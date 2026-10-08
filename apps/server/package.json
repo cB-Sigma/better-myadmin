@@ -1,0 +1,27 @@
+{
+  "name": "@bettermyadmin/server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "bettermyadmin": "./dist/main.js"
+  },
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@bettermyadmin/config": "workspace:*",
+    "@bettermyadmin/contracts": "workspace:*",
+    "@bettermyadmin/sql-gen": "workspace:*",
+    "@bettermyadmin/sql-lexer": "workspace:*",
+    "@hono/node-server": "1.14.1",
+    "hono": "4.7.10",
+    "mysql2": "3.14.1",
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "tsx": "4.19.4"
+  }
+}

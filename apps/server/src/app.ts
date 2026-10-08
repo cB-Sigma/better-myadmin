@@ -1,0 +1,110 @@
+import { CSRF_COOKIE, CSRF_HEADER, type Executed, SESSION_COOKIE } from '@bettermyadmin/contracts'
+import { type Context, Hono } from 'hono'
+import { getCookie, setCookie } from 'hono/cookie'
+import type { AppConfig } from './config.ts'
+import type { PoolManager } from './db/pool-manager.ts'
+import { BmaError, CsrfError } from './http/errors.ts'
+import { securityHeaders } from './http/headers.ts'
+import { authRoutes } from './routes/auth.ts'
+import { metaRoutes } from './routes/meta.ts'
+import { serverRoutes } from './routes/server.ts'
+import { SecretBox, safeEqual } from './session/crypto.ts'
+import { newSession, nowSeconds } from './session/manager.ts'
+import type { SessionData, SessionStore } from './session/store.ts'
+
+export interface AppDeps {
+  cfg: AppConfig
+  store: SessionStore
+  pools: PoolManager
+  /** Encrypts credentials kept in the session store. */
+  credBox: SecretBox
+  /** Encrypts the recalled-username cookie (LoginCookieRecall). */
+  userBox: SecretBox
+}
+
+export interface AppEnv {
+  Variables: {
+    deps: AppDeps
+    session: SessionData
+    /** True when the session did not exist before this request. */
+    sessionIsNew: boolean
+    executed: Executed[]
+    isHttps: boolean
+  }
+}
+
+export function createApp(deps: AppDeps) {
+  const app = new Hono<AppEnv>()
+
+  app.onError((err, c) => {
+    if (err instanceof BmaError) return c.json(err.toEnvelope(), err.status as 400)
+    console.error(err)
+    return c.json({ error: { code: 'INTERNAL', message: 'Internal error.' } }, 500)
+  })
+
+  app.use('*', securityHeaders(deps.cfg))
+
+  // session: load or create; cookie carries only the id
+  app.use('/api/*', async (c, next) => {
+    c.set('deps', deps)
+    c.set('executed', [])
+    const proto = c.req.header('x-forwarded-proto') ?? new URL(c.req.url).protocol.replace(':', '')
+    c.set('isHttps', proto === 'https')
+    const id = getCookie(c, SESSION_COOKIE)
+    let session = id !== undefined ? deps.store.get(id) : null
+    c.set('sessionIsNew', session === null)
+    if (session === null) session = newSession(deps.cfg.ServerDefault > 0 ? deps.cfg.ServerDefault : 1)
+    else if (
+      Object.keys(session.servers).length > 0 &&
+      nowSeconds() - session.lastSeenAt > deps.cfg.LoginCookieValidity
+    ) {
+      // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY)
+      session.servers = {}
+      session.expired = true
+      void deps.pools.dropSession(session.id)
+    }
+    c.set('session', session)
+    await next()
+    const s = c.get('session')
+    s.lastSeenAt = nowSeconds()
+    deps.store.set(s)
+    writeSessionCookies(c, s)
+  })
+
+  // CSRF: double submit on every non-GET request (pma: TokenRequestParamChecking)
+  app.use('/api/*', async (c, next) => {
+    const m = c.req.method
+    if (m !== 'GET' && m !== 'HEAD' && m !== 'OPTIONS') {
+      const header = c.req.header(CSRF_HEADER) ?? ''
+      if (c.get('sessionIsNew') || header === '' || !safeEqual(header, c.get('session').csrfToken)) {
+        throw new CsrfError()
+      }
+    }
+    await next()
+  })
+
+  app.route('/api/auth', authRoutes)
+  app.route('/api/meta', metaRoutes)
+  app.route('/api/servers', serverRoutes)
+
+  app.all('/api/*', (c) => c.json({ error: { code: 'NOT_FOUND', message: 'Not found.' } }, 404))
+
+  return app
+}
+
+export type App = ReturnType<typeof createApp>
+
+// biome-ignore lint/suspicious/noExplicitAny: any route path/input
+export function writeSessionCookies(c: Context<AppEnv, any, any>, s: SessionData) {
+  const { cfg } = c.get('deps')
+  const secure = c.get('isHttps')
+  const sameSite = (['Lax', 'Strict', 'None'].includes(cfg.CookieSameSite) ? cfg.CookieSameSite : 'Strict') as
+    | 'Lax'
+    | 'Strict'
+    | 'None'
+  const path = cfg.Listen?.basePath !== undefined && cfg.Listen.basePath !== '' ? cfg.Listen.basePath : '/'
+  // LoginCookieStore = 0 → browser-session cookie, otherwise kept that many seconds
+  const maxAge = cfg.LoginCookieStore > 0 ? { maxAge: cfg.LoginCookieStore } : {}
+  setCookie(c, SESSION_COOKIE, s.id, { path, httpOnly: true, secure, sameSite, ...maxAge })
+  setCookie(c, CSRF_COOKIE, s.csrfToken, { path, httpOnly: false, secure, sameSite, ...maxAge })
+}
