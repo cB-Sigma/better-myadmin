@@ -51,12 +51,11 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/servers/:s/navigation/databases?pos=&filter=` | paged db list, grouped per `NavigationTreeDbSeparator`, with `hidden` counts and `total` | `/navigation` (root) |
-| GET | `/api/servers/:s/navigation/db/:db?container=tables|views|procedures|functions|events&pos=&filter=` | children of a container with counts; `container` omitted returns the container summary (counts) | `/navigation` (`aPath`/`vPath`) |
-| GET | `/api/servers/:s/navigation/db/:db/table/:t` | columns + indexes nodes | `/navigation` |
+| GET | `/api/servers/:s/navigation/tree?pos=&searchClause=&db=` | the whole tree (`NavTreeResponse`): panel settings, root list (database fast filter, `dbselector` page selector, `New` + database and group nodes, already grouped and sorted), user errors. Without `pos`, `db` selects the page holding that database (`getNavigationDbPos`) | `/navigation` `full=1` (`renderState`) |
+| POST | `/api/servers/:s/navigation/tree` | `{pos?, searchClause?, db?, paths: [{aPath, vPath, pos2Name?, pos2Value?, pos3Name?, pos3Value?}], reload}`: the tree with the listed branches expanded (state restore); `reload: true` is "Reload navigation panel" and also sets the session's `dbs_to_test` to false (#14252) | `/navigation` `reload=1` + `n{i}_aPath`… |
+| GET | `/api/servers/:s/navigation/branch?path=…&pos=&pos2Name=&pos2Value=&pos3Name=&pos3Value=&searchClause=&searchClause2=` | one branch (`NavBranchResponse`: `{list, error, searchResults, results}`); `path` repeats per aPath component after `root` (`db`, `db/tables`, `db/tables/t`, `db/tables/t/columns`); no `path` is the root list (database search). `results` is "%s result(s) found" when a search clause is given | `/navigation` `aPath`/`vPath` (`renderPath`) |
 | GET | `/api/servers/:s/navigation/hidden/:db` | hidden items list | `navigationhiding` |
 | POST | `/api/servers/:s/navigation/hide` / `unhide` | `{db, itemType, itemName}` | `/navigation` hide/unhide |
-| POST | `/api/servers/:s/navigation/reload` | drops server-side nav caches | "Reload navigation panel" |
 | GET | `/api/servers/:s/recent-favorite` | `{recent:[], favorite:[]}` | `/table/recent-favorite` |
 | POST | `/api/servers/:s/favorites` | `{action:'add'|'remove'|'sync', db, table, localList?}` | `/database/structure/favorite-table`, `/sync-favorite-tables` |
 
