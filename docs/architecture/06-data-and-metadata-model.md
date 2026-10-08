@@ -91,7 +91,7 @@ The result is cached per `(session, server, db, table)` and invalidated by any D
 
 ## Identity of a row
 
-Row edit/delete/copy need a `WHERE` clause. phpMyAdmin's `Results::getUniqueConditions` / `Util::getUniqueCondition` picks, in order: the primary key, a unique index with no NULL values in the row, otherwise *all* columns (with `RowActionLinksWithoutUnique` controlling whether links are shown at all, and the generated `DELETE/UPDATE` gets `LIMIT 1` when no unique key exists). Column comparisons use type-aware literal forms: numbers unquoted, strings escaped, binary compared as `= CAST(0x... AS BINARY)`, `BIT` as `= b'...'`, spatial via `ST_AsText(col) = '...'`, NULL as `IS NULL`, floating point with the `CONCAT`/precision trick phpMyAdmin uses to avoid float-equality failures. All of this lives in `packages/sql-gen/where.ts` with phpMyAdmin's unit fixtures ported.
+Row edit/delete/copy need a `WHERE` clause. phpMyAdmin's `Results::getUniqueConditions` / `Util::getUniqueCondition` picks, in order: the primary key, a unique key (a NULL value in it is still used, compared with `IS NULL`, and the clause stays unique), otherwise *all* columns (with `RowActionLinksWithoutUnique` controlling whether links are shown at all, and the generated `DELETE/UPDATE` gets `LIMIT 1` when no unique key exists). Column comparisons use type-aware literal forms: numbers unquoted, strings escaped, binary compared as `= CAST(0x... AS BINARY)`, `BIT` as `= b'...'`, spatial as `= CAST(0x... AS BINARY)` like other binary values, NULL as `IS NULL`, floating point with the `CONCAT`/precision trick phpMyAdmin uses to avoid float-equality failures. All of this lives in `packages/sql-gen/where.ts` with phpMyAdmin's unit fixtures ported.
 
 ## Type catalog
 

@@ -1,0 +1,1499 @@
+{
+  "_generated": {"by": "generate-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "backquote": [
+    ["", "", "", ""],
+    ["*", "*", "*", "*"],
+    ["a", "`a`", "\"a\"", "`a`"],
+    ["my table", "`my table`", "\"my table\"", "`my table`"],
+    ["owner`s db", "`owner``s db`", "\"owner`s db\"", "`owner``s db`"],
+    ["``", "``````", "\"``\"", "``````"],
+    ["a.b", "`a.b`", "\"a.b\"", "`a.b`"],
+    ["é", "`é`", "\"é\"", "`é`"],
+    ["\"quoted\"", "`\"quoted\"`", "\"\\\"quoted\\\"\"", "`\"quoted\"`"],
+    ["0", "`0`", "\"0\"", "`0`"],
+    [" lead", "` lead`", "\" lead\"", "` lead`"],
+    ["x`y`z", "`x``y``z`", "\"x`y`z\"", "`x``y``z`"],
+    ["new\nline", "`new\nline`", "\"new\nline\"", "`new\nline`"]
+  ],
+  "escape": [
+    {"charset": "utf8mb4", "input": "", "escaped": ""},
+    {"charset": "utf8mb4", "input": "abc", "escaped": "abc"},
+    {"charset": "utf8mb4", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "utf8mb4", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "utf8mb4", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "utf8mb4", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "utf8mb4", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "utf8mb4", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "utf8mb4", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "utf8mb4", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "utf8mb4", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "utf8mb4", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "utf8mb4", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "utf8mb4", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "utf8", "input": "", "escaped": ""},
+    {"charset": "utf8", "input": "abc", "escaped": "abc"},
+    {"charset": "utf8", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "utf8", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "utf8", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "utf8", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "utf8", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "utf8", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "utf8", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "utf8", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "utf8", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "utf8", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "utf8",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "utf8",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "utf8", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "utf8", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "latin1", "input": "", "escaped": ""},
+    {"charset": "latin1", "input": "abc", "escaped": "abc"},
+    {"charset": "latin1", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "latin1", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "latin1", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "latin1", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "latin1", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "latin1", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "latin1", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "latin1", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "latin1", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "latin1", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "latin1",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "latin1", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "latin1", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "binary", "input": "", "escaped": ""},
+    {"charset": "binary", "input": "abc", "escaped": "abc"},
+    {"charset": "binary", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "binary", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "binary", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "binary", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "binary", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "binary", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "binary", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "binary", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "binary", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "binary", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "binary",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "binary",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "binary", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "binary", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "ascii", "input": "", "escaped": ""},
+    {"charset": "ascii", "input": "abc", "escaped": "abc"},
+    {"charset": "ascii", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "ascii", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "ascii", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "ascii", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "ascii", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "ascii", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "ascii", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "ascii", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "ascii", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "ascii", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "ascii",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "ascii",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "ascii", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "ascii", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "gbk", "input": "", "escaped": ""},
+    {"charset": "gbk", "input": "abc", "escaped": "abc"},
+    {"charset": "gbk", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "gbk", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "gbk", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "gbk", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "gbk", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "gbk", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "gbk", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "gbk", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "gbk", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "gbk", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "gbk",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "5cc35c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa15ca15c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "5c81305c81305c27"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "gbk", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "gbk", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "big5", "input": "", "escaped": ""},
+    {"charset": "big5", "input": "abc", "escaped": "abc"},
+    {"charset": "big5", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "big5", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "big5", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "big5", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "big5", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "big5", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "big5", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "big5", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "big5",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e55cad97205cf09f9880"}
+    },
+    {"charset": "big5", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "big5",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "5cc35c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8e5ca15c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "5ce2825c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "5cf09f5c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "5ceda0805c27"}
+    },
+    {"charset": "big5", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "big5", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "sjis", "input": "", "escaped": ""},
+    {"charset": "sjis", "input": "abc", "escaped": "abc"},
+    {"charset": "sjis", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "sjis", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "sjis", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "sjis", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "sjis", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "sjis", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "sjis", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "sjis", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "sjis",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e5ad5c9720f09f9880"}
+    },
+    {"charset": "sjis", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "sjis",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "5c81305c81305c27"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "sjis", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "sjis", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "cp932", "input": "", "escaped": ""},
+    {"charset": "cp932", "input": "abc", "escaped": "abc"},
+    {"charset": "cp932", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "cp932", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "cp932", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "cp932", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "cp932", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "cp932", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "cp932", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "cp932", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "cp932",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e5ad5c9720f09f9880"}
+    },
+    {"charset": "cp932", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "cp932",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "5c81305c81305c27"}
+    },
+    {
+      "charset": "cp932",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "cp932", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "cp932", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "gb18030", "input": "", "escaped": ""},
+    {"charset": "gb18030", "input": "abc", "escaped": "abc"},
+    {"charset": "gb18030", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "gb18030", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "gb18030", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "gb18030", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "gb18030", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "gb18030", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "gb18030", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "gb18030", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "gb18030", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "gb18030", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "gb18030",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "gb18030",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "gb18030", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "gb18030", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "gb2312", "input": "", "escaped": ""},
+    {"charset": "gb2312", "input": "abc", "escaped": "abc"},
+    {"charset": "gb2312", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "gb2312", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "gb2312", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "gb2312", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "gb2312", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "gb2312", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "gb2312", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "gb2312", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "gb2312",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e55cad97205cf09f9880"}
+    },
+    {"charset": "gb2312", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "gb2312",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "5cc35c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "5cbf5c5c5c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "5ca15c5c5c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8e5ca15c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "5ce2825c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "5cf09f5c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "gb2312",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "5ceda0805c27"}
+    },
+    {"charset": "gb2312", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "gb2312", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "euckr", "input": "", "escaped": ""},
+    {"charset": "euckr", "input": "abc", "escaped": "abc"},
+    {"charset": "euckr", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "euckr", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "euckr", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "euckr", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "euckr", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "euckr", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "euckr", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "euckr", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "euckr",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e55cad97205cf09f9880"}
+    },
+    {"charset": "euckr", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "euckr",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "5cc35c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "5cbf5c5c5c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "5ca15c5c5c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa15ca15c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "5ce2825c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "5cf09f5c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "euckr",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "5ceda0805c27"}
+    },
+    {"charset": "euckr", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "euckr", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "ujis", "input": "", "escaped": ""},
+    {"charset": "ujis", "input": "abc", "escaped": "abc"},
+    {"charset": "ujis", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "ujis", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "ujis", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "ujis", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "ujis", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "ujis", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "ujis", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "ujis", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "ujis",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e55cad97205cf09f9880"}
+    },
+    {"charset": "ujis", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "ujis",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "5cc35c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "5cbf5c5c5c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "5ca15c5c5c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "5ce2825c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "5cf09f5c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "ujis",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "5ceda0805c27"}
+    },
+    {"charset": "ujis", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "ujis", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "eucjpms", "input": "", "escaped": ""},
+    {"charset": "eucjpms", "input": "abc", "escaped": "abc"},
+    {"charset": "eucjpms", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "eucjpms", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "eucjpms", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "eucjpms", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "eucjpms", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "eucjpms", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "eucjpms", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "eucjpms", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {
+      "charset": "eucjpms",
+      "input": "é ü 漢字 😀",
+      "escaped": {"hex": "c3a920c3bc20e6bca2e55cad97205cf09f9880"}
+    },
+    {"charset": "eucjpms", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "5cc35c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "5cbf5c5c5c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "5ca15c5c5c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "5ce2825c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "5cf09f5c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "eucjpms",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "5ceda0805c27"}
+    },
+    {"charset": "eucjpms", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "eucjpms", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "cp1250", "input": "", "escaped": ""},
+    {"charset": "cp1250", "input": "abc", "escaped": "abc"},
+    {"charset": "cp1250", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "cp1250", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "cp1250", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "cp1250", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "cp1250", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "cp1250", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "cp1250", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "cp1250", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "cp1250", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "cp1250", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "cp1250",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "cp1250",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "cp1250", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "cp1250", "input": "\\'", "escaped": "\\\\\\'"},
+    {"charset": "koi8r", "input": "", "escaped": ""},
+    {"charset": "koi8r", "input": "abc", "escaped": "abc"},
+    {"charset": "koi8r", "input": "it's", "escaped": "it\\'s"},
+    {"charset": "koi8r", "input": "say \"hi\"", "escaped": "say \\\"hi\\\""},
+    {"charset": "koi8r", "input": "back\\slash", "escaped": "back\\\\slash"},
+    {"charset": "koi8r", "input": "nul\u0000byte", "escaped": "nul\\0byte"},
+    {"charset": "koi8r", "input": "line\nfeed", "escaped": "line\\nfeed"},
+    {"charset": "koi8r", "input": "carriage\rreturn", "escaped": "carriage\\rreturn"},
+    {"charset": "koi8r", "input": "ctrl\u001aZ", "escaped": "ctrl\\ZZ"},
+    {"charset": "koi8r", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all \\'\\\"\\\\\\0\\n\\r\\Z"},
+    {"charset": "koi8r", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "koi8r", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "koi8r",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c35c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c5c5c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c5c5c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c5c5c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea15c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a15c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2825c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f5c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081305c27"}
+    },
+    {
+      "charset": "koi8r",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0805c27"}
+    },
+    {"charset": "koi8r", "input": "''", "escaped": "\\'\\'"},
+    {"charset": "koi8r", "input": "\\'", "escaped": "\\\\\\'"}
+  ],
+  "escapeNoBackslashEscapes": [
+    {"charset": "utf8mb4", "input": "", "escaped": ""},
+    {"charset": "utf8mb4", "input": "abc", "escaped": "abc"},
+    {"charset": "utf8mb4", "input": "it's", "escaped": "it''s"},
+    {"charset": "utf8mb4", "input": "say \"hi\"", "escaped": "say \"hi\""},
+    {"charset": "utf8mb4", "input": "back\\slash", "escaped": "back\\slash"},
+    {"charset": "utf8mb4", "input": "nul\u0000byte", "escaped": "nul\u0000byte"},
+    {"charset": "utf8mb4", "input": "line\nfeed", "escaped": "line\nfeed"},
+    {"charset": "utf8mb4", "input": "carriage\rreturn", "escaped": "carriage\rreturn"},
+    {"charset": "utf8mb4", "input": "ctrl\u001aZ", "escaped": "ctrl\u001aZ"},
+    {"charset": "utf8mb4", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all ''\"\\\u0000\n\r\u001a"},
+    {"charset": "utf8mb4", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "utf8mb4", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c32727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c2727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c2727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c2727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea12727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a12727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2822727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f2727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081302727"}
+    },
+    {
+      "charset": "utf8mb4",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0802727"}
+    },
+    {"charset": "utf8mb4", "input": "''", "escaped": "''''"},
+    {"charset": "utf8mb4", "input": "\\'", "escaped": "\\''"},
+    {"charset": "latin1", "input": "", "escaped": ""},
+    {"charset": "latin1", "input": "abc", "escaped": "abc"},
+    {"charset": "latin1", "input": "it's", "escaped": "it''s"},
+    {"charset": "latin1", "input": "say \"hi\"", "escaped": "say \"hi\""},
+    {"charset": "latin1", "input": "back\\slash", "escaped": "back\\slash"},
+    {"charset": "latin1", "input": "nul\u0000byte", "escaped": "nul\u0000byte"},
+    {"charset": "latin1", "input": "line\nfeed", "escaped": "line\nfeed"},
+    {"charset": "latin1", "input": "carriage\rreturn", "escaped": "carriage\rreturn"},
+    {"charset": "latin1", "input": "ctrl\u001aZ", "escaped": "ctrl\u001aZ"},
+    {"charset": "latin1", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all ''\"\\\u0000\n\r\u001a"},
+    {"charset": "latin1", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "latin1", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "latin1",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c32727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c2727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c2727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c2727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea12727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a12727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2822727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f2727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081302727"}
+    },
+    {
+      "charset": "latin1",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0802727"}
+    },
+    {"charset": "latin1", "input": "''", "escaped": "''''"},
+    {"charset": "latin1", "input": "\\'", "escaped": "\\''"},
+    {"charset": "gbk", "input": "", "escaped": ""},
+    {"charset": "gbk", "input": "abc", "escaped": "abc"},
+    {"charset": "gbk", "input": "it's", "escaped": "it''s"},
+    {"charset": "gbk", "input": "say \"hi\"", "escaped": "say \"hi\""},
+    {"charset": "gbk", "input": "back\\slash", "escaped": "back\\slash"},
+    {"charset": "gbk", "input": "nul\u0000byte", "escaped": "nul\u0000byte"},
+    {"charset": "gbk", "input": "line\nfeed", "escaped": "line\nfeed"},
+    {"charset": "gbk", "input": "carriage\rreturn", "escaped": "carriage\rreturn"},
+    {"charset": "gbk", "input": "ctrl\u001aZ", "escaped": "ctrl\u001aZ"},
+    {"charset": "gbk", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all ''\"\\\u0000\n\r\u001a"},
+    {"charset": "gbk", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "gbk", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "gbk",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c32727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c2727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c2727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c2727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea12727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a12727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2822727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f2727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081302727"}
+    },
+    {
+      "charset": "gbk",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0802727"}
+    },
+    {"charset": "gbk", "input": "''", "escaped": "''''"},
+    {"charset": "gbk", "input": "\\'", "escaped": "\\''"},
+    {"charset": "sjis", "input": "", "escaped": ""},
+    {"charset": "sjis", "input": "abc", "escaped": "abc"},
+    {"charset": "sjis", "input": "it's", "escaped": "it''s"},
+    {"charset": "sjis", "input": "say \"hi\"", "escaped": "say \"hi\""},
+    {"charset": "sjis", "input": "back\\slash", "escaped": "back\\slash"},
+    {"charset": "sjis", "input": "nul\u0000byte", "escaped": "nul\u0000byte"},
+    {"charset": "sjis", "input": "line\nfeed", "escaped": "line\nfeed"},
+    {"charset": "sjis", "input": "carriage\rreturn", "escaped": "carriage\rreturn"},
+    {"charset": "sjis", "input": "ctrl\u001aZ", "escaped": "ctrl\u001aZ"},
+    {"charset": "sjis", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all ''\"\\\u0000\n\r\u001a"},
+    {"charset": "sjis", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "sjis", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "sjis",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c32727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c2727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c2727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c2727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea12727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a12727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2822727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f2727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081302727"}
+    },
+    {
+      "charset": "sjis",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0802727"}
+    },
+    {"charset": "sjis", "input": "''", "escaped": "''''"},
+    {"charset": "sjis", "input": "\\'", "escaped": "\\''"},
+    {"charset": "big5", "input": "", "escaped": ""},
+    {"charset": "big5", "input": "abc", "escaped": "abc"},
+    {"charset": "big5", "input": "it's", "escaped": "it''s"},
+    {"charset": "big5", "input": "say \"hi\"", "escaped": "say \"hi\""},
+    {"charset": "big5", "input": "back\\slash", "escaped": "back\\slash"},
+    {"charset": "big5", "input": "nul\u0000byte", "escaped": "nul\u0000byte"},
+    {"charset": "big5", "input": "line\nfeed", "escaped": "line\nfeed"},
+    {"charset": "big5", "input": "carriage\rreturn", "escaped": "carriage\rreturn"},
+    {"charset": "big5", "input": "ctrl\u001aZ", "escaped": "ctrl\u001aZ"},
+    {"charset": "big5", "input": "all '\"\\\u0000\n\r\u001a", "escaped": "all ''\"\\\u0000\n\r\u001a"},
+    {"charset": "big5", "input": "é ü 漢字 😀", "escaped": "é ü 漢字 😀"},
+    {"charset": "big5", "input": "%_wild_%", "escaped": "%_wild_%"},
+    {
+      "charset": "big5",
+      "input": {"hex": "7f80ff"},
+      "escaped": {"hex": "7f80ff"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "c327"},
+      "escaped": {"hex": "c32727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "bf5c27"},
+      "escaped": {"hex": "bf5c2727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "815c27"},
+      "escaped": {"hex": "815c2727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "a15c27"},
+      "escaped": {"hex": "a15c2727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "8ea127"},
+      "escaped": {"hex": "8ea12727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "8fa1a127"},
+      "escaped": {"hex": "8fa1a12727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "e28227"},
+      "escaped": {"hex": "e2822727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "f09f27"},
+      "escaped": {"hex": "f09f2727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "8130813027"},
+      "escaped": {"hex": "813081302727"}
+    },
+    {
+      "charset": "big5",
+      "input": {"hex": "eda08027"},
+      "escaped": {"hex": "eda0802727"}
+    },
+    {"charset": "big5", "input": "''", "escaped": "''''"},
+    {"charset": "big5", "input": "\\'", "escaped": "\\''"}
+  ]
+}

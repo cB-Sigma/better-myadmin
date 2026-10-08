@@ -1,0 +1,437 @@
+{
+  "_generated": {"by": "generate-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "strGetCsv": [
+    [
+      "'a','b'",
+      ["a", "b"]
+    ],
+    [
+      "'a', 'b'",
+      ["a", "b"]
+    ],
+    [
+      "  'a'  ,  'b'  ",
+      ["a  ", "b  "]
+    ],
+    [
+      "a,b",
+      ["a", "b"]
+    ],
+    [
+      "'a''b','c'",
+      ["a'b", "c"]
+    ],
+    [
+      "'a\\'b'",
+      ["a\\'b"]
+    ],
+    [
+      "'a\\\\','b'",
+      ["a\\\\", "b"]
+    ],
+    [
+      "'unterminated",
+      ["unterminated"]
+    ],
+    [
+      "''",
+      [""]
+    ],
+    [
+      "",
+      [null]
+    ],
+    [
+      ",",
+      ["", ""]
+    ],
+    [
+      "'a',",
+      ["a", ""]
+    ],
+    [
+      "'a'x,'b'",
+      ["ax", "b"]
+    ],
+    [
+      "'a\nb','c'",
+      ["a\nb", "c"]
+    ],
+    [
+      "'a'\n",
+      ["a"]
+    ],
+    [
+      "x\r\n",
+      ["x"]
+    ],
+    [
+      "'x'\r\n",
+      ["x"]
+    ],
+    [
+      "'\\",
+      ["\\"]
+    ],
+    [
+      "'a\\''b'",
+      ["a\\'b'"]
+    ],
+    [
+      "'é','ü'",
+      ["é", "ü"]
+    ],
+    [
+      "\t'a'",
+      ["a"]
+    ],
+    [
+      "'a' 'b'",
+      ["a 'b'"]
+    ],
+    [
+      "'',''",
+      ["", ""]
+    ],
+    [
+      "'a',,'b'",
+      ["a", "", "b"]
+    ]
+  ],
+  "extractColumnSpec": {
+    "int(11)": {"type": "int", "spec_in_brackets": "11", "enum_set_values": [], "print_type": "int(11)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "int(11)"},
+    "int(10) unsigned": {"type": "int", "spec_in_brackets": "10", "enum_set_values": [], "print_type": "int(10)", "binary": false, "unsigned": true, "zerofill": false, "attribute": "UNSIGNED", "can_contain_collation": false, "displayed_type": "int(10)"},
+    "int(10) unsigned zerofill": {"type": "int", "spec_in_brackets": "10", "enum_set_values": [], "print_type": "int(10)", "binary": false, "unsigned": true, "zerofill": true, "attribute": "UNSIGNED ZEROFILL", "can_contain_collation": false, "displayed_type": "int(10)"},
+    "INT(10) UNSIGNED ZEROFILL": {"type": "int", "spec_in_brackets": "10", "enum_set_values": [], "print_type": "int(10)", "binary": false, "unsigned": true, "zerofill": true, "attribute": "UNSIGNED ZEROFILL", "can_contain_collation": false, "displayed_type": "int(10)"},
+    "bigint unsigned": {"type": "bigint", "spec_in_brackets": "", "enum_set_values": [], "print_type": "bigint", "binary": false, "unsigned": true, "zerofill": false, "attribute": "UNSIGNED", "can_contain_collation": false, "displayed_type": "bigint"},
+    "tinyint(1)": {"type": "tinyint", "spec_in_brackets": "1", "enum_set_values": [], "print_type": "tinyint(1)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "tinyint(1)"},
+    "decimal(10,2)": {"type": "decimal", "spec_in_brackets": "10,2", "enum_set_values": [], "print_type": "decimal(10,2)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "decimal(10,2)"},
+    "float": {"type": "float", "spec_in_brackets": "", "enum_set_values": [], "print_type": "float", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "float"},
+    "double(8,3) unsigned": {"type": "double", "spec_in_brackets": "8,3", "enum_set_values": [], "print_type": "double(8,3)", "binary": false, "unsigned": true, "zerofill": false, "attribute": "UNSIGNED", "can_contain_collation": false, "displayed_type": "double(8,3)"},
+    "varchar(255)": {"type": "varchar", "spec_in_brackets": "255", "enum_set_values": [], "print_type": "varchar(255)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "varchar(255)"},
+    "char(36)": {"type": "char", "spec_in_brackets": "36", "enum_set_values": [], "print_type": "char(36)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "char(36)"},
+    "varchar(20) binary": {"type": "varchar", "spec_in_brackets": "20", "enum_set_values": [], "print_type": "varchar(20)", "binary": true, "unsigned": false, "zerofill": false, "attribute": "BINARY", "can_contain_collation": false, "displayed_type": "varchar(20)"},
+    "char(5) BINARY": {"type": "char", "spec_in_brackets": "5", "enum_set_values": [], "print_type": "char(5)", "binary": true, "unsigned": false, "zerofill": false, "attribute": "BINARY", "can_contain_collation": false, "displayed_type": "char(5)"},
+    "binary(16)": {"type": "binary", "spec_in_brackets": "16", "enum_set_values": [], "print_type": "binary(16)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "binary(16)"},
+    "varbinary(255)": {"type": "varbinary", "spec_in_brackets": "255", "enum_set_values": [], "print_type": "varbinary(255)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "varbinary(255)"},
+    "blob": {"type": "blob", "spec_in_brackets": "", "enum_set_values": [], "print_type": "blob", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "blob"},
+    "tinyblob": {"type": "tinyblob", "spec_in_brackets": "", "enum_set_values": [], "print_type": "tinyblob", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "tinyblob"},
+    "longtext": {"type": "longtext", "spec_in_brackets": "", "enum_set_values": [], "print_type": "longtext", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "longtext"},
+    "text": {"type": "text", "spec_in_brackets": "", "enum_set_values": [], "print_type": "text", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "text"},
+    "mediumtext": {"type": "mediumtext", "spec_in_brackets": "", "enum_set_values": [], "print_type": "mediumtext", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "mediumtext"},
+    "text /*!100301 COMPRESSED*/": {"type": "text", "spec_in_brackets": "", "enum_set_values": [], "print_type": "text", "binary": false, "unsigned": false, "zerofill": false, "attribute": "COMPRESSED=zlib", "can_contain_collation": true, "displayed_type": "text"},
+    "varchar(100) /*M!100301 COMPRESSED*/": {"type": "varchar", "spec_in_brackets": "100", "enum_set_values": [], "print_type": "varchar(100)", "binary": false, "unsigned": false, "zerofill": false, "attribute": "COMPRESSED=zlib", "can_contain_collation": true, "displayed_type": "varchar(100)"},
+    "blob /*!100301 COMPRESSED*/": {"type": "blob", "spec_in_brackets": "", "enum_set_values": [], "print_type": "blob", "binary": false, "unsigned": false, "zerofill": false, "attribute": "COMPRESSED=zlib", "can_contain_collation": false, "displayed_type": "blob"},
+    "enum('a','b','c')": {
+      "type": "enum",
+      "spec_in_brackets": "'a','b','c'",
+      "enum_set_values": ["a", "b", "c"],
+      "print_type": "enum('a', 'b', 'c')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "enum('a', 'b', 'c')"
+    },
+    "ENUM('a','b')": {
+      "type": "enum",
+      "spec_in_brackets": "'a','b'",
+      "enum_set_values": ["a", "b"],
+      "print_type": "enum('a', 'b')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "enum('a', 'b')"
+    },
+    "set('x','y','z')": {
+      "type": "set",
+      "spec_in_brackets": "'x','y','z'",
+      "enum_set_values": ["x", "y", "z"],
+      "print_type": "set('x', 'y', 'z')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "set('x', 'y', 'z')"
+    },
+    "enum('a,b','c''d','e\\\\f','g\\'h')": {
+      "type": "enum",
+      "spec_in_brackets": "'a,b','c''d','e\\\\f','g\\'h'",
+      "enum_set_values": ["a,b", "c'd", "e\\f", "g\\'h"],
+      "print_type": "enum('a,b', 'c''d', 'e\\\\f', 'g\\'h')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "enum('a,b', 'c''d', 'e\\\\f', 'g\\'h')"
+    },
+    "set('','x')": {
+      "type": "set",
+      "spec_in_brackets": "'','x'",
+      "enum_set_values": ["", "x"],
+      "print_type": "set('', 'x')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "set('', 'x')"
+    },
+    "enum('&#8211;','&ldquo;')": {
+      "type": "enum",
+      "spec_in_brackets": "'&#8211;','&ldquo;'",
+      "enum_set_values": ["&#8211;", "&ldquo;"],
+      "print_type": "enum('&#8211;', '&ldquo;')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "enum('&amp;#8211;', '&amp;ldquo;')"
+    },
+    "enum('one','two','three','four','five','six','seven','eight','nine')": {
+      "type": "enum",
+      "spec_in_brackets": "'one','two','three','four','five','six','seven','eight','nine'",
+      "enum_set_values": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+      "print_type": "enum('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "<abbr title=\"enum(&#039;one&#039;, &#039;two&#039;, &#039;three&#039;, &#039;four&#039;, &#039;five&#039;, &#039;six&#039;, &#039;seven&#039;, &#039;eight&#039;, &#039;nine&#039;)\">enum('one', 'two', 'three', 'four', 'five', 'six',...</abbr>"
+    },
+    "timestamp": {"type": "timestamp", "spec_in_brackets": "", "enum_set_values": [], "print_type": "timestamp", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "timestamp"},
+    "timestamp(6)": {"type": "timestamp", "spec_in_brackets": "6", "enum_set_values": [], "print_type": "timestamp(6)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "timestamp(6)"},
+    "datetime(3)": {"type": "datetime", "spec_in_brackets": "3", "enum_set_values": [], "print_type": "datetime(3)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "datetime(3)"},
+    "time": {"type": "time", "spec_in_brackets": "", "enum_set_values": [], "print_type": "time", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "time"},
+    "year(4)": {"type": "year", "spec_in_brackets": "4", "enum_set_values": [], "print_type": "year(4)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "year(4)"},
+    "date": {"type": "date", "spec_in_brackets": "", "enum_set_values": [], "print_type": "date", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "date"},
+    "bit(1)": {"type": "bit", "spec_in_brackets": "1", "enum_set_values": [], "print_type": "bit(1)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "bit(1)"},
+    "bit(64)": {"type": "bit", "spec_in_brackets": "64", "enum_set_values": [], "print_type": "bit(64)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "bit(64)"},
+    "json": {"type": "json", "spec_in_brackets": "", "enum_set_values": [], "print_type": "json", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "json"},
+    "point": {"type": "point", "spec_in_brackets": "", "enum_set_values": [], "print_type": "point", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "point"},
+    "geometry": {"type": "geometry", "spec_in_brackets": "", "enum_set_values": [], "print_type": "geometry", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "geometry"},
+    "uuid": {"type": "uuid", "spec_in_brackets": "", "enum_set_values": [], "print_type": "uuid", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "uuid"},
+    "inet6": {"type": "inet6", "spec_in_brackets": "", "enum_set_values": [], "print_type": "inet6", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "inet6"},
+    "inet4": {"type": "inet4", "spec_in_brackets": "", "enum_set_values": [], "print_type": "inet4", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "inet4"},
+    "vector(3)": {"type": "vector", "spec_in_brackets": "3", "enum_set_values": [], "print_type": "vector(3)", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "vector(3)"},
+    "serial": {"type": "serial", "spec_in_brackets": "", "enum_set_values": [], "print_type": "serial", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "serial"},
+    "mediumint(8) unsigned": {"type": "mediumint", "spec_in_brackets": "8", "enum_set_values": [], "print_type": "mediumint(8)", "binary": false, "unsigned": true, "zerofill": false, "attribute": "UNSIGNED", "can_contain_collation": false, "displayed_type": "mediumint(8)"},
+    "varchar(12) character set utf8": {"type": "varchar", "spec_in_brackets": "12", "enum_set_values": [], "print_type": "varchar(12) character set utf8", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "varchar(12) character set utf8"},
+    "enum('a','b') character set utf8mb4": {
+      "type": "enum",
+      "spec_in_brackets": "'a','b'",
+      "enum_set_values": ["a", "b"],
+      "print_type": "enum('a', 'b')",
+      "binary": false,
+      "unsigned": false,
+      "zerofill": false,
+      "attribute": " ",
+      "can_contain_collation": true,
+      "displayed_type": "enum('a', 'b')"
+    },
+    "something": {"type": "something", "spec_in_brackets": "", "enum_set_values": [], "print_type": "something", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "something"},
+    "": {"type": "", "spec_in_brackets": "", "enum_set_values": [], "print_type": "", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": ""},
+    "xmltype": {"type": "xmltype", "spec_in_brackets": "", "enum_set_values": [], "print_type": "xmltype", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "xmltype"},
+    "varchar(255) COLLATE utf8mb4_unicode_ci": {"type": "varchar", "spec_in_brackets": "255", "enum_set_values": [], "print_type": "varchar(255) collate utf8mb4_unicode_ci", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "varchar(255) collate utf8mb4_unicode_ci"},
+    "double precision": {"type": "double", "spec_in_brackets": "", "enum_set_values": [], "print_type": "double precision", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": false, "displayed_type": "double precision"},
+    "long varbinary": {"type": "long", "spec_in_brackets": "", "enum_set_values": [], "print_type": "long var", "binary": true, "unsigned": false, "zerofill": false, "attribute": "BINARY", "can_contain_collation": false, "displayed_type": "long var"}
+  },
+  "extractColumnSpecLimitChars": {
+    "limitChars": 20,
+    "cases": {
+      "enum('one','two','three','four','five','six','seven','eight','nine')": {
+        "type": "enum",
+        "spec_in_brackets": "'one','two','three','four','five','six','seven','eight','nine'",
+        "enum_set_values": ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+        "print_type": "enum('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine')",
+        "binary": false,
+        "unsigned": false,
+        "zerofill": false,
+        "attribute": " ",
+        "can_contain_collation": true,
+        "displayed_type": "<abbr title=\"enum(&#039;one&#039;, &#039;two&#039;, &#039;three&#039;, &#039;four&#039;, &#039;five&#039;, &#039;six&#039;, &#039;seven&#039;, &#039;eight&#039;, &#039;nine&#039;)\">enum('one', 'two', '...</abbr>"
+      },
+      "varchar(255) character set utf8mb4 collate utf8mb4_unicode_ci": {"type": "varchar", "spec_in_brackets": "255", "enum_set_values": [], "print_type": "varchar(255) character set utf8mb4 collate utf8mb4_unicode_ci", "binary": false, "unsigned": false, "zerofill": false, "attribute": " ", "can_contain_collation": true, "displayed_type": "<abbr title=\"varchar(255) character set utf8mb4 collate utf8mb4_unicode_ci\">varchar(255) charact...</abbr>"},
+      "enum('<b>','\"x\"')": {
+        "type": "enum",
+        "spec_in_brackets": "'<b>','\"x\"'",
+        "enum_set_values": ["<b>", "\"x\""],
+        "print_type": "enum('<b>', '\"x\"')",
+        "binary": false,
+        "unsigned": false,
+        "zerofill": false,
+        "attribute": " ",
+        "can_contain_collation": true,
+        "displayed_type": "enum('&lt;b&gt;', '&quot;x&quot;')"
+      }
+    }
+  },
+  "parseEnumSetValues": [
+    [
+      "enum('a','b')",
+      ["a", "b"],
+      ["a", "b"]
+    ],
+    [
+      "set('a','b','c')",
+      ["a", "b", "c"],
+      ["a", "b", "c"]
+    ],
+    [
+      "enum('a,b','c')",
+      ["a,b", "c"],
+      ["a,b", "c"]
+    ],
+    [
+      "enum('it''s','b')",
+      ["it's", "b"],
+      ["it&#039;s", "b"]
+    ],
+    [
+      "enum('a\\'b')",
+      ["a\\'b"],
+      ["a\\&#039;b"]
+    ],
+    [
+      "enum('back\\\\slash','x')",
+      ["back\\slash", "x"],
+      ["back\\slash", "x"]
+    ],
+    [
+      "enum('<script>','&amp;')",
+      ["<script>", "&amp;"],
+      ["&lt;script&gt;", "&amp;amp;"]
+    ],
+    [
+      "enum('')",
+      [""],
+      [""]
+    ],
+    [
+      "enum('a','')",
+      ["a", ""],
+      ["a", ""]
+    ],
+    [
+      "set('a', 'b')",
+      ["a", "b"],
+      ["a", "b"]
+    ],
+    [
+      "enum('x\"y')",
+      ["x\"y"],
+      ["x&quot;y"]
+    ],
+    [
+      "ENUM('1','2','3')",
+      ["1", "2", "3"],
+      ["1", "2", "3"]
+    ]
+  ],
+  "printableBitValue": [
+    ["0", 1, "0"],
+    ["1", 1, "1"],
+    ["5", 4, "0101"],
+    ["5", 8, "00000101"],
+    ["255", 8, "11111111"],
+    ["256", 8, "100000000"],
+    ["1024", 12, "010000000000"],
+    ["9223372036854775807", 64, "0111111111111111111111111111111111111111111111111111111111111111"],
+    ["-1", 64, "1111111111111111111111111111111111111111111111111111111111111111"],
+    ["7", 2, "111"],
+    ["3", 0, "11"]
+  ],
+  "convertBitDefaultValue": [
+    ["b'010'", "010"],
+    ["b'0'", "0"],
+    ["b''", ""],
+    ["b'", ""],
+    ["b'101", "101"],
+    ["0101", "0101"],
+    ["B'01'", "B'01'"],
+    ["b&#039;01&#039;", "01"],
+    [null, ""],
+    ["", ""],
+    ["b'12'", "12"],
+    ["b'1'x", "b'1'x"]
+  ],
+  "unQuote": [
+    ["'abc'", null, "abc"],
+    ["'abc'", "'", "abc"],
+    ["'abc'", "\"", "'abc'"],
+    ["\"abc\"", null, "abc"],
+    ["\"abc\"", "'", "\"abc\""],
+    ["\"abc\"", "\"", "abc"],
+    ["`abc`", null, "abc"],
+    ["`abc`", "'", "`abc`"],
+    ["`abc`", "\"", "`abc`"],
+    ["'ab''c'", null, "ab'c"],
+    ["'ab''c'", "'", "ab'c"],
+    ["'ab''c'", "\"", "'ab''c'"],
+    ["\"a\"\"b\"", null, "a\"b"],
+    ["\"a\"\"b\"", "'", "\"a\"\"b\""],
+    ["\"a\"\"b\"", "\"", "a\"b"],
+    ["`a``b`", null, "a`b"],
+    ["`a``b`", "'", "`a``b`"],
+    ["`a``b`", "\"", "`a``b`"],
+    ["abc", null, "abc"],
+    ["abc", "'", "abc"],
+    ["abc", "\"", "abc"],
+    ["'abc", null, "'abc"],
+    ["'abc", "'", "'abc"],
+    ["'abc", "\"", "'abc"],
+    ["'", null, ""],
+    ["'", "'", ""],
+    ["'", "\"", "'"],
+    ["''", null, ""],
+    ["''", "'", ""],
+    ["''", "\"", "''"],
+    ["'é'", null, "é"],
+    ["'é'", "'", "é"],
+    ["'é'", "\"", "'é'"]
+  ],
+  "unquoteDefaultValue": [
+    ["'abc'", "abc"],
+    ["'it''s'", "it's"],
+    ["'it\\'s'", "it's"],
+    ["'back\\\\slash'", "back\\slash"],
+    ["abc", "abc"],
+    ["NULL", "NULL"],
+    ["'0'", "0"],
+    ["''", ""],
+    ["current_timestamp()", "current_timestamp()"],
+    ["'", ""]
+  ],
+  "getCharsetQueryPart": [
+    ["utf8mb4_general_ci", false, " CHARSET=utf8mb4 COLLATE utf8mb4_general_ci"],
+    ["utf8mb4_general_ci", true, " CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"],
+    ["utf8mb4", false, " CHARSET=utf8mb4"],
+    ["utf8mb4", true, " CHARACTER SET utf8mb4"],
+    ["latin1_swedish_ci", false, " CHARSET=latin1 COLLATE latin1_swedish_ci"],
+    ["latin1_swedish_ci", true, " CHARACTER SET latin1 COLLATE latin1_swedish_ci"],
+    ["binary", false, " CHARSET=binary"],
+    ["binary", true, " CHARACTER SET binary"],
+    ["utf8mb4_0900_ai_ci", false, " CHARSET=utf8mb4 COLLATE utf8mb4_0900_ai_ci"],
+    ["utf8mb4_0900_ai_ci", true, " CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci"],
+    ["armscii8", false, " CHARSET=armscii8"],
+    ["armscii8", true, " CHARACTER SET armscii8"]
+  ],
+  "addMicroseconds": [
+    ["", ""],
+    ["current_timestamp()", "current_timestamp()"],
+    ["CURRENT_TIMESTAMP(6)", "CURRENT_TIMESTAMP(6)"],
+    ["current_timestamp", "current_timestamp"],
+    ["12:00:00", "12:00:00.000000"],
+    ["2024-01-01 10:00:00.5", "2024-01-01 10:00:00.500000"],
+    ["10:00:00.1234567", "10:00:00.123456"],
+    ["2024-01-01 10:00:00.123456", "2024-01-01 10:00:00.123456"],
+    ["1.", "1.000000"]
+  ]
+}

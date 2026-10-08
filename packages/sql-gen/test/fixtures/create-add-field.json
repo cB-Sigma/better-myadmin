@@ -1,0 +1,951 @@
+{
+  "_generated": {"by": "generate-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "phpunitExpected": {
+    "partitions": ["", " PARTITION BY HASH (EXPR()) PARTITIONS 2", " PARTITION BY LIST (EXPR2()) PARTITIONS 2 ( PARTITION p0,  PARTITION p1)", " PARTITION BY LIST (EXPR2()) PARTITIONS 2 SUBPARTITION BY HASH (EXPR1()) SUBPARTITIONS 2 ( PARTITION p0,  PARTITION p1,  PARTITION p2 VALUES <value type> (<value>))", " PARTITION BY LIST (EXPR2()) PARTITIONS 2 SUBPARTITION BY HASH (EXPR1()) SUBPARTITIONS 2 ( PARTITION p0 ENGINE = MRG_MyISAM COMMENT = 'Partition zero' MAX_ROWS = 2048 MIN_ROWS = 25,  PARTITION p1 VALUES LESS THAN MAXVALUE,  PARTITION p2 ( SUBPARTITION p2_s1 DATA DIRECTORY = 'datadir' INDEX_DIRECTORY = 'indexdir' TABLESPACE = space1 NODEGROUP = ngroup1))"],
+    "create": ["CREATE TABLE `db`.`table` ();", "CREATE TABLE `db`.`table` () ENGINE = dummy CHARSET=armscii8 COMMENT = 'my \\'table';", "CREATE TABLE `db`.`table` () CHARSET=armscii8 COMMENT = 'my \\'table';"],
+    "alter": ["ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`;", "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`, ALGORITHM=INPLACE, LOCK=NONE;", "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`, ADD UNIQUE `un1` (`dd`(12), `dd`), ADD UNIQUE `un3` (`dd`(12)) USING BTREE COMMENT 'Unique 3', ADD UNIQUE `un3.1` (`dd`(12)) WITH PARSER Parser 1 COMMENT 'Unique 3.1', ADD UNIQUE `un2` (`dd`(12)) KEY_BLOCK_SIZE = 32 USING BTREE COMMENT 'Unique 2', ALGORITHM=INPLACE, LOCK=NONE;", "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`;"]
+  },
+  "partitions": [
+    {"label": "phpunit #0", "post": [], "sql": ""},
+    {
+      "label": "phpunit #1",
+      "post": {"partition_by": "HASH", "partition_expr": "EXPR()", "partition_count": "2"},
+      "sql": " PARTITION BY HASH (EXPR()) PARTITIONS 2"
+    },
+    {
+      "label": "phpunit #2",
+      "post": {
+        "partition_by": "LIST",
+        "partition_count": "2",
+        "subpartition_by": "HASH",
+        "partition_expr": "EXPR2()",
+        "partitions": [
+          {"name": "p0", "value_type": "", "value": "", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""},
+          {"name": "p1", "value_type": "", "value": "", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""}
+        ]
+      },
+      "sql": " PARTITION BY LIST (EXPR2()) PARTITIONS 2 ( PARTITION p0,  PARTITION p1)"
+    },
+    {
+      "label": "phpunit #3",
+      "post": {
+        "partition_by": "LIST",
+        "partition_count": "2",
+        "subpartition_by": "HASH",
+        "subpartition_expr": "EXPR1()",
+        "subpartition_count": "2",
+        "partition_expr": "EXPR2()",
+        "partitions": [
+          {"name": "p0", "value_type": "", "value": "", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""},
+          {"name": "p1", "value_type": "", "value": "", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""},
+          {"name": "p2", "value_type": "<value type>", "value": "<value>", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""}
+        ]
+      },
+      "sql": " PARTITION BY LIST (EXPR2()) PARTITIONS 2 SUBPARTITION BY HASH (EXPR1()) SUBPARTITIONS 2 ( PARTITION p0,  PARTITION p1,  PARTITION p2 VALUES <value type> (<value>))"
+    },
+    {
+      "label": "phpunit #4",
+      "post": {
+        "partition_by": "LIST",
+        "subpartition_by": "HASH",
+        "subpartition_expr": "EXPR1()",
+        "subpartition_count": "2",
+        "partition_expr": "EXPR2()",
+        "partition_count": "2",
+        "partitions": [
+          {"name": "p0", "value_type": "", "value": "", "engine": "MRG_MyISAM", "comment": "Partition zero", "data_directory": "", "index_directory": "", "max_rows": "2048", "min_rows": "25", "tablespace": "", "node_group": ""},
+          {"name": "p1", "value_type": "LESS THAN MAXVALUE", "value": "", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""},
+          {
+            "name": "p2",
+            "value_type": "",
+            "value": "",
+            "engine": "",
+            "comment": "",
+            "data_directory": "",
+            "index_directory": "",
+            "max_rows": "",
+            "min_rows": "",
+            "tablespace": "",
+            "node_group": "",
+            "subpartitions": [
+              {"name": "p2_s1", "value_type": "", "value": "1", "engine": "", "comment": "", "data_directory": "datadir", "index_directory": "indexdir", "max_rows": "", "min_rows": "", "tablespace": "space1", "node_group": "ngroup1"}
+            ]
+          }
+        ]
+      },
+      "sql": " PARTITION BY LIST (EXPR2()) PARTITIONS 2 SUBPARTITION BY HASH (EXPR1()) SUBPARTITIONS 2 ( PARTITION p0 ENGINE = MRG_MyISAM COMMENT = 'Partition zero' MAX_ROWS = 2048 MIN_ROWS = 25,  PARTITION p1 VALUES LESS THAN MAXVALUE,  PARTITION p2 ( SUBPARTITION p2_s1 DATA DIRECTORY = 'datadir' INDEX_DIRECTORY = 'indexdir' TABLESPACE = space1 NODEGROUP = ngroup1))"
+    },
+    {
+      "label": "extra #0",
+      "post": {"partition_by": "RANGE", "partition_expr": "YEAR(d)", "partition_count": "1"},
+      "sql": ""
+    },
+    {
+      "label": "extra #1",
+      "post": {"partition_by": "RANGE", "partition_expr": "YEAR(d)", "partition_count": "abc"},
+      "sql": " PARTITION BY RANGE (YEAR(d)) PARTITIONS abc"
+    },
+    {
+      "label": "extra #2",
+      "post": {"partition_by": "KEY", "partition_expr": "id", "partition_count": "3", "subpartition_by": "HASH", "subpartition_expr": "id", "subpartition_count": "0"},
+      "sql": " PARTITION BY KEY (id) PARTITIONS 3"
+    },
+    {
+      "label": "extra #3",
+      "post": {
+        "partition_by": "RANGE",
+        "partition_expr": "id",
+        "partition_count": "2",
+        "partitions": [
+          {"name": "p0", "value_type": "LESS THAN", "value": "10", "engine": "InnoDB", "comment": "it's", "data_directory": "", "index_directory": "", "max_rows": "0", "min_rows": "", "tablespace": "", "node_group": ""},
+          {"name": "p1", "value_type": "LESS THAN MAXVALUE", "value": "99", "engine": "", "comment": "", "data_directory": "/d", "index_directory": "/i", "max_rows": "5", "min_rows": "1", "tablespace": "ts", "node_group": "0", "subpartitions": []}
+        ]
+      },
+      "sql": " PARTITION BY RANGE (id) PARTITIONS 2 ( PARTITION p0 VALUES LESS THAN (10) ENGINE = InnoDB COMMENT = 'it's',  PARTITION p1 VALUES LESS THAN MAXVALUE DATA DIRECTORY = '/d' INDEX_DIRECTORY = '/i' MAX_ROWS = 5 MIN_ROWS = 1 TABLESPACE = ts)"
+    },
+    {
+      "label": "extra #4",
+      "post": {
+        "partition_by": "LIST",
+        "partition_expr": "id",
+        "partition_count": "1",
+        "partitions": [
+          {
+            "name": "p0",
+            "value_type": "IN",
+            "value": "1,2",
+            "subpartitions": [
+              {"name": "s0", "engine": "MyISAM"},
+              {"name": "s1", "comment": "c"}
+            ]
+          }
+        ]
+      },
+      "sql": " ( PARTITION p0 VALUES IN (1,2) ( SUBPARTITION s0 ENGINE = MyISAM,  SUBPARTITION s1 COMMENT = 'c'))"
+    }
+  ],
+  "create": [
+    {
+      "label": "phpunit #0",
+      "server": {"vendor": "mysql", "version": 55000},
+      "db": "db",
+      "table": "table",
+      "post": {"field_name": [], "primary_indexes": "{}", "indexes": "{}", "unique_indexes": "{}", "fulltext_indexes": "{}", "spatial_indexes": "{}"},
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`table` ();"
+    },
+    {
+      "label": "phpunit #1",
+      "server": {"vendor": "mysql", "version": 55000},
+      "db": "db",
+      "table": "table",
+      "post": {"field_name": [], "primary_indexes": "{}", "indexes": "{}", "unique_indexes": "{}", "fulltext_indexes": "{}", "spatial_indexes": "{}", "tbl_storage_engine": "dummy", "tbl_collation": "armscii8", "connection": "aaaa", "comment": "my 'table"},
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`table` () ENGINE = dummy CHARSET=armscii8 COMMENT = 'my \\'table';"
+    },
+    {
+      "label": "phpunit #2",
+      "server": {"vendor": "mysql", "version": 55000},
+      "db": "db",
+      "table": "table",
+      "post": {"field_name": [], "primary_indexes": "{}", "indexes": "{}", "unique_indexes": "{}", "fulltext_indexes": "{}", "spatial_indexes": "{}", "tbl_storage_engine": "Inno'DB", "tbl_collation": "armscii8", "connection": "aaaa", "comment": "my 'table"},
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`table` () CHARSET=armscii8 COMMENT = 'my \\'table';"
+    },
+    {
+      "label": "rich table",
+      "server": {"vendor": "mysql", "version": 80400},
+      "db": "shop",
+      "table": " orders ",
+      "post": {
+        "field_name": ["id", "name ", "", "price", "created", "tags", "geo", "flag"],
+        "field_type": ["INT", "VARCHAR", "INT", "DECIMAL", "TIMESTAMP", "SET", "POINT", "BIT"],
+        "field_length": ["11", "100", "", "10,2", "", "'a','b'", "", "1"],
+        "field_attribute": ["UNSIGNED", "", "", "", "on update CURRENT_TIMESTAMP", "", "", ""],
+        "field_collation": ["", "utf8mb4_unicode_ci", "", "", "", "latin1_swedish_ci", "", ""],
+        "field_null": {"1": "YES", "5": "YES"},
+        "field_default_type": ["NONE", "USER_DEFINED", "NONE", "USER_DEFINED", "CURRENT_TIMESTAMP", "NULL", "NONE", "USER_DEFINED"],
+        "field_default_value": ["", "it's", "", "0.00", "", "", "", "1"],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_comments": ["", "the name", "", "", "", "", "", ""],
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]",
+        "unique_indexes": "[{\"Key_name\":\"uq_name\",\"Index_comment\":\"uniq'\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"8\",\"Parser\":\"\",\"Index_type\":\"HASH\",\"columns\":[{\"col_index\":\"1\",\"size\":\"10\"},{\"col_index\":3,\"size\":\"0\"}]}]",
+        "indexes": "[{\"Key_name\":\"\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"0\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"4\",\"size\":\"\"}]},{\"Key_name\":\"idx`2\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"abc\",\"Parser\":\"\",\"Index_type\":\"RTREE\",\"columns\":[{\"col_index\":\"3\",\"size\":\"\"}]}]",
+        "fulltext_indexes": "[{\"Key_name\":\"ft\",\"Index_comment\":\"\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"ngram\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"1\",\"size\":\"\"}]}]",
+        "spatial_indexes": "[{\"Key_name\":\"sp\",\"Index_comment\":\"geo\",\"Index_choice\":\"SPATIAL\",\"Key_block_size\":\"\",\"Parser\":\"x\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"6\",\"size\":\"\"}]}]",
+        "tbl_storage_engine": "dummy",
+        "tbl_collation": "utf8mb4_unicode_ci",
+        "comment": "Bob's orders",
+        "partition_by": "HASH",
+        "partition_expr": "id",
+        "partition_count": "4"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `shop`.`orders` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'it\\'s' COMMENT 'the name' , `price` DECIMAL(10,2) NOT NULL DEFAULT '0.00' , `created` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `tags` SET('a','b') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL , `geo` POINT NOT NULL , `flag` BIT(1) NOT NULL DEFAULT b'1' , PRIMARY KEY (`id`), INDEX (`created`) USING BTREE, INDEX `idx``2` (`price`) KEY_BLOCK_SIZE = 0, UNIQUE `uq_name` (`name`(10), `price`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'uniq\\'', FULLTEXT `ft` (`name`) WITH PARSER ngram, SPATIAL `sp` (`geo`) COMMENT 'geo') ENGINE = dummy CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT = 'Bob\\'s orders' PARTITION BY HASH (id) PARTITIONS 4;"
+    },
+    {
+      "label": "federated",
+      "server": {"vendor": "mysql", "version": 80400},
+      "db": "db",
+      "table": "fed",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "FEDERATED",
+        "connection": "mysql://u:p@h/db/t'x"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`fed` (`a` INT NOT NULL ) ENGINE = FEDERATED CONNECTION = 'mysql://u:p@h/db/t\\'x';"
+    },
+    {
+      "label": "default engine and collation only charset",
+      "server": {"vendor": "mysql", "version": 80400},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "Default",
+        "tbl_collation": "utf8mb4",
+        "comment": "0"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NOT NULL ) CHARSET=utf8mb4;"
+    },
+    {
+      "label": "unknown engine skipped, PBMS valid",
+      "server": {"vendor": "mysql", "version": 80400},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "PBMS"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NOT NULL ) ENGINE = PBMS;"
+    },
+    {
+      "label": "only empty names",
+      "server": {"vendor": "mysql", "version": 80400},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["", ""],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "indexes": "[{\"Key_name\":\"k\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (INDEX `k` ());"
+    },
+    {
+      "label": "virtual column",
+      "server": {"vendor": "mysql", "version": 80400},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "VARCHAR"],
+        "field_length": ["", "20"],
+        "field_attribute": ["", ""],
+        "field_collation": ["", "utf8mb4_bin"],
+        "field_null": ["YES", "NO"],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_extra": ["", "AUTO_INCREMENT"],
+        "field_virtuality": ["", "STORED"],
+        "field_expression": ["", "CONCAT(a)"]
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NULL , `b` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin AS (CONCAT(a)) STORED NOT NULL  );"
+    },
+    {
+      "label": "rich table",
+      "server": {"vendor": "mysql", "version": 50500},
+      "db": "shop",
+      "table": " orders ",
+      "post": {
+        "field_name": ["id", "name ", "", "price", "created", "tags", "geo", "flag"],
+        "field_type": ["INT", "VARCHAR", "INT", "DECIMAL", "TIMESTAMP", "SET", "POINT", "BIT"],
+        "field_length": ["11", "100", "", "10,2", "", "'a','b'", "", "1"],
+        "field_attribute": ["UNSIGNED", "", "", "", "on update CURRENT_TIMESTAMP", "", "", ""],
+        "field_collation": ["", "utf8mb4_unicode_ci", "", "", "", "latin1_swedish_ci", "", ""],
+        "field_null": {"1": "YES", "5": "YES"},
+        "field_default_type": ["NONE", "USER_DEFINED", "NONE", "USER_DEFINED", "CURRENT_TIMESTAMP", "NULL", "NONE", "USER_DEFINED"],
+        "field_default_value": ["", "it's", "", "0.00", "", "", "", "1"],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_comments": ["", "the name", "", "", "", "", "", ""],
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]",
+        "unique_indexes": "[{\"Key_name\":\"uq_name\",\"Index_comment\":\"uniq'\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"8\",\"Parser\":\"\",\"Index_type\":\"HASH\",\"columns\":[{\"col_index\":\"1\",\"size\":\"10\"},{\"col_index\":3,\"size\":\"0\"}]}]",
+        "indexes": "[{\"Key_name\":\"\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"0\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"4\",\"size\":\"\"}]},{\"Key_name\":\"idx`2\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"abc\",\"Parser\":\"\",\"Index_type\":\"RTREE\",\"columns\":[{\"col_index\":\"3\",\"size\":\"\"}]}]",
+        "fulltext_indexes": "[{\"Key_name\":\"ft\",\"Index_comment\":\"\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"ngram\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"1\",\"size\":\"\"}]}]",
+        "spatial_indexes": "[{\"Key_name\":\"sp\",\"Index_comment\":\"geo\",\"Index_choice\":\"SPATIAL\",\"Key_block_size\":\"\",\"Parser\":\"x\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"6\",\"size\":\"\"}]}]",
+        "tbl_storage_engine": "dummy",
+        "tbl_collation": "utf8mb4_unicode_ci",
+        "comment": "Bob's orders",
+        "partition_by": "HASH",
+        "partition_expr": "id",
+        "partition_count": "4"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `shop`.`orders` (`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'it\\'s' COMMENT 'the name' , `price` DECIMAL(10,2) NOT NULL DEFAULT '0.00' , `created` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `tags` SET('a','b') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL , `geo` POINT NOT NULL , `flag` BIT(1) NOT NULL DEFAULT b'1' , PRIMARY KEY (`id`), INDEX (`created`) USING BTREE, INDEX `idx``2` (`price`) KEY_BLOCK_SIZE = 0, UNIQUE `uq_name` (`name`(10), `price`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'uniq\\'', FULLTEXT `ft` (`name`) WITH PARSER ngram, SPATIAL `sp` (`geo`) COMMENT 'geo') ENGINE = dummy CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT = 'Bob\\'s orders' PARTITION BY HASH (id) PARTITIONS 4;"
+    },
+    {
+      "label": "federated",
+      "server": {"vendor": "mysql", "version": 50500},
+      "db": "db",
+      "table": "fed",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "FEDERATED",
+        "connection": "mysql://u:p@h/db/t'x"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`fed` (`a` INT NOT NULL ) ENGINE = FEDERATED CONNECTION = 'mysql://u:p@h/db/t\\'x';"
+    },
+    {
+      "label": "default engine and collation only charset",
+      "server": {"vendor": "mysql", "version": 50500},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "Default",
+        "tbl_collation": "utf8mb4",
+        "comment": "0"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NOT NULL ) CHARSET=utf8mb4;"
+    },
+    {
+      "label": "unknown engine skipped, PBMS valid",
+      "server": {"vendor": "mysql", "version": 50500},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "PBMS"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NOT NULL ) ENGINE = PBMS;"
+    },
+    {
+      "label": "only empty names",
+      "server": {"vendor": "mysql", "version": 50500},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["", ""],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "indexes": "[{\"Key_name\":\"k\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (INDEX `k` ());"
+    },
+    {
+      "label": "virtual column",
+      "server": {"vendor": "mysql", "version": 50500},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "VARCHAR"],
+        "field_length": ["", "20"],
+        "field_attribute": ["", ""],
+        "field_collation": ["", "utf8mb4_bin"],
+        "field_null": ["YES", "NO"],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_extra": ["", "AUTO_INCREMENT"],
+        "field_virtuality": ["", "STORED"],
+        "field_expression": ["", "CONCAT(a)"]
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NULL , `b` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin AS (CONCAT(a)) STORED NOT NULL  );"
+    },
+    {
+      "label": "rich table",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "db": "shop",
+      "table": " orders ",
+      "post": {
+        "field_name": ["id", "name ", "", "price", "created", "tags", "geo", "flag"],
+        "field_type": ["INT", "VARCHAR", "INT", "DECIMAL", "TIMESTAMP", "SET", "POINT", "BIT"],
+        "field_length": ["11", "100", "", "10,2", "", "'a','b'", "", "1"],
+        "field_attribute": ["UNSIGNED", "", "", "", "on update CURRENT_TIMESTAMP", "", "", ""],
+        "field_collation": ["", "utf8mb4_unicode_ci", "", "", "", "latin1_swedish_ci", "", ""],
+        "field_null": {"1": "YES", "5": "YES"},
+        "field_default_type": ["NONE", "USER_DEFINED", "NONE", "USER_DEFINED", "CURRENT_TIMESTAMP", "NULL", "NONE", "USER_DEFINED"],
+        "field_default_value": ["", "it's", "", "0.00", "", "", "", "1"],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_comments": ["", "the name", "", "", "", "", "", ""],
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]",
+        "unique_indexes": "[{\"Key_name\":\"uq_name\",\"Index_comment\":\"uniq'\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"8\",\"Parser\":\"\",\"Index_type\":\"HASH\",\"columns\":[{\"col_index\":\"1\",\"size\":\"10\"},{\"col_index\":3,\"size\":\"0\"}]}]",
+        "indexes": "[{\"Key_name\":\"\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"0\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"4\",\"size\":\"\"}]},{\"Key_name\":\"idx`2\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"abc\",\"Parser\":\"\",\"Index_type\":\"RTREE\",\"columns\":[{\"col_index\":\"3\",\"size\":\"\"}]}]",
+        "fulltext_indexes": "[{\"Key_name\":\"ft\",\"Index_comment\":\"\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"ngram\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"1\",\"size\":\"\"}]}]",
+        "spatial_indexes": "[{\"Key_name\":\"sp\",\"Index_comment\":\"geo\",\"Index_choice\":\"SPATIAL\",\"Key_block_size\":\"\",\"Parser\":\"x\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"6\",\"size\":\"\"}]}]",
+        "tbl_storage_engine": "dummy",
+        "tbl_collation": "utf8mb4_unicode_ci",
+        "comment": "Bob's orders",
+        "partition_by": "HASH",
+        "partition_expr": "id",
+        "partition_count": "4"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `shop`.`orders` (`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'it\\'s' COMMENT 'the name' , `price` DECIMAL(10,2) NOT NULL DEFAULT '0.00' , `created` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `tags` SET('a','b') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL , `geo` POINT NOT NULL , `flag` BIT(1) NOT NULL DEFAULT b'1' , PRIMARY KEY (`id`), INDEX (`created`) USING BTREE, INDEX `idx``2` (`price`) KEY_BLOCK_SIZE = 0, UNIQUE `uq_name` (`name`(10), `price`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'uniq\\'', FULLTEXT `ft` (`name`) WITH PARSER ngram, SPATIAL `sp` (`geo`) COMMENT 'geo') ENGINE = dummy CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT = 'Bob\\'s orders' PARTITION BY HASH (id) PARTITIONS 4;"
+    },
+    {
+      "label": "federated",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "db": "db",
+      "table": "fed",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "FEDERATED",
+        "connection": "mysql://u:p@h/db/t'x"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`fed` (`a` INT NOT NULL ) ENGINE = FEDERATED CONNECTION = 'mysql://u:p@h/db/t\\'x';"
+    },
+    {
+      "label": "default engine and collation only charset",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "Default",
+        "tbl_collation": "utf8mb4",
+        "comment": "0"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NOT NULL ) CHARSET=utf8mb4;"
+    },
+    {
+      "label": "unknown engine skipped, PBMS valid",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "tbl_storage_engine": "PBMS"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NOT NULL ) ENGINE = PBMS;"
+    },
+    {
+      "label": "only empty names",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["", ""],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "indexes": "[{\"Key_name\":\"k\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]"
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (INDEX `k` ());"
+    },
+    {
+      "label": "virtual column",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "db": "db",
+      "table": "t",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "VARCHAR"],
+        "field_length": ["", "20"],
+        "field_attribute": ["", ""],
+        "field_collation": ["", "utf8mb4_bin"],
+        "field_null": ["YES", "NO"],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_extra": ["", "AUTO_INCREMENT"],
+        "field_virtuality": ["", "STORED"],
+        "field_expression": ["", "CONCAT(a)"]
+      },
+      "storageEngines": ["dummy", "dummy2", "FEDERATED", "Pbxt"],
+      "sql": "CREATE TABLE `db`.`t` (`a` INT NULL , `b` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin AS (CONCAT(a)) STORED );"
+    }
+  ],
+  "alter": [
+    {
+      "label": "phpunit #0",
+      "server": {"vendor": "mysql", "version": 55000},
+      "table": "my_table",
+      "post": {
+        "db": "2fa",
+        "field_where": "after",
+        "after_field": "d",
+        "table": "aes",
+        "orig_num_fields": "1",
+        "orig_field_where": "after",
+        "orig_after_field": "d",
+        "primary_indexes": "[]",
+        "unique_indexes": "[]",
+        "indexes": "[]",
+        "fulltext_indexes": "[]",
+        "spatial_indexes": "[]",
+        "field_name": ["dd"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_collation": [""],
+        "field_attribute": [""],
+        "field_key": ["none_0"],
+        "field_comments": [""],
+        "field_virtuality": [""],
+        "field_expression": [""],
+        "field_move_to": [""],
+        "field_mimetype": [""],
+        "field_transformation": [""],
+        "field_transformation_options": [""],
+        "field_input_transformation": [""],
+        "field_input_transformation_options": [""],
+        "do_save_data": "1",
+        "preview_sql": "1",
+        "ajax_request": "1"
+      },
+      "sql": "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`;"
+    },
+    {
+      "label": "phpunit #1",
+      "server": {"vendor": "mysql", "version": 55000},
+      "table": "my_table",
+      "post": {
+        "db": "2fa",
+        "field_where": "after",
+        "after_field": "d",
+        "table": "aes",
+        "orig_num_fields": "1",
+        "orig_field_where": "after",
+        "orig_after_field": "d",
+        "primary_indexes": "[]",
+        "unique_indexes": "[]",
+        "indexes": "[]",
+        "fulltext_indexes": "[]",
+        "spatial_indexes": "[]",
+        "field_name": ["dd"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_collation": [""],
+        "field_attribute": [""],
+        "field_key": ["none_0"],
+        "field_comments": [""],
+        "field_virtuality": [""],
+        "field_expression": [""],
+        "field_move_to": [""],
+        "field_mimetype": [""],
+        "field_transformation": [""],
+        "field_transformation_options": [""],
+        "field_input_transformation": [""],
+        "field_input_transformation_options": [""],
+        "do_save_data": "1",
+        "preview_sql": "1",
+        "ajax_request": "1",
+        "online_transaction": "ONLINE_TRANSACTION_ENABLED"
+      },
+      "sql": "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`, ALGORITHM=INPLACE, LOCK=NONE;"
+    },
+    {
+      "label": "phpunit #2",
+      "server": {"vendor": "mysql", "version": 55000},
+      "table": "my_table",
+      "post": {
+        "db": "2fa",
+        "field_where": "after",
+        "after_field": "d",
+        "table": "aes",
+        "orig_num_fields": "1",
+        "orig_field_where": "after",
+        "orig_after_field": "d",
+        "primary_indexes": "[]",
+        "unique_indexes": "[{\"Key_name\":\"un1\",\"Index_comment\":\"\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"12\"},{\"col_index\":\"0\",\"size\":\"\"}]},{\"Key_name\":\"un3\",\"Index_comment\":\"Unique 3\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"\",\"Parser\":\"Parser 1\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"0\",\"size\":\"12\"}]},{\"Key_name\":\"un3.1\",\"Index_comment\":\"Unique 3.1\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"Parser 1\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"0\",\"size\":\"12\"}]},{\"Key_name\":\"un2\",\"Index_comment\":\"Unique 2\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"32\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"0\",\"size\":\"12\"}]}]",
+        "indexes": "[]",
+        "fulltext_indexes": "[]",
+        "spatial_indexes": "[]",
+        "field_name": ["dd"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_collation": [""],
+        "field_attribute": [""],
+        "field_key": ["none_0"],
+        "field_comments": [""],
+        "field_virtuality": [""],
+        "field_expression": [""],
+        "field_move_to": [""],
+        "field_mimetype": [""],
+        "field_transformation": [""],
+        "field_transformation_options": [""],
+        "field_input_transformation": [""],
+        "field_input_transformation_options": [""],
+        "do_save_data": "1",
+        "preview_sql": "1",
+        "ajax_request": "1",
+        "online_transaction": "ONLINE_TRANSACTION_ENABLED"
+      },
+      "sql": "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`, ADD UNIQUE `un1` (`dd`(12), `dd`), ADD UNIQUE `un3` (`dd`(12)) USING BTREE COMMENT 'Unique 3', ADD UNIQUE `un3.1` (`dd`(12)) WITH PARSER Parser 1 COMMENT 'Unique 3.1', ADD UNIQUE `un2` (`dd`(12)) KEY_BLOCK_SIZE = 32 USING BTREE COMMENT 'Unique 2', ALGORITHM=INPLACE, LOCK=NONE;"
+    },
+    {
+      "label": "phpunit #3",
+      "server": {"vendor": "mysql", "version": 55000},
+      "table": "my_table",
+      "post": {
+        "db": "2fa",
+        "field_where": "after",
+        "after_field": "d",
+        "table": "aes",
+        "orig_num_fields": "1",
+        "orig_field_where": "after",
+        "orig_after_field": "d",
+        "field_name": ["dd"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_collation": [""],
+        "field_attribute": [""],
+        "field_key": ["none_0"],
+        "field_comments": [""],
+        "field_virtuality": [""],
+        "field_expression": [""],
+        "field_move_to": [""],
+        "field_mimetype": [""],
+        "field_transformation": [""],
+        "field_transformation_options": [""],
+        "field_input_transformation": [""],
+        "field_input_transformation_options": [""],
+        "do_save_data": "1",
+        "preview_sql": "1",
+        "ajax_request": "1"
+      },
+      "sql": "ALTER TABLE `my_table` ADD `dd` INT NOT NULL AFTER `d`;"
+    },
+    {
+      "label": "add first + after previous",
+      "server": {"vendor": "mysql", "version": 80400},
+      "table": "t",
+      "post": {
+        "field_name": ["id", "name ", "", "price", "created", "tags", "geo", "flag"],
+        "field_type": ["INT", "VARCHAR", "INT", "DECIMAL", "TIMESTAMP", "SET", "POINT", "BIT"],
+        "field_length": ["11", "100", "", "10,2", "", "'a','b'", "", "1"],
+        "field_attribute": ["UNSIGNED", "", "", "", "on update CURRENT_TIMESTAMP", "", "", ""],
+        "field_collation": ["", "utf8mb4_unicode_ci", "", "", "", "latin1_swedish_ci", "", ""],
+        "field_null": {"1": "YES", "5": "YES"},
+        "field_default_type": ["NONE", "USER_DEFINED", "NONE", "USER_DEFINED", "CURRENT_TIMESTAMP", "NULL", "NONE", "USER_DEFINED"],
+        "field_default_value": ["", "it's", "", "0.00", "", "", "", "1"],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_comments": ["", "the name", "", "", "", "", "", ""],
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]",
+        "unique_indexes": "[{\"Key_name\":\"uq_name\",\"Index_comment\":\"uniq'\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"8\",\"Parser\":\"\",\"Index_type\":\"HASH\",\"columns\":[{\"col_index\":\"1\",\"size\":\"10\"},{\"col_index\":3,\"size\":\"0\"}]}]",
+        "indexes": "[{\"Key_name\":\"\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"0\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"4\",\"size\":\"\"}]},{\"Key_name\":\"idx`2\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"abc\",\"Parser\":\"\",\"Index_type\":\"RTREE\",\"columns\":[{\"col_index\":\"3\",\"size\":\"\"}]}]",
+        "fulltext_indexes": "[{\"Key_name\":\"ft\",\"Index_comment\":\"\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"ngram\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"1\",\"size\":\"\"}]}]",
+        "spatial_indexes": "[{\"Key_name\":\"sp\",\"Index_comment\":\"geo\",\"Index_choice\":\"SPATIAL\",\"Key_block_size\":\"\",\"Parser\":\"x\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"6\",\"size\":\"\"}]}]",
+        "field_where": "first"
+      },
+      "sql": "ALTER TABLE `t` ADD `id` INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'it\\'s' COMMENT 'the name' AFTER `id`, ADD `price` DECIMAL(10,2) NOT NULL DEFAULT '0.00' AFTER `name `, ADD `created` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `price`, ADD `tags` SET('a','b') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL AFTER `created`, ADD `geo` POINT NOT NULL AFTER `tags`, ADD `flag` BIT(1) NOT NULL DEFAULT b'1' AFTER `geo`, ADD PRIMARY KEY (`id`), ADD INDEX (`created`) USING BTREE, ADD INDEX `idx``2` (`price`) KEY_BLOCK_SIZE = 0, ADD UNIQUE `uq_name` (`name`(10), `price`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'uniq\\'', ADD FULLTEXT `ft` (`name`) WITH PARSER ngram, ADD SPATIAL `sp` (`geo`) COMMENT 'geo';"
+    },
+    {
+      "label": "add after field",
+      "server": {"vendor": "mysql", "version": 80400},
+      "table": "t`x",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_where": "after",
+        "after_field": "z`z"
+      },
+      "sql": "ALTER TABLE `t``x` ADD `a` INT NOT NULL AFTER `z``z`, ADD `b` INT NOT NULL AFTER `a`;"
+    },
+    {
+      "label": "add last",
+      "server": {"vendor": "mysql", "version": 80400},
+      "table": "t",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_where": "last"
+      },
+      "sql": "ALTER TABLE `t` ADD `a` INT NOT NULL , ADD `b` INT NOT NULL ;"
+    },
+    {
+      "label": "add after empty after_field",
+      "server": {"vendor": "mysql", "version": 80400},
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_where": "after",
+        "after_field": "0",
+        "online_transaction": ""
+      },
+      "sql": "ALTER TABLE `t` ADD `a` INT NOT NULL , ALGORITHM=INPLACE, LOCK=NONE;"
+    },
+    {
+      "label": "add with primary",
+      "server": {"vendor": "mysql", "version": 80400},
+      "table": "t",
+      "post": {
+        "field_name": ["id"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_where": "first",
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]"
+      },
+      "sql": "ALTER TABLE `t` ADD `id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);"
+    },
+    {
+      "label": "add first + after previous",
+      "server": {"vendor": "mysql", "version": 50500},
+      "table": "t",
+      "post": {
+        "field_name": ["id", "name ", "", "price", "created", "tags", "geo", "flag"],
+        "field_type": ["INT", "VARCHAR", "INT", "DECIMAL", "TIMESTAMP", "SET", "POINT", "BIT"],
+        "field_length": ["11", "100", "", "10,2", "", "'a','b'", "", "1"],
+        "field_attribute": ["UNSIGNED", "", "", "", "on update CURRENT_TIMESTAMP", "", "", ""],
+        "field_collation": ["", "utf8mb4_unicode_ci", "", "", "", "latin1_swedish_ci", "", ""],
+        "field_null": {"1": "YES", "5": "YES"},
+        "field_default_type": ["NONE", "USER_DEFINED", "NONE", "USER_DEFINED", "CURRENT_TIMESTAMP", "NULL", "NONE", "USER_DEFINED"],
+        "field_default_value": ["", "it's", "", "0.00", "", "", "", "1"],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_comments": ["", "the name", "", "", "", "", "", ""],
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]",
+        "unique_indexes": "[{\"Key_name\":\"uq_name\",\"Index_comment\":\"uniq'\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"8\",\"Parser\":\"\",\"Index_type\":\"HASH\",\"columns\":[{\"col_index\":\"1\",\"size\":\"10\"},{\"col_index\":3,\"size\":\"0\"}]}]",
+        "indexes": "[{\"Key_name\":\"\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"0\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"4\",\"size\":\"\"}]},{\"Key_name\":\"idx`2\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"abc\",\"Parser\":\"\",\"Index_type\":\"RTREE\",\"columns\":[{\"col_index\":\"3\",\"size\":\"\"}]}]",
+        "fulltext_indexes": "[{\"Key_name\":\"ft\",\"Index_comment\":\"\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"ngram\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"1\",\"size\":\"\"}]}]",
+        "spatial_indexes": "[{\"Key_name\":\"sp\",\"Index_comment\":\"geo\",\"Index_choice\":\"SPATIAL\",\"Key_block_size\":\"\",\"Parser\":\"x\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"6\",\"size\":\"\"}]}]",
+        "field_where": "first"
+      },
+      "sql": "ALTER TABLE `t` ADD `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'it\\'s' COMMENT 'the name' AFTER `id`, ADD `price` DECIMAL(10,2) NOT NULL DEFAULT '0.00' AFTER `name `, ADD `created` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `price`, ADD `tags` SET('a','b') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL AFTER `created`, ADD `geo` POINT NOT NULL AFTER `tags`, ADD `flag` BIT(1) NOT NULL DEFAULT b'1' AFTER `geo`, ADD PRIMARY KEY (`id`), ADD INDEX (`created`) USING BTREE, ADD INDEX `idx``2` (`price`) KEY_BLOCK_SIZE = 0, ADD UNIQUE `uq_name` (`name`(10), `price`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'uniq\\'', ADD FULLTEXT `ft` (`name`) WITH PARSER ngram, ADD SPATIAL `sp` (`geo`) COMMENT 'geo';"
+    },
+    {
+      "label": "add after field",
+      "server": {"vendor": "mysql", "version": 50500},
+      "table": "t`x",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_where": "after",
+        "after_field": "z`z"
+      },
+      "sql": "ALTER TABLE `t``x` ADD `a` INT NOT NULL AFTER `z``z`, ADD `b` INT NOT NULL AFTER `a`;"
+    },
+    {
+      "label": "add last",
+      "server": {"vendor": "mysql", "version": 50500},
+      "table": "t",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_where": "last"
+      },
+      "sql": "ALTER TABLE `t` ADD `a` INT NOT NULL , ADD `b` INT NOT NULL ;"
+    },
+    {
+      "label": "add after empty after_field",
+      "server": {"vendor": "mysql", "version": 50500},
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_where": "after",
+        "after_field": "0",
+        "online_transaction": ""
+      },
+      "sql": "ALTER TABLE `t` ADD `a` INT NOT NULL , ALGORITHM=INPLACE, LOCK=NONE;"
+    },
+    {
+      "label": "add with primary",
+      "server": {"vendor": "mysql", "version": 50500},
+      "table": "t",
+      "post": {
+        "field_name": ["id"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_where": "first",
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]"
+      },
+      "sql": "ALTER TABLE `t` ADD `id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);"
+    },
+    {
+      "label": "add first + after previous",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "table": "t",
+      "post": {
+        "field_name": ["id", "name ", "", "price", "created", "tags", "geo", "flag"],
+        "field_type": ["INT", "VARCHAR", "INT", "DECIMAL", "TIMESTAMP", "SET", "POINT", "BIT"],
+        "field_length": ["11", "100", "", "10,2", "", "'a','b'", "", "1"],
+        "field_attribute": ["UNSIGNED", "", "", "", "on update CURRENT_TIMESTAMP", "", "", ""],
+        "field_collation": ["", "utf8mb4_unicode_ci", "", "", "", "latin1_swedish_ci", "", ""],
+        "field_null": {"1": "YES", "5": "YES"},
+        "field_default_type": ["NONE", "USER_DEFINED", "NONE", "USER_DEFINED", "CURRENT_TIMESTAMP", "NULL", "NONE", "USER_DEFINED"],
+        "field_default_value": ["", "it's", "", "0.00", "", "", "", "1"],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_comments": ["", "the name", "", "", "", "", "", ""],
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]",
+        "unique_indexes": "[{\"Key_name\":\"uq_name\",\"Index_comment\":\"uniq'\",\"Index_choice\":\"UNIQUE\",\"Key_block_size\":\"8\",\"Parser\":\"\",\"Index_type\":\"HASH\",\"columns\":[{\"col_index\":\"1\",\"size\":\"10\"},{\"col_index\":3,\"size\":\"0\"}]}]",
+        "indexes": "[{\"Key_name\":\"\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"0\",\"Parser\":\"\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"4\",\"size\":\"\"}]},{\"Key_name\":\"idx`2\",\"Index_comment\":\"\",\"Index_choice\":\"INDEX\",\"Key_block_size\":\"abc\",\"Parser\":\"\",\"Index_type\":\"RTREE\",\"columns\":[{\"col_index\":\"3\",\"size\":\"\"}]}]",
+        "fulltext_indexes": "[{\"Key_name\":\"ft\",\"Index_comment\":\"\",\"Index_choice\":\"FULLTEXT\",\"Key_block_size\":\"\",\"Parser\":\"ngram\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"1\",\"size\":\"\"}]}]",
+        "spatial_indexes": "[{\"Key_name\":\"sp\",\"Index_comment\":\"geo\",\"Index_choice\":\"SPATIAL\",\"Key_block_size\":\"\",\"Parser\":\"x\",\"Index_type\":\"BTREE\",\"columns\":[{\"col_index\":\"6\",\"size\":\"\"}]}]",
+        "field_where": "first"
+      },
+      "sql": "ALTER TABLE `t` ADD `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST, ADD `name` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'it\\'s' COMMENT 'the name' AFTER `id`, ADD `price` DECIMAL(10,2) NOT NULL DEFAULT '0.00' AFTER `name `, ADD `created` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `price`, ADD `tags` SET('a','b') CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL AFTER `created`, ADD `geo` POINT NOT NULL AFTER `tags`, ADD `flag` BIT(1) NOT NULL DEFAULT b'1' AFTER `geo`, ADD PRIMARY KEY (`id`), ADD INDEX (`created`) USING BTREE, ADD INDEX `idx``2` (`price`) KEY_BLOCK_SIZE = 0, ADD UNIQUE `uq_name` (`name`(10), `price`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'uniq\\'', ADD FULLTEXT `ft` (`name`) WITH PARSER ngram, ADD SPATIAL `sp` (`geo`) COMMENT 'geo';"
+    },
+    {
+      "label": "add after field",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "table": "t`x",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_where": "after",
+        "after_field": "z`z"
+      },
+      "sql": "ALTER TABLE `t``x` ADD `a` INT NOT NULL AFTER `z``z`, ADD `b` INT NOT NULL AFTER `a`;"
+    },
+    {
+      "label": "add last",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "table": "t",
+      "post": {
+        "field_name": ["a", "b"],
+        "field_type": ["INT", "INT"],
+        "field_length": ["", ""],
+        "field_attribute": ["", ""],
+        "field_default_type": ["NONE", "NONE"],
+        "field_default_value": ["", ""],
+        "field_where": "last"
+      },
+      "sql": "ALTER TABLE `t` ADD `a` INT NOT NULL , ADD `b` INT NOT NULL ;"
+    },
+    {
+      "label": "add after empty after_field",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "table": "t",
+      "post": {
+        "field_name": ["a"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_where": "after",
+        "after_field": "0",
+        "online_transaction": ""
+      },
+      "sql": "ALTER TABLE `t` ADD `a` INT NOT NULL , ALGORITHM=INPLACE, LOCK=NONE;"
+    },
+    {
+      "label": "add with primary",
+      "server": {"vendor": "mariadb", "version": 110700},
+      "table": "t",
+      "post": {
+        "field_name": ["id"],
+        "field_type": ["INT"],
+        "field_length": [""],
+        "field_attribute": [""],
+        "field_default_type": ["NONE"],
+        "field_default_value": [""],
+        "field_extra": ["AUTO_INCREMENT"],
+        "field_where": "first",
+        "primary_indexes": "[{\"Key_name\":\"PRIMARY\",\"Index_comment\":\"\",\"Index_choice\":\"PRIMARY\",\"Key_block_size\":\"\",\"Parser\":\"\",\"Index_type\":\"\",\"columns\":[{\"col_index\":\"0\",\"size\":\"\"}]}]"
+      },
+      "sql": "ALTER TABLE `t` ADD `id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);"
+    }
+  ]
+}
