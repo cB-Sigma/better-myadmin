@@ -173,7 +173,10 @@ export function emptyRelationParameters(user: string | null = null): RelationPar
 }
 
 /** pma: src/ConfigStorage/RelationParameters.php::fromArray */
-export function relationParametersFromArray(p: RelationParamsArray): RelationParameters {
+export function relationParametersFromArray(
+  input: RelationParamsArray | RelationParametersArray,
+): RelationParameters {
+  const p = input as RelationParamsArray
   const user = typeof p.user === 'string' && p.user !== '' ? p.user : null
   const database = str(p.db)
   if (database === null) return emptyRelationParameters(user)

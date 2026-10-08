@@ -16,6 +16,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/../../mysql-types/scripts/pma-bootstrap.php';
+require __DIR__ . '/recording.php';
 
 use PhpMyAdmin\Bookmarks\Bookmark;
 use PhpMyAdmin\Config;
@@ -157,48 +158,6 @@ foreach (
 // ---------------------------------------------------------------------------------------------
 // Configuration storage discovery against a real server
 // ---------------------------------------------------------------------------------------------
-
-/** DbiMysqli that records what it sends, per connection kind. */
-final class RecordingMysqli extends DbiMysqli
-{
-    /** @var list<array{conn: string, kind: string, sql: string}> */
-    public array $log = [];
-    public bool $recording = false;
-    /** @var array<int, string> spl_object_id(Connection) → 'user'|'control' */
-    public array $names = [];
-
-    private function name(Connection $c): string
-    {
-        return $this->names[spl_object_id($c)] ?? '?';
-    }
-
-    public function selectDb(string|DatabaseName $databaseName, Connection $connection): bool
-    {
-        if ($this->recording) {
-            $this->log[] = ['conn' => $this->name($connection), 'kind' => 'selectDb', 'sql' => (string) $databaseName];
-        }
-
-        return parent::selectDb($databaseName, $connection);
-    }
-
-    public function realQuery(string $query, Connection $connection, bool $unbuffered = false): \PhpMyAdmin\Dbal\MysqliResult|false
-    {
-        if ($this->recording) {
-            $this->log[] = ['conn' => $this->name($connection), 'kind' => 'query', 'sql' => $query];
-        }
-
-        return parent::realQuery($query, $connection, $unbuffered);
-    }
-
-    public function realMultiQuery(Connection $connection, string $query): bool
-    {
-        if ($this->recording) {
-            $this->log[] = ['conn' => $this->name($connection), 'kind' => 'multi', 'sql' => $query];
-        }
-
-        return parent::realMultiQuery($connection, $query);
-    }
-}
 
 $host = (string) (getenv('BMA_MYSQL_HOST') ?: '127.0.0.1');
 $port = (string) (getenv('BMA_MYSQL_PORT') ?: '3306');
@@ -470,7 +429,7 @@ if ($scenarios !== null) {
 }
 
 // shipped data, not a test fixture: the hard-coded relations of information_schema / mysql
-$resources = __DIR__ . '/../resources';
+$resources = __DIR__ . '/../resources/generated';
 file_put_contents(
     $resources . '/internal-relations.json',
     json_encode(

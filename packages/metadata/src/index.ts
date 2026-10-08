@@ -5,7 +5,7 @@
  * relation / display-field / column-info readers. pmadb through the control connection, with a
  * SQLite fallback for the per-user tables.
  */
-import userFormFields from '../resources/user-form-fields.json' with { type: 'json' }
+import userFormFields from '../resources/generated/user-form-fields.json' with { type: 'json' }
 
 export * from './bookmarks.ts'
 export * from './conn.ts'

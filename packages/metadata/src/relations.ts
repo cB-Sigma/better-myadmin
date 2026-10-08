@@ -1,12 +1,14 @@
 import { getTypeClass } from '@bettermyadmin/mysql-types'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
-import internalRelations from '../resources/internal-relations.json' with { type: 'json' }
+import internalRelations from '../resources/generated/internal-relations.json' with { type: 'json' }
 import { type MetaConn, fetchValue } from './conn.ts'
 import type { RelationParameters } from './relation-parameters.ts'
 
 const q = (s: string) => quoteString(s)
 
 export interface InternalRelation {
+  /** present for pma__relation rows (fetchResult keeps the key column), absent for the built-in maps */
+  master_field?: string
   foreign_db: string
   foreign_table: string
   foreign_field: string
@@ -40,6 +42,7 @@ export async function getForeignersInternal(
     if (r !== false) {
       for (const row of r.rows) {
         foreign[row.master_field ?? ''] = {
+          master_field: row.master_field ?? '',
           foreign_db: row.foreign_db ?? '',
           foreign_table: row.foreign_table ?? '',
           foreign_field: row.foreign_field ?? '',

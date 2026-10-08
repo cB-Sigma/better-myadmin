@@ -104,14 +104,23 @@ const s = (v: unknown) => (v === null || v === undefined ? '' : String(v))
 
 /** Opened once per process; every (server, user) pair shares the file. */
 export class LocalMetadataStore {
-  readonly db: DatabaseSync
+  readonly file: string
+  #db: DatabaseSync | null = null
   /** Monotonic clock for rows written within the same second (history purge, uiprefs eviction). */
   #seq = 0
 
   constructor(file: string) {
-    if (file !== ':memory:') mkdirSync(dirname(file), { recursive: true })
-    this.db = new DatabaseSync(file)
-    this.db.exec(SCHEMA)
+    this.file = file
+  }
+
+  /** Opened on first use, so a server that never needs the fallback never creates the file. */
+  get db(): DatabaseSync {
+    if (this.#db === null) {
+      if (this.file !== ':memory:') mkdirSync(dirname(this.file), { recursive: true })
+      this.#db = new DatabaseSync(this.file)
+      this.#db.exec(SCHEMA)
+    }
+    return this.#db
   }
 
   driver(server: number): SqliteDriver {
@@ -124,15 +133,20 @@ export class LocalMetadataStore {
   }
 
   close(): void {
-    this.db.close()
+    this.#db?.close()
+    this.#db = null
   }
 }
 
 class SqliteBookmarks implements BookmarkBackend {
   constructor(
-    readonly db: DatabaseSync,
+    readonly store: LocalMetadataStore,
     readonly server: number,
   ) {}
+
+  get db(): DatabaseSync {
+    return this.store.db
+  }
 
   #row(r: SqlRow): BookmarkRow {
     return { id: Number(r.id), dbase: s(r.dbase), user: s(r.user), label: s(r.label), query: s(r.query) }
@@ -182,9 +196,13 @@ class SqliteBookmarks implements BookmarkBackend {
 
 class SqliteHistory implements HistoryBackend {
   constructor(
-    readonly db: DatabaseSync,
+    readonly store: LocalMetadataStore,
     readonly server: number,
   ) {}
+
+  get db(): DatabaseSync {
+    return this.store.db
+  }
 
   async add(username: string, db: string, table: string, sqlquery: string, max: number): Promise<void> {
     this.db
@@ -216,10 +234,14 @@ class SqliteHistory implements HistoryBackend {
 
 class SqliteRecentFavorite implements RecentFavoriteBackend {
   constructor(
-    readonly db: DatabaseSync,
+    readonly store: LocalMetadataStore,
     readonly server: number,
     readonly table: 'recent' | 'favorite',
   ) {}
+
+  get db(): DatabaseSync {
+    return this.store.db
+  }
 
   async read(username: string): Promise<string | null> {
     const r = this.db
@@ -277,9 +299,13 @@ class SqliteUiPrefs implements UiPrefsBackend {
 
 class SqliteUserConfig implements UserConfigBackend {
   constructor(
-    readonly db: DatabaseSync,
+    readonly store: LocalMetadataStore,
     readonly server: number,
   ) {}
+
+  get db(): DatabaseSync {
+    return this.store.db
+  }
 
   async load(username: string): Promise<{ configData: string; ts: number } | null> {
     const r = this.db
@@ -307,11 +333,11 @@ export class SqliteDriver implements MetadataDriver {
   readonly navigationHiding = null
 
   constructor(store: LocalMetadataStore, server: number) {
-    this.bookmarks = new SqliteBookmarks(store.db, server)
-    this.history = new SqliteHistory(store.db, server)
-    this.recent = new SqliteRecentFavorite(store.db, server, 'recent')
-    this.favorite = new SqliteRecentFavorite(store.db, server, 'favorite')
+    this.bookmarks = new SqliteBookmarks(store, server)
+    this.history = new SqliteHistory(store, server)
+    this.recent = new SqliteRecentFavorite(store, server, 'recent')
+    this.favorite = new SqliteRecentFavorite(store, server, 'favorite')
     this.uiPrefs = new SqliteUiPrefs(store, server)
-    this.userConfig = new SqliteUserConfig(store.db, server)
+    this.userConfig = new SqliteUserConfig(store, server)
   }
 }

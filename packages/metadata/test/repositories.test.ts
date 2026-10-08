@@ -393,7 +393,7 @@ describe('SqliteDriver (local fallback store)', () => {
 
     const fav = await m.recentFavorite('favorite')
     await fav.add({ db: 'db1', table: 't' })
-    state.favoriteTables = undefined
+    delete state.favoriteTables
     expect((await m.recentFavorite('favorite')).getTables()).toEqual([{ db: 'db1', table: 't' }])
 
     const up = m.userPreferences()
@@ -404,10 +404,10 @@ describe('SqliteDriver (local fallback store)', () => {
     const info = { isView: async () => false, createTime: async () => 'c', columns: async () => ['id'] }
     await m.uiPrefs('db1', 't1', info).setUiProp('sorted_col', '`id` ASC')
     await m.uiPrefs('db1', 't2', info).setUiProp('sorted_col', '`id` DESC')
-    state.tableUiPrefs = undefined
+    delete state.tableUiPrefs
     // MaxTableUiprefs = 1: the older row was evicted
     expect(await m.uiPrefs('db1', 't1', info).getUiProp('sorted_col')).toBe(false)
-    state.tableUiPrefs = undefined
+    delete state.tableUiPrefs
     expect(await m.uiPrefs('db1', 't2', info).getUiProp('sorted_col')).toBe('`id` DESC')
     store.close()
   })
