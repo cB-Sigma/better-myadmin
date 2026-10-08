@@ -59,3 +59,18 @@
 - tool: bma
   pattern: "^SHOW SESSION VARIABLES LIKE 'FOREIGN_KEY_CHECKS'$"
   why: ForeignKey::handleDisableCheckInit read (phpMyAdmin sends it too, more often).
+- tool: bma
+  pattern: "^SELECT CURRENT_USER\\(\\)$"
+  why: Session-cached in both tools (SessionCache mysql_cur_user); phpMyAdmin filled its cache while rendering the page after login, BetterMyAdmin on its first request that needs it.
+- tool: bma
+  pattern: "^SHOW GRANTS$"
+  why: UserPrivilegesFactory::analyseShowGrant, session-cached in both tools; phpMyAdmin ran it while rendering the page after login.
+- tool: bma
+  pattern: "^SELECT @@lower_case_table_names$"
+  why: Server fact phpMyAdmin reads once per request (allowed above); BetterMyAdmin keeps it for the session.
+- tool: pma
+  pattern: "^SELECT CURRENT_ROLE\\(\\)$"
+  why: Menu privilege checks run on every phpMyAdmin response (getCurrentRolesAndHost).
+- tool: pma
+  pattern: "^SHOW GRANTS FOR CURRENT_USER\\(\\)$"
+  why: Menu privilege checks (isGrantUser/isCreateUser) for restricted accounts.

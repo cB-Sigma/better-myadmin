@@ -8,7 +8,7 @@ export interface AllowedDiff {
   why: string
 }
 
-const allowed = (
+const allowedDiffs = (
   parse(readFileSync(new URL('../allowed-diffs.yaml', import.meta.url), 'utf8')) as AllowedDiff[]
 ).map((a) => ({ ...a, re: new RegExp(a.pattern) }))
 
@@ -52,8 +52,18 @@ export function compareLogs(
   pmaLog: LogEntry[],
   bmaLog: LogEntry[],
   dbMap: Record<string, string>,
+  options: {
+    /** Suite-specific accepted differences, on top of allowed-diffs.yaml. */
+    extra?: AllowedDiff[]
+    /** Patterns of allowed-diffs.yaml that do not apply to this suite (the statement is under test). */
+    exclude?: string[]
+  } = {},
 ): Comparison {
   const problems: string[] = []
+  const allowed = [
+    ...allowedDiffs.filter((a) => !(options.exclude ?? []).includes(a.pattern)),
+    ...(options.extra ?? []).map((a) => ({ ...a, re: new RegExp(a.pattern) })),
+  ]
   const filter = (tool: 'pma' | 'bma', log: LogEntry[]) =>
     log
       .map((e) => normalise(e.sql, dbMap))
