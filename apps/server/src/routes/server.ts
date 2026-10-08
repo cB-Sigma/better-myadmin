@@ -7,6 +7,7 @@ import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
 import { navigationRoutes } from './navigation.ts'
 import { queryRoutes } from './query.ts'
+import { tableStructureRoutes } from './table-structure.ts'
 
 export type ServerEnv = AppEnv & {
   Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials }
@@ -44,3 +45,4 @@ serverRoutes.use('/:s/*', async (c, next) => {
 
 serverRoutes.route('/:s/query', queryRoutes)
 serverRoutes.route('/:s/navigation', navigationRoutes)
+serverRoutes.route('/:s/databases', tableStructureRoutes)
