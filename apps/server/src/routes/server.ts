@@ -1,10 +1,11 @@
-import { Hono } from 'hono'
+import { Hono, type MiddlewareHandler } from 'hono'
 import type { AppEnv } from '../app.ts'
 import { AuthMessages } from '../auth/cookie.ts'
 import { getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
 import { queryRoutes } from './query.ts'
+import { shellRoutes } from './shell.ts'
 
 export type ServerEnv = AppEnv & {
   Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials }
@@ -13,7 +14,7 @@ export type ServerEnv = AppEnv & {
 export const serverRoutes = new Hono<ServerEnv>()
 
 /** Resolves `:s` → configured server + the session's decrypted credentials for it. */
-serverRoutes.use('/:s/*', async (c, next) => {
+const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   const { cfg, credBox } = c.get('deps')
   const s = Number(c.req.param('s'))
   if (!Number.isInteger(s) || getServer(cfg, s) === undefined)
@@ -34,8 +35,12 @@ serverRoutes.use('/:s/*', async (c, next) => {
   if (login.port !== undefined) creds.port = login.port
   session.currentServer = s
   c.set('serverIndex', s)
+  if (login.collation !== undefined) creds.collation = login.collation
   c.set('creds', creds)
   await next()
-})
+}
+serverRoutes.use('/:s', resolveServer)
+serverRoutes.use('/:s/*', resolveServer)
 
 serverRoutes.route('/:s/query', queryRoutes)
+serverRoutes.route('/:s', shellRoutes)

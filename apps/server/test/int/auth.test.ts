@@ -97,7 +97,7 @@ describe('cookie auth', () => {
     t = testApp()
     await t.login()
     const r = await t.req('POST', '/api/auth/logout')
-    expect(r.json).toEqual({ ok: true, logoutUrl: null })
+    expect(r.json).toEqual({ ok: true, logoutUrl: null, server: null })
     const s = await t.req('GET', '/api/auth/state')
     expect(s.json.authenticated).toBe(false)
   })

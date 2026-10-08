@@ -122,12 +122,20 @@ authRoutes.post('/logout', async (c) => {
     delete session.servers[String(server)]
     await pools.dropSession(session.id, server)
   }
-  if (Object.keys(session.servers).length === 0) {
+  const remaining = Object.keys(session.servers).map(Number)
+  if (remaining.length === 0) {
     const fresh = regenerate(c.get('deps').store, session, server)
     fresh.servers = {}
     c.set('session', fresh)
+    const body: LogoutResponse = { ok: true, logoutUrl: logoutUrl === '' ? null : logoutUrl, server: null }
+    return c.json(body)
   }
-  const body: LogoutResponse = { ok: true, logoutUrl: logoutUrl === '' ? null : logoutUrl }
+  // AuthenticationPlugin::logOut: redirect to the (last) other authenticated server with
+  // $_SESSION['partial_logout'], whose home page shows the partial-logout message
+  const other = Math.max(...remaining)
+  session.partialLogout = true
+  session.currentServer = other
+  const body: LogoutResponse = { ok: true, logoutUrl: null, server: other }
   return c.json(body)
 })
 

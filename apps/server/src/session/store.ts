@@ -11,7 +11,10 @@ export interface ServerLogin {
   /** Arbitrary server host/port when AllowArbitraryServer was used. */
   host?: string
   port?: number
+  /** DefaultConnectionCollation chosen on the home page (session-level user preference). */
   collation?: string
+  /** SessionCache equivalent for this server: is_superuser, binary_logs, menu-levels-*, … (pma: Utils/SessionCache.php) */
+  cache?: Record<string, unknown>
 }
 
 export interface SessionData {
@@ -29,6 +32,10 @@ export interface SessionData {
   debugSql?: Array<{ sql: string; ms: number; label?: string }>
   /** Query history kept in the session when QueryHistoryDB is off (pma: $_SESSION['sql_history']). */
   sqlHistory?: Array<{ db: string; table: string; sqlquery: string }>
+  /** $_SESSION['partial_logout']: shown once on the home page */
+  partialLogout?: boolean
+  /** SendErrorReports persisted by "Automatically send report next time" (until the prefs layer stores it). */
+  sendErrorReports?: 'ask' | 'always' | 'never'
 }
 
 export interface SessionStore {
