@@ -5,7 +5,8 @@ import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } fro
 import { ApiError, api } from '../../lib/api'
 import { mysqlDocUrl, pmaDocUrl } from '../../lib/docs'
 import { qk } from '../../lib/queryKeys'
-import { bookmarkProvider, useBookmarks } from '../bookmarks/provider'
+import { type BookmarkEntry, bookmarkProvider, useBookmarks } from '../bookmarks/provider'
+import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
 import { StatementBlock } from './Results'
 import { SimulateModal } from './SimulateModal'
 import { type CardAction, type CardEnv, DocIcon, InlineEditContext, MessageBox } from './SqlMessage'
@@ -86,6 +87,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
   const [toggleShown, setToggleShown] = useState(false)
   const [result, setResult] = useState<QueryResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [flash, setFlash] = useState<string | null>(null)
   const [running, setRunning] = useState<string | null>(null)
   const [simulate, setSimulate] = useState<SimulateResponse | null>(null)
   const [inlineOpen, setInlineOpen] = useState<string | null>(null)
@@ -216,6 +218,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     // "Show this query here again"
     rememberShowThisQuery(showQuery, db, table, sql)
     if (!confirmQuery(sql)) return
+    setFlash(null)
     const req: Parameters<typeof execute>[0] = { sql, db, table, delimiter, fkChecks }
     if (rollback) req.rollback = true
     if (parameterized) {
@@ -235,6 +238,26 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
       })
       void bookmarks.refetch()
     })
+  }
+
+  /** id_bookmark + action_bookmark (ImportController::__invoke) */
+  const onBookmark = async (b: BookmarkEntry, action: BookmarkAction, variables: Record<number, string>) => {
+    setFlash(null)
+    if (action === 'view') {
+      setQuery(b.query)
+      setResult(null)
+      setFlash('Showing bookmark')
+      return
+    }
+    if (action === 'delete') {
+      const r = await bookmarkProvider().remove(server, b.id)
+      setResult(null)
+      setFlash(r.message !== '' ? r.message : 'The bookmark has been deleted.')
+      void bookmarks.refetch()
+      return
+    }
+    const { sql } = await bookmarkProvider().run(server, b.id, variables)
+    void execute({ sql, db, table, delimiter, fkChecks }, true)
   }
 
   const onCardAction = (a: CardAction) => {
@@ -608,6 +631,9 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
             </div>
           </div>
         )}
+        {!boxHidden && bookmarks.enabled && bookmarks.bookmarks.length > 0 && (
+          <BookmarkedQuery bookmarks={bookmarks.bookmarks} onGo={(b, a, v) => void onBookmark(b, a, v)} />
+        )}
         {toggleShown && (
           <>
             {boxHidden && <br id="togglequerybox_spacer" />}
@@ -619,6 +645,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
       </form>
 
       <div id="sqlqueryresultsouter" className="max-w-full">
+        {flash !== null && <MessageBox type="success" text={flash} className="mb-3 rounded" />}
         {error !== null && <MessageBox type="error" text={error} className="mb-3 rounded" />}
         {result?.statements.map((st, i) => (
           <StatementBlock key={`${i}-${st.sig}`} st={st} env={env} />
