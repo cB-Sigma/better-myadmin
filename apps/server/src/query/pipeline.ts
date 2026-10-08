@@ -1,4 +1,5 @@
 import type { Executed, StatementResult, Warning } from '@bettermyadmin/contracts'
+import { type Translator, englishTranslator, formatNumber, sprintf } from '@bettermyadmin/i18n'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import {
   type Context,
@@ -35,7 +36,11 @@ export interface PipelineContext {
   context?: Context
   /** Query\Cache 'ExactRows' per `db.table` for this request (Table::countRecords). */
   exactRows?: Map<string, number>
+  /** The request language's catalogue (messages are phpMyAdmin's msgids); English when absent. */
+  tr?: Translator
 }
+
+const english = englishTranslator()
 
 /**
  * The SQL tab path: split by the delimiter (ImportSql/BufferedQuery), then run each statement through
@@ -94,18 +99,9 @@ export function isJustBrowsing(info: StatementInfo): boolean {
   )
 }
 
-const ngettext = (one: string, many: string, n: number) => (n === 1 ? one : many).replace('%1$d', String(n))
-
-/** PHP sprintf('%01.4f') */
-const fmtTime = (seconds: number) => seconds.toFixed(4)
-
-/**
- * Util::formatNumber($value, 0) for row totals: digitsLeft 0 → number_format with "," thousands.
- */
-export function formatCount(n: number): string {
-  if (n === 0) return '0'
-  return Math.round(n).toLocaleString('en-US')
-}
+/** Message::getMessageFor{Deleted,Affected,Inserted}Rows: sprintf(_ngettext(…), $rows) */
+const rowsMessage = (tr: Translator, one: string, many: string, n: number) =>
+  sprintf(tr.ngettext(one, many, n), n)
 
 async function executeStatement(input: PipelineInput, ctx: PipelineContext): Promise<StatementResult> {
   const { conn, cfg } = ctx
@@ -126,13 +122,14 @@ async function executeStatement(input: PipelineInput, ctx: PipelineContext): Pro
     reload: false,
   }
 
+  const tr = ctx.tr ?? english
   // "DROP DATABASE" statements are disabled. (Sql::hasNoRightsToDropDatabase)
   if (!cfg.AllowUserDropDatabase && info.flags.dropDatabase && !(await isSuperUser(conn))) {
     return {
       ...base,
       executedSql: input.sql,
       kind: 'error',
-      message: { type: 'error', text: '"DROP DATABASE" statements are disabled.' },
+      message: { type: 'error', text: tr.gettext('"DROP DATABASE" statements are disabled.') },
       queryTime: 0,
       db: db === '' ? null : db,
     }
@@ -226,10 +223,10 @@ async function executeStatement(input: PipelineInput, ctx: PipelineContext): Pro
     executedSql: fullSql,
     kind: noResults ? (set !== undefined && set.fields.length > 0 ? 'empty' : 'affected') : 'resultset',
     message: noResults
-      ? { type: 'success', text: messageForNoRowsReturned(info, numRows, insertId, queryTime) }
+      ? { type: 'success', text: messageForNoRowsReturned(tr, info, numRows, insertId, queryTime) }
       : {
           type: 'success',
-          text: resultsMessage(info, unlimNumRows, numRows, input, queryTime),
+          text: resultsMessage(tr, info, unlimNumRows, numRows, input, queryTime),
         },
     queryTime,
     db: db === '' ? null : db,
@@ -347,6 +344,7 @@ async function countRecords(
 
 /** Sql::getMessageForNoRowsReturned (without show-as-PHP and rollback, which are M1) */
 function messageForNoRowsReturned(
+  tr: Translator,
   info: StatementInfo,
   numRows: number,
   insertId: string,
@@ -356,29 +354,30 @@ function messageForNoRowsReturned(
 ): string {
   let msg: string
   if (info.flags.queryType === 'DELETE') {
-    msg = ngettext('%1$d row deleted.', '%1$d rows deleted.', numRows)
+    msg = rowsMessage(tr, '%1$d row deleted.', '%1$d rows deleted.', numRows)
   } else if (info.flags.isInsert) {
     msg =
       info.flags.queryType === 'REPLACE'
-        ? ngettext('%1$d row affected.', '%1$d rows affected.', numRows)
-        : ngettext('%1$d row inserted.', '%1$d rows inserted.', numRows)
+        ? rowsMessage(tr, '%1$d row affected.', '%1$d rows affected.', numRows)
+        : rowsMessage(tr, '%1$d row inserted.', '%1$d rows inserted.', numRows)
     if (insertId !== '0') {
       // insert_id is the id of the FIRST inserted row
-      msg += `\nInserted row id: ${(BigInt(insertId) + BigInt(numRows) - 1n).toString()}`
+      msg += `\n${sprintf(tr.gettext('Inserted row id: %1$d'), (BigInt(insertId) + BigInt(numRows) - 1n).toString())}`
     }
   } else if (info.flags.isAffected) {
-    msg = ngettext('%1$d row affected.', '%1$d rows affected.', numRows)
+    msg = rowsMessage(tr, '%1$d row affected.', '%1$d rows affected.', numRows)
   } else if (messageToShow !== '' && info.flags.queryType !== 'SELECT') {
     msg = messageToShow
   } else {
-    msg = 'MySQL returned an empty result set (i.e. zero rows).'
+    msg = tr.gettext('MySQL returned an empty result set (i.e. zero rows).')
   }
-  if (queryTime > 0) msg += ` (Query took ${fmtTime(queryTime)} seconds.)`
+  if (queryTime > 0) msg += ` ${sprintf(`(${tr.gettext('Query took %01.4f seconds.')})`, queryTime)}`
   return msg
 }
 
 /** Results::setMessageInformation, for result sets with a navigation bar. */
 function resultsMessage(
+  tr: Translator,
   info: StatementInfo,
   unlimNumRows: number,
   numRows: number,
@@ -394,8 +393,12 @@ function resultsMessage(
     f.isMaint ||
     f.queryType === 'EXPLAIN' ||
     f.queryType === 'SHOW'
-  if (nonData || f.isProcedure)
-    return `Your SQL query has been executed successfully. (Query took ${fmtTime(queryTime)} seconds.)`
+  // the bare Message::success() card, "(Query took …)" only when the time is positive
+  const took = sprintf(`${tr.gettext('Query took %01.4f seconds.')})`, queryTime)
+  if (nonData || f.isProcedure) {
+    const done = tr.gettext('Your SQL query has been executed successfully.')
+    return queryTime > 0 ? `${done} (${took}` : done
+  }
   const total = unlimNumRows > 0 ? unlimNumRows : 0
   const statementLimit = (info.statement as { limit?: { offset: unknown; rowCount: unknown } | null } | null)
     ?.limit
@@ -413,8 +416,8 @@ function resultsMessage(
     first = input.pos
     last = posNext - 1
   }
-  const totalText = `${formatCount(total)} total`
-  return `Showing rows ${first} - ${last} (${totalText}, Query took ${fmtTime(queryTime)} seconds.)`
+  const totalText = sprintf(tr.gettext('%s total'), formatNumber(tr, total, 0))
+  return `${sprintf(tr.gettext('Showing rows %1s - %2s'), first, last)} (${totalText}, ${took}`
 }
 
 async function setVariable(conn: Conn, name: string, value: string): Promise<void> {

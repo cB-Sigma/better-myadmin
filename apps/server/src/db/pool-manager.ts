@@ -101,6 +101,8 @@ interface PoolEntry {
   pool: Pool
   lastUsed: number
   initialised: WeakSet<object>
+  /** lc_messages each physical connection was last set to. */
+  locales: WeakMap<object, string>
   serverInfo: ServerInfo | null
   serverIndex: number
   collation: string
@@ -140,6 +142,8 @@ export class PoolManager {
     creds: Credentials,
     log: Executed[],
     collation = this.#cfg.DefaultConnectionCollation,
+    /** The request language's MySQL locale (Language::getMySQLLocale), '' sends nothing. */
+    mysqlLocale = 'en_US',
   ): Promise<Conn> {
     const key = `${sessionId}\u0000${serverIndex}`
     let entry = this.#pools.get(key)
@@ -158,6 +162,7 @@ export class PoolManager {
         }),
         lastUsed: Date.now(),
         initialised: new WeakSet(),
+        locales: new WeakMap(),
         serverInfo: null,
         serverIndex,
         collation,
@@ -169,8 +174,15 @@ export class PoolManager {
     const conn = new Conn(raw, log)
     const marker = raw.connection as unknown as object
     if (!entry.initialised.has(marker)) {
-      entry.serverInfo = await postConnect(conn, this.server(serverIndex), collation)
+      entry.serverInfo = await postConnect(conn, this.server(serverIndex), collation, mysqlLocale)
       entry.initialised.add(marker)
+      entry.locales.set(marker, mysqlLocale)
+    } else if ((entry.locales.get(marker) ?? '') !== mysqlLocale) {
+      // phpMyAdmin connects per request, so lc_messages always follows the current language;
+      // a pooled connection is switched when the language changed since it was set up
+      const sql = mysqlLocale !== '' ? `SET lc_messages = '${mysqlLocale}';` : 'SET lc_messages = DEFAULT;'
+      await conn.query(sql, 'connect.locale').catch(() => {})
+      entry.locales.set(marker, mysqlLocale)
     }
     conn.serverInfo = entry.serverInfo
     return conn

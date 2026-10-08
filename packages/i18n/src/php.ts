@@ -258,8 +258,10 @@ function formatOne(spec: string, arg: SprintfArg, sp: Spec): string {
       return padStr(s, sp, false)
     }
     case 'd': {
-      const n = Math.trunc(toPhpNumber(arg))
-      let s = String(Number.isFinite(n) ? n : 0)
+      // integer strings keep 64-bit precision (PHP ints), e.g. BIGINT insert ids
+      const big = typeof arg === 'string' && /^\s*[+-]?\d+$/.test(arg) ? BigInt(arg.trim()) : null
+      const n = big !== null ? Number(big) : Math.trunc(toPhpNumber(arg))
+      let s = big !== null ? big.toString() : String(Number.isFinite(n) ? n : 0)
       if (sp.alwaysSign && n >= 0) s = `+${s}`
       return padStr(s, sp, true)
     }

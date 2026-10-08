@@ -124,7 +124,8 @@ describe.skipIf(!reachable)('parity: SQL tab (/import) vs POST /query', () => {
       }>
       expect(pr.success, `pma success for ${c.sql}`).toBe(statements.every((s) => s.kind !== 'error'))
       for (const st of statements) {
-        const text = maskTime(st.message.text.replace(/\n/g, ' ')).replaceAll(DB_BMA, 'par_db')
+        // whitespace collapses in HTML on both sides (pma's '%2s' pads: "0 -  4")
+        const text = maskTime(st.message.text.replace(/\s+/g, ' ')).replaceAll(DB_BMA, 'par_db')
         expect(pmaText, `message for ${st.sql}`).toContain(text)
         // the card shows the typed statement; the error card shows the SQL actually sent
         expect(pmaText).toContain(st.kind === 'error' ? st.executedSql : st.sql)
