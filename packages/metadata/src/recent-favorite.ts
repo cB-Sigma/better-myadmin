@@ -76,6 +76,11 @@ export class RecentFavoriteTables {
     return this.toSession()
   }
 
+  /** `getTables()` as phpMyAdmin JSON-encodes it (keys kept: a removal in this request leaves a gap). */
+  getTablesForJson(): PhpSparseList<RecentFavoriteTable> {
+    return new PhpSparseList(this.#tables.map(([k, t]) => [k, { db: t.db, table: t.table }]))
+  }
+
   /** pma: RecentFavoriteTables::contains (loose object comparison) */
   contains(t: RecentFavoriteTable): boolean {
     return this.#tables.some(([, x]) => x.db === t.db && x.table === t.table)

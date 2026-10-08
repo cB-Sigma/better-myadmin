@@ -155,6 +155,8 @@ export const BookmarkRunRequest = z.object({
   allUsers: z.boolean().default(false),
   pos: z.number().int().min(0).default(0),
   maxRows: z.union([z.number().int().positive(), z.literal('all')]).optional(),
+  /** no_history */
+  noHistory: z.boolean().optional(),
 })
 
 export const BookmarkDeleteResponse = z.object({ success: z.boolean(), message: UiMessage.nullable() })

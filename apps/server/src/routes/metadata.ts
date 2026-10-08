@@ -270,7 +270,12 @@ metadataRoutes.post('/bookmarks/:id{[0-9]+}/run', async (c) => {
     } finally {
       conn.raw.release()
     }
-    await recordSqlBoxHistory(m, { db: req.db ?? '', table: req.table ?? '', statements })
+    await recordSqlBoxHistory(m, {
+      db: req.db ?? '',
+      table: req.table ?? '',
+      statements,
+      noHistory: req.noHistory === true,
+    })
     const last = statements.at(-1)
     const res: QueryResponse = {
       statements,
@@ -417,7 +422,7 @@ metadataRoutes.post('/favorites', async (c) => {
       }
     }
     meta.storeRecentFavorite(favorite)
-    favoriteTables[user] = favorite.getTables()
+    favoriteTables[user] = favorite.getTablesForJson()
     if (!changes) return c.json({ changes, message: msg('error', 'Favorite List is full!') })
     return c.json({
       changes,

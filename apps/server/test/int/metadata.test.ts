@@ -38,6 +38,7 @@ beforeAll(async () => {
     CREATE TABLE ${DATA}.t2 (id INT PRIMARY KEY);
     CREATE TABLE ${DATA}.t3 (id INT PRIMARY KEY);
     INSERT INTO ${DATA}.t VALUES (1, 'a'), (2, 'b'), (3, 'c');
+    ANALYZE TABLE ${DATA}.t;
     DROP DATABASE IF EXISTS ${CUR};`)
   for (const [u, grants] of [
     [USER, [`GRANT ALL ON \`${DATA}\`.* TO '${USER}'@'%'`, `GRANT ALL ON \`${CUR}\`.* TO '${USER}'@'%'`]],
@@ -230,7 +231,7 @@ describe('with a configuration storage and a control user', () => {
     r = await t.req('POST', '/api/servers/1/favorites', { db: DATA, table: 't2', action: 'remove' })
     expect(r.json.favorite).toEqual([{ db: DATA, table: 't' }])
     expect(JSON.parse(r.json.favoriteTables as string)).toEqual({
-      [r.json.user as string]: [{ db: DATA, table: 't' }],
+      [r.json.user as string]: { '1': { db: DATA, table: 't' } },
     })
     r = await t.req('GET', '/api/servers/1/recent-favorite')
     expect(r.json.favorite).toEqual([{ db: DATA, table: 't' }])
