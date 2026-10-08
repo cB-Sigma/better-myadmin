@@ -56,6 +56,26 @@ export class PmaClient {
     this.token = t
   }
 
+  /** A full (non-AJAX) GET of a page, e.g. `/index.php?route=/database/structure&db=x`. */
+  async page(path: string): Promise<string> {
+    return this.#req(path)
+  }
+
+  /**
+   * POST /navigation over AJAX with the parameters `navigation.ts` sends (loadChildNodes, reload,
+   * treePagination, FastFilter.request). Returns the JSON response (`message` holds the HTML).
+   */
+  async navigation(
+    params: Record<string, string>,
+  ): Promise<{ success: boolean; message?: string; results?: string; error?: string }> {
+    const body = await this.#req(
+      '/index.php?route=/navigation&ajax_request=1',
+      { server: '1', ...params, ajax_request: 'true', token: this.token },
+      true,
+    )
+    return JSON.parse(body) as { success: boolean; message?: string; results?: string; error?: string }
+  }
+
   /** The SQL tab form (resources/templates/sql/query.twig) posted to /import over AJAX. */
   async sqlBox(
     sql: string,
