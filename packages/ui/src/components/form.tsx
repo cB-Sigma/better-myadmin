@@ -7,14 +7,14 @@ import { cn } from '../lib/cn.ts'
 import { Popover, PopoverContent, PopoverTrigger } from './menus.tsx'
 
 const control =
-  'w-full rounded-(--radius) border border-border-strong bg-bg text-fg px-2 text-[13px] leading-snug placeholder:text-fg-subtle focus-visible:outline-2 focus-visible:outline-(--focus-ring) disabled:opacity-60'
+  'rounded-(--radius) border border-border-strong bg-bg text-fg px-2 text-[13px] leading-snug placeholder:text-fg-subtle focus-visible:outline-2 focus-visible:outline-(--focus-ring) disabled:opacity-60'
 
 export function Input({ className, ...props }: ComponentProps<'input'>) {
-  return <input className={cn(control, 'h-7', className)} {...props} />
+  return <input className={cn(control, 'h-7 w-full', className)} {...props} />
 }
 
 export function Textarea({ className, ...props }: ComponentProps<'textarea'>) {
-  return <textarea className={cn(control, 'py-1', className)} {...props} />
+  return <textarea className={cn(control, 'w-full py-1', className)} {...props} />
 }
 
 export function Label({ className, ...props }: ComponentProps<'label'>) {
@@ -28,7 +28,7 @@ export function Label({ className, ...props }: ComponentProps<'label'>) {
  */
 export function NativeSelect({ className, children, ...props }: ComponentProps<'select'>) {
   return (
-    <select className={cn(control, 'h-7 w-auto cursor-pointer pr-6', className)} {...props}>
+    <select className={cn(control, 'h-7 max-w-full cursor-pointer pe-6', className)} {...props}>
       {children}
     </select>
   )
@@ -60,7 +60,7 @@ export function Select({ value, onValueChange, options, id, className, disabled,
       <SelectPrimitive.Trigger
         {...(id !== undefined ? { id } : {})}
         aria-label={rest['aria-label']}
-        className={cn(control, 'inline-flex h-7 w-auto items-center justify-between gap-2', className)}
+        className={cn(control, 'inline-flex h-7 items-center justify-between gap-2', className)}
       >
         <SelectPrimitive.Value />
         <SelectPrimitive.Icon>

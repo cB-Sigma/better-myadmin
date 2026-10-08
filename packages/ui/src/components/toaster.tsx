@@ -1,23 +1,58 @@
-import { LoaderCircle } from 'lucide-react'
-import { type ReactNode, useRef } from 'react'
-import { Toaster as Sonner, toast } from 'sonner'
-import { cn } from '../lib/cn.ts'
-import { DISMISS_CLICK_MS, DISMISS_HINT, type MessageType, messagePolicy } from '../lib/messages.ts'
+import { type ComponentType, type ReactNode, Suspense, lazy, useEffect, useState } from 'react'
+import { type MessageType, messagePolicy } from '../lib/messages.ts'
 
-/** Only one AJAX notification exists at a time: every new one replaces the previous (same id). */
-const AJAX_ID = 'ajax_message'
+type Impl = typeof import('./toaster-impl.tsx')
+
+let impl: Impl | null = null
+let loading: Promise<Impl> | null = null
+let mountHost: (() => void) | null = null
+let wantHost = false
 let counter = 0
+let pending: (() => void) | null = null
 
-/** Mount once near the root (`#loading_parent`). */
+/** sonner is loaded with the first notification, keeping it out of the initial bundle. */
+function load(): Promise<Impl> {
+  loading ??= import('./toaster-impl.tsx').then((m) => {
+    impl = m
+    return m
+  })
+  return loading
+}
+
+const Host = lazy(async () => {
+  const m = await load()
+  return { default: m.default as ComponentType }
+})
+
+/**
+ * Mount once near the root (`#loading_parent`). It renders nothing until the first
+ * notification is shown.
+ */
 export function Toaster() {
+  const [on, setOn] = useState(wantHost)
+  useEffect(() => {
+    mountHost = () => setOn(true)
+    if (wantHost) setOn(true)
+    return () => {
+      mountHost = null
+    }
+  }, [])
+  if (!on) return null
   return (
-    <Sonner
-      position="top-center"
-      offset={{ top: 200 }}
-      visibleToasts={1}
-      toastOptions={{ unstyled: true, className: 'w-[350px]' }}
-    />
+    <Suspense fallback={null}>
+      <HostReady />
+    </Suspense>
   )
+}
+
+function HostReady() {
+  useEffect(() => {
+    // the host is mounted: flush the notification requested while sonner was loading
+    const p = pending
+    pending = null
+    if (p !== null) queueMicrotask(p)
+  }, [])
+  return <Host />
 }
 
 export interface MessageHandle {
@@ -43,24 +78,23 @@ export function showMessage(
   if (policy === null) return null
   const body = typeof message === 'string' || message === null ? policy.text : message
   const num = ++counter
-  toast.custom(
-    (id) => (
-      <Notification
-        num={num}
-        type={policy.type}
-        spinner={policy.spinner}
-        dismissable={policy.dismissable}
-        onDismiss={() => toast.dismiss(id)}
-      >
-        {body}
-      </Notification>
-    ),
-    { id: AJAX_ID, duration: policy.duration ?? Number.POSITIVE_INFINITY, dismissible: false },
-  )
+  const run = () => {
+    if (num === counter) impl?.show(num, policy, body)
+  }
+  if (impl !== null && pending === null && wantHost) {
+    run()
+  } else {
+    pending = run
+    wantHost = true
+    mountHost?.()
+    void load()
+  }
   return {
-    id: AJAX_ID,
+    id: 'ajax_message',
     remove: () => {
-      if (num === counter) toast.dismiss(AJAX_ID)
+      if (num !== counter) return
+      if (pending === run) pending = null
+      impl?.dismiss()
     },
   }
 }
@@ -68,43 +102,4 @@ export function showMessage(
 /** Removes whatever notification is showing. */
 export function removeMessage(handle: MessageHandle | null | boolean | undefined): void {
   if (handle !== null && typeof handle === 'object') handle.remove()
-}
-
-function Notification(props: {
-  num: number
-  type: MessageType
-  spinner: boolean
-  dismissable: boolean
-  onDismiss: () => void
-  children: ReactNode
-}) {
-  const down = useRef(0)
-  const tone = {
-    error: 'border-error/40 bg-error-bg text-error',
-    warning: 'border-warning/40 bg-warning-bg text-warning',
-    success: 'border-success/40 bg-success-bg text-success',
-  } as const
-  return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: Escape/the close button are not part of phpMyAdmin's notification; keyboard users get role=status
-    <span
-      id={`ajax_message_num_${props.num}`}
-      role="status"
-      title={props.dismissable ? DISMISS_HINT : undefined}
-      className={cn(
-        'ajax_notification flex w-[350px] items-center gap-2 rounded-(--radius) border px-3 py-2 text-[13px] shadow-md',
-        props.type === null ? 'border-notification-border bg-notification-bg text-fg' : tone[props.type],
-        props.dismissable && 'dismissable cursor-pointer',
-      )}
-      onMouseDown={() => {
-        down.current = Date.now()
-      }}
-      onClick={() => {
-        // a press-and-release under 250 ms dismisses (functions.ts dismissNotifications)
-        if (props.dismissable && Date.now() - down.current < DISMISS_CLICK_MS) props.onDismiss()
-      }}
-    >
-      {props.spinner && <LoaderCircle className="size-4 shrink-0 animate-spin" aria-hidden />}
-      <span className="min-w-0 flex-1 break-words">{props.children}</span>
-    </span>
-  )
 }

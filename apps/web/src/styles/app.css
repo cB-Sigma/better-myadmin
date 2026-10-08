@@ -1,79 +1,10 @@
 @import "tailwindcss";
 
-/*
- * Theme tokens (docs/architecture/09-ui-design-system.md#colour-tokens).
- * Light values of the default theme come from phpMyAdmin's pmahomme/scss/_variables.scss.
- */
-:root,
-:root[data-theme="pmahomme"] {
-  color-scheme: light;
-  --bg: #ffffff;
-  --bg-subtle: #f3f3f3; /* $navi-background */
-  --bg-elevated: #ffffff;
-  --bg-inset: #f7f7f7;
-  --fg: #444444; /* $main-color */
-  --fg-muted: #666666;
-  --fg-subtle: #888888;
-  --fg-on-accent: #ffffff;
-  --border: #d0d0d0;
-  --border-strong: #aaaaaa;
-  --accent: #235a81; /* $link-color */
-  --accent-hover: #1a4462;
-  --accent-fg: #ffffff;
-  --success: #1f6f2b;
-  --success-bg: #ebf8a4;
-  --notice: #6b5300;
-  --notice-bg: #fff3cd;
-  --error: #8c1d1d;
-  --error-bg: #f8d7da;
-  --grid-header-bg: #d3dce3; /* $th-background */
-  --grid-row-odd: #e5e5e5; /* $bg-one */
-  --grid-row-even: #d5d5d5; /* $bg-two */
-  --grid-row-hover: #ccffcc; /* $browse-pointer-background */
-  --grid-row-marked: #ffcc99; /* $browse-marker-background */
-  --grid-cell-edited: #fff7c2;
-  --data-null: #888888;
-  --data-number: #444444;
-  --data-binary: #6a3d9a;
-  --data-link: #235a81;
-  --focus-ring: #4c8bf5;
-  --nav-pointer-bg: #dddddd; /* $navi-pointer-background */
-}
+/* Theme tokens: the four phpMyAdmin themes + dark variants (packages/ui/src/themes/themes.css). */
+@import "@bettermyadmin/ui/themes.css";
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-color-mode="light"]) {
-    color-scheme: dark;
-    --bg: #1b1d21;
-    --bg-subtle: #23262b;
-    --bg-elevated: #2a2d33;
-    --bg-inset: #15171a;
-    --fg: #d6d8dc;
-    --fg-muted: #a3a7ae;
-    --fg-subtle: #7d828a;
-    --border: #3a3e45;
-    --border-strong: #555a63;
-    --accent: #6fa8d6;
-    --accent-hover: #8dbde3;
-    --accent-fg: #0d1b26;
-    --success: #9ad48f;
-    --success-bg: #1f3320;
-    --notice: #e8cf7d;
-    --notice-bg: #3a3218;
-    --error: #f2a3a3;
-    --error-bg: #3d1e1e;
-    --grid-header-bg: #2f3a44;
-    --grid-row-odd: #22252a;
-    --grid-row-even: #1d2024;
-    --grid-row-hover: #24402a;
-    --grid-row-marked: #4a3520;
-    --grid-cell-edited: #4a4420;
-    --data-null: #7d828a;
-    --data-number: #d6d8dc;
-    --data-binary: #c7a6f2;
-    --data-link: #6fa8d6;
-    --nav-pointer-bg: #30343a;
-  }
-}
+/* Tailwind must see the classes used inside the component kit. */
+@source "../../../../packages/ui/src";
 
 @theme inline {
   --color-bg: var(--bg);
@@ -94,6 +25,14 @@
   --color-notice-bg: var(--notice-bg);
   --color-error: var(--error);
   --color-error-bg: var(--error-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  --color-btn: var(--btn-bg);
+  --color-btn-hover: var(--btn-hover-bg);
+  --color-notification-bg: var(--notification-bg);
+  --color-notification-border: var(--notification-border);
   --color-grid-header: var(--grid-header-bg);
   --color-grid-odd: var(--grid-row-odd);
   --color-grid-even: var(--grid-row-even);
@@ -103,33 +42,74 @@
   --color-data-binary: var(--data-binary);
   --color-data-link: var(--data-link);
   --color-nav-pointer: var(--nav-pointer-bg);
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-ui);
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
-html,
-body,
-#root {
-  height: 100%;
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-ui);
+    font-size: var(--font-base);
+  }
 }
 
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  font-size: 14px;
+/* ---- tab menu (templates/menu/main.twig, theme _navbar.scss / _nav.scss) ---- */
+.tab-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  padding: 0.35rem 0.65rem;
+  margin-inline-end: 0.15rem;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-start-start-radius: var(--radius);
+  border-start-end-radius: var(--radius);
+  color: var(--tab-fg);
+  background: var(--tab-bg);
+  font-weight: 600;
+  cursor: pointer;
+}
+.tab-link:hover {
+  background: var(--tab-hover-bg);
+  text-decoration: none;
+}
+.tab-link-active,
+.tab-link-active:hover {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-fg);
+  border-color: var(--tab-border);
+  position: relative;
+  top: 1px;
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
 }
 
-a {
-  color: var(--accent);
-}
-a:hover {
-  text-decoration: underline;
-}
+/* links and focus rings are base styles, so utilities (breadcrumb, tabs, menus) can recolour them */
+@layer base {
+  a {
+    color: var(--accent);
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 
-:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 1px;
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 1px;
+  }
 }
 
 .tnum {

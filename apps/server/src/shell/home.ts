@@ -1,4 +1,6 @@
+import { existsSync, readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
 import type { HomeResponse, HomeWarning } from '@bettermyadmin/contracts'
 import { collationDescription } from '@bettermyadmin/mysql-types'
 import { serverIndexes } from '../config.ts'
@@ -11,9 +13,20 @@ const require = createRequire(import.meta.url)
 /** SODIUM_CRYPTO_SECRETBOX_KEYBYTES */
 const KEY_BYTES = 32
 
+/** A dependency's version (its package.json may not be exported, so walk up from the entry point). */
 function pkgVersion(name: string): string {
   try {
-    return (require(`${name}/package.json`) as { version: string }).version
+    let dir = dirname(require.resolve(name))
+    for (;;) {
+      const f = join(dir, 'package.json')
+      if (existsSync(f)) {
+        const pkg = JSON.parse(readFileSync(f, 'utf8')) as { name?: string; version?: string }
+        if (pkg.name === name) return pkg.version ?? ''
+      }
+      const up = dirname(dir)
+      if (up === dir) return ''
+      dir = up
+    }
   } catch {
     return ''
   }
