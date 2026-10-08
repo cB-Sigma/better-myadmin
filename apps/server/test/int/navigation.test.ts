@@ -96,7 +96,7 @@ describe('GET /navigation/tree', () => {
     try {
       const r = await t.req('GET', '/api/servers/1/navigation/tree?pos=1')
       const body = r.json as unknown as NavTreeResponse
-      expect(body.tree.fastFilter).toEqual({ kind: 'db' })
+      expect(body.tree.fastFilter).toEqual({ kind: 'db', aPath: [] })
       expect(body.tree.pageSelector).toMatchObject({
         count: 3,
         pos: 1,

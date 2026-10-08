@@ -30,6 +30,12 @@ export function navigationHiding(deps: Omit<NavServiceDeps, 'hiding'>): Navigati
   return hidingFactory(deps)
 }
 
+/** pma: Util::getMySQLDocuURL('') */
+function mysqlDocsUrl(version: number): string {
+  const mysql = version >= 90000 ? '9.0' : version >= 80000 ? '8.0' : '5.7'
+  return `https://dev.mysql.com/doc/refman/${mysql}/en/index.html`
+}
+
 async function context(deps: NavServiceDeps): Promise<NavCtx> {
   const dbi = new NavDbi(deps.conn, deps.cache)
   return {
@@ -43,6 +49,8 @@ async function context(deps: NavServiceDeps): Promise<NavCtx> {
 
 export function navSettings(deps: Pick<NavServiceDeps, 'cfg' | 'server' | 'conn'>): NavSettings {
   const { cfg, server } = deps
+  const isMariaDb = deps.conn.serverInfo?.isMariaDb ?? false
+  const v = deps.conn.serverInfo?.versionInt ?? 0
   return {
     NavigationWidth: cfg.NavigationWidth,
     NavigationLinkWithMainPanel: cfg.NavigationLinkWithMainPanel,
@@ -58,7 +66,9 @@ export function navSettings(deps: Pick<NavServiceDeps, 'cfg' | 'server' | 'conn'
     NumRecentTables: cfg.NumRecentTables,
     NumFavoriteTables: cfg.NumFavoriteTables,
     authType: server.auth_type,
-    isMariaDb: deps.conn.serverInfo?.isMariaDb ?? false,
+    isMariaDb,
+    serverDocsUrl: isMariaDb ? 'https://mariadb.com/kb/en/documentation/' : mysqlDocsUrl(v),
+    TableNavigationLinksMode: cfg.TableNavigationLinksMode as 'icons' | 'text' | 'both',
   }
 }
 

@@ -89,10 +89,12 @@ export function pageselectorPages(
  * null when phpMyAdmin renders nothing (`max_count >= count`).
  */
 export function listNavigator(
+  aPath: string[],
   count: number,
   pos: number,
   maxCountIn: number,
   paramName: NavPageSelector['paramName'],
+  pos2: number | null = null,
 ): NavPageSelector | null {
   const maxCount = maxCountIn <= 0 ? 250 : maxCountIn
   if (!(maxCount < count)) return null
@@ -100,10 +102,12 @@ export function listNavigator(
   const lastPos = Math.floor(count / maxCount) * maxCount
   const hasNext = pos + maxCount < count
   return {
+    aPath,
     count,
     pos,
     maxCount,
     paramName,
+    pos2,
     begin: pos > 0 ? 0 : null,
     prev: pos > 0 ? pos - maxCount : null,
     next: hasNext ? pos + maxCount : null,

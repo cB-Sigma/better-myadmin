@@ -64,11 +64,18 @@ export type NavContainer = z.infer<typeof NavContainer>
 
 /** `list_navigator.twig` in `frame_navigation` mode, with Util::pageselector's page list. */
 export const NavPageSelector = z.object({
+  /**
+   * aPath (after `root`) of the node whose list is paged — `[]` for the databases; not always the
+   * node the list is shown under (the only *Tables* container is not rendered).
+   */
+  aPath: z.array(z.string()),
   count: z.number().int(),
   pos: z.number().int(),
   maxCount: z.number().int(),
   /** `pos` (databases), `pos2_value` (tables, views…), `pos3_value` (columns, indexes, triggers). */
   paramName: z.enum(['pos', 'pos2_value', 'pos3_value']),
+  /** For a third-level list (columns, indexes, triggers): the `pos2_value` it is sent with. */
+  pos2: z.number().int().nullable(),
   /** Positions of the `<<` `<` `>` `>>` links; null when phpMyAdmin does not render the link. */
   begin: z.number().int().nullable(),
   prev: z.number().int().nullable(),
@@ -80,7 +87,11 @@ export const NavPageSelector = z.object({
 export type NavPageSelector = z.infer<typeof NavPageSelector>
 
 /** `tree/fast_filter.twig`: `db` is the database filter (`searchClause`), `item` a container filter (`searchClause2`). */
-export const NavFastFilter = z.object({ kind: z.enum(['db', 'item']) })
+export const NavFastFilter = z.object({
+  kind: z.enum(['db', 'item']),
+  /** aPath (after `root`) of the filtered container (`[]` for the database filter). */
+  aPath: z.array(z.string()),
+})
 export type NavFastFilter = z.infer<typeof NavFastFilter>
 
 /** Hide control (`hideNavItem`), only when the navigation-hiding feature of the pmadb is on. */
@@ -183,6 +194,10 @@ export const NavSettings = z.object({
   /** `auth_type` of the current server: the logout link reads "Empty session data" for `config`. */
   authType: z.string(),
   isMariaDb: z.boolean(),
+  /** `get_docu_url(is_mariadb)`: the MySQL (by server version) or MariaDB documentation. */
+  serverDocsUrl: z.string(),
+  /** Page selector links: `icons` (<< < > >>), `text` (Begin, Previous…) or `both`. */
+  TableNavigationLinksMode: z.enum(['icons', 'text', 'both']),
 })
 export type NavSettings = z.infer<typeof NavSettings>
 

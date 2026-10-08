@@ -625,7 +625,7 @@ export class NavigationTree {
     const filterDbMin = this.#cfg.NavigationTreeDisplayDbFilterMinimum
     const filterItemMin = this.#cfg.NavigationTreeDisplayItemFilterMinimum
     const isRootNode = node === this.#tree && (await this.#tree.getPresence()) >= filterDbMin
-    if (isRootNode) return { kind: 'db' }
+    if (isRootNode) return { kind: 'db', aPath: [] }
     const nodeIsContainer = node.type === 'container'
     const nodeIsSpecial = SPECIAL_NODE_NAMES.includes(node.realName)
     const realParent = node.getRealParent()
@@ -635,7 +635,7 @@ export class NavigationTree {
       realParent !== false &&
       (await realParent.getPresence(node.realName)) >= filterItemMin
     ) {
-      return { kind: 'item' }
+      return { kind: 'item', aPath: node.getPaths().aPathClean.slice(1) }
     }
     return null
   }
@@ -644,6 +644,7 @@ export class NavigationTree {
   async #getPageSelector(node: Node): Promise<NavList['pageSelector']> {
     if (node === this.#tree) {
       return listNavigator(
+        [],
         await this.#tree.getPresence('databases', this.#searchClause),
         this.#pos,
         this.#cfg.FirstLevelNavigationItems,
@@ -656,7 +657,14 @@ export class NavigationTree {
       const realParent = node.getRealParent()
       if (realParent === false) return null
       const num = await realParent.getPresence(node.realName, this.#searchClause2)
-      return listNavigator(num, pos, this.#cfg.MaxNavigationItems, level === 3 ? 'pos3_value' : 'pos2_value')
+      return listNavigator(
+        node.getPaths().aPathClean.slice(1),
+        num,
+        pos,
+        this.#cfg.MaxNavigationItems,
+        level === 3 ? 'pos3_value' : 'pos2_value',
+        level === 3 ? node.pos2 : null,
+      )
     }
     return null
   }

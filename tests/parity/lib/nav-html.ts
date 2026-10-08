@@ -5,10 +5,12 @@ import type { NavList, NavNode, NavPageSelector } from '../../../packages/contra
  * or from BetterMyAdmin's JSON, so both can be compared with toEqual.
  */
 export type Entry =
-  | { t: 'filter'; kind: 'db' | 'item' }
+  | { t: 'filter'; kind: 'db' | 'item'; aPath: string[] }
   | {
       t: 'pager'
       param: string
+      aPath: string[]
+      pos2: number | null
       links: Record<string, number>
       pages: Array<[number, number, boolean]>
     }
@@ -96,6 +98,15 @@ function find(el: El, pred: (e: El) => boolean, out: El[] = []): El[] {
 }
 
 const b64 = (s: string) => Buffer.from(s, 'base64').toString('utf8')
+const decodePath = (p: string) => p.split('.').map(b64).slice(1)
+
+function hiddenInputs(el: El): Record<string, string> {
+  const out: Record<string, string> = {}
+  for (const i of find(el, (e) => e.tag === 'input' && e.attrs.type === 'hidden')) {
+    out[i.attrs.name ?? ''] = i.attrs.value ?? ''
+  }
+  return out
+}
 
 /** `index.php?route=/x&a=1` → `/x?a=1` with the parameters in order. */
 function normHref(href: string, post?: string): string {
@@ -130,7 +141,15 @@ function pagerFromHtml(div: El): Entry {
     (o) =>
       [Number(o.attrs.value), Number(text(o).trim()), 'selected' in o.attrs] as [number, number, boolean],
   )
-  return { t: 'pager', param, links, pages }
+  const hidden = hiddenInputs(div)
+  return {
+    t: 'pager',
+    param,
+    aPath: hidden.aPath === undefined ? [] : decodePath(hidden.aPath),
+    pos2: param === 'pos3_value' && hidden.pos2_value !== undefined ? Number(hidden.pos2_value) : null,
+    links,
+    pages,
+  }
 }
 
 function nodeFromHtml(li: El): Entry {
@@ -202,9 +221,14 @@ function nodeFromHtml(li: El): Entry {
 function listFromUl(ul: El): Entry[] {
   const out: Entry[] = []
   for (const c of elements(ul)) {
-    if (c.tag === 'li' && hasClass(c, 'fast_filter'))
-      out.push({ t: 'filter', kind: hasClass(c, 'db_fast_filter') ? 'db' : 'item' })
-    else if (c.tag === 'li' && c.attrs.id === 'navigation_controls_outer') continue
+    if (c.tag === 'li' && hasClass(c, 'fast_filter')) {
+      const aPath = hiddenInputs(c).aPath
+      out.push({
+        t: 'filter',
+        kind: hasClass(c, 'db_fast_filter') ? 'db' : 'item',
+        aPath: aPath === undefined ? [] : decodePath(aPath),
+      })
+    } else if (c.tag === 'li' && c.attrs.id === 'navigation_controls_outer') continue
     else if (c.tag === 'li') out.push(nodeFromHtml(c))
     else if (c.tag === 'div' && hasClass(c, 'pageselector')) out.push(pagerFromHtml(c))
     else if (c.tag === 'div' && hasClass(c, 'list_container')) {
@@ -253,12 +277,20 @@ function pagerFromJson(p: NavPageSelector): Entry {
   if (p.prev !== null) links.previous = p.prev
   if (p.next !== null) links.next = p.next
   if (p.end !== null) links.end = p.end
-  return { t: 'pager', param: p.paramName, links, pages: p.pages.map((x) => [x.value, x.page, x.selected]) }
+  return {
+    t: 'pager',
+    param: p.paramName,
+    aPath: p.aPath,
+    pos2: p.pos2,
+    links,
+    pages: p.pages.map((x) => [x.value, x.page, x.selected]),
+  }
 }
 
 export function listFromJson(list: NavList): Entry[] {
   const out: Entry[] = []
-  if (list.fastFilter !== null) out.push({ t: 'filter', kind: list.fastFilter.kind })
+  if (list.fastFilter !== null)
+    out.push({ t: 'filter', kind: list.fastFilter.kind, aPath: list.fastFilter.aPath })
   if (list.pageSelector !== null) out.push(pagerFromJson(list.pageSelector))
   for (const n of list.items) {
     if (n.flatten) {
