@@ -7,7 +7,8 @@
       "**/fixtures/**/*.json",
       "**/generated/**",
       "docs/**",
-      "**/routeTree.gen.ts"
+      "**/routeTree.gen.ts",
+      ".claude/**"
     ]
   },
   "formatter": {
