@@ -1,3 +1,16 @@
+import type {
+  AutocompleteResponse,
+  CancelResponse,
+  ConsoleConfigResponse,
+  DefaultFkCheckResponse,
+  FormatResponse,
+  HistoryResponse,
+  LintRequest,
+  LintResponse,
+  SimulateRequest,
+  SimulateResponse,
+  SqlFormResponse,
+} from '@bettermyadmin/contracts'
 import {
   type AuthState,
   CSRF_COOKIE,
@@ -56,4 +69,29 @@ export const api = {
   login: (req: LoginRequest) => call<LoginResponse>('POST', '/auth/login', req),
   logout: () => call<LogoutResponse>('POST', '/auth/logout'),
   query: (server: number, req: QueryRequest) => call<QueryResponse>('POST', `/servers/${server}/query`, req),
+  // SQL tab and console (docs/architecture/05-api-reference.md#sql-execution)
+  sqlForm: (server: number, p: { db?: string; table?: string; sqlQuery?: string | undefined }) =>
+    call<SqlFormResponse>('GET', `/servers/${server}/sql/form?${qs(p)}`),
+  sqlLint: (server: number, req: LintRequest) =>
+    call<LintResponse>('POST', `/servers/${server}/sql/lint`, req),
+  sqlFormat: (server: number, sql: string, singleLine: boolean) =>
+    call<FormatResponse>('POST', `/servers/${server}/sql/format`, { sql, singleLine }),
+  sqlAutocomplete: (server: number, db: string) =>
+    call<AutocompleteResponse>('GET', `/servers/${server}/sql/autocomplete?${qs({ db })}`),
+  defaultFkCheck: (server: number) =>
+    call<DefaultFkCheckResponse>('GET', `/servers/${server}/sql/default-fk-check`),
+  sqlHistory: (server: number) => call<HistoryResponse>('GET', `/servers/${server}/sql/history`),
+  simulate: (server: number, req: SimulateRequest) =>
+    call<SimulateResponse>('POST', `/servers/${server}/query/simulate`, req),
+  cancelQuery: (server: number, queryId: string) =>
+    call<CancelResponse>('POST', `/servers/${server}/query/cancel`, { queryId }),
+  consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
+  consoleConfigUpdate: (server: number, key: string, value: string) =>
+    call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+}
+
+function qs(p: Record<string, string | undefined>): string {
+  const u = new URLSearchParams()
+  for (const [k, v] of Object.entries(p)) if (v !== undefined && v !== '') u.set(k, v)
+  return u.toString()
 }

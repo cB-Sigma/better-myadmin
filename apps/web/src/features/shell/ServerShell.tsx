@@ -1,9 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, Outlet, useLocation, useParams } from '@tanstack/react-router'
 import { BookOpen, Database, Home, LogOut, RefreshCw, Server, Settings } from 'lucide-react'
+import { Suspense, lazy } from 'react'
 import { api } from '../../lib/api'
 import { qk } from '../../lib/queryKeys'
 import { SERVER_TABS } from './tabs'
+
+// the SQL console is a deferred chunk (docs/architecture/08-performance-and-snappiness.md)
+const Console = lazy(() => import('../console/Console'))
 
 export function ServerShell() {
   const { server } = useParams({ from: '/s/$server' })
@@ -24,10 +28,13 @@ export function ServerShell() {
           </Link>
         </nav>
         <TabBar server={server} />
-        <main className="min-h-0 flex-1 overflow-auto p-3">
+        <main className="min-h-0 flex-1 overflow-auto p-3 pb-12">
           <Outlet />
         </main>
       </div>
+      <Suspense fallback={null}>
+        <Console server={server} />
+      </Suspense>
     </div>
   )
 }

@@ -1,0 +1,9 @@
+# BetterMyAdmin configuration for the Playwright tests (tests/e2e). MySQL from the dev environment.
+blowfish_secret: e2e-secret-e2e-secret-e2e-secret-!!
+DataDir: ./.data/e2e
+Servers:
+  - host: 127.0.0.1
+    port: 3306
+    verbose: MySQL e2e
+DBG:
+  sql: true

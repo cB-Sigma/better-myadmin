@@ -15,7 +15,8 @@
     "test": "vitest run --project unit",
     "test:int": "vitest run --project int",
     "test:watch": "vitest --project unit",
-    "test:parity": "vitest run --project parity"
+    "test:parity": "vitest run --project parity",
+    "test:e2e": "playwright test -c tests/e2e"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
