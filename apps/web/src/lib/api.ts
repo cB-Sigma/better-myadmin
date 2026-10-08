@@ -3,6 +3,7 @@ import {
   CSRF_COOKIE,
   CSRF_HEADER,
   type ErrorEnvelope,
+  type I18nState,
   type LoginRequest,
   type LoginResponse,
   type LogoutResponse,
@@ -53,6 +54,9 @@ async function call<T>(method: 'GET' | 'POST', path: string, body?: unknown): Pr
 
 export const api = {
   authState: () => call<AuthState>('GET', '/auth/state'),
+  /** The request language; `lang` selects one (pma: `?lang=` from the language selector). */
+  i18n: (lang?: string) =>
+    call<I18nState>('GET', lang === undefined ? '/i18n' : `/i18n?lang=${encodeURIComponent(lang)}`),
   login: (req: LoginRequest) => call<LoginResponse>('POST', '/auth/login', req),
   logout: () => call<LogoutResponse>('POST', '/auth/logout'),
   query: (server: number, req: QueryRequest) => call<QueryResponse>('POST', `/servers/${server}/query`, req),

@@ -3,7 +3,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CircleHelp, Database } from 'lucide-react'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
+import { Trans, t, useLanguage } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { LanguageLabel, LanguageSelect } from './LanguageSelect'
 
 /**
  * Cookie-auth login form.
@@ -17,6 +19,7 @@ export function LoginPage({ state }: { state: AuthState }) {
   const [arbitrary, setArbitrary] = useState('')
   const userRef = useRef<HTMLInputElement>(null)
   const passRef = useRef<HTMLInputElement>(null)
+  const { state: lang } = useLanguage()
 
   // focus the password field when a username is prefilled, else the username (functions.ts)
   // biome-ignore lint/correctness/useExhaustiveDependencies: focus once on mount, like functions.ts
@@ -45,49 +48,71 @@ export function LoginPage({ state }: { state: AuthState }) {
   let error: string | null = null
   if (login.error instanceof ApiError) error = login.error.message
   else if (login.error) error = login.error.message
-  else if (state.sessionExpired) error = 'Your session has expired. Please log in again.'
+  else if (state.sessionExpired) error = t('Your session has expired. Please log in again.')
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
       <div className="mb-6 flex flex-col items-center gap-2 text-center">
         <Database className="size-12 text-accent" aria-hidden />
         <h1 className="text-xl font-semibold">
-          Welcome to{' '}
-          <bdo dir="ltr" lang="en">
-            BetterMyAdmin
-          </bdo>
+          <Trans
+            id="Welcome to %s"
+            args={[
+              <bdo key="name" dir="ltr" lang="en">
+                BetterMyAdmin
+              </bdo>,
+            ]}
+          />
         </h1>
       </div>
 
-      {error !== null && (
-        <div
-          role="alert"
-          className="mb-4 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
-        >
-          {error}
-        </div>
+      {[lang?.warning ?? null, error].map(
+        (msg) =>
+          msg !== null && (
+            <div
+              key={msg}
+              role="alert"
+              className="mb-4 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
+            >
+              {msg}
+            </div>
+          ),
+      )}
+
+      {/* pma: login/form.twig — only when $cfg['Lang'] is empty and LanguageManager::hasChoice() */}
+      {lang?.languages != null && (
+        <section className="mb-4 rounded border border-border bg-bg-elevated">
+          <header className="border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
+            <span id="languageSelectLabel">
+              <LanguageLabel />
+            </span>
+          </header>
+          <div className="p-3 text-sm">
+            <LanguageSelect labelledBy="languageSelectLabel" />
+          </div>
+        </section>
       )}
 
       <form id="login_form" onSubmit={onSubmit} autoComplete={state.recalledUser !== null ? 'on' : 'off'}>
         <section className="rounded border border-border bg-bg-elevated">
           <header className="flex items-center justify-between border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-            <span>Log in</span>
+            <span>{t('Log in')}</span>
             <a
               href="https://docs.phpmyadmin.net/en/latest/"
               target="_blank"
               rel="noopener noreferrer"
-              title="Documentation"
+              title={t('Documentation')}
             >
               <CircleHelp className="size-4" aria-hidden />
-              <span className="sr-only">Documentation</span>
+              <span className="sr-only">{t('Documentation')}</span>
             </a>
           </header>
           <div className="space-y-3 p-3 text-sm">
             {state.allowArbitraryServer && (
               <Row
-                label="Server:"
+                label={t('Server:')}
                 htmlFor="serverNameInput"
-                title="You can enter hostname/IP address and port separated by space."
+                title={t('You can enter hostname/IP address and port separated by space.')}
               >
                 <input
                   id="serverNameInput"
@@ -98,7 +123,7 @@ export function LoginPage({ state }: { state: AuthState }) {
                 />
               </Row>
             )}
-            <Row label="Username:" htmlFor="input_username">
+            <Row label={t('Username:')} htmlFor="input_username">
               <input
                 ref={userRef}
                 id="input_username"
@@ -110,7 +135,7 @@ export function LoginPage({ state }: { state: AuthState }) {
                 onChange={(e) => setUsername(e.target.value)}
               />
             </Row>
-            <Row label="Password:" htmlFor="input_password">
+            <Row label={t('Password:')} htmlFor="input_password">
               <input
                 ref={passRef}
                 id="input_password"
@@ -124,7 +149,7 @@ export function LoginPage({ state }: { state: AuthState }) {
               />
             </Row>
             {state.servers.length > 1 && (
-              <Row label="Server choice:" htmlFor="select_server">
+              <Row label={t('Server choice:')} htmlFor="select_server">
                 <select
                   id="select_server"
                   name="server"
@@ -148,7 +173,7 @@ export function LoginPage({ state }: { state: AuthState }) {
             <input
               id="input_go"
               type="submit"
-              value="Log in"
+              value={t('Log in')}
               disabled={login.isPending}
               className="cursor-pointer rounded bg-accent px-4 py-1.5 text-sm font-medium text-accent-fg hover:bg-accent-hover disabled:opacity-60"
             />

@@ -30,6 +30,7 @@ Conventions:
 | GET | `/api/meta/build` | version, git commit/branch, build date | `/git-revision` |
 | GET | `/api/meta/version-check` | `{latest, isNewer, releaseDate}` (respects `VersionCheck`) | `/version-check` |
 | GET | `/api/meta/health` | liveness | — |
+| GET | `/api/i18n[?lang=xx]` | `{key, code, dir, languages: [{key, name}] \| null, warning}`: the request language (`Lang` → `lang` param → `bma_lang` cookie → Accept-Language → User-Agent → `DefaultLang`), the selector options when phpMyAdmin shows the selector, "Ignoring unsupported language code." when applicable; `lang` sets the cookie. Every API response uses the request language for its messages | `LanguageManager::selectLanguage`, `?lang=` |
 | GET | `/api/meta/config-public` | the subset of config the client needs (directives flagged client-visible in `packages/config`) | inlined JS globals |
 | POST | `/api/telemetry/error` | sanitized client error report, only when `SendErrorReports` allows | `/error-report` |
 

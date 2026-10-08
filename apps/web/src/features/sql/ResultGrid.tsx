@@ -1,6 +1,7 @@
 import type { Cell, Field } from '@bettermyadmin/contracts'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { memo, useRef } from 'react'
+import { translator } from '../../lib/i18n'
 import { formatByteDown } from './format'
 
 const ROW_H = 28
@@ -17,7 +18,10 @@ const CellView = memo(function CellView({ value, field }: { value: Cell; field: 
   if (value === null) return <span className="italic text-data-null">NULL</span>
   if (typeof value === 'string') return <>{value}</>
   if (field.mappedType === 'blob' || field.flags.blob) {
-    return <span className="font-mono text-data-binary">[BLOB - {formatByteDown(value.bytes)}]</span>
+    // pma: Results::handleNonPrintableContents — Util::formatByteDown($size, 3, 1)
+    return (
+      <span className="font-mono text-data-binary">[BLOB - {formatByteDown(translator(), value.bytes)}]</span>
+    )
   }
   if (field.mappedType === 'bit') {
     const bits = [...b64ToHex(value.b64)]
@@ -62,7 +66,7 @@ export function ResultGrid({ fields, rows }: { fields: Field[]; rows: Cell[][] }
               <th
                 key={`${f.name}-${i}`}
                 scope="col"
-                className="h-8 whitespace-nowrap border-b border-r border-border bg-grid-header px-2 text-left font-semibold"
+                className="h-8 whitespace-nowrap border-b border-e border-border bg-grid-header px-2 text-start font-semibold"
               >
                 {f.name}
               </th>
@@ -86,8 +90,8 @@ export function ResultGrid({ fields, rows }: { fields: Field[]; rows: Cell[][] }
                 {fields.map((f, c) => (
                   <td
                     key={`${f.name}-${c}`}
-                    className={`max-w-md truncate whitespace-nowrap border-r border-border/60 px-2 ${
-                      f.flags.numeric ? 'text-right' : ''
+                    className={`max-w-md truncate whitespace-nowrap border-e border-border/60 px-2 ${
+                      f.flags.numeric ? 'text-end' : ''
                     }`}
                   >
                     <CellView value={row[c] ?? null} field={f} />

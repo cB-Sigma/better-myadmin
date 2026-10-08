@@ -3,10 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./src/index.ts",
     "./node": "./src/node.ts",
-    "./compile": "./src/compile.ts"
+    "./compile": "./src/compile.ts",
+    "./php": "./src/php.ts",
+    "./translator": "./src/translator.ts",
+    "./format": "./src/format.ts",
+    "./bbcode": "./src/bbcode.ts"
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",

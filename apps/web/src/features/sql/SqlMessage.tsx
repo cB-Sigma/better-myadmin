@@ -1,5 +1,6 @@
 import type { StatementResult } from '@bettermyadmin/contracts'
 import { AlertTriangle, CheckCircle2, XCircle } from 'lucide-react'
+import { t } from '../../lib/i18n'
 
 const styles = {
   success: { box: 'border-success/40 bg-success-bg text-success', Icon: CheckCircle2 },
@@ -21,13 +22,13 @@ export function SqlMessage({ st }: { st: StatementResult }) {
       >
         <div className="flex items-center gap-2 font-semibold">
           <XCircle className="size-4" aria-hidden />
-          Error
+          {t('Error')}
         </div>
-        <div className="mt-2 text-xs font-semibold">SQL query:</div>
+        <div className="mt-2 text-xs font-semibold">{t('SQL query:')}</div>
         <pre className="my-1 overflow-x-auto font-mono text-xs" dir="ltr">
           <code className="sql">{st.executedSql}</code>
         </pre>
-        <div className="text-xs font-semibold">MySQL said:</div>
+        <div className="text-xs font-semibold">{t('MySQL said: ')}</div>
         <code className="text-xs">{st.message.text}</code>
       </div>
     )
