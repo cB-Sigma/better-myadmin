@@ -12,6 +12,11 @@ export interface ServerLogin {
   host?: string
   port?: number
   collation?: string
+  /**
+   * Per-server session cache (pma: SessionCache, `$_SESSION['cache']['server_N']`): facts such as
+   * `mysql_cur_user` or the SHOW GRANTS analysis. Dropped with the login.
+   */
+  cache?: Record<string, unknown>
 }
 
 export interface SessionData {
