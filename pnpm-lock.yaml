@@ -171,6 +171,19 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
+  packages/kbs:
+    dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+    devDependencies:
+      '@types/node':
+        specifier: 22.15.3
+        version: 22.15.3
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+
   packages/metadata: {}
 
   packages/mysql-types: {}
