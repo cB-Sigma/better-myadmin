@@ -18,7 +18,15 @@ export function serverIndexes(cfg: AppConfig): number[] {
 
 /** PHP empty(): '', '0', 0, false, null, [] are empty. */
 export function phpEmpty(v: unknown): boolean {
-  return v === undefined || v === null || v === false || v === '' || v === '0' || v === 0 || (Array.isArray(v) && v.length === 0)
+  return (
+    v === undefined ||
+    v === null ||
+    v === false ||
+    v === '' ||
+    v === '0' ||
+    v === 0 ||
+    (Array.isArray(v) && v.length === 0)
+  )
 }
 
 /**

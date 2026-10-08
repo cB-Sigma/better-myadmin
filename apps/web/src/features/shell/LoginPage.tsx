@@ -19,10 +19,10 @@ export function LoginPage({ state }: { state: AuthState }) {
   const passRef = useRef<HTMLInputElement>(null)
 
   // focus the password field when a username is prefilled, else the username (functions.ts)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus once on mount, like functions.ts
   useEffect(() => {
     if (username !== '') passRef.current?.focus()
     else userRef.current?.focus()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const login = useMutation({
@@ -60,7 +60,10 @@ export function LoginPage({ state }: { state: AuthState }) {
       </div>
 
       {error !== null && (
-        <div role="alert" className="mb-4 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error">
+        <div
+          role="alert"
+          className="mb-4 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
+        >
           {error}
         </div>
       )}
@@ -69,14 +72,23 @@ export function LoginPage({ state }: { state: AuthState }) {
         <section className="rounded border border-border bg-bg-elevated">
           <header className="flex items-center justify-between border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
             <span>Log in</span>
-            <a href="https://docs.phpmyadmin.net/en/latest/" target="_blank" rel="noopener noreferrer" title="Documentation">
+            <a
+              href="https://docs.phpmyadmin.net/en/latest/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Documentation"
+            >
               <CircleHelp className="size-4" aria-hidden />
               <span className="sr-only">Documentation</span>
             </a>
           </header>
           <div className="space-y-3 p-3 text-sm">
             {state.allowArbitraryServer && (
-              <Row label="Server:" htmlFor="serverNameInput" title="You can enter hostname/IP address and port separated by space.">
+              <Row
+                label="Server:"
+                htmlFor="serverNameInput"
+                title="You can enter hostname/IP address and port separated by space."
+              >
                 <input
                   id="serverNameInput"
                   name="pma_servername"

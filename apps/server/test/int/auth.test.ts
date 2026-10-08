@@ -17,7 +17,12 @@ describe('cookie auth', () => {
   it('rejects a POST without the CSRF token', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
-    const r = await t.req('POST', '/api/auth/login', { server: 1, username: 'root', password: 'x' }, { 'X-BMA-Token': '' })
+    const r = await t.req(
+      'POST',
+      '/api/auth/login',
+      { server: 1, username: 'root', password: 'x' },
+      { 'X-BMA-Token': '' },
+    )
     expect(r.status).toBe(403)
     expect(r.json.error).toMatchObject({ code: 'CSRF', message: 'Error: Token mismatch' })
   })
@@ -39,13 +44,17 @@ describe('cookie auth', () => {
     t = testApp()
     const r = await t.login('root', 'wrong-password')
     expect(r.status).toBe(403)
-    expect(String((r.json.error as { message: string }).message)).toMatch(/^1045: Access denied for user 'root'@/)
+    expect(String((r.json.error as { message: string }).message)).toMatch(
+      /^1045: Access denied for user 'root'@/,
+    )
   })
 
   it('hide_connection_errors masks 1045', async () => {
     t = testApp(testConfig({}, { hide_connection_errors: true }))
     const r = await t.login('root', 'wrong-password')
-    expect((r.json.error as { message: string }).message).toMatch(/^Error 1045: Access denied for user\. Additional/)
+    expect((r.json.error as { message: string }).message).toMatch(
+      /^Error 1045: Access denied for user\. Additional/,
+    )
   })
 
   it('AllowRoot=false denies root before connecting', async () => {

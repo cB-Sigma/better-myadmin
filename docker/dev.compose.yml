@@ -1,0 +1,21 @@
+# Development and parity services. Usage: docker compose -f docker/dev.compose.yml up -d
+# - mysql84 / mariadb11: test servers (root/root), general log on for the parity harness
+# - phpmyadmin-ref: phpMyAdmin at the reference commit (docs/reference/reference-commit.txt) on :8081
+services:
+  mysql84:
+    image: mysql:8.4
+    environment: { MYSQL_ROOT_PASSWORD: root }
+    command: ["--general-log=1", "--log-output=TABLE"]
+    ports: ["3306:3306"]
+    healthcheck: { test: ["CMD", "mysqladmin", "ping", "-proot"], interval: 5s, retries: 30 }
+  mariadb11:
+    image: mariadb:11
+    environment: { MARIADB_ROOT_PASSWORD: root }
+    command: ["--general-log=1", "--log-output=TABLE"]
+    ports: ["3307:3306"]
+    healthcheck: { test: ["CMD", "healthcheck.sh", "--connect"], interval: 5s, retries: 30 }
+  phpmyadmin-ref:
+    build: { context: ./pma-ref }
+    environment: { PMA_HOST: mysql84 }
+    ports: ["8081:8081"]
+    depends_on: { mysql84: { condition: service_healthy } }

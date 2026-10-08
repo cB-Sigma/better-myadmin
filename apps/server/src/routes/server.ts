@@ -6,7 +6,9 @@ import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
 import { queryRoutes } from './query.ts'
 
-export type ServerEnv = AppEnv & { Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials } }
+export type ServerEnv = AppEnv & {
+  Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials }
+}
 
 export const serverRoutes = new Hono<ServerEnv>()
 
@@ -14,7 +16,8 @@ export const serverRoutes = new Hono<ServerEnv>()
 serverRoutes.use('/:s/*', async (c, next) => {
   const { cfg, credBox } = c.get('deps')
   const s = Number(c.req.param('s'))
-  if (!Number.isInteger(s) || getServer(cfg, s) === undefined) throw new NotFoundError('Invalid server index!')
+  if (!Number.isInteger(s) || getServer(cfg, s) === undefined)
+    throw new NotFoundError('Invalid server index!')
   const session = c.get('session')
   const login = session.servers[String(s)]
   if (login === undefined || !login.twoFactorOk) {

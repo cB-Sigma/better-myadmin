@@ -9,7 +9,11 @@ export function securityHeaders(cfg: AppConfig): MiddlewareHandler {
   const allow = cfg.CSPAllow.trim()
   const extra = allow === '' ? '' : ` ${allow}`
   const frameAncestors =
-    cfg.AllowThirdPartyFraming === true ? '*' : cfg.AllowThirdPartyFraming === 'sameorigin' ? "'self'" : "'none'"
+    cfg.AllowThirdPartyFraming === true
+      ? '*'
+      : cfg.AllowThirdPartyFraming === 'sameorigin'
+        ? "'self'"
+        : "'none'"
   const csp = [
     "default-src 'self'",
     `script-src 'self' 'wasm-unsafe-eval'${extra}`,

@@ -13,7 +13,10 @@ export function ServerShell() {
     <div className="flex h-full">
       <NavPanel server={server} />
       <div className="flex min-w-0 flex-1 flex-col">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-1.5 text-sm">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-1.5 text-sm"
+        >
           <Server className="size-4 text-fg-muted" aria-hidden />
           <span className="text-fg-muted">Server:</span>
           <Link to="/s/$server" params={{ server }} className="font-medium">
@@ -60,7 +63,13 @@ function NavPanel({ server }: { server: number }) {
           <LogOut className={icon} aria-hidden />
           <span className="sr-only">Log out</span>
         </button>
-        <a className={btn} href="https://docs.phpmyadmin.net/en/latest/" target="_blank" rel="noopener noreferrer" title="phpMyAdmin documentation">
+        <a
+          className={btn}
+          href="https://docs.phpmyadmin.net/en/latest/"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="phpMyAdmin documentation"
+        >
           <BookOpen className={icon} aria-hidden />
           <span className="sr-only">phpMyAdmin documentation</span>
         </a>
@@ -68,7 +77,12 @@ function NavPanel({ server }: { server: number }) {
           <Settings className={icon} aria-hidden />
           <span className="sr-only">Navigation panel settings</span>
         </button>
-        <button type="button" className={btn} title="Reload navigation panel" onClick={() => qc.invalidateQueries({ queryKey: qk.srv(server) })}>
+        <button
+          type="button"
+          className={btn}
+          title="Reload navigation panel"
+          onClick={() => qc.invalidateQueries({ queryKey: qk.srv(server) })}
+        >
           <RefreshCw className={icon} aria-hidden />
           <span className="sr-only">Reload navigation panel</span>
         </button>
@@ -92,7 +106,9 @@ function TabBar({ server }: { server: number }) {
               <Link
                 to={href}
                 className={`flex items-center gap-1.5 whitespace-nowrap rounded-t border border-b-0 px-2.5 py-1.5 hover:no-underline ${
-                  active ? 'border-border bg-bg-subtle font-medium text-fg' : 'border-transparent text-accent hover:bg-bg-subtle'
+                  active
+                    ? 'border-border bg-bg-subtle font-medium text-fg'
+                    : 'border-transparent text-accent hover:bg-bg-subtle'
                 }`}
                 aria-current={active ? 'page' : undefined}
               >

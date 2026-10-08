@@ -1,0 +1,61 @@
+# Statements that one tool sends and the other does not, accepted on purpose.
+# Only reads and connection/session set-up may be listed; the harness refuses a pattern that
+# matches a write. Every entry needs a reason. See docs/architecture/11-testing-and-parity-strategy.md.
+#
+#   tool:    pma | bma   which side may send it without the other
+#   pattern: JavaScript regex, matched against the normalised statement
+#   why:     justification reviewed in the PR
+- tool: pma
+  pattern: "^SHOW TABLES FROM `phpmyadmin`$"
+  why: phpMyAdmin probes the configuration storage on every request; BetterMyAdmin caches pmadb discovery per session (M0 has no pmadb yet).
+- tool: pma
+  pattern: "^SHOW TABLES FROM `par_db`$"
+  why: phpMyAdmin's DbTableExists check on every request; BetterMyAdmin validates scope lazily.
+- tool: pma
+  pattern: "^SHOW SESSION VARIABLES LIKE 'FOREIGN_KEY_CHECKS'$"
+  why: phpMyAdmin reads the FK setting several times while rendering the page (form checkbox, inline editor); we read it once per statement.
+- tool: pma
+  pattern: "^SELECT 1 FROM information_schema\\.VIEWS WHERE "
+  why: Table::isView / isUpdatableView for rendering the result table; the grid features that need it arrive in M1.
+- tool: pma
+  pattern: "^SELECT @@lower_case_table_names$"
+  why: Cached server facts read lazily by phpMyAdmin during rendering.
+- tool: pma
+  pattern: "^SELECT \\*, `TABLE_SCHEMA` +AS `Db`"
+  why: getTablesFull's information_schema query; BetterMyAdmin reads the same TABLE_ROWS/TABLE_TYPE with a narrower query (same row estimate).
+- tool: bma
+  pattern: "^SELECT TABLE_TYPE, TABLE_ROWS FROM information_schema\\.TABLES WHERE "
+  why: The narrower equivalent of getTablesFull used for Table::countRecords.
+- tool: pma
+  pattern: "^SELECT `COLUMN_NAME` AS `Field`"
+  why: Column metadata for the results grid (edit links, transformations) — grid metadata arrives in M1.
+- tool: pma
+  pattern: "^SHOW INDEXES FROM "
+  why: Unique-key detection for grid editing — arrives in M1.
+- tool: pma
+  pattern: "^SHOW CREATE TABLE "
+  why: Read by phpMyAdmin while rendering the results grid (relations) — arrives in M1.
+- tool: pma
+  pattern: "^SELECT @@have_profiling$"
+  why: Profiling checkbox rendering — arrives in M1.
+- tool: pma
+  pattern: "^SELECT 1 FROM mysql\\.user LIMIT 1$"
+  why: isSuperUser for the menu; BetterMyAdmin evaluates it only for the DROP DATABASE guard.
+- tool: pma
+  pattern: "^SHOW SESSION VARIABLES LIKE 'collation_connection'$"
+  why: Read for the home/menu rendering.
+- tool: pma
+  pattern: "^SELECT CURRENT_USER\\(\\)$"
+  why: Menu privilege checks (isGrantUser/isCreateUser).
+- tool: pma
+  pattern: "^SELECT 1 FROM \\(SELECT `GRANTEE`, `IS_GRANTABLE` FROM `INFORMATION_SCHEMA`"
+  why: Menu privilege checks (isGrantUser/isCreateUser).
+- tool: pma
+  pattern: "^SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`\\.`USER_PRIVILEGES`"
+  why: Menu tab visibility (Triggers/Events).
+- tool: pma
+  pattern: "^SELECT 1 FROM `INFORMATION_SCHEMA`\\.`(USER|SCHEMA|TABLE)_PRIVILEGES`"
+  why: Menu tab visibility.
+- tool: bma
+  pattern: "^SHOW SESSION VARIABLES LIKE 'FOREIGN_KEY_CHECKS'$"
+  why: ForeignKey::handleDisableCheckInit read (phpMyAdmin sends it too, more often).

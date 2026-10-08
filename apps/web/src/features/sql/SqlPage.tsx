@@ -43,10 +43,20 @@ export function SqlPage() {
 
   return (
     <div>
-      <form ref={formRef} id="sqlqueryform" onSubmit={onSubmit} className="mb-4 max-w-5xl rounded border border-border">
+      <form
+        ref={formRef}
+        id="sqlqueryform"
+        onSubmit={onSubmit}
+        className="mb-4 max-w-5xl rounded border border-border"
+      >
         <div className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
           <span>Run SQL query/queries on server “{label}”:</span>
-          <a href="https://dev.mysql.com/doc/refman/8.4/en/select.html" target="_blank" rel="noopener noreferrer" title="Documentation">
+          <a
+            href="https://dev.mysql.com/doc/refman/8.4/en/select.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Documentation"
+          >
             <CircleHelp className="size-4" aria-hidden />
             <span className="sr-only">Documentation</span>
           </a>
@@ -89,7 +99,10 @@ export function SqlPage() {
 
       <div id="sqlqueryresultsouter">
         {run.error instanceof ApiError && (
-          <div role="alert" className="mb-3 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error">
+          <div
+            role="alert"
+            className="mb-3 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
+          >
             <div className="font-semibold">Error</div>
             {run.error.envelope.sql !== undefined && (
               <>

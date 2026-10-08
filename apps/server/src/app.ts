@@ -8,7 +8,7 @@ import { securityHeaders } from './http/headers.ts'
 import { authRoutes } from './routes/auth.ts'
 import { metaRoutes } from './routes/meta.ts'
 import { serverRoutes } from './routes/server.ts'
-import { SecretBox, safeEqual } from './session/crypto.ts'
+import { type SecretBox, safeEqual } from './session/crypto.ts'
 import { newSession, nowSeconds } from './session/manager.ts'
 import type { SessionData, SessionStore } from './session/store.ts'
 

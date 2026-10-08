@@ -1,5 +1,5 @@
-import { type AppDeps, createApp } from '../../src/app.ts'
 import { type ConfigInput, type ServerInput, resolveConfig } from '@bettermyadmin/config'
+import { type AppDeps, createApp } from '../../src/app.ts'
 import type { AppConfig } from '../../src/config.ts'
 import { PoolManager } from '../../src/db/pool-manager.ts'
 import { SecretBox } from '../../src/session/crypto.ts'
@@ -40,7 +40,11 @@ export function testApp(cfg = testConfig()) {
     if (jar.size > 0) h.cookie = [...jar].map(([k, v]) => `${k}=${v}`).join('; ')
     if (body !== undefined) h['content-type'] = 'application/json'
     if (method !== 'GET' && token !== '' && !('X-BMA-Token' in headers)) h['X-BMA-Token'] = token
-    const res = await app.request(path, { method, headers: h, body: body === undefined ? null : JSON.stringify(body) })
+    const res = await app.request(path, {
+      method,
+      headers: h,
+      body: body === undefined ? null : JSON.stringify(body),
+    })
     for (const c of res.headers.getSetCookie()) {
       const [kv] = c.split(';')
       const [k, v] = kv!.split('=')

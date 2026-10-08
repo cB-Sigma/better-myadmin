@@ -64,7 +64,9 @@ export interface MysqlErrorLike {
 }
 
 export function isMysqlError(e: unknown): e is MysqlErrorLike {
-  return typeof e === 'object' && e !== null && 'errno' in e && typeof (e as MysqlErrorLike).errno === 'number'
+  return (
+    typeof e === 'object' && e !== null && 'errno' in e && typeof (e as MysqlErrorLike).errno === 'number'
+  )
 }
 
 export class MysqlError extends BmaError {

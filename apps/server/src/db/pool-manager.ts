@@ -1,8 +1,9 @@
 import type { Executed } from '@bettermyadmin/contracts'
-import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { quoteString } from '@bettermyadmin/sql-gen'
+import { createServerContext } from '@bettermyadmin/sql-lexer'
+import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
-import { Conn } from './connection.ts'
+import { Conn, type ServerInfo } from './connection.ts'
 
 export interface Credentials {
   user: string
@@ -22,6 +23,8 @@ export function connectionOptions(server: ServerConfig, creds: Credentials): Poo
     bigNumberStrings: true,
     dateStrings: true,
     multipleStatements: false,
+    // mysqli does not request CLIENT_FOUND_ROWS: UPDATE reports changed rows, not matched rows
+    flags: ['-FOUND_ROWS'],
     compress: server.compress,
     connectTimeout: 10000,
   }
@@ -44,21 +47,61 @@ export function connectionOptions(server: ServerConfig, creds: Credentials): Poo
   return opts
 }
 
+/** "8.4.2-log" → 80402 (DatabaseInterface::setVersion) */
+export function versionInt(version: string): number {
+  const [maj = 0, min = 0, pat = 0] = version.split(/[.-]/).map((p) => Number.parseInt(p, 10) || 0)
+  return maj * 10000 + min * 100 + pat
+}
+
 /**
- * Statements run on every new connection.
- * pma: src/Dbal/DatabaseInterface.php::postConnect
+ * Connection set-up, in phpMyAdmin's order: postConnect (version probe, SET NAMES with the default
+ * collation, lc_messages, time zone) then setCollation with the configured connection collation.
+ * pma: src/Dbal/DatabaseInterface.php::postConnect, ::setCollation
  */
-export function postConnectStatements(server: ServerConfig, collation: string): string[] {
-  const charset = collation.split('_')[0] ?? 'utf8mb4'
-  const stmts = [`SET NAMES '${charset}' COLLATE '${collation}';`]
-  if (server.SessionTimeZone !== '') stmts.push(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`)
-  return stmts
+export async function postConnect(
+  conn: Conn,
+  server: ServerConfig,
+  collation: string,
+  mysqlLocale = 'en_US',
+): Promise<ServerInfo> {
+  const row = (await conn.rows('SELECT @@version, @@version_comment, @@sql_mode', 'connect.version'))[0]
+  const version = row?.['@@version'] ?? ''
+  const versionComment = row?.['@@version_comment'] ?? ''
+  const sqlMode = row?.['@@sql_mode'] ?? ''
+  const v = versionInt(version)
+  const isMariaDb = version.toLowerCase().includes('mariadb')
+  const charset = v > 50503 ? 'utf8mb4' : 'utf8'
+  await conn.query(
+    `SET NAMES '${charset}' COLLATE '${v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'}';`,
+    'connect.names',
+  )
+  if (mysqlLocale !== '')
+    await conn.query(`SET lc_messages = '${mysqlLocale}';`, 'connect.locale').catch(() => {})
+  if (server.SessionTimeZone !== '') {
+    await conn
+      .query(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`, 'connect.tz')
+      .catch(() => {})
+  }
+  // automatically adjust collation if not supported by server
+  const coll =
+    charset === 'utf8' && collation.startsWith('utf8mb4_') ? `utf8_${collation.slice(8)}` : collation
+  await conn.query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation').catch(() => {})
+  return {
+    version,
+    versionInt: v,
+    versionComment,
+    isMariaDb,
+    isPercona: versionComment.toLowerCase().includes('percona'),
+    sqlMode,
+    context: createServerContext(v, isMariaDb, sqlMode),
+  }
 }
 
 interface PoolEntry {
   pool: Pool
   lastUsed: number
   initialised: WeakSet<object>
+  serverInfo: ServerInfo | null
   serverIndex: number
   collation: string
 }
@@ -115,6 +158,7 @@ export class PoolManager {
         }),
         lastUsed: Date.now(),
         initialised: new WeakSet(),
+        serverInfo: null,
         serverIndex,
         collation,
       }
@@ -125,16 +169,20 @@ export class PoolManager {
     const conn = new Conn(raw, log)
     const marker = raw.connection as unknown as object
     if (!entry.initialised.has(marker)) {
-      for (const sql of postConnectStatements(this.server(serverIndex), collation)) {
-        await conn.query(sql, 'connect.post')
-      }
+      entry.serverInfo = await postConnect(conn, this.server(serverIndex), collation)
       entry.initialised.add(marker)
     }
+    conn.serverInfo = entry.serverInfo
     return conn
   }
 
   /** KILL QUERY on a separate connection of the same pool (Cancel button). */
-  async killQuery(sessionId: string, serverIndex: number, threadId: number, creds: Credentials): Promise<void> {
+  async killQuery(
+    sessionId: string,
+    serverIndex: number,
+    threadId: number,
+    creds: Credentials,
+  ): Promise<void> {
     const conn = await mysql.createConnection(connectionOptions(this.server(serverIndex), creds))
     try {
       await conn.query(`KILL QUERY ${Math.trunc(threadId)}`)

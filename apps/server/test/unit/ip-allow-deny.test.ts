@@ -14,7 +14,9 @@ describe('getClientIp matches Core::getIp', () => {
   for (const c of fixtures.getIp) {
     it(JSON.stringify(c), () => {
       const proxies: Record<string, string> = c.proxy === null ? {} : { [c.proxy]: 'HTTP_X_FORWARDED_FOR' }
-      const result = getClientIp(c.remote, proxies, (n) => (n === 'x-forwarded-for' ? (c.header ?? undefined) : undefined))
+      const result = getClientIp(c.remote, proxies, (n) =>
+        n === 'x-forwarded-for' ? (c.header ?? undefined) : undefined,
+      )
       expect(result).toBe(c.result)
     })
   }

@@ -2,7 +2,7 @@
 import { randomBytes } from 'node:crypto'
 import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { dirname, join, resolve } from 'node:path'
+import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { ConfigError, loadConfig } from '@bettermyadmin/config'
@@ -58,7 +58,8 @@ async function main() {
   const dataDir = resolve(expandHome(cfg.DataDir))
   mkdirSync(dataDir, { recursive: true, mode: 0o700 })
   const { secret, generated } = ensureSecret(cfg, dataDir)
-  if (generated) console.warn(`blowfish_secret is not set; using the generated secret in ${join(dataDir, 'secret')}`)
+  if (generated)
+    console.warn(`blowfish_secret is not set; using the generated secret in ${join(dataDir, 'secret')}`)
   cfg.blowfish_secret = secret
 
   const pools = new PoolManager(cfg)
@@ -76,14 +77,16 @@ async function main() {
   const staticRoot = resolve(values.static ?? join(here, '../../web/dist'))
   if (existsSync(join(staticRoot, 'index.html'))) {
     const indexHtml = readFileSync(join(staticRoot, 'index.html'), 'utf8')
+    // serveStatic resolves `root` against the working directory
+    const root = relative(process.cwd(), staticRoot) || '.'
     app.use(
       '/assets/*',
       serveStatic({
-        root: staticRoot,
+        root,
         onFound: (_p, c) => c.header('Cache-Control', 'public, max-age=31536000, immutable'),
       }),
     )
-    app.use('*', serveStatic({ root: staticRoot }))
+    app.use('*', serveStatic({ root }))
     app.get('*', (c) => c.html(indexHtml))
   } else {
     console.warn(`web assets not found in ${staticRoot}; serving the API only (run the web dev server)`)

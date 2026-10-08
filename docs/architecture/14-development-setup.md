@@ -11,13 +11,16 @@
 ```bash
 git clone <repo> bettermyadmin && cd bettermyadmin
 pnpm install
-docker compose -f docker/dev.compose.yml up -d        # mysql84, mariadb11, phpmyadmin-ref, redis (optional)
-pnpm db:seed                                           # loads sakila, world, pma-edge and pmadb tables into both servers
-cp bettermyadmin.config.example.ts bettermyadmin.config.ts
-pnpm dev                                               # turbo: server on :8080 (API + proxies to Vite), web on :5173 with HMR
+docker compose -f docker/dev.compose.yml up -d          # mysql84 (:3306), mariadb11 (:3307), phpmyadmin-ref (:8081)
+pnpm --filter @bettermyadmin/web dev                    # web on :5173 with HMR, proxies /api to :8080
+BMA_HOST=127.0.0.1 pnpm --filter @bettermyadmin/server dev   # API on :8080
 ```
 
-Open `http://localhost:5173`. Log in with `root` / `root` (dev containers only). The reference phpMyAdmin is on `http://localhost:8081` for side-by-side comparison.
+Open `http://localhost:5173` and log in with `root` / `root` (dev containers only). The reference phpMyAdmin (built from the commit in `docs/reference/reference-commit.txt`) is on `http://localhost:8081` for side-by-side comparison.
+
+Without a config file the server uses phpMyAdmin's defaults plus environment overrides, generates `blowfish_secret` into `DataDir` (`~/.bettermyadmin`), and serves the built SPA from `apps/web/dist` when present.
+
+Without Docker, the reference phpMyAdmin also runs from a checkout with `composer install --prefer-source && yarn install` and `php -S 127.0.0.1:8081 -t public` (PHP 8.2+ with `mysqli`).
 
 ## Dev config
 
@@ -47,19 +50,13 @@ Environment variables override: `BMA__Servers__1__host=127.0.0.1 pnpm dev`.
 | Typecheck everything | `pnpm typecheck` |
 | Lint and format | `pnpm lint` / `pnpm format` |
 | Unit + contract tests | `pnpm test` |
-| Integration tests (needs Docker) | `pnpm test:int` (`MATRIX=mysql84` to pick one) |
-| Golden parity tests | `pnpm test:parity` (brings up the reference phpMyAdmin) |
-| Refresh golden files from phpMyAdmin | `pnpm golden:refresh` then review the diff |
-| E2E | `pnpm test:e2e` (`--ui` for the Playwright inspector) |
-| Update checklists from test results | `pnpm parity:report` |
-| Regenerate reference docs | `pnpm docs:gen` (config directive table, route map, parity exceptions index) |
-| Import a locale | `pnpm i18n:import --locale de` (reads phpMyAdmin's `.po` from `vendor/phpmyadmin-po` submodule) |
-| Check string parity | `pnpm i18n:parity` |
-| Storybook for `packages/ui` and composites | `pnpm storybook` |
-| Build everything | `pnpm build` |
-| Run the production build locally | `node apps/server/dist/main.js --config ./bettermyadmin.config.ts` |
-| Build Bun binary | `pnpm build:binary` |
-| Build Docker image | `docker build -t bettermyadmin .` |
+| Integration tests (MySQL on :3306, `BMA_TEST_*` env to override) | `pnpm test:int` |
+| Golden parity tests (needs the reference phpMyAdmin, `BMA_PARITY_PMA_URL`) | `pnpm test:parity` |
+| Regenerate PHP-derived fixtures | `php packages/<pkg>/scripts/*.php` (each package README lists its scripts) |
+| Build the SPA | `pnpm --filter @bettermyadmin/web build` |
+| Run the server | `pnpm --filter @bettermyadmin/server start -- --config ./bettermyadmin.config.ts` |
+
+Planned and not yet wired: `pnpm test:e2e`, `pnpm parity:report`, `pnpm docs:gen`, `pnpm i18n:*`, `pnpm storybook`, `pnpm build:binary`.
 
 ## Working on a feature
 

@@ -54,7 +54,11 @@ export interface LoginInput {
  * pma: src/Plugins/Auth/AuthenticationCookie.php::readCredentials/storeCredentials,
  *      src/Plugins/AuthenticationPlugin.php::checkRules, src/Http/Middleware/Authentication.php
  */
-export async function cookieLogin(cfg: AppConfig, pools: PoolManager, input: LoginInput): Promise<Credentials> {
+export async function cookieLogin(
+  cfg: AppConfig,
+  pools: PoolManager,
+  input: LoginInput,
+): Promise<Credentials> {
   const server = pools.server(input.serverIndex)
   const user = sanitizeMySQLUser(input.username)
   if (Buffer.byteLength(input.password, 'utf8') >= 2000) {

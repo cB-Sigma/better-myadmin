@@ -1,4 +1,5 @@
 import type { Executed } from '@bettermyadmin/contracts'
+import type { Context } from '@bettermyadmin/sql-lexer'
 import type { FieldPacket, PoolConnection, ResultSetHeader } from 'mysql2/promise'
 import { MysqlError, isMysqlError } from '../http/errors.ts'
 import { type RawField, toField } from './field-meta.ts'
@@ -21,9 +22,22 @@ export interface QueryResult {
  * Thin wrapper over one mysql2 connection. Every statement the server runs goes through
  * `query(sql, label)` so it is timed and logged for the Debug SQL console and parity tests.
  */
+/** Facts read by postConnect (DatabaseInterface::setVersion) and the matching parser context. */
+export interface ServerInfo {
+  version: string
+  versionInt: number
+  versionComment: string
+  isMariaDb: boolean
+  isPercona: boolean
+  sqlMode: string
+  /** Context::setMode(@@sql_mode) + Context::loadClosest(MySql|MariaDb + version) */
+  context: Context
+}
+
 export class Conn {
   readonly raw: PoolConnection
   readonly log: Executed[]
+  serverInfo: ServerInfo | null = null
 
   constructor(raw: PoolConnection, log: Executed[]) {
     this.raw = raw
@@ -91,13 +105,19 @@ function normalise(rows: unknown, fields: unknown): Omit<QueryResult, 'ms'> {
   if (isHeader(rows)) return { resultSets: [], header: toHeader(rows) }
   const fieldList = fields as Array<FieldPacket[] | FieldPacket | undefined> | undefined
   // multi result: rows = [rows1, rows2, ..., header], fields = [fields1, fields2, ..., undefined]
-  if (Array.isArray(rows) && Array.isArray(fieldList) && fieldList.length > 0 && Array.isArray(fieldList[0])) {
+  if (
+    Array.isArray(rows) &&
+    Array.isArray(fieldList) &&
+    fieldList.length > 0 &&
+    Array.isArray(fieldList[0])
+  ) {
     const sets: ResultSet[] = []
     let header: QueryResult['header'] = null
     rows.forEach((r, i) => {
       const fs = fieldList[i]
       if (isHeader(r)) header = toHeader(r)
-      else if (Array.isArray(fs)) sets.push({ fields: fs.map((f) => toField(f as unknown as RawField)), rows: r as RawRow[] })
+      else if (Array.isArray(fs))
+        sets.push({ fields: fs.map((f) => toField(f as unknown as RawField)), rows: r as RawRow[] })
     })
     return { resultSets: sets, header }
   }

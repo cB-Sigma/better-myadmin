@@ -29,6 +29,8 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | X21 | Headers | No `X-Frame-Options` (CSP `frame-ancestors` + JS check) | Adds `X-Frame-Options` consistent with `AllowThirdPartyFraming` | Defence in depth | [Security](../architecture/07-security.md) |
 | X22 | Config | `ForceSSL` documented as deprecated, not acted on | Honoured: redirects to HTTPS and sets HSTS | Useful behind TLS terminators | [Security](../architecture/07-security.md) |
 | X23 | Themes | Colour mode chosen manually per theme | Defaults to `prefers-color-scheme`, manual override kept | Expected on modern desktops | [UI design](../architecture/09-ui-design-system.md) |
+| X24 | Connections | A new MySQL connection per HTTP request, so `postConnect` (`SELECT @@version…`, `SET NAMES`, `SET lc_messages`, `SET collation_connection`) runs on every request | Pooled connections per (session, server); the same set-up statements run once per new connection | Latency; same session state. The parity harness compares session set-up as final state, not per request | [Backend](../architecture/04-backend-architecture.md#connection-manager) |
+| X25 | Config | Invalid directive values silently replaced by the default (`MaxRows = 0` → 25) | Startup fails with a readable error naming the directive | A typo should not silently change behaviour | `packages/config/README.md` |
 
 ## Source quirks found in phpMyAdmin master (reproduced unless noted)
 

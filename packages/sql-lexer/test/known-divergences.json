@@ -1,0 +1,110 @@
+[
+  {
+    "fixture": "parser",
+    "name": "extra/php-typeerror-into-outfile",
+    "aspect": "phpException",
+    "reason": "PHP: IntoKeyword::parseFileOptions() receives a null keyword (`INTO OUTFILE '...' f`, a non-keyword after the file name) and throws a TypeError under strict_types, i.e. phpMyAdmin answers with a fatal error. The port passes the null through, records no exception and keeps parsing (MySQL then reports the syntax error)."
+  },
+  {
+    "fixture": "split",
+    "name": "extra/php-typeerror-into-outfile",
+    "aspect": "phpException",
+    "reason": "PHP: IntoKeyword::parseFileOptions() receives a null keyword (`INTO OUTFILE '...' f`, a non-keyword after the file name) and throws a TypeError under strict_types, i.e. phpMyAdmin answers with a fatal error. The port passes the null through, records no exception and keeps parsing (MySQL then reports the syntax error)."
+  },
+  {
+    "fixture": "lint",
+    "name": "extra/php-typeerror-into-outfile",
+    "aspect": "phpException",
+    "reason": "PHP: IntoKeyword::parseFileOptions() receives a null keyword (`INTO OUTFILE '...' f`, a non-keyword after the file name) and throws a TypeError under strict_types, i.e. phpMyAdmin answers with a fatal error. The port passes the null through, records no exception and keeps parsing (MySQL then reports the syntax error)."
+  },
+  {
+    "fixture": "parser",
+    "name": "extra/php-typeerror-explain-connection",
+    "aspect": "phpException",
+    "reason": "PHP: `EXPLAIN FOR CONNECTION` without an id assigns a non-int token value to the ?int property ExplainStatement::$connectionId and throws a TypeError. The port stores the value (or null) and keeps parsing."
+  },
+  {
+    "fixture": "split",
+    "name": "extra/php-typeerror-explain-connection",
+    "aspect": "phpException",
+    "reason": "PHP: `EXPLAIN FOR CONNECTION` without an id assigns a non-int token value to the ?int property ExplainStatement::$connectionId and throws a TypeError. The port stores the value (or null) and keeps parsing."
+  },
+  {
+    "fixture": "lint",
+    "name": "extra/php-typeerror-explain-connection",
+    "aspect": "phpException",
+    "reason": "PHP: `EXPLAIN FOR CONNECTION` without an id assigns a non-int token value to the ?int property ExplainStatement::$connectionId and throws a TypeError. The port stores the value (or null) and keeps parsing."
+  },
+  {
+    "fixture": "parser",
+    "name": "extra/php-typeerror-param-name",
+    "aspect": "phpException",
+    "reason": "PHP: a number used as routine parameter name is assigned to the ?string property ParameterDefinition::$name and throws a TypeError. The port stores the value and keeps parsing."
+  },
+  {
+    "fixture": "split",
+    "name": "extra/php-typeerror-param-name",
+    "aspect": "phpException",
+    "reason": "PHP: a number used as routine parameter name is assigned to the ?string property ParameterDefinition::$name and throws a TypeError. The port stores the value and keeps parsing."
+  },
+  {
+    "fixture": "lint",
+    "name": "extra/php-typeerror-param-name",
+    "aspect": "phpException",
+    "reason": "PHP: a number used as routine parameter name is assigned to the ?string property ParameterDefinition::$name and throws a TypeError. The port stores the value and keeps parsing."
+  },
+  {
+    "fixture": "parser",
+    "name": "extra/php-typeerror-alias-number",
+    "aspect": "phpException",
+    "reason": "PHP: a number token after AS is assigned to the ?string property Expression::$alias and throws a TypeError. The port stores the number and keeps parsing."
+  },
+  {
+    "fixture": "split",
+    "name": "extra/php-typeerror-alias-number",
+    "aspect": "phpException",
+    "reason": "PHP: a number token after AS is assigned to the ?string property Expression::$alias and throws a TypeError. The port stores the number and keeps parsing."
+  },
+  {
+    "fixture": "lint",
+    "name": "extra/php-typeerror-alias-number",
+    "aspect": "phpException",
+    "reason": "PHP: a number token after AS is assigned to the ?string property Expression::$alias and throws a TypeError. The port stores the number and keeps parsing."
+  },
+  {
+    "fixture": "parser",
+    "name": "extra/php-typeerror-limit-float",
+    "aspect": "phpException",
+    "reason": "PHP: a float LIMIT value is assigned to the string|int property Limit::$rowCount and throws a TypeError. The port stores the number (no parser error, like PHP would have if it did not crash)."
+  },
+  {
+    "fixture": "split",
+    "name": "extra/php-typeerror-limit-float",
+    "aspect": "phpException",
+    "reason": "PHP: a float LIMIT value is assigned to the string|int property Limit::$rowCount and throws a TypeError. The port stores the number (no parser error, like PHP would have if it did not crash)."
+  },
+  {
+    "fixture": "lint",
+    "name": "extra/php-typeerror-limit-float",
+    "aspect": "phpException",
+    "reason": "PHP: a float LIMIT value is assigned to the string|int property Limit::$rowCount and throws a TypeError. The port stores the number (no parser error, like PHP would have if it did not crash)."
+  },
+  {
+    "fixture": "parser",
+    "name": "extra/php-typeerror-describe-number",
+    "aspect": "phpException",
+    "reason": "PHP: a number used as table name in DESCRIBE is assigned to the ?string property ExplainStatement::$explainedTable and throws a TypeError. The port stores the value."
+  },
+  {
+    "fixture": "split",
+    "name": "extra/php-typeerror-describe-number",
+    "aspect": "phpException",
+    "reason": "PHP: a number used as table name in DESCRIBE is assigned to the ?string property ExplainStatement::$explainedTable and throws a TypeError. The port stores the value."
+  },
+  {
+    "fixture": "lint",
+    "name": "extra/php-typeerror-describe-number",
+    "aspect": "phpException",
+    "reason": "PHP: a number used as table name in DESCRIBE is assigned to the ?string property ExplainStatement::$explainedTable and throws a TypeError. The port stores the value."
+  }
+]

@@ -42,7 +42,10 @@ async function call<T>(method: 'GET' | 'POST', path: string, body?: unknown): Pr
   })
   const json = (await res.json().catch(() => null)) as unknown
   if (!res.ok) {
-    const env = (json as ErrorEnvelope | null)?.error ?? { code: 'INTERNAL' as const, message: res.statusText }
+    const env = (json as ErrorEnvelope | null)?.error ?? {
+      code: 'INTERNAL' as const,
+      message: res.statusText,
+    }
     throw new ApiError(res.status, env)
   }
   return json as T

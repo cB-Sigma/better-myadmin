@@ -166,7 +166,10 @@ export function getClientIp(
   if (remoteAddr === undefined || remoteAddr === '') return false
   const headerVar = trustedProxies[remoteAddr]
   if (headerVar === undefined) return remoteAddr
-  const name = headerVar.replace(/^HTTP_/, '').replace(/_/g, '-').toLowerCase()
+  const name = headerVar
+    .replace(/^HTTP_/, '')
+    .replace(/_/g, '-')
+    .toLowerCase()
   const first = (header(name) ?? '').split(',')[0] ?? ''
   return isIPv4(first) || isIPv6(first) ? first : false
 }

@@ -1,0 +1,7 @@
+[
+{"query":"SELECT 1; SELECT 2;","options":{"add_delimiter":true},"results":["","SELECT 1;","SELECT 2;"]},
+{"query":"DELIMITER $$\nSELECT 1$$\n","options":{"parse_delimiter":true},"results":["DELIMITER $$","","SELECT 1",""]},
+{"query":"DELIMITER $$\nSELECT 1$$\nDELIMITER ;\nSELECT 2;","options":{"parse_delimiter":true,"add_delimiter":true},"results":["DELIMITER $$","SELECT 1$$","DELIMITER ;","","SELECT 2;"]},
+{"query":"SELECT 1","options":[],"results":["","SELECT 1"]},
+{"query":"SELECT 1; SELECT 'this is a long statement that exceeds sixteen bytes'; SELECT 3","options":[],"results":["SELECT 1","","SELECT 'this is a long statement that exceeds sixteen bytes'","SELECT 3"]}
+]

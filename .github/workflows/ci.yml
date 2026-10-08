@@ -1,0 +1,49 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm --filter @bettermyadmin/web build
+
+  integration:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        db: ["mysql:8.4", "mysql:8.0", "mariadb:11.4", "mariadb:10.11"]
+    services:
+      db:
+        image: ${{ matrix.db }}
+        env: { MYSQL_ROOT_PASSWORD: root, MARIADB_ROOT_PASSWORD: root }
+        ports: ["3306:3306"]
+        options: --health-cmd="mysqladmin ping -proot || healthcheck.sh --connect" --health-interval=5s --health-retries=30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:int
+
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: docker compose -f docker/dev.compose.yml up -d --build --wait mysql84 phpmyadmin-ref
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:parity

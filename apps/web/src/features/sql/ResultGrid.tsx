@@ -20,7 +20,9 @@ const CellView = memo(function CellView({ value, field }: { value: Cell; field: 
     return <span className="font-mono text-data-binary">[BLOB - {formatByteDown(value.bytes)}]</span>
   }
   if (field.mappedType === 'bit') {
-    const bits = [...b64ToHex(value.b64)].map((h) => Number.parseInt(h, 16).toString(2).padStart(4, '0')).join('')
+    const bits = [...b64ToHex(value.b64)]
+      .map((h) => Number.parseInt(h, 16).toString(2).padStart(4, '0'))
+      .join('')
     return <span className="font-mono">b'{bits.replace(/^0+(?=.)/, '')}'</span>
   }
   return <span className="font-mono text-data-binary">0x{b64ToHex(value.b64)}</span>
@@ -45,8 +47,15 @@ export function ResultGrid({ fields, rows }: { fields: Field[]; rows: Cell[][] }
   const padBottom = virtual && items.length > 0 ? v.getTotalSize() - ((items.at(-1)?.start ?? 0) + ROW_H) : 0
 
   return (
-    <div ref={parentRef} className={`overflow-auto rounded border border-border ${virtual ? 'max-h-[70vh]' : ''}`}>
-      <table className="tnum w-max min-w-full border-collapse text-[13px]" role="grid" aria-rowcount={rows.length}>
+    <div
+      ref={parentRef}
+      className={`overflow-auto rounded border border-border ${virtual ? 'max-h-[70vh]' : ''}`}
+    >
+      <table
+        className="tnum w-max min-w-full border-collapse text-[13px]"
+        role="grid"
+        aria-rowcount={rows.length}
+      >
         <thead className="sticky top-0 z-10">
           <tr>
             {fields.map((f, i) => (

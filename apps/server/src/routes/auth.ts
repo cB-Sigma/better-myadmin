@@ -1,4 +1,9 @@
-import { type AuthState, LoginRequest, type LoginResponse, type LogoutResponse } from '@bettermyadmin/contracts'
+import {
+  type AuthState,
+  LoginRequest,
+  type LoginResponse,
+  type LogoutResponse,
+} from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { type AppEnv, writeSessionCookies } from '../app.ts'
@@ -23,7 +28,7 @@ authRoutes.get('/state', (c) => {
     if (enc !== undefined) recalledUser = userBox.decrypt(enc)
   }
   const body: AuthState = {
-    authenticated: login !== undefined && login.twoFactorOk,
+    authenticated: login?.twoFactorOk === true,
     server: session.currentServer,
     user: login?.user ?? null,
     twoFactorPending: login !== undefined && !login.twoFactorOk,
@@ -58,8 +63,8 @@ authRoutes.post('/login', async (c) => {
   if (req.username === '') throw new ValidationError('Missing username.')
 
   // Node's socket address; TrustedProxies decides whether a forwarded header is believed
-  const remote = (c.env as { incoming?: { socket?: { remoteAddress?: string } } } | undefined)?.incoming?.socket
-    ?.remoteAddress
+  const remote = (c.env as { incoming?: { socket?: { remoteAddress?: string } } } | undefined)?.incoming
+    ?.socket?.remoteAddress
   const remoteIp = getClientIp(remote?.replace(/^::ffff:/, ''), cfg.TrustedProxies, (n) => c.req.header(n))
 
   const creds = await cookieLogin(cfg, pools, {
@@ -95,7 +100,12 @@ authRoutes.post('/login', async (c) => {
     })
   }
 
-  const body: LoginResponse = { ok: true, server: req.server, twoFactorRequired: false, csrfToken: session.csrfToken }
+  const body: LoginResponse = {
+    ok: true,
+    server: req.server,
+    twoFactorRequired: false,
+    csrfToken: session.csrfToken,
+  }
   return c.json(body)
 })
 
@@ -130,4 +140,3 @@ authRoutes.post('/switch-server', async (c) => {
   c.get('session').currentServer = server
   return c.json({ ok: true })
 })
-

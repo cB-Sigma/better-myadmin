@@ -92,7 +92,9 @@ export class SqliteSessionStore implements SessionStore {
   }
 
   get(id: string): SessionData | null {
-    const row = this.#db.prepare('SELECT data FROM sessions WHERE id = ?').get(id) as { data: string } | undefined
+    const row = this.#db.prepare('SELECT data FROM sessions WHERE id = ?').get(id) as
+      | { data: string }
+      | undefined
     return row === undefined ? null : (JSON.parse(row.data) as SessionData)
   }
 
