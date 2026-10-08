@@ -6,6 +6,11 @@ import {
   type LoginRequest,
   type LoginResponse,
   type LogoutResponse,
+  type NavBranchQuery,
+  type NavBranchResponse,
+  type NavTreeQuery,
+  type NavTreeRequest,
+  type NavTreeResponse,
   type QueryRequest,
   type QueryResponse,
 } from '@bettermyadmin/contracts'
@@ -56,4 +61,22 @@ export const api = {
   login: (req: LoginRequest) => call<LoginResponse>('POST', '/auth/login', req),
   logout: () => call<LogoutResponse>('POST', '/auth/logout'),
   query: (server: number, req: QueryRequest) => call<QueryResponse>('POST', `/servers/${server}/query`, req),
+  navTree: (server: number, q: NavTreeQuery = {}) =>
+    call<NavTreeResponse>('GET', `/servers/${server}/navigation/tree${queryString(q)}`),
+  navTreeState: (server: number, req: NavTreeRequest) =>
+    call<NavTreeResponse>('POST', `/servers/${server}/navigation/tree`, req),
+  navBranch: (server: number, q: NavBranchQuery) => {
+    const { path, ...rest } = q
+    const qs = new URLSearchParams()
+    for (const p of path) qs.append('path', p)
+    for (const [k, v] of Object.entries(rest)) if (v !== undefined) qs.set(k, String(v))
+    return call<NavBranchResponse>('GET', `/servers/${server}/navigation/branch?${qs}`)
+  },
+}
+
+function queryString(q: Record<string, string | number | undefined>): string {
+  const qs = new URLSearchParams()
+  for (const [k, v] of Object.entries(q)) if (v !== undefined) qs.set(k, String(v))
+  const s = qs.toString()
+  return s === '' ? '' : `?${s}`
 }
