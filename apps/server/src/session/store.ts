@@ -34,6 +34,12 @@ export interface SessionData {
   debugSql?: Array<{ sql: string; ms: number; label?: string }>
   /** Query history kept in the session when QueryHistoryDB is off (pma: $_SESSION['sql_history']). */
   sqlHistory?: Array<{ db: string; table: string; sqlquery: string }>
+  /** $_SESSION['profiling']: the Profiling switch is on. */
+  profiling?: boolean
+  /** SessionCache 'profiling_supported' per server index. */
+  profilingSupported?: Record<string, boolean>
+  /** Console/* preferences set through /console/config when no pmadb user preferences are stored. */
+  consolePrefs?: Record<string, boolean | number | string>
 }
 
 export interface SessionStore {

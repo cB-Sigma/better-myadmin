@@ -82,30 +82,60 @@ export class PmaClient {
     db = '',
     table = '',
     delimiter = ';',
-  ): Promise<{ success: boolean; message?: string; error?: string }> {
+    extra: Record<string, string | null> = {},
+  ): Promise<{ success: boolean; message?: string; error?: string } & Record<string, unknown>> {
+    const form: Record<string, string> = {
+      route: '/import',
+      server: '1',
+      db,
+      table,
+      token: this.token,
+      is_js_confirmed: '0',
+      pos: '0',
+      goto: db === '' ? '/server/sql' : table === '' ? '/database/sql' : '/table/sql',
+      message_to_show: 'Your SQL query has been executed successfully.',
+      prev_sql_query: '',
+      sql_query: sql,
+      sql_delimiter: delimiter,
+      fk_checks: '1',
+      SQL: 'Go',
+      ajax_request: 'true',
+      ajax_page_request: 'true',
+    }
+    // `null` removes a default field
+    for (const [k, v] of Object.entries(extra)) {
+      if (v === null) delete form[k]
+      else form[k] = v
+    }
+    const body = await this.#req('/index.php?route=/import', form, true)
+    return JSON.parse(body) as { success: boolean; message?: string; error?: string }
+  }
+
+  /** Any AJAX POST to a phpMyAdmin route (index.php?route=...), JSON response. */
+  async post(route: string, form: Record<string, string>): Promise<Record<string, unknown>> {
     const body = await this.#req(
-      '/index.php?route=/import',
-      {
-        route: '/import',
-        server: '1',
-        db,
-        table,
-        token: this.token,
-        is_js_confirmed: '0',
-        pos: '0',
-        goto: db === '' ? '/server/sql' : table === '' ? '/database/sql' : '/table/sql',
-        message_to_show: 'Your SQL query has been executed successfully.',
-        prev_sql_query: '',
-        sql_query: sql,
-        sql_delimiter: delimiter,
-        fk_checks: '1',
-        SQL: 'Go',
-        ajax_request: 'true',
-        ajax_page_request: 'true',
-      },
+      `/index.php?route=${route}`,
+      { route, server: '1', token: this.token, ajax_request: 'true', ...form },
       true,
     )
-    return JSON.parse(body) as { success: boolean; message?: string; error?: string }
+    return JSON.parse(body) as Record<string, unknown>
+  }
+
+  /** Any AJAX GET (JSON response). */
+  async get(route: string, params: Record<string, string> = {}): Promise<Record<string, unknown>> {
+    const q = new URLSearchParams({ route, server: '1', ajax_request: 'true', ...params })
+    const body = await this.#reqAjaxGet(`/index.php?${q}`)
+    return JSON.parse(body) as Record<string, unknown>
+  }
+
+  /** HTML of a full page (GET). */
+  async routePage(route: string, params: Record<string, string> = {}): Promise<string> {
+    const q = new URLSearchParams({ route, server: '1', ...params })
+    return this.#req(`/index.php?${q}`)
+  }
+
+  #reqAjaxGet(path: string): Promise<string> {
+    return this.#req(path, undefined, true)
   }
 }
 

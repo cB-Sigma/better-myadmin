@@ -1,132 +1,667 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useParams, useSearch } from '@tanstack/react-router'
-import { CircleHelp } from 'lucide-react'
-import { type FormEvent, type KeyboardEvent, useRef, useState } from 'react'
+import type { QueryRequest, QueryResponse, SimulateResponse, SqlFormResponse } from '@bettermyadmin/contracts'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Link, useBlocker, useNavigate } from '@tanstack/react-router'
+import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { t } from '../../lib/i18n'
+import { mysqlDocUrl, pmaDocUrl } from '../../lib/docs'
 import { qk } from '../../lib/queryKeys'
-import { ResultGrid } from './ResultGrid'
-import { SqlMessage } from './SqlMessage'
+import { type BookmarkEntry, bookmarkProvider, useBookmarks } from '../bookmarks/provider'
+import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
+import { StatementBlock } from './Results'
+import { SimulateModal } from './SimulateModal'
+import { type CardAction, type CardEnv, DocIcon, InlineEditContext, MessageBox } from './SqlMessage'
+import { SqlEditor } from './editor/SqlEditor'
+import type { SqlEditorHandle } from './editor/types'
+import {
+  FORM_EMPTY,
+  NO_PARAM,
+  type SnippetType,
+  autoSave,
+  backquote,
+  canSimulate,
+  checkSqlQuery,
+  confirmationText,
+  getAutoSaved,
+  insertValueText,
+  rememberShowThisQuery,
+  restoreShowThisQuery,
+  scanParameters,
+  snippetQuery,
+} from './logic'
+import { sqlTabRoute } from './routes'
+import { newQueryId, runQuery, scopeKey, takePendingResults } from './runner'
+import './sql.css'
+
+export interface SqlPageProps {
+  server: number
+  db: string
+  table: string
+  /** `sql_query` + `show_query`: prefill without executing. */
+  sql?: string | undefined
+  /** With a signature the query in the URL is executed (signed /sql links: Simulate's matched rows). */
+  sig?: string | undefined
+}
+
+/** Messages.strConfirmNavigation */
+const CONFIRM_NAVIGATION = 'You have unsaved changes; are you sure you want to leave this page?'
 
 /**
- * Server-scope SQL tab (bare query box for M0; CodeMirror, bookmarks, snippets etc. are M1).
- * pma: resources/templates/sql/query.twig, src/SqlQueryForm.php
+ * The SQL tab of the server, a database or a table.
+ * pma: src/Controllers/{Server,Database,Table}/SqlController.php, src/SqlQueryForm.php,
+ *      resources/templates/sql/query.twig, resources/js/sql.ts
  */
-export function SqlPage() {
-  const { server } = useParams({ from: '/s/$server' })
-  const search = useSearch({ from: '/s/$server/sql' })
-  const auth = useQuery({ queryKey: qk.auth, queryFn: api.authState })
-  const label = auth.data?.servers.find((s) => s.index === server)?.label ?? ''
-  const [sql, setSql] = useState(search.sql ?? '')
-  const [delimiter, setDelimiter] = useState(';')
-  const formRef = useRef<HTMLFormElement>(null)
+export function SqlPage(props: SqlPageProps) {
+  const { server, db, table } = props
+  const form = useQuery({
+    queryKey: qk.sqlForm(server, db, table, props.sql ?? ''),
+    queryFn: () => api.sqlForm(server, { db, table, sqlQuery: props.sql }),
+    staleTime: 0,
+  })
+  if (form.error instanceof ApiError) {
+    return <MessageBox type="error" text={form.error.message} className="rounded" />
+  }
+  if (form.data === undefined) return <div className="text-sm text-fg-subtle">Loading…</div>
+  return <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
+}
 
-  const run = useMutation({
-    mutationFn: () => api.query(server, { sql, delimiter, fromQueryBox: true }),
+function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFormResponse }) {
+  const s = form.settings
+  const navigate = useNavigate()
+  const qc = useQueryClient()
+  const editor = useRef<SqlEditorHandle>(null)
+  const restored = useMemo(() => restoreShowThisQuery(db, table), [db, table])
+  const initial = sig === undefined && restored.query !== null ? restored.query : form.query
+  const [text, setText] = useState(initial)
+  const [savedAvailable, setSavedAvailable] = useState(() => getAutoSaved(db, table) !== null)
+  const [delimiter, setDelimiter] = useState(';')
+  const [showQuery, setShowQuery] = useState(restored.checked)
+  const [retain, setRetain] = useState(s.RetainQueryBox)
+  const [rollback, setRollback] = useState(false)
+  const [fkChecks, setFkChecks] = useState(form.fkChecks)
+  const [parameterized, setParameterized] = useState(false)
+  const [params, setParams] = useState<string[] | null>(null)
+  const paramValues = useRef(new Map<string, string>())
+  const [selectedColumns, setSelectedColumns] = useState<string[]>([])
+  const [formatting, setFormatting] = useState(false)
+  const [boxHidden, setBoxHidden] = useState(false)
+  const [toggleShown, setToggleShown] = useState(false)
+  const [result, setResult] = useState<QueryResponse | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [flash, setFlash] = useState<string | null>(null)
+  const [running, setRunning] = useState<string | null>(null)
+  const [simulate, setSimulate] = useState<SimulateResponse | null>(null)
+  const [inlineOpen, setInlineOpen] = useState<string | null>(null)
+  const [wantAutocomplete, setWantAutocomplete] = useState(false)
+  const bookmarks = useBookmarks(server, db)
+  const [bkmLabel, setBkmLabel] = useState('')
+  const [bkmShared, setBkmShared] = useState(false)
+  const [bkmReplace, setBkmReplace] = useState(false)
+
+  const columnValues = form.columns.map((c) => backquote(c.field))
+
+  // Autocomplete data: fetched once per page, on the first input (codeMirrorAutoCompleteOnInputRead)
+  const autocompleteQuery = useQuery({
+    queryKey: qk.autocomplete(server, db),
+    queryFn: () => api.sqlAutocomplete(server, db),
+    enabled: wantAutocomplete && s.CodemirrorEnable,
+    staleTime: Number.POSITIVE_INFINITY,
+  })
+  const autocomplete = useMemo(
+    () =>
+      autocompleteQuery.data !== undefined
+        ? { tables: autocompleteQuery.data.tables, defaultTable: table }
+        : null,
+    [autocompleteQuery.data, table],
+  )
+  const lint = useMemo(
+    () => (s.CodemirrorEnable && s.LintEnable ? { server: form.server } : null),
+    [s, form.server],
+  )
+
+  // AJAX.lockPageHandler: a changed editor asks before leaving the page
+  useBlocker({
+    shouldBlockFn: () => editor.current?.isDirty() === true && !window.confirm(CONFIRM_NAVIGATION),
+    enableBeforeUnload: () => editor.current?.isDirty() === true,
   })
 
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (sql.trim() === '') {
-      window.alert(t('Missing value in the form!'))
+  const updateParameters = useCallback((enabled: boolean) => {
+    // updateQueryParameters runs on the checkbox change and on editor blur
+    setParams(enabled ? scanParameters(editor.current?.getValue() ?? '') : null)
+  }, [])
+
+  const confirmQuery = useCallback(
+    (sql: string): boolean => {
+      const check = checkSqlQuery(sql, s.Confirm)
+      if (check === 'empty') {
+        window.alert(FORM_EMPTY)
+        editor.current?.focus()
+        return false
+      }
+      if (check === 'confirm' && !window.confirm(confirmationText(sql))) {
+        window.focus()
+        return false
+      }
+      return true
+    },
+    [s.Confirm],
+  )
+
+  const afterResponse = useCallback(
+    (res: QueryResponse, fromForm: boolean) => {
+      setResult(res)
+      setError(null)
+      if (res.ajaxReload?.reload === true) {
+        if (res.ajaxReload.tableName !== undefined && table !== '') {
+          void navigate(sqlTabRoute(server, db, res.ajaxReload.tableName) as never)
+        } else {
+          void qc.invalidateQueries({ queryKey: qk.srv(server), refetchType: 'active' })
+        }
+      } else if (res.reloadNavigation) {
+        void qc.invalidateQueries({ queryKey: qk.srv(server), refetchType: 'active' })
+      }
+      setToggleShown(true)
+      // the query box collapses unless "Retain query box" is checked
+      if (fromForm && !retain) setBoxHidden(true)
+      editor.current?.markClean()
+    },
+    [db, table, server, retain, navigate, qc],
+  )
+
+  const execute = useCallback(
+    async (req: Omit<QueryRequest, 'fromQueryBox'> & { fromQueryBox?: boolean }, fromForm = false) => {
+      const id = newQueryId()
+      setRunning(id)
+      setSimulate(null)
+      try {
+        const res = await runQuery(server, { fromQueryBox: true, ...req }, 'page', id)
+        afterResponse(res, fromForm)
+        return res
+      } catch (e) {
+        setResult(null)
+        setError(e instanceof Error ? e.message : String(e))
+        return null
+      } finally {
+        setRunning(null)
+      }
+    },
+    [server, afterResponse],
+  )
+
+  // signed query from the URL (Simulate's "Affected rows" link): executed like phpMyAdmin's /sql
+  const ranSigned = useRef(false)
+  useEffect(() => {
+    if (sig === undefined || ranSigned.current) return
+    ranSigned.current = true
+    setBoxHidden(true)
+    setToggleShown(true)
+    void execute({ sql: form.query, db, table, sig })
+  }, [sig, form.query, db, table, execute])
+
+  // results produced by the console for this scope
+  useEffect(() => {
+    const pick = () => {
+      const r = takePendingResults(scopeKey(server, db, table))
+      if (r !== null) {
+        setResult(r)
+        setBoxHidden(true)
+        setToggleShown(true)
+      }
+    }
+    pick()
+    window.addEventListener('bma:pending-results', pick)
+    return () => window.removeEventListener('bma:pending-results', pick)
+  }, [server, db, table])
+
+  const submit = (e?: FormEvent) => {
+    e?.preventDefault()
+    const sql = editor.current?.getValue() ?? ''
+    // "Show this query here again"
+    rememberShowThisQuery(showQuery, db, table, sql)
+    if (!confirmQuery(sql)) return
+    setFlash(null)
+    const req: Parameters<typeof execute>[0] = { sql, db, table, delimiter, fkChecks }
+    if (rollback) req.rollback = true
+    if (parameterized) {
+      const p: Record<string, string> = {}
+      for (const name of params ?? scanParameters(sql)) p[name] = paramValues.current.get(name) ?? ''
+      req.params = p
+    }
+    void execute(req, true).then(async (res) => {
+      if (res === null || bkmLabel === '' || !bookmarks.enabled) return
+      // a bookmark is stored once for the whole text (ImportController::__invoke)
+      await bookmarkProvider().create(server, {
+        label: bkmLabel,
+        db,
+        sql,
+        shared: bkmShared,
+        replace: bkmReplace,
+      })
+      void bookmarks.refetch()
+    })
+  }
+
+  /** id_bookmark + action_bookmark (ImportController::__invoke) */
+  const onBookmark = async (b: BookmarkEntry, action: BookmarkAction, variables: Record<number, string>) => {
+    setFlash(null)
+    if (action === 'view') {
+      setQuery(b.query)
+      setResult(null)
+      setFlash('Showing bookmark')
       return
     }
-    run.mutate()
+    if (action === 'delete') {
+      const r = await bookmarkProvider().remove(server, b.id)
+      setResult(null)
+      setFlash(r.message !== '' ? r.message : 'The bookmark has been deleted.')
+      void bookmarks.refetch()
+      return
+    }
+    const { sql } = await bookmarkProvider().run(server, b.id, variables)
+    void execute({ sql, db, table, delimiter, fkChecks }, true)
   }
 
-  // Ctrl+Enter / Alt+Enter submits the enclosing form (functions.ts getKeyboardFormSubmitEventHandler)
-  const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && (e.ctrlKey || e.altKey || e.metaKey)) {
-      e.preventDefault()
-      formRef.current?.requestSubmit()
+  const onCardAction = (a: CardAction) => {
+    if (a.type === 'edit') {
+      void navigate({ ...sqlTabRoute(server, a.db, a.table), search: { sql: a.sql } } as never)
+      return
+    }
+    const req: Parameters<typeof execute>[0] = { sql: a.sql, db: a.db, table: a.table }
+    if (a.showAsPhp !== undefined) req.showAsPhp = a.showAsPhp
+    if (a.profiling !== undefined) req.profiling = a.profiling
+    if (a.sig !== undefined) req.sig = a.sig
+    if (a.fkChecks !== undefined) req.fkChecks = a.fkChecks
+    void execute(req)
+  }
+
+  const env: CardEnv = {
+    server,
+    versionInt: form.server.versionInt,
+    confirmQuery,
+    codemirror: s.CodemirrorEnable,
+    onAction: onCardAction,
+  }
+
+  const setQuery = (q: string) => {
+    editor.current?.setValue(q)
+    editor.current?.focus()
+  }
+
+  const snippet = (type: SnippetType) => {
+    const q = snippetQuery(type, table, columnValues)
+    if (q !== null) setQuery(q)
+  }
+
+  const format = async (singleLine: boolean) => {
+    setFormatting(true)
+    try {
+      const r = await api.sqlFormat(server, editor.current?.getValue() ?? '', singleLine)
+      editor.current?.setValue(r.sql)
+    } finally {
+      setFormatting(false)
     }
   }
 
-  return (
-    <div>
-      <form
-        ref={formRef}
-        id="sqlqueryform"
-        onSubmit={onSubmit}
-        className="mb-4 max-w-5xl rounded border border-border"
-      >
-        <div className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-          <span>{t('Run SQL query/queries on server “%s”', label)}</span>
-          <a
-            href="https://dev.mysql.com/doc/refman/8.4/en/select.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            title={t('Documentation')}
-          >
-            <CircleHelp className="size-4" aria-hidden />
-            <span className="sr-only">{t('Documentation')}</span>
-          </a>
-        </div>
-        <div className="p-3">
-          <textarea
-            id="sqlquery"
-            name="sql_query"
-            aria-label="SQL query"
-            className="input min-h-60 font-mono"
-            rows={15}
-            cols={40}
-            spellCheck={false}
-            value={sql}
-            onChange={(e) => setSql(e.target.value)}
-            onKeyDown={onKeyDown}
-          />
-        </div>
-        <div className="flex flex-wrap items-center justify-end gap-3 border-t border-border bg-bg-subtle px-3 py-2 text-sm">
-          <label htmlFor="id_sql_delimiter" className="flex items-center gap-1">
-            {t('Delimiter')}
-            <input
-              id="id_sql_delimiter"
-              name="sql_delimiter"
-              className="input w-12"
-              size={3}
-              value={delimiter}
-              onChange={(e) => setDelimiter(e.target.value)}
-            />
-          </label>
-          <input
-            id="button_submit_query"
-            type="submit"
-            value={t('Go')}
-            disabled={run.isPending}
-            className="cursor-pointer rounded bg-accent px-4 py-1 font-medium text-accent-fg hover:bg-accent-hover disabled:opacity-60"
-          />
-        </div>
-      </form>
+  const onSimulate = async () => {
+    const q = editor.current?.getValue() ?? ''
+    if (q.length === 0) {
+      window.alert(FORM_EMPTY)
+      editor.current?.focus()
+      return
+    }
+    setSimulate(await api.simulate(server, { sql: q, db, delimiter }))
+  }
 
-      <div id="sqlqueryresultsouter">
-        {run.error instanceof ApiError && (
-          <div
-            role="alert"
-            className="mb-3 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
-          >
-            <div className="font-semibold">{t('Error')}</div>
-            {run.error.envelope.sql !== undefined && (
-              <>
-                <div className="mt-1 text-xs">{t('SQL query:')}</div>
-                <pre className="my-1 overflow-x-auto font-mono text-xs">{run.error.envelope.sql}</pre>
-              </>
-            )}
-            <div className="text-xs">{t('MySQL said: ')}</div>
-            <code className="text-xs">
-              {run.error.envelope.errno !== undefined ? `#${run.error.envelope.errno} - ` : ''}
-              {run.error.message}
-            </code>
+  const btn = 'btn'
+  const legend =
+    form.scope === 'server' ? (
+      <>Run SQL query/queries on server “{form.legendName}”</>
+    ) : form.scope === 'database' ? (
+      <>
+        Run SQL query/queries on database{' '}
+        <Link to="/s/$server/db/$db/sql" params={{ server, db }} className="text-accent">
+          {db}
+        </Link>
+      </>
+    ) : (
+      <>
+        Run SQL query/queries on table{' '}
+        <Link to="/s/$server/db/$db/t/$table/sql" params={{ server, db, table }} className="text-accent">
+          {form.legendName}
+        </Link>
+      </>
+    )
+
+  return (
+    <InlineEditContext.Provider value={{ open: inlineOpen, setOpen: setInlineOpen }}>
+      <form
+        id="sqlqueryform"
+        name="sqlform"
+        onSubmit={submit}
+        onKeyUp={() => setText(editor.current?.getValue() ?? '')}
+        className="mb-4 max-w-6xl"
+      >
+        {!boxHidden && (
+          <div className="mb-3 rounded border border-border">
+            <div className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
+              <span>{legend}:</span>
+              <DocIcon href={mysqlDocUrl('SELECT', '', form.server.versionInt)} />
+            </div>
+            <div className="p-3">
+              <div className="flex gap-3">
+                <div className="min-w-0 flex-1">
+                  <SqlEditor
+                    handleRef={editor}
+                    id="sqlquery"
+                    ariaLabel="SQL query"
+                    initialValue={initial}
+                    rows={s.TextareaRows}
+                    cols={s.TextareaCols}
+                    codemirror={s.CodemirrorEnable}
+                    lint={lint}
+                    autocomplete={autocomplete}
+                    autoSelect={s.TextareaAutoSelect}
+                    onSubmit={() => submit()}
+                    onChange={(v) => {
+                      setText(v)
+                      // Sql.autoSave on every change
+                      autoSave(db, table, v)
+                      if (v !== '') setSavedAvailable(true)
+                      if (!wantAutocomplete && db !== '') setWantAutocomplete(true)
+                    }}
+                    onBlur={() => updateParameters(parameterized)}
+                  />
+                  <div id="querymessage" className="min-h-5 text-xs text-fg-subtle" aria-live="polite">
+                    {formatting && 'Formatting SQL…'}
+                  </div>
+                  <div className="mt-1 flex flex-wrap gap-2" role="toolbar">
+                    {form.columns.length > 0 && (
+                      <div className="flex gap-1" role="group">
+                        <button
+                          type="button"
+                          id="selectall"
+                          className={btn}
+                          onClick={() => snippet('selectall')}
+                        >
+                          SELECT *
+                        </button>
+                        <button type="button" id="select" className={btn} onClick={() => snippet('select')}>
+                          SELECT
+                        </button>
+                        <button type="button" id="insert" className={btn} onClick={() => snippet('insert')}>
+                          INSERT
+                        </button>
+                        <button type="button" id="update" className={btn} onClick={() => snippet('update')}>
+                          UPDATE
+                        </button>
+                        <button type="button" id="delete" className={btn} onClick={() => snippet('delete')}>
+                          DELETE
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex gap-1" role="group">
+                      <button type="button" id="clear" className={btn} onClick={() => setQuery('')}>
+                        Clear
+                      </button>
+                      {s.CodemirrorEnable && (
+                        <>
+                          <button
+                            type="button"
+                            id="format"
+                            className={btn}
+                            onClick={() => void format(false)}
+                          >
+                            Format
+                          </button>
+                          <button
+                            type="button"
+                            id="formatSingleLine"
+                            className={btn}
+                            onClick={() => void format(true)}
+                          >
+                            Format as a single line
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      id="saved"
+                      className={btn}
+                      disabled={!savedAvailable}
+                      onClick={() => {
+                        const q = getAutoSaved(db, table)
+                        if (q !== null) setQuery(q)
+                      }}
+                    >
+                      Get auto-saved query
+                    </button>
+                  </div>
+                  <div className="my-3 flex items-center gap-1 text-sm">
+                    <input
+                      type="checkbox"
+                      id="parameterized"
+                      name="parameterized"
+                      checked={parameterized}
+                      onChange={(e) => {
+                        setParameterized(e.target.checked)
+                        updateParameters(e.target.checked)
+                      }}
+                    />
+                    <label htmlFor="parameterized">Bind parameters</label>
+                    <DocIcon href={pmaDocUrl('faq', 'faq6-40')} target="documentation" />
+                  </div>
+                  {params !== null && (
+                    <div className="mb-3 flex flex-wrap gap-3 text-sm" id="parametersDiv">
+                      {params.length === 0
+                        ? NO_PARAM
+                        : params.map((p) => (
+                            <span
+                              key={p}
+                              className="parameter flex items-center gap-1"
+                              id={`paramSpan_${p.slice(1)}`}
+                            >
+                              <label htmlFor={`param_${p.slice(1)}`}>{p}</label>
+                              <input
+                                type="text"
+                                className="input w-32"
+                                id={`param_${p.slice(1)}`}
+                                name={`parameters[${p}]`}
+                                defaultValue={paramValues.current.get(p) ?? ''}
+                                onChange={(e) => paramValues.current.set(p, e.target.value)}
+                              />
+                            </span>
+                          ))}
+                    </div>
+                  )}
+                </div>
+                {form.columns.length > 0 && (
+                  <div className="flex w-48 shrink-0 flex-col gap-2">
+                    <label className="sr-only" htmlFor="fieldsSelect">
+                      Columns
+                    </label>
+                    <select
+                      id="fieldsSelect"
+                      name="dummy"
+                      multiple
+                      size={s.TextareaRows}
+                      className="input resize-y"
+                      value={selectedColumns}
+                      onChange={(e) => setSelectedColumns([...e.target.selectedOptions].map((o) => o.value))}
+                      onDoubleClick={() => editor.current?.replaceSelection(insertValueText(selectedColumns))}
+                    >
+                      {form.columns.map((c, i) => (
+                        <option
+                          key={c.field}
+                          value={columnValues[i]}
+                          title={c.field.length > 0 ? c.comment : undefined}
+                        >
+                          {c.field}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      id="insertBtn"
+                      name="insert"
+                      className={btn}
+                      title={s.ActionLinksMode !== 'text' ? 'Insert' : undefined}
+                      onClick={() => {
+                        editor.current?.replaceSelection(insertValueText(selectedColumns))
+                        editor.current?.focus()
+                      }}
+                    >
+                      {s.ActionLinksMode !== 'text' ? '<<' : 'Insert'}
+                    </button>
+                  </div>
+                )}
+              </div>
+              {bookmarks.enabled && (
+                <div className="flex flex-wrap items-center gap-3 text-sm">
+                  <label htmlFor="bkm_label">Bookmark this SQL query:</label>
+                  <input
+                    id="bkm_label"
+                    name="bkm_label"
+                    className="input w-48"
+                    value={bkmLabel}
+                    onChange={(e) => setBkmLabel(e.target.value)}
+                  />
+                  {/* the two options show only once a label is typed */}
+                  {bkmLabel.length > 0 && s.AllowSharedBookmarks && (
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        id="id_bkm_all_users"
+                        checked={bkmShared}
+                        onChange={(e) => setBkmShared(e.target.checked)}
+                      />
+                      Let every user access this bookmark
+                    </label>
+                  )}
+                  {bkmLabel.length > 0 && (
+                    <label className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        id="id_bkm_replace"
+                        checked={bkmReplace}
+                        onChange={(e) => setBkmReplace(e.target.checked)}
+                      />
+                      Replace existing bookmark of same name
+                    </label>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border bg-bg-subtle px-3 py-2 text-sm">
+              <label className="flex items-center gap-1">
+                <span>Delimiter</span>
+                <input
+                  id="id_sql_delimiter"
+                  name="sql_delimiter"
+                  className="input w-12"
+                  size={3}
+                  value={delimiter}
+                  onChange={(e) => setDelimiter(e.target.value)}
+                />
+              </label>
+              <label className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  id="checkbox_show_query"
+                  name="show_query"
+                  checked={showQuery}
+                  onChange={(e) => setShowQuery(e.target.checked)}
+                />
+                Show this query here again
+              </label>
+              <label className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  id="retain_query_box"
+                  name="retain_query_box"
+                  checked={retain}
+                  onChange={(e) => setRetain(e.target.checked)}
+                />
+                Retain query box
+              </label>
+              <label className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  id="rollback_query"
+                  name="rollback_query"
+                  checked={rollback}
+                  onChange={(e) => setRollback(e.target.checked)}
+                />
+                Rollback when finished
+              </label>
+              <label className="flex items-center gap-1">
+                <input
+                  type="checkbox"
+                  id="fk_checks"
+                  name="fk_checks"
+                  checked={fkChecks}
+                  onChange={(e) => setFkChecks(e.target.checked)}
+                />
+                Enable foreign key checks
+              </label>
+              <div className="ml-auto flex items-center gap-2">
+                {canSimulate(text) && (
+                  <button
+                    type="button"
+                    id="simulate_dml"
+                    className="btn btn-primary"
+                    onClick={() => void onSimulate()}
+                  >
+                    Simulate query
+                  </button>
+                )}
+                {running !== null && (
+                  <button type="button" className={btn} onClick={() => void api.cancelQuery(server, running)}>
+                    Cancel
+                  </button>
+                )}
+                <input
+                  id="button_submit_query"
+                  type="submit"
+                  name="SQL"
+                  value="Go"
+                  disabled={running !== null}
+                  className="btn btn-primary"
+                />
+              </div>
+            </div>
           </div>
         )}
-        {run.data?.statements.map((st, i) => (
-          <section key={`${i}-${st.sig}`} className="mb-4">
-            <SqlMessage st={st} />
-            {st.result !== undefined && st.result.fields.length > 0 && (
-              <ResultGrid fields={st.result.fields} rows={st.result.rows} />
-            )}
-          </section>
+        {!boxHidden && bookmarks.enabled && bookmarks.bookmarks.length > 0 && (
+          <BookmarkedQuery bookmarks={bookmarks.bookmarks} onGo={(b, a, v) => void onBookmark(b, a, v)} />
+        )}
+        {toggleShown && (
+          <>
+            {boxHidden && <br id="togglequerybox_spacer" />}
+            <button type="button" id="togglequerybox" className="btn" onClick={() => setBoxHidden((h) => !h)}>
+              {boxHidden ? 'Show query box' : 'Hide query box'}
+            </button>
+          </>
+        )}
+      </form>
+
+      <div id="sqlqueryresultsouter" className="max-w-full">
+        {flash !== null && <MessageBox type="success" text={flash} className="mb-3 rounded" />}
+        {error !== null && <MessageBox type="error" text={error} className="mb-3 rounded" />}
+        {result?.statements.map((st, i) => (
+          <StatementBlock key={`${i}-${st.sig}`} st={st} env={env} />
         ))}
       </div>
-    </div>
+
+      {simulate !== null && (
+        <SimulateModal
+          data={simulate}
+          versionInt={form.server.versionInt}
+          onClose={() => setSimulate(null)}
+          onShowRows={(sql, rowsSig) =>
+            void navigate({ ...sqlTabRoute(server, db, ''), search: { sql, sig: rowsSig } } as never)
+          }
+        />
+      )}
+    </InlineEditContext.Provider>
   )
 }

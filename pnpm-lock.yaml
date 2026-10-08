@@ -84,6 +84,33 @@ importers:
       '@bettermyadmin/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../../packages/sql-lexer
+      '@codemirror/autocomplete':
+        specifier: 6.18.6
+        version: 6.18.6
+      '@codemirror/commands':
+        specifier: 6.8.1
+        version: 6.8.1
+      '@codemirror/lang-sql':
+        specifier: 6.8.0
+        version: 6.8.0
+      '@codemirror/language':
+        specifier: 6.11.0
+        version: 6.11.0
+      '@codemirror/lint':
+        specifier: 6.8.5
+        version: 6.8.5
+      '@codemirror/state':
+        specifier: 6.5.2
+        version: 6.5.2
+      '@codemirror/view':
+        specifier: 6.36.8
+        version: 6.36.8
+      '@lezer/highlight':
+        specifier: 1.2.1
+        version: 1.2.1
       '@lingui/core':
         specifier: 6.8.0
         version: 6.8.0(@babel/core@7.29.7)
@@ -99,6 +126,9 @@ importers:
       '@tanstack/react-virtual':
         specifier: 3.13.8
         version: 3.13.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      chart.js:
+        specifier: 4.4.9
+        version: 4.4.9
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -337,6 +367,27 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@codemirror/autocomplete@6.18.6':
+    resolution: {integrity: sha512-PHHBXFomUs5DF+9tCOM/UoW6XQ4R44lLNNhRaW9PKPTU0D7lIjRg3ElxaJnTwsl/oHiR93WSXDBrekhoUGCPtg==}
+
+  '@codemirror/commands@6.8.1':
+    resolution: {integrity: sha512-KlGVYufHMQzxbdQONiLyGQDUW0itrLZwq3CcY7xpv9ZLRHqzkBSoteocBHtMCoY7/Ci4xhzSrToIeLg7FxHuaw==}
+
+  '@codemirror/lang-sql@6.8.0':
+    resolution: {integrity: sha512-aGLmY4OwGqN3TdSx3h6QeA1NrvaYtF7kkoWR/+W7/JzB0gQtJ+VJxewlnE3+VImhA4WVlhmkJr109PefOOhjLg==}
+
+  '@codemirror/language@6.11.0':
+    resolution: {integrity: sha512-A7+f++LodNNc1wGgoRDTt78cOwWm9KVezApgjOMp1W4hM0898nsqBXwF+sbePE7ZRcjN7Sa1Z5m2oN27XkmEjQ==}
+
+  '@codemirror/lint@6.8.5':
+    resolution: {integrity: sha512-s3n3KisH7dx3vsoeGMxsbRAgKe4O1vbrnKBClm99PU0fWxmxsx5rR2PfqQgIt+2MMJBHbiJ5rfIdLYfB9NNvsA==}
+
+  '@codemirror/state@6.5.2':
+    resolution: {integrity: sha512-FVqsPqtPWKVVL3dPSxy8wEF/ymIEuVzF1PK3VbUgrxXpJUSHQWWZz4JMToquRxnkw+36LTamCZG2iua2Ptq0fA==}
+
+  '@codemirror/view@6.36.8':
+    resolution: {integrity: sha512-yoRo4f+FdnD01fFt4XpfpMCcCAo9QvZOtbrXExn4SqzH32YC6LgzqxfLZw/r6Ge65xyY03mK/UfUqrVw1gFiFg==}
+
   '@esbuild/aix-ppc64@0.25.12':
     resolution: {integrity: sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==}
     engines: {node: '>=18'}
@@ -527,6 +578,18 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
+  '@kurkle/color@0.3.4':
+    resolution: {integrity: sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w==}
+
+  '@lezer/common@1.5.3':
+    resolution: {integrity: sha512-H0iErY4e43LpXbYDyBci5W4v/RwTgGV3YzYOlJPiGZ8RY8w51kVE+xLn1tg3Z6UmSfyETvtsUK3r7YsgDQEI7Q==}
+
+  '@lezer/highlight@1.2.1':
+    resolution: {integrity: sha512-Z5duk4RN/3zuVO7Jq0pGLJ3qynpxUVsh7IbUbGj88+uV2ApSAn6kWg2au3iJb+0Zi7kKtqffIESgNcRXWZWmSA==}
+
+  '@lezer/lr@1.4.11':
+    resolution: {integrity: sha512-UwgZcl1R66H2hDzBrA7kWyYmX6s8p5TQ+e/t7CuvgCtBEPxbEPaHYHu+pJBvTvDotEJpuQkJjbXuHiw5Cixxgw==}
+
   '@lingui/babel-plugin-lingui-macro@6.8.0':
     resolution: {integrity: sha512-/gecQy9KnOo7xTNtHB/DWmweXtV1xd9BFWSmHbIqxKo8k3zcBacyZ4Jt4+RVEJglJ4LvpANjF3fQH3YfHPoqvQ==}
     engines: {node: '>=22.19.0'}
@@ -552,6 +615,9 @@ packages:
   '@lingui/message-utils@6.8.0':
     resolution: {integrity: sha512-vT8mcuZ5sC0+xHF1i2iirFeg0rF0AzOEgnb7eOw+RJd4Q9tZhNQdGXxx2BeglopE9hjLM1lxVI0Wg54LSKMVCQ==}
     engines: {node: '>=22.19.0'}
+
+  '@marijn/find-cluster-break@1.0.4':
+    resolution: {integrity: sha512-Wy0V7+SGUjnF9/TkiM1hKVDPj7jKXduPNboMVtHTA8dySMURWqfg/JZ9E2Sq8JgSJmkl7k7Qe9FLeMSrSraWmQ==}
 
   '@messageformat/date-skeleton@1.1.0':
     resolution: {integrity: sha512-rmGAfB1tIPER+gh3p/RgA+PVeRE/gxuQ2w4snFWPF5xtb5mbWR7Cbw7wCOftcUypbD6HVoxrVdyyghPm3WzP5A==}
@@ -998,6 +1064,10 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
+  chart.js@4.4.9:
+    resolution: {integrity: sha512-EyZ9wWKgpAU0fLJ43YAEIF8sr5F2W3LqbS40ZJyHIner2lY14ufqv2VMp69MAiZ2rpwxEUxEhIH/0U3xyRynxg==}
+    engines: {pnpm: '>=8'}
+
   check-error@2.1.3:
     resolution: {integrity: sha512-PAJdDJusoxnwm1VwW07VWwUN1sl7smmC3OKggvndJFadxxDRyFJBX/ggnu/KE4kQAB7a3Dp8f/YXC1FlUprWmA==}
     engines: {node: '>= 16'}
@@ -1023,6 +1093,9 @@ packages:
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  crelt@1.0.7:
+    resolution: {integrity: sha512-aK6BbWfhf4U/wCcLHKPJl/xa6VkVstRaPywWtMKGwuOLc/wZTyQYuoxgvZnNsBvv7Kg3YTBQYYBCggcviQczuA==}
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
@@ -1404,6 +1477,9 @@ packages:
   std-env@3.10.0:
     resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
 
+  style-mod@4.1.4:
+    resolution: {integrity: sha512-XXWIQt633/EpAFx8aZDOTjBzrCaGmhvEQlQo6MVPfa2OzO2cWo+4hV9h+6UkHYlXGfy+ODXKUdP7Pthmcu5ATw==}
+
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -1626,6 +1702,9 @@ packages:
       jsdom:
         optional: true
 
+  w3c-keyname@2.2.8:
+    resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
+
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
@@ -1813,6 +1892,54 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
+  '@codemirror/autocomplete@6.18.6':
+    dependencies:
+      '@codemirror/language': 6.11.0
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.36.8
+      '@lezer/common': 1.5.3
+
+  '@codemirror/commands@6.8.1':
+    dependencies:
+      '@codemirror/language': 6.11.0
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.36.8
+      '@lezer/common': 1.5.3
+
+  '@codemirror/lang-sql@6.8.0':
+    dependencies:
+      '@codemirror/autocomplete': 6.18.6
+      '@codemirror/language': 6.11.0
+      '@codemirror/state': 6.5.2
+      '@lezer/common': 1.5.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.11
+
+  '@codemirror/language@6.11.0':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.36.8
+      '@lezer/common': 1.5.3
+      '@lezer/highlight': 1.2.1
+      '@lezer/lr': 1.4.11
+      style-mod: 4.1.4
+
+  '@codemirror/lint@6.8.5':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      '@codemirror/view': 6.36.8
+      crelt: 1.0.7
+
+  '@codemirror/state@6.5.2':
+    dependencies:
+      '@marijn/find-cluster-break': 1.0.4
+
+  '@codemirror/view@6.36.8':
+    dependencies:
+      '@codemirror/state': 6.5.2
+      style-mod: 4.1.4
+      w3c-keyname: 2.2.8
+
   '@esbuild/aix-ppc64@0.25.12':
     optional: true
 
@@ -1931,6 +2058,18 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
+  '@kurkle/color@0.3.4': {}
+
+  '@lezer/common@1.5.3': {}
+
+  '@lezer/highlight@1.2.1':
+    dependencies:
+      '@lezer/common': 1.5.3
+
+  '@lezer/lr@1.4.11':
+    dependencies:
+      '@lezer/common': 1.5.3
+
   '@lingui/babel-plugin-lingui-macro@6.8.0(@babel/core@7.29.7)':
     dependencies:
       '@babel/types': 7.29.8
@@ -1958,6 +2097,8 @@ snapshots:
       '@messageformat/date-skeleton': 1.1.0
       '@messageformat/parser': 5.1.1
       js-sha256: 0.10.1
+
+  '@marijn/find-cluster-break@1.0.4': {}
 
   '@messageformat/date-skeleton@1.1.0': {}
 
@@ -2367,6 +2508,10 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  chart.js@4.4.9:
+    dependencies:
+      '@kurkle/color': 0.3.4
+
   check-error@2.1.3: {}
 
   chokidar@3.6.0:
@@ -2392,6 +2537,8 @@ snapshots:
   color-name@1.1.4: {}
 
   convert-source-map@2.0.0: {}
+
+  crelt@1.0.7: {}
 
   csstype@3.2.3: {}
 
@@ -2718,6 +2865,8 @@ snapshots:
 
   std-env@3.10.0: {}
 
+  style-mod@4.1.4: {}
+
   supports-color@7.2.0:
     dependencies:
       has-flag: 4.0.0
@@ -2903,6 +3052,8 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  w3c-keyname@2.2.8: {}
 
   webpack-virtual-modules@0.6.2: {}
 
