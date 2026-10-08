@@ -1,7 +1,7 @@
 import type { Executed } from '@bettermyadmin/contracts'
 import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
-import type { AppConfig, ServerConfig } from '../config.ts'
-import { quoteString } from '../util/sql.ts'
+import { quoteString } from '@bettermyadmin/sql-gen'
+import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { Conn } from './connection.ts'
 
 export interface Credentials {
@@ -73,7 +73,7 @@ export class PoolManager {
   }
 
   server(index: number): ServerConfig {
-    const s = this.#cfg.Servers[index - 1]
+    const s = getServer(this.#cfg, index)
     if (s === undefined) throw new Error(`Unknown server ${index}`)
     return s
   }

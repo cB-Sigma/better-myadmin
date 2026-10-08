@@ -1,5 +1,6 @@
 import { type AppDeps, createApp } from '../../src/app.ts'
-import type { AppConfig, ServerConfig } from '../../src/config.ts'
+import { type ConfigInput, type ServerInput, resolveConfig } from '@bettermyadmin/config'
+import type { AppConfig } from '../../src/config.ts'
 import { PoolManager } from '../../src/db/pool-manager.ts'
 import { SecretBox } from '../../src/session/crypto.ts'
 import { MemorySessionStore } from '../../src/session/store.ts'
@@ -11,59 +12,15 @@ export const MYSQL = {
   password: process.env.BMA_TEST_PASSWORD ?? 'root',
 }
 
-/** phpMyAdmin defaults for the directives the server reads (Settings.php / Settings/Server.php). */
-export function testServer(o: Partial<ServerConfig> = {}): ServerConfig {
-  return {
-    host: MYSQL.host,
-    port: MYSQL.port,
-    socket: '',
-    ssl: false,
-    ssl_key: null,
-    ssl_cert: null,
-    ssl_ca: null,
-    ssl_ca_path: null,
-    ssl_ciphers: null,
-    ssl_verify: true,
-    compress: false,
-    auth_type: 'cookie',
-    user: 'root',
-    password: '',
-    verbose: '',
-    AllowRoot: true,
-    AllowNoPassword: false,
-    AllowDeny: { order: '', rules: [] },
-    SessionTimeZone: '',
-    hide_connection_errors: false,
-    LogoutURL: '',
-    ...o,
-  }
-}
-
-export function testConfig(o: Partial<AppConfig> = {}): AppConfig {
-  return {
-    Servers: [testServer()],
-    ServerDefault: 1,
-    blowfish_secret: 'test-secret-test-secret-test-secret!',
-    LoginCookieValidity: 1440,
-    LoginCookieStore: 0,
-    LoginCookieRecall: true,
-    LoginCookieDeleteAll: true,
-    AllowArbitraryServer: false,
-    ArbitraryServerRegexp: '',
-    CookieSameSite: 'Strict',
-    TrustedProxies: {},
-    DefaultConnectionCollation: 'utf8mb4_unicode_ci',
-    MaxRows: 25,
-    MaxExactCount: 50000,
-    MaxExactCountViews: 0,
-    IgnoreMultiSubmitErrors: false,
-    AllowUserDropDatabase: false,
-    CSPAllow: '',
-    AllowThirdPartyFraming: false,
-    DBG: { sql: false },
-    DataDir: '.data/test',
-    ...o,
-  }
+/** A resolved config (phpMyAdmin defaults) with one test server; overrides use phpMyAdmin names. */
+export function testConfig(o: ConfigInput = {}, server: ServerInput = {}): AppConfig {
+  return resolveConfig(
+    {
+      blowfish_secret: 'test-secret-test-secret-test-secret!',
+      Servers: [{ host: MYSQL.host, port: MYSQL.port, ...server }],
+    },
+    o,
+  )
 }
 
 /** In-process app + a tiny cookie-jar client. */

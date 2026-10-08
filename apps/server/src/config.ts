@@ -1,56 +1,19 @@
-/**
- * The subset of the merged configuration (packages/config) the server runtime reads.
- * Names are phpMyAdmin's `$cfg` names; `Servers` is 0-based here and exposed 1-based in URLs.
- */
-export interface ServerConfig {
-  host: string
-  port: string | number
-  socket: string
-  ssl: boolean
-  ssl_key: string | null
-  ssl_cert: string | null
-  ssl_ca: string | null
-  ssl_ca_path: string | null
-  ssl_ciphers: string | null
-  ssl_verify: boolean
-  compress: boolean
-  auth_type: string
-  user: string
-  password: string
-  verbose: string
-  AllowRoot: boolean
-  AllowNoPassword: boolean
-  AllowDeny: { order: string; rules: string[] }
-  SessionTimeZone: string
-  hide_connection_errors: boolean
-  LogoutURL: string
-  max_connections?: number
+import type { ResolvedConfig, ServerConfig } from '@bettermyadmin/config'
+
+/** The merged configuration (packages/config): phpMyAdmin names, `Servers` keyed "1".."n". */
+export type AppConfig = ResolvedConfig
+export type { ServerConfig }
+
+/** Servers[i] with i 1-based, as in phpMyAdmin URLs (`?server=`). */
+export function getServer(cfg: AppConfig, index: number): ServerConfig | undefined {
+  return (cfg.Servers as Record<string, ServerConfig>)[String(index)]
 }
 
-export interface AppConfig {
-  Servers: ServerConfig[]
-  ServerDefault: number
-  blowfish_secret: string
-  LoginCookieValidity: number
-  LoginCookieStore: number
-  LoginCookieRecall: boolean
-  LoginCookieDeleteAll: boolean
-  AllowArbitraryServer: boolean
-  ArbitraryServerRegexp: string
-  CookieSameSite: string
-  TrustedProxies: Record<string, string>
-  DefaultConnectionCollation: string
-  MaxRows: number
-  MaxExactCount: number
-  MaxExactCountViews: number
-  IgnoreMultiSubmitErrors: boolean
-  AllowUserDropDatabase: boolean
-  CSPAllow: string
-  AllowThirdPartyFraming: boolean | string
-  DBG: { sql: boolean }
-  DataDir: string
-  SessionStore?: string
-  Listen?: { host?: string; port?: number; basePath?: string }
+export function serverIndexes(cfg: AppConfig): number[] {
+  return Object.keys(cfg.Servers)
+    .map(Number)
+    .filter((n) => Number.isInteger(n) && n > 0)
+    .sort((a, b) => a - b)
 }
 
 /** PHP empty(): '', '0', 0, false, null, [] are empty. */
@@ -62,17 +25,18 @@ export function phpEmpty(v: unknown): boolean {
  * Label used by the server selector. Servers with an empty host are not listed.
  * pma: src/Server/Select.php::render
  */
-export function serverLabel(s: ServerConfig & { only_db?: string | string[] }): string {
+export function serverLabel(s: ServerConfig): string {
   let label: string
   if (!phpEmpty(s.verbose)) {
     label = s.verbose
   } else {
-    label = s.host
+    label = String(s.host)
     if (!phpEmpty(s.port)) label += `:${s.port}`
   }
-  if (!phpEmpty(s.only_db)) {
-    if (!Array.isArray(s.only_db)) label += ` - ${s.only_db}`
-    else if (s.only_db.length < 4) label += ` - ${s.only_db.join(', ')}`
+  const onlyDb = s.only_db as string | string[]
+  if (!phpEmpty(onlyDb)) {
+    if (!Array.isArray(onlyDb)) label += ` - ${onlyDb}`
+    else if (onlyDb.length < 4) label += ` - ${onlyDb.join(', ')}`
   }
   if (!phpEmpty(s.user) && s.auth_type === 'config') label += `  (${s.user})`
   return label

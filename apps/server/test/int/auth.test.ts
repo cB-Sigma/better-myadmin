@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import { MYSQL, testApp, testConfig, testServer } from '../support/app.ts'
+import { MYSQL, testApp, testConfig } from '../support/app.ts'
 
 let t: ReturnType<typeof testApp>
 afterEach(async () => t?.close())
@@ -43,13 +43,13 @@ describe('cookie auth', () => {
   })
 
   it('hide_connection_errors masks 1045', async () => {
-    t = testApp(testConfig({ Servers: [testServer({ hide_connection_errors: true })] }))
+    t = testApp(testConfig({}, { hide_connection_errors: true }))
     const r = await t.login('root', 'wrong-password')
     expect((r.json.error as { message: string }).message).toMatch(/^Error 1045: Access denied for user\. Additional/)
   })
 
   it('AllowRoot=false denies root before connecting', async () => {
-    t = testApp(testConfig({ Servers: [testServer({ AllowRoot: false })] }))
+    t = testApp(testConfig({}, { AllowRoot: false }))
     const r = await t.login()
     expect((r.json.error as { message: string }).message).toBe('Access denied!')
   })

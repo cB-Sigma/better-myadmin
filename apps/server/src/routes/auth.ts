@@ -4,7 +4,7 @@ import { getCookie, setCookie } from 'hono/cookie'
 import { type AppEnv, writeSessionCookies } from '../app.ts'
 import { cookieLogin } from '../auth/cookie.ts'
 import { getClientIp } from '../auth/ip-allow-deny.ts'
-import { phpEmpty, serverLabel } from '../config.ts'
+import { getServer, phpEmpty, serverIndexes, serverLabel } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
 import { regenerate } from '../session/manager.ts'
 
@@ -27,7 +27,8 @@ authRoutes.get('/state', (c) => {
     server: session.currentServer,
     user: login?.user ?? null,
     twoFactorPending: login !== undefined && !login.twoFactorOk,
-    servers: cfg.Servers.map((s, i) => ({ s, index: i + 1 }))
+    servers: serverIndexes(cfg)
+      .map((index) => ({ s: getServer(cfg, index)!, index }))
       .filter(({ s }) => !phpEmpty(s.host))
       .map(({ s, index }) => ({
         index,
@@ -52,7 +53,7 @@ authRoutes.post('/login', async (c) => {
     )
   }
   const req = parsed.data
-  if (cfg.Servers[req.server - 1] === undefined) throw new ValidationError('Invalid server index!')
+  if (getServer(cfg, req.server) === undefined) throw new ValidationError('Invalid server index!')
   // an empty username just shows the form again (readCredentials returns false)
   if (req.username === '') throw new ValidationError('Missing username.')
 
@@ -102,7 +103,7 @@ authRoutes.post('/logout', async (c) => {
   const { cfg, pools } = c.get('deps')
   const session = c.get('session')
   const server = session.currentServer
-  const logoutUrl = cfg.Servers[server - 1]?.LogoutURL ?? ''
+  const logoutUrl = getServer(cfg, server)?.LogoutURL ?? ''
   // LoginCookieDeleteAll: drop every server login, else only the current one
   if (cfg.LoginCookieDeleteAll) {
     session.servers = {}
@@ -123,7 +124,7 @@ authRoutes.post('/logout', async (c) => {
 authRoutes.post('/switch-server', async (c) => {
   const { cfg } = c.get('deps')
   const { server } = (await c.req.json().catch(() => ({}))) as { server?: number }
-  if (typeof server !== 'number' || cfg.Servers[server - 1] === undefined) {
+  if (typeof server !== 'number' || getServer(cfg, server) === undefined) {
     throw new ValidationError('Invalid server index!')
   }
   c.get('session').currentServer = server

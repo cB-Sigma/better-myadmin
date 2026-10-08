@@ -38,6 +38,9 @@ importers:
       '@bettermyadmin/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@bettermyadmin/mysql-types':
+        specifier: workspace:*
+        version: link:../../packages/mysql-types
       '@bettermyadmin/sql-gen':
         specifier: workspace:*
         version: link:../../packages/sql-gen

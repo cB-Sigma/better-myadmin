@@ -14,6 +14,7 @@
   "dependencies": {
     "@bettermyadmin/config": "workspace:*",
     "@bettermyadmin/contracts": "workspace:*",
+    "@bettermyadmin/mysql-types": "workspace:*",
     "@bettermyadmin/sql-gen": "workspace:*",
     "@bettermyadmin/sql-lexer": "workspace:*",
     "@hono/node-server": "1.14.1",

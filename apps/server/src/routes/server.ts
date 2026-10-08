@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import type { AppEnv } from '../app.ts'
 import { AuthMessages } from '../auth/cookie.ts'
+import { getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
 import { queryRoutes } from './query.ts'
@@ -13,7 +14,7 @@ export const serverRoutes = new Hono<ServerEnv>()
 serverRoutes.use('/:s/*', async (c, next) => {
   const { cfg, credBox } = c.get('deps')
   const s = Number(c.req.param('s'))
-  if (!Number.isInteger(s) || cfg.Servers[s - 1] === undefined) throw new NotFoundError('Invalid server index!')
+  if (!Number.isInteger(s) || getServer(cfg, s) === undefined) throw new NotFoundError('Invalid server index!')
   const session = c.get('session')
   const login = session.servers[String(s)]
   if (login === undefined || !login.twoFactorOk) {
