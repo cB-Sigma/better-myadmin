@@ -136,7 +136,7 @@ The most important component. Requirements are enumerated in [Browse / results g
 
 ## SQL editor (`SqlEditor`)
 
-CodeMirror 6 wrapped in a component that reproduces phpMyAdmin's editor UX: `Ctrl+Enter` run (or `Enter` when `ConsoleEnterExecutes` in the console), `Ctrl+Space` autocomplete, lint gutter from the worker, fullscreen toggle, "Format" via `sql-formatter`, "Clear", `Get auto-saved query` (localStorage autosave per scope, same key semantics), parameter binding detection (`:name` highlighted when "Bind parameters" is on), delimiter input, the right-hand "Columns" list with `<<` insertion for the current table, snippet buttons (`SELECT *`, `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CLEAR`, `FORMAT`) producing the same templates. Details: [SQL editor and query pipeline](../features/09-sql-editor-query-pipeline.md).
+CodeMirror 6 wrapped in a component that reproduces phpMyAdmin's editor UX: `Ctrl+Enter` run (or `Enter` when `ConsoleEnterExecutes` in the console), `Ctrl+Space` autocomplete, lint gutter from the worker, "Format" / "Format as a single line" via `POST /sql/format` (the ported `phpmyadmin/sql-parser` Formatter), "Clear", `Get auto-saved query` (localStorage autosave per scope, same key semantics), parameter binding detection (`:name` highlighted when "Bind parameters" is on), delimiter input, the right-hand "Columns" list with `<<` insertion for the current table, snippet buttons (`SELECT *`, `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CLEAR`, `FORMAT`) producing the same templates. Details: [SQL editor and query pipeline](../features/09-sql-editor-query-pipeline.md).
 
 ## Navigation tree
 

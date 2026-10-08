@@ -44,7 +44,7 @@ Conventions:
 | GET | `/api/servers/:s/prefs/export?format=json|php` | download | `/preferences/manage` export |
 | GET | `/api/servers/:s/prefs/forms` | the form definitions (groups, fields, types, validators) for Settings tabs and page-settings gear | `Config/Forms/*` |
 | GET/POST | `/api/servers/:s/two-factor` | current backend; `POST {backend, setupToken...}` configure/disable | `/preferences/two-factor` |
-| POST | `/api/servers/:s/console/config` | `{key, value}` console options | `/console/update-config` |
+| POST | `/api/servers/:s/console/config` | `{key, value}` console options (same key/value validation, 400 "Unexpected parameter value.") | `/console/update-config` |
 | POST | `/api/servers/:s/navigation/width` | `{width}` | `/navigation/update-width` |
 
 ## Navigation tree
@@ -167,15 +167,16 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| POST | `/api/servers/:s/query` | `{sql, db?, table?, pos, maxRows, delimiter, params?, fkChecks?, rollback?, showAsPhp?, profiling?, explain?, isBrowse?, displayOptions, bookmark?: {label, shared, replace}}` → result envelope (rows, fields, counts, analysis, executed, messages, operations, redirectScope?) | `/sql`, `/database/sql`, `/table/sql`, `/server/sql` |
-| POST | `/api/servers/:s/query/cancel` | `{queryId}` → `KILL QUERY` | — (new) |
-| POST | `/api/servers/:s/query/simulate` | `{sql}` → matched rows for UPDATE/DELETE | `/import/simulate-dml` |
-| POST | `/api/servers/:s/query/explain` | `{sql}` | Explain link |
-| POST | `/api/servers/:s/sql/format` | `{sql}` → formatted | `/database/sql/format` |
-| POST | `/api/servers/:s/sql/lint` | `{sql}` → issues (fallback; client lints in a worker) | `/lint` |
-| GET | `/api/servers/:s/sql/autocomplete?db=` | tables and columns for the editor | `/database/sql/autocomplete` |
-| GET | `/api/servers/:s/sql/default-fk-check` | `{checked}` from `DefaultForeignKeyChecks` + server var | `/sql/get-default-fk-check-value` |
-| GET | `/api/servers/:s/sql/history?limit=` | query history (pmadb or empty) | console history |
+| POST | `/api/servers/:s/query` | `{sql, db?, table?, pos, maxRows?, delimiter, fromQueryBox, sig?, fkChecks?, rollback?, params? ({':name': value}), showAsPhp?, profiling? (true = on, false = off, omitted = unchanged), queryId?}` → `{statements[], executed, db, table, ajaxReload?, reloadNavigation, sqlQuery}`; each statement has `kind` (`resultset`/`affected`/`empty`/`error`/`php`/`import`), `message`, `card` (SQL shown + `links` {editInline, edit, explain, php, refresh, profiling}), `error` (mysqlDie: static analysis, SQL, server message), `result`, `moreResults` (CALL), `profiling`, `warnings`. A `sig` that does not verify → 400 "Missing parameter: sql_query" | `/import` (SQL tab, console), `/sql` |
+| POST | `/api/servers/:s/query/cancel` | `{queryId}` → `{killed}` (`KILL QUERY` on the connection running that request) | — (new, X14) |
+| POST | `/api/servers/:s/query/simulate` | `{sql, db?, delimiter}` → `{sqlData: [{sqlQuery, matchedRows, matchedRowsSql, matchedRowsSig}] \| null, message?}` | `/import/simulate-dml` |
+| POST | `/api/servers/:s/sql/format` | `{sql, singleLine}` → `{sql}` (ported Formatter) | `/database/sql/format` |
+| POST | `/api/servers/:s/sql/lint` | `{sql, editorType?: event\|routine\|trigger}` → `{lints}` (fallback; the editor lints in a worker) | `/lint` |
+| GET | `/api/servers/:s/sql/autocomplete?db=` | `{tables: {table: [{field, columnHint}]}}` | `/database/sql/autocomplete` |
+| GET | `/api/servers/:s/sql/default-fk-check` | `{defaultFkCheckValue}` from `DefaultForeignKeyChecks` + server var | `/sql/get-default-fk-check-value` |
+| GET | `/api/servers/:s/sql/form?db=&table=&sqlQuery=` | what the SQL tab renders server-side: scope, legend name, prefilled query (`DefaultQuery*` expanded), columns, FK default, profiling support, server parser context, SQL-box settings; 404 "No databases selected." / "No table selected." | `/server/sql`, `/database/sql`, `/table/sql` |
+| GET | `/api/servers/:s/sql/history` | `{entries: [{db, table, sqlquery, timevalue}]}` newest first (session history; pma__history store pluggable) | console history |
+| GET | `/api/servers/:s/console/config` | `{settings (Console/*), debugSql, maxCharactersInDisplayedSql, confirm}` | `console/display.twig` data |
 | GET/POST | `/api/servers/:s/bookmarks` | list; create `{label, sql, shared, db}`; `/:id/delete`; `/:id/run {variables}` returns signed SQL | `/console/bookmark/*`, bookmark forms |
 | POST | `/api/servers/:s/query/sign` | `{sql}` → `{sig}` for building browse links (FK traversal, search redirects) | `Core::signSqlQuery` |
 
