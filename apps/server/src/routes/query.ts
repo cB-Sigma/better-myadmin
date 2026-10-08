@@ -1,6 +1,7 @@
 import { QueryRequest, type QueryResponse } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
 import { ValidationError } from '../http/errors.ts'
+import { afterSqlBox } from '../metadata/hooks.ts'
 import { runSqlBox } from '../query/pipeline.ts'
 import type { ServerEnv } from './server.ts'
 
@@ -21,8 +22,9 @@ queryRoutes.post('/', async (c) => {
   const session = c.get('session')
   const executed = c.get('executed')
   const conn = await pools.acquire(session.id, c.get('serverIndex'), c.get('creds'), executed)
+  let statements: QueryResponse['statements'] = []
   try {
-    const statements = await runSqlBox(
+    statements = await runSqlBox(
       {
         sql: req.sql,
         db: req.db ?? '',
@@ -44,5 +46,12 @@ queryRoutes.post('/', async (c) => {
     return c.json(body)
   } finally {
     conn.raw.release()
+    // StatementHistory + RecentTableHandling middlewares (pma: src/Application.php)
+    await afterSqlBox(c, {
+      db: req.db ?? '',
+      table: req.table ?? '',
+      statements,
+      noHistory: req.noHistory === true,
+    })
   }
 })

@@ -18,6 +18,8 @@ export const QueryRequest = z.object({
   profiling: z.boolean().optional(),
   rollback: z.boolean().optional(),
   params: z.record(z.string()).optional(),
+  /** no_history: do not record the query in the SQL history (StatementHistory middleware). */
+  noHistory: z.boolean().optional(),
 })
 export type QueryRequest = z.input<typeof QueryRequest>
 

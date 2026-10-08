@@ -59,3 +59,15 @@
 - tool: bma
   pattern: "^SHOW SESSION VARIABLES LIKE 'FOREIGN_KEY_CHECKS'$"
   why: ForeignKey::handleDisableCheckInit read (phpMyAdmin sends it too, more often).
+- tool: bma
+  pattern: "^SHOW TABLES FROM `phpmyadmin`$"
+  why: Configuration-storage discovery (Relation::initRelationParamsCache / checkRelationsParam). phpMyAdmin runs it on every request on its control link, which the reference instance logs under its controluser `pma`; the BetterMyAdmin server of sql-box.parity has no controluser, so its control link uses the test user's credentials, once per session.
+- tool: bma
+  pattern: "^SELECT NULL FROM `pma__[a-z_]+` LIMIT 0$"
+  why: Same discovery (Relation::canAccessStorageTable probes), on the user's credentials when no controluser is configured.
+- tool: bma
+  pattern: "^SHOW COLUMNS FROM `phpmyadmin`\\.`pma__column_info` WHERE Field IN "
+  why: Same discovery (Relation::tryUpgradeTransformations), on the user's credentials when no controluser is configured.
+- tool: bma
+  pattern: "^SELECT `config_data`, UNIX_TIMESTAMP\\(`timevalue`\\) ts FROM `phpmyadmin`\\.`pma__userconfig` WHERE "
+  why: UserPreferences::load — phpMyAdmin reads it through its control user on every request, BetterMyAdmin once per session (on the user's credentials when no controluser is configured).

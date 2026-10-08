@@ -29,6 +29,8 @@ export interface SessionData {
   debugSql?: Array<{ sql: string; ms: number; label?: string }>
   /** Query history kept in the session when QueryHistoryDB is off (pma: $_SESSION['sql_history']). */
   sqlHistory?: Array<{ db: string; table: string; sqlquery: string }>
+  /** Configuration-storage state owned by src/metadata/service.ts (pma: parts of $_SESSION). */
+  metadata?: Record<string, unknown>
 }
 
 export interface SessionStore {
