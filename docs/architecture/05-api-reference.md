@@ -37,9 +37,10 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/servers/:s/prefs` | merged prefs + per-directive source (`default|config|user`) + `userprefsDisallow` list | `UserPreferences::load` |
-| POST | `/api/servers/:s/prefs` | `{patch: Record<directive, value>}` → validated, stored in `userconfig` (or returned for localStorage when `!userconfigwork`) | `/preferences/*` save |
-| POST | `/api/servers/:s/prefs/reset` | `{directives?: string[]}` all or some to default | "Restore default value" |
+| GET | `/api/servers/:s/prefs` | `{storage: db|local|session, mtime, configData, values}`: every user-preference path with effective value, phpMyAdmin default, config value, source (`default|config|user`) and `disallowed` (`UserprefsDisallow`) | `UserPreferences::load` + `apply` |
+| POST | `/api/servers/:s/prefs` | `{configData}` replaces the stored flat map (`2fa` kept when absent); pmadb `userconfig`, else local store, else session. Form validation arrives with the Settings UI | `UserPreferences::save` |
+| POST | `/api/servers/:s/prefs/option` | `{path, value, default?}` one value, removed when equal to the default (phpMyAdmin's when omitted) | `UserPreferencesHandler::setUserValue` (`/console/update-config`, theme, lang, nav width...) |
+| POST | `/api/servers/:s/prefs/reset` | wipe all preferences (`save([])`, which keeps `2fa`) | `/preferences/manage` Reset (`submit_clear`) |
 | POST | `/api/servers/:s/prefs/import` | `{json}` or `{file}` + `merge?` | `/preferences/manage` import |
 | GET | `/api/servers/:s/prefs/export?format=json|php` | download | `/preferences/manage` export |
 | GET | `/api/servers/:s/prefs/forms` | the form definitions (groups, fields, types, validators) for Settings tabs and page-settings gear | `Config/Forms/*` |
@@ -54,19 +55,21 @@ Conventions:
 | GET | `/api/servers/:s/navigation/databases?pos=&filter=` | paged db list, grouped per `NavigationTreeDbSeparator`, with `hidden` counts and `total` | `/navigation` (root) |
 | GET | `/api/servers/:s/navigation/db/:db?container=tables|views|procedures|functions|events&pos=&filter=` | children of a container with counts; `container` omitted returns the container summary (counts) | `/navigation` (`aPath`/`vPath`) |
 | GET | `/api/servers/:s/navigation/db/:db/table/:t` | columns + indexes nodes | `/navigation` |
-| GET | `/api/servers/:s/navigation/hidden/:db` | hidden items list | `navigationhiding` |
-| POST | `/api/servers/:s/navigation/hide` / `unhide` | `{db, itemType, itemName}` | `/navigation` hide/unhide |
+| GET | `/api/servers/:s/navigation/hidden?db=` | `{available, hidden: {item_type: names[]}, counts: {db: n}}` | `Navigation::getHiddenItems`, `Node::getNavigationHidingData` |
+| POST | `/api/servers/:s/navigation/hide` / `unhide` | `{dbName, itemType, itemName}` | `/navigation` `hideNavItem` / `unhideNavItem` |
 | POST | `/api/servers/:s/navigation/reload` | drops server-side nav caches | "Reload navigation panel" |
-| GET | `/api/servers/:s/recent-favorite` | `{recent:[], favorite:[]}` | `/table/recent-favorite` |
-| POST | `/api/servers/:s/favorites` | `{action:'add'|'remove'|'sync', db, table, localList?}` | `/database/structure/favorite-table`, `/sync-favorite-tables` |
+| GET | `/api/servers/:s/recent-favorite` | `{recent, favorite, numRecentTables, numFavoriteTables, syncFavorites}` (lists loaded once per session) | navigation recent/favorite lists |
+| POST | `/api/servers/:s/recent` | `{db, table}` adds a recently used table (trimmed to `NumRecentTables`); `POST /query` with a `table` does the same | `RecentTableHandling` middleware |
+| POST | `/api/servers/:s/favorites` | `{action:'add'|'remove', db, table, favoriteTables}` → `{changes, message?, user (sha1), favoriteTables (localStorage JSON), favorite}`; *Favorite List is full!* at `NumFavoriteTables` | `/database/structure/favorite-table` |
+| POST | `/api/servers/:s/favorites/sync` | `{favoriteTables}` localStorage → storage when the stored list is empty | `/sync-favorite-tables` |
 
 ## Server scope
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
 | GET | `/api/servers/:s` | server info block for home page (version, type, host, user, charset, SSL status; master shows no protocol version) + web server block + capabilities + metadata-storage status + warnings list | `HomeController` |
-| GET | `/api/servers/:s/metadata-storage/status` | per-table existence and `*work` flags | `/check-relations` |
-| POST | `/api/servers/:s/metadata-storage/create` | create missing pmadb tables (`fixUpMissing`) | `/check-relations` create |
+| GET | `/api/servers/:s/metadata-storage/status?db=` | `RelationParameters::toArray()`, the home and DB-operations notices, the one create action offered, the check page's table and feature lines, the store serving each per-user feature, the control-link error | `/check-relations`, `HomeController` notice |
+| POST | `/api/servers/:s/metadata-storage/create` | `{action: create_pmadb|fixall_pmadb|fix_pmadb, db?}` → `{message, status}` | `/check-relations` (`createPmaDatabase`, `fixPmaTables`) |
 | GET | `/api/servers/:s/databases?pos=&sortBy=&sortOrder=&withStats=` | db list with collation and (optional) stats | `/server/databases` |
 | POST | `/api/servers/:s/databases` | `{name, collation}` create | `/server/databases/create` |
 | POST | `/api/servers/:s/databases/drop` | `{names[]}` | `/server/databases/destroy` |
@@ -151,7 +154,8 @@ Conventions:
 | GET | `/api/servers/:s/databases/:db/tables/:t/cell?where=&column=&transform=` | raw cell bytes (BLOB download, image inline, transformation wrapper) | `/table/get-field`, `/transformation/wrapper` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/foreign-values?column=&search=&pos=` | FK browse popup / dropdown data (`ForeignKeyMaxLimit`, ordering) | `/browse-foreigners`, `/sql/get-relational-values` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/enum-values?column=` / `set-values` | option lists for grid editors | `/sql/get-enum-values`, `/sql/get-set-values` |
-| POST | `/api/servers/:s/databases/:db/tables/:t/uiprefs` | `{sortedCol?, colOrder?, colVisib?}` | `/sql/set-column-preferences` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/uiprefs` | validated `{sorted_col, col_order, col_visib, createTime}` (stale values removed) | `Table::getUiProp` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/uiprefs` | `{col_order?, col_visib?, table_create_time}` (comma lists) | `/sql/set-column-preferences` |
 | GET/POST | `/api/servers/:s/databases/:db/tables/:t/normalization/*` | wizard steps (1NF 1-4, 2NF, 3NF, partial-dependencies, create tables, move repeating group, add primary) | `/normalization/*` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/columns?names=1` | names (pickers) | `/columns` |
 
@@ -175,8 +179,9 @@ Conventions:
 | POST | `/api/servers/:s/sql/lint` | `{sql}` → issues (fallback; client lints in a worker) | `/lint` |
 | GET | `/api/servers/:s/sql/autocomplete?db=` | tables and columns for the editor | `/database/sql/autocomplete` |
 | GET | `/api/servers/:s/sql/default-fk-check` | `{checked}` from `DefaultForeignKeyChecks` + server var | `/sql/get-default-fk-check-value` |
-| GET | `/api/servers/:s/sql/history?limit=` | query history (pmadb or empty) | console history |
-| GET/POST | `/api/servers/:s/bookmarks` | list; create `{label, sql, shared, db}`; `/:id/delete`; `/:id/run {variables}` returns signed SQL | `/console/bookmark/*`, bookmark forms |
+| GET | `/api/servers/:s/sql/history` | `{history: rows newest first, or false, queryHistoryDB}`; `POST /query` records the last statement like `StatementHistory` (`noHistory` skips it) | `Console\History::getHistory` |
+| GET/POST | `/api/servers/:s/bookmarks` | `?db=` list (own + shared); create `{db, label, query, shared, replace}`; `GET /:id` show; `POST /:id/delete`; `POST /:id/run {db, variables, allUsers, noHistory}` runs it through the SQL-box pipeline | bookmark forms, `/import` `id_bookmark` / `action_bookmark` |
+| GET/POST | `/api/servers/:s/console/bookmarks` | console list with *Showing N bookmarks (both private and shared)*; add `{db, label, bookmark_query, shared}` → *Succeeded* / *Failed* | `/console/bookmark/refresh`, `/console/bookmark/add` |
 | POST | `/api/servers/:s/query/sign` | `{sql}` → `{sig}` for building browse links (FK traversal, search redirects) | `Core::signSqlQuery` |
 
 ## Export
