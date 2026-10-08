@@ -78,3 +78,38 @@ export function lint(query: string, options: Pick<LexerOptions, 'context'> = {})
 
   return response
 }
+
+/** Editors whose content is a routine/trigger/event body (`lintOptions.editorType`). */
+export type LintEditorType = 'event' | 'routine' | 'trigger'
+
+// pma: src/Controllers/LintController.php::EDITOR_SQL_PREFIX
+export const EDITOR_SQL_PREFIX: Readonly<Record<LintEditorType, string>> = {
+  event: 'DELIMITER $$ CREATE EVENT `a` ON SCHEDULE EVERY MINUTE DO\n',
+  routine: 'DELIMITER $$ CREATE PROCEDURE `a`()\n',
+  trigger: 'DELIMITER $$ CREATE TRIGGER `a` AFTER INSERT ON `b` FOR EACH ROW\n',
+}
+
+/**
+ * The `/lint` endpoint: lints routine/trigger/event bodies in context by prepending a synthetic
+ * header, then moves the positions back one line (except those on line 0).
+ */
+// pma: src/Controllers/LintController.php::__invoke
+export function lintQuery(
+  sqlQuery: string,
+  editorType?: string | null,
+  options: Pick<LexerOptions, 'context'> = {},
+): LintMessage[] {
+  const prefix =
+    typeof editorType === 'string' && Object.hasOwn(EDITOR_SQL_PREFIX, editorType)
+      ? EDITOR_SQL_PREFIX[editorType as LintEditorType]
+      : ''
+  const lints = lint(prefix + sqlQuery, options)
+  if (prefix !== '') {
+    for (const l of lints) {
+      if (l.fromLine === 0) continue
+      l.fromLine -= 1
+      l.toLine -= 1
+    }
+  }
+  return lints
+}
