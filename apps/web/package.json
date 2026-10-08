@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@bettermyadmin/contracts": "workspace:*",
+    "@bettermyadmin/ui": "workspace:*",
     "@tanstack/react-query": "5.76.1",
     "@tanstack/react-router": "1.120.3",
     "@tanstack/react-table": "8.21.3",
     "@tanstack/react-virtual": "3.13.8",
+    "@zxcvbn-ts/core": "3.0.4",
     "clsx": "2.1.1",
     "lucide-react": "0.511.0",
     "react": "19.1.0",

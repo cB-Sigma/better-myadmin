@@ -3,3 +3,5 @@ packages:
   - packages/*
 onlyBuiltDependencies:
   - esbuild
+# Only resolve versions published at least 14 days ago (direct and transitive dependencies).
+minimumReleaseAge: 20160
