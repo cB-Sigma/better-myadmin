@@ -20,18 +20,19 @@ Conventions:
 | POST | `/api/auth/two-factor` | `{code}` or WebAuthn assertion → `{ok}` | `TwoFactor::check` |
 | POST | `/api/auth/logout` | clears session (all servers if `LoginCookieDeleteAll`) → `{logoutUrl}` (`LogoutURL`) | `/logout` |
 | POST | `/api/auth/switch-server` | `{server}` for `config`/`signon` types | `?server=` |
-| POST | `/api/servers/:s/account/password` | `{mode:'none'|'text', password?, hashing?}` → sets current user password (`SET PASSWORD` / `ALTER USER`) | `/user-password` |
-| POST | `/api/servers/:s/session/collation` | `{collation}` → `SET collation_connection` for the session | `/collation-connection` |
+| GET | `/api/servers/:s/account/password` | the change-password form: `{origAuthPlugin, showHashing, showSslNotice, authPlugins[], allowNoPassword}` (refused for `config` auth) | `GET /user-password` |
+| POST | `/api/servers/:s/account/password` | `{nopass, pma_pw, pma_pw2, authentication_plugin?}` → `ALTER USER` / `UPDATE mysql.user` / `SET password` + `FLUSH PRIVILEGES`; `{message, sql}` with the password masked; the session keeps working with the new password | `POST /user-password` |
+| POST | `/api/servers/:s/session/collation` | `{collation_connection}` → stored as this login's `DefaultConnectionCollation`; new pooled connections run `SET collation_connection` (skipped for `''` and the `SET NAMES` collation) | `/collation-connection` |
 
 ## Meta
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
 | GET | `/api/meta/build` | version, git commit/branch, build date | `/git-revision` |
-| GET | `/api/meta/version-check` | `{latest, isNewer, releaseDate}` (respects `VersionCheck`) | `/version-check` |
+| GET | `/api/meta/version-check` | `{}` or `{version, date}` of the latest compatible release (respects `VersionCheck`; feed from `BMA_VERSION_FEED_URL`, cached 6 h) | `/version-check` |
 | GET | `/api/meta/health` | liveness | — |
 | GET | `/api/meta/config-public` | the subset of config the client needs (directives flagged client-visible in `packages/config`) | inlined JS globals |
-| POST | `/api/telemetry/error` | sanitized client error report, only when `SendErrorReports` allows | `/error-report` |
+| POST | `/api/telemetry/error` | `{exception_type, get_settings?}` → `{report_setting}`; without `send_error_report` → `{report}` (modal preview); with it → sends to `BMA_ERROR_REPORT_URL` or the server log, `{message}`; `always_send` persists `SendErrorReports=always` | `/error-report` |
 
 ## Preferences and page settings
 
@@ -64,7 +65,8 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/servers/:s` | server info block for home page (version, type, host, user, charset, SSL status; master shows no protocol version) + web server block + capabilities + metadata-storage status + warnings list | `HomeController` |
+| GET | `/api/servers/:s` | server scope for the shell: breadcrumb name, host/verbose, version, capabilities (`isSuperUser`, `isGrantUser`, `isCreateUser`, binary logs, tracker, central columns, column comments, configurable menus, `CURRENT_USER()`), the visible server tab keys | `Menu::getServerTabs` |
+| GET | `/api/servers/:s/home` | home page blocks: server selection, change-password link, connection collations, Database server, Web server, version/git info, warnings, configuration-storage notice, partial-logout flag | `HomeController` |
 | GET | `/api/servers/:s/metadata-storage/status` | per-table existence and `*work` flags | `/check-relations` |
 | POST | `/api/servers/:s/metadata-storage/create` | create missing pmadb tables (`fixUpMissing`) | `/check-relations` create |
 | GET | `/api/servers/:s/databases?pos=&sortBy=&sortOrder=&withStats=` | db list with collation and (optional) stats | `/server/databases` |
@@ -103,7 +105,8 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/servers/:s/databases/:db` | capabilities for tab bar (can create, counts, is `information_schema`, user privs) | `Menu` |
+| GET | `/api/servers/:s/databases/:db` | database scope: visible db tab keys (with the empty-database warning), `isSystemSchema`, table count, pmadb database comment | `Menu::getDbTabs` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/capabilities` | table scope: visible table tab keys, `isView`, `isUpdatableView`, table comment (without `; InnoDB free`) | `Menu::getTableTabs` |
 | GET | `/api/servers/:s/databases/:db/structure?pos=&sortBy=&sortOrder=` | table list with rows (exact/approx), engine, collation, size, overhead, comments, timestamps, favorites | `/database/structure` |
 | GET | `/api/servers/:s/databases/:db/structure/real-row-count?table=` | exact count on demand | `/database/structure/real-row-count` |
 | POST | `/api/servers/:s/databases/:db/tables/bulk` | `{tables[], action: empty|drop|analyze|check|checksum|optimize|repair|print|show-create|export|add-prefix|replace-prefix|copy-with-prefix|copy, params}` | `/database/structure/*` |
