@@ -1,0 +1,3694 @@
+{
+  "_generated": {"by": "generate-structure-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "addIndex": [
+    {
+      "type": "INDEX",
+      "table": "t",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `t` ADD INDEX(`a`);"
+    },
+    {
+      "type": "INDEX",
+      "table": "my`table",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `my``table` ADD INDEX(`a`);"
+    },
+    {
+      "type": "INDEX",
+      "table": "t",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `t` ADD INDEX(`a`, `my col`);"
+    },
+    {
+      "type": "INDEX",
+      "table": "my`table",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `my``table` ADD INDEX(`a`, `my col`);"
+    },
+    {
+      "type": "INDEX",
+      "table": "t",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `t` ADD INDEX(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "INDEX",
+      "table": "my`table",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `my``table` ADD INDEX(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "UNIQUE",
+      "table": "t",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `t` ADD UNIQUE(`a`);"
+    },
+    {
+      "type": "UNIQUE",
+      "table": "my`table",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `my``table` ADD UNIQUE(`a`);"
+    },
+    {
+      "type": "UNIQUE",
+      "table": "t",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `t` ADD UNIQUE(`a`, `my col`);"
+    },
+    {
+      "type": "UNIQUE",
+      "table": "my`table",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `my``table` ADD UNIQUE(`a`, `my col`);"
+    },
+    {
+      "type": "UNIQUE",
+      "table": "t",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `t` ADD UNIQUE(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "UNIQUE",
+      "table": "my`table",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `my``table` ADD UNIQUE(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "SPATIAL",
+      "table": "t",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `t` ADD SPATIAL(`a`);"
+    },
+    {
+      "type": "SPATIAL",
+      "table": "my`table",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `my``table` ADD SPATIAL(`a`);"
+    },
+    {
+      "type": "SPATIAL",
+      "table": "t",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `t` ADD SPATIAL(`a`, `my col`);"
+    },
+    {
+      "type": "SPATIAL",
+      "table": "my`table",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `my``table` ADD SPATIAL(`a`, `my col`);"
+    },
+    {
+      "type": "SPATIAL",
+      "table": "t",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `t` ADD SPATIAL(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "SPATIAL",
+      "table": "my`table",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `my``table` ADD SPATIAL(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "FULLTEXT",
+      "table": "t",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `t` ADD FULLTEXT(`a`);"
+    },
+    {
+      "type": "FULLTEXT",
+      "table": "my`table",
+      "columns": ["a"],
+      "sql": "ALTER TABLE `my``table` ADD FULLTEXT(`a`);"
+    },
+    {
+      "type": "FULLTEXT",
+      "table": "t",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `t` ADD FULLTEXT(`a`, `my col`);"
+    },
+    {
+      "type": "FULLTEXT",
+      "table": "my`table",
+      "columns": ["a", "my col"],
+      "sql": "ALTER TABLE `my``table` ADD FULLTEXT(`a`, `my col`);"
+    },
+    {
+      "type": "FULLTEXT",
+      "table": "t",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `t` ADD FULLTEXT(`we``ird`, `1`, `é`);"
+    },
+    {
+      "type": "FULLTEXT",
+      "table": "my`table",
+      "columns": ["we`ird", "1", "é"],
+      "sql": "ALTER TABLE `my``table` ADD FULLTEXT(`we``ird`, `1`, `é`);"
+    }
+  ],
+  "addPrimary": [
+    {"table": "t", "column": "a", "hasPrimary": false, "sql": "ALTER TABLE `t` ADD PRIMARY KEY(`a`);"},
+    {"table": "t", "column": "a", "hasPrimary": true, "sql": "ALTER TABLE `t` DROP PRIMARY KEY, ADD PRIMARY KEY(`a`);"},
+    {"table": "t", "column": "my col", "hasPrimary": false, "sql": "ALTER TABLE `t` ADD PRIMARY KEY(`my col`);"},
+    {"table": "t", "column": "my col", "hasPrimary": true, "sql": "ALTER TABLE `t` DROP PRIMARY KEY, ADD PRIMARY KEY(`my col`);"},
+    {"table": "t", "column": "we`ird", "hasPrimary": false, "sql": "ALTER TABLE `t` ADD PRIMARY KEY(`we``ird`);"},
+    {"table": "t", "column": "we`ird", "hasPrimary": true, "sql": "ALTER TABLE `t` DROP PRIMARY KEY, ADD PRIMARY KEY(`we``ird`);"},
+    {"table": "t", "column": "1", "hasPrimary": false, "sql": "ALTER TABLE `t` ADD PRIMARY KEY(`1`);"},
+    {"table": "t", "column": "1", "hasPrimary": true, "sql": "ALTER TABLE `t` DROP PRIMARY KEY, ADD PRIMARY KEY(`1`);"},
+    {"table": "t", "column": "é", "hasPrimary": false, "sql": "ALTER TABLE `t` ADD PRIMARY KEY(`é`);"},
+    {"table": "t", "column": "é", "hasPrimary": true, "sql": "ALTER TABLE `t` DROP PRIMARY KEY, ADD PRIMARY KEY(`é`);"},
+    {"table": "my`table", "column": "a", "hasPrimary": false, "sql": "ALTER TABLE `my``table` ADD PRIMARY KEY(`a`);"},
+    {"table": "my`table", "column": "a", "hasPrimary": true, "sql": "ALTER TABLE `my``table` DROP PRIMARY KEY, ADD PRIMARY KEY(`a`);"},
+    {"table": "my`table", "column": "my col", "hasPrimary": false, "sql": "ALTER TABLE `my``table` ADD PRIMARY KEY(`my col`);"},
+    {"table": "my`table", "column": "my col", "hasPrimary": true, "sql": "ALTER TABLE `my``table` DROP PRIMARY KEY, ADD PRIMARY KEY(`my col`);"},
+    {"table": "my`table", "column": "we`ird", "hasPrimary": false, "sql": "ALTER TABLE `my``table` ADD PRIMARY KEY(`we``ird`);"},
+    {"table": "my`table", "column": "we`ird", "hasPrimary": true, "sql": "ALTER TABLE `my``table` DROP PRIMARY KEY, ADD PRIMARY KEY(`we``ird`);"},
+    {"table": "my`table", "column": "1", "hasPrimary": false, "sql": "ALTER TABLE `my``table` ADD PRIMARY KEY(`1`);"},
+    {"table": "my`table", "column": "1", "hasPrimary": true, "sql": "ALTER TABLE `my``table` DROP PRIMARY KEY, ADD PRIMARY KEY(`1`);"},
+    {"table": "my`table", "column": "é", "hasPrimary": false, "sql": "ALTER TABLE `my``table` ADD PRIMARY KEY(`é`);"},
+    {"table": "my`table", "column": "é", "hasPrimary": true, "sql": "ALTER TABLE `my``table` DROP PRIMARY KEY, ADD PRIMARY KEY(`é`);"}
+  ],
+  "partitionOps": [
+    {
+      "table": "my`t",
+      "operation": "ANALYZE",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` ANALYZE PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "ANALYZE",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` ANALYZE PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "CHECK",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` CHECK PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "CHECK",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` CHECK PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "OPTIMIZE",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` OPTIMIZE PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "OPTIMIZE",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` OPTIMIZE PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "REBUILD",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` REBUILD PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "REBUILD",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` REBUILD PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "REPAIR",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` REPAIR PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "REPAIR",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` REPAIR PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "TRUNCATE",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` TRUNCATE PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "TRUNCATE",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` TRUNCATE PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "DROP",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` DROP PARTITION p0;"
+    },
+    {
+      "table": "my`t",
+      "operation": "DROP",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` DROP PARTITION p0, p1, p2;"
+    },
+    {
+      "table": "my`t",
+      "operation": "COALESCE",
+      "partitions": ["p0"],
+      "sql": "ALTER TABLE `my``t` COALESCE PARTITION 1"
+    },
+    {
+      "table": "my`t",
+      "operation": "COALESCE",
+      "partitions": ["p0", "p1", "p2"],
+      "sql": "ALTER TABLE `my``t` COALESCE PARTITION 3"
+    }
+  ],
+  "partitioning": [
+    {
+      "table": "my`t",
+      "post": {"partition_by": "HASH", "partition_expr": "id", "partition_count": "4"},
+      "sql": "ALTER TABLE `my``t`  PARTITION BY HASH (id) PARTITIONS 4"
+    },
+    {
+      "table": "my`t",
+      "post": {
+        "partition_by": "RANGE",
+        "partition_expr": "id",
+        "partition_count": "2",
+        "partitions": [
+          {"name": "p0", "value_type": "LESS THAN", "value": "100", "engine": "", "comment": "", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""},
+          {"name": "p1", "value_type": "LESS THAN MAXVALUE", "value": "", "engine": "", "comment": "last", "data_directory": "", "index_directory": "", "max_rows": "", "min_rows": "", "tablespace": "", "node_group": ""}
+        ]
+      },
+      "sql": "ALTER TABLE `my``t`  PARTITION BY RANGE (id) PARTITIONS 2 ( PARTITION p0 VALUES LESS THAN (100),  PARTITION p1 VALUES LESS THAN MAXVALUE COMMENT = 'last')"
+    },
+    {
+      "table": "my`t",
+      "post": {"partition_by": "", "partition_expr": "", "partition_count": "0"},
+      "sql": "ALTER TABLE `my``t` "
+    }
+  ],
+  "rename": [
+    {
+      "server": {"vendor": "mysql", "version": 50612},
+      "old": "idx",
+      "new": "idx2",
+      "sql": "ALTER TABLE `db`.`t` DROP INDEX `idx`, ADD INDEX `idx2` (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50612},
+      "old": "PRIMARY",
+      "new": "",
+      "sql": "ALTER TABLE `db`.`t` DROP PRIMARY KEY, ADD PRIMARY KEY (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50612},
+      "old": "PRIMARY",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` DROP PRIMARY KEY, ADD PRIMARY KEY (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50612},
+      "old": "PRIMARY",
+      "new": "pk",
+      "sql": "ALTER TABLE `db`.`t` DROP PRIMARY KEY, ADD PRIMARY KEY (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50612},
+      "old": "idx",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` DROP INDEX `idx`, ADD INDEX `PRIMARY` (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50612},
+      "old": "we`ird",
+      "new": "é",
+      "sql": "ALTER TABLE `db`.`t` DROP INDEX `we``ird`, ADD INDEX `é` (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50700},
+      "old": "idx",
+      "new": "idx2",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `idx` TO `idx2`;",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50700},
+      "old": "PRIMARY",
+      "new": "",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50700},
+      "old": "PRIMARY",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50700},
+      "old": "PRIMARY",
+      "new": "pk",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `pk`;",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50700},
+      "old": "idx",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `idx` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 50700},
+      "old": "we`ird",
+      "new": "é",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `we``ird` TO `é`;",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 80400},
+      "old": "idx",
+      "new": "idx2",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `idx` TO `idx2`;",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mysql", "version": 80400},
+      "old": "PRIMARY",
+      "new": "",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 80400},
+      "old": "PRIMARY",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 80400},
+      "old": "PRIMARY",
+      "new": "pk",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `pk`;",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 80400},
+      "old": "idx",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `idx` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mysql", "version": 80400},
+      "old": "we`ird",
+      "new": "é",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `we``ird` TO `é`;",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100501},
+      "old": "idx",
+      "new": "idx2",
+      "sql": "ALTER TABLE `db`.`t` DROP INDEX `idx`, ADD INDEX `idx2` (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100501},
+      "old": "PRIMARY",
+      "new": "",
+      "sql": "ALTER TABLE `db`.`t` DROP PRIMARY KEY, ADD PRIMARY KEY (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100501},
+      "old": "PRIMARY",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` DROP PRIMARY KEY, ADD PRIMARY KEY (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100501},
+      "old": "PRIMARY",
+      "new": "pk",
+      "sql": "ALTER TABLE `db`.`t` DROP PRIMARY KEY, ADD PRIMARY KEY (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100501},
+      "old": "idx",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` DROP INDEX `idx`, ADD INDEX `PRIMARY` (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100501},
+      "old": "we`ird",
+      "new": "é",
+      "sql": "ALTER TABLE `db`.`t` DROP INDEX `we``ird`, ADD INDEX `é` (`a` ASC, `b`(5) DESC) USING BTREE COMMENT 'c';",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100502},
+      "old": "idx",
+      "new": "idx2",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `idx` TO `idx2`;",
+      "error": null
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100502},
+      "old": "PRIMARY",
+      "new": "",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100502},
+      "old": "PRIMARY",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100502},
+      "old": "PRIMARY",
+      "new": "pk",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `PRIMARY` TO `pk`;",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100502},
+      "old": "idx",
+      "new": "PRIMARY",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `idx` TO `PRIMARY`;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "server": {"vendor": "mariadb", "version": 100502},
+      "old": "we`ird",
+      "new": "é",
+      "sql": "ALTER TABLE `db`.`t` RENAME INDEX `we``ird` TO `é`;",
+      "error": null
+    }
+  ],
+  "indexCreateOrEdit": [
+    {
+      "label": "PRIMARY//single",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`) USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "PRIMARY//composite",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "PRIMARY//ignored rows",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`(7)) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "PRIMARY//all ignored",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "PRIMARY//duplicate name",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`(3) DESC, `b`(2)) USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "PRIMARY//odd sizes",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`, `b`(12), `1`(-3) ASC) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "PRIMARY//no collations key",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`(4), `b`) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/PRIMARY/single",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`) KEY_BLOCK_SIZE = 16;",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/PRIMARY/composite",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`(10) ASC, `my col` DESC, `we``ird`) USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/PRIMARY/ignored rows",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`(7)) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/PRIMARY/all ignored",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "PRIMARY/PRIMARY/duplicate name",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 8;",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/PRIMARY/odd sizes",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 16 USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/PRIMARY/no collations key",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`(4), `b`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "PRIMARY/idx_a/single",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/idx_a/composite",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`(10) ASC, `my col` DESC, `we``ird`);",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/idx_a/ignored rows",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`(7)) KEY_BLOCK_SIZE = 8 USING BTREE;",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/idx_a/all ignored",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY KEY_BLOCK_SIZE = 16 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "PRIMARY/idx_a/duplicate name",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`(3) DESC, `b`(2)) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/idx_a/odd sizes",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`, `b`(12), `1`(-3) ASC);",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/idx_a/no collations key",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": null,
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`(4), `b`);",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/single",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/composite",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/ignored rows",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`(7));",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/all ignored",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY USING BTREE;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/duplicate name",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD PRIMARY KEY (`a`(3) DESC, `b`(2)) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/odd sizes",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD PRIMARY KEY (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "PRIMARY/we`ird name/no collations key",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "PRIMARY",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD PRIMARY KEY (`a`(4), `b`) KEY_BLOCK_SIZE = 16;",
+      "error": "The name of the primary key must be \"PRIMARY\"!"
+    },
+    {
+      "label": "INDEX//single",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX (`a`) USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "INDEX//composite",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX (`a`(10) ASC, `my col` DESC, `we``ird`) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX//ignored rows",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX (`a`(7)) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX//all ignored",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX KEY_BLOCK_SIZE = 8;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "INDEX//duplicate name",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 16 USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "INDEX//odd sizes",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX (`a`, `b`(12), `1`(-3) ASC) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX//no collations key",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "INDEX",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX (`a`(4), `b`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/PRIMARY/single",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `PRIMARY` (`a`);",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "INDEX/PRIMARY/composite",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `PRIMARY` (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 8 USING BTREE;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "INDEX/PRIMARY/ignored rows",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `PRIMARY` (`a`(7)) KEY_BLOCK_SIZE = 16 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "INDEX/PRIMARY/all ignored",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `PRIMARY` COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "INDEX/PRIMARY/duplicate name",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `PRIMARY` (`a`(3) DESC, `b`(2));",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "INDEX/PRIMARY/odd sizes",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `PRIMARY` (`a`, `b`(12), `1`(-3) ASC) USING BTREE;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "INDEX/PRIMARY/no collations key",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "INDEX",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": null,
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `PRIMARY` (`a`(4), `b`) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "INDEX/idx_a/single",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `idx_a` (`a`) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/idx_a/composite",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `idx_a` (`a`(10) ASC, `my col` DESC, `we``ird`);",
+      "error": null
+    },
+    {
+      "label": "INDEX/idx_a/ignored rows",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `idx_a` (`a`(7)) USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "INDEX/idx_a/all ignored",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `idx_a` USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "INDEX/idx_a/duplicate name",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `idx_a` (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/idx_a/odd sizes",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `idx_a` (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 16;",
+      "error": null
+    },
+    {
+      "label": "INDEX/idx_a/no collations key",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "INDEX",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `idx_a` (`a`(4), `b`);",
+      "error": null
+    },
+    {
+      "label": "INDEX/we`ird name/single",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `we``ird name` (`a`) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/we`ird name/composite",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `we``ird name` (`a`(10) ASC, `my col` DESC, `we``ird`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/we`ird name/ignored rows",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `we``ird name` (`a`(7)) KEY_BLOCK_SIZE = 8;",
+      "error": null
+    },
+    {
+      "label": "INDEX/we`ird name/all ignored",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `we``ird name` KEY_BLOCK_SIZE = 16 USING BTREE;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "INDEX/we`ird name/duplicate name",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD INDEX `we``ird name` (`a`(3) DESC, `b`(2)) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/we`ird name/odd sizes",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD INDEX `we``ird name` (`a`, `b`(12), `1`(-3) ASC) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "INDEX/we`ird name/no collations key",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "INDEX",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD INDEX `we``ird name` (`a`(4), `b`);",
+      "error": null
+    },
+    {
+      "label": "UNIQUE//single",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE (`a`) KEY_BLOCK_SIZE = 8 USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "UNIQUE//composite",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 16 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE//ignored rows",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE (`a`(7)) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE//all ignored",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "UNIQUE//duplicate name",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE (`a`(3) DESC, `b`(2)) USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "UNIQUE//odd sizes",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE//no collations key",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": null,
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE (`a`(4), `b`) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/PRIMARY/single",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `PRIMARY` (`a`);",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "UNIQUE/PRIMARY/composite",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `PRIMARY` (`a`(10) ASC, `my col` DESC, `we``ird`) USING BTREE;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "UNIQUE/PRIMARY/ignored rows",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `PRIMARY` (`a`(7)) USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "UNIQUE/PRIMARY/all ignored",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `PRIMARY` KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "UNIQUE/PRIMARY/duplicate name",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `PRIMARY` (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 16;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "UNIQUE/PRIMARY/odd sizes",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `PRIMARY` (`a`, `b`(12), `1`(-3) ASC) USING BTREE;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "UNIQUE/PRIMARY/no collations key",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `PRIMARY` (`a`(4), `b`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "UNIQUE/idx_a/single",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `idx_a` (`a`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/idx_a/composite",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `idx_a` (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 8;",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/idx_a/ignored rows",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `idx_a` (`a`(7)) KEY_BLOCK_SIZE = 16 USING BTREE;",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/idx_a/all ignored",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `idx_a` USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "UNIQUE/idx_a/duplicate name",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `idx_a` (`a`(3) DESC, `b`(2)) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/idx_a/odd sizes",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `idx_a` (`a`, `b`(12), `1`(-3) ASC);",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/idx_a/no collations key",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `idx_a` (`a`(4), `b`) KEY_BLOCK_SIZE = 8;",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/we`ird name/single",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `we``ird name` (`a`) KEY_BLOCK_SIZE = 16 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/we`ird name/composite",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `we``ird name` (`a`(10) ASC, `my col` DESC, `we``ird`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/we`ird name/ignored rows",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `we``ird name` (`a`(7));",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/we`ird name/all ignored",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `we``ird name` USING BTREE;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "UNIQUE/we`ird name/duplicate name",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD UNIQUE `we``ird name` (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 8 USING HASH COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/we`ird name/odd sizes",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD UNIQUE `we``ird name` (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "UNIQUE/we`ird name/no collations key",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "UNIQUE",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": null,
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD UNIQUE `we``ird name` (`a`(4), `b`);",
+      "error": null
+    },
+    {
+      "label": "SPATIAL//single",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL (`a`);",
+      "error": null
+    },
+    {
+      "label": "SPATIAL//composite",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL (`a`(10) ASC, `my col` DESC, `we``ird`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL//ignored rows",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL (`a`(7)) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL//all ignored",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL KEY_BLOCK_SIZE = 16;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "SPATIAL//duplicate name",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL (`a`(3) DESC, `b`(2));",
+      "error": null
+    },
+    {
+      "label": "SPATIAL//odd sizes",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL (`a`, `b`(12), `1`(-3) ASC) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL//no collations key",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL (`a`(4), `b`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/PRIMARY/single",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `PRIMARY` (`a`) KEY_BLOCK_SIZE = 8;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "SPATIAL/PRIMARY/composite",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `PRIMARY` (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 16;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "SPATIAL/PRIMARY/ignored rows",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `PRIMARY` (`a`(7)) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "SPATIAL/PRIMARY/all ignored",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `PRIMARY` COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "SPATIAL/PRIMARY/duplicate name",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `PRIMARY` (`a`(3) DESC, `b`(2));",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "SPATIAL/PRIMARY/odd sizes",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `PRIMARY` (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 8;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "SPATIAL/PRIMARY/no collations key",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `PRIMARY` (`a`(4), `b`) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "SPATIAL/idx_a/single",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `idx_a` (`a`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/idx_a/composite",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `idx_a` (`a`(10) ASC, `my col` DESC, `we``ird`);",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/idx_a/ignored rows",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `idx_a` (`a`(7));",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/idx_a/all ignored",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `idx_a` KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "SPATIAL/idx_a/duplicate name",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `idx_a` (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/idx_a/odd sizes",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `idx_a` (`a`, `b`(12), `1`(-3) ASC);",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/idx_a/no collations key",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": null,
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `idx_a` (`a`(4), `b`);",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/we`ird name/single",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `we``ird name` (`a`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/we`ird name/composite",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `we``ird name` (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/we`ird name/ignored rows",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `we``ird name` (`a`(7)) KEY_BLOCK_SIZE = 16;",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/we`ird name/all ignored",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `we``ird name`;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "SPATIAL/we`ird name/duplicate name",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD SPATIAL `we``ird name` (`a`(3) DESC, `b`(2)) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/we`ird name/odd sizes",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD SPATIAL `we``ird name` (`a`, `b`(12), `1`(-3) ASC) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "SPATIAL/we`ird name/no collations key",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "SPATIAL",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD SPATIAL `we``ird name` (`a`(4), `b`) KEY_BLOCK_SIZE = 8;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT//single",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT (`a`) KEY_BLOCK_SIZE = 16 WITH PARSER ngram;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT//composite",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT (`a`(10) ASC, `my col` DESC, `we``ird`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT//ignored rows",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT (`a`(7)) WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT//all ignored",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "FULLTEXT//duplicate name",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 8 WITH PARSER ngram;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT//odd sizes",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT//no collations key",
+      "post": {
+        "Key_name": "",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT (`a`(4), `b`) WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/single",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `PRIMARY` (`a`);",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/composite",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "0",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `PRIMARY` (`a`(10) ASC, `my col` DESC, `we``ird`) WITH PARSER ngram;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/ignored rows",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "8",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `PRIMARY` (`a`(7)) KEY_BLOCK_SIZE = 8 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/all ignored",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "16abc",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `PRIMARY` KEY_BLOCK_SIZE = 16 WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/duplicate name",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "x",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `PRIMARY` (`a`(3) DESC, `b`(2));",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/odd sizes",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `PRIMARY` (`a`, `b`(12), `1`(-3) ASC) WITH PARSER ngram;",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "FULLTEXT/PRIMARY/no collations key",
+      "post": {
+        "Key_name": "PRIMARY",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "0",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": null,
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `PRIMARY` (`a`(4), `b`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "Can't rename index to PRIMARY!"
+    },
+    {
+      "label": "FULLTEXT/idx_a/single",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "8",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `idx_a` (`a`) KEY_BLOCK_SIZE = 8 WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/idx_a/composite",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "16abc",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `idx_a` (`a`(10) ASC, `my col` DESC, `we``ird`) KEY_BLOCK_SIZE = 16;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/idx_a/ignored rows",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "x",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `idx_a` (`a`(7)) WITH PARSER ngram;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/idx_a/all ignored",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `idx_a` COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "FULLTEXT/idx_a/duplicate name",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "0",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `idx_a` (`a`(3) DESC, `b`(2)) WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/idx_a/odd sizes",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "8",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `idx_a` (`a`, `b`(12), `1`(-3) ASC) KEY_BLOCK_SIZE = 8;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/idx_a/no collations key",
+      "post": {
+        "Key_name": "idx_a",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "16abc",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `idx_a` (`a`(4), `b`) KEY_BLOCK_SIZE = 16 WITH PARSER ngram;",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/we`ird name/single",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "x",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a"],
+          "sub_parts": [""],
+          "collations": [""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `we``ird name` (`a`) COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/we`ird name/composite",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "my col", "we`ird"],
+          "sub_parts": ["10", "", "0"],
+          "collations": ["A", "D", ""]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `we``ird name` (`a`(10) ASC, `my col` DESC, `we``ird`) WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/we`ird name/ignored rows",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "0",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", "a", ""],
+          "sub_parts": ["5", "7", ""],
+          "collations": ["D", "", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `we``ird name` (`a`(7));",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/we`ird name/all ignored",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "8",
+        "Index_type": "BTREE",
+        "Parser": "ngram",
+        "Index_comment": "",
+        "columns": {
+          "names": ["", ""],
+          "sub_parts": ["", ""],
+          "collations": ["", ""]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `we``ird name` KEY_BLOCK_SIZE = 8 WITH PARSER ngram;",
+      "error": "No index parts defined!"
+    },
+    {
+      "label": "FULLTEXT/we`ird name/duplicate name",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "16abc",
+        "Index_type": "HASH",
+        "Parser": "",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "a"],
+          "sub_parts": ["1", "2", "3"],
+          "collations": ["A", "", "D"]
+        }
+      },
+      "old": null,
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` ADD FULLTEXT `we``ird name` (`a`(3) DESC, `b`(2)) KEY_BLOCK_SIZE = 16 COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/we`ird name/odd sizes",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "x",
+        "Index_type": "RTREE",
+        "Parser": "ngram",
+        "Index_comment": "it's \"quoted\"",
+        "columns": {
+          "names": ["a", "b", "1"],
+          "sub_parts": ["abc", " 12 ", "-3"],
+          "collations": ["X", "0", "A"]
+        }
+      },
+      "old": "PRIMARY",
+      "tokudb": false,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP PRIMARY KEY, ADD FULLTEXT `we``ird name` (`a`, `b`(12), `1`(-3) ASC) WITH PARSER ngram COMMENT 'it\\'s \\\"quoted\\\"';",
+      "error": null
+    },
+    {
+      "label": "FULLTEXT/we`ird name/no collations key",
+      "post": {
+        "Key_name": "we`ird name",
+        "Index_choice": "FULLTEXT",
+        "Key_block_size": "",
+        "Index_type": "",
+        "Parser": "",
+        "Index_comment": "",
+        "columns": {
+          "names": ["a", "b"],
+          "sub_parts": ["4"]
+        }
+      },
+      "old": "old`idx",
+      "tokudb": true,
+      "sql": "ALTER TABLE `d``b`.`t``x` DROP INDEX `old``idx`, ADD FULLTEXT `we``ird name` (`a`(4), `b`);",
+      "error": null
+    }
+  ],
+  "fromShowIndexes": [
+    {
+      "label": "pk + composite + fulltext",
+      "rows": [
+        {"Key_name": "PRIMARY", "Non_unique": "0", "Seq_in_index": "1", "Column_name": "id", "Collation": "A", "Cardinality": "3", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": ""},
+        {"Key_name": "name_idx", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "name", "Collation": "A", "Cardinality": "3", "Sub_part": "10", "Packed": null, "Null": "YES", "Index_type": "BTREE", "Comment": "", "Index_comment": "my idx"},
+        {"Key_name": "name_idx", "Non_unique": "1", "Seq_in_index": "2", "Column_name": "qty", "Collation": "D", "Cardinality": "2", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": "my idx"},
+        {"Key_name": "ft", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "name", "Collation": null, "Cardinality": "3", "Sub_part": null, "Packed": null, "Null": "YES", "Index_type": "FULLTEXT", "Comment": "", "Index_comment": ""},
+        {"Key_name": "uq", "Non_unique": "0", "Seq_in_index": "1", "Column_name": "code", "Collation": "A", "Cardinality": "3", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "HASH", "Comment": "disabled", "Index_comment": ""},
+        {"Key_name": "dup", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "qty", "Collation": "A", "Cardinality": "2", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": ""},
+        {"Key_name": "dup2", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "qty", "Collation": "A", "Cardinality": "2", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": "different comment, same data"},
+        {"Key_name": "sp", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "g", "Collation": "A", "Cardinality": "0", "Sub_part": "32", "Packed": null, "Null": "", "Index_type": "SPATIAL", "Comment": "", "Index_comment": ""},
+        {"Key_name": "fn", "Non_unique": "1", "Seq_in_index": "1", "Column_name": null, "Collation": "A", "Cardinality": "3", "Sub_part": null, "Packed": null, "Null": "YES", "Index_type": "BTREE", "Comment": "", "Index_comment": "", "Expression": "(`qty` * 2)"},
+        {"Key_name": "1", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "7", "Collation": "A", "Cardinality": "3", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": ""}
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "type": "BTREE",
+          "choice": "PRIMARY",
+          "nonUnique": false,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "id", "name": "id", "seqInIndex": 1, "collation": "A", "cardinality": 3, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP PRIMARY KEY, ADD PRIMARY KEY (`id` ASC) USING BTREE;"
+        },
+        {
+          "name": "name_idx",
+          "type": "BTREE",
+          "choice": "INDEX",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "my idx",
+          "columns": [
+            {"key": "name", "name": "name", "seqInIndex": 1, "collation": "A", "cardinality": 3, "subPart": 10, "null": "YES", "expression": null},
+            {"key": "qty", "name": "qty", "seqInIndex": 2, "collation": "D", "cardinality": 2, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `name_idx`, ADD INDEX `name_idx` (`name`(10) ASC, `qty` DESC) USING BTREE COMMENT 'my idx';"
+        },
+        {
+          "name": "ft",
+          "type": "",
+          "choice": "FULLTEXT",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "name", "name": "name", "seqInIndex": 1, "collation": null, "cardinality": 3, "subPart": null, "null": "YES", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `ft`, ADD FULLTEXT `ft` (`name`);"
+        },
+        {
+          "name": "uq",
+          "type": "HASH",
+          "choice": "UNIQUE",
+          "nonUnique": false,
+          "packed": null,
+          "remarks": "disabled",
+          "comment": "",
+          "columns": [
+            {"key": "code", "name": "code", "seqInIndex": 1, "collation": "A", "cardinality": 3, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `uq`, ADD UNIQUE `uq` (`code` ASC) USING HASH;"
+        },
+        {
+          "name": "dup",
+          "type": "BTREE",
+          "choice": "INDEX",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "qty", "name": "qty", "seqInIndex": 1, "collation": "A", "cardinality": 2, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `dup`, ADD INDEX `dup` (`qty` ASC) USING BTREE;"
+        },
+        {
+          "name": "dup2",
+          "type": "BTREE",
+          "choice": "INDEX",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "different comment, same data",
+          "columns": [
+            {"key": "qty", "name": "qty", "seqInIndex": 1, "collation": "A", "cardinality": 2, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `dup2`, ADD INDEX `dup2` (`qty` ASC) USING BTREE COMMENT 'different comment, same data';"
+        },
+        {
+          "name": "sp",
+          "type": "",
+          "choice": "SPATIAL",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "g", "name": "g", "seqInIndex": 1, "collation": "A", "cardinality": 0, "subPart": 32, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `sp`, ADD SPATIAL `sp` (`g` ASC);"
+        },
+        {
+          "name": "fn",
+          "type": "BTREE",
+          "choice": "INDEX",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "(`qty` * 2)1", "name": "", "seqInIndex": 1, "collation": "A", "cardinality": 3, "subPart": null, "null": "YES", "expression": "(`qty` * 2)"}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `fn`, ADD INDEX `fn` USING BTREE;"
+        },
+        {
+          "name": "1",
+          "type": "BTREE",
+          "choice": "INDEX",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "7", "name": "7", "seqInIndex": 1, "collation": "A", "cardinality": 3, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl0` DROP INDEX `1`, ADD INDEX `1` (`7` ASC) USING BTREE;"
+        }
+      ],
+      "duplicates": [
+        ["dup", "dup2"]
+      ],
+      "columnsWithPrimaryOrUnique": ["id", "code"],
+      "columnsWithAnyIndex": ["id", "name", "qty", "name", "code", "qty", "qty", "g", "(`qty` * 2)1", 7]
+    },
+    {
+      "label": "no duplicates",
+      "rows": [
+        {"Key_name": "a", "Non_unique": "1", "Seq_in_index": "1", "Column_name": "x", "Collation": "A", "Cardinality": "0", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": ""},
+        {"Key_name": "b", "Non_unique": "0", "Seq_in_index": "1", "Column_name": "x", "Collation": "A", "Cardinality": "0", "Sub_part": null, "Packed": null, "Null": "", "Index_type": "BTREE", "Comment": "", "Index_comment": ""}
+      ],
+      "indexes": [
+        {
+          "name": "a",
+          "type": "BTREE",
+          "choice": "INDEX",
+          "nonUnique": true,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "x", "name": "x", "seqInIndex": 1, "collation": "A", "cardinality": 0, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl1` DROP INDEX `a`, ADD INDEX `a` (`x` ASC) USING BTREE;"
+        },
+        {
+          "name": "b",
+          "type": "BTREE",
+          "choice": "UNIQUE",
+          "nonUnique": false,
+          "packed": null,
+          "remarks": "",
+          "comment": "",
+          "columns": [
+            {"key": "x", "name": "x", "seqInIndex": 1, "collation": "A", "cardinality": 0, "subPart": null, "null": "", "expression": null}
+          ],
+          "editSql": "ALTER TABLE `db`.`tbl1` DROP INDEX `b`, ADD UNIQUE `b` (`x` ASC) USING BTREE;"
+        }
+      ],
+      "duplicates": [],
+      "columnsWithPrimaryOrUnique": ["x"],
+      "columnsWithAnyIndex": ["x", "x"]
+    }
+  ],
+  "moveColumns": [
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["id", "name", "qty", "note"],
+      "sql": null,
+      "error": "The selected columns are already in the correct order."
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["note", "qty", "name", "id"],
+      "sql": "ALTER TABLE `simple`\n  CHANGE `note` `note` text FIRST,\n  CHANGE `qty` `qty` int DEFAULT NULL AFTER `note`,\n  CHANGE `name` `name` varchar(20) NOT NULL DEFAULT 'x' AFTER `qty`",
+      "error": null
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["name", "qty", "note", "id"],
+      "sql": "ALTER TABLE `simple`\n  CHANGE `name` `name` varchar(20) NOT NULL DEFAULT 'x' FIRST,\n  CHANGE `qty` `qty` int DEFAULT NULL AFTER `name`,\n  CHANGE `note` `note` text AFTER `qty`",
+      "error": null
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["note", "id", "name", "qty"],
+      "sql": "ALTER TABLE `simple`\n  CHANGE `note` `note` text FIRST",
+      "error": null
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["name", "qty", "note"],
+      "sql": null,
+      "error": "The selected columns do not match the columns in the table."
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["id", "name", "qty", "note", "missing"],
+      "sql": null,
+      "error": "The selected columns do not match the columns in the table."
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["id", "name", "qty", "missing"],
+      "sql": null,
+      "error": "The selected columns do not match the columns in the table."
+    },
+    {
+      "table": "simple",
+      "create": "CREATE TABLE `simple` (\n  `id` int NOT NULL AUTO_INCREMENT,\n  `name` varchar(20) NOT NULL DEFAULT 'x',\n  `qty` int DEFAULT NULL,\n  `note` text,\n  PRIMARY KEY (`id`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "order": ["note", "name", "id", "qty"],
+      "sql": "ALTER TABLE `simple`\n  CHANGE `note` `note` text FIRST,\n  CHANGE `name` `name` varchar(20) NOT NULL DEFAULT 'x' AFTER `note`",
+      "error": null
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["id", "my col", "created", "price", "kind", "flags", "doubled", "stored_name", "bits", "doc", "geo", "we`ird"],
+      "sql": null,
+      "error": "The selected columns are already in the correct order."
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["we`ird", "geo", "doc", "bits", "stored_name", "doubled", "flags", "kind", "price", "created", "my col", "id"],
+      "sql": "ALTER TABLE `rich`\n  CHANGE `we``ird` `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL FIRST,\n  CHANGE `geo` `geo` point NOT NULL SRID 0 AFTER `we``ird`,\n  CHANGE `doc` `doc` json DEFAULT NULL AFTER `geo`,\n  CHANGE `bits` `bits` bit(4) DEFAULT b'101' AFTER `doc`,\n  CHANGE `stored_name` `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED AFTER `bits`,\n  CHANGE `doubled` `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL AFTER `stored_name`,\n  CHANGE `flags` `flags` set('x','y') DEFAULT NULL AFTER `doubled`,\n  CHANGE `kind` `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a' AFTER `flags`,\n  CHANGE `price` `price` decimal(10,2) NOT NULL DEFAULT '0.00' AFTER `kind`,\n  CHANGE `created` `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) AFTER `price`,\n  CHANGE `my col` `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s' AFTER `created`",
+      "error": null
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["my col", "created", "price", "kind", "flags", "doubled", "stored_name", "bits", "doc", "geo", "we`ird", "id"],
+      "sql": "ALTER TABLE `rich`\n  CHANGE `my col` `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s' FIRST,\n  CHANGE `created` `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) AFTER `my col`,\n  CHANGE `price` `price` decimal(10,2) NOT NULL DEFAULT '0.00' AFTER `created`,\n  CHANGE `kind` `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a' AFTER `price`,\n  CHANGE `flags` `flags` set('x','y') DEFAULT NULL AFTER `kind`,\n  CHANGE `doubled` `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL AFTER `flags`,\n  CHANGE `stored_name` `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED AFTER `doubled`,\n  CHANGE `bits` `bits` bit(4) DEFAULT b'101' AFTER `stored_name`,\n  CHANGE `doc` `doc` json DEFAULT NULL AFTER `bits`,\n  CHANGE `geo` `geo` point NOT NULL SRID 0 AFTER `doc`,\n  CHANGE `we``ird` `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL AFTER `geo`",
+      "error": null
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["we`ird", "id", "my col", "created", "price", "kind", "flags", "doubled", "stored_name", "bits", "doc", "geo"],
+      "sql": "ALTER TABLE `rich`\n  CHANGE `we``ird` `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL FIRST",
+      "error": null
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["my col", "created", "price", "kind", "flags", "doubled", "stored_name", "bits", "doc", "geo", "we`ird"],
+      "sql": null,
+      "error": "The selected columns do not match the columns in the table."
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["id", "my col", "created", "price", "kind", "flags", "doubled", "stored_name", "bits", "doc", "geo", "we`ird", "missing"],
+      "sql": null,
+      "error": "The selected columns do not match the columns in the table."
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["id", "my col", "created", "price", "kind", "flags", "doubled", "stored_name", "bits", "doc", "geo", "missing"],
+      "sql": null,
+      "error": "The selected columns do not match the columns in the table."
+    },
+    {
+      "table": "rich",
+      "create": "CREATE TABLE `rich` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT,\n  `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s',\n  `created` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),\n  `price` decimal(10,2) NOT NULL DEFAULT '0.00',\n  `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a',\n  `flags` set('x','y') DEFAULT NULL,\n  `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL,\n  `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED,\n  `bits` bit(4) DEFAULT b'101',\n  `doc` json DEFAULT NULL,\n  `geo` point NOT NULL /*!80003 SRID 0 */,\n  `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uq` (`price`,`kind`),\n  KEY `k` (`my col`(10)),\n  SPATIAL KEY `sp` (`geo`),\n  CONSTRAINT `chk` CHECK ((`price` >= 0))\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='table comment'",
+      "order": ["stored_name", "we`ird", "flags", "price", "doc", "my col", "id", "doubled", "bits", "kind", "created", "geo"],
+      "sql": "ALTER TABLE `rich`\n  CHANGE `stored_name` `stored_name` varchar(60) GENERATED ALWAYS AS (concat(`my col`,_latin1'!')) STORED FIRST,\n  CHANGE `we``ird` `we``ird` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL AFTER `stored_name`,\n  CHANGE `flags` `flags` set('x','y') DEFAULT NULL AFTER `we``ird`,\n  CHANGE `price` `price` decimal(10,2) NOT NULL DEFAULT '0.00' AFTER `flags`,\n  CHANGE `doc` `doc` json DEFAULT NULL AFTER `price`,\n  CHANGE `my col` `my col` varchar(50) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL COMMENT 'it''s' AFTER `doc`,\n  CHANGE `doubled` `doubled` decimal(12,2) GENERATED ALWAYS AS ((`price` * 2)) VIRTUAL AFTER `id`,\n  CHANGE `bits` `bits` bit(4) DEFAULT b'101' AFTER `doubled`,\n  CHANGE `kind` `kind` enum('a','b''c','d,e') NOT NULL DEFAULT 'a' AFTER `bits`",
+      "error": null
+    }
+  ],
+  "columnNeedsAlterTable": [
+    {
+      "label": "unchanged",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": false
+    },
+    {
+      "label": "renamed",
+      "post": {"field_orig": "a", "field_name": "b", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "numeric rename equal",
+      "post": {"field_orig": "1", "field_name": "01", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": false
+    },
+    {
+      "label": "length 10 vs 10.0",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "10.0", "field_length_orig": "10", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": false
+    },
+    {
+      "label": "length changed",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "11", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "null ticked",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null": "YES", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "null orig YES, unticked",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "YES", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "auto_increment lower-case orig",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra": "AUTO_INCREMENT", "field_extra_orig": "auto_increment", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "DEFAULT_GENERATED extra",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "DEFAULT_GENERATED", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "current_timestamp default",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "CURRENT_TIMESTAMP", "field_default_type_orig": "CURRENT_TIMESTAMP", "field_default_value": "", "field_default_value_orig": "CURRENT_TIMESTAMP", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "collation absent",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": false
+    },
+    {
+      "label": "collation absent vs value",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation_orig": "utf8mb4_bin", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "collation changed",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "utf8mb4_bin", "field_collation_orig": "utf8mb4_general_ci", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "virtuality absent",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": false
+    },
+    {
+      "label": "virtual column",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "VIRTUAL", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "moved first",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": "-first"},
+      "needs": true
+    },
+    {
+      "label": "moved \"0\"",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": "0"},
+      "needs": false
+    },
+    {
+      "label": "on update attribute",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "on update CURRENT_TIMESTAMP", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "comment changed",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "x", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "type changed",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "BIGINT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "default 0 vs empty",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "0", "field_default_value_orig": "", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": true
+    },
+    {
+      "label": "default 1e1 vs 10",
+      "post": {"field_orig": "a", "field_name": "a", "field_type": "INT", "field_type_orig": "INT", "field_length": "", "field_length_orig": "", "field_attribute": "", "field_attribute_orig": "", "field_collation": "", "field_collation_orig": "", "field_null_orig": "NO", "field_default_type": "NONE", "field_default_type_orig": "NONE", "field_default_value": "1e1", "field_default_value_orig": "10", "field_extra_orig": "", "field_comments": "", "field_comments_orig": "", "field_virtuality": "", "field_virtuality_orig": "", "field_move_to": ""},
+      "needs": false
+    }
+  ]
+}
