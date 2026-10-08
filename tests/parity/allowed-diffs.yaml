@@ -37,7 +37,10 @@
   why: Read by phpMyAdmin while rendering the results grid (relations) — arrives in M1.
 - tool: pma
   pattern: "^SELECT @@have_profiling$"
-  why: Profiling checkbox rendering — arrives in M1.
+  why: Profiling::isSupported is cached per session (SessionCache); phpMyAdmin first asks while rendering other pages.
+- tool: bma
+  pattern: "^SELECT @@have_profiling$"
+  why: Profiling::isSupported, cached per session like SessionCache; asked the first time a Refresh-able card is built.
 - tool: pma
   pattern: "^SELECT 1 FROM mysql\\.user LIMIT 1$"
   why: isSuperUser for the menu; BetterMyAdmin evaluates it only for the DROP DATABASE guard.
@@ -59,3 +62,15 @@
 - tool: bma
   pattern: "^SHOW SESSION VARIABLES LIKE 'FOREIGN_KEY_CHECKS'$"
   why: ForeignKey::handleDisableCheckInit read (phpMyAdmin sends it too, more often).
+- tool: pma
+  pattern: "^SHOW TABLES FROM `[^`]+`$"
+  why: DbTableExists checks the database the request ends in (e.g. after USE in import mode) while rendering the menu.
+- tool: pma
+  pattern: "^SELECT 1 FROM `par_db`\\.`[^`]+` LIMIT 1$"
+  why: DbTableExists::hasTable for a table-scope request; BetterMyAdmin validates scope lazily.
+- tool: pma
+  pattern: "^SELECT `CATALOG_NAME` FROM `information_schema`\\.`SCHEMATA` WHERE `SCHEMA_NAME` = "
+  why: phpMyAdmin probes the configuration storage database while rendering; pmadb discovery is cached per session.
+- tool: bma
+  pattern: "^SELECT 1 FROM mysql\\.user LIMIT 1$"
+  why: isSuperUser for the DROP DATABASE guard; phpMyAdmin answers it from SessionCache filled while rendering earlier pages.

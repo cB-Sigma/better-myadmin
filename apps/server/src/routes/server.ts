@@ -4,7 +4,9 @@ import { AuthMessages } from '../auth/cookie.ts'
 import { getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
+import { consoleRoutes } from './console.ts'
 import { queryRoutes } from './query.ts'
+import { sqlRoutes } from './sql.ts'
 
 export type ServerEnv = AppEnv & {
   Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials }
@@ -39,3 +41,5 @@ serverRoutes.use('/:s/*', async (c, next) => {
 })
 
 serverRoutes.route('/:s/query', queryRoutes)
+serverRoutes.route('/:s/sql', sqlRoutes)
+serverRoutes.route('/:s/console', consoleRoutes)
