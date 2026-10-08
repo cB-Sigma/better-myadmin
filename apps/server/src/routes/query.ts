@@ -17,10 +17,17 @@ queryRoutes.post('/', async (c) => {
     )
   }
   const req = parsed.data
-  if (req.sql.trim() === '') throw new ValidationError('Missing value in the form!')
+  if (req.sql.trim() === '') throw new ValidationError(c.get('tr').gettext('Missing value in the form!'))
   const session = c.get('session')
   const executed = c.get('executed')
-  const conn = await pools.acquire(session.id, c.get('serverIndex'), c.get('creds'), executed)
+  const conn = await pools.acquire(
+    session.id,
+    c.get('serverIndex'),
+    c.get('creds'),
+    executed,
+    undefined,
+    c.get('language').mysqlLocale,
+  )
   try {
     const statements = await runSqlBox(
       {
@@ -32,7 +39,7 @@ queryRoutes.post('/', async (c) => {
         delimiter: req.delimiter,
         fkChecks: req.fkChecks,
       },
-      { cfg, conn, hmacSecret: session.hmacSecret, executed },
+      { cfg, conn, hmacSecret: session.hmacSecret, executed, tr: c.get('tr') },
     )
     const last = statements.at(-1)
     const body: QueryResponse = {

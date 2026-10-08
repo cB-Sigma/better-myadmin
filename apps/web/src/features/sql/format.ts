@@ -1,15 +1,10 @@
+import { formatBytes } from '@bettermyadmin/i18n/format'
+import type { Gettext } from '@bettermyadmin/i18n/translator'
+
 /**
- * Byte formatting like phpMyAdmin's Util::formatByteDown (limes 6, comma 0 for B, 1 otherwise).
+ * `implode(' ', Util::formatByteDown($size, 3, 1))` as Results::handleNonPrintableContents prints a
+ * BLOB size (the ported helper from packages/i18n: translated units and separators).
  */
-export function formatByteDown(bytes: number): string {
-  const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB']
-  let i = 0
-  let value = bytes
-  // pma: move to the next unit once the value has more than `limes` (6) digits
-  while (i < units.length - 1 && value >= 10 ** 6 / 1) {
-    value /= 1024
-    i++
-  }
-  if (i === 0) return `${value} ${units[0]}`
-  return `${value.toFixed(1)} ${units[i]}`
+export function formatByteDown(tr: Gettext, bytes: number, limes = 3, comma = 1): string {
+  return formatBytes(tr, bytes, limes, comma)
 }

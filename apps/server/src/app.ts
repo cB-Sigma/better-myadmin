@@ -1,11 +1,14 @@
 import { CSRF_COOKIE, CSRF_HEADER, type Executed, SESSION_COOKIE } from '@bettermyadmin/contracts'
+import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
 import { type Context, Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { securityHeaders } from './http/headers.ts'
+import { languageLoading, languageManager } from './i18n.ts'
 import { authRoutes } from './routes/auth.ts'
+import { i18nRoutes } from './routes/i18n.ts'
 import { metaRoutes } from './routes/meta.ts'
 import { serverRoutes } from './routes/server.ts'
 import { type SecretBox, safeEqual } from './session/crypto.ts'
@@ -30,6 +33,11 @@ export interface AppEnv {
     sessionIsNew: boolean
     executed: Executed[]
     isHttps: boolean
+    /** The request's language (LanguageManager::selectLanguage) and its catalogue. */
+    languageManager: LanguageManager
+    language: Language
+    tr: Translator
+    languageWarning: boolean
   }
 }
 
@@ -71,6 +79,8 @@ export function createApp(deps: AppDeps) {
     writeSessionCookies(c, s)
   })
 
+  app.use('/api/*', languageLoading(languageManager(deps.cfg)))
+
   // CSRF: double submit on every non-GET request (pma: TokenRequestParamChecking)
   app.use('/api/*', async (c, next) => {
     const m = c.req.method
@@ -85,6 +95,7 @@ export function createApp(deps: AppDeps) {
 
   app.route('/api/auth', authRoutes)
   app.route('/api/meta', metaRoutes)
+  app.route('/api/i18n', i18nRoutes)
   app.route('/api/servers', serverRoutes)
 
   app.all('/api/*', (c) => c.json({ error: { code: 'NOT_FOUND', message: 'Not found.' } }, 404))

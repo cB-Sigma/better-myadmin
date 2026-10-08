@@ -1,0 +1,6488 @@
+# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/bg.po by packages/i18n/scripts/import-po.ts.
+# Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+msgid ""
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2025-12-18 18:00+0000\nLast-Translator: Кирил Стоименов <steemman123@gmail.com>\nLanguage-Team: Bulgarian <https://hosted.weblate.org/projects/phpmyadmin/master/bg/>\nLanguage: bg\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1-dev\n"
+
+msgid "Javascript must be enabled past this point!"
+msgstr "Оттук нататък е необходим javascript!"
+
+msgid "Open user account menu"
+msgstr "Отваряне на менюто на потребителския акаунт"
+
+msgid "phpMyAdmin documentation"
+msgstr "phpMyAdmin документация"
+
+msgid "MariaDB documentation"
+msgstr "Документация на MariaDB"
+
+msgid "MySQL documentation"
+msgstr "Документация на MySQL"
+
+msgid "Appearance:"
+msgstr "Външен вид:"
+
+msgctxt "Light color mode of the theme"
+msgid "Light"
+msgstr "Светла тема"
+
+msgctxt "Dark color mode of the theme"
+msgid "Dark"
+msgstr "Тъмна тема"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Log out"
+msgstr "Изход от системата"
+
+msgid "Page-related settings"
+msgstr "Страница-свързани настройки"
+
+msgid "Click on the bar to scroll to top of page"
+msgstr "Кликнете върху лентата, за да превъртите до началото на страницата"
+
+msgid "Open new phpMyAdmin window"
+msgstr "Отваряне на нов прозорец с phpMyAdmin"
+
+msgid "phpMyAdmin Demo Server"
+msgstr "phpMyAdmin Демонстрационен сървър"
+
+msgid "Currently running Git revision %1$s from the %2$s branch."
+msgstr "В момента се работи с Git ревизия %1$s от %2$s бранш."
+
+msgid "Git information missing!"
+msgstr "Липсва Git информация!"
+
+msgctxt "for default"
+msgid "None"
+msgstr "Няма"
+
+msgid "As defined:"
+msgstr "Дефиниран като:"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details"
+msgstr "Нямате достатъчно права за извършване на тази операция; Моля, вижте документацията за повече подробности"
+
+msgid "Primary"
+msgstr "Първичен"
+
+msgid "Unique"
+msgstr "Уникално"
+
+msgid "Index"
+msgstr "Индекс"
+
+msgid "Fulltext"
+msgstr "Пълнотекстово"
+
+msgid "Spatial"
+msgstr "Пространствен"
+
+msgid "Expression"
+msgstr "Израз"
+
+msgid "after %s"
+msgstr "след %s"
+
+msgid "None"
+msgstr "Няма"
+
+msgid "Table name"
+msgstr "Име на таблица"
+
+msgid "Add"
+msgstr "Добави"
+
+msgid "column(s)"
+msgstr "колона(и)"
+
+msgid "Go"
+msgstr "Изпълнение"
+
+msgid "Table comments:"
+msgstr "Коментари към таблицата:"
+
+msgid "Collation:"
+msgstr "Колация:"
+
+msgid "Storage Engine:"
+msgstr "Хранилище:"
+
+msgid "Connection:"
+msgstr "Връзка:"
+
+msgid "Storage engine"
+msgstr "софтуерен компонент, който се използва за създаване, четене, актуализиране и изтриване на данни"
+
+msgctxt "Online transaction part of the SQL DDL for InnoDB"
+msgid "Online transaction"
+msgstr "Онлайн транзакция"
+
+msgid "Preview SQL"
+msgstr "Преглед на SQL"
+
+msgid "Save"
+msgstr "Запазване"
+
+msgid "Loading"
+msgstr "Зареждане"
+
+msgid "Close"
+msgstr "Затваряне"
+
+msgid "Referenced by %s."
+msgstr "Позовава се на %s."
+
+msgid "Is a foreign key."
+msgstr "Външен ключ е."
+
+msgid "Column"
+msgstr "Kолона"
+
+msgid "Pick from Central Columns"
+msgstr "Избиране от Централните Колони"
+
+msgid "Partition by:"
+msgstr "Разделяне от:"
+
+msgid "Expression or column list"
+msgstr "Израз или списък с колони %s"
+
+msgid "Partitions:"
+msgstr "Дялове:"
+
+msgid "Subpartition by:"
+msgstr "Под-дялове от:"
+
+msgid "Subpartitions:"
+msgstr "Под-дялове:"
+
+msgid "Partition"
+msgstr "Дял"
+
+msgid "Values"
+msgstr "Стойности"
+
+msgid "Subpartition"
+msgstr "Подразделение"
+
+msgid "Engine"
+msgstr "Двигател"
+
+msgid "Comment"
+msgstr "Коментар"
+
+msgid "Data directory"
+msgstr "Директория с данни"
+
+msgid "Index directory"
+msgstr "Индексна директория"
+
+msgid "Max rows"
+msgstr "Максимален брой редове"
+
+msgid "Min rows"
+msgstr "Мин. редове"
+
+msgid "Table space"
+msgstr "Място в таблицата"
+
+msgid "Node group"
+msgstr "Група възли"
+
+msgid "Structure"
+msgstr "Структура"
+
+msgid "Name"
+msgstr "Име"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Length/Values"
+msgstr "Дължина/Стойности"
+
+msgid "If column type is \"enum\" or \"set\", please enter the values using this format: 'a','b','c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b')."
+msgstr "Ако типа на полето е \"enum\" или \"set\", моля въведете стойностите използвайки този формат: 'a','b','c'…<br>Ако е необходимо да сложите обратна черта (\"\\\") или апостроф (\"'\") между тези стойности, сложите обратна черта пред тях (например: '\\\\xyz' или 'a\\'b')."
+
+msgid "Default"
+msgstr "По подразбиране"
+
+msgid "For default values, please enter just a single value, without backslash escaping or quotes, using this format: a"
+msgstr "За стойностите по подразбиране, моля въведете само една стойност, без обратни черти или апостроф, използвайки следния формат: a"
+
+msgid "Collation"
+msgstr "Колация"
+
+msgid "Attributes"
+msgstr "Атрибути"
+
+msgid "Null"
+msgstr "Празно"
+
+msgid "Adjust privileges"
+msgstr "Коригиране на привилегиите"
+
+msgid "Comments"
+msgstr "Коментари"
+
+msgid "Move column"
+msgstr "Преместване колона"
+
+msgid "Media type"
+msgstr "Тип медия"
+
+msgid "List of available transformations and their options"
+msgstr "Списък с наличните трансформации и техните опции"
+
+msgid "Browser display transformation"
+msgstr "Показване на трансформацията в браузъра"
+
+msgid "Browser display transformation options"
+msgstr "Показване на трансформиращите опции в браузъра"
+
+msgid "Please enter the values for transformation options using this format: 'a', 100, b,'c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b')."
+msgstr "Моля въведете стойностите за опциите на трансформацията като използвате следния формат: 'a', 100, b,'c'…<br>Ако трябва да поставите обратно наклонена черта (\"\\\") или единична кавичка (\"'\") между тези стойности, поставете пред тях допълнителна обратно наклонена черта (например '\\\\xyz' или 'a\\'b')."
+
+msgid "Input transformation"
+msgstr "Въвеждане на трансформацията"
+
+msgid "Input transformation options"
+msgstr "Въвеждане на трансформиращите опции"
+
+msgid "No change"
+msgstr "Няма промяна"
+
+msgid "Apply"
+msgstr "Прилагане"
+
+msgid "Reset"
+msgstr "Изчистване"
+
+msgid "Documentation"
+msgstr "Документация"
+
+msgid "This setting is disabled, it will not be applied to your configuration."
+msgstr "Тази настройка е забранена, тя няма да влияе на конфигурацията."
+
+msgid "Disabled"
+msgstr "Забранено"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Не"
+
+msgid "Set value: %s"
+msgstr "Стойност: %s"
+
+msgid "Restore default value"
+msgstr "Стойност по подразбиране"
+
+msgid "Allow users to customize this value"
+msgstr "Позволение на потребители да променят стойността"
+
+msgid "Collapse"
+msgstr "Колапс"
+
+msgid "Expand"
+msgstr "Разширяване"
+
+msgid "Requery"
+msgstr "Подзаявка"
+
+msgid "Edit"
+msgstr "Редакция"
+
+msgid "Delete"
+msgstr "Изтриване"
+
+msgid "Database"
+msgstr "DB"
+
+msgid "SQL Query Console"
+msgstr "SQL конзола"
+
+msgid "Console"
+msgstr "Конзола"
+
+msgid "Clear"
+msgstr "Изчистване"
+
+msgid "History"
+msgstr "SQL изтория"
+
+msgid "Options"
+msgstr "Настройки"
+
+msgid "Bookmarks"
+msgstr "Бележки"
+
+msgid "Debug SQL"
+msgstr "Трасиране SQL"
+
+msgid "Press Ctrl+Enter to execute query"
+msgstr "Натисни Ctrl+Enter за изпълнение на заявката"
+
+msgid "Press Enter to execute query"
+msgstr "Натиснете Enter, за да изпълни заявката"
+
+msgid "Explain"
+msgstr "Обяснение"
+
+msgid "Profiling"
+msgstr "Профилиране"
+
+msgid "Bookmark"
+msgstr "Бележки"
+
+msgid "Query failed"
+msgstr "Заявката е не успешна"
+
+msgid "Queried time"
+msgstr "Време за изпълнение на заявката"
+
+msgid "During current session"
+msgstr "По време на текущата сесия"
+
+msgid "ascending"
+msgstr "възходящо"
+
+msgid "descending"
+msgstr "низходящо"
+
+msgid "Order:"
+msgstr "Поръчка:"
+
+msgid "Count"
+msgstr "Броене"
+
+msgid "Execution order"
+msgstr "Изпълнение на поръчката"
+
+msgid "Order by:"
+msgstr "Подредени по:"
+
+msgid "Group queries"
+msgstr "Група заявки"
+
+msgid "Ungroup queries"
+msgstr "Разгрупиране на заявки"
+
+msgid "Show trace"
+msgstr "Покажи следа"
+
+msgid "Hide trace"
+msgstr "Скрий следа"
+
+msgid "Count:"
+msgstr "Бройка:"
+
+msgid "Time taken:"
+msgstr "Използвано време:"
+
+msgid "Refresh"
+msgstr "Опресняване"
+
+msgid "Add bookmark"
+msgstr "Добави бележка"
+
+msgid "Label"
+msgstr "Етикет"
+
+msgid "Target database"
+msgstr "Целева БД"
+
+msgid "Share this bookmark"
+msgstr "Сподели тази бележка"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Restore default values"
+msgstr "Възстановяване на стойностите по подразбиране"
+
+msgid "Always expand query messages"
+msgstr "Винаги разширите заявки съобщения"
+
+msgid "Show query history at start"
+msgstr "Покажи историята на заявката в началото"
+
+msgid "Show current browsing query"
+msgstr "Показване на текущата заявка за сърфиране"
+
+msgid "Switch to dark theme"
+msgstr "Превключи на тъмна палитра"
+
+msgid "Create version %1$s of %2$s"
+msgstr "Създаване на версия %1$s от %2$s"
+
+msgid "Create version %1$s"
+msgstr "Създаване на версия %1$s"
+
+msgid "Track these data definition statements:"
+msgstr "Проследяване следните изрази за дефиниране на данни:"
+
+msgid "Track these data manipulation statements:"
+msgstr "Проследяване следните изрази за манипулиране на данни:"
+
+msgid "Create version"
+msgstr "Създаване на версия"
+
+msgid "Add new column"
+msgstr "Добавяне на нова колона"
+
+msgid "Length/Value"
+msgstr "Дължина/Стойности"
+
+msgid "Attribute"
+msgstr "Атрибут"
+
+msgid "A_I"
+msgstr "A_I"
+
+msgid "The central list of columns for the current database is empty"
+msgstr "Най-важният списък с колони за текущата база данни е празен"
+
+msgid "Filter rows:"
+msgstr "Филтриране на редове:"
+
+msgid "Search this table"
+msgstr "Търсене в таблицата"
+
+msgid "Add column"
+msgstr "Добавяне колона"
+
+msgid "Select a table"
+msgstr "Избор на таблица"
+
+msgid "Select a column."
+msgstr "Изберете колона."
+
+msgid "Click to sort."
+msgstr "Кликнете за сортиране."
+
+msgid "Action"
+msgstr "Действие"
+
+msgid "Cancel"
+msgstr "Отмяна"
+
+msgid "Create new table"
+msgstr "Създаване на таблица"
+
+msgid "Number of columns"
+msgstr "Брой колони"
+
+msgid "Create"
+msgstr "Създаване"
+
+msgid "Database comment:"
+msgstr "Коментар към БД:"
+
+msgid "Print"
+msgstr "Печат"
+
+msgid "Links to"
+msgstr "Свързана към"
+
+msgid "Indexes"
+msgstr "Индекси"
+
+msgid "Keyname"
+msgstr "Име на ключ"
+
+msgid "Packed"
+msgstr "Опаковани"
+
+msgid "Cardinality"
+msgstr "Кардиналност"
+
+msgid "No index defined!"
+msgstr "Не е избран индекс!"
+
+msgid "Select all"
+msgstr "Маркиране на всички"
+
+msgid "Show/hide columns"
+msgstr "Показване/скриване на колони"
+
+msgid "See table structure"
+msgstr "Разглеждане на структурата на таблицата"
+
+msgid "Select \"%s\""
+msgstr "Изберете \"%s\""
+
+msgid "Add an option for column \"%s\"."
+msgstr "Добавяне на опция към колона \"%s\"."
+
+msgid "Page to open"
+msgstr "Страница за отваряне"
+
+msgid "Page to delete"
+msgstr "Страница за изтриване"
+
+msgid "Untitled"
+msgstr "Неозаглавено"
+
+msgid "Show/Hide tables list"
+msgstr "Показване/Скриване на списъка с таблиците"
+
+msgid "Add tables from other databases"
+msgstr "Добавете таблици от други бази данни"
+
+msgid "New page"
+msgstr "Ново страница"
+
+msgid "Open page"
+msgstr "Отвори страница"
+
+msgid "Save page"
+msgstr "Записване на страница"
+
+msgid "Save page as"
+msgstr "Записване на страница като"
+
+msgid "Delete pages"
+msgstr "Изтриване на страници"
+
+msgid "Create table"
+msgstr "Създаване таблица"
+
+msgid "Create relationship"
+msgstr "Създаване на връзка"
+
+msgid "Choose column to display"
+msgstr "Изберете колона за показване"
+
+msgid "Reload"
+msgstr "Презареждане"
+
+msgid "Help"
+msgstr "Помощ"
+
+msgid "Angular links"
+msgstr "Ъгловати връзки"
+
+msgid "Direct links"
+msgstr "Прави връзки"
+
+msgid "Snap to grid"
+msgstr "Прилепване към мрежата"
+
+msgid "Small/Big All"
+msgstr "Малки/големи всички"
+
+msgid "Toggle small/big"
+msgstr "Превключване на малки/големи"
+
+msgid "Build Query"
+msgstr "Построяване на заявка"
+
+msgid "Move Menu"
+msgstr "Меню Преместване"
+
+msgid "Hide/Show all"
+msgstr "Показване/скриване всички"
+
+msgid "Number of tables:"
+msgstr "Брой таблици:"
+
+msgid "Except"
+msgstr "Освен"
+
+msgid "Value"
+msgstr "Стойност"
+
+msgid "subquery"
+msgstr "подзаявка"
+
+msgid "Rename to"
+msgstr "Преименуване на"
+
+msgid "New name"
+msgstr "Ново име"
+
+msgid "Aggregate"
+msgstr "Агрегиране"
+
+msgid "Operator"
+msgstr "Оператор"
+
+msgid "Active options"
+msgstr "Активни опции"
+
+msgid "Submit"
+msgstr "Изпълнение"
+
+msgid "New page name"
+msgstr "Име на новата страница"
+
+msgid "Select page"
+msgstr "Избор на страница"
+
+msgid "Select export relational type:"
+msgstr "Изберете релационен тип експорт:"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "Event name"
+msgstr "Име на събитие"
+
+msgid "Status"
+msgstr "Състояние"
+
+msgid "Event type"
+msgstr "Тип на събитието"
+
+msgid "Change to %s"
+msgstr "Промяна на %s"
+
+msgid "Execute at"
+msgstr "Изпълнение в"
+
+msgid "Execute every"
+msgstr "Изпълнение на всеки"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Начало"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Край"
+
+msgid "Definition"
+msgstr "Описание"
+
+msgid "Format"
+msgstr "Формат"
+
+msgid "Events"
+msgstr "Събития"
+
+msgid "Check all"
+msgstr "Маркиране всички"
+
+msgid "Export"
+msgstr "Експорт"
+
+msgid "Drop"
+msgstr "Изтриване"
+
+msgid "There are no events to display."
+msgstr "Няма събития."
+
+msgid "Event scheduler status"
+msgstr "Състояние на Диспечера на събитията"
+
+msgid "Click to toggle"
+msgstr "Щракване за превключване"
+
+msgid "ON"
+msgstr "Вкл."
+
+msgid "OFF"
+msgstr "Изкл."
+
+msgid "Loading…"
+msgstr "Зареждане…"
+
+msgid "Exporting tables from \"%s\" database"
+msgstr "Експорт на таблици от БД \"%s\""
+
+msgid "Tables:"
+msgstr "Таблици:"
+
+msgid "Tables"
+msgstr "Таблици"
+
+msgid "Data"
+msgstr "Данни"
+
+msgid "Importing into the database \"%s\""
+msgstr "Импорт в БД \"%s\""
+
+msgid "Query window"
+msgstr "Прозорец за заявки"
+
+msgid "Show"
+msgstr "Показване"
+
+msgid "criteria"
+msgstr "критерии"
+
+msgid "Sort"
+msgstr "Сортиране"
+
+msgid "Ascending"
+msgstr "Възходящо"
+
+msgid "Descending"
+msgstr "Низходящо"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "Update query"
+msgstr "Допълване заявка"
+
+msgid "Submit query"
+msgstr "Изпълни заявката"
+
+msgid "Database comment"
+msgstr "Коментар към БД"
+
+msgid "Rename database to"
+msgstr "Преименуване БД на"
+
+msgid "New database name"
+msgstr "Ново име на БД"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details."
+msgstr "Не разполагате с права, за да извършите това действие. За подробности прочетете докумантацията."
+
+msgid "Remove database"
+msgstr "Изтриване БД"
+
+msgid "Database %s has been dropped."
+msgstr "БД %s беше изтрита."
+
+msgid "Drop the database (DROP)"
+msgstr "Изтриване на БД (DROP)"
+
+msgid "Copy database to"
+msgstr "Копиране на БД в"
+
+msgid "Database name"
+msgstr "Име БД"
+
+msgid "Structure only"
+msgstr "Само структурата"
+
+msgid "Structure and data"
+msgstr "Структурата и данните"
+
+msgid "Data only"
+msgstr "Само данните"
+
+msgid "CREATE DATABASE before copying"
+msgstr "Изпълняване на CREATE DATABASE преди копирането"
+
+msgid "Add %s"
+msgstr "Добавяне на %s"
+
+msgid "Add AUTO_INCREMENT value"
+msgstr "Добавяне AUTO_INCREMENT стойност"
+
+msgid "Add constraints"
+msgstr "Добавяне ограничения"
+
+msgid "Switch to copied database"
+msgstr "Показване на копираната БД"
+
+msgid "Users having access to \"%s\""
+msgstr "Потребители с достъп до \"%s\""
+
+msgid "User name"
+msgstr "Потребителско име"
+
+msgid "Host name"
+msgstr "Име на host"
+
+msgid "Privileges"
+msgstr "Права"
+
+msgid "Grant"
+msgstr "Дадени"
+
+msgid "Any"
+msgstr "Всеки"
+
+msgid "global"
+msgstr "глобален"
+
+msgid "database-specific"
+msgstr "специфични за БД"
+
+msgid "wildcard"
+msgstr "знак за заместване"
+
+msgid "routine"
+msgstr "процедура"
+
+msgid "No user found."
+msgstr "Няма потребител."
+
+msgid "With selected:"
+msgstr "Когато има отметка:"
+
+msgid "Add user account"
+msgstr "Нов потребител"
+
+msgid "Routine name"
+msgstr "Име"
+
+msgid "Parameters"
+msgstr "Параметри"
+
+msgid "Direction"
+msgstr "Посока"
+
+msgid "Add parameter"
+msgstr "Нов параметър"
+
+msgid "Remove last parameter"
+msgstr "Изтриване на последен параметър"
+
+msgid "Return type"
+msgstr "Тип данни при изход"
+
+msgid "Return length/values"
+msgstr "Дължина/стойност на данни при изход"
+
+msgid "Return options"
+msgstr "Настройки на данни при изход"
+
+msgid "Charset"
+msgstr "Знаков набор"
+
+msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
+msgstr "Не разполагате с права, за да извършите това действие. За подробности прочетете докумантацията."
+
+msgid "Security type"
+msgstr "Сигурност"
+
+msgid "SQL data access"
+msgstr "Достъп до SQL данните"
+
+msgid "Routine parameters"
+msgstr "Параметри на процедурата"
+
+msgid "Function"
+msgstr "Функция"
+
+msgid "Routines"
+msgstr "Процедури"
+
+msgid "Search"
+msgstr "Търсене"
+
+msgid "There are no routines to display."
+msgstr "Няма процедури."
+
+msgid "Returns"
+msgstr "Връща"
+
+msgid "Execute routine"
+msgstr "Изпълнение на процедура"
+
+msgid "Execute"
+msgstr "Изпълнение"
+
+msgid "ENUM/SET editor"
+msgstr "ENUM/SET редактор"
+
+msgid "Search in database"
+msgstr "Търсене в БД"
+
+msgid "Words or values to search for (wildcard: \"%\"):"
+msgstr "Думи или стойности за търсене (знак за заместване: \"%\"):"
+
+msgid "Find:"
+msgstr "Намери:"
+
+msgid "at least one of the words"
+msgstr "поне една от думите"
+
+msgid "Words are separated by a space character (\" \")."
+msgstr "Думите трябва да се разделят с интервал (\" \")."
+
+msgid "as regular expression"
+msgstr "като регулярен израз"
+
+msgid "Options:"
+msgstr "Настройки:"
+
+msgid "Inside tables:"
+msgstr "В таблици:"
+
+msgid "Unselect all"
+msgstr "Размаркиране всички"
+
+msgid "Inside column:"
+msgstr "В колона:"
+
+msgid "%1$s match in <strong>%2$s</strong>"
+msgid_plural "%1$s matches in <strong>%2$s</strong>"
+msgstr[0] "%1$s съвпадение в таблица <strong>%2$s</strong>"
+msgstr[1] "%1$s съвпадения в таблица <strong>%2$s</strong>"
+
+msgid "Browse"
+msgstr "Прелистване"
+
+msgid "Add prefix"
+msgstr "Добавяне на представка"
+
+msgid "%s table"
+msgid_plural "%s tables"
+msgstr[0] "%s таблица"
+msgstr[1] "%s таблици"
+
+msgid "Replication"
+msgstr "Репликация"
+
+msgid "Sum"
+msgstr "Сума"
+
+msgid "%s is the default storage engine on this MySQL server."
+msgstr "%s е хранилището на данни по подразбиране на този MySQL сървър."
+
+msgid "Continue"
+msgstr "Продължете"
+
+msgid "From"
+msgstr "От"
+
+msgid "Check tables having overhead"
+msgstr "Маркиране на таблиците със загубено място"
+
+msgid "Empty"
+msgstr "Изчистване"
+
+msgid "Table maintenance"
+msgstr "Поддръжка на таблицата"
+
+msgid "Analyze table"
+msgstr "Анализиране на таблицата"
+
+msgid "Check table"
+msgstr "Проверка на таблицата"
+
+msgid "Optimize table"
+msgstr "Оптимизация на таблицата"
+
+msgid "Repair table"
+msgstr "Поправяне на таблицата"
+
+msgid "Add prefix to table"
+msgstr "Добавяне представка към таблица"
+
+msgid "Replace table prefix"
+msgstr "Замяна на представката на таблица"
+
+msgid "Copy table with prefix"
+msgstr "Копиране на таблицата с представка"
+
+msgid "Central columns"
+msgstr "Централни колони"
+
+msgid "Are you sure?"
+msgstr "Сигурни ли сте?"
+
+msgid "This action may change some of the columns definition.[br]Are you sure you want to continue?"
+msgstr "Това действие може да промени дефиницията на някоя от колоните.[br]Сигурни ли сте, че искате да продължите?"
+
+msgid "Database:"
+msgstr "База данни:"
+
+msgid "Add DROP TABLE"
+msgstr "Добавяне DROP TABLE"
+
+msgid "Do you really want to execute the following query?"
+msgstr "Наистина ли искате да изпълните следната заявка?"
+
+msgid "Enable foreign key checks"
+msgstr "Включване на проверките за външен ключ"
+
+msgid "Remove from Favorites"
+msgstr "Изтриване от любими"
+
+msgid "No tables found in database."
+msgstr "В БД няма таблици."
+
+msgid "Table"
+msgstr "Таблица"
+
+msgid "Views"
+msgstr "Изглед"
+
+msgid "View"
+msgstr "Изглед"
+
+msgid "Create view"
+msgstr "Създаване на изглед"
+
+msgid "Not replicated"
+msgstr "Нереплицирана"
+
+msgid "Replicated"
+msgstr "Реплицирана"
+
+msgid "Insert"
+msgstr "Вмъкване"
+
+msgid "Table %s has been emptied."
+msgstr "Таблицата %s беше изчистена."
+
+msgid "in use"
+msgstr "ползва се в момента"
+
+msgid "Rows"
+msgstr "Редове"
+
+msgid "Size"
+msgstr "Размер"
+
+msgid "Overhead"
+msgstr "Загубено място"
+
+msgid "Creation"
+msgstr "Дата на създаване"
+
+msgid "Last update"
+msgstr "Последно обновление"
+
+msgid "Last check"
+msgstr "Последна проверка"
+
+msgid "Tracking is active."
+msgstr "Проследяването е активно."
+
+msgid "Tracking is not active."
+msgstr "Проследяването е неактивно."
+
+msgid "Tracked tables"
+msgstr "Следени таблици"
+
+msgid "Last version"
+msgstr "Последна версия"
+
+msgid "Created"
+msgstr "Създаден"
+
+msgid "Updated"
+msgstr "Актуализиран"
+
+msgid "active"
+msgstr "активен"
+
+msgid "not active"
+msgstr "неактивен"
+
+msgid "Delete tracking"
+msgstr "Изтриване информацията за следене"
+
+msgid "Versions"
+msgstr "Версии"
+
+msgid "Tracking report"
+msgstr "Доклад за следенето"
+
+msgid "Structure snapshot"
+msgstr "Моментна снимка на структурата"
+
+msgid "Untracked tables"
+msgstr "Непроследявани таблици"
+
+msgid "Track table"
+msgstr "Следене на таблица"
+
+msgctxt "First page"
+msgid "Begin"
+msgstr "Начало"
+
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "Предна"
+
+msgctxt "Next page"
+msgid "Next"
+msgstr "Следваща"
+
+msgctxt "Last page"
+msgid "End"
+msgstr "Последна"
+
+msgid "Show all"
+msgstr "Показване на всички"
+
+msgid "Save edited data"
+msgstr "Съхраняване на редактираните данни"
+
+msgid "Restore column order"
+msgstr "Възстановяване на подредбата на колоните"
+
+msgid "Number of rows:"
+msgstr "Брой редове:"
+
+msgid "All"
+msgstr "Всички"
+
+msgid "Sort by key:"
+msgstr "Сортиране по ключ:"
+
+msgid "Partial texts"
+msgstr "Частични текстове"
+
+msgid "Full texts"
+msgstr "Пълни текстове"
+
+msgid "Relational key"
+msgstr "Сроден ключ"
+
+msgid "Show binary contents"
+msgstr "Показване на двоичните данни"
+
+msgid "Show BLOB contents"
+msgstr "Показване на BLOB-данните"
+
+msgid "Hide browser transformation"
+msgstr "Без трансформация от браузъра"
+
+msgid "Geometry"
+msgstr "Геометрия"
+
+msgid "Well Known Text"
+msgstr "Добре познат текст"
+
+msgid "Well Known Binary"
+msgstr "Добре позната двоична стойност"
+
+msgid "Copy"
+msgstr "Копиране"
+
+msgid "Query results operations"
+msgstr "Операции с резултата от заявката"
+
+msgid "Copy to clipboard"
+msgstr "Копиране в клипборда"
+
+msgid "Display chart"
+msgstr "Диаграма"
+
+msgid "Visualize GIS data"
+msgstr "Визуализиране на GIS данни"
+
+msgctxt "None encoding conversion"
+msgid "None"
+msgstr "Няма"
+
+msgid "Convert to Kana"
+msgstr "Превърни на Кана"
+
+msgid "Error"
+msgstr "Грешка"
+
+msgid "Automatically send report next time"
+msgstr "Автоматично изпращане на доклад, следващият път"
+
+msgid "Submit error report"
+msgstr "Представи доклад за грешка"
+
+msgid "Send error report"
+msgstr "Изпрати доклад за грешка"
+
+msgid "Export templates:"
+msgstr "Експортиране на шаблони:"
+
+msgid "SQL query:"
+msgstr "SQL заявка:"
+
+msgid "Export method:"
+msgstr "Метод за експортиране:"
+
+msgid "Quick - display only the minimal options"
+msgstr "Бързо - минимум настройки"
+
+msgid "Custom - display all possible options"
+msgstr "Потребителско - всички настройки"
+
+msgid "Format:"
+msgstr "Формат:"
+
+msgid "File format to export"
+msgstr "Файлов формат за експортиране"
+
+msgid "Rows:"
+msgstr "Редове:"
+
+msgid "Dump all rows"
+msgstr "Схема на всички редове"
+
+msgid "Dump some row(s)"
+msgstr "Схема на ред(ове)"
+
+msgid "Row to begin at:"
+msgstr "Ред започва от:"
+
+msgid "Output:"
+msgstr "Изход:"
+
+msgid "Save on server in the directory <strong>%s</strong>"
+msgstr "Записване на сървъра в папка <strong>%s</strong>"
+
+msgid "Overwrite existing file(s)"
+msgstr "Презаписване на съществуващите файл(ове)"
+
+msgctxt "Alias"
+msgid "Database"
+msgstr "База Данни"
+
+msgctxt "Alias"
+msgid "Table"
+msgstr "Таблица"
+
+msgctxt "Alias"
+msgid "Column"
+msgstr "Колона"
+
+msgid "Select database:"
+msgstr "Изберете база данни:"
+
+msgid "Select table:"
+msgstr "Изберете таблица:"
+
+msgid "New table name"
+msgstr "Име на новата таблица"
+
+msgid "Select column:"
+msgstr "Изберете колона:"
+
+msgid "Save & close"
+msgstr "Запис & Затваряне"
+
+msgid "Use %s statement"
+msgstr "Използване на израз %s"
+
+msgid "View output as text"
+msgstr "Показване на изхода като текст"
+
+msgid "Save output to a file"
+msgstr "Запазване на изхода във файл"
+
+msgid "File name template:"
+msgstr "Шаблон на файловото име:"
+
+msgid "Character set of the file:"
+msgstr "Знаков набор на файла:"
+
+msgid "Compression:"
+msgstr "Компресия:"
+
+msgid "zipped"
+msgstr "zip-нато"
+
+msgid "gzipped"
+msgstr "gzip-нато"
+
+msgid "Format-specific options:"
+msgstr "Специфични настройки:"
+
+msgid "Filters"
+msgstr "Филтри"
+
+msgid "Containing the word:"
+msgstr "Съдържащ думата:"
+
+msgid "Use OpenStreetMaps as Base Layer"
+msgstr "Използване на OpenStreetMaps като основен слой"
+
+msgid "Output"
+msgstr "Изход"
+
+msgid "You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at %s."
+msgstr "Използвате демонстрационен сървър. Тук може да изпробвате всичко, но моля не променяйте потребителите root, debian-sys-maint и pma. За повече информация потърсете %s."
+
+msgid "General settings"
+msgstr "Общи настройки"
+
+msgid "Change password"
+msgstr "Смяна на паролата"
+
+msgid "Server connection collation:"
+msgstr "Колация на връзката към сървъра:"
+
+msgid "More settings"
+msgstr "Още"
+
+msgid "Appearance settings"
+msgstr "Визуални настройки"
+
+msgid "Language"
+msgstr "Език"
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Database server"
+msgstr "SQL сървър"
+
+msgid "Server:"
+msgstr "Сървър:"
+
+msgid "Server type:"
+msgstr "Тип на сървъра:"
+
+msgid "Server connection:"
+msgstr "Връзка със сървъра:"
+
+msgid "Server version:"
+msgstr "Версия на сървъра:"
+
+msgid "User:"
+msgstr "Потребител:"
+
+msgid "Server charset:"
+msgstr "Знаков набор (charset) на сървъра:"
+
+msgid "Web server"
+msgstr "Web сървър"
+
+msgid "Database client version:"
+msgstr "Версия на БД клиент:"
+
+msgid "PHP extension:"
+msgstr "PHP разширение:"
+
+msgid "PHP version:"
+msgstr "PHP Версия:"
+
+msgid "Show PHP information"
+msgstr "Информация за PHP"
+
+msgid "Version information:"
+msgstr "Версия:"
+
+msgid "Official Homepage"
+msgstr "Официална страница"
+
+msgid "Contribute"
+msgstr "Принос"
+
+msgid "Get support"
+msgstr "Получаване на помощ"
+
+msgid "List of changes"
+msgstr "Списък с промени"
+
+msgid "License"
+msgstr "Лиценз"
+
+msgid "Warning"
+msgstr "Предупреждение"
+
+msgid "Get more themes!"
+msgstr "Още теми!"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Import"
+msgstr "Импорт"
+
+msgid "File may be compressed (%s) or uncompressed."
+msgstr "Файлът може да е компресиран (%s) или некомпресиран."
+
+msgid "A compressed file's name must end in <strong>.[format].[compression]</strong>. Example: <strong>.sql.zip</strong>"
+msgstr "Компресираният файл трябва да завършва на <strong>.[format].[compression]</strong>. Например: <strong>.sql.zip</strong>"
+
+msgid "Select file to import"
+msgstr "Изберете файл за импорт"
+
+msgid "Browse your computer:"
+msgstr "Разглеждане на компютъра:"
+
+msgid "The directory you set for upload work cannot be reached."
+msgstr "Папката, която сте указали за качване е недостъпна."
+
+msgid "Select from the web server upload directory [strong]%s[/strong]:"
+msgstr "Изберете от папката на сървъра, предназначена за качване [strong]%s[/strong]:"
+
+msgid "File uploads are not allowed on this server."
+msgstr "На този сървър не е позволени качване на файлове."
+
+msgid "Other options"
+msgstr "Други опции"
+
+msgid "The primary key has been dropped."
+msgstr "Главният ключ беше изтрит."
+
+msgid "Index %s has been dropped."
+msgstr "Индекс %s беше изтрит."
+
+msgid "Taking you to the target site."
+msgstr "Към целевата страница."
+
+msgid "Page number:"
+msgstr "Страница:"
+
+msgid "Log in"
+msgstr "Вход"
+
+msgid "You can enter hostname/IP address and port separated by space."
+msgstr "Можете да въведете хост/IP адрес и порт, разделени с интервал."
+
+msgid "Username:"
+msgstr "Име:"
+
+msgid "Password:"
+msgstr "Парола:"
+
+msgid "Server choice:"
+msgstr "Избор на сървър:"
+
+msgid "Welcome to %s"
+msgstr "Добре дошли в %s"
+
+msgid "Authentication code:"
+msgstr "Код за удостоверяване:"
+
+msgid "Deprecated!"
+msgstr "Изведено от употреба!"
+
+msgid "View:"
+msgstr "Изглед:"
+
+msgid "Table:"
+msgstr "Таблица:"
+
+msgid "Show hidden navigation tree items."
+msgstr "Показване на скритото навигационно дърво."
+
+msgid "Home"
+msgstr "Начало"
+
+msgid "Drop files here"
+msgstr "Пуснете файловете тук"
+
+msgid "Databases"
+msgstr "БД"
+
+msgid "Recent"
+msgstr "Скорошни"
+
+msgid "Favorite tables"
+msgstr "Любими таблици"
+
+msgid "Favorites"
+msgstr "Любими"
+
+msgid "Your browser has phpMyAdmin configuration for this domain. Would you like to import it for current session?"
+msgstr "Браузърът ви има настройки на phpMyAdmin за този домейн. Искате ли да бъдат използвани за текущата сесия?"
+
+msgid "Cannot save settings, submitted form contains errors!"
+msgstr "Настройките не могат да бъдат запазени, изпратеният формуляр съдържа грешки!"
+
+msgid "Manage your settings"
+msgstr "Управление мои настройки"
+
+msgid "Features"
+msgstr "Свойства"
+
+msgid "SQL queries"
+msgstr "SQL заявки"
+
+msgid "Navigation panel"
+msgstr "Панел за навигация"
+
+msgid "Main panel"
+msgstr "Основен панел"
+
+msgid "Configuration has been saved."
+msgstr "Конфигурацията е записана."
+
+msgid "Your preferences will be saved for current session only. Storing them permanently requires %sphpMyAdmin configuration storage%s."
+msgstr "Вашите настройки ще бъдат пазени само за текущата сесия. За да ги използвате постоянно е необходимо %sхранилище за конфигурация на phpMyAdmin%s."
+
+msgid "Configuration contains incorrect data for some fields."
+msgstr "Конфигурацията съдържа грешни данни за някои ключове."
+
+msgid "Do you want to import remaining settings?"
+msgstr "Искате ли да импортирате оставащите настройки?"
+
+msgid "Saved on: @DATE@"
+msgstr "Записан на: @DATE@"
+
+msgid "Import from file"
+msgstr "Импорт от файл"
+
+msgid "Import from browser's storage"
+msgstr "Импорт от хранилището на браузъра"
+
+msgid "Settings will be imported from your browser's local storage."
+msgstr "Настройки ще бъдат импортирани от локалното хранилище на браузъра."
+
+msgid "You have no saved settings!"
+msgstr "Нямате запазени настройки!"
+
+msgid "This feature is not supported by your web browser"
+msgstr "Тази функционалност не се поддържа от вашия браузър"
+
+msgid "Merge with current configuration"
+msgstr "Сливане с текущите настройки"
+
+msgid "You can set more settings by modifying config.inc.php, eg. by using %sSetup script%s."
+msgstr "Имате достъп до още настройки, модифицирайки config.inc.php, примерно чрез %sскрипта за настройки%s."
+
+msgid "Save to browser's storage"
+msgstr "Запис в хранилището на браузъра"
+
+msgid "Settings will be saved in your browser's local storage."
+msgstr "Настройките ще бъдат запазени в хранилището на вашия браузър."
+
+msgid "Existing settings will be overwritten!"
+msgstr "Съществуващи настройки ще бъдат презаписани!"
+
+msgid "You can reset all your settings and restore them to default values."
+msgstr "Може да изчистите настройките си до стойностите им по подразбиране."
+
+msgid "There are no favorite tables."
+msgstr "Няма любими таблици."
+
+msgid "There are no recent tables."
+msgstr "Няма наскоро отваряни таблици."
+
+msgid "Configuration of pmadb…"
+msgstr "Настройки на pmadb…"
+
+msgid "not OK"
+msgstr "не е OK"
+
+msgid "General relation features"
+msgstr "Общи свойства на релациите"
+
+msgid "%sCreate%s a database named '%s' and setup the phpMyAdmin configuration storage there."
+msgstr "%sСъздаване%s на база данни с име \"%s\" и настройване на конфигурацията на phpMyAdmin да бъде запазена там."
+
+msgid "%sCreate%s the phpMyAdmin configuration storage in the current database."
+msgstr "%sСъздаване%s на phpMyAdmin конфигурационно хранилище в текущата база данни."
+
+msgid "%sCreate%s missing phpMyAdmin configuration storage tables."
+msgstr "%sСъздаване%s на липсващите таблици за съхранение на конфигурация на phpMyAdmin."
+
+msgctxt "Correctly working"
+msgid "OK"
+msgstr "OK"
+
+msgid "General relation features:"
+msgstr "Общи характеристики на връзката:"
+
+msgid "Enabled"
+msgstr "Позволено"
+
+msgid "Display features:"
+msgstr "Показване на свойствата:"
+
+msgid "Designer and creation of PDFs:"
+msgstr "Дизайнер и създаване на PDF файлове:"
+
+msgid "Persistent tables' UI preferences:"
+msgstr "Настройки на интетфейса на постоянните таблици:"
+
+msgid "Quick steps to set up advanced features:"
+msgstr "Бързи стъпки за настройка на разширените свойства:"
+
+msgid "Enable advanced features in configuration file (<code>config.inc.php</code>), for example by starting from <code>config.sample.inc.php</code>."
+msgstr "Включване на допълнителните функции в конфигурационния файл (<code>config.inc.php</code>), започнете с примера в <code>config.sample.inc.php</code>."
+
+msgid "Binary log"
+msgstr "Двоичен дневник"
+
+msgid "Select binary log to view"
+msgstr "Изберете двоичен дневник за преглед"
+
+msgid "Files"
+msgstr "Файлове"
+
+msgid "Log name"
+msgstr "Име на дневник"
+
+msgid "Position"
+msgstr "Положение"
+
+msgid "Server ID"
+msgstr "Сървърен идентификатор"
+
+msgid "Original position"
+msgstr "Първоначално положение"
+
+msgid "Information"
+msgstr "Информация"
+
+msgid "Databases statistics"
+msgstr "Статистика за базите данни"
+
+msgid "Create database"
+msgstr "Създаване БД"
+
+msgid "Jump to database '%s'"
+msgstr "Прескачане към базата данни \"%s'"
+
+msgid "Check privileges for database \"%s\"."
+msgstr "Проверка на правата над БД \"%s\"."
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Total:"
+msgstr "Общо:"
+
+msgid "Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server."
+msgstr "Забележка: Разрешаването на статистика на БД може да коства много голям трафик между web сървъра и MySQL сървъра."
+
+msgid "No databases"
+msgstr "Няма БД"
+
+msgid "Confirm"
+msgstr "Потвърждение"
+
+msgid "Storage Engine"
+msgstr "Хранилище"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Free pages"
+msgstr "Свободни страници"
+
+msgid "Dirty pages"
+msgstr "Мръсни страници"
+
+msgid "Pages containing data"
+msgstr "Страници съдържащи данни"
+
+msgid "Pages to be flushed"
+msgstr "Страници за изчистване"
+
+msgid "Busy pages"
+msgstr "Заети страници"
+
+msgid "Latched pages"
+msgstr "Заключени страници"
+
+msgid "Read requests"
+msgstr "Заявки за четене"
+
+msgid "Write requests"
+msgstr "Заявки за запис"
+
+msgid "Read misses"
+msgstr "Пропуснати прочитания"
+
+msgid "Write waits"
+msgstr "Изчаквания за запис"
+
+msgid "Read misses in %"
+msgstr "Пропуснати прочитания в %"
+
+msgid "Write waits in %"
+msgstr "Изчаквания за запис в %"
+
+msgid "Variables"
+msgstr "Променливи"
+
+msgid "Exporting databases from the current server"
+msgstr "Експорт на БД от текущия сървър"
+
+msgid "Importing into the current server"
+msgstr "Импорт в текущия сървър"
+
+msgid "Plugins"
+msgstr "Добавки"
+
+msgid "Plugin"
+msgstr "Праставка"
+
+msgid "Version"
+msgstr "Версия"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "disabled"
+msgstr "изключено"
+
+msgid "Create database with same name and grant all privileges."
+msgstr "Създаване на БД със същото име и даване на пълни права."
+
+msgid "Grant all privileges on wildcard name (username\\_%)."
+msgstr "Даване на всички привилегии на име с маска (username\\_%)."
+
+msgid "No Password"
+msgstr "Без парола"
+
+msgid "Re-type:"
+msgstr "Въведете пак:"
+
+msgid "Password Hashing:"
+msgstr "Хеширане на паролата:"
+
+msgid "Edit privileges:"
+msgstr "Редактиране на привилегии:"
+
+msgid "Login Information"
+msgstr "Информация за логване"
+
+msgid "User name:"
+msgstr "Потребителско име:"
+
+msgid "Any user"
+msgstr "Всеки потребител"
+
+msgid "Use text field"
+msgstr "От текстовото поле"
+
+msgid "Host name:"
+msgstr "Име на хост:"
+
+msgid "Any host"
+msgstr "Всеки хост"
+
+msgid "Local"
+msgstr "Локален"
+
+msgid "Password"
+msgstr "Парола"
+
+msgid "Do not change the password"
+msgstr "Да не се сменя паролата"
+
+msgid "Re-type"
+msgstr "Отново"
+
+msgid "Table-specific privileges"
+msgstr "Специфични за таблицата права"
+
+msgid "Column-specific privileges"
+msgstr "Специфични за колоната права"
+
+msgid "Wildcards % and _ should be escaped with a \\ to use them literally."
+msgstr "Ако искате да използвате в името символите '_' (долна черта) и '%' (процент) е необходимо да поставите пред тях символът '\\' (обратна наклонена черта)."
+
+msgid "Add privileges on the following table:"
+msgstr "Добавяне на права към следната таблица:"
+
+msgid "Allows reading data."
+msgstr "Позволява четене на данни."
+
+msgid "Or"
+msgstr "Или"
+
+msgctxt "None privileges"
+msgid "None"
+msgstr "Няма"
+
+msgid "Allows inserting and replacing data."
+msgstr "Позволява вмъкване и заменяне на данни."
+
+msgid "Allows changing data."
+msgstr "Позволява промяна на данни."
+
+msgid "Has no effect in this MySQL version."
+msgstr "Няма ефект в тази версия на MySQL."
+
+msgid "Allows deleting data."
+msgstr "Позволява изтриване на данни."
+
+msgid "Allows creating new tables."
+msgstr "Позволява създаване на нови таблици."
+
+msgid "Allows dropping tables."
+msgstr "Позволява изтриване на таблици."
+
+msgid "Allows creating and dropping indexes."
+msgstr "Позволява създаване и изтриване на индекси."
+
+msgid "Allows altering the structure of existing tables."
+msgstr "Позволява промяна на структурата на съществуващи таблици."
+
+msgid "Allows creating new views."
+msgstr "Позволява създаване на изгледи."
+
+msgid "Allows performing SHOW CREATE VIEW queries."
+msgstr "Позволява изпълнение на SHOW CREATE VIEW заявки."
+
+msgid "Global privileges"
+msgstr "Глобални права"
+
+msgid "Database-specific privileges"
+msgstr "Специфични за БД права"
+
+msgid "Allows importing data from and exporting data into files."
+msgstr "Позволява импортиране на данни от и експортиране на данни във файлове."
+
+msgid "Allows creating new databases and tables."
+msgstr "Позволява създаване на нови БД и таблици."
+
+msgid "Allows dropping databases and tables."
+msgstr "Позволява изтриване на БД и таблици."
+
+msgid "Allows creating temporary tables."
+msgstr "Позволява създаването на временни таблици."
+
+msgid "Allows creating stored routines."
+msgstr "Позволява създаване на съхранени процедури."
+
+msgid "Allows altering and dropping stored routines."
+msgstr "Позволява промяна и изтриване на съхранени процедури."
+
+msgid "Allows executing stored routines."
+msgstr "Позволява изпълнение на съхранени процедури."
+
+msgid "Administration"
+msgstr "Администрация"
+
+msgid "Allows adding users and privileges without reloading the privilege tables."
+msgstr "Позволява добавяне на потребители и права без презареждане на таблицата с правата."
+
+msgid "Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users."
+msgstr "Позволява връзка, дори ако е достигнат максималния брой на връзки; Изисква се за повечето административни операции, като установяване на глобални променливи или спиране на нишка на други потребители."
+
+msgid "Allows reloading server settings and flushing the server's caches."
+msgstr "Позволява презареждане на настройките и изчистване на буфера на сървъра."
+
+msgid "Allows shutting down the server."
+msgstr "Позволява спиране на сървъра."
+
+msgid "Gives access to the complete list of databases."
+msgstr "Дава достъп до пълния списък на базите данни."
+
+msgid "Allows locking tables for the current thread."
+msgstr "Позволява заключване на таблици за текущата нишка."
+
+msgid "Allows creating, dropping and renaming user accounts."
+msgstr "Позволява създаване, изтриване и преименуване на потребителски сметки."
+
+msgid "Resource limits"
+msgstr "Ресурсни ограничения"
+
+msgid "Note: Setting these options to 0 (zero) removes the limit."
+msgstr "Забележка: Установяването на тези опции с 0 (нула) премахва ограничението."
+
+msgid "Limits the number of queries the user may send to the server per hour."
+msgstr "Ограничава броя на заявките, които потребителя може да изпрати към сървъра на час."
+
+msgid "Limits the number of commands that change any table or database the user may execute per hour."
+msgstr "Ограничава броя на командите, които променят някоя таблица или БД, които даден потребител може да инициира за час."
+
+msgid "Limits the number of new connections the user may open per hour."
+msgstr "Ограничава броя на новите връзки, които потребителя може да отвори за час."
+
+msgid "Limits the number of simultaneous connections the user may have."
+msgstr "Ограничава броя на едновременните връзки, които потребителят може да държи отворени."
+
+msgid "The selected user was not found in the privilege table."
+msgstr "Избраният потребител не беше открит в таблицата с права."
+
+msgid "… keep the old one."
+msgstr "… запазване на стария."
+
+msgid "… delete the old one from the user tables."
+msgstr "… изтриване на стария от таблицата с потребители."
+
+msgid "… revoke all active privileges from the old one and delete it afterwards."
+msgstr "… отмяна на всички права от стария и след това изтриване."
+
+msgid "… delete the old one from the user tables and reload the privileges afterwards."
+msgstr "… изтриване на стария от таблицата с потребители и след това презареждане на правата."
+
+msgid "Revoke all active privileges from the users and delete them afterwards."
+msgstr "Отмяна на всички права на потребителите и след това изтриване."
+
+msgid "Drop the databases that have the same names as the users."
+msgstr "Изтриване на БД, които имат имена като тези на потребителите."
+
+msgid "Host:"
+msgstr "Хост:"
+
+msgid "Port:"
+msgstr "Порт:"
+
+msgid "Use text field:"
+msgstr "От текстовото поле:"
+
+msgid "Host"
+msgstr "Хост"
+
+msgid "Generate password:"
+msgstr "Генериране на парола:"
+
+msgid "Generate"
+msgstr "Генериране"
+
+msgid "Replicate all databases; Ignore:"
+msgstr "Реплициране на всички БД; Игнориране на:"
+
+msgid "Ignore all databases; Replicate:"
+msgstr "Игнориране на всички БД; Реплициране на:"
+
+msgid "Please select databases:"
+msgstr "Изберете БД:"
+
+msgid "Now, add the following lines at the end of [mysqld] section in your my.cnf and please restart the MySQL server afterwards."
+msgstr "Сега добавете следните редове в края на секцията [mysqld] на вашия my.cnf и рестартирайте MySQL сървъра."
+
+msgid "Once you restarted MySQL server, please click on Go button. Afterwards, you should see a message informing you, that this server <strong>is</strong> configured as primary."
+msgstr "След като сте рестартирали сървъра на MySQL, щракнете върху бутона „Изпълнение“. След това би трябвало да видите съобщение, което ви информира, че сървърът <strong>е</strong> настроен като главен."
+
+msgid "Start SQL Thread only"
+msgstr "Пускане само на SQL нишка"
+
+msgid "Stop SQL Thread only"
+msgstr "Спиране само на SQL нишка"
+
+msgid "Start IO Thread only"
+msgstr "Пускане само на В/И нишка"
+
+msgid "Stop IO Thread only"
+msgstr "Спиране само на В/И нишка"
+
+msgid "Error management:"
+msgstr "Обработка на грешки:"
+
+msgid "Skip current error"
+msgstr "Прескачане на текущата"
+
+msgid "Skip next %s errors."
+msgstr "Пропуснете следващите %s грешки."
+
+msgid "Variable"
+msgstr "Променлива"
+
+msgid "Current server:"
+msgstr "Текущ сървър:"
+
+msgid "Servers"
+msgstr "Сървъри"
+
+msgid "Advisor system"
+msgstr "Съветническа програма"
+
+msgid "Instructions"
+msgstr "Инструкции"
+
+msgid "Possible performance issues"
+msgstr "Възможни проблеми с производителността"
+
+msgid "Server"
+msgstr "Сървър"
+
+msgid "Processes"
+msgstr "Процеси"
+
+msgid "Query statistics"
+msgstr "Статистика за заявките"
+
+msgid "All status variables"
+msgstr "Всички променливи на състоянието"
+
+msgid "Monitor"
+msgstr "Наблюдател"
+
+msgid "Advisor"
+msgstr "Съветник"
+
+msgid "Add chart"
+msgstr "Добавяне диаграма"
+
+msgid "Refresh rate"
+msgstr "Скорост на опресняване"
+
+msgid "Please select the file you want to import:"
+msgstr "Изберете файла, който искате да импортирате:"
+
+msgid "Reset to default"
+msgstr "Стойност по подразбиране"
+
+msgid "The phpMyAdmin Monitor can assist you in optimizing the server configuration and track down time intensive queries. For the latter you will need to set log_output to 'TABLE' and have either the slow_query_log or general_log enabled. Note however, that the general_log produces a lot of data and increases server load by up to 15%."
+msgstr "Наблюдателят на phpMyAdmin може да ви помогне при оптимизиране на конфигурацията на сървъра и да проследи времеемките заявки. За последното ще трябва да настроите log_output на 'TABLE' и да разрешите slow_query_log или general_log. Отбележете обаче, че general_log генерира много данни и натоварването на сървъра се увеличава с до 15%."
+
+msgid "Using the monitor:"
+msgstr "Използване наблюдател:"
+
+msgid "Chart Title"
+msgstr "Заглавие на диаграмата"
+
+msgid "Status variable(s)"
+msgstr "Променливи(а) на състоянието"
+
+msgid "Select series:"
+msgstr "Избор на серии:"
+
+msgid "or type variable name:"
+msgstr "или въведете променлива:"
+
+msgid "Apply a divisor"
+msgstr "Прилагане на разделител"
+
+msgid "KiB"
+msgstr "КБ"
+
+msgid "MiB"
+msgstr "МБ"
+
+msgid "Add chart to grid"
+msgstr "Добавяне диаграма към мрежата"
+
+msgid "Log statistics"
+msgstr "Статистика на дневника"
+
+msgid "From slow log"
+msgstr "От дневника за бавни заявки"
+
+msgid "From general log"
+msgstr "От общия дневник"
+
+msgid "Query analyzer"
+msgstr "Анализатор заявки"
+
+msgid "Query"
+msgstr "Заявка по пример"
+
+msgid "Analyse query"
+msgstr "Анализиране заявка"
+
+msgid "Analysing logs"
+msgstr "Зареждане дневници"
+
+msgid "Cancel request"
+msgstr "Отмяна на заявката"
+
+msgid "No data found"
+msgstr "Няма данни"
+
+msgid "Log analysed, but no data found in this time span."
+msgstr "Дневникът е проверен, но няма заявки изпълнени в този времеви интервал."
+
+msgid "Loading logs"
+msgstr "Зареждане на дневници"
+
+msgid "Log data loaded. Queries executed in this time span:"
+msgstr "Данните заредени. Заявки изпълнени в този времеви интервал:"
+
+msgid "Monitor refresh failed"
+msgstr "Опресняването на монитора се провали"
+
+msgid "While requesting new chart data the server returned an invalid response. This is most likely because your session expired. Reloading the page and reentering your credentials should help."
+msgstr "При поискване на новата диаграма сървъра върна невалиден отговор. Най-вероятно това се дължи на изтекла сесия. Презареждане страницата и ново удостоверяване трябва да помогне."
+
+msgid "Reload page"
+msgstr "Презареждане страницата"
+
+msgid "Local monitor configuration incompatible!"
+msgstr "Локалната настройка на наблюдателя е несъвместима!"
+
+msgid "Start auto refresh"
+msgstr "Стартиране на самоопресняване"
+
+msgid "Kill"
+msgstr "Спиране"
+
+msgid "Questions since startup:"
+msgstr "Въпроси от момента на стартиране:"
+
+msgid "ø per hour: %s"
+msgstr "ø в час: %s"
+
+msgid "ø per minute: %s"
+msgstr "ø в минута: %s"
+
+msgid "ø per second: %s"
+msgstr "ø в секунда: %s"
+
+msgid "Statements"
+msgstr "Заявление"
+
+msgid "#"
+msgstr "№"
+
+msgid "Network traffic since startup: %s"
+msgstr "Мрежови трафик от включването: %s"
+
+msgid "This MySQL server has been running for %1$s. It started up on %2$s."
+msgstr "Този MySQL сървър работи от %1$s. Пуснат е на %2$s."
+
+msgid "Traffic"
+msgstr "Трафик"
+
+msgid "On a busy server, the byte counters may overrun, so those statistics as reported by the MySQL server may be incorrect."
+msgstr "При натоварен сървър байтовите броячи може да превъртат и статистиката докладвана от MySQL да е невярна."
+
+msgid "Connections"
+msgstr "Връзки"
+
+msgid "Replication status"
+msgstr "Състояние на репликацията"
+
+msgid "Show only alert values"
+msgstr "Само тревожни стойности"
+
+msgid "Filter by category…"
+msgstr "Филтър по категория…"
+
+msgid "Show unformatted values"
+msgstr "Неформатирани стойности"
+
+msgid "Related links:"
+msgstr "Сродни връзки:"
+
+msgid "Group name:"
+msgstr "Име на групата:"
+
+msgid "User"
+msgstr "Потребител"
+
+msgid "Server variables and settings"
+msgstr "Сървърни променливи и настройки"
+
+msgid "Session value"
+msgstr "Сесийна стойност"
+
+msgid "Not enough privilege to view server variables and settings. %s"
+msgstr "Недостатъчни права за преглед на променливите и настройките на сървъра. %s"
+
+msgid "Configuration file"
+msgstr "Конфигурационен файл"
+
+msgid "Generated configuration file"
+msgstr "Създаденият файл с настройки"
+
+msgid "Download"
+msgstr "Изтегляне"
+
+msgid "Ignore errors"
+msgstr "Пренебрегване на грешките"
+
+msgid "Show form"
+msgstr "Показване формуляр"
+
+msgid "Authentication type"
+msgstr "Тип удостоверяване"
+
+msgid "There are no configured servers"
+msgstr "Няма конфигурирани сървъри"
+
+msgid "New server"
+msgstr "Нов сървър"
+
+msgid "Default language"
+msgstr "Език по подразбиране"
+
+msgid "Default server"
+msgstr "Сървър по подразбиране"
+
+msgid "let the user choose"
+msgstr "нека потребитлят избере"
+
+msgid "- none -"
+msgstr "- никой -"
+
+msgid "End of line"
+msgstr "Край на ред"
+
+msgid "Display"
+msgstr "Показване"
+
+msgid "phpMyAdmin homepage"
+msgstr "phpMyAdmin страница"
+
+msgid "Donate"
+msgstr "Дарение"
+
+msgid "Check for latest version"
+msgstr "Проверка за обновление"
+
+msgid "Edit server"
+msgstr "Редакция сървър"
+
+msgid "Add a new server"
+msgstr "Добавяне на нов сървър"
+
+msgid "Bookmark this SQL query"
+msgstr "Отбелязване SQL заявката"
+
+msgid "Let every user access this bookmark"
+msgstr "Всеки потребител да има достъп до тази белязка"
+
+msgid "Time"
+msgstr "Време"
+
+msgid "Total Time"
+msgstr "Общо време"
+
+msgid "Your SQL query has been executed successfully."
+msgstr "SQL заявката беше изпълнена успешно."
+
+msgid "SQL query"
+msgstr "SQL заявка"
+
+msgid "Bind parameters"
+msgstr "Свързване на параметри"
+
+msgid "Columns"
+msgstr "Колони"
+
+msgid "Bookmark this SQL query:"
+msgstr "Отбелязване на SQL заявката:"
+
+msgid "Replace existing bookmark of same name"
+msgstr "Замяна белязката със същото име"
+
+msgid "Delimiter"
+msgstr "Разделител"
+
+msgid "Show this query here again"
+msgstr "Показване на заявката отново"
+
+msgid "Retain query box"
+msgstr "Запазване отворен прозореца за заявки"
+
+msgid "Bookmarked SQL query"
+msgstr "Отбелязана SQL заявка"
+
+msgid "shared"
+msgstr "споделен"
+
+msgid "View only"
+msgstr "Само показване"
+
+msgid "Simulate query"
+msgstr "Симулиране на заявка"
+
+msgid "Browse foreign values"
+msgstr "Разглеждане на външни стойности"
+
+msgid "Use this value"
+msgstr "Използване тази стойност"
+
+msgctxt "Chart type"
+msgid "Bar"
+msgstr "Стълб"
+
+msgctxt "Chart type"
+msgid "Column"
+msgstr "Kолона"
+
+msgctxt "Chart type"
+msgid "Line"
+msgstr "Линия"
+
+msgctxt "Chart type"
+msgid "Spline"
+msgstr "Сплайн"
+
+msgctxt "Chart type"
+msgid "Pie"
+msgstr "Пита"
+
+msgid "Stacked"
+msgstr "Припокриващи се"
+
+msgid "Chart title:"
+msgstr "Заглавие на диаграмата:"
+
+msgid "X-Axis:"
+msgstr "Ос X:"
+
+msgid "Series:"
+msgstr "Поредици:"
+
+msgid "X-Axis label:"
+msgstr "Етикет на оста X:"
+
+msgid "X Values"
+msgstr "Стойности на X"
+
+msgid "Y-Axis label:"
+msgstr "Етикет на оста Y:"
+
+msgid "Y Values"
+msgstr "Стойности на Y"
+
+msgid "Value Column:"
+msgstr "Колона за стойностите:"
+
+msgid "Exporting rows from \"%s\" table"
+msgstr "Експортиране на редове от таблица \"%s\""
+
+msgid "Column:"
+msgstr "Колона:"
+
+msgid "Label column"
+msgstr "Етикет на колона"
+
+msgid "-- None --"
+msgstr "-- без --"
+
+msgid "Spatial column"
+msgstr "Пространствено поле"
+
+msgid "Importing into the table \"%s\""
+msgstr "Импорт в таблица \"%s\""
+
+msgid "Index name:"
+msgstr "Име на индекс:"
+
+msgid "\"PRIMARY\" <b>must</b> be the name of and <b>only of</b> a primary key!"
+msgstr "\"PRIMARY\" <b>трябва</b> да е името на <b>и единствено на</b> главен ключ!"
+
+msgid "Index choice:"
+msgstr "Избор на индекс:"
+
+msgid "Index type:"
+msgstr "Тип на индекса:"
+
+msgid "Comment:"
+msgstr "Коментар:"
+
+msgid "Ignore"
+msgstr "Игнориране"
+
+msgid "Add %s column(s) to index"
+msgstr "Добавяне на %s колона(и) към индекса"
+
+msgid "Insert as new row"
+msgstr "Вмъкване като нов ред"
+
+msgid "Show insert query"
+msgstr "Показване заявка за вмъкване"
+
+msgid "and then"
+msgstr "и след това"
+
+msgid "Go back to previous page"
+msgstr "Обратно към предната страница"
+
+msgid "Insert another new row"
+msgstr "Вмъкване нов ред"
+
+msgid "Go back to this page"
+msgstr "Връщане към тази страница"
+
+msgid "Edit next row"
+msgstr "Редакция на следващия ред"
+
+msgid "Binary"
+msgstr "двоичен"
+
+msgid "Because of its length,<br> this column might not be editable."
+msgstr "Поради дължината си,<br>това поле може да е нередактируемо."
+
+msgid "Binary - do not edit"
+msgstr "Двоично - не се редактира"
+
+msgid "Edit/Insert"
+msgstr "Редакция/Вмъкване"
+
+msgid "Improve table structure (Normalization):"
+msgstr "Подобряване на структурата на таблицата (Нормализиране):"
+
+msgid "Alter table order by"
+msgstr "Подреждане на таблицата по"
+
+msgid "Table options"
+msgstr "Опции на таблицата"
+
+msgid "Rename table to"
+msgstr "Преименуване на таблицата на"
+
+msgid "Table comments"
+msgstr "Коментари към таблицата"
+
+msgid "Switch to copied table"
+msgstr "Превключване към копираната таблица"
+
+msgid "Defragment table"
+msgstr "Дефрагментиране на таблица"
+
+msgid "Table %s has been flushed."
+msgstr "Кеша на таблица %s беше изчистен."
+
+msgid "Flush the table (FLUSH)"
+msgstr "Изпразване кеша на таблицата (FLUSH)"
+
+msgid "Empty the table (TRUNCATE)"
+msgstr "Изпразване на таблицата (TRUNCATE)"
+
+msgid "Delete the table (DROP)"
+msgstr "Изтриване на таблицата (DROP)"
+
+msgid "Operations"
+msgstr "Операции"
+
+msgid "Rename view to"
+msgstr "Преименуване на изгледа на"
+
+msgid "Table structure"
+msgstr "Структура на таблица"
+
+msgid "Foreign key constraint"
+msgstr "Ограничение за външен ключ"
+
+msgid "Internal relation"
+msgstr "Вътрешна релация"
+
+msgid "An internal relation is not necessary when a corresponding FOREIGN KEY relation exists."
+msgstr "Вътрешна релация не е необходима, при наличието на съответен FOREIGN KEY."
+
+msgid "Choose column to display:"
+msgstr "Изберете колона за показване:"
+
+msgid "Foreign key constraint %s has been dropped"
+msgstr "Ограничението за външен ключ %s е премахнато"
+
+msgid "Do a \"query by example\" (wildcard: \"%\")"
+msgstr "Изпълняване на \"заявка по шаблон\" (знак за заместване: \"%\")"
+
+msgid "Select columns (at least one):"
+msgstr "Избор на колона (поне една):"
+
+msgid "Add search conditions (body of the \"where\" clause):"
+msgstr "Добавяне на условие за търсене (съдържание на \"where\" клаузата):"
+
+msgid "Number of rows per page"
+msgstr "Брой редове на страница"
+
+msgid "Display order:"
+msgstr "Подреждане по:"
+
+msgid "Range search"
+msgstr "Търсене в област"
+
+msgid "Minimum value:"
+msgstr "Минимална стойност:"
+
+msgid "Maximum value:"
+msgstr "Максимална стойност:"
+
+msgid "Start row:"
+msgstr "Начален ред:"
+
+msgid "Analyze"
+msgstr "Анализиране"
+
+msgid "Check"
+msgstr "Проверка"
+
+msgid "Optimize"
+msgstr "Оптимизиране"
+
+msgid "Repair"
+msgstr "Поправяне"
+
+msgid "Extra"
+msgstr "Допълнително"
+
+msgctxt "None for default"
+msgid "None"
+msgstr "Няма"
+
+msgid "Change"
+msgstr "Промяна"
+
+msgid "Column %s has been dropped."
+msgstr "Колоната %s беше изтрита."
+
+msgid "More"
+msgstr "Още"
+
+msgid "Distinct values"
+msgstr "Уникални стойности"
+
+msgid "Move columns"
+msgstr "Преместване колони"
+
+msgid "Edit view"
+msgstr "Изглед за редакция"
+
+msgid "Propose table structure"
+msgstr "Анализ на таблицата"
+
+msgid "Track view"
+msgstr "Изглед за следене"
+
+msgid "Add %s column(s)"
+msgstr "Добавяне %s колона(и)"
+
+msgid "Create an index on %s columns"
+msgstr "Създаване на индекс върху %s колони"
+
+msgid "Space usage"
+msgstr "Използвано място"
+
+msgid "Effective"
+msgstr "Ефективни"
+
+msgid "Total"
+msgstr "Общо"
+
+msgid "static"
+msgstr "статичен"
+
+msgid "dynamic"
+msgstr "динамичен"
+
+msgid "Row length"
+msgstr "Дължина ред"
+
+msgid "Row size"
+msgstr "Размер ред"
+
+msgid "Activate tracking for %s"
+msgstr "Включване проследяването за %s"
+
+msgid "Activate now"
+msgstr "Включване сега"
+
+msgid "Deactivate tracking for %s"
+msgstr "Изключване проследяването за %s"
+
+msgid "Deactivate now"
+msgstr "Изключване сега"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Username"
+msgstr "Потребителско име"
+
+msgid "Do a \"query by example\" (wildcard: \"%\") for two different columns"
+msgstr "Изпълняване \"заявка по шаблон\" (знак за заместване: \"%\") за две различни колони"
+
+msgid "Additional search criteria"
+msgstr "Допълнителен критерий за търсене"
+
+msgid "Use this column to label each point"
+msgstr "Използване колоната като етикет за всяка точка"
+
+msgid "Maximum rows to plot"
+msgstr "Максимален брой редове за изчертаване"
+
+msgid "Browse/Edit the points"
+msgstr "Прелистване/Редакция точки"
+
+msgid "How to use"
+msgstr "Как да бъде използвано"
+
+msgid "Reset zoom"
+msgstr "Възстановяване на мащабирането"
+
+msgid "Trigger name"
+msgstr "Име на тригер"
+
+msgctxt "Trigger action time"
+msgid "Time"
+msgstr "Време"
+
+msgid "Event"
+msgstr "Действие"
+
+msgid "Export of trigger %s"
+msgstr "Експорт на тригер %s"
+
+msgid "Triggers"
+msgstr "Тригери"
+
+msgid "There are no triggers to display."
+msgstr "Няма тригери."
+
+msgid "VIEW name"
+msgstr "Име на ИЗГЛЕД"
+
+msgid "Column names"
+msgstr "Име на колона"
+
+msgid "Error when evaluating: %s"
+msgstr "Грешка при оценяване: %s"
+
+msgid "Failed evaluating precondition for rule '%s'."
+msgstr "Неуспешно оценяване условието за правилото '%s'."
+
+msgid "Failed calculating value for rule '%s'."
+msgstr "Неуспешно изчисляване стойността за правилото '%s'."
+
+msgid "Failed running test for rule '%s'."
+msgstr "Неуспешно пускане на тест за правилото '%s'."
+
+msgid "Failed formatting string for rule '%s'."
+msgstr "Неуспешно форматиране низ за правилото '%s'."
+
+msgid "per second"
+msgstr "на секунда"
+
+msgid "per minute"
+msgstr "на минута"
+
+msgid "per hour"
+msgstr "на час"
+
+msgid "per day"
+msgstr "на ден"
+
+msgid "Uptime below one day"
+msgstr "Активност под един ден"
+
+msgid "Uptime is less than 1 day, performance tuning may not be accurate."
+msgstr "Активността е под 1 ден, настройките за производителност може да не са точни."
+
+msgid "To have more accurate averages it is recommended to let the server run for longer than a day before running this analyzer"
+msgstr "За да получите по-точни данни, препоръчително е да оставите сървъра да работи по-дълго от един ден преди да стартирате този анализатор"
+
+msgid "The uptime is only %s"
+msgstr "Активността е само %s"
+
+msgid "Questions below 1,000"
+msgstr "Запитвания под 1000"
+
+msgid "Fewer than 1,000 questions have been run against this server. The recommendations may not be accurate."
+msgstr "По-малко от 1,000 заявки са били изпратени до този сървър. Препоръките е възможно да не са точни."
+
+msgid "Let the server run for a longer time until it has executed a greater amount of queries."
+msgstr "Оставете сървъра да работи по-дълго време, за да изпълни по-голямо количество заявки."
+
+msgid "Current amount of Questions: %s"
+msgstr "Текущ брой запитвания: %s"
+
+msgid "Percentage of slow queries"
+msgstr "Процент на бавните заявки"
+
+msgid "There is a lot of slow queries compared to the overall amount of Queries."
+msgstr "Има много на брой бавни заявки в сравнение с общото количество заявки."
+
+msgid "Slow query rate"
+msgstr "Стойност на бавните заявки"
+
+msgid "You have a slow query rate of %s per hour, you should have less than 1%% per hour."
+msgstr "Стойността на бавните заявки е %s, тази стойност трябва да бъде под 1%% за час."
+
+msgid "long_query_time is currently set to %ds."
+msgstr "long_query_time в момента е %dс."
+
+msgid "Slow query logging"
+msgstr "Вписване бавните заявки в дневник"
+
+msgid "The slow query log is disabled."
+msgstr "Дневникът за бавни заявки е изключен."
+
+msgid "log_slow_queries is set to 'OFF'"
+msgstr "log_slow_queries е зададено на 'Изключено'"
+
+msgid "slow_query_log is set to 'OFF'"
+msgstr "Променливата 'slow_query_log' е зададена на 'OFF'"
+
+msgid "Current version: %s"
+msgstr "Текуща версия: %s"
+
+msgid "Minor Version"
+msgstr "Малка версия"
+
+msgid "You should upgrade, to a stable version of MySQL 5.5."
+msgstr "Трябва да обновите до стабилна версия на MySQL 5.5."
+
+msgid "Distribution"
+msgstr "Разпространение"
+
+msgid "MySQL Architecture"
+msgstr "Архитектура на MySQL"
+
+msgid "Available memory on this host: %s"
+msgstr "Достъпна памет на този хост: %s"
+
+msgid "Query caching method"
+msgstr "Метод за буфериране на заявки"
+
+msgid "Suboptimal caching method."
+msgstr "Неоптимален метод за буфериране."
+
+msgid "Percentage of sorts that cause temporary tables"
+msgstr "Процент сортировки, използващи временни таблици"
+
+msgid "Too many sorts are causing temporary tables."
+msgstr "Твърде много сортировки, изискващи временни таблици."
+
+msgid "%s%% of all sorts cause temporary tables, this value should be lower than 10%%."
+msgstr "%s%% от всички сортировки се изпълняват с временни таблици, тази стойност трябва да бъде под 10%%."
+
+msgid "Rate of sorts that cause temporary tables"
+msgstr "Стойност на сортировките, изискващи временни таблици"
+
+msgid "Temporary tables average: %s, this value should be less than 1 per hour."
+msgstr "Средната стойност на временни таблици е %s, тази стойност трябва да бъде под 1 за час."
+
+msgid "Sort rows"
+msgstr "Сортиране на редове"
+
+msgid "Rate of joins without indexes"
+msgstr "Стойност на JOIN без индекси"
+
+msgid "There are too many joins without indexes."
+msgstr "Има твърде много JOIN без индекси."
+
+msgid "Table joins average: %s, this value should be less than 1 per hour"
+msgstr "Средната стойност за JOIN на таблици e %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Rate of reading first index entry"
+msgstr "Стойност на прочитане на първия индекс"
+
+msgid "The rate of reading the first index entry is high."
+msgstr "Стойността на прочитане на първия индекс е висока."
+
+msgid "Index scans average: %s, this value should be less than 1 per hour"
+msgstr "Стойността на отказаните клиенти е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Rate of reading fixed position"
+msgstr "Стойност на прочитане на фиксирана позиция"
+
+msgid "The rate of reading data from a fixed position is high."
+msgstr "Стойността на прочитане на фиксирана позиция е висока."
+
+msgid "Rate of reading fixed position average: %s, this value should be less than 1 per hour"
+msgstr "Стойността на прекъснатите клиенти е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Rate of reading next table row"
+msgstr "Стойност на четене на следващ ред от таблица"
+
+msgid "The rate of reading the next table row is high."
+msgstr "Стойността на прочитане на следващ ред от таблица е висока."
+
+msgid "Rate of reading next table row: %s, this value should be less than 1 per hour"
+msgstr "Стойността на отказаните клиенти е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Percentage of temp tables on disk"
+msgstr "Процент на временни таблици на диска"
+
+msgid "%s%% of all temporary tables are being written to disk, this value should be below 25%%"
+msgstr "%s%% от всички временни таблици биват записвани на диска, тази стойност трябва да бъде под 25%%"
+
+msgid "Rate of temporary tables being written to disk: %s, this value should be less than 1 per hour"
+msgstr "Стойността на временните таблици записвани на диска е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "MyISAM key buffer size"
+msgstr "Размер на буфера за ключове на MyISAM"
+
+msgid "key_buffer_size is 0"
+msgstr "key_buffer_size е 0"
+
+msgid "max %% MyISAM key buffer ever used: %s%%, this value should be above 95%%"
+msgstr "Максималният %% от буфера за ключове на MyISAM ползван някога е %s%%, тази стойност трябва да е над 95%%"
+
+msgid "Percentage of MyISAM key buffer used"
+msgstr "Процент използван буфер за ключове на MyISAM"
+
+msgid "%% MyISAM key buffer used: %s%%, this value should be above 95%%"
+msgstr "Използваният %% от буфера за ключове на MyISAM е %s%%, тази стойност трябва да е над 95%%"
+
+msgid "Percentage of index reads from memory"
+msgstr "Процент на прочитане на индекс от паметта"
+
+msgid "Index reads from memory: %s%%, this value should be above 95%%"
+msgstr "Прочетени от паметта индекси: %s%%, стойността трябва да е над 95%%"
+
+msgid "Rate of table open"
+msgstr "Стойност на отваряне на таблици"
+
+msgid "The rate of opening tables is high."
+msgstr "Стойността на отваряне на таблици е висока."
+
+msgid "Opened table rate: %s, this value should be less than 10 per hour"
+msgstr "Стойността на отваряните таблици е %s, тази стойност трябва да бъде под 10 за час"
+
+msgid "Percentage of used open files limit"
+msgstr "Процент от лимита на отворени файлове"
+
+msgid "The number of opened files is at %s%% of the limit. It should be below 85%%"
+msgstr "Броят отворени файлове е на %s%% от ограничението, тази стойност трябва да бъде под 85%%"
+
+msgid "Rate of open files"
+msgstr "Стойност на отворени файлове"
+
+msgid "The rate of opening files is high."
+msgstr "Стойността на отворени файлове е висока."
+
+msgid "Opened files rate: %s, this value should be less than 5 per hour"
+msgstr "Стойността на отваряните файлове е %s, тази стойност трябва да бъде под 5 за час"
+
+msgid "Immediate table locks: %s%%, this value should be above 95%%"
+msgstr "Незабавното заключване на таблици е %s%%, тази стойност трябва да бъде над 95%%"
+
+msgid "Table lock wait rate: %s, this value should be less than 1 per hour"
+msgstr "Стойността на изчакване за заключване на таблица е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Thread cache"
+msgstr "Буфер за нишки"
+
+msgid "The thread cache is set to 0"
+msgstr "Буферът за нишки е зададен на 0"
+
+msgid "Thread cache is not efficient."
+msgstr "Буферът за нишки е неефективен."
+
+msgid "Thread cache hitrate: %s%%, this value should be above 80%%"
+msgstr "Честота на обръщане към кеша: %s%%, тази стойност трябва да бъде над 80%%"
+
+msgid "Threads that are slow to launch"
+msgstr "Пускащи се бавно нишки"
+
+msgid "There are too many threads that are slow to launch."
+msgstr "Има много пускащи се бавно нишки."
+
+msgid "%s thread(s) took longer than %s seconds to start, it should be 0"
+msgstr "%s нишки(а) отнеха повече от %s секунди да стартират, трябва да бъдат 0"
+
+msgid "Slow launch time"
+msgstr "Показване времето за пускане"
+
+msgid "Slow_launch_time is above 2s."
+msgstr "Slow_launch_time е над 2s."
+
+msgid "Set {slow_launch_time} to 1s or 2s to correctly count threads that are slow to launch."
+msgstr "Задайте на {slow_launch_time} 1s или 2s, за да бъдат правилно отчетени бавно стартиращите нишки."
+
+msgid "slow_launch_time is set to %s"
+msgstr "slow_launch_time е зададено на %s"
+
+msgid "Percentage of used connections"
+msgstr "Процент използвни връзки"
+
+msgid "Max_used_connections is at %s%% of max_connections, it should be below 80%%"
+msgstr "Max_used_connections е на %s%% от max_connections, трябва да бъде под 80%%"
+
+msgid "Percentage of aborted connections"
+msgstr "Процент прекъснати връзки"
+
+msgid "Too many connections are aborted."
+msgstr "Твърде много прекъснати връзки."
+
+msgid "Connections are usually aborted when they cannot be authorized. <a href=\"https://www.percona.com/blog/2008/08/23/how-to-track-down-the-source-of-aborted_connects/\">This article</a> might help you track down the source."
+msgstr "Връзките обикновено се прекратяват, когато няма възможност да бъдат оторизирани. <a href=\"https://www.percona.com/blog/2008/08/23/how-to-track-down-the-source-of-aborted_connects/\"> Тази статия</a> може да ви помогне да проследите източника на проблеми."
+
+msgid "%s%% of all connections are aborted. This value should be below 1%%"
+msgstr "%s%% от всички връзки са прекъсвани, тази стойност трябва да бъде под 1%%"
+
+msgid "Rate of aborted connections"
+msgstr "Стойност прекъснати връзки"
+
+msgid "Aborted connections rate is at %s, this value should be less than 1 per hour"
+msgstr "Стойността на прекъснатите връзки е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Percentage of aborted clients"
+msgstr "Процент прекъснати клиенти"
+
+msgid "Too many clients are aborted."
+msgstr "Твърде много прекъснати клиенти."
+
+msgid "Clients are usually aborted when they did not close their connection to MySQL properly. This can be due to network issues or code not closing a database handler properly. Check your network and code."
+msgstr "Клиенти обикновено са прекъсвани, когато не затварят правилно връзката си към MySQL. Това може да се дължи на мрежови проблеми или код, не затварящ правилно манипулатора към БД. Проверете вашата мрежа и код."
+
+msgid "%s%% of all clients are aborted. This value should be below 2%%"
+msgstr "%s%% от всички клиенти са прекъсвани, тази стойност трябва да бъде под 2%%"
+
+msgid "Rate of aborted clients"
+msgstr "Стойност прекъснати клиенти"
+
+msgid "Aborted client rate is at %s, this value should be less than 1 per hour"
+msgstr "Стойността на прекъсваните клиенти е %s, тази стойност трябва да бъде под 1 за час"
+
+msgid "Is InnoDB disabled?"
+msgstr "Забранен ли е InnoDB?"
+
+msgid "You do not have InnoDB enabled."
+msgstr "InnoDB е забранен."
+
+msgid "InnoDB is usually the better choice for table engines."
+msgstr "Обикновено InnoDB е по-добър избор на хранилище."
+
+msgid "have_innodb is set to 'value'"
+msgstr "have_innodb е 'value'"
+
+msgid "InnoDB log size"
+msgstr "Размер на дневника на InnoDB"
+
+msgid "The InnoDB log file size is not an appropriate size, in relation to the InnoDB buffer pool."
+msgstr "Размерът на лог-файла на InnoDB не съответства на буфера на InnoDB."
+
+msgid "Your InnoDB log size is at %s%% in relation to the InnoDB buffer pool size, it should not be below 20%%"
+msgstr "Размерът на вашият лог-файл на InnoDB е %s%% от размера на буфера на InnoDB, това съотношение не трябва да е по-малко от 20%%"
+
+msgid "Max InnoDB log size"
+msgstr "Максимален размер на дневника на InnoDB"
+
+msgid "The InnoDB log file size is inadequately large."
+msgstr "Лог-файла на InnoDB е неоправдано голям."
+
+msgid "Your absolute InnoDB log size is %s MiB"
+msgstr "Абсолютният размер на InnoDB журналa е %s MiB"
+
+msgid "InnoDB buffer pool size"
+msgstr "Размер на InnoDB буфер"
+
+msgid "Your InnoDB buffer pool is fairly small."
+msgstr "Вашият InnoDB буфер е доста малък."
+
+msgid "You are currently using %s%% of your memory for the InnoDB buffer pool. This rule fires if you are assigning less than 60%%, however this might be perfectly adequate for your system if you don't have much InnoDB tables or other services running on the same machine."
+msgstr "В момента използвате %s%% от Вашата памет за буферен резерв за InnoDB. Това правило се задейства ако бъдат зададени по-малко от 60%%, въпреки че това би могло да е напълно достатъчно за Вашата система, ако нямате много InnoDB таблици или други услуги работещи на същата машина."
+
+msgid "MyISAM concurrent inserts"
+msgstr "MyISAM едновременни вмъквания"
+
+msgid "Enable {concurrent_insert} by setting it to 1"
+msgstr "Включване на {concurrent_insert} и установяването му на 1"
+
+msgid "concurrent_insert is set to 0"
+msgstr "concurrent_insert e 0"
+
+msgid "Query cache disabled"
+msgstr "Изключен буфер за заявки"
+
+msgid "The query cache is not enabled."
+msgstr "Буферът за заявки не е включен."
+
+msgid "query_cache_size is set to 0 or query_cache_type is set to 'OFF'"
+msgstr "query_cache_size е зададено на 0 или query_cache_type е зададено на 'Изключено'"
+
+msgid "Query Cache usage"
+msgstr "Използвано от буфера за заявки"
+
+msgid "Query cache fragmentation"
+msgstr "Фрагментиране на буфера за заявки"
+
+msgid "The query cache is considerably fragmented."
+msgstr "Буферът за заявки е значително фрагментиран."
+
+msgid "Cached queries are removed due to low query cache memory from the query cache."
+msgstr "Буферирани заявки са махани заради малко свободна памет в буфера за заявки."
+
+msgid "Query cache max size"
+msgstr "Максимален размер на буфера за заявки"
+
+msgid "Current query cache size: %s"
+msgstr "Текущ размер на буфера за заявки: %s"
+
+msgid "Query cache min result size"
+msgstr "Минимален размер на резултат за буфериране"
+
+msgid "query_cache_limit is set to 1 MiB"
+msgstr "query_cache_limit е установен на 1 MiB"
+
+msgid "Search:"
+msgstr "Търсене:"
+
+msgid "Unknown"
+msgstr "Неизвестен"
+
+msgctxt "Collation"
+msgid "German (phone book order)"
+msgstr "Германски (поръчка на телефонен указател)"
+
+msgctxt "Collation"
+msgid "German (dictionary order)"
+msgstr "Немски (по ред в речника)"
+
+msgctxt "Collation"
+msgid "Spanish (traditional)"
+msgstr "Испански (традиционен)"
+
+msgctxt "Collation"
+msgid "Spanish (modern)"
+msgstr "Испански (модерен)"
+
+msgctxt "Collation variant"
+msgid "case-insensitive"
+msgstr "нечувствителен към регистъра"
+
+msgctxt "Collation variant"
+msgid "case-sensitive"
+msgstr "чувствително към регистъра"
+
+msgctxt "Collation variant"
+msgid "accent-insensitive"
+msgstr "нечувствително към акценти"
+
+msgctxt "Collation variant"
+msgid "accent-sensitive"
+msgstr "чувствително към акценти"
+
+msgctxt "Collation variant"
+msgid "kana-sensitive"
+msgstr "чувствителен към kana"
+
+msgctxt "Collation variant"
+msgid "multi-level"
+msgstr "многостепенно"
+
+msgctxt "Collation variant"
+msgid "binary"
+msgstr "двоичен"
+
+msgctxt "Collation variant"
+msgid "no-pad"
+msgstr "без изравняване"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Двоичен"
+
+msgctxt "Collation"
+msgid "Unicode"
+msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "West European"
+msgstr "Западно-европейски"
+
+msgctxt "Collation"
+msgid "Central European"
+msgstr "Централно-европейски"
+
+msgctxt "Collation"
+msgid "Russian"
+msgstr "Руски"
+
+msgctxt "Collation"
+msgid "Simplified Chinese"
+msgstr "Опростен китайски"
+
+msgctxt "Collation"
+msgid "Traditional Chinese"
+msgstr "Традиционен китайски"
+
+msgctxt "Collation"
+msgid "Chinese"
+msgstr "Китайски"
+
+msgctxt "Collation"
+msgid "Japanese"
+msgstr "Японски"
+
+msgctxt "Collation"
+msgid "Baltic"
+msgstr "Балтийски"
+
+msgctxt "Collation"
+msgid "Armenian"
+msgstr "Арменски"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Кирилица"
+
+msgctxt "Collation"
+msgid "Arabic"
+msgstr "Арабски"
+
+msgctxt "Collation"
+msgid "Korean"
+msgstr "Корейски"
+
+msgctxt "Collation"
+msgid "Hebrew"
+msgstr "Иврит"
+
+msgctxt "Collation"
+msgid "Georgian"
+msgstr "Грузински"
+
+msgctxt "Collation"
+msgid "Greek"
+msgstr "Гръцки"
+
+msgctxt "Collation"
+msgid "Czech-Slovak"
+msgstr "Чехословашки"
+
+msgctxt "Collation"
+msgid "Ukrainian"
+msgstr "Украински"
+
+msgctxt "Collation"
+msgid "Turkish"
+msgstr "Турски"
+
+msgctxt "Collation"
+msgid "Swedish"
+msgstr "Шведски"
+
+msgctxt "Collation"
+msgid "Thai"
+msgstr "Тайландски"
+
+msgctxt "Collation"
+msgid "Unknown"
+msgstr "непознат"
+
+msgctxt "Collation"
+msgid "Bulgarian"
+msgstr "Български"
+
+msgctxt "Collation"
+msgid "Croatian"
+msgstr "Хърватски"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Чешки"
+
+msgctxt "Collation"
+msgid "Danish"
+msgstr "Датски"
+
+msgctxt "Collation"
+msgid "English"
+msgstr "Английски"
+
+msgctxt "Collation"
+msgid "Esperanto"
+msgstr "Есперанто"
+
+msgctxt "Collation"
+msgid "Estonian"
+msgstr "Естонски"
+
+msgctxt "Collation"
+msgid "Hungarian"
+msgstr "Унгарски"
+
+msgctxt "Collation"
+msgid "Icelandic"
+msgstr "Исландски"
+
+msgctxt "Collation"
+msgid "Classical Latin"
+msgstr "Класическо латински"
+
+msgctxt "Collation"
+msgid "Latvian"
+msgstr "Латвийски"
+
+msgctxt "Collation"
+msgid "Lithuanian"
+msgstr "Литовски"
+
+msgctxt "Collation"
+msgid "Burmese"
+msgstr "Бирмански"
+
+msgctxt "Collation"
+msgid "Persian"
+msgstr "Персийски"
+
+msgctxt "Collation"
+msgid "Polish"
+msgstr "Полски"
+
+msgctxt "Collation"
+msgid "Romanian"
+msgstr "Румънски"
+
+msgctxt "Collation"
+msgid "Sinhalese"
+msgstr "Синхалски"
+
+msgctxt "Collation"
+msgid "Slovak"
+msgstr "Словашки"
+
+msgctxt "Collation"
+msgid "Slovenian"
+msgstr "Словенски"
+
+msgctxt "Collation"
+msgid "Vietnamese"
+msgstr "Виетнамски"
+
+msgid "Icons"
+msgstr "Икони"
+
+msgid "Both"
+msgstr "И двете"
+
+msgid "Nowhere"
+msgstr "Никъде"
+
+msgid "Left"
+msgstr "Ляво"
+
+msgid "Right"
+msgstr "Дясно"
+
+msgid "display column"
+msgstr "покажи колона"
+
+msgid "Welcome"
+msgstr "Добре дошли"
+
+msgid "Open"
+msgstr "Отворен"
+
+msgid "Closed"
+msgstr "Затворен"
+
+msgid "Server default"
+msgstr "Сървър по подразбиране"
+
+msgid "Enable"
+msgstr "Включено"
+
+msgid "Disable"
+msgstr "Изключено"
+
+msgid "structure"
+msgstr "структура"
+
+msgid "data"
+msgstr "данни"
+
+msgid "structure and data"
+msgstr "структура и данни"
+
+msgid "Quick - display only the minimal options to configure"
+msgstr "Бързо - минимум настройки"
+
+msgid "Custom - display all possible options to configure"
+msgstr "Потребителско - всички настройки"
+
+msgid "Custom - like above, but without the quick/custom choice"
+msgstr "Потребителско - като горното, но без избор бързо/потребителско"
+
+msgid "complete inserts"
+msgstr "пълни INSERT-и"
+
+msgid "extended inserts"
+msgstr "разширени INSERT-и"
+
+msgid "both of the above"
+msgstr "и двете по-горе"
+
+msgid "neither of the above"
+msgstr "никое от горните"
+
+msgid "Users cannot set a higher value"
+msgstr "Потребителите не могат да задават по-висока стойност"
+
+msgid "If enabled, user can enter any MySQL server in login form for cookie auth."
+msgstr "Ако е включено, потребителят може да въведе произволен MySQL сървър във формата за удостоверяване с бисквитки."
+
+msgid "Restricts the MySQL servers the user can enter when a login to an arbitrary MySQL server is enabled by matching the IP or hostname of the MySQL server to the given regular expression."
+msgstr "Ограничава достъпа до MySQL сървъри, в които потребителят може да влиза. Достъпът до даден MySQL сървър се позволява, ако има съвпадение на IP адреса или името на хоста на MySQL сървъра към зададения Regex израз."
+
+msgid "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
+msgstr "Позволявайки това разрешавате на страница, намираща се на друг домейн да зареди phpMyAdmin в рамка и възможна [strong]дупка в сигурността[/strong] може да позволи междурамкова скрипт атака - cross-frame scripting (XSS)."
+
+msgid "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
+msgstr "Тайна фраза, използвана за криптиране на бисквитките при [kbd]cookie[/kbd] удоствоверяване."
+
+msgid "Enable bzip2 compression for import operations."
+msgstr "Включване на компресия с bzip2 при внасяне."
+
+msgid "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
+msgstr "Определя какъв вид полета за редакция да бъдат използвани за колони тип CHAR и VARCHAR:[kbd]input[/kbd] - позволява ограничаване по дължина, [kbd]textarea[/kbd] - позволява вмъкването на нови редове."
+
+msgid "Use user-friendly editor for editing SQL queries (CodeMirror) with syntax highlighting and line numbers."
+msgstr "Използване на удобен за потребителя редактор за писане на SQL заявките (CodeMirror) със синтактично оцветяване и номер на редовете."
+
+msgid "Find any errors in the query before executing it. Requires CodeMirror to be enabled."
+msgstr "Търси грешки в заявката, преди изпълнение. Изисква CodeMirror да бъде активиран."
+
+msgid "Defines the minimum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "Определя минималният размер на текстови полета, генерирани за CHAR и VARCHAR колони."
+
+msgid "Defines the maximum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "Определя максималния размер на текстови полета, генерирани за CHAR и VARCHAR колони."
+
+msgid "Compress gzip exports on the fly without the need for much memory; if you encounter problems with created gzip files disable this feature."
+msgstr "Компресиране в gzip експортите в движение без нуждата от много памет; Ако срещнете проблеми със създадените gzip файлове, забраните тази функция."
+
+msgid "Whether a warning (\"Are your really sure…\") should be displayed when you're about to lose data."
+msgstr "Дали да бъде показано предупреждение (\"Наистина ли искате…\"), когато сте на път да загубите данни."
+
+msgid "Autocomplete of the table and column names in the SQL queries."
+msgstr "Автоматично допълване на имена на таблици и имена на колони в SQL заявки."
+
+msgid "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+msgstr "Стойности за списъка с опции за трансформации по подразбиране. Те ще бъдат заменени, ако трансформацията се попълни на страницата на структурата на таблицата."
+
+msgid "Disable the table maintenance mass operations, like optimizing or repairing the selected tables of a database."
+msgstr "Забранява възможността за избор на много таблици за едновременно извършване на профилактика като оптимизиране или поправка."
+
+msgid "Set the number of seconds a script is allowed to run ([kbd]0[/kbd] for no limit)."
+msgstr "Задайте брой секунди, за които скрипт може да върви ([kbd]0[/kbd] за без лимит)."
+
+msgid "Exclude definition of current user"
+msgstr "Изключва се определението за текущия потребител"
+
+msgid "Sort order for items in a foreign-key dropdown box; [kbd]content[/kbd] is the referenced data, [kbd]id[/kbd] is the key value."
+msgstr "Сортиране на реда за елементи в падащия списък с чужд ключ; [kbd]съдържание[/kbd] са референтните данни, [kbd]id[/kbd] е стойността на ключа."
+
+msgid "Specify browser's title bar text. Refer to [doc@faq6-27]documentation[/doc] for magic strings that can be used to get special values."
+msgstr "Определете текста на заглавната лента на браузъра. Вижте [doc@faq6-27]документацията[/doc] за специални низове."
+
+msgid "Please note that phpMyAdmin is just a user interface and its features do not limit MySQL."
+msgstr "Обърнете внимание, че phpMyAdmin е само потребителски интерфейс и неговите възможности не ограничават MySQL."
+
+msgid "Advanced server configuration, do not change these options unless you know what they are for."
+msgstr "Разширена конфигурация на сървъра, не променяйте тези настройки, освен ако знаете за какво са."
+
+msgid "Configure phpMyAdmin configuration storage to gain access to additional features, see [doc@linked-tables]phpMyAdmin configuration storage[/doc] in documentation."
+msgstr "Настройте конфигурацията за съхранение на phpMyAdmin за да получите достъп до допълнителните функции, вижте в документацията [doc@linked-tables]phpMyAdmin конфигурация за съхранение[/doc]."
+
+msgid "Tracking of changes made in database. Requires the phpMyAdmin configuration storage."
+msgstr "Проследяване на промените, правени в БД. Изисква phpMyAdmin хранилище за конфигурация."
+
+msgid "Customize browse mode."
+msgstr "Персонализиране на преглеждането."
+
+msgid "Customize default options."
+msgstr "Персонализиране настройките по подразбиране."
+
+msgid "Settings for phpMyAdmin developers."
+msgstr "Настройки за разработчици на phpMyAdmin."
+
+msgid "Customize edit mode."
+msgstr "Персонализиране на редактирането."
+
+msgid "Customize default export options."
+msgstr "Персонализиране настройките по подразбиране на експорта."
+
+msgid "Set some commonly used options."
+msgstr "Настройки, на някои често използвани опции."
+
+msgid "Customize default common import options."
+msgstr "Персонализиране настройките по подразбиране на импорта."
+
+msgid "Set import and export directories and compression options."
+msgstr "Настройки на директориите за импорт и експорт, и на опциите за компресиране."
+
+msgid "Databases display options."
+msgstr "Опции за показване на БД."
+
+msgid "Customize appearance of the navigation panel."
+msgstr "Персонализиране изгледа на навигационния панел."
+
+msgid "Customize the navigation tree."
+msgstr "Персонализиране дървото за навигация."
+
+msgid "Servers display options."
+msgstr "Настройки за показване на списъка със сървъри."
+
+msgid "Tables display options."
+msgstr "Настройки за показването на таблиците."
+
+msgid "Settings that didn't fit anywhere else."
+msgstr "Други настройки."
+
+msgid "Authentication settings."
+msgstr "Настройки за удостоверяване."
+
+msgid "Enter server connection parameters."
+msgstr "Параметри за връзка със сървъра."
+
+msgid "Customize links shown in SQL Query boxes."
+msgstr "Персонализирайте връзките, показвани в полетата на SQL заявка."
+
+msgid "SQL queries settings."
+msgstr "Настройки на SQL заявките."
+
+msgid "Customize startup page."
+msgstr "Персонализиране на началната страница."
+
+msgid "Choose which details to show in the database structure (list of tables)."
+msgstr "Изберете кои детайли да се показват в структурата на базата данни (списък на таблиците)."
+
+msgid "Settings for the table structure (list of columns)."
+msgstr "Настройки за структурата на таблицата (списък на колоните)."
+
+msgid "Choose how you want tabs to work."
+msgstr "Изберете поведението на разделите."
+
+msgid "Customize text input fields."
+msgstr "Персонализиране на текстовите полета."
+
+msgid "Customize default options"
+msgstr "Персонализиране настройките по подразбиране"
+
+msgid "Disable some of the warnings shown by phpMyAdmin."
+msgstr "Скрива някои от предупрежденията, показвани от phpMyAdmin."
+
+msgid "Enable gzip compression for import and export operations."
+msgstr "Активирайте gzip компресия за операции по импортиране и експортиране."
+
+msgid "If enabled, phpMyAdmin continues computing multiple-statement queries even if one of the queries failed."
+msgstr "Ако е разрешено, phpMyAdmin продължава да изпълнява съставните заявки, дори ако една от заявките не може да се изпълни."
+
+msgid "Default format; be aware that this list depends on location (database, table) and only SQL is always available."
+msgstr "Формат по подразбиране; имайте предвид, че този списък зависи от местоположението (база данни, таблица) и само SQL е винаги наличен."
+
+msgid "Update data when duplicate keys found on import"
+msgstr "Актуализиране на данните при наличие на дублирани ключове при импортиране"
+
+msgid "Number of queries to skip from start."
+msgstr "Брой заявки, които да бъдат пропуснати от началото."
+
+msgid "If TRUE, logout deletes cookies for all servers; when set to FALSE, logout only occurs for the current server. Setting this to FALSE makes it easy to forget to log out from other servers when connected to multiple servers."
+msgstr "Ако е TRUE, излизането изтрива бисквитките за всички сървъри; когато е зададено на FALSE, излизането се извършва само за текущия сървър. Ако зададете това на FALSE, лесно можете да забравите да излезете от другите сървъри. (Когато сте свързани към няколко сървъра)."
+
+msgid "Define whether the previous login should be recalled or not in [kbd]cookie[/kbd] authentication mode."
+msgstr "Определя дали да се припомни или не потребителското име от предишен вход в режим на удостоверяване с [kbd]бисквитки[/kbd]."
+
+msgid "Defines how long (in seconds) a login cookie should be stored in browser. The default of 0 means that it will be kept for the existing session only, and will be deleted as soon as you close the browser window. This is recommended for non-trusted environments."
+msgstr "Определя колко дълго (в секунди) бисквитката за вход трябва да се съхранява в браузъра. По подразбиране е 0 и означава, че ще се съхранява само за съществуващата сесия и ще бъде изтрита веднага след като затворите прозореца на браузъра. Това се препоръчва за по-ненадеждни среди."
+
+msgid "Maximum number of characters used when a SQL query is displayed."
+msgstr "Максимален брой знаци, използвани при извеждането на SQL заявка."
+
+msgid "The number of items that can be displayed on each page on the first level of the navigation tree."
+msgstr "Броят на елементите, които могат да бъдат показани на всяка страница на първото ниво на навигационното дърво."
+
+msgid "The number of items that can be displayed on each page of the navigation tree."
+msgstr "Броят на елементите, които могат да бъдат показани на всяка страница на дървото за навигация."
+
+msgid "Number of rows displayed when browsing a result set. If the result set contains more rows, \"Previous\" and \"Next\" links will be shown."
+msgstr "Брой редове, показвани при разглеждане на набор от резултати. Ако наборът от резултати съдържа повече редове, ще бъдат показани „Назад“ и „Напред“."
+
+msgid "The number of bytes a script is allowed to allocate, e.g. [kbd]32M[/kbd] ([kbd]-1[/kbd] for no limit and [kbd]0[/kbd] for no change)."
+msgstr "Броят байтове, които скрипт може да заеме, напр. [kbd]32М[/kbd] ([kbd]-1[/kbd] - без ограничение и [kbd]0[/kbd] - без промяна)."
+
+msgid "In the navigation panel, replaces the database tree with a selector"
+msgstr "В навигационния панел замества дървото на базата данни със селектор"
+
+msgid "Link with main panel by highlighting the current database or table."
+msgstr "Свързване с главния панел чрез оцветяване наа текущата база данни или таблица."
+
+msgid "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
+msgstr "Определя минималния брой елементи (таблици, изгледи, подпрограми или събития) за показване на филтър."
+
+msgid "Set to 0 to collapse navigation panel."
+msgstr "Задайте на 0, за да свиете навигационния панел."
+
+msgid "Show logo in navigation panel."
+msgstr "Лого в панела за навигация."
+
+msgid "URL where logo in the navigation panel will point to."
+msgstr "URL адрес, към който ще сочи логото в навигационния панел."
+
+msgid "Display server choice at the top of the navigation panel."
+msgstr "Избор на сървъра в горната част на навигационния панел."
+
+msgid "String that separates databases into different tree levels."
+msgstr "Ред, който разделя БД на различните нива на дървото."
+
+msgid "String that separates tables into different tree levels."
+msgstr "Ред, разделящ таблици в отделни нива на дървото."
+
+msgid "Highlight server under the mouse cursor."
+msgstr "Оцветяване на сървъра под курсора на мишката."
+
+msgid "Whether to show tables under database in the navigation tree"
+msgstr "Да се показват ли таблици под базата данни в навигационното дърво"
+
+msgid "Whether to show views under database in the navigation tree"
+msgstr "Да се показват ли изгледи под базата данни в навигационното дърво"
+
+msgid "Whether to show events under database in the navigation tree"
+msgstr "Да се показват ли събития под базата данни в навигационното дърво"
+
+msgid "A special MySQL user configured with limited permissions, more information available on [doc@linked-tables]documentation[/doc]."
+msgstr "Специален MySQL потребител с ограничени права, за още информация вижте [doc@linked-tables]документацията[/doc]."
+
+msgid "See [doc@authentication-modes]authentication types[/doc] for an example."
+msgstr "За пример вижте [doc@authentication-modes]видове удостоверяване[/doc]."
+
+msgid "Whether a DROP DATABASE IF EXISTS statement will be added as first line to the log when creating a database."
+msgstr "Дали израз DROP DATABASE IF EXISTS да бъде добавян като първи ред в дневника при създаване на БД."
+
+msgid "Whether a DROP TABLE IF EXISTS statement will be added as first line to the log when creating a table."
+msgstr "Дали израз DROP TABLE IF EXISTS да бъде добавян като първи ред в дневника при създаване на таблица."
+
+msgid "Whether a DROP VIEW IF EXISTS statement will be added as first line to the log when creating a view."
+msgstr "Дали израз DROP VIEW IF EXISTS да бъде добавян като първи ред в дневника при създаване на изглед."
+
+msgid "A user-friendly description of this server. Leave blank to display the hostname instead."
+msgstr "Разбираемо за потребителя описание на този сървър. Ако е празно ще бъде показан хоста."
+
+msgid "Highlight selected rows."
+msgstr "Маркиране избраните редове."
+
+msgid "Highlight row pointed by the mouse cursor."
+msgstr "Маркиране редовете, посочени с мишка."
+
+msgid "Number of columns for CHAR/VARCHAR textareas."
+msgstr "Брой колони за CHAR/VARCHAR текстови полета."
+
+msgid "Number of rows for CHAR/VARCHAR textareas."
+msgstr "Брой редове за CHAR/VARCHAR текстови полета."
+
+msgid "Log SQL queries and their execution time, to be displayed in the console"
+msgstr "Регистриране на SQL заявките и тяхното време за изпълнение за да се покажат в конзолата"
+
+msgid "Tab that is displayed when entering a database."
+msgstr "Показваният подпрозорец при отваряне на БД."
+
+msgid "Tab that is displayed when entering a server."
+msgstr "Показваният подпрозорец при отваряне на сървър."
+
+msgid "Tab that is displayed when entering a table."
+msgstr "Показваният подпрозорец при отваряне на таблица."
+
+msgid "Whether the table structure actions should be hidden."
+msgstr "Скриване на действията за промяна на структурата."
+
+msgid "Whether column comments should be shown in table structure view"
+msgstr "Да се показват коментарите на колони при представяне структурата на таблицата"
+
+msgid "Show server listing as a list instead of a drop down."
+msgstr "Показване сървърите като списък вместо падащо меню."
+
+msgid "A dropdown will be used if fewer items are present."
+msgstr "Да се ползва падащият списък при малко елементи."
+
+msgid "Default value for foreign key checks checkbox for some queries."
+msgstr "Стойностти по подразбиране за проверките на чужди ключове за някои заявки."
+
+msgid "Uncheck the checkbox to disable drag and drop import"
+msgstr "Махнете отметката за да позволите импорт чрез провлачване с мишката"
+
+msgid "How many rows can be inserted at one time."
+msgstr "Брой редове, които могат да бъдат вмъкнати наведнъж."
+
+msgid "Maximum number of characters shown in any non-numeric column on browse view."
+msgstr "Максимален брой знаци, показвани в произволна нечислова колона в изгледа за преглед."
+
+msgid "Define how long (in seconds) a login cookie is valid."
+msgstr "Определете колко дълго (в секунди) е валидна бисквитката за вход."
+
+msgid "Double size of textarea for LONGTEXT columns."
+msgstr "Двоен размер на текстовите полета за LONGTEXT колони ."
+
+msgid "Maximum number of databases displayed in database list."
+msgstr "Максимален брой бази данни показвани в списъка."
+
+msgid "Maximum number of tables displayed in table list."
+msgstr "Максимален брой таблици, показани в списъка на таблиците."
+
+msgid "Maximum number of recently used tables; set 0 to disable."
+msgstr "Максимален брой скоро отваряни таблици; 0 за изключване."
+
+msgid "Allow login to any MySQL server"
+msgstr "Разрешено включване към произволен MySQL сървър"
+
+msgid "Restrict login to MySQL server"
+msgstr "Ограничаване на влизането в MySQL сървър"
+
+msgid "Allow third party framing"
+msgstr "Позволяване на вграждане в трети сайтове"
+
+msgid "Show \"Drop database\" link to normal users"
+msgstr "Показване връзката \"Изтриване БД\" на обикновени потребители"
+
+msgid "Blowfish secret"
+msgstr "Тайна Blowfish фраза"
+
+msgid "Row marker"
+msgstr "Маркер на ред"
+
+msgid "Highlight pointer"
+msgstr "Маркиране на показалеца"
+
+msgid "Bzip2"
+msgstr "Bzip2"
+
+msgid "CHAR columns editing"
+msgstr "Редакция на CHAR колони"
+
+msgid "Enable CodeMirror"
+msgstr "Включване на CodeMirror"
+
+msgid "Enable linter"
+msgstr "Включване на Linter"
+
+msgid "Minimum size for input field"
+msgstr "Минимален размер на текстово поле"
+
+msgid "Maximum size for input field"
+msgstr "Максимален размер на текстовите полета"
+
+msgid "CHAR textarea columns"
+msgstr "Колони за CHAR текство поле"
+
+msgid "CHAR textarea rows"
+msgstr "Редове за CHAR текство поле"
+
+msgid "Check config file permissions"
+msgstr "Проверка на правата върху конфигурационния файл"
+
+msgid "Compress on the fly"
+msgstr "Компресиране в движение"
+
+msgid "Confirm DROP queries"
+msgstr "Потвърждаване DROP заявки"
+
+msgid "Paper size"
+msgstr "Размер на хартията"
+
+msgid "Default database tab"
+msgstr "Подпрозорец по подразбиране за БД"
+
+msgid "Default server tab"
+msgstr "Подпрозорец по подразбиране за сървъри"
+
+msgid "Default table tab"
+msgstr "Подпрозорец по подразбиране за таблици"
+
+msgid "Enable autocomplete for table and column names"
+msgstr "Включване на автоматично допълване на имена на таблици и колони"
+
+msgid "Show column comments"
+msgstr "Показване на коментари към таблицата"
+
+msgid "Hide table structure actions"
+msgstr "Скриване на действията за промяна на структурата"
+
+msgid "Default transformations for Hex"
+msgstr "Трансформации по подразбиране за Hex"
+
+msgid "Default transformations for Substring"
+msgstr "Трансформации по подразбиране за Substring"
+
+msgid "Default transformations for Bool2Text"
+msgstr "Трансформации по подразбиране за Bool2Text"
+
+msgid "Default transformations for External"
+msgstr "Трансформации по подразбиране за External"
+
+msgid "Default transformations for PreApPend"
+msgstr "Трансформации по подразбиране за PreApPend"
+
+msgid "Default transformations for DateFormat"
+msgstr "Трансформации по подразбиране за DateFormat"
+
+msgid "Default transformations for Inline"
+msgstr "Трансформации по подразбиране за Inline"
+
+msgid "Default transformations for TextImageLink"
+msgstr "Трансформации по подразбиране за TextImageLink"
+
+msgid "Default transformations for TextLink"
+msgstr "Трансформации по подразбиране за TextLink"
+
+msgid "Display servers as a list"
+msgstr "Показване на сървърите в списък"
+
+msgid "Disable multi table maintenance"
+msgstr "Забрана на избора на много таблици за профилактика"
+
+msgid "Maximum execution time"
+msgstr "Максимално време за изпълнение"
+
+msgid "Save as file"
+msgstr "Изпращане"
+
+msgid "Character set of the file"
+msgstr "Знаков набор на файла"
+
+msgid "Compression"
+msgstr "Компресия"
+
+msgid "Put columns names in the first row"
+msgstr "Поставяне имената на полетата в първи ред"
+
+msgid "Columns enclosed with"
+msgstr "Колоните са оградени от"
+
+msgid "Columns escaped with"
+msgstr "Колоните са избегнати с"
+
+msgid "Replace NULL with"
+msgstr "Замяна NULL с"
+
+msgid "Remove CRLF characters within columns"
+msgstr "Премахване CRLF знаци от колони"
+
+msgid "Columns terminated with"
+msgstr "Колоните завършват с"
+
+msgid "Lines terminated with"
+msgstr "Редовете завършват с"
+
+msgid "Excel edition"
+msgstr "Excel версия"
+
+msgid "Database name template"
+msgstr "Шаблон за име на БД"
+
+msgid "Server name template"
+msgstr "Шаблон за име на сървър"
+
+msgid "Table name template"
+msgstr "Шаблон за име на таблица"
+
+msgid "Dump table"
+msgstr "Схема на таблица"
+
+msgid "Include table caption"
+msgstr "Включване на заглавие на таблицата"
+
+msgid "Table caption"
+msgstr "Заглавие на таблицата"
+
+msgid "Continued table caption"
+msgstr "Продължение на заглавието на таблицата"
+
+msgid "Label key"
+msgstr "Етикет на ключа"
+
+msgid "Export method"
+msgstr "Метод за експортиране"
+
+msgid "Save on server"
+msgstr "Запазване на сървъра"
+
+msgid "Export as separate files"
+msgstr "Експортиране като отделни файлове"
+
+msgid "Enclose table and column names with backquotes"
+msgstr "Ограждане на имената на таблици и полета с обратни апострофи"
+
+msgid "SQL compatibility mode"
+msgstr "Режим на съвместимост на SQL"
+
+msgid "Creation/Update/Check dates"
+msgstr "Създаване/Обновяване/Проверка на дати"
+
+msgid "Use delayed inserts"
+msgstr "Използване на отложени вмъквания"
+
+msgid "Disable foreign key checks"
+msgstr "Забрана на проверките за външен ключ"
+
+msgid "Export views as tables"
+msgstr "Експортиране на изгледи (views) като таблици"
+
+msgid "Export related metadata from phpMyAdmin configuration storage"
+msgstr "Експортиране на свързани метаданни от конфигурацията за съхранение на phpMyAdmin"
+
+msgid "Use hexadecimal for BINARY & BLOB"
+msgstr "Използване на шестнадесетични стойности за BINARY и BLOB"
+
+msgid "Add IF NOT EXISTS (less efficient as indexes will be generated during table creation)"
+msgstr "Добавяне на IF NOT EXISTS (при създаването на таблицата ще се генерират по-малко ефективни като индекси)"
+
+msgid "%s view"
+msgstr "%s изглед"
+
+msgid "Use ignore inserts"
+msgstr "Използване на INSERT IGNORE"
+
+msgid "Syntax to use when inserting data"
+msgstr "Използван синтаксис при вмъкване на данни"
+
+msgid "Maximal length of created query"
+msgstr "Максимална дължина на създадената заявка"
+
+msgid "Export type"
+msgstr "Тип експорт"
+
+msgid "Enclose export in a transaction"
+msgstr "Изолиране на експорта в транзакция"
+
+msgid "Export time in UTC"
+msgstr "Експортиране на време в UTC"
+
+msgid "Foreign key dropdown order"
+msgstr "външен ключ"
+
+msgid "Foreign key limit"
+msgstr "външен ключ"
+
+msgid "Foreign key checks"
+msgstr "Проверки на външен ключ"
+
+msgid "Browse mode"
+msgstr "Преглеждане"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Developer"
+msgstr "Разработчик"
+
+msgid "Edit mode"
+msgstr "Редактиране"
+
+msgid "Export defaults"
+msgstr "Настройки по подразбиране на експорта"
+
+msgid "General"
+msgstr "Общи"
+
+msgid "Import defaults"
+msgstr "Настройки по подразбиране на импорта"
+
+msgid "Import / export"
+msgstr "Импорт / експорт"
+
+msgid "LaTeX"
+msgstr "LaTeX"
+
+msgid "Navigation tree"
+msgstr "Дърво за навигация"
+
+msgid "Microsoft Office"
+msgstr "Microsoft Office"
+
+msgid "Other core settings"
+msgstr "Други основни настройки"
+
+msgid "Page titles"
+msgstr "Заглавие в браузъра"
+
+msgid "Security"
+msgstr "Сигурност"
+
+msgid "Basic settings"
+msgstr "Основни настройки"
+
+msgid "Authentication"
+msgstr "Удостоверяване"
+
+msgid "Server configuration"
+msgstr "Сървърна конфигурация"
+
+msgid "Configuration storage"
+msgstr "Хранилище за конфигурация"
+
+msgid "Changes tracking"
+msgstr "Следене за промени"
+
+msgid "SQL Query box"
+msgstr "SQL прозорец за заявки"
+
+msgid "Startup"
+msgstr "Начало"
+
+msgid "Database structure"
+msgstr "БД структура"
+
+msgid "Tabs"
+msgstr "Подпрозорци"
+
+msgid "Display relational schema"
+msgstr "Показване схема на релациите"
+
+msgid "Text fields"
+msgstr "Текстови полета"
+
+msgid "Texy! text"
+msgstr "Texy! текст"
+
+msgid "Warnings"
+msgstr "Предупреждения"
+
+msgid "GZip"
+msgstr "GZip"
+
+msgid "Extra parameters for iconv"
+msgstr "Допълнителни параметри за iconv"
+
+msgid "Ignore multiple statement errors"
+msgstr "Игнориране на грешките при съставните заявки"
+
+msgid "Enable drag and drop import"
+msgstr "Активира импортирането с плъзгане и пускане"
+
+msgid "Partial import: allow interrupt"
+msgstr "Частичен импорт: позволява прекъсване"
+
+msgid "Do not abort on INSERT error"
+msgstr "Да не се прекъсва операцията при възникване на грешка по време на INSERT"
+
+msgid "Add ON DUPLICATE KEY UPDATE"
+msgstr "Добавяне на ON DUPLICATE KEY UPDATE"
+
+msgid "Format of imported file"
+msgstr "Формат на импортирания файл"
+
+msgid "Use LOCAL keyword"
+msgstr "Използване на ключовата дума LOCAL"
+
+msgid "Column names in first row"
+msgstr "Имена на колони в първи ред"
+
+msgid "Do not import empty rows"
+msgstr "Празните редове да не бъдат импортирани"
+
+msgid "Import currencies ($5.00 to 5.00)"
+msgstr "Импортиране на валути ($5.00 към 5.00)"
+
+msgid "Import percentages as proper decimals (12.00% to .12)"
+msgstr "Импортиране процентите като десетични числа (12.00% към .12)"
+
+msgid "Partial import: skip queries"
+msgstr "Частично импортиране: пропускане на заявки"
+
+msgid "Do not use AUTO_INCREMENT for zero values"
+msgstr "Да не се използва AUTO_INCREMENT за нулеви стойности"
+
+msgid "Read as multibytes"
+msgstr "Четене като многобайтови"
+
+msgid "Initial state for sliders"
+msgstr "Първоначално състояние за плъзгачите"
+
+msgid "Number of inserted rows"
+msgstr "Броят добавени редове"
+
+msgid "Limit column characters"
+msgstr "Ограничаване знаците в колона"
+
+msgid "Delete all cookies on logout"
+msgstr "Изтриване всички бисквитки при изход"
+
+msgid "Recall user name"
+msgstr "Запомняне потребителското име"
+
+msgid "Login cookie store"
+msgstr "Съхраняване на бисквитки за вход"
+
+msgid "Login cookie validity"
+msgstr "Валидност на бисквитката за вход"
+
+msgid "Bigger textarea for LONGTEXT"
+msgstr "По-голямо текстово поле за LONGTEXT"
+
+msgid "Maximum displayed SQL length"
+msgstr "Максимална дължина на показване на SQL"
+
+msgid "Maximum databases"
+msgstr "Максимален брой бази данни"
+
+msgid "Maximum items on first level"
+msgstr "Максимален брой елементи на първо ниво"
+
+msgid "Maximum items in branch"
+msgstr "Максимален брой елементи в клон"
+
+msgid "Maximum number of rows to display"
+msgstr "Максимален брой редове за показване"
+
+msgid "Maximum tables"
+msgstr "Максимален брой таблици"
+
+msgid "Memory limit"
+msgstr "Ограничение на паметта"
+
+msgid "Show databases navigation as tree"
+msgstr "Представяне на навигацията в БД като дърво"
+
+msgid "Navigation panel width"
+msgstr "Ширина на навигационния панел"
+
+msgid "Link with main panel"
+msgstr "Свързване с главния панел"
+
+msgid "Display logo"
+msgstr "Показване лого"
+
+msgid "Logo link URL"
+msgstr "Връзка на логото"
+
+msgid "Logo link target"
+msgstr "Цел за връзката на логото"
+
+msgid "Display servers selection"
+msgstr "Показване избора на сървъра"
+
+msgid "Target for quick access icon"
+msgstr "Цел на пиктограмата за бърз достъп"
+
+msgid "Target for second quick access icon"
+msgstr "Цел на втората икона за бърз достъп"
+
+msgid "Minimum number of items to display the filter box"
+msgstr "Минимален брой елементи за показване на филтър"
+
+msgid "Database tree separator"
+msgstr "Разделител на дървото на БД"
+
+msgid "Table tree separator"
+msgstr "Разделител на дървото на таблици"
+
+msgid "Maximum table tree depth"
+msgstr "Максимална дълбочина на дървото на таблиците"
+
+msgid "Enable highlighting"
+msgstr "Включване синтактичното оцветяване"
+
+msgid "Enable navigation tree expansion"
+msgstr "Разрешаване разширяването дървото за навигация"
+
+msgid "Show tables in tree"
+msgstr "Показване на таблиците в дървото"
+
+msgid "Recently used tables"
+msgstr "Последно отваряни таблици"
+
+msgid "Where to show the table row links"
+msgstr "Къде да бъдат показани връзките в ред от таблица"
+
+msgid "Natural order"
+msgstr "Естествен ред"
+
+msgid "GZip output buffering"
+msgstr "GZip буфериране"
+
+msgid "Default sorting order"
+msgstr "Ред за сортиране по подразбиране"
+
+msgid "Persistent connections"
+msgstr "Постоянни връзки"
+
+msgid "Missing phpMyAdmin configuration storage tables"
+msgstr "Липсват таблици от хранилището за конфигурация на phpMyAdmin"
+
+msgid "Protect binary columns"
+msgstr "Защитаване на двоичните колони"
+
+msgid "Permanent query history"
+msgstr "Постоянна история на заявките"
+
+msgid "Query history length"
+msgstr "Дължина на историята на заявки"
+
+msgid "Remember table's sorting"
+msgstr "Запомняне сортирането на таблици"
+
+msgid "Repeat headers"
+msgstr "Повтаряне на заглавката"
+
+msgid "Allow logins without a password"
+msgstr "Разрешаване вход без парола"
+
+msgid "Allow root login"
+msgstr "Разрешаване вход с потребител root"
+
+msgid "Bookmark table"
+msgstr "Таблица за белязки"
+
+msgid "Compress connection"
+msgstr "Компресиране връзката"
+
+msgid "Control user password"
+msgstr "Парола на контролен потребител"
+
+msgid "Control user"
+msgstr "Контролен потребител"
+
+msgid "Control host"
+msgstr "Контролен хост"
+
+msgid "Disable use of INFORMATION_SCHEMA"
+msgstr "Забрана използването на INFORMATION_SCHEMA"
+
+msgid "Hide databases"
+msgstr "Скриване БД"
+
+msgid "Logout URL"
+msgstr "Адрес за изход"
+
+msgid "Show only listed databases"
+msgstr "Показване само на изброените БД"
+
+msgid "Password for config auth"
+msgstr "Парола за удостоверяване от настройките"
+
+msgid "Server port"
+msgstr "Порт на сървъра"
+
+msgid "Recently used table"
+msgstr "Последно отваряна таблица"
+
+msgid "Relation table"
+msgstr "Таблица за връзка"
+
+msgid "Server socket"
+msgstr "Сокет на сървъра"
+
+msgid "Use SSL"
+msgstr "Използване SSL"
+
+msgid "Display columns table"
+msgstr "Показване таблицата с колоните"
+
+msgid "UI preferences table"
+msgstr "Таблица с визуалните настройки"
+
+msgid "Add DROP DATABASE"
+msgstr "Добавяне DROP DATABASE"
+
+msgid "Add DROP VIEW"
+msgstr "Добавяне DROP VIEW"
+
+msgid "Statements to track"
+msgstr "Изрази, които да бъдат проследявани"
+
+msgid "Automatically create versions"
+msgstr "Автоматично създаване на версии"
+
+msgid "User preferences storage table"
+msgstr "Таблица за съхранение на потребителските предпочитания"
+
+msgid "Verbose name of this server"
+msgstr "Описателно име на този сървър"
+
+msgid "Allow to display all the rows"
+msgstr "Разрешаване показването на всички редове"
+
+msgid "Show password change form"
+msgstr "Показване формуляр за смяна на парола"
+
+msgid "Show create database form"
+msgstr "Показване формуляр за създаване на БД"
+
+msgid "Show field types"
+msgstr "Показване типовете полета"
+
+msgid "Show function fields"
+msgstr "Показване поле с функциите"
+
+msgid "Show hint"
+msgstr "Показване подсказка"
+
+msgid "Show phpinfo() link"
+msgstr "Показване връзка към phpinfo()"
+
+msgid "Show detailed MySQL server information"
+msgstr "Показва подробна информация за MySQL сървъра"
+
+msgid "Show SQL queries"
+msgstr "Показване на SQL заявките"
+
+msgid "Show statistics"
+msgstr "Показване статистика"
+
+msgid "Skip locked tables"
+msgstr "Пропускане заключени таблици"
+
+msgid "Explain SQL"
+msgstr "Обяснение на SQL"
+
+msgid "Create PHP code"
+msgstr "Създаване на PHP код"
+
+msgid "Textarea columns"
+msgstr "Колони в текство поле"
+
+msgid "Textarea rows"
+msgstr "Реда в текстово поле"
+
+msgid "Default title"
+msgstr "Заглавие по подразбиране"
+
+msgid "Upload directory"
+msgstr "Папка за качване на файлове"
+
+msgid "Version check"
+msgstr "Проверка за обновления"
+
+msgid "ZIP"
+msgstr "ZIP"
+
+msgid "Order by"
+msgstr "Подредени по"
+
+msgid "Server connection collation"
+msgstr "Колация на връзката към сървъра"
+
+msgid "Missing data for %s"
+msgstr "Липсващи данни за %s"
+
+msgid "Incorrect value!"
+msgstr "Невалидна стойност!"
+
+msgid "unavailable"
+msgstr "недостъпно"
+
+msgid "\"%s\" requires %s extension"
+msgstr "\"%s\" изисква разширението %s"
+
+msgid "Compressed import will not work due to missing function %s."
+msgstr "Компресираният импорт не работи, поради липсваща функционалност %s."
+
+msgid "Compressed export will not work due to missing function %s."
+msgstr "Компресираният експорт не работи, поради липсваща функционалност %s."
+
+msgid "maximum %s"
+msgstr "най-много %s"
+
+msgid "Config authentication"
+msgstr "Удостоверяване от настройките"
+
+msgid "HTTP authentication"
+msgstr "HTTP удостоверяване"
+
+msgid "Quick"
+msgstr "Бърз"
+
+msgid "Custom"
+msgstr "Потребителски"
+
+msgid "CSV for MS Excel"
+msgstr "CSV за MS Excel данни"
+
+msgid "Microsoft Word 2000"
+msgstr "Microsoft Word 2000"
+
+msgid "CSV using LOAD DATA"
+msgstr "CSV с LOAD DATA"
+
+msgid "Cannot save settings, submitted configuration form contains errors!"
+msgstr "Промените не бяха запазени, изпратеният конфигурационен формуляр съдържа грешки!"
+
+msgid "Existing configuration file (%s) is not readable."
+msgstr "Текущия файл с настройки (%s) е недостъпен."
+
+msgid "Wrong permissions on configuration file, should not be world writable!"
+msgstr "Неподходящи права на файлът с настройки, в него не трябва да може да пише всеки!"
+
+msgid "You should use SSL connections if your database server supports it."
+msgstr "Използвайте SSL ако БД сървърът ви го поддържа."
+
+msgid "You allow for connecting to the server without a password."
+msgstr "Позволено е свързването към сървъра без парола."
+
+msgid "%sZip decompression%s requires functions (%s) which are unavailable on this system."
+msgstr "%sZip разархивиране%s изизква функцията (%s), която не е налична."
+
+msgid "%sZip compression%s requires functions (%s) which are unavailable on this system."
+msgstr "%sZip архивиране%s изизква функцията (%s), която не е налична."
+
+msgid "%1$sBzip2 compression and decompression%2$s requires functions (%3$s) which are unavailable on this system."
+msgstr "%1$sСъздаването и разкомпресирането на архиви Bzip2%2$s изискват функции (%3$s), които не са достъпни в системата."
+
+msgid "%1$sGZip compression and decompression%2$s requires functions (%3$s) which are unavailable on this system."
+msgstr "%1$sGzip архивирането и разархивирането%2$s изискват функции (%3$s), които не са достъпни на тази система."
+
+msgid "Server %d"
+msgstr "Сървър %d"
+
+msgid "no description"
+msgstr "няма описание"
+
+msgid "Could not save configuration"
+msgstr "Конфигурацията не може да бъде запазена"
+
+msgid "Could not connect to the database server!"
+msgstr "Невъзможно свързване със сървъра на базата данни!"
+
+msgid "Invalid authentication type!"
+msgstr "Неприемлив вид на удостоверяването!"
+
+msgid "Empty username while using [kbd]config[/kbd] authentication method!"
+msgstr "Празно потребителско име при използване на метод за удостоверяване от [kbd]настройките[/kbd]!"
+
+msgid "Empty signon session name while using [kbd]signon[/kbd] authentication method!"
+msgstr "Празно име на сесия при използване на метод [kbd]signon[/kbd] за удостоверяване!"
+
+msgid "Empty signon URL while using [kbd]signon[/kbd] authentication method!"
+msgstr "Празнa URL връзка при използване на метод [kbd]signon[/kbd] за удостоверяване!"
+
+msgid "Incorrect value:"
+msgstr "Невалидна стойност:"
+
+msgid "Incorrect IP address: %s"
+msgstr "Грешен IP адрес: %s"
+
+msgid "Not a valid port number!"
+msgstr "Невалиден номер на порт!"
+
+msgid "Not a positive number!"
+msgstr "Не е положително число!"
+
+msgid "Not a non-negative number!"
+msgstr "Не е неотрицателно число!"
+
+msgid "Value must be less than or equal to %s!"
+msgstr "Стойността трябва да е по-малка или равна на %s!"
+
+msgid "Showing %1$d bookmark (both private and shared)"
+msgid_plural "Showing %1$d bookmarks (both private and shared)"
+msgstr[0] "Показване на %1$d отбелязка (общо лични и споделени)"
+msgstr[1] "Показване на %1$d отбелязки (общо лични и споделени)"
+
+msgid "No bookmarks"
+msgstr "Няма бележки"
+
+msgid "The %s file is not available on this system, please visit %s for more information."
+msgstr "Файлът %s не е наличен в тази система, моля посетете %s за повече информация."
+
+msgid "Failed"
+msgstr "Неуспешно"
+
+msgid "Succeeded"
+msgstr "Успешно"
+
+msgid "Showing rows %1$s - %2$s."
+msgstr "Показване на редове %1$s - %2$s."
+
+msgid "No databases selected."
+msgstr "Няма избрани БД."
+
+msgid "Add event"
+msgstr "Ново събитие"
+
+msgid "Edit event"
+msgstr "Редакция събитие"
+
+msgid "Error in processing request:"
+msgstr "Грешка при обработка на заявката:"
+
+msgid "Export of event %s"
+msgstr "Експорт на събитието %s"
+
+msgid "Could not load export plugins, please check your installation!"
+msgstr "Приставките за експортиране не могат да бъдат заредени, моля проверете инсталацията!"
+
+msgid "Could not load import plugins, please check your installation!"
+msgstr "Не могат да бъдат заредени разширенията за импорт, моля проверете инсталацията!"
+
+msgid "No Privileges"
+msgstr "Без права"
+
+msgid "You do not have the privileges to administrate the users!"
+msgstr "Не разполагате с права, за да администрирате потребители!"
+
+msgid "Add routine"
+msgstr "Нова процедура"
+
+msgid "Edit routine"
+msgstr "Редактиране"
+
+msgid "Export of routine %s"
+msgstr "Експорт на процедура %s"
+
+msgid "This view has at least this number of rows. Please refer to %sdocumentation%s."
+msgstr "Този изглед има поне толкова реда. Погледнете %sдокументацията%s."
+
+msgid "unknown"
+msgstr "непознат"
+
+msgid "Favorite List is full!"
+msgstr "Листа с фаворитите е пълен!"
+
+msgid "Tracking data deleted successfully."
+msgstr "Следената дата е изтрита усрешно."
+
+msgid "Version %1$s was created for selected tables, tracking is active for them."
+msgstr "Версията %1$s беше създадена за избраните таблици, тракинга е активен за тях."
+
+msgid "No tables selected."
+msgstr "Няма избрани таблици."
+
+msgid "Database Log"
+msgstr "Дневник БД"
+
+msgid "An error has been detected and an error report has been automatically submitted based on your settings."
+msgstr "Установена е грешка и е изпратено автоматично съобщение за нея съобразно Вашите настройки."
+
+msgid "Thank you for submitting this report."
+msgstr "Благодарим Ви за доклада."
+
+msgid "An error has been detected and an error report has been generated but failed to be sent."
+msgstr "Засечена е грешка; за нея беше създадено съобщение, но то не беше успешно изпратено."
+
+msgid "If you experience any problems please submit a bug report manually."
+msgstr "Ако срещате каквито и да е проблеми, докладвайте ръчно за проблем."
+
+msgid "You may want to refresh the page."
+msgstr "Препоръчва се да презаредите страницата."
+
+msgid "Bad type!"
+msgstr "Типът е неправилен!"
+
+msgid "Value for the column \"%s\""
+msgstr "Стойност за колона \"%s\""
+
+msgid "You were logged out from one server, to logout completely from phpMyAdmin, you need to logout from all servers."
+msgstr "Вие сте излезли от един сървър, за да излезете напълно от phpMyAdmin, вие трябва да излезете от всички сървъри."
+
+msgid "The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. "
+msgstr "Хранилището за конфигурации на phpMyAdmin е недобре настроено и някои разширени функции са деактивирани. За да разберете защо натиснете %sтук%s. "
+
+msgid "Or alternately go to 'Operations' tab of any database to set it up there."
+msgstr "Или отидете в раздела \"Операции\" на всяка база данни, за да го настроите там."
+
+msgid "Your PHP parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is lower than cookie validity configured in phpMyAdmin, because of this, your login might expire sooner than configured in phpMyAdmin."
+msgstr "Вашата настройка на PHP [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] е по-ниска, отколкото валидността на бисквитката в phpMyAdmin. Поради това, Вашата сесия ще изтече по-бързо, отколкото е настройката в phpMyAdmin."
+
+msgid "Login cookie store is lower than cookie validity configured in phpMyAdmin, because of this, your login will expire sooner than configured in phpMyAdmin."
+msgstr "Логин бисквитка е по-ниска, отколкото валидност бисквитка конфигурирана в PhpMyAdmin, защото от това, данните за вход ще изтече по-рано от конфигурирана в PhpMyAdmin."
+
+msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
+msgstr "Директорията [code]config[/code], която се използва от инсталационния скрипт, все още съществъва в phpMyAdmin директорията. Силно се препоръчва да я изртиете след конфигурирането на phpMyAdmin. В противен случай сигурността на сървъра Ви е компрометирана, защото неоторозирани лица могат да свалят конфигурационните Ви файлове."
+
+msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
+msgstr "Разширението mbstring на PHP не е открито и изглежда използвате многобайтов символен набор. Без това разширение phpMyAdmin не може да разделя правилно низове и това може да доведе до неочаквани резултати."
+
+msgid "The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled."
+msgstr "Добавката curl не е намерена и allow_url_fopen е деактивирано. Заради това някои дейности като сигнализиране за грешки или проверка на версия са също деактивирани."
+
+msgid "You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit."
+msgstr "Вероятно сте направили опит да качите твърде голям файл. Моля, обърнете се към %sдокументацията%s за да намерите начин да избегнете това ограничение."
+
+msgid "Showing bookmark"
+msgstr "Показване на белязка"
+
+msgid "The bookmark has been deleted."
+msgstr "Белязката беше изтрита."
+
+msgid "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc]."
+msgstr "Не бяха получени данни за импорт. Или не е изпратен файл, или файлът е бил по-голям от разрешеното в конфигурацията на PHP. Вижте [doc@faq1-16]ЧЗВ 1.16[/doc]."
+
+msgid "Import has been successfully finished, %d query executed."
+msgid_plural "Import has been successfully finished, %d queries executed."
+msgstr[0] "Импортирането приключи успешно, беше изпълнена %d заявка."
+msgstr[1] "Импортирането приключи успешно, бяха изпълнени %d заявки."
+
+msgid "Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume."
+msgstr "Времето за изчакване на скрипта изтече, ако искате да завършите импорта,моля пуснете (%s) отново същия файл (%s) и той ще си продължи."
+
+msgid "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits."
+msgstr "Въпреки това при последното изпълнение никакви данни не постъпиха, това обикновено означава, че phpMyAdmin няма да бъде в състояние да завърши този импорт, освен ако не бъдат увеличени времевите ограничения в PHP."
+
+msgid "\"DROP DATABASE\" statements are disabled."
+msgstr "\"DROP DATABASE\" заявката е забранена."
+
+msgid "Could not load the progress of the import."
+msgstr "Невъзможност да се зареди прогрес (ход) на импорта."
+
+msgid "Do you really want to execute \"%s\"?"
+msgstr "Наистина ли искате да изпълните \"%s\"?"
+
+msgid "You are about to DESTROY a complete database!"
+msgstr "Вие ще УНИЩОЖИТЕ цяла БД!"
+
+msgid "You are about to DESTROY a complete table!"
+msgstr "Вие ще УНИЩОЖИТЕ цяла таблица!"
+
+msgid "You are about to TRUNCATE a complete table!"
+msgstr "Вие ще ИЗПРАЗНИТЕ цяла таблица!"
+
+msgid "Delete tracking data for this table?"
+msgstr "Изтриване на тракинг информация за тази таблица?"
+
+msgid "Delete tracking data for these tables?"
+msgstr "Изтриване на тракинг информация за тази таблица?"
+
+msgid "Delete tracking data for this version?"
+msgstr "Изтриване на проследената информация за тази версия?"
+
+msgid "Delete tracking data for these versions?"
+msgstr "Изтриване на проследената информация за тази версии?"
+
+msgid "Delete entry from tracking report?"
+msgstr "Изтриване на информационен запис за следене?"
+
+msgid "Deleting tracking data"
+msgstr "Изтриване информацията за следене"
+
+msgid "Dropping Primary Key/Index"
+msgstr "Изтриване на първичен ключ/индекс"
+
+msgid "Dropping Foreign key."
+msgstr "Изтриване на външен ключ/индекс."
+
+msgid "Do you really want to delete user group \"%s\"?"
+msgstr "Наистина ли искате да изтриете потребителска група \"%s\"?"
+
+msgid "You have unsaved changes; are you sure you want to leave this page?"
+msgstr "Имате незаписани промени; наистина ли искате да напуснете тази страница?"
+
+msgid "You are trying to reduce the number of rows, but have already entered data in those rows which will be lost. Do you wish to continue?"
+msgstr "Опитвате се да намалите броя на редовете, но в тях има данни, които ще бъдата загубени. Искате ли да продължите?"
+
+msgid "Do you really want to revoke the selected user(s) ?"
+msgstr "Наистина ли искате да възстановите избраните потребители?"
+
+msgid "Do you really want to delete this central column?"
+msgstr "Наистина ли искате да изтриете централната колона: \"%s\"?"
+
+msgid "Do you really want to delete the selected items?"
+msgstr "Наистина ли искате да изтриете избраното?"
+
+msgid "Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!"
+msgstr "Наистина ли искате да ПРЕМАХНЕТЕ избраните дялове? Това ще ИЗТРИЕ също и данните към избраните дялове!"
+
+msgid "Do you really want to TRUNCATE the selected partition(s)?"
+msgstr "Наистина ли искате да отрежете избрания дял?"
+
+msgid "Do you really want to remove partitioning?"
+msgstr "Наистина ли искате да премахнете избрания дял?"
+
+msgid "This operation will attempt to convert your data to the new collation. In rare cases, especially where a character doesn't exist in the new collation, this process could cause the data to appear incorrectly under the new collation; in this case we suggest you revert to the original collation and refer to the tips at "
+msgstr "Операцията ще опита да конвертира вашите данни към нова колация. В редки случаи, особено когато даден знак не съществува, процесът може да доведе до неправилно изобразяване на данните в новата колация; в този случай ние предлагаме да се върнете към първоначалната колация и да се обърнете към съветите на "
+
+msgid "Garbled Data"
+msgstr "Размесени данни"
+
+msgid "Are you sure you wish to change the collation and convert the data?"
+msgstr "Сигурни ли сте, че искате да смените сверката и да преобразувате данните?"
+
+msgid "Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the \"Change\" Link) on the table structure page. </b>"
+msgstr "Чрез тази операция, MySQL опитва да съпостави стойностите на данните между различните параметри за сравнение. Ако наборът от символи е несъвместим, това може да доведе до загуба на данни и загубените дани може да <b>НЕМОГАТ</b> да се възстановят с проста обратна смяна на сравнението на колоната. <b>За да преобразувате съществуващите данни, се препоръчва да използвате възможността за редактиране на колона/колони (връзка «Промяна») на страницата за структура на таблицата.</b>"
+
+msgid "Are you sure you wish to change all the column collations and convert the data?"
+msgstr "Сигурни ли сте че желаете да смените всички сверки на колони и да преобразувате данните?"
+
+msgid "Reset all"
+msgstr "Нулиране на всички"
+
+msgid "Missing value in the form!"
+msgstr "Липсва стойност в поле от формуляра!"
+
+msgid "Select at least one of the options!"
+msgstr "Изберете поне една от опциите!"
+
+msgid "Please enter a valid number!"
+msgstr "Моля, въведете валиден номер на порт!"
+
+msgid "Please enter a valid length!"
+msgstr "Моля, въведете валидна дължина!"
+
+msgid "Add index"
+msgstr "Добавяне на индекс"
+
+msgid "Edit index"
+msgstr "Редактиране индекс"
+
+msgid "Create single-column index"
+msgstr "Създаване на индекс на една колона"
+
+msgid "Create composite index"
+msgstr "Създаване на композитен индекс"
+
+msgid "Composite with:"
+msgstr "Комбинация от:"
+
+msgid "Please select column(s) for the index."
+msgstr "Моля, изберете колона(и) за индекса."
+
+msgid "Y values"
+msgstr "Стойности на Y"
+
+msgid "Please enter the SQL query first."
+msgstr "Моля, въведете първо SQL заявката."
+
+msgid "The host name is empty!"
+msgstr "Името на хоста е празно!"
+
+msgid "The user name is empty!"
+msgstr "Потребителското име е празно!"
+
+msgid "The password is empty!"
+msgstr "Паролата е празна!"
+
+msgid "The passwords aren't the same!"
+msgstr "Паролата не е същата!"
+
+msgid "Removing Selected Users"
+msgstr "Изтриване на маркираните потребители"
+
+msgid "Template was created."
+msgstr "Шаблонът беше създаден."
+
+msgid "Template was loaded."
+msgstr "Шаблонът бе зареден."
+
+msgid "Template was updated."
+msgstr "Шаблонът бе обновен."
+
+msgid "Template was deleted."
+msgstr "Шаблонът бе изтрит."
+
+msgid "Other"
+msgstr "Друго"
+
+msgid ","
+msgstr ","
+
+msgid "."
+msgstr "."
+
+msgid "Connections / Processes"
+msgstr "Връзки / Процеси"
+
+msgid "Query cache efficiency"
+msgstr "Ефикасност на буфера за заявки"
+
+msgid "Query cache usage"
+msgstr "Използване на буфера за заявки"
+
+msgid "Query cache used"
+msgstr "Използвано от буфера за заявки"
+
+msgid "System CPU usage"
+msgstr "Натоварване на процесора"
+
+msgid "System memory"
+msgstr "Системна памет"
+
+msgid "System swap"
+msgstr "Системен swap"
+
+msgid "Average load"
+msgstr "Средно натоварване"
+
+msgid "Total memory"
+msgstr "Общо памет"
+
+msgid "Cached memory"
+msgstr "Памет в буфери"
+
+msgid "Buffered memory"
+msgstr "Буферирана памет"
+
+msgid "Free memory"
+msgstr "Свободна памет"
+
+msgid "Used memory"
+msgstr "Използвана памет"
+
+msgid "Total swap"
+msgstr "Всичкия swap"
+
+msgid "Cached swap"
+msgstr "Кеширан swap"
+
+msgid "Used swap"
+msgstr "Използван swap"
+
+msgid "Free swap"
+msgstr "Свободен swap"
+
+msgid "Bytes sent"
+msgstr "Байта изпратени"
+
+msgid "Bytes received"
+msgstr "Байта получени"
+
+msgid "B"
+msgstr "Б"
+
+msgid "GiB"
+msgstr "ГБ"
+
+msgid "TiB"
+msgstr "ТБ"
+
+msgid "PiB"
+msgstr "ПБ"
+
+msgid "EiB"
+msgstr "ЕБ"
+
+msgid "%d table(s)"
+msgstr "%d таблица(и)"
+
+msgid "Questions"
+msgstr "Запитвания"
+
+msgid "Please add at least one variable to the series!"
+msgstr "Моля добавете поне една променлива към сериите!"
+
+msgid "Resume monitor"
+msgstr "Подновяване на наблюдателя"
+
+msgid "Pause monitor"
+msgstr "Bременно спиране на наблюдателя"
+
+msgid "Stop auto refresh"
+msgstr "Спиране на самоопресняване"
+
+msgid "general_log and slow_query_log are enabled."
+msgstr "general_log и slow_query_log са разрешени."
+
+msgid "general_log is enabled."
+msgstr "general_log е разрешен."
+
+msgid "slow_query_log is enabled."
+msgstr "slow_query_log е разрешен."
+
+msgid "slow_query_log and general_log are disabled."
+msgstr "slow_query_log и general_log са забранени."
+
+msgid "log_output is not set to TABLE."
+msgstr "на log_output не е зададено TABLE."
+
+msgid "log_output is set to TABLE."
+msgstr "на log_output е зададено TABLE."
+
+msgid "slow_query_log is enabled, but the server logs only queries that take longer than %d seconds. It is advisable to set this long_query_time 0-2 seconds, depending on your system."
+msgstr "slow_query_log е разрешено, но сървъра вписва в дневника само заявки, отнемащи повече от %d секунди. Препоръчително е да зададете на long_query_time 0-2 секунди, в зависимост от вашата система."
+
+msgid "long_query_time is set to %d second(s)."
+msgstr "long_query_time е зададено на %d секунда(и)."
+
+msgid "Following settings will be applied globally and reset to default on server restart:"
+msgstr "Следните настройки ще бъдат приложени глобално и ще бъдат върнати по подразбиране след рестарт на сървъра:"
+
+msgid "Set log_output to %s"
+msgstr "Задаване на log_output на %s"
+
+msgid "Enable %s"
+msgstr "Включване %s"
+
+msgid "Disable %s"
+msgstr "Изключване %s"
+
+msgid "Set long_query_time to %d seconds."
+msgstr "Задаване на long_query_time на %d секунди."
+
+msgid "You can't change these variables. Please log in as root or contact your database administrator."
+msgstr "Не може да променяте тези променливи. Моля, влезте като root или се обърнете към администратор."
+
+msgid "Change settings"
+msgstr "Промяна настройки"
+
+msgid "Current settings"
+msgstr "Текущи настройки"
+
+msgid "Chart title"
+msgstr "Заглавие на диаграмата"
+
+msgid "Differential"
+msgstr "Диференциални"
+
+msgid "Divided by %s"
+msgstr "Разделени с %s"
+
+msgid "Unit"
+msgstr "Единица"
+
+msgid "The database name is not known for this query in the server's logs."
+msgstr "Базата данни е непозната за тази заявка в логовете на сървъра."
+
+msgid "This column shows the amount of identical queries that are grouped together. However only the SQL query itself has been used as a grouping criteria, so the other attributes of queries, such as start time, may differ."
+msgstr "Тази колона показва броят на еднаквите заявки групирани заедно. Обаче самата SQL заявка е използвана като критерий за групиране и другите атрибути на заявката, като начало на изпълнението, може да са различни."
+
+msgid "Since grouping of INSERTs queries has been selected, INSERT queries into the same table are also being grouped together, disregarding of the inserted data."
+msgstr "Тъй като е избрано групиране на заявки за вмъкване, такива към същата таблица също ще са групирани заедно, без оглед на вмъкваните данни."
+
+msgid "Analyzing…"
+msgstr "Анализиране…"
+
+msgid "Explain output"
+msgstr "Обяснение на изхода"
+
+msgid "Total time:"
+msgstr "Общо време:"
+
+msgid "Profiling results"
+msgstr "Резултат от профилиране"
+
+msgctxt "Display format"
+msgid "Table"
+msgstr "Таблица"
+
+msgid "Chart"
+msgstr "Диаграма"
+
+msgid "Log table filter options"
+msgstr "Опции за филтриране на таблица-дневник"
+
+msgid "Filter"
+msgstr "Филтър"
+
+msgid "Filter queries by word/regexp:"
+msgstr "Филтриране заявки по дума/регулярен израз:"
+
+msgid "Group queries, ignoring variable data in WHERE clauses"
+msgstr "Групиране на заявките и игнориране на променливата информация в WHERE клаузите"
+
+msgid "Sum of grouped rows:"
+msgstr "Брой групирани редове:"
+
+msgid "Affected rows:"
+msgstr "Засегнати редове:"
+
+msgid "Failed parsing config file. It doesn't seem to be valid JSON code."
+msgstr "Грешка в конфигурационен файл. Изглежда не е валиден JSON код."
+
+msgid "Failed building chart grid with imported config. Resetting to default config…"
+msgstr "Създаването на силмолна таблица с въведеното кодиране се провали. Пренастройка към кодирането по подразбиране…"
+
+msgid "Please enter a valid table name."
+msgstr "Моля, въведете валидно име на таблица."
+
+msgid "Please enter a valid database name."
+msgstr "Моля, въведете валидно име на БД."
+
+msgid "No files available on server for import!"
+msgstr "На сървъра няма налични файлове за импорт!"
+
+msgid "Formatting SQL…"
+msgstr "Форматиране на SQL…"
+
+msgid "No parameters found!"
+msgstr "Не са намерени параметри!"
+
+msgid "Request aborted!!"
+msgstr "Искането е отказано!"
+
+msgid "Processing request"
+msgstr "Обработка на заявката"
+
+msgid "Request failed!!"
+msgstr "Заявката се провали!"
+
+msgid "Error in processing request"
+msgstr "Грешка при обработка на заявката"
+
+msgid "Error code: %s"
+msgstr "Код за грешка: %s"
+
+msgid "Error text: %s"
+msgstr "Текст на грешката: %s"
+
+msgid "It seems that the connection to server has been lost. Please check your network connectivity and server status."
+msgstr "Изглежда е загубена връзката със сървъра. Моля, проверете мрежовата връзка и състоянието на сървъра."
+
+msgid "No accounts selected."
+msgstr "Няма избрани акаунти."
+
+msgid "Dropping column"
+msgstr "Изтриване на колона"
+
+msgid "Adding primary key"
+msgstr "Добавяне на първичен ключ"
+
+msgid "Click to dismiss this notification"
+msgstr "Щракнете, за да скриете това съобщение"
+
+msgid "Renaming databases"
+msgstr "Преименуване БД"
+
+msgid "Copying database"
+msgstr "Копиране БД"
+
+msgid "Changing charset"
+msgstr "Промяна знаков набор"
+
+msgid "Failed to get real row count."
+msgstr "Неточно преброяване на редовете."
+
+msgid "Searching"
+msgstr "Търсене"
+
+msgid "Hide search results"
+msgstr "Скриване резултати от търсенето"
+
+msgid "Show search results"
+msgstr "Показване резултати от търсенето"
+
+msgid "Browsing"
+msgstr "Прелистване"
+
+msgid "Deleting"
+msgstr "Изтриване"
+
+msgid "Delete the matches for the %s table?"
+msgstr "Изтриване на съвпаденията от таблицата %s?"
+
+msgid "The definition of a stored function must contain a RETURN statement!"
+msgstr "Дефиницията на съхранена процедура трябва да съдържа израз RETURN!"
+
+msgid "No routine is exportable. Required privileges may be lacking."
+msgstr "Никаква рутина е изнесена. Нужните привилегии може би липсват."
+
+msgid "Values for column %s"
+msgstr "Стойности за колоната %s"
+
+msgid "Values for a new column"
+msgstr "Стойности за нова колона"
+
+msgid "Enter each value in a separate field."
+msgstr "Въвеждайте всяка стойност в отделно поле."
+
+msgid "Add %d value(s)"
+msgstr "Добавяне %d стойност(и)"
+
+msgid "Note: If the file contains multiple tables, they will be combined into one."
+msgstr "Заб.: Ако файлът съдържа няколко таблици, те ще бъдат обединени."
+
+msgid "Hide query box"
+msgstr "Скриване формата за заявки"
+
+msgid "Show query box"
+msgstr "Показване формата за заявки"
+
+msgid "Edit query"
+msgstr "Промяна на заявката"
+
+msgid "%d is not valid row number."
+msgstr "%d не е валиден номер на ред."
+
+msgid "Variable %d:"
+msgstr "Променлива %d:"
+
+msgid "Pick"
+msgstr "Изберете"
+
+msgid "Column selector"
+msgstr "Избор на колона"
+
+msgid "Search this list"
+msgstr "Търсене в този списък"
+
+msgid "No columns in the central list. Make sure the Central columns list for database %s has columns that are not present in the current table."
+msgstr "Няма колони в централният списък. Уверете се, че списъкът от Централни колони на базата данни %s има колони, които не присъстват в настоящата таблица."
+
+msgid "See more"
+msgstr "Вижте повече"
+
+msgid "Add primary key"
+msgstr "Добавяне на първичен ключ"
+
+msgid "Primary key added."
+msgstr "Беше добавен главен ключ."
+
+msgid "Taking you to next step…"
+msgstr "Към следващата стъпка…"
+
+msgid "The first step of normalization is complete for table '%s'."
+msgstr "Първата стъпка на нормализация завърши за таблица '%s'."
+
+msgid "End of step"
+msgstr "Край на стъпката"
+
+msgid "Second step of normalization (2NF)"
+msgstr "Втора стъпка на нормализация (2NF)"
+
+msgid "Done"
+msgstr "Готово"
+
+msgid "Confirm partial dependencies"
+msgstr "Потвърждаване на частичната зависимост"
+
+msgid "Selected partial dependencies are as follows:"
+msgstr "Избраните частични зависимостити са следните:"
+
+msgid "Note: a, b -> d,f implies values of columns a and b combined together can determine values of column d and column f."
+msgstr "Забележка: а, б -> D, F предполага стойности на колони А и В се комбинират заедно могат да се определят стойностите на колона г и колона е."
+
+msgid "No partial dependencies selected!"
+msgstr "Няма избрани частични зависимости!"
+
+msgid "Show me the possible partial dependencies based on data in the table"
+msgstr "Покажи ми възможните частични зависимости, базирани на данните в таблицата"
+
+msgid "Hide partial dependencies list"
+msgstr "Скриване на листа с частичните зависимости"
+
+msgid "Sit tight! It may take few seconds depending on data size and column count of the table."
+msgstr "Облегнете се! Може да отнеме няколко секунди, в зависимост от размера на данните и броя на колоните в таблицата."
+
+msgid "Step"
+msgstr "Стъпка"
+
+msgid "The following actions will be performed:"
+msgstr "Следните действия ще бъдат изпълнени:"
+
+msgid "DROP columns %s from the table %s"
+msgstr "ИЗТРИВАНЕ на колона/и %s от таблицата %s"
+
+msgid "Create the following table"
+msgstr "Създаване на следната таблица"
+
+msgid "Third step of normalization (3NF)"
+msgstr "Трета стъпка на нормализация (3NF)"
+
+msgid "Confirm transitive dependencies"
+msgstr "Потвърждаване на преходните зависимости"
+
+msgid "Selected dependencies are as follows:"
+msgstr "Избраните зависимости са следните:"
+
+msgid "No dependencies selected!"
+msgstr "Няма избрани зависимости!"
+
+msgid "Hide search criteria"
+msgstr "Скриване критерий за търсене"
+
+msgid "Show search criteria"
+msgstr "Показване критерий за търсене"
+
+msgid "Column maximum:"
+msgstr "Максимум колони:"
+
+msgid "Column minimum:"
+msgstr "Минимум колони:"
+
+msgid "Hide find and replace criteria"
+msgstr "Скриване параметрите за търсене и заместване"
+
+msgid "Show find and replace criteria"
+msgstr "Показване параметрите за търсене и заместване"
+
+msgid "Each point represents a data row."
+msgstr "Всяка точка представлява ред."
+
+msgid "Hovering over a point will show its label."
+msgstr "Посочване на точка ще покаже етикета ѝ."
+
+msgid "To zoom in, select a section of the plot with the mouse."
+msgstr "За да увеличите, изберете част от диаграмата с мишката."
+
+msgid "Click reset zoom button to come back to original state."
+msgstr "Щракнете върху връзката за възстановяване на мащабирането, за да се върнете в състоянието по подразбиране."
+
+msgid "Click a data point to view and possibly edit the data row."
+msgstr "Кликнете върху точката с данните, за да видите и евентуално промените реда."
+
+msgid "The plot can be resized by dragging it along the bottom right corner."
+msgstr "Плотът може да се преоразмерява, като го дръпнете за долния десен ъгъл."
+
+msgid "Select two columns"
+msgstr "Изберете две колони"
+
+msgid "Select two different columns"
+msgstr "Изберете две различни колони"
+
+msgid "Data point content"
+msgstr "Съдържание на точката с данни"
+
+msgid "X"
+msgstr "X"
+
+msgid "Y"
+msgstr "Y"
+
+msgid "Point"
+msgstr "Точка"
+
+msgid "Linestring"
+msgstr "Linestring"
+
+msgid "Polygon"
+msgstr "Многоъгълник"
+
+msgid "Inner ring"
+msgstr "Вътрешен пръстен"
+
+msgid "Outer ring"
+msgstr "Външен контур"
+
+msgid "Add a point"
+msgstr "Добавяне на точка"
+
+msgid "Add a linestring"
+msgstr "Добавяне LineString"
+
+msgid "Add an inner ring"
+msgstr "Добавяне на вътрешен пръстен"
+
+msgid "Add a polygon"
+msgstr "Добавяне на многоъгълник"
+
+msgid "Add geometry"
+msgstr "Добави геометрия"
+
+msgid "Do you want to copy encryption key?"
+msgstr "Искате ли да копирате криптиращия ключ?"
+
+msgid "Encryption key"
+msgstr "Криптиращ ключ"
+
+msgid "MySQL accepts additional values not selectable by the slider; key in those values directly if desired"
+msgstr "MySQL потвърждава допълнителните стойности не избрани от плъзгачът; посочете тези стойности директно ако желаете"
+
+msgid "MySQL accepts additional values not selectable by the datepicker; key in those values directly if desired"
+msgstr "MySQL потвърждава допълнителните стойности не избрани от дата-избирачът; посочете тези стойности директно ако желаете"
+
+msgid "Indicates that you have made changes to this page; you will be prompted for confirmation before abandoning changes"
+msgstr "Показва, че сте направили промени в тази страница; ще бъде попитани за потвърждение преди да откажете промените"
+
+msgid "Select referenced key"
+msgstr "Изберете съотнесен ключ"
+
+msgid "Select Foreign Key"
+msgstr "Избор чужд ключ"
+
+msgid "Please select the primary key or a unique key!"
+msgstr "Моля изберете главен или уникален ключ!"
+
+msgid "You haven't saved the changes in the layout. They will be lost if you don't save them. Do you want to continue?"
+msgstr "Не сте записали промените в оформлението. Те ще бъдат загубени, ако не ги запазите. Искате ли да продължите?"
+
+msgid "value/subQuery is empty"
+msgstr "value/subQuery е празна"
+
+msgid "Page name"
+msgstr "Име на страница"
+
+msgid "Delete page"
+msgstr "Изтриване на страница"
+
+msgid "Please select a page to continue"
+msgstr "Моля изберете страница, за да продължите"
+
+msgid "Please enter a valid page name"
+msgstr "Моля, въведете валидно име на страница"
+
+msgid "Do you want to save the changes to the current page?"
+msgstr "Искате ли да запишете промените на текущата страница?"
+
+msgid "Successfully deleted the page"
+msgstr "Изтриването на страницата е успешно"
+
+msgid "Export relational schema"
+msgstr "Експорт на релационна схема"
+
+msgid "Modifications have been saved"
+msgstr "Промените бяха запазени"
+
+msgid "%d object(s) created."
+msgstr "%d обект(а) бяха създадени."
+
+msgid "Column name"
+msgstr "Име на колона"
+
+msgid "You have edited some data and they have not been saved. Are you sure you want to leave this page before saving the data?"
+msgstr "Редактирали сте данни и те не са запазени. Наистина ли искате да напуснете страницата преди запазването им?"
+
+msgid "Drag to reorder."
+msgstr "Завличане за промяна на подредбата."
+
+msgid "Click to sort results by this column."
+msgstr "Кликнете за сортиране на резултата по тази колона."
+
+msgid "Shift+Click to add this column to ORDER BY clause or to toggle ASC/DESC.<br>- Ctrl+Click or Alt+Click (Mac: Shift+Option+Click) to remove column from ORDER BY clause"
+msgstr "Shift+кликване за добавяне на колоната в ORDER BY клаузата или за превключване на ASC/DESC.<br>- Control+кликване за премахване на колоната от ORDER BY клаузата"
+
+msgid "Click to mark/unmark."
+msgstr "Щракване за маркиране/отмаркиране."
+
+msgid "Double-click to copy column name."
+msgstr "Щракнете двукратно за копиране името на колона."
+
+msgid "Click the drop-down arrow to toggle column's visibility."
+msgstr "Натиснете стрелката на падащото меню, за да превключите видимостта на колоните."
+
+msgid "This table does not contain a unique column. Features related to the grid edit, checkbox, Edit, Copy and Delete links may not work after saving."
+msgstr "Тази таблица не съдържа уникална колона. Функциите, свързани с мрежата за редакция, отметката, връзките редактиране, копиране и изтриване може да не работят след запазване."
+
+msgid "Please enter a valid hexadecimal string. Valid characters are 0-9, A-F."
+msgstr "Моля въведете валиден шеснадесетичен низ. Валидни символи са 0-9, A-F."
+
+msgid "Do you really want to see all of the rows? For a big table this could crash the browser."
+msgstr "Наистина ли искате да видите всички редове? За една голяма таблица, това може да блокира браузъра."
+
+msgid "Original length"
+msgstr "Първоначална дължина"
+
+msgid "cancel"
+msgstr "Отмяна"
+
+msgid "Aborted"
+msgstr "Прекъснати"
+
+msgid "Success"
+msgstr "Успех"
+
+msgid "Import status"
+msgstr "Състояние на импорта"
+
+msgid "Select database first"
+msgstr "Първо избетере база данни"
+
+msgid "Go to link:"
+msgstr "Към връзка:"
+
+msgid "Generate password"
+msgstr "Генериране на парола"
+
+msgid "Show panel"
+msgstr "Показване на панела"
+
+msgid "Hide panel"
+msgstr "Скриване на панела"
+
+msgid "Unlink from main panel"
+msgstr "Премахване от главния панел"
+
+msgid "A newer version of phpMyAdmin is available and you should consider upgrading. The newest version is %s, released on %s."
+msgstr "Налична е нова версия на phpMyAdmin и трябва да обмислите обновяване. Новата версия е %s, излязла на %s."
+
+msgid ", latest stable version:"
+msgstr ", последната стабилна версия:"
+
+msgid "up to date"
+msgstr "актуално"
+
+msgid "A fatal JavaScript error has occurred. Would you like to send an error report?"
+msgstr "Възникнала е грешка фатална JavaScript. Бихте ли искали да изпратите доклад за грешка?"
+
+msgid "Change report settings"
+msgstr "Промяна на настройки за доклади"
+
+msgid "Show report details"
+msgstr "Показване детайли за доклада"
+
+msgid "Your export is incomplete, due to a low execution time limit at the PHP level!"
+msgstr "Вашият износ е непълна, поради нисък изпълнение срок на ниво PHP!"
+
+msgid "Warning: a form on this page has more than %d fields. On submission, some of the fields might be ignored, due to PHP's max_input_vars configuration."
+msgstr "Внимание: форма на тази страница има повече от %d полета. При подаването, някои от полетата могат да бъдат пренебрегнати, поради max_input_vars конфигурацията на PHP."
+
+msgid "Some errors have been detected on the server!"
+msgstr "Засечени са някой грешки на сървъра!"
+
+msgid "Please look at the bottom of this window."
+msgstr "Моля погледнете в края на този прозорец."
+
+msgid "Ignore All"
+msgstr "Игнориране на всички"
+
+msgid "As per your settings, they are being submitted currently, please be patient."
+msgstr "Според настройките си, те се подава в момента, моля, бъдете търпеливи."
+
+msgid "Successfully copied!"
+msgstr "Успешно копирано!"
+
+msgid "Copying failed!"
+msgstr "Копирането пропадна!"
+
+msgid "Execute this query again?"
+msgstr "Изпълняване на заявката отново?"
+
+msgid "Do you really want to delete this bookmark?"
+msgstr "Наистина ли искате да изтриете отметката: \"%s\"?"
+
+msgid "Some error occurred while getting SQL debug info."
+msgstr "Възникнаха грешки при вземане на информация за SQL дебъг."
+
+msgid "%s queries executed %s times in %s seconds."
+msgstr "%s изпълнени заявки %s пъти %s секунди."
+
+msgid "%s argument(s) passed"
+msgstr "%s аргумент(и) преминали"
+
+msgid "Show arguments"
+msgstr "Покажи доводи"
+
+msgid "Hide arguments"
+msgstr "Скриване доводи"
+
+msgid "There was a problem accessing your browser storage, some features may not work properly for you. It is likely that the browser doesn't support storage or the quota limit has been reached. In Firefox, corrupted storage can also cause such a problem, clearing your \"Offline Website Data\" might help. In Safari, such problem is commonly caused by \"Private Mode Browsing\"."
+msgstr "Възникна проблем при достъпа до пространството за съхранение на Вашия браузър. Някой дейности могат да не работят правилно. Вероятно браузърът не поддържа съхранение или максимално разрешеният размер е достигнат. Във Файърфокс, повредено хранилище също може да породи този проблем. Изчистване на „Офлайн Уеб Данните“ (Offline Website Data) може да помогне. При Сафари, подобен проблем и често причинен от „Браузване в личне режим“ (Private Mode Browsing)."
+
+msgid "Copy tables to"
+msgstr "Копиране на таблици в"
+
+msgid "Add table prefix"
+msgstr "Добавяне на представка на таблица"
+
+msgid "Replace table with prefix"
+msgstr "Замяна на таблица с представка"
+
+msgid "Extremely weak"
+msgstr "Прекалено слаба"
+
+msgid "Very weak"
+msgstr "Много слаба"
+
+msgid "Weak"
+msgstr "Слаба"
+
+msgid "Good"
+msgstr "Добре"
+
+msgid "Strong"
+msgstr "Силна"
+
+msgctxt "The table already exists in the designer and can not be added once more."
+msgid "Table %s already exists!"
+msgstr "Таблица %s вече съществува!"
+
+msgid "Hide"
+msgstr "Скриване"
+
+msgctxt "The month-year order in a calendar"
+msgid "calendar-month-year"
+msgstr "calendar-month-year"
+
+msgctxt "Next month"
+msgid "Next"
+msgstr "Следващ"
+
+msgid "Today"
+msgstr "Днес"
+
+msgid "This field is required"
+msgstr "Полето е задължително"
+
+msgid "Please fix this field"
+msgstr "Моля поправете тази област"
+
+msgid "Please enter a valid email address"
+msgstr "Моля въведете валиден емайл адрес"
+
+msgid "Please enter a valid URL"
+msgstr "Моля, въведете валиден URL"
+
+msgid "Please enter a valid date"
+msgstr "Моля, въведете валидна дата"
+
+msgid "Please enter a valid date ( ISO )"
+msgstr "Моля въведете валидна дата (ISO)"
+
+msgid "Please enter a valid number"
+msgstr "Моля, въведете валиден номер"
+
+msgid "Please enter a valid credit card number"
+msgstr "Моля, въведете валиден номер на кредитна карта"
+
+msgid "Please enter only digits"
+msgstr "Моля, въведете само цифри"
+
+msgid "Please enter the same value again"
+msgstr "Моля, въведете една и съща стойност отново"
+
+msgid "Please enter no more than {0} characters"
+msgstr "Моля въведете не повече от {0} знака"
+
+msgid "Please enter at least {0} characters"
+msgstr "Моля, въведете поне {0} букви"
+
+msgid "Please enter a value between {0} and {1} characters long"
+msgstr "Моля въведете стойност с дължина между {0} и {1} знака"
+
+msgid "Please enter a value between {0} and {1}"
+msgstr "Моля, въведете стойност между {0} и {1}"
+
+msgid "Please enter a value less than or equal to {0}"
+msgstr "Моля въведете стойност по-малка или равна на {0}"
+
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "Въведете стойност по-голяма от или равна на {0}"
+
+msgid "Please enter a valid date or time"
+msgstr "Моля, въведете валиден дата или час"
+
+msgid "Please enter a valid HEX input"
+msgstr "Моля, въведете валиден HEX"
+
+msgid "Please be patient, the file is being uploaded. Details about the upload are not available."
+msgstr "Файлът се качва, бъдете търпеливи. Не са налични повече подробности."
+
+msgid "Select one…"
+msgstr "Изберете нещо…"
+
+msgctxt "string types"
+msgid "String"
+msgstr "Низ"
+
+msgid "Cannot copy database to the same name. Change the name and try again."
+msgstr "Невъзможно е копирането на БД със същото име. Изберете различно име и опитайте пак."
+
+msgid "Database %1$s has been renamed to %2$s."
+msgstr "БД %1$s беше преименувана на %2$s."
+
+msgid "Database %1$s has been copied to %2$s."
+msgstr "БД %1$s беше копирана като %2$s."
+
+msgid "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s."
+msgstr "Хранилището за конфигурации на phpMyAdmin е деактивирано. За да разберете защо натиснете %sтук%s."
+
+msgid "Could not import configuration"
+msgstr "Конфигурацията не може да бъде импортирана"
+
+msgid "Two-factor authentication has been configured."
+msgstr "Двуфакторната идентификация е конфигурирана."
+
+msgid "Missing parameter:"
+msgstr "Липсващ параметър:"
+
+msgid "Database %1$s has been created."
+msgstr "Базата данни %1$s беше създадена."
+
+msgid "%1$d database has been dropped successfully."
+msgid_plural "%1$d databases have been dropped successfully."
+msgstr[0] "%1$d БД беше изтрита успешно."
+msgstr[1] "%1$ds БД бяха изтрити успешно."
+
+msgid "The account %s@%s has been successfully locked."
+msgstr "Профилът %s@%s успешно е заключен."
+
+msgid "The account %s@%s has been successfully unlocked."
+msgstr "Профилът %s@%s успешно е отключен."
+
+msgid "Thread %s was successfully killed."
+msgstr "Нишка %s беше успешно спряна."
+
+msgid "phpMyAdmin was unable to kill thread %s. It probably has already been closed."
+msgstr "phpMyAdmin не можа да спре нишка %s. Вероятно вече е била затворена."
+
+msgid "Received"
+msgstr "Получени"
+
+msgid "Sent"
+msgstr "Изпратени"
+
+msgid "Failed attempts"
+msgstr "Неуспешни опити"
+
+msgid "The number of connections that were aborted because the client died without closing the connection properly."
+msgstr "Броят връзки, които са прекъснати, защото клиентът е изчезнал без да затвори правилно връзките."
+
+msgid "The number of failed attempts to connect to the MySQL server."
+msgstr "Броят неуспешни опити за връзка към MySQL сървъра."
+
+msgid "How many temporary files mysqld has created."
+msgstr "Броят създадени от mysqld временни файлове."
+
+msgid "The number of INSERT DELAYED rows written."
+msgstr "Броят вмъкнати посредством INSERT DELAYED редове."
+
+msgid "The number of times the first entry was read from an index. If this is high, it suggests that the server is doing a lot of full index scans; for example, SELECT col1 FROM foo, assuming that col1 is indexed."
+msgstr "Брой на четенията на първият запис от индекса. При голяма стойност се подразбира, че сървърът извършва прекалено много пълни сканирания на индекса; например, SELECT col1 FROM foo, при условие, че col1 е индексирано поле."
+
+msgid "The number of requests to update a row in a table."
+msgstr "Брой заявки за обновяване на ред в таблица."
+
+msgid "The number of requests to insert a row in a table."
+msgstr "Брой заявки за вмъкване на ред в таблица."
+
+msgid "The number of log write requests."
+msgstr "Броят на заявки за запис в дневника."
+
+msgid "The number of rows deleted from InnoDB tables."
+msgstr "Броят изтрити редове от InnoDB таблици."
+
+msgid "The number of rows inserted in InnoDB tables."
+msgstr "Броят вмъкнати редове в InnoDB таблици."
+
+msgid "The number of rows read from InnoDB tables."
+msgstr "Броят прочетени редове от InnoDB таблици."
+
+msgid "The number of rows updated in InnoDB tables."
+msgstr "Броят обновени редове в InnoDB таблици."
+
+msgid "The maximum number of connections that have been in use simultaneously since the server started."
+msgstr "Максималният брой едновременно използвани връзки от като е стартиран сървърът."
+
+msgid "The number of files that are open."
+msgstr "Броят отворени файлове."
+
+msgid "The number of streams that are open (used mainly for logging)."
+msgstr "Броят отворени потоци (използва се главно за дневници)."
+
+msgid "The number of tables that are open."
+msgstr "Броят отворени таблици."
+
+msgid "The amount of free memory for query cache."
+msgstr "Количеството свободна памет за буфер за заявки."
+
+msgid "The number of cache hits."
+msgstr "Броят попадения в кеш."
+
+msgid "The number of queries added to the cache."
+msgstr "Броят заявки добавени към буфера."
+
+msgid "The number of queries registered in the cache."
+msgstr "Броят заявки регистрирани в буфера."
+
+msgid "The total number of blocks in the query cache."
+msgstr "Общият брой блокове в буфера за заявки."
+
+msgid "The number of sorted rows."
+msgstr "Броят сортирани редове."
+
+msgid "The number of currently open connections."
+msgstr "Брой текущо отворени връзки."
+
+msgid "The number of threads that are not sleeping."
+msgstr "Броят на нишките, които не са спящи."
+
+msgid "Setting variable failed"
+msgstr "Неуспешно създаване на променлива"
+
+msgid "Insecure connection"
+msgstr "Несигурна връзка"
+
+msgid "Wrong data"
+msgstr "Грешни данни"
+
+msgid "Bookmark %s has been created."
+msgstr "Отметката %s беше създадена."
+
+msgid "Bookmark not created!"
+msgstr "Отметката не беше създадена!"
+
+msgid "Table %1$s has been altered successfully."
+msgstr "Таблицата %1$s е променена."
+
+msgid "Table %s already exists!"
+msgstr "Таблица %s вече съществува!"
+
+msgid "No column selected."
+msgstr "Няма избрана колона."
+
+msgid "Invalid table name"
+msgstr "Невалидно име на таблица"
+
+msgid "MySQL returned an empty result set (i.e. zero rows)."
+msgstr "MySQL върна празен резултат (т.е. нула редове)."
+
+msgid "The columns have been moved successfully."
+msgstr "Колоните бяха преместени упешно."
+
+msgid "The selected columns do not match the columns in the table."
+msgstr "Избраните колони не съвпадат с колони от таблицата."
+
+msgid "Query error"
+msgstr "Грешка в заявката"
+
+msgid "Table %1$s has been altered successfully. Privileges have been adjusted."
+msgstr "Таблицата %1$s е променена."
+
+msgid "Tracking of %s is activated."
+msgstr "Проследяването на %s е активно."
+
+msgid "Add trigger"
+msgstr "Нов тригер"
+
+msgid "Edit trigger"
+msgstr "Редакция тригер"
+
+msgid "You don't have sufficient privileges to be here right now!"
+msgstr "Не разполагате с права, за да се намирате тук!"
+
+msgid "The %s extension is missing. Please check your PHP configuration."
+msgstr "Разширението %s липсва. Проверете конфигурацията на PHP."
+
+msgid "Could not add %1$s as they already exist in central list!"
+msgstr "%1$s не може да се добави, тъй като вече съществува в централния списък!"
+
+msgid "Could not add columns!"
+msgstr "Колона неможе да бъде добавена!"
+
+msgid "Couldn't remove Column(s) %1$s as they don't exist in central columns list!"
+msgstr "Колона(ите) %1$s не можаха да бъдат премахнати, тъй като те не съществуват в списъка с централни колони!"
+
+msgid "Could not remove columns!"
+msgstr "Колоните немога да бъдат изтрити!"
+
+msgid "The configuration storage is not ready for the central list of columns feature."
+msgstr "Конфигурационното хранилище не е готово за централен списък на колони."
+
+msgid "Error: FOREIGN KEY relationship could not be added!"
+msgstr "Грешка: Не може да бъде добавена релация FOREIGN KEY !"
+
+msgid "Error: Relational features are disabled!"
+msgstr "Грешка: Релацията е изключена!"
+
+msgid "Error: Internal relationship could not be added!"
+msgstr "Грешка: Вътрешната релация не може да бъде добавена!"
+
+msgid "Error: Internal relationship could not be removed!"
+msgstr "Грешка: Вътрешната релация не можа да бъде премахната!"
+
+msgid "The following query has failed: \"%s\""
+msgstr "Следната заявка е неуспешна: \"%s\""
+
+msgid "MySQL said: "
+msgstr "MySQL отговори: "
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Съжаляваме, но възстановяването на изтритото събитие е неуспешно."
+
+msgid "The backed up query was:"
+msgstr "Архивираната заявка е:"
+
+msgid "Event %1$s has been modified."
+msgstr "Събитието %1$s беше променено."
+
+msgid "Event %1$s has been created."
+msgstr "Събитието %1$s беше създадено."
+
+msgid "One or more errors have occurred while processing your request:"
+msgstr "Възникнаха грешки при обработката на вашата заявка:"
+
+msgid "You must provide an event name!"
+msgstr "Трябва да дадете име на събитието!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Трябва да дадете валидна вътрешна стойност на събитието."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Трябва да дадете валиден интервал за изпълнение на събитието."
+
+msgid "You must provide a valid type for the event."
+msgstr "Трябва да дадете валиден тип на събитието."
+
+msgid "You must provide an event definition."
+msgstr "Трябва да дадете дефиниция на събитието."
+
+msgid "Invalid routine type: \"%s\""
+msgstr "Невалиден тип процедура: \"%s\""
+
+msgid "Routine %1$s has been created."
+msgstr "Процедура %1$s беше създадена."
+
+msgid "Sorry, we failed to restore the dropped routine."
+msgstr "Съжаляваме, но възстановяването на изтритата процедура е неуспешно."
+
+msgid "Routine %1$s has been modified. Privileges have been adjusted."
+msgstr "Процедурата%1$s е променена."
+
+msgid "Routine %1$s has been modified."
+msgstr "Процедурата %1$s е променена."
+
+msgid "You must provide a name and a type for each routine parameter."
+msgstr "Трябва да дадете име и тип за всеки параметър на процедурата."
+
+msgid "Invalid direction \"%s\" given for parameter."
+msgstr "Невалидна посока \"%s\" подадена като параметър."
+
+msgid "You must provide length/values for routine parameters of type ENUM, SET, VARCHAR and VARBINARY."
+msgstr "Трябва да дадете дължина/стойност за параметрите на процедурата от тип ENUM, SET, VARCHAR и VARBINARY."
+
+msgid "You must provide a valid return type for the routine."
+msgstr "Трябва да дадете валиден тип на данните при изход на процедурата."
+
+msgid "You must provide a routine name!"
+msgstr "Трябва да дадете име на процедурата!"
+
+msgid "You must provide a routine definition."
+msgstr "Трябва да дадете дефиниция на процедурата."
+
+msgid "Execution results of routine %s"
+msgstr "Резултати от изпълнението на процедура %s"
+
+msgid "Failed to set configured collation connection!"
+msgstr "Неуспешно установяване на конфигурираната връзка за колация!"
+
+msgid "The row has been deleted."
+msgstr "Редът беше изтрит."
+
+msgid "Query took %01.4f seconds."
+msgstr "Заявката отне %01.4f секунди."
+
+msgid "Showing rows %1s - %2s"
+msgstr "Показване на редове %1s - %2s"
+
+msgid "%1$s total, %2$s in query"
+msgstr "%1$s общо, %2$s в заявка"
+
+msgid "%s total"
+msgstr "%s общо"
+
+msgid "Link not found!"
+msgstr "Връзката не е намерена!"
+
+msgid "Data home directory"
+msgstr "Папка с данни"
+
+msgid "The common part of the directory path for all InnoDB data files."
+msgstr "Общата част от пътя до папката с всички InnoDB файлове."
+
+msgid "Data files"
+msgstr "Файлове с данни"
+
+msgid "InnoDB Status"
+msgstr "InnoDB Състояние"
+
+msgid "Automatic recovery mode"
+msgstr "Режим на автоматично възстановяване"
+
+msgid "Maximum size for temporary sort files"
+msgstr "Максимален размер на временните файлове за сортиране"
+
+msgid "Maximum size for temporary files on index creation"
+msgstr "Максимален размер на временните файлове при създаване на индекс"
+
+msgid "If the temporary file used for fast MyISAM index creation would be larger than using the key cache by the amount specified here, prefer the key cache method."
+msgstr "Ако временният файл, използван за бързо създаване на индекс MyISAM, ще бъде по-голям от използването на 'key cache' с посочена тук стойност, то методът 'key cache' ще бъде предпочетен."
+
+msgid "Repair threads"
+msgstr "Поправка на нишките"
+
+msgid "Sort buffer size"
+msgstr "Размер на буфера за сортиране"
+
+msgid "Index cache size"
+msgstr "Размер на буфера за индекси"
+
+msgid "Record cache size"
+msgstr "Размер на буфера за записи"
+
+msgid "Log cache size"
+msgstr "Размер на буфера на дневника"
+
+msgid "Log buffer size"
+msgstr "Размер на буфера на дневника"
+
+msgid "Too many error messages, some are not displayed."
+msgstr "Твърде много съобщения за грешки, някои не са показани."
+
+msgid "Report"
+msgstr "Доклад"
+
+msgid "Access denied!"
+msgstr "Отказан достъп!"
+
+msgid "Insufficient space to save the file %s."
+msgstr "Недостатъчно свободно пространство за запазване на файла %s."
+
+msgid "File %s already exists on server, change filename or check overwrite option."
+msgstr "Файлът %s вече съществува на сървъра, сменете името на файла или включете опцията за препокриване."
+
+msgid "The web server does not have permission to save the file %s."
+msgstr "Web сървърът няма права за писане върху файла %s."
+
+msgid "Dump has been saved to file %s."
+msgstr "Схемата беше запазена във файл %s."
+
+msgid "Could not save recent table!"
+msgstr "Наскоро отваряната таблице не можа да бъде записана!"
+
+msgid "Could not save favorite table!"
+msgstr "Неможе да бъде записана любима таблица!"
+
+msgid "File was not an uploaded file."
+msgstr "Файлът не е бил качен."
+
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
+msgstr "Качваният файл надвижава директивата upload_max_filesize от php.ini."
+
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
+msgstr "Изпратеният файл надхвърля директивата MAX_FILE_SIZE заложена във формата."
+
+msgid "The uploaded file was only partially uploaded."
+msgstr "Подаденият файл беше само частично качен."
+
+msgid "Missing a temporary folder."
+msgstr "Липсва временна папка."
+
+msgid "Failed to write file to disk."
+msgstr "Неуспешно записване на файл на диска."
+
+msgid "File upload stopped by extension."
+msgstr "Качването на файлът беше спряно от разширение."
+
+msgid "Unknown error in file upload."
+msgstr "Неизвестна грешка при качване."
+
+msgid "File is a symbolic link"
+msgstr "Файлът е символична връзка"
+
+msgid "File could not be read!"
+msgstr "Файлът не може да бъде прочетен!"
+
+msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
+msgstr "Грешка при преместване на качения файл, виж [doc@faq1-11]ЧЗВ 1.11[/doc]."
+
+msgid "Error while moving uploaded file."
+msgstr "Грешка при преместване на качения файл."
+
+msgid "Cannot read uploaded file."
+msgstr "Каченият файл неможе да бъде прочетен."
+
+msgid "You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration."
+msgstr "Опитахте се да заредите файл с неподдържана компресия (%s). Или поддръжката ѝ не е реализирана, или е забранена от конфигурацията."
+
+msgid "SSL is used"
+msgstr "SSL се използва"
+
+msgid "Skip Explain SQL"
+msgstr "Пропусни Explain SQL"
+
+msgid "Without PHP code"
+msgstr "Без PHP код"
+
+msgctxt "Inline edit query"
+msgid "Edit inline"
+msgstr "Редактиране на място"
+
+msgid "Static analysis:"
+msgstr "Статичен анализ:"
+
+msgid "You should upgrade to %s %s or later."
+msgstr "Осъвременете до %s %s или по-нова."
+
+msgid "possible exploit"
+msgstr "възможен пробив в сигурността"
+
+msgid "Ignoring unsupported language code."
+msgstr "Пренебрегване на неподдържан код на език."
+
+msgid "The database name cannot be longer than %d characters."
+msgstr "Името на банката от данни не може да бъде по-дълго от %d знака."
+
+msgid "The table name cannot be longer than %d characters."
+msgstr "Името на таблицата не може да бъде по-дълго от %d знака."
+
+msgid "Go to table: %s"
+msgstr "Към таблица: %s"
+
+msgid "Structure of %s"
+msgstr "Структурата на %s"
+
+msgid "Edit settings for %s"
+msgstr "Редактиране настройките на %s"
+
+msgid "Go to database: %s"
+msgstr "Към БД: %s"
+
+msgid "The indexes %1$s and %2$s seem to be equal and one of them could possibly be removed."
+msgstr "Индексите %1$s и %2$s изглеждат равнозначни и един от двата вероятно може да бъде премахнат."
+
+msgid "web server upload directory:"
+msgstr "директория за качване на уеб сървър:"
+
+msgid "Showing SQL query"
+msgstr "Показване на SQL заявкa"
+
+msgid "Linting is disabled for this query because it exceeds the maximum length."
+msgstr "Linting е деактивирано за тази заявка, защото надвишава максималната дължина."
+
+msgid "%1$s (near <code>%2$s</code>)"
+msgstr "%1$s (близо <code>%2$s</code>)"
+
+msgid "Tracking"
+msgstr "Проследяване"
+
+msgid "Database seems to be empty!"
+msgstr "БД изглежда празна!"
+
+msgid "Designer"
+msgstr "Строител"
+
+msgid "User accounts"
+msgstr "Потребители"
+
+msgid "Charsets"
+msgstr "Знакови набори"
+
+msgid "Engines"
+msgstr "Хранилища"
+
+msgid "%1$d row affected."
+msgid_plural "%1$d rows affected."
+msgstr[0] "%1$d повлиян ред."
+msgstr[1] "%1$d повлияни реда."
+
+msgid "%1$d row deleted."
+msgid_plural "%1$d rows deleted."
+msgstr[0] "%1$d ред изтрит."
+msgstr[1] "%1$d реда изтрити."
+
+msgid "%1$d row inserted."
+msgid_plural "%1$d rows inserted."
+msgstr[0] "%1$d ред добавен."
+msgstr[1] "%1$d реда добавени."
+
+msgid "Groups:"
+msgstr "Групи:"
+
+msgid "Events:"
+msgstr "Събития:"
+
+msgid "Functions:"
+msgstr "Функции:"
+
+msgid "Procedures:"
+msgstr "Процедури:"
+
+msgid "Views:"
+msgstr "Изгледи:"
+
+msgid "Groups"
+msgstr "Групи"
+
+msgid "Functions"
+msgstr "Функции"
+
+msgid "Procedures"
+msgstr "Процедури"
+
+msgid "Error in processing!"
+msgstr "Грешка при обработка!"
+
+msgid "Selected repeating group has been moved to the table '%s'"
+msgstr "Избраната повтаряща се група е преместена в таблицата '%s'"
+
+msgid "Step 3."
+msgstr "Стъпка 3."
+
+msgid "Can't move table to same one!"
+msgstr "Не може да се премести таблицата към себе си!"
+
+msgid "Can't copy table to same one!"
+msgstr "Не може да се копира таблицата към себе си!"
+
+msgid "Table %s has been moved to %s."
+msgstr "Таблицата %s беше преместена към %s."
+
+msgid "Table %s has been copied to %s."
+msgstr "Таблица %s беше копирана в %s."
+
+msgid "The table name is empty!"
+msgstr "Името на таблицата е празно!"
+
+msgid "Error while creating PDF:"
+msgstr "Грешка при създаване на PDF:"
+
+msgid "You probably did not create a configuration file. You might want to use the %1$ssetup script%2$s to create one."
+msgstr "Изглежда не се създали конфигурационен файл. Вероятно ще искате да използвате %1$sскрипта за настройки%2$s, за да го създадете."
+
+msgid "phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server."
+msgstr "phpMyAdmin направи опит да се свърже към MySQL сървъра, но сървъра отхвърли връзката. Трябва да проверите хоста, потребителското име и паролата в config.inc.php файла и да се уверите, че те отговарят на информацията предоставена от администратора на MySQL сървъра."
+
+msgid "You are not allowed to log in to this MySQL server!"
+msgstr "Нямате право да влизате в този MySQL сървър!"
+
+msgid "Wrong username/password. Access denied."
+msgstr "Грешно име/парола. Достъп отказан."
+
+msgid "Can not find signon authentication script: %s"
+msgstr "Не е намерен скрипт за удостоверяване по метода signon: %s"
+
+msgid "Invalid authentication method set in configuration:"
+msgstr "Невалиден метод за удостоверяване в конфогурацията:"
+
+msgid "Columns separated with:"
+msgstr "Колоните са разделени с:"
+
+msgid "Columns enclosed with:"
+msgstr "Колоните са оградени от:"
+
+msgid "Columns escaped with:"
+msgstr "Колоните са избегнати с:"
+
+msgid "Lines terminated with:"
+msgstr "Редовете завършват с:"
+
+msgid "Replace NULL with:"
+msgstr "Замяна NULL с:"
+
+msgid "Remove carriage return/line feed characters within columns"
+msgstr "Премахване на символите за нов ред от колоните"
+
+msgid "Excel edition:"
+msgstr "Excel версия:"
+
+msgid "Data dump options"
+msgstr "Опции при експортиране на данните"
+
+msgid "Dumping data for table"
+msgstr "Схема на данните от таблица"
+
+msgid "Table structure for table"
+msgstr "Структура на таблица"
+
+msgid "Content of table @TABLE@"
+msgstr "Съдържание на таблица @TABLE@"
+
+msgid "(continued)"
+msgstr "(продължение)"
+
+msgid "Structure of table @TABLE@"
+msgstr "Структура на таблица @TABLE@"
+
+msgid "Table caption:"
+msgstr "Заглавие на таблицата:"
+
+msgid "Table caption (continued):"
+msgstr "Заглавие на таблицата (продължение):"
+
+msgid "Label key:"
+msgstr "Етикет на ключа:"
+
+msgid "Display foreign key relationships"
+msgstr "Показване връзките на външен ключ"
+
+msgid "Display comments"
+msgstr "Показване коментари"
+
+msgid "Put columns names in the first row:"
+msgstr "Поставяне имената на полетата в първи ред:"
+
+msgid "Generation Time:"
+msgstr "Време на генериране:"
+
+msgid "PHP Version:"
+msgstr "Версия на PHP:"
+
+msgid "Data:"
+msgstr "Данни:"
+
+msgid "Structure:"
+msgstr "Структура:"
+
+msgid "Export table names"
+msgstr "Експорт имена на таблици"
+
+msgid "Export table headers"
+msgstr "Експортиране заглавки на таблици"
+
+msgid "Report title:"
+msgstr "Заглавие на доклада:"
+
+msgid "Additional custom header comment (\\n splits lines):"
+msgstr "Добавяне на коментар в заглавката (\\n нов ред):"
+
+msgid "Add statements:"
+msgstr "Добавяне на заявления:"
+
+msgid "Add %s statement"
+msgstr "Добавяне на израз %s"
+
+msgid "%s value"
+msgstr "%s стойност"
+
+msgid "Instead of <code>INSERT</code> statements, use:"
+msgstr "Вместо <code>INSERT</code> изрази, да се използват:"
+
+msgid "include column names in every <code>INSERT</code> statement <br> &nbsp; &nbsp; &nbsp; Example: <code>INSERT INTO tbl_name (col_A,col_B,col_C) VALUES (1,2,3)</code>"
+msgstr "включване на имената на полетата във всеки <code>INSERT</code> израз <br> &nbsp; &nbsp; &nbsp; Пример: <code>INSERT INTO tbl_name (col_A,col_B,col_C) VALUES (1,2,3)</code>"
+
+msgid "insert multiple rows in every <code>INSERT</code> statement<br> &nbsp; &nbsp; &nbsp; Example: <code>INSERT INTO tbl_name VALUES (1,2,3), (4,5,6), (7,8,9)</code>"
+msgstr "включване на няколко реда във всеки <code>INSERT</code> израз<br> &nbsp; &nbsp; &nbsp; Пример: <code>INSERT INTO tbl_name VALUES (1,2,3), (4,5,6), (7,8,9)</code>"
+
+msgid "both of the above<br> &nbsp; &nbsp; &nbsp; Example: <code>INSERT INTO tbl_name (col_A,col_B,col_C) VALUES (1,2,3), (4,5,6), (7,8,9)</code>"
+msgstr "комбинация от двата горни варианта<br> &nbsp; &nbsp; &nbsp; Пример: <code>INSERT INTO tbl_name (col_A,col_B,col_C) VALUES (1,2,3), (4,5,6), (7,8,9)</code>"
+
+msgid "neither of the above<br> &nbsp; &nbsp; &nbsp; Example: <code>INSERT INTO tbl_name VALUES (1,2,3)</code>"
+msgstr "нито един от горните варианти<br> &nbsp; &nbsp; &nbsp; Пример: <code>INSERT INTO tbl_name VALUES (1,2,3)</code>"
+
+msgid "Dump binary columns in hexadecimal notation <i>(for example, \"abc\" becomes 0x616263)</i>"
+msgstr "Съхраняване на двоичните полета в шестнадесетичен вид <i>(например, \"abc\" става 0x616263)</i>"
+
+msgid "Dump TIMESTAMP columns in UTC <i>(enables TIMESTAMP columns to be dumped and reloaded between servers in different time zones)</i>"
+msgstr "Съхраняване на полета от вида TIMESTAMP в UTC формат<i>(позволява полетата TIMESTAMP да бъдат експортирани и четени от сървъри в различни часови пояси)</i>"
+
+msgid "Metadata for table %s"
+msgstr "Метаданни за таблица %s"
+
+msgid "Metadata for database %s"
+msgstr "Метаданни за база данни %s"
+
+msgid "Error reading structure for table %s:"
+msgstr "Грешка при четене на структура за таблица %s:"
+
+msgid "Constraints for dumped tables"
+msgstr "Ограничения за дъмпнати таблици"
+
+msgid "Constraints for table"
+msgstr "Ограничения за таблица"
+
+msgid "Indexes for table"
+msgstr "Индекси за таблица"
+
+msgid "Error reading data for table %s:"
+msgstr "Грешка при четене на данните за таблица %s:"
+
+msgid "Creation:"
+msgstr "Създаване:"
+
+msgid "Last update:"
+msgstr "Последно обновяване:"
+
+msgid "Last check:"
+msgstr "Последна проверка:"
+
+msgid "Column names:"
+msgstr "Имена на колони:"
+
+msgid "Column names: "
+msgstr "Имена на колони: "
+
+msgid "Could not parse OpenDocument Spreadsheet!"
+msgstr "Не може да се анализира електронна таблица на OpenDocument!"
+
+msgid "The imported file does not contain any data!"
+msgstr "Импортираният файл не съдържа никаква информация!"
+
+msgid "SQL compatibility mode:"
+msgstr "Режим на съвместимост на SQL:"
+
+msgid "Do not use <code>AUTO_INCREMENT</code> for zero values"
+msgstr "Да не се използва <code>AUTO_INCREMENT</code> за нулеви стойности"
+
+msgid "XML"
+msgstr "XML"
+
+msgid "This format has no options"
+msgstr "Този формат няма опции"
+
+msgid "The %s table doesn't exist!"
+msgstr "Таблицата %s не съществува!"
+
+msgid "Schema of the %s database - Page %s"
+msgstr "Схема на БД %s - страница %s"
+
+msgid "SCHEMA ERROR: "
+msgstr "ГРЕШКА В СХЕМАТА: "
+
+msgid "Schema of the %s database"
+msgstr "Схема на базата данни %s"
+
+msgid "Relational schema"
+msgstr "Релационна схема"
+
+msgid "Table of contents"
+msgstr "Съдържание"
+
+msgid "Show color"
+msgstr "Показване свят"
+
+msgid "Only show keys"
+msgstr "Само ключовете видими"
+
+msgid "Orientation"
+msgstr "Посока"
+
+msgid "Landscape"
+msgstr "Пейзажно"
+
+msgid "Portrait"
+msgstr "Портретно"
+
+msgid "Show grid"
+msgstr "Мрежата видима"
+
+msgid "%B %d, %Y at %I:%M %p"
+msgstr "%e %B %Y в %H:%M"
+
+msgid "Displays a link to download this image."
+msgstr "Показва връзка за сваляне на това изображение."
+
+msgid "Displays a clickable thumbnail. The options are the maximum width and height in pixels. The original aspect ratio is preserved."
+msgstr "Показва натискаема миниатюра. Опции: максимална ширина и височина в пиксели. Запазва оригиналната пропорция."
+
+msgid "Formats text as SQL query with syntax highlighting."
+msgstr "Форматира текст като SQL заявка със синтактично оцветяване."
+
+msgid "Displays a part of a string. The first option is the number of characters to skip from the beginning of the string (Default 0). The second option is the number of characters to return (Default: until end of string). The third option is the string to append and/or prepend when truncation occurs (Default: \"…\")."
+msgstr "Показва част от низ. Първата опция е отместването, от което ще се извежда вашият текст (По подразбиране: 0). Втората указва колко текст ще се изведе (По подразбиране: до края на низа). Третата опция указва кои зкаци ще бъдат изведени залепени от края в слъчай на скъсяване (По подразбиране: \"…\")."
+
+msgid "Displays an image and a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second and third options are the width and the height in pixels."
+msgstr "Показва изображение и връзка на полето съдържащо файлово име. Първата опция е префикс като \"https://www.example.com/\". Втората опция е ширината в пиксели, третата е височината в пиксели."
+
+msgid "Displays a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second option is a title for the link."
+msgstr "Показва връзката на полето съдържащо файлово име. Първата опция е префикс като \"https://www.example.com/\". Втората опция е заглавието на връзката."
+
+msgid "Two-factor authentication failed: %s"
+msgstr "Неуспешно двуфакторно удостоверяване: %s"
+
+msgid "Two-factor authentication failed."
+msgstr "Неуспешно двуфакторно удостоверяване."
+
+msgid "The server is not responding (or the local server's socket is not correctly configured)."
+msgstr "Сървърът не отговаря (или местният сокет на сървъра не е конфигуриран правилно)."
+
+msgid "The server is not responding."
+msgstr "Сървърът не отговаря."
+
+msgid "Please check privileges of directory containing database."
+msgstr "Проверете правата на папката, съдържаща БД."
+
+msgid "Details…"
+msgstr "Подробности…"
+
+msgid "Error 404! The page %s was not found."
+msgstr "Грешка 404! Страницата %s не е намерена."
+
+msgid "No privileges."
+msgstr "Няма права."
+
+msgid "Includes all privileges except GRANT."
+msgstr "Дава всички права освен GRANT."
+
+msgid "The password for %s was changed successfully."
+msgstr "Паролата на %s е променена успешно."
+
+msgid "You have revoked the privileges for %s."
+msgstr "Вие отменихте правата на %s."
+
+msgid "Revoke"
+msgstr "Отменяне"
+
+msgid "No users selected for deleting!"
+msgstr "Не за избрани потребители за изтриване!"
+
+msgid "Reloading the privileges"
+msgstr "Презареждане на правата"
+
+msgid "The selected users have been deleted successfully."
+msgstr "Избраните потребители бяха изтрити успешно."
+
+msgid "You have updated the privileges for %s."
+msgstr "Вие променихте правата на %s."
+
+msgid "Deleting %s"
+msgstr "Изтриване на %s"
+
+msgid "The privileges were reloaded successfully."
+msgstr "Правата бяха презаредени успешно."
+
+msgid "The user %s already exists!"
+msgstr "Потребител %s вече съществува!"
+
+msgid "Privileges for %s"
+msgstr "Права на %s"
+
+msgid "You have added a new user."
+msgstr "Вие добавихте нов потребител."
+
+msgid "Handler"
+msgstr "Манипулатор"
+
+msgid "Query cache"
+msgstr "Буфер за заявки"
+
+msgid "Threads"
+msgstr "Нишки"
+
+msgid "Temporary data"
+msgstr "Временни данни"
+
+msgid "Delayed inserts"
+msgstr "Забавени вмъквания"
+
+msgid "Key cache"
+msgstr "Буфер за ключове"
+
+msgid "Joins"
+msgstr "Свръзки"
+
+msgid "Sorting"
+msgstr "Сортиране"
+
+msgid "Transaction coordinator"
+msgstr "Координатор на транзакциите"
+
+msgid "Flush (close) all tables"
+msgstr "Изчистване от буфера (затваряне) на всички таблици"
+
+msgid "Show open tables"
+msgstr "Показване отворените таблици"
+
+msgid "Flush query cache"
+msgstr "Изчистване на буфера за заявки"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Reading of version failed. Maybe you're offline or the upgrade server does not respond."
+msgstr "Неуспешно получаване на версията. Вероятно сте offline или сървърът за обновления не отговаря."
+
+msgid "No newer stable version is available"
+msgstr "Няма по-нова стабилна версия"
+
+msgid "Showing as PHP code"
+msgstr "Показване като PHP-код"
+
+msgid "Current selection does not contain a unique column. Grid edit, checkbox, Edit, Copy and Delete features are not available. %s"
+msgstr "Тази таблица не съдържа уникална колона. Редактирането на мрежа, поставянето на отметки, функциите редактиране, копиране и изтриване не са достъпни. %s"
+
+msgid "Current selection does not contain a unique column. Grid edit, Edit, Copy and Delete features may result in undesired behavior. %s"
+msgstr "Текущата селекция не съдържа уникална колона. Функциите за редактиране на мрежа, редактиране, копиране и изтриване могат да доведат до нежелано поведение. %s"
+
+msgid "Run SQL query/queries on database %s"
+msgstr "Изпълнение на SQL заявка/заявки към БД %s"
+
+msgid "There is no detailed status information available for this storage engine."
+msgstr "Няма детайлна информация за състоянието на това хранилище на данни."
+
+msgid "%s is available on this MySQL server."
+msgstr "%s е разрешен на този MySQL сървър."
+
+msgid "%s has been disabled for this MySQL server."
+msgstr "%s е забранено за този MySQL сървър."
+
+msgid "This MySQL server does not support the %s storage engine."
+msgstr "Този MySQL сървър не поддържа хранилището на данни %s."
+
+msgid "The name of the primary key must be \"PRIMARY\"!"
+msgstr "Името на първичния ключ трябва да е \"PRIMARY\"!"
+
+msgid "Can't rename index to PRIMARY!"
+msgstr "Индексът не може да бъде преименуван на PRIMARY!"
+
+msgid "No index parts defined!"
+msgstr "Не са дефинирани части на индекс!"
+
+msgid "Problems with indexes of table `%s`"
+msgstr "Проблем с индексите на таблица `%s`"
+
+msgid "Source database `%s` was not found!"
+msgstr "БД-източник `%s` не е намерена!"
+
+msgid "Target database `%s` was not found!"
+msgstr "Целевата БД `%s` не е намерена!"
+
+msgid "Invalid database:"
+msgstr "Невалидна БД:"
+
+msgid "Invalid table name:"
+msgstr "Невалидно име на таблица:"
+
+msgid "Table %1$s has been renamed to %2$s."
+msgstr "Таблица %1$s беше преименувана на %2$s."
+
+msgid "Could not save table UI preferences!"
+msgstr "Таблицата с визуалните настройки не може да бъде запазена!"
+
+msgid "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] %s)"
+msgstr "Неуспех при почистването на предпочитанията за потребителския интерфейс на таблицата (вижте $cfg['Servers'][$i]['MaxTableUiprefs'] %s)"
+
+msgid "Cannot save UI property \"%s\". The changes made will not be persistent after you refresh this page. Please check if the table structure has been changed."
+msgstr "Не може да се запази собствеността на потребителския интерфейс \"%s\". Извършените промени няма да бъдат устойчиви, след като опресните тази страница. Моля, проверете дали структурата на таблицата е променена."
+
+msgid "Error creating foreign key on %1$s (check data types)"
+msgstr "Грешка при създаването на външен ключ върху %1$s (проверете типа данни)"
+
+msgid "Default theme %s not found!"
+msgstr "Темата по подразбиране %s не е намерена!"
+
+msgid "Theme %s not found!"
+msgstr "Тема %s не е намерена!"
+
+msgid "No valid image path for theme %s found!"
+msgstr "Не открито изображение към тема %s!"
+
+msgid "Data definition statement"
+msgstr "Израз за дефиниране на данни"
+
+msgid "Data manipulation statement"
+msgstr "Израз за манипулация на данни"
+
+msgid "No data"
+msgstr "Няма данни"
+
+msgid "SQL execution"
+msgstr "Изпълняване на SQL"
+
+msgid "Export as %s"
+msgstr "Експорт като %s"
+
+msgid "Tracking for %1$s was activated at version %2$s."
+msgstr "Проследяването на %1$s беше включено във версия %2$s."
+
+msgid "Tracking for %1$s was deactivated at version %2$s."
+msgstr "Проследяването на %1$s беше изключено във версия %2$s."
+
+msgid "Sorry, we failed to restore the dropped trigger."
+msgstr "Съжаляваме, но възстановяването на изтрития тригер е неуспешно."
+
+msgid "Trigger %1$s has been modified."
+msgstr "Тригерът %1$s беше променен."
+
+msgid "Trigger %1$s has been created."
+msgstr "Тригерът %1$s беше създаден."
+
+msgid "You must provide a trigger name!"
+msgstr "Трябва да дадете име на тригера!"
+
+msgid "You must provide a valid timing for the trigger!"
+msgstr "Трябва да дадете график на тригера!"
+
+msgid "You must provide a valid event for the trigger!"
+msgstr "Трябва да дадете събитие на тригера!"
+
+msgid "You must provide a valid table name!"
+msgstr "Трябва да зададете валидно име на таблица!"
+
+msgid "You must provide a trigger definition."
+msgstr "Трябва да дадете дефиниция на тригера."
+
+msgid "A 1-byte integer, signed range is -128 to 127, unsigned range is 0 to 255"
+msgstr "1-байт цяло число, подписано обхват е -128 до 127, неподписан обхват е от 0 до 255"
+
+msgid "A 2-byte integer, signed range is -32,768 to 32,767, unsigned range is 0 to 65,535"
+msgstr "2-байт цяло число, подписано обхват е -32,768 до 32,767, неподписан обхват от 0 до 65,535"
+
+msgid "A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned range is 0 to 16,777,215"
+msgstr "3-байт цяло число, подписано обхват е -8,388,608 до 8,388,607, неподписан обхват е от 0 до 16,777,215"
+
+msgid "A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, unsigned range is 0 to 4,294,967,295"
+msgstr "Едно цяло число от 4 байта, подписано в обхвата, е -2,147,483,648 до 2,147,483,647, неподписан обхват е от 0 до 4,294,967,295"
+
+msgid "A date, supported range is %1$s to %2$s"
+msgstr "Дата, поддържан диапазон е %1$s до %2$s"
+
+msgid "A date and time combination, supported range is %1$s to %2$s"
+msgstr "Комбинация от дата и час, поддържаният диапазон е %1$s до %2$s"
+
+msgid "A time, range is %1$s to %2$s"
+msgstr "Време, диапазонът е %1$s до %2$s"
+
+msgid "An enumeration, chosen from the list of up to 65,535 values or the special '' error value"
+msgstr "Изброяване, избор от списък с до 65535 стойности или специалната стойност за грешка ''"
+
+msgid "A single value chosen from a set of up to 64 members"
+msgstr "Единична стойност, избрана от списък с до 64 възможни"
+
+msgid "A type that can store a geometry of any type"
+msgstr "Тип, който може да съхранява геометрия от всякакъв вид"
+
+msgid "A point in 2-dimensional space"
+msgstr "Точка в 2-мерното пространство"
+
+msgid "A curve with linear interpolation between points"
+msgstr "Крива с линейна интерполация между точки"
+
+msgid "A polygon"
+msgstr "Многоъгълник"
+
+msgid "A collection of points"
+msgstr "Набор от точки"
+
+msgid "A collection of curves with linear interpolation between points"
+msgstr "Колекция от криви с линейна интерполация между точки"
+
+msgid "A collection of polygons"
+msgstr "Набор от многоъгълници"
+
+msgid "A collection of geometry objects of any type"
+msgstr "Набор от геометрични обекти от всякакъв вид"
+
+msgctxt "numeric types"
+msgid "Numeric"
+msgstr "Цифров"
+
+msgctxt "date and time types"
+msgid "Date and time"
+msgstr "Дата и час"
+
+msgctxt "spatial types"
+msgid "Spatial"
+msgstr "Пространствен"
+
+msgid "Password is too long!"
+msgstr "Паролата е твърде дълга!"
+
+msgid "The profile has been updated."
+msgstr "Профилът беше обновен."
+
+msgid "Max: %s%s"
+msgstr "Максимум: %s%s"
+
+msgid "%s days, %s hours, %s minutes and %s seconds"
+msgstr "%s дена, %s часа, %s минути и %s секунди"
+
+msgid "Users"
+msgstr "Потребители"
+
+msgid "Error in ZIP archive:"
+msgstr "Грешка в ZIP архива:"
+
+msgid "No files found inside ZIP archive!"
+msgstr "Не са открити файлове в ZIP архива!"

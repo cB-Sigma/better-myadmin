@@ -160,7 +160,7 @@ A single `useHotkeys` layer with scopes (`global`, `grid`, `editor`, `tree`, `di
 
 ## i18n
 
-Lingui macros (`t`, `Trans`, `plural`) with the phpMyAdmin PO catalogues compiled per locale and loaded on demand. Language is chosen by `Lang` config → cookie → URL `lang` param → `Accept-Language`, filtered by `FilterLanguages`, same order as phpMyAdmin's `LanguageManager`. RTL locales flip the layout via `dir="rtl"` and Tailwind logical properties.
+Lingui (`@lingui/core`) holds phpMyAdmin's PO catalogues, compiled per locale and loaded on demand; components translate with `t('…')` / `<Trans id="…" />` / `ngettext` / `pgettext` from `lib/i18n.tsx`, keyed by phpMyAdmin's exact msgids (printf placeholders filled by the PHP `sprintf` port). Language is chosen like phpMyAdmin's `LanguageManager::selectLanguage`: `Lang` config → POST/GET `lang` → cookie → `Accept-Language` → `User-Agent` → `DefaultLang`, filtered by `FilterLanguages`. RTL locales flip the layout via `dir="rtl"` and Tailwind logical properties. Details: [i18n](10-i18n-and-accessibility.md#i18n).
 
 ## Error handling
 

@@ -22,7 +22,7 @@ This file records every stack decision, the alternatives we weighed, and why we 
 | Maps / GIS | OpenLayers 10 | OpenLayers 10 |
 | Date/time | `date-fns` + native `<input type=datetime-local>` + custom picker component | jQuery UI datetimepicker |
 | Forms | react-hook-form + Zod | jquery-validation + server-side `Validator.php` |
-| i18n | `@lingui/core` with PO catalogues imported from phpMyAdmin's 97 locales | gettext `.po` via `motranslator` |
+| i18n | `@lingui/core` with PO catalogues imported from phpMyAdmin (96 catalogues, the 48 a release ships) | gettext `.po` via `motranslator` |
 | Backend runtime | Node.js 22 LTS (Bun-compatible) | PHP-FPM / Apache |
 | HTTP framework | Hono (with typed RPC client) | Slim PSR-7 + FastRoute + Symfony DI |
 | Validation | Zod schemas shared between client and server | ad hoc |
@@ -116,7 +116,7 @@ phpMyAdmin builds export output in memory or with `CompressOnFly`, and fights PH
 
 ## D13: Lingui with phpMyAdmin's PO catalogues
 
-phpMyAdmin has 3,442 source strings and 97 locales. We import the `.po` files directly (same msgids), so translations carry over on day one, and we keep the English source strings identical where the UI text is identical. This is also a parity tool: if a UI string isn't in the catalogue, we probably invented a feature.
+phpMyAdmin has 3,426 source msgids, 96 catalogues and 97 languages in its language table; a release ships the 48 catalogues that are at least 40 % translated. We import the `.po` files directly (same msgids, same plural selection as motranslator), so translations carry over on day one, and we keep the English source strings identical where the UI text is identical. This is also a parity tool: if a UI string isn't in the catalogue, we probably invented a feature.
 
 ## D14: Testing against a MySQL/MariaDB matrix with golden files from phpMyAdmin
 

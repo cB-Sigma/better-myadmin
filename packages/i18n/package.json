@@ -1,0 +1,30 @@
+{
+  "name": "@bettermyadmin/i18n",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./node": "./src/node.ts",
+    "./compile": "./src/compile.ts",
+    "./php": "./src/php.ts",
+    "./translator": "./src/translator.ts",
+    "./format": "./src/format.ts",
+    "./bbcode": "./src/bbcode.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "import": "tsx scripts/import-po.ts",
+    "parity": "tsx scripts/parity.ts",
+    "fixtures": "python3 -I scripts/build-mo.py \"${PMA_PATH:-/home/user/ref/pma}\" \"${BMA_LOCALE_DIR:-/tmp/bma-locale}\" && BMA_NO_MYSQL=1 BMA_LOCALE_DIR=\"${BMA_LOCALE_DIR:-/tmp/bma-locale}\" php scripts/generate-fixtures.php"
+  },
+  "dependencies": {
+    "@lingui/core": "6.8.0"
+  },
+  "devDependencies": {
+    "tsx": "4.19.4",
+    "typescript": "5.8.3",
+    "@types/node": "22.15.3"
+  }
+}

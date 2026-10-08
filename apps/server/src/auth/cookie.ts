@@ -1,10 +1,11 @@
+import { type Gettext, englishTranslator, sprintf } from '@bettermyadmin/i18n'
 import type { AppConfig } from '../config.ts'
 import type { Credentials, PoolManager } from '../db/pool-manager.ts'
 import { BmaError, isMysqlError } from '../http/errors.ts'
 import { phpRegex } from '../util/php-regex.ts'
 import { isForbiddenByRules } from './ip-allow-deny.ts'
 
-/** Failure kinds and texts. pma: src/Exceptions/AuthenticationFailure.php */
+/** Failure kinds and texts (phpMyAdmin msgids, translated per request). pma: src/Exceptions/AuthenticationFailure.php */
 export const AuthMessages = {
   serverDenied: 'Cannot log in to the database server.',
   allowDenied: 'Access denied!',
@@ -16,9 +17,12 @@ export const AuthMessages = {
   passwordTooLong:
     'Your password is too long. To prevent denial-of-service attacks, phpMyAdmin restricts passwords to less than 2000 characters.',
   arbitraryNotAllowed: 'You are not allowed to log in to this MySQL server!',
+  /** pma: src/Dbal/DbiMysqli.php::connect, %s = the directive (BBCode `[code][doc@…]…[/doc][/code]` there) */
   hiddenConnectionError:
-    "Error 1045: Access denied for user. Additional error information may be available, but is being hidden by the $cfg['Servers'][$i]['hide_connection_errors'] configuration directive.",
+    'Error 1045: Access denied for user. Additional error information may be available, but is being hidden by the %s configuration directive.',
 } as const
+
+const english = englishTranslator()
 
 export class LoginFailure extends BmaError {
   readonly failureType: 'server-denied' | 'allow-denied' | 'root-denied' | 'empty-denied' | 'form'
@@ -47,6 +51,8 @@ export interface LoginInput {
   password: string
   arbitraryServer?: string | undefined
   remoteIp: string | false
+  /** The request language (messages are translated like phpMyAdmin's). */
+  tr?: Gettext | undefined
 }
 
 /**
@@ -60,9 +66,10 @@ export async function cookieLogin(
   input: LoginInput,
 ): Promise<Credentials> {
   const server = pools.server(input.serverIndex)
+  const tr = input.tr ?? english
   const user = sanitizeMySQLUser(input.username)
   if (Buffer.byteLength(input.password, 'utf8') >= 2000) {
-    throw new LoginFailure('form', AuthMessages.passwordTooLong)
+    throw new LoginFailure('form', tr.gettext(AuthMessages.passwordTooLong))
   }
 
   const creds: Credentials = { user, password: input.password }
@@ -72,7 +79,8 @@ export async function cookieLogin(
       const parts = input.arbitraryServer.split(' ')
       const tmpHost = parts.length === 2 ? parts[0]! : input.arbitraryServer
       const re = phpRegex(cfg.ArbitraryServerRegexp)
-      if (re === null || !re.test(tmpHost)) throw new LoginFailure('form', AuthMessages.arbitraryNotAllowed)
+      if (re === null || !re.test(tmpHost))
+        throw new LoginFailure('form', tr.gettext(AuthMessages.arbitraryNotAllowed))
     }
     const authServer = sanitizeMySQLHost(input.arbitraryServer)
     if (authServer !== '') {
@@ -93,25 +101,35 @@ export async function cookieLogin(
       rules: server.AllowDeny.rules,
       serverAddr: process.env.SERVER_ADDR ?? '',
     })
-    if (forbidden) throw new LoginFailure('allow-denied', AuthMessages.allowDenied)
+    if (forbidden) throw new LoginFailure('allow-denied', tr.gettext(AuthMessages.allowDenied))
   }
-  if (!server.AllowRoot && user === 'root') throw new LoginFailure('root-denied', AuthMessages.rootDenied)
+  if (!server.AllowRoot && user === 'root')
+    throw new LoginFailure('root-denied', tr.gettext(AuthMessages.rootDenied))
   if (!server.AllowNoPassword && creds.password === '') {
-    throw new LoginFailure('empty-denied', AuthMessages.emptyDenied)
+    throw new LoginFailure('empty-denied', tr.gettext(AuthMessages.emptyDenied))
   }
 
   try {
     await pools.probe(input.serverIndex, creds)
   } catch (e) {
-    throw new LoginFailure('server-denied', connectionErrorMessage(e, server.hide_connection_errors))
+    throw new LoginFailure('server-denied', connectionErrorMessage(e, server.hide_connection_errors, tr))
   }
   return creds
 }
 
 /** pma: src/Dbal/DbiMysqli.php::connect (ConnectionException message) */
-export function connectionErrorMessage(e: unknown, hideConnectionErrors: boolean): string {
+export function connectionErrorMessage(
+  e: unknown,
+  hideConnectionErrors: boolean,
+  tr: Gettext = english,
+): string {
   if (isMysqlError(e)) {
-    if (e.errno === 1045 && hideConnectionErrors) return AuthMessages.hiddenConnectionError
+    if (e.errno === 1045 && hideConnectionErrors) {
+      return sprintf(
+        tr.gettext(AuthMessages.hiddenConnectionError),
+        "$cfg['Servers'][$i]['hide_connection_errors']",
+      )
+    }
     return `${e.errno}: ${e.sqlMessage ?? e.message}`
   }
   const err = e as { code?: string; message?: string }
@@ -122,5 +140,5 @@ export function connectionErrorMessage(e: unknown, hideConnectionErrors: boolean
   if (err.code === 'ENOTFOUND' || err.code === 'ENOENT' || err.code === 'EAI_AGAIN') {
     return `2002: ${err.message ?? ''}`
   }
-  return AuthMessages.serverDenied
+  return tr.gettext(AuthMessages.serverDenied)
 }

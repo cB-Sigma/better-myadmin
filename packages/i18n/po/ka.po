@@ -1,0 +1,6069 @@
+# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/ka.po by packages/i18n/scripts/import-po.ts.
+# Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+msgid ""
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2026-03-31 15:09+0000\nLast-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\nLanguage-Team: Georgian <https://hosted.weblate.org/projects/phpmyadmin/master/ka/>\nLanguage: ka\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17-dev\n"
+
+msgid "Open user account menu"
+msgstr "მომხმარებლის ანგარიშის მენიუს გახსნა"
+
+msgid "phpMyAdmin documentation"
+msgstr "phpMyAdmin-ის დოკუმენტაცია"
+
+msgid "MariaDB documentation"
+msgstr "MariaDB-ის დოკუმენტაცია"
+
+msgid "MySQL documentation"
+msgstr "MySQL-ის დოკუმენტაცია"
+
+msgid "Appearance:"
+msgstr "გარეგნობა:"
+
+msgctxt "Light color mode of the theme"
+msgid "Light"
+msgstr "ღია"
+
+msgctxt "Dark color mode of the theme"
+msgid "Dark"
+msgstr "ბნელი"
+
+msgid "Settings"
+msgstr "პარამეტრები"
+
+msgid "Log out"
+msgstr "გამოსვლა"
+
+msgid "Page-related settings"
+msgstr "გვერდის პარამეტრები"
+
+msgid "Open new phpMyAdmin window"
+msgstr "PhpMyAdmin-ის ახალი ფანჯრის გახსნა"
+
+msgid "phpMyAdmin Demo Server"
+msgstr "phpMyAdmin-ის დემო სერვერი"
+
+msgid "Git information missing!"
+msgstr "Git-ის ინფორმაცია მიუწვდომელია!"
+
+msgctxt "for default"
+msgid "None"
+msgstr "არცერთი"
+
+msgid "As defined:"
+msgstr "როგორც აღწერილია:"
+
+msgid "Primary"
+msgstr "პირველადი"
+
+msgid "Unique"
+msgstr "უნიკალური"
+
+msgid "Index"
+msgstr "ინდექსი"
+
+msgid "Fulltext"
+msgstr "Fulltext"
+
+msgid "Spatial"
+msgstr "სივრცითი"
+
+msgid "Expression"
+msgstr "გამოსახულება"
+
+msgid "first"
+msgstr "პირველი"
+
+msgid "after %s"
+msgstr "%s-ის შემდეგ"
+
+msgid "None"
+msgstr "არაა"
+
+msgid "Table name"
+msgstr "ცხრილის სახელი"
+
+msgid "Add"
+msgstr "დამატება"
+
+msgid "column(s)"
+msgstr "სვეტები"
+
+msgid "Go"
+msgstr "გადასვლა"
+
+msgid "Table comments:"
+msgstr "ცხრილის კომენტარები:"
+
+msgid "Collation:"
+msgstr "კოლაცია:"
+
+msgid "Storage Engine:"
+msgstr "საცავის ძრავა:"
+
+msgid "Connection:"
+msgstr "კავშირები:"
+
+msgid "Storage engine"
+msgstr "საცავის ძრავა"
+
+msgid "PARTITION definition:"
+msgstr "დანაყოფის (PARTITION) აღწერა:"
+
+msgctxt "Online transaction part of the SQL DDL for InnoDB"
+msgid "Online transaction"
+msgstr "ონლაინ ტრანზაქცია"
+
+msgid "Preview SQL"
+msgstr "SQL-ის გადახედვა"
+
+msgid "Save"
+msgstr "შენახვა"
+
+msgid "Loading"
+msgstr "ჩატვირთვა"
+
+msgid "Close"
+msgstr "დახურვა"
+
+msgid "Column"
+msgstr "სვეტები"
+
+msgid "Pick from Central Columns"
+msgstr "აირჩიეთ ცენტრალური სვეტებიდან"
+
+msgid "Partition by:"
+msgstr "დაყოფის პირობა:"
+
+msgid "Expression or column list"
+msgstr "გამოსახულება ან სვეტების სია"
+
+msgid "Partitions:"
+msgstr "დანაყოფები:"
+
+msgid "Subpartition by:"
+msgstr "ქვედაყოფის პირობა:"
+
+msgid "Subpartitions:"
+msgstr "ქვედანაყოფები:"
+
+msgid "Partition"
+msgstr "დანაყოფი"
+
+msgid "Values"
+msgstr "მნიშვნელობები"
+
+msgid "Subpartition"
+msgstr "ქვედანაყოფი"
+
+msgid "Engine"
+msgstr "ძრავი"
+
+msgid "Comment"
+msgstr "კომენტარი"
+
+msgid "Data directory"
+msgstr "მონაცემების ლექსიკონი"
+
+msgid "Index directory"
+msgstr "ინდექსის საქაღალდე"
+
+msgid "Max rows"
+msgstr "მაქს მწკრივები"
+
+msgid "Min rows"
+msgstr "მინ. მწკრივები"
+
+msgid "Table space"
+msgstr "ცხრილის სივრცე"
+
+msgid "Node group"
+msgstr "კვანძების ჯგუფი"
+
+msgid "Structure"
+msgstr "სტრუქტურა"
+
+msgid "Name"
+msgstr "სახელი"
+
+msgid "Type"
+msgstr "ტიპი"
+
+msgid "Length/Values"
+msgstr "სიგრძე/მნიშვნელობები"
+
+msgid "If column type is \"enum\" or \"set\", please enter the values using this format: 'a','b','c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b')."
+msgstr "თუ სვეტის ტიპი არის \"enum\" ან \"set\", გთხოვთ, შეიყვანოთ მნიშვნელობები ამ ფორმატის გამოყენებით: 'a', 'b', 'c'… <br> თუ ოდესმე დაგჭირდებათ უკუკავშირის (\"\\\") ან ერთი მნიშვნელობის ციტირება (\"'\") ამ მნიშვნელობებს შორის, წინ უსწრებს უკუქცევით (მაგალითად' '\\\\ xyz' ან 'a \\' b ')."
+
+msgid "Default"
+msgstr "სტანდარტული"
+
+msgid "Collation"
+msgstr "კოლაცია"
+
+msgid "Attributes"
+msgstr "ატრიბუტები"
+
+msgid "Null"
+msgstr "Null"
+
+msgid "Adjust privileges"
+msgstr "პრივილეგიების მორგება"
+
+msgid "Comments"
+msgstr "კომენტარები"
+
+msgid "Virtuality"
+msgstr "ვირტუალურობა"
+
+msgid "Move column"
+msgstr "სვეტის გადატანა"
+
+msgid "Media type"
+msgstr "მედიის ტიპი"
+
+msgid "List of available transformations and their options"
+msgstr "ხელმისაწვდომი გარდაქმნებისა და მათი პარამეტრების სია"
+
+msgid "Browser display transformation"
+msgstr "ბრაუზერის ჩვენების ტრანსფორმაცია"
+
+msgid "Browser display transformation options"
+msgstr "ბრაუზერის ჩვენების ტრანსფორმაციის პარამეტრები"
+
+msgid "Input transformation"
+msgstr "შეყვანის გარდაქმნა"
+
+msgid "Input transformation options"
+msgstr "შეყვანის გარდაქმნის პარამეტრები"
+
+msgid "No change"
+msgstr "ცვლილების გარეშე"
+
+msgid "Apply"
+msgstr "გადატარება"
+
+msgid "Reset"
+msgstr "დაბრუნება"
+
+msgid "Documentation"
+msgstr "დოკუმენტაცია"
+
+msgid "Disabled"
+msgstr "გათიშულია"
+
+msgid "Yes"
+msgstr "დიახ"
+
+msgid "No"
+msgstr "არა"
+
+msgid "Collapse"
+msgstr "ჩაკეცვა"
+
+msgid "Expand"
+msgstr "ამოკეცვა"
+
+msgid "Requery"
+msgstr "თავიდან მოთხოვნა"
+
+msgid "Edit"
+msgstr "რედაქტირება"
+
+msgid "Delete"
+msgstr "წაშლა"
+
+msgid "Database"
+msgstr "მონაცემთა ბაზა"
+
+msgid "SQL Query Console"
+msgstr "SQL მოთხოვნის კონსოლი"
+
+msgid "Console"
+msgstr "კონსოლი"
+
+msgid "Clear"
+msgstr "გაწმენდა"
+
+msgid "History"
+msgstr "ისტორია"
+
+msgid "Options"
+msgstr "პარამეტრები"
+
+msgid "Bookmarks"
+msgstr "სანიშნები"
+
+msgid "Debug SQL"
+msgstr "SQL-ის გამართვა"
+
+msgid "Press Ctrl+Enter to execute query"
+msgstr "მოთხოვნის შესასრულებლად დააჭირეთ Ctrl+Enter"
+
+msgid "Press Enter to execute query"
+msgstr "მოთხოვნის შესასრულებლად დააჭირეთ Enter"
+
+msgid "Explain"
+msgstr "ახსნა"
+
+msgid "Profiling"
+msgstr "Profiling"
+
+msgid "Bookmark"
+msgstr "სანიშნი"
+
+msgid "Query failed"
+msgstr "მოთხოვნის შეცდომა"
+
+msgid "Queried time"
+msgstr "გამოთხოვილი დრო"
+
+msgid "ascending"
+msgstr "ზრდადობით"
+
+msgid "descending"
+msgstr "კლებადობით"
+
+msgid "Order:"
+msgstr "დალაგება:"
+
+msgid "Count"
+msgstr "რაოდენობა"
+
+msgid "Execution order"
+msgstr "გაშვების მიმდევრობა"
+
+msgid "Time taken"
+msgstr "დასჭირდა დრო"
+
+msgid "Order by:"
+msgstr "დალაგება:"
+
+msgid "Group queries"
+msgstr "ჯგუფური მოთხოვნები"
+
+msgid "Ungroup queries"
+msgstr "მოთხოვნების განჯგუფება"
+
+msgid "Show trace"
+msgstr "ტრეისის ჩვენება"
+
+msgid "Hide trace"
+msgstr "ტრეისის დამალვა"
+
+msgid "Count:"
+msgstr "რაოდენობა:"
+
+msgid "Time taken:"
+msgstr "დასჭირდა დრო:"
+
+msgid "Refresh"
+msgstr "განახლება"
+
+msgid "Add bookmark"
+msgstr "სანიშნის დამატება"
+
+msgid "Label"
+msgstr "ჭდე"
+
+msgid "Target database"
+msgstr "სამიზნე მონაცემთა ბაზა"
+
+msgid "Share this bookmark"
+msgstr "სანიშნის გაზიარება"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Restore default values"
+msgstr "ნაგულისხმევი მნიშვნელობების აღდგენა"
+
+msgid "Show query history at start"
+msgstr "გაშვებისას მოთხოვნების ისტორიის ჩვენება"
+
+msgid "Create version %1$s of %2$s"
+msgstr "%1$s-ის %2$s ვერსიის შექმნა"
+
+msgid "Create version %1$s"
+msgstr "ვერსია %1$s-ის შექმნა"
+
+msgid "Create version"
+msgstr "ვერსიის შექმნა"
+
+msgctxt "Auto Increment"
+msgid "A_I"
+msgstr "A_I"
+
+msgid "Add new column"
+msgstr "ახალი სვეტის დამატება"
+
+msgid "Length/Value"
+msgstr "სიგრძე/მნიშვნელობა"
+
+msgid "Attribute"
+msgstr "ატრიბუტი"
+
+msgid "A_I"
+msgstr "A_I"
+
+msgid "Filter rows:"
+msgstr "მწკრივების ფილტრი:"
+
+msgid "Search this table"
+msgstr "ამ ცხრილში ძებნა"
+
+msgid "Add column"
+msgstr "სვეტის დამატება"
+
+msgid "Select a table"
+msgstr "აირჩიეთ ცხრილი"
+
+msgid "Select a column."
+msgstr "აირჩიეთ სვეტი."
+
+msgid "Click to sort."
+msgstr "დასალაგებლად დააწკაპუნეთ."
+
+msgid "Action"
+msgstr "მოქმედება"
+
+msgid "Cancel"
+msgstr "გაუქმება"
+
+msgid "Create new table"
+msgstr "ახალი ცხრილის შექმნა"
+
+msgid "Number of columns"
+msgstr "სვეტების რაოდენობა"
+
+msgid "Create"
+msgstr "შექმნა"
+
+msgid "Database comment:"
+msgstr "მონაცემთა ბაზის კომენტარი:"
+
+msgid "Print"
+msgstr "დაბეჭდვა"
+
+msgid "Links to"
+msgstr "მიბმულია"
+
+msgid "Indexes"
+msgstr "ინდექსები"
+
+msgid "Keyname"
+msgstr "გასაღებისსახელი"
+
+msgid "Packed"
+msgstr "შეკუმშული"
+
+msgid "Cardinality"
+msgstr "Cardinality"
+
+msgid "No index defined!"
+msgstr "ინდექსი არაა განსაზღვრული!"
+
+msgid "Select all"
+msgstr "ყველას მონიშვნა"
+
+msgid "Show/hide columns"
+msgstr "სვეტების ჩვენება/დამალვა"
+
+msgid "See table structure"
+msgstr "იხილეთ ცხრილის სტრუქტურა"
+
+msgid "Select \"%s\""
+msgstr "მონიშნეთ \"%s\""
+
+msgid "Add an option for column \"%s\"."
+msgstr "პარამეტრის დამატება სვეტისთვის \"%s\"."
+
+msgid "Page to open"
+msgstr "გასახსნელი გვერდი"
+
+msgid "Page to delete"
+msgstr "წასაშლელი გვერდი"
+
+msgid "Untitled"
+msgstr "უსათაურო"
+
+msgid "Show/Hide tables list"
+msgstr "ცხრილების სიის ჩვენება/დამალვა"
+
+msgid "Exit fullscreen"
+msgstr "სრული ეკრანიდან გასვლა"
+
+msgid "Add tables from other databases"
+msgstr "დაამატეთ ცხრილები სხვა ბაზებიდან"
+
+msgid "New page"
+msgstr "ახალი გვერდი"
+
+msgid "Open page"
+msgstr "გვერდის გახსნა"
+
+msgid "Save page"
+msgstr "გვერდის შენახვა"
+
+msgid "Save page as"
+msgstr "გვერდის შენახვა, როგორც"
+
+msgid "Delete pages"
+msgstr "გვერდების წაშლა"
+
+msgid "Create table"
+msgstr "ცხრილის შექმნა"
+
+msgid "Create relationship"
+msgstr "ურთიერთობის შექმნა"
+
+msgid "Choose column to display"
+msgstr "აირჩიეთ საჩვენებელი სვეტი"
+
+msgid "Reload"
+msgstr "გადატვირთვა"
+
+msgid "Help"
+msgstr "დახმარება"
+
+msgid "Direct links"
+msgstr "პირდაპირი ბმულები"
+
+msgid "Snap to grid"
+msgstr "ბადეზე მიბმა"
+
+msgid "Toggle relationship lines"
+msgstr "ურთიერთობის ხაზების გადართვა"
+
+msgid "Export schema"
+msgstr "სქემის გატანა"
+
+msgid "Build Query"
+msgstr "მოთხოვნის აგება"
+
+msgid "Move Menu"
+msgstr "მენიუს გადატანა"
+
+msgid "Pin text"
+msgstr "ტექსტის მიმაგრება"
+
+msgid "Hide/Show all"
+msgstr "ყველას დამალვა/ჩვენება"
+
+msgid "Hide/Show tables with no relationship"
+msgstr "ურთიერთობის არმქონე ცხრილების დამალვა/ჩვენება"
+
+msgid "Number of tables:"
+msgstr "ცხრილების რიცხვი:"
+
+msgid "Delete relationship"
+msgstr "ურთიერთობის წაშლა"
+
+msgid "Relationship operator"
+msgstr "ურთიერთობის ოპერატორი"
+
+msgid "Except"
+msgstr "გარდა"
+
+msgid "Value"
+msgstr "მნიშვნელობა"
+
+msgid "subquery"
+msgstr "ქვემოთხოვნა"
+
+msgid "Rename to"
+msgstr "გადარქმევა"
+
+msgid "New name"
+msgstr "ახალი სახელი"
+
+msgid "Aggregate"
+msgstr "შეკოწიწება"
+
+msgid "Operator"
+msgstr "ოპერატორი"
+
+msgid "Active options"
+msgstr "აქტიური პარამეტრები"
+
+msgid "Submit"
+msgstr "Submit"
+
+msgid "Save to selected page"
+msgstr "არცეულ გვერდზე შენახვა"
+
+msgid "Create a page and save to it"
+msgstr "შექმენით გვერდი და შეინახეთ მასში"
+
+msgid "New page name"
+msgstr "ახალი გვერდის სახელი"
+
+msgid "Select page"
+msgstr "აირჩიეთ გვერდი"
+
+msgid "Select export relational type:"
+msgstr "აირჩიეთ გატანის რელაციის ტიპი:"
+
+msgid "Details"
+msgstr "დეტალები"
+
+msgid "Event name"
+msgstr "მოვლენის სახელი"
+
+msgid "Status"
+msgstr "სტატუსი"
+
+msgid "Event type"
+msgstr "მოვლენის ტიპი"
+
+msgid "Change to %s"
+msgstr "%s-ზე შეცვლა"
+
+msgid "Execute every"
+msgstr "შესრულება ყოველ"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "გაშვება"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "დასასრული"
+
+msgid "Definition"
+msgstr "აღწერა"
+
+msgid "Format"
+msgstr "ფორმატი"
+
+msgid "Definer"
+msgstr "აღმწერი"
+
+msgid "Events"
+msgstr "მოვლენები"
+
+msgid "Check all"
+msgstr "ყველას მონიშვნა"
+
+msgid "Export"
+msgstr "ექსპორტი"
+
+msgid "Drop"
+msgstr "გადაგდება"
+
+msgid "Create new event"
+msgstr "ახალი მოვლენის შექმნა"
+
+msgid "There are no events to display."
+msgstr "საჩვენებელი მოვლენების გარეშე."
+
+msgid "ON"
+msgstr "ჩართული"
+
+msgid "OFF"
+msgstr "გამორთული"
+
+msgid "Event editor"
+msgstr "მოვლენის რედაქტორი"
+
+msgid "Loading…"
+msgstr "ჩატვირთვა…"
+
+msgid "Save changes"
+msgstr "ცვლილებების შენახვა"
+
+msgid "Export event"
+msgstr "მოვლენის გატანა"
+
+msgid "Exporting tables from \"%s\" database"
+msgstr "ცხრილებს გატანა ბაზიდან \"%s\""
+
+msgid "Tables:"
+msgstr "ცხრილები:"
+
+msgid "Tables"
+msgstr "ცხრილები"
+
+msgid "Data"
+msgstr "მონაცემები"
+
+msgid "Export the structure of all tables."
+msgstr "ყველა ცხრილის სტრუქტურის გატანა."
+
+msgid "Export the data of all tables."
+msgstr "ყველა ცხრილის მონაცემების გატანა."
+
+msgid "Importing into the database \"%s\""
+msgstr "მიმდინარეობს შემოტანა ბაზაში \"%s\""
+
+msgid "Query window"
+msgstr "მოთხოვნის ფანჯარა"
+
+msgid "select table"
+msgstr "აირჩიეთ ცხრილი"
+
+msgid "select column"
+msgstr "აირჩიეთ სვეტი"
+
+msgid "Show"
+msgstr "ჩვენება"
+
+msgid "Table alias"
+msgstr "ცხრილის მეტსახელი"
+
+msgid "Column alias"
+msgstr "სვეტის მეტსახელი"
+
+msgid "criteria"
+msgstr "კრიტერიუმი"
+
+msgid "Sort"
+msgstr "დალაგება"
+
+msgid "Ascending"
+msgstr "ზრდადობით"
+
+msgid "Descending"
+msgstr "კლებადობით"
+
+msgid "Add as"
+msgstr "დამატება, როგორც"
+
+msgid "Text"
+msgstr "ტექსტი"
+
+msgid "Another column"
+msgstr "სხვა სვეტი"
+
+msgid "Remove this column"
+msgstr "ამ სვეტის წაშლა"
+
+msgid "+ Add column"
+msgstr "+ სვეტის დამატება"
+
+msgid "Update query"
+msgstr "მოთხოვნის განახლება"
+
+msgid "Copy query"
+msgstr "მოთხოვნის კოპირება"
+
+msgid "Submit query"
+msgstr "მოთხოვნის გაგზავნა"
+
+msgid "Database operations"
+msgstr "მონაცემთა ბაზის ოპერაციები"
+
+msgid "Database comment"
+msgstr "კომენტარი მონაცემთა ბაზაში"
+
+msgid "Rename database to"
+msgstr "მონაცემთა ბაზის გადარქმევა"
+
+msgid "New database name"
+msgstr "ახალი ბაზის სახელი"
+
+msgid "Drop the database (DROP)"
+msgstr "ბაზის მოცილება (DROP)"
+
+msgid "Copy database to"
+msgstr "ბაზის კოპირება"
+
+msgid "Database name"
+msgstr "ბაზის სახელი"
+
+msgid "Structure only"
+msgstr "მხოლოდ სტრუქტურა"
+
+msgid "Structure and data"
+msgstr "სტრუქტურა და მონაცემები"
+
+msgid "Data only"
+msgstr "მხოლოდ მონაცემები"
+
+msgid "Add %s"
+msgstr "%s-ის დამატება"
+
+msgid "User name"
+msgstr "მომხმარებლის სახელი"
+
+msgid "Host name"
+msgstr "ჰოსტის სახელი"
+
+msgid "Privileges"
+msgstr "პრივილეგიები"
+
+msgid "Grant"
+msgstr "Grant"
+
+msgid "Any"
+msgstr "ნებისმიერი"
+
+msgid "global"
+msgstr "გლობალულრი"
+
+msgid "database-specific"
+msgstr "ბაზაზე-დამოკიდებული"
+
+msgid "wildcard"
+msgstr "ვაილდკარდი"
+
+msgid "routine"
+msgstr "პროცედურა"
+
+msgid "Edit privileges"
+msgstr "პრივილეგიების ჩასწორება"
+
+msgid "No user found."
+msgstr "მომხმარებელი ვერ ვიპოვე."
+
+msgid "With selected:"
+msgstr "მონიშნულით:"
+
+msgid "Add user account"
+msgstr "მომხმარებლის ანგარიშის დამატება"
+
+msgid "Routine name"
+msgstr "პროცედურის სახელი"
+
+msgid "Parameters"
+msgstr "პარამეტრები"
+
+msgid "Direction"
+msgstr "მიმართულება"
+
+msgid "Add parameter"
+msgstr "პარამეტრის დამატება"
+
+msgid "Remove last parameter"
+msgstr "ბოლო პარამეტრის წაშლა"
+
+msgid "Return type"
+msgstr "დაბრუნების ტიპი"
+
+msgid "Return length/values"
+msgstr "დაბრუნებული სიგრძე/მნიშვნელობები"
+
+msgid "Return options"
+msgstr "დაბრუნების მორგება"
+
+msgid "Charset"
+msgstr "სიმბოლოთა ნაკრები"
+
+msgid "Security type"
+msgstr "უსაფრთხოების ტიპი"
+
+msgid "Routine parameters"
+msgstr "პროცედურის პარამეტრები"
+
+msgid "Function"
+msgstr "ფუნქცია"
+
+msgid "This routine does not require any parameters."
+msgstr "ამ პროცედურას პარამეტრები არ სჭირდება."
+
+msgid "Routines"
+msgstr "პროცედურები"
+
+msgid "Search"
+msgstr "ძებნა"
+
+msgid "Create new routine"
+msgstr "ახალი პროცედურის შექმნა"
+
+msgid "There are no routines to display."
+msgstr "საჩვენებელი პროცედურების გარეშე."
+
+msgid "Returns"
+msgstr "აბრუნებს"
+
+msgid "Routine editor"
+msgstr "პროცედურის რედაქტორი"
+
+msgid "Export routine"
+msgstr "პროცედურის გატანა"
+
+msgid "Execute"
+msgstr "შესრულება"
+
+msgid "ENUM/SET editor"
+msgstr "ENUM/SET-ის რედაქტორი"
+
+msgid "Search in database"
+msgstr "მონაცემთა ბაზაში ძებნა"
+
+msgid "Words or values to search for (wildcard: \"%\"):"
+msgstr "მოსაძებნი სიტყვები ან მნიშვნელობები (ვაილდკარდი: \"%s\"):"
+
+msgid "Find:"
+msgstr "ძებნა:"
+
+msgid "at least one of the words"
+msgstr "ერთი სიტყვა მაინც"
+
+msgid "all of the words"
+msgstr "ყველა სიტყვა"
+
+msgid "the exact phrase as substring"
+msgstr "ზუსტი ფრაზა ქვესტრიქონის სახით"
+
+msgid "the exact phrase as whole field"
+msgstr "ზუსტი ფრაზა როგორც მთელი ველი"
+
+msgid "as regular expression"
+msgstr "რეგულარული გამოსახულება"
+
+msgid "Options:"
+msgstr "პარამეტრები:"
+
+msgid "Inside tables:"
+msgstr "ცხრილებში:"
+
+msgid "Unselect all"
+msgstr "მონიშვნის ყველაფერზე მოხსნა"
+
+msgid "Inside column:"
+msgstr "სვეტში:"
+
+msgid "%1$s match in <strong>%2$s</strong>"
+msgid_plural "%1$s matches in <strong>%2$s</strong>"
+msgstr[0] "%1$s დამთხვევა ცხრილში <strong>%2$s</strong>"
+
+msgid "Browse"
+msgstr "არჩევა"
+
+msgid "<strong>Total:</strong> <em>%s</em> match"
+msgid_plural "<strong>Total:</strong> <em>%s</em> matches"
+msgstr[0] "<strong>სულ:</strong><em>%s</em> დამთხვევა"
+
+msgid "Add prefix"
+msgstr "პრეფიქსის დამატება"
+
+msgid "%s table"
+msgid_plural "%s tables"
+msgstr[0] "%s ცხრილი"
+
+msgid "Replication"
+msgstr "რეპლიკაცია"
+
+msgid "Sum"
+msgstr "ჯამი"
+
+msgid "Continue"
+msgstr "გაგრძელება"
+
+msgid "From"
+msgstr "გამომგზავნი"
+
+msgid "To"
+msgstr "მიმღები"
+
+msgid "Copy table"
+msgstr "ცხრილის კოპირება"
+
+msgid "Show create"
+msgstr "შექმნის ჩვენება"
+
+msgid "Delete data or table"
+msgstr "მონაცემების ან ცხრილის წაშლა"
+
+msgid "Empty"
+msgstr "ცარიელი"
+
+msgid "Check table"
+msgstr "ცხრილის შემოწმება"
+
+msgid "Checksum table"
+msgstr "საკონტროლო ჯამების ცხრილი"
+
+msgid "Optimize table"
+msgstr "ცხრილის ოპტიმიზება"
+
+msgid "Repair table"
+msgstr "ცხრილის აღდგენა"
+
+msgid "Prefix"
+msgstr "პრეფიქსი"
+
+msgid "Add prefix to table"
+msgstr "პრეფიქსის დამატება მაგიდისათვის"
+
+msgid "Replace table prefix"
+msgstr "ცხრილის პრეფიქსის ჩანაცვლება"
+
+msgid "Copy table with prefix"
+msgstr "პრეფიქსის მქონე ცხრილის კოპირება"
+
+msgid "Central columns"
+msgstr "ცენტრალური სვეტები"
+
+msgid "Add columns to central list"
+msgstr "დაამატეთ სვეტები ცენტრალურ სიაში"
+
+msgid "Make consistent with central list"
+msgstr "ცენტრალურ სიასთან შეთანხმება"
+
+msgid "Are you sure?"
+msgstr "დარწმუნებული ბრძანდებით?"
+
+msgid "Database:"
+msgstr "მონაცემთა ბაზა:"
+
+msgid "Add AUTO INCREMENT value"
+msgstr "AUTO INCREMENT-ის მნიშვნელობის დამატება"
+
+msgid "Do you really want to execute the following query?"
+msgstr "მართლა გნებავთ ამ მოთხოვნის შესრულება?"
+
+msgid "Enable foreign key checks"
+msgstr "უცხო გასაღებების შემოწმების ჩართვა"
+
+msgid "Remove from Favorites"
+msgstr "რჩეულებიდან წაშლა"
+
+msgid "Add to Favorites"
+msgstr "რჩეულებში დამატება"
+
+msgid "Data dictionary"
+msgstr "მონაცემების ლექსიკონი"
+
+msgid "Showing create queries"
+msgstr "შექმნის მოთხოვნების ჩვენება"
+
+msgid "Table"
+msgstr "ცხრილი"
+
+msgid "Views"
+msgstr "ხედები"
+
+msgid "View"
+msgstr "ხედო"
+
+msgid "Create view"
+msgstr "ხედის შექმნა"
+
+msgid "Not replicated"
+msgstr "რეპლიცირებული არაა"
+
+msgid "Replicated"
+msgstr "რეპლიცირებულია"
+
+msgid "Insert"
+msgstr "ჩასმა"
+
+msgid "in use"
+msgstr "გამოიყენება"
+
+msgid "Rows"
+msgstr "სტრიქონები"
+
+msgid "May be approximate. Click on the number to get the exact count. See [doc@faq3-11]FAQ 3.11[/doc]."
+msgstr "შეიძლება იყოს მიახლოებითი. ზუსტი რაოდენობის მისაღებად რიცხვზე დააწკაპუნეთ. იხილეთ [doc@faq3-11]FAQ 3.11[/doc]."
+
+msgid "Size"
+msgstr "ზომა"
+
+msgid "Overhead"
+msgstr "Overhead"
+
+msgid "Creation"
+msgstr "შეიქმნა"
+
+msgid "Last update"
+msgstr "უკანასკნელი განახლება"
+
+msgid "Last check"
+msgstr "ბოლო შემოწმება"
+
+msgid "Tracked tables"
+msgstr "ნანახი ცხრილები"
+
+msgid "Last version"
+msgstr "ბოლო ვერსია"
+
+msgid "Created"
+msgstr "შეიქმნა"
+
+msgid "Updated"
+msgstr "განახლებულია"
+
+msgid "active"
+msgstr "აქტიური"
+
+msgid "Delete tracking"
+msgstr "ტრეკინგის წაშლა"
+
+msgid "Versions"
+msgstr "ვერსია"
+
+msgid "Tracking report"
+msgstr "ტრეკინგის ანგარიში"
+
+msgid "Structure snapshot"
+msgstr "სნეიფშუთის სტრუქტურა"
+
+msgid "Track table"
+msgstr "ცხრილის ტრეკი"
+
+msgctxt "First page"
+msgid "Begin"
+msgstr "დაწყბა"
+
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "წინა"
+
+msgctxt "Next page"
+msgid "Next"
+msgstr "შემდეგი"
+
+msgctxt "Last page"
+msgid "End"
+msgstr "დასასრული"
+
+msgid "Show all"
+msgstr "ყველაფრის ჩვენება"
+
+msgid "Save edited data"
+msgstr "ჩასწორებული მონაცემების შენახვა"
+
+msgid "Restore column order"
+msgstr "სვეტის მიმდევრობის აღდგენა"
+
+msgid "Number of rows:"
+msgstr "მწკრივების რაოდენობა:"
+
+msgid "All"
+msgstr "ყველა"
+
+msgid "Sort by key:"
+msgstr "გასაღებით დალაგება:"
+
+msgid "Extra options"
+msgstr "დამატებითი პარამეტრები"
+
+msgid "Partial texts"
+msgstr "ნაწილობრივი ტექსტები"
+
+msgid "Full texts"
+msgstr "სრული ტექსტები"
+
+msgid "Display column for relationships"
+msgstr "აჩვენეთ სვეტი ურთიერთობებისთვის"
+
+msgid "Show binary contents"
+msgstr "ორობითი შიგთავსის ჩვენება"
+
+msgid "Hide browser transformation"
+msgstr "ბრაუზერის ტრანსფორმაციის დამალვა"
+
+msgid "Geometry"
+msgstr "გეომეტრია"
+
+msgid "Copy"
+msgstr "ასლი"
+
+msgid "Copy to clipboard"
+msgstr "ბუფერში კოპირება"
+
+msgid "Display chart"
+msgstr "გრაფიკის ჩვენება"
+
+msgctxt "None encoding conversion"
+msgid "None"
+msgstr "არაფერი"
+
+msgid "Error"
+msgstr "შეცდომა"
+
+msgid "Automatically send report next time"
+msgstr "შემდეგ ჯერზე ანგარიშის ავტომატური გაგზავნა"
+
+msgid "Submit error report"
+msgstr "შეცდომის ანგარიშის გაგზავნა"
+
+msgid "Send error report"
+msgstr "შეცდომის ანგარიშის გაგზავნა"
+
+msgid "Something went wrong"
+msgstr "რაღაც არასწორია"
+
+msgid "Go back"
+msgstr "უკან გადასვლა"
+
+msgid "Select a template"
+msgstr "აირჩიეთ შაბლონი"
+
+msgid "Export templates:"
+msgstr "გატანის შაბლონები:"
+
+msgid "New template:"
+msgstr "ახალი შაბლონი:"
+
+msgid "Template name"
+msgstr "შაბლონის სახელი"
+
+msgid "Existing templates:"
+msgstr "არსებული შაბლონები:"
+
+msgid "Template:"
+msgstr "შაბლონი:"
+
+msgid "Update"
+msgstr "განახლება"
+
+msgid "SQL query:"
+msgstr "SQL მოთხოვნა:"
+
+msgid "Show SQL query"
+msgstr "SQL მოთხოვნის ჩვენება"
+
+msgid "Export method:"
+msgstr "გატანის მეთოდი:"
+
+msgid "Custom - display all possible options"
+msgstr "მორგებული - ყველა შესაძლო ვარიანტის ჩვენება"
+
+msgid "Format:"
+msgstr "ფორმატი:"
+
+msgid "File format to export"
+msgstr "გატანის ფაილის ფორმატი"
+
+msgid "Rows:"
+msgstr "სტრიქონები:"
+
+msgid "Output:"
+msgstr "გამოტანა:"
+
+msgid "Save on server in the directory <strong>%s</strong>"
+msgstr "შეინახება სერვერზე საქაღალდეში <strong>%s</strong>"
+
+msgctxt "Alias"
+msgid "Database"
+msgstr "მონაცემთა ბაზა"
+
+msgid "Remove"
+msgstr "წაშლა"
+
+msgctxt "Alias"
+msgid "Table"
+msgstr "ცხრილი"
+
+msgctxt "Alias"
+msgid "Column"
+msgstr "სვეტი"
+
+msgid "Select database:"
+msgstr "აირჩიეთ ბაზა:"
+
+msgid "Select table:"
+msgstr "აირჩიეთ ცხრილი:"
+
+msgid "New table name"
+msgstr "ახალი ცხრილის სახელი"
+
+msgid "Select column:"
+msgstr "აირჩიეთ სვეტი:"
+
+msgid "New column name"
+msgstr "ახალი სვეტის სახელი"
+
+msgid "Save & close"
+msgstr "შენახვა და დახურვა"
+
+msgid "Use %s statement"
+msgstr "%s გამოსახულების გამოყენება"
+
+msgid "View output as text"
+msgstr "გამოტანის ტექსტად ნახვა"
+
+msgid "Save output to a file"
+msgstr "გამოტანის ფაილში შენახვა"
+
+msgid "File name template:"
+msgstr "ფაილის სახელის ნიმუში:"
+
+msgid "This value is interpreted using the 'strftime' function, so you can use time formatting strings. Additionally the following transformations will happen: %s Other text will be kept as is. See the FAQ 6.27 for details."
+msgstr "მნიშვნელობა ითარგმნება ფუნქციით 'strftime', ასე რომ შეგიძლიათ, დროის დაფორმატების სტრიქონები გამოიყენოთ. დამატებით მოხდება შემდეგი გარდაქმნები: %s სხვა ტექსტი დარჩება ისე, როგორც არის. დეტალებისთვის იხილთ ხდკ 6.26."
+
+msgid "Character set of the file:"
+msgstr "სიმბოლოთა ნაკრები ფაილისთვის:"
+
+msgid "Compression:"
+msgstr "შეკუმშვა:"
+
+msgid "zipped"
+msgstr "zip-ით შეკუმშული"
+
+msgid "gzipped"
+msgstr "gzip-ით შეკუმშული"
+
+msgid "Export databases as separate files"
+msgstr "ბაზების ცალ-ცალკე ფაილებში გატანა"
+
+msgid "Export tables as separate files"
+msgstr "ცხრილების ცალ-ცალკე ფაილებად გატანა"
+
+msgid "Format-specific options:"
+msgstr "ფორმატის საკუთარი პარამეტრები:"
+
+msgid "Encoding Conversion:"
+msgstr "კოდირების გადაყვანა:"
+
+msgid "Filters"
+msgstr "ფილტრები"
+
+msgid "Containing the word:"
+msgstr "შეიცავს სიტყვას:"
+
+msgid "Geometry type:"
+msgstr "გეომეტრიის ტიპი:"
+
+msgctxt "Spatial Reference System Identifier"
+msgid "SRID:"
+msgstr "SRID:"
+
+msgid "Output"
+msgstr "გამოტანილი"
+
+msgid "no branch"
+msgstr "ბრენჩის გარეშე"
+
+msgid "committed on %s by %s"
+msgstr "კომიტის დრო %s, %s-ის მიერ"
+
+msgid "authored on %s by %s"
+msgstr "დრო %s ავტორი %s"
+
+msgid "General settings"
+msgstr "ზოგადი პარამეტრები"
+
+msgid "Change password"
+msgstr "პაროლის შეცვლა"
+
+msgid "Server connection collation:"
+msgstr "სერვერთან მიერთების კოლაცია:"
+
+msgid "More settings"
+msgstr "მეტი პარამეტრი"
+
+msgid "Appearance settings"
+msgstr "გარეგნობის პარამეტრები"
+
+msgid "Language"
+msgstr "ენა"
+
+msgid "Theme"
+msgstr "თემა"
+
+msgctxt "View all themes"
+msgid "View all"
+msgstr "ყველას ნახვა"
+
+msgid "Database server"
+msgstr "ბაზის სერვერი"
+
+msgid "Server:"
+msgstr "სერვერი:"
+
+msgid "Hostname:"
+msgstr "ჰოსტის სახელი:"
+
+msgid "Server type:"
+msgstr "სერვერის ტიპი:"
+
+msgid "Server connection:"
+msgstr "სერვერის მიერთება:"
+
+msgid "Server version:"
+msgstr "სერვერის ვერსია:"
+
+msgid "User:"
+msgstr "მომხმარებელი:"
+
+msgid "Server charset:"
+msgstr "სერვერის სიმბოლოების კოდირება:"
+
+msgid "Web server"
+msgstr "ვებ სერვერი"
+
+msgid "Database client version:"
+msgstr "ბაზის კლიენტის ვერსია:"
+
+msgid "PHP extension:"
+msgstr "PHP-ის გაფართოება:"
+
+msgid "PHP version:"
+msgstr "PHP-ის ვერსია:"
+
+msgid "Show PHP information"
+msgstr "PHP-ის ინფორმაციის ჩვენება"
+
+msgid "Version information:"
+msgstr "ვერსიის ინფორმაცია:"
+
+msgid "Official Homepage"
+msgstr "ოფიციალური ვებგვერდი"
+
+msgid "Contribute"
+msgstr "შემოგვწირეთ"
+
+msgid "Get support"
+msgstr "მხარდაჭერის მიღება"
+
+msgid "List of changes"
+msgstr "ცვლილების სია"
+
+msgid "License"
+msgstr "ლიცენზია"
+
+msgid "Warning"
+msgstr "გაფრთხილება"
+
+msgid "Notice"
+msgstr "გაფრთხილება"
+
+msgid "phpMyAdmin Themes"
+msgstr "phpMyAdmin-ის თემები"
+
+msgid "Screenshot of the %s theme."
+msgstr "%s თემის ეკრანის ანაბეჭდი."
+
+msgid "Back"
+msgstr "უკან"
+
+msgid "Import"
+msgstr "შემოტანა"
+
+msgid "File to import:"
+msgstr "შემოსატანი ფაილი:"
+
+msgid "Upload a file"
+msgstr "ფაილის ატვირთვა"
+
+msgid "Select file to import"
+msgstr "აირჩიეთ შემოსატანი ფაილი"
+
+msgid "Select from the web server upload directory [strong]%s[/strong]:"
+msgstr "აირჩიეთ ვებსერვერის ატვირთვის საქაღალდიდან [strong]%s[/strong]:"
+
+msgid "There are no files to import!"
+msgstr "შემოსატანი ფაილების გარეშე!"
+
+msgid "Partial import:"
+msgstr "ნაწილობრივი შემოტანა:"
+
+msgid "Allow the interruption of an import in case the script detects it is close to the PHP timeout limit."
+msgstr "PHP-ის მოლოდინის გადაჭარბების შემთხვევაში შემოტანის შეწყვეტის დაშვება."
+
+msgid "Skip this number of queries (for SQL) starting from the first one:"
+msgstr "პირველიდან დაწყებული მითითებული რაოდენობის (SQL-სთვის) ხაზების გამოტოვება:"
+
+msgid "Other options"
+msgstr "სხვა პარამეტრები"
+
+msgid "Rename"
+msgstr "გადარქმევა"
+
+msgid "Taking you to the target site."
+msgstr "სამიზნე საიტზე გადაყვანა."
+
+msgid "Page number:"
+msgstr "გვერდის ნომერი:"
+
+msgid "Log in"
+msgstr "შესვლა"
+
+msgid "Username:"
+msgstr "მომხმარებელი:"
+
+msgid "Password:"
+msgstr "პაროლი:"
+
+msgid "Server choice:"
+msgstr "სერვერის არჩევა:"
+
+msgid "Welcome to %s"
+msgstr "მოგესალმებათ %s"
+
+msgid "Secret/key:"
+msgstr "პაროლი/გასაღები:"
+
+msgid "Authentication code:"
+msgstr "ავთენტიფიკაციის კოდი:"
+
+msgid "Deprecated!"
+msgstr "მოძველებულია!"
+
+msgid "Verify"
+msgstr "შემოწმება"
+
+msgid "View:"
+msgstr "ხედი:"
+
+msgid "Table:"
+msgstr "ცხრილი:"
+
+msgid "Toggle navigation"
+msgstr "ნავიგაციის გადართვა"
+
+msgid "(current)"
+msgstr "(მიმდინარე)"
+
+msgid "Show hidden navigation tree items."
+msgstr "დამალული ნავიგაციის ხის ელემენტების ჩვენება."
+
+msgid "Unhide"
+msgstr "გამოჩენა"
+
+msgid "Home"
+msgstr "სახლი"
+
+msgid "Empty session data"
+msgstr "სესის მონაცემები ცარიელია"
+
+msgid "MariaDB Documentation"
+msgstr "MariaDB-ის დოკუმენტაცია"
+
+msgid "MySQL Documentation"
+msgstr "MySQL-ის დოკუმენტაცია"
+
+msgid "Navigation panel settings"
+msgstr "ნავიგაციის პანელის მორგება"
+
+msgid "Reload navigation panel"
+msgstr "ნავიგაციის პანელის თავიდან ჩატვირთვა"
+
+msgid "SQL upload"
+msgstr "SQL ატვირთვა"
+
+msgid "Databases"
+msgstr "მონაცემთა ბაზები"
+
+msgid "Clear fast filter"
+msgstr "სწრაფი ფილტრის გასუფთავება"
+
+msgid "Recently visited tables"
+msgstr "ახლახან ნანახი ცხრილები"
+
+msgid "Recent"
+msgstr "ახლახანს"
+
+msgid "Favorite tables"
+msgstr "რჩეული ცხრილები"
+
+msgid "Favorites"
+msgstr "სანიშნები"
+
+msgid "Delete settings"
+msgstr "პარამეტრების წაშლა"
+
+msgid "Cannot save settings, submitted form contains errors!"
+msgstr "პარამეტრების შენახვა შეუძლებელია. გადმოცემული ფორმა შეცდომებს შეიცავს!"
+
+msgid "Manage your settings"
+msgstr "თქვენი პარამეტრების მართვა"
+
+msgid "Two-factor authentication"
+msgstr "2FA"
+
+msgid "Features"
+msgstr "თვისებები"
+
+msgid "SQL queries"
+msgstr "SQL მოთხოვნები"
+
+msgid "Navigation panel"
+msgstr "ნავიგაციის პანელი"
+
+msgid "Main panel"
+msgstr "მთავარი პანელი"
+
+msgid "Configuration has been saved."
+msgstr "კონფიგურაცია შენახულია."
+
+msgid "Import from file"
+msgstr "ფაილიდან შემოტანა"
+
+msgid "You have no saved settings!"
+msgstr "შენახული პარამეტრები არ გაგაჩნიათ!"
+
+msgid "Merge with current configuration"
+msgstr "შერწყმა მიმდინარე კონფიგურაციასთან"
+
+msgid "Save as JSON file"
+msgstr "JSON ფაილის სახით შენახვა"
+
+msgid "Save as PHP file"
+msgstr "PHP ფაილის სახით შენახვა"
+
+msgid "Configure two-factor authentication"
+msgstr "2FA-ის მორგება"
+
+msgid "Enable two-factor authentication"
+msgstr "2FA-ის ჩართვა"
+
+msgid "Confirm disabling two-factor authentication"
+msgstr "დაადასტურეთ 2FA-ის გამორთვა"
+
+msgid "Disable two-factor authentication"
+msgstr "2FA-ის გამორთვა"
+
+msgid "Two-factor authentication status"
+msgstr "2FA-ის სტატუსი"
+
+msgid "There are no favorite tables."
+msgstr "რჩეული ცხრილების გარეშე."
+
+msgid "There are no recent tables."
+msgstr "უახლესი ცხრილების გარეშე."
+
+msgid "phpMyAdmin configuration storage"
+msgstr "phpMyAdmin-ის კონფიგურაციის საცავი"
+
+msgid "Configuration of pmadb…"
+msgstr "მიმდინარეობს pmbadb-ის მორგება…"
+
+msgctxt "Correctly working"
+msgid "OK"
+msgstr "დიახ"
+
+msgid "General relation features:"
+msgstr "ზოგადი ურთიერთობის თვისებები:"
+
+msgid "Enabled"
+msgstr "ჩართულია"
+
+msgid "Display features:"
+msgstr "თვისებების ჩვენება:"
+
+msgid "Designer and creation of PDFs:"
+msgstr "დიზაინერი და PDF-ების შექმნა:"
+
+msgid "Displaying column comments:"
+msgstr "სვეტის კომენტარების ჩვენება:"
+
+msgid "Browser transformation:"
+msgstr "ბრაუზერის ტრანსფორმაცია:"
+
+msgid "Bookmarked SQL query:"
+msgstr "ჩანიშნული SQL მოთხოვნა:"
+
+msgid "SQL history:"
+msgstr "SQL ისტორია:"
+
+msgid "Persistent recently used tables:"
+msgstr "მუდმივი ახლახანს გამოყენებული ცხრილები:"
+
+msgid "Persistent favorite tables:"
+msgstr "მუდმივი რჩეული ცხრილები:"
+
+msgid "Persistent tables' UI preferences:"
+msgstr "მუდმივი ცხრილების ინტერფეისის მორგება:"
+
+msgid "Tracking:"
+msgstr "ტრეკინგი:"
+
+msgid "User preferences:"
+msgstr "მომხმარებლის პარამეტრები:"
+
+msgid "Configurable menus:"
+msgstr "მორგებადი მენიუები:"
+
+msgid "Hide/show navigation items:"
+msgstr "ნავიგაციის ჩანაწერების ჩვენება/დამალვა:"
+
+msgid "Remembering designer settings:"
+msgstr "დიზაინერის პარამეტრების დამახსოვრება:"
+
+msgid "Saving export templates:"
+msgstr "გატანის შაბლონების შენახვა:"
+
+msgid "Binary log"
+msgstr "ბინარული ჟურნალი"
+
+msgid "Select binary log to view"
+msgstr "აირჩიეთ საჩვენებელი ორობითი ჟურნალი"
+
+msgid "Files"
+msgstr "ფაილები"
+
+msgid "Truncate shown queries"
+msgstr "ნაჩვენები მოთხოვნების წაკვეთა"
+
+msgid "Show full queries"
+msgstr "სრული მოთხოვნების ჩვენება"
+
+msgid "Log name"
+msgstr "ჟურნალის სახელი"
+
+msgid "Position"
+msgstr "მდებარეობა"
+
+msgid "Server ID"
+msgstr "სერვერის ID"
+
+msgid "Original position"
+msgstr "საწყისი მდებარეობა"
+
+msgid "Information"
+msgstr "ინფორმაცია"
+
+msgid "Character sets and collations"
+msgstr "სიმბოლოთა ნაკრებები და კოლაციები"
+
+msgctxt "The collation is the default one"
+msgid "default"
+msgstr "ნაგულისხმები"
+
+msgid "Databases statistics"
+msgstr "მონაცემთა ბაზების სტატისტიკა"
+
+msgid "Create database"
+msgstr "ბაზის შექმნა"
+
+msgid "No privileges to create databases"
+msgstr "მონაცემთა ბაზების შექმნის პრივილეგია არ გაგაჩნიათ"
+
+msgid "Primary replication"
+msgstr "ძირითადი რეპლიკაცია"
+
+msgid "Replica replication"
+msgstr "რეპლიკის რეპლიკაცია"
+
+msgid "Jump to database '%s'"
+msgstr "ბაზაზე გადასვლა '%s'"
+
+msgid "Check privileges"
+msgstr "შეამოწმეთ პრივილეგიები"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Total:"
+msgstr "სულ:"
+
+msgid "Enable statistics"
+msgstr "სტატისტიკის ჩართვა"
+
+msgid "No databases"
+msgstr "მონაცემთა ბაზები არაა"
+
+msgid "Confirm"
+msgstr "დადასტურება"
+
+msgid "Storage engines"
+msgstr "საცავის ძრავები"
+
+msgid "Description"
+msgstr "აღწერილობა"
+
+msgid "Buffer pool usage"
+msgstr "ბუფერის პულის გამოყენება"
+
+msgid "%s pages"
+msgstr "%s გვერდი"
+
+msgid "Buffer pool activity"
+msgstr "ბუფერის პულის აქტივობა"
+
+msgid "Read requests"
+msgstr "მოთხოვნების წაკითხვა"
+
+msgid "Variables"
+msgstr "ცვლადები"
+
+msgid "Unknown storage engine."
+msgstr "უცნობი საცავის ძრავა."
+
+msgid "Exporting databases from the current server"
+msgstr "ბაზების გატანა მიმდინარე სერვერიდან"
+
+msgid "Importing into the current server"
+msgstr "მიმდინა სერვერში შეტანა"
+
+msgid "Plugins"
+msgstr "დამატებები"
+
+msgid "Plugin"
+msgstr "დამატება"
+
+msgid "Version"
+msgstr "ვერსია"
+
+msgid "Author"
+msgstr "ავტორი"
+
+msgid "inactive"
+msgstr "არააქტიური"
+
+msgid "disabled"
+msgstr "გათიშულია"
+
+msgid "deleting"
+msgstr "წაშლა"
+
+msgid "deleted"
+msgstr "წაშლილია"
+
+msgctxt "Create new user"
+msgid "New"
+msgstr "ახალი"
+
+msgid "Database for user account"
+msgstr "მონაცემთა ბაზა მომხმარებლისთვის"
+
+msgid "Create database with same name and grant all privileges."
+msgstr "იგივე სახელის მქონე მონაცემთა ბაზის შექმნა და ყველა პრივილეგიის მინიჭება."
+
+msgid "Grant all privileges on database %s."
+msgstr "ყველა პრივილეგიის მინიჭება მონაცემთა ბაზისთვის \"%s\"."
+
+msgid "Create user"
+msgstr "მომხმარებლის შექმნა"
+
+msgid "No Password"
+msgstr "პაროლი არაა"
+
+msgid "Enter:"
+msgstr "შეიყვანეთ:"
+
+msgid "Re-type:"
+msgstr "თავიდან-აკრიფეთ:"
+
+msgctxt "Password strength"
+msgid "Strength:"
+msgstr "სიმაგრე:"
+
+msgid "Password Hashing:"
+msgstr "პაროლის ჰეშირება:"
+
+msgid "User group:"
+msgstr "მომხმარებლის ჯგუფი:"
+
+msgid "Edit privileges:"
+msgstr "პრივილეგიების ჩასწორება:"
+
+msgid "User account"
+msgstr "მომხმარებლის ანგარიში"
+
+msgid "Routine"
+msgstr "რუტინა"
+
+msgid "Routine-specific privileges"
+msgstr "პროცედურისთვის საჭირო პრივილეგიები"
+
+msgid "Login Information"
+msgstr "შესვლის ინფორმაცია"
+
+msgid "User name:"
+msgstr "მომხმარებლის სახელი:"
+
+msgid "Any user"
+msgstr "ნებისმიერი მომხმარებელი"
+
+msgid "Use text field"
+msgstr "გამოიყენე ტექსტური ველი"
+
+msgid "Host name:"
+msgstr "ჰოსტის სახელი:"
+
+msgid "Any host"
+msgstr "ნებისმიერი ჰოსტი"
+
+msgid "Local"
+msgstr "ლოკალური"
+
+msgid "This host"
+msgstr "ეს ჰოსტი"
+
+msgid "Use host table"
+msgstr "ჰოსტის ცხრილის გამოყენება"
+
+msgid "Password"
+msgstr "პაროლი"
+
+msgid "Do not change the password"
+msgstr "არ შეცვალო პაროლი"
+
+msgid "No password"
+msgstr "პაროლის გარეშე"
+
+msgid "Re-type"
+msgstr "თავიდან აკრეფა"
+
+msgid "Authentication plugin"
+msgstr "ავთენტიფიკაციის მოდული"
+
+msgid "Password hashing method"
+msgstr "პაროლის ჰეშირების მეთოდი"
+
+msgid "Edit user group"
+msgstr "მომხმარებლის ჯგუფის ჩასწორება"
+
+msgid "Add privileges on the following database(s):"
+msgstr "პრივილეგიების დამატება შემდეგი მონაცემთა ბაზ(ებ)-ისთვის:"
+
+msgid "Add privileges on the following table:"
+msgstr "პრივილეგიების დამატება შემდეგი ცხრილისათვის:"
+
+msgid "Add privileges on the following routine:"
+msgstr "პრივილეგიების დამატება შემდეგი პროცედურისთვის:"
+
+msgid "Or"
+msgstr "ან"
+
+msgctxt "None privileges"
+msgid "None"
+msgstr "არა"
+
+msgid "Global"
+msgstr "გლობალური"
+
+msgid "Global privileges"
+msgstr "გლობალური პრივილეგიები"
+
+msgid "Administration"
+msgstr "ადმინისტრირება"
+
+msgid "Allows creating foreign key relations."
+msgstr "უცხო გასაღების ურთიერთობების შექმნის დაშვება."
+
+msgid "Not used for this MySQL version."
+msgstr "ამ MySQL ვერსიაში არ გამოიყენება."
+
+msgid "Does not require SSL-encrypted connections."
+msgstr "SSL-ით დაშიფრულ მიერთებას არ ითხოვს."
+
+msgid "Requires SSL-encrypted connections."
+msgstr "მოითხოვს SSL-ით დაშიფრულ შეერთებებს."
+
+msgid "Update user privileges"
+msgstr "მომხმარებლის პრივილეგიების განახება"
+
+msgid "User accounts overview"
+msgstr "მომხმარებლის ანგარიშების მიმოხილვა"
+
+msgid "User groups"
+msgstr "მომხმარებლის ჯგუფები"
+
+msgid "Create a new user account with the same privileges and …"
+msgstr "იგივე პრივილეგიების მქონე ახალი მომხმარებლის შექმნა და …"
+
+msgid "… keep the old one."
+msgstr "… ძველის შენახვა."
+
+msgid "… delete the old one from the user tables."
+msgstr "… ძველი მომხმარებლის მომხმარებლების ცხრილიდან წაშლა."
+
+msgid "… delete the old one from the user tables and reload the privileges afterwards."
+msgstr "… ძველი მომხმარებლის მომხმარებლების სიიდან წაშლა და შემდეგ პრივილეგიების გადატვირთვა."
+
+msgid "User group"
+msgstr "მომხმარებლის ჯგუფი"
+
+msgid "Unlock this account."
+msgstr "ამ ანგარიშის განბლოკვა."
+
+msgid "Lock this account."
+msgstr "ამ ანგარიშის დაბლოკვა."
+
+msgctxt "Unlock the account."
+msgid "Unlock"
+msgstr "განბლოკვა"
+
+msgctxt "Lock the account."
+msgid "Lock"
+msgstr "დაბლოკვა"
+
+msgid "Remove selected user accounts"
+msgstr "მონიშნული მომხმარებლის ანგარიშების წაშლა"
+
+msgid "Replica configuration - Change or reconfigure primary server"
+msgstr "რეპლიკის მორგება - მთავარი სერვერის შეცვლა ან თავიდან მორგება"
+
+msgid "Host:"
+msgstr "ჰოსტი:"
+
+msgid "Port:"
+msgstr "პორტი:"
+
+msgid "No privileges"
+msgstr "პრივილეგიების გარეშე"
+
+msgid "Add replica replication user"
+msgstr "რეპლიკის რეპლიკაციის მომხმარებლის დამატება"
+
+msgid "Use text field:"
+msgstr "გამოიყენე ტექსტური ველი:"
+
+msgid "Host"
+msgstr "ჰოსტი"
+
+msgid "Generate password:"
+msgstr "პაროლის გენერირება:"
+
+msgid "Generate"
+msgstr "დაგენერირება"
+
+msgid "Primary configuration"
+msgstr "ძირითადი კონფიგურაცია"
+
+msgid "Please select databases:"
+msgstr "აირჩიეთ ბაზები:"
+
+msgid "Show primary status"
+msgstr "ძირითადი სტატუსის ჩვენება"
+
+msgid "Primary connection:"
+msgstr "ძირითადი მიერთება:"
+
+msgid "See replica status table"
+msgstr "იხილეთ რეპლიკის სტატუსის ცხრილი"
+
+msgid "Control replica:"
+msgstr "რეპლიკის კონტროლი:"
+
+msgid "Reset replica"
+msgstr "რეპლიკის საწყის მნიშვნელობებზე დაბრუნება"
+
+msgid "Start SQL Thread only"
+msgstr "მხოლოდ SQL თემების გაშვება"
+
+msgid "Start IO Thread only"
+msgstr "გაეშვას მხოლოდ IO სტრუქტურა"
+
+msgid "Primary status"
+msgstr "ძირითადი სტატუსი"
+
+msgid "Replica status"
+msgstr "რეპლიკის სტატუსი"
+
+msgid "Variable"
+msgstr "ცვლადი"
+
+msgid "Current server:"
+msgstr "მიმდინარე სერვერი:"
+
+msgid "Servers"
+msgstr "სერვერები"
+
+msgid "Advisor system"
+msgstr "მრჩეველი სისტემა"
+
+msgid "Instructions"
+msgstr "ინსტრუქციები"
+
+msgid "Issue:"
+msgstr "პრობლემა:"
+
+msgid "Recommendation:"
+msgstr "რეკომენდაცია:"
+
+msgid "Justification:"
+msgstr "ახსნა:"
+
+msgid "Test:"
+msgstr "ტესტი:"
+
+msgid "Server"
+msgstr "სერვერი"
+
+msgid "Processes"
+msgstr "პროცესები"
+
+msgid "Query statistics"
+msgstr "მოთხოვნების სტატისტიკა"
+
+msgid "Monitor"
+msgstr "თვალყური"
+
+msgid "Advisor"
+msgstr "მრჩეველი"
+
+msgid "System monitor"
+msgstr "სისტემური მონიტორი"
+
+msgid "Start monitor"
+msgstr "მონიტორის გაშვება"
+
+msgid "Instructions/Setup"
+msgstr "ინსტრუქციები/მორგება"
+
+msgid "Add chart"
+msgstr "გრაფიკის დამატება"
+
+msgid "Refresh rate"
+msgstr "განახლების სიხშირე"
+
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d წამი"
+
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d წუთი"
+
+msgid "Chart columns"
+msgstr "გრაფიკის სვეტები"
+
+msgid "Importing system monitor configuration"
+msgstr "მიმდინარეობს სისტემის მონიტორის კონფიგურაციის შემოტანა"
+
+msgid "Reset to default"
+msgstr "ნაგულისხმებ მნიშვნელობაზე დაბრუნება"
+
+msgid "System monitor instructions"
+msgstr "სისტემის მონიტორის ინსტრუქციები"
+
+msgid "Chart Title"
+msgstr "გრაფიკის სათაური"
+
+msgid "Select series:"
+msgstr "სერიების არჩევა:"
+
+msgid "or type variable name:"
+msgstr "ან აკრიფეთ ცვლადის სახელი:"
+
+msgid "KiB"
+msgstr "KiB"
+
+msgid "MiB"
+msgstr "MiB"
+
+msgid "Add this series"
+msgstr "ამ სერიების დამატება"
+
+msgid "Series in chart:"
+msgstr "მონაცემის მწკრივები გრაფიკში:"
+
+msgid "Add chart to grid"
+msgstr "გრაფიკის დამატება ბადეზე"
+
+msgid "Log statistics"
+msgstr "ჟურნალის სტატისტიკა"
+
+msgid "Selected time range:"
+msgstr "მონიშნული დროის დიაპაზონი:"
+
+msgid "Query analyzer"
+msgstr "მოთხოვნის ანალიზატორი"
+
+msgid "Query"
+msgstr "მოთხოვნა"
+
+msgid "Analyse query"
+msgstr "მოთხოვნის ანალიზი"
+
+msgid "Analysing logs"
+msgstr "ჟურნალის ანალიზი"
+
+msgid "Cancel request"
+msgstr "მოთხოვნის გაუქმება"
+
+msgid "No data found"
+msgstr "მონაცემების გარეშე"
+
+msgid "Loading logs"
+msgstr "ჟურნალის ჩატვირთვა"
+
+msgid "Jump to the log table"
+msgstr "გადასვლა ჟურნალის ცხრილზე"
+
+msgid "Warning:"
+msgstr "გაფრთხილება:"
+
+msgid "Reload page"
+msgstr "გვერდის თავიდან ჩატვირთვა"
+
+msgid "Local monitor configuration incompatible!"
+msgstr "ლოკალური მონიტორის კონფიგურაცია შეუთავსებელია!"
+
+msgid "Show only active"
+msgstr "მხოლოდ აქტიურის ჩვენება"
+
+msgid "Kill"
+msgstr "მოკვლა"
+
+msgid "Questions since startup:"
+msgstr "კითხვები გაშვების შემდეგ:"
+
+msgid "ø per hour: %s"
+msgstr "ø საათში: %s"
+
+msgid "ø per minute: %s"
+msgstr "ø წუთში: %s"
+
+msgid "ø per second: %s"
+msgstr "ø წამში: %s"
+
+msgid "Statements"
+msgstr "ინსტრუქციები"
+
+msgid "#"
+msgstr "#"
+
+msgid "ø per hour"
+msgstr "ø საათში"
+
+msgid "This MySQL server has been running for %1$s. It started up on %2$s."
+msgstr "დრო, რომლის განმავლობაშიც ეს MySQL სერვერი გაშვებულია: %1$s. გაშვების დრო: %2$s."
+
+msgid "Traffic"
+msgstr "ტრაფიკი"
+
+msgid "Connections"
+msgstr "კავშირები"
+
+msgid "Replication status"
+msgstr "რეპლიკაციის სტატუსი"
+
+msgid "Show only alert values"
+msgstr "მხოლოდ განგაშის მნიშვნელობების ჩვენება"
+
+msgid "Show unformatted values"
+msgstr "დაუფორმატებელი მნიშვნელობების ჩვენება"
+
+msgid "Related links:"
+msgstr "შესაბამისი ბმულები:"
+
+msgid "Add user group"
+msgstr "მომხმარებლის ჯგუფის დამატება"
+
+msgid "User group menu assignments"
+msgstr "მომხმარებლის ჯგუფის მინიჭებები"
+
+msgid "Group name:"
+msgstr "ჯგუფის სახელი:"
+
+msgid "Server level tabs"
+msgstr "სერვერის-დონის ჩანართები"
+
+msgid "Database level tabs"
+msgstr "ბაზის დონის ჩანართები"
+
+msgid "Table level tabs"
+msgstr "ცხრილის დონის ჩანართები"
+
+msgid "Delete user group"
+msgstr "მომხმარებლის ჯგუფის წაშლა"
+
+msgid "User"
+msgstr "მომხმარებელი"
+
+msgid "Server variables and settings"
+msgstr "სერვერის ცვლადები და პარამეტრები"
+
+msgid "Session value"
+msgstr "სესიის მნიშვნელობა"
+
+msgid "Not enough privilege to view server variables and settings. %s"
+msgstr "არასაკმარისი პრივილეგიები სერვერის ცვლადებისა და პარამეტრების სანახავად. %s"
+
+msgid "Overview"
+msgstr "განხილვა"
+
+msgid "Configuration file"
+msgstr "კონფიგურაციის ფაილი"
+
+msgid "Generated configuration file"
+msgstr "გენერირებული კონფიგურაციის ფაილი"
+
+msgid "Download"
+msgstr "ჩამოტვირთვა"
+
+msgid "Ignore errors"
+msgstr "შეცდომების იგნორირება"
+
+msgid "Show form"
+msgstr "ფორმის ჩვენება"
+
+msgid "Show hidden messages"
+msgstr "დამალული შეტყობინებების ჩვენება"
+
+msgid "Authentication type"
+msgstr "ავთენტიფიკაციის ტიპი"
+
+msgid "New server"
+msgstr "ახალი სერვერი"
+
+msgid "Default language"
+msgstr "ნაგულისხმები ენა"
+
+msgid "Default server"
+msgstr "ნაგულისხმები სერვერი"
+
+msgid "- none -"
+msgstr "- არაა -"
+
+msgid "End of line"
+msgstr "სტრიქონის დასასრული"
+
+msgid "Display"
+msgstr "ჩვენება"
+
+msgid "phpMyAdmin homepage"
+msgstr "phpMyAdmin-ის სათაო გვერდი"
+
+msgid "Donate"
+msgstr "შემოწირულობა"
+
+msgid "Check for latest version"
+msgstr "უკანასკნელ ვერსიაზე შემოწმება"
+
+msgid "Edit server"
+msgstr "სერვერის რედაქტირება"
+
+msgid "Add a new server"
+msgstr "ახალი სერვერის დამატება"
+
+msgid "Something went wrong."
+msgstr "რაღაც მოხდა."
+
+msgid "Bookmark label:"
+msgstr "ჭდის ჩანიშვნა:"
+
+msgid "Create new bookmark"
+msgstr "ახალი სანიშნის შექმნა"
+
+msgid "Detailed profile"
+msgstr "დეტალური პროფილი"
+
+msgid "Order"
+msgstr "დალაგება"
+
+msgid "State"
+msgstr "მდგომარეობა"
+
+msgid "Time"
+msgstr "დრო"
+
+msgid "Total Time"
+msgstr "სრული დრო"
+
+msgid "% Time"
+msgstr "% დრო"
+
+msgid "Calls"
+msgstr "გამოძახებები"
+
+msgid "ø Time"
+msgstr "ø დრო"
+
+msgid "Pie chart with profiling results."
+msgstr "გრაფიკი პროფილირების შედეგებით."
+
+msgid "Your SQL query has been executed successfully."
+msgstr "თქვენი SQL მოთხოვნა წარმატებით შესრულდა."
+
+msgid "SQL query"
+msgstr "SQL მოთხოვნა"
+
+msgid "Bind parameters"
+msgstr "მიბმის პარამეტრები"
+
+msgid "Columns"
+msgstr "სვეტები"
+
+msgid "Delimiter"
+msgstr "გამყოფი"
+
+msgid "Retain query box"
+msgstr "მოთხოვნის ფანჯრის შენარჩუნება"
+
+msgid "Bookmark:"
+msgstr "სანიშნე:"
+
+msgid "shared"
+msgstr "გაზიარებული"
+
+msgid "View only"
+msgstr "მხოლოდ ნახვა"
+
+msgid "Simulate query"
+msgstr "მოთხოვნის სიმულაცია"
+
+msgid "Use this value"
+msgstr "გამოიყენეთ ეს ველი"
+
+msgid "Chart type"
+msgstr "გრაფიკის ტიპი"
+
+msgctxt "Chart type"
+msgid "Bar"
+msgstr "რიგი"
+
+msgctxt "Chart type"
+msgid "Column"
+msgstr "სვეტი"
+
+msgctxt "Chart type"
+msgid "Line"
+msgstr "ხაზი"
+
+msgctxt "Chart type"
+msgid "Spline"
+msgstr "სპლაინი"
+
+msgctxt "Chart type"
+msgid "Area"
+msgstr "ფართობი"
+
+msgctxt "Chart type"
+msgid "Pie"
+msgstr "წრიული"
+
+msgctxt "Chart type"
+msgid "Timeline"
+msgstr "დროის ხაზი"
+
+msgctxt "Chart type"
+msgid "Scatter"
+msgstr "გაფანტვა"
+
+msgid "Stacked"
+msgstr "ჩალაგებული"
+
+msgid "Chart title:"
+msgstr "გრაფიკის სათაური:"
+
+msgid "X-Axis:"
+msgstr "X-ღერძი:"
+
+msgid "Series:"
+msgstr "სერიები:"
+
+msgid "X Values"
+msgstr "X მნიშვნელობები"
+
+msgid "Y Values"
+msgstr "Y მნიშვნელობები"
+
+msgid "Series column:"
+msgstr "სერიის სვეტი:"
+
+msgid "Value Column:"
+msgstr "მნიშვნელობის სვეტი:"
+
+msgid "Save chart as image"
+msgstr "გრაფიკის გამოსახულების სახით შენახვა"
+
+msgid "Exporting rows from \"%s\" table"
+msgstr "მიმდინარეობს მწკრივების გატანა ცხრილიდან \"%s\""
+
+msgid "Table search"
+msgstr "ცხრილში ძებნა"
+
+msgid "Zoom search"
+msgstr "ძიების მასშტაბირება"
+
+msgid "Find and replace"
+msgstr "ძებნა და ჩანაცვლება"
+
+msgid "Replace with:"
+msgstr "ჩანაცვლდება:"
+
+msgid "Column:"
+msgstr "სვეტი:"
+
+msgid "Use regular expression"
+msgstr "რეგულარული გამოსახულებების გამოყენება"
+
+msgid "Original string"
+msgstr "საწყისი სტრიქონი"
+
+msgid "Replaced string"
+msgstr "ჩანაცვლებული სტრიქონი"
+
+msgid "Replace"
+msgstr "ჩანაცვლება"
+
+msgid "Display GIS Visualization"
+msgstr "ჩვენების GIS ვიზუალიზაცია"
+
+msgid "Label column"
+msgstr "ჭდის სვეტი"
+
+msgid "-- None --"
+msgstr "- არაა -"
+
+msgid "Spatial column"
+msgstr "სივრცითი სვეტი"
+
+msgid "Importing into the table \"%s\""
+msgstr "მიმდინარეობს შემოტანა ცხრილში \"%s\""
+
+msgid "Index name:"
+msgstr "ინდექსის სახელი:"
+
+msgid "Index choice:"
+msgstr "ინდექსის არჩევანი:"
+
+msgid "Advanced options"
+msgstr "დამატებითი პარამეტრები"
+
+msgid "Index type:"
+msgstr "ინდექსის ტიპი:"
+
+msgid "Parser:"
+msgstr "დამმუშავებელი:"
+
+msgid "Comment:"
+msgstr "კომენტარი:"
+
+msgid "Ignore"
+msgstr "იგნორირება"
+
+msgid "Add %s column(s) to index"
+msgstr "ინდექსისთვის %s სვეტის დამატება"
+
+msgid "Insert as new row"
+msgstr "ახალი სტრიქონის ჩამატება"
+
+msgid "Show insert query"
+msgstr "ჩასმის მოთხოვნის ჩვენება"
+
+msgid "and then"
+msgstr "და შემდეგ"
+
+msgid "Go back to previous page"
+msgstr "წინა გვერდზე დაბრუნება"
+
+msgid "Insert another new row"
+msgstr "სხვა ახალი სტრიქონის დამატება"
+
+msgid "Go back to this page"
+msgstr "ამ გვერდზე დაბრუნება"
+
+msgid "Edit next row"
+msgstr "შემდეგი სტრიქონის რედაქტირება"
+
+msgid "Binary"
+msgstr "ბინარული"
+
+msgid "Because of its length,<br> this column might not be editable."
+msgstr "მისი სიგრძის გამო <br>ეს სვეტი შეიძლება ჩასწორებადი არ იყოს."
+
+msgid "Edit/Insert"
+msgstr "ჩასწორება/ჩასმა"
+
+msgid "Checksum"
+msgstr "საკონტროლო ჯამი"
+
+msgid "Improve table structure (Normalization):"
+msgstr "ცხრილის სტრუქტურის გაუმჯობესება (ნორმალიზაცია):"
+
+msgid "Table operations"
+msgstr "ცხრილის ოპერაციები"
+
+msgctxt "Alter table order by a single field."
+msgid "(singly)"
+msgstr "(ერთი)"
+
+msgid "Table options"
+msgstr "ცხრილის პარამეტრები"
+
+msgid "Table comments"
+msgstr "ცხრილის კომენტარები"
+
+msgid "Copy table to (database.table)"
+msgstr "დააკოპირეთ ცხრილი (database.table)"
+
+msgid "Empty the table (DELETE FROM)"
+msgstr "ცხრილის დაცარიელება (DELETE FROM)"
+
+msgid "View %s has been dropped."
+msgstr "ხედი %s მოცილებულია."
+
+msgid "Table %s has been dropped."
+msgstr "ცხრილი %s წაშლილია."
+
+msgid "Delete the table (DROP)"
+msgstr "მაგიდების წაშლა (DROP)"
+
+msgid "Operations"
+msgstr "მოქმედებები"
+
+msgid "Rename view to"
+msgstr "ხედის გადარქმევა"
+
+msgid "Delete the view (DROP)"
+msgstr "ხედის წაშლა (DROP)"
+
+msgid "Table structure"
+msgstr "ცხრილის სტრუქტურა"
+
+msgid "Relation view"
+msgstr "ურთიერთობის ხედი"
+
+msgid "Analyze partition"
+msgstr "დანაყოფის ანალიზი"
+
+msgid "Check partition"
+msgstr "დანაყოფის შემოწმება"
+
+msgid "Drop partition"
+msgstr "დანაყოფის მოცილება"
+
+msgid "Optimize partition"
+msgstr "დანაყოფის ოპტიმიზაცია"
+
+msgid "Rebuild partition"
+msgstr "დანაყოფის თავიდან აგება"
+
+msgid "Repair partition"
+msgstr "დანაყოფის რემონტი"
+
+msgid "Truncate partition"
+msgstr "დანაყოფის მოკვეთა"
+
+msgid "table-specific"
+msgstr "ცხრილზე-დამოკიდებული"
+
+msgid "Foreign key constraints"
+msgstr "უცხო-გასაღების შეზღუდვები"
+
+msgid "Actions"
+msgstr "მოქმედებები"
+
+msgid "Constraint properties"
+msgstr "შეზღუდვის თვისებები"
+
+msgid "Foreign key constraint"
+msgstr "უცხო გასაღების შეზღუდვა"
+
+msgid "+ Add constraint"
+msgstr "+ შეზღუდვის დამატება"
+
+msgid "Internal relationships"
+msgstr "შიდა ურთიერთობები"
+
+msgid "Internal relation"
+msgstr "შიდა ურთიერთობა"
+
+msgid "Choose column to display:"
+msgstr "აირჩიეთ საჩვენებელი სვეტი:"
+
+msgid "Foreign key constraint %s has been dropped"
+msgstr "უცხო გასაღების შეზღუდვა %s მოცილებულია"
+
+msgid "Constraint name"
+msgstr "შეზღუდვის სახელი"
+
+msgid "Select columns (at least one):"
+msgstr "აირჩიეთ სვეტები (ერთი მაინც):"
+
+msgid "Display order:"
+msgstr "ჩვენების მიმდევრობა:"
+
+msgid "Range search"
+msgstr "დიაპაზონის ძებნა"
+
+msgid "Minimum value:"
+msgstr "მინიმალური მნიშვნელობა:"
+
+msgid "Maximum value:"
+msgstr "მაქსიმალური მნიშვნელობა:"
+
+msgid "Start row:"
+msgstr "საწყისი მწკრივი:"
+
+msgid "Partitions"
+msgstr "დანაყოფები"
+
+msgid "No partitioning defined!"
+msgstr "დაყოფა აღწერილი არაა!"
+
+msgid "Partitioned by:"
+msgstr "დაყოფის პირობა:"
+
+msgid "Sub partitioned by:"
+msgstr "ქვედაყოფის პირობა:"
+
+msgid "Data length"
+msgstr "მონაცემების სიგრძე"
+
+msgid "Index length"
+msgstr "ინდექსის სიგრძე"
+
+msgid "Analyze"
+msgstr "ანალიზი"
+
+msgid "Check"
+msgstr "შემოწმება"
+
+msgid "Optimize"
+msgstr "ოპტიმიზება"
+
+msgid "Rebuild"
+msgstr "თავიდან აგება"
+
+msgid "Repair"
+msgstr "აღდგენა"
+
+msgid "Truncate"
+msgstr "გასუფთავება"
+
+msgid "Partition table"
+msgstr "დანაყოფების ცხრილი"
+
+msgid "Edit partitioning"
+msgstr "დაყოფის ჩასწორება"
+
+msgid "Extra"
+msgstr "ექსტრა"
+
+msgid "Media type:"
+msgstr "მედიის ტიპი:"
+
+msgctxt "None for default"
+msgid "None"
+msgstr "არცერთი"
+
+msgid "Change"
+msgstr "შეცვლა"
+
+msgid "Column %s has been dropped."
+msgstr "სვეტი %s წაიშალა."
+
+msgid "More"
+msgstr "მეტი"
+
+msgid "Distinct values"
+msgstr "განსხვავებული მნიშვნელობები"
+
+msgid "Remove from central columns"
+msgstr "ცენტრალური სვეტებიდან წაშლა"
+
+msgid "Add to central columns"
+msgstr "დაამატეთ ცენტრალურ სვეტებში"
+
+msgid "Move columns"
+msgstr "სვეტების გადატანა"
+
+msgid "Edit view"
+msgstr "ხედის ჩასწორება"
+
+msgid "Propose table structure"
+msgstr "ცხრილის სტრუქტურის შეთავაზება"
+
+msgid "Normalize"
+msgstr "ნორმალიზაცია"
+
+msgid "Track view"
+msgstr "ხედის ტრეკი"
+
+msgid "Add %s column(s)"
+msgstr "%s ველის დამატება"
+
+msgid "at beginning of table"
+msgstr "ცხრილის დასაწყისში"
+
+msgid "Space usage"
+msgstr "ადგილის გამოყენება"
+
+msgid "Effective"
+msgstr "ეფექტური"
+
+msgid "Total"
+msgstr "სულ"
+
+msgid "Row statistics"
+msgstr "მწკრივის სტატისტიკა"
+
+msgid "static"
+msgstr "სტატიკური"
+
+msgid "dynamic"
+msgstr "დინამიური"
+
+msgid "partitioned"
+msgstr "დაყოფილი"
+
+msgid "Row length"
+msgstr "სტრიქონის სიგრძე"
+
+msgid "Row size"
+msgstr "სტრიქონის ზომა"
+
+msgid "Dropping columns from the table"
+msgstr "სვეტების წაშლა ცხრილიდან"
+
+msgid "Delete version"
+msgstr "ვერსიის წაშლა"
+
+msgid "Activate tracking for %s"
+msgstr "%s-ის ტრეკინგის ჩართვა"
+
+msgid "Deactivate tracking for %s"
+msgstr "%s-ის ტრეკინგის გამორთვა"
+
+msgctxt "Number"
+msgid "#"
+msgstr "#"
+
+msgid "Date"
+msgstr "თარიღი"
+
+msgid "Username"
+msgstr "მომხმარებელი"
+
+msgid "Do a \"query by example\" (wildcard: \"%\") for two different columns"
+msgstr "\"მოთხოვნა მაგალითით\"-ის შესრულება (ვაილდკარდი: \"%s\") ორი განსხვავებული სვეტისთვის"
+
+msgid "Additional search criteria"
+msgstr "ძიების დამატებითი პიირობა"
+
+msgid "Maximum rows to plot"
+msgstr "დასახაზი მწკრივების მაქსიმალური რაოდენობა"
+
+msgid "How to use"
+msgstr "როგორ გამოვიყენოთ"
+
+msgid "Reset zoom"
+msgstr "გადიდების საწყისი პარამეტრები"
+
+msgid "Available media types"
+msgstr "ხელმისაწვდომი მედიის ტიპები"
+
+msgid "Available browser display transformations"
+msgstr "ბრაუზერის ჩვენების ხელმისაწვდომი გარდაქმნები"
+
+msgctxt "for media type transformation"
+msgid "Description"
+msgstr "აღწერილობა"
+
+msgid "Available input transformations"
+msgstr "შეყვანის ხელმისაწვდომი გარდაქმნები"
+
+msgid "Trigger name"
+msgstr "ტრიგერის სახელი"
+
+msgctxt "Trigger action time"
+msgid "Time"
+msgstr "დრო"
+
+msgid "Event"
+msgstr "მოვლენა"
+
+msgid "Export of trigger %s"
+msgstr "ტრიგერის %s გატანა"
+
+msgid "Triggers"
+msgstr "ტრიგერები"
+
+msgid "Create new trigger"
+msgstr "ახალი ტრიგერის შექმნა"
+
+msgid "There are no triggers to display."
+msgstr "საჩვენებელი ტრიგერების გარეშე."
+
+msgid "Trigger editor"
+msgstr "ტრიგერის რედაქტორი"
+
+msgid "Export trigger"
+msgstr "ტრიგერის გატანა"
+
+msgid "VIEW name"
+msgstr "ხედის სახელი"
+
+msgid "Column names"
+msgstr "სვეტების სახელები"
+
+msgid "Error when evaluating: %s"
+msgstr "შეცდომა შეფასებისას: %s"
+
+msgid "per second"
+msgstr "წამში"
+
+msgid "per minute"
+msgstr "წუთში"
+
+msgid "per hour"
+msgstr "საათში"
+
+msgid "per day"
+msgstr "დღეში"
+
+msgid "Questions below 1,000"
+msgstr "1,000-ზე ნაკლები კითხვა"
+
+msgid "Current amount of Questions: %s"
+msgstr "კითხვებს მიმდინარე რაოდენობა: %s"
+
+msgid "Percentage of slow queries"
+msgstr "ნელი მოთხოვნების პროცენტულობა"
+
+msgid "Slow query rate"
+msgstr "ნელი მოთხოვნების სიხშირე"
+
+msgid "Long query time"
+msgstr "გრძელი მოთხოვნის დრო"
+
+msgid "Slow query logging"
+msgstr "ნელი მოთხოვნების ჟურნალში ჩაწერა"
+
+msgid "The slow query log is disabled."
+msgstr "ნელი მოთხოვნების ჟურნალი გათიშულია."
+
+msgid "Release Series"
+msgstr "გამოშვების სერიები"
+
+msgid "Current version: %s"
+msgstr "მიმდინარე ვერსია: %s"
+
+msgid "Minor Version"
+msgstr "მინორული ვერსია"
+
+msgid "You should upgrade, to a stable version of MySQL 5.5."
+msgstr "სჯობს MySQL 5.5-ის სტაბილურ ვერსიაზე განახლდეთ."
+
+msgid "Distribution"
+msgstr "დისტრიბუცია"
+
+msgid "MySQL Architecture"
+msgstr "MySQL-ის არქიტექტურა"
+
+msgid "Query caching method"
+msgstr "მოთხოვნების კეშირების მეთოდი"
+
+msgid "Suboptimal caching method."
+msgstr "კეშინგის მეთოდი ოპტიმალური არაა."
+
+msgid "Percentage of sorts that cause temporary tables"
+msgstr "დროებითი ცხრილების გამომწვევი დალაგებების პროცენტულობა"
+
+msgid "Too many sorts are causing temporary tables."
+msgstr "დროებითი ცხრილების შექმნას მეტისმეტად ბევრი დალაგება იწვევს."
+
+msgid "Rate of sorts that cause temporary tables"
+msgstr "დროებითი ცხრილების გამომწვევი დალაგებების სიხშირე"
+
+msgid "Temporary tables average: %s, this value should be less than 1 per hour."
+msgstr "დროებითი ცხრილების საშუალო: %s. ეს მნიშვნელობა საათში ერთზე ნაკლები არ უნდა იყოს."
+
+msgid "Sort rows"
+msgstr "მწკრივების დალაგება"
+
+msgid "Rate of joins without indexes"
+msgstr "ინდექსების გარეშე შეერთებების სიხშირე"
+
+msgid "There are too many joins without indexes."
+msgstr "მეტისმეტად ბევრი შეერთება ინდექსების გარეშე."
+
+msgid "Table joins average: %s, this value should be less than 1 per hour"
+msgstr "ცხრილების შეერთება საშუალოდ: %s. ეს მნიშვნელობა საათში ერთზე ნაკლები არ უნდა იყოს"
+
+msgid "Rate of reading first index entry"
+msgstr "ინდექსის პირველი ჩანაწერის წაკითხვის სიხშირე"
+
+msgid "The rate of reading the first index entry is high."
+msgstr "პირველი ინდექსის ჩანაწერის წაკითხვის სიხშირე მაღალია."
+
+msgid "Index scans average: %s, this value should be less than 1 per hour"
+msgstr "ინდექსის სკანირების საშუალო: %s ეს მნიშვნელობა საათში ერთზე ნაკლები უნდა იყოს"
+
+msgid "Rate of reading fixed position"
+msgstr "ფიქსირებული პოზიციის წაკითხვის სიხშირე"
+
+msgid "The rate of reading data from a fixed position is high."
+msgstr "ფიქსირებული პოზიციებიდან მონაცემების წაკითხვის სიხშირე მაღალია."
+
+msgid "Rate of reading next table row"
+msgstr "შემდეგი ცხრილის მწკრივის წაკითხვის სიხშირე"
+
+msgid "The rate of reading the next table row is high."
+msgstr "შემდეგი ცხრილის მწკრივის წაკითხვის სიხშირე მაღალია."
+
+msgid "Rate of reading next table row: %s, this value should be less than 1 per hour"
+msgstr "შემდეგი ცხრილის მწკრივის კითხვის სიხშირე: %s. ეს მნიშვნელობა საათში ერთზე ნაკლები უნდა იყოს"
+
+msgid "Percentage of temp tables on disk"
+msgstr "დისკზე არსებული დროებითი ცხრილების პროცენტულობა"
+
+msgid "Temp disk rate"
+msgstr "დროებითი დისკის სიხშირე"
+
+msgid "MyISAM key buffer size"
+msgstr "MyISAM-ის გასაღების ბაფერის ზომა"
+
+msgid "key_buffer_size is 0"
+msgstr "key_buffer_size-ი 0-ის ტოლია"
+
+msgid "Max % MyISAM key buffer ever used"
+msgstr "MyISAM-ის გასაღების ბაფერის გამოყენების მაქსიმალური %"
+
+msgid "MyISAM key buffer (index cache) % used is low."
+msgstr "MyISAM-ის გასაღების ბაფერის (ინდექსის კეში) გამოყენების % დაბალია."
+
+msgid "max %% MyISAM key buffer ever used: %s%%, this value should be above 95%%"
+msgstr "მაქს %% MyISAM-ის გასაღების ბაფერი, რომელიც არასდროს გამოყენებულა: %s%%. ეს მნიშვნელობა 95%%-ზე მეტი უნდა იყოს"
+
+msgid "Percentage of MyISAM key buffer used"
+msgstr "MyISAM-ის გასაღების ბაფერის გამოყენების პროცენტული მაჩვენებელი"
+
+msgid "%% MyISAM key buffer used: %s%%, this value should be above 95%%"
+msgstr "%% MyISAM-ის გასაღების გამოყენებული ბაფერი: %s%%. ეს მნიშვნელობა 95%%-ზე მეტი უნდა იყოს"
+
+msgid "Percentage of index reads from memory"
+msgstr "ინდექსების მეხსიერებიდან წაკითხვის პროცენტული მაჩვენებელი"
+
+msgid "Index reads from memory: %s%%, this value should be above 95%%"
+msgstr "ინდექსის წაკითხვები მეხსიერებიდან: %s%%. ეს მნიშვნელობა 95%%-ზე მეტი უნდა იყოს"
+
+msgid "Rate of table open"
+msgstr "ცხრილის გახსნის სიხშირე"
+
+msgid "The rate of opening tables is high."
+msgstr "ცხრილების გახსნის სიხშირე მაღალია."
+
+msgid "Opened table rate: %s, this value should be less than 10 per hour"
+msgstr "ცხრილის გახსნის სიხშირე: %s. ეს მნიშვნელობა საათში 10-ზე ნაკლები უნდა იყოს"
+
+msgid "Percentage of used open files limit"
+msgstr "ღია ფაილების ლიმიტის გამოყენებული პროცენტული მაჩვენებელი"
+
+msgid "Rate of open files"
+msgstr "ღია ფაილების სიხშირე"
+
+msgid "The rate of opening files is high."
+msgstr "ფაილების გახსნის სიხშირე მაღალია."
+
+msgid "Opened files rate: %s, this value should be less than 5 per hour"
+msgstr "ფაილების გახსნის სიხშირე: %s. ეს მნიშვნელობა საათში 5-ზე ნაკლები უნდა იყოს"
+
+msgid "Immediate table locks %"
+msgstr "დაუყოვნებლივი ცხრილის დაბლოკვის %"
+
+msgid "Too many table locks were not granted immediately."
+msgstr "ერთდროულად მეტისმეტად ბევრი ცხრილის დაბლოკვა არ მომხდარა."
+
+msgid "Immediate table locks: %s%%, this value should be above 95%%"
+msgstr "დაუყოვნებლივი ცხრილის ჩაკეტვები: %s%%. ეს მნიშვნელობა 95%%-ზე მეტი უნდა იყოს"
+
+msgid "Table lock wait rate: %s, this value should be less than 1 per hour"
+msgstr "ცხრილის ბლოკის მოლოდინის სიხშირე: %s. ეს მნიშვნელობა საათში ერთზე ნაკლები უნდა იყოს"
+
+msgid "Thread cache"
+msgstr "ძაფის ქეში"
+
+msgid "The thread cache is set to 0"
+msgstr "ძაფის ქეში დაყენებულია 0"
+
+msgid "Thread cache hit rate %"
+msgstr "ძაფის კეშის გამოყენების სიხშირის %"
+
+msgid "Thread cache is not efficient."
+msgstr "ნაკადის კეში ეფექტური არაა."
+
+msgid "Thread cache hitrate: %s%%, this value should be above 80%%"
+msgstr "ნაკადის კეშის დამთხვევის სიხშირე: %s%%. ეს მნიშვნელობა 80%%-ზე მეტი უნდა იყოს"
+
+msgid "Threads that are slow to launch"
+msgstr "ნელა გაშვებადი ნაკადები"
+
+msgid "There are too many threads that are slow to launch."
+msgstr "მეტისმეტად ბევრი ნაკადი, რომელიც ნელა ეშვება."
+
+msgid "Set {slow_launch_time} to 1s or 2s to correctly count threads that are slow to launch."
+msgstr "ნელა გაშვებადი ნაკადების სწორად დასათვლელად {slow_launch_time} 1 ან 2 წამზე დააყენეთ."
+
+msgid "Percentage of used connections"
+msgstr "გამოყენებული კავშირების პროცენტული მაჩვენებელი"
+
+msgid "Percentage of aborted connections"
+msgstr "შეწყვეტილი კავშირების პროცენტული მაჩვენებელი"
+
+msgid "Too many connections are aborted."
+msgstr "შეწყვეტილია მეტისმეტად ბევრი შეერთება."
+
+msgid "Rate of aborted connections"
+msgstr "შეწყვეტილი კავშირების მაჩვენებელი"
+
+msgid "Percentage of aborted clients"
+msgstr "გაუქმებული კლიენტების პროცენტული მაჩვენებელი"
+
+msgid "Too many clients are aborted."
+msgstr "შეწყვეტილია მეტისმეტად ბევრი კლიენტი."
+
+msgid "Rate of aborted clients"
+msgstr "გაუქმებული კლიენტების სიხშირე"
+
+msgid "Aborted client rate is at %s, this value should be less than 1 per hour"
+msgstr "გაუქმებული კლიენტების სიხშირე %s-ია. ეს მნიშვნელობა საათში ერთზე ნაკლები უნდა იყოს"
+
+msgid "You do not have InnoDB enabled."
+msgstr "InnoDB ჩართული არ გაქვთ."
+
+msgid "InnoDB log size"
+msgstr "InnoDB ჟურნალის ზომა"
+
+msgid "The InnoDB log file size is not an appropriate size, in relation to the InnoDB buffer pool."
+msgstr "InnoDB-ის ჟურნალის ფაილის ზომა InnoDB-ის ბაფერის პულთან შედარებით საკმარისი ზომის არაა."
+
+msgid "Your InnoDB log size is at %s%% in relation to the InnoDB buffer pool size, it should not be below 20%%"
+msgstr "InnoDB-ის ჟურნალის ზომა InnoDB-ის ბუფერს პულის ზომის %s%%-ია. ის 20%%-ზე ნაკლები არ უნდა იყოს"
+
+msgid "Max InnoDB log size"
+msgstr "მაქსიმალური InnoDB ჟურნალის ზომა"
+
+msgid "InnoDB buffer pool size"
+msgstr "InnoDB ბაფერის პულის ზომა"
+
+msgid "Your InnoDB buffer pool is fairly small."
+msgstr "თქვენი InnoDB-ის ბუფერის პული საკმაოდ პატარაა."
+
+msgid "MyISAM concurrent inserts"
+msgstr "MyISAM-ის ერთდროული ჩასმები"
+
+msgid "Enable {concurrent_insert} by setting it to 1"
+msgstr "ჩართეთ {concurrent_insert} მისი მნიშვნელობის 1-ზე დაყენებით"
+
+msgid "concurrent_insert is set to 0"
+msgstr "concurrent_insert-ის მნიშვნელობაა 0"
+
+msgid "Query cache disabled"
+msgstr "მოთხოვნების კეში გამორთულია"
+
+msgid "The query cache is not enabled."
+msgstr "მოთხოვნების კეში ჩართული არაა."
+
+msgid "Query cache efficiency (%)"
+msgstr "მოთხოვნების კეშის ეფექტურობა (%)"
+
+msgid "The current query cache hit rate of %s%% is below 20%%"
+msgstr "მიმდინადე მოთხოვნის კეშის დამთხვევის სიხშირე %s%% 20%%-ზე ნაკლებია"
+
+msgid "Query Cache usage"
+msgstr "მოთხოვნების კეშის გამოყენება"
+
+msgid "Query cache fragmentation"
+msgstr "მოთხოვნების კეშის ფრაგმენტაცია"
+
+msgid "The query cache is considerably fragmented."
+msgstr "მოთხოვნების კეში საკმაოდ ფრაგმენტირებულია."
+
+msgid "Query cache low memory prunes"
+msgstr "მოთხოვნების კეშის წაკვეთა მეხსიერების არასაკმარისობის დროს"
+
+msgid "Cached queries are removed due to low query cache memory from the query cache."
+msgstr "დაკეშილი მოთხოვნები იშლება, რადგან მოთხოვნის კეშის მეხსიერება საკმარისი არაა."
+
+msgid "Query cache max size"
+msgstr "მოთხოვნების კეშის მაქსიმალური ზომა"
+
+msgid "Current query cache size: %s"
+msgstr "მოთხოვნის კეშის მიმდინარე ზომა: %s"
+
+msgid "Query cache min result size"
+msgstr "მოთხოვნის კეშის შედეგის მინიმალური ზომა"
+
+msgid "Search:"
+msgstr "ძებნა:"
+
+msgid "Unknown"
+msgstr "უცნობი"
+
+msgctxt "Collation"
+msgid "German (dictionary order)"
+msgstr "გერმანული (ლექსიკონის მიმდევრობა)"
+
+msgctxt "Collation"
+msgid "Spanish (modern)"
+msgstr "ესპანური (თანამედროვე)"
+
+msgctxt "Collation variant"
+msgid "case-insensitive"
+msgstr "რეგისტრზე-დამოკიდებული"
+
+msgctxt "Collation variant"
+msgid "case-sensitive"
+msgstr "რეგისტრზე-დამოკიდებული"
+
+msgctxt "Collation variant"
+msgid "accent-insensitive"
+msgstr "აქცენტისგან-დამოუკიდებელი"
+
+msgctxt "Collation variant"
+msgid "accent-sensitive"
+msgstr "აქცენტზე-დამოკიდებული"
+
+msgctxt "Collation variant"
+msgid "kana-sensitive"
+msgstr "კანა-დამოკიდებული"
+
+msgctxt "Collation variant"
+msgid "multi-level"
+msgstr "მრავალ დონიანი"
+
+msgctxt "Collation variant"
+msgid "binary"
+msgstr "ბინარული"
+
+msgctxt "Collation variant"
+msgid "no-pad"
+msgstr "სწორების-გარეშე"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "ბინარული"
+
+msgctxt "Collation"
+msgid "Unicode"
+msgstr "უნიკოდი"
+
+msgctxt "Collation"
+msgid "West European"
+msgstr "დასავლეთ ევროპული"
+
+msgctxt "Collation"
+msgid "Central European"
+msgstr "ცენტრალურ ევროპული"
+
+msgctxt "Collation"
+msgid "Russian"
+msgstr "რუსული"
+
+msgctxt "Collation"
+msgid "Simplified Chinese"
+msgstr "გამარტივებული ჩინური"
+
+msgctxt "Collation"
+msgid "Traditional Chinese"
+msgstr "ტრადიციული ჩინური"
+
+msgctxt "Collation"
+msgid "Chinese"
+msgstr "ჩინური"
+
+msgctxt "Collation"
+msgid "Japanese"
+msgstr "იაპონური"
+
+msgctxt "Collation"
+msgid "Baltic"
+msgstr "ბალტიური"
+
+msgctxt "Collation"
+msgid "Armenian"
+msgstr "სომხური"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "კირილიცა"
+
+msgctxt "Collation"
+msgid "Arabic"
+msgstr "არაბული"
+
+msgctxt "Collation"
+msgid "Korean"
+msgstr "კორეული"
+
+msgctxt "Collation"
+msgid "Hebrew"
+msgstr "ივრითი"
+
+msgctxt "Collation"
+msgid "Georgian"
+msgstr "ქართული"
+
+msgctxt "Collation"
+msgid "Greek"
+msgstr "ბერძნული"
+
+msgctxt "Collation"
+msgid "Czech-Slovak"
+msgstr "ჩეხური-სლოვაკური"
+
+msgctxt "Collation"
+msgid "Ukrainian"
+msgstr "უკრაინული"
+
+msgctxt "Collation"
+msgid "Turkish"
+msgstr "თურქული"
+
+msgctxt "Collation"
+msgid "Swedish"
+msgstr "შვედური"
+
+msgctxt "Collation"
+msgid "Thai"
+msgstr "ტაილანდური"
+
+msgctxt "Collation"
+msgid "Unknown"
+msgstr "უცნობი"
+
+msgctxt "Collation"
+msgid "Bulgarian"
+msgstr "ბულგარული"
+
+msgctxt "Collation"
+msgid "Croatian"
+msgstr "ხორვატული"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "ჩეხური"
+
+msgctxt "Collation"
+msgid "Danish"
+msgstr "დანიური"
+
+msgctxt "Collation"
+msgid "English"
+msgstr "ინგლისური"
+
+msgctxt "Collation"
+msgid "Esperanto"
+msgstr "ესპერანტო"
+
+msgctxt "Collation"
+msgid "Estonian"
+msgstr "ესტონური"
+
+msgctxt "Collation"
+msgid "Hungarian"
+msgstr "უნგრული"
+
+msgctxt "Collation"
+msgid "Icelandic"
+msgstr "ისლანდიური"
+
+msgctxt "Collation"
+msgid "Latvian"
+msgstr "ლატვიური"
+
+msgctxt "Collation"
+msgid "Lithuanian"
+msgstr "ლიტუანიური"
+
+msgctxt "Collation"
+msgid "Burmese"
+msgstr "ბურმული"
+
+msgctxt "Collation"
+msgid "Persian"
+msgstr "სპარსული"
+
+msgctxt "Collation"
+msgid "Polish"
+msgstr "პოლონური"
+
+msgctxt "Collation"
+msgid "Romanian"
+msgstr "რუმინული"
+
+msgctxt "Collation"
+msgid "Sinhalese"
+msgstr "სინჰალური"
+
+msgctxt "Collation"
+msgid "Slovak"
+msgstr "სლოვაკური"
+
+msgctxt "Collation"
+msgid "Slovenian"
+msgstr "სლოვენური"
+
+msgctxt "Collation"
+msgid "Vietnamese"
+msgstr "ვიეტნამური"
+
+msgid "Icons"
+msgstr "ხატულები"
+
+msgid "Both"
+msgstr "ორივე"
+
+msgid "Nowhere"
+msgstr "არსად"
+
+msgid "Left"
+msgstr "მარცხნივ"
+
+msgid "Right"
+msgstr "მარჯვნივ"
+
+msgid "Click"
+msgstr "წკაპი"
+
+msgid "Double click"
+msgstr "ორმაგი წკაპი"
+
+msgid "key"
+msgstr "გასაღები"
+
+msgid "display column"
+msgstr "სვეტის ჩვენება"
+
+msgid "Welcome"
+msgstr "კეთილი იყოს თქვენი მობრძანება"
+
+msgid "Open"
+msgstr "გახსნა"
+
+msgid "Closed"
+msgstr "დახურული"
+
+msgctxt "Week day name"
+msgid "Monday"
+msgstr "ორშაბათი"
+
+msgctxt "Week day name"
+msgid "Tuesday"
+msgstr "სამშაბათი"
+
+msgctxt "Week day name"
+msgid "Wednesday"
+msgstr "ოთხშაბათი"
+
+msgctxt "Week day name"
+msgid "Thursday"
+msgstr "ხუთშაბათი"
+
+msgctxt "Week day name"
+msgid "Friday"
+msgstr "პარასკევი"
+
+msgctxt "Week day name"
+msgid "Saturday"
+msgstr "შაბათი"
+
+msgctxt "Week day name"
+msgid "Sunday"
+msgstr "კვირა"
+
+msgid "Server default"
+msgstr "სერვერის ნაგულისხმევი"
+
+msgid "Enable"
+msgstr "ჩართვა"
+
+msgid "Disable"
+msgstr "გათიშვა"
+
+msgid "structure"
+msgstr "სტრუქტურა"
+
+msgid "data"
+msgstr "მონაცემები"
+
+msgid "structure and data"
+msgstr "სტრუქტურა და მონაცემები"
+
+msgid "complete inserts"
+msgstr "სრული ჩასმები"
+
+msgid "extended inserts"
+msgstr "გაფართოებული ჩასმები"
+
+msgid "Enable bzip2 compression for import operations."
+msgstr "შემოტანის ოპერაციებისთვის bzip2 შეკუმშვის ჩართვა."
+
+msgid "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
+msgstr "აღწერს, რომელი ტიპის ჩასწორების კონტროლები უნდა იქნეს გამოყენებული CHAT/VARCHAR ტიპის სვეტებისთვის. [kbd]შეყვანა[/kbd] - შეყვანის სიგრძის შეზღუდვის საშუალებას გაძლევთ, [kbd]ტექსტის ადგილი[/kbd] კი სვეტებში ახალი ხაზების ჩასმისას."
+
+msgid "Autocomplete of the table and column names in the SQL queries."
+msgstr "SQL მოთხოვნებში ცხრილისა და სვეტების სახელების ავტომატური დასრულება."
+
+msgid "Configure phpMyAdmin configuration storage to gain access to additional features, see [doc@linked-tables]phpMyAdmin configuration storage[/doc] in documentation."
+msgstr "მოირგეთ phpMyAdmin-ი კონფიგურაციის საცავი დამატებით ფუნქციებთან წვდომისთვის. იხილეთ [doc@linked-tables]phpMyAdmin-ის კონფიგურაციის საცავი[/doc] დოკუმენტაციაში."
+
+msgid "Customize browse mode."
+msgstr "დათვალიერების რეჟიმის მორგება."
+
+msgid "Customize default options."
+msgstr "ნაგულისხმები პარამეტრების მორგება."
+
+msgid "Customize edit mode."
+msgstr "ჩასწორების რეჟიმის მორგება."
+
+msgid "Customize default export options."
+msgstr "გატანის ნაგულისხმები პარამეტრების მორგება."
+
+msgid "Customize default common import options."
+msgstr "ნაგულისხმები საერთო შემოტანის პარამეტრების მორგება."
+
+msgid "Databases display options."
+msgstr "ბაზების ჩვენების მორგება."
+
+msgid "Customize appearance of the navigation panel."
+msgstr "ნავიგაციის პანელის გარეგნობის მორგება."
+
+msgid "Customize the navigation tree."
+msgstr "ნავიგაციის ხის მორგება."
+
+msgid "Servers display options."
+msgstr "სერვერების ჩვენების მორგება."
+
+msgid "Tables display options."
+msgstr "ცხრილების ჩვენების მორგება."
+
+msgid "Authentication settings."
+msgstr "ავთენტიფიკაციის მორგება."
+
+msgid "Enter server connection parameters."
+msgstr "შეიყვანეთ სერვერთან მიერთების პარამეტრები."
+
+msgid "SQL queries settings."
+msgstr "SQL მოთხოვნების მორგება."
+
+msgid "Customize startup page."
+msgstr "საწყისი გვერდის მორგება."
+
+msgid "Customize text input fields."
+msgstr "ტექსტის შეყვანის ველების მორგება."
+
+msgid "Customize default options"
+msgstr "ნაგულისხმები პარამეტრების მორგება"
+
+msgid "Enable gzip compression for import and export operations."
+msgstr "შემოტანისა და გატანის ოპერაციებისთვის gzip შეკუმშვის ჩართვა."
+
+msgid "Number of queries to skip from start."
+msgstr "დასაწყისიდან გამოსატოვებელი მოთხოვნების რაოდენობა."
+
+msgid "Maximum number of characters used when a SQL query is displayed."
+msgstr "SQL მოთხოვნის ჩვენებისას გამოყენებული სიმბოლოების მაქსიმალური რაოდენობა."
+
+msgid "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
+msgstr "აღწერს ფილტრის ველში საჩვენებელ მინიმალური რაოდენობის ელემენტებს (ცხრილები, ხედები, პროცედურები და მოვლენები)."
+
+msgid "Whether to expand single database in the navigation tree automatically."
+msgstr "ერთი ბაზის შემთხვევაში ნავიგაციის ხის ავტომატური გაშლა."
+
+msgid "Set to 0 to collapse navigation panel."
+msgstr "ნავიგაციის პანელის ასაკეცად დააყენეთ 0."
+
+msgid "Show logo in navigation panel."
+msgstr "ნავიგაციის პანელში ლოგოს ჩვენება."
+
+msgid "URL where logo in the navigation panel will point to."
+msgstr "URL, სადაც ნავიგაციის პანელში ნაჩვენები ლოგო მიუთითებს."
+
+msgid "Whether to show tables under database in the navigation tree"
+msgstr "აჩვენებს თუ არა ცხრილებს მონაცემთა ბაზის ქვეშ ნავიგაციის ხეში"
+
+msgid "Whether to show views under database in the navigation tree"
+msgstr "აჩვენებს თუ არა ნახვებს მონაცემთა ბაზის ქვეშ ნავიგაციის ხეში"
+
+msgid "Whether to show events under database in the navigation tree"
+msgstr "აჩვენებს თუ არა მოვლენებს მონაცემთა ბაზის ქვეშ ნავიგაციის ხეში"
+
+msgid "[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, DATE, DATETIME and TIMESTAMP, ascending order otherwise."
+msgstr "[kbd]ჭკვიანი[/kbd] - ანუ TIME, DATE, DATETIME და TIMESTAMP-ის ტიპის სვეტების დაღმავალი დალაგემა. არადა პირიქით."
+
+msgid "Enable if you want DB-based query history (requires phpMyAdmin configuration storage). If disabled, this utilizes JS-routines to display query history (lost by window close)."
+msgstr "ჩართეთ, თუ გნებავთ ბაზაზე-დაყრდნობილი მოთხოვნების ისტორია იქონიოთ (სჭირდება phpMyAdmin-ის კონფიგურაციის საცავი). თუ გათიშულია, ეს მოთხოვნების ისტორიის საჩვენებლად JS-ს იყენებს (დაიკარგება ფანჯრის დახურვისას)."
+
+msgid "Leave blank for no [doc@bookmarks@]bookmark[/doc] support, suggested: [kbd]pma__bookmark[/kbd]"
+msgstr "დატოვეთ ცარიელი, რომ [doc@bookmarks@]სანიშნეების[/doc] მხარდაჭერის გარეშე იმუშაოთ. გირჩევთ: [kbd]pma__bookmark[/kbd]"
+
+msgid "Leave blank for no column comments/media types, suggested: [kbd]pma__column_info[/kbd]."
+msgstr "სვეტის კომენტარების/მედიის ტიპების გამოსართავად ცარიელი დატოვეთ. რჩევა:[kbd]pma__column_info[/kbd]."
+
+msgid "Leave blank for no SQL query history support, suggested: [kbd]pma__history[/kbd]."
+msgstr "SQL მოთხოვნების ისტორიის მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__history[/kbd]."
+
+msgid "Leave blank for no export template support, suggested: [kbd]pma__export_templates[/kbd]."
+msgstr "დატოვეთ ცარიელი გატანის შაბლონების მხარდაჭერის გამოსართავად. რჩევა: [kbd]pma__export_templates[/kbd]."
+
+msgid "Leave blank for no central columns support, suggested: [kbd]pma__central_columns[/kbd]."
+msgstr "ცენტრალური სვეტების მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__central_columns[/kbd]."
+
+msgid "You can use MySQL wildcard characters (% and _), escape them if you want to use their literal instances, i.e. use [kbd]'my\\_db'[/kbd] and not [kbd]'my_db'[/kbd]."
+msgstr "შეგიძლიათ, გამოიყენოთ MySQL-ის ვაილდკარდის სიმბოლოები (% და _), ჩასვათ ისინი სპეციალურ მიმდევრობებში, როცა ზუსტად ის სიმბოლოები გჭირდებათ. ანუ, გამოიყენეთ [kbd]'my\\_db'[/kbd] და არა [kbd]'my_db'[/kbd]."
+
+msgid "Leave blank for no PDF schema support, suggested: [kbd]pma__pdf_pages[/kbd]."
+msgstr "PDF-ის სქემის მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__pdf_pages[/kbd]."
+
+msgid "Leave blank for no \"persistent\" recently used tables across sessions, suggested: [kbd]pma__recent[/kbd]."
+msgstr "სესიებს შორის მუდმივი ახლახანს გამოყენებული ცხრილების მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__recent[/kbd]."
+
+msgid "Leave blank for no \"persistent\" favorite tables across sessions, suggested: [kbd]pma__favorite[/kbd]."
+msgstr "სესიებს შორის მუდმივი რჩეული ცხრილების მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__favorite[/kbd]."
+
+msgid "Leave blank for no [doc@relations@]relation-links[/doc] support, suggested: [kbd]pma__relation[/kbd]."
+msgstr "დატოვეთ ცარიელი [doc@relations@]relation-links[/doc]-ის მხარდაჭერის გასათიშად. გირჩევთ: [kbd]pma__relation[/kbd]."
+
+msgid "Leave blank for no PDF schema support, suggested: [kbd]pma__table_coords[/kbd]."
+msgstr "PDF-ის სქემის მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__table_coords[/kbd]."
+
+msgid "Table to describe the display columns, leave blank for no support; suggested: [kbd]pma__table_info[/kbd]."
+msgstr "საჩვენებელი სვეტების აღწერის ცხრილის მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__table_info[/kbd]."
+
+msgid "Leave blank for no \"persistent\" tables' UI preferences across sessions, suggested: [kbd]pma__table_uiprefs[/kbd]."
+msgstr "სესიებს შორის მუდმივი ცხრილების ინტერფეისის პარამეტრების მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__table_uiprefs[/kbd]."
+
+msgid "Leave blank for no SQL query tracking support, suggested: [kbd]pma__tracking[/kbd]."
+msgstr "SQL მოთხოვნის ტრეკინგის მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__tracking[/kbd]."
+
+msgid "Leave blank for no user preferences storage in database, suggested: [kbd]pma__userconfig[/kbd]."
+msgstr "ბაზაში მომხმარებლის პარამეტრების შენახვის მხარდაჭერის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__userconfig[/kbd]."
+
+msgid "Leave blank to disable the feature to hide and show navigation items, suggested: [kbd]pma__navigationhiding[/kbd]."
+msgstr "ნავიგაციის ელემენტების ჩვენება/დამალვის ფუნქციის გამოსართავად ცარიელი დატოვეთ. რჩევა: [kbd]pma__navigationhiding[/kbd]."
+
+msgid "Authentication method to use."
+msgstr "ავთენტიკაციის მეთოდის გამოყენება."
+
+msgid "Compress connection to MySQL server."
+msgstr "MySQL სერვერთან კავშირის შეკუმშვა."
+
+msgid "Enable SSL for connection to MySQL server."
+msgstr "SSL კავშირის ჩართვა MySQL სერვერზე."
+
+msgid "Whether a user should be displayed a \"show all (rows)\" button."
+msgstr "მომხმარებლისთვის \"ყველა მწკრივის ჩვენების\" ღილაკის ჩვენება."
+
+msgid "Whether the table structure actions should be hidden."
+msgstr "დამალული იქნება ცხრილის სტრუქტურა, თუ არა."
+
+msgid "Maximum number of characters shown in any non-numeric column on browse view."
+msgstr "ხედის დათვალიერებისას არა-რიცხვით სვეტებში ნაჩვენები სიმბოლოების მაქსიმალური რაოდენობა."
+
+msgid "Maximum number of databases displayed in database list."
+msgstr "ბაზების სიაში ნაჩვენები ბაზების მაქსიმალური რაოდენობა."
+
+msgid "Maximum number of tables displayed in table list."
+msgstr "ცხრილების სიაში ნაჩვენები ცხრილების მაქსიმალური რაოდენობა."
+
+msgid "Maximum number of recently used tables; set 0 to disable."
+msgstr "ახლახანს გამოყენებული ცხრილების მაქსიმალური რაოდენობა. გასათიშად 0 დააყენეთ."
+
+msgid "Maximum number of favorite tables; set 0 to disable."
+msgstr "რჩეული ცხრილების მაქსიმალური რაოდენობა. გასათიშად 0 დააყენეთ."
+
+msgid "Disable shortcut keys"
+msgstr "მალსახმობის ღილაკების გამორთვა"
+
+msgid "Use persistent connections to MySQL databases."
+msgstr "MySQL-ის ბაზებთან მუდმივი მიერთების გამოყენება."
+
+msgid "Disallow BLOB and BINARY columns from editing."
+msgstr "BLOB და BINARY სვეტების ჩასწორების აკრძალვა."
+
+msgid "For display Options"
+msgstr "ჩვენების პარამეტრებისთვის"
+
+msgid "Enable ZIP compression for import and export operations."
+msgstr "შემოტანა/გატანის ოპერაციებისთვის ZIP შეკუმშვის ჩართვა."
+
+msgid "Restrict login to MySQL server"
+msgstr "MySQL სერვერზე შესვლის აკრძალვა"
+
+msgid "Row marker"
+msgstr "სტრიქონის ნიშანი"
+
+msgid "Bzip2"
+msgstr "Bzip2"
+
+msgid "CHAR columns editing"
+msgstr "CHAR სვეტების ჩასწორება"
+
+msgid "Enable CodeMirror"
+msgstr "CodeMirror-ის ჩართვა"
+
+msgid "Enable linter"
+msgstr "Linter-ის ჩართვა"
+
+msgid "Minimum size for input field"
+msgstr "შეყვანის ველის მინიმალური ზომა"
+
+msgid "Maximum size for input field"
+msgstr "შეყვანის ველის მაქსიმალური ზომა"
+
+msgid "Paper size"
+msgstr "გვერდის ზომა"
+
+msgid "Enable autocomplete for table and column names"
+msgstr "ცხრილისა და სვეტების სახელების ავტომატური დასრულება"
+
+msgid "Show column comments"
+msgstr "სვეტის კომენტარების ჩვენება"
+
+msgid "Hide table structure actions"
+msgstr "ცხრილის სტრუქტურის ქმედებების დამალვა"
+
+msgid "Default transformations for Hex"
+msgstr "ნაგულისხმები გარდაქმნა თექვსმეტობითისთვის"
+
+msgid "Default transformations for Substring"
+msgstr "გარდაქმნის პარამეტრები ქვესტრიქონისთვის"
+
+msgid "Default transformations for Bool2Text"
+msgstr "გარდაქმნის პარამეტრები Bool2Text-სთვის"
+
+msgid "Default transformations for External"
+msgstr "გარდაქმნის პარამეტრები გარესთვის"
+
+msgid "Default transformations for PreApPend"
+msgstr "გარდაქმნის პარამეტრები PreApPend-სთვის"
+
+msgid "Default transformations for DateFormat"
+msgstr "გარდაქმნის პარამეტრები თარიღის ფორმატისთვის"
+
+msgid "Default transformations for Inline"
+msgstr "გარდაქმნის პარამეტრები Inline-სთვის"
+
+msgid "Default transformations for TextImageLink"
+msgstr "გარდაქმნის პარამეტრები TextImageLink-სთვის"
+
+msgid "Default transformations for TextLink"
+msgstr "გარდაქმნის პარამეტრები TextLink-სთვის"
+
+msgid "Display servers as a list"
+msgstr "სერვერების სიის სახით ჩვენება"
+
+msgid "Disable multi table maintenance"
+msgstr "მრავალცხრილიანი რემონტის გამორთვა"
+
+msgid "Save as file"
+msgstr "ფაილის სახის შენახვა"
+
+msgid "Character set of the file"
+msgstr "სომბოლოთა ნაკრები ფაილისათვის"
+
+msgid "Compression"
+msgstr "შეკუმშვა"
+
+msgid "Put columns names in the first row"
+msgstr "სვეტის სახელები პირველ მწკრივში ჩასმა"
+
+msgid "Columns enclosed with"
+msgstr "სვეტები ჩასმულია"
+
+msgid "Columns escaped with"
+msgstr "სვეტებს შუა სიმბოლო"
+
+msgid "Replace NULL with"
+msgstr "NULL-ის ჩანაცვლება"
+
+msgid "Columns terminated with"
+msgstr "სვეტები სრულდება"
+
+msgid "Lines terminated with"
+msgstr "ხაზები მთავრდება"
+
+msgid "Excel edition"
+msgstr "Excel-ის ვერსია"
+
+msgid "Dump table"
+msgstr "ცხრილის დამპი"
+
+msgid "Relationships"
+msgstr "ურთიერთობები"
+
+msgid "Export method"
+msgstr "გატანის მეთოდი"
+
+msgid "Save on server"
+msgstr "სერვერზე შენახვა"
+
+msgid "Export as separate files"
+msgstr "ცა-ცალკე ფაილებად გატანა"
+
+msgid "Remember filename template"
+msgstr "ფაილის სახელის შაბლონის დამახსოვრება"
+
+msgid "Enclose table and column names with backquotes"
+msgstr "ცხრილისა და სვეტების სახელების ბრჭყალებში ჩასმა"
+
+msgid "Export views as tables"
+msgstr "ხედების ცხრილის სახით გატანა"
+
+msgid "%s view"
+msgstr "%s ხედი"
+
+msgid "Export type"
+msgstr "გატანის ტიპი"
+
+msgid "Export time in UTC"
+msgstr "ექსპორტის დრო UT- ში"
+
+msgid "Foreign key checks"
+msgstr "უცხრო გასაღების შემოწმება"
+
+msgid "Browse mode"
+msgstr "დათვალიერების რეჟიმი"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Developer"
+msgstr "პროგრამისტი"
+
+msgid "Edit mode"
+msgstr "რედაქტირების რეჟიმი"
+
+msgid "General"
+msgstr "ზოგადი"
+
+msgid "Import / export"
+msgstr "იმპორტი / ექსპორტი"
+
+msgid "LaTeX"
+msgstr "LaTeX"
+
+msgid "Navigation tree"
+msgstr "ნავიგაციის ხე"
+
+msgid "Microsoft Office"
+msgstr "Microsoft Office"
+
+msgid "Page titles"
+msgstr "გვერდის სათაურები"
+
+msgid "Security"
+msgstr "უსაფრთხოება"
+
+msgid "Basic settings"
+msgstr "ძირითადი პარამეტრები"
+
+msgid "Authentication"
+msgstr "ავთენტიფიკაცია"
+
+msgid "Server configuration"
+msgstr "სერვერის კონფიგურაცია"
+
+msgid "Configuration storage"
+msgstr "კონფიგურაციის საცავი"
+
+msgid "Startup"
+msgstr "გაშვება"
+
+msgid "Database structure"
+msgstr "მონაცემთა ბაზის სტრუქტურა"
+
+msgid "Tabs"
+msgstr "დაფები"
+
+msgid "Display relational schema"
+msgstr "ურთიერთობის სქემის ჩვენება"
+
+msgid "Text fields"
+msgstr "ტექსტური ველები"
+
+msgid "Texy! text"
+msgstr "Texy! text"
+
+msgid "Warnings"
+msgstr "გაფრთხილებები"
+
+msgid "GZip"
+msgstr "GZip"
+
+msgid "Format of imported file"
+msgstr "შემოტანილი ფაილების ფორმატი"
+
+msgid "Column names in first row"
+msgstr "სვეტის სახელები პირველ მწკრივში"
+
+msgid "Do not use AUTO_INCREMENT for zero values"
+msgstr "არ გამოიყენოთ AUTO_INCREMENT ნულოვანი მნიშვნელობებისთვის"
+
+msgid "Number of inserted rows"
+msgstr "ჩასმული სტრიქონების რაოდენობა"
+
+msgid "Maximum items on first level"
+msgstr "მაქსიმალური ელემენტები პირველ დონეზე"
+
+msgid "Memory limit"
+msgstr "მეხსიერების შეზღუდვა"
+
+msgid "Show databases navigation as tree"
+msgstr "ბაზების ნავიგაციის ხის სახით ჩვენება"
+
+msgid "Navigation panel width"
+msgstr "ნავიგაციის პანელის სიგანე"
+
+msgid "Link with main panel"
+msgstr "მთავარ პანელზე მიბმა"
+
+msgid "Display logo"
+msgstr "ლოგოს ჩვენება"
+
+msgid "Logo link URL"
+msgstr "Logo link URL"
+
+msgid "Minimum number of items to display the filter box"
+msgstr "ფილტრის ფანჯარაში საჩვენებელი ელემენტების მინიმალური რაოდენობა"
+
+msgid "Minimum number of databases to display the database filter box"
+msgstr "ბაზის ფილტრის ფანჯარაში ნაჩვენები ბაზების მინიმალური რაოდენობა"
+
+msgid "Enable navigation tree expansion"
+msgstr "ნავიგაციის ხის გაფართოების ჩართვა"
+
+msgid "Show tables in tree"
+msgstr "ცხრილების ჩვენება ხეში"
+
+msgid "Show views in tree"
+msgstr "ხედების ჩვენება ხეზე"
+
+msgid "Show functions in tree"
+msgstr "ხეში ფუნქციების ჩვენება"
+
+msgid "Show procedures in tree"
+msgstr "აჩვენეთ პროცედურები ხეში"
+
+msgid "Show events in tree"
+msgstr "მოვლენების ჩვენება ხეზე"
+
+msgid "Expand single database"
+msgstr "ერთი მონაცემთა ბაზის გაფართოება"
+
+msgid "Recently used tables"
+msgstr "ახლახანს გამოყენებული ცხრილები"
+
+msgid "Natural order"
+msgstr "ბუნებრივი მიმდევრობა"
+
+msgid "Table navigation bar"
+msgstr "ცხრილის ნავიგაციის პანელი"
+
+msgid "Protect binary columns"
+msgstr "ბინარული სვეტების დაცვა"
+
+msgid "Remember table's sorting"
+msgstr "ცხრილის დალაგების დამახსოვრება"
+
+msgid "Repeat headers"
+msgstr "თავსართების გამეორება"
+
+msgid "Relational display"
+msgstr "ურთიერთობის ჩვენება"
+
+msgid "Save directory"
+msgstr "დირექტორიის შენახვა"
+
+msgid "Host authorization order"
+msgstr "ჰოსტის ავტორიზაციის მიმდევრობა"
+
+msgid "Host authorization rules"
+msgstr "ჰოსტის ავტორიზაციის წესები"
+
+msgid "Allow root login"
+msgstr "\"root\"-ით შესვლის ნებართვა"
+
+msgid "Session timezone"
+msgstr "სესიის დროის სარტყელი"
+
+msgid "Bookmark table"
+msgstr "ცხრილის ჩანიშვნა"
+
+msgid "Compress connection"
+msgstr "კავშირის შეკუმშვა"
+
+msgid "Control host"
+msgstr "კონტროლის ჰოსტი"
+
+msgid "Control port"
+msgstr "კონტროლის პორტი"
+
+msgid "Disable use of INFORMATION_SCHEMA"
+msgstr "INFORMATION_SCHEMA-ის გამოყენების აკრძალვა"
+
+msgid "Hide databases"
+msgstr "მონაცემთა ბაზების დამალვა"
+
+msgid "Server hostname"
+msgstr "სერვერის ჰოსტის სახელი"
+
+msgid "Maximal number of table preferences to store"
+msgstr "შენახული ცხრილის პარამეტრების მაქსიმალური რაოდენობა"
+
+msgid "Export templates table"
+msgstr "შაბლონების ცხრილის გატანა"
+
+msgid "Central columns table"
+msgstr "ცენტრალური სვეტების ცხრილი"
+
+msgid "Server port"
+msgstr "სერვერის პორტი"
+
+msgid "Recently used table"
+msgstr "ახლახანს გამოყენებული ცხრილი"
+
+msgid "Favorites table"
+msgstr "რჩეული ცხრილი"
+
+msgid "Server socket"
+msgstr "სერვერის სოკეტი"
+
+msgid "Use SSL"
+msgstr "SSL-ის გამოყენება"
+
+msgid "Display columns table"
+msgstr "სვეტების ცხრილის ჩვენება"
+
+msgid "UI preferences table"
+msgstr "UI პარამეტრების მაგიდა"
+
+msgid "Statements to track"
+msgstr "დასატრეკი გამოსახულებები"
+
+msgid "SQL query tracking table"
+msgstr "SQL მოთხოვნის ტრეკინგის ცხრილი"
+
+msgid "Automatically create versions"
+msgstr "ვერსიების ავტომატური შექმნა"
+
+msgid "Users table"
+msgstr "მომხმარებელთა ცხრილი"
+
+msgid "Show password change form"
+msgstr "პაროლის შეცვლის ფორმის ჩვენება"
+
+msgid "Show create database form"
+msgstr "მონაცემთა ბაზის შექმნის ფორმის ჩვენება"
+
+msgid "Show table comments"
+msgstr "ცხრილის კომენტარების ჩვენება"
+
+msgid "Show creation timestamp"
+msgstr "შექმნის დროის შტამპის ჩვენება"
+
+msgid "Show last update timestamp"
+msgstr "უკანასკნელი განახლების დროის შტამპის ჩვენება"
+
+msgid "Show last check timestamp"
+msgstr "უკანასკნელი სემოწმების დროის შტამპის ჩვენება"
+
+msgid "Show table charset"
+msgstr "ცხრილის კოდირების ჩვენება"
+
+msgid "Show field types"
+msgstr "ველის ტიპების ჩვენება"
+
+msgid "Show function fields"
+msgstr "ფუნქციების ველების ჩვენება"
+
+msgid "Show hint"
+msgstr "მინიშნების ჩვენება"
+
+msgid "Show phpinfo() link"
+msgstr "\"phpinfo()\"-ის ბმულის ჩვენება"
+
+msgid "Show detailed MySQL server information"
+msgstr "MySQL სერვერის შესახებ დეტალური ინფორმაციის ჩვენება"
+
+msgid "Show SQL queries"
+msgstr "SQL მოთხოვნების ჩვენება"
+
+msgid "Show statistics"
+msgstr "სტატისტიკის ჩევნება"
+
+msgid "Skip locked tables"
+msgstr "დაბლოკილი ცხრილების გამოტოვება"
+
+msgid "Explain SQL"
+msgstr "SQL-ის ახსნა"
+
+msgid "Create PHP code"
+msgstr "PHP კოდის შექმნა"
+
+msgid "Textarea columns"
+msgstr "Textarea სვეტები"
+
+msgid "Textarea rows"
+msgstr "Textarea მწკრივები"
+
+msgid "Default title"
+msgstr "ნაგულისხმები სათაური"
+
+msgid "Upload directory"
+msgstr "ატვირთვის დირექტორია"
+
+msgid "Version check"
+msgstr "ვერსიის შემოწმება"
+
+msgid "Proxy username"
+msgstr "პროქსის მომხმარებელი"
+
+msgid "Proxy password"
+msgstr "პროქსის პაროლი"
+
+msgid "ZIP"
+msgstr "ZIP"
+
+msgid "Send error reports"
+msgstr "შეცდომის ანგარიშების გაგზავნა"
+
+msgid "Enable Zero Configuration mode"
+msgstr "ნულოვანი კონფიგურაციის რეჟიმის ჩართვა"
+
+msgid "Console mode"
+msgstr "კონსოლის რეჟიმი"
+
+msgid "Server connection collation"
+msgstr "სერვერის კავშირის კოლაცია"
+
+msgid "Incorrect value!"
+msgstr "არასწორი მნიშვნელობა!"
+
+msgid "unavailable"
+msgstr "მიუწვდომელი"
+
+msgid "maximum %s"
+msgstr "მაქსიმალური %s"
+
+msgid "Config authentication"
+msgstr "კონფიგურაციის ავთენტიფიკაცია"
+
+msgid "HTTP authentication"
+msgstr "HTTP ავტორიზაცია"
+
+msgid "Signon authentication"
+msgstr "შესვლის ავთენტიკაცია"
+
+msgid "Quick"
+msgstr "სწრაფი"
+
+msgid "Custom"
+msgstr "ხელით მითითებული"
+
+msgid "CSV for MS Excel"
+msgstr "CSV MS Excel-თვის"
+
+msgid "Microsoft Word 2000"
+msgstr "Microsoft Word 2000"
+
+msgid "OpenDocument Spreadsheet"
+msgstr "OpenDocument ელცხრილი"
+
+msgid "OpenDocument Text"
+msgstr "OpenDocument Text"
+
+msgid "Default transformations"
+msgstr "ნაგულისხმები გარდაქმნები"
+
+msgid "Cannot save settings, submitted configuration form contains errors!"
+msgstr "პარამეტრების შენახვა შეუძლებელია. გადმოცემული კონფიგურაცია შეცდომებს შეიცავს!"
+
+msgid "This %soption%s should be disabled as it allows attackers to bruteforce login to any MySQL server. If you feel this is necessary, use %srestrict login to MySQL server%s or %strusted proxies list%s. However, IP-based protection with trusted proxies list may not be reliable if your IP belongs to an ISP where thousands of users, including you, are connected to."
+msgstr "ეს %sპარამეტრი%s გამორთული უნდა იყოს რადგან ის ცუდ ხალხს MySQL-ის სერვერში შესასვლელად პაროლის არჩევის საშუალებას აძლევთ. თუ მისი გამოყენება აუცილებელია, %sშეზღუდეთ MySQL სერვერთან%s ან %sსანდო პროქსის სიის%s წვდომა. მაგრამ IP-ზე დაფუძნებული უსაფრთხოება სანდო პროქსიებით სანდო არაა, თუ IP მიეკუთვნება ISP-ს, სადაც მას ათასობით მომხმარებელი (თქვენი ჩათვლით) შეიძლება იყენებდეს."
+
+msgid "You should use SSL connections if your database server supports it."
+msgstr "თუ ბაზას SSL მიერთების მხარდაჭერა გააჩნია, გამოიყენეთ ის."
+
+msgid "If you feel this is necessary, use additional protection settings - %1$shost authentication%2$s settings and %3$strusted proxies list%4$s. However, IP-based protection may not be reliable if your IP belongs to an ISP where thousands of users, including you, are connected to."
+msgstr "თუ ეს აუცილებლად გჭირდებათ, გამოიყენეთ დამატებითი უსაფრთხოების პარამეტრები - %1$sჰოსტით ავთენტიკაციის%2$sპარამეტრები და %3$sსანდო პროქსიების სია%4$s. მაგრამ IP-ზე დაფუძნებული უსაფრთხოება შეიძლება ცუდი იდეა იყოს, თუ ის ეკუთვნის ISP-ს, სადაც მას ათასობით მომხმარებელი იყენებს, თქვენი ჩათვლით."
+
+msgid "You set the [kbd]config[/kbd] authentication type and included username and password for auto-login, which is not a desirable option for live hosts. Anyone who knows or guesses your phpMyAdmin URL can directly access your phpMyAdmin panel. Set %1$sauthentication type%2$s to [kbd]cookie[/kbd] or [kbd]http[/kbd]."
+msgstr "თქვენ დააყენეთ [kbd]config[/kbd] ავთენტიკაციის ტიპი და ჩასვით მომხმარებლის სახელი და პაროლი ავტოშესვლისთვის, რაც ცოცხალი ჰოსტებისთვის სასურველი არაა. ყველას, ვინც იცის, ან მიხვდება თქვენი phpMyAdmin-ის URL-ს, შეუძლია, შევიდეს თქვენი phpMyAdmiin-ის პანელში. დააყენეთ %1$sავთენტიკაციის ტიპი%2$s [kbd]cookie[/kbd]-ზე, ან [kbd]http[/kbd]-ზე."
+
+msgid "%sZip decompression%s requires functions (%s) which are unavailable on this system."
+msgstr "%sZip გაშლა %s მოითხოვს ფუნქციებს (%s), რომლებიც თქვენს სისტემაზე ხელმისაწვდომი არაა."
+
+msgid "%sZip compression%s requires functions (%s) which are unavailable on this system."
+msgstr "%sZip შეკუმშვა %s მოითხოვს ფუნქციებს (%s), რომლებიც თქვენს სისტემაზე ხელმისაწვდომი არაა."
+
+msgid "%sLogin cookie validity%s should be set to 1800 seconds (30 minutes) at most. Values larger than 1800 may pose a security risk such as impersonation."
+msgstr "%sშესვლის ქუქის სისწორე%s 1800 წამზე (30 წთ) უნდა გეყენოთ, მაქს. 1800 წამზე დიდი მნიშვნელობები დიდ რისკებს შეიცავს."
+
+msgid "%1$sBzip2 compression and decompression%2$s requires functions (%3$s) which are unavailable on this system."
+msgstr "%1$sBzip2 გაშლა და შეკუმშვა %2$s მოითხოვს ფუნქციებს (%3$s), რომლებიც თქვენს სისტემაზე ხელმისაწვდომი არაა."
+
+msgid "%1$sGZip compression and decompression%2$s requires functions (%3$s) which are unavailable on this system."
+msgstr "%1$sGZip-ით შეკუმშვას და გაშლას%2$s სჭირდება ფუნქცია (%3$s), რომელიც ამ სისტემაზე ხელმისაწვდომი არაა."
+
+msgid "Server %d"
+msgstr "სერვერი %d"
+
+msgid "View users"
+msgstr "მომხმარებლების ნახვა"
+
+msgid "Server-level tabs"
+msgstr "სერვერის-დონის ჩანართები"
+
+msgid "Database-level tabs"
+msgstr "ბაზის დონის ჩანართები"
+
+msgid "Table-level tabs"
+msgstr "ცხრილის დონის ჩანართები"
+
+msgid "Could not save configuration"
+msgstr "კონფიგურაციის შენახვის შეცდომა"
+
+msgid "The phpMyAdmin configuration storage database could not be accessed."
+msgstr "phpMyAdmin-ის კონფიგურაციის საცავის ბაზასთან წვდომა შეუძლებელია."
+
+msgid "Could not connect to the database server!"
+msgstr "ბაზის სერვერთან დაკავშირება ვერ მოხერხდა!"
+
+msgid "Invalid authentication type!"
+msgstr "არასწორი ავთენტიფიკაციის ტიპი!"
+
+msgid "Empty username while using [kbd]config[/kbd] authentication method!"
+msgstr "არასწორი მომხმარებლის სახელი [kbd]config[/kbd ავთენტიკაციის გამოყენებისას!"
+
+msgid "Empty signon session name while using [kbd]signon[/kbd] authentication method!"
+msgstr "ცარიელი შესვლის სესიის სახელი [kbd]signon[/kbd] ავთენტიკაციის მეთოდის გამოყენებისას!"
+
+msgid "Empty signon URL while using [kbd]signon[/kbd] authentication method!"
+msgstr "ცარიელი შესვლის URL [kbd]signon[/kbd] ავთენტიკაციის გამოყენებისას!"
+
+msgid "Incorrect value:"
+msgstr "არასწორი მნიშვნელობა:"
+
+msgid "Incorrect IP address: %s"
+msgstr "IP მისამართი არასწორია: %s"
+
+msgid "Not a valid port number!"
+msgstr "პორტის ნომერი არასწორია!"
+
+msgid "Not a positive number!"
+msgstr "არადადებითი რიცხვი!"
+
+msgid "Not a non-negative number!"
+msgstr "არადადებითი რიცხვი არაა!"
+
+msgid "No bookmarks"
+msgstr "სანიშნების გარეშე"
+
+msgid "The %s file is not available on this system, please visit %s for more information."
+msgstr "%s ფაილი მიუწვდომელია ამ სისტემაში, გთხოვთ ეწვიოთ %s -ს დამატებითი ინფორმაციისთვის."
+
+msgid "Failed"
+msgstr "შეცდომა"
+
+msgid "Succeeded"
+msgstr "წარმატებულია"
+
+msgid "Console settings has been updated successfully."
+msgstr "კონსოლის პარამეტრები წარმატებით განახლდა."
+
+msgid "Unexpected parameter value."
+msgstr "მოულოდნელი პარამეტრის მნიშვნელობა."
+
+msgid "Showing rows %1$s - %2$s."
+msgstr "ნაჩვენებია მწკრივები %1$s - %2$s."
+
+msgid "Add event"
+msgstr "მოვლენის დამატება"
+
+msgid "Edit event"
+msgstr "მოვლენის ჩასწორება"
+
+msgid "Error in processing request:"
+msgstr "მოთხოვნის დამუშავების შეცდომა:"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "მოვლენა %1$s ბაზაში %2$s აღმოჩენილი არაა."
+
+msgid "Export of event %s"
+msgstr "%s მოვლენის გატანა"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "მოთხოვნის დამუშავების შეცდომა: მოვლენა სახელით %1$s ბაზაში %2$s აღმოჩენილი არაა."
+
+msgid "No Privileges"
+msgstr "პრივილეგიები არაა"
+
+msgid "You do not have the privileges to administrate the users!"
+msgstr "მომხმარებლების ადმინისტრირების პრივილეგიები არ გაქვთ!"
+
+msgid "No table selected."
+msgstr "ცხრილი არჩეული არაა."
+
+msgid "Add routine"
+msgstr "პროცედურის დამატება"
+
+msgid "Edit routine"
+msgstr "პროცედურის ჩასწორება"
+
+msgid "No routine with name %1$s found in database %2$s."
+msgstr "რუტინა %1$s ბაზაში %2$s აღმოჩენილი არაა."
+
+msgid "Export of routine %s"
+msgstr "პროცედურის %s გატანა"
+
+msgid "Success!"
+msgstr "წარმატება!"
+
+msgid "unknown"
+msgstr "უცნობი"
+
+msgid "Tracking data deleted successfully."
+msgstr "ტრეკინგის მონაცემები წარმატებით წაიშალა."
+
+msgid "No tables selected."
+msgstr "ცხრილები არჩეული არაა."
+
+msgid "Database Log"
+msgstr "მონაცემთა ბაზის ჟურნალი"
+
+msgid "Bad type!"
+msgstr "არასწორი ტიპი!"
+
+msgid "The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. "
+msgstr "PhpMyAdmin-ის კონფიგურაციის საცავი ბოლომდე მორგებული არაა. ზოგიერთი დამატებითი ფუნქცია გაითიშება. %sგაიგეთ, რატომ%s. "
+
+msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
+msgstr "PHP-ის mbstring გაფართოების პოვნა ვერ მოხერხდა და როგორც ჩანს გამოიყენება მრავალბაიტიანი სიმბოლოთა ნაკრები. mbstring გაფართოების გარეშე phpMyAdmin-ს არ შეუძლია სტრიქონების სწორად დაყოფა რის გამოც შეიძლება მიიღოთ მოულოდნელი შედეგი."
+
+msgid "Incorrect format parameter"
+msgstr "ფორმატის არასწორი პარამეტრი"
+
+msgid "Showing bookmark"
+msgstr "სანიშნის ჩვენება"
+
+msgid "Do you really want to execute \"%s\"?"
+msgstr "ნამდვილად გსურთ გაუშვათ \"%s\"?"
+
+msgid "You are about to DESTROY a complete table!"
+msgstr "აპირებთ გაანადგუროთ სრული ცხრილი!"
+
+msgid "You are about to TRUNCATE a complete table!"
+msgstr "თქვენ სრულიად გაანადგურეთ მონაცემთა ბაზა!"
+
+msgid "You are about to DELETE all the rows of the table!"
+msgstr "პაირებთ წაშალოთ ცხრილის ყველა მწკრივი!"
+
+msgid "Delete tracking data for this table?"
+msgstr "წავშალო ტრეკინგის მონაცემები ამ ცხრილისთვის?"
+
+msgid "Delete tracking data for these tables?"
+msgstr "წავშალო ტრეკინგის მონაცემები ამ ცხრილებისთვის?"
+
+msgid "Delete tracking data for this version?"
+msgstr "წავშალო ტრეკინგის მონაცემები ამ ვერსიისთვის?"
+
+msgid "Delete tracking data for these versions?"
+msgstr "წავშალო ტრეკინგის მონაცემები ამ ვერსიებისთვის?"
+
+msgid "Delete entry from tracking report?"
+msgstr "წავშალო ჩანაწერი ტრეკინგის ანგარიშიდან?"
+
+msgid "Deleting tracking data"
+msgstr "ტრეკინგის მონაცემების წაშლა"
+
+msgid "Dropping Foreign key."
+msgstr "უცხო გასაღების მოცილება."
+
+msgid "Do you really want to delete user group \"%s\"?"
+msgstr "ნამდვილად გსურთ წაშალოთ მომხმარებლების ჯგუფი \"%s\"?"
+
+msgid "Do you really want to revoke the selected user(s) ?"
+msgstr "მართლა გნებავთ მონიშნული მომხმარებლების გაუქმება?"
+
+msgid "Do you really want to delete this central column?"
+msgstr "მართლა გნებავთ ამ ცენტრალური სვეტის წაშლა?"
+
+msgid "Do you really want to delete the selected items?"
+msgstr "მართლა გნებავთ მონიშნული ელემენტების წაშლა?"
+
+msgid "Do you really want to TRUNCATE the selected partition(s)?"
+msgstr "მართლა გნებავთ მონიშნული დანაყოფების TRUNCATE?"
+
+msgid "Do you really want to remove partitioning?"
+msgstr "მართლა გნებავთ დაყოფის წაშლა?"
+
+msgid "Do you really want to reset the replica (RESET REPLICA)?"
+msgstr "მართლა გნებავთ რეპლიკის თავიდან გაშვება (RESET REPLICA)?"
+
+msgid "Reset all"
+msgstr "ყველას ჩამოყრა"
+
+msgid "Select at least one of the options!"
+msgstr "აირჩიეთ ერთი პარამეტრი მაინც!"
+
+msgid "Please enter a valid number!"
+msgstr "შეიყვანეთ სწორი რიცხვი!"
+
+msgid "Please enter a valid length!"
+msgstr "შეიყვანეთ სწორი სიგრძე!"
+
+msgid "Add index"
+msgstr "ინდექსის დამატება"
+
+msgid "Edit index"
+msgstr "ინდექსის ჩასწორება"
+
+msgid "Rename index"
+msgstr "ინდექსის გადარქმევა"
+
+msgid "Create single-column index"
+msgstr "ერთ-სვეტიანი ინდექსის შექმნა"
+
+msgid "Create composite index"
+msgstr "კომპოზიტური ინდექსის შექმნა"
+
+msgid "Composite with:"
+msgstr "აწყობილია:"
+
+msgid "Please select column(s) for the index."
+msgstr "ინდექსისთვის სვეტ(ებ)-ის მონიშვნა აუცილებელია."
+
+msgid "Y values"
+msgstr "Y მნიშვნელობები"
+
+msgid "Please enter the SQL query first."
+msgstr "ჯერ შეიყვანეთ SQL მოთხოვნა."
+
+msgid "The host name is empty!"
+msgstr "ჰოსტის სახელის ველი ცარიელია!"
+
+msgid "The user name is empty!"
+msgstr "მომხმარებლის სახელის ველი ცარიელია!"
+
+msgid "The password is empty!"
+msgstr "პაროლის ველი ცარიელია!"
+
+msgid "The passwords aren't the same!"
+msgstr "პაროლებში შეუსაბამობაა!"
+
+msgid "Removing Selected Users"
+msgstr "მონიშნული მომხმარებლების წაშლა"
+
+msgid "Template was created."
+msgstr "შაბლონი შეიქმნა."
+
+msgid "Template was updated."
+msgstr "შაბლონი განახლდა."
+
+msgid "Template was deleted."
+msgstr "შაბლონი წაშლილია."
+
+msgid "Other"
+msgstr "სხვა"
+
+msgid ","
+msgstr ","
+
+msgid "."
+msgstr "."
+
+msgid "Connections / Processes"
+msgstr "კავშირები / პროცესები"
+
+msgid "Number of statements"
+msgstr "გამოსახულებების რაოდენობა"
+
+msgid "Query cache efficiency"
+msgstr "მოთხოვნების კეშის ეფექტურობა"
+
+msgid "Query cache usage"
+msgstr "მოთხოვნების კეშის გამოყენება"
+
+msgid "Query cache used"
+msgstr "გამოყენებული მოთხოვნების კეში"
+
+msgid "System CPU usage"
+msgstr "სისტემის CPU-ის გამოყენება"
+
+msgid "System memory"
+msgstr "სისტემური მეხსიერება"
+
+msgid "System swap"
+msgstr "სისტემური Swap-ი"
+
+msgid "Average load"
+msgstr "საშუალო დატვირთვა"
+
+msgid "Total memory"
+msgstr "ჯამური მეხსიერება"
+
+msgid "Cached memory"
+msgstr "დაქეშილი მეხსიერება"
+
+msgid "Buffered memory"
+msgstr "ბაფერის მეხსიერება"
+
+msgid "Free memory"
+msgstr "თავისუფალი მეხსიერება"
+
+msgid "Used memory"
+msgstr "გამოყენებული მეხსიერება"
+
+msgid "Total swap"
+msgstr "მთლიანი სვოპი"
+
+msgid "Cached swap"
+msgstr "დაკეშილი სვოპი"
+
+msgid "Free swap"
+msgstr "თავისუფალი სვოპი"
+
+msgid "Bytes sent"
+msgstr "გაგზავნილი ბაიტი"
+
+msgid "Bytes received"
+msgstr "მიღებული ბაიტები"
+
+msgid "B"
+msgstr "B"
+
+msgid "GiB"
+msgstr "GiB"
+
+msgid "TiB"
+msgstr "ტიბ"
+
+msgid "PiB"
+msgstr "PiB"
+
+msgid "EiB"
+msgstr "EiB"
+
+msgid "%d table(s)"
+msgstr "%d ცხრილი"
+
+msgid "Questions"
+msgstr "კითხვები"
+
+msgid "SQL Query"
+msgstr "SQL მოთხოვნა"
+
+msgid "Resume monitor"
+msgstr "თვალყურის დევნების გაგრძელება"
+
+msgid "Pause monitor"
+msgstr "თვალყურის დევნების შეჩერება"
+
+msgid "Set log_output to %s"
+msgstr "Log_output-ის %s-ზე დაყენება"
+
+msgid "Enable %s"
+msgstr "%s-ის ჩართვა"
+
+msgid "Disable %s"
+msgstr "%s-ის გამორთვა"
+
+msgid "Set long_query_time to %d seconds."
+msgstr "Long_query_time-ის %d წამზე დაყენება."
+
+msgid "Change settings"
+msgstr "პარამეტრების შეცვლა"
+
+msgid "Current settings"
+msgstr "მიმდინარე პარამეტრები"
+
+msgid "Chart title"
+msgstr "გრაფიკის სათაური"
+
+msgid "Differential"
+msgstr "განსხვავება"
+
+msgid "Unit"
+msgstr "ერთეული"
+
+msgid "Analyzing…"
+msgstr "ანალიზი…"
+
+msgid "Explain output"
+msgstr "გამოტანის ახსნა"
+
+msgid "Total time:"
+msgstr "სულ დრო:"
+
+msgid "Profiling results"
+msgstr "პროფილირების შედეგები"
+
+msgctxt "Display format"
+msgid "Table"
+msgstr "ცხრილი"
+
+msgid "Chart"
+msgstr "გრაფიკი"
+
+msgid "Log table filter options"
+msgstr "ჟურნალის ცხრილის ფილტრის პარამეტრები"
+
+msgid "Filter"
+msgstr "ფილტრი"
+
+msgid "Sum of grouped rows:"
+msgstr "დაჯგუფებული მწკრივების ჯამი:"
+
+msgid "Affected rows:"
+msgstr "შეცვლილი სტრიქონები:"
+
+msgid "Please enter a valid table name."
+msgstr "შეიყვანეთ სწორი ცხრილის სახელი."
+
+msgid "Please enter a valid database name."
+msgstr "შეიყვანეთ სწორი ბაზის სახელი."
+
+msgid "No parameters found!"
+msgstr "პარამეტრები ვერ მოიძებნა!"
+
+msgid "Processing request"
+msgstr "მოთხოვნის დამუშავება"
+
+msgid "Request failed!!"
+msgstr "მოთხოვნის შეცდომა!!"
+
+msgid "Error in processing request"
+msgstr "მოთხოვნის დამუშავების შეცდომა"
+
+msgid "No accounts selected."
+msgstr "ანგარიში არჩეული არაა."
+
+msgid "Dropping column"
+msgstr "სვეტის მოცილება"
+
+msgid "Adding primary key"
+msgstr "ძირითადი გასაღების დამატება"
+
+msgid "Renaming databases"
+msgstr "მონაცემთა ბაზების გადარქმევა"
+
+msgid "Copying database"
+msgstr "მონაცემთა ბაზის კოპირება"
+
+msgid "Changing charset"
+msgstr "სიმბოლოთა ნაკრები"
+
+msgid "Failed to get real row count."
+msgstr "მწკრივების ნამდვილი რაოდენობის მიღების შეცდომა."
+
+msgid "Searching"
+msgstr "ძებნა"
+
+msgid "Hide search results"
+msgstr "ძებნის შედეგების დამალვა"
+
+msgid "Show search results"
+msgstr "ძებნის შედეგების ჩვენება"
+
+msgid "Browsing"
+msgstr "არჩევა"
+
+msgid "Deleting"
+msgstr "წაშლა"
+
+msgid "Trigger"
+msgstr "ტრიგერი"
+
+msgid "Values for column %s"
+msgstr "ველების რაოდენობა სვეტებისათვის %s"
+
+msgid "Add %d value(s)"
+msgstr "%d მნიშვნელობის დამატება"
+
+msgid "Hide query box"
+msgstr "ძებნის ფანჯრის დამალვა"
+
+msgid "Show query box"
+msgstr "ძებნის ფანჯრის ჩვენება"
+
+msgid "Edit query"
+msgstr "მოთხოვნის ჩასწორება"
+
+msgid "Variable %d:"
+msgstr "ცვლადი %d:"
+
+msgid "Pick"
+msgstr "აირჩიეთ"
+
+msgid "Column selector"
+msgstr "სვეტს სელექტორი"
+
+msgid "Search this list"
+msgstr "ამ სიასი ძებნა"
+
+msgid "See more"
+msgstr "მეტის ნახვა"
+
+msgid "Taking you to next step…"
+msgstr "შემდეგ ნაბიჯზე გადასვლა…"
+
+msgid "End of step"
+msgstr "ნაბიჯის დასასრული"
+
+msgid "Done"
+msgstr "დასრულებულია"
+
+msgid "Step"
+msgstr "ბიჯი"
+
+msgid "Create the following table"
+msgstr "შექმენით შემდეგი ცხრილი"
+
+msgid "Enter first value"
+msgstr "შეიყვანეთ პირველი მნიშვნელობა"
+
+msgid "Enter second value"
+msgstr "შეიყვანეთ მეორე მნიშვნელობა"
+
+msgid "Hide search criteria"
+msgstr "ძებნის პირობის დამალვა"
+
+msgid "Show search criteria"
+msgstr "ძებნის პირობის ჩვენება"
+
+msgid "Column maximum:"
+msgstr "მაქსიმუმ სვეტები:"
+
+msgid "Column minimum:"
+msgstr "სვეტების მინიმუმი:"
+
+msgid "Hide find and replace criteria"
+msgstr "ძებნისა და ჩანაცვლების პირობის დამალვა"
+
+msgid "Show find and replace criteria"
+msgstr "ძებნისა და ჩანაცვლების პირობის ჩვენება"
+
+msgid "Select two columns"
+msgstr "აირჩიეთ ორი სვეტი"
+
+msgid "Data point content"
+msgstr "მონაცემის მაჩვენებლის შემცველობა"
+
+msgid "X"
+msgstr "X"
+
+msgid "Y"
+msgstr "Y"
+
+msgid "Point"
+msgstr "წერტილი"
+
+msgid "Linestring"
+msgstr "სტრიქონის ხაზი"
+
+msgid "Polygon"
+msgstr "მრავალკუთხედი"
+
+msgid "Inner ring"
+msgstr "შიდა რგოლი"
+
+msgid "Outer ring"
+msgstr "გარე რგოლი"
+
+msgid "Add a point"
+msgstr "წერტილის დამატება"
+
+msgid "Add a linestring"
+msgstr "ველის დამატება"
+
+msgid "Add an inner ring"
+msgstr "შიდა ქსელის დამატება"
+
+msgid "Add geometry"
+msgstr "გეომეტრიის დამატება"
+
+msgid "Encryption key"
+msgstr "დაშიფვრის გასაღები"
+
+msgid "Page name"
+msgstr "გვერდის სახელი"
+
+msgid "Delete page"
+msgstr "გვერდის წაშლა"
+
+msgid "Please select a page to continue"
+msgstr "გასაგრძელებლად აირჩიეთ გვერდი"
+
+msgid "Please enter a valid page name"
+msgstr "გთხოვთ, შეიყვანოთ სწორი გვერდის სახელი"
+
+msgid "Export relational schema"
+msgstr "ურთიერთობის სქემის გატანა"
+
+msgid "Modifications have been saved"
+msgstr "ცვლილებები შენახულია"
+
+msgid "%d object(s) created."
+msgstr "%d ობიექტი შეიქმნა."
+
+msgid "Column name"
+msgstr "სვეტის სახელი"
+
+msgid "Double-click to copy column name."
+msgstr "ორმაგი წკაპი სვეტის სახელის დასაკოპირებლად."
+
+msgid "Original length"
+msgstr "საწყისი სიგრძე"
+
+msgid "cancel"
+msgstr "გაუქმება"
+
+msgid "Aborted"
+msgstr "შეწყვეტილია"
+
+msgid "Success"
+msgstr "წარმატებულია"
+
+msgid "Import status"
+msgstr "შემოტანის სტატუსი"
+
+msgid "Select database first"
+msgstr "ჯერ ბაზა აირჩიეთ"
+
+msgid "Go to link:"
+msgstr "ბმულზე გადასვლა:"
+
+msgid "Generate password"
+msgstr "პაროლის გენერირება"
+
+msgid "Show panel"
+msgstr "პანელის ჩვენება"
+
+msgid "Hide panel"
+msgstr "პანელის დამალვა"
+
+msgid "Unlink from main panel"
+msgstr "მთავარი პანელიდან მოხსნა"
+
+msgid ", latest stable version:"
+msgstr ", უკანასკნელი სტაბილური ვერსია:"
+
+msgid "up to date"
+msgstr "განახლებულია"
+
+msgid "Change report settings"
+msgstr "ანგარიშის პარამეტრების შეცვლა"
+
+msgid "Show report details"
+msgstr "ანგარიშის დეტალების ჩვენება"
+
+msgid "Ignore All"
+msgstr "ყველას იგნორირება"
+
+msgid "Copying failed!"
+msgstr "კოპირების შეცდომა!"
+
+msgid "Execute this query again?"
+msgstr "შევასრულო ეს მოთხოვნა კიდევ ერთხელ?"
+
+msgid "Do you really want to delete this bookmark?"
+msgstr "მართლა გნებავთ ამ სანიშნეს წაშლა?"
+
+msgid "Show arguments"
+msgstr "არგუმენტების ჩვენება"
+
+msgid "Hide arguments"
+msgstr "არგუმენტების დამალვა"
+
+msgid "Copy tables to"
+msgstr "დააკოპირეთ ცხრილები"
+
+msgid "Add table prefix"
+msgstr "ცხრილის პრეფიქსის დამატება"
+
+msgid "Replace table with prefix"
+msgstr "პრეფიქსის მქონე ცხრილის ჩანაცვლება"
+
+msgid "Weak"
+msgstr "სუსტი"
+
+msgid "Good"
+msgstr "კარგი"
+
+msgid "Strong"
+msgstr "ძლიერი"
+
+msgctxt "U2F error"
+msgid "Invalid request sent to security key."
+msgstr "უსაფრთხოების გასაღებთან გაგზავნილი მოთხნოვნა არასწორია."
+
+msgctxt "U2F error"
+msgid "Unknown security key error."
+msgstr "უცნობი უსაფრთხოების გასაღების შეცდომა."
+
+msgctxt "U2F error"
+msgid "Failed security key activation."
+msgstr "უსაფრთხოების გასაღების გააქტიურება ჩავარდა."
+
+msgctxt "U2F error"
+msgid "Invalid security key."
+msgstr "არასწორი უსაფრთხოების გასაღები."
+
+msgctxt "The table already exists in the designer and can not be added once more."
+msgid "Table %s already exists!"
+msgstr "ცხრილი %s უკვე არსებობს!"
+
+msgid "Hide"
+msgstr "დამალვა"
+
+msgctxt "Month name"
+msgid "January"
+msgstr "იანვარი"
+
+msgctxt "Month name"
+msgid "February"
+msgstr "თებერვალი"
+
+msgctxt "Month name"
+msgid "March"
+msgstr "მარტი"
+
+msgctxt "Month name"
+msgid "April"
+msgstr "აპრილი"
+
+msgctxt "Month name"
+msgid "May"
+msgstr "მაისი"
+
+msgctxt "Month name"
+msgid "June"
+msgstr "ივნისი"
+
+msgctxt "Month name"
+msgid "July"
+msgstr "ივლისი"
+
+msgctxt "Month name"
+msgid "August"
+msgstr "აგვისტო"
+
+msgctxt "Month name"
+msgid "September"
+msgstr "სექტემბერი"
+
+msgctxt "Month name"
+msgid "October"
+msgstr "ოქტომბერი"
+
+msgctxt "Month name"
+msgid "November"
+msgstr "ნოემბერი"
+
+msgctxt "Month name"
+msgid "December"
+msgstr "დეკემბერი"
+
+msgctxt "Short month name for January"
+msgid "Jan"
+msgstr "იან"
+
+msgctxt "Short month name for February"
+msgid "Feb"
+msgstr "თებ"
+
+msgctxt "Short month name for March"
+msgid "Mar"
+msgstr "მარ"
+
+msgctxt "Short month name for April"
+msgid "Apr"
+msgstr "აპრ"
+
+msgctxt "Short month name for May"
+msgid "May"
+msgstr "მაისი"
+
+msgctxt "Short month name for June"
+msgid "Jun"
+msgstr "ივნ"
+
+msgctxt "Short month name for July"
+msgid "Jul"
+msgstr "ივლ"
+
+msgctxt "Short month name for August"
+msgid "Aug"
+msgstr "აგვ"
+
+msgctxt "Short month name for September"
+msgid "Sep"
+msgstr "სექ"
+
+msgctxt "Short month name for October"
+msgid "Oct"
+msgstr "ოქტ"
+
+msgctxt "Short month name for November"
+msgid "Nov"
+msgstr "ნოე"
+
+msgctxt "Short month name for December"
+msgid "Dec"
+msgstr "დეკ"
+
+msgctxt "Short week day name for Sunday"
+msgid "Sun"
+msgstr "კვ"
+
+msgctxt "Short week day name for Monday"
+msgid "Mon"
+msgstr "ორშ"
+
+msgctxt "Short week day name for Tuesday"
+msgid "Tue"
+msgstr "სამ"
+
+msgctxt "Short week day name for Wednesday"
+msgid "Wed"
+msgstr "ოთხ"
+
+msgctxt "Short week day name for Thursday"
+msgid "Thu"
+msgstr "ხუთ"
+
+msgctxt "Short week day name for Friday"
+msgid "Fri"
+msgstr "პარ"
+
+msgctxt "Short week day name for Saturday"
+msgid "Sat"
+msgstr "შაბ"
+
+msgctxt "Minimal week day name for Sunday"
+msgid "Su"
+msgstr "კვი"
+
+msgctxt "Minimal week day name for Monday"
+msgid "Mo"
+msgstr "ორშ"
+
+msgctxt "Minimal week day name for Tuesday"
+msgid "Tu"
+msgstr "სამშ"
+
+msgctxt "Minimal week day name for Wednesday"
+msgid "We"
+msgstr "ოთხშ"
+
+msgctxt "Minimal week day name for Thursday"
+msgid "Th"
+msgstr "ხუთშ"
+
+msgctxt "Minimal week day name for Friday"
+msgid "Fr"
+msgstr "პარ"
+
+msgctxt "Minimal week day name for Saturday"
+msgid "Sa"
+msgstr "შაბ"
+
+msgctxt "Column header for week of the year in calendar"
+msgid "Wk"
+msgstr "კვ"
+
+msgctxt "The month-year order in a calendar"
+msgid "calendar-month-year"
+msgstr "calendar-month-year"
+
+msgctxt "Year suffix for calendar, \"none\" is empty"
+msgid "none"
+msgstr "არცერთი"
+
+msgctxt "A specific point in the day, as shown on a clock"
+msgid "Time"
+msgstr "დრო"
+
+msgctxt "Unit of time"
+msgid "Hour"
+msgstr "საათი"
+
+msgctxt "Unit of time"
+msgid "Minute"
+msgstr "წუთი"
+
+msgctxt "Unit of time"
+msgid "Second"
+msgstr "წამი"
+
+msgctxt "Unit of time"
+msgid "Millisecond"
+msgstr "მილიწამი"
+
+msgctxt "Unit of time"
+msgid "Microsecond"
+msgstr "მიკროწამი"
+
+msgctxt "The time zone for a time of day"
+msgid "Time zone"
+msgstr "დროის სარტყელი"
+
+msgctxt "Previous month"
+msgid "Prev"
+msgstr "წინა"
+
+msgctxt "Next month"
+msgid "Next"
+msgstr "შემდეგი"
+
+msgid "Today"
+msgstr "დღეს"
+
+msgid "This field is required"
+msgstr "ამ ველის შევსება აუცილებელია"
+
+msgid "Please fix this field"
+msgstr "გაასწორეთ ეს ველი"
+
+msgid "Please enter a valid email address"
+msgstr "გთხოვთ მიუთითოთ სწორი ელ-ფოსტის მისამართი"
+
+msgid "Please enter a valid URL"
+msgstr "გთხოვთ, შეიყვანოთ სწორი URL"
+
+msgid "Please enter a valid date"
+msgstr "გთხოვთ, შეიყვანეთ სწორი თარიღი"
+
+msgid "Please enter a valid date ( ISO )"
+msgstr "გთხოვთ, შეიყვანეთ სწორი თარიღი ( ISO )"
+
+msgid "Please enter a valid number"
+msgstr "შეიყვანეთ სწორი რიცხვი"
+
+msgid "Please enter a valid credit card number"
+msgstr "გთხოვთ, შეიყვანოთ სწორი საკრედიტო ბარათის ნომერი"
+
+msgid "Please enter only digits"
+msgstr "გთხოვთ, შეიყვანოთ მხოლოდ ციფრები"
+
+msgid "Please enter the same value again"
+msgstr "გთხოვთ, კიდევ ერთხელ შეიყვანოთ იგივე მნიშვნელობა"
+
+msgid "Please enter at least {0} characters"
+msgstr "გთხოვთ შეიყვანოთ მინიმუმ {0} სიმბოლო"
+
+msgid "Please enter a value between {0} and {1}"
+msgstr "გთხოვთ, შეიყვანოთ მნიშვნელობა {0}-სა და {1}-ს შორის"
+
+msgid "Please enter a value less than or equal to {0}"
+msgstr "შეიყვანეთ მნიშვნელობა, რომელიც {0}-ზე ნაკლები ან ტოლია"
+
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "შეიყვანეთ მნიშვნელობა, რომელიც {0}-ზე მეტი ან ტოლია"
+
+msgid "Please enter a valid date or time"
+msgstr "შეიყვანეთ სწორი დრო ან თარიღი"
+
+msgid "Please enter a valid HEX input"
+msgstr "შეიყვანეთ სწორი თექვსმეტობითი მნიშვნელობა"
+
+msgid "%s/sec."
+msgstr "%s/წმ."
+
+msgid "Uploading your import file…"
+msgstr "თქვენი შეტანის ფაილის ატვირთვა…"
+
+msgid "Select one…"
+msgstr "აირჩიეთ…"
+
+msgid "No such column"
+msgstr "ასეთი სვეტი არ არსებობს"
+
+msgctxt "string types"
+msgid "String"
+msgstr "სტრიქონი"
+
+msgid "Database %1$s has been renamed to %2$s."
+msgstr "ბაზის %1$s სახელი %2$s-ზე შეიცვალა."
+
+msgid "Database %1$s has been copied to %2$s."
+msgstr "ბაზა %1$s კოპირებულია %2$s-ში."
+
+msgid "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s."
+msgstr "phpMyAdmin-ის კონფიგურაციის საცავი გამორთულია. %sგაიგეთ, რატომ%s."
+
+msgid "phpMyAdmin configuration snippet"
+msgstr "phpMyAdmin-ის კონფიგურაციის ნაწყვეტი"
+
+msgid "Could not import configuration"
+msgstr "კონფიგურაციის შემოტანის სეცდომა"
+
+msgid "Two-factor authentication has been removed."
+msgstr "1FA გაითიშა."
+
+msgid "Missing parameter:"
+msgstr "ნაკლული პარამეტრი:"
+
+msgid "Database %1$s has been created."
+msgstr "მონაცემთა ბაზა '%1$s' წარმატებით შეიქმნა."
+
+msgid "%1$d database has been dropped successfully."
+msgid_plural "%1$d databases have been dropped successfully."
+msgstr[0] "%1$d ბაზა წარმატებით წაიშალა."
+
+msgid "The account %s@%s has been successfully locked."
+msgstr "ანგარიში %s@%s წარმატებით დაიბლოკა."
+
+msgid "The account %s@%s has been successfully unlocked."
+msgstr "ანგარიში %s@%s წარმატებით განიბლოკა."
+
+msgid "Other statements"
+msgstr "სხვა გამოსახულებები"
+
+msgid "Received"
+msgstr "მიღებულია"
+
+msgid "Sent"
+msgstr "გაიგზავნა"
+
+msgid "Max. concurrent connections"
+msgstr "მაქს. ერთდროული მიერთება"
+
+msgid "The number of failed attempts to connect to the MySQL server."
+msgstr "MySQL სერვერთან მიერთების ავარიების რაოდენობა."
+
+msgid "Percentage of used key cache (calculated value)"
+msgstr "გამოყენებული გასაღებების კეშის პროცენტული მაჩვენებელი (გამოთვლილი მნიშვნელობა)"
+
+msgid "Thread cache hit rate (calculated value)"
+msgstr "ძაფის კეშის გამოყენების სიხშირე (გამოთვლილი მნიშვნელობა)"
+
+msgid "User groups management is not enabled."
+msgstr "მომხმარებლის ჯგუფების მართვა ჩართული არაა."
+
+msgid "Insecure connection"
+msgstr "დაუცველი კავშირი"
+
+msgid "Wrong data"
+msgstr "არასწორი მონაცემები"
+
+msgid "Bookmark %s has been created."
+msgstr "სანიშნე %s შეიქმნა."
+
+msgid "Bookmark not created!"
+msgstr "სანიშნი არ შექმნილა!"
+
+msgid "No row selected."
+msgstr "მწკრივი არჩეული არაა."
+
+msgid "No data to display"
+msgstr "საჩვენებელი მონაცემები არ არის"
+
+msgid "Table %s already exists!"
+msgstr "ცხრილი %s უკვე არსებობს!"
+
+msgid "%1$d column has been dropped successfully."
+msgid_plural "%1$d columns have been dropped successfully."
+msgstr[0] "%1$d სვეტი წარმატებით წაიშალა."
+
+msgid "Invalid table name"
+msgstr "ცხრილის არასწორი სახელი"
+
+msgid "There is an issue with your request."
+msgstr "პრობლემა თქვენს მოთხოვნასთან."
+
+msgid "Failed to create image"
+msgstr "გამოსახულების შექმნა ჩავარდა!"
+
+msgid "The partition name must be a non-empty string."
+msgstr "დანაყოფის სახელი არაცარიელი სტრიქონი უნდა იყოს."
+
+msgid "Invalid database or table name."
+msgstr "არასწორი ბაზის ან ცხრილის სახელი."
+
+msgid "Internal relationships were successfully updated."
+msgstr "ინტერნეტ-ურთიერთობები წარმატებით განახლდა."
+
+msgid "The columns have been moved successfully."
+msgstr "სვეტების გატანა წარმატებულია."
+
+msgid "Query error"
+msgstr "მოთხოვნის შეცდომა"
+
+msgid "Table %1$s has been altered successfully. Privileges have been adjusted."
+msgstr "ცხრილი %1$s წარმატებით შეიცვალა. პრივილეგიები გასწორდა."
+
+msgid "Tracking versions deleted successfully."
+msgstr "ტრეკინგის ვერსიების წაშლა წარმატებულია."
+
+msgid "No versions selected."
+msgstr "ვერსია არჩეული არაა."
+
+msgid "Add trigger"
+msgstr "ტრიგერის დამატება"
+
+msgid "Edit trigger"
+msgstr "ტრიგერის ჩასწორება"
+
+msgid "No trigger with name %1$s found in database %2$s."
+msgstr "ტრიგერი სახელით %1$s ბაზაში %2$s აღმოჩენილი არაა."
+
+msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
+msgstr "მოთხოვნის დამუშავების შეცდომა: ტრიგერი სახელით %1$s ბაზაში %2$s აღმოჩენილი არაა."
+
+msgid "Could not add columns!"
+msgstr "სვეტების დამატება შეუძლებელია!"
+
+msgid "Could not remove columns!"
+msgstr "სვეტების წაშლა შეუძლებელია!"
+
+msgctxt "phpMyAdmin configuration storage is not configured for \"Display Features\" on designer when user tries to set a display field."
+msgid "phpMyAdmin configuration storage is not configured for \"Display Features\"."
+msgstr "phpMyAdmin-ის კონფიგურაციის საცავი \"ფუნქციების ჩვენებისთვის\" მორგებული არაა."
+
+msgid "Error: relationship already exists."
+msgstr "შეცდომა: ურთიერთობა უკვე არსებობს."
+
+msgid "FOREIGN KEY relationship has been added."
+msgstr "უცხო გასაღების ურთიერთობა დამატებულია."
+
+msgid "Error: FOREIGN KEY relationship could not be added!"
+msgstr "შეცდომა: უცხო გასაღების ურთიერთობის დამატება შეუძლებელია!"
+
+msgid "Internal relationship has been added."
+msgstr "შიდა ურთიერთობა დაემატა."
+
+msgid "Error: Internal relationship could not be added!"
+msgstr "შეცდომა: შიდა ურთიერთობას ვერ დაამატებთ!"
+
+msgid "FOREIGN KEY relationship has been removed."
+msgstr "გარე გასაღების ურთიერთობა წაიშალა."
+
+msgid "Error: Internal relationship could not be removed!"
+msgstr "შეცდომა: შიდა ურთიერთობას ვერ წაშლით!"
+
+msgid "Internal relationship has been removed."
+msgstr "შიდა ურთიერთობა წაიშალა."
+
+msgid "MySQL said: "
+msgstr "MySQL-მა თქვა: "
+
+msgid "Event %1$s has been modified."
+msgstr "მოვლენა %1$s შეიცვალა."
+
+msgid "Event %1$s has been created."
+msgstr "მოვლენა %1$s შეიქმნა."
+
+msgid "You must provide an event name!"
+msgstr "მოვლენის სახელის მითითება აუცილებელია!"
+
+msgid "Invalid routine type: \"%s\""
+msgstr "არასწორი პროცედურის ტიპი: \"%s\""
+
+msgid "Routine %1$s has been created."
+msgstr "პროცედურა %1$s შეიქმნა."
+
+msgid "Routine %1$s has been modified. Privileges have been adjusted."
+msgstr "პროცედურა %1$s შეიცვალა. პრივილეგიები გასწორდა."
+
+msgid "Routine %1$s has been modified."
+msgstr "პროცედურა %1$s შეიცვალა."
+
+msgid "Invalid routine type!"
+msgstr "არასწორი პროცედურის ტიპი!"
+
+msgid "You must provide a routine name!"
+msgstr "პროცედურის სახელის მითითება აუცილებელია!"
+
+msgid "Execution results of routine %s"
+msgstr "შესრულების შედეგები პროცედურისთვის %s"
+
+msgid "Failed to set configured collation connection!"
+msgstr "მიერთებაზე მითითებული კოლაციის დაყენება შეუძლებელია!"
+
+msgid "The row has been deleted."
+msgstr "წკრივი წაიშალა."
+
+msgid "Query took %01.4f seconds."
+msgstr "მოთხოვნას %01.4f წმ დასჭირდა."
+
+msgid "%s total"
+msgstr "%s სულ"
+
+msgid "Link not found!"
+msgstr "ბმული ვერ მოიძებნა!"
+
+msgid "Data files"
+msgstr "მონაცემთა ფაილები"
+
+msgid "Buffer Pool"
+msgstr "Buffer Pool"
+
+msgid "InnoDB Status"
+msgstr "InnoDB-ის მდგომარეობა"
+
+msgid "Transaction buffer size"
+msgstr "ტრანზაქციის ბუფერის ზომა"
+
+msgid "Report"
+msgstr "ანგარიში"
+
+msgid "Cannot log in to the database server."
+msgstr "MySQL სერვერზე შესვლა შეუძლებელია."
+
+msgid "Access denied!"
+msgstr "მიუწვდომელია!"
+
+msgid "Could not save recent table!"
+msgstr "ახალი ცხრილის შენახვის შეცდომა!"
+
+msgid "Could not save favorite table!"
+msgstr "რჩეული ცხრილის შენახვა შეუძლებელია!"
+
+msgid "File could not be read!"
+msgstr "ფაილის წაკითხვა ვერ მოხერხდა!"
+
+msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
+msgstr "ატვირთული ფაილის გადატანის შეცდომა. იხილეთ [doc@faq3-11]FAQ 3.11[/doc]."
+
+msgid "Session not found."
+msgstr "სესია ვერ ვიპოვე."
+
+msgid "Jump to database “%s”."
+msgstr "გადასვლა ბაზაზე \"%s\"."
+
+msgid "Without PHP code"
+msgstr "PHP კოდის გარეშე"
+
+msgctxt "Inline edit query"
+msgid "Edit inline"
+msgstr "იქვე ჩასწორება"
+
+msgid "possible exploit"
+msgstr "შესაძლო მოწყვლადობა"
+
+msgid "The database name must be a non-empty string."
+msgstr "ბაზის სახელი არ შეიძლება, ცარიელ სტრიქონს წარმოადგენდეს."
+
+msgid "The table name must be a non-empty string."
+msgstr "ცხრილის სახელი არ შეიძლება, ცარიელ სტრიქონს წარმოადგენდეს."
+
+msgid "The trigger name must not be empty."
+msgstr "ტრიგერის სახელი არ შეიძლება, ცარიელი იყოს."
+
+msgid "Go to table: %s"
+msgstr "გადასვლა ცხრილზე: %s"
+
+msgid "Structure of %s"
+msgstr "%s-ის სტრუქტურა"
+
+msgid "Edit settings for %s"
+msgstr "პარამეტრების შეცვლა %s-სთვის"
+
+msgid "Go to view: %s"
+msgstr "გადასვლა ხედზე: %s"
+
+msgid "Go to database: %s"
+msgstr "გადასვლა ბაზაზე: %s"
+
+msgid "web server upload directory:"
+msgstr "ვებსერერის ატვირთვის საქაღალდე:"
+
+msgid "Inserted row id: %1$d"
+msgstr "ჩამატებული სტრიქონის id: %1$d"
+
+msgid "Tracking"
+msgstr "ტრეკინგი"
+
+msgid "Designer"
+msgstr "შემქნელი"
+
+msgid "User accounts"
+msgstr "მომხმარებლის ანგარიშები"
+
+msgid "Charsets"
+msgstr "სიმბოლოთა ნაკრებები"
+
+msgid "Engines"
+msgstr "ძრავები"
+
+msgid "%1$d row affected."
+msgid_plural "%1$d rows affected."
+msgstr[0] "%1$d მწკრივი შეიცვალა."
+
+msgid "%1$d row deleted."
+msgid_plural "%1$d rows deleted."
+msgstr[0] "წაიშალა %1$d მწკრივი."
+
+msgid "%1$d row inserted."
+msgid_plural "%1$d rows inserted."
+msgstr[0] "ჩაისვა %1$d სტრიქონი."
+
+msgid "Groups:"
+msgstr "ჯგუფები:"
+
+msgid "Events:"
+msgstr "მოვლენები:"
+
+msgid "Functions:"
+msgstr "ფუნქციები:"
+
+msgid "Procedures:"
+msgstr "პროცედურები:"
+
+msgid "Views:"
+msgstr "ხედები:"
+
+msgid "Groups"
+msgstr "ჯგუფები"
+
+msgid "Collapse all"
+msgstr "ყველას ჩაკეცვა"
+
+msgctxt "Create new column"
+msgid "New"
+msgstr "ახალი"
+
+msgctxt "Create new database"
+msgid "New"
+msgstr "ახალი"
+
+msgid "Show hidden items"
+msgstr "დამალული ჩანაწერების ჩვენება"
+
+msgctxt "Create new event"
+msgid "New"
+msgstr "ახალი"
+
+msgid "Functions"
+msgstr "ფუნქციები"
+
+msgctxt "Create new function"
+msgid "New"
+msgstr "ახალი"
+
+msgctxt "Create new index"
+msgid "New"
+msgstr "ახალი"
+
+msgid "Expand/Collapse"
+msgstr "ჩაკეცვა/ამოკეცვა"
+
+msgid "Procedures"
+msgstr "პროცედურები"
+
+msgctxt "Create new procedure"
+msgid "New"
+msgstr "ახალი"
+
+msgid "Procedure"
+msgstr "პროცედურა"
+
+msgctxt "Create new table"
+msgid "New"
+msgstr "ახალი"
+
+msgctxt "Create new trigger"
+msgid "New"
+msgstr "ახალი"
+
+msgctxt "Create new view"
+msgid "New"
+msgstr "ახალი"
+
+msgid "Step 1."
+msgstr "ნაბიჯი 1."
+
+msgid "Primary key already exists."
+msgstr "ძირითადი გასაღები უკვე არსებობს."
+
+msgid "+ Add a new primary key column"
+msgstr "+ ახალი ძირითადი გასაღების სვეტის დამატება"
+
+msgid "Remove redundant columns"
+msgstr "ზედმეტი სვეტების წაშლა"
+
+msgid "Remove selected"
+msgstr "მონიშნულის წაშლა"
+
+msgid "No redundant column"
+msgstr "დამატებითი სვეტის გარეშე"
+
+msgid "Step 2."
+msgstr "ნაბიჯი 2."
+
+msgid "Error in processing!"
+msgstr "დამუშავების შეცდომა!"
+
+msgid "Step 3."
+msgstr "ნაბიჯი 3."
+
+msgid "Coalesce"
+msgstr "შეერთება"
+
+msgid "Table %s has been moved to %s. Privileges have been adjusted."
+msgstr "ცხრილი %s გადატანილია %s-ში. პრივილეგიები გასწორდა."
+
+msgid "Table %s has been copied to %s. Privileges have been adjusted."
+msgstr "ცხრილი %s კოპირებულია %s-ში. პრივილეგიები გასწორებულია."
+
+msgid "The table name is empty!"
+msgstr "ცხრილის სახელი ცარიელია!"
+
+msgid "Error while creating PDF:"
+msgstr "შეცდომა PDF-ის შექმნისას:"
+
+msgid "Your session has expired. Please log in again."
+msgstr "სესიის ვადა გასულია. თავიდან შედით."
+
+msgid "Failed to connect to the reCAPTCHA service!"
+msgstr "RECAPTCHA სერვისთან დაკავშირების შეცდომა!"
+
+msgid "You are not allowed to log in to this MySQL server!"
+msgstr "ამ MySQL სერვერზე შესვლა შეუძლებელია!"
+
+msgid "Can not find signon authentication script: %s"
+msgstr "შესვლის ავთენტიკაციის სკრიპტი ვერ ვიპოვე: %s"
+
+msgid "Columns separated with:"
+msgstr "სვეტები გამოყოფილია:"
+
+msgid "Columns enclosed with:"
+msgstr "სვეტები ჩასმულია:"
+
+msgid "Columns escaped with:"
+msgstr "სვეტებს შუა სიმბოლო:"
+
+msgid "Lines terminated with:"
+msgstr "ხაზები მთავრდება:"
+
+msgid "Replace NULL with:"
+msgstr "NULL-ის ჩანაცვლება:"
+
+msgid "Excel edition:"
+msgstr "Excel-ის გამოცემა:"
+
+msgid "Data dump options"
+msgstr "მონაცემების დამპის მორგება"
+
+msgid "Structure for view"
+msgstr "სტრუქტურა ხედისათვის"
+
+msgid "Content of table @TABLE@"
+msgstr "@TABLE@ ცხრილის შემცველობა"
+
+msgid "(continued)"
+msgstr "(გაგრძელება)"
+
+msgid "Structure of table @TABLE@"
+msgstr "ცხრილის @TABLE@ სტრუქტურა"
+
+msgid "Object creation options"
+msgstr "ობიექტის შექმნის მორგება"
+
+msgid "Table caption:"
+msgstr "ცხრილის წარწერა:"
+
+msgid "Table caption (continued):"
+msgstr "ცხრილის წარწერა (გაგრძელება):"
+
+msgid "Label key:"
+msgstr "ჭდის იდენტიფიკატორი:"
+
+msgid "Display foreign key relationships"
+msgstr "გარე გასაღების ახალი შეზღუდვა"
+
+msgid "Display comments"
+msgstr "კომენტარების ჩვენება"
+
+msgid "Display media types"
+msgstr "მედიის ტიპების ჩვენება"
+
+msgid "Put columns names in the first row:"
+msgstr "პირველ მწკრივში სვეტის სახელები ჩადეთ:"
+
+msgid "Generation Time:"
+msgstr "გენერაციის დრო:"
+
+msgid "PHP Version:"
+msgstr "PHP-ის ვერსია:"
+
+msgid "Data:"
+msgstr "მონაცემები:"
+
+msgid "Structure:"
+msgstr "სტრუქტურა:"
+
+msgid "Export table names"
+msgstr "ცხრილის სახელების გატანა"
+
+msgid "Export table headers"
+msgstr "ცხრილის თავსართების გატანა"
+
+msgid "Report title:"
+msgstr "ანგარიშის სათაური:"
+
+msgid "Dumping data"
+msgstr "მონაცემების დამპი"
+
+msgid "Query result data"
+msgstr "მოთხოვნის შედეგის მონაცემები"
+
+msgid "View structure"
+msgstr "სტრუქტურის ნახვა"
+
+msgid "Additional custom header comment (\\n splits lines):"
+msgstr "დამატებითი მორგების თავსართის კომენტარი (\\n ყოფს ხაზებს):"
+
+msgid "Export metadata"
+msgstr "მეტამონაცემების გატანა"
+
+msgid "Add statements:"
+msgstr "პროცედურები დამატება:"
+
+msgid "Add %s statement"
+msgstr "%s გამოსახულების დამატება"
+
+msgid "%s value"
+msgstr "%s მნიშვნელობა"
+
+msgid "Data creation options"
+msgstr "მონაცემების შექმნის მორგება"
+
+msgid "Metadata"
+msgstr "მეტამონაცემები"
+
+msgid "Metadata for table %s"
+msgstr "მეტამონაცემები ცხრილისთვის %s"
+
+msgid "Metadata for database %s"
+msgstr "მეტამონაცემები ბაზისთვის %s"
+
+msgid "Error reading structure for table %s:"
+msgstr "სტრუქტურის წაკითხვის შეცდომა ცხრილისთვის %s:"
+
+msgid "Indexes for dumped tables"
+msgstr "ინდექსები დამპის ცხრილებისთვის"
+
+msgid "Indexes for table"
+msgstr "ინდექსები ცხრილისთვის"
+
+msgid "AUTO_INCREMENT for table"
+msgstr "AUTO_INCREMENT ცხრილისთვის"
+
+msgid "MEDIA TYPES FOR TABLE"
+msgstr "MIME TYPES FOR TABLE"
+
+msgid "RELATIONSHIPS FOR TABLE"
+msgstr "RELATIONSHIPS FOR TABLE"
+
+msgid "Structure for view %s exported as a table"
+msgstr "სტრუქტურა ხედისთვის %s ცხრილის სახით იქნა გატანილი"
+
+msgid "Error reading data for table %s:"
+msgstr "მონაცემების წაკითხვის შეცდომა ცხრილისთვის %s:"
+
+msgid "Creation:"
+msgstr "შეიქმნა:"
+
+msgid "Last update:"
+msgstr "უკანასკნელი განახლება:"
+
+msgid "Last check:"
+msgstr "ბოლოს შემოწმდა:"
+
+msgid "Indentation:"
+msgstr "სწორება:"
+
+msgid "Export contents"
+msgstr "შემცველობის გატანა"
+
+msgid "Purpose:"
+msgstr "დანიშნულება:"
+
+msgid "Column names:"
+msgstr "სვეტის სახელები:"
+
+msgid "Invalid column count in CSV input on line %d."
+msgstr "არასწორი სვეტების რაოდენობა CSV-ში შეყვანაში ხაზზე %d."
+
+msgid "Column names: "
+msgstr "სვეტის სახელები: "
+
+msgid "Could not parse OpenDocument Spreadsheet!"
+msgstr "OpenDocument Spreadsheet-ის დამუშავების შეცდომა!"
+
+msgid "The imported file does not contain any data!"
+msgstr "შემოტანილი ფაილი მონაცემებს არ შეიცავს!"
+
+msgid "SQL compatibility mode:"
+msgstr "SQL თავსებადობის რეჟიმი:"
+
+msgid "XML"
+msgstr "XML"
+
+msgid "This format has no options"
+msgstr "ამ ფორმატს პარამეტრები არ აქვს"
+
+msgid "The %s table doesn't exist!"
+msgstr "ცხრილი \"%s\" არ არსებობს!"
+
+msgid "Schema of the %s database - Page %s"
+msgstr "%s ბაზის სქემა - გვერდი %s"
+
+msgid "PDF export page"
+msgstr "PDF გვერდის გატანა"
+
+msgid "Schema of the %s database"
+msgstr "სქემა ბაზისთვის %s"
+
+msgid "Table of contents"
+msgstr "სარჩევი"
+
+msgid "Show color"
+msgstr "ფერის ჩვენება"
+
+msgid "Orientation"
+msgstr "ორიენტაცია"
+
+msgid "Landscape"
+msgstr "ლანდშაფტური"
+
+msgid "Portrait"
+msgstr "პორტრეტული"
+
+msgid "Show grid"
+msgstr "ბადის ჩვენება"
+
+msgid "Order of the tables"
+msgstr "ცხრილების მიმდევრობა"
+
+msgid "Name (Ascending)"
+msgstr "აღმავალი სახელით"
+
+msgid "Name (Descending)"
+msgstr "სახელი (დაღმავალი)"
+
+msgid "%B %d, %Y at %I:%M %p"
+msgstr "%B %d, %Y, %I:%M %p"
+
+msgid "Displays a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second option is a title for the link."
+msgstr "გამოიტანს ბმულს; სვეტი შეიცავს ფაილის სახელს. პირველი პარამეტრია ბმულის პრეფიქსი, \"https://www.example.com/\"-ის მსგავსი. მეორე პარამეტრი ბმულის სათაურია."
+
+msgid "Authentication Application (2FA)"
+msgstr "ავთენტიფიკაციის აპლიკაცია (2FA)"
+
+msgid "Two-factor authentication failed."
+msgstr "2FA-ის შეცდომა."
+
+msgid "No Two-Factor Authentication"
+msgstr "2FA-ის გარეშე"
+
+msgid "Simple two-factor authentication"
+msgstr "მარტივი 2FA"
+
+msgid "The server is not responding (or the local server's socket is not correctly configured)."
+msgstr "სერვერი არ პასუხობს (ან ლოკალური სერვერის სოკეტი არასწორადაა მორგებული)."
+
+msgid "The server is not responding."
+msgstr "სერვერი არ პასუხობს."
+
+msgid "Details…"
+msgstr "დეტალები…"
+
+msgid "Replication started successfully."
+msgstr "რეპლიკაცია წარმატებით გაეშვა."
+
+msgid "Error starting replication."
+msgstr "რეპლიკაციის გაშვების შეცდომა."
+
+msgid "Replication stopped successfully."
+msgstr "რეპლიკაცია წარმატებით გაჩერდა."
+
+msgid "Error stopping replication."
+msgstr "რეპლიკაციის გაჩერების შეცდომა."
+
+msgid "Replication resetting successfully."
+msgstr "რეპლიკაციის თავიდან გაშვება წარმატებულია."
+
+msgid "Error resetting replication."
+msgstr "რეპლიკაციის თავიდან გაშვების შეცდომა."
+
+msgid "Success."
+msgstr "წარმატება."
+
+msgid "Error."
+msgstr "შეცდომა."
+
+msgid "Unable to connect to primary %s."
+msgstr "ძირითად %s-სთან მიერთების შეცდომა."
+
+msgid "Primary server changed successfully to %s."
+msgstr "ძირითადი სერვერი %s-ზე წარმატებით შეიცვალა."
+
+msgid "Error 404! The page %s was not found."
+msgstr "შეცდომა 404! გვერდი %s აღმოჩენილი არაა."
+
+msgid "Native MySQL authentication"
+msgstr "MySQL-ის საკუთარი ავთენტიკაცია"
+
+msgid "SHA256 password authentication"
+msgstr "SHA256 პაროლით ავთენტიკაცია"
+
+msgid "Caching sha2 authentication"
+msgstr "დაკეშილი sha2 ავთენტიკაცია"
+
+msgid "Unix Socket based authentication"
+msgstr "Unix სოკეტზე ბაზირებული ავთენტიკაცია"
+
+msgid "Old MySQL-4.0 authentication"
+msgstr "ძველი MySQL-4.0 ავთენტიკაცია"
+
+msgid "No privileges."
+msgstr "პრივილეგიები არაა."
+
+msgid "Includes all privileges except GRANT."
+msgstr "შეიცავს ყველა პრივილეგიას GRANT-ის გამოკლებით."
+
+msgid "Revoke"
+msgstr "გაუქმება"
+
+msgid "Deleting %s"
+msgstr "%s-ის წაშლა"
+
+msgid "The user %s already exists!"
+msgstr "მომხმარებელი %s უკვე არსებობს!"
+
+msgid "Privileges for %s"
+msgstr "პრივილეგიები %s-სთვის"
+
+msgid "You have added a new user."
+msgstr "თქვენ დაამატეთ ახალი მომხმარებელი."
+
+msgid "Handler"
+msgstr "Handler"
+
+msgid "Query cache"
+msgstr "მოთხოვნების კეში"
+
+msgid "Threads"
+msgstr "ნაკადები"
+
+msgid "Temporary data"
+msgstr "დროებითი მონაცემები"
+
+msgid "Delayed inserts"
+msgstr "დაგვიანებული ჩასმები"
+
+msgid "Key cache"
+msgstr "გასაღების ქეში"
+
+msgid "Joins"
+msgstr "Joins"
+
+msgid "Sorting"
+msgstr "დალაგება"
+
+msgid "Transaction coordinator"
+msgstr "ტრანზაქციის კოორდინატორი"
+
+msgid "Show replica hosts"
+msgstr "რეპლიკის ჰოსტების ჩვენება"
+
+msgid "Show replica status"
+msgstr "რეპლიკის სტატუსის ჩვენება"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Command"
+msgstr "ბრძანება"
+
+msgid "Progress"
+msgstr "მიმდინარეობა"
+
+msgid "You are using Git version, run [kbd]git pull[/kbd] :-)[br]The latest stable version is %s, released on %s."
+msgstr "იყენებთ Git ვერსიას, გაუშვით [kbd]git pull[/kbd] :-)[br]უახლესი სტაბილური ვერსიაა %s, რელიზის თარიღი %s."
+
+msgid "Showing as PHP code"
+msgstr "PHP კოდის სახით ჩვენება"
+
+msgid "Run SQL query/queries on server “%s”"
+msgstr "SQL მოთხოვნ(ებ)-ის გაშვება სერვერზე \"%s\""
+
+msgid "Run SQL query/queries on table %s"
+msgstr "SQL მოთხოვნ(ებ)-ის გაშვება ცხრილზე %s"
+
+msgid "%s is available on this MySQL server."
+msgstr "%s ხელმისაწვდომია ამ MySQL სერვერზე."
+
+msgid "%s has been disabled for this MySQL server."
+msgstr "%s გათიშულია ამ MySQL სერვერზე."
+
+msgid "This MySQL server does not support the %s storage engine."
+msgstr "ამ MySQL სერვერს არ აქვს %s ძრავის მხარდაჭერა."
+
+msgid "Source database `%s` was not found!"
+msgstr "საწყისი ბაზა `%s` ვერ ვიპოვე!"
+
+msgid "Target database `%s` was not found!"
+msgstr "სამიზნე ბაზა `%s` აღმოჩენილი არაა!"
+
+msgid "Invalid database:"
+msgstr "არასწორი მონაცემთა ბაზა:"
+
+msgid "Invalid table name:"
+msgstr "არასწორი ცხრილის სახელი:"
+
+msgid "Table %1$s has been renamed to %2$s."
+msgstr "ცხრილის %1$s სახელი %2$s-ზე შეიცვალა."
+
+msgid "Could not save table UI preferences!"
+msgstr "UI-ის პარამეტრების შენახვის შეცდომა!"
+
+msgid "Delete tracking data row from report"
+msgstr "ანგარიშიდან ტრეკინგის მონაცემების წაშლა"
+
+msgid "No data"
+msgstr "მონაცემების გარეშე"
+
+msgid "Export as %s"
+msgstr "%s-ად გატანა"
+
+msgid "Version %1$s of %2$s was deleted."
+msgstr "%2$s-ის ვერსია %1$s წაიშალა."
+
+msgid "Trigger %1$s has been modified."
+msgstr "ტრიგერი %1$s შეიცვალა."
+
+msgid "Trigger %1$s has been created."
+msgstr "ტრიგერი %1$s შეიქმნა."
+
+msgid "You must provide a trigger name!"
+msgstr "ტრიგერის სახელის მითითება აუცილებელია!"
+
+msgid "You must provide a valid timing for the trigger!"
+msgstr "ტრიგერის სწორი დროის მითითება აუცილებელია!"
+
+msgid "You must provide a valid event for the trigger!"
+msgstr "ტრიგერისთვის სწორი მოვლენის მითითება აუცილებელია!"
+
+msgid "You must provide a valid table name!"
+msgstr "აუცილებელია ცხრილის სწორი სახელის მითითება!"
+
+msgid "empty"
+msgstr "ცარიელი"
+
+msgid "A date, supported range is %1$s to %2$s"
+msgstr "თარიღი, რომელიც მხარს უჭერს დიაპაზონს %1$s-დან %2$s-მდე"
+
+msgid "A time, range is %1$s to %2$s"
+msgstr "დრო. დიაპაზონია %1$s-დან %2$s-მდე"
+
+msgid "A polygon"
+msgstr "მრავალკუთხედი"
+
+msgctxt "numeric types"
+msgid "Numeric"
+msgstr "რიცხვობრივი"
+
+msgctxt "date and time types"
+msgid "Date and time"
+msgstr "თარიღი და დრო"
+
+msgctxt "spatial types"
+msgid "Spatial"
+msgstr "სივრცითი"
+
+msgid "Password is too long!"
+msgstr "პაროლი მეტისმეტად გრძელია!"
+
+msgid "The profile has been updated."
+msgstr "პროფილი განახლდა."
+
+msgid "Max: %s%s"
+msgstr "მაქს: %s%s"
+
+msgctxt "AM/PM indication in time"
+msgid "PM"
+msgstr "PM"
+
+msgctxt "AM/PM indication in time"
+msgid "AM"
+msgstr "AM"
+
+msgid "%s days, %s hours, %s minutes and %s seconds"
+msgstr "%s დღე, %s საათი, %s წუთი და %s წამი"
+
+msgid "Users"
+msgstr "მომხმარებლები"
+
+msgid "Error in ZIP archive:"
+msgstr "შეცდომა ZIP არქივში:"
+
+msgid "No files found inside ZIP archive!"
+msgstr "ZIP არქივში ფაილების პოვნა ვერ მოხერხდა!"

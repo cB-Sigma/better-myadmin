@@ -10,3 +10,5 @@ bettermyadmin.config.ts
 apps/web/src/routeTree.gen.ts
 __pycache__/
 .claude/worktrees/
+test-results/
+playwright-report/

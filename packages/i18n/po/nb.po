@@ -1,0 +1,5954 @@
+# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/nb.po by packages/i18n/scripts/import-po.ts.
+# Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+msgid ""
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2026-01-27 12:44+0000\nLast-Translator: IsakBH <isak@brunhenriksen.net>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/phpmyadmin/master/nb_NO/>\nLanguage: nb\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.16-dev\n"
+
+msgid "Javascript must be enabled past this point!"
+msgstr "JavaScript må være slått på forbi dette punktet!"
+
+msgid "phpMyAdmin documentation"
+msgstr "phpMyAdmin-Dokumentasjon"
+
+msgid "Color mode for the theme"
+msgstr "Fargetema"
+
+msgctxt "Dark color mode of the theme"
+msgid "Dark"
+msgstr "Mørk"
+
+msgid "Settings"
+msgstr "Innstillinger"
+
+msgid "Log out"
+msgstr "Logg ut"
+
+msgid "Page-related settings"
+msgstr "Side-relaterte innstillinger"
+
+msgid "Click on the bar to scroll to top of page"
+msgstr "Klikk på linjen for å bla til toppen av siden"
+
+msgid "Open new phpMyAdmin window"
+msgstr "Åpne nytt phpMyAdmin vindu"
+
+msgid "phpMyAdmin Demo Server"
+msgstr "phpMyAdmin-demotjener"
+
+msgid "Currently running Git revision %1$s from the %2$s branch."
+msgstr "Kjører Git-revisjon %1$s fra %2$s gren."
+
+msgid "Git information missing!"
+msgstr "Git - informasjonen mangler!"
+
+msgid "Edit ENUM/SET values"
+msgstr "Rediger ENUM/SET verdier"
+
+msgctxt "for default"
+msgid "None"
+msgstr "Ingen"
+
+msgid "As defined:"
+msgstr "Som definert:"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details"
+msgstr "Du har ikke nok rettigheter til å gjøre denne handlingen! Vennligst referer til dokumentasjonen for mer informasjon"
+
+msgid "Primary"
+msgstr "Primær"
+
+msgid "Unique"
+msgstr "Unik"
+
+msgid "Index"
+msgstr "Indeks"
+
+msgid "Fulltext"
+msgstr "Fulltekst"
+
+msgid "Spatial"
+msgstr "Romslig"
+
+msgid "Expression"
+msgstr "Spørring"
+
+msgid "first"
+msgstr "først"
+
+msgid "None"
+msgstr "Ingen"
+
+msgid "Table name"
+msgstr "Tabellnavn"
+
+msgid "Add"
+msgstr "Legg til"
+
+msgid "Go"
+msgstr "Gå"
+
+msgid "Table comments:"
+msgstr "Tabellkommentarer:"
+
+msgid "Connection:"
+msgstr "Tilkobling:"
+
+msgid "Storage engine"
+msgstr "Lagringsmotor"
+
+msgctxt "Online transaction part of the SQL DDL for InnoDB"
+msgid "Online transaction"
+msgstr "Online transaksjon"
+
+msgid "Preview SQL"
+msgstr "Forhåndsvis SQL"
+
+msgid "Save"
+msgstr "Lagre"
+
+msgid "The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column"
+msgstr "Kolonnebredden av integer typer er ignorert i din versjon av MySQL med mindre du definerer en TINYINT(1) kolonne"
+
+msgid "Close"
+msgstr "Lukk"
+
+msgid "Referenced by %s."
+msgstr "Referert av %s."
+
+msgid "Is a foreign key."
+msgstr "Er en fremmednøkkel."
+
+msgid "Column"
+msgstr "Kolonne"
+
+msgid "Pick from Central Columns"
+msgstr "Velg fra sentrale kolonner"
+
+msgid "Partition by:"
+msgstr "Partisjonert av:"
+
+msgid "Expression or column list"
+msgstr "Spørring eller kolonneliste"
+
+msgid "Partitions:"
+msgstr "Partisjoner:"
+
+msgid "Subpartition by:"
+msgstr "Underpartisjon av:"
+
+msgid "Subpartitions:"
+msgstr "Underpartisjoner:"
+
+msgid "Partition"
+msgstr "Partisjon"
+
+msgid "Values"
+msgstr "Verdier"
+
+msgid "Subpartition"
+msgstr "Underpartisjon"
+
+msgid "Engine"
+msgstr "Motor"
+
+msgid "Comment"
+msgstr "Kommentar"
+
+msgid "Data directory"
+msgstr "Datamappe"
+
+msgid "Index directory"
+msgstr "Index mappe"
+
+msgid "Max rows"
+msgstr "Maksimum rader"
+
+msgid "Min rows"
+msgstr "Minimum rader"
+
+msgid "Table space"
+msgstr "Tabellplass"
+
+msgid "Node group"
+msgstr "Node gruppe"
+
+msgid "Structure"
+msgstr "Struktur"
+
+msgid "Name"
+msgstr "Navn"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Length/Values"
+msgstr "Lengde/Sett*"
+
+msgid "If column type is \"enum\" or \"set\", please enter the values using this format: 'a','b','c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b')."
+msgstr "Hvis kolonnetypen er \"enum\" eller \"set\", skriv inn verdien med dette formatet: 'a','b','c'…<br>Hvis du skulle trenge å ha en skråstrek (\"\\\") eller en enkel apostrof (\"'\") blant disse verdiene, skriv en skråstrek foran (eks. '\\\\xyz' eller 'a\\'b')."
+
+msgid "Default"
+msgstr "Standard"
+
+msgid "For default values, please enter just a single value, without backslash escaping or quotes, using this format: a"
+msgstr "Sett inn en enkelt verdi for standard verdier uten skråstrek, anførselstegn eller annen \"escaping\" med dette formatet: a"
+
+msgid "Collation"
+msgstr "Sammenligning"
+
+msgid "Attributes"
+msgstr "Attributter"
+
+msgid "Null"
+msgstr "Null"
+
+msgid "Comments"
+msgstr "Kommentarer"
+
+msgid "Virtuality"
+msgstr "Virtualitet"
+
+msgid "Move column"
+msgstr "Flytt kolonne"
+
+msgid "Media type"
+msgstr "Media type"
+
+msgid "List of available transformations and their options"
+msgstr "Tilgjengelige transformasjoner og innstillingene deres"
+
+msgid "Browser display transformation"
+msgstr "Nettleser visningstransformasjon"
+
+msgid "Browser display transformation options"
+msgstr "Nettleser visningstransformasjon innstillinger"
+
+msgid "Please enter the values for transformation options using this format: 'a', 100, b,'c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b')."
+msgstr "Skriv inn verdiene for transformasjon med dette formatet: 'a', 100, b,'c'…<br>Hvis du trenger å bruke en skråstrek (\"\\\") eller en enkel apostrof (\"'\") blant disse verdiene så sett en skråstrek foran (eks. '\\\\xyz' eller 'a\\'b')."
+
+msgid "No change"
+msgstr "Ingen endring"
+
+msgid "Apply"
+msgstr "Angi"
+
+msgid "Reset"
+msgstr "Tilbakestill"
+
+msgid "Documentation"
+msgstr "Dokumentasjon"
+
+msgid "This setting is disabled, it will not be applied to your configuration."
+msgstr "Denne innstillingen er avslått, den vil ikke bli lagt til din konfigurasjon."
+
+msgid "Disabled"
+msgstr "Avslått"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nei"
+
+msgid "Set value: %s"
+msgstr "Sett verdi: %s"
+
+msgid "Restore default value"
+msgstr "Gjennopprett standard verdi"
+
+msgid "Allow users to customize this value"
+msgstr "Tillat brukere å endre denne verdien"
+
+msgid "Collapse"
+msgstr "Slå sammen"
+
+msgid "Expand"
+msgstr "Utvid"
+
+msgid "Requery"
+msgstr "Spør igjen"
+
+msgid "Edit"
+msgstr "Rediger"
+
+msgid "Delete"
+msgstr "Slett"
+
+msgid "Database"
+msgstr "Database"
+
+msgid "SQL Query Console"
+msgstr "SQL-spørringskonsoll"
+
+msgid "Console"
+msgstr "Konsoll"
+
+msgid "Clear"
+msgstr "Fjern"
+
+msgid "History"
+msgstr "Historikk"
+
+msgid "Options"
+msgstr "Innstillinger"
+
+msgid "Bookmarks"
+msgstr "Bokmerker"
+
+msgid "Debug SQL"
+msgstr "Feilsøk SQL"
+
+msgid "Press Ctrl+Enter to execute query"
+msgstr "Tast Ctrl+Enter for å utføre spørring"
+
+msgid "Explain"
+msgstr "Forklar"
+
+msgid "Profiling"
+msgstr "Profilering"
+
+msgid "Bookmark"
+msgstr "Bokmerke"
+
+msgid "Query failed"
+msgstr "Spørringen mislyktes"
+
+msgid "Queried time"
+msgstr "Spørringens tidsforbruk"
+
+msgid "During current session"
+msgstr "Gjennom gjeldende sesjon"
+
+msgid "Count"
+msgstr "Antall"
+
+msgid "Time taken:"
+msgstr "Tidsbruk:"
+
+msgid "Refresh"
+msgstr "Oppdater"
+
+msgid "Add bookmark"
+msgstr "Legg til bokmerke"
+
+msgid "Label"
+msgstr "Etikett"
+
+msgid "Target database"
+msgstr "Måldatabase"
+
+msgid "Share this bookmark"
+msgstr "Del dette bokmerke"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Always expand query messages"
+msgstr "Alltid utvid spørringsmeldinger"
+
+msgid "Show query history at start"
+msgstr "Vis spørringshistorikk ved oppstart"
+
+msgid "Show current browsing query"
+msgstr "Vis gjeldende nettleser kø"
+
+msgid "Track these data definition statements:"
+msgstr "Spor disse datadefinisjonsspørringene:"
+
+msgid "Track these data manipulation statements:"
+msgstr "Spor disse datamanipulasjonsspørringene:"
+
+msgid "Create version"
+msgstr "Opprett versjon"
+
+msgid "Add new column"
+msgstr "Legg til ny kolonne"
+
+msgid "Attribute"
+msgstr "Attributt"
+
+msgid "A_I"
+msgstr "A_I"
+
+msgid "Search this table"
+msgstr "Søk i denne tabellen"
+
+msgid "Add column"
+msgstr "Legg til kolonne(r)"
+
+msgid "Select a table"
+msgstr "Velg en tabell"
+
+msgid "Select a column."
+msgstr "Velg en kolonne."
+
+msgid "Click to sort."
+msgstr "Klikk for å sortere."
+
+msgid "Action"
+msgstr "Handling"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "Number of columns"
+msgstr "Antall kolonner"
+
+msgid "Create"
+msgstr "Opprett"
+
+msgid "Print"
+msgstr "Skriv ut"
+
+msgid "Links to"
+msgstr "Lenker til"
+
+msgid "Indexes"
+msgstr "Indekser"
+
+msgid "Keyname"
+msgstr "Nøkkel"
+
+msgid "Packed"
+msgstr "Pakket"
+
+msgid "Cardinality"
+msgstr "Kardinalitet"
+
+msgid "No index defined!"
+msgstr "Ingen indeks definert!"
+
+msgid "Select all"
+msgstr "Marker alle"
+
+msgid "Add an option for column \"%s\"."
+msgstr "Legg til valg for kolonne \"%s\"."
+
+msgid "Page to delete"
+msgstr "Side for å slettes"
+
+msgid "Untitled"
+msgstr "Ikke navngitt"
+
+msgid "Show/Hide tables list"
+msgstr "Vis/Gjem tabell listen"
+
+msgid "View in fullscreen"
+msgstr "Se i fullskjerm"
+
+msgid "Exit fullscreen"
+msgstr "Forlat fullskjerm"
+
+msgid "Add tables from other databases"
+msgstr "Legg til tabeller fra andre databaser"
+
+msgid "New page"
+msgstr "Ny side"
+
+msgid "Open page"
+msgstr "Åpne siden"
+
+msgid "Save page"
+msgstr "Lagre side"
+
+msgid "Save page as"
+msgstr "Lagre side som"
+
+msgid "Create table"
+msgstr "Opprett tabell"
+
+msgid "Choose column to display"
+msgstr "Velg kolonne for visning"
+
+msgid "Reload"
+msgstr "Oppdater"
+
+msgid "Help"
+msgstr "Hjelp"
+
+msgid "Angular links"
+msgstr "Vinklede linker"
+
+msgid "Direct links"
+msgstr "Direkte linker"
+
+msgid "Snap to grid"
+msgstr "Lås til ruter"
+
+msgid "Small/Big All"
+msgstr "Liten/Stor alle"
+
+msgid "Toggle small/big"
+msgstr "Veksle mellom liten/stor"
+
+msgid "Move Menu"
+msgstr "Flytt meny"
+
+msgid "Hide/Show all"
+msgstr "Skjul/Vis alle"
+
+msgid "Value"
+msgstr "Verdi"
+
+msgid "Operator"
+msgstr "Operatør"
+
+msgid "Submit"
+msgstr "Send"
+
+msgid "Select page"
+msgstr "Velg side"
+
+msgid "Details"
+msgstr "Detaljer"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Event type"
+msgstr "Hendelsestype"
+
+msgid "Format"
+msgstr "Format"
+
+msgid "Events"
+msgstr "Hendelser"
+
+msgid "Export"
+msgstr "Eksporter"
+
+msgid "Drop"
+msgstr "Slett"
+
+msgid "Click to toggle"
+msgstr "Klikk for å endre"
+
+msgid "Loading…"
+msgstr "Laster…"
+
+msgid "Exporting tables from \"%s\" database"
+msgstr "Eksporter tabell fra \"%s\" database"
+
+msgid "Tables"
+msgstr "Tabeller"
+
+msgid "Data"
+msgstr "Data"
+
+msgid "Importing into the database \"%s\""
+msgstr "Importer til database \"%s\""
+
+msgid "Query window"
+msgstr "Spørringsvindu"
+
+msgid "Show"
+msgstr "Vis"
+
+msgid "Sort"
+msgstr "Sorter"
+
+msgid "Ascending"
+msgstr "Stigende"
+
+msgid "Descending"
+msgstr "Synkende"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "Database comment"
+msgstr "Databasekommentar"
+
+msgid "New database name"
+msgstr "Databasenavn"
+
+msgid "Remove database"
+msgstr "Fjern database"
+
+msgid "Database %s has been dropped."
+msgstr "Databasen %s har blitt slettet."
+
+msgid "Drop the database (DROP)"
+msgstr "Drop databasen (DROP)"
+
+msgid "Database name"
+msgstr "Databasenavn"
+
+msgid "Structure only"
+msgstr "Kun struktur"
+
+msgid "Structure and data"
+msgstr "Struktur og data"
+
+msgid "Data only"
+msgstr "Bare data"
+
+msgid "CREATE DATABASE before copying"
+msgstr "CREATE DATABASE før kopiering"
+
+msgid "Add %s"
+msgstr "Legg til %s"
+
+msgid "Add AUTO_INCREMENT value"
+msgstr "Legg til AUTO_INCREMENT verdi"
+
+msgid "Add constraints"
+msgstr "Legg til begrensninger"
+
+msgid "Switch to copied database"
+msgstr "Bytt til kopiert database"
+
+msgid "Users having access to \"%s\""
+msgstr "Brukere som har adgang til \"%s\""
+
+msgid "User name"
+msgstr "Brukernavn"
+
+msgid "Privileges"
+msgstr "Privilegier"
+
+msgid "Grant"
+msgstr "Rettighet"
+
+msgid "Any"
+msgstr "Alle"
+
+msgid "global"
+msgstr "global"
+
+msgid "database-specific"
+msgstr "databasespesifikk"
+
+msgid "wildcard"
+msgstr "jokertegn"
+
+msgid "No user found."
+msgstr "Ingen bruker(e) funnet."
+
+msgid "With selected:"
+msgstr "Med avkrysset:"
+
+msgid "Parameters"
+msgstr "Parameter"
+
+msgid "Return type"
+msgstr "Returtype"
+
+msgid "Charset"
+msgstr "Tegnsett"
+
+msgid "Is deterministic"
+msgstr "Er deterministisk"
+
+msgid "SQL data access"
+msgstr "SQL-datatilgang"
+
+msgid "Function"
+msgstr "Funksjon"
+
+msgid "Routines"
+msgstr "Rutiner"
+
+msgid "Search"
+msgstr "Søk"
+
+msgid "Execute"
+msgstr "Utfør"
+
+msgid "ENUM/SET editor"
+msgstr "ENUM/SET-editor"
+
+msgid "Search in database"
+msgstr "Søk i database"
+
+msgid "Words or values to search for (wildcard: \"%\"):"
+msgstr "Ord eller verdier å søke med (jokertegn: \"%\"):"
+
+msgid "Find:"
+msgstr "Finn:"
+
+msgid "at least one of the words"
+msgstr "minst ett av ordene"
+
+msgid "Words are separated by a space character (\" \")."
+msgstr "Ord er separert med et mellomrom (\" \")."
+
+msgid "as regular expression"
+msgstr "som \"regular expression\""
+
+msgid "Inside tables:"
+msgstr "I tabellene:"
+
+msgid "Inside column:"
+msgstr "I kolonne:"
+
+msgid "%1$s match in <strong>%2$s</strong>"
+msgid_plural "%1$s matches in <strong>%2$s</strong>"
+msgstr[0] "%1$s treff i <strong>%2$s</strong>"
+msgstr[1] "%1$s treff i <strong>%2$s</strong>"
+
+msgid "Browse"
+msgstr "Se på"
+
+msgid "%s table"
+msgid_plural "%s tables"
+msgstr[0] "%s tabell"
+msgstr[1] "%s tabeller"
+
+msgid "Replication"
+msgstr "Replikering"
+
+msgid "Sum"
+msgstr "Sum"
+
+msgid "%s is the default storage engine on this MySQL server."
+msgstr "%s er standard lagringsmotor for denne MySQL tjeneren."
+
+msgid "Continue"
+msgstr "Fortsett"
+
+msgid "Check tables having overhead"
+msgstr "Merk overheng"
+
+msgid "Empty"
+msgstr "Tøm"
+
+msgid "Table maintenance"
+msgstr "Tabellvedlikehold"
+
+msgid "Analyze table"
+msgstr "Analyser tabell"
+
+msgid "Check table"
+msgstr "Kontroller tabell"
+
+msgid "Optimize table"
+msgstr "Optimiser tabell"
+
+msgid "Repair table"
+msgstr "Reparer tabell"
+
+msgid "Add prefix to table"
+msgstr "Legg prefiks til tabell"
+
+msgid "Replace table prefix"
+msgstr "Erstatt tabellprefiks"
+
+msgid "Copy table with prefix"
+msgstr "Kopier tabell med prefiks"
+
+msgid "Central columns"
+msgstr "Hovedkolonner"
+
+msgid "Are you sure?"
+msgstr "Er du sikker?"
+
+msgid "This action may change some of the columns definition.[br]Are you sure you want to continue?"
+msgstr "Denne handlingen kan endre definisjonen av enkelte kolonner.[br]Er du sikker på at du vil fortsette?"
+
+msgid "Add DROP TABLE"
+msgstr "Legg til DROP TABLE"
+
+msgid "Do you really want to execute the following query?"
+msgstr "Vil du virkelig utføre følgende spørsmål?"
+
+msgid "Enable foreign key checks"
+msgstr "Slå på kontroll av fremmednøkler"
+
+msgid "Remove from Favorites"
+msgstr "Fjern fra favoritter"
+
+msgid "No tables found in database."
+msgstr "Databasen har ingen tabeller."
+
+msgid "Table"
+msgstr "Tabell"
+
+msgid "Views"
+msgstr "Visning"
+
+msgid "View"
+msgstr "Vis"
+
+msgid "Create view"
+msgstr "Opprett view"
+
+msgid "Not replicated"
+msgstr "Ikke replikert"
+
+msgid "Replicated"
+msgstr "Replikert"
+
+msgid "Insert"
+msgstr "Sett inn"
+
+msgid "Table %s has been emptied."
+msgstr "Tabellen %s har blitt tømt."
+
+msgid "in use"
+msgstr "i bruk"
+
+msgid "Rows"
+msgstr "Rader"
+
+msgid "Size"
+msgstr "Størrelse"
+
+msgid "Overhead"
+msgstr "Overheng"
+
+msgid "Creation"
+msgstr "Opprettet"
+
+msgid "Last update"
+msgstr "Sist oppdatert"
+
+msgid "Last check"
+msgstr "Sist kontrollert"
+
+msgid "Tracking is active."
+msgstr "Overvåkning er aktiv."
+
+msgid "Tracking is not active."
+msgstr "Overvåkning er ikke aktiv."
+
+msgid "Tracked tables"
+msgstr "Overvåkede tabeller"
+
+msgid "Last version"
+msgstr "Siste versjon"
+
+msgid "Created"
+msgstr "Opprettet"
+
+msgid "Updated"
+msgstr "Oppdatert"
+
+msgid "active"
+msgstr "aktiv"
+
+msgid "not active"
+msgstr "inaktiv"
+
+msgid "Delete tracking"
+msgstr "Fjern overvåkning"
+
+msgid "Versions"
+msgstr "Utgaver"
+
+msgid "Tracking report"
+msgstr "Overvåkningsrapport"
+
+msgid "Structure snapshot"
+msgstr "Struktur-øyeblikksbilde"
+
+msgid "Untracked tables"
+msgstr "Ikke overvåkede tabeller"
+
+msgid "Track table"
+msgstr "Overvåk tabell"
+
+msgctxt "First page"
+msgid "Begin"
+msgstr "Start"
+
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "Forrige"
+
+msgctxt "Next page"
+msgid "Next"
+msgstr "Neste"
+
+msgctxt "Last page"
+msgid "End"
+msgstr "Siste"
+
+msgid "Show all"
+msgstr "Vis alle"
+
+msgid "Save edited data"
+msgstr "Lagre redigerte data"
+
+msgid "Restore column order"
+msgstr "Tilbakestill kolonnerekkefølge"
+
+msgid "Number of rows:"
+msgstr "Antall rader:"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "Partial texts"
+msgstr "Delvise tekster"
+
+msgid "Full texts"
+msgstr "Hele tekster"
+
+msgid "Relational key"
+msgstr "Relasjonsnøkkel"
+
+msgid "Show binary contents"
+msgstr "Vis binært innhold"
+
+msgid "Show BLOB contents"
+msgstr "Vis BLOB innhold"
+
+msgid "Hide browser transformation"
+msgstr "Skjul nettlesertransformasjon"
+
+msgid "Geometry"
+msgstr "Geometri"
+
+msgid "Well Known Text"
+msgstr "Velkjent Tekst"
+
+msgid "Well Known Binary"
+msgstr "Velkjent Binær"
+
+msgid "Copy"
+msgstr "Kopier"
+
+msgid "Query results operations"
+msgstr "Spørringsresultatshandlinger"
+
+msgid "Display chart"
+msgstr "Vis diagram"
+
+msgid "Visualize GIS data"
+msgstr "Visualiser GIS data"
+
+msgctxt "None encoding conversion"
+msgid "None"
+msgstr "Ingen"
+
+msgid "Convert to Kana"
+msgstr "Konverter til Kana"
+
+msgid "Error"
+msgstr "Feil"
+
+msgid "Automatically send report next time"
+msgstr "Automatisk send rapport neste gang"
+
+msgid "Submit error report"
+msgstr "Send feilrapport"
+
+msgid "Send error report"
+msgstr "Send feilrapport"
+
+msgid "SQL query:"
+msgstr "SQL-spørring:"
+
+msgid "Quick - display only the minimal options"
+msgstr "Hurtig - vis minimum alternativer"
+
+msgid "Custom - display all possible options"
+msgstr "Egendefinert - vis alle alternativer"
+
+msgid "Format:"
+msgstr "Format:"
+
+msgid "Rows:"
+msgstr "Rader:"
+
+msgid "Dump all rows"
+msgstr "Dump alle rader"
+
+msgid "Dump some row(s)"
+msgstr "Dump (noen) rad(er)"
+
+msgid "Row to begin at:"
+msgstr "Start med rad:"
+
+msgid "Output:"
+msgstr "Utskrift:"
+
+msgid "Save on server in the directory <strong>%s</strong>"
+msgstr "Lagre på server i <strong>%s</strong> katalogen"
+
+msgid "Overwrite existing file(s)"
+msgstr "Skriv over eksisterende filer"
+
+msgctxt "Alias"
+msgid "Database"
+msgstr "Database"
+
+msgctxt "Alias"
+msgid "Table"
+msgstr "Tabell"
+
+msgctxt "Alias"
+msgid "Column"
+msgstr "Kolonne"
+
+msgid "Save & close"
+msgstr "Lagre og lukk"
+
+msgid "Use %s statement"
+msgstr "Bruk %s-uttrykk"
+
+msgid "View output as text"
+msgstr "Vis utskrift som tekst"
+
+msgid "Save output to a file"
+msgstr "Lagre utdata til fil"
+
+msgid "File name template:"
+msgstr "Filnavn mal:"
+
+msgid "Character set of the file:"
+msgstr "Filens tegnsett:"
+
+msgid "Compression:"
+msgstr "Komprimering:"
+
+msgid "zipped"
+msgstr "Pakket (zip)"
+
+msgid "gzipped"
+msgstr "gzippet"
+
+msgid "Format-specific options:"
+msgstr "Formatspesifike valg:"
+
+msgid "Encoding Conversion:"
+msgstr "Kodingskonvertering:"
+
+msgid "Use OpenStreetMaps as Base Layer"
+msgstr "Bruk OpenStreetMaps som baselag"
+
+msgid "Output"
+msgstr "Utdata"
+
+msgid "You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at %s."
+msgstr "Du bruker demotjeneren. Du kan gjøre hva du vil her, men vennligst ikke endre på root, debian-sys-maint og pma -brukerne. Mer informasjon tilgjengelig på %s."
+
+msgid "General settings"
+msgstr "Generelle innstillinger"
+
+msgid "Change password"
+msgstr "Endre passord"
+
+msgid "More settings"
+msgstr "Flere innstillinger"
+
+msgid "Appearance settings"
+msgstr "Tilpass utseende"
+
+msgid "Language"
+msgstr "Språk"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Database server"
+msgstr "Database-tjener"
+
+msgid "Server:"
+msgstr "Tjener:"
+
+msgid "Server type:"
+msgstr "Tjener-type:"
+
+msgid "Server connection:"
+msgstr "Tjenertilkobling:"
+
+msgid "Server version:"
+msgstr "Tjener-versjon:"
+
+msgid "User:"
+msgstr "Bruker:"
+
+msgid "Server charset:"
+msgstr "Tjener-tegnsett:"
+
+msgid "Web server"
+msgstr "Vevtjener"
+
+msgid "Database client version:"
+msgstr "Databaseklient-versjon:"
+
+msgid "PHP extension:"
+msgstr "PHP tillegg:"
+
+msgid "PHP version:"
+msgstr "PHP-versjon:"
+
+msgid "Show PHP information"
+msgstr "Vis PHP-informasjon"
+
+msgid "Version information:"
+msgstr "Versjonsinformasjon:"
+
+msgid "Official Homepage"
+msgstr "Offisiell hjemmeside"
+
+msgid "Contribute"
+msgstr "Bidra"
+
+msgid "Get support"
+msgstr "Brukerstøtte"
+
+msgid "List of changes"
+msgstr "Endringsliste"
+
+msgid "License"
+msgstr "Lisens"
+
+msgid "Warning"
+msgstr "Advarsel"
+
+msgid "Get more themes!"
+msgstr "Få flere temaer!"
+
+msgid "Back"
+msgstr "Tilbake"
+
+msgid "Import"
+msgstr "Importer"
+
+msgid "File may be compressed (%s) or uncompressed."
+msgstr "FIlen kan bli pakket (%s) eller utpakket."
+
+msgid "A compressed file's name must end in <strong>.[format].[compression]</strong>. Example: <strong>.sql.zip</strong>"
+msgstr "En komprimert fils navn må ende med <strong>.[format].[compression]</strong>. Eksempel: <strong>.sql.zip</strong>"
+
+msgid "Browse your computer:"
+msgstr "Bla gjennom datamaskinen:"
+
+msgid "The directory you set for upload work cannot be reached."
+msgstr "Katalogen du anga for opplasting kan ikke nåes."
+
+msgid "Select from the web server upload directory [strong]%s[/strong]:"
+msgstr "Merk fra opplastingskatalogen på vevtjeneren [strong]%s[/strong]:"
+
+msgid "File uploads are not allowed on this server."
+msgstr "Filopplastinger er ikke tillatt på denne tjeneren."
+
+msgid "Previous import timed out, after resubmitting will continue from position %d."
+msgstr "Forrige import ble tidsavbrutt, vil fortsette fra posisjon %d etter gjenninnsending."
+
+msgid "The primary key has been dropped."
+msgstr "Primærnøkkelen har blitt slettet."
+
+msgid "Index %s has been dropped."
+msgstr "Indeksen %s har blitt slettet."
+
+msgid "Taking you to the target site."
+msgstr "Tar deg til målsiden."
+
+msgid "Page number:"
+msgstr "Sidenummer:"
+
+msgid "Log in"
+msgstr "Logg inn"
+
+msgid "You can enter hostname/IP address and port separated by space."
+msgstr "Du kan skrive vertsnavn/IP adresse og port separert med mellomrom."
+
+msgid "Username:"
+msgstr "Brukernavn:"
+
+msgid "Password:"
+msgstr "Passord:"
+
+msgid "Welcome to %s"
+msgstr "Velkommen til %s"
+
+msgid "Show hidden navigation tree items."
+msgstr "Vis skjulte elementer i navigasjonstreet."
+
+msgid "Home"
+msgstr "Hjem"
+
+msgid "Drop files here"
+msgstr "Legg filene her"
+
+msgid "Databases"
+msgstr "Databaser"
+
+msgid "Clear fast filter"
+msgstr "Fjern hurtigfilter"
+
+msgid "Recent"
+msgstr "Nylige"
+
+msgid "Favorite tables"
+msgstr "Favorittabeller"
+
+msgid "Favorites"
+msgstr "Favoritter"
+
+msgid "Manage your settings"
+msgstr "Endre dine innstillinger"
+
+msgid "Features"
+msgstr "Egenskaper"
+
+msgid "SQL queries"
+msgstr "SQL-spørringer"
+
+msgid "Navigation panel"
+msgstr "Navigasjonspanel"
+
+msgid "Main panel"
+msgstr "Hovedpanel"
+
+msgid "You have no saved settings!"
+msgstr "Du har ingen lagrede innstillinger!"
+
+msgid "There are no favorite tables."
+msgstr "Det er ingen favorittabeller."
+
+msgid "There are no recent tables."
+msgstr "Det er ikke noen nylig brukte tabeller."
+
+msgid "Configuration of pmadb…"
+msgstr "Konfigurasjon av pmadb …"
+
+msgid "not OK"
+msgstr "ikke OK"
+
+msgid "General relation features"
+msgstr "Generelle relasjonsegenskaper"
+
+msgid "Enabled"
+msgstr "Påslått"
+
+msgid "Quick steps to set up advanced features:"
+msgstr "Raske steg for å sette opp avansert funksjonalitet:"
+
+msgid "Create a pma user and give access to these tables."
+msgstr "Opprett en pma bruker og gi tilgang til disse tabellene."
+
+msgid "Enable advanced features in configuration file (<code>config.inc.php</code>), for example by starting from <code>config.sample.inc.php</code>."
+msgstr "Slå på avansert funksjonalitet i konfigurasjonsfilen (<code>config.inc.php</code>), f.eks. med eksempel fra <code>config.sample.inc.php</code>."
+
+msgid "Re-login to phpMyAdmin to load the updated configuration file."
+msgstr "Re-logginn til phpMyAdmin for å laste den oppdaterte konfigurasjonsfila."
+
+msgid "Binary log"
+msgstr "Binærlogg"
+
+msgid "Select binary log to view"
+msgstr "Velg binærlogg for visning"
+
+msgid "Files"
+msgstr "Filer"
+
+msgid "Log name"
+msgstr "Loggnavn"
+
+msgid "Position"
+msgstr "Posisjon"
+
+msgid "Server ID"
+msgstr "Tjener ID"
+
+msgid "Original position"
+msgstr "Original posisjon"
+
+msgid "Information"
+msgstr "Informasjon"
+
+msgid "Databases statistics"
+msgstr "Statistikk for databaser"
+
+msgid "Create database"
+msgstr "Opprett ny database"
+
+msgid "Check privileges for database \"%s\"."
+msgstr "Kontroller privilegier for databasen \"%s\"."
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Total:"
+msgstr "Totalt:"
+
+msgid "Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server."
+msgstr "OBS: Når du slår på databasestatistikk så kan det medføre stor traffik mellom webtjeneren og MySQL-tjeneren."
+
+msgid "No databases"
+msgstr "Ingen databaser"
+
+msgid "Confirm"
+msgstr "Bekreft"
+
+msgid "Storage Engine"
+msgstr "Lagringsmotor"
+
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "Free pages"
+msgstr "Ledige sider"
+
+msgid "Dirty pages"
+msgstr "Endrede sider"
+
+msgid "Pages containing data"
+msgstr "Sider som inneholder data"
+
+msgid "Pages to be flushed"
+msgstr "Sider som skal tømmes"
+
+msgid "Busy pages"
+msgstr "Opptatte sider"
+
+msgid "Latched pages"
+msgstr "Tilknyttede sider"
+
+msgid "Read requests"
+msgstr "Leseforespørsler"
+
+msgid "Write requests"
+msgstr "Skriveforespørsler"
+
+msgid "Read misses"
+msgstr "Lesebommer"
+
+msgid "Write waits"
+msgstr "Skriveforsinkelser"
+
+msgid "Read misses in %"
+msgstr "Lesebommer i %"
+
+msgid "Write waits in %"
+msgstr "Skriveforsinkelser i %"
+
+msgid "Variables"
+msgstr "Variabler"
+
+msgid "Exporting databases from the current server"
+msgstr "Eksporter database fra gjeldende tjener"
+
+msgid "Importing into the current server"
+msgstr "Importer til gjeldende tjener"
+
+msgid "Plugins"
+msgstr "Programtillegg"
+
+msgid "Version"
+msgstr "Versjon"
+
+msgid "Create database with same name and grant all privileges."
+msgstr "Opprett database med samme navn og gi alle rettigheter."
+
+msgid "Grant all privileges on wildcard name (username\\_%)."
+msgstr "Gi alle rettigheter på jokertegnavn (username\\_%)."
+
+msgid "No Password"
+msgstr "Intet passord"
+
+msgid "Login Information"
+msgstr "Innlogingsinformasjon"
+
+msgid "User name:"
+msgstr "Brukernavn:"
+
+msgid "Any user"
+msgstr "Alle brukere"
+
+msgid "Use text field"
+msgstr "Bruk tekstfelt"
+
+msgid "Any host"
+msgstr "Alle verter"
+
+msgid "Local"
+msgstr "Lokal"
+
+msgid "When Host table is used, this field is ignored and values stored in Host table are used instead."
+msgstr "Når vertstabellen er brukt så ignoreres dette feltet og verdier lagret i vertstabellen blir brukt istedet."
+
+msgid "Password"
+msgstr "Passord"
+
+msgid "Do not change the password"
+msgstr "Ikke endre passordet"
+
+msgid "Re-type"
+msgstr "Gjenta"
+
+msgid "Table-specific privileges"
+msgstr "Tabell-spesifikke privilegier"
+
+msgid "Column-specific privileges"
+msgstr "Kolonne-spesifikke privilegier"
+
+msgid "Wildcards % and _ should be escaped with a \\ to use them literally."
+msgstr "Jokertegnene _ og % må beskyttes med en \\ for å bruke dem direkte."
+
+msgid "Allows reading data."
+msgstr "Tillater lesing av data."
+
+msgid "Or"
+msgstr "Eller"
+
+msgctxt "None privileges"
+msgid "None"
+msgstr "Ingen"
+
+msgid "Allows inserting and replacing data."
+msgstr "Tillater å legge til og erstatte data."
+
+msgid "Allows changing data."
+msgstr "Tillater endring av data."
+
+msgid "Has no effect in this MySQL version."
+msgstr "har ingen effekt i denne versjonen av MySQL."
+
+msgid "Allows deleting data."
+msgstr "Tillater sletting av data."
+
+msgid "Allows creating new tables."
+msgstr "Tillater oppretting av nye tabeller."
+
+msgid "Allows dropping tables."
+msgstr "Tillater sletting av tabeller."
+
+msgid "Allows creating and dropping indexes."
+msgstr "Tillater oppretting og sletting av indekser."
+
+msgid "Allows altering the structure of existing tables."
+msgstr "Tillater endring av struktur på eksisterende tabeller."
+
+msgid "Allows creating new views."
+msgstr "Tillater oppretting av nye visninger."
+
+msgid "Allows performing SHOW CREATE VIEW queries."
+msgstr "Tillater utføring av SHOW CREATE VIEW spørringer."
+
+msgid "Global privileges"
+msgstr "Globale privilegier"
+
+msgid "Database-specific privileges"
+msgstr "Databasespesifikke privilegier"
+
+msgid "Allows importing data from and exporting data into files."
+msgstr "Tillater import og eksport av data til og fra filer."
+
+msgid "Allows creating new databases and tables."
+msgstr "Tillater oppretting av nye databaser og tabeller."
+
+msgid "Allows dropping databases and tables."
+msgstr "Tillater sletting av databaser og tabeller."
+
+msgid "Allows creating temporary tables."
+msgstr "Tillater oppretting av midlertidige tabeller."
+
+msgid "Allows creating stored routines."
+msgstr "Tillater oppreting av lagrede rutiner."
+
+msgid "Allows altering and dropping stored routines."
+msgstr "Tillater endring og sletting av lagrede rutiner."
+
+msgid "Allows executing stored routines."
+msgstr "Tillater utføring av lagrede rutiner."
+
+msgid "Administration"
+msgstr "Administrasjon"
+
+msgid "Allows adding users and privileges without reloading the privilege tables."
+msgstr "Tillater å legge til brukere og privilegier uten å oppfriske privilegietabellene."
+
+msgid "Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users."
+msgstr "Tillater tilkobling, selv om maksimum tilkoblinger er nådd. Behøves for de fleste administrative operasjoner som å sette globale variabler eller avslutting av andre brukeres tråder."
+
+msgid "Allows reloading server settings and flushing the server's caches."
+msgstr "Tillater oppfrisking av tjenerinnstillinger og oppfrisking av mellomlager."
+
+msgid "Allows shutting down the server."
+msgstr "Tillater avslutting av tjener."
+
+msgid "Gives access to the complete list of databases."
+msgstr "Gir adgang til komplett liste over databaser."
+
+msgid "Allows locking tables for the current thread."
+msgstr "Tillater låsing av tabeller for den kjørende tråden."
+
+msgid "Allows creating, dropping and renaming user accounts."
+msgstr "Tillater oppretting, sletting og navneendring av brukerkontoer."
+
+msgid "Resource limits"
+msgstr "Ressursbegrensninger"
+
+msgid "Note: Setting these options to 0 (zero) removes the limit."
+msgstr "Merk: Ved å sette disse til 0 (null) fjernes begrensningen."
+
+msgid "Limits the number of queries the user may send to the server per hour."
+msgstr "Begrenser antall spørringer brukeren kan sende til tjeneren per time."
+
+msgid "Limits the number of commands that change any table or database the user may execute per hour."
+msgstr "Begrenser antall kommandoer som kan endre tabeller eller databaser brukeren kan utføre per time."
+
+msgid "Limits the number of new connections the user may open per hour."
+msgstr "Begrenser antall nye tilkoblinger brukeren kan åpne per time."
+
+msgid "Limits the number of simultaneous connections the user may have."
+msgstr "Begrens antall samtidige tilkoblinger brukeren kan ha."
+
+msgid "The selected user was not found in the privilege table."
+msgstr "Den valgte brukeren ble ikke funnet i privilegietabellen."
+
+msgid "… keep the old one."
+msgstr "… behold den gamle."
+
+msgid "… delete the old one from the user tables."
+msgstr "… slett den gamle fra brukertabellene."
+
+msgid "… revoke all active privileges from the old one and delete it afterwards."
+msgstr "… tilbakekall alle aktive privilegier fra den gamle og slett den etterpå."
+
+msgid "… delete the old one from the user tables and reload the privileges afterwards."
+msgstr "… slett den gamle fra brukertabellene og deretter oppfrisk privilegiene."
+
+msgid "Revoke all active privileges from the users and delete them afterwards."
+msgstr "Tilbakekall alle aktive privilegier fra brukerne og slett dem etterpå."
+
+msgid "Drop the databases that have the same names as the users."
+msgstr "Slett databasene som har det samme navnet som brukerne."
+
+msgid "Make sure you have a unique server-id in your configuration file (my.cnf). If not, please add the following line into [mysqld] section:"
+msgstr "Forsikre deg om at du har unik server-id i din oppsettsfil(my.cnf). Hvis ikke, legg til følgende linje i [mysqld] seksjonen:"
+
+msgid "Host"
+msgstr "Vert"
+
+msgid "Generate"
+msgstr "Generer"
+
+msgid "Replicate all databases; Ignore:"
+msgstr "Repliker alle databaser; Ignorer:"
+
+msgid "Ignore all databases; Replicate:"
+msgstr "Ignorer alle databaser; repliker:"
+
+msgid "Please select databases:"
+msgstr "Vennligst velg databaser:"
+
+msgid "Now, add the following lines at the end of [mysqld] section in your my.cnf and please restart the MySQL server afterwards."
+msgstr "Legg til følgende linjer på slutten av din my.cnf og restart MySQL tjeneren etterpå.."
+
+msgid "Error management:"
+msgstr "Feilbehandling:"
+
+msgid "Skip current error"
+msgstr "Hopp over nåværende feil"
+
+msgid "Variable"
+msgstr "Variabler"
+
+msgid "Servers"
+msgstr "Tjenere"
+
+msgid "Advisor system"
+msgstr "Rådgivningssystem"
+
+msgid "Possible performance issues"
+msgstr "Mulige ytelsesproblemer"
+
+msgid "Server"
+msgstr "Tjener"
+
+msgid "Processes"
+msgstr "Prosesser"
+
+msgid "Query statistics"
+msgstr "Spørringsstatistikk"
+
+msgid "All status variables"
+msgstr "Alle statusvariabler"
+
+msgid "Monitor"
+msgstr "Monitor"
+
+msgid "Advisor"
+msgstr "Rådgiver"
+
+msgid "Please select the file you want to import:"
+msgstr "Vennligst velg filen du vil importere:"
+
+msgid "Chart Title"
+msgstr "Fremstillings-tittel"
+
+msgid "KiB"
+msgstr "KiB"
+
+msgid "MiB"
+msgstr "MiB"
+
+msgid "Add chart to grid"
+msgstr "Legg graf til grid"
+
+msgid "From slow log"
+msgstr "Fra langsom logg"
+
+msgid "From general log"
+msgstr "Fra generell logg"
+
+msgid "Query"
+msgstr "Spørring"
+
+msgid "Analyse query"
+msgstr "Analyser spørring"
+
+msgid "Analysing logs"
+msgstr "Analyserer logger"
+
+msgid "Cancel request"
+msgstr "Avbryt forespørsel"
+
+msgid "No data found"
+msgstr "Ingen data funnet"
+
+msgid "Log analysed, but no data found in this time span."
+msgstr "Logg analysert, men ingen data var funnet i løpet av tidsperioden."
+
+msgid "Loading logs"
+msgstr "Laster logger"
+
+msgid "Log data loaded. Queries executed in this time span:"
+msgstr "Loggdata lastet inn. Spørringer vil bli utført i løpet av denne tidsplanen:"
+
+msgid "Monitor refresh failed"
+msgstr "Visningsoppdatering feilet"
+
+msgid "While requesting new chart data the server returned an invalid response. This is most likely because your session expired. Reloading the page and reentering your credentials should help."
+msgstr "Imens nytt diagramdata ble forespurt, returnerte serveren en ugyldig respons. Dette er mest sannsynlig begrunnet at din sesjon utgikk. Det burde hjelpe å laste inn siden og logge inn på nytt."
+
+msgid "Reload page"
+msgstr "Oppdater siden"
+
+msgid "Local monitor configuration incompatible!"
+msgstr "Lokal monitorkonfigurasjon er inkompatibel!"
+
+msgid "Start auto refresh"
+msgstr "Start automatisk oppdatering"
+
+msgid "Kill"
+msgstr "Avslutt"
+
+msgid "Statements"
+msgstr "Oversikt"
+
+msgid "Traffic"
+msgstr "Trafikk"
+
+msgid "On a busy server, the byte counters may overrun, so those statistics as reported by the MySQL server may be incorrect."
+msgstr "På en travel tjener så kan byte-tellerene overflyte, så denne statistikken som rapportert av MySQL tjeneren kan være unøyaktig."
+
+msgid "Connections"
+msgstr "tilkoblinger"
+
+msgid "Replication status"
+msgstr "Replikasjonsstatus"
+
+msgid "Group name:"
+msgstr "Gruppe navn:"
+
+msgid "User"
+msgstr "Bruker"
+
+msgid "Server variables and settings"
+msgstr "Tjenervariabler og -innstillinger"
+
+msgid "Session value"
+msgstr "Økts verdi"
+
+msgid "Overview"
+msgstr "Oversikt"
+
+msgid "Configuration file"
+msgstr "Konfigurasjonsfil"
+
+msgid "Download"
+msgstr "Last ned"
+
+msgid "Submitted form contains errors"
+msgstr "Innsendt skjema inneholder feil"
+
+msgid "Try to revert erroneous fields to their default values"
+msgstr "Forsøk å reverser felter med feil til standard verdier"
+
+msgid "Ignore errors"
+msgstr "Ignorer feil"
+
+msgid "Show form"
+msgstr "Vis skjema"
+
+msgid "Authentication type"
+msgstr "Autentiseringstype"
+
+msgid "There are no configured servers"
+msgstr "Der finnes ingen konfigurerte tjenere"
+
+msgid "New server"
+msgstr "Ny tjener"
+
+msgid "Default language"
+msgstr "Standard språk"
+
+msgid "Default server"
+msgstr "Standard tjener"
+
+msgid "let the user choose"
+msgstr "la brukeren bestemme"
+
+msgid "- none -"
+msgstr "- ingen -"
+
+msgid "End of line"
+msgstr "Linjeslutt"
+
+msgid "Display"
+msgstr "Vis"
+
+msgid "phpMyAdmin homepage"
+msgstr "phpMyAdmin hjemmeside"
+
+msgid "Donate"
+msgstr "Doner"
+
+msgid "Check for latest version"
+msgstr "Sjekk for siste versjon"
+
+msgid "Edit server"
+msgstr "Rediger tjener"
+
+msgid "Add a new server"
+msgstr "Legg til en ny tjener"
+
+msgid "Bookmark this SQL query"
+msgstr "Lagre denne SQL-spørringen"
+
+msgid "Let every user access this bookmark"
+msgstr "La alle brukere ha adgang til dette bokmerket"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Your SQL query has been executed successfully."
+msgstr "Kommandoen/spørringen er utført."
+
+msgid "SQL query"
+msgstr "SQL-spørring"
+
+msgid "Columns"
+msgstr "Kolonner"
+
+msgid "Replace existing bookmark of same name"
+msgstr "Erstatt eksisterende bokmerke med samme navn"
+
+msgid "Delimiter"
+msgstr "Skilletegn"
+
+msgid "Show this query here again"
+msgstr "Vis denne spørring her igjen"
+
+msgid "Bookmarked SQL query"
+msgstr "Lagret SQL-spørring"
+
+msgid "shared"
+msgstr "delt"
+
+msgid "View only"
+msgstr "Bare se"
+
+msgid "Simulate query"
+msgstr "Simuler spørring"
+
+msgid "Browse foreign values"
+msgstr "Se de eksterne verdiene"
+
+msgid "Use this value"
+msgstr "Bruk denne verdien"
+
+msgid "Y Values"
+msgstr "Y-verdier"
+
+msgid "Exporting rows from \"%s\" table"
+msgstr "Eksporter rader fra %s tabell"
+
+msgid "Table search"
+msgstr "Tabellsøk"
+
+msgid "Zoom search"
+msgstr "Utvidet søk"
+
+msgid "Find and replace"
+msgstr "Finn og erstatt"
+
+msgid "Replace with:"
+msgstr "Erstatt med:"
+
+msgid "Column:"
+msgstr "Kolonne:"
+
+msgid "Use regular expression"
+msgstr "Bruk \"regulert uttrykk\""
+
+msgid "Find and replace - preview"
+msgstr "Finn og erstatt - forhåndsvisning"
+
+msgid "Original string"
+msgstr "Opprinnelig"
+
+msgid "Replaced string"
+msgstr "Erstattet"
+
+msgid "Replace"
+msgstr "Erstatt"
+
+msgid "Importing into the table \"%s\""
+msgstr "Importer til tabell \"%s\""
+
+msgid "Index name:"
+msgstr "Indeksnavn&nbsp;:"
+
+msgid "\"PRIMARY\" <b>must</b> be the name of and <b>only of</b> a primary key!"
+msgstr "\"PRIMARY\" <b>må</b> være navnet til og <b>bare til</b> en primærnøkkel!"
+
+msgid "Index type:"
+msgstr "Indekstype&nbsp;:"
+
+msgid "Ignore"
+msgstr "Ignorer"
+
+msgid "Add %s column(s) to index"
+msgstr "Legg %s kolonne(r) til index"
+
+msgid "Insert as new row"
+msgstr "Sett inn som ny rad"
+
+msgid "Insert as new row and ignore errors"
+msgstr "Sett inn som ny rad og ignorer feil"
+
+msgid "Show insert query"
+msgstr "Viser SQL spørring"
+
+msgid "and then"
+msgstr "og så"
+
+msgid "Go back to previous page"
+msgstr "Returner"
+
+msgid "Insert another new row"
+msgstr "Sett inn en ny post"
+
+msgid "Go back to this page"
+msgstr "Tilbake til denne siden"
+
+msgid "Edit next row"
+msgstr "Rediger neste rad"
+
+msgid "Binary"
+msgstr "Binær"
+
+msgid "Because of its length,<br> this column might not be editable."
+msgstr "På grunn av sin lengde,<br> så vil muligens denne kolonnen ikke være redigerbar."
+
+msgid "Binary - do not edit"
+msgstr "Binær - må ikke redigeres"
+
+msgid "Edit/Insert"
+msgstr "Rediger/Sett inn"
+
+msgid "Alter table order by"
+msgstr "Endre tabellrekkefølge ved"
+
+msgid "Table options"
+msgstr "Tabellinnstillinger"
+
+msgid "Rename table to"
+msgstr "Endre tabellens navn"
+
+msgid "Table comments"
+msgstr "Tabellkommentarer"
+
+msgid "Switch to copied table"
+msgstr "Bytt til kopiert tabell"
+
+msgid "Defragment table"
+msgstr "Defragmenter tabell"
+
+msgid "Table %s has been flushed."
+msgstr "Tabelen %s har blitt oppfrisket."
+
+msgid "Flush the table (FLUSH)"
+msgstr "Oppfrisk tabellen (\"FLUSH\")"
+
+msgid "Partition maintenance"
+msgstr "Partisjonsvedlikehold"
+
+msgid "Remove partitioning"
+msgstr "Fjern partisjonering"
+
+msgid "Operations"
+msgstr "Operasjoner"
+
+msgid "Rename view to"
+msgstr "Endre tabellens navn"
+
+msgid "Table structure"
+msgstr "Tabellstruktur"
+
+msgid "Foreign key constraint"
+msgstr "Fremmednøkkelbegrensning"
+
+msgid "Internal relation"
+msgstr "Interne relasjoner"
+
+msgid "An internal relation is not necessary when a corresponding FOREIGN KEY relation exists."
+msgstr "En intern relasjon er ikke nødvendig når en tilsvarende FOREIGN KEY relasjon eksisterer."
+
+msgid "Do a \"query by example\" (wildcard: \"%\")"
+msgstr "Utfør en \"spørring ved eksempel\" (jokertegn: \"%\")"
+
+msgid "Select columns (at least one):"
+msgstr "Velg kolonner (minst ett):"
+
+msgid "Add search conditions (body of the \"where\" clause):"
+msgstr "Legg til søkekriterier (innhold i \"where\"-setningen):"
+
+msgid "Number of rows per page"
+msgstr "Antall poster per side"
+
+msgid "Display order:"
+msgstr "Visningsrekkefølge:"
+
+msgid "Range search"
+msgstr "Områdesøk"
+
+msgid "Minimum value:"
+msgstr "Minimumsverdi:"
+
+msgid "Maximum value:"
+msgstr "Maksimumsverdi:"
+
+msgid "Analyze"
+msgstr "Analyser"
+
+msgid "Check"
+msgstr "Kontroller"
+
+msgid "Optimize"
+msgstr "Optimaliser"
+
+msgid "Rebuild"
+msgstr "Gjenoppbygg"
+
+msgid "Repair"
+msgstr "Reparer"
+
+msgid "Extra"
+msgstr "Ekstra"
+
+msgctxt "None for default"
+msgid "None"
+msgstr "Ingen"
+
+msgid "Change"
+msgstr "Endre"
+
+msgid "Column %s has been dropped."
+msgstr "Kolonne %s har blitt slettet."
+
+msgid "More"
+msgstr "Mer"
+
+msgid "Edit view"
+msgstr "Rediger visning"
+
+msgid "Propose table structure"
+msgstr "Foreslå tabellstruktur"
+
+msgid "Track view"
+msgstr "Sporvisning"
+
+msgid "Add %s column(s)"
+msgstr "Legg til %s kolonne(r)"
+
+msgid "Space usage"
+msgstr "Plassbruk"
+
+msgid "Effective"
+msgstr "Effektiv"
+
+msgid "Total"
+msgstr "Totalt"
+
+msgid "static"
+msgstr "statisk"
+
+msgid "dynamic"
+msgstr "dynamisk"
+
+msgid "partitioned"
+msgstr "partisjonert"
+
+msgid "Row length"
+msgstr "Radlengde"
+
+msgid "Row size"
+msgstr "Radstørrelse"
+
+msgid "Activate tracking for %s"
+msgstr "Aktiver overvåkning av %s"
+
+msgid "Activate now"
+msgstr "Aktiver nå"
+
+msgid "Deactivate tracking for %s"
+msgstr "Deaktiver overvåkning av %s"
+
+msgid "Deactivate now"
+msgstr "Deaktiver nå"
+
+msgid "Date"
+msgstr "Dato"
+
+msgid "Username"
+msgstr "Brukernavn"
+
+msgid "Do a \"query by example\" (wildcard: \"%\") for two different columns"
+msgstr "Utfør en \"spørring ved eksempel\" (jokertegn: \"%\") for to forskjellige kolonner"
+
+msgid "Additional search criteria"
+msgstr "Ytterligere søkekriterier"
+
+msgid "Use this column to label each point"
+msgstr "Bruk denne kolonnen til å merke hvert punkt"
+
+msgid "Maximum rows to plot"
+msgstr "Maks antall rader som vises"
+
+msgid "Browse/Edit the points"
+msgstr "Bla gjennom/rediger punktene"
+
+msgid "How to use"
+msgstr "Bruksforklaring"
+
+msgid "Reset zoom"
+msgstr "Tilbakestill zoom"
+
+msgid "Event"
+msgstr "Hendelse"
+
+msgid "Triggers"
+msgstr "Triggere"
+
+msgid "VIEW name"
+msgstr "VIEW navn"
+
+msgid "Column names"
+msgstr "Kolonnenavn"
+
+msgid "Error when evaluating: %s"
+msgstr "Feil ved evaluering: %s"
+
+msgid "Failed evaluating precondition for rule '%s'."
+msgstr "Mislykket evaluering av forhåndsbetingelse for regelen '%s'."
+
+msgid "Failed calculating value for rule '%s'."
+msgstr "Feil ved kalkulering av verdi for regel \"%s\"."
+
+msgid "Failed running test for rule '%s'."
+msgstr "Feil ved kjøring av test for regel \"%s\"."
+
+msgid "Failed formatting string for rule '%s'."
+msgstr "Feil ved formattering av streng for regel \"%s\"."
+
+msgid "per second"
+msgstr "per sekund"
+
+msgid "per minute"
+msgstr "per minutt"
+
+msgid "per hour"
+msgstr "per time"
+
+msgid "per day"
+msgstr "hver dag"
+
+msgid "Uptime below one day"
+msgstr "Oppetid under en dag"
+
+msgid "Uptime is less than 1 day, performance tuning may not be accurate."
+msgstr "Oppetid er mindre enn 1 dag, ytelsejustering er kanskje ikke nøyaktig."
+
+msgid "To have more accurate averages it is recommended to let the server run for longer than a day before running this analyzer"
+msgstr "For å ha mer nøyaktige gjennomsnitt anbefales det å la serveren kjøre lenger enn en dag før du kjører denne analysatoren"
+
+msgid "The uptime is only %s"
+msgstr "Oppetid er bare %s"
+
+msgid "Fewer than 1,000 questions have been run against this server. The recommendations may not be accurate."
+msgstr "Færre enn 1000 spørsmål har blitt kjørt mot denne serveren. Anbefalingene er kanskje ikke nøyaktige."
+
+msgid "Let the server run for a longer time until it has executed a greater amount of queries."
+msgstr "La serveren kjøre i lengre tid til den har utført en større mengde spørsmål."
+
+msgid "Current amount of Questions: %s"
+msgstr "Nåværende antall spørsmål: %s"
+
+msgid "Percentage of slow queries"
+msgstr "Prosentandel av trege spørringer"
+
+msgid "There is a lot of slow queries compared to the overall amount of Queries."
+msgstr "Det er mange langsomme spørsmål sammenlignet med den totale mengden spørringer."
+
+msgid "You might want to increase {long_query_time} or optimize the queries listed in the slow query log"
+msgstr "Det kan være lurt å øke {long_query_time} eller optimalisere spørringene som er oppført i den langsomme spørringsloggen"
+
+msgid "The slow query rate should be below 5%%, your value is %s%%."
+msgstr "Den sakte spørringsgraden bør være under 5%%, verdien din er %s%%."
+
+msgid "Slow query rate"
+msgstr "Langsom spørringsfrekvens"
+
+msgid "There is a high percentage of slow queries compared to the server uptime."
+msgstr "Det er en høy andel langsomme spørsmål sammenlignet med serverens oppetid."
+
+msgid "You have a slow query rate of %s per hour, you should have less than 1%% per hour."
+msgstr "Du har en sakte spørringsfrekvens på %s per time. Du bør ha mindre enn 1%% per time."
+
+msgid "Long query time"
+msgstr "Lang spørringstid"
+
+msgid "{long_query_time} is set to 10 seconds or more, thus only slow queries that take above 10 seconds are logged."
+msgstr "{long_query_time} er satt til 10 sekunder eller mer, og derfor blir bare langsomme spørsmål som tar over 10 sekunder logget."
+
+msgid "It is suggested to set {long_query_time} to a lower value, depending on your environment. Usually a value of 1-5 seconds is suggested."
+msgstr "Det anbefales å sette {long_query_time} til en lavere verdi, avhengig av miljøet ditt. Vanligvis foreslås en verdi på 1-5 sekunder."
+
+msgid "Enable slow query logging by setting {log_slow_queries} to 'ON'. This will help troubleshooting badly performing queries."
+msgstr "Aktiver langsom loggføring ved å sette {log_slow_queries} til \"PÅ\". Dette vil hjelpe til med å feilsøke spørsmål som har dårlige resultater."
+
+msgid "Enable slow query logging by setting {slow_query_log} to 'ON'. This will help troubleshooting badly performing queries."
+msgstr "Aktiver treg logglogging ved å sette {slow_query_log} til \"PÅ\". Dette vil hjelpe til med å feilsøke spørsmål som har dårlige resultater."
+
+msgid "The MySQL server version less than 5.1."
+msgstr "MySQL-serverversjonen er mindre enn 5.1."
+
+msgid "You should upgrade, as MySQL 5.1 has improved performance, and MySQL 5.5 even more so."
+msgstr "Du bør oppgradere, ettersom MySQL 5.1 har forbedret ytelsen, og MySQL 5.5 enda mer."
+
+msgid "Version less than 5.1.30 (the first GA release of 5.1)."
+msgstr "Versjon mindre enn 5.1.30 (den første GA-versjonen av 5.1)."
+
+msgid "You should upgrade, as recent versions of MySQL 5.1 have improved performance and MySQL 5.5 even more so."
+msgstr "Du bør oppgradere, siden nyere versjoner av MySQL 5.1 har forbedret ytelsen og MySQL 5.5 enda mer."
+
+msgid "Version less than 5.5.8 (the first GA release of 5.5)."
+msgstr "Versjon mindre enn 5.5.8 (den første GA-versjonen av 5.5)."
+
+msgid "Version is compiled from source, not a MySQL official binary."
+msgstr "Versjonen er samlet fra kilden, ikke en offisiell MySQL-binær."
+
+msgid "If you did not compile from source, you may be using a package modified by a distribution. The MySQL manual only is accurate for official MySQL binaries, not any package distributions (such as RedHat, Debian/Ubuntu etc)."
+msgstr "Hvis du ikke kompilerte fra kilden, bruker du kanskje en pakke modifisert av en distribusjon. MySQL-håndboken er bare nøyaktig for offisielle MySQL-binære filer, ikke for noen pakkedistribusjoner (som RedHat, Debian/Ubuntu osv.)."
+
+msgid "'source' found in version_comment"
+msgstr "'kilde' funnet i version_comment"
+
+msgid "The MySQL manual only is accurate for official MySQL binaries."
+msgstr "MySQL-manualen er bare nøyaktig for offisielle MySQL-binærfiler."
+
+msgid "Percona documentation is at <a href=\"https://www.percona.com/software/documentation/\">https://www.percona.com/software/documentation/</a>"
+msgstr "Percona dokumentasjon er på <a href=\"https://www.percona.com/software/documentation/\">https://www.percona.com/software/documentation/</a>"
+
+msgid "'percona' found in version_comment"
+msgstr "'percona' funnet i version_comment"
+
+msgid "MySQL is not compiled as a 64-bit package."
+msgstr "MySQL er ikke kompilert som en 64-biters pakke."
+
+msgid "Your memory capacity is above 3 GiB (assuming the Server is on localhost), so MySQL might not be able to access all of your memory. You might want to consider installing the 64-bit version of MySQL."
+msgstr "Minnekapasiteten er over 3 GiB (forutsatt at serveren er på localhost), så MySQL har kanskje ikke tilgang til hele minnet ditt. Det kan være lurt å vurdere å installere 64-biters versjonen av MySQL."
+
+msgid "Available memory on this host: %s"
+msgstr "Tilgjengelig minne på denne verten: %s"
+
+msgid "Search:"
+msgstr "Søk:"
+
+msgid "Unknown"
+msgstr "Ukjent"
+
+msgctxt "Collation"
+msgid "German (phone book order)"
+msgstr "Tysk (telefonboksanordning)"
+
+msgctxt "Collation"
+msgid "German (dictionary order)"
+msgstr "Tysk (Dataordbok)"
+
+msgctxt "Collation"
+msgid "Spanish (traditional)"
+msgstr "Spansk (tradisjonell)"
+
+msgctxt "Collation"
+msgid "Spanish (modern)"
+msgstr "Spansk"
+
+msgctxt "Collation variant"
+msgid "case-insensitive"
+msgstr "uavhengig av bokstavstørrelse"
+
+msgctxt "Collation variant"
+msgid "case-sensitive"
+msgstr "avhengig av bokstavstørrelse"
+
+msgctxt "Collation variant"
+msgid "accent-insensitive"
+msgstr "uavhengig av fremheving"
+
+msgctxt "Collation variant"
+msgid "accent-sensitive"
+msgstr "avhengig av fremheving"
+
+msgctxt "Collation variant"
+msgid "multi-level"
+msgstr "flernivå"
+
+msgctxt "Collation variant"
+msgid "binary"
+msgstr "binær"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Binær"
+
+msgctxt "Collation"
+msgid "Unicode"
+msgstr "Unicode"
+
+msgctxt "Collation"
+msgid "West European"
+msgstr "Vesteuropeisk"
+
+msgctxt "Collation"
+msgid "Central European"
+msgstr "Sentral europeisk"
+
+msgctxt "Collation"
+msgid "Russian"
+msgstr "Russisk"
+
+msgctxt "Collation"
+msgid "Simplified Chinese"
+msgstr "Forenklet kinesisk"
+
+msgctxt "Collation"
+msgid "Traditional Chinese"
+msgstr "Tradisjonell kinesisk"
+
+msgctxt "Collation"
+msgid "Chinese"
+msgstr "Kinesisk"
+
+msgctxt "Collation"
+msgid "Japanese"
+msgstr "Japansk"
+
+msgctxt "Collation"
+msgid "Baltic"
+msgstr "Baltisk"
+
+msgctxt "Collation"
+msgid "Armenian"
+msgstr "Armensk"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Kyrillisk"
+
+msgctxt "Collation"
+msgid "Arabic"
+msgstr "Arabisk"
+
+msgctxt "Collation"
+msgid "Korean"
+msgstr "Koreansk"
+
+msgctxt "Collation"
+msgid "Hebrew"
+msgstr "Hebraisk"
+
+msgctxt "Collation"
+msgid "Georgian"
+msgstr "Georgisk"
+
+msgctxt "Collation"
+msgid "Greek"
+msgstr "Gresk"
+
+msgctxt "Collation"
+msgid "Czech-Slovak"
+msgstr "Tjekkoslovakisk"
+
+msgctxt "Collation"
+msgid "Ukrainian"
+msgstr "Ukrainsk"
+
+msgctxt "Collation"
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+msgctxt "Collation"
+msgid "Swedish"
+msgstr "Svensk"
+
+msgctxt "Collation"
+msgid "Thai"
+msgstr "Thai"
+
+msgctxt "Collation"
+msgid "Unknown"
+msgstr "Ukjent"
+
+msgctxt "Collation"
+msgid "Bulgarian"
+msgstr "Bulgarsk"
+
+msgctxt "Collation"
+msgid "Croatian"
+msgstr "Kroatisk"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Tsjekkisk"
+
+msgctxt "Collation"
+msgid "Danish"
+msgstr "Dansk"
+
+msgctxt "Collation"
+msgid "English"
+msgstr "Engelsk"
+
+msgctxt "Collation"
+msgid "Esperanto"
+msgstr "Esperanto"
+
+msgctxt "Collation"
+msgid "Estonian"
+msgstr "Estisk"
+
+msgctxt "Collation"
+msgid "Hungarian"
+msgstr "Ungarsk"
+
+msgctxt "Collation"
+msgid "Icelandic"
+msgstr "Islandsk"
+
+msgctxt "Collation"
+msgid "Classical Latin"
+msgstr "Klassisk latin"
+
+msgctxt "Collation"
+msgid "Latvian"
+msgstr "Latvisk"
+
+msgctxt "Collation"
+msgid "Lithuanian"
+msgstr "Litauisk"
+
+msgctxt "Collation"
+msgid "Burmese"
+msgstr "Burmesisk"
+
+msgctxt "Collation"
+msgid "Persian"
+msgstr "Persisk"
+
+msgctxt "Collation"
+msgid "Polish"
+msgstr "Polsk"
+
+msgctxt "Collation"
+msgid "Romanian"
+msgstr "Rumensk"
+
+msgctxt "Collation"
+msgid "Sinhalese"
+msgstr "Singalesisk"
+
+msgctxt "Collation"
+msgid "Slovak"
+msgstr "Slovakisk"
+
+msgctxt "Collation"
+msgid "Slovenian"
+msgstr "Slovensk"
+
+msgctxt "Collation"
+msgid "Vietnamese"
+msgstr "Vietnamesisk"
+
+msgid "Icons"
+msgstr "Ikoner"
+
+msgid "Both"
+msgstr "Begge"
+
+msgid "Nowhere"
+msgstr "Ingensteds"
+
+msgid "Left"
+msgstr "Venstre"
+
+msgid "Right"
+msgstr "Høyre"
+
+msgid "Click"
+msgstr "Klikk"
+
+msgid "Double click"
+msgstr "Dobbel klikk"
+
+msgid "key"
+msgstr "nøkkel"
+
+msgid "display column"
+msgstr "vis kolonne"
+
+msgid "Open"
+msgstr "Åpne"
+
+msgid "Closed"
+msgstr "Lukket"
+
+msgid "Ask before sending error reports"
+msgstr "Spør før innsending av feilrapporter"
+
+msgid "Always send error reports"
+msgstr "Alltid send feilrapporter"
+
+msgid "Never send error reports"
+msgstr "Aldri send feilrapporter"
+
+msgid "structure"
+msgstr "struktur"
+
+msgid "data"
+msgstr "data"
+
+msgid "structure and data"
+msgstr "struktur og data"
+
+msgid "Quick - display only the minimal options to configure"
+msgstr "Hurtig - vis minimalt med konfigureringer"
+
+msgid "Custom - display all possible options to configure"
+msgstr "Bruker - vis alle konfigureringer"
+
+msgid "Custom - like above, but without the quick/custom choice"
+msgstr "Bruker - som ovenfor, men uten hurtigoppsett"
+
+msgid "complete inserts"
+msgstr "Komplette inserts"
+
+msgid "extended inserts"
+msgstr "Utvidete innlegg"
+
+msgid "both of the above"
+msgstr "begge ovenforstående"
+
+msgid "neither of the above"
+msgstr "ingen av de overstående"
+
+msgid "Users cannot set a higher value"
+msgstr "Brukere kan ikke angi en høyere verdi"
+
+msgid "If enabled, user can enter any MySQL server in login form for cookie auth."
+msgstr "Hvis tillatt, kan brukere skrive inn hvilke som helst MySQL tjener i innloggingsskjemaet for kakeidentifisering."
+
+msgid "Restricts the MySQL servers the user can enter when a login to an arbitrary MySQL server is enabled by matching the IP or hostname of the MySQL server to the given regular expression."
+msgstr "Begrens MySQL-serverne som brukeren kan skrive inn når en pålogging til en vilkårlig MySQL-server aktiveres ved å matche IP eller vertsnavnet til MySQL-serveren til det gjeldende regulære uttrykket."
+
+msgid "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
+msgstr "Å tillate dette gir sider på andre domener muligheten til å legge inn phpMyAdmin i en ramme, og er et potensielt [strong]sikkerhetshull[/strong] som muliggjør rammeskripting på tvers av sider (XSS)."
+
+msgid "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
+msgstr "Hemmelig passordfrase brukt for kryptering av informasjonskapsler i [kbd]kake[/kbd]-identitetsbekreftelse."
+
+msgid "Enable bzip2 compression for import operations."
+msgstr "Slå på bzip2 komprimering for import operasjoner."
+
+msgid "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
+msgstr "Definerer hvilken type redigeringskontroll som skal brukes for CHAR og VARCHAR kolonner; [kbd]input[/kbd] - tillater begrensning av lengde, [kbd]textarea[/kbd] - tillater linjeskift i kolonner."
+
+msgid "Use user-friendly editor for editing SQL queries (CodeMirror) with syntax highlighting and line numbers."
+msgstr "Bruk brukervennlig tekstbehandler for redigering av SQL-spørringer (CodeMirror) med syntaks utheving og nummererte linjer."
+
+msgid "Find any errors in the query before executing it. Requires CodeMirror to be enabled."
+msgstr "Finn enhver feil i spørringen før den kjøres. Kreves at \"CodeMirror\" er påslått."
+
+msgid "Defines the minimum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "Definerer minimum størrelse for innskrivningfelt laget for CHAR og VARCHAR kolonner."
+
+msgid "Defines the maximum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "Definerer maks størrelse for innskrivningsfelt laget for CHAR og VARCHAR kolonner."
+
+msgid "Compress gzip exports on the fly without the need for much memory; if you encounter problems with created gzip files disable this feature."
+msgstr "Kopmrimer gzip eksporter direkte uten behov for mye minne; hvis du får problemer med opprettede gzip filer så slå av denne funksjonen."
+
+msgid "Whether a warning (\"Are your really sure…\") should be displayed when you're about to lose data."
+msgstr "Om en advarsel (\"Er du helt sikker…\") skal vises når du er i ferd med å miste data."
+
+msgid "Autocomplete of the table and column names in the SQL queries."
+msgstr "Autofullføring av tabellen og kolonnens navn i SQL-spørringene."
+
+msgid "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+msgstr "Verdier for valgliste for standardtransformasjoner. Disse blir overskrevet hvis transformasjonen er fylt ut på tabellstruktursiden."
+
+msgid "Disable the table maintenance mass operations, like optimizing or repairing the selected tables of a database."
+msgstr "Deaktiver masseoperasjoner for tabellvedlikehold, som optimalisering eller reparasjon av de valgte tabellene til en database."
+
+msgid "Set the number of seconds a script is allowed to run ([kbd]0[/kbd] for no limit)."
+msgstr "Antall sekunder et skript har lov til å kjøre ([kbd]0[/kbd] uten begrensning)."
+
+msgid "Exclude definition of current user"
+msgstr "Ekskluder definisjonen av nåværende bruker"
+
+msgid "Sort order for items in a foreign-key dropdown box; [kbd]content[/kbd] is the referenced data, [kbd]id[/kbd] is the key value."
+msgstr "Sorteringsrekkefølge for elementer i en fremmednøkkel nedfallsboks; [kbd]content[/kbd] for refererte data, [kbd]id[/kbd] for nøkkelverdien."
+
+msgid "Please note that phpMyAdmin is just a user interface and its features do not limit MySQL."
+msgstr "Merk at phpMyAdmin bare er et brukergrensesnitt og dens egenskaper begrenser ikke MySQL."
+
+msgid "Advanced server configuration, do not change these options unless you know what they are for."
+msgstr "Avanserte tjenerinnstillinger, ikke endre disse hvis du ikke vet hva de er til."
+
+msgid "Tracking of changes made in database. Requires the phpMyAdmin configuration storage."
+msgstr "Sporing av endringer utført i databasen. Krever at phpMyAdming konfigurasjonslager er satt opp."
+
+msgid "Customize default options."
+msgstr "Tilpass forvalgsinnstillinger."
+
+msgid "Settings for phpMyAdmin developers."
+msgstr "Innstillinger for phpMyAdmin-utviklere."
+
+msgid "Customize edit mode."
+msgstr "Endre redigeringsmodus."
+
+msgid "Customize default export options."
+msgstr "Endre standard eksportinnstillinger."
+
+msgid "Set some commonly used options."
+msgstr "Angi noen vanlig brukte alternativer."
+
+msgid "Customize default common import options."
+msgstr "Endre standard importinnstillinger."
+
+msgid "Set import and export directories and compression options."
+msgstr "Set import and eksport mapper og komprimeringsinnstillinger."
+
+msgid "Databases display options."
+msgstr "Databasevisningsinnstillinger."
+
+msgid "Customize appearance of the navigation panel."
+msgstr "Endre utseendet til navigasjonsrammen."
+
+msgid "Customize the navigation tree."
+msgstr "Tilpasse navigasjonspanelet."
+
+msgid "Servers display options."
+msgstr "Tjenervisningsinnstillinger."
+
+msgid "Tables display options."
+msgstr "Tabellvisningsinnstillinger."
+
+msgid "Settings that didn't fit anywhere else."
+msgstr "Innstillinger som ikke passer andre steder."
+
+msgid "Enter server connection parameters."
+msgstr "Legg til tjenertilkoblingsparametre."
+
+msgid "Customize links shown in SQL Query boxes."
+msgstr "Tilpass lenker vist i SQL-spørringsbokser."
+
+msgid "SQL queries settings."
+msgstr "SQL-søkeinnstilinger."
+
+msgid "Customize startup page."
+msgstr "Endre oppstartssiden."
+
+msgid "Choose which details to show in the database structure (list of tables)."
+msgstr "Velg hvilke detaljer som skal vises i databasestrukturen (tabelliste)."
+
+msgid "Settings for the table structure (list of columns)."
+msgstr "Innstillinger for tabellstruktur (kolonneliste)."
+
+msgid "Customize default options"
+msgstr "Tilpass forvalgsinnstillinger"
+
+msgid "Allow interrupt of import in case script detects it is close to time limit. This might be a good way to import large files, however it can break transactions."
+msgstr "Tillat avbrudd av import i de tilfeller skriptet oppdager at den er i nærheten av tidsbegrensningen. Dette kan være en god måte å importere store filer, men den kan knekke transaksjoner."
+
+msgid "Update data when duplicate keys found on import"
+msgstr "Oppdater data når dupliserte nøkler blir funnet ved import"
+
+msgid "If TRUE, logout deletes cookies for all servers; when set to FALSE, logout only occurs for the current server. Setting this to FALSE makes it easy to forget to log out from other servers when connected to multiple servers."
+msgstr "Hvis påslått vil alle cookies for alle tjenere bli slettet ved utlogging, ellers bare for den aktuelle tjeneren. Sett denne til FALSE gjør det lett å glemme å logge ut fra andre tjenere når du bruker flere."
+
+msgid "Define whether the previous login should be recalled or not in [kbd]cookie[/kbd] authentication mode."
+msgstr "Definerer om forrige innlogging skal huskes eller ikke i [kbd]cookie[/kbd] autentiseringsmodus."
+
+msgid "Defines how long (in seconds) a login cookie should be stored in browser. The default of 0 means that it will be kept for the existing session only, and will be deleted as soon as you close the browser window. This is recommended for non-trusted environments."
+msgstr "Definerer hvor lenge (i sekunder) en innloggings cookie skal lagres i nettleseren. Standard 0 betyer at den kun vil bli lagret for eksisterende sessjon, det vil si at den vil bli slettet så fort du lukker nettleservinduet. Dette er anbefalt for ikke sikre brukermiljøer."
+
+msgid "The number of items that can be displayed on each page of the navigation tree."
+msgstr "Antall elementer som kan vises på hver enkelt side av navigasjonstreet."
+
+msgid "Number of rows displayed when browsing a result set. If the result set contains more rows, \"Previous\" and \"Next\" links will be shown."
+msgstr "Antall rader som viser ved framvisning av et resultat. Hvis resultatet inneholder flere rader vil \"Forrige\" og \"Neste\" linker bli vist."
+
+msgid "The number of bytes a script is allowed to allocate, e.g. [kbd]32M[/kbd] ([kbd]-1[/kbd] for no limit and [kbd]0[/kbd] for no change)."
+msgstr "Maks antal byte et skript har lov til å bruke, f.eks. [kbd]32M[/kbd] ([kbd]-1[/kbd] for ingen begrensning og [kbd]0[/kbd] for ingen endring)"
+
+msgid "In the navigation panel, replaces the database tree with a selector"
+msgstr "I navigasjonspanelet, erstatter databasetreet med en velger"
+
+msgid "Link with main panel by highlighting the current database or table."
+msgstr "Koble til hovedpanelet ved å markere den gjeldende databasen eller tabellen."
+
+msgid "Open the linked page in the main window ([code]main[/code]) or in a new one ([code]new[/code])."
+msgstr "Åpne den linkede siden i hovedvinduet ([code]main[/code]) eller i en ny en ([code]new[/code])"
+
+msgid "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
+msgstr "Angi minste antall elementer (tabeller, views, rutiner og hendelser) som skal vises i en filterboks."
+
+msgid "Whether to offer the possibility of tree expansion in the navigation panel."
+msgstr "Hvorvidt muligheten for treekspansjon i navigasjonspanelet skal tilbys."
+
+msgid "Whether to show procedures under database in the navigation tree"
+msgstr "Hvorvidt prosedyrer skal vises under database i navigasjonstreet"
+
+msgid "Whether to show functions under database in the navigation tree"
+msgstr "Hvorvidt funksjoner skal vises under database i navigasjonstreet"
+
+msgid "[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, DATE, DATETIME and TIMESTAMP, ascending order otherwise."
+msgstr "[kbd]SMART[/kbd] - dvs. synkende rekkefølge for felter av typen TIME, DATE, DATETIME og TIMESTAMP, ellers stigende rekkefølge."
+
+msgid "Enable if you want DB-based query history (requires phpMyAdmin configuration storage). If disabled, this utilizes JS-routines to display query history (lost by window close)."
+msgstr "Slå på hvis du ønsker DB-basert spørringshistorikk (trenger phpMyAdmins konfigurasjonslagring). Hvis avslått vil historikken mistes når vinduet lukkes, fordi det da brukes JS-rutiner vise den."
+
+msgid "Sets the effective timezone; possibly different than the one from your database server"
+msgstr "Angir effektiv tidssone; muligens annerledes enn den fra databasetjeneren"
+
+msgid "Leave blank for no [doc@bookmarks@]bookmark[/doc] support, suggested: [kbd]pma__bookmark[/kbd]"
+msgstr "La stå tomt for ingen [doc@bookmarks@]bookmark[/doc] støtte, foreslått: [kbd]pma__bookmark[/kbd]"
+
+msgid "A special MySQL user configured with limited permissions, more information available on [doc@linked-tables]documentation[/doc]."
+msgstr "En spesiell MySQL bruker konfigurert med begrensede rettigheter, mer informasjon tilgjengelig på [doc@linked-tables]documentation[/doc]."
+
+msgid "Leave blank for no SQL query history support, suggested: [kbd]pma__history[/kbd]."
+msgstr "La stå tom for ingen SQL spørringshistorie, anbefalt: [kbd]pma__history[/kbd]."
+
+msgid "You can use MySQL wildcard characters (% and _), escape them if you want to use their literal instances, i.e. use [kbd]'my\\_db'[/kbd] and not [kbd]'my_db'[/kbd]."
+msgstr "Du kan bruke MySQL jokertegn (% og _), unnslippe dem hvis du vil bruke deres bokstavelige forekomster, dvs. bruke [kbd]'my\\_db'[/kbd] og ikke [kbd]'my_db'[/kbd]."
+
+msgid "Leave blank for no PDF schema support, suggested: [kbd]pma__pdf_pages[/kbd]."
+msgstr "La stå tom for ingen PDF schema støtte, anbefalt: [kbd]pma__pdf_pages[/kbd]."
+
+msgid "Database used for relations, bookmarks, and PDF features. See [doc@linked-tables]pmadb[/doc] for complete information. Leave blank for no support. Suggested: [kbd]phpmyadmin[/kbd]."
+msgstr "Database som brukes til relasjoner, bokmerker og PDF-funksjoner. Se [doc@linked-tables]pmadb[/doc] for fullstendig informasjon. La stå tomt uten støtte. Foreslått: [kbd]phpmyadmin[/kbd]."
+
+msgid "Leave blank for no [doc@relations@]relation-links[/doc] support, suggested: [kbd]pma__relation[/kbd]."
+msgstr "La stå tom for ingen [doc@relations@]relation-links[/doc] støtte, anbefalt: [kbd]pma__relation[/kbd]."
+
+msgid "See [doc@authentication-modes]authentication types[/doc] for an example."
+msgstr "Se [doc@authentication-modes]autentiseringstyper[/doc] for et eksempel."
+
+msgid "Leave blank for no PDF schema support, suggested: [kbd]pma__table_coords[/kbd]."
+msgstr "La stå tom for ingen PDF schema støtte, anbefalt: [kbd]pma__table_coords[/kbd]."
+
+msgid "Table to describe the display columns, leave blank for no support; suggested: [kbd]pma__table_info[/kbd]."
+msgstr "Tabell for beskrivelse av visningskolonner, la stå tom for ingen støtte; anbefalt: [kbd]pma__table_info[/kbd]."
+
+msgid "Whether a DROP DATABASE IF EXISTS statement will be added as first line to the log when creating a database."
+msgstr "Om en DROP DATABASE IF EXISTS spørring skal bli lagt til som første linje i loggen når oppretter en database."
+
+msgid "Whether a DROP TABLE IF EXISTS statement will be added as first line to the log when creating a table."
+msgstr "Om en DROP TABLE IF EXISTS spørring vil bli lagt til som første linje til loggen når oppretter en tabell."
+
+msgid "Whether a DROP VIEW IF EXISTS statement will be added as first line to the log when creating a view."
+msgstr "Om en DROP VIEW IF EXISTS spørring vil bli lagt til som første linje i loggen når opprettes en visning."
+
+msgid "Defines the list of statements the auto-creation uses for new versions."
+msgstr "Definerer lista med spørringer autoopprettinga bruker for nye versjoner."
+
+msgid "Leave blank for no SQL query tracking support, suggested: [kbd]pma__tracking[/kbd]."
+msgstr "La stå tom for ingen SQL spørringshistorie, anbefalt: [kbd]pma__tracking[/kbd]."
+
+msgid "Whether the tracking mechanism creates versions for tables and views automatically."
+msgstr "Om sporingsmekanismen oppretter versjoner for tabeller og visninger automatisk."
+
+msgid "Both this table and the user groups table are required to enable the configurable menus feature; leaving either one of them blank will disable this feature, suggested: [kbd]pma__users[/kbd]."
+msgstr "Både denne tabellen og brukergruppetabellen kreves for å skru på den konfigurerbare menyfunksjonen; Hvis du lar en av dem være tomme, skrus denne funksjonen av, foreslått: [kbd]pma__users[/kbd]."
+
+msgid "Both this table and the users table are required to enable the configurable menus feature; leaving either one of them blank will disable this feature, suggested: [kbd]pma__usergroups[/kbd]."
+msgstr "Begge disse tabellene kreves for å aktivere den konfigurerbare menyfunksjonen; Hvis du lar en av dem være tom, deaktiveres denne funksjonen, foreslått: [kbd]pma__usergroups[/kbd]."
+
+msgid "A user-friendly description of this server. Leave blank to display the hostname instead."
+msgstr "En brukervennlig beskrivelse av denne tjeneren. La stå tom for visning av vertsnavn istedet."
+
+msgid "Please note that enabling this has no effect with [kbd]config[/kbd] authentication mode because the password is hard coded in the configuration file; this does not limit the ability to execute the same command directly."
+msgstr "Merk at påslåing av denne ikke har noen effekt med [kbd]config[/kbd] autentiseringsmodus siden passordet er hardkodet i konfigurasjonsfila; dette begrenser ikke muligheten til å utføre samme kommando direkte."
+
+msgid "Show or hide a column displaying the Creation timestamp for all tables."
+msgstr "Vis eller skjul en kolonne som viser opprettelsestidsstempel for alle tabeller."
+
+msgid "Show or hide a column displaying the Last update timestamp for all tables."
+msgstr "Vis eller skjul en kolonne som viser tidsstempel for siste oppdatering for alle tabeller."
+
+msgid "Show or hide a column displaying the Last check timestamp for all tables."
+msgstr "Vis eller skjul en kolonne som viser tidsstempel for siste sjekk for alle tabeller."
+
+msgid "Defines whether or not type fields should be initially displayed in edit/insert mode."
+msgstr "Definerer om typefelt skal vises i redigerings- / innsettingsmodus."
+
+msgid "Show or hide a column displaying the comments for all tables."
+msgstr "Vis eller skjul en kolonne som viser kommentarer for alle tabeller."
+
+msgid "Show or hide a column displaying the charset for all tables."
+msgstr "Vis eller skjul en kolonne som viser tegnsett for alle tabeller."
+
+msgid "Textarea size (columns) in edit mode, this value will be emphasized for SQL query textareas (*2)."
+msgstr "Tekstområdestørrelse (kolonner) i redigeringsmodus, denne verdien vil fremheves for SQL-spørringstekstområder (*2)."
+
+msgid "Textarea size (rows) in edit mode, this value will be emphasized for SQL query textareas (*2)."
+msgstr "Tekstområdestørrelse (rader) i redigeringsmodus, denne verdien vil fremheves for SQL-spørringstekstområder (*2)."
+
+msgid "Input proxies as [kbd]IP: trusted HTTP header[/kbd]. The following example specifies that phpMyAdmin should trust a HTTP_X_FORWARDED_FOR (X-Forwarded-For) header coming from the proxy 1.2.3.4:[br][kbd]1.2.3.4: HTTP_X_FORWARDED_FOR[/kbd]."
+msgstr "Sett inn mellomlager som [kbd]IP: trusted HTTP header[/kbd]. Følgende eksempel spesifiserer at phpMyAdminskal stole på en HTTP_X_FORWARDED_FOR (X-Forwarded-For) header som kommer fra mellomlager 1.2.3.4:[br][kbd]1.2.3.4: HTTP_X_FORWARDED_FOR[/kbd]."
+
+msgid "When disabled, users cannot set any of the options below, regardless of the checkbox on the right."
+msgstr "Når den er deaktivert, kan ikke brukerne angi noen av alternativene nedenfor, uavhengig av avkrysningsruten til høyre."
+
+msgid "The username for authenticating with the proxy. By default, no authentication is performed. If a username is supplied, Basic Authentication will be performed. No other types of authentication are currently supported."
+msgstr "Brukernavnet for autentisering med proxyen. Som standard utføres ingen godkjenning. Hvis et brukernavn er oppgitt, utføres grunnleggende godkjenning. Ingen andre typer autentisering støttes for øyeblikket."
+
+msgid "Queries are executed by pressing Enter (instead of Ctrl+Enter). New lines will be inserted with Shift+Enter."
+msgstr "Spørringer utføres ved å trykke Enter (i stedet for Ctrl + Enter). Nye linjer vil settes inn med Shift + Enter."
+
+msgid "Highlight selected rows."
+msgstr "Framhev valgte rader."
+
+msgid "Highlight row pointed by the mouse cursor."
+msgstr "Framhev raden under musmarkøren."
+
+msgid "Number of columns for CHAR/VARCHAR textareas."
+msgstr "Antall kolonner i CHAR/VARCHAR tekstbokser."
+
+msgid "Number of rows for CHAR/VARCHAR textareas."
+msgstr "Antall rader i CHAR/VARCHAR tekstbokser."
+
+msgid "Log SQL queries and their execution time, to be displayed in the console"
+msgstr "Logger SQL-spørringer og deres køringstid, for visning i konsollen"
+
+msgid "Tab that is displayed when entering a database."
+msgstr "Fanen som vises når en database tas i bruk."
+
+msgid "Tab that is displayed when entering a server."
+msgstr "Fanen som vises når en tjener tas i bruk."
+
+msgid "Tab that is displayed when entering a table."
+msgstr "Fanen som vises når en tabell tas i bruk."
+
+msgid "Whether the table structure actions should be hidden."
+msgstr "Hvorvidt tabellstrukturshandlingene skal være skjult."
+
+msgid "Whether column comments should be shown in table structure view"
+msgstr "Hvorvidt kolonnekommentarer skal vises i tabellstrukturvisning"
+
+msgid "Show server listing as a list instead of a drop down."
+msgstr "Vis tjenere som en liste istedet for en nedtrekksliste."
+
+msgid "A dropdown will be used if fewer items are present."
+msgstr "En nedfallsboks vil bli brukt hvis færre elementer er tilstede."
+
+msgid "Default value for foreign key checks checkbox for some queries."
+msgstr "Standardverdi for fremmed nøkkel kontroller avkrysningsruten for noen spørsmål."
+
+msgid "Uncheck the checkbox to disable drag and drop import"
+msgstr "Fjern avmerkingen i avmerkingsboksen for å deaktivere dra og slipp-import"
+
+msgid "Whether to show row links even in the absence of a unique key."
+msgstr "Hvorvidt radlenker skal vises, selv om unik nøkkel mangler"
+
+msgid "Disallow BLOB and BINARY columns from editing."
+msgstr "Ikke tillat redigering av BLOB- eller BINARY-kolonner."
+
+msgid "Default sort order for tables with a primary key."
+msgstr "Forvalgt sorteringsrekkefølge for tabeller med en primærnøkkel."
+
+msgid "Repeat the headers every X cells, [kbd]0[/kbd] deactivates this feature."
+msgstr "Gjenta topptekst hver n. rad; [kbd]0[/kbd] deaktiverer funksjonen."
+
+msgid "Defines whether the query box should stay on-screen after its submission."
+msgstr "Definerer om søkeboksen skal forbli på skjermen etter at den er sendt."
+
+msgid "Enables check for latest version on main phpMyAdmin page."
+msgstr "Skrur på sjekk for senesteversjon på hoved-phpMyAdmin-siden."
+
+msgid "The password for authenticating with the proxy."
+msgstr "Passordet for autentisering med proxyen."
+
+msgid "Choose the default action when sending error reports."
+msgstr "Velg standardhandling når du sender feilrapporter."
+
+msgid "Allow login to any MySQL server"
+msgstr "Tillat innlogging til vilkårlig MySQL-tjener"
+
+msgid "Restrict login to MySQL server"
+msgstr "Begrens innlogging til MySQL-tjeneren"
+
+msgid "Allow third party framing"
+msgstr "Tillat tredjepartsinnramming"
+
+msgid "Show \"Drop database\" link to normal users"
+msgstr "Vis \"Fjern database\"-lenke til normale brukere"
+
+msgid "Blowfish secret"
+msgstr "Blowfish hemmelig kode"
+
+msgid "Row marker"
+msgstr "Radframheving"
+
+msgid "Highlight pointer"
+msgstr "Pekermarkering"
+
+msgid "Bzip2"
+msgstr "Bzip2"
+
+msgid "CHAR columns editing"
+msgstr "CHAR kolonneredigering"
+
+msgid "Enable CodeMirror"
+msgstr "Aktiver CodeMirror"
+
+msgid "Minimum size for input field"
+msgstr "Minste størrelse for innskrivningsfelt"
+
+msgid "Maximum size for input field"
+msgstr "Maksimum størrelse for innskrivningsfelt"
+
+msgid "CHAR textarea columns"
+msgstr "CHAR textarea kolonner"
+
+msgid "CHAR textarea rows"
+msgstr "CHAR textarea rader"
+
+msgid "Check config file permissions"
+msgstr "Kontroller konfigurasjonsfilrettigheter"
+
+msgid "Compress on the fly"
+msgstr "Komprimer direkte"
+
+msgid "Confirm DROP queries"
+msgstr "Bekreft DROP spørringer"
+
+msgid "Paper size"
+msgstr "Papirstørrelse"
+
+msgid "Default database tab"
+msgstr "Standard databasefane"
+
+msgid "Default server tab"
+msgstr "Standard tjenerfane"
+
+msgid "Default table tab"
+msgstr "Standard tabellfane"
+
+msgid "Enable autocomplete for table and column names"
+msgstr "Aktiver autofullfør for tabell- og kolonneavn"
+
+msgid "Show column comments"
+msgstr "Vis kolonnekommentarer"
+
+msgid "Hide table structure actions"
+msgstr "Skjul tabell-strukturhandlinger"
+
+msgid "Default transformations for Hex"
+msgstr "Forvalgte transformasjoner for Hex"
+
+msgid "Default transformations for Substring"
+msgstr "Standard transformasjoner for understreng"
+
+msgid "Default transformations for Bool2Text"
+msgstr "Standard transformasjoner for Bool2Text"
+
+msgid "Default transformations for External"
+msgstr "Standard transformasjoner for ekstern"
+
+msgid "Default transformations for PreApPend"
+msgstr "Forvalgte transformasjoner for PreApPend"
+
+msgid "Default transformations for DateFormat"
+msgstr "Forvalgte transformasjoner for datoformat"
+
+msgid "Default transformations for Inline"
+msgstr "Forvalgte transformasjoner for Inline"
+
+msgid "Default transformations for TextImageLink"
+msgstr "Forvalgte transformasjoner for tekstbildelenke"
+
+msgid "Default transformations for TextLink"
+msgstr "Forvalgte transformasjoner for tekstlenke"
+
+msgid "Display servers as a list"
+msgstr "Vis tjenere som en liste"
+
+msgid "Disable multi table maintenance"
+msgstr "Deaktiver multitabellvedlikehold"
+
+msgid "Maximum execution time"
+msgstr "Maks kjøretid"
+
+msgid "Save as file"
+msgstr "Lagre som fil"
+
+msgid "Character set of the file"
+msgstr "Filens tegnsett"
+
+msgid "Compression"
+msgstr "Kompresjon"
+
+msgid "Put columns names in the first row"
+msgstr "Sett inn kolonnenavn i første rad"
+
+msgid "Columns enclosed with"
+msgstr "Kolonner omsluttet av"
+
+msgid "Replace NULL with"
+msgstr "Erstatt NULL med"
+
+msgid "Remove CRLF characters within columns"
+msgstr "Fjern CRLF tegn inne i kolonner"
+
+msgid "Columns terminated with"
+msgstr "Kolonner avsluttet med"
+
+msgid "Lines terminated with"
+msgstr "Linjer avsluttet med"
+
+msgid "Excel edition"
+msgstr "Excel stil"
+
+msgid "Database name template"
+msgstr "Databasenavnmal"
+
+msgid "Server name template"
+msgstr "Tjenernavnmal"
+
+msgid "Table name template"
+msgstr "Tabellnavnmal"
+
+msgid "Dump table"
+msgstr "Dump tabell"
+
+msgid "Include table caption"
+msgstr "Inkluder tabelloverskrift"
+
+msgid "Table caption"
+msgstr "Tabelloverskrift"
+
+msgid "Continued table caption"
+msgstr "Fortsettet tabelloverskrift"
+
+msgid "Label key"
+msgstr "Merkelappnøkkel"
+
+msgid "Relationships"
+msgstr "Relasjoner"
+
+msgid "Export method"
+msgstr "Eksportmetode"
+
+msgid "Save on server"
+msgstr "Lagre på tjener"
+
+msgid "Export as separate files"
+msgstr "Eksporter som egne filer"
+
+msgid "Enclose table and column names with backquotes"
+msgstr "Bruk venstre anførselstegn med tabell og kolonnenavn"
+
+msgid "SQL compatibility mode"
+msgstr "SQL kompatibilitetsmodus"
+
+msgid "Creation/Update/Check dates"
+msgstr "Opprettelse/Oppdaterings/Kontrolldato"
+
+msgid "Use delayed inserts"
+msgstr "Bruk forsinkede innsettinger"
+
+msgid "Disable foreign key checks"
+msgstr "Slå av kontroll av fremmednøkler"
+
+msgid "Export views as tables"
+msgstr "Eksporter views som tabeller"
+
+msgid "Export related metadata from phpMyAdmin configuration storage"
+msgstr "Eksporter relatert metadata fra phpMyAdmin-oppsettslager"
+
+msgid "Use hexadecimal for BINARY & BLOB"
+msgstr "Bruk heksadesimal for BINARY & BLOB"
+
+msgid "Add IF NOT EXISTS (less efficient as indexes will be generated during table creation)"
+msgstr "Legg til HVIS IKKE EKSISTERER (mindre effektiv som indekser vil bli generert under tabellopprettelse)"
+
+msgid "Use ignore inserts"
+msgstr "Bruk ignore inserts"
+
+msgid "Syntax to use when inserting data"
+msgstr "Syntaks i bruk ved innsetting av data"
+
+msgid "Maximal length of created query"
+msgstr "Maksimum lengde av opprettet spørring"
+
+msgid "Export type"
+msgstr "Eksport type"
+
+msgid "Enclose export in a transaction"
+msgstr "Inneslutt eksport i en transaksjon"
+
+msgid "Export time in UTC"
+msgstr "Eksport tid i UTC"
+
+msgid "Foreign key dropdown order"
+msgstr "Fremmednøkkelrekkefølge"
+
+msgid "Foreign key limit"
+msgstr "Fremmednøkkelbegrensning"
+
+msgid "Foreign key checks"
+msgstr "Kontroll av fremmednøkler"
+
+msgid "Browse mode"
+msgstr "Visningsmodus"
+
+msgid "CSV"
+msgstr "CSV-data"
+
+msgid "Developer"
+msgstr "Utvikler"
+
+msgid "Edit mode"
+msgstr "Redigeringsmodus"
+
+msgid "Export defaults"
+msgstr "Eksportinnstillinger"
+
+msgid "General"
+msgstr "Generell"
+
+msgid "Import defaults"
+msgstr "Importinnstillinger"
+
+msgid "Import / export"
+msgstr "Import / eksport"
+
+msgid "LaTeX"
+msgstr "LaTeX"
+
+msgid "Navigation tree"
+msgstr "Navigasjonspanel"
+
+msgid "Microsoft Office"
+msgstr "Microsoft Office"
+
+msgid "Other core settings"
+msgstr "Andre hovedinnstillinger"
+
+msgid "Page titles"
+msgstr "Sidetitler"
+
+msgid "Security"
+msgstr "Sikkerhet"
+
+msgid "Basic settings"
+msgstr "Grunnleggende innstillinger"
+
+msgid "Authentication"
+msgstr "Godkjenning"
+
+msgid "Server configuration"
+msgstr "Tjenerinnstillinger"
+
+msgid "Configuration storage"
+msgstr "Konfigurasjonslager"
+
+msgid "Changes tracking"
+msgstr "Endringssporing"
+
+msgid "SQL Query box"
+msgstr "SQL spørringsboks"
+
+msgid "Startup"
+msgstr "Oppstart"
+
+msgid "Database structure"
+msgstr "Databasestruktur"
+
+msgid "Tabs"
+msgstr "Faner"
+
+msgid "Display relational schema"
+msgstr "Vis relasjonsskjema"
+
+msgid "Text fields"
+msgstr "Tekstfelt"
+
+msgid "Texy! text"
+msgstr "Texy! tekst"
+
+msgid "Warnings"
+msgstr "Advarsler"
+
+msgid "GZip"
+msgstr "GZip"
+
+msgid "Extra parameters for iconv"
+msgstr "Ekstra parametre for iconv"
+
+msgid "Ignore multiple statement errors"
+msgstr "Ignorer flere spørringsfeil"
+
+msgid "Enable drag and drop import"
+msgstr "Aktiver dra og slipp-import"
+
+msgid "Partial import: allow interrupt"
+msgstr "Delvis import: tillat avbrudd"
+
+msgid "Do not abort on INSERT error"
+msgstr "Ikke avbryt under INSERT feil"
+
+msgid "Format of imported file"
+msgstr "Importfilformat"
+
+msgid "Use LOCAL keyword"
+msgstr "Bruk LOCAL nøkkelord"
+
+msgid "Column names in first row"
+msgstr "Kolonnenavn i første rad"
+
+msgid "Do not import empty rows"
+msgstr "Ikke importer tomme rader"
+
+msgid "Import currencies ($5.00 to 5.00)"
+msgstr "Importer valuta ($5.00 til 5.00)"
+
+msgid "Import percentages as proper decimals (12.00% to .12)"
+msgstr "Importer prosenter som heltall (12.00% til .12)"
+
+msgid "Partial import: skip queries"
+msgstr "Delvis import: hopp over spørringer"
+
+msgid "Do not use AUTO_INCREMENT for zero values"
+msgstr "Ikke bruk AUTO_INCREMENT for nullverdier"
+
+msgid "Initial state for sliders"
+msgstr "Initiell tilstand for slidere"
+
+msgid "Number of inserted rows"
+msgstr "Antall innsettingsrader"
+
+msgid "Limit column characters"
+msgstr "Begrens kolonne tegn"
+
+msgid "Delete all cookies on logout"
+msgstr "Slett alle cookies ved utlogging"
+
+msgid "Recall user name"
+msgstr "Husk brukernavn"
+
+msgid "Login cookie store"
+msgstr "Innloggings cookie lagring"
+
+msgid "Login cookie validity"
+msgstr "Innloggings cookie gyldighet"
+
+msgid "Bigger textarea for LONGTEXT"
+msgstr "Større tekstområde for LONGTEXT"
+
+msgid "Maximum displayed SQL length"
+msgstr "Maks lengde SQL"
+
+msgid "Maximum databases"
+msgstr "Maks antall databaser"
+
+msgid "Maximum items in branch"
+msgstr "Maksimalt antall gjenstander i forgreningen"
+
+msgid "Maximum number of rows to display"
+msgstr "Maks antall rader som kan framvises"
+
+msgid "Maximum tables"
+msgstr "Maks antall tabeller"
+
+msgid "Memory limit"
+msgstr "Minnetak"
+
+msgid "Link with main panel"
+msgstr "Lenke med hovedpanelet"
+
+msgid "Display logo"
+msgstr "Vis logo"
+
+msgid "Logo link URL"
+msgstr "Logo link URL"
+
+msgid "Logo link target"
+msgstr "Logo link mål"
+
+msgid "Display servers selection"
+msgstr "Vis tjenerutvalg"
+
+msgid "Target for quick access icon"
+msgstr "Mål for hurtigtilgangsikon"
+
+msgid "Minimum number of items to display the filter box"
+msgstr "Minste antall elementer som kreves for å vise filterboksen"
+
+msgid "Minimum number of databases to display the database filter box"
+msgstr "Minste antall databaser som skal vises i database-filterboksen"
+
+msgid "Group items in the tree"
+msgstr "Grupper elementer i treet"
+
+msgid "Database tree separator"
+msgstr "Database treskilletegn"
+
+msgid "Table tree separator"
+msgstr "Tabelltreseparator"
+
+msgid "Maximum table tree depth"
+msgstr "Maks tabelltredybde"
+
+msgid "Enable highlighting"
+msgstr "Aktiver utheving"
+
+msgid "Enable navigation tree expansion"
+msgstr "Skru på navigasjonstreutvidelse"
+
+msgid "Recently used tables"
+msgstr "Sist brukte tabeller"
+
+msgid "Where to show the table row links"
+msgstr "Hvor tabell-lenkene skal vises"
+
+msgid "Show row links anyway"
+msgstr "Vis radlenker uansett"
+
+msgid "Natural order"
+msgstr "Normal rekkefølge"
+
+msgid "Table navigation bar"
+msgstr "Tabellbasert navigasjonsområde"
+
+msgid "GZip output buffering"
+msgstr "GZip utbuffring"
+
+msgid "Default sorting order"
+msgstr "Standard sorteringsrekkefølge"
+
+msgid "Persistent connections"
+msgstr "Vedvarende forbindelser"
+
+msgid "Missing phpMyAdmin configuration storage tables"
+msgstr "Mangler phpMyAdmin konfigurasjonslagertabeller"
+
+msgid "MySQL reserved word warning"
+msgstr "Advarsel om MySQL-reservert ord"
+
+msgid "How to display the menu tabs"
+msgstr "Hvordan menyfanene vises"
+
+msgid "How to display various action links"
+msgstr "Hvorvidt forskjellige handlingslenker skal vises"
+
+msgid "Protect binary columns"
+msgstr "Beskytt binære kolonner"
+
+msgid "Permanent query history"
+msgstr "Permanent spørringshistorie"
+
+msgid "Query history length"
+msgstr "Spørringshistorielengde"
+
+msgid "Recoding engine"
+msgstr "Rekodingsmotor"
+
+msgid "Remember table's sorting"
+msgstr "Husk tabellens sortering"
+
+msgid "Repeat headers"
+msgstr "Gjenta topptekst"
+
+msgid "Grid editing: trigger action"
+msgstr "Rutenettredigering: Utløsende handling"
+
+msgid "Grid editing: save all edited cells at once"
+msgstr "Rutenett - redigering: Lagre alle redigerte celler på en gang"
+
+msgid "Save directory"
+msgstr "Lagringsmappe"
+
+msgid "Host authorization order"
+msgstr "Rekkefølge for vertsautorisering"
+
+msgid "Host authorization rules"
+msgstr "Regler for vertsautorisering"
+
+msgid "Allow logins without a password"
+msgstr "Tillat innlogging uten passord"
+
+msgid "Allow root login"
+msgstr "Tillat innlogging som root"
+
+msgid "HTTP Realm"
+msgstr "HTTP Realm"
+
+msgid "Bookmark table"
+msgstr "Bokmerketabell"
+
+msgid "Column information table"
+msgstr "Kolonneinformasjonstabell"
+
+msgid "Compress connection"
+msgstr "Komprimer tilkobling"
+
+msgid "Control user password"
+msgstr "Kontrollbrukerpassord"
+
+msgid "Control user"
+msgstr "Kontrollbruker"
+
+msgid "Control host"
+msgstr "Kontrollvert"
+
+msgid "Disable use of INFORMATION_SCHEMA"
+msgstr "Slå av bruk av INFORMATION_SCHEMA"
+
+msgid "Hide databases"
+msgstr "Skul databaser"
+
+msgid "SQL query history table"
+msgstr "SQL spørringshistorietabell"
+
+msgid "Server hostname"
+msgstr "Tjenervertsnavn"
+
+msgid "Logout URL"
+msgstr "Logg ut URL"
+
+msgid "Maximal number of table preferences to store"
+msgstr "Maksimalt antall tabellpreferanser som lagres"
+
+msgid "Show only listed databases"
+msgstr "Vis kun opplistede databaser"
+
+msgid "Password for config auth"
+msgstr "Passord for config autentisering"
+
+msgid "PDF schema: pages table"
+msgstr "PDF schema: sidetabell"
+
+msgid "Server port"
+msgstr "Tjenerport"
+
+msgid "Recently used table"
+msgstr "Nylig brukt tabell"
+
+msgid "Relation table"
+msgstr "Relasjonstabell"
+
+msgid "Signon session name"
+msgstr "Signon sesjonsnavn"
+
+msgid "Signon URL"
+msgstr "Innloggingslink"
+
+msgid "Server socket"
+msgstr "Tjenersokkel"
+
+msgid "Use SSL"
+msgstr "Bruk SSL"
+
+msgid "Display columns table"
+msgstr "Visningskolonnetabell"
+
+msgid "UI preferences table"
+msgstr "Tabell for UI preferanser"
+
+msgid "Add DROP DATABASE"
+msgstr "Legg til DROP DATABASE"
+
+msgid "Add DROP VIEW"
+msgstr "Legg til DROP VIEW"
+
+msgid "Statements to track"
+msgstr "Spørringer som skal spores"
+
+msgid "SQL query tracking table"
+msgstr "SQL spørringssporingstabell"
+
+msgid "Automatically create versions"
+msgstr "Automatisk opprette versjoner"
+
+msgid "User preferences storage table"
+msgstr "Tabell for lagring av brukerpreferanser"
+
+msgid "Users table"
+msgstr "Brukertabell"
+
+msgid "Hidden navigation items table"
+msgstr "Skjult navigasjonselementtabell"
+
+msgid "User for config auth"
+msgstr "Bruker for config autentisering"
+
+msgid "Verbose name of this server"
+msgstr "Fult navn for denne tjeneren"
+
+msgid "Allow to display all the rows"
+msgstr "Tillat visning av alle rader"
+
+msgid "Show password change form"
+msgstr "Vis passordendringsskjema"
+
+msgid "Show create database form"
+msgstr "Vis opprett database skjema"
+
+msgid "Show field types"
+msgstr "Vis felttyper"
+
+msgid "Show function fields"
+msgstr "Vis funksjonsfelter"
+
+msgid "Show hint"
+msgstr "Vis hint"
+
+msgid "Show phpinfo() link"
+msgstr "Vis phpinfo() link"
+
+msgid "Show detailed MySQL server information"
+msgstr "Vis detaljert MySQL tjenerinformasjon"
+
+msgid "Show SQL queries"
+msgstr "Vis SQL spørringer"
+
+msgid "Show statistics"
+msgstr "Vis statistikk"
+
+msgid "Skip locked tables"
+msgstr "Ignorer låste tabeller"
+
+msgid "Explain SQL"
+msgstr "Forklar SQL"
+
+msgid "Default title"
+msgstr "Forvalgt tittel"
+
+msgid "List of trusted proxies for IP allow/deny"
+msgstr "Liste over godkjente mellomlager for IP allow/deny"
+
+msgid "Upload directory"
+msgstr "Opplastingsmappe"
+
+msgid "Use database search"
+msgstr "Bruk databasesøk"
+
+msgid "Enable the Developer tab in settings"
+msgstr "Skru på utviklerfanen i innstillingene"
+
+msgid "Version check"
+msgstr "Versjonskontroll"
+
+msgid "ZIP"
+msgstr "ZIP"
+
+msgid "Enter executes queries in console"
+msgstr "Enter utfører spørringer i konsollen"
+
+msgid "Server connection collation"
+msgstr "Tjenertilkobling kollasjon"
+
+msgid "Missing data for %s"
+msgstr "Mangler data for %s"
+
+msgid "Incorrect value!"
+msgstr "Ugyldig verdi!"
+
+msgid "unavailable"
+msgstr "ikke tilgjengelig"
+
+msgid "\"%s\" requires %s extension"
+msgstr "\"%s\" trenger %s tillegget"
+
+msgid "Compressed import will not work due to missing function %s."
+msgstr "Komprimert import vil ikke fungere, funksjonen (%s) mangler."
+
+msgid "Compressed export will not work due to missing function %s."
+msgstr "Komprimert eksport vil ikke fungere,funksjonen (%s) mangler."
+
+msgid "maximum %s"
+msgstr "maksimum %s"
+
+msgid "Config authentication"
+msgstr "Konfigurer vertsautentisering"
+
+msgid "HTTP authentication"
+msgstr "HTTP autentisering"
+
+msgid "Quick"
+msgstr "Rask"
+
+msgid "Custom"
+msgstr "Egendefinert"
+
+msgid "CSV for MS Excel"
+msgstr "CSV for MS Excel data"
+
+msgid "Microsoft Word 2000"
+msgstr "Microsoft Word 2000"
+
+msgid "CSV using LOAD DATA"
+msgstr "CSV med LOAD DATA"
+
+msgid "Cannot save settings, submitted configuration form contains errors!"
+msgstr "Kan ikke lagre innstillinger, innsendt konfigurasjonsskjema inneholder feil!"
+
+msgid "Existing configuration file (%s) is not readable."
+msgstr "Nåværende konfigurasjonsfil (%s) er ikke lesbar."
+
+msgid "Wrong permissions on configuration file, should not be world writable!"
+msgstr "Gale tillatelser på konfigurasjonsfilen, den burde ikke være skrivbar!"
+
+msgid "This value should be double checked to ensure that this directory is neither world accessible nor readable or writable by other users on your server."
+msgstr "Denne verdien bør være dobbeltkontrollert for å sikre at denne katalogen verken er tilgjengelig for alle og heller ikke kan leses eller skrives til av andre brukere på tjeneren din."
+
+msgid "You should use SSL connections if your database server supports it."
+msgstr "Du bør bruke SSL-tilkobling dersom din databasetjener har støtte for det."
+
+msgid "You set the [kbd]config[/kbd] authentication type and included username and password for auto-login, which is not a desirable option for live hosts. Anyone who knows or guesses your phpMyAdmin URL can directly access your phpMyAdmin panel. Set %1$sauthentication type%2$s to [kbd]cookie[/kbd] or [kbd]http[/kbd]."
+msgstr "Du angir [kbd]config[/kbd] autentiseringstype og inkluderte brukernavn og passord for automatisk pålogging, noe som ikke er et ønskelig alternativ for live verter. Alle som kjenner eller gjetter phpMyAdmin URL-en din, kan få direkte tilgang til phpMyAdmin-panelet. Sett %1$sauthentication type%2$s til [kbd]cookie[/kbd] eller [kbd]http[/kbd]."
+
+msgid "You allow for connecting to the server without a password."
+msgstr "Du tillater tilkobling til tjeneren uten passord."
+
+msgid "You didn't have blowfish secret set and have enabled [kbd]cookie[/kbd] authentication, so a key was automatically generated for you. It is used to encrypt cookies; you don't need to remember it."
+msgstr "Du hadde ikke noe hemmelig sett for blowfish og har aktivert autentisering av [kbd]cookie[/kbd], så en nøkkel ble automatisk generert for deg. Den brukes til å kryptere informasjonskapsler; du trenger ikke å huske det."
+
+msgid "%1$sLogin cookie validity%2$s greater than %3$ssession.gc_maxlifetime%4$s may cause random session invalidation (currently session.gc_maxlifetime is %5$d)."
+msgstr "%1$s gyldighet for påloggingskake %2$s større enn %3$s økt.gc_maxlifetime %4$s kan forårsake tilfeldig ugyldighetsøkt (for tiden session.gc_maxlifetime er %5$d)."
+
+msgid "Server %d"
+msgstr "Tjener %d"
+
+msgid "no description"
+msgstr "ingen beskrivelse"
+
+msgid "Could not save configuration"
+msgstr "Kunne ikke lagre konfigurasjonen"
+
+msgid "Could not connect to the database server!"
+msgstr "Kunne ikke koble til databaseserveren!"
+
+msgid "Invalid authentication type!"
+msgstr "Ugyldig godkjenningstype!"
+
+msgid "Empty username while using [kbd]config[/kbd] authentication method!"
+msgstr "Tøm brukernavnet mens du bruker [kbd]config[/kbd] autentiseringsmetode!"
+
+msgid "Empty signon session name while using [kbd]signon[/kbd] authentication method!"
+msgstr "Tomt påloggingsøktsnavn mens du bruker [kbd]signon[/kbd] autentiseringsmetode!"
+
+msgid "Empty signon URL while using [kbd]signon[/kbd] authentication method!"
+msgstr "Tom signon URL ved bruk av [kbd]signon[/kbd] autentiseringsmetode!"
+
+msgid "Empty phpMyAdmin control user while using phpMyAdmin configuration storage!"
+msgstr "Tøm phpMyAdmin-kontrollbruker mens du bruker phpMyAdmin-konfigurasjonslagring!"
+
+msgid "Empty phpMyAdmin control user password while using phpMyAdmin configuration storage!"
+msgstr "Tøm phpMyAdmin kontroll brukerpassord mens du bruker phpMyAdmin konfigurasjonslagring!"
+
+msgid "Incorrect value:"
+msgstr "Ugyldig verdi:"
+
+msgid "Incorrect IP address: %s"
+msgstr "Ugyldig IP-adresse: %s"
+
+msgid "Not a valid port number!"
+msgstr "Ikke et gyldig portnummer!"
+
+msgid "Not a positive number!"
+msgstr "Ikke et positivt nummer!"
+
+msgid "Not a non-negative number!"
+msgstr "Ikke et ikke-negativt nummer!"
+
+msgid "Value must be less than or equal to %s!"
+msgstr "Verdien må være mindre enn eller lik %s!"
+
+msgid "Showing %1$d bookmark (both private and shared)"
+msgid_plural "Showing %1$d bookmarks (both private and shared)"
+msgstr[0] "Viser %1$d bokmerke (både private og delt)"
+msgstr[1] "Viser %1$d bokmerker (både private og delt)"
+
+msgid "No bookmarks"
+msgstr "Ingen bokmerker"
+
+msgid "The %s file is not available on this system, please visit %s for more information."
+msgstr "Filen %s er ikke tilgjengelig på dette systemet, se %s for mer informasjon."
+
+msgid "Failed"
+msgstr "Feilet"
+
+msgid "Succeeded"
+msgstr "Vellykket"
+
+msgid "Showing rows %1$s - %2$s."
+msgstr "Viser radene %1$s - %2$s."
+
+msgid "No databases selected."
+msgstr "Ingen databaser er valgt."
+
+msgid "Could not load export plugins, please check your installation!"
+msgstr "Kunne ikke laste eksporttillegg, kontroller din innstallasjon!"
+
+msgid "Could not load import plugins, please check your installation!"
+msgstr "Kan ikke starte importerings-tilleggene, kontroller din installasjon!"
+
+msgid "No Privileges"
+msgstr "Ingen privilegier"
+
+msgid "This view has at least this number of rows. Please refer to %sdocumentation%s."
+msgstr "Denne visningen har minst dette antall rader. Sjekk %sdocumentation%s."
+
+msgid "unknown"
+msgstr "ukjent"
+
+msgid "Favorite List is full!"
+msgstr "Favotittlisten er full!"
+
+msgid "Tracking data deleted successfully."
+msgstr "Sporingsdata ble slettet."
+
+msgid "Version %1$s was created for selected tables, tracking is active for them."
+msgstr "Versjon %1$s ble opprettet for de valgte tabellene, og overvåking er aktivert."
+
+msgid "No tables selected."
+msgstr "Ingen tabeller er valgt."
+
+msgid "Database Log"
+msgstr "Databaselogg"
+
+msgid "An error has been detected and an error report has been automatically submitted based on your settings."
+msgstr "Det er oppdaget en feil og en feilrapport har blitt automatisk sendt basert på innstillingene dine."
+
+msgid "Thank you for submitting this report."
+msgstr "Takk for at du sender inn denne rapporten."
+
+msgid "An error has been detected and an error report has been generated but failed to be sent."
+msgstr "Det er oppdaget en feil og en feilrapport er generert, men kunne ikke sendes."
+
+msgid "If you experience any problems please submit a bug report manually."
+msgstr "Hvis du opplever problemer: Send en feilrapport manuelt."
+
+msgid "You may want to refresh the page."
+msgstr "Det kan være lurt å oppdatere siden."
+
+msgid "Bad type!"
+msgstr "Feil type!"
+
+msgid "Value for the column \"%s\""
+msgstr "Verdien for kolonnen \"%s\""
+
+msgid "You were logged out from one server, to logout completely from phpMyAdmin, you need to logout from all servers."
+msgstr "Du ble logget ut fra én tjener. For å logge helt ut av phpMyAdmin må du logge ut av alle tjenere."
+
+msgid "The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. "
+msgstr "Lagring av phpMyAdmin-oppsett er ikke konfigurert riktig i innstillingene, og noen tilleggsfunksjoner er deaktivert. %sFinn ut hvorfor%s. "
+
+msgid "Or alternately go to 'Operations' tab of any database to set it up there."
+msgstr "Alternativt kan du gå til 'Operasjoner'-fanen for en database og sette det opp der."
+
+msgid "Your PHP parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is lower than cookie validity configured in phpMyAdmin, because of this, your login might expire sooner than configured in phpMyAdmin."
+msgstr "PHP-parameteret [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] er lavere enn cookie gyldighet konfigurert i phpMyAdmin. På grunn av dette så kan innlogging utløpe raskere enn det som er satt i phpMyAdmin."
+
+msgid "Login cookie store is lower than cookie validity configured in phpMyAdmin, because of this, your login will expire sooner than configured in phpMyAdmin."
+msgstr "Levetiden for din innloggings-cookie er kortere enn innstillingen satt i phpMyAdmin. Innloggingen din vil dermed utløpe raskere enn det som er satt i phpMyAdmin."
+
+msgid "Your server is running with default values for the controluser and password (controlpass) and is open to intrusion; you really should fix this security weakness by changing the password for controluser 'pma'."
+msgstr "Tjeneren dine kjører med forvalgte verdier for kontrollbrukeren og passordet (controlpass), og er åpen for enhver til å ta seg inn; du bør virkelig ordne dette sikkerhetsproblemet ved å endre passordet for kontrollbrukeren \"pma\"."
+
+msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
+msgstr "Mappen [code]config[/code], som blir brukt av setup-skriptet, eksisterer fortsatt i din phpMyAdmin mappe. Det anbefales å fjerne den så fort phpMyAdmin har blitt konfigurert. Ellers kan uautoriserte personer få tak i konfigurasjonen din og endre serveren."
+
+msgid "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this."
+msgstr "$cfg['TempDir'] (%s) er ikke tilgjengelig. phpMyAdmin kan ikke hurtiglagre maler, og vil være tregt som følge av dette."
+
+msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
+msgstr "PHP tillegget mbstring ble ikke funnet, og det ser ut til at du bruker et mangetegns tegnsett. Uten mbstring-tillegget kan ikke phpMyAdmin splitte strenger korrekt, dette kan medføre uønskede resultater."
+
+msgid "The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled."
+msgstr "Curl-utvidelsen ble ikke funnet og allow_url_fopen er deaktivert. Derfor er noen funksjoner, som feilrapportering og versjonssjekk, deaktivert."
+
+msgid "You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit."
+msgstr "Du forsøkte sannsynligvis å laste opp en fil som var for stor. Sjekk %sdokumentasjonen%s for måter å omgå denne begrensningen på."
+
+msgid "Showing bookmark"
+msgstr "Vis bokmerke"
+
+msgid "The bookmark has been deleted."
+msgstr "Bokmerket er slettet."
+
+msgid "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc]."
+msgstr "Ingen data ble mottatt for importering. Enten ble ingen filnavn gitt, eller så var filstørrelsen over maksimum størrelse tillatt i din PHP konfigurasjon. Se [doc@faq1-16]FAQ 1.16[/doc]."
+
+msgid "Import has been successfully finished, %d query executed."
+msgid_plural "Import has been successfully finished, %d queries executed."
+msgstr[0] "Importen er fullført, %d spørring utført."
+msgstr[1] "Importen er fullført, %d spørringer utført."
+
+msgid "Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume."
+msgstr "Skript-tidsavbrudd. Hvis du ønsker å fortsette vil importen, %ssend inn samme fil igjen%s og importen vil tilta igjen."
+
+msgid "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits."
+msgstr "Under den siste kjøringen så ble ingen data lest, dette betyr vanligvis at phpMyAdmin ikke vil være istand til å fullføre importeringen uten at du øker PHP-tidsgrensen."
+
+msgid "\"DROP DATABASE\" statements are disabled."
+msgstr "\"DROP DATABASE\"-uttrykk er avslått."
+
+msgid "Could not load the progress of the import."
+msgstr "Kan ikke laste importframdrift."
+
+msgid "Do you really want to execute \"%s\"?"
+msgstr "Vil du virkelig utføre \"%s\"?"
+
+msgid "You are about to DESTROY a complete database!"
+msgstr "Du er i ferd med å SLETTE en komplett database!"
+
+msgid "You are about to DESTROY a complete table!"
+msgstr "Du er i ferd med å SLETTE en hel database!"
+
+msgid "You are about to TRUNCATE a complete table!"
+msgstr "Du er i ferd med å AVKORTE en hel database!"
+
+msgid "Delete tracking data for this table?"
+msgstr "Slette overvåkningsdata for denne tabellen?"
+
+msgid "Delete tracking data for these tables?"
+msgstr "Slette overvåkningsdata for disse tabellene?"
+
+msgid "Delete tracking data for this version?"
+msgstr "Slette overvåkningsdata for denne versjonen?"
+
+msgid "Delete tracking data for these versions?"
+msgstr "Slette overvåkningsdata for disse versjonene?"
+
+msgid "Delete entry from tracking report?"
+msgstr "Slette innlegget fra overvåkningsrapporten?"
+
+msgid "Deleting tracking data"
+msgstr "Slett overvåkningsdata"
+
+msgid "Dropping Primary Key/Index"
+msgstr "Slipper primærnøkkel/indeks"
+
+msgid "Dropping Foreign key."
+msgstr "Slipper fremmednøkkel."
+
+msgid "Do you really want to delete user group \"%s\"?"
+msgstr "Vil du virkelig slette bruker-gruppen \"%s\"?"
+
+msgid "You have unsaved changes; are you sure you want to leave this page?"
+msgstr "Du har gjort endringer som ikke er lagret! Er du sikker på at du vil forlate denne siden?"
+
+msgid "You are trying to reduce the number of rows, but have already entered data in those rows which will be lost. Do you wish to continue?"
+msgstr "Du prøver å redusere antallet rader, men har allerede skrevet inn data i de radene, som vil gå tapt. Ønsker du å fortsette?"
+
+msgid "Do you really want to revoke the selected user(s) ?"
+msgstr "Vil du virkelig tilbakekalle valgt(e) bruker(e)?"
+
+msgid "Do you really want to delete this central column?"
+msgstr "Vil du virkelig slette denne sentrale kolonnen?"
+
+msgid "Do you really want to delete the selected items?"
+msgstr "Vil du virkelig slette de valgte element?"
+
+msgid "Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!"
+msgstr "Vil du virkelig kjøre DROP på de valgte partisjonene? Dette vil også kjøre DELETE på tilknyttet data til de valgte partisjonene!"
+
+msgid "Do you really want to TRUNCATE the selected partition(s)?"
+msgstr "Vil du virkelig TRUNCATE (tømme) de valgte partisjonene?"
+
+msgid "Do you really want to remove partitioning?"
+msgstr "Er du sikker på at du vil fjerne partisjonering?"
+
+msgid "This operation will attempt to convert your data to the new collation. In rare cases, especially where a character doesn't exist in the new collation, this process could cause the data to appear incorrectly under the new collation; in this case we suggest you revert to the original collation and refer to the tips at "
+msgstr "Denne operasjonen vil forsøke å konvertere dataene dine til den nye sorteringsrekkefølgen. I sjeldne tilfeller - spesielt når en karakter ikke finnes i den nye sorteringen - kan denne prosessen føre til at dataene dine vises feil. Dersom det skulle skje, foreslår vi at du går tilbake til den opprinnelige sorteringen og leser veiledningen på "
+
+msgid "Garbled Data"
+msgstr "Uleselig data"
+
+msgid "Are you sure you wish to change the collation and convert the data?"
+msgstr "Er du sikker på at du ønsker å endre sortering og konvertere data?"
+
+msgid "Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the \"Change\" Link) on the table structure page. </b>"
+msgstr "Gjennom denne operasjonen, prøver MySQL å knytte dataverdier mellom sammenligninger. Hvis karaktersettene er ukompatible, kan det forekomme datatap, og det kan hende at denne <b>IKKE</b> ikke lar seg gjenopprette ved å enkelthen bytte tilbake kolonnesamlingen(e). <b>For å konvertere eksisterende data, anbefales det å bruke kolonneredigeringsfuksjonen (altså \"Endre\"-lenken) på tabellstruktursiden. </b>"
+
+msgid "Are you sure you wish to change all the column collations and convert the data?"
+msgstr "Er du sikker på at du ønsker å endre alle kolonnesorteringene og konvertere data?"
+
+msgid "Reset all"
+msgstr "Tilbakestill alle"
+
+msgid "Missing value in the form!"
+msgstr "Manglende verdi i skjemaet!"
+
+msgid "Select at least one of the options!"
+msgstr "Velg minst et av alternativene!"
+
+msgid "Please enter a valid number!"
+msgstr "Vennligst tast inn et gyldig tall!"
+
+msgid "Please enter a valid length!"
+msgstr "Vennligst oppgi en gyldig lengde!"
+
+msgid "Add index"
+msgstr "Legg til indeks(er)"
+
+msgid "Edit index"
+msgstr "Rediger indeks"
+
+msgid "Create single-column index"
+msgstr "Opprett en enkeltkolonneindeks"
+
+msgid "Create composite index"
+msgstr "Opprett kompositt indeks"
+
+msgid "Composite with:"
+msgstr "Kompositt med:"
+
+msgid "Please select column(s) for the index."
+msgstr "Vennligst velg kolonne(r) for indexen."
+
+msgid "Y values"
+msgstr "Y-verdier"
+
+msgid "The host name is empty!"
+msgstr "Vertsnavnet er tomt!"
+
+msgid "The user name is empty!"
+msgstr "Brukernavnet er tomt!"
+
+msgid "The password is empty!"
+msgstr "Passordet er blankt!"
+
+msgid "The passwords aren't the same!"
+msgstr "Passordene er ikke like!"
+
+msgid "Removing Selected Users"
+msgstr "Fjern valgte brukere"
+
+msgid "Template was created."
+msgstr "Malen ble opprettet."
+
+msgid "Template was loaded."
+msgstr "Malen ble lastet."
+
+msgid "Template was updated."
+msgstr "Malen har blitt oppdatert."
+
+msgid "Template was deleted."
+msgstr "Malen ble slettet."
+
+msgid "Other"
+msgstr "Annet"
+
+msgid ","
+msgstr "."
+
+msgid "."
+msgstr ","
+
+msgid "Connections / Processes"
+msgstr "Tilkoblinger/prosesser"
+
+msgid "Query cache efficiency"
+msgstr "Spørrings cache effektivitet"
+
+msgid "Query cache usage"
+msgstr "Spørrings cache bruk"
+
+msgid "Query cache used"
+msgstr "Spørrings cache brukt"
+
+msgid "System CPU usage"
+msgstr "System CPU-bruk"
+
+msgid "System memory"
+msgstr "Systemminne"
+
+msgid "System swap"
+msgstr "Systembytte"
+
+msgid "Average load"
+msgstr "Gjennomsnitt load"
+
+msgid "Total memory"
+msgstr "Totalt minne"
+
+msgid "Cached memory"
+msgstr "Cached minne"
+
+msgid "Buffered memory"
+msgstr "Buffered minne"
+
+msgid "Free memory"
+msgstr "Ledig minne"
+
+msgid "Used memory"
+msgstr "Brukt minne"
+
+msgid "Total swap"
+msgstr "Totalt swap"
+
+msgid "Cached swap"
+msgstr "Cachet swap"
+
+msgid "Used swap"
+msgstr "Brukt swap"
+
+msgid "Free swap"
+msgstr "Ledig swap"
+
+msgid "Bytes sent"
+msgstr "Bytes sendt"
+
+msgid "Bytes received"
+msgstr "Bytes mottatt"
+
+msgid "B"
+msgstr "B"
+
+msgid "GiB"
+msgstr "GiB"
+
+msgid "TiB"
+msgstr "TiB"
+
+msgid "PiB"
+msgstr "PiB"
+
+msgid "EiB"
+msgstr "EiB"
+
+msgid "%d table(s)"
+msgstr "%d tabell(er)"
+
+msgid "Questions"
+msgstr "Spørringer"
+
+msgid "Please add at least one variable to the series!"
+msgstr "Legg minst én variabel til serien!"
+
+msgid "Resume monitor"
+msgstr "Gjenoppta monitor"
+
+msgid "Pause monitor"
+msgstr "Pause overvåkning"
+
+msgid "Stop auto refresh"
+msgstr "Stopp automatisk oppdatering"
+
+msgid "general_log and slow_query_log are enabled."
+msgstr "general_log og slow_query_log er aktivert."
+
+msgid "general_log is enabled."
+msgstr "general_log er aktivert."
+
+msgid "slow_query_log is enabled."
+msgstr "slow_query_log er aktivert."
+
+msgid "slow_query_log and general_log are disabled."
+msgstr "slow_query_log og general_log er deaktivert."
+
+msgid "log_output is not set to TABLE."
+msgstr "log_output er ikke satt til TABLE."
+
+msgid "log_output is set to TABLE."
+msgstr "log_output er satt til TABLE."
+
+msgid "slow_query_log is enabled, but the server logs only queries that take longer than %d seconds. It is advisable to set this long_query_time 0-2 seconds, depending on your system."
+msgstr "slow_query_log er aktivert, men tjeneren loggfører kun spørringer som tar lenger enn %d sekunder. Avhengig av ditt system, er det tilrådelig å sette long_query_time til 0-2 sekunder."
+
+msgid "long_query_time is set to %d second(s)."
+msgstr "long_query_time er satt til %d sekund(er)."
+
+msgid "Following settings will be applied globally and reset to default on server restart:"
+msgstr "Følgende innstillinger blir lagt til globalt og endret til default ved omstart av tjener:"
+
+msgid "Set log_output to %s"
+msgstr "Lagre utdata til %s"
+
+msgid "Enable %s"
+msgstr "Aktiver %s"
+
+msgid "Disable %s"
+msgstr "Deaktiver %s"
+
+msgid "Set long_query_time to %d seconds."
+msgstr "Sett long_query_time til %d sekunder."
+
+msgid "You can't change these variables. Please log in as root or contact your database administrator."
+msgstr "Du kan ikke endre disse verdiene. Logg inn som root eller kontakt din databaseadministrator."
+
+msgid "Change settings"
+msgstr "Endre innstillinger"
+
+msgid "Current settings"
+msgstr "Nåværende innstillinger"
+
+msgid "Chart title"
+msgstr "Diagramtittel"
+
+msgid "Differential"
+msgstr "Differensial"
+
+msgid "Divided by %s"
+msgstr "Delt på %s"
+
+msgid "Unit"
+msgstr "Enhet"
+
+msgid "The database name is not known for this query in the server's logs."
+msgstr "Databasenavnet er ukjent for denne spørringen i tjenerens logger."
+
+msgid "This column shows the amount of identical queries that are grouped together. However only the SQL query itself has been used as a grouping criteria, so the other attributes of queries, such as start time, may differ."
+msgstr "Denne kolonnen viser antallet identiske spørringer som er gruppert sammen. Men kun SQL-spørringene har blitt brukt som en grupperingskriterie, så andre attributter i spørringer som starter samtidig kan variere."
+
+msgid "Since grouping of INSERTs queries has been selected, INSERT queries into the same table are also being grouped together, disregarding of the inserted data."
+msgstr "Ettersom gruppering av INSERT-spørringer har blitt valgt så vil INSERT-spørringer i samme tabellen bli gruppert sammen, uten hensyn til de innsatte dataene."
+
+msgid "Analyzing…"
+msgstr "Analyserer…"
+
+msgid "Explain output"
+msgstr "Forklar utdata"
+
+msgid "Total time:"
+msgstr "Total tid:"
+
+msgid "Profiling results"
+msgstr "Profileringsresultater"
+
+msgctxt "Display format"
+msgid "Table"
+msgstr "Tabell"
+
+msgid "Chart"
+msgstr "Grafisk fremstilling"
+
+msgid "Log table filter options"
+msgstr "Logg tabellfiltervalgene"
+
+msgid "Filter"
+msgstr "Filtrer"
+
+msgid "Filter queries by word/regexp:"
+msgstr "Filtrer spørringer med ord/regexp:"
+
+msgid "Group queries, ignoring variable data in WHERE clauses"
+msgstr "Grupper spørringer, og ignorer varierende data brukt i WHERE-muligheter"
+
+msgid "Sum of grouped rows:"
+msgstr "Sum av grupperte rader:"
+
+msgid "Affected rows:"
+msgstr "Berørte rader:"
+
+msgid "Failed parsing config file. It doesn't seem to be valid JSON code."
+msgstr "Feilet analyseringen av konfigurasjonsfilen. Det virker ikke som det er gyldig JSON-kode."
+
+msgid "Failed building chart grid with imported config. Resetting to default config…"
+msgstr "Kunne ikke bygge diagramrutenett med importert konfigurasjon. Setter til standardkonfigurasjon…"
+
+msgid "Please enter a valid table name."
+msgstr "Skriv inn et gyldig tabellnavn."
+
+msgid "Please enter a valid database name."
+msgstr "Skriv inn et gyldig databasenavn."
+
+msgid "No files available on server for import!"
+msgstr "Ingen filer tilgjengelig på server for importering!"
+
+msgid "Formatting SQL…"
+msgstr "Formaterer SQL…"
+
+msgid "No parameters found!"
+msgstr "Ingen parametre funnet!"
+
+msgid "Request aborted!!"
+msgstr "Forespørsel avbrutt!!"
+
+msgid "Processing request"
+msgstr "Prosesseringsforespørsel"
+
+msgid "Request failed!!"
+msgstr "Forespørsel feilet!!"
+
+msgid "Error in processing request"
+msgstr "Feil i prosesseringsforespørsel"
+
+msgid "Error code: %s"
+msgstr "Feilkode: %s"
+
+msgid "Error text: %s"
+msgstr "Feilmelding: %s"
+
+msgid "It seems that the connection to server has been lost. Please check your network connectivity and server status."
+msgstr "Forbindelsen til serveren er brutt. Vennligst kontroller nettverksforbindelsen og serverstatus."
+
+msgid "No accounts selected."
+msgstr "Ingen kontoer valgt."
+
+msgid "Dropping column"
+msgstr "Dropper kolonne"
+
+msgid "Adding primary key"
+msgstr "Legger til primærnøkkel"
+
+msgid "Click to dismiss this notification"
+msgstr "Klikk for å overse dette varselet"
+
+msgid "Renaming databases"
+msgstr "Endrer databasers navn"
+
+msgid "Copying database"
+msgstr "Kopierer database"
+
+msgid "Changing charset"
+msgstr "Endrer tegnsett"
+
+msgid "Failed to get real row count."
+msgstr "Klarte ikke hente faktisk antall rader."
+
+msgid "Searching"
+msgstr "Søker"
+
+msgid "Hide search results"
+msgstr "Skjul søkeresultater"
+
+msgid "Show search results"
+msgstr "Vis søkeresultater"
+
+msgid "Browsing"
+msgstr "Leser"
+
+msgid "Deleting"
+msgstr "Sletter"
+
+msgid "Delete the matches for the %s table?"
+msgstr "Slett treffene for %s tabellen?"
+
+msgid "The definition of a stored function must contain a RETURN statement!"
+msgstr "Definisjonen av en lagret funksjon må inneholde RETURN erklæring!"
+
+msgid "No routine is exportable. Required privileges may be lacking."
+msgstr "Ingen rutine kan eksporteres. Nødvendige rettigheter mangler."
+
+msgid "Values for column %s"
+msgstr "Verdier for kolonne %s"
+
+msgid "Values for a new column"
+msgstr "Verdier for ny kolonne"
+
+msgid "Enter each value in a separate field."
+msgstr "Skriv hver verdi i et eget felt."
+
+msgid "Add %d value(s)"
+msgstr "Legg til %d verdi(er)"
+
+msgid "Note: If the file contains multiple tables, they will be combined into one."
+msgstr "Legg merke til: Om filen inneholder flere tabeller, så vil de kombineres til en tabell."
+
+msgid "Hide query box"
+msgstr "Skjul spørringsboks"
+
+msgid "Show query box"
+msgstr "Vis spørringsboks"
+
+msgid "%d is not valid row number."
+msgstr "%d er ikke et gyldig radnummer."
+
+msgid "Variable %d:"
+msgstr "Variabel %d:"
+
+msgid "Pick"
+msgstr "Velg"
+
+msgid "Column selector"
+msgstr "Kolonnevelger"
+
+msgid "Search this list"
+msgstr "Søk i denne listen"
+
+msgid "No columns in the central list. Make sure the Central columns list for database %s has columns that are not present in the current table."
+msgstr "Ingen kolonner i sentrallisten. Sørg for at hovedkolonnelisten for databasen %s ikke har kolonner som er til stede i den aktuelle tabellen."
+
+msgid "See more"
+msgstr "Se mer"
+
+msgid "Add primary key"
+msgstr "Legg til primærnøkkel"
+
+msgid "Primary key added."
+msgstr "Primærnøkkel lagt til."
+
+msgid "Taking you to next step…"
+msgstr "Tar deg videre til neste trinn…"
+
+msgid "The first step of normalization is complete for table '%s'."
+msgstr "Første trinn av normaliseringen er ferdig for tabellen '%s'."
+
+msgid "End of step"
+msgstr "Slutten på dette trinnet"
+
+msgid "Second step of normalization (2NF)"
+msgstr "Andre trinn for normaliseringen (2NF)"
+
+msgid "Done"
+msgstr "Utført"
+
+msgid "Confirm partial dependencies"
+msgstr "Bekreft delvise avhengigheter"
+
+msgid "Selected partial dependencies are as follows:"
+msgstr "Valgte delvise avhengigheter er følgende:"
+
+msgid "Note: a, b -> d,f implies values of columns a and b combined together can determine values of column d and column f."
+msgstr "Merk: a, b -> d, f forutsetter at verdiene i kolonnene a og b, sammen kan bestemme verdiene for kolonne d og kolonne f."
+
+msgid "No partial dependencies selected!"
+msgstr "Ingen delvise avhengigheter er valgt!"
+
+msgid "Show me the possible partial dependencies based on data in the table"
+msgstr "Vis meg mulige delvise avhengigheter basert på dataene i tabellen"
+
+msgid "Hide partial dependencies list"
+msgstr "Skjul listen over delvise avhengigheter"
+
+msgid "Sit tight! It may take few seconds depending on data size and column count of the table."
+msgstr "Slapp av! Dette kan ta noen sekunder, basert på datamengden og antall kolonner i tabellen."
+
+msgid "Step"
+msgstr "Trinn"
+
+msgid "The following actions will be performed:"
+msgstr "Følgende handlinger vil bli utført:"
+
+msgid "DROP columns %s from the table %s"
+msgstr "SLETT kolonnene %s fra tabellen %s"
+
+msgid "Create the following table"
+msgstr "Lag følgende tabell"
+
+msgid "Third step of normalization (3NF)"
+msgstr "Tredje trinn av normaliseringen (3NF)"
+
+msgid "Confirm transitive dependencies"
+msgstr "Bekreft transitive avhengigheter"
+
+msgid "Selected dependencies are as follows:"
+msgstr "Følgende er valgte avhengigheter:"
+
+msgid "No dependencies selected!"
+msgstr "Ingen avhengigheter er valgt!"
+
+msgid "Hide search criteria"
+msgstr "Skjul søkekriterier"
+
+msgid "Show search criteria"
+msgstr "Vis søkekriterier"
+
+msgid "Column maximum:"
+msgstr "Kolonne maksimum:"
+
+msgid "Column minimum:"
+msgstr "Kolonne minimum:"
+
+msgid "Hide find and replace criteria"
+msgstr "Skjul kriterier for søk- og erstatt"
+
+msgid "Show find and replace criteria"
+msgstr "Vis kriteriene for søk og erstatt"
+
+msgid "Each point represents a data row."
+msgstr "Hvert punkt representerer en datarad."
+
+msgid "Hovering over a point will show its label."
+msgstr "Ved å ha musen over punktet vises dets etikett."
+
+msgid "To zoom in, select a section of the plot with the mouse."
+msgstr "For å zoome inn, velger en del for plotteområdet med musen."
+
+msgid "Click reset zoom button to come back to original state."
+msgstr "Trykk på \"tilbakestill zoom\"-knappen for å gå tilbake til standardvisningen."
+
+msgid "Click a data point to view and possibly edit the data row."
+msgstr "Velg et datapunkt for å vise, og eventuelt endre raden med data."
+
+msgid "The plot can be resized by dragging it along the bottom right corner."
+msgstr "Du kan endre størrelsen på området ved å dra i hjørnet nederst til høyre."
+
+msgid "Select two columns"
+msgstr "Velg to kolonner"
+
+msgid "Select two different columns"
+msgstr "Velg to forskjellige kolonner"
+
+msgid "Data point content"
+msgstr "Datapunktinnhold"
+
+msgid "X"
+msgstr "X"
+
+msgid "Y"
+msgstr "Y"
+
+msgid "Point"
+msgstr "Punkt"
+
+msgid "Linestring"
+msgstr "Linjestreng"
+
+msgid "Polygon"
+msgstr "Polygon"
+
+msgid "Inner ring"
+msgstr "Indre ring"
+
+msgid "Outer ring"
+msgstr "Ytre ring"
+
+msgid "Add a point"
+msgstr "Legg til punkt"
+
+msgid "Add a linestring"
+msgstr "Legg til linjestreng"
+
+msgid "Add an inner ring"
+msgstr "Legg til en indre ring"
+
+msgid "Add a polygon"
+msgstr "Legg til et polygon"
+
+msgid "Add geometry"
+msgstr "Legg til geometri"
+
+msgid "Do you want to copy encryption key?"
+msgstr "Vil du kopiere krypteringsnøkkel?"
+
+msgid "Encryption key"
+msgstr "Krypteringsnøkkel"
+
+msgid "MySQL accepts additional values not selectable by the slider; key in those values directly if desired"
+msgstr "MySQL aksepterer ytterligere verdier som ikke aksepteres av slider; skriv inn disse direkte hvis ønskelig"
+
+msgid "MySQL accepts additional values not selectable by the datepicker; key in those values directly if desired"
+msgstr "MySQL aksepterer ytterligere verdier som ikke aksepteres av datovelgeren; skriv inn disse direkte hvis ønskelig"
+
+msgid "Indicates that you have made changes to this page; you will be prompted for confirmation before abandoning changes"
+msgstr "Indikerer at du har gjort endringer til denne siden; du vil bli bedt om bekreftelse før du forlater endringer"
+
+msgid "Select referenced key"
+msgstr "Velg referert nøkkel"
+
+msgid "Select Foreign Key"
+msgstr "Velg fremmednøkkel"
+
+msgid "Please select the primary key or a unique key!"
+msgstr "Velg primærnøkkelen eller en unik nøkkel!"
+
+msgid "You haven't saved the changes in the layout. They will be lost if you don't save them. Do you want to continue?"
+msgstr "Du har ikke lagret endringene i utseendet. De vil forsvinne om du ikke lagrer dem. Ønsker du å fortsette?"
+
+msgid "value/subQuery is empty"
+msgstr "verdi/underspørring er tom"
+
+msgid "Page name"
+msgstr "Sidenummer"
+
+msgid "Delete page"
+msgstr "Slett side"
+
+msgid "Please select a page to continue"
+msgstr "Velg en side for å fortsette"
+
+msgid "Please enter a valid page name"
+msgstr "Tast inn et gyldig sidenavn"
+
+msgid "Do you want to save the changes to the current page?"
+msgstr "Ønsker du å lagre endringene i den gjeldende siden?"
+
+msgid "Successfully deleted the page"
+msgstr "Slettet side"
+
+msgid "Export relational schema"
+msgstr "Eksporter relasjonsskjema"
+
+msgid "Modifications have been saved"
+msgstr "Endringene er lagret"
+
+msgid "%d object(s) created."
+msgstr "%d objekt(er) opprettet."
+
+msgid "You have edited some data and they have not been saved. Are you sure you want to leave this page before saving the data?"
+msgstr "Du har endret en del data og de har ikke blitt lagret. Er du sikker på at du vil forlate denne siden før du lagrer dataene?"
+
+msgid "Drag to reorder."
+msgstr "Dra for å endre rekkefølgen."
+
+msgid "Click to sort results by this column."
+msgstr "Klikk for å sortere resultatene etter denne kolonnen."
+
+msgid "Shift+Click to add this column to ORDER BY clause or to toggle ASC/DESC.<br>- Ctrl+Click or Alt+Click (Mac: Shift+Option+Click) to remove column from ORDER BY clause"
+msgstr "Shift + Klikk for å legge denne kolonnen til BESTILLT AV-ledd eller veksle mellom STIGENDE/ SYNKENDE<br> - Ctrl + klikk eller Alt + klikk (Mac: Shift + Option + Klikk). For å fjerne kolonnen fra BESTILLT AV-leddet"
+
+msgid "Click to mark/unmark."
+msgstr "Klikk for å markere/fjern markering."
+
+msgid "Double-click to copy column name."
+msgstr "Dobbelklikk for å kopiere kolonnenavn."
+
+msgid "This table does not contain a unique column. Features related to the grid edit, checkbox, Edit, Copy and Delete links may not work after saving."
+msgstr "Denne tabellen inneholder ikke en unik kolonne. Funksjoner knyttet til valgene Endring, avkrysningsruten, redigere, kopiere og slette koblinger virker kanskje ikke etter lagring."
+
+msgid "Please enter a valid hexadecimal string. Valid characters are 0-9, A-F."
+msgstr "Skriv inn en gyldig heksadesimal streng. Gyldige tegn er 0-9, A-F."
+
+msgid "Do you really want to see all of the rows? For a big table this could crash the browser."
+msgstr "Ønsker du virkelig å se alle radene? For et stort bord kan dette krasje nettleseren."
+
+msgid "Original length"
+msgstr "Opprinnelig lengde"
+
+msgid "cancel"
+msgstr "avbryt"
+
+msgid "Aborted"
+msgstr "Avbrutt"
+
+msgid "Success"
+msgstr "Vellykket"
+
+msgid "Import status"
+msgstr "Import status"
+
+msgid "Select database first"
+msgstr "Velg database først"
+
+msgid "Go to link:"
+msgstr "Gå til link:"
+
+msgid "Generate password"
+msgstr "Generer passord"
+
+msgid "Show panel"
+msgstr "Vis panel"
+
+msgid "Hide panel"
+msgstr "Skjul panel"
+
+msgid "Unlink from main panel"
+msgstr "Fjern lenke fra hovedpanelet"
+
+msgid "A newer version of phpMyAdmin is available and you should consider upgrading. The newest version is %s, released on %s."
+msgstr "En ny versjon av phpMyAdmin er tilgjengelig og du bør vurdere å oppgradere. Den nye versjonen har nummer %s og er utgitt den %s."
+
+msgid ", latest stable version:"
+msgstr ", siste tilgjengelige versjon:"
+
+msgid "up to date"
+msgstr "er oppdatert"
+
+msgid "A fatal JavaScript error has occurred. Would you like to send an error report?"
+msgstr "Det oppstod en alvorlig feil i JavaScript. Ønsker du å sende en feilrapport?"
+
+msgid "Change report settings"
+msgstr "Endre rapportinnstillinger"
+
+msgid "Show report details"
+msgstr "Vis rapportdetaljer"
+
+msgid "Your export is incomplete, due to a low execution time limit at the PHP level!"
+msgstr "Eksporten er ufullstendig, på grunn av en lav kjøringsfrist på PHP nivå!"
+
+msgid "Warning: a form on this page has more than %d fields. On submission, some of the fields might be ignored, due to PHP's max_input_vars configuration."
+msgstr "Advarsel: et skjema på denne siden har mer enn %d felt. Ved innsending kan noen av feltene bli ignorert, på grunn av PHP max_input_vars konfigurasjon."
+
+msgid "Some errors have been detected on the server!"
+msgstr "Noen feil har blitt oppdaget på tjeneren!"
+
+msgid "Please look at the bottom of this window."
+msgstr "Ta en titt nederst i dette vinduet."
+
+msgid "Ignore All"
+msgstr "Ignorer alle"
+
+msgid "As per your settings, they are being submitted currently, please be patient."
+msgstr "I henhold til dine innstillinger, blir de sendt i dag, vær tålmodig."
+
+msgid "Successfully copied!"
+msgstr "Vellykket kopiert!"
+
+msgid "Copying failed!"
+msgstr "Kopiering feilet!"
+
+msgid "Execute this query again?"
+msgstr "Utfør denne spørring igjen?"
+
+msgid "Do you really want to delete this bookmark?"
+msgstr "Vil du virkelig slette dette bokmerket?"
+
+msgid "Some error occurred while getting SQL debug info."
+msgstr "En feil oppstod i innhenting av SQL debug info."
+
+msgid "%s queries executed %s times in %s seconds."
+msgstr "%s spørringer utført %s ganger på %s sekunder."
+
+msgid "%s argument(s) passed"
+msgstr "%s argument(er) sendt"
+
+msgid "Show arguments"
+msgstr "Vis argumenter"
+
+msgid "Hide arguments"
+msgstr "Skjul argumenter"
+
+msgid "There was a problem accessing your browser storage, some features may not work properly for you. It is likely that the browser doesn't support storage or the quota limit has been reached. In Firefox, corrupted storage can also cause such a problem, clearing your \"Offline Website Data\" might help. In Safari, such problem is commonly caused by \"Private Mode Browsing\"."
+msgstr "Det oppstod et problem med å få tilgang til nettleserens lagring. Noen funksjoner fungerer kanskje ikke riktig for deg. Det er sannsynlig at nettleseren ikke støtter lagring eller kvotegrensen er nådd. I Firefox kan ødelagt lagring også forårsake et slikt problem, og det kan være lurt å fjerne \"Offline Nettstedsdata\". I Safari er dette problemet ofte forårsaket av \"Privat Modus Browsing\"."
+
+msgid "Copy tables to"
+msgstr "Kopier tabeller til"
+
+msgid "Add table prefix"
+msgstr "Legg til tabellprefiks"
+
+msgid "Replace table with prefix"
+msgstr "Erstatt tabell med prefiks"
+
+msgid "Extremely weak"
+msgstr "Ekstremt svak"
+
+msgid "Very weak"
+msgstr "Veldig svak"
+
+msgid "Weak"
+msgstr "Svak"
+
+msgid "Good"
+msgstr "God"
+
+msgid "Strong"
+msgstr "Sterk"
+
+msgid "Hide"
+msgstr "Skjul"
+
+msgctxt "Next month"
+msgid "Next"
+msgstr "Neste"
+
+msgid "Today"
+msgstr "I dag"
+
+msgid "This field is required"
+msgstr "Dette feltet er påkrevd"
+
+msgid "Please fix this field"
+msgstr "Ordne dette feltet"
+
+msgid "Please enter a valid email address"
+msgstr "Tast inn en gyldig e-postadresse"
+
+msgid "Please enter a valid URL"
+msgstr "Tast inn en gyldig nettadresse"
+
+msgid "Please enter a valid date"
+msgstr "Tast inn en gyldig dato"
+
+msgid "Please enter a valid date ( ISO )"
+msgstr "Tast inn en gyldig dato ( ISO )"
+
+msgid "Please enter a valid number"
+msgstr "Tast inn et gyldig tall"
+
+msgid "Please enter a valid credit card number"
+msgstr "Tast inn et gyldig bankkortnummer"
+
+msgid "Please enter only digits"
+msgstr "Kun skriv inn tall"
+
+msgid "Please enter the same value again"
+msgstr "Tast inn den samme verdien igjen"
+
+msgid "Please enter no more than {0} characters"
+msgstr "Ikke skriv inn mer enn {0} tegn"
+
+msgid "Please enter at least {0} characters"
+msgstr "Tast inn minst {0} tegn"
+
+msgid "Please enter a value between {0} and {1} characters long"
+msgstr "Skriv inn en verdi mellom {0} og {1} tegn lang"
+
+msgid "Please enter a value between {0} and {1}"
+msgstr "Tast inn en verdi mellom {0} og {1}"
+
+msgid "Please enter a value less than or equal to {0}"
+msgstr "Angi en verdi mindre eller lik {0}"
+
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "Tast inn en verdi større eller lik {0}"
+
+msgid "Please enter a valid date or time"
+msgstr "Skriv inn gyldig dato eller tid"
+
+msgid "Please enter a valid HEX input"
+msgstr "Fyll inn gyldig heksadesimal inndata"
+
+msgid "The file is being processed, please be patient."
+msgstr "Filen er under behandling, vennligst vent."
+
+msgid "Uploading your import file…"
+msgstr "Laster opp importfilen …"
+
+msgid "Please be patient, the file is being uploaded. Details about the upload are not available."
+msgstr "Vær tålmodig, filen lastes opp. Detaljer om opplastingen er ikke tilgjengelig."
+
+msgid "Select one…"
+msgstr "Velg en…"
+
+msgctxt "string types"
+msgid "String"
+msgstr "Streng"
+
+msgid "Cannot copy database to the same name. Change the name and try again."
+msgstr "Kan ikke kopiere database til samme navn. Endre navnet og prøv igjen."
+
+msgid "Database %1$s has been renamed to %2$s."
+msgstr "Databasen %1$s endret navn til %2$s."
+
+msgid "Database %1$s has been copied to %2$s."
+msgstr "Databasen %1$s har blitt kopiert til %2$s."
+
+msgid "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s."
+msgstr "phpMyAdmin konfigurasjonslager har blitt deaktivert. %sSe hvorfor%s."
+
+msgid "Paste it to your config.inc.php"
+msgstr "Lim det inn i din config.inc.php-fil"
+
+msgid "Missing parameter:"
+msgstr "Mangler parametere:"
+
+msgid "Database %1$s has been created."
+msgstr "Databasen %1$s er opprettet."
+
+msgid "%1$d database has been dropped successfully."
+msgid_plural "%1$d databases have been dropped successfully."
+msgstr[0] "%1$d database har blitt slettet."
+msgstr[1] "%1$d databaser har blitt slettet."
+
+msgid "Thread %s was successfully killed."
+msgstr "Tråd %s ble avsluttet med suksess."
+
+msgid "phpMyAdmin was unable to kill thread %s. It probably has already been closed."
+msgstr "phpMyAdmin kunne ikke avslutte tråd %s. Den er sansynligvis alt avsluttet."
+
+msgid "Received"
+msgstr "Mottatt"
+
+msgid "Sent"
+msgstr "Sendt"
+
+msgid "Failed attempts"
+msgstr "Feilede forsøk"
+
+msgid "The number of transactions that used the temporary binary log cache but that exceeded the value of binlog_cache_size and used a temporary file to store statements from the transaction."
+msgstr "Antall transaksjoner som brukte den midlertidige binærloggmellomlageret men som overskred verdien av binlog_size og brukte en midlertidig fil for å lagre spørringer fra transaksjonen."
+
+msgid "The number of transactions that used the temporary binary log cache."
+msgstr "Antall transaksjoner som brukte den midlertidige binærloggmellomlageret."
+
+msgid "The number of connection attempts (successful or not) to the MySQL server."
+msgstr "Antalle tilkoblingsforsøk (vellykkede eller ei) til MySQL-tjeneren."
+
+msgid "The number of temporary tables on disk created automatically by the server while executing statements. If Created_tmp_disk_tables is big, you may want to increase the tmp_table_size  value to cause temporary tables to be memory-based instead of disk-based."
+msgstr "Antall midlertidige tabeller lagret på harddisken automatisk opprettet av tjeneren mens den utførte spørringer. Hvis Created_tmp_disk_tables er stor bør du vurdere å øke tmp_table_size verdien slik at midlertidige tabeller blir lagret i minnet og ikke på harddisken."
+
+msgid "How many temporary files mysqld has created."
+msgstr "Antall midlertidige filer mysqld har opprettet."
+
+msgid "The number of in-memory temporary tables created automatically by the server while executing statements."
+msgstr "Antall midlertidige tabeller i minnet automatisk opprettet av tjeneren under utføriing av spørringer."
+
+msgid "The number of rows written with INSERT DELAYED for which some error occurred (probably duplicate key)."
+msgstr "Antall rader skrevet med INSERT DELAYED hvor en eller annen form for feil oppstod (mest sannsynlig duplisert nøkkel)."
+
+msgid "The number of INSERT DELAYED handler threads in use. Every different table on which one uses INSERT DELAYED gets its own thread."
+msgstr "Antall INSERT DELAYED håndterertråder i bruk. Hver eneste tabell hvor det blir brukt INSERT DELAYE får sin egen tråd."
+
+msgid "The number of INSERT DELAYED rows written."
+msgstr "Antall INSERT DELAYED rader skrevet."
+
+msgid "The number of executed FLUSH statements."
+msgstr "Antall utførte FLUSH uttrykk."
+
+msgid "The number of internal COMMIT statements."
+msgstr "Antall interne COMMIT uttrykk."
+
+msgid "The number of times a row was deleted from a table."
+msgstr "Antall ganger en rad ble slettet fra en tabell."
+
+msgid "The MySQL server can ask the NDB Cluster storage engine if it knows about a table with a given name. This is called discovery. Handler_discover indicates the number of time tables have been discovered."
+msgstr "MySQL tjeneren kan spørre NDB Cluster lagringsmotoren om den kjenner til en tabell med et gitt navn. Dette blir kalt oppdaging (discovery). Handler_discover indikerer antall ganger tabeller har blitt oppdaget."
+
+msgid "The number of times the first entry was read from an index. If this is high, it suggests that the server is doing a lot of full index scans; for example, SELECT col1 FROM foo, assuming that col1 is indexed."
+msgstr "Antall ganger det første innlegget ble lest fra en index. Hvis dette tallet er høyt tyder det på at tjeneren utfører en god del fullindekssøk; for eksempel, SELECT col1 FROM foo, da forutsatt at col1 er indeksert."
+
+msgid "The number of requests to read a row based on a key. If this is high, it is a good indication that your queries and tables are properly indexed."
+msgstr "Antall forespørsler for å lese en rad basert på en nøkkel. Hvis dette tallet er høyt gir dette en god indikasjon på at dine spørringer og tabeller er riktig indeksert."
+
+msgid "The number of requests to read the next row in key order. This is incremented if you are querying an index column with a range constraint or if you are doing an index scan."
+msgstr "Antall forespørsler for å lese en rad basert på en fast posisjon. Denne er høy hvis du utører mange spørringer som behøver sortering av resultatet. Du har sansynligvis mange spørringer som krever at MySQL leser hele tabeller eller du har joins som ikke bruker nøkler korrekt."
+
+msgid "The number of requests to read the previous row in key order. This read method is mainly used to optimize ORDER BY … DESC."
+msgstr "Antall forespørsler for å lese den forrige raden i nøkkelrekkefølge. Denne lesemetoden er hovedsakelig brukt for å optimalisere ORDER BY … DESC."
+
+msgid "The number of requests to read a row based on a fixed position. This is high if you are doing a lot of queries that require sorting of the result. You probably have a lot of queries that require MySQL to scan whole tables or you have joins that don't use keys properly."
+msgstr "Antall forespørsler for å lese en rad basert på en fast posisjon. Denne er høy om du utfører mange spørringer som behøver sorteringer av resultatet. Du har mest sansynlig mange spørringer som krever at MySQL leser hele tabeller eller du har joins som ikke bruker nøkler korrekt."
+
+msgid "The number of requests to read the next row in the data file. This is high if you are doing a lot of table scans. Generally this suggests that your tables are not properly indexed or that your queries are not written to take advantage of the indexes you have."
+msgstr "Antall forespørsler for å lese neste rad i datafila. Dette tallet er høyt hvis du utfører mange tabellskanninger. Vanligvis betyr dette at dine tabeller ikke er rett indeksert eller at dine spørringer ikke er skrevet for å utnytte de indeksene du har."
+
+msgid "The number of internal ROLLBACK statements."
+msgstr "Antall interne ROLLBACK kommandoer."
+
+msgid "The number of requests to update a row in a table."
+msgstr "Antall forespørsler for å oppdatere en rad i en tabell."
+
+msgid "The number of requests to insert a row in a table."
+msgstr "Antall forespørsler for å sette inn en rad i en tabell."
+
+msgid "The number of pages containing data (dirty or clean)."
+msgstr "Antall sider som inneholder data (endret eller uendret)."
+
+msgid "The number of pages currently dirty."
+msgstr "Antall sider for tiden endret."
+
+msgid "The number of buffer pool pages that have been requested to be flushed."
+msgstr "Antall midlertidige mellomlagersider som det har vært oppfriskningsforespørsler på."
+
+msgid "The number of free pages."
+msgstr "Antall tomme sider."
+
+msgid "The number of latched pages in InnoDB buffer pool. These are pages currently being read or written or that can't be flushed or removed for some other reason."
+msgstr "Antallet låste sider i InnoDBs mellomlager. Dette er sider som er under lesing eller skriving eller ikke kan tømmes eller fjernes av en annen grunn."
+
+msgid "The number of pages busy because they have been allocated for administrative overhead such as row locks or the adaptive hash index. This value can also be calculated as Innodb_buffer_pool_pages_total - Innodb_buffer_pool_pages_free - Innodb_buffer_pool_pages_data."
+msgstr "Antall sider som er opptatt fordi de har blitt allokert for administrative oppgaver slik som radlåsing eller adaptiv nøkkelindeksering. Denne verdien kan også regnes ut som Innodb_buffer_pool_pages_total - Innodb_buffer_pool_pages_free - Innodb_buffer_pool_pages_data."
+
+msgid "Total size of buffer pool, in pages."
+msgstr "Total størrelse på midlertidig mellomlager i sider."
+
+msgid "The number of \"random\" read-aheads InnoDB initiated. This happens when a query is to scan a large portion of a table but in random order."
+msgstr "Antall \"tilfeldige\" \"read-aheads\" InnoDB startet. Dette skjer når en spørring skanner en stor andel av en tabell men i en tilfeldig rekkefølge."
+
+msgid "The number of sequential read-aheads InnoDB initiated. This happens when InnoDB does a sequential full table scan."
+msgstr "Antall sekvensielle \"read-aheads\" InnoDB startet. Denne skjer når InnoDB utfører en sekvensiell full tabellskanning."
+
+msgid "The number of logical read requests InnoDB has done."
+msgstr "Antall logiske leseforespørsler InnoDB har utført."
+
+msgid "The number of logical reads that InnoDB could not satisfy from buffer pool and had to do a single-page read."
+msgstr "Antall logiske lesninger som InnoDN ikke kunne tilfredsstille fra mellomlageret og måtte utføre en enkelsidelesnining."
+
+msgid "Normally, writes to the InnoDB buffer pool happen in the background. However, if it's necessary to read or create a page and no clean pages are available, it's necessary to wait for pages to be flushed first. This counter counts instances of these waits. If the buffer pool size was set properly, this value should be small."
+msgstr "Normalt vil skrivinger til InnoDBs mellomlager skje i bakgrunnen. Men, hvis det er behov for å lese eller opprette en side og ingen rene/tomme sider er tilgjengelig så er det nødvendig å vente på at sider blir tømt først. Denne telleren viser antall slike ventinger. Hvis mellomlagerstørrelsen er godt innstilt så vil denne verdien være liten."
+
+msgid "The number writes done to the InnoDB buffer pool."
+msgstr "Antall skrivinger til InnoDBs midlertidig mellomlager."
+
+msgid "The number of fsync() operations so far."
+msgstr "Antall fsync() operasjoner så langt."
+
+msgid "The current number of pending fsync() operations."
+msgstr "Antall ventende fsync() operasjoner."
+
+msgid "The current number of pending reads."
+msgstr "Antall ventende lesinger."
+
+msgid "The current number of pending writes."
+msgstr "Antall ventende skrivinger."
+
+msgid "The amount of data read so far, in bytes."
+msgstr "Mengden data lest så langt, i bytes."
+
+msgid "The total number of data reads."
+msgstr "Antall utførte lesninger."
+
+msgid "The total number of data writes."
+msgstr "Antall utførte skrivinger."
+
+msgid "The amount of data written so far, in bytes."
+msgstr "Mengden data skrevet så langt, i bytes."
+
+msgid "The number of pages that have been written for doublewrite operations."
+msgstr "Antallet dobbeltskrivinger som har blitt utført og antall sider som har blitt skrevet på grunn av dette."
+
+msgid "The number of doublewrite operations that have been performed."
+msgstr "Antallet dobbeltskrivinger som har blitt utført og antall sider som har blitt skrevet på grunn av dette."
+
+msgid "The number of waits we had because log buffer was too small and we had to wait for it to be flushed before continuing."
+msgstr "Antall ganger ventinger vi hadde fordi loggmellomlageret var for lite og vi måtte vente for at det skulle bli tømt før vi kunne fortsette."
+
+msgid "The number of log write requests."
+msgstr "Antall loggskrivingsforespørsler."
+
+msgid "The number of physical writes to the log file."
+msgstr "Antall fysiske skrivinger til loggfila."
+
+msgid "The number of fsync() writes done to the log file."
+msgstr "Antall fsync-skrivinger utført på loggfila."
+
+msgid "The number of pending log file fsyncs."
+msgstr "Antall ventende loggfil-fsyncs."
+
+msgid "Pending log file writes."
+msgstr "Ventende loggfilskrivinger."
+
+msgid "The number of bytes written to the log file."
+msgstr "Antall bytes skrevet til loggfila."
+
+msgid "The number of pages created."
+msgstr "Antall sider opprettet."
+
+msgid "The compiled-in InnoDB page size (default 16KB). Many values are counted in pages; the page size allows them to be easily converted to bytes."
+msgstr "Den innkompilerte InnoDB sidestørrelsen (standard 16KB). Mange verdier måles i sider; sidestørrelsen gjør at det er lett å konvertere dem til bytes."
+
+msgid "The number of pages read."
+msgstr "Antall sidelesninger."
+
+msgid "The number of pages written."
+msgstr "Antall sideskrivinger."
+
+msgid "The number of row locks currently being waited for."
+msgstr "Antall ventende radlåsinger."
+
+msgid "The average time to acquire a row lock, in milliseconds."
+msgstr "Gjennomsnittlig tid for å oppnå radlåsing, i millisekunder."
+
+msgid "The total time spent in acquiring row locks, in milliseconds."
+msgstr "Total tid brukt for å få radlåsinger, i millisekunder."
+
+msgid "The maximum time to acquire a row lock, in milliseconds."
+msgstr "Maksimum tid brukt for å oppnå en radlåsing, i millisekunder."
+
+msgid "The number of times a row lock had to be waited for."
+msgstr "Antall ganger en radlås måtte ventes på."
+
+msgid "The number of rows deleted from InnoDB tables."
+msgstr "Antall rader slettet fra InnoDB tabeller."
+
+msgid "The number of rows inserted in InnoDB tables."
+msgstr "Antall rader satt inn i InnoDB tabeller."
+
+msgid "The number of rows read from InnoDB tables."
+msgstr "Antall rader lest fra InnoDB tabeller."
+
+msgid "The number of rows updated in InnoDB tables."
+msgstr "Antall rader oppdatert i InnoDB tabeller."
+
+msgid "The number of key blocks in the key cache that have changed but haven't yet been flushed to disk. It used to be known as Not_flushed_key_blocks."
+msgstr "Antall nøkkelblokker i nøkkelmellomlageret som har blitt endret men som ikke ennå har blitt skrevet til harddisken. Dette var tidligere kjent som Not_flushed_key_blocks."
+
+msgid "The number of unused blocks in the key cache. You can use this value to determine how much of the key cache is in use."
+msgstr "Antall ubrukte blokker i nøkkelmellomlageret. Du kan bruke denne verdien til å bestemme hvor mye av nøkkelmellomlageret som er i bruk."
+
+msgid "The number of used blocks in the key cache. This value is a high-water mark that indicates the maximum number of blocks that have ever been in use at one time."
+msgstr "Antall brukte blokker i nøkkelmellomlageret. Denne verdien er et høyvannsmål som viser maksimum antall blokker som har vært brukt på en gang."
+
+msgid "The number of requests to read a key block from the cache."
+msgstr "Antall forespørsler for å lese en nøkkelblokk fra mellomlageret."
+
+msgid "The number of physical reads of a key block from disk. If Key_reads is big, then your key_buffer_size value is probably too small. The cache miss rate can be calculated as Key_reads/Key_read_requests."
+msgstr "Antall fysiske lesninger av en nøkkelblokk fra harddisk. Hvis Key_reads er stor er nok din key_buffer_size verdi for liten. Mellomlagertreffraten kan kalkuleres med Key_reads/Key_read_requests."
+
+msgid "The number of requests to write a key block to the cache."
+msgstr "Antall forespørsler for å skrive en nøkkelblokk til mellomlageret."
+
+msgid "The number of physical writes of a key block to disk."
+msgstr "Antall fysiske skrivinger av en nøkkelblokk til disk."
+
+msgid "The total cost of the last compiled query as computed by the query optimizer. Useful for comparing the cost of different query plans for the same query. The default value of 0 means that no query has been compiled yet."
+msgstr "Den totale kostnad ved siste kompilerte spørring slik den ble utregnet av spørringsoptimisereren. Nyttig for å kunne sammenligne kostnader ved forskjellige spørringsplaner for den samme spørringen. Standardverdien på 0 betyr at ingen spørring har blitt kompilert ennå."
+
+msgid "The maximum number of connections that have been in use simultaneously since the server started."
+msgstr "Maksimalt antall tilkoblinger i bruk samtidig siden tjeneren startet."
+
+msgid "The number of rows waiting to be written in INSERT DELAYED queues."
+msgstr "Antall rader som venter på å bli skrevet i INSERT DELAYED køer."
+
+msgid "The number of files that are open."
+msgstr "Antall åpne filer."
+
+msgid "The number of streams that are open (used mainly for logging)."
+msgstr "Antall åpne dataflyter (hovedsaklig brukt til logging)."
+
+msgid "The number of tables that are open."
+msgstr "Antall åpne tabeller."
+
+msgid "The amount of free memory for query cache."
+msgstr "Mengden ledig minne i spørringsmellomlager."
+
+msgid "The number of cache hits."
+msgstr "Antall mellomlagertreff."
+
+msgid "The number of queries added to the cache."
+msgstr "Antall spørringer lagt til i mellomlageret."
+
+msgid "The number of queries that have been removed from the cache to free up memory for caching new queries. This information can help you tune the query cache size. The query cache uses a least recently used (LRU) strategy to decide which queries to remove from the cache."
+msgstr "Antall spørringer som har blitt fjernet fra mellomlageret for å frigjøre minne for nye spørringer. Denne informasjonen kan hjelpe deg å fininnstille størrelsen på spørringsmellomlageret. Spørringsmellomlageret bruker en minst og sist brukt (least recently used (LRU)) strategi for å finne hvilke spørringer som skal fjernes fra mellomlageret."
+
+msgid "The number of non-cached queries (not cachable, or not cached due to the query_cache_type setting)."
+msgstr "Antallet ikkelagrede spørringer (kan ikke lagres, eller ikke lagret p.g.a. query_cache_type innstillingen)."
+
+msgid "The number of queries registered in the cache."
+msgstr "Antall spørringer registrert i mellomlageret."
+
+msgid "The total number of blocks in the query cache."
+msgstr "Totale antall blokker i spørringsmellomlageret."
+
+msgid "The status of failsafe replication (not yet implemented)."
+msgstr "Failsafe replikasjonsstatus (ikke implementert ennå)."
+
+msgid "The number of joins that do not use indexes. If this value is not 0, you should carefully check the indexes of your tables."
+msgstr "Antall joins som ikke bruker indekser. Hvis denne verdien ikke er 0 bør du nøye sjekke indeksene til dine tabeller."
+
+msgid "The number of joins that used a range search on a reference table."
+msgstr "Antall joins som trenger en rekkefølgesøk i en referansetabell."
+
+msgid "The number of joins without keys that check for key usage after each row. (If this is not 0, you should carefully check the indexes of your tables.)"
+msgstr "Antall joins uten nøkler som kontrollerer for nøkkelbruk etter hver rad (Hvis denne ikke er 0 bør du nøye kontrollere dine tabellindekser.)"
+
+msgid "The number of joins that used ranges on the first table. (It's normally not critical even if this is big.)"
+msgstr "Antall joins som brukte rekkefølger på den første tabellen. (Det er normalt ikke kritisk selv om denne verdien er stor.)"
+
+msgid "The number of joins that did a full scan of the first table."
+msgstr "Antall joins som utførte en full skann av den første tabellen."
+
+msgid "The number of threads that have taken more than slow_launch_time seconds to create."
+msgstr "Antall tråder som har brukt mer enn slow_launch_time sekunder under opprettelse."
+
+msgid "The number of queries that have taken more than long_query_time seconds."
+msgstr "Antall spørringer som har brukt mer enn long_query_time sekunder."
+
+msgid "The number of merge passes the sort algorithm has had to do. If this value is large, you should consider increasing the value of the sort_buffer_size system variable."
+msgstr "Antall sammenslåingspasseringer sorteringsalgoritmen har måttet utføre. Hvis denne verdien er stor bør du vurdere å øke verdien av sort_buffer_size systemvariabelen."
+
+msgid "The number of sorts that were done with ranges."
+msgstr "Antall sorteringer som ble utført med rekkefølger."
+
+msgid "The number of sorted rows."
+msgstr "Antall sorterte rader."
+
+msgid "The number of sorts that were done by scanning the table."
+msgstr "Antall sorteringer som har vært utført ved hjelp av skanning av tabellen."
+
+msgid "The number of times that a table lock was acquired immediately."
+msgstr "Antall ganger en tabellåsing ble utført umiddelbart."
+
+msgid "The number of times that a table lock could not be acquired immediately and a wait was needed. If this is high, and you have performance problems, you should first optimize your queries, and then either split your table or tables or use replication."
+msgstr "Antall ganger en tabellås ikke har kunnet blitt opprettet umiddelbart og en venting ble nødvendig. Hvis denne er høy og du har ytelsesproblemer bør du først optimalisere dine spørringer, og deretter enten splitte din tabell eller tabeller eller bruke replikasjon."
+
+msgid "The number of threads in the thread cache. The cache hit rate can be calculated as Threads_created/Connections. If this value is red you should raise your thread_cache_size."
+msgstr "Antall tråder i trådmellomlageret. Mellomlagertreffraten kan regnes ut som Threads_created/Connections. Hvis denne verdien er rød bør du øke din thread_cache_size."
+
+msgid "The number of currently open connections."
+msgstr "Antall åpne tilkoblinger."
+
+msgid "The number of threads created to handle connections. If Threads_created is big, you may want to increase the thread_cache_size value. (Normally this doesn't give a notable performance improvement if you have a good thread implementation.)"
+msgstr "Antall tråder opprettet for å handtere tilkoblinger. Hvis Threads_created er stor bør du vurdere å øke thread_cache_size størrelsen. (Normalt vil dette ikke gi noen merkbar forbedring hvis du har en god trådimplementering.)"
+
+msgid "The number of threads that are not sleeping."
+msgstr "Antall tråder som ikke sover."
+
+msgid "You are not using a secure connection; all data (including potentially sensitive information, like passwords) is transferred unencrypted!"
+msgstr "Du bruker ikke en sikker tilkobling, all data (inkludert sensitive, slik som passorder) blir overført ukryptert!"
+
+msgid "Insecure connection"
+msgstr "Usikker tilkobling"
+
+msgid "Bookmark %s has been created."
+msgstr "Bokmerke %s har blitt opprettet."
+
+msgid "Bookmark not created!"
+msgstr "Bokmerke er ikke opprettet!"
+
+msgid "Table %1$s has been altered successfully."
+msgstr "Tabellen %1$s har blitt endret."
+
+msgid "'%s' database does not exist."
+msgstr "'%s' database eksisterer ikke."
+
+msgid "Table %s already exists!"
+msgstr "Tabel %s eksisterer allerede!"
+
+msgid "Invalid table name"
+msgstr "Ugylding tabellnavn"
+
+msgid "MySQL returned an empty result set (i.e. zero rows)."
+msgstr "MySQL returnerte et tomt resultat - det vil si ingen rader."
+
+msgid "Row: %1$s, Column: %2$s, Error: %3$s"
+msgstr "Rad: %1$s, Kolonne: %2$s, Feil: %3$s"
+
+msgid "SQL statements executed."
+msgstr "SQL spørringer utført."
+
+msgid "You don't have sufficient privileges to be here right now!"
+msgstr "Du har ikke nok rettigheter til å være her nå!"
+
+msgid "The %s extension is missing. Please check your PHP configuration."
+msgstr "%s tillegget mangler. Kontroller din PHP konfigurasjon."
+
+msgid "Could not add %1$s as they already exist in central list!"
+msgstr "Kunne ikke legge til %1$s ettersom den allerede finnes i sentrallisten!"
+
+msgid "Could not add columns!"
+msgstr "Kunne ikke legge til kolonner!"
+
+msgid "Couldn't remove Column(s) %1$s as they don't exist in central columns list!"
+msgstr "Kunne ikke fjerne Kolonne(s) %1$s fordi den eksisterer ikke i sentral kolonneliste!"
+
+msgid "Could not remove columns!"
+msgstr "Kunne ikke fjerne kolonner!"
+
+msgid "The configuration storage is not ready for the central list of columns feature."
+msgstr "Oppsettslageret er ikke klar for den sentrale listen over kolonnegenskaper."
+
+msgid "Error: FOREIGN KEY relationship could not be added!"
+msgstr "Feil: FREMMED NØKKEL-forhold kunne ikke legges til!"
+
+msgid "Error: Relational features are disabled!"
+msgstr "Feil: Relasjonsfunksjoner er deaktivert!"
+
+msgid "Error: Internal relationship could not be added!"
+msgstr "Feil: Internt forhold kunne ikke legges til!"
+
+msgid "Error: Internal relationship could not be removed!"
+msgstr "Feil: Internt forhold kunne ikke fjernes!"
+
+msgid "MySQL said: "
+msgstr "MySQL sa: "
+
+msgid "The row has been deleted."
+msgstr "Raden er slettet."
+
+msgid "Query took %01.4f seconds."
+msgstr "Spørring tok %01.4f sekunder."
+
+msgid "Showing rows %1s - %2s"
+msgstr "Viser radene %1s - %2s"
+
+msgid "Link not found!"
+msgstr "Link ikke funnet!"
+
+msgid "Data home directory"
+msgstr "Datalagringsmappe"
+
+msgid "The common part of the directory path for all InnoDB data files."
+msgstr "Felles del av filsti for alle InnoDB datafiler."
+
+msgid "Data files"
+msgstr "Datafiler"
+
+msgid "Autoextend increment"
+msgstr "Autoforstørrende økning"
+
+msgid "The increment size for extending the size of an autoextending tablespace when it becomes full."
+msgstr "Økningen som brukes for å forstørre et autoforstørrende tabellager når den blir full."
+
+msgid "Buffer pool size"
+msgstr "Mellomlagerstørrelse"
+
+msgid "The size of the memory buffer InnoDB uses to cache data and indexes of its tables."
+msgstr "størrelsen på datalageret InnoDB bruker for å mellomlagre data og indekser for sine tabeller."
+
+msgid "Buffer Pool"
+msgstr "Mellomlager"
+
+msgid "InnoDB Status"
+msgstr "InnoDB status"
+
+msgid "Data pointer size"
+msgstr "Datapekerstørrelse"
+
+msgid "The default pointer size in bytes, to be used by CREATE TABLE for MyISAM tables when no MAX_ROWS option is specified."
+msgstr "Standard pekerstørrelse i bytes, som brukes av CREATE TABLE for MyISAM tabeller når ingen MAX_ROWS innstillinger er spesifisert."
+
+msgid "Automatic recovery mode"
+msgstr "Automatisk gjennopprettignsmodus"
+
+msgid "The mode for automatic recovery of crashed MyISAM tables, as set via the --myisam-recover server startup option."
+msgstr "Modusen for automatisk gjenoppretting av MyISAM-tabeller som har krasjet, satt opp via --myisam-recover -tjeneroppstartsinnstillingen."
+
+msgid "Maximum size for temporary sort files"
+msgstr "Maksimum størrelse for midlertidige sorteringsfiler"
+
+msgid "The maximum size of the temporary file MySQL is allowed to use while re-creating a MyISAM index (during REPAIR TABLE, ALTER TABLE, or LOAD DATA INFILE)."
+msgstr "Maksimum størrelse for den midlertidige filen MySQL har lov til å bruke når den gjennoppretter en MyISAM indeks (med spørringene REPAIR TABLE, ALTER TABLE, eller LOAD DATA INFILE)."
+
+msgid "Maximum size for temporary files on index creation"
+msgstr "Maksimum størrelse for midlertidige filer under indeksopprettelse"
+
+msgid "If the temporary file used for fast MyISAM index creation would be larger than using the key cache by the amount specified here, prefer the key cache method."
+msgstr "Hvis den midlertidige filen brukt for hurtig MyISAM indeksopprettelse ville bli større enn å bruke nøkkelmellomlager med størrelsen spesifisert her, så bruk nøkkellagermetoden."
+
+msgid "Repair threads"
+msgstr "Reparer tråder"
+
+msgid "If this value is greater than 1, MyISAM table indexes are created in parallel (each index in its own thread) during the repair by sorting process."
+msgstr "Hvis denne verdien er større enn 1 så blir MyISAM tabellindekser opprettet parallelt (hver indeks i sin egen tråd) under REPAIR av sorteringsprosessen."
+
+msgid "Sort buffer size"
+msgstr "Sorteringsbufferstørrelse"
+
+msgid "The buffer that is allocated when sorting MyISAM indexes during a REPAIR TABLE or when creating indexes with CREATE INDEX or ALTER TABLE."
+msgstr "Bufferet som brukes ved sortering av MyISAM indekser under en REPAIR TABLE eller når indekser blir opprettet med CREATE INDEX eller ALTER TABLE."
+
+msgid "Index cache size"
+msgstr "Indeksmellomlagerstørrelse"
+
+msgid "This is the amount of memory allocated to the index cache. Default value is 32MB. The memory allocated here is used only for caching index pages."
+msgstr "Dette er mengden minne tilordnet indeksmellomlageret. Standard verdi er 32MB. Minnet tilordnet her brukes kun for mellomlagring av indekssider."
+
+msgid "Record cache size"
+msgstr "Radmellomlagerstørrelse"
+
+msgid "This is the amount of memory allocated to the record cache used to cache table data. The default value is 32MB. This memory is used to cache changes to the handle data (.xtd) and row pointer (.xtr) files."
+msgstr "Mengden minne tilordnet radmellomlageret brukt til å mellomlagre tabelldata. Standard verdi er 32MB. Dette minnet blir brukt til å mellomlagre endringer til \"handle data\" (.xtd) og radpeker (.xtr) filer."
+
+msgid "Log cache size"
+msgstr "Loggmellomlagerstørrelse"
+
+msgid "The amount of memory allocated to the transaction log cache used to cache on transaction log data. The default is 16MB."
+msgstr "Mengden minne tilordnet transaksjonsloggmellomlageret brukt til å mellomlagre transakjsonsloggdata. Standard verdi er 16MB."
+
+msgid "Log file threshold"
+msgstr "Loggfilterskel"
+
+msgid "The size of a transaction log before rollover, and a new log is created. The default value is 16MB."
+msgstr "Størrelsen til en transaksjonslogg før rollover, og en ny logg blir opprettet. Standard verdi er 16MB."
+
+msgid "Transaction buffer size"
+msgstr "Transaksjonsbufferstørrelse"
+
+msgid "The size of the global transaction log buffer (the engine allocates 2 buffers of this size). The default is 1MB."
+msgstr "Størrelsen til det globale transaksjonsloggmellomlageret (databasemotoren tilordner 2 mellomlager med denne størrelsen). Standard verdi er 1MB."
+
+msgid "Checkpoint frequency"
+msgstr "Kontrollpunktfrekvens"
+
+msgid "The amount of data written to the transaction log before a checkpoint is performed. The default value is 24MB."
+msgstr "Mengden data skrevet til transaksjonsloggen før en punktsjekk blir utført. Standard verdi er 24MB."
+
+msgid "Data log threshold"
+msgstr "Dataloggterskel"
+
+msgid "The maximum size of a data log file. The default value is 64MB. PBXT can create a maximum of 32000 data logs, which are used by all tables. So the value of this variable can be increased to increase the total amount of data that can be stored in the database."
+msgstr "Maksimum størrelse på en dataloggfil. Standard verdi er 64MB. PBXT can opprette maksimum 32000 datalogger, som er brukt av alle tabeller. Så verdien av denne variabelen kan økes for å øke den totale mengden data som kan lagres i databasen."
+
+msgid "Garbage threshold"
+msgstr "Søppelterskel"
+
+msgid "The percentage of garbage in a data log file before it is compacted. This is a value between 1 and 99. The default is 50."
+msgstr "Prosentandelen søppel på en dataloggfil før den komprimeres. Dette er en verdi mellom 1 og 99. Standard er 50."
+
+msgid "Log buffer size"
+msgstr "Loggbufferstørrelse"
+
+msgid "The size of the buffer used when writing a data log. The default is 256MB. The engine allocates one buffer per thread, but only if the thread is required to write a data log."
+msgstr "Størrelsen på mellomlageret som brukes ved skriving av en datalogg. Standard verdi er 256MB. Databasemotoren tillordner ett buffer per tråd, men bare hvis tråden er påkrevd å skrive en datalogg."
+
+msgid "Data file grow size"
+msgstr "Datafil vekststørrelse"
+
+msgid "The grow size of the handle data (.xtd) files."
+msgstr "Vekststørrelsen til \"handle data\" filene (.xtd)."
+
+msgid "Row file grow size"
+msgstr "Radfil vekststørrelse"
+
+msgid "The grow size of the row pointer (.xtr) files."
+msgstr "Vekststørrelsen til radpekerfilene (.xtr)."
+
+msgid "Log file count"
+msgstr "Antall loggfiler"
+
+msgid "This is the number of transaction log files (pbxt/system/xlog*.xt) the system will maintain. If the number of logs exceeds this value then old logs will be deleted, otherwise they are renamed and given the next highest number."
+msgstr "Dette er det antall transaksjonsloggfiler (pbxt/system/xlog*.xt) som systemet will opprettholde. Hvis antall logger overstiger denne verdien vil gamle logger bli slettet, ellers så vil de bli gitt nytt navn og gitt det neste høyeste nummeret."
+
+msgid "Too many error messages, some are not displayed."
+msgstr "For mange feilmeldinger, noen vises ikke."
+
+msgid "Report"
+msgstr "Rapporter"
+
+msgid "Access denied!"
+msgstr "Ingen tilgang!"
+
+msgid "Insufficient space to save the file %s."
+msgstr "Ikke nok plass til å lagre filen %s."
+
+msgid "File %s already exists on server, change filename or check overwrite option."
+msgstr "Filen %s eksisterer alt på tjeneren, endre navnet eller merk av for overskriving av fil."
+
+msgid "The web server does not have permission to save the file %s."
+msgstr "Vevtjeneren har ikke tillatelse til å lagre filen %s."
+
+msgid "Dump has been saved to file %s."
+msgstr "Dump har blitt lagret til filen %s."
+
+msgid "Could not save recent table!"
+msgstr "Kunne ikke lagre tabell!"
+
+msgid "Could not save favorite table!"
+msgstr "Kunne ikke lagre favorittabell!"
+
+msgid "File was not an uploaded file."
+msgstr "Filen var ikke en opplastet fil."
+
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
+msgstr "Opplastingsfilen er større enn upload_max_filesize direktivet definert i php.ini."
+
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
+msgstr "Opplastingsfilen er større enn MAX_FILE_SIZE direktivet som ble spesifisert i HTML-skjemaet."
+
+msgid "The uploaded file was only partially uploaded."
+msgstr "Opplastingsfilen ble bare delvis opplastet."
+
+msgid "Missing a temporary folder."
+msgstr "Mangler en midlertidig mappe."
+
+msgid "Failed to write file to disk."
+msgstr "Feil ved skriving av fil til disk."
+
+msgid "File upload stopped by extension."
+msgstr "Filopplasting stoppet av utvidelse."
+
+msgid "Unknown error in file upload."
+msgstr "Ukjent feil oppstod under filopplastingen."
+
+msgid "File is a symbolic link"
+msgstr "Filen er en symbolsk lenke"
+
+msgid "File could not be read!"
+msgstr "Filen kunne ikke leses!"
+
+msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
+msgstr "Feil oppstod under forsøk på flytting av den opplastede filen, se [doc@faq1-11]FAQ 1.11[/doc]."
+
+msgid "Error while moving uploaded file."
+msgstr "Feil oppstod imens den opplastede filen ble flyttet."
+
+msgid "You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration."
+msgstr "Du forsøkte å laste en fil med komprimering det ikke er støtte for (%s). Enten så er ikke støtte implementert eller det er slått av i oppsettet ditt."
+
+msgid "SSL is not being used"
+msgstr "SSL er ikke i bruk"
+
+msgid "SSL is used with disabled verification"
+msgstr "SSL er i bruk med avskrudd bekreftelse"
+
+msgid "SSL is used without certification authority"
+msgstr "SSl er i bruk uten sertifikatsmyndighet"
+
+msgid "SSL is used"
+msgstr "SSL er i bruk"
+
+msgid "password_hash() PHP function"
+msgstr "password_hash()-PHP-funksjon"
+
+msgid "Skip Explain SQL"
+msgstr "Ikke forklar SQL"
+
+msgctxt "Inline edit query"
+msgid "Edit inline"
+msgstr "Rediger innenfor"
+
+msgid "%d errors were found during analysis."
+msgstr "%d feil ble funnet under analyse."
+
+msgid "You should upgrade to %s %s or later."
+msgstr "Du burde oppgradere til %s %s eller nyere."
+
+msgid "possible exploit"
+msgstr "mulig sikkerhetshull"
+
+msgid "Error: Token mismatch"
+msgstr "Feil: Tegn samsvarer ikke"
+
+msgid "The following structures have either been created or altered. Here you can:"
+msgstr "Følgende strukturer har enten blitt opprettet eller endret. Her kan du:"
+
+msgid "The indexes %1$s and %2$s seem to be equal and one of them could possibly be removed."
+msgstr "Indeksene %1$s og %2$s ser ut til å være like og en av dem burde kunne fjernes."
+
+msgid "Showing SQL query"
+msgstr "Viser SQL spørring"
+
+msgid "Inserted row id: %1$d"
+msgstr "Insatt rad id: %1$d"
+
+msgid "Tracking"
+msgstr "Overvåkning"
+
+msgid "Database seems to be empty!"
+msgstr "Databasen ser ut til å være tom!"
+
+msgid "Designer"
+msgstr "Designer"
+
+msgid "User accounts"
+msgstr "Brukerkontoer"
+
+msgid "Charsets"
+msgstr "Tegnsett"
+
+msgid "Engines"
+msgstr "Motorer"
+
+msgid "%1$d row affected."
+msgid_plural "%1$d rows affected."
+msgstr[0] "%1$d rad berørt."
+msgstr[1] "%1$d rader berørt."
+
+msgid "%1$d row deleted."
+msgid_plural "%1$d rows deleted."
+msgstr[0] "%1$d rad slettet."
+msgstr[1] "%1$d rader slettet."
+
+msgid "%1$d row inserted."
+msgid_plural "%1$d rows inserted."
+msgstr[0] "%1$d rad innsatt."
+msgstr[1] "%1$d rader innsatt."
+
+msgid "Groups:"
+msgstr "Grupper:"
+
+msgid "Groups"
+msgstr "Grupper"
+
+msgctxt "Create new database"
+msgid "New"
+msgstr "Ny"
+
+msgctxt "Create new event"
+msgid "New"
+msgstr "Ny"
+
+msgid "Functions"
+msgstr "Funsjoner"
+
+msgctxt "Create new function"
+msgid "New"
+msgstr "Ny"
+
+msgctxt "Create new index"
+msgid "New"
+msgstr "Ny"
+
+msgid "Procedures"
+msgstr "Prosedyrer"
+
+msgctxt "Create new procedure"
+msgid "New"
+msgstr "Ny"
+
+msgctxt "Create new table"
+msgid "New"
+msgstr "Ny"
+
+msgctxt "Create new trigger"
+msgid "New"
+msgstr "Ny"
+
+msgctxt "Create new view"
+msgid "New"
+msgstr "Ny"
+
+msgid "Error in processing!"
+msgstr "Feil i gjennomføring!"
+
+msgid "Can't move table to same one!"
+msgstr "Kan ikke flytte tabellen til samme navn!"
+
+msgid "Can't copy table to same one!"
+msgstr "Kan ikke kopiere tabellen til samme navn!"
+
+msgid "Table %s has been moved to %s."
+msgstr "Tabellen %s har blitt flyttet til %s."
+
+msgid "Table %s has been copied to %s."
+msgstr "Tabellen %s er kopiert til %s."
+
+msgid "The table name is empty!"
+msgstr "Tabellnavnet er tomt!"
+
+msgid "Error while creating PDF:"
+msgstr "Feil oppstod under oppretting av PDF:"
+
+msgid "You probably did not create a configuration file. You might want to use the %1$ssetup script%2$s to create one."
+msgstr "En mulig årsak for dette er at du ikke opprettet konfigurasjonsfila. Du bør kanskje bruke %1$ssetup script%2$s for å opprette en."
+
+msgid "phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server."
+msgstr "phpMyAdmin forsøkte å koble til MySQL-tjeneren, og tjeneren avviste tilkoblingen. Du må kontrollere vert (host), brukernavn (username) og passord (password) i config.inc.php og sjekke at de tilsvarer den informasjonen du fikk fra MySQL-tjeneradministratoren."
+
+msgid "Retry to connect"
+msgstr "Prøv igjen for å koble til"
+
+msgid "Your session has expired. Please log in again."
+msgstr "Økten din har utløpt. Prøv igjen."
+
+msgid "Failed to connect to the reCAPTCHA service!"
+msgstr "Kunne ikke koble til reCAPTCHA tjeneste!"
+
+msgid "Wrong username/password. Access denied."
+msgstr "Ugyldig brukernavn/passord. Ingen tilgang."
+
+msgid "Invalid authentication method set in configuration:"
+msgstr "Ugyldig autentiseringsmetode satt opp i konfigureringen:"
+
+msgid "Columns separated with:"
+msgstr "Kolonner separert med:"
+
+msgid "Columns enclosed with:"
+msgstr "Kolonner omsluttet av:"
+
+msgid "Replace NULL with:"
+msgstr "Erstatt NULL med:"
+
+msgid "Dumping data for table"
+msgstr "Dataark for tabell"
+
+msgid "Table structure for table"
+msgstr "Tabellstruktur for tabell"
+
+msgid "Structure for view"
+msgstr "Visningsstruktur"
+
+msgid "Stand-in structure for view"
+msgstr "Erstatningsstruktur for visning"
+
+msgid "Content of table @TABLE@"
+msgstr "Innhold i tabell @TABLE@"
+
+msgid "(continued)"
+msgstr "(fortsettet)"
+
+msgid "Structure of table @TABLE@"
+msgstr "Struktur i tabell @TABLE@"
+
+msgid "Display comments"
+msgstr "Vis kommentarer"
+
+msgid "Display comments <i>(includes info such as export timestamp, PHP version, and server version)</i>"
+msgstr "Vis kommentarer <i>(inkluderer info som eksporteringstidsstempel, PHP-versjon, og tjenerversjon)</i>"
+
+msgid "Additional custom header comment (\\n splits lines):"
+msgstr "Ytterligere egendefinert kommentar hodekommentar (\\n lager linjeskift):"
+
+msgid "Constraints for dumped tables"
+msgstr "Begrensninger for dumpede tabeller"
+
+msgid "Constraints for table"
+msgstr "Begrensninger for tabell"
+
+msgid "Creation:"
+msgstr "Opprettet:"
+
+msgid "Last update:"
+msgstr "Sist oppdatert:"
+
+msgid "Last check:"
+msgstr "Sist sjekket:"
+
+msgid "Export contents"
+msgstr "Eksporter innhold"
+
+msgid "Column names:"
+msgstr "Kolonne navn:"
+
+msgid "Invalid format of CSV input on line %d."
+msgstr "Ugyldig format i CSV importen i linje %d."
+
+msgid "Invalid column count in CSV input on line %d."
+msgstr "Ugyldig antall kolonner i CSV importen i linje %d."
+
+msgid "Invalid parameter for CSV import: %s"
+msgstr "Ugyldig parameter for CSV import: %s"
+
+msgid "Column names: "
+msgstr "Kolonnenavn: "
+
+msgid "This plugin does not support compressed imports!"
+msgstr "Dette tillegget støtter ikke komprimerte importeringer!"
+
+msgid "MediaWiki Table"
+msgstr "MediaWiki Tabell"
+
+msgid "Import percentages as proper decimals <i>(ex. 12.00% to .12)</i>"
+msgstr "Importer prosenter som ekte desimaler <i>(eks. 12.00% til .12)</i>"
+
+msgid "Import currencies <i>(ex. $5.00 to 5.00)</i>"
+msgstr "Importer valuta <i>(eks. $5.00 til 5.00)</i>"
+
+msgid "The XML file specified was either malformed or incomplete. Please correct the issue and try again."
+msgstr "Den spesifiserte XML-filen var enten skadet eller ufulstendig. Korriger problemet og prøv igjen."
+
+msgid "The imported file does not contain any data!"
+msgstr "Den importerte filen inneholder ingen data!"
+
+msgid "Do not use <code>AUTO_INCREMENT</code> for zero values"
+msgstr "Ikke bruk <code>AUTO_INCREMENT</code> for nullverdier"
+
+msgid "XML"
+msgstr "XML"
+
+msgid "The %s table doesn't exist!"
+msgstr "Tabellen %s eksisterer ikke!"
+
+msgid "Schema of the %s database - Page %s"
+msgstr "Skjema for %s databasen - Side %s"
+
+msgid "Relational schema"
+msgstr "Relasjonsskjema"
+
+msgid "Table of contents"
+msgstr "Innholdsfortegnelse"
+
+msgid "Show color"
+msgstr "Vis farger"
+
+msgid "Only show keys"
+msgstr "Bare vis nøkler"
+
+msgid "Landscape"
+msgstr "Landskapsformat"
+
+msgid "Portrait"
+msgstr "Portrettformat"
+
+msgid "Show grid"
+msgstr "Vis rutenett"
+
+msgid "Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use \"local\" or \"utc\" strings) for that. According to that, date format has different value - for \"local\" see the documentation for PHP's strftime() function and for \"utc\" it is done using gmdate() function."
+msgstr "Vis en TIME, TIMESTAMP, DATETIME eller et numerisk Unix tidsmerke som en formatert dato. Den første innstillingen er differansen (i timer) som vil bli lagt til tidsmerket (Standard: 0). Bruk den andre innstillingen til å spesifiser en alternativ datoformatstreng. Den tredje innstillingen avgjør om du ønsker visning som en lokal dato eller som UTC (bruk \"local\" eller \"utc\" strenger). Avhengig av dette, vil datoformatstrengen ha forskjellig verdi - for \"local\" se dokumentasjonen for PHPs strftime() funksjon og for \"utc\" se gmdate() funksjonen."
+
+msgid "%B %d, %Y at %I:%M %p"
+msgstr "%d. %B, %Y %H:%M %p"
+
+msgid "Displays the contents of the column as-is, without running it through htmlspecialchars(). That is, the column is assumed to contain valid HTML."
+msgstr "Bevarer original formatering av kolonnen uten å kjøre den gjennom htmlspecialchars(). Kolonnen blir betraktet som å inneholde gyldig HTML."
+
+msgid "Displays hexadecimal representation of data. Optional first parameter specifies how often space will be added (defaults to 2 nibbles)."
+msgstr "Vis dataene i heksadesimal. Den valgfrie første parameteren tilkjennegir hvor ofte mellomrom vil bli lagt til (standard hvert andre tegn)."
+
+msgid "Displays a link to download this image."
+msgstr "Viser en link for nedlasting av dette bildet."
+
+msgid "Displays a clickable thumbnail. The options are the maximum width and height in pixels. The original aspect ratio is preserved."
+msgstr "Viser et klikkbart ministyrbilde. Valgene er satt til maksimum lengde og høyde i piksler. Det opprinnelige størrelsesforholdet blir bevart."
+
+msgid "Formats text as SQL query with syntax highlighting."
+msgstr "Formaterer tekst som en SQL spørring med syntaksutheving."
+
+msgid "Displays a part of a string. The first option is the number of characters to skip from the beginning of the string (Default 0). The second option is the number of characters to return (Default: until end of string). The third option is the string to append and/or prepend when truncation occurs (Default: \"…\")."
+msgstr "Viser bare en delstreng. Første verdien er antall tegn fra starten hvor din tekst begynner (Standard: 0). Andre verdien er hvor mange tegn som skal returneres. Hvis den er tom så returneres resten av teksten. Den tredje verdien definerer hvilke tegn som vil bli lagt til resultatet når en delstreng blir returnert (Standard: …)."
+
+msgid "Displays an image and a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second and third options are the width and the height in pixels."
+msgstr "Viser et bilde og en link, kolonnen inneholder filnavnet; første verdi er et prefiks slik som \"https://www.example.com/\", andre verdien er bredden i piksler, tredje er høyden."
+
+msgid "Displays a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second option is a title for the link."
+msgstr "Viser en link, kolonnen inneholder filnavnet, ; første verdi er et prefiks slik som \"https://www.example.com/\", andre verdien er en tittel for linken."
+
+msgid "The server is not responding (or the local server's socket is not correctly configured)."
+msgstr "Tjeneren svarer ikke (eller den lokale MySQL tjenerens sokkel er ikke korrekt konfigurert)."
+
+msgid "The server is not responding."
+msgstr "Tjeneren svarer ikke."
+
+msgid "Please check privileges of directory containing database."
+msgstr "Vennligst sjekk privilegiene på mappen som inneholder databasen."
+
+msgid "Details…"
+msgstr "Detaljer…"
+
+msgid "Error 404! The page %s was not found."
+msgstr "Feil 404! Siden \"%s\" ble ikke funnet."
+
+msgid "No privileges."
+msgstr "Ingen privilegier."
+
+msgid "Includes all privileges except GRANT."
+msgstr "Inkluder alle privilegier unntatt GRANT."
+
+msgid "The password for %s was changed successfully."
+msgstr "Passordet til %s er endret."
+
+msgid "You have revoked the privileges for %s."
+msgstr "Du har fjernet privilegiene til %s."
+
+msgid "Revoke"
+msgstr "Tilbakekall"
+
+msgid "No users selected for deleting!"
+msgstr "Ingen brukere merket for sletting!"
+
+msgid "Reloading the privileges"
+msgstr "Oppfrisker privilegiene"
+
+msgid "The selected users have been deleted successfully."
+msgstr "De valgte brukerne har blitt slettet."
+
+msgid "You have updated the privileges for %s."
+msgstr "Du har oppdatert privilegiene til %s."
+
+msgid "Deleting %s"
+msgstr "Sletter %s"
+
+msgid "The privileges were reloaded successfully."
+msgstr "Oppfriskingen av privilegiene lyktes."
+
+msgid "The user %s already exists!"
+msgstr "Brukeren %s finnes fra før!"
+
+msgid "You have added a new user."
+msgstr "Du har lagt til en ny bruker."
+
+msgid "Handler"
+msgstr "Behandler"
+
+msgid "Query cache"
+msgstr "Spørringsmellomlager"
+
+msgid "Threads"
+msgstr "Tråder"
+
+msgid "Temporary data"
+msgstr "Midlertidige data"
+
+msgid "Delayed inserts"
+msgstr "Forsinkede innsettinger"
+
+msgid "Key cache"
+msgstr "Nøkkelmellomlager"
+
+msgid "Joins"
+msgstr "Sammenføyninger"
+
+msgid "Sorting"
+msgstr "Sortering"
+
+msgid "Transaction coordinator"
+msgstr "Transaksjonskoordinator"
+
+msgid "Flush (close) all tables"
+msgstr "Flush (lukk) alle tabeller"
+
+msgid "Show open tables"
+msgstr "Vis åpne tabeller"
+
+msgid "Flush query cache"
+msgstr "Flush spørringsbufferen"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Command"
+msgstr "Kommando"
+
+msgid "Progress"
+msgstr "Framdrift"
+
+msgid "Reading of version failed. Maybe you're offline or the upgrade server does not respond."
+msgstr "Lesing av versjon feilet. Du er kanskje offline eller oppgraderingstjeneren svarer ikke."
+
+msgid "You are using Git version, run [kbd]git pull[/kbd] :-)[br]The latest stable version is %s, released on %s."
+msgstr "Du bruker Git versjon, kjør [kbd]git pull[/kbd] :-)[br]Den siste stabile versjon er %s, utgitt den %s."
+
+msgid "No newer stable version is available"
+msgstr "Ingen ny stabil versjon er tilgjengelig"
+
+msgid "Showing as PHP code"
+msgstr "Viser som PHP kode"
+
+msgid "Run SQL query/queries on database %s"
+msgstr "Kjør SQL spørring/spørringer mot databasen %s"
+
+msgid "There is no detailed status information available for this storage engine."
+msgstr "Det er ikke noen detaljert statusinformasjon for denne lagringsmotoren."
+
+msgid "%s is available on this MySQL server."
+msgstr "%s er tilgjengelig på denne MySQL theneren."
+
+msgid "%s has been disabled for this MySQL server."
+msgstr "%s har blitt dekativert for denne MySQL tjeneren."
+
+msgid "This MySQL server does not support the %s storage engine."
+msgstr "Denne MySQL tjeneren har ikke støtte for %s lagringsmotoren."
+
+msgid "The name of the primary key must be \"PRIMARY\"!"
+msgstr "Navnet til primærnøkkelen må være \"PRIMARY\"!"
+
+msgid "Can't rename index to PRIMARY!"
+msgstr "Kan ikke endre indeks til PRIMARY!"
+
+msgid "No index parts defined!"
+msgstr "Ingen indeksdeler definert!"
+
+msgid "Problems with indexes of table `%s`"
+msgstr "Problemer med indeksene i tabellen `%s`"
+
+msgid "Source database `%s` was not found!"
+msgstr "Kildedatabasen \"%s\" ble ikke funnet!"
+
+msgid "Target database `%s` was not found!"
+msgstr "Måldatabasen %s ble ikke funnet!"
+
+msgid "Invalid database:"
+msgstr "Ugylding database:"
+
+msgid "Invalid table name:"
+msgstr "Ugyldig tabellnavn:"
+
+msgid "Table %1$s has been renamed to %2$s."
+msgstr "Tabellen %1$s har endret navn til %2$s."
+
+msgid "Could not save table UI preferences!"
+msgstr "Kunne ikke lagre preferanser for tabellgrensesnitt!"
+
+msgid "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] %s)"
+msgstr "Feil ved opprydning av preferansene for tabellgrensesnitt (se $cfg['Servers'][$i]['MaxTableUiprefs'] %s)"
+
+msgid "Cannot save UI property \"%s\". The changes made will not be persistent after you refresh this page. Please check if the table structure has been changed."
+msgstr "Kunne ikke lagre UI attributtet \"%s\". Endringene vil ikke være permanente etter at du har lastet denne siden på nytt. Vennligst sjekk om tabellstrukturen har blitt endret."
+
+msgid "Error creating foreign key on %1$s (check data types)"
+msgstr "Feil oppstod under forsøk på opprettelse av fremmednøkkel på %1$s (kontroller datatyper)"
+
+msgid "Default theme %s not found!"
+msgstr "Standard stil %s ble ikke funnet!"
+
+msgid "Theme %s not found!"
+msgstr "Stilen %s ble ikke funnet!"
+
+msgid "No valid image path for theme %s found!"
+msgstr "Ingen gyldig bildesti for stilen %s ble funnet!"
+
+msgid "Data definition statement"
+msgstr "Datadefinisjonsuttrykk"
+
+msgid "Data manipulation statement"
+msgstr "Datamanipulasjonsuttrykk"
+
+msgid "Tracking statements"
+msgstr "Overvåkingsspørringer"
+
+msgid "SQL dump (file download)"
+msgstr "SQL dump (filnedlasting)"
+
+msgid "SQL dump"
+msgstr "SQL dump"
+
+msgid "This option will replace your table and contained data."
+msgstr "Dette valget vil erstatte din tabell og dataene den inneholder."
+
+msgid "SQL execution"
+msgstr "SQL utførelse"
+
+msgid "Export as %s"
+msgstr "Eksporter som %s"
+
+msgid "Version %s snapshot (SQL code)"
+msgstr "Versjon %s øyeblikksbilde (SQL kode)"
+
+msgid "You can execute the dump by creating and using a temporary database. Please ensure that you have the privileges to do so."
+msgstr "Du kan utføre dumpen ved å opprette og bruke en midlertidig database. Kontroller at du har privilegiene til å gjøre så."
+
+msgid "Comment out these two lines if you do not need them."
+msgstr "Kommenter ut disse to linjene hvis du ikke trenger dem."
+
+msgid "SQL statements exported. Please copy the dump or execute it."
+msgstr "SQL spørringer eksportert. Venligst kopier dumpen eller utfør den."
+
+msgid "Tracking report for table `%s`"
+msgstr "Overvåkningsrapport for tabell `%s`"
+
+msgid "A 1-byte integer, signed range is -128 to 127, unsigned range is 0 to 255"
+msgstr "Et 1-byte heltall, signert område er fra -128 til 127, usignert område er fra 0 til 255"
+
+msgid "A 2-byte integer, signed range is -32,768 to 32,767, unsigned range is 0 to 65,535"
+msgstr "Et 2-byte heltall, signert område er fra -32.768 til 32.767, usignert område er fra 0 til 65.535"
+
+msgid "A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned range is 0 to 16,777,215"
+msgstr "Et 3-byte heltall, signert område er fra -8.388.608 til 8.388.607, usignert er fra 0 til 16.777.215"
+
+msgid "A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, unsigned range is 0 to 4,294,967,295"
+msgstr "Et 4-byte heltall, signert område er fra -2.147.483.648 til 2.147.483.647, usignert er fra 0 til 4.294.967.295"
+
+msgid "An 8-byte integer, signed range is -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807, unsigned range is 0 to 18,446,744,073,709,551,615"
+msgstr "Et 8-byte heltall, signert område er fra -9.223.372.036.854.775.808 til 9.223.372.036.854.775.807, usignert er fra 0 til 18.446.744.073.709.551.615"
+
+msgid "A fixed-point number (M, D) - the maximum number of digits (M) is 65 (default 10), the maximum number of decimals (D) is 30 (default 0)"
+msgstr "Et tall med fast antall desimaler (M, D) - maksimalt antall sifre (M) er 65 (standard 10), maksimalt antall desimaler (D) 30 (standard 0)"
+
+msgid "A small floating-point number, allowable values are -3.402823466E+38 to -1.175494351E-38, 0, and 1.175494351E-38 to 3.402823466E+38"
+msgstr "Et lite flyttall, tillatte verdier er fra -3,402823466E+38 til -1,175494351E-38, 0, og fra 1,175494351E-38 til 3,402823466E+38"
+
+msgid "A double-precision floating-point number, allowable values are -1.7976931348623157E+308 to -2.2250738585072014E-308, 0, and 2.2250738585072014E-308 to 1.7976931348623157E+308"
+msgstr "Et dobbelt presisjons flyttall, tillatte verdier er fra -1,7976931348623157E+308 til -2,2250738585072014E-308, 0, og fra 2,2250738585072014E-308 til 1,7976931348623157E+308"
+
+msgid "Synonym for DOUBLE (exception: in REAL_AS_FLOAT SQL mode it is a synonym for FLOAT)"
+msgstr "Synonym for DOUBLE (unntak: i REAL_AS_FLOAT SQL-modus er det et synonym for FLOAT)"
+
+msgid "A bit-field type (M), storing M of bits per value (default is 1, maximum is 64)"
+msgstr "En bit-felttype (M), lagring av M bits per verdi (standard er 1, maksimum er 64)"
+
+msgid "A synonym for TINYINT(1), a value of zero is considered false, nonzero values are considered true"
+msgstr "Et synonym for TINYINT (1), en verdi på null ansees som usann, andre verdier enn null anses sanne"
+
+msgid "An alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"
+msgstr "Et alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE"
+
+msgid "A date, supported range is %1$s to %2$s"
+msgstr "En dato i området %1$s til %2$s"
+
+msgid "A date and time combination, supported range is %1$s to %2$s"
+msgstr "En kombinasjon av dato og klokkeslett, støttet område er %1$s til %2$s"
+
+msgid "A time, range is %1$s to %2$s"
+msgstr "Et klokkeslett, rekkevidde er %1$s til %2$s"
+
+msgid "A year in four-digit (4, default) or two-digit (2) format, the allowable values are 70 (1970) to 69 (2069) or 1901 to 2155 and 0000"
+msgstr "Et årstall med fire-sifret format (4, standard) eller to-sifret (2) format, de tillatte verdiene er 70 (1970) til 69 (2069) eller 1901 til 2155 og 0000"
+
+msgid "A fixed-length (0-255, default 1) string that is always right-padded with spaces to the specified length when stored"
+msgstr "En streng med fast lengde (0-255, standard 1) som alltid har mellomrom på høyre side til den angitte lengden når den lagres"
+
+msgid "A variable-length (%s) string, the effective maximum length is subject to the maximum row size"
+msgstr "En streng med variabel lengde (%s), effektiv maksimum lengde er avhengig av maksimum radstørrelse"
+
+msgid "A TEXT column with a maximum length of 255 (2^8 - 1) characters, stored with a one-byte prefix indicating the length of the value in bytes"
+msgstr "En TEKST-kolonne med en maksimal lengde på 255 (2^8 - 1) tegn, lagret med en 1-byte prefiks som angir lengden av verdien i byte"
+
+msgid "A TEXT column with a maximum length of 65,535 (2^16 - 1) characters, stored with a two-byte prefix indicating the length of the value in bytes"
+msgstr "En TEKST-kolonne med en maksimal lengde på 65.535 (2^16 - 1) tegn, som er lagret med en 2-byte prefiks som angir lengden av verdien i byte"
+
+msgid "A TEXT column with a maximum length of 16,777,215 (2^24 - 1) characters, stored with a three-byte prefix indicating the length of the value in bytes"
+msgstr "En TEKST-kolonne med en maksimal lengde på 16.777.215 (2^24 - 1) tegn, som er lagret med en 3-byte prefiks som angir lengden av verdien i byte"
+
+msgid "A TEXT column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) characters, stored with a four-byte prefix indicating the length of the value in bytes"
+msgstr "En TEKST-kolonne med en maksimal lengde på 4.294.967.295 eller 4GiB (2^32 - 1) tegn, som er lagret med en 4-byte prefiks som angir lengden av verdien i byte"
+
+msgid "Similar to the CHAR type, but stores binary byte strings rather than non-binary character strings"
+msgstr "Lik CHAR type, men lagrer binære byte-strenger i stedet for ikke-binære tegnstrenger"
+
+msgid "Similar to the VARCHAR type, but stores binary byte strings rather than non-binary character strings"
+msgstr "Lik VARCHAR type, men lagrer binære byte-strenger i stedet for ikke-binære tegnstrenger"
+
+msgid "A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored with a one-byte prefix indicating the length of the value"
+msgstr "En BLOB-kolonne med en maksimal lengde på 255 (2^8 - 1) bytes, lagret med en 1-byte prefiks som angir lengden av verdien"
+
+msgid "A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes, stored with a three-byte prefix indicating the length of the value"
+msgstr "En BLOB-kolonne med en maksimal lengde på 16.777.215 (2^24 - 1) bytes, lagret med en 3-byte prefiks som angir lengden av verdien"
+
+msgid "A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, stored with a two-byte prefix indicating the length of the value"
+msgstr "En BLOB-kolonne med en maksimal lengde på 65.535 (2^16 - 1) bytes, lagret med en 2-byte prefiks som angir lengden av verdien"
+
+msgid "A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) bytes, stored with a four-byte prefix indicating the length of the value"
+msgstr "En BLOB-kolonne med en maksimal lengde på 4.294.967.295 eller 4GiB (2^32 - 1) bytes, lagret med en 4-byte prefiks som angir lengden av verdien"
+
+msgid "An enumeration, chosen from the list of up to 65,535 values or the special '' error value"
+msgstr "En nummerering, valgt fra listen på opp til 65.535 verdier eller den spesielle '' feilverdien"
+
+msgid "A single value chosen from a set of up to 64 members"
+msgstr "En enkelt verdi valgt fra et sett på opp til 64 medlemmer"
+
+msgid "A type that can store a geometry of any type"
+msgstr "En type som kan lagre en geometri av enhver type"
+
+msgid "A point in 2-dimensional space"
+msgstr "Et punkt i todimensjonalt rom"
+
+msgid "A curve with linear interpolation between points"
+msgstr "En kurve med lineær interpolasjon mellom punkter"
+
+msgid "A polygon"
+msgstr "Et polygon"
+
+msgid "A collection of points"
+msgstr "En samling av punkter"
+
+msgid "A collection of curves with linear interpolation between points"
+msgstr "En samling av kurver med lineær interpolasjon mellom punkter"
+
+msgid "A collection of polygons"
+msgstr "En samling av polygoner"
+
+msgid "A collection of geometry objects of any type"
+msgstr "En samling av geometriobjekter av enhver type"
+
+msgctxt "numeric types"
+msgid "Numeric"
+msgstr "Numerisk"
+
+msgctxt "date and time types"
+msgid "Date and time"
+msgstr "Dato og tid"
+
+msgctxt "spatial types"
+msgid "Spatial"
+msgstr "Romtyper"
+
+msgid "Password is too long!"
+msgstr "Passord er for langt!"
+
+msgid "The profile has been updated."
+msgstr "Profilen har blitt oppdatert."
+
+msgid "Max: %s%s"
+msgstr "Maksimum størrelse: %s%s"
+
+msgid "%s days, %s hours, %s minutes and %s seconds"
+msgstr "%s dager, %s timer, %s minutter og %s sekunder"
+
+msgid "Users"
+msgstr "Brukere"
+
+msgid "Error in ZIP archive:"
+msgstr "Feil i ZIP arkivet:"
+
+msgid "No files found inside ZIP archive!"
+msgstr "Ingen filer funnet inne i ZIP arkivet!"

@@ -1,3 +1,4 @@
+import { sprintf } from '@bettermyadmin/i18n'
 import { Hono } from 'hono'
 import type { AppEnv } from '../app.ts'
 import { AuthMessages } from '../auth/cookie.ts'
@@ -22,7 +23,9 @@ serverRoutes.use('/:s/*', async (c, next) => {
   const login = session.servers[String(s)]
   if (login === undefined || !login.twoFactorOk) {
     if (session.expired === true) {
-      throw new AuthExpiredError(AuthMessages.noActivity.replace('%s', String(cfg.LoginCookieValidity)))
+      throw new AuthExpiredError(
+        sprintf(c.get('tr').gettext(AuthMessages.noActivity), String(cfg.LoginCookieValidity)),
+      )
     }
     throw new AuthRequiredError()
   }

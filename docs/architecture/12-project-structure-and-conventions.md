@@ -50,7 +50,7 @@ bettermyadmin/
 - Data: `useQuery`/`useSuspenseQuery` with keys from `lib/queryKeys.ts`; mutations declare `invalidates` arrays.
 - Components receive data, not query hooks, below the page level (keeps them testable in Storybook).
 - Styling: Tailwind utilities + CSS variables; no inline style objects except for virtualizer transforms and measured widths.
-- i18n: Lingui macros; never concatenate translated fragments.
+- i18n: `t` / `Trans` / `ngettext` / `pgettext` with phpMyAdmin's exact msgids (no Lingui macros, they rewrite msgids); never concatenate translated fragments; `pnpm i18n:parity` must stay clean.
 - Accessibility: every interactive element is a `button`, `a`, or input; `div onClick` is banned by lint.
 
 ### Backend

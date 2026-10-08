@@ -1,0 +1,5603 @@
+# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/ar.po by packages/i18n/scripts/import-po.ts.
+# Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+msgid ""
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2025-07-14 12:01+0000\nLast-Translator: \"Ali H.Abdulhadi\" <a.h.alsaady1998@gmail.com>\nLanguage-Team: Arabic <https://hosted.weblate.org/projects/phpmyadmin/master/ar/>\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Weblate 5.13-dev\n"
+
+msgid "Javascript must be enabled past this point!"
+msgstr "يجب تفعيل Javascript بعد هذه النقطة!"
+
+msgid "Open user account menu"
+msgstr "افتح قائمة حساب المستخدم"
+
+msgid "phpMyAdmin documentation"
+msgstr "مستندات وثائقية لـ phpMyAdmin (بالإنجليزية)"
+
+msgid "MariaDB documentation"
+msgstr "وثائق MariaDB"
+
+msgid "MySQL documentation"
+msgstr "وثائق MySQL"
+
+msgid "Appearance:"
+msgstr "مظهر:"
+
+msgid "Color mode for the theme"
+msgstr "وضع اللون للثيم"
+
+msgctxt "Light color mode of the theme"
+msgid "Light"
+msgstr "فاتح"
+
+msgctxt "Dark color mode of the theme"
+msgid "Dark"
+msgstr "داكن"
+
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgid "Log out"
+msgstr "تسجيل خروج"
+
+msgid "Page-related settings"
+msgstr "الإعدادات المتعلقة بالصفحة"
+
+msgid "Click on the bar to scroll to top of page"
+msgstr "انقر على الشريط للتمرير إلى أعلى الصفحة"
+
+msgid "Open new phpMyAdmin window"
+msgstr "إفتح نافذة phpMyAdmin جديدة"
+
+msgid "phpMyAdmin Demo Server"
+msgstr "phpMyAdmin الخادم التجريبي"
+
+msgid "Currently running Git revision %1$s from the %2$s branch."
+msgstr "قيد التشغيل Git مراجعة %1$s من الفرع ال %2$s."
+
+msgid "Git information missing!"
+msgstr "معلومات Git مفقودة!"
+
+msgid "Edit ENUM/SET values"
+msgstr "تعديل قيم ENUM/SET"
+
+msgid "As defined:"
+msgstr "كما هو معرف:"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details"
+msgstr "ليس لديك امتيازات كافية لتنفيذ هذه العملية; يرجى الرجوع إلى الوثائق لمزيد من التفاصيل"
+
+msgid "Primary"
+msgstr "أساسي"
+
+msgid "Unique"
+msgstr "فريد"
+
+msgid "Index"
+msgstr "فهرست"
+
+msgid "Fulltext"
+msgstr "النص كاملا"
+
+msgid "Spatial"
+msgstr "مكاني"
+
+msgid "Expression"
+msgstr "تعبير"
+
+msgid "first"
+msgstr "أولاً"
+
+msgid "None"
+msgstr "لا شيء"
+
+msgid "Table name"
+msgstr "اسم الجدول"
+
+msgid "Add"
+msgstr "إضافة"
+
+msgid "column(s)"
+msgstr "العمود (الأعمدة)"
+
+msgid "Go"
+msgstr "إنطلق"
+
+msgid "Table comments:"
+msgstr "تعليقات الجدول:"
+
+msgid "Collation:"
+msgstr "ترتيب:"
+
+msgid "Connection:"
+msgstr "اتصال:"
+
+msgid "Preview SQL"
+msgstr "استعراض SQL"
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Loading"
+msgstr "جار التحميل"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Referenced by %s."
+msgstr "تمت الإشارة إليه بـ %s."
+
+msgid "Is a foreign key."
+msgstr "هو مفتاح خارجي."
+
+msgid "Column"
+msgstr "عمود"
+
+msgid "Partition by:"
+msgstr "التقسيم حسب:"
+
+msgid "Partitions:"
+msgstr "اقسام:"
+
+msgid "Subpartition by:"
+msgstr "التقسيم الفرعي حسب:"
+
+msgid "Subpartitions:"
+msgstr "الأقسام الفرعية:"
+
+msgid "Comment"
+msgstr "تعليق"
+
+msgid "Index directory"
+msgstr "دليل الفهرس"
+
+msgid "Max rows"
+msgstr "الحد الأقصى للصفوف"
+
+msgid "Structure"
+msgstr "بناء"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Type"
+msgstr "نوع"
+
+msgid "Length/Values"
+msgstr "الطول/القيمة"
+
+msgid "Default"
+msgstr "إفتراضي"
+
+msgid "For default values, please enter just a single value, without backslash escaping or quotes, using this format: a"
+msgstr "للقيم الافتراضية، الرجاء أدخل قيمة مفردة، دون علامات هروب أو تنصيص، باستخدام التنسيق: a"
+
+msgid "Collation"
+msgstr "الترتيب"
+
+msgid "Attributes"
+msgstr "الخواص"
+
+msgid "Null"
+msgstr "لا شيء"
+
+msgid "Comments"
+msgstr "التعليقات"
+
+msgid "No change"
+msgstr "لا تغييرات"
+
+msgid "Apply"
+msgstr "تطبيق"
+
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+msgid "Documentation"
+msgstr "مستندات وثائقية"
+
+msgid "This setting is disabled, it will not be applied to your configuration."
+msgstr "هذا الإعداد معطل , لن يتم تطبيقه في التكوين."
+
+msgid "Disabled"
+msgstr "معطل"
+
+msgid "Yes"
+msgstr "نعم"
+
+msgid "No"
+msgstr "لا"
+
+msgid "Set value: %s"
+msgstr "تعيين القيمة: %s"
+
+msgid "Restore default value"
+msgstr "إستعادة القيمة الإفتراضية"
+
+msgid "Allow users to customize this value"
+msgstr "السماح للمستخدمين بتخصيص هذه القيمة"
+
+msgid "Edit"
+msgstr "تعديل"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Database"
+msgstr "قاعدة البيانات"
+
+msgid "SQL Query Console"
+msgstr "مِعراض استعلام SQL"
+
+msgid "Console"
+msgstr "المِعراض"
+
+msgid "History"
+msgstr "المحفوظات"
+
+msgid "Options"
+msgstr "خيارات"
+
+msgid "Debug SQL"
+msgstr "تصحيح SQL"
+
+msgid "Profiling"
+msgstr "جانبي"
+
+msgid "Order:"
+msgstr "ترتيب:"
+
+msgid "Order by:"
+msgstr "ترتيب حسب:"
+
+msgid "Count:"
+msgstr "عد:"
+
+msgid "Time taken:"
+msgstr "الوقت المستغرق:"
+
+msgid "Refresh"
+msgstr "تحديث"
+
+msgid "Add bookmark"
+msgstr "إضافة للمفضلة"
+
+msgid "OK"
+msgstr "موافق"
+
+msgid "Show query history at start"
+msgstr "إظهار محفوظات الاستعلام"
+
+msgid "Create version %1$s of %2$s"
+msgstr "إنشاء إصدار %1$s من %2$s"
+
+msgid "Create version %1$s"
+msgstr "إنشاء إصدار %1$s"
+
+msgid "Track these data definition statements:"
+msgstr "تتبع تقارير تعريف البيانات:"
+
+msgid "Track these data manipulation statements:"
+msgstr "تتبع تقارير التلاعب بالبيانات:"
+
+msgid "Create version"
+msgstr "إنشاء إصدار"
+
+msgid "Add new column"
+msgstr "إضافة عمود جديد"
+
+msgid "The central list of columns for the current database is empty"
+msgstr "القائمة المركزية للأعمدة لقاعدة البيانات الحالية فارغة"
+
+msgid "Filter rows:"
+msgstr "تصفية الصفوف:"
+
+msgid "Search this table"
+msgstr "ابحث في هذا الجدول"
+
+msgid "Add column"
+msgstr "إضافة عمود"
+
+msgid "Select a table"
+msgstr "اختر الجدول"
+
+msgid "Select a column."
+msgstr "إختر عمود ."
+
+msgid "Click to sort."
+msgstr "اضغط للترتيب."
+
+msgid "Action"
+msgstr "العملية"
+
+msgid "Cancel"
+msgstr "ألغاء"
+
+msgid "Number of columns"
+msgstr "عدد العواميد"
+
+msgid "Create"
+msgstr "تكوين"
+
+msgid "Database comment:"
+msgstr "تعليق قاعدة البيانات:"
+
+msgid "Print"
+msgstr "طباعة"
+
+msgid "Links to"
+msgstr "مرتبط بـ"
+
+msgid "Indexes"
+msgstr "فهارس"
+
+msgid "Keyname"
+msgstr "اسم المفتاح"
+
+msgid "Packed"
+msgstr "محزم"
+
+msgid "Cardinality"
+msgstr "عدد العناصر في المجموعة"
+
+msgid "No index defined!"
+msgstr "لم يتم تعريف الفهرس!"
+
+msgid "Select all"
+msgstr "تحديد الكل"
+
+msgid "Select \"%s\""
+msgstr "حدد \"%s\""
+
+msgid "Add an option for column \"%s\"."
+msgstr "إضافة خيار للعمود‘%s‘ ."
+
+msgid "Untitled"
+msgstr "بدون عنوان"
+
+msgid "Add tables from other databases"
+msgstr "اضافة جداول من قواعد بيانات اخري"
+
+msgid "Open page"
+msgstr "فتح الصفحة"
+
+msgid "Save page"
+msgstr "احفظ الصفحة"
+
+msgid "Save page as"
+msgstr "حفظ الصفحة في صيغة"
+
+msgid "Create table"
+msgstr "أنشئ الجدول"
+
+msgid "Choose column to display"
+msgstr "اختر الحقل لإظهاره"
+
+msgid "Help"
+msgstr "مساعدة"
+
+msgid "Move Menu"
+msgstr "نقل القائمة"
+
+msgid "Hide/Show all"
+msgstr "إخفاء/عرض الكل"
+
+msgid "Number of tables:"
+msgstr "عدد الجداول:"
+
+msgid "Value"
+msgstr "القيمة"
+
+msgid "Operator"
+msgstr "عامل التشغيل"
+
+msgid "Submit"
+msgstr "إرسال"
+
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Event type"
+msgstr "نوع الحدث"
+
+msgid "Change to %s"
+msgstr "التغيير إلى %s"
+
+msgid "Format"
+msgstr "صيغة"
+
+msgid "Definer"
+msgstr "محدد"
+
+msgid "Events"
+msgstr "أحداث"
+
+msgid "Check all"
+msgstr "تحقق من الكل"
+
+msgid "Export"
+msgstr "تصدير"
+
+msgid "Drop"
+msgstr "سقّط"
+
+msgid "Click to toggle"
+msgstr "إضغط للإختيار"
+
+msgid "Loading…"
+msgstr "جار التحميل…"
+
+msgid "Exporting tables from \"%s\" database"
+msgstr "تصدير الجداول من قاعدة المعطيات \"%s\""
+
+msgid "Tables:"
+msgstr "جداول :"
+
+msgid "Tables"
+msgstr "جداول"
+
+msgid "Data"
+msgstr "بيانات"
+
+msgid "Export the data of all tables."
+msgstr "تصدير بيانات جميع الجداول."
+
+msgid "Importing into the database \"%s\""
+msgstr "الاستيراد إلى قاعدة البيانات \"%s\""
+
+msgid "Query window"
+msgstr "نافذة الاستعلام"
+
+msgid "Show"
+msgstr "عرض"
+
+msgid "criteria"
+msgstr "معايير"
+
+msgid "Sort"
+msgstr "ترتيب"
+
+msgid "Ascending"
+msgstr "تصاعديا"
+
+msgid "Descending"
+msgstr "تنازليا"
+
+msgid "Add as"
+msgstr "إضافة كـ"
+
+msgid "Text"
+msgstr "نص"
+
+msgid "+ Add column"
+msgstr "+ إضافة عمود"
+
+msgid "Submit query"
+msgstr "إرسال الإستعلام"
+
+msgid "Database operations"
+msgstr "عمليات قاعدة البيانات"
+
+msgid "Database comment"
+msgstr "تعليق قاعدة البيانات"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details."
+msgstr "ليس لديك امتيازات كافية لتنفيذ هذه العملية; يرجى الرجوع إلى الوثائق لمزيد من التفاصيل."
+
+msgid "Remove database"
+msgstr "حذف قاعدة البيانات"
+
+msgid "Database %s has been dropped."
+msgstr "تم إسقاط قاعدة البيانات %s ."
+
+msgid "Drop the database (DROP)"
+msgstr "إسقاط قاعدة البيانات"
+
+msgid "Database name"
+msgstr "اسم قاعدة البيانات"
+
+msgid "Structure only"
+msgstr "البنية فقط"
+
+msgid "Structure and data"
+msgstr "البنية والبيانات"
+
+msgid "Data only"
+msgstr "بيانات فقط"
+
+msgid "CREATE DATABASE before copying"
+msgstr "إنشاء قاعدة البيانات قبل عملية النسخ"
+
+msgid "Add %s"
+msgstr "إضافة %s"
+
+msgid "Add AUTO_INCREMENT value"
+msgstr "أضف قيمة AUTO_INCREMENT"
+
+msgid "Add constraints"
+msgstr "إضافة قيود"
+
+msgid "Switch to copied database"
+msgstr "التبديل إلى قاعدة البيانات المنسوخة"
+
+msgid "Users having access to \"%s\""
+msgstr "المستخدمين ذوي صلاحية الوصول إلى \"%s\""
+
+msgid "User name"
+msgstr "اسم المستخدم"
+
+msgid "Privileges"
+msgstr "الإمتيازات"
+
+msgid "Grant"
+msgstr "منح"
+
+msgid "Any"
+msgstr "أي"
+
+msgid "global"
+msgstr "عام"
+
+msgid "database-specific"
+msgstr "خاص بقاعدة بيانات"
+
+msgid "wildcard"
+msgstr "حرف شامل"
+
+msgid "With selected:"
+msgstr "مع المحدد:"
+
+msgid "Parameters"
+msgstr "معايير"
+
+msgid "Add parameter"
+msgstr "إضافة معلمة"
+
+msgid "Charset"
+msgstr "مجموعة المحارف"
+
+msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
+msgstr "ليس لديك امتيازات كافية لتنفيذ هذه العملية ؛ يرجى الرجوع إلى الوثائق لمزيد من التفاصيل."
+
+msgid "Function"
+msgstr "دالة"
+
+msgid "Routines"
+msgstr "روتينات"
+
+msgid "Search"
+msgstr "إبحث"
+
+msgid "Execute routine"
+msgstr "تنفيذ"
+
+msgid "Execute"
+msgstr "تنفيذ"
+
+msgid "ENUM/SET editor"
+msgstr "محرر ENUM/SET"
+
+msgid "Search in database"
+msgstr "بحث في قاعدة البيانات"
+
+msgid "Words or values to search for (wildcard: \"%\"):"
+msgstr "الكلمات أو القيم المطلوب البحث عنها (wildcard: \"%\"):"
+
+msgid "Find:"
+msgstr "ابحث:"
+
+msgid "at least one of the words"
+msgstr "على الأقل أحد الكلمات"
+
+msgid "Words are separated by a space character (\" \")."
+msgstr "الكلمات مفصولة بمسافة (\" \")."
+
+msgid "all of the words"
+msgstr "كل الكلمات"
+
+msgid "the exact phrase as substring"
+msgstr "الجملة بالضبط كسلسلة فرعية"
+
+msgid "the exact phrase as whole field"
+msgstr "الجملة بالضبط كمجال كامل"
+
+msgid "as regular expression"
+msgstr "كتعبير قياسي"
+
+msgid "Options:"
+msgstr "خيارات:"
+
+msgid "Inside tables:"
+msgstr "داخل الجداول:"
+
+msgid "Unselect all"
+msgstr "إلغاء تحديد الكل"
+
+msgid "Inside column:"
+msgstr "داخل العمود:"
+
+msgid "%1$s match in <strong>%2$s</strong>"
+msgid_plural "%1$s matches in <strong>%2$s</strong>"
+msgstr[0] "%1$s مطابق في <strong>%2$s</strong>"
+msgstr[1] "%1$s مطابق في <strong>%2$s</strong>"
+msgstr[2] "%1$sمطابق في <strong>%2$s</strong>"
+msgstr[3] "%1$s مطابقة في الجدول <strong>%2$s</strong>"
+msgstr[4] "%1$s مطابقة في الجدول <strong>%2$s</strong>"
+msgstr[5] "%1$s مطابقة في الجدول <strong>%2$s</strong>"
+
+msgid "Browse"
+msgstr "استعراض"
+
+msgid "Add prefix"
+msgstr "إضافة بادئة"
+
+msgid "%s table"
+msgid_plural "%s tables"
+msgstr[0] "%s جدول"
+msgstr[1] "%s جدول"
+msgstr[2] "%s جدول"
+msgstr[3] "%s جداول"
+msgstr[4] "%s جداول"
+msgstr[5] "%s جدول"
+
+msgid "Replication"
+msgstr "إستنساخ"
+
+msgid "Sum"
+msgstr "المجموع"
+
+msgid "%s is the default storage engine on this MySQL server."
+msgstr "%s هو محرك التخزين الغيابي على خادم الMySQL هذا."
+
+msgid "Continue"
+msgstr "استمر"
+
+msgid "To"
+msgstr "إلى"
+
+msgid "Check tables having overhead"
+msgstr "تحقق من الجداول التي تحمل عبء زائد"
+
+msgid "Delete data or table"
+msgstr "حذف البيانات او الجدول"
+
+msgid "Empty"
+msgstr "إفراغ"
+
+msgid "Table maintenance"
+msgstr "صيانة الجدول"
+
+msgid "Analyze table"
+msgstr "تحليل الجدول"
+
+msgid "Check table"
+msgstr "التحقق من الجدول"
+
+msgid "Optimize table"
+msgstr "تحسين الجدول"
+
+msgid "Repair table"
+msgstr "إصلاح الجدول"
+
+msgid "Add prefix to table"
+msgstr "إضافة بادئة للجدول"
+
+msgid "Replace table prefix"
+msgstr "استبدال بادئة الجدول"
+
+msgid "Copy table with prefix"
+msgstr "نسخ الجدول مع البادئة"
+
+msgid "Central columns"
+msgstr "الأعمدة المركزية"
+
+msgid "Are you sure?"
+msgstr "هل أنت متأكد؟"
+
+msgid "This action may change some of the columns definition.[br]Are you sure you want to continue?"
+msgstr "هذا الإجراء قد يغيير بعض معرفات الأعمدة .[br] هل انت متاكد انك تريد المتابعة؟"
+
+msgid "Database:"
+msgstr "قاعدة بيانات:"
+
+msgid "Add DROP TABLE"
+msgstr "إضافة DROP TABLE"
+
+msgid "Do you really want to execute the following query?"
+msgstr "هل تريد حقا تنفيذ الاستعلام التالي؟"
+
+msgid "Enable foreign key checks"
+msgstr "تمكين عمليات التحقق من المفتاح الخارجي"
+
+msgid "Remove from Favorites"
+msgstr "إزالة من المفضلة"
+
+msgid "No tables found in database."
+msgstr "لم يعثر على جداول في قاعدة البيانات."
+
+msgid "Table"
+msgstr "الجدول"
+
+msgid "View"
+msgstr "عرض"
+
+msgid "Create view"
+msgstr "إنشاء عرض"
+
+msgid "Not replicated"
+msgstr "غير مستنسخة"
+
+msgid "Replicated"
+msgstr "مستنسخة"
+
+msgid "Insert"
+msgstr "إدخال"
+
+msgid "Table %s has been emptied."
+msgstr "تم إفراغ محتويات الجدول %s."
+
+msgid "in use"
+msgstr "قيد الإستعمال"
+
+msgid "Rows"
+msgstr "صفوف"
+
+msgid "May be approximate. Click on the number to get the exact count. See [doc@faq3-11]FAQ 3.11[/doc]."
+msgstr "قد تكون تقريبية. انقر على الرقم للحصول على العدد الدقيق. راجع [doc@faq3-11] الأسئلة الشائعة 3.11 [/doc]."
+
+msgid "Size"
+msgstr "الحجم"
+
+msgid "Overhead"
+msgstr "الحمل الزائد"
+
+msgid "Creation"
+msgstr "الإنشاء"
+
+msgid "Last update"
+msgstr "آخر تحديث"
+
+msgid "Last check"
+msgstr "آخر فحص"
+
+msgid "Tracking is active."
+msgstr "التتبع نشط."
+
+msgid "Tracking is not active."
+msgstr "التتبع غير نشط."
+
+msgid "Tracked tables"
+msgstr "الجداول المتعقبة"
+
+msgid "Last version"
+msgstr "آخر إصدار"
+
+msgid "Created"
+msgstr "أنشئ"
+
+msgid "Updated"
+msgstr "محدث"
+
+msgid "active"
+msgstr "نشط"
+
+msgid "not active"
+msgstr "غير نشط"
+
+msgid "Delete tracking"
+msgstr "حذف بيانات تتبع التغيرات"
+
+msgid "Versions"
+msgstr "الإصدارات"
+
+msgid "Tracking report"
+msgstr "تقرير التتبع"
+
+msgid "Structure snapshot"
+msgstr "لقطة للبناء الهيكلي"
+
+msgid "Untracked tables"
+msgstr "الجداول الغير متتبعة"
+
+msgid "Track table"
+msgstr "تتبع الجدول"
+
+msgctxt "First page"
+msgid "Begin"
+msgstr "بداية"
+
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "سابق"
+
+msgctxt "Next page"
+msgid "Next"
+msgstr "التالي"
+
+msgctxt "Last page"
+msgid "End"
+msgstr "نهاية"
+
+msgid "Show all"
+msgstr "عرض الكل"
+
+msgid "Save edited data"
+msgstr "إحفظ البيانات المعدّلة"
+
+msgid "Restore column order"
+msgstr "استعادة ترتيب الأعمدة"
+
+msgid "Number of rows:"
+msgstr "عدد الأسطر:"
+
+msgid "All"
+msgstr "الكل"
+
+msgid "Sort by key:"
+msgstr "فرز حسب المفتاح:"
+
+msgid "Partial texts"
+msgstr "نصوص جزئيّة"
+
+msgid "Full texts"
+msgstr "نصوص كاملة"
+
+msgid "Relational key"
+msgstr "مفتاح العلائقيّة"
+
+msgid "Display column for relationships"
+msgstr "عرض عمود للعلاقات"
+
+msgid "Show binary contents"
+msgstr "أظهر المحتويات الثنائية"
+
+msgid "Show BLOB contents"
+msgstr "عرض محتويات BLOB"
+
+msgid "Hide browser transformation"
+msgstr "أخفي محتويات المستعرض"
+
+msgid "Geometry"
+msgstr "هندسة"
+
+msgid "Well Known Text"
+msgstr "نصّ معروف جيّداً"
+
+msgid "Well Known Binary"
+msgstr "ثنائي معروف جيّداً"
+
+msgid "Copy"
+msgstr "نسخ"
+
+msgid "Query results operations"
+msgstr "عمليّات على نتائج الإستعلام"
+
+msgid "Copy to clipboard"
+msgstr "نسخ إلى الحافظة"
+
+msgid "Display chart"
+msgstr "عرض الرّسم البياني"
+
+msgid "Visualize GIS data"
+msgstr "إبداء بيانات نظام المعلومات الجغرافية للعيان"
+
+msgctxt "None encoding conversion"
+msgid "None"
+msgstr "لا شيء"
+
+msgid "Error"
+msgstr "خطأ"
+
+msgid "Automatically send report next time"
+msgstr "إرسال التقرير تلقائيا في المرة القادمة"
+
+msgid "Submit error report"
+msgstr "إرسال تقرير الخطأ"
+
+msgid "Send error report"
+msgstr "إرسال تقرير عن الخطأ"
+
+msgid "Select a template"
+msgstr "اختر قالب"
+
+msgid "Export templates:"
+msgstr "قوالب التصدير:"
+
+msgid "New template:"
+msgstr "قالب جديد:"
+
+msgid "Template name"
+msgstr "اسم القالب"
+
+msgid "Existing templates:"
+msgstr "قالب موجود مسبقا:"
+
+msgid "Template:"
+msgstr "قالب:"
+
+msgid "Update"
+msgstr "تحديث / ترقيه"
+
+msgid "SQL query:"
+msgstr "استعلام SQL:"
+
+msgid "Export method:"
+msgstr "طريقة التصدير:"
+
+msgid "Format:"
+msgstr "الصيغة:"
+
+msgid "File format to export"
+msgstr "تنسيق الملف المراد تصديره"
+
+msgid "Rows:"
+msgstr "الأسطر:"
+
+msgid "Save on server in the directory <strong>%s</strong>"
+msgstr "إحفظ على الخادم في الدليل <strong>%s</strong>"
+
+msgid "Overwrite existing file(s)"
+msgstr "خزن على الملفات الموجودة"
+
+msgctxt "Alias"
+msgid "Database"
+msgstr "قاعدة البيانات"
+
+msgctxt "Alias"
+msgid "Table"
+msgstr "جدول"
+
+msgctxt "Alias"
+msgid "Column"
+msgstr "عمود"
+
+msgid "Select database:"
+msgstr "حدد قاعدة البيانات:"
+
+msgid "Select table:"
+msgstr "حدد جدولا:"
+
+msgid "Select column:"
+msgstr "حدد العمود:"
+
+msgid "Save & close"
+msgstr "حفظ واغلاق"
+
+msgid "Use %s statement"
+msgstr "استخدم عبارة %s"
+
+msgid "View output as text"
+msgstr "عرض الخرج كنص"
+
+msgid "Save output to a file"
+msgstr "إحفظ الخرج في ملف"
+
+msgid "File name template:"
+msgstr "قالب اسم الملف:"
+
+msgid "Character set of the file:"
+msgstr "ترميز الأحرف للملف:"
+
+msgid "Compression:"
+msgstr "الضغظ:"
+
+msgid "zipped"
+msgstr "مضغوط"
+
+msgid "gzipped"
+msgstr "مضغوط: gzipped"
+
+msgid "Export databases as separate files"
+msgstr "صدر قواعد البيانات في ملفات منفصلة"
+
+msgid "Export tables as separate files"
+msgstr "صدر الجداول في ملفات منفصلة"
+
+msgid "Format-specific options:"
+msgstr "إعدادات الصيغة المخصصة:"
+
+msgid "Encoding Conversion:"
+msgstr "تحويل ترميز النص:"
+
+msgid "Containing the word:"
+msgstr "تحتوي على كلمة:"
+
+msgid "Use OpenStreetMaps as Base Layer"
+msgstr "إستعمل خريطة الشوارع الحرة كطبقة أساسية"
+
+msgid "Output"
+msgstr "المخرجات"
+
+msgid "committed on %s by %s"
+msgstr "ارتكبت على %s بواسطة %s"
+
+msgid "authored on %s by %s"
+msgstr "تأليف على %s بواسطة %s"
+
+msgid "You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at %s."
+msgstr "تم تشغيل خادم العرض. يمكن عمل كل شيء هنا، لكن لا تقم بغيير المستخدمين المسؤولين، مستخدمو debian-sys-maint و pma. مزيد من المعلومات متوفرة هنا %s."
+
+msgid "General settings"
+msgstr "الإعدادات العامة"
+
+msgid "Change password"
+msgstr "تغيير كلمة السر"
+
+msgid "Server connection collation:"
+msgstr "ترتيب اتصال الخادم:"
+
+msgid "More settings"
+msgstr "المزيد من الإعدادات"
+
+msgid "Appearance settings"
+msgstr "إعدادات المظهر"
+
+msgid "Language"
+msgstr "لغة"
+
+msgid "Theme"
+msgstr "مظهر"
+
+msgid "Database server"
+msgstr "خادم قاعدة بيانات"
+
+msgid "Server:"
+msgstr "الخادم:"
+
+msgid "Server type:"
+msgstr "نوع الخادم:"
+
+msgid "Server connection:"
+msgstr "اتصال الخادم:"
+
+msgid "Server version:"
+msgstr "إصدار الخادم:"
+
+msgid "User:"
+msgstr "المستخدم:"
+
+msgid "Server charset:"
+msgstr "مجموعة أحرف الخادم:"
+
+msgid "Web server"
+msgstr "خادم الويب"
+
+msgid "Database client version:"
+msgstr "إصدار عميل قاعدة البيانات:"
+
+msgid "PHP extension:"
+msgstr "امتداد PHP:"
+
+msgid "PHP version:"
+msgstr "PHP إصدار :"
+
+msgid "Show PHP information"
+msgstr "عرض المعلومات المتعلقة بـPHP"
+
+msgid "Version information:"
+msgstr "بيانات الإصدار:"
+
+msgid "Official Homepage"
+msgstr "الصفحة الرئيسة لـphpMyAdmin"
+
+msgid "Contribute"
+msgstr "مشاركة"
+
+msgid "Get support"
+msgstr "الحصول على الدعم"
+
+msgid "List of changes"
+msgstr "قائمة التعديلات"
+
+msgid "License"
+msgstr "رخصة"
+
+msgid "Warning"
+msgstr "تحذير"
+
+msgid "Get more themes!"
+msgstr "الحصول على سمات جديدة!"
+
+msgid "Screenshot of the %s theme."
+msgstr "لقطة شاشة للنسق %s."
+
+msgid "Back"
+msgstr "رجوع"
+
+msgid "Import"
+msgstr "استيراد"
+
+msgid "File to import:"
+msgstr "ملف للاستيراد:"
+
+msgid "File may be compressed (%s) or uncompressed."
+msgstr "يمكن للملف أن يكون مضغوط (%s) أو غير مضغوط."
+
+msgid "A compressed file's name must end in <strong>.[format].[compression]</strong>. Example: <strong>.sql.zip</strong>"
+msgstr "يجب على اسم الملف المضغوط أن ينتهي بـ <strong>.[format].[compression]</strong>. مثال: <strong>.sql.zip</strong>"
+
+msgid "Select file to import"
+msgstr "حدد ملفا للاستيراد"
+
+msgid "Browse your computer:"
+msgstr "تصفح حاسبك:"
+
+msgid "You may also drag and drop a file on any page."
+msgstr "يمكنك أيضًا سحب ملف وإفلاته على أي صفحة."
+
+msgid "The directory you set for upload work cannot be reached."
+msgstr "لا يمكن الوصول إلى الدليل اللذي عينته لعمل التحميل."
+
+msgid "Select from the web server upload directory [strong]%s[/strong]:"
+msgstr "إختر مجلد الرفع من الخادم [strong]%s[/strong]:"
+
+msgid "File uploads are not allowed on this server."
+msgstr "التحميلات إلى هذا المخدّم غير مرخّصة لها."
+
+msgid "Previous import timed out, after resubmitting will continue from position %d."
+msgstr "انتهت مُهلة عمليّة الإستراد السابقة, بعد إعادة الإرسال سنستمرُّ من الموقف %d."
+
+msgid "Allow the interruption of an import in case the script detects it is close to the PHP timeout limit."
+msgstr "تسمح بقطع عمليّة استراد معيّنة في حالة كَشفَ الرّمز أنّها قريبة من المهلة الزّمنيّة لـ PHP."
+
+msgid "Other options"
+msgstr "خيارات أخرى"
+
+msgid "The primary key has been dropped."
+msgstr "لقد تم إسقاط المفتاح الأساسي."
+
+msgid "Index %s has been dropped."
+msgstr "تم حذف إسقاط %s."
+
+msgid "Taking you to the target site."
+msgstr "يأخذك إلى الموقع المستهدف."
+
+msgid "Page number:"
+msgstr "رقم الصفحة:"
+
+msgid "Log in"
+msgstr "دخول"
+
+msgid "You can enter hostname/IP address and port separated by space."
+msgstr "يمكن أن تدخل عنوان المضيف والمنفذ مفصولان بالمسافة."
+
+msgid "Username:"
+msgstr "اسم المستخدم:"
+
+msgid "Password:"
+msgstr "كلمة المرور:"
+
+msgid "Server choice:"
+msgstr "اختيار الخادم:"
+
+msgid "Welcome to %s"
+msgstr "أهلا بك في %s"
+
+msgid "Authentication code:"
+msgstr "رمز التوثيق:"
+
+msgid "Deprecated!"
+msgstr "إهمال!"
+
+msgid "Table:"
+msgstr "جدول:"
+
+msgid "Show hidden navigation tree items."
+msgstr "إظهار عناصر شجرة التنقل المخفية."
+
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+msgid "Drop files here"
+msgstr "قم إفلات الملفات هنا"
+
+msgid "Databases"
+msgstr "قاعدة بيانات"
+
+msgid "Recent"
+msgstr "حديث"
+
+msgid "Favorite tables"
+msgstr "الجداول المفضلة"
+
+msgid "Favorites"
+msgstr "المفضلة"
+
+msgid "Features"
+msgstr "مميزات"
+
+msgid "SQL queries"
+msgstr "إستعلام SQL"
+
+msgid "Navigation panel"
+msgstr "إطار التصفح"
+
+msgid "Main panel"
+msgstr "الإطار الرئيسي"
+
+msgid "Configuration has been saved."
+msgstr "تم حفظ التكوين."
+
+msgid "Two-factor authentication status"
+msgstr "حالة المصادقة ذات العاملين"
+
+msgid "There are no favorite tables."
+msgstr "لا توجد جداول مفضلة ."
+
+msgid "There are no recent tables."
+msgstr "لا توجد جداول حديثة."
+
+msgid "Configuration of pmadb…"
+msgstr "تمت التعديلات…"
+
+msgid "not OK"
+msgstr "ليس صالحا"
+
+msgid "General relation features"
+msgstr "المزايا العامّة للرابط"
+
+msgid "%sCreate%s a database named '%s' and setup the phpMyAdmin configuration storage there."
+msgstr "%s قم بإنشاء %s قاعدة بيانات باسم \"%s\" وقم بإعداد تخزين تكوين phpMyAdmin هناك."
+
+msgid "%sCreate%s missing phpMyAdmin configuration storage tables."
+msgstr "%s إنشاء %s جداول تخزين تكوين phpMyAdmin مفقودة."
+
+msgid "General relation features:"
+msgstr "ميزات العلاقات العامة:"
+
+msgid "Enabled"
+msgstr "مفعل"
+
+msgid "Display features:"
+msgstr "مزايا العرض:"
+
+msgid "Designer and creation of PDFs:"
+msgstr "مصمم وإنشاء ملفات PDF:"
+
+msgid "Displaying column comments:"
+msgstr "عرض تعليقات العمود:"
+
+msgid "Browser transformation:"
+msgstr "تحويل المتصفح:"
+
+msgid "Bookmarked SQL query:"
+msgstr "استعلام SQL الذي تم وضع إشارة مرجعية عليه:"
+
+msgid "SQL history:"
+msgstr "محفوظات SQL :"
+
+msgid "Persistent recently used tables:"
+msgstr "الجداول المستمرة المستخدمة مؤخرا:"
+
+msgid "Persistent favorite tables:"
+msgstr "الجداول المفضلة المستمرة:"
+
+msgid "Persistent tables' UI preferences:"
+msgstr "تفضيلات واجهة المستخدم للجداول الدائمة:"
+
+msgid "Tracking:"
+msgstr "تتبع:"
+
+msgid "Configurable menus:"
+msgstr "القوائم القابلة للتكوين:"
+
+msgid "Hide/show navigation items:"
+msgstr "إخفاء/إظهار عناصر التنقل:"
+
+msgid "Remembering designer settings:"
+msgstr "تذكر إعدادات المصمم:"
+
+msgid "Saving export templates:"
+msgstr "حفظ قوالب التصدير:"
+
+msgid "Binary log"
+msgstr "سجل ثنائي"
+
+msgid "Files"
+msgstr "الملفات"
+
+msgid "Log name"
+msgstr "اسم السجل"
+
+msgid "Position"
+msgstr "موضع"
+
+msgid "Server ID"
+msgstr "رقم الخادم"
+
+msgid "Original position"
+msgstr "الوضع الأصلي"
+
+msgid "Information"
+msgstr "معلومات"
+
+msgid "Databases statistics"
+msgstr "إحصائيات قواعد البيانات"
+
+msgid "Create database"
+msgstr "أنشئ قاعدة معطيات"
+
+msgid "No privileges to create databases"
+msgstr "لا توجد امتيازات لإنشاء قواعد البيانات"
+
+msgid "Jump to database '%s'"
+msgstr "انتقل إلى قاعدة البيانات '%s'"
+
+msgid "Check privileges for database \"%s\"."
+msgstr "تحقق من الصلاحيات لقاعدة بيانات \"%s\"."
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Total:"
+msgstr "المجموع:"
+
+msgid "Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server."
+msgstr "ملاحظة: تمكين إحصائيات قواعد البيانات هنا قد يسبب تدفق بيانات ثقيل بين خادم الويب وخادم MySQL."
+
+msgid "Enable statistics"
+msgstr "مكن الإحصائيات"
+
+msgid "No databases"
+msgstr "لايوجد قواعد بيانات"
+
+msgid "Confirm"
+msgstr "أكد"
+
+msgid "Description"
+msgstr "الوصف"
+
+msgid "Free pages"
+msgstr "صفحات حرة"
+
+msgid "Busy pages"
+msgstr "صفحات مشغولة"
+
+msgid "Variables"
+msgstr "متغيرات"
+
+msgid "Unknown storage engine."
+msgstr "محرك تخزين غير معروف."
+
+msgid "Exporting databases from the current server"
+msgstr "تصدير قواعد المعطيات من الخادم الحالي"
+
+msgid "Importing into the current server"
+msgstr "يتم التحميل إلى الخادم الحالي"
+
+msgid "Plugins"
+msgstr "القوابس"
+
+msgid "Version"
+msgstr "نسخة"
+
+msgid "Author"
+msgstr "مؤلف"
+
+msgid "No Password"
+msgstr "لا كلمة سر"
+
+msgid "Re-type:"
+msgstr "إعادة الكتابة:"
+
+msgctxt "Password strength"
+msgid "Strength:"
+msgstr "قوة:"
+
+msgid "User group:"
+msgstr "مجموعة المستخدمين:"
+
+msgid "Edit privileges:"
+msgstr "تحرير الامتيازات:"
+
+msgid "Note: MySQL privilege names are expressed in English."
+msgstr "ملاحظة: يتم التعبير عن أسماء امتيازات MySQL باللغة الإنجليزية."
+
+msgid "Allows altering and dropping this routine."
+msgstr "يسمح بإنشاء وإسقاط هذا الروتين."
+
+msgid "Login Information"
+msgstr "بيانات الدخول"
+
+msgid "User name:"
+msgstr "اسم المستخدم:"
+
+msgid "Any user"
+msgstr "أي مستخدم"
+
+msgid "Use text field"
+msgstr "استخدم حقل نص"
+
+msgid "Host name:"
+msgstr "اسم المضيف:"
+
+msgid "Any host"
+msgstr "أي مزود"
+
+msgid "Local"
+msgstr "محلي"
+
+msgid "Password"
+msgstr "كلمة السر"
+
+msgid "Do not change the password"
+msgstr "لا تغير كلمة السر"
+
+msgid "Re-type"
+msgstr "أعد كتابة"
+
+msgid "Password hashing method"
+msgstr "طريقة تجزئة كلمة المرور"
+
+msgid "Table-specific privileges"
+msgstr "صلاحيات خاصة بالجدول"
+
+msgid "Column-specific privileges"
+msgstr "صلاحيات خاصة بالحقل"
+
+msgid "Add privileges on the following database(s):"
+msgstr "إضافة امتيازات على قاعدة (قواعد) البيانات التالية:"
+
+msgid "Add privileges on the following table:"
+msgstr "أضف امتيازات في الجدول التالي:"
+
+msgid "Add privileges on the following routine:"
+msgstr "أضف امتيازات على الروتين التالي:"
+
+msgid "Allows reading data."
+msgstr "يسمح بقراءة البيانات."
+
+msgid "Or"
+msgstr "أو"
+
+msgid "Allows inserting and replacing data."
+msgstr "يسمح بإضافة واستبدال البيانات."
+
+msgid "Allows changing data."
+msgstr "يسمح بتعديل البيانات."
+
+msgid "Has no effect in this MySQL version."
+msgstr "ليس له أي تأثير في نسخة MySQL الحالية."
+
+msgid "Allows deleting data."
+msgstr "يسمح بحذف البيانات."
+
+msgid "Allows creating new tables."
+msgstr "يسمح بإنشاء جداول جديدة."
+
+msgid "Allows dropping tables."
+msgstr "يسمح بإسقاط الجداول."
+
+msgid "Allows creating and dropping indexes."
+msgstr "يسمح بإنشاء وحذف الفهارس."
+
+msgid "Allows altering the structure of existing tables."
+msgstr "يسمح بتعديل بناء الجداول الموجودة مسبقا."
+
+msgid "Allows creating and dropping triggers."
+msgstr "يسمح بإنشاء وإسقاط الأزندة."
+
+msgid "Global privileges"
+msgstr "صلاحيات عامة"
+
+msgid "Database-specific privileges"
+msgstr "صلاحيات خاصة بقاعدة البيانات"
+
+msgid "Allows importing data from and exporting data into files."
+msgstr "يسمح باستيراد وتصدير البيانات من وإلى الملفّات."
+
+msgid "Allows creating new databases and tables."
+msgstr "يسمح بإنشاء قواعد بيانات وجداول جديدة."
+
+msgid "Allows dropping databases and tables."
+msgstr "يسمح بإسقاط قواعد البيانات والجداول."
+
+msgid "Allows creating temporary tables."
+msgstr "يسمح بإنشاء جداول مؤقتة."
+
+msgid "Allows altering and dropping stored routines."
+msgstr "يمسح بتعديل وإسقاط الروتينيات المخزنة."
+
+msgid "Administration"
+msgstr "إدارة"
+
+msgid "Allows adding users and privileges without reloading the privilege tables."
+msgstr "يسمح بإضافة المستخدمين والصلاحيات دون إعادة قراءة جداول الصلاحيات."
+
+msgid "Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users."
+msgstr "يسمح بالاتصال، حتى لو وصل حد عدد الاتصالات للأقصى.، مطلوب للمهام الإدارية كضبط الإعدادات العامة other users."
+
+msgid "Allows reloading server settings and flushing the server's caches."
+msgstr "يسمح بإعادة تحميل إعدادات الخادم وتفريغ كاش الخادم."
+
+msgid "Allows shutting down the server."
+msgstr "يسمح بإيقاف عمل الخادم."
+
+msgid "Gives access to the complete list of databases."
+msgstr "يسمح بالوصول لقائمة أسماء جميع قواعد البيانات."
+
+msgid "Allows locking tables for the current thread."
+msgstr "يسمح بقفل الجداول للعملية الحالية."
+
+msgid "Allows creating, dropping and renaming user accounts."
+msgstr "يسمح بإنشاء، وإسقاط وإعادة تسمية حسابات المستخدمين."
+
+msgid "Resource limits"
+msgstr "حدود المصادر"
+
+msgid "Note: Setting these options to 0 (zero) removes the limit."
+msgstr "ملاحظة: تغيير هذه الخيارات للرقم 0 )صفر( يلغي الحد."
+
+msgid "Limits the number of queries the user may send to the server per hour."
+msgstr "يحد عدد الاستعلامات التي يستطيع المستخدم إرسالها إلى الخادم بكل ساعة."
+
+msgid "Limits the number of commands that change any table or database the user may execute per hour."
+msgstr "يحد عدد الأوامر التي ينفذها المستخدم بكل ساعة، والتي تغير أي جدول أو قاعدة بيانات."
+
+msgid "Limits the number of new connections the user may open per hour."
+msgstr "يحد من عدد الاتصالات الجديدة التي يمكن للمستخدم فتحها بكل ساعة."
+
+msgid "Does not require SSL-encrypted connections."
+msgstr "لا يتطلب اتصالات مشفرة بطبقة المقابس الآمنة."
+
+msgid "Requires SSL-encrypted connections."
+msgstr "يتطلب اتصالات مشفرة بواسطة بروتوكول SSL."
+
+msgid "The selected user was not found in the privilege table."
+msgstr "المستخدم المحدد غير موجود في جدول الصلاحيات."
+
+msgid "… keep the old one."
+msgstr "… أبق القديم."
+
+msgid "… delete the old one from the user tables."
+msgstr "… احذف القديم من جداول المستخدمين."
+
+msgid "… revoke all active privileges from the old one and delete it afterwards."
+msgstr "… استعد كل الصلاحيات الفعالة من القديم واحذهم بعد ذلك."
+
+msgid "… delete the old one from the user tables and reload the privileges afterwards."
+msgstr "… احذف القديم من جداول المستخدمين وأعد قراءة الصلاحيات بعد ذلك."
+
+msgid "Unlock this account."
+msgstr "افتح هذا الحساب."
+
+msgid "Lock this account."
+msgstr "قفل هذا الحساب."
+
+msgid "Revoke all active privileges from the users and delete them afterwards."
+msgstr "استرجع كل الصلاحيات الفعالة من المستخدمين ثم احذفهم بعد ذلك."
+
+msgid "Drop the databases that have the same names as the users."
+msgstr "إسقاط قواعد البيانات التي لها نفس أسماء المستخدمين."
+
+msgid "Host:"
+msgstr "مضيف:"
+
+msgid "Port:"
+msgstr "ميناء:"
+
+msgid "No privileges"
+msgstr "لا امتيازات"
+
+msgid "Add replica replication user"
+msgstr "إضافة مستخدم النسخ المتماثل للنسخة المتماثلة"
+
+msgid "Use text field:"
+msgstr "استخدام حقل النص:"
+
+msgid "Host"
+msgstr "المزود"
+
+msgid "Generate password:"
+msgstr "إنشاء كلمة مرور:"
+
+msgid "Generate"
+msgstr "توليد"
+
+msgid "Primary connection:"
+msgstr "الاتصال الأساسي:"
+
+msgid "Control replica:"
+msgstr "نسخة طبق الأصل من التحكم:"
+
+msgid "Variable"
+msgstr "متغير"
+
+msgid "Current server:"
+msgstr "الخادم الحالي:"
+
+msgid "Servers"
+msgstr "خوادم"
+
+msgid "Advisor system"
+msgstr "نظام المرشد"
+
+msgid "Errors occurred while executing rule expressions:"
+msgstr "حدثت أخطاء أثناء تنفيذ تعبيرات القاعدة:"
+
+msgid "Possible performance issues"
+msgstr "الأداء المتوقع"
+
+msgid "Issue:"
+msgstr "أصدر:"
+
+msgid "Recommendation:"
+msgstr "التوصيه:"
+
+msgid "Justification:"
+msgstr "التبرير:"
+
+msgid "Used variable / formula:"
+msgstr "المتغير / الصيغة المستخدمة:"
+
+msgid "Test:"
+msgstr "امتحان:"
+
+msgid "Server"
+msgstr "خادم"
+
+msgid "Processes"
+msgstr "عمليات"
+
+msgid "Query statistics"
+msgstr "إحصائيات الإستعلام"
+
+msgid "All status variables"
+msgstr "جميع متغيرات الحالة"
+
+msgid "Monitor"
+msgstr "مراقبة"
+
+msgid "Please select the file you want to import:"
+msgstr "﻿الرجاء تحديد الملف الذي تريد استيراده:"
+
+msgid "Chart Title"
+msgstr "عنوان الرسم البياني"
+
+msgid "Select series:"
+msgstr "اختر السلسلة:"
+
+msgid "or type variable name:"
+msgstr "أو اكتب اسم المتغير:"
+
+msgid "KiB"
+msgstr "كيلوبايت"
+
+msgid "MiB"
+msgstr "ميجابايت"
+
+msgid "Add chart to grid"
+msgstr "أضف تخطيط إلى المشبكة"
+
+msgid "Selected time range:"
+msgstr "النطاق الزمني المحدد:"
+
+msgid "From slow log"
+msgstr "من السجل البطيء"
+
+msgid "From general log"
+msgstr "من السجل العام"
+
+msgid "Query"
+msgstr "استعلام بواسطة مثال"
+
+msgid "Analyse query"
+msgstr "تحليل الإستعلام"
+
+msgid "Analysing logs"
+msgstr "تحليل السجلات"
+
+msgid "Cancel request"
+msgstr "ألغ الطلب"
+
+msgid "No data found"
+msgstr "لايوجد بيانات"
+
+msgid "Log analysed, but no data found in this time span."
+msgstr "تمّ تحليل سجل الوقائع، و لكن لم توجد أي بيانات في إمتداد الزمن هذا."
+
+msgid "Loading logs"
+msgstr "تحميل السجلات"
+
+msgid "Log data loaded. Queries executed in this time span:"
+msgstr "تم تحميل بيانات سجلّ الوقائع. الإستعلامات المنفذة في الفترة الزمنية هذه:"
+
+msgid "Monitor refresh failed"
+msgstr "فشل تحديث المراقب"
+
+msgid "While requesting new chart data the server returned an invalid response. This is most likely because your session expired. Reloading the page and reentering your credentials should help."
+msgstr "أثناء طلب بيانات المخطط الجديد، عرض الخادم استجابة غير صالحة. بسبب انتهاء الجلسة.اعد تحميل الصفحة وإعد إدخال بيانات الاعتماد الخاصة بك."
+
+msgid "Reload page"
+msgstr "إعادة تحميل الصفحة"
+
+msgid "Local monitor configuration incompatible!"
+msgstr "اعدادات المراقب المحلي غير متوافقة!"
+
+msgid "Start auto refresh"
+msgstr "بدء التحديث التلقائي"
+
+msgid "Kill"
+msgstr "حذف"
+
+msgid "Questions since startup:"
+msgstr "أسئلة منذ بدء التشغيل:"
+
+msgid "Statements"
+msgstr "أوامر"
+
+msgid "This MySQL server has been running for %1$s. It started up on %2$s."
+msgstr "تم تشغيل خادم MySQL هذا ل %1$s. بدأت في %2$s."
+
+msgid "Traffic"
+msgstr "بيانات سير"
+
+msgid "Connections"
+msgstr "اتصالات"
+
+msgid "Related links:"
+msgstr "روابط ذات صلة:"
+
+msgid "User group menu assignments"
+msgstr "تعيينات قائمة مجموعة المستخدم"
+
+msgid "Group name:"
+msgstr "اسم المجموعة:"
+
+msgid "User"
+msgstr "المستخدم"
+
+msgid "Server variables and settings"
+msgstr "متغيرات وإعدادات الخادم"
+
+msgid "Session value"
+msgstr "قيمة الجلسة"
+
+msgid "Not enough privilege to view server variables and settings. %s"
+msgstr "لا يوجد امتياز كاف لعرض متغيرات الخادم وإعداداته. %s"
+
+msgid "Configuration file"
+msgstr "ملف التكوين"
+
+msgid "Generated configuration file"
+msgstr "ملف التكوين الذي تم إنشاؤه"
+
+msgid "Download"
+msgstr "نزل"
+
+msgid "Authentication type"
+msgstr "نوع المصادقة"
+
+msgid "New server"
+msgstr "خادم جديد"
+
+msgid "- none -"
+msgstr "- لا شيء -"
+
+msgid "Donate"
+msgstr "تبرع"
+
+msgid "Bookmark this SQL query"
+msgstr "اجعل علامة مرجعية SQL-استعلام"
+
+msgid "Bookmark label:"
+msgstr "تسمية الإشارة المرجعية:"
+
+msgid "Let every user access this bookmark"
+msgstr "اسمح لكل المستخدمين الوصول إلى هذه العلامة المرجعية"
+
+msgid "Detailed profile"
+msgstr "ملف تعريف مفصل"
+
+msgid "Order"
+msgstr "طلب"
+
+msgid "State"
+msgstr "حالة"
+
+msgid "Time"
+msgstr "وقت"
+
+msgid "Total Time"
+msgstr "الوقت الكلي"
+
+msgid "% Time"
+msgstr "% وقت"
+
+msgid "Calls"
+msgstr "اتصالات"
+
+msgid "ø Time"
+msgstr "ø وقت"
+
+msgid "Your SQL query has been executed successfully."
+msgstr "تم تنفيذ استعلام SQL الخاص بك بنجاح."
+
+msgid "SQL query"
+msgstr "استعلام SQL"
+
+msgid "Bind parameters"
+msgstr "ربط المعلمات"
+
+msgid "Columns"
+msgstr "أعمدة"
+
+msgid "Bookmark this SQL query:"
+msgstr "ضع إشارة مرجعية على استعلام SQL هذا:"
+
+msgid "Show this query here again"
+msgstr "أعرض هذا الاستعلام هنا مرة أخرى"
+
+msgid "Retain query box"
+msgstr "إحتفظ بصندوق الإستعلام"
+
+msgid "Bookmarked SQL query"
+msgstr "علامة مرجعية SQL-استعلام"
+
+msgid "Bookmark:"
+msgstr "الاشاره المرجعيه:"
+
+msgid "shared"
+msgstr "مشترك"
+
+msgid "View only"
+msgstr "عرض فقط"
+
+msgid "Simulate query"
+msgstr "محاكاة الإستعلام"
+
+msgid "Browse foreign values"
+msgstr "استعرض القيم الغريبة"
+
+msgid "Use this value"
+msgstr "إستعمل هذه القيمة"
+
+msgid "Chart title:"
+msgstr "عنوان الرسم البياني:"
+
+msgid "Value Column:"
+msgstr "عمود القيمة:"
+
+msgid "Exporting rows from \"%s\" table"
+msgstr "تصدير الأسطر من الجدول \"%s\""
+
+msgid "Zoom search"
+msgstr "تكبير البحث"
+
+msgid "Replace with:"
+msgstr "يستعاض عنها بما يلي:"
+
+msgid "Column:"
+msgstr "عمود :"
+
+msgid "Find and replace - preview"
+msgstr "بحث واستبدال - المعاينة"
+
+msgid "Importing into the table \"%s\""
+msgstr "الاستيراد إلى الجدول \"%s\""
+
+msgid "Index name:"
+msgstr "اسم الفهرس&nbsp;:"
+
+msgid "\"PRIMARY\" <b>must</b> be the name of and <b>only of</b> a primary key!"
+msgstr "\"الأساسي\" <b>يجب</b> يجب أن يكون الاسم <b>وأيضاً فقط</b> المفتاح الأساسي!"
+
+msgid "Index type:"
+msgstr "نوع الفهرس&nbsp;:"
+
+msgid "Parser:"
+msgstr "محلل:"
+
+msgid "Comment:"
+msgstr "التعليق:"
+
+msgid "Ignore"
+msgstr "تجاهل"
+
+msgid "Add %s column(s) to index"
+msgstr "أضف %s عمود/ أعمدة إلى الفهرس"
+
+msgid "Insert as new row"
+msgstr "إدخال كتسجيل جديد"
+
+msgid "and then"
+msgstr "وبعدها"
+
+msgid "Go back to previous page"
+msgstr "الرجوع إلى الصفحة السابقة"
+
+msgid "Insert another new row"
+msgstr "إدخال تسجيل جديد"
+
+msgid "Go back to this page"
+msgstr "ارجع إلى هذه الصفحة"
+
+msgid "Edit next row"
+msgstr "عدل الصف التالي"
+
+msgid "Binary"
+msgstr "ثنائي"
+
+msgid "Use the NULL value for this column."
+msgstr "استخدم القيمة NULL لهذا العمود."
+
+msgid "Because of its length,<br> this column might not be editable."
+msgstr "بسبب طوله,<br /> فمن المحتمل أن هذا الحقل غير قابل للتحرير."
+
+msgid "Binary - do not edit"
+msgstr "ثنائي - لاتحرره"
+
+msgid "Edit/Insert"
+msgstr "تحرير/إدخال"
+
+msgid "Improve table structure (Normalization):"
+msgstr "تحسين هيكل الجدول (التطبيع):"
+
+msgid "Alter table order by"
+msgstr "تعديل ترتيب الجدول بـ"
+
+msgid "Table options"
+msgstr "خيارات الجدول"
+
+msgid "Rename table to"
+msgstr "تغيير اسم جدول إلى"
+
+msgid "Table comments"
+msgstr "تعليقات الجدول"
+
+msgid "Switch to copied table"
+msgstr "بدل إلى الجدول المنسوخ"
+
+msgid "Defragment table"
+msgstr "إلغاء تجزئة الجدول"
+
+msgid "Table %s has been flushed."
+msgstr "لقد تم إعادة تحميل الجدول %s بنجاح."
+
+msgid "Flush the table (FLUSH)"
+msgstr "إعادة تحميل الجدول (FLUSH)"
+
+msgid "Empty the table (TRUNCATE)"
+msgstr "إفراغ الجدول (TRUNCATE)"
+
+msgid "View %s has been dropped."
+msgstr "تم إسقاط عرض %s."
+
+msgid "Table %s has been dropped."
+msgstr "تم إسقاط الجدول %s."
+
+msgid "Delete the table (DROP)"
+msgstr "إسقاط الجدول (DROP)"
+
+msgid "Remove partitioning"
+msgstr "إزالة التقسيم"
+
+msgid "Check referential integrity"
+msgstr "تحقق من التكامل المرجعي"
+
+msgid "Operations"
+msgstr "عمليات"
+
+msgid "Rename view to"
+msgstr "أعد تسمية العرض الـ"
+
+msgid "Delete the view (DROP)"
+msgstr "إسقاط العرض (DROP)"
+
+msgid "Table structure"
+msgstr "بنية الجدول"
+
+msgid "Drop partition"
+msgstr "إسقاط القسم"
+
+msgid "Foreign key constraints"
+msgstr "قيود المفاتيح الأجنبية"
+
+msgid "Constraint properties"
+msgstr "خواص القيد"
+
+msgid "Foreign key constraint"
+msgstr "قيد المفتاح الأجنبي"
+
+msgid "+ Add constraint"
+msgstr "+ إضافة قيود"
+
+msgid "Internal relation"
+msgstr "العلاقات الداخلية"
+
+msgid "Choose column to display:"
+msgstr "اختر عمودا لعرضه:"
+
+msgid "Foreign key constraint %s has been dropped"
+msgstr "تم إسقاط قيد المفتاح الخارجي %s"
+
+msgid "Constraint name"
+msgstr "اسم القيد"
+
+msgid "Do a \"query by example\" (wildcard: \"%\")"
+msgstr "عمل \"استعلام بواسطة المثال\" (بدل: \"%\")"
+
+msgid "Select columns (at least one):"
+msgstr "اختيار الأعمدة (واحد على الأقل):"
+
+msgid "Add search conditions (body of the \"where\" clause):"
+msgstr "أضف شروط البحث (الفقرة \"where\" ):"
+
+msgid "Number of rows per page"
+msgstr "رقم السجلات لكل صفحة"
+
+msgid "Display order:"
+msgstr "ترتيب العرض:"
+
+msgid "Range search"
+msgstr "مدي البحث"
+
+msgid "Minimum value:"
+msgstr "اقل قيمة:"
+
+msgid "Maximum value:"
+msgstr "اكبر قيمة:"
+
+msgid "Start row:"
+msgstr "صف البداية:"
+
+msgid "Partitions"
+msgstr "الأقسام"
+
+msgid "Partitioned by:"
+msgstr "مقسمة بواسطة:"
+
+msgid "Sub partitioned by:"
+msgstr "مقسمة بواسطة:"
+
+msgid "Analyze"
+msgstr "حلل"
+
+msgid "Check"
+msgstr "تحقق"
+
+msgid "Optimize"
+msgstr "تحسين"
+
+msgid "Rebuild"
+msgstr "إعادة بناء"
+
+msgid "Repair"
+msgstr "إصلاح"
+
+msgid "Extra"
+msgstr "إضافي"
+
+msgid "Media type:"
+msgstr "نوع الوسائط:"
+
+msgctxt "None for default"
+msgid "None"
+msgstr "لا شيء"
+
+msgid "Change"
+msgstr "تغيير"
+
+msgid "Column %s has been dropped."
+msgstr "تم إسقاط العمود %s."
+
+msgid "More"
+msgstr "أكثر"
+
+msgid "Propose table structure"
+msgstr "اقترح بناء الجدول"
+
+msgid "Track view"
+msgstr "تتبع الجدول"
+
+msgid "Add %s column(s)"
+msgstr "إضافة عمود (أعمدة) %s"
+
+msgid "Create an index on %s columns"
+msgstr "إنشاء فهرس على %s عمود (أعمدة)"
+
+msgid "Space usage"
+msgstr "المساحة المستخدمة"
+
+msgid "Effective"
+msgstr "فعال"
+
+msgid "Total"
+msgstr "مجموع كلي"
+
+msgid "dynamic"
+msgstr "ديناميكي"
+
+msgid "partitioned"
+msgstr "مقسم"
+
+msgid "Row length"
+msgstr "طول الصف"
+
+msgid "Row size"
+msgstr "مقاس الصف"
+
+msgid "Activate tracking for %s"
+msgstr "تنشيط التتبع ل %s"
+
+msgid "Activate now"
+msgstr "تنشيط الآن"
+
+msgid "Deactivate tracking for %s"
+msgstr "إلغاء تنشيط التتبع ل %s"
+
+msgid "Deactivate now"
+msgstr "تعطيل الآن"
+
+msgid "Date"
+msgstr "تاريخ"
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Additional search criteria"
+msgstr "معايير بحث إضافية"
+
+msgid "Maximum rows to plot"
+msgstr "أقصى عدد الصفوف للرسم"
+
+msgid "Browse/Edit the points"
+msgstr "تصفح/حرّر النقاط"
+
+msgid "How to use"
+msgstr "كيفية الإستعمال"
+
+msgid "Reset zoom"
+msgstr "إعادة تعيين المقربة"
+
+msgid "Event"
+msgstr "حدث"
+
+msgid "Triggers"
+msgstr "القوادح"
+
+msgid "VIEW name"
+msgstr "اسم VIEW"
+
+msgid "Column names"
+msgstr "اسم العمود"
+
+msgid "Error when evaluating: %s"
+msgstr "حدث خطأ أثناء تقييم: %s"
+
+msgid "Failed evaluating precondition for rule '%s'."
+msgstr "فشلت في تقييم مسبق للقاعدة '%s'."
+
+msgid "Failed calculating value for rule '%s'."
+msgstr "فشلت في حساب القيمة للقاعدة '%s'."
+
+msgid "Failed running test for rule '%s'."
+msgstr "فشلت في تشغيل الإختبار للقاعدة '%s'."
+
+msgid "Failed formatting string for rule '%s'."
+msgstr "فشل تنسيق النص لـ '%s'."
+
+msgid "per second"
+msgstr "لكل ثانية"
+
+msgid "per minute"
+msgstr "لكل دقيقة"
+
+msgid "per hour"
+msgstr "لكل ساعة"
+
+msgid "per day"
+msgstr "يومياً"
+
+msgid "Uptime below one day"
+msgstr "زمن التشغيل أقل من يوم واحد"
+
+msgid "Uptime is less than 1 day, performance tuning may not be accurate."
+msgstr "زمن التشغيل أقل من يوم واحد، قد لا يكون ضبط الأداء دقيقًا."
+
+msgid "To have more accurate averages it is recommended to let the server run for longer than a day before running this analyzer"
+msgstr "للحصول على متوسطات أكثر دِقَّة، يوصى بترك الخادوم يعمل لفترة أطول من يوم قبل تشغيل هذا المُحلل"
+
+msgid "The uptime is only %s"
+msgstr "وقت التشغيل %s فقط"
+
+msgid "Questions below 1,000"
+msgstr "الأسئلة تحت 1,000"
+
+msgid "Fewer than 1,000 questions have been run against this server. The recommendations may not be accurate."
+msgstr "تم تشغيل أقل من 1000 سؤال على هذا الخادوم. قد لا تكون التوصيات دقيقة."
+
+msgid "Let the server run for a longer time until it has executed a greater amount of queries."
+msgstr "دع الخادوم يعمل لفترة أطول حتى يتم تنفيذ قدر أكبر من الاستعلامات."
+
+msgid "Current amount of Questions: %s"
+msgstr "الكمية الحالية من الأسئلة: %s"
+
+msgid "Percentage of slow queries"
+msgstr "النسبة المئوية للاستعلامات البطيئة"
+
+msgid "There is a lot of slow queries compared to the overall amount of Queries."
+msgstr "هناك الكثير من الاستعلامات البطيئة مقارنةً المجموع الكلي للاستعلامات."
+
+msgid "You might want to increase {long_query_time} or optimize the queries listed in the slow query log"
+msgstr "قد ترغب في زيادة {long_query_time} أو تحسين الاستعلامات المدرجة في سجل الاستعلام البطيء"
+
+msgid "The slow query rate should be below 5%%, your value is %s%%."
+msgstr "يجب أن يكون معدل الاستعلام البطيء أقل من 5 %% ، القيمة الخاصة بك هي %s %%."
+
+msgid "Slow query rate"
+msgstr "معدّل الاستعلام البطيء"
+
+msgid "There is a high percentage of slow queries compared to the server uptime."
+msgstr "هناك نسبة مئوية عالية من الاستعلامات البطيئة مقارنة بوقت تشغيل الخادوم."
+
+msgid "You have a slow query rate of %s per hour, you should have less than 1%% per hour."
+msgstr "لديك معدل استعلام بطيء %s في الساعة، يجب أن يكون لديك أقل من 1%% في الساعة."
+
+msgid "Long query time"
+msgstr "وقت استعلام طويل"
+
+msgid "{long_query_time} is set to 10 seconds or more, thus only slow queries that take above 10 seconds are logged."
+msgstr "{long_query_time} تم ضبطه على 10 ثوانٍ أو أكثر، وبالتالي يتم تسجيل الاستعلامات البطيئة التي تستغرق فقط 10 ثوانٍ."
+
+msgid "It is suggested to set {long_query_time} to a lower value, depending on your environment. Usually a value of 1-5 seconds is suggested."
+msgstr "يوصى بتعيين {long_query_time} على قيمة أقل، اعتمادًا على بيئتك. عادة ما يوصى بقيمة بين 1-5 ثوان."
+
+msgid "long_query_time is currently set to %ds."
+msgstr "long_query_time معينة حاليًِا على قيمة %dث."
+
+msgid "Slow query logging"
+msgstr "تسجيل الاستعلام البطيء"
+
+msgid "The slow query log is disabled."
+msgstr "تم تعطيل سجل الاستعلام البطيء."
+
+msgid "Enable slow query logging by setting {log_slow_queries} to 'ON'. This will help troubleshooting badly performing queries."
+msgstr "تمكين تسجيل الاستعلام البطيء عن طريق تعيين قيمة {log_slow_queries} على'تشغيل'. هذا سوف يساعد في استكشاف الأخطاء وإصلاحها بشكل سيء في الاستعلامات."
+
+msgid "log_slow_queries is set to 'OFF'"
+msgstr "تم ضبط log_slow_queries على \"OFF\""
+
+msgid "Enable slow query logging by setting {slow_query_log} to 'ON'. This will help troubleshooting badly performing queries."
+msgstr "تفعيل التسجيل البطيء للاستعلام عن طريق ضبط {slow_query_log} على \"تشغيل\". سيساعد هذا في استكشاف أخطاء الاستعلامات ذات الأداء السيئ وإصلاحها."
+
+msgid "slow_query_log is set to 'OFF'"
+msgstr "تم ضبط slow_query_log على \"إيقاف\""
+
+msgid "You should upgrade, as MySQL 5.1 has improved performance, and MySQL 5.5 even more so."
+msgstr "يجب عليك الترقية، لأن الأداء قد تحسن في MySQL 5.1، وMySQL 5.5 بشكل كبير."
+
+msgid "Current version: %s"
+msgstr "الإصدار الحالي: %s"
+
+msgid "Minor Version"
+msgstr "إصدار مًصغر"
+
+msgid "You should upgrade, to a stable version of MySQL 5.5."
+msgstr "يتوجب عليك الترقية إلى إصدار مستقر من MySQL 5.5."
+
+msgid "Distribution"
+msgstr "التوزيع"
+
+msgid "If you did not compile from source, you may be using a package modified by a distribution. The MySQL manual only is accurate for official MySQL binaries, not any package distributions (such as RedHat, Debian/Ubuntu etc)."
+msgstr "إذا لم تقم بالتجميع من المصدر ، فقد تستخدم حزمة تم تعديلها من خلال توزيع. دليل MySQL فقط دقيق لثنائيات MySQL الرسمية ، وليس أي توزيعات للحزم (مثل RedHat ، Debian / Ubuntu ، إلخ)."
+
+msgid "Suboptimal caching method."
+msgstr "طريقة التخزين المؤقت دون المستوى الأمثل."
+
+msgid "Percentage of sorts that cause temporary tables"
+msgstr "النسبة المئوية للأنواع التي تسبب الجداول المؤقتة"
+
+msgid "Rate of sorts that cause temporary tables"
+msgstr "معدل الأنواع التي تسبب جداول مؤقتة"
+
+msgid "The rate of reading the first index entry is high."
+msgstr "معدل قراءة مدخل المؤشر الأول مرتفع."
+
+msgid "The rate of reading data from a fixed position is high."
+msgstr "معدل قراءة البيانات من موقع ثابت مرتفع."
+
+msgid "The rate of reading the next table row is high."
+msgstr "معدل قراءة صف الجدول التالي مرتفع."
+
+msgid "Temp disk rate"
+msgstr "%s جدول (جداول)"
+
+msgid "MyISAM key buffer (index cache) % used is low."
+msgstr "المخزن المؤقت لمفتاح MyISAM (ذاكرة التخزين المؤقت للفهرس) النسبة المئوية المستخدمة منخفضة."
+
+msgid "The rate of opening tables is high."
+msgstr "معدل فتح الجداول مرتفع."
+
+msgid "The rate of opening files is high."
+msgstr "معدل فتح الملفات مرتفع."
+
+msgid "Thread cache"
+msgstr "مخبأ الموضوع"
+
+msgid "The thread cache is set to 0"
+msgstr "تم تعيين ذاكرة التخزين المؤقت لمؤشر الترابط على 0"
+
+msgid "Thread cache hit rate %"
+msgstr "معدل إصابة ذاكرة التخزين المؤقت للخيط٪"
+
+msgid "%s%% of all connections are aborted. This value should be below 1%%"
+msgstr "%s%% من كل الإتصالات أجهضة. يجب أن تكون هذه القيمة أقل من 1%%"
+
+msgid "Rate of aborted connections"
+msgstr "نسبة إجهاض الإتصالات"
+
+msgid "Aborted connections rate is at %s, this value should be less than 1 per hour"
+msgstr "نسبة الإتصالات المجهضة هي %s، يجب أن تكون هذه القيمة أقل من واحد في الساعة"
+
+msgid "Percentage of aborted clients"
+msgstr "النسبة المئوية للزبائن المجهضين"
+
+msgid "Too many clients are aborted."
+msgstr "تم إجهاض الكثير من الزبائن."
+
+msgid "%s%% of all clients are aborted. This value should be below 2%%"
+msgstr "%s%% من كل الزبائن تم إجهاضهن. يجب أن تكون هذه القيمة أقل من 2%%"
+
+msgid "Rate of aborted clients"
+msgstr "نسبة الزبائن المجهوضين"
+
+msgid "You do not have InnoDB enabled."
+msgstr "لم يتم تمكين InnoDB."
+
+msgid "MyISAM concurrent inserts"
+msgstr "MyISAM ادخالات متزامنة"
+
+msgid "Enable {concurrent_insert} by setting it to 1"
+msgstr "مكّن {concurrent_insert} من خلال تعيينه الى 1"
+
+msgid "concurrent_insert is set to 0"
+msgstr "تم تعيين concurrent_insert الى 0"
+
+msgid "Query cache efficiency (%)"
+msgstr "كفاءة ذاكرة التخزين المؤقت للاستعلام (٪)"
+
+msgid "Current query cache size: %s"
+msgstr "حجم ذاكرة التخزين المؤقت للاستعلام الحالي: %s"
+
+msgid "Search:"
+msgstr "إبحث:"
+
+msgid "Unknown"
+msgstr "غير معروف"
+
+msgctxt "Collation"
+msgid "German (phone book order)"
+msgstr "الألمانية (ترتيب دفتر الهاتف)"
+
+msgctxt "Collation"
+msgid "German (dictionary order)"
+msgstr "الألمانية (ترتيب القاموس)"
+
+msgctxt "Collation"
+msgid "Spanish (traditional)"
+msgstr "الإسبانية (التقليدية)"
+
+msgctxt "Collation"
+msgid "Spanish (modern)"
+msgstr "الإسبانية (الحديثة)"
+
+msgctxt "Collation variant"
+msgid "case-insensitive"
+msgstr "غير حساس لحالة الأحرف"
+
+msgctxt "Collation variant"
+msgid "case-sensitive"
+msgstr "حساس لحالة الأحرف"
+
+msgctxt "Collation variant"
+msgid "accent-insensitive"
+msgstr "غير حساس لحالة اللهجة"
+
+msgctxt "Collation variant"
+msgid "accent-sensitive"
+msgstr "حساس لحالة اللهجة"
+
+msgctxt "Collation variant"
+msgid "kana-sensitive"
+msgstr "حساسة للكانا"
+
+msgctxt "Collation variant"
+msgid "multi-level"
+msgstr "متعدد المستويات"
+
+msgctxt "Collation variant"
+msgid "binary"
+msgstr "ثنائي"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "ثنائي"
+
+msgctxt "Collation"
+msgid "Unicode"
+msgstr "يونيكود"
+
+msgctxt "Collation"
+msgid "West European"
+msgstr "أوروبا الغربية"
+
+msgctxt "Collation"
+msgid "Central European"
+msgstr "أوروبا الوسطى"
+
+msgctxt "Collation"
+msgid "Russian"
+msgstr "الروسية"
+
+msgctxt "Collation"
+msgid "Simplified Chinese"
+msgstr "الصينية المبسطة"
+
+msgctxt "Collation"
+msgid "Traditional Chinese"
+msgstr "الصينية التقليدية"
+
+msgctxt "Collation"
+msgid "Chinese"
+msgstr "الصينية"
+
+msgctxt "Collation"
+msgid "Japanese"
+msgstr "اليابانية"
+
+msgctxt "Collation"
+msgid "Baltic"
+msgstr "البلطيق"
+
+msgctxt "Collation"
+msgid "Armenian"
+msgstr "الأرمنية"
+
+msgctxt "Collation"
+msgid "Arabic"
+msgstr "العربية"
+
+msgctxt "Collation"
+msgid "Korean"
+msgstr "الكورية"
+
+msgctxt "Collation"
+msgid "Hebrew"
+msgstr "العبرية"
+
+msgctxt "Collation"
+msgid "Georgian"
+msgstr "الجورجية"
+
+msgctxt "Collation"
+msgid "Greek"
+msgstr "اليونانية"
+
+msgctxt "Collation"
+msgid "Czech-Slovak"
+msgstr "السلوفاكية"
+
+msgctxt "Collation"
+msgid "Ukrainian"
+msgstr "الأكرانية"
+
+msgctxt "Collation"
+msgid "Turkish"
+msgstr "التركية"
+
+msgctxt "Collation"
+msgid "Swedish"
+msgstr "السويدية"
+
+msgctxt "Collation"
+msgid "Thai"
+msgstr "التايلندية"
+
+msgctxt "Collation"
+msgid "Unknown"
+msgstr "غير معروف"
+
+msgctxt "Collation"
+msgid "Bulgarian"
+msgstr "البلغارية"
+
+msgctxt "Collation"
+msgid "Croatian"
+msgstr "الكرواتية"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "التشيكية"
+
+msgctxt "Collation"
+msgid "Danish"
+msgstr "الدنمركية"
+
+msgctxt "Collation"
+msgid "English"
+msgstr "الإنجليزية"
+
+msgctxt "Collation"
+msgid "Esperanto"
+msgstr "إسبرانتو"
+
+msgctxt "Collation"
+msgid "Estonian"
+msgstr "الإستونية"
+
+msgctxt "Collation"
+msgid "Hungarian"
+msgstr "الهنجارية"
+
+msgctxt "Collation"
+msgid "Icelandic"
+msgstr "الأيسلندية"
+
+msgctxt "Collation"
+msgid "Classical Latin"
+msgstr "اللاتينية الكلاسيكية"
+
+msgctxt "Collation"
+msgid "Latvian"
+msgstr "اللاتفية"
+
+msgctxt "Collation"
+msgid "Lithuanian"
+msgstr "الليتوانية"
+
+msgctxt "Collation"
+msgid "Burmese"
+msgstr "البورمية"
+
+msgctxt "Collation"
+msgid "Persian"
+msgstr "فارسية"
+
+msgctxt "Collation"
+msgid "Polish"
+msgstr "البولندية"
+
+msgctxt "Collation"
+msgid "Romanian"
+msgstr "الرومانية"
+
+msgctxt "Collation"
+msgid "Sinhalese"
+msgstr "السنهالية"
+
+msgctxt "Collation"
+msgid "Slovak"
+msgstr "السلوفاكية"
+
+msgctxt "Collation"
+msgid "Slovenian"
+msgstr "السلوفينية"
+
+msgctxt "Collation"
+msgid "Vietnamese"
+msgstr "الفيتنامية"
+
+msgid "Both"
+msgstr "كلا"
+
+msgid "Nowhere"
+msgstr "لامكان"
+
+msgid "Left"
+msgstr "يسار"
+
+msgid "Right"
+msgstr "يمين"
+
+msgid "Click"
+msgstr "انقر"
+
+msgid "Double click"
+msgstr "نقرتين متتاليتين"
+
+msgid "key"
+msgstr "مفتاح"
+
+msgid "display column"
+msgstr "إظهار العمود"
+
+msgid "Welcome"
+msgstr "أهلا بك"
+
+msgid "Open"
+msgstr "فتح"
+
+msgid "Closed"
+msgstr "إغلاق"
+
+msgid "Ask before sending error reports"
+msgstr "اسأل قبل إرسال تقارير الأخطاء"
+
+msgid "Always send error reports"
+msgstr "إرسال تقارير الأخطاء دائما"
+
+msgid "Never send error reports"
+msgstr "عدم إرسال تقارير الأخطاء مطلقا"
+
+msgid "Server default"
+msgstr "الخادم الافتراضي"
+
+msgid "Enable"
+msgstr "مكن"
+
+msgid "Disable"
+msgstr "تعطيل"
+
+msgid "structure"
+msgstr "بناء"
+
+msgid "data"
+msgstr "بيانات"
+
+msgid "structure and data"
+msgstr "البنية والبيانات"
+
+msgid "Quick - display only the minimal options to configure"
+msgstr "سريع - عرض خيارات أقل"
+
+msgid "Custom - display all possible options to configure"
+msgstr "مخصص - عرض كل الخيارات المحتملة"
+
+msgid "Custom - like above, but without the quick/custom choice"
+msgstr "مخصص - مثل مافي الأعلى , لكن بدون الخيار سريع/مخصص"
+
+msgid "complete inserts"
+msgstr "إدخال كامل"
+
+msgid "extended inserts"
+msgstr "إدخال ممدد"
+
+msgid "both of the above"
+msgstr "كلاهما"
+
+msgid "neither of the above"
+msgstr "لاشيء منهم"
+
+msgid "Users cannot set a higher value"
+msgstr "المستخدمين لايمكنهم وضع قيمة أكبر"
+
+msgid "If enabled, user can enter any MySQL server in login form for cookie auth."
+msgstr "في حالة التمكين ، يمكن للمستخدم إدخال أي خادم MySQL في نموذج تسجيل الدخول لمصادقة ملف تعريف الارتباط."
+
+msgid "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
+msgstr "يتيح تمكين هذا للصفحة الموجودة على نطاق مختلف لاستدعاء phpMyAdmin داخل إطار ، وهو ثغرة أمنية [strong] محتملة [/strong] تسمح بهجمات البرمجة النصية عبر الإطارات (XSS)."
+
+msgid "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
+msgstr "عبارة المرور السرية المستخدمة لتشفير ملفات تعريف الارتباط في مصادقة ملف تعريف الارتباط[kbd]cookie[/kbd]."
+
+msgid "Enable bzip2 compression for import operations."
+msgstr "تفعيل ضغط bzip2 لعمليات والإستيراد."
+
+msgid "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
+msgstr "يعرف أي أدوات التعديل تستخدم مع الأعمدة CHAR و VARCHAR ,,[kbd]input[/kbd] - تسمح بمدخل محدود الطول ,, [kbd]textarea[/kbd] - تسمح بتعدد الأسطر في العمود."
+
+msgid "Use user-friendly editor for editing SQL queries (CodeMirror) with syntax highlighting and line numbers."
+msgstr "إستخدام محرر صديق للمستخدم (سهل) لكتابة أوامر SQL وهو (CodeMirror) حيث يقوم بتلوين الأوامر وإضافة أرقام الأسطر."
+
+msgid "Find any errors in the query before executing it. Requires CodeMirror to be enabled."
+msgstr "إيجاد أي مشاكل في الأمر قبل تشغيله يتطلب تفعيل CodeMirror."
+
+msgid "Defines the minimum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "يحدد الحجم الأدنى لحقول الإدخال التي تم إنشاؤها لأعمدة CHAR و VARCHAR."
+
+msgid "Defines the maximum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "يحدد الحجم الأقصى لحقول الإدخال التي تم إنشاؤها لأعمدة CHAR و VARCHAR."
+
+msgid "Whether a warning (\"Are your really sure…\") should be displayed when you're about to lose data."
+msgstr "التحذير (\" هل أنت متأكد \" ) يظهر عندما تكون على وشك فقدان بيانات."
+
+msgid "Autocomplete of the table and column names in the SQL queries."
+msgstr "الإكمال التلقائي لأسماء الجداول و الأعمدة في أوامر الSQL."
+
+msgid "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+msgstr "قائمة قيم الخيارات للتحويلات الافتراضية. سيتم استبدالها إذا تم ملء التحويل في صفحة بنية الجدول."
+
+msgid "Disable the table maintenance mass operations, like optimizing or repairing the selected tables of a database."
+msgstr "تعطيل عمليات الصيانة , مثل تحسين وإصلاح جداول قاعدة البيانات."
+
+msgid "Set the number of seconds a script is allowed to run ([kbd]0[/kbd] for no limit)."
+msgstr "قم بتعيين عدد الثواني المسموح بتشغيل البرنامج النصي ([kbd] 0 [/kbd] بدون حدود)."
+
+msgid "Exclude definition of current user"
+msgstr "استبعاد تعريف المستخدم الحالي"
+
+msgid "Please note that phpMyAdmin is just a user interface and its features do not limit MySQL."
+msgstr "فضلاً , تذكر أن phpMyAdmin هي واجهه إستخدام فقط وميزاتها لا يمكن أن تتجاوز حدود MySQL."
+
+msgid "Advanced server configuration, do not change these options unless you know what they are for."
+msgstr "إعداد متقدم للخادم , لاتغير أي من هذه القيم حتى تعلم وظيفتها."
+
+msgid "Tracking of changes made in database. Requires the phpMyAdmin configuration storage."
+msgstr "تعقب التغيرات الحاصلة على قاعدة البيانات."
+
+msgid "Customize browse mode."
+msgstr "تخصيص وضع التصفح."
+
+msgid "Customize default options."
+msgstr "تخصيص الخيارات الإفتراضية."
+
+msgid "Settings for phpMyAdmin developers."
+msgstr "إعدادات لمطوري phpMyAdmin."
+
+msgid "Customize edit mode."
+msgstr "تخصيص وضع التعديل."
+
+msgid "Customize default export options."
+msgstr "تخصيص خيارات التصدير الإفتراضي."
+
+msgid "Set some commonly used options."
+msgstr "تعيين بعض الخيارات شائعة الإستخدام."
+
+msgid "Customize default common import options."
+msgstr "تخصيص خيارات الإستيراد الإفتراضية."
+
+msgid "Set import and export directories and compression options."
+msgstr "حدد عناوين الإستيراد والتصدير و خيارات الضغط."
+
+msgid "Databases display options."
+msgstr "خيارات عرض قواعد البيانات."
+
+msgid "Customize appearance of the navigation panel."
+msgstr "تخصيص مظهر إطار التصفح."
+
+msgid "Customize the navigation tree."
+msgstr "تخصيص شجرة التنقل."
+
+msgid "Servers display options."
+msgstr "خيارات عرض الخوادم."
+
+msgid "Tables display options."
+msgstr "خيارات عرض الجداول."
+
+msgid "Settings that didn't fit anywhere else."
+msgstr "الإعدادات التي لاتناسب أي مكان آخر."
+
+msgid "Authentication settings."
+msgstr "خيارات المصادقة."
+
+msgid "Enter server connection parameters."
+msgstr "أدخل معلمات اتصال الخادم."
+
+msgid "Customize links shown in SQL Query boxes."
+msgstr "تخصيص الارتباطات المعروضة في مربعات استعلام SQL."
+
+msgid "SQL queries settings."
+msgstr "إعدادات إستعلامات SQL."
+
+msgid "Customize startup page."
+msgstr "تخصيص صفحة بدء التشغيل."
+
+msgid "Choose which details to show in the database structure (list of tables)."
+msgstr "اختر التفاصيل التي تظهر في بنية قاعدة البيانات (قائمة الجداول)."
+
+msgid "Settings for the table structure (list of columns)."
+msgstr "إعدادات بنية الجدول (قائمة الأعمدة)."
+
+msgid "Choose how you want tabs to work."
+msgstr "إختر الطريقة التي تعمل بها التبويبات."
+
+msgid "Customize text input fields."
+msgstr "تخصيص حقول الإدخال النصية."
+
+msgid "Customize default options"
+msgstr "تخصيص الخيارات الإفتراضية"
+
+msgid "Disable some of the warnings shown by phpMyAdmin."
+msgstr "تعطيل عرض بعض التحذيرات في phpMyAdmin ."
+
+msgid "Enable gzip compression for import and export operations."
+msgstr "تفعيل ضغط gzip لعمليات التصدير والإستيراد."
+
+msgid "If enabled, phpMyAdmin continues computing multiple-statement queries even if one of the queries failed."
+msgstr "إذا كان مفعل , فإن phpMyAdmin سوف تستمر في تنفيذ الإستعلامات المتعددة حتى لو فشل بعضها."
+
+msgid "Default format; be aware that this list depends on location (database, table) and only SQL is always available."
+msgstr "التنسيق الافتراضي؛ اعلم أن هذه القائمة تعتمد على الموقع (قاعدة البيانات، الجدول) وفقط SQL هي متاحة دائما."
+
+msgid "Update data when duplicate keys found on import"
+msgstr "تحديث البيانات عند العثور على مفاتيح مكررة عند الاستيراد"
+
+msgid "Number of queries to skip from start."
+msgstr "عدد طلبات البحث للتخطي من البداية."
+
+msgid "Define whether the previous login should be recalled or not in [kbd]cookie[/kbd] authentication mode."
+msgstr "تعريف ما إذا كان سوف يتذكر تسجيل الدخول الأخير من تحقق [kbd]cookie[/kbd] أم لا."
+
+msgid "Maximum number of characters used when a SQL query is displayed."
+msgstr "الحد الأقصى لعدد الأحرف المستخدمة عند عرض استعلام SQL."
+
+msgid "The number of items that can be displayed on each page on the first level of the navigation tree."
+msgstr "عدد العناصر التي يمكن عرضها على كل صفحة على المستوى الأول من شجرة التنقل."
+
+msgid "The number of items that can be displayed on each page of the navigation tree."
+msgstr "عدد العناصر التي يمكن عرضها على كل صفحة من شجرة التنقل."
+
+msgid "The number of bytes a script is allowed to allocate, e.g. [kbd]32M[/kbd] ([kbd]-1[/kbd] for no limit and [kbd]0[/kbd] for no change)."
+msgstr "عدد البايتات المسموح للبرنامج النصي بتخصيصها ، على سبيل المثال [kbd] 32 ميجا [/kbd] ([kbd] -1 [/kbd] بلا حدود و [kbd] 0 [/kbd] بدون تغيير)."
+
+msgid "In the navigation panel, replaces the database tree with a selector"
+msgstr "في لوحة التنقل، استبدل شجرة قاعدة البيانات مع محدد"
+
+msgid "Open the linked page in the main window ([code]main[/code]) or in a new one ([code]new[/code])."
+msgstr "افتح الصفحة المرتبطة في النافذة الرئيسية ([code] الرئيسية [/code]) أو في نافذة جديدة ([code] جديدة [/code])."
+
+msgid "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
+msgstr "يحدد الحد الأدنى لعدد العناصر (الجداول ، طرق العرض ، الإجراءات والأحداث) لعرض مربع التصفية."
+
+msgid "Whether to expand single database in the navigation tree automatically."
+msgstr "ما إذا كنت تريد توسيع قاعدة بيانات واحدة في شجرة التنقل تلقائيا."
+
+msgid "Set to 0 to collapse navigation panel."
+msgstr "اضبط على 0 لتصغير لوحة التنقل."
+
+msgid "Show logo in navigation panel."
+msgstr "عرض تنقل قواعد البيانات على شكل شجرة."
+
+msgid "URL where logo in the navigation panel will point to."
+msgstr "عنوان URL الذي سيشير إليه الشعار في لوحة التنقل."
+
+msgid "Display server choice at the top of the navigation panel."
+msgstr "اختيار خادم العرض أعلى لوحة التنقل."
+
+msgid "Highlight server under the mouse cursor."
+msgstr "توضيح الخادم تحت مؤشر الفأرة."
+
+msgid "Enable if you want DB-based query history (requires phpMyAdmin configuration storage). If disabled, this utilizes JS-routines to display query history (lost by window close)."
+msgstr "تمكين إذا كنت تريد سجل الاستعلام المستند إلى قاعدة البيانات (يتطلب تكوين الإعداد الخاص بوحدة تخزين PhpmyAdmin). إذا تم تعطيل ذلك، فإن هذا يستخدم JS-Routines لعرض محفوظات الاستعلام (التي فقدت عن طريق إغلاق النافذة)."
+
+msgid "Leave blank for no SQL query history support, suggested: [kbd]pma__history[/kbd]."
+msgstr "اتركه فارغًا لعدم دعم محفوظات استعلام SQL ، المقترح: [kbd] pma__history [/kbd]."
+
+msgid "Whether a DROP DATABASE IF EXISTS statement will be added as first line to the log when creating a database."
+msgstr "ما إذا كانت عبارة DROP DATABASE IF EXISTS سيتم إضافتها في السطر الأول في السجل عند إنشاء قاعدة بيانات."
+
+msgid "Whether a DROP TABLE IF EXISTS statement will be added as first line to the log when creating a table."
+msgstr "ما إذا كانت عبارة DROP TABLE IF EXISTS سيتم إضافتها في السطر الأول في السجل عند إنشاء قاعدة بيانات."
+
+msgid "Whether a DROP VIEW IF EXISTS statement will be added as first line to the log when creating a view."
+msgstr "ما إذا كانت عبارة DROP VIEW IF EXISTS سيتم إضافتها في السطر الأول في السجل عند إنشاء عرض."
+
+msgid "Leave blank if not used."
+msgstr "اتركه فارغا إذا لم يتم استخدامه."
+
+msgid "Leave blank for defaults."
+msgstr "اتركه فارغا كإعدادات افتراضية."
+
+msgid "Authentication method to use."
+msgstr "طريقة المصادقة للاستخدام."
+
+msgid "Compress connection to MySQL server."
+msgstr "ضغط الاتصال بخادم MySQL."
+
+msgid "Hostname where MySQL server is running."
+msgstr "اسم المضيف حيث يتم تشغيل خادم MySQL."
+
+msgid "Disable the default warning that is displayed on the main page if the value of the PHP setting session.gc_maxlifetime is less than the value of `LoginCookieValidity`."
+msgstr "قم بتعطيل التحذير الافتراضي الذي يتم عرضه على الصفحة الرئيسية إذا كانت قيمة جلسة إعداد PHP. gc_maxlifetime أقل من قيمة `LoginCookieValidity`."
+
+msgid "Highlight selected rows."
+msgstr "توضيح الصفوف المختارة."
+
+msgid "Highlight row pointed by the mouse cursor."
+msgstr "توضيح الصفوف المشار إليها بمؤشر الفأرة."
+
+msgid "Number of columns for CHAR/VARCHAR textareas."
+msgstr "عدد الأعمدة لمربعات النصوص الخاصة بـCHAR/VARCHAR."
+
+msgid "Number of rows for CHAR/VARCHAR textareas."
+msgstr "عدد الصفوف لمربعات النصوص الخاصة بـCHAR/VARCHAR."
+
+msgid "Log SQL queries and their execution time, to be displayed in the console"
+msgstr "تسجيل استعلامات SQL ووقت تنفيذها ، ليتم عرضها في وحدة التحكم"
+
+msgid "Tab that is displayed when entering a database."
+msgstr "علامة التبويب التي يتم عرضها عند إدخال قاعدة بيانات."
+
+msgid "Tab that is displayed when entering a server."
+msgstr "التبويب الذي يعرض عند الدخول إلى الخادم."
+
+msgid "Tab that is displayed when entering a table."
+msgstr "التبويب الذي يعرض عند الدخول إلى الجدول."
+
+msgid "Whether the table structure actions should be hidden."
+msgstr "لتحديد ما إذا كان يجب إخفاء إجراءات بنية الجدول."
+
+msgid "Whether column comments should be shown in table structure view"
+msgstr "لتحديد ما إذا كان يجب عرض تعليقات الأعمدة في طريقة عرض بنية الجدول أم لا"
+
+msgid "Show server listing as a list instead of a drop down."
+msgstr "إظهار الخواديم كقائمة بدلاً من القائمة المنسدلة."
+
+msgid "A dropdown will be used if fewer items are present."
+msgstr "سيتم استخدام القائمة المنسدلة إذا وجد عدد أقل من العناصر."
+
+msgid "Default value for foreign key checks checkbox for some queries."
+msgstr "مربع الاختيار الافتراضي لقيمة التحقق من المفاتيح الخارجية لبعض طلبات البحث."
+
+msgid "Uncheck the checkbox to disable drag and drop import"
+msgstr "قم بإلغاء تحديد خانة الاختيار لتعطيل الاستيراد بالسحب والإفلات"
+
+msgid "How many rows can be inserted at one time."
+msgstr "كم عدد الصفوف التي يمكن إدخالها مرة واحدة."
+
+msgid "Maximum number of characters shown in any non-numeric column on browse view."
+msgstr "الحد الأقصى لعدد الأحرف المعروضة في أي عمود غير رقمي في طريقة عرض الاستعراض."
+
+msgid "Define how long (in seconds) a login cookie is valid."
+msgstr "حدد مدة صلاحية ملف تعريف ارتباط تسجيل الدخول (بالثواني)."
+
+msgid "Double size of textarea for LONGTEXT columns."
+msgstr "حجم مزدوج من textarea لأعمدة LONGTEXT."
+
+msgid "Maximum number of databases displayed in database list."
+msgstr "الحد الأقصى لعدد قواعد البيانات المعروضة في قائمة قواعد البيانات."
+
+msgid "Maximum number of tables displayed in table list."
+msgstr "الحد الأقصى لعدد الجداول المعروضة في قائمة الجداول."
+
+msgid "Maximum number of recently used tables; set 0 to disable."
+msgstr "أكبر عدد للجداول المستعملة مؤخراً ; ضع 0 للتعطيل."
+
+msgid "Maximum number of favorite tables; set 0 to disable."
+msgstr "أكبر عدد للجداول المستعملة مؤخراً ; ضع 0 للتعطيل."
+
+msgid "These are Edit, Copy and Delete links."
+msgstr "هذه هي روابط التعديل والنسخ والحذف."
+
+msgid "Disable shortcut keys"
+msgstr "تعطيل مفاتيح الاختصار"
+
+msgid "Use natural order for sorting table and database names."
+msgstr "استخدام النظام الطبيعي لفرز الجدول وأسماء قاعدة البيانات."
+
+msgid "Use only icons, only text or both."
+msgstr "إستخدم الأيقونات او النصوص فقط , أو الإثنان."
+
+msgid "Use persistent connections to MySQL databases."
+msgstr "استخدام الاتصالات المستمرة لقواعد بيانات MySQL."
+
+msgid "Disallow BLOB and BINARY columns from editing."
+msgstr "عدم السماح بتحرير الأعمدة BLOB و BINARY."
+
+msgid "How many queries are kept in history."
+msgstr "كم عدد الاستفسارات المحفوظة في التاريخ."
+
+msgid "Select which functions will be used for character set conversion."
+msgstr "حدد الوظائف التي سيتم استخدامها لتحويل مجموعة الأحرف."
+
+msgid "When browsing tables, the sorting of each table is remembered."
+msgstr "عند تصفح الجداول ، يتم تذكر فرز كل جدول."
+
+msgid "Default sort order for tables with a primary key."
+msgstr "ترتيب الفرز الافتراضي للجداول ذات المفتاح الأساسي."
+
+msgid "For display Options"
+msgstr "لخيارات العرض"
+
+msgid "Directory where exports can be saved on server."
+msgstr "الدليل حيث يمكن حفظ الصادرات على الخادم."
+
+msgid "Enable ZIP compression for import and export operations."
+msgstr "تفعيل ضغط ZIP لعمليات التصدير والإستيراد ."
+
+msgid "Allow login to any MySQL server"
+msgstr "السماح بالدخول لأي خادم MySQL"
+
+msgid "Restrict login to MySQL server"
+msgstr "تقييد الدخول إلى خادم MySQL"
+
+msgid "Show \"Drop database\" link to normal users"
+msgstr "إظهار رابط «إسقاط قاعدة البيانات» للمستخدمين العاديين"
+
+msgid "Blowfish secret"
+msgstr "كلمة سر Blowfish"
+
+msgid "Row marker"
+msgstr "علامة الصف"
+
+msgid "Highlight pointer"
+msgstr "توضيح المؤشر"
+
+msgid "Bzip2"
+msgstr "Bzip2"
+
+msgid "CHAR columns editing"
+msgstr "تعديل أعمدة CHAR"
+
+msgid "Enable CodeMirror"
+msgstr "تمكين CodeMirror"
+
+msgid "Enable linter"
+msgstr "تفعيل مكتشف الأخطاء"
+
+msgid "Minimum size for input field"
+msgstr "الحد الأدنى لحجم حقل إدخال"
+
+msgid "Maximum size for input field"
+msgstr "أقصى حجم لحقل الإدخال"
+
+msgid "CHAR textarea columns"
+msgstr "أعمدة مربع النص لـ CHAR"
+
+msgid "CHAR textarea rows"
+msgstr "صفوف مربع النص لـ CHAR"
+
+msgid "Check config file permissions"
+msgstr "تحقق من أذونات ملف التكوين"
+
+msgid "Compress on the fly"
+msgstr "ضغط"
+
+msgid "Confirm DROP queries"
+msgstr "تأكيد استعلامات الإسقاط DROP"
+
+msgid "Paper size"
+msgstr "حجم الورق"
+
+msgid "Default database tab"
+msgstr "تبويب قاعدة البيانات الإفتراضي"
+
+msgid "Default server tab"
+msgstr "تبويب الخادم الإفتراضي"
+
+msgid "Default table tab"
+msgstr "تبويب الجدول الإفتراضي"
+
+msgid "Enable autocomplete for table and column names"
+msgstr "تمكين الإكمال التلقائي لأسماء الجداول والأعمدة"
+
+msgid "Show column comments"
+msgstr "اظهر تعليقات الجدول"
+
+msgid "Hide table structure actions"
+msgstr "إخفاء إجراءات بنية الجدول"
+
+msgid "Default transformations for Hex"
+msgstr "تحولات افتراضية من Hex"
+
+msgid "Default transformations for Substring"
+msgstr "التحولات الافتراضية من السلاسل الفرعية"
+
+msgid "Default transformations for External"
+msgstr "التحويلات الافتراضية للخارج"
+
+msgid "Default transformations for PreApPend"
+msgstr "التحويلات الافتراضية لـ PrePend"
+
+msgid "Default transformations for DateFormat"
+msgstr "التحويلات الافتراضية لتنسيق التاريخ"
+
+msgid "Default transformations for TextLink"
+msgstr "التحويلات الافتراضية لرابط النص"
+
+msgid "Display servers as a list"
+msgstr "إظهار الخوادم كقائمة"
+
+msgid "Disable multi table maintenance"
+msgstr "تعطيل صيانة الجداول المتعددة"
+
+msgid "Maximum execution time"
+msgstr "وقت التنفيذ الأقصى"
+
+msgid "Save as file"
+msgstr "حفظ كملف"
+
+msgid "Character set of the file"
+msgstr "مجموعة الأحرف للملف"
+
+msgid "Compression"
+msgstr "الضغط"
+
+msgid "Put columns names in the first row"
+msgstr "ضع أسماء الحقول في السطر الأول"
+
+msgid "Columns enclosed with"
+msgstr "الأعمدة المرفقة ب"
+
+msgid "Replace NULL with"
+msgstr "استبدل NULL بـ"
+
+msgid "Remove CRLF characters within columns"
+msgstr "حذف CRLF من الأعمدة"
+
+msgid "Columns terminated with"
+msgstr "تم إنهاء الأعمدة ب"
+
+msgid "Excel edition"
+msgstr "إصدارة إكسل"
+
+msgid "Database name template"
+msgstr "إسم قالب قاعدة البيانات"
+
+msgid "Server name template"
+msgstr "إسم قالب الخادم"
+
+msgid "Table name template"
+msgstr "إسم قالب الجدول"
+
+msgid "Dump table"
+msgstr "إفراغ الجدول"
+
+msgid "Include table caption"
+msgstr "أضف عنواناً للجدول"
+
+msgid "Table caption"
+msgstr "عنوان الجدول"
+
+msgid "Continued table caption"
+msgstr "عنوان جدول تابع"
+
+msgid "Label key"
+msgstr "مفتاح التسمية"
+
+msgid "Relationships"
+msgstr "علاقات"
+
+msgid "Export method"
+msgstr "نوع التصدير"
+
+msgid "Save on server"
+msgstr "حفظ في الخادم"
+
+msgid "Export as separate files"
+msgstr "تصدير كملفات منفصلة"
+
+msgid "Enclose table and column names with backquotes"
+msgstr "محاصرة أسماء الجداول و العواميد ب \"`\""
+
+msgid "SQL compatibility mode"
+msgstr "وضع توافق SQL"
+
+msgid "Creation/Update/Check dates"
+msgstr "تواريخ الإنشاء/التحديث/التحقق"
+
+msgid "Use delayed inserts"
+msgstr "استخدم الإضافات المتأخرة"
+
+msgid "Disable foreign key checks"
+msgstr "تعطيل التحقق من المفتاح الغريب"
+
+msgid "Export views as tables"
+msgstr "تصدير العروض كجداول"
+
+msgid "Export related metadata from phpMyAdmin configuration storage"
+msgstr "تصدير بيانات التعريف ذات الصلة من تخزين تكوين phpMyAdmin"
+
+msgid "Add IF NOT EXISTS (less efficient as indexes will be generated during table creation)"
+msgstr "إضافة إذا لم يكن موجودًا (أقل كفاءة حيث سيتم إنشاء الفهارس أثناء إنشاء الجدول)"
+
+msgid "%s view"
+msgstr "عرض %s"
+
+msgid "Use ignore inserts"
+msgstr "إستخدم الإضافات المتجاهلة"
+
+msgid "Syntax to use when inserting data"
+msgstr "بناء الجملة لإستخدامه عند إدخال البيانات"
+
+msgid "Maximal length of created query"
+msgstr "أقصى طول للإستعلام المنشئ"
+
+msgid "Export type"
+msgstr "نوع التصدير"
+
+msgid "Enclose export in a transaction"
+msgstr "تضمين التصدير في العملية"
+
+msgid "Export time in UTC"
+msgstr "وقت التصدير (بالتوقيت العالمي)"
+
+msgid "Foreign key dropdown order"
+msgstr "قائمة منسدلة مرتبة بالمفتاح الأجنبي"
+
+msgid "Foreign key limit"
+msgstr "حد المفتاح الغريب"
+
+msgid "Foreign key checks"
+msgstr "التحقق من المفتاح الخارجي"
+
+msgid "Browse mode"
+msgstr "وضع الإستعراض"
+
+msgid "CSV"
+msgstr "سي إس في"
+
+msgid "Developer"
+msgstr "مطور"
+
+msgid "Edit mode"
+msgstr "وضع التعديل"
+
+msgid "Export defaults"
+msgstr "إفتراضيات التصدير"
+
+msgid "General"
+msgstr "عام"
+
+msgid "Import defaults"
+msgstr "إفتراضيات الإستيراد"
+
+msgid "Import / export"
+msgstr "إستيراد / تصدير"
+
+msgid "LaTeX"
+msgstr "LaTeX"
+
+msgid "Microsoft Office"
+msgstr "مايكروسوفت أوفيس"
+
+msgid "Other core settings"
+msgstr "الإعدادات الرئيسية الأخرى"
+
+msgid "Page titles"
+msgstr "عناوين الصفحة"
+
+msgid "Security"
+msgstr "الأمان"
+
+msgid "Basic settings"
+msgstr "الإعدادات الأساسية"
+
+msgid "Authentication"
+msgstr "المصادقة"
+
+msgid "Server configuration"
+msgstr "إعداد الخادم"
+
+msgid "Configuration storage"
+msgstr "إعداد التخزين"
+
+msgid "Changes tracking"
+msgstr "تعقب التغيرات"
+
+msgid "SQL Query box"
+msgstr "صندوق إستعلام SQL"
+
+msgid "Startup"
+msgstr "بدء التشغيل"
+
+msgid "Database structure"
+msgstr "بنية قاعدة البيانات"
+
+msgid "Tabs"
+msgstr "التبويبات"
+
+msgid "Display relational schema"
+msgstr "عرض المخطط العلائقي"
+
+msgid "Text fields"
+msgstr "حقول نصية"
+
+msgid "Texy! text"
+msgstr "نص"
+
+msgid "Warnings"
+msgstr "تحذيرات"
+
+msgid "GZip"
+msgstr "GZip"
+
+msgid "Extra parameters for iconv"
+msgstr "مدخلات إضافية لـ iconv"
+
+msgid "Ignore multiple statement errors"
+msgstr "تجاهل أخطاء الجمل المتعددة"
+
+msgid "Enable drag and drop import"
+msgstr "تمكين السحب والإفلات للاستيراد"
+
+msgid "Partial import: allow interrupt"
+msgstr "الإستيراد الجزئي: السماح بالمقاطعة"
+
+msgid "Do not abort on INSERT error"
+msgstr "لاتحبط عندما يكون الخطأ في جمل الإدخال INSERT"
+
+msgid "Add ON DUPLICATE KEY UPDATE"
+msgstr "إضافة على التحديث الرئيسي المكرر"
+
+msgid "Format of imported file"
+msgstr "هيئة الملفات المستوردة"
+
+msgid "Use LOCAL keyword"
+msgstr "إستعمل الجملة LOCAL"
+
+msgid "Column names in first row"
+msgstr "ضع أسماء الصفوف في السطر الأول"
+
+msgid "Do not import empty rows"
+msgstr "لاتستورد صفوف فارغة"
+
+msgid "Import currencies ($5.00 to 5.00)"
+msgstr "عملات الإستيراد ($5.00 إلى 5.00)"
+
+msgid "Import percentages as proper decimals (12.00% to .12)"
+msgstr "النسبة المئوية للإستيراد كرقم عشري (12.00% إلى .12)"
+
+msgid "Partial import: skip queries"
+msgstr "إستيراد جزئي: تخطي الإستعلامات"
+
+msgid "Do not use AUTO_INCREMENT for zero values"
+msgstr "لاتستعمل AUTO_INCREMENT للقيم الصفرية"
+
+msgid "Read as multibytes"
+msgstr "اقرأ كمتعدد وحدات"
+
+msgid "Initial state for sliders"
+msgstr "الحالة الأولية"
+
+msgid "Number of inserted rows"
+msgstr "عدد الصفوف المدخلة"
+
+msgid "Limit column characters"
+msgstr "حد أحرف العمود"
+
+msgid "Delete all cookies on logout"
+msgstr "حذف كل الكوكيز عند الخروج"
+
+msgid "Recall user name"
+msgstr "تذكر إسم المستخدم"
+
+msgid "Login cookie validity"
+msgstr "صلاحية دخول الكوكيز"
+
+msgid "Bigger textarea for LONGTEXT"
+msgstr "مربع نص أكبر لـ LONGTEXT"
+
+msgid "Maximum displayed SQL length"
+msgstr "الحد الأقصى لطول SQL المعروض"
+
+msgid "Maximum databases"
+msgstr "قواعد بيانات أكبر"
+
+msgid "Maximum items on first level"
+msgstr "الحد الأقصى للعناصر على المستوى الأول"
+
+msgid "Maximum items in branch"
+msgstr "الحد الأقصى للعناصر في الفرع"
+
+msgid "Maximum number of rows to display"
+msgstr "الحد الأقصى لعدد الصفوف المطلوب عرضها"
+
+msgid "Maximum tables"
+msgstr "جداول أكبر"
+
+msgid "Memory limit"
+msgstr "حدود الذاكرة"
+
+msgid "Link with main panel"
+msgstr "ربط مع اللوحة الرئيسية"
+
+msgid "Display logo"
+msgstr "عرض الشعار"
+
+msgid "Logo link URL"
+msgstr "رابط الشعار"
+
+msgid "Logo link target"
+msgstr "هدف رابط الشعار"
+
+msgid "Display servers selection"
+msgstr "عرض إختيار الخوادم"
+
+msgid "Target for quick access icon"
+msgstr "الهدف لإيقونة الوصول السريع"
+
+msgid "Minimum number of databases to display the database filter box"
+msgstr "أقل عدد جداول اللتي تعرض في صندوق ترشيح الجداول"
+
+msgid "Group items in the tree"
+msgstr "عناصر المجموعة في الشجرة"
+
+msgid "Database tree separator"
+msgstr "فاصل شجرة قاعدة البيانات"
+
+msgid "Table tree separator"
+msgstr "فاصل شجرة الجدول"
+
+msgid "Maximum table tree depth"
+msgstr "أقصى عمق لشجرة الجدول"
+
+msgid "Enable highlighting"
+msgstr "تفعيل التوضيح (highlighting)"
+
+msgid "Show tables in tree"
+msgstr "عرض شجرة الجداول"
+
+msgid "Show functions in tree"
+msgstr "عرض شجرة الوظائف"
+
+msgid "Show procedures in tree"
+msgstr "عرض شجرة العمليات"
+
+msgid "Show events in tree"
+msgstr "عرض شجرة الاحداث"
+
+msgid "Recently used tables"
+msgstr "الجداول المستعملة مؤخراً"
+
+msgid "Show row links anyway"
+msgstr "عرض روابط الصف على أي حال"
+
+msgid "Natural order"
+msgstr "ترتيب طبيعي"
+
+msgid "Default sorting order"
+msgstr "الترتيب الإفتراضي"
+
+msgid "Persistent connections"
+msgstr "الإتصالات الثابتة"
+
+msgid "How to display the menu tabs"
+msgstr "كيفية عرض علامات التبويب"
+
+msgid "How to display various action links"
+msgstr "كيفية عرض روابط عمل مختلفة"
+
+msgid "Protect binary columns"
+msgstr "حماية الأعمدة من نوع BINARY"
+
+msgid "Permanent query history"
+msgstr "محفوظات استعلام دائمة"
+
+msgid "Query history length"
+msgstr "طول محفوظات الاستعلام"
+
+msgid "Recoding engine"
+msgstr "محرك إعادة الترميز"
+
+msgid "Remember table's sorting"
+msgstr "تذكر ترتيب الجداول"
+
+msgid "Repeat headers"
+msgstr "كرر الرؤوس"
+
+msgid "Relational display"
+msgstr "عرض علائقي"
+
+msgid "Grid editing: save all edited cells at once"
+msgstr "تحرير الشبكة: حفظ جميع الخلايا المحررة علي الفور"
+
+msgid "Save directory"
+msgstr "حفظ الدليل"
+
+msgid "Allow logins without a password"
+msgstr "السماح بتسجيلات الدخول بدون كلمة مرور"
+
+msgid "Allow root login"
+msgstr "السماح بتسجيل الدخول إلى الجذر"
+
+msgid "Session timezone"
+msgstr "توقيت الجلسة"
+
+msgid "Bookmark table"
+msgstr "جدول الإشارات المرجعية"
+
+msgid "Column information table"
+msgstr "جدول معلومات العمود"
+
+msgid "Control user password"
+msgstr "التحكم في كلمة مرور المستخدم"
+
+msgid "Control host"
+msgstr "مضيف التحكم"
+
+msgid "Hide databases"
+msgstr "إخفاء قواعد البيانات"
+
+msgid "SQL query history table"
+msgstr "جدول محفوظات استعلام SQL"
+
+msgid "Export templates table"
+msgstr "تصدير جدول القوالب"
+
+msgid "PDF schema: pages table"
+msgstr "مخطط PDF: جدول الصفحات"
+
+msgid "Recently used table"
+msgstr "الجدول المستخدم مؤخرا"
+
+msgid "Relation table"
+msgstr "جدول العلاقات"
+
+msgid "Server socket"
+msgstr "مقبس الخادم"
+
+msgid "Add DROP DATABASE"
+msgstr "إضافة DROP DATABASE"
+
+msgid "Add DROP VIEW"
+msgstr "إضافة DROP VIEW"
+
+msgid "SQL query tracking table"
+msgstr "جدول تتبع استعلام SQL"
+
+msgid "Automatically create versions"
+msgstr "إنشاء الإصدارات تلقائيا"
+
+msgid "Users table"
+msgstr "جدول المستخدمين"
+
+msgid "User groups table"
+msgstr "جدول مجموعات المستخدمين"
+
+msgid "Show table comments"
+msgstr "اظهر تعليقات الجدول"
+
+msgid "Show hint"
+msgstr "أعرض نصيحة"
+
+msgid "Explain SQL"
+msgstr "شرح SQL"
+
+msgid "Create PHP code"
+msgstr "أنشئ كود PHP"
+
+msgid "Textarea columns"
+msgstr "عواميد منطقة النص"
+
+msgid "Default title"
+msgstr "العنوان الغيابي"
+
+msgid "ZIP"
+msgstr "زيب"
+
+msgid "Enter executes queries in console"
+msgstr "زر الإدخال يقوم بتنفيذ الاستعلامات في المِعراض"
+
+msgid "Console height"
+msgstr "ارتفاع المِعراض"
+
+msgid "Console mode"
+msgstr "وضع المِعراض"
+
+msgid "Server connection collation"
+msgstr "إعدادات الاتصال بالخادم"
+
+msgid "Missing data for %s"
+msgstr "بيانات مفقودة لـ %s"
+
+msgid "Incorrect value!"
+msgstr "قيمة غير صحيحة!"
+
+msgid "unavailable"
+msgstr "غير متاح"
+
+msgid "\"%s\" requires %s extension"
+msgstr "%s يتطلب الإمتداد %s"
+
+msgid "Compressed import will not work due to missing function %s."
+msgstr "الإستيراد لن يتم , الدالة (%s) مفقودة ."
+
+msgid "Compressed export will not work due to missing function %s."
+msgstr "التصدير لن يتم , الدالة (%s) مفقودة ."
+
+msgid "maximum %s"
+msgstr "أقصى %s"
+
+msgid "CSV for MS Excel"
+msgstr "بيانات CSV لبرنامج ميكروسوفت إكسل"
+
+msgid "Cannot save settings, submitted configuration form contains errors!"
+msgstr "لا يمكن حفظ الإعدادات، نموذج التكوين المقدم يحتوي على أخطاء!"
+
+msgid "Existing configuration file (%s) is not readable."
+msgstr "ملف الإعدادت (%s) غير قابل للقراءة."
+
+msgid "Wrong permissions on configuration file, should not be world writable!"
+msgstr "صلاحيات خاطئة على ملف الإعدادات , لاينبغى أن يكون قابل للكتابة!"
+
+msgid "You should use SSL connections if your database server supports it."
+msgstr "يجب استخدام اتصالات طبقة المقابس الآمنة إذا كان خادم قاعدة البيانات يدعم ذلك."
+
+msgid "You allow for connecting to the server without a password."
+msgstr "الاتصال بالخادم بدون كلمة سر مسموح."
+
+msgid "Server %d"
+msgstr "خادم %d"
+
+msgid "no description"
+msgstr "بدون وصف"
+
+msgid "Could not connect to the database server!"
+msgstr "تعذر الاتصال بخادم قاعدة البيانات!"
+
+msgid "Invalid authentication type!"
+msgstr "نوع المصادقة غير صالح!"
+
+msgid "Empty username while using [kbd]config[/kbd] authentication method!"
+msgstr "اجعل اسم المستخدم الفارغ أثناء استخدام طريقة المصادقة[kbd]config[/kbd]!"
+
+msgid "Empty signon session name while using [kbd]signon[/kbd] authentication method!"
+msgstr "اسم جلسة تسجيل الدخول فارغ أثناء استخدام أسلوب مصادقة [kbd]signon[/kbd]!"
+
+msgid "Empty signon URL while using [kbd]signon[/kbd] authentication method!"
+msgstr "لايمكن إيجاد برنامج مصادقة التوقيع [kbd]signon[/kbd] !"
+
+msgid "Incorrect value:"
+msgstr "قيمة غير صحيحة:"
+
+msgid "Not a valid port number!"
+msgstr "رقم منفذ غير صحيح!"
+
+msgid "Not a positive number!"
+msgstr "عدد غير موجب!"
+
+msgid "Not a non-negative number!"
+msgstr "ليس عدد غير سالب!"
+
+msgid "Value must be less than or equal to %s!"
+msgstr "القيمة يجب أن تساوي أو أقل من %s!"
+
+msgid "Showing %1$d bookmark (both private and shared)"
+msgid_plural "Showing %1$d bookmarks (both private and shared)"
+msgstr[0] "عرض %1$d إشارة مرجعية (خاصة ومشتركة)"
+msgstr[1] "عرض%1$d إشارة مرجعية (خاصة ومشتركة)"
+msgstr[2] "عرض%1$d إشاراتان مرجعييتان (خاصة ومشتركة)"
+msgstr[3] "عرض%1$d إشارة مرجعية (خاصة ومشتركة)"
+msgstr[4] "عرض%1$d إشارة مرجعية (خاصة ومشتركة)"
+msgstr[5] "عرض%1$d إشارة مرجعية (خاصة ومشتركة)"
+
+msgid "No bookmarks"
+msgstr "لا توجد إشارات مرجعية"
+
+msgid "The %s file is not available on this system, please visit %s for more information."
+msgstr "الملف %s غير متوفر في هذا النظام، المرجو مراجعة %s لمزيد من المعلومات."
+
+msgid "Failed"
+msgstr "فشل"
+
+msgid "Succeeded"
+msgstr "نجحت"
+
+msgid "Showing rows %1$s - %2$s."
+msgstr "إظهار الصفوف %1$s - %2$s."
+
+msgid "No databases selected."
+msgstr "لا قواعد بيانات محددة."
+
+msgid "Add event"
+msgstr "إضافة حدث"
+
+msgid "Error in processing request:"
+msgstr "خطأ في معالجة الطلب:"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "لم يتم العثور على حدث يحمل الاسم %1$s في قاعدة البيانات %2$s."
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "خطأ في طلب المعالجة: لم يتم العثور على حدث يحمل الاسم %1$s في قاعدة البيانات %2$s."
+
+msgid "Could not load import plugins, please check your installation!"
+msgstr "لم يمكن تحميل قوابس الاستيراد، الرجاء فحص تثبيتك!"
+
+msgid "No Privileges"
+msgstr "امتياز غير موجود"
+
+msgid "Add routine"
+msgstr "إضافة روتين"
+
+msgid "Edit routine"
+msgstr "تعديل الإجراء"
+
+msgid "No routine with name %1$s found in database %2$s."
+msgstr "لم يتم العثور على إجراء بالاسم %1$s في قاعدة البيانات %2$s."
+
+msgid "Export of routine %s"
+msgstr "تصدير %s"
+
+msgid "Success!"
+msgstr "نجاح!"
+
+msgid "This view has at least this number of rows. Please refer to %sdocumentation%s."
+msgstr "لدى هذا العرض على الأقل هذا العدد من الأسطر. الرجاء مراجعة الـ %sdocumentation%s."
+
+msgid "unknown"
+msgstr "غير معروفة"
+
+msgid "Favorite List is full!"
+msgstr "قائمة المفضلة ممتلئة!"
+
+msgid "Tracking data deleted successfully."
+msgstr "تم مسح بيانات تتبع التغيرات بنجاح ."
+
+msgid "Version %1$s was created for selected tables, tracking is active for them."
+msgstr "تم إنشاء الإصدار %1$s للجداول المحددة، التتبع نشط بالنسبة لهم."
+
+msgid "No tables selected."
+msgstr "لم يتم تحديد جداول."
+
+msgid "Database Log"
+msgstr "سجل قاعدة البيانات"
+
+msgid "An error has been detected and an error report has been automatically submitted based on your settings."
+msgstr "تم اكتشاف خطأ، وتلقائياً تم إرسال تقرير بهذا الخطأ بناءً على إعداداتك."
+
+msgid "Thank you for submitting this report."
+msgstr "شكرا لك لتقديم هذا التقرير."
+
+msgid "An error has been detected and an error report has been generated but failed to be sent."
+msgstr "تم اكتشاف خطأ وتم إنشاء تقرير خطأ ولكن أخفق إرساله."
+
+msgid "If you experience any problems please submit a bug report manually."
+msgstr "إذا واجهت أي مشاكل يرجى تقديم تقرير بذلك يدويا."
+
+msgid "You may want to refresh the page."
+msgstr "لربما يكون من الأفضل أن تقوم بتحديث هذه الصفحة."
+
+msgid "Bad type!"
+msgstr "نوع غير جيد!"
+
+msgid "Value for the column \"%s\""
+msgstr "قيمة العمود \"%s\""
+
+msgid "You were logged out from one server, to logout completely from phpMyAdmin, you need to logout from all servers."
+msgstr "تم تسجيل الخروج من خادم واحد، لتسجيل الخروج تماما من phpMyAdmin، تحتاج إلى تسجيل الخروج من كافة الملقمات."
+
+msgid "The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. "
+msgstr "إعدادت التخزين لـphpMyAdmin ليست مكتملة، بعض الميزات تم تعطيلها. لمعرفة السبب اضغط %s هنا%s. "
+
+msgid "Or alternately go to 'Operations' tab of any database to set it up there."
+msgstr "أو عليك التوجه إلى التبويب «العمليات» لأي قاعدة بيانات لتحديدها في ذلك المكان."
+
+msgid "Your PHP parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is lower than cookie validity configured in phpMyAdmin, because of this, your login might expire sooner than configured in phpMyAdmin."
+msgstr "قيمة العامل [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] الخاص بـPHP أصغر من مدة صلاحية «الكعكات» التي تم إعدادها بواسطة phpMyAdmin، جلسة العمل يمكن أن تنتهي أسرع مما قد تم إعداده بواسطة phpMyAdmin."
+
+msgid "Login cookie store is lower than cookie validity configured in phpMyAdmin, because of this, your login will expire sooner than configured in phpMyAdmin."
+msgstr "قيمة العامل LoginCookieStore أصغر من مدة صلاحية الكعكات التي تم إعدادها بواسطة phpMyAdmin، نتيجة لذلك جلسة العمل يمكن أن تنتهي أسرع مما قد تم إعداده بواسطة phpMyAdmin."
+
+msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
+msgstr "الملف [code]config[/code] المستعمل من قبل نص الإعدادات مازال موجودا في مجلد phpMyAdmin. يُوصى بفسخه عندما يتم إعداد phpMyAdmin. إذا لم يتم ذلك فحماية الخادم قد يتعرض للخطر من أشخاص غير مرخصين قد يحَمِّلون إعداداتك."
+
+msgid "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this."
+msgstr "$cfg['TempDir'] (%s 1) لا يمكن الوصول إليه. phpMyAdmin ليست قادرة على ايداع القوالب في ذاكرة التخزين المؤقت، وسوف تكون بطيئة بسبب هذا."
+
+msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
+msgstr "لم يتم العثور على إضافة PHP mbstring ويبدو أنك تستعمل طقم محارف متعدد البايتات. دون إضافة mbstring لا يستطيع phpMyAdmin إدارة النصوص بشكل فعَّال، مما قد يُظهِر نتائج غير متوقعة."
+
+msgid "The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled."
+msgstr "لم يتم العثور على إضافة curl وallow_url_fopen غير مفعل. نتيجة لذلك بعض الميزات مثل تقارير الأخطاء أو التحقق من الإصدار مُعَطَّلة."
+
+msgid "You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit."
+msgstr "من المحتمل أنك قد حاولت رفع ملف كبير الحجم. الرجاء مراجعة %sdocumentation%s لإيجاد حلّ بديل لتغيير هذا الحد."
+
+msgid "Showing bookmark"
+msgstr "عرض العلامة المرجعية"
+
+msgid "The bookmark has been deleted."
+msgstr "لقد حذفت العلامة المرجعية."
+
+msgid "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc]."
+msgstr "لم يتم تلَقَّي أي بيانات للاستيراد. أما لم يتم إرسال اسم الملف، أو حجم الملف يتجاوز الحجم الأقصى المسموح به من قبل إعداد PHP الخاص بك. انظر [doc@faq1-16] أسئلة وأجوبة 1.16[/doc]."
+
+msgid "Import has been successfully finished, %d query executed."
+msgid_plural "Import has been successfully finished, %d queries executed."
+msgstr[0] "تم الانتهاء من الاستيراد بنجاح، وتم تنفيذ استعلامات %d."
+msgstr[1] "انتهى الإستيراد بنجاح، %d استعلام تم تنفيذه."
+msgstr[2] "انتهى الإستيراد بنجاح، %d استعلام تم تنفيذه."
+msgstr[3] "انتهى الإستيراد بنجاح، %d استعلام تم تنفيذه."
+msgstr[4] "انتهى الإستيراد بنجاح، %d استعلام تم تنفيذه."
+msgstr[5] "انتهى الإستيراد بنجاح، %d استعلام تم تنفيذه."
+
+msgid "Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume."
+msgstr "انتهت مهلة البرنامج النصي، إذا كنت ترغب في إنهاء الاستيراد، الرجاء %s إعادة إرسال نفس الملف%s وسوف تستأنف الاستيراد."
+
+msgid "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits."
+msgstr "على كل حال عند آخر معالجة لم يتم تحليل أي معلومات، هذا يعني أن phpMyAdmin لا يستطيع استكمال هذا الاستيراد، ما لم يتم زيادة حد وقت PHP."
+
+msgid "\"DROP DATABASE\" statements are disabled."
+msgstr "تم تعطيل عبارات «Drop Database»."
+
+msgid "Could not load the progress of the import."
+msgstr "تعذّر تحميل حالة تقدم الاستيراد."
+
+msgid "Do you really want to execute \"%s\"?"
+msgstr "هل تريد فعلاً تنفيذ \"%s\"؟"
+
+msgid "You are about to DESTROY a complete database!"
+msgstr "أنت على وشك إزالة كامل قاعدة البيانات !"
+
+msgid "You are about to DESTROY a complete table!"
+msgstr "أنت على وشك إزالة كامل الجدول!"
+
+msgid "You are about to TRUNCATE a complete table!"
+msgstr "أنت على وشك إفراغ كامل الجدول!"
+
+msgid "Delete tracking data for this table?"
+msgstr "حذف بيانات التتبع لهذا الجدول ؟"
+
+msgid "Delete tracking data for these tables?"
+msgstr "حذف بيانات التتبع لهذا الجدول؟"
+
+msgid "Delete tracking data for this version?"
+msgstr "حذف بيانات التتبع لهذه النسخة؟"
+
+msgid "Delete tracking data for these versions?"
+msgstr "حذف بيانات التتبع لهذه النسخة ؟"
+
+msgid "Delete entry from tracking report?"
+msgstr "هل تريد حذف الإدخال من تقرير التتبع؟"
+
+msgid "Deleting tracking data"
+msgstr "حذف بيانات التتبع"
+
+msgid "Dropping Primary Key/Index"
+msgstr "حذف المفتاح/الفهرس الرئيس"
+
+msgid "Dropping Foreign key."
+msgstr "إسقاط المفتاح الخارجي."
+
+msgid "Do you really want to delete user group \"%s\"?"
+msgstr "هل تريد حقا حذف مجموعة المستخدمين ”%s“؟"
+
+msgid "You have unsaved changes; are you sure you want to leave this page?"
+msgstr "لم تحفظ التغييرات؛ هل تريد بالتأكيد مغادرة هذه الصفحة؟"
+
+msgid "You are trying to reduce the number of rows, but have already entered data in those rows which will be lost. Do you wish to continue?"
+msgstr "أنت تحاول تقليل عدد الصفوف، ولكنك قمت بإدخال بيانات إلى تلك الصفوف، سيتم حذف هذه البيانات. هل ترغب في الإستمرار ؟"
+
+msgid "Do you really want to revoke the selected user(s) ?"
+msgstr "هل تريد حقا إلغاء المستخدم /المستخدمين المحدد /المحددين؟"
+
+msgid "Do you really want to delete this central column?"
+msgstr "هل تريد حقا حذف هذا العمود المركزي؟"
+
+msgid "Do you really want to delete the selected items?"
+msgstr "هل تريد حقا حذف العناصر المحددة؟"
+
+msgid "Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!"
+msgstr "هل تريد حقًا إسقاط القسم المحدد؟ سيؤدي ذلك أيضًا إلى حذف البيانات المتعلقة بالقسم (الأقسام) المحدد!"
+
+msgid "Do you really want to TRUNCATE the selected partition(s)?"
+msgstr "هل تريد حقا اقتطاع القسم (الأقسام) المحدده؟"
+
+msgid "Do you really want to remove partitioning?"
+msgstr "هل تريد حقا إزالة التقسيم؟"
+
+msgid "This operation will attempt to convert your data to the new collation. In rare cases, especially where a character doesn't exist in the new collation, this process could cause the data to appear incorrectly under the new collation; in this case we suggest you revert to the original collation and refer to the tips at "
+msgstr "ستحاول هذه العملية تحويل بياناتك إلى التصنيف الجديد. في حالات نادرة، خاصة عندما لا يوجد حرف في الترتيب الجديد، قد تؤدي هذه العملية إلى ظهور البيانات بشكل غير صحيح تحت التصنيف الجديد؛ في هذه الحالة نقترح عليك العودة إلى الترتيب الأصلي والرجوع إلى النصائح في "
+
+msgid "Garbled Data"
+msgstr "بيانات مشوشة"
+
+msgid "Are you sure you wish to change the collation and convert the data?"
+msgstr "هل تريد بالتأكيد تغيير التصنيف وتحويل البيانات؟"
+
+msgid "Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the \"Change\" Link) on the table structure page. </b>"
+msgstr "من خلال هذه العملية ، تحاول MySQL تعيين قيم البيانات بين عمليات الترتيب. إذا كانت مجموعات الأحرف غير متوافقة ، فقد يكون هناك فقدان للبيانات وقد تكون هذه البيانات المفقودة <b> NOT </b> قابلة للاسترداد ببساطة عن طريق تغيير ترتيب (ترتيبات) الأعمدة. <b> لتحويل البيانات الموجودة ، يقترح استخدام ميزة تحرير العمود (الأعمدة) (رابط \"التغيير\") في صفحة بنية الجدول. </b>"
+
+msgid "Are you sure you wish to change all the column collations and convert the data?"
+msgstr "هل تريد بالتأكيد تغيير جميع عمليات تصنيف الأعمدة وتحويل البيانات؟"
+
+msgid "Reset all"
+msgstr "إعادة ضبط الكل"
+
+msgid "Missing value in the form!"
+msgstr "يوجد قيمة مفقودة بالنموذج !"
+
+msgid "Select at least one of the options!"
+msgstr "اختر على الأقل أحد الخيارات !"
+
+msgid "Please enter a valid number!"
+msgstr "رجاء ادخل رقم صحيح !"
+
+msgid "Please enter a valid length!"
+msgstr "من فضلك ادخل طول صالح !"
+
+msgid "Add index"
+msgstr "إضافة فهرس"
+
+msgid "Edit index"
+msgstr "تحرير الفهرس"
+
+msgid "Create single-column index"
+msgstr "إنشاء فهرس ذو عمود مفرد"
+
+msgid "Create composite index"
+msgstr "إنشئ فهرس مركب"
+
+msgid "Composite with:"
+msgstr "مركب مع:"
+
+msgid "Please select column(s) for the index."
+msgstr "أضف s% عمود/ اعمدة إلى الفهرس ."
+
+msgid "Y values"
+msgstr "كل قيم Y"
+
+msgid "Please enter the SQL query first."
+msgstr "من فضلك ادخل قيمة SQL اولا."
+
+msgid "The host name is empty!"
+msgstr "إسم المستضيف فارغ!"
+
+msgid "The user name is empty!"
+msgstr "إسم المستخدم فارغ!"
+
+msgid "The password is empty!"
+msgstr "كلمة المرور فارغة!"
+
+msgid "The passwords aren't the same!"
+msgstr "كلمتا المرور مختلفتان!"
+
+msgid "Removing Selected Users"
+msgstr "حذف المستخدمين المحددين"
+
+msgid "Template was created."
+msgstr "تم انشاء القالب ."
+
+msgid "Template was loaded."
+msgstr "تم تحميل القالب."
+
+msgid "Template was updated."
+msgstr "تم تحديث القالب ."
+
+msgid "Template was deleted."
+msgstr "تمّ حذف القالب ."
+
+msgid "Other"
+msgstr "آخر"
+
+msgid ","
+msgstr ","
+
+msgid "."
+msgstr "."
+
+msgid "Connections / Processes"
+msgstr "اتصالات / عمليات"
+
+msgid "Number of statements"
+msgstr "عدد البيانات"
+
+msgid "Query cache efficiency"
+msgstr "كفاءة ذاكرة التخزين المؤقت لطلب البحث"
+
+msgid "Query cache usage"
+msgstr "استخدام ذاكرة التخزين المؤقت لطلب البحث"
+
+msgid "Query cache used"
+msgstr "تم استخدام ذاكرة التخزين المؤقت لطلب البحث"
+
+msgid "System CPU usage"
+msgstr "استخدام وحدة المعالجة المركزية للنظام"
+
+msgid "System memory"
+msgstr "ذاكرة النظام"
+
+msgid "System swap"
+msgstr "مبادلة النظام"
+
+msgid "Average load"
+msgstr "متوسط التحميل"
+
+msgid "Total memory"
+msgstr "الذاكرة الاجمالية"
+
+msgid "Cached memory"
+msgstr "ذاكرة التخزين المؤقت"
+
+msgid "Buffered memory"
+msgstr "الذاكرة الوسيطة"
+
+msgid "Free memory"
+msgstr "الذاكرة الحرة"
+
+msgid "Used memory"
+msgstr "الذاكرة المستخدمة"
+
+msgid "Total swap"
+msgstr "إجمالي المبادلة"
+
+msgid "Cached swap"
+msgstr "تبادل مؤقت"
+
+msgid "Used swap"
+msgstr "المبادلة المستخدمة"
+
+msgid "Free swap"
+msgstr "تبادل مجاني"
+
+msgid "Bytes sent"
+msgstr "تم إرسال وحدات البايت"
+
+msgid "Bytes received"
+msgstr "تم استلام وحدات البايت"
+
+msgid "B"
+msgstr "بايت"
+
+msgid "GiB"
+msgstr "جيجا بايت"
+
+msgid "TiB"
+msgstr "تيرا بايت"
+
+msgid "PiB"
+msgstr "بيتا بايت"
+
+msgid "EiB"
+msgstr "إكسابايت"
+
+msgid "%d table(s)"
+msgstr "%d جدول/جداول"
+
+msgid "Questions"
+msgstr "العمليات"
+
+msgid "Please add at least one variable to the series!"
+msgstr "الرجاء إضافة متغير واحد على الأقل إلى السلسلة!"
+
+msgid "Resume monitor"
+msgstr "استئناف المراقبة"
+
+msgid "Pause monitor"
+msgstr "إيقاف المراقبة مؤقتا"
+
+msgid "Stop auto refresh"
+msgstr "وقف التحديث التلقائي"
+
+msgid "general_log and slow_query_log are enabled."
+msgstr "تم تمكين السجل العام وسجل الاستعلام البطيء ."
+
+msgid "general_log is enabled."
+msgstr "تم تمكين السجل العام ."
+
+msgid "slow_query_log is enabled."
+msgstr "تم تمكين سجل الاستعلام البطيء."
+
+msgid "slow_query_log and general_log are disabled."
+msgstr "تم تعطيل سجل الاستعلام البطيء والسجل العام."
+
+msgid "log_output is not set to TABLE."
+msgstr "لم يتم تعيين إخراج السجل إلى الجدول."
+
+msgid "log_output is set to TABLE."
+msgstr "يتم تعيين إخراج السجل إلى الجدول."
+
+msgid "slow_query_log is enabled, but the server logs only queries that take longer than %d seconds. It is advisable to set this long_query_time 0-2 seconds, depending on your system."
+msgstr "تم تمكين سجل الاستعلام البطيء, ولكن يسجل الخادم طلبات البحث التي تستغرق وقتا أطول من%d ثانية. من المستحسن تعيين هذه المدة الزمنية الطويلة 0-2 ثانية، اعتمادا على النظام الخاص بك."
+
+msgid "long_query_time is set to %d second(s)."
+msgstr "long_query_time محددة بـ %d ثانية."
+
+msgid "Following settings will be applied globally and reset to default on server restart:"
+msgstr "الإعدادات التالية سوف تفعل عند إعادة تشغيل السيرفر:"
+
+msgid "Set log_output to %s"
+msgstr "تعيين إخراج السجل إلى %s"
+
+msgid "Enable %s"
+msgstr "تفعيل %s"
+
+msgid "Disable %s"
+msgstr "تعطيل %s"
+
+msgid "Set long_query_time to %d seconds."
+msgstr "تعيين وقت الاستعلام الطويل إلى %d ثانية."
+
+msgid "You can't change these variables. Please log in as root or contact your database administrator."
+msgstr "لاتستطيع تغير هذه المتغيرات , فضلاً سجل دخولك كمدير أو أتصل بمدير قاعدة البيانات."
+
+msgid "Change settings"
+msgstr "تغيير الإعدادات"
+
+msgid "Current settings"
+msgstr "الإعدادات الحالية"
+
+msgid "Chart title"
+msgstr "عنوان التخطيط"
+
+msgid "Differential"
+msgstr "الفارق"
+
+msgid "Divided by %s"
+msgstr "مقسوم على %s"
+
+msgid "Unit"
+msgstr "وحدة"
+
+msgid "The database name is not known for this query in the server's logs."
+msgstr "اسم قاعدة البيانات غير معروف لهذا الاستعلام في سجلات الملقم."
+
+msgid "This column shows the amount of identical queries that are grouped together. However only the SQL query itself has been used as a grouping criteria, so the other attributes of queries, such as start time, may differ."
+msgstr "يعرض هذا العمود كمية طلبات البحث المتطابقة التي تم تجميعها معا. ومع ذلك، تم استخدام الاستعلام SQL نفسه فقط كمعايير تجميع، لذلك قد تختلف سمات الاستعلامات الأخرى، مثل وقت البدء."
+
+msgid "Since grouping of INSERTs queries has been selected, INSERT queries into the same table are also being grouped together, disregarding of the inserted data."
+msgstr "وبما أنه تم اختيار مجموعة من الاستفسارات الداخلية، يتم أيضا تجميع الاستعلامات الداخلية في نفس الجدول معا، بغض النظر عن البيانات المدرجة."
+
+msgid "Analyzing…"
+msgstr "جاري التحليل…"
+
+msgid "Explain output"
+msgstr "إشرح الخرج"
+
+msgid "Total time:"
+msgstr "مجموع الوقت:"
+
+msgid "Profiling results"
+msgstr "نتائج التنميط"
+
+msgctxt "Display format"
+msgid "Table"
+msgstr "الجدول"
+
+msgid "Chart"
+msgstr "الرسم البياني"
+
+msgid "Log table filter options"
+msgstr "خيارات مرشح جدول السجل"
+
+msgid "Filter"
+msgstr "مرشح"
+
+msgid "Filter queries by word/regexp:"
+msgstr "ترشيح الإستعلامات بواسطة word/regexp :"
+
+msgid "Group queries, ignoring variable data in WHERE clauses"
+msgstr "مجموعة إستعلامات , تجاهل المتغيرات في جملة WHERE"
+
+msgid "Sum of grouped rows:"
+msgstr "مجموع الصفوف المدخلة:"
+
+msgid "Affected rows:"
+msgstr "الصفوف المتأثرة:"
+
+msgid "Failed parsing config file. It doesn't seem to be valid JSON code."
+msgstr "أخفق تحليل ملف التهيئة. يبدو أن كود JSON غير صالح."
+
+msgid "Failed building chart grid with imported config. Resetting to default config…"
+msgstr "أخفق إنشاء شبكة المخطط باستخدام التهيئة المستوردة. جار إعادة التعيين إلى التهيئة الافتراضية …"
+
+msgid "Please enter a valid table name."
+msgstr "الرجاء إدخال اسم جدول صحيح."
+
+msgid "Please enter a valid database name."
+msgstr "الرجاء إدخال اسم قاعدة بيانات صالح."
+
+msgid "No files available on server for import!"
+msgstr "لا توجد ملفات متوفرة على الخادم للاستيراد!"
+
+msgid "Formatting SQL…"
+msgstr "جار تنسيق SQL …"
+
+msgid "No parameters found!"
+msgstr "لم يتم العثور على معلمات!"
+
+msgid "Request aborted!!"
+msgstr "طلب إحباط !!"
+
+msgid "Processing request"
+msgstr "معالجة الطلب"
+
+msgid "Request failed!!"
+msgstr "الطلب فشل!!"
+
+msgid "Error in processing request"
+msgstr "حدث خطأ أثناء معالجة الطلب"
+
+msgid "Error code: %s"
+msgstr "رمز الخطأ :%s"
+
+msgid "Error text: %s"
+msgstr "رمز الخطأ: %s"
+
+msgid "It seems that the connection to server has been lost. Please check your network connectivity and server status."
+msgstr "يبدو أن الاتصال بالخادم قد فقد. يرجى التحقق من الاتصال بالشبكة وحالة الخادم."
+
+msgid "No accounts selected."
+msgstr "لم يتم تحديد أي حسابات."
+
+msgid "Dropping column"
+msgstr "إسقاط العمود"
+
+msgid "Adding primary key"
+msgstr "إضافة المفتاح الأساسي"
+
+msgid "Click to dismiss this notification"
+msgstr "إضغط لإغلاق هذا الإشعار"
+
+msgid "Renaming databases"
+msgstr "إعادة تسمية قواعد البيانات"
+
+msgid "Copying database"
+msgstr "نسخ قاعدة البيانات"
+
+msgid "Changing charset"
+msgstr "تغيير مجموعة الأحرف"
+
+msgid "Failed to get real row count."
+msgstr "أخفق الحصول على عدد الصفوف الحقيقية."
+
+msgid "Searching"
+msgstr "بحث"
+
+msgid "Hide search results"
+msgstr "إخفاء نتائج البحث"
+
+msgid "Show search results"
+msgstr "إظهار نتائج البحث"
+
+msgid "Browsing"
+msgstr "استعراض"
+
+msgid "Deleting"
+msgstr "حذف"
+
+msgid "Delete the matches for the %s table?"
+msgstr "حذف التشابهات لجدول %s ؟"
+
+msgid "The definition of a stored function must contain a RETURN statement!"
+msgstr "تعريف الدالة المخزنة يجب أن تحتوي جملة RETURN !"
+
+msgid "No routine is exportable. Required privileges may be lacking."
+msgstr "لا توجد روتينات قابلة للتصدير.الامتيازات المطلوبة ناقصة."
+
+msgid "Values for column %s"
+msgstr "القيم للعمود %s"
+
+msgid "Values for a new column"
+msgstr "﻿القيم لعمود جديد"
+
+msgid "Enter each value in a separate field."
+msgstr "أدخل كل قيمة في حقل منفصل ."
+
+msgid "Add %d value(s)"
+msgstr "﻿إضافة قيمة/قيم %d"
+
+msgid "Note: If the file contains multiple tables, they will be combined into one."
+msgstr "ملاحظة: إذا كان الملف يحتوي على جداول متعددة , سيتم تجميعها فى جدول واحد."
+
+msgid "Hide query box"
+msgstr "إخفاء صندوق الإستعلام"
+
+msgid "Show query box"
+msgstr "إظهار صندوق الإستعلام"
+
+msgid "%d is not valid row number."
+msgstr "%d ليس رقم عمود صالح."
+
+msgid "Variable %d:"
+msgstr "المتغير %d:"
+
+msgid "Pick"
+msgstr "اختيار"
+
+msgid "Column selector"
+msgstr "محدد العمود"
+
+msgid "Search this list"
+msgstr "ابحث في هذه القائمة"
+
+msgid "No columns in the central list. Make sure the Central columns list for database %s has columns that are not present in the current table."
+msgstr "لا توجد أعمدة في القائمة المركزية. تأكد من أن قائمة الأعمدة المركزية لقاعدة البيانات %s يحتوي على أعمدة غير موجودة في الجدول الحالي ."
+
+msgid "See more"
+msgstr "شاهد المزيد"
+
+msgid "Add primary key"
+msgstr "إضافة مفتاح أساسي"
+
+msgid "Primary key added."
+msgstr "تم إضافة المفتاح الأساسي ."
+
+msgid "Taking you to next step…"
+msgstr "نقلك إلى الخطوة التالية …"
+
+msgid "The first step of normalization is complete for table '%s'."
+msgstr "الخطوة الاولي في التطبيع هي اكمال الجدول '%s'."
+
+msgid "End of step"
+msgstr "نهاية الخطوة"
+
+msgid "Second step of normalization (2NF)"
+msgstr "الخطوة الثانية في التطبيع (2NF)"
+
+msgid "Done"
+msgstr "إنتهى"
+
+msgid "Confirm partial dependencies"
+msgstr "تأكيد تبعيات جزئية"
+
+msgid "Selected partial dependencies are as follows:"
+msgstr "اخترالتبعيات الجزئية كما يلي:"
+
+msgid "Note: a, b -> d,f implies values of columns a and b combined together can determine values of column d and column f."
+msgstr "ملاحظة: a,b -> d,f تدل على أن قيم الأعمدة a و b مجتمعة يمكن أن تحدد قيم العمود d و العمود f."
+
+msgid "No partial dependencies selected!"
+msgstr "لم يتم تحديد أي تبعيات جزئية!"
+
+msgid "Show me the possible partial dependencies based on data in the table"
+msgstr "اظهر لي التبعيات الجزئية المحتملة استنادا إلى البيانات في الجدول"
+
+msgid "Hide partial dependencies list"
+msgstr "إخفاء قائمة التبعيات الجزئية"
+
+msgid "Sit tight! It may take few seconds depending on data size and column count of the table."
+msgstr "اجلس بثبات! قد يستغرق بضع ثوان اعتمادا على حجم البيانات وعدد الأعمدة من الجدول."
+
+msgid "Step"
+msgstr "خطوة"
+
+msgid "The following actions will be performed:"
+msgstr "سيتم تنفيذ الإجراءات التالية:"
+
+msgid "DROP columns %s from the table %s"
+msgstr "إسقاط الأعمدة %s من الجدول %s"
+
+msgid "Create the following table"
+msgstr "قم بإنشاء الجدول التالي"
+
+msgid "Third step of normalization (3NF)"
+msgstr "خطوة التطبيع الثالثة (3NF)"
+
+msgid "Confirm transitive dependencies"
+msgstr "تأكيد التبعيات المتعدية"
+
+msgid "Selected dependencies are as follows:"
+msgstr "التبعيات المحددة كما يلي:"
+
+msgid "No dependencies selected!"
+msgstr "لم يتم تحديد أي تبعيات!"
+
+msgid "Hide search criteria"
+msgstr "إخفاء معايير البحث"
+
+msgid "Show search criteria"
+msgstr "إظهار معايير البحث"
+
+msgid "Column maximum:"
+msgstr "اكبر قيمة للعمود :"
+
+msgid "Column minimum:"
+msgstr "اقل قيمة للعمود:"
+
+msgid "Hide find and replace criteria"
+msgstr "إخفاء البحث عن المعايير واستبدالها"
+
+msgid "Show find and replace criteria"
+msgstr "إظهار إيجاد واستبدال المعايير"
+
+msgid "Each point represents a data row."
+msgstr "كل نقطة تمثل صف بيانات."
+
+msgid "Hovering over a point will show its label."
+msgstr "سيؤدي التمرير فوق نقطة إلى عرض تصنيفها."
+
+msgid "To zoom in, select a section of the plot with the mouse."
+msgstr "لإستعمال المقربة، إختر جزء من رسم البيانات بواسطة الفأرة."
+
+msgid "Click reset zoom button to come back to original state."
+msgstr "أنقر زر الإسعادة للمقربة للرجوع إلى الحالة الأصلية."
+
+msgid "Click a data point to view and possibly edit the data row."
+msgstr "أنقر على نقطة من البيانات لمشاهدة و ربما تحرير سطر البيانات."
+
+msgid "The plot can be resized by dragging it along the bottom right corner."
+msgstr "يمكن تغيير قياس الرسم البياني من خلال سحبه على طول القرنة في أسفل اليمين."
+
+msgid "Select two columns"
+msgstr "حدد عمودين"
+
+msgid "Select two different columns"
+msgstr "حدد عمودين مختلفين"
+
+msgid "Data point content"
+msgstr "محتوى نقطة البيانات"
+
+msgid "X"
+msgstr "س"
+
+msgid "Y"
+msgstr "ص"
+
+msgid "Point"
+msgstr "نقطة"
+
+msgid "Linestring"
+msgstr "منحنى"
+
+msgid "Polygon"
+msgstr "مضلع"
+
+msgid "Inner ring"
+msgstr "الحلقة الداخلية"
+
+msgid "Outer ring"
+msgstr "الحلقة الخارجية"
+
+msgid "Add a point"
+msgstr "إضافة نقطة"
+
+msgid "Add a linestring"
+msgstr "إضافة منحنى"
+
+msgid "Add an inner ring"
+msgstr "﻿إضافة حلقة الداخلية"
+
+msgid "Add a polygon"
+msgstr "إضافة مضلع"
+
+msgid "Add geometry"
+msgstr "أضف شكلا هندسيا"
+
+msgid "Do you want to copy encryption key?"
+msgstr "هل تريد نسخ مفتاح التشفير؟"
+
+msgid "Encryption key"
+msgstr "مفتاح التشفير"
+
+msgid "MySQL accepts additional values not selectable by the slider; key in those values directly if desired"
+msgstr "قبول MySQL قيم إضافية لا يمكن تحديدها بواسطة شريط التمرير؛ المفتاح في تلك القيم مباشرة إذا رغبت في ذلك"
+
+msgid "MySQL accepts additional values not selectable by the datepicker; key in those values directly if desired"
+msgstr "قبول MySQL القيم الإضافية لا يمكن اختيارها من قبل منتقي التاريخ. المفتاح في تلك القيم مباشرة إذا رغبت في ذلك"
+
+msgid "Indicates that you have made changes to this page; you will be prompted for confirmation before abandoning changes"
+msgstr "اشارة إلى أنك أجريت تغييرات على هذه الصفحة؛ ستتم مطالبتك بالتأكيد قبل التخلي عن تلك التغييرات"
+
+msgid "Select referenced key"
+msgstr "إختيار المفتاح المرجع"
+
+msgid "Select Foreign Key"
+msgstr "إختيار المفتاح الغريب"
+
+msgid "Please select the primary key or a unique key!"
+msgstr "فضلاً أختر المفتاح الرئيسي أو المفتاح الفريد !"
+
+msgid "You haven't saved the changes in the layout. They will be lost if you don't save them. Do you want to continue?"
+msgstr "لم تحفظ التغييرات في التخطيط. وسوف تضيع إذا كنت لم تحفظها. هل تريد الاستمرار؟"
+
+msgid "value/subQuery is empty"
+msgstr "القيمة / استعلام فرعي فارغ"
+
+msgid "Page name"
+msgstr "اسم الصفحة"
+
+msgid "Delete page"
+msgstr "حذف الصفحة"
+
+msgid "Please select a page to continue"
+msgstr "يرجى تحديد صفحة للمتابعة"
+
+msgid "Please enter a valid page name"
+msgstr "الرجاء إدخال اسم صفحة صالح"
+
+msgid "Do you want to save the changes to the current page?"
+msgstr "هل تريد حفظ التغييرات في الصفحة الحالية؟"
+
+msgid "Successfully deleted the page"
+msgstr "تم حذف الصفحة بنجاح"
+
+msgid "Export relational schema"
+msgstr "تصدير المخطط العلائقي"
+
+msgid "Modifications have been saved"
+msgstr "تمت التعديلات"
+
+msgid "%d object(s) created."
+msgstr "%d تم انشاء كائن / كائنات."
+
+msgid "Column name"
+msgstr "اسم العمود"
+
+msgid "Press escape to cancel editing.<br>- Shift+Enter for a newline."
+msgstr "إضغط escape لإلغاء التعديل ."
+
+msgid "You have edited some data and they have not been saved. Are you sure you want to leave this page before saving the data?"
+msgstr "لقد تم التعديل على بعض البيانات ولم يتم حفظها. هل تريد ترك هذه الصفحة بدون حفظ البيانات الجديدة؟"
+
+msgid "Drag to reorder."
+msgstr "إسحب لإعادة الترتيب ."
+
+msgid "Click to sort results by this column."
+msgstr "انقر لترتيب النتائج حسب هذا العمود."
+
+msgid "Click to mark/unmark."
+msgstr "إضغط لوضع علامة / إزالة علامة ."
+
+msgid "Double-click to copy column name."
+msgstr "أنقر مرتين لنسخ اسم العمود ."
+
+msgid "This table does not contain a unique column. Features related to the grid edit, checkbox, Edit, Copy and Delete links may not work after saving."
+msgstr "لا يحتوي هذا الجدول على عمود فريد. الميزات المتعلقة بتحرير الشبكة، خانة الاختيار، تحرير، نسخ وحذف الروابط قد لا تعمل بعد الحفظ ."
+
+msgid "Please enter a valid hexadecimal string. Valid characters are 0-9, A-F."
+msgstr "الرجاء إدخال سلسلة سداسية عشرية صالحة. الأحرف الصالحة هي 0-9، A-F."
+
+msgid "Do you really want to see all of the rows? For a big table this could crash the browser."
+msgstr "هل تريد حقا أن ترى كل الصفوف؟ لجدول كبير مثل هذا يمكن أن تحطم او يغلق المتصفح."
+
+msgid "Original length"
+msgstr "طول الأصلي"
+
+msgid "cancel"
+msgstr "ألغاء"
+
+msgid "Aborted"
+msgstr "ألغي"
+
+msgid "Success"
+msgstr "نجاح"
+
+msgid "Import status"
+msgstr "حالة الاستيراد"
+
+msgid "Select database first"
+msgstr "حدد قاعدة البيانات أولا"
+
+msgid "Go to link:"
+msgstr "الانتقال إلى الرابط:"
+
+msgid "Generate password"
+msgstr "توليد كلمة مرور"
+
+msgid "Show panel"
+msgstr "إظهار اللوحة"
+
+msgid "Hide panel"
+msgstr "إخفاء اللوحة"
+
+msgid "Unlink from main panel"
+msgstr "إلغاء الربط من اللوحة الرئيسية"
+
+msgid "A newer version of phpMyAdmin is available and you should consider upgrading. The newest version is %s, released on %s."
+msgstr "يوجد إصدارأحدث من phpMyAdmin متوفر حالياً ,, ينبغى أن تعمل ترقية.أحدث إصدار هو %s, released on %s."
+
+msgid ", latest stable version:"
+msgstr ", آخر إصدار مستقر:"
+
+msgid "up to date"
+msgstr "محدثة"
+
+msgid "A fatal JavaScript error has occurred. Would you like to send an error report?"
+msgstr "حدث خطأ فادح في جافا سكريبت. هل تريد إرسال تقرير عن الخطأ؟"
+
+msgid "Change report settings"
+msgstr "تغيير إعدادات التقرير"
+
+msgid "Show report details"
+msgstr "عرض تفاصيل التقرير"
+
+msgid "Your export is incomplete, due to a low execution time limit at the PHP level!"
+msgstr "التصدير الخاص بك غير مكتمل، بسبب انخفاض وقت التنفيذ على مستوى PHP!"
+
+msgid "Warning: a form on this page has more than %d fields. On submission, some of the fields might be ignored, due to PHP's max_input_vars configuration."
+msgstr "تحذير: يحتوي النموذج الموجود في هذه الصفحة على أكثر من %d حقل. عند الإرسال، قد يتم تجاهل بعض الحقول، وذلك بسبب تكوين ترتيب PHP max_input_vars ."
+
+msgid "Some errors have been detected on the server!"
+msgstr "تم اكتشاف بعض الأخطاء على الخادم!"
+
+msgid "Please look at the bottom of this window."
+msgstr "يرجى النظر في الجزء السفلي من هذه النافذة."
+
+msgid "Ignore All"
+msgstr "تجاهل الكل"
+
+msgid "As per your settings, they are being submitted currently, please be patient."
+msgstr "وفقا للإعدادات الخاصة بك، يتم تقديمها حاليا، يرجى التحلي بالصبر."
+
+msgid "Successfully copied!"
+msgstr "تم النقل بنجاح !"
+
+msgid "Copying failed!"
+msgstr "النقل فاشل !"
+
+msgid "Execute this query again?"
+msgstr "هل تريد تنفيذ هذا الاستعلام مرة أخرى؟"
+
+msgid "Do you really want to delete this bookmark?"
+msgstr "هل تريد حقا حذف هذه الإشارة المرجعية؟"
+
+msgid "Some error occurred while getting SQL debug info."
+msgstr "حدث خطأ ما أثناء الحصول على معلومات تصحيح أخطاء SQL."
+
+msgid "%s queries executed %s times in %s seconds."
+msgstr "نفذت %s من طلبات البحث%s من المرات في %s من الثواني."
+
+msgid "%s argument(s) passed"
+msgstr "تم تمرير وسيطة %s"
+
+msgid "Show arguments"
+msgstr "إظهار الحجج"
+
+msgid "There was a problem accessing your browser storage, some features may not work properly for you. It is likely that the browser doesn't support storage or the quota limit has been reached. In Firefox, corrupted storage can also cause such a problem, clearing your \"Offline Website Data\" might help. In Safari, such problem is commonly caused by \"Private Mode Browsing\"."
+msgstr "حدثت مشكلة أثناء الوصول إلى مساحة تخزين المتصفح ، وقد لا تعمل بعض الميزات بشكل صحيح بالنسبة لك. من المحتمل أن المتصفح لا يدعم التخزين أو تم الوصول إلى حد الحصة النسبية. في Firefox ، يمكن أن يتسبب التخزين التالف أيضًا في حدوث مثل هذه المشكلة ، وقد يساعدك مسح \"بيانات موقع الويب غير المتصل\". في Safari ، تحدث هذه المشكلة بشكل شائع بسبب \"تصفح الوضع الخاص\"."
+
+msgid "Copy tables to"
+msgstr "نسخ الجداول إلى"
+
+msgid "Add table prefix"
+msgstr "إضافة بادئة الجدول"
+
+msgid "Replace table with prefix"
+msgstr "استبدال الجدول مع البادئة"
+
+msgid "Extremely weak"
+msgstr "ضعيف لأبعد الحدود"
+
+msgid "Very weak"
+msgstr "ضعيف جدا"
+
+msgid "Weak"
+msgstr "ضعيف"
+
+msgid "Good"
+msgstr "جيد"
+
+msgid "Strong"
+msgstr "قوي"
+
+msgctxt "U2F error"
+msgid "Invalid security key."
+msgstr "مفتاح أمان غير صالح."
+
+msgctxt "The table already exists in the designer and can not be added once more."
+msgid "Table %s already exists!"
+msgstr "جدول %s موجود مسبقاً!"
+
+msgid "Hide"
+msgstr "أخفاء"
+
+msgctxt "The month-year order in a calendar"
+msgid "calendar-month-year"
+msgstr "نتيجة-شهر-سنة"
+
+msgctxt "Next month"
+msgid "Next"
+msgstr "التالي"
+
+msgid "Today"
+msgstr "اليوم"
+
+msgid "This field is required"
+msgstr "هذا الحقل مطلوب"
+
+msgid "Please fix this field"
+msgstr "الرجاء إصلاح هذا الحقل"
+
+msgid "Please enter a valid email address"
+msgstr "رجاء قم بإدخال بريد الكتروني صحيح"
+
+msgid "Please enter a valid URL"
+msgstr "أدخل رابط صحيح من فضلك"
+
+msgid "Please enter a valid date"
+msgstr "ارجوك ادخل تاريخ صحيح"
+
+msgid "Please enter a valid date ( ISO )"
+msgstr "الرجاء إدخال تاريخ صالح ( ISO )"
+
+msgid "Please enter a valid number"
+msgstr "الرجاء إدخال رقم صحيح"
+
+msgid "Please enter a valid credit card number"
+msgstr "الرجاء إدخال رقم بطاقة ائتمان صالحة"
+
+msgid "Please enter only digits"
+msgstr "الرجاء إدخال أرقام فقط"
+
+msgid "Please enter the same value again"
+msgstr "من فظلك ادخل نفس القيمة مرة أخرى"
+
+msgid "Please enter no more than {0} characters"
+msgstr "الرجاء إدخال أكثر من {0} حرفا"
+
+msgid "Please enter at least {0} characters"
+msgstr "الرجاء إدخال {0} حرفا على الأقل"
+
+msgid "Please enter a value between {0} and {1} characters long"
+msgstr "يرجى إدخال قيمة بين {0} و {1} حرفا"
+
+msgid "Please enter a value between {0} and {1}"
+msgstr "يرجى إدخال قيمة بين {0} و {1}"
+
+msgid "Please enter a value less than or equal to {0}"
+msgstr "يرجى إدخال قيمة أقل من أو تساوي {0}"
+
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "يرجى إدخال قيمة أكبر من أو تساوي {0}"
+
+msgid "Please enter a valid date or time"
+msgstr "الرجاء إدخال تاريخ أو وقت صالح"
+
+msgid "Please enter a valid HEX input"
+msgstr "الرجاء إدخال HEX صالح"
+
+msgid "The file is being processed, please be patient."
+msgstr "الملف قيد المعالجة, يرجى الانتظار."
+
+msgid "Uploading your import file…"
+msgstr "هيئة الملفات المستوردة…"
+
+msgid "Please be patient, the file is being uploaded. Details about the upload are not available."
+msgstr "يتم تحميل الملف. تفاصيل التحميل غير متوفرة. يرجى الانتظار.."
+
+msgid "Select one…"
+msgstr "اختر واحدا…"
+
+msgctxt "string types"
+msgid "String"
+msgstr "السلسلة"
+
+msgid "Cannot copy database to the same name. Change the name and try again."
+msgstr "لا يمكن تسمية قاعدتي بيانات بنفس الاسم. عَدِّل على الاسم وحاول مجددا."
+
+msgid "Database %1$s has been renamed to %2$s."
+msgstr "تمت إعادة تسمية قاعدة البيانات %1$s إلى %2$s."
+
+msgid "Database %1$s has been copied to %2$s."
+msgstr "تم نسخ قاعدة البيانات %1$s إلى %2$s."
+
+msgid "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s."
+msgstr "تم تعطيل phpMyAdmin لتهيئة التخزين . لمعرفة السبب اضغط %sهنا%s."
+
+msgid "Two-factor authentication has been removed."
+msgstr "تمت إزالة المصادقة ذات العاملين."
+
+msgid "Two-factor authentication has been configured."
+msgstr "تم تكوين المصادقة الثنائية."
+
+msgid "Missing parameter:"
+msgstr "مدخلات مفقودة:"
+
+msgid "Database %1$s has been created."
+msgstr "تم إنشاء قاعدة البيانات %1$s."
+
+msgid "%1$d database has been dropped successfully."
+msgid_plural "%1$d databases have been dropped successfully."
+msgstr[0] "تم إسقاط قواعد بيانات %1$d بنجاح."
+msgstr[1] "تم إسقاط قواعد البيانات %1$d بنجاح."
+msgstr[2] "تم إسقاط قواعد البيانات %1$d بنجاح."
+msgstr[3] "تم إسقاط قواعد البيانات %1$d بنجاح."
+msgstr[4] "تم إسقاط قواعد البيانات %1$d بنجاح."
+msgstr[5] "تم إسقاط قواعد البيانات %1$d بنجاح."
+
+msgid "The account %s@%s has been successfully locked."
+msgstr "تم حذف الاعمده %s@%s بنجاح."
+
+msgid "The account %s@%s has been successfully unlocked."
+msgstr "تم حذف الاعمده %s@%s بنجاح."
+
+msgid "Thread %s was successfully killed."
+msgstr "تم إيقاف العمليّة %s بنجاح."
+
+msgid "phpMyAdmin was unable to kill thread %s. It probably has already been closed."
+msgstr "لم يستطع phpMyAdmin إيقاف العملية %s. يبدو أنها أوقفت مسبقا."
+
+msgid "Other statements"
+msgstr "دال - بيانات أخرى"
+
+msgid "Received"
+msgstr "استلم"
+
+msgid "Sent"
+msgstr "أرسل"
+
+msgid "Failed attempts"
+msgstr "محاولات أخفقت"
+
+msgid "The number of requests to read the next row in key order. This is incremented if you are querying an index column with a range constraint or if you are doing an index scan."
+msgstr "عدد الطلبات لقراءة الصف التالي بالترتيب حسب المفتاح. يتم زيادة هذا إذا كنت تستعلم عن عمود الفهارس مع القيود أو إذا كنت تقوم بفحص للفهارس."
+
+msgid "Thread cache hit rate (calculated value)"
+msgstr "معدل عدد مرات الدخول إلى ذاكرة التخزين المؤقت للخيط (القيمة المحسوبة)"
+
+msgid "Bookmark %s has been created."
+msgstr "تم إنشاء العلامة المرجعية %s."
+
+msgid "Bookmark not created!"
+msgstr "المرجعية لم يتم إنشاؤها!"
+
+msgid "No row selected."
+msgstr "لم يتم تحديد صف."
+
+msgid "No data to display"
+msgstr "لايوجد بيانات لعرضها"
+
+msgid "No column selected."
+msgstr "لايوجد صفوف مختارة."
+
+msgid "%1$d column has been dropped successfully."
+msgid_plural "%1$d columns have been dropped successfully."
+msgstr[0] "تم إسقاط %1$d من الأعمدة بنجاح."
+msgstr[1] "تم إسقاط عمود واحد بنجاح."
+msgstr[2] "تم اسقاط عمودان بنجاح."
+msgstr[3] "تم إسقاط %1$d أعمدة بنجاح."
+msgstr[4] "تم إسقاط %1$d عمود بنجاح."
+msgstr[5] "‍تم إسقاط %1$d عمود بنجاح."
+
+msgid "Invalid table name"
+msgstr "اسم الجدول غير صالح"
+
+msgid "MySQL returned an empty result set (i.e. zero rows)."
+msgstr "قام MySQL بإرجاع نتيجة فارغة."
+
+msgid "The partition name must be a non-empty string."
+msgstr "يجب أن يكون اسم القسم سلسلة غير فارغة."
+
+msgid "Internal relationships were successfully updated."
+msgstr "العلاقات الداخلية تم تحديثها بنجاح ."
+
+msgid "The columns have been moved successfully."
+msgstr "تم حذف الاعمده بنجاح."
+
+msgid "Query error"
+msgstr "خطأ في الإستعلام"
+
+msgid "Table %1$s has been altered successfully. Privileges have been adjusted."
+msgstr "تم تغيير الجدول %1$s بنجاح. تم تعديل الامتيازات."
+
+msgid "Tracking of %s is activated."
+msgstr "تم تنشيط تتبع %s."
+
+msgid "SQL statements executed."
+msgstr "تم تنفيذ جمل SQL."
+
+msgid "No versions selected."
+msgstr "لم يتم تحديد إصدارات."
+
+msgid "Add trigger"
+msgstr "إضافة زناد"
+
+msgid "No trigger with name %1$s found in database %2$s."
+msgstr "لم يتم العثور على مشغل بالاسم %1$s في قاعدة البيانات %2$s."
+
+msgid "Error in processing request: No trigger with name %1$s found in database %2$s."
+msgstr "خطأ في طلب المعالجة: لم يتم العثور على مشغل بالاسم %1$s في قاعدة البيانات %2$s."
+
+msgid "You don't have sufficient privileges to be here right now!"
+msgstr "ليس لديك الحقوق الكافية بأن تكون هنا الآن!"
+
+msgid "Could not add %1$s as they already exist in central list!"
+msgstr "لا تضف %1$s لأنها موجودة بالفعل في القائمة المركزية!"
+
+msgid "Could not add columns!"
+msgstr "تعذرت إضافة أعمدة!"
+
+msgid "Couldn't remove Column(s) %1$s as they don't exist in central columns list!"
+msgstr "لايمكن حذف العمود/الأعمدة %1$s لأنها غير موجودة في قائمة الأعمدة المركزية!"
+
+msgid "Could not remove columns!"
+msgstr "تعذر إزالة الأعمدة!"
+
+msgid "Error: relationship already exists."
+msgstr "خطأ: العلاقة موجودة بالفعل."
+
+msgid "FOREIGN KEY relationship has been added."
+msgstr "تمت إضافة علاقة المفتاح الخارجي."
+
+msgid "Error: FOREIGN KEY relationship could not be added!"
+msgstr "خطأ: تعذرت إضافة علاقة FOREIGN KEY!"
+
+msgid "Internal relationship has been added."
+msgstr "تمت إضافة العلاقة الداخلية."
+
+msgid "Error: Internal relationship could not be added!"
+msgstr "خطأ: تعذر إضافة العلاقة الداخلية!"
+
+msgid "FOREIGN KEY relationship has been removed."
+msgstr "تمت إزالة علاقة FOREIGN KEY."
+
+msgid "Error: Internal relationship could not be removed!"
+msgstr "خطأ: تعذر إزالة العلاقة الداخلية!"
+
+msgid "Internal relationship has been removed."
+msgstr "تمت إزالة العلاقة الداخلية."
+
+msgid "MySQL said: "
+msgstr "MySQL قال: "
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "عذرا ، لقد فشلنا في استعادة الحدث الذي تم إسقاطه."
+
+msgid "The backed up query was:"
+msgstr "الإستعلام الإحتياطي:"
+
+msgid "Event %1$s has been modified."
+msgstr "تم تعديل الحدث %1$s."
+
+msgid "One or more errors have occurred while processing your request:"
+msgstr "حدث خطأ واحد أو أكثر أثناء معالجة طلبك:"
+
+msgid "You must provide an event name!"
+msgstr "يجب عليك تقديم اسم الحدث!"
+
+msgid "Invalid routine type: \"%s\""
+msgstr "نوع الإجراء غير صحيح: %s"
+
+msgid "Routine %1$s has been created."
+msgstr "تم إنشاء الإجراء %1$s."
+
+msgid "Sorry, we failed to restore the dropped routine."
+msgstr "معذرة، فشلنا في استعادة الروتين الذي تم إسقاطه."
+
+msgid "Routine %1$s has been modified."
+msgstr "تم تعديل الإجراء %1$s."
+
+msgid "You must provide a routine name!"
+msgstr "يجب عليك تقديم اسم روتيني!"
+
+msgid "Execution results of routine %s"
+msgstr "نتائج تنفيذ الإجراء %s"
+
+msgid "%d row affected by the last statement inside the procedure."
+msgid_plural "%d rows affected by the last statement inside the procedure."
+msgstr[0] "%d الصفوف المتأثرة بالعبارة الأخيرة داخل الإجراء."
+msgstr[1] "يتأثر صف %d بالعبارة الأخيرة داخل الإجراء."
+msgstr[2] "%d الصفوف المتأثرة بالعبارة الأخيرة داخل الإجراء."
+msgstr[3] "%d الصفوف المتأثرة بالعبارة الأخيرة داخل الإجراء."
+msgstr[4] "%d الصفوف المتأثرة بالعبارة الأخيرة داخل الإجراء."
+msgstr[5] "%d الصفوف المتأثرة بالعبارة الأخيرة داخل الإجراء."
+
+msgid "Failed to set configured collation connection!"
+msgstr "فشل في تعيين اتصال ترتيب التكوين!"
+
+msgid "The row has been deleted."
+msgstr "تم حذف الصف."
+
+msgid "Query took %01.4f seconds."
+msgstr "استغرق الاستعلام %01.4f ثانية."
+
+msgid "Showing rows %1s - %2s"
+msgstr "عرض الصفوف من %1s إلى %2s"
+
+msgid "Link not found!"
+msgstr "لم يتم العثور على الرابط!"
+
+msgid "Data files"
+msgstr "ملفات البيانات"
+
+msgid "InnoDB Status"
+msgstr "وضع InnoDB"
+
+msgid "Too many error messages, some are not displayed."
+msgstr "كثيراً من رسائل الخطأ، لن تعرض كلها."
+
+msgid "Report"
+msgstr "أبلغ عن"
+
+msgid "Access denied!"
+msgstr "ممنوع الوصول!"
+
+msgid "Insufficient space to save the file %s."
+msgstr "لا توجد مساحة كافية لحفظ الملف %s."
+
+msgid "File %s already exists on server, change filename or check overwrite option."
+msgstr "الملف %s موجود على الخادم بالفعل , غير الاسم أو حدد خيار الكتابة عليه."
+
+msgid "The web server does not have permission to save the file %s."
+msgstr "خادم الويب ليس لديه صلاحية لحفظ الملف %s."
+
+msgid "Dump has been saved to file %s."
+msgstr "تم حفظ الـDump إلى الملف %s."
+
+msgid "Could not save recent table!"
+msgstr "تعذر حفظ الجدول الأخير!"
+
+msgid "Could not save favorite table!"
+msgstr "تعذر حفظ الجدول المفضل!"
+
+msgid "File was not an uploaded file."
+msgstr "الملف لم يكن مرفوعاً."
+
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
+msgstr "إنّ الملف المرفوع يتجاوز توجيهة upload_max_filesize في الملف php.ini."
+
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
+msgstr "إنّ الملف المرفوع يتجاوز التوجيهة MAX_FILE_SIZE اللتي تم تحديدها في إستمارة الـHTML."
+
+msgid "The uploaded file was only partially uploaded."
+msgstr "تم رفع جزء من الملف فقط."
+
+msgid "Missing a temporary folder."
+msgstr "المجلد المؤقت مفقود."
+
+msgid "Failed to write file to disk."
+msgstr "فشلت عملية كتابة الملف على القرص."
+
+msgid "File upload stopped by extension."
+msgstr "رفع الملف إستوقف من قبل الامتداد."
+
+msgid "Unknown error in file upload."
+msgstr "خطأ غير معروف عند رفع الملف."
+
+msgid "File is a symbolic link"
+msgstr "الملف هو رابط رمزي"
+
+msgid "File could not be read!"
+msgstr "لا يمكن قراءة الملف!"
+
+msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
+msgstr "حدث خطأ أثناء نقل الملف الذي تم تحميله، راجع [doc@faq1-11] الأسئلة الشائعة 1.11 [/doc]."
+
+msgid "Error while moving uploaded file."
+msgstr "خطأ عند نقل الملف المرفوع."
+
+msgid "Cannot read uploaded file."
+msgstr "يتعذر قراءة الملف الذي تم تحميله."
+
+msgid "You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration."
+msgstr "انت تحاول رفع ملف بصيغة ضغط غير معروفة (%s)."
+
+msgid "Session not found."
+msgstr "لم يتم العثور على الجلسة."
+
+msgid "Skip Explain SQL"
+msgstr "تخطي شرح SQL"
+
+msgid "Without PHP code"
+msgstr "بدون كود PHP"
+
+msgctxt "Inline edit query"
+msgid "Edit inline"
+msgstr "تحرير مُضمّن"
+
+msgid "Static analysis:"
+msgstr "تحليل ثابت:"
+
+msgid "You should upgrade to %s %s or later."
+msgstr "عليك الترقية إلى %s%s أو لاحقا."
+
+msgid "possible exploit"
+msgstr "إستغلال محتمل"
+
+msgid "Error: Token mismatch"
+msgstr "خطأ: عدم تطابق الرمز المميز"
+
+msgid "Ignoring unsupported language code."
+msgstr "تجاهل رمز اللغة غير المدعوم ."
+
+msgid "The database name must be a non-empty string."
+msgstr "يجب أن يكون اسم قاعدة البيانات سلسلة غير فارغة."
+
+msgid "The database name cannot be longer than %d characters."
+msgstr "لا يمكن أن يكون اسم قاعدة البيانات أطول من أحرف %d."
+
+msgid "The table name must be a non-empty string."
+msgstr "يجب أن يكون اسم الجدول سلسلة غير فارغة."
+
+msgid "The table name cannot be longer than %d characters."
+msgstr "لا يمكن أن يكون اسم الجدول أطول من أحرف %d."
+
+msgid "Go to table: %s"
+msgstr "انتقل إلى الجدول: %s"
+
+msgid "Structure of %s"
+msgstr "هيكل %s"
+
+msgid "Go to database: %s"
+msgstr "انتقل إلى قاعدة البيانات: %s"
+
+msgid "The indexes %1$s and %2$s seem to be equal and one of them could possibly be removed."
+msgstr "الفهارس %1$s و %2$s متساويان ويمكن حذف أحدهما."
+
+msgid "web server upload directory:"
+msgstr "دليل تحميل خادم الويب:"
+
+msgid "Showing SQL query"
+msgstr "عرض استعلام SQL"
+
+msgid "Linting is disabled for this query because it exceeds the maximum length."
+msgstr "تم تعطيل ميزة Linting لهذا الاستعلام لأنه يتجاوز الحد الأقصى للطول ."
+
+msgid "%1$s (near <code>%2$s</code>)"
+msgstr "%1$s (بالقرب من <code>%2$s</code>)"
+
+msgid "Tracking"
+msgstr "تتبع"
+
+msgid "Database seems to be empty!"
+msgstr "قاعدة البيانات فارغة!"
+
+msgid "Designer"
+msgstr "المصمم"
+
+msgid "User accounts"
+msgstr "حسابات المستخدمين"
+
+msgid "Charsets"
+msgstr "مجموعات المحارف"
+
+msgid "Engines"
+msgstr "محركات"
+
+msgid "%1$d row affected."
+msgid_plural "%1$d rows affected."
+msgstr[0] "%1$d صف تأثر."
+msgstr[1] "%1$d صف تأثر."
+msgstr[2] "%1$d صفوف تأثرت."
+msgstr[3] "%1$d صفوف تأثرت."
+msgstr[4] "%1$d صفوف تأثرت."
+msgstr[5] "%1$d صفوف تأثرت."
+
+msgid "%1$d row deleted."
+msgid_plural "%1$d rows deleted."
+msgstr[0] "%1$d صف حذف."
+msgstr[1] "%1$d صف حذف."
+msgstr[2] "%1$d صفوف حذفت."
+msgstr[3] "%1$d صفوف حذفت."
+msgstr[4] "%1$d صفوف حذفت."
+msgstr[5] "%1$d صفوف حذفت."
+
+msgid "%1$d row inserted."
+msgid_plural "%1$d rows inserted."
+msgstr[0] "%1$d صف أضيف."
+msgstr[1] "%1$d صف أضيف."
+msgstr[2] "%1$d صفوف أضيفت."
+msgstr[3] "%1$d صفوف أضيفت."
+msgstr[4] "%1$d صفوف أضيفت."
+msgstr[5] "%1$d صفوف أضيفت."
+
+msgid "Groups:"
+msgstr "المجموعات:"
+
+msgid "Events:"
+msgstr "أحداث :"
+
+msgid "Functions:"
+msgstr "دوال :"
+
+msgid "Procedures:"
+msgstr "الاجراءات :"
+
+msgid "Views:"
+msgstr "عرض :"
+
+msgid "Procedures"
+msgstr "الإجراءات"
+
+msgid "Procedure"
+msgstr "اجراء"
+
+msgid "Primary key already exists."
+msgstr "المفتاح الأساسي موجود بالفعل."
+
+msgid "+ Add a new primary key column"
+msgstr "إضافة مفتاح أساسي"
+
+msgid "Error in processing!"
+msgstr "خطأ في المعالجة!"
+
+msgid "Step 3."
+msgstr "الخطوه 3."
+
+msgid "Can't move table to same one!"
+msgstr "لايمكن نقل الجدول إلى نفسه!"
+
+msgid "Can't copy table to same one!"
+msgstr "لا يمكن نسخ الجدول إلى نفسه!"
+
+msgid "Table %s has been moved to %s."
+msgstr "%s جدول تم نقله إلى %s."
+
+msgid "Table %s has been copied to %s."
+msgstr "الجدول %s لقد تم نسخه إلى %s."
+
+msgid "The table name is empty!"
+msgstr "اسم الجدول فارغ!"
+
+msgid "Error while creating PDF:"
+msgstr "خطأ عند إنشاء ملف PDF :"
+
+msgid "You probably did not create a configuration file. You might want to use the %1$ssetup script%2$s to create one."
+msgstr "يبدو انك لم تنشئ ملف الإعدادات.إستخدم %1$ssetup script%2$s لإنشائه."
+
+msgid "phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server."
+msgstr "حاول phpMyAdmin الاتصال بخادم MySQL، ورفض الخادم الاتصال. عليك أن تتحقق من المستضيف، أو اسم المستخدم وكلمة المرور في ملف الإعداد config.inc.php وتتأكد أنها مطابقة للمعلومات المعطاة إليك من قبل المسؤول عن خادم MySQL."
+
+msgid "Failed to connect to the reCAPTCHA service!"
+msgstr "فشل الاتصال بخدمة reCAPTCHA!"
+
+msgid "You are not allowed to log in to this MySQL server!"
+msgstr "لا يسمح لك بتسجيل الدخول إلى خادم MySQL هذا!"
+
+msgid "Wrong username/password. Access denied."
+msgstr "خطأ في اسم المستخدم أو كلمة السر. الوصول ممنوع."
+
+msgid "Invalid authentication method set in configuration:"
+msgstr "اسلوب مصادقة غير صحيح في الإعدادات:"
+
+msgid "Columns separated with:"
+msgstr "فواصل الأعمدة :"
+
+msgid "Columns enclosed with:"
+msgstr "حقل محاط بـ :"
+
+msgid "Columns escaped with:"
+msgstr "هربت الأعمدة مع:"
+
+msgid "Lines terminated with:"
+msgstr "الخطوط المنتهية ب:"
+
+msgid "Replace NULL with:"
+msgstr "استبدل NULL بما يلي:"
+
+msgid "Excel edition:"
+msgstr "طبعة اكسل:"
+
+msgid "Dumping data for table"
+msgstr "إرجاع أو استيراد بيانات الجدول"
+
+msgid "Table structure for table"
+msgstr "بنية الجدول"
+
+msgid "(continued)"
+msgstr "(تابع)"
+
+msgid "Table caption:"
+msgstr "شرح الجدول:"
+
+msgid "Table caption (continued):"
+msgstr "شرح الجدول (تابع):"
+
+msgid "Label key:"
+msgstr "مفتاح التسمية:"
+
+msgid "Put columns names in the first row:"
+msgstr "ضع أسماء الأعمدة في الصف الأول:"
+
+msgid "Generation Time:"
+msgstr "وقت الجيل:"
+
+msgid "PHP Version:"
+msgstr "نسخة PHP:"
+
+msgid "Data:"
+msgstr "بيانات:"
+
+msgid "Structure:"
+msgstr "هيكل:"
+
+msgid "Report title:"
+msgstr "عنوان التقرير:"
+
+msgid "Add statements:"
+msgstr "إضافة بيانات:"
+
+msgid "Add %s statement"
+msgstr "إضافة عبارة %s"
+
+msgid "%s value"
+msgstr "قيمة %s"
+
+msgid "Error reading structure for table %s:"
+msgstr "بنية قراءة الخطأ للجدول %s:"
+
+msgid "Constraints for dumped tables"
+msgstr "القيود المفروضة على الجداول الملقاة"
+
+msgid "Constraints for table"
+msgstr "قيود الجداول"
+
+msgid "Indexes for table"
+msgstr "فهارس للجدول"
+
+msgid "Error reading data for table %s:"
+msgstr "خطأ في قراءة بيانات الجدول %s:"
+
+msgid "Creation:"
+msgstr "الإنشاء:"
+
+msgid "Last update:"
+msgstr "آخر تحديث:"
+
+msgid "Last check:"
+msgstr "آخر فحص:"
+
+msgid "Column names:"
+msgstr "أسماء الأعمدة:"
+
+msgid "Column names: "
+msgstr "أسماء الأعمدة: "
+
+msgid "MediaWiki Table"
+msgstr "جدول ميدياويكي"
+
+msgid "Could not parse OpenDocument Spreadsheet!"
+msgstr "تعذر تحليل جدول بيانات OpenDocument!"
+
+msgid "The imported file does not contain any data!"
+msgstr "الملف المستورد لا يحتوي على أي بيانات!"
+
+msgid "XML"
+msgstr "إكس إم إل"
+
+msgid "Schema of the %s database"
+msgstr "مخطط قاعدة البيانات %s"
+
+msgid "Relational schema"
+msgstr "بناء الارتباطات"
+
+msgid "Table of contents"
+msgstr "جدول المحتويات"
+
+msgid "Show color"
+msgstr "أظهر اللون"
+
+msgid "Landscape"
+msgstr "عرض الصفحة"
+
+msgid "Portrait"
+msgstr "طول الصفحة"
+
+msgid "Show grid"
+msgstr "أظهر تخطيط الجدول"
+
+msgid "%B %d, %Y at %I:%M %p"
+msgstr "%d %B %Y الساعة %H:%M"
+
+msgid "Displays a link to download this image."
+msgstr "يظهر رابطا لهذه الصورة (direct blob download, i.e.)."
+
+msgid "Displays a clickable thumbnail. The options are the maximum width and height in pixels. The original aspect ratio is preserved."
+msgstr "يظهر صورة مصغرة للضغط عليها، الخيارات: العرض، الارتفاع بالبكسل )ويبقي التناسب الأصلي للحجم(."
+
+msgid "Displays a part of a string. The first option is the number of characters to skip from the beginning of the string (Default 0). The second option is the number of characters to return (Default: until end of string). The third option is the string to append and/or prepend when truncation occurs (Default: \"…\")."
+msgstr "يظهر فقط جزءً من النص. الخيار الأول يحدد مكان بدء ظهور النص )صفر بشكل افتراضي(. الخيار الثاني هو تعديل كم النص المسترجع. إن كان فارغا، يسترجع كل النص الباقي. الخيار الثالث يعرف أي من الأحرف سوف تضاف إلى المخرجات عند استرجاع جزء من النص )… بشكل افتراضي(."
+
+msgid "The server is not responding (or the local server's socket is not correctly configured)."
+msgstr "الملقم لا يستجيب (أو لم يتم تكوين مأخذ الملقم المحلي بشكل صحيح)."
+
+msgid "The server is not responding."
+msgstr "الخادم لا يستجيب."
+
+msgid "Logout and try as another user."
+msgstr "الخروج والمحاولة كمستخدم آخر."
+
+msgid "Please check privileges of directory containing database."
+msgstr "يرجى التحقق من امتيازات الدليل الذي يحتوي على قاعدة البيانات."
+
+msgid "Details…"
+msgstr "التفاصيل…"
+
+msgid "Error."
+msgstr "خطأ."
+
+msgid "Unable to connect to primary %s."
+msgstr "تعذر الاتصال ب %s الأساسي."
+
+msgid "Primary server changed successfully to %s."
+msgstr "تم تغيير الخادم الأساسي بنجاح إلى %s."
+
+msgid "Error 404! The page %s was not found."
+msgstr "خطأ 404! لم يتم العثور على الصفحة %s."
+
+msgid "Error 405! Request method not allowed."
+msgstr "خطأ 405! طريقة الطلب غير مسموح بها."
+
+msgid "No privileges."
+msgstr "لا صلاحيات."
+
+msgid "Includes all privileges except GRANT."
+msgstr "يتضمن كل الصلاحيات عدا GRANT."
+
+msgid "The password for %s was changed successfully."
+msgstr "تم تغيير كلمة المرور لـ %s بنجاح."
+
+msgid "You have revoked the privileges for %s."
+msgstr "لقد أبطلت الامتيازات لـ %s."
+
+msgid "Revoke"
+msgstr "إبطال"
+
+msgid "Reloading the privileges"
+msgstr "إعادة تحميل الأمتيازات"
+
+msgid "The selected users have been deleted successfully."
+msgstr "تم حذف المستخدمين المحددين بنجاح."
+
+msgid "You have updated the privileges for %s."
+msgstr "لقد جددت وحدثت الإمتيازات لـ %s."
+
+msgid "Deleting %s"
+msgstr "قيد حذف %s"
+
+msgid "The privileges were reloaded successfully."
+msgstr "تم إعادة قراءة الصلاحيات بنجاح."
+
+msgid "The user %s already exists!"
+msgstr "اسم المستخدم %s موجود مسبقاً!"
+
+msgid "Privileges for %s"
+msgstr "امتيازات %s"
+
+msgid "You have added a new user."
+msgstr "لقد أضفت مستخدم جديد."
+
+msgid "Query cache"
+msgstr "ذاكرة التخزين المؤقت للاستعلام"
+
+msgid "Temporary data"
+msgstr "البيانات المؤقتة"
+
+msgid "Delayed inserts"
+msgstr "تأخر إدراج"
+
+msgid "Sorting"
+msgstr "فرز"
+
+msgid "Transaction coordinator"
+msgstr "منسق المعاملات"
+
+msgid "Flush (close) all tables"
+msgstr "Flush (إغلاق) جميع الجداول"
+
+msgid "Show open tables"
+msgstr "تبين الجداول المفتوحة"
+
+msgid "ID"
+msgstr "رقم"
+
+msgid "Command"
+msgstr "أمر"
+
+msgid "Showing as PHP code"
+msgstr "تظهر كملف PHP"
+
+msgid "Run SQL query/queries on database %s"
+msgstr "تنفيذ استعلام/استعلامات SQL على قاعدة بيانات %s"
+
+msgid "There is no detailed status information available for this storage engine."
+msgstr "لايوجد معلومات تفصيلية لحالة محرك التخزين هذا."
+
+msgid "%s is available on this MySQL server."
+msgstr "%s متوفر في خادم MySQL هذا."
+
+msgid "%s has been disabled for this MySQL server."
+msgstr "%s معطل في خادم MySQL هذا."
+
+msgid "This MySQL server does not support the %s storage engine."
+msgstr "خادم MySQL هذا لايدعم محرك التخزين %s ."
+
+msgid "The name of the primary key must be \"PRIMARY\"!"
+msgstr "اسم المفتاح الأساسي يجب أن يكون أساسيا \"PRIMARY\"!"
+
+msgid "Can't rename index to PRIMARY!"
+msgstr "لايمكن تغيير اسم الفهرس إلى الأساسي!"
+
+msgid "No index parts defined!"
+msgstr "أجزاء الفهرسة غير معرفة!"
+
+msgid "Source database `%s` was not found!"
+msgstr "لم يعثر على قاعدة البيانات المصدر `%s`!"
+
+msgid "Target database `%s` was not found!"
+msgstr "لم يعثر على قاعدة البيانات الهدف `%s`!"
+
+msgid "Invalid database:"
+msgstr "قاعدة بيانات غير صالحة:"
+
+msgid "Invalid table name:"
+msgstr "اسم الجدول غير صالح :"
+
+msgid "Table %1$s has been renamed to %2$s."
+msgstr "تمّت تسمية الجدول %1$s إلى %2$s."
+
+msgid "Could not save table UI preferences!"
+msgstr "تعذر حفظ تفضيلات واجهة مستخدم الجدول!"
+
+msgid "Default theme %s not found!"
+msgstr "المظهر الإفتراضي %s غير موجود!"
+
+msgid "Theme %s not found!"
+msgstr "المظهر %s غير موجود!"
+
+msgid "No valid image path for theme %s found!"
+msgstr "مسار الصورة للمظهر %s غير صحيح!"
+
+msgid "Delete tracking data row from report"
+msgstr "حذف صف بيانات التعقب من التقرير"
+
+msgid "No data"
+msgstr "لايوجد بيانات"
+
+msgid "SQL execution"
+msgstr "تنفيذ SQL"
+
+msgid "Export as %s"
+msgstr "تصدير كـ %s"
+
+msgid "Tracking report for table `%s`"
+msgstr "تتبع التقرير للجدول %s"
+
+msgid "Tracking for %1$s was activated at version %2$s."
+msgstr "تم تنشيط تتبع %1$s في الإصدار %2$s."
+
+msgid "Tracking for %1$s was deactivated at version %2$s."
+msgstr "تم إلغاء تنشيط تتبع %1$s في الإصدار %2$s."
+
+msgid "Version %1$s of %2$s was deleted."
+msgstr "تم حذف الإصدار %1$s من %2$s."
+
+msgid "Version %1$s was created, tracking for %2$s is active."
+msgstr "تم إنشاء الإصدار %1$s ، التعقب لـ %2$s نشط."
+
+msgid "Sorry, we failed to restore the dropped trigger."
+msgstr "عذرا ، لقد فشلنا في استعادة الزناد الذي تم إسقاطه."
+
+msgid "Trigger %1$s has been modified."
+msgstr "تم تعديل المشغل %1$s."
+
+msgid "You must provide a trigger name!"
+msgstr "يجب عليك تقديم اسم الزناد!"
+
+msgid "You must provide a valid timing for the trigger!"
+msgstr "يجب عليك تقديم توقيت صالح للمشغل!"
+
+msgid "You must provide a valid event for the trigger!"
+msgstr "يجب عليك تقديم حدث صالح للمشغل!"
+
+msgid "You must provide a valid table name!"
+msgstr "يجب عليك تقديم اسم جدول صالح!"
+
+msgid "A date, supported range is %1$s to %2$s"
+msgstr "تاريخ ما، إن النطاق المسموح به هو من %1$s إلى %2$s"
+
+msgid "A date and time combination, supported range is %1$s to %2$s"
+msgstr "تركيبة تاريخ و زمان، النطاق المسموح به هو من %1$s إلى %2$s"
+
+msgid "A time, range is %1$s to %2$s"
+msgstr "زمن ما، النطاق يكون من %1$s إلى %2$s"
+
+msgid "A TEXT column with a maximum length of 16,777,215 (2^24 - 1) characters, stored with a three-byte prefix indicating the length of the value in bytes"
+msgstr "عمود تكست يبلغ طوله الأقصى 16،777،215 حرفا (2 ^ 24 - 1)، ويتم تخزينه مع بادئة ثلاثة بايتات تشير إلى طول القيمة بالبايت"
+
+msgid "A TEXT column with a maximum length of 4,294,967,295 or 4GiB (2^32 - 1) characters, stored with a four-byte prefix indicating the length of the value in bytes"
+msgstr "عمود تكست يبلغ الحد الأقصى لطوله 4،294،967،295 أو 4 غيغابايت (2 ^ 32 - 1)، ويتم تخزينه مع بادئة أربعة بايتات تشير إلى طول القيمة بالبايت"
+
+msgid "A single value chosen from a set of up to 64 members"
+msgstr "قيمة واحدة مختارة من مجموعة لحد 64 أعضاء"
+
+msgid "A point in 2-dimensional space"
+msgstr "نقطة في فضاء ذات أبعاد ثنائية"
+
+msgid "A curve with linear interpolation between points"
+msgstr "منحنى مع الاستيفاء الخطي بين النقاط"
+
+msgid "A polygon"
+msgstr "مضلع"
+
+msgid "A collection of points"
+msgstr "مجموعة من النقاط"
+
+msgid "A collection of polygons"
+msgstr "مجموعة من المضلعات"
+
+msgid "A collection of geometry objects of any type"
+msgstr "مجموعة كائنات الهندسة من أي نوع"
+
+msgctxt "numeric types"
+msgid "Numeric"
+msgstr "رقمية"
+
+msgctxt "date and time types"
+msgid "Date and time"
+msgstr "التاريخ والوقت"
+
+msgid "Password is too long!"
+msgstr "كلمة المرور طويلة جدا!"
+
+msgid "The profile has been updated."
+msgstr "لقد تم تجديد الملف الشخصي."
+
+msgid "Max: %s%s"
+msgstr "كبير: %s%s"
+
+msgctxt "AM/PM indication in time"
+msgid "PM"
+msgstr "مساء"
+
+msgctxt "AM/PM indication in time"
+msgid "AM"
+msgstr "صباحا"
+
+msgid "%s days, %s hours, %s minutes and %s seconds"
+msgstr "%s يوم، %s ساعة، %s دقيقة و%s ثانية"
+
+msgid "Users"
+msgstr "المستخدمون"

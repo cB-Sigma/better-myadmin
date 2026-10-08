@@ -73,6 +73,7 @@ authRoutes.post('/login', async (c) => {
     password: req.password,
     arbitraryServer: req.arbitraryServer,
     remoteIp,
+    tr: c.get('tr'),
   })
 
   // Session::secure(): new id + token on login, logins on other servers are kept

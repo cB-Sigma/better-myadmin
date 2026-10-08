@@ -69,7 +69,7 @@ Exit: full feature parity. Every checklist in `docs/features` green or `n/a`.
 
 - Performance suite at budget on all pages; bundle gates; INP p95 ≤ 100 ms.
 - Visual regression baselines for 4 themes × 2 modes.
-- All 97 locales imported and spot-checked (RTL pass).
+- All shipped locales (48 of phpMyAdmin's 96 catalogues) imported and spot-checked (RTL pass: Arabic, Hebrew).
 - Accessibility audit and fixes.
 - Packaging: `npx bettermyadmin`, Docker multi-arch, Bun binaries, Helm chart example, reverse-proxy examples (Nginx, Caddy, Traefik) with `basePath`.
 - Documentation site built from `docs/`.

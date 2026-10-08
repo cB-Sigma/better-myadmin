@@ -39,8 +39,9 @@ export class PmaClient {
     return res.text()
   }
 
-  async login(user: string, password: string, server = 1): Promise<void> {
-    const page = await this.#req('/index.php?route=/')
+  /** `lang` picks the language like the login page's selector (?lang=xx, then the pma_lang cookie). */
+  async login(user: string, password: string, server = 1, lang?: string): Promise<void> {
+    const page = await this.#req(`/index.php?route=/${lang !== undefined ? `&lang=${lang}` : ''}`)
     const token = page.match(/name="token" value="([^"]+)"/)?.[1] ?? ''
     const setSession = page.match(/name="set_session" value="([^"]+)"/)?.[1] ?? ''
     const home = await this.#req('/index.php?route=/', {
