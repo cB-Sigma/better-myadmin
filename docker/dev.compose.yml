@@ -7,6 +7,7 @@ services:
     environment: { MYSQL_ROOT_PASSWORD: root }
     command: ["--general-log=1", "--log-output=TABLE"]
     ports: ["3306:3306"]
+    volumes: ["./seed/pmadb.sql:/docker-entrypoint-initdb.d/01-pmadb.sql:ro"]
     healthcheck: { test: ["CMD", "mysqladmin", "ping", "-proot"], interval: 5s, retries: 30 }
   mariadb11:
     image: mariadb:11
