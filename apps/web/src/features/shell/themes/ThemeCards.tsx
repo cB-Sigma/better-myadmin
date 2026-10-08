@@ -63,7 +63,7 @@ export function ThemesDialog(props: {
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogContent size="xl" id="themesModal" aria-describedby={undefined}>
         <DialogHeader>
-          <DialogTitle id="themesModalLabel">phpMyAdmin Themes</DialogTitle>
+          <DialogTitle>phpMyAdmin Themes</DialogTitle>
         </DialogHeader>
         <DialogBody>
           <ThemeCards

@@ -12,6 +12,16 @@ export class PmaClient {
     this.base = base.replace(/\/$/, '')
   }
 
+  /** GET a page as HTML, redirects followed (no JavaScript runs, so the menu is not collapsed). */
+  get(path: string): Promise<string> {
+    return this.#req(path)
+  }
+
+  /** POST a form the way the page's own forms do (token + server added), optionally over AJAX. */
+  post(path: string, form: Record<string, string>, ajax = false): Promise<string> {
+    return this.#req(path, { token: this.token, server: '1', ...form }, ajax)
+  }
+
   async #req(path: string, form?: Record<string, string>, ajax = false): Promise<string> {
     const headers: Record<string, string> = {}
     if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
@@ -86,6 +96,43 @@ export class PmaClient {
     )
     return JSON.parse(body) as { success: boolean; message?: string; error?: string }
   }
+}
+
+/** Tab labels of `ul#topmenu` (templates/menu/main.twig), in order, without "(current)". */
+export function menuTabs(html: string): string[] {
+  const m = html.match(/<ul id="topmenu"[^>]*>([\s\S]*?)<\/ul>/)
+  if (m === null) return []
+  return [...m[1]!.matchAll(/<li class="nav-item[^"]*">([\s\S]*?)<\/li>/g)].map((li) =>
+    visibleText(li[1]!).replace(/\s*\(current\)$/, ''),
+  )
+}
+
+/** The breadcrumb items and the comment of `nav#server-breadcrumb`. */
+export function breadcrumb(html: string): { items: string[]; comment: string } {
+  const m = html.match(/<nav id="server-breadcrumb"[\s\S]*?<\/nav>/)
+  if (m === null) return { items: [], comment: '' }
+  const items = [...m[0].matchAll(/<li class="breadcrumb-item">([\s\S]*?)<\/li>/g)].map((x) =>
+    visibleText(x[1]!),
+  )
+  const c = m[0].match(/<span class="breadcrumb-comment"[^>]*>([\s\S]*?)<\/span>/)
+  return { items, comment: c === null ? '' : visibleText(c[1]!).replace(/^“|”$/g, '') }
+}
+
+/** The `list-group-item` texts of the home-page card with this header. */
+export function homeCard(html: string, header: string): string[] {
+  const start = html.search(new RegExp(`card-header">\\s*${header}\\s*</div>`))
+  if (start === -1) return []
+  const end = html.indexOf('</ul>', start)
+  return [
+    ...html.slice(start, end).matchAll(/<li[^>]*class="list-group-item[^"]*"[^>]*>([\s\S]*?)<\/li>/g),
+  ].map((x) => visibleText(x[1]!))
+}
+
+/** The warning/notice alerts of the home page (HomeController::$errors), as visible text. */
+export function homeWarnings(html: string): string[] {
+  return [
+    ...html.matchAll(/<div class="alert (?:alert-warning|alert-info)" role="alert">([\s\S]*?)<\/div>/g),
+  ].map((x) => visibleText(x[1]!))
 }
 
 /** Visible text of an HTML fragment, whitespace-collapsed. */

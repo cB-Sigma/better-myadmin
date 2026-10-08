@@ -135,7 +135,7 @@ export function ChangePasswordDialog(props: {
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogContent size="lg" id="changePasswordModal" aria-describedby={undefined}>
         <DialogHeader>
-          <DialogTitle id="changePasswordModalLabel">Change password</DialogTitle>
+          <DialogTitle>Change password</DialogTitle>
         </DialogHeader>
         <DialogBody>
           {form.isError && <Alert variant="error">{form.error.message}</Alert>}
