@@ -15,7 +15,9 @@
     "test": "vitest run --project unit",
     "test:int": "vitest run --project int",
     "test:watch": "vitest --project unit",
-    "test:parity": "vitest run --project parity"
+    "test:parity": "vitest run --project parity",
+    "i18n:import": "pnpm --filter @bettermyadmin/i18n run import",
+    "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

@@ -1,0 +1,5671 @@
+# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/be.po by packages/i18n/scripts/import-po.ts.
+# Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+msgid ""
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Belarusian <https://hosted.weblate.org/projects/phpmyadmin/master/be/>\nLanguage: be\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.11-dev\n"
+
+msgid "Javascript must be enabled past this point!"
+msgstr "Javascript мусіць быць уключаным!"
+
+msgid "phpMyAdmin documentation"
+msgstr "Дакумэнтацыя па phpMyAdmin"
+
+msgid "Settings"
+msgstr "Налады"
+
+msgid "Log out"
+msgstr "Выйсьці з сыстэмы"
+
+msgid "Page-related settings"
+msgstr "Налады старонкі"
+
+msgid "Open new phpMyAdmin window"
+msgstr "Адкрыць новае акно phpMyAdmin"
+
+msgid "phpMyAdmin Demo Server"
+msgstr "Дэма-сервер phpMyAdmin"
+
+msgid "Git information missing!"
+msgstr "Адсутнічае Інфармацыя пра Git!"
+
+msgctxt "for default"
+msgid "None"
+msgstr "Няма"
+
+msgid "As defined:"
+msgstr "Як вызначана:"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details"
+msgstr "Вы не маеце дастатковых прывілеяў для выканання гэтай аперацыі. Калі ласка, звярніцеся да дакументацыі для дэтальнай інфармацыі"
+
+msgid "Primary"
+msgstr "Першасны"
+
+msgid "Unique"
+msgstr "Унікальнае"
+
+msgid "Index"
+msgstr "Індэкс"
+
+msgid "Fulltext"
+msgstr "Поўнатэкстэкставае"
+
+msgid "Expression"
+msgstr "Выраз"
+
+msgid "after %s"
+msgstr "пасля %s"
+
+msgid "None"
+msgstr "Няма"
+
+msgid "Table name"
+msgstr "Імя табліцы"
+
+msgid "Add"
+msgstr "Дадаць"
+
+msgid "column(s)"
+msgstr "слупок(і)"
+
+msgid "Go"
+msgstr "Панеслася"
+
+msgid "Table comments:"
+msgstr "Камэнтар да табліцы:"
+
+msgid "Collation:"
+msgstr "Параўноўванне:"
+
+msgid "Storage Engine:"
+msgstr "Механізм захоўвання:"
+
+msgid "Connection:"
+msgstr "Злучэнне:"
+
+msgid "PARTITION definition:"
+msgstr "Азначэнне раздзелаў (PARTITION):"
+
+msgid "Save"
+msgstr "Захаваць"
+
+msgid "Referenced by %s."
+msgstr "Спасылаецца на %s."
+
+msgid "Is a foreign key."
+msgstr "Гэта знешні ключ."
+
+msgid "Column"
+msgstr "Калонка"
+
+msgid "Pick from Central Columns"
+msgstr "Выбраць з цэнтральных слупкоў"
+
+msgid "Partition by:"
+msgstr "Раздзел:"
+
+msgid "Expression or column list"
+msgstr "Выраз ці спіс слупкоў"
+
+msgid "Partitions:"
+msgstr "Раздзелы:"
+
+msgid "Subpartition by:"
+msgstr "Падраздзел:"
+
+msgid "Subpartitions:"
+msgstr "Падраздзелы:"
+
+msgid "Partition"
+msgstr "Раздзел"
+
+msgid "Values"
+msgstr "Значэнні"
+
+msgid "Subpartition"
+msgstr "Падраздзел"
+
+msgid "Engine"
+msgstr "Механізм"
+
+msgid "Comment"
+msgstr "Камэнтар"
+
+msgid "Data directory"
+msgstr "Каталог даных"
+
+msgid "Index directory"
+msgstr "Каталог індэксаў"
+
+msgid "Max rows"
+msgstr "Максімум радкоў"
+
+msgid "Min rows"
+msgstr "Мінімум радкоў"
+
+msgid "Table space"
+msgstr "Таблічная прастора"
+
+msgid "Node group"
+msgstr "Група вузлоў"
+
+msgid "Structure"
+msgstr "Структура"
+
+msgid "Name"
+msgstr "Назва"
+
+msgid "Type"
+msgstr "Тып"
+
+msgid "Length/Values"
+msgstr "Даўжыня/Значэньні*"
+
+msgid "Default"
+msgstr "Па змоўчаньні"
+
+msgid "For default values, please enter just a single value, without backslash escaping or quotes, using this format: a"
+msgstr "Для значэньняў па змоўчаньні, калі ласка, увядзіце проста значэньне, без выкарыстаньня зваротных слэшаў і двукосься, выкарыстоўваючы фармат: a"
+
+msgid "Collation"
+msgstr "Параўноўванне"
+
+msgid "Attributes"
+msgstr "Атрыбуты"
+
+msgid "Null"
+msgstr "Нуль"
+
+msgid "Adjust privileges"
+msgstr "Наладзіць прывілеі"
+
+msgid "Comments"
+msgstr "Камэнтары"
+
+msgid "Move column"
+msgstr "Перамясціць слупок"
+
+msgid "List of available transformations and their options"
+msgstr "Спіс даступных пераўтварэнняў і іх параметры"
+
+msgid "Browser display transformation"
+msgstr "Пераўтварэнне адлюстравання браўзерам"
+
+msgid "Browser display transformation options"
+msgstr "Параметры пераўтварэння адлюстравання браўзерам"
+
+msgid "Input transformation"
+msgstr "Пераўтварэнне ўвода"
+
+msgid "Input transformation options"
+msgstr "Параметры пераўтварэння ўвода"
+
+msgid "No change"
+msgstr "Няма зьменаў"
+
+msgid "Reset"
+msgstr "Скінуць"
+
+msgid "Documentation"
+msgstr "Дакумэнтацыя"
+
+msgid "Disabled"
+msgstr "Адключана"
+
+msgid "Yes"
+msgstr "Так"
+
+msgid "No"
+msgstr "Не"
+
+msgid "Requery"
+msgstr "Паўтарыць запыт"
+
+msgid "Edit"
+msgstr "Рэдагаваць"
+
+msgid "Delete"
+msgstr "Выдаліць"
+
+msgid "Database"
+msgstr "База дадзеных"
+
+msgid "SQL Query Console"
+msgstr "Кансоль SQL-запыту"
+
+msgid "Clear"
+msgstr "Ачысціць"
+
+msgid "History"
+msgstr "Гісторыя"
+
+msgid "Options"
+msgstr "Налады"
+
+msgid "Bookmarks"
+msgstr "Закладкі"
+
+msgid "Press Ctrl+Enter to execute query"
+msgstr "Націсніце Ctrl+Enter каб выканаць запыт"
+
+msgid "Press Enter to execute query"
+msgstr "Націсніце Enter каб выканаць запыт"
+
+msgid "Explain"
+msgstr "Тлумачыць"
+
+msgid "Profiling"
+msgstr "Прафіляваньне"
+
+msgid "Bookmark"
+msgstr "Закладка"
+
+msgid "Query failed"
+msgstr "Збой запыту"
+
+msgid "ascending"
+msgstr "прамы"
+
+msgid "descending"
+msgstr "адваротны"
+
+msgid "Count"
+msgstr "Колькасць"
+
+msgid "Execution order"
+msgstr "Парадак выканання"
+
+msgid "Group queries"
+msgstr "Групаваць запыты"
+
+msgid "Ungroup queries"
+msgstr "Разгрупаваць запыты"
+
+msgid "Show trace"
+msgstr "Паказаць трасіроўку"
+
+msgid "Hide trace"
+msgstr "Схаваць трасіроўку"
+
+msgid "Refresh"
+msgstr "Абнавіць"
+
+msgid "Add bookmark"
+msgstr "Дадаць закладку"
+
+msgid "Label"
+msgstr "Метка"
+
+msgid "Target database"
+msgstr "Мэтавая база даных"
+
+msgid "Share this bookmark"
+msgstr "Падзяліцца гэтай закладкай"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Show query history at start"
+msgstr "Паказаць гісторыю запытаў ад пачатку"
+
+msgid "Switch to dark theme"
+msgstr "Пераключыць на цёмную тэму"
+
+msgid "Create version %1$s of %2$s"
+msgstr "Стварыць версію %1$s з %2$s"
+
+msgid "Create version %1$s"
+msgstr "Стварыць версію %1$s"
+
+msgid "Create version"
+msgstr "Стварыць версію"
+
+msgid "Add new column"
+msgstr "Дадаць новы слупок"
+
+msgid "Attribute"
+msgstr "Атрыбут"
+
+msgid "Search this table"
+msgstr "Пошук у гэтай табліцы"
+
+msgid "Add column"
+msgstr "Дадаць слупок"
+
+msgid "Select a table"
+msgstr "Выберыце табліцу"
+
+msgid "Select a column."
+msgstr "Выберыце слупок."
+
+msgid "Click to sort."
+msgstr "Клікніце для сартавання."
+
+msgid "Action"
+msgstr "Дзеяньне"
+
+msgid "Cancel"
+msgstr "Скасаваць"
+
+msgid "Number of columns"
+msgstr "Колькасць слупкоў"
+
+msgid "Create"
+msgstr "Стварыць"
+
+msgid "Print"
+msgstr "Друк"
+
+msgid "Links to"
+msgstr "Зьвязаная з"
+
+msgid "Indexes"
+msgstr "Індэксы"
+
+msgid "Keyname"
+msgstr "Імя ключа"
+
+msgid "Packed"
+msgstr "Сьціснутая"
+
+msgid "Cardinality"
+msgstr "Колькасьць элемэнтаў"
+
+msgid "No index defined!"
+msgstr "Індэкс ня вызначаны!"
+
+msgid "Select all"
+msgstr "Выбраць усё"
+
+msgid "Show/hide columns"
+msgstr "Паказаць/Схаваць слупкі"
+
+msgid "See table structure"
+msgstr "Глядзець структуру табліцы"
+
+msgid "Add an option for column \"%s\"."
+msgstr "Дадаць опцыю для слупка «%s»."
+
+msgid "Page to open"
+msgstr "Старонка для адкрыцця"
+
+msgid "Page to delete"
+msgstr "Старонка для выдалення"
+
+msgid "Show/Hide tables list"
+msgstr "Паказаць/Схаваць спіс табліц"
+
+msgid "Add tables from other databases"
+msgstr "Дабавіць табліцы з іншых баз даных"
+
+msgid "New page"
+msgstr "Новая старонка"
+
+msgid "Open page"
+msgstr "Адкрыць старонку"
+
+msgid "Save page"
+msgstr "Захаваць старонку"
+
+msgid "Save page as"
+msgstr "Захаваць старонку як"
+
+msgid "Delete pages"
+msgstr "Выдаліць старонкі"
+
+msgid "Create table"
+msgstr "Стварыць табліцу"
+
+msgid "Create relationship"
+msgstr "Стварыць сувязь"
+
+msgid "Choose column to display"
+msgstr "Выберыце слупок для адлюстраваньня"
+
+msgid "Reload"
+msgstr "Абнавіць"
+
+msgid "Help"
+msgstr "Дапамога"
+
+msgid "Angular links"
+msgstr "Вуглавыя лініі сувязяў"
+
+msgid "Direct links"
+msgstr "Прамыя лініі сувязяў"
+
+msgid "Snap to grid"
+msgstr "Зьвяць зь сеткай"
+
+msgid "Small/Big All"
+msgstr "Згарнуць/разгарнуць адлюстраваньне ўсіх табліц"
+
+msgid "Toggle small/big"
+msgstr "Пераключыць маленькі/вялікі"
+
+msgid "Toggle relationship lines"
+msgstr "Пераключыць лініі сувязі"
+
+msgid "Export schema"
+msgstr "Экспартаваць схему"
+
+msgid "Build Query"
+msgstr "Скласці запыт"
+
+msgid "Move Menu"
+msgstr "Перасунуць мэню"
+
+msgid "Pin text"
+msgstr "Прымацаваць тэкст"
+
+msgid "Hide/Show all"
+msgstr "Схаваць/паказаць усе табліцы"
+
+msgid "Hide/Show tables with no relationship"
+msgstr "Схаваць/паказаць табліцы без сувязяў"
+
+msgid "Number of tables:"
+msgstr "Колькасць табліц:"
+
+msgid "Delete relationship"
+msgstr "Выдаліць сувязь"
+
+msgid "Relationship operator"
+msgstr "Аператар сувязей"
+
+msgid "Except"
+msgstr "Акрамя"
+
+msgid "Value"
+msgstr "Значэньне"
+
+msgid "subquery"
+msgstr "падзапыт"
+
+msgid "Rename to"
+msgstr "Перайменаваць у"
+
+msgid "New name"
+msgstr "Новая назва"
+
+msgid "Aggregate"
+msgstr "Сукупнасць"
+
+msgid "Operator"
+msgstr "Апэратар"
+
+msgid "Active options"
+msgstr "Актыўная опцыі"
+
+msgid "Submit"
+msgstr "Адправіць"
+
+msgid "Save to selected page"
+msgstr "Захаваць на абраную старонку"
+
+msgid "Create a page and save to it"
+msgstr "Стварыць старонку і запісаць на яе"
+
+msgid "New page name"
+msgstr "Назва новай старонкі"
+
+msgid "Select page"
+msgstr "Выбраць старонку"
+
+msgid "Details"
+msgstr "Дэталі"
+
+msgid "Event name"
+msgstr "Назва падзеі"
+
+msgid "Status"
+msgstr "Стан"
+
+msgid "Event type"
+msgstr "Тып падзеі"
+
+msgid "Change to %s"
+msgstr "Змяніць на %s"
+
+msgid "Execute every"
+msgstr "Выканаць кожны"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Пачатак"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Канец"
+
+msgid "Definition"
+msgstr "Азначэнне"
+
+msgid "Format"
+msgstr "Фармат"
+
+msgid "On completion preserve"
+msgstr "Па завяршэнні захавання"
+
+msgid "Events"
+msgstr "Падзеі"
+
+msgid "Check all"
+msgstr "Адзначыць усё"
+
+msgid "Export"
+msgstr "Экспарт"
+
+msgid "Drop"
+msgstr "Выдаліць"
+
+msgid "There are no events to display."
+msgstr "Няма падзей для адлюстравання."
+
+msgid "Loading…"
+msgstr "Загрузка…"
+
+msgid "Exporting tables from \"%s\" database"
+msgstr "Экспартаванне табліц з базы даных «%s»"
+
+msgid "Tables:"
+msgstr "Табліцы:"
+
+msgid "Tables"
+msgstr "Табліцы"
+
+msgid "Data"
+msgstr "Даныя"
+
+msgid "Importing into the database \"%s\""
+msgstr "Імпартаванне ў базу даных «%s»"
+
+msgid "Query window"
+msgstr "Акно запыту"
+
+msgid "select table"
+msgstr "выберыце табліцу"
+
+msgid "select column"
+msgstr "выберыце слупок"
+
+msgid "Show"
+msgstr "Паказаць"
+
+msgid "Table alias"
+msgstr "псеўданімы табліцы"
+
+msgid "Column alias"
+msgstr "Псеўданімы слупка"
+
+msgid "criteria"
+msgstr "крытэрый"
+
+msgid "Sort"
+msgstr "Парадак"
+
+msgid "Ascending"
+msgstr "прамы"
+
+msgid "Descending"
+msgstr "адваротны"
+
+msgid "Add as"
+msgstr "Дадаць як"
+
+msgid "Text"
+msgstr "Тэкст"
+
+msgid "Another column"
+msgstr "Іншы слупок"
+
+msgid "Remove this column"
+msgstr "Выдаліць гэты слупок"
+
+msgid "+ Add column"
+msgstr "+ Дадаць слупок"
+
+msgid "Update query"
+msgstr "Абнавіць запыт"
+
+msgid "Submit query"
+msgstr "Выканаць запыт"
+
+msgid "Database operations"
+msgstr "Аперацыі базы даных"
+
+msgid "Database comment"
+msgstr "Камэнтар да базы дадзеных"
+
+msgid "Rename database to"
+msgstr "Перайменаваць базу даных у"
+
+msgid "New database name"
+msgstr "Назва новай базы даных"
+
+msgid "Remove database"
+msgstr "Выдаліць базу даных"
+
+msgid "Database %s has been dropped."
+msgstr "База дадзеных %s была выдаленая."
+
+msgid "Drop the database (DROP)"
+msgstr "Скінуць базу даных (DROP)"
+
+msgid "Copy database to"
+msgstr "Капіяваць базу даных у"
+
+msgid "Database name"
+msgstr "Назва базы даных"
+
+msgid "Structure only"
+msgstr "Толькі структуру"
+
+msgid "Structure and data"
+msgstr "Структуру і дадзеныя"
+
+msgid "Data only"
+msgstr "Толькі дадзеныя"
+
+msgid "CREATE DATABASE before copying"
+msgstr "выканаць CREATE DATABASE перад капіяваньнем"
+
+msgid "Add %s"
+msgstr "Дадаць %s"
+
+msgid "Add AUTO_INCREMENT value"
+msgstr "Дадаць значэньне AUTO_INCREMENT"
+
+msgid "Add constraints"
+msgstr "Дадаць абмежаваньні"
+
+msgid "Switch to copied database"
+msgstr "Перайсьці да скапіяванай базы дадзеных"
+
+msgid "Change all tables collations"
+msgstr "Змяніць параўноўванні ўсіх табліц"
+
+msgid "Users having access to \"%s\""
+msgstr "Карыстальнікі з правамі доступу да \"%s\""
+
+msgid "User name"
+msgstr "Імя карыстальніка"
+
+msgid "Host name"
+msgstr "Назва хаста"
+
+msgid "Privileges"
+msgstr "Прывілеі"
+
+msgid "Grant"
+msgstr "Grant"
+
+msgid "Any"
+msgstr "Любы"
+
+msgid "global"
+msgstr "глябальны"
+
+msgid "database-specific"
+msgstr "спэцыфічны для базы дадзеных"
+
+msgid "wildcard"
+msgstr "шаблён"
+
+msgid "routine"
+msgstr "працэдура"
+
+msgid "Edit privileges"
+msgstr "Рэдагаваць прывілеі"
+
+msgid "No user found."
+msgstr "Карыстальнік не знойдзены."
+
+msgid "With selected:"
+msgstr "З адзначанымі:"
+
+msgid "Add user account"
+msgstr "Дадаць конт карыстальніка"
+
+msgid "Routine name"
+msgstr "Назва працэдуры"
+
+msgid "Direction"
+msgstr "Напрамак"
+
+msgid "Add parameter"
+msgstr "Дадаць параметр"
+
+msgid "Remove last parameter"
+msgstr "Выдаліць апошні параметр"
+
+msgid "Return type"
+msgstr "Тып працэдуры"
+
+msgid "Return length/values"
+msgstr "Вярнуць даўжыню/значэнні"
+
+msgid "Return options"
+msgstr "Вярнуць опцыі"
+
+msgid "Charset"
+msgstr "Знаказбор"
+
+msgid "Security type"
+msgstr "Тып бяспекі"
+
+msgid "Routine parameters"
+msgstr "Параметры працэдуры"
+
+msgid "Function"
+msgstr "Функцыя"
+
+msgid "Routines"
+msgstr "Працэдуры"
+
+msgid "Search"
+msgstr "Пошук"
+
+msgid "There are no routines to display."
+msgstr "Няма працэдур для адлюстравання."
+
+msgid "Returns"
+msgstr "Вяртае"
+
+msgid "Search in database"
+msgstr "Пошук у базе дадзеных"
+
+msgid "Words or values to search for (wildcard: \"%\"):"
+msgstr "Словы або значэнні для пошуку (падстаноўка: \"%\"):"
+
+msgid "Find:"
+msgstr "Знайсці:"
+
+msgid "at least one of the words"
+msgstr "прынамсі адно з словаў"
+
+msgid "Words are separated by a space character (\" \")."
+msgstr "Словы, падзеленыя прагалам (\" \")."
+
+msgid "all of the words"
+msgstr "усе словы"
+
+msgid "the exact phrase as substring"
+msgstr "дакладная фраза як падрадок"
+
+msgid "the exact phrase as whole field"
+msgstr "дакладная фраза поўнасцю"
+
+msgid "as regular expression"
+msgstr "рэгулярны выраз"
+
+msgid "Inside tables:"
+msgstr "У табліцах:"
+
+msgid "Unselect all"
+msgstr "Зняць усе"
+
+msgid "Inside column:"
+msgstr "Унутры слупка:"
+
+msgid "%1$s match in <strong>%2$s</strong>"
+msgid_plural "%1$s matches in <strong>%2$s</strong>"
+msgstr[0] "%1$s супадзенне у <strong>%2$s</strong>"
+msgstr[1] "%1$s супадзення у <strong>%2$s</strong>"
+msgstr[2] "%1$s супадзенняў у <strong>%2$s</strong>"
+
+msgid "Browse"
+msgstr "Прагляд"
+
+msgid "Add prefix"
+msgstr "Дадаць прэфікс"
+
+msgid "%s table"
+msgid_plural "%s tables"
+msgstr[0] "%s табліца"
+msgstr[1] "%s табліцы"
+msgstr[2] "%s табліц"
+
+msgid "Replication"
+msgstr "Рэплікацыя"
+
+msgid "Sum"
+msgstr "Усяго"
+
+msgid "%s is the default storage engine on this MySQL server."
+msgstr "%s зьяўляецца машынай захаваньня дадзеных па змоўчаньні на гэтым MySQL-сэрвэры."
+
+msgid "Continue"
+msgstr "Працягваць"
+
+msgid "From"
+msgstr "Ад"
+
+msgid "Check tables having overhead"
+msgstr "Адзначыць тыя, што патрабуюць аптымізацыі"
+
+msgid "Copy table"
+msgstr "Капіяваць табліцу"
+
+msgid "Show create"
+msgstr "Паказаць стварэнне"
+
+msgid "Delete data or table"
+msgstr "Выдаліць даныя ці табліцу"
+
+msgid "Empty"
+msgstr "Ачысьціць"
+
+msgid "Table maintenance"
+msgstr "Абслугоўваньне табліцы"
+
+msgid "Analyze table"
+msgstr "Аналізаваць табліцу"
+
+msgid "Check table"
+msgstr "Праверыць табліцу"
+
+msgid "Checksum table"
+msgstr "Кантрольная сума табліцы"
+
+msgid "Optimize table"
+msgstr "Аптымізаваць табліцу"
+
+msgid "Repair table"
+msgstr "Рамантаваць табліцу"
+
+msgid "Prefix"
+msgstr "Прэфікс"
+
+msgid "Add prefix to table"
+msgstr "Дадаць прэфікс да табліцы"
+
+msgid "Replace table prefix"
+msgstr "Замяніць прэфікс табліцы"
+
+msgid "Copy table with prefix"
+msgstr "Капіяваць табліцу з прэфіксам"
+
+msgid "Central columns"
+msgstr "Галоўныя слупкі"
+
+msgid "Add columns to central list"
+msgstr "Дадаць слупкі ў галоўны спіс"
+
+msgid "Make consistent with central list"
+msgstr "Зрабіць у адпаведнасці з галоўныс спісам"
+
+msgid "Database:"
+msgstr "База даных:"
+
+msgid "Add AUTO INCREMENT value"
+msgstr "Дадаць значэнне AUTO INCREMENT"
+
+msgid "Do you really want to execute the following query?"
+msgstr "Ці сапраўды вы жадаеце выканаць наступны запыт?"
+
+msgid "Enable foreign key checks"
+msgstr "Уключыць праверку знешніх ключоў"
+
+msgid "Remove from Favorites"
+msgstr "Выдаліць з улюблёнага"
+
+msgid "Add to Favorites"
+msgstr "Дадаць да абранага"
+
+msgid "Data dictionary"
+msgstr "Слоўнік даных"
+
+msgid "No tables found in database."
+msgstr "У базе даных табліц не выяўлена."
+
+msgid "Showing create queries"
+msgstr "Паказваюцца запыты стварэння"
+
+msgid "Table"
+msgstr "Табліца"
+
+msgid "Views"
+msgstr "Прадстаўленне"
+
+msgid "View"
+msgstr "Выгляд"
+
+msgid "Create view"
+msgstr "Стварыць прастаўленне"
+
+msgid "Replicated"
+msgstr "Рэплікаваны"
+
+msgid "Insert"
+msgstr "Уставіць"
+
+msgid "Table %s has been emptied."
+msgstr "Табліца %s была ачышчаная."
+
+msgid "in use"
+msgstr "выкарыстоўваецца"
+
+msgid "Rows"
+msgstr "Радкі"
+
+msgid "May be approximate. Click on the number to get the exact count. See [doc@faq3-11]FAQ 3.11[/doc]."
+msgstr "Можа быць прыблізным. Націсніце на нумар, каб атрымаць дакладную колькасць. Глядзіце [doc@faq3-11]FAQ 3.11[/doc]."
+
+msgid "Size"
+msgstr "Памер"
+
+msgid "Overhead"
+msgstr "Выкарыстаньне рэсурсаў"
+
+msgid "Creation"
+msgstr "Створаная"
+
+msgid "Last update"
+msgstr "Апошняе абнаўленьне"
+
+msgid "Last check"
+msgstr "Апошняя праверка"
+
+msgid "Tracked tables"
+msgstr "Адсочваемыя табліцы"
+
+msgid "Last version"
+msgstr "Апошняя версія"
+
+msgid "Created"
+msgstr "Створаная"
+
+msgid "Delete tracking"
+msgstr "Выдаліць адсочванне"
+
+msgid "Versions"
+msgstr "Версіі"
+
+msgid "Structure snapshot"
+msgstr "Здымак структуры"
+
+msgid "Untracked tables"
+msgstr "Неадсочваемыя табліцы"
+
+msgid "Track table"
+msgstr "Адсочваць табліцу"
+
+msgctxt "First page"
+msgid "Begin"
+msgstr "Пачатак"
+
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "Папярэдняя"
+
+msgctxt "Next page"
+msgid "Next"
+msgstr "Наступная"
+
+msgctxt "Last page"
+msgid "End"
+msgstr "Апошняя"
+
+msgid "Show all"
+msgstr "Паказаць усе"
+
+msgid "Save edited data"
+msgstr "Захаваць рэдагаваныя даныя"
+
+msgid "Restore column order"
+msgstr "Аднавіць парадак слупкоў"
+
+msgid "Number of rows:"
+msgstr "Колькасць радкоў:"
+
+msgid "All"
+msgstr "Усе"
+
+msgid "Partial texts"
+msgstr "Частковыя тэксты"
+
+msgid "Full texts"
+msgstr "Поўныя тэксты"
+
+msgid "Relational key"
+msgstr "Ключ сувязі"
+
+msgid "Display column for relationships"
+msgstr "Адлюстроўваць слупок адносін"
+
+msgid "Show binary contents"
+msgstr "Паказаць двайковы змест"
+
+msgid "Show BLOB contents"
+msgstr "Паказаць BLOB-змест"
+
+msgid "Hide browser transformation"
+msgstr "Схаваць ператварэнне"
+
+msgid "Well Known Text"
+msgstr "Добра вядомы тэкст"
+
+msgid "Well Known Binary"
+msgstr "Добра вядомыя двайковыя даныя"
+
+msgid "Copy"
+msgstr "Скапіяваць"
+
+msgid "Query results operations"
+msgstr "Дзеяньні з вынікамі запытаў"
+
+msgid "Display chart"
+msgstr "Адлюстраваць графік"
+
+msgctxt "None encoding conversion"
+msgid "None"
+msgstr "Няма"
+
+msgid "Error"
+msgstr "Памылка"
+
+msgid "Automatically send report next time"
+msgstr "Аўтаматычна адпраўляць справаздачу ў наступны раз"
+
+msgid "Submit error report"
+msgstr "Адаслаць зварот аб памылцы"
+
+msgid "Send error report"
+msgstr "Адправіць зварот аб памылцы"
+
+msgid "Select a template"
+msgstr "Выберыце шаблон"
+
+msgid "Export templates:"
+msgstr "Экспарт шаблонаў:"
+
+msgid "New template:"
+msgstr "Новы шаблон:"
+
+msgid "Template name"
+msgstr "Назва шаблона"
+
+msgid "Existing templates:"
+msgstr "Наяўныя шаблоны:"
+
+msgid "Template:"
+msgstr "Шаблон:"
+
+msgid "Update"
+msgstr "Абнавіць"
+
+msgid "SQL query:"
+msgstr "SQL-запыт:"
+
+msgid "Export method:"
+msgstr "Метад экспарту:"
+
+msgid "Custom - display all possible options"
+msgstr "Звычайны - адлюстроўваць усе магчымыя налады"
+
+msgid "Format:"
+msgstr "Фармат:"
+
+msgid "Rows:"
+msgstr "Радкі:"
+
+msgid "Save on server in the directory <strong>%s</strong>"
+msgstr "Захаваць на серверы ў каталогу <strong>%s</strong>"
+
+msgid "Overwrite existing file(s)"
+msgstr "Перазапісваць наяўны(я) файл(ы)"
+
+msgctxt "Alias"
+msgid "Database"
+msgstr "База даных"
+
+msgid "Remove"
+msgstr "Выдаліць"
+
+msgctxt "Alias"
+msgid "Table"
+msgstr "Табліца"
+
+msgctxt "Alias"
+msgid "Column"
+msgstr "Слупок"
+
+msgid "Select database:"
+msgstr "Выберыце базу даных:"
+
+msgid "Select table:"
+msgstr "Выберыце табліцу:"
+
+msgid "New table name"
+msgstr "Назва новай табліцы"
+
+msgid "Select column:"
+msgstr "Выберыце слупок:"
+
+msgid "New column name"
+msgstr "Навая назва слупка"
+
+msgid "Save & close"
+msgstr "Захаваць і закрыць"
+
+msgid "Use %s statement"
+msgstr "Выкарыстоўваць сцвярджэнне %s"
+
+msgid "View output as text"
+msgstr "Паказаць вывад як тэкст"
+
+msgid "Save output to a file"
+msgstr "Захаваць вывад у файл"
+
+msgid "File name template:"
+msgstr "Шаблон назвы файла:"
+
+msgid "Character set of the file:"
+msgstr "Кадыроўка файла:"
+
+msgid "Compression:"
+msgstr "Сцісканне:"
+
+msgid "zipped"
+msgstr "сціскаць zip"
+
+msgid "gzipped"
+msgstr "сціскаць gzip"
+
+msgid "Export databases as separate files"
+msgstr "Экпартаваць базы даных у выглядзе асобных файлаў"
+
+msgid "Export tables as separate files"
+msgstr "Экспартаваць табліцы ў асобныя файлы"
+
+msgid "Format-specific options:"
+msgstr "Параметры фарматавання:"
+
+msgid "Encoding Conversion:"
+msgstr "Змены кадавання:"
+
+msgid "Filters"
+msgstr "Фільтры"
+
+msgid "Containing the word:"
+msgstr "Змяшчае слова:"
+
+msgid "General settings"
+msgstr "Асноўныя налады"
+
+msgid "Change password"
+msgstr "Зьмяніць пароль"
+
+msgid "More settings"
+msgstr "Дадатковыя налады"
+
+msgid "Appearance settings"
+msgstr "Налады выгляду"
+
+msgid "Language"
+msgstr "Мова"
+
+msgid "Database server"
+msgstr "Сервер базы дадзеных"
+
+msgid "Server:"
+msgstr "Сэрвэр:"
+
+msgid "Server type:"
+msgstr "Тып сервера:"
+
+msgid "Server connection:"
+msgstr "Злучэнне сервера:"
+
+msgid "Server version:"
+msgstr "Версія сервера:"
+
+msgid "User:"
+msgstr "Карыстальнік:"
+
+msgid "Server charset:"
+msgstr "Кадаванне сэрвэра:"
+
+msgid "Web server"
+msgstr "Вэб-сэрвэр"
+
+msgid "Database client version:"
+msgstr "Вэрсія кліента базы даных:"
+
+msgid "PHP extension:"
+msgstr "PHP-пашырэньні:"
+
+msgid "PHP version:"
+msgstr "Вэрсія PHP:"
+
+msgid "Show PHP information"
+msgstr "Паказаць інфармацыю пра PHP"
+
+msgid "Version information:"
+msgstr "Інфармацыя пра вэрсію:"
+
+msgid "Official Homepage"
+msgstr "Афіцыйная старонка phpMyAdmin"
+
+msgid "Contribute"
+msgstr "Удзельнічаць"
+
+msgid "List of changes"
+msgstr "Спіс зьменаў"
+
+msgid "Take it"
+msgstr "Узяць гэта"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Import"
+msgstr "Імрарт"
+
+msgid "File to import:"
+msgstr "Файл для імпарту:"
+
+msgid "The directory you set for upload work cannot be reached."
+msgstr "Немагчыма адкрыць пазначаную вамі тэчку для загрузкі файлаў."
+
+msgid "File uploads are not allowed on this server."
+msgstr "Загрузкі файлаў не дазволеныя на гэтым сэрвэры."
+
+msgid "Partial import:"
+msgstr "Частковы імпарт:"
+
+msgid "Previous import timed out, after resubmitting will continue from position %d."
+msgstr "Папярэдняе імпартаваньне спынілася з-за недахопу часу. Пасьля новай загрузкі імпартаваньне будзе працягнутае з пазыцыі %d."
+
+msgid "Skip this number of queries (for SQL) starting from the first one:"
+msgstr "Прапусціць указаную колькасць запытаў (для SQL) ад пачатку:"
+
+msgid "The primary key has been dropped."
+msgstr "Першасны ключ быў выдалены."
+
+msgid "Index %s has been dropped."
+msgstr "Індэкс %s быў выдалены."
+
+msgid "Taking you to the target site."
+msgstr "Прымаючы вас на мэтавы сайт."
+
+msgid "Page number:"
+msgstr "Старонка:"
+
+msgid "Log in"
+msgstr "Уваход у сыстэму"
+
+msgid "Username:"
+msgstr "Імя карыстальніка:"
+
+msgid "Password:"
+msgstr "Пароль:"
+
+msgid "Welcome to %s"
+msgstr "Запрашаем у %s"
+
+msgid "Authentication code:"
+msgstr "Код аўтэнтыфікацыі:"
+
+msgid "Table:"
+msgstr "Табліца:"
+
+msgid "Show hidden navigation tree items."
+msgstr "Паказаць схаваныя элементы дрэва навігацыі."
+
+msgid "Home"
+msgstr "Да пачатку"
+
+msgid "Empty session data"
+msgstr "Сеансавыя даныя пустыя"
+
+msgid "Navigation panel settings"
+msgstr "Налады навігацыйнай панэлі"
+
+msgid "Reload navigation panel"
+msgstr "Перазагрузіць навігацыйную панэль"
+
+msgid "Drop files here"
+msgstr "Скінуць файлы сюды"
+
+msgid "Databases"
+msgstr "Базы дадзеных"
+
+msgid "Clear fast filter"
+msgstr "Ачысціць хуткі фільтр"
+
+msgid "Recent"
+msgstr "Нядаўнія"
+
+msgid "Favorite tables"
+msgstr "Улюблёныя табліцы"
+
+msgid "Favorites"
+msgstr "Улюблёныя"
+
+msgid "Delete settings"
+msgstr "Выдаліць налады"
+
+msgid "Manage your settings"
+msgstr "Кіраваць наладамі"
+
+msgid "Two-factor authentication"
+msgstr "Двух-фактарная аўтэнтыфікацыя"
+
+msgid "SQL queries"
+msgstr "SQL-запыты"
+
+msgid "Main panel"
+msgstr "Галоўная панэль"
+
+msgid "Configuration has been saved."
+msgstr "Канфігурацыя захаваная."
+
+msgid "Import from file"
+msgstr "Імпартаваць з файла"
+
+msgid "Save as PHP file"
+msgstr "Захаваць як PHP-файл"
+
+msgid "Configure two-factor authentication"
+msgstr "Наладзіць двух-фактарную аўтэнтыфікацыю"
+
+msgid "Enable two-factor authentication"
+msgstr "Уключыць двух-фактарную аўтэнтыфікацыю"
+
+msgid "Confirm disabling two-factor authentication"
+msgstr "Пацвердзіць адключэнне двух-фактарнай аўтэнтыфікацыі"
+
+msgid "Disable two-factor authentication"
+msgstr "Адключыць двух-фактарную аўтэнтыфікацыю"
+
+msgid "Two-factor authentication status"
+msgstr "Стан двух-фактарнай аўтэнтыфікацыі"
+
+msgid "There are no favorite tables."
+msgstr "Няма ўлюблёных табліц."
+
+msgid "There are no recent tables."
+msgstr "Няма нядаўніх табліц."
+
+msgid "Configuration of pmadb…"
+msgstr "Канфігурацыя pmadb…"
+
+msgid "not OK"
+msgstr "не OK"
+
+msgid "General relation features"
+msgstr "Магчымасьці асноўных сувязяў"
+
+msgctxt "Correctly working"
+msgid "OK"
+msgstr "Добра"
+
+msgid "Enabled"
+msgstr "Уключана"
+
+msgid "Please see the documentation on how to update your column_info table."
+msgstr "За інфармацыяй як абнавіць табліцу column_comments звярніцеся, калі ласка, да дакументацыі."
+
+msgid "Binary log"
+msgstr "Двайковы лог"
+
+msgid "Select binary log to view"
+msgstr "Вылучыце двайковы лог для прагляду"
+
+msgid "Files"
+msgstr "Файлы"
+
+msgid "Log name"
+msgstr "Імя логу"
+
+msgid "Position"
+msgstr "Пазыцыя"
+
+msgid "Server ID"
+msgstr "ID сэрвэра"
+
+msgid "Original position"
+msgstr "Першапачатковая пазыцыя"
+
+msgid "Information"
+msgstr "Інфармацыя"
+
+msgid "Character sets and collations"
+msgstr "Наборы сімвалаў і супастаўленьні"
+
+msgid "Databases statistics"
+msgstr "Статыстыка базаў дадзеных"
+
+msgid "Create database"
+msgstr "Стварыць базу даных"
+
+msgid "Jump to database '%s'"
+msgstr "Перайсці ў базу даных «%s»"
+
+msgid "Check privileges for database \"%s\"."
+msgstr "Праверыць прывілеі для базы \"%s\"."
+
+msgid "Check privileges"
+msgstr "Праверыць прывілеі"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Total:"
+msgstr "Агулам:"
+
+msgid "Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server."
+msgstr "Заўвага: Уключэньне статыстыкі базы дадзеных можа выклікаць вялікую колькасьць трафіку паміж вэб-сэрвэрам і сэрвэрам MySQL."
+
+msgid "Enable statistics"
+msgstr "Уключыць статыстыку"
+
+msgid "No databases"
+msgstr "Базы дадзеных адсутнічаюць"
+
+msgid "Storage engines"
+msgstr "Рухавікі захаваньня дадзеных"
+
+msgid "Storage Engine"
+msgstr "Машына захаваньня дадзеных"
+
+msgid "Description"
+msgstr "Апісаньне"
+
+msgid "Free pages"
+msgstr "Вольных старонак"
+
+msgid "Dirty pages"
+msgstr "Брудных старонак"
+
+msgid "Pages containing data"
+msgstr "Старонак з дадзенымі"
+
+msgid "Pages to be flushed"
+msgstr "Скінуць кэш старонак"
+
+msgid "Busy pages"
+msgstr "Занятых старонак"
+
+msgid "Latched pages"
+msgstr "Фіксаваныя старонкі"
+
+msgid "Read requests"
+msgstr "Запыты чытаньня"
+
+msgid "Write requests"
+msgstr "Запытаў запісу"
+
+msgid "Read misses"
+msgstr "Пропускаў чытаньня"
+
+msgid "Write waits"
+msgstr "Затрымак запісу"
+
+msgid "Read misses in %"
+msgstr "Пропускаў чытаньня ў %"
+
+msgid "Write waits in %"
+msgstr "Затрымак запісу ў %"
+
+msgid "Variables"
+msgstr "Зьменныя"
+
+msgid "Exporting databases from the current server"
+msgstr "Экспартаванне баз даных з дзейнага сервера"
+
+msgid "Importing into the current server"
+msgstr "Імпартаванне на дзейны сервер"
+
+msgid "Version"
+msgstr "Версія"
+
+msgid "disabled"
+msgstr "адключана"
+
+msgid "Database for user account"
+msgstr "База даных для конта карыстальніка"
+
+msgid "Create database with same name and grant all privileges."
+msgstr "Стварыць базу дадзеных з такім самым імем і надзяліць усімі прывілеямі."
+
+msgid "Grant all privileges on wildcard name (username\\_%)."
+msgstr "Надзяліць усімі прывілеямі базы з іменамі па масцы (імя карыстальніка_%)."
+
+msgid "Grant all privileges on database %s."
+msgstr "Надаць усе прывілеі для базы даных «%s»."
+
+msgid "No Password"
+msgstr "Без пароля"
+
+msgid "Re-type:"
+msgstr "Пацверджанне:"
+
+msgid "Password Hashing:"
+msgstr "Хэшаванне пароля:"
+
+msgid "Edit privileges:"
+msgstr "Рэдагаваць прывілеі:"
+
+msgid "User account"
+msgstr "Конт карыстальніка"
+
+msgid "Routine"
+msgstr "Працэдура"
+
+msgid "Routine-specific privileges"
+msgstr "Прывілеі працэдур"
+
+msgid "Note: MySQL privilege names are expressed in English."
+msgstr "Заўвага: назвы прывілеяў MySQL задаюцца па-ангельску."
+
+msgid "Allows altering and dropping this routine."
+msgstr "Дазваляе змяняць і выдаляць гэтую працэдуру."
+
+msgid "Allows executing this routine."
+msgstr "Дазваляе выкананне гэтай працэдуры."
+
+msgid "Login Information"
+msgstr "Інфармацыя пра ўваход"
+
+msgid "User name:"
+msgstr "Імя карыстальніка:"
+
+msgid "Any user"
+msgstr "Любы карыстальнік"
+
+msgid "Use text field"
+msgstr "Выкарыстоўваць тэкставае поле"
+
+msgid "Host name:"
+msgstr "Назва хаста:"
+
+msgid "Any host"
+msgstr "Любы хост"
+
+msgid "Local"
+msgstr "Лякальны"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Do not change the password"
+msgstr "Не зьмяняць пароль"
+
+msgid "Re-type"
+msgstr "Пацьверджаньне"
+
+msgid "Edit user group"
+msgstr "Рэдагаваць групу карыстальнікаў"
+
+msgid "Table-specific privileges"
+msgstr "Прывілеі, спэцыфічныя для табліцы"
+
+msgid "Column-specific privileges"
+msgstr "Спэцыфічныя прывілеі калёнак"
+
+msgid "Add privileges on the following database(s):"
+msgstr "Дадаць прывілеі на наступную базу(ы):"
+
+msgid "Wildcards % and _ should be escaped with a \\ to use them literally."
+msgstr "Сымбалі падстаноўкі _ і % мусяць быць экранаванымі сымбалем \\ для іх літаральнага выкарыстаньня."
+
+msgid "Add privileges on the following table:"
+msgstr "Дадаць прывілеі на наступную табліцу:"
+
+msgid "Add privileges on the following routine:"
+msgstr "Дадаць прывілеі на наступную працэдуру:"
+
+msgid "Allows reading data."
+msgstr "Дазваляе чытаць дадзеныя."
+
+msgid "Or"
+msgstr "Або"
+
+msgctxt "None privileges"
+msgid "None"
+msgstr "Няма"
+
+msgid "Allows inserting and replacing data."
+msgstr "Дазваляе ўстаўляць і замяняць дадзеныя."
+
+msgid "Allows changing data."
+msgstr "Дазваляе зьмяняць дадзеныя."
+
+msgid "Has no effect in this MySQL version."
+msgstr "Не працуе ў гэтай вэрсіі MySQL."
+
+msgid "Allows deleting data."
+msgstr "Дазваляе выдаляць дадзеныя."
+
+msgid "Allows creating new tables."
+msgstr "Дазваляе ствараць новыя табліцы."
+
+msgid "Allows dropping tables."
+msgstr "Дазваляе выдаляць табліцы."
+
+msgid "Allows creating and dropping indexes."
+msgstr "Дазваляе ствараць і выдаляць індэксы."
+
+msgid "Allows altering the structure of existing tables."
+msgstr "Дазваляе зьмяняць структуру існых табліц."
+
+msgid "Allows creating new views."
+msgstr "Дазваляе ствараць новыя прагляды."
+
+msgid "Allows performing SHOW CREATE VIEW queries."
+msgstr "Дазваляе выкананьне запытаў SHOW CREATE VIEW."
+
+msgid "Allows creating and dropping triggers."
+msgstr "Дазваляе стварэнне і выдаленне трыгераў."
+
+msgid "Global"
+msgstr "Глабальны"
+
+msgid "Global privileges"
+msgstr "Глябальныя прывілеі"
+
+msgid "Database-specific privileges"
+msgstr "Спэцыфічныя прывілеі базы дадзеных"
+
+msgid "Allows importing data from and exporting data into files."
+msgstr "Дазваляе імпартаваць дадзеныя з файлаў і экспартаваць дадзеныя ў файлы."
+
+msgid "Allows creating new databases and tables."
+msgstr "Дазваляе ствараць новыя базы дадзеных і табліцы."
+
+msgid "Allows dropping databases and tables."
+msgstr "Дазваляе выдаляць базы дадзеных і табліцы."
+
+msgid "Allows creating temporary tables."
+msgstr "Дазваляе ствараць часовыя табліцы."
+
+msgid "Allows creating stored routines."
+msgstr "Дазваляе ствараць праграмы, якія захоўваюцца."
+
+msgid "Allows altering and dropping stored routines."
+msgstr "Дазваляе зьмяняць і выдаляць праграмы, якія захоўваюцца."
+
+msgid "Allows executing stored routines."
+msgstr "Дазваляе выкананьне праграмаў, якія захоўваюцца."
+
+msgid "Allows to set up events for the event scheduler."
+msgstr "Дазваляе наладжваць падзеі ў планавальніку."
+
+msgid "Administration"
+msgstr "Адміністраваньне"
+
+msgid "Allows adding users and privileges without reloading the privilege tables."
+msgstr "Дазваляе дадаваць карыстальнікаў і прывілеі без перазагрузкі табліц прывілеяў."
+
+msgid "Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users."
+msgstr "Дазваляе падлучэньне, нават калі дасягнуты максымальны лік падлучэньняў; Патрабуецца для большасьці адміністратыўных апэрацыяў, такіх як вызначэньне глябальных зьменных або спыненьне патокаў іншых карыстальнікаў."
+
+msgid "Allows viewing processes of all users."
+msgstr "Дазваляе праглядаць працэсы ўсіх карыстальнікаў."
+
+msgid "Allows reloading server settings and flushing the server's caches."
+msgstr "Дазваляе перазагружаць налады сэрвэра і ачышчаць кэш сэрвэра."
+
+msgid "Allows shutting down the server."
+msgstr "Дазваляе спыняць сэрвэр."
+
+msgid "Gives access to the complete list of databases."
+msgstr "Дае доступ да поўнага сьпісу базаў дадзеных."
+
+msgid "Allows locking tables for the current thread."
+msgstr "Дазваляе блякаваць табліцы для бягучага патоку."
+
+msgid "Allows creating, dropping and renaming user accounts."
+msgstr "Дазваляе ствараць, выдаляць і пераймяноўваць уліковыя запісы карыстальнікаў."
+
+msgid "Resource limits"
+msgstr "Абмежаваньні рэсурсаў"
+
+msgid "Note: Setting these options to 0 (zero) removes the limit."
+msgstr "Заўвага: Пазначэньне гэтых опцыяў як 0 (нуль) здымае абмежаваньне."
+
+msgid "Limits the number of queries the user may send to the server per hour."
+msgstr "Абмяжоўвае колькасьць запытаў, якія карыстальнік можа адправіць на сэрвэр на працягу гадзіны."
+
+msgid "Limits the number of commands that change any table or database the user may execute per hour."
+msgstr "Абмяжоўвае колькасьць камандаў, зьмяняючых любую табліцу або базу дадзеных, якія карыстальнік можа выканаць на працягу гадзіны."
+
+msgid "Limits the number of new connections the user may open per hour."
+msgstr "Абмяжоўвае колькасьць новых злучэньняў, якія карыстальнік можа адкрыць на працягу гадзіны."
+
+msgid "Limits the number of simultaneous connections the user may have."
+msgstr "Абмяжоўвае колькасьць адначасовых злучэньняў, якія можа мець карыстальнік."
+
+msgid "Does not require SSL-encrypted connections."
+msgstr "Не патрабуе SSL-злучэнняў."
+
+msgid "Requires SSL-encrypted connections."
+msgstr "Патрабуе SSL-злучэнняў."
+
+msgid "User accounts overview"
+msgstr "Агляд контаў карыстальнікаў"
+
+msgid "User groups"
+msgstr "Групы карыстальнікаў"
+
+msgid "The selected user was not found in the privilege table."
+msgstr "Вылучаны карыстальнік ня знойдзены ў табліцы прывілеяў."
+
+msgid "Change login information / Copy user account"
+msgstr "Змяніць рэгістрацыйную інфармацыю / Капіяваць конт карыстальніка"
+
+msgid "Create a new user account with the same privileges and …"
+msgstr "Стварыць новы конт карыстальніка з такімі ж прывілеямі і …"
+
+msgid "… keep the old one."
+msgstr "… пакінуць старога."
+
+msgid "… delete the old one from the user tables."
+msgstr "… выдаліць старога з табліцы карыстальнікаў."
+
+msgid "… revoke all active privileges from the old one and delete it afterwards."
+msgstr "… ануляваць усе актыўныя прывілеі старога і пасьля выдаліць яго."
+
+msgid "… delete the old one from the user tables and reload the privileges afterwards."
+msgstr "… выдаліць старога з табліцы карыстальнікаў і пасьля перазагрузіць прывілеі."
+
+msgid "Remove selected user accounts"
+msgstr "Выдаліць абраныя конты карыстальнікаў"
+
+msgid "Revoke all active privileges from the users and delete them afterwards."
+msgstr "Ануляваць усе актыўныя прывілеі карыстальнікаў і пасьля выдаліць іх."
+
+msgid "Drop the databases that have the same names as the users."
+msgstr "Выдаліць базы дадзеных, якія маюць такія ж імёны як і карыстальнікі."
+
+msgid "Host:"
+msgstr "Хост:"
+
+msgid "Port:"
+msgstr "Порт:"
+
+msgid "Use text field:"
+msgstr "Выкарыстоўваць тэкставае поле:"
+
+msgid "Host"
+msgstr "Хост"
+
+msgid "Generate password:"
+msgstr "Згенераваць пароль:"
+
+msgid "Generate"
+msgstr "Згенэраваць"
+
+msgid "Please select databases:"
+msgstr "Калі ласка, выберыце базу даных:"
+
+msgid "Start SQL Thread only"
+msgstr "Запусціць толькі SQL-паток"
+
+msgid "Start IO Thread only"
+msgstr "Запусціць толькі IO-паток"
+
+msgid "Variable"
+msgstr "Зьменная"
+
+msgid "Current server:"
+msgstr "Дзейны сервер:"
+
+msgid "Servers"
+msgstr "Сэрвэры"
+
+msgid "Instructions"
+msgstr "Інструкцыі"
+
+msgid "Server"
+msgstr "Сэрвэр"
+
+msgid "Processes"
+msgstr "Працэсы"
+
+msgid "Query statistics"
+msgstr "Статыстыка запыту"
+
+msgid "Add chart"
+msgstr "Дадаць графік"
+
+msgid "Refresh rate"
+msgstr "Інтэрвал абнаўлення"
+
+msgid "Chart columns"
+msgstr "Слупкі графіка"
+
+msgid "Please select the file you want to import:"
+msgstr "Калі ласка, выберыце файл, які вы жадаеце імпартаваць:"
+
+msgid "Chart Title"
+msgstr "Загаловак графіка"
+
+msgid "Preset chart"
+msgstr "Загатоўка графіка"
+
+msgid "Select series:"
+msgstr "Выберыце паслядоўнасць:"
+
+msgid "or type variable name:"
+msgstr "ці ўвядзіце назву зменнай:"
+
+msgid "KiB"
+msgstr "КiБ"
+
+msgid "MiB"
+msgstr "МіБ"
+
+msgid "Add this series"
+msgstr "Дадаць гэту паслядоўнась"
+
+msgid "Series in chart:"
+msgstr "Паслядоўнасць у графіку:"
+
+msgid "Add chart to grid"
+msgstr "Дадаць графік да сеткі"
+
+msgid "Log statistics"
+msgstr "Статыстыка журнала"
+
+msgid "Selected time range:"
+msgstr "Выбраны прамежак часу:"
+
+msgid "Query analyzer"
+msgstr "Аналізатар запыту"
+
+msgid "Query"
+msgstr "Запыт згодна прыкладу"
+
+msgid "Analyse query"
+msgstr "Аналізаваць запыт"
+
+msgid "Analysing logs"
+msgstr "Аналіз журналаў"
+
+msgid "Cancel request"
+msgstr "Скасаваць запыт"
+
+msgid "No data found"
+msgstr "Няма даных"
+
+msgid "Loading logs"
+msgstr "Загрузка журналаў"
+
+msgid "Reload page"
+msgstr "Абнавіць старонку"
+
+msgid "Local monitor configuration incompatible!"
+msgstr "Несумясцімая канфігурацыя лакальнага манітора!"
+
+msgid "Show only active"
+msgstr "Паказаць толькі актыўныя"
+
+msgid "Note: Enabling the auto refresh here might cause heavy traffic between the web server and the MySQL server."
+msgstr "Заўвага: Уключэнне аўтаматычнага абнаўлення можа выклікаць вялікую колькасць трафіку паміж вэб-серверам і серверам MySQL."
+
+msgid "Kill"
+msgstr "Спыніць"
+
+msgid "Statements"
+msgstr "Выразы"
+
+msgid "This MySQL server has been running for %1$s. It started up on %2$s."
+msgstr "Гэты сервер MySQL працуе %1$s. Ён быў запушчаны %2$s."
+
+msgid "Traffic"
+msgstr "Трафік"
+
+msgid "On a busy server, the byte counters may overrun, so those statistics as reported by the MySQL server may be incorrect."
+msgstr "На загружаным сэрвэры байтавыя лічыльнікі могуць пераскокваць кола, таму статыстыка, якую паказвае MySQL-сэрвэр, можа быць няправільнай."
+
+msgid "Connections"
+msgstr "Падлучэньні"
+
+msgid "Replication status"
+msgstr "Стан рэплікацыі"
+
+msgid "Show only alert values"
+msgstr "Паказаць толькі трывожныя значэнні"
+
+msgid "Show unformatted values"
+msgstr "Паказаць нефарматаваныя значэнні"
+
+msgid "Related links:"
+msgstr "Звязаныя спасылкі:"
+
+msgid "Add user group"
+msgstr "Дадаць групу карыстальнікаў"
+
+msgid "User group menu assignments"
+msgstr "Прызначэнні меню груп карыстальнікаў"
+
+msgid "Group name:"
+msgstr "Назва групы:"
+
+msgid "Server level tabs"
+msgstr "Укладкі сервернага ўзроўня"
+
+msgid "Database level tabs"
+msgstr "Укладкі ўзроўня базы даных"
+
+msgid "Table level tabs"
+msgstr "Укладкі таблічнага ўзроўня"
+
+msgid "User"
+msgstr "Карыстальнік"
+
+msgid "Server variables and settings"
+msgstr "Налады і зьменныя сэрвэра"
+
+msgid "Session value"
+msgstr "Значэньне сэсіі"
+
+msgid "Not enough privilege to view server variables and settings. %s"
+msgstr "Недастаткова прывілей для прагляду серверных зменных і налад. %s"
+
+msgid "Show form"
+msgstr "Паказаць форму"
+
+msgid "Authentication type"
+msgstr "Тып аўтэнтыфікацыі"
+
+msgid "New server"
+msgstr "Новы сервер"
+
+msgid "phpMyAdmin homepage"
+msgstr "Хатняя старонка phpMyAdmin"
+
+msgid "Donate"
+msgstr "Ахвяраваць"
+
+msgid "Edit server"
+msgstr "Рэдагаваць сервер"
+
+msgid "Add a new server"
+msgstr "Дадаць новы сервер"
+
+msgid "Bookmark this SQL query"
+msgstr "Дадаць гэты SQL-запыт у закладкі"
+
+msgid "Let every user access this bookmark"
+msgstr "Даць кожнаму карыстальніку доступ да гэтай закладкі"
+
+msgid "Detailed profile"
+msgstr "Дэталёвы профіль"
+
+msgid "State"
+msgstr "Стан"
+
+msgid "Time"
+msgstr "Час"
+
+msgid "Total Time"
+msgstr "Агульны час"
+
+msgid "% Time"
+msgstr "% часу"
+
+msgid "ø Time"
+msgstr "ø час"
+
+msgid "Your SQL query has been executed successfully."
+msgstr "Ваш SQL-запыт быў паспяхова выкананы."
+
+msgid "SQL query"
+msgstr "SQL-запыт"
+
+msgid "Bind parameters"
+msgstr "Прывязаць параметры"
+
+msgid "Columns"
+msgstr "Слупкі"
+
+msgid "Bookmark this SQL query:"
+msgstr "Дадаць гэты SQL-запыт у закладкі:"
+
+msgid "Replace existing bookmark of same name"
+msgstr "Замяніць існую закладку з такім жа імем"
+
+msgid "Delimiter"
+msgstr "Разьдзяляльнік"
+
+msgid "Show this query here again"
+msgstr "Паказаць гэты запыт зноў"
+
+msgid "Retain query box"
+msgstr "Пакінуць поле запыта"
+
+msgid "Bookmarked SQL query"
+msgstr "Закладзены SQL-запыт"
+
+msgid "View only"
+msgstr "Толькі прагляд"
+
+msgid "Simulate query"
+msgstr "Сімуляваць запыт"
+
+msgid "Browse foreign values"
+msgstr "Праглядзець зьнешнія значэньні"
+
+msgid "Use this value"
+msgstr "Выкарыстоўваць гэта значэньне"
+
+msgctxt "Chart type"
+msgid "Bar"
+msgstr "Гістаграма"
+
+msgctxt "Chart type"
+msgid "Column"
+msgstr "Слупковая"
+
+msgctxt "Chart type"
+msgid "Line"
+msgstr "Графік"
+
+msgctxt "Chart type"
+msgid "Spline"
+msgstr "Сплайнавая"
+
+msgctxt "Chart type"
+msgid "Area"
+msgstr "Вобласці"
+
+msgctxt "Chart type"
+msgid "Pie"
+msgstr "Кругавая"
+
+msgctxt "Chart type"
+msgid "Timeline"
+msgstr "Часовая шкала"
+
+msgctxt "Chart type"
+msgid "Scatter"
+msgstr "Пунктавая"
+
+msgid "Stacked"
+msgstr "Сціснутая"
+
+msgid "Chart title:"
+msgstr "Загаловак дыяграмы:"
+
+msgid "X-Axis:"
+msgstr "Вось X:"
+
+msgid "Series:"
+msgstr "Серыі:"
+
+msgid "X-Axis label:"
+msgstr "Метка восі X:"
+
+msgid "X Values"
+msgstr "Значэнні X"
+
+msgid "Y-Axis label:"
+msgstr "Метка восі Y:"
+
+msgid "Y Values"
+msgstr "Значэнні Y"
+
+msgid "Series column:"
+msgstr "Слупок серыі:"
+
+msgid "Value Column:"
+msgstr "Слупок значэнняў:"
+
+msgid "Save chart as image"
+msgstr "Захаваць дыяграму як выяву"
+
+msgid "Exporting rows from \"%s\" table"
+msgstr "Экспартаванне радкоў з табліцы «%s»"
+
+msgid "Table search"
+msgstr "Пошук у табліцы"
+
+msgid "Zoom search"
+msgstr "Расшырыць пошук"
+
+msgid "Find and replace"
+msgstr "Знайсці і замяніць"
+
+msgid "Replace with:"
+msgstr "Замяняць на:"
+
+msgid "Column:"
+msgstr "Слупок:"
+
+msgid "Use regular expression"
+msgstr "Выкарыстаць рэгулярны выраз"
+
+msgid "Original string"
+msgstr "Першапачатковы радок"
+
+msgid "Replaced string"
+msgstr "Радок замены"
+
+msgid "Replace"
+msgstr "Замяніць"
+
+msgid "Label column"
+msgstr "Слупок меткі"
+
+msgid "Spatial column"
+msgstr "Прасторавы слупок"
+
+msgid "Importing into the table \"%s\""
+msgstr "Імпартаванне ў табліцу «%s»"
+
+msgid "Index name:"
+msgstr "Імя індэкса:"
+
+msgid "\"PRIMARY\" <b>must</b> be the name of and <b>only of</b> a primary key!"
+msgstr "\"PRIMARY\" <b>мусіць</b> быць імем першаснага ключа і <b>толькі</b> яго!"
+
+msgid "Index choice:"
+msgstr "Выбар індэксу:"
+
+msgid "Index type:"
+msgstr "Тып індэкса:"
+
+msgid "Parser:"
+msgstr "Аналізатар:"
+
+msgid "Comment:"
+msgstr "Каментар:"
+
+msgid "Ignore"
+msgstr "Ігнараваць"
+
+msgid "Add %s column(s) to index"
+msgstr "Дадаць %s слупок(і) да індэкса"
+
+msgid "Insert as new row"
+msgstr "Уставіць як новы радок"
+
+msgid "Show insert query"
+msgstr "Паказаць запыт устаўкі"
+
+msgid "and then"
+msgstr "і пасьля"
+
+msgid "Go back to previous page"
+msgstr "Перайсьці да папярэдняй старонкі"
+
+msgid "Insert another new row"
+msgstr "Дадаць яшчэ адзін радок"
+
+msgid "Go back to this page"
+msgstr "Вярнуцца да гэтай старонкі"
+
+msgid "Edit next row"
+msgstr "Рэдагаваць наступны радок"
+
+msgid "Use TAB key to move from value to value, or CTRL+arrows to move anywhere."
+msgstr "Выкарыстоўвайце клавішу TAB для перамяшчэння ад значэння да значэння або CTRL+стрэлкі для перамяшчэння ў любое іншае месца."
+
+msgid "Binary"
+msgstr "Двайковы"
+
+msgid "Binary - do not edit"
+msgstr "Двайковыя дадзеныя — не рэдагуюцца"
+
+msgid "Edit/Insert"
+msgstr "Рэдагаваць/Уставіць"
+
+msgid "Improve table structure (Normalization):"
+msgstr "Палепшыць структуру табліцы (нармалізацыя):"
+
+msgid "Alter table order by"
+msgstr "Зьмяніць парадак табліцы"
+
+msgid "Table options"
+msgstr "Опцыі табліцы"
+
+msgid "Rename table to"
+msgstr "Перайменаваць табліцу ў"
+
+msgid "Table comments"
+msgstr "Камэнтар да табліцы"
+
+msgid "Switch to copied table"
+msgstr "Перайсьці да скапіяванай табліцы"
+
+msgid "Defragment table"
+msgstr "Дэфрагмэнтаваць табліцу"
+
+msgid "Table %s has been flushed."
+msgstr "Кэш табліцы %s быў ачышчаны."
+
+msgid "Flush the table (FLUSH)"
+msgstr "Ачысціць кэш табліцы (FLUSH)"
+
+msgid "View %s has been dropped."
+msgstr "Прадстаўленне «%s» было выдаленае."
+
+msgid "Table %s has been dropped."
+msgstr "Табліца «%s» была выдаленая."
+
+msgid "Delete the table (DROP)"
+msgstr "Выдаліць табліцу (DROP)"
+
+msgid "Partition maintenance"
+msgstr "Падтрымка падзелаў"
+
+msgid "Remove partitioning"
+msgstr "Скасаваць падзел на часткі"
+
+msgid "Operations"
+msgstr "Апэрацыі"
+
+msgid "Rename view to"
+msgstr "Перайменаваць прадстаўленне ў"
+
+msgid "Delete the view (DROP)"
+msgstr "Выдаліць прадстаўленне (DROP)"
+
+msgid "Table structure"
+msgstr "Структура табліцы"
+
+msgid "Relation view"
+msgstr "Прагляд сувязяў"
+
+msgid "table-specific"
+msgstr "спецыфічны для табліцы"
+
+msgid "Foreign key constraints"
+msgstr "Абмежаванні знешняга ключа"
+
+msgid "Actions"
+msgstr "Дзеяньні"
+
+msgid "Constraint properties"
+msgstr "Уласцівасці абмежавання"
+
+msgid "+ Add constraint"
+msgstr "+ Дадаць абмежаванне"
+
+msgid "Internal relationships"
+msgstr "Унутраныя сувязі"
+
+msgid "Internal relation"
+msgstr "Унутраная сувязь"
+
+msgid "An internal relation is not necessary when a corresponding FOREIGN KEY relation exists."
+msgstr "Унутраная сувязь не зьяўляецца абавязковай, калі існуе адпаведная сувязь FOREIGN KEY."
+
+msgid "Choose column to display:"
+msgstr "Выберыце слупок для адлюстравання:"
+
+msgid "Foreign key constraint %s has been dropped"
+msgstr "Абмежаванне знешняга ключа %s выдаленае"
+
+msgid "Constraint name"
+msgstr "Назва абмежавання"
+
+msgid "Do a \"query by example\" (wildcard: \"%\")"
+msgstr "Выканаць \"запыт згодна прыклада\" (сымбаль падстаноўкі: \"%\")"
+
+msgid "Select columns (at least one):"
+msgstr "Выбраць слупкі (прынамсі адзін):"
+
+msgid "Add search conditions (body of the \"where\" clause):"
+msgstr "Дадаць умовы пошуку (цела для ўмовы \"where\"):"
+
+msgid "Number of rows per page"
+msgstr "Колькасьць радкоў на старонку"
+
+msgid "Display order:"
+msgstr "Парадак прагляду:"
+
+msgid "Range search"
+msgstr "Пошук у дыяпазоне"
+
+msgid "Maximum value:"
+msgstr "Максімальнае значэнне:"
+
+msgid "Start row:"
+msgstr "Пачатковы радок:"
+
+msgid "Partitions"
+msgstr "Падзелы"
+
+msgid "No partitioning defined!"
+msgstr "Раздзяленне не вызначанае!"
+
+msgid "Partitioned by:"
+msgstr "Раздзяленне па:"
+
+msgid "Sub partitioned by:"
+msgstr "Падраздзяленне па:"
+
+msgid "Data length"
+msgstr "Даўжыня даных"
+
+msgid "Index length"
+msgstr "Даўжыня індэкса"
+
+msgid "Analyze"
+msgstr "Прааналізаваць"
+
+msgid "Check"
+msgstr "Праверыць"
+
+msgid "Optimize"
+msgstr "Аптымізаваць"
+
+msgid "Rebuild"
+msgstr "Перабудаваць"
+
+msgid "Repair"
+msgstr "Адрамантаваць"
+
+msgid "Partition table"
+msgstr "Падзяліць табліцу"
+
+msgid "Edit partitioning"
+msgstr "Рэдагаваць падзяленне"
+
+msgid "Extra"
+msgstr "Дадаткова"
+
+msgctxt "None for default"
+msgid "None"
+msgstr "Няма"
+
+msgid "Change"
+msgstr "Зьмяніць"
+
+msgid "Column %s has been dropped."
+msgstr "Слупок %s быў знішчаны."
+
+msgid "More"
+msgstr "Больш"
+
+msgid "Distinct values"
+msgstr "Розныя значэнні"
+
+msgid "Remove from central columns"
+msgstr "Выдаліць з цэнтральных слупкоў"
+
+msgid "Add to central columns"
+msgstr "Дадаць да цэнтральных слупкоў"
+
+msgid "Move columns"
+msgstr "Перамясціць слупкі"
+
+msgid "Edit view"
+msgstr "Рэдагаваць прадстаўленне"
+
+msgid "Propose table structure"
+msgstr "Прапанаваная структура табліцы"
+
+msgid "Track view"
+msgstr "Адсочваць прадстаўленне"
+
+msgid "Add %s column(s)"
+msgstr "Дадаць %s слупок(і)"
+
+msgid "at beginning of table"
+msgstr "у пачатку табліцы"
+
+msgid "Space usage"
+msgstr "Выкарыстаньне прасторы"
+
+msgid "Effective"
+msgstr "Эфэктыўнасьць"
+
+msgid "Total"
+msgstr "Агулам"
+
+msgid "Row statistics"
+msgstr "Статыстыка радка"
+
+msgid "dynamic"
+msgstr "дынамічны"
+
+msgid "partitioned"
+msgstr "падзеленая на сэкцыі"
+
+msgid "Row length"
+msgstr "Даўжыня радка"
+
+msgid "Row size"
+msgstr "Памер радка"
+
+msgid "Delete version"
+msgstr "Выдаліць версію"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Username"
+msgstr "Імя карыстальніка"
+
+msgid "Do a \"query by example\" (wildcard: \"%\") for two different columns"
+msgstr "Выканаць \"запыт згодна прыклада\" (сімвал падстаноўкі: \"%\") для двух розных слупкоў"
+
+msgid "Additional search criteria"
+msgstr "Дадатковыя крытэрыі пошуку"
+
+msgid "How to use"
+msgstr "Як выкарыстоўваць"
+
+msgid "Reset zoom"
+msgstr "Скінуць маштабаванне"
+
+msgid "Available browser display transformations"
+msgstr "Даступныя пераўтварэнні адльстравання браўзера"
+
+msgid "Available input transformations"
+msgstr "Даступныя пераўтварэнні ўводу"
+
+msgid "Trigger name"
+msgstr "Назва трыгера"
+
+msgctxt "Trigger action time"
+msgid "Time"
+msgstr "Час"
+
+msgid "Event"
+msgstr "Падзея"
+
+msgid "Export of trigger %s"
+msgstr "Экспартаваць трыгер %s"
+
+msgid "Triggers"
+msgstr "Трыгеры"
+
+msgid "There are no triggers to display."
+msgstr "Няма трыгераў для адлюстравання."
+
+msgid "VIEW name"
+msgstr "Назва прагляду"
+
+msgid "Column names"
+msgstr "Назвы калёнак"
+
+msgid "Error when evaluating: %s"
+msgstr "Памылка пры вызначэнні: %s"
+
+msgid "Failed evaluating precondition for rule '%s'."
+msgstr "Не атрымалася вызначыць прадумову для правіла «%s»."
+
+msgid "Failed calculating value for rule '%s'."
+msgstr "Не атрымалася вылічыць значэнне для правіла «%s»."
+
+msgid "Failed running test for rule '%s'."
+msgstr "Не атрымалася выканаць тэст для правіла «%s»."
+
+msgid "Failed formatting string for rule '%s'."
+msgstr "Не атрымаляся фарматаваць радок для правіла «%s»."
+
+msgid "per second"
+msgstr "у секунду"
+
+msgid "per minute"
+msgstr "у хвіліну"
+
+msgid "per hour"
+msgstr "у гадзіну"
+
+msgid "per day"
+msgstr "у дзень"
+
+msgid "Questions below 1,000"
+msgstr "Запытаў менш 1000"
+
+msgid "Current amount of Questions: %s"
+msgstr "Колькасць запытаў у дадзены момант: %s"
+
+msgid "Percentage of slow queries"
+msgstr "Адсотак павольных запытаў"
+
+msgid "Slow query rate"
+msgstr "Тэмп павольных запытаў"
+
+msgid "Long query time"
+msgstr "Час доўгіх запытаў"
+
+msgid "Slow query logging"
+msgstr "Журналяванне павольных запытаў"
+
+msgid "The slow query log is disabled."
+msgstr "Журнал павольных запытаў адключаны."
+
+msgid "Release Series"
+msgstr "Серыя выпуску"
+
+msgid "Current version: %s"
+msgstr "Цяперашняя версія: %s"
+
+msgid "Minor Version"
+msgstr "Прамежкавая версія"
+
+msgid "You should upgrade, to a stable version of MySQL 5.5."
+msgstr "Вам трэба абнавіць MySQL да стабільнай версіі 5.5."
+
+msgid "Distribution"
+msgstr "Дыстрыбутыў"
+
+msgid "MySQL Architecture"
+msgstr "Архітэктура MySQL"
+
+msgid "Query caching method"
+msgstr "Метад кэшавання запытаў"
+
+msgid "Suboptimal caching method."
+msgstr "Субаптымальны метад кэшавання."
+
+msgid "Percentage of sorts that cause temporary tables"
+msgstr "Адсотак сартаванняў, які прывядзе да стварэння часовых табліц"
+
+msgid "Too many sorts are causing temporary tables."
+msgstr "Занадта шмат сартаванняў прывядуць да стварэння часовых табліц."
+
+msgid "Rate of sorts that cause temporary tables"
+msgstr "Тэмп сартавання, які прывядзе да стварэння часовых табліц"
+
+msgid "Temporary tables average: %s, this value should be less than 1 per hour."
+msgstr "Сярэдняе часовых табліц: %s, гэтае значэнне павінна быць менш 1 у гадзіну."
+
+msgid "Sort rows"
+msgstr "Сартаваць радкі"
+
+msgid "Rate of joins without indexes"
+msgstr "Тэмп злучэнняў без індэксаў"
+
+msgid "There are too many joins without indexes."
+msgstr "Занадта шмат злучэнняў без індэксаў."
+
+msgid "Table joins average: %s, this value should be less than 1 per hour"
+msgstr "Сярэдняе злучэнняў табліц: %s, гэта значэнне павінна быць менш 1 у гадзіну"
+
+msgid "Rate of reading first index entry"
+msgstr "Тэмп чытання першага элемента індэкса"
+
+msgid "The rate of reading the first index entry is high."
+msgstr "Тэмп чытання першага элемента індэкса завялікі."
+
+msgid "Index scans average: %s, this value should be less than 1 per hour"
+msgstr "Сярэдняе сканавання індэкса: %s, гэта значэнне павінна баць менш 1 у гадзіну"
+
+msgid "Rate of reading fixed position"
+msgstr "Тэмп чытання фіксаванай пазіцыі"
+
+msgid "The rate of reading data from a fixed position is high."
+msgstr "Тэмп чытання даных з фіксаванай пазіцыі завялікі."
+
+msgid "Rate of reading next table row"
+msgstr "Тэмп чытання наступнага радка табліцы"
+
+msgid "The rate of reading the next table row is high."
+msgstr "Тэмп чытання наступнага радка табліцы завялікі."
+
+msgid "Rate of reading next table row: %s, this value should be less than 1 per hour"
+msgstr "Тэмп чытання наступнага радка табліцы: %s, гэта значэнне павінна быць менш 1 у гадзіну"
+
+msgid "Percentage of temp tables on disk"
+msgstr "Адсотак часовых табліц на дыску"
+
+msgid "Temp disk rate"
+msgstr "Тэмр часовага дыску"
+
+msgid "MyISAM key buffer size"
+msgstr "Памер буфера ключоў MyISAM"
+
+msgid "key_buffer_size is 0"
+msgstr "key_buffer_size роўны 0"
+
+msgid "max %% MyISAM key buffer ever used: %s%%, this value should be above 95%%"
+msgstr "Максімальны выкарыстаны %% буфера ключоў MyISAM: %s %%, гэта значэнне павінна быць больш 95 %%"
+
+msgid "Percentage of MyISAM key buffer used"
+msgstr "Адсотак выкарыстанага буфера ключоў MyISAM"
+
+msgid "%% MyISAM key buffer used: %s%%, this value should be above 95%%"
+msgstr "%% выкарыстанага буфера ключоў MyISAM: %s %%, гэта значэнне павінна быць вышэй 95 %%"
+
+msgid "Percentage of index reads from memory"
+msgstr "Адсотак чытання індэксаў з памяці"
+
+msgid "Index reads from memory: %s%%, this value should be above 95%%"
+msgstr "Чытанне індэксу з памяці: %s %%, мае быць вышэй 95 %%"
+
+msgid "Rate of table open"
+msgstr "Тэмп адкрыцця табліц"
+
+msgid "The rate of opening tables is high."
+msgstr "Тэмп адкрыцця табліц занадта вялікі."
+
+msgid "Opened table rate: %s, this value should be less than 10 per hour"
+msgstr "Тэпм адкрытых табліц: %s, гэта значэнне мае быць менш 10 у гадзіну"
+
+msgid "Percentage of used open files limit"
+msgstr "Адсотак выкарыстаных файлавых дэскрыптараў"
+
+msgid "Rate of open files"
+msgstr "Тэмп адкрыцця файлаў"
+
+msgid "The rate of opening files is high."
+msgstr "Тэпм адкрыцця файлаў занадта вялікі."
+
+msgid "Opened files rate: %s, this value should be less than 5 per hour"
+msgstr "Тэмп адкрыцця файлаў: %s, гэта значэнне мае быць ніжэй 5 у гадзіну"
+
+msgid "Too many table locks were not granted immediately."
+msgstr "Занадта шмат блакаванняў табліц не былі выкананыя неадкладна."
+
+msgid "Immediate table locks: %s%%, this value should be above 95%%"
+msgstr "Неадкладныя блакаванні табліц: %s %%, гэта значэнне мае быць вышэй 95 %%"
+
+msgid "Table lock wait rate: %s, this value should be less than 1 per hour"
+msgstr "Тэмп чакання блакавання табліц: %s, гэта значэнне мае быць менш 1 у гадзіну"
+
+msgid "Thread cache"
+msgstr "Кэш патоку"
+
+msgid "The thread cache is set to 0"
+msgstr "Кэш патоку ўстаноўлены ў 0"
+
+msgid "Thread cache is not efficient."
+msgstr "Кэш патоку не эфектыўны."
+
+msgid "Thread cache hitrate: %s%%, this value should be above 80%%"
+msgstr "Тэмп пападанняў у кэш патоку: %s %%, гэта значэнне мае быць вышэй 80 %%"
+
+msgid "Threads that are slow to launch"
+msgstr "Патокі з павольным запускам"
+
+msgid "There are too many threads that are slow to launch."
+msgstr "Занадта шмат патокаў з павольным запускам."
+
+msgid "Set {slow_launch_time} to 1s or 2s to correctly count threads that are slow to launch."
+msgstr "Устанавіць значэнне {slow_launch_time} у 1 або 2 сек, каб правільны лічыць патокі з павольным запускам."
+
+msgid "Percentage of used connections"
+msgstr "Адсотак выкарыстаных злучэнняў"
+
+msgid "Percentage of aborted connections"
+msgstr "Адсотак перарваных злучэнняў"
+
+msgid "Too many connections are aborted."
+msgstr "Занадта шмат перарваных злучэнняў."
+
+msgid "Rate of aborted connections"
+msgstr "Тэмп перарваных злучэнняў"
+
+msgid "Percentage of aborted clients"
+msgstr "Адсотак перарваных кліентаў"
+
+msgid "Too many clients are aborted."
+msgstr "Занадта шмат перарваных кліентаў."
+
+msgid "Rate of aborted clients"
+msgstr "Тэмп перарвання кліентаў"
+
+msgid "Aborted client rate is at %s, this value should be less than 1 per hour"
+msgstr "Тэмп перарвання кліентаў %s, гэта мае быць менш 1 у гадзіну"
+
+msgid "You do not have InnoDB enabled."
+msgstr "Вы не ўключылі InnoDB."
+
+msgid "InnoDB log size"
+msgstr "Памер журнала InnoDB"
+
+msgid "The InnoDB log file size is not an appropriate size, in relation to the InnoDB buffer pool."
+msgstr "Файл журнала InnoDB не адпаведнага памеру ў адносінах да буфернага пула InnoDB."
+
+msgid "Your InnoDB log size is at %s%% in relation to the InnoDB buffer pool size, it should not be below 20%%"
+msgstr "Ваш памер журнала InnoDB %s %% ад памеру буфернага пула InnoDB, а мае быць не ніжэй 20 %%"
+
+msgid "Max InnoDB log size"
+msgstr "Максімальны памер журнала InnoDB"
+
+msgid "InnoDB buffer pool size"
+msgstr "Памер пулу буфэру InnoDB"
+
+msgid "Your InnoDB buffer pool is fairly small."
+msgstr "Недастатковы памер буферу InnoDB."
+
+msgid "MyISAM concurrent inserts"
+msgstr "Адначасовыя ўстаўкі MyISAM"
+
+msgid "Enable {concurrent_insert} by setting it to 1"
+msgstr "Уключыць {concurrent_insert} устаноўкай 1"
+
+msgid "concurrent_insert is set to 0"
+msgstr "concurrent_insert устаноўленая ў 0"
+
+msgid "Query cache disabled"
+msgstr "Кэш запытаў адключаны"
+
+msgid "The query cache is not enabled."
+msgstr "Кэш запытаў не ўключаны."
+
+msgid "The current query cache hit rate of %s%% is below 20%%"
+msgstr "Цяперашні тэмп пападання ў кэш запытаў на %s %% менш 20 %%"
+
+msgid "Query Cache usage"
+msgstr "Выкарыстанне кэшу запытаў"
+
+msgid "Query cache fragmentation"
+msgstr "Фрагментацыя кэшу запытаў"
+
+msgid "The query cache is considerably fragmented."
+msgstr "Кэш запытаў значна фрагментаваны."
+
+msgid "Query cache low memory prunes"
+msgstr "Ачыстка пры недахопе памяці кэшу запытаў"
+
+msgid "Cached queries are removed due to low query cache memory from the query cache."
+msgstr "Кэшаваныя запыты выдалены праз недахоп памяці кэшу запытаў."
+
+msgid "Query cache max size"
+msgstr "Максімальны памер кэшу запытаў"
+
+msgid "Current query cache size: %s"
+msgstr "Цяперашні памер кэшу запытаў: %s"
+
+msgid "Query cache min result size"
+msgstr "Мінімальны памер рэзультату кэшу запытаў"
+
+msgid "Search:"
+msgstr "Пошук:"
+
+msgid "Unknown"
+msgstr "Невядома"
+
+msgctxt "Collation"
+msgid "German (phone book order)"
+msgstr "Нямецкая (парадак тэлефоннай кнігі)"
+
+msgctxt "Collation"
+msgid "German (dictionary order)"
+msgstr "Нямецкая (парадак слоўніка)"
+
+msgctxt "Collation"
+msgid "Spanish (traditional)"
+msgstr "Іспанская (традыцыйная)"
+
+msgctxt "Collation"
+msgid "Spanish (modern)"
+msgstr "Іспанская (мадэрн)"
+
+msgctxt "Collation variant"
+msgid "case-insensitive"
+msgstr "без уліку рэгістру"
+
+msgctxt "Collation variant"
+msgid "case-sensitive"
+msgstr "з улікам рэгістру"
+
+msgctxt "Collation variant"
+msgid "accent-insensitive"
+msgstr "без уліку акцэнту"
+
+msgctxt "Collation variant"
+msgid "accent-sensitive"
+msgstr "з улікам акцэнту"
+
+msgctxt "Collation variant"
+msgid "multi-level"
+msgstr "шматузроўневае"
+
+msgctxt "Collation variant"
+msgid "binary"
+msgstr "двайковы"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "Двайковы"
+
+msgctxt "Collation"
+msgid "Unicode"
+msgstr "Юнікод"
+
+msgctxt "Collation"
+msgid "West European"
+msgstr "Заходне-еўрапейская"
+
+msgctxt "Collation"
+msgid "Central European"
+msgstr "Цэнтральна-еўрапейская"
+
+msgctxt "Collation"
+msgid "Russian"
+msgstr "Расейская"
+
+msgctxt "Collation"
+msgid "Simplified Chinese"
+msgstr "Кітайская спрошчаная"
+
+msgctxt "Collation"
+msgid "Traditional Chinese"
+msgstr "Традыцыйная кітайская"
+
+msgctxt "Collation"
+msgid "Chinese"
+msgstr "Кітайская"
+
+msgctxt "Collation"
+msgid "Japanese"
+msgstr "Японская"
+
+msgctxt "Collation"
+msgid "Baltic"
+msgstr "Балтыйская"
+
+msgctxt "Collation"
+msgid "Armenian"
+msgstr "Армянская"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "Кірылічная"
+
+msgctxt "Collation"
+msgid "Arabic"
+msgstr "Арабская"
+
+msgctxt "Collation"
+msgid "Korean"
+msgstr "Карэйская"
+
+msgctxt "Collation"
+msgid "Hebrew"
+msgstr "Габрэйская"
+
+msgctxt "Collation"
+msgid "Georgian"
+msgstr "Грузінская"
+
+msgctxt "Collation"
+msgid "Greek"
+msgstr "Грэцкая"
+
+msgctxt "Collation"
+msgid "Czech-Slovak"
+msgstr "Чэхаславацкая"
+
+msgctxt "Collation"
+msgid "Ukrainian"
+msgstr "Украінская"
+
+msgctxt "Collation"
+msgid "Turkish"
+msgstr "Турэцкая"
+
+msgctxt "Collation"
+msgid "Swedish"
+msgstr "Шведская"
+
+msgctxt "Collation"
+msgid "Thai"
+msgstr "Тайландская"
+
+msgctxt "Collation"
+msgid "Unknown"
+msgstr "Невядома"
+
+msgctxt "Collation"
+msgid "Bulgarian"
+msgstr "Балгарская"
+
+msgctxt "Collation"
+msgid "Croatian"
+msgstr "Харвацкая"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "Чэская"
+
+msgctxt "Collation"
+msgid "Danish"
+msgstr "Дацкая"
+
+msgctxt "Collation"
+msgid "English"
+msgstr "Ангельская"
+
+msgctxt "Collation"
+msgid "Esperanto"
+msgstr "Эсперанта"
+
+msgctxt "Collation"
+msgid "Estonian"
+msgstr "Эстонская"
+
+msgctxt "Collation"
+msgid "Hungarian"
+msgstr "Вугорская"
+
+msgctxt "Collation"
+msgid "Icelandic"
+msgstr "Ісландская"
+
+msgctxt "Collation"
+msgid "Classical Latin"
+msgstr "Лацінская класічная"
+
+msgctxt "Collation"
+msgid "Latvian"
+msgstr "Латвійская"
+
+msgctxt "Collation"
+msgid "Lithuanian"
+msgstr "Літоўская"
+
+msgctxt "Collation"
+msgid "Burmese"
+msgstr "Бірманская"
+
+msgctxt "Collation"
+msgid "Persian"
+msgstr "Персідская"
+
+msgctxt "Collation"
+msgid "Polish"
+msgstr "Польская"
+
+msgctxt "Collation"
+msgid "Romanian"
+msgstr "Румынская"
+
+msgctxt "Collation"
+msgid "Sinhalese"
+msgstr "Сінгальская"
+
+msgctxt "Collation"
+msgid "Slovak"
+msgstr "Славацкая"
+
+msgctxt "Collation"
+msgid "Slovenian"
+msgstr "Славенская"
+
+msgctxt "Collation"
+msgid "Vietnamese"
+msgstr "В'етнамская"
+
+msgid "Icons"
+msgstr "Значкі"
+
+msgid "display column"
+msgstr "адлюстраваць слупок"
+
+msgid "Welcome"
+msgstr "Вітаем"
+
+msgid "Closed"
+msgstr "Закрыты"
+
+msgid "Server default"
+msgstr "Агаданы сервер"
+
+msgid "Enable"
+msgstr "Уключыць"
+
+msgid "Disable"
+msgstr "Адключыць"
+
+msgid "structure"
+msgstr "структура"
+
+msgid "structure and data"
+msgstr "структура і даныя"
+
+msgid "complete inserts"
+msgstr "поўная ўстаўка"
+
+msgid "extended inserts"
+msgstr "пашыраныя ўстаўкі"
+
+msgid "Autocomplete of the table and column names in the SQL queries."
+msgstr "Аўтазапаўненне назваў табліц і слупкоў  у SQL-запытах."
+
+msgid "Customize browse mode."
+msgstr "Наладзіць рэжым прагляду."
+
+msgid "Customize default options."
+msgstr "Наладзіць агаданыя опцыі."
+
+msgid "Customize edit mode."
+msgstr "Наладзіць рэжым рэдагавання."
+
+msgid "Customize default export options."
+msgstr "Наладзіць опцыі агаданага экспарту."
+
+msgid "Customize default common import options."
+msgstr "Наладзіць опцыі агаданага імпарта."
+
+msgid "Databases display options."
+msgstr "Параметры адлюстравання баз даных."
+
+msgid "Customize appearance of the navigation panel."
+msgstr "Наладзіць выгляд навігацыйнай панэлі."
+
+msgid "Customize the navigation tree."
+msgstr "Наладзіць навігацыйнае дрэва."
+
+msgid "Servers display options."
+msgstr "Параметры адлюстравання сервераў."
+
+msgid "Tables display options."
+msgstr "Параметры адлюстравання табліц."
+
+msgid "Authentication settings."
+msgstr "Налады аўтэнтыфікацыі."
+
+msgid "Enter server connection parameters."
+msgstr "Увядзіце параметры падлучэння да сервера."
+
+msgid "SQL queries settings."
+msgstr "Налады SQL-запытаў."
+
+msgid "Customize startup page."
+msgstr "Наладзіць пачатковую старонку."
+
+msgid "Customize text input fields."
+msgstr "Наладзіць тэкставая палі ўводу."
+
+msgid "Customize default options"
+msgstr "Наладзіць агаданыя опцыі"
+
+msgid "Allow interrupt of import in case script detects it is close to time limit. This might be a good way to import large files, however it can break transactions."
+msgstr "Дазволіць спыненне імпартавання ў выпадку, калі скрыпт высветліць, што скончваецца час выканання. Гэта можа быць добрым спосабам імпартавання вялікіх файлаў, аднак, гэта можа перапыніць транзакцыі."
+
+msgid "Number of queries to skip from start."
+msgstr "Колькасць запытаў, якія трэба прапусціць ад пачатку."
+
+msgid "The number of items that can be displayed on each page on the first level of the navigation tree."
+msgstr "Колькасць элементаў, якія могуць буць адлюстраваны на кожнай старонцы першага ўзроўня навігацыйнага дрэва."
+
+msgid "The number of items that can be displayed on each page of the navigation tree."
+msgstr "Колькасць элементаў, якія могуць буць адлюстраваны на кожнай старонцы навігацыйнага дрэва."
+
+msgid "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
+msgstr "Вызначае мінімальную колькасць элементай (табліц, прадстаўленняў, працэдур і падзей) для адлюстравання вакна фільтра."
+
+msgid "Set to 0 to collapse navigation panel."
+msgstr "Устаноўка ў 0 згарне навігацыйную панэль."
+
+msgid "Show logo in navigation panel."
+msgstr "Пакаць лагатып у навігацыйнай панэлі."
+
+msgid "Whether to show tables under database in the navigation tree"
+msgstr "Ці паказваць табліцы пад базай даных у навігацыйным дрэве"
+
+msgid "Whether to show views under database in the navigation tree"
+msgstr "Ці паказваць прадстаўленні пад базай даных у навігацыйным дрэве"
+
+msgid "Whether to show events under database in the navigation tree"
+msgstr "Ці паказваць падзеі пад базай даных у навігацыйным дрэве"
+
+msgid "Authentication method to use."
+msgstr "Метад аўтэнтыфікацыі, што выкарыстоўваецца."
+
+msgid "Compress connection to MySQL server."
+msgstr "Сціскаць злучэнне з MySQL-серверам."
+
+msgid "Enable SSL for connection to MySQL server."
+msgstr "Уключыць SSL для злучэння з MySQL-серверам."
+
+msgid "Whether the table structure actions should be hidden."
+msgstr "Ці павінны быць схаваныя дзеянні над структурай табліцы."
+
+msgid "Maximum number of databases displayed in database list."
+msgstr "Максімальныя колькасць баз даных, адлюстраваных у спісе."
+
+msgid "Maximum number of tables displayed in table list."
+msgstr "Максімальная колькасць табліц, якія адлюстроўваюцца ў спісе."
+
+msgid "Maximum number of favorite tables; set 0 to disable."
+msgstr "Максімальная колькасць улюблёных табліц; 0 для адключэння."
+
+msgid "Disable shortcut keys"
+msgstr "Адключыць скароты"
+
+msgid "For display Options"
+msgstr "Для опцый адлюстравання"
+
+msgid "Allow login to any MySQL server"
+msgstr "Дазволіць уваход на любы сервер MySQL"
+
+msgid "Restrict login to MySQL server"
+msgstr "Абмежаваць уваход на сервер MySQL"
+
+msgid "Enable linter"
+msgstr "Уключыць linter"
+
+msgid "Minimum size for input field"
+msgstr "Мінімальны памер поля ўводу"
+
+msgid "Maximum size for input field"
+msgstr "Максімальны памер поля ўводу"
+
+msgid "Paper size"
+msgstr "Памер паперы"
+
+msgid "Default database tab"
+msgstr "Агаданая ўкладка базы даных"
+
+msgid "Default server tab"
+msgstr "Агаданая ўкладка сервера"
+
+msgid "Default table tab"
+msgstr "Агаданая ўкладка табліцы"
+
+msgid "Enable autocomplete for table and column names"
+msgstr "Уключыць аўтазапаўненне назваў табліц і слупкоў"
+
+msgid "Show column comments"
+msgstr "Паказаць каментары слупкоў"
+
+msgid "Hide table structure actions"
+msgstr "Схаваць дзеянні над структурай табліцы"
+
+msgid "Default transformations for Hex"
+msgstr "Агаданае пераўтварэнне для Hex"
+
+msgid "Default transformations for Substring"
+msgstr "Агадагае пераўтварэнне для падрадка"
+
+msgid "Default transformations for Bool2Text"
+msgstr "Агаданае пераўтварэнне для Bool2Text"
+
+msgid "Default transformations for External"
+msgstr "Агаданае пераўтварэнне для External"
+
+msgid "Default transformations for PreApPend"
+msgstr "Агаданае пераўтварэнне для PreApPend"
+
+msgid "Default transformations for DateFormat"
+msgstr "Агаданае пераўтварэнне для DateFormat"
+
+msgid "Default transformations for Inline"
+msgstr "Агаданае пераўтварэнне для Inline"
+
+msgid "Default transformations for TextImageLink"
+msgstr "Агаданае пераўтварэнне для TextImageLink"
+
+msgid "Default transformations for TextLink"
+msgstr "Агаданае пераўтварэнне для TextLink"
+
+msgid "Disable multi table maintenance"
+msgstr "Адключыць абслугоўванне мноства табліц"
+
+msgid "Save as file"
+msgstr "Захаваць як файл"
+
+msgid "Character set of the file"
+msgstr "Знаказбор файла"
+
+msgid "Compression"
+msgstr "Сьціск"
+
+msgid "Put columns names in the first row"
+msgstr "Змясціць назвы слупкоў у першым радку"
+
+msgid "Columns enclosed with"
+msgstr "Слупкі ўзятыя ў"
+
+msgid "Columns escaped with"
+msgstr "Слупкі экранаваныя з"
+
+msgid "Replace NULL with"
+msgstr "Замяніць NULL на"
+
+msgid "Columns terminated with"
+msgstr "Радкі заканчваюцца на"
+
+msgid "Lines terminated with"
+msgstr "Радкі заканчваюцца на"
+
+msgid "Excel edition"
+msgstr "Вэрсія Excel"
+
+msgid "Database name template"
+msgstr "Шаблон назвы базы даных"
+
+msgid "Server name template"
+msgstr "Шаблон назвы сервера"
+
+msgid "Table name template"
+msgstr "Шаблон назвы табліцы"
+
+msgid "Dump table"
+msgstr "Адбітак табліцы"
+
+msgid "Include table caption"
+msgstr "Уключыць загаловак табліцы"
+
+msgid "Table caption"
+msgstr "Загаловак табліцы"
+
+msgid "Continued table caption"
+msgstr "Працягнуты загаловак табліцы"
+
+msgid "Label key"
+msgstr "Ключ меткі"
+
+msgid "Relationships"
+msgstr "Сувязі"
+
+msgid "Export method"
+msgstr "Метад экспарту"
+
+msgid "Export as separate files"
+msgstr "Экспарт у выглядзе асобных файлаў"
+
+msgid "Enclose table and column names with backquotes"
+msgstr "Зваротнае двукоссе ў назвах табліц і слупкоў"
+
+msgid "SQL compatibility mode"
+msgstr "Рэжым сумяшчальнасьці SQL"
+
+msgid "Creation/Update/Check dates"
+msgstr "Стварэньне/Абнаўленьне/Праверка дат"
+
+msgid "Use delayed inserts"
+msgstr "Выкарыстоўваць адкладзеныя ўстаўкі"
+
+msgid "Disable foreign key checks"
+msgstr "Адключыць праверку зьнешніх ключоў"
+
+msgid "Export views as tables"
+msgstr "Экспартаваць прадстаўленні як табліцы"
+
+msgid "Use hexadecimal for BINARY & BLOB"
+msgstr "Выкарыстоўваць шаснаццатковыя значэнні для тыпаў BINARY і BLOB"
+
+msgid "Use ignore inserts"
+msgstr "Выкарыстоўваць устаўкі ігнараваньняў"
+
+msgid "Maximal length of created query"
+msgstr "Максымальная даўжыня створанага запыту"
+
+msgid "Export type"
+msgstr "Тып экспарту"
+
+msgid "Enclose export in a transaction"
+msgstr "Экспартаваць за адну транзакцыю"
+
+msgid "Export time in UTC"
+msgstr "Экспарт часу ў UTC"
+
+msgid "Foreign key checks"
+msgstr "Праверка знешніх ключоў"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Export defaults"
+msgstr "Экспартаваць агаданыя"
+
+msgid "General"
+msgstr "Агульныя"
+
+msgid "Import defaults"
+msgstr "Імпартаваць агаданыя"
+
+msgid "LaTeX"
+msgstr "LaTeX"
+
+msgid "Navigation tree"
+msgstr "Навігацыйнае дрэва"
+
+msgid "Microsoft Office"
+msgstr "Microsoft Office"
+
+msgid "Page titles"
+msgstr "Назвы старонак"
+
+msgid "Authentication"
+msgstr "Аўтэнтыфікацыя"
+
+msgid "SQL Query box"
+msgstr "Вакно SQL-запыту"
+
+msgid "Startup"
+msgstr "Пачатак"
+
+msgid "Database structure"
+msgstr "Структура базы даных"
+
+msgid "Tabs"
+msgstr "Укладкі"
+
+msgid "Display relational schema"
+msgstr "Адлюстраваць рэляцыйную схему"
+
+msgid "Text fields"
+msgstr "Тэкставыя палі"
+
+msgid "Texy! text"
+msgstr "Тэкст Texy!"
+
+msgid "Format of imported file"
+msgstr "Фармат імпартаванага файла"
+
+msgid "Use LOCAL keyword"
+msgstr "Выкарыстоўваць ключавое слова LOCAL"
+
+msgid "Column names in first row"
+msgstr "Назвы слупкоў у першым радку"
+
+msgid "Do not use AUTO_INCREMENT for zero values"
+msgstr "Не выкарыстоўваць AUTO_INCREMENT для нулявых значэнняў"
+
+msgid "Read as multibytes"
+msgstr "Чытаць як шматбайтавая"
+
+msgid "Number of inserted rows"
+msgstr "Колькасць устаўленых радкоў"
+
+msgid "Maximum databases"
+msgstr "Максімум баз даных"
+
+msgid "Maximum items on first level"
+msgstr "Максімум элементаў на першым узроўні"
+
+msgid "Memory limit"
+msgstr "Абмежаванне памяці"
+
+msgid "Show databases navigation as tree"
+msgstr "Паказаць навігацыю баз даных у выглядзе дрэва"
+
+msgid "Navigation panel width"
+msgstr "Шырыня навігацыйнай панэлі"
+
+msgid "Link with main panel"
+msgstr "Злучыць з галоўнай панэллю"
+
+msgid "Minimum number of items to display the filter box"
+msgstr "Мінімальная колькасць элементаў для адлюстравання вакна фільтра"
+
+msgid "Minimum number of databases to display the database filter box"
+msgstr "Мінімальная колькасць баз даных для адлюстравання вакна фільтра баз даных"
+
+msgid "Database tree separator"
+msgstr "Раздзяляльнік дрэва баз даных"
+
+msgid "Enable navigation tree expansion"
+msgstr "Уключыць раскрыцце навігацыйнага дрэва"
+
+msgid "Show tables in tree"
+msgstr "Паказаць табліцы ў дрэве"
+
+msgid "Show views in tree"
+msgstr "Паказаць прадстаўленні ў дрэве"
+
+msgid "Show procedures in tree"
+msgstr "Паказаць працэдуры ў дрэве"
+
+msgid "Show events in tree"
+msgstr "Паказаць падзеі ў дрэве"
+
+msgid "Recently used tables"
+msgstr "Нядаўны выкарыстаныя табліцы"
+
+msgid "Natural order"
+msgstr "Звычайны парадак"
+
+msgid "Table navigation bar"
+msgstr "Панэль таблічнай навігацыі"
+
+msgid "Remember table's sorting"
+msgstr "Запомніць сартаванне табліцы"
+
+msgid "Primary key default sort order"
+msgstr "Агаданы парадак сартавання першаснага ключа"
+
+msgid "Repeat headers"
+msgstr "Паўтор загалоўкаў"
+
+msgid "Relational display"
+msgstr "Рэляцыйнае адлюстраванне"
+
+msgid "Save directory"
+msgstr "Каталог захавання"
+
+msgid "Host authorization order"
+msgstr "Парадак аўтарызацыі хаста"
+
+msgid "Host authorization rules"
+msgstr "Правіла аўтарызацыі хаста"
+
+msgid "Session timezone"
+msgstr "Часовы пояс сесіі"
+
+msgid "Control host"
+msgstr "Хост кіравання"
+
+msgid "Control port"
+msgstr "Порт кіравання"
+
+msgid "Hide databases"
+msgstr "Схаваць базы даных"
+
+msgid "Server hostname"
+msgstr "Назва хоста сервера"
+
+msgid "Export templates table"
+msgstr "Экспарт табліцы шаблонаў"
+
+msgid "Central columns table"
+msgstr "Табліца асноўных слупкоў"
+
+msgid "Server port"
+msgstr "Порт сервера"
+
+msgid "Recently used table"
+msgstr "Табліца нядаўна выкарыстанага"
+
+msgid "Favorites table"
+msgstr "Табліца ўлюблёнага"
+
+msgid "Relation table"
+msgstr "Табліца звязкаў"
+
+msgid "Server socket"
+msgstr "Сокет сервера"
+
+msgid "Display columns table"
+msgstr "Табліца адлюстраваных слупкоў"
+
+msgid "UI preferences table"
+msgstr "Табліца UI-налад"
+
+msgid "Statements to track"
+msgstr "Сачэнне за сцвярджэннямі"
+
+msgid "Automatically create versions"
+msgstr "Аўтаматычна ствараць версіі"
+
+msgid "Users table"
+msgstr "Табліца карыстальнікаў"
+
+msgid "User groups table"
+msgstr "Табліца груп карыстальнікаў"
+
+msgid "Show table comments"
+msgstr "Паказаць каментарыі табліцы"
+
+msgid "Show creation timestamp"
+msgstr "Паказаць час стварэння"
+
+msgid "Show last update timestamp"
+msgstr "Паказаць час апошняга абнаўлення"
+
+msgid "Show last check timestamp"
+msgstr "Паказаць час апошняй праверкі"
+
+msgid "Show table charset"
+msgstr "Паказаць знаказбор табліцы"
+
+msgid "Show field types"
+msgstr "Паказаць тыпы палёў"
+
+msgid "Show hint"
+msgstr "Паказаць падказку"
+
+msgid "Show SQL queries"
+msgstr "Паказаць SQL-запыты"
+
+msgid "Show statistics"
+msgstr "Паказаць статыстыку"
+
+msgid "Skip locked tables"
+msgstr "Прапускаць заблакаваныя табліцы"
+
+msgid "Explain SQL"
+msgstr "Тлумачыць SQL"
+
+msgid "Create PHP code"
+msgstr "Стварыць PHP-код"
+
+msgid "Textarea columns"
+msgstr "Слупкі тэкставай вобласці"
+
+msgid "Default title"
+msgstr "Агаданы загаловак"
+
+msgid "Upload directory"
+msgstr "Каталог загрузкі"
+
+msgid "Proxy username"
+msgstr "Імя карыстальніка проксі"
+
+msgid "Proxy password"
+msgstr "Пароль проксі"
+
+msgid "Send error reports"
+msgstr "Адпраўка зваротаў аб памылках"
+
+msgid "Enter executes queries in console"
+msgstr "Enter выконвае запыты ў кансолі"
+
+msgid "Enable Zero Configuration mode"
+msgstr "Уключыць рэжым аўтаканфігурацыі"
+
+msgid "Server connection collation"
+msgstr "Супастаўленьне сервернага падлучэньня"
+
+msgid "unavailable"
+msgstr "недаступны"
+
+msgid "Config authentication"
+msgstr "Аўтэнтыфікацыя праз файл канфігурацыі"
+
+msgid "HTTP authentication"
+msgstr "HTTP-аўтэнтыфікацыя"
+
+msgid "Signon authentication"
+msgstr "Signon-аўтэнтыфікацыя"
+
+msgid "Custom"
+msgstr "Свой"
+
+msgid "CSV for MS Excel"
+msgstr "CSV для дадзеных MS Excel"
+
+msgid "Microsoft Word 2000"
+msgstr "Microsoft Word 2000"
+
+msgid "OpenDocument Spreadsheet"
+msgstr "Табліца OpenDocument"
+
+msgid "OpenDocument Text"
+msgstr "Тэкст OpenDocument"
+
+msgid "CSV using LOAD DATA"
+msgstr "CSV з выкарыстаньнем LOAD DATA"
+
+msgid "Default transformations"
+msgstr "Агаданыя пераўтварэнні"
+
+msgid "Existing configuration file (%s) is not readable."
+msgstr "Існы файл канфігурацыі (%s) не чытаецца."
+
+msgid "Wrong permissions on configuration file, should not be world writable!"
+msgstr "Няправільныя дазволы ў файла канфігурацыі, ён не павінен змяняцца ўсімі!"
+
+msgid "Server %d"
+msgstr "Сервер %d"
+
+msgid "no description"
+msgstr "няма апісаньня"
+
+msgid "View users"
+msgstr "Паглядзець карыстальнікаў"
+
+msgid "Server-level tabs"
+msgstr "Укладкі сервернага ўзроўню"
+
+msgid "Database-level tabs"
+msgstr "Укладкі ўзроўню базы даных"
+
+msgid "Table-level tabs"
+msgstr "Укладкі таблічнага ўзроўню"
+
+msgid "Could not save configuration"
+msgstr "Не атрымалася захаваць канфігурацыю"
+
+msgid "Invalid authentication type!"
+msgstr "Некрэктны тып аўтэнтыфікацыі!"
+
+msgid "Empty username while using [kbd]config[/kbd] authentication method!"
+msgstr "Пустое імя карыстальніка пры выкарыстанні метада аўтэнтыфікацыі [kbd]config[/kbd]!"
+
+msgid "Empty signon session name while using [kbd]signon[/kbd] authentication method!"
+msgstr "Пустая назва сессіі пры выкарыстанні метада аўтэнтыфікацыі [kbd]signon[/kbd]!"
+
+msgid "Empty signon URL while using [kbd]signon[/kbd] authentication method!"
+msgstr "Пусты URL сессіі пры выкарыстанні метада аўтэнтыфікацыі [kbd]signon[/kbd]!"
+
+msgid "Not a valid port number!"
+msgstr "Некарэктны нумар порта!"
+
+msgid "Showing %1$d bookmark (both private and shared)"
+msgid_plural "Showing %1$d bookmarks (both private and shared)"
+msgstr[0] "Паказваецца %1$d закладка (прыватная ці агульная)"
+msgstr[1] "Паказваюцца %1$d закладкі (прыватныя ці агульныя)"
+msgstr[2] "Паказваюцца %1$d закладак (прыватныя ці агульныя)"
+
+msgid "No bookmarks"
+msgstr "Няма закладак"
+
+msgid "The %s file is not available on this system, please visit %s for more information."
+msgstr "Файл %s недаступны на гэтай сістэме, падрабязнасці на %s."
+
+msgid "Succeeded"
+msgstr "Паспяхова"
+
+msgid "Showing rows %1$s - %2$s."
+msgstr "Паказваюцца радкі %1$s - %2$s."
+
+msgid "No databases selected."
+msgstr "Ня выбраная база дадзеных."
+
+msgid "Add event"
+msgstr "Дадаць падзею"
+
+msgid "Edit event"
+msgstr "Рэдагаваць падзею"
+
+msgid "Error in processing request:"
+msgstr "Памылка пры апрацоўцы запыту:"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Падзеі з назвай %1$s няма ў базе даных %2$s."
+
+msgid "Export of event %s"
+msgstr "Экспартаваць падзею %s"
+
+msgid "Could not load export plugins, please check your installation!"
+msgstr "Немагчыма загрузіць плагіны экспартаваньня, калі ласка, праверце ўсталяваныя файлы!"
+
+msgid "Could not load import plugins, please check your installation!"
+msgstr "Немагчыма загрузіць плагіны імпартаваньня, калі ласка, праверце ўсталёўку!"
+
+msgid "No Privileges"
+msgstr "Без прывілеяў"
+
+msgid "Add routine"
+msgstr "Дадаць працэдуру"
+
+msgid "Edit routine"
+msgstr "Рэдагаваць працэдуру"
+
+msgid "No routine with name %1$s found in database %2$s."
+msgstr "Працэдуры з назвай %1$s няма ў базе даных %2$s."
+
+msgid "Export of routine %s"
+msgstr "Экспартаваць працэдуру %s"
+
+msgid "This view has at least this number of rows. Please refer to %sdocumentation%s."
+msgstr "Гэты прагляд мае толькі такую колькасьць радкоў. Калі ласка, зьвярніцеся да %sдакумэнтацыі%s."
+
+msgid "unknown"
+msgstr "невядома"
+
+msgid "Tracking data deleted successfully."
+msgstr "Даныя адсочвання паспяхова выдаленыя."
+
+msgid "Version %1$s was created for selected tables, tracking is active for them."
+msgstr "Версія %1$s створаная для абраных табліц, адсочванне ўключанае."
+
+msgid "No tables selected."
+msgstr "Не выбрана ніводнай табліцы."
+
+msgid "Database Log"
+msgstr "Журнал базы дадзеных"
+
+msgid "Bad type!"
+msgstr "Памылковы тып!"
+
+msgid "The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. "
+msgstr "Сховішча канфігурацыі phpMyAdmin не поўнасцю наладжана — некаторыя пашыраныя функцыі дэактываваліся. %sДаведайцеся чаму%s. "
+
+msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
+msgstr "Пашырэньне PHP mbstring ня знойдзенае, а вы, здаецца, выкарыстоўваеце шматбайтавую кадыроўку. Без пашырэньня mbstring phpMyAdmin ня можа падзяляць радкі карэктна, і гэта можа прывесьці да нечаканых вынікаў."
+
+msgid "You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit."
+msgstr "Вы, мусіць, паспрабавалі загрузіць вельмі вялікі файл. Калі ласка, звярніцеся да %sдакументацыі%s для высвятлення спосабаў абыйсьці гэтае абмежаваньне."
+
+msgid "Showing bookmark"
+msgstr "Паказваючы закладку"
+
+msgid "The bookmark has been deleted."
+msgstr "Закладка была выдаленая."
+
+msgid "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc]."
+msgstr "Дадзеныя для імпартаваньня не атрыманыя. Альбо ніводны файл ня быў загружаны, альбо памер файла перавысіў максымальны памер, вызначаны канфігурацыяй PHP. Гл. [doc@faq1-16]FAQ 1.16[/doc]."
+
+msgid "Import has been successfully finished, %d query executed."
+msgid_plural "Import has been successfully finished, %d queries executed."
+msgstr[0] "Імпартраваньне пасьпяхова завершанае, выканана %d запыт."
+msgstr[1] "Імпартраваньне пасьпяхова завершанае, выканана %d запыта."
+msgstr[2] "Імпартраваньне пасьпяхова завершанае, выканана %d запытаў."
+
+msgid "Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume."
+msgstr "Выйшаў дазволены час выкананьня скрыпта. Калі вы хочаце завершыць імпартаваньне, калі ласка, %s загрузіце файл %s зноў і імпартаваньне ўзнавіцца."
+
+msgid "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits."
+msgstr "Аднак, падчас апошняга выкананьня ніякія дадзеныя былі апрацаваныя. Гэта звычайна значыць, што phpMyAdmin ня зможа скончыць гэтае імпартаваньня, калі вы не павялічыце ліміты выкананьня php-скрыптоў."
+
+msgid "\"DROP DATABASE\" statements are disabled."
+msgstr "Каманды \"DROP DATABASE\" адключаныя."
+
+msgid "Do you really want to execute \"%s\"?"
+msgstr "Ці сапраўды вы жадаеце выканаць «%s»?"
+
+msgid "You are about to DESTROY a complete database!"
+msgstr "Вы зьбіраеце ВЫДАЛІЦЬ базу дадзеных цалкам!"
+
+msgid "You are about to DESTROY a complete table!"
+msgstr "Вы зьбіраеце ВЫДАЛІЦЬ табліцу цалкам!"
+
+msgid "You are about to TRUNCATE a complete table!"
+msgstr "Вы зьбіраеце УСЯЧЫ табліцу цалкам!"
+
+msgid "Delete tracking data for this table?"
+msgstr "Выдаліць даныя адсочвання для гэтай табліцы?"
+
+msgid "Delete tracking data for these tables?"
+msgstr "Выдаліць даныя адсочвання для гэтах табліц?"
+
+msgid "Delete tracking data for this version?"
+msgstr "Выдаліць даныя адсочвання для гэтай версіі?"
+
+msgid "Delete tracking data for these versions?"
+msgstr "Выдаліць даныя адсочвання для гэтых версій?"
+
+msgid "Delete entry from tracking report?"
+msgstr "Выдаліць запіс са справаздача адсочвання?"
+
+msgid "Deleting tracking data"
+msgstr "Выдаленне даныя адсочвання"
+
+msgid "Dropping Foreign key."
+msgstr "Выдаленне знешняга ключа."
+
+msgid "Do you really want to delete user group \"%s\"?"
+msgstr "Ці сапраўды вы жадаеце выдаліць групу карыстальнікаў «%s»?"
+
+msgid "Do you really want to revoke the selected user(s) ?"
+msgstr "Ці сапраўды вы жадаеце адклікаць абранага(ых) карыстальніка(аў)?"
+
+msgid "Do you really want to delete this central column?"
+msgstr "Ці сапраўды вы жадаеце выдаліць гэты цэнтральны слупок?"
+
+msgid "Do you really want to delete the selected items?"
+msgstr "Ці сапраўды вы жадаеце выдаліць абраныя элементы?"
+
+msgid "Do you really want to TRUNCATE the selected partition(s)?"
+msgstr "Ці сапраўды вы жадаеце ўсекчы абраны раздзел(ы)?"
+
+msgid "Do you really want to remove partitioning?"
+msgstr "Ці сапраўды вы жадаеце выдаліць раздзелы?"
+
+msgid "Reset all"
+msgstr "Скінуць усё"
+
+msgid "Missing value in the form!"
+msgstr "Не зададзенае значэньне ў форме!"
+
+msgid "Select at least one of the options!"
+msgstr "Абырыце прынамсі адзін з варыянтаў!"
+
+msgid "Please enter a valid number!"
+msgstr "Калі ласка, увядіце карэктны лік!"
+
+msgid "Please enter a valid length!"
+msgstr "Калі ласка, увядзіце карэктную даўжыню!"
+
+msgid "Add index"
+msgstr "Дадаць індэкс"
+
+msgid "Edit index"
+msgstr "Рэдагаваць індэкс"
+
+msgid "Create single-column index"
+msgstr "Стварыць індэкс па адным слупку"
+
+msgid "Create composite index"
+msgstr "Стварыць складаны індэкс"
+
+msgid "Composite with:"
+msgstr "Складаецца з:"
+
+msgid "Please select column(s) for the index."
+msgstr "Калі ласка, абярыце слупок(і) для індэкса."
+
+msgid "Y values"
+msgstr "Значэнне Y"
+
+msgid "The host name is empty!"
+msgstr "Пустое імя хосту!"
+
+msgid "The user name is empty!"
+msgstr "Пустое імя карыстальніка!"
+
+msgid "The password is empty!"
+msgstr "Пусты пароль!"
+
+msgid "The passwords aren't the same!"
+msgstr "Паролі не супадаюць!"
+
+msgid "Removing Selected Users"
+msgstr "Выдаленне абраных карыстальнікаў"
+
+msgid "Template was created."
+msgstr "Шаблон створаны."
+
+msgid "Template was updated."
+msgstr "Шаблон быў абноўлены."
+
+msgid "Template was deleted."
+msgstr "Шаблон быў выдалены."
+
+msgid ","
+msgstr ","
+
+msgid "."
+msgstr "."
+
+msgid "Connections / Processes"
+msgstr "Злучэньні / Працэсы"
+
+msgid "Query cache efficiency"
+msgstr "Эфектыўнасць кэшу запытаў"
+
+msgid "Query cache usage"
+msgstr "Выкарыстанне кэшу запытаў"
+
+msgid "Query cache used"
+msgstr "Выкарыстаны кэш запытаў"
+
+msgid "System CPU usage"
+msgstr "Выкарыстаньне сістэмнага працэсара"
+
+msgid "Total memory"
+msgstr "Агульны аб'ём памяці"
+
+msgid "Buffered memory"
+msgstr "Буферная памяць"
+
+msgid "Total swap"
+msgstr "Агульны аб'ём свапа"
+
+msgid "Cached swap"
+msgstr "Закэшыраваны аб'ём свапа"
+
+msgid "Free swap"
+msgstr "Вольны аб'ём свапа"
+
+msgid "Bytes received"
+msgstr "Атрымана байтаў"
+
+msgid "B"
+msgstr "Б"
+
+msgid "GiB"
+msgstr "ГіБ"
+
+msgid "TiB"
+msgstr "ТіБ"
+
+msgid "PiB"
+msgstr "ПіБ"
+
+msgid "EiB"
+msgstr "ЭіБ"
+
+msgid "%d table(s)"
+msgstr "%d табліц(a,ы)"
+
+msgid "Questions"
+msgstr "Пытанні"
+
+msgid "Set log_output to %s"
+msgstr "Задаць log_output у %s"
+
+msgid "Enable %s"
+msgstr "Уключана %s"
+
+msgid "Disable %s"
+msgstr "Адключана %s"
+
+msgid "Set long_query_time to %d seconds."
+msgstr "Задаць long_query_time у %d секунд."
+
+msgid "Change settings"
+msgstr "Наладзіць"
+
+msgid "Current settings"
+msgstr "Дзейсныя налады"
+
+msgid "Chart title"
+msgstr "Загаловак графіка"
+
+msgid "Analyzing…"
+msgstr "Аналіз…"
+
+msgid "Explain output"
+msgstr "Патлумачыць вынік"
+
+msgid "Total time:"
+msgstr "Агульны час:"
+
+msgid "Profiling results"
+msgstr "Прафіляваньне вынікаў"
+
+msgctxt "Display format"
+msgid "Table"
+msgstr "Табліца"
+
+msgid "Chart"
+msgstr "Графік"
+
+msgid "Log table filter options"
+msgstr "Параметры фільтра табліцы журнала"
+
+msgid "Filter"
+msgstr "Фільтр"
+
+msgid "Sum of grouped rows:"
+msgstr "Сума згрупаваных радкоў:"
+
+msgid "No parameters found!"
+msgstr "Параметры не знойдзены!"
+
+msgid "Processing request"
+msgstr "Апрацоўка запыту"
+
+msgid "Request failed!!"
+msgstr "Няўдалы запыт!!"
+
+msgid "Error in processing request"
+msgstr "Памылка апрацоўкі запыту"
+
+msgid "No accounts selected."
+msgstr "Ніводны конт не выбраны."
+
+msgid "Dropping column"
+msgstr "Выдаленне слупка"
+
+msgid "Adding primary key"
+msgstr "Даданне першаснага ключа"
+
+msgid "Renaming databases"
+msgstr "Перайменаваць базы дадзеных"
+
+msgid "Copying database"
+msgstr "Капіяваць базу дадзеных"
+
+msgid "Changing charset"
+msgstr "Змена кадавання"
+
+msgid "Failed to get real row count."
+msgstr "Не ўдалося атрымаць рэальную колькасць радкоў."
+
+msgid "Searching"
+msgstr "Пошук"
+
+msgid "Hide search results"
+msgstr "Схаваць вынікі пошуку"
+
+msgid "Show search results"
+msgstr "Паказаць вынікі пошуку"
+
+msgid "Browsing"
+msgstr "Прагляд"
+
+msgid "Deleting"
+msgstr "Выдаленне"
+
+msgid "Delete the matches for the %s table?"
+msgstr "Выдаліць адпаведнасць для табліцы %s?"
+
+msgid "Values for column %s"
+msgstr "Значэнне для слупка %s"
+
+msgid "Add %d value(s)"
+msgstr "Дадаць %d значэнне(яў)"
+
+msgid "Hide query box"
+msgstr "Схаваць акно запытаў"
+
+msgid "Show query box"
+msgstr "Паказаць акно запытаў"
+
+msgid "%d is not valid row number."
+msgstr "%d не зьяўляецца карэктным нумарам радка."
+
+msgid "Variable %d:"
+msgstr "Зменная %d:"
+
+msgid "Column selector"
+msgstr "Селектар слупка"
+
+msgid "Search this list"
+msgstr "Шукаць у гэтым спісе"
+
+msgid "Primary key added."
+msgstr "Першасны ключ дададзены."
+
+msgid "Taking you to next step…"
+msgstr "Пераход да наступнага кроку…"
+
+msgid "End of step"
+msgstr "Канец кроку"
+
+msgid "Done"
+msgstr "Гатова"
+
+msgid "No partial dependencies selected!"
+msgstr "Ня выбраны частковыя залежнасці!"
+
+msgid "Create the following table"
+msgstr "Стварыць наступную табліцу"
+
+msgid "No dependencies selected!"
+msgstr "Ня выбраны залежнасці!"
+
+msgid "Hide search criteria"
+msgstr "Схаваць крытэрый пошуку"
+
+msgid "Show search criteria"
+msgstr "Паказаць крытэрый пошуку"
+
+msgid "Column maximum:"
+msgstr "Максімум у слупку:"
+
+msgid "Column minimum:"
+msgstr "Мінімум у слупку:"
+
+msgid "Hide find and replace criteria"
+msgstr "Схаваць крытэрый пошуку і замены"
+
+msgid "Show find and replace criteria"
+msgstr "Паказаць крытэрый пошуку і замены"
+
+msgid "Select two columns"
+msgstr "Абярыце два слупкі"
+
+msgid "Data point content"
+msgstr "Змест кропкі даных"
+
+msgid "Linestring"
+msgstr "Адрэзак"
+
+msgid "Inner ring"
+msgstr "Унутранае кальцо"
+
+msgid "Outer ring"
+msgstr "Знешняе кальцо"
+
+msgid "Add a point"
+msgstr "Дадаць кропку"
+
+msgid "Add a linestring"
+msgstr "Дадаць адрэзак"
+
+msgid "Add an inner ring"
+msgstr "Дадаць унутранае кальцо"
+
+msgid "Add a polygon"
+msgstr "Дадаць шматкутнік"
+
+msgid "Add geometry"
+msgstr "Дадаць геаметрыю"
+
+msgid "Select referenced key"
+msgstr "Выберыце спасылкавы ключ"
+
+msgid "Select Foreign Key"
+msgstr "Выберыце зьнешні ключ"
+
+msgid "Please select the primary key or a unique key!"
+msgstr "Калі ласка, выберыце першасны альбо ўнікальны ключ!"
+
+msgid "Page name"
+msgstr "Назва старонкі"
+
+msgid "Delete page"
+msgstr "Выдаліць старонку"
+
+msgid "Please select a page to continue"
+msgstr "Калі ласка, выберыце старонку для працягу"
+
+msgid "Please enter a valid page name"
+msgstr "Калі ласка, увядзіце карэктную назву старонкі"
+
+msgid "Export relational schema"
+msgstr "Экспартаваць рэляцыйную схему"
+
+msgid "Modifications have been saved"
+msgstr "Мадыфікацыі былі захаваныя"
+
+msgid "%d object(s) created."
+msgstr "%d аб'ект(аў) створана."
+
+msgid "Double-click to copy column name."
+msgstr "Націсні двойчы, каб скапіявацю назву слупка."
+
+msgid "Original length"
+msgstr "Першапачатковая даўжыня"
+
+msgid "cancel"
+msgstr "скасаваць"
+
+msgid "Aborted"
+msgstr "Спынена"
+
+msgid "Import status"
+msgstr "Стан імпарту"
+
+msgid "Select database first"
+msgstr "Выберыце спачатку базу даных"
+
+msgid "Go to link:"
+msgstr "Перайсці па спасылцы:"
+
+msgid "Generate password"
+msgstr "Згенэраваць пароль"
+
+msgid "Show panel"
+msgstr "Паказаць панэль"
+
+msgid "Hide panel"
+msgstr "Схаваць панэль"
+
+msgid "Unlink from main panel"
+msgstr "Адлучыць ад галоўнай панэлі"
+
+msgid ", latest stable version:"
+msgstr ", апошняя стабільная версія:"
+
+msgid "up to date"
+msgstr "актуальная"
+
+msgid "Change report settings"
+msgstr "Змяніць налады зварота"
+
+msgid "Show report details"
+msgstr "Паказаць дэталі зварота"
+
+msgid "Ignore All"
+msgstr "Ігнараваць усё"
+
+msgid "Execute this query again?"
+msgstr "Выканаць гэты запыт зноў?"
+
+msgid "Do you really want to delete this bookmark?"
+msgstr "Ці сапраўды вы жадаеце выдаліць гэтую закладку?"
+
+msgid "%s queries executed %s times in %s seconds."
+msgstr "%s запытаў выканана %s разоў за %s секунд."
+
+msgid "Show arguments"
+msgstr "Паказаць аргументы"
+
+msgid "Hide arguments"
+msgstr "Схаваць аргументы"
+
+msgid "Copy tables to"
+msgstr "Капіяваць табліцы у"
+
+msgid "Add table prefix"
+msgstr "Дадаць прэфікс табліцы"
+
+msgid "Replace table with prefix"
+msgstr "Замяніць прэфікс табліцы"
+
+msgid "Hide"
+msgstr "Схаваць"
+
+msgid "Today"
+msgstr "Сёння"
+
+msgid "Please fix this field"
+msgstr "Калі ласка, выпраўце гэтае поле"
+
+msgid "Please enter a valid email address"
+msgstr "Калі ласка, увядзіце дзейны адрас электроннай пошты"
+
+msgid "Please enter a valid URL"
+msgstr "Калі ласка, увядзіце карэктны URL"
+
+msgid "Please enter a valid date"
+msgstr "Калі ласка, увядзіце карэктную дату"
+
+msgid "Please enter a valid date ( ISO )"
+msgstr "Калі ласка, увядзіце карэктную дату (ISO)"
+
+msgid "Please enter a valid number"
+msgstr "Калі ласка, увядзіце карэктны лік"
+
+msgid "Please enter a valid credit card number"
+msgstr "Калі ласка, увядзіце дзейны нумар крэдытнай карты"
+
+msgid "Please enter only digits"
+msgstr "Калі ласка, увядзіце толькі лічбы"
+
+msgid "Please enter the same value again"
+msgstr "Калі ласка, увядзіце тое ж значэнне зноў"
+
+msgid "Please enter at least {0} characters"
+msgstr "Калі ласка, увядзіце не менш {0} знакаў"
+
+msgid "Please enter a value between {0} and {1}"
+msgstr "Калі ласка, увядзіце значэнне паміж {0} і {1}"
+
+msgid "Please enter a value less than or equal to {0}"
+msgstr "Калі ласка, увядзіце значэнне меншае ці роўнае {0}"
+
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "Калі ласка, увядзіце значэнне большае ці роўнае {0}"
+
+msgid "Please enter a valid date or time"
+msgstr "Калі ласка, увядзіце сапраўдную дату або час"
+
+msgid "Please enter a valid HEX input"
+msgstr "Калі ласка, увядзіце сапраўдны HEX"
+
+msgid "Uploading your import file…"
+msgstr "Загрузка вашага файла імпарту…"
+
+msgid "Select one…"
+msgstr "Выберыце адно…"
+
+msgid "No such column"
+msgstr "Няма такога слупка"
+
+msgctxt "string types"
+msgid "String"
+msgstr "Радок"
+
+msgid "Cannot copy database to the same name. Change the name and try again."
+msgstr "Не магчыма скапіяваць базу даных з такой жа назвай. Змяніце назву і паспрабуйце яшчэ раз."
+
+msgid "Database %1$s has been renamed to %2$s."
+msgstr "База даных %1$s была перайменаваная ў %2$s."
+
+msgid "Database %1$s has been copied to %2$s."
+msgstr "База даных %1$s была скапіяваная ў %2$s."
+
+msgid "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s."
+msgstr "Сховішча канфігурацыі PHPMyAdmin дэактываванае. %sДаведацца чаму%s."
+
+msgid "phpMyAdmin configuration snippet"
+msgstr "Фрагмент дакументацыі phpMyAdmin"
+
+msgid "Could not import configuration"
+msgstr "Не атрымалася імпартаваць канфігурацыю"
+
+msgid "Two-factor authentication has been removed."
+msgstr "Двух-фактарная аўтэнтыфікацыя выдаленая."
+
+msgid "Two-factor authentication has been configured."
+msgstr "Двух-фактарная аўтэнтыфікацыя сканфігураваная."
+
+msgid "Missing parameter:"
+msgstr "Адсутны параметр:"
+
+msgid "Database %1$s has been created."
+msgstr "База дадзеных %1$s створаная."
+
+msgid "%1$d database has been dropped successfully."
+msgid_plural "%1$d databases have been dropped successfully."
+msgstr[0] "%1$d база даных была паспяхова выдаленая."
+msgstr[1] "%1$d базы даных былі паспяхова выдаленыя."
+msgstr[2] "%1$d баз даных былі паспяхова выдаленыя."
+
+msgid "Thread %s was successfully killed."
+msgstr "Паток %s быў пасьпяхова спынены."
+
+msgid "phpMyAdmin was unable to kill thread %s. It probably has already been closed."
+msgstr "phpMyAdmin ня можа спыніць працэс %s. Напэўна, ён ужо спынены."
+
+msgid "Received"
+msgstr "Атрымана"
+
+msgid "Sent"
+msgstr "Адпраўлена"
+
+msgid "Max. concurrent connections"
+msgstr "Максімум адначасовых злучэнняў"
+
+msgid "Failed attempts"
+msgstr "Няўдалых спробаў"
+
+msgid "The number of failed attempts to connect to the MySQL server."
+msgstr "Колькасць няўдалых спроб злучэння з серверам MySQL."
+
+msgid "The number of transactions that used the temporary binary log cache but that exceeded the value of binlog_cache_size and used a temporary file to store statements from the transaction."
+msgstr "Колькасьць транзакцыяў, якія выкарыстоўвалі часовы двайковы кэш запытаў, але якія перавысілі значэньне binlog_cache_size і выкарыстоўвалі часовы файл для захоўваньня выразаў транзакцыі."
+
+msgid "The number of transactions that used the temporary binary log cache."
+msgstr "Колькасьць транзакцыяў, якія выкарыстоўвалі часовы двайковы кэш запытаў."
+
+msgid "The number of temporary tables on disk created automatically by the server while executing statements. If Created_tmp_disk_tables is big, you may want to increase the tmp_table_size  value to cause temporary tables to be memory-based instead of disk-based."
+msgstr "Колькасьць часовых табліц на дыску, створаных аўтаматычна сэрвэрам падчас выкананьня выразаў. Калі лік Created_tmp_disk_tables вялікі, вы можаце павялічыць значэньне tmp_table_size, каб часовыя табліцы захоўваліся ў памяці, а не на дыску."
+
+msgid "How many temporary files mysqld has created."
+msgstr "Колькасьць часовых файлаў, створаных mysqld."
+
+msgid "The number of in-memory temporary tables created automatically by the server while executing statements."
+msgstr "Колькасьць часовых табліц, разьмешчаных у памяці, якія былі аўтаматычна створаныя сэрвэрам падчас выкананьня выразаў."
+
+msgid "The number of rows written with INSERT DELAYED for which some error occurred (probably duplicate key)."
+msgstr "Колькасьць радкоў, запісаных з INSERT DELAYED, з-за якіх адбыліся пэўныя памылкі (пэўна, дубляваныя ключы)."
+
+msgid "The number of INSERT DELAYED handler threads in use. Every different table on which one uses INSERT DELAYED gets its own thread."
+msgstr "Колькасьць апрацоўнікаў патокаў INSERT DELAYED, якія выкарыстоўваюцца. Кожная табліца, на якой выконваецца INSERT DELAYED атрымлівае свой уласны паток."
+
+msgid "The number of INSERT DELAYED rows written."
+msgstr "Колькасьць запісаных INSERT DELAYED радкоў."
+
+msgid "The number of executed FLUSH statements."
+msgstr "Колькасьць выкананых FLUSH-выразаў."
+
+msgid "The number of internal COMMIT statements."
+msgstr "Колькасьць унутраных COMMIT-выразаў."
+
+msgid "The number of times a row was deleted from a table."
+msgstr "Колькасьць разоў выдаленьня радка з табліцы."
+
+msgid "The MySQL server can ask the NDB Cluster storage engine if it knows about a table with a given name. This is called discovery. Handler_discover indicates the number of time tables have been discovered."
+msgstr "Сэрвэр MySQL можа запытацца машыну захаваньня дадзеных NDB Cluster, ці ведае яна табліцу з дадзеным імем. Гэта называецца высьвятленьнем. Handler_discover паказвае колькасьць высьвятленьняў табліц."
+
+msgid "The number of times the first entry was read from an index. If this is high, it suggests that the server is doing a lot of full index scans; for example, SELECT col1 FROM foo, assuming that col1 is indexed."
+msgstr "Колькасьць разоў першы запіс быў прачытаны з індэксу. Калі гэтае значэньне вялікае, сэрвэру рэкамэндуецца рабіць вялікую колькасьць паўнаіндэксавых сканаваньняў; напрыклад, SELECT col1 FROM foo, улічваючы, што col1 індэксаваная."
+
+msgid "The number of requests to read a row based on a key. If this is high, it is a good indication that your queries and tables are properly indexed."
+msgstr "Колькасьць запытаў на чытаньне радка з выкарыстаньнем ключа. Калі яна вялікая, гэта добрая прыкмета таго, што запыты і табліцы добра індэксаваныя."
+
+msgid "The number of requests to read the next row in key order. This is incremented if you are querying an index column with a range constraint or if you are doing an index scan."
+msgstr "Колькасьць запытаў чытаньня наступны радок у ключавым парадку. Яна павялічваецца, калі выконваецца запыт на індэксаваную калёнку з шэрагам абмежаваньняў або калі адбываецца сканаваньне індэксаў."
+
+msgid "The number of requests to read the previous row in key order. This read method is mainly used to optimize ORDER BY … DESC."
+msgstr "Колькасьць запытаў чытаньня папярэдні радок у ключавым парадку. Гэты мэтад чытаньня выкарыстоўваецца пераважна для аптымізацыі ORDER BY … DESC."
+
+msgid "The number of requests to read a row based on a fixed position. This is high if you are doing a lot of queries that require sorting of the result. You probably have a lot of queries that require MySQL to scan whole tables or you have joins that don't use keys properly."
+msgstr "Колькасьць запытаў чытаньня радка фіксаванай пазыцыі. Яна вялікая, калі выконваецца шмат запытаў, якія патрабуюць сартаваньне вынікаў. Магчыма, прысутнічае шмат запытаў, якія патрабуюць ад MySQL перагляд табліцы цалкам або выконваюцца аб'яднаньні, якія няправільна выкарыстоўваюць ключы."
+
+msgid "The number of requests to read the next row in the data file. This is high if you are doing a lot of table scans. Generally this suggests that your tables are not properly indexed or that your queries are not written to take advantage of the indexes you have."
+msgstr "Колькасьць запытаў чытаньня наступнага радка ў файле дадзеных. Яна вялікая, калі выконваецца шмат праглядаў табліцы. У агульным выпадку гэта азначае, што табліцы індэксаваныя няправільна або запыты не напісаныя так, каб выкарыстоўваць перавагі індэксаў."
+
+msgid "The number of internal ROLLBACK statements."
+msgstr "Колькасьць унутраных выразаў ROLLBACK."
+
+msgid "The number of requests to update a row in a table."
+msgstr "Колькасьць запытаў абнаўленьня радка ў табліцы."
+
+msgid "The number of requests to insert a row in a table."
+msgstr "Колькасьць запытаў устаўкі радка ў табліцу."
+
+msgid "The number of pages containing data (dirty or clean)."
+msgstr "Колькасьць старонак, якія ўтрымліваюць дадзеныя (зьмененых або нязьмененых)."
+
+msgid "The number of pages currently dirty."
+msgstr "Колькасьць зьмененых старонак."
+
+msgid "The number of buffer pool pages that have been requested to be flushed."
+msgstr "Колькасьць старонак буфэрнага пулу, на якія быў атрыманы запыт на скід."
+
+msgid "The number of free pages."
+msgstr "Колькасьць вольных старонак."
+
+msgid "The number of latched pages in InnoDB buffer pool. These are pages currently being read or written or that can't be flushed or removed for some other reason."
+msgstr "Колькасьць старонак, якія ўтрымліваюцца ў буфэрным пуле InnoDB. Гэта старонкі, якія ў бягучы момант чытаюцца ці запісваюцца або якія ня могуць быць скінутыя ці выдаленыя з-за пэўнай прычыны."
+
+msgid "The number of pages busy because they have been allocated for administrative overhead such as row locks or the adaptive hash index. This value can also be calculated as Innodb_buffer_pool_pages_total - Innodb_buffer_pool_pages_free - Innodb_buffer_pool_pages_data."
+msgstr "Колькасьць занятых старонак таму, што яны былі вызначаныя як адміністрыцыйныя дадзеныя такія, як блякаваньне радкоў або адаптыўны хэшаваны індэкс. Гэтае значэньне таксама можа быць вылічанае як Innodb_buffer_pool_pages_total - Innodb_buffer_pool_pages_free - Innodb_buffer_pool_pages_data."
+
+msgid "Total size of buffer pool, in pages."
+msgstr "Агульны памер буфэрнага пулу, у старонках."
+
+msgid "The number of \"random\" read-aheads InnoDB initiated. This happens when a query is to scan a large portion of a table but in random order."
+msgstr "Колькасьць «выпадковых» папярэдніх чытаньняў, зробленых InnoDB. Гэта адбываецца, калі запыт праглядае значную частку табліцы, але ў выпадковым парадку."
+
+msgid "The number of sequential read-aheads InnoDB initiated. This happens when InnoDB does a sequential full table scan."
+msgstr "Колькасьць пасьлядоўных папярэдніх чытаньняў, зробленых InnoDB. Гэта адбываецца, калі InnoDB выконвае пасьлядоўны поўны прагляд табліцы."
+
+msgid "The number of logical read requests InnoDB has done."
+msgstr "Колькасьць лягічных запытаў чытаньня, зробленых InnoDB."
+
+msgid "The number of logical reads that InnoDB could not satisfy from buffer pool and had to do a single-page read."
+msgstr "Колькасьць лягічных чытаньняў, якія InnoDB не змагла аднавіць з буфэрнага пулу, а таму зрабіла аднастаронкавае чытаньне."
+
+msgid "Normally, writes to the InnoDB buffer pool happen in the background. However, if it's necessary to read or create a page and no clean pages are available, it's necessary to wait for pages to be flushed first. This counter counts instances of these waits. If the buffer pool size was set properly, this value should be small."
+msgstr "Звычайна, запісы ў буфэрны пул InnoDB, зробленыя ў фоне. Аднак, калі  неабходна прачытаць або стварыьць старонку і чыстыя старонкі адсутнічаюць, неабхочна пачакаць, пакуль пэўныя старонкі ня будуць скінутыя. Гэты кампутар падлічвае колькасьць такіх чаканьняў. Калі памер буфэру быў вызначаны правільна, гэтае значэньне мусіць быць маленькім."
+
+msgid "The number writes done to the InnoDB buffer pool."
+msgstr "Колькасьць запісаў, зробленых у буфэрны пул InnoDB."
+
+msgid "The number of fsync() operations so far."
+msgstr "Колькасьць апэрацыяў fsync() на бягучы момант."
+
+msgid "The current number of pending fsync() operations."
+msgstr "Бягучая колькасьць апэрацыяў fsync(), якія чакаюць выкананьня."
+
+msgid "The current number of pending reads."
+msgstr "Бягучая колькасьць чытаньняў, якія чакаюць выкананьня."
+
+msgid "The current number of pending writes."
+msgstr "Бягучая колькасьць запісаў, якія чакаюць выкананьня."
+
+msgid "The amount of data read so far, in bytes."
+msgstr "Колькасьць прачытаных на бягучы момант дадзеных, у байтах."
+
+msgid "The total number of data reads."
+msgstr "Агульная колькасьць чытаньняў дадзеных."
+
+msgid "The total number of data writes."
+msgstr "Агульная колькасьць запісаў дадзеных."
+
+msgid "The amount of data written so far, in bytes."
+msgstr "Колькасьць запісаных на бягучы момант дадзеных, у байтах."
+
+msgid "The number of pages that have been written for doublewrite operations."
+msgstr "Колькасьць падвойных запісаў, якія былі выкананыя, і колькасьць старонак, якія былі запісаныя для гэтай мэты."
+
+msgid "The number of doublewrite operations that have been performed."
+msgstr "Колькасьць падвойных запісаў, якія былі выкананыя, і колькасьць старонак, якія былі запісаныя для гэтай мэты."
+
+msgid "The number of waits we had because log buffer was too small and we had to wait for it to be flushed before continuing."
+msgstr "Колькасьць выпадкаў чаканьня з-за таго, што буфэр логу быў занадта малы, і таму давялося чакаць, пакуль ён не ачысьціцца."
+
+msgid "The number of log write requests."
+msgstr "Колькасьць запісаў у лог."
+
+msgid "The number of physical writes to the log file."
+msgstr "Колькасьць фізычна выкананых запісаў у лог-файл."
+
+msgid "The number of fsync() writes done to the log file."
+msgstr "Колькасьць сынхранізавыных запісаў, зробленых у лог-файл."
+
+msgid "The number of pending log file fsyncs."
+msgstr "Колькасьць сынхранізаваньняў лог-файла, якія чакаюць выкананьня."
+
+msgid "Pending log file writes."
+msgstr "Колькасьць запісаў у лог-файл, якія чакаюць выкананьня."
+
+msgid "The number of bytes written to the log file."
+msgstr "Колькасьць байтаў, запісаных у лог-файл."
+
+msgid "The number of pages created."
+msgstr "Колькасьць створаных старонак."
+
+msgid "The compiled-in InnoDB page size (default 16KB). Many values are counted in pages; the page size allows them to be easily converted to bytes."
+msgstr "Памер закампіляванай старонкі InnoDB (па змоўчаньні 16КБ). Пэўныя велічыні вымяраюцца ў старонках; памер старонкі дазваляе хутка перавесьці яго ў байты."
+
+msgid "The number of pages read."
+msgstr "Колькасьць прачытаных старонак."
+
+msgid "The number of pages written."
+msgstr "Колькасьць запісаных старонак."
+
+msgid "The number of row locks currently being waited for."
+msgstr "Колькасьць блякаваньняў радкоў, чаканьне якіх адбываецца на бягучы момант."
+
+msgid "The average time to acquire a row lock, in milliseconds."
+msgstr "Сярэдні час атрыманьня магчымасьці блякаваньня радку, у мілісэкундах."
+
+msgid "The total time spent in acquiring row locks, in milliseconds."
+msgstr "Агульны час чаканьня атрыманьня магчымасьці блякаваньня радку, у мілісэкундах."
+
+msgid "The maximum time to acquire a row lock, in milliseconds."
+msgstr "Максымальны час атраманьня магчымасьці блякаваньня радку, у мілісэкундах."
+
+msgid "The number of times a row lock had to be waited for."
+msgstr "Колькасьць разоў, калі даводзілася чакаць блякаваньне радку."
+
+msgid "The number of rows deleted from InnoDB tables."
+msgstr "Колькасьць радкоў, выдаленых з табліц InnoDB."
+
+msgid "The number of rows inserted in InnoDB tables."
+msgstr "Колькасьць радкоў, устаўленых у табліцы InnoDB."
+
+msgid "The number of rows read from InnoDB tables."
+msgstr "Колькась радкоў, прачытаных з табліц InnoDB."
+
+msgid "The number of rows updated in InnoDB tables."
+msgstr "Колькасьць радкоў, абноўленых у табліцах InnoDB."
+
+msgid "The number of key blocks in the key cache that have changed but haven't yet been flushed to disk. It used to be known as Not_flushed_key_blocks."
+msgstr "Колькасьць блёкаў у кэшы ключоў, якія былі зьмененыя, але яшчэ не былі скінутыя на дыск. Выкарыстоўваецца як значэньне Not_flushed_key_blocks."
+
+msgid "The number of unused blocks in the key cache. You can use this value to determine how much of the key cache is in use."
+msgstr "Колькасьць нявыкарыстаных блёкаў у кэшы ключоў. Гэтае значэньне можна выкарыстоўваць для вызначэньня ступені выкарыстаньня кэшу ключоў."
+
+msgid "The number of used blocks in the key cache. This value is a high-water mark that indicates the maximum number of blocks that have ever been in use at one time."
+msgstr "Колькасьць выкарыстаных блёкаў у кэшы ключоў. Гэтае значэньне з дастатковай ступеньню пэўнасьці сьведчыць пра максымальную за ўвесь час колькасьць блёкаў, якія выкарастоўваліся адначасова."
+
+msgid "Percentage of used key cache (calculated value)"
+msgstr "Адсотак выкарыстання кэшу (вылічанае значэнне)"
+
+msgid "The number of requests to read a key block from the cache."
+msgstr "Колькасьць запытаў на чытаньне блёку ключоў з кэшу."
+
+msgid "The number of physical reads of a key block from disk. If Key_reads is big, then your key_buffer_size value is probably too small. The cache miss rate can be calculated as Key_reads/Key_read_requests."
+msgstr "Колькасьць фізычных чытаньняў блёку ключоў з дыска. Калі значэньне Key_reads вялікае, значэньне key_buffer_size, відаць, вельмі малое. Колькасьць промахаў у кэш можна вылічыць як Key_reads/Key_read_requests."
+
+msgid "The number of requests to write a key block to the cache."
+msgstr "Колькасьць запытаў на запіс блёку ключоў у кэш."
+
+msgid "The number of physical writes of a key block to disk."
+msgstr "Колькасьць фізычных запісаў блёку ключоў на дыск."
+
+msgid "The total cost of the last compiled query as computed by the query optimizer. Useful for comparing the cost of different query plans for the same query. The default value of 0 means that no query has been compiled yet."
+msgstr "Агульны кошт апошняга зкампіляванага запыту, падлічанага аптымізатарам запытаў. Карысна для параўнаньня розных спосабаў рэалізацыі аднаго запыту. Значэньне па змоўчаньні 0 азначае, што ніводны запыт яшчэ ня быў зкампіляваны."
+
+msgid "The number of rows waiting to be written in INSERT DELAYED queues."
+msgstr "Колькасьць радкоў для запісу, адкладзеных запытамі INSERT DELAYED."
+
+msgid "The number of files that are open."
+msgstr "Колькасьць адкрытых файлаў."
+
+msgid "The number of streams that are open (used mainly for logging)."
+msgstr "Колькасьць адкрытых патокаў (выкарыстоўваюцца пераважна для лагаваньня)."
+
+msgid "The number of tables that are open."
+msgstr "Колькасьць адкрытых табліц."
+
+msgid "The amount of free memory for query cache."
+msgstr "Колькасьць вольнай памяці для кэшу запытаў."
+
+msgid "The number of cache hits."
+msgstr "Колькасьць зваротаў да кэшу."
+
+msgid "The number of queries added to the cache."
+msgstr "Колькасьць запытаў, якія былі даданыя ў кэш."
+
+msgid "The number of queries that have been removed from the cache to free up memory for caching new queries. This information can help you tune the query cache size. The query cache uses a least recently used (LRU) strategy to decide which queries to remove from the cache."
+msgstr "Колкасьць запытаў, якія былі выдаленыя з кэшу, каб вызваліць памяць для кэшаваньня новых запытаў. Гэтыя зьвесткі могуць дапамагчы вызначыць памер кэшу запытаў. Кэш запытаў выкарыстоўвае статэгію элемэнта, які выкарыстоўваўся найменш (LRU) для вызначэньня, якія запыты трэба выдаляць з кэшу."
+
+msgid "The number of non-cached queries (not cachable, or not cached due to the query_cache_type setting)."
+msgstr "Колькасьць некэшавальных запытаў (некэшавальных або некэшаваных з-за значэньня дырэктывы query_cache_type)."
+
+msgid "The number of queries registered in the cache."
+msgstr "Колькасьць запытаў, якія прысутнічаюць у кэшы."
+
+msgid "The total number of blocks in the query cache."
+msgstr "Агульная колькасьць блёкаў у кэшы запытыў."
+
+msgid "The status of failsafe replication (not yet implemented)."
+msgstr "Стан абароненай ад памылак рэплікацыі (яшчэ не рэалізаваная)."
+
+msgid "The number of joins that do not use indexes. If this value is not 0, you should carefully check the indexes of your tables."
+msgstr "Колькасьць аб'яднаньняў, якія не выкарыстоўвяюць індэксы. Калі гэтае значэньне ня роўнае 0, варта праверыць індэксы ў табліцах."
+
+msgid "The number of joins that used a range search on a reference table."
+msgstr "Колькасьць аб'яднаньняў, якія выкарыстоўвалі пошук па масцы ў мэтавай табліцы."
+
+msgid "The number of joins without keys that check for key usage after each row. (If this is not 0, you should carefully check the indexes of your tables.)"
+msgstr "Колькасьць аб'яднаньняў без выкарыстаньня ключоў, якія правяралі наяўнасьць ключа пасьля кожнага радка. (Калі гэтае значэньне ня роўнае 0, варта праверыць індэксы ў табліцах.)"
+
+msgid "The number of joins that used ranges on the first table. (It's normally not critical even if this is big.)"
+msgstr "Колькасьць аб'яднаньняў, якія выкарыстоўвалі спалучэньні палёў у першай табліцы. (Звычайна не крытычна, нават калі гэтае значэньне вялікае.)"
+
+msgid "The number of joins that did a full scan of the first table."
+msgstr "Колькасьць аб'яднаньняў, якія правялі поўны прагляд першай табліцы."
+
+msgid "The number of threads that have taken more than slow_launch_time seconds to create."
+msgstr "Колькасьць патокаў, якім спатрэбілася больш за slow_launch_time сэкундаў для стварэньня."
+
+msgid "The number of queries that have taken more than long_query_time seconds."
+msgstr "Колькасьць запытаў, на выканантне якіх спатрэбілася больш, чым long_query_time сэкундаў."
+
+msgid "The number of merge passes the sort algorithm has had to do. If this value is large, you should consider increasing the value of the sort_buffer_size system variable."
+msgstr "Колькасьць праходаў, якія былі зробленыя альгарытмам сартаваньня. Калі гэтае значэньне вялікае, варта разгледзіць павелічэньне значэньня сыстэмнай зьменнай sort_buffer_size."
+
+msgid "The number of sorts that were done with ranges."
+msgstr "Колькасьць сартаваньняў, якія былі зробленыя з выкарыстаньнем некалькіх слупкоў."
+
+msgid "The number of sorted rows."
+msgstr "Колькасьць адсартаваных радкоў."
+
+msgid "The number of sorts that were done by scanning the table."
+msgstr "Колькасьць сартаваньняў, якія былі зробленыя падчас прагляду табліцы."
+
+msgid "The number of times that a table lock was acquired immediately."
+msgstr "Колькасьць разоў, калі блякаваньне табліцы было зробленае імгненна."
+
+msgid "The number of times that a table lock could not be acquired immediately and a wait was needed. If this is high, and you have performance problems, you should first optimize your queries, and then either split your table or tables or use replication."
+msgstr "Колькасьць разоў, калі блякаваньне табліцы немагчыма было ажыцьцявіць імгненна і пэўны час пайшоў на чаканьне. Калі гэтае значэньне вялікае, і існуюць праблемы з прадукцыйнасьцю, варта спачатку аптымізаваць запыты, а пасьля або падзяліць табліцу або табліцы, або выкарыстоўваць рэплікацыю."
+
+msgid "The number of threads in the thread cache. The cache hit rate can be calculated as Threads_created/Connections. If this value is red you should raise your thread_cache_size."
+msgstr "Колькасьць патокаў у кэшы патокаў. Ступень трапляньня ў кэш можа быць вылічаная як Threads_created/Connections. Калі гэтае значэньне пафарбаванае ў чырвоны колер, варта павялічыць значэньне thread_cache_size."
+
+msgid "The number of currently open connections."
+msgstr "Колькасьць адкрытых на бягучы момант злучэньняў."
+
+msgid "The number of threads created to handle connections. If Threads_created is big, you may want to increase the thread_cache_size value. (Normally this doesn't give a notable performance improvement if you have a good thread implementation.)"
+msgstr "Колькасьць патокаў, створаных для кіраваньня злучэньнямі. Калі значэньне Threads_created вялікае, магчыма, варта павялічыць значэньне thread_cache_size. (Звычайна, гэта не дае якога-небудзь заўважнага павелічэньня прадукцыйнасьці, калі прысутнічае добрая рэалізацыя патокаў.)"
+
+msgid "Thread cache hit rate (calculated value)"
+msgstr "Адносныя пападанні ў кэш патоку (вылічанае значэнне)"
+
+msgid "The number of threads that are not sleeping."
+msgstr "Колькасьць патокаў, якія не зьяўляюцца сьпячымі."
+
+msgid "Wrong data"
+msgstr "Памылковыя даныя"
+
+msgid "Bookmark %s has been created."
+msgstr "Закладка %s створаная."
+
+msgid "Bookmark not created!"
+msgstr "Закладка не створаная!"
+
+msgid "Table %1$s has been altered successfully."
+msgstr "Табліца %1$s была пасьпяхова зьмененая."
+
+msgid "No row selected."
+msgstr "Радок не выбраны."
+
+msgid "No data to display"
+msgstr "Няма даных для адлюстравання"
+
+msgid "Table %s already exists!"
+msgstr "Табліца %s ужо існуе!"
+
+msgid "No column selected."
+msgstr "Ніводны слупок не выбраны."
+
+msgid "Invalid table name"
+msgstr "Некарэктнае імя табліцы"
+
+msgid "MySQL returned an empty result set (i.e. zero rows)."
+msgstr "MySQL вярнула пусты вынік (то бок нуль радкоў)."
+
+msgid "Display column was successfully updated."
+msgstr "Слупок, што адлюстроўваецца, паспяхова абноўлены."
+
+msgid "Internal relationships were successfully updated."
+msgstr "Унутраныя сувязі паспяхова абноўленыя."
+
+msgid "The columns have been moved successfully."
+msgstr "Слупкі паспяхова перамешчаныя."
+
+msgid "Query error"
+msgstr "Памылка запыту"
+
+msgid "Table %1$s has been altered successfully. Privileges have been adjusted."
+msgstr "Табліца %1$s паспяхова змененая. Прывілеі адрэгуляваныя."
+
+msgid "Tracking versions deleted successfully."
+msgstr "Версіі, што адсочваюцца, былі паспяхова выдаленыя."
+
+msgid "No versions selected."
+msgstr "Версіі не выбраныя."
+
+msgid "Add trigger"
+msgstr "Дадаць трыгер"
+
+msgid "Edit trigger"
+msgstr "Рэдагаваць трыгер"
+
+msgid "No trigger with name %1$s found in database %2$s."
+msgstr "Трыгера з назвай %1$s няма ў базе даных %2$s."
+
+msgid "You don't have sufficient privileges to be here right now!"
+msgstr "Вы ня маеце дастатковых прывілеяў быць у гэтым месцы ў гэты час!"
+
+msgid "Could not add columns!"
+msgstr "Не атрымалася дадаць слупкі!"
+
+msgid "Could not remove columns!"
+msgstr "Не атрымалася выдаліць слупкі!"
+
+msgid "Error: relationship already exists."
+msgstr "Памылка: сувязь ужо існуе."
+
+msgid "FOREIGN KEY relationship has been added."
+msgstr "Сувязь FOREIGN KEY была дададзеная."
+
+msgid "Error: FOREIGN KEY relationship could not be added!"
+msgstr "Памылка: сувязь FOREIGN KEY не дададзеная!"
+
+msgid "Error: Relational features are disabled!"
+msgstr "Памылка: рэляцыйныя функцыі адключаныя!"
+
+msgid "Internal relationship has been added."
+msgstr "Унутраная сувязь дададзеная."
+
+msgid "Error: Internal relationship could not be added!"
+msgstr "Памылка: унутраная сувязь не дададзеная!"
+
+msgid "FOREIGN KEY relationship has been removed."
+msgstr "Сувязь FOREIGN KEY была выдаленыя."
+
+msgid "Error: Internal relationship could not be removed!"
+msgstr "Памылка: унутраная сувязь не можа быць выдаленая!"
+
+msgid "Internal relationship has been removed."
+msgstr "Унутраная сувязь выдаленая."
+
+msgid "Could not load schema plugins, please check your installation!"
+msgstr "Немагчыма загрузіць плагіны схемы, калі ласка, праверце ўсталёўку!"
+
+msgid "MySQL said: "
+msgstr "Адказ MySQL: "
+
+msgid "Event %1$s has been modified."
+msgstr "Падзея %1$s была змененая."
+
+msgid "Event %1$s has been created."
+msgstr "Падзея %1$s створаная."
+
+msgid "You must provide an event name!"
+msgstr "Неабходна задаць назву падзеі!"
+
+msgid "Invalid routine type: \"%s\""
+msgstr "Некарэктны тып працэдуры: «%s»"
+
+msgid "Routine %1$s has been created."
+msgstr "Працэдура %1$s створаная."
+
+msgid "Routine %1$s has been modified. Privileges have been adjusted."
+msgstr "Працэдура %1$s была змененая. Прывілеі абноўленыя."
+
+msgid "Routine %1$s has been modified."
+msgstr "Працэдура %1$s была змененая."
+
+msgid "You must provide a routine name!"
+msgstr "Неабходна задаць назву працэдуры!"
+
+msgid "Execution results of routine %s"
+msgstr "Вынікі выканання працэдуры %s"
+
+msgid "Failed to set configured collation connection!"
+msgstr "Не атрымалася ўстанавіць кафігурацыю параўноўвання злучэння!"
+
+msgid "The row has been deleted."
+msgstr "Радок быў выдалены."
+
+msgid "Query took %01.4f seconds."
+msgstr "Запыт выконваўся %01.4f секунд."
+
+msgid "Showing rows %1s - %2s"
+msgstr "Паказаныя запісы %1s - %2s"
+
+msgid "Link not found!"
+msgstr "Сувязь ня знойдзеная!"
+
+msgid "Data home directory"
+msgstr "Хатняя тэчка дадзеных"
+
+msgid "The common part of the directory path for all InnoDB data files."
+msgstr "Агульная частка шляху тэчкі да ўсіх файлаў дадзеных InnoDB."
+
+msgid "Data files"
+msgstr "Файлы дадзеных"
+
+msgid "Autoextend increment"
+msgstr "Аўтапашыральнае прырашчэньне"
+
+msgid "The increment size for extending the size of an autoextending tablespace when it becomes full."
+msgstr "Памер прырашчэньня для пашырэньня памеру прасторы аўтапашыральнай табліцы, калі яна запоўніцца."
+
+msgid "Buffer pool size"
+msgstr "Памер пулу буфэру"
+
+msgid "The size of the memory buffer InnoDB uses to cache data and indexes of its tables."
+msgstr "Памер буфэру ў памяці, які InnoDB выкарыстоўвае для кэшаваньня дадзеных і індэксаў табліц."
+
+msgid "Buffer Pool"
+msgstr "Пул буфэру"
+
+msgid "InnoDB Status"
+msgstr "Стан InnoDB"
+
+msgid "Data pointer size"
+msgstr "Памер указальніка на дадзеныя"
+
+msgid "The default pointer size in bytes, to be used by CREATE TABLE for MyISAM tables when no MAX_ROWS option is specified."
+msgstr "Значэньне па змоўчаньні памеру ўказальніка ў байтах, для выкарыстаньня ў CREATE TABLE для табліц MyISAM, калі ня вызначаная опцыя MAX_ROWS."
+
+msgid "Automatic recovery mode"
+msgstr "Рэжым аўтаматычнага ўзнаўленьня"
+
+msgid "The mode for automatic recovery of crashed MyISAM tables, as set via the --myisam-recover server startup option."
+msgstr "Рэжым для аўтаматычнага ўзнаўленьня пашкоджаных табліц MyISAM, як вызначаны праз опцыю --myisam-recover загрузкі сэрвэра."
+
+msgid "Maximum size for temporary sort files"
+msgstr "Максымальны памер для часовых файлаў сартаваньня"
+
+msgid "The maximum size of the temporary file MySQL is allowed to use while re-creating a MyISAM index (during REPAIR TABLE, ALTER TABLE, or LOAD DATA INFILE)."
+msgstr "Максымальны памер часовага файла MySQL, які дазволена выкарыстоўваць для перастварэньня індэксу MyISAM (падчас REPAIR TABLE, ALTER TABLE, або LOAD DATA INFILE)."
+
+msgid "Maximum size for temporary files on index creation"
+msgstr "Максымальны памер часовых файлаў для стварэньня індэксу"
+
+msgid "If the temporary file used for fast MyISAM index creation would be larger than using the key cache by the amount specified here, prefer the key cache method."
+msgstr "Калі памер часовага файла, які выкарыстоўваецца для хуткага стварэньня індэксу MyISAM, будзе большы, чым выкарыстаньне для кэшу ключоў памеру, пазначанага тут, выберыце мэтад кэшаваньня ключоў."
+
+msgid "Repair threads"
+msgstr "Патокаў узнаўленьня"
+
+msgid "If this value is greater than 1, MyISAM table indexes are created in parallel (each index in its own thread) during the repair by sorting process."
+msgstr "Калі гэтае значэньне большае за 1, індэксы табліц MyISAM будуць стварацца паралельна (кожны індэкс у сваім уласным патоку) падчас узнаўленьня працэсам сартаваньня."
+
+msgid "Sort buffer size"
+msgstr "Памер буфэру сартаваньня"
+
+msgid "The buffer that is allocated when sorting MyISAM indexes during a REPAIR TABLE or when creating indexes with CREATE INDEX or ALTER TABLE."
+msgstr "Буфэр, які выдзяляецца для сартаваньня індэксаў MyISAM падчас REPAIR TABLE або падчас стварэньня індэксаў, выкарыстоўваючы CREATE INDEX ці ALTER TABLE."
+
+msgid "Index cache size"
+msgstr "Памер кэшу індэксаў"
+
+msgid "This is the amount of memory allocated to the index cache. Default value is 32MB. The memory allocated here is used only for caching index pages."
+msgstr "Гэта памер памяці, якая выдзяляецца для кэшу індэксаў. Памер па змоўчаньні — 32 МБ. Гэта памяць выкарыстоўваецца толькі для кэшаваньня старонак індэксаў."
+
+msgid "Record cache size"
+msgstr "Памер кэшу запісаў"
+
+msgid "This is the amount of memory allocated to the record cache used to cache table data. The default value is 32MB. This memory is used to cache changes to the handle data (.xtd) and row pointer (.xtr) files."
+msgstr "Колькасьць памяці, якая выдзяляецца для кэшу запісаў, што выкарыстоўваецца для кэшаваньня дадзеных табліцы. Памер па змоўчаньні — 32 МБ. Гэтая памяць выкарыстоўваецца для кэшаваньня зьменаў файлаў апрацоўкі дадзеных (.xtd) і файлаў указальнікаў радкоў (.xtr)."
+
+msgid "Log cache size"
+msgstr "Памер кэшу логаў"
+
+msgid "The amount of memory allocated to the transaction log cache used to cache on transaction log data. The default is 16MB."
+msgstr "Колькасьць памяці, якая выдзяляецца для кэшу логу транзакцый, які выкарыстоўваецца для кэшаваньня дадзеныя логу транзакцый. Памер па змоўчаньні — 16 МБ."
+
+msgid "Log file threshold"
+msgstr "Парог файла логу"
+
+msgid "The size of a transaction log before rollover, and a new log is created. The default value is 16MB."
+msgstr "Памер логу транзакцый перад выкананьнем выкананьня, да моманту, пакуль будзе створаны новы файл. Значэньне па Памер — 16 МБ."
+
+msgid "Transaction buffer size"
+msgstr "Памер буфэру транзакцый"
+
+msgid "The size of the global transaction log buffer (the engine allocates 2 buffers of this size). The default is 1MB."
+msgstr "Памер глябальнага буфэру логу транзакцый (кожная машына захаваньня дадзеных выдзяляле 2 буфэры гэтага памеру). Памер па змоўчаньні — 1 МБ."
+
+msgid "Checkpoint frequency"
+msgstr "Частата кантрольных кропак"
+
+msgid "The amount of data written to the transaction log before a checkpoint is performed. The default value is 24MB."
+msgstr "Колькасьць дадзеных, якія запісваюцца ў лог транзакцый перад тым, як выканаецца кантрольная кропка. Значэньне па змоўчаньні — 24 МБ."
+
+msgid "Data log threshold"
+msgstr "Парог лагаваньня дадзеных"
+
+msgid "The maximum size of a data log file. The default value is 64MB. PBXT can create a maximum of 32000 data logs, which are used by all tables. So the value of this variable can be increased to increase the total amount of data that can be stored in the database."
+msgstr "Максымальны памер файла логу дадзеных. Памер па змоўчаньні — 64МБ. PBXT мода ствараць да 32000 логаў дадзеных, якія выкарыстоўваюцца ўсімі табліцамі. Такім чынам, значэньне гэтай зьменнай можа быць павялічана, каб павялічаць агульную колькасьць дадзеных, якія могуць захоўвацца ў базе дадзеных."
+
+msgid "Garbage threshold"
+msgstr "Парог сьмецьця"
+
+msgid "The percentage of garbage in a data log file before it is compacted. This is a value between 1 and 99. The default is 50."
+msgstr "Адсотак сьмецьця ў файле логу дадзеных перад тым, як ён будзе сьціснуты. Гэтае значэньне можа знаходзіцца ў межах ад 1 да 99. Значэньне па змоўчаньні — 50."
+
+msgid "Log buffer size"
+msgstr "Памер буфэру логу"
+
+msgid "The size of the buffer used when writing a data log. The default is 256MB. The engine allocates one buffer per thread, but only if the thread is required to write a data log."
+msgstr "Памер буфэру, які выкарыстоўваецца падчас запісу логу. Памер па змоўчаньні складае 256МБ. Машына захаваньня дадзеных выдзяляе па аднаму буфэру на кожны паток, але толькі калі патоку патрабуецца запісваць лог дадзеных."
+
+msgid "Data file grow size"
+msgstr "Памер павелічэньня файлаў з дадзенымі"
+
+msgid "The grow size of the handle data (.xtd) files."
+msgstr "Памер павелічэньня файлаў апрацоўкі дадзеных (.xtd)."
+
+msgid "Row file grow size"
+msgstr "Памер павелічэньня файлаў радкоў"
+
+msgid "The grow size of the row pointer (.xtr) files."
+msgstr "Памер павелічэньня файлаў указальнікаў на радкі (.xtr)."
+
+msgid "Log file count"
+msgstr "Колькасьць файлаў логу"
+
+msgid "This is the number of transaction log files (pbxt/system/xlog*.xt) the system will maintain. If the number of logs exceeds this value then old logs will be deleted, otherwise they are renamed and given the next highest number."
+msgstr "Гэта колькасьць файлаў логу транзакцый (pbxt/system/xlog*.xt), якія можа падтрымліваць сыстэма. У выпадку, калі колькасьць файлаў логу перавысіць гэтае значэньне, старыя файлы логу будуць выдаленыя. У іншым выпадку яны будуць перайменаваныя і ім будзе дадзены чарговы найвышэйшы нумар."
+
+msgid "Report"
+msgstr "Справаздача"
+
+msgid "Access denied!"
+msgstr "У доступе адмоўлена!"
+
+msgid "Insufficient space to save the file %s."
+msgstr "Недастаткова месца для захаваньня ў файл %s."
+
+msgid "File %s already exists on server, change filename or check overwrite option."
+msgstr "Файл %s ужо існуе на сэрвэры, зьмяніце імя файла або праверце опцыю перазапісу."
+
+msgid "The web server does not have permission to save the file %s."
+msgstr "Вэб-сэрвэр ня мае дазволу для захаваньня ў файл %s."
+
+msgid "Dump has been saved to file %s."
+msgstr "Дамп захаваны ў файл %s."
+
+msgid "Could not save recent table!"
+msgstr "Не атрымалася захаваць астатнюю табліцу!"
+
+msgid "Could not save favorite table!"
+msgstr "Не атрымалася захаваць улюблёную табліцу!"
+
+msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini."
+msgstr "Памер загружанага файла пераўзыходзіць парамэтар upload_max_filesize у php.ini."
+
+msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form."
+msgstr "Памер загружанага файла пераўзыходзіць парамэтар MAX_FILE_SIZE, які быў вызначаны ў HTML-форме."
+
+msgid "The uploaded file was only partially uploaded."
+msgstr "Файл быў загружаны толькі часткова."
+
+msgid "Missing a temporary folder."
+msgstr "Адсутнічае часовая тэчка."
+
+msgid "Failed to write file to disk."
+msgstr "Памылка запісу на дыск."
+
+msgid "File upload stopped by extension."
+msgstr "Загрузка файла спыненая пашырэньнем."
+
+msgid "Unknown error in file upload."
+msgstr "Падчас загрузкі файла адбылася невядомая памылка."
+
+msgid "File could not be read!"
+msgstr "Немагчыма прачытаць файл!"
+
+msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
+msgstr "Памылка перамяшчэньня загружанага файла. Глядзіце разьдзел [doc@faq1-11]1.11 у FAQ[/doc]."
+
+msgid "You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration."
+msgstr "Вы паспрабавалі загрузіць файл з мэтадам сьціску, які непадтрымліваецца (%s). Ягоная падтрымка або не рэалізаваная, або адключаная ў вашай канфігурацыі."
+
+msgid "Jump to database “%s”."
+msgstr "Перайсці да базы дадых «%s»."
+
+msgid "Skip Explain SQL"
+msgstr "Не тлумачыць SQL"
+
+msgid "Without PHP code"
+msgstr "Без PHP-коду"
+
+msgctxt "Inline edit query"
+msgid "Edit inline"
+msgstr "Радковае рэдагаванне"
+
+msgid "You should upgrade to %s %s or later."
+msgstr "Вам трэба абнавіць %s да вэрсіі %s ці пазьнейшай."
+
+msgid "Go to table: %s"
+msgstr "Перайсці да табліцы: %s"
+
+msgid "Structure of %s"
+msgstr "Структура %s"
+
+msgid "Go to view: %s"
+msgstr "Перайсці да прадстаўлення: %s"
+
+msgid "Go to database: %s"
+msgstr "Перайсці да базы даных: %s"
+
+msgid "The indexes %1$s and %2$s seem to be equal and one of them could possibly be removed."
+msgstr "Падобна, што індэксы %1$s і %2$s зьяўляюцца аднолькавымі, а таму адзін зь іх, магчыма, можна выдаліць."
+
+msgid "web server upload directory:"
+msgstr "каталог вэб-сервера для загрузкі:"
+
+msgid "Showing SQL query"
+msgstr "У выглядзе SQL-запыту"
+
+msgid "Inserted row id: %1$d"
+msgstr "ID устаўленага радку: %1$d"
+
+msgid "Database seems to be empty!"
+msgstr "База дадзеных — пустая!"
+
+msgid "Designer"
+msgstr "Дызайнэр"
+
+msgid "User accounts"
+msgstr "Уліковыя запісы"
+
+msgid "Charsets"
+msgstr "Кадыроўкі"
+
+msgid "Engines"
+msgstr "Машыны"
+
+msgid "%1$d row affected."
+msgid_plural "%1$d rows affected."
+msgstr[0] "%1$d радок закрануты."
+msgstr[1] "%1$d радкі закранутыя."
+msgstr[2] "%1$d радкоў закранутыя."
+
+msgid "%1$d row deleted."
+msgid_plural "%1$d rows deleted."
+msgstr[0] "%1$d радок выдалены."
+msgstr[1] "%1$d радкі выдаленыя."
+msgstr[2] "%1$d радкоў выдаленыя."
+
+msgid "%1$d row inserted."
+msgid_plural "%1$d rows inserted."
+msgstr[0] "%1$d радок устаўлены."
+msgstr[1] "%1$d радкі устаўленыя."
+msgstr[2] "%1$d радкоў устаўленыя."
+
+msgid "Groups:"
+msgstr "Групы:"
+
+msgid "Events:"
+msgstr "Падзеі:"
+
+msgid "Functions:"
+msgstr "Функцыі:"
+
+msgid "Procedures:"
+msgstr "Працэдуры:"
+
+msgid "Views:"
+msgstr "Прадстаўленні:"
+
+msgid "Show hidden items"
+msgstr "Паказаць схаваныя элементы"
+
+msgid "Functions"
+msgstr "Функцыі"
+
+msgid "Procedures"
+msgstr "Працэдуры"
+
+msgid "Procedure"
+msgstr "Працэдура"
+
+msgid "Primary key already exists."
+msgstr "Першасны ключ ужо існуе."
+
+msgid "+ Add a new primary key column"
+msgstr "Дадаць новы слупок да першаснага ключа"
+
+msgid "Remove redundant columns"
+msgstr "Выдаліць залішнія слупкі"
+
+msgid "Remove selected"
+msgstr "Выдаліць выбранае"
+
+msgid "No redundant column"
+msgstr "Няма лішняга слупка"
+
+msgid "Error in processing!"
+msgstr "Памылка пры апрацоўцы!"
+
+msgid "Step 3."
+msgstr "Крок 3."
+
+msgid "Coalesce"
+msgstr "Аб'яднаць"
+
+msgid "Can't move table to same one!"
+msgstr "Немагчыма перанесьці табліцу ў саму сябе!"
+
+msgid "Can't copy table to same one!"
+msgstr "Немагчыма скапіяваць табліцу ў саму сябе!"
+
+msgid "Table %s has been moved to %s. Privileges have been adjusted."
+msgstr "Табліца %s была перанесеная ў %s. Прывілеі адрэгуляваныя."
+
+msgid "Table %s has been copied to %s. Privileges have been adjusted."
+msgstr "Табліца %s была скапіяваная ў %s. Прывілеі адрэгуляваныя."
+
+msgid "Table %s has been moved to %s."
+msgstr "Табліца %s была перанесеная ў %s."
+
+msgid "Table %s has been copied to %s."
+msgstr "Табліца %s была скапіяваная ў %s."
+
+msgid "The table name is empty!"
+msgstr "Пустая назва табліцы!"
+
+msgid "Error while creating PDF:"
+msgstr "Памылка падчас стварэння PDF:"
+
+msgid "You probably did not create a configuration file. You might want to use the %1$ssetup script%2$s to create one."
+msgstr "Імаверна, прычына гэтага ў тым, што ня створаны канфігурацыйны файл. Каб яго стварыць, можна выкарыстаць %1$sналадачны скрыпт%2$s."
+
+msgid "phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server."
+msgstr "phpMyAdmin паспрабаваў падлучыцца да сэрвэра MySQL, але сэрвэр адхіліў злучэньне. Праверце імя хосту, карыстальніка і пароль у config.inc.php і ўпэўніцеся, што яны адпавядаюць інфармацыі, якую даў адміністратар MySQL-сэрвэра."
+
+msgid "You are not allowed to log in to this MySQL server!"
+msgstr "Вам не дазволена ўваходзіць на MySQL-сервер!"
+
+msgid "Wrong username/password. Access denied."
+msgstr "Няправільны лагін/пароль. У доступе адмоўлена."
+
+msgid "Invalid authentication method set in configuration:"
+msgstr "У канфігурацыі вызначаны некарэктны мэтад аўтэнтыфікацыі:"
+
+msgid "Columns separated with:"
+msgstr "Раздзяляльнік слупкоў:"
+
+msgid "Columns enclosed with:"
+msgstr "Слупкі ўзяты ў:"
+
+msgid "Columns escaped with:"
+msgstr "Слупкі экранаваны з:"
+
+msgid "Lines terminated with:"
+msgstr "Радкі заканчваюцца на:"
+
+msgid "Replace NULL with:"
+msgstr "Замяніць NULL на:"
+
+msgid "Excel edition:"
+msgstr "Версія Excel:"
+
+msgid "Data dump options"
+msgstr "Налады дампу даных"
+
+msgid "Dumping data for table"
+msgstr "Дамп дадзеных табліцы"
+
+msgid "Table structure for table"
+msgstr "Структура табліцы"
+
+msgid "Structure for view"
+msgstr "Структура для прагляду"
+
+msgid "Stand-in structure for view"
+msgstr "Замяняльная структура для прагляду"
+
+msgid "Content of table @TABLE@"
+msgstr "Змесціва табліцы @TABLE@"
+
+msgid "(continued)"
+msgstr "(працяг)"
+
+msgid "Structure of table @TABLE@"
+msgstr "Структура табліцы @TABLE@"
+
+msgid "Object creation options"
+msgstr "Параметры стварэння аб'екта"
+
+msgid "Table caption:"
+msgstr "Загаловак табліцы:"
+
+msgid "Table caption (continued):"
+msgstr "Загаловак табліцы (працяг):"
+
+msgid "Label key:"
+msgstr "Ключ меткі:"
+
+msgid "Display foreign key relationships"
+msgstr "Адлюстраваць сувязі знешніх ключоў"
+
+msgid "Display comments"
+msgstr "Адлюстраваць каментары"
+
+msgid "Put columns names in the first row:"
+msgstr "Памясціць назвы слупкоў у першым радку:"
+
+msgid "Generation Time:"
+msgstr "Час генерацыі:"
+
+msgid "PHP Version:"
+msgstr "Вэрсія PHP:"
+
+msgid "Data:"
+msgstr "Даныя:"
+
+msgid "Structure:"
+msgstr "Структура:"
+
+msgid "Export table names"
+msgstr "Экспарт назваў табліц"
+
+msgid "Export table headers"
+msgstr "Экспарт загалоўкаў табліц"
+
+msgid "Report title:"
+msgstr "Загаловак справаздачы:"
+
+msgid "Dumping data"
+msgstr "Дампаванне даных"
+
+msgid "View structure"
+msgstr "Паглядзець структуру"
+
+msgid "Stand in"
+msgstr "Станьце"
+
+msgid "Additional custom header comment (\\n splits lines):"
+msgstr "Дадатковы асабісты каментар загалоўка (\\n падзяляе радкі):"
+
+msgid "Export metadata"
+msgstr "Экспарт метаданых"
+
+msgid "Add statements:"
+msgstr "Дадаць сцвярджэнні:"
+
+msgid "Add %s statement"
+msgstr "Дадаць сцвярджэнне %s"
+
+msgid "%s value"
+msgstr "%s значэнне"
+
+msgid "Data creation options"
+msgstr "Параметры стварэння даных"
+
+msgid "Metadata"
+msgstr "Метаданыя"
+
+msgid "Metadata for table %s"
+msgstr "Метаданыя для табліцы %s"
+
+msgid "Metadata for database %s"
+msgstr "Метаданыя для базы даных %s"
+
+msgid "Error reading structure for table %s:"
+msgstr "Памылка чытання структуры табліцы %s:"
+
+msgid "Constraints for dumped tables"
+msgstr "Абмежаваньні для экспартаваных табліц"
+
+msgid "Constraints for table"
+msgstr "Абмежаваньні для табліцы"
+
+msgid "Indexes for dumped tables"
+msgstr "Індэксы для захаваных табліц"
+
+msgid "Indexes for table"
+msgstr "Індэксы табліцы"
+
+msgid "AUTO_INCREMENT for dumped tables"
+msgstr "AUTO_INCREMENT для захаваных табліц"
+
+msgid "AUTO_INCREMENT for table"
+msgstr "AUTO_INCREMENT для табліцы"
+
+msgid "RELATIONSHIPS FOR TABLE"
+msgstr "СУВЯЗІ ТАБЛІЦЫ"
+
+msgid "Structure for view %s exported as a table"
+msgstr "Структура прадстаўлення «%s» экспартаваная як табліца"
+
+msgid "Error reading data for table %s:"
+msgstr "Памылка чытання даных табліц %s:"
+
+msgid "Creation:"
+msgstr "Створаная:"
+
+msgid "Last update:"
+msgstr "Апошняе абнаўленьне:"
+
+msgid "Last check:"
+msgstr "Апошняя праверка:"
+
+msgid "Export contents"
+msgstr "Экспартаваць змест"
+
+msgid "Invalid format of CSV input on line %d."
+msgstr "Некарэктны фармат CSV-дадзеных у радку %d."
+
+msgid "Invalid column count in CSV input on line %d."
+msgstr "Няправільная колькасць слупкоў у CSV уводзе ў радку %d."
+
+msgid "Invalid parameter for CSV import: %s"
+msgstr "Недапушчальны парэмэтар для імпарту дадзеных у CSV: %s"
+
+msgid "Column names: "
+msgstr "Назвы слупкоў: "
+
+msgid "This plugin does not support compressed imports!"
+msgstr "Гэты плагін не падтрымлівае сьціснутыя дадзеныя!"
+
+msgid "Could not parse OpenDocument Spreadsheet!"
+msgstr "Немагчыма разабраць OpenDocument Spreadsheet!"
+
+msgid "The imported file does not contain any data!"
+msgstr "Імпартаваны файл не ўтрымлівае даных!"
+
+msgid "SQL compatibility mode:"
+msgstr "Рэжым сумяшчальнасці SQL:"
+
+msgid "XML"
+msgstr "XML"
+
+msgid "This format has no options"
+msgstr "Гэты фармат не мае опцыяў"
+
+msgid "The %s table doesn't exist!"
+msgstr "Табліца «%s» не існуе!"
+
+msgid "Schema of the %s database - Page %s"
+msgstr "Схема базы даных «%s» — старонка %s"
+
+msgid "PDF export page"
+msgstr "Старонка экспарту PDF"
+
+msgid "Schema of the %s database"
+msgstr "Схема базы даных «%s»"
+
+msgid "Relational schema"
+msgstr "Рэляцыйная схема"
+
+msgid "Table of contents"
+msgstr "Зьмест"
+
+msgid "Show color"
+msgstr "Паказаць колер"
+
+msgid "Orientation"
+msgstr "Арыентацыя"
+
+msgid "Landscape"
+msgstr "Краявід"
+
+msgid "Portrait"
+msgstr "Партрэт"
+
+msgid "Show grid"
+msgstr "Паказаць сетку"
+
+msgid "Order of the tables"
+msgstr "Парадак табліц"
+
+msgid "Name (Ascending)"
+msgstr "Назва (па ўзрастанню)"
+
+msgid "Name (Descending)"
+msgstr "Назва (па ўбыванню)"
+
+msgid "Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use \"local\" or \"utc\" strings) for that. According to that, date format has different value - for \"local\" see the documentation for PHP's strftime() function and for \"utc\" it is done using gmdate() function."
+msgstr "Паказвае TIME, TIMESTAMP, DATETIME альбо лікавы час Unix як адфарматаваную дату. Першы параметр — гэта колькасць гадзінаў, якія будуць дададзеныя да меткі часу (агадана: 0). Другі параметр выкарыстоўвайце, каб пазначыць іншы фармат даты/часу. Трэці параметр вызначае, ці хочаце вы ўбачыць лакальную дату альбо дату UTC (ужывайце для гэтага параметра «local» і «utc» адпаведна). У залежнасьці ад гэтага фармат даты мае розныя значэнні: для атрымання параметраў лакальнай даты глядзіце дакументацыю для функцыі PHP strftime(), а для грынвіцкага часу (параметр «utc») — дакументацыю функцыі gmdate()."
+
+msgid "%B %d, %Y at %I:%M %p"
+msgstr "%d %B %Y, %H:%M"
+
+msgid "Displays the contents of the column as-is, without running it through htmlspecialchars(). That is, the column is assumed to contain valid HTML."
+msgstr "Паказвае змесціва слупка як ёсць, без апрацоўкі яго функцыяй htmlspecialchars(). Таму разумеецца, што слупок ўтрымлівае карэктны HTML-код."
+
+msgid "Displays hexadecimal representation of data. Optional first parameter specifies how often space will be added (defaults to 2 nibbles)."
+msgstr "Паказвае дадзеныя ў шаснаццатковым выглядзе. Апцыянальны першы парамэтар вызначае частату дадаваньня прагала (па-змоўчаньні — праз кожныя 8 бітаў)."
+
+msgid "Displays a link to download this image."
+msgstr "Паказвае спасылку для загрузкі гэтага малюнку."
+
+msgid "Displays a clickable thumbnail. The options are the maximum width and height in pixels. The original aspect ratio is preserved."
+msgstr "Паказвае націскальны эскіз; Опцыі — максымальная шырыня і вышыня ў піксэлах. Захоўваюцца пачатковыя прапорцыі."
+
+msgid "Formats text as SQL query with syntax highlighting."
+msgstr "Фарматуе тэкст як SQL-запыт з падсьвечаным сынтаксісам."
+
+msgid "Displays a part of a string. The first option is the number of characters to skip from the beginning of the string (Default 0). The second option is the number of characters to return (Default: until end of string). The third option is the string to append and/or prepend when truncation occurs (Default: \"…\")."
+msgstr "Паказвае толькі частку радка. Першая опцыя — колькасьць сымбаляў ад пачатку радка, якія трэба прапусьціць (Па змоўчаньні 0). Другая опцыя — колькасьць сымбаляў, якія трэба вярнуць (Па змоўчаньні: да канца радка). Трэцяя опцыя — радок, які трэба далучыць да канца і/або з пачатку радка, калі адбудзецца ўсячэньне (Па змоўчаньні: \"…\") ."
+
+msgid "Displays an image and a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second and third options are the width and the height in pixels."
+msgstr "Паказвае малюнак і спасылку, слупок змяшчае назву файла. Першая опцыя — прэфікс адраса кшталту \"https://www.example.com/\". Другая і трэцяя опцыі — шырыня і вышыня ў пікселах."
+
+msgid "Displays a link; the column contains the filename. The first option is a URL prefix like \"https://www.example.com/\". The second option is a title for the link."
+msgstr "Паказвае спасылку; слупок змяшчае назву файла. Першая опцыя — прэфікс адраса кшталту \"https://www.example.com/\". Другая опцыя — назва спасылкі."
+
+msgid "Formats text as JSON with syntax highlighting."
+msgstr "Фарматуе тэкст як JSON з падсвечаным сінтаксісам."
+
+msgid "Formats text as XML with syntax highlighting."
+msgstr "Фарматуе тэкст як XML з падсвечаным сінтаксісам."
+
+msgid "Authentication Application (2FA)"
+msgstr "Праграма аўтэнтыфікацыі (2FA)"
+
+msgid "Two-factor authentication failed: %s"
+msgstr "Двух-фактарная аўтэнтыфікацыя скончылася няўдала: %s"
+
+msgid "Two-factor authentication failed."
+msgstr "Двух-фактарная аўтэнтыфікацыя скончылася няўдала."
+
+msgid "Simple two-factor authentication"
+msgstr "Простая двух-фактарная аўтэнтыфікацыя"
+
+msgid "The server is not responding (or the local server's socket is not correctly configured)."
+msgstr "Сервер не адказвае (або сокет лакальнага сервера не сканфігураваны правільна)."
+
+msgid "The server is not responding."
+msgstr "Сервер не адказвае."
+
+msgid "Logout and try as another user."
+msgstr "Выйсці і паспрабаваць у якасці іншага карыстальніка."
+
+msgid "Please check privileges of directory containing database."
+msgstr "Калі ласка, праверце прывілеі каталога, што змяшчае базу даных."
+
+msgid "Details…"
+msgstr "Дэталі…"
+
+msgid "Replication started successfully."
+msgstr "Рэплікацыя паспяхова запусцілася."
+
+msgid "Replication stopped successfully."
+msgstr "Рэплікацыя паспяхова спынілася."
+
+msgid "Replication resetting successfully."
+msgstr "Рэплікацыя паспяхова скінулася."
+
+msgid "Error."
+msgstr "Памылка."
+
+msgid "Native MySQL authentication"
+msgstr "Уласная аўтэнтыфікацыя MySQL"
+
+msgid "SHA256 password authentication"
+msgstr "Парольная аўтэнтыфікацыя SHA256"
+
+msgid "No privileges."
+msgstr "Без прывілеяў."
+
+msgid "Includes all privileges except GRANT."
+msgstr "Уключае ўсе прывілеі, апроч GRANT."
+
+msgid "The password for %s was changed successfully."
+msgstr "Пароль для %s пасьпяхова зьменены."
+
+msgid "You have revoked the privileges for %s."
+msgstr "Вы анулявалі прывілеі для %s."
+
+msgid "Revoke"
+msgstr "Ануляваць"
+
+msgid "No users selected for deleting!"
+msgstr "На выбраныя карыстальнікі для выдаленьня!"
+
+msgid "Reloading the privileges"
+msgstr "Перазагрузіць прывілеі"
+
+msgid "The selected users have been deleted successfully."
+msgstr "Выбраныя карыстальнікі былі пасьпяхова выдаленыя."
+
+msgid "You have updated the privileges for %s."
+msgstr "Вы зьмянілі прывілеі для  %s."
+
+msgid "Deleting %s"
+msgstr "Выдаленьне %s"
+
+msgid "The privileges were reloaded successfully."
+msgstr "Прывілеі былі пасьпяхова перазагружаныя."
+
+msgid "The user %s already exists!"
+msgstr "Карыстальнік %s ужо існуе!"
+
+msgid "Privileges for %s"
+msgstr "Прывілеі для %s"
+
+msgid "Note: phpMyAdmin gets the users’ privileges directly from MySQL’s privilege tables. The content of these tables may differ from the privileges the server uses, if they have been changed manually. In this case, you should %sreload the privileges%s before you continue."
+msgstr "Заўвага: phpMyAdmin атрымлівае прывілеі карыстальнікаў наўпростава з табліц прывілеяў MySQL. Змесціва гэтых табліц можа адрознівацца ад прывілеяў, якія выкарыстоўвае сервер, калі яны былі змененыя ўручную. У гэтым выпадку вам трэба %sперазагрузіць прывілеі%s да таго, як вы працягнеце."
+
+msgid "Note: phpMyAdmin gets the users’ privileges directly from MySQL’s privilege tables. The content of these tables may differ from the privileges the server uses, if they have been changed manually. In this case, the privileges have to be reloaded but currently, you don't have the RELOAD privilege."
+msgstr "Заўвага: phpMyAdmin атрымлівае прывілеі карыстальнікаў наўпростава з табліц прывілеяў MySQL. Змесціва гэтых табліц можа адрознівацца ад прывілеяў, якія выкарыстоўвае сервер, калі яны былі змененыя ўручную. У гэтым выпадку вам трэба %sперазагрузіць прывілеі%s, але цяпер у вас няма прывілеі RELOAD."
+
+msgid "You have added a new user."
+msgstr "Быў дададзены новы карыстальнік."
+
+msgid "Handler"
+msgstr "Апрацоўнік"
+
+msgid "Query cache"
+msgstr "Кэш запытаў"
+
+msgid "Threads"
+msgstr "Патокі"
+
+msgid "Temporary data"
+msgstr "Часовыя дадзеныя"
+
+msgid "Delayed inserts"
+msgstr "Адкладзеныя ўстаўкі"
+
+msgid "Key cache"
+msgstr "Кэш ключоў"
+
+msgid "Joins"
+msgstr "Аб'яднаньні"
+
+msgid "Sorting"
+msgstr "Сартаваньне"
+
+msgid "Transaction coordinator"
+msgstr "Каардынатар перакладу"
+
+msgid "Flush (close) all tables"
+msgstr "Скінуць (закрыць) усе табліцы"
+
+msgid "Show open tables"
+msgstr "Паказаць адкрытыя табліцы"
+
+msgid "Flush query cache"
+msgstr "Скінуць кэш запытаў"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Command"
+msgstr "Каманда"
+
+msgid "Showing as PHP code"
+msgstr "У выглядзе PHP-коду"
+
+msgid "Run SQL query/queries on server “%s”"
+msgstr "Выканаць SQL-запыт(ы) на серверы «%s»"
+
+msgid "Run SQL query/queries on database %s"
+msgstr "Выканаць SQL-запыт(ы) на базе дадзеных %s"
+
+msgid "Run SQL query/queries on table %s"
+msgstr "Выканаць SQL-запыт(ы) у табліцы %s"
+
+msgid "There is no detailed status information available for this storage engine."
+msgstr "Для гэтай машыны захаваньня дадзеных дэтальная інфармацыя не даступная."
+
+msgid "%s is available on this MySQL server."
+msgstr "%s даступная на гэтым MySQL-сэрвэры."
+
+msgid "%s has been disabled for this MySQL server."
+msgstr "%s была адключаная для рэтага MySQL-сэрвэра."
+
+msgid "This MySQL server does not support the %s storage engine."
+msgstr "Гэты сэрвэр MySQL не падтрымлівае машыну захаваньня дадзеных %s."
+
+msgid "The name of the primary key must be \"PRIMARY\"!"
+msgstr "Імя першаснага ключа мусіць быць PRIMARY!"
+
+msgid "Can't rename index to PRIMARY!"
+msgstr "Немагчыма перайменаваць індэкс у PRIMARY!"
+
+msgid "No index parts defined!"
+msgstr "Часткі індэксу ня вызначаныя!"
+
+msgid "Problems with indexes of table `%s`"
+msgstr "Праблемы з індэксамі для табліцы `%s`"
+
+msgid "Source database `%s` was not found!"
+msgstr "База-крыніца «%s» не знойдзена!"
+
+msgid "Target database `%s` was not found!"
+msgstr "Мэтавая база «%s» не знойдзеная!"
+
+msgid "Invalid database:"
+msgstr "Няправільная база даных:"
+
+msgid "Invalid table name:"
+msgstr "Некарэктная назва табліцы:"
+
+msgid "Table %1$s has been renamed to %2$s."
+msgstr "Табліца %1$s была перайменаваная ў %2$s."
+
+msgid "Could not save table UI preferences!"
+msgstr "Не атрымалася захаваць налады UI!"
+
+msgid "Error creating foreign key on %1$s (check data types)"
+msgstr "Памылка стварэньня зьнешняга ключа на %1$s (праверце тыпы калёнак)"
+
+msgid "Default theme %s not found!"
+msgstr "Тэма па змоўчаньні %s ня знойдзеная!"
+
+msgid "Theme %s not found!"
+msgstr "Тэма %s ня знойдзеная!"
+
+msgid "No valid image path for theme %s found!"
+msgstr "Дапушчальны шлях да малюнкаў тэмы %s ня знойдзены!"
+
+msgid "Delete tracking data row from report"
+msgstr "Выдаліць радок даных сачэння са справаздачы"
+
+msgid "No data"
+msgstr "Няма даных"
+
+msgid "Export as %s"
+msgstr "Экспартаваць як %s"
+
+msgid "Version %1$s of %2$s was deleted."
+msgstr "Версія %1$s з %2$s выдаленая."
+
+msgid "Trigger %1$s has been modified."
+msgstr "Трыгер %1$s быў зменены."
+
+msgid "Trigger %1$s has been created."
+msgstr "Трыгер %1$s створаны."
+
+msgid "You must provide a trigger name!"
+msgstr "Неабходна задаць назву трыгера!"
+
+msgid "You must provide a valid timing for the trigger!"
+msgstr "Неабходна задаць правільны час выканання трыгера!"
+
+msgid "You must provide a valid event for the trigger!"
+msgstr "Неабходна задаць правільную падзею для трыгера!"
+
+msgid "You must provide a valid table name!"
+msgstr "Неабходна задаць правільную назву табліцы!"
+
+msgid "A date, supported range is %1$s to %2$s"
+msgstr "Дата, падтрымліваецца інтэрвал ад %1$s да %2$s"
+
+msgid "A time, range is %1$s to %2$s"
+msgstr "Час, інтэрвал ад %1$s да %2$s"
+
+msgid "A polygon"
+msgstr "Шматвугольнік"
+
+msgctxt "date and time types"
+msgid "Date and time"
+msgstr "Дата і час"
+
+msgctxt "spatial types"
+msgid "Spatial"
+msgstr "Прасторавыя"
+
+msgid "Password is too long!"
+msgstr "Пароль занадта доўгі!"
+
+msgid "The profile has been updated."
+msgstr "Профіль быў адноўлены."
+
+msgid "Max: %s%s"
+msgstr "Максымальны памер: %s%s"
+
+msgid "%s days, %s hours, %s minutes and %s seconds"
+msgstr "%s дзён, %s гадзінаў, %s хвілінаў і %s сэкундаў"
+
+msgid "Users"
+msgstr "Карыстальнікі"
+
+msgid "Error in ZIP archive:"
+msgstr "Памылка ў ZIP-архіве:"
+
+msgid "No files found inside ZIP archive!"
+msgstr "Файлы ў ZIP-архіве ня знойдзеныя!"

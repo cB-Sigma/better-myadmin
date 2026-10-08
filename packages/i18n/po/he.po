@@ -1,0 +1,4592 @@
+# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/he.po by packages/i18n/scripts/import-po.ts.
+# Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
+msgid ""
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2026-03-23 02:09+0000\nLast-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\nLanguage-Team: Hebrew <https://hosted.weblate.org/projects/phpmyadmin/master/he/>\nLanguage: he\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 5.17-dev\n"
+
+msgid "Javascript must be enabled past this point!"
+msgstr "יש להפעיל Javascript מעבר לנקודה זו!"
+
+msgid "phpMyAdmin documentation"
+msgstr "תיעוד phpMyAdmin"
+
+msgid "Settings"
+msgstr "הגדרות"
+
+msgid "Log out"
+msgstr "יציאה"
+
+msgid "Page-related settings"
+msgstr "הגדרות תלויות עמוד"
+
+msgid "phpMyAdmin Demo Server"
+msgstr "שרת הדגמה של phpMyAdmin"
+
+msgid "Git information missing!"
+msgstr "פרטי ה־Git חסרים!"
+
+msgid "Edit ENUM/SET values"
+msgstr "עריכת ערכי ENUM/SET"
+
+msgid "As defined:"
+msgstr "כפי שהוגדר:"
+
+msgid "You don't have sufficient privileges to perform this operation; Please refer to the documentation for more details"
+msgstr "אין לך מספיק הרשאות כדי לבצע פעולה זו, נא לפנות לתיעוד לקבלת פרטים נוספים"
+
+msgid "Primary"
+msgstr "ראשי"
+
+msgid "Unique"
+msgstr "ייחודי"
+
+msgid "Index"
+msgstr "אינדקס"
+
+msgid "Fulltext"
+msgstr "Fulltext"
+
+msgid "Expression"
+msgstr "ביטוי"
+
+msgid "first"
+msgstr "ראשון"
+
+msgid "None"
+msgstr "ללא"
+
+msgid "Add"
+msgstr "הוספה"
+
+msgid "Go"
+msgstr "ביצוע"
+
+msgid "Table comments:"
+msgstr "הערות לטבלה:"
+
+msgid "Preview SQL"
+msgstr "הצגה מקדימה של SQL"
+
+msgid "Save"
+msgstr "שמירה"
+
+msgid "Loading"
+msgstr "בטעינה"
+
+msgid "Close"
+msgstr "סגירה"
+
+msgid "Column"
+msgstr "עמודה"
+
+msgid "Comment"
+msgstr "הערה"
+
+msgid "Structure"
+msgstr "מבנה"
+
+msgid "Name"
+msgstr "שם"
+
+msgid "Type"
+msgstr "סוג"
+
+msgid "Length/Values"
+msgstr "אורך/ערכים*"
+
+msgid "Default"
+msgstr "בררת מחדל"
+
+msgid "For default values, please enter just a single value, without backslash escaping or quotes, using this format: a"
+msgstr "לערכי ברירת מחדל, אנא הכנס רק ערך בודד, ללא סימני ציטוט או לוכסנים, השתמש בתבנית הזאת : a"
+
+msgid "Collation"
+msgstr "איסוף"
+
+msgid "Attributes"
+msgstr "תכונות"
+
+msgid "Null"
+msgstr "ריק"
+
+msgid "Adjust privileges"
+msgstr "התאמת הרשאות"
+
+msgid "Comments"
+msgstr "הערות"
+
+msgid "No change"
+msgstr "ללא שינוי"
+
+msgid "Apply"
+msgstr "החלה"
+
+msgid "Reset"
+msgstr "איפוס"
+
+msgid "Documentation"
+msgstr "תיעוד"
+
+msgid "Disabled"
+msgstr "מבוטל"
+
+msgid "Yes"
+msgstr "כן"
+
+msgid "No"
+msgstr "לא"
+
+msgid "Edit"
+msgstr "עריכה"
+
+msgid "Delete"
+msgstr "מחיקה"
+
+msgid "Database"
+msgstr "מסד נתונים"
+
+msgid "SQL Query Console"
+msgstr "מסוף שאילתות SQL"
+
+msgid "Console"
+msgstr "מסוף"
+
+msgid "Clear"
+msgstr "פינוי"
+
+msgid "Options"
+msgstr "אפשרויות"
+
+msgid "Debug SQL"
+msgstr "ניפוי שגיאות SQL"
+
+msgid "Group queries"
+msgstr "שאילתות קבוצתיות"
+
+msgid "Refresh"
+msgstr "רענון"
+
+msgid "OK"
+msgstr "אישור"
+
+msgid "Restore default values"
+msgstr "שחזור ערכי ברירת מחדל"
+
+msgid "Always expand query messages"
+msgstr "תמיד להרחיב הודעות תשאול"
+
+msgid "Show query history at start"
+msgstr "הצגת היסטוריית שאילתות בהתחלה"
+
+msgid "Switch to dark theme"
+msgstr "החלפה לערכת עיצוב כהה"
+
+msgid "Create version %1$s of %2$s"
+msgstr "יצירת גרסה %1$s מתוך %2$s"
+
+msgid "Create version %1$s"
+msgstr "יצירת גרסה %1$s"
+
+msgid "Create version"
+msgstr "יצירת גרסה"
+
+msgid "Add new column"
+msgstr "הוספת עמודה חדשה"
+
+msgid "Length/Value"
+msgstr "אורך/ערך"
+
+msgid "Attribute"
+msgstr "תכונה"
+
+msgid "Search this table"
+msgstr "חיפוש בטבלה זו"
+
+msgid "Add column"
+msgstr "הוספת עמודה"
+
+msgid "Select a table"
+msgstr "נא לבחור טבלה"
+
+msgid "Select a column."
+msgstr "נא לבחור עמודה."
+
+msgid "Click to sort."
+msgstr "יש ללחוץ כדי למיין."
+
+msgid "Action"
+msgstr "פעולה"
+
+msgid "Cancel"
+msgstr "ביטול"
+
+msgid "Create"
+msgstr "יצירה"
+
+msgid "Print"
+msgstr "הדפסה"
+
+msgid "Links to"
+msgstr "מקושר אל"
+
+msgid "Indexes"
+msgstr "אינדקסים"
+
+msgid "Keyname"
+msgstr "שם מפתח"
+
+msgid "Cardinality"
+msgstr "מספור"
+
+msgid "No index defined!"
+msgstr "אין אינדקסים מוגדרים!"
+
+msgid "Select all"
+msgstr "בחירת הכול"
+
+msgid "Show/hide columns"
+msgstr "הצגה/הסתרה של עמודות"
+
+msgid "See table structure"
+msgstr "הצגת מבנה הטבלה"
+
+msgid "Add an option for column \"%s\"."
+msgstr "הוספת אפשרות עבור העמודה „%s“."
+
+msgid "Untitled"
+msgstr "ללא כותרת"
+
+msgid "Add tables from other databases"
+msgstr "הוספת טבלאות ממסדי נתונים אחרים"
+
+msgid "Open page"
+msgstr "פתיחת עמוד"
+
+msgid "Save page"
+msgstr "שמירת עמוד"
+
+msgid "Save page as"
+msgstr "שמירת עמוד בשם"
+
+msgid "Choose column to display"
+msgstr "נא לבחור עמודה להצגה"
+
+msgid "Delete relationship"
+msgstr "מחיקת יחס"
+
+msgid "Except"
+msgstr "למעט"
+
+msgid "Value"
+msgstr "ערך"
+
+msgid "subquery"
+msgstr "תת־שאילתה"
+
+msgid "Rename to"
+msgstr "שינוי שם טבלה לשם"
+
+msgid "New name"
+msgstr "שם חדש"
+
+msgid "Aggregate"
+msgstr "צבירה"
+
+msgid "Submit"
+msgstr "שליחה"
+
+msgid "Save to selected page"
+msgstr "שמירה לעמוד הנבחר"
+
+msgid "Create a page and save to it"
+msgstr "יצירת עמוד ושמירה אליו"
+
+msgid "New page name"
+msgstr "שם עמוד חדש"
+
+msgid "Select page"
+msgstr "בחירת עמוד"
+
+msgid "Status"
+msgstr "מצב"
+
+msgid "Event type"
+msgstr "סוג אירוע"
+
+msgid "Definition"
+msgstr "הגדרה"
+
+msgid "Format"
+msgstr "תבנית"
+
+msgid "Check all"
+msgstr "סימון הכול"
+
+msgid "Export"
+msgstr "יצוא"
+
+msgid "Drop"
+msgstr "השמטה"
+
+msgid "Event scheduler status"
+msgstr "מצב מתזמן אירועים"
+
+msgid "ON"
+msgstr "פעיל"
+
+msgid "OFF"
+msgstr "כבוי"
+
+msgid "Event editor"
+msgstr "עורך אירועים"
+
+msgid "Loading…"
+msgstr "בטעינה…"
+
+msgid "Export event"
+msgstr "ייצוא אירועים"
+
+msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
+msgstr "@SERVER@ יהפוך לשם השרת ואילו @DATABASE@ יהפוך לשם מסד הנתונים."
+
+msgid "Exporting a raw query"
+msgstr "מתבצע ייצוא של שאילתה גולמית"
+
+msgid "Exporting tables from \"%s\" database"
+msgstr "מתבצע ייצוא של טבלאות ממסד הנתונים „%s”"
+
+msgid "Tables:"
+msgstr "טבלאות:"
+
+msgid "Tables"
+msgstr "טבלאות"
+
+msgid "Data"
+msgstr "נתונים"
+
+msgid "Importing into the database \"%s\""
+msgstr "מתבצע ייבוא לתוך מסד הנתונים „%s”"
+
+msgid "Query window"
+msgstr "חלון שאילתה"
+
+msgid "select table"
+msgstr "בחירת טבלה"
+
+msgid "select column"
+msgstr "בחירת עמודה"
+
+msgid "Show"
+msgstr "הצגה"
+
+msgid "Table alias"
+msgstr "כינוי לטבלה"
+
+msgid "Column alias"
+msgstr "כינוי לעמודה"
+
+msgid "criteria"
+msgstr "קריטריונים"
+
+msgid "Sort"
+msgstr "סידור"
+
+msgid "Ascending"
+msgstr "עולה"
+
+msgid "Descending"
+msgstr "יורד"
+
+msgid "Add as"
+msgstr "הוספה בתור"
+
+msgid "Text"
+msgstr "טקסט"
+
+msgid "Another column"
+msgstr "עמודה אחרת"
+
+msgid "Remove this column"
+msgstr "הסרת עמודה זו"
+
+msgid "+ Add column"
+msgstr "+ הוספת עמודה"
+
+msgid "Update query"
+msgstr "עדכון שאילתה"
+
+msgid "Copy query"
+msgstr "העתקת שאילתה"
+
+msgid "Submit query"
+msgstr "שליחת שאילתה"
+
+msgid "Database comment"
+msgstr "הערה על מסד הנתונים"
+
+msgid "Rename database to"
+msgstr "שינוי שם מסד הנתונים לשם"
+
+msgid "New database name"
+msgstr "שם חדש למסד הנתונים"
+
+msgid "Remove database"
+msgstr "הסרת מסד הנתונים"
+
+msgid "Database %s has been dropped."
+msgstr "מסד הנתונים %s הושמט."
+
+msgid "Drop the database (DROP)"
+msgstr "השמטת מסד הנתונים (DROP)"
+
+msgid "Database name"
+msgstr "שם מסד הנתונים"
+
+msgid "Structure only"
+msgstr "מבנה בלבד"
+
+msgid "Structure and data"
+msgstr "מבנה ונתונים"
+
+msgid "Data only"
+msgstr "נתונים בלבד"
+
+msgid "CREATE DATABASE before copying"
+msgstr "CREATE DATABASE לפני העתקה"
+
+msgid "Add %s"
+msgstr "הוספת %s"
+
+msgid "Add AUTO_INCREMENT value"
+msgstr "הוספת ערך AUTO_INCREMENT (מספור אוטומטי)"
+
+msgid "Add constraints"
+msgstr "הוספת הגבלות"
+
+msgid "Switch to copied database"
+msgstr "מעבר למסד הנתונים שהועתק"
+
+msgid "User name"
+msgstr "שם משתמש"
+
+msgid "Host name"
+msgstr "שם מארח"
+
+msgid "Privileges"
+msgstr "הרשאות"
+
+msgid "Grant"
+msgstr "הענקה"
+
+msgid "Any"
+msgstr "כל דבר"
+
+msgid "global"
+msgstr "עולמי"
+
+msgid "database-specific"
+msgstr "ספציפי למאגר הנתונים"
+
+msgid "wildcard"
+msgstr "תו כללי"
+
+msgid "routine"
+msgstr "שגרה"
+
+msgid "Edit privileges"
+msgstr "עריכת הרשאות"
+
+msgid "No user found."
+msgstr "לא נמצאו משתמשים."
+
+msgid "With selected:"
+msgstr "עם הנבחרים:"
+
+msgid "Add user account"
+msgstr "הוספת חשבון משתמש"
+
+msgid "Charset"
+msgstr "קידוד"
+
+msgid "Function"
+msgstr "פונקציה"
+
+msgid "Search"
+msgstr "חיפוש"
+
+msgid "ENUM/SET editor"
+msgstr "עורך מונה/עריכה (ENUM/SET)"
+
+msgid "Search in database"
+msgstr "חיפוש במסד הנתונים"
+
+msgid "Words or values to search for (wildcard: \"%\"):"
+msgstr "מילים או ערכים לחיפוש אחריהם (תו כללי: „%“):"
+
+msgid "Find:"
+msgstr "חיפוש:"
+
+msgid "at least one of the words"
+msgstr "לפחות אחת מהמילים"
+
+msgid "Words are separated by a space character (\" \")."
+msgstr "מילים מופרדות ברווח („ “)."
+
+msgid "all of the words"
+msgstr "כל המילים"
+
+msgid "the exact phrase as substring"
+msgstr "הביטוי במדויק כתת־מחרוזת"
+
+msgid "the exact phrase as whole field"
+msgstr "הביטוי במדויק כשדה שלם"
+
+msgid "as regular expression"
+msgstr "כביטוי רגולרי"
+
+msgid "Inside tables:"
+msgstr "בתוך הטבלאות:"
+
+msgid "Inside column:"
+msgstr "בתוך העמודה:"
+
+msgid "%1$s match in <strong>%2$s</strong>"
+msgid_plural "%1$s matches in <strong>%2$s</strong>"
+msgstr[0] "תוצאה אחת (%1$s) בטבלה <strong>%2$s</strong>"
+msgstr[1] "%1$s תוצאות בטבלה <strong>%2$s</strong>"
+
+msgid "Browse"
+msgstr "עיון"
+
+msgid "<strong>Total:</strong> <em>%s</em> match"
+msgid_plural "<strong>Total:</strong> <em>%s</em> matches"
+msgstr[0] "<strong>סך־הכול:</strong> <em>%s</em> תוצאות"
+msgstr[1] "<strong>סך־הכול:</strong> <em>%s</em> תוצאות"
+
+msgid "Add prefix"
+msgstr "הוספת קידומת"
+
+msgid "%s table"
+msgid_plural "%s tables"
+msgstr[0] "טבלה אחת (%s)"
+msgstr[1] "%s טבלאות"
+
+msgid "Replication"
+msgstr "שכפול"
+
+msgid "Sum"
+msgstr "סכום"
+
+msgid "%s is the default storage engine on this MySQL server."
+msgstr "%s הוא מנוע האחסון כבררת המחדל של שרת MySQL זה."
+
+msgid "Continue"
+msgstr "להמשיך"
+
+msgid "Check tables having overhead"
+msgstr "בדיקת טבלאות בעלות תקורה"
+
+msgid "Delete data or table"
+msgstr "מחיקת נתונים או טבלה"
+
+msgid "Empty"
+msgstr "ריקון"
+
+msgid "Table maintenance"
+msgstr "אחזקת טבלה"
+
+msgid "Analyze table"
+msgstr "ניתוח טבלה"
+
+msgid "Check table"
+msgstr "בדיקת טבלה"
+
+msgid "Optimize table"
+msgstr "ייעול טבלה"
+
+msgid "Repair table"
+msgstr "תיקון טבלה"
+
+msgid "Add prefix to table"
+msgstr "הוספת קידומת לטבלה"
+
+msgid "Replace table prefix"
+msgstr "החלפת קידומת הטבלה"
+
+msgid "Copy table with prefix"
+msgstr "העתקת הטבלה עם קידומת"
+
+msgid "Central columns"
+msgstr "עמודות מרכזיות"
+
+msgid "Are you sure?"
+msgstr "להמשיך?"
+
+msgid "This action may change some of the columns definition.[br]Are you sure you want to continue?"
+msgstr "פעולה זו עשויה לשנות חלק מהגדרת העמודות.[br]להמשיך בפעולה?"
+
+msgid "Add AUTO INCREMENT value"
+msgstr "הוספת ערך AUTO INCREMENT (מספור אוטומטי)"
+
+msgid "Do you really want to execute the following query?"
+msgstr "להריץ את השאילתה הבאה?"
+
+msgid "Enable foreign key checks"
+msgstr "הפעלת בדיקות מפתחות זרים"
+
+msgid "Add to Favorites"
+msgstr "הוספה למועדפים"
+
+msgid "No tables found in database."
+msgstr "לא נמצאו טבלאות במסד הנתונים."
+
+msgid "Table"
+msgstr "טבלה"
+
+msgid "View"
+msgstr "תצוגה"
+
+msgid "Create view"
+msgstr "יצירת תצוגה"
+
+msgid "Replicated"
+msgstr "משוכפל"
+
+msgid "Insert"
+msgstr "הכנסה"
+
+msgid "Table %s has been emptied."
+msgstr "הטבלה %s רוקנה."
+
+msgid "in use"
+msgstr "בשימוש"
+
+msgid "Rows"
+msgstr "שורות"
+
+msgid "Size"
+msgstr "גודל"
+
+msgid "Overhead"
+msgstr "תקורה"
+
+msgid "Creation"
+msgstr "יצירה"
+
+msgid "Last update"
+msgstr "עדכון אחרון"
+
+msgid "Last check"
+msgstr "נבדק לאחרונה"
+
+msgid "Tracking is active."
+msgstr "המעקב פעיל."
+
+msgid "Tracking is not active."
+msgstr "המעקב אינו פעיל."
+
+msgid "Tracked tables"
+msgstr "טבלאות במעקב"
+
+msgid "Last version"
+msgstr "הגרסה האחרונה"
+
+msgid "Created"
+msgstr "מועד היצירה"
+
+msgid "Updated"
+msgstr "עודכנה"
+
+msgid "active"
+msgstr "פעיל"
+
+msgid "not active"
+msgstr "לא פעיל"
+
+msgid "Delete tracking"
+msgstr "מחיקת מעקב"
+
+msgid "Versions"
+msgstr "גרסאות"
+
+msgid "Tracking report"
+msgstr "דוח המעקב"
+
+msgid "Structure snapshot"
+msgstr "העתק של המבנה"
+
+msgid "Untracked tables"
+msgstr "טבלאות שאינן במעקב"
+
+msgid "Track table"
+msgstr "מעקב אחר טבלה"
+
+msgctxt "First page"
+msgid "Begin"
+msgstr "התחלה"
+
+msgctxt "Previous page"
+msgid "Previous"
+msgstr "הקודם"
+
+msgctxt "Next page"
+msgid "Next"
+msgstr "הבא"
+
+msgctxt "Last page"
+msgid "End"
+msgstr "סיום"
+
+msgid "Show all"
+msgstr "הצגת הכול"
+
+msgid "Save edited data"
+msgstr "שמירת נתונים שנערכו"
+
+msgid "Restore column order"
+msgstr "שחזור סדר עמודות"
+
+msgid "Number of rows:"
+msgstr "מספר שורות:"
+
+msgid "All"
+msgstr "הכול"
+
+msgid "Partial texts"
+msgstr "טקסטים חלקיים"
+
+msgid "Full texts"
+msgstr "טקסטים מלאים"
+
+msgid "Relational key"
+msgstr "מפתח יחסי"
+
+msgid "Display column for relationships"
+msgstr "הצגת עמודת יחסים"
+
+msgid "Geometry"
+msgstr "פני השטח"
+
+msgid "Copy"
+msgstr "העתקה"
+
+msgid "Query results operations"
+msgstr "פעולות תוצאות שאילתה"
+
+msgid "Copy to clipboard"
+msgstr "העתקה ללוח הגזירים"
+
+msgid "Display chart"
+msgstr "הצגת תרשים"
+
+msgid "Visualize GIS data"
+msgstr "הגשה חזותית של נתוני GIS"
+
+msgid "Error"
+msgstr "שגיאה"
+
+msgid "Automatically send report next time"
+msgstr "בפעם הבאה יש לשלוח דיווח אוטומטית"
+
+msgid "Submit error report"
+msgstr "שליחת דוח שגיאה"
+
+msgid "Send error report"
+msgstr "שליחת דוח שגיאה"
+
+msgid "Select a template"
+msgstr "בחירת טבלה"
+
+msgid "New template:"
+msgstr "תבנית חדשה:"
+
+msgid "Template name"
+msgstr "שם טבלה"
+
+msgid "Existing templates:"
+msgstr "תבניות קיימות:"
+
+msgid "Template:"
+msgstr "תבנית:"
+
+msgid "Update"
+msgstr "עדכון"
+
+msgid "SQL query:"
+msgstr "שאילתת SQL:"
+
+msgid "Format:"
+msgstr "תבנית:"
+
+msgid "Rows:"
+msgstr "שורות:"
+
+msgid "Save on server in the directory <strong>%s</strong>"
+msgstr "שמירה בשרת בתיקיית <strong>%s</strong>"
+
+msgid "Overwrite existing file(s)"
+msgstr "שכתוב על קבצים קיימים"
+
+msgctxt "Alias"
+msgid "Database"
+msgstr "מסד נתונים"
+
+msgctxt "Alias"
+msgid "Table"
+msgstr "טבלה"
+
+msgctxt "Alias"
+msgid "Column"
+msgstr "עמודה"
+
+msgid "Select database:"
+msgstr "בחירת מסד נתונים:"
+
+msgid "Select table:"
+msgstr "בחירת טבלה:"
+
+msgid "New table name"
+msgstr "שם חדש לטבלה"
+
+msgid "Select column:"
+msgstr "בחירת עמודה:"
+
+msgid "New column name"
+msgstr "שם חדש לעמודה"
+
+msgid "Save & close"
+msgstr "שמירה וסגירה"
+
+msgid "Use %s statement"
+msgstr "שימוש במשפט %s"
+
+msgid "Character set of the file:"
+msgstr "חבילת הקידוד של הקובץ:"
+
+msgid "Export databases as separate files"
+msgstr "ייצוא מסדי נתונים כקבצים נפרדים"
+
+msgid "Export tables as separate files"
+msgstr "ייצוא טבלאות כקבצים נפרדים"
+
+msgid "Geometry type:"
+msgstr "סוג גאומטריה:"
+
+msgid "Use OpenStreetMaps as Base Layer"
+msgstr "שימוש ב־OpenStreetMaps כשכבת הבסיס"
+
+msgid "Output"
+msgstr "פלט"
+
+msgid "Git revision:"
+msgstr "מהדורה ב־Git:"
+
+msgid "no branch"
+msgstr "אין ענף"
+
+msgid "You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at %s."
+msgstr "השרת שכרגע משמש אותך הוא שרת להדגמה. ניתן לעשות כאן הכול אבל אנא לא לשנות את המשתמשים root,‏ debian-sys-maint ו־pma. מידע נוסף זמין תחת %s."
+
+msgid "General settings"
+msgstr "הגדרות כלליות"
+
+msgid "Change password"
+msgstr "שינוי סיסמא"
+
+msgid "More settings"
+msgstr "הגדרות נוספות"
+
+msgid "Appearance settings"
+msgstr "הגדרות מראה"
+
+msgid "Language"
+msgstr "שפה"
+
+msgid "Database server"
+msgstr "שרת מסד נתונים"
+
+msgid "Server:"
+msgstr "שרת:"
+
+msgid "Hostname:"
+msgstr "שם מארח:"
+
+msgid "Server type:"
+msgstr "סוג שרת:"
+
+msgid "Server connection:"
+msgstr "חיבור לשרת:"
+
+msgid "Server version:"
+msgstr "גרסת שרת:"
+
+msgid "User:"
+msgstr "משתמש:"
+
+msgid "Server charset:"
+msgstr "קידוד לשרת:"
+
+msgid "Web server"
+msgstr "שרת אינטרנט"
+
+msgid "Database client version:"
+msgstr "גרסת לקוח מסד הנתונים:"
+
+msgid "PHP extension:"
+msgstr "הרחבות PHP:"
+
+msgid "PHP version:"
+msgstr "גרסת PHP:"
+
+msgid "Show PHP information"
+msgstr "ראיית מידע PHP"
+
+msgid "Version information:"
+msgstr "מידע גרסאות:"
+
+msgid "Official Homepage"
+msgstr "דף הבית phpMyAdmin הרשמי"
+
+msgid "Contribute"
+msgstr "תרומה"
+
+msgid "Get support"
+msgstr "קבל תמיכה"
+
+msgid "List of changes"
+msgstr "רשימת שינויים"
+
+msgid "License"
+msgstr "רשיון"
+
+msgid "Get more themes!"
+msgstr "השג סגנונות נוספים!"
+
+msgid "Back"
+msgstr "חזרה"
+
+msgid "Import"
+msgstr "ייבוא"
+
+msgid "The primary key has been dropped."
+msgstr "המפתח הראשי הוסר."
+
+msgid "Index %s has been dropped."
+msgstr "אינדקס %s הוסר."
+
+msgid "Taking you to the target site."
+msgstr "מתבצעת העברה לאתר היעד."
+
+msgid "Page number:"
+msgstr "מספר העמוד:"
+
+msgid "Log in"
+msgstr "כניסה"
+
+msgid "Username:"
+msgstr "שם משתמש:"
+
+msgid "Password:"
+msgstr "סיסמא:"
+
+msgid "Welcome to %s"
+msgstr "ברוך הבא אל %s"
+
+msgid "Authentication code:"
+msgstr "קוד אימות:"
+
+msgid "Show hidden navigation tree items."
+msgstr "הצגת פריטי עץ ניווט נסתרים."
+
+msgid "Home"
+msgstr "בית"
+
+msgid "Empty session data"
+msgstr "נתוני הפעלה ריקים"
+
+msgid "Navigation panel settings"
+msgstr "הגדרות לוח ניווט"
+
+msgid "Reload navigation panel"
+msgstr "טעינת לוח הניווט מחדש"
+
+msgid "Drop files here"
+msgstr "ניתן להשליך קבצים לכאן"
+
+msgid "Databases"
+msgstr "מסדי נתונים"
+
+msgid "Clear fast filter"
+msgstr "פינוי המסנן המהיר"
+
+msgid "Recently visited tables"
+msgstr "הטבלאות האחרונות שביקרת בהן"
+
+msgid "Recent"
+msgstr "אחרונות"
+
+msgid "Favorite tables"
+msgstr "טבלאות מועדפות"
+
+msgid "Manage your settings"
+msgstr "ניהול ההגדרות שלך"
+
+msgid "Two-factor authentication"
+msgstr "אימות דו־שלבי"
+
+msgid "SQL queries"
+msgstr "שאילתות SQL"
+
+msgid "Navigation panel"
+msgstr "חלונית ניווט"
+
+msgid "Main panel"
+msgstr "חלונית ראשית"
+
+msgid "Configuration has been saved."
+msgstr "התצוגה נשמרה."
+
+msgid "Import from file"
+msgstr "ייבוא מקובץ"
+
+msgid "Save as PHP file"
+msgstr "שמירה כקובץ PHP"
+
+msgid "Configuration of pmadb…"
+msgstr "תצורה של pmadb…"
+
+msgid "not OK"
+msgstr "לא בסדר"
+
+msgid "General relation features"
+msgstr "תכונות קשר כלליות"
+
+msgid "%sCreate%s a database named '%s' and setup the phpMyAdmin configuration storage there."
+msgstr "%sיצירת%s מסד נתונים בשם ‚%s’ והגדרת האחסון של phpMyAdmin שם."
+
+msgid "%sCreate%s the phpMyAdmin configuration storage in the current database."
+msgstr "%sיצירת%s אחסון התצורה של phpMyAdmin במסד הנתונים הנוכחי."
+
+msgid "Enabled"
+msgstr "מופעל"
+
+msgid "Please see the documentation on how to update your column_info table."
+msgstr "נא לעיין בתיעוד על אופן עדכון טבלת ה־column_info שלך."
+
+msgid "Quick steps to set up advanced features:"
+msgstr "צעדים מהירים להגדרת תכונות מתקדמות:"
+
+msgid "Create the needed tables with the <code>%screate_tables.sql</code>."
+msgstr "יצירת הטבלאות הנחוצות עם <code>%screate_tables.sql</code>."
+
+msgid "Create a pma user and give access to these tables."
+msgstr "יצירת משתמש pma והענקת גישה לטבלאות האלה."
+
+msgid "Re-login to phpMyAdmin to load the updated configuration file."
+msgstr "כניסה מחדש ל־phpMyAdmin כדי לטעון את קובץ התצורה המעודכן."
+
+msgid "Binary log"
+msgstr "דו\"ח בינארי"
+
+msgid "Log name"
+msgstr "שם דו\"ח"
+
+msgid "Position"
+msgstr "מיקום"
+
+msgid "Server ID"
+msgstr "קוד שרת (ID)"
+
+msgid "Original position"
+msgstr "מיקום מקורי"
+
+msgid "Information"
+msgstr "מידע"
+
+msgid "Character sets and collations"
+msgstr "ערכות תווים ואוספים"
+
+msgid "Databases statistics"
+msgstr "סטטיסטיקת מסד הנתונים"
+
+msgid "Create database"
+msgstr "יצירת מסד נתונים"
+
+msgid "Jump to database '%s'"
+msgstr "קפיצה למסד הנתונים ‚%s’"
+
+msgid "Check privileges for database \"%s\"."
+msgstr "בדיקת הראשות עבור מאגר נתונים \"%s\"."
+
+msgid "Check privileges"
+msgstr "בדיקת הרשאות"
+
+msgid "SQL"
+msgstr "SQL"
+
+msgid "Total:"
+msgstr "סה״כ:"
+
+msgid "Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server."
+msgstr "הערה: הפעלת סטטיסטיקות מאגר נתונים כאן יכולות לגרום לתעבורה כבדה בין השרת האינטרנט לשרת MySQL."
+
+msgid "No databases"
+msgstr "אין מאגרי נתונים"
+
+msgid "Confirm"
+msgstr "אימות"
+
+msgid "Storage engines"
+msgstr "מנועי אחסון"
+
+msgid "Storage Engine"
+msgstr "מנוע אחסון"
+
+msgid "Description"
+msgstr "תיאור"
+
+msgid "Free pages"
+msgstr "דפים חופשיים"
+
+msgid "Dirty pages"
+msgstr "דפים מלוכלכים"
+
+msgid "Pages containing data"
+msgstr "דפים מכילים מידע"
+
+msgid "Pages to be flushed"
+msgstr "דפים לריקון"
+
+msgid "Busy pages"
+msgstr "עמודים עסוקים"
+
+msgid "Read requests"
+msgstr "בקשות קריאה"
+
+msgid "Write requests"
+msgstr "בקשות כתיבה"
+
+msgid "Variables"
+msgstr "משתנים"
+
+msgid "Importing into the current server"
+msgstr "מתבצע ייבוא לתוך השרת הנוכחי"
+
+msgid "Version"
+msgstr "גרסה"
+
+msgid "Database for user account"
+msgstr "מסד נתונים לחשבון משתמש"
+
+msgid "Grant all privileges on database %s."
+msgstr "הענקת כל ההרשאות על מסד הנתונים %s."
+
+msgid "No Password"
+msgstr "ללא סיסמא"
+
+msgid "Re-type:"
+msgstr "הקלדה מחדש:"
+
+msgid "Password Hashing:"
+msgstr "גיבוב ססמה:"
+
+msgid "Edit privileges:"
+msgstr "עריכת הרשאות:"
+
+msgid "User account"
+msgstr "חשבון משתמש"
+
+msgid "Routine"
+msgstr "שגרה"
+
+msgid "Note: MySQL privilege names are expressed in English."
+msgstr "הערה: שמות הרשאות MySQL מיוצגות באנגלית."
+
+msgid "Allows altering and dropping this routine."
+msgstr "אפשרות לשינוי ולהשמטה של שגרה זו."
+
+msgid "Allows executing this routine."
+msgstr "אפשרות להרצת שגרה זו."
+
+msgid "Login Information"
+msgstr "מידע כניסה"
+
+msgid "Any user"
+msgstr "כל משתמש"
+
+msgid "Use text field"
+msgstr "השתמש בשדה טקסט"
+
+msgid "Host name:"
+msgstr "שם מארח:"
+
+msgid "Any host"
+msgstr "כל שרת מארח"
+
+msgid "Local"
+msgstr "מקומי"
+
+msgid "Password"
+msgstr "סיסמא"
+
+msgid "Do not change the password"
+msgstr "אל תשנה את הסיסמא"
+
+msgid "Re-type"
+msgstr "הקלדה נוספת"
+
+msgid "Edit user group"
+msgstr "עריכת קבוצת משתמשים"
+
+msgid "Table-specific privileges"
+msgstr "הרשאות ספציפיות-לטבלאות"
+
+msgid "Column-specific privileges"
+msgstr "הרשאות ספציפיות-לעמודה"
+
+msgid "Wildcards % and _ should be escaped with a \\ to use them literally."
+msgstr "תווים כללים _ וגם % צריכים לבוא ביחד עם \\ על מנת להשתמש בהם באמת."
+
+msgid "Add privileges on the following table:"
+msgstr "הוספת הרשאות לטבלה הבאה:"
+
+msgid "Add privileges on the following routine:"
+msgstr "הוספת הרשאות לשגרה הבאה:"
+
+msgid "Allows reading data."
+msgstr "אפשרות לקריאת נתונים."
+
+msgid "Or"
+msgstr "או"
+
+msgid "Allows changing data."
+msgstr "אפשרות לשינוי נתונים."
+
+msgid "Allows deleting data."
+msgstr "מאפשר מחיקת מידע."
+
+msgid "Allows creating new tables."
+msgstr "מאפשר יצירת טבלאות חדשות."
+
+msgid "Allows dropping tables."
+msgstr "מאפשר מחיקת טבלאות."
+
+msgid "Allows altering the structure of existing tables."
+msgstr "מאפשר שינוי של מבני הטבלאות הקיימות."
+
+msgid "Allows creating new views."
+msgstr "אפשרות ליצירת תצוגות חדשות."
+
+msgid "Global privileges"
+msgstr "הרשאות גלובליות"
+
+msgid "Database-specific privileges"
+msgstr "הרשאות ספציפיות למאגר נתונים"
+
+msgid "Allows creating new databases and tables."
+msgstr "אפשרות לייצר מסדי נתונים וטבלאות חדשים."
+
+msgid "Allows dropping databases and tables."
+msgstr "מאפשר מחיקת מאגרי נתונים וטבלאות."
+
+msgid "Allows creating temporary tables."
+msgstr "מאפשר יצירת טבלאות זמניות."
+
+msgid "Allows creating stored routines."
+msgstr "מאפשר יצירת שגרות מאוחסנות."
+
+msgid "Allows altering and dropping stored routines."
+msgstr "אפשרות לשינוי ולהשמטה של שגרות מאוחסנות."
+
+msgid "Allows executing stored routines."
+msgstr "אפשרות להרצת שגרות מאוחסנות."
+
+msgid "Administration"
+msgstr "ניהול"
+
+msgid "Resource limits"
+msgstr "גבולות משאבים"
+
+msgid "Note: Setting these options to 0 (zero) removes the limit."
+msgstr "הערה: הגדרת אפשרויות אלו אל 0 (אפס) יבטלו את ההגבלה."
+
+msgid "Does not require SSL-encrypted connections."
+msgstr "לא נדרשים חיבורים בהצפנת SSL."
+
+msgid "Requires SSL-encrypted connections."
+msgstr "נדרשים חיבורים בהצפנת SSL."
+
+msgid "User accounts overview"
+msgstr "סקירת חשבונות משתמשים"
+
+msgid "The selected user was not found in the privilege table."
+msgstr "המשתמש שנבחר לא נמצא בטבלת ההרשאות."
+
+msgid "Change login information / Copy user account"
+msgstr "החלפת פרטי כניסה / העתקת חשבון משתמש"
+
+msgid "Create a new user account with the same privileges and …"
+msgstr "יצירת חשבון משתמש חדש עם אותן ההרשאות וגם …"
+
+msgid "… keep the old one."
+msgstr "… שמירת הישן."
+
+msgid "… delete the old one from the user tables."
+msgstr "… מחיקת הישן מטבלאות המשתמשים."
+
+msgid "… revoke all active privileges from the old one and delete it afterwards."
+msgstr "… בטל את כל ההרשאות הפעילות מהישן ומחק אותו לאחר מכן."
+
+msgid "… delete the old one from the user tables and reload the privileges afterwards."
+msgstr "… מחיקת הישן מטבלאות המשתמשים וטען מחדש את ההרשאות לאחר מכן."
+
+msgid "Remove selected user accounts"
+msgstr "הסרת חשבונות המשתמשים שנבחרו"
+
+msgid "Revoke all active privileges from the users and delete them afterwards."
+msgstr "שלילת כל ההרשאות הפעילות מהמשתמשים ומחיקתם לאחר מכן."
+
+msgid "Drop the databases that have the same names as the users."
+msgstr "הסרת מאגרי נתונים שיש להם שמות דומים כמו למשתמשים."
+
+msgid "Host"
+msgstr "מארח"
+
+msgid "Generate"
+msgstr "ייצור"
+
+msgid "Variable"
+msgstr "משתנה"
+
+msgid "Servers"
+msgstr "שרתים"
+
+msgid "Advisor system"
+msgstr "מערכת ייעוץ"
+
+msgid "Possible performance issues"
+msgstr "תקלות ביצועים אפשריות"
+
+msgid "Server"
+msgstr "שרת"
+
+msgid "Processes"
+msgstr "תהליכים"
+
+msgid "Query statistics"
+msgstr "סטטיסטיקת תשאולים"
+
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "שנייה"
+msgstr[1] "%d שניות"
+
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "דקה"
+msgstr[1] "%d דקות"
+
+msgid "Chart columns"
+msgstr "עמודות תרשים"
+
+msgid "Chart arrangement"
+msgstr "סידור תרשים"
+
+msgid "Importing system monitor configuration"
+msgstr "ייבוא תצורת מעקב מערכת"
+
+msgid "Please select the file you want to import:"
+msgstr "נא לבחור את הקובץ לייבוא:"
+
+msgid "KiB"
+msgstr "KB"
+
+msgid "MiB"
+msgstr "MB"
+
+msgid "Add chart to grid"
+msgstr "הוספת תרשים לרשת"
+
+msgid "From slow log"
+msgstr "מיומן האיטיים"
+
+msgid "From general log"
+msgstr "מהיומן הכללי"
+
+msgid "Query"
+msgstr "שאילתה"
+
+msgid "Analyse query"
+msgstr "ניתוח שאילתה"
+
+msgid "Analysing logs"
+msgstr "ניתוח יומנים"
+
+msgid "Cancel request"
+msgstr "ביטול הבקשה"
+
+msgid "Analysing and loading logs. This may take a while."
+msgstr "היומנים מנותחים ונטענים. פעולה זו עשויה לארוך זמן מה."
+
+msgid "No data found"
+msgstr "לא נמצאו נתונים"
+
+msgid "Log analysed, but no data found in this time span."
+msgstr "היומן עבר ניתוח, אך לא נמצאו נתונים בטווח זמן זה."
+
+msgid "Loading logs"
+msgstr "היומנים נטענים"
+
+msgid "Log data loaded. Queries executed in this time span:"
+msgstr "נתוני היומן נטענו. שאילתות שהופעלו בטווח זמן זה:"
+
+msgid "Jump to the log table"
+msgstr "מעבר לטבלת היומן"
+
+msgid "Monitor refresh failed"
+msgstr "רענון המעקב נכשל"
+
+msgid "Warning:"
+msgstr "אזהרה:"
+
+msgid "While requesting new chart data the server returned an invalid response. This is most likely because your session expired. Reloading the page and reentering your credentials should help."
+msgstr "בעת בקשת נתונים חדשים לתרשים החזיר השרת תגובה שגויה. כפי הנראה כיוון שהזמן שמוקצה להפעלה שלך פג. רענון העמוד והקלדת פרטי הזיהוי שלך מחדש אמורים לפתור זאת."
+
+msgid "Reload page"
+msgstr "רענון העמוד"
+
+msgid "Local monitor configuration incompatible!"
+msgstr "תצורת מעקב מקומית אינה תואמת!"
+
+msgid "Start auto refresh"
+msgstr "התחלת רענון אוטומטי"
+
+msgid "Kill"
+msgstr "חיסול"
+
+msgid "ø per hour: %s"
+msgstr "ממוצע לשעה: %s"
+
+msgid "ø per minute: %s"
+msgstr "ממוצע לדקה: %s"
+
+msgid "ø per second: %s"
+msgstr "ממוצע לשנייה: %s"
+
+msgid "Statements"
+msgstr "משפטים"
+
+msgid "Traffic"
+msgstr "תעבורה"
+
+msgid "Connections"
+msgstr "חיבורים"
+
+msgid "User"
+msgstr "משתמש"
+
+msgid "Server variables and settings"
+msgstr "משתני והגדרות שרת"
+
+msgid "Session value"
+msgstr "ערך זמן חיבור (Session)"
+
+msgid "Not enough privilege to view server variables and settings. %s"
+msgstr "אין מספיק הרשאות כדי לצפות במשתני והגדרות השרת. %s"
+
+msgid "Show form"
+msgstr "הצגת טופס"
+
+msgid "phpMyAdmin homepage"
+msgstr "דף הבית של phpMyAdmin"
+
+msgid "Add a new server"
+msgstr "הוספת שרת חדש"
+
+msgid "Bookmark this SQL query"
+msgstr "הכנס שאילתת SQL זאת למועדפים"
+
+msgid "Let every user access this bookmark"
+msgstr "אפשר לכל משתמש לגשת לכתובת מועדפת זאת"
+
+msgid "Detailed profile"
+msgstr "פרופיל מפורט"
+
+msgid "Order"
+msgstr "סידור"
+
+msgid "State"
+msgstr "מצב"
+
+msgid "Time"
+msgstr "זמן"
+
+msgid "Total Time"
+msgstr "סך כל הזמן"
+
+msgid "% Time"
+msgstr "% זמן"
+
+msgid "Calls"
+msgstr "קריאות"
+
+msgid "ø Time"
+msgstr "ø זמן"
+
+msgid "Your SQL query has been executed successfully."
+msgstr "שאילתת ה־SQL שלך רצה בהצלחה."
+
+msgid "SQL query"
+msgstr "שאילתת SQL"
+
+msgid "Columns"
+msgstr "עמודות"
+
+msgid "Bookmark this SQL query:"
+msgstr "הוספת שאילתת SQL זאת לסימניות:"
+
+msgid "Show this query here again"
+msgstr "הראה את שאילתה כאן שוב"
+
+msgid "Retain query box"
+msgstr "שימור תוכן תיבת השאילתה"
+
+msgid "Bookmarked SQL query"
+msgstr "שאילתות SQL מועדפות"
+
+msgid "View only"
+msgstr "ראה רק"
+
+msgid "Simulate query"
+msgstr "הדמיית שאילתה"
+
+msgid "Browse foreign values"
+msgstr "עיון בערכים זרים"
+
+msgid "Use this value"
+msgstr "שימוש בערך זה"
+
+msgid "Y Values"
+msgstr "ערך"
+
+msgid "Table search"
+msgstr "חיפוש טבלאות"
+
+msgid "Zoom search"
+msgstr "חיפוש תקריב"
+
+msgid "Find and replace"
+msgstr "חיפוש והחלפה"
+
+msgid "Replace with:"
+msgstr "החלפה ב־:"
+
+msgid "Column:"
+msgstr "עמודה:"
+
+msgid "Use regular expression"
+msgstr "שימוש בביטוי רגולרי"
+
+msgid "Label column"
+msgstr "תווית עמודה"
+
+msgid "Spatial column"
+msgstr "עמודה מרחבית"
+
+msgid "Index name:"
+msgstr "שם אינדקס:"
+
+msgid "Index type:"
+msgstr "סוג אינדקס:"
+
+msgid "Parser:"
+msgstr "מפענח:"
+
+msgid "Comment:"
+msgstr "הערה:"
+
+msgid "Ignore"
+msgstr "התעלמות"
+
+msgid "Add %s column(s) to index"
+msgstr "הוספת %s עמודות לאינדקס"
+
+msgid "Insert as new row"
+msgstr "הכנסה כשורה חדשה"
+
+msgid "and then"
+msgstr "ואז"
+
+msgid "Go back to previous page"
+msgstr "חזרה לעמוד הקודם"
+
+msgid "Insert another new row"
+msgstr "הוספה נוספת של שורה חדשה"
+
+msgid "Go back to this page"
+msgstr "חזרה אחורה לעמוד זה"
+
+msgid "Edit next row"
+msgstr "עריכת השורה הבאה"
+
+msgid "Binary"
+msgstr "בינארי"
+
+msgid "Because of its length,<br> this column might not be editable."
+msgstr "עקב אורכה,<br>העמודה הזאת עלולה להיות נעולה לעריכה."
+
+msgid "Binary - do not edit"
+msgstr "בינארי - אין לערוך"
+
+msgid "Edit/Insert"
+msgstr "עריכה/הוספה"
+
+msgid "Alter table order by"
+msgstr "שינוי סדר הטבלה לפי"
+
+msgid "Table options"
+msgstr "אפשרויות טבלה"
+
+msgid "Rename table to"
+msgstr "שינוי שם טבלה אל"
+
+msgid "Table comments"
+msgstr "הערות לטבלה"
+
+msgid "Switch to copied table"
+msgstr "מעבר לטבלה שהועתקה"
+
+msgid "Defragment table"
+msgstr "איחוי טבלה"
+
+msgid "Table %s has been flushed."
+msgstr "הטבלה %s אופסה."
+
+msgid "Flush the table (FLUSH)"
+msgstr "פינוי הטבלה (FLUSH)"
+
+msgid "View %s has been dropped."
+msgstr "התצוגה %s נשמטה."
+
+msgid "Table %s has been dropped."
+msgstr "הטבלה %s נשמטה."
+
+msgid "Delete the table (DROP)"
+msgstr "השמטת הטבלה (DROP)"
+
+msgid "Partition maintenance"
+msgstr "אחזקת מחיצות"
+
+msgid "Operations"
+msgstr "פעולות"
+
+msgid "Rename view to"
+msgstr "שינוי שם התצוגה אל"
+
+msgid "Delete the view (DROP)"
+msgstr "מחיקת התצוגה (DROP)"
+
+msgid "Table structure"
+msgstr "מבנה טבלה"
+
+msgid "Actions"
+msgstr "פעולה"
+
+msgid "Constraint name"
+msgstr "שם האילוץ"
+
+msgid "Do a \"query by example\" (wildcard: \"%\")"
+msgstr "ביצוע \"שאילתה לדוגמה\" (תו כללי: \"%\")"
+
+msgid "Add search conditions (body of the \"where\" clause):"
+msgstr "הוספת תנאי חיפוש (הגוף של תנאי \"where\"):"
+
+msgid "Number of rows per page"
+msgstr "מספר של שורות לכל דף"
+
+msgid "Display order:"
+msgstr "סדר תצוגה:"
+
+msgid "Range search"
+msgstr "חיפוש טווח"
+
+msgid "Minimum value:"
+msgstr "ערך מזערי:"
+
+msgid "Maximum value:"
+msgstr "ערך מרבי:"
+
+msgid "Index length"
+msgstr "אורך אינדקס"
+
+msgid "Check"
+msgstr "בדיקה"
+
+msgid "Repair"
+msgstr "תיקון"
+
+msgid "Partition table"
+msgstr "טבלת מחיצות"
+
+msgid "Edit partitioning"
+msgstr "עריכת הפרדת המחיצות"
+
+msgid "Extra"
+msgstr "תוספת"
+
+msgid "Change"
+msgstr "שינוי"
+
+msgid "More"
+msgstr "עוד"
+
+msgid "Distinct values"
+msgstr "ערכים נפרדים"
+
+msgid "Remove from central columns"
+msgstr "הסרה מהעמודות המרכזיות"
+
+msgid "Add to central columns"
+msgstr "הוספה לעמודות המרכזיות"
+
+msgid "Move columns"
+msgstr "העברת עמודות"
+
+msgid "Edit view"
+msgstr "עריכת תצוגה"
+
+msgid "Propose table structure"
+msgstr "הצעת מבנה טבלה"
+
+msgid "Create an index on %s columns"
+msgstr "יצירת מפתח על עמודות %s"
+
+msgid "Space usage"
+msgstr "ניצולת"
+
+msgid "Effective"
+msgstr "יעיל"
+
+msgid "Total"
+msgstr "סה״כ"
+
+msgid "Row statistics"
+msgstr "סטטיסטיקת שורה"
+
+msgid "dynamic"
+msgstr "דינאמי"
+
+msgid "Row length"
+msgstr "אורך שורה"
+
+msgid "Row size"
+msgstr "גודל שורה"
+
+msgid "Delete version"
+msgstr "מחיקת גרסה"
+
+msgid "Date"
+msgstr "תאריך"
+
+msgid "Username"
+msgstr "שם משתמש"
+
+msgid "Event"
+msgstr "אירוע"
+
+msgid "Column names"
+msgstr "שמות עמודה"
+
+msgid "Error when evaluating: %s"
+msgstr "שגיאה בעת הערכה: %s"
+
+msgid "Failed evaluating precondition for rule '%s'."
+msgstr "הערכת התנאי המקדים לכלל ‚%s’ נכשלה."
+
+msgid "Failed calculating value for rule '%s'."
+msgstr "חישוב הערך לכלל ‚%s’ נכשלה."
+
+msgid "Failed running test for rule '%s'."
+msgstr "הרצת בדיקה לכלל ‚%s’ נכשלה."
+
+msgid "Failed formatting string for rule '%s'."
+msgstr "עיצוב מחרוזת לכלל ‚%s’ נכשלה."
+
+msgid "per second"
+msgstr "לשנייה"
+
+msgid "per minute"
+msgstr "לדקה"
+
+msgid "per hour"
+msgstr "לשעה"
+
+msgid "per day"
+msgstr "ליום"
+
+msgid "Uptime is less than 1 day, performance tuning may not be accurate."
+msgstr "זמן הפעילות הוא פחות מיום אחד, כוונון הביצועים עלול להיות לא מדויק."
+
+msgid "Questions below 1,000"
+msgstr "שאלות מתחת ל־1,000"
+
+msgid "Current amount of Questions: %s"
+msgstr "כמות השאלות הנוכחית: %s"
+
+msgid "Percentage of slow queries"
+msgstr "אחוז שאילתות אטיות"
+
+msgid "Slow query rate"
+msgstr "קצב שאילתות אטיות"
+
+msgid "Long query time"
+msgstr "זמן שאילתה ארוך"
+
+msgid "Slow query logging"
+msgstr "רישום שאילתות אטיות"
+
+msgid "The slow query log is disabled."
+msgstr "רישום השאילתות האטיות מושבת."
+
+msgid "Current version: %s"
+msgstr "גרסה נוכחית: %s"
+
+msgid "Minor Version"
+msgstr "גרסה מזערית"
+
+msgid "You should upgrade, to a stable version of MySQL 5.5."
+msgstr "עליך לשדרג לגרסה היציבה של MySQL 5.5."
+
+msgid "Distribution"
+msgstr "הפצה"
+
+msgid "MySQL Architecture"
+msgstr "ארכיטקטורת MySQL"
+
+msgid "Sort rows"
+msgstr "סידור שורות"
+
+msgid "Rate of reading next table row"
+msgstr "קצב קריאת השורה הבאה בטבלה"
+
+msgid "The rate of reading the next table row is high."
+msgstr "קצב קריאת השורה הבאה בטבלה גבוה."
+
+msgid "Rate of reading next table row: %s, this value should be less than 1 per hour"
+msgstr "קצב קריאת השורה הבאה בטבלה: %s, ערך זה אמור להיות פחות מ־1 בשעה"
+
+msgid "Different tmp_table_size and max_heap_table_size"
+msgstr "tmp_table_size ו־max_heap_table_size שונים"
+
+msgid "{tmp_table_size} and {max_heap_table_size} are not the same."
+msgstr "{tmp_table_size} ו־{max_heap_table_size} אינם זהים."
+
+msgid "Current values are tmp_table_size: %s, max_heap_table_size: %s"
+msgstr "הערכים הנוכחיים הם tmp_table_size: %s,‏ max_heap_table_size: %s"
+
+msgid "Percentage of temp tables on disk"
+msgstr "אחוז הטבלאות הזמניות בכונן"
+
+msgid "Many temporary tables are being written to disk instead of being kept in memory."
+msgstr "טבלאות זמניות רבות נכתבות לכונן במקום שתישמרנה בזיכרון."
+
+msgid "%s%% of all temporary tables are being written to disk, this value should be below 25%%"
+msgstr "%s%% מכל הטבלאות הזמניות נכתבות לכונן, ערך זה אמור להיות מתחת ל־25%%"
+
+msgid "Temp disk rate"
+msgstr "קצב זמניות בכונן"
+
+msgid "Rate of temporary tables being written to disk: %s, this value should be less than 1 per hour"
+msgstr "קצב הטבלאות הזמניות שנכתבות לכונן: %s, ערך זה אמור להיות פחות מ־1 בשעה"
+
+msgid "key_buffer_size is 0"
+msgstr "key_buffer_size הוא 0"
+
+msgid "You may need to increase {key_buffer_size}."
+msgstr "יתכן שיהיה עליך להגדיל את {key_buffer_size}."
+
+msgid "Rate of table open"
+msgstr "קצב פתיחת טבלאות"
+
+msgid "The rate of opening tables is high."
+msgstr "קצב פתיחת הטבלאות גבוה."
+
+msgid "Opening tables requires disk I/O which is costly. Increasing {table_open_cache} might avoid this."
+msgstr "פתיחת טבלאות דורשת פעילות קלט/פלט בכונן שהיא פעולה בזבזנית. הגדלת {table_open_cache} עשויה למנוע זאת."
+
+msgid "Percentage of used open files limit"
+msgstr "אחוז מגבלת הקבצים הפתוחים שנוצל"
+
+msgid "The number of open files is approaching the max number of open files. You may get a \"Too many open files\" error."
+msgstr "מספר הקבצים הפתוחים מגיע לסף המרבי של קבצים פתוחים. אולי תתקבל שגיאת „יותר מדי קבצים פתוחים”."
+
+msgid "Consider increasing {open_files_limit}, and check the error log when restarting after changing {open_files_limit}."
+msgstr "כדאי לנסות להגדיל את {open_files_limit}, ולבדוק מה כתוב ברישום השגיאות בעת הפעלה מחדש לאחר השינוי של {open_files_limit}."
+
+msgid "The number of opened files is at %s%% of the limit. It should be below 85%%"
+msgstr "מספר הקבצים הפתוחים עומד על %s%% מתוך המגבלה. הערך הזה אמור להיות מתחת ל־85%%"
+
+msgid "Rate of open files"
+msgstr "קצב פתיחת קבצים"
+
+msgid "The rate of opening files is high."
+msgstr "קצב פתיחת קבצים גבוה."
+
+msgid "Opened files rate: %s, this value should be less than 5 per hour"
+msgstr "קצב קבצים פתוחים: %s, הערך הזה אמור להיות פחות מ־5 בשעה"
+
+msgid "Too many table locks were not granted immediately."
+msgstr "יותר מדי נעילות טבלאות מיידיות לא קיבלו אישור מיידית."
+
+msgid "Optimize queries and/or use InnoDB to reduce lock wait."
+msgstr "שיפור שאילתות ו/או שימוש ב־InnoDB כדי להפחית את זמן ההמתנה לנעילות."
+
+msgid "Immediate table locks: %s%%, this value should be above 95%%"
+msgstr "נעילות טבלאות מיידיות: %s%%, הערך הזה אמור להיות מעל 95%%"
+
+msgid "Table lock wait rate"
+msgstr "קצב המתנה לנעילת טבלאות"
+
+msgid "Table lock wait rate: %s, this value should be less than 1 per hour"
+msgstr "קצב המתנה לנעילת טבלאות: %s, הערך הזה אמור להיות מתחת ל־1 לשעה"
+
+msgid "Thread cache"
+msgstr "מטמון תהליכי משנה"
+
+msgid "Thread cache is disabled, resulting in more overhead from new connections to MySQL."
+msgstr "מטמון תהליכי המשנה מושבת, מצב זה גורם לעומס מוסף עקב חיבורים חדשים ל־MySQL."
+
+msgid "Enable the thread cache by setting {thread_cache_size} > 0."
+msgstr "יש להפעיל את מטמון תהליכי המשנה על ידי הגדרת {thread_cache_size} > 0."
+
+msgid "The thread cache is set to 0"
+msgstr "מטמון תהליכי המשנה מוגדר ל־0"
+
+msgid "Thread cache is not efficient."
+msgstr "מטמון תהליכי המשנה אינו יעיל."
+
+msgid "Increase {thread_cache_size}."
+msgstr "יש להגדיל את {thread_cache_size}."
+
+msgid "Threads that are slow to launch"
+msgstr "תהליכי משנה שהטעינה שלהם אטית"
+
+msgid "There are too many threads that are slow to launch."
+msgstr "יש יותר מדי תהליכי משנה שטעינתם אטית."
+
+msgid "This generally happens in case of general system overload as it is pretty simple operations. You might want to monitor your system load carefully."
+msgstr "מצב כזה קורה בדרך כלל עקב עומס כללי על המערכת כיוון שמדובר בפעולות יחסית פשוטות. אולי מוטב לך לעקוב אחר העומס במערכת שלך ביתר קפידה."
+
+msgid "Slow launch time"
+msgstr "זמן הפעלה אטי"
+
+msgid "Slow_launch_time is above 2s."
+msgstr "Slow_launch_time הוא מעל 2 שניות."
+
+msgid "Set {slow_launch_time} to 1s or 2s to correctly count threads that are slow to launch."
+msgstr "יש להגדיר את {slow_launch_time} לשנייה או 2 שניות כדי לספור נכון את תהליכי המשנה שטעינתם אטית."
+
+msgid "slow_launch_time is set to %s"
+msgstr "slow_launch_time מוגדר לערך %s"
+
+msgid "Percentage of used connections"
+msgstr "אחוז החיבורים בשימוש"
+
+msgid "The maximum amount of used connections is getting close to the value of {max_connections}."
+msgstr "המספר המרבי של חיבורים בשימוש מתקרב לערך {max_connections}."
+
+msgid "Max_used_connections is at %s%% of max_connections, it should be below 80%%"
+msgstr "הערך של Max_used_connections עומד על %s%% מתוך max_connections, הוא אמור להיות מתחת ל־80%%"
+
+msgid "Percentage of aborted connections"
+msgstr "אחוז החיבורים הנקטעים"
+
+msgid "Too many connections are aborted."
+msgstr "יותר מדי חיבורים נקטעים."
+
+msgid "Connections are usually aborted when they cannot be authorized. <a href=\"https://www.percona.com/blog/2008/08/23/how-to-track-down-the-source-of-aborted_connects/\">This article</a> might help you track down the source."
+msgstr "חיבורים בדרך כלל נקטעים כשאין אפשרות לאמת אותם. <a href=\"https://www.percona.com/blog/2008/08/23/how-to-track-down-the-source-of-aborted_connects/\">הערך הזה</a> עשוי לסייע לך לרדת לשורש הבעיה."
+
+msgid "%s%% of all connections are aborted. This value should be below 1%%"
+msgstr "%s%% מכל החיבורים נקטעים. הערך הזה אמור להיות מתחת ל־1%%"
+
+msgid "Rate of aborted connections"
+msgstr "קצב החיבורים הנקטעים"
+
+msgid "Aborted connections rate is at %s, this value should be less than 1 per hour"
+msgstr "כמות החיבורים שנקטעו עומד על %s, הערך הזה אמור להיות מתחת ל־1 בשעה"
+
+msgid "Percentage of aborted clients"
+msgstr "אחוז הלקוחות הנקטעים"
+
+msgid "Too many clients are aborted."
+msgstr "יותר מדי לקוחות נקטעו."
+
+msgid "Clients are usually aborted when they did not close their connection to MySQL properly. This can be due to network issues or code not closing a database handler properly. Check your network and code."
+msgstr "לקוחות בדרך כלל נקטעים כשהם לא סוגרים את החיבור שלהם ל־MySQL כנדרש. מצב זה יכול לקרות עקב תקלות ברשת או קוד שלא סוגר את מנגנון הטיפול במסד הנתונים כראוי. נא לבדוק את הרשת ואת הקוד שלך."
+
+msgid "%s%% of all clients are aborted. This value should be below 2%%"
+msgstr "%s%% מכל הלקוחות נקטעים. ערך זה אמור להיות מתחת ל־2%%"
+
+msgid "Rate of aborted clients"
+msgstr "קצב הלקוחות שנקטעו"
+
+msgid "Aborted client rate is at %s, this value should be less than 1 per hour"
+msgstr "קצב הלקוחות שנקטעו הוא %s, ערך זה אמור להיות מתחת ל־1 בשעה"
+
+msgid "Is InnoDB disabled?"
+msgstr "InnoDB מושבת?"
+
+msgid "You do not have InnoDB enabled."
+msgstr "ה־InnoDB אינו מופעל אצלך."
+
+msgid "InnoDB is usually the better choice for table engines."
+msgstr "InnoDB היא בחירה טובה יותר למנועי טבלאות."
+
+msgid "have_innodb is set to 'value'"
+msgstr "have_innodb מוגדר לערך ‚value’"
+
+msgid "InnoDB log size"
+msgstr "גודל יומן ה־InnoDB"
+
+msgid "The InnoDB log file size is not an appropriate size, in relation to the InnoDB buffer pool."
+msgstr "קובץ הרישום של InnoDB אינו בגודל מתאים, ביחס למאגר החוצצים של InnoDB."
+
+msgid "Max InnoDB log size"
+msgstr "גודל יומן ה־InnoDB המרבי"
+
+msgid "The InnoDB log file size is inadequately large."
+msgstr "גודל קובץ היומן של InnoDB גדול באופן בלתי הולם."
+
+msgid "Your absolute InnoDB log size is %s MiB"
+msgstr "גודל המוחלט של יומן ה־InnoDB שלך הוא %s ‏MiB"
+
+msgid "InnoDB buffer pool size"
+msgstr "גודל מאגר החוצצים של InnoDB"
+
+msgid "Your InnoDB buffer pool is fairly small."
+msgstr "מאגר החוצצים של InnoDB קטן למדי."
+
+msgid "MyISAM concurrent inserts"
+msgstr "הכנסות בו זמניות של MyISAM"
+
+msgid "Enable {concurrent_insert} by setting it to 1"
+msgstr "הפעלת {concurrent_insert} על ידי שינוי ההגדרה ל־1"
+
+msgid "Setting {concurrent_insert} to 1 reduces contention between readers and writers for a given table. See also <a href=\"https://dev.mysql.com/doc/refman/5.5/en/concurrent-inserts.html\">MySQL Documentation</a>"
+msgstr "הגדרת {concurrent_insert} ל־1 מקטינה את המחלוקת בין הקוראים והכותבים לטבלה מסוימת. ניתן גם לעיין ב<a href=\"https://dev.mysql.com/doc/refman/5.5/en/concurrent-inserts.html\">תיעוד של MySQL</a>"
+
+msgid "concurrent_insert is set to 0"
+msgstr "concurrent_insert מוגדר ל־0"
+
+msgid "Query cache disabled"
+msgstr "זיכרון מטמון השאילתות מושבת"
+
+msgid "Search:"
+msgstr "חיפוש:"
+
+msgid "Unknown"
+msgstr "לא ידועה"
+
+msgctxt "Collation"
+msgid "German (phone book order)"
+msgstr "גרמני (סדר של ספר טלפונים)"
+
+msgctxt "Collation"
+msgid "German (dictionary order)"
+msgstr "גרמני (סדר מילוני)"
+
+msgctxt "Collation"
+msgid "Spanish (traditional)"
+msgstr "ספרדי (מסורתי)"
+
+msgctxt "Collation"
+msgid "Spanish (modern)"
+msgstr "ספרדי (מודרני)"
+
+msgctxt "Collation variant"
+msgid "case-insensitive"
+msgstr "אין חשיבות לרישיות"
+
+msgctxt "Collation variant"
+msgid "case-sensitive"
+msgstr "יש חשיבות לרישיות"
+
+msgctxt "Collation variant"
+msgid "accent-insensitive"
+msgstr "אין חשיבות לדיאקריטים"
+
+msgctxt "Collation variant"
+msgid "accent-sensitive"
+msgstr "יש חשיבות לדיאקריטים"
+
+msgctxt "Collation variant"
+msgid "multi-level"
+msgstr "ריבוי שכבות"
+
+msgctxt "Collation variant"
+msgid "binary"
+msgstr "בינרי"
+
+msgctxt "Collation"
+msgid "Binary"
+msgstr "בינרי"
+
+msgctxt "Collation"
+msgid "Unicode"
+msgstr "יוניקוד"
+
+msgctxt "Collation"
+msgid "West European"
+msgstr "מערב אירופי"
+
+msgctxt "Collation"
+msgid "Central European"
+msgstr "מרכז אירופאי"
+
+msgctxt "Collation"
+msgid "Russian"
+msgstr "רוסי"
+
+msgctxt "Collation"
+msgid "Simplified Chinese"
+msgstr "סיני מפושט"
+
+msgctxt "Collation"
+msgid "Traditional Chinese"
+msgstr "סיני מסורתי"
+
+msgctxt "Collation"
+msgid "Chinese"
+msgstr "סיני"
+
+msgctxt "Collation"
+msgid "Japanese"
+msgstr "יפני"
+
+msgctxt "Collation"
+msgid "Baltic"
+msgstr "בלטי"
+
+msgctxt "Collation"
+msgid "Armenian"
+msgstr "ארמני"
+
+msgctxt "Collation"
+msgid "Cyrillic"
+msgstr "קירילי"
+
+msgctxt "Collation"
+msgid "Arabic"
+msgstr "ערבי"
+
+msgctxt "Collation"
+msgid "Korean"
+msgstr "קוריאני"
+
+msgctxt "Collation"
+msgid "Hebrew"
+msgstr "עברי"
+
+msgctxt "Collation"
+msgid "Georgian"
+msgstr "גיאורגי"
+
+msgctxt "Collation"
+msgid "Greek"
+msgstr "יווני"
+
+msgctxt "Collation"
+msgid "Czech-Slovak"
+msgstr "צ׳כו-סלובקי"
+
+msgctxt "Collation"
+msgid "Ukrainian"
+msgstr "אוקראיני"
+
+msgctxt "Collation"
+msgid "Turkish"
+msgstr "טורקי"
+
+msgctxt "Collation"
+msgid "Swedish"
+msgstr "שוודי"
+
+msgctxt "Collation"
+msgid "Thai"
+msgstr "תאי"
+
+msgctxt "Collation"
+msgid "Unknown"
+msgstr "לא ידוע"
+
+msgctxt "Collation"
+msgid "Bulgarian"
+msgstr "בולגרי"
+
+msgctxt "Collation"
+msgid "Croatian"
+msgstr "קרואטי"
+
+msgctxt "Collation"
+msgid "Czech"
+msgstr "צ׳כי"
+
+msgctxt "Collation"
+msgid "Danish"
+msgstr "דני"
+
+msgctxt "Collation"
+msgid "English"
+msgstr "אנגלי"
+
+msgctxt "Collation"
+msgid "Esperanto"
+msgstr "אספרנטו"
+
+msgctxt "Collation"
+msgid "Estonian"
+msgstr "אסטוני"
+
+msgctxt "Collation"
+msgid "Hungarian"
+msgstr "הונגרי"
+
+msgctxt "Collation"
+msgid "Icelandic"
+msgstr "איסלנדי"
+
+msgctxt "Collation"
+msgid "Classical Latin"
+msgstr "לטיני קלסי"
+
+msgctxt "Collation"
+msgid "Latvian"
+msgstr "לטבי"
+
+msgctxt "Collation"
+msgid "Lithuanian"
+msgstr "ליטאי"
+
+msgctxt "Collation"
+msgid "Burmese"
+msgstr "בורמי"
+
+msgctxt "Collation"
+msgid "Persian"
+msgstr "פרסי"
+
+msgctxt "Collation"
+msgid "Polish"
+msgstr "פולני"
+
+msgctxt "Collation"
+msgid "Romanian"
+msgstr "רומני"
+
+msgctxt "Collation"
+msgid "Sinhalese"
+msgstr "סינהלי"
+
+msgctxt "Collation"
+msgid "Slovak"
+msgstr "סלובקי"
+
+msgctxt "Collation"
+msgid "Slovenian"
+msgstr "סלובני"
+
+msgctxt "Collation"
+msgid "Vietnamese"
+msgstr "וייטנאמי"
+
+msgid "Icons"
+msgstr "סמלים"
+
+msgid "Welcome"
+msgstr "ברוך בואך"
+
+msgid "Server default"
+msgstr "בררת המחדל של השרת"
+
+msgid "Enable"
+msgstr "הפעלה"
+
+msgid "Disable"
+msgstr "השבתה"
+
+msgid "structure"
+msgstr "מבנה"
+
+msgid "data"
+msgstr "נתונים"
+
+msgid "structure and data"
+msgstr "מבנה ונתונים"
+
+msgid "If enabled, user can enter any MySQL server in login form for cookie auth."
+msgstr "אם האפשרות פעילה, המשתמש יכול להיכנס לכל שרת MySQL דרך טופס הכניסה לטובת אימות באמצעות עוגיות."
+
+msgid "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
+msgstr "מילת צופן שמשמשת להצפנת עוגיות באימות עם [kbd]עוגיות[/kbd]."
+
+msgid "Enable bzip2 compression for import operations."
+msgstr "הפעלת דחיסת bzip2 לפעולות ייבוא."
+
+msgid "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
+msgstr "הגדרה באיזה סוג של פקדי עריכה יש להשתמש עבור עמודות CHAR (תווים) ו־VARCHAR (תווים באורך משתנה קיצונית);‏ [kbd]input[/kbd] - מאפשר את הגבלת אורך הקלט, [kbd]textarea[/kbd] - מאפשר שורות חדשות בעמודות."
+
+msgid "Use user-friendly editor for editing SQL queries (CodeMirror) with syntax highlighting and line numbers."
+msgstr "שימוש בעורך ידידותי למשתמש לטובת עריכת שאילתות SQL‏ (CodeMirror) עם הדגשת תחביר ומספור שורות."
+
+msgid "Find any errors in the query before executing it. Requires CodeMirror to be enabled."
+msgstr "איתור שגיאות בשאילתה בטרם הרצתה. דורש את הפעלת CodeMirror."
+
+msgid "Defines the minimum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "הגדרת הגודל המזערי לשדות קלט שנוצרו עבור עמודות CHAR ו־VARCHAR."
+
+msgid "Defines the maximum size for input fields generated for CHAR and VARCHAR columns."
+msgstr "הגדרת הגודל המרבי לשדות קלט שנוצרו עבור עמודות CHAR ו־VARCHAR."
+
+msgid "Compress gzip exports on the fly without the need for much memory; if you encounter problems with created gzip files disable this feature."
+msgstr "ניתן לדחוס נתונים מיוצאים עם gzip על הדרך מבלי לצרוך הרבה זיכרון, אם נתקלת בבעיות עם קובצי gzip שנוצרו דרך כאן יש להשבית את התכונה הזו."
+
+msgid "Whether a warning (\"Are your really sure…\") should be displayed when you're about to lose data."
+msgstr "האם יש להציג אזהרה כשעלול להתרחש אובדן נתונים."
+
+msgid "Autocomplete of the table and column names in the SQL queries."
+msgstr "השלמה אוטומטית של שמות העמודות והטבלאות בשאילתות ה־SQL."
+
+msgid "Please note that phpMyAdmin is just a user interface and its features do not limit MySQL."
+msgstr "נא לשים לב כי phpMyAdmin הוא מנשק משתמש והתכונות שלו אינן מגבילות את MySQL."
+
+msgid "Advanced server configuration, do not change these options unless you know what they are for."
+msgstr "הגדרות שרת מתקדמות, אינן לשנות אפשרויות אלא אלמלא ידוע לך מה מטרתן."
+
+msgid "Tracking of changes made in database. Requires the phpMyAdmin configuration storage."
+msgstr "מעקב אחר שינויים שנערכים במסד הנתונים. נדרש אחסון הגדרות של phpMyAdmin."
+
+msgid "Customize browse mode."
+msgstr "התאמת מצב עיון."
+
+msgid "Customize default options."
+msgstr "התאמת אפשרויות בררת המחדל."
+
+msgid "Settings for phpMyAdmin developers."
+msgstr "הגדרות למפתחי phpMyAdmin."
+
+msgid "Customize edit mode."
+msgstr "התאמת מצב עריכה."
+
+msgid "Customize default export options."
+msgstr "התאמת אפשרויות בררת המחדל לייצוא."
+
+msgid "Set some commonly used options."
+msgstr "הגדרת מגוון אפשרויות נפוצות."
+
+msgid "Customize default common import options."
+msgstr "התאמת אפשרויות בררת המחדל לייצוא."
+
+msgid "Set import and export directories and compression options."
+msgstr "הגדרת תיקיות ייבוא וייצוא לרבות אפשרויות דחיסה."
+
+msgid "Databases display options."
+msgstr "אפשרויות תצוגת מסדי נתונים."
+
+msgid "Customize appearance of the navigation panel."
+msgstr "התאמת תצוגת חלונית הניווט."
+
+msgid "Customize the navigation tree."
+msgstr "התאמת עץ הניווט."
+
+msgid "Servers display options."
+msgstr "אפשרויות הצגת שרתים."
+
+msgid "Tables display options."
+msgstr "אפשרויות הצגת טבלאות."
+
+msgid "Settings that didn't fit anywhere else."
+msgstr "הגדרות שאינן מתאימות לאף סיווג אחר."
+
+msgid "Authentication settings."
+msgstr "הגדרות אימות."
+
+msgid "Enter server connection parameters."
+msgstr "נא להכניס משתני חיבור לשרת."
+
+msgid "Customize links shown in SQL Query boxes."
+msgstr "התאמת הקישורים שמופיעים בתיבות שאילתות SQL."
+
+msgid "SQL queries settings."
+msgstr "הגדרות שאילתות SQL."
+
+msgid "Customize startup page."
+msgstr "התאמת דף הפעלה."
+
+msgid "Choose which details to show in the database structure (list of tables)."
+msgstr "נא לבחור אילו פרטים יופיעו במבנה מסד הנתונים (רשימת טבלאות)."
+
+msgid "Settings for the table structure (list of columns)."
+msgstr "הגדרת מבנה הטבלה (רשימת עמודות)."
+
+msgid "Choose how you want tabs to work."
+msgstr "נא לבחור כיצד יעבדו הטאבים."
+
+msgid "Customize text input fields."
+msgstr "התאמת שדות קלט טקסט."
+
+msgid "Customize default options"
+msgstr "התאמת אפשרויות בררת המחדל"
+
+msgid "Disable some of the warnings shown by phpMyAdmin."
+msgstr "השבתת חלק מהאזהרות שמוצגות על ידי phpMyAdmin."
+
+msgid "Enable gzip compression for import and export operations."
+msgstr "הפעלת דחיסת gzip לפעולות ייבוא וייצוא."
+
+msgid "If enabled, phpMyAdmin continues computing multiple-statement queries even if one of the queries failed."
+msgstr "אם אפשרות זו פעילה, phpMyAdmin ימשיך לחשב שאילתות מרובות משפטים אפילו אם אחת מהשאילתות נכשלה."
+
+msgid "Set to 0 to collapse navigation panel."
+msgstr "יש להגדיר ל־0 כדי לכווץ את לוח הניווט."
+
+msgid "Show logo in navigation panel."
+msgstr "הצגת לוגו בחלונית הניווט."
+
+msgid "Whether to show tables under database in the navigation tree"
+msgstr "האם להציג טבלאות תחת מסד נתונים בעץ הניווט"
+
+msgid "Whether to show views under database in the navigation tree"
+msgstr "האם להציג תצוגות תחת מסד נתונים בעץ הניווט"
+
+msgid "Whether to show events under database in the navigation tree"
+msgstr "האם להציג אירועים תחת מסד הנתונים בעץ הניווט"
+
+msgid "Authentication method to use."
+msgstr "שיטת אימות לשימוש."
+
+msgid "Compress connection to MySQL server."
+msgstr "דחיסת חיבור לשרת MySQL."
+
+msgid "Enable SSL for connection to MySQL server."
+msgstr "הפעלת SSL לחיבור לשרת MySQL."
+
+msgid "Shows link to [a@https://www.php.net/manual/en/function.phpinfo.php]phpinfo()[/a] output."
+msgstr "הצגת קישור אל הפלט של [a@https://php.net/manual/function.phpinfo.php]phpinfo()‎[/a]."
+
+msgid "When disabled, users cannot set any of the options below, regardless of the checkbox on the right."
+msgstr "כאשר האפשרות מושבתת, משתמשים לא יכולים להגדיר אף אחת מהאפשרויות שלהלן, ללא תלות בתיבת הסימון שמימין."
+
+msgid "Highlight selected rows."
+msgstr "הדגשת השורות הנבחרות."
+
+msgid "Highlight row pointed by the mouse cursor."
+msgstr "הדגשת שורות עליהן סמן העכבר מצביע."
+
+msgid "Log SQL queries and their execution time, to be displayed in the console"
+msgstr "תיעוד שאילתות SQL ואת זמן ההפעלה שלהן, יוצג במסוף"
+
+msgid "Tab that is displayed when entering a database."
+msgstr "לשונית שמופיעה בעת כניסה למסד הנתונים."
+
+msgid "Tab that is displayed when entering a server."
+msgstr "לשונית שמוצגת בעת כניסה לשרת."
+
+msgid "Tab that is displayed when entering a table."
+msgstr "לשונית שמופיעה בעת כניסה לטבלה."
+
+msgid "Whether the table structure actions should be hidden."
+msgstr "האם יש להסתיר פעולות על מבנה הטבלה."
+
+msgid "Show server listing as a list instead of a drop down."
+msgstr "הצגת רישום השרתים כרשימה במקום תפריט נגלל."
+
+msgid "Disable shortcut keys"
+msgstr "השבתת מקשי קיצור"
+
+msgid "For display Options"
+msgstr "לאפשרויות תצוגה"
+
+msgid "Title of browser window when a database is selected."
+msgstr "כותרת חלון הדפדפן כאשר נבחר מסד נתונים."
+
+msgid "Title of browser window when nothing is selected."
+msgstr "כותרת חלון הדפדפן כאשר לא נבחר שום דבר."
+
+msgid "Title of browser window when a server is selected."
+msgstr "כותרת חלון הדפדפן כאשר נבחר שרת."
+
+msgid "Title of browser window when a table is selected."
+msgstr "כותרת חלון הדפדפן בעת בחירת טבלה."
+
+msgid "Allow for searching inside the entire database."
+msgstr "לאפשר חיפוש בתוך כל מסד הנתונים."
+
+msgid "Enables check for latest version on main phpMyAdmin page."
+msgstr "הפעלת איתור הגרסה העדכנית ביותר בעמוד הראשי של phpMyAdmin."
+
+msgid "Allow login to any MySQL server"
+msgstr "לאפשר כניסה לכל שרת MySQL"
+
+msgid "Restrict login to MySQL server"
+msgstr "הגבלת גישה לשרת MySQL"
+
+msgid "Show \"Drop database\" link to normal users"
+msgstr "הצגת קישור „השמטת מסד נתונים” למשתמשים רגילים"
+
+msgid "Blowfish secret"
+msgstr "סוד Blowfish"
+
+msgid "Row marker"
+msgstr "סמן שורות"
+
+msgid "Highlight pointer"
+msgstr "סמן הדגשה"
+
+msgid "Bzip2"
+msgstr "Bzip2"
+
+msgid "CHAR columns editing"
+msgstr "עריכת עמודות CHAR"
+
+msgid "Enable CodeMirror"
+msgstr "הפעלת CodeMirror"
+
+msgid "Enable linter"
+msgstr "הפעלת מיישר (linter)"
+
+msgid "Minimum size for input field"
+msgstr "גודל מזערי לשדה קלט"
+
+msgid "Maximum size for input field"
+msgstr "גודל מרבי לשדה קלט"
+
+msgid "Check config file permissions"
+msgstr "יש לבדוק את הרשאות קובץ ההגדרות"
+
+msgid "Compress on the fly"
+msgstr "דחיסה על הדרך"
+
+msgid "Confirm DROP queries"
+msgstr "אישור שאילתות השמטה (DROP)"
+
+msgid "Paper size"
+msgstr "גודל דף"
+
+msgid "Default database tab"
+msgstr "לשונית בררת מחדל למסדי נתונים"
+
+msgid "Default server tab"
+msgstr "לשונית שרת כבררת מחדל"
+
+msgid "Default table tab"
+msgstr "לשונית טבלה כבררת מחדל"
+
+msgid "Enable autocomplete for table and column names"
+msgstr "הפעלת השלמה אוטומטית לשמות הטבלאות והעמודות"
+
+msgid "Show column comments"
+msgstr "הצגת הערות לעמודה"
+
+msgid "Hide table structure actions"
+msgstr "הסתרת פעולות מבנה טבלה"
+
+msgid "Default transformations for Hex"
+msgstr "התמרות בררת מחדל להקסדצימלי"
+
+msgid "Default transformations for Substring"
+msgstr "התמרות בררת מחדל לתת‏־מחרוזת"
+
+msgid "Default transformations for Bool2Text"
+msgstr "התמרות בררת מחדל ל־Bool2Text"
+
+msgid "Default transformations for External"
+msgstr "התמרות בררת מחדל ל־External"
+
+msgid "Default transformations for PreApPend"
+msgstr "התמרות בררת מחדל ל־PreApPend"
+
+msgid "Default transformations for DateFormat"
+msgstr "התמרות בררת מחדל ל־DateFormat"
+
+msgid "Default transformations for Inline"
+msgstr "התמרות בררת מחדל ל־Inline"
+
+msgid "Default transformations for TextImageLink"
+msgstr "התמרות בררת מחדל ל־TextImageLink"
+
+msgid "Default transformations for TextLink"
+msgstr "התמרות בררת מחדל ל־TextLink"
+
+msgid "Display servers as a list"
+msgstr "הצגת שרתים כרשימה"
+
+msgid "Disable multi table maintenance"
+msgstr "השבתת תחזוקה מרובת טבלאות"
+
+msgid "Maximum execution time"
+msgstr "זמן ההרצה המרבי"
+
+msgid "Save as file"
+msgstr "שמירה כקובץ"
+
+msgid "Character set of the file"
+msgstr "ערכת התווים של הקובץ"
+
+msgid "Compression"
+msgstr "דחיסה"
+
+msgid "Put columns names in the first row"
+msgstr "תיעוד שמות העמודות בשורה הראשונה"
+
+msgid "Columns enclosed with"
+msgstr "עמודות מוקפות ע״י"
+
+msgid "Columns escaped with"
+msgstr "עמודות עם ההפרדה"
+
+msgid "Replace NULL with"
+msgstr "החלפת NULL בתו"
+
+msgid "Columns terminated with"
+msgstr "עמודות מסתיימות ב־"
+
+msgid "Lines terminated with"
+msgstr "שורות מסתיימות ב־"
+
+msgid "Excel edition"
+msgstr "מהדורת Excel"
+
+msgid "Database name template"
+msgstr "תבנית שם מסד נתונים"
+
+msgid "Server name template"
+msgstr "תבנית שם שרת"
+
+msgid "Table name template"
+msgstr "תבנית שם טבלה"
+
+msgid "Dump table"
+msgstr "צבירת הטבלה"
+
+msgid "Include table caption"
+msgstr "כלול כותרת טבלה"
+
+msgid "Table caption"
+msgstr "כותרת טבלה"
+
+msgid "Continued table caption"
+msgstr "כותרת טבלה מומשך"
+
+msgid "Label key"
+msgstr "מפתח תווית"
+
+msgid "Relationships"
+msgstr "יחסים"
+
+msgid "Export method"
+msgstr "שיטת ייצוא"
+
+msgid "Save on server"
+msgstr "שמירה על השרת"
+
+msgid "Export as separate files"
+msgstr "ייצוא כקבצים נפרדים"
+
+msgid "Enclose table and column names with backquotes"
+msgstr "תחימת שמות טבלאות ועמודות בסימן הטעמה משני (`)"
+
+msgid "SQL compatibility mode"
+msgstr "מצב תאימות SQL"
+
+msgid "Creation/Update/Check dates"
+msgstr "תאריכי יצירה/עדכון/בדיקה"
+
+msgid "Use delayed inserts"
+msgstr "שימוש בהכנסות מעוכבות"
+
+msgid "Disable foreign key checks"
+msgstr "השבתת בדיקות מפתחות זרים"
+
+msgid "Export views as tables"
+msgstr "ייצוא תצוגות כטבלאות"
+
+msgid "Export related metadata from phpMyAdmin configuration storage"
+msgstr "ייצוא נתוני העל הקשורים מאחסון התצורה של phpMyAdmin"
+
+msgid "Add IF NOT EXISTS (less efficient as indexes will be generated during table creation)"
+msgstr "הוספת „אם לא קיים” - IF NOT EXISTS (פחות יעיל כיוון שהאינדקסים ייווצרו במהלך יצירת הטבלה)"
+
+msgid "Use ignore inserts"
+msgstr "שימוש בהתעלמות מהכנסות"
+
+msgid "Syntax to use when inserting data"
+msgstr "תחביר לשימוש לצורך הוספת נתונים"
+
+msgid "Maximal length of created query"
+msgstr "אורך מרבי של שאילתה שנוצרה"
+
+msgid "Export type"
+msgstr "סוג ייצוא"
+
+msgid "Export time in UTC"
+msgstr "סוג ייצוא ב־UTC"
+
+msgid "Foreign key limit"
+msgstr "מגבלת מפתחות זרים"
+
+msgid "Foreign key checks"
+msgstr "בדיקת מפתחות זרים"
+
+msgid "Browse mode"
+msgstr "מצב עיון"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Developer"
+msgstr "מפתח"
+
+msgid "Edit mode"
+msgstr "מצב עריכה"
+
+msgid "Export defaults"
+msgstr "בררות מחדל של ייצוא"
+
+msgid "General"
+msgstr "כללי"
+
+msgid "Import defaults"
+msgstr "בררות מחדל של ייבוא"
+
+msgid "Import / export"
+msgstr "ייבוא / ייצוא"
+
+msgid "LaTeX"
+msgstr "LaTeX"
+
+msgid "Navigation tree"
+msgstr "עץ ניווט"
+
+msgid "Microsoft Office"
+msgstr "Microsoft Office"
+
+msgid "Other core settings"
+msgstr "הגדרות ליבה אחרות"
+
+msgid "Page titles"
+msgstr "כותרות עמודים"
+
+msgid "Security"
+msgstr "אבטחה"
+
+msgid "Basic settings"
+msgstr "הגדרות בסיסיות"
+
+msgid "Authentication"
+msgstr "אימות"
+
+msgid "Server configuration"
+msgstr "הגדרות שרת"
+
+msgid "Configuration storage"
+msgstr "אחסון הגדרות"
+
+msgid "Changes tracking"
+msgstr "מעקב אחר שינויים"
+
+msgid "SQL Query box"
+msgstr "תיבת שאילתת SQL"
+
+msgid "Startup"
+msgstr "הפעלה"
+
+msgid "Database structure"
+msgstr "מבנה מסד נתונים"
+
+msgid "Tabs"
+msgstr "טאבים"
+
+msgid "Display relational schema"
+msgstr "הצגת סכמה יחסית"
+
+msgid "Text fields"
+msgstr "שדות טקסט"
+
+msgid "Texy! text"
+msgstr "טקסי! טקסט"
+
+msgid "Warnings"
+msgstr "אזהרות"
+
+msgid "GZip"
+msgstr "GZip"
+
+msgid "Extra parameters for iconv"
+msgstr "משתנים נוספים ל־iconv"
+
+msgid "Ignore multiple statement errors"
+msgstr "התעלמות משגיאות בריבוי משפטים"
+
+msgid "Column names in first row"
+msgstr "שמות העמודות בשורה הראשונה"
+
+msgid "Do not use AUTO_INCREMENT for zero values"
+msgstr "לא להשתמש ב־AUTO_INCREMENT לערכי אפס"
+
+msgid "Maximum items on first level"
+msgstr "כמות הפריטים המרבית ברמה הראשונה"
+
+msgid "Memory limit"
+msgstr "מגבלת זיכרון"
+
+msgid "Show databases navigation as tree"
+msgstr "הצגת ניווט בין מסדי נתונים כעץ"
+
+msgid "Navigation panel width"
+msgstr "רוחב לוח ניווט"
+
+msgid "Link with main panel"
+msgstr "קישור ללוח הראשי"
+
+msgid "Enable navigation tree expansion"
+msgstr "הפעלת הרחבת עץ הניווט"
+
+msgid "Show tables in tree"
+msgstr "הצגת טבלאות בעץ"
+
+msgid "Show views in tree"
+msgstr "הצג תצוגות בעץ"
+
+msgid "Show functions in tree"
+msgstr "הצגת פונקציות בעץ"
+
+msgid "Show procedures in tree"
+msgstr "הצגת תהליכים בעץ"
+
+msgid "Show events in tree"
+msgstr "הצגת אירועים בעץ"
+
+msgid "Recently used tables"
+msgstr "טבלאות שהיו בשימוש לאחרונה"
+
+msgid "Natural order"
+msgstr "סדר טבעי"
+
+msgid "Table navigation bar"
+msgstr "סרגל ניווט בטבלה"
+
+msgid "Remember table's sorting"
+msgstr "שמירת סדר הטבלה"
+
+msgid "Primary key default sort order"
+msgstr "אופן סידור המפתח הראשי כבררת מחדל"
+
+msgid "Relational display"
+msgstr "תצוגה יחסית"
+
+msgid "Save directory"
+msgstr "שמירת תיקייה"
+
+msgid "Session timezone"
+msgstr "אזור הזמן של ההפעלה"
+
+msgid "Control host"
+msgstr "מארח בקרה"
+
+msgid "Control port"
+msgstr "פתחת בקרה"
+
+msgid "Hide databases"
+msgstr "הסתרת מסדי נתונים"
+
+msgid "Server hostname"
+msgstr "שם המארח לשרת"
+
+msgid "Export templates table"
+msgstr "ייצוא טבלת תבניות"
+
+msgid "Central columns table"
+msgstr "טבלת עמודות מרכזית"
+
+msgid "Server port"
+msgstr "פתחת השרת"
+
+msgid "Recently used table"
+msgstr "טבלה שהייתה בשימוש לאחרונה"
+
+msgid "Favorites table"
+msgstr "טבלת מועדפים"
+
+msgid "Relation table"
+msgstr "טבלת יחסים"
+
+msgid "Server socket"
+msgstr "שקע לשרת"
+
+msgid "Display columns table"
+msgstr "הצגת טבלת עמודות"
+
+msgid "UI preferences table"
+msgstr "טבלת העדפות מנשק משתמש"
+
+msgid "Statements to track"
+msgstr "משפטים למעקב"
+
+msgid "Automatically create versions"
+msgstr "יצירת גרסאות אוטומטית"
+
+msgid "Users table"
+msgstr "טבלת משתמשים"
+
+msgid "Show create database form"
+msgstr "הצגת טופס יצירת מסד נתונים"
+
+msgid "Show table comments"
+msgstr "הצגת הערות טבלה"
+
+msgid "Show creation timestamp"
+msgstr "הצגת חותמת זמן היצירה"
+
+msgid "Show last update timestamp"
+msgstr "הצגת חותמת זמן העדכון האחרון"
+
+msgid "Show last check timestamp"
+msgstr "הצגת חותמת זמן הבדיקה האחרונה"
+
+msgid "Show table charset"
+msgstr "הצגת ערכת התווים של הטבלה"
+
+msgid "Show field types"
+msgstr "הצגת סוגי שדות"
+
+msgid "Show hint"
+msgstr "הצגת רמז"
+
+msgid "Show phpinfo() link"
+msgstr "הצגת קישור phpinfo()‎"
+
+msgid "Show detailed MySQL server information"
+msgstr "הצגת פירוט נרחב על שרת ה־MySQL"
+
+msgid "Show SQL queries"
+msgstr "הצגת שאילתות SQL"
+
+msgid "Show statistics"
+msgstr "הצגת סטטיסטיקה"
+
+msgid "Explain SQL"
+msgstr "הסברת SQL"
+
+msgid "Create PHP code"
+msgstr "יצירת קוד PHP"
+
+msgid "Textarea columns"
+msgstr "עמודות אזורי טקסט"
+
+msgid "Default title"
+msgstr "כותרת בררת מחדל"
+
+msgid "List of trusted proxies for IP allow/deny"
+msgstr "רשימה של מתווכים מורשים להרשאה/דחייה של IP"
+
+msgid "Upload directory"
+msgstr "העלאת תיקייה"
+
+msgid "Use database search"
+msgstr "שימוש בחיפוש במסד הנתונים"
+
+msgid "Enable the Developer tab in settings"
+msgstr "הפעלת לשונית המפתח בהגדרות"
+
+msgid "Version check"
+msgstr "בדיקת גרסה"
+
+msgid "Proxy username"
+msgstr "שם משתמש במתווך"
+
+msgid "Proxy password"
+msgstr "ססמת המתווך"
+
+msgid "Send error reports"
+msgstr "שליחת דוחות שגיאה"
+
+msgid "Enter executes queries in console"
+msgstr "Enter מפעיל שאילתות במסוף"
+
+msgid "Enable Zero Configuration mode"
+msgstr "הפעלת מצב אפס תצורה"
+
+msgid "Order by"
+msgstr "סידור לפי"
+
+msgid "Server connection collation"
+msgstr "איסוף חיבור שרת"
+
+msgid "unavailable"
+msgstr "לא זמין"
+
+msgid "CSV for MS Excel"
+msgstr "CSV עבור MS Excel"
+
+msgid "Microsoft Word 2000"
+msgstr "Microsoft Word 2000"
+
+msgid "OpenDocument Spreadsheet"
+msgstr "גיליון של OpenDocument"
+
+msgid "OpenDocument Text"
+msgstr "טקסט של OpenDocument"
+
+msgid "Default transformations"
+msgstr "התמרות כבררת מחדל"
+
+msgid "Existing configuration file (%s) is not readable."
+msgstr "קובץ התצורה הקיים (%s) אינו קריא."
+
+msgid "Wrong permissions on configuration file, should not be world writable!"
+msgstr "ההרשאות של קובץ התצורה שגויות, הקובץ אמור להיות קריא לכל העולם!"
+
+msgid "Server %d"
+msgstr "שרת %d"
+
+msgid "no description"
+msgstr "ללא תיאור"
+
+msgid "Server-level tabs"
+msgstr "טאבים ברמת השרת"
+
+msgid "Database-level tabs"
+msgstr "לשוניות ברמת מסד הנתונים"
+
+msgid "Table-level tabs"
+msgstr "טאבים ברמת הטבלה"
+
+msgid "Invalid authentication type!"
+msgstr "סוג האימות שגוי!"
+
+msgid "Not a valid port number!"
+msgstr "מספר הפתחה אינו תקין!"
+
+msgid "No bookmarks"
+msgstr "אין סימניות"
+
+msgid "The %s file is not available on this system, please visit %s for more information."
+msgstr "הקובץ %s אינו זמין במערכת זו, נא לבקר בכתובת %s למידע נוסף."
+
+msgid "Failed"
+msgstr "נכשל"
+
+msgid "Succeeded"
+msgstr "הצליח"
+
+msgid "Showing rows %1$s - %2$s."
+msgstr "מוצגות השורות %1$s-%2$s."
+
+msgid "No databases selected."
+msgstr "לא נבחר אף מסד נתונים."
+
+msgid "Add event"
+msgstr "הוספת אירוע"
+
+msgid "Error in processing request:"
+msgstr "שגיאה בעיבוד הבקשה:"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "לא נמצא אירוע בשם %1$s במסד הנתונים %2$s."
+
+msgid "Export of event %s"
+msgstr "ייצוא של אירועים %s"
+
+msgid "Could not load export plugins, please check your installation!"
+msgstr "לא ניתן לייצא תוספים, נא לבדוק את ההתקנה שלך!"
+
+msgid "Could not load import plugins, please check your installation!"
+msgstr "לא ניתן לטעון את תוספי הייבוא, נא לבדוק האם ההתקנה שלך תקינה!"
+
+msgid "No Privileges"
+msgstr "ללא הרשאות"
+
+msgid "Add routine"
+msgstr "הוספת שגרה"
+
+msgid "No routine with name %1$s found in database %2$s."
+msgstr "לא נמצאה שגרה עם השם %1$s במסד הנתונים %2$s."
+
+msgid "This view has at least this number of rows. Please refer to %sdocumentation%s."
+msgstr "לתצוגה זו יש לפחות מספר כזה של שורות. נא לפנות ל%sתיעוד%s."
+
+msgid "unknown"
+msgstr "לא ידוע"
+
+msgid "Tracking data deleted successfully."
+msgstr "נתוני המעקב נמחקו בהצלחה."
+
+msgid "Version %1$s was created for selected tables, tracking is active for them."
+msgstr "הגרסה %1$s נוצרה עבור טבלאות נבחרות, עבורן יש מעקב פעיל."
+
+msgid "No tables selected."
+msgstr "לא נבחרו טבלאות."
+
+msgid "Database Log"
+msgstr "יומן מסד נתונים"
+
+msgid "An error has been detected and an error report has been automatically submitted based on your settings."
+msgstr "זוהתה שגיאה ודוח שגיאות נשלח אוטומטית, מבוסס על ההגדרות שלך."
+
+msgid "Thank you for submitting this report."
+msgstr "תודה לך על משלוח הדוח."
+
+msgid "An error has been detected and an error report has been generated but failed to be sent."
+msgstr "זוהתה שגיאה ונוצר דוח שגיאות אבל משלוח הדוח נכשל."
+
+msgid "If you experience any problems please submit a bug report manually."
+msgstr "אם אתה נתקל בבעיות אנא שלח דוח באגים ידנית."
+
+msgid "You may want to refresh the page."
+msgstr "כדאי שתרענן את הדף."
+
+msgid "Bad type!"
+msgstr "הסוג שגוי!"
+
+msgid "Value for the column \"%s\""
+msgstr "ערך עבור העמודה „%s“"
+
+msgid "You were logged out from one server, to logout completely from phpMyAdmin, you need to logout from all servers."
+msgstr "יצאת משרת אחד, כדי לצאת לחלוטין מ־phpMyAdmin עליך לצאת מכל השרתים."
+
+msgid "The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. "
+msgstr "אחסון התצורה של phpMyAdmin לא מוגדר לחלוטין, חלק מהתכונות המורחבות הושבתו. %sהסיבה%s. "
+
+msgid "Or alternately go to 'Operations' tab of any database to set it up there."
+msgstr "או לחלופין יש לגשת ללשונית ‚פעולות’ של כל מסד נתונים כדי להגדיר אותו כאן."
+
+msgid "Your PHP parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is lower than cookie validity configured in phpMyAdmin, because of this, your login might expire sooner than configured in phpMyAdmin."
+msgstr "פרמטר ה־PHP שלך [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] נמוך מתוקף העוגייה שמוגדר ב־phpMyAdmin, עקב כך, הכניסה שלך צפויה לפוג מוקדם ממה שמוגדר ב־phpMyAdmin."
+
+msgid "Login cookie store is lower than cookie validity configured in phpMyAdmin, because of this, your login will expire sooner than configured in phpMyAdmin."
+msgstr "חנות עוגיית כניסה נמוכה מתוקף עוגייה המוגדר בphpMyAdmin, בגלל זה, הכניסה שלך תפוג מוקדם יותר מאשר מוגדרת בphpMyAdmin."
+
+msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
+msgstr "מדריך [code]תצורה[/code], שהשתמש על ידי התקנת סקריפט, עוד קיים במדריך הphpMyAdmin שלך. עדיף לך להסיר אותו בסוף מהתצורה phpMyAdmin."
+
+msgid "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this."
+msgstr "ההגדרה $cfg['TempDir'] (%s) אינה נגישה. ל־phpMyAdmin אין אפשרות לשמור תבניות והמערכת תאט בעקבות כך."
+
+msgid "The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results."
+msgstr "תוספת mbstring לא נמצאה וזה נראה כי אתה משתמש בקידוד multibyte. ללא תוספת mbstring מותקנת, phpMyAdmin אינו יכול לחלק מחרוזות באופן תקין וזה יכול לגרום לתוצאות לא רצויות."
+
+msgid "The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled."
+msgstr "הרחבת ה־curl לא נמצאה והאפשרות allow_url_fopen מושבתת. עקב כך חלק מהתכונות כגון דיווח על שגיאות או בדיקת גרסאות מושבתות."
+
+msgid "You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit."
+msgstr "כפי הנראה ניסית להעלות קובץ גדול מדי. נא לפנות ל%s תיעוד %s למצוא דרך לעקיפת מגבלה זו."
+
+msgid "Showing bookmark"
+msgstr "הצגת סימנייה"
+
+msgid "The bookmark has been deleted."
+msgstr "הסימנייה נמחקה."
+
+msgid "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc]."
+msgstr "לא התקבלו נתונים לייבוא. או שלא נשלח שום קובץ או שגודל הקובץ חרג מהגודל המרבי המותר בתצורת ה־PHP שלך. ניתן לעיין ב[doc@faq1-16]שו״ת 1.16[/doc]."
+
+msgid "Import has been successfully finished, %d query executed."
+msgid_plural "Import has been successfully finished, %d queries executed."
+msgstr[0] "הייבוא הושלם בהצלחה, הופעלה שאילתה אחת."
+msgstr[1] "הייבוא הושלם בהצלחה, הופעלו %d שאילתות."
+
+msgid "Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume."
+msgstr "תום זמן ההמתנה של הסקריפט עבר, אם ברצונך לסיים את הייבוא נא %sלשלוח מחדש את אותו הקובץ%s והייבוא יימשך."
+
+msgid "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits."
+msgstr "עם זאת, בהרצה האחרונה לא נותחו נתונים כלל, לרוב משמעות הדבר היא ש־phpMyAdmin לא יוכל להשלים יבוא זה אלמלא גבול זמן ההמתנה של ה־php יוגדל."
+
+msgid "\"DROP DATABASE\" statements are disabled."
+msgstr "הוראות \"DROP DATABASE\" מנוטרלות."
+
+msgid "Could not load the progress of the import."
+msgstr "לא ניתן לטעון את תהליך הייבוא."
+
+msgid "Do you really want to execute \"%s\"?"
+msgstr "האם אכן ברצונך להפעיל את „%s”?"
+
+msgid "You are about to DESTROY a complete database!"
+msgstr "פעולה זו עלולה להשמיד מסד נתונים שלם!"
+
+msgid "You are about to DESTROY a complete table!"
+msgstr "פעולה זו עלולה להשמיד טבלה שלמה!"
+
+msgid "You are about to TRUNCATE a complete table!"
+msgstr "פעולה זו עלולה למחוק טבלה שלמה!"
+
+msgid "Delete tracking data for this table?"
+msgstr "למחוק את נתוני המעקב לטבלה זו?"
+
+msgid "Delete tracking data for these tables?"
+msgstr "למחוק את נתוני המעקב לטבלאות אלו?"
+
+msgid "Delete tracking data for this version?"
+msgstr "למחוק את נתוני המעקב לגרסה זו?"
+
+msgid "Delete tracking data for these versions?"
+msgstr "למחוק את נתוני המעקב לגרסאות אלו?"
+
+msgid "Delete entry from tracking report?"
+msgstr "למחוק רשומה מדוח המעקב?"
+
+msgid "Deleting tracking data"
+msgstr "נתוני המעקב נמחקים"
+
+msgid "Dropping Primary Key/Index"
+msgstr "מפתח/אינדקס ראשיים מושמטים"
+
+msgid "Dropping Foreign key."
+msgstr "המפתח הזר מושמט."
+
+msgid "Do you really want to delete user group \"%s\"?"
+msgstr "למחוק את קבוצת המשתמשים „%s”?"
+
+msgid "You have unsaved changes; are you sure you want to leave this page?"
+msgstr "יש לך שינויים שלא נשמרו, לעזוב את העמוד?"
+
+msgid "You are trying to reduce the number of rows, but have already entered data in those rows which will be lost. Do you wish to continue?"
+msgstr "פעולה זו תצמצם את מספר השורות, אך כבר הוזנו נתונים בשורות אלו והמידע עשוי ללכת לאיבוד. להמשיך?"
+
+msgid "Do you really want to revoke the selected user(s) ?"
+msgstr "לשלול את גישתם של המשתמשים הנבחרים?"
+
+msgid "Do you really want to delete this central column?"
+msgstr "למחוק את העמודה המרכזית הזאת?"
+
+msgid "Do you really want to delete the selected items?"
+msgstr "למחוק את הפריטים הנבחרים?"
+
+msgid "Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!"
+msgstr "להפיל (DROP) את המחיצות הנבחרות? פעולה זו גם תמחק (DELETE) את הנתונים שקשורים במחיצות הנבחרות!"
+
+msgid "Do you really want to TRUNCATE the selected partition(s)?"
+msgstr "לקצץ (TRUNCATE) את המחיצות הנבחרות?"
+
+msgid "Do you really want to remove partitioning?"
+msgstr "להסיר את החציצה?"
+
+msgid "This operation will attempt to convert your data to the new collation. In rare cases, especially where a character doesn't exist in the new collation, this process could cause the data to appear incorrectly under the new collation; in this case we suggest you revert to the original collation and refer to the tips at "
+msgstr "פעולה זו תנסה להמיר את הנתונים לאוסף חדש. במקרים נדירים, במיוחד היכן שיש תו שאינו קיים באוסף החדש, תהליך זה עשוי לגרום לנתונים להופיע בצורה שגויה באוסף החדש, במקרה שכזה אנו ממליצים לשחזר את האוסף המקורי ולפנות לעצות תחת "
+
+msgid "Garbled Data"
+msgstr "נתונים מעורבבים"
+
+msgid "Are you sure you wish to change the collation and convert the data?"
+msgstr "לשנות את האוסף ולהמיר את הנתונים?"
+
+msgid "Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the \"Change\" Link) on the table structure page. </b>"
+msgstr "באמצעות פעולה זו, יתבצע ניסיון מצד MySQL למפות את ערכי הנתונים בין האוספים. אם ערכות התווים אינן תואמות, נתונים עשויים ללכת לאיבוד ויתכן ש<b>לא</b> יהיה ניתן לשחזרם פשוט על ידי שינוי אוסף העמודות בחזרה. <b> כדי להמיר נתונים קיימים, מומלץ להשתמש בתכונת עריכת העמודות (הקישור „שינוי”) בדף מבנה הטבלה.</b>"
+
+msgid "Are you sure you wish to change all the column collations and convert the data?"
+msgstr "לשנות את אוספי העמודות ולהמיר את הנתונים?"
+
+msgid "Reset all"
+msgstr "איפוס הכול"
+
+msgid "Missing value in the form!"
+msgstr "ערך ריק בטופס!"
+
+msgid "Select at least one of the options!"
+msgstr "נא לבחור לפחות באחת מהאפשרויות!"
+
+msgid "Please enter a valid number!"
+msgstr "נא להקליד מספר תקני!"
+
+msgid "Please enter a valid length!"
+msgstr "נא להקליד אורך תקין!"
+
+msgid "Add index"
+msgstr "הוספת אינדקס"
+
+msgid "Edit index"
+msgstr "עריכת האינדקס"
+
+msgid "Create single-column index"
+msgstr "יצירת אינדקס חד עמודה"
+
+msgid "Create composite index"
+msgstr "יצירת אינדקס מרוכב"
+
+msgid "Composite with:"
+msgstr "מרוכב עם:"
+
+msgid "Please select column(s) for the index."
+msgstr "נא לבחור עמודות לאינדקס."
+
+msgid "Y values"
+msgstr "ערכי Y"
+
+msgid "The host name is empty!"
+msgstr "שם המארח ריק!"
+
+msgid "The user name is empty!"
+msgstr "שם המשתמש ריק!"
+
+msgid "The password is empty!"
+msgstr "הססמה ריקה!"
+
+msgid "The passwords aren't the same!"
+msgstr "הססמאות אינן זהות!"
+
+msgid "Removing Selected Users"
+msgstr "הסרת המשתמש הנבחרים"
+
+msgid "Template was created."
+msgstr "נוצרה תבנית."
+
+msgid "Template was loaded."
+msgstr "נטענה תבנית."
+
+msgid "Template was updated."
+msgstr "תבנית עודכנה."
+
+msgid "Template was deleted."
+msgstr "תבנית נמחקה."
+
+msgid "Other"
+msgstr "אחר"
+
+msgid ","
+msgstr ","
+
+msgid "."
+msgstr "."
+
+msgid "Connections / Processes"
+msgstr "חיבורים / תהליכים"
+
+msgid "Query cache efficiency"
+msgstr "יעילות מטמון שאילתה"
+
+msgid "Query cache usage"
+msgstr "זיכרון מטמון בשימוש"
+
+msgid "Query cache used"
+msgstr "שאילתות מטמון בשימוש"
+
+msgid "System CPU usage"
+msgstr "ניצול מעבד המערכת"
+
+msgid "System memory"
+msgstr "זיכרון מערכת"
+
+msgid "System swap"
+msgstr "קובץ החלפה של המערכת"
+
+msgid "Average load"
+msgstr "טעינה בממוצע"
+
+msgid "Total memory"
+msgstr "סה\"כ זיכרון"
+
+msgid "Cached memory"
+msgstr "זיכרון במטמון"
+
+msgid "Buffered memory"
+msgstr "זיכרון בחוצץ"
+
+msgid "Free memory"
+msgstr "זיכרון פנוי"
+
+msgid "Used memory"
+msgstr "זיכרון בשימוש"
+
+msgid "Total swap"
+msgstr "סך כל קובץ ההחלפה"
+
+msgid "Cached swap"
+msgstr "קובץ החלפה במטמון"
+
+msgid "Used swap"
+msgstr "ניצול קובץ החלפה"
+
+msgid "Free swap"
+msgstr "פנוי בקובץ החלפה"
+
+msgid "Bytes sent"
+msgstr "בתים נשלחו"
+
+msgid "Bytes received"
+msgstr "בתים שהתקבלו"
+
+msgid "B"
+msgstr "Bytes"
+
+msgid "GiB"
+msgstr "GB"
+
+msgid "TiB"
+msgstr "TB"
+
+msgid "PiB"
+msgstr "PB"
+
+msgid "EiB"
+msgstr "EB"
+
+msgid "%d table(s)"
+msgstr "%d טבלאות"
+
+msgid "Questions"
+msgstr "שאלות"
+
+msgid "Please add at least one variable to the series!"
+msgstr "נא להוסיף לסדרה משתנה אחד לפחות!"
+
+msgid "Resume monitor"
+msgstr "המשך המעקב"
+
+msgid "Pause monitor"
+msgstr "השהיית המעקב"
+
+msgid "Stop auto refresh"
+msgstr "עצירת רענון אוטומטי"
+
+msgid "general_log and slow_query_log are enabled."
+msgstr "general_log ו־slow_query_log פעילים."
+
+msgid "general_log is enabled."
+msgstr "general_log פעיל."
+
+msgid "slow_query_log is enabled."
+msgstr "slow_query_log פעיל."
+
+msgid "slow_query_log and general_log are disabled."
+msgstr "slow_query_log ו־general_log מושבתים."
+
+msgid "log_output is not set to TABLE."
+msgstr "log_output לא מוגדר לטבלה (TABLE)."
+
+msgid "log_output is set to TABLE."
+msgstr "log_output מוגדר ל-TABLE."
+
+msgid "slow_query_log is enabled, but the server logs only queries that take longer than %d seconds. It is advisable to set this long_query_time 0-2 seconds, depending on your system."
+msgstr "slow_query_log מופעל, אך בפועל מתבצע רישום לשאילתות שאורכות למעלה מ־%d שניות. עדיף להגדיר את הערך long_query_time ל־0-2 שניות, בהתאם למערכת שלך."
+
+msgid "long_query_time is set to %d second(s)."
+msgstr "הזמן של long_query_time מוגדר ל־%d שניות."
+
+msgid "Following settings will be applied globally and reset to default on server restart:"
+msgstr "ההגדרות הבאות יחולו באופן גלובלי ויאופסו לבררת המחדל עם הפעלת השרת מחדש:"
+
+msgid "Set log_output to %s"
+msgstr "הגדרת הערך של log_output לערך %s"
+
+msgid "Enable %s"
+msgstr "הפעלת %s"
+
+msgid "Disable %s"
+msgstr "השבתת %s"
+
+msgid "Set long_query_time to %d seconds."
+msgstr "הגדרת long_query_time ל־%d שניות."
+
+msgid "You can't change these variables. Please log in as root or contact your database administrator."
+msgstr "לא ניתן לשנות את המשתנים האלה. נא להיכנס כמשתמש על או ליצור קשר עם מנהל מסד הנתונים שלך."
+
+msgid "Change settings"
+msgstr "שינוי הגדרות"
+
+msgid "Current settings"
+msgstr "ההגדרות הנוכחיות"
+
+msgid "Chart title"
+msgstr "כותרת התרשים"
+
+msgid "Differential"
+msgstr "יחסי"
+
+msgid "Divided by %s"
+msgstr "מחולק ב־%s"
+
+msgid "Unit"
+msgstr "יחידה"
+
+msgid "The database name is not known for this query in the server's logs."
+msgstr "שם מסד הנתונים אינו ידוע עבור שאילתה זו ביומני השרת."
+
+msgid "This column shows the amount of identical queries that are grouped together. However only the SQL query itself has been used as a grouping criteria, so the other attributes of queries, such as start time, may differ."
+msgstr "עמודה זו מציעה את כמות השאילתות הזהות שמקובצות יחד. עם זאת, רק שאילתת ה־SQL עצמה משמשת כקריטריון לקיבוץ, כך שמאפיינים נוספים של השאילתה, כגון מועד ההפעלה, עשויים להיות שונים."
+
+msgid "Since grouping of INSERTs queries has been selected, INSERT queries into the same table are also being grouped together, disregarding of the inserted data."
+msgstr "מאחר שנבחר קיבוץ של שאילתות הוספה (INSERT), שאילתות הוספה (INSERT) לאותה הטבלה יקובצו גם הן יחדיו, תוך התעלמות מהנתונים המתווספים."
+
+msgid "Analyzing…"
+msgstr "מתבצע ניתוח…"
+
+msgid "Explain output"
+msgstr "הסברת הפלט"
+
+msgid "Total time:"
+msgstr "זמן כולל:"
+
+msgid "Profiling results"
+msgstr "תוצאות החקירה"
+
+msgctxt "Display format"
+msgid "Table"
+msgstr "טבלה"
+
+msgid "Chart"
+msgstr "תרשים"
+
+msgid "Log table filter options"
+msgstr "תיעוד אפשרויות סינון טבלאות ביומן"
+
+msgid "Filter"
+msgstr "מסנן"
+
+msgid "Filter queries by word/regexp:"
+msgstr "סינון שאילתות לפי מילה/ביטוי רגולרי:"
+
+msgid "Group queries, ignoring variable data in WHERE clauses"
+msgstr "קיבוץ שאילתות, תוך התעלמות מנתונים משתנים בביטויי הכוונה (WHERE)"
+
+msgid "Sum of grouped rows:"
+msgstr "סיכום שורות מקובצות:"
+
+msgid "Affected rows:"
+msgstr "שורות מושפעות:"
+
+msgid "Failed parsing config file. It doesn't seem to be valid JSON code."
+msgstr "ניתוח קובץ ההגדרות נכשל. הוא לא נראה כמו קוד JSON תקני."
+
+msgid "Failed building chart grid with imported config. Resetting to default config…"
+msgstr "בניית רשת לתרשים נכשלה עם ההגדרות שייובאו. מתבצע איפוס להגדרות בררת המחדל…"
+
+msgid "No files available on server for import!"
+msgstr "אין קבצים זמינים לייבוא בשרת!"
+
+msgid "Formatting SQL…"
+msgstr "ה־SQL מאורגן…"
+
+msgid "No parameters found!"
+msgstr "לא נמצאו משתנים!"
+
+msgid "Request aborted!!"
+msgstr "הבקשה בוטלה!!"
+
+msgid "Processing request"
+msgstr "הבקשה בהליכי עיבוד"
+
+msgid "Request failed!!"
+msgstr "הבקשה נכשלה!!"
+
+msgid "Error in processing request"
+msgstr "שגיאה בעיבוד הבקשה"
+
+msgid "Error code: %s"
+msgstr "קוד שגיאה: %s"
+
+msgid "Error text: %s"
+msgstr "טקסט שגיאה: %s"
+
+msgid "It seems that the connection to server has been lost. Please check your network connectivity and server status."
+msgstr "נראה כי הקישור לשרת אבד. נא לבדוק את החיבור שלך לרשת ואת מצב השרת."
+
+msgid "No accounts selected."
+msgstr "לא נבחרו חשבונות."
+
+msgid "Dropping column"
+msgstr "העמודה מושמטת"
+
+msgid "Adding primary key"
+msgstr "נוסף מפתח עיקרי"
+
+msgid "Click to dismiss this notification"
+msgstr "יש ללחוץ כדי להעלים את ההתרעה הזאת"
+
+msgid "Renaming databases"
+msgstr "שמות מסדי הנתונים משתנים"
+
+msgid "Copying database"
+msgstr "מסד הנתונים מועתק"
+
+msgid "Changing charset"
+msgstr "הקידוד משתנה"
+
+msgid "Failed to get real row count."
+msgstr "ספירת השורות האמתית נכשלה."
+
+msgid "Searching"
+msgstr "מתבצע חיפוש"
+
+msgid "Hide search results"
+msgstr "הסתרת תוצאות החיפוש"
+
+msgid "Show search results"
+msgstr "הצגת תוצאות החיפוש"
+
+msgid "Browsing"
+msgstr "עיון"
+
+msgid "Deleting"
+msgstr "מחיקה"
+
+msgid "Delete the matches for the %s table?"
+msgstr "האם למחוק את התוצאות עבור הטבלה %s?"
+
+msgid "The definition of a stored function must contain a RETURN statement!"
+msgstr "הגדרה של פונקציה מאוחסנת חייבת להכיל משפט RETURN!"
+
+msgid "No routine is exportable. Required privileges may be lacking."
+msgstr "אין שגרה שניתן לייצא. יכול להיות שחסרות הרשאות."
+
+msgid "Values for column %s"
+msgstr "ערכים לעמודה %s"
+
+msgid "Values for a new column"
+msgstr "ערכים לעמודה חדשה"
+
+msgid "Enter each value in a separate field."
+msgstr "נא להקליד כל ערך בשדה נפרד."
+
+msgid "Add %d value(s)"
+msgstr "הוספת %d ערך/ים"
+
+msgid "Note: If the file contains multiple tables, they will be combined into one."
+msgstr "לתשומת לבך: אם הקובץ מכיל מספר טבלאות הן תאוחדנה לאחת."
+
+msgid "Hide query box"
+msgstr "הסתרת תיבת שאילתות"
+
+msgid "Show query box"
+msgstr "הצגת תיבת שאילתות"
+
+msgid "Edit query"
+msgstr "עריכת שאילתה"
+
+msgid "%d is not valid row number."
+msgstr "%d הוא לא מספר שורה תקין."
+
+msgid "Variable %d:"
+msgstr "משתנה %d:"
+
+msgid "Pick"
+msgstr "בחירה"
+
+msgid "Column selector"
+msgstr "בוחר עמודות"
+
+msgid "Search this list"
+msgstr "חיפוש ברשימה הזאת"
+
+msgid "No columns in the central list. Make sure the Central columns list for database %s has columns that are not present in the current table."
+msgstr "אין עמודות ברשימה המרכזית. נא לוודא שלרשימת העמודות המרכזית של מסד הנתונים %s יש עמודות שאין קיימות בטבלה הנוכחית."
+
+msgid "See more"
+msgstr "הצגת עוד"
+
+msgid "Add primary key"
+msgstr "הוספת מפתח עיקרי"
+
+msgid "Primary key added."
+msgstr "נוסף מפתח עיקרי."
+
+msgid "Taking you to next step…"
+msgstr "התקדמות לשלב הבא…"
+
+msgid "End of step"
+msgstr "סיום השלב"
+
+msgid "Done"
+msgstr "סיום"
+
+msgid "Confirm partial dependencies"
+msgstr "אישור תלויות חלקיות"
+
+msgid "Selected partial dependencies are as follows:"
+msgstr "התלויות החלקיות שנבחרו הן:"
+
+msgid "No partial dependencies selected!"
+msgstr "לא נמצאו תלויות חלקיות!"
+
+msgid "Show me the possible partial dependencies based on data in the table"
+msgstr "להציג לי את התלויות החלקיות האפשריות על בסיס הנתונים בטבלה"
+
+msgid "Hide partial dependencies list"
+msgstr "הסתרת רשימת התלויות החלקיות"
+
+msgid "Sit tight! It may take few seconds depending on data size and column count of the table."
+msgstr "עוד רגע קט! יכול להיות שהתהליך יארוך מספר שניות כתלות בגודל הנתונים ומספר העמודות שבטבלה."
+
+msgid "The following actions will be performed:"
+msgstr "הפעולות הבאות תבוצענה:"
+
+msgid "DROP columns %s from the table %s"
+msgstr "השמטת (DROP) עמודות %s מהטבלה %s"
+
+msgid "Create the following table"
+msgstr "יצירת הטבלה הבאה"
+
+msgid "Selected dependencies are as follows:"
+msgstr "אלו הן התלויות הנבחרות:"
+
+msgid "No dependencies selected!"
+msgstr "לא נבחרו תלויות!"
+
+msgid "Enter first value"
+msgstr "נא למלא את הערך הראשון"
+
+msgid "Enter second value"
+msgstr "נא למלא את הערך השני"
+
+msgid "Hide search criteria"
+msgstr "הסתרת תנאי חיפוש"
+
+msgid "Show search criteria"
+msgstr "הצגת תנאי חיפוש"
+
+msgid "Column maximum:"
+msgstr "כמות מרבית לעמודה:"
+
+msgid "Column minimum:"
+msgstr "כמות מזערית לעמודה:"
+
+msgid "Hide find and replace criteria"
+msgstr "הסתרת תנאי החיפוש וההחלפה"
+
+msgid "Show find and replace criteria"
+msgstr "הצגת תנאי החיפוש וההחלפה"
+
+msgid "Each point represents a data row."
+msgstr "כל נקודה מייצגת שורת נתונים."
+
+msgid "Hovering over a point will show its label."
+msgstr "מעבר מעל נקודה תציג את התווית שלה."
+
+msgid "To zoom in, select a section of the plot with the mouse."
+msgstr "כדי להתקרב, יש לבחור סעיף מהתרשים עם העכבר."
+
+msgid "Click reset zoom button to come back to original state."
+msgstr "יש ללחוץ על כפתור איפוס התקריב כדי לחזור למצב המקורי."
+
+msgid "Click a data point to view and possibly edit the data row."
+msgstr "יש ללחוץ על נקודת נתונים כדי לצפות ואפילו לערוך את שורת הנתונים."
+
+msgid "The plot can be resized by dragging it along the bottom right corner."
+msgstr "ניתן לשנות את גודל התרשים על ידי גרירתו לאורך הפינה הימנית התחתונה."
+
+msgid "Select two columns"
+msgstr "נא לבחור שתי עמודות"
+
+msgid "Select two different columns"
+msgstr "יש לבחור שתי עמודות נפרדות"
+
+msgid "Data point content"
+msgstr "תוכן נקודת נתונים"
+
+msgid "X"
+msgstr "X"
+
+msgid "Y"
+msgstr "Y"
+
+msgid "Point"
+msgstr "נקודה"
+
+msgid "Linestring"
+msgstr "מחרוזת שורה"
+
+msgid "Polygon"
+msgstr "מצולע"
+
+msgid "Inner ring"
+msgstr "טבעת פנימית"
+
+msgid "Outer ring"
+msgstr "טבעת חיצונית"
+
+msgid "Add a point"
+msgstr "הוספת נקודה"
+
+msgid "Add a linestring"
+msgstr "הוספת מחרוזת שורה"
+
+msgid "Add an inner ring"
+msgstr "הוספת טבעת פנימית"
+
+msgid "Add a polygon"
+msgstr "הוספת מצולע"
+
+msgid "Add geometry"
+msgstr "הוספת פני שטח"
+
+msgid "Do you want to copy encryption key?"
+msgstr "להעתיק את מפתח ההצפנה?"
+
+msgid "Encryption key"
+msgstr "מפתח הצפנה"
+
+msgid "Select referenced key"
+msgstr "בחירת מפתח עם הפניה"
+
+msgid "Select Foreign Key"
+msgstr "נא לבחור מפתח זר"
+
+msgid "Please select the primary key or a unique key!"
+msgstr "נא לבחור את המפתח העיקרי או מפתח ייחודי!"
+
+msgid "You haven't saved the changes in the layout. They will be lost if you don't save them. Do you want to continue?"
+msgstr "לא שמרת את השינויים לפריסה. הם יאבדו אלמלא יישמרו. להמשיך?"
+
+msgid "value/subQuery is empty"
+msgstr "הערך/תת־שאילתה ריקים"
+
+msgid "Page name"
+msgstr "שם העמוד"
+
+msgid "Delete page"
+msgstr "מחיקת עמוד"
+
+msgid "Please select a page to continue"
+msgstr "נא לבחור עמוד כדי להמשיך"
+
+msgid "Please enter a valid page name"
+msgstr "נא להקליד שם עמוד תקני"
+
+msgid "Do you want to save the changes to the current page?"
+msgstr "לשמור את השינויים לעמוד הנוכחי?"
+
+msgid "Successfully deleted the page"
+msgstr "העמוד נמחק בהצלחה"
+
+msgid "Export relational schema"
+msgstr "יצוא סכימה יחסית"
+
+msgid "Modifications have been saved"
+msgstr "שינויים נשמרו"
+
+msgid "%d object(s) created."
+msgstr "נוצרו %d פריטים."
+
+msgid "You have edited some data and they have not been saved. Are you sure you want to leave this page before saving the data?"
+msgstr "ערכת חלק מהנתונים והם לא נשמרו. לצאת מהעמוד הזה מבלי לשמור את הנתונים?"
+
+msgid "Drag to reorder."
+msgstr "יש לגרור כדי לסדר מחדש."
+
+msgid "Click to sort results by this column."
+msgstr "יש ללחוץ כדי לסדר תוצאות לפי עמודה זו."
+
+msgid "Click to mark/unmark."
+msgstr "יש ללחוץ כדי לסמן/לבטל סימון."
+
+msgid "Double-click to copy column name."
+msgstr "יש ללחוץ לחיצה כפולה כדי להעתיק שם עמודה."
+
+msgid "Click the drop-down arrow to toggle column's visibility."
+msgstr "יש ללחוץ על חץ הפתיחה כדי לחשוף או להסתיר את העמודה."
+
+msgid "Do you really want to see all of the rows? For a big table this could crash the browser."
+msgstr "להציג את כל השורות? בטבלאות גדולות פעולה כזאת יכולה להקריס את הדפדפן."
+
+msgid "Original length"
+msgstr "אורך מקורי"
+
+msgid "cancel"
+msgstr "ביטול"
+
+msgid "Aborted"
+msgstr "בוטל"
+
+msgid "Success"
+msgstr "הצלחה"
+
+msgid "Import status"
+msgstr "מצב ייבוא"
+
+msgid "Select database first"
+msgstr "נא לבחור מסד נתונים קודם"
+
+msgid "Go to link:"
+msgstr "מעבר לקישור:"
+
+msgid "Generate password"
+msgstr "יצירת ססמה"
+
+msgid "Show panel"
+msgstr "הצגת לוח"
+
+msgid "Hide panel"
+msgstr "הסתרת לוח"
+
+msgid "Unlink from main panel"
+msgstr "ניתוק מהלוח הראשי"
+
+msgid "A newer version of phpMyAdmin is available and you should consider upgrading. The newest version is %s, released on %s."
+msgstr "גרסה חדשה יותר של phpMyAdmin זמינה ומומלץ לשקול לשדרג. הגרסה העדכנית ביותר היא %s, יצאה לאור ב־%s."
+
+msgid "up to date"
+msgstr "עדכני"
+
+msgid "Change report settings"
+msgstr "שינוי הגדרות דיווח"
+
+msgid "Show report details"
+msgstr "הצגת פרטי דוח"
+
+msgid "Ignore All"
+msgstr "התעלמות מהכול"
+
+msgid "Execute this query again?"
+msgstr "להפעיל את השאילתה הזאת שוב?"
+
+msgid "Do you really want to delete this bookmark?"
+msgstr "למחוק את הסימנייה הזאת?"
+
+msgid "%s queries executed %s times in %s seconds."
+msgstr "%s שאילתות הופעלו %s פעמים תוך %s שניות."
+
+msgid "Show arguments"
+msgstr "הצגת ארגומנטים"
+
+msgid "Hide arguments"
+msgstr "הסתרת ארגונטים"
+
+msgid "Copy tables to"
+msgstr "העתקת טבלאות אל"
+
+msgid "Add table prefix"
+msgstr "הוספת קידומת לטבלה"
+
+msgid "Replace table with prefix"
+msgstr "החלפת טבלה בקידומת"
+
+msgid "Today"
+msgstr "היום"
+
+msgid "This field is required"
+msgstr "שדה זה נחוץ"
+
+msgid "Please fix this field"
+msgstr "נא לתקן את השדה הזה"
+
+msgid "Please enter a valid email address"
+msgstr "נא להקליד כתובת דוא״ל תקנית"
+
+msgid "Please enter a valid URL"
+msgstr "נא להקליד כתובת תקנית"
+
+msgid "Please enter a valid date"
+msgstr "נא להקליד תאריך תקין"
+
+msgid "Please enter a valid date ( ISO )"
+msgstr "נא להקליד תאריך תקני (ISO)"
+
+msgid "Please enter a valid number"
+msgstr "נא להקליד מספר תקני"
+
+msgid "Please enter a valid credit card number"
+msgstr "נא להקליד מספר כרטיס אשראי תקני"
+
+msgid "Please enter only digits"
+msgstr "נא להקליד ספרות בלבד"
+
+msgid "Please enter the same value again"
+msgstr "נא להקליד את אותו הערך שוב"
+
+msgid "Please enter no more than {0} characters"
+msgstr "נא להקליד פחות מ־{0} תווים"
+
+msgid "Please enter at least {0} characters"
+msgstr "נא להקליד {0} תווים לפחות"
+
+msgid "Please enter a value between {0} and {1} characters long"
+msgstr "נא להקליד ערך באורך של בין {0} ל־{1} תווים"
+
+msgid "Please enter a value between {0} and {1}"
+msgstr "נא להקליד ערך בין {0} ל־{1}"
+
+msgid "Please enter a value less than or equal to {0}"
+msgstr "נא להקליד ערך שקטן או שווה ל־{0}"
+
+msgid "Please enter a value greater than or equal to {0}"
+msgstr "נא להקליד ערך שגדול או שווה ל־{0}"
+
+msgid "Please enter a valid date or time"
+msgstr "נא להקליד תאריך או שעה תקניים"
+
+msgid "Please enter a valid HEX input"
+msgstr "נא להקליד קלט הקסדצימלי (HEX) תקני"
+
+msgid "Select one…"
+msgstr "נא לבחור אחד…"
+
+msgid "No such column"
+msgstr "אין כזו עמודה"
+
+msgctxt "string types"
+msgid "String"
+msgstr "מחרוזת"
+
+msgid "Cannot copy database to the same name. Change the name and try again."
+msgstr "לא ניתן להעתיק את מסד הנתונים לאותו השם. יש לשנות את השם ולנסות שוב."
+
+msgid "Database %1$s has been renamed to %2$s."
+msgstr "שם מסד הנתונים %1$s הוחלף בשם %2$s."
+
+msgid "Database %1$s has been copied to %2$s."
+msgstr "מסד הנתונים %1$s הועתק אל %2$s."
+
+msgid "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s."
+msgstr "אחסון התצורה של phpMyAdmin הושבת. %sזאת הסיבה%s."
+
+msgid "Two-factor authentication has been removed."
+msgstr "האימות הדו־שלבי הוסר."
+
+msgid "Missing parameter:"
+msgstr "חסר משתנה:"
+
+msgid "Database %1$s has been created."
+msgstr "מסד הנתונים %1$s נוצר."
+
+msgid "%1$d database has been dropped successfully."
+msgid_plural "%1$d databases have been dropped successfully."
+msgstr[0] "מסד נתונים אחד הושמט בהצלחה."
+msgstr[1] "%1$d מסדי נתונים הושמטו בהצלחה."
+
+msgid "phpMyAdmin was unable to kill thread %s. It probably has already been closed."
+msgstr "phpMyAdmin נכשל בחיסול בהליך %s. רוב הסיכויים שהוא כבר נסגר."
+
+msgid "Received"
+msgstr "התקבל"
+
+msgid "Sent"
+msgstr "נשלח"
+
+msgid "Failed attempts"
+msgstr "ניסיונות כושלים"
+
+msgid "Wrong data"
+msgstr "נתונים שגויים"
+
+msgid "Bookmark %s has been created."
+msgstr "הסימנייה %s נוצרה."
+
+msgid "Bookmark not created!"
+msgstr "לא נוצרה סימנייה!"
+
+msgid "No row selected."
+msgstr "לא נבחרו שורות."
+
+msgid "No data to display"
+msgstr "אין נתונים להצגה"
+
+msgid "Table %s already exists!"
+msgstr "הטבלה %s כבר קיימת!"
+
+msgid "No column selected."
+msgstr "לא נבחרו עמודות."
+
+msgid "MySQL returned an empty result set (i.e. zero rows)."
+msgstr "MySQL החזיר חבילת תוצאות ריקה (לדוגמא, אפס שורות)."
+
+msgid "Internal relationships were successfully updated."
+msgstr "היחסים פנימיים עודכנו בהצלחה."
+
+msgid "The columns have been moved successfully."
+msgstr "העמודות הועברו בהצלחה."
+
+msgid "The selected columns do not match the columns in the table."
+msgstr "העמודות הנבחרות לא תואמות את העמודות בטבלה."
+
+msgid "The selected columns are already in the correct order."
+msgstr "העמודות הנבחרות הן כבר בסדר הנכון."
+
+msgid "Query error"
+msgstr "שגיאת שאילתה"
+
+msgid "Table %1$s has been altered successfully. Privileges have been adjusted."
+msgstr "הטבלה %1$s נערכה בהצלחה. ההרשאות השתנו."
+
+msgid "Tracking versions deleted successfully."
+msgstr "גרסאות המעקב נמחקו בהצלחה."
+
+msgid "No versions selected."
+msgstr "לא נבחרו גרסאות."
+
+msgid "You don't have sufficient privileges to be here right now!"
+msgstr "אין לך הרשאות מספיקות להיות כאן כרגע!"
+
+msgid "Could not add %1$s as they already exist in central list!"
+msgstr "לא ניתן להוסיף %1$s כיוון שהם כבר קיימים ברשימה מרכזית!"
+
+msgid "Could not add columns!"
+msgstr "לא ניתן להוסיף עמודות!"
+
+msgid "Couldn't remove Column(s) %1$s as they don't exist in central columns list!"
+msgstr "לא ניתן להסיר את העמודות %1$s כיוון שהן לא קיימות ברשימת העמודות המרכזית!"
+
+msgid "Could not remove columns!"
+msgstr "לא ניתן להסיר עמודות!"
+
+msgid "The configuration storage is not ready for the central list of columns feature."
+msgstr "אחסון התצורה לא מוכן לתכונת רשימת העמודות המרכזית."
+
+msgid "Error: relationship already exists."
+msgstr "שגיאה: היחס כבר קיים."
+
+msgid "FOREIGN KEY relationship has been added."
+msgstr "נוסף יחס מפתח זר (FOREIGN KEY)."
+
+msgid "Error: FOREIGN KEY relationship could not be added!"
+msgstr "שגיאה: לא ניתן להוסיף יחס מפתח זר (FOREIGN KEY)!"
+
+msgid "Error: Missing index on column(s)."
+msgstr "שגיאה: חסר אינדקס בעמודה/ות."
+
+msgid "Error: Relational features are disabled!"
+msgstr "שגיאה: תכונות היחסים מושבתות!"
+
+msgid "Internal relationship has been added."
+msgstr "נוסף יחס פנימי."
+
+msgid "Error: Internal relationship could not be added!"
+msgstr "שגיאה: לא ניתן להוסיף יחס פנימי!"
+
+msgid "FOREIGN KEY relationship has been removed."
+msgstr "יחס מפתח זר (FOREIGN KEY) הוסר."
+
+msgid "Error: Internal relationship could not be removed!"
+msgstr "שגיאה: לא ניתן להסיר יחס פנימי!"
+
+msgid "Internal relationship has been removed."
+msgstr "הוסר יחס פנימי."
+
+msgid "Could not load schema plugins, please check your installation!"
+msgstr "לא ניתן לטעון את תוספי הסכמה, נא לבדוק האם ההתקנה שלך תקינה!"
+
+msgid "MySQL said: "
+msgstr "MySQL אמר: "
+
+msgid "The backed up query was:"
+msgstr "השאילתה שגובתה היא:"
+
+msgid "You must provide an event definition."
+msgstr "עליך לציין הגדרת אירוע."
+
+msgid "Invalid routine type!"
+msgstr "סוג השגרה שגוי!"
+
+msgid "You must provide a routine name!"
+msgstr "חובה לספק שם שגרה!"
+
+msgid "You must provide a routine definition."
+msgstr "חובה לספק הגדרת שגרה."
+
+msgid "Execution results of routine %s"
+msgstr "תוצאות הפעלת השגרה %s"
+
+msgid "The row has been deleted."
+msgstr "השורה נמחקה."
+
+msgid "Query took %01.4f seconds."
+msgstr "השאילתה ארכה %01.4f שניות."
+
+msgid "Showing rows %1s - %2s"
+msgstr "מוצגות שורות %1s‏ - %2s"
+
+msgid "Link not found!"
+msgstr "קישור לא נמצא!"
+
+msgid "Data home directory"
+msgstr "תיקיית בית של נתונים"
+
+msgid "Data files"
+msgstr "קובצי נתונים"
+
+msgid "InnoDB Status"
+msgstr "מצב InnoDB"
+
+msgid "Report"
+msgstr "דיווח"
+
+msgid "Cannot log in to the database server."
+msgstr "הכניסה לשרת מסד הנתונים נכשלה"
+
+msgid "Access denied!"
+msgstr "הגישה נדחתה!"
+
+msgid "Login without a password is forbidden by configuration (see AllowNoPassword)."
+msgstr "כניסה ללא סיסמה אסורה לפי ההגדרות (לחפש אחר AllowNoPassword)."
+
+msgid "You have been automatically logged out due to inactivity of %s seconds. Once you log in again, you should be able to resume the work where you left off."
+msgstr "המערכת הוציאה אותך עקב חוסר פעילות של %s שניות. לאחר כניסה מחדש, אמורה להיות לך האפשרות להמשיך את העבודה מאיפה שסיימת."
+
+msgid "Insufficient space to save the file %s."
+msgstr "אין מספיק מקום לשמירת הקובץ %s."
+
+msgid "File %s already exists on server, change filename or check overwrite option."
+msgstr "הקובץ %s כבר קיים בשרת, נא לשנות את שם הקובץ או לסמן את אפשרות השכתוב."
+
+msgid "The web server does not have permission to save the file %s."
+msgstr "לשרת אין הרשאה לשמור את קובץ %s."
+
+msgid "Dump has been saved to file %s."
+msgstr "השליפה נשמרה אל הקובץ %s."
+
+msgid "File could not be read!"
+msgstr "לא ניתן לקרוא את הקובץ!"
+
+msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
+msgstr "שגיאה בהעברת הקובץ שהועלה, יש לעיין ב[doc@faq1-11]שו״ת 1.11[/doc]."
+
+msgid "Cannot create temporary file."
+msgstr "לא ניתן ליצור קובץ זמני."
+
+msgid "Error while moving uploaded file."
+msgstr "שגיאה בהעברת קובץ שהועלה."
+
+msgid "Cannot read uploaded file."
+msgstr "לא ניתן לקרוא קובץ שהועלה."
+
+msgid "You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration."
+msgstr "ניסית לטעון קובץ עם דחיסה שאינה נתמכת (%s). או שהתמיכה בדחיסה לא הוטמעה או שבוטלה בהגדרות שלך."
+
+msgid "Jump to database “%s”."
+msgstr "קפיצה אל מסד הנתונים „%s”."
+
+msgid "SSL is not being used"
+msgstr "לא נעשה שימוש ב־SSL"
+
+msgid "SSL is used"
+msgstr "נעשה שימוש ב־SSL"
+
+msgid "Without PHP code"
+msgstr "ללא קוד PHP"
+
+msgctxt "Inline edit query"
+msgid "Edit inline"
+msgstr "עריכה במקום"
+
+msgid "You should upgrade to %s %s or later."
+msgstr "אתה צריך לשדרג אל %s %s לפחות."
+
+msgid "Go to table: %s"
+msgstr "מעבר לטבלה: %s"
+
+msgid "Structure of %s"
+msgstr "מבנה של %s"
+
+msgid "Go to database: %s"
+msgstr "מעבר למסד נתונים: %s"
+
+msgid "web server upload directory:"
+msgstr "תיקיית העלאת השירות המקוון:"
+
+msgid "User accounts"
+msgstr "חשבונות משתמשים"
+
+msgid "Charsets"
+msgstr "קידודים"
+
+msgid "Engines"
+msgstr "מנועים"
+
+msgid "Groups:"
+msgstr "קבוצות:"
+
+msgid "Events:"
+msgstr "אירועים:"
+
+msgid "Functions:"
+msgstr "פונקציות:"
+
+msgid "Procedures:"
+msgstr "נהלים:"
+
+msgid "Views:"
+msgstr "תצוגות:"
+
+msgid "Show hidden items"
+msgstr "הצגת פריטים מוסתרים"
+
+msgid "Procedures"
+msgstr "נהלים"
+
+msgid "Procedure"
+msgstr "נוהל"
+
+msgid "Remove redundant columns"
+msgstr "הסרת עמודות מיותרות"
+
+msgid "Remove selected"
+msgstr "הסרת נבחרים"
+
+msgid "Step 3."
+msgstr "שלב 3."
+
+msgid "Coalesce"
+msgstr "ליכוד"
+
+msgid "Can't move table to same one!"
+msgstr "לא ניתן להעתיק טבלה לאותה אחת!"
+
+msgid "Can't copy table to same one!"
+msgstr "לא ניתן להעתיק טבלה אל אותה אחת!"
+
+msgid "Table %s has been moved to %s. Privileges have been adjusted."
+msgstr "הטבלה %s הועברה ל־%s. ההרשאות עברו התאמה."
+
+msgid "Table %s has been copied to %s. Privileges have been adjusted."
+msgstr "הטבלה %s הועתקה ל־%s. ההרשאות עברו התאמה."
+
+msgid "Table %s has been moved to %s."
+msgstr "הטבלה %s הועברה ל־%s."
+
+msgid "Table %s has been copied to %s."
+msgstr "הטבלה %s הועתקה ל־%s."
+
+msgid "The table name is empty!"
+msgstr "שם הטבלה ריק!"
+
+msgid "phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server."
+msgstr "phpMyAdmin ניסה לתקשר עם שרת MySQL, והשרת דחה את החיבור. אתה צריך לבדוק את כתובת השרת, שם משתמש והסיסמא בקובץ config.inc.php ולוודא כי הם תואמים למידע שקיבלת ע\"י אחראי השרת של MySQL."
+
+msgid "Failed to connect to the reCAPTCHA service!"
+msgstr "ההתחברות לשירות ה־reCAPTCHA נכשלה!"
+
+msgid "Entered captcha is wrong, try again!"
+msgstr "המלל שהוקלד כאימות שגוי, נא לנסות שוב!"
+
+msgid "You are not allowed to log in to this MySQL server!"
+msgstr "אין לך הרשאה להיכנס לשרת ה־MySQL הזה!"
+
+msgid "Wrong username/password. Access denied."
+msgstr "שם משתמש/ססמה שגויים. הגישה נדחתה."
+
+msgid "You have enabled two factor authentication, please confirm your login."
+msgstr "הפעלת אימות דו־שלבי, נא לאשר כניסה למערכת."
+
+msgid "Columns separated with:"
+msgstr "עמודות מופרדות ב־:"
+
+msgid "Columns enclosed with:"
+msgstr "עמודות תחומות ב־:"
+
+msgid "Lines terminated with:"
+msgstr "שורות מסתיימות ב־:"
+
+msgid "Replace NULL with:"
+msgstr "החלפת NULL ב־:"
+
+msgid "Excel edition:"
+msgstr "מהדורת Excel:"
+
+msgid "Dumping data for table"
+msgstr "הוצאת מידע עבור טבלה"
+
+msgid "Table structure for table"
+msgstr "מבנה טבלה עבור טבלה"
+
+msgid "(continued)"
+msgstr "(מומשך)"
+
+msgid "Add statements:"
+msgstr "הוספת משפטים:"
+
+msgid "Add %s statement"
+msgstr "הוספת משפט %s"
+
+msgid "%s value"
+msgstr "ערך %s"
+
+msgid "Data creation options"
+msgstr "אפשרויות יצירת נתונים"
+
+msgid "Metadata"
+msgstr "נתוני על"
+
+msgid "Metadata for table %s"
+msgstr "נתוני על של הטבלה %s"
+
+msgid "Metadata for database %s"
+msgstr "נתוני על של מסד הנתונים %s"
+
+msgid "Error reading structure for table %s:"
+msgstr "קריאת מבנה הטבלה %s הובילה לשגיאה:"
+
+msgid "Constraints for dumped tables"
+msgstr "הגבלות לטבלאות שהוצאו"
+
+msgid "Constraints for table"
+msgstr "הגבלות לטבלה"
+
+msgid "Indexes for table"
+msgstr "אינדקסים לטבלה"
+
+msgid "Creation:"
+msgstr "יצירה:"
+
+msgid "Last update:"
+msgstr "עדכון אחרון:"
+
+msgid "Last check:"
+msgstr "נבדק לאחרונה:"
+
+msgid "Column names: "
+msgstr "שמות עמודות: "
+
+msgid "XML"
+msgstr "XML"
+
+msgid "Table of contents"
+msgstr "תוכן עניניים"
+
+msgid "Show color"
+msgstr "ראיית צבע"
+
+msgid "Portrait"
+msgstr "אנכי"
+
+msgid "Show grid"
+msgstr "הראה רשת"
+
+msgid "%B %d, %Y at %I:%M %p"
+msgstr "%B %d, %Y בזמן %I:%M %p"
+
+msgid "The server is not responding."
+msgstr "השרת אינו מגיב."
+
+msgid "Native MySQL authentication"
+msgstr "אימות MySQL מובנה"
+
+msgid "SHA256 password authentication"
+msgstr "אימות ססמה SHA256"
+
+msgid "No privileges."
+msgstr "ללא הרשאות."
+
+msgid "Includes all privileges except GRANT."
+msgstr "כלול כל ההרשאות חוץ מ- GRANT."
+
+msgid "The password for %s was changed successfully."
+msgstr "הסיסמא עבור %s שונתה בהצלחה."
+
+msgid "You have revoked the privileges for %s."
+msgstr "שללת את הרשאות של %s."
+
+msgid "Revoke"
+msgstr "שלילה"
+
+msgid "Reloading the privileges"
+msgstr "טוען מחדש הרשאות"
+
+msgid "The selected users have been deleted successfully."
+msgstr "המשתמשים הנבחרים נמחקו בהצלחה."
+
+msgid "You have updated the privileges for %s."
+msgstr "אתה עדכנת הרשאות עבור %s."
+
+msgid "Deleting %s"
+msgstr "מוחק %s"
+
+msgid "The privileges were reloaded successfully."
+msgstr "ההרשאות נטענו מחדש בהצלחה."
+
+msgid "The user %s already exists!"
+msgstr "שם המשתמש %s כבר קיים!"
+
+msgid "Privileges for %s"
+msgstr "הרשאות עבור %s"
+
+msgid "You have added a new user."
+msgstr "משתמש חדש נוסף."
+
+msgid "ID"
+msgstr "קוד זיהוי"
+
+msgid "Command"
+msgstr "פקודה"
+
+msgid "Run SQL query/queries on server “%s”"
+msgstr "הרצת את שאילתה/שאילתות על השרת „%s”"
+
+msgid "Run SQL query/queries on database %s"
+msgstr "הרצת את שאילתה/שאילתות על מסד הנתונים %s"
+
+msgid "Run SQL query/queries on table %s"
+msgstr "הרצת את שאילתה/שאילתות על הטבלה „%s”"
+
+msgid "There is no detailed status information available for this storage engine."
+msgstr "אין מידע מצב מפורט על מנוע אחסון זה."
+
+msgid "%s is available on this MySQL server."
+msgstr "%s זמין על שרת MySQL זה."
+
+msgid "%s has been disabled for this MySQL server."
+msgstr "%s מובטל על שרת MySQL זה."
+
+msgid "This MySQL server does not support the %s storage engine."
+msgstr "שרת MySQL לא תומך במנוע אחסון %s."
+
+msgid "Can't rename index to PRIMARY!"
+msgstr "לא ניתן לשנות שם אינדקס אל PRIMARY!"
+
+msgid "Problems with indexes of table `%s`"
+msgstr "בעיות עם אינדקסים של טבלה `%s`"
+
+msgid "Source database `%s` was not found!"
+msgstr "מסד נתוני המקור ‚%s’ לא נמצא!"
+
+msgid "Target database `%s` was not found!"
+msgstr "מסד נתוני היעד ‚%s’ לא נמצא!"
+
+msgid "Invalid database:"
+msgstr "מסד נתונים שגוי:"
+
+msgid "Invalid table name:"
+msgstr "שם הטבלה שגוי:"
+
+msgid "Table %1$s has been renamed to %2$s."
+msgstr "שם הטבלה %1$s הוחלף לשם %2$s."
+
+msgid "No data"
+msgstr "אין נתונים"
+
+msgid "Version %1$s of %2$s was deleted."
+msgstr "גרסה %1$s מתוך %2$s נמחקה."
+
+msgid "A date, supported range is %1$s to %2$s"
+msgstr "תאריך, הטווח הנתמך הוא %1$s עד %2$s"
+
+msgid "A time, range is %1$s to %2$s"
+msgstr "שעה, הטווח הוא %1$s עד %2$s"
+
+msgid "A polygon"
+msgstr "מצולע"
+
+msgctxt "date and time types"
+msgid "Date and time"
+msgstr "תאריך ושעה"
+
+msgctxt "spatial types"
+msgid "Spatial"
+msgstr "מרחבי"
+
+msgid "Password is too long!"
+msgstr "הססמה ארוכה מדי!"
+
+msgid "The profile has been updated."
+msgstr "הפרופיל עודכן בהצלחה."
+
+msgid "Max: %s%s"
+msgstr "מירבי: %s%s"
+
+msgid "%s days, %s hours, %s minutes and %s seconds"
+msgstr "%s ימים, %s שעות, %s דקות ו- %s שניות"
+
+msgid "Users"
+msgstr "משתמשים"
+
+msgid "Error in ZIP archive:"
+msgstr "שגיאה בארכיון ZIP:"
+
+msgid "No files found inside ZIP archive!"
+msgstr "לא נמצאו קבצים בתוך ארכיון ה־ZIP!"
