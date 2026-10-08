@@ -71,3 +71,6 @@
 - tool: bma
   pattern: "^SELECT `config_data`, UNIX_TIMESTAMP\\(`timevalue`\\) ts FROM `phpmyadmin`\\.`pma__userconfig` WHERE "
   why: UserPreferences::load — phpMyAdmin reads it through its control user on every request, BetterMyAdmin once per session (on the user's credentials when no controluser is configured).
+- tool: bma
+  pattern: "^SELECT CREATE_TIME FROM information_schema\\.TABLES WHERE TABLE_SCHEMA = "
+  why: Table::getStatusInfo('CREATE_TIME') for the UI-preferences check; phpMyAdmin reads it with getTablesFull's `SELECT *, TABLE_SCHEMA AS Db` query (allow-listed for pma above), BetterMyAdmin reads only that column (same value).
