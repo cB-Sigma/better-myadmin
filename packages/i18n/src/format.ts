@@ -6,7 +6,7 @@
  * pma: src/Util.php (formatNumber, formatByteDown, timespanFormat, localisedDate,
  *      getFormattedMaximumUploadSize). Verified against PHP output in test/fixtures/format.json.
  */
-import { numberFormat, phpFloatval, phpRound, sprintf } from './php.ts'
+import { numberFormat, phpFloatToString, phpFloatval, phpRound, sprintf } from './php.ts'
 import type { Gettext } from './translator.ts'
 
 const SI_UNITS: Record<number, string> = {
@@ -142,18 +142,29 @@ export function getFormattedMaximumUploadSize(tr: Gettext, maxUploadSize: number
 /** Util::timespanFormat */
 export function timespanFormat(tr: Gettext, input: number): string {
   let seconds = Math.trunc(input)
+  // floor() returns floats; `$seconds -= …` turns the int into a float too: printed with precision 14
+  let secondsIsFloat = false
   const days = Math.floor(seconds / 86400)
-  if (days > 0) seconds -= days * 86400
+  if (days > 0) {
+    seconds -= days * 86400
+    secondsIsFloat = true
+  }
   const hours = Math.floor(seconds / 3600)
-  if (days > 0 || hours > 0) seconds -= hours * 3600
+  if (days > 0 || hours > 0) {
+    seconds -= hours * 3600
+    secondsIsFloat = true
+  }
   const minutes = Math.floor(seconds / 60)
-  if (days > 0 || hours > 0 || minutes > 0) seconds -= minutes * 60
+  if (days > 0 || hours > 0 || minutes > 0) {
+    seconds -= minutes * 60
+    secondsIsFloat = true
+  }
   return sprintf(
     tr.gettext('%s days, %s hours, %s minutes and %s seconds'),
-    String(days),
-    String(hours),
-    String(minutes),
-    String(seconds),
+    phpFloatToString(days),
+    phpFloatToString(hours),
+    phpFloatToString(minutes),
+    secondsIsFloat ? phpFloatToString(seconds) : String(seconds),
   )
 }
 
