@@ -4,3 +4,6 @@ dist/
 .turbo/
 .env
 .DS_Store
+coverage/
+*.tsbuildinfo
+bettermyadmin.config.ts
