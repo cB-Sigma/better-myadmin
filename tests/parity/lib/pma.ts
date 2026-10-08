@@ -39,6 +39,25 @@ export class PmaClient {
     return res.text()
   }
 
+  /** Raw request: GET without a form, POST (urlencoded, optionally as XHR) with one. Follows redirects. */
+  request(path: string, form?: Record<string, string>, ajax = false): Promise<string> {
+    return this.#req(path, form, ajax)
+  }
+
+  /** POST a form with the session token and server, as phpMyAdmin's AJAX forms do; parses the JSON reply. */
+  async ajax(path: string, form: Record<string, string> = {}): Promise<Record<string, unknown>> {
+    const body = await this.#req(
+      path,
+      { server: '1', token: this.token, ajax_request: 'true', ...form },
+      true,
+    )
+    try {
+      return JSON.parse(body) as Record<string, unknown>
+    } catch {
+      throw new Error(`phpMyAdmin did not answer JSON for ${path}: ${body.slice(0, 300)}`)
+    }
+  }
+
   /** `lang` picks the language like the login page's selector (?lang=xx, then the pma_lang cookie). */
   async login(user: string, password: string, server = 1, lang?: string): Promise<void> {
     const page = await this.#req(`/index.php?route=/${lang !== undefined ? `&lang=${lang}` : ''}`)

@@ -3,7 +3,6 @@ import {
   type DefaultFkCheckResponse,
   FormatRequest,
   type FormatResponse,
-  type HistoryResponse,
   LintRequest,
   type LintResponse,
   type SqlFormResponse,
@@ -16,7 +15,6 @@ import type { z } from 'zod'
 import { getServer } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
-import { getHistory } from '../query/history.ts'
 import { getVariable } from '../query/pipeline.ts'
 import { isProfilingSupported } from '../query/profiling.ts'
 import { expandUserString } from '../util/expand-user-string.ts'
@@ -238,14 +236,5 @@ sqlRoutes.get('/form', async (c) => {
       },
     }
   })
-  return c.json(body)
-})
-
-/**
- * GET /sql/history — the session's query history (History::getHistory without QueryHistoryDB).
- * The pmadb-backed history plugs in through query/history.ts.
- */
-sqlRoutes.get('/history', async (c) => {
-  const body: HistoryResponse = { entries: await getHistory(c.get('deps').cfg, c.get('session')) }
   return c.json(body)
 })

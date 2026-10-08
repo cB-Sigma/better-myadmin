@@ -1,4 +1,6 @@
+import type { Bookmark, QueryResponse } from '@bettermyadmin/contracts'
 import { useQuery } from '@tanstack/react-query'
+import { api } from '../../lib/api'
 
 /** One entry of BookmarkRepository::getList. */
 export interface BookmarkEntry {
@@ -6,61 +8,85 @@ export interface BookmarkEntry {
   label: string
   db: string
   query: string
-  /** '' for shared bookmarks */
-  user: string
+  /** Bookmark::getUser() is empty: shared with every user */
+  shared: boolean
   /** Bookmark::getVariableCount ([VARIABLE], [VARIABLEn]) */
   variableCount: number
 }
 
+const entry = (b: Bookmark): BookmarkEntry => ({
+  id: b.id,
+  label: b.label,
+  db: b.dbase,
+  query: b.query,
+  shared: b.isShared,
+  variableCount: b.variableCount,
+})
+
 /**
- * Bookmark storage (pma__bookmark). The SQL tab and the console are written against this interface;
- * the configuration-storage module installs the implementation with `registerBookmarkProvider`.
+ * Bookmarks of the configuration storage (pma__bookmark, or the local store), through the metadata
+ * endpoints. Without the bookmark feature the lists come back unavailable and no bookmark UI renders,
+ * like phpMyAdmin.
  */
-export interface BookmarkProvider {
-  /** RelationParameters->bookmarkFeature !== null for the server. */
-  isEnabled(server: number): Promise<boolean>
-  /** BookmarkRepository::getList(user, db) — db undefined lists every database (console). */
-  list(server: number, db?: string): Promise<BookmarkEntry[]>
-  /** Sql::storeTheQueryAsBookmark / console "Add bookmark". */
-  create(
+export const bookmarks = {
+  /** "Bookmark this SQL query" (SqlController::addBookmark / Sql::storeTheQueryAsBookmark) */
+  create: (
     server: number,
     b: { label: string; db: string; sql: string; shared: boolean; replace?: boolean },
-  ): Promise<{ ok: boolean; message: string }>
-  /** Bookmark::delete ("The bookmark has been deleted."). */
-  remove(server: number, id: number): Promise<{ message: string }>
-  /** Bookmark::applyVariables for running a bookmark with its variables. */
-  run(server: number, id: number, variables: Record<number, string>): Promise<{ sql: string }>
+  ): Promise<{ ok: boolean; message: string }> =>
+    api
+      .bookmarkCreate(server, {
+        db: b.db,
+        label: b.label,
+        query: b.sql,
+        shared: b.shared,
+        replace: b.replace === true,
+      })
+      .then(
+        (r) => ({ ok: r.success, message: r.message.text }),
+        (e: Error) => ({ ok: false, message: e.message }),
+      ),
+  /** Console "Add bookmark" (/console/bookmark/add): `message` is "Succeeded" / "Failed" */
+  consoleAdd: (
+    server: number,
+    b: { label: string; db: string; sql: string; shared: boolean },
+  ): Promise<{ ok: boolean; message: string }> =>
+    api
+      .consoleBookmarkAdd(server, { db: b.db, label: b.label, bookmark_query: b.sql, shared: b.shared })
+      .then((r) => ({ ok: r.data !== undefined, message: r.message })),
+  /** action_bookmark=1 ("View only"): the query and "Showing bookmark" */
+  show: (server: number, id: number) => api.bookmarkShow(server, id),
+  /** action_bookmark=2: "The bookmark has been deleted." */
+  remove: (server: number, id: number): Promise<{ message: string }> =>
+    api.bookmarkDelete(server, id).then((r) => ({ message: r.message?.text ?? '' })),
+  /** action_bookmark=0: Bookmark::applyVariables then the SQL-box pipeline, server side */
+  run: (
+    server: number,
+    id: number,
+    req: { db: string; table: string; variables: Record<number, string> },
+  ): Promise<QueryResponse> =>
+    api.bookmarkRun(server, id, {
+      db: req.db,
+      table: req.table,
+      variables: Object.fromEntries(Object.entries(req.variables).map(([k, v]) => [String(k), v])),
+    }),
 }
 
-/** No configuration storage: no bookmark UI at all, like phpMyAdmin without the bookmark feature. */
-const disabled: BookmarkProvider = {
-  isEnabled: async () => false,
-  list: async () => [],
-  create: async () => ({ ok: false, message: 'Bookmark not created!' }),
-  remove: async () => ({ message: '' }),
-  run: async () => ({ sql: '' }),
-}
-
-let provider: BookmarkProvider = disabled
-
-export function registerBookmarkProvider(p: BookmarkProvider | null): void {
-  provider = p ?? disabled
-}
-
-export function bookmarkProvider(): BookmarkProvider {
-  return provider
-}
-
-/** The feature flag and the list for a scope (empty and disabled until a provider is registered). */
+/**
+ * The feature flag and the list: `db` given is the SQL tab's getList(user, db); omitted is the console's
+ * list of every database (Console::getBookmarkContent).
+ */
 export function useBookmarks(server: number, db?: string) {
-  const enabled = useQuery({
-    queryKey: ['srv', server, 'bookmarks', 'enabled'],
-    queryFn: () => provider.isEnabled(server),
-  })
   const list = useQuery({
-    queryKey: ['srv', server, 'bookmarks', 'list', db ?? null],
-    queryFn: () => provider.list(server, db),
-    enabled: enabled.data === true,
+    queryKey: ['srv', server, 'bookmarks', db ?? null],
+    queryFn: async () => {
+      const r = db === undefined ? await api.consoleBookmarks(server) : await api.bookmarks(server, db)
+      return { available: r.available, bookmarks: r.bookmarks.map(entry) }
+    },
   })
-  return { enabled: enabled.data === true, bookmarks: list.data ?? [], refetch: list.refetch }
+  return {
+    enabled: list.data?.available === true,
+    bookmarks: list.data?.bookmarks ?? [],
+    refetch: list.refetch,
+  }
 }

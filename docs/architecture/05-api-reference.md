@@ -38,9 +38,10 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/servers/:s/prefs` | merged prefs + per-directive source (`default|config|user`) + `userprefsDisallow` list | `UserPreferences::load` |
-| POST | `/api/servers/:s/prefs` | `{patch: Record<directive, value>}` → validated, stored in `userconfig` (or returned for localStorage when `!userconfigwork`) | `/preferences/*` save |
-| POST | `/api/servers/:s/prefs/reset` | `{directives?: string[]}` all or some to default | "Restore default value" |
+| GET | `/api/servers/:s/prefs` | `{storage: db|local|session, mtime, configData, values}`: every user-preference path with effective value, phpMyAdmin default, config value, source (`default|config|user`) and `disallowed` (`UserprefsDisallow`) | `UserPreferences::load` + `apply` |
+| POST | `/api/servers/:s/prefs` | `{configData}` replaces the stored flat map (`2fa` kept when absent); pmadb `userconfig`, else local store, else session. Form validation arrives with the Settings UI | `UserPreferences::save` |
+| POST | `/api/servers/:s/prefs/option` | `{path, value, default?}` one value, removed when equal to the default (phpMyAdmin's when omitted) | `UserPreferencesHandler::setUserValue` (`/console/update-config`, theme, lang, nav width...) |
+| POST | `/api/servers/:s/prefs/reset` | wipe all preferences (`save([])`, which keeps `2fa`) | `/preferences/manage` Reset (`submit_clear`) |
 | POST | `/api/servers/:s/prefs/import` | `{json}` or `{file}` + `merge?` | `/preferences/manage` import |
 | GET | `/api/servers/:s/prefs/export?format=json|php` | download | `/preferences/manage` export |
 | GET | `/api/servers/:s/prefs/forms` | the form definitions (groups, fields, types, validators) for Settings tabs and page-settings gear | `Config/Forms/*` |
@@ -55,18 +56,20 @@ Conventions:
 | GET | `/api/servers/:s/navigation/tree?pos=&searchClause=&db=` | the whole tree (`NavTreeResponse`): panel settings, root list (database fast filter, `dbselector` page selector, `New` + database and group nodes, already grouped and sorted), user errors. Without `pos`, `db` selects the page holding that database (`getNavigationDbPos`) | `/navigation` `full=1` (`renderState`) |
 | POST | `/api/servers/:s/navigation/tree` | `{pos?, searchClause?, db?, paths: [{aPath, vPath, pos2Name?, pos2Value?, pos3Name?, pos3Value?}], reload}`: the tree with the listed branches expanded (state restore); `reload: true` is "Reload navigation panel" and also sets the session's `dbs_to_test` to false (#14252) | `/navigation` `reload=1` + `n{i}_aPath`… |
 | GET | `/api/servers/:s/navigation/branch?path=…&pos=&pos2Name=&pos2Value=&pos3Name=&pos3Value=&searchClause=&searchClause2=` | one branch (`NavBranchResponse`: `{list, error, searchResults, results}`); `path` repeats per aPath component after `root` (`db`, `db/tables`, `db/tables/t`, `db/tables/t/columns`); no `path` is the root list (database search). `results` is "%s result(s) found" when a search clause is given | `/navigation` `aPath`/`vPath` (`renderPath`) |
-| GET | `/api/servers/:s/navigation/hidden/:db` | hidden items list | `navigationhiding` |
-| POST | `/api/servers/:s/navigation/hide` / `unhide` | `{db, itemType, itemName}` | `/navigation` hide/unhide |
-| GET | `/api/servers/:s/recent-favorite` | `{recent:[], favorite:[]}` | `/table/recent-favorite` |
-| POST | `/api/servers/:s/favorites` | `{action:'add'|'remove'|'sync', db, table, localList?}` | `/database/structure/favorite-table`, `/sync-favorite-tables` |
+| GET | `/api/servers/:s/navigation/hidden?db=` | `{available, hidden: {item_type: names[]}, counts: {db: n}}` | `Navigation::getHiddenItems`, `Node::getNavigationHidingData` |
+| POST | `/api/servers/:s/navigation/hide` / `unhide` | `{dbName, itemType, itemName}` | `/navigation` `hideNavItem` / `unhideNavItem` |
+| GET | `/api/servers/:s/recent-favorite` | `{recent, favorite, numRecentTables, numFavoriteTables, syncFavorites}` (lists loaded once per session) | navigation recent/favorite lists |
+| POST | `/api/servers/:s/recent` | `{db, table}` adds a recently used table (trimmed to `NumRecentTables`); `POST /query` with a `table` does the same | `RecentTableHandling` middleware |
+| POST | `/api/servers/:s/favorites` | `{action:'add'|'remove', db, table, favoriteTables}` → `{changes, message?, user (sha1), favoriteTables (localStorage JSON), favorite}`; *Favorite List is full!* at `NumFavoriteTables` | `/database/structure/favorite-table` |
+| POST | `/api/servers/:s/favorites/sync` | `{favoriteTables}` localStorage → storage when the stored list is empty | `/sync-favorite-tables` |
 
 ## Server scope
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
 | GET | `/api/servers/:s` | server info block for home page (version, type, host, user, charset, SSL status; master shows no protocol version) + web server block + capabilities + metadata-storage status + warnings list | `HomeController` |
-| GET | `/api/servers/:s/metadata-storage/status` | per-table existence and `*work` flags | `/check-relations` |
-| POST | `/api/servers/:s/metadata-storage/create` | create missing pmadb tables (`fixUpMissing`) | `/check-relations` create |
+| GET | `/api/servers/:s/metadata-storage/status?db=` | `RelationParameters::toArray()`, the home and DB-operations notices, the one create action offered, the check page's table and feature lines, the store serving each per-user feature, the control-link error | `/check-relations`, `HomeController` notice |
+| POST | `/api/servers/:s/metadata-storage/create` | `{action: create_pmadb|fixall_pmadb|fix_pmadb, db?}` → `{message, status}` | `/check-relations` (`createPmaDatabase`, `fixPmaTables`) |
 | GET | `/api/servers/:s/databases?pos=&sortBy=&sortOrder=&withStats=` | db list with collation and (optional) stats | `/server/databases` |
 | POST | `/api/servers/:s/databases` | `{name, collation}` create | `/server/databases/create` |
 | POST | `/api/servers/:s/databases/drop` | `{names[]}` | `/server/databases/destroy` |
@@ -151,7 +154,8 @@ Conventions:
 | GET | `/api/servers/:s/databases/:db/tables/:t/cell?where=&column=&transform=` | raw cell bytes (BLOB download, image inline, transformation wrapper) | `/table/get-field`, `/transformation/wrapper` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/foreign-values?column=&search=&pos=` | FK browse popup / dropdown data (`ForeignKeyMaxLimit`, ordering) | `/browse-foreigners`, `/sql/get-relational-values` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/enum-values?column=` / `set-values` | option lists for grid editors | `/sql/get-enum-values`, `/sql/get-set-values` |
-| POST | `/api/servers/:s/databases/:db/tables/:t/uiprefs` | `{sortedCol?, colOrder?, colVisib?}` | `/sql/set-column-preferences` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/uiprefs` | validated `{sorted_col, col_order, col_visib, createTime}` (stale values removed) | `Table::getUiProp` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/uiprefs` | `{col_order?, col_visib?, table_create_time}` (comma lists) | `/sql/set-column-preferences` |
 | GET/POST | `/api/servers/:s/databases/:db/tables/:t/normalization/*` | wizard steps (1NF 1-4, 2NF, 3NF, partial-dependencies, create tables, move repeating group, add primary) | `/normalization/*` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/columns?names=1` | names (pickers) | `/columns` |
 
@@ -167,7 +171,7 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| POST | `/api/servers/:s/query` | `{sql, db?, table?, pos, maxRows?, delimiter, fromQueryBox, sig?, fkChecks?, rollback?, params? ({':name': value}), showAsPhp?, profiling? (true = on, false = off, omitted = unchanged), queryId?}` → `{statements[], executed, db, table, ajaxReload?, reloadNavigation, sqlQuery}`; each statement has `kind` (`resultset`/`affected`/`empty`/`error`/`php`/`import`), `message`, `card` (SQL shown + `links` {editInline, edit, explain, php, refresh, profiling}), `error` (mysqlDie: static analysis, SQL, server message), `result`, `moreResults` (CALL), `profiling`, `warnings`. A `sig` that does not verify → 400 "Missing parameter: sql_query" | `/import` (SQL tab, console), `/sql` |
+| POST | `/api/servers/:s/query` | `{sql, db?, table?, pos, maxRows?, delimiter, fromQueryBox, sig?, fkChecks?, rollback?, params? ({':name': value}), showAsPhp?, profiling? (true = on, false = off, omitted = unchanged), queryId?, noHistory?, bookmark? {label, shared, replace}}` → `{statements[], executed, db, table, ajaxReload?, reloadNavigation, sqlQuery}`; each statement has `kind` (`resultset`/`affected`/`empty`/`error`/`php`/`import`), `message`, `card` (SQL shown + `links` {editInline, edit, explain, php, refresh, profiling}), `error` (mysqlDie: static analysis, SQL, server message), `result`, `moreResults` (CALL), `profiling`, `warnings`. A `sig` that does not verify → 400 "Missing parameter: sql_query". Afterwards the request records `Current::$sqlQuery` in the SQL history (StatementHistory; `noHistory` skips it), adds the posted db/table to the recent tables (RecentTableHandling) and, with `bookmark`, stores the posted SQL once as a bookmark in the final database when the run completed | `/import` (SQL tab, console), `/sql` |
 | POST | `/api/servers/:s/query/cancel` | `{queryId}` → `{killed}` (`KILL QUERY` on the connection running that request) | — (new, X14) |
 | POST | `/api/servers/:s/query/simulate` | `{sql, db?, delimiter}` → `{sqlData: [{sqlQuery, matchedRows, matchedRowsSql, matchedRowsSig}] \| null, message?}` | `/import/simulate-dml` |
 | POST | `/api/servers/:s/sql/format` | `{sql, singleLine}` → `{sql}` (ported Formatter) | `/database/sql/format` |
@@ -175,9 +179,11 @@ Conventions:
 | GET | `/api/servers/:s/sql/autocomplete?db=` | `{tables: {table: [{field, columnHint}]}}` | `/database/sql/autocomplete` |
 | GET | `/api/servers/:s/sql/default-fk-check` | `{defaultFkCheckValue}` from `DefaultForeignKeyChecks` + server var | `/sql/get-default-fk-check-value` |
 | GET | `/api/servers/:s/sql/form?db=&table=&sqlQuery=` | what the SQL tab renders server-side: scope, legend name, prefilled query (`DefaultQuery*` expanded), columns, FK default, profiling support, server parser context, SQL-box settings; 404 "No databases selected." / "No table selected." | `/server/sql`, `/database/sql`, `/table/sql` |
-| GET | `/api/servers/:s/sql/history` | `{entries: [{db, table, sqlquery, timevalue}]}` newest first (session history; pma__history store pluggable) | console history |
-| GET | `/api/servers/:s/console/config` | `{settings (Console/*), debugSql, maxCharactersInDisplayedSql, confirm}` | `console/display.twig` data |
-| GET/POST | `/api/servers/:s/bookmarks` | list; create `{label, sql, shared, db}`; `/:id/delete`; `/:id/run {variables}` returns signed SQL | `/console/bookmark/*`, bookmark forms |
+| GET | `/api/servers/:s/sql/history` | `{history: rows newest first, or false, queryHistoryDB}`; `POST /query` records the last statement like `StatementHistory` (`noHistory` skips it) | `Console\History::getHistory` |
+| GET | `/api/servers/:s/console/config` | `{settings (Console/* with the user preferences applied), debugSql, maxCharactersInDisplayedSql, confirm}` | `console/display.twig` data |
+| POST | `/api/servers/:s/console/config` | `{key, value}` validated like `parseValueParam` (400 "Unexpected parameter value."), stored as `Console/<key>` in the user preferences (configuration storage or session) → `{message}` | `/console/update-config` |
+| GET/POST | `/api/servers/:s/bookmarks` | `?db=` list (own + shared); create `{db, label, query, shared, replace}`; `GET /:id` show; `POST /:id/delete`; `POST /:id/run {db, variables, allUsers, noHistory}` runs it through the SQL-box pipeline | bookmark forms, `/import` `id_bookmark` / `action_bookmark` |
+| GET/POST | `/api/servers/:s/console/bookmarks` | console list with *Showing N bookmarks (both private and shared)*; add `{db, label, bookmark_query, shared}` → *Succeeded* / *Failed* | `/console/bookmark/refresh`, `/console/bookmark/add` |
 | POST | `/api/servers/:s/query/sign` | `{sql}` → `{sig}` for building browse links (FK traversal, search redirects) | `Core::signSqlQuery` |
 
 ## Export

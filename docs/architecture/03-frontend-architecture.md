@@ -100,7 +100,7 @@ Zustand stores, one per concern, tiny and serializable:
 | Store | Holds | Persistence |
 |---|---|---|
 | `NavTreeStore` (`features/navigation/store.ts`) | expanded branches and their positions, fast-filter texts, loaded branches, selection, "link with main panel" | expanded paths + positions in `sessionStorage.navTreePaths`, filter texts in `sessionStorage.navTreeSearchFilters` (phpMyAdmin's keys and semantics: restored only for the same server and session token); panel width in `localStorage` until the preferences API lands (phpMyAdmin: `navigation/update-width`) |
-| `useConsoleStore` | open/closed, height, active tab, history (with status/time), options (`AlwaysExpand`, `CurrentQuery`, `EnterExecutes`, `DarkTheme`) | localStorage + server `console/update-config` (pmadb userconfig) to match pMA |
+| `useConsoleStore` | open/closed, height, active tab, history (with status/time), options (`AlwaysExpand`, `CurrentQuery`, `EnterExecutes`, `DarkTheme`) | server `console/update-config` → user preferences (configuration storage or session), as in pMA |
 | `useThemeStore` | theme id, color mode | localStorage + cookie (so the server can preselect for printing) |
 | `useGridPrefsStore` | per-table column order/visibility/width (mirrors `table_uiprefs`) | server when `uiprefswork`, else localStorage |
 | `useSelectionStore` (per grid instance) | checked rows, last clicked index for shift-click | none |

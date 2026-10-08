@@ -8,8 +8,8 @@ import {
 } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
 import { ValidationError } from '../http/errors.ts'
-import { setHistory } from '../query/history.ts'
-import { runSqlBox } from '../query/pipeline.ts'
+import { afterSqlBox } from '../metadata/hooks.ts'
+import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { simulateDml } from '../query/simulate.ts'
 import type { ServerEnv } from './server.ts'
@@ -47,8 +47,9 @@ queryRoutes.post('/', async (c) => {
   const runKey = req.queryId !== undefined ? `${session.id}\u0000${server}\u0000${req.queryId}` : null
   if (runKey !== null) running.set(runKey, conn.threadId)
   let discard = false
+  let r: SqlBoxResult | null = null
   try {
-    const r = await runSqlBox(
+    r = await runSqlBox(
       {
         sql: req.sql,
         db: req.db ?? '',
@@ -65,13 +66,6 @@ queryRoutes.post('/', async (c) => {
       { cfg, conn, hmacSecret: session.hmacSecret, executed, session, server, tr: c.get('tr') },
     )
     discard = r.discardConnection
-    // StatementHistory middleware
-    await setHistory(cfg, session, {
-      db: r.db,
-      table: r.table,
-      username: c.get('creds').user,
-      sqlquery: r.sqlQuery,
-    })
     const body: QueryResponse = {
       statements: r.statements,
       executed: cfg.DBG.sql ? executed : [],
@@ -88,6 +82,19 @@ queryRoutes.post('/', async (c) => {
     // like PHP's connection close: a transaction left open or a changed session setting is discarded
     if (discard) conn.raw.destroy()
     else conn.raw.release()
+    if (r !== null) {
+      // StatementHistory + RecentTableHandling middlewares (pma: src/Application.php)
+      await afterSqlBox(c, {
+        db: req.db ?? '',
+        table: req.table ?? '',
+        current: { db: r.db, table: r.table, sqlQuery: r.sqlQuery },
+        noHistory: req.noHistory === true,
+        bookmark:
+          req.bookmark !== undefined && r.bookmarkable === true
+            ? { ...req.bookmark, sql: req.sql }
+            : undefined,
+      })
+    }
   }
 })
 

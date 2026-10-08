@@ -159,14 +159,16 @@ describe('SQL tab options', () => {
   })
 
   it('records the session history (last statement, capped at QueryHistoryMax)', async () => {
-    const a = await app({ QueryHistoryMax: 2 })
+    // the history feature comes from the configuration storage (here the local store)
+    const a = await app({ QueryHistoryMax: 2, DataDir: ':memory:' })
     await run(a, 'SELECT 1')
     await run(a, 'SELECT 2; SELECT * FROM t')
     await run(a, 'SELECT 3')
+    await run(a, 'SELECT 4', { noHistory: true })
     const h = await a.req('GET', '/api/servers/1/sql/history')
-    expect(h.json.entries).toEqual([
-      { db: DB, table: '', sqlquery: 'SELECT 3;', timevalue: null },
-      { db: DB, table: 't', sqlquery: 'SELECT * FROM t;', timevalue: null },
+    expect(h.json.history).toEqual([
+      { db: DB, table: '', sqlquery: 'SELECT 3;' },
+      { db: DB, table: 't', sqlquery: 'SELECT * FROM t;' },
     ])
   })
 })
@@ -218,7 +220,7 @@ describe('SQL form, autocomplete and console endpoints', () => {
     expect((await a.req('GET', `/api/servers/1/sql/autocomplete?db=${DB}`)).json.tables).toEqual({})
   })
 
-  it('console options: defaults, validation, persistence in the session', async () => {
+  it('console options: defaults, validation, persistence in the user preferences (session)', async () => {
     const a = await app()
     const g = await a.req('GET', '/api/servers/1/console/config')
     expect(g.json.settings).toEqual({
@@ -248,5 +250,13 @@ describe('SQL form, autocomplete and console endpoints', () => {
     }
     const g2 = await a.req('GET', '/api/servers/1/console/config')
     expect(g2.json.settings).toMatchObject({ EnterExecutes: true, Height: 240 })
+    // the default value removes the stored preference (UserPreferences::persistOption): the shared
+    // MySQL's `phpmyadmin` storage (ZeroConf) is left as it was
+    await a.req('POST', '/api/servers/1/console/config', { key: 'EnterExecutes', value: 'false' })
+    await a.req('POST', '/api/servers/1/console/config', { key: 'Height', value: '92' })
+    expect((await a.req('GET', '/api/servers/1/console/config')).json.settings).toMatchObject({
+      EnterExecutes: false,
+      Height: 92,
+    })
   })
 })

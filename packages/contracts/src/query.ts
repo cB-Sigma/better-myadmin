@@ -32,6 +32,19 @@ export const QueryRequest = z.object({
   showAsPhp: z.boolean().optional(),
   /** Client-chosen id so POST /query/cancel can KILL QUERY this request's connection. */
   queryId: z.string().max(64).optional(),
+  /** no_history: do not record the query in the SQL history (StatementHistory middleware). */
+  noHistory: z.boolean().optional(),
+  /**
+   * "Bookmark this SQL query": bkm_label, bkm_all_users, bkm_replace. The posted `sql` is stored once
+   * for the whole text in the request's final database when the run completed (ImportController).
+   */
+  bookmark: z
+    .object({
+      label: z.string(),
+      shared: z.boolean().default(false),
+      replace: z.boolean().default(false),
+    })
+    .optional(),
 })
 export type QueryRequest = z.input<typeof QueryRequest>
 

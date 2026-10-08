@@ -7,7 +7,7 @@ import { type MouseEvent as ReactMouseEvent, useCallback, useEffect, useMemo, us
 import { api } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { type BookmarkEntry, bookmarkProvider, useBookmarks } from '../bookmarks/provider'
+import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { SqlEditor } from '../sql/editor/SqlEditor'
 import type { SqlEditorHandle } from '../sql/editor/types'
@@ -22,8 +22,8 @@ import {
 import { sqlTabRoute } from '../sql/routes'
 import { newQueryId, onQueryEvent, runQuery, scopeKey, setPendingResults } from '../sql/runner'
 import '../sql/sql.css'
-import { CONSOLE_DEFAULTS, localConsoleSettings, normaliseMode, saveConsoleSetting } from './config'
-import { historyProvider } from './history'
+import { CONSOLE_DEFAULTS, normaliseMode, saveConsoleSetting } from './config'
+import { consoleHistory } from './history'
 
 /** One entry of the message list (div.message in console/display.twig). */
 export interface ConsoleMessage {
@@ -71,7 +71,7 @@ export default function Console({ server }: { server: number }) {
   return (
     <ConsoleDock
       server={server}
-      initial={{ ...CONSOLE_DEFAULTS, ...remote.data.settings, ...localConsoleSettings() }}
+      initial={{ ...CONSOLE_DEFAULTS, ...remote.data.settings }}
       debugSql={remote.data.debugSql}
       confirm={remote.data.confirm}
     />
@@ -116,8 +116,7 @@ function ConsoleDock({
   // history rows rendered at start, hidden unless "Show query history at start"
   useEffect(() => {
     let alive = true
-    void historyProvider()
-      .list(server)
+    void consoleHistory(server)
       .then((entries) => {
         if (!alive) return
         const rows = [...entries].reverse().map(
@@ -735,7 +734,7 @@ function BookmarksCard({
                 <button
                   type="button"
                   className={action}
-                  onClick={() => setAdd({ label: b.label, db: b.db, sql: b.query, shared: b.user === '' })}
+                  onClick={() => setAdd({ label: b.label, db: b.db, sql: b.query, shared: b.shared })}
                 >
                   {t('Edit')}
                 </button>
@@ -744,7 +743,7 @@ function BookmarksCard({
                   className={action}
                   onClick={async () => {
                     if (!window.confirm(`${t(CONSOLE_DELETE_BOOKMARK_CONFIRM)}\n${b.label}`)) return
-                    await bookmarkProvider().remove(server, b.id)
+                    await bookmarkApi.remove(server, b.id)
                     refetch()
                   }}
                 >
@@ -754,9 +753,7 @@ function BookmarksCard({
                   {t('Database')}: <span>{b.db}</span>
                 </span>
                 <span
-                  className={
-                    b.user === '' ? 'bookmark_label shared text-success' : 'bookmark_label text-accent'
-                  }
+                  className={b.shared ? 'bookmark_label shared text-success' : 'bookmark_label text-accent'}
                 >
                   {b.label}
                 </span>
@@ -840,8 +837,8 @@ function AddBookmarkForm({
               window.alert(t(FORM_EMPTY))
               return
             }
-            // "Edit" creates a new bookmark: there is no in-place update
-            const r = await bookmarkProvider().create(server, { label, db, sql, shared })
+            // "Edit" creates a new bookmark: there is no in-place update (/console/bookmark/add)
+            const r = await bookmarkApi.consoleAdd(server, { label, db, sql, shared })
             setMessage(r.ok ? t('Succeeded') : t('Failed'))
             if (r.ok) onDone()
           }}

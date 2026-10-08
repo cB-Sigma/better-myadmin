@@ -5,39 +5,12 @@ import {
 } from '@bettermyadmin/contracts'
 import { type Gettext, englishTranslator } from '@bettermyadmin/i18n'
 import { Hono } from 'hono'
-import type { AppConfig } from '../config.ts'
 import { BmaError } from '../http/errors.ts'
-import type { SessionData } from '../session/store.ts'
+import { defaultOfPath, withMeta } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
 import { parseBody } from './sql.ts'
 
 export const consoleRoutes = new Hono<ServerEnv>()
-
-/**
- * Where Console/* values are persisted. phpMyAdmin's UserPreferencesHandler::setUserValue keeps them in
- * pmadb (pma__userconfig) or, without it, in the session; the pmadb writer installs itself here.
- */
-export interface ConsolePrefsWriter {
-  set(session: SessionData, key: string, value: boolean | number | string): Promise<void>
-}
-
-const sessionWriter: ConsolePrefsWriter = {
-  set: async (session, key, value) => {
-    session.consolePrefs ??= {}
-    session.consolePrefs[key] = value
-  },
-}
-let writer: ConsolePrefsWriter = sessionWriter
-
-export function setConsolePrefsWriter(w: ConsolePrefsWriter | null): void {
-  writer = w ?? sessionWriter
-}
-
-/** $cfg['Console'] merged with the user's values. */
-export function consoleSettings(cfg: AppConfig, session: SessionData): ConsoleSettings {
-  const c = cfg.Console as ConsoleSettings
-  return { ...c, ...(session.consolePrefs ?? {}) } as ConsoleSettings
-}
 
 const BOOL_KEYS = [
   'StartHistory',
@@ -79,22 +52,36 @@ export function parseConsoleValue(
   throw new UnexpectedParameter(tr)
 }
 
-/** GET /api/servers/:s/console/config — what console/display.twig receives. */
-consoleRoutes.get('/config', (c) => {
-  const { cfg } = c.get('deps')
-  const body: ConsoleConfigResponse = {
-    settings: consoleSettings(cfg, c.get('session')),
-    debugSql: cfg.DBG.sql,
-    maxCharactersInDisplayedSql: cfg.MaxCharactersInDisplayedSQL,
-    confirm: cfg.Confirm,
-  }
-  return c.json(body)
-})
+/**
+ * GET /api/servers/:s/console/config — what console/display.twig receives: `$cfg['Console']` with the
+ * user's preferences applied (UserPreferencesHandler::loadUserPreferences).
+ */
+consoleRoutes.get('/config', (c) =>
+  withMeta(c, {}, async (m) => {
+    const settings = await m.settings()
+    const body: ConsoleConfigResponse = {
+      settings: settings.Console as ConsoleSettings,
+      debugSql: settings.DBG.sql,
+      maxCharactersInDisplayedSql: settings.MaxCharactersInDisplayedSQL,
+      confirm: settings.Confirm,
+    }
+    return c.json(body)
+  }),
+)
 
-/** POST /api/servers/:s/console/config — pma: /console/update-config */
+/**
+ * POST /api/servers/:s/console/config — UserPreferencesHandler::setUserValue('Console/<key>'): the user
+ * preferences in the configuration storage (pma__userconfig, the local store) or the session.
+ * pma: /console/update-config
+ */
 consoleRoutes.post('/config', async (c) => {
+  const tr = c.get('tr')
   const req = await parseBody(c, ConsoleConfigUpdate)
-  const value = parseConsoleValue(req.key, req.value, c.get('tr'))
-  await writer.set(c.get('session'), req.key, value)
-  return c.json({ message: c.get('tr').gettext('Console settings has been updated successfully.') })
+  const value = parseConsoleValue(req.key, req.value, tr)
+  return withMeta(c, {}, async (m) => {
+    const path = `Console/${req.key}`
+    const r = await (await m.meta()).userPreferences().persistOption(path, value, defaultOfPath(path))
+    if (r !== true) return c.json({ message: r.text }, 500)
+    return c.json({ message: tr.gettext('Console settings has been updated successfully.') })
+  })
 })

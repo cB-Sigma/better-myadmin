@@ -4,6 +4,7 @@ import { createServerContext } from '@bettermyadmin/sql-lexer'
 import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { Conn, type ServerInfo } from './connection.ts'
+import { ControlConnections } from './control.ts'
 
 export interface Credentials {
   user: string
@@ -112,9 +113,12 @@ interface PoolEntry {
 export class PoolManager {
   readonly #pools = new Map<string, PoolEntry>()
   readonly #cfg: AppConfig
+  /** The configuration-storage (control user) links. */
+  readonly control: ControlConnections
 
   constructor(cfg: AppConfig) {
     this.#cfg = cfg
+    this.control = new ControlConnections(cfg)
   }
 
   server(index: number): ServerConfig {
@@ -209,6 +213,7 @@ export class PoolManager {
       if (serverIndex !== undefined && entry.serverIndex !== serverIndex) continue
       await this.#endEntry(key, entry)
     }
+    await this.control.dropSession(sessionId, serverIndex)
   }
 
   /** Evicts pools idle for longer than LoginCookieValidity. */
@@ -221,6 +226,7 @@ export class PoolManager {
 
   async closeAll(): Promise<void> {
     for (const [key, entry] of this.#pools) await this.#endEntry(key, entry)
+    await this.control.closeAll()
   }
 
   async #endEntry(key: string, entry: PoolEntry): Promise<void> {

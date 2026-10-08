@@ -38,8 +38,8 @@ export interface SessionData {
   profiling?: boolean
   /** SessionCache 'profiling_supported' per server index. */
   profilingSupported?: Record<string, boolean>
-  /** Console/* preferences set through /console/config when no pmadb user preferences are stored. */
-  consolePrefs?: Record<string, boolean | number | string>
+  /** Configuration-storage state owned by src/metadata/service.ts (pma: parts of $_SESSION). */
+  metadata?: Record<string, unknown>
 }
 
 export interface SessionStore {

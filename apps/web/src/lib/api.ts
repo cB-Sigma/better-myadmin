@@ -1,6 +1,15 @@
 import type {
   AutocompleteResponse,
+  BookmarkCreateRequest,
+  BookmarkCreateResponse,
+  BookmarkDeleteResponse,
+  BookmarkListResponse,
+  BookmarkRunRequest,
+  BookmarkShowResponse,
   CancelResponse,
+  ConsoleBookmarkAddRequest,
+  ConsoleBookmarkAddResponse,
+  ConsoleBookmarksResponse,
   ConsoleConfigResponse,
   DefaultFkCheckResponse,
   FormatResponse,
@@ -100,7 +109,23 @@ export const api = {
     call<AutocompleteResponse>('GET', `/servers/${server}/sql/autocomplete?${qs({ db })}`),
   defaultFkCheck: (server: number) =>
     call<DefaultFkCheckResponse>('GET', `/servers/${server}/sql/default-fk-check`),
+  /** History::getHistory (configuration storage; `history: false` without the feature) */
   sqlHistory: (server: number) => call<HistoryResponse>('GET', `/servers/${server}/sql/history`),
+  // bookmarks (configuration storage, docs/architecture/05-api-reference.md#sql-execution)
+  bookmarks: (server: number, db: string) =>
+    call<BookmarkListResponse>('GET', `/servers/${server}/bookmarks?db=${encodeURIComponent(db)}`),
+  bookmarkCreate: (server: number, req: BookmarkCreateRequest) =>
+    call<BookmarkCreateResponse>('POST', `/servers/${server}/bookmarks`, req),
+  bookmarkShow: (server: number, id: number) =>
+    call<BookmarkShowResponse>('GET', `/servers/${server}/bookmarks/${id}`),
+  bookmarkDelete: (server: number, id: number) =>
+    call<BookmarkDeleteResponse>('POST', `/servers/${server}/bookmarks/${id}/delete`),
+  bookmarkRun: (server: number, id: number, req: BookmarkRunRequest) =>
+    call<QueryResponse>('POST', `/servers/${server}/bookmarks/${id}/run`, req),
+  consoleBookmarks: (server: number) =>
+    call<ConsoleBookmarksResponse>('GET', `/servers/${server}/console/bookmarks`),
+  consoleBookmarkAdd: (server: number, req: ConsoleBookmarkAddRequest) =>
+    call<ConsoleBookmarkAddResponse>('POST', `/servers/${server}/console/bookmarks`, req),
   simulate: (server: number, req: SimulateRequest) =>
     call<SimulateResponse>('POST', `/servers/${server}/query/simulate`, req),
   cancelQuery: (server: number, queryId: string) =>

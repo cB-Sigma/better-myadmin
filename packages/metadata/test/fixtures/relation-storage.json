@@ -1,0 +1,853 @@
+{
+  "_generated": {"by": "generate-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "scenarios": [
+    {
+      "name": "no pmadb configured, nothing found",
+      "setup": {"server": []},
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `phpmyadmin`;"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": null, "db": null, "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "phpmyadmin"},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {"m1meta_rp": null, "m1meta_rp_new": null}
+    },
+    {
+      "name": "pmadb configured but missing",
+      "setup": {
+        "server": {"pmadb": "m1meta_rp"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"}
+          ],
+          "result": {"user": null, "db": null, "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "phpmyadmin"},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {"m1meta_rp": null, "m1meta_rp_new": null}
+    },
+    {
+      "name": "all tables, auto-detected names",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__column_info": "pma__column_info", "pma__history": "pma__history", "pma__pdf_pages": "pma__pdf_pages", "pma__recent": "pma__recent", "pma__favorite": "pma__favorite", "pma__table_uiprefs": "pma__table_uiprefs", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__table_info": "pma__table_info", "pma__tracking": "pma__tracking", "pma__userconfig": "pma__userconfig", "pma__users": "pma__users", "pma__usergroups": "pma__usergroups", "pma__navigationhiding": "pma__navigationhiding", "pma__savedsearches": "pma__savedsearches", "pma__central_columns": "pma__central_columns", "pma__designer_settings": "pma__designer_settings", "pma__export_templates": "pma__export_templates"},
+        "server": {"pmadb": "m1meta_rp"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__usergroups` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__tracking` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": true, "uiprefswork": true, "userconfigwork": true, "allworks": true},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": true, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "all tables, explicit names",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__column_info": "pma__column_info", "pma__history": "pma__history", "pma__pdf_pages": "pma__pdf_pages", "pma__recent": "pma__recent", "pma__favorite": "pma__favorite", "pma__table_uiprefs": "pma__table_uiprefs", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__table_info": "pma__table_info", "pma__tracking": "pma__tracking", "pma__userconfig": "pma__userconfig", "pma__users": "pma__users", "pma__usergroups": "pma__usergroups", "pma__navigationhiding": "pma__navigationhiding", "pma__savedsearches": "pma__savedsearches", "pma__central_columns": "pma__central_columns", "pma__designer_settings": "pma__designer_settings", "pma__export_templates": "pma__export_templates"},
+        "server": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__usergroups` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__tracking` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": true, "uiprefswork": true, "userconfigwork": true, "allworks": true},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": true, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "subset of tables, auto-detected",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__history": "pma__history", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__users": "pma__users"},
+        "server": {"pmadb": "m1meta_rp"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "", "table_coords": "pma__table_coords", "pdf_pages": "", "column_info": "", "history": "pma__history", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "pma__users", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": "pma__history", "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": "pma__relation", "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": true, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": true, "savedsearcheswork": false, "historywork": true, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "", "table_coords": "pma__table_coords", "pdf_pages": "", "column_info": "", "history": "pma__history", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "pma__users", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "", "table_coords": "pma__table_coords", "pdf_pages": "", "column_info": "", "history": "pma__history", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "pma__users", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__history", "pma__relation", "pma__table_coords", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "custom table name",
+      "setup": {
+        "create": {"my_bookmarks": "pma__bookmark", "pma__history": "pma__history", "pma__table_info": "pma__table_info"},
+        "server": {"pmadb": "m1meta_rp", "bookmarktable": "my_bookmarks"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `my_bookmarks` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "my_bookmarks", "relation": "", "table_info": "pma__table_info", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "pma__history", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "my_bookmarks", "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": "pma__history", "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": true, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": true, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "my_bookmarks", "relation": "", "table_info": "pma__table_info", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "pma__history", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "my_bookmarks", "relation": "", "table_info": "pma__table_info", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "pma__history", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["my_bookmarks", "pma__history", "pma__table_info"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "features disabled with false",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__column_info": "pma__column_info", "pma__history": "pma__history", "pma__pdf_pages": "pma__pdf_pages", "pma__recent": "pma__recent", "pma__favorite": "pma__favorite", "pma__table_uiprefs": "pma__table_uiprefs", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__table_info": "pma__table_info", "pma__tracking": "pma__tracking", "pma__userconfig": "pma__userconfig", "pma__users": "pma__users", "pma__usergroups": "pma__usergroups", "pma__navigationhiding": "pma__navigationhiding", "pma__savedsearches": "pma__savedsearches", "pma__central_columns": "pma__central_columns", "pma__designer_settings": "pma__designer_settings", "pma__export_templates": "pma__export_templates"},
+        "server": {"pmadb": "m1meta_rp", "tracking": false, "users": false, "pdf_pages": false}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": false, "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": false, "userconfig": "pma__userconfig", "users": false, "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": null, "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": null, "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": null, "userconfig": "pma__userconfig", "usergroups": null, "users": null, "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": false, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": false, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": false, "uiprefswork": true, "userconfigwork": true, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": false, "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": false, "userconfig": "pma__userconfig", "users": false, "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": false, "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": false, "userconfig": "pma__userconfig", "users": false, "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "all features disabled",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__column_info": "pma__column_info", "pma__history": "pma__history", "pma__pdf_pages": "pma__pdf_pages", "pma__recent": "pma__recent", "pma__favorite": "pma__favorite", "pma__table_uiprefs": "pma__table_uiprefs", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__table_info": "pma__table_info", "pma__tracking": "pma__tracking", "pma__userconfig": "pma__userconfig", "pma__users": "pma__users", "pma__usergroups": "pma__usergroups", "pma__navigationhiding": "pma__navigationhiding", "pma__savedsearches": "pma__savedsearches", "pma__central_columns": "pma__central_columns", "pma__designer_settings": "pma__designer_settings", "pma__export_templates": "pma__export_templates"},
+        "server": {"pmadb": "m1meta_rp", "bookmarktable": false, "relation": false, "table_info": false, "table_coords": false, "pdf_pages": false, "column_info": false, "history": false, "recent": false, "favorite": false, "table_uiprefs": false, "tracking": false, "userconfig": false, "users": false, "usergroups": false, "navigationhiding": false, "savedsearches": false, "central_columns": false, "designer_settings": false, "export_templates": false}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": false, "relation": false, "table_info": false, "table_coords": false, "pdf_pages": false, "column_info": false, "history": false, "recent": false, "favorite": false, "table_uiprefs": false, "tracking": false, "userconfig": false, "users": false, "usergroups": false, "navigationhiding": false, "savedsearches": false, "central_columns": false, "designer_settings": false, "export_templates": false}
+        },
+        {
+          "step": "params",
+          "statements": [
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"}
+          ],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": false, "relation": false, "table_info": false, "table_coords": false, "pdf_pages": false, "column_info": false, "history": false, "recent": false, "favorite": false, "table_uiprefs": false, "tracking": false, "userconfig": false, "users": false, "usergroups": false, "navigationhiding": false, "savedsearches": false, "central_columns": false, "designer_settings": false, "export_templates": false}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": true, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": false, "relation": false, "table_info": false, "table_coords": false, "pdf_pages": false, "column_info": false, "history": false, "recent": false, "favorite": false, "table_uiprefs": false, "tracking": false, "userconfig": false, "users": false, "usergroups": false, "navigationhiding": false, "savedsearches": false, "central_columns": false, "designer_settings": false, "export_templates": false}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "column_info needs the 4.3 upgrade",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__column_info": "pma__column_info", "pma__history": "pma__history", "pma__pdf_pages": "pma__pdf_pages", "pma__recent": "pma__recent", "pma__favorite": "pma__favorite", "pma__table_uiprefs": "pma__table_uiprefs", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__table_info": "pma__table_info", "pma__tracking": "pma__tracking", "pma__userconfig": "pma__userconfig", "pma__users": "pma__users", "pma__usergroups": "pma__usergroups", "pma__navigationhiding": "pma__navigationhiding", "pma__savedsearches": "pma__savedsearches", "pma__central_columns": "pma__central_columns", "pma__designer_settings": "pma__designer_settings", "pma__export_templates": "pma__export_templates"},
+        "oldColumnInfo": true,
+        "server": {"pmadb": "m1meta_rp"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "multi", "sql": "-- -------------------------------------------------------------\n-- SQL Commands to upgrade pmadb.pma__column_info table\n-- for normal phpMyAdmin operation\n--\n-- This file is meant for use with phpMyAdmin 4.3.0 and above!\n-- For older releases, please use create_tables.sql\n--\n-- Please don't forget to set up the table names in config.inc.php\n--\n\n-- --------------------------------------------------------\n\n--\n-- Database : `m1meta_rp`\n--\nUSE `m1meta_rp`;\n\n-- --------------------------------------------------------\n\n--\n-- Update table structure for table `pma__column_info`\n--\nUPDATE `pma__column_info`\n  SET `mimetype` = REPLACE(`mimetype`, 'octet-stream', 'octetstream');\nUPDATE `pma__column_info`\n  SET `transformation` = REPLACE(REPLACE(`transformation`, '__', '_'), 'inc.php', 'class.php');\nUPDATE `pma__column_info`\n  SET `transformation` = ''\n  WHERE `transformation` = '_';\nUPDATE `pma__column_info`\n  SET `transformation` = CONCAT('output/', `transformation`)\n  WHERE `transformation` IN (\n    'application_octetstream_download.class.php',\n    'application_octetstream_hex.class.php',\n    'image_jpeg_inline.class.php',\n    'image_jpeg_link.class.php',\n    'image_png_inline.class.php',\n    'text_plain_bool2text.class.php',\n    'text_plain_dateformat.class.php',\n    'text_plain_external.class.php',\n    'text_plain_formatted.class.php',\n    'text_plain_imagelink.class.php',\n    'text_plain_sql.class.php'\n  );\nALTER TABLE `pma__column_info`\n  ADD `input_transformation` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',\n  ADD `input_transformation_options` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '';\n"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__tracking` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": null, "central_columns": null, "column_info": "pma__column_info", "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": "pma__pdf_pages", "recent": null, "relation": "pma__relation", "savedsearches": null, "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": true, "centralcolumnswork": false, "commwork": true, "menuswork": false, "designersettingswork": false, "displaywork": true, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": true, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "control user cannot read one table",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__column_info": "pma__column_info", "pma__history": "pma__history", "pma__pdf_pages": "pma__pdf_pages", "pma__recent": "pma__recent", "pma__favorite": "pma__favorite", "pma__table_uiprefs": "pma__table_uiprefs", "pma__relation": "pma__relation", "pma__table_coords": "pma__table_coords", "pma__table_info": "pma__table_info", "pma__tracking": "pma__tracking", "pma__userconfig": "pma__userconfig", "pma__users": "pma__users", "pma__usergroups": "pma__usergroups", "pma__navigationhiding": "pma__navigationhiding", "pma__savedsearches": "pma__savedsearches", "pma__central_columns": "pma__central_columns", "pma__designer_settings": "pma__designer_settings", "pma__export_templates": "pma__export_templates"},
+        "denyTable": "pma__tracking",
+        "server": {"pmadb": "m1meta_rp"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__usergroups` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": null, "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": false, "uiprefswork": true, "userconfigwork": true, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "tables in the current database are picked up (ZeroConf)",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__userconfig": "pma__userconfig"},
+        "server": [],
+        "currentDb": "m1meta_rp"
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `phpmyadmin`;"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "pma__userconfig", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": "pma__userconfig", "usergroups": null, "users": null, "bookmarkwork": true, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": true, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "pma__userconfig", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "pma__userconfig", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__userconfig"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "fix_pmadb creates the missing tables (explicit names)",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark", "pma__relation": "pma__relation"},
+        "server": {"pmadb": "m1meta_rp", "history": "my_history", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "my_history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": "pma__relation", "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": true, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": true, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "my_history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": true, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "my_history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "fix_pmadb",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_info`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_info` (\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `display_field` varchar(64) NOT NULL default '',\n  PRIMARY KEY  (`db_name`,`table_name`)\n)\n  COMMENT='Table information for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_coords`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_coords` (\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `pdf_page_number` int(11) NOT NULL default '0',\n  `x` float unsigned NOT NULL default '0',\n  `y` float unsigned NOT NULL default '0',\n  PRIMARY KEY  (`db_name`,`table_name`,`pdf_page_number`)\n)\n  COMMENT='Table coordinates for phpMyAdmin PDF output'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__pdf_pages`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__pdf_pages` (\n  `db_name` varchar(64) NOT NULL default '',\n  `page_nr` int(10) unsigned NOT NULL auto_increment,\n  `page_descr` varchar(50) COLLATE utf8mb4_general_ci NOT NULL default '',\n  PRIMARY KEY  (`page_nr`),\n  KEY `db_name` (`db_name`)\n)\n  COMMENT='PDF relation pages for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__column_info`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__column_info` (\n  `id` int(5) unsigned NOT NULL auto_increment,\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `column_name` varchar(64) NOT NULL default '',\n  `comment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `mimetype` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `transformation` varchar(255) NOT NULL default '',\n  `transformation_options` varchar(255) NOT NULL default '',\n  `input_transformation` varchar(255) NOT NULL default '',\n  `input_transformation_options` varchar(255) NOT NULL default '',\n  PRIMARY KEY  (`id`),\n  UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)\n)\n  COMMENT='Column information for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `my_history`\n--\n\nCREATE TABLE IF NOT EXISTS `my_history` (\n  `id` bigint(20) unsigned NOT NULL auto_increment,\n  `username` varchar(64) NOT NULL default '',\n  `db` varchar(64) NOT NULL default '',\n  `table` varchar(64) NOT NULL default '',\n  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP,\n  `sqlquery` text NOT NULL,\n  PRIMARY KEY  (`id`),\n  KEY `username` (`username`,`db`,`table`,`timevalue`)\n)\n  COMMENT='SQL history for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__recent`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__recent` (\n  `username` varchar(64) NOT NULL,\n  `tables` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Recently accessed tables'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__favorite`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__favorite` (\n  `username` varchar(64) NOT NULL,\n  `tables` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Favorite tables'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_uiprefs`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_uiprefs` (\n  `username` varchar(64) NOT NULL,\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  `prefs` text NOT NULL,\n  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`username`,`db_name`,`table_name`)\n)\n  COMMENT='Tables'' UI preferences'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__tracking`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__tracking` (\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  `version` int(10) unsigned NOT NULL,\n  `date_created` datetime NOT NULL,\n  `date_updated` datetime NOT NULL,\n  `schema_snapshot` text NOT NULL,\n  `schema_sql` text,\n  `data_sql` longtext,\n  `tracking` set('UPDATE','REPLACE','INSERT','DELETE','TRUNCATE','CREATE DATABASE','ALTER DATABASE','DROP DATABASE','CREATE TABLE','ALTER TABLE','RENAME TABLE','DROP TABLE','CREATE INDEX','DROP INDEX','CREATE VIEW','ALTER VIEW','DROP VIEW') default NULL,\n  `tracking_active` int(1) unsigned NOT NULL default '1',\n  PRIMARY KEY  (`db_name`,`table_name`,`version`)\n)\n  COMMENT='Database changes tracking for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__userconfig`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__userconfig` (\n  `username` varchar(64) NOT NULL,\n  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `config_data` text NOT NULL,\n  PRIMARY KEY  (`username`)\n)\n  COMMENT='User preferences storage for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__users`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__users` (\n  `username` varchar(64) NOT NULL,\n  `usergroup` varchar(64) NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Users and their assignments to user groups'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__usergroups`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__usergroups` (\n  `usergroup` varchar(64) NOT NULL,\n  `tab` varchar(64) NOT NULL,\n  `allowed` enum('Y','N') NOT NULL DEFAULT 'N',\n  PRIMARY KEY (`usergroup`,`tab`,`allowed`)\n)\n  COMMENT='User groups with configured menu items'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__navigationhiding`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__navigationhiding` (\n  `username` varchar(64) NOT NULL,\n  `item_name` varchar(64) NOT NULL,\n  `item_type` varchar(64) NOT NULL,\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`)\n)\n  COMMENT='Hidden items of navigation tree'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__savedsearches`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__savedsearches` (\n  `id` int(5) unsigned NOT NULL auto_increment,\n  `username` varchar(64) NOT NULL default '',\n  `db_name` varchar(64) NOT NULL default '',\n  `search_name` varchar(64) NOT NULL default '',\n  `search_data` text NOT NULL,\n  PRIMARY KEY  (`id`),\n  UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`)\n)\n  COMMENT='Saved searches'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__central_columns`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__central_columns` (\n  `db_name` varchar(64) NOT NULL,\n  `col_name` varchar(64) NOT NULL,\n  `col_type` varchar(64) NOT NULL,\n  `col_length` text,\n  `col_collation` varchar(64) NOT NULL,\n  `col_isNull` boolean NOT NULL,\n  `col_extra` varchar(255) default '',\n  `col_default` text,\n  PRIMARY KEY (`db_name`,`col_name`)\n)\n  COMMENT='Central list of columns'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__designer_settings`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__designer_settings` (\n  `username` varchar(64) NOT NULL,\n  `settings_data` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Settings related to Designer'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__export_templates`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__export_templates` (\n  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,\n  `username` varchar(64) NOT NULL,\n  `export_type` varchar(10) NOT NULL,\n  `template_name` varchar(64) NOT NULL,\n  `template_data` text NOT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`)\n)\n  COMMENT='Saved export templates'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__usergroups` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__tracking` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `my_history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "my_history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "my_history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": true, "uiprefswork": true, "userconfigwork": true, "allworks": true},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "my_history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["my_history", "pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "fix_pmadb with disabled tables skips them",
+      "setup": {
+        "create": {"pma__bookmark": "pma__bookmark"},
+        "server": {"pmadb": "m1meta_rp", "tracking": false, "central_columns": false, "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": false, "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": false, "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "fix_pmadb",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__relation`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__relation` (\n  `master_db` varchar(64) NOT NULL default '',\n  `master_table` varchar(64) NOT NULL default '',\n  `master_field` varchar(64) NOT NULL default '',\n  `foreign_db` varchar(64) NOT NULL default '',\n  `foreign_table` varchar(64) NOT NULL default '',\n  `foreign_field` varchar(64) NOT NULL default '',\n  PRIMARY KEY  (`master_db`,`master_table`,`master_field`),\n  KEY `foreign_field` (`foreign_db`,`foreign_table`)\n)\n  COMMENT='Relation table'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_info`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_info` (\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `display_field` varchar(64) NOT NULL default '',\n  PRIMARY KEY  (`db_name`,`table_name`)\n)\n  COMMENT='Table information for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_coords`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_coords` (\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `pdf_page_number` int(11) NOT NULL default '0',\n  `x` float unsigned NOT NULL default '0',\n  `y` float unsigned NOT NULL default '0',\n  PRIMARY KEY  (`db_name`,`table_name`,`pdf_page_number`)\n)\n  COMMENT='Table coordinates for phpMyAdmin PDF output'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__pdf_pages`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__pdf_pages` (\n  `db_name` varchar(64) NOT NULL default '',\n  `page_nr` int(10) unsigned NOT NULL auto_increment,\n  `page_descr` varchar(50) COLLATE utf8mb4_general_ci NOT NULL default '',\n  PRIMARY KEY  (`page_nr`),\n  KEY `db_name` (`db_name`)\n)\n  COMMENT='PDF relation pages for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__column_info`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__column_info` (\n  `id` int(5) unsigned NOT NULL auto_increment,\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `column_name` varchar(64) NOT NULL default '',\n  `comment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `mimetype` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `transformation` varchar(255) NOT NULL default '',\n  `transformation_options` varchar(255) NOT NULL default '',\n  `input_transformation` varchar(255) NOT NULL default '',\n  `input_transformation_options` varchar(255) NOT NULL default '',\n  PRIMARY KEY  (`id`),\n  UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)\n)\n  COMMENT='Column information for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__history`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__history` (\n  `id` bigint(20) unsigned NOT NULL auto_increment,\n  `username` varchar(64) NOT NULL default '',\n  `db` varchar(64) NOT NULL default '',\n  `table` varchar(64) NOT NULL default '',\n  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP,\n  `sqlquery` text NOT NULL,\n  PRIMARY KEY  (`id`),\n  KEY `username` (`username`,`db`,`table`,`timevalue`)\n)\n  COMMENT='SQL history for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__recent`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__recent` (\n  `username` varchar(64) NOT NULL,\n  `tables` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Recently accessed tables'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__favorite`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__favorite` (\n  `username` varchar(64) NOT NULL,\n  `tables` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Favorite tables'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_uiprefs`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_uiprefs` (\n  `username` varchar(64) NOT NULL,\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  `prefs` text NOT NULL,\n  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`username`,`db_name`,`table_name`)\n)\n  COMMENT='Tables'' UI preferences'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__userconfig`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__userconfig` (\n  `username` varchar(64) NOT NULL,\n  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `config_data` text NOT NULL,\n  PRIMARY KEY  (`username`)\n)\n  COMMENT='User preferences storage for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__users`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__users` (\n  `username` varchar(64) NOT NULL,\n  `usergroup` varchar(64) NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Users and their assignments to user groups'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__usergroups`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__usergroups` (\n  `usergroup` varchar(64) NOT NULL,\n  `tab` varchar(64) NOT NULL,\n  `allowed` enum('Y','N') NOT NULL DEFAULT 'N',\n  PRIMARY KEY (`usergroup`,`tab`,`allowed`)\n)\n  COMMENT='User groups with configured menu items'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__navigationhiding`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__navigationhiding` (\n  `username` varchar(64) NOT NULL,\n  `item_name` varchar(64) NOT NULL,\n  `item_type` varchar(64) NOT NULL,\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`)\n)\n  COMMENT='Hidden items of navigation tree'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__savedsearches`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__savedsearches` (\n  `id` int(5) unsigned NOT NULL auto_increment,\n  `username` varchar(64) NOT NULL default '',\n  `db_name` varchar(64) NOT NULL default '',\n  `search_name` varchar(64) NOT NULL default '',\n  `search_data` text NOT NULL,\n  PRIMARY KEY  (`id`),\n  UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`)\n)\n  COMMENT='Saved searches'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__designer_settings`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__designer_settings` (\n  `username` varchar(64) NOT NULL,\n  `settings_data` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Settings related to Designer'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__export_templates`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__export_templates` (\n  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,\n  `username` varchar(64) NOT NULL,\n  `export_type` varchar(10) NOT NULL,\n  `template_name` varchar(64) NOT NULL,\n  `template_data` text NOT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`)\n)\n  COMMENT='Saved export templates'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__usergroups` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": false, "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": false, "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": null, "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": null, "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": false, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": false, "uiprefswork": true, "userconfigwork": true, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": false, "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": false, "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "fixall_pmadb creates the storage in the current database",
+      "setup": {"create": [], "server": [], "currentDb": "m1meta_rp"},
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `phpmyadmin`;"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": null, "db": null, "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "fixall_pmadb",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__bookmark`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__bookmark` (\n  `id` int(10) unsigned NOT NULL auto_increment,\n  `dbase` varchar(255) NOT NULL default '',\n  `user` varchar(255) NOT NULL default '',\n  `label` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `query` text NOT NULL,\n  PRIMARY KEY  (`id`)\n)\n  COMMENT='Bookmarks'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__relation`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__relation` (\n  `master_db` varchar(64) NOT NULL default '',\n  `master_table` varchar(64) NOT NULL default '',\n  `master_field` varchar(64) NOT NULL default '',\n  `foreign_db` varchar(64) NOT NULL default '',\n  `foreign_table` varchar(64) NOT NULL default '',\n  `foreign_field` varchar(64) NOT NULL default '',\n  PRIMARY KEY  (`master_db`,`master_table`,`master_field`),\n  KEY `foreign_field` (`foreign_db`,`foreign_table`)\n)\n  COMMENT='Relation table'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_info`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_info` (\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `display_field` varchar(64) NOT NULL default '',\n  PRIMARY KEY  (`db_name`,`table_name`)\n)\n  COMMENT='Table information for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_coords`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_coords` (\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `pdf_page_number` int(11) NOT NULL default '0',\n  `x` float unsigned NOT NULL default '0',\n  `y` float unsigned NOT NULL default '0',\n  PRIMARY KEY  (`db_name`,`table_name`,`pdf_page_number`)\n)\n  COMMENT='Table coordinates for phpMyAdmin PDF output'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__pdf_pages`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__pdf_pages` (\n  `db_name` varchar(64) NOT NULL default '',\n  `page_nr` int(10) unsigned NOT NULL auto_increment,\n  `page_descr` varchar(50) COLLATE utf8mb4_general_ci NOT NULL default '',\n  PRIMARY KEY  (`page_nr`),\n  KEY `db_name` (`db_name`)\n)\n  COMMENT='PDF relation pages for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__column_info`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__column_info` (\n  `id` int(5) unsigned NOT NULL auto_increment,\n  `db_name` varchar(64) NOT NULL default '',\n  `table_name` varchar(64) NOT NULL default '',\n  `column_name` varchar(64) NOT NULL default '',\n  `comment` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `mimetype` varchar(255) COLLATE utf8mb4_general_ci NOT NULL default '',\n  `transformation` varchar(255) NOT NULL default '',\n  `transformation_options` varchar(255) NOT NULL default '',\n  `input_transformation` varchar(255) NOT NULL default '',\n  `input_transformation_options` varchar(255) NOT NULL default '',\n  PRIMARY KEY  (`id`),\n  UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`)\n)\n  COMMENT='Column information for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__history`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__history` (\n  `id` bigint(20) unsigned NOT NULL auto_increment,\n  `username` varchar(64) NOT NULL default '',\n  `db` varchar(64) NOT NULL default '',\n  `table` varchar(64) NOT NULL default '',\n  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP,\n  `sqlquery` text NOT NULL,\n  PRIMARY KEY  (`id`),\n  KEY `username` (`username`,`db`,`table`,`timevalue`)\n)\n  COMMENT='SQL history for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__recent`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__recent` (\n  `username` varchar(64) NOT NULL,\n  `tables` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Recently accessed tables'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__favorite`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__favorite` (\n  `username` varchar(64) NOT NULL,\n  `tables` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Favorite tables'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__table_uiprefs`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__table_uiprefs` (\n  `username` varchar(64) NOT NULL,\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  `prefs` text NOT NULL,\n  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  PRIMARY KEY (`username`,`db_name`,`table_name`)\n)\n  COMMENT='Tables'' UI preferences'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__tracking`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__tracking` (\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  `version` int(10) unsigned NOT NULL,\n  `date_created` datetime NOT NULL,\n  `date_updated` datetime NOT NULL,\n  `schema_snapshot` text NOT NULL,\n  `schema_sql` text,\n  `data_sql` longtext,\n  `tracking` set('UPDATE','REPLACE','INSERT','DELETE','TRUNCATE','CREATE DATABASE','ALTER DATABASE','DROP DATABASE','CREATE TABLE','ALTER TABLE','RENAME TABLE','DROP TABLE','CREATE INDEX','DROP INDEX','CREATE VIEW','ALTER VIEW','DROP VIEW') default NULL,\n  `tracking_active` int(1) unsigned NOT NULL default '1',\n  PRIMARY KEY  (`db_name`,`table_name`,`version`)\n)\n  COMMENT='Database changes tracking for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__userconfig`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__userconfig` (\n  `username` varchar(64) NOT NULL,\n  `timevalue` timestamp NOT NULL default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n  `config_data` text NOT NULL,\n  PRIMARY KEY  (`username`)\n)\n  COMMENT='User preferences storage for phpMyAdmin'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__users`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__users` (\n  `username` varchar(64) NOT NULL,\n  `usergroup` varchar(64) NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Users and their assignments to user groups'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__usergroups`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__usergroups` (\n  `usergroup` varchar(64) NOT NULL,\n  `tab` varchar(64) NOT NULL,\n  `allowed` enum('Y','N') NOT NULL DEFAULT 'N',\n  PRIMARY KEY (`usergroup`,`tab`,`allowed`)\n)\n  COMMENT='User groups with configured menu items'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__navigationhiding`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__navigationhiding` (\n  `username` varchar(64) NOT NULL,\n  `item_name` varchar(64) NOT NULL,\n  `item_type` varchar(64) NOT NULL,\n  `db_name` varchar(64) NOT NULL,\n  `table_name` varchar(64) NOT NULL,\n  PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`)\n)\n  COMMENT='Hidden items of navigation tree'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__savedsearches`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__savedsearches` (\n  `id` int(5) unsigned NOT NULL auto_increment,\n  `username` varchar(64) NOT NULL default '',\n  `db_name` varchar(64) NOT NULL default '',\n  `search_name` varchar(64) NOT NULL default '',\n  `search_data` text NOT NULL,\n  PRIMARY KEY  (`id`),\n  UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`)\n)\n  COMMENT='Saved searches'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__central_columns`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__central_columns` (\n  `db_name` varchar(64) NOT NULL,\n  `col_name` varchar(64) NOT NULL,\n  `col_type` varchar(64) NOT NULL,\n  `col_length` text,\n  `col_collation` varchar(64) NOT NULL,\n  `col_isNull` boolean NOT NULL,\n  `col_extra` varchar(255) default '',\n  `col_default` text,\n  PRIMARY KEY (`db_name`,`col_name`)\n)\n  COMMENT='Central list of columns'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__designer_settings`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__designer_settings` (\n  `username` varchar(64) NOT NULL,\n  `settings_data` text NOT NULL,\n  PRIMARY KEY (`username`)\n)\n  COMMENT='Settings related to Designer'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "query", "sql": "\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `pma__export_templates`\n--\n\nCREATE TABLE IF NOT EXISTS `pma__export_templates` (\n  `id` int(5) unsigned NOT NULL AUTO_INCREMENT,\n  `username` varchar(64) NOT NULL,\n  `export_type` varchar(10) NOT NULL,\n  `template_name` varchar(64) NOT NULL,\n  `template_data` text NOT NULL,\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`)\n)\n  COMMENT='Saved export templates'\n  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"},
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp"},
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp`;"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_coords` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__pdf_pages` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__column_info` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SHOW COLUMNS FROM `m1meta_rp`.`pma__column_info` WHERE Field IN ('input_transformation', 'input_transformation_options')"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__users` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__usergroups` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__export_templates` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__designer_settings` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__central_columns` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__savedsearches` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__navigationhiding` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__bookmark` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__userconfig` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__tracking` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__table_uiprefs` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__favorite` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__recent` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__history` LIMIT 0"},
+            {"conn": "control", "kind": "query", "sql": "SELECT NULL FROM `pma__relation` LIMIT 0"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": true, "uiprefswork": true, "userconfigwork": true, "allworks": true},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": true, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "m1meta_rp"},
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp", "bookmarktable": "pma__bookmark", "relation": "pma__relation", "table_info": "pma__table_info", "table_coords": "pma__table_coords", "pdf_pages": "pma__pdf_pages", "column_info": "pma__column_info", "history": "pma__history", "recent": "pma__recent", "favorite": "pma__favorite", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "users": "pma__users", "usergroups": "pma__usergroups", "navigationhiding": "pma__navigationhiding", "savedsearches": "pma__savedsearches", "central_columns": "pma__central_columns", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates"}
+        }
+      ],
+      "tablesAfter": {
+        "m1meta_rp": ["pma__bookmark", "pma__central_columns", "pma__column_info", "pma__designer_settings", "pma__export_templates", "pma__favorite", "pma__history", "pma__navigationhiding", "pma__pdf_pages", "pma__recent", "pma__relation", "pma__savedsearches", "pma__table_coords", "pma__table_info", "pma__table_uiprefs", "pma__tracking", "pma__userconfig", "pma__usergroups", "pma__users"],
+        "m1meta_rp_new": null
+      }
+    },
+    {
+      "name": "create_pmadb creates the database and the tables",
+      "setup": {
+        "server": {"pmadb": "m1meta_rp_new"},
+        "grantCreateNew": true
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp_new`;"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp_new", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp_new"}
+          ],
+          "result": {"user": null, "db": null, "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "flags",
+          "statements": [],
+          "result": {"arePmadbTablesDefined": false, "arePmadbTablesAllDisabled": false, "configurationStorageDbName": "phpmyadmin"},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "create_pmadb",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "CREATE DATABASE IF NOT EXISTS `phpmyadmin`"}
+          ],
+          "result": null,
+          "message": "You do not have necessary privileges to create a database named 'phpmyadmin'. You may go to 'Operations' tab of any database to set up the phpMyAdmin configuration storage there.",
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [],
+          "result": {"user": null, "db": null, "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {"m1meta_rp": null, "m1meta_rp_new": null}
+    },
+    {
+      "name": "create_pmadb without privileges",
+      "setup": {
+        "server": {"pmadb": "m1meta_rp_new"}
+      },
+      "steps": [
+        {
+          "step": "init",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "SHOW TABLES FROM `m1meta_rp_new`;"}
+          ],
+          "result": null,
+          "message": null,
+          "selectedServer": {"pmadb": "m1meta_rp_new", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "create_pmadb",
+          "statements": [
+            {"conn": "control", "kind": "query", "sql": "CREATE DATABASE IF NOT EXISTS `m1meta_rp_new`"}
+          ],
+          "result": null,
+          "message": "You do not have necessary privileges to create a database named 'm1meta_rp_new'. You may go to 'Operations' tab of any database to set up the phpMyAdmin configuration storage there.",
+          "selectedServer": {"pmadb": "m1meta_rp_new", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        },
+        {
+          "step": "params",
+          "statements": [
+            {"conn": "control", "kind": "selectDb", "sql": "m1meta_rp_new"}
+          ],
+          "result": {"user": null, "db": null, "bookmark": null, "central_columns": null, "column_info": null, "designer_settings": null, "export_templates": null, "favorite": null, "history": null, "navigationhiding": null, "pdf_pages": null, "recent": null, "relation": null, "savedsearches": null, "table_coords": null, "table_info": null, "table_uiprefs": null, "tracking": null, "userconfig": null, "usergroups": null, "users": null, "bookmarkwork": false, "mimework": false, "centralcolumnswork": false, "commwork": false, "menuswork": false, "designersettingswork": false, "displaywork": false, "exporttemplateswork": false, "favoritework": false, "navwork": false, "pdfwork": false, "recentwork": false, "relwork": false, "savedsearcheswork": false, "historywork": false, "trackingwork": false, "uiprefswork": false, "userconfigwork": false, "allworks": false},
+          "message": null,
+          "selectedServer": {"pmadb": "", "bookmarktable": "", "relation": "", "table_info": "", "table_coords": "", "pdf_pages": "", "column_info": "", "history": "", "recent": "", "favorite": "", "table_uiprefs": "", "tracking": "", "userconfig": "", "users": "", "usergroups": "", "navigationhiding": "", "savedsearches": "", "central_columns": "", "designer_settings": "", "export_templates": ""}
+        }
+      ],
+      "tablesAfter": {"m1meta_rp": null, "m1meta_rp_new": null}
+    }
+  ]
+}

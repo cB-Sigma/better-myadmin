@@ -6,7 +6,7 @@ import { ApiError, api } from '../../lib/api'
 import { mysqlDocUrl, pmaDocUrl } from '../../lib/docs'
 import { Trans, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { type BookmarkEntry, bookmarkProvider, useBookmarks } from '../bookmarks/provider'
+import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
 import { StatementBlock } from './Results'
 import { SimulateModal } from './SimulateModal'
@@ -228,38 +228,42 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
       for (const name of params ?? scanParameters(sql)) p[name] = paramValues.current.get(name) ?? ''
       req.params = p
     }
-    void execute(req, true).then(async (res) => {
-      if (res === null || bkmLabel === '' || !bookmarks.enabled) return
-      // a bookmark is stored once for the whole text (ImportController::__invoke)
-      await bookmarkProvider().create(server, {
-        label: bkmLabel,
-        db,
-        sql,
-        shared: bkmShared,
-        replace: bkmReplace,
-      })
-      void bookmarks.refetch()
+    // bkm_label: the server stores one bookmark for the whole text (ImportController::__invoke)
+    const withBookmark = bkmLabel !== '' && bookmarks.enabled
+    if (withBookmark) req.bookmark = { label: bkmLabel, shared: bkmShared, replace: bkmReplace }
+    void execute(req, true).then(() => {
+      if (withBookmark) void bookmarks.refetch()
     })
   }
 
   /** id_bookmark + action_bookmark (ImportController::__invoke) */
   const onBookmark = async (b: BookmarkEntry, action: BookmarkAction, variables: Record<number, string>) => {
     setFlash(null)
-    if (action === 'view') {
-      setQuery(b.query)
+    try {
+      if (action === 'view') {
+        // action_bookmark=1: "Showing bookmark" and the query in the box
+        const r = await bookmarkApi.show(server, b.id)
+        setQuery(r.bookmark.query)
+        setResult(null)
+        setFlash(r.message.text)
+        return
+      }
+      if (action === 'delete') {
+        const r = await bookmarkApi.remove(server, b.id)
+        setResult(null)
+        setFlash(r.message !== '' ? r.message : t('The bookmark has been deleted.'))
+        void bookmarks.refetch()
+        return
+      }
+      // action_bookmark=0: the bookmark (with its variables) runs through the SQL-box pipeline
+      setRunning('bookmark')
+      afterResponse(await bookmarkApi.run(server, b.id, { db, table, variables }), true)
+    } catch (e) {
       setResult(null)
-      setFlash(t('Showing bookmark'))
-      return
+      setError(e instanceof Error ? e.message : String(e))
+    } finally {
+      setRunning(null)
     }
-    if (action === 'delete') {
-      const r = await bookmarkProvider().remove(server, b.id)
-      setResult(null)
-      setFlash(r.message !== '' ? r.message : t('The bookmark has been deleted.'))
-      void bookmarks.refetch()
-      return
-    }
-    const { sql } = await bookmarkProvider().run(server, b.id, variables)
-    void execute({ sql, db, table, delimiter, fkChecks }, true)
   }
 
   const onCardAction = (a: CardAction) => {

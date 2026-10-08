@@ -46,7 +46,7 @@ export function BookmarkedQuery({
           {bookmarks.map((b) => (
             <option key={b.id} value={b.id} data-varcount={b.variableCount}>
               {b.label}
-              {b.user === '' ? ` (${t('shared')})` : ''}
+              {b.shared ? ` (${t('shared')})` : ''}
             </option>
           ))}
         </select>

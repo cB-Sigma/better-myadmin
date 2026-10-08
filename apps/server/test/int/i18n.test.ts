@@ -169,6 +169,8 @@ describe('server messages follow the request language', () => {
     })
     const bad = await t.req('POST', '/api/servers/1/console/config', { key: 'Mode', value: 'nope' })
     expect((bad.json.error as { message: string }).message).toBe('Unerwarteter Parameterwert.')
+    // back to the default: the stored preference is removed again
+    await t.req('POST', '/api/servers/1/console/config', { key: 'Mode', value: 'info' })
     await t.close()
   })
 

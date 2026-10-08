@@ -132,15 +132,3 @@ export const ConsoleConfigUpdate = z.object({
   value: z.union([z.string(), z.number(), z.boolean()]),
 })
 export type ConsoleConfigUpdate = z.input<typeof ConsoleConfigUpdate>
-
-/** A query history entry (pma: History::getHistory rows). */
-export const HistoryEntry = z.object({
-  db: z.string(),
-  table: z.string(),
-  sqlquery: z.string(),
-  /** pma__history.timevalue; null for session history ("During current session"). */
-  timevalue: z.string().nullable(),
-})
-export type HistoryEntry = z.infer<typeof HistoryEntry>
-export const HistoryResponse = z.object({ entries: z.array(HistoryEntry) })
-export type HistoryResponse = z.infer<typeof HistoryResponse>

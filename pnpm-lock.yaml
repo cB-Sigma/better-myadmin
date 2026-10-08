@@ -50,6 +50,9 @@ importers:
       '@bettermyadmin/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@bettermyadmin/metadata':
+        specifier: workspace:*
+        version: link:../../packages/metadata
       '@bettermyadmin/mysql-types':
         specifier: workspace:*
         version: link:../../packages/mysql-types
@@ -201,7 +204,17 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
 
-  packages/metadata: {}
+  packages/metadata:
+    dependencies:
+      '@bettermyadmin/mysql-types':
+        specifier: workspace:*
+        version: link:../mysql-types
+      '@bettermyadmin/sql-gen':
+        specifier: workspace:*
+        version: link:../sql-gen
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../sql-lexer
 
   packages/mysql-types: {}
 

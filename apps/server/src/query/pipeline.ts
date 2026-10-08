@@ -77,6 +77,11 @@ export interface SqlBoxResult {
   sqlQuery: string
   /** A transaction was left open for "Rollback when finished": discard the connection. */
   discardConnection: boolean
+  /**
+   * The request reached ImportController's bookmark step (`bkm_label`): the goSql loop ran to the end
+   * (no mysqlDie exit) or import mode finished with a result.
+   */
+  bookmarkable?: boolean
 }
 
 /** Per-request state shared by the statements of one run (phpMyAdmin's static/session state). */
@@ -266,6 +271,7 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
       db,
       table,
       sqlQuery,
+      bookmarkable: true,
     }
   }
 
@@ -300,7 +306,15 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
       profilingSupported: () => isProfilingSupported(conn, session, server),
     })
   }
-  return { ...base, statements: [st], reloadNavigation: state.reload, db, table, sqlQuery }
+  return {
+    ...base,
+    statements: [st],
+    reloadNavigation: state.reload,
+    db,
+    table,
+    sqlQuery,
+    bookmarkable: im.result,
+  }
 }
 
 /** A plain error message (Message::rawError), no error card. */
