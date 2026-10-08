@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { QueryOutcome } from '../src/conn.ts'
+import { getForeigners, searchColumnInForeigners } from '../src/foreign-keys.ts'
 import { type MetaSessionState, Metadata } from '../src/metadata.ts'
 import type { RecentFavoriteTables } from '../src/recent-favorite.ts'
 import { type RelationParametersArray, relationParametersFromArray } from '../src/relation-parameters.ts'
@@ -274,6 +275,15 @@ describe('pmadb repositories replay phpMyAdmin’s statements', () => {
           case 'relation.getMime':
             result = await getMime(conn, rp, a[0] as string, a[1] as string, a[2] as boolean, a[3] as boolean)
             break
+          case 'foreign.getForeigners': {
+            const [db, table, column, showCreate] = o.args as [string, string, string, string]
+            const f = await getForeigners(conn, rp, db, table, column, async () => showCreate)
+            const search: Record<string, unknown> = {}
+            for (const col of ['id', 'pid', 'pcode', 'other', 'plain'])
+              search[col] = searchColumnInForeigners(f, col, db)
+            result = { data: f.data, keysData: f.keysData, search }
+            break
+          }
           default:
             throw new Error(`no replay for ${group}.${o.op}`)
         }

@@ -157,6 +157,9 @@ importers:
       '@bettermyadmin/sql-gen':
         specifier: workspace:*
         version: link:../sql-gen
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../sql-lexer
 
   packages/mysql-types: {}
 

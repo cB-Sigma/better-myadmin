@@ -104,10 +104,15 @@ export class TableUiPrefs {
   }
 
   /**
-   * The property, or false when it is not set or no longer valid (in which case it is removed).
+   * The property, or false when it is not set or no longer valid (in which case it is removed,
+   * unless `readOnly`: read endpoints must not write).
    * pma: Table::getUiProp
    */
-  async getUiProp(property: UiProperty, discardRememberedSort = false): Promise<string | number[] | false> {
+  async getUiProp(
+    property: UiProperty,
+    discardRememberedSort = false,
+    readOnly = false,
+  ): Promise<string | number[] | false> {
     await this.#ensure()
     if (property === 'sorted_col') {
       const v = this.#prefs.sorted_col
@@ -120,7 +125,7 @@ export class TableUiPrefs {
         }
       }
       // remove the property, since it no longer exists in database
-      await this.removeUiProp(property)
+      if (!readOnly) await this.removeUiProp(property)
       return false
     }
     if ((await this.info.isView()) || this.#prefs[property] === undefined || this.#prefs[property] === null) {
@@ -132,7 +137,7 @@ export class TableUiPrefs {
       return (Array.isArray(arr) ? arr : Object.values(arr as object)).map((x) => phpIntval(x))
     }
     // remove the property, since the table has been modified
-    await this.removeUiProp(property)
+    if (!readOnly) await this.removeUiProp(property)
     return false
   }
 

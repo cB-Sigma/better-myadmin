@@ -310,6 +310,31 @@ $record('relation', 'getMime', [$db, 't', false, false], static fn () => $transf
 $record('relation', 'getMime', [$db, 't', true, false], static fn () => $transformations->getMime($db, 't', true));
 $record('relation', 'getMime', [$db, 't', false, true], static fn () => $transformations->getMime($db, 't', false, true));
 
+// --- foreign keys (Relation::getForeigners / searchColumnInForeigners) ----------------------
+$q('CREATE TABLE `m1meta_rpd`.`parent` (id INT, code CHAR(3), PRIMARY KEY (id), UNIQUE KEY (id, code)) ENGINE=InnoDB');
+$q('CREATE TABLE `m1meta_rpd`.`child` (id INT PRIMARY KEY, pid INT NULL, pcode CHAR(3) NULL, other INT, plain INT,'
+    . ' CONSTRAINT `fk_pc` FOREIGN KEY (pid, pcode) REFERENCES parent (id, code) ON DELETE CASCADE ON UPDATE SET NULL,'
+    . ' CONSTRAINT `fk other` FOREIGN KEY (other) REFERENCES `m1meta_rpd`.`t2` (id) ON DELETE NO ACTION,'
+    . ' FOREIGN KEY (plain) REFERENCES t2 (id)) ENGINE=InnoDB');
+$q("INSERT INTO `m1meta_rp`.`pma__relation` VALUES ('m1meta_rpd', 'child', 'other', 'm1meta_rpd', 't', 'id')");
+$fkView = static fn (array $keys) => array_map(static fn ($k) => [
+    'constraint' => $k->constraint, 'indexList' => $k->indexList, 'refDbName' => $k->refDbName,
+    'refTableName' => $k->refTableName, 'refIndexList' => $k->refIndexList, 'onUpdate' => $k->onUpdate,
+    'onDelete' => $k->onDelete,
+], $keys);
+$showCreate = (string) $admin->query('SHOW CREATE TABLE `m1meta_rpd`.`child`')->fetch_row()[1];
+Current::$database = $db;
+$record('foreign', 'getForeigners', [$db, 'child', '', $showCreate], static function () use ($relation, $db, $fkView) {
+    $f = $relation->getForeigners($db, 'child');
+    $out = ['data' => $f->data, 'keysData' => $fkView($f->keysData), 'search' => []];
+    foreach (['id', 'pid', 'pcode', 'other', 'plain'] as $col) {
+        $out['search'][$col] = $relation->searchColumnInForeigners($f, $col);
+    }
+
+    return $out;
+});
+Current::$database = '';
+
 $reset();
 
 bma_write_fixture(__DIR__ . '/../test/fixtures/repositories.json', [

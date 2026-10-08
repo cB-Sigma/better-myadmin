@@ -508,10 +508,12 @@ metadataRoutes.get('/databases/:db/tables/:t/uiprefs', (c) => {
     const info = tableInfo(m, db, t)
     const ui = (await m.meta()).uiPrefs(db, t, info)
     const discard = c.req.query('discard_remembered_sort') !== undefined
+    // GET is side-effect free: stale values are reported as false but removed only by the browse
+    // path (pma: Results::getColumnParams / Sql::handleSortOrder)
     return c.json({
-      sorted_col: await ui.getUiProp('sorted_col', discard),
-      col_order: await ui.getUiProp('col_order'),
-      col_visib: await ui.getUiProp('col_visib'),
+      sorted_col: await ui.getUiProp('sorted_col', discard, true),
+      col_order: await ui.getUiProp('col_order', false, true),
+      col_visib: await ui.getUiProp('col_visib', false, true),
       createTime: await info.createTime(),
     })
   })

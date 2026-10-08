@@ -290,6 +290,17 @@ describe('table UI preferences (Table.php)', () => {
     expect(await t.getUiProp('sorted_col')).toBe('`name` DESC')
     expect(await t.getUiProp('sorted_col', true)).toBe(false)
   })
+
+  it('read-only reads report stale values as false without writing', async () => {
+    const conn = new FakeConn(() =>
+      ok([{ prefs: '{"col_order":[1,0],"CREATE_TIME":"old","sorted_col":"`gone` ASC"}' }]),
+    )
+    const { t } = make(conn)
+    expect(await t.getUiProp('col_order', false, true)).toBe(false)
+    expect(await t.getUiProp('sorted_col', false, true)).toBe(false)
+    expect(t.prefs).toEqual({ col_order: [1, 0], CREATE_TIME: 'old', sorted_col: '`gone` ASC' })
+    expect(conn.log.filter((l) => !l.sql.startsWith('SELECT'))).toEqual([])
+  })
 })
 
 describe('user preferences (UserPreferences.php)', () => {
