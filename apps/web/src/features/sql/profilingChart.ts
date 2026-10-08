@@ -1,4 +1,5 @@
 import { ArcElement, Chart, Colors, Legend, PieController, Tooltip } from 'chart.js'
+import { translator } from '../../lib/i18n'
 
 Chart.register(PieController, ArcElement, Legend, Tooltip, Colors)
 
@@ -11,7 +12,8 @@ export function createProfilingChart(
   chartData: { labels: string[]; data: number[] },
   legendPosition: 'bottom' | 'top' | 'left' | 'right' = 'bottom',
 ): Chart {
-  const lang = document.documentElement.lang || 'en'
+  // CommonParams.get('lang'): the phpMyAdmin language code (pt_BR → pt-BR)
+  const lang = translator().locale
   const numberFormat = new Intl.NumberFormat(lang.replace('_', '-'), {
     style: 'unit',
     unit: 'second',

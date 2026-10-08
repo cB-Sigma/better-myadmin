@@ -1,5 +1,6 @@
 import type { SimulateResponse } from '@bettermyadmin/contracts'
 import { useEffect, useRef } from 'react'
+import { t } from '../../lib/i18n'
 import { HighlightedSql } from './HighlightedSql'
 
 /**
@@ -32,11 +33,11 @@ export function SimulateModal({
     >
       <div className="flex items-center justify-between border-b border-border px-4 py-2">
         <h5 id="simulateDmlModalLabel" className="font-semibold">
-          Simulate query
+          {t('Simulate query')}
         </h5>
         <button
           type="button"
-          aria-label="Close"
+          aria-label={t('Close')}
           className="px-2 text-lg"
           onClick={() => dialog.current?.close()}
         >
@@ -53,9 +54,9 @@ export function SimulateModal({
             // biome-ignore lint/suspicious/noArrayIndexKey: statements are positional
             <div key={i}>
               {i > 0 && <hr className="my-2 border-border" />}
-              <strong>SQL query:</strong>
+              <strong>{t('SQL query:')}</strong>
               <HighlightedSql sql={d.sqlQuery} versionInt={versionInt} className="my-1" />
-              Affected rows:{' '}
+              {t('Affected rows:')}{' '}
               <button
                 type="button"
                 className="text-accent hover:underline"
@@ -72,7 +73,7 @@ export function SimulateModal({
       </div>
       <div className="flex justify-end border-t border-border px-4 py-2">
         <button type="button" className="btn" onClick={() => dialog.current?.close()}>
-          Close
+          {t('Close')}
         </button>
       </div>
     </dialog>

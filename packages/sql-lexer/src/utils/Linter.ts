@@ -33,16 +33,44 @@ export function findLineNumberAndColumn(lines: readonly number[], pos: number): 
 }
 
 /**
+ * The two phpMyAdmin msgids the linter prints, translated by the caller (`__()`); English by default.
+ */
+export interface LintMessages {
+  /** `%1$s (near <code>%2$s</code>)` */
+  near: string
+  /** `Linting is disabled for this query because it exceeds the maximum length.` */
+  tooLong: string
+}
+
+export const LINT_MSGIDS: LintMessages = {
+  near: '%1$s (near <code>%2$s</code>)',
+  tooLong: 'Linting is disabled for this query because it exceeds the maximum length.',
+}
+
+/** sprintf for the `%1$s`/`%2$s` (or plain `%s`) placeholders of LintMessages.near. */
+function fillNear(format: string, message: string, near: string): string {
+  const args = [message, near]
+  let next = 0
+  return format.replace(/%(?:(\d)\$)?s|%%/g, (m, n: string | undefined) =>
+    m === '%%' ? '%' : (args[n !== undefined ? Number(n) - 1 : next++] ?? ''),
+  )
+}
+
+/**
  * phpMyAdmin's SQL linter (the `/lint` endpoint): lexer + parser errors with line/column positions.
  * `message` is HTML (`%1$s (near <code>%2$s</code>)`), like phpMyAdmin's English output.
  */
 // pma: src/Linter.php::lint
-export function lint(query: string, options: Pick<LexerOptions, 'context'> = {}): LintMessage[] {
+export function lint(
+  query: string,
+  options: Pick<LexerOptions, 'context'> & { messages?: LintMessages } = {},
+): LintMessage[] {
+  const messages = options.messages ?? LINT_MSGIDS
   // Disabling linting for big queries.
   if (Array.from(query).length > 10000) {
     return [
       {
-        message: 'Linting is disabled for this query because it exceeds the maximum length.',
+        message: messages.tooLong,
         fromLine: 0,
         fromColumn: 0,
         toLine: 0,
@@ -67,7 +95,7 @@ export function lint(query: string, options: Pick<LexerOptions, 'context'> = {})
     const [fromLine, fromColumn] = findLineNumberAndColumn(lines, pos)
     const [toLine, toColumn] = findLineNumberAndColumn(lines, pos + Array.from(error[2]).length)
     response.push({
-      message: `${htmlspecialchars(error[0])} (near <code>${htmlspecialchars(error[2])}</code>)`,
+      message: fillNear(messages.near, htmlspecialchars(error[0]), htmlspecialchars(error[2])),
       fromLine,
       fromColumn,
       toLine,
@@ -97,7 +125,7 @@ export const EDITOR_SQL_PREFIX: Readonly<Record<LintEditorType, string>> = {
 export function lintQuery(
   sqlQuery: string,
   editorType?: string | null,
-  options: Pick<LexerOptions, 'context'> = {},
+  options: Pick<LexerOptions, 'context'> & { messages?: LintMessages } = {},
 ): LintMessage[] {
   const prefix =
     typeof editorType === 'string' && Object.hasOwn(EDITOR_SQL_PREFIX, editorType)

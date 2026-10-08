@@ -4,6 +4,7 @@ import { Link, useBlocker, useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { mysqlDocUrl, pmaDocUrl } from '../../lib/docs'
+import { Trans, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarkProvider, useBookmarks } from '../bookmarks/provider'
 import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
@@ -13,6 +14,7 @@ import { type CardAction, type CardEnv, DocIcon, InlineEditContext, MessageBox }
 import { SqlEditor } from './editor/SqlEditor'
 import type { SqlEditorHandle } from './editor/types'
 import {
+  DO_YOU_REALLY,
   FORM_EMPTY,
   NO_PARAM,
   type SnippetType,
@@ -60,7 +62,7 @@ export function SqlPage(props: SqlPageProps) {
   if (form.error instanceof ApiError) {
     return <MessageBox type="error" text={form.error.message} className="rounded" />
   }
-  if (form.data === undefined) return <div className="text-sm text-fg-subtle">Loading…</div>
+  if (form.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
   return <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
 }
 
@@ -120,7 +122,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
 
   // AJAX.lockPageHandler: a changed editor asks before leaving the page
   useBlocker({
-    shouldBlockFn: () => editor.current?.isDirty() === true && !window.confirm(CONFIRM_NAVIGATION),
+    shouldBlockFn: () => editor.current?.isDirty() === true && !window.confirm(t(CONFIRM_NAVIGATION)),
     enableBeforeUnload: () => editor.current?.isDirty() === true,
   })
 
@@ -133,11 +135,11 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     (sql: string): boolean => {
       const check = checkSqlQuery(sql, s.Confirm)
       if (check === 'empty') {
-        window.alert(FORM_EMPTY)
+        window.alert(t(FORM_EMPTY))
         editor.current?.focus()
         return false
       }
-      if (check === 'confirm' && !window.confirm(confirmationText(sql))) {
+      if (check === 'confirm' && !window.confirm(confirmationText(sql, t(DO_YOU_REALLY)))) {
         window.focus()
         return false
       }
@@ -246,13 +248,13 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     if (action === 'view') {
       setQuery(b.query)
       setResult(null)
-      setFlash('Showing bookmark')
+      setFlash(t('Showing bookmark'))
       return
     }
     if (action === 'delete') {
       const r = await bookmarkProvider().remove(server, b.id)
       setResult(null)
-      setFlash(r.message !== '' ? r.message : 'The bookmark has been deleted.')
+      setFlash(r.message !== '' ? r.message : t('The bookmark has been deleted.'))
       void bookmarks.refetch()
       return
     }
@@ -304,7 +306,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
   const onSimulate = async () => {
     const q = editor.current?.getValue() ?? ''
     if (q.length === 0) {
-      window.alert(FORM_EMPTY)
+      window.alert(t(FORM_EMPTY))
       editor.current?.focus()
       return
     }
@@ -313,22 +315,32 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
 
   const btn = 'btn'
   const legend =
+    // SqlQueryForm::init: the msgid, then ': ' and the documentation link
     form.scope === 'server' ? (
-      <>Run SQL query/queries on server “{form.legendName}”</>
+      <Trans id="Run SQL query/queries on server “%s”" args={[form.legendName]} />
     ) : form.scope === 'database' ? (
-      <>
-        Run SQL query/queries on database{' '}
-        <Link to="/s/$server/db/$db/sql" params={{ server, db }} className="text-accent">
-          {db}
-        </Link>
-      </>
+      <Trans
+        id="Run SQL query/queries on database %s"
+        args={[
+          <Link key="db" to="/s/$server/db/$db/sql" params={{ server, db }} className="text-accent">
+            {db}
+          </Link>,
+        ]}
+      />
     ) : (
-      <>
-        Run SQL query/queries on table{' '}
-        <Link to="/s/$server/db/$db/t/$table/sql" params={{ server, db, table }} className="text-accent">
-          {form.legendName}
-        </Link>
-      </>
+      <Trans
+        id="Run SQL query/queries on table %s"
+        args={[
+          <Link
+            key="table"
+            to="/s/$server/db/$db/t/$table/sql"
+            params={{ server, db, table }}
+            className="text-accent"
+          >
+            {form.legendName}
+          </Link>,
+        ]}
+      />
     )
 
   return (
@@ -352,7 +364,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   <SqlEditor
                     handleRef={editor}
                     id="sqlquery"
-                    ariaLabel="SQL query"
+                    ariaLabel={t('SQL query')}
                     initialValue={initial}
                     rows={s.TextareaRows}
                     cols={s.TextareaCols}
@@ -371,7 +383,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     onBlur={() => updateParameters(parameterized)}
                   />
                   <div id="querymessage" className="min-h-5 text-xs text-fg-subtle" aria-live="polite">
-                    {formatting && 'Formatting SQL…'}
+                    {formatting && t('Formatting SQL…')}
                   </div>
                   <div className="mt-1 flex flex-wrap gap-2" role="toolbar">
                     {form.columns.length > 0 && (
@@ -400,7 +412,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     )}
                     <div className="flex gap-1" role="group">
                       <button type="button" id="clear" className={btn} onClick={() => setQuery('')}>
-                        Clear
+                        {t('Clear')}
                       </button>
                       {s.CodemirrorEnable && (
                         <>
@@ -410,7 +422,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                             className={btn}
                             onClick={() => void format(false)}
                           >
-                            Format
+                            {t('Format')}
                           </button>
                           <button
                             type="button"
@@ -418,7 +430,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                             className={btn}
                             onClick={() => void format(true)}
                           >
-                            Format as a single line
+                            {t('Format as a single line')}
                           </button>
                         </>
                       )}
@@ -433,7 +445,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                         if (q !== null) setQuery(q)
                       }}
                     >
-                      Get auto-saved query
+                      {t('Get auto-saved query')}
                     </button>
                   </div>
                   <div className="my-3 flex items-center gap-1 text-sm">
@@ -447,13 +459,13 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                         updateParameters(e.target.checked)
                       }}
                     />
-                    <label htmlFor="parameterized">Bind parameters</label>
+                    <label htmlFor="parameterized">{t('Bind parameters')}</label>
                     <DocIcon href={pmaDocUrl('faq', 'faq6-40')} target="documentation" />
                   </div>
                   {params !== null && (
                     <div className="mb-3 flex flex-wrap gap-3 text-sm" id="parametersDiv">
                       {params.length === 0
-                        ? NO_PARAM
+                        ? t(NO_PARAM)
                         : params.map((p) => (
                             <span
                               key={p}
@@ -477,7 +489,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                 {form.columns.length > 0 && (
                   <div className="flex w-48 shrink-0 flex-col gap-2">
                     <label className="sr-only" htmlFor="fieldsSelect">
-                      Columns
+                      {t('Columns')}
                     </label>
                     <select
                       id="fieldsSelect"
@@ -504,20 +516,20 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                       id="insertBtn"
                       name="insert"
                       className={btn}
-                      title={s.ActionLinksMode !== 'text' ? 'Insert' : undefined}
+                      title={s.ActionLinksMode !== 'text' ? t('Insert') : undefined}
                       onClick={() => {
                         editor.current?.replaceSelection(insertValueText(selectedColumns))
                         editor.current?.focus()
                       }}
                     >
-                      {s.ActionLinksMode !== 'text' ? '<<' : 'Insert'}
+                      {s.ActionLinksMode !== 'text' ? '<<' : t('Insert')}
                     </button>
                   </div>
                 )}
               </div>
               {bookmarks.enabled && (
                 <div className="flex flex-wrap items-center gap-3 text-sm">
-                  <label htmlFor="bkm_label">Bookmark this SQL query:</label>
+                  <label htmlFor="bkm_label">{t('Bookmark this SQL query:')}</label>
                   <input
                     id="bkm_label"
                     name="bkm_label"
@@ -534,7 +546,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                         checked={bkmShared}
                         onChange={(e) => setBkmShared(e.target.checked)}
                       />
-                      Let every user access this bookmark
+                      {t('Let every user access this bookmark')}
                     </label>
                   )}
                   {bkmLabel.length > 0 && (
@@ -545,7 +557,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                         checked={bkmReplace}
                         onChange={(e) => setBkmReplace(e.target.checked)}
                       />
-                      Replace existing bookmark of same name
+                      {t('Replace existing bookmark of same name')}
                     </label>
                   )}
                 </div>
@@ -553,7 +565,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border bg-bg-subtle px-3 py-2 text-sm">
               <label className="flex items-center gap-1">
-                <span>Delimiter</span>
+                <span>{t('Delimiter')}</span>
                 <input
                   id="id_sql_delimiter"
                   name="sql_delimiter"
@@ -571,7 +583,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   checked={showQuery}
                   onChange={(e) => setShowQuery(e.target.checked)}
                 />
-                Show this query here again
+                {t('Show this query here again')}
               </label>
               <label className="flex items-center gap-1">
                 <input
@@ -581,7 +593,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   checked={retain}
                   onChange={(e) => setRetain(e.target.checked)}
                 />
-                Retain query box
+                {t('Retain query box')}
               </label>
               <label className="flex items-center gap-1">
                 <input
@@ -591,7 +603,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   checked={rollback}
                   onChange={(e) => setRollback(e.target.checked)}
                 />
-                Rollback when finished
+                {t('Rollback when finished')}
               </label>
               <label className="flex items-center gap-1">
                 <input
@@ -601,7 +613,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   checked={fkChecks}
                   onChange={(e) => setFkChecks(e.target.checked)}
                 />
-                Enable foreign key checks
+                {t('Enable foreign key checks')}
               </label>
               <div className="ml-auto flex items-center gap-2">
                 {canSimulate(text) && (
@@ -611,19 +623,19 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     className="btn btn-primary"
                     onClick={() => void onSimulate()}
                   >
-                    Simulate query
+                    {t('Simulate query')}
                   </button>
                 )}
                 {running !== null && (
                   <button type="button" className={btn} onClick={() => void api.cancelQuery(server, running)}>
-                    Cancel
+                    {t('Cancel')}
                   </button>
                 )}
                 <input
                   id="button_submit_query"
                   type="submit"
                   name="SQL"
-                  value="Go"
+                  value={t('Go')}
                   disabled={running !== null}
                   className="btn btn-primary"
                 />
@@ -638,7 +650,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
           <>
             {boxHidden && <br id="togglequerybox_spacer" />}
             <button type="button" id="togglequerybox" className="btn" onClick={() => setBoxHidden((h) => !h)}>
-              {boxHidden ? 'Show query box' : 'Hide query box'}
+              {boxHidden ? t('Show query box') : t('Hide query box')}
             </button>
           </>
         )}

@@ -1,4 +1,5 @@
 import type { SimulateResponse } from '@bettermyadmin/contracts'
+import { type Gettext, englishTranslator } from '@bettermyadmin/i18n'
 import { unQuote } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
 import {
@@ -91,8 +92,9 @@ export async function simulateDml(
   db: string,
   conn: Conn,
   context: Context | undefined,
-  sign: { hmacSecret: string; blowfishSecret: string },
+  sign: { hmacSecret: string; blowfishSecret: string; tr?: Gettext },
 ): Promise<SimulateResponse> {
+  const tr = sign.tr ?? englishTranslator()
   const parser = createParser(sql, delimiter, context)
   if (parser.errors.length > 0) return { sqlData: null, message: parser.errors[0]!.message }
   const data: NonNullable<SimulateResponse['sqlData']> = []
@@ -102,7 +104,10 @@ export async function simulateDml(
       (statement.join !== null && statement.join.length > 0) ||
       getTables(statement).length > 1
     ) {
-      return { sqlData: null, message: 'Only single-table UPDATE and DELETE queries can be simulated.' }
+      return {
+        sqlData: null,
+        message: tr.gettext('Only single-table UPDATE and DELETE queries can be simulated.'),
+      }
     }
     const q =
       statement instanceof DeleteStatement
@@ -115,7 +120,7 @@ export async function simulateDml(
       matchedRows = Number((await conn.value(q.count, 'simulate.count')) ?? 0)
     } catch (e) {
       if (e instanceof MysqlError) {
-        return { sqlData: null, message: formatError(e.extra.errno ?? 0, e.message).text }
+        return { sqlData: null, message: formatError(e.extra.errno ?? 0, e.message, tr).text }
       }
       throw e
     }

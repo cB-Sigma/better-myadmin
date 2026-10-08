@@ -1,3 +1,4 @@
+import { type Translator, englishTranslator, sprintf } from '@bettermyadmin/i18n'
 import { unQuote } from '@bettermyadmin/mysql-types'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import {
@@ -85,14 +86,14 @@ export class LastError {
 }
 
 /** DatabaseInterface::tryQuery: null on error (recorded in `last`). */
-async function tryQuery(conn: Conn, sql: string, label: string, last: LastError) {
+async function tryQuery(conn: Conn, sql: string, label: string, last: LastError, tr: Translator) {
   try {
     const r = await conn.query(sql, label)
     last.value = ''
     return r
   } catch (e) {
     if (e instanceof MysqlError) {
-      last.value = formatError(e.extra.errno ?? 0, e.message).text
+      last.value = formatError(e.extra.errno ?? 0, e.message, tr).text
       return null
     }
     throw e
@@ -105,6 +106,7 @@ async function isTableTransactional(
   tableRef: string,
   currentDb: string,
   last: LastError,
+  tr: Translator,
 ): Promise<boolean> {
   const parts = tableRef.split('.')
   let db: string
@@ -122,6 +124,7 @@ async function isTableTransactional(
     `SELECT * FROM ${backquote(db)}.${backquote(table)} LIMIT 1`,
     'rollback.check-table',
     last,
+    tr,
   )
   if (exists === null) return false
   // Query to check if table is 'Transactional'.
@@ -130,6 +133,7 @@ async function isTableTransactional(
     `SELECT \`ENGINE\` FROM \`information_schema\`.\`tables\` WHERE \`table_name\` = ${quoteString(table)} AND \`table_schema\` = ${quoteString(db)} AND UPPER(\`engine\`) IN ("${TRANSACTIONAL_ENGINES.join('", "')}")`,
     'rollback.check-engine',
     last,
+    tr,
   )
   return r !== null && (r.resultSets[0]?.rows.length ?? 0) === 1
 }
@@ -141,6 +145,7 @@ async function checkIfRollbackPossible(
   currentDb: string,
   context: Context | undefined,
   last: LastError,
+  tr: Translator,
 ): Promise<boolean> {
   const parser = new Parser(sqlQuery, context !== undefined ? { context } : {})
   const statement = parser.statements[0]
@@ -159,7 +164,7 @@ async function checkIfRollbackPossible(
   }
   // Check if each table is 'InnoDB'.
   for (const table of getTables(statement)) {
-    if (!(await isTableTransactional(conn, table, currentDb, last))) return false
+    if (!(await isTableTransactional(conn, table, currentDb, last, tr))) return false
   }
   return true
 }
@@ -175,15 +180,18 @@ export async function handleRollbackRequest(
   delimiter: string,
   currentDb: string,
   context: Context | undefined,
+  tr: Translator = english,
 ): Promise<string | null> {
   const last = new LastError()
   for (const piece of sqlQuery.split(delimiter)) {
     if (piece === '') continue
     // Check each query for ROLLBACK support.
-    if (await checkIfRollbackPossible(conn, piece, currentDb, context, last)) continue
+    if (await checkIfRollbackPossible(conn, piece, currentDb, context, last, tr)) continue
     return last.value !== ''
       ? last.value
-      : 'Only INSERT, UPDATE, DELETE, REPLACE and SET (without options like GLOBAL) SQL queries containing transactional engine tables can be rolled back.'
+      : tr.gettext(
+          'Only INSERT, UPDATE, DELETE, REPLACE and SET (without options like GLOBAL) SQL queries containing transactional engine tables can be rolled back.',
+        )
   }
   // If everything fine, START a transaction.
   await conn.query('START TRANSACTION', 'rollback.start')
@@ -219,7 +227,7 @@ export interface ImportRunResult {
   importMode: ImportModeState | null
 }
 
-const ngettext = (one: string, many: string, n: number) => (n === 1 ? one : many).replace('%1$d', String(n))
+const english = englishTranslator()
 
 /**
  * ImportSql::doImport + Import::runQuery/executeQuery: fewer than 50 statements are handed to the
@@ -233,11 +241,13 @@ export async function runImport(
     runQuery: boolean
     db: string
     ignoreMultiSubmitErrors: boolean
+    tr?: Translator
   },
 ): Promise<ImportRunResult> {
+  const tr = opts.tr ?? english
   const st: ImportModeState = {
     sqlQuery: '',
-    message: 'Sorry an unexpected error happened!',
+    message: tr.gettext('Sorry an unexpected error happened!'),
     result: false,
     hasError: false,
     failedQueries: [],
@@ -255,14 +265,14 @@ export async function runImport(
   const executeQuery = async (sql: string) => {
     importModeUsed = true
     const last = new LastError()
-    const result = await tryQuery(opts.conn, sql, 'import.query', last)
+    const result = await tryQuery(opts.conn, sql, 'import.query', last, tr)
     // USE query changes the database, so need to track while running multiple queries
     const isUseQuery = sql.toLowerCase().includes('use ')
     st.message = '# '
     st.result = result !== null
     if (result === null) {
       st.failedQueries.push({ sql, error: last.value })
-      st.message += 'Error'
+      st.message += tr.gettext('Error')
       if (!opts.ignoreMultiSubmitErrors) {
         st.hasError = true
         return
@@ -270,10 +280,13 @@ export async function runImport(
     } else {
       const aNumRows = result.resultSets[0]?.rows.length ?? 0
       const aAffectedRows = result.header?.affectedRows ?? aNumRows
-      if (aNumRows > 0) st.message += `Rows: ${aNumRows}`
+      if (aNumRows > 0) st.message += `${tr.gettext('Rows')}: ${aNumRows}`
       else if (aAffectedRows > 0)
-        st.message += ngettext('%1$d row affected.', '%1$d rows affected.', aAffectedRows)
-      else st.message += 'MySQL returned an empty result set (i.e. zero rows).'
+        st.message += sprintf(
+          tr.ngettext('%1$d row affected.', '%1$d rows affected.', aAffectedRows),
+          aAffectedRows,
+        )
+      else st.message += tr.gettext('MySQL returned an empty result set (i.e. zero rows).')
       if (aNumRows > 0 || isUseQuery) sqlData.push(sql)
     }
     if (!sqlQueryDisabled) st.sqlQuery += `${st.message}\n`

@@ -8,8 +8,9 @@ import {
   type LintResponse,
   type SqlFormResponse,
 } from '@bettermyadmin/contracts'
+import type { Gettext } from '@bettermyadmin/i18n'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
-import { formatSql, lintQuery } from '@bettermyadmin/sql-lexer'
+import { LINT_MSGIDS, type LintMessages, formatSql, lintQuery } from '@bettermyadmin/sql-lexer'
 import { Hono, type Context as HonoContext } from 'hono'
 import type { z } from 'zod'
 import { getServer } from '../config.ts'
@@ -55,6 +56,11 @@ export async function withConn<T>(c: HonoContext<ServerEnv>, fn: (conn: Conn) =>
   }
 }
 
+/** Linter's msgids through the request catalogue. */
+export function lintMessages(tr: Gettext): LintMessages {
+  return { near: tr.gettext(LINT_MSGIDS.near), tooLong: tr.gettext(LINT_MSGIDS.tooLong) }
+}
+
 /**
  * POST /sql/lint — the fallback of the editor's in-worker linter.
  * pma: src/Controllers/LintController.php
@@ -63,11 +69,10 @@ sqlRoutes.post('/lint', async (c) => {
   const req = await parseBody(c, LintRequest)
   const body: LintResponse = {
     lints: await withConn(c, async (conn) =>
-      lintQuery(
-        req.sql,
-        req.editorType ?? null,
-        conn.serverInfo !== null ? { context: conn.serverInfo.context } : {},
-      ),
+      lintQuery(req.sql, req.editorType ?? null, {
+        ...(conn.serverInfo !== null ? { context: conn.serverInfo.context } : {}),
+        messages: lintMessages(c.get('tr')),
+      }),
     ),
   }
   return c.json(body)
@@ -162,7 +167,7 @@ sqlRoutes.get('/form', async (c) => {
         `SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ${quoteString(db)}`,
         'sql.form.db-exists',
       )
-      if (dbExists === null) throw new NotFoundError('No databases selected.')
+      if (dbExists === null) throw new NotFoundError(c.get('tr').gettext('No databases selected.'))
       if (table === '') {
         scope = 'database'
         legendName = db
@@ -188,7 +193,7 @@ sqlRoutes.get('/form', async (c) => {
             `SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = ${quoteString(db)} AND TABLE_NAME = ${quoteString(table)}`,
             'sql.form.table-exists',
           )
-          if (tableExists === null) throw new NotFoundError('No table selected.')
+          if (tableExists === null) throw new NotFoundError(c.get('tr').gettext('No table selected.'))
         }
         scope = 'table'
         legendName = `${db}.${table}`

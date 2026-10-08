@@ -1,4 +1,5 @@
 import type { MysqlDie, SqlCard } from '@bettermyadmin/contracts'
+import { type Gettext, englishTranslator } from '@bettermyadmin/i18n'
 import { type Context, Lexer, Parser, getErrors } from '@bettermyadmin/sql-lexer'
 import type { AppConfig } from '../config.ts'
 import { addslashes } from '../util/php.ts'
@@ -10,30 +11,35 @@ import { addslashes } from '../util/php.ts'
 export function formatError(
   errorNumber: number,
   errorMessage: string,
+  tr: Gettext = english,
 ): { text: string; hint: MysqlDie['hint'] } {
   let error = `#${errorNumber}`
   const separator = ' — '
   let hint: MysqlDie['hint'] = null
   if (errorNumber === 2002) {
-    error += ` - ${errorMessage}${separator}The server is not responding (or the local server's socket is not correctly configured).`
+    error += ` - ${errorMessage}${separator}${tr.gettext("The server is not responding (or the local server's socket is not correctly configured).")}`
   } else if (errorNumber === 2003) {
-    error += ` - ${errorMessage}${separator}The server is not responding.`
+    error += ` - ${errorMessage}${separator}${tr.gettext('The server is not responding.')}`
   } else if (errorNumber === 1698) {
-    error += ` - ${errorMessage}${separator}Logout and try as another user.`
-    hint = { kind: 'logout', text: 'Logout and try as another user.' }
+    const logout = tr.gettext('Logout and try as another user.')
+    error += ` - ${errorMessage}${separator}${logout}`
+    hint = { kind: 'logout', text: logout }
   } else if (errorNumber === 1005) {
     if (errorMessage.includes('errno: 13')) {
-      error += ` - ${errorMessage}${separator}Please check privileges of directory containing database.`
+      error += ` - ${errorMessage}${separator}${tr.gettext('Please check privileges of directory containing database.')}`
     } else {
       // InnoDB constraints, see https://dev.mysql.com/doc/refman/8.0/en/create-table-foreign-keys.html
-      error += ` - ${errorMessage} (Details…)`
-      hint = { kind: 'innodb-status', text: 'Details…' }
+      const details = tr.gettext('Details…')
+      error += ` - ${errorMessage} (${details})`
+      hint = { kind: 'innodb-status', text: details }
     }
   } else {
     error += ` - ${errorMessage}`
   }
   return { text: error, hint }
 }
+
+const english = englishTranslator()
 
 /** Generator::formatSql($sql, true): the SQL shown in the card, truncated to MaxCharactersInDisplayedSQL. */
 export function formatSqlForDisplay(sql: string, cfg: AppConfig, truncate = true): string {
@@ -87,9 +93,15 @@ export async function getMessageCard(sqlQuery: string, o: CardOptions): Promise<
     if (isSelect) {
       explain = { text: 'Explain SQL', sql: `EXPLAIN ${sqlQuery}` }
     } else if (new RegExp(`${EXPLAIN_RE}SELECT${SP}+`, 'i').test(sqlQuery)) {
-      explain = { text: 'Skip Explain SQL', sql: sqlQuery.replace(new RegExp(EXPLAIN_RE, 'i'), '') }
+      explain = {
+        text: 'Skip Explain SQL',
+        sql: sqlQuery.replace(new RegExp(EXPLAIN_RE, 'i'), ''),
+      }
     } else if (new RegExp(`${ANALYZE_RE}SELECT${SP}+`, 'i').test(sqlQuery)) {
-      explain = { text: 'Skip Analyze SQL', sql: sqlQuery.replace(new RegExp(ANALYZE_RE, 'i'), '') }
+      explain = {
+        text: 'Skip Analyze SQL',
+        sql: sqlQuery.replace(new RegExp(ANALYZE_RE, 'i'), ''),
+      }
     }
   }
 

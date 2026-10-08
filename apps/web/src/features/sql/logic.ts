@@ -26,10 +26,13 @@ export function needsConfirmation(sqlQuery: string): boolean {
   )
 }
 
-/** The text of the confirmation: the query cut at 100 characters. */
-export function confirmationText(sqlQuery: string): string {
+/**
+ * The text of the confirmation: the query cut at 100 characters. `format` is the translated
+ * Messages.strDoYouReally (filled with String.replace, like phpMyAdmin's JS).
+ */
+export function confirmationText(sqlQuery: string, format = DO_YOU_REALLY): string {
   const message = sqlQuery.length > 100 ? `${sqlQuery.substring(0, 100)}\n    ...` : sqlQuery
-  return DO_YOU_REALLY.replace('%s', message)
+  return format.replace('%s', message)
 }
 
 /**

@@ -4,6 +4,7 @@ import { AlertTriangle, CheckCircle2, CircleHelp, XCircle } from 'lucide-react'
 import { createContext, useContext, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { mysqlDocUrl } from '../../lib/docs'
+import { pgettext, t } from '../../lib/i18n'
 import { HighlightedSql } from './HighlightedSql'
 import { SqlEditor } from './editor/SqlEditor'
 import type { SqlEditorHandle } from './editor/types'
@@ -49,11 +50,11 @@ export function DocIcon({ href, target = 'mysql_doc' }: { href: string; target?:
       href={href}
       target={target}
       rel="noopener noreferrer"
-      title="Documentation"
+      title={t('Documentation')}
       className="inline-flex align-middle"
     >
       <CircleHelp className="size-3.5" aria-hidden />
-      <span className="sr-only">Documentation</span>
+      <span className="sr-only">{t('Documentation')}</span>
     </a>
   )
 }
@@ -131,7 +132,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
                 })
               }
             />
-            Profiling
+            {t('Profiling')}
           </label>
         )}
         {l.editInline && (
@@ -140,7 +141,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
             className={`${link} inline_edit_sql`}
             onClick={() => open === null && setOpen(key)}
           >
-            Edit inline
+            {pgettext('Inline edit query', 'Edit inline')}
           </button>
         )}
         {l.edit && (
@@ -149,7 +150,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
             className={link}
             onClick={() => env.onAction({ type: 'edit', sql: card.sql, db: card.db, table: card.table })}
           >
-            Edit
+            {t('Edit')}
           </button>
         )}
         {l.explain !== null && (
@@ -158,7 +159,8 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
             className={link}
             onClick={() => env.onAction({ type: 'run', sql: l.explain!.sql, db: card.db, table: card.table })}
           >
-            {l.explain.text}
+            {/* msgid from the server: Explain SQL / Skip Explain SQL / Skip Analyze SQL */}
+            {t(l.explain.text)}
           </button>
         )}
         {l.php === 'create' && (
@@ -169,7 +171,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
               env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, showAsPhp: true })
             }
           >
-            Create PHP code
+            {t('Create PHP code')}
           </button>
         )}
         {l.php === 'without' && (
@@ -179,14 +181,14 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
               className={link}
               onClick={() => env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table })}
             >
-              Without PHP code
+              {t('Without PHP code')}
             </button>
             <button
               type="button"
               className={link}
               onClick={() => env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table })}
             >
-              Submit query
+              {t('Submit query')}
             </button>
           </>
         )}
@@ -198,7 +200,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
               env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, sig: st.sig })
             }
           >
-            Refresh
+            {t('Refresh')}
           </button>
         )}
       </div>
@@ -231,7 +233,7 @@ function InlineEditor({ card, env, onClose }: { card: SqlCard; env: CardEnv; onC
       <SqlEditor
         handleRef={editor}
         id="sql_query_edit"
-        ariaLabel="SQL query"
+        ariaLabel={t('SQL query')}
         initialValue={card.sql.trim()}
         rows={5}
         codemirror={env.codemirror}
@@ -254,16 +256,16 @@ function InlineEditor({ card, env, onClose }: { card: SqlCard; env: CardEnv; onC
               checked={checked}
               onChange={(e) => setFkChecks(e.target.checked)}
             />
-            Enable foreign key checks
+            {t('Enable foreign key checks')}
           </label>
         )}
       </div>
       <div className="flex gap-2">
         <button type="button" id="sql_query_edit_save" className="btn" onClick={save}>
-          Go
+          {t('Go')}
         </button>
         <button type="button" id="sql_query_edit_discard" className="btn" onClick={onClose}>
-          Cancel
+          {t('Cancel')}
         </button>
       </div>
     </div>
@@ -282,15 +284,15 @@ export function ErrorCard({ st, env }: { st: StatementResult; env: Pick<CardEnv,
       role="alert"
       className="mb-3 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
     >
-      <h2 className="mb-1 text-lg font-semibold">Error</h2>
+      <h2 className="mb-1 text-lg font-semibold">{t('Error')}</h2>
       {e.sql !== null && (
         <>
           {e.staticAnalysis.length > 0 && (
             <>
               <p>
-                <strong>Static analysis:</strong>
+                <strong>{t('Static analysis:')}</strong>
               </p>
-              <p>{e.staticAnalysis.length} errors were found during analysis.</p>
+              <p>{t('%d errors were found during analysis.', e.staticAnalysis.length)}</p>
               <ol className="ml-6 list-decimal">
                 {e.staticAnalysis.map((a, i) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: positional list
@@ -302,7 +304,7 @@ export function ErrorCard({ st, env }: { st: StatementResult; env: Pick<CardEnv,
             </>
           )}
           <p className="mt-1 flex items-center gap-2">
-            <strong>SQL query:</strong>
+            <strong>{t('SQL query:')}</strong>
             <button
               type="button"
               className="copyQueryBtn text-accent hover:underline"
@@ -310,16 +312,16 @@ export function ErrorCard({ st, env }: { st: StatementResult; env: Pick<CardEnv,
                 void navigator.clipboard?.writeText(st.executedSql.trim()).then(() => setCopied(true))
               }}
             >
-              Copy
+              {t('Copy')}
             </button>
-            {copied && <span className="sr-only">copied</span>}
+            {copied && <span className="sr-only">{t('Successfully copied!')}</span>}
             {e.selectDoc && <DocIcon href={mysqlDocUrl('SELECT', '', env.versionInt)} />}
           </p>
           <HighlightedSql sql={e.sql} versionInt={env.versionInt} className="my-1 text-fg" />
         </>
       )}
       <p className="flex items-center gap-1">
-        <strong>MySQL said: </strong>
+        <strong>{t('MySQL said: ')}</strong>
         <DocIcon href={mysqlDocUrl('server-error-reference', '', env.versionInt)} />
       </p>
       <code className="whitespace-pre-wrap text-xs">{e.serverMessage}</code>

@@ -1,9 +1,11 @@
 import type { ConsoleSettings, Executed, QueryResponse } from '@bettermyadmin/contracts'
+import { sprintf } from '@bettermyadmin/i18n/php'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { SquareTerminal } from 'lucide-react'
 import { type MouseEvent as ReactMouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../../lib/api'
+import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarkProvider, useBookmarks } from '../bookmarks/provider'
 import { HighlightedSql } from '../sql/HighlightedSql'
@@ -12,6 +14,7 @@ import type { SqlEditorHandle } from '../sql/editor/types'
 import {
   CONSOLE_DELETE_BOOKMARK_CONFIRM,
   CONSOLE_REQUERY_CONFIRM,
+  DO_YOU_REALLY,
   FORM_EMPTY,
   confirmationText,
   needsConfirmation,
@@ -127,7 +130,7 @@ function ConsoleDock({
             history: true,
             hidden: !initial.StartHistory,
             expanded: false,
-            time: h.timevalue ?? 'During current session',
+            time: h.timevalue ?? t('During current session'),
           }),
         )
         setMessages((m) => [...rows, ...m])
@@ -220,7 +223,8 @@ function ConsoleDock({
     (sql: string, opts: { db?: string; table?: string; profiling?: boolean } = {}) => {
       // requires at least one letter
       if (!/[a-z]|[A-Z]/.test(sql)) return
-      if (confirm && needsConfirmation(sql) && !window.confirm(confirmationText(sql))) return
+      if (confirm && needsConfirmation(sql) && !window.confirm(confirmationText(sql, t(DO_YOU_REALLY))))
+        return
       const db = opts.db ?? scope.db
       const table = opts.table ?? scope.table
       const id = newQueryId()
@@ -346,7 +350,7 @@ function ConsoleDock({
           className={`toolbar group flex items-center gap-1 bg-bg-subtle px-2 py-1 ${open ? 'cursor-n-resize' : 'collapsed'}`}
           onMouseDown={onToolbarMouseDown}
           role="toolbar"
-          aria-label="SQL Query Console"
+          aria-label={t('SQL Query Console')}
         >
           <button
             type="button"
@@ -355,11 +359,11 @@ function ConsoleDock({
             aria-expanded={open}
           >
             <SquareTerminal className="size-4" aria-hidden />
-            <span>Console</span>
+            <span>{t('Console')}</span>
           </button>
           <div className={`${open ? 'flex' : 'hidden group-hover:flex'} items-center gap-1`}>
             <button type="button" className={`clear ${tb}`} onClick={clearMessages}>
-              Clear
+              {t('Clear')}
             </button>
             <button
               type="button"
@@ -369,7 +373,7 @@ function ConsoleDock({
                 if (!open) show()
               }}
             >
-              History
+              {t('History')}
             </button>
             <button
               type="button"
@@ -379,7 +383,7 @@ function ConsoleDock({
                 setCard('options')
               }}
             >
-              Options
+              {t('Options')}
             </button>
             {bookmarks.enabled && (
               <button
@@ -390,7 +394,7 @@ function ConsoleDock({
                   setCard('bookmarks')
                 }}
               >
-                Bookmarks
+                {t('Bookmarks')}
               </button>
             )}
             {debugSql && debugLog !== null && (
@@ -402,7 +406,7 @@ function ConsoleDock({
                   setCard('debug')
                 }}
               >
-                Debug SQL
+                {t('Debug SQL')}
               </button>
             )}
           </div>
@@ -423,8 +427,8 @@ function ConsoleDock({
               >
                 <div className="message welcome text-fg-subtle">
                   {settings.EnterExecutes
-                    ? 'Press Enter to execute query'
-                    : 'Press Ctrl+Enter to execute query'}
+                    ? t('Press Enter to execute query')
+                    : t('Press Ctrl+Enter to execute query')}
                 </div>
                 {messages.map((m) => (
                   <MessageEntry
@@ -435,7 +439,7 @@ function ConsoleDock({
                       setMessages((list) => list.map((x) => (x.id === m.id ? { ...x, expanded } : x)))
                     }
                     onRequery={() => {
-                      if (window.confirm(`${CONSOLE_REQUERY_CONFIRM}\n${m.sql.substring(0, 100)}`)) {
+                      if (window.confirm(`${t(CONSOLE_REQUERY_CONFIRM)}\n${m.sql.substring(0, 100)}`)) {
                         execute(m.sql, { db: m.db, table: m.table })
                       }
                     }}
@@ -455,7 +459,7 @@ function ConsoleDock({
               <div className="query_input border-t border-border">
                 <SqlEditor
                   handleRef={input}
-                  ariaLabel="SQL Query Console"
+                  ariaLabel={t('SQL Query Console')}
                   initialValue=""
                   rows={2}
                   height={56}
@@ -472,7 +476,7 @@ function ConsoleDock({
               <>
                 <button
                   type="button"
-                  aria-label="Close"
+                  aria-label={t('Close')}
                   className="mid_layer absolute inset-0 bg-black/15"
                   onClick={() => setCard(null)}
                 />
@@ -537,45 +541,45 @@ function MessageEntry({
       >
         {m.expanded ? (
           <button type="button" className={action} onClick={() => onToggle(false)}>
-            Collapse
+            {t('Collapse')}
           </button>
         ) : (
           <button type="button" className={action} onClick={() => onToggle(true)}>
-            Expand
+            {t('Expand')}
           </button>
         )}
         {reusable && (
           <button type="button" className={action} onClick={onRequery}>
-            Requery
+            {t('Requery')}
           </button>
         )}
         <button type="button" className={action} onClick={onEdit}>
-          Edit
+          {t('Edit')}
         </button>
         {select && (
           <>
             <button type="button" className={action} onClick={onExplain}>
-              Explain
+              {t('Explain')}
             </button>
             <button type="button" className={action} onClick={onProfiling}>
-              Profiling
+              {t('Profiling')}
             </button>
           </>
         )}
         {bookmarkFeature && reusable && (
           <button type="button" className={action} onClick={onBookmark}>
-            Bookmark
+            {t('Bookmark')}
           </button>
         )}
-        {m.state === 'failed' && <span className="text failed text-error">Query failed</span>}
+        {m.state === 'failed' && <span className="text failed text-error">{t('Query failed')}</span>}
         {reusable && (
           <span className="text targetdb">
-            Database: <span>{m.db}</span>
+            {t('Database')}: <span>{m.db}</span>
           </span>
         )}
         {m.state !== 'failed' && (
           <span className="text query_time">
-            Queried time: <span>{m.time}</span>
+            {t('Queried time')}: <span>{m.time}</span>
           </span>
         )}
       </div>
@@ -612,13 +616,13 @@ function OptionsCard({
         checked={settings[key]}
         onChange={(e) => set(key, e.target.checked)}
       />
-      {label}
+      {t(label)}
     </label>
   )
   return (
     <div id="pma_console_options">
       <div className="toolbar flex items-center gap-3 border-b border-border bg-bg-subtle px-2 py-1">
-        <span className="font-semibold">Options</span>
+        <span className="font-semibold">{t('Options')}</span>
         <button
           type="button"
           className="default rounded px-2 hover:bg-nav-pointer"
@@ -636,7 +640,7 @@ function OptionsCard({
             }
           }}
         >
-          Restore default values
+          {t('Restore default values')}
         </button>
       </div>
       <div className="content flex flex-col gap-1 p-3">
@@ -676,24 +680,31 @@ function BookmarksCard({
     <div id="pma_bookmarks" className="relative h-full">
       <div className="toolbar flex items-center gap-3 border-b border-border bg-bg-subtle px-2 py-1">
         <button type="button" className="font-semibold" onClick={onClose}>
-          Bookmarks
+          {t('Bookmarks')}
         </button>
         <button type="button" className="refresh rounded px-2 hover:bg-nav-pointer" onClick={refetch}>
-          Refresh
+          {t('Refresh')}
         </button>
         <button
           type="button"
           className="add rounded px-2 hover:bg-nav-pointer"
           onClick={() => setAdd({ label: '', db: '', sql: '', shared: false })}
         >
-          Add
+          {t('Add')}
         </button>
       </div>
       <div className="content bookmark p-2">
         <div className="message welcome">
           {list.length === 0
-            ? 'No bookmarks'
-            : `Showing ${list.length} bookmark(s) (both private and shared)`}
+            ? t('No bookmarks')
+            : sprintf(
+                ngettext(
+                  'Showing %1$d bookmark (both private and shared)',
+                  'Showing %1$d bookmarks (both private and shared)',
+                  list.length,
+                ),
+                list.length,
+              )}
         </div>
         {list.map((b) => {
           const isOpen = expanded.has(b.id)
@@ -716,31 +727,31 @@ function BookmarksCard({
                     })
                   }
                 >
-                  {isOpen ? 'Collapse' : 'Expand'}
+                  {isOpen ? t('Collapse') : t('Expand')}
                 </button>
                 <button type="button" className={action} onClick={() => onRequery(b)}>
-                  Requery
+                  {t('Requery')}
                 </button>
                 <button
                   type="button"
                   className={action}
                   onClick={() => setAdd({ label: b.label, db: b.db, sql: b.query, shared: b.user === '' })}
                 >
-                  Edit
+                  {t('Edit')}
                 </button>
                 <button
                   type="button"
                   className={action}
                   onClick={async () => {
-                    if (!window.confirm(`${CONSOLE_DELETE_BOOKMARK_CONFIRM}\n${b.label}`)) return
+                    if (!window.confirm(`${t(CONSOLE_DELETE_BOOKMARK_CONFIRM)}\n${b.label}`)) return
                     await bookmarkProvider().remove(server, b.id)
                     refetch()
                   }}
                 >
-                  Delete
+                  {t('Delete')}
                 </button>
                 <span>
-                  Database: <span>{b.db}</span>
+                  {t('Database')}: <span>{b.db}</span>
                 </span>
                 <span
                   className={
@@ -758,7 +769,7 @@ function BookmarksCard({
       {add !== null && (
         <div className="card add absolute inset-0 bg-bg-elevated">
           <div className="toolbar border-b border-border bg-bg-subtle px-2 py-1 font-semibold">
-            Add bookmark
+            {t('Add bookmark')}
           </div>
           <AddBookmarkForm
             server={server}
@@ -792,7 +803,7 @@ function AddBookmarkForm({
     <div className="content add_bookmark flex flex-col gap-2 p-2">
       <div className="options flex flex-wrap items-center gap-3">
         <label>
-          Label:{' '}
+          {t('Label')}:{' '}
           <input
             type="text"
             name="label"
@@ -802,7 +813,7 @@ function AddBookmarkForm({
           />
         </label>
         <label>
-          Target database:{' '}
+          {t('Target database')}:{' '}
           <input
             type="text"
             name="targetdb"
@@ -818,7 +829,7 @@ function AddBookmarkForm({
             checked={shared}
             onChange={(e) => setShared(e.target.checked)}
           />
-          Share this bookmark
+          {t('Share this bookmark')}
         </label>
         <button
           type="button"
@@ -826,22 +837,22 @@ function AddBookmarkForm({
           onClick={async () => {
             const sql = editor.current?.getValue() ?? ''
             if (label === '' || sql === '') {
-              window.alert(FORM_EMPTY)
+              window.alert(t(FORM_EMPTY))
               return
             }
             // "Edit" creates a new bookmark: there is no in-place update
             const r = await bookmarkProvider().create(server, { label, db, sql, shared })
-            setMessage(r.ok ? 'Succeeded' : 'Failed')
+            setMessage(r.ok ? t('Succeeded') : t('Failed'))
             if (r.ok) onDone()
           }}
         >
-          OK
+          {t('OK')}
         </button>
         {message !== '' && <span>{message}</span>}
       </div>
       <SqlEditor
         handleRef={editor}
-        ariaLabel="SQL query"
+        ariaLabel={t('SQL query')}
         initialValue={initial.sql}
         rows={3}
         codemirror
@@ -890,22 +901,22 @@ function DebugCard({
   return (
     <div id="debug_console">
       <div className="toolbar flex flex-wrap items-center gap-2 border-b border-border bg-bg-subtle px-2 py-1">
-        <span className="font-semibold">Debug SQL</span>
-        <span>Order:</span>
+        <span className="font-semibold">{t('Debug SQL')}</span>
+        <span>{t('Order:')}</span>
         <button type="button" className={b(settings.Order === 'asc')} onClick={() => set('Order', 'asc')}>
-          ascending
+          {t('ascending')}
         </button>
         <button type="button" className={b(settings.Order === 'desc')} onClick={() => set('Order', 'desc')}>
-          descending
+          {t('descending')}
         </button>
-        <span>Order by:</span>
+        <span>{t('Order by:')}</span>
         {settings.GroupQueries && (
           <button
             type="button"
             className={b(settings.OrderBy === 'count')}
             onClick={() => set('OrderBy', 'count')}
           >
-            Count
+            {t('Count')}
           </button>
         )}
         <button
@@ -913,14 +924,14 @@ function DebugCard({
           className={b(settings.OrderBy === 'exec')}
           onClick={() => set('OrderBy', 'exec')}
         >
-          Execution order
+          {t('Execution order')}
         </button>
         <button
           type="button"
           className={b(settings.OrderBy === 'time')}
           onClick={() => set('OrderBy', 'time')}
         >
-          Time taken
+          {t('Time taken')}
         </button>
         {settings.GroupQueries ? (
           <button
@@ -928,7 +939,7 @@ function DebugCard({
             className="rounded px-2 hover:bg-nav-pointer"
             onClick={() => set('GroupQueries', false)}
           >
-            Ungroup queries
+            {t('Ungroup queries')}
           </button>
         ) : (
           <button
@@ -936,13 +947,14 @@ function DebugCard({
             className="rounded px-2 hover:bg-nav-pointer"
             onClick={() => set('GroupQueries', true)}
           >
-            Group queries
+            {t('Group queries')}
           </button>
         )}
       </div>
       <div className="content debug p-2">
         <div className="message welcome">
-          {`${groups.size} queries executed ${log.length} times in ${totalTime} seconds.`}
+          {/* sprintf(Messages.strConsoleDebugSummary, totalUnique, totalExec, totalTime) */}
+          {t('%s queries executed %s times in %s seconds.', groups.size, log.length, String(totalTime))}
         </div>
         <div className="debugLog">
           {rows.map((r) => (
@@ -950,11 +962,11 @@ function DebugCard({
               <div className="flex gap-3 text-xs">
                 {settings.GroupQueries && (
                   <span className="text count">
-                    Count: <span>{r.count}</span>
+                    {t('Count:')} <span>{r.count}</span>
                   </span>
                 )}
                 <span className="text time">
-                  Time taken:{' '}
+                  {t('Time taken:')}{' '}
                   <span>{`${r.time.toFixed(6)}s (${totalTime > 0 ? ((r.time * 100) / totalTime).toFixed(2) : '0'}%)`}</span>
                 </span>
               </div>

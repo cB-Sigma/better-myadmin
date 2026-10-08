@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { pmaDocUrl } from '../../lib/docs'
+import { t } from '../../lib/i18n'
 import type { BookmarkEntry } from '../bookmarks/provider'
 import { DocIcon } from './SqlMessage'
 
@@ -27,10 +28,10 @@ export function BookmarkedQuery({
   return (
     <div className="mb-3 rounded border border-border" id="fieldsetBookmarkOptions">
       <div className="border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-        Bookmarked SQL query
+        {t('Bookmarked SQL query')}
       </div>
       <div className="flex flex-wrap items-center gap-3 p-3 text-sm">
-        <label htmlFor="id_bookmark">Bookmark:</label>
+        <label htmlFor="id_bookmark">{t('Bookmark:')}</label>
         <select
           id="id_bookmark"
           name="id_bookmark"
@@ -45,15 +46,15 @@ export function BookmarkedQuery({
           {bookmarks.map((b) => (
             <option key={b.id} value={b.id} data-varcount={b.variableCount}>
               {b.label}
-              {b.user === '' ? ' (shared)' : ''}
+              {b.user === '' ? ` (${t('shared')})` : ''}
             </option>
           ))}
         </select>
         {(
           [
-            ['submit', 'radio_bookmark_exe', 'Submit'],
-            ['view', 'radio_bookmark_view', 'View only'],
-            ['delete', 'radio_bookmark_del', 'Delete'],
+            ['submit', 'radio_bookmark_exe', t('Submit')],
+            ['view', 'radio_bookmark_view', t('View only')],
+            ['delete', 'radio_bookmark_del', t('Delete')],
           ] as const
         ).map(([value, htmlId, label]) => (
           <label key={value} className="flex items-center gap-1" htmlFor={htmlId}>
@@ -70,12 +71,15 @@ export function BookmarkedQuery({
       </div>
       {varCount > 0 && (
         <div className="px-3 pb-3 text-sm">
-          <span className="mr-1">Variables</span>
+          <span className="mr-1">{t('Variables')}</span>
           <DocIcon href={pmaDocUrl('faq', 'faqbookmark')} target="documentation" />
           <div className="mt-1 flex flex-wrap gap-3" id="bookmarkVariables">
             {Array.from({ length: varCount }, (_, i) => i + 1).map((i) => (
               <div key={`${id}-${i}`} className="flex items-center gap-1">
-                <label htmlFor={`bookmarkVariable${i}`}>{`Variable ${i}:`}</label>
+                <label htmlFor={`bookmarkVariable${i}`}>
+                  {/* Messages.strBookmarkVariable */}
+                  {t('Variable %d:', i)}
+                </label>
                 <input
                   type="text"
                   size={10}
@@ -100,7 +104,7 @@ export function BookmarkedQuery({
       )}
       <div className="flex justify-end border-t border-border bg-bg-subtle px-3 py-2">
         <button type="button" id="button_submit_bookmark" className="btn" onClick={go}>
-          Go
+          {t('Go')}
         </button>
       </div>
     </div>

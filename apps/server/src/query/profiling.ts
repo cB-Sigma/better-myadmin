@@ -1,7 +1,8 @@
 import type { Profiling } from '@bettermyadmin/contracts'
+import { type Gettext, englishTranslator, formatNumber } from '@bettermyadmin/i18n'
 import type { Conn } from '../db/connection.ts'
 import type { SessionData } from '../session/store.ts'
-import { formatNumber, ucwords } from '../util/php.ts'
+import { ucwords } from '../util/php.ts'
 
 /**
  * Profiling::isSupported: `SELECT @@have_profiling`, cached per server in the session (SessionCache).
@@ -69,14 +70,17 @@ export async function getProfilingInformation(
  * Sql::getDetailedProfilingStats, with the numbers formatted the way sql/profiling_chart.twig prints them.
  * Returns null when the total time is 0 (no chart is rendered).
  */
-export function getDetailedProfilingStats(rows: readonly ProfileRow[]): Profiling | null {
+export function getDetailedProfilingStats(
+  rows: readonly ProfileRow[],
+  tr: Gettext = englishTranslator(),
+): Profiling | null {
   const totalTime = rows.reduce((s, r) => s + Number.parseFloat(r.Duration), 0)
   if (totalTime === 0) return null
   const states = new Map<string, { totalTime: number; calls: number }>()
   const profile: Profiling['profile'] = []
   for (const r of rows) {
     const status = ucwords(r.Status)
-    profile.push({ status, duration: formatNumber(r.Duration, 3, 1), durationRaw: r.Duration })
+    profile.push({ status, duration: formatNumber(tr, r.Duration, 3, 1), durationRaw: r.Duration })
     const s = states.get(status)
     if (s === undefined) states.set(status, { totalTime: Number.parseFloat(r.Duration), calls: 1 })
     else {
@@ -93,11 +97,11 @@ export function getDetailedProfilingStats(rows: readonly ProfileRow[]): Profilin
     profile,
     states: sorted.map(([state, s]) => ({
       state,
-      totalTime: formatNumber(s.totalTime, 3, 1),
+      totalTime: formatNumber(tr, s.totalTime, 3, 1),
       totalTimeRaw: s.totalTime,
-      percent: formatNumber(100 * (s.totalTime / totalTime), 0, 2),
+      percent: formatNumber(tr, 100 * (s.totalTime / totalTime), 0, 2),
       calls: s.calls,
-      average: formatNumber(s.totalTime / s.calls, 3, 1),
+      average: formatNumber(tr, s.totalTime / s.calls, 3, 1),
       averageRaw: (s.totalTime / s.calls).toFixed(8),
     })),
     chart: { labels: sorted.map(([k]) => k), data: sorted.map(([, s]) => s.totalTime) },

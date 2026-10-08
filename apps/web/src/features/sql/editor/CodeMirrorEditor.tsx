@@ -6,6 +6,7 @@ import { type Diagnostic, lintGutter, linter } from '@codemirror/lint'
 import { Compartment, EditorState, type Extension, Prec } from '@codemirror/state'
 import { EditorView, keymap, lineNumbers } from '@codemirror/view'
 import { type Ref, useEffect, useImperativeHandle, useRef } from 'react'
+import { t } from '../../../lib/i18n'
 import { lintInWorker } from './lintClient'
 import type { SqlEditorHandle, SqlEditorProps } from './types'
 
@@ -210,7 +211,16 @@ function lintFor(cfg: SqlEditorProps['lint']): Extension {
         const text = view.state.doc.toString()
         // Skipping check if text box is empty.
         if (text.trim() === '') return []
-        const lints = await lintInWorker({ sql: text, editorType: cfg.editorType, server: cfg.server })
+        const lints = await lintInWorker({
+          sql: text,
+          editorType: cfg.editorType,
+          server: cfg.server,
+          // LINT_MSGIDS (literal here so the editor chunk does not load the parser)
+          messages: {
+            near: t('%1$s (near <code>%2$s</code>)'),
+            tooLong: t('Linting is disabled for this query because it exceeds the maximum length.'),
+          },
+        })
         if (view.state.doc.toString() !== text) return []
         return lints.map((l) => {
           const from = posOf(view, l.fromLine, l.fromColumn)

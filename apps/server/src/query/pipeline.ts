@@ -145,7 +145,7 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
   // If there is a request to ROLLBACK when finished.
   let discardConnection = false
   if (state.rollback) {
-    const refused = await handleRollbackRequest(conn, sql, input.delimiter, db, ctx.context)
+    const refused = await handleRollbackRequest(conn, sql, input.delimiter, db, ctx.context, tr)
     if (refused !== null) {
       // Message::rawError + callExit: only the message
       return {
@@ -177,6 +177,7 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
       runQuery: state.showAsPhp === null,
       db,
       ignoreMultiSubmitErrors: cfg.IgnoreMultiSubmitErrors,
+      tr,
     })
   } finally {
     await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
@@ -467,7 +468,7 @@ async function executeStatement(
       await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
       throw e
     }
-    const formatted = formatError(e.extra.errno ?? 0, e.message)
+    const formatted = formatError(e.extra.errno ?? 0, e.message, tr)
     if (!cfg.IgnoreMultiSubmitErrors) {
       // Generator::mysqlDie + exit (FOREIGN_KEY_CHECKS stays as set: the connection is discarded)
       if ((await getVariable(conn, 'FOREIGN_KEY_CHECKS')) !== (fkDefault ? 'ON' : 'OFF')) state.discard = true
@@ -513,7 +514,7 @@ async function executeStatement(
     }),
   )
 
-  const profiling: Profiling | null = getDetailedProfilingStats(profilingRows)
+  const profiling: Profiling | null = getDetailedProfilingStats(profilingRows, tr)
   const noResults = (numRows === 0 && unlimNumRows === 0) || info.flags.isAffected || result === null
   let r: StatementResult
   if (noResults) {

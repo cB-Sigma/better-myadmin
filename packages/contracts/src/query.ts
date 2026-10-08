@@ -88,7 +88,7 @@ export const SqlLinks = z.object({
   editInline: z.boolean(),
   /** "Edit": the SQL tab of the current scope with the query prefilled. */
   edit: z.boolean(),
-  /** "Explain SQL" / "Skip Explain SQL" / "Skip Analyze SQL" and the query each one runs. */
+  /** "Explain SQL" / "Skip Explain SQL" / "Skip Analyze SQL" (msgids, translated by the UI) and the query each one runs. */
   explain: z
     .object({ text: z.enum(['Explain SQL', 'Skip Explain SQL', 'Skip Analyze SQL']), sql: z.string() })
     .nullable(),

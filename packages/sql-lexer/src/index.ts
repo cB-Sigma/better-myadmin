@@ -96,6 +96,8 @@ export {
   getLines,
   findLineNumberAndColumn,
   EDITOR_SQL_PREFIX,
+  LINT_MSGIDS,
+  type LintMessages,
   type LintMessage,
   type LintEditorType,
 } from './utils/Linter.ts'

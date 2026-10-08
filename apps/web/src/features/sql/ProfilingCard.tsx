@@ -1,6 +1,7 @@
 import type { Profiling } from '@bettermyadmin/contracts'
 import { useEffect, useRef, useState } from 'react'
 import { mysqlDocUrl } from '../../lib/docs'
+import { t } from '../../lib/i18n'
 import { DocIcon } from './SqlMessage'
 
 type SortDir = 'asc' | 'desc'
@@ -61,16 +62,16 @@ export function ProfilingCard({ profiling, versionInt }: { profiling: Profiling;
   const td = 'px-2 py-0.5'
   return (
     <div className="mb-3 rounded border border-border" data-testid="profiling">
-      <div className="border-b border-border bg-bg-subtle px-3 py-1.5 font-semibold">Profiling</div>
+      <div className="border-b border-border bg-bg-subtle px-3 py-1.5 font-semibold">{t('Profiling')}</div>
       <div className="grid gap-4 p-3 lg:grid-cols-3">
         <div>
-          <h3 className="mb-1 font-semibold">Detailed profile</h3>
+          <h3 className="mb-1 font-semibold">{t('Detailed profile')}</h3>
           <table id="profiletable" className="w-full text-xs">
             <thead>
               <tr>
-                {detail.header('Order', 0)}
-                {detail.header('State', 1)}
-                {detail.header('Time', 2)}
+                {detail.header(t('Order'), 0)}
+                {detail.header(t('State'), 1)}
+                {detail.header(t('Time'), 2)}
               </tr>
             </thead>
             <tbody>
@@ -86,17 +87,17 @@ export function ProfilingCard({ profiling, versionInt }: { profiling: Profiling;
         </div>
         <div>
           <h3 className="mb-1 flex items-center gap-1 font-semibold">
-            Summary by state
+            {t('Summary by state')}
             <DocIcon href={mysqlDocUrl('general-thread-states', '', versionInt)} />
           </h3>
           <table id="profilesummarytable" className="w-full text-xs">
             <thead>
               <tr>
-                {summary.header('State', 0)}
-                {summary.header('Total Time', 1)}
-                {summary.header('% Time', 2)}
-                {summary.header('Calls', 3)}
-                {summary.header('ø Time', 4)}
+                {summary.header(t('State'), 0)}
+                {summary.header(t('Total Time'), 1)}
+                {summary.header(t('% Time'), 2)}
+                {summary.header(t('Calls'), 3)}
+                {summary.header(t('ø Time'), 4)}
               </tr>
             </thead>
             <tbody>
@@ -139,7 +140,7 @@ function ProfilingChart({ chart }: { chart: Profiling['chart'] }) {
         id="profilingChartCanvas"
         ref={canvas}
         role="img"
-        aria-label="Pie chart with profiling results."
+        aria-label={t('Pie chart with profiling results.')}
       />
     </div>
   )

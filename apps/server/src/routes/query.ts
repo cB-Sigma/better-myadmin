@@ -32,7 +32,7 @@ queryRoutes.post('/', async (c) => {
     req.sig !== undefined &&
     !checkSqlSignature(req.sql, req.sig, session.hmacSecret, cfg.blowfish_secret)
   ) {
-    throw new ValidationError('Missing parameter: sql_query')
+    throw new ValidationError(`${c.get('tr').gettext('Missing parameter:')} sql_query`)
   }
   const executed = c.get('executed')
   const server = c.get('serverIndex')
@@ -103,6 +103,7 @@ queryRoutes.post('/simulate', async (c) => {
     simulateDml(req.sql, req.delimiter, req.db ?? '', conn, conn.serverInfo?.context, {
       hmacSecret: session.hmacSecret,
       blowfishSecret: cfg.blowfish_secret,
+      tr: c.get('tr'),
     }),
   )
   return c.json(body)

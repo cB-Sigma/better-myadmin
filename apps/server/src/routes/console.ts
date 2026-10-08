@@ -3,6 +3,7 @@ import {
   ConsoleConfigUpdate,
   type ConsoleSettings,
 } from '@bettermyadmin/contracts'
+import { type Gettext, englishTranslator } from '@bettermyadmin/i18n'
 import { Hono } from 'hono'
 import type { AppConfig } from '../config.ts'
 import { BmaError } from '../http/errors.ts'
@@ -49,14 +50,18 @@ const BOOL_KEYS = [
 const KEYS = [...BOOL_KEYS, 'Mode', 'Height', 'OrderBy', 'Order']
 
 class UnexpectedParameter extends BmaError {
-  constructor() {
-    super('VALIDATION', 'Unexpected parameter value.', 400)
+  constructor(tr: Gettext) {
+    super('VALIDATION', tr.gettext('Unexpected parameter value.'), 400)
   }
 }
 
 /** pma: src/Controllers/Console/UpdateConfigController.php::parseValueParam */
-export function parseConsoleValue(key: string, raw: unknown): boolean | number | string {
-  if (!KEYS.includes(key)) throw new UnexpectedParameter()
+export function parseConsoleValue(
+  key: string,
+  raw: unknown,
+  tr: Gettext = englishTranslator(),
+): boolean | number | string {
+  if (!KEYS.includes(key)) throw new UnexpectedParameter(tr)
   // the form posts strings; JSON clients may send the typed value
   const value = typeof raw === 'boolean' || typeof raw === 'number' ? String(raw) : raw
   if (BOOL_KEYS.includes(key) && (value === 'true' || value === 'false')) return value === 'true'
@@ -71,7 +76,7 @@ export function parseConsoleValue(key: string, raw: unknown): boolean | number |
   }
   if (key === 'OrderBy' && (value === 'exec' || value === 'time' || value === 'count')) return value
   if (key === 'Order' && (value === 'asc' || value === 'desc')) return value
-  throw new UnexpectedParameter()
+  throw new UnexpectedParameter(tr)
 }
 
 /** GET /api/servers/:s/console/config — what console/display.twig receives. */
@@ -89,7 +94,7 @@ consoleRoutes.get('/config', (c) => {
 /** POST /api/servers/:s/console/config — pma: /console/update-config */
 consoleRoutes.post('/config', async (c) => {
   const req = await parseBody(c, ConsoleConfigUpdate)
-  const value = parseConsoleValue(req.key, req.value)
+  const value = parseConsoleValue(req.key, req.value, c.get('tr'))
   await writer.set(c.get('session'), req.key, value)
-  return c.json({ message: 'Console settings has been updated successfully.' })
+  return c.json({ message: c.get('tr').gettext('Console settings has been updated successfully.') })
 })
