@@ -9,6 +9,7 @@
       "packages/kbs/test/fixtures.json",
       "**/generated/**",
       "docs/**",
+      ".data/**",
       "**/routeTree.gen.ts"
     ]
   },
