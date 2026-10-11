@@ -122,7 +122,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
 | ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:234<br>apps/server/src/table/structure-page.ts:365<br>apps/web/src/features/sql/SqlPage.tsx:540 |  |
-| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:284<br>apps/server/src/routes/metadata.ts:226<br>apps/server/src/routes/sql.ts:235<br>apps/web/src/features/browse/ResultsView.tsx:358 |  |
+| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:284<br>apps/server/src/routes/metadata.ts:226<br>apps/server/src/routes/sql.ts:235<br>apps/web/src/features/browse/ResultsView.tsx:359 |  |
 | ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:476<br>apps/web/src/features/browse/GridTable.tsx:511<br>apps/web/src/features/browse/GridTable.tsx:574 |  |
 | ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:477<br>apps/web/src/features/browse/GridTable.tsx:507<br>apps/web/src/features/browse/GridTable.tsx:574 |  |
 | ✅ | `DefaultForeignKeyChecks` | apps/server/src/routes/sql.ts:130<br>apps/server/src/routes/sql.ts:131 |  |
@@ -131,7 +131,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `DefaultTransformations/TextLink` |  |  |
 | ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/insert-edit/form.ts:194 |  |
 | ✅ | `GridEditing` | apps/server/src/browse/grid.ts:693<br>apps/server/src/browse/grid.ts:694 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/structure-page.ts:366<br>apps/web/src/features/browse/ResultsView.tsx:670<br>apps/web/src/features/table/structure/StructurePage.tsx:785 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/structure-page.ts:366<br>apps/web/src/features/browse/ResultsView.tsx:671<br>apps/web/src/features/table/structure/StructurePage.tsx:785 |  |
 | ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:466<br>apps/server/src/browse/grid.ts:816<br>apps/server/src/browse/grid.ts:1030 |  |
 | ⬜ | `LinkLengthLimit` |  |  |
 | ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/query/pipeline.ts:701<br>apps/server/src/query/pipeline.ts:754 |  |
@@ -463,7 +463,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DBG/sql` | apps/server/src/routes/browse.ts:38<br>apps/server/src/routes/console.ts:64<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:329<br>apps/server/src/routes/query.ts:113 |  |
 | ⬜ | `DBG/sqllog` |  |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:105<br>apps/server/src/routes/sql.ts:229 |  |
-| ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/insert-edit/save.ts:250<br>apps/server/src/query/pipeline.ts:203<br>apps/server/src/query/pipeline.ts:505 |  |
+| ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/insert-edit/save.ts:253<br>apps/server/src/query/pipeline.ts:203<br>apps/server/src/query/pipeline.ts:505 |  |
 | ✅ | `LintEnable` | apps/server/src/routes/sql.ts:228<br>apps/web/src/features/sql/SqlPage.tsx:136 |  |
 | ✅ | `MaxCharactersInDisplayedSQL` | apps/server/src/browse/actions.ts:84<br>apps/server/src/metadata/service.ts:287<br>apps/server/src/query/message.ts:47<br>apps/server/src/query/message.ts:48<br>apps/server/src/query/message.ts:88 |  |
 | ✅ | `RetainQueryBox` | apps/server/src/routes/sql.ts:226<br>apps/web/src/features/sql/SqlPage.tsx:97 |  |
