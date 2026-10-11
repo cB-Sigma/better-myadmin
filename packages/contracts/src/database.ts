@@ -437,3 +437,20 @@ export interface TriggerEditorData {
   definition: string
   definer: string
 }
+
+// ---------------------------------------------------------------- Multi-table query
+
+export interface MultiTableFormResponse {
+  tables: Array<{ name: string; columns: string[] }>
+  /** default_no_of_columns */
+  defaultColumns: number
+}
+
+export interface MultiTableKeysResponse {
+  foreignKeyConstrains: Array<{
+    TABLE_NAME: string
+    COLUMN_NAME: string
+    REFERENCED_TABLE_NAME: string
+    REFERENCED_COLUMN_NAME: string
+  }>
+}

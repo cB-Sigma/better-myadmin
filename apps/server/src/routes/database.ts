@@ -29,6 +29,7 @@ import {
 } from '../database/bulk.ts'
 import { parse, withDb } from '../database/context.ts'
 import { eventData, eventsList, exportEvent, saveEvent } from '../database/events.ts'
+import { multiTableForm, multiTableKeys } from '../database/multi-table.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
 import {
   executeForm,
@@ -230,4 +231,14 @@ databaseRoutes.post('/:db/triggers', async (c) => {
 
 databaseRoutes.get('/:db/triggers/export', async (c) =>
   c.json(await withDb(c, (ctx) => exportTrigger(ctx, c.req.query('table') ?? '', c.req.query('name') ?? ''))),
+)
+
+// ---------------------------------------------------------------- Multi-table query
+
+/** pma: /database/multi-table-query */
+databaseRoutes.get('/:db/multi-table-query', async (c) => c.json(await withDb(c, multiTableForm)))
+
+/** pma: /database/multi-table-query/tables?tables[]=… */
+databaseRoutes.get('/:db/multi-table-query/tables', async (c) =>
+  c.json(await withDb(c, (ctx) => multiTableKeys(ctx, c.req.queries('tables') ?? []))),
 )

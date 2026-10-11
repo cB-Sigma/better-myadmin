@@ -39,6 +39,8 @@ import type {
   LoginResponse,
   LogoutResponse,
   MaintenanceResponse,
+  MultiTableFormResponse,
+  MultiTableKeysResponse,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
@@ -262,6 +264,13 @@ export const api = {
     call<DbExportResponse>(
       'GET',
       `${dbPath(server, db)}/triggers/export${queryString({ table: table || undefined, name })}`,
+    ),
+  dbMultiTableForm: (server: number, db: string) =>
+    call<MultiTableFormResponse>('GET', `${dbPath(server, db)}/multi-table-query`),
+  dbMultiTableKeys: (server: number, db: string, tables: string[]) =>
+    call<MultiTableKeysResponse>(
+      'GET',
+      `${dbPath(server, db)}/multi-table-query/tables?${tables.map((t) => `tables=${encodeURIComponent(t)}`).join('&')}`,
     ),
   favorite: (
     server: number,
