@@ -1,4 +1,4 @@
-import { FIX } from './lib/env.ts'
+import { FIX, RUN } from './lib/env.ts'
 import { pageParity } from './lib/parity.ts'
 
 /**
@@ -54,9 +54,18 @@ pageParity('server-variables', {
   interactions: [{ name: 'filter autocommit', do: { fill: ['Containing the word:', 'autocommit'] } }],
 })
 
+/**
+ * Rows of databases other sessions create and drop on the shared MySQL while the case runs would
+ * differ between the two captures: only this run's (`…_<run>`) and the system ones are compared.
+ */
+const OTHER_RUNS_DB_ROWS = `tr[data-filter-row]${['INFORMATION_SCHEMA', 'MYSQL', 'PERFORMANCE_SCHEMA', 'SYS', 'PHPMYADMIN']
+  .map((n) => `:not([data-filter-row="${n}"])`)
+  .join('')}:not([data-filter-row$="_${RUN.toUpperCase()}"])`
+
 pageParity('server-databases', {
   pma: { route: '/server/databases' },
   ours: { path: '/s/1/databases' },
+  exclude: [OTHER_RUNS_DB_ROWS],
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
 })
 
