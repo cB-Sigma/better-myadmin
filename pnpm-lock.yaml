@@ -50,6 +50,9 @@ importers:
       '@bettermyadmin/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@bettermyadmin/export':
+        specifier: workspace:*
+        version: link:../../packages/export
       '@bettermyadmin/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
@@ -199,6 +202,24 @@ importers:
       zod:
         specifier: 3.24.4
         version: 3.24.4
+
+  packages/export:
+    dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@bettermyadmin/mysql-types':
+        specifier: workspace:*
+        version: link:../mysql-types
+      '@bettermyadmin/sql-gen':
+        specifier: workspace:*
+        version: link:../sql-gen
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../sql-lexer
+      iconv-lite:
+        specifier: 0.6.3
+        version: 0.6.3
 
   packages/i18n:
     dependencies:

@@ -42,6 +42,8 @@ export interface SessionData {
   partialLogout?: boolean
   /** SendErrorReports persisted by "Automatically send report next time" (until the prefs layer stores it). */
   sendErrorReports?: 'ask' | 'always' | 'never'
+  /** $_SESSION['tmpval']['aliases']: the last export's rename-dialog aliases (Back link repopulation). */
+  exportAliases?: Record<string, unknown>
 }
 
 export interface SessionStore {

@@ -256,6 +256,35 @@ export class PmaClient {
     return JSON.parse(body) as Record<string, unknown>
   }
 
+  /**
+   * A form POST (pairs in order, `server` + `token` added, no AJAX) answered with raw bytes and
+   * headers: downloads such as /export. Redirects are not followed.
+   */
+  async postBytes(
+    route: string,
+    pairs: Array<[string, string]>,
+  ): Promise<{ status: number; headers: Headers; body: Buffer }> {
+    const all: Array<[string, string]> = [...pairs]
+    if (!all.some(([k]) => k === 'server')) all.push(['server', '1'])
+    if (!all.some(([k]) => k === 'token')) all.push(['token', this.token])
+    const headers: Record<string, string> = { 'content-type': 'application/x-www-form-urlencoded' }
+    if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
+    const res = await fetch(`${this.base}/index.php?route=${route}`, {
+      method: 'POST',
+      headers,
+      redirect: 'manual',
+      body: new URLSearchParams(all).toString(),
+    })
+    for (const c of res.headers.getSetCookie()) {
+      const [kv = ''] = c.split(';')
+      const i = kv.indexOf('=')
+      const v = kv.slice(i + 1)
+      if (v === 'deleted' || v === '') this.#cookies.delete(kv.slice(0, i))
+      else this.#cookies.set(kv.slice(0, i), v)
+    }
+    return { status: res.status, headers: res.headers, body: Buffer.from(await res.arrayBuffer()) }
+  }
+
   /** HTML of a full page (GET). */
   async routePage(route: string, params: Record<string, string> = {}): Promise<string> {
     const q = new URLSearchParams({ route, server: '1', ...params })
