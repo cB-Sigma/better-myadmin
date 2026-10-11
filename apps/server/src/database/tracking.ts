@@ -12,8 +12,8 @@ import {
   trackingSet,
 } from '@bettermyadmin/metadata'
 import { backquote } from '@bettermyadmin/sql-gen'
+import { sqlStructurePlugin } from '../table/table-def.ts'
 import { type DbCtx, isSystemSchema, listTables, msg, tf } from './context.ts'
-import { getTableDef } from './table-mover.ts'
 import { isView } from './tables.ts'
 
 /**
@@ -93,7 +93,7 @@ export async function createVersion(
   if (ctx.server.tracking_add_drop_view && view)
     createSql += `${log}DROP VIEW IF EXISTS ${backquote(table)};\n`
   // ExportSql::getTableDef with the plugin defaults ($view = false, no AUTO_INCREMENT value)
-  createSql += `${log}${(await getTableDef(ctx, ctx.db, table, false, false)).create};\n`
+  createSql += `${log}${await sqlStructurePlugin(ctx).getTableDef(ctx.db, table)}`
   return insertTrackingVersion(ctx.control, ctx.rp, {
     db: ctx.db,
     table,

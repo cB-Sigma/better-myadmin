@@ -83,6 +83,7 @@ export async function withScope<T>(
         session: state,
         server,
         user: c.get('creds').user,
+        serverIndex,
         features: storageFeatures(meta?.rp ?? null),
       })
     } finally {

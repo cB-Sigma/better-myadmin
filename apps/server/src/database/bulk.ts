@@ -10,17 +10,18 @@ import { backquote } from '@bettermyadmin/sql-gen'
 import { MysqlError, ValidationError } from '../http/errors.ts'
 import { mbSubstr } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
+import { getDatabaseList, moveCopy, newMoveState } from '../table/table-mover.ts'
 import {
   type DbCtx,
   errorText,
   fkCheckCleanup,
   fkCheckInit,
+  moverCtx,
   msg,
   selectDb,
   successText,
   tryQuery,
 } from './context.ts'
-import { getDatabaseList, moveCopy, newMoveState } from './table-mover.ts'
 import { isView, tableCache } from './tables.ts'
 
 /**
@@ -129,7 +130,17 @@ export async function copyWithPrefix(
   const st = newMoveState(false)
   for (const t of req.tables) {
     const newName = req.toPrefix + mbSubstr(t, mbStrlen(req.fromPrefix))
-    await moveCopy(ctx, st, ctx.db, t, ctx.db, newName, 'data', 'single', req.dropIfExists)
+    await moveCopy(
+      moverCtx(ctx, (db, t) => tableCache(ctx).forget(db, t)),
+      st,
+      ctx.db,
+      t,
+      ctx.db,
+      newName,
+      'data',
+      'single',
+      req.dropIfExists,
+    )
   }
   return {
     messages: [st.error !== null ? msg('error', st.error) : msg('success', successText(ctx.tr), st.sqlQuery)],
@@ -140,7 +151,7 @@ export async function copyWithPrefix(
 export async function copyForm(ctx: DbCtx): Promise<CopyFormResponse> {
   const p = await getPrivileges(ctx.dbi)
   return {
-    databases: (await getDatabaseList(ctx)).filter((d) => d !== ctx.db),
+    databases: (await getDatabaseList(moverCtx(ctx))).filter((d) => d !== ctx.db),
     hasAdjustPrivileges: p.table && p.column && p.isReload,
   }
 }
@@ -161,7 +172,17 @@ export async function copyTables(
   const st = newMoveState(req.autoIncrement)
   const privileges = await getPrivileges(ctx.dbi)
   for (const t of req.tables) {
-    await moveCopy(ctx, st, ctx.db, t, req.targetDb, t, req.what, 'single', req.dropIfExists)
+    await moveCopy(
+      moverCtx(ctx, (db, t) => tableCache(ctx).forget(db, t)),
+      st,
+      ctx.db,
+      t,
+      req.targetDb,
+      t,
+      req.what,
+      'single',
+      req.dropIfExists,
+    )
     if (!req.adjustPrivileges) continue
     await adjustPrivilegesCopyTable(ctx, privileges, ctx.db, t, req.targetDb, t)
   }

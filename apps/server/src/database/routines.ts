@@ -21,9 +21,8 @@ import { MysqlError, NotFoundError } from '../http/errors.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import { isSuperUser } from '../server-admin/context.ts'
 import { PrivilegeProbe } from '../shell/privileges.ts'
-import { type DbCtx, errorText, msg, tryQuery } from './context.ts'
+import { type DbCtx, errorText, fetchColumn, msg, tryQuery } from './context.ts'
 import { pager } from './structure.ts'
-import { fetchColumn } from './table-mover.ts'
 
 /**
  * Database → Routines: list, editor (create / edit = backup, DROP, CREATE, restore), execute
