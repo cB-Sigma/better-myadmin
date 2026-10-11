@@ -85,13 +85,9 @@ export function LoginPage({ state }: { state: AuthState }) {
       {/* pma: login/form.twig — only when $cfg['Lang'] is empty and LanguageManager::hasChoice() */}
       {lang?.languages != null && (
         <Panel
-          title={
-            <>
-              <span id="languageSelectLabel">
-                <LanguageLabel />
-              </span>
-            </>
-          }
+          title=<span id="languageSelectLabel">
+            <LanguageLabel />
+          </span>
           className="mb-4"
         >
           <PanelBody>
@@ -102,11 +98,7 @@ export function LoginPage({ state }: { state: AuthState }) {
 
       <form id="login_form" onSubmit={onSubmit} autoComplete={state.recalledUser !== null ? 'on' : 'off'}>
         <Panel
-          title={
-            <>
-              <span>{t('Log in')}</span>
-            </>
-          }
+          title=<span>{t('Log in')}</span>
           actions={
             <a
               href="https://docs.phpmyadmin.net/en/latest/"

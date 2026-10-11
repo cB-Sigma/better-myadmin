@@ -25,7 +25,7 @@ export function BookmarkedQuery({
     if (selected !== undefined) onGo(selected, action, { ...variables.current })
   }
   return (
-    <Panel title={<>{t('Bookmarked SQL query')}</>} id="fieldsetBookmarkOptions">
+    <Panel title={t('Bookmarked SQL query')} id="fieldsetBookmarkOptions">
       <div className="flex flex-wrap items-center gap-3 p-3 text-sm">
         <label htmlFor="id_bookmark">{t('Bookmark:')}</label>
         <select
