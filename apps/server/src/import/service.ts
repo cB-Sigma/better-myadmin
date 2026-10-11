@@ -245,6 +245,8 @@ export async function runFileImport(
     try {
       if (fk !== undefined)
         await setVariable(conn, 'FOREIGN_KEY_CHECKS', fk === '' || fk === '0' ? 'OFF' : 'ON')
+      // ImportLdi's LOAD DATA LOCAL INFILE may read the import file, nothing else
+      if (format === 'ldi' && importFile !== 'none') conn.localInfile = importFile
       await plugin.doImport(imp)
     } finally {
       await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
@@ -378,6 +380,7 @@ export async function runFileImport(
     }
     return out({ ...echoed, ...(message !== null ? { message } : {}), reloadNavigation: reload, db })
   } finally {
+    s.conn.localInfile = null
     await s.close()
   }
 }

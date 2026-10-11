@@ -1,3 +1,5 @@
+import { createReadStream } from 'node:fs'
+import { Readable } from 'node:stream'
 import type { Executed } from '@bettermyadmin/contracts'
 import type { Context } from '@bettermyadmin/sql-lexer'
 import type { FieldPacket, PoolConnection, ResultSetHeader } from 'mysql2/promise'
@@ -38,6 +40,11 @@ export class Conn {
   readonly raw: PoolConnection
   readonly log: Executed[]
   serverInfo: ServerInfo | null = null
+  /**
+   * The one file a `LOAD DATA LOCAL INFILE` may read (the uploaded import file of ImportLdi), or
+   * null: the server's file request is refused like a client without local_infile.
+   */
+  localInfile: string | null = null
 
   constructor(raw: PoolConnection, log: Executed[]) {
     this.raw = raw
@@ -53,7 +60,12 @@ export class Conn {
     let res: [unknown, unknown]
     try {
       // typeCast:false keeps every value as the exact bytes the server sent (docs/architecture/06 numeric fidelity)
-      res = (await this.raw.query({ sql, rowsAsArray: true, typeCast: false })) as [unknown, unknown]
+      res = (await this.raw.query({
+        sql,
+        rowsAsArray: true,
+        typeCast: false,
+        infileStreamFactory: (path: string) => localFile(path, this.localInfile),
+      })) as [unknown, unknown]
     } catch (e) {
       const ms = performance.now() - start
       this.log.push({ sql, ms, label })
@@ -85,6 +97,17 @@ export class Conn {
     const v = r.resultSets[0]?.rows[0]?.[0]
     return v === null || v === undefined ? null : v.toString('utf8')
   }
+}
+
+/** mysql2's LOCAL INFILE stream: only the import file in hand, any other request fails. */
+function localFile(path: string, allowed: string | null): Readable {
+  if (allowed !== null && path === allowed) return createReadStream(path)
+  // the server sees an aborted transfer and answers with its own error
+  return new Readable({
+    read() {
+      this.destroy(new Error('LOAD DATA LOCAL INFILE file request rejected due to restrictions on access.'))
+    },
+  })
 }
 
 function isHeader(x: unknown): x is ResultSetHeader {
