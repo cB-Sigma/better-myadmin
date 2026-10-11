@@ -12,6 +12,7 @@ import type {
   BookmarkListResponse,
   BookmarkRunRequest,
   BookmarkShowResponse,
+  BrowseRequest,
   CancelResponse,
   ChangeColumnsRequest,
   ChangeFormResponse,
@@ -19,6 +20,7 @@ import type {
   ChangePasswordResponse,
   CollationsResponse,
   ColumnFormOptions,
+  ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
@@ -40,6 +42,8 @@ import type {
   ErrorReportResponse,
   FormatResponse,
   GetVariableResponse,
+  GridSaveRequest,
+  GridSaveResponse,
   HistoryResponse,
   HomeResponse,
   I18nState,
@@ -77,6 +81,7 @@ import type {
   SimulateResponse,
   SqlFormResponse,
   SqlMessage,
+  StatementResult,
   StatusOverview,
   StatusVariables,
   StatusVariablesRequest,
@@ -314,7 +319,42 @@ export const api = {
     call<DdlResponse>('POST', `${tblPath(r)}/partitions/maintenance`, req),
   removePartitioning: (r: TableRef) =>
     call<DdlResponse>('POST', `${tblPath(r)}/partitions/remove-partitioning`, {}),
+  // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
+  browse: (server: number, req: BrowseRequest) =>
+    call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
+  gridValue: (server: number, req: { db: string; table: string; column: string; where: string }) =>
+    call<{ value: string | null }>('POST', `/servers/${server}/browse/grid-value`, req),
+  gridValues: (
+    server: number,
+    req: {
+      kind: 'enum' | 'set' | 'relational'
+      db: string
+      table: string
+      column: string
+      currValue: string
+      where?: string
+      keyOrDisplay?: string
+      relationalDisplay?: 'K' | 'D'
+    },
+  ) => call<ColumnValuesResponse>('POST', `/servers/${server}/browse/values`, req),
+  gridSave: (server: number, req: GridSaveRequest) =>
+    call<GridSaveResponse>('POST', `/servers/${server}/browse/save`, req),
+  deleteRows: (
+    server: number,
+    req: { db: string; table: string; where: string[]; fkChecks: boolean; originalSql: string },
+  ) => call<BrowseResponse>('POST', `/servers/${server}/browse/delete-rows`, req),
+  /** pma: /sql/set-column-preferences */
+  columnPrefs: (
+    r: TableRef,
+    req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
+  ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tblPath(r)}/uiprefs`, req),
+  /** /table/get-field download URL */
+  gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
+    `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
 }
+
+/** POST /browse: the statement with its grid, the default-bookmark notice and the previous query card. */
+export type BrowseResponse = QueryResponse & { usingBookmark: string | null; previous?: StatementResult }
 
 function queryString(q: Record<string, string | number | undefined>): string {
   const qs = new URLSearchParams()

@@ -48,4 +48,6 @@ export const qk = {
   indexForm: (r: TableRef, q: object | null) => [...qk.tbl(r), 'index-form', q] as const,
   partitionForm: (r: TableRef) => [...qk.tbl(r), 'partition-form'] as const,
   createTableForm: (r: DbRef) => [...qk.db(r), 'create-form'] as const,
+  /** the Browse tab's /sql run (signed sql + pos from the URL) */
+  browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
 }

@@ -175,7 +175,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
       setRunning(id)
       setSimulate(null)
       try {
-        const res = await runQuery(server, { fromQueryBox: true, ...req }, 'page', id)
+        const res = await runQuery(server, { fromQueryBox: true, grid: true, ...req }, 'page', id)
         afterResponse(res, fromForm)
         return res
       } catch (e) {

@@ -1,5 +1,6 @@
 import type { StatementResult } from '@bettermyadmin/contracts'
 import { MessageBox } from '@bettermyadmin/ui'
+import { ResultsView } from '../browse/ResultsView'
 import { ProfilingCard } from './ProfilingCard'
 import { ResultGrid } from './ResultGrid'
 import { type CardEnv, SqlMessage } from './SqlMessage'
@@ -9,7 +10,31 @@ import { type CardEnv, SqlMessage } from './SqlMessage'
  * set for CALL) and the warnings. Every statement of a multi-statement run gets its own block.
  * pma: src/Sql.php::executeQueryAndGetQueryResponse
  */
-export function StatementBlock({ st, env }: { st: StatementResult; env: CardEnv }) {
+export function StatementBlock({
+  st,
+  env,
+  usingBookmark,
+  previous,
+}: {
+  st: StatementResult
+  env: CardEnv
+  /** Browse: "Using bookmark … as default browse query." */
+  usingBookmark?: string | null
+  /** Browse after a multi-row delete: the executed DELETEs */
+  previous?: StatementResult | undefined
+}) {
+  // the full results grid (docs/features/02-browse-results-grid.md)
+  if (st.grid !== undefined) {
+    return (
+      <ResultsView
+        server={env.server}
+        statement={st}
+        env={env}
+        usingBookmark={usingBookmark ?? null}
+        previous={previous}
+      />
+    )
+  }
   // import mode: the SQL tab shows only data.message (the transcript card is not displayed)
   if (st.kind === 'import') {
     return <MessageBox type={st.message.type} text={st.message.text} />
