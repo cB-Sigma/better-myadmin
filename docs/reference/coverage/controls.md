@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-142/1106 covered (12.8%): 142 implemented, 24 planned, 940 missing. [Summary](README.md).
+265/1106 covered (24.0%): 265 implemented, 24 planned, 817 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 2/306 (0.7%) covered, 2/306 implemented
+## 04 table level — 8/306 (2.6%) covered, 8/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -95,7 +95,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/operations/index.twig` | 0/36 |  | ⬜ `add_constraints` ⬜ `adjust_privileges` ⬜ `change_all_collations` ⬜ `comment` ⬜ `drop_if_exists` ⬜ `link:Analyze table` ⬜ `link:Check table` ⬜ `link:Checksum table` ⬜ `link:Defragment table` ⬜ `link:Flush the table (FLUSH)` ⬜ `link:Optimize table` ⬜ `link:Remove partitioning` ⬜ `link:Repair table` ⬜ `link:Table %s has been emptied.` ⬜ `link:View %s has been dropped.` ⬜ `new_auto_increment` ⬜ `new_checksum` ⬜ `new_delay_key_write` ⬜ `new_name` ⬜ `new_pack_keys` ⬜ `new_page_checksum` ⬜ `new_row_format` ⬜ `new_tbl_storage_engine` ⬜ `new_transactional` ⬜ `order_field` ⬜ `order_order` ⬜ `partition_name[]` ⬜ `partition_operation` ⬜ `sql_auto_increment` ⬜ `submit_copy` ⬜ `submit_move` ⬜ `submit:Go` ⬜ `switch_to_new` ⬜ `target_db` ⬜ `tbl_collation` ⬜ `what` |
 | `table/operations/view.twig` | 0/3 |  | ⬜ `link:View %s has been dropped.` ⬜ `new_name` ⬜ `submit:Go` |
 | `table/page_with_secondary_tabs.twig` | 0/2 |  | ⬜ `link:Relation view` ⬜ `link:Table structure` |
-| `table/privileges/index.twig` | 0/6 |  | ⬜ `id:usersForm_checkall` ⬜ `link:Add user account` ⬜ `link:Edit privileges` ⬜ `link:Export` ⬜ `selected_usr[]` ⬜ `submit_mult` |
+| `table/privileges/index.twig` | 6/6 | ✅ `id:usersForm_checkall` ✅ `link:Add user account` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` ✅ `submit_mult` |  |
 | `table/relation/common_form.twig` | 0/7 |  | ⬜ `button:Close` ⬜ `button:Internal relationships` ⬜ `button:Preview SQL` ⬜ `display_field` ⬜ `id:previewSQLCloseButton` ⬜ `link:+ Add constraint` ⬜ `submit:Save` |
 | `table/relation/dropdown_generate.twig` | 0/1 |  | ⬜ `select:L2` |
 | `table/relation/foreign_key_row.twig` | 0/2 |  | ⬜ `constraint_name[*]` ⬜ `link:+ Add column` |
@@ -159,7 +159,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/tracking/tables.twig` | 0/7 |  | ⬜ `link:Delete tracking` ⬜ `link:Structure snapshot` ⬜ `link:Track table` ⬜ `link:Tracking report` ⬜ `link:Versions` ⬜ `selected_tbl[]` ⬜ `submit_mult` |
 | `src/Database/CentralColumns.php` | 0/1 |  | ⬜ `pos` |
 
-## 06 server level — 0/243 (0.0%) covered, 0/243 implemented
+## 06 server level — 117/243 (48.1%) covered, 117/243 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -167,20 +167,20 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/binlog/index.twig` | 0/6 |  | ⬜ `link:Next` ⬜ `link:Previous` ⬜ `link:Show full queries` ⬜ `link:Truncate shown queries` ⬜ `log` ⬜ `submit:Go` |
 | `server/databases/index.twig` | 0/16 |  | ⬜ `button:Cancel` ⬜ `db_collation` ⬜ `filterText` ⬜ `id:buttonGo` ⬜ `id:checkAllCheckbox` ⬜ `id:dropDatabaseModalDropButton` ⬜ `link:Ascending` ⬜ `link:Check privileges` ⬜ `link:Collation` ⬜ `link:Database` ⬜ `link:Enable statistics` ⬜ `link:Jump to database '%s'` ⬜ `link:SQL` ⬜ `new_db` ⬜ `selected_dbs[]` ⬜ `submit_mult` |
 | `server/engines/show.twig` | 0/1 |  | ⬜ `link:Variables` |
-| `server/privileges/add_user_fieldset.twig` | 0/1 |  | ⬜ `link:Add user account` |
-| `server/privileges/add_user.twig` | 0/4 |  | ⬜ `createdb-1` ⬜ `createdb-2` ⬜ `createdb-3` ⬜ `id:adduser_submit` |
-| `server/privileges/change_password.twig` | 0/5 |  | ⬜ `authentication_plugin` ⬜ `nopass` ⬜ `pma_pw` ⬜ `pma_pw2` ⬜ `submit:Go` |
-| `server/privileges/choose_user_group.twig` | 0/1 |  | ⬜ `userGroup` |
-| `server/privileges/edit_routine_privileges.twig` | 0/5 |  | ⬜ `Alter_routine_priv` ⬜ `Execute_priv` ⬜ `Grant_priv` ⬜ `id:checkall_Routine_priv` ⬜ `submit:Go` |
-| `server/privileges/initials_row.twig` | 0/2 |  | ⬜ `link:Any` ⬜ `link:Show all` |
-| `server/privileges/login_information_fields.twig` | 0/8 |  | ⬜ `authentication_plugin` ⬜ `hostname` ⬜ `pma_pw` ⬜ `pma_pw2` ⬜ `pred_hostname` ⬜ `pred_password` ⬜ `pred_username` ⬜ `username` |
-| `server/privileges/new_user_ajax.twig` | 0/4 |  | ⬜ `button:Edit user group` ⬜ `link:Edit privileges` ⬜ `link:Export` ⬜ `selected_usr[]` |
-| `server/privileges/privileges_summary.twig` | 0/7 |  | ⬜ `dbname` ⬜ `pred_dbname[]` ⬜ `pred_routinename` ⬜ `pred_tablename` ⬜ `routinename` ⬜ `submit:Go` ⬜ `tablename` |
-| `server/privileges/privileges_table.twig` | 0/55 |  | ⬜ `Alter_priv` ⬜ `Alter_routine_priv` ⬜ `Create View_priv` ⬜ `Create_priv` ⬜ `Create_routine_priv` ⬜ `Create_tmp_table_priv` ⬜ `Create_user_priv` ⬜ `Create_view_priv` ⬜ `Delete_history_priv` ⬜ `Delete_priv` ⬜ `Drop_priv` ⬜ `Event_priv` ⬜ `Execute_priv` ⬜ `File_priv` ⬜ `Grant_priv` ⬜ `id:addUsersForm_checkall` ⬜ `id:checkall_Administration_priv` ⬜ `id:checkall_Data_priv` ⬜ `id:checkall_Structure_priv` ⬜ `id:insert_priv_all` ⬜ `id:references_priv_all` ⬜ `id:select_priv_all` ⬜ `id:update_priv_all` ⬜ `Index_priv` ⬜ `Insert_priv` ⬜ `Insert_priv_none` ⬜ `Insert_priv[]` ⬜ `Lock_tables_priv` ⬜ `max_connections` ⬜ `max_questions` ⬜ `max_updates` ⬜ `max_user_connections` ⬜ `Process_priv` ⬜ `References_priv` ⬜ `References_priv_none` ⬜ `References_priv[]` ⬜ `Reload_priv` ⬜ `Repl_client_priv` ⬜ `Repl_slave_priv` ⬜ `Select_priv` ⬜ `Select_priv_none` ⬜ `Select_priv[]` ⬜ `Show_db_priv` ⬜ `Show_view_priv` ⬜ `Shutdown_priv` ⬜ `ssl_cipher` ⬜ `ssl_type` ⬜ `submit:Update user privileges` ⬜ `Super_priv` ⬜ `Trigger_priv` ⬜ `Update_priv` ⬜ `Update_priv_none` ⬜ `Update_priv[]` ⬜ `x509_issuer` ⬜ `x509_subject` |
-| `server/privileges/subnav.twig` | 0/2 |  | ⬜ `link:User accounts overview` ⬜ `link:User groups` |
-| `server/privileges/user_overview.twig` | 0/1 |  | ⬜ `link:Add user account` |
-| `server/privileges/user_properties.twig` | 0/2 |  | ⬜ `mode` ⬜ `submit:Go` |
-| `server/privileges/users_overview.twig` | 0/12 |  | ⬜ `button:Close` ⬜ `button:Edit user group` ⬜ `button:Unlock` ⬜ `delete` ⬜ `drop_users_db` ⬜ `id:editUserGroupModalSaveButton` ⬜ `id:usersForm_checkall` ⬜ `link:Add user account` ⬜ `link:Edit privileges` ⬜ `link:Export` ⬜ `selected_usr[]` ⬜ `submit_mult` |
+| `server/privileges/add_user_fieldset.twig` | 1/1 | ✅ `link:Add user account` |  |
+| `server/privileges/add_user.twig` | 4/4 | ✅ `createdb-1` ✅ `createdb-2` ✅ `createdb-3` ✅ `id:adduser_submit` |  |
+| `server/privileges/change_password.twig` | 5/5 | ✅ `authentication_plugin` ✅ `nopass` ✅ `pma_pw` ✅ `pma_pw2` ✅ `submit:Go` |  |
+| `server/privileges/choose_user_group.twig` | 1/1 | ✅ `userGroup` |  |
+| `server/privileges/edit_routine_privileges.twig` | 5/5 | ✅ `Alter_routine_priv` ✅ `Execute_priv` ✅ `Grant_priv` ✅ `id:checkall_Routine_priv` ✅ `submit:Go` |  |
+| `server/privileges/initials_row.twig` | 2/2 | ✅ `link:Any` ✅ `link:Show all` |  |
+| `server/privileges/login_information_fields.twig` | 8/8 | ✅ `authentication_plugin` ✅ `hostname` ✅ `pma_pw` ✅ `pma_pw2` ✅ `pred_hostname` ✅ `pred_password` ✅ `pred_username` ✅ `username` |  |
+| `server/privileges/new_user_ajax.twig` | 4/4 | ✅ `button:Edit user group` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` |  |
+| `server/privileges/privileges_summary.twig` | 7/7 | ✅ `dbname` ✅ `pred_dbname[]` ✅ `pred_routinename` ✅ `pred_tablename` ✅ `routinename` ✅ `submit:Go` ✅ `tablename` |  |
+| `server/privileges/privileges_table.twig` | 55/55 | ✅ `Alter_priv` ✅ `Alter_routine_priv` ✅ `Create View_priv` ✅ `Create_priv` ✅ `Create_routine_priv` ✅ `Create_tmp_table_priv` ✅ `Create_user_priv` ✅ `Create_view_priv` ✅ `Delete_history_priv` ✅ `Delete_priv` ✅ `Drop_priv` ✅ `Event_priv` ✅ `Execute_priv` ✅ `File_priv` ✅ `Grant_priv` ✅ `id:addUsersForm_checkall` ✅ `id:checkall_Administration_priv` ✅ `id:checkall_Data_priv` ✅ `id:checkall_Structure_priv` ✅ `id:insert_priv_all` ✅ `id:references_priv_all` ✅ `id:select_priv_all` ✅ `id:update_priv_all` ✅ `Index_priv` ✅ `Insert_priv` ✅ `Insert_priv_none` ✅ `Insert_priv[]` ✅ `Lock_tables_priv` ✅ `max_connections` ✅ `max_questions` ✅ `max_updates` ✅ `max_user_connections` ✅ `Process_priv` ✅ `References_priv` ✅ `References_priv_none` ✅ `References_priv[]` ✅ `Reload_priv` ✅ `Repl_client_priv` ✅ `Repl_slave_priv` ✅ `Select_priv` ✅ `Select_priv_none` ✅ `Select_priv[]` ✅ `Show_db_priv` ✅ `Show_view_priv` ✅ `Shutdown_priv` ✅ `ssl_cipher` ✅ `ssl_type` ✅ `submit:Update user privileges` ✅ `Super_priv` ✅ `Trigger_priv` ✅ `Update_priv` ✅ `Update_priv_none` ✅ `Update_priv[]` ✅ `x509_issuer` ✅ `x509_subject` |  |
+| `server/privileges/subnav.twig` | 2/2 | ✅ `link:User accounts overview` ✅ `link:User groups` |  |
+| `server/privileges/user_overview.twig` | 1/1 | ✅ `link:Add user account` |  |
+| `server/privileges/user_properties.twig` | 2/2 | ✅ `mode` ✅ `submit:Go` |  |
+| `server/privileges/users_overview.twig` | 12/12 | ✅ `button:Close` ✅ `button:Edit user group` ✅ `button:Unlock` ✅ `delete` ✅ `drop_users_db` ✅ `id:editUserGroupModalSaveButton` ✅ `id:usersForm_checkall` ✅ `link:Add user account` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` ✅ `submit_mult` |  |
 | `server/replication/change_primary.twig` | 0/5 |  | ⬜ `hostname` ⬜ `id:confreplica_submit` ⬜ `pma_pw` ⬜ `text_port` ⬜ `username` |
 | `server/replication/database_multibox.twig` | 0/3 |  | ⬜ `db_select[]` ⬜ `link:Select all` ⬜ `link:Unselect all` |
 | `server/replication/primary_add_replica_user.twig` | 0/10 |  | ⬜ `generated_pw` ⬜ `hostname` ⬜ `id:adduser_submit` ⬜ `id:button_generate_password` ⬜ `pma_pw` ⬜ `pma_pw2` ⬜ `pred_hostname` ⬜ `pred_password` ⬜ `pred_username` ⬜ `username` |
@@ -193,9 +193,9 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/status/processes/index.twig` | 0/4 |  | ⬜ `link:Start auto refresh` ⬜ `refreshRate` ⬜ `showExecuting` ⬜ `submit:Refresh` |
 | `server/status/processes/list.twig` | 0/3 |  | ⬜ `link:Descending` ⬜ `link:Kill` ⬜ `link:Truncate shown queries` |
 | `server/status/variables/index.twig` | 0/5 |  | ⬜ `dontFormat` ⬜ `filterAlert` ⬜ `filterCategory` ⬜ `filterText` ⬜ `submit:Refresh` |
-| `server/user_groups/edit_user_groups.twig` | 0/3 |  | ⬜ `id:addUsersForm_checkall` ⬜ `submit:Add user group` ⬜ `userGroup` |
-| `server/user_groups/tab_list.twig` | 0/1 |  | ⬜ `*_*` |
-| `server/user_groups/user_groups.twig` | 0/4 |  | ⬜ `button:Close` ⬜ `button:Delete` ⬜ `id:deleteUserGroupConfirm` ⬜ `link:Add user group` |
+| `server/user_groups/edit_user_groups.twig` | 3/3 | ✅ `id:addUsersForm_checkall` ✅ `submit:Add user group` ✅ `userGroup` |  |
+| `server/user_groups/tab_list.twig` | 1/1 | ✅ `*_*` |  |
+| `server/user_groups/user_groups.twig` | 4/4 | ✅ `button:Close` ✅ `button:Delete` ✅ `id:deleteUserGroupConfirm` ✅ `link:Add user group` |  |
 | `server/variables/index.twig` | 0/3 |  | ⬜ `link:Cancel` ⬜ `link:Edit` ⬜ `link:Save` |
 | `user_password.twig` | 0/1 |  | ⬜ `link:Back` |
 

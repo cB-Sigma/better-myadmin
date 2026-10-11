@@ -12,6 +12,7 @@ import { importRoutes } from './import.ts'
 import { insertEditRoutes } from './insert-edit.ts'
 import { metadataRoutes } from './metadata.ts'
 import { navigationRoutes } from './navigation.ts'
+import { privilegesRoutes } from './privileges.ts'
 import { queryRoutes } from './query.ts'
 import { serverAdminRoutes } from './server-admin.ts'
 import { shellRoutes } from './shell.ts'
@@ -67,3 +68,4 @@ serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)
 serverRoutes.route('/:s/databases', insertEditRoutes)
 serverRoutes.route('/:s', serverAdminRoutes)
+serverRoutes.route('/:s', privilegesRoutes)

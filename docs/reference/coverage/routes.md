@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-61/199 covered (30.7%): 53 implemented, 7 exception, 1 n/a, 138 planned. [Summary](README.md).
+67/199 covered (33.7%): 59 implemented, 7 exception, 1 n/a, 132 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -59,7 +59,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | UI /s/:server/transformations (apps/web/src/routes/s/$server/transformations.tsx) | static plugin catalog (packages/mysql-types transformations.ts) |
 | ✅ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper (apps/server/src/routes/insert-edit.ts:148) | raw cell bytes; resize=jpeg\|png sends the original image (no GD) |
 
-## 04 table level — 3/64 (4.7%) covered, 3/64 implemented
+## 04 table level — 4/64 (6.3%) covered, 4/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -100,7 +100,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `POST /table/partition/rebuild` | `Table/Partition/RebuildController` | API /api/servers/:s/databases/:db/tables/:table/partition/rebuild<br>UI /s/:s/db/:db/t/:table/partition/rebuild | M2 |
 | 🗓️ | `POST /table/partition/repair` | `Table/Partition/RepairController` | API /api/servers/:s/databases/:db/tables/:table/partition/repair<br>UI /s/:s/db/:db/t/:table/partition/repair | M2 |
 | 🗓️ | `POST /table/partition/truncate` | `Table/Partition/TruncateController` | API /api/servers/:s/databases/:db/tables/:table/partition/truncate<br>UI /s/:s/db/:db/t/:table/partition/truncate | M2 |
-| 🗓️ | `GET /table/privileges` | `Table/PrivilegesController` | API GET /api/servers/:s/databases/:db/tables/:t/privileges<br>UI /s/:s/db/:db/t/:table/privileges | M2 |
+| ✅ | `GET /table/privileges` | `Table/PrivilegesController` | API GET /api/servers/:s/databases/:db/tables/:table/privileges (apps/server/src/routes/privileges.ts:117)<br>UI /s/:server/db/:db/t/:table/privileges (apps/web/src/routes/s/$server/db/$db/t/$table/privileges.tsx) |  |
 | 🗓️ | `GET, POST /table/relation` | `Table/RelationController` | API GET /api/servers/:s/databases/:db/tables/:t/relations<br>API POST /api/servers/:s/databases/:db/tables/:t/relations<br>UI /s/:s/db/:db/t/:table/relation | M2 |
 | 🗓️ | `GET, POST /table/search` | `Table/SearchController` | API POST /api/servers/:s/databases/:db/tables/:t/search<br>UI /s/:s/db/:db/t/:table/search | M2 |
 | ✅ | `GET, POST /table/sql` | `Table/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/db/:db/t/:table/sql (apps/web/src/routes/s/$server/db/$db/t/$table/sql.tsx) |  |
@@ -167,7 +167,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /databases` | `DatabaseController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:35) | name lists for pickers |
 | 🗓️ | `GET, POST /schema-export` | `SchemaExportController` | API POST /api/servers/:s/databases/:db/schema-export | M3 |
 
-## 06 server level — 11/31 (35.5%) covered, 11/31 implemented
+## 06 server level — 16/31 (51.6%) covered, 16/31 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -179,9 +179,9 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET /server/engines` | `Server/EnginesController` | API GET /api/servers/:s/engines (apps/server/src/routes/server-admin.ts:136)<br>UI /s/:server/engines (apps/web/src/routes/s/$server/engines/index.tsx) |  |
 | 🗓️ | `GET /server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | API GET /api/servers/:s/engines/:engine<br>UI /s/:s/engines/:engine | M3 |
 | ✅ | `GET /server/plugins` | `Server/PluginsController` | API GET /api/servers/:s/plugins (apps/server/src/routes/server-admin.ts:146)<br>UI /s/:server/plugins (apps/web/src/routes/s/$server/plugins.tsx) |  |
-| 🗓️ | `GET, POST /server/privileges` | `Server/PrivilegesController` | API GET /api/servers/:s/privileges/users<br>API GET /api/servers/:s/privileges/users/:user/:host<br>UI /s/:s/privileges | M3 |
-| 🗓️ | `POST /server/privileges/account-lock` | `Server/Privileges/AccountLockController` | API /api/servers/:s/privileges/account-lock<br>UI /s/:s/privileges/account-lock | M3 |
-| 🗓️ | `POST /server/privileges/account-unlock` | `Server/Privileges/AccountUnlockController` | API /api/servers/:s/privileges/account-unlock<br>UI /s/:s/privileges/account-unlock | M3 |
+| ✅ | `GET, POST /server/privileges` | `Server/PrivilegesController` | API GET /api/servers/:s/privileges/users (apps/server/src/routes/privileges.ts:37)<br>API GET /api/servers/:s/privileges/add-user (apps/server/src/routes/privileges.ts:42)<br>API GET /api/servers/:s/privileges/user (apps/server/src/routes/privileges.ts:47)<br>API GET /api/servers/:s/privileges/validate-username (apps/server/src/routes/privileges.ts:52)<br>API POST /api/servers/:s/privileges (apps/server/src/routes/privileges.ts:58)<br>API POST /api/servers/:s/privileges/export (apps/server/src/routes/privileges.ts:64)<br>UI /s/:server/privileges (apps/web/src/routes/s/$server/privileges/index.tsx)<br>UI /s/:server/privileges/add-user (apps/web/src/routes/s/$server/privileges/add-user.tsx)<br>UI /s/:server/privileges/user (apps/web/src/routes/s/$server/privileges/user.tsx) | one route in phpMyAdmin (overview, ?adduser, the user editor at every level, the posted actions, ?export, ?validate_username, ?flush_privileges) |
+| ✅ | `POST /server/privileges/account-lock` | `Server/Privileges/AccountLockController` | API POST /api/servers/:s/privileges/account-lock (apps/server/src/routes/privileges.ts:74)<br>UI /s/:server/privileges (apps/web/src/routes/s/$server/privileges/index.tsx) | AJAX action of the overview Lock button |
+| ✅ | `POST /server/privileges/account-unlock` | `Server/Privileges/AccountUnlockController` | API POST /api/servers/:s/privileges/account-unlock (apps/server/src/routes/privileges.ts:81)<br>UI /s/:server/privileges (apps/web/src/routes/s/$server/privileges/index.tsx) | AJAX action of the overview Unlock button |
 | 🗓️ | `GET, POST /server/replication` | `Server/ReplicationController` | API GET /api/servers/:s/replication<br>API POST /api/servers/:s/replication/*<br>UI /s/:s/replication | M3 |
 | ✅ | `GET /server/status` | `Server/Status/StatusController` | API GET /api/servers/:s/status (apps/server/src/routes/server-admin.ts:64)<br>UI /s/:server/status (apps/web/src/routes/s/$server/status/index.tsx) |  |
 | ✅ | `GET /server/status/advisor` | `Server/Status/AdvisorController` | API GET /api/servers/:s/status/advisor (apps/server/src/routes/server-admin.ts:106)<br>UI /s/:server/status/advisor (apps/web/src/routes/s/$server/status/advisor.tsx) |  |
@@ -196,8 +196,8 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `POST /server/status/processes/refresh` | `Server/Status/Processes/RefreshController` | API /api/servers/:s/status/processes/refresh<br>UI /s/:s/status/processes/refresh | M3 |
 | ✅ | `GET /server/status/queries` | `Server/Status/QueriesController` | API GET /api/servers/:s/status/queries (apps/server/src/routes/server-admin.ts:90)<br>UI /s/:server/status/queries (apps/web/src/routes/s/$server/status/queries.tsx) |  |
 | ✅ | `GET, POST /server/status/variables` | `Server/Status/VariablesController` | API GET /api/servers/:s/status/variables (apps/server/src/routes/server-admin.ts:93)<br>UI /s/:server/status/variables (apps/web/src/routes/s/$server/status/variables.tsx) |  |
-| 🗓️ | `GET, POST /server/user-groups` | `Server/UserGroupsController` | API /api/servers/:s/user-groups<br>UI /s/:s/user-groups | M3 |
-| 🗓️ | `GET /server/user-groups/edit-form` | `Server/UserGroupsFormController` | API /api/servers/:s/user-groups/edit-form<br>UI /s/:s/user-groups/edit-form | M3 |
+| ✅ | `GET, POST /server/user-groups` | `Server/UserGroupsController` | API GET /api/servers/:s/user-groups (apps/server/src/routes/privileges.ts:88)<br>API POST /api/servers/:s/user-groups (apps/server/src/routes/privileges.ts:93)<br>API GET /api/servers/:s/user-groups/users (apps/server/src/routes/privileges.ts:99)<br>API GET /api/servers/:s/user-groups/form (apps/server/src/routes/privileges.ts:105)<br>UI /s/:server/user-groups (apps/web/src/routes/s/$server/user-groups.tsx) |  |
+| ✅ | `GET /server/user-groups/edit-form` | `Server/UserGroupsFormController` | API GET /api/servers/:s/user-groups/edit-form (apps/server/src/routes/privileges.ts:111)<br>UI /s/:server/privileges (apps/web/src/routes/s/$server/privileges/index.tsx) | body of the overview modal #editUserGroupModal |
 | ✅ | `GET /server/variables` | `Server/VariablesController` | API GET /api/servers/:s/variables (apps/server/src/routes/server-admin.ts:116)<br>UI /s/:server/variables (apps/web/src/routes/s/$server/variables.tsx) |  |
 | 🗓️ | `GET /server/variables/get/{name}` | `Server/Variables/GetVariableController` | API /api/servers/:s/variables/get/:name<br>UI /s/:s/variables/get/:name | M3 |
 | 🗓️ | `POST /server/variables/set/{name}` | `Server/Variables/SetVariableController` | API /api/servers/:s/variables/set/:name<br>UI /s/:s/variables/set/:name | M3 |

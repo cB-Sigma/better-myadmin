@@ -68,9 +68,9 @@ export function UserMenu({ server }: { server: number }) {
         <DropdownMenuContent className="min-w-56">
           <DropdownMenuItem asChild>
             <Link
-              to="/s/$server/$"
-              params={{ server, _splat: 'privileges' }}
-              search={{ username: user, hostname: host } as never}
+              to="/s/$server/privileges/user"
+              params={{ server }}
+              search={{ username: user, hostname: host }}
             >
               <PmaIcon name="user" />
               <span dir="ltr">{`${user}@${host}`}</span>

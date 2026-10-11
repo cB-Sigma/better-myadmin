@@ -48,8 +48,18 @@ export const qk = {
   engines: (s: number, engine = '', page = '') => ['srv', s, 'engines', engine, page] as const,
   plugins: (s: number) => ['srv', s, 'plugins'] as const,
   binlog: (s: number, q: object) => ['srv', s, 'binlog', q] as const,
+  // user accounts and user groups (every privileges write invalidates qk.privileges)
+  privileges: (s: number) => ['srv', s, 'privileges'] as const,
+  usersOverview: (s: number, q: object) => ['srv', s, 'privileges', 'users', q] as const,
+  addUserForm: (s: number, q: object) => ['srv', s, 'privileges', 'add-user', q] as const,
+  userProperties: (s: number, q: object) => ['srv', s, 'privileges', 'user', q] as const,
+  userGroups: (s: number) => ['srv', s, 'privileges', 'user-groups'] as const,
+  userGroupUsers: (s: number, g: string) => ['srv', s, 'privileges', 'user-groups', 'users', g] as const,
+  userGroupForm: (s: number, g: string | null) => ['srv', s, 'privileges', 'user-groups', 'form', g] as const,
+  chooseUserGroup: (s: number, u: string) => ['srv', s, 'privileges', 'user-groups', 'choose', u] as const,
   // table structure (all below qk.tbl: DDL invalidates the table)
   tableStructure: (r: TableRef) => [...qk.tbl(r), 'structure'] as const,
+  tablePrivileges: (r: TableRef) => [...qk.tbl(r), 'privileges'] as const,
   changeColumnsForm: (r: TableRef, fields: string[]) => [...qk.tbl(r), 'change-form', fields] as const,
   addColumnsForm: (r: TableRef) => [...qk.tbl(r), 'add-form'] as const,
   indexForm: (r: TableRef, q: object | null) => [...qk.tbl(r), 'index-form', q] as const,

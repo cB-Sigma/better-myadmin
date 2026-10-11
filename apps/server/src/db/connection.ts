@@ -97,6 +97,35 @@ export class Conn {
     const v = r.resultSets[0]?.rows[0]?.[0]
     return v === null || v === undefined ? null : v.toString('utf8')
   }
+
+  /**
+   * A server-side prepared statement (DatabaseInterface::executeQuery: the general log records it
+   * as Prepare/Execute, not Query). Rows as strings keyed by column name.
+   */
+  async execute(
+    sql: string,
+    params: Array<string | number | null>,
+    label: string,
+  ): Promise<Array<Record<string, string | null>>> {
+    const start = performance.now()
+    try {
+      const [rows] = await this.raw.execute({ sql, values: params })
+      const list = Array.isArray(rows) ? (rows as Array<Record<string, unknown>>) : []
+      return list.map((r) =>
+        Object.fromEntries(
+          Object.entries(r).map(([k, v]) => [
+            k,
+            v === null || v === undefined ? null : Buffer.isBuffer(v) ? v.toString('utf8') : String(v),
+          ]),
+        ),
+      )
+    } catch (e) {
+      if (isMysqlError(e)) throw new MysqlError(e, sql)
+      throw e
+    } finally {
+      this.log.push({ sql, ms: performance.now() - start, label })
+    }
+  }
 }
 
 /** mysql2's LOCAL INFILE stream: only the import file in hand, any other request fails. */

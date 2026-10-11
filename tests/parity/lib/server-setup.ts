@@ -49,6 +49,8 @@ export const suiteUsers = (tag: string) => ({ pma: `${PMA_USER}_${tag}`, bma: `$
 export async function startHarness(
   cfg: Parameters<typeof testConfig>[0] = {},
   users: { pma: string; bma: string; grant?: string } = { pma: PMA_USER, bma: BMA_USER },
+  /** `$cfg['Servers'][1]` overrides of the BetterMyAdmin server (controluser, pmadb, …) */
+  server: Parameters<typeof testConfig>[1] = {},
 ): Promise<Harness> {
   const root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
   for (const u of [users.pma, users.bma]) {
@@ -59,7 +61,7 @@ export async function startHarness(
   const log = await GeneralLog.open(ROOT)
   const pma = new PmaClient(PMA_URL)
   await pma.login(users.pma, users.pma)
-  const bma = testApp(testConfig(cfg))
+  const bma = testApp(testConfig(cfg, server))
   await bma.login(users.bma, users.bma)
   return {
     users: { pma: users.pma, bma: users.bma },

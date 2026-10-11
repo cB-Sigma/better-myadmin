@@ -12,3 +12,5 @@ js:setup/:
 js:error_report.ts:
   exception: X19
   planned: M1
+js:server/privileges.ts#change:#checkbox_SSL_priv:
+  n/a: 'dead handler: no template renders #checkbox_SSL_priv (the SSL radios are handled by input[name="ssl_type"])'

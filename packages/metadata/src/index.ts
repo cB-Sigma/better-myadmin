@@ -24,6 +24,7 @@ export * from './sqlite-driver.ts'
 export * from './storage.ts'
 export * from './uiprefs.ts'
 export * from './userprefs.ts'
+export * from './user-groups.ts'
 
 /**
  * UserFormList::getFields() — the field paths of the user preference forms (group markers

@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-979/3426 covered (28.6%): 979 implemented, 33 planned, 2414 missing. [Summary](README.md).
+1083/3426 covered (31.6%): 1083 implemented, 33 planned, 2310 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 193/403 (47.9%) covered, 193/403 implemented
 
@@ -156,9 +156,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 149/534 (27.9%) covered, 149/534 implemented
+## 04 table level — 159/534 (29.8%) covered, 159/534 implemented
 
-385 msgids not used yet.
+375 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -168,15 +168,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Tracking/Tracking.php` | 23/26 | `Comment out these two lines if you do not need them.` · `Data only` · `Delete tracking data row from report` · `Export as %s` · `No data` · `Show %1$s with dates from %2$s to %3$s by user %4$s %5$s` · `SQL dump` · `SQL dump (file download)` · `SQL execution` · `SQL statements exported. Please copy the dump or execute it.` · `Structure and data` · `Structure only` · … +11 |
 | `resources/templates/table/chart/tbl_chart.twig` | 22/22 | `Chart title:` · `Chart type` · `Area (Chart type)` · `Bar (Chart type)` · `Column (Chart type)` · `Line (Chart type)` · `Pie (Chart type)` · `Scatter (Chart type)` · `Spline (Chart type)` · `Timeline (Chart type)` · `Save chart as image` · `Series column:` · … +10 |
 | `resources/js/normalization.ts` | 18/22 | `Add primary key` · `Confirm partial dependencies` · `Confirm transitive dependencies` · `End of step` · `Hide partial dependencies list` · `No dependencies selected!` · `No partial dependencies selected!` · `Note: a, b -> d,f implies values of columns a and b combined togeth…` · `Primary key added.` · `Second step of normalization (2NF)` · `Selected dependencies are as follows:` · `Selected partial dependencies are as follows:` · … +6 |
-| `resources/templates/table/relation/common_form.twig` | 12/17 | `+ Add constraint` · `Actions` · `An internal relation is not necessary when a corresponding FOREIGN …` · `Choose column to display:` · `Constraint properties` · `Creating a foreign key over a non-indexed column would automaticall…` · `Foreign key constraint` · `Foreign key constraints` · `Internal relation` · `Internal relationships` · `Loading` · `Only columns with index will be displayed. You can define an index …` |
 | `resources/templates/table/search/index.twig` | 12/20 | `Add search conditions (body of the "where" clause):` · `Display order:` · `Do a "query by example" (wildcard: "%")` · `Find and replace` · `Maximum value:` · `Minimum value:` · `Number of rows per page` · `Operator` · `Range search` · `Select columns (at least one):` · `Table search` · `Zoom search` |
+| `resources/templates/table/relation/common_form.twig` | 11/17 | `+ Add constraint` · `Actions` · `An internal relation is not necessary when a corresponding FOREIGN …` · `Choose column to display:` · `Constraint properties` · `Creating a foreign key over a non-indexed column would automaticall…` · `Foreign key constraint` · `Foreign key constraints` · `Internal relation` · `Internal relationships` · `Only columns with index will be displayed. You can define an index …` |
 | `resources/templates/table/tracking/main.twig` | 11/13 | `Activate now` · `Activate tracking for %s` · `active` · `Created` · `Deactivate now` · `Deactivate tracking for %s` · `Delete version` · `not active` · `Structure snapshot` · `Tracking report` · `Updated` |
 | `resources/templates/table/structure/display_structure.twig` | 9/51 | `Add to central columns` · `Edit view` · `Go back` · `Media type:` · `None (None for default)` · `Normalize` · `Remove from central columns` · `Track table` · `Track view` |
-| `resources/templates/table/privileges/index.twig` | 8/11 | `database-specific` · `global` · `No user found.` · `Not enough privilege to view users.` · `routine` · `table-specific` · `Users having access to "%s"` · `wildcard` |
 | `resources/templates/table/zoom_search/index.twig` | 8/13 | `Additional search criteria` · `Do a "query by example" (wildcard: "%") for two different columns` · `Find and replace` · `Maximum rows to plot` · `Operator` · `Table search` · `Use this column to label each point` · `Zoom search` |
 | `src/Operations.php` | 8/15 | `Can't copy table to same one!` · `Can't move table to same one!` · `Coalesce` · `Table %s has been copied to %s.` · `Table %s has been copied to %s. Privileges have been adjusted.` · `Table %s has been moved to %s.` · `Table %s has been moved to %s. Privileges have been adjusted.` · `The table name is empty!` |
 | `src/Triggers/Triggers.php` | 8/8 | `Sorry, we failed to restore the dropped trigger.` · `Trigger %1$s has been created.` · `Trigger %1$s has been modified.` · `You must provide a trigger definition.` · `You must provide a trigger name!` · `You must provide a valid event for the trigger!` · `You must provide a valid table name!` · `You must provide a valid timing for the trigger!` |
-| `resources/templates/database/privileges/index.twig` | 7/10 | `database-specific` · `global` · `No user found.` · `Not enough privilege to view users.` · `routine` · `Users having access to "%s"` · `wildcard` |
 | `resources/templates/database/tracking/tables.twig` | 7/9 | `active` · `Created` · `not active` · `Structure snapshot` · `Track table` · `Tracking report` · `Updated` |
 | `resources/templates/table/find_replace/index.twig` | 7/8 | `Column:` · `Find and replace` · `Find:` · `Replace with:` · `Table search` · `Use regular expression` · `Zoom search` |
 | `src/Table/Table.php` | 7/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Error creating foreign key on %1$s (check data types)` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` · `Invalid database:` · `Invalid table name:` · `Table %1$s has been renamed to %2$s.` |
@@ -187,13 +185,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `resources/js/table/select.ts` | 5/6 | `Column maximum:` · `Column minimum:` · `Hide search criteria` · `Searching` · `Show search criteria` |
 | `resources/templates/create_tracking_version.twig` | 5/5 | `Create version` · `Create version %1$s` · `Create version %1$s of %2$s` · `Track these data definition statements:` · `Track these data manipulation statements:` |
-| `resources/templates/table/zoom_search/result_form.twig` | 5/10 | `Browse/Edit the points` · `How to use` · `Loading` · `Reset zoom` · `The generated chart` |
 | `resources/templates/view_create.twig` | 5/6 | `Column names` · `Definer` · `Details` · `Edit view` · `VIEW name` |
 | `src/Controllers/Triggers/IndexController.php` | 5/7 | `Add trigger` · `Edit trigger` · `Error in processing request: No trigger with name %1$s found in dat…` · `Export of trigger %s` · `No trigger with name %1$s found in database %2$s.` |
 | `resources/js/table/operations.ts` | 4/7 | `Through this operation, MySQL attempts to map the data values betwe…` · `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/templates/table/find_replace/replace_preview.twig` | 4/4 | `Find and replace - preview` · `Original string` · `Replace` · `Replaced string` |
 | `resources/templates/table/gis_visualization/gis_visualization.twig` | 4/5 | `-- None --` · `Display GIS Visualization` · `Label column` · `Spatial column` |
 | `resources/templates/table/operations/view.twig` | 4/5 | `Delete data or table` · `Delete the view (DROP)` · `Rename view to` · `View %s has been dropped.` |
+| `resources/templates/table/zoom_search/result_form.twig` | 4/10 | `Browse/Edit the points` · `How to use` · `Reset zoom` · `The generated chart` |
 | `resources/templates/triggers/editor_form.twig` | 4/7 | `Definer` · `Details` · `Time (Trigger action time)` · `Trigger name` |
 | `resources/templates/triggers/list.twig` | 4/8 | `Create new trigger` · `Export trigger` · `There are no triggers to display.` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 4/5 | `Failed to create image` · `Invalid file format, expected one of: ` · `No spatial column found for this SQL query.` · `No SQL query was set to fetch data.` |
@@ -211,31 +209,25 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
-| `resources/templates/columns_definitions/column_definitions_form.twig` | 2/14 | `Loading` · `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
-| `resources/templates/database/designer/main.twig` | 2/7 | `Loading` · `Operator` |
 | `resources/templates/database/events/editor_form.twig` | 2/5 | `Definer` · `Details` |
 | `resources/templates/database/routines/editor_form.twig` | 2/5 | `Definer` · `Details` |
-| `resources/templates/modals/index_dialog_modal.twig` | 2/6 | `Go back` · `Loading` |
 | `resources/templates/table/maintenance/checksum.twig` | 2/3 | `Checksum` · `Checksum table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 2/11 | `None (None for default)` · `# (Number)` |
 | `src/Config/Descriptions.php` | 2/5 | `Add %s` · `Add AUTO_INCREMENT value` |
 | `src/Controllers/Database/StructureController.php` | 2/3 | `Table %s has been dropped.` · `View %s has been dropped.` |
 | `src/Controllers/Table/RelationController.php` | 2/2 | `Display column was successfully updated.` · `Internal relationships were successfully updated.` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
-| `src/Server/Privileges.php` | 2/3 | `No user found.` · `Not enough privilege to view users.` |
 | `src/Table/TableMover.php` | 2/2 | ``Source database `%s` was not found!`` · ``Target database `%s` was not found!`` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/structure.ts` | 1/8 | `Dropping column` |
+| `resources/templates/columns_definitions/column_definitions_form.twig` | 1/14 | `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
+| `resources/templates/database/designer/main.twig` | 1/7 | `Operator` |
 | `resources/templates/database/multi_table_query/form.twig` | 1/3 | `+ Add column` |
 | `resources/templates/database/search/main.twig` | 1/1 | `Find:` |
 | `resources/templates/database/structure/structure_table_row.twig` | 1/3 | `Table %s has been emptied.` |
 | `resources/templates/error/simple.twig` | 1/1 | `Go back` |
-| `resources/templates/export_modal.twig` | 1/2 | `Loading` |
-| `resources/templates/export.twig` | 1/2 | `Loading` |
-| `resources/templates/modals/preview_sql_confirmation.twig` | 1/2 | `Loading` |
-| `resources/templates/modals/preview_sql_modal.twig` | 1/2 | `Loading` |
-| `resources/templates/table/insert/actions_panel.twig` | 1/5 | `Loading` |
+| `resources/templates/modals/index_dialog_modal.twig` | 1/6 | `Go back` |
 | `resources/templates/table/maintenance/analyze.twig` | 1/1 | `Analyze table` |
 | `resources/templates/table/maintenance/check.twig` | 1/1 | `Check table` |
 | `resources/templates/table/maintenance/repair.twig` | 1/1 | `Repair table` |
@@ -248,23 +240,20 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/triggers/export.twig` | 1/1 | `Export of trigger %s` |
-| `src/Controllers/Database/PrivilegesController.php` | 1/1 | `You do not have the privileges to administrate the users!` |
 | `src/Controllers/Operations/Database/CollationController.php` | 1/2 | `No collation provided.` |
 | `src/Controllers/Operations/TableController.php` | 1/5 | `No collation provided.` |
-| `src/Controllers/Server/PrivilegesController.php` | 1/2 | `You do not have the privileges to administrate the users!` |
 | `src/Controllers/Table/Maintenance/AnalyzeController.php` | 1/2 | `Maintenance operations on multiple tables are disabled.` |
 | `src/Controllers/Table/Maintenance/CheckController.php` | 1/2 | `Maintenance operations on multiple tables are disabled.` |
 | `src/Controllers/Table/Maintenance/ChecksumController.php` | 1/2 | `Maintenance operations on multiple tables are disabled.` |
 | `src/Controllers/Table/Maintenance/OptimizeController.php` | 1/2 | `Maintenance operations on multiple tables are disabled.` |
 | `src/Controllers/Table/Maintenance/RepairController.php` | 1/2 | `Maintenance operations on multiple tables are disabled.` |
-| `src/Controllers/Table/PrivilegesController.php` | 1/1 | `You do not have the privileges to administrate the users!` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
 | `src/Controllers/View/CreateController.php` | 1/2 | `View name can not be empty!` |
 | `src/Table/Maintenance.php` | 1/1 | `` Problems with indexes of table `%s` `` |
 
-## 05 database level — 39/340 (11.5%) covered, 39/340 implemented
+## 05 database level — 40/340 (11.8%) covered, 40/340 implemented
 
-301 msgids not used yet.
+300 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -280,10 +269,10 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Database/Designer/Common.php` | 11/11 | `Error: FOREIGN KEY relationship could not be added!` · `Error: Internal relationship could not be added!` · `Error: Internal relationship could not be removed!` · `Error: Missing index on column(s).` · `Error: Relational features are disabled!` · `Error: relationship already exists.` · `FOREIGN KEY relationship has been added.` · `FOREIGN KEY relationship has been removed.` · `Internal relationship has been added.` · `Internal relationship has been removed.` · `phpMyAdmin configuration storage is not configured for "Display Fea…` |
 | `src/Plugins/Schema/SchemaPdf.php` | 10/11 | `Data dictionary` · `Landscape` · `Name (Ascending)` · `Name (Descending)` · `Order of the tables` · `Orientation` · `Paper size` · `Portrait` · `Same width for all tables` · `Show grid` |
 | `resources/templates/database/central_columns/main.twig` | 9/18 | `A_I` · `Add new column` · `Attribute` · `Click to sort.` · `None (for default)` · `Length/Value` · `Select a column.` · `Select a table` · `The central list of columns for the current database is empty` |
-| `resources/templates/database/events/index.twig` | 9/14 | `Click to toggle` · `Create new event` · `Event editor` · `Event scheduler status` · `Export event` · `OFF` · `ON` · `Save changes` · `There are no events to display.` |
-| `resources/templates/database/routines/index.twig` | 8/12 | `Create new routine` · `Execute` · `Execute routine` · `Export routine` · `Returns` · `Routine editor` · `Save changes` · `There are no routines to display.` |
+| `resources/templates/database/events/index.twig` | 8/14 | `Click to toggle` · `Create new event` · `Event editor` · `Event scheduler status` · `Export event` · `OFF` · `ON` · `There are no events to display.` |
 | `src/Controllers/Database/RoutinesController.php` | 8/8 | `Add routine` · `Edit routine` · `Error in processing request:` · `Error in processing request: No routine with name %1$s found in dat…` · `Execute routine` · `Export of routine %s` · `No routine with name %1$s found in database %2$s.` · `No routine with name %1$s found in database %2$s. You might be lack…` |
 | `resources/templates/database/events/editor_form.twig` | 7/9 | `Change to %s` · `End (End of recurring event)` · `Event name` · `Execute at` · `Execute every` · `On completion preserve` · `Start (Start of recurring event)` |
+| `resources/templates/database/routines/index.twig` | 7/12 | `Create new routine` · `Execute` · `Execute routine` · `Export routine` · `Returns` · `Routine editor` · `There are no routines to display.` |
 | `src/Controllers/Database/EventsController.php` | 7/7 | `Add event` · `Edit event` · `Error in processing request:` · `Error in processing request: No event with name %1$s found in datab…` · `Export of event %s` · `No event with name %1$s found in database %2$s.` · `The event was dropped immediately after creation.` |
 | `resources/js/database/structure.ts` | 6/6 | `Add table prefix` · `Copy table with prefix` · `Copy tables to` · `Failed to get real row count.` · `Processing request` · `Replace table with prefix` |
 | `resources/templates/database/tracking/tables.twig` | 6/8 | `Click to toggle` · `Delete tracking` · `Last version` · `Tracked tables` · `Untracked tables` · `Versions` |
@@ -341,9 +330,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/structure/bulk_action_modal.twig` | 1/2 | `Continue` |
 | `resources/templates/database/structure/favorite_anchor.twig` | 1/1 | `Add to Favorites` |
 | `resources/templates/database/structure/index.twig` | 1/3 | `Data dictionary` |
-| `resources/templates/server/privileges/users_overview.twig` | 1/2 | `Save changes` |
 | `resources/templates/table/operations/index.twig` | 1/2 | `Add constraints` |
-| `resources/templates/triggers/list.twig` | 1/3 | `Save changes` |
 | `src/Config/ConfigFile.php` | 1/4 | `Text` |
 | `src/Controllers/Database/CentralColumnsController.php` | 1/1 | `Showing rows %1$s - %2$s.` |
 | `src/Controllers/Database/DesignerController.php` | 1/1 | `There already exists a page named "%s" please rename it to somethin…` |
@@ -366,63 +353,39 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Schema/Svg/TableStatsSvg.php` | 1/1 | `The %s table doesn't exist!` |
 | `src/Util.php` | 1/5 | `Sort` |
 
-## 06 server level — 176/915 (19.2%) covered, 176/915 implemented
+## 06 server level — 268/915 (29.3%) covered, 268/915 implemented
 
-739 msgids not used yet.
+647 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Advisory/Rules.php` | 197/197 | `'percona' found in version_comment` · `'source' found in version_comment` · `{long_query_time} is set to 10 seconds or more, thus only slow quer…` · `{tmp_table_size} and {max_heap_table_size} are not the same.` · `%% MyISAM key buffer used: %s%%, this value should be above 95%%` · `%s thread(s) took longer than %s seconds to start, it should be 0` · `%s%% of all clients are aborted. This value should be below 2%%` · `%s%% of all connections are aborted. This value should be below 1%%` · `%s%% of all sorts cause temporary tables, this value should be lowe…` · `%s%% of all temporary tables are being written to disk, this value …` · `Aborted client rate is at %s, this value should be less than 1 per …` · `Aborted connections rate is at %s, this value should be less than 1…` · … +185 |
 | `src/Controllers/Server/Status/VariablesController.php` | 114/114 | `How many temporary files mysqld has created.` · `Key cache miss calculated as rate of physical reads compared to rea…` · `Normally, writes to the InnoDB buffer pool happen in the background…` · `Pending log file writes.` · `Percentage of physical writes compared to write requests (calculate…` · `Percentage of used key cache (calculated value)` · `The amount of data read so far, in bytes.` · `The amount of data written so far, in bytes.` · `The amount of free memory for query cache.` · `The average time to acquire a row lock, in milliseconds.` · `The compiled-in InnoDB page size (default 16KB). Many values are co…` · `The current number of pending fsync() operations.` · … +102 |
 | `resources/js/server/status/monitor.ts` | 57/63 | `Analyzing…` · `Average load` · `Buffered memory` · `Bytes received` · `Bytes sent` · `Cached memory` · `Cached swap` · `Change settings` · `Chart` · `Chart title` · `Connections / Processes` · `Current settings` · … +45 |
-| `resources/templates/server/privileges/privileges_table.twig` | 55/58 | `Administration` · `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · … +43 |
 | `resources/templates/server/status/monitor/index.twig` | 55/59 | `Add chart` · `Add chart to grid` · `Add this series` · `Analyse query` · `Analysing and loading logs. This may take a while.` · `Analysing logs` · `Append unit to data values` · `Apply a divisor` · `Cancel request` · `Chart arrangement` · `Chart columns` · `Chart Title` · … +43 |
 | `src/Charsets/Collation.php` | 55/56 | `accent-insensitive (Collation variant)` · `accent-sensitive (Collation variant)` · `binary (Collation variant)` · `case-insensitive (Collation variant)` · `case-sensitive (Collation variant)` · `kana-sensitive (Collation variant)` · `multi-level (Collation variant)` · `no-pad (Collation variant)` · `Arabic (Collation)` · `Armenian (Collation)` · `Baltic (Collation)` · `Binary (Collation)` · … +43 |
-| `src/Server/Privileges.php` | 54/56 | `A user account allowing any user from localhost to connect is prese…` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · … +42 |
+| `src/Server/Privileges.php` | 47/56 | `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · `Allows creating, dropping and renaming user accounts.` · … +35 |
+| `resources/templates/server/privileges/privileges_table.twig` | 41/58 | `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · … +29 |
 | `src/Engines/Pbxt.php` | 24/25 | `Checkpoint frequency` · `Data file grow size` · `Data log threshold` · `Garbage threshold` · `Index cache size` · `Log buffer size` · `Log cache size` · `Log file count` · `Log file threshold` · `Record cache size` · `Row file grow size` · `The amount of data written to the transaction log before a checkpoi…` · … +12 |
-| `resources/templates/server/privileges/login_information_fields.twig` | 19/23 | `An account already exists with the same username but possibly a dif…` · `Any host` · `Any user` · `Authentication plugin` · `Do not change the password` · `Host name` · `Host name:` · `Local` · `Login Information` · `No password` · `Password` · `Password hashing method` · … +7 |
-| `resources/templates/server/privileges/users_overview.twig` | 19/20 | `Add user account` · `Any` · `New (Create new user)` · `Drop the databases that have the same names as the users.` · `Edit privileges` · `Edit user group` · `Global privileges` · `Grant` · `Host name` · `Lock (Lock the account.)` · `Lock this account.` · `Password` · … +7 |
 | `resources/templates/server/replication/replica_configuration.twig` | 17/18 | `Change or reconfigure primary server` · `Control replica:` · `Error management:` · `Primary connection:` · `Replica IO Thread not running!` · `Replica SQL Thread not running!` · `Reset replica` · `See replica status table` · `Server is configured as replica in a replication process. Would you…` · `Skip current error` · `Skip next %s errors.` · `Skipping errors might lead into unsynchronized primary and replica!` · … +5 |
-| `resources/templates/server/replication/primary_add_replica_user.twig` | 14/17 | `Add replica replication user` · `Any host` · `Any user` · `Generate password:` · `Local` · `No password` · `Password` · `Re-type` · `This host` · `Use host table` · `Use text field:` · `User name` · … +2 |
 | `src/Replication/ReplicationGui.php` | 13/13 | `Connection to server is disabled, please enable $cfg['AllowArbitrar…` · `Error resetting replication.` · `Error starting replication.` · `Error stopping replication.` · `Error.` · `Primary server changed successfully to %s.` · `Replication resetting successfully.` · `Replication started successfully.` · `Replication stopped successfully.` · `Success.` · `Unable to change primary!` · `Unable to connect to primary %s.` · … +1 |
 | `src/Engines/Myisam.php` | 12/12 | `Automatic recovery mode` · `Data pointer size` · `If the temporary file used for fast MyISAM index creation would be …` · `If this value is greater than 1, MyISAM table indexes are created i…` · `Maximum size for temporary files on index creation` · `Maximum size for temporary sort files` · `Repair threads` · `Sort buffer size` · `The buffer that is allocated when sorting MyISAM indexes during a R…` · `The default pointer size in bytes, to be used by CREATE TABLE for M…` · `The maximum size of the temporary file MySQL is allowed to use whil…` · `The mode for automatic recovery of crashed MyISAM tables, as set vi…` |
-| `resources/templates/server/privileges/user_properties.twig` | 11/12 | `… delete the old one from the user tables and reload the privileges…` · `… delete the old one from the user tables.` · `… keep the old one.` · `… revoke all active privileges from the old one and delete it after…` · `Change login information / Copy user account` · `Create a new user account with the same privileges and …` · `Edit privileges:` · `Login Information` · `Note: You are attempting to edit privileges of the user with which …` · `The selected user was not found in the privilege table.` · `User account` |
-| `resources/js/server/privileges.ts` | 9/10 | `Do you really want to revoke the selected user(s) ?` · `Lock (Lock the account.)` · `Lock this account.` · `No accounts selected.` · `Removing Selected Users` · `The host name is empty!` · `The user name is empty!` · `Unlock (Unlock the account.)` · `Unlock this account.` |
-| `resources/templates/server/privileges/edit_routine_privileges.twig` | 9/11 | `Allows altering and dropping this routine.` · `Allows executing this routine.` · `Allows user to give to other users or remove from other users privi…` · `Edit privileges:` · `Note: MySQL privilege names are expressed in English.` · `Note: You are attempting to edit privileges of the user with which …` · `Routine` · `Routine-specific privileges` · `User account` |
-| `resources/templates/server/privileges/privileges_summary.twig` | 8/9 | `Add privileges on the following database(s):` · `Add privileges on the following routine:` · `Add privileges on the following table:` · `Column-specific privileges` · `Grant` · `Table-specific privileges` · `Use text field` · `Wildcards % and _ should be escaped with a \\ to use them literally.` |
 | `src/Engines/Innodb.php` | 8/9 | `Autoextend increment` · `Buffer Pool` · `Buffer pool size` · `Data files` · `Data home directory` · `The common part of the directory path for all InnoDB data files.` · `The increment size for extending the size of an autoextending table…` · `The size of the memory buffer InnoDB uses to cache data and indexes…` |
 | `resources/templates/server/replication/primary_configuration.twig` | 7/7 | `Ignore all databases; Replicate:` · `Now, add the following lines at the end of [mysqld] section in your…` · `Once you restarted MySQL server, please click on Go button. Afterwa…` · `Please select databases:` · `Primary configuration` · `Replicate all databases; Ignore:` · `This server is not configured as a primary server in a replication …` |
-| `resources/templates/database/privileges/index.twig` | 6/8 | `Add user account` · `Any` · `Edit privileges` · `Grant` · `Host name` · `User name` |
-| `resources/templates/server/privileges/add_user.twig` | 6/6 | `Add user account` · `Create database with same name and grant all privileges.` · `Create user` · `Database for user account` · `Grant all privileges on database %s.` · `Grant all privileges on wildcard name (username\\_%).` |
-| `resources/templates/server/replication/change_primary.twig` | 6/7 | `Make sure you have a unique server-id in your configuration file (m…` · `Password` · `Port:` · `Replica configuration - Change or reconfigure primary server` · `User name` · `User name:` |
-| `resources/templates/server/user_groups/user_groups.twig` | 6/6 | `Add user group` · `Database level tabs` · `Delete user group` · `Server level tabs` · `Table level tabs` · `User groups` |
-| `resources/templates/table/privileges/index.twig` | 6/8 | `Add user account` · `Any` · `Edit privileges` · `Grant` · `Host name` · `User name` |
-| `resources/templates/server/user_groups/edit_user_groups.twig` | 5/6 | `Add user group` · `Edit user group` · `Edit user group: '%s'` · `Group name:` · `User group menu assignments` |
 | `resources/templates/server/plugins/index.twig` | 4/7 | `deleted` · `deleting` · `disabled` · `inactive` |
+| `resources/templates/server/privileges/user_properties.twig` | 4/12 | `… delete the old one from the user tables and reload the privileges…` · `… delete the old one from the user tables.` · `… keep the old one.` · `… revoke all active privileges from the old one and delete it after…` |
 | `resources/templates/server/replication/primary_replication.twig` | 4/8 | `Add replica replication user` · `Only replicas started with the --report-host=host_name option are v…` · `Show connected replicas` · `This server is configured as primary in a replication process.` |
 | `src/Server/Plugins.php` | 4/5 | `Caching sha2 authentication` · `Old MySQL-4.0 authentication` · `SHA256 password authentication` · `Unix Socket based authentication` |
-| `resources/templates/server/privileges/new_user_ajax.twig` | 3/3 | `Any` · `Edit privileges` · `Edit user group` |
-| `resources/templates/server/privileges/user_overview.twig` | 3/3 | `Add user account` · `New (Create new user)` · `User accounts overview` |
+| `resources/templates/server/replication/change_primary.twig` | 3/7 | `Make sure you have a unique server-id in your configuration file (m…` · `Port:` · `Replica configuration - Change or reconfigure primary server` |
+| `resources/templates/server/replication/primary_add_replica_user.twig` | 3/17 | `Add replica replication user` · `Generate password:` · `Use text field:` |
 | `src/UserPassword.php` | 3/4 | `Password is too long!` · `The password is empty!` · `The passwords aren't the same!` |
 | `resources/js/modules/functions.ts` | 2/2 | `The password is empty!` · `The passwords aren't the same!` |
-| `resources/templates/server/privileges/add_user_fieldset.twig` | 2/2 | `Add user account` · `New (Create new user)` |
-| `resources/templates/server/privileges/initials_row.twig` | 2/2 | `Any` · `Pagination of user accounts` |
-| `resources/templates/server/privileges/subnav.twig` | 2/2 | `User accounts overview` · `User groups` |
+| `resources/js/server/privileges.ts` | 2/10 | `The host name is empty!` · `The user name is empty!` |
 | `resources/templates/server/replication/index.twig` | 2/3 | `No privileges` · `This server is not configured as primary in a replication process. …` |
-| `resources/templates/server/user_groups/user_listings.twig` | 2/3 | `No users were found belonging to this user group.` · `Users of '%s' user group` |
-| `src/Controllers/Server/PrivilegesController.php` | 2/4 | `No Privileges` · `Username and hostname didn't change. If you only want to change the…` |
-| `resources/js/database/routines.ts` | 1/1 | `Routine` |
 | `resources/js/replication.ts` | 1/1 | `Do you really want to reset the replica (RESET REPLICA)?` |
 | `resources/js/server/status/queries.ts` | 1/1 | `Number of statements` |
-| `resources/js/server/user_groups.ts` | 1/1 | `Do you really want to delete user group "%s"?` |
-| `resources/templates/server/privileges/choose_user_group.twig` | 1/1 | `User group:` |
-| `src/Controllers/Database/PrivilegesController.php` | 1/1 | `No Privileges` |
 | `src/Controllers/Server/Privileges/AccountLockController.php` | 1/1 | `The account %s@%s has been successfully locked.` |
 | `src/Controllers/Server/Privileges/AccountUnlockController.php` | 1/1 | `The account %s@%s has been successfully unlocked.` |
-| `src/Controllers/Server/UserGroupsController.php` | 1/1 | `No Privileges` |
-| `src/Controllers/Server/UserGroupsFormController.php` | 1/1 | `User groups management is not enabled.` |
-| `src/Controllers/Table/PrivilegesController.php` | 1/1 | `No Privileges` |
-| `src/Server/Privileges/AccountLocking.php` | 1/1 | `Account locking is not supported.` |
 
 ## 07 export import — 238/293 (81.2%) covered, 238/293 implemented
 
@@ -460,9 +423,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 12/666 (1.8%) covered, 12/666 implemented
+## 08 settings preferences pmadb — 13/666 (2.0%) covered, 13/666 implemented
 
-654 msgids not used yet.
+653 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -480,10 +443,10 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Config/Forms/User/ExportForm.php` | 7/7 | `CSV` · `CSV for MS Excel` · `Custom` · `Microsoft Word 2000` · `OpenDocument Spreadsheet` · `OpenDocument Text` · `Quick` |
 | `resources/js/modules/config.ts` | 5/5 | `Incorrect value!` · `Not a non-negative number!` · `Not a positive number!` · `Not a valid port number!` · `Value must be less than or equal to %s!` |
 | `resources/templates/config/form_display/input.twig` | 5/5 | `Allow users to customize this value` · `Disabled` · `Restore default value` · `Set value: %s` · `This setting is disabled, it will not be applied to your configurat…` |
-| `src/ConfigStorage/UserGroups.php` | 4/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` · `View users` |
 | `resources/templates/preferences/two_factor/confirm.twig` | 3/3 | `By disabling two factor authentication you will be again able to lo…` · `Confirm disabling two-factor authentication` · `Disable two-factor authentication` |
 | `src/Config/Forms/Setup/ServersForm.php` | 3/3 | `Config authentication` · `HTTP authentication` · `Signon authentication` |
 | `src/Config/Forms/User/ImportForm.php` | 3/4 | `CSV` · `CSV using LOAD DATA` · `OpenDocument Spreadsheet` |
+| `src/ConfigStorage/UserGroups.php` | 3/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` |
 | `src/Controllers/Preferences/ManageController.php` | 3/3 | `Could not import configuration` · `Paste it to your config.inc.php` · `phpMyAdmin configuration snippet` |
 | `resources/templates/preferences/autoload.twig` | 2/2 | `Delete settings` · `Your browser has phpMyAdmin configuration for this domain. Would yo…` |
 | `resources/templates/preferences/manage/error.twig` | 2/2 | `Configuration contains incorrect data for some fields.` · `Do you want to import remaining settings?` |

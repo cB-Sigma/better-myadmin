@@ -40,6 +40,7 @@ import {
   ListOrdered,
   ListTree,
   Lock,
+  LockOpen,
   LogOut,
   type LucideIcon,
   Maximize2,
@@ -65,6 +66,11 @@ import {
   Trash2,
   Upload,
   User,
+  UserCheck,
+  UserMinus,
+  UserPen,
+  UserPlus,
+  Users,
   Variable,
   Wrench,
   X,
@@ -169,6 +175,13 @@ export const pmaIcons = {
   s_fulltext: Maximize2,
   s_partialtext: Minimize2,
   select_all_arrow: CornerLeftUp,
+  // user accounts (server/privileges/*.twig)
+  b_usradd: UserPlus,
+  b_usrlist: Users,
+  b_usredit: UserPen,
+  b_usrdrop: UserMinus,
+  b_usrcheck: UserCheck,
+  s_unlock: LockOpen,
 } satisfies Record<string, LucideIcon>
 
 export type PmaIconName = keyof typeof pmaIcons
