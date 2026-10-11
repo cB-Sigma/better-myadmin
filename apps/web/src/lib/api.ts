@@ -19,6 +19,9 @@ import type {
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
+  FindReplacePreviewResponse,
+  FindReplaceRequest,
+  FindReplaceResponse,
   FormatResponse,
   HistoryResponse,
   HomeResponse,
@@ -42,11 +45,15 @@ import type {
   PasswordForm,
   QueryRequest,
   QueryResponse,
+  RangeResponse,
   RelationDropdownResponse,
   RelationPageResponse,
   RelationSaveRequest,
   RelationSaveResponse,
   RenameViewRequest,
+  SearchPageResponse,
+  SearchRequest,
+  SearchResponse,
   ServerScope,
   SetCollationResponse,
   SimulateRequest,
@@ -56,6 +63,9 @@ import type {
   TableOptionsRequest,
   TableScope,
   VersionCheckResponse,
+  ZoomRequest,
+  ZoomResponse,
+  ZoomRowResponse,
 } from '@bettermyadmin/contracts'
 import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
 import type { ClientConfig } from './config.ts'
@@ -196,6 +206,19 @@ export const api = {
     ),
   tableRelationSave: (s: TableRef, req: RelationSaveRequest) =>
     call<RelationSaveResponse>('POST', `${tablePath(s)}/relation`, req),
+  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${tablePath(s)}/search`),
+  tableSearch: (s: TableRef, req: SearchRequest) =>
+    call<SearchResponse>('POST', `${tablePath(s)}/search`, req),
+  tableSearchRange: (s: TableRef, column: string) =>
+    call<RangeResponse>('GET', `${tablePath(s)}/search/range${queryString({ column })}`),
+  tableZoom: (s: TableRef, req: ZoomRequest) =>
+    call<ZoomResponse>('POST', `${tablePath(s)}/search/zoom`, req),
+  tableZoomRow: (s: TableRef, whereClause: string, sig: string) =>
+    call<ZoomRowResponse>('POST', `${tablePath(s)}/search/zoom/row`, { whereClause, sig }),
+  tableFindReplacePreview: (s: TableRef, req: FindReplaceRequest) =>
+    call<FindReplacePreviewResponse>('POST', `${tablePath(s)}/find-replace/preview`, req),
+  tableFindReplace: (s: TableRef, req: FindReplaceRequest) =>
+    call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
 }
