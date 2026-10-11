@@ -28,7 +28,8 @@ export function CentralColumnPicker({
   /** cur_table ('' on Create table: the whole list) */
   table: string
   maxRows: number
-  onPick: (patch: Partial<ColumnRow>) => void
+  /** null: the list only (data-pick=false, the normalization wizard) */
+  onPick: ((patch: Partial<ColumnRow>) => void) | null
   onClose: () => void
 }) {
   const q = useQuery({
@@ -94,18 +95,20 @@ export function CentralColumnPicker({
                       <span className="text-fg-muted">{label(c)}</span>
                     </div>
                   </td>
-                  <td className="py-1">
-                    <Button
-                      variant="secondary"
-                      className="pick w-full"
-                      onClick={() => {
-                        onPick(autoPopulate(c))
-                        onClose()
-                      }}
-                    >
-                      {t('Pick')}
-                    </Button>
-                  </td>
+                  {onPick !== null && (
+                    <td className="py-1">
+                      <Button
+                        variant="secondary"
+                        className="pick w-full"
+                        onClick={() => {
+                          onPick(autoPopulate(c))
+                          onClose()
+                        }}
+                      >
+                        {t('Pick')}
+                      </Button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>

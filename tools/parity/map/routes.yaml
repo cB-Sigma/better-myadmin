@@ -508,9 +508,11 @@
   planned: M1
   note: sync
 /table/add-field:
-  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/*'
-  ui: '/s/:s/db/:db/t/:table/add-field'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/columns/add-form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/columns/add'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/columns/preview'
+  ui: '/s/:s/db/:db/t/:table/structure/add'
 /table/change:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/insert-form'
   ui:
@@ -526,9 +528,10 @@
   ui: '/s/:s/db/:db/t/:table/chart'
   planned: M3
 /table/create:
-  api: '/api/servers/:s/databases/:db/tables/:table/create'
-  ui: '/s/:s/db/:db/t/:table/create'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/create-table/form'
+    - 'POST /api/servers/:s/databases/:db/tables'
+  ui: '/s/:s/db/:db/create-table'
 /table/delete/confirm:
   ui: '/s/:s/db/:db/t/:table/browse'
   note: the confirmation is rendered in place by the results view (no request of its own)
@@ -556,13 +559,17 @@
   api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/db/:db/t/:table/import'
 /table/indexes:
-  api: '/api/servers/:s/databases/:db/tables/:table/indexes'
-  ui: '/s/:s/db/:db/t/:table/indexes'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/indexes/form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/indexes'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the index editor dialog of the Structure page
 /table/indexes/rename:
-  api: '/api/servers/:s/databases/:db/tables/:table/indexes/rename'
-  ui: '/s/:s/db/:db/t/:table/indexes/rename'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/indexes/form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/indexes/rename'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the rename dialog of the Structure page
 /table/maintenance/analyze:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance'
   ui: '/s/:s/db/:db/t/:table/operations'
@@ -593,33 +600,33 @@
     - 'POST /api/servers/:s/databases/:db/tables/:t/operations/sql'
   ui: '/s/:s/db/:db/t/:table/operations'
 /table/partition/analyze:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/analyze'
-  ui: '/s/:s/db/:db/t/:table/partition/analyze'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/partition/check:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/check'
-  ui: '/s/:s/db/:db/t/:table/partition/check'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/partition/drop:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/drop'
-  ui: '/s/:s/db/:db/t/:table/partition/drop'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/partition/optimize:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/optimize'
-  ui: '/s/:s/db/:db/t/:table/partition/optimize'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/partition/rebuild:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/rebuild'
-  ui: '/s/:s/db/:db/t/:table/partition/rebuild'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/partition/repair:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/repair'
-  ui: '/s/:s/db/:db/t/:table/partition/repair'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/partition/truncate:
-  api: '/api/servers/:s/databases/:db/tables/:table/partition/truncate'
-  ui: '/s/:s/db/:db/t/:table/partition/truncate'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Partitions card of the Structure page
 /table/privileges:
   api: 'GET /api/servers/:s/databases/:db/tables/:t/privileges'
   ui: '/s/:s/db/:db/t/:table/privileges'
@@ -655,13 +662,12 @@
   ui: '/s/:s/db/:db/t/:table/structure'
   planned: M2
 /table/structure/add-key:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/add-key'
-  ui: '/s/:s/db/:db/t/:table/structure/add-key'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/key'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the row Primary / Unique / Index / Spatial / Fulltext links
 /table/structure/browse:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/browse'
-  ui: '/s/:s/db/:db/t/:table/structure/browse'
-  planned: M2
+  ui: '/s/:s/db/:db/sql'
+  note: With selected Browse runs the SELECT of the checked columns on the SQL page
 /table/structure/central-columns-add:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/structure/central-columns-add'
   ui: '/s/:s/db/:db/t/:table/structure'
@@ -671,55 +677,53 @@
   ui: '/s/:s/db/:db/t/:table/structure'
   note: row link and With-selected button of the Structure page
 /table/structure/change:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/change'
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/columns/form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/columns/change'
   ui: '/s/:s/db/:db/t/:table/structure/change'
-  planned: M2
 /table/structure/drop:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/drop'
-  ui: '/s/:s/db/:db/t/:table/structure/drop'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/drop'
+  ui: '/s/:s/db/:db/t/:table/structure'
 /table/structure/drop-confirm:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/drop-confirm'
-  ui: '/s/:s/db/:db/t/:table/structure/drop-confirm'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/drop'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the confirmation is a dialog of the Structure page
 /table/structure/fulltext:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/fulltext'
-  ui: '/s/:s/db/:db/t/:table/structure/fulltext'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/key'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: With selected Fulltext
 /table/structure/index:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/index'
-  ui: '/s/:s/db/:db/t/:table/structure/index'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/key'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: With selected Index
 /table/structure/move-columns:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/move-columns'
-  ui: '/s/:s/db/:db/t/:table/structure/move-columns'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/move'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: the Move columns dialog
 /table/structure/partitioning:
   api:
-    - 'GET /api/servers/:s/databases/:db/tables/:t/partitions/*'
-    - 'POST /api/servers/:s/databases/:db/tables/:t/partitions/*'
+    - 'GET /api/servers/:s/databases/:db/tables/:t/partitions/form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/partitions/partitioning'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/partitions/remove-partitioning'
   ui: '/s/:s/db/:db/t/:table/structure/partitioning'
-  planned: M2
 /table/structure/primary:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/primary'
-  ui: '/s/:s/db/:db/t/:table/structure/primary'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/key'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: With selected Primary (with the replace-primary confirmation)
 /table/structure/reserved-word-check:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/reserved-word-check'
-  ui: '/s/:s/db/:db/t/:table/structure/reserved-word-check'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/reserved-word-check'
+  ui: '/s/:s/db/:db/t/:table/structure/change'
 /table/structure/save:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/save'
-  ui: '/s/:s/db/:db/t/:table/structure/save'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/change'
+  ui: '/s/:s/db/:db/t/:table/structure/change'
 /table/structure/spatial:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/spatial'
-  ui: '/s/:s/db/:db/t/:table/structure/spatial'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/key'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: With selected Spatial
 /table/structure/unique:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/unique'
-  ui: '/s/:s/db/:db/t/:table/structure/unique'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/key'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: With selected Unique
 /table/tracking:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/tracking'

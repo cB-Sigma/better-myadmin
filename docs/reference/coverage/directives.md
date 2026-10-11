@@ -121,7 +121,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:370<br>apps/web/src/features/sql/SqlPage.tsx:543 |  |
+| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:371<br>apps/web/src/features/sql/SqlPage.tsx:543 |  |
 | ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:284<br>apps/server/src/routes/metadata.ts:212<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:360 |  |
 | ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:479<br>apps/web/src/features/browse/GridTable.tsx:514<br>apps/web/src/features/browse/GridTable.tsx:577 |  |
 | ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:480<br>apps/web/src/features/browse/GridTable.tsx:510<br>apps/web/src/features/browse/GridTable.tsx:577 |  |
@@ -131,11 +131,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `DefaultTransformations/TextLink` |  |  |
 | ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/insert-edit/form.ts:194<br>apps/server/src/table/search.ts:133 |  |
 | ✅ | `GridEditing` | apps/server/src/browse/grid.ts:693<br>apps/server/src/browse/grid.ts:694 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:284<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:207<br>apps/server/src/table/structure-page.ts:371 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:285<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:207<br>apps/server/src/table/structure-page.ts:372 |  |
 | ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:466<br>apps/server/src/browse/grid.ts:816<br>apps/server/src/browse/grid.ts:1030 |  |
 | ⬜ | `LinkLengthLimit` |  |  |
 | ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/database/structure.ts:240<br>apps/server/src/database/tables.ts:224<br>apps/server/src/export/page.ts:39<br>apps/server/src/query/pipeline.ts:708 |  |
-| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:595<br>apps/server/src/browse/grid.ts:823<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/database/central-columns.ts:118 |  |
+| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:595<br>apps/server/src/browse/grid.ts:823<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/database/central-columns.ts:119 |  |
 | ✅ | `Order` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:51<br>apps/web/src/features/console/Console.tsx:892<br>apps/web/src/features/console/Console.tsx:895<br>apps/web/src/features/sql/ProfilingCard.tsx:70 |  |
 | ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1115<br>apps/server/src/insert-edit/form.ts:403<br>apps/server/src/insert-edit/form.ts:477 |  |
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
@@ -158,7 +158,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:104 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:105 |  |
 | ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:91 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |
@@ -183,9 +183,9 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |---|---|---|---|
 | ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:155<br>apps/server/src/table/maintenance.ts:58 |  |
 | ⬜ | `Export/sql_auto_increment` |  |  |
-| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:368<br>apps/web/src/features/table/structure/StructurePage.tsx:244 |  |
-| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:206<br>apps/server/src/table/structure-page.ts:372 |  |
-| ✅ | `ShowStats` | apps/server/src/database/structure.ts:138<br>apps/server/src/table/structure-page.ts:259<br>apps/server/src/table/structure-page.ts:369 |  |
+| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:369<br>apps/web/src/features/table/structure/StructurePage.tsx:244 |  |
+| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:225<br>apps/server/src/table/structure-page.ts:373 |  |
+| ✅ | `ShowStats` | apps/server/src/database/structure.ts:138<br>apps/server/src/table/structure-page.ts:260<br>apps/server/src/table/structure-page.ts:370 |  |
 
 ## 05 database level — 8/32 (25.0%) covered, 8/32 implemented
 
@@ -443,7 +443,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/table_coords` |  |  |
 | ⬜ | `Servers/*/table_info` |  |  |
 | ⬜ | `Servers/*/userconfig` |  |  |
-| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:367<br>apps/web/src/features/table/structure/StructurePage.tsx:156<br>apps/web/src/features/table/structure/StructurePage.tsx:218 |  |
+| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:368<br>apps/web/src/features/table/structure/StructurePage.tsx:156<br>apps/web/src/features/table/structure/StructurePage.tsx:218 |  |
 | ✅ | `ShowDbStructureCharset` | apps/server/src/database/structure.ts:149 |  |
 | ✅ | `ShowDbStructureComment` | apps/server/src/database/structure.ts:150 |  |
 | ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:151<br>apps/server/src/database/structure.ts:310 |  |

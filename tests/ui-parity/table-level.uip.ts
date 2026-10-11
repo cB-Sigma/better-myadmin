@@ -94,14 +94,18 @@ pageParity('table-column-change', {
     params: { ...p(FIX.table), field: 'created', change_column: '1' },
   },
   ours: { path: `${T}/${FIX.table}/structure/change?fields=created` },
-  known: 'no "Pick from Central Columns" link yet (central columns land with the database-level work)',
+  interactions: [
+    {
+      name: 'pick from central columns',
+      pma: (page) => page.locator('a.central_columns_dialog').first().click(),
+      ours: (page) => page.locator('.central_columns_dialog').first().click(),
+    },
+  ],
 })
 
 pageParity('table-normalization', {
   pma: { route: '/normalization', params: p(FIX.table) },
   ours: { path: `${T}/${FIX.table}/normalization` },
-  known:
-    'no "Show me the central list of columns…" link yet (central columns land with the database-level work)',
   interactions: [
     { name: '1NF step 1', do: { click: 'Go' } },
     {
@@ -115,6 +119,11 @@ pageParity('table-normalization', {
       ours: (page) => page.locator('#selectNonAtomicCol').selectOption('no_such_col'),
     },
   ],
+})
+
+pageParity('table-privileges', {
+  pma: { route: '/table/privileges', params: p(FIX.table) },
+  ours: { path: `${T}/${FIX.table}/privileges` },
 })
 
 /** an icon + text link (the reference's accessible name repeats the image's alt) */

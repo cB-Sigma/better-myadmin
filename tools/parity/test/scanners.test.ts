@@ -47,6 +47,10 @@ describe('TanStack file routes', () => {
     expect(fileToRoute('s/$server/route.tsx')).toEqual({ path: '/s/:server', splat: false })
     expect(fileToRoute('s/$server/db/$db/index.tsx')).toEqual({ path: '/s/:server/db/:db', splat: false })
     expect(fileToRoute('s/$server/sql.tsx')).toEqual({ path: '/s/:server/sql', splat: false })
+    expect(fileToRoute('s/$server/db/$db/t/$table/structure_.add.tsx')).toEqual({
+      path: '/s/:server/db/:db/t/:table/structure/add',
+      splat: false,
+    })
     expect(fileToRoute('s/$server/$.tsx')).toEqual({ path: '/s/:server/*', splat: true })
     expect(fileToRoute('s/_layout/about.tsx')).toEqual({ path: '/s/about', splat: false })
     expect(fileToRoute('s.$server.status.tsx')).toEqual({ path: '/s/:server/status', splat: false })
