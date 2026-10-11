@@ -184,9 +184,15 @@ function InsertEditForm({
       const msgs = [r.message]
       if (r.next.action === 'back') {
         setFlash(msgs)
-        await navigate({
-          to: goto ?? `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}/sql`,
-        })
+        const tbl = `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}`
+        if (goto !== undefined) await navigate({ to: goto })
+        else if (r.next.sql !== undefined) {
+          // back to the Browse query the rows came from (it runs again)
+          await navigate({
+            to: `${tbl}/browse`,
+            search: { sql: r.next.sql.sql, sig: r.next.sql.sig } as never,
+          })
+        } else await navigate({ to: `${tbl}/sql` })
       } else if (r.next.action === 'insert') {
         reload(
           {

@@ -226,7 +226,8 @@ export const SaveRowsResponse = z.object({
   sqlQuery: z.string(),
   /** where to go next: back to the previous page, or reopen /table/change */
   next: z.discriminatedUnion('action', [
-    z.object({ action: z.literal('back') }),
+    /** back: to the Browse query the form came from (signed), else the table's SQL tab */
+    z.object({ action: z.literal('back'), sql: z.object({ sql: z.string(), sig: z.string() }).optional() }),
     z.object({ action: z.literal('insert') }),
     /** same_insert / edit_next / a failed input transformation: these signed clauses */
     z.object({

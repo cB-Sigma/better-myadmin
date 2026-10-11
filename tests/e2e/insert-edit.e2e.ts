@@ -94,4 +94,14 @@ test('insert rows through the Insert tab [p03-35434c]', async ({ page }) => {
   await page.locator('#buttonYes').click()
   await expect(page.getByText('1 row inserted.')).toBeVisible()
   expect(await rows()).toEqual([[1, 'alpha', 'b', 2, 'POINT(3 4)']])
+
+  // Edit from Browse, save, and come back to the Browse query with the message
+  await page.goto(`/s/1/db/${DB}/t/t/browse`)
+  await page.locator('td.edit_row_anchor a').first().click()
+  await expect(page.locator('#insertForm')).toBeVisible()
+  await page.locator('input[name="fields[multi_edit][0][b068931cc450442b63f5b3d276ea4297]"]').fill('beta')
+  await page.locator('#buttonYes').click()
+  await expect(page.getByText('1 row affected.')).toBeVisible()
+  await expect(page.locator('#sqlqueryresultsouter')).toContainText('beta')
+  expect((await rows())[0]?.[1]).toBe('beta')
 })

@@ -17,7 +17,8 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/edit')({
     action: z.enum(['insert', 'update']).optional(),
     unique: z.coerce.number().optional(),
     goto: z.string().optional(),
-    sql_query: z.string().optional(),
+    /** the Browse query (sql_query) */
+    sql: z.string().optional(),
   }),
   component: function Edit() {
     const { server, db, table } = Route.useParams()
@@ -34,7 +35,7 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/edit')({
         copy={s.action === 'insert'}
         clauseIsUnique={s.unique === 1}
         goto={s.goto}
-        sqlQuery={s.sql_query}
+        sqlQuery={s.sql}
       />
     )
   },

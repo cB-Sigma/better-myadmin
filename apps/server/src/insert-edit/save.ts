@@ -220,7 +220,10 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
         return { action: 'edit', where: signed([editNext]) }
       return { action: 'edit', where: signed(whereClauses) }
     }
-    return { action: 'back' }
+    // getGotoInclude: from Browse (goto /sql) the query runs again
+    return req.sqlQuery !== ''
+      ? { action: 'back', sql: { sql: req.sqlQuery, sig: sign(ctx, req.sqlQuery) } }
+      : { action: 'back' }
   }
 
   if (queries.length === 0 && !req.preview && !rowSkipped) {
