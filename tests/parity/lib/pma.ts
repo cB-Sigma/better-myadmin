@@ -8,6 +8,13 @@ export interface PmaJson {
   [key: string]: unknown
 }
 
+/** postPage options: a multipart file upload, a byte-exact body, the response status/headers. */
+export interface PostOptions {
+  file?: { field: string; name: string; data: Buffer } | null
+  binary?: boolean
+  onHeaders?: (status: number, headers: Headers) => void
+}
+
 /** A form body: an object, or ordered pairs when a key repeats (`selected_fld[]`, …). */
 export type PmaForm = Record<string, string> | Array<[string, string]>
 
@@ -68,13 +75,17 @@ export class PmaClient {
     return json(target, await this.#send(url(target, q), undefined, true))
   }
 
-  /** A form POST the way the page's own forms send it (not AJAX). */
-  postPage(target: string, form: PmaForm = {}): Promise<string> {
+  /**
+   * A form POST the way the page's own forms send it (not AJAX). `file` sends it as
+   * multipart/form-data with that file (the import form); `binary` answers the body byte for byte
+   * (latin1-decoded: downloads such as /export) and reports status and headers to `onHeaders`.
+   */
+  postPage(target: string, form: PmaForm = {}, opts: PostOptions = {}): Promise<string> {
     const body = withDefaults(pairs(form), [
       ['server', '1'],
       ['token', this.token],
     ])
-    return this.#send(url(target), body)
+    return this.#send(url(target), body, false, opts)
   }
 
   /** A POST the way phpMyAdmin's AJAX handlers send it, JSON-decoded. */
@@ -87,17 +98,33 @@ export class PmaClient {
     return json(target, await this.#send(url(target), body, true))
   }
 
-  async #send(path: string, body?: Array<[string, string]>, ajax = false): Promise<string> {
+  async #send(
+    path: string,
+    body?: Array<[string, string]>,
+    ajax = false,
+    opts: PostOptions = {},
+  ): Promise<string> {
     const headers: Record<string, string> = {}
     if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
-    if (body !== undefined) headers['content-type'] = 'application/x-www-form-urlencoded'
+    let payload: string | FormData | undefined
+    if (body !== undefined && opts.file !== undefined) {
+      const fd = new FormData()
+      for (const [k, v] of body) fd.append(k, v)
+      if (opts.file !== null)
+        fd.append(opts.file.field, new Blob([new Uint8Array(opts.file.data)]), opts.file.name)
+      payload = fd
+    } else if (body !== undefined) {
+      headers['content-type'] = 'application/x-www-form-urlencoded'
+      payload = new URLSearchParams(body).toString()
+    }
     if (ajax) headers['x-requested-with'] = 'XMLHttpRequest'
     const res = await fetch(this.base + path, {
       method: body === undefined ? 'GET' : 'POST',
       headers,
       redirect: 'manual',
-      ...(body !== undefined ? { body: new URLSearchParams(body).toString() } : {}),
+      ...(payload !== undefined ? { body: payload } : {}),
     })
+    opts.onHeaders?.(res.status, res.headers)
     for (const c of res.headers.getSetCookie()) {
       const [kv = ''] = c.split(';')
       const i = kv.indexOf('=')
@@ -105,6 +132,7 @@ export class PmaClient {
       if (v === 'deleted' || v === '') this.#cookies.delete(kv.slice(0, i))
       else this.#cookies.set(kv.slice(0, i), v)
     }
+    if (opts.binary === true) return Buffer.from(await res.arrayBuffer()).toString('latin1')
     if (res.status >= 300 && res.status < 400) {
       const loc = res.headers.get('location') ?? '/'
       return this.#send(

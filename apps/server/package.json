@@ -14,6 +14,8 @@
   "dependencies": {
     "@bettermyadmin/config": "workspace:*",
     "@bettermyadmin/contracts": "workspace:*",
+    "@bettermyadmin/export": "workspace:*",
+    "@bettermyadmin/import": "workspace:*",
     "@bettermyadmin/i18n": "workspace:*",
     "@bettermyadmin/kbs": "workspace:*",
     "@bettermyadmin/metadata": "workspace:*",

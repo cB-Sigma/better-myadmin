@@ -224,11 +224,10 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/import/options?scope=&format=` | plugin list and options (`Import[*]` defaults, `upload_max_filesize` equivalent `MaxUploadSize`), server upload dir files | `/import` page |
-| POST | `/api/import/uploads` / PATCH `/api/import/uploads/:id` | resumable chunked upload | `$_FILES` |
-| POST | `/api/import/jobs` | `{source: {uploadId}|{serverFile}|{sql}, format, options, scope, skipQueries, allowInterrupt, fkChecks, charset}` → `{jobId}` | `/import` submit |
-| GET | `/api/import/jobs/:id/events` (SSE) | progress / done / error | `/import-status` polling |
-| POST | `/api/import/jobs/:id/resume` | continue after interrupt from statement N | partial import resume |
+| GET | `/api/servers/:s/import/page?db=&table=` | the import page view-model of the scope: plugins with their options (`Import[*]` defaults), compressions, `MaxUploadSize` label, UploadDir files, encodings, partial-import state, foreign key checks default | `/server/import`, `/database/import`, `/table/import` |
+| POST | `/api/servers/:s/import/uploads` / PATCH `/api/servers/:s/import/uploads/:id?offset=n` | chunked upload (raw chunk bodies at the expected offset, capped by `MaxUploadSize`) → `{id}` / `{size}` | `$_FILES` |
+| POST | `/api/servers/:s/import/jobs` | `{params: [[name, value]…] (the import form's fields), upload?: {id, name}}` → `{id}` | `/import` submit |
+| GET | `/api/servers/:s/import/jobs/:id/events` (SSE) | runs the job: `progress` `{offset, total, executed}`, then `result` `{message?, echoed?, error?, statements?, reloadNavigation, db, table}` (or `failure`) | `/import`, `/import-status` |
 
 ## Transformations
 

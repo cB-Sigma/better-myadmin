@@ -50,9 +50,15 @@ importers:
       '@bettermyadmin/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@bettermyadmin/export':
+        specifier: workspace:*
+        version: link:../../packages/export
       '@bettermyadmin/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@bettermyadmin/import':
+        specifier: workspace:*
+        version: link:../../packages/import
       '@bettermyadmin/kbs':
         specifier: workspace:*
         version: link:../../packages/kbs
@@ -212,6 +218,24 @@ importers:
         specifier: 3.24.4
         version: 3.24.4
 
+  packages/export:
+    dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@bettermyadmin/mysql-types':
+        specifier: workspace:*
+        version: link:../mysql-types
+      '@bettermyadmin/sql-gen':
+        specifier: workspace:*
+        version: link:../sql-gen
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../sql-lexer
+      iconv-lite:
+        specifier: 0.6.3
+        version: 0.6.3
+
   packages/i18n:
     dependencies:
       '@lingui/core':
@@ -227,6 +251,30 @@ importers:
       typescript:
         specifier: 5.8.3
         version: 5.8.3
+
+  packages/import:
+    dependencies:
+      '@bettermyadmin/export':
+        specifier: workspace:*
+        version: link:../export
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+      '@bettermyadmin/mysql-types':
+        specifier: workspace:*
+        version: link:../mysql-types
+      '@bettermyadmin/sql-gen':
+        specifier: workspace:*
+        version: link:../sql-gen
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../sql-lexer
+      '@xmldom/xmldom':
+        specifier: 0.8.10
+        version: 0.8.10
+      seek-bzip:
+        specifier: 2.0.0
+        version: 2.0.0
 
   packages/kbs:
     dependencies:
@@ -1570,6 +1618,11 @@ packages:
   '@vitest/utils@3.1.3':
     resolution: {integrity: sha512-2Ltrpht4OmHO9+c/nmHtF09HWiyWdworqnHIwjfvDyWjuwKbdkcS9AnhsDn+8E2RM4x++foD1/tNuLPVvWG1Rg==}
 
+  '@xmldom/xmldom@0.8.10':
+    resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
+    engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
+
   '@zxcvbn-ts/core@3.0.4':
     resolution: {integrity: sha512-aQeiT0F09FuJaAqNrxynlAwZ2mW/1MdXakKWNmGM1Qp/VaY6CnB/GfnMS2T8gB2231Esp1/maCWd8vTG4OuShw==}
 
@@ -1684,6 +1737,10 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+
+  commander@6.2.1:
+    resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
+    engines: {node: '>= 6'}
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -2094,6 +2151,10 @@ packages:
 
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
+
+  seek-bzip@2.0.0:
+    resolution: {integrity: sha512-SMguiTnYrhpLdk3PwfzHeotrcwi8bNV4iemL9tx9poR/yeaMYwB9VzR1w7b57DuWpuqR8n6oZboi0hj3AxZxQg==}
+    hasBin: true
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -3541,6 +3602,8 @@ snapshots:
       loupe: 3.2.1
       tinyrainbow: 2.0.0
 
+  '@xmldom/xmldom@0.8.10': {}
+
   '@zxcvbn-ts/core@3.0.4':
     dependencies:
       fastest-levenshtein: 1.0.16
@@ -3657,6 +3720,8 @@ snapshots:
       color-name: 1.1.4
 
   color-name@1.1.4: {}
+
+  commander@6.2.1: {}
 
   convert-source-map@2.0.0: {}
 
@@ -4009,6 +4074,10 @@ snapshots:
   safer-buffer@2.1.2: {}
 
   scheduler@0.26.0: {}
+
+  seek-bzip@2.0.0:
+    dependencies:
+      commander: 6.2.1
 
   semver@6.3.1: {}
 

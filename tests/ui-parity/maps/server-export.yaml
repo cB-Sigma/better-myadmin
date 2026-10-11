@@ -1,0 +1,7 @@
+# Intentional differences of the export form (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: button, label: Export }
+    ignore: [section]
+    reason: >-
+      the submit row follows the last card in both apps; our card titles are h2 headings (Panel),
+      phpMyAdmin's are plain div.card-header, so the preceding-heading fallback names a different section

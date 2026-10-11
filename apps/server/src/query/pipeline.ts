@@ -46,6 +46,8 @@ export interface PipelineInput {
   profiling?: boolean | undefined
   /** Current::$messageToShow (the /sql path: e.g. "The row has been deleted."). */
   messageToShow?: string | undefined
+  /** already split statements (a file import's goSql queries) instead of splitting `sql` */
+  statements?: readonly string[] | undefined
 }
 
 /** What a results-grid builder receives for a statement with a result set (Results.php). */
@@ -196,7 +198,7 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
   try {
     if (input.fkChecks !== undefined)
       await setVariable(conn, 'FOREIGN_KEY_CHECKS', input.fkChecks ? 'ON' : 'OFF')
-    run = await runImport(splitSql(sql, { delimiter: input.delimiter }), {
+    run = await runImport(input.statements ?? splitSql(sql, { delimiter: input.delimiter }), {
       conn,
       runQuery: state.showAsPhp === null,
       db,
@@ -463,7 +465,12 @@ export async function executeStatement(
     // hasCurrentDbChanged + selectDb
     const current = await conn.value('SELECT DATABASE()', 'query.current-db')
     base.reload = current !== null && current !== db
-    if (current !== db) await conn.query(`USE ${backquote(db)}`, 'query.select-db')
+    if (current !== db) {
+      // DatabaseInterface::selectDb: a failure (unknown database) is not raised, the query runs
+      await conn.query(`USE ${backquote(db)}`, 'query.select-db').catch((e: unknown) => {
+        if (!(e instanceof MysqlError)) throw e
+      })
+    }
   }
   state.reload = base.reload
 
