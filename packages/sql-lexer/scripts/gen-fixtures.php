@@ -2,7 +2,7 @@
 
 /**
  * Generates the JSON fixtures of packages/sql-lexer/test/fixtures/ by running the PHP implementation
- * (phpmyadmin/sql-parser 6.0.0 as vendored by phpMyAdmin, plus phpMyAdmin's Linter) over:
+ * (phpmyadmin/sql-parser 6.0.1 as vendored by phpMyAdmin, plus phpMyAdmin's Linter) over:
  *   - the sql-parser test corpus (tests/data/lexer, parser, bugs, misc *.in files),
  *   - the extra edge cases of scripts/extra-cases.php.
  *

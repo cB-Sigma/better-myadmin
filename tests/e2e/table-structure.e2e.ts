@@ -53,12 +53,12 @@ test('create table, add / change a column, add indexes, drop a column', async ({
   await page.getByRole('textbox', { name: 'Table name:' }).fill('items')
   await expect(page.locator('[data-testid^=column-row-]')).toHaveCount(4)
   const r0 = page.getByTestId('column-row-0')
-  await r0.getByLabel('Name').fill('id')
+  await r0.getByLabel('Column', { exact: true }).fill('id')
   await r0.getByLabel('AUTO_INCREMENT').check()
   // ticking A_I selects PRIMARY in the Index column
   await expect(r0.getByLabel('Index')).toHaveValue('primary')
   const r1 = page.getByTestId('column-row-1')
-  await r1.getByLabel('Name').fill('title')
+  await r1.getByLabel('Column', { exact: true }).fill('title')
   await r1.getByLabel('Type').selectOption('VARCHAR')
   // VARCHAR without a length is refused like checkTableEditForm
   await page.getByRole('button', { name: 'Save' }).click()
@@ -79,7 +79,7 @@ test('create table, add / change a column, add indexes, drop a column', async ({
   await page.locator('#addColumns').getByRole('button', { name: 'Go' }).click()
   await expect(page).toHaveURL(/\/structure\/add\?/)
   const a0 = page.getByTestId('column-row-0')
-  await a0.getByLabel('Name').fill('qty')
+  await a0.getByLabel('Column', { exact: true }).fill('qty')
   await a0.getByLabel('Null').check()
   await page.getByRole('button', { name: 'Save' }).click()
   await expect(page).toHaveURL(/\/t\/items\/structure$/)
@@ -91,7 +91,7 @@ test('create table, add / change a column, add indexes, drop a column', async ({
   // ---- change "title": longer, with a comment
   await page.getByTestId('structure-row-title').getByRole('link', { name: 'Change' }).click()
   const c0 = page.getByTestId('column-row-0')
-  await expect(c0.getByLabel('Name')).toHaveValue('title')
+  await expect(c0.getByLabel('Column', { exact: true })).toHaveValue('title')
   await expect(c0.getByLabel('Length/Values')).toHaveValue('40')
   await c0.getByLabel('Length/Values').fill('80')
   await c0.getByLabel('Comments').fill('the title')

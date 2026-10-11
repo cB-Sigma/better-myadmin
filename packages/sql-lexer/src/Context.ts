@@ -102,6 +102,9 @@ const OPERATORS: ReadonlyMap<string, number> = new Map([
   [')', 16],
   ['.', 16],
   [',', 16],
+  // sql-parser 6.0.1: the JSON path operators are punctuation (no spaces around them when formatted)
+  ['->', 16],
+  ['->>', 16],
   [';', 16],
 ])
 

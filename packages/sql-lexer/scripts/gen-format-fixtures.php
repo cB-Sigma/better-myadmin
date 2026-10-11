@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Generates test/fixtures/format.json: phpmyadmin/sql-parser 6.0.0 Formatter::format() output for
+ * Generates test/fixtures/format.json: phpmyadmin/sql-parser 6.0.1 Formatter::format() output for
  *   - the library's own FormatterTest cases (text/cli/html, with their options),
  *   - the sql-parser test corpus and scripts/extra-cases.php, formatted the way phpMyAdmin's
  *     /database/sql/format does it (type text, and the "single line" variant) plus html.

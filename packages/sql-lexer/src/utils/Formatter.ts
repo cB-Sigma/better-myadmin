@@ -298,11 +298,17 @@ export class Formatter {
         } else if (
           prev.keyword === 'DELIMITER' ||
           !(
-            (prev.type === TokenType.Operator && (prev.value === '.' || prev.value === '(')) ||
-            // No space after . (
+            (prev.type === TokenType.Operator &&
+              (prev.value === '.' || prev.value === '(' || prev.value === '->' || prev.value === '->>')) ||
+            // No space after punctuation and JSON operators (sql-parser 6.0.1).
             (curr.type === TokenType.Operator &&
-              (curr.value === '.' || curr.value === ',' || curr.value === '(' || curr.value === ')')) ||
-            // No space before . , ( )
+              (curr.value === '.' ||
+                curr.value === ',' ||
+                curr.value === '(' ||
+                curr.value === ')' ||
+                curr.value === '->' ||
+                curr.value === '->>')) ||
+            // No space before punctuation and JSON operators.
             (curr.type === TokenType.Delimiter && Array.from(phpString(curr.value)).length < 2)
           )
         ) {

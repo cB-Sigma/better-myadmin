@@ -7,10 +7,6 @@ rules:
   - ours: { kind: select, label: Color mode for the theme }
     added: every theme has a dark variant, so the colour-mode select is always shown
     exception: X31
-  - pma: { kind: link, label: GitHub, section: phpMyAdmin }
-    n/a: environment — the reference runs from a git checkout (ShowGitRevision prints branch and commit links)
-  - pma: { kind: link, label: Maurício Meneghini Fauth, section: phpMyAdmin }
-    n/a: environment — the git revision line names the reference commit's author
   - match: { kind: link, label: Documentation, section: Web server }
     ignore: [section]
     reason: >-

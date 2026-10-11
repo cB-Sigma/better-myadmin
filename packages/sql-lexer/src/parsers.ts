@@ -2324,7 +2324,8 @@ export const AlterOperations = {
             break
           }
         } else if (!checkIfTokenQuotedSymbol(token) && token.type !== TokenType.String) {
-          if (hasStatementParser(arrayKey)) {
+          // sql-parser 6.0.1: ASC / DESC of a key part (`ADD UNIQUE KEY (a DESC)`) do not start a statement
+          if (hasStatementParser(arrayKey) && arrayKey !== 'ASC' && arrayKey !== 'DESC') {
             list.idx++ // Ignore the current token
             const nextToken = list.getNext()
 
