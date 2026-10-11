@@ -22,7 +22,8 @@ export function CreateTablePage({
   server,
   db,
   initialName,
-}: { server: number; db: string; initialName?: string }) {
+  numFields,
+}: { server: number; db: string; initialName?: string; numFields?: number }) {
   const navigate = useNavigate()
   const qc = useQueryClient()
   const q = useQuery({
@@ -34,7 +35,7 @@ export function CreateTablePage({
   if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined) return null
   const options = q.data.options
-  const current = rows ?? Array.from({ length: q.data.defaultColumns }, emptyRow)
+  const current = rows ?? Array.from({ length: numFields ?? q.data.defaultColumns }, emptyRow)
   const table =
     opts ??
     ({

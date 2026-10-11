@@ -1,4 +1,42 @@
 import mysql from 'mysql2/promise'
+import { liveHolders, registerHolder, withRegistryLock } from './log-holders.ts'
+
+/** Rotate (TRUNCATE) the log when it is larger than this and nobody holds a marker into it. */
+export const ROTATE_AT = Number(process.env.BMA_GENERAL_LOG_ROTATE_AT ?? 100_000)
+const INDEX = 'bma_event_time'
+
+/**
+ * Makes the log table cheap to read: MyISAM with an index on event_time (the default CSV engine
+ * cannot be indexed, so every since()/settle() scanned the whole log), and truncates it when large.
+ * Only called while no suite holds a marker (the log is switched off for the ALTER).
+ */
+async function prepare(conn: mysql.Connection): Promise<void> {
+  const [t] = (await conn.query(
+    "SELECT ENGINE AS engine, TABLE_ROWS AS n FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'mysql' AND TABLE_NAME = 'general_log'",
+  )) as unknown as [Array<{ engine: string; n: number | null }>]
+  const [idx] = (await conn.query('SHOW INDEX FROM mysql.general_log WHERE Key_name = ?', [
+    INDEX,
+  ])) as unknown as [unknown[]]
+  const engine = t[0]?.engine ?? ''
+  if (engine.toUpperCase() !== 'MYISAM' || idx.length === 0) {
+    const [[on]] = (await conn.query({
+      sql: 'SELECT @@GLOBAL.general_log',
+      rowsAsArray: true,
+    })) as unknown as [[[number]]]
+    await conn.query("SET GLOBAL general_log = 'OFF'")
+    try {
+      if (engine.toUpperCase() !== 'MYISAM') await conn.query('ALTER TABLE mysql.general_log ENGINE = MyISAM')
+      if (idx.length === 0) await conn.query(`ALTER TABLE mysql.general_log ADD INDEX ${INDEX} (event_time)`)
+    } finally {
+      if (Number(on) !== 0) await conn.query("SET GLOBAL general_log = 'ON'")
+    }
+  }
+  const [[count]] = (await conn.query({
+    sql: 'SELECT COUNT(*) FROM mysql.general_log',
+    rowsAsArray: true,
+  })) as unknown as [[[number]]]
+  if (Number(count) > ROTATE_AT) await conn.query('TRUNCATE TABLE mysql.general_log')
+}
 
 export interface LogEntry {
   command: string
@@ -7,13 +45,17 @@ export interface LogEntry {
 
 /**
  * Reads MySQL's general log (log_output=TABLE) for one account since a marker, so each tool's
- * statements can be isolated by the MySQL user it logged in as.
+ * statements can be isolated by the MySQL user it logged in as. The log table is MyISAM with an
+ * event_time index (prepare), so reading a window costs the window, not the whole log; it is
+ * rotated when large and unheld (lib/log-holders.ts, docs/architecture/14-development-setup.md).
  */
 export class GeneralLog {
   readonly #conn: mysql.Connection
+  readonly #release: () => void
 
-  private constructor(conn: mysql.Connection) {
+  private constructor(conn: mysql.Connection, release: () => void) {
     this.#conn = conn
+    this.#release = release
   }
 
   static async open(opts: {
@@ -23,9 +65,14 @@ export class GeneralLog {
     password: string
   }): Promise<GeneralLog> {
     const conn = await mysql.createConnection({ ...opts, dateStrings: true })
+    // index / rotate only while no other suite (any worktree) holds a marker, then register
+    const release = await withRegistryLock(async () => {
+      if (liveHolders().length === 0) await prepare(conn)
+      return registerHolder()
+    })
     await conn.query("SET GLOBAL log_output = 'TABLE'")
     await conn.query("SET GLOBAL general_log = 'ON'")
-    return new GeneralLog(conn)
+    return new GeneralLog(conn, release)
   }
 
   async marker(): Promise<string> {
@@ -84,6 +131,7 @@ export class GeneralLog {
   }
 
   async close(): Promise<void> {
+    this.#release()
     await this.#conn.end()
   }
 }

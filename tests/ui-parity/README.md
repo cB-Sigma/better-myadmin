@@ -11,8 +11,10 @@ open .data/ui-parity/index.html           # screenshots side by side + differenc
 
 Needs MySQL (`BMA_TEST_HOST/PORT`, root `BMA_TEST_PASSWORD`) and the reference phpMyAdmin
 (`BMA_PARITY_PMA_URL`, default `http://127.0.0.1:8081`, cookie auth); cases are skipped when it is
-down. global-setup creates `uip_db.uip_t`, our configuration storage `uip_pmadb` and one superuser per
-app (`uip_pma`, `uip_bma`); our server runs on a random port (`BMA_UIP_PORT`).
+down. global-setup creates `uip_db_<run>.uip_t`, our configuration storage `uip_pmadb_<run>`, the Insert/Edit
+database `uip_ie_<run>` and one superuser per app (`uip_pma_<run>`, `uip_bma_<run>`); global-teardown
+drops them. `<run>` is a hash of the worktree path (`BMA_UIP_RUN` overrides it), so runs from different
+worktrees on one MySQL never touch each other's accounts. Our server runs on a random port (`BMA_UIP_PORT`).
 
 ## Writing a case
 
@@ -64,7 +66,7 @@ rules:
     n/a: environment — the reference runs from a git checkout
   - ours: { kind: select, name: lang }                     # we add it
     added: the reference is built without translations
-  - match: { label: '/^(phpmyadmin|uip_pmadb)$/' }         # accept field differences
+  - match: { label: '/^(phpmyadmin|uip_pmadb_[a-z0-9]+)$/' }         # accept field differences
     ignore: [disabled, checked]
     reason: each app protects its own configuration storage
 ```
