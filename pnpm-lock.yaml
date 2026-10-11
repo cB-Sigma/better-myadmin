@@ -71,6 +71,9 @@ importers:
       '@hono/node-server':
         specifier: 1.14.1
         version: 1.14.1(hono@4.7.10)
+      bcryptjs:
+        specifier: 2.4.3
+        version: 2.4.3
       hono:
         specifier: 4.7.10
         version: 4.7.10
@@ -81,6 +84,9 @@ importers:
         specifier: 3.24.4
         version: 3.24.4
     devDependencies:
+      '@types/bcryptjs':
+        specifier: 2.4.6
+        version: 2.4.6
       tsx:
         specifier: 4.19.4
         version: 4.19.4
@@ -1440,6 +1446,9 @@ packages:
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
 
+  '@types/bcryptjs@2.4.6':
+    resolution: {integrity: sha512-9xlo6R2qDs5uixm0bcIqCeMCE6HiQsIyel9KQySStiyqNl2tnj2mP3DX1Nf56MD6KMenNNlBBsy3LJ7gUEQPXQ==}
+
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
 
@@ -1553,6 +1562,9 @@ packages:
     resolution: {integrity: sha512-ElY12DaROGuan+lMmZ8Cvo/ZUbXPe7Enc/9VU/b1T3Kp4dwytRcNdR8DoSJN5SNJT/CuvcCA0DHDVmMOCePdRQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  bcryptjs@2.4.3:
+    resolution: {integrity: sha512-V/Hy/X9Vt7f3BbPJEi8BdVFMByHi+jNXrYkW3huaybV/kQ0KJg0Y6PkEMbn+zeT+i+SiKZ/HMqJGIIt4LZDqNQ==}
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -3383,6 +3395,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.8
 
+  '@types/bcryptjs@2.4.6': {}
+
   '@types/estree@1.0.7': {}
 
   '@types/estree@1.0.9': {}
@@ -3507,6 +3521,8 @@ snapshots:
       - supports-color
 
   baseline-browser-mapping@2.11.27: {}
+
+  bcryptjs@2.4.3: {}
 
   binary-extensions@2.3.0: {}
 
