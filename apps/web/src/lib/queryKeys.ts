@@ -19,6 +19,8 @@ export const qk = {
   passwordForm: (s: number) => ['srv', s, 'account', 'password-form'] as const,
   db: (s: number, db: string) => ['srv', s, 'db', db] as const,
   dbScope: (s: number, db: string) => ['srv', s, 'db', db, 'scope'] as const,
+  /** a database page (structure, operations, routines, …) with its query */
+  dbPage: (s: number, db: string, page: string, q: object = {}) => ['srv', s, 'db', db, page, q] as const,
   tbl: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t] as const,
   tableScope: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'scope'] as const,
 }

@@ -14,7 +14,10 @@ import type {
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  CopyFormResponse,
   DatabaseScope,
+  DbActionResponse,
+  DbStructureResponse,
   DefaultFkCheckResponse,
   ErrorEnvelope,
   ErrorReportRequest,
@@ -28,6 +31,7 @@ import type {
   LoginRequest,
   LoginResponse,
   LogoutResponse,
+  MaintenanceResponse,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
@@ -36,8 +40,10 @@ import type {
   PasswordForm,
   QueryRequest,
   QueryResponse,
+  RealRowCountResponse,
   ServerScope,
   SetCollationResponse,
+  ShowCreateResponse,
   SimulateRequest,
   SimulateResponse,
   SqlFormResponse,
@@ -171,7 +177,35 @@ export const api = {
   consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+  // database level (docs/features/05-database-level.md)
+  dbStructure: (server: number, db: string, q: Record<string, string | undefined>) =>
+    call<DbStructureResponse>('GET', `${dbPath(server, db)}/structure${queryString(q)}`),
+  dbRealRowCount: (server: number, db: string, table: string | null) =>
+    call<RealRowCountResponse>(
+      'GET',
+      `${dbPath(server, db)}/structure/real-row-count${table === null ? '?all=1' : queryString({ table })}`,
+    ),
+  dbCopyForm: (server: number, db: string) =>
+    call<CopyFormResponse>('GET', `${dbPath(server, db)}/structure/copy-form`),
+  /** POST …/structure/{empty,drop,add-prefix,replace-prefix,copy-with-prefix,copy,central-*} */
+  dbStructureAction: (server: number, db: string, action: string, body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(server, db)}/structure/${action}`, body),
+  dbShowCreate: (server: number, db: string, tables: string[]) =>
+    call<ShowCreateResponse>('POST', `${dbPath(server, db)}/structure/show-create`, { tables }),
+  dbMaintenance: (server: number, db: string, op: string, tables: string[]) =>
+    call<MaintenanceResponse>('POST', `${dbPath(server, db)}/structure/maintenance`, { op, tables }),
+  favorite: (
+    server: number,
+    body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
+  ) =>
+    call<{ changes: boolean; favoriteTables?: string; message?: { text: string } }>(
+      'POST',
+      `/servers/${server}/favorites`,
+      body,
+    ),
 }
+
+const dbPath = (server: number, db: string) => `/servers/${server}/databases/${encodeURIComponent(db)}`
 
 function queryString(q: Record<string, string | number | undefined>): string {
   const qs = new URLSearchParams()

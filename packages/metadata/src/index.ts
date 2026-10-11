@@ -8,6 +8,7 @@
 import userFormFields from '../resources/generated/user-form-fields.json' with { type: 'json' }
 
 export * from './bookmarks.ts'
+export * from './cleanup.ts'
 export * from './conn.ts'
 export * from './driver.ts'
 export * from './foreign-keys.ts'
