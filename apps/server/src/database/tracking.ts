@@ -4,15 +4,10 @@ import {
   deleteTracking,
   getTrackedData,
   headVersions,
-  insertTrackingVersion,
-  phpSerialize,
   trackedTables,
-  trackingDate,
-  trackingLogComment,
   trackingSet,
 } from '@bettermyadmin/metadata'
-import { backquote } from '@bettermyadmin/sql-gen'
-import { sqlStructurePlugin } from '../table/table-def.ts'
+import { createVersion } from '../table/tracking.ts'
 import { type DbCtx, isSystemSchema, listTables, msg, tf } from './context.ts'
 import { isView } from './tables.ts'
 
@@ -20,7 +15,7 @@ import { isView } from './tables.ts'
  * Database → Tracking: tracked and untracked tables, deleting tracking data, creating a version
  * for several tables, and the database log.
  * pma: src/Controllers/Database/TrackingController.php, src/Tracking/Tracking.php,
- *      src/Tracking/Tracker.php::createVersion, templates/database/tracking/tables.twig
+ *      templates/database/tracking/tables.twig
  */
 
 /** TrackingController (GET): the page */
@@ -59,52 +54,6 @@ export async function trackingPage(ctx: DbCtx): Promise<DbTrackingResponse> {
   }
 }
 
-/**
- * Tracker::createVersion: the structure snapshot, the DROP/CREATE statements as the first log
- * entries, then the INSERT into pma__tracking (and the previous version deactivated).
- */
-export async function createVersion(
-  ctx: DbCtx,
-  table: string,
-  version: string,
-  statements: string,
-  view: boolean,
-): Promise<boolean> {
-  const set = statements !== '' ? statements : ctx.server.tracking_default_statements
-  const date = trackingDate()
-  const columns = (await ctx.reader.getColumns(ctx.db, table)).map((c) => ({
-    Field: c.Field,
-    Type: c.Type,
-    Collation: c.Collation,
-    Null: c.Null,
-    Key: c.Key,
-    Default: c.Default,
-    Extra: c.Extra,
-    Comment: c.Comment,
-  }))
-  const indexes = await ctx.dbi.fetchResultSimple(
-    `SHOW INDEXES FROM ${backquote(ctx.db)}.${backquote(table)}`,
-  )
-  const snapshot = phpSerialize({ COLUMNS: columns, INDEXES: indexes })
-  const log = trackingLogComment(date, ctx.user)
-  let createSql = ''
-  if (ctx.server.tracking_add_drop_table && !view)
-    createSql += `${log}DROP TABLE IF EXISTS ${backquote(table)};\n`
-  if (ctx.server.tracking_add_drop_view && view)
-    createSql += `${log}DROP VIEW IF EXISTS ${backquote(table)};\n`
-  // ExportSql::getTableDef with the plugin defaults ($view = false, no AUTO_INCREMENT value)
-  createSql += `${log}${await sqlStructurePlugin(ctx).getTableDef(ctx.db, table)}`
-  return insertTrackingVersion(ctx.control, ctx.rp, {
-    db: ctx.db,
-    table,
-    version,
-    date,
-    snapshot,
-    schemaSql: createSql,
-    trackingSet: set,
-  })
-}
-
 /** TrackingController (POST): delete_tracking / submit_mult=delete_tracking / submit_create_version */
 export async function trackingAction(ctx: DbCtx, req: DbTrackingRequest): Promise<DbActionResponse> {
   const { tr } = ctx
@@ -122,7 +71,8 @@ export async function trackingAction(ctx: DbCtx, req: DbTrackingRequest): Promis
     return { messages: [msg('success', tf(tr, text, `${ctx.db}.${req.table}`, req.version))] }
   }
   const set = trackingSet(req.statements)
-  for (const t of req.tables) await createVersion(ctx, t, req.version, set, await isView(ctx, ctx.db, t))
+  for (const t of req.tables)
+    await createVersion(ctx, ctx.db, t, req.version, set, await isView(ctx, ctx.db, t))
   return {
     messages: [
       msg(
