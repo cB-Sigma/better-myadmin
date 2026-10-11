@@ -37,6 +37,25 @@ export function classify(sql: string): Kind {
   return 'write'
 }
 
+/**
+ * Only the writes of two logs, normalised, in order (DDL suites: reads differ by design, writes
+ * never may). `exclude` drops statements of one tool that are out of scope for the suite.
+ */
+export function compareWrites(
+  pmaLog: LogEntry[],
+  bmaLog: LogEntry[],
+  dbMap: Record<string, string>,
+  exclude: RegExp[] = [],
+): { ok: boolean; pma: string[]; bma: string[] } {
+  const writes = (log: LogEntry[]) =>
+    log
+      .map((e) => normalise(e.sql, dbMap))
+      .filter((s) => classify(s) === 'write' && !exclude.some((re) => re.test(s)))
+  const pma = writes(pmaLog)
+  const bma = writes(bmaLog)
+  return { ok: pma.length === bma.length && pma.every((s, i) => s === bma[i]), pma, bma }
+}
+
 export interface Comparison {
   ok: boolean
   pma: string[]

@@ -159,10 +159,10 @@ export async function indexForm(
         })),
       }
     } else {
-      // Index::singleton with an unknown name: an empty INDEX of that name
+      // Index::singleton with an unknown name: a new Index (Non_unique false → UNIQUE) of that name
       index = {
         name: q.index,
-        choice: 'INDEX',
+        choice: 'UNIQUE',
         keyBlockSize: '0',
         type: '',
         parser: '',
@@ -173,7 +173,8 @@ export async function indexForm(
   } else {
     // In most cases an index may consist of up to 16 columns
     addFields = q.create !== undefined && q.create >= 2 ? Math.min(Math.trunc(q.create), 16) : 1
-    index = { name: '', choice: 'INDEX', keyBlockSize: '0', type: '', parser: '', comment: '', columns: [] }
+    // `new Index()`: Non_unique defaults to false, so Index::set() makes the choice UNIQUE
+    index = { name: '', choice: 'UNIQUE', keyBlockSize: '0', type: '', parser: '', comment: '', columns: [] }
   }
   // new rows preselect the i-th column (index_form.twig `j == i`)
   for (let i = 1; i <= addFields; i++) {
@@ -182,7 +183,9 @@ export async function indexForm(
   return {
     index,
     oldIndex: q.index ?? null,
-    primaryAllowed: index.choice === 'PRIMARY' || !hasPrimary,
+    // Index::hasPrimary() looks up the index's own schema/table, which a new Index does not have:
+    // the PRIMARY option is then always offered
+    primaryAllowed: index.choice === 'PRIMARY' || existing === undefined || !hasPrimary,
     fields,
     addFields,
     sliders: cfg.InitialSlidersState,

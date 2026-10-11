@@ -1,3 +1,13 @@
+/** An AJAX answer of phpMyAdmin (ResponseRenderer::ajaxResponse). */
+export interface PmaJson {
+  success: boolean
+  message?: string
+  error?: string
+  sql_data?: string
+  sql_query?: string
+  [key: string]: unknown
+}
+
 /**
  * Scripted client for the reference phpMyAdmin (cookie auth + the same POSTs its forms send).
  * The parity harness drives phpMyAdmin through these requests and BetterMyAdmin through its API,
@@ -74,6 +84,67 @@ export class PmaClient {
       true,
     )
     return JSON.parse(body) as { success: boolean; message?: string; results?: string; error?: string }
+  }
+
+  /**
+   * A form POST the way phpMyAdmin's JS sends it: `params` in order (repeat keys with a list of
+   * pairs), plus `server` and `token`, over AJAX (`ajax_request=true`) unless `ajax` is false.
+   * Returns the raw body (JSON for AJAX).
+   */
+  async post(
+    route: string,
+    params: Record<string, string> | Array<[string, string]>,
+    { ajax = true }: { ajax?: boolean } = {},
+  ): Promise<string> {
+    const pairs: Array<[string, string]> = Array.isArray(params) ? [...params] : Object.entries(params)
+    if (!pairs.some(([k]) => k === 'server')) pairs.push(['server', '1'])
+    if (!pairs.some(([k]) => k === 'token')) pairs.push(['token', this.token])
+    if (ajax && !pairs.some(([k]) => k === 'ajax_request')) pairs.push(['ajax_request', 'true'])
+    return this.#reqPairs(`/index.php?route=${route}`, pairs, ajax)
+  }
+
+  /** {@link post} and JSON.parse of the AJAX answer. */
+  async postJson(route: string, params: Record<string, string> | Array<[string, string]>): Promise<PmaJson> {
+    const body = await this.post(route, params)
+    try {
+      return JSON.parse(body) as PmaJson
+    } catch {
+      throw new Error(`phpMyAdmin did not answer JSON for ${route}: ${body.slice(0, 500)}`)
+    }
+  }
+
+  /** An AJAX GET (`ajax_request=1`), JSON-decoded. */
+  async getJson(route: string, params: Record<string, string> = {}): Promise<PmaJson> {
+    const qs = new URLSearchParams({ route, ...params, server: '1', ajax_request: '1' })
+    const body = await this.#reqPairs(`/index.php?${qs}`, undefined, true)
+    return JSON.parse(body) as PmaJson
+  }
+
+  async #reqPairs(path: string, pairs: Array<[string, string]> | undefined, ajax: boolean): Promise<string> {
+    const headers: Record<string, string> = {}
+    if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
+    if (pairs !== undefined) headers['content-type'] = 'application/x-www-form-urlencoded'
+    if (ajax) headers['x-requested-with'] = 'XMLHttpRequest'
+    const res = await fetch(this.base + path, {
+      method: pairs === undefined ? 'GET' : 'POST',
+      headers,
+      redirect: 'manual',
+      ...(pairs !== undefined ? { body: new URLSearchParams(pairs).toString() } : {}),
+    })
+    for (const c of res.headers.getSetCookie()) {
+      const [kv = ''] = c.split(';')
+      const i = kv.indexOf('=')
+      const v = kv.slice(i + 1)
+      if (v === 'deleted' || v === '') this.#cookies.delete(kv.slice(0, i))
+      else this.#cookies.set(kv.slice(0, i), v)
+    }
+    if (res.status >= 300 && res.status < 400) {
+      const loc = res.headers.get('location') ?? '/'
+      return this.#req(
+        loc.startsWith('http') ? new URL(loc).pathname + new URL(loc).search : `/${loc.replace(/^\.\//, '')}`,
+      )
+    }
+    return res.text()
   }
 
   /** The SQL tab form (resources/templates/sql/query.twig) posted to /import over AJAX. */

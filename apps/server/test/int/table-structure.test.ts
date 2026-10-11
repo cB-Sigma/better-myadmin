@@ -211,7 +211,7 @@ describe('create table, add and change columns', () => {
     })
     expect(rows[0]?.orig).toMatchObject({ extra: 'auto_increment', type: 'INT' })
     expect((form.options as Json).privsAvailable).toBe(true)
-    const columns = rows.map((r) => ({ ...r.values, orig: r.orig }))
+    const columns: Json[] = rows.map((r) => ({ ...r.values, orig: r.orig }))
     // untouched: id is re-stated (A_I box vs "auto_increment"), label is not
     const unchanged = await post(`${base}/tables/c1/columns/change`, { columns, dryRun: true })
     expect(unchanged.preview).toBe('ALTER TABLE `c1` CHANGE `id` `id` INT NOT NULL AUTO_INCREMENT;')
@@ -353,6 +353,12 @@ describe('index editor', () => {
 
   it('creates an index on N columns, refuses bad names, renames and drops', async () => {
     const form = await get(`${base}/tables/i/indexes/form?create=2`)
+    // a new Index() is UNIQUE and offers PRIMARY even when the table has one (phpMyAdmin quirk)
+    expect(form).toMatchObject({
+      oldIndex: null,
+      primaryAllowed: true,
+      index: { choice: 'UNIQUE', name: '' },
+    })
     expect((form.index as Json).columns).toEqual([
       { name: 'id', subPart: '', collation: '' },
       { name: 'name', subPart: '', collation: '' },
