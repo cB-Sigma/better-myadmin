@@ -23,23 +23,32 @@ import type {
   TrackingSnapshotResponse,
 } from '@bettermyadmin/contracts'
 import { TRACKING_STATEMENTS } from '@bettermyadmin/contracts'
-import { sprintf } from '@bettermyadmin/i18n'
-import { type MetaConn, phpSerialize, phpUnserialize } from '@bettermyadmin/metadata'
-import { backquote, quoteString } from '@bettermyadmin/sql-gen'
+import { type Translator, sprintf } from '@bettermyadmin/i18n'
+import {
+  type TrackingLogEntry as LogEntry,
+  type MetaConn,
+  type RelationParameters,
+  changeTrackingData,
+  changeTracking as changeTrackingRow,
+  deleteTracking,
+  insertTrackingVersion,
+  phpSerialize,
+  phpUnserialize,
+  getTrackedData as trackedRow,
+  trackedTables,
+  trackingDate,
+  trackingLogComment,
+  trackingVersions,
+} from '@bettermyadmin/metadata'
+import { backquote } from '@bettermyadmin/sql-gen'
 import type { z } from 'zod'
+import type { AppConfig, ServerConfig } from '../config.ts'
 import { MysqlError, ValidationError } from '../http/errors.ts'
 import type { OpsCtx } from './operations.ts'
+import type { TableReader } from './read.ts'
 import { sqlStructurePlugin } from './table-def.ts'
 
 type In<T extends z.ZodTypeAny> = z.output<T>
-const q = (s: string) => quoteString(s)
-const bq = backquote
-
-interface LogEntry {
-  date: string
-  username: string
-  statement: string
-}
 
 interface TrackedData {
   dateFrom: string
@@ -51,11 +60,7 @@ interface TrackedData {
 }
 
 const pad = (n: number) => String(n).padStart(2, '0')
-
-/** DateTimeImmutable::format('Y-m-d H:i:s') (local time, like PHP's default time zone) */
-export function formatDate(d: Date): string {
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
-}
+const formatDate = (d: Date) => trackingDate(d)
 
 /** format('Y-m-d H:i:sP') */
 function formatDateOffset(d: Date): string {
@@ -85,23 +90,16 @@ function validateDateTimeParam(s: string | undefined): Date {
   return parseDate(s) ?? new Date()
 }
 
-/** mb_substr / mb_strpos / mb_strstr on code points */
-const cps = (s: string) => Array.from(s)
-
-/** Tracker::getLogComment */
-function logComment(user: string, now: Date): string {
-  return `# log ${formatDate(now)} ${user.replace(/\s+/g, ' ')}\n`
-}
-
-function tracking(ctx: OpsCtx): { conn: MetaConn; database: string; table: string } | null {
-  const f = ctx.meta?.rp.trackingFeature ?? null
+/** the control link and the relation parameters, when tracking is configured */
+function storage(ctx: OpsCtx): { conn: MetaConn; rp: RelationParameters } | null {
+  const rp = ctx.meta?.rp ?? null
   const conn = ctx.meta?.control ?? null
-  if (f === null || conn === null) return null
-  return { conn, database: f.database, table: f.tracking }
+  if (rp === null || rp.trackingFeature === null || conn === null) return null
+  return { conn, rp }
 }
 
 function requireTracking(ctx: OpsCtx) {
-  const t = tracking(ctx)
+  const t = storage(ctx)
   if (t === null) throw new ValidationError(ctx.tr.gettext('Tracking is not active.'))
   return t
 }
@@ -112,47 +110,21 @@ const success = (text: string): SqlMessage => ({ type: 'success', text })
 // Main page
 // ---------------------------------------------------------------------------------------------
 
-/** pma: TrackingChecker::getTrackedTables */
-async function getTrackedTables(ctx: OpsCtx): Promise<Array<{ name: string; active: boolean }>> {
-  const t = tracking(ctx)
-  if (t === null) return []
-  const tbl = `${bq(t.database)}.${bq(t.table)}`
-  const r = await t.conn.query(
-    `SELECT table_name, tracking_active
-            FROM (
-                SELECT table_name, MAX(version) version
-                FROM ${tbl} WHERE db_name = ${q(ctx.db)} AND table_name <> ''
-                GROUP BY table_name
-            ) filtered_tables
-            JOIN ${tbl} USING(table_name, version)`,
-  )
-  return r.rows.map((row) => ({ name: row.table_name ?? '', active: Number(row.tracking_active) === 1 }))
-}
-
-/** pma: Tracking::getListOfVersionsOfTable */
-async function getVersions(ctx: OpsCtx) {
-  const t = tracking(ctx)
-  if (t === null) return []
-  const r = await t.conn.query(
-    `SELECT * FROM ${bq(t.database)}.${bq(t.table)} WHERE db_name = ${q(ctx.db)} AND table_name = ${q(ctx.table)} ORDER BY version DESC`,
-  )
-  return r.rows
-}
-
 /** pma: TrackingController::__invoke (no action) + Tracking::getHtmlForMainPage */
 export async function trackingPage(ctx: OpsCtx): Promise<TrackingPageResponse> {
-  const available = tracking(ctx) !== null
-  const trackedTables = await getTrackedTables(ctx)
-  const rows = await getVersions(ctx)
+  const t = storage(ctx)
+  const available = t !== null
+  const tracked = t === null ? new Map<string, boolean>() : await trackedTables(t.conn, t.rp, ctx.db)
+  const rows = t === null ? [] : await trackingVersions(t.conn, t.rp, ctx.db, ctx.table)
   const isView = await ctx.reader.isView(ctx.db, ctx.table)
   return {
     db: ctx.db,
     table: ctx.table,
     type: isView ? 'view' : 'table',
     available,
-    activeMessage: available && trackedTables.find((x) => x.name === ctx.table)?.active === true,
+    activeMessage: tracked.get(ctx.table) === true,
+    trackedTables: [...tracked].map(([name, active]) => ({ name, active })),
     // Tracking::getTableLastVersionNumber: (int) of the first row's version
-    trackedTables,
     lastVersion: Number.parseInt(rows[0]?.version ?? '0', 10) || 0,
     versions: rows.map((r) => ({
       version: r.version ?? '',
@@ -171,20 +143,36 @@ export async function trackingPage(ctx: OpsCtx): Promise<TrackingPageResponse> {
 /** pma: Tracker::changeTracking */
 async function changeTracking(ctx: OpsCtx, version: string, state: 0 | 1): Promise<boolean> {
   const t = requireTracking(ctx)
-  return (
-    (await t.conn.tryQuery(
-      `UPDATE ${bq(t.database)}.${bq(t.table)} SET \`tracking_active\` = ${state} WHERE \`db_name\` = ${q(ctx.db)} AND \`table_name\` = ${q(ctx.table)} AND \`version\` = ${q(version)}`,
-    )) !== false
-  )
+  return changeTrackingRow(t.conn, t.rp, ctx.db, ctx.table, version, state)
 }
 
-/** pma: Tracker::createVersion */
-async function createVersion(ctx: OpsCtx, version: string, statements: string, isView: boolean) {
-  const t = requireTracking(ctx)
-  const { reader, db, table, server, user } = ctx
+export interface VersionCtx {
+  reader: TableReader
+  cfg: AppConfig
+  tr: Translator
+  server: ServerConfig
+  /** the logged-in MySQL user */
+  user: string
+  control: MetaConn | null
+  rp: RelationParameters
+}
+
+/**
+ * pma: Tracker::createVersion — the structure snapshot, the DROP/CREATE statements as the first
+ * log entries, then the INSERT into pma__tracking (and the previous version deactivated). Shared
+ * by the table Tracking tab and Database > Tracking.
+ */
+export async function createVersion(
+  ctx: VersionCtx,
+  db: string,
+  table: string,
+  version: string,
+  statements: string,
+  isView: boolean,
+): Promise<boolean> {
+  const { reader, server } = ctx
   const trackingSet = statements === '' ? server.tracking_default_statements : statements
-  const now = new Date()
-  const date = formatDate(now)
+  const date = trackingDate()
 
   // Get data definition snapshot of table
   const columns = (await reader.getColumns(db, table)).map((c) => ({
@@ -198,29 +186,36 @@ async function createVersion(ctx: OpsCtx, version: string, statements: string, i
     Comment: c.Comment,
   }))
   // DatabaseInterface::getTableIndexes: the rows of SHOW INDEXES as mysqli returns them (strings)
-  const indexRows = await reader.dbi.fetchResultSimple(`SHOW INDEXES FROM ${bq(db)}.${bq(table)}`)
+  const indexRows = await reader.dbi.fetchResultSimple(
+    `SHOW INDEXES FROM ${backquote(db)}.${backquote(table)}`,
+  )
   const indexes = indexRows.map((r) =>
     Object.fromEntries(Object.entries(r).map(([k, v]) => [k, v === null ? null : String(v)])),
   )
   const snapshot = phpSerialize({ COLUMNS: columns, INDEXES: indexes })
 
   // Get DROP TABLE / DROP VIEW and CREATE TABLE SQL statements
+  const log = trackingLogComment(date, ctx.user)
   let createSql = ''
   if (server.tracking_add_drop_table && !isView) {
-    createSql += `${logComment(user, now)}DROP TABLE IF EXISTS ${bq(table)};\n`
+    createSql += `${log}DROP TABLE IF EXISTS ${backquote(table)};\n`
   }
   if (server.tracking_add_drop_view && isView) {
-    createSql += `${logComment(user, now)}DROP VIEW IF EXISTS ${bq(table)};\n`
+    createSql += `${log}DROP VIEW IF EXISTS ${backquote(table)};\n`
   }
   // ExportSql::getTableDef($db, $table) with the plugin's defaults: no view handling, no
   // AUTO_INCREMENT value, keys and constraints left out of the CREATE statement, a semicolon added
-  createSql += `${logComment(user, now)}${await sqlStructurePlugin(ctx).getTableDef(db, table)}`
+  createSql += `${log}${await sqlStructurePlugin(ctx).getTableDef(db, table)}`
 
-  await t.conn.query(
-    `/*NOTRACK*/\nINSERT INTO ${bq(t.database)}.${bq(t.table)} (db_name, table_name, version, date_created, date_updated, schema_snapshot, schema_sql, data_sql, tracking) values (${q(db)}, ${q(table)}, ${q(version)}, ${q(date)}, ${q(date)}, ${q(snapshot)}, ${q(createSql)}, ${q('\n')}, ${q(trackingSet)})`,
-  )
-  // Deactivate previous version
-  return changeTracking(ctx, String((Number.parseInt(version, 10) || 0) - 1), 0)
+  return insertTrackingVersion(ctx.control, ctx.rp, {
+    db,
+    table,
+    version,
+    date,
+    snapshot,
+    schemaSql: createSql,
+    trackingSet,
+  })
 }
 
 /** pma: Tracking::createTrackingVersion (submit_create_version) */
@@ -231,7 +226,9 @@ export async function createTrackingVersion(
   // Tracking::getTrackingSet: the checked statements, in the form's order
   const set = TRACKING_STATEMENTS.filter((s) => req.statements.includes(s)).join(',')
   const isView = await ctx.reader.isView(ctx.db, ctx.table)
-  const ok = await createVersion(ctx, req.version, set, isView)
+  const t = requireTracking(ctx)
+  const vctx = { ...ctx, control: t.conn, rp: t.rp }
+  const ok = await createVersion(vctx, ctx.db, ctx.table, req.version, set, isView)
   if (!ok) return { messages: [] }
   return {
     messages: [
@@ -247,11 +244,9 @@ export async function createTrackingVersion(
 }
 
 /** pma: Tracking::deleteTracking */
-async function deleteTracking(ctx: OpsCtx, version: string): Promise<boolean> {
+async function deleteVersion(ctx: OpsCtx, version: string): Promise<boolean> {
   const t = requireTracking(ctx)
-  let sql = `/*NOTRACK*/\nDELETE FROM ${bq(t.database)}.${bq(t.table)} WHERE \`db_name\` = ${q(ctx.db)} AND \`table_name\` = ${q(ctx.table)}`
-  if (version !== '') sql += ` AND \`version\` = ${q(version)}`
-  return (await t.conn.tryQuery(sql)) !== false
+  return deleteTracking(t.conn, t.rp, ctx.db, ctx.table, version)
 }
 
 /** pma: TrackingController (submit_mult=delete_version) / Tracking::deleteTrackingVersion */
@@ -263,11 +258,11 @@ export async function deleteTrackingVersions(
   if (req.multiple) {
     if (req.versions.length === 0)
       return { messages: [{ type: 'notice', text: tr.gettext('No versions selected.') }] }
-    for (const v of req.versions) await deleteTracking(ctx, v)
+    for (const v of req.versions) await deleteVersion(ctx, v)
     return { messages: [success(tr.gettext('Tracking versions deleted successfully.'))] }
   }
   const version = req.versions[0] ?? ''
-  if (!(await deleteTracking(ctx, version))) return { messages: [] }
+  if (!(await deleteVersion(ctx, version))) return { messages: [] }
   return {
     messages: [
       success(sprintf(tr.gettext('Version %1$s of %2$s was deleted.'), version, `${ctx.db}.${ctx.table}`)),
@@ -294,36 +289,11 @@ export async function toggleTracking(
 // Tracked data, report, exports
 // ---------------------------------------------------------------------------------------------
 
-/** rtrim()'s default characters: " \t\n\r\0\x0B" */
-// biome-ignore lint/suspicious/noControlCharactersInRegex: PHP's rtrim set includes NUL and VT
-const PHP_RTRIM = /[ \t\n\r\0\x0B]+$/
-
-/** the entries of one log column ('# log <date> <user>\n<statement>') */
-function parseLog(text: string): LogEntry[] {
-  const out: LogEntry[] = []
-  for (const logEntry of text.split('# log ')) {
-    if (logEntry.trim() === '') continue
-    const c = cps(logEntry)
-    const nl = c.indexOf('\n')
-    const date = c.slice(0, 19).join('')
-    // mb_substr($e, 20, mb_strpos($e, "\n") - 20): a negative length counts from the end
-    const len = (nl === -1 ? 0 : nl) - 20
-    const username = (len >= 0 ? c.slice(20, 20 + len) : c.slice(20, c.length + len)).join('')
-    const statement = (nl === -1 ? '' : c.slice(nl).join('')).replace(PHP_RTRIM, '')
-    out.push({ date, username, statement })
-  }
-  return out
-}
-
-/** pma: Tracking::getTrackedData */
+/** pma: Tracking::getTrackedData, with the report's date range */
 async function getTrackedData(ctx: OpsCtx, version: string): Promise<TrackedData> {
   const t = requireTracking(ctx)
-  let sql = `SELECT * FROM ${bq(t.database)}.${bq(t.table)} WHERE \`db_name\` = ${q(ctx.db)}`
-  if (ctx.table !== '') sql += ` AND \`table_name\` = ${q(ctx.table)} `
-  sql += ` AND \`version\` = ${q(version)} ORDER BY \`version\` DESC LIMIT 1`
-  const row = (await t.conn.query(sql)).rows[0]
-  const ddlog = parseLog(row?.schema_sql ?? '')
-  const dmlog = parseLog(row?.data_sql ?? '')
+  const row = await trackedRow(t.conn, t.rp, ctx.db, ctx.table, version)
+  const { ddlog, dmlog } = row
   const now = formatDate(new Date())
   const ddlFrom = ddlog[0]?.date ?? now
   const ddlTo = ddlog.at(-1)?.date ?? now
@@ -334,8 +304,8 @@ async function getTrackedData(ctx: OpsCtx, version: string): Promise<TrackedData
     dateTo: strtotime(ddlTo) >= strtotime(dmlTo) ? ddlTo : dmlTo,
     ddlog,
     dmlog,
-    tracking: row?.tracking ?? '',
-    schemaSnapshot: row?.schema_snapshot ?? '',
+    tracking: row.tracking,
+    schemaSnapshot: row.snapshot,
   }
 }
 
@@ -384,17 +354,6 @@ function reportRows(
   return [out, n]
 }
 
-/** pma: Tracking::changeTrackingData */
-async function changeTrackingData(ctx: OpsCtx, version: string, column: string, data: LogEntry[]) {
-  const t = requireTracking(ctx)
-  const text = data.map((d) => `# log ${d.date} ${d.username}${d.statement}\n`).join('')
-  return (
-    (await t.conn.tryQuery(
-      `UPDATE ${bq(t.database)}.${bq(t.table)} SET \`${column}\` = ${q(text)} WHERE \`db_name\` = ${q(ctx.db)} AND \`table_name\` = ${q(ctx.table)} AND \`version\` = ${q(version)}`,
-    )) !== false
-  )
-}
-
 /** pma: TrackingController (report=true …) + Tracking::getHtmlForTrackingReport */
 export async function trackingReport(
   ctx: OpsCtx,
@@ -437,10 +396,11 @@ export async function trackingReport(
   }
 
   // Tracking::deleteFromTrackingReportLog
-  const del = async (log: LogEntry[], id: number, column: string, ok: string) => {
+  const t = requireTracking(ctx)
+  const del = async (log: LogEntry[], id: number, column: 'schema_sql' | 'data_sql', ok: string) => {
     const kept = log.filter((_, i) => i !== id)
     messages.push(
-      (await changeTrackingData(ctx, req.version, column, kept))
+      (await changeTrackingData(t.conn, t.rp, ctx.db, ctx.table, req.version, column, kept))
         ? success(ok)
         : { type: 'error', text: tr.gettext('Query error') },
     )

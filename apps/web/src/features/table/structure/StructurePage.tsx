@@ -345,6 +345,9 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             <Button variant="link" id="move_columns_anchor" onClick={() => setMoving([...columnNames])}>
               {t('Move columns')}
             </Button>
+            <Link to="/s/$server/db/$db/t/$table/normalization" params={{ server, db, table }}>
+              {t('Normalize')}
+            </Link>
             <Link to={sqlLink(server, `SHOW CREATE TABLE \`${db}\`.\`${table}\``)}>{t('Show create')}</Link>
           </>
         )}

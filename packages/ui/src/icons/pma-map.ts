@@ -124,6 +124,7 @@ export const pmaIcons = {
   b_primary: Key,
   b_unique: KeySquare,
   b_index: ListOrdered,
+  b_index_add: Plus,
   b_spatial: Globe,
   b_ftext: TextSearch,
   s_views: Eye,

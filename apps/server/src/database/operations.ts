@@ -1,22 +1,35 @@
 import type { DbActionResponse, DbOperationsResponse } from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n'
-import { getDbComment, hasAllFeatures, relationCleanupDatabase, setDbComment } from '@bettermyadmin/metadata'
+import {
+  duplicateInfo,
+  getDbComment,
+  hasAllFeatures,
+  relationCleanupDatabase,
+  setDbComment,
+} from '@bettermyadmin/metadata'
 import { getCharsetQueryPart } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { ValidationError } from '../http/errors.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import { isSuperUser } from '../server-admin/context.ts'
-import { type DbCtx, getDbCollation, isSystemSchema, listTables, msg, selectDb } from './context.ts'
+import { sqlStructurePlugin } from '../table/table-def.ts'
 import {
-  duplicateStorageInfo,
-  fetchColumn,
   getDatabaseList,
-  getTableDefStandIn,
   getTriggers,
   moveCopy,
   newMoveState,
   triggerCreateSql,
-} from './table-mover.ts'
+} from '../table/table-mover.ts'
+import {
+  type DbCtx,
+  fetchColumn,
+  getDbCollation,
+  isSystemSchema,
+  listTables,
+  moverCtx,
+  msg,
+  selectDb,
+} from './context.ts'
 import { isMerge, isView, tableCache } from './tables.ts'
 
 /**
@@ -157,7 +170,7 @@ export async function renameOrCopy(
     st.sqlQuery += q
     await ctx.conn.query(q, 'operations.create')
     await ctx.conn.query("SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO'", 'operations.mode')
-    await getDatabaseList(ctx, true)
+    await getDatabaseList(mover(ctx), true)
   }
   // runProcedureAndFunctionDefinitions
   for (const type of ['PROCEDURE', 'FUNCTION'] as const) {
@@ -189,7 +202,7 @@ export async function renameOrCopy(
       st.sqlQuery += `\n${drop};`
     }
     views.push(t)
-    const standIn = await getTableDefStandIn(ctx, old, t)
+    const standIn = await sqlStructurePlugin(ctx).getTableDefStandIn(old, t)
     await selectDb(ctx, newName)
     await ctx.conn.query(standIn, 'operations.standin')
     st.sqlQuery += `\n${standIn}`
@@ -207,7 +220,7 @@ export async function renameOrCopy(
     if (mode === 'nocopy') continue
     const triggers = await getTriggers(ctx, old, t)
     const ok = await moveCopy(
-      ctx,
+      mover(ctx),
       st,
       old,
       t,
@@ -232,7 +245,9 @@ export async function renameOrCopy(
   }
   // handleTheViews
   for (const v of views) {
-    if (!(await moveCopy(ctx, st, old, v, newName, v, req.move ? 'move' : 'structure', 'database', true)))
+    if (
+      !(await moveCopy(mover(ctx), st, old, v, newName, v, req.move ? 'move' : 'structure', 'database', true))
+    )
       break
   }
   // createAllAccumulatedConstraints
@@ -261,8 +276,9 @@ export async function renameOrCopy(
   await selectDb(ctx, old)
   // duplicateBookmarks
   if (ctx.rp.bookmarkFeature !== null) {
-    await duplicateStorageInfo(
-      ctx,
+    await duplicateInfo(
+      ctx.control,
+      ctx.rp.db,
       ctx.rp.bookmarkFeature.bookmark,
       ['user', 'label', 'query'],
       { dbase: old },
@@ -336,3 +352,6 @@ async function adjustPrivilegesCopyDb(ctx: DbCtx, oldDb0: string, newDb: string)
   }
   await ctx.dbi.tryQuery('FLUSH PRIVILEGES;')
 }
+
+/** the TableMover's view of the request, forgetting the cached status of the tables it changes */
+const mover = (ctx: DbCtx) => moverCtx(ctx, (db, table) => tableCache(ctx).forget(db, table))

@@ -118,6 +118,7 @@ tableStructureRoutes.get('/:db/tables/:t/indexes/form', async (c) => {
       indexForm(x.reader, x.cfg, x.db, x.table, {
         index,
         create: create === undefined ? undefined : Number(create),
+        primary: c.req.query('primary') === '1',
       }),
     ),
   )

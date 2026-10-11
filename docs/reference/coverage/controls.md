@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-448/1106 covered (40.5%): 448 implemented, 24 planned, 634 missing. [Summary](README.md).
+450/1106 covered (40.7%): 450 implemented, 24 planned, 632 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 120/306 (39.2%) covered, 120/306 implemented
+## 04 table level — 122/306 (39.9%) covered, 122/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -91,7 +91,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/gis_visualization/gis_visualization.twig` | 0/4 |  | ⬜ `id:saveImageButton` ⬜ `useBaseLayer` ⬜ `visualizationSettings[labelColumn]` ⬜ `visualizationSettings[spatialColumn]` |
 | `table/index_form.twig` | 0/13 |  | ⬜ `button:Advanced options` ⬜ `button:Go` ⬜ `id:add_fields` ⬜ `id:preview_index_frm` ⬜ `index[columns][collations][]` ⬜ `index[columns][names][]` ⬜ `index[columns][sub_parts][]` ⬜ `index[Index_choice]` ⬜ `index[Index_comment]` ⬜ `index[Index_type]` ⬜ `index[Key_block_size]` ⬜ `index[Key_name]` ⬜ `index[Parser]` |
 | `table/index_rename_form.twig` | 0/2 |  | ⬜ `id:preview_index_frm` ⬜ `index` |
-| `table/normalization/normalization.twig` | 0/2 |  | ⬜ `normalizeTo` ⬜ `submit_normalize` |
+| `table/normalization/normalization.twig` | 2/2 | ✅ `normalizeTo` ✅ `submit_normalize` |  |
 | `table/operations/index.twig` | 34/36 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_collations` ✅ `comment` ✅ `drop_if_exists` ✅ `link:Analyze table` ✅ `link:Check table` ✅ `link:Checksum table` ✅ `link:Defragment table` ✅ `link:Flush the table (FLUSH)` ✅ `link:Optimize table` ✅ `link:Remove partitioning` ✅ `link:Repair table` ✅ `new_auto_increment` ✅ `new_checksum` ✅ `new_delay_key_write` ✅ `new_name` ✅ `new_pack_keys` ✅ `new_page_checksum` ✅ `new_row_format` ✅ `new_tbl_storage_engine` ✅ `new_transactional` ✅ `order_field` ✅ `order_order` ✅ `partition_name[]` ✅ `partition_operation` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit_move` ✅ `submit:Go` ✅ `switch_to_new` ✅ `target_db` ✅ `tbl_collation` ✅ `what` | ⬜ `link:Table %s has been emptied.` ⬜ `link:View %s has been dropped.` |
 | `table/operations/view.twig` | 2/3 | ✅ `new_name` ✅ `submit:Go` | ⬜ `link:View %s has been dropped.` |
 | `table/page_with_secondary_tabs.twig` | 0/2 |  | ⬜ `link:Relation view` ⬜ `link:Table structure` |

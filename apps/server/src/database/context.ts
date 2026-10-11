@@ -12,6 +12,7 @@ import type { NavDbi } from '../navigation/dbi.ts'
 import { strnatcasecmp } from '../navigation/php.ts'
 import type { ServerEnv } from '../routes/server.ts'
 import { TableReader } from '../table/read.ts'
+import type { MoverCtx } from '../table/table-mover.ts'
 
 /**
  * What a database-level page or action needs: the user's connection (TableReader / NavDbi, the
@@ -203,4 +204,31 @@ export async function getDbCollation(ctx: DbCtx, db = ctx.db): Promise<string> {
     `SELECT DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ${ctx.dbi.quoteString(db)} LIMIT 1`,
   )
   return typeof v === 'string' ? v : ''
+}
+
+/** `fetchValue($sql, 'Column')` */
+export async function fetchColumn(ctx: DbCtx, sql: string, column: string): Promise<string | null> {
+  const rows = await ctx.dbi.fetchResultSimple(sql)
+  const v = rows[0]?.[column]
+  return v === undefined ? null : v
+}
+
+const movers = new WeakMap<DbCtx, MoverCtx>()
+/** The request as the TableMover sees it (one per request: the database list is cached on it). */
+export function moverCtx(ctx: DbCtx, forget?: (db: string, table: string) => void): MoverCtx {
+  let m = movers.get(ctx)
+  if (m === undefined) {
+    m = {
+      reader: ctx.reader,
+      cfg: ctx.cfg,
+      tr: ctx.tr,
+      server: ctx.server,
+      serverIndex: ctx.serverIndex,
+      rp: ctx.rp,
+      control: ctx.control,
+      ...(forget !== undefined ? { forget } : {}),
+    }
+    movers.set(ctx, m)
+  }
+  return m
 }

@@ -4,17 +4,17 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1343/3426 covered (39.2%): 1343 implemented, 33 planned, 2050 missing. [Summary](README.md).
+1415/3426 covered (41.3%): 1415 implemented, 33 planned, 1978 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 197/403 (48.9%) covered, 197/403 implemented
+## 01 shell navigation auth — 201/403 (49.9%) covered, 201/403 implemented
 
-206 msgids not used yet.
+202 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Controllers/JavaScriptMessagesController.php` | 19/23 | `Adding primary key` · `Are you sure you wish to change all the column collations and conve…` · `As per your settings, they are being submitted currently, please be…` · `Click a data point to view and possibly edit the data row.` · `Click reset zoom button to come back to original state.` · `Create the following table` · `Do you want to copy encryption key?` · `DROP columns %s from the table %s` · `Each point represents a data row.` · `Hovering over a point will show its label.` · `Please look at the bottom of this window.` · `Reset all` · … +7 |
 | `resources/templates/setup/home/index.twig` | 16/20 | `- none -` · `Authentication type` · `Check for latest version` · `Configuration file` · `Default language` · `Default server` · `Display` · `Donate` · `Download` · `End of line` · `let the user choose` · `New server` · … +4 |
-| `resources/js/modules/functions.ts` | 12/31 | `Column selector` · `Edit query` · `Enter each value in a separate field.` · `Extremely weak` · `Good` · `No columns in the central list. Make sure the Central columns list …` · `Pick` · `Search this list` · `See more` · `Strong` · `Very weak` · `Weak` |
+| `src/Controllers/JavaScriptMessagesController.php` | 16/23 | `Adding primary key` · `Are you sure you wish to change all the column collations and conve…` · `As per your settings, they are being submitted currently, please be…` · `Click a data point to view and possibly edit the data row.` · `Click reset zoom button to come back to original state.` · `Do you want to copy encryption key?` · `Each point represents a data row.` · `Hovering over a point will show its label.` · `Please look at the bottom of this window.` · `Reset all` · `Some errors have been detected on the server!` · `The plot can be resized by dragging it along the bottom right corner.` · … +4 |
+| `resources/js/modules/functions.ts` | 11/31 | `Column selector` · `Edit query` · `Enter each value in a separate field.` · `Extremely weak` · `Good` · `No columns in the central list. Make sure the Central columns list …` · `Search this list` · `See more` · `Strong` · `Very weak` · `Weak` |
 | `src/Config/Descriptions.php` | 8/14 | `Always expand query messages` · `Authentication type` · `Favorite tables` · `Link with main panel` · `Show current browsing query` · `Show query history at start` · `Switch to dark theme` · `Version check` |
 | `resources/templates/console/display.twig` | 7/42 | `Always expand query messages` · `Execute queries on Enter and insert new line with Shift+Enter. To m…` · `Hide trace` · `Show current browsing query` · `Show query history at start` · `Show trace` · `Switch to dark theme` |
 | `resources/templates/home/index.twig` | 7/35 | `Get more themes!` · `PHP extension:` · `PHP version:` · `phpMyAdmin Demo Server` · `phpMyAdmin Themes` · `Show PHP information` · `You are using the demo server. You can do anything here, but please…` |
@@ -100,7 +100,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Navigation/Nodes/NodeTrigger.php` | 1/1 | `Trigger` |
 | `src/Navigation/Nodes/NodeTriggerContainer.php` | 1/1 | `New (Create new trigger)` |
 | `src/Navigation/Nodes/NodeViewContainer.php` | 1/2 | `New (Create new view)` |
-| `src/Normalization.php` | 1/1 | `Pick` |
 | `src/Plugins/Auth/AuthenticationHttp.php` | 1/3 | `Wrong username/password. Access denied.` |
 | `src/Plugins/Auth/AuthenticationSignon.php` | 1/1 | `Can not find signon authentication script: %s` |
 | `src/Plugins/AuthenticationPlugin.php` | 1/1 | `You have enabled two factor authentication, please confirm your login.` |
@@ -154,30 +153,27 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 321/534 (60.1%) covered, 321/534 implemented
+## 04 table level — 389/534 (72.8%) covered, 389/534 implemented
 
-213 msgids not used yet.
+145 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Normalization.php` | 50/52 | `'%1$s' depends on:` · `+ Add a new primary key column` · `+ Show me the possible partial dependencies based on data in the table` · `Add a primary key on existing column(s)` · `Check the columns which are redundant and click on remove. If no re…` · `Check the columns which form a repeating group. If no such group, c…` · `Do you have a group of columns which on combining gives an existing…` · `Do you have a group of two or more columns that are closely related…` · `Do you have any column which can be split into more than one column…` · `End of step` · `Error in processing!` · `Find partial dependencies` · … +38 |
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
 | `resources/templates/table/chart/tbl_chart.twig` | 22/22 | `Chart title:` · `Chart type` · `Area (Chart type)` · `Bar (Chart type)` · `Column (Chart type)` · `Line (Chart type)` · `Pie (Chart type)` · `Scatter (Chart type)` · `Spline (Chart type)` · `Timeline (Chart type)` · `Save chart as image` · `Series column:` · … +10 |
-| `resources/js/normalization.ts` | 18/22 | `Add primary key` · `Confirm partial dependencies` · `Confirm transitive dependencies` · `End of step` · `Hide partial dependencies list` · `No dependencies selected!` · `No partial dependencies selected!` · `Note: a, b -> d,f implies values of columns a and b combined togeth…` · `Primary key added.` · `Second step of normalization (2NF)` · `Selected dependencies are as follows:` · `Selected partial dependencies are as follows:` · … +6 |
 | `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
-| `resources/templates/table/structure/display_structure.twig` | 7/51 | `Add to central columns` · `Edit view` · `Go back` · `Media type:` · `None (None for default)` · `Normalize` · `Remove from central columns` |
-| `resources/templates/table/normalization/normalization.twig` | 6/7 | `First step of normalization (1NF)` · `Hint: Please follow the procedure carefully in order to obtain corr…` · `Improve table structure (Normalization):` · `Second step of normalization (1NF+2NF)` · `Select up to what step you want to normalize` · `Third step of normalization (1NF+2NF+3NF)` |
+| `resources/templates/table/structure/display_structure.twig` | 6/51 | `Add to central columns` · `Edit view` · `Go back` · `Media type:` · `None (None for default)` · `Remove from central columns` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `resources/templates/table/gis_visualization/gis_visualization.twig` | 4/5 | `-- None --` · `Display GIS Visualization` · `Label column` · `Spatial column` |
 | `src/Controllers/Table/GisVisualizationController.php` | 4/5 | `Failed to create image` · `Invalid file format, expected one of: ` · `No spatial column found for this SQL query.` · `No SQL query was set to fetch data.` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/templates/columns_definitions/column_name.twig` | 3/4 | `Is a foreign key.` · `Pick from Central Columns` · `Referenced by %s.` |
 | `resources/templates/view_create.twig` | 3/6 | `Column names` · `Edit view` · `VIEW name` |
-| `src/Controllers/Normalization/GetColumnsController.php` | 3/3 | `No such column` · `Select one…` · `String (string types)` |
 | `src/Controllers/Table/ChartController.php` | 3/5 | `No data to display` · `No numeric columns present in the table to plot.` · `No SQL query was set to fetch data.` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
+| `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
 | `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
 | `resources/templates/columns_definitions/column_definitions_form.twig` | 2/14 | `Loading` · `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
@@ -186,6 +182,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
+| `src/Normalization.php` | 2/52 | `Show me the central list of columns that are not already in this table` · `String (string types)` |
 | `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
 | `resources/js/database/search.ts` | 1/4 | `Searching` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
@@ -211,6 +208,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
+| `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
 | `src/Controllers/View/CreateController.php` | 1/2 | `View name can not be empty!` |
 
