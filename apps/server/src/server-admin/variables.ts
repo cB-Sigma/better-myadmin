@@ -81,22 +81,21 @@ function intCast(s: string): string {
   return Number.isFinite(f) ? BigInt.asIntN(64, BigInt(Math.trunc(f))).toString() : '0'
 }
 
+/** The SQL value of SET GLOBAL for the variable type (SetVariableController::__invoke). */
+export function setVariableValue(type: string | null, input: string): string {
+  const m = type === 'byte' ? /^\s*(\d+(\.\d+)?)\s*(mb|kb|mib|kib|gb|gib)\s*$/i.exec(input) : null
+  if (m !== null) return phpFloatToString(Number(m[1]) * 1024 ** UNIT_EXP[m[3]!.toLowerCase()]!)
+  if (type === 'integer') return intCast(input)
+  return quoteString(input)
+}
+
 /**
  * SET GLOBAL with phpMyAdmin's value handling: byte variables accept kb/kib/mb/mib/gb/gib units,
  * integer variables are cast, anything else is quoted; the value is read back (servers round).
  * pma: src/Controllers/Server/Variables/SetVariableController.php
  */
 export async function setVariable(ctx: AdminCtx, name: string, input: string): Promise<SetVariableResponse> {
-  const type = getVariableType(name)
-  let value: string
-  const m = type === 'byte' ? /^\s*(\d+(\.\d+)?)\s*(mb|kb|mib|kib|gb|gib)\s*$/i.exec(input) : null
-  if (m !== null) {
-    value = phpFloatToString(Number(m[1]) * 1024 ** UNIT_EXP[m[3]!.toLowerCase()]!)
-  } else if (type === 'integer') {
-    value = intCast(input)
-  } else {
-    value = quoteString(input)
-  }
+  const value = setVariableValue(getVariableType(name), input)
   if (/[^a-zA-Z0-9_]+/.test(name)) {
     return { success: false, error: ctx.tr.gettext('Setting variable failed') }
   }

@@ -249,7 +249,7 @@ export async function killProcess(ctx: AdminCtx, id: number): Promise<KillProces
 }
 
 /** mb_convert_case(str_replace(['Com_', '_'], ['', ' '], $key), MB_CASE_TITLE) */
-function queryName(key: string): string {
+export function queryName(key: string): string {
   const s = key.replaceAll('Com_', '').replaceAll('_', ' ')
   // MB_CASE_TITLE upper-cases the first letter of every word and lower-cases the rest
   return s
