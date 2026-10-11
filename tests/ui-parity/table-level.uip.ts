@@ -1,5 +1,5 @@
 import { FIX } from './lib/env.ts'
-import { pageParity } from './lib/parity.ts'
+import { type PageFn, pageParity } from './lib/parity.ts'
 
 /**
  * UI parity of the table-level pages beyond Structure (docs/features/04-table-level.md):
@@ -55,3 +55,30 @@ pageParity('table-find-replace', {
   pma: { route: '/table/find-replace', params: p(FIX.table) },
   ours: { path: `${T}/${FIX.table}/find-replace` },
 })
+
+/** one tracking version of uip_child, with a log of each kind (in the reference's and our pmadb) */
+const TRACKED = `${CHILD}${['phpmyadmin', FIX.pmadb].map((pmadb) => trackingRow(pmadb)).join('')}`
+function trackingRow(pmadb: string): string {
+  return `
+  DELETE FROM ${pmadb}.pma__tracking WHERE db_name = '${FIX.db}';
+  INSERT INTO ${pmadb}.pma__tracking (db_name, table_name, version, date_created, date_updated, schema_snapshot, schema_sql, data_sql, tracking, tracking_active)
+  VALUES ('${FIX.db}', 'uip_child', '1', '2024-01-01 10:00:00', '2024-01-02 10:00:00',
+    'a:2:{s:7:"COLUMNS";a:1:{i:0;a:8:{s:5:"Field";s:2:"id";s:4:"Type";s:3:"int";s:9:"Collation";N;s:4:"Null";s:2:"NO";s:3:"Key";s:3:"PRI";s:7:"Default";N;s:5:"Extra";s:0:"";s:7:"Comment";s:0:"";}}s:7:"INDEXES";a:0:{}}',
+    '# log 2024-01-01 10:00:00 root\\nDROP TABLE IF EXISTS \`uip_child\`;\\n# log 2024-01-01 10:00:00 root\\nCREATE TABLE \`uip_child\` (\\n  \`id\` int NOT NULL\\n);\\n',
+    '\\n# log 2024-01-02 10:00:00 root\\nINSERT INTO \`uip_child\` (\`id\`) VALUES (1);\\n', 'INSERT,UPDATE', 1);`
+}
+
+pageParity('table-tracking', {
+  sql: TRACKED,
+  pma: { route: '/table/tracking', params: p('uip_child') },
+  ours: { path: `${T}/uip_child/tracking` },
+  interactions: [
+    { name: 'tracking report', pma: showLink('Tracking report'), ours: showLink('Tracking report') },
+    { name: 'structure snapshot', pma: showLink('Structure snapshot'), ours: showLink('Structure snapshot') },
+  ],
+})
+
+/** an icon + text link (the reference's accessible name repeats the image's alt) */
+function showLink(text: string): PageFn {
+  return (page) => page.locator('#page_content a', { hasText: text }).first().click()
+}

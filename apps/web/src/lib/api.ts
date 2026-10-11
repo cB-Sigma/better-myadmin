@@ -16,8 +16,10 @@ import type {
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  CreateTrackingVersionRequest,
   DatabaseScope,
   DefaultFkCheckResponse,
+  DeleteTrackingVersionsRequest,
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
@@ -67,6 +69,12 @@ import type {
   StatementResult,
   TableOptionsRequest,
   TableScope,
+  ToggleTrackingRequest,
+  TrackingPageResponse,
+  TrackingReportRequest,
+  TrackingReportResponse,
+  TrackingResponse,
+  TrackingSnapshotResponse,
   VersionCheckResponse,
   ZoomRequest,
   ZoomResponse,
@@ -226,6 +234,17 @@ export const api = {
     call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
+  tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
+  tableTrackingDelete: (s: TableRef, req: DeleteTrackingVersionsRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions/delete`, req),
+  tableTrackingToggle: (s: TableRef, req: ToggleTrackingRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/toggle`, req),
+  tableTrackingReport: (s: TableRef, req: Partial<TrackingReportRequest> & { version: string }) =>
+    call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
+  tableTrackingSnapshot: (s: TableRef, version: string) =>
+    call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
   // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
   browse: (server: number, req: BrowseRequest) =>
     call<BrowseResponse>('POST', `/servers/${server}/browse`, req),

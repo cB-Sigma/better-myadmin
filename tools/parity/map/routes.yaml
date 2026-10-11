@@ -758,9 +758,12 @@
 /table/tracking:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/tracking'
-    - 'POST /api/servers/:s/databases/:db/tables/:t/tracking'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/tracking/versions'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/tracking/versions/delete'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/tracking/toggle'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/tracking/report'
+    - 'GET /api/servers/:s/databases/:db/tables/:t/tracking/snapshot'
   ui: '/s/:s/db/:db/t/:table/tracking'
-  planned: M2
 /table/zoom-search:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/search'

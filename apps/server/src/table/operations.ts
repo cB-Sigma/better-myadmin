@@ -33,6 +33,7 @@ import { getCharsetQueryPart } from '@bettermyadmin/mysql-types'
 import { backquote, findDuplicateIndexes } from '@bettermyadmin/sql-gen'
 import { AlterStatement, Context as Ctx, Expression, Parser, parseAnalyze } from '@bettermyadmin/sql-lexer'
 import type { z } from 'zod'
+import type { ServerConfig } from '../config.ts'
 import { MysqlError } from '../http/errors.ts'
 import { strnatcasecmp } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
@@ -54,6 +55,10 @@ export interface OpsCtx extends DdlCtx {
   sign: (sql: string) => string
   /** $_SESSION['pma_switch_to_new'] */
   session: { switchToNew?: boolean | undefined }
+  /** $cfg['Servers'][$i] of the current server */
+  server: ServerConfig
+  /** the logged-in MySQL user ($cfg['Server']['user']) */
+  user: string
 }
 
 const msg = (type: SqlMessage['type'], text: string, sql?: string): SqlMessage =>

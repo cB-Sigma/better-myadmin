@@ -6,11 +6,11 @@ Mechanical inventories of phpMyAdmin `e3e877e8` ([reference-commit.txt](../refer
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Routes | 199 | 45 | 3 | 1 | 150 | 0 | 0 | 0 | 0 | 49 | 24.6% |
-| Template controls | 1106 | 57 | 0 | 0 | 24 | 0 | 0 | 1025 | 0 | 57 | 5.2% |
-| Config directives | 449 | 152 | 1 | 2 | 3 | 0 | 0 | 291 | 0 | 155 | 34.5% |
-| Messages (msgids) | 3426 | 767 | 0 | 0 | 33 | 0 | 0 | 2626 | 0 | 767 | 22.4% |
-| JS behaviours | 966 | 38 | 0 | 0 | 12 | 0 | 0 | 916 | 0 | 38 | 3.9% |
+| Routes | 199 | 46 | 3 | 1 | 149 | 0 | 0 | 0 | 0 | 50 | 25.1% |
+| Template controls | 1106 | 147 | 0 | 0 | 24 | 0 | 0 | 935 | 0 | 147 | 13.3% |
+| Config directives | 449 | 155 | 1 | 2 | 3 | 0 | 0 | 288 | 0 | 158 | 35.2% |
+| Messages (msgids) | 3426 | 819 | 0 | 0 | 33 | 0 | 0 | 2574 | 0 | 819 | 23.9% |
+| JS behaviours | 966 | 77 | 0 | 0 | 12 | 0 | 0 | 877 | 0 | 77 | 8.0% |
 | Checklist items | 706 | 12 | 0 | 0 | 0 | 12 | 0 | 682 | 0 | 12 | 1.7% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
@@ -21,11 +21,11 @@ Covered / total per inventory (directives are attributed to the feature doc that
 
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
-| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 10/23 (43.5%) | 24/98 (24.5%) | 67/106 (63.2%) | 187/403 (46.4%) | 0/237 (0.0%) | 11/77 (14.3%) |
+| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 10/23 (43.5%) | 24/98 (24.5%) | 69/106 (65.1%) | 187/403 (46.4%) | 0/237 (0.0%) | 11/77 (14.3%) |
 | [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 24/32 (75.0%) | 29/32 (90.6%) | 37/56 (66.1%) | 22/69 (31.9%) | 0/118 (0.0%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 0/7 (0.0%) | 0/28 (0.0%) | 3/18 (16.7%) | 4/79 (5.1%) | 0/22 (0.0%) | 0/59 (0.0%) |
-| [04 table level](../../features/04-table-level.md) | M2 | 13/64 (20.3%) | 2/306 (0.7%) | 4/5 (80.0%) | 232/534 (43.4%) | 0/178 (0.0%) | 0/100 (0.0%) |
-| [05 database level](../../features/05-database-level.md) | M3 | 1/34 (2.9%) | 0/268 (0.0%) | 5/32 (15.6%) | 32/340 (9.4%) | 0/198 (0.0%) | 0/111 (0.0%) |
+| [04 table level](../../features/04-table-level.md) | M2 | 14/64 (21.9%) | 92/306 (30.1%) | 4/5 (80.0%) | 282/534 (52.8%) | 39/178 (21.9%) | 0/100 (0.0%) |
+| [05 database level](../../features/05-database-level.md) | M3 | 1/34 (2.9%) | 0/268 (0.0%) | 6/32 (18.8%) | 34/340 (10.0%) | 0/198 (0.0%) | 0/111 (0.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 11/31 (35.5%) | 0/243 (0.0%) | 14/18 (77.8%) | 175/915 (19.1%) | 0/131 (0.0%) | 0/49 (0.0%) |
 | [07 export import](../../features/07-export-import.md) | M4 | 0/16 (0.0%) | 0/63 (0.0%) | 0/138 (0.0%) | 12/293 (4.1%) | 0/66 (0.0%) | 0/67 (0.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 1/9 (11.1%) | 0/39 (0.0%) | 24/61 (39.3%) | 6/666 (0.9%) | 0/17 (0.0%) | 0/62 (0.0%) |
@@ -52,22 +52,22 @@ phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by c
 | 12 | `resources/templates/table/structure/display_structure.twig` | 04 table level | M2 | 0 | 42 | 0 | 9 | 93 |
 | 13 | `resources/js/designer/init.ts` | 05 database level | M3 | 0 | 0 | 45 | 0 | 90 |
 | 14 | `resources/js/makegrid.ts` | 02 browse results grid | M1 | 0 | 0 | 41 | 5 | 87 |
-| 15 | `resources/templates/table/operations/index.twig` | 04 table level | M2 | 0 | 36 | 0 | 14 | 86 |
-| 16 | `resources/js/normalization.ts` | 04 table level | M2 | 0 | 0 | 32 | 20 | 84 |
-| 17 | `resources/js/designer/move.ts` | 05 database level | M3 | 0 | 0 | 28 | 23 | 79 |
-| 18 | `resources/js/server/privileges.ts` | 06 server level | M3 | 0 | 0 | 35 | 9 | 79 |
-| 19 | `src/Plugins/Export/ExportSql.php` | 07 export import | M4 | 0 | 0 | 0 | 69 | 69 |
-| 20 | `resources/js/database/routines.ts` | 05 database level | M3 | 0 | 0 | 31 | 5 | 67 |
-| 21 | `resources/templates/database/central_columns/main.twig` | 05 database level | M3 | 0 | 29 | 0 | 9 | 67 |
-| 22 | `resources/js/sql.ts` | 09 sql editor query pipeline | M1 | 0 | 0 | 31 | 0 | 62 |
-| 23 | `resources/templates/database/multi_table_query/form.twig` | 05 database level | M3 | 0 | 22 | 0 | 16 | 60 |
-| 24 | `src/Server/Privileges.php` | 06 server level | M3 | 0 | 0 | 0 | 56 | 56 |
-| 25 | `resources/templates/database/routines/editor_form.twig` | 05 database level | M3 | 0 | 19 | 0 | 17 | 55 |
-| 26 | `src/Charsets/Collation.php` | 06 server level | M3 | 0 | 0 | 0 | 55 | 55 |
-| 27 | `resources/templates/database/operations/index.twig` | 05 database level | M3 | 0 | 18 | 0 | 18 | 54 |
-| 28 | `src/Normalization.php` | 04 table level | M2 | 0 | 0 | 0 | 52 | 52 |
-| 29 | `src/Types.php` | 04 table level | M2 | 0 | 0 | 0 | 49 | 49 |
-| 30 | `resources/js/modules/navigation/event-loader.ts` | 01 shell navigation auth | M1 | 0 | 0 | 23 | 2 | 48 |
+| 15 | `resources/js/normalization.ts` | 04 table level | M2 | 0 | 0 | 32 | 20 | 84 |
+| 16 | `resources/js/server/privileges.ts` | 06 server level | M3 | 0 | 0 | 35 | 9 | 79 |
+| 17 | `resources/js/designer/move.ts` | 05 database level | M3 | 0 | 0 | 28 | 22 | 78 |
+| 18 | `src/Plugins/Export/ExportSql.php` | 07 export import | M4 | 0 | 0 | 0 | 69 | 69 |
+| 19 | `resources/js/database/routines.ts` | 05 database level | M3 | 0 | 0 | 31 | 5 | 67 |
+| 20 | `resources/templates/database/central_columns/main.twig` | 05 database level | M3 | 0 | 29 | 0 | 9 | 67 |
+| 21 | `resources/js/sql.ts` | 09 sql editor query pipeline | M1 | 0 | 0 | 31 | 0 | 62 |
+| 22 | `resources/templates/database/multi_table_query/form.twig` | 05 database level | M3 | 0 | 22 | 0 | 15 | 59 |
+| 23 | `src/Server/Privileges.php` | 06 server level | M3 | 0 | 0 | 0 | 56 | 56 |
+| 24 | `resources/templates/database/routines/editor_form.twig` | 05 database level | M3 | 0 | 19 | 0 | 17 | 55 |
+| 25 | `src/Charsets/Collation.php` | 06 server level | M3 | 0 | 0 | 0 | 55 | 55 |
+| 26 | `src/Normalization.php` | 04 table level | M2 | 0 | 0 | 0 | 52 | 52 |
+| 27 | `resources/templates/database/operations/index.twig` | 05 database level | M3 | 0 | 18 | 0 | 15 | 51 |
+| 28 | `src/Types.php` | 04 table level | M2 | 0 | 0 | 0 | 49 | 49 |
+| 29 | `resources/js/modules/navigation/event-loader.ts` | 01 shell navigation auth | M1 | 0 | 0 | 23 | 2 | 48 |
+| 30 | `resources/js/table/structure.ts` | 04 table level | M2 | 0 | 0 | 23 | 2 | 48 |
 
 ## Cross-check notes
 
@@ -101,4 +101,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 115 API endpoints, 37 SPA routes (4 placeholders/catch-alls), 95 control claims, 686 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 121 API endpoints, 38 SPA routes (4 placeholders/catch-alls), 224 control claims, 702 tests.

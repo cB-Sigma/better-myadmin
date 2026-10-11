@@ -1,5 +1,6 @@
 import type { MetaConn, RelationParameters } from '@bettermyadmin/metadata'
 import type { Context } from 'hono'
+import { getServer } from '../config.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { withMeta } from '../metadata/service.ts'
 import { signSql } from '../query/signature.ts'
@@ -43,6 +44,8 @@ export async function withScope<T>(
   const db = c.req.param('db') ?? ''
   const table = c.req.param('t') ?? ''
   const tr = c.get('tr')
+  const server = getServer(cfg, serverIndex)
+  if (server === undefined) throw new ValidationError(tr.gettext('Invalid server index!'))
   const run = async (meta: { rp: RelationParameters; control: MetaConn | null } | null) => {
     const conn = await pools.acquire(
       session.id,
@@ -76,6 +79,8 @@ export async function withScope<T>(
         meta,
         sign: (sql) => signSql(sql, session.hmacSecret, cfg.blowfish_secret),
         session: state,
+        server,
+        user: c.get('creds').user,
       })
     } finally {
       conn.raw.release()

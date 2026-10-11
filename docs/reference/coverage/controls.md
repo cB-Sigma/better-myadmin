@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-57/1106 covered (5.2%): 57 implemented, 24 planned, 1025 missing. [Summary](README.md).
+147/1106 covered (13.3%): 147 implemented, 24 planned, 935 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 0/1 |  | ⬜ `submit:Go` |
 | `table/insert/value_column_for_other_datatype.twig` | 0/1 |  | ⬜ `fields*` |
 
-## 04 table level — 2/306 (0.7%) covered, 2/306 implemented
+## 04 table level — 92/306 (30.1%) covered, 92/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -77,7 +77,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `columns_definitions/column_name.twig` | 0/2 |  | ⬜ `field_name[*]` ⬜ `link:Pick from Central Columns` |
 | `columns_definitions/partitions.twig` | 0/17 |  | ⬜ `*[comment]` ⬜ `*[data_directory]` ⬜ `*[engine]` ⬜ `*[index_directory]` ⬜ `*[max_rows]` ⬜ `*[min_rows]` ⬜ `*[name]` ⬜ `*[node_group]` ⬜ `*[tablespace]` ⬜ `*[value_type]` ⬜ `*[value]` ⬜ `partition_by` ⬜ `partition_count` ⬜ `partition_expr` ⬜ `subpartition_by` ⬜ `subpartition_count` ⬜ `subpartition_expr` |
 | `columns_definitions/table_fields_definitions.twig` | 0/2 |  | ⬜ `link:Browser display transformation` ⬜ `link:Input transformation` |
-| `create_tracking_version.twig` | 0/14 |  | ⬜ `alter_table` ⬜ `alter_view` ⬜ `create_index` ⬜ `create_table` ⬜ `create_view` ⬜ `delete` ⬜ `drop_index` ⬜ `drop_table` ⬜ `drop_view` ⬜ `insert` ⬜ `rename_table` ⬜ `submit:Create version` ⬜ `truncate` ⬜ `update` |
+| `create_tracking_version.twig` | 1/14 | ✅ `submit:Create version` | ⬜ `alter_table` ⬜ `alter_view` ⬜ `create_index` ⬜ `create_table` ⬜ `create_view` ⬜ `delete` ⬜ `drop_index` ⬜ `drop_table` ⬜ `drop_view` ⬜ `insert` ⬜ `rename_table` ⬜ `truncate` ⬜ `update` |
 | `indexes.twig` | 0/3 |  | ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Rename` |
 | `modals/create_view.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:createViewModalGoButton` |
 | `modals/enum_set_editor.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:enumEditorGoButton` |
@@ -86,32 +86,32 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `modals/preview_sql_modal.twig` | 0/1 |  | ⬜ `button:Close` |
 | `table/chart/tbl_chart.twig` | 0/11 |  | ⬜ `barStackedCheckbox` ⬜ `chartSeriesColumnSelect` ⬜ `chartSeriesSelect` ⬜ `chartTitleInput` ⬜ `chartType` ⬜ `chartValueColumnSelect` ⬜ `chartXAxisSelect` ⬜ `link:Save chart as image` ⬜ `seriesColumnCheckbox` ⬜ `xAxisLabelInput` ⬜ `yAxisLabelInput` |
 | `table/delete/confirm.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
-| `table/find_replace/index.twig` | 0/8 |  | ⬜ `columnIndex` ⬜ `find` ⬜ `link:Find and replace` ⬜ `link:Table search` ⬜ `link:Zoom search` ⬜ `replaceWith` ⬜ `submit` ⬜ `useRegex` |
-| `table/find_replace/replace_preview.twig` | 0/1 |  | ⬜ `replace` |
+| `table/find_replace/index.twig` | 8/8 | ✅ `columnIndex` ✅ `find` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `replaceWith` ✅ `submit` ✅ `useRegex` |  |
+| `table/find_replace/replace_preview.twig` | 1/1 | ✅ `replace` |  |
 | `table/gis_visualization/gis_visualization.twig` | 0/4 |  | ⬜ `id:saveImageButton` ⬜ `useBaseLayer` ⬜ `visualizationSettings[labelColumn]` ⬜ `visualizationSettings[spatialColumn]` |
 | `table/index_form.twig` | 0/13 |  | ⬜ `button:Advanced options` ⬜ `button:Go` ⬜ `id:add_fields` ⬜ `id:preview_index_frm` ⬜ `index[columns][collations][]` ⬜ `index[columns][names][]` ⬜ `index[columns][sub_parts][]` ⬜ `index[Index_choice]` ⬜ `index[Index_comment]` ⬜ `index[Index_type]` ⬜ `index[Key_block_size]` ⬜ `index[Key_name]` ⬜ `index[Parser]` |
 | `table/index_rename_form.twig` | 0/2 |  | ⬜ `id:preview_index_frm` ⬜ `index` |
 | `table/normalization/normalization.twig` | 0/2 |  | ⬜ `normalizeTo` ⬜ `submit_normalize` |
-| `table/operations/index.twig` | 0/36 |  | ⬜ `add_constraints` ⬜ `adjust_privileges` ⬜ `change_all_collations` ⬜ `comment` ⬜ `drop_if_exists` ⬜ `link:Analyze table` ⬜ `link:Check table` ⬜ `link:Checksum table` ⬜ `link:Defragment table` ⬜ `link:Flush the table (FLUSH)` ⬜ `link:Optimize table` ⬜ `link:Remove partitioning` ⬜ `link:Repair table` ⬜ `link:Table %s has been emptied.` ⬜ `link:View %s has been dropped.` ⬜ `new_auto_increment` ⬜ `new_checksum` ⬜ `new_delay_key_write` ⬜ `new_name` ⬜ `new_pack_keys` ⬜ `new_page_checksum` ⬜ `new_row_format` ⬜ `new_tbl_storage_engine` ⬜ `new_transactional` ⬜ `order_field` ⬜ `order_order` ⬜ `partition_name[]` ⬜ `partition_operation` ⬜ `sql_auto_increment` ⬜ `submit_copy` ⬜ `submit_move` ⬜ `submit:Go` ⬜ `switch_to_new` ⬜ `target_db` ⬜ `tbl_collation` ⬜ `what` |
-| `table/operations/view.twig` | 0/3 |  | ⬜ `link:View %s has been dropped.` ⬜ `new_name` ⬜ `submit:Go` |
+| `table/operations/index.twig` | 34/36 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_collations` ✅ `comment` ✅ `drop_if_exists` ✅ `link:Analyze table` ✅ `link:Check table` ✅ `link:Checksum table` ✅ `link:Defragment table` ✅ `link:Flush the table (FLUSH)` ✅ `link:Optimize table` ✅ `link:Remove partitioning` ✅ `link:Repair table` ✅ `new_auto_increment` ✅ `new_checksum` ✅ `new_delay_key_write` ✅ `new_name` ✅ `new_pack_keys` ✅ `new_page_checksum` ✅ `new_row_format` ✅ `new_tbl_storage_engine` ✅ `new_transactional` ✅ `order_field` ✅ `order_order` ✅ `partition_name[]` ✅ `partition_operation` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit_move` ✅ `submit:Go` ✅ `switch_to_new` ✅ `target_db` ✅ `tbl_collation` ✅ `what` | ⬜ `link:Table %s has been emptied.` ⬜ `link:View %s has been dropped.` |
+| `table/operations/view.twig` | 2/3 | ✅ `new_name` ✅ `submit:Go` | ⬜ `link:View %s has been dropped.` |
 | `table/page_with_secondary_tabs.twig` | 0/2 |  | ⬜ `link:Relation view` ⬜ `link:Table structure` |
 | `table/privileges/index.twig` | 0/6 |  | ⬜ `id:usersForm_checkall` ⬜ `link:Add user account` ⬜ `link:Edit privileges` ⬜ `link:Export` ⬜ `selected_usr[]` ⬜ `submit_mult` |
-| `table/relation/common_form.twig` | 0/7 |  | ⬜ `button:Close` ⬜ `button:Internal relationships` ⬜ `button:Preview SQL` ⬜ `display_field` ⬜ `id:previewSQLCloseButton` ⬜ `link:+ Add constraint` ⬜ `submit:Save` |
+| `table/relation/common_form.twig` | 5/7 | ✅ `button:Internal relationships` ✅ `button:Preview SQL` ✅ `display_field` ✅ `link:+ Add constraint` ✅ `submit:Save` | ⬜ `button:Close` ⬜ `id:previewSQLCloseButton` |
 | `table/relation/dropdown_generate.twig` | 0/1 |  | ⬜ `select:L2` |
-| `table/relation/foreign_key_row.twig` | 0/2 |  | ⬜ `constraint_name[*]` ⬜ `link:+ Add column` |
+| `table/relation/foreign_key_row.twig` | 2/2 | ✅ `constraint_name[*]` ✅ `link:+ Add column` |  |
 | `table/relation/relational_dropdown.twig` | 0/1 |  | ⬜ `select:L1` |
-| `table/search/column_comparison_operators.twig` | 0/1 |  | ⬜ `criteriaColumnOperators[*]` |
-| `table/search/index.twig` | 0/17 |  | ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `button:Extra options` ⬜ `columnsToDisplay[]` ⬜ `customWhereClause` ⬜ `distinct` ⬜ `geom_func[*]` ⬜ `id:max_value` ⬜ `id:min_value` ⬜ `id:rangeSearchModalGo` ⬜ `link:Find and replace` ⬜ `link:Table search` ⬜ `link:Zoom search` ⬜ `order` ⬜ `orderByColumn` ⬜ `session_max_rows` ⬜ `submit` |
-| `table/search/input_box.twig` | 0/3 |  | ⬜ `button:Edit/Insert` ⬜ `criteriaValues[*]` ⬜ `link:Browse foreign values` |
+| `table/search/column_comparison_operators.twig` | 1/1 | ✅ `criteriaColumnOperators[*]` |  |
+| `table/search/index.twig` | 17/17 | ✅ `button:Cancel` ✅ `button:Close` ✅ `button:Extra options` ✅ `columnsToDisplay[]` ✅ `customWhereClause` ✅ `distinct` ✅ `geom_func[*]` ✅ `id:max_value` ✅ `id:min_value` ✅ `id:rangeSearchModalGo` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `order` ✅ `orderByColumn` ✅ `session_max_rows` ✅ `submit` |  |
+| `table/search/input_box.twig` | 1/3 | ✅ `criteriaValues[*]` | ⬜ `button:Edit/Insert` ⬜ `link:Browse foreign values` |
 | `table/structure/display_partitions.twig` | 0/10 |  | ⬜ `link:Analyze` ⬜ `link:Check` ⬜ `link:Drop` ⬜ `link:Optimize` ⬜ `link:Rebuild` ⬜ `link:Remove partitioning` ⬜ `link:Repair` ⬜ `link:Truncate` ⬜ `submit:Edit partitioning` ⬜ `submit:Partition table` |
 | `table/structure/display_structure.twig` | 0/42 |  | ⬜ `after_field` ⬜ `button:Add to central columns` ⬜ `button:Browse` ⬜ `button:Change` ⬜ `button:Close` ⬜ `button:Drop` ⬜ `button:Fulltext` ⬜ `button:Go back` ⬜ `button:Index` ⬜ `button:OK` ⬜ `button:Partitions` ⬜ `button:Primary` ⬜ `button:Print` ⬜ `button:Remove from central columns` ⬜ `button:Spatial` ⬜ `button:Unique` ⬜ `id:designerModalCloseButton` ⬜ `id:designerModalGoButton` ⬜ `id:designerModalPreviewButton` ⬜ `id:moreActionsButton` ⬜ `link:Add to central columns` ⬜ `link:Change` ⬜ `link:Distinct values` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Edit view` ⬜ `link:Fulltext` ⬜ `link:Index` ⬜ `link:Move columns` ⬜ `link:Normalize` ⬜ `link:Primary` ⬜ `link:Propose table structure` ⬜ `link:Remove from central columns` ⬜ `link:Rename` ⬜ `link:Show create` ⬜ `link:Spatial` ⬜ `link:Track table` ⬜ `link:Track view` ⬜ `link:Unique` ⬜ `num_fields` ⬜ `selected_fld[]` ⬜ `submit:Go` |
 | `table/structure/display_table_stats.twig` | 0/1 |  | ⬜ `link:Optimize table` |
 | `table/structure/drop_confirm.twig` | 0/1 |  | ⬜ `mult_btn` |
 | `table/structure/partition_definition_form.twig` | 0/1 |  | ⬜ `save_partitioning` |
 | `table/structure/primary.twig` | 0/1 |  | ⬜ `mult_btn` |
-| `table/tracking/main.twig` | 0/7 |  | ⬜ `link:Delete version` ⬜ `link:Structure snapshot` ⬜ `link:Tracking report` ⬜ `selected_versions[]` ⬜ `submit_mult` ⬜ `submit:L113` ⬜ `table` |
-| `table/zoom_search/index.twig` | 0/7 |  | ⬜ `criteriaColumnNames[]` ⬜ `dataLabel` ⬜ `link:Find and replace` ⬜ `link:Table search` ⬜ `link:Zoom search` ⬜ `maxPlotLimit` ⬜ `zoom_submit` |
-| `table/zoom_search/result_form.twig` | 0/5 |  | ⬜ `button:Close` ⬜ `button:Reset zoom` ⬜ `criteriaColumnNullFlags[*]` ⬜ `id:dataPointSaveButton` ⬜ `link:How to use` |
+| `table/tracking/main.twig` | 7/7 | ✅ `link:Delete version` ✅ `link:Structure snapshot` ✅ `link:Tracking report` ✅ `selected_versions[]` ✅ `submit_mult` ✅ `submit:L113` ✅ `table` |  |
+| `table/zoom_search/index.twig` | 7/7 | ✅ `criteriaColumnNames[]` ✅ `dataLabel` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `maxPlotLimit` ✅ `zoom_submit` |  |
+| `table/zoom_search/result_form.twig` | 4/5 | ✅ `button:Close` ✅ `button:Reset zoom` ✅ `id:dataPointSaveButton` ✅ `link:How to use` | ⬜ `criteriaColumnNullFlags[*]` |
 | `triggers/editor_form.twig` | 0/8 |  | ⬜ `id:format` ⬜ `item_definer` ⬜ `item_definition` ⬜ `item_event` ⬜ `item_name` ⬜ `item_table` ⬜ `item_timing` ⬜ `submit:Go` |
 | `triggers/export.twig` | 0/1 |  | ⬜ `textarea:L6` |
 | `triggers/list.twig` | 0/5 |  | ⬜ `button:Close` ⬜ `id:checkAllCheckbox` ⬜ `id:triggersEditorModalSaveButton` ⬜ `link:Create new trigger` ⬜ `submit_mult` |

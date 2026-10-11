@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-767/3426 covered (22.4%): 767 implemented, 33 planned, 2626 missing. [Summary](README.md).
+819/3426 covered (23.9%): 819 implemented, 33 planned, 2574 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 187/403 (46.4%) covered, 187/403 implemented
 
@@ -179,28 +179,24 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 232/534 (43.4%) covered, 232/534 implemented
+## 04 table level — 282/534 (52.8%) covered, 282/534 implemented
 
-302 msgids not used yet.
+252 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Normalization.php` | 51/52 | `'%1$s' depends on:` · `+ Add a new primary key column` · `+ Show me the possible partial dependencies based on data in the table` · `Add a primary key on existing column(s)` · `Check the columns which are redundant and click on remove. If no re…` · `Check the columns which form a repeating group. If no such group, c…` · `Do you have a group of columns which on combining gives an existing…` · `Do you have a group of two or more columns that are closely related…` · `Do you have any column which can be split into more than one column…` · `Done` · `End of step` · `Error in processing!` · … +39 |
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
-| `src/Tracking/Tracking.php` | 23/26 | `Comment out these two lines if you do not need them.` · `Data only` · `Delete tracking data row from report` · `Export as %s` · `No data` · `Show %1$s with dates from %2$s to %3$s by user %4$s %5$s` · `SQL dump` · `SQL dump (file download)` · `SQL execution` · `SQL statements exported. Please copy the dump or execute it.` · `Structure and data` · `Structure only` · … +11 |
 | `resources/templates/table/chart/tbl_chart.twig` | 22/22 | `Chart title:` · `Chart type` · `Area (Chart type)` · `Bar (Chart type)` · `Column (Chart type)` · `Line (Chart type)` · `Pie (Chart type)` · `Scatter (Chart type)` · `Spline (Chart type)` · `Timeline (Chart type)` · `Save chart as image` · `Series column:` · … +10 |
 | `resources/js/normalization.ts` | 19/22 | `Add primary key` · `Confirm partial dependencies` · `Confirm transitive dependencies` · `Done` · `End of step` · `Hide partial dependencies list` · `No dependencies selected!` · `No partial dependencies selected!` · `Note: a, b -> d,f implies values of columns a and b combined togeth…` · `Primary key added.` · `Second step of normalization (2NF)` · `Selected dependencies are as follows:` · … +7 |
-| `resources/templates/table/operations/index.twig` | 14/43 | `(singly) (Alter table order by a single field.)` · `Analyze table` · `Check table` · `Checksum table` · `Data only` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Repair table` · `Structure and data` · … +2 |
-| `resources/templates/table/tracking/main.twig` | 11/13 | `Activate now` · `Activate tracking for %s` · `active` · `Created` · `Deactivate now` · `Deactivate tracking for %s` · `Delete version` · `not active` · `Structure snapshot` · `Tracking report` · `Updated` |
+| `resources/templates/table/operations/index.twig` | 11/43 | `(singly) (Alter table order by a single field.)` · `Analyze table` · `Check table` · `Checksum table` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Repair table` · `Table %s has been dropped.` |
 | `resources/templates/table/structure/display_structure.twig` | 9/51 | `Add to central columns` · `Edit view` · `Go back` · `Media type:` · `None (None for default)` · `Normalize` · `Remove from central columns` · `Track table` · `Track view` |
 | `resources/templates/table/privileges/index.twig` | 8/11 | `database-specific` · `global` · `No user found.` · `Not enough privilege to view users.` · `routine` · `table-specific` · `Users having access to "%s"` · `wildcard` |
 | `src/Triggers/Triggers.php` | 8/8 | `Sorry, we failed to restore the dropped trigger.` · `Trigger %1$s has been created.` · `Trigger %1$s has been modified.` · `You must provide a trigger definition.` · `You must provide a trigger name!` · `You must provide a valid event for the trigger!` · `You must provide a valid table name!` · `You must provide a valid timing for the trigger!` |
 | `resources/templates/database/privileges/index.twig` | 7/10 | `database-specific` · `global` · `No user found.` · `Not enough privilege to view users.` · `routine` · `Users having access to "%s"` · `wildcard` |
-| `resources/templates/database/tracking/tables.twig` | 7/9 | `active` · `Created` · `not active` · `Structure snapshot` · `Track table` · `Tracking report` · `Updated` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 6/12 | `Browser display transformation options` · `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` · `Input transformation options` · `List of available transformations and their options` · `Please enter the values for transformation options using this forma…` |
 | `resources/templates/table/normalization/normalization.twig` | 6/7 | `First step of normalization (1NF)` · `Hint: Please follow the procedure carefully in order to obtain corr…` · `Improve table structure (Normalization):` · `Second step of normalization (1NF+2NF)` · `Select up to what step you want to normalize` · `Third step of normalization (1NF+2NF+3NF)` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
-| `resources/templates/create_tracking_version.twig` | 5/5 | `Create version` · `Create version %1$s` · `Create version %1$s of %2$s` · `Track these data definition statements:` · `Track these data manipulation statements:` |
 | `resources/templates/view_create.twig` | 5/6 | `Column names` · `Definer` · `Details` · `Edit view` · `VIEW name` |
 | `src/Controllers/Triggers/IndexController.php` | 5/7 | `Add trigger` · `Edit trigger` · `Error in processing request: No trigger with name %1$s found in dat…` · `Export of trigger %s` · `No trigger with name %1$s found in database %2$s.` |
 | `resources/templates/database/structure/check_all_tables.twig` | 4/9 | `Analyze table` · `Check table` · `Checksum table` · `Repair table` |
@@ -208,16 +204,10 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/triggers/editor_form.twig` | 4/7 | `Definer` · `Details` · `Time (Trigger action time)` · `Trigger name` |
 | `resources/templates/triggers/list.twig` | 4/8 | `Create new trigger` · `Export trigger` · `There are no triggers to display.` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 4/5 | `Failed to create image` · `Invalid file format, expected one of: ` · `No spatial column found for this SQL query.` · `No SQL query was set to fetch data.` |
-| `src/Controllers/Table/TrackingController.php` | 4/5 | `No versions selected.` · `SQL statements executed.` · `Tracking of %s is activated.` · `Tracking versions deleted successfully.` |
-| `src/Tracking/TrackedDataType.php` | 4/4 | `Data definition statement` · `Data manipulation statement` · `Tracking data definition successfully deleted` · `Tracking data manipulation successfully deleted` |
 | `resources/js/database/search.ts` | 3/4 | `Hide search criteria` · `Searching` · `Show search criteria` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/js/table/select.ts` | 3/6 | `Hide search criteria` · `Searching` · `Show search criteria` |
-| `resources/js/table/tracking.ts` | 3/3 | `Delete entry from tracking report?` · `Delete tracking data for these versions?` · `Delete tracking data for this version?` |
 | `resources/templates/columns_definitions/column_name.twig` | 3/4 | `Is a foreign key.` · `Pick from Central Columns` · `Referenced by %s.` |
-| `resources/templates/database/operations/index.twig` | 3/8 | `Data only` · `Structure and data` · `Structure only` |
-| `resources/templates/database/structure/copy_form.twig` | 3/3 | `Data only` · `Structure and data` · `Structure only` |
-| `resources/templates/table/tracking/report_table.twig` | 3/4 | `Date` · `# (Number)` · `Username` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 3/3 | `No such column` · `Select one…` · `String (string types)` |
 | `src/Controllers/Table/ChartController.php` | 3/5 | `No data to display` · `No numeric columns present in the table to plot.` · `No SQL query was set to fetch data.` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
@@ -229,7 +219,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/events/editor_form.twig` | 2/5 | `Definer` · `Details` |
 | `resources/templates/database/routines/editor_form.twig` | 2/5 | `Definer` · `Details` |
 | `resources/templates/modals/index_dialog_modal.twig` | 2/6 | `Go back` · `Loading` |
-| `resources/templates/table/tracking/structure_snapshot_columns.twig` | 2/11 | `None (None for default)` · `# (Number)` |
 | `resources/templates/table/zoom_search/result_form.twig` | 2/10 | `Loading` · `The generated chart` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
@@ -238,7 +227,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/structure.ts` | 1/8 | `Dropping column` |
+| `resources/templates/create_tracking_version.twig` | 1/5 | `Create version %1$s` |
 | `resources/templates/database/designer/main.twig` | 1/7 | `Loading` |
+| `resources/templates/database/tracking/tables.twig` | 1/9 | `Track table` |
 | `resources/templates/error/simple.twig` | 1/1 | `Go back` |
 | `resources/templates/export_modal.twig` | 1/2 | `Loading` |
 | `resources/templates/export.twig` | 1/2 | `Loading` |
@@ -258,6 +249,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
 | `resources/templates/table/relation/common_form.twig` | 1/17 | `Loading` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
+| `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
 | `resources/templates/triggers/export.twig` | 1/1 | `Export of trigger %s` |
 | `src/Controllers/Database/PrivilegesController.php` | 1/1 | `You do not have the privileges to administrate the users!` |
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
@@ -266,16 +258,16 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
 | `src/Controllers/View/CreateController.php` | 1/2 | `View name can not be empty!` |
 
-## 05 database level — 32/340 (9.4%) covered, 32/340 implemented
+## 05 database level — 34/340 (10.0%) covered, 34/340 implemented
 
-308 msgids not used yet.
+306 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/templates/database/designer/main.twig` | 36/40 | `Active options` · `Add tables from other databases` · `Aggregate` · `Angular links` · `Build Query` · `Choose column to display` · `Create relationship` · `Create table` · `Delete pages` · `Delete relationship` · `Direct links` · `Except` · … +24 |
-| `resources/js/designer/move.ts` | 22/23 | `%d object(s) created.` · `Add tables from other databases` · `Choose column to display` · `Delete page` · `Do you want to save the changes to the current page?` · `Export relational schema` · `Modifications have been saved` · `Open page` · `Page name` · `Please enter a valid page name` · `Please select a page to continue` · `Please select the primary key or a unique key!` · … +10 |
+| `resources/js/designer/move.ts` | 21/23 | `%d object(s) created.` · `Add tables from other databases` · `Choose column to display` · `Delete page` · `Do you want to save the changes to the current page?` · `Export relational schema` · `Modifications have been saved` · `Open page` · `Page name` · `Please enter a valid page name` · `Please select a page to continue` · `Please select the primary key or a unique key!` · … +9 |
 | `src/Database/Routines.php` | 18/19 | `%d row affected by the last statement inside the procedure.` · `Execution results of routine %s` · `Invalid direction "%s" given for parameter.` · `Invalid routine type: "%s"` · `Invalid routine type!` · `One or more errors have occurred while processing your request:` · `Routine %1$s has been created.` · `Routine %1$s has been modified.` · `Routine %1$s has been modified. Privileges have been adjusted.` · `Sorry, we failed to restore the dropped routine.` · `The backed up query was:` · `The definer must be in the "username@hostname" format!` · … +6 |
-| `resources/templates/database/multi_table_query/form.twig` | 16/17 | `Add as` · `Another column` · `Column alias` · `Copy query` · `criteria` · `Enter criteria as free text` · `Query window` · `Remove this column` · `select column` · `select table` · `Show` · `Sort` · … +4 |
+| `resources/templates/database/multi_table_query/form.twig` | 15/17 | `Add as` · `Another column` · `Column alias` · `Copy query` · `criteria` · `Enter criteria as free text` · `Query window` · `Remove this column` · `select column` · `select table` · `Sort` · `Table alias` · … +3 |
 | `resources/templates/database/operations/index.twig` | 14/18 | `Change all tables collations` · `Change all tables columns collations` · `Copy database to` · `CREATE DATABASE before copying` · `Create new table` · `Database %s has been dropped.` · `Database comment` · `Drop the database (DROP)` · `New database name` · `Number of columns` · `Remove database` · `Rename database to` · … +2 |
 | `resources/templates/database/routines/editor_form.twig` | 14/19 | `Add parameter` · `Change to %s` · `Charset` · `Direction` · `Is deterministic` · `Parameters` · `Remove last parameter` · `Return length/values` · `Return options` · `Return type` · `Routine name` · `Security type` · … +2 |
 | `resources/templates/database/search/main.twig` | 14/15 | `all of the words` · `as regular expression` · `at least one of the words` · `include hex matches` · `Inside column:` · `Inside tables:` · `Options:` · `Search in database` · `Select all` · `the exact phrase as substring` · `the exact phrase as whole field` · `Unselect all` · … +2 |
@@ -288,9 +280,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/routines/index.twig` | 8/12 | `Create new routine` · `Execute` · `Execute routine` · `Export routine` · `Returns` · `Routine editor` · `Save changes` · `There are no routines to display.` |
 | `src/Controllers/Database/RoutinesController.php` | 8/8 | `Add routine` · `Edit routine` · `Error in processing request:` · `Error in processing request: No routine with name %1$s found in dat…` · `Execute routine` · `Export of routine %s` · `No routine with name %1$s found in database %2$s.` · `No routine with name %1$s found in database %2$s. You might be lack…` |
 | `resources/templates/database/events/editor_form.twig` | 7/9 | `Change to %s` · `End (End of recurring event)` · `Event name` · `Execute at` · `Execute every` · `On completion preserve` · `Start (Start of recurring event)` |
-| `resources/templates/database/tracking/tables.twig` | 7/8 | `Click to toggle` · `Delete tracking` · `Last version` · `Show` · `Tracked tables` · `Untracked tables` · `Versions` |
 | `src/Controllers/Database/EventsController.php` | 7/7 | `Add event` · `Edit event` · `Error in processing request:` · `Error in processing request: No event with name %1$s found in datab…` · `Export of event %s` · `No event with name %1$s found in database %2$s.` · `The event was dropped immediately after creation.` |
 | `resources/js/database/structure.ts` | 6/6 | `Add table prefix` · `Copy table with prefix` · `Copy tables to` · `Failed to get real row count.` · `Processing request` · `Replace table with prefix` |
+| `resources/templates/database/tracking/tables.twig` | 6/8 | `Click to toggle` · `Delete tracking` · `Last version` · `Tracked tables` · `Untracked tables` · `Versions` |
 | `src/Plugins/Schema/Pdf/PdfRelationSchema.php` | 6/8 | `Creation:` · `Last check:` · `Last update:` · `Relational schema` · `Schema of the %s database` · `Table of contents` |
 | `resources/js/database/operations.ts` | 5/6 | `Cannot rename database to the same name. Change the name and try ag…` · `Changing charset` · `Copying database` · `Processing request` · `Renaming databases` |
 | `resources/js/database/search.ts` | 5/7 | `Browsing` · `Delete the matches for the %s table?` · `Deleting` · `Hide search results` · `Show search results` |
@@ -322,7 +314,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/structure/show_create.twig` | 2/2 | `Create table` · `Showing create queries` |
 | `resources/templates/database/structure/structure_table_row.twig` | 2/6 | `Empty` · `in use` |
 | `resources/templates/database/structure/table_header.twig` | 2/4 | `Charset` · `May be approximate. Click on the number to get the exact count. See…` |
-| `resources/templates/database/structure/tracking_icon.twig` | 2/2 | `Tracking is active.` · `Tracking is not active.` |
 | `resources/templates/server/export/index.twig` | 2/2 | `Select all` · `Unselect all` |
 | `resources/templates/server/replication/database_multibox.twig` | 2/2 | `Select all` · `Unselect all` |
 | `src/Config/Descriptions.php` | 2/4 | `Add DROP TABLE` · `Paper size` |
@@ -349,11 +340,11 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/structure/add_prefix.twig` | 1/1 | `Add prefix` |
 | `resources/templates/database/structure/bulk_action_modal.twig` | 1/2 | `Continue` |
 | `resources/templates/database/structure/favorite_anchor.twig` | 1/1 | `Add to Favorites` |
+| `resources/templates/database/structure/tracking_icon.twig` | 1/2 | `Tracking is active.` |
 | `resources/templates/export.twig` | 1/5 | `New database name` |
 | `resources/templates/navigation/tree/path.twig` | 1/1 | `No tables found in database.` |
 | `resources/templates/server/privileges/privileges_table.twig` | 1/1 | `Select all` |
 | `resources/templates/server/privileges/users_overview.twig` | 1/2 | `Save changes` |
-| `resources/templates/table/tracking/main.twig` | 1/2 | `Show` |
 | `resources/templates/triggers/list.twig` | 1/3 | `Save changes` |
 | `src/Config/ConfigFile.php` | 1/4 | `Text` |
 | `src/Controllers/Database/CentralColumnsController.php` | 1/1 | `Showing rows %1$s - %2$s.` |
@@ -366,7 +357,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Database/Structure/FavoriteTableController.php` | 1/1 | `Favorite List is full!` |
 | `src/Controllers/Database/StructureController.php` | 1/1 | `unknown` |
 | `src/Controllers/Export/ExportController.php` | 1/1 | `No tables found in database.` |
-| `src/Controllers/Table/ChangeController.php` | 1/1 | `Show` |
 | `src/Controllers/Triggers/IndexController.php` | 1/1 | `Error in processing request:` |
 | `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
 | `src/Plugins/Schema/Dia/TableStatsDia.php` | 1/1 | `The %s table doesn't exist!` |

@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-49/199 covered (24.6%): 45 implemented, 3 exception, 1 n/a, 150 planned. [Summary](README.md).
+50/199 covered (25.1%): 46 implemented, 3 exception, 1 n/a, 149 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -59,7 +59,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | API GET /api/transformations | M2 — overview; wrapper: raw cell bytes |
 | 🗓️ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/cell | M2 — overview; wrapper: raw cell bytes |
 
-## 04 table level — 13/64 (20.3%) covered, 13/64 implemented
+## 04 table level — 14/64 (21.9%) covered, 14/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -121,7 +121,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `POST /table/structure/save` | `Table/Structure/SaveController` | API /api/servers/:s/databases/:db/tables/:table/structure/save<br>UI /s/:s/db/:db/t/:table/structure/save | M2 |
 | 🗓️ | `POST /table/structure/spatial` | `Table/Structure/SpatialController` | API /api/servers/:s/databases/:db/tables/:table/structure/spatial<br>UI /s/:s/db/:db/t/:table/structure/spatial | M2 |
 | 🗓️ | `POST /table/structure/unique` | `Table/Structure/UniqueController` | API /api/servers/:s/databases/:db/tables/:table/structure/unique<br>UI /s/:s/db/:db/t/:table/structure/unique | M2 |
-| 🗓️ | `GET, POST /table/tracking` | `Table/TrackingController` | API GET /api/servers/:s/databases/:db/tables/:t/tracking<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking<br>UI /s/:s/db/:db/t/:table/tracking | M2 |
+| ✅ | `GET, POST /table/tracking` | `Table/TrackingController` | API GET /api/servers/:s/databases/:db/tables/:t/tracking (apps/server/src/routes/table-tracking.ts:25)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/versions (apps/server/src/routes/table-tracking.ts:28)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/versions/delete (apps/server/src/routes/table-tracking.ts:34)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/toggle (apps/server/src/routes/table-tracking.ts:40)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/report (apps/server/src/routes/table-tracking.ts:46)<br>API GET /api/servers/:s/databases/:db/tables/:t/tracking/snapshot (apps/server/src/routes/table-tracking.ts:52)<br>UI /s/:server/db/:db/t/:table/tracking (apps/web/src/routes/s/$server/db/$db/t/$table/tracking.tsx) |  |
 | ✅ | `GET, POST /table/zoom-search` | `Table/ZoomSearchController` | API GET /api/servers/:s/databases/:db/tables/:t/search (apps/server/src/routes/table-search.ts:21)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom (apps/server/src/routes/table-search.ts:33)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom/row (apps/server/src/routes/table-search.ts:39)<br>UI /s/:server/db/:db/t/:table/zoom-search (apps/web/src/routes/s/$server/db/$db/t/$table/zoom-search.tsx) |  |
 | 🗓️ | `POST /tables` | `TableController` | API GET /api/servers/:s/databases/:db/tables | M2 — name lists for pickers |
 | 🗓️ | `GET, POST /triggers` | `Triggers/IndexController` | API GET /api/servers/:s/databases/:db/triggers<br>API POST /api/servers/:s/databases/:db/triggers<br>UI /s/:s/db/:db[/t/:table]/triggers | M2 |
