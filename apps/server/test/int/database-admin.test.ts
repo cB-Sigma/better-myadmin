@@ -72,7 +72,7 @@ describe('tracking', () => {
     expect(J(r).untracked).toEqual(['b'])
     expect(J(r).log).toMatch(/^# \d{4}-\d\d-\d\d \d\d:\d\d:\d\d \S+\n\nDROP TABLE IF EXISTS `a`;/)
     const [rows] = await root.query(
-      `SELECT tracking, schema_snapshot FROM phpmyadmin.pma__tracking WHERE db_name = ?`,
+      'SELECT tracking, schema_snapshot FROM phpmyadmin.pma__tracking WHERE db_name = ?',
       [DB],
     )
     const row = (rows as Array<{ tracking: string; schema_snapshot: string }>)[0]
