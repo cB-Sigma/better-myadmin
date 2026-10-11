@@ -115,13 +115,6 @@ export function isPhpArray(v: unknown): v is unknown[] | Record<string, unknown>
   return v !== null && typeof v === 'object'
 }
 
-/** `mb_strlen` for UTF-8 text: code points. */
-export function mbStrlen(s: string): number {
-  let n = 0
-  for (const _ of s) n++
-  return n
-}
-
 /** PHP `empty()`. */
 export function phpEmpty(v: unknown): boolean {
   return (

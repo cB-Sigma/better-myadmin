@@ -154,10 +154,6 @@ export function mbStrpos(haystack: string, needle: string): number | false {
   return [...haystack.slice(0, i)].length
 }
 
-export function mbStrlen(s: string): number {
-  return [...s].length
-}
-
 export function mbSubstr(s: string, start: number, length?: number): string {
   const cps = [...s]
   return cps.slice(start, length === undefined ? undefined : start + length).join('')

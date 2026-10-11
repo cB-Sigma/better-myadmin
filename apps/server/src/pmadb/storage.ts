@@ -1,7 +1,6 @@
 import {
   type MetaConn,
   type RelationParameters,
-  getDbComment as metaDbComment,
   hasAllFeatures as metaHasAllFeatures,
 } from '@bettermyadmin/metadata'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
@@ -68,16 +67,6 @@ const TABLE_DIRECTIVES = [
 /** Relation::arePmadbTablesAllDisabled — every table directive set to false. */
 export function arePmadbTablesAllDisabled(server: ServerConfig): boolean {
   return TABLE_DIRECTIVES.every((d) => (server as unknown as Record<string, unknown>)[d] === false)
-}
-
-/** RelationParameters::hasAllFeatures */
-export function hasAllFeatures(info: StorageInfo): boolean {
-  return info.allFeatures
-}
-
-/** Relation::getDbComment: the `(db_comment)` row of column_info, on the control link. */
-export async function getDbComment(conn: MetaConn | null, info: StorageInfo, db: string): Promise<string> {
-  return metaDbComment(conn, info.rp, db)
 }
 
 /**

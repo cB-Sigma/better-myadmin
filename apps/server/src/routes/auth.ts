@@ -4,12 +4,13 @@ import {
   type LoginResponse,
   type LogoutResponse,
 } from '@bettermyadmin/contracts'
+import { phpEmpty } from '@bettermyadmin/metadata'
 import { Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { type AppEnv, writeSessionCookies } from '../app.ts'
 import { cookieLogin } from '../auth/cookie.ts'
 import { getClientIp } from '../auth/ip-allow-deny.ts'
-import { getServer, phpEmpty, serverIndexes, serverLabel } from '../config.ts'
+import { getServer, serverIndexes, serverLabel } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
 import { forgetServerMetadata } from '../metadata/service.ts'

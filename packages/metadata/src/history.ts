@@ -1,5 +1,5 @@
+import { mbStrlen } from '@bettermyadmin/mysql-types'
 import type { HistoryBackend, HistoryRow } from './driver.ts'
-import { mbStrlen } from './php.ts'
 
 export interface SessionHistoryEntry {
   db: string
