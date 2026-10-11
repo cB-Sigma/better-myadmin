@@ -21,4 +21,7 @@ export const qk = {
   dbScope: (s: number, db: string) => ['srv', s, 'db', db, 'scope'] as const,
   tbl: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t] as const,
   tableScope: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'scope'] as const,
+  /** the Browse tab's /sql run (signed sql + pos from the URL) */
+  browse: (s: number, db: string, t: string, q: object) =>
+    ['srv', s, 'db', db, 'tbl', t, 'browse', q] as const,
 }

@@ -1,0 +1,108 @@
+/* Results grid (resources/templates/display/results/*.twig, themes/pmahomme/scss/_common.scss parts). */
+
+.table_results {
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.table_results th,
+.table_results td {
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.4rem;
+  vertical-align: top;
+}
+.table_results thead th {
+  position: sticky;
+  top: 0;
+  background: var(--grid-header-bg);
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: start;
+  z-index: 1;
+}
+.table_results tbody tr:nth-child(odd) {
+  background: var(--grid-row-odd);
+}
+.table_results tbody tr:nth-child(even) {
+  background: var(--grid-row-even);
+}
+.table_results tbody tr:not(.nopointer):hover,
+.table_results td.hover {
+  background: var(--grid-row-hover);
+}
+.table_results tr.marked:not(.nomarker),
+.table_results td.marked:not(.nomarker) {
+  background: var(--grid-row-marked);
+}
+.table_results .hide {
+  display: none;
+}
+.table_results td.pre_wrap {
+  white-space: pre-wrap;
+}
+.table_results td.text-nowrap {
+  white-space: nowrap;
+}
+.table_results td.null em {
+  color: var(--fg-subtle);
+}
+.table_results .condition {
+  border-color: var(--notice) !important;
+}
+.table_results td.to_be_saved {
+  background: var(--error-bg);
+}
+.table_results th.column_heading.pointer {
+  cursor: pointer;
+}
+.table_results th.marked {
+  background: var(--grid-row-marked);
+}
+.table_results a.sortlink {
+  color: var(--accent);
+}
+.table_results tr.repeating_header_row th {
+  background: var(--bg-subtle);
+}
+.cEdit {
+  position: absolute;
+  z-index: 20;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  padding: 2px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 20%);
+}
+.cEdit .edit_box {
+  width: 100%;
+  min-width: 10rem;
+  font: inherit;
+}
+.cEdit .edit_area {
+  padding: 0.25rem;
+  font-size: 12px;
+}
+.cEdit .cell_edit_hint {
+  color: var(--fg-subtle);
+  font-size: 11px;
+}
+table.navigation td {
+  padding: 0.15rem 0.3rem;
+  vertical-align: middle;
+}
+.coldrop {
+  cursor: pointer;
+}
+.cList {
+  position: absolute;
+  z-index: 30;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  padding: 0.25rem;
+  max-height: 20rem;
+  overflow: auto;
+  font-weight: normal;
+}
+@media print {
+  .d-print-none {
+    display: none !important;
+  }
+}
