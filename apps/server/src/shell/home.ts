@@ -193,7 +193,7 @@ export async function homeData(ctx: ShellCtx, env: HomeEnv): Promise<HomeRespons
     description: charsetDesc.get(name) ?? '',
     collations: [...new Set(collations.get(name) ?? [])].sort(byteSort).map((c) => ({
       name: c,
-      description: collationDescription(c, (x, m) => ctx.tr.pgettext(x, m)),
+      description: collationDescription(c, ctx.tr),
     })),
   }))
 

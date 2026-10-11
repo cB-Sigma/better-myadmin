@@ -1,11 +1,27 @@
 /**
- * Human description of a collation name ("Unicode (UCA 4.0.0), case-insensitive").
- * Strings are phpMyAdmin's msgids (context "Collation" / "Collation variant").
- * pma: src/Charsets/Collation.php::buildDescription
+ * Collation descriptions (the `title` of collation options and of the Structure page's `<dfn>`).
+ *
+ * pma: src/Charsets/Collation.php::buildDescription and helpers
  */
+
+/** The gettext functions the descriptions need (the request translator). */
+export interface CollationTranslator {
+  gettext(msgid: string): string
+  pgettext(context: string, msgid: string): string
+}
+
+const identity: CollationTranslator = { gettext: (s) => s, pgettext: (_c, s) => s }
 
 const LEVEL0: Record<string, string> = {
   binary: 'Binary',
+  utf8mb4: 'Unicode',
+  ucs2: 'Unicode',
+  utf8: 'Unicode',
+  utf8mb3: 'Unicode',
+  utf16: 'Unicode',
+  utf16le: 'Unicode',
+  utf16be: 'Unicode',
+  utf32: 'Unicode',
   ascii: 'West European',
   cp850: 'West European',
   dec8: 'West European',
@@ -21,6 +37,7 @@ const LEVEL0: Record<string, string> = {
   gb2312: 'Simplified Chinese',
   gbk: 'Simplified Chinese',
   big5: 'Traditional Chinese',
+  gb18030: 'Chinese',
   sjis: 'Japanese',
   ujis: 'Japanese',
   cp932: 'Japanese',
@@ -41,10 +58,19 @@ const LEVEL0: Record<string, string> = {
   swe7: 'Swedish',
   tis620: 'Thai',
 }
+const UNICODE_CHARSETS = new Set([
+  'utf8mb4',
+  'ucs2',
+  'utf8',
+  'utf8mb3',
+  'utf16',
+  'utf16le',
+  'utf16be',
+  'utf32',
+  'gb18030',
+])
 
-const UNICODE = new Set(['ucs2', 'utf8', 'utf8mb3', 'utf16', 'utf16le', 'utf16be', 'utf32'])
-
-/** Level-1 tokens (locale names / codes); `null` = known but keeps the current name. */
+/** level 1 tokens → name; `null`: the name is left as is ("general") */
 const LEVEL1: Record<string, string | null> = {
   general: null,
   bulgarian: 'Bulgarian',
@@ -124,94 +150,84 @@ const SUFFIXES: Record<string, string> = {
   nopad: 'no-pad',
 }
 
-/** `_pgettext()` of the caller's catalogue; English (the msgid) by default. */
-export type Pgettext = (msgctxt: string, msgid: string) => string
-
-export function collationDescription(collation: string, pgettext: Pgettext = (_c, m) => m): string {
-  let name = 'Unknown'
+/**
+ * e.g. `utf8mb4_0900_ai_ci` → "Unicode (UCA 9.0.0), accent-insensitive, case-insensitive".
+ *
+ * pma: src/Charsets/Collation.php::buildDescription
+ */
+export function collationDescription(collation: string, tr: CollationTranslator = identity): string {
+  const c = (s: string) => tr.pgettext('Collation', s)
+  let name = tr.gettext('Unknown')
   let variant: string | null = null
   const suffixes: string[] = []
   let unicode = false
   let unknown = false
   let level = 0
-
   for (const part of collation.split('_')) {
     if (level === 0) {
       level = 1
-      if (part === 'utf8mb4') {
-        variant = 'UCA 4.0.0'
-        name = 'Unicode'
-        unicode = true
-      } else if (UNICODE.has(part)) {
-        name = 'Unicode'
-        unicode = true
-      } else if (part === 'gb18030') {
-        name = 'Chinese'
-        unicode = true
-      } else if (Object.hasOwn(LEVEL0, part)) {
-        name = LEVEL0[part]!
-      } else {
-        name = 'Unknown'
+      // getNameForLevel0
+      if (part === 'utf8mb4') variant = 'UCA 4.0.0'
+      const n = Object.hasOwn(LEVEL0, part) ? LEVEL0[part] : undefined
+      if (n === undefined) {
+        name = c('Unknown')
         unknown = true
+      } else {
+        name = c(n)
+        if (UNICODE_CHARSETS.has(part)) unicode = true
       }
       continue
     }
-
     if (level === 1) {
       level = 4
+      // getNameForLevel1
       let found = true
       if (part === 'chinese' || part === 'cn' || part === 'zh') {
-        if (unicode) name = 'Chinese'
+        if (unicode) name = c('Chinese')
       } else if (part === 'german' || part === 'de') {
         level = 2
       } else if (part === 'es') {
         level = 3
       } else if (part === 'unicode') {
-        if (unknown) name = 'Unicode'
+        if (unknown) name = c('Unicode')
       } else if (Object.hasOwn(LEVEL1, part)) {
         const n = LEVEL1[part]
-        if (n !== null && n !== undefined) name = n
+        if (n !== null && n !== undefined) name = c(n)
       } else {
         found = false
       }
       if (found) continue
     }
-
     if (level === 2) {
       level = 4
       if (part === 'pb') {
-        name = 'German (phone book order)'
+        name = c('German (phone book order)')
         continue
       }
-      name = 'German (dictionary order)'
+      name = c('German (dictionary order)')
     }
-
     if (level === 3) {
       level = 4
       if (part === 'trad') {
-        name = 'Spanish (traditional)'
+        name = c('Spanish (traditional)')
         continue
       }
-      name = 'Spanish (modern)'
+      name = c('Spanish (modern)')
     }
-
     if (level === 4) {
       level = 5
-      const v = VARIANTS[part]
+      const v = Object.hasOwn(VARIANTS, part) ? VARIANTS[part] : undefined
       if (v !== undefined) {
         variant = v
         continue
       }
     }
-
     if (level < 5) continue
-    const s = SUFFIXES[part]
-    if (s !== undefined) suffixes.push(s)
+    const s = Object.hasOwn(SUFFIXES, part) ? SUFFIXES[part] : undefined
+    if (s !== undefined) suffixes.push(tr.pgettext('Collation variant', s))
   }
-
-  // every name is _pgettext('Collation', …), every suffix _pgettext('Collation variant', …)
-  let result = pgettext('Collation', name)
+  let result = name
   if (variant !== null) result += ` (${variant})`
-  if (suffixes.length > 0) result += `, ${suffixes.map((x) => pgettext('Collation variant', x)).join(', ')}`
+  if (suffixes.length > 0) result += `, ${suffixes.join(', ')}`
   return result
 }

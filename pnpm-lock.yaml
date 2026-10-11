@@ -234,6 +234,9 @@ importers:
       '@bettermyadmin/mysql-types':
         specifier: workspace:*
         version: link:../mysql-types
+      '@bettermyadmin/sql-lexer':
+        specifier: workspace:*
+        version: link:../sql-lexer
 
   packages/sql-lexer: {}
 

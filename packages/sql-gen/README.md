@@ -7,6 +7,10 @@ These are pure SQL builders that return strings and generate the same SQL phpMyA
 | `quote.ts` | `Util::backquote`, `DatabaseInterface::quoteString`, mysqlnd `escape_slashes`/`escape_quotes` | `backquote` (also accepts arrays), `backquoteCompat`, `escapeString`, `quoteString`, `hexLiteral`, `bitLiteral`, `NULL`, `escapeMysqlWildcards` |
 | `where.ts` | `UniqueCondition.php`, `InsertEdit::isWhereClauseNumeric` | `getUniqueCondition(fields, row, {forceUnique, restrictToTable, expressions, isView, quote})` returns `{condition, isClauseUnique, conditionArray}` |
 | `column.ts` | `Table::generateFieldSpec`, `::generateAlter`, `CreateAddField` | `generateFieldSpec`, `generateAlter`, `getTableCreationQuery`, `getColumnCreationQuery`, `getPartitionsDefinition` |
+| `structure.ts` | `Query\Generator` (add index / primary / partition maintenance), `PrimaryController`, `DropColumnController`, `PartitioningController`, Structure templates | `getAddIndexSql`, `getAddPrimaryKeyStatement`, `getAddKeyQuery`, `getPrimaryKeyQuery`, `getDropColumn(s)Query`, `getDropIndexQuery`, `getDistinctValuesQuery`, `getBrowseColumnsQuery`, `getPartitionMaintenanceQuery`, `getQueryForPartitioningTable`, `getPartitioningQuery`, `getRemovePartitioningQuery` |
+| `indexes.ts` | `Table\Indexes`, `Indexes\Index`, `Table::getColumnsWithIndex` | `getSqlQueryForIndexCreateOrEdit`, `getSqlQueryForIndexRename`, `getSqlQueryForRename`, `indexesFromShowIndexes`, `findDuplicateIndexes`, `getColumnsWithIndex` |
+| `change-columns.ts` | `Structure\SaveController::updateColumns` | `columnNeedsAlterTable`, `getChangeColumnsQuery`, `getCollationBlobConversions`, `getChangeRevertQuery`, `getAdjustColumnPrivilegesQuery` |
+| `move-columns.ts` | `MoveColumnsController::generateAlterTableSql` (on `@bettermyadmin/sql-lexer`) | `getMoveColumnsQuery` |
 | `dml.ts` | `InsertEdit` value formatting, `ReplaceController`, `Query\Generator::buildInsertSqlQuery`, `Results` / `DeleteRowsController` | `getQueryValueForInsert`, `getQueryValueForUpdate`, `buildInsertEditQueries`, `buildProtectedValueQuery`, `uploadedEditField`, `buildDeleteRowQuery`, `buildDeleteRowsQueries` |
 
 ## Values and charsets

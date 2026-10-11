@@ -242,7 +242,7 @@ describe.skipIf(!reachable)(
       try {
         const since = await log.marker()
         await pma.login(user('pa', 'su'), user('pa', 'su'))
-        await pma.post('/index.php?route=/collation-connection', { collation_connection: 'utf8mb4_bin' })
+        await pma.postPath('/index.php?route=/collation-connection', { collation_connection: 'utf8mb4_bin' })
         const html = await pma.get('/index.php?route=/')
         await bma.login(user('pb', 'su'), user('pb', 'su'))
         await bma.req('POST', '/api/servers/1/session/collation', { collation_connection: 'utf8mb4_bin' })
@@ -257,7 +257,7 @@ describe.skipIf(!reachable)(
         expect(html).toMatch(/<option value="utf8mb4_general_ci" title="[^"]*" selected>/)
         expect(home.collation.selected).toBe('utf8mb4_general_ci')
         // restore the reference user's preference (stored in phpMyAdmin's pmadb userconfig)
-        await pma.post('/index.php?route=/collation-connection', {
+        await pma.postPath('/index.php?route=/collation-connection', {
           collation_connection: 'utf8mb4_unicode_ci',
         })
       } finally {
@@ -272,7 +272,7 @@ describe.skipIf(!reachable)(
         const since = await log.marker()
         await pma.login(user('pa', role), user('pa', role))
         const pmaJson = JSON.parse(
-          await pma.post(
+          await pma.postPath(
             '/index.php?route=/user-password',
             {
               nopass: '0',

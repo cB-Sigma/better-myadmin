@@ -11,6 +11,7 @@
     "fixtures": "php scripts/generate-fixtures.php"
   },
   "dependencies": {
-    "@bettermyadmin/mysql-types": "workspace:*"
+    "@bettermyadmin/mysql-types": "workspace:*",
+    "@bettermyadmin/sql-lexer": "workspace:*"
   }
 }

@@ -1,7 +1,7 @@
 <?php
 // Collation descriptions as phpMyAdmin computes them (Charsets\Collation::buildDescription), for every
 // collation of the connected server plus MariaDB-only names.
-// Usage: php scripts/gen-collation-fixtures.php > test/fixtures/collations.json
+// Usage: php scripts/gen-collation-fixtures.php > test/fixtures/collation-descriptions.json
 declare(strict_types=1);
 
 require __DIR__ . '/pma-bootstrap.php';

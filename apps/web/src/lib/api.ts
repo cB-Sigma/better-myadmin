@@ -67,7 +67,7 @@ function readCookie(name: string): string {
 }
 
 /** The only place in the web app allowed to call fetch. */
-async function call<T>(method: 'GET' | 'POST', path: string, body?: unknown): Promise<T> {
+export async function call<T>(method: 'GET' | 'POST', path: string, body?: unknown): Promise<T> {
   const headers: Record<string, string> = { accept: 'application/json' }
   if (body !== undefined) headers['content-type'] = 'application/json'
   if (method !== 'GET') headers[CSRF_HEADER] = readCookie(CSRF_COOKIE)

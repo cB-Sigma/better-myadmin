@@ -11,6 +11,7 @@ import { navigationRoutes } from './navigation.ts'
 import { queryRoutes } from './query.ts'
 import { shellRoutes } from './shell.ts'
 import { sqlRoutes } from './sql.ts'
+import { tableStructureRoutes } from './table-structure.ts'
 
 export type ServerEnv = AppEnv & {
   Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials }
@@ -55,3 +56,4 @@ serverRoutes.route('/:s/sql', sqlRoutes)
 serverRoutes.route('/:s/console', consoleRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
+serverRoutes.route('/:s/databases', tableStructureRoutes)

@@ -136,11 +136,23 @@ Conventions:
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
 | GET | `/api/servers/:s/databases/:db/tables/:t/meta` | columns (full definition), indexes, FKs + internal relations, display field, comments, MIME, uiprefs, engine, is view, row estimate, capabilities | `Table`, `Relation` |
-| GET | `/api/servers/:s/databases/:db/tables/:t/structure` | structure tab payload (columns, indexes, partitions, information/statistics) | `/table/structure` |
-| POST | `/api/servers/:s/databases/:db/tables/:t/columns/*` | `add {count, position, defs[]}`, `change {defs[]}`, `drop {names}`, `move {order[]}`, `key {type: primary|unique|index|spatial|fulltext, columns[]}`, `central-add`, `central-remove`, `reserved-word-check {names}` | `/table/add-field`, `/table/structure/*` |
-| POST | `/api/servers/:s/databases/:db/tables/:t/columns/preview` | `{op, defs}` → SQL statements (dry run) | "Preview SQL" |
-| GET/POST | `/api/servers/:s/databases/:db/tables/:t/indexes[/:name]` | edit form payload; create/edit `{name, type, columns:[{name, subPart}], keyBlockSize, parser, comment, visible}`; `rename`; drop | `/table/indexes*` |
-| GET/POST | `/api/servers/:s/databases/:db/tables/:t/partitions/*` | `analyze|check|optimize|rebuild|repair|truncate|drop {partitions[]}`, `remove-partitioning`, `partitioning {definition}` | `/table/partition/*`, `/table/structure/partitioning` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/structure` | `StructureResponse`: columns (print type, collation + description, attribute, default, comment, extra, primary/index icons, row-action availability, distinct-values and drop SQL), indexes + duplicate notices, partitions card, Information card (sizes formatted), links, config flags | `/table/structure` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/columns/form?fields=a&fields=b` | change form of the selected columns in table order: option lists (type catalog, attributes, default types, virtuality, charsets/collations, engines, privileges) + per column the values the form shows and the `_orig` snapshot | `/table/structure/change` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/columns/add-form` | option lists of the add-columns form | `/table/add-field` (form) |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/add` | `{columns[], indexes[], where: last|first|after, afterField, onlineTransaction, dryRun}` | `/table/add-field` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/change` | `{columns[] (values + orig + moveTo + adjustPrivileges), onlineTransaction, dryRun}` | `/table/structure/save` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/drop` | `{columns[], source: row|bulk}` (row = the /sql link, bulk = the Yes/No page) | `/sql`, `/table/structure/drop` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/key` | `{type: PRIMARY|UNIQUE|INDEX|SPATIAL|FULLTEXT, columns[], source: row|bulk, confirmed}` → `confirm` for a bulk Primary on a table with a PK | `/table/structure/add-key`, `/primary`, `/unique`, `/index`, `/spatial`, `/fulltext` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/move` | `{order[], dryRun}` | `/table/structure/move-columns` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/preview` | `{op: add|change|move, body}` → `{preview}` (always a dry run of the same builders) | "Preview SQL" |
+| POST | `/api/servers/:s/databases/:db/tables/:t/columns/reserved-word-check` | `{names[], table?}` → `{reserved, message}` | `/table/structure/reserved-word-check` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/indexes/form?index=…|create=N` | the index editor as phpMyAdmin pre-fills it | `/table/indexes` (form), `/table/indexes/rename` (form) |
+| POST | `/api/servers/:s/databases/:db/tables/:t/indexes` | `{oldIndex, index: {name, choice, keyBlockSize, type, parser, comment, columns:[{name, subPart, collation}]}, dryRun}` (phpMyAdmin has no index visibility control) | `/table/indexes` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/indexes/rename` / `drop` | `{oldIndex, name, dryRun}` / `{name}` (drop = the /sql link) | `/table/indexes/rename`, `/sql` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/partitions/form` | partition editor pre-filled from SHOW CREATE TABLE | `/table/structure/partitioning` |
+| POST | `/api/servers/:s/databases/:db/tables/:t/partitions/partitioning` / `maintenance` / `remove-partitioning` | `{partitioning, dryRun}` / `{operation, partition}` / — | `/table/structure/partitioning`, `/table/partition/*`, `/sql` |
+| GET | `/api/servers/:s/databases/:db/create-table/form` | option lists, 4 default rows | `/table/create` (form) |
+| POST | `/api/servers/:s/databases/:db/tables` | create table `{table, columns[], indexes[], comment, collation, engine, connection, partitioning, dryRun}` | `/table/create` |
 | GET/POST | `/api/servers/:s/databases/:db/tables/:t/relations` | relation view payload; save `{internal:[{col, refDb, refTable, refCol}], foreign:[{name, cols[], refDb, refTable, refCols[], onDelete, onUpdate}], displayField}` | `/table/relation` |
 | POST | `/api/servers/:s/databases/:db/tables/:t/operations/*` | `order {column, dir}`, `move {targetDb, targetTable, what, ...}`, `options {name, comment, engine, collation, autoIncrement, packKeys, checksum, delayKeyWrite, transactional, pageChecksum, rowFormat}`, `copy {...}`, `maintenance {action}`, `empty`, `drop`, `referential-check` | `/table/operations`, `/table/maintenance/*` |
 | POST | `/api/servers/:s/databases/:db/tables/:t/search` | criteria → signed SQL + redirect to browse | `/table/search` |
