@@ -65,9 +65,8 @@ export function PluginOptions({
                   name={item.name}
                   value="y"
                   id={`checkbox_${item.name}`}
-                  checked
+                  defaultChecked
                   disabled
-                  readOnly
                 />
                 <input type="hidden" name={item.name} value="y" />
                 <label className="form-check-label" htmlFor={`checkbox_${item.name}`}>

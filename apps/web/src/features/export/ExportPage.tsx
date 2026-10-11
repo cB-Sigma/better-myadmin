@@ -17,7 +17,7 @@ import {
   showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -189,22 +189,16 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
     if (isDb && p !== undefined) {
       const r = structureRadio(p)
       if (r !== null) {
-        // setupTableStructureOrData: the plugin default decides the pre-checked column
+        // setupTableStructureOrData: a "structure" default clears the data column and a "data" one
+        // the structure column. Its "re-tick the selected rows when a column is empty" branch never
+        // takes effect in the reference (observed in Chromium: once cleared, a column stays clear
+        // across format changes), so it is not reproduced.
         setTables((ts) => {
-          let next = ts.map((x) => ({
+          const next = ts.map((x) => ({
             ...x,
             data: r.value === 'structure' ? false : x.data,
             structure: r.value === 'data' ? false : x.structure,
           }))
-          if (
-            (r.value === 'structure' || r.value === 'structure_and_data') &&
-            !next.some((x) => x.structure)
-          ) {
-            next = next.map((x) => (x.select ? { ...x, structure: true } : x))
-          }
-          if ((r.value === 'data' || r.value === 'structure_and_data') && !next.some((x) => x.data)) {
-            next = next.map((x) => (x.select ? { ...x, data: true } : x))
-          }
           return next.map((x) => ({ ...x, select: x.structure || x.data }))
         })
       }
@@ -224,8 +218,12 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
   // handleAddProcCheckbox: CREATE PROCEDURE/FUNCTION/EVENT follows "all structure and all data"
   const syncProcCheckbox = (next: typeof tables) => {
     const box = document.getElementById('checkbox_sql_procedure_function') as HTMLInputElement | null
-    if (box !== null) box.checked = next.every((x) => x.structure) && next.every((x) => x.data)
+    // without the table list (server/table scope) #table_structure_all is absent: unchecked
+    if (box !== null) box.checked = isDb && next.every((x) => x.structure) && next.every((x) => x.data)
   }
+  // pma: export.ts registerOnload calls handleAddProcCheckbox once on load
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once, after the options mounted
+  useEffect(() => syncProcCheckbox(tables), [])
   const updateTables = (fn: (ts: typeof tables) => typeof tables) => {
     setTables((ts) => {
       const next = fn(ts)
