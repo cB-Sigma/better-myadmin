@@ -140,6 +140,7 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
               className="max-w-48"
               value={cols}
               onChange={(e) => setCols(Number(e.target.value))}
+              required
             />
           </Label>
         </PanelBody>

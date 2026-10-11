@@ -31,19 +31,32 @@ pageParity(
 pageParity('db-operations', db('/database/operations', 'operations'))
 pageParity('db-search', db('/database/search', 'search'))
 pageParity('db-query', db('/database/multi-table-query', 'multi-table-query'))
+pageParity('db-routines', db('/database/routines', 'routines'))
+pageParity('db-events', db('/database/events', 'events'))
+pageParity('db-triggers', db('/triggers', 'triggers'))
+
+/** An editor dialog: phpMyAdmin's Bootstrap modal (opened by its ajax anchor) and our Dialog. */
+const editor = (route: string, path: string, modal: string, open: string, ready: string): PageSpec =>
+  db(route, path, {
+    scope: { pma: `#${modal}.show .modal-content`, ours: `#${modal}` },
+    setup: async ({ pma, ours }) => {
+      // phpMyAdmin's anchor sits under its floating menu bar: a normal click never becomes actionable
+      await pma.locator('#page_content a.add_anchor').first().click({ force: true })
+      await ours.getByRole('button', { name: open }).first().click()
+      for (const page of [pma, ours]) await page.locator(`#${modal} [name="${ready}"]`).first().waitFor()
+    },
+  })
 pageParity(
-  'db-routines',
-  db('/database/routines', 'routines', {
-    interactions: [{ name: 'create', do: { click: 'Create new routine' } }],
-  }),
+  'db-routine-editor',
+  editor('/database/routines', 'routines', 'routinesEditorModal', 'Create new routine', 'item_name'),
 )
 pageParity(
-  'db-events',
-  db('/database/events', 'events', { interactions: [{ name: 'create', do: { click: 'Create new event' } }] }),
+  'db-event-editor',
+  editor('/database/events', 'events', 'eventsEditorModal', 'Create new event', 'item_name'),
 )
 pageParity(
-  'db-triggers',
-  db('/triggers', 'triggers', { interactions: [{ name: 'create', do: { click: 'Create new trigger' } }] }),
+  'db-trigger-editor',
+  editor('/triggers', 'triggers', 'triggersEditorModal', 'Create new trigger', 'item_name'),
 )
 pageParity('table-triggers', {
   sql: SQL,
@@ -54,7 +67,13 @@ pageParity('db-tracking', db('/database/tracking', 'tracking'))
 pageParity(
   'db-central-columns',
   db('/database/central-columns', 'central-columns', {
-    interactions: [{ name: 'add new column', do: { click: 'Add new column' } }],
+    interactions: [
+      {
+        name: 'add new column',
+        pma: async (page) => page.locator('#add_col_div > a').click({ force: true }),
+        ours: { click: 'Add new column' },
+      },
+    ],
   }),
 )
 pageParity('db-data-dictionary', db('/database/data-dictionary', 'data-dictionary'))

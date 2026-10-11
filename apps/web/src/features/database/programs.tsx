@@ -54,10 +54,13 @@ export function ProgramListPage({
   before,
   after,
   tableId,
+  filterable = false,
 }: {
   server: number
   db: string
   table?: string
+  /** the name filter (only the Routines list has one) */
+  filterable?: boolean
   icon: PmaIconName
   title: string
   docLink: string
@@ -181,17 +184,19 @@ export function ProgramListPage({
             <Button id="bulkActionDropButton" title={t('Drop')} onClick={() => void bulkDrop()}>
               <IconText icon="b_drop" text={t('Drop')} />
             </Button>
-            <div className="ms-auto flex items-center gap-1">
-              <PmaIcon name="b_search" alt={t('Search')} />
-              <Input
-                id="filterText"
-                className="max-w-60"
-                placeholder={t('Search')}
-                aria-label={t('Search')}
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-              />
-            </div>
+            {filterable && (
+              <div className="ms-auto flex items-center gap-1">
+                <PmaIcon name="b_search" alt={t('Search')} />
+                <Input
+                  id="filterText"
+                  className="max-w-60"
+                  placeholder={t('Search')}
+                  aria-label={t('Search')}
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                />
+              </div>
+            )}
           </>
         )}
         <Button variant="primary" className="add_anchor" disabled={!canCreate} onClick={onCreate}>
