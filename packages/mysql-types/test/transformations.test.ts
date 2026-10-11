@@ -17,7 +17,12 @@ const html = (file: string, v: string | Uint8Array, o: string[] = [], ctx = {}) 
 
 describe('Transformations::getOptions', () => {
   it('splits on commas, keeps quoted commas, strips quotes and slashes', () => {
-    expect(parseTransformationOptions("'option ,, quoted',abd,'2,3',")).toEqual(['option ,, quoted', 'abd', '2,3', ''])
+    expect(parseTransformationOptions("'option ,, quoted',abd,'2,3',")).toEqual([
+      'option ,, quoted',
+      'abd',
+      '2,3',
+      '',
+    ])
     expect(parseTransformationOptions('')).toEqual([])
     expect(parseTransformationOptions("'a\\'b'")).toEqual(["a'b"])
   })
@@ -30,8 +35,19 @@ describe('plugin catalog', () => {
   })
   it('lists input transformations then the root plugins [p03-e852ea]', () => {
     const t = getAvailableMimeTypes()
-    expect(t.mimetype).toEqual(['Image/JPEG', 'Text/Plain', 'Application/Octetstream', 'Image/PNG', 'Text/Octetstream'])
-    expect(t.input_transformation.map((p) => p.label).slice(-4)).toEqual(['Link', 'Longtoipv4', 'PreApPend', 'Substring'])
+    expect(t.mimetype).toEqual([
+      'Image/JPEG',
+      'Text/Plain',
+      'Application/Octetstream',
+      'Image/PNG',
+      'Text/Octetstream',
+    ])
+    expect(t.input_transformation.map((p) => p.label).slice(-4)).toEqual([
+      'Link',
+      'Longtoipv4',
+      'PreApPend',
+      'Substring',
+    ])
     expect(t.transformation).toHaveLength(19)
   })
 })
@@ -54,15 +70,23 @@ describe('output plugins', () => {
   })
   it('wrapper links, SQL, JSON, Formatted, External', () => {
     const wrapperUrl = (e?: Record<string, string>) => `w?${new URLSearchParams(e)}`
-    expect(html('Output/Application_Octetstream_Download', 'x', [], { wrapperUrl })).toContain('cn=binary_file.dat')
+    expect(html('Output/Application_Octetstream_Download', 'x', [], { wrapperUrl })).toContain(
+      'cn=binary_file.dat',
+    )
     expect(html('Output/Text_Plain_Sql', 'SELECT 1')).toBe('SQL:SELECT 1')
-    expect(html('Output/Text_Plain_Json', '{"a":1}')).toBe('<pre><code class="json">{&quot;a&quot;:1}</code></pre>')
-    expect(html('Output/Text_Plain_Formatted', '<b class="x">')).toBe("<iframe srcdoc=\"<b class='x'>\" sandbox=\"\"></iframe>")
+    expect(html('Output/Text_Plain_Json', '{"a":1}')).toBe(
+      '<pre><code class="json">{&quot;a&quot;:1}</code></pre>',
+    )
+    expect(html('Output/Text_Plain_Formatted', '<b class="x">')).toBe(
+      '<iframe srcdoc="<b class=\'x\'>" sandbox=""></iframe>',
+    )
     expect(html('Output/Text_Plain_External', '<p>')).toBe('<p>')
     expect(transformationNoWrap('Output/Text_Plain_External', [])).toBe(true)
   })
   it('Date Format in UTC', () => {
-    expect(html('Output/Text_Plain_Dateformat', '0', ['', 'Y-m-d', 'utc'], { meta: { isInt: true } })).toContain('>1970-01-01</dfn>')
+    expect(
+      html('Output/Text_Plain_Dateformat', '0', ['', 'Y-m-d', 'utc'], { meta: { isInt: true } }),
+    ).toContain('>1970-01-01</dfn>')
   })
   it('Binary To IPv4/IPv6', () => {
     expect(html('Output/Text_Plain_Binarytoip', '0x7f000001')).toBe('127.0.0.1')

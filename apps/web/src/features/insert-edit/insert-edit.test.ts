@@ -5,7 +5,9 @@ import { arrowTarget, fieldIndex, isDateTime } from './logic'
 describe('GIS data editor model', () => {
   it('generates WKT with phpMyAdmin minimum point counts', () => {
     expect(generateWkt({ type: 'LINESTRING', points: [{ x: '1', y: '2' }] })).toBe('LINESTRING(1 2, )')
-    expect(generateWkt({ type: 'POLYGON', lines: [[{ x: '0', y: '0' }]] }, '0')).toBe('POLYGON((0 0,0 0,0 0,0 0))')
+    expect(generateWkt({ type: 'POLYGON', lines: [[{ x: '0', y: '0' }]] }, '0')).toBe(
+      'POLYGON((0 0,0 0,0 0,0 0))',
+    )
   })
   it('round-trips a value with SRID', () => {
     const v = initialValue('geometry', "'MULTIPOLYGON(((0 0,1 0,1 1,0 0)),((5 5,6 5,6 6,5 5)))',4326")

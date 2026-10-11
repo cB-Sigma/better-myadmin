@@ -363,7 +363,12 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
         { row: 0, col: 'name', value: 'dup' },
       ],
     },
-    { name: 'preview of an insert [p03-789dce]', table: 't', preview: true, mods: [{ row: 0, col: 'name', value: 'pv' }] },
+    {
+      name: 'preview of an insert [p03-789dce]',
+      table: 't',
+      preview: true,
+      mods: [{ row: 0, col: 'name', value: 'pv' }],
+    },
     {
       name: 'edit one row: changed columns only, NULL set [p03-30e777]',
       table: 't',
