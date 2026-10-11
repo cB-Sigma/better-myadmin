@@ -4,6 +4,25 @@
  */
 export { defaultConfig, defaults, serverDefaults } from './defaults.ts'
 export { ENV_CONFIG_FILE, ENV_PREFIX, ENV_SHORTCUTS, type EnvLayer, parseEnv } from './env.ts'
+export {
+  FORM_FIELDS,
+  FORM_VALIDATORS,
+  type FormDef,
+  type FormFieldDef,
+  type FormFieldType,
+  type FormItem,
+  type FormMsg,
+  type FormSelectValue,
+  type FormTabDef,
+  type FormValidator,
+  formFields,
+  PAGE_FORMS,
+  pageFormTab,
+  USER_FORMS,
+  USER_VALIDATORS,
+  userFormFieldPaths,
+  userFormTab,
+} from './forms.ts'
 export { type ConfigIssue, ConfigError, formatIssue } from './errors.ts'
 export {
   CONFIG_FILE_NAMES,

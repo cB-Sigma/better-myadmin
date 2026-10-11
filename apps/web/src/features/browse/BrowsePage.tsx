@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { ApiError, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { StatementBlock } from '../sql/Results'
 import type { CardEnv } from '../sql/SqlMessage'
@@ -30,6 +31,8 @@ export interface BrowsePageProps {
  */
 export function BrowsePage(props: BrowsePageProps) {
   const { server, db, table } = props
+  // pma: Sql\SqlController: PageSettings::init('Browse')
+  usePagePrefs(server, 'Browse')
   const ui = useUiSettings()
   const navigate = useNavigate()
   const qc = useQueryClient()

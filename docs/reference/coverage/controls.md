@@ -4,9 +4,9 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-450/1106 covered (40.7%): 450 implemented, 24 planned, 632 missing. [Summary](README.md).
+490/1106 covered (44.3%): 490 implemented, 24 planned, 592 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
+## 01 shell navigation auth — 27/98 (27.6%) covered, 27/98 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -20,9 +20,9 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `home/themes.twig` | 0/1 |  | ⬜ `set_theme` |
 | `list_navigator.twig` | 4/4 | ✅ `link:Begin` ✅ `link:End` ✅ `link:Next` ✅ `link:Previous` |  |
 | `login/form.twig` | 6/6 | ✅ `id:input_go` ✅ `lang` ✅ `pma_password` ✅ `pma_servername` ✅ `pma_username` ✅ `server` |  |
-| `login/twofactor.twig` | 0/1 |  | ⬜ `submit:Verify` |
-| `login/twofactor/application_configure.twig` | 0/1 |  | ⬜ `2fa_code` |
-| `login/twofactor/application.twig` | 0/1 |  | ⬜ `2fa_code` |
+| `login/twofactor.twig` | 1/1 | ✅ `submit:Verify` |  |
+| `login/twofactor/application_configure.twig` | 1/1 | ✅ `2fa_code` |  |
+| `login/twofactor/application.twig` | 1/1 | ✅ `2fa_code` |  |
 | `menu/main.twig` | 2/5 | ✅ `link:(current)` ✅ `link:Server:` | ⬜ `button:Toggle navigation` ⬜ `link:Database:` ⬜ `link:View:` |
 | `modals/unhide_nav_item.twig` | 0/1 |  | ⬜ `button:Close` |
 | `navigation/item_unhide_dialog.twig` | 0/1 |  | ⬜ `link:Unhide` |
@@ -211,19 +211,19 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `import.twig` | 10/10 | ✅ `allow_interrupt` ✅ `charset_of_file` ✅ `fk_checks` ✅ `format` ✅ `id:buttonGo` ✅ `id:localFileTab` ✅ `id:uploadFileTab` ✅ `import_file` ✅ `local_import_file` ✅ `skip_queries` |  |
 | `server/export/index.twig` | 3/3 | ✅ `db_select[]` ✅ `id:db_select_all` ✅ `id:db_unselect_all` |  |
 
-## 08 settings preferences pmadb — 0/39 (0.0%) covered, 0/39 implemented
+## 08 settings preferences pmadb — 37/39 (94.9%) covered, 37/39 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `config/form_display/display.twig` | 0/2 |  | ⬜ `submit_reset` ⬜ `submit_save` |
-| `config/form_display/input.twig` | 0/12 |  | ⬜ `*-userprefs-allow` ⬜ `checkbox:L37` ⬜ `link:Comment` ⬜ `link:Documentation` ⬜ `link:Restore default value` ⬜ `link:Set value: %s` ⬜ `number:L34` ⬜ `password:L29` ⬜ `select:L40` ⬜ `text:L27` ⬜ `text:L32` ⬜ `textarea:L47` |
-| `preferences/autoload.twig` | 0/3 |  | ⬜ `link:Delete settings` ⬜ `link:No` ⬜ `link:Yes` |
-| `preferences/header.twig` | 0/8 |  | ⬜ `link:Export` ⬜ `link:Features` ⬜ `link:Import` ⬜ `link:Main panel` ⬜ `link:Manage your settings` ⬜ `link:Navigation panel` ⬜ `link:SQL queries` ⬜ `link:Two-factor authentication` |
-| `preferences/manage/error.twig` | 0/2 |  | ⬜ `submit_ignore` ⬜ `submit_import` |
-| `preferences/manage/main.twig` | 0/7 |  | ⬜ `export_type` ⬜ `import_file` ⬜ `import_merge` ⬜ `import_type` ⬜ `submit_clear` ⬜ `submit_export` ⬜ `submit_import` |
-| `preferences/two_factor/configure.twig` | 0/1 |  | ⬜ `submit:Enable two-factor authentication` |
-| `preferences/two_factor/confirm.twig` | 0/1 |  | ⬜ `submit:Disable two-factor authentication` |
-| `preferences/two_factor/main.twig` | 0/3 |  | ⬜ `2fa_configure` ⬜ `2fa_remove` ⬜ `submit:Configure two-factor authentication` |
+| `config/form_display/display.twig` | 2/2 | ✅ `submit_reset` ✅ `submit_save` |  |
+| `config/form_display/input.twig` | 10/12 | ✅ `checkbox:L37` ✅ `link:Documentation` ✅ `link:Restore default value` ✅ `link:Set value: %s` ✅ `number:L34` ✅ `password:L29` ✅ `select:L40` ✅ `text:L27` ✅ `text:L32` ✅ `textarea:L47` | ⬜ `*-userprefs-allow` ⬜ `link:Comment` |
+| `preferences/autoload.twig` | 3/3 | ✅ `link:Delete settings` ✅ `link:No` ✅ `link:Yes` |  |
+| `preferences/header.twig` | 8/8 | ✅ `link:Export` ✅ `link:Features` ✅ `link:Import` ✅ `link:Main panel` ✅ `link:Manage your settings` ✅ `link:Navigation panel` ✅ `link:SQL queries` ✅ `link:Two-factor authentication` |  |
+| `preferences/manage/error.twig` | 2/2 | ✅ `submit_ignore` ✅ `submit_import` |  |
+| `preferences/manage/main.twig` | 7/7 | ✅ `export_type` ✅ `import_file` ✅ `import_merge` ✅ `import_type` ✅ `submit_clear` ✅ `submit_export` ✅ `submit_import` |  |
+| `preferences/two_factor/configure.twig` | 1/1 | ✅ `submit:Enable two-factor authentication` |  |
+| `preferences/two_factor/confirm.twig` | 1/1 | ✅ `submit:Disable two-factor authentication` |  |
+| `preferences/two_factor/main.twig` | 3/3 | ✅ `2fa_configure` ✅ `2fa_remove` ✅ `submit:Configure two-factor authentication` |  |
 
 ## 09 sql editor query pipeline — 6/28 (21.4%) covered, 6/28 implemented
 
