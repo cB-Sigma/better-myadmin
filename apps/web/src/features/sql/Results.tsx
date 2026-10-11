@@ -1,7 +1,8 @@
 import type { StatementResult } from '@bettermyadmin/contracts'
+import { MessageBox } from '@bettermyadmin/ui'
 import { ProfilingCard } from './ProfilingCard'
 import { ResultGrid } from './ResultGrid'
-import { type CardEnv, MessageBox, SqlMessage } from './SqlMessage'
+import { type CardEnv, SqlMessage } from './SqlMessage'
 
 /**
  * Everything one statement renders: the card, the profiling chart, the results table (one per result
@@ -11,7 +12,7 @@ import { type CardEnv, MessageBox, SqlMessage } from './SqlMessage'
 export function StatementBlock({ st, env }: { st: StatementResult; env: CardEnv }) {
   // import mode: the SQL tab shows only data.message (the transcript card is not displayed)
   if (st.kind === 'import') {
-    return <MessageBox type={st.message.type} text={st.message.text} className="mb-3 rounded" />
+    return <MessageBox type={st.message.type} text={st.message.text} />
   }
   const showGrid = st.result !== undefined && st.result.fields.length > 0
   return (
@@ -51,7 +52,8 @@ export function StatementBlock({ st, env }: { st: StatementResult; env: CardEnv 
           key={i}
           type="notice"
           text={`${w.level}: #${w.code}${w.message !== '' ? ` ${w.message}` : ''}`}
-          className="mt-2 rounded"
+          flush
+          className="mt-2"
         />
       ))}
     </section>

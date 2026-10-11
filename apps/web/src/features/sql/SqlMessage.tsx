@@ -1,19 +1,12 @@
 import type { SqlCard, StatementResult } from '@bettermyadmin/contracts'
+import { MessageBox, MessageLine, MySqlDocLink, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
-import { AlertTriangle, CheckCircle2, CircleHelp, XCircle } from 'lucide-react'
 import { createContext, useContext, useRef, useState } from 'react'
 import { api } from '../../lib/api'
-import { mysqlDocUrl } from '../../lib/docs'
 import { pgettext, t } from '../../lib/i18n'
 import { HighlightedSql } from './HighlightedSql'
 import { SqlEditor } from './editor/SqlEditor'
 import type { SqlEditorHandle } from './editor/types'
-
-const styles = {
-  success: { box: 'border-success/40 bg-success-bg text-success', Icon: CheckCircle2 },
-  notice: { box: 'border-notice/40 bg-notice-bg text-notice', Icon: AlertTriangle },
-  error: { box: 'border-error/40 bg-error-bg text-error', Icon: XCircle },
-} as const
 
 /** What a link of the card asks the page to do. */
 export type CardAction =
@@ -44,40 +37,6 @@ export interface CardEnv {
   onAction: (a: CardAction) => void
 }
 
-export function DocIcon({ href, target = 'mysql_doc' }: { href: string; target?: string }) {
-  return (
-    <a
-      href={href}
-      target={target}
-      rel="noopener noreferrer"
-      title={t('Documentation')}
-      className="inline-flex align-middle"
-    >
-      <CircleHelp className="size-3.5" aria-hidden />
-      <span className="sr-only">{t('Documentation')}</span>
-    </a>
-  )
-}
-
-/** The message alert (Message::getMessageWithIcon). */
-export function MessageBox({
-  type,
-  text,
-  className = '',
-}: { type: keyof typeof styles; text: string; className?: string }) {
-  const { box, Icon } = styles[type]
-  return (
-    <div
-      className={`flex items-start gap-2 border px-3 py-2 text-sm ${box} ${className}`}
-      role={type === 'error' ? 'alert' : 'status'}
-      data-message-type={type}
-    >
-      <Icon className="mt-0.5 size-4 shrink-0" aria-hidden />
-      <div className="min-w-0 whitespace-pre-line">{text}</div>
-    </div>
-  )
-}
-
 /**
  * The executed-query card: message, SQL, and Edit inline / Edit / Explain / PHP / Refresh links.
  * pma: src/Html/Generator.php::getMessage, resources/js/modules/functions.ts::onloadSqlQueryEditEvents
@@ -87,11 +46,17 @@ export function SqlMessage({ st, env, message }: { st: StatementResult; env: Car
   if (st.kind === 'error' && st.error !== undefined) return <ErrorCard st={st} env={env} />
   const card = st.card
   if (card === null || card === undefined) {
-    return <MessageBox type={st.message.type} text={text} className="mb-3 rounded" />
+    return <MessageBox type={st.message.type} text={text} />
   }
   return (
     <div className="result_query mb-3 overflow-hidden rounded border border-border">
-      <MessageBox type={st.message.type} text={text} className="rounded-t border-x-0 border-t-0" />
+      <MessageLine
+        type={st.message.type}
+        text={text}
+        className="rounded-t border-x-0 border-t-0"
+        role={st.message.type === 'error' ? 'alert' : 'status'}
+        data-message-type={st.message.type}
+      />
       <SqlCardBody card={card} st={st} env={env} />
     </div>
   )
@@ -315,14 +280,14 @@ export function ErrorCard({ st, env }: { st: StatementResult; env: Pick<CardEnv,
               {t('Copy')}
             </button>
             {copied && <span className="sr-only">{t('Successfully copied!')}</span>}
-            {e.selectDoc && <DocIcon href={mysqlDocUrl('SELECT', '', env.versionInt)} />}
+            {e.selectDoc && <MySqlDocLink url={mysqlDocUrl('SELECT', '', env.versionInt)} />}
           </p>
           <HighlightedSql sql={e.sql} versionInt={env.versionInt} className="my-1 text-fg" />
         </>
       )}
       <p className="flex items-center gap-1">
         <strong>{t('MySQL said: ')}</strong>
-        <DocIcon href={mysqlDocUrl('server-error-reference', '', env.versionInt)} />
+        <MySqlDocLink url={mysqlDocUrl('server-error-reference', '', env.versionInt)} />
       </p>
       <code className="whitespace-pre-wrap text-xs">{e.serverMessage}</code>
     </div>

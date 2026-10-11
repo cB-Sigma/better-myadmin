@@ -195,3 +195,34 @@ export function Checkbox({ className, ...props }: ComponentProps<typeof Checkbox
     </CheckboxPrimitive.Root>
   )
 }
+
+// ---------------------------------------------------------------------------------------------
+// FormRow — label left (220 px), control right; stacked below 900 px (docs/architecture/09)
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * One row of a free-layout admin form (`.form-group`). Forms that mirror a phpMyAdmin `<table>`
+ * template keep the table for parity; everything else lays out its fields with FormRow.
+ */
+export function FormRow({
+  label,
+  htmlFor,
+  hint,
+  children,
+  className,
+}: { label: ReactNode; htmlFor?: string; hint?: ReactNode; children: ReactNode; className?: string }) {
+  return (
+    <div
+      className={cn(
+        'grid items-center gap-x-3 gap-y-1 py-1 min-[900px]:grid-cols-[220px_minmax(0,1fr)]',
+        className,
+      )}
+    >
+      <Label {...(htmlFor !== undefined ? { htmlFor } : {})}>{label}</Label>
+      <div className="min-w-0">
+        {children}
+        {hint !== undefined && <p className="mt-0.5 text-xs text-fg-muted">{hint}</p>}
+      </div>
+    </div>
+  )
+}

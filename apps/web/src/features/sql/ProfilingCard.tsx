@@ -1,8 +1,7 @@
 import type { Profiling } from '@bettermyadmin/contracts'
+import { MySqlDocLink, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useEffect, useRef, useState } from 'react'
-import { mysqlDocUrl } from '../../lib/docs'
 import { t } from '../../lib/i18n'
-import { DocIcon } from './SqlMessage'
 
 type SortDir = 'asc' | 'desc'
 
@@ -88,7 +87,7 @@ export function ProfilingCard({ profiling, versionInt }: { profiling: Profiling;
         <div>
           <h3 className="mb-1 flex items-center gap-1 font-semibold">
             {t('Summary by state')}
-            <DocIcon href={mysqlDocUrl('general-thread-states', '', versionInt)} />
+            <MySqlDocLink url={mysqlDocUrl('general-thread-states', '', versionInt)} />
           </h3>
           <table id="profilesummarytable" className="w-full text-xs">
             <thead>

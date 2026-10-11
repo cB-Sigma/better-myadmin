@@ -1,23 +1,23 @@
 import type { DdlResponse, SqlMessage, StructureResponse } from '@bettermyadmin/contracts'
+import {
+  Button,
+  MessageBox,
+  Modal,
+  MySqlDocLink,
+  Panel,
+  PanelBody,
+  PreviewSqlDialog,
+} from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, KeyRound, ListTree } from 'lucide-react'
 import { useState } from 'react'
+import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
 import { type Scope, structureApi, structureKeys } from './api'
+import { confirmSql } from './confirm'
 import { takeFlash } from './flash'
-import {
-  Button,
-  Card,
-  DocLink,
-  MessageBox,
-  Modal,
-  Notice,
-  PreviewSqlModal,
-  confirmSql,
-  errorMessage,
-} from './ui'
 
 /**
  * The table Structure tab.
@@ -70,7 +70,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
     }
   }
 
-  if (q.isError) return <MessageBox message={errorMessage(q.error)} />
+  if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined) return null
   const s = q.data
   const editable = !s.isView && !s.isSystemSchema
@@ -117,29 +117,31 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       )}
       {messages.map((m, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: message list
-        <MessageBox key={i} message={m} />
+        <MessageBox key={i} {...m} />
       ))}
       {maintenance && (
-        <Card title={maintenance.title}>
-          {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
-            <div key={name} className="mb-2">
-              <div className="font-semibold">
-                {name} ({maintenance.partition})
+        <Panel title={maintenance.title}>
+          <PanelBody>
+            {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
+              <div key={name} className="mb-2">
+                <div className="font-semibold">
+                  {name} ({maintenance.partition})
+                </div>
+                <ul>
+                  {maintenance.rows
+                    .filter((r) => r.table === name)
+                    .map((r, i) => (
+                      // biome-ignore lint/suspicious/noArrayIndexKey: result rows
+                      <li key={i} className="text-sm">
+                        <span className="mr-1 rounded bg-bg-inset px-1">{r.msgType}</span>
+                        {r.msgText}
+                      </li>
+                    ))}
+                </ul>
               </div>
-              <ul>
-                {maintenance.rows
-                  .filter((r) => r.table === name)
-                  .map((r, i) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: result rows
-                    <li key={i} className="text-sm">
-                      <span className="mr-1 rounded bg-bg-inset px-1">{r.msgType}</span>
-                      {r.msgText}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))}
-        </Card>
+            ))}
+          </PanelBody>
+        </Panel>
       )}
 
       <form id="fieldsForm" onSubmit={(e) => e.preventDefault()}>
@@ -399,11 +401,11 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       )}
 
       {s.showIndexes && (
-        <Card
+        <Panel
           id="index_div"
           title={
             <>
-              {t('Indexes')} <DocLink page="optimizing-database-structure" />
+              {t('Indexes')} <MySqlDocLink link="optimizing-database-structure" />
             </>
           }
           footer={
@@ -434,163 +436,169 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             </form>
           }
         >
-          <div className="index_info">
-            {s.indexes.length === 0 ? (
-              <div className="no_indexes_defined">
-                <Notice>{t('No index defined!')}</Notice>
-              </div>
-            ) : (
-              <>
-                {s.indexNotices.map((n) => (
-                  <Notice key={n}>{n}</Notice>
-                ))}
-                <table id="table_index" className="mt-2 w-auto text-sm">
-                  <thead>
-                    <tr className="bg-grid-header text-left">
-                      <th colSpan={3} className="px-1 print:hidden">
-                        {t('Action')}
-                      </th>
-                      <th className="px-1">{t('Keyname')}</th>
-                      <th className="px-1">{t('Type')}</th>
-                      <th className="px-1">{t('Unique')}</th>
-                      <th className="px-1">{t('Packed')}</th>
-                      <th className="px-1">{t('Column')}</th>
-                      <th className="px-1">{t('Cardinality')}</th>
-                      <th className="px-1">{t('Collation')}</th>
-                      <th className="px-1">{t('Null')}</th>
-                      <th className="px-1">{t('Comment')}</th>
-                    </tr>
-                  </thead>
-                  {s.indexes.map((index) => (
-                    <tbody key={index.name} className="row_span" data-testid={`index-${index.name}`}>
-                      {index.columns.map((col, n) => (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: index parts
-                        <tr key={n} className="odd:bg-grid-odd even:bg-grid-even">
-                          {n === 0 && (
-                            <>
-                              <td rowSpan={index.columns.length} className="px-1 print:hidden">
-                                <Button variant="link" onClick={() => setIndexQuery({ index: index.name })}>
-                                  {t('Edit')}
-                                </Button>
-                              </td>
-                              <td rowSpan={index.columns.length} className="px-1 print:hidden">
-                                <Button variant="link" onClick={() => setRenaming(index.name)}>
-                                  {t('Rename')}
-                                </Button>
-                              </td>
-                              <td rowSpan={index.columns.length} className="px-1 print:hidden">
-                                <Button
-                                  variant="link"
-                                  className="drop_primary_key_index_anchor"
-                                  onClick={() =>
-                                    setConfirm({
-                                      question: t('Do you really want to execute the following query?'),
-                                      sql: index.dropSql,
-                                      run: async () => {
-                                        await act(() => structureApi.dropIndex(scope, index.name))
-                                      },
-                                    })
-                                  }
-                                >
-                                  {t('Drop')}
-                                </Button>
-                              </td>
-                              <th rowSpan={index.columns.length} className="px-1 text-left">
-                                {index.name}
-                              </th>
-                              <td rowSpan={index.columns.length} className="px-1">
-                                {index.type}
-                              </td>
-                              <td rowSpan={index.columns.length} className="px-1">
-                                {index.unique ? t('Yes') : t('No')}
-                              </td>
-                              <td rowSpan={index.columns.length} className="px-1">
-                                {index.packed}
-                              </td>
-                            </>
-                          )}
-                          <td className="px-1">
-                            {col.expression ?? col.name}
-                            {col.subPart !== null && ` (${col.subPart})`}
-                          </td>
-                          <td className="px-1">{col.cardinality}</td>
-                          <td className="px-1">{col.collation}</td>
-                          <td className="px-1">{col.null}</td>
-                          {n === 0 && (
-                            <td rowSpan={index.columns.length} className="whitespace-pre-line px-1">
-                              {index.comments}
-                            </td>
-                          )}
-                        </tr>
-                      ))}
-                    </tbody>
+          <PanelBody>
+            <div className="index_info">
+              {s.indexes.length === 0 ? (
+                <div className="no_indexes_defined">
+                  <MessageBox type="notice">{t('No index defined!')}</MessageBox>
+                </div>
+              ) : (
+                <>
+                  {s.indexNotices.map((n) => (
+                    <MessageBox type="notice" key={n}>
+                      {n}
+                    </MessageBox>
                   ))}
-                </table>
-              </>
-            )}
-          </div>
-        </Card>
+                  <table id="table_index" className="mt-2 w-auto text-sm">
+                    <thead>
+                      <tr className="bg-grid-header text-left">
+                        <th colSpan={3} className="px-1 print:hidden">
+                          {t('Action')}
+                        </th>
+                        <th className="px-1">{t('Keyname')}</th>
+                        <th className="px-1">{t('Type')}</th>
+                        <th className="px-1">{t('Unique')}</th>
+                        <th className="px-1">{t('Packed')}</th>
+                        <th className="px-1">{t('Column')}</th>
+                        <th className="px-1">{t('Cardinality')}</th>
+                        <th className="px-1">{t('Collation')}</th>
+                        <th className="px-1">{t('Null')}</th>
+                        <th className="px-1">{t('Comment')}</th>
+                      </tr>
+                    </thead>
+                    {s.indexes.map((index) => (
+                      <tbody key={index.name} className="row_span" data-testid={`index-${index.name}`}>
+                        {index.columns.map((col, n) => (
+                          // biome-ignore lint/suspicious/noArrayIndexKey: index parts
+                          <tr key={n} className="odd:bg-grid-odd even:bg-grid-even">
+                            {n === 0 && (
+                              <>
+                                <td rowSpan={index.columns.length} className="px-1 print:hidden">
+                                  <Button variant="link" onClick={() => setIndexQuery({ index: index.name })}>
+                                    {t('Edit')}
+                                  </Button>
+                                </td>
+                                <td rowSpan={index.columns.length} className="px-1 print:hidden">
+                                  <Button variant="link" onClick={() => setRenaming(index.name)}>
+                                    {t('Rename')}
+                                  </Button>
+                                </td>
+                                <td rowSpan={index.columns.length} className="px-1 print:hidden">
+                                  <Button
+                                    variant="link"
+                                    className="drop_primary_key_index_anchor"
+                                    onClick={() =>
+                                      setConfirm({
+                                        question: t('Do you really want to execute the following query?'),
+                                        sql: index.dropSql,
+                                        run: async () => {
+                                          await act(() => structureApi.dropIndex(scope, index.name))
+                                        },
+                                      })
+                                    }
+                                  >
+                                    {t('Drop')}
+                                  </Button>
+                                </td>
+                                <th rowSpan={index.columns.length} className="px-1 text-left">
+                                  {index.name}
+                                </th>
+                                <td rowSpan={index.columns.length} className="px-1">
+                                  {index.type}
+                                </td>
+                                <td rowSpan={index.columns.length} className="px-1">
+                                  {index.unique ? t('Yes') : t('No')}
+                                </td>
+                                <td rowSpan={index.columns.length} className="px-1">
+                                  {index.packed}
+                                </td>
+                              </>
+                            )}
+                            <td className="px-1">
+                              {col.expression ?? col.name}
+                              {col.subPart !== null && ` (${col.subPart})`}
+                            </td>
+                            <td className="px-1">{col.cardinality}</td>
+                            <td className="px-1">{col.collation}</td>
+                            <td className="px-1">{col.null}</td>
+                            {n === 0 && (
+                              <td rowSpan={index.columns.length} className="whitespace-pre-line px-1">
+                                {index.comments}
+                              </td>
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    ))}
+                  </table>
+                </>
+              )}
+            </div>
+          </PanelBody>
+        </Panel>
       )}
 
       {s.partitions.available && <PartitionsCard s={s} scope={scope} act={act} />}
 
       {s.stats !== null && (
-        <Card id="tablestatistics" title={t('Information')}>
-          {s.stats.tableComment !== '' && (
-            <div className="mb-2 text-sm">
-              <strong>{t('Table comments:')}</strong>
-              <em>
-                <pre>{s.stats.tableComment}</pre>
-              </em>
-            </div>
-          )}
-          <div className="flex flex-wrap gap-6">
-            {s.stats.showSpaceUsage && (
-              <table className="text-sm">
-                <caption className="text-left font-semibold">{t('Space usage')}</caption>
-                <tbody>
-                  {(
-                    [
-                      [t('Data'), s.stats.data],
-                      [t('Index'), s.stats.index],
-                      [t('Overhead'), s.stats.overhead],
-                      [t('Effective'), s.stats.overhead === null ? null : s.stats.effective],
-                      [t('Total'), s.stats.total],
-                    ] as Array<[string, [string, string] | null]>
-                  )
-                    .filter((r): r is [string, [string, string]] => r[1] !== null)
-                    .map(([label, [v, unit]]) => (
-                      <tr key={label}>
-                        <th className="pr-3 text-left">{label}</th>
-                        <td className="text-right">{v}</td>
-                        <td className="pl-1">{unit}</td>
-                      </tr>
-                    ))}
-                </tbody>
-                {s.stats.optimizeSql !== null && (
-                  <tfoot className="print:hidden">
-                    <tr>
-                      <th colSpan={3}>
-                        <Link to={sqlLink(server, s.stats.optimizeSql)}>{t('Optimize table')}</Link>
-                      </th>
-                    </tr>
-                  </tfoot>
-                )}
-              </table>
+        <Panel id="tablestatistics" title={t('Information')}>
+          <PanelBody>
+            {s.stats.tableComment !== '' && (
+              <div className="mb-2 text-sm">
+                <strong>{t('Table comments:')}</strong>
+                <em>
+                  <pre>{s.stats.tableComment}</pre>
+                </em>
+              </div>
             )}
-            <table className="text-sm">
-              <caption className="text-left font-semibold">{t('Row statistics')}</caption>
-              <tbody>
-                {s.stats.rows.map((r) => (
-                  <tr key={r.label}>
-                    <th className="pr-3 text-left">{r.label}</th>
-                    <td>{r.title !== undefined ? <dfn title={r.title}>{r.value}</dfn> : r.value}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
+            <div className="flex flex-wrap gap-6">
+              {s.stats.showSpaceUsage && (
+                <table className="text-sm">
+                  <caption className="text-left font-semibold">{t('Space usage')}</caption>
+                  <tbody>
+                    {(
+                      [
+                        [t('Data'), s.stats.data],
+                        [t('Index'), s.stats.index],
+                        [t('Overhead'), s.stats.overhead],
+                        [t('Effective'), s.stats.overhead === null ? null : s.stats.effective],
+                        [t('Total'), s.stats.total],
+                      ] as Array<[string, [string, string] | null]>
+                    )
+                      .filter((r): r is [string, [string, string]] => r[1] !== null)
+                      .map(([label, [v, unit]]) => (
+                        <tr key={label}>
+                          <th className="pr-3 text-left">{label}</th>
+                          <td className="text-right">{v}</td>
+                          <td className="pl-1">{unit}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                  {s.stats.optimizeSql !== null && (
+                    <tfoot className="print:hidden">
+                      <tr>
+                        <th colSpan={3}>
+                          <Link to={sqlLink(server, s.stats.optimizeSql)}>{t('Optimize table')}</Link>
+                        </th>
+                      </tr>
+                    </tfoot>
+                  )}
+                </table>
+              )}
+              <table className="text-sm">
+                <caption className="text-left font-semibold">{t('Row statistics')}</caption>
+                <tbody>
+                  {s.stats.rows.map((r) => (
+                    <tr key={r.label}>
+                      <th className="pr-3 text-left">{r.label}</th>
+                      <td>{r.title !== undefined ? <dfn title={r.title}>{r.value}</dfn> : r.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </PanelBody>
+        </Panel>
       )}
 
       <Modal
@@ -600,7 +608,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         footer={
           <>
             <Button
-              variant="danger"
+              variant="destructive"
               id="buttonYes"
               onClick={async () => {
                 const c = confirm
@@ -680,7 +688,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           ))}
         </ul>
       </Modal>
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
       <IndexDialog
         scope={scope}
         query={indexQuery}
@@ -820,11 +828,11 @@ function PartitionsCard({
   }
   const editHref = `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/structure/partitioning`
   const card = (
-    <Card
+    <Panel
       id="partitions"
       title={
         <>
-          {t('Partitions')} <DocLink page="partitioning" />
+          {t('Partitions')} <MySqlDocLink link="partitioning" />
         </>
       }
       footer={
@@ -849,70 +857,76 @@ function PartitionsCard({
         </div>
       }
     >
-      {p.partitions.length === 0 ? (
-        <Notice>{t('No partitioning defined!')}</Notice>
-      ) : (
-        <>
-          <p className="text-sm">
-            {t('Partitioned by:')}{' '}
-            <code>
-              {p.method}({p.expression})
-            </code>
-          </p>
-          {p.subMethod !== null && (
+      <PanelBody>
+        {p.partitions.length === 0 ? (
+          <MessageBox type="notice">{t('No partitioning defined!')}</MessageBox>
+        ) : (
+          <>
             <p className="text-sm">
-              {t('Sub partitioned by:')}{' '}
+              {t('Partitioned by:')}{' '}
               <code>
-                {p.subMethod}({p.subExpression})
+                {p.method}({p.expression})
               </code>
             </p>
-          )}
-          <table className="mt-2 text-sm">
-            <thead>
-              <tr className="bg-grid-header text-left">
-                <th className="px-1">#</th>
-                <th className="px-1">{t('Partition')}</th>
-                {p.hasDescription && <th className="px-1">{t('Expression')}</th>}
-                <th className="px-1">{t('Rows')}</th>
-                <th className="px-1">{t('Data length')}</th>
-                <th className="px-1">{t('Index length')}</th>
-                <th className="px-1">{t('Comment')}</th>
-                <th className="px-1" colSpan={ops.length}>
-                  {t('Action')}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {p.partitions.map((part) => (
-                <tr key={part.name} data-testid={`partition-${part.name}`}>
-                  <td className="px-1">{part.ordinal}</td>
-                  <th className="px-1 text-left">{part.name}</th>
-                  {p.hasDescription && (
-                    <td className="px-1">
-                      <code>
-                        {part.expression}
-                        {part.method === 'LIST' ? ` IN (${part.description})` : ` < ${part.description}`}
-                      </code>
-                    </td>
-                  )}
-                  <td className="px-1 text-right">{part.rows}</td>
-                  <td className="px-1 text-right">{part.dataLength.join(' ')}</td>
-                  <td className="px-1 text-right">{part.indexLength.join(' ')}</td>
-                  <td className="px-1">{part.comment}</td>
-                  {ops.map((op) => (
-                    <td key={op} className="px-1">
-                      <Button variant="link" id={`partition_action_${op}`} onClick={() => run(op, part.name)}>
-                        {labels[op]}
-                      </Button>
-                    </td>
-                  ))}
+            {p.subMethod !== null && (
+              <p className="text-sm">
+                {t('Sub partitioned by:')}{' '}
+                <code>
+                  {p.subMethod}({p.subExpression})
+                </code>
+              </p>
+            )}
+            <table className="mt-2 text-sm">
+              <thead>
+                <tr className="bg-grid-header text-left">
+                  <th className="px-1">#</th>
+                  <th className="px-1">{t('Partition')}</th>
+                  {p.hasDescription && <th className="px-1">{t('Expression')}</th>}
+                  <th className="px-1">{t('Rows')}</th>
+                  <th className="px-1">{t('Data length')}</th>
+                  <th className="px-1">{t('Index length')}</th>
+                  <th className="px-1">{t('Comment')}</th>
+                  <th className="px-1" colSpan={ops.length}>
+                    {t('Action')}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-    </Card>
+              </thead>
+              <tbody>
+                {p.partitions.map((part) => (
+                  <tr key={part.name} data-testid={`partition-${part.name}`}>
+                    <td className="px-1">{part.ordinal}</td>
+                    <th className="px-1 text-left">{part.name}</th>
+                    {p.hasDescription && (
+                      <td className="px-1">
+                        <code>
+                          {part.expression}
+                          {part.method === 'LIST' ? ` IN (${part.description})` : ` < ${part.description}`}
+                        </code>
+                      </td>
+                    )}
+                    <td className="px-1 text-right">{part.rows}</td>
+                    <td className="px-1 text-right">{part.dataLength.join(' ')}</td>
+                    <td className="px-1 text-right">{part.indexLength.join(' ')}</td>
+                    <td className="px-1">{part.comment}</td>
+                    {ops.map((op) => (
+                      <td key={op} className="px-1">
+                        <Button
+                          variant="link"
+                          id={`partition_action_${op}`}
+                          onClick={() => run(op, part.name)}
+                        >
+                          {labels[op]}
+                        </Button>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </PanelBody>
+    </Panel>
   )
   if (p.partitions.length === 0 || sliders === 'disabled') return card
   return (

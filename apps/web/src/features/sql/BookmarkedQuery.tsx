@@ -1,8 +1,7 @@
+import { DocLink } from '@bettermyadmin/ui'
 import { useRef, useState } from 'react'
-import { pmaDocUrl } from '../../lib/docs'
 import { t } from '../../lib/i18n'
 import type { BookmarkEntry } from '../bookmarks/provider'
-import { DocIcon } from './SqlMessage'
 
 export type BookmarkAction = 'submit' | 'view' | 'delete'
 
@@ -72,7 +71,7 @@ export function BookmarkedQuery({
       {varCount > 0 && (
         <div className="px-3 pb-3 text-sm">
           <span className="mr-1">{t('Variables')}</span>
-          <DocIcon href={pmaDocUrl('faq', 'faqbookmark')} target="documentation" />
+          <DocLink page="faq" anchor="faqbookmark" />
           <div className="mt-1 flex flex-wrap gap-3" id="bookmarkVariables">
             {Array.from({ length: varCount }, (_, i) => i + 1).map((i) => (
               <div key={`${id}-${i}`} className="flex items-center gap-1">

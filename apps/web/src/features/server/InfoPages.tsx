@@ -1,18 +1,29 @@
+import {
+  Hint,
+  Loading,
+  MessageBox,
+  MySqlDocLink,
+  PageHeader,
+  Panel,
+  PanelBody,
+  SafeHtml,
+  Table,
+} from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { CaseSensitive, Cog, FileText, FileType, Puzzle, Table2 } from 'lucide-react'
 import { Fragment } from 'react'
+import { errorMessage } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { serverApi, serverKeys } from './api'
-import { Alert, Card, DocLink, ErrorBox, Hint, Loading, PageTitle, SqlBox, tableCls } from './ui'
 
 /** pma: templates/server/collations/index.twig */
 export function CollationsPage({ server }: { server: number }) {
   const q = useQuery({ queryKey: serverKeys.collations(server), queryFn: () => serverApi.collations(server) })
   return (
     <div>
-      <PageTitle icon={CaseSensitive}>{t('Character sets and collations')}</PageTitle>
-      {q.error !== null && <ErrorBox error={q.error} />}
+      <PageHeader icon={CaseSensitive}>{t('Character sets and collations')}</PageHeader>
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {q.data === undefined ? (
         q.isPending && <Loading />
       ) : (
@@ -55,11 +66,11 @@ export function EnginesPage({ server }: { server: number }) {
   const q = useQuery({ queryKey: serverKeys.engines(server), queryFn: () => serverApi.engines(server) })
   return (
     <div>
-      <PageTitle icon={Cog}>{t('Storage engines')}</PageTitle>
-      {q.error !== null && <ErrorBox error={q.error} />}
+      <PageHeader icon={Cog}>{t('Storage engines')}</PageHeader>
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {q.isPending && <Loading />}
       {q.data !== undefined && (
-        <table className={tableCls} id="enginesTable">
+        <Table zebra id="enginesTable">
           <thead>
             <tr>
               <th scope="col">{t('Storage Engine')}</th>
@@ -84,7 +95,7 @@ export function EnginesPage({ server }: { server: number }) {
               )
             })}
           </tbody>
-        </table>
+        </Table>
       )}
     </div>
   )
@@ -99,15 +110,15 @@ export function EnginePage({ server, engine, page }: { server: number; engine: s
   const e = q.data
   return (
     <div>
-      <PageTitle icon={Cog}>{t('Storage engines')}</PageTitle>
-      {q.error !== null && <ErrorBox error={q.error} />}
+      <PageHeader icon={Cog}>{t('Storage engines')}</PageHeader>
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {q.isPending && <Loading />}
-      {e !== undefined && !e.isValid && <Alert type="error">{t('Unknown storage engine.')}</Alert>}
+      {e !== undefined && !e.isValid && <MessageBox type="error">{t('Unknown storage engine.')}</MessageBox>}
       {e?.isValid === true && (
         <>
-          <PageTitle icon={Cog} docUrl={e.docUrl}>
+          <PageHeader icon={Cog} docUrl={e.docUrl}>
             {e.title}
-          </PageTitle>
+          </PageHeader>
           <p className="mb-3 text-sm">
             <em>{e.comment}</em>
           </p>
@@ -145,17 +156,17 @@ export function EnginePage({ server, engine, page }: { server: number; engine: s
                   {t('There is no detailed status information available for this storage engine.')}
                 </p>
               ) : (
-                <table className={tableCls} id="engineVariables">
+                <Table zebra id="engineVariables">
                   <tbody>
                     {e.variables.map((v) => (
                       <tr key={v.name}>
-                        <td>{v.desc !== null && <Hint text={v.desc} />}</td>
+                        <td>{v.desc !== null && <Hint message={v.desc} />}</td>
                         <th scope="row">{v.title}</th>
                         <td className="text-end font-mono">{v.value}</td>
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </Table>
               )}
             </>
           )}
@@ -169,8 +180,7 @@ export function EnginePage({ server, engine, page }: { server: number; engine: s
             </pre>
           )}
           {e.pageContent.kind === 'documentation' && (
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: translated msgid with a fixed link
-            <p className="text-sm" dangerouslySetInnerHTML={{ __html: e.pageContent.html }} />
+            <SafeHtml as="p" className="text-sm" html={e.pageContent.html} />
           )}
         </>
       )}
@@ -187,7 +197,7 @@ function BufferPool({ b }: { b: import('@bettermyadmin/contracts').InnodbBufferP
   )
   return (
     <div className="flex flex-wrap items-start gap-6" id="bufferPool">
-      <table className={tableCls}>
+      <Table zebra>
         <caption className="caption-top text-start text-sm font-semibold">{t('Buffer pool usage')}</caption>
         <tbody>
           {row(t('Free pages'), b.pagesFree)}
@@ -204,8 +214,8 @@ function BufferPool({ b }: { b: import('@bettermyadmin/contracts').InnodbBufferP
             </th>
           </tr>
         </tfoot>
-      </table>
-      <table className={tableCls}>
+      </Table>
+      <Table zebra>
         <caption className="caption-top text-start text-sm font-semibold">
           {t('Buffer pool activity')}
         </caption>
@@ -217,7 +227,7 @@ function BufferPool({ b }: { b: import('@bettermyadmin/contracts').InnodbBufferP
           {row(t('Read misses in %'), b.readMissesPct)}
           {row(t('Write waits in %'), b.writeWaitsPct)}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
@@ -234,26 +244,28 @@ export function PluginsPage({ server }: { server: number }) {
   const q = useQuery({ queryKey: serverKeys.plugins(server), queryFn: () => serverApi.plugins(server) })
   return (
     <div>
-      <PageTitle icon={Puzzle}>{t('Plugins')}</PageTitle>
-      {q.error !== null && <ErrorBox error={q.error} />}
+      <PageHeader icon={Puzzle}>{t('Plugins')}</PageHeader>
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {q.isPending && <Loading />}
       {q.data !== undefined && (
         <div id="plugins_plugins">
-          <Card>
-            <div className="flex flex-wrap gap-1.5">
-              {q.data.types.map((ty) => (
-                <a
-                  key={ty.type}
-                  href={`#plugins-${ty.cleanType}`}
-                  className="rounded bg-accent px-2 py-1 text-xs text-accent-fg hover:no-underline"
-                >
-                  {ty.type}
-                </a>
-              ))}
-            </div>
-          </Card>
+          <Panel>
+            <PanelBody>
+              <div className="flex flex-wrap gap-1.5">
+                {q.data.types.map((ty) => (
+                  <a
+                    key={ty.type}
+                    href={`#plugins-${ty.cleanType}`}
+                    className="rounded bg-accent px-2 py-1 text-xs text-accent-fg hover:no-underline"
+                  >
+                    {ty.type}
+                  </a>
+                ))}
+              </div>
+            </PanelBody>
+          </Panel>
           {q.data.types.map((ty) => (
-            <table key={ty.type} id={`plugins-${ty.cleanType}`} className={`${tableCls} mb-4`}>
+            <Table key={ty.type} id={`plugins-${ty.cleanType}`} zebra className="mb-4">
               <caption className="caption-top text-start text-sm font-semibold">{ty.type}</caption>
               <thead>
                 <tr>
@@ -282,7 +294,7 @@ export function PluginsPage({ server }: { server: number }) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           ))}
         </div>
       )}
@@ -331,8 +343,8 @@ export function BinlogPage({
     )
   return (
     <div>
-      <PageTitle icon={Table2}>{t('Binary log')}</PageTitle>
-      {q.error !== null && <ErrorBox error={q.error} />}
+      <PageHeader icon={Table2}>{t('Binary log')}</PageHeader>
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {q.isPending && <Loading />}
       {b !== undefined && (
         <>
@@ -343,7 +355,7 @@ export function BinlogPage({
               onChange({ log: String(v ?? ''), full, pos: 0 })
             }}
           >
-            <Card
+            <Panel
               title={t('Select binary log to view')}
               footer={
                 <input
@@ -353,25 +365,27 @@ export function BinlogPage({
                 />
               }
             >
-              <select
-                name="log"
-                defaultValue={b.log}
-                key={b.log}
-                className="input me-2 w-auto"
-                aria-label={t('Select binary log to view')}
-              >
-                {b.binaryLogs.map((l) => (
-                  <option key={l.name} value={l.name}>
-                    {l.name}
-                    {l.size !== null ? ` (${l.size})` : ''}
-                  </option>
-                ))}
-              </select>
-              {b.fileCount} {t('Files')},{b.totalSize !== null ? ` ${b.totalSize}` : ''}
-            </Card>
+              <PanelBody>
+                <select
+                  name="log"
+                  defaultValue={b.log}
+                  key={b.log}
+                  className="input me-2 w-auto"
+                  aria-label={t('Select binary log to view')}
+                >
+                  {b.binaryLogs.map((l) => (
+                    <option key={l.name} value={l.name}>
+                      {l.name}
+                      {l.size !== null ? ` (${l.size})` : ''}
+                    </option>
+                  ))}
+                </select>
+                {b.fileCount} {t('Files')},{b.totalSize !== null ? ` ${b.totalSize}` : ''}
+              </PanelBody>
+            </Panel>
           </form>
-          <SqlBox message={b.sqlMessage.message.text} sql={b.sqlMessage.sql} />
-          <table className={`${tableCls} w-full`} id="binlogTable">
+          <MessageBox type="success" text={b.sqlMessage.message.text} sql={b.sqlMessage.sql} />
+          <Table zebra className="w-full" id="binlogTable">
             <thead>
               <tr>
                 <td colSpan={6} className="text-center">
@@ -418,10 +432,10 @@ export function BinlogPage({
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </>
       )}
-      <DocLink url={null} />
+      <MySqlDocLink url={null} />
     </div>
   )
 }

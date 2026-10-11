@@ -38,71 +38,6 @@ allow:
   - rule: web/query-keys
     file: apps/web/src/features/table/structure/api.ts
     reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-dangerous-html
-    file: apps/web/src/features/server/InfoPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-dangerous-html
-    file: apps/web/src/features/server/StatusPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-dangerous-html
-    file: apps/web/src/features/sql/editor/CodeMirrorEditor.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: DocLink
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: PageTitle
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Card
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Alert
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: ErrorBox
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Hint
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Loading
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/sql/SqlMessage.tsx
-    symbol: MessageBox
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Button
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Card
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: DocLink
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: MessageBox
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Notice
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Modal
-    reason: present at eec8ae7 (before the checker); being consolidated
   - rule: web/no-raw-colors
     file: apps/web/src/features/server/StatusPages.tsx
     reason: present at eec8ae7 (before the checker); being consolidated
@@ -188,28 +123,10 @@ allow:
     symbol: expandUserString
     reason: present at eec8ae7 (before the checker); being consolidated
   - rule: no-duplicate-exports
-    symbol: DocLink
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: Alert
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: Hint
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
     symbol: formatByteDown
     reason: present at eec8ae7 (before the checker); being consolidated
   - rule: no-duplicate-exports
     symbol: backquote
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: Button
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: mysqlDocUrl
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: pmaDocUrl
     reason: present at eec8ae7 (before the checker); being consolidated
   - rule: no-duplicate-exports
     symbol: str

@@ -1,10 +1,11 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
+import { Button, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { type Scope, structureApi } from '../structure/api'
-import { Button, DocLink, Modal, PreviewSqlModal, errorMessage } from '../structure/ui'
 
 /**
  * Add / edit index dialog and the rename dialog.
@@ -112,7 +113,7 @@ export function IndexEditorForm({
         </label>
         <label className="flex flex-col">
           <strong>
-            {t('Index choice:')} <DocLink page="alter-table" />
+            {t('Index choice:')} <MySqlDocLink link="alter-table" />
           </strong>
           <select
             id="select_index_choice"
@@ -289,7 +290,7 @@ export function IndexEditorForm({
         </Button>
         {onCancel !== undefined && <Button onClick={onCancel}>{t('Close')}</Button>}
       </div>
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
     </form>
   )
 }
@@ -317,7 +318,7 @@ export function IndexDialog({
       title={query?.index !== undefined ? t('Edit index') : t('Add index')}
       open={query !== null}
       onClose={onClose}
-      wide
+      size="xl"
     >
       {form.data !== undefined && (
         <IndexEditorForm scope={scope} form={form.data} onDone={onDone} onCancel={onClose} />
@@ -372,7 +373,7 @@ export function RenameIndexDialog({
           {error.text}
         </div>
       )}
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
     </Modal>
   )
 }

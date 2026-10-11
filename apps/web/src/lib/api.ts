@@ -41,6 +41,7 @@ import type {
   SimulateRequest,
   SimulateResponse,
   SqlFormResponse,
+  SqlMessage,
   TableScope,
   VersionCheckResponse,
 } from '@bettermyadmin/contracts'
@@ -56,6 +57,20 @@ export class ApiError extends Error {
     this.status = status
     this.envelope = envelope
   }
+}
+
+/**
+ * Any failure as a message for `<MessageBox {...errorMessage(e)} />`: an ApiError shows
+ * `#errno - message` (DatabaseInterface::getError) with its SQL; anything else its text.
+ */
+export function errorMessage(e: unknown): SqlMessage {
+  if (e instanceof ApiError) {
+    const sql = e.envelope.sql
+    const text =
+      e.envelope.errno !== undefined ? `#${e.envelope.errno} - ${e.envelope.message}` : e.envelope.message
+    return sql === undefined ? { type: 'error', text } : { type: 'error', text, sql }
+  }
+  return { type: 'error', text: e instanceof Error ? e.message : String(e) }
 }
 
 function readCookie(name: string): string {

@@ -1,3 +1,4 @@
+import { sanitizeToFragment } from '@bettermyadmin/ui'
 import { autocompletion, completionKeymap, startCompletion } from '@codemirror/autocomplete'
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands'
 import { MySQL, sql } from '@codemirror/lang-sql'
@@ -233,7 +234,7 @@ function lintFor(cfg: SqlEditorProps['lint']): Extension {
             // messageHTML: the linter escapes the message and wraps the token in <code>
             renderMessage: () => {
               const span = document.createElement('span')
-              span.innerHTML = l.message
+              span.append(sanitizeToFragment(l.message))
               return span
             },
           }

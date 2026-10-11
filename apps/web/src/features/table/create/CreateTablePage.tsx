@@ -1,6 +1,8 @@
+import { MessageBox } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
+import { errorMessage } from '../../../lib/api'
 import {
   ColumnForm,
   type ColumnRow,
@@ -11,7 +13,6 @@ import {
 } from '../structure/ColumnForm'
 import { structureApi } from '../structure/api'
 import { setFlash } from '../structure/flash'
-import { MessageBox, errorMessage } from '../structure/ui'
 
 /**
  * Create table (pma: /table/create, CreateController + column_definitions_form.twig with the
@@ -30,7 +31,7 @@ export function CreateTablePage({
   })
   const [rows, setRows] = useState<ColumnRow[] | null>(null)
   const [opts, setOpts] = useState<TableOptions | null>(null)
-  if (q.isError) return <MessageBox message={errorMessage(q.error)} />
+  if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined) return null
   const options = q.data.options
   const current = rows ?? Array.from({ length: q.data.defaultColumns }, emptyRow)

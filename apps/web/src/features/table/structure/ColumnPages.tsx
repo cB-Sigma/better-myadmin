@@ -1,13 +1,14 @@
 import type { ChangeFormResponse, ColumnFormOptions, Partitioning } from '@bettermyadmin/contracts'
+import { Button, MessageBox, MySqlDocLink, Panel, PanelBody, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { ColumnForm, type ColumnRow, emptyRow, indexesFromRows, toColumnDef } from './ColumnForm'
 import { PartitionEditor } from './PartitionEditor'
 import { type Scope, structureApi, structureKeys } from './api'
 import { setFlash } from './flash'
-import { Button, Card, DocLink, MessageBox, PreviewSqlModal, errorMessage } from './ui'
 
 /**
  * Change column(s) (pma: /table/structure/change → /table/structure/save), Add column(s)
@@ -59,7 +60,7 @@ export function ChangeColumnsPage({ scope, fields }: { scope: Scope; fields: str
   useEffect(() => {
     if (q.data !== undefined) setRows(q.data.columns.map((c) => rowFromForm(c, q.data.options)))
   }, [q.data])
-  if (q.isError) return <MessageBox message={errorMessage(q.error)} />
+  if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined || rows === null) return null
   return (
     <ColumnForm
@@ -99,7 +100,7 @@ export function AddColumnsPage({
   // AddFieldController: num_fields capped at 4096, default 1
   const count = Math.min(4096, Math.max(1, Math.trunc(num) || 1))
   const [rows, setRows] = useState<ColumnRow[]>(() => Array.from({ length: count }, emptyRow))
-  if (q.isError) return <MessageBox message={errorMessage(q.error)} />
+  if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined) return null
   return (
     <ColumnForm
@@ -137,7 +138,7 @@ export function PartitioningPage({ scope }: { scope: Scope }) {
   useEffect(() => {
     if (q.data !== undefined) setValue(q.data.partitioning)
   }, [q.data])
-  if (q.isError) return <MessageBox message={errorMessage(q.error)} />
+  if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined || value === null) return null
   const save = async (dryRun: boolean) => {
     try {
@@ -149,10 +150,10 @@ export function PartitioningPage({ scope }: { scope: Scope }) {
     }
   }
   return (
-    <Card
+    <Panel
       title={
         <>
-          {t('Edit partitioning')} <DocLink page="partitioning" />
+          {t('Edit partitioning')} <MySqlDocLink link="partitioning" />
         </>
       }
       footer={
@@ -164,9 +165,11 @@ export function PartitioningPage({ scope }: { scope: Scope }) {
         </div>
       }
     >
-      {error !== null && <MessageBox message={error} />}
-      <PartitionEditor value={value} engines={q.data.engines} onChange={setValue} />
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
-    </Card>
+      <PanelBody>
+        {error !== null && <MessageBox {...error} />}
+        <PartitionEditor value={value} engines={q.data.engines} onChange={setValue} />
+        <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
+      </PanelBody>
+    </Panel>
   )
 }
