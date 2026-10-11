@@ -40,6 +40,8 @@ export interface SessionData {
   metadata?: Record<string, unknown>
   /** $_SESSION['partial_logout']: shown once on the home page */
   partialLogout?: boolean
+  /** $_SESSION['tmpval']['query'][md5]: per-query grid state of the last 10 queries (src/browse/view-state.ts). */
+  gridQueries?: Record<string, Record<string, unknown>>
   /** SendErrorReports persisted by "Automatically send report next time" (until the prefs layer stores it). */
   sendErrorReports?: 'ask' | 'always' | 'never'
 }

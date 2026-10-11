@@ -12,7 +12,7 @@ import { mimeMap } from '../insert-edit/context.ts'
 import { browseForeigners } from '../insert-edit/foreign.ts'
 import { buildInsertForm } from '../insert-edit/form.ts'
 import { saveRows } from '../insert-edit/save.ts'
-import { type RawCell, getField, transformationWrapper } from '../insert-edit/wrapper.ts'
+import { type RawCell, transformationWrapper } from '../insert-edit/wrapper.ts'
 import { withMeta } from '../metadata/service.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
@@ -155,19 +155,6 @@ insertEditRoutes.get('/:db/tables/:t/transformation/wrapper', async (c) =>
         ct: c.req.query('ct'),
         cn: c.req.query('cn'),
         resize: c.req.query('resize'),
-      }),
-    ),
-  ),
-)
-
-/** GET …/tables/:t/get-field?key&where&sig (pma: /table/get-field) */
-insertEditRoutes.get('/:db/tables/:t/get-field', async (c) =>
-  send(
-    await withIe(c, (ctx) =>
-      getField(ctx, {
-        key: c.req.query('key') ?? '',
-        where: c.req.query('where') ?? '',
-        sig: c.req.query('sig') ?? '',
       }),
     ),
   ),

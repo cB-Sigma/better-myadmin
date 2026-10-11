@@ -30,4 +30,7 @@ export const qk = {
   /** stored MIME types / transformations of a table's columns (Browse grid, Insert form) */
   transformations: (s: number, db: string, t: string) =>
     ['srv', s, 'db', db, 'tbl', t, 'transformations'] as const,
+  /** the Browse tab's /sql run (signed sql + pos from the URL) */
+  browse: (s: number, db: string, t: string, q: object) =>
+    ['srv', s, 'db', db, 'tbl', t, 'browse', q] as const,
 }

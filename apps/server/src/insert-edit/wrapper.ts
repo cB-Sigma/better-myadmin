@@ -1,7 +1,7 @@
 /**
- * Raw cell bytes: the transformation wrapper (images, downloads) and the BLOB download.
- * pma: src/Controllers/Transformation/WrapperController.php, src/Controllers/Table/GetFieldController.php,
- *      src/Mime.php::detect
+ * Raw cell bytes of the transformation wrapper (images, downloads); the BLOB download
+ * (/table/get-field) belongs to the Browse grid (routes/browse).
+ * pma: src/Controllers/Transformation/WrapperController.php
  */
 
 import { parseTransformationOptions } from '@bettermyadmin/mysql-types'
@@ -106,33 +106,4 @@ export async function transformationWrapper(ctx: IeCtx, p: WrapperParams): Promi
     return { status: 200, body: s, headers: downloadHeaders(p.cn ?? '', contentType) }
   }
   return { status: 200, body: value, headers: downloadHeaders(p.cn ?? '', contentType, value.length) }
-}
-
-/** pma: Mime::detect */
-export function detectMime(b: Buffer): string {
-  if (b.length >= 2 && b[0] === 0xff && b[1] === 0xd8) return 'image/jpeg'
-  if (b.length >= 3 && b.subarray(0, 3).toString('latin1') === 'GIF') return 'image/gif'
-  if (b.length >= 4 && b.subarray(0, 4).toString('latin1') === '\x89PNG') return 'image/png'
-  return 'application/octet-stream'
-}
-
-/** GET …/get-field (BLOB download as `<table>-<column>.bin`) */
-export async function getField(ctx: IeCtx, p: { key: string; where: string; sig: string }): Promise<RawCell> {
-  if (p.where === '' || !checkSqlSignature(p.where, p.sig, ctx.hmacSecret, ctx.cfg.blowfish_secret)) {
-    return {
-      status: 400,
-      body: ctx.tr.gettext('There is an issue with your request.'),
-      headers: { 'content-type': 'text/plain; charset=utf-8' },
-    }
-  }
-  const r = await ctx.conn.query(
-    `SELECT ${backquote(p.key)} FROM ${backquote(ctx.table)} WHERE ${p.where} LIMIT 1;`,
-    'table.get-field',
-  )
-  const v = r.resultSets[0]?.rows[0]?.[0] ?? Buffer.alloc(0)
-  return {
-    status: 200,
-    body: v,
-    headers: downloadHeaders(`${ctx.table}-${p.key}.bin`, detectMime(v), v.length),
-  }
 }

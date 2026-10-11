@@ -5,6 +5,7 @@ import { AuthMessages } from '../auth/cookie.ts'
 import { getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
+import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
 import { insertEditRoutes } from './insert-edit.ts'
 import { metadataRoutes } from './metadata.ts'
@@ -53,6 +54,7 @@ serverRoutes.use('/:s', resolveServer)
 serverRoutes.use('/:s/*', resolveServer)
 
 serverRoutes.route('/:s/query', queryRoutes)
+serverRoutes.route('/:s/browse', browseRoutes)
 serverRoutes.route('/:s/navigation', navigationRoutes)
 serverRoutes.route('/:s/sql', sqlRoutes)
 serverRoutes.route('/:s/console', consoleRoutes)

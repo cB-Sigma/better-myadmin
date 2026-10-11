@@ -9,10 +9,12 @@ import type {
   BookmarkShowResponse,
   BrowseForeignersRequest,
   BrowseForeignersResponse,
+  BrowseRequest,
   CancelResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
   ColumnTransformations,
+  ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
@@ -23,6 +25,8 @@ import type {
   ErrorReportRequest,
   ErrorReportResponse,
   FormatResponse,
+  GridSaveRequest,
+  GridSaveResponse,
   HistoryResponse,
   HomeResponse,
   I18nState,
@@ -47,6 +51,7 @@ import type {
   SimulateRequest,
   SimulateResponse,
   SqlFormResponse,
+  StatementResult,
   TableScope,
   VersionCheckResponse,
 } from '@bettermyadmin/contracts'
@@ -190,6 +195,45 @@ export const api = {
   ) => call<BrowseForeignersResponse>('POST', `${tablePath(server, db, table)}/browse-foreigners`, req),
   columnTransformations: (server: number, db: string, table: string) =>
     call<ColumnTransformations>('GET', `${tablePath(server, db, table)}/transformations`),
+  // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
+  browse: (server: number, req: BrowseRequest) =>
+    call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
+  gridValue: (server: number, req: { db: string; table: string; column: string; where: string }) =>
+    call<{ value: string | null }>('POST', `/servers/${server}/browse/grid-value`, req),
+  gridValues: (
+    server: number,
+    req: {
+      kind: 'enum' | 'set' | 'relational'
+      db: string
+      table: string
+      column: string
+      currValue: string
+      where?: string
+      keyOrDisplay?: string
+      relationalDisplay?: 'K' | 'D'
+    },
+  ) => call<ColumnValuesResponse>('POST', `/servers/${server}/browse/values`, req),
+  gridSave: (server: number, req: GridSaveRequest) =>
+    call<GridSaveResponse>('POST', `/servers/${server}/browse/save`, req),
+  deleteRows: (
+    server: number,
+    req: { db: string; table: string; where: string[]; fkChecks: boolean; originalSql: string },
+  ) => call<BrowseResponse>('POST', `/servers/${server}/browse/delete-rows`, req),
+  /** pma: /sql/set-column-preferences */
+  columnPrefs: (
+    server: number,
+    db: string,
+    table: string,
+    req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
+  ) =>
+    call<{ success: boolean; message: { text: string } | null }>(
+      'POST',
+      `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}/uiprefs`,
+      req,
+    ),
+  /** /table/get-field download URL */
+  gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
+    `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
 }
 
 /** Body of POST …/insert-form: signed where clauses (none = insert) and the form toggles. */
@@ -208,6 +252,9 @@ export interface InsertFormRequest {
 export function tablePath(server: number, db: string, table: string): string {
   return `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}`
 }
+
+/** POST /browse: the statement with its grid, the default-bookmark notice and the previous query card. */
+export type BrowseResponse = QueryResponse & { usingBookmark: string | null; previous?: StatementResult }
 
 function queryString(q: Record<string, string | number | undefined>): string {
   const qs = new URLSearchParams()
