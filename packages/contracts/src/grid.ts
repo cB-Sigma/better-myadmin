@@ -204,6 +204,7 @@ export const GridData = z.object({
     Confirm: z.boolean(),
     MaxRows: z.number().int(),
     ShowAll: z.boolean(),
+    AllowSharedBookmarks: z.boolean(),
   }),
 })
 export type GridData = z.infer<typeof GridData>

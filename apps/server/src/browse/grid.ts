@@ -813,6 +813,7 @@ export async function buildGrid(
       Confirm: cfg.Confirm,
       MaxRows: cfg.MaxRows,
       ShowAll: cfg.ShowAll,
+      AllowSharedBookmarks: cfg.AllowSharedBookmarks,
     },
   }
   return message === undefined ? { grid } : { grid, message }

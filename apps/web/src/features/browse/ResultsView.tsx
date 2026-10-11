@@ -49,8 +49,6 @@ export interface ResultsViewProps {
   previous?: StatementResult | undefined
   /** The bookmark form's complete query (bkm_sql_query), the statement by default. */
   completeQuery?: string
-  /** $cfg['AllowSharedBookmarks'] */
-  allowSharedBookmarks?: boolean
 }
 
 /**
@@ -357,7 +355,7 @@ export function ResultsView(props: ResultsViewProps) {
           server={server}
           db={grid.db}
           sql={props.completeQuery ?? grid.sql}
-          allowShared={props.allowSharedBookmarks ?? false}
+          allowShared={grid.settings.AllowSharedBookmarks}
         />
       )}
       {(st.moreResults ?? []).map((r, i) => (
@@ -561,7 +559,9 @@ function Navigation(props: {
           <td className="navigation_separator" />
           <td className="largescreenonly">
             <div className="flex items-center gap-1 p-1 text-sm">
-              <label htmlFor="filterRows">{t('Filter rows:')}</label>
+              <label htmlFor="filterRows" className="whitespace-nowrap">
+                {t('Filter rows:')}
+              </label>
               <Input
                 type="text"
                 id="filterRows"

@@ -687,7 +687,7 @@ function CellContent({
         params={{ server, db: fk.db, table: fk.table }}
         search={{ sql: fk.sql, sig: fk.sig, pos: 0 } as never}
         title={fk.title}
-        className={hasClass(cell.cls, 'grid_edit') ? 'ajax' : undefined}
+        className={`text-accent hover:underline${hasClass(cell.cls, 'grid_edit') ? ' ajax' : ''}`}
         onClick={(e) => {
           e.preventDefault()
           onFk(fk)
