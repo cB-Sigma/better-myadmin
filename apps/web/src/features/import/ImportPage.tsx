@@ -1,15 +1,26 @@
 import type { ImportPageResponse, ImportResult } from '@bettermyadmin/contracts'
-import { Alert, Button, Input, NativeSelect, Panel, PanelBody, PmaIcon, SafeHtml, showMessage, useUiSettings } from '@bettermyadmin/ui'
+import {
+  Alert,
+  Button,
+  Input,
+  NativeSelect,
+  Panel,
+  PanelBody,
+  PmaIcon,
+  SafeHtml,
+  showMessage,
+  useUiSettings,
+} from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useMemo, useRef, useState } from 'react'
 import { api } from '../../lib/api'
-import { formatBytes } from '../../lib/format'
-import { t } from '../../lib/i18n'
+import { t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PluginOptions } from '../export/PluginOptions'
 import { StatementBlock } from '../sql/Results'
 import { type CardEnv, ErrorCard, MessageBox } from '../sql/SqlMessage'
+import { formatByteDown } from '../sql/format'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
 import { sqlTabRoute } from '../sql/routes'
 
@@ -160,7 +171,11 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
       setPhase({ label: t('The file is being processed, please be patient.'), done: 0, total: 0 })
       const job = await api.importJob(server, pairs, upload)
       const r = await api.importEvents(server, job.id, (p) =>
-        setPhase({ label: t('The file is being processed, please be patient.'), done: p.offset, total: p.total }),
+        setPhase({
+          label: t('The file is being processed, please be patient.'),
+          done: p.offset,
+          total: p.total,
+        }),
       )
       setResult(r)
       // Navigation.reload()
@@ -181,7 +196,10 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
           <MessageBox key={i} type="error" text={h} className="mb-3 rounded" />
         ))}
         {result.message !== undefined && (
-          <div className={`alert alert-${result.message.type === 'error' ? 'danger' : result.message.type} mb-3`} role="alert">
+          <div
+            className={`alert alert-${result.message.type === 'error' ? 'danger' : result.message.type} mb-3`}
+            role="alert"
+          >
             <SafeHtml html={result.message.html} />
           </div>
         )}
@@ -222,15 +240,21 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
   )
   const localPane =
     page.localFiles === false ? (
-      <MessageBox type="error" text={t('The directory you set for upload work cannot be reached.')} className="mb-3" />
+      <MessageBox
+        type="error"
+        text={t('The directory you set for upload work cannot be reached.')}
+        className="mb-3"
+      />
     ) : page.localFiles.length > 0 ? (
       <div className="mb-3">
         <label className="form-label" htmlFor="select_local_import_file">
           <SafeHtml
-            html={t('Select from the web server upload directory [strong]%s[/strong]:')
+            html={t(
+              'Select from the web server upload directory [strong]%s[/strong]:',
+              page.userUploadDir.replace(/&/g, '&amp;').replace(/</g, '&lt;'),
+            )
               .replace('[strong]', '<strong>')
-              .replace('[/strong]', '</strong>')
-              .replace('%s', page.userUploadDir.replace(/&/g, '&amp;').replace(/</g, '&lt;'))}
+              .replace('[/strong]', '</strong>')}
           />
         </label>
         <NativeSelect
@@ -274,9 +298,11 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
           <div>{phase.label}</div>
           {phase.total > 0 && (
             <div id="statustext">
-              {t('%s of %s')
-                .replace('%s', formatBytes(phase.done, 1))
-                .replace('%s', formatBytes(phase.total, 1))}
+              {t(
+                '%s of %s',
+                formatByteDown(translator(), phase.done, 3, 1),
+                formatByteDown(translator(), phase.total, 3, 1),
+              )}
             </div>
           )}
         </div>
@@ -300,7 +326,7 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
             <PanelBody>
               {page.compressions.length > 0 && (
                 <p className="card-text">
-                  {t('File may be compressed (%s) or uncompressed.').replace('%s', page.compressions.join(', '))}
+                  {t('File may be compressed (%s) or uncompressed.', page.compressions.join(', '))}
                   <br />
                   <SafeHtml
                     html={t(
@@ -368,7 +394,13 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                   ))}
                 </NativeSelect>
               ) : (
-                <NativeSelect lang="en" dir="ltr" name="charset_of_file" id="charset_of_file" defaultValue="utf8">
+                <NativeSelect
+                  lang="en"
+                  dir="ltr"
+                  name="charset_of_file"
+                  id="charset_of_file"
+                  defaultValue="utf8"
+                >
                   <option value="" />
                   {page.charsets.map((c) => (
                     <option key={c} value={c}>
@@ -386,9 +418,9 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                 <>
                   <input type="hidden" name="skip" value={String(page.offset ?? 0)} />
                   <Alert variant="info" className="mb-3">
-                    {t('Previous import timed out, after resubmitting will continue from position %d.').replace(
-                      '%d',
-                      String(page.offset ?? 0),
+                    {t(
+                      'Previous import timed out, after resubmitting will continue from position %d.',
+                      page.offset ?? 0,
                     )}
                   </Alert>
                 </>
@@ -397,7 +429,6 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  role="switch"
                   name="allow_interrupt"
                   value="yes"
                   id="checkbox_allow_interrupt"
@@ -418,10 +449,21 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                   <label className="form-label" htmlFor="text_skip_queries">
                     {t('Skip this number of queries (for SQL) starting from the first one:')}
                   </label>
-                  <Input type="number" name="skip_queries" defaultValue={String(page.skipQueries)} id="text_skip_queries" min={0} />
+                  <Input
+                    type="number"
+                    name="skip_queries"
+                    defaultValue={String(page.skipQueries)}
+                    id="text_skip_queries"
+                    min={0}
+                  />
                 </>
               ) : (
-                <input type="hidden" name="skip_queries" value={String(page.skipQueries)} id="text_skip_queries" />
+                <input
+                  type="hidden"
+                  name="skip_queries"
+                  value={String(page.skipQueries)}
+                  id="text_skip_queries"
+                />
               )}
             </PanelBody>
           </Panel>
@@ -433,7 +475,6 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  role="switch"
                   name="fk_checks"
                   id="fk_checks"
                   value="1"

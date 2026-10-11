@@ -1,11 +1,20 @@
 import type { PluginInfo, PluginOptionItem } from '@bettermyadmin/contracts'
-import { DocLink, Input, MySqlDocLink, NativeSelect } from '@bettermyadmin/ui'
+import { DocLink, Hint, Input, MySqlDocLink, NativeSelect } from '@bettermyadmin/ui'
 import { Fragment, type ReactNode } from 'react'
 import { t } from '../../lib/i18n'
 import { InlineHtml } from '../shell/inline-html'
 
 /** An option label of phpMyAdmin (msgids carry `<code>`, `<i>`, `<br>` and `&nbsp;`). */
 export function OptionText({ text }: { text: string }) {
+  // Generator::showHint inside a label (ImportCsv "Column names:")
+  const hint = /\s*<span class="pma_hint">.*?<span class="hide">(.*?)<\/span><\/span>/.exec(text)
+  if (hint !== null) {
+    return (
+      <>
+        <OptionText text={text.slice(0, hint.index)} /> <Hint message={hint[1] ?? ''} />
+      </>
+    )
+  }
   const lines = text.replaceAll('&nbsp;', ' ').split(/<br\s*\/?>/)
   return (
     <>

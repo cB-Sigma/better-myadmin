@@ -64,9 +64,8 @@
   api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/db/:db/export'
 /database/import:
-  api: '/api/servers/:s/databases/:db/import'
+  api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/db/:db/import'
-  planned: M4
 /database/multi-table-query:
   api: '/api/servers/:s/databases/:db/multi-table-query'
   ui: '/s/:s/db/:db/multi-table-query'
@@ -229,14 +228,13 @@
   api: GET /api/meta/build
 /import:
   api:
-    - GET /api/import/options
-    - POST /api/import/jobs
-  planned: M4
+    - 'POST /api/servers/:s/import/uploads'
+    - 'PATCH /api/servers/:s/import/uploads/:id'
+    - 'POST /api/servers/:s/import/jobs'
   exception: X9
-  note: chunked upload + SSE progress
+  note: chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query)
 /import-status:
-  api: 'GET /api/import/jobs/:id/events'
-  planned: M4
+  api: 'GET /api/servers/:s/import/jobs/:id/events'
   exception: X9
   note: chunked upload + SSE progress
 /import/simulate-dml:
@@ -393,9 +391,8 @@
   api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/export'
 /server/import:
-  api: '/api/servers/:s/import'
+  api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/import'
-  planned: M4
 /server/plugins:
   api: 'GET /api/servers/:s/plugins'
   ui: '/s/:s/plugins'
@@ -566,9 +563,8 @@
   ui: '/s/:s/db/:db/t/:table/gis-visualization'
   planned: M3
 /table/import:
-  api: '/api/servers/:s/databases/:db/tables/:table/import'
+  api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/db/:db/t/:table/import'
-  planned: M4
 /table/indexes:
   api: '/api/servers/:s/databases/:db/tables/:table/indexes'
   ui: '/s/:s/db/:db/t/:table/indexes'

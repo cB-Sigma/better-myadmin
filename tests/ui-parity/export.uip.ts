@@ -25,7 +25,10 @@ const FORMATS = [
 
 const steps = (formats: string[]): Step[] => [
   { name: 'custom', do: { check: 'Custom - display all possible options' } },
-  ...formats.map((f) => ({ name: `format ${f}`, do: { select: ['File format to export', f] as [string, string] } })),
+  ...formats.map((f) => ({
+    name: `format ${f}`,
+    do: { select: ['File format to export', f] as [string, string] },
+  })),
 ]
 
 pageParity('server-export', {

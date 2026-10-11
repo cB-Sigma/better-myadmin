@@ -27,16 +27,16 @@ import type {
   ExportPageResponse,
   ExportResponse,
   ExportTemplateResult,
-  ImportPageResponse,
-  ImportProgress,
-  ImportResult,
-  ImportUploadCreated,
   FormatResponse,
   GridSaveRequest,
   GridSaveResponse,
   HistoryResponse,
   HomeResponse,
   I18nState,
+  ImportPageResponse,
+  ImportProgress,
+  ImportResult,
+  ImportUploadCreated,
   InsertFormResponse,
   LintRequest,
   LintResponse,
@@ -250,7 +250,11 @@ export const api = {
   importJob: (server: number, params: Array<[string, string]>, upload?: { id: string; name: string }) =>
     call<{ id: string }>('POST', `/servers/${server}/import/jobs`, { params, ...(upload ? { upload } : {}) }),
   /** Runs the job: `progress` events, then the result (server-sent events). */
-  importEvents: (server: number, id: string, onProgress: (p: ImportProgress) => void): Promise<ImportResult> =>
+  importEvents: (
+    server: number,
+    id: string,
+    onProgress: (p: ImportProgress) => void,
+  ): Promise<ImportResult> =>
     new Promise((resolve, reject) => {
       const es = new EventSource(`/api/servers/${server}/import/jobs/${id}/events`)
       es.addEventListener('progress', (e) => onProgress(JSON.parse((e as MessageEvent<string>).data)))
