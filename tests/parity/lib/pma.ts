@@ -100,6 +100,34 @@ export class PmaClient {
     return this.#req(path)
   }
 
+  /** GET `route` with query parameters (a full page, or the AJAX JSON when `ajax`). */
+  async pageGet(route: string, params: Record<string, string> = {}, ajax = false): Promise<string> {
+    const qs = new URLSearchParams({ route, ...params, ...(ajax ? { ajax_request: 'true' } : {}) })
+    return this.#req(`/index.php?${qs}`, undefined, ajax)
+  }
+
+  /**
+   * POST to `route` like a form or a `data-post` link (`server` and `token` added); `ajax` sends the
+   * request the way phpMyAdmin's AJAX handlers do (`ajax_request=true` + `X-Requested-With`).
+   */
+  async pagePost(route: string, form: Record<string, string> = {}, ajax = false): Promise<string> {
+    return this.#req(
+      `/index.php?route=${route}`,
+      { server: '1', ...form, ...(ajax ? { ajax_request: 'true' } : {}), token: this.token },
+      ajax,
+    )
+  }
+
+  /** `post` with an AJAX request, parsed as phpMyAdmin's JSON response. */
+  async pagePostJson(route: string, form: Record<string, string> = {}): Promise<Record<string, unknown>> {
+    return JSON.parse(await this.pagePost(route, form, true)) as Record<string, unknown>
+  }
+
+  /** `get` with an AJAX request, parsed as phpMyAdmin's JSON response. */
+  async pageGetJson(route: string, params: Record<string, string> = {}): Promise<Record<string, unknown>> {
+    return JSON.parse(await this.pageGet(route, params, true)) as Record<string, unknown>
+  }
+
   /**
    * POST /navigation over AJAX with the parameters `navigation.ts` sends (loadChildNodes, reload,
    * treePagination, FastFilter.request). Returns the JSON response (`message` holds the HTML).

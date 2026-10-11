@@ -8,6 +8,14 @@
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "vendor": "node scripts/vendor.mjs"
+    "generate": "BMA_NO_MYSQL=1 php scripts/generate.php && cp \"${PMA_PATH:-/home/user/ref/pma}/vendor/williamdes/mariadb-mysql-kbs/dist/merged-ultraslim.json\" src/generated/merged-ultraslim.json",
+    "fixtures": "php scripts/advisor-fixtures.php"
+  },
+  "dependencies": {
+    "@bettermyadmin/i18n": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "typescript": "5.8.3"
   }
 }

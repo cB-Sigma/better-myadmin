@@ -26,8 +26,9 @@ export function connectionOptions(server: ServerConfig, creds: Credentials): Poo
     bigNumberStrings: true,
     dateStrings: true,
     multipleStatements: false,
-    // mysqli does not request CLIENT_FOUND_ROWS: UPDATE reports changed rows, not matched rows
-    flags: ['-FOUND_ROWS'],
+    // mysqli does not request CLIENT_FOUND_ROWS (UPDATE reports changed rows, not matched rows) nor
+    // CLIENT_IGNORE_SPACE (which adds IGNORE_SPACE to the session sql_mode)
+    flags: ['-FOUND_ROWS', '-IGNORE_SPACE'],
     compress: server.compress,
     connectTimeout: 10000,
   }

@@ -9,6 +9,7 @@ import { consoleRoutes } from './console.ts'
 import { metadataRoutes } from './metadata.ts'
 import { navigationRoutes } from './navigation.ts'
 import { queryRoutes } from './query.ts'
+import { serverAdminRoutes } from './server-admin.ts'
 import { shellRoutes } from './shell.ts'
 import { sqlRoutes } from './sql.ts'
 import { tableStructureRoutes } from './table-structure.ts'
@@ -57,3 +58,4 @@ serverRoutes.route('/:s/console', consoleRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)
+serverRoutes.route('/:s', serverAdminRoutes)
