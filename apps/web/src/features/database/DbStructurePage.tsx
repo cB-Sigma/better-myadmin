@@ -596,7 +596,10 @@ export function DbStructurePage({
                               <>
                                 <td className="tbl_size text-right font-mono">
                                   {'text' in tb.size ? (
-                                    tb.size.text
+                                    // a view's "-" is still the link to the space usage
+                                    <Link to={path(`${tbase}/structure`)} hash="showusage">
+                                      {tb.size.text}
+                                    </Link>
                                   ) : (
                                     <Link to={path(`${tbase}/structure`)} hash="showusage">
                                       {tb.size.value}&nbsp;<span className="unit">{tb.size.unit}</span>
@@ -723,10 +726,11 @@ export function DbStructurePage({
                 name="submit_mult"
                 aria-label={t('With selected:')}
                 className="mx-4 w-auto"
-                value=""
+                value={t('With selected:')}
                 onChange={(e) => void onBulk(e.target.value)}
               >
-                <option value="">{t('With selected:')}</option>
+                {/* phpMyAdmin's first option has no value attribute: its value is its text */}
+                <option value={t('With selected:')}>{t('With selected:')}</option>
                 <option value="copy_tbl">{t('Copy table')}</option>
                 <option value="show_create">{t('Show create')}</option>
                 <option value="export">{t('Export')}</option>

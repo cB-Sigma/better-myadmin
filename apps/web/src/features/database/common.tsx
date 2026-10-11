@@ -129,7 +129,6 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
               autoComplete="off"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
             />
           </Label>
           <Label className="flex flex-col gap-1">
@@ -141,7 +140,6 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
               className="max-w-48"
               value={cols}
               onChange={(e) => setCols(Number(e.target.value))}
-              required
             />
           </Label>
         </PanelBody>

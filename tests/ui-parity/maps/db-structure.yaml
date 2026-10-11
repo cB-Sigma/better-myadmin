@@ -1,0 +1,8 @@
+# phpMyAdmin's "Filters" card header is a div; ours is a Panel heading, so the controls after it read
+# as being under "Filters" (the preceding heading) instead of no section.
+sections: { '': 'Filters' }
+rules:
+  - pma: { kind: checkbox, name: 'selected_tbl[]' }
+    n/a: matched by ours below — phpMyAdmin's row checkbox has no accessible name, so the matcher can only pair it by name
+  - ours: { kind: checkbox, label: '/^(child|parent|v)$/' }
+    added: the row checkbox (selected_tbl[]) labelled with its table name

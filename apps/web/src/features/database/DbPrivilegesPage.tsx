@@ -75,7 +75,6 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
                             <Checkbox
                               className="checkall"
                               id={`checkbox_sel_users_${ai}`}
-                              aria-label={`${a.user}@${a.host}`}
                               checked={selected.includes(key)}
                               onCheckedChange={(v) =>
                                 setSelected(

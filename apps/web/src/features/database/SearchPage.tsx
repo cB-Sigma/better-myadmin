@@ -131,7 +131,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
               <fieldset className="flex flex-col gap-1">
                 <legend className="font-semibold">{t('Find:')}</legend>
                 {types.map(([v, label, hint]) => (
-                  <Label key={v} className="flex items-center gap-2">
+                  <div key={v} className="flex items-center gap-2">
                     <input
                       type="radio"
                       name="criteriaSearchType"
@@ -140,10 +140,11 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
                       checked={searchType === v}
                       onChange={() => setSearchType(v)}
                     />
-                    {label}
+                    <Label htmlFor={`criteriaSearchTypeRadio${v}`}>{label}</Label>
+                    {/* the hint follows the label (phpMyAdmin's hint text is hidden, ours is sr-only) */}
                     {hint && <Hint message={t('Words are separated by a space character (" ").')} />}
                     {v === '5' && <MySqlDocLink link="Regexp" />}
-                  </Label>
+                  </div>
                 ))}
                 <legend className="mt-2 font-semibold">{t('Options:')}</legend>
                 <Label className="flex items-center gap-2">

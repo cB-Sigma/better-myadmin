@@ -118,18 +118,9 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                 return (
                   // biome-ignore lint/suspicious/noArrayIndexKey: cards are positional
                   <fieldset key={i} className="relative min-w-60 rounded border border-border p-2 text-sm">
-                    <button
-                      type="button"
-                      className="jsRemoveColumn absolute top-1 right-1 text-fg-muted"
-                      title={t('Remove this column')}
-                      onClick={() => setCards(list.filter((_, j) => j !== i))}
-                    >
-                      ×
-                    </button>
                     <div className="flex items-center gap-1">
                       <NativeSelect
                         className="tableNameSelect"
-                        aria-label={t('select table')}
                         value={c.table}
                         onChange={(e) => set(i, { table: e.target.value, column: '' })}
                       >
@@ -143,7 +134,6 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                       <span>.</span>
                       <NativeSelect
                         className="columnNameSelect"
-                        aria-label={t('select column')}
                         value={c.column}
                         onChange={(e) =>
                           set(i, {
@@ -161,14 +151,15 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                         ))}
                       </NativeSelect>
                     </div>
-                    <Label className="mt-1 flex items-center gap-1">
+                    {/* like phpMyAdmin: the checkbox is followed by a plain "Show" text, not a label */}
+                    <div className="mt-1 flex items-center gap-1">
                       <Checkbox
                         className="show_col"
                         checked={c.show}
                         onCheckedChange={(v) => set(i, { show: v === true })}
                       />
-                      {t('Show')}
-                    </Label>
+                      <span>{t('Show')}</span>
+                    </div>
                     <div className="mt-1 flex gap-1">
                       <Input
                         className="table_alias"
@@ -179,7 +170,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                       <Input
                         className="col_alias"
                         placeholder={t('Column alias')}
-                        disabled={c.column === '' || c.column === '*'}
+                        disabled={c.table !== '' && (c.column === '' || c.column === '*')}
                         value={c.columnAlias}
                         onChange={(e) => set(i, { columnAlias: e.target.value })}
                       />
@@ -398,6 +389,14 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                         </tbody>
                       </table>
                     )}
+                    <button
+                      type="button"
+                      className="jsRemoveColumn absolute top-1 right-1 text-fg-muted"
+                      aria-label={t('Remove this column')}
+                      onClick={() => setCards(list.filter((_, j) => j !== i))}
+                    >
+                      ×
+                    </button>
                   </fieldset>
                 )
               })}
@@ -411,7 +410,6 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                 name="sql_query"
                 rows={6}
                 className="font-mono"
-                aria-label={t('SQL query')}
                 value={sql}
                 onChange={(e) => setSql(e.target.value)}
               />
