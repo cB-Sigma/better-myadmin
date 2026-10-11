@@ -1,0 +1,14 @@
+# Dispositions for phpMyAdmin JavaScript behaviours (tools/parity/inventory/js.json) our web app does
+# not claim (yet). Claims live next to the components: `js:<script>#…` keys in `pma-controls.ts`
+# registries (docs/architecture/12), e.g.
+#   'js:modules/console.ts#keydown:#pma_console .console_query_input': { file: 'Console.tsx', match: 'onKeyDown' },
+# Keys: item key, a script (`js:table/structure.ts`) or a prefix ending in `/` or `*` (`js:setup/`).
+#   planned: M<n> | exception: X<n> | n/a: <reason> | note: <text>
+
+js:setup/:
+  exception: X7
+  planned: M4
+  note: first-run wizard instead of public/setup
+js:error_report.ts:
+  exception: X19
+  planned: M1
