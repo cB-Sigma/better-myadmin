@@ -23,6 +23,7 @@ Start with [Vision and principles](00-vision-and-principles.md).
 | 13 | [Roadmap and milestones](architecture/13-roadmap-and-milestones.md) | M0–M5, risks |
 | 14 | [Development setup](architecture/14-development-setup.md) | Getting a dev environment, common commands, feature workflow |
 | 15 | [Upstream sync](architecture/15-upstream-sync.md) | Following phpMyAdmin after the reference commit: daily check, sync procedure, ledger gate |
+| 16 | [Golden path](architecture/16-golden-path.md) | The one way to add a page, an endpoint and tests, with a canonical example per step; enforced by `pnpm conventions:check` |
 
 ## Features (what we build, exhaustively, from phpMyAdmin's source)
 
@@ -45,11 +46,12 @@ Each file documents one area control-by-control with citations to phpMyAdmin fil
 | Doc | What |
 |---|---|
 | [Config directives](reference/config-directives.md) | Every `$cfg` directive: type, default, allowed values, description, consumer |
-| [phpMyAdmin route map](reference/pma-route-map.md) | All 195 phpMyAdmin routes and their BetterMyAdmin equivalent |
+| [phpMyAdmin route map](reference/pma-route-map.md) | All 195 phpMyAdmin routes (+ setup script) and their BetterMyAdmin equivalent, generated from `tools/parity/map/routes.yaml` |
+| [Parity coverage](reference/coverage/README.md) | Generated: routes, template controls, directives, msgids and checklist items covered, per feature area, top missing |
 | [Parity exceptions](reference/parity-exceptions.md) | Intentional differences and phpMyAdmin source quirks, with our handling |
 | [Glossary](reference/glossary.md) | Terms |
 | [reference-commit.txt](reference/reference-commit.txt) | The phpMyAdmin commit these docs describe |
 
 ## How parity is tracked
 
-The checklists in `features/*.md` are the acceptance criteria. Each item becomes an e2e test whose title is the checklist line; `pnpm parity:report` ticks items from test results. Generated SQL and export files are diffed against phpMyAdmin in CI (see [Testing and parity](architecture/11-testing-and-parity-strategy.md)). Known accepted differences live in [Parity exceptions](reference/parity-exceptions.md).
+The checklists in `features/*.md` are the acceptance criteria. Each item becomes an e2e test whose title is the checklist line; `pnpm parity:report` ticks items from test results, and `tools/parity` inventories everything phpMyAdmin has (routes, template controls, directives, msgids) so gaps the checklists missed show up in [coverage](reference/coverage/README.md); `pnpm parity:check` gates CI on it. Generated SQL and export files are diffed against phpMyAdmin in CI (see [Testing and parity](architecture/11-testing-and-parity-strategy.md)). Known accepted differences live in [Parity exceptions](reference/parity-exceptions.md).

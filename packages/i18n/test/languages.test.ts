@@ -22,7 +22,7 @@ const fx = JSON.parse(readFileSync(new URL('./fixtures/languages.json', import.m
 }
 
 describe('LanguageManager', () => {
-  it('sortedLanguages: order, names, MySQL locale, RTL', () => {
+  it('sortedLanguages: order, names, MySQL locale, RTL [p01-728b8d]', () => {
     const got = new LanguageManager()
       .sortedLanguages()
       .map((l) => [l.key, l.code, l.name, l.englishName, l.nativeName, l.mysqlLocale, l.isRTL])

@@ -1,0 +1,825 @@
+# phpMyAdmin route → BetterMyAdmin endpoint(s) / SPA route(s). Keys are tools/parity/inventory/routes.json keys.
+#   api: 'METHOD /api/…' (or a list)   ui: '/s/:s/…' (or a list)   later: targets still to build
+#   planned: M<n> | exception: X<n> | n/a: <reason> | note: <text>
+# Targets are verified against apps/server/src/routes (Hono) and apps/web/src/routes (TanStack) by
+# pnpm parity:check; a route whose targets do not all exist must be `planned`. Placeholder SPA routes
+# (rendering NotImplemented) do not count. docs/reference/pma-route-map.md is generated from this file.
+
+'[/]':
+  ui: '/s/:s'
+/browse-foreigners:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/foreign-values'
+  planned: M2
+/changelog:
+  ui: /about/changelog
+  planned: M1
+  note: static
+/check-relations:
+  api:
+    - 'GET /api/servers/:s/metadata-storage/status'
+    - 'POST /api/servers/:s/metadata-storage/create'
+  planned: M4
+/collation-connection:
+  api: 'POST /api/servers/:s/session/collation'
+  planned: M1
+/columns:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/columns'
+  planned: M2
+  note: name lists for pickers
+/console/bookmark/add:
+  api: '/api/console/*'
+  planned: M1
+  note: 'bookmarks, config'
+/console/bookmark/refresh:
+  api: '/api/console/*'
+  planned: M1
+  note: 'bookmarks, config'
+/console/update-config:
+  api: 'POST /api/servers/:s/console/config'
+  planned: M1
+  note: 'bookmarks, config'
+/database/central-columns:
+  api: '/api/servers/:s/databases/:db/central-columns'
+  ui: '/s/:s/db/:db/central-columns'
+  planned: M3
+/database/central-columns/populate:
+  api: '/api/servers/:s/databases/:db/central-columns/populate'
+  ui: '/s/:s/db/:db/central-columns/populate'
+  planned: M3
+/database/data-dictionary:
+  api: 'GET /api/servers/:s/databases/:db/data-dictionary'
+  ui: '/s/:s/db/:db/data-dictionary'
+  planned: M3
+/database/designer:
+  api: 'GET /api/servers/:s/databases/:db/designer'
+  ui: '/s/:s/db/:db/designer'
+  planned: M3
+/database/events:
+  api:
+    - 'GET /api/servers/:s/databases/:db/events'
+    - 'POST /api/servers/:s/databases/:db/events'
+  ui: '/s/:s/db/:db/events'
+  planned: M3
+/database/export:
+  api: '/api/servers/:s/databases/:db/export'
+  ui: '/s/:s/db/:db/export'
+  planned: M4
+/database/import:
+  api: '/api/servers/:s/databases/:db/import'
+  ui: '/s/:s/db/:db/import'
+  planned: M4
+/database/multi-table-query:
+  api: '/api/servers/:s/databases/:db/multi-table-query'
+  ui: '/s/:s/db/:db/multi-table-query'
+  planned: M3
+/database/multi-table-query/query:
+  api: '/api/servers/:s/databases/:db/multi-table-query/query'
+  ui: '/s/:s/db/:db/multi-table-query/query'
+  planned: M3
+/database/multi-table-query/tables:
+  api: '/api/servers/:s/databases/:db/multi-table-query/tables'
+  ui: '/s/:s/db/:db/multi-table-query/tables'
+  planned: M3
+/database/operations:
+  api: '/api/servers/:s/databases/:db/operations'
+  ui: '/s/:s/db/:db/operations'
+  planned: M3
+/database/operations/collation:
+  api: '/api/servers/:s/databases/:db/operations/collation'
+  ui: '/s/:s/db/:db/operations/collation'
+  planned: M3
+/database/privileges:
+  api: 'GET /api/servers/:s/databases/:db/privileges'
+  ui: '/s/:s/db/:db/privileges'
+  planned: M3
+/database/routines:
+  api:
+    - 'GET /api/servers/:s/databases/:db/routines'
+    - 'POST /api/servers/:s/databases/:db/routines'
+  ui: '/s/:s/db/:db/routines'
+  planned: M3
+/database/search:
+  api: 'POST /api/servers/:s/databases/:db/search'
+  ui: '/s/:s/db/:db/search'
+  planned: M3
+/database/sql:
+  api: 'POST /api/servers/:s/query'
+  ui: '/s/:s/db/:db/sql'
+  planned: M1
+/database/sql/autocomplete:
+  api: 'GET /api/servers/:s/sql/autocomplete'
+  ui: '/s/:s/db/:db/sql/autocomplete'
+  planned: M1
+/database/sql/format:
+  api: 'POST /api/servers/:s/sql/format'
+  ui: '/s/:s/db/:db/sql/format'
+  planned: M1
+/database/structure:
+  api: 'GET /api/servers/:s/databases/:db/structure'
+  ui: '/s/:s/db/:db/structure'
+  planned: M3
+/database/structure/add-prefix:
+  api: '/api/servers/:s/databases/:db/structure/add-prefix'
+  ui: '/s/:s/db/:db/structure/add-prefix'
+  planned: M3
+/database/structure/add-prefix-table:
+  api: '/api/servers/:s/databases/:db/structure/add-prefix-table'
+  ui: '/s/:s/db/:db/structure/add-prefix-table'
+  planned: M3
+/database/structure/central-columns/add:
+  api: '/api/servers/:s/databases/:db/structure/central-columns/add'
+  ui: '/s/:s/db/:db/structure/central-columns/add'
+  planned: M3
+/database/structure/central-columns/make-consistent:
+  api: '/api/servers/:s/databases/:db/structure/central-columns/make-consistent'
+  ui: '/s/:s/db/:db/structure/central-columns/make-consistent'
+  planned: M3
+/database/structure/central-columns/remove:
+  api: '/api/servers/:s/databases/:db/structure/central-columns/remove'
+  ui: '/s/:s/db/:db/structure/central-columns/remove'
+  planned: M3
+/database/structure/change-prefix-form:
+  api: '/api/servers/:s/databases/:db/structure/change-prefix-form'
+  ui: '/s/:s/db/:db/structure/change-prefix-form'
+  planned: M3
+/database/structure/copy-form:
+  api: '/api/servers/:s/databases/:db/structure/copy-form'
+  ui: '/s/:s/db/:db/structure/copy-form'
+  planned: M3
+/database/structure/copy-table:
+  api: '/api/servers/:s/databases/:db/structure/copy-table'
+  ui: '/s/:s/db/:db/structure/copy-table'
+  planned: M3
+/database/structure/copy-table-with-prefix:
+  api: '/api/servers/:s/databases/:db/structure/copy-table-with-prefix'
+  ui: '/s/:s/db/:db/structure/copy-table-with-prefix'
+  planned: M3
+/database/structure/drop-form:
+  api: '/api/servers/:s/databases/:db/structure/drop-form'
+  ui: '/s/:s/db/:db/structure/drop-form'
+  planned: M3
+/database/structure/drop-table:
+  api: '/api/servers/:s/databases/:db/structure/drop-table'
+  ui: '/s/:s/db/:db/structure/drop-table'
+  planned: M3
+/database/structure/empty-form:
+  api: '/api/servers/:s/databases/:db/structure/empty-form'
+  ui: '/s/:s/db/:db/structure/empty-form'
+  planned: M3
+/database/structure/empty-table:
+  api: '/api/servers/:s/databases/:db/structure/empty-table'
+  ui: '/s/:s/db/:db/structure/empty-table'
+  planned: M3
+/database/structure/favorite-table:
+  api: 'POST /api/servers/:s/favorites'
+  ui: '/s/:s/db/:db/structure/favorite-table'
+  planned: M3
+/database/structure/real-row-count:
+  api: 'GET /api/servers/:s/databases/:db/structure/real-row-count'
+  ui: '/s/:s/db/:db/structure/real-row-count'
+  planned: M3
+/database/structure/replace-prefix:
+  api: '/api/servers/:s/databases/:db/structure/replace-prefix'
+  ui: '/s/:s/db/:db/structure/replace-prefix'
+  planned: M3
+/database/structure/show-create:
+  api: 'POST /api/servers/:s/databases/:db/tables/show-create'
+  ui: '/s/:s/db/:db/structure/show-create'
+  planned: M3
+/database/tracking:
+  api:
+    - 'GET /api/servers/:s/databases/:db/tracking'
+    - 'POST /api/servers/:s/databases/:db/tracking'
+  ui: '/s/:s/db/:db/tracking'
+  planned: M3
+/databases:
+  api: 'GET /api/servers/:s/databases'
+  planned: M3
+  note: name lists for pickers
+/error-report:
+  api: POST /api/telemetry/error
+  planned: M1
+  exception: X19
+  note: opt-in
+/export:
+  api:
+    - GET /api/export/options
+    - POST /api/export/jobs
+  planned: M4
+  exception: X10
+  note: streaming
+/export/check-time-out:
+  api: GET /api/export/check-time-out
+  planned: M4
+  exception: X10
+  note: streaming
+/export/tables:
+  api: '/api/export/*'
+  planned: M4
+  exception: X10
+  note: streaming
+/export/template/create:
+  api: '/api/export/*'
+  planned: M4
+  exception: X10
+  note: streaming
+/export/template/delete:
+  api: '/api/export/*'
+  planned: M4
+  exception: X10
+  note: streaming
+/export/template/load:
+  api: '/api/export/*'
+  planned: M4
+  exception: X10
+  note: streaming
+/export/template/update:
+  api: '/api/export/*'
+  planned: M4
+  exception: X10
+  note: streaming
+/gis-data-editor:
+  api: POST /api/gis/preview
+  planned: M2
+  note: 'client component `GisEditor`'
+/git-revision:
+  api: GET /api/meta/build
+/import:
+  api:
+    - GET /api/import/options
+    - POST /api/import/jobs
+  planned: M4
+  exception: X9
+  note: chunked upload + SSE progress
+/import-status:
+  api: 'GET /api/import/jobs/:id/events'
+  planned: M4
+  exception: X9
+  note: chunked upload + SSE progress
+/import/simulate-dml:
+  api: 'POST /api/servers/:s/query/simulate'
+  planned: M1
+  exception: X9
+  note: chunked upload + SSE progress
+/license:
+  ui: /about/license
+  planned: M1
+  note: static
+/lint:
+  api: 'POST /api/servers/:s/sql/lint'
+  planned: M1
+  note: client-side lint (SQL tokenizer in the browser) +  fallback
+/logout:
+  api: POST /api/auth/logout
+/messages:
+  n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent)
+/navigation:
+  api:
+    - 'GET /api/servers/:s/navigation/tree'
+    - 'POST /api/servers/:s/navigation/tree'
+    - 'GET /api/servers/:s/navigation/branch'
+  later:
+    - 'GET /api/servers/:s/navigation/hidden/:db'
+    - 'POST /api/servers/:s/navigation/hide'
+    - 'POST /api/servers/:s/navigation/unhide'
+/navigation/update-width:
+  api: 'POST /api/servers/:s/navigation/width'
+  planned: M1
+  note: see API reference
+/normalization:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/1nf/step1:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/1nf/step2:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/1nf/step3:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/1nf/step4:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/2nf/create-new-tables:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/2nf/new-tables:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/2nf/step1:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/3nf/create-new-tables:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/3nf/new-tables:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/3nf/step1:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/add-new-primary:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/create-new-column:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/get-columns:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/move-repeating-group:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/normalization/partial-dependencies:
+  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
+  planned: M2
+/phpinfo:
+  ui: /about/runtime
+  planned: M1
+  exception: X15
+  note: static
+/preferences/export:
+  api: /api/preferences
+  ui: /settings/export
+  planned: M4
+/preferences/features:
+  api: /api/preferences
+  ui: /settings/features
+  planned: M4
+/preferences/import:
+  api: /api/preferences
+  ui: /settings/import
+  planned: M4
+/preferences/main-panel:
+  api: /api/preferences
+  ui: /settings/main-panel
+  planned: M4
+/preferences/manage:
+  api:
+    - 'POST /api/servers/:s/prefs/import'
+    - 'GET /api/servers/:s/prefs/export'
+  ui: /settings/manage
+  planned: M4
+/preferences/navigation:
+  api: /api/preferences
+  ui: /settings/navigation
+  planned: M4
+/preferences/sql:
+  api: /api/preferences
+  ui: /settings/sql
+  planned: M4
+/preferences/two-factor:
+  api:
+    - 'GET /api/servers/:s/two-factor'
+    - 'POST /api/servers/:s/two-factor'
+  ui: /settings/two-factor
+  planned: M4
+/schema-export:
+  api: 'POST /api/servers/:s/databases/:db/schema-export'
+  planned: M3
+/server/binlog:
+  api: 'GET /api/servers/:s/binlog'
+  ui: '/s/:s/binlog'
+  planned: M3
+/server/collations:
+  api: 'GET /api/servers/:s/collations'
+  ui: '/s/:s/collations'
+  planned: M3
+/server/databases:
+  api: 'GET /api/servers/:s/databases'
+  ui: '/s/:s/databases'
+  planned: M3
+/server/databases/create:
+  api: 'POST /api/servers/:s/databases'
+  ui: '/s/:s/databases/create'
+  planned: M3
+/server/databases/destroy:
+  api: 'POST /api/servers/:s/databases/drop'
+  ui: '/s/:s/databases/destroy'
+  planned: M3
+/server/engines:
+  api: 'GET /api/servers/:s/engines'
+  ui: '/s/:s/engines'
+  planned: M3
+'/server/engines/{engine}[/{page}]':
+  api: 'GET /api/servers/:s/engines/:engine'
+  ui: '/s/:s/engines/:engine'
+  planned: M3
+/server/export:
+  api: '/api/servers/:s/export'
+  ui: '/s/:s/export'
+  planned: M4
+/server/import:
+  api: '/api/servers/:s/import'
+  ui: '/s/:s/import'
+  planned: M4
+/server/plugins:
+  api: 'GET /api/servers/:s/plugins'
+  ui: '/s/:s/plugins'
+  planned: M3
+/server/privileges:
+  api:
+    - 'GET /api/servers/:s/privileges/users'
+    - 'GET /api/servers/:s/privileges/users/:user/:host'
+  ui: '/s/:s/privileges'
+  planned: M3
+/server/privileges/account-lock:
+  api: '/api/servers/:s/privileges/account-lock'
+  ui: '/s/:s/privileges/account-lock'
+  planned: M3
+/server/privileges/account-unlock:
+  api: '/api/servers/:s/privileges/account-unlock'
+  ui: '/s/:s/privileges/account-unlock'
+  planned: M3
+/server/replication:
+  api:
+    - 'GET /api/servers/:s/replication'
+    - 'POST /api/servers/:s/replication/*'
+  ui: '/s/:s/replication'
+  planned: M3
+/server/sql:
+  api: 'POST /api/servers/:s/query'
+  ui: '/s/:s/sql'
+/server/status:
+  api: 'GET /api/servers/:s/status'
+  ui: '/s/:s/status'
+  planned: M3
+/server/status/advisor:
+  api: 'GET /api/servers/:s/status/advisor'
+  ui: '/s/:s/status/advisor'
+  planned: M3
+/server/status/monitor:
+  api: 'GET /api/servers/:s/status/monitor/*'
+  planned: M3
+  exception: X11
+  note: SSE stream for charts
+/server/status/monitor/chart:
+  api: 'GET /api/servers/:s/status/monitor/stream'
+  planned: M3
+  exception: X11
+  note: SSE stream for charts
+/server/status/monitor/general-log:
+  api: 'GET /api/servers/:s/status/monitor/*'
+  planned: M3
+  exception: X11
+  note: SSE stream for charts
+/server/status/monitor/log-vars:
+  api: 'POST /api/servers/:s/status/monitor/log-vars'
+  planned: M3
+  exception: X11
+  note: SSE stream for charts
+/server/status/monitor/query:
+  api: 'POST /api/servers/:s/status/monitor/query'
+  planned: M3
+  exception: X11
+  note: SSE stream for charts
+/server/status/monitor/slow-log:
+  api: 'GET /api/servers/:s/status/monitor/*'
+  planned: M3
+  exception: X11
+  note: SSE stream for charts
+/server/status/processes:
+  api: 'GET /api/servers/:s/processes'
+  ui: '/s/:s/status/processes'
+  planned: M3
+'/server/status/processes/kill/{id:\d+}':
+  api: 'POST /api/servers/:s/processes/:id/kill'
+  planned: M3
+/server/status/processes/refresh:
+  api: '/api/servers/:s/status/processes/refresh'
+  ui: '/s/:s/status/processes/refresh'
+  planned: M3
+/server/status/queries:
+  api: 'GET /api/servers/:s/status/queries'
+  ui: '/s/:s/status/queries'
+  planned: M3
+/server/status/variables:
+  api: 'GET /api/servers/:s/status/variables'
+  ui: '/s/:s/status/variables'
+  planned: M3
+/server/user-groups:
+  api: '/api/servers/:s/user-groups'
+  ui: '/s/:s/user-groups'
+  planned: M3
+/server/user-groups/edit-form:
+  api: '/api/servers/:s/user-groups/edit-form'
+  ui: '/s/:s/user-groups/edit-form'
+  planned: M3
+/server/variables:
+  api: 'GET /api/servers/:s/variables'
+  ui: '/s/:s/variables'
+  planned: M3
+'/server/variables/get/{name}':
+  api: '/api/servers/:s/variables/get/:name'
+  ui: '/s/:s/variables/get/:name'
+  planned: M3
+'/server/variables/set/{name}':
+  api: '/api/servers/:s/variables/set/:name'
+  ui: '/s/:s/variables/set/:name'
+  planned: M3
+/sql:
+  api: 'POST /api/servers/:s/query'
+  ui: '/s/:s/sql'
+  note: server scope only so far; db/table scopes land with M1
+/sql/get-default-fk-check-value:
+  api: 'GET /api/servers/:s/sql/default-fk-check'
+  planned: M1
+/sql/get-enum-values:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/enum-values'
+  planned: M1
+/sql/get-relational-values:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/foreign-values'
+  planned: M1
+/sql/get-set-values:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/enum-values'
+  planned: M1
+/sql/set-column-preferences:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/uiprefs'
+  planned: M1
+/sync-favorite-tables:
+  api: 'POST /api/servers/:s/favorites'
+  planned: M1
+  note: sync
+/table/add-field:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/columns/*'
+  ui: '/s/:s/db/:db/t/:table/add-field'
+  planned: M2
+/table/change:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/insert-form'
+  ui: '/s/:s/db/:db/t/:table/change'
+  planned: M2
+/table/change/rows:
+  api: '/api/servers/:s/databases/:db/tables/:table/change/rows'
+  ui: '/s/:s/db/:db/t/:table/change/rows'
+  planned: M2
+/table/chart:
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/chart'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/chart'
+  ui: '/s/:s/db/:db/t/:table/chart'
+  planned: M3
+/table/create:
+  api: '/api/servers/:s/databases/:db/tables/:table/create'
+  ui: '/s/:s/db/:db/t/:table/create'
+  planned: M2
+/table/delete/confirm:
+  api: '/api/servers/:s/databases/:db/tables/:table/delete/confirm'
+  ui: '/s/:s/db/:db/t/:table/delete/confirm'
+  planned: M1
+/table/delete/rows:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/rows/delete'
+  ui: '/s/:s/db/:db/t/:table/delete/rows'
+  planned: M1
+/table/export:
+  api: '/api/servers/:s/databases/:db/tables/:table/export'
+  ui: '/s/:s/db/:db/t/:table/export'
+  planned: M4
+/table/export/rows:
+  api: POST /api/export/rows
+  ui: '/s/:s/db/:db/t/:table/export/rows'
+  planned: M4
+/table/find-replace:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
+  ui: '/s/:s/db/:db/t/:table/find-replace'
+  planned: M2
+/table/get-field:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/cell'
+  ui: '/s/:s/db/:db/t/:table/get-field'
+  planned: M1
+/table/gis-visualization:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/gis'
+  ui: '/s/:s/db/:db/t/:table/gis-visualization'
+  planned: M3
+/table/import:
+  api: '/api/servers/:s/databases/:db/tables/:table/import'
+  ui: '/s/:s/db/:db/t/:table/import'
+  planned: M4
+/table/indexes:
+  api: '/api/servers/:s/databases/:db/tables/:table/indexes'
+  ui: '/s/:s/db/:db/t/:table/indexes'
+  planned: M2
+/table/indexes/rename:
+  api: '/api/servers/:s/databases/:db/tables/:table/indexes/rename'
+  ui: '/s/:s/db/:db/t/:table/indexes/rename'
+  planned: M2
+/table/maintenance/analyze:
+  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/analyze'
+  ui: '/s/:s/db/:db/t/:table/maintenance/analyze'
+  planned: M2
+/table/maintenance/check:
+  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/check'
+  ui: '/s/:s/db/:db/t/:table/maintenance/check'
+  planned: M2
+/table/maintenance/checksum:
+  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/checksum'
+  ui: '/s/:s/db/:db/t/:table/maintenance/checksum'
+  planned: M2
+/table/maintenance/optimize:
+  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/optimize'
+  ui: '/s/:s/db/:db/t/:table/maintenance/optimize'
+  planned: M2
+/table/maintenance/repair:
+  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/repair'
+  ui: '/s/:s/db/:db/t/:table/maintenance/repair'
+  planned: M2
+/table/operations:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/*'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  planned: M2
+/table/partition/analyze:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/analyze'
+  ui: '/s/:s/db/:db/t/:table/partition/analyze'
+  planned: M2
+/table/partition/check:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/check'
+  ui: '/s/:s/db/:db/t/:table/partition/check'
+  planned: M2
+/table/partition/drop:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/drop'
+  ui: '/s/:s/db/:db/t/:table/partition/drop'
+  planned: M2
+/table/partition/optimize:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/optimize'
+  ui: '/s/:s/db/:db/t/:table/partition/optimize'
+  planned: M2
+/table/partition/rebuild:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/rebuild'
+  ui: '/s/:s/db/:db/t/:table/partition/rebuild'
+  planned: M2
+/table/partition/repair:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/repair'
+  ui: '/s/:s/db/:db/t/:table/partition/repair'
+  planned: M2
+/table/partition/truncate:
+  api: '/api/servers/:s/databases/:db/tables/:table/partition/truncate'
+  ui: '/s/:s/db/:db/t/:table/partition/truncate'
+  planned: M2
+/table/privileges:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/privileges'
+  ui: '/s/:s/db/:db/t/:table/privileges'
+  planned: M2
+/table/recent-favorite:
+  api: 'GET /api/servers/:s/recent-favorite'
+  ui: '/s/:s/db/:db/t/:table/recent-favorite'
+  planned: M1
+/table/relation:
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/relations'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/relations'
+  ui: '/s/:s/db/:db/t/:table/relation'
+  planned: M2
+/table/replace:
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/rows'
+  ui: '/s/:s/db/:db/t/:table/replace'
+  planned: M2
+/table/search:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/search'
+  ui: '/s/:s/db/:db/t/:table/search'
+  planned: M2
+/table/sql:
+  api: 'POST /api/servers/:s/query'
+  ui: '/s/:s/db/:db/t/:table/sql'
+  planned: M2
+/table/structure:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/structure'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  planned: M2
+/table/structure/add-key:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/add-key'
+  ui: '/s/:s/db/:db/t/:table/structure/add-key'
+  planned: M2
+/table/structure/browse:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/browse'
+  ui: '/s/:s/db/:db/t/:table/structure/browse'
+  planned: M2
+/table/structure/central-columns-add:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/central-columns-add'
+  ui: '/s/:s/db/:db/t/:table/structure/central-columns-add'
+  planned: M2
+/table/structure/central-columns-remove:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/central-columns-remove'
+  ui: '/s/:s/db/:db/t/:table/structure/central-columns-remove'
+  planned: M2
+/table/structure/change:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/change'
+  ui: '/s/:s/db/:db/t/:table/structure/change'
+  planned: M2
+/table/structure/drop:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/drop'
+  ui: '/s/:s/db/:db/t/:table/structure/drop'
+  planned: M2
+/table/structure/drop-confirm:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/drop-confirm'
+  ui: '/s/:s/db/:db/t/:table/structure/drop-confirm'
+  planned: M2
+/table/structure/fulltext:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/fulltext'
+  ui: '/s/:s/db/:db/t/:table/structure/fulltext'
+  planned: M2
+/table/structure/index:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/index'
+  ui: '/s/:s/db/:db/t/:table/structure/index'
+  planned: M2
+/table/structure/move-columns:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/move-columns'
+  ui: '/s/:s/db/:db/t/:table/structure/move-columns'
+  planned: M2
+/table/structure/partitioning:
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/partitions/*'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/partitions/*'
+  ui: '/s/:s/db/:db/t/:table/structure/partitioning'
+  planned: M2
+/table/structure/primary:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/primary'
+  ui: '/s/:s/db/:db/t/:table/structure/primary'
+  planned: M2
+/table/structure/reserved-word-check:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/reserved-word-check'
+  ui: '/s/:s/db/:db/t/:table/structure/reserved-word-check'
+  planned: M2
+/table/structure/save:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/save'
+  ui: '/s/:s/db/:db/t/:table/structure/save'
+  planned: M2
+/table/structure/spatial:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/spatial'
+  ui: '/s/:s/db/:db/t/:table/structure/spatial'
+  planned: M2
+/table/structure/unique:
+  api: '/api/servers/:s/databases/:db/tables/:table/structure/unique'
+  ui: '/s/:s/db/:db/t/:table/structure/unique'
+  planned: M2
+/table/tracking:
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/tracking'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/tracking'
+  ui: '/s/:s/db/:db/t/:table/tracking'
+  planned: M2
+/table/zoom-search:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/zoom-search'
+  ui: '/s/:s/db/:db/t/:table/zoom-search'
+  planned: M2
+/tables:
+  api: 'GET /api/servers/:s/databases/:db/tables'
+  planned: M2
+  note: name lists for pickers
+/themes:
+  planned: M1
+  exception: X16
+  note: client-side theme store (no server round trip)
+/themes/set:
+  planned: M1
+  exception: X16
+  note: client-side theme store (no server round trip)
+/transformation/overview:
+  api: GET /api/transformations
+  planned: M2
+  note: 'overview; wrapper: raw cell bytes'
+/transformation/wrapper:
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/cell'
+  planned: M2
+  note: 'overview; wrapper: raw cell bytes'
+/triggers:
+  api:
+    - 'GET /api/servers/:s/databases/:db/triggers'
+    - 'POST /api/servers/:s/databases/:db/triggers'
+  ui: '/s/:s/db/:db[/t/:table]/triggers'
+  planned: M2
+/user-password:
+  api: 'POST /api/servers/:s/account/password'
+  planned: M3
+/version-check:
+  api: GET /api/meta/version-check
+  planned: M1
+  exception: X20
+/view/create:
+  api:
+    - 'GET /api/servers/:s/databases/:db/views/:v'
+    - 'POST /api/servers/:s/databases/:db/views'
+  ui: '/s/:s/db/:db/view/*'
+  planned: M2
+/view/operations:
+  api: 'POST /api/servers/:s/databases/:db/views/:v/operations/*'
+  ui: '/s/:s/db/:db/view/*'
+  planned: M2
+'setup:/':
+  api: 'GET /api/servers/:s/navigation/branch'
+  ui: /setup
+  planned: M4
+  exception: X7
+'setup:/setup':
+  ui: /setup
+  planned: M4
+  exception: X7
+'setup:/setup/show-config':
+  ui: /setup
+  planned: M4
+  exception: X7
+'setup:/setup/validate':
+  ui: /setup
+  planned: M4
+  exception: X7

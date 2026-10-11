@@ -1,0 +1,16 @@
+# Dispositions for phpMyAdmin template controls our web app does not claim (yet). Claims live next to
+# the components (`pma-controls.ts` registries, `data-pma` attributes; docs/architecture/12).
+# Keys: control key (`login/form.twig#pma_username`), template (`login/form.twig`) or a template
+# directory prefix ending in `/`.
+#   planned: M<n> | exception: X<n> | n/a: <reason> | note: <text>
+
+setup/:
+  exception: X7
+  planned: M4
+  note: first-run wizard instead of public/setup
+home/index.twig#link:Show PHP information:
+  exception: X15
+  planned: M1
+error/report_form.twig:
+  exception: X19
+  planned: M1

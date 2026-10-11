@@ -312,6 +312,41 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
 
+  tools/conventions:
+    dependencies:
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      yaml:
+        specifier: 2.7.1
+        version: 2.7.1
+    devDependencies:
+      '@types/node':
+        specifier: 22.15.3
+        version: 22.15.3
+      tsx:
+        specifier: 4.19.4
+        version: 4.19.4
+
+  tools/parity:
+    dependencies:
+      '@bettermyadmin/config':
+        specifier: workspace:*
+        version: link:../../packages/config
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+      yaml:
+        specifier: 2.7.1
+        version: 2.7.1
+    devDependencies:
+      '@types/node':
+        specifier: 22.15.3
+        version: 22.15.3
+      tsx:
+        specifier: 4.19.4
+        version: 4.19.4
+
 packages:
 
   '@ampproject/remapping@2.3.0':
