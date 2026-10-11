@@ -1,5 +1,5 @@
 import { localisedDate, sprintf } from '@bettermyadmin/i18n'
-import { extractColumnSpec, printableBitValue } from '@bettermyadmin/mysql-types'
+import { extractColumnSpec, php, printableBitValue } from '@bettermyadmin/mysql-types'
 import { backquote, backquoteCompat, getUniqueCondition } from '@bettermyadmin/sql-gen'
 import {
   Context,
@@ -11,7 +11,7 @@ import {
   TokenFlag,
   TokenType,
 } from '@bettermyadmin/sql-lexer'
-import { encodeBytes, hexBytes, mbStrlen } from '../bytes.ts'
+import { encodeBytes, hexBytes } from '../bytes.ts'
 import { MYSQL_CHARSET_MAP } from '../charset.ts'
 import { ExportError } from '../errors.ts'
 import type { Params } from '../params.ts'
@@ -1302,7 +1302,7 @@ export class ExportSql extends ExportPlugin {
           insertLine = `${schemaInsert}(${values.join(', ')})`
         } else {
           insertLine = `(${values.join(', ')})`
-          const insertLineSize = mbStrlen(insertLine)
+          const insertLineSize = php.mbStrlen(insertLine)
           if (this.maxQuerySize > 0 && querySize + insertLineSize > this.maxQuerySize) {
             await this.addLine(';\n')
             querySize = 0
@@ -1310,7 +1310,7 @@ export class ExportSql extends ExportPlugin {
             insertLine = schemaInsert + insertLine
           }
         }
-        querySize += mbStrlen(insertLine)
+        querySize += php.mbStrlen(insertLine)
       } else {
         // Other inserts case
         insertLine = `${schemaInsert}(${values.join(', ')})`

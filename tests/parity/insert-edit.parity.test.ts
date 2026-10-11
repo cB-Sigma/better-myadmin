@@ -158,24 +158,22 @@ async function pmaRun(c: Case, db: string): Promise<{ preview?: string[] }> {
     ]
     for (const w of c.where) params.push(['rows_to_delete[]', w])
     if (c.clauseIsUnique === true) params.push(['clause_is_unique', '1'])
-    html = await pma.post('/table/change/rows', params, { ajax: false })
+    html = await pma.postPage('/table/change/rows', params)
   } else {
-    html = await pma.pageGet('/table/change', { db, table: c.table, server: '1' })
+    html = await pma.getPage('/table/change', { db, table: c.table, server: '1' })
   }
   let pairs = serializeForm(findForm(html, { id: 'insertForm' }))
   pairs = applyPma(pairs, html, c.mods, c.unignore ?? [])
   if (c.submitType !== undefined) pairs = setPair(pairs, 'submit_type', c.submitType)
   if (c.afterInsert !== undefined) pairs = setPair(pairs, 'after_insert', c.afterInsert)
   if (c.preview === true) {
-    const j = JSON.parse(
-      await pma.post('/table/replace', [...pairs, ['do_save_data', '1'], ['preview_sql', '1']]),
-    ) as PmaJson
+    const j = await pma.postJson('/table/replace', [...pairs, ['do_save_data', '1'], ['preview_sql', '1']])
     const codes = [...String(j.sql_data ?? '').matchAll(/<code class="sql"[^>]*>([\s\S]*?)<\/code>/g)].map(
       (m) => decodeEntities((m[1] ?? '').replace(/<[^>]+>/g, '')),
     )
     return { preview: codes }
   }
-  await pma.post('/table/replace', [...pairs, ['ajax_page_request', 'true']])
+  await pma.postJson('/table/replace', [...pairs, ['ajax_page_request', 'true']])
   return {}
 }
 
@@ -538,7 +536,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       await root.query(`DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`)
     }
     const m1 = await log.marker()
-    await pma.post('/browse-foreigners', {
+    await pma.postJson('/browse-foreigners', {
       db: DB_PMA,
       table: 't',
       field: 'parent_id',

@@ -1,8 +1,10 @@
 import type { ImportPageResponse, ImportResult } from '@bettermyadmin/contracts'
+import { formatBytes } from '@bettermyadmin/i18n/format'
 import {
   Alert,
   Button,
   Input,
+  MessageBox,
   NativeSelect,
   Panel,
   PanelBody,
@@ -19,8 +21,7 @@ import { t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PluginOptions } from '../export/PluginOptions'
 import { StatementBlock } from '../sql/Results'
-import { type CardEnv, ErrorCard, MessageBox } from '../sql/SqlMessage'
-import { formatByteDown } from '../sql/format'
+import { type CardEnv, ErrorCard } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
 import { sqlTabRoute } from '../sql/routes'
 
@@ -193,15 +194,14 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
       <div className="container my-3" id="import_form_status">
         {result.echoed?.map((h, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: static list
-          <MessageBox key={i} type="error" text={h} className="mb-3 rounded" />
+          <MessageBox key={i} type="error">
+            <SafeHtml html={h} />
+          </MessageBox>
         ))}
         {result.message !== undefined && (
-          <div
-            className={`alert alert-${result.message.type === 'error' ? 'danger' : result.message.type} mb-3`}
-            role="alert"
-          >
+          <MessageBox type={result.message.type}>
             <SafeHtml html={result.message.html} />
-          </div>
+          </MessageBox>
         )}
         {result.error !== undefined && <ErrorCard st={result.error} env={env} />}
         {result.statements?.map((st, i) => (
@@ -300,8 +300,8 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
             <div id="statustext">
               {t(
                 '%s of %s',
-                formatByteDown(translator(), phase.done, 3, 1),
-                formatByteDown(translator(), phase.total, 3, 1),
+                formatBytes(translator(), phase.done, 3, 1),
+                formatBytes(translator(), phase.total, 3, 1),
               )}
             </div>
           )}

@@ -1,14 +1,14 @@
 import type { QueryResponse } from '@bettermyadmin/contracts'
-import { useUiSettings } from '@bettermyadmin/ui'
+import { MessageBox, useUiSettings } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { ApiError, api } from '../../lib/api'
+import { ApiError, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { StatementBlock } from '../sql/Results'
-import { type CardEnv, MessageBox } from '../sql/SqlMessage'
+import type { CardEnv } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
 import { sqlTabRoute } from '../sql/routes'
 import { runQuery } from '../sql/runner'
@@ -44,7 +44,7 @@ export function BrowsePage(props: BrowsePageProps) {
     ...(props.pos !== undefined ? { pos: props.pos } : {}),
   }
   const q = useQuery({
-    queryKey: qk.browse(server, db, table, req),
+    queryKey: qk.browse({ server, db, table }, req),
     queryFn: () => api.browse(server, req),
     staleTime: 0,
     gcTime: 0,
@@ -87,8 +87,7 @@ export function BrowsePage(props: BrowsePageProps) {
     },
   }
 
-  if (q.error instanceof ApiError)
-    return <MessageBox type="error" text={q.error.message} className="rounded" />
+  if (q.error instanceof ApiError) return <MessageBox {...errorMessage(q.error)} flush />
   if (q.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
   const res = other ?? q.data
   return (

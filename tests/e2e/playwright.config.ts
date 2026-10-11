@@ -17,7 +17,7 @@ const chromium =
 
 export default defineConfig({
   testDir: '.',
-  testMatch: ['**/*.e2e.ts', '**/*.spec.ts'],
+  testMatch: ['**/*.e2e.ts'],
   outputDir: join(repo, '.data/e2e-results'),
   timeout: 60_000,
   fullyParallel: false,

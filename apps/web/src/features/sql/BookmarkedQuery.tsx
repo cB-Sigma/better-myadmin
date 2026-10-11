@@ -1,8 +1,7 @@
+import { DocLink, Panel, buttonVariants } from '@bettermyadmin/ui'
 import { useRef, useState } from 'react'
-import { pmaDocUrl } from '../../lib/docs'
 import { t } from '../../lib/i18n'
 import type { BookmarkEntry } from '../bookmarks/provider'
-import { DocIcon } from './SqlMessage'
 
 export type BookmarkAction = 'submit' | 'view' | 'delete'
 
@@ -26,10 +25,7 @@ export function BookmarkedQuery({
     if (selected !== undefined) onGo(selected, action, { ...variables.current })
   }
   return (
-    <div className="mb-3 rounded border border-border" id="fieldsetBookmarkOptions">
-      <div className="border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-        {t('Bookmarked SQL query')}
-      </div>
+    <Panel title={t('Bookmarked SQL query')} id="fieldsetBookmarkOptions">
       <div className="flex flex-wrap items-center gap-3 p-3 text-sm">
         <label htmlFor="id_bookmark">{t('Bookmark:')}</label>
         <select
@@ -72,7 +68,7 @@ export function BookmarkedQuery({
       {varCount > 0 && (
         <div className="px-3 pb-3 text-sm">
           <span className="mr-1">{t('Variables')}</span>
-          <DocIcon href={pmaDocUrl('faq', 'faqbookmark')} target="documentation" />
+          <DocLink page="faq" anchor="faqbookmark" />
           <div className="mt-1 flex flex-wrap gap-3" id="bookmarkVariables">
             {Array.from({ length: varCount }, (_, i) => i + 1).map((i) => (
               <div key={`${id}-${i}`} className="flex items-center gap-1">
@@ -103,10 +99,10 @@ export function BookmarkedQuery({
         </div>
       )}
       <div className="flex justify-end border-t border-border bg-bg-subtle px-3 py-2">
-        <button type="button" id="button_submit_bookmark" className="btn" onClick={go}>
+        <button type="button" id="button_submit_bookmark" className={buttonVariants()} onClick={go}>
           {t('Go')}
         </button>
       </div>
-    </div>
+    </Panel>
   )
 }

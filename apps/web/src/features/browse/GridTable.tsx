@@ -150,11 +150,14 @@ export function GridTable(props: Props) {
     const co = grid.columnOrder
     if (co === null || grid.table === '') return
     void api
-      .columnPrefs(server, grid.db, grid.table, {
-        col_order: nextOrder.map((p) => grid.columns[p]!.index).join(','),
-        col_visib: nextOrder.map((p) => (nextVisib[p] ? 1 : 0)).join(','),
-        ...(co.isView ? {} : { table_create_time: co.createTime }),
-      })
+      .columnPrefs(
+        { server, db: grid.db, table: grid.table },
+        {
+          col_order: nextOrder.map((p) => grid.columns[p]!.index).join(','),
+          col_visib: nextOrder.map((p) => (nextVisib[p] ? 1 : 0)).join(','),
+          ...(co.isView ? {} : { table_create_time: co.createTime }),
+        },
+      )
       .catch((e: Error) => showMessage(e.message, false, 'error'))
   }
 

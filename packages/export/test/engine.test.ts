@@ -1,3 +1,4 @@
+import { php } from '@bettermyadmin/mysql-types'
 import { describe, expect, it } from 'vitest'
 import {
   Params,
@@ -6,7 +7,6 @@ import {
   decodeBytes,
   encodeBytes,
   hexBytes,
-  mbStrlen,
   mergeAliases,
   readZip,
   sanitizeFilename,
@@ -18,7 +18,7 @@ describe('byte-preserving strings', () => {
     const s = decodeBytes(raw)
     expect(encodeBytes(s).equals(raw)).toBe(true)
     expect(hexBytes(s)).toBe('61ffc3a900e282')
-    expect(mbStrlen(s)).toBe(6)
+    expect(php.mbStrlen(s)).toBe(6)
   })
   it('keeps astral characters', () => {
     const raw = Buffer.from('a😀b', 'utf8')

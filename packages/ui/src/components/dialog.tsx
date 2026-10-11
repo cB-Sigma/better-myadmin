@@ -1,6 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../lib/cn.ts'
 
 /** Bootstrap-modal equivalent (`#modal`): sizes sm/md/lg/xl/full, Esc and backdrop close. */
@@ -112,5 +112,40 @@ export function DialogFooter({ className, ...props }: ComponentProps<'div'>) {
       )}
       {...props}
     />
+  )
+}
+
+/**
+ * The standard modal: title bar, scrolling body, optional button footer — the Bootstrap `#modal`
+ * pages open for forms and confirmations. Compose the Dialog parts directly only for layouts this
+ * does not cover.
+ */
+export function Modal({
+  title,
+  open,
+  onClose,
+  children,
+  footer,
+  size = 'lg',
+  id,
+}: {
+  title: ReactNode
+  open: boolean
+  onClose: () => void
+  children?: ReactNode
+  footer?: ReactNode
+  size?: keyof typeof sizes
+  id?: string
+}) {
+  return (
+    <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent size={size} aria-describedby={undefined} {...(id !== undefined ? { id } : {})}>
+        <DialogHeader>
+          <DialogTitle className="text-sm">{title}</DialogTitle>
+        </DialogHeader>
+        <DialogBody>{children}</DialogBody>
+        {footer !== undefined && <DialogFooter>{footer}</DialogFooter>}
+      </DialogContent>
+    </Dialog>
   )
 }

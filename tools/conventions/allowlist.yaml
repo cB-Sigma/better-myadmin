@@ -2,307 +2,72 @@
 # Every entry needs a reason. The list only shrinks: an entry that no longer matches fails the check.
 # Fields: rule (required), file (exact path, optional), symbol (exact, optional), reason (required).
 allow:
-  - rule: web/api-module
-    file: apps/web/src/features/server/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/api-module
-    file: apps/web/src/features/table/structure/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/bookmarks/provider.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/server/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/shell/UserMenu.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/sql/SqlMessage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/create/CreateTablePage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/indexes/IndexEditor.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/indexes/IndexPage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/structure/ColumnPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/structure/StructurePage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/structure/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-dangerous-html
-    file: apps/web/src/features/server/InfoPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-dangerous-html
-    file: apps/web/src/features/server/StatusPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-dangerous-html
-    file: apps/web/src/features/sql/editor/CodeMirrorEditor.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: DocLink
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: PageTitle
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Card
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Alert
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: ErrorBox
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Hint
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/server/ui.tsx
-    symbol: Loading
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/sql/SqlMessage.tsx
-    symbol: MessageBox
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Button
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Card
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: DocLink
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: MessageBox
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Notice
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-local-primitives
-    file: apps/web/src/features/table/structure/ui.tsx
-    symbol: Modal
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-raw-colors
-    file: apps/web/src/features/server/StatusPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-raw-colors
-    file: apps/web/src/features/sql/editor/CodeMirrorEditor.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/no-raw-colors
-    file: apps/web/src/features/sql/sql.css
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/no-sql-in-routes
-    file: apps/server/src/routes/metadata.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/no-sql-in-routes
-    file: apps/server/src/routes/sql.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/auth.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/metadata.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/navigation.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/server-admin.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/server.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/shell.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/sql.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/table-structure.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/telemetry.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/auth.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/metadata.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/navigation.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/server-admin.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/shell.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/sql.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/table-structure.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/validate
-    file: apps/server/src/routes/telemetry.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: phpEmpty
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: mbStrlen
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: hasAllFeatures
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: getDbComment
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: collationDescription
-    reason: present at eec8ae7 (before the checker); being consolidated
   - rule: no-duplicate-exports
     symbol: expandUserString
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: DocLink
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: Alert
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: Hint
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: formatByteDown
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: backquote
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: Button
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: mysqlDocUrl
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: pmaDocUrl
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      same purpose, different runtime: the web title expands client-side variables only, the server one queries @VSERVER@/@VERSION@ through the connection; follow-up: one pure expander in packages/config with an async variable resolver
   - rule: no-duplicate-exports
     symbol: str
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: no-duplicate-exports
-    symbol: levenshtein
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      different purpose: packages/config `str()` declares a string config node, sql-lexer `str()` is PHP (string) casting
   - rule: no-duplicate-exports
     symbol: phpFloatToString
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: phpFloatval
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: phpIntval
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: htmlspecialchars
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: tokenize
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      different purpose: the advisor rule-expression tokenizer (packages/kbs) vs the SQL lexer (packages/sql-lexer)
   - rule: no-duplicate-exports
     symbol: truthy
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: looseEquals
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: stripcslashes
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: rtrim
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: trim
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: strtoupper
-    reason: present at eec8ae7 (before the checker); being consolidated
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
   - rule: no-duplicate-exports
     symbol: strtolower
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/i18n.parity.test.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/lib/pma-instance.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/lib/pma-shadow.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/lib/pma.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/lib/server-setup.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/shell.parity.test.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/sql-box.parity.test.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/sql-tab.parity.test.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: parity/one-client
-    file: tests/parity/table-structure.parity.test.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-
-  - rule: tests/naming
-    file: tests/e2e/navigation.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: tests/naming
-    file: tests/e2e/shell/change-password.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: tests/naming
-    file: tests/e2e/shell/shortcuts.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: tests/naming
-    file: tests/e2e/shell/tabs.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: tests/naming
-    file: tests/e2e/shell/theme.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: tests/naming
-    file: tests/e2e/sql-editor.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: tests/naming
-    file: tests/e2e/table-structure.spec.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: server/strings-through-tr
-    file: apps/server/src/routes/export.ts
-    symbol: success
-    reason: protocol value of /export/check-time-out ('success' / 'timeout'), not a message (pma CheckTimeOutController)
+    reason: >-
+      PHP emulation: packages/sql-lexer must stay dependency-free (it runs in the lint worker), so it keeps its own copy; i18n / mysql-types / kbs variants differ in signature (byte arrays, trim char lists, precision) — follow-up: a dependency-free packages/php owner that sql-lexer, i18n, mysql-types and kbs import
+  - rule: web/no-hand-made-ui
+    file: apps/web/src/features/console/Console.tsx
+    reason: >-
+      the console drawer's `.toolbar` rows (Options, Bookmarks, Add bookmark,
+      debug) mirror phpMyAdmin's console widget
+      (resources/templates/console/display.twig), not a card header; a
+      Console-specific toolbar primitive is due when the console is reworked
+  - rule: web/no-hand-made-ui
+    file: apps/web/src/features/sql/SqlMessage.tsx
+    reason: >-
+      ErrorCard is Generator::mysqlDie (heading, static analysis list,
+      highlighted SQL with Copy and documentation links) composed inside
+      SqlMessage; MessageBox carries only text + plain SQL

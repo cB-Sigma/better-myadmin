@@ -73,18 +73,16 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
               <div className="flex min-h-0 flex-1">
                 <div className="contents print:hidden">{nav}</div>
                 <div className="flex min-w-0 flex-1 flex-col">
-                  <header
-                    id="floating_menubar"
-                    className="flex items-center gap-2 bg-(--breadcrumb-bg) px-3 py-1.5 text-(--breadcrumb-fg) print:hidden [&_a]:text-(--breadcrumb-fg) [&_.breadcrumb-comment]:text-(--breadcrumb-comment)"
-                  >
-                    <div className="min-w-0 flex-1">
+                  {/* pma: base.twig — #page_nav_icons follows the menu (#floating_menubar), it is not part of it */}
+                  <div className="flex items-center gap-2 bg-(--breadcrumb-bg) px-3 py-1.5 text-(--breadcrumb-fg) print:hidden [&_a]:text-(--breadcrumb-fg) [&_.breadcrumb-comment]:text-(--breadcrumb-comment)">
+                    <header id="floating_menubar" className="min-w-0 flex-1">
                       <Breadcrumb server={server} db={db} table={table} onScrollTop={scrollTop} />
-                    </div>
+                    </header>
                     <div id="page_nav_icons" className="flex shrink-0 items-center gap-2">
                       <UserMenu server={server} />
                       <PageIcons onTop={scrollTop} />
                     </div>
-                  </header>
+                  </div>
                   <div ref={scroller} id="page_scroll" className="min-h-0 flex-1 overflow-auto">
                     {db === '' && (
                       <div className="sticky top-0 z-10 border-b border-(--tab-border) bg-bg px-2 pt-1 print:hidden">

@@ -19,12 +19,12 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🔀 | `GET, POST /error-report` | `ErrorReportController` | API POST /api/telemetry/error (apps/server/src/routes/telemetry.ts:55) | X19 — opt-in |
 | ✅ | `GET, POST /git-revision` | `GitInfoController` | API GET /api/meta/build (apps/server/src/routes/meta.ts:15) |  |
 | 🗓️ | `GET /license` | `LicenseController` | UI /about/license | M1 — static |
-| ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:115) |  |
+| ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:111) |  |
 | ➖ | `GET /messages` | `JavaScriptMessagesController` |  | n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent) |
-| ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:62)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:69) | later: GET /api/servers/:s/navigation/hidden/:db, POST /api/servers/:s/navigation/hide, POST /api/servers/:s/navigation/unhide |
+| ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:42)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:59) | later: GET /api/servers/:s/navigation/hidden/:db, POST /api/servers/:s/navigation/hide, POST /api/servers/:s/navigation/unhide |
 | 🗓️ | `POST /navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API POST /api/servers/:s/navigation/width | M1 — see API reference |
 | 🗓️ | `GET /phpinfo` | `PhpInfoController` | UI /about/runtime | M1 (X15) — static |
-| ✅ | `POST /sync-favorite-tables` | `SyncFavoriteTablesController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:446) | sync |
+| ✅ | `POST /sync-favorite-tables` | `SyncFavoriteTablesController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:432) | sync |
 | 🗓️ | `GET, POST /table/recent-favorite` | `Table/RecentFavoriteController` | API GET /api/servers/:s/recent-favorite<br>UI /s/:s/db/:db/t/:table/recent-favorite | M1 |
 | 🗓️ | `GET /themes` | `ThemesController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🗓️ | `POST /themes/set` | `ThemeSetController` |  | M1 (X16) — client-side theme store (no server round trip) |
@@ -38,11 +38,11 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET /sql/get-default-fk-check-value` | `Sql/DefaultForeignKeyCheckValueController` | API GET /api/servers/:s/sql/default-fk-check (apps/server/src/routes/sql.ts:139) |  |
+| ✅ | `GET /sql/get-default-fk-check-value` | `Sql/DefaultForeignKeyCheckValueController` | API GET /api/servers/:s/sql/default-fk-check (apps/server/src/routes/sql.ts:115) |  |
 | ✅ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
-| ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:587) |  |
+| ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:535) |  |
 | ✅ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the confirmation is rendered in place by the results view (no request of its own) |
 | ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:71) |  |
 | ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:85) |  |
@@ -85,7 +85,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /table/create` | `Table/CreateController` | API /api/servers/:s/databases/:db/tables/:table/create<br>UI /s/:s/db/:db/t/:table/create | M2 |
 | 🗓️ | `GET, POST /table/find-replace` | `Table/FindReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace<br>UI /s/:s/db/:db/t/:table/find-replace | M2 |
 | 🗓️ | `GET, POST /table/gis-visualization` | `Table/GisVisualizationController` | API GET /api/servers/:s/databases/:db/tables/:t/gis<br>UI /s/:s/db/:db/t/:table/gis-visualization | M3 |
-| ✅ | `GET, POST /table/indexes` | `Table/IndexesController` | API POST /api/servers/:s/databases/:db/tables/:t/indexes (apps/server/src/routes/table-structure.ts:248)<br>UI /s/:server/db/:db/t/:table/indexes (apps/web/src/routes/s/$server/db/$db/t/$table/indexes.tsx) |  |
+| ✅ | `GET, POST /table/indexes` | `Table/IndexesController` | API POST /api/servers/:s/databases/:db/tables/:t/indexes (apps/server/src/routes/table-structure.ts:235)<br>UI /s/:server/db/:db/t/:table/indexes (apps/web/src/routes/s/$server/db/$db/t/$table/indexes.tsx) |  |
 | 🗓️ | `GET, POST /table/indexes/rename` | `Table/IndexRenameController` | API /api/servers/:s/databases/:db/tables/:table/indexes/rename<br>UI /s/:s/db/:db/t/:table/indexes/rename | M2 |
 | 🗓️ | `POST /table/maintenance/analyze` | `Table/Maintenance/AnalyzeController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/analyze<br>UI /s/:s/db/:db/t/:table/maintenance/analyze | M2 |
 | 🗓️ | `POST /table/maintenance/check` | `Table/Maintenance/CheckController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/check<br>UI /s/:s/db/:db/t/:table/maintenance/check | M2 |
@@ -103,8 +103,8 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET /table/privileges` | `Table/PrivilegesController` | API GET /api/servers/:s/databases/:db/tables/:t/privileges<br>UI /s/:s/db/:db/t/:table/privileges | M2 |
 | 🗓️ | `GET, POST /table/relation` | `Table/RelationController` | API GET /api/servers/:s/databases/:db/tables/:t/relations<br>API POST /api/servers/:s/databases/:db/tables/:t/relations<br>UI /s/:s/db/:db/t/:table/relation | M2 |
 | 🗓️ | `GET, POST /table/search` | `Table/SearchController` | API POST /api/servers/:s/databases/:db/tables/:t/search<br>UI /s/:s/db/:db/t/:table/search | M2 |
-| ✅ | `GET, POST /table/sql` | `Table/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/t/:table/sql (apps/web/src/routes/s/$server/db/$db/t/$table/sql.tsx) |  |
-| ✅ | `GET, POST /table/structure` | `Table/StructureController` | API GET /api/servers/:s/databases/:db/tables/:t/structure (apps/server/src/routes/table-structure.ts:112)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) |  |
+| ✅ | `GET, POST /table/sql` | `Table/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/db/:db/t/:table/sql (apps/web/src/routes/s/$server/db/$db/t/$table/sql.tsx) |  |
+| ✅ | `GET, POST /table/structure` | `Table/StructureController` | API GET /api/servers/:s/databases/:db/tables/:t/structure (apps/server/src/routes/table-structure.ts:99)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) |  |
 | 🗓️ | `POST /table/structure/add-key` | `Table/Structure/AddKeyController` | API /api/servers/:s/databases/:db/tables/:table/structure/add-key<br>UI /s/:s/db/:db/t/:table/structure/add-key | M2 |
 | 🗓️ | `POST /table/structure/browse` | `Table/Structure/BrowseController` | API /api/servers/:s/databases/:db/tables/:table/structure/browse<br>UI /s/:s/db/:db/t/:table/structure/browse | M2 |
 | 🗓️ | `POST /table/structure/central-columns-add` | `Table/Structure/CentralColumnsAddController` | API /api/servers/:s/databases/:db/tables/:table/structure/central-columns-add<br>UI /s/:s/db/:db/t/:table/structure/central-columns-add | M2 |
@@ -164,27 +164,27 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `POST /database/structure/replace-prefix` | `Database/Structure/ReplacePrefixController` | API /api/servers/:s/databases/:db/structure/replace-prefix<br>UI /s/:s/db/:db/structure/replace-prefix | M3 |
 | 🗓️ | `POST /database/structure/show-create` | `Database/Structure/ShowCreateController` | API POST /api/servers/:s/databases/:db/tables/show-create<br>UI /s/:s/db/:db/structure/show-create | M3 |
 | 🗓️ | `GET, POST /database/tracking` | `Database/TrackingController` | API GET /api/servers/:s/databases/:db/tracking<br>API POST /api/servers/:s/databases/:db/tracking<br>UI /s/:s/db/:db/tracking | M3 |
-| ✅ | `POST /databases` | `DatabaseController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:49) | name lists for pickers |
+| ✅ | `POST /databases` | `DatabaseController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:35) | name lists for pickers |
 | 🗓️ | `GET, POST /schema-export` | `SchemaExportController` | API POST /api/servers/:s/databases/:db/schema-export | M3 |
 
 ## 06 server level — 11/31 (35.5%) covered, 11/31 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /server/binlog` | `Server/BinlogController` | API GET /api/servers/:s/binlog (apps/server/src/routes/server-admin.ts:163)<br>UI /s/:server/binlog (apps/web/src/routes/s/$server/binlog.tsx) |  |
-| ✅ | `GET /server/collations` | `Server/CollationsController` | API GET /api/servers/:s/collations (apps/server/src/routes/server-admin.ts:147)<br>UI /s/:server/collations (apps/web/src/routes/s/$server/collations.tsx) |  |
-| ✅ | `GET, POST /server/databases` | `Server/DatabasesController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:49)<br>UI /s/:server/databases (apps/web/src/routes/s/$server/databases.tsx) |  |
+| ✅ | `GET, POST /server/binlog` | `Server/BinlogController` | API GET /api/servers/:s/binlog (apps/server/src/routes/server-admin.ts:149)<br>UI /s/:server/binlog (apps/web/src/routes/s/$server/binlog.tsx) |  |
+| ✅ | `GET /server/collations` | `Server/CollationsController` | API GET /api/servers/:s/collations (apps/server/src/routes/server-admin.ts:133)<br>UI /s/:server/collations (apps/web/src/routes/s/$server/collations.tsx) |  |
+| ✅ | `GET, POST /server/databases` | `Server/DatabasesController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:35)<br>UI /s/:server/databases (apps/web/src/routes/s/$server/databases.tsx) |  |
 | 🗓️ | `POST /server/databases/create` | `Server/Databases/CreateController` | API POST /api/servers/:s/databases<br>UI /s/:s/databases/create | M3 |
 | 🗓️ | `POST /server/databases/destroy` | `Server/Databases/DestroyController` | API POST /api/servers/:s/databases/drop<br>UI /s/:s/databases/destroy | M3 |
-| ✅ | `GET /server/engines` | `Server/EnginesController` | API GET /api/servers/:s/engines (apps/server/src/routes/server-admin.ts:150)<br>UI /s/:server/engines (apps/web/src/routes/s/$server/engines/index.tsx) |  |
+| ✅ | `GET /server/engines` | `Server/EnginesController` | API GET /api/servers/:s/engines (apps/server/src/routes/server-admin.ts:136)<br>UI /s/:server/engines (apps/web/src/routes/s/$server/engines/index.tsx) |  |
 | 🗓️ | `GET /server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | API GET /api/servers/:s/engines/:engine<br>UI /s/:s/engines/:engine | M3 |
-| ✅ | `GET /server/plugins` | `Server/PluginsController` | API GET /api/servers/:s/plugins (apps/server/src/routes/server-admin.ts:160)<br>UI /s/:server/plugins (apps/web/src/routes/s/$server/plugins.tsx) |  |
+| ✅ | `GET /server/plugins` | `Server/PluginsController` | API GET /api/servers/:s/plugins (apps/server/src/routes/server-admin.ts:146)<br>UI /s/:server/plugins (apps/web/src/routes/s/$server/plugins.tsx) |  |
 | 🗓️ | `GET, POST /server/privileges` | `Server/PrivilegesController` | API GET /api/servers/:s/privileges/users<br>API GET /api/servers/:s/privileges/users/:user/:host<br>UI /s/:s/privileges | M3 |
 | 🗓️ | `POST /server/privileges/account-lock` | `Server/Privileges/AccountLockController` | API /api/servers/:s/privileges/account-lock<br>UI /s/:s/privileges/account-lock | M3 |
 | 🗓️ | `POST /server/privileges/account-unlock` | `Server/Privileges/AccountUnlockController` | API /api/servers/:s/privileges/account-unlock<br>UI /s/:s/privileges/account-unlock | M3 |
 | 🗓️ | `GET, POST /server/replication` | `Server/ReplicationController` | API GET /api/servers/:s/replication<br>API POST /api/servers/:s/replication/*<br>UI /s/:s/replication | M3 |
-| ✅ | `GET /server/status` | `Server/Status/StatusController` | API GET /api/servers/:s/status (apps/server/src/routes/server-admin.ts:78)<br>UI /s/:server/status (apps/web/src/routes/s/$server/status/index.tsx) |  |
-| ✅ | `GET /server/status/advisor` | `Server/Status/AdvisorController` | API GET /api/servers/:s/status/advisor (apps/server/src/routes/server-admin.ts:120)<br>UI /s/:server/status/advisor (apps/web/src/routes/s/$server/status/advisor.tsx) |  |
+| ✅ | `GET /server/status` | `Server/Status/StatusController` | API GET /api/servers/:s/status (apps/server/src/routes/server-admin.ts:64)<br>UI /s/:server/status (apps/web/src/routes/s/$server/status/index.tsx) |  |
+| ✅ | `GET /server/status/advisor` | `Server/Status/AdvisorController` | API GET /api/servers/:s/status/advisor (apps/server/src/routes/server-admin.ts:106)<br>UI /s/:server/status/advisor (apps/web/src/routes/s/$server/status/advisor.tsx) |  |
 | 🗓️ | `GET /server/status/monitor` | `Server/Status/MonitorController` | API GET /api/servers/:s/status/monitor/* | M3 (X11) — SSE stream for charts |
 | 🗓️ | `POST /server/status/monitor/chart` | `Server/Status/Monitor/ChartingDataController` | API GET /api/servers/:s/status/monitor/stream | M3 (X11) — SSE stream for charts |
 | 🗓️ | `POST /server/status/monitor/general-log` | `Server/Status/Monitor/GeneralLogController` | API GET /api/servers/:s/status/monitor/* | M3 (X11) — SSE stream for charts |
@@ -194,14 +194,14 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /server/status/processes` | `Server/Status/ProcessesController` | API GET /api/servers/:s/processes<br>UI /s/:s/status/processes | M3 |
 | 🗓️ | `POST /server/status/processes/kill/{id:\\d+}` | `Server/Status/Processes/KillController` | API POST /api/servers/:s/processes/:id/kill | M3 |
 | 🗓️ | `POST /server/status/processes/refresh` | `Server/Status/Processes/RefreshController` | API /api/servers/:s/status/processes/refresh<br>UI /s/:s/status/processes/refresh | M3 |
-| ✅ | `GET /server/status/queries` | `Server/Status/QueriesController` | API GET /api/servers/:s/status/queries (apps/server/src/routes/server-admin.ts:104)<br>UI /s/:server/status/queries (apps/web/src/routes/s/$server/status/queries.tsx) |  |
-| ✅ | `GET, POST /server/status/variables` | `Server/Status/VariablesController` | API GET /api/servers/:s/status/variables (apps/server/src/routes/server-admin.ts:107)<br>UI /s/:server/status/variables (apps/web/src/routes/s/$server/status/variables.tsx) |  |
+| ✅ | `GET /server/status/queries` | `Server/Status/QueriesController` | API GET /api/servers/:s/status/queries (apps/server/src/routes/server-admin.ts:90)<br>UI /s/:server/status/queries (apps/web/src/routes/s/$server/status/queries.tsx) |  |
+| ✅ | `GET, POST /server/status/variables` | `Server/Status/VariablesController` | API GET /api/servers/:s/status/variables (apps/server/src/routes/server-admin.ts:93)<br>UI /s/:server/status/variables (apps/web/src/routes/s/$server/status/variables.tsx) |  |
 | 🗓️ | `GET, POST /server/user-groups` | `Server/UserGroupsController` | API /api/servers/:s/user-groups<br>UI /s/:s/user-groups | M3 |
 | 🗓️ | `GET /server/user-groups/edit-form` | `Server/UserGroupsFormController` | API /api/servers/:s/user-groups/edit-form<br>UI /s/:s/user-groups/edit-form | M3 |
-| ✅ | `GET /server/variables` | `Server/VariablesController` | API GET /api/servers/:s/variables (apps/server/src/routes/server-admin.ts:130)<br>UI /s/:server/variables (apps/web/src/routes/s/$server/variables.tsx) |  |
+| ✅ | `GET /server/variables` | `Server/VariablesController` | API GET /api/servers/:s/variables (apps/server/src/routes/server-admin.ts:116)<br>UI /s/:server/variables (apps/web/src/routes/s/$server/variables.tsx) |  |
 | 🗓️ | `GET /server/variables/get/{name}` | `Server/Variables/GetVariableController` | API /api/servers/:s/variables/get/:name<br>UI /s/:s/variables/get/:name | M3 |
 | 🗓️ | `POST /server/variables/set/{name}` | `Server/Variables/SetVariableController` | API /api/servers/:s/variables/set/:name<br>UI /s/:s/variables/set/:name | M3 |
-| ✅ | `GET, POST /user-password` | `UserPasswordController` | API POST /api/servers/:s/account/password (apps/server/src/routes/shell.ts:125) |  |
+| ✅ | `GET, POST /user-password` | `UserPasswordController` | API POST /api/servers/:s/account/password (apps/server/src/routes/shell.ts:124) |  |
 
 ## 07 export import — 0/16 (0.0%) covered, 0/16 implemented
 
@@ -228,7 +228,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /check-relations` | `CheckRelationsController` | API GET /api/servers/:s/metadata-storage/status (apps/server/src/routes/metadata.ts:185)<br>API POST /api/servers/:s/metadata-storage/create (apps/server/src/routes/metadata.ts:192) |  |
+| ✅ | `GET, POST /check-relations` | `CheckRelationsController` | API GET /api/servers/:s/metadata-storage/status (apps/server/src/routes/metadata.ts:171)<br>API POST /api/servers/:s/metadata-storage/create (apps/server/src/routes/metadata.ts:178) |  |
 | 🗓️ | `GET, POST /preferences/export` | `Preferences/ExportController` | API /api/preferences<br>UI /settings/export | M4 |
 | 🗓️ | `GET, POST /preferences/features` | `Preferences/FeaturesController` | API /api/preferences<br>UI /settings/features | M4 |
 | 🗓️ | `GET, POST /preferences/import` | `Preferences/ImportController` | API /api/preferences<br>UI /settings/import | M4 |
@@ -242,10 +242,10 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /database/sql` | `Database/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/sql (apps/web/src/routes/s/$server/db/$db/sql.tsx) |  |
+| ✅ | `GET, POST /database/sql` | `Database/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/db/:db/sql (apps/web/src/routes/s/$server/db/$db/sql.tsx) |  |
 | 🗓️ | `POST /database/sql/autocomplete` | `Database/SqlAutoCompleteController` | API GET /api/servers/:s/sql/autocomplete<br>UI /s/:s/db/:db/sql/autocomplete | M1 |
 | 🗓️ | `POST /database/sql/format` | `Database/SqlFormatController` | API POST /api/servers/:s/sql/format<br>UI /s/:s/db/:db/sql/format | M1 |
-| 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:148) | X9 — chunked upload + SSE progress |
-| ✅ | `GET, POST /lint` | `LintController` | API POST /api/servers/:s/sql/lint (apps/server/src/routes/sql.ts:66) | client-side lint (SQL tokenizer in the browser) +  fallback |
-| ✅ | `GET, POST /server/sql` | `Server/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) |  |
-| ✅ | `GET, POST /sql` | `Sql/SqlController` | API POST /api/servers/:s/browse (apps/server/src/routes/browse.ts:44)<br>API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import |
+| 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:149) | X9 — chunked upload + SSE progress |
+| ✅ | `GET, POST /lint` | `LintController` | API POST /api/servers/:s/sql/lint (apps/server/src/routes/sql.ts:53) | client-side lint (SQL tokenizer in the browser) +  fallback |
+| ✅ | `GET, POST /server/sql` | `Server/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) |  |
+| ✅ | `GET, POST /sql` | `Sql/SqlController` | API POST /api/servers/:s/browse (apps/server/src/routes/browse.ts:44)<br>API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import |

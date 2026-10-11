@@ -1,12 +1,26 @@
 import type { ProcessList, StatusLink, StatusVariable } from '@bettermyadmin/contracts'
+import {
+  Button,
+  Hint,
+  Loading,
+  MessageBox,
+  Modal,
+  MySqlDocLink,
+  Panel,
+  PanelBody,
+  SafeHtml,
+  Table,
+  buttonVariants,
+  stripTags,
+} from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, Outlet, useLocation, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, CircleHelp, FileText, FileType, Pause, Play } from 'lucide-react'
-import { type ReactNode, useMemo, useRef, useState } from 'react'
-import { ApiError } from '../../lib/api'
+import { type ReactNode, useMemo, useState } from 'react'
+import { ApiError, api, errorMessage } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
-import { serverApi, serverKeys } from './api'
-import { path, Alert, Card, DocLink, ErrorBox, Hint, Loading, tableCls } from './ui'
+import { path } from '../../lib/paths'
+import { qk } from '../../lib/queryKeys'
 
 /** pma: templates/server/status/base.twig — the pills shared by the Status sub-pages */
 export function StatusLayout({ server }: { server: number }) {
@@ -43,13 +57,14 @@ export function StatusLayout({ server }: { server: number }) {
 /** pma: templates/server/status/status/index.twig */
 export function StatusOverviewPage({ server }: { server: number }) {
   const q = useQuery({
-    queryKey: serverKeys.status(server, 'overview'),
-    queryFn: () => serverApi.status(server),
+    queryKey: qk.status(server, 'overview'),
+    queryFn: () => api.statusOverview(server),
   })
   const o = q.data
-  if (q.error !== null) return <ErrorBox error={q.error} />
+  if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
   if (o === undefined) return <Loading />
-  if (!o.isDataLoaded) return <Alert type="error">{t('Not enough privilege to view server status.')}</Alert>
+  if (!o.isDataLoaded)
+    return <MessageBox type="error">{t('Not enough privilege to view server status.')}</MessageBox>
   return (
     <div>
       <h3 className="mb-2 text-base font-semibold">
@@ -63,13 +78,13 @@ export function StatusOverviewPage({ server }: { server: number }) {
         )}
       </p>
       <div className="flex flex-wrap items-start gap-6">
-        <table className={tableCls} id="trafficTable">
+        <Table zebra id="trafficTable">
           <thead>
             <tr>
               <th scope="col">
                 {t('Traffic')}{' '}
                 <Hint
-                  text={t(
+                  message={t(
                     'On a busy server, the byte counters may overrun, so those statistics as reported by the MySQL server may be incorrect.',
                   )}
                 />
@@ -91,8 +106,8 @@ export function StatusOverviewPage({ server }: { server: number }) {
               </tr>
             ))}
           </tbody>
-        </table>
-        <table className={tableCls} id="connectionsTable">
+        </Table>
+        <Table zebra id="connectionsTable">
           <thead>
             <tr>
               <th scope="col">{t('Connections')}</th>
@@ -117,25 +132,23 @@ export function StatusOverviewPage({ server }: { server: number }) {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
       {(o.isPrimary || o.isReplica) && (
         <>
-          <Alert type="info" className="mt-4">
-            <span
-              // biome-ignore lint/security/noDangerouslySetInnerHtml: phpMyAdmin's msgid carries <b> markup
-              dangerouslySetInnerHTML={{
-                __html:
-                  o.isPrimary && o.isReplica
-                    ? t(
-                        'This MySQL server works as <b>primary</b> and <b>replica</b> in <b>replication</b> process.',
-                      )
-                    : o.isPrimary
-                      ? t('This MySQL server works as <b>primary</b> in <b>replication</b> process.')
-                      : t('This MySQL server works as <b>replica</b> in <b>replication</b> process.'),
-              }}
+          <MessageBox type="info" className="mt-4">
+            <SafeHtml
+              html={
+                o.isPrimary && o.isReplica
+                  ? t(
+                      'This MySQL server works as <b>primary</b> and <b>replica</b> in <b>replication</b> process.',
+                    )
+                  : o.isPrimary
+                    ? t('This MySQL server works as <b>primary</b> in <b>replication</b> process.')
+                    : t('This MySQL server works as <b>replica</b> in <b>replication</b> process.')
+              }
             />
-          </Alert>
+          </MessageBox>
           <hr className="my-3 border-border" />
           <h3 className="mb-2 text-base font-semibold">{t('Replication status')}</h3>
           {o.replication.map((r) => (
@@ -143,7 +156,7 @@ export function StatusOverviewPage({ server }: { server: number }) {
               <h4 className="mb-1 text-sm font-semibold" id={`replication_${r.type}`}>
                 {r.type === 'primary' ? t('Primary status') : t('Replica status')}
               </h4>
-              <table className={`${tableCls} mb-3`} id={`server${r.type}replicationsummary`}>
+              <Table zebra className="mb-3" id={`server${r.type}replicationsummary`}>
                 <thead>
                   <tr>
                     <th>{t('Variable')}</th>
@@ -170,7 +183,7 @@ export function StatusOverviewPage({ server }: { server: number }) {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           ))}
         </>
@@ -201,18 +214,18 @@ export function ProcessesPage({
   const [auto, setAuto] = useState(false)
   const [rate, setRate] = useState(5)
   const [message, setMessage] = useState<{ type: 'success' | 'error' | 'notice'; text: string } | null>(null)
-  const key = serverKeys.status(server, 'processes', { ...search, auto })
+  const key = qk.status(server, 'processes', { ...search, auto })
   const q = useQuery({
     queryKey: key,
     queryFn: ({ signal }) => {
       void signal
-      return serverApi.processes(server, { ...search, full: auto ? true : search.full })
+      return api.processes(server, { ...search, full: auto ? true : search.full })
     },
     refetchInterval: auto ? rate * 1000 : false,
     placeholderData: (prev) => prev,
   })
   const kill = useMutation({
-    mutationFn: (id: string) => serverApi.kill(server, id),
+    mutationFn: (id: string) => api.killProcess(server, id),
     onSuccess: (r, id) => {
       setMessage(r.message)
       qc.setQueryData<ProcessList>(key, (old) =>
@@ -227,38 +240,36 @@ export function ProcessesPage({
   const l = q.data
   return (
     <div>
-      <Card title={t('Filters')} id="tableFilter">
-        <form
-          className="flex flex-wrap items-center gap-3"
-          onSubmit={(e) => {
-            e.preventDefault()
-            void q.refetch()
-          }}
-        >
-          <label className="flex items-center gap-1.5">
-            <input
-              type="checkbox"
-              id="showExecuting"
-              name="showExecuting"
-              className="autosubmit"
-              checked={search.showExecuting}
-              onChange={(e) => onSearch({ showExecuting: e.target.checked })}
-            />
-            {t('Show only active')}
-          </label>
-          <input
-            type="submit"
-            value={t('Refresh')}
-            className="cursor-pointer rounded border border-border-strong px-3 py-1"
-          />
-        </form>
-      </Card>
-      {message !== null && <Alert type={message.type}>{message.text}</Alert>}
-      {q.error !== null && <ErrorBox error={q.error} />}
+      <Panel title={t('Filters')} id="tableFilter">
+        <PanelBody>
+          <form
+            className="flex flex-wrap items-center gap-3"
+            onSubmit={(e) => {
+              e.preventDefault()
+              void q.refetch()
+            }}
+          >
+            <label className="flex items-center gap-1.5">
+              <input
+                type="checkbox"
+                id="showExecuting"
+                name="showExecuting"
+                className="autosubmit"
+                checked={search.showExecuting}
+                onChange={(e) => onSearch({ showExecuting: e.target.checked })}
+              />
+              {t('Show only active')}
+            </label>
+            <input type="submit" value={t('Refresh')} className={buttonVariants()} />
+          </form>
+        </PanelBody>
+      </Panel>
+      {message !== null && <MessageBox type={message.type}>{message.text}</MessageBox>}
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {l === undefined ? (
         <Loading />
       ) : (
-        <table id="tableprocesslist" className={`${tableCls} mb-3`}>
+        <Table id="tableprocesslist" zebra className="mb-3">
           <thead>
             <tr>
               <th>{t('Processes')}</th>
@@ -356,13 +367,13 @@ export function ProcessesPage({
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
-      <Alert type="notice">
+      <MessageBox type="notice">
         {t(
           'Note: Enabling the auto refresh here might cause heavy traffic between the web server and the MySQL server.',
         )}
-      </Alert>
+      </MessageBox>
       <div className="flex items-center gap-4 text-sm">
         <label className="flex items-center gap-1.5">
           {t('Refresh rate')}:
@@ -396,18 +407,8 @@ export function ProcessesPage({
   )
 }
 
-const PIE_COLORS = [
-  '#4e79a7',
-  '#f28e2b',
-  '#e15759',
-  '#76b7b2',
-  '#59a14f',
-  '#edc948',
-  '#b07aa1',
-  '#ff9da7',
-  '#9c755f',
-  '#bab0ac',
-]
+/** chart series tokens (packages/ui themes.css) */
+const PIE_COLORS = Array.from({ length: 10 }, (_, i) => `var(--chart-${i + 1})`)
 
 /** A small SVG pie (the Chart.js pie of queries.ts) */
 function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ariaLabel: string }) {
@@ -437,7 +438,7 @@ function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ar
       <svg viewBox="0 0 200 200" className="size-60" aria-hidden="true">
         <title>{ariaLabel}</title>
         {slices.map((s) => (
-          <path key={s.label} d={s.d} fill={s.color}>
+          <path key={s.label} d={s.d} style={{ fill: s.color }}>
             <title>{`${s.label}: ${s.v}`}</title>
           </path>
         ))}
@@ -457,18 +458,18 @@ function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ar
 /** pma: templates/server/status/queries/index.twig */
 export function QueriesPage({ server }: { server: number }) {
   const q = useQuery({
-    queryKey: serverKeys.status(server, 'queries'),
-    queryFn: () => serverApi.queries(server),
+    queryKey: qk.status(server, 'queries'),
+    queryFn: () => api.queryStatistics(server),
   })
   const s = q.data
-  if (q.error !== null) return <ErrorBox error={q.error} />
+  if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
   if (s === undefined) return <Loading />
   if (!s.isDataLoaded)
-    return <Alert type="error">{t('Not enough privilege to view query statistics.')}</Alert>
+    return <MessageBox type="error">{t('Not enough privilege to view query statistics.')}</MessageBox>
   return (
     <div>
       <h3 className="mb-2 flex items-center gap-1 text-base font-semibold">
-        {t('Questions since startup:')} {s.total} <DocLink url={s.questionsDocUrl} />
+        {t('Questions since startup:')} {s.total} <MySqlDocLink url={s.questionsDocUrl} />
       </h3>
       <ul className="mb-3 list-disc ps-6 text-sm" id="questionsAverages">
         <li>{t('ø per hour: %s', s.perHour)}</li>
@@ -476,7 +477,7 @@ export function QueriesPage({ server }: { server: number }) {
         {s.perSecond !== null && <li>{t('ø per second: %s', s.perSecond)}</li>}
       </ul>
       <div className="flex flex-wrap items-start gap-6">
-        <table id="serverStatusQueriesDetails" className={tableCls}>
+        <Table id="serverStatusQueriesDetails" zebra>
           <thead>
             <tr>
               <th scope="col">{t('Statements')}</th>
@@ -501,7 +502,7 @@ export function QueriesPage({ server }: { server: number }) {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
         <Pie
           labels={s.chart.labels}
           data={s.chart.data}
@@ -519,7 +520,7 @@ function LinkView({
 }: { link: StatusLink; onFlush: (f: string) => void; server: number }): ReactNode {
   switch (link.kind) {
     case 'doc':
-      return <DocLink url={link.url} />
+      return <MySqlDocLink url={link.url} />
     case 'flush':
       return (
         <button type="button" className="text-accent hover:underline" onClick={() => onFlush(link.flush)}>
@@ -555,15 +556,15 @@ export function StatusVariablesPage({
   initial: { filterText: string; filterAlert: boolean; filterCategory: string; dontFormat: boolean }
 }) {
   const qc = useQueryClient()
-  const key = serverKeys.status(server, 'variables')
-  const q = useQuery({ queryKey: key, queryFn: () => serverApi.statusVariables(server) })
+  const key = qk.status(server, 'variables')
+  const q = useQuery({ queryKey: key, queryFn: () => api.statusVariables(server) })
   const [text, setText] = useState(initial.filterText)
   const [alertOnly, setAlertOnly] = useState(initial.filterAlert)
   const [category, setCategory] = useState(initial.filterCategory)
   const [raw, setRaw] = useState(initial.dontFormat)
   const [flushed, setFlushed] = useState<string | null>(null)
   const flush = useMutation({
-    mutationFn: (f: string) => serverApi.statusVariables(server, { flush: f }),
+    mutationFn: (f: string) => api.statusVariables(server, { flush: f }),
     onSuccess: (r) => {
       setFlushed(r.flushed)
       qc.setQueryData(key, r)
@@ -579,10 +580,10 @@ export function StatusVariablesPage({
     }
   }, [word])
   const v = q.data
-  if (q.error !== null) return <ErrorBox error={q.error} />
+  if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
   if (v === undefined) return <Loading />
   if (!v.isDataLoaded)
-    return <Alert type="error">{t('Not enough privilege to view status variables.')}</Alert>
+    return <MessageBox type="error">{t('Not enough privilege to view status variables.')}</MessageBox>
   const section = category.length > 0 ? category : word
   const links =
     section.length > 1 ? v.links.filter((l) => `status_${l.section}`.includes(`status_${section}`)) : []
@@ -592,63 +593,66 @@ export function StatusVariablesPage({
     (category === '' || x.section === category)
   return (
     <div>
-      <Card title={t('Filters')} id="tableFilter">
-        <form
-          className="flex flex-wrap items-center gap-3"
-          onSubmit={(e) => {
-            e.preventDefault()
-            void q.refetch()
-          }}
-        >
-          <label htmlFor="filterText">{t('Containing the word:')}</label>
-          <input
-            id="filterText"
-            name="filterText"
-            type="text"
-            className={`input w-56 ${textFilter.error ? 'error border-error' : ''}`}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-          <label className="flex items-center gap-1.5">
-            <input
-              type="checkbox"
-              id="filterAlert"
-              checked={alertOnly}
-              onChange={(e) => setAlertOnly(e.target.checked)}
-            />
-            {t('Show only alert values')}
-          </label>
-          <label className="sr-only" htmlFor="filterCategory">
-            {t('Filter by category…')}
-          </label>
-          <select
-            id="filterCategory"
-            className="input w-auto"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+      <Panel title={t('Filters')} id="tableFilter">
+        <PanelBody>
+          <form
+            className="flex flex-wrap items-center gap-3"
+            onSubmit={(e) => {
+              e.preventDefault()
+              void q.refetch()
+            }}
           >
-            <option value="">{t('Filter by category…')}</option>
-            {v.categories.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-          <label className="flex items-center gap-1.5">
-            <input type="checkbox" id="dontFormat" checked={raw} onChange={(e) => setRaw(e.target.checked)} />
-            {t('Show unformatted values')}
-          </label>
-          <input
-            type="submit"
-            value={t('Refresh')}
-            className="cursor-pointer rounded border border-border-strong px-3 py-1"
-          />
-        </form>
-      </Card>
-      {flush.error !== null && <ErrorBox error={flush.error} />}
-      {flushed !== null && <Alert type="success">{flushed}</Alert>}
+            <label htmlFor="filterText">{t('Containing the word:')}</label>
+            <input
+              id="filterText"
+              name="filterText"
+              type="text"
+              className={`input w-56 ${textFilter.error ? 'error border-error' : ''}`}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <label className="flex items-center gap-1.5">
+              <input
+                type="checkbox"
+                id="filterAlert"
+                checked={alertOnly}
+                onChange={(e) => setAlertOnly(e.target.checked)}
+              />
+              {t('Show only alert values')}
+            </label>
+            <label className="sr-only" htmlFor="filterCategory">
+              {t('Filter by category…')}
+            </label>
+            <select
+              id="filterCategory"
+              className="input w-auto"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">{t('Filter by category…')}</option>
+              {v.categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+            <label className="flex items-center gap-1.5">
+              <input
+                type="checkbox"
+                id="dontFormat"
+                checked={raw}
+                onChange={(e) => setRaw(e.target.checked)}
+              />
+              {t('Show unformatted values')}
+            </label>
+            <input type="submit" value={t('Refresh')} className={buttonVariants()} />
+          </form>
+        </PanelBody>
+      </Panel>
+      {flush.error !== null && <MessageBox {...errorMessage(flush.error)} />}
+      {flushed !== null && <MessageBox type="success">{flushed}</MessageBox>}
       {links.length > 0 && (
-        <Alert type="info" className="">
+        <MessageBox type="info" className="">
           <span id="linkSuggestions">
             {t('Related links:')}{' '}
             {links.map((l) => (
@@ -662,9 +666,9 @@ export function StatusVariablesPage({
               </span>
             ))}
           </span>
-        </Alert>
+        </MessageBox>
       )}
-      <table id="serverStatusVariables" className={`${tableCls} w-full`}>
+      <Table id="serverStatusVariables" zebra className="w-full">
         <thead>
           <tr>
             <th scope="col">{t('Variable')}</th>
@@ -676,7 +680,7 @@ export function StatusVariablesPage({
           {v.variables.filter(visible).map((x) => (
             <tr key={x.name} className={x.section !== null ? `s_${x.section}` : undefined}>
               <th className="name">
-                {x.name.replaceAll('_', ' ')} <DocLink url={x.docUrl} />
+                {x.name.replaceAll('_', ' ')} <MySqlDocLink url={x.docUrl} />
               </th>
               <td className="value text-end font-mono">
                 <span className={x.hasAlert ? (x.isAlert ? 'text-error' : 'text-success') : undefined}>
@@ -699,7 +703,7 @@ export function StatusVariablesPage({
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
@@ -707,14 +711,14 @@ export function StatusVariablesPage({
 /** pma: templates/server/status/advisor/index.twig */
 export function AdvisorPage({ server }: { server: number }) {
   const q = useQuery({
-    queryKey: serverKeys.status(server, 'advisor'),
-    queryFn: () => serverApi.advisor(server),
+    queryKey: qk.status(server, 'advisor'),
+    queryFn: () => api.advisor(server),
   })
   const [open, setOpen] = useState(0)
-  const dialog = useRef<HTMLDialogElement>(null)
+  const [instructions, setInstructions] = useState(false)
   const navigate = useNavigate()
   const a = q.data
-  if (q.error !== null) return <ErrorBox error={q.error} />
+  if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
   if (a === undefined) return <Loading />
   // in-app variable links (`{var}` → /s/n/variables?filter=var) navigate without a reload
   const onClick = (e: React.MouseEvent) => {
@@ -730,24 +734,26 @@ export function AdvisorPage({ server }: { server: number }) {
     <div>
       <h2 className="mb-3 text-lg font-semibold">{t('Advisor system')}</h2>
       {!a.isDataLoaded ? (
-        <Alert type="error">{t('Not enough privilege to view the advisor.')}</Alert>
+        <MessageBox type="error">{t('Not enough privilege to view the advisor.')}</MessageBox>
       ) : (
         <>
-          <button
-            type="button"
-            className="mb-4 flex items-center gap-1 rounded border border-border-strong px-3 py-1 text-sm"
-            onClick={() => dialog.current?.showModal()}
-          >
-            <CircleHelp className="size-4" aria-hidden />
+          <Button className="mb-4" onClick={() => setInstructions(true)}>
+            <CircleHelp aria-hidden />
             {t('Instructions')}
-          </button>
-          <dialog
-            ref={dialog}
+          </Button>
+          <Modal
+            open={instructions}
             id="advisorInstructionsModal"
-            className="max-w-lg rounded border border-border bg-bg p-0 text-fg backdrop:bg-black/40"
+            title={t('Advisor system')}
+            size="md"
+            onClose={() => setInstructions(false)}
+            footer={
+              <Button variant="primary" onClick={() => setInstructions(false)}>
+                {t('Close')}
+              </Button>
+            }
           >
-            <div className="border-b border-border px-4 py-2 font-semibold">{t('Advisor system')}</div>
-            <div className="space-y-2 px-4 py-3 text-sm">
+            <div className="space-y-2">
               <p>
                 {t(
                   'The Advisor system can provide recommendations on server variables by analyzing the server status variables.',
@@ -769,18 +775,9 @@ export function AdvisorPage({ server }: { server: number }) {
                 )}
               </p>
             </div>
-            <div className="border-t border-border px-4 py-2 text-end">
-              <button
-                type="button"
-                className="rounded bg-accent px-3 py-1 text-sm text-accent-fg"
-                onClick={() => dialog.current?.close()}
-              >
-                {t('Close')}
-              </button>
-            </div>
-          </dialog>
+          </Modal>
           {a.errors.length > 0 && (
-            <Alert type="error">
+            <MessageBox type="error">
               <h4 className="font-semibold">{t('Errors occurred while executing rule expressions:')}</h4>
               <ul className="list-disc ps-5">
                 {a.errors.map((e, i) => (
@@ -788,7 +785,7 @@ export function AdvisorPage({ server }: { server: number }) {
                   <li key={i}>{e}</li>
                 ))}
               </ul>
-            </Alert>
+            </MessageBox>
           )}
           {a.fired.length > 0 && (
             <>
@@ -816,11 +813,9 @@ export function AdvisorPage({ server }: { server: number }) {
                         className="space-y-1 px-3 py-2 text-sm [&_dt]:font-semibold"
                       >
                         <dt>{t('Issue:')}</dt>
-                        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: translated msgids with variable links (Advisor::addRule) */}
-                        <dd dangerouslySetInnerHTML={{ __html: r.issue }} />
+                        <SafeHtml as="dd" html={r.issue} />
                         <dt>{t('Recommendation:')}</dt>
-                        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: translated msgids with variable and external links */}
-                        <dd dangerouslySetInnerHTML={{ __html: r.recommendation }} />
+                        <SafeHtml as="dd" html={r.recommendation} />
                         <dt>{t('Justification:')}</dt>
                         <dd>{r.justification}</dd>
                         <dt>{t('Used variable / formula:')}</dt>
@@ -838,11 +833,4 @@ export function AdvisorPage({ server }: { server: number }) {
       )}
     </div>
   )
-}
-
-/** Twig's striptags */
-function stripTags(html: string): string {
-  const d = document.createElement('div')
-  d.innerHTML = html
-  return d.textContent ?? ''
 }

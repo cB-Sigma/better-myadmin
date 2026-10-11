@@ -2,7 +2,7 @@ import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { GeneralLog } from './lib/general-log.ts'
-import { PmaClient, visibleText } from './lib/pma.ts'
+import { PmaClient, isPmaUp, sqlBoxForm, visibleText } from './lib/pma.ts'
 
 /**
  * Language parity: a German session gets the same SQL-tab messages (translated by phpMyAdmin's
@@ -25,9 +25,7 @@ const DB_PMA = 'par_i18n_pma'
 const DB_BMA = 'par_i18n_bma'
 
 // reachable AND translated (a checkout without .mo files would answer in English)
-const reachable = await fetch(`${PMA_URL}/index.php?route=/&lang=de`)
-  .then(async (r) => r.ok && (await r.text()).includes('Willkommen bei'))
-  .catch(() => false)
+const reachable = await isPmaUp(PMA_URL, { path: '/index.php?route=/&lang=de', contains: 'Willkommen bei' })
 
 const SEED = (db: string) => `DROP DATABASE IF EXISTS ${db}; CREATE DATABASE ${db}; USE ${db};
   CREATE TABLE t (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(20), qty INT) ENGINE=InnoDB;
@@ -110,7 +108,7 @@ describe.skipIf(!reachable)('parity: German session (lang=de) — messages and l
       await root.query(SEED(DB_PMA))
       await root.query(SEED(DB_BMA))
       const m1 = await log.marker()
-      const pr = await pma.sqlBox(c.sql, DB_PMA)
+      const pr = await pma.postJson('/import', sqlBoxForm(c.sql, DB_PMA))
       const pmaLog = await log.since(PMA_USER, m1)
       const m2 = await log.marker()
       const br = await bma.req('POST', '/api/servers/1/query', { sql: c.sql, db: DB_BMA, fromQueryBox: true })

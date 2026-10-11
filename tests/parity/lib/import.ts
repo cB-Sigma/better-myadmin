@@ -16,7 +16,7 @@ export async function pmaImportForm(
   scope: 'server' | 'database' | 'table',
   params: Record<string, string> = {},
 ): Promise<Pairs> {
-  const html = await pma.pageGet(`/${scope}/import`, params)
+  const html = await pma.getPage(`/${scope}/import`, params)
   return serializeForm(findForm(html, { id: 'import_file_form' })).filter(
     ([k]) => k !== 'token' && k !== 'import_file',
   )
@@ -53,11 +53,9 @@ export function pmaMessages(html: string): string[] {
 }
 
 export async function pmaImport(pma: PmaClient, pairs: Pairs, file: ImportFile | null): Promise<string[]> {
-  const html = await pma.postMultipart(
-    '/import',
-    pairs,
-    file === null ? null : { field: 'import_file', ...file },
-  )
+  const html = await pma.postPage('/import', pairs, {
+    file: file === null ? null : { field: 'import_file', ...file },
+  })
   return pmaMessages(html)
 }
 

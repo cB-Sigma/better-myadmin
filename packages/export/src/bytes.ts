@@ -57,13 +57,6 @@ export function hexBytes(s: string): string {
   return php.bin2hex(encodeBytes(s))
 }
 
-/** PHP mb_strlen() (UTF-8): characters, an escaped byte counts as one */
-export function mbStrlen(s: string): number {
-  let n = 0
-  for (const _ of s) n++
-  return n
-}
-
 /** PHP htmlspecialchars($s, ENT_COMPAT) */
 export function htmlspecialcharsCompat(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')

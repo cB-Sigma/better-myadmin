@@ -1,6 +1,7 @@
 import type { Bookmark, QueryResponse } from '@bettermyadmin/contracts'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../../lib/api'
+import { qk } from '../../lib/queryKeys'
 
 /** One entry of BookmarkRepository::getList. */
 export interface BookmarkEntry {
@@ -78,7 +79,7 @@ export const bookmarks = {
  */
 export function useBookmarks(server: number, db?: string) {
   const list = useQuery({
-    queryKey: ['srv', server, 'bookmarks', db ?? null],
+    queryKey: qk.bookmarks(server, db ?? null),
     queryFn: async () => {
       const r = db === undefined ? await api.consoleBookmarks(server) : await api.bookmarks(server, db)
       return { available: r.available, bookmarks: r.bookmarks.map(entry) }

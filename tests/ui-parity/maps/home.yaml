@@ -11,3 +11,10 @@ rules:
     n/a: environment — the reference runs from a git checkout (ShowGitRevision prints branch and commit links)
   - pma: { kind: link, label: Maurício Meneghini Fauth, section: phpMyAdmin }
     n/a: environment — the git revision line names the reference commit's author
+  - match: { kind: link, label: Documentation, section: Web server }
+    ignore: [section]
+    reason: >-
+      the Web server card lists 4 PHP-extension documentation links in phpMyAdmin and 3 Node.js module
+      links in ours (X30); the 4th pairs with our language selector's documentation link (faq7-2), which
+      the reference hides together with the selector (built without translations, see the lang rule)
+    exception: X30

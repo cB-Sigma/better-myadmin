@@ -6,10 +6,10 @@ import { ImportRequest, type ImportResult, type ImportUploadCreated } from '@bet
 import { Hono } from 'hono'
 import { streamSSE } from 'hono/streaming'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { importPage } from '../import/page.ts'
 import { runFileImport } from '../import/service.ts'
 import type { ServerEnv } from './server.ts'
-import { parseBody } from './sql.ts'
 
 /**
  * Import: the page view-model, a chunked upload of the file, then a job whose progress and result
@@ -91,7 +91,7 @@ importRoutes.patch('/uploads/:id{[0-9a-f]{32}}', async (c) => {
 /** POST …/import/jobs: registers the import form (and its upload); the events run it */
 importRoutes.post('/jobs', async (c) => {
   prune()
-  const body = await parseBody(c, ImportRequest)
+  const body = await parseJson(c, ImportRequest)
   let upload: Job['upload'] = null
   if (body.upload !== undefined) {
     const u = uploads.get(body.upload.id)

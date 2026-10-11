@@ -8,9 +8,9 @@ import { stream } from 'hono/streaming'
 import { exportPageRoutes } from '../export/page.ts'
 import { openExportSession, userDir } from '../export/service.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { defaultOfPath } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
-import { parseBody } from './sql.ts'
 
 /**
  * Export: POST the dump form, GET the one-shot download (streamed).
@@ -43,7 +43,7 @@ exportRoutes.route('/', exportPageRoutes)
 
 /** POST …/export: validates the form; saves on the server or returns a download id. */
 exportRoutes.post('/', async (c) => {
-  const body = await parseBody(c, ExportRequest)
+  const body = await parseJson(c, ExportRequest)
   const params = new Params(body.params)
   const tr = c.get('tr')
   const s = await openExportSession(c, params.str('db'))
@@ -161,4 +161,6 @@ exportRoutes.get('/:id{[0-9a-f]{32}}', async (c: Context<ServerEnv>) => {
 })
 
 /** GET …/export/check-time-out (pma: /export/check-time-out): the stream has no PHP time limit. */
-exportRoutes.get('/check-time-out', (c) => c.json({ message: 'success' }))
+// the protocol value CheckTimeOutController answers ('success' / 'timeout'), not a message
+const NOT_TIMED_OUT = 'success'
+exportRoutes.get('/check-time-out', (c) => c.json({ message: NOT_TIMED_OUT }))

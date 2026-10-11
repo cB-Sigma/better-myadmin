@@ -78,13 +78,11 @@ test('export a database, view it as text, import it back, import a CSV', async (
 
   // a CSV file selects the CSV format and becomes a new table
   await page.goto(`/s/1/db/${TARGET}/import`)
-  await page
-    .locator('#input_import_file')
-    .setInputFiles({
-      name: 'people.csv',
-      mimeType: 'text/csv',
-      buffer: Buffer.from('name,age\nann,31\nbob,42\n'),
-    })
+  await page.locator('#input_import_file').setInputFiles({
+    name: 'people.csv',
+    mimeType: 'text/csv',
+    buffer: Buffer.from('name,age\nann,31\nbob,42\n'),
+  })
   await expect(page.locator('#plugins')).toHaveValue('csv')
   await expect(
     page.getByText('Note: If the file contains multiple tables, they will be combined into one.'),

@@ -43,7 +43,7 @@ export async function pmaExportForm(
   scope: 'server' | 'database' | 'table',
   params: Record<string, string> = {},
 ): Promise<Pairs> {
-  const html = await pma.pageGet(`/${scope}/export`, params)
+  const html = await pma.getPage(`/${scope}/export`, params)
   const start = html.indexOf('<form method="post" action="index.php?route=/export" name="dump"')
   if (start < 0) throw new Error(`no export form on /${scope}/export: ${html.slice(0, 500)}`)
   return serializeForm(findForm(html.slice(start), { action: 'route=/export' })).filter(
@@ -78,12 +78,20 @@ const dispositionName = (h: string | null): string => {
 }
 
 export async function pmaDump(pma: PmaClient, pairs: Pairs): Promise<Dump> {
-  const r = await pma.postBytes('/export', pairs)
+  let status = 0
+  let headers = new Headers()
+  const body = await pma.postPage('/export', pairs, {
+    binary: true,
+    onHeaders: (st, h) => {
+      status = st
+      headers = h
+    },
+  })
   return {
-    status: r.status,
-    contentType: r.headers.get('content-type') ?? '',
-    filename: dispositionName(r.headers.get('content-disposition')),
-    body: r.body,
+    status,
+    contentType: headers.get('content-type') ?? '',
+    filename: dispositionName(headers.get('content-disposition')),
+    body: Buffer.from(body, 'latin1'),
   }
 }
 

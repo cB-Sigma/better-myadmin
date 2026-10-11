@@ -8,10 +8,32 @@ export interface PmaJson {
   [key: string]: unknown
 }
 
+/** postPage options: a multipart file upload, a byte-exact body, the response status/headers. */
+export interface PostOptions {
+  file?: { field: string; name: string; data: Buffer } | null
+  binary?: boolean
+  onHeaders?: (status: number, headers: Headers) => void
+}
+
+/** A form body: an object, or ordered pairs when a key repeats (`selected_fld[]`, …). */
+export type PmaForm = Record<string, string> | Array<[string, string]>
+
 /**
- * Scripted client for the reference phpMyAdmin (cookie auth + the same POSTs its forms send).
- * The parity harness drives phpMyAdmin through these requests and BetterMyAdmin through its API,
- * then diffs what each one sent to MySQL.
+ * Scripted client for the reference phpMyAdmin (cookie auth + the same requests its pages and
+ * forms send). The parity harness drives phpMyAdmin through it and BetterMyAdmin through its API,
+ * then diffs what each one sent to MySQL. Its whole request API (docs/architecture/16-golden-path.md#parity-client):
+ *
+ * | method                 | request                                                             |
+ * |------------------------|---------------------------------------------------------------------|
+ * | `login`                | the cookie login form; keeps the session token                      |
+ * | `getPage(t, params)`   | full-page GET → HTML                                                |
+ * | `getJson(t, params)`   | AJAX GET (+ `server`, `ajax_request`, XHR header) → PmaJson         |
+ * | `postPage(t, form)`    | form POST (+ `server`, `token`) → HTML                              |
+ * | `postJson(t, form)`    | AJAX POST (+ `server`, `token`, `ajax_request`, XHR header) → PmaJson |
+ *
+ * `t` is a route (`/table/structure`, becomes `index.php?route=…`) or a ready path starting with
+ * `/index.php`. Fields already present in `params`/`form` are not overridden. Redirects are followed.
+ * Recurring forms are built by plain functions next to the client (`sqlBoxForm`).
  */
 export class PmaClient {
   readonly base: string
@@ -22,172 +44,87 @@ export class PmaClient {
     this.base = base.replace(/\/$/, '')
   }
 
-  /** GET a page as HTML, redirects followed (no JavaScript runs, so the menu is not collapsed). */
-  get(path: string): Promise<string> {
-    return this.#req(path)
-  }
-
-  /** POST a form the way the page's own forms do (token + server added), optionally over AJAX. */
-  postPath(path: string, form: Record<string, string>, ajax = false): Promise<string> {
-    return this.#req(path, { token: this.token, server: '1', ...form }, ajax)
-  }
-
-  async #req(path: string, form?: Record<string, string>, ajax = false): Promise<string> {
-    const headers: Record<string, string> = {}
-    if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
-    if (form !== undefined) headers['content-type'] = 'application/x-www-form-urlencoded'
-    if (ajax) headers['x-requested-with'] = 'XMLHttpRequest'
-    const res = await fetch(this.base + path, {
-      method: form === undefined ? 'GET' : 'POST',
-      headers,
-      redirect: 'manual',
-      ...(form !== undefined ? { body: new URLSearchParams(form).toString() } : {}),
-    })
-    for (const c of res.headers.getSetCookie()) {
-      const [kv = ''] = c.split(';')
-      const i = kv.indexOf('=')
-      const v = kv.slice(i + 1)
-      if (v === 'deleted' || v === '') this.#cookies.delete(kv.slice(0, i))
-      else this.#cookies.set(kv.slice(0, i), v)
-    }
-    if (res.status >= 300 && res.status < 400) {
-      const loc = res.headers.get('location') ?? '/'
-      return this.#req(
-        loc.startsWith('http') ? new URL(loc).pathname + new URL(loc).search : `/${loc.replace(/^\.\//, '')}`,
-      )
-    }
-    return res.text()
-  }
-
-  /** Raw request: GET without a form, POST (urlencoded, optionally as XHR) with one. Follows redirects. */
-  request(path: string, form?: Record<string, string>, ajax = false): Promise<string> {
-    return this.#req(path, form, ajax)
-  }
-
-  /** POST a form with the session token and server, as phpMyAdmin's AJAX forms do; parses the JSON reply. */
-  async ajax(path: string, form: Record<string, string> = {}): Promise<Record<string, unknown>> {
-    const body = await this.#req(
-      path,
-      { server: '1', token: this.token, ajax_request: 'true', ...form },
-      true,
-    )
-    try {
-      return JSON.parse(body) as Record<string, unknown>
-    } catch {
-      throw new Error(`phpMyAdmin did not answer JSON for ${path}: ${body.slice(0, 300)}`)
-    }
-  }
-
   /** `lang` picks the language like the login page's selector (?lang=xx, then the pma_lang cookie). */
   async login(user: string, password: string, server = 1, lang?: string): Promise<void> {
-    const page = await this.#req(`/index.php?route=/${lang !== undefined ? `&lang=${lang}` : ''}`)
+    const page = await this.#send(`/index.php?route=/${lang !== undefined ? `&lang=${lang}` : ''}`)
     const token = page.match(/name="token" value="([^"]+)"/)?.[1] ?? ''
     const setSession = page.match(/name="set_session" value="([^"]+)"/)?.[1] ?? ''
-    const home = await this.#req('/index.php?route=/', {
-      token,
-      set_session: setSession,
-      pma_username: user,
-      pma_password: password,
-      server: String(server),
-    })
+    const home = await this.#send('/index.php?route=/', [
+      ['token', token],
+      ['set_session', setSession],
+      ['pma_username', user],
+      ['pma_password', password],
+      ['server', String(server)],
+    ])
     const t = home.match(/"token":"([^"]+)"/)?.[1] ?? home.match(/name="token" value="([^"]+)"/)?.[1]
     if (t === undefined || /id="login_form"/.test(home)) throw new Error('phpMyAdmin login failed')
     this.token = t
   }
 
-  /** A full (non-AJAX) GET of a page, e.g. `/index.php?route=/database/structure&db=x`. */
-  async page(path: string): Promise<string> {
-    return this.#req(path)
+  /** A full page (no JavaScript runs, so e.g. the menu is not collapsed). */
+  getPage(target: string, params: Record<string, string> = {}): Promise<string> {
+    return this.#send(url(target, Object.entries(params)))
   }
 
-  /** GET `route` with query parameters (a full page, or the AJAX JSON when `ajax`). */
-  async pageGet(route: string, params: Record<string, string> = {}, ajax = false): Promise<string> {
-    const qs = new URLSearchParams({ route, ...params, ...(ajax ? { ajax_request: 'true' } : {}) })
-    return this.#req(`/index.php?${qs}`, undefined, ajax)
-  }
-
-  /**
-   * POST to `route` like a form or a `data-post` link (`server` and `token` added); `ajax` sends the
-   * request the way phpMyAdmin's AJAX handlers do (`ajax_request=true` + `X-Requested-With`).
-   */
-  async pagePost(route: string, form: Record<string, string> = {}, ajax = false): Promise<string> {
-    return this.#req(
-      `/index.php?route=${route}`,
-      { server: '1', ...form, ...(ajax ? { ajax_request: 'true' } : {}), token: this.token },
-      ajax,
-    )
-  }
-
-  /** `post` with an AJAX request, parsed as phpMyAdmin's JSON response. */
-  async pagePostJson(route: string, form: Record<string, string> = {}): Promise<Record<string, unknown>> {
-    return JSON.parse(await this.pagePost(route, form, true)) as Record<string, unknown>
-  }
-
-  /** `get` with an AJAX request, parsed as phpMyAdmin's JSON response. */
-  async pageGetJson(route: string, params: Record<string, string> = {}): Promise<Record<string, unknown>> {
-    return JSON.parse(await this.pageGet(route, params, true)) as Record<string, unknown>
+  /** An AJAX GET, JSON-decoded. */
+  async getJson(target: string, params: Record<string, string> = {}): Promise<PmaJson> {
+    const q = withDefaults(Object.entries(params), [
+      ['server', '1'],
+      ['ajax_request', 'true'],
+    ])
+    return json(target, await this.#send(url(target, q), undefined, true))
   }
 
   /**
-   * POST /navigation over AJAX with the parameters `navigation.ts` sends (loadChildNodes, reload,
-   * treePagination, FastFilter.request). Returns the JSON response (`message` holds the HTML).
+   * A form POST the way the page's own forms send it (not AJAX). `file` sends it as
+   * multipart/form-data with that file (the import form); `binary` answers the body byte for byte
+   * (latin1-decoded: downloads such as /export) and reports status and headers to `onHeaders`.
    */
-  async navigation(
-    params: Record<string, string>,
-  ): Promise<{ success: boolean; message?: string; results?: string; error?: string }> {
-    const body = await this.#req(
-      '/index.php?route=/navigation&ajax_request=1',
-      { server: '1', ...params, ajax_request: 'true', token: this.token },
-      true,
-    )
-    return JSON.parse(body) as { success: boolean; message?: string; results?: string; error?: string }
+  postPage(target: string, form: PmaForm = {}, opts: PostOptions = {}): Promise<string> {
+    const body = withDefaults(pairs(form), [
+      ['server', '1'],
+      ['token', this.token],
+    ])
+    return this.#send(url(target), body, false, opts)
   }
 
-  /**
-   * A form POST the way phpMyAdmin's JS sends it: `params` in order (repeat keys with a list of
-   * pairs), plus `server` and `token`, over AJAX (`ajax_request=true`) unless `ajax` is false.
-   * Returns the raw body (JSON for AJAX).
-   */
-  async post(
-    route: string,
-    params: Record<string, string> | Array<[string, string]>,
-    { ajax = true }: { ajax?: boolean } = {},
+  /** A POST the way phpMyAdmin's AJAX handlers send it, JSON-decoded. */
+  async postJson(target: string, form: PmaForm = {}): Promise<PmaJson> {
+    const body = withDefaults(pairs(form), [
+      ['server', '1'],
+      ['token', this.token],
+      ['ajax_request', 'true'],
+    ])
+    return json(target, await this.#send(url(target), body, true))
+  }
+
+  async #send(
+    path: string,
+    body?: Array<[string, string]>,
+    ajax = false,
+    opts: PostOptions = {},
   ): Promise<string> {
-    const pairs: Array<[string, string]> = Array.isArray(params) ? [...params] : Object.entries(params)
-    if (!pairs.some(([k]) => k === 'server')) pairs.push(['server', '1'])
-    if (!pairs.some(([k]) => k === 'token')) pairs.push(['token', this.token])
-    if (ajax && !pairs.some(([k]) => k === 'ajax_request')) pairs.push(['ajax_request', 'true'])
-    return this.#reqPairs(`/index.php?route=${route}`, pairs, ajax)
-  }
-
-  /** {@link post} and JSON.parse of the AJAX answer. */
-  async postJson(route: string, params: Record<string, string> | Array<[string, string]>): Promise<PmaJson> {
-    const body = await this.post(route, params)
-    try {
-      return JSON.parse(body) as PmaJson
-    } catch {
-      throw new Error(`phpMyAdmin did not answer JSON for ${route}: ${body.slice(0, 500)}`)
-    }
-  }
-
-  /** An AJAX GET (`ajax_request=1`), JSON-decoded. */
-  async getJson(route: string, params: Record<string, string> = {}): Promise<PmaJson> {
-    const qs = new URLSearchParams({ route, ...params, server: '1', ajax_request: '1' })
-    const body = await this.#reqPairs(`/index.php?${qs}`, undefined, true)
-    return JSON.parse(body) as PmaJson
-  }
-
-  async #reqPairs(path: string, pairs: Array<[string, string]> | undefined, ajax: boolean): Promise<string> {
     const headers: Record<string, string> = {}
     if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
-    if (pairs !== undefined) headers['content-type'] = 'application/x-www-form-urlencoded'
+    let payload: string | FormData | undefined
+    if (body !== undefined && opts.file !== undefined) {
+      const fd = new FormData()
+      for (const [k, v] of body) fd.append(k, v)
+      if (opts.file !== null)
+        fd.append(opts.file.field, new Blob([new Uint8Array(opts.file.data)]), opts.file.name)
+      payload = fd
+    } else if (body !== undefined) {
+      headers['content-type'] = 'application/x-www-form-urlencoded'
+      payload = new URLSearchParams(body).toString()
+    }
     if (ajax) headers['x-requested-with'] = 'XMLHttpRequest'
     const res = await fetch(this.base + path, {
-      method: pairs === undefined ? 'GET' : 'POST',
+      method: body === undefined ? 'GET' : 'POST',
       headers,
       redirect: 'manual',
-      ...(pairs !== undefined ? { body: new URLSearchParams(pairs).toString() } : {}),
+      ...(payload !== undefined ? { body: payload } : {}),
     })
+    opts.onHeaders?.(res.status, res.headers)
     for (const c of res.headers.getSetCookie()) {
       const [kv = ''] = c.split(';')
       const i = kv.indexOf('=')
@@ -195,130 +132,89 @@ export class PmaClient {
       if (v === 'deleted' || v === '') this.#cookies.delete(kv.slice(0, i))
       else this.#cookies.set(kv.slice(0, i), v)
     }
+    if (opts.binary === true) return Buffer.from(await res.arrayBuffer()).toString('latin1')
     if (res.status >= 300 && res.status < 400) {
       const loc = res.headers.get('location') ?? '/'
-      return this.#req(
+      return this.#send(
         loc.startsWith('http') ? new URL(loc).pathname + new URL(loc).search : `/${loc.replace(/^\.\//, '')}`,
       )
     }
     return res.text()
   }
+}
 
-  /** The SQL tab form (resources/templates/sql/query.twig) posted to /import over AJAX. */
-  async sqlBox(
-    sql: string,
-    db = '',
-    table = '',
-    delimiter = ';',
-    extra: Record<string, string | null> = {},
-  ): Promise<{ success: boolean; message?: string; error?: string } & Record<string, unknown>> {
-    const form: Record<string, string> = {
-      route: '/import',
-      server: '1',
-      db,
-      table,
-      token: this.token,
-      is_js_confirmed: '0',
-      pos: '0',
-      goto: db === '' ? '/server/sql' : table === '' ? '/database/sql' : '/table/sql',
-      message_to_show: 'Your SQL query has been executed successfully.',
-      prev_sql_query: '',
-      sql_query: sql,
-      sql_delimiter: delimiter,
-      fk_checks: '1',
-      SQL: 'Go',
-      ajax_request: 'true',
-      ajax_page_request: 'true',
-    }
-    // `null` removes a default field
-    for (const [k, v] of Object.entries(extra)) {
-      if (v === null) delete form[k]
-      else form[k] = v
-    }
-    const body = await this.#req('/index.php?route=/import', form, true)
-    return JSON.parse(body) as { success: boolean; message?: string; error?: string }
+/** `/index.php?route=<route>` (or the given `/index.php…` path) with `params` appended. */
+function url(target: string, params: Array<[string, string]> = []): string {
+  const base = target.startsWith('/index.php') ? target : `/index.php?route=${target}`
+  if (params.length === 0) return base
+  return `${base}${base.includes('?') ? '&' : '?'}${new URLSearchParams(params)}`
+}
+
+const pairs = (form: PmaForm): Array<[string, string]> =>
+  Array.isArray(form) ? [...form] : Object.entries(form)
+
+/** Appends each default whose key the request does not carry yet. */
+function withDefaults(
+  list: Array<[string, string]>,
+  defaults: Array<[string, string]>,
+): Array<[string, string]> {
+  const out = [...list]
+  for (const [k, v] of defaults) if (!out.some(([key]) => key === k)) out.push([k, v])
+  return out
+}
+
+function json(target: string, body: string): PmaJson {
+  try {
+    return JSON.parse(body) as PmaJson
+  } catch {
+    throw new Error(`phpMyAdmin did not answer JSON for ${target}: ${body.slice(0, 500)}`)
   }
+}
 
-  /** Any AJAX POST to a phpMyAdmin route (index.php?route=...), JSON response. */
-  async postRoute(route: string, form: Record<string, string>): Promise<Record<string, unknown>> {
-    const body = await this.#req(
-      `/index.php?route=${route}`,
-      { route, server: '1', token: this.token, ajax_request: 'true', ...form },
-      true,
+/** Whether a phpMyAdmin instance answers (`anyStatus`: any HTTP answer; `contains`: body text). */
+export async function isPmaUp(
+  base: string,
+  o: { path?: string; contains?: string; anyStatus?: boolean } = {},
+) {
+  return fetch(`${base}${o.path ?? '/index.php'}`)
+    .then(async (r) =>
+      o.anyStatus === true
+        ? r.status > 0
+        : r.ok && (o.contains === undefined || (await r.text()).includes(o.contains)),
     )
-    return JSON.parse(body) as Record<string, unknown>
-  }
+    .catch(() => false)
+}
 
-  /** Any AJAX GET (JSON response). */
-  async getRoute(route: string, params: Record<string, string> = {}): Promise<Record<string, unknown>> {
-    const q = new URLSearchParams({ route, server: '1', ajax_request: 'true', ...params })
-    const body = await this.#reqAjaxGet(`/index.php?${q}`)
-    return JSON.parse(body) as Record<string, unknown>
+/**
+ * The SQL tab form (resources/templates/sql/query.twig) for `postJson('/import', …)`; `extra` adds
+ * or overrides fields, `null` removes a default one.
+ */
+export function sqlBoxForm(
+  sql: string,
+  db = '',
+  table = '',
+  extra: Record<string, string | null> = {},
+): Record<string, string> {
+  const form: Record<string, string> = {
+    route: '/import',
+    db,
+    table,
+    is_js_confirmed: '0',
+    pos: '0',
+    goto: db === '' ? '/server/sql' : table === '' ? '/database/sql' : '/table/sql',
+    message_to_show: 'Your SQL query has been executed successfully.',
+    prev_sql_query: '',
+    sql_query: sql,
+    sql_delimiter: ';',
+    fk_checks: '1',
+    SQL: 'Go',
+    ajax_page_request: 'true',
   }
-
-  /**
-   * A form POST (pairs in order, `server` + `token` added, no AJAX) answered with raw bytes and
-   * headers: downloads such as /export. Redirects are not followed.
-   */
-  async postBytes(
-    route: string,
-    pairs: Array<[string, string]>,
-  ): Promise<{ status: number; headers: Headers; body: Buffer }> {
-    const all: Array<[string, string]> = [...pairs]
-    if (!all.some(([k]) => k === 'server')) all.push(['server', '1'])
-    if (!all.some(([k]) => k === 'token')) all.push(['token', this.token])
-    const headers: Record<string, string> = { 'content-type': 'application/x-www-form-urlencoded' }
-    if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
-    const res = await fetch(`${this.base}/index.php?route=${route}`, {
-      method: 'POST',
-      headers,
-      redirect: 'manual',
-      body: new URLSearchParams(all).toString(),
-    })
-    for (const c of res.headers.getSetCookie()) {
-      const [kv = ''] = c.split(';')
-      const i = kv.indexOf('=')
-      const v = kv.slice(i + 1)
-      if (v === 'deleted' || v === '') this.#cookies.delete(kv.slice(0, i))
-      else this.#cookies.set(kv.slice(0, i), v)
-    }
-    return { status: res.status, headers: res.headers, body: Buffer.from(await res.arrayBuffer()) }
+  for (const [k, v] of Object.entries(extra)) {
+    if (v === null) delete form[k]
+    else form[k] = v
   }
-
-  /**
-   * A multipart form POST with one file (pairs in order, `server` + `token` added, no AJAX), as the
-   * import form sends it; answers the page HTML. Redirects are not followed.
-   */
-  async postMultipart(
-    route: string,
-    pairs: Array<[string, string]>,
-    file: { field: string; name: string; data: Buffer } | null,
-  ): Promise<string> {
-    const form = new FormData()
-    for (const [k, v] of pairs) form.append(k, v)
-    if (!pairs.some(([k]) => k === 'server')) form.append('server', '1')
-    if (!pairs.some(([k]) => k === 'token')) form.append('token', this.token)
-    if (file !== null) form.append(file.field, new Blob([new Uint8Array(file.data)]), file.name)
-    const headers: Record<string, string> = {}
-    if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
-    const res = await fetch(`${this.base}/index.php?route=${route}`, {
-      method: 'POST',
-      headers,
-      redirect: 'manual',
-      body: form,
-    })
-    return res.text()
-  }
-
-  /** HTML of a full page (GET). */
-  async routePage(route: string, params: Record<string, string> = {}): Promise<string> {
-    const q = new URLSearchParams({ route, server: '1', ...params })
-    return this.#req(`/index.php?${q}`)
-  }
-
-  #reqAjaxGet(path: string): Promise<string> {
-    return this.#req(path, undefined, true)
-  }
+  return form
 }
 
 /** Tab labels of `ul#topmenu` (templates/menu/main.twig), in order, without "(current)". */

@@ -5,7 +5,7 @@ import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { DB_TABS, SERVER_TABS, TABLE_TABS } from '../../apps/web/src/features/shell/tabs.ts'
 import { classify, normalise } from './lib/compare.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
-import { PmaClient, breadcrumb, homeCard, homeWarnings, menuTabs, visibleText } from './lib/pma.ts'
+import { PmaClient, breadcrumb, homeCard, homeWarnings, isPmaUp, menuTabs, visibleText } from './lib/pma.ts'
 
 /**
  * Golden parity of the shell: the tab sets, breadcrumb comments, home-page blocks and warnings,
@@ -36,9 +36,7 @@ for (const r of Object.keys(ROLES) as Role[]) {
   dbMap[user('pb', r)] = `user_${r}`
 }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = await isPmaUp(PMA_URL)
 
 /** The reference instance: controluser pma/pmapass, pmadb phpmyadmin, a 34-byte blowfish_secret. */
 const bmaConfig = () =>
@@ -154,7 +152,7 @@ describe.skipIf(!reachable)(
           const pmaCrumb: Record<string, string> = {}
           const pages = PAGES.filter((p) => !('su' in p) || role === 'su')
           for (const p of pages) {
-            const html = await pma.get(p.pma)
+            const html = await pma.getPage(p.pma)
             pmaTabs[p.name] = menuTabs(html)
             pmaCrumb[p.name] = breadcrumb(html).comment
           }
@@ -184,7 +182,7 @@ describe.skipIf(!reachable)(
       const bma = testApp(bmaConfig())
       try {
         await pma.login(user('pa', 'su'), user('pa', 'su'))
-        const html = await pma.get('/index.php?route=/')
+        const html = await pma.getPage('/index.php?route=/')
         await bma.login(user('pb', 'su'), user('pb', 'su'))
         const r = await bma.req('GET', '/api/servers/1/home', undefined, { host: '127.0.0.1:8081' })
         const home = r.json as unknown as HomeResponse
@@ -242,8 +240,8 @@ describe.skipIf(!reachable)(
       try {
         const since = await log.marker()
         await pma.login(user('pa', 'su'), user('pa', 'su'))
-        await pma.postPath('/index.php?route=/collation-connection', { collation_connection: 'utf8mb4_bin' })
-        const html = await pma.get('/index.php?route=/')
+        await pma.postPage('/index.php?route=/collation-connection', { collation_connection: 'utf8mb4_bin' })
+        const html = await pma.getPage('/index.php?route=/')
         await bma.login(user('pb', 'su'), user('pb', 'su'))
         await bma.req('POST', '/api/servers/1/session/collation', { collation_connection: 'utf8mb4_bin' })
         const home = (await bma.req('GET', '/api/servers/1/home')).json as unknown as HomeResponse
@@ -257,7 +255,7 @@ describe.skipIf(!reachable)(
         expect(html).toMatch(/<option value="utf8mb4_general_ci" title="[^"]*" selected>/)
         expect(home.collation.selected).toBe('utf8mb4_general_ci')
         // restore the reference user's preference (stored in phpMyAdmin's pmadb userconfig)
-        await pma.postPath('/index.php?route=/collation-connection', {
+        await pma.postPage('/index.php?route=/collation-connection', {
           collation_connection: 'utf8mb4_unicode_ci',
         })
       } finally {
@@ -271,20 +269,13 @@ describe.skipIf(!reachable)(
       try {
         const since = await log.marker()
         await pma.login(user('pa', role), user('pa', role))
-        const pmaJson = JSON.parse(
-          await pma.postPath(
-            '/index.php?route=/user-password',
-            {
-              nopass: '0',
-              pma_pw: pw,
-              pma_pw2: pw,
-              authentication_plugin: 'mysql_native_password',
-              change_pw: '1',
-              ajax_request: 'true',
-            },
-            true,
-          ),
-        ) as { success: boolean; message?: string; error?: string }
+        const pmaJson = await pma.postJson('/user-password', {
+          nopass: '0',
+          pma_pw: pw,
+          pma_pw2: pw,
+          authentication_plugin: 'mysql_native_password',
+          change_pw: '1',
+        })
         await bma.login(user('pb', role), user('pb', role))
         const ours = await bma.req('POST', '/api/servers/1/account/password', {
           nopass: false,
