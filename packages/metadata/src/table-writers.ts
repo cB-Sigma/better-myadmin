@@ -257,3 +257,87 @@ export async function updateDisplayField(
       : `REPLACE INTO ${target}(db_name, table_name, display_field) VALUES(${q(db)},${q(table)},${q(displayField)})`,
   )
 }
+
+/** pma: Relation::renameField (a renamed column in table_info.display_field and both relation ends) */
+export async function renameField(
+  conn: MetaConn,
+  rp: RelationParameters,
+  db: string,
+  table: string,
+  field: string,
+  newName: string,
+): Promise<void> {
+  const d = rp.displayFeature
+  if (d !== null) {
+    await conn.query(
+      `UPDATE ${bq(d.database)}.${bq(d.tableInfo)}   SET display_field = ${q(newName)} WHERE db_name       = ${q(db)}   AND table_name    = ${q(table)}   AND display_field = ${q(field)}`,
+    )
+  }
+  const r = rp.relationFeature
+  if (r === null) return
+  const target = `${bq(r.database)}.${bq(r.relation)}`
+  await conn.query(
+    `UPDATE ${target}   SET master_field = ${q(newName)} WHERE master_db    = ${q(db)}   AND master_table = ${q(table)}   AND master_field = ${q(field)}`,
+  )
+  await conn.query(
+    `UPDATE ${target}   SET foreign_field = ${q(newName)} WHERE foreign_db    = ${q(db)}   AND foreign_table = ${q(table)}   AND foreign_field = ${q(field)}`,
+  )
+}
+
+export interface MimeInput {
+  mimetype: string
+  transformation: string
+  transformationOptions: string
+  inputTransformation: string
+  inputTransformationOptions: string
+}
+
+/**
+ * pma: Transformations::setMime — the column's row of column_info is updated, inserted, or deleted
+ * (no value left and no comment), through the control link.
+ */
+export async function setMime(
+  conn: MetaConn,
+  rp: RelationParameters,
+  db: string,
+  table: string,
+  key: string,
+  mime: MimeInput,
+  forcedelete = false,
+): Promise<boolean> {
+  const f = rp.browserTransformationFeature
+  if (f === null) return false
+  const target = `${bq(f.database)}.${bq(f.columnInfo)}`
+  // lowercase mimetype & transformation
+  const mimetype = mime.mimetype.toLowerCase()
+  const transformation = mime.transformation.toLowerCase()
+  const { transformationOptions: opts, inputTransformation: input, inputTransformationOptions: inputOpts } = mime
+  const hasValue = mimetype !== '' || transformation !== '' || opts !== '' || input !== '' || inputOpts !== ''
+  const test = await conn.query(
+    `
+             SELECT \`mimetype\`,
+                    \`comment\`
+               FROM ${target}
+              WHERE \`db_name\`     = ${q(db)}
+                AND \`table_name\`  = ${q(table)}
+                AND \`column_name\` = ${q(key)}`,
+  )
+  const where = `
+                WHERE \`db_name\`     = ${q(db)}
+                  AND \`table_name\`  = ${q(table)}
+                  AND \`column_name\` = ${q(key)}`
+  let sql: string | null = null
+  const row = test.rows[0]
+  if (row !== undefined) {
+    const comment = row.comment ?? null
+    if (!forcedelete && (hasValue || (comment !== null && comment !== ''))) {
+      sql = `UPDATE ${target} SET \`mimetype\` = ${q(mimetype)}, \`transformation\` = ${q(transformation)}, \`transformation_options\` = ${q(opts)}, \`input_transformation\` = ${q(input)}, \`input_transformation_options\` = ${q(inputOpts)}${where}`
+    } else {
+      sql = `DELETE FROM ${target}${where}`
+    }
+  } else if (hasValue) {
+    sql = `INSERT INTO ${target} (db_name, table_name, column_name, mimetype, transformation, transformation_options, input_transformation, input_transformation_options)  VALUES(${q(db)},${q(table)},${q(key)},${q(mimetype)},${q(transformation)},${q(opts)},${q(input)},${q(inputOpts)})`
+  }
+  if (sql === null) return false
+  return (await conn.tryQuery(sql)) !== false
+}

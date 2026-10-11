@@ -23,6 +23,7 @@ import { type Translator, sprintf } from '@bettermyadmin/i18n'
 import {
   type MetaConn,
   type RelationParameters,
+  type TableUiPrefs,
   cleanupTableInStorage,
   duplicateTableInfo,
   getForeignKeysData,
@@ -47,6 +48,8 @@ type Out<T extends z.ZodTypeAny> = z.output<T>
 export interface OpsMeta {
   rp: RelationParameters
   control: MetaConn | null
+  /** Table::getUiProp / removeUiProp of a table (pma__table_uiprefs or the session) */
+  uiPrefs?: (db: string, table: string) => Promise<TableUiPrefs>
 }
 
 export interface OpsCtx extends DdlCtx {

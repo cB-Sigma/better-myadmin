@@ -39,6 +39,7 @@ import { changeForm, columnFormOptions, indexForm, partitionForm } from '../tabl
 import { TableReader } from '../table/read.ts'
 import { buildStructurePage } from '../table/structure-page.ts'
 import type { ServerEnv } from './server.ts'
+import { withScope } from './table-scope.ts'
 
 /**
  * Table Structure tab, column form, index editor and partitions (docs/architecture/05 table scope).
@@ -88,17 +89,7 @@ async function withReader<T>(c: Context<ServerEnv>, fn: (reader: TableReader) =>
  * pma: DbTableExists::selectDatabase / ::hasTable ("No databases selected." / "No table selected.")
  */
 async function withTable<T>(c: Context<ServerEnv>, fn: (ctx: DdlCtx) => Promise<T>): Promise<T> {
-  const db = c.req.param('db') ?? ''
-  const table = c.req.param('t') ?? ''
-  const tr = c.get('tr')
-  return withReader(c, async (reader) => {
-    if (db === '' || !(await reader.selectDb(db)))
-      throw new NotFoundError(tr.gettext('No databases selected.'))
-    if (table === '' || (await reader.getStatus(db, table)) === null) {
-      throw new NotFoundError(tr.gettext('No table selected.'))
-    }
-    return fn({ reader, cfg: c.get('deps').cfg, tr, db, table })
-  })
+  return withScope(c, fn)
 }
 
 const respond = (c: Context<ServerEnv>, r: DdlResponse) => {
@@ -110,20 +101,20 @@ const respond = (c: Context<ServerEnv>, r: DdlResponse) => {
 
 /** GET …/tables/:t/structure (pma: /table/structure) */
 tableStructureRoutes.get('/:db/tables/:t/structure', async (c) =>
-  c.json(await withTable(c, (x) => buildStructurePage(x.reader, x.cfg, x.tr, x.db, x.table))),
+  c.json(await withTable(c, (x) => buildStructurePage(x.reader, x.cfg, x.tr, x.db, x.table, x.features))),
 )
 
 /** GET …/tables/:t/columns/form?fields=a&fields=b (pma: /table/structure/change) */
 tableStructureRoutes.get('/:db/tables/:t/columns/form', async (c) => {
   const fields = c.req.queries('fields') ?? []
   if (fields.length === 0) throw new ValidationError(c.get('tr').gettext('No column selected.'))
-  return c.json(await withTable(c, (x) => changeForm(x.reader, x.cfg, x.tr, x.db, x.table, fields)))
+  return c.json(await withTable(c, (x) => changeForm(x.reader, x.cfg, x.tr, x.db, x.table, fields, x.features, x.meta)))
 })
 
 /** GET …/tables/:t/columns/add-form (pma: /table/add-field without do_save_data) */
 tableStructureRoutes.get('/:db/tables/:t/columns/add-form', async (c) =>
   c.json({
-    options: await withTable(c, (x) => columnFormOptions(x.reader, x.cfg, x.tr, x.db, x.table)),
+    options: await withTable(c, (x) => columnFormOptions(x.reader, x.cfg, x.tr, x.db, x.table, { features: x.features, meta: x.meta })),
   }),
 )
 

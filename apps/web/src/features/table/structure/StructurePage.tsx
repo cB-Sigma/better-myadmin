@@ -2,6 +2,7 @@ import type { DdlResponse, SqlMessage, StructureResponse } from '@bettermyadmin/
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, KeyRound, ListTree } from 'lucide-react'
+import { Panel, PanelBody } from '@bettermyadmin/ui'
 import { useState } from 'react'
 import { t } from '../../../lib/i18n'
 import { StructurePills } from '../common/StructurePills'
@@ -10,7 +11,6 @@ import { type Scope, structureApi, structureKeys } from './api'
 import { takeFlash } from './flash'
 import {
   Button,
-  Card,
   DocLink,
   MessageBox,
   Modal,
@@ -102,6 +102,12 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
     await act(() => structureApi.dropColumns(scope, { columns: [c.name], source: 'row' }))
   }
   const orderedSelection = columnNames.filter((n) => selected.includes(n))
+  /** the With-selected buttons are always enabled; without a selection the action answers this */
+  const noneSelected = () => {
+    if (selected.length > 0) return false
+    setMessages([{ type: 'error', text: t('No column selected.') }])
+    return true
+  }
 
   return (
     <div id="structure_content">
@@ -112,7 +118,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         <MessageBox key={i} message={m} />
       ))}
       {maintenance && (
-        <Card title={maintenance.title}>
+        <Panel className="mb-3" title={maintenance.title}>
+<PanelBody>
           {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
             <div key={name} className="mb-2">
               <div className="font-semibold">
@@ -131,7 +138,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
               </ul>
             </div>
           ))}
-        </Card>
+        </PanelBody>
+</Panel>
       )}
 
       <form id="fieldsForm" onSubmit={(e) => e.preventDefault()}>
@@ -260,8 +268,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           <em className="mx-1">{t('With selected:')}</em>
           <Button
             variant="link"
-            disabled={selected.length === 0}
             onClick={() =>
+              noneSelected() ||
               void navigate({
                 to: sqlLink(
                   server,
@@ -276,8 +284,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             <>
               <Button
                 variant="link"
-                disabled={selected.length === 0}
                 onClick={() =>
+                  noneSelected() ||
                   void navigate({
                     to: `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}/structure/change?${orderedSelection.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
                   })
@@ -287,8 +295,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
               </Button>
               <Button
                 variant="link"
-                disabled={selected.length === 0}
                 onClick={() =>
+                  noneSelected() ||
                   setConfirm({
                     question: t('Do you really want to execute the following query?'),
                     sql: `ALTER TABLE \`${table}\`\n${orderedSelection.map((f) => `  DROP \`${f}\``).join(',\n')};`,
@@ -307,8 +315,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                   <Button
                     key={k}
                     variant="link"
-                    disabled={selected.length === 0}
-                    onClick={() => void bulkKey(k)}
+                        onClick={() => void bulkKey(k)}
                   >
                     {t(
                       k === 'PRIMARY'
@@ -338,11 +345,24 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         )}
         {editable && (
           <>
+            {s.links.trackTable && (
+              <Link to="/s/$server/db/$db/t/$table/tracking" params={{ server, db, table }}>
+                {t('Track table')}
+              </Link>
+            )}
             <Button variant="link" id="move_columns_anchor" onClick={() => setMoving([...columnNames])}>
               {t('Move columns')}
             </Button>
+            <Link to="/s/$server/db/$db/t/$table/normalization" params={{ server, db, table }}>
+              {t('Normalize')}
+            </Link>
             <Link to={sqlLink(server, `SHOW CREATE TABLE \`${db}\`.\`${table}\``)}>{t('Show create')}</Link>
           </>
+        )}
+        {s.isView && !s.isSystemSchema && s.links.trackTable && (
+          <Link to="/s/$server/db/$db/t/$table/tracking" params={{ server, db, table }}>
+            {t('Track view')}
+          </Link>
         )}
       </div>
 
@@ -391,7 +411,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       )}
 
       {s.showIndexes && (
-        <Card
+        <Panel className="mb-3"
           id="index_div"
           title={
             <>
@@ -415,7 +435,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 min={1}
                 max={16}
                 required
-                aria-label={t('Create an index on %s columns', '')}
+                name="added_fields"
                 value={indexCount}
                 onChange={(e) => setIndexCount(Number(e.target.value))}
               />
@@ -426,6 +446,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             </form>
           }
         >
+<PanelBody>
           <div className="index_info">
             {s.indexes.length === 0 ? (
               <div className="no_indexes_defined">
@@ -521,13 +542,15 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
               </>
             )}
           </div>
-        </Card>
+        </PanelBody>
+</Panel>
       )}
 
       {s.partitions.available && <PartitionsCard s={s} scope={scope} act={act} />}
 
       {s.stats !== null && (
-        <Card id="tablestatistics" title={t('Information')}>
+        <Panel className="mb-3" id="tablestatistics" title={t('Information')}>
+<PanelBody>
           {s.stats.tableComment !== '' && (
             <div className="mb-2 text-sm">
               <strong>{t('Table comments:')}</strong>
@@ -582,7 +605,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
               </tbody>
             </table>
           </div>
-        </Card>
+        </PanelBody>
+</Panel>
       )}
 
       <Modal
@@ -812,7 +836,7 @@ function PartitionsCard({
   }
   const editHref = `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/structure/partitioning`
   const card = (
-    <Card
+    <Panel className="mb-3"
       id="partitions"
       title={
         <>
@@ -841,6 +865,7 @@ function PartitionsCard({
         </div>
       }
     >
+<PanelBody>
       {p.partitions.length === 0 ? (
         <Notice>{t('No partitioning defined!')}</Notice>
       ) : (
@@ -904,7 +929,8 @@ function PartitionsCard({
           </table>
         </>
       )}
-    </Card>
+    </PanelBody>
+</Panel>
   )
   if (p.partitions.length === 0 || sliders === 'disabled') return card
   return (

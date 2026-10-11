@@ -9,6 +9,8 @@
 import type {
   ChangeFormResponse,
   ColumnFormOptions,
+  ColumnMime as ColumnMimeIn,
+
   IndexFormResponse,
   PartitionDefT,
   PartitionFormResponse,
@@ -16,7 +18,9 @@ import type {
 import type { Translator } from '@bettermyadmin/i18n'
 import {
   type ColumnMeta,
+  type TransformationPlugin,
   columnFormRow,
+  getAvailableMimeTypes,
   getAttributes,
   getDatatypeOptions,
   getDefaultTypeOptions,
@@ -30,10 +34,14 @@ import {
   Parser,
   type PartitionDefinition,
 } from '@bettermyadmin/sql-lexer'
+import { type MimeInfo, getMime } from '@bettermyadmin/metadata'
 import type { AppConfig } from '../config.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
+import type { OpsMeta } from './operations.ts'
 import type { TableReader } from './read.ts'
-import { structureFeatures } from './structure-page.ts'
+import { type StructureFeatures, structureFeatures } from './structure-page.ts'
+
+type MimeValues = { [K in keyof ColumnMimeIn]-?: string }
 
 /** Option lists of the column definition form (ColumnsDefinition::displayForm template data). */
 export async function columnFormOptions(
@@ -42,7 +50,15 @@ export async function columnFormOptions(
   tr: Translator,
   db: string,
   table: string,
-  { withPrivileges = false }: { withPrivileges?: boolean } = {},
+  {
+    withPrivileges = false,
+    features: given,
+    meta,
+  }: {
+    withPrivileges?: boolean
+    features?: StructureFeatures | undefined
+    meta?: OpsMeta | null | undefined
+  } = {},
 ): Promise<ColumnFormOptions> {
   const server = reader.server
   const charsets = await reader.getCharsets()
@@ -52,7 +68,7 @@ export async function columnFormOptions(
     const p = await getPrivileges(reader.dbi)
     privsAvailable = p.column && p.isReload
   }
-  const features = await structureFeatures(db, table)
+  const features = await structureFeatures(db, table, given)
   return {
     server,
     types: getDatatypeOptions(server, '', (s) => tr.gettext(s)).map((o) =>
@@ -75,7 +91,60 @@ export async function columnFormOptions(
     privsAvailable,
     charEditing: cfg.CharEditing,
     centralColumns: features.centralColumns,
-    mime: false,
+    mime: showMime(cfg, meta),
+    mimeTypes: showMime(cfg, meta) ? mimeTypeOptions(tr) : null,
+  }
+}
+
+/**
+ * column_attributes.twig: the MIME columns need the browser transformation and column comments
+ * features and $cfg['BrowseMIME'].
+ */
+function showMime(cfg: AppConfig, meta: OpsMeta | null | undefined): boolean {
+  const rp = meta?.rp ?? null
+  return cfg.BrowseMIME && rp?.browserTransformationFeature != null && rp.columnCommentsFeature !== null
+}
+
+/** Transformations::getAvailableMimeTypes as the column form's selects list it */
+function mimeTypeOptions(tr: Translator): NonNullable<ColumnFormOptions['mimeTypes']> {
+  const available = getAvailableMimeTypes()
+  // `get_name(file) ~ ' (' ~ parts[0]|lower ~ ':' ~ parts[1] ~ ')'` of "Text/Plain: Dateformat"
+  const option = (p: TransformationPlugin) => ({
+    value: `${p.file}.php`,
+    label: `${p.name} (${p.mimetype.toLowerCase()}: ${p.label})`,
+    title: tr.gettext(p.info),
+  })
+  return {
+    mimetypes: available.mimetype.map((m) => ({ value: m.replace('/', '_'), label: m.toLowerCase() })),
+    transformations: available.transformation.map(option),
+    inputTransformations: available.input_transformation.map(option),
+  }
+}
+
+/**
+ * The stored settings of a column as the form selects them: `mime_map[field]` (getMime), the
+ * transformation options matched case-insensitively against the plugin files (`'@' ~ file ~ '3?@i'`).
+ */
+function columnMime(
+  map: Record<string, MimeInfo>,
+  field: string,
+  options: NonNullable<ColumnFormOptions['mimeTypes']>,
+): MimeValues {
+  const m = map[field]
+  const pick = (stored: string | undefined, list: Array<{ value: string }>) => {
+    if (stored === undefined || stored === '') return ''
+    const re = (v: string) => new RegExp(`${v.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}3?`, 'i')
+    // the last matching option is the one the browser shows selected
+    let found = ''
+    for (const o of list) if (re(o.value).test(stored)) found = o.value
+    return found
+  }
+  return {
+    mimetype: options.mimetypes.some((o) => o.value === m?.mimetype) ? (m?.mimetype ?? '') : '',
+    transformation: pick(m?.transformation, options.transformations),
+    transformationOptions: m?.transformation_options ?? '',
+    inputTransformation: pick(m?.input_transformation, options.inputTransformations),
+    inputTransformationOptions: m?.input_transformation_options ?? '',
   }
 }
 
@@ -91,6 +160,8 @@ export async function changeForm(
   db: string,
   table: string,
   selected: readonly string[],
+  features?: StructureFeatures,
+  meta?: OpsMeta | null,
 ): Promise<ChangeFormResponse> {
   const all = await reader.getColumns(db, table)
   const metas: ColumnMeta[] = all.filter((c) => selected.includes(c.Field))
@@ -100,7 +171,16 @@ export async function changeForm(
       meta.Expression = expressions.get(meta.Field) ?? null
     }
   }
-  const options = await columnFormOptions(reader, cfg, tr, db, table, { withPrivileges: true })
+  const options = await columnFormOptions(reader, cfg, tr, db, table, {
+    withPrivileges: true,
+    features,
+    meta,
+  })
+  // ColumnsDefinition::displayForm: $mimeMap = getMime(db, table) when BrowseMIME
+  const mimeMap =
+    options.mimeTypes !== null && meta != null
+      ? ((await getMime(meta.control, meta.rp, db, table)) ?? {})
+      : {}
   const names = all.map((c) => c.Field)
   return {
     options,
@@ -110,6 +190,7 @@ export async function changeForm(
       const current = found < 0 ? 0 : found
       return {
         values,
+        mime: options.mimeTypes === null ? null : columnMime(mimeMap, meta.Field, options.mimeTypes),
         orig,
         moveOptions: [
           { value: '', after: null, disabled: false },

@@ -4,8 +4,10 @@ import { getServer } from '../config.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { withMeta } from '../metadata/service.ts'
 import { signSql } from '../query/signature.ts'
-import type { OpsCtx } from '../table/operations.ts'
+import type { OpsCtx, OpsMeta } from '../table/operations.ts'
+import { tableInfo } from './metadata.ts'
 import { TableReader } from '../table/read.ts'
+import type { StructureFeatures } from '../table/structure-page.ts'
 import type { ServerEnv } from './server.ts'
 
 /**
@@ -46,7 +48,7 @@ export async function withScope<T>(
   const tr = c.get('tr')
   const server = getServer(cfg, serverIndex)
   if (server === undefined) throw new ValidationError(tr.gettext('Invalid server index!'))
-  const run = async (meta: { rp: RelationParameters; control: MetaConn | null } | null) => {
+  const run = async (meta: OpsMeta | null) => {
     const conn = await pools.acquire(
       session.id,
       serverIndex,
@@ -81,6 +83,7 @@ export async function withScope<T>(
         session: state,
         server,
         user: c.get('creds').user,
+        features: storageFeatures(meta?.rp ?? null),
       })
     } finally {
       conn.raw.release()
@@ -88,15 +91,30 @@ export async function withScope<T>(
   }
   if (opts.meta === false) return run(null)
   return withMeta(c, { db }, async (m) => {
-    let meta: { rp: RelationParameters; control: MetaConn | null } | null = null
+    let meta: OpsMeta | null = null
     try {
       const rp = await m.relationParameters()
-      meta = { rp, control: rp.db === null ? null : m.control }
+      meta = {
+        rp,
+        control: rp.db === null ? null : m.control,
+        uiPrefs: async (db, table) => (await m.meta()).uiPrefs(db, table, tableInfo(m, db, table)),
+      }
     } catch (e) {
       console.error('configuration storage:', e)
     }
     return run(meta)
   })
+}
+
+/** The configuration-storage features the Structure screens toggle on (RelationParameters). */
+export function storageFeatures(rp: RelationParameters | null): StructureFeatures {
+  const bt = rp?.browserTransformationFeature ?? null
+  return {
+    centralColumns: (rp?.centralColumnsFeature ?? null) !== null,
+    relation: (rp?.relationFeature ?? null) !== null,
+    tracking: (rp?.trackingFeature ?? null) !== null,
+    browserTransformation: bt === null ? null : { database: bt.database, columnInfo: bt.columnInfo },
+  }
 }
 
 export const respond = <R extends object>(c: Context<ServerEnv>, r: R) => {
