@@ -16,7 +16,9 @@ beforeAll(async () => {
   await app.login()
 })
 afterAll(async () => {
-  await root.query(`DROP DATABASE IF EXISTS ${DB}; DROP DATABASE IF EXISTS ${DB}_c; DROP DATABASE IF EXISTS ${DB}_r`)
+  await root.query(
+    `DROP DATABASE IF EXISTS ${DB}; DROP DATABASE IF EXISTS ${DB}_c; DROP DATABASE IF EXISTS ${DB}_r`,
+  )
   await root.end()
   await app.close()
 })
