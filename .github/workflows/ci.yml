@@ -13,6 +13,8 @@ jobs:
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
+      # docs/architecture/16-golden-path.md: static, no database (tools/conventions)
+      - run: pnpm conventions:check
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm --filter @bettermyadmin/web build
