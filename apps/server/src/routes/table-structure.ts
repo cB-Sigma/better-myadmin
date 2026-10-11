@@ -1,6 +1,7 @@
 import {
   AddColumnsRequest,
   AddKeyRequest,
+  CentralColumnsSelectRequest,
   ChangeColumnsRequest,
   ColumnsPreviewRequest,
   CreateTableRequest,
@@ -20,6 +21,7 @@ import { Context as SqlContext } from '@bettermyadmin/sql-lexer'
 import { type Context, Hono } from 'hono'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { jsonBody, parse } from '../http/validate.ts'
+import { centralColumnsAdd, centralColumnsRemove, centralList } from '../table/central-columns.ts'
 import {
   type DdlCtx,
   addColumns,
@@ -39,7 +41,7 @@ import { changeForm, columnFormOptions, indexForm, partitionForm } from '../tabl
 import { TableReader } from '../table/read.ts'
 import { buildStructurePage } from '../table/structure-page.ts'
 import type { ServerEnv } from './server.ts'
-import { withScope } from './table-scope.ts'
+import { storageFeatures, withScope } from './table-scope.ts'
 
 /**
  * Table Structure tab, column form, index editor and partitions (docs/architecture/05 table scope).
@@ -88,8 +90,25 @@ const respond = (c: Context<ServerEnv>, r: DdlResponse) => {
 
 /** GET …/tables/:t/structure (pma: /table/structure) */
 tableStructureRoutes.get('/:db/tables/:t/structure', async (c) =>
-  c.json(await withTable(c, (x) => buildStructurePage(x.reader, x.cfg, x.tr, x.db, x.table, x.features))),
+  c.json(
+    await withTable(c, async (x) =>
+      buildStructurePage(x.reader, x.cfg, x.tr, x.db, x.table, {
+        ...(x.features ?? storageFeatures(null)),
+        centralList: await centralList(x),
+      }),
+    ),
+  ),
 )
+
+/** POST …/tables/:t/structure/central-columns-{add,remove} (selected_fld[]) */
+tableStructureRoutes.post('/:db/tables/:t/structure/central-columns-add', async (c) => {
+  const req = parse(CentralColumnsSelectRequest, await jsonBody(c))
+  return respond(c, await withTable(c, (x) => centralColumnsAdd(x, req.columns)))
+})
+tableStructureRoutes.post('/:db/tables/:t/structure/central-columns-remove', async (c) => {
+  const req = parse(CentralColumnsSelectRequest, await jsonBody(c))
+  return respond(c, await withTable(c, (x) => centralColumnsRemove(x, req.columns)))
+})
 
 /** GET …/tables/:t/columns/form?fields=a&fields=b (pma: /table/structure/change) */
 tableStructureRoutes.get('/:db/tables/:t/columns/form', async (c) => {

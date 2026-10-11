@@ -17,6 +17,7 @@ import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { ResultMessages } from '../common/ResultMessages'
 import { IndexDialog } from '../indexes/IndexEditor'
+import { CentralColumnPicker } from '../structure/CentralColumnPicker'
 import { ColumnForm, type ColumnRow, emptyRow, indexesFromRows, toColumnDef } from '../structure/ColumnForm'
 
 /**
@@ -285,12 +286,33 @@ function Step11({ env }: { env: StepEnv }) {
   const [selected, setSelected] = useState(placeholder)
   const [num, setNum] = useState(2)
   const [splitting, setSplitting] = useState<number | null>(null)
+  const [centralList, setCentralList] = useState(false)
   return (
     <StepCard
       legend={legend1(1, t('Make all columns atomic'))}
-      head={t(
-        'Do you have any column which can be split into more than one column? For example: address can be split into street, city, country and zip.',
-      )}
+      head={
+        <>
+          {t(
+            'Do you have any column which can be split into more than one column? For example: address can be split into street, city, country and zip.',
+          )}
+          <br />(
+          <Button variant="link" className="central_columns_dialog" onClick={() => setCentralList(true)}>
+            {t('Show me the central list of columns that are not already in this table')}
+          </Button>
+          )
+          {centralList && (
+            // data-maxrows='25' data-pick=false
+            <CentralColumnPicker
+              server={env.scope.server}
+              db={env.scope.db}
+              table={env.scope.table}
+              maxRows={25}
+              onPick={null}
+              onClose={() => setCentralList(false)}
+            />
+          )}
+        </>
+      }
       sub={t(
         "Select a column which can be split into more than one (on select of 'no such column', it'll move to next step).",
       )}

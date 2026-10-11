@@ -353,6 +353,7 @@ export const api = {
     call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  tablePrivileges: (s: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(s)}/privileges`),
   tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
     call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
@@ -523,6 +524,9 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
   dropColumns: (r: TableRef, req: DropColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  /** pma: /table/structure/central-columns-{add,remove} */
+  structureCentralColumns: (r: TableRef, op: 'add' | 'remove', columns: string[]) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/structure/central-columns-${op}`, { columns }),
   addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tablePath(r)}/columns/key`, req),
   moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/move`, req),
@@ -634,6 +638,9 @@ export const api = {
     ),
   dbCentralColumnsPopulate: (r: DbRef, table: string) =>
     call<string[]>('GET', `${dbPath(r)}/central-columns/populate?table=${encodeURIComponent(table)}`),
+  /** pma: /database/central-columns getColumnList (cur_table): the "Pick from Central Columns" list */
+  dbCentralColumnsList: (r: DbRef, table: string) =>
+    call<CentralColumn[]>('GET', `${dbPath(r)}/central-columns/list?table=${encodeURIComponent(table)}`),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },

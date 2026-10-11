@@ -243,6 +243,11 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                           column={c}
                           hide={s.config.HideStructureActions}
                           onKey={(type) => void addKey(type, c)}
+                          onCentral={
+                            s.features.centralColumns
+                              ? (op) => void act(() => api.structureCentralColumns(scope, op, [c.name]))
+                              : null
+                          }
                           server={server}
                         />
                       </td>
@@ -320,6 +325,20 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                               ? 'Spatial'
                               : 'Fulltext',
                     )}
+                  </Button>
+                ))}
+              {s.engine !== 'ARCHIVE' &&
+                s.features.centralColumns &&
+                (['add', 'remove'] as const).map((op) => (
+                  <Button
+                    key={op}
+                    variant="link"
+                    onClick={() =>
+                      noneSelected() ||
+                      void act(() => api.structureCentralColumns(scope, op, orderedSelection))
+                    }
+                  >
+                    {op === 'add' ? t('Add to central columns') : t('Remove from central columns')}
                   </Button>
                 ))}
             </>
@@ -727,11 +746,14 @@ function RowActions({
   column,
   hide,
   onKey,
+  onCentral,
   server,
 }: {
   column: Column
   hide: boolean
   onKey: (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT') => void
+  /** null without the central columns feature */
+  onCentral: ((op: 'add' | 'remove') => void) | null
   server: number
 }) {
   const items = (
@@ -768,6 +790,19 @@ function RowActions({
           {t('Distinct values')}
         </Link>
       </li>
+      {onCentral !== null && (
+        <li className="browse whitespace-nowrap">
+          {column.inCentralList ? (
+            <Button variant="link" onClick={() => onCentral('remove')}>
+              {t('Remove from central columns')}
+            </Button>
+          ) : (
+            <Button variant="link" onClick={() => onCentral('add')}>
+              {t('Add to central columns')}
+            </Button>
+          )}
+        </li>
+      )}
     </ul>
   )
   if (!hide) return items

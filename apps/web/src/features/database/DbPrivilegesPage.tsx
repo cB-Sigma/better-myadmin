@@ -5,17 +5,21 @@ import { Fragment, useState } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { path, Messages, dbBase, enc, errorMessage } from './common'
+import { path, Messages, dbBase, enc, errorMessage, tableBase } from './common'
 
 /**
- * Database → Privileges: the accounts with access to the database (read-only; editing goes to
- * the server privileges pages).
- * pma: templates/database/privileges/index.twig
+ * Database → Privileges and Table → Privileges (with `table`): the accounts with access to the
+ * database or the table (read-only; editing goes to the server privileges pages).
+ * pma: templates/database/privileges/index.twig, templates/table/privileges/index.twig
  */
-export function DbPrivilegesPage({ server, db }: { server: number; db: string }) {
+export function DbPrivilegesPage({ server, db, table }: { server: number; db: string; table?: string }) {
   const q = useQuery({
-    queryKey: qk.dbPage({ server, db }, 'privileges'),
-    queryFn: () => api.dbPrivileges({ server, db }),
+    queryKey:
+      table === undefined
+        ? qk.dbPage({ server, db }, 'privileges')
+        : qk.tblPage({ server, db, table }, 'privileges'),
+    queryFn: () =>
+      table === undefined ? api.dbPrivileges({ server, db }) : api.tablePrivileges({ server, db, table }),
   })
   const [selected, setSelected] = useState<string[]>([])
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
@@ -23,8 +27,8 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
   if (d === undefined) return null
   if (d.error !== null) return <Messages messages={[{ type: 'error', text: d.error }]} />
   const usersBase = `/s/${server}/privileges`
-  const editUrl = (user: string, host: string, dbname: string, routine: string | null) =>
-    `${usersBase}?username=${enc(user)}&hostname=${enc(host)}&dbname=${enc(dbname)}&tablename=&routinename=${enc(routine ?? '')}`
+  const editUrl = (user: string, host: string, dbname: string, tablename: string, routine: string | null) =>
+    `${usersBase}?username=${enc(user)}&hostname=${enc(host)}&dbname=${enc(dbname)}&tablename=${enc(tablename)}&routinename=${enc(routine ?? '')}`
   const escapedDb = db.replaceAll('_', '\\_').replaceAll('%', '\\%')
   const keys = d.accounts.map((a) => `${a.user}\u001b${a.host}`)
   return (
@@ -36,7 +40,11 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
             <IconText icon="b_usrcheck" text="" />
             <span>
               {t('Users having access to "%s"').split('%s')[0]}
-              <Link to={path(dbBase(server, db))}>{db}</Link>
+              {table === undefined ? (
+                <Link to={path(dbBase(server, db))}>{db}</Link>
+              ) : (
+                <Link to={path(tableBase(server, db, table))}>{`${db}.${table}`}</Link>
+              )}
               {t('Users having access to "%s"').split('%s')[1]}
             </span>
           </h2>
@@ -66,7 +74,7 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
                   const key = keys[ai] ?? ''
                   return a.privileges.map((p, i) => (
                     <tr
-                      key={`${key}-${p.type}-${p.database}-${p.routine ?? ''}`}
+                      key={`${key}-${p.type}-${p.database}-${p.table ?? ''}-${p.routine ?? ''}`}
                       className={i > 0 ? 'noclick' : 'odd:bg-grid-odd even:bg-grid-even'}
                     >
                       {i === 0 && (
@@ -101,6 +109,7 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
                               {t('wildcard')}: <code>{p.database}</code>
                             </>
                           ))}
+                        {p.type === 't' && t('table-specific')}
                         {p.type === 'r' && t('routine')}
                       </td>
                       <td>
@@ -121,7 +130,13 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
                           <Link
                             className="edit_user_anchor"
                             to={path(
-                              editUrl(a.user, a.host, p.database !== '*' ? p.database : db, p.routine),
+                              editUrl(
+                                a.user,
+                                a.host,
+                                p.database !== '*' ? p.database : db,
+                                p.table !== undefined && p.table !== '*' ? p.table : (table ?? ''),
+                                p.routine,
+                              ),
                             )}
                           >
                             <IconText icon="b_usredit" text={t('Edit privileges')} />
@@ -173,7 +188,9 @@ export function DbPrivilegesPage({ server, db }: { server: number; db: string })
           <Link
             className={buttonVariants({ variant: 'primary' })}
             id="add_user_anchor"
-            to={path(`${usersBase}?adduser=1&dbname=${enc(db)}`)}
+            to={path(
+              `${usersBase}?adduser=1&dbname=${enc(db)}${table === undefined ? '' : `&tablename=${enc(table)}`}`,
+            )}
           >
             <IconText icon="b_usradd" text={t('Add user account')} />
           </Link>

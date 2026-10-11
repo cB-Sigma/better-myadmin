@@ -90,6 +90,7 @@ export async function columnFormOptions(
     privsAvailable,
     charEditing: cfg.CharEditing,
     centralColumns: features.centralColumns,
+    maxRows: cfg.MaxRows,
     mime: showMime(cfg, meta),
     mimeTypes: showMime(cfg, meta) ? mimeTypeOptions(tr) : null,
   }
