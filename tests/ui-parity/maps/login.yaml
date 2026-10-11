@@ -1,0 +1,6 @@
+# Intentional differences of the login page (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: select, name: lang }
+    added: >-
+      environment: the reference phpMyAdmin is built without translations (docker/pma-ref,
+      PMA_TRANSLATIONS=0), so LanguageManager has no choice and hides the selector; ours bundles them
