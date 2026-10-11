@@ -65,3 +65,7 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | Q27 | Login | `login/footer.twig` checks `check_timeout`, which PHP never passes | N/A; our expiry message path is explicit |
 | Q28 | Home | No "Protocol version" row in the server block in master | Reproduce |
 | Q29 | Shell | No "Remember me" checkbox exists; persistence comes from `LoginCookieStore` | Reproduce |
+| Q30 | Index editor | A new index defaults to UNIQUE and always offers PRIMARY (`new Index()` / `hasPrimary()` on an empty table name) | Reproduce |
+| Q31 | Change columns | Untouched A_I, CURRENT_TIMESTAMP-default, `on update` and generated columns are re-stated with CHANGE (form values vs `_orig`); a failing ALTER always runs the revert query, `ALTER TABLE `t` ;` when nothing was converted to BLOB | Reproduce |
+| Q32 | Change columns | MySQL 8 reports `geomcollection`, absent from the type select, so the form posts `INT` | Reproduce |
+| Q33 | Structure | The /sql links clear `column_info` with unescaped values on the user's connection (`Transformations::clear`), also for `DROP INDEX` (first altered field) | Reproduce behind the browser-transformation feature flag |
