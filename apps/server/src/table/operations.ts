@@ -547,7 +547,7 @@ async function handleStructureCreation(
   const { reader, db, table } = ctx
   const context = reader.conn.serverInfo?.context
   const isView = await reader.isView(db, table)
-  const def = await getTableDef(reader, db, table, isView, req.autoIncrement)
+  const def = await getTableDef(ctx, db, table, isView, req.autoIncrement)
   const destination = new Expression(targetDb, targetTable, '')
   const build = <T>(fn: () => T) => Ctx.run(context, fn)
   let maintainRelations = false

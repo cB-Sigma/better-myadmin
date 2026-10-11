@@ -1,20 +1,16 @@
 /**
- * The table definition the SQL export plugin produces for a table copy / cross-database move:
- * the CREATE statement without constraints, indexes and AUTO_INCREMENT, plus the three ALTER
- * statements that add them back.
+ * The table definition the SQL export plugin produces for a table copy / move and for a tracking
+ * version: `ExportSql::getTableDef` itself (packages/export), on the request's user link.
  *
- * pma: src/Plugins/Export/ExportSql.php::getTableDef (useSqlBackquotes, no comments/dates,
- *      compatibility NONE, no IF NOT EXISTS, $updateIndexesIncrements = true)
+ * pma: src/Table/TableMover.php::moveCopy (getPlugin('export', 'sql'), useSqlBackquotes(true),
+ *      setAutoIncrement, getTableDef($db, $table, false, $isView) + the deferred sqlConstraintsQuery /
+ *      sqlIndexes / sqlAutoIncrements), src/Tracking/Tracker.php::createVersion
  */
-import { backquote } from '@bettermyadmin/sql-gen'
-import {
-  type Context,
-  type CreateDefinition,
-  CreateStatement,
-  Context as Ctx,
-  type OptionsArray,
-  Parser,
-} from '@bettermyadmin/sql-lexer'
+import { type ExportSql, structurePlugin } from '@bettermyadmin/export'
+import type { Translator } from '@bettermyadmin/i18n'
+import { Context } from '@bettermyadmin/sql-lexer'
+import type { AppConfig, ServerConfig } from '../config.ts'
+import { ServerExportDbi } from '../export/dbi.ts'
 import type { TableReader } from './read.ts'
 
 export interface TableDef {
@@ -28,97 +24,43 @@ export interface TableDef {
   autoIncrements: string | null
 }
 
+interface DefCtx {
+  reader: TableReader
+  cfg: AppConfig
+  tr: Translator
+  server: ServerConfig
+}
+
+/** Plugins::getPlugin('export', 'sql', ExportType::Table) + useSqlBackquotes(true) on the user link */
+export function sqlStructurePlugin(ctx: DefCtx, autoIncrement = false): ExportSql {
+  const conn = ctx.reader.conn
+  return structurePlugin({
+    dbi: new ServerExportDbi(conn, {
+      disableIS: ctx.server.DisableIS,
+      naturalOrder: ctx.cfg.NaturalOrder,
+      databaseList: async () => [],
+    }),
+    tr: ctx.tr,
+    parserContext: conn.serverInfo?.context ?? new Context(),
+    settings: ctx.cfg.Export as unknown as Record<string, unknown>,
+    autoIncrement,
+  })
+}
+
+/** TableMover::moveCopy's structure: the CREATE statement and the deferred ALTERs */
 export async function getTableDef(
-  reader: TableReader,
+  ctx: DefCtx,
   db: string,
   table: string,
   isView: boolean,
   autoIncrement: boolean,
 ): Promise<TableDef> {
-  const context: Context | undefined = reader.conn.serverInfo?.context
-  // Whether to quote table and column names or not
-  await reader.conn.query('SET SQL_QUOTE_SHOW_CREATE = 1', 'export.quote')
-  await reader.dbi.tryQuery(`USE ${backquote(db)}`, 'export.use')
-  const r = await reader.dbi.tryQuery(
-    `SHOW CREATE TABLE ${backquote(db)}.${backquote(table)}`,
-    'export.create',
-  )
-  if (r === null) throw new Error(`Error reading structure for table ${db}.${table}: ${reader.dbi.lastError}`)
-  let createQuery = r.rows[0]?.[1] ?? ''
-  const out: TableDef = { create: '', constraints: '', indexes: null, autoIncrements: null }
-  if (createQuery === '') return out
-
-  if (createQuery.includes('(\r\n ')) createQuery = createQuery.replaceAll('\r\n', '\n')
-  else if (createQuery.includes('(\r ')) createQuery = createQuery.replaceAll('\r', '\n')
-
-  return Ctx.run(context, () => {
-    if (isView) {
-      // Drop database name from VIEW creation
-      createQuery = createQuery.replaceAll(`${backquote(db)}.`, '')
-      const st = new Parser(createQuery).statements[0]
-      if (st instanceof CreateStatement) createQuery = st.build()
-    }
-    const parser = new Parser(createQuery)
-    const statement = parser.statements[0]
-    if (!(statement instanceof CreateStatement)) {
-      out.create = createQuery
-      return out
-    }
-    const entity = statement.entityOptions as OptionsArray | null
-    const engine =
-      entity !== null && typeof entity === 'object' && 'get' in entity ? entity.get('ENGINE') : ''
-    const fields = statement.fields
-    if (
-      Array.isArray(fields) &&
-      fields.length > 0 &&
-      (engine === '' || String(engine).toUpperCase() !== 'ARCHIVE')
-    ) {
-      const constraints: string[] = []
-      const indexes: string[] = []
-      const fulltext: string[] = []
-      const autoInc: string[] = []
-      const keep: CreateDefinition[] = []
-      for (const field of fields as CreateDefinition[]) {
-        let removed = false
-        if (field.isConstraint) {
-          constraints.push(field.build())
-          removed = true
-        } else if (field.key !== null) {
-          if (field.key.type === 'FULLTEXT KEY') fulltext.push(field.build())
-          else indexes.push(field.build().replaceAll("COMMENT='", "COMMENT '"))
-          removed = true
-        }
-        if (field.key !== null && field.key.type === 'FOREIGN KEY' && field.name !== null) removed = true
-        if (field.options?.has('AUTO_INCREMENT')) {
-          autoInc.push(field.build())
-          field.options.remove('AUTO_INCREMENT')
-        }
-        if (!removed) keep.push(field)
-      }
-      statement.fields = keep
-      const alterHeader = `ALTER TABLE ${backquote(table)}`
-      const alterFooter = ';\n'
-      if (constraints.length > 0) {
-        out.constraints = `${alterHeader}\n  ADD ${constraints.join(',\n  ADD ')}${alterFooter}`
-      }
-      let indexesQuery = ''
-      if (indexes.length > 0)
-        indexesQuery += `${alterHeader}\n  ADD ${indexes.join(',\n  ADD ')}${alterFooter}`
-      if (fulltext.length > 0) {
-        indexesQuery += `${alterHeader} ADD ${fulltext.join(`${alterFooter}${alterHeader} ADD `)}${alterFooter}`
-      }
-      if (indexesQuery !== '') out.indexes = indexesQuery
-      if (autoInc.length > 0) {
-        let q = `${alterHeader}\n  MODIFY ${autoInc.join(',\n  MODIFY ')}`
-        if (autoIncrement && entity?.has('AUTO_INCREMENT') === true) {
-          q += `, AUTO_INCREMENT=${String(entity.get('AUTO_INCREMENT'))}`
-        }
-        out.autoIncrements = `${q};\n`
-      }
-      entity?.remove('AUTO_INCREMENT')
-      createQuery = statement.build()
-    }
-    out.create = createQuery
-    return out
-  })
+  const plugin = sqlStructurePlugin(ctx, autoIncrement)
+  const create = await plugin.getTableDef(db, table, false, isView)
+  return {
+    create,
+    constraints: plugin.sqlConstraintsQuery,
+    indexes: plugin.sqlIndexes,
+    autoIncrements: plugin.sqlAutoIncrements,
+  }
 }

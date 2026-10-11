@@ -29,7 +29,7 @@ import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import type { z } from 'zod'
 import { MysqlError, ValidationError } from '../http/errors.ts'
 import type { OpsCtx } from './operations.ts'
-import { getTableDef } from './table-def.ts'
+import { sqlStructurePlugin } from './table-def.ts'
 
 type In<T extends z.ZodTypeAny> = z.output<T>
 const q = (s: string) => quoteString(s)
@@ -214,8 +214,7 @@ async function createVersion(ctx: OpsCtx, version: string, statements: string, i
   }
   // ExportSql::getTableDef($db, $table) with the plugin's defaults: no view handling, no
   // AUTO_INCREMENT value, keys and constraints left out of the CREATE statement, a semicolon added
-  const def = await getTableDef(reader, db, table, false, false)
-  createSql += `${logComment(user, now)}${def.create};\n`
+  createSql += `${logComment(user, now)}${await sqlStructurePlugin(ctx).getTableDef(db, table)}`
 
   await t.conn.query(
     `/*NOTRACK*/\nINSERT INTO ${bq(t.database)}.${bq(t.table)} (db_name, table_name, version, date_created, date_updated, schema_snapshot, schema_sql, data_sql, tracking) values (${q(db)}, ${q(table)}, ${q(version)}, ${q(date)}, ${q(date)}, ${q(snapshot)}, ${q(createSql)}, ${q('\n')}, ${q(trackingSet)})`,
