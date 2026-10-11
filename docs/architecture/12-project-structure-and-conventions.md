@@ -21,6 +21,10 @@ bettermyadmin/
   packages/
     contracts/   sql-lexer/   sql-gen/   mysql-types/   metadata/   export/   import/   transformations/
     i18n/        ui/          config/    kbs/           testing/
+  tools/
+    parity/                    inventories extracted from phpMyAdmin, maps, coverage reports, CI gate
+      php/                     extraction scripts that execute phpMyAdmin's own code
+      inventory/  map/         committed JSON inventories; YAML mappings + checklist ids
   docs/                        this documentation
   tests/parity/                golden parity scripts and allowed-diffs.yaml
   docker/                      compose files for dev and parity (mysql matrix, phpmyadmin reference)
@@ -43,6 +47,24 @@ bettermyadmin/
 
 - Directives keep phpMyAdmin names in config (`MaxRows`), camelCase in code (`maxRows`), and the mapping is generated from `packages/config/schema.ts` so there is one source.
 - Feature folders are named after the phpMyAdmin tab/page they implement; component names echo phpMyAdmin template names where sensible (`ResultHeader` ↔ `sql/sql_query_message.twig`) and the file carries a `// pma: src/Display/Results.php::getTableHeaders` comment pointing at the mirrored source. These pointers are how a reviewer checks parity quickly.
+
+### Parity markers
+
+`tools/parity` reads these statically (no build, no execution) to compute [coverage](../reference/coverage/README.md); see [Testing and parity](11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate).
+
+- **Template controls**: each feature folder that implements phpMyAdmin controls has a `pma-controls.ts` registry, so components stay untouched and merges stay easy:
+
+  ```ts
+  export const pmaControls = {
+    'login/form.twig#pma_username': 'LoginPage.tsx',
+    'sql/query.twig#SQL': { file: 'SqlPage.tsx', match: 'button_submit_query' },
+  }
+  ```
+
+  Keys are inventory keys from `tools/parity/inventory/controls.json`: `<template>#<name>`, else `#id:<id>`, else `#<kind>:<label msgid>` (`#link:Reload navigation panel`, `#button:Clear fast filter`); controls printed by PHP helpers use the PHP file (`src/Navigation/NavigationTree.php#id:pma_navigation_sync`). The value is the component file, relative to the registry; the gate checks that it exists and still contains the control's name, id or label msgid as a quoted string, or the `match` string when given. Alternatively, put `data-pma="<key> [<key>…]"` on the element itself (no further evidence needed). Only claim a control the component really implements.
+- **Routes**: map phpMyAdmin routes in `tools/parity/map/routes.yaml` (`api:`/`ui:` targets, else `planned: M<n>`); a target must exist in the Hono registrations or TanStack routes, so change the map in the same PR as the endpoint.
+- **Checklist tests**: put the item id in the test title, e.g. `it('pages by prefix [p01-41d435]', …)` (ids are in `tools/parity/map/checklist-ids.json` and next to each ticked item); a title equal to the item text also links. Several ids per title are fine. Only link a test that exercises the whole item.
+- **Not applicable**: `n/a: <reason>` in `tools/parity/map/*.yaml`, or `<!-- parity:n/a: reason -->` after a checklist item.
 
 ### Frontend
 
@@ -71,8 +93,8 @@ bettermyadmin/
 
 - `docs/features/*`: behaviour, exhaustively, with source citations to phpMyAdmin. They change only when phpMyAdmin changes or an audit finds an error.
 - `docs/architecture/*`: how we build it. Decisions get a `D<n>` id in the tech-stack doc.
-- `docs/reference/*`: generated or tabular references (config directives, route map, parity exceptions, glossary). Generated files say so in their first line and have a `pnpm docs:gen` script.
-- Checklists in feature docs are updated by `pnpm parity:report`, never by hand.
+- `docs/reference/*`: generated or tabular references (config directives, route map, parity exceptions, glossary). Generated files say so in their first line and have a generating script (`pnpm parity:report` for `pma-route-map.md` and `coverage/`).
+- Checklists in feature docs are updated by `pnpm parity:report`, never by hand (it only rewrites the `[ ]`/`[x]` marker and the ` <!-- parity:test --> …` suffix).
 
 ## Branching
 

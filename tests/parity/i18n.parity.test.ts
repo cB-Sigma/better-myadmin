@@ -55,13 +55,13 @@ const CASES: Array<{ name: string; sql: string; expect: RegExp }> = [
   { name: 'SHOW: executed successfully', sql: 'SHOW TABLES', expect: /^Ihr SQL-Befehl wurde erfolgreich/ },
   // motranslator evaluates `n != 1` to a boolean → form 0 even for 3 rows
   {
-    name: 'UPDATE: plural form as phpMyAdmin picks it',
+    name: 'UPDATE: plural form as phpMyAdmin picks it [p09-a212a5]',
     sql: 'UPDATE t SET qty = 9 WHERE id < 4',
     expect: /^3 Datensatz betroffen\./,
   },
   { name: 'DELETE', sql: 'DELETE FROM t WHERE id > 38', expect: /^2 Datensatz gelöscht\./ },
   {
-    name: 'INSERT with row id',
+    name: 'INSERT with row id [p09-a212a5]',
     sql: "INSERT INTO t (name, qty) VALUES ('a', 1), ('b', 2)",
     expect: /ID der eingefügten Zeile: 42/,
   },

@@ -635,7 +635,7 @@ Breadcrumb: Server (`s_host`, "Server:") → Database (`s_db`, "Database:", + �
 - [ ] Cookies: `HttpOnly`, `Secure` on HTTPS, `SameSite=$cfg['CookieSameSite']` (`Strict`), `__Secure-` prefix + `_https` suffix on HTTPS; password cookie encrypted with a per-session key, username cookie with `blowfish_secret`; `LoginCookieValidity` inactivity enforcement; `LoginCookieStore`; `LoginCookieDeleteAll`.
 - [ ] Session: `use_strict_mode`, `use_only_cookies`, no trans-sid, regenerate on login, `session_unset/destroy` on full logout; `SessionSavePath` optional.
 - [ ] `AllowArbitraryServer` (`false`) + `ArbitraryServerRegexp`; `p:` prefix stripping; `AllowRoot` (`true`), `AllowNoPassword` (`false`).
-- [ ] IP `AllowDeny` (`IpAllowDeny.php`): `order` `''|deny,allow|allow,deny|explicit`; rules `<allow|deny> <user|%> [from] <ip|cidr|range|all|localhost|localnetA|B|C>` (IPv4 `[a-b]` octet ranges and CIDR; IPv6 exact, trailing `[hex-hex]`, CIDR); `allow,deny`/`explicit` → allowed only if an allow rule matches and no deny rule; `deny,allow` → denied if a deny matches and no allow. Docs examples: `'allow bob from all'`, `'allow mary from 192.168.100.[50-100]'`, `'allow % from 192.168.[5-6].10'`, `'allow root from 192.168.5.50'`. Client IP from `REMOTE_ADDR`, or the first entry of the header configured in `$cfg['TrustedProxies']` (`['1.2.3.4' => 'HTTP_X_FORWARDED_FOR']`) when the proxy matches.
+- [x] IP `AllowDeny` (`IpAllowDeny.php`): `order` `''|deny,allow|allow,deny|explicit`; rules `<allow|deny> <user|%> [from] <ip|cidr|range|all|localhost|localnetA|B|C>` (IPv4 `[a-b]` octet ranges and CIDR; IPv6 exact, trailing `[hex-hex]`, CIDR); `allow,deny`/`explicit` → allowed only if an allow rule matches and no deny rule; `deny,allow` → denied if a deny matches and no allow. Docs examples: `'allow bob from all'`, `'allow mary from 192.168.100.[50-100]'`, `'allow % from 192.168.[5-6].10'`, `'allow root from 192.168.5.50'`. Client IP from `REMOTE_ADDR`, or the first entry of the header configured in `$cfg['TrustedProxies']` (`['1.2.3.4' => 'HTTP_X_FORWARDED_FOR']`) when the proxy matches. <!-- parity:test --> `p01-8f6608` [ip-allow-deny.test.ts:27](../../apps/server/test/unit/ip-allow-deny.test.ts#L27)
 - [ ] Captcha on login (`CaptchaMethod` invisible/checkbox, reCAPTCHA v2 API) — optional.
 - [ ] `URLQueryEncryption` (`false`) + `URLQueryEncryptionSecretKey`: encrypts `db, table, field, sql_query, sql_signature, where_clause, goto, back, message_to_show, username, hostname, dbname, tablename` into one `eq` param. SQL query signatures via the HMAC secret (`Core::signSqlQuery/checkSqlQuerySignature`).
 - [ ] `goto`/`back` restricted to `index.php` (`Core::checkPageValidity`); `Sanitize::checkLink()` restricts logo/other links to `https://`, `/url&url=https…`, `./docs/html/`, `./index.php?` (+ `http://` when allowed, `mailto:`/`ftp://` for "other").
@@ -652,18 +652,18 @@ Navigation panel
 - [ ] Tree height recomputed on resize and every 2 s; body bottom margin follows console height.
 - [ ] Expanded branches + pagination positions restored from `sessionStorage.navTreePaths` only when `server` and `token` match; config form submit clears it; logout clears all `sessionStorage`.
 - [ ] Fast filter: live client regex filter on keyup, server search on Enter (the response's "%s result(s) found" is not displayed), clear button restores the cloned original list and the page selector; filter text restored after reload (`navTreeSearchFilters`).
-- [ ] Database filter box only when ≥ 30 databases (`NavigationTreeDisplayDbFilterMinimum`); per-container filter only when ≥ 30 objects of that type (`NavigationTreeDisplayItemFilterMinimum`).
-- [ ] Pagination: 100 first-level items (`FirstLevelNavigationItems`, counted per prefix group when grouping), 50 objects per container (`MaxNavigationItems`); page selector with `<< < [select] > >>`; initial db page computed from the current database.
-- [ ] Grouping by `_` (databases, unlimited depth) and `__` (tables/views/routines/events, depth `NavigationTreeTableLevel=1`); single-member prefixes never group; a prefix equal to a sibling name joins the group; one group covering everything is not created; > 500 members → performance warning.
+- [x] Database filter box only when ≥ 30 databases (`NavigationTreeDisplayDbFilterMinimum`); per-container filter only when ≥ 30 objects of that type (`NavigationTreeDisplayItemFilterMinimum`). <!-- parity:test --> `p01-79ae51` [navigation.test.ts:94](../../apps/server/test/int/navigation.test.ts#L94) +3
+- [x] Pagination: 100 first-level items (`FirstLevelNavigationItems`, counted per prefix group when grouping), 50 objects per container (`MaxNavigationItems`); page selector with `<< < [select] > >>`; initial db page computed from the current database. <!-- parity:test --> `p01-41d435` [navigation.test.ts:94](../../apps/server/test/int/navigation.test.ts#L94) +4
+- [x] Grouping by `_` (databases, unlimited depth) and `__` (tables/views/routines/events, depth `NavigationTreeTableLevel=1`); single-member prefixes never group; a prefix equal to a sibling name joins the group; one group covering everything is not created; > 500 members → performance warning. <!-- parity:test --> `p01-a333a2` [navigation.test.ts:61](../../apps/server/test/int/navigation.test.ts#L61) +5
 - [ ] "New" items first in every container (database, table, view, procedure, function, event, column, index, trigger) — "New" view opens the create-view modal.
-- [ ] Table node: first icon per `NavigationTreeDefaultTabTable` (default Structure), optional second icon; text link per `DefaultTabTable` (default Browse) with `pos=0`.
+- [x] Table node: first icon per `NavigationTreeDefaultTabTable` (default Structure), optional second icon; text link per `DefaultTabTable` (default Browse) with `pos=0`. <!-- parity:test --> `p01-d23a2e` [navigation.test.ts:152](../../apps/server/test/int/navigation.test.ts#L152) +1
 - [ ] Routine icon opens the *Execute* dialog, routine text opens *Edit*; trigger icon = export, text = edit; event = edit.
-- [ ] Column label `name (key, type, default…, nullable)` with default truncated to 6 bytes; PRI/UNI icons.
+- [x] Column label `name (key, type, default…, nullable)` with default truncated to 6 bytes; PRI/UNI icons. <!-- parity:test --> `p01-60ce39` [navigation.test.ts:189](../../apps/server/test/int/navigation.test.ts#L189) +1
 - [ ] Hide (eye) on every db child incl. containers; database shows an unhide icon when hidden items exist; unhide dialog grouped by type.
-- [ ] *Tables* container row is suppressed when it is the only container (its tables, filter and page selector show under the database); the client auto-expands a loaded branch made of a single container `<li>`.
-- [ ] Link-with-main-panel: highlight + expand + scroll current db/table after every AJAX load; toggle is session-only; `autoexpand` opens the only database when none is selected.
+- [x] *Tables* container row is suppressed when it is the only container (its tables, filter and page selector show under the database); the client auto-expands a loaded branch made of a single container `<li>`. <!-- parity:test --> `p01-5523b6` [navigation.test.ts:138](../../apps/web/src/features/navigation/navigation.test.ts#L138) +2
+- [x] Link-with-main-panel: highlight + expand + scroll current db/table after every AJAX load; toggle is session-only; `autoexpand` opens the only database when none is selected. <!-- parity:test --> `p01-750138` [navigation.test.ts:245](../../apps/web/src/features/navigation/navigation.test.ts#L245) +1
 - [ ] Hover reveals a floating full-name layer for truncated names; `highlight` class gives hover pointer styling.
-- [ ] Reload icon re-fetches the full tree keeping expansion; `reload` also clears the cached db list.
+- [x] Reload icon re-fetches the full tree keeping expansion; `reload` also clears the cached db list. <!-- parity:test --> `p01-b7e594` [navigation.test.ts:274](../../apps/server/test/int/navigation.test.ts#L274) +1
 - [ ] Recent (10) / Favorites (10) dropdowns above the tree; favorites synced between `localStorage.favoriteTables[sha1(user)]` and `pma__favorite` via a one-time hidden sync link; "Favorite List is full!"; star buttons on structure page and dropdown stay in sync via `data-favtargets`.
 - [ ] Logo link honours `NavigationLogoLink`/`NavigationLogoLinkWindow`; invalid links fall back to `index.php`.
 - [ ] Drag-and-drop SQL import overlay when `enable_drag_drop_import`.
@@ -703,7 +703,7 @@ Console
 
 Auth
 - [ ] Cookie login redirects (302) after POST so cookies take effect; username recalled via `LoginCookieRecall`; password cookie lifetime per `LoginCookieStore`.
-- [ ] Inactivity logout message with the configured seconds; "Your session has expired. Please log in again." on `session_expired`.
+- [x] Inactivity logout message with the configured seconds; "Your session has expired. Please log in again." on `session_expired`. <!-- parity:test --> `p01-d6345b` [auth.test.ts:80](../../apps/server/test/int/auth.test.ts#L80)
 - [ ] Server dropdown vs arbitrary server input; `ArbitraryServerRegexp`; language card on login.
 - [ ] Captcha (invisible/checkbox) when fully configured; CSP extended accordingly.
 - [ ] 2FA prompt after password; Application (TOTP + QR), WebAuthn, U2F (deprecated), Simple (debug); configure/disable in Settings with confirmation.
@@ -714,7 +714,7 @@ Auth
 Home / themes / languages / misc
 - [ ] Home cards: General settings (server select, change password, connection collation, more settings), Appearance (language, theme + colour mode, "View all" gallery with screenshots and "Take it"), Database server, Web server, phpMyAdmin (version check, docs links, git revision via AJAX), warnings list, config-storage notice with "Find out why".
 - [ ] Version check cached 6 h, compatibility-filtered, "latest stable version" link, newer-version alert (danger for same-series security releases), "up to date".
-- [ ] Language detection order and `pma_lang` cookie; RTL for ar/fa/he/ur; `FilterLanguages`.
+- [x] Language detection order and `pma_lang` cookie; RTL for ar/fa/he/ur; `FilterLanguages`. <!-- parity:test --> `p01-728b8d` [languages.test.ts:25](../../packages/i18n/test/languages.test.ts#L25) +3
 - [ ] Theme cookie (`pma_theme[-N]`, `_color`), per-theme colour modes, `data-bs-theme`, RTL stylesheet variant.
 - [ ] JS error reporting (TraceKit) with ask/always/never, report modal, "Automatically send report next time", "Change report settings", "Ignore".
 - [ ] `/url` redirector allow-list; docs link conventions (pma docs page#anchor, MySQL refman by version, PHP manual by language, MariaDB KB).

@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test'
  * The login page's Language card (pma: login/form.twig): switching re-renders the page in the chosen
  * language, `<html lang dir>` follows it, RTL locales flip the layout, and the choice is remembered.
  */
-test('switching the language on the login page, RTL flips the layout', async ({ page }) => {
+test('switching the language on the login page, RTL flips the layout [p01-728b8d]', async ({ page }) => {
   await page.goto('/')
   const heading = page.locator('h1')
   await expect(heading).toHaveText('Welcome to BetterMyAdmin')

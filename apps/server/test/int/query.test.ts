@@ -85,7 +85,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(st!.result!.fields[0]!.flags.numeric).toBe(true)
   })
 
-  it('INSERT reports rows inserted and the inserted row id', async () => {
+  it('INSERT reports rows inserted and the inserted row id [p09-a212a5]', async () => {
     const [st] = await q("INSERT INTO t (name) VALUES ('x'), ('y')")
     expect(st!.kind).toBe('affected')
     expect(st!.message.text).toMatch(/^2 rows inserted\.\nInserted row id: 32 \(Query took/)
@@ -93,12 +93,12 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(d!.message.text).toMatch(/^2 rows deleted\. \(Query took/)
   })
 
-  it('UPDATE counts changed rows like mysqli (no CLIENT_FOUND_ROWS)', async () => {
+  it('UPDATE counts changed rows like mysqli (no CLIENT_FOUND_ROWS) [p09-a212a5]', async () => {
     const [same] = await q("UPDATE t SET name = 'first' WHERE id = 1")
     expect(same!.message.text).toMatch(/^0 rows affected\./)
   })
 
-  it('UPDATE matching nothing says 0 rows affected; DDL says executed successfully', async () => {
+  it('UPDATE matching nothing says 0 rows affected; DDL says executed successfully [p09-a212a5]', async () => {
     const [u] = await q("UPDATE t SET name = 'z' WHERE id = -1")
     expect(u!.message.text).toMatch(/^0 rows affected\./)
     const [c] = await q('CREATE TABLE IF NOT EXISTS t2 (a INT)')
@@ -106,7 +106,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(c!.message.text).toMatch(/^MySQL returned an empty result set \(i\.e\. zero rows\)\./)
   })
 
-  it('empty result set with columns', async () => {
+  it('empty result set with columns [p09-a212a5]', async () => {
     const [st] = await q('SELECT * FROM t WHERE id = -1')
     expect(st!.kind).toBe('empty')
     expect(st!.message.text).toMatch(/^MySQL returned an empty result set \(i\.e\. zero rows\)\./)
