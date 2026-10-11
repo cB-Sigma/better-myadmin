@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-72/199 covered (36.2%): 64 implemented, 7 exception, 1 n/a, 127 planned. [Summary](README.md).
+88/199 covered (44.2%): 80 implemented, 7 exception, 1 n/a, 111 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -59,33 +59,33 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | UI /s/:server/transformations (apps/web/src/routes/s/$server/transformations.tsx) | static plugin catalog (packages/mysql-types transformations.ts) |
 | ✅ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper (apps/server/src/routes/insert-edit.ts:148) | raw cell bytes; resize=jpeg\|png sends the original image (no GD) |
 
-## 04 table level — 14/64 (21.9%) covered, 14/64 implemented
+## 04 table level — 30/64 (46.9%) covered, 30/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | 🗓️ | `POST /columns` | `ColumnController` | API GET /api/servers/:s/databases/:db/tables/:t/columns | M2 — name lists for pickers |
-| 🗓️ | `GET, POST /normalization` | `Normalization/MainController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/1nf/step1` | `Normalization/FirstNormalForm/FirstStepController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/1nf/step2` | `Normalization/FirstNormalForm/SecondStepController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/1nf/step3` | `Normalization/FirstNormalForm/ThirdStepController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/1nf/step4` | `Normalization/FirstNormalForm/FourthStepController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/2nf/create-new-tables` | `Normalization/SecondNormalForm/CreateNewTablesController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/2nf/new-tables` | `Normalization/SecondNormalForm/NewTablesController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/2nf/step1` | `Normalization/SecondNormalForm/FirstStepController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/3nf/create-new-tables` | `Normalization/ThirdNormalForm/CreateNewTablesController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/3nf/new-tables` | `Normalization/ThirdNormalForm/NewTablesController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/3nf/step1` | `Normalization/ThirdNormalForm/FirstStepController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/add-new-primary` | `Normalization/AddNewPrimaryController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/create-new-column` | `Normalization/CreateNewColumnController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/get-columns` | `Normalization/GetColumnsController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
-| 🗓️ | `POST /normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | API /api/servers/:s/databases/:db/tables/:table/normalization/* | M2 |
+| ✅ | `GET, POST /normalization` | `Normalization/MainController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/1nf/step1` | `Normalization/FirstNormalForm/FirstStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/1nf/step2` | `Normalization/FirstNormalForm/SecondStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/1nf/step3` | `Normalization/FirstNormalForm/ThirdStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/1nf/step4` | `Normalization/FirstNormalForm/FourthStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/2nf/create-new-tables` | `Normalization/SecondNormalForm/CreateNewTablesController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/2nf/create-new-tables (apps/server/src/routes/table-normalization.ts:50)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/2nf/new-tables` | `Normalization/SecondNormalForm/NewTablesController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/2nf/new-tables (apps/server/src/routes/table-normalization.ts:45)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/2nf/step1` | `Normalization/SecondNormalForm/FirstStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/3nf/create-new-tables` | `Normalization/ThirdNormalForm/CreateNewTablesController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/create-new-tables (apps/server/src/routes/table-normalization.ts:60)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/3nf/new-tables` | `Normalization/ThirdNormalForm/NewTablesController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/new-tables (apps/server/src/routes/table-normalization.ts:55)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/3nf/step1` | `Normalization/ThirdNormalForm/FirstStepController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/step1 (apps/server/src/routes/table-normalization.ts:31)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/add-new-primary` | `Normalization/AddNewPrimaryController` | API GET /api/servers/:s/databases/:db/tables/:t/columns/add-form (apps/server/src/routes/table-structure.ts:104)<br>API POST /api/servers/:s/databases/:db/tables/:t/columns/add (apps/server/src/routes/table-structure.ts:160)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/create-new-column` | `Normalization/CreateNewColumnController` | API GET /api/servers/:s/databases/:db/tables/:t/columns/add-form (apps/server/src/routes/table-structure.ts:104)<br>API POST /api/servers/:s/databases/:db/tables/:t/columns/add (apps/server/src/routes/table-structure.ts:160)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/get-columns` | `Normalization/GetColumnsController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/move-repeating-group (apps/server/src/routes/table-normalization.ts:40)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
+| ✅ | `POST /normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies (apps/server/src/routes/table-normalization.ts:36)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
 | 🗓️ | `GET, POST /table/add-field` | `Table/AddFieldController` | API POST /api/servers/:s/databases/:db/tables/:t/columns/*<br>UI /s/:s/db/:db/t/:table/add-field | M2 |
 | 🗓️ | `GET, POST /table/chart` | `Table/ChartController` | API GET /api/servers/:s/databases/:db/tables/:t/chart<br>API POST /api/servers/:s/databases/:db/tables/:t/chart<br>UI /s/:s/db/:db/t/:table/chart | M3 |
 | 🗓️ | `GET, POST /table/create` | `Table/CreateController` | API /api/servers/:s/databases/:db/tables/:table/create<br>UI /s/:s/db/:db/t/:table/create | M2 |
 | ✅ | `GET, POST /table/find-replace` | `Table/FindReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace/preview (apps/server/src/routes/table-search.ts:46)<br>API POST /api/servers/:s/databases/:db/tables/:t/find-replace (apps/server/src/routes/table-search.ts:51)<br>UI /s/:server/db/:db/t/:table/find-replace (apps/web/src/routes/s/$server/db/$db/t/$table/find-replace.tsx) |  |
 | 🗓️ | `GET, POST /table/gis-visualization` | `Table/GisVisualizationController` | API GET /api/servers/:s/databases/:db/tables/:t/gis<br>UI /s/:s/db/:db/t/:table/gis-visualization | M3 |
-| ✅ | `GET, POST /table/indexes` | `Table/IndexesController` | API POST /api/servers/:s/databases/:db/tables/:t/indexes (apps/server/src/routes/table-structure.ts:230)<br>UI /s/:server/db/:db/t/:table/indexes (apps/web/src/routes/s/$server/db/$db/t/$table/indexes.tsx) |  |
+| ✅ | `GET, POST /table/indexes` | `Table/IndexesController` | API POST /api/servers/:s/databases/:db/tables/:t/indexes (apps/server/src/routes/table-structure.ts:231)<br>UI /s/:server/db/:db/t/:table/indexes (apps/web/src/routes/s/$server/db/$db/t/$table/indexes.tsx) |  |
 | 🗓️ | `GET, POST /table/indexes/rename` | `Table/IndexRenameController` | API /api/servers/:s/databases/:db/tables/:table/indexes/rename<br>UI /s/:s/db/:db/t/:table/indexes/rename | M2 |
 | ✅ | `POST /table/maintenance/analyze` | `Table/Maintenance/AnalyzeController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |
 | ✅ | `POST /table/maintenance/check` | `Table/Maintenance/CheckController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |

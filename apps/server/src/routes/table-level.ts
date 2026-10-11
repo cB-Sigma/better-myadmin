@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import type { ServerEnv } from './server.ts'
+import { tableNormalizationRoutes } from './table-normalization.ts'
 import { tableOpsRoutes } from './table-ops.ts'
 import { tableRelationRoutes } from './table-relation.ts'
 import { tableSearchRoutes } from './table-search.ts'
@@ -11,3 +12,4 @@ tableLevelRoutes.route('/', tableOpsRoutes)
 tableLevelRoutes.route('/', tableRelationRoutes)
 tableLevelRoutes.route('/', tableSearchRoutes)
 tableLevelRoutes.route('/', tableTrackingRoutes)
+tableLevelRoutes.route('/', tableNormalizationRoutes)

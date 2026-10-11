@@ -74,22 +74,22 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET | `/messages` | `JavaScriptMessagesController` | n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent) | ➖ n/a |
 | GET, POST | `/navigation` | `NavigationController` | API `GET /api/servers/:s/navigation/tree` · API `POST /api/servers/:s/navigation/tree` · API `GET /api/servers/:s/navigation/branch` · later `GET /api/servers/:s/navigation/hidden/:db` · later `POST /api/servers/:s/navigation/hide` · later `POST /api/servers/:s/navigation/unhide` | ✅ implemented |
 | POST | `/navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API `POST /api/servers/:s/navigation/width` · (see API reference) | 🗓️ planned (M1) |
-| GET, POST | `/normalization` | `Normalization/MainController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/1nf/step1` | `Normalization/FirstNormalForm/FirstStepController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/1nf/step2` | `Normalization/FirstNormalForm/SecondStepController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/1nf/step3` | `Normalization/FirstNormalForm/ThirdStepController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/1nf/step4` | `Normalization/FirstNormalForm/FourthStepController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/2nf/create-new-tables` | `Normalization/SecondNormalForm/CreateNewTablesController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/2nf/new-tables` | `Normalization/SecondNormalForm/NewTablesController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/2nf/step1` | `Normalization/SecondNormalForm/FirstStepController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/3nf/create-new-tables` | `Normalization/ThirdNormalForm/CreateNewTablesController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/3nf/new-tables` | `Normalization/ThirdNormalForm/NewTablesController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/3nf/step1` | `Normalization/ThirdNormalForm/FirstStepController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/add-new-primary` | `Normalization/AddNewPrimaryController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/create-new-column` | `Normalization/CreateNewColumnController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/get-columns` | `Normalization/GetColumnsController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
-| POST | `/normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
+| GET, POST | `/normalization` | `Normalization/MainController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/1nf/step1` | `Normalization/FirstNormalForm/FirstStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/1nf/step2` | `Normalization/FirstNormalForm/SecondStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/1nf/step3` | `Normalization/FirstNormalForm/ThirdStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/1nf/step4` | `Normalization/FirstNormalForm/FourthStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/2nf/create-new-tables` | `Normalization/SecondNormalForm/CreateNewTablesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/2nf/create-new-tables` | ✅ implemented |
+| POST | `/normalization/2nf/new-tables` | `Normalization/SecondNormalForm/NewTablesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/2nf/new-tables` | ✅ implemented |
+| POST | `/normalization/2nf/step1` | `Normalization/SecondNormalForm/FirstStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/3nf/create-new-tables` | `Normalization/ThirdNormalForm/CreateNewTablesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/create-new-tables` | ✅ implemented |
+| POST | `/normalization/3nf/new-tables` | `Normalization/ThirdNormalForm/NewTablesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/new-tables` | ✅ implemented |
+| POST | `/normalization/3nf/step1` | `Normalization/ThirdNormalForm/FirstStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/step1` | ✅ implemented |
+| POST | `/normalization/add-new-primary` | `Normalization/AddNewPrimaryController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/columns/add-form` · API `POST /api/servers/:s/databases/:db/tables/:t/columns/add` | ✅ implemented |
+| POST | `/normalization/create-new-column` | `Normalization/CreateNewColumnController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/columns/add-form` · API `POST /api/servers/:s/databases/:db/tables/:t/columns/add` | ✅ implemented |
+| POST | `/normalization/get-columns` | `Normalization/GetColumnsController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
+| POST | `/normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/move-repeating-group` | ✅ implemented |
+| POST | `/normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies` | ✅ implemented |
 | GET | `/phpinfo` | `PhpInfoController` | UI `/about/runtime` · (static) | 🗓️ planned (M1, X15) |
 | GET, POST | `/preferences/export` | `Preferences/ExportController` | UI `/settings/export` · API `/api/preferences` | 🗓️ planned (M4) |
 | GET, POST | `/preferences/features` | `Preferences/FeaturesController` | UI `/settings/features` · API `/api/preferences` | 🗓️ planned (M4) |

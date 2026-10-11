@@ -296,11 +296,14 @@ export function IndexDialog({
   query,
   onClose,
   onDone,
+  title,
 }: {
   scope: TableRef
-  query: { index?: string; create?: number } | null
+  query: { index?: string; create?: number; primary?: boolean } | null
   onClose: () => void
   onDone: (r: DdlResponse) => void
+  /** the dialog title (normalization: "Add primary key") */
+  title?: string
 }) {
   const form = useQuery({
     queryKey: qk.indexForm(scope, query),
@@ -310,7 +313,7 @@ export function IndexDialog({
   })
   return (
     <Modal
-      title={query?.index !== undefined ? t('Edit index') : t('Add index')}
+      title={title ?? (query?.index !== undefined ? t('Edit index') : t('Add index'))}
       open={query !== null}
       onClose={onClose}
       size="xl"

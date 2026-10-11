@@ -31,6 +31,8 @@ import type {
   CreateDatabaseResponse,
   CreateTableFormResponse,
   CreateTableRequest,
+  CreateTables2NFRequest,
+  CreateTables3NFRequest,
   CreateTrackingVersionRequest,
   DatabaseScope,
   DatabasesQuery,
@@ -73,14 +75,21 @@ import type {
   MaintenanceRequest,
   MoveColumnsRequest,
   MoveCopyRequest,
+  MoveRepeatingGroupRequest,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  NewTables2NFResponse,
+  NewTables3NFResponse,
+  Normalization3NFStepResponse,
+  NormalizationResult,
+  NormalizationTableResponse,
   OperationsPageResponse,
   OperationsResponse,
   OrderByRequest,
+  PartialDependenciesResponse,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
   PartitionOpsRequest,
@@ -326,6 +335,22 @@ export const api = {
     call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
   tableTrackingSnapshot: (s: TableRef, version: string) =>
     call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
+  // normalization wizard (pma: /normalization/**)
+  normalization: (s: TableRef) => call<NormalizationTableResponse>('GET', `${tablePath(s)}/normalization`),
+  normalization3NFStep: (s: TableRef, tables: string[]) =>
+    call<Normalization3NFStepResponse>('POST', `${tablePath(s)}/normalization/3nf/step1`, { tables }),
+  normalizationPartialDependencies: (s: TableRef) =>
+    call<PartialDependenciesResponse>('POST', `${tablePath(s)}/normalization/partial-dependencies`, {}),
+  normalizationMoveRepeatingGroup: (s: TableRef, req: MoveRepeatingGroupRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/move-repeating-group`, req),
+  normalizationNewTables2NF: (s: TableRef, pd: Array<[string, string[]]>) =>
+    call<NewTables2NFResponse>('POST', `${tablePath(s)}/normalization/2nf/new-tables`, { pd }),
+  normalizationCreateTables2NF: (s: TableRef, req: CreateTables2NFRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/2nf/create-new-tables`, req),
+  normalizationNewTables3NF: (s: TableRef, pd: Record<string, string[]>, tables: Array<[string, string[]]>) =>
+    call<NewTables3NFResponse>('POST', `${tablePath(s)}/normalization/3nf/new-tables`, { pd, tables }),
+  normalizationCreateTables3NF: (s: TableRef, req: CreateTables3NFRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/3nf/create-new-tables`, req),
   // export (docs/features/07-export-import.md)
   exportPage: (server: number, pairs: Array<[string, string]>) =>
     call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
@@ -455,8 +480,11 @@ export const api = {
   addColumnsForm: (r: TableRef) =>
     call<{ options: ColumnFormOptions }>('GET', `${tablePath(r)}/columns/add-form`),
   createTableForm: (r: DbRef) => call<CreateTableFormResponse>('GET', `${dbPath(r)}/create-table/form`),
-  indexForm: (r: TableRef, q: { index?: string; create?: number }) =>
-    call<IndexFormResponse>('GET', `${tablePath(r)}/indexes/form${queryString(q)}`),
+  indexForm: (r: TableRef, q: { index?: string; create?: number; primary?: boolean }) =>
+    call<IndexFormResponse>(
+      'GET',
+      `${tablePath(r)}/indexes/form${queryString({ ...q, primary: q.primary === true ? '1' : undefined })}`,
+    ),
   partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tablePath(r)}/partitions/form`),
   createTable: (r: DbRef, req: CreateTableRequest) =>
     call<DdlResponse & { db: string; table: string }>('POST', `${dbPath(r)}/tables`, req),

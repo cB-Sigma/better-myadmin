@@ -66,4 +66,7 @@ export const qk = {
   browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
   /** a table-level page payload (operations, relation, search, tracking…) */
   tblPage: (r: TableRef, page: string) => [...qk.tbl(r), page] as const,
+  /** a step payload of the normalization wizard */
+  normalizationStep: (r: TableRef, step: string, q: object) =>
+    [...qk.tbl(r), 'normalization', step, q] as const,
 }

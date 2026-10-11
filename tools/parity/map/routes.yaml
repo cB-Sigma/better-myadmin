@@ -268,53 +268,71 @@
   planned: M1
   note: see API reference
 /normalization:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/1nf/step1:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/1nf/step2:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/1nf/step3:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/1nf/step4:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/2nf/create-new-tables:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/2nf/create-new-tables'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/2nf/new-tables:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/2nf/new-tables'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/2nf/step1:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/3nf/create-new-tables:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/create-new-tables'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/3nf/new-tables:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/new-tables'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/3nf/step1:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/3nf/step1'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/add-new-primary:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/columns/add-form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/columns/add'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/create-new-column:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/columns/add-form'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/columns/add'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/get-columns:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/move-repeating-group:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/move-repeating-group'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /normalization/partial-dependencies:
-  api: '/api/servers/:s/databases/:db/tables/:table/normalization/*'
-  planned: M2
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies'
+  ui: '/s/:s/db/:db/t/:table/normalization'
 /phpinfo:
   ui: /about/runtime
   planned: M1

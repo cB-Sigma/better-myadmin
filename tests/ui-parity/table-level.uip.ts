@@ -97,6 +97,26 @@ pageParity('table-column-change', {
   known: 'no "Pick from Central Columns" link yet (central columns land with the database-level work)',
 })
 
+pageParity('table-normalization', {
+  pma: { route: '/normalization', params: p(FIX.table) },
+  ours: { path: `${T}/${FIX.table}/normalization` },
+  known:
+    'no "Show me the central list of columns…" link yet (central columns land with the database-level work)',
+  interactions: [
+    { name: '1NF step 1', do: { click: 'Go' } },
+    {
+      name: '1NF step 2',
+      // normalization.js listens to `click` on the select (a mouse choice fires it; selectOption does not)
+      pma: async (page) => {
+        await page.locator('#selectNonAtomicCol').selectOption('no_such_col')
+        await page.locator('#selectNonAtomicCol').dispatchEvent('click')
+        await page.waitForTimeout(500)
+      },
+      ours: (page) => page.locator('#selectNonAtomicCol').selectOption('no_such_col'),
+    },
+  ],
+})
+
 /** an icon + text link (the reference's accessible name repeats the image's alt) */
 function showLink(text: string): PageFn {
   return (page) => page.locator('#page_content a', { hasText: text }).first().click()

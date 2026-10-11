@@ -39,7 +39,7 @@ pageParity('table-structure', {
   ours: { path: `/s/1/db/${FIX.db}/t/${FIX.table}/structure` },
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
   known:
-    'no "Add to central columns" / "Remove from central columns" bulk buttons yet (central columns land with the database-level work); no "Normalize" link yet (the normalization wizard)',
+    'no "Add to central columns" / "Remove from central columns" bulk buttons yet (central columns land with the database-level work)',
 })
 
 pageParity('table-menu', {
