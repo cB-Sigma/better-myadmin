@@ -1,4 +1,68 @@
 {
   "origin": "e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1",
-  "entries": []
+  "entries": [
+    {
+      "commit": "a3fb345c4bb08afed055ddbf525400cc3c42f4c0",
+      "subject": "Fix deprecation",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync a57149e1f6: .github/workflows/shellcheck.yml only (upstream CI)."
+    },
+    {
+      "commit": "da5edf1580f4e8261e18480dfd5443bd9f2708b2",
+      "subject": "Avoid x-prefix",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync a57149e1f6: bin/internal/create-release.sh and upload-release (upstream release scripts)."
+    },
+    {
+      "commit": "39aa8625dd0044cb3613582e1e0f5eb74a0d1dfa",
+      "subject": "Add double quote",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync a57149e1f6: bin/internal/create-release.sh quoting (upstream release script)."
+    },
+    {
+      "commit": "b4a09da529b5ffd8e55af22e93bc1084934ff4b9",
+      "subject": "Remove duplicate .phpstorm.meta.php",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync a57149e1f6: bin/internal/check-release-excludes.sh (upstream release packaging)."
+    },
+    {
+      "commit": "8847e08639e97e47d6b4b14a7037b97a27535d1c",
+      "subject": "Fix incorrect default value",
+      "status": "ported",
+      "areas": ["features/04-table-level"],
+      "notes": "sync a57149e1f6: Relation view ON DELETE / ON UPDATE options are now RESTRICT, NO ACTION, CASCADE, SET NULL. packages/sql-gen/src/relation.ts (FK_ACTIONS) already used this order (exception X38); X38 is retired, the UI parity map rule for the selects and the parity suite's RESTRICT workaround are removed (tests/parity/table-relation.parity.test.ts now posts phpMyAdmin's form as-is), docs/features/04-table-level.md lists the new order."
+    },
+    {
+      "commit": "8deb83ccb0a7627c9c514f0e0732dfd71cc55754",
+      "subject": "Update Composer dependencies",
+      "status": "ported",
+      "areas": ["dependencies", "tooling"],
+      "notes": "sync a57149e1f6: phpmyadmin/sql-parser 6.0.0 -> 6.0.1 ported to packages/sql-lexer: Context OPERATORS gains -> and ->> (punctuation, flag 16); Formatter adds no space around -> / ->>; IntoKeyword::build escapes INTO columns with Context::escapeAll; AlterOperations no longer treats ASC / DESC of a key part as a statement start; SelectStatement::getTables skips unaliased tables in the alias map; Utils/Query getClause null keyword (our port was already null-safe); CustomJsonSerializer (setAccessible removal) has no TS counterpart. Fixtures regenerated with 6.0.1 (lexer, parser, split, lint, first-statement, format; the new parseAlterTableAddUniqueKey* corpus cases included), sql-gen fixtures re-stamped (no value changes). phpstan/phpstan-phpunit 2.1.1 and vimeo/psalm 6.19.2 are upstream dev tooling: not applicable."
+    },
+    {
+      "commit": "98641d6118765849947f0a55581ce5b1d4dfb9ed",
+      "subject": "Update create-release.sh",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync a57149e1f6: bin/internal/create-release.sh (upstream release script)."
+    },
+    {
+      "commit": "3ff024fe9d520a26448aa2f726128243eb4e336c",
+      "subject": "Get export_item param from ServerRequest object",
+      "status": "not-applicable",
+      "areas": ["tooling", "features/05-database-level"],
+      "notes": "sync a57149e1f6: Events/RoutinesController read export_item / item_name / item_type through ServerRequest (string-typed, RoutineType::tryFrom) instead of $_GET; the export trigger becomes hasQueryParam('export_item') (an empty value now exports too). Our exports are dedicated endpoints (GET /api/servers/:s/databases/:db/routines/export?name=&type=, …/events/export?name=) with no export_item flag; definitions, titles ('Export of routine %s' / 'Export of event %s', backquoted name) and the not-found messages are unchanged, so nothing to port. phpstan/psalm baselines: upstream tooling."
+    },
+    {
+      "commit": "a57149e1f6273eb326b153487ad070893dd9e19c",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync a57149e1f6: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): 51 catalogues re-imported; the change is the POT creation date and source references, no msgid/msgstr of a shipped catalogue changed."
+    }
+  ]
 }

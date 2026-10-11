@@ -1,6 +1,6 @@
 # BetterMyAdmin documentation
 
-A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript, React and a modern UI, specified against phpMyAdmin `6.0.0-dev` commit `e3e877e8` (2026-10-06, see [reference-commit.txt](reference/reference-commit.txt)).
+A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript, React and a modern UI, specified against phpMyAdmin `6.0.0-dev` commit `a57149e1f6` (2026-10-11; originally `e3e877e8`, followed through [upstream syncs](architecture/15-upstream-sync.md), see [reference-commit.txt](reference/reference-commit.txt)).
 
 Start with [Vision and principles](00-vision-and-principles.md).
 
