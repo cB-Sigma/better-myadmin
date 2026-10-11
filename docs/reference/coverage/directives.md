@@ -181,7 +181,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/bulk.ts:252<br>apps/server/src/database/structure.ts:155<br>apps/server/src/table/operations.ts:651 |  |
+| ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:155<br>apps/server/src/table/maintenance.ts:58 |  |
 | ⬜ | `Export/sql_auto_increment` |  |  |
 | ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:368<br>apps/web/src/features/table/structure/StructurePage.tsx:244 |  |
 | ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:206<br>apps/server/src/table/structure-page.ts:372 |  |

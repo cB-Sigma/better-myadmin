@@ -66,7 +66,7 @@ describe('database structure', () => {
 
   it('runs table maintenance and empties/drops with confirmation', async () => {
     const m = await app.req('POST', `${base}/structure/maintenance`, { op: 'check', tables: ['a'] })
-    expect((m.json.groups as Array<{ table: string }>)[0]?.table).toBe('a')
+    expect((m.json.maintenance as { rows: Array<{ table: string }> }).rows[0]?.table).toBe('a')
     const no = await app.req('POST', `${base}/structure/empty`, { tables: ['a'], confirmed: false })
     expect(JSON.stringify(no.json)).toContain('No change')
     const e = await app.req('POST', `${base}/structure/empty`, { tables: ['c'], fkChecks: false })

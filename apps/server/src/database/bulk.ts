@@ -1,9 +1,4 @@
-import type {
-  CopyFormResponse,
-  DbActionResponse,
-  MaintenanceResponse,
-  ShowCreateResponse,
-} from '@bettermyadmin/contracts'
+import type { CopyFormResponse, DbActionResponse, ShowCreateResponse } from '@bettermyadmin/contracts'
 import { relationCleanupTable } from '@bettermyadmin/metadata'
 import { mbStrlen } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
@@ -233,68 +228,4 @@ export async function showCreate(ctx: DbCtx, tables: string[]): Promise<ShowCrea
     ;(view ? out.views : out.tables).push({ name: t, sql: r?.rows[0]?.[1] ?? '' })
   }
   return out
-}
-
-const MAINT = {
-  analyze: ['ANALYZE TABLE', 'Analyze table', 'ANALYZE_TABLE'],
-  check: ['CHECK TABLE', 'Check table', 'CHECK_TABLE'],
-  checksum: ['CHECKSUM TABLE', 'Checksum table', 'CHECKSUM_TABLE'],
-  optimize: ['OPTIMIZE TABLE', 'Optimize table', 'OPTIMIZE_TABLE'],
-  repair: ['REPAIR TABLE', 'Repair table', 'REPAIR_TABLE'],
-} as const
-
-/** pma: Controllers/Table/Maintenance/*Controller + Table/Maintenance */
-export async function maintenance(
-  ctx: DbCtx,
-  req: { tables: string[]; op: keyof typeof MAINT },
-): Promise<MaintenanceResponse> {
-  requireTables(ctx, req.tables)
-  if (ctx.cfg.DisableMultiTableMaintenance && req.tables.length > 1) {
-    throw new ValidationError(ctx.tr.gettext('Maintenance operations on multiple tables are disabled.'))
-  }
-  const [stmt, title, doc] = MAINT[req.op]
-  const sql = `${stmt} ${req.tables.map((t) => backquote(t)).join(', ')};`
-  await selectDb(ctx, ctx.db)
-  let rows: Array<Record<string, string | null>>
-  try {
-    rows = await ctx.conn.rows(sql, 'maintenance')
-  } catch (e) {
-    if (e instanceof MysqlError) {
-      return {
-        title: ctx.tr.gettext(title),
-        docPage: doc,
-        messages: [msg('error', errorText(e), sql)],
-        groups: [],
-        checksums: [],
-        warnings: [],
-      }
-    }
-    throw e
-  }
-  const res: MaintenanceResponse = {
-    title: ctx.tr.gettext(title),
-    docPage: doc,
-    messages: [msg('success', successText(ctx.tr), sql)],
-    groups: [],
-    checksums: [],
-    warnings: [],
-  }
-  if (req.op === 'checksum') {
-    res.checksums = rows.map((r) => ({ table: r.Table ?? '', checksum: r.Checksum ?? null }))
-    const w = await ctx.dbi.tryQuery('SHOW WARNINGS')
-    res.warnings = (w?.rows ?? []).map((r) => `${r[0] ?? ''}: #${r[1] ?? ''} ${r[2] ?? ''}`)
-    return res
-  }
-  for (const r of rows) {
-    // Message::fromArray: table without the database prefix
-    const full = r.Table ?? ''
-    const table = full.includes('.') ? full.slice(full.indexOf('.') + 1) : full
-    let g = res.groups.find((x) => x.table === table)
-    if (g === undefined) {
-      g = { table, rows: [] }
-      res.groups.push(g)
-    }
-    g.rows.push({ operation: r.Op ?? '', type: r.Msg_type ?? '', text: r.Msg_text ?? '' })
-  }
-  return res
 }

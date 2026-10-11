@@ -91,7 +91,6 @@ import type {
   LoginResponse,
   LogoutResponse,
   MaintenanceRequest,
-  MaintenanceResponse,
   MoveColumnsRequest,
   MoveCopyRequest,
   MoveRepeatingGroupRequest,
@@ -559,7 +558,7 @@ export const api = {
   dbShowCreate: (r: DbRef, tables: string[]) =>
     call<ShowCreateResponse>('POST', `${dbPath(r)}/structure/show-create`, { tables }),
   dbMaintenance: (r: DbRef, op: string, tables: string[]) =>
-    call<MaintenanceResponse>('POST', `${dbPath(r)}/structure/maintenance`, { op, tables }),
+    call<OperationsResponse>('POST', `${dbPath(r)}/structure/maintenance`, { op, tables }),
   dbOperations: (r: DbRef) => call<DbOperationsResponse>('GET', `${dbPath(r)}/operations`),
   /** POST …/operations/{comment,collation} */
   dbOperation: (r: DbRef, action: 'comment' | 'collation', body: unknown) =>

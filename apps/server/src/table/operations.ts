@@ -635,64 +635,6 @@ export async function renameView(ctx: OpsCtx, req: Out<typeof RenameViewRequest>
 
 // ---------------------------------------------------------------- maintenance
 
-const MAINT_TITLES: Record<string, string> = {
-  analyze: 'Analyze table',
-  check: 'Check table',
-  checksum: 'Checksum table',
-  optimize: 'Optimize table',
-  repair: 'Repair table',
-}
-
-/** pma: src/Controllers/Table/Maintenance/*Controller.php + src/Table/Maintenance.php */
-export async function maintenance(ctx: OpsCtx, req: Out<typeof MaintenanceRequest>) {
-  const { reader, tr, cfg } = ctx
-  const tables = req.tables ?? [ctx.table]
-  if (tables.length === 0 || tables.some((t) => t === '')) return fail(tr.gettext('No table selected.'))
-  if (cfg.DisableMultiTableMaintenance && tables.length > 1) {
-    return fail(tr.gettext('Maintenance operations on multiple tables are disabled.'))
-  }
-  const sql = `${req.op.toUpperCase()} TABLE ${tables.map((t) => backquote(t)).join(', ')};`
-  await reader.selectDb(ctx.db)
-  const rows = await reader.dbi.fetchResultSimple(sql)
-  reader.invalidate()
-  const result: MaintenanceResult = { op: req.op, title: tr.gettext(MAINT_TITLES[req.op] ?? ''), rows: [] }
-  if (req.op === 'checksum') {
-    result.checksums = rows.map((r) => ({ table: r.Table ?? '', checksum: r.Checksum ?? null }))
-    result.notices = (await getWarnings(ctx)).map(warningText)
-  } else {
-    result.rows = rows.map((r) => ({
-      table: r.Table ?? '',
-      op: r.Op ?? '',
-      msgType: r.Msg_type ?? '',
-      msgText: r.Msg_text ?? '',
-    }))
-  }
-  if (req.op === 'check') {
-    const notices: string[] = []
-    for (const t of tables) {
-      const dup = findDuplicateIndexes(await reader.getIndexes(ctx.db, t))
-      if (dup.length === 0) continue
-      notices.push(sprintf(tr.gettext('Problems with indexes of table `%s`'), t))
-      for (const [a, b] of dup) {
-        notices.push(
-          sprintf(
-            tr.gettext(
-              'The indexes %1$s and %2$s seem to be equal and one of them could possibly be removed.',
-            ),
-            a,
-            b,
-          ),
-        )
-      }
-    }
-    result.notices = notices
-  }
-  return {
-    messages: [msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql)],
-    maintenance: result,
-  } satisfies OperationsResponse
-}
-
 // ---------------------------------------------------------------- /sql links
 
 /**
