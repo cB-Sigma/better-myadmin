@@ -168,7 +168,7 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
       if (r.id === undefined) return
       if (r.asFile) {
         window.location.assign(api.exportDownloadUrl(server, r.id))
-        void qc.invalidateQueries({ queryKey: ['srv', server] })
+        void qc.invalidateQueries({ queryKey: qk.srv(server) })
         return
       }
       setOutput({ text: await api.exportText(server, r.id), pairs })

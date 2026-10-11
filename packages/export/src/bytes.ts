@@ -5,6 +5,7 @@
  * so values round-trip to the exact bytes MySQL sent while text functions keep working on characters.
  */
 import { isUtf8 } from 'node:buffer'
+import { php } from '@bettermyadmin/mysql-types'
 
 /** Raw cell bytes → string (valid UTF-8 decoded, every other byte escaped as U+DC80+byte). */
 export function decodeBytes(buf: Uint8Array): string {
@@ -51,14 +52,9 @@ export function encodeBytes(s: string): Buffer {
   return Buffer.concat(parts)
 }
 
-/** PHP bin2hex() */
-export function bin2hex(s: string): string {
-  return encodeBytes(s).toString('hex')
-}
-
-/** PHP strlen(): byte length */
-export function strlen(s: string): number {
-  return encodeBytes(s).length
+/** PHP bin2hex() of a cell held as a byte-preserving string (escaped bytes are their own byte) */
+export function hexBytes(s: string): string {
+  return php.bin2hex(encodeBytes(s))
 }
 
 /** PHP mb_strlen() (UTF-8): characters, an escaped byte counts as one */
@@ -79,11 +75,6 @@ export function htmlspecialchars(s: string): string {
   return htmlspecialcharsCompat(s)
     .replace(/'/g, '&#039;')
     .replace(/(?<![\ud800-\udbff])[\udc80-\udcff]/g, '\ufffd')
-}
-
-/** PHP is_numeric() on a string */
-export function isNumeric(s: string): boolean {
-  return /^[ \t\n\r\v\f]*[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?[ \t\n\r\v\f]*$/.test(s)
 }
 
 /** PHP empty() on a string */

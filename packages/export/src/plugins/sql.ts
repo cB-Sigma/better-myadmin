@@ -11,7 +11,7 @@ import {
   TokenFlag,
   TokenType,
 } from '@bettermyadmin/sql-lexer'
-import { bin2hex, encodeBytes, mbStrlen } from '../bytes.ts'
+import { encodeBytes, hexBytes, mbStrlen } from '../bytes.ts'
 import { MYSQL_CHARSET_MAP } from '../charset.ts'
 import { ExportError } from '../errors.ts'
 import type { Params } from '../params.ts'
@@ -19,7 +19,7 @@ import { type Aliases, ExportPlugin, type ExportSettings } from '../plugin.ts'
 import {
   type OptionItem,
   type PluginProperties,
-  bool,
+  boolItem,
   main,
   message,
   numberItem,
@@ -151,16 +151,16 @@ export class ExportSql extends ExportPlugin {
 
     const commentItems: OptionItem[] = [
       textItem('sql_header_comment', __('Additional custom header comment (\\n splits lines):')),
-      bool(
+      boolItem(
         'sql_dates',
         __('Include a timestamp of when databases were created, last updated, and last checked'),
       ),
     ]
     if (this.ctx.relation.relationFeature) {
-      commentItems.push(bool('sql_relation', __('Display foreign key relationships')))
+      commentItems.push(boolItem('sql_relation', __('Display foreign key relationships')))
     }
     if (this.ctx.relation.browserTransformationFeature) {
-      commentItems.push(bool('sql_mime', __('Display media types')))
+      commentItems.push(boolItem('sql_mime', __('Display media types')))
     }
     const general: OptionItem[] = [
       subgroup(
@@ -174,16 +174,16 @@ export class ExportSql extends ExportPlugin {
         commentItems,
         'sql_include_comments',
       ),
-      bool('sql_use_transaction', __('Enclose export in a transaction'), [
+      boolItem('sql_use_transaction', __('Enclose export in a transaction'), [
         'mysqldump',
         'option_mysqldump_single-transaction',
       ]),
-      bool('sql_disable_fk', __('Disable foreign key checks'), [
+      boolItem('sql_disable_fk', __('Disable foreign key checks'), [
         'server-system-variables',
         'sysvar_foreign_key_checks',
       ]),
-      bool('sql_views_as_tables', __('Export views as tables')),
-      bool('sql_metadata', __('Export metadata')),
+      boolItem('sql_views_as_tables', __('Export views as tables')),
+      boolItem('sql_metadata', __('Export metadata')),
     ]
     const compats = this.ctx.compatibilities
     if (compats.length > 0) {
@@ -217,12 +217,18 @@ export class ExportSql extends ExportPlugin {
     const addStatements: OptionItem[] = []
     if (this.ctx.exportType === 'server') {
       addStatements.push(
-        bool('sql_drop_database', sprintf(__('Add %s statement'), '<code>DROP DATABASE IF EXISTS</code>')),
+        boolItem(
+          'sql_drop_database',
+          sprintf(__('Add %s statement'), '<code>DROP DATABASE IF EXISTS</code>'),
+        ),
       )
     }
     if (this.ctx.exportType === 'database') {
       addStatements.push(
-        bool('sql_create_database', sprintf(__('Add %s statement'), '<code>CREATE DATABASE / USE</code>')),
+        boolItem(
+          'sql_create_database',
+          sprintf(__('Add %s statement'), '<code>CREATE DATABASE / USE</code>'),
+        ),
       )
     }
     let dropClause =
@@ -232,7 +238,7 @@ export class ExportSql extends ExportPlugin {
           : '<code>DROP TABLE</code>'
         : '<code>DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT</code>'
     dropClause += '<code> / TRIGGER</code>'
-    addStatements.push(bool('sql_drop_table', sprintf(__('Add %s statement'), dropClause)))
+    addStatements.push(boolItem('sql_drop_table', sprintf(__('Add %s statement'), dropClause)))
     addStatements.push(
       subgroup(
         {
@@ -241,11 +247,11 @@ export class ExportSql extends ExportPlugin {
           text: sprintf(__('Add %s statement'), '<code>CREATE TABLE</code>'),
         },
         [
-          bool(
+          boolItem(
             'sql_if_not_exists',
             `<code>IF NOT EXISTS</code> ${__('(less efficient as indexes will be generated during table creation)')}`,
           ),
-          bool('sql_auto_increment', sprintf(__('%s value'), '<code>AUTO_INCREMENT</code>')),
+          boolItem('sql_auto_increment', sprintf(__('%s value'), '<code>AUTO_INCREMENT</code>')),
         ],
       ),
     )
@@ -257,25 +263,25 @@ export class ExportSql extends ExportPlugin {
           text: sprintf(__('Add %s statement'), '<code>CREATE VIEW</code>'),
         },
         [
-          bool('sql_simple_view_export', __('Use simple view export')),
-          bool('sql_view_current_user', __('Exclude definition of current user')),
-          bool('sql_or_replace_view', sprintf(__('%s view'), '<code>OR REPLACE</code>')),
+          boolItem('sql_simple_view_export', __('Use simple view export')),
+          boolItem('sql_view_current_user', __('Exclude definition of current user')),
+          boolItem('sql_or_replace_view', sprintf(__('%s view'), '<code>OR REPLACE</code>')),
         ],
       ),
     )
     addStatements.push(
-      bool(
+      boolItem(
         'sql_procedure_function',
         sprintf(__('Add %s statement'), '<code>CREATE PROCEDURE / FUNCTION / EVENT</code>'),
       ),
     )
     addStatements.push(
-      bool('sql_create_trigger', sprintf(__('Add %s statement'), '<code>CREATE TRIGGER</code>')),
+      boolItem('sql_create_trigger', sprintf(__('Add %s statement'), '<code>CREATE TRIGGER</code>')),
     )
 
     const structure: OptionItem[] = [
       subgroup(message('sql_add_statements', __('Add statements:')), addStatements),
-      bool(
+      boolItem(
         'sql_backquotes',
         __(
           'Enclose table and column names with backquotes <i>(Protects column and table names formed with special characters or keywords)</i>',
@@ -284,10 +290,10 @@ export class ExportSql extends ExportPlugin {
     ]
 
     const data: OptionItem[] = [
-      bool('sql_truncate', __('Truncate table before insert')),
+      boolItem('sql_truncate', __('Truncate table before insert')),
       subgroup(message('sql_insert_alternatives', __('Instead of <code>INSERT</code> statements, use:')), [
-        bool('sql_delayed', __('<code>INSERT DELAYED</code> statements'), ['insert_delayed']),
-        bool('sql_ignore', __('<code>INSERT IGNORE</code> statements'), ['insert']),
+        boolItem('sql_delayed', __('<code>INSERT DELAYED</code> statements'), ['insert_delayed']),
+        boolItem('sql_ignore', __('<code>INSERT IGNORE</code> statements'), ['insert']),
       ]),
       select('sql_type', __('Function to use when dumping data:'), [
         ['INSERT', 'INSERT'],
@@ -323,11 +329,11 @@ export class ExportSql extends ExportPlugin {
         ]),
       ]),
       numberItem('sql_max_query_size', __('Maximal length of created query')),
-      bool(
+      boolItem(
         'sql_hex_for_binary',
         __('Dump binary columns in hexadecimal notation <i>(for example, "abc" becomes 0x616263)</i>'),
       ),
-      bool(
+      boolItem(
         'sql_utc_time',
         __(
           'Dump TIMESTAMP columns in UTC <i>(enables TIMESTAMP columns to be dumped and reloaded between servers in different time zones)</i>',
@@ -1259,13 +1265,13 @@ export class ExportSql extends ExportPlugin {
         else if (metaInfo.isNumeric) values.push(v)
         else if (metaInfo.isBinary && this.hexForBinary) {
           // empty blobs need to be different, but '0' is also empty :-(
-          values.push(v === '' ? "''" : `0x${bin2hex(v)}`)
+          values.push(v === '' ? "''" : `0x${hexBytes(v)}`)
         } else if (metaInfo.isMappedTypeBit) {
           // detection of 'bit' works only on mysqli extension
           values.push(`b'${printableBitValue(v, metaInfo.length)}'`)
         } else if (metaInfo.isMappedTypeGeometry) {
           // export GIS types as hex
-          values.push(`0x${bin2hex(v)}`)
+          values.push(`0x${hexBytes(v)}`)
         } else if (ExportSql.#exportingMetadata && v === '@LAST_PAGE') {
           values.push('@LAST_PAGE')
         } else if (v === '') {

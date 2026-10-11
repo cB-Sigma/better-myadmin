@@ -1,5 +1,5 @@
 import { extractColumnSpec } from '@bettermyadmin/mysql-types'
-import { bin2hex, decodeBytes, encodeBytes, htmlspecialchars } from '../bytes.ts'
+import { decodeBytes, encodeBytes, hexBytes, htmlspecialchars } from '../bytes.ts'
 import type { Params } from '../params.ts'
 import {
   type Aliases,
@@ -11,7 +11,7 @@ import {
 import {
   type OptionMainGroup,
   type PluginProperties,
-  bool,
+  boolItem,
   hidden,
   main,
   radio,
@@ -120,7 +120,7 @@ export class ExportOds extends ExportPlugin {
       options: [
         main('ods_general_opts', '', [
           textItem('ods_null', __('Replace NULL with:')),
-          bool('ods_columns', __('Put columns names in the first row')),
+          boolItem('ods_columns', __('Put columns names in the first row')),
           hidden('ods_structure_or_data'),
         ]),
       ],
@@ -163,8 +163,8 @@ export class ExportOds extends ExportPlugin {
       row.forEach((field0, j) => {
         const f = fieldsMeta[j]
         let field = field0
-        // export GIS types as hex (bin2hex(null) is '')
-        if (f?.isMappedTypeGeometry === true) field = `0x${field === null ? '' : bin2hex(field)}`
+        // export GIS types as hex (hexBytes(null) is '')
+        if (f?.isMappedTypeGeometry === true) field = `0x${field === null ? '' : hexBytes(field)}`
         if (field === null) this.buffer += cell(htmlspecialchars(this.null))
         else if (f?.isBinary === true && f.isBlob) this.buffer += cell('')
         else if (f?.mappedType === 'date') {
@@ -224,15 +224,15 @@ export class ExportOdt extends ExportPlugin {
     if (!hideStructure) {
       const items = []
       if (this.ctx.relation.relationFeature)
-        items.push(bool('odt_relation', __('Display foreign key relationships')))
-      items.push(bool('odt_comments', __('Display comments')))
+        items.push(boolItem('odt_relation', __('Display foreign key relationships')))
+      items.push(boolItem('odt_comments', __('Display comments')))
       if (this.ctx.relation.browserTransformationFeature)
-        items.push(bool('odt_mime', __('Display media types')))
+        items.push(boolItem('odt_mime', __('Display media types')))
       groups.push(main('odt_structure', __('Object creation options'), items))
     }
     groups.push(
       main('odt_data', __('Data dump options'), [
-        bool('odt_columns', __('Put columns names in the first row')),
+        boolItem('odt_columns', __('Put columns names in the first row')),
         textItem('odt_null', __('Replace NULL with:')),
       ]),
     )
@@ -292,7 +292,7 @@ export class ExportOdt extends ExportPlugin {
       row.forEach((field0, j) => {
         const f = fieldsMeta[j]
         let field = field0
-        if (f?.isMappedTypeGeometry === true) field = `0x${field === null ? '' : bin2hex(field)}`
+        if (f?.isMappedTypeGeometry === true) field = `0x${field === null ? '' : hexBytes(field)}`
         if (field === null) this.buffer += cell(htmlspecialchars(this.null))
         else if (f?.isBinary === true && f.isBlob) this.buffer += cell('')
         else if (f?.isNumeric === true) {

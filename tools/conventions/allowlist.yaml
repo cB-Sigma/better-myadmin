@@ -302,3 +302,7 @@ allow:
   - rule: tests/naming
     file: tests/e2e/table-structure.spec.ts
     reason: present at eec8ae7 (before the checker); being consolidated
+  - rule: server/strings-through-tr
+    file: apps/server/src/routes/export.ts
+    symbol: success
+    reason: protocol value of /export/check-time-out ('success' / 'timeout'), not a message (pma CheckTimeOutController)

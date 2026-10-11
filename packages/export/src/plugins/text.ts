@@ -1,6 +1,6 @@
 import { extractColumnSpec } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
-import { bin2hex, htmlspecialchars } from '../bytes.ts'
+import { hexBytes, htmlspecialchars } from '../bytes.ts'
 import type { Params } from '../params.ts'
 import {
   type Aliases,
@@ -9,7 +9,7 @@ import {
   type Foreigners,
   foreignersEmpty,
 } from '../plugin.ts'
-import { type PluginProperties, bool, main, radio, subgroup, textItem } from '../properties.ts'
+import { type PluginProperties, boolItem, main, radio, subgroup, textItem } from '../properties.ts'
 import type { Column } from '../tables.ts'
 
 /** PHP's loose `$key['Non_unique'] != 0` */
@@ -55,8 +55,8 @@ export class ExportMediawiki extends ExportPlugin {
             'mediawiki_dump_table',
             __('Dump table'),
           ),
-          bool('mediawiki_caption', __('Export table names')),
-          bool('mediawiki_headers', __('Export table headers')),
+          boolItem('mediawiki_caption', __('Export table names')),
+          boolItem('mediawiki_headers', __('Export table headers')),
         ]),
       ],
     }
@@ -135,7 +135,7 @@ export class ExportMediawiki extends ExportPlugin {
       fieldsMeta.forEach((f, i) => {
         let v = row[i] ?? null
         if (v === null) v = 'NULL'
-        else if (f.isMappedTypeGeometry || f.isBinary) v = `0x${bin2hex(v)}`
+        else if (f.isMappedTypeGeometry || f.isBinary) v = `0x${hexBytes(v)}`
         output += ` | ${v}\n`
       })
     }
@@ -192,7 +192,7 @@ export class ExportTexytext extends ExportPlugin {
           radio('texytext_structure_or_data', '', structureValues(__)),
         ]),
         main('texytext_data', __('Data dump options'), [
-          bool('texytext_columns', __('Put columns names in the first row')),
+          boolItem('texytext_columns', __('Put columns names in the first row')),
           textItem('texytext_null', __('Replace NULL with:')),
         ]),
       ],
@@ -235,7 +235,7 @@ export class ExportTexytext extends ExportPlugin {
         else if (field !== '') {
           value = field
           const f = fieldsMeta[j]
-          if (f?.isMappedTypeGeometry === true || f?.isBinary === true) value = `0x${bin2hex(value)}`
+          if (f?.isMappedTypeGeometry === true || f?.isBinary === true) value = `0x${hexBytes(value)}`
         } else value = ' '
         textOutput += `|${htmlspecialchars(value).replaceAll('|', '&#124;')}`
       })

@@ -16,6 +16,7 @@ import {
   withFields,
 } from './lib/export.ts'
 import { PmaClient } from './lib/pma.ts'
+import { PMA_URL, pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the non-SQL export plugins (docs/features/07-export-import.md): the same
@@ -24,13 +25,8 @@ import { PmaClient } from './lib/pma.ts'
  * OpenDocument files are compared entry by entry after extraction (meta.xml carries the creation
  * time and the generator, so only its shape is compared).
  */
-const PMA_URL = process.env.BMA_PARITY_PMA_URL ?? 'http://127.0.0.1:8081'
 const DB = 'f07_fmt'
 const USERS = { pma: 'f07_fpma', bma: 'f07_fbma' }
-
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
 
 let root: mysql.Connection
 let pma: PmaClient
@@ -204,7 +200,7 @@ const cases: Array<{ name: string; form: () => Pairs; changes: Changes; odf?: tr
   },
 ]
 
-describe.skipIf(!reachable)('export formats parity', () => {
+describe.skipIf(!pmaReachable)('export formats parity', () => {
   beforeAll(async () => {
     root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
     await createAccounts(root, [USERS.pma, USERS.bma])

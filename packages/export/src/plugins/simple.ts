@@ -1,5 +1,6 @@
+import { php } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
-import { bin2hex, isNumeric } from '../bytes.ts'
+import { hexBytes } from '../bytes.ts'
 import type { Params } from '../params.ts'
 import { varExport } from '../php.ts'
 import { type Aliases, ExportPlugin, type ExportSettings } from '../plugin.ts'
@@ -56,9 +57,9 @@ export class ExportYaml extends ExportPlugin {
           buffer += `  ${columns[i]}: null\n`
           return
         }
-        if (f.isMappedTypeGeometry || f.isBinary) v = `0x${bin2hex(v)}`
+        if (f.isMappedTypeGeometry || f.isBinary) v = `0x${hexBytes(v)}`
         const isNotString = f.mappedType !== 'string'
-        if (isNumeric(v) && isNotString) {
+        if (php.isNumericString(v) && isNotString) {
           buffer += `  ${columns[i]}: ${v}\n`
           return
         }
@@ -156,7 +157,7 @@ export class ExportPhparray extends ExportPlugin {
       for (let i = 0; i < columnsCnt; i++) {
         let v = record[i] ?? null
         const f = fieldsMeta[i]
-        if (v !== null && (f?.isMappedTypeGeometry === true || f?.isBinary === true)) v = `0x${bin2hex(v)}`
+        if (v !== null && (f?.isMappedTypeGeometry === true || f?.isBinary === true)) v = `0x${hexBytes(v)}`
         buffer += `${varExport(columns[i] as string)} => ${varExport(v)}${i + 1 >= columnsCnt ? '' : ','}`
       }
       buffer += ')'
@@ -236,7 +237,7 @@ export class ExportToon extends ExportPlugin {
         let col = col0
         const f = fieldsMeta[index]
         if (col !== null && (f?.isMappedTypeGeometry === true || f?.isBinary === true))
-          col = `0x${bin2hex(col)}`
+          col = `0x${hexBytes(col)}`
         buffer += col ?? 'null'
         if (index !== columnsCnt - 1) buffer += this.separator
       })

@@ -1,6 +1,6 @@
 import { localisedDate } from '@bettermyadmin/i18n'
 import { extractColumnSpec } from '@bettermyadmin/mysql-types'
-import { bin2hex } from '../bytes.ts'
+import { hexBytes } from '../bytes.ts'
 import { expandUserString } from '../expand.ts'
 import type { Params } from '../params.ts'
 import {
@@ -14,7 +14,7 @@ import {
   type LeafItem,
   type OptionMainGroup,
   type PluginProperties,
-  bool,
+  boolItem,
   main,
   radio,
   textItem,
@@ -62,7 +62,7 @@ export class ExportLatex extends ExportPlugin {
     const __ = (s: string) => this.__(s)
     const hideStructure = this.ctx.exportType === 'table' && !this.ctx.singleTable
     const groups: OptionMainGroup[] = [
-      main('latex_general_opts', '', [bool('latex_caption', __('Include table caption'))]),
+      main('latex_general_opts', '', [boolItem('latex_caption', __('Include table caption'))]),
       main('latex_dump_what', __('Dump table'), [radio('latex_structure_or_data', '', structureValues(__))]),
     ]
     if (!hideStructure) {
@@ -72,15 +72,15 @@ export class ExportLatex extends ExportPlugin {
         textItem('latex_structure_label', __('Label key:'), { doc: 'faq6-27' }),
       ]
       if (this.ctx.relation.relationFeature)
-        items.push(bool('latex_relation', __('Display foreign key relationships')))
-      items.push(bool('latex_comments', __('Display comments')))
+        items.push(boolItem('latex_relation', __('Display foreign key relationships')))
+      items.push(boolItem('latex_comments', __('Display comments')))
       if (this.ctx.relation.browserTransformationFeature)
-        items.push(bool('latex_mime', __('Display media types')))
+        items.push(boolItem('latex_mime', __('Display media types')))
       groups.push(main('latex_structure', __('Object creation options'), items))
     }
     groups.push(
       main('latex_data', __('Data dump options'), [
-        bool('latex_columns', __('Put columns names in the first row:')),
+        boolItem('latex_columns', __('Put columns names in the first row:')),
         textItem('latex_data_caption', __('Table caption:'), { doc: 'faq6-27' }),
         textItem('latex_data_continued_caption', __('Table caption (continued):'), { doc: 'faq6-27' }),
         textItem('latex_data_label', __('Label key:'), { doc: 'faq6-27' }),
@@ -167,7 +167,7 @@ export class ExportLatex extends ExportPlugin {
         if (v !== null) {
           columnValue =
             f?.isMappedTypeGeometry === true || f?.isBinary === true
-              ? texEscape(`0x${bin2hex(v)}`)
+              ? texEscape(`0x${hexBytes(v)}`)
               : texEscape(v)
         } else columnValue = this.null
         // last column ... no need for & character

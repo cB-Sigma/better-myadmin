@@ -10,6 +10,7 @@ import { openExportSession, userDir } from '../export/service.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { defaultOfPath } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
+import { parseBody } from './sql.ts'
 
 /**
  * Export: POST the dump form, GET the one-shot download (streamed).
@@ -42,9 +43,8 @@ exportRoutes.route('/', exportPageRoutes)
 
 /** POST …/export: validates the form; saves on the server or returns a download id. */
 exportRoutes.post('/', async (c) => {
-  const parsed = ExportRequest.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) throw new ValidationError('Invalid request.')
-  const params = new Params(parsed.data.params)
+  const body = await parseBody(c, ExportRequest)
+  const params = new Params(body.params)
   const tr = c.get('tr')
   const s = await openExportSession(c, params.str('db'))
   try {
@@ -82,18 +82,19 @@ exportRoutes.post('/', async (c) => {
       } catch {
         return c.json(fail('The web server does not have permission to save the file %s.'))
       }
+      let complete = true
       try {
         await prepared.run({
           write(chunk) {
-            const n = writeSync(fd, chunk)
-            if (n !== chunk.length) throw new Error('short write')
+            if (complete && writeSync(fd, chunk) !== chunk.length) complete = false
           },
         })
       } catch {
-        return c.json(fail('Insufficient space to save the file %s.'))
+        complete = false
       } finally {
         closeSync(fd)
       }
+      if (!complete) return c.json(fail('Insufficient space to save the file %s.'))
       return c.json({
         filename: prepared.filename,
         mimeType: prepared.mimeType,
@@ -106,7 +107,7 @@ exportRoutes.post('/', async (c) => {
     pending.set(id, {
       sessionId: c.get('session').id,
       serverIndex: c.get('serverIndex'),
-      pairs: parsed.data.params,
+      pairs: body.params,
       created: Date.now(),
     })
     return c.json({
@@ -128,7 +129,7 @@ exportRoutes.get('/:id{[0-9a-f]{32}}', async (c: Context<ServerEnv>) => {
     job.sessionId !== c.get('session').id ||
     job.serverIndex !== c.get('serverIndex')
   ) {
-    throw new NotFoundError('Not found.')
+    throw new NotFoundError(c.get('tr').gettext('Not found.'))
   }
   pending.delete(c.req.param('id') ?? '')
   const params = new Params(job.pairs)

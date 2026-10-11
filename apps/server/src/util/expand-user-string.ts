@@ -1,3 +1,4 @@
+import { php } from '@bettermyadmin/mysql-types'
 import { quoteString } from '@bettermyadmin/sql-gen'
 import type { ServerConfig } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
@@ -87,28 +88,6 @@ export function strftime(format: string, d = new Date()): string {
   })
 }
 
-/** PHP strtr($string, $pairs): longest keys first, no re-replacement. */
-export function strtr(str: string, pairs: Record<string, string>): string {
-  const keys = Object.keys(pairs)
-    .filter((k) => k !== '')
-    .sort((a, b) => b.length - a.length)
-  if (keys.length === 0) return str
-  let out = ''
-  let i = 0
-  outer: while (i < str.length) {
-    for (const k of keys) {
-      if (str.startsWith(k, i)) {
-        out += pairs[k]
-        i += k.length
-        continue outer
-      }
-    }
-    out += str[i]
-    i++
-  }
-  return out
-}
-
 /**
  * Placeholders of DefaultQueryTable / DefaultQueryDatabase (and the title templates).
  * pma: src/Util.php::expandUserString
@@ -144,7 +123,7 @@ export async function expandUserString(
     replace = Object.fromEntries(Object.entries(replace).map(([k, v]) => [k, esc(v)]))
   }
   // Backward compatibility in 3.5.x
-  let s = string.includes('@FIELDS@') ? strtr(string, { '@FIELDS@': '@COLUMNS@' }) : string
+  let s = string.includes('@FIELDS@') ? php.strtr(string, { '@FIELDS@': '@COLUMNS@' }) : string
   // Fetch columns list if required
   if (s.includes('@COLUMNS@')) {
     const rows = await o.conn.rows(
@@ -155,5 +134,5 @@ export async function expandUserString(
     replace['@COLUMNS@'] = (o.escape !== undefined ? names.map(o.escape) : names).join(',')
   }
   s = strftime(s)
-  return strtr(s, replace)
+  return php.strtr(s, replace)
 }

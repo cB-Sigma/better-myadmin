@@ -4,6 +4,7 @@ import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import type { Conn } from '../db/connection.ts'
 import type { RawField } from '../db/field-meta.ts'
 import { MysqlError, isMysqlError } from '../http/errors.ts'
+import { strnatcasecmp } from '../navigation/php.ts'
 
 /** mysql2 field packet → FieldMetadata + protocol type (DatabaseInterface::getFieldsMeta). */
 export function exportField(raw: RawField): ExportField {
@@ -42,7 +43,7 @@ export class ServerExportDbi implements ExportDbi {
   readonly versionInt: number
   readonly isMariaDb: boolean
   readonly disableIS: boolean
-  readonly naturalOrder: boolean
+  readonly naturalCompare: ((a: string, b: string) => number) | null
   readonly #databaseList: () => Promise<string[]>
 
   constructor(
@@ -54,7 +55,7 @@ export class ServerExportDbi implements ExportDbi {
     this.versionInt = conn.serverInfo?.versionInt ?? 0
     this.isMariaDb = conn.serverInfo?.isMariaDb ?? false
     this.disableIS = o.disableIS
-    this.naturalOrder = o.naturalOrder
+    this.naturalCompare = o.naturalOrder ? strnatcasecmp : null
     this.#databaseList = o.databaseList
   }
 

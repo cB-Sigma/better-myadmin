@@ -1,7 +1,7 @@
-import { bin2hex } from '../bytes.ts'
+import { hexBytes } from '../bytes.ts'
 import type { Params } from '../params.ts'
 import { type Aliases, ExportPlugin, type ExportSettings } from '../plugin.ts'
-import { type PluginProperties, bool, hidden, main, textItem } from '../properties.ts'
+import { type PluginProperties, boolItem, hidden, main, textItem } from '../properties.ts'
 
 /** PHP strcspn($s, $chars) !== strlen($s): whether `s` contains any of `chars` */
 export const containsAny = (s: string, chars: string): boolean => {
@@ -41,8 +41,8 @@ export class ExportCsv extends ExportPlugin {
           textItem('csv_escaped', __('Columns escaped with:')),
           textItem('csv_terminated', __('Lines terminated with:')),
           textItem('csv_null', __('Replace NULL with:')),
-          bool('csv_removeCRLF', __('Remove carriage return/line feed characters within columns')),
-          bool('csv_columns', __('Put columns names in the first row')),
+          boolItem('csv_removeCRLF', __('Remove carriage return/line feed characters within columns')),
+          boolItem('csv_columns', __('Put columns names in the first row')),
           hidden('csv_structure_or_data'),
         ]),
       ],
@@ -99,7 +99,7 @@ export class ExportCsv extends ExportPlugin {
         }
         const meta = fieldsMeta[j]
         if (meta?.isMappedTypeGeometry === true || meta?.isBinary === true) {
-          insertValues.push(`0x${bin2hex(field)}`)
+          insertValues.push(`0x${hexBytes(field)}`)
           return
         }
         // remove CRLF characters within field
@@ -176,8 +176,8 @@ export class ExportExcel extends ExportPlugin {
       options: [
         main('excel_general_opts', '', [
           textItem('excel_null', __('Replace NULL with:')),
-          bool('excel_removeCRLF', __('Remove carriage return/line feed characters within columns')),
-          bool('excel_columns', __('Put columns names in the first row')),
+          boolItem('excel_removeCRLF', __('Remove carriage return/line feed characters within columns')),
+          boolItem('excel_columns', __('Put columns names in the first row')),
           {
             kind: 'select',
             name: 'excel_edition',

@@ -288,3 +288,25 @@ export function strGetCsv(
   } while (incLen > 0)
   return values
 }
+
+/** PHP strtr($string, $pairs): longest keys first, no re-replacement. */
+export function strtr(str: string, pairs: Record<string, string>): string {
+  const keys = Object.keys(pairs)
+    .filter((k) => k !== '')
+    .sort((a, b) => b.length - a.length)
+  if (keys.length === 0) return str
+  let out = ''
+  let i = 0
+  outer: while (i < str.length) {
+    for (const k of keys) {
+      if (str.startsWith(k, i)) {
+        out += pairs[k]
+        i += k.length
+        continue outer
+      }
+    }
+    out += str[i]
+    i++
+  }
+  return out
+}

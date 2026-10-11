@@ -16,21 +16,6 @@ export interface Column {
   comment: string
 }
 
-/** PHP strnatcasecmp (enough for table names). */
-export function strnatcasecmp(a: string, b: string): number {
-  const ax = a.toLowerCase().match(/(\d+|\D+)/g) ?? []
-  const bx = b.toLowerCase().match(/(\d+|\D+)/g) ?? []
-  for (let i = 0; i < Math.min(ax.length, bx.length); i++) {
-    const x = ax[i] as string
-    const y = bx[i] as string
-    if (/^\d/.test(x) && /^\d/.test(y)) {
-      const d = Number(x) - Number(y)
-      if (d !== 0) return d < 0 ? -1 : 1
-    } else if (x !== y) return x < y ? -1 : 1
-  }
-  return ax.length - bx.length
-}
-
 /**
  * Table/database reads the plugins need, with phpMyAdmin's queries and per-dump caches
  * (getTablesFull's cache, Table objects).
@@ -60,7 +45,7 @@ export class TableInfo {
     if (r === null) return []
     const tables: string[] = []
     for await (const row of r.rows) tables.push(row[0] ?? '')
-    if (this.dbi.naturalOrder) tables.sort(strnatcasecmp)
+    if (this.dbi.naturalCompare !== null) tables.sort(this.dbi.naturalCompare)
     return tables
   }
 

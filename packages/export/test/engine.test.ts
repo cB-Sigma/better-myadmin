@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
   Params,
-  bin2hex,
   convertFromUtf8,
   createZip,
   decodeBytes,
   encodeBytes,
+  hexBytes,
   mbStrlen,
   mergeAliases,
   readZip,
@@ -17,7 +17,7 @@ describe('byte-preserving strings', () => {
     const raw = Buffer.from([0x61, 0xff, 0xc3, 0xa9, 0x00, 0xe2, 0x82])
     const s = decodeBytes(raw)
     expect(encodeBytes(s).equals(raw)).toBe(true)
-    expect(bin2hex(s)).toBe('61ffc3a900e282')
+    expect(hexBytes(s)).toBe('61ffc3a900e282')
     expect(mbStrlen(s)).toBe(6)
   })
   it('keeps astral characters', () => {

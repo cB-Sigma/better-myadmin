@@ -8,7 +8,7 @@ import {
   type Foreigners,
   foreignersEmpty,
 } from '../plugin.ts'
-import { type PluginProperties, bool, main, radio, textItem } from '../properties.ts'
+import { type PluginProperties, boolItem, main, radio, textItem } from '../properties.ts'
 import type { Column } from '../tables.ts'
 import { structureValues, uniqueKeyColumns } from './text.ts'
 
@@ -43,7 +43,7 @@ export class ExportHtmlword extends ExportPlugin {
         ]),
         main('htmlword_dump_data_options', __('Data dump options'), [
           textItem('htmlword_null', __('Replace NULL with:')),
-          bool('htmlword_columns', __('Put columns names in the first row')),
+          boolItem('htmlword_columns', __('Put columns names in the first row')),
         ]),
       ],
     }

@@ -1,9 +1,9 @@
 import { localisedDate } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
-import { bin2hex, htmlspecialchars } from '../bytes.ts'
+import { hexBytes, htmlspecialchars } from '../bytes.ts'
 import type { Params } from '../params.ts'
 import { type Aliases, ExportPlugin, type ExportSettings } from '../plugin.ts'
-import { type PluginProperties, bool, hidden, main } from '../properties.ts'
+import { type PluginProperties, boolItem, hidden, main } from '../properties.ts'
 
 const rtrim = (s: string) => s.replace(/[ \n\r\t\v\0]+$/, '')
 
@@ -36,14 +36,14 @@ export class ExportXml extends ExportPlugin {
       options: [
         main('xml_general_opts', '', [hidden('xml_structure_or_data')]),
         main('xml_structure', __('Object creation options (all are recommended)'), [
-          bool('xml_export_events', __('Events')),
-          bool('xml_export_functions', __('Functions')),
-          bool('xml_export_procedures', __('Procedures')),
-          bool('xml_export_tables', __('Tables')),
-          bool('xml_export_triggers', __('Triggers')),
-          bool('xml_export_views', __('Views')),
+          boolItem('xml_export_events', __('Events')),
+          boolItem('xml_export_functions', __('Functions')),
+          boolItem('xml_export_procedures', __('Procedures')),
+          boolItem('xml_export_tables', __('Tables')),
+          boolItem('xml_export_triggers', __('Triggers')),
+          boolItem('xml_export_views', __('Views')),
         ]),
-        main('xml_data', __('Data dump options'), [bool('xml_export_contents', __('Export contents'))]),
+        main('xml_data', __('Data dump options'), [boolItem('xml_export_contents', __('Export contents'))]),
       ],
     }
   }
@@ -201,7 +201,7 @@ export class ExportXml extends ExportPlugin {
         // If a cell is NULL, still export it to preserve the XML structure
         let v = record[i] ?? null
         if (v === null) v = 'NULL'
-        else if (f.isMappedTypeGeometry || f.isBinary) v = `0x${bin2hex(v)}`
+        else if (f.isMappedTypeGeometry || f.isBinary) v = `0x${hexBytes(v)}`
         buffer += `            <column name="${htmlspecialchars(colAs)}">${htmlspecialchars(v)}</column>\n`
       })
       buffer += '        </table>\n'

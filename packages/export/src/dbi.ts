@@ -49,7 +49,8 @@ export interface ExportDbi {
   /** $cfg['Servers'][$i]['DisableIS'] */
   disableIS: boolean
   /** $cfg['NaturalOrder'] (DatabaseInterface::getTables) */
-  naturalOrder: boolean
+  /** $cfg['NaturalOrder']: PHP strnatcasecmp, or null to keep the server's order */
+  naturalCompare: ((a: string, b: string) => number) | null
 }
 
 /** A foreign key of SHOW CREATE TABLE (Relation::getForeignKeysData). */

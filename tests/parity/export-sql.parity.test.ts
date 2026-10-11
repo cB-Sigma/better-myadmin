@@ -13,6 +13,7 @@ import {
   withFields,
 } from './lib/export.ts'
 import { PmaClient } from './lib/pma.ts'
+import { PMA_URL, pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden byte parity of the SQL export (docs/features/07-export-import.md, SQL plugin): the same
@@ -20,13 +21,8 @@ import { PmaClient } from './lib/pma.ts'
  * phpMyAdmin and to BetterMyAdmin for the seed schema with every column type; both dumps must be
  * byte-identical once the tool/version/time header lines are removed.
  */
-const PMA_URL = process.env.BMA_PARITY_PMA_URL ?? 'http://127.0.0.1:8081'
 const DB = 'f07_exp'
 const USERS = { pma: 'f07_pma', bma: 'f07_bma' }
-
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
 
 let root: mysql.Connection
 let pma: PmaClient
@@ -224,7 +220,7 @@ const PMADB_CLEAN = [
   .map((t) => `DELETE FROM phpmyadmin.pma__${t.split(':')[0]} WHERE ${t.split(':')[1]} = '${DB}';`)
   .join(' ')
 
-describe.skipIf(!reachable)('export SQL parity', () => {
+describe.skipIf(!pmaReachable)('export SQL parity', () => {
   beforeAll(async () => {
     root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
     await createAccounts(root, [USERS.pma, USERS.bma])

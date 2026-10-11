@@ -1,9 +1,9 @@
-import { bin2hex } from '../bytes.ts'
+import { hexBytes } from '../bytes.ts'
 import { ExportError } from '../errors.ts'
 import type { Params } from '../params.ts'
 import { type PhpValue, jsonEncode } from '../php.ts'
 import { type Aliases, ExportPlugin, type ExportSettings } from '../plugin.ts'
-import { type PluginProperties, bool, hidden, main } from '../properties.ts'
+import { type PluginProperties, boolItem, hidden, main } from '../properties.ts'
 
 /**
  * Handles the export for the JSON format.
@@ -33,8 +33,8 @@ export class ExportJson extends ExportPlugin {
       options: [
         main('json_general_opts', '', [
           hidden('json_structure_or_data'),
-          bool('json_pretty_print', __('Output pretty-printed JSON (Use human-readable formatting)')),
-          bool('json_unicode', __('Output unicode characters unescaped')),
+          boolItem('json_pretty_print', __('Output pretty-printed JSON (Use human-readable formatting)')),
+          boolItem('json_unicode', __('Output unicode characters unescaped')),
         ]),
       ],
     }
@@ -118,7 +118,7 @@ export class ExportJson extends ExportPlugin {
         let v = record[i] ?? null
         if ((f.isMappedTypeGeometry || binary) && v !== null) {
           // export GIS and blob types as hex
-          v = `0x${bin2hex(v)}`
+          v = `0x${hexBytes(v)}`
         }
         data.set(columns[i] as string, v)
       })
