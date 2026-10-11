@@ -5,6 +5,7 @@
  * pma: src/Navigation/NavigationTree.php
  */
 import type { NavContainer, NavList, NavNode, NavNodeKind, NavPath } from '@bettermyadmin/contracts'
+import { mbStrlen } from '@bettermyadmin/mysql-types'
 import { php } from '@bettermyadmin/mysql-types'
 import { listNavigator } from './list-navigator.ts'
 import {
@@ -34,7 +35,6 @@ import {
 } from './nodes.ts'
 import {
   isIntKey,
-  mbStrlen,
   mbStrpos,
   mbSubstr,
   phpSort,

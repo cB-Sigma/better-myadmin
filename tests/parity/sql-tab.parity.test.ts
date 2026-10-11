@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { compareLogs } from './lib/compare.ts'
 import { GeneralLog } from './lib/general-log.ts'
-import { PmaClient, visibleText } from './lib/pma.ts'
+import { PmaClient, isPmaUp, sqlBoxForm, visibleText } from './lib/pma.ts'
 import { cardText, collapse, errorText } from './lib/render.ts'
 
 /**
@@ -31,9 +31,7 @@ const dbMap = {
   [U.bmaLow]: 'parity_user',
 }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = await isPmaUp(PMA_URL)
 
 const SEED = (db: string) => `DROP DATABASE IF EXISTS ${db}; CREATE DATABASE ${db}; USE ${db};
   CREATE TABLE t (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(20), qty INT) ENGINE=InnoDB;
@@ -257,12 +255,12 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
       const bUser = c.low === true ? U.bmaLow : U.bma
 
       const m1 = await log.marker()
-      const pr = await p.sqlBox(
-        c.sql.replaceAll('%DB%', DB_PMA),
-        pdb,
-        c.table ?? '',
-        c.delimiter ?? ';',
-        c.pma,
+      const pr = await p.postJson(
+        '/import',
+        sqlBoxForm(c.sql.replaceAll('%DB%', DB_PMA), pdb, c.table ?? '', {
+          sql_delimiter: c.delimiter ?? ';',
+          ...c.pma,
+        }),
       )
       const pmaLog = await log.since(pUser, m1)
 
@@ -281,7 +279,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
       const res = br.json as unknown as QueryResponse
 
       if (c.after !== undefined) {
-        await p.sqlBox('SELECT 1', pdb, '', ';', c.after.pma)
+        await p.postJson('/import', sqlBoxForm('SELECT 1', pdb, '', c.after.pma))
         await b.req('POST', '/api/servers/1/query', {
           sql: 'SELECT 1',
           db: bdb,
@@ -371,7 +369,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     ]
     for (const l of LINT) {
       it(`lint ${l.editorType ?? 'sql'}: ${l.sql.slice(0, 30)}`, async () => {
-        const pr = await pma.super.postRoute('/lint', {
+        const pr = await pma.super.postJson('/lint', {
           sql_query: l.sql,
           no_history: 'true',
           ...(l.editorType !== undefined ? { 'options[editorType]': l.editorType } : {}),
@@ -392,7 +390,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     ]) {
       for (const singleLine of [false, true]) {
         it(`format${singleLine ? ' single line' : ''}: ${sql.slice(0, 30)}`, async () => {
-          const pr = await pma.super.postRoute('/database/sql/format', {
+          const pr = await pma.super.postJson('/database/sql/format', {
             sql,
             formatSingleLine: String(singleLine),
           })
@@ -404,7 +402,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
 
     it('autocomplete lists tables and columns with hints', async () => {
       const m1 = await log.marker()
-      const pr = await pma.super.postRoute('/database/sql/autocomplete', { db: DB_PMA, no_debug: 'true' })
+      const pr = await pma.super.postJson('/database/sql/autocomplete', { db: DB_PMA, no_debug: 'true' })
       const pmaLog = await log.since(U.pma, m1)
       const m2 = await log.marker()
       const br = await bma.super.req('GET', `/api/servers/1/sql/autocomplete?db=${DB_BMA}`)
@@ -415,7 +413,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     })
 
     it('default foreign key check value', async () => {
-      const pr = await pma.super.getRoute('/sql/get-default-fk-check-value')
+      const pr = await pma.super.getJson('/sql/get-default-fk-check-value')
       const br = await bma.super.req('GET', '/api/servers/1/sql/default-fk-check')
       expect(br.json.defaultFkCheckValue).toBe(pr.default_fk_check_value)
     })
@@ -434,7 +432,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     for (const sql of SIMULATE) {
       it(`simulate: ${sql}`, async () => {
         const m1 = await log.marker()
-        const pr = await pma.super.postRoute('/import/simulate-dml', {
+        const pr = await pma.super.postJson('/import/simulate-dml', {
           db: DB_PMA,
           sql_query: sql,
           sql_delimiter: ';',
@@ -452,7 +450,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
           matchedRows: number
           matchedRowsSql: string
         }> | null
-        const pdata = pr.sql_data as
+        const pdata = pr.sql_data as unknown as
           | Array<{ sql_query: string; matched_rows: number; matched_rows_url: string }>
           | false
         if (pdata === false) {

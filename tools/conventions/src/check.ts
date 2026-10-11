@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { parse as parseYaml } from 'yaml'
+import { parseDocument, parse as parseYaml } from 'yaml'
 import { RULES, type Rule, type Source, type Violation, docLink } from './rules.ts'
 
 /** One allow-list entry: a known, accepted exception (tools/conventions/allowlist.yaml). */
@@ -70,6 +70,16 @@ export function loadAllowList(file: string): AllowEntry[] {
     if (!RULES.some((r) => r.id === e.rule)) throw new Error(`allow-list entry for unknown rule ${e.rule}`)
   }
   return list
+}
+
+/** Removes `stale` entries from the allow-list file, keeping its comments. */
+export function pruneAllowList(file: string, stale: AllowEntry[]): void {
+  const doc = parseDocument(readFileSync(file, 'utf8'))
+  const key = (e: AllowEntry) => `${e.rule}\0${e.file ?? ''}\0${e.symbol ?? ''}`
+  const gone = new Set(stale.map(key))
+  const list = (doc.toJS() as { allow?: AllowEntry[] }).allow ?? []
+  for (let i = list.length - 1; i >= 0; i--) if (gone.has(key(list[i]!))) doc.deleteIn(['allow', i])
+  writeFileSync(file, doc.toString())
 }
 
 export function format(r: Result): string {

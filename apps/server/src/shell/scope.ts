@@ -7,12 +7,14 @@ import type {
   TableTabKey,
 } from '@bettermyadmin/contracts'
 import type { Translator } from '@bettermyadmin/i18n'
+import { phpEmpty } from '@bettermyadmin/metadata'
+import { getDbComment } from '@bettermyadmin/metadata'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
-import { type AppConfig, type ServerConfig, phpEmpty } from '../config.ts'
+import type { AppConfig, ServerConfig } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
 import { NotFoundError } from '../http/errors.ts'
 import type { MetaRequest } from '../metadata/service.ts'
-import { type StorageInfo, deniedTabs, getDbComment, storageInfo } from '../pmadb/storage.ts'
+import { type StorageInfo, deniedTabs, storageInfo } from '../pmadb/storage.ts'
 import { PrivilegeProbe, isSystemSchema } from './privileges.ts'
 
 export const APP_VERSION = process.env.BMA_VERSION ?? '0.0.0-dev'
@@ -144,7 +146,7 @@ export async function databaseScope(ctx: ShellCtx, db: string): Promise<Database
   const { versionInt, isMariaDb } = info(ctx)
   const st = await storage(ctx)
   // breadcrumb first, as Menu::getDisplay does
-  const comment = st.features.columnComments ? await getDbComment(controlFor(ctx), st, db) : ''
+  const comment = st.features.columnComments ? await getDbComment(controlFor(ctx), st.rp, db) : ''
   const system = isSystemSchema(db)
   const tables = await getTables(ctx.conn, db)
   if (tables === null && !(await databaseExists(ctx.conn, db))) {

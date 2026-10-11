@@ -1,5 +1,5 @@
 import type { SimulateResponse } from '@bettermyadmin/contracts'
-import { useEffect, useRef } from 'react'
+import { Button, MessageBox, Modal } from '@bettermyadmin/ui'
 import { t } from '../../lib/i18n'
 import { HighlightedSql } from './HighlightedSql'
 
@@ -18,37 +18,18 @@ export function SimulateModal({
   onClose: () => void
   onShowRows: (sql: string, sig: string) => void
 }) {
-  const dialog = useRef<HTMLDialogElement>(null)
-  useEffect(() => {
-    const d = dialog.current
-    if (d !== null && !d.open) d.showModal()
-  }, [])
   return (
-    <dialog
-      ref={dialog}
+    <Modal
+      open
       id="simulateDmlModal"
-      aria-labelledby="simulateDmlModalLabel"
-      className="m-auto w-[min(40rem,92vw)] rounded border border-border bg-bg p-0 text-fg shadow-lg backdrop:bg-black/40"
+      title={t('Simulate query')}
+      size="md"
       onClose={onClose}
+      footer={<Button onClick={onClose}>{t('Close')}</Button>}
     >
-      <div className="flex items-center justify-between border-b border-border px-4 py-2">
-        <h5 id="simulateDmlModalLabel" className="font-semibold">
-          {t('Simulate query')}
-        </h5>
-        <button
-          type="button"
-          aria-label={t('Close')}
-          className="px-2 text-lg"
-          onClick={() => dialog.current?.close()}
-        >
-          ×
-        </button>
-      </div>
-      <div className="modal-body preview_sql px-4 py-3 text-sm">
+      <div className="modal-body preview_sql">
         {data.sqlData === null ? (
-          <div role="alert" className="text-error">
-            {data.message}
-          </div>
+          <MessageBox type="error" text={data.message ?? ''} flush />
         ) : (
           data.sqlData.map((d, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: statements are positional
@@ -57,25 +38,19 @@ export function SimulateModal({
               <strong>{t('SQL query:')}</strong>
               <HighlightedSql sql={d.sqlQuery} versionInt={versionInt} className="my-1" />
               {t('Affected rows:')}{' '}
-              <button
-                type="button"
-                className="text-accent hover:underline"
+              <Button
+                variant="link"
                 onClick={() => {
-                  dialog.current?.close()
+                  onClose()
                   onShowRows(d.matchedRowsSql, d.matchedRowsSig)
                 }}
               >
                 {d.matchedRows}
-              </button>
+              </Button>
             </div>
           ))
         )}
       </div>
-      <div className="flex justify-end border-t border-border px-4 py-2">
-        <button type="button" className="btn" onClick={() => dialog.current?.close()}>
-          {t('Close')}
-        </button>
-      </div>
-    </dialog>
+    </Modal>
   )
 }

@@ -1,52 +1,27 @@
-/* SQL box, executed-SQL card and console styles (loaded with the SQL page and console chunks). */
-
-.btn {
-  border: 1px solid var(--border-strong);
-  border-radius: 0.25rem;
-  background: var(--bg-subtle);
-  color: var(--fg);
-  padding: 0.2rem 0.6rem;
-  font-size: 13px;
-  line-height: 1.4;
-  cursor: pointer;
-}
-.btn:hover:not(:disabled) {
-  background: var(--nav-pointer-bg);
-}
-.btn:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
-.btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-fg);
-}
-.btn-primary:hover:not(:disabled) {
-  background: var(--accent-hover);
-}
+/* Executed-SQL highlighting and console styles (loaded with the SQL page and console chunks); colours are
+   tokens of packages/ui/src/themes/themes.css. */
 
 /* highlighted SQL (CodeMirror runMode classes, resources/js/modules/sql-highlight.ts) */
 code.sql .cm-keyword {
-  color: #708;
+  color: var(--sql-keyword);
 }
 code.sql .cm-builtin {
-  color: #30a;
+  color: var(--sql-builtin);
 }
 code.sql .cm-string {
-  color: #a11;
+  color: var(--sql-string);
 }
 code.sql .cm-number {
-  color: #164;
+  color: var(--sql-number);
 }
 code.sql .cm-comment {
-  color: #a50;
+  color: var(--sql-comment);
 }
 code.sql .cm-variable-2 {
-  color: #05a;
+  color: var(--sql-variable);
 }
 code.sql .cm-atom {
-  color: #219;
+  color: var(--sql-atom);
 }
 code.sql a.cm-sql-doc {
   color: inherit;
@@ -56,26 +31,11 @@ code.sql a.cm-sql-doc:hover {
   text-decoration: underline;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-color-mode="light"]) code.sql .cm-keyword {
-    color: #c792ea;
-  }
-  :root:not([data-color-mode="light"]) code.sql .cm-string {
-    color: #f0a0a0;
-  }
-  :root:not([data-color-mode="light"]) code.sql .cm-builtin {
-    color: #8fb4ff;
-  }
-  :root:not([data-color-mode="light"]) code.sql .cm-number {
-    color: #9ad48f;
-  }
-}
-
 /* console dark theme (.console_dark_theme in phpMyAdmin's _common.scss) */
 .console_dark_theme {
-  background: #000;
-  color: #fff;
+  background: var(--console-dark-bg);
+  color: var(--console-dark-fg);
 }
 .console_dark_theme code.sql .cm-keyword {
-  color: #de935f;
+  color: var(--sql-keyword);
 }

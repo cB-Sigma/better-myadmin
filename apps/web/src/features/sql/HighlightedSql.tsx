@@ -1,5 +1,5 @@
+import { mysqlDocUrl } from '@bettermyadmin/ui'
 import { useEffect, useState } from 'react'
-import { mysqlDocUrl } from '../../lib/docs'
 import type { SqlSpan } from './editor/highlight'
 
 let highlighter: Promise<(text: string) => SqlSpan[]> | null = null

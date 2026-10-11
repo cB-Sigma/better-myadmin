@@ -1,8 +1,8 @@
 import { NavBranchQuery, NavTreeQuery, NavTreeRequest } from '@bettermyadmin/contracts'
 import { type Context, Hono } from 'hono'
-import type { z } from 'zod'
 import { getServer } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
+import { jsonBody, parse } from '../http/validate.ts'
 import {
   type NavServiceDeps,
   navigationBranch,
@@ -13,24 +13,14 @@ import type { ServerEnv } from './server.ts'
 
 export const navigationRoutes = new Hono<ServerEnv>()
 
-function parse<T extends z.ZodTypeAny>(schema: T, value: unknown): z.output<T> {
-  const r = schema.safeParse(value)
-  if (!r.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      r.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  return r.data
-}
-
 async function withDeps<T>(c: Context<ServerEnv>, fn: (deps: NavServiceDeps) => Promise<T>): Promise<T> {
   const { cfg, pools } = c.get('deps')
   const session = c.get('session')
   const serverIndex = c.get('serverIndex')
   const server = getServer(cfg, serverIndex)
   const login = session.servers[String(serverIndex)]
-  if (server === undefined || login === undefined) throw new ValidationError('Invalid server index!')
+  if (server === undefined || login === undefined)
+    throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   login.cache ??= {}
   const conn = await pools.acquire(
     session.id,
@@ -60,7 +50,7 @@ navigationRoutes.get('/tree', async (c) => {
  * load, and "Reload navigation panel" (`reload: true`). pma: POST /navigation reload=1 n{i}_aPath…
  */
 navigationRoutes.post('/tree', async (c) => {
-  const req = parse(NavTreeRequest, await c.req.json().catch(() => null))
+  const req = parse(NavTreeRequest, await jsonBody(c))
   const body = await withDeps(c, (deps) => navigationTree(deps, req))
   return c.json(body)
 })

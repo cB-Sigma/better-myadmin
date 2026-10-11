@@ -18,6 +18,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api } from '../../lib/api.ts'
+import { PROJECT_URL } from '../../lib/config'
 import { useConfig } from '../../lib/config.ts'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys.ts'
@@ -28,7 +29,7 @@ import { VersionInfo } from './home/VersionInfo.tsx'
 import { colorModeText, setTheme, useThemeState } from './theme/theme.ts'
 import { ThemesDialog } from './themes/ThemeCards.tsx'
 
-const REPO = 'https://github.com/cB-Abhinav-Gautam/better-myadmin'
+const REPO = PROJECT_URL
 
 /**
  * The home page: General settings, Appearance settings, Database server, Web server, the
@@ -139,7 +140,7 @@ function GeneralSettings(props: {
   }
 
   return (
-    <Panel title={t('General settings')}>
+    <Panel variant="home" title={t('General settings')}>
       <PanelList>
         {home.hasServerSelection && (
           <PanelItem id="li_select_server">
@@ -237,7 +238,7 @@ function AppearanceSettings({ server }: { server: number }) {
   // "Appearance settings" exists when a language choice or the theme manager is available
   if (!cfg.ThemeManager && !languageChoice) return null
   return (
-    <Panel title={t('Appearance settings')}>
+    <Panel variant="home" title={t('Appearance settings')}>
       <PanelList>
         <LanguageSlot />
         {cfg.ThemeManager && (
@@ -295,7 +296,7 @@ function AppearanceSettings({ server }: { server: number }) {
 
 function DatabaseServer({ d }: { d: NonNullable<HomeResponse['databaseServer']> }) {
   return (
-    <Panel title={t('Database server')}>
+    <Panel variant="home" title={t('Database server')}>
       <PanelList className="list-disc ps-8">
         <PanelItem className="ps-0">
           {t('Server:')} {d.host}
@@ -334,7 +335,7 @@ function WebServer({
   server,
 }: { w: HomeResponse['webServer']; showPhpInfo: boolean; server: number }) {
   return (
-    <Panel title={t('Web server')}>
+    <Panel variant="home" title={t('Web server')}>
       <PanelList className="list-disc ps-8">
         {w !== null && (
           <>
@@ -377,7 +378,7 @@ function WebServer({
 function AppCard({ server, home }: { server: number; home: HomeResponse }) {
   const git = home.app.git
   return (
-    <Panel title="BetterMyAdmin">
+    <Panel variant="home" title="BetterMyAdmin">
       <PanelList className="list-disc ps-8">
         <VersionInfo version={home.app.version} check={home.versionCheck} />
         {git !== null && (

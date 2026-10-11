@@ -11,21 +11,22 @@ import {
   Hint,
   Input,
   Label,
+  MessageBox,
   NativeSelect,
   Panel,
   PanelBody,
+  Table,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { Fragment, type KeyboardEvent, useMemo, useState } from 'react'
-import { ApiError, type InsertFormRequest, api } from '../../lib/api'
+import { ApiError, type InsertFormRequest, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { GisEditor } from '../gis/GisEditor'
 import { useLockPage } from '../shell/page-chrome'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { MessageBox } from '../sql/SqlMessage'
 import { setFlash } from '../table/structure/flash'
 import { ForeignBrowser } from './ForeignBrowser'
 import { NullCheckbox, ValueWidget } from './ValueWidget'
@@ -69,13 +70,12 @@ export function InsertEditPage(props: InsertEditPageProps) {
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const q = useQuery({
-    queryKey: qk.insertForm(server, db, table, req),
-    queryFn: () => api.insertForm(server, db, table, req),
+    queryKey: qk.insertForm({ server, db, table }, req),
+    queryFn: () => api.insertForm({ server, db, table }, req),
     gcTime: 0,
     staleTime: 0,
   })
-  if (q.error instanceof ApiError)
-    return <MessageBox type="error" text={q.error.message} className="rounded" />
+  if (q.error instanceof ApiError) return <MessageBox {...errorMessage(q.error)} flush />
   if (q.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
   return (
     <InsertEditForm
@@ -175,12 +175,12 @@ function InsertEditForm({
     }
     setBusy(true)
     try {
-      const r = await api.saveRows(server, db, table, body)
+      const r = await api.saveRows({ server, db, table }, body)
       if (isPreview) {
         setPreview(r.preview ?? [])
         return
       }
-      await qc.invalidateQueries({ queryKey: qk.tbl(server, db, table) })
+      await qc.invalidateQueries({ queryKey: qk.tbl({ server, db, table }) })
       const msgs = [r.message]
       if (r.next.action === 'back') {
         setFlash(msgs)
@@ -335,10 +335,10 @@ function InsertEditForm({
               </div>
             )}
             <div className="overflow-x-auto">
-              <table className="insertRowTable my-3 w-auto border-collapse text-[13px]" onKeyDown={onKeyDown}>
+              <Table zebra className="insertRowTable my-3 w-auto" onKeyDown={onKeyDown}>
                 <thead>
                   {goRow}
-                  <tr className="border-b border-border bg-bg-subtle">
+                  <tr>
                     <th className="px-2 py-1">{t('Column')}</th>
                     {showType && (
                       <th className="px-2 py-1">
@@ -375,7 +375,7 @@ function InsertEditForm({
                     />
                   ))}
                 </tbody>
-              </table>
+              </Table>
             </div>
           </Fragment>
         ))}
@@ -528,7 +528,7 @@ function ColumnRow({
   if (cell === undefined || state === undefined) return null
   const idx = fieldIndex(r, f.columnCount, col.columnNumber)
   return (
-    <tr className="noclick border-b border-border odd:bg-bg-subtle">
+    <tr className="noclick">
       <td className="px-2 py-1 text-center">
         {col.comment !== null ? (
           <span className="border-b border-dashed border-fg" title={col.comment}>

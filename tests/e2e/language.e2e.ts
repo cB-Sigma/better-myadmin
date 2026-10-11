@@ -54,5 +54,5 @@ test('switching the language on the login page, RTL flips the layout [p01-728b8d
   await page.locator('#input_password').fill(process.env.BMA_TEST_PASSWORD ?? 'root')
   await page.locator('#input_go').click()
   await expect(page.getByRole('link', { name: 'Datenbanken' })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Anzeige-Einstellungen' })).toBeVisible()
+  await expect(page.getByText('Anzeige-Einstellungen', { exact: true })).toBeVisible()
 })

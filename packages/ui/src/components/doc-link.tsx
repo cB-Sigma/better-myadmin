@@ -38,20 +38,24 @@ export function MySqlDocLink({
   anchor = '',
   url,
   bigIcon = false,
+  className,
   children,
 }: {
-  link: string
+  /** Manual page (`link` of Util::getMySQLDocuURL); or give a ready `url`. */
+  link?: string
   anchor?: string
-  /** A ready URL (e.g. from the mariadb-mysql-kbs knowledge base, packages/kbs). */
-  url?: string
+  /** A ready URL (e.g. from the mariadb-mysql-kbs knowledge base, packages/kbs); null = no link. */
+  url?: string | null | undefined
   bigIcon?: boolean
+  className?: string
   children?: ReactNode
 }) {
   const { serverVersion, gettext } = useUiSettings()
-  const href = url ?? mysqlDocUrl(link, anchor, serverVersion)
+  if (url === null || (url === undefined && link === undefined)) return null
+  const href = url ?? mysqlDocUrl(link ?? '', anchor, serverVersion)
   const doc = gettext('Documentation')
   return (
-    <a href={href} target="mysql_doc" rel="noopener noreferrer" title={doc}>
+    <a href={href} target="mysql_doc" rel="noopener noreferrer" title={doc} className={className}>
       {children ?? <PmaIcon name={bigIcon ? 'b_sqlhelp' : 'b_help'} alt={doc} />}
     </a>
   )

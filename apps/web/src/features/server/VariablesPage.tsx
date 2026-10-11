@@ -1,11 +1,11 @@
 import type { ServerVariable, ServerVariableValue } from '@bettermyadmin/contracts'
+import { Loading, MessageBox, MySqlDocLink, PageHeader, Panel, PanelBody, Table } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, Pencil, Variable, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { ApiError } from '../../lib/api'
+import { ApiError, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
-import { serverApi, serverKeys } from './api'
-import { Alert, Card, DocLink, ErrorBox, Loading, PageTitle, tableCls } from './ui'
+import { qk } from '../../lib/queryKeys'
 
 /** The value cell: `,` gets a zero-width space for wrapping; byte values carry their full number. */
 function ValueText({ v }: { v: ServerVariableValue }) {
@@ -19,7 +19,7 @@ function ValueText({ v }: { v: ServerVariableValue }) {
  * pma: templates/server/variables/index.twig, resources/js/server/variables.ts
  */
 export function VariablesPage({ server, filter: initial }: { server: number; filter: string }) {
-  const q = useQuery({ queryKey: serverKeys.variables(server), queryFn: () => serverApi.variables(server) })
+  const q = useQuery({ queryKey: qk.serverVariables(server), queryFn: () => api.serverVariables(server) })
   const [filter, setFilter] = useState(initial)
   const [message, setMessage] = useState<{ type: 'error' | 'notice'; text: string } | null>(null)
   const needle = filter.toUpperCase().replace(/ /g, '_')
@@ -29,34 +29,36 @@ export function VariablesPage({ server, filter: initial }: { server: number; fil
   )
   return (
     <div>
-      <PageTitle icon={Variable} docUrl={q.data?.docUrl}>
+      <PageHeader icon={Variable} docUrl={q.data?.docUrl}>
         {t('Server variables and settings')}
-      </PageTitle>
-      {q.error !== null && <ErrorBox error={q.error} />}
+      </PageHeader>
+      {q.error !== null && <MessageBox {...errorMessage(q.error)} />}
       {q.isPending && <Loading />}
-      {message !== null && <Alert type={message.type}>{message.text}</Alert>}
+      {message !== null && <MessageBox type={message.type}>{message.text}</MessageBox>}
       {q.data !== undefined && q.data.variables.length === 0 && (
-        <Alert type="error">
+        <MessageBox type="error">
           {t('Not enough privilege to view server variables and settings. %s', '')}
-          <DocLink url={q.data.noPrivilegeDocUrl} />
-        </Alert>
+          <MySqlDocLink url={q.data.noPrivilegeDocUrl} />
+        </MessageBox>
       )}
       {q.data !== undefined && q.data.variables.length > 0 && (
         <>
-          <Card title={t('Filters')} id="tableFilter">
-            <label htmlFor="filterText" className="flex items-center gap-2">
-              {t('Containing the word:')}
-              <input
-                id="filterText"
-                name="filterText"
-                type="text"
-                className="input w-64"
-                value={filter}
-                onChange={(e) => setFilter(e.target.value)}
-              />
-            </label>
-          </Card>
-          <table id="serverVariables" className={`${tableCls} w-full`}>
+          <Panel title={t('Filters')} id="tableFilter">
+            <PanelBody>
+              <label htmlFor="filterText" className="flex items-center gap-2">
+                {t('Containing the word:')}
+                <input
+                  id="filterText"
+                  name="filterText"
+                  type="text"
+                  className="input w-64"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                />
+              </label>
+            </PanelBody>
+          </Panel>
+          <Table id="serverVariables" zebra className="w-full">
             <thead>
               <tr>
                 <th scope="col">{t('Action')}</th>
@@ -77,7 +79,7 @@ export function VariablesPage({ server, filter: initial }: { server: number; fil
                 />
               ))}
             </tbody>
-          </table>
+          </Table>
         </>
       )}
     </div>
@@ -104,7 +106,7 @@ function VariableRows({
   const startEdit = async () => {
     onMessage(null)
     try {
-      const r = await serverApi.getVariable(server, v.name)
+      const r = await api.serverVariable(server, v.name)
       setEditing(r.message)
     } catch (e) {
       onMessage({ type: 'error', text: e instanceof Error ? e.message : String(e) })
@@ -114,10 +116,10 @@ function VariableRows({
     if (editing === null) return
     setBusy(true)
     try {
-      const r = await serverApi.setVariable(server, v.name, editing)
+      const r = await api.setVariable(server, v.name, editing)
       if (r.variable !== undefined) setValue(r.variable)
       setEditing(null)
-      void qc.invalidateQueries({ queryKey: serverKeys.variables(server) })
+      void qc.invalidateQueries({ queryKey: qk.serverVariables(server) })
     } catch (e) {
       const env = e instanceof ApiError ? e.envelope : null
       const text =
@@ -184,7 +186,6 @@ function VariableRows({
               <a href={v.docUrl} target="mysql_doc" rel="noopener noreferrer">
                 {label.replaceAll(' ', ' ')}
               </a>
-              <DocLink url={v.docUrl} className="ms-1" />
             </span>
           ) : (
             label

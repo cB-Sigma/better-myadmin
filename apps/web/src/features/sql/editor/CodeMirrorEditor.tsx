@@ -1,3 +1,4 @@
+import { sanitizeToFragment } from '@bettermyadmin/ui'
 import { autocompletion, completionKeymap, startCompletion } from '@codemirror/autocomplete'
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands'
 import { MySQL, sql } from '@codemirror/lang-sql'
@@ -39,9 +40,9 @@ const theme = EditorView.theme({
 
 const darkTheme = EditorView.theme(
   {
-    '&': { backgroundColor: '#000', color: '#fff' },
-    '.cm-content': { caretColor: '#fff' },
-    '.ͼb, .tok-keyword': { color: '#de935f' },
+    '&': { backgroundColor: 'var(--console-dark-bg)', color: 'var(--console-dark-fg)' },
+    '.cm-content': { caretColor: 'var(--console-dark-fg)' },
+    '.ͼb, .tok-keyword': { color: 'var(--console-dark-keyword)' },
   },
   { dark: true },
 )
@@ -233,7 +234,7 @@ function lintFor(cfg: SqlEditorProps['lint']): Extension {
             // messageHTML: the linter escapes the message and wraps the token in <code>
             renderMessage: () => {
               const span = document.createElement('span')
-              span.innerHTML = l.message
+              span.append(sanitizeToFragment(l.message))
               return span
             },
           }

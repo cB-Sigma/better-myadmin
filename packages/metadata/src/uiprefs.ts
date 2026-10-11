@@ -1,5 +1,6 @@
+import { mbStrlen } from '@bettermyadmin/mysql-types'
 import type { UiPrefsBackend } from './driver.ts'
-import { mbStrlen, phpJsonDecode, phpJsonEncode } from './php.ts'
+import { phpJsonDecode, phpJsonEncode } from './php.ts'
 
 /** pma: src/Table/UiProperty.php */
 export type UiProperty = 'sorted_col' | 'col_order' | 'col_visib'

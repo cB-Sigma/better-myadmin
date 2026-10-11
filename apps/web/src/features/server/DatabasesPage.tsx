@@ -1,13 +1,24 @@
 import type { DatabasesResponse, NavPageSelector } from '@bettermyadmin/contracts'
+import {
+  Button,
+  Loading,
+  MessageBox,
+  Modal,
+  MySqlDocLink,
+  PageHeader,
+  Panel,
+  PanelBody,
+  Table,
+  buttonVariants,
+} from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, Check, Database, FileCode2, Shield, Trash2, X } from 'lucide-react'
 import { useRef, useState } from 'react'
-import { ApiError } from '../../lib/api'
+import { api, errorMessage } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
+import { path } from '../../lib/paths'
 import { qk } from '../../lib/queryKeys'
-import { serverApi, serverKeys } from './api'
-import { path, Alert, Card, DocLink, ErrorBox, Loading, SqlBox, tableCls } from './ui'
 
 export interface DatabasesSearch {
   statistics: boolean
@@ -34,8 +45,8 @@ export function DatabasesPage({
   const qc = useQueryClient()
   const navigate = useNavigate()
   const q = useQuery({
-    queryKey: serverKeys.databases(server, search),
-    queryFn: () => serverApi.databases(server, search),
+    queryKey: qk.databases(server, search),
+    queryFn: () => api.databases(server, search),
     placeholderData: (prev) => prev,
   })
   const [filter, setFilter] = useState('')
@@ -47,12 +58,11 @@ export function DatabasesPage({
   const collationRef = useRef<HTMLSelectElement>(null)
 
   const refresh = () => {
-    void qc.invalidateQueries({ queryKey: serverKeys.allDatabases(server) })
+    void qc.invalidateQueries({ queryKey: qk.allDatabases(server) })
     void qc.invalidateQueries({ queryKey: qk.nav(server) })
   }
   const create = useMutation({
-    mutationFn: (v: { name: string; collation: string }) =>
-      serverApi.createDatabase(server, v.name, v.collation),
+    mutationFn: (v: { name: string; collation: string }) => api.createDatabase(server, v.name, v.collation),
     onSuccess: (r) => {
       setMessage(r.message)
       setCreated(r.sqlQuery?.sql ?? null)
@@ -62,22 +72,29 @@ export function DatabasesPage({
         void navigate({ to: `/s/${server}/db/${encodeURIComponent(r.db)}${tab !== '' ? `/${tab}` : ''}` })
       }
     },
-    onError: (e) => setMessage({ type: 'error', text: apiText(e) }),
+    onError: (e) => {
+      setCreated(null)
+      setMessage(errorMessage(e))
+    },
   })
   const drop = useMutation({
-    mutationFn: (names: string[]) => serverApi.dropDatabases(server, names),
+    mutationFn: (names: string[]) => api.dropDatabases(server, names),
     onSuccess: (r) => {
       setMessage(r.message)
+      setCreated(null)
       setSelected(new Set())
       refresh()
     },
-    onError: (e) => setMessage({ type: 'error', text: apiText(e) }),
+    onError: (e) => {
+      setCreated(null)
+      setMessage(errorMessage(e))
+    },
   })
 
   const d = q.data
-  if (q.error !== null) return <ErrorBox error={q.error} />
+  if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
   if (d === undefined) return <Loading />
-  if (d.error !== null) return <ErrorBox error={d.error.message} />
+  if (d.error !== null) return <MessageBox {...errorMessage(d.error.message)} />
   const needle = filter.toUpperCase().replace(/ /g, '_')
   const rows = d.databases.filter((db) => db.name.toUpperCase().includes(needle))
   const selectable = rows.filter((db) => !db.isSystemSchema && !db.isPmadb)
@@ -105,82 +122,82 @@ export function DatabasesPage({
 
   return (
     <div>
-      <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-        <Database className="size-5 text-fg-muted" aria-hidden />
-        {d.hasStatistics ? t('Databases statistics') : t('Databases')}
-      </h2>
-      {message !== null && <Alert type={message.type}>{message.text}</Alert>}
-      {created !== null && <SqlBox message="" sql={created} />}
+      <PageHeader icon={Database}>{d.hasStatistics ? t('Databases statistics') : t('Databases')}</PageHeader>
+      {message !== null && <MessageBox type={message.type} text={message.text} sql={created ?? undefined} />}
       {d.isCreateDatabaseShown && (
-        <Card
+        <Panel
           title={
             <span className="flex items-center gap-1">
-              {t('Create database')} <DocLink url={d.createDatabaseDocUrl} />
+              {t('Create database')} <MySqlDocLink url={d.createDatabaseDocUrl} />
             </span>
           }
         >
-          {d.hasCreateDatabasePrivileges ? (
-            <form
-              id="create_database_form"
-              className="flex flex-wrap items-center gap-2"
-              onSubmit={(e) => {
-                e.preventDefault()
-                const name = nameRef.current?.value ?? ''
-                if (name === '') {
-                  window.alert(t('Missing value in the form!'))
-                  return
-                }
-                create.mutate({ name, collation: collationRef.current?.value ?? '' })
-              }}
-            >
-              <input
-                ref={nameRef}
-                autoComplete="off"
-                type="text"
-                name="new_db"
-                maxLength={64}
-                className="input w-64"
-                defaultValue={d.databaseToCreate}
-                id="text_create_db"
-                placeholder={t('Database name')}
-                aria-label={t('Database name')}
-                required
-              />
-              {d.charsets.length > 0 && (
-                <select
-                  ref={collationRef}
-                  lang="en"
-                  dir="ltr"
-                  name="db_collation"
-                  className="input w-auto"
-                  aria-label={t('Collation')}
-                  defaultValue={d.charsets.flatMap((c) => c.collations).find((c) => c.isSelected)?.name ?? ''}
-                >
-                  <option value="">{t('Collation')}</option>
-                  <option value="" />
-                  {d.charsets.map((cs) => (
-                    <optgroup key={cs.name} label={cs.name} title={cs.description}>
-                      {cs.collations.map((c) => (
-                        <option key={c.name} value={c.name} title={c.description}>
-                          {c.name}
-                        </option>
-                      ))}
-                    </optgroup>
-                  ))}
-                </select>
-              )}
-              <input
-                id="buttonGo"
-                type="submit"
-                value={t('Create')}
-                disabled={create.isPending}
-                className="cursor-pointer rounded bg-accent px-4 py-1 text-accent-fg"
-              />
-            </form>
-          ) : (
-            <span className="text-error">{t('No privileges to create databases')}</span>
-          )}
-        </Card>
+          <PanelBody>
+            {d.hasCreateDatabasePrivileges ? (
+              <form
+                id="create_database_form"
+                className="flex flex-wrap items-center gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const name = nameRef.current?.value ?? ''
+                  if (name === '') {
+                    window.alert(t('Missing value in the form!'))
+                    return
+                  }
+                  create.mutate({ name, collation: collationRef.current?.value ?? '' })
+                }}
+              >
+                <input
+                  ref={nameRef}
+                  autoComplete="off"
+                  type="text"
+                  name="new_db"
+                  maxLength={64}
+                  className="input w-64"
+                  defaultValue={d.databaseToCreate}
+                  id="text_create_db"
+                  placeholder={t('Database name')}
+                  aria-label={t('Database name')}
+                  required
+                />
+                {d.charsets.length > 0 && (
+                  <select
+                    ref={collationRef}
+                    lang="en"
+                    dir="ltr"
+                    name="db_collation"
+                    className="input w-auto"
+                    aria-label={t('Collation')}
+                    defaultValue={
+                      d.charsets.flatMap((c) => c.collations).find((c) => c.isSelected)?.name ?? ''
+                    }
+                  >
+                    <option value="">{t('Collation')}</option>
+                    <option value="" />
+                    {d.charsets.map((cs) => (
+                      <optgroup key={cs.name} label={cs.name} title={cs.description}>
+                        {cs.collations.map((c) => (
+                          <option key={c.name} value={c.name} title={c.description}>
+                            {c.name}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                  </select>
+                )}
+                <input
+                  id="buttonGo"
+                  type="submit"
+                  value={t('Create')}
+                  disabled={create.isPending}
+                  className={buttonVariants({ variant: 'primary' })}
+                />
+              </form>
+            ) : (
+              <span className="text-error">{t('No privileges to create databases')}</span>
+            )}
+          </PanelBody>
+        </Panel>
       )}
 
       {d.databaseCount > 0 ? (
@@ -202,7 +219,7 @@ export function DatabasesPage({
                 <button
                   type="button"
                   id="bulkActionDropButton"
-                  className="flex items-center gap-1 rounded border border-border-strong px-2 py-1"
+                  className={buttonVariants()}
                   title={t('Drop')}
                   onClick={() => {
                     if (selected.size === 0) {
@@ -229,7 +246,7 @@ export function DatabasesPage({
             />
           </div>
           {d.pager !== null && <Pager pager={d.pager} onPos={(pos) => onSearch({ pos })} />}
-          <table className={tableCls} id="dbStatsTable">
+          <Table zebra id="dbStatsTable">
             <thead>
               <tr>
                 {d.isDropAllowed && <th />}
@@ -366,78 +383,70 @@ export function DatabasesPage({
                 <th />
               </tr>
             </tfoot>
-          </table>
+          </Table>
           {!d.hasStatistics && (
-            <Card className="mt-3">
-              <Alert type="info">
-                {t(
-                  'Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server.',
-                )}
-              </Alert>
-              <button
-                type="button"
-                className="text-accent hover:underline"
-                title={t('Enable statistics')}
-                onClick={() => onSearch({ statistics: true })}
-              >
-                {t('Enable statistics')}
-              </button>
-            </Card>
+            <Panel className="mt-3">
+              <PanelBody>
+                <MessageBox type="info">
+                  {t(
+                    'Note: Enabling the database statistics here might cause heavy traffic between the web server and the MySQL server.',
+                  )}
+                </MessageBox>
+                <button
+                  type="button"
+                  className="text-accent hover:underline"
+                  title={t('Enable statistics')}
+                  onClick={() => onSearch({ statistics: true })}
+                >
+                  {t('Enable statistics')}
+                </button>
+              </PanelBody>
+            </Panel>
           )}
         </>
       ) : (
-        <Alert type="info">{t('No databases')}</Alert>
+        <MessageBox type="info">{t('No databases')}</MessageBox>
       )}
 
-      {confirm !== null && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="dropDatabaseModalLabel"
-          className="fixed inset-0 z-50 grid place-items-center bg-black/40"
-          id="dropDatabaseModal"
-        >
-          <div className="w-full max-w-lg rounded border border-border bg-bg">
-            <h5 id="dropDatabaseModalLabel" className="border-b border-border px-4 py-2 font-semibold">
-              {t('Confirm')}
-            </h5>
-            <div className="modal-body px-4 py-3 text-sm">
-              {/* databases.ts: strDropDatabaseStrongWarning + ' ' + sprintf(strDoYouReally, statements joined by <br>) */}
-              {`${t('You are about to DESTROY a complete database!')} ${t(
-                'Do you really want to execute "%s"?',
-                confirm.map((n) => `DROP DATABASE \`${n}\`;`).join('\n'),
-              )}`
-                .split('\n')
-                .map((line, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: static lines
-                  <div key={i}>{line}</div>
-                ))}
-            </div>
-            <div className="flex justify-end gap-2 border-t border-border px-4 py-2">
-              <button
-                type="button"
-                className="flex items-center gap-1 rounded border border-border-strong px-3 py-1 text-sm"
-                onClick={() => setConfirm(null)}
-              >
-                <X className="size-4" aria-hidden />
-                {t('Cancel')}
-              </button>
-              <button
-                type="button"
-                id="dropDatabaseModalDropButton"
-                className="flex items-center gap-1 rounded bg-error px-3 py-1 text-sm text-bg"
-                onClick={() => {
-                  drop.mutate(confirm)
-                  setConfirm(null)
-                }}
-              >
-                <Check className="size-4" aria-hidden />
-                {t('Drop')}
-              </button>
-            </div>
-          </div>
+      <Modal
+        open={confirm !== null}
+        id="dropDatabaseModal"
+        title={t('Confirm')}
+        size="md"
+        onClose={() => setConfirm(null)}
+        footer={
+          <>
+            <Button onClick={() => setConfirm(null)}>
+              <X aria-hidden />
+              {t('Cancel')}
+            </Button>
+            <Button
+              variant="destructive"
+              id="dropDatabaseModalDropButton"
+              onClick={() => {
+                if (confirm !== null) drop.mutate(confirm)
+                setConfirm(null)
+              }}
+            >
+              <Check aria-hidden />
+              {t('Drop')}
+            </Button>
+          </>
+        }
+      >
+        <div className="modal-body">
+          {/* databases.ts: strDropDatabaseStrongWarning + ' ' + sprintf(strDoYouReally, statements joined by <br>) */}
+          {`${t('You are about to DESTROY a complete database!')} ${t(
+            'Do you really want to execute "%s"?',
+            (confirm ?? []).map((n) => `DROP DATABASE \`${n}\`;`).join('\n'),
+          )}`
+            .split('\n')
+            .map((line, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static lines
+              <div key={i}>{line}</div>
+            ))}
         </div>
-      )}
+      </Modal>
     </div>
   )
 }
@@ -489,14 +498,6 @@ function Pager({ pager, onPos }: { pager: NavPageSelector; onPos: (pos: number) 
       {b(pgettext('Last page', 'End'), pager.end, '>>')}
     </div>
   )
-}
-
-function apiText(e: unknown): string {
-  if (e instanceof ApiError) {
-    const m = (e.envelope as unknown as { message?: unknown }).message
-    return typeof m === 'string' ? m : e.message
-  }
-  return e instanceof Error ? e.message : String(e)
 }
 
 export type { DatabasesResponse }

@@ -38,4 +38,4 @@ export {
   serverNode,
   USERPREF_PATHS,
 } from './schema.ts'
-export { levenshtein } from './suggest.ts'
+export { suggestionDistance } from './suggest.ts'
