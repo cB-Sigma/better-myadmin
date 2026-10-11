@@ -1,5 +1,5 @@
 import type { Profiling } from '@bettermyadmin/contracts'
-import { MySqlDocLink, mysqlDocUrl } from '@bettermyadmin/ui'
+import { MySqlDocLink, Panel, PanelBody, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useEffect, useRef, useState } from 'react'
 import { t } from '../../lib/i18n'
 
@@ -60,9 +60,8 @@ export function ProfilingCard({ profiling, versionInt }: { profiling: Profiling;
   )
   const td = 'px-2 py-0.5'
   return (
-    <div className="mb-3 rounded border border-border" data-testid="profiling">
-      <div className="border-b border-border bg-bg-subtle px-3 py-1.5 font-semibold">{t('Profiling')}</div>
-      <div className="grid gap-4 p-3 lg:grid-cols-3">
+    <Panel title={t('Profiling')} data-testid="profiling">
+      <PanelBody className="grid gap-4 lg:grid-cols-3">
         <div>
           <h3 className="mb-1 font-semibold">{t('Detailed profile')}</h3>
           <table id="profiletable" className="w-full text-xs">
@@ -113,8 +112,8 @@ export function ProfilingCard({ profiling, versionInt }: { profiling: Profiling;
           </table>
         </div>
         <ProfilingChart chart={profiling.chart} />
-      </div>
-    </div>
+      </PanelBody>
+    </Panel>
   )
 }
 

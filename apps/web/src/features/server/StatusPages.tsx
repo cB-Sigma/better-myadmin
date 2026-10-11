@@ -1,19 +1,22 @@
 import type { ProcessList, StatusLink, StatusVariable } from '@bettermyadmin/contracts'
 import {
+  Button,
   Hint,
   Loading,
   MessageBox,
+  Modal,
   MySqlDocLink,
   Panel,
   PanelBody,
   SafeHtml,
   Table,
+  buttonVariants,
   stripTags,
 } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, Outlet, useLocation, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, CircleHelp, FileText, FileType, Pause, Play } from 'lucide-react'
-import { type ReactNode, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useMemo, useState } from 'react'
 import { ApiError, api, errorMessage } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { path } from '../../lib/paths'
@@ -257,11 +260,7 @@ export function ProcessesPage({
               />
               {t('Show only active')}
             </label>
-            <input
-              type="submit"
-              value={t('Refresh')}
-              className="cursor-pointer rounded border border-border-strong px-3 py-1"
-            />
+            <input type="submit" value={t('Refresh')} className={buttonVariants()} />
           </form>
         </PanelBody>
       </Panel>
@@ -408,18 +407,8 @@ export function ProcessesPage({
   )
 }
 
-const PIE_COLORS = [
-  '#4e79a7',
-  '#f28e2b',
-  '#e15759',
-  '#76b7b2',
-  '#59a14f',
-  '#edc948',
-  '#b07aa1',
-  '#ff9da7',
-  '#9c755f',
-  '#bab0ac',
-]
+/** chart series tokens (packages/ui themes.css) */
+const PIE_COLORS = Array.from({ length: 10 }, (_, i) => `var(--chart-${i + 1})`)
 
 /** A small SVG pie (the Chart.js pie of queries.ts) */
 function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ariaLabel: string }) {
@@ -449,7 +438,7 @@ function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ar
       <svg viewBox="0 0 200 200" className="size-60" aria-hidden="true">
         <title>{ariaLabel}</title>
         {slices.map((s) => (
-          <path key={s.label} d={s.d} fill={s.color}>
+          <path key={s.label} d={s.d} style={{ fill: s.color }}>
             <title>{`${s.label}: ${s.v}`}</title>
           </path>
         ))}
@@ -656,11 +645,7 @@ export function StatusVariablesPage({
               />
               {t('Show unformatted values')}
             </label>
-            <input
-              type="submit"
-              value={t('Refresh')}
-              className="cursor-pointer rounded border border-border-strong px-3 py-1"
-            />
+            <input type="submit" value={t('Refresh')} className={buttonVariants()} />
           </form>
         </PanelBody>
       </Panel>
@@ -730,7 +715,7 @@ export function AdvisorPage({ server }: { server: number }) {
     queryFn: () => api.advisor(server),
   })
   const [open, setOpen] = useState(0)
-  const dialog = useRef<HTMLDialogElement>(null)
+  const [instructions, setInstructions] = useState(false)
   const navigate = useNavigate()
   const a = q.data
   if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
@@ -752,21 +737,23 @@ export function AdvisorPage({ server }: { server: number }) {
         <MessageBox type="error">{t('Not enough privilege to view the advisor.')}</MessageBox>
       ) : (
         <>
-          <button
-            type="button"
-            className="mb-4 flex items-center gap-1 rounded border border-border-strong px-3 py-1 text-sm"
-            onClick={() => dialog.current?.showModal()}
-          >
-            <CircleHelp className="size-4" aria-hidden />
+          <Button className="mb-4" onClick={() => setInstructions(true)}>
+            <CircleHelp aria-hidden />
             {t('Instructions')}
-          </button>
-          <dialog
-            ref={dialog}
+          </Button>
+          <Modal
+            open={instructions}
             id="advisorInstructionsModal"
-            className="max-w-lg rounded border border-border bg-bg p-0 text-fg backdrop:bg-black/40"
+            title={t('Advisor system')}
+            size="md"
+            onClose={() => setInstructions(false)}
+            footer={
+              <Button variant="primary" onClick={() => setInstructions(false)}>
+                {t('Close')}
+              </Button>
+            }
           >
-            <div className="border-b border-border px-4 py-2 font-semibold">{t('Advisor system')}</div>
-            <div className="space-y-2 px-4 py-3 text-sm">
+            <div className="space-y-2">
               <p>
                 {t(
                   'The Advisor system can provide recommendations on server variables by analyzing the server status variables.',
@@ -788,16 +775,7 @@ export function AdvisorPage({ server }: { server: number }) {
                 )}
               </p>
             </div>
-            <div className="border-t border-border px-4 py-2 text-end">
-              <button
-                type="button"
-                className="rounded bg-accent px-3 py-1 text-sm text-accent-fg"
-                onClick={() => dialog.current?.close()}
-              >
-                {t('Close')}
-              </button>
-            </div>
-          </dialog>
+          </Modal>
           {a.errors.length > 0 && (
             <MessageBox type="error">
               <h4 className="font-semibold">{t('Errors occurred while executing rule expressions:')}</h4>

@@ -186,7 +186,6 @@ function VariableRows({
               <a href={v.docUrl} target="mysql_doc" rel="noopener noreferrer">
                 {label.replaceAll(' ', ' ')}
               </a>
-              <MySqlDocLink url={v.docUrl} className="ms-1" />
             </span>
           ) : (
             label

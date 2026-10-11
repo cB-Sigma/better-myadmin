@@ -1,5 +1,5 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
-import { Button, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Button, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -275,12 +275,7 @@ export function IndexEditorForm({
           </Button>
         </div>
       )}
-      {error !== null && (
-        <div className="mt-2 rounded border border-error/40 bg-error-bg px-3 py-2 text-error" role="alert">
-          {error.text}
-          {error.sql !== undefined && <pre className="mt-1 font-mono text-xs">{error.sql}</pre>}
-        </div>
-      )}
+      {error !== null && <MessageBox {...error} flush className="mt-2" />}
       <div className="mt-3 flex justify-end gap-2">
         <Button type="submit" variant="primary">
           {t('Go')}

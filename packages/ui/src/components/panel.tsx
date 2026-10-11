@@ -39,22 +39,23 @@ export function Panel({
       {title !== undefined &&
         (home ? (
           <header className="flex items-center justify-between gap-2 bg-(--card-head-bg) px-3 py-1 text-(--card-head-fg)">
-            <h2
+            {/* `.card-header` is a div in phpMyAdmin, not a heading */}
+            <div
               {...(headerId !== undefined ? { id: headerId } : {})}
               className="text-(length:--card-head-size) font-normal"
             >
               {title}
-            </h2>
+            </div>
             {actions}
           </header>
         ) : (
-          <div
+          <header
             {...(headerId !== undefined ? { id: headerId } : {})}
             className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-1.5 text-[13px] font-semibold"
           >
             {title}
             {actions !== undefined && <span className="ms-auto font-normal">{actions}</span>}
-          </div>
+          </header>
         ))}
       {children}
       {footer !== undefined && (

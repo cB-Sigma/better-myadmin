@@ -5,7 +5,7 @@ import type {
   FormIndex,
   Partitioning,
 } from '@bettermyadmin/contracts'
-import { Button, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Button, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
@@ -779,24 +779,13 @@ export function ColumnForm({
         </div>
       </div>
       {options.integersLengthRestricted && (
-        <div
-          id="length_not_allowed"
-          className="mt-2 rounded border border-notice/40 bg-notice-bg px-3 py-2 text-sm text-notice"
-        >
+        <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
           {t(
             'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
           )}
-        </div>
+        </MessageBox>
       )}
-      {error !== null && (
-        <div
-          className="mt-2 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
-          role="alert"
-        >
-          <div className="whitespace-pre-line">{error.text}</div>
-          {error.sql !== undefined && <pre className="mt-1 font-mono text-xs">{error.sql}</pre>}
-        </div>
-      )}
+      {error !== null && <MessageBox {...error} flush className="mt-2" />}
       <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
       {enumFor !== null && (
         <EnumEditor

@@ -1,5 +1,5 @@
 import type { SqlCard, StatementResult } from '@bettermyadmin/contracts'
-import { MessageBox, MessageLine, MySqlDocLink, mysqlDocUrl } from '@bettermyadmin/ui'
+import { MessageBox, MessageLine, MySqlDocLink, buttonVariants, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useRef, useState } from 'react'
 import { api } from '../../lib/api'
@@ -227,10 +227,10 @@ function InlineEditor({ card, env, onClose }: { card: SqlCard; env: CardEnv; onC
         )}
       </div>
       <div className="flex gap-2">
-        <button type="button" id="sql_query_edit_save" className="btn" onClick={save}>
+        <button type="button" id="sql_query_edit_save" className={buttonVariants()} onClick={save}>
           {t('Go')}
         </button>
-        <button type="button" id="sql_query_edit_discard" className="btn" onClick={onClose}>
+        <button type="button" id="sql_query_edit_discard" className={buttonVariants()} onClick={onClose}>
           {t('Cancel')}
         </button>
       </div>

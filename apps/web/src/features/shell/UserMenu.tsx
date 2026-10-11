@@ -7,6 +7,7 @@ import {
   IconText,
   NativeSelect,
   PmaIcon,
+  buttonVariants,
   pmaDocUrl,
   serverDocUrl,
 } from '@bettermyadmin/ui'
@@ -61,10 +62,7 @@ export function UserMenu({ server }: { server: number }) {
   return (
     <div id="userAccountDropdown">
       <DropdownMenu>
-        <DropdownMenuTrigger
-          className="inline-flex items-center gap-1 rounded border border-border-strong bg-bg px-1.5 py-0.5 text-fg"
-          title={t('Open user account menu')}
-        >
+        <DropdownMenuTrigger className={buttonVariants({ size: 'sm' })} title={t('Open user account menu')}>
           <PmaIcon name="user" alt={t('Open user account menu')} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="min-w-56">

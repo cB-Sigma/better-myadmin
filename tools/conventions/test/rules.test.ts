@@ -56,6 +56,19 @@ useQuery({ queryKey: qk.home(1), queryFn })`
     expect(rulesOf([{ path: 'apps/web/src/styles/app.css', text: 'a { color: #fff }' }])).toEqual([])
   })
 
+  it('flags raw dialogs and hand-made cards, alerts and buttons', () => {
+    const file = (text: string) => [{ path: 'apps/web/src/features/x/A.tsx', text }]
+    expect(rulesOf(file('<dialog open />'))).toEqual(['web/no-hand-made-ui'])
+    expect(rulesOf(file('<div role="dialog" />'))).toEqual(['web/no-hand-made-ui'])
+    expect(rulesOf(file('<div className="border-b border-border bg-bg-subtle px-3" />'))).toEqual([
+      'web/no-hand-made-ui',
+    ])
+    expect(rulesOf(file('<div className="rounded border bg-error-bg" />'))).toEqual(['web/no-hand-made-ui'])
+    expect(rulesOf(file('<button className="rounded bg-accent px-2" />'))).toEqual(['web/no-hand-made-ui'])
+    // a badge is not a push button
+    expect(rulesOf(file('<span className="rounded bg-error px-1" />'))).toEqual([])
+  })
+
   it('limits route files to 60 lines', () => {
     const text = Array.from({ length: 61 }, (_, i) => `// ${i}`).join('\n')
     expect(rulesOf([{ path: 'apps/web/src/routes/s/x.tsx', text }])).toEqual(['web/route-size'])

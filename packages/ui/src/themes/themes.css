@@ -551,3 +551,37 @@
   --notification-bg: #2b3035;
   --notification-border: #495057;
 }
+
+/* Theme-independent tokens of the app's own widgets (moved here from feature CSS so colours live in one
+   place): SQL highlighting (resources/js/modules/sql-highlight.ts classes), the console's dark mode
+   (.console_dark_theme in phpMyAdmin's _common.scss), chart series (Chart.js' default-like palette). */
+:root {
+  --sql-keyword: #708;
+  --sql-builtin: #30a;
+  --sql-string: #a11;
+  --sql-number: #164;
+  --sql-comment: #a50;
+  --sql-variable: #05a;
+  --sql-atom: #219;
+  --console-dark-bg: #000;
+  --console-dark-fg: #fff;
+  --console-dark-keyword: #de935f;
+  --chart-1: #4e79a7;
+  --chart-2: #f28e2b;
+  --chart-3: #e15759;
+  --chart-4: #76b7b2;
+  --chart-5: #59a14f;
+  --chart-6: #edc948;
+  --chart-7: #b07aa1;
+  --chart-8: #ff9da7;
+  --chart-9: #9c755f;
+  --chart-10: #bab0ac;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-color-mode="light"]) {
+    --sql-keyword: #c792ea;
+    --sql-string: #f0a0a0;
+    --sql-builtin: #8fb4ff;
+    --sql-number: #9ad48f;
+  }
+}

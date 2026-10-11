@@ -8,6 +8,7 @@ import {
   PanelBody,
   SafeHtml,
   Table,
+  buttonVariants,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
@@ -29,13 +30,18 @@ export function CollationsPage({ server }: { server: number }) {
       ) : (
         <div className="grid max-w-4xl gap-3" id="collations">
           {q.data.charsets.map((cs) => (
-            <section key={cs.name} className="rounded border border-border" data-charset={cs.name}>
-              <div className="border-b border-border bg-bg-subtle px-3 py-2 text-sm">
-                <div>
-                  <strong>{cs.name}</strong>
-                </div>
-                <div>{cs.description}</div>
-              </div>
+            <Panel
+              title={
+                <>
+                  <div>
+                    <strong>{cs.name}</strong>
+                  </div>
+                  <div>{cs.description}</div>
+                </>
+              }
+              key={cs.name}
+              data-charset={cs.name}
+            >
               <ul className="divide-y divide-border text-sm">
                 {cs.collations.map((c) => (
                   <li key={c.name} className="flex items-center gap-2 px-3 py-1.5">
@@ -53,7 +59,7 @@ export function CollationsPage({ server }: { server: number }) {
                   </li>
                 ))}
               </ul>
-            </section>
+            </Panel>
           ))}
         </div>
       )}
@@ -256,7 +262,7 @@ export function PluginsPage({ server }: { server: number }) {
                   <a
                     key={ty.type}
                     href={`#plugins-${ty.cleanType}`}
-                    className="rounded bg-accent px-2 py-1 text-xs text-accent-fg hover:no-underline"
+                    className={buttonVariants({ variant: 'primary', size: 'sm' })}
                   >
                     {ty.type}
                   </a>
@@ -358,11 +364,7 @@ export function BinlogPage({
             <Panel
               title={t('Select binary log to view')}
               footer={
-                <input
-                  type="submit"
-                  value={t('Go')}
-                  className="cursor-pointer rounded bg-accent px-4 py-1 text-accent-fg"
-                />
+                <input type="submit" value={t('Go')} className={buttonVariants({ variant: 'primary' })} />
               }
             >
               <PanelBody>

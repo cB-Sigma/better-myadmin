@@ -1,8 +1,10 @@
 import type { AuthState } from '@bettermyadmin/contracts'
+import { MessageBox, Panel, PanelBody, buttonVariants } from '@bettermyadmin/ui'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CircleHelp, Database } from 'lucide-react'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
+import { PROJECT_URL } from '../../lib/config'
 import { Trans, t, useLanguage } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { LanguageLabel, LanguageSelect } from './LanguageSelect'
@@ -53,7 +55,17 @@ export function LoginPage({ state }: { state: AuthState }) {
   return (
     <div className="mx-auto max-w-md px-4 py-10">
       <div className="mb-6 flex flex-col items-center gap-2 text-center">
-        <Database className="size-12 text-accent" aria-hidden />
+        {/* pma: login/header.twig — the logo links to the project's homepage (tabindex -1) */}
+        <a
+          href={PROJECT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="logo"
+          tabIndex={-1}
+          aria-label="BetterMyAdmin"
+        >
+          <Database className="size-12 text-accent" aria-hidden />
+        </a>
         <h1 className="text-xl font-semibold">
           <Trans
             id="Welcome to %s"
@@ -67,36 +79,35 @@ export function LoginPage({ state }: { state: AuthState }) {
       </div>
 
       {[lang?.warning ?? null, error].map(
-        (msg) =>
-          msg !== null && (
-            <div
-              key={msg}
-              role="alert"
-              className="mb-4 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
-            >
-              {msg}
-            </div>
-          ),
+        (msg) => msg !== null && <MessageBox key={msg} type="error" text={msg} className="mb-4" />,
       )}
 
       {/* pma: login/form.twig — only when $cfg['Lang'] is empty and LanguageManager::hasChoice() */}
       {lang?.languages != null && (
-        <section className="mb-4 rounded border border-border bg-bg-elevated">
-          <header className="border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-            <span id="languageSelectLabel">
-              <LanguageLabel />
-            </span>
-          </header>
-          <div className="p-3 text-sm">
+        <Panel
+          title={
+            <>
+              <span id="languageSelectLabel">
+                <LanguageLabel />
+              </span>
+            </>
+          }
+          className="mb-4"
+        >
+          <PanelBody>
             <LanguageSelect labelledBy="languageSelectLabel" />
-          </div>
-        </section>
+          </PanelBody>
+        </Panel>
       )}
 
       <form id="login_form" onSubmit={onSubmit} autoComplete={state.recalledUser !== null ? 'on' : 'off'}>
-        <section className="rounded border border-border bg-bg-elevated">
-          <header className="flex items-center justify-between border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-            <span>{t('Log in')}</span>
+        <Panel
+          title={
+            <>
+              <span>{t('Log in')}</span>
+            </>
+          }
+          actions={
             <a
               href="https://docs.phpmyadmin.net/en/latest/"
               target="_blank"
@@ -106,7 +117,8 @@ export function LoginPage({ state }: { state: AuthState }) {
               <CircleHelp className="size-4" aria-hidden />
               <span className="sr-only">{t('Documentation')}</span>
             </a>
-          </header>
+          }
+        >
           <div className="space-y-3 p-3 text-sm">
             {state.allowArbitraryServer && (
               <Row
@@ -175,10 +187,10 @@ export function LoginPage({ state }: { state: AuthState }) {
               type="submit"
               value={t('Log in')}
               disabled={login.isPending}
-              className="cursor-pointer rounded bg-accent px-4 py-1.5 text-sm font-medium text-accent-fg hover:bg-accent-hover disabled:opacity-60"
+              className={buttonVariants({ variant: 'primary', size: 'lg' })}
             />
           </footer>
-        </section>
+        </Panel>
       </form>
     </div>
   )

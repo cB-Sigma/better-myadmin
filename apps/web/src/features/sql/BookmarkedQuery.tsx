@@ -1,4 +1,4 @@
-import { DocLink } from '@bettermyadmin/ui'
+import { DocLink, Panel, buttonVariants } from '@bettermyadmin/ui'
 import { useRef, useState } from 'react'
 import { t } from '../../lib/i18n'
 import type { BookmarkEntry } from '../bookmarks/provider'
@@ -25,10 +25,7 @@ export function BookmarkedQuery({
     if (selected !== undefined) onGo(selected, action, { ...variables.current })
   }
   return (
-    <div className="mb-3 rounded border border-border" id="fieldsetBookmarkOptions">
-      <div className="border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-        {t('Bookmarked SQL query')}
-      </div>
+    <Panel title={<>{t('Bookmarked SQL query')}</>} id="fieldsetBookmarkOptions">
       <div className="flex flex-wrap items-center gap-3 p-3 text-sm">
         <label htmlFor="id_bookmark">{t('Bookmark:')}</label>
         <select
@@ -102,10 +99,10 @@ export function BookmarkedQuery({
         </div>
       )}
       <div className="flex justify-end border-t border-border bg-bg-subtle px-3 py-2">
-        <button type="button" id="button_submit_bookmark" className="btn" onClick={go}>
+        <button type="button" id="button_submit_bookmark" className={buttonVariants()} onClick={go}>
           {t('Go')}
         </button>
       </div>
-    </div>
+    </Panel>
   )
 }

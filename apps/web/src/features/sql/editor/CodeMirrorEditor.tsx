@@ -40,9 +40,9 @@ const theme = EditorView.theme({
 
 const darkTheme = EditorView.theme(
   {
-    '&': { backgroundColor: '#000', color: '#fff' },
-    '.cm-content': { caretColor: '#fff' },
-    '.ͼb, .tok-keyword': { color: '#de935f' },
+    '&': { backgroundColor: 'var(--console-dark-bg)', color: 'var(--console-dark-fg)' },
+    '.cm-content': { caretColor: 'var(--console-dark-fg)' },
+    '.ͼb, .tok-keyword': { color: 'var(--console-dark-keyword)' },
   },
   { dark: true },
 )

@@ -18,6 +18,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api } from '../../lib/api.ts'
+import { PROJECT_URL } from '../../lib/config'
 import { useConfig } from '../../lib/config.ts'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys.ts'
@@ -28,7 +29,7 @@ import { VersionInfo } from './home/VersionInfo.tsx'
 import { colorModeText, setTheme, useThemeState } from './theme/theme.ts'
 import { ThemesDialog } from './themes/ThemeCards.tsx'
 
-const REPO = 'https://github.com/cB-Abhinav-Gautam/better-myadmin'
+const REPO = PROJECT_URL
 
 /**
  * The home page: General settings, Appearance settings, Database server, Web server, the

@@ -1,5 +1,16 @@
 import type { DatabasesResponse, NavPageSelector } from '@bettermyadmin/contracts'
-import { Loading, MessageBox, MySqlDocLink, PageHeader, Panel, PanelBody, Table } from '@bettermyadmin/ui'
+import {
+  Button,
+  Loading,
+  MessageBox,
+  Modal,
+  MySqlDocLink,
+  PageHeader,
+  Panel,
+  PanelBody,
+  Table,
+  buttonVariants,
+} from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, Check, Database, FileCode2, Shield, Trash2, X } from 'lucide-react'
@@ -179,7 +190,7 @@ export function DatabasesPage({
                   type="submit"
                   value={t('Create')}
                   disabled={create.isPending}
-                  className="cursor-pointer rounded bg-accent px-4 py-1 text-accent-fg"
+                  className={buttonVariants({ variant: 'primary' })}
                 />
               </form>
             ) : (
@@ -208,7 +219,7 @@ export function DatabasesPage({
                 <button
                   type="button"
                   id="bulkActionDropButton"
-                  className="flex items-center gap-1 rounded border border-border-strong px-2 py-1"
+                  className={buttonVariants()}
                   title={t('Drop')}
                   onClick={() => {
                     if (selected.size === 0) {
@@ -397,55 +408,45 @@ export function DatabasesPage({
         <MessageBox type="info">{t('No databases')}</MessageBox>
       )}
 
-      {confirm !== null && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="dropDatabaseModalLabel"
-          className="fixed inset-0 z-50 grid place-items-center bg-black/40"
-          id="dropDatabaseModal"
-        >
-          <div className="w-full max-w-lg rounded border border-border bg-bg">
-            <h5 id="dropDatabaseModalLabel" className="border-b border-border px-4 py-2 font-semibold">
-              {t('Confirm')}
-            </h5>
-            <div className="modal-body px-4 py-3 text-sm">
-              {/* databases.ts: strDropDatabaseStrongWarning + ' ' + sprintf(strDoYouReally, statements joined by <br>) */}
-              {`${t('You are about to DESTROY a complete database!')} ${t(
-                'Do you really want to execute "%s"?',
-                confirm.map((n) => `DROP DATABASE \`${n}\`;`).join('\n'),
-              )}`
-                .split('\n')
-                .map((line, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: static lines
-                  <div key={i}>{line}</div>
-                ))}
-            </div>
-            <div className="flex justify-end gap-2 border-t border-border px-4 py-2">
-              <button
-                type="button"
-                className="flex items-center gap-1 rounded border border-border-strong px-3 py-1 text-sm"
-                onClick={() => setConfirm(null)}
-              >
-                <X className="size-4" aria-hidden />
-                {t('Cancel')}
-              </button>
-              <button
-                type="button"
-                id="dropDatabaseModalDropButton"
-                className="flex items-center gap-1 rounded bg-error px-3 py-1 text-sm text-bg"
-                onClick={() => {
-                  drop.mutate(confirm)
-                  setConfirm(null)
-                }}
-              >
-                <Check className="size-4" aria-hidden />
-                {t('Drop')}
-              </button>
-            </div>
-          </div>
+      <Modal
+        open={confirm !== null}
+        id="dropDatabaseModal"
+        title={t('Confirm')}
+        size="md"
+        onClose={() => setConfirm(null)}
+        footer={
+          <>
+            <Button onClick={() => setConfirm(null)}>
+              <X aria-hidden />
+              {t('Cancel')}
+            </Button>
+            <Button
+              variant="destructive"
+              id="dropDatabaseModalDropButton"
+              onClick={() => {
+                if (confirm !== null) drop.mutate(confirm)
+                setConfirm(null)
+              }}
+            >
+              <Check aria-hidden />
+              {t('Drop')}
+            </Button>
+          </>
+        }
+      >
+        <div className="modal-body">
+          {/* databases.ts: strDropDatabaseStrongWarning + ' ' + sprintf(strDoYouReally, statements joined by <br>) */}
+          {`${t('You are about to DESTROY a complete database!')} ${t(
+            'Do you really want to execute "%s"?',
+            (confirm ?? []).map((n) => `DROP DATABASE \`${n}\`;`).join('\n'),
+          )}`
+            .split('\n')
+            .map((line, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static lines
+              <div key={i}>{line}</div>
+            ))}
         </div>
-      )}
+      </Modal>
     </div>
   )
 }

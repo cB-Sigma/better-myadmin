@@ -287,6 +287,70 @@ const webPrimitives: Rule = {
   },
 }
 
+/** Class lists that re-create a kit component by hand (card header, message box, push button). */
+const HAND_MADE: Array<[RegExp, string]> = [
+  [
+    /\bborder-b\b.*\bbg-bg-subtle\b|\bbg-bg-subtle\b.*\bborder-b\b/,
+    'a card/section header: use <Panel title> (the section primitive)',
+  ],
+  [/\bbg-(error|success|notice)-bg\b/, 'a message box: use <MessageBox type>'],
+  [
+    /\brounded\b.*\b(border-border-strong|bg-accent|bg-error)\b|\b(border-border-strong|bg-accent|bg-error)\b.*\brounded\b/,
+    'a push button: use <Button> or buttonVariants()',
+  ],
+]
+
+const webHandMade: Rule = {
+  id: 'web/no-hand-made-ui',
+  doc: 'ui',
+  summary:
+    'no raw <dialog>/role=dialog and no class lists re-creating Panel, MessageBox or Button in apps/web',
+  check(files) {
+    const out: Violation[] = []
+    for (const f of files) {
+      if (!f.path.startsWith(WEB) || !f.path.endsWith('.tsx')) continue
+      const sf = parse(f)
+      walk(sf, (n) => {
+        if (
+          (ts.isJsxOpeningElement(n) || ts.isJsxSelfClosingElement(n)) &&
+          n.tagName.getText(sf) === 'dialog'
+        )
+          out.push({
+            rule: this.id,
+            file: f.path,
+            line: lineOf(sf, n),
+            symbol: 'dialog',
+            message: 'use Modal / Dialog from @bettermyadmin/ui instead of <dialog>',
+          })
+        if (!ts.isJsxAttribute(n) || n.initializer === undefined || !ts.isStringLiteral(n.initializer)) return
+        const name = n.name.getText(sf)
+        const v = n.initializer.text
+        if (name === 'role' && (v === 'dialog' || v === 'alertdialog'))
+          out.push({
+            rule: this.id,
+            file: f.path,
+            line: lineOf(sf, n),
+            symbol: 'dialog',
+            message: 'use Modal / Dialog from @bettermyadmin/ui instead of role="dialog"',
+          })
+        if (name !== 'className') return
+        const el = n.parent.parent as ts.JsxOpeningElement | ts.JsxSelfClosingElement
+        const tag = el.tagName.getText(sf)
+        for (const [re, what] of HAND_MADE)
+          if (re.test(v) && (!what.includes('push button') || ['button', 'input', 'a'].includes(tag)))
+            out.push({
+              rule: this.id,
+              file: f.path,
+              line: lineOf(sf, n),
+              symbol: v.slice(0, 60),
+              message: `class list re-creates ${what}`,
+            })
+      })
+    }
+    return out
+  },
+}
+
 const HEX = /^#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/
 const COLOR_IN_TEXT = /\[#[0-9a-fA-F]{3,8}\]|(?<![\w-])(?:rgba?|hsla?)\(/
 const CSS_COLOR = /#[0-9a-fA-F]{3,8}\b|(?<![\w-])(?:rgba?|hsla?)\(/
@@ -665,6 +729,7 @@ export const RULES: Rule[] = [
   noDangerousHtml,
   webPrimitives,
   webColors,
+  webHandMade,
   webRouteSize,
   webNoServer,
   serverNoSql,
