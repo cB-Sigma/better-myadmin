@@ -9,6 +9,7 @@ import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
 import { exportRoutes } from './export.ts'
 import { importRoutes } from './import.ts'
+import { insertEditRoutes } from './insert-edit.ts'
 import { metadataRoutes } from './metadata.ts'
 import { navigationRoutes } from './navigation.ts'
 import { queryRoutes } from './query.ts'
@@ -64,4 +65,5 @@ serverRoutes.route('/:s/import', importRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)
+serverRoutes.route('/:s/databases', insertEditRoutes)
 serverRoutes.route('/:s', serverAdminRoutes)

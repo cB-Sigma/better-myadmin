@@ -7,10 +7,13 @@ import type {
   BookmarkListResponse,
   BookmarkRunRequest,
   BookmarkShowResponse,
+  BrowseForeignersRequest,
+  BrowseForeignersResponse,
   BrowseRequest,
   CancelResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  ColumnTransformations,
   ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
@@ -34,6 +37,7 @@ import type {
   HistoryResponse,
   HomeResponse,
   I18nState,
+  InsertFormResponse,
   LintRequest,
   LintResponse,
   LoginRequest,
@@ -47,6 +51,8 @@ import type {
   PasswordForm,
   QueryRequest,
   QueryResponse,
+  SaveRowsRequest,
+  SaveRowsResponse,
   ServerScope,
   SetCollationResponse,
   SimulateRequest,
@@ -261,6 +267,19 @@ export const api = {
         reject(new Error('Could not load the progress of the import.'))
       }
     }),
+  // Insert/Edit and transformations (docs/features/03-insert-edit-transformations.md)
+  insertForm: (server: number, db: string, table: string, req: InsertFormRequest) =>
+    call<InsertFormResponse>('POST', `${tablePath(server, db, table)}/insert-form`, req),
+  saveRows: (server: number, db: string, table: string, req: SaveRowsRequest) =>
+    call<SaveRowsResponse>('POST', `${tablePath(server, db, table)}/rows`, req),
+  browseForeigners: (
+    server: number,
+    db: string,
+    table: string,
+    req: Partial<BrowseForeignersRequest> & { field: string },
+  ) => call<BrowseForeignersResponse>('POST', `${tablePath(server, db, table)}/browse-foreigners`, req),
+  columnTransformations: (server: number, db: string, table: string) =>
+    call<ColumnTransformations>('GET', `${tablePath(server, db, table)}/transformations`),
   // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
   browse: (server: number, req: BrowseRequest) =>
     call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
@@ -300,6 +319,23 @@ export const api = {
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
+}
+
+/** Body of POST …/insert-form: signed where clauses (none = insert) and the form toggles. */
+export interface InsertFormRequest {
+  where?: Array<{ clause: string; sig: string }>
+  copy?: boolean
+  insertRows?: number
+  afterInsert?: string
+  clauseIsUnique?: boolean
+  unsaved?: Array<Record<string, string | null>> | undefined
+  showFunctionFields?: boolean
+  showFieldTypes?: boolean
+}
+
+/** `/api` path of a table (also the base of the transformation wrapper links). */
+export function tablePath(server: number, db: string, table: string): string {
+  return `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}`
 }
 
 /** POST /browse: the statement with its grid, the default-bookmark notice and the previous query card. */

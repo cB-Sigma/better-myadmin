@@ -4,7 +4,7 @@
 
 Every `- [ ]` item of docs/features/*.md. A test links to an item when its title contains the item id (e.g. `p01-3f9a2c`) or the exact item text; status comes from the latest results in .data/parity-results/ (`pnpm parity:report --run`), else from the doc marker.
 
-12/706 covered (1.7%): 12 implemented, 12 untested, 682 missing. [Summary](README.md).
+23/706 covered (3.3%): 23 implemented, 13 untested, 670 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 11/77 (14.3%) covered, 11/77 implemented
 
@@ -43,10 +43,24 @@ Every `- [ ]` item of docs/features/*.md. A test links to an item when its title
 | 🧪 | `p02-dafcf6` | `RememberSorting`: the last ORDER BY of `SELECT *` single-table queries is stored per table (`sorted_col`) and re-applied to later unsort… | tests/parity/browse.parity.test.ts:87 › parity: Browse / results grid (/sql) vs POST /browse > sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6] |
 | 🧪 | `p02-fae7cc` | A GET `sql_query` is only accepted when accompanied by a valid `sql_signature`; all generated links (sort, FK, refresh, Browse-distinct, … | apps/server/test/int/browse.test.ts:83 › Browse (/sql) > refuses an unsigned or badly signed query [p02-fae7cc] |
 
-## 03 insert edit transformations — 0/59 (0.0%) covered, 0/59 implemented
+## 03 insert edit transformations — 11/59 (18.6%) covered, 11/59 implemented
 
-59 items without a linked test.
+47 items without a linked test.
 
+|  | Id | Item | Tests |
+|---|---|---|---|
+| ✅ | `p03-074264` | `UUID` function is pre-evaluated with `SELECT UUID()` so the literal is visible in the executed query; `PHP_PASSWORD_HASH` is computed in… | tests/parity/insert-edit.parity.test.ts:458 › Insert/Edit parity > UUID default for a char(36) primary key [p03-074264] |
+| ✅ | `p03-1b3909` | Virtual/generated columns are omitted from the form; `DEFAULT_GENERATED` columns are not treated as virtual. | apps/server/test/int/insert-edit.test.ts:86 › insert form > describes each column with phpMyAdmin widgets and defaults [p03-1b3909] [p03-7e69f5] |
+| ✅ | `p03-30e777` | UPDATE includes only changed fields (value ≠ `fields_prev`, NULL state changed, or function applied); never sets NULL→NULL again; one `UP… | tests/parity/insert-edit.parity.test.ts:369 › Insert/Edit parity > edit one row: changed columns only, NULL set [p03-30e777] |
+| ✅ | `p03-31dbd7` | GIS values are displayed in the form as `'WKT',srid` obtained with `ST_ASTEXT`/`ST_SRID` (`axis-order=long-lat` on MySQL ≥ 8.0.1). | tests/parity/insert-edit.parity.test.ts:451 › Insert/Edit parity > GIS edit keeps WKT [p03-31dbd7] |
+| 🧪 | `p03-35434c` | Insert tab opens `/table/change` with `InsertRows` (default 2) blank row tables; rows ≥1 carry a pre-checked "Ignore" checkbox. | tests/e2e/insert-edit.e2e.ts:46 › insert rows through the Insert tab [p03-35434c] |
+| ✅ | `p03-486ab6` | GIS functions take `'WKT',srid` and emit `FUNC('WKT',srid)`; other functions wrap the quoted value; no-param functions emit `FUNC()`; `NO… | tests/parity/insert-edit.parity.test.ts:443 › Insert/Edit parity > GIS point through ST_GeomFromText [p03-486ab6] |
+| ✅ | `p03-5c8c94` | Editing a non-existent row shows "MySQL returned an empty result set (i.e. zero rows)." with the query and still renders the form. | apps/server/test/int/insert-edit.test.ts:162 › edit form > reports an empty result set but still renders the form [p03-5c8c94] |
+| ✅ | `p03-632952` | INSERT uses a single multi-row `INSERT INTO t (cols) VALUES (...), (...)`; column list taken from the first non-empty row; values equal t… | tests/parity/insert-edit.parity.test.ts:334 › Insert/Edit parity > insert two rows in one statement [p03-632952] |
+| ✅ | `p03-789dce` | Preview SQL posts `preview_sql=1` and shows formatted statements (or "No change") in a modal without executing. | tests/parity/insert-edit.parity.test.ts:363 › Insert/Edit parity > preview of an insert [p03-789dce] |
+| ✅ | `p03-7e69f5` | Column names with comments are dashed-underlined with the comment as tooltip (only when `ShowPropertyComments`). | apps/server/test/int/insert-edit.test.ts:86 › insert form > describes each column with phpMyAdmin widgets and defaults [p03-1b3909] [p03-7e69f5] |
+| ✅ | `p03-7f7f64` | Client datetime validation accepts `CURRENT_TIMESTAMP`, `current_timestamp()`, zero datetime, date-only; timestamp years restricted to 19… | apps/web/src/features/insert-edit/insert-edit.test.ts:30 › Insert/Edit form rules > date/time validation [p03-7f7f64] |
+| ✅ | `p03-e852ea` | `/transformation/overview` lists media types, output and input transformations with descriptions. | packages/mysql-types/test/transformations.test.ts:36 › plugin catalog > lists input transformations then the root plugins [p03-e852ea] |
 
 ## 04 table level — 0/100 (0.0%) covered, 0/100 implemented
 
