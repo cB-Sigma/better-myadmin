@@ -207,3 +207,37 @@ describe('foreign values and wrapper', () => {
     expect(bad.status).toBe(400)
   })
 })
+
+describe('browser display transformations in the Browse grid', () => {
+  let s: ReturnType<typeof testApp>
+  beforeAll(async () => {
+    await root.query(`DELETE FROM phpmyadmin.pma__column_info WHERE db_name = '${DB}';
+      INSERT INTO phpmyadmin.pma__column_info (db_name, table_name, column_name, comment, mimetype,
+        transformation, transformation_options, input_transformation, input_transformation_options)
+      VALUES ('${DB}', 't', 'name', '', 'text_plain', 'text_plain_preappend.php', "'[',']'", '', '')`)
+    s = testApp(testConfig({}, { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }))
+    await s.login()
+  })
+  afterAll(async () => {
+    await root.query(`DELETE FROM phpmyadmin.pma__column_info WHERE db_name = '${DB}'`)
+    await s?.close()
+  })
+
+  it('marks transformed cells; Hide browser transformation turns them off', async () => {
+    const run = async (hide: boolean) =>
+      (
+        (await s.req('POST', '/api/servers/1/browse', { db: DB, table: 't', hideTransformation: hide }))
+          .json as Json
+      ).statements[0].grid
+    const grid = await run(false)
+    const i = (grid.columns as Json[]).findIndex((c) => c.name === 'name')
+    const cell = grid.rows[0].cells[i]
+    expect(cell.cls).toContain('text_plain transformed')
+    expect(cell.tf).toMatchObject({ file: 'Text_Plain_PreApPend', options: ['[', ']'], column: 'name' })
+    const plain = await run(true)
+    expect(plain.rows[0].cells[i].tf).toBeUndefined()
+    const cols = (await s.req('GET', `${base}/t/transformations`)).json as Json
+    expect(cols.enabled).toBe(true)
+    expect(cols.columns.name.transformationOptions).toEqual(['[', ']'])
+  })
+})

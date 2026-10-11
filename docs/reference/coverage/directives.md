@@ -14,7 +14,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ArbitraryServerRegexp` | apps/server/src/auth/cookie.ts:78<br>apps/server/src/auth/cookie.ts:81 |  |
 | ⬜ | `AuthLog` |  |  |
 | ⬜ | `AuthLogSuccess` |  |  |
-| ✅ | `blowfish_secret` | apps/server/src/browse/actions.ts:92<br>apps/server/src/browse/actions.ts:375<br>apps/server/src/browse/grid.ts:238<br>apps/server/src/browse/service.ts:123<br>apps/server/src/insert-edit/context.ts:56 |  |
+| ✅ | `blowfish_secret` | apps/server/src/browse/actions.ts:92<br>apps/server/src/browse/actions.ts:375<br>apps/server/src/browse/grid.ts:246<br>apps/server/src/browse/service.ts:123<br>apps/server/src/insert-edit/context.ts:56 |  |
 | ⬜ | `CaptchaApi` |  |  |
 | ⬜ | `CaptchaCsp` |  |  |
 | ⬜ | `CaptchaLoginPrivateKey` |  |  |
@@ -25,7 +25,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `CaptchaSiteVerifyURL` |  |  |
 | ⬜ | `CheckConfigurationPermissions` |  |  |
 | ✅ | `CodemirrorEnable` | apps/server/src/routes/sql.ts:227<br>apps/web/src/features/sql/SqlPage.tsx:125<br>apps/web/src/features/sql/SqlPage.tsx:136<br>apps/web/src/features/sql/SqlPage.tsx:303<br>apps/web/src/features/sql/SqlPage.tsx:392 |  |
-| ✅ | `Confirm` | apps/web/src/features/server/DatabasesPage.tsx:402<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:813<br>apps/server/src/routes/console.ts:66<br>apps/server/src/routes/sql.ts:225 |  |
+| ✅ | `Confirm` | apps/web/src/features/server/DatabasesPage.tsx:402<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822<br>apps/server/src/routes/console.ts:66<br>apps/server/src/routes/sql.ts:225 |  |
 | ⬜ | `Console/EnterExecutes` |  |  |
 | ⬜ | `Console/Mode` |  |  |
 | ⬜ | `Console/StartHistory` |  |  |
@@ -122,35 +122,35 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
 | ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:234<br>apps/server/src/table/structure-page.ts:365<br>apps/web/src/features/sql/SqlPage.tsx:540 |  |
-| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:816<br>apps/server/src/metadata/service.ts:284<br>apps/server/src/routes/metadata.ts:226<br>apps/server/src/routes/sql.ts:235<br>apps/web/src/features/browse/ResultsView.tsx:358 |  |
-| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:810<br>apps/web/src/features/browse/GridTable.tsx:475<br>apps/web/src/features/browse/GridTable.tsx:510<br>apps/web/src/features/browse/GridTable.tsx:573 |  |
-| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:809<br>apps/web/src/features/browse/GridTable.tsx:476<br>apps/web/src/features/browse/GridTable.tsx:506<br>apps/web/src/features/browse/GridTable.tsx:573 |  |
+| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:284<br>apps/server/src/routes/metadata.ts:226<br>apps/server/src/routes/sql.ts:235<br>apps/web/src/features/browse/ResultsView.tsx:358 |  |
+| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:476<br>apps/web/src/features/browse/GridTable.tsx:511<br>apps/web/src/features/browse/GridTable.tsx:574 |  |
+| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:477<br>apps/web/src/features/browse/GridTable.tsx:507<br>apps/web/src/features/browse/GridTable.tsx:574 |  |
 | ✅ | `DefaultForeignKeyChecks` | apps/server/src/routes/sql.ts:130<br>apps/server/src/routes/sql.ts:131 |  |
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:173 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:200 |  |
 | ⬜ | `DefaultTransformations/TextLink` |  |  |
 | ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/insert-edit/form.ts:194 |  |
-| ✅ | `GridEditing` | apps/server/src/browse/grid.ts:685<br>apps/server/src/browse/grid.ts:686 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:812<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/structure-page.ts:366<br>apps/web/src/features/browse/ResultsView.tsx:670<br>apps/web/src/features/table/structure/StructurePage.tsx:785 |  |
-| ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:458<br>apps/server/src/browse/grid.ts:807<br>apps/server/src/browse/grid.ts:1021 |  |
+| ✅ | `GridEditing` | apps/server/src/browse/grid.ts:693<br>apps/server/src/browse/grid.ts:694 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/structure-page.ts:366<br>apps/web/src/features/browse/ResultsView.tsx:670<br>apps/web/src/features/table/structure/StructurePage.tsx:785 |  |
+| ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:466<br>apps/server/src/browse/grid.ts:816<br>apps/server/src/browse/grid.ts:1030 |  |
 | ⬜ | `LinkLengthLimit` |  |  |
-| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:574<br>apps/server/src/query/pipeline.ts:701<br>apps/server/src/query/pipeline.ts:754 |  |
-| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:587<br>apps/server/src/browse/grid.ts:814<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/insert-edit/foreign.ts:18 |  |
+| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/query/pipeline.ts:701<br>apps/server/src/query/pipeline.ts:754 |  |
+| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:595<br>apps/server/src/browse/grid.ts:823<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/insert-edit/foreign.ts:18 |  |
 | ✅ | `Order` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:51<br>apps/web/src/features/console/Console.tsx:892<br>apps/web/src/features/console/Console.tsx:895<br>apps/web/src/features/sql/ProfilingCard.tsx:72 |  |
-| ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1106<br>apps/server/src/insert-edit/form.ts:403<br>apps/server/src/insert-edit/form.ts:477 |  |
+| ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1115<br>apps/server/src/insert-edit/form.ts:403<br>apps/server/src/insert-edit/form.ts:477 |  |
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
 | ✅ | `RememberSorting` | apps/server/src/browse/service.ts:67 |  |
 | ✅ | `RepeatCells` | apps/server/src/browse/view-state.ts:54<br>apps/server/src/browse/view-state.ts:105<br>apps/server/src/insert-edit/foreign.ts:44 |  |
-| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:805<br>apps/web/src/features/browse/GridTable.tsx:123<br>apps/web/src/features/browse/GridTable.tsx:454 |  |
-| ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:300 |  |
-| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:806<br>apps/web/src/features/browse/GridTable.tsx:362<br>apps/web/src/features/browse/GridTable.tsx:373<br>apps/web/src/features/browse/GridTable.tsx:395 |  |
-| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:808<br>apps/web/src/features/browse/GridTable.tsx:223<br>apps/web/src/features/browse/GridTable.tsx:286 |  |
+| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:814<br>apps/web/src/features/browse/GridTable.tsx:124<br>apps/web/src/features/browse/GridTable.tsx:455 |  |
+| ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:308 |  |
+| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:815<br>apps/web/src/features/browse/GridTable.tsx:363<br>apps/web/src/features/browse/GridTable.tsx:374<br>apps/web/src/features/browse/GridTable.tsx:396 |  |
+| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:817<br>apps/web/src/features/browse/GridTable.tsx:224<br>apps/web/src/features/browse/GridTable.tsx:287 |  |
 | ✅ | `Servers/*/MaxTableUiprefs` | apps/server/src/metadata/service.ts:290 |  |
 | ⬜ | `Servers/*/table_uiprefs` |  |  |
-| ✅ | `ShowAll` | apps/server/src/browse/grid.ts:586<br>apps/server/src/browse/grid.ts:815<br>apps/server/src/insert-edit/foreign.ts:22 |  |
-| ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:617 |  |
+| ✅ | `ShowAll` | apps/server/src/browse/grid.ts:594<br>apps/server/src/browse/grid.ts:824<br>apps/server/src/insert-edit/foreign.ts:22 |  |
+| ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:625 |  |
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:100<br>apps/server/src/query/message.ts:83 |  |
-| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:811<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:92 |  |
+| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:820<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:92 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
 | ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:232<br>apps/web/src/features/sql/SqlPage.tsx:395 |  |
 
@@ -158,7 +158,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/routes/insert-edit.ts:123 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123 |  |
 | ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:76 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |

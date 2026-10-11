@@ -18,13 +18,21 @@ import type {
 import { type Translator, formatByteDown, formatNumber, sprintf } from '@bettermyadmin/i18n'
 import {
   type MetaConn,
+  type MimeInfo,
   type RelationParameters,
   type TableUiPrefs,
   getDisplayField,
   getForeignKeysData,
   getForeignersInternal,
+  getMime,
 } from '@bettermyadmin/metadata'
-import { getTypeClass, printableBitValue } from '@bettermyadmin/mysql-types'
+import {
+  findTransformationPlugin,
+  getTypeClass,
+  parseTransformationOptions,
+  printableBitValue,
+  transformationNoWrap,
+} from '@bettermyadmin/mysql-types'
 import {
   type CellValue,
   type SelectExpression,
@@ -688,6 +696,7 @@ export async function buildGrid(
   const metas = fields.map(uniqueMeta)
   const urlSqlQuery = urlSql(info, sqlQuery)
   const fkCache = new Map<string, string | null>()
+  const mediaTypes = await mediaTypeMap(env, fields)
   const rows: GridRow[] = []
   const hasLinks = displayParts.editLink || displayParts.deleteLink !== 'none'
   for (const raw of a.limited ? [] : set.rows) {
@@ -724,22 +733,22 @@ export async function buildGrid(
           getUniqueCondition(metas, values, { restrictToTable: meta.orgTable, expressions }).condition,
         )
       }
-      row.cells.push(
-        await cellOf(env, {
-          meta,
-          raw: raw[i] ?? null,
-          gridEdit,
-          map,
-          condition: isCondition(meta.name),
-          info,
-          where: whereByTable.get(meta.orgTable) ?? '',
-          db,
-          fkCache,
-          view,
-          sign,
-          urlSqlQuery,
-        }),
-      )
+      const cell = await cellOf(env, {
+        meta,
+        raw: raw[i] ?? null,
+        gridEdit,
+        map,
+        condition: isCondition(meta.name),
+        info,
+        where: whereByTable.get(meta.orgTable) ?? '',
+        db,
+        fkCache,
+        view,
+        sign,
+        urlSqlQuery,
+      })
+      const where = whereByTable.get(meta.orgTable) ?? ''
+      row.cells.push(applyTransformation(cell, raw[i] ?? null, meta, mediaTypes, where, sign))
     }
     rows.push(row)
   }
@@ -1243,4 +1252,63 @@ async function rowData(
     ...(displayColumn && dispval === null ? { nullDisplay: true } : {}),
   }
   return cell
+}
+
+/**
+ * Results::$mediaTypeMap: the stored transformations of every table in the result, keyed
+ * `db.table.column`, when BrowseMIME is on, the feature is configured and the "Hide browser
+ * transformation" display option is off.
+ * pma: src/Display/Results.php::getTable (mediaTypeMap), Transformations::getMime(strict = false, fullName = true)
+ */
+async function mediaTypeMap(env: GridEnv, fields: Field[]): Promise<Map<string, MimeInfo>> {
+  const out = new Map<string, MimeInfo>()
+  const meta = env.meta
+  if (!env.cfg.BrowseMIME || env.view.hideTransformation || meta === null) return out
+  if (meta.rp.browserTransformationFeature === null || meta.control === null) return out
+  const seen = new Set<string>()
+  for (const f of fields) {
+    const key = `${f.db}\u0000${f.orgTable}`
+    if (f.db === '' || f.orgTable === '' || seen.has(key)) continue
+    seen.add(key)
+    const map = await getMime(meta.control, meta.rp, f.db, f.orgTable, false, true)
+    for (const [k, v] of Object.entries(map ?? {})) out.set(k, v)
+  }
+  return out
+}
+
+/** Results::getRowValues: a column with a mimetype and a browser display transformation. */
+function applyTransformation(
+  cell: GridCell,
+  raw: Buffer | null,
+  meta: Field,
+  mediaTypes: Map<string, MimeInfo>,
+  where: string,
+  sign: (s: string) => string,
+): GridCell {
+  if (raw === null || cell.k === 'null') return cell
+  const m = mediaTypes.get(`${meta.db}.${meta.orgTable}.${meta.orgName}`)
+  if (m === undefined || m.mimetype === '' || m.transformation === '') return cell
+  const plugin = findTransformationPlugin(m.transformation)
+  if (plugin === null || plugin.kind === 'input') return cell
+  const options = parseTransformationOptions(m.transformation_options)
+  const mime = m.mimetype.replaceAll('/', '_').toLowerCase()
+  const nowrap = transformationNoWrap(plugin.file, options)
+  return {
+    ...cell,
+    k: 'v',
+    cls: `${cell.cls.replace(/\bpre_wrap\b/, nowrap ? 'text-nowrap' : 'pre_wrap')} ${mime} transformed`,
+    tf: {
+      file: plugin.file,
+      options,
+      mimetype: m.mimetype,
+      b64: raw.toString('base64'),
+      db: meta.db,
+      table: meta.orgTable,
+      column: meta.orgName,
+      where,
+      sig: sign(where),
+      isInt: meta.mappedType === 'int',
+      isBinary: meta.flags.binary,
+    },
+  }
 }
