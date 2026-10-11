@@ -50,6 +50,9 @@ importers:
       '@bettermyadmin/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@bettermyadmin/kbs':
+        specifier: workspace:*
+        version: link:../../packages/kbs
       '@bettermyadmin/mysql-types':
         specifier: workspace:*
         version: link:../../packages/mysql-types

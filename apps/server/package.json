@@ -15,6 +15,7 @@
     "@bettermyadmin/config": "workspace:*",
     "@bettermyadmin/contracts": "workspace:*",
     "@bettermyadmin/i18n": "workspace:*",
+    "@bettermyadmin/kbs": "workspace:*",
     "@bettermyadmin/mysql-types": "workspace:*",
     "@bettermyadmin/sql-gen": "workspace:*",
     "@bettermyadmin/sql-lexer": "workspace:*",
