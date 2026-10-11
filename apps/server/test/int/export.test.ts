@@ -71,7 +71,9 @@ describe('export page', () => {
     const sql = (r.json.plugins as Array<{ name: string; options: unknown }>).find((p) => p.name === 'sql')
     expect(sql?.options).toBeNull()
     const single = await page({ scope: 'table', db: DB, table: 'a', single_table: 'true' })
-    const sql2 = (single.json.plugins as Array<{ name: string; options: unknown }>).find((p) => p.name === 'sql')
+    const sql2 = (single.json.plugins as Array<{ name: string; options: unknown }>).find(
+      (p) => p.name === 'sql',
+    )
     expect(sql2?.options).not.toBeNull()
   })
 

@@ -19,7 +19,10 @@ export const pmaControls = {
   'export.twig#quick_export_onserver': 'ExportPage.tsx',
   'export.twig#quick_export_onserver_overwrite': 'ExportPage.tsx',
   'export.twig#aliases[*][alias]': { file: 'AliasDialog.tsx', match: '][alias]`' },
-  'export.twig#aliases[*][tables][*][alias]': { file: 'AliasDialog.tsx', match: '][tables][${table}][alias]' },
+  'export.twig#aliases[*][tables][*][alias]': {
+    file: 'AliasDialog.tsx',
+    match: '][tables][${table}][alias]',
+  },
   'export.twig#aliases[*][tables][*][colums][*]': { file: 'AliasDialog.tsx', match: '][colums][' },
   'export.twig#button:Remove': 'AliasDialog.tsx',
   'export.twig#id:db_alias_select': 'AliasDialog.tsx',
