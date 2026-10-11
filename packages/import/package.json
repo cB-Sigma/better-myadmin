@@ -1,0 +1,21 @@
+{
+  "name": "@bettermyadmin/import",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@bettermyadmin/export": "workspace:*",
+    "@bettermyadmin/i18n": "workspace:*",
+    "@bettermyadmin/mysql-types": "workspace:*",
+    "@bettermyadmin/sql-gen": "workspace:*",
+    "@bettermyadmin/sql-lexer": "workspace:*",
+    "@xmldom/xmldom": "0.8.10",
+    "seek-bzip": "2.0.0"
+  }
+}

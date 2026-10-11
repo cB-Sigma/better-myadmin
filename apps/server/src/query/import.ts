@@ -229,43 +229,69 @@ export interface ImportRunResult {
 
 const english = englishTranslator()
 
+export interface ImportRunnerOptions {
+  conn: Conn
+  runQuery: boolean
+  db: string
+  ignoreMultiSubmitErrors: boolean
+  tr?: Translator
+  /** ImportSettings::$skipQueries (skip_queries of the import form) */
+  skipQueries?: number
+  /** ImportSettings::$sqlQueryDisabled at the start (SET NAMES charset: the SQL is not shown) */
+  sqlQueryDisabled?: boolean
+}
+
 /**
- * ImportSql::doImport + Import::runQuery/executeQuery: fewer than 50 statements are handed to the
- * SQL-tab path (goSql); from the 50th on they are executed here with a `# Rows: n` style transcript.
+ * Import::runQuery/executeQuery: one-statement look-behind buffer; fewer than 50 statements are
+ * collected for the SQL-tab path (goSql); from the 50th on (or once `forceExecute` is set) they are
+ * executed here with a `# Rows: n` style transcript. Shared by the SQL box and the import plugins.
  * pma: src/Import/Import.php::runQuery, ::executeQuery, ::lookForUse
  */
-export async function runImport(
-  statements: readonly string[],
-  opts: {
-    conn: Conn
-    runQuery: boolean
-    db: string
-    ignoreMultiSubmitErrors: boolean
-    tr?: Translator
-  },
-): Promise<ImportRunResult> {
-  const tr = opts.tr ?? english
-  const st: ImportModeState = {
-    sqlQuery: '',
-    message: tr.gettext('Sorry an unexpected error happened!'),
-    result: false,
-    hasError: false,
-    failedQueries: [],
-    db: opts.db,
-    reloadNavigation: false,
-    executedQueries: 0,
-  }
-  let importRunBuffer: string | null = null
-  let goSql = false
-  let sqlQueryDisabled = false
-  let maxSqlLength = 0
-  let sqlData: string[] = []
-  let importModeUsed = false
+export class ImportRunner {
+  readonly st: ImportModeState
+  readonly #o: ImportRunnerOptions
+  readonly #tr: Translator
+  #importRunBuffer: string | null = null
+  goSql = false
+  sqlQueryDisabled: boolean
+  #maxSqlLength = 0
+  sqlData: string[] = []
+  #importModeUsed = false
+  /** Import::$forceExecute (buildSql with more than 50 rows) */
+  forceExecute = false
+  skipQueries: number
 
-  const executeQuery = async (sql: string) => {
-    importModeUsed = true
+  constructor(o: ImportRunnerOptions) {
+    this.#o = o
+    this.#tr = o.tr ?? english
+    this.skipQueries = o.skipQueries ?? 0
+    this.sqlQueryDisabled = o.sqlQueryDisabled ?? false
+    this.st = {
+      sqlQuery: '',
+      message: this.#tr.gettext('Sorry an unexpected error happened!'),
+      result: false,
+      hasError: false,
+      failedQueries: [],
+      db: o.db,
+      reloadNavigation: false,
+      executedQueries: 0,
+    }
+  }
+
+  get hasError(): boolean {
+    return this.st.hasError
+  }
+
+  clearError(): void {
+    this.st.hasError = false
+  }
+
+  async #executeQuery(sql: string): Promise<void> {
+    const { st } = this
+    const tr = this.#tr
+    this.#importModeUsed = true
     const last = new LastError()
-    const result = await tryQuery(opts.conn, sql, 'import.query', last, tr)
+    const result = await tryQuery(this.#o.conn, sql, 'import.query', last, tr)
     // USE query changes the database, so need to track while running multiple queries
     const isUseQuery = sql.toLowerCase().includes('use ')
     st.message = '# '
@@ -273,7 +299,7 @@ export async function runImport(
     if (result === null) {
       st.failedQueries.push({ sql, error: last.value })
       st.message += tr.gettext('Error')
-      if (!opts.ignoreMultiSubmitErrors) {
+      if (!this.#o.ignoreMultiSubmitErrors) {
         st.hasError = true
         return
       }
@@ -287,9 +313,9 @@ export async function runImport(
           aAffectedRows,
         )
       else st.message += tr.gettext('MySQL returned an empty result set (i.e. zero rows).')
-      if (aNumRows > 0 || isUseQuery) sqlData.push(sql)
+      if (aNumRows > 0 || isUseQuery) this.sqlData.push(sql)
     }
-    if (!sqlQueryDisabled) st.sqlQuery += `${st.message}\n`
+    if (!this.sqlQueryDisabled) st.sqlQuery += `${st.message}\n`
     // If a 'USE <db>' SQL-clause was found and the query succeeded, set our current $db to the new one
     if (result !== null) {
       const dbNameInsideUse = lookForUse(sql)
@@ -306,56 +332,78 @@ export async function runImport(
     }
   }
 
-  const runQuery = async (sql: string) => {
-    if (importRunBuffer === null) {
+  /** Import::runQuery */
+  async runQuery(sql: string): Promise<void> {
+    const { st } = this
+    if (this.#importRunBuffer === null) {
       // Do we have something to push into buffer?
-      importRunBuffer = sql !== '' ? `${sql};` : null
+      this.#importRunBuffer = sql !== '' ? `${sql};` : null
       return
     }
-    maxSqlLength = Math.max(maxSqlLength, Array.from(importRunBuffer).length)
-    if (!sqlQueryDisabled) st.sqlQuery += importRunBuffer
+    // Should we skip something?
+    if (this.skipQueries > 0) {
+      this.skipQueries--
+      this.#importRunBuffer = sql !== '' ? `${sql};` : null
+      return
+    }
+    const buffer = this.#importRunBuffer
+    this.#maxSqlLength = Math.max(this.#maxSqlLength, Array.from(buffer).length)
+    if (!this.sqlQueryDisabled) st.sqlQuery += buffer
     st.executedQueries++
-    if (opts.runQuery && st.executedQueries < 50) {
-      goSql = true
-      st.sqlQuery = importRunBuffer
-      sqlData.push(importRunBuffer)
-    } else if (opts.runQuery) {
+    if (this.#o.runQuery && st.executedQueries < 50 && !this.forceExecute) {
+      this.goSql = true
+      st.sqlQuery = buffer
+      this.sqlData.push(buffer)
+    } else if (this.#o.runQuery) {
       /* Handle rollback from go_sql */
-      if (goSql && sqlData.length > 0) {
-        const queries = sqlData
-        sqlData = []
-        goSql = false
+      if (this.goSql && this.sqlData.length > 0) {
+        const queries = this.sqlData
+        this.sqlData = []
+        this.goSql = false
         for (const query of queries) {
-          await executeQuery(query)
+          await this.#executeQuery(query)
           if (st.hasError) break
         }
       }
-      if (!st.hasError) await executeQuery(importRunBuffer)
+      if (!st.hasError) await this.#executeQuery(buffer)
     }
     // check length of query unless we decided to pass it to /sql
-    if (!goSql && opts.runQuery && st.sqlQuery !== '') {
-      if (Array.from(st.sqlQuery).length > 50000 || st.executedQueries > 50 || maxSqlLength > 1000) {
+    if (!this.goSql && this.#o.runQuery && st.sqlQuery !== '') {
+      if (Array.from(st.sqlQuery).length > 50000 || st.executedQueries > 50 || this.#maxSqlLength > 1000) {
         st.sqlQuery = ''
-        sqlQueryDisabled = true
+        this.sqlQueryDisabled = true
       }
     }
     // Do we have something to push into buffer?
-    importRunBuffer = sql !== '' ? `${sql};` : null
+    this.#importRunBuffer = sql !== '' ? `${sql};` : null
   }
 
+  result(): ImportRunResult {
+    return {
+      goSql: this.goSql,
+      queriesToBeExecuted: this.goSql ? this.sqlData : [],
+      sqlQuery: this.st.sqlQuery,
+      importMode: this.#importModeUsed ? this.st : null,
+    }
+  }
+}
+
+/**
+ * ImportSql::doImport over already split statements (the SQL box).
+ * pma: src/Plugins/Import/ImportSql.php::doImport
+ */
+export async function runImport(
+  statements: Iterable<string>,
+  opts: ImportRunnerOptions,
+): Promise<ImportRunResult> {
+  const runner = new ImportRunner(opts)
   for (const s of statements) {
-    if (st.hasError) break
-    await runQuery(s)
+    if (runner.hasError) break
+    await runner.runQuery(s)
   }
   // Finishing.
-  if (!st.hasError) await runQuery('')
-
-  return {
-    goSql,
-    queriesToBeExecuted: goSql ? sqlData : [],
-    sqlQuery: st.sqlQuery,
-    importMode: importModeUsed ? st : null,
-  }
+  if (!runner.hasError) await runner.runQuery('')
+  return runner.result()
 }
 
 /** pma: src/Import/Import.php::lookForUse */

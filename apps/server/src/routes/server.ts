@@ -8,6 +8,7 @@ import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/erro
 import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
 import { exportRoutes } from './export.ts'
+import { importRoutes } from './import.ts'
 import { metadataRoutes } from './metadata.ts'
 import { navigationRoutes } from './navigation.ts'
 import { queryRoutes } from './query.ts'
@@ -59,6 +60,7 @@ serverRoutes.route('/:s/navigation', navigationRoutes)
 serverRoutes.route('/:s/sql', sqlRoutes)
 serverRoutes.route('/:s/console', consoleRoutes)
 serverRoutes.route('/:s/export', exportRoutes)
+serverRoutes.route('/:s/import', importRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)

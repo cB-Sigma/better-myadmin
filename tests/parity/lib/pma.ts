@@ -285,6 +285,31 @@ export class PmaClient {
     return { status: res.status, headers: res.headers, body: Buffer.from(await res.arrayBuffer()) }
   }
 
+  /**
+   * A multipart form POST with one file (pairs in order, `server` + `token` added, no AJAX), as the
+   * import form sends it; answers the page HTML. Redirects are not followed.
+   */
+  async postMultipart(
+    route: string,
+    pairs: Array<[string, string]>,
+    file: { field: string; name: string; data: Buffer } | null,
+  ): Promise<string> {
+    const form = new FormData()
+    for (const [k, v] of pairs) form.append(k, v)
+    if (!pairs.some(([k]) => k === 'server')) form.append('server', '1')
+    if (!pairs.some(([k]) => k === 'token')) form.append('token', this.token)
+    if (file !== null) form.append(file.field, new Blob([new Uint8Array(file.data)]), file.name)
+    const headers: Record<string, string> = {}
+    if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
+    const res = await fetch(`${this.base}/index.php?route=${route}`, {
+      method: 'POST',
+      headers,
+      redirect: 'manual',
+      body: form,
+    })
+    return res.text()
+  }
+
   /** HTML of a full page (GET). */
   async routePage(route: string, params: Record<string, string> = {}): Promise<string> {
     const q = new URLSearchParams({ route, server: '1', ...params })
