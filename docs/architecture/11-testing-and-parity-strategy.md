@@ -46,7 +46,7 @@ flowchart TB
 
 The core "exact clone" proof.
 
-1. Docker compose brings up MySQL with `general_log=ON, log_output=TABLE`, a phpMyAdmin container (pinned to the reference commit), and BetterMyAdmin.
+1. Docker compose brings up MySQL with `general_log=ON, log_output=TABLE` (an indexed MyISAM log table, rotated when unheld: [development setup](14-development-setup.md#sharing-one-mysql-between-worktrees-agents-ci-jobs)), a phpMyAdmin container (pinned to the reference commit), and BetterMyAdmin.
 2. A **parity script** per feature area (`tests/parity/<area>.ts`) performs the same user action in both tools through Playwright (phpMyAdmin via its UI; BetterMyAdmin via its UI), e.g. "add a VARCHAR(100) NOT NULL DEFAULT 'x' column after `name` with comment and index".
 3. After each action we read `mysql.general_log` for each tool's connection id, normalise (strip comments like `/* pma */`, whitespace, our tool-identifying header), and **diff the SQL statements**. Differences fail the test unless listed in `tests/parity/allowed-diffs.yaml` with a justification (e.g. we use `information_schema` where phpMyAdmin used `SHOW`, which is a *read* difference and allowed; a *write* difference is never allowed).
 4. For exports, both tools export the same objects with the same options and the files are diffed after stripping the header lines that name the tool, version and timestamp. Must be identical for SQL, CSV, JSON, XML, YAML, LaTeX, MediaWiki, PHP array, Texy; ODS/ODT/PDF/Excel are compared after extraction (XML content for ODS/ODT, text for PDF) because binary containers include timestamps.

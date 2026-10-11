@@ -1,5 +1,6 @@
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { FIX } from './lib/env.ts'
 
 /** BetterMyAdmin server configuration for the UI parity run (phpMyAdmin directive names). */
 export default {
@@ -12,7 +13,7 @@ export default {
     {
       host: process.env.BMA_TEST_HOST ?? '127.0.0.1',
       port: Number(process.env.BMA_TEST_PORT ?? 3306),
-      pmadb: 'uip_pmadb',
+      pmadb: FIX.pmadb,
     },
   ],
 }
