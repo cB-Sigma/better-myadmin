@@ -74,3 +74,18 @@
 - tool: pma
   pattern: "^SHOW GRANTS FOR CURRENT_USER\\(\\)$"
   why: Menu privilege checks (isGrantUser/isCreateUser) for restricted accounts.
+- tool: bma
+  pattern: "^SELECT 1 FROM mysql\\.user LIMIT 1$"
+  why: DatabaseInterface::isSuperUser is session-cached in both tools (SessionCache is_superuser); phpMyAdmin filled it while rendering the menu of the page after login, BetterMyAdmin on its first request that needs it.
+- tool: pma
+  pattern: "^SELECT @@disabled_storage_engines$"
+  why: Session-cached in both tools (SessionCache disabled_storage_engines); read on the first page that lists storage engines, which differs between the tools (menus).
+- tool: bma
+  pattern: "^SELECT @@disabled_storage_engines$"
+  why: Session-cached in both tools (SessionCache disabled_storage_engines), see the pma entry.
+- tool: pma
+  pattern: "^SELECT @@basedir$"
+  why: DatabaseInterface::isAmazonRds, session-cached in both tools (SessionCache is_amazon_rds).
+- tool: bma
+  pattern: "^SELECT @@basedir$"
+  why: DatabaseInterface::isAmazonRds, session-cached in both tools (SessionCache is_amazon_rds).
