@@ -652,6 +652,19 @@ const PARITY_CLIENT = 'tests/parity/lib/pma.ts'
 /** The one family of request helpers of PmaClient (docs/architecture/16-golden-path.md#parity-client). */
 export const PMA_CLIENT_API = ['login', 'getPage', 'getJson', 'postPage', 'postJson']
 
+const RETIRED = new Set([
+  'postPath',
+  'pageGet',
+  'pagePost',
+  'pagePostJson',
+  'pageGetJson',
+  'postRoute',
+  'getRoute',
+  'routePage',
+  'sqlBox',
+  'ajax',
+])
+
 const parityClient: Rule = {
   id: 'parity/one-client',
   doc: 'parity-client',
@@ -669,6 +682,21 @@ const parityClient: Rule = {
             line: lineOf(sf, n),
             message: 'use PmaClient / pmaReachable() from tests/parity/lib/pma.ts instead of fetch()',
           })
+        // calls of the retired helper families (tests/parity is not type-checked)
+        if (ts.isCallExpression(n) && ts.isPropertyAccessExpression(n.expression)) {
+          const m = n.expression.name.text
+          const recv = n.expression.expression.getText(sf)
+          const pmaRecv = /(^|\.)(pma|p|super|low)$/.test(recv)
+          if (RETIRED.has(m) || (pmaRecv && ['get', 'post', 'page', 'request'].includes(m)))
+            if (pmaRecv || RETIRED.has(m))
+              out.push({
+                rule: this.id,
+                file: f.path,
+                line: lineOf(sf, n),
+                symbol: m,
+                message: `\`${recv}.${m}()\` is not a PmaClient helper: use ${PMA_CLIENT_API.join(', ')}`,
+              })
+        }
         if (ts.isClassDeclaration(n) && n.name !== undefined) {
           const isClient = n.name.text === 'PmaClient'
           if (!isClient && /Client$|^Pma/.test(n.name.text))

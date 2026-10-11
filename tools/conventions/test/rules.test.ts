@@ -141,6 +141,13 @@ app.post('/other', h)`
     ])
   })
 
+  it('flags calls of retired PmaClient helpers', () => {
+    const text =
+      "await pma.post('/sql', f)\nawait h.pma.pagePost('/x', {}, true)\nawait log.get(1)\nmap.get(k)"
+    const v = run([{ path: 'tests/parity/x.parity.test.ts', text }]).violations
+    expect(v.map((x) => x.symbol)).toEqual(['post', 'pagePost'])
+  })
+
   it('every rule links a golden-path section', () => {
     for (const r of RULES) expect(r.doc).toMatch(/^[a-z-]+$/)
   })
