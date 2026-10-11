@@ -18,7 +18,11 @@
     "test:parity": "vitest run --project parity",
     "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
     "i18n:import": "pnpm --filter @bettermyadmin/i18n run import",
-    "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity"
+    "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity",
+    "parity:inventory": "pnpm --filter @bettermyadmin/parity run inventory",
+    "parity:report": "pnpm --filter @bettermyadmin/parity run report",
+    "parity:check": "pnpm --filter @bettermyadmin/parity run check",
+    "parity:baseline": "pnpm --filter @bettermyadmin/parity run baseline"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

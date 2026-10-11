@@ -17,6 +17,18 @@ jobs:
       - run: pnpm test
       - run: pnpm --filter @bettermyadmin/web build
 
+  # Parity ratchet (tools/parity): mapped/covered items, map targets, exception ids and inventory
+  # freshness against tools/parity/baseline.json. Static: no database, no PHP. Never runs parity:baseline.
+  parity-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm parity:check
+
   integration:
     runs-on: ubuntu-latest
     strategy:
