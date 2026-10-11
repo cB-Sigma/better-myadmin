@@ -197,7 +197,8 @@ export async function databasesPage(
   }
   const databaseCount = error === null ? (await databaseList(ctx)).length : 0
 
-  const collations = await loadCollations(ctx)
+  // Charsets::findCollationByName loads the collations only when there is a row to describe
+  const collations = rows.length > 0 ? await loadCollations(ctx) : new Map()
   const headerStatistics = STAT_KEYS.map(([key, title, format]) => ({
     key,
     title: tr.gettext(title),
@@ -335,6 +336,22 @@ export async function createDatabase(
 }
 
 /**
+ * Extension point for the metadata (pmadb) layer: RelationCleanup::database (control connection)
+ * before each DROP DATABASE and Transformations::clear (`DELETE FROM pma__column_info …`) after it.
+ * No-ops until the pmadb layer registers them.
+ */
+export interface DropCleanup {
+  relation(ctx: AdminCtx, db: string): Promise<void>
+  transformations(ctx: AdminCtx, db: string): Promise<void>
+}
+const dropCleanup: DropCleanup = { relation: async () => {}, transformations: async () => {} }
+
+export function setDatabaseDropCleanup(c: DropCleanup): void {
+  dropCleanup.relation = c.relation
+  dropCleanup.transformations = c.transformations
+}
+
+/**
  * DROP DATABASE for each selected database, skipping system schemas and the pmadb.
  * pma: src/Controllers/Server/Databases/DestroyController.php
  */
@@ -352,8 +369,9 @@ export async function dropDatabases(ctx: AdminCtx, selected: unknown[]): Promise
     return { success: false, message: { type: 'error', text: tr.gettext('No databases selected.') } }
   }
   for (const db of dbs) {
-    // RelationCleanup::database / Transformations::clear: the pmadb layer's (control connection)
+    await dropCleanup.relation(ctx, db)
     await ctx.conn.query(`DROP DATABASE ${backquote(db)}`, 'databases.drop')
+    await dropCleanup.transformations(ctx, db)
   }
   // getDatabaseList()->build(): constructs the list, then builds it again
   await databaseList(ctx)
