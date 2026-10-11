@@ -6,8 +6,8 @@ import type {
   PluginsResponse,
 } from '@bettermyadmin/contracts'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { $, $$, type Node, classes, linkTarget, pageHtml, parse, text } from './lib/html.ts'
-import { type Harness, both, diff, pmaReachable, startHarness } from './lib/server-setup.ts'
+import { $, $$, type Node, classes, linkTarget, pageHtml, parse, shape, text } from './lib/html.ts'
+import { type Harness, both, diff, pmaReachable, startHarness, suiteUsers } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the read-only server pages: Charsets, Engines (+ detail pages, InnoDB Buffer Pool
@@ -17,7 +17,7 @@ let h: Harness
 
 beforeAll(async () => {
   if (!pmaReachable) return
-  h = await startHarness()
+  h = await startHarness({}, suiteUsers('info'))
 })
 afterAll(async () => h?.close())
 
@@ -247,8 +247,9 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     const body = $(html, 'div.card-body')!
     const nav = $(html, 'table#binlogTable thead tr td')!
     return {
-      options: $$(select, 'option').map((o) => [o.attrs.value, text(o), 'selected' in o.attrs]),
-      summary: text(body).replace(text(select), '').trim(),
+      // the current log grows while the server works: sizes compared by shape
+      options: $$(select, 'option').map((o) => [o.attrs.value, shape(text(o)), 'selected' in o.attrs]),
+      summary: shape(text(body).replace(text(select), '').trim()),
       sql: text($(html, 'div.sqlOuter')!),
       message: text($(html, 'div.alert-success')!),
       nav: $$(nav, 'a').map((a) => [a.attrs.title ?? '', text(a), a.attrs['data-post'] ?? '']),
@@ -279,10 +280,10 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     return {
       options: b.binaryLogs.map((l) => [
         l.name,
-        `${l.name}${l.size !== null ? ` (${l.size})` : ''}`,
+        shape(`${l.name}${l.size !== null ? ` (${l.size})` : ''}`),
         l.name === b.log,
       ]),
-      summary: `${b.fileCount} Files,${b.totalSize !== null ? ` ${b.totalSize}` : ''}`,
+      summary: shape(`${b.fileCount} Files,${b.totalSize !== null ? ` ${b.totalSize}` : ''}`),
       sql: b.sqlMessage.sql,
       message: b.sqlMessage.message.text,
       nav,

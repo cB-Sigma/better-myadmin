@@ -11,7 +11,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { formatStatusValue } from '../../apps/server/src/server-admin/status.ts'
 import { englishTranslator } from '../../packages/i18n/src/index.ts'
 import { $, $$, type Node, classes, hasClass, linkTarget, pageHtml, parse, shape, text } from './lib/html.ts'
-import { type Harness, ROOT, both, diff, pmaReachable, startHarness } from './lib/server-setup.ts'
+import { type Harness, ROOT, both, diff, pmaReachable, startHarness, suiteUsers } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the Status pages: overview, processes (list, filters, sorting, full texts,
@@ -40,7 +40,7 @@ async function sleeperConnection(): Promise<mysql.Connection> {
 
 beforeAll(async () => {
   if (!pmaReachable) return
-  h = await startHarness()
+  h = await startHarness({}, suiteUsers('stat'))
   await h.root.query(`DROP DATABASE IF EXISTS ${SLEEP_DB}; CREATE DATABASE ${SLEEP_DB};
     DROP USER IF EXISTS '${SLEEP_USER}'@'%'; CREATE USER '${SLEEP_USER}'@'%' IDENTIFIED BY '${SLEEP_USER}';
     GRANT ALL ON \`${SLEEP_DB}\`.* TO '${SLEEP_USER}'@'%'`)

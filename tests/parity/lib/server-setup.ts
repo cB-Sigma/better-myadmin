@@ -36,6 +36,7 @@ export const PER_REQUEST: AllowedDiff[] = [
 ]
 
 export interface Harness {
+  users: { pma: string; bma: string }
   root: mysql.Connection
   log: GeneralLog
   pma: PmaClient
@@ -43,6 +44,9 @@ export interface Harness {
   dbMap: Record<string, string>
   close(): Promise<void>
 }
+
+/** Account names per suite (suites may run concurrently: each needs its own general-log users). */
+export const suiteUsers = (tag: string) => ({ pma: `${PMA_USER}_${tag}`, bma: `${BMA_USER}_${tag}` })
 
 export async function startHarness(
   cfg: Parameters<typeof testConfig>[0] = {},
@@ -60,6 +64,7 @@ export async function startHarness(
   const bma = testApp(testConfig(cfg))
   await bma.login(users.bma, users.bma)
   return {
+    users: { pma: users.pma, bma: users.bma },
     root,
     log,
     pma,
@@ -79,7 +84,7 @@ export async function both<P, B>(
   h: Harness,
   pmaAction: () => Promise<P>,
   bmaAction: () => Promise<B>,
-  users: { pma: string; bma: string } = { pma: PMA_USER, bma: BMA_USER },
+  users: { pma: string; bma: string } = h.users,
 ): Promise<{ p: P; b: B; pmaLog: LogEntry[]; bmaLog: LogEntry[] }> {
   const m1 = await h.log.marker()
   const p = await pmaAction()

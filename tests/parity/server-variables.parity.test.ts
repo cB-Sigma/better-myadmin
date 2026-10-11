@@ -5,7 +5,7 @@ import type {
 } from '@bettermyadmin/contracts'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { $, $$, type Node, linkTarget, pageHtml, parse, text } from './lib/html.ts'
-import { type Harness, both, diff, pmaReachable, startHarness } from './lib/server-setup.ts'
+import { type Harness, both, diff, pmaReachable, startHarness, suiteUsers } from './lib/server-setup.ts'
 
 /**
  * Golden parity of Server → Variables: the list (names, formatted global and session values, doc
@@ -17,7 +17,7 @@ let original = ''
 
 beforeAll(async () => {
   if (!pmaReachable) return
-  h = await startHarness()
+  h = await startHarness({}, suiteUsers('vars'))
   const [rows] = await h.root.query('SELECT @@GLOBAL.max_connect_errors AS v')
   original = String((rows as Array<{ v: unknown }>)[0]!.v)
 })

@@ -5,7 +5,7 @@ import type {
 } from '@bettermyadmin/contracts'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { $, $$, type Node, classes, pageHtml, parse, text } from './lib/html.ts'
-import { type Harness, both, diff, pmaReachable, startHarness } from './lib/server-setup.ts'
+import { type Harness, both, diff, pmaReachable, startHarness, suiteUsers } from './lib/server-setup.ts'
 
 /**
  * Golden parity of Server → Databases: the list (collations, statistics, sorting, paging, the create
@@ -206,7 +206,7 @@ describe.skipIf(!pmaReachable)('parity: databases list', () => {
 describe.skipIf(!pmaReachable)('parity: drop databases', () => {
   let su: Harness
   beforeAll(async () => {
-    su = await startHarness()
+    su = await startHarness({}, suiteUsers('drop'))
     await su.root.query(
       'CREATE DATABASE IF NOT EXISTS m3srv_db_dropp; CREATE DATABASE IF NOT EXISTS m3srv_db_dropb',
     )
