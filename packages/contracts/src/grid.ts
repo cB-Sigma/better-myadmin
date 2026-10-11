@@ -95,6 +95,26 @@ export const GridCell = z.object({
   dl: z.object({ where: z.string(), sig: z.string(), key: z.string(), table: z.string() }).optional(),
   /** text shown highlighted as code (built-in SQL / JSON transformations) */
   code: z.enum(['sql', 'json']).optional(),
+  /**
+   * Browser display transformation of the column (pma__column_info), rendered client-side by
+   * features/transformations/registry.tsx: plugin file, options, the raw value (base64) and the
+   * cell's wrapper parameters.
+   */
+  tf: z
+    .object({
+      file: z.string(),
+      options: z.array(z.string()),
+      mimetype: z.string(),
+      b64: z.string(),
+      db: z.string(),
+      table: z.string(),
+      column: z.string(),
+      where: z.string(),
+      sig: z.string(),
+      isInt: z.boolean(),
+      isBinary: z.boolean(),
+    })
+    .optional(),
 })
 export type GridCell = z.infer<typeof GridCell>
 
