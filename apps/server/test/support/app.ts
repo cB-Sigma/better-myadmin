@@ -63,5 +63,14 @@ export function testApp(cfg = testConfig()) {
     await req('GET', '/api/auth/state')
     return req('POST', '/api/auth/login', { server: 1, username: user, password })
   }
-  return { app, deps, jar, req, login, close: () => deps.pools.closeAll() }
+  return {
+    app,
+    deps,
+    jar,
+    req,
+    login,
+    close: async () => {
+      await deps.pools.closeAll()
+    },
+  }
 }

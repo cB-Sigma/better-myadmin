@@ -22,6 +22,7 @@ import {
 import { sqlTabRoute } from '../sql/routes'
 import { newQueryId, onQueryEvent, runQuery, scopeKey, setPendingResults } from '../sql/runner'
 import '../sql/sql.css'
+import { CONSOLE_TOGGLE_EVENT } from '../shell/hotkeys/useShortcuts'
 import { CONSOLE_DEFAULTS, normaliseMode, saveConsoleSetting } from './config'
 import { consoleHistory } from './history'
 
@@ -182,40 +183,28 @@ function ConsoleDock({
     set('Mode', 'collapse')
     setCard(null)
   }, [set])
-  const toggle = useCallback(() => (open ? collapse() : show(true)), [open, collapse, show])
+  const openRef = useRef(open)
+  openRef.current = open
+  const toggle = useCallback(() => {
+    if (openRef.current) {
+      openRef.current = false
+      collapse()
+    } else {
+      openRef.current = true
+      show(true)
+    }
+  }, [collapse, show])
+  const toggleRef = useRef(toggle)
+  toggleRef.current = toggle
 
-  // Ctrl+Alt+C and Ctrl+K anywhere, K outside inputs (shortcuts_handler.ts); other modules can
-  // toggle it with the `bma:console-toggle` event
+  // Console.toggle: the shell's shortcut layer (the single source of key bindings, shortcuts_handler.ts)
+  // and other modules send `bma:console-toggle`; phpMyAdmin's Ctrl+K outside form fields toggles
+  // twice in a row (Q45), so each toggle reads the state left by the previous one
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null
-      const inInput = t !== null && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)
-      if (t?.isContentEditable === true && !(e.ctrlKey && (e.altKey || e.key === 'k'))) return
-      if (
-        (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'c') ||
-        (e.ctrlKey && !e.altKey && e.key === 'k')
-      ) {
-        e.preventDefault()
-        toggle()
-      } else if (
-        !inInput &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !e.metaKey &&
-        e.key === 'k' &&
-        t?.isContentEditable !== true
-      ) {
-        toggle()
-      }
-    }
-    const onToggle = () => toggle()
-    window.addEventListener('keydown', onKey)
-    window.addEventListener('bma:console-toggle', onToggle)
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      window.removeEventListener('bma:console-toggle', onToggle)
-    }
-  }, [toggle])
+    const onToggle = () => toggleRef.current()
+    window.addEventListener(CONSOLE_TOGGLE_EVENT, onToggle)
+    return () => window.removeEventListener(CONSOLE_TOGGLE_EVENT, onToggle)
+  }, [])
 
   /** Console.execute */
   const execute = useCallback(

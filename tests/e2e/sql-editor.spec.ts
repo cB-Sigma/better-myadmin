@@ -237,11 +237,26 @@ test.describe('console', () => {
     await page.keyboard.insertText('SELECT 42')
     await page.keyboard.press('Enter')
     await expect(messages.locator('.message[data-state="successed"]').last()).toContainText('SELECT 42')
-    // the options (and the open mode, Console/Mode) are kept in this browser
+    // the options (and the open mode, Console/Mode) are user preferences (/console/config)
     await page.reload()
     await expect(page.getByTestId('console-messages').locator('.welcome')).toHaveText(
       'Press Enter to execute query',
     )
+  })
+
+  test('Ctrl+K toggles twice outside fields and once inside, like phpMyAdmin (Q45)', async ({ page }) => {
+    await page.goto('/s/1/sql')
+    await expect(page.locator('.console_switch')).toBeVisible()
+    await page.locator('#page_content').click({ position: { x: 2, y: 2 } })
+    await page.keyboard.press('Control+k')
+    // Ctrl+K, then K: open and closed again
+    await expect(page.getByTestId('console-messages')).toHaveCount(0)
+    await page.keyboard.press('Control+Alt+c')
+    await expect(page.getByTestId('console-messages')).toBeVisible()
+    // the console input has the focus: a single toggle
+    await expect(page.locator('.console_query_input .cm-content')).toBeFocused()
+    await page.keyboard.press('Control+k')
+    await expect(page.getByTestId('console-messages')).toHaveCount(0)
   })
 
   test('Ctrl+Alt+C toggles the console', async ({ page }) => {

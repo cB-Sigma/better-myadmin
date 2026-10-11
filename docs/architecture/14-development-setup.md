@@ -54,9 +54,11 @@ Environment variables override: `BMA__Servers__1__host=127.0.0.1 pnpm dev`.
 | Golden parity tests (needs the reference phpMyAdmin, `BMA_PARITY_PMA_URL`) | `pnpm test:parity` |
 | Regenerate PHP-derived fixtures | `php packages/<pkg>/scripts/*.php` (each package README lists its scripts) |
 | Build the SPA | `pnpm --filter @bettermyadmin/web build` |
+| End-to-end tests (every Playwright suite in `tests/e2e`: shell, navigation, SQL editor/console, language; builds the SPA first; `PW_CHROMIUM` for a local Chromium) | `pnpm test:e2e` |
+| Catalogue import / msgid check | `pnpm i18n:import`, `pnpm i18n:parity` |
 | Run the server | `pnpm --filter @bettermyadmin/server start -- --config ./bettermyadmin.config.ts` |
 
-Planned and not yet wired: `pnpm test:e2e`, `pnpm parity:report`, `pnpm docs:gen`, `pnpm i18n:*`, `pnpm storybook`, `pnpm build:binary`.
+Planned and not yet wired: `pnpm parity:report`, `pnpm docs:gen`, `pnpm storybook`, `pnpm build:binary`.
 
 ## Working on a feature
 

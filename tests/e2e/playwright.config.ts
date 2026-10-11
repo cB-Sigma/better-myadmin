@@ -4,9 +4,10 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from '@playwright/test'
 
 /**
- * End-to-end checks against the built SPA served by the real server (pnpm --filter @bettermyadmin/web build
- * first). MySQL from BMA_TEST_HOST/PORT (default 127.0.0.1:3306, root/root).
- *   pnpm test:e2e
+ * The one end-to-end setup: every suite (shell, navigation, SQL editor and console, language) against
+ * the built SPA served by the real server. `pnpm test:e2e` builds the web app first. MySQL from
+ * BMA_TEST_HOST/PORT (default 127.0.0.1:3306, root/root); global-setup creates the shell suite's
+ * m1shell_* objects, the other suites create their own.
  * Chromium: PW_CHROMIUM or BMA_CHROMIUM, else the preinstalled one when present.
  */
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../..')
@@ -17,13 +18,17 @@ const chromium =
 export default defineConfig({
   testDir: '.',
   testMatch: ['**/*.e2e.ts', '**/*.spec.ts'],
+  outputDir: join(repo, '.data/e2e-results'),
   timeout: 60_000,
   fullyParallel: false,
   workers: 1,
   reporter: 'list',
+  globalSetup: './global-setup.ts',
+  globalTeardown: './global-teardown.ts',
   use: {
     baseURL: `http://127.0.0.1:${port}`,
     locale: 'en-US',
+    viewport: { width: 1400, height: 900 },
     trace: 'retain-on-failure',
     ...(existsSync(chromium) ? { launchOptions: { executablePath: chromium } } : {}),
   },

@@ -11,6 +11,7 @@ import { authRoutes } from './routes/auth.ts'
 import { i18nRoutes } from './routes/i18n.ts'
 import { metaRoutes } from './routes/meta.ts'
 import { serverRoutes } from './routes/server.ts'
+import { telemetryRoutes } from './routes/telemetry.ts'
 import { type SecretBox, safeEqual } from './session/crypto.ts'
 import { newSession, nowSeconds } from './session/manager.ts'
 import type { SessionData, SessionStore } from './session/store.ts'
@@ -23,6 +24,10 @@ export interface AppDeps {
   credBox: SecretBox
   /** Encrypts the recalled-username cookie (LoginCookieRecall). */
   userBox: SecretBox
+  /** blowfish_secret as configured, before main.ts generated one (home page key-length warnings). */
+  configuredSecret?: string
+  /** True when blowfish_secret was generated into DataDir because the configuration had none. */
+  secretGenerated?: boolean
 }
 
 export interface AppEnv {
@@ -97,6 +102,7 @@ export function createApp(deps: AppDeps) {
   app.route('/api/meta', metaRoutes)
   app.route('/api/i18n', i18nRoutes)
   app.route('/api/servers', serverRoutes)
+  app.route('/api/telemetry', telemetryRoutes)
 
   app.all('/api/*', (c) => c.json({ error: { code: 'NOT_FOUND', message: 'Not found.' } }, 404))
 

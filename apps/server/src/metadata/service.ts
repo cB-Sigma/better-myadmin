@@ -21,6 +21,7 @@ import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
 import type { AcquiredControl } from '../db/control.ts'
 import type { ServerEnv } from '../routes/server.ts'
+import type { SessionData } from '../session/store.ts'
 
 // ---------------------------------------------------------------------------------------------
 // Session state
@@ -50,6 +51,24 @@ function sessionMetadata(c: Context<ServerEnv>): SessionMetadata {
   const session = c.get('session')
   session.metadata ??= { state: {}, relation: {} }
   return session.metadata as unknown as SessionMetadata
+}
+
+/**
+ * Forgets what the configuration storage cached for one server login (discovery, applied
+ * preferences, recent/favorite and UI-preference lists): called on login and logout, so the storage
+ * is discovered once per login (phpMyAdmin rediscovers on every request, X26).
+ */
+export function forgetServerMetadata(session: SessionData, serverIndex: number): void {
+  const md = session.metadata as unknown as SessionMetadata | undefined
+  if (md === undefined) return
+  const s = String(serverIndex)
+  delete md.relation[s]
+  delete md.state.prefsCache?.[`server_${serverIndex}`]
+  delete md.state.recentTables?.[s]
+  delete md.state.favoriteTables?.[s]
+  delete md.state.favoritesSynced?.[s]
+  delete md.state.tableUiPrefs?.[s]
+  if (Object.keys(session.servers).length === 0) delete md.state.userconfig
 }
 
 /** Forgets the cached storage discovery (after creating tables, or on logout). */

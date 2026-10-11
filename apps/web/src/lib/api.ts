@@ -1,4 +1,5 @@
 import type {
+  AuthState,
   AutocompleteResponse,
   BookmarkCreateRequest,
   BookmarkCreateResponse,
@@ -7,36 +8,44 @@ import type {
   BookmarkRunRequest,
   BookmarkShowResponse,
   CancelResponse,
+  ChangePasswordRequest,
+  ChangePasswordResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  DatabaseScope,
   DefaultFkCheckResponse,
+  ErrorEnvelope,
+  ErrorReportRequest,
+  ErrorReportResponse,
   FormatResponse,
   HistoryResponse,
+  HomeResponse,
+  I18nState,
   LintRequest,
   LintResponse,
+  LoginRequest,
+  LoginResponse,
+  LogoutResponse,
+  NavBranchQuery,
+  NavBranchResponse,
+  NavTreeQuery,
+  NavTreeRequest,
+  NavTreeResponse,
+  PasswordForm,
+  QueryRequest,
+  QueryResponse,
+  ServerScope,
+  SetCollationResponse,
   SimulateRequest,
   SimulateResponse,
   SqlFormResponse,
+  TableScope,
+  VersionCheckResponse,
 } from '@bettermyadmin/contracts'
-import {
-  type AuthState,
-  CSRF_COOKIE,
-  CSRF_HEADER,
-  type ErrorEnvelope,
-  type I18nState,
-  type LoginRequest,
-  type LoginResponse,
-  type LogoutResponse,
-  type NavBranchQuery,
-  type NavBranchResponse,
-  type NavTreeQuery,
-  type NavTreeRequest,
-  type NavTreeResponse,
-  type QueryRequest,
-  type QueryResponse,
-} from '@bettermyadmin/contracts'
+import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
+import type { ClientConfig } from './config.ts'
 
 /** An API error carrying the server's envelope (message texts are phpMyAdmin's). */
 export class ApiError extends Error {
@@ -87,6 +96,35 @@ export const api = {
   login: (req: LoginRequest) => call<LoginResponse>('POST', '/auth/login', req),
   logout: () => call<LogoutResponse>('POST', '/auth/logout'),
   query: (server: number, req: QueryRequest) => call<QueryResponse>('POST', `/servers/${server}/query`, req),
+  // shell (docs/architecture/05-api-reference.md#server-scope)
+  switchServer: (server: number) => call<{ ok: true }>('POST', '/auth/switch-server', { server }),
+  configPublic: () => call<ClientConfig>('GET', '/meta/config-public'),
+  build: () =>
+    call<{ name: string; version: string; commit: string | null; branch: string | null }>(
+      'GET',
+      '/meta/build',
+    ),
+  versionCheck: () => call<VersionCheckResponse>('GET', '/meta/version-check'),
+  serverScope: (server: number) => call<ServerScope>('GET', `/servers/${server}`),
+  databaseScope: (server: number, db: string) =>
+    call<DatabaseScope>('GET', `/servers/${server}/databases/${encodeURIComponent(db)}`),
+  tableScope: (server: number, db: string, table: string) =>
+    call<TableScope>(
+      'GET',
+      `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}/capabilities`,
+    ),
+  home: (server: number) => call<HomeResponse>('GET', `/servers/${server}/home`),
+  setCollation: (server: number, collation: string) =>
+    call<SetCollationResponse>('POST', `/servers/${server}/session/collation`, {
+      collation_connection: collation,
+    }),
+  passwordForm: (server: number) => call<PasswordForm>('GET', `/servers/${server}/account/password`),
+  changePassword: (server: number, req: ChangePasswordRequest) =>
+    call<ChangePasswordResponse>('POST', `/servers/${server}/account/password`, req),
+  /** ThemeSetController's ThemeDefault in the user preferences */
+  themeSet: (server: number, theme: string) =>
+    call<{ ok: boolean }>('POST', `/servers/${server}/themes/set`, { theme }),
+  errorReport: (req: ErrorReportRequest) => call<ErrorReportResponse>('POST', '/telemetry/error', req),
   navTree: (server: number, q: NavTreeQuery = {}) =>
     call<NavTreeResponse>('GET', `/servers/${server}/navigation/tree${queryString(q)}`),
   navTreeState: (server: number, req: NavTreeRequest) =>

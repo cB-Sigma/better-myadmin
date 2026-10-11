@@ -1,5 +1,5 @@
 import { sprintf } from '@bettermyadmin/i18n'
-import { Hono } from 'hono'
+import { Hono, type MiddlewareHandler } from 'hono'
 import type { AppEnv } from '../app.ts'
 import { AuthMessages } from '../auth/cookie.ts'
 import { getServer } from '../config.ts'
@@ -9,6 +9,7 @@ import { consoleRoutes } from './console.ts'
 import { metadataRoutes } from './metadata.ts'
 import { navigationRoutes } from './navigation.ts'
 import { queryRoutes } from './query.ts'
+import { shellRoutes } from './shell.ts'
 import { sqlRoutes } from './sql.ts'
 
 export type ServerEnv = AppEnv & {
@@ -18,7 +19,7 @@ export type ServerEnv = AppEnv & {
 export const serverRoutes = new Hono<ServerEnv>()
 
 /** Resolves `:s` → configured server + the session's decrypted credentials for it. */
-serverRoutes.use('/:s/*', async (c, next) => {
+const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   const { cfg, credBox } = c.get('deps')
   const s = Number(c.req.param('s'))
   if (!Number.isInteger(s) || getServer(cfg, s) === undefined)
@@ -41,12 +42,16 @@ serverRoutes.use('/:s/*', async (c, next) => {
   if (login.port !== undefined) creds.port = login.port
   session.currentServer = s
   c.set('serverIndex', s)
+  if (login.collation !== undefined) creds.collation = login.collation
   c.set('creds', creds)
   await next()
-})
+}
+serverRoutes.use('/:s', resolveServer)
+serverRoutes.use('/:s/*', resolveServer)
 
 serverRoutes.route('/:s/query', queryRoutes)
 serverRoutes.route('/:s/navigation', navigationRoutes)
 serverRoutes.route('/:s/sql', sqlRoutes)
 serverRoutes.route('/:s/console', consoleRoutes)
 serverRoutes.route('/:s', metadataRoutes)
+serverRoutes.route('/:s', shellRoutes)

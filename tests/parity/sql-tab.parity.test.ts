@@ -371,7 +371,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     ]
     for (const l of LINT) {
       it(`lint ${l.editorType ?? 'sql'}: ${l.sql.slice(0, 30)}`, async () => {
-        const pr = await pma.super.post('/lint', {
+        const pr = await pma.super.postRoute('/lint', {
           sql_query: l.sql,
           no_history: 'true',
           ...(l.editorType !== undefined ? { 'options[editorType]': l.editorType } : {}),
@@ -392,7 +392,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     ]) {
       for (const singleLine of [false, true]) {
         it(`format${singleLine ? ' single line' : ''}: ${sql.slice(0, 30)}`, async () => {
-          const pr = await pma.super.post('/database/sql/format', {
+          const pr = await pma.super.postRoute('/database/sql/format', {
             sql,
             formatSingleLine: String(singleLine),
           })
@@ -404,7 +404,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
 
     it('autocomplete lists tables and columns with hints', async () => {
       const m1 = await log.marker()
-      const pr = await pma.super.post('/database/sql/autocomplete', { db: DB_PMA, no_debug: 'true' })
+      const pr = await pma.super.postRoute('/database/sql/autocomplete', { db: DB_PMA, no_debug: 'true' })
       const pmaLog = await log.since(U.pma, m1)
       const m2 = await log.marker()
       const br = await bma.super.req('GET', `/api/servers/1/sql/autocomplete?db=${DB_BMA}`)
@@ -415,7 +415,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     })
 
     it('default foreign key check value', async () => {
-      const pr = await pma.super.get('/sql/get-default-fk-check-value')
+      const pr = await pma.super.getRoute('/sql/get-default-fk-check-value')
       const br = await bma.super.req('GET', '/api/servers/1/sql/default-fk-check')
       expect(br.json.defaultFkCheckValue).toBe(pr.default_fk_check_value)
     })
@@ -434,7 +434,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     for (const sql of SIMULATE) {
       it(`simulate: ${sql}`, async () => {
         const m1 = await log.marker()
-        const pr = await pma.super.post('/import/simulate-dml', {
+        const pr = await pma.super.postRoute('/import/simulate-dml', {
           db: DB_PMA,
           sql_query: sql,
           sql_delimiter: ';',

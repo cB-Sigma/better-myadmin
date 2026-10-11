@@ -29,6 +29,14 @@ export function t(msgid: string, ...args: SprintfArg[]): string {
   return args.length > 0 ? sprintf(s, ...args) : s
 }
 
+/**
+ * A phpMyAdmin text naming the product, with BetterMyAdmin's name (parity exception X33): the msgid is
+ * translated, then "phpMyAdmin" is replaced (translations keep the product name as is).
+ */
+export function tProduct(msgid: string, ...args: SprintfArg[]): string {
+  return t(msgid, ...args).replaceAll('phpMyAdmin', 'BetterMyAdmin')
+}
+
 /** `_ngettext()`; the count is not substituted (phpMyAdmin passes it to sprintf separately). */
 export function ngettext(msgid: string, msgidPlural: string, n: number): string {
   return current.ngettext(msgid, msgidPlural, n)

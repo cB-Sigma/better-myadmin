@@ -57,6 +57,7 @@ async function main() {
 
   const dataDir = resolve(expandHome(cfg.DataDir))
   mkdirSync(dataDir, { recursive: true, mode: 0o700 })
+  const configuredSecret = cfg.blowfish_secret
   const { secret, generated } = ensureSecret(cfg, dataDir)
   if (generated)
     console.warn(`blowfish_secret is not set; using the generated secret in ${join(dataDir, 'secret')}`)
@@ -64,19 +65,28 @@ async function main() {
 
   const pools = new PoolManager(cfg)
   const store = new SqliteSessionStore(join(dataDir, 'sessions.sqlite'))
-  const app = createApp({
+  const deps = {
     cfg,
     store,
     pools,
     credBox: new SecretBox(secret, 'credentials'),
     userBox: new SecretBox(secret, 'username'),
-  })
+    configuredSecret,
+    secretGenerated: configuredSecret === '',
+  }
+  const app = createApp(deps)
 
   // static SPA: hashed assets are immutable, everything else falls back to index.html
   const here = dirname(fileURLToPath(import.meta.url))
   const staticRoot = resolve(values.static ?? join(here, '../../web/dist'))
   if (existsSync(join(staticRoot, 'index.html'))) {
+    // ThemeDefault / ThemePerServer for public/theme-init.js, so the first paint uses the configured theme
     const indexHtml = readFileSync(join(staticRoot, 'index.html'), 'utf8')
+      .replace(
+        'data-theme-default="pmahomme"',
+        `data-theme-default="${cfg.ThemeDefault.replace(/[^\w-]/g, '')}"`,
+      )
+      .replace('data-theme-per-server="0"', `data-theme-per-server="${cfg.ThemePerServer ? 1 : 0}"`)
     // serveStatic resolves `root` against the working directory
     const root = relative(process.cwd(), staticRoot) || '.'
     app.use(

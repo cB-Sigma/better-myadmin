@@ -114,7 +114,8 @@ describe('server messages follow the request language', () => {
   })
 
   it('SQL tab: import mode summary, PHP code, rollback, profiling numbers, simulate, lint, console', async () => {
-    const t = testApp()
+    // console options in the session: the shared `phpmyadmin` storage stays untouched
+    const t = testApp(testConfig({}, { pmadb: 'bma_it_i18n_no_storage' }))
     await t.req('GET', '/api/i18n?lang=de')
     await t.login()
     const run = async (body: Record<string, unknown>) =>
@@ -171,6 +172,26 @@ describe('server messages follow the request language', () => {
     expect((bad.json.error as { message: string }).message).toBe('Unerwarteter Parameterwert.')
     // back to the default: the stored preference is removed again
     await t.req('POST', '/api/servers/1/console/config', { key: 'Mode', value: 'info' })
+    await t.close()
+  })
+
+  it('home page: warnings, SSL line and collation descriptions are German', async () => {
+    const t = testApp(testConfig({ blowfish_secret: 'short' }))
+    await t.req('GET', '/api/i18n?lang=de')
+    await t.login()
+    const h = (await t.req('GET', '/api/servers/1/home')).json as {
+      warnings: Array<{ message: string }>
+      databaseServer: { connection: { message: string } } | null
+      collation: {
+        charsets: Array<{ name: string; collations: Array<{ name: string; description: string }> }>
+      }
+    }
+    expect(h.warnings.map((w) => w.message)).toContain(
+      'Die Konfigurationsdatei benötigt einen gültigen Schlüssel für die Cookie-Verschlüsselung. Ein temporärer Schlüssel wurde automatisch für dich generiert. Bitte schau in der [doc@cfg_blowfish_secret]Dokumentation[/doc] nach.',
+    )
+    expect(h.databaseServer?.connection.message).toBe('SSL wird nicht verwendet')
+    const ci = h.collation.charsets.flatMap((c) => c.collations).find((c) => c.name === 'utf8mb4_general_ci')
+    expect(ci?.description).toMatch(/, Beachtet nicht Groß- und Kleinschreibung$/)
     await t.close()
   })
 

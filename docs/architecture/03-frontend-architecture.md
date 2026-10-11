@@ -101,10 +101,10 @@ Zustand stores, one per concern, tiny and serializable:
 |---|---|---|
 | `NavTreeStore` (`features/navigation/store.ts`) | expanded branches and their positions, fast-filter texts, loaded branches, selection, "link with main panel" | expanded paths + positions in `sessionStorage.navTreePaths`, filter texts in `sessionStorage.navTreeSearchFilters` (phpMyAdmin's keys and semantics: restored only for the same server and session token); panel width in `localStorage` until the preferences API lands (phpMyAdmin: `navigation/update-width`) |
 | `useConsoleStore` | open/closed, height, active tab, history (with status/time), options (`AlwaysExpand`, `CurrentQuery`, `EnterExecutes`, `DarkTheme`) | server `console/update-config` → user preferences (configuration storage or session), as in pMA |
-| `useThemeStore` | theme id, color mode | localStorage + cookie (so the server can preselect for printing) |
+| `useThemeState` (`features/shell/theme`) | theme id, color mode per `ThemePerServer` key (`bma_theme[-N]`, `…_color`) | localStorage + cookie mirror, read by `public/theme-init.js` before first paint |
 | `useGridPrefsStore` | per-table column order/visibility/width (mirrors `table_uiprefs`) | server when `uiprefswork`, else localStorage |
 | `useSelectionStore` (per grid instance) | checked rows, last clicked index for shift-click | none |
-| `useHotkeyStore` | current scope for shortcuts, help overlay open | none |
+| `ShortcutMachine` (`features/shell/hotkeys`) | pending `D`/`T` chords, help overlay open | none |
 
 Everything else is either server state (Query) or URL state (Router).
 
@@ -156,7 +156,7 @@ Tokens as CSS variables on `:root`, four built-in themes ported from phpMyAdmin 
 
 ## Keyboard
 
-A single `useHotkeys` layer with scopes (`global`, `grid`, `editor`, `tree`, `dialog`). phpMyAdmin's shortcuts (`keyhandler.ts`, `shortcuts_handler.ts`: `Ctrl+Alt+H` home, `Ctrl+Alt+D` database structure, `Ctrl+Alt+T` table structure, `Ctrl+Alt+S` SQL, `Ctrl+Alt+F` filter, `Ctrl+Alt+?` help, `Ctrl+Alt+B` back, `Ctrl+Alt+Left/Right` page nav, Esc to close dialogs) are bound as-is and listed in the same help overlay; the full table is in the shell feature doc.
+A single shortcut layer (`features/shell/hotkeys`): phpMyAdmin's `shortcuts_handler.ts` reproduced as a tested state machine — `K` / `Ctrl+K` / `Ctrl+Alt+C` console toggle (dispatched as the `bma:console-toggle` window event), `S` navigation settings (`bma:navigation-settings` when the panel has no settings icon), `D`/`T` then `S` / `F` structure / search (2 s chord window), `E` export, `H` home, `Backspace` back — plus `Ctrl+Enter`/`Alt+Enter` form submit, `Esc` closing dialogs, and our addition `?` for a help overlay listing them. Shortcuts pause while a dialog is open. The full table is in the shell feature doc.
 
 ## i18n
 

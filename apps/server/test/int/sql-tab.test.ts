@@ -221,7 +221,9 @@ describe('SQL form, autocomplete and console endpoints', () => {
   })
 
   it('console options: defaults, validation, persistence in the user preferences (session)', async () => {
-    const a = await app()
+    // a configured storage that does not exist: no pmadb features, the preferences live in the session
+    // (the shared MySQL's `phpmyadmin` storage is not touched, other test files run concurrently)
+    const a = await app({}, { pmadb: 'm1sql_it_no_storage' })
     const g = await a.req('GET', '/api/servers/1/console/config')
     expect(g.json.settings).toEqual({
       StartHistory: false,
