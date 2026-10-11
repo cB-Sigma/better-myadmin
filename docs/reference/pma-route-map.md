@@ -17,43 +17,43 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/console/bookmark/add` | `Console/Bookmark/AddController` | API `/api/console/*` · (bookmarks, config) | 🗓️ planned (M1) |
 | GET | `/console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API `/api/console/*` · (bookmarks, config) | 🗓️ planned (M1) |
 | POST | `/console/update-config` | `Console/UpdateConfigController` | API `POST /api/servers/:s/console/config` · (bookmarks, config) | ✅ implemented (M1) |
-| GET, POST | `/database/central-columns` | `Database/CentralColumnsController` | UI `/s/:s/db/:db/central-columns` · API `/api/servers/:s/databases/:db/central-columns` | 🗓️ planned (M3) |
-| POST | `/database/central-columns/populate` | `Database/CentralColumns/PopulateColumnsController` | UI `/s/:s/db/:db/central-columns/populate` · API `/api/servers/:s/databases/:db/central-columns/populate` | 🗓️ planned (M3) |
-| GET | `/database/data-dictionary` | `Database/DataDictionaryController` | UI `/s/:s/db/:db/data-dictionary` · API `GET /api/servers/:s/databases/:db/data-dictionary` | 🗓️ planned (M3) |
+| GET, POST | `/database/central-columns` | `Database/CentralColumnsController` | UI `/s/:s/db/:db/central-columns` · API `GET /api/servers/:s/databases/:db/central-columns` · API `POST /api/servers/:s/databases/:db/central-columns` · API `GET /api/servers/:s/databases/:db/central-columns/edit` · API `GET /api/servers/:s/databases/:db/central-columns/list` | ✅ implemented |
+| POST | `/database/central-columns/populate` | `Database/CentralColumns/PopulateColumnsController` | API `GET /api/servers/:s/databases/:db/central-columns/populate` | ✅ implemented |
+| GET | `/database/data-dictionary` | `Database/DataDictionaryController` | UI `/s/:s/db/:db/data-dictionary` · API `GET /api/servers/:s/databases/:db/data-dictionary` | ✅ implemented |
 | GET, POST | `/database/designer` | `Database/DesignerController` | UI `/s/:s/db/:db/designer` · API `GET /api/servers/:s/databases/:db/designer` | 🗓️ planned (M3) |
-| GET, POST | `/database/events` | `Database/EventsController` | UI `/s/:s/db/:db/events` · API `GET /api/servers/:s/databases/:db/events` · API `POST /api/servers/:s/databases/:db/events` | 🗓️ planned (M3) |
+| GET, POST | `/database/events` | `Database/EventsController` | UI `/s/:s/db/:db/events` · API `GET /api/servers/:s/databases/:db/events` · API `POST /api/servers/:s/databases/:db/events` · API `GET /api/servers/:s/databases/:db/events/editor` · API `GET /api/servers/:s/databases/:db/events/export` | ✅ implemented |
 | GET, POST | `/database/export` | `Database/ExportController` | UI `/s/:s/db/:db/export` · API `/api/servers/:s/databases/:db/export` | 🗓️ planned (M4) |
 | GET, POST | `/database/import` | `Database/ImportController` | UI `/s/:s/db/:db/import` · API `/api/servers/:s/databases/:db/import` | 🗓️ planned (M4) |
-| GET | `/database/multi-table-query` | `Database/MultiTableQueryController` | UI `/s/:s/db/:db/multi-table-query` · API `/api/servers/:s/databases/:db/multi-table-query` | 🗓️ planned (M3) |
-| POST | `/database/multi-table-query/query` | `Database/MultiTableQuery/QueryController` | UI `/s/:s/db/:db/multi-table-query/query` · API `/api/servers/:s/databases/:db/multi-table-query/query` | 🗓️ planned (M3) |
-| GET | `/database/multi-table-query/tables` | `Database/MultiTableQuery/TablesController` | UI `/s/:s/db/:db/multi-table-query/tables` · API `/api/servers/:s/databases/:db/multi-table-query/tables` | 🗓️ planned (M3) |
-| GET, POST | `/database/operations` | `Operations/DatabaseController` | UI `/s/:s/db/:db/operations` · API `/api/servers/:s/databases/:db/operations` | 🗓️ planned (M3) |
-| POST | `/database/operations/collation` | `Operations/Database/CollationController` | UI `/s/:s/db/:db/operations/collation` · API `/api/servers/:s/databases/:db/operations/collation` | 🗓️ planned (M3) |
-| GET | `/database/privileges` | `Database/PrivilegesController` | UI `/s/:s/db/:db/privileges` · API `GET /api/servers/:s/databases/:db/privileges` | 🗓️ planned (M3) |
-| GET, POST | `/database/routines` | `Database/RoutinesController` | UI `/s/:s/db/:db/routines` · API `GET /api/servers/:s/databases/:db/routines` · API `POST /api/servers/:s/databases/:db/routines` | 🗓️ planned (M3) |
-| GET, POST | `/database/search` | `Database/SearchController` | UI `/s/:s/db/:db/search` · API `POST /api/servers/:s/databases/:db/search` | 🗓️ planned (M3) |
+| GET | `/database/multi-table-query` | `Database/MultiTableQueryController` | UI `/s/:s/db/:db/multi-table-query` · API `GET /api/servers/:s/databases/:db/multi-table-query` | ✅ implemented |
+| POST | `/database/multi-table-query/query` | `Database/MultiTableQuery/QueryController` | UI `/s/:s/db/:db/multi-table-query` · API `POST /api/servers/:s/query` | ✅ implemented |
+| GET | `/database/multi-table-query/tables` | `Database/MultiTableQuery/TablesController` | API `GET /api/servers/:s/databases/:db/multi-table-query/tables` | ✅ implemented |
+| GET, POST | `/database/operations` | `Operations/DatabaseController` | UI `/s/:s/db/:db/operations` · API `GET /api/servers/:s/databases/:db/operations` · API `POST /api/servers/:s/databases/:db/operations/comment` · API `POST /api/servers/:s/databases/:db/operations/rename` · API `POST /api/servers/:s/databases/:db/operations/copy` | ✅ implemented |
+| POST | `/database/operations/collation` | `Operations/Database/CollationController` | UI `/s/:s/db/:db/operations` · API `POST /api/servers/:s/databases/:db/operations/collation` | ✅ implemented |
+| GET | `/database/privileges` | `Database/PrivilegesController` | UI `/s/:s/db/:db/privileges` · API `GET /api/servers/:s/databases/:db/privileges` | ✅ implemented |
+| GET, POST | `/database/routines` | `Database/RoutinesController` | UI `/s/:s/db/:db/routines` · API `GET /api/servers/:s/databases/:db/routines` · API `POST /api/servers/:s/databases/:db/routines` · API `GET /api/servers/:s/databases/:db/routines/editor` · API `GET /api/servers/:s/databases/:db/routines/execute` · API `POST /api/servers/:s/databases/:db/routines/execute` · API `GET /api/servers/:s/databases/:db/routines/export` | ✅ implemented |
+| GET, POST | `/database/search` | `Database/SearchController` | UI `/s/:s/db/:db/search` · API `GET /api/servers/:s/databases/:db/search` · API `POST /api/servers/:s/databases/:db/search` | ✅ implemented |
 | GET, POST | `/database/sql` | `Database/SqlController` | UI `/s/:s/db/:db/sql` · API `POST /api/servers/:s/query` | ✅ implemented (M1) |
 | POST | `/database/sql/autocomplete` | `Database/SqlAutoCompleteController` | UI `/s/:s/db/:db/sql/autocomplete` · API `GET /api/servers/:s/sql/autocomplete` | 🗓️ planned (M1) |
 | POST | `/database/sql/format` | `Database/SqlFormatController` | UI `/s/:s/db/:db/sql/format` · API `POST /api/servers/:s/sql/format` | 🗓️ planned (M1) |
-| GET, POST | `/database/structure` | `Database/StructureController` | UI `/s/:s/db/:db/structure` · API `GET /api/servers/:s/databases/:db/structure` | 🗓️ planned (M3) |
-| POST | `/database/structure/add-prefix` | `Database/Structure/AddPrefixController` | UI `/s/:s/db/:db/structure/add-prefix` · API `/api/servers/:s/databases/:db/structure/add-prefix` | 🗓️ planned (M3) |
-| POST | `/database/structure/add-prefix-table` | `Database/Structure/AddPrefixTableController` | UI `/s/:s/db/:db/structure/add-prefix-table` · API `/api/servers/:s/databases/:db/structure/add-prefix-table` | 🗓️ planned (M3) |
-| POST | `/database/structure/central-columns/add` | `Database/Structure/CentralColumns/AddController` | UI `/s/:s/db/:db/structure/central-columns/add` · API `/api/servers/:s/databases/:db/structure/central-columns/add` | 🗓️ planned (M3) |
-| POST | `/database/structure/central-columns/make-consistent` | `Database/Structure/CentralColumns/MakeConsistentController` | UI `/s/:s/db/:db/structure/central-columns/make-consistent` · API `/api/servers/:s/databases/:db/structure/central-columns/make-consistent` | 🗓️ planned (M3) |
-| POST | `/database/structure/central-columns/remove` | `Database/Structure/CentralColumns/RemoveController` | UI `/s/:s/db/:db/structure/central-columns/remove` · API `/api/servers/:s/databases/:db/structure/central-columns/remove` | 🗓️ planned (M3) |
-| POST | `/database/structure/change-prefix-form` | `Database/Structure/ChangePrefixFormController` | UI `/s/:s/db/:db/structure/change-prefix-form` · API `/api/servers/:s/databases/:db/structure/change-prefix-form` | 🗓️ planned (M3) |
-| POST | `/database/structure/copy-form` | `Database/Structure/CopyFormController` | UI `/s/:s/db/:db/structure/copy-form` · API `/api/servers/:s/databases/:db/structure/copy-form` | 🗓️ planned (M3) |
-| POST | `/database/structure/copy-table` | `Database/Structure/CopyTableController` | UI `/s/:s/db/:db/structure/copy-table` · API `/api/servers/:s/databases/:db/structure/copy-table` | 🗓️ planned (M3) |
-| POST | `/database/structure/copy-table-with-prefix` | `Database/Structure/CopyTableWithPrefixController` | UI `/s/:s/db/:db/structure/copy-table-with-prefix` · API `/api/servers/:s/databases/:db/structure/copy-table-with-prefix` | 🗓️ planned (M3) |
-| POST | `/database/structure/drop-form` | `Database/Structure/DropFormController` | UI `/s/:s/db/:db/structure/drop-form` · API `/api/servers/:s/databases/:db/structure/drop-form` | 🗓️ planned (M3) |
-| POST | `/database/structure/drop-table` | `Database/Structure/DropTableController` | UI `/s/:s/db/:db/structure/drop-table` · API `/api/servers/:s/databases/:db/structure/drop-table` | 🗓️ planned (M3) |
-| POST | `/database/structure/empty-form` | `Database/Structure/EmptyFormController` | UI `/s/:s/db/:db/structure/empty-form` · API `/api/servers/:s/databases/:db/structure/empty-form` | 🗓️ planned (M3) |
-| POST | `/database/structure/empty-table` | `Database/Structure/EmptyTableController` | UI `/s/:s/db/:db/structure/empty-table` · API `/api/servers/:s/databases/:db/structure/empty-table` | 🗓️ planned (M3) |
-| POST | `/database/structure/favorite-table` | `Database/Structure/FavoriteTableController` | UI `/s/:s/db/:db/structure/favorite-table` · API `POST /api/servers/:s/favorites` | 🗓️ planned (M3) |
-| GET, POST | `/database/structure/real-row-count` | `Database/Structure/RealRowCountController` | UI `/s/:s/db/:db/structure/real-row-count` · API `GET /api/servers/:s/databases/:db/structure/real-row-count` | 🗓️ planned (M3) |
-| POST | `/database/structure/replace-prefix` | `Database/Structure/ReplacePrefixController` | UI `/s/:s/db/:db/structure/replace-prefix` · API `/api/servers/:s/databases/:db/structure/replace-prefix` | 🗓️ planned (M3) |
-| POST | `/database/structure/show-create` | `Database/Structure/ShowCreateController` | UI `/s/:s/db/:db/structure/show-create` · API `POST /api/servers/:s/databases/:db/tables/show-create` | 🗓️ planned (M3) |
-| GET, POST | `/database/tracking` | `Database/TrackingController` | UI `/s/:s/db/:db/tracking` · API `GET /api/servers/:s/databases/:db/tracking` · API `POST /api/servers/:s/databases/:db/tracking` | 🗓️ planned (M3) |
+| GET, POST | `/database/structure` | `Database/StructureController` | UI `/s/:s/db/:db/structure` · API `GET /api/servers/:s/databases/:db/structure` | ✅ implemented |
+| POST | `/database/structure/add-prefix` | `Database/Structure/AddPrefixController` | UI `/s/:s/db/:db/structure` · API `POST /api/servers/:s/databases/:db/structure/add-prefix` | ✅ implemented |
+| POST | `/database/structure/add-prefix-table` | `Database/Structure/AddPrefixTableController` | API `POST /api/servers/:s/databases/:db/structure/add-prefix` | ✅ implemented |
+| POST | `/database/structure/central-columns/add` | `Database/Structure/CentralColumns/AddController` | API `POST /api/servers/:s/databases/:db/structure/central-add` | ✅ implemented |
+| POST | `/database/structure/central-columns/make-consistent` | `Database/Structure/CentralColumns/MakeConsistentController` | API `POST /api/servers/:s/databases/:db/structure/central-make-consistent` | ✅ implemented |
+| POST | `/database/structure/central-columns/remove` | `Database/Structure/CentralColumns/RemoveController` | API `POST /api/servers/:s/databases/:db/structure/central-remove` | ✅ implemented |
+| POST | `/database/structure/change-prefix-form` | `Database/Structure/ChangePrefixFormController` | UI `/s/:s/db/:db/structure` · API `POST /api/servers/:s/databases/:db/structure/replace-prefix` | ✅ implemented |
+| POST | `/database/structure/copy-form` | `Database/Structure/CopyFormController` | UI `/s/:s/db/:db/structure` · API `GET /api/servers/:s/databases/:db/structure/copy-form` | ✅ implemented |
+| POST | `/database/structure/copy-table` | `Database/Structure/CopyTableController` | API `POST /api/servers/:s/databases/:db/structure/copy` | ✅ implemented |
+| POST | `/database/structure/copy-table-with-prefix` | `Database/Structure/CopyTableWithPrefixController` | API `POST /api/servers/:s/databases/:db/structure/copy-with-prefix` | ✅ implemented |
+| POST | `/database/structure/drop-form` | `Database/Structure/DropFormController` | UI `/s/:s/db/:db/structure` · API `POST /api/servers/:s/databases/:db/structure/drop` | ✅ implemented |
+| POST | `/database/structure/drop-table` | `Database/Structure/DropTableController` | API `POST /api/servers/:s/databases/:db/structure/drop` | ✅ implemented |
+| POST | `/database/structure/empty-form` | `Database/Structure/EmptyFormController` | UI `/s/:s/db/:db/structure` · API `POST /api/servers/:s/databases/:db/structure/empty` | ✅ implemented |
+| POST | `/database/structure/empty-table` | `Database/Structure/EmptyTableController` | API `POST /api/servers/:s/databases/:db/structure/empty` | ✅ implemented |
+| POST | `/database/structure/favorite-table` | `Database/Structure/FavoriteTableController` | API `POST /api/servers/:s/favorites` | ✅ implemented |
+| GET, POST | `/database/structure/real-row-count` | `Database/Structure/RealRowCountController` | API `GET /api/servers/:s/databases/:db/structure/real-row-count` | ✅ implemented |
+| POST | `/database/structure/replace-prefix` | `Database/Structure/ReplacePrefixController` | API `POST /api/servers/:s/databases/:db/structure/replace-prefix` | ✅ implemented |
+| POST | `/database/structure/show-create` | `Database/Structure/ShowCreateController` | API `POST /api/servers/:s/databases/:db/structure/show-create` | ✅ implemented |
+| GET, POST | `/database/tracking` | `Database/TrackingController` | UI `/s/:s/db/:db/tracking` · API `GET /api/servers/:s/databases/:db/tracking` · API `POST /api/servers/:s/databases/:db/tracking` | ✅ implemented |
 | POST | `/databases` | `DatabaseController` | API `GET /api/servers/:s/databases` · (name lists for pickers) | ✅ implemented (M3) |
 | GET, POST | `/error-report` | `ErrorReportController` | API `POST /api/telemetry/error` · (opt-in) | 🔀 exception (M1, X19) |
 | GET, POST | `/export` | `Export/ExportController` | API `GET /api/export/options` · API `POST /api/export/jobs` · (streaming) | 🗓️ planned (M4, X10) |
@@ -198,7 +198,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/themes/set` | `ThemeSetController` | (client-side theme store (no server round trip)) | 🗓️ planned (M1, X16) |
 | GET, POST | `/transformation/overview` | `Transformation/OverviewController` | API `GET /api/transformations` · (overview; wrapper: raw cell bytes) | 🗓️ planned (M2) |
 | GET, POST | `/transformation/wrapper` | `Transformation/WrapperController` | API `GET /api/servers/:s/databases/:db/tables/:t/cell` · (overview; wrapper: raw cell bytes) | 🗓️ planned (M2) |
-| GET, POST | `/triggers` | `Triggers/IndexController` | UI `/s/:s/db/:db[/t/:table]/triggers` · API `GET /api/servers/:s/databases/:db/triggers` · API `POST /api/servers/:s/databases/:db/triggers` | 🗓️ planned (M2) |
+| GET, POST | `/triggers` | `Triggers/IndexController` | UI `/s/:s/db/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers` · API `POST /api/servers/:s/databases/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers/editor` · API `GET /api/servers/:s/databases/:db/triggers/export` | ✅ implemented |
 | GET, POST | `/user-password` | `UserPasswordController` | API `POST /api/servers/:s/account/password` | ✅ implemented (M3) |
 | GET, POST | `/version-check` | `VersionCheckController` | API `GET /api/meta/version-check` | 🔀 exception (M1, X20) |
 | GET, POST | `/view/create` | `View/CreateController` | UI `/s/:s/db/:db/view/*` · API `GET /api/servers/:s/databases/:db/views/:v` · API `POST /api/servers/:s/databases/:db/views` | 🗓️ planned (M2) |

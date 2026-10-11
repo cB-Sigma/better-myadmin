@@ -4,9 +4,9 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-153/449 covered (34.1%): 150 implemented, 1 exception, 2 n/a, 3 planned, 293 missing. [Summary](README.md).
+168/449 covered (37.4%): 165 implemented, 1 exception, 2 n/a, 3 planned, 278 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 67/106 (63.2%) covered, 66/106 implemented
+## 01 shell navigation auth — 69/106 (65.1%) covered, 68/106 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -25,7 +25,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `CaptchaSiteVerifyURL` |  |  |
 | ⬜ | `CheckConfigurationPermissions` |  |  |
 | ✅ | `CodemirrorEnable` | apps/server/src/routes/sql.ts:227<br>apps/web/src/features/sql/SqlPage.tsx:108<br>apps/web/src/features/sql/SqlPage.tsx:119<br>apps/web/src/features/sql/SqlPage.tsx:286<br>apps/web/src/features/sql/SqlPage.tsx:375 |  |
-| ✅ | `Confirm` | apps/web/src/features/server/DatabasesPage.tsx:402<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:813<br>apps/server/src/routes/console.ts:66<br>apps/server/src/routes/sql.ts:225 |  |
+| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:562<br>apps/web/src/features/database/TrackingPage.tsx:78<br>apps/web/src/features/server/DatabasesPage.tsx:402<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:813 |  |
 | ⬜ | `Console/EnterExecutes` |  |  |
 | ⬜ | `Console/Mode` |  |  |
 | ⬜ | `Console/StartHistory` |  |  |
@@ -47,7 +47,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `LoginCookieDeleteAll` | apps/server/src/routes/auth.ts:121 |  |
 | ✅ | `LoginCookieRecall` | apps/server/src/routes/auth.ts:27<br>apps/server/src/routes/auth.ts:95 |  |
 | ✅ | `LoginCookieStore` | apps/server/src/app.ts:124<br>apps/server/src/main.ts:112<br>apps/server/src/shell/home.ts:59 |  |
-| ✅ | `LoginCookieValidity` | apps/server/src/app.ts:72<br>apps/server/src/db/pool-manager.ts:229<br>apps/server/src/main.ts:112<br>apps/server/src/routes/server.ts:35<br>apps/server/src/shell/home.ts:59 |  |
+| ✅ | `LoginCookieValidity` | apps/server/src/app.ts:72<br>apps/server/src/db/pool-manager.ts:229<br>apps/server/src/main.ts:112<br>apps/server/src/routes/server.ts:36<br>apps/server/src/shell/home.ts:59 |  |
 | ✅ | `MaxNavigationItems` | apps/server/src/navigation/nodes.ts:511<br>apps/server/src/navigation/nodes.ts:766<br>apps/server/src/navigation/nodes.ts:813<br>apps/server/src/navigation/nodes.ts:818<br>apps/server/src/navigation/tree.ts:664 |  |
 | ✅ | `MysqlSslWarningSafeHosts` | apps/server/src/shell/home.ts:144 |  |
 | ✅ | `NavigationDisplayLogo` | apps/server/src/navigation/service.ts:60<br>apps/web/src/features/navigation/NavigationPanel.tsx:302 |  |
@@ -63,7 +63,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NavigationTreeEnableExpansion` | apps/server/src/navigation/nodes.ts:304<br>apps/server/src/navigation/nodes.ts:310<br>apps/server/src/navigation/service.ts:59<br>apps/server/src/navigation/service.ts:107<br>apps/server/src/navigation/tree.ts:334 |  |
 | ✅ | `NavigationTreeEnableGrouping` | apps/server/src/navigation/nodes.ts:181<br>apps/server/src/navigation/nodes.ts:444<br>apps/server/src/navigation/nodes.ts:576 |  |
 | ✅ | `NavigationTreePointerEnable` | apps/server/src/navigation/service.ts:57<br>apps/web/src/features/navigation/NavTree.tsx:74 |  |
-| ✅ | `NavigationTreeTableSeparator` | apps/server/src/navigation/nodes.ts:577 |  |
+| ✅ | `NavigationTreeTableSeparator` | apps/server/src/database/structure.ts:111<br>apps/server/src/navigation/nodes.ts:577 |  |
 | ⬜ | `PmaAbsoluteUri` |  |  |
 | ⬜ | `ProxyPass` |  |  |
 | ⬜ | `ProxyUrl` |  |  |
@@ -81,7 +81,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/controlhost` |  |  |
 | ⬜ | `Servers/*/controlport` |  |  |
 | ✅ | `Servers/*/controluser` | apps/server/src/shell/home.ts:67 |  |
-| ✅ | `Servers/*/DisableIS` | apps/server/src/metadata/service.ts:291<br>apps/server/src/metadata/service.ts:325<br>apps/server/src/navigation/nodes.ts:186<br>apps/server/src/navigation/nodes.ts:196<br>apps/server/src/navigation/nodes.ts:215 |  |
+| ✅ | `Servers/*/DisableIS` | apps/server/src/database/events.ts:47<br>apps/server/src/database/table-mover.ts:218<br>apps/server/src/database/tables.ts:122<br>apps/server/src/metadata/service.ts:291<br>apps/server/src/metadata/service.ts:325 |  |
 | ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/cookie.ts:115 |  |
 | ✅ | `Servers/*/host` | apps/server/src/auth/cookie.ts:89<br>apps/server/src/db/pool-manager.ts:35<br>apps/server/src/routes/sql.ts:159<br>apps/server/src/shell/scope.ts:109<br>apps/server/src/util/expand-user-string.ts:128 |  |
 | ⬜ | `Servers/*/LogoutURL` |  |  |
@@ -95,8 +95,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/SignonURL` |  |  |
 | ✅ | `Servers/*/socket` | apps/server/src/db/pool-manager.ts:36<br>apps/server/src/db/pool-manager.ts:37 |  |
 | ⬜ | `Servers/*/tracking_add_drop_database` |  |  |
-| ⬜ | `Servers/*/tracking_add_drop_table` |  |  |
-| ⬜ | `Servers/*/tracking_add_drop_view` |  |  |
+| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/database/tracking.ts:91 |  |
+| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/database/tracking.ts:93 |  |
 | ⬜ | `Servers/*/tracking_version_auto_create` |  |  |
 | ✅ | `Servers/*/user` | packages/metadata/src/storage.ts:235 |  |
 | ✅ | `Servers/*/verbose` | apps/server/src/routes/sql.ts:159<br>apps/server/src/shell/home.ts:203<br>apps/server/src/shell/home.ts:205<br>apps/server/src/shell/scope.ts:110<br>apps/server/src/util/expand-user-string.ts:127 |  |
@@ -125,7 +125,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:816<br>apps/server/src/metadata/service.ts:284<br>apps/server/src/routes/metadata.ts:226<br>apps/server/src/routes/sql.ts:235<br>apps/web/src/features/browse/ResultsView.tsx:358 |  |
 | ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:810<br>apps/web/src/features/browse/GridTable.tsx:475<br>apps/web/src/features/browse/GridTable.tsx:510<br>apps/web/src/features/browse/GridTable.tsx:573 |  |
 | ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:809<br>apps/web/src/features/browse/GridTable.tsx:476<br>apps/web/src/features/browse/GridTable.tsx:506<br>apps/web/src/features/browse/GridTable.tsx:573 |  |
-| ✅ | `DefaultForeignKeyChecks` | apps/server/src/routes/sql.ts:130<br>apps/server/src/routes/sql.ts:131 |  |
+| ✅ | `DefaultForeignKeyChecks` | apps/server/src/database/context.ts:171<br>apps/server/src/database/context.ts:172<br>apps/server/src/routes/sql.ts:130<br>apps/server/src/routes/sql.ts:131 |  |
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:173 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:200 |  |
 | ⬜ | `DefaultTransformations/TextLink` |  |  |
@@ -134,8 +134,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:812<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/structure-page.ts:366<br>apps/web/src/features/browse/ResultsView.tsx:670<br>apps/web/src/features/table/structure/StructurePage.tsx:785 |  |
 | ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:458<br>apps/server/src/browse/grid.ts:807<br>apps/server/src/browse/grid.ts:1021 |  |
 | ⬜ | `LinkLengthLimit` |  |  |
-| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:574<br>apps/server/src/query/pipeline.ts:701<br>apps/server/src/query/pipeline.ts:754 |  |
-| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:587<br>apps/server/src/browse/grid.ts:814<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/routes/metadata.ts:304 |  |
+| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:574<br>apps/server/src/database/structure.ts:240<br>apps/server/src/database/tables.ts:224<br>apps/server/src/query/pipeline.ts:701<br>apps/server/src/query/pipeline.ts:754 |  |
+| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:587<br>apps/server/src/browse/grid.ts:814<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/database/central-columns.ts:118 |  |
 | ✅ | `Order` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:51<br>apps/web/src/features/console/Console.tsx:892<br>apps/web/src/features/console/Console.tsx:895<br>apps/web/src/features/sql/ProfilingCard.tsx:72 |  |
 | ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1106 |  |
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
@@ -154,7 +154,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
 | ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:232<br>apps/web/src/features/sql/SqlPage.tsx:378 |  |
 
-## 03 insert edit transformations — 3/18 (16.7%) covered, 3/18 implemented
+## 03 insert edit transformations — 4/18 (22.2%) covered, 4/18 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -171,34 +171,34 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `InsertRows` |  |  |
 | ⬜ | `LongtextDoubleTextarea` |  |  |
 | ⬜ | `MaxSizeForInputField` |  |  |
-| ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:220<br>apps/server/src/browse/actions.ts:222<br>apps/server/src/navigation/nodes.ts:512<br>apps/server/src/navigation/tree.ts:674<br>apps/server/src/server-admin/databases.ts:60 |  |
+| ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:220<br>apps/server/src/browse/actions.ts:222<br>apps/server/src/database/context.ts:181<br>apps/server/src/database/tables.ts:77<br>apps/server/src/database/tables.ts:141 |  |
 | ⬜ | `ShowFieldTypesInDataEditView` |  |  |
-| ⬜ | `ShowFunctionFields` |  |  |
+| ✅ | `ShowFunctionFields` | apps/server/src/database/routines.ts:401<br>apps/server/src/database/routines.ts:438 |  |
 | ✅ | `ShowPropertyComments` | apps/server/src/table/structure-page.ts:100 |  |
 | ⬜ | `SQLQuery/Edit` |  |  |
 
-## 04 table level — 3/5 (60.0%) covered, 3/5 implemented
+## 04 table level — 4/5 (80.0%) covered, 4/5 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ⬜ | `DisableMultiTableMaintenance` |  |  |
+| ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/bulk.ts:230<br>apps/server/src/database/structure.ts:155 |  |
 | ⬜ | `Export/sql_auto_increment` |  |  |
 | ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:363<br>apps/web/src/features/table/structure/StructurePage.tsx:246 |  |
 | ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:223<br>apps/server/src/table/structure-page.ts:367 |  |
-| ✅ | `ShowStats` | apps/server/src/table/structure-page.ts:254<br>apps/server/src/table/structure-page.ts:364 |  |
+| ✅ | `ShowStats` | apps/server/src/database/structure.ts:138<br>apps/server/src/table/structure-page.ts:254<br>apps/server/src/table/structure-page.ts:364 |  |
 
-## 05 database level — 5/32 (15.6%) covered, 5/32 implemented
+## 05 database level — 8/32 (25.0%) covered, 8/32 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `AllowUserDropDatabase` | apps/server/src/query/pipeline.ts:249<br>apps/server/src/server-admin/databases.ts:280<br>apps/server/src/server-admin/databases.ts:361 |  |
+| ✅ | `AllowUserDropDatabase` | apps/server/src/database/operations.ts:53<br>apps/server/src/query/pipeline.ts:249<br>apps/server/src/server-admin/databases.ts:280<br>apps/server/src/server-admin/databases.ts:361 |  |
 | ✅ | `DefaultTabDatabase` | apps/server/src/navigation/nodes.ts:468<br>apps/server/src/server-admin/databases.ts:281<br>apps/server/src/server-admin/databases.ts:334<br>apps/web/src/features/shell/Breadcrumb.tsx:44<br>apps/web/src/routes/s/$server/db/$db/index.tsx:14 |  |
 | ⬜ | `DefaultTransformations/Inline/0` |  |  |
-| ✅ | `MaxExactCountViews` | apps/server/src/query/pipeline.ts:763<br>apps/server/src/query/pipeline.ts:766<br>apps/server/src/query/pipeline.ts:770 |  |
+| ✅ | `MaxExactCountViews` | apps/server/src/database/structure.ts:324<br>apps/server/src/database/tables.ts:228<br>apps/server/src/database/tables.ts:232<br>apps/server/src/database/tables.ts:236<br>apps/server/src/query/pipeline.ts:763 |  |
 | ⬜ | `MysqlMinVersion/internal` |  |  |
-| ✅ | `NumFavoriteTables` | apps/server/src/metadata/service.ts:289<br>apps/server/src/navigation/service.ts:67<br>apps/server/src/routes/metadata.ts:420<br>apps/server/src/routes/metadata.ts:482<br>packages/metadata/src/metadata.ts:121 |  |
-| ✅ | `PmaNoRelation_DisableWarning` | apps/server/src/routes/metadata.ts:143<br>apps/server/src/shell/home.ts:256 |  |
-| ⬜ | `PropertiesNumColumns` |  |  |
+| ✅ | `NumFavoriteTables` | apps/server/src/database/structure.ts:148<br>apps/server/src/metadata/service.ts:289<br>apps/server/src/navigation/service.ts:67<br>apps/server/src/routes/metadata.ts:420<br>apps/server/src/routes/metadata.ts:482 |  |
+| ✅ | `PmaNoRelation_DisableWarning` | apps/server/src/database/operations.ts:38<br>apps/server/src/routes/metadata.ts:143<br>apps/server/src/shell/home.ts:256 |  |
+| ✅ | `PropertiesNumColumns` | apps/server/src/database/structure.ts:139<br>apps/server/src/database/structure.ts:156 |  |
 | ⬜ | `Schema/dia_orientation` |  |  |
 | ⬜ | `Schema/dia_paper` |  |  |
 | ⬜ | `Schema/dia_show_color` |  |  |
@@ -220,9 +220,9 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/central_columns` |  |  |
 | ⬜ | `Servers/*/pdf_pages` |  |  |
 | ⬜ | `Servers/*/tracking` |  |  |
-| ⬜ | `Servers/*/tracking_default_statements` |  |  |
+| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:37<br>apps/server/src/database/tracking.ts:73 |  |
 | ⬜ | `SkipLockedTables` |  |  |
-| ⬜ | `UseDbSearch` |  |  |
+| ✅ | `UseDbSearch` | apps/server/src/database/search.ts:21 |  |
 
 ## 06 server level — 14/18 (77.8%) covered, 14/18 implemented
 
@@ -247,7 +247,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowServerInfo` | apps/server/src/shell/home.ts:200 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:145<br>apps/web/src/features/shell/HomePage.tsx:238<br>apps/web/src/features/shell/HomePage.tsx:243<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
 
-## 07 export import — 0/138 (0.0%) covered, 0/138 implemented
+## 07 export import — 1/138 (0.7%) covered, 1/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -312,7 +312,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Export/quick_export_onserver` |  |  |
 | ⬜ | `Export/quick_export_onserver_overwrite` |  |  |
 | ⬜ | `Export/remember_file_template` |  |  |
-| ⬜ | `Export/remove_definer_from_definitions` |  |  |
+| ✅ | `Export/remove_definer_from_definitions` | apps/server/src/database/table-mover.ts:118 |  |
 | ⬜ | `Export/sql_backquotes` |  |  |
 | ⬜ | `Export/sql_compatibility` |  |  |
 | ⬜ | `Export/sql_create_database` |  |  |
@@ -390,7 +390,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `UploadDir` |  |  |
 | ⬜ | `ZipDump` |  |  |
 
-## 08 settings preferences pmadb — 24/61 (39.3%) covered, 23/61 implemented
+## 08 settings preferences pmadb — 31/61 (50.8%) covered, 30/61 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -416,8 +416,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Import/ldi_terminated` |  |  |
 | ⬜ | `Import/sql_read_as_multibytes` |  |  |
 | ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272 |  |
-| ⬜ | `MaxRoutineList` |  |  |
-| ⬜ | `MaxTableList` |  |  |
+| ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:90 |  |
+| ✅ | `MaxTableList` | apps/server/src/database/structure.ts:92<br>apps/server/src/database/structure.ts:168<br>apps/server/src/database/structure.ts:378 |  |
 | ➖ | `MemoryLimit` |  | n/a: PHP memory_limit; Node has no per-request memory limit (exports and imports stream, X10/X9) |
 | ⬜ | `MinSizeForInputField` |  |  |
 | ✅ | `NavigationTreeShowEvents` | apps/server/src/navigation/tree.ts:298 |  |
@@ -436,7 +436,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/history` |  |  |
 | ⬜ | `Servers/*/navigationhiding` |  |  |
 | ✅ | `Servers/*/only_db` | apps/server/src/navigation/nodes.ts:262<br>apps/server/src/server-admin/databases.ts:58 |  |
-| ✅ | `Servers/*/pmadb` | apps/server/src/routes/metadata.ts:141<br>apps/server/src/server-admin/databases.ts:220<br>apps/server/src/server-admin/databases.ts:364<br>apps/server/src/shell/home.ts:257<br>packages/metadata/src/storage.ts:163 |  |
+| ✅ | `Servers/*/pmadb` | apps/server/src/database/operations.ts:40<br>apps/server/src/routes/metadata.ts:141<br>apps/server/src/server-admin/databases.ts:220<br>apps/server/src/server-admin/databases.ts:364<br>apps/server/src/shell/home.ts:257 |  |
 | ✅ | `Servers/*/port` | apps/server/src/db/pool-manager.ts:40 |  |
 | ⬜ | `Servers/*/recent` |  |  |
 | ⬜ | `Servers/*/relation` |  |  |
@@ -444,11 +444,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/table_info` |  |  |
 | ⬜ | `Servers/*/userconfig` |  |  |
 | ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:362<br>apps/web/src/features/table/structure/StructurePage.tsx:158<br>apps/web/src/features/table/structure/StructurePage.tsx:220 |  |
-| ⬜ | `ShowDbStructureCharset` |  |  |
-| ⬜ | `ShowDbStructureComment` |  |  |
-| ⬜ | `ShowDbStructureCreation` |  |  |
-| ⬜ | `ShowDbStructureLastCheck` |  |  |
-| ⬜ | `ShowDbStructureLastUpdate` |  |  |
+| ✅ | `ShowDbStructureCharset` | apps/server/src/database/structure.ts:149 |  |
+| ✅ | `ShowDbStructureComment` | apps/server/src/database/structure.ts:150 |  |
+| ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:151<br>apps/server/src/database/structure.ts:310 |  |
+| ✅ | `ShowDbStructureLastCheck` | apps/server/src/database/structure.ts:153<br>apps/server/src/database/structure.ts:316 |  |
+| ✅ | `ShowDbStructureLastUpdate` | apps/server/src/database/structure.ts:152<br>apps/server/src/database/structure.ts:313 |  |
 | ✅ | `TextareaCols` | apps/server/src/routes/sql.ts:230<br>apps/web/src/features/sql/SqlPage.tsx:374 |  |
 | ✅ | `TextareaRows` | apps/server/src/routes/sql.ts:231<br>apps/web/src/features/sql/SqlPage.tsx:373<br>apps/web/src/features/sql/SqlPage.tsx:502 |  |
 | ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:620<br>packages/metadata/src/userprefs.ts:147<br>apps/server/src/main.ts:87<br>apps/server/src/routes/shell.ts:149<br>apps/web/src/features/shell/HomePage.tsx:232 | X16 |
