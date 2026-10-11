@@ -16,6 +16,7 @@ import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from '
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { HighlightedSql } from '../sql/HighlightedSql'
+import { renderTransformation } from '../transformations/registry'
 import {
   type HeaderLayout,
   clauseOf,
@@ -663,6 +664,28 @@ export function GridTable(props: Props) {
   )
 }
 
+/** A cell of a column with a browser display transformation (Results::applyTransformation). */
+function GridTransformed({
+  tf,
+  server,
+  versionInt,
+}: { tf: NonNullable<GridCell['tf']>; server: number; versionInt: number }) {
+  const bytes = Uint8Array.from(atob(tf.b64), (c) => c.charCodeAt(0))
+  return renderTransformation(
+    {
+      mimetype: tf.mimetype,
+      transformation: tf.file,
+      transformationOptions: tf.options,
+      inputTransformation: '',
+      inputTransformationOptions: [],
+    },
+    tf.isBinary ? bytes : new TextDecoder().decode(bytes),
+    { server, db: tf.db, table: tf.table, column: tf.column, where: { clause: tf.where, sig: tf.sig } },
+    { isInt: tf.isInt, isBinary: tf.isBinary },
+    versionInt,
+  )
+}
+
 function CellContent({
   cell,
   server,
@@ -678,6 +701,7 @@ function CellContent({
 }) {
   if (cell.k === 'null') return <em>NULL</em>
   if (cell.k === 'empty') return null
+  if (cell.tf !== undefined) return <GridTransformed tf={cell.tf} server={server} versionInt={versionInt} />
   const text = cell.t ?? ''
   if (cell.fk !== undefined) {
     const fk = cell.fk

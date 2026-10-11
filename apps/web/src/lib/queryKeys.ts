@@ -25,6 +25,15 @@ export const qk = {
   dbPage: (s: number, db: string, page: string, q: object = {}) => ['srv', s, 'db', db, page, q] as const,
   tbl: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t] as const,
   tableScope: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'scope'] as const,
+  /** Insert/Edit form for one request (where clauses, toggles, row count) */
+  insertForm: (s: number, db: string, t: string, req: object) =>
+    ['srv', s, 'db', db, 'tbl', t, 'insertForm', req] as const,
+  /** a page of the Browse foreign values popup */
+  browseForeigners: (s: number, db: string, t: string, req: object) =>
+    ['srv', s, 'db', db, 'tbl', t, 'browseForeigners', req] as const,
+  /** stored MIME types / transformations of a table's columns (Browse grid, Insert form) */
+  transformations: (s: number, db: string, t: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'transformations'] as const,
   /** the Browse tab's /sql run (signed sql + pos from the URL) */
   browse: (s: number, db: string, t: string, q: object) =>
     ['srv', s, 'db', db, 'tbl', t, 'browse', q] as const,

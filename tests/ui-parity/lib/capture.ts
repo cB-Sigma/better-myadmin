@@ -149,7 +149,7 @@ function captureInPage(opts: { scope: string | null; exclude: string[] }): Contr
     .flatMap((root) => [...root.querySelectorAll(SELECTOR)])
     .filter((el) => {
       if (excluded(el) || isCm5Inner(el) || isCm6Inner(el)) return false
-      // the native input a Radix control mirrors itself into inside a <form> (aria-hidden, no UI)
+      // a hidden form mirror of a custom control (Radix Checkbox's bubble input) is not a control
       if (el instanceof HTMLInputElement && el.getAttribute('aria-hidden') === 'true') return false
       // an element with a control role inside another control (e.g. <a role=tab><button>) counts once
       const outer = el.parentElement?.closest(SELECTOR)

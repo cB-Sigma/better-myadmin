@@ -9,7 +9,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | Methods | phpMyAdmin route | Controller | BetterMyAdmin equivalent | Status |
 |---|---|---|---|---|
 | GET, POST | `[/]` | `HomeController` | UI `/s/:s` | ✅ implemented |
-| GET, POST | `/browse-foreigners` | `BrowseForeignersController` | API `GET /api/servers/:s/databases/:db/tables/:t/foreign-values` | 🗓️ planned (M2) |
+| GET, POST | `/browse-foreigners` | `BrowseForeignersController` | API `POST /api/servers/:s/databases/:db/tables/:t/browse-foreigners` · (modal `ForeignBrowser` of the Insert/Edit form) | ✅ implemented |
 | GET | `/changelog` | `ChangeLogController` | UI `/about/changelog` · (static) | 🗓️ planned (M1) |
 | GET, POST | `/check-relations` | `CheckRelationsController` | API `GET /api/servers/:s/metadata-storage/status` · API `POST /api/servers/:s/metadata-storage/create` | ✅ implemented (M4) |
 | POST | `/collation-connection` | `CollationConnectionController` | API `POST /api/servers/:s/session/collation` | ✅ implemented (M1) |
@@ -63,7 +63,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/export/template/delete` | `Export/Template/DeleteController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
 | POST | `/export/template/load` | `Export/Template/LoadController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
 | POST | `/export/template/update` | `Export/Template/UpdateController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
-| GET, POST | `/gis-data-editor` | `GisDataEditorController` | API `POST /api/gis/preview` · (client component `GisEditor`) | 🗓️ planned (M2) |
+| GET, POST | `/gis-data-editor` | `GisDataEditorController` | UI `/s/:s/db/:db/t/:table/insert` · (client component `GisEditor` (WKT parsing/generation needs no server round trip)) | ✅ implemented |
 | GET, POST | `/git-revision` | `GitInfoController` | API `GET /api/meta/build` | ✅ implemented |
 | GET, POST | `/import` | `Import/ImportController` | API `GET /api/import/options` · API `POST /api/import/jobs` · (chunked upload + SSE progress) | 🗓️ planned (M4, X9) |
 | GET, POST | `/import-status` | `Import/StatusController` | API `GET /api/import/jobs/:id/events` · (chunked upload + SSE progress) | 🗓️ planned (M4, X9) |
@@ -141,8 +141,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API `POST /api/servers/:s/databases/:db/tables/:t/uiprefs` | ✅ implemented |
 | POST | `/sync-favorite-tables` | `SyncFavoriteTablesController` | API `POST /api/servers/:s/favorites` · (sync) | ✅ implemented (M1) |
 | GET, POST | `/table/add-field` | `Table/AddFieldController` | UI `/s/:s/db/:db/t/:table/add-field` · API `POST /api/servers/:s/databases/:db/tables/:t/columns/*` | 🗓️ planned (M2) |
-| GET, POST | `/table/change` | `Table/ChangeController` | UI `/s/:s/db/:db/t/:table/change` · API `GET /api/servers/:s/databases/:db/tables/:t/insert-form` | 🗓️ planned (M2) |
-| POST | `/table/change/rows` | `Table/ChangeRowsController` | UI `/s/:s/db/:db/t/:table/change/rows` · API `/api/servers/:s/databases/:db/tables/:table/change/rows` | 🗓️ planned (M2) |
+| GET, POST | `/table/change` | `Table/ChangeController` | UI `/s/:s/db/:db/t/:table/insert` · UI `/s/:s/db/:db/t/:table/edit` · API `POST /api/servers/:s/databases/:db/tables/:t/insert-form` | ✅ implemented |
+| POST | `/table/change/rows` | `Table/ChangeRowsController` | UI `/s/:s/db/:db/t/:table/edit` · API `POST /api/servers/:s/databases/:db/tables/:t/insert-form` | ✅ implemented |
 | GET, POST | `/table/chart` | `Table/ChartController` | UI `/s/:s/db/:db/t/:table/chart` · API `GET /api/servers/:s/databases/:db/tables/:t/chart` · API `POST /api/servers/:s/databases/:db/tables/:t/chart` | 🗓️ planned (M3) |
 | GET, POST | `/table/create` | `Table/CreateController` | UI `/s/:s/db/:db/t/:table/create` · API `/api/servers/:s/databases/:db/tables/:table/create` | 🗓️ planned (M2) |
 | POST | `/table/delete/confirm` | `Table/DeleteConfirmController` | UI `/s/:s/db/:db/t/:table/browse` · (the confirmation is rendered in place by the results view (no request of its own)) | ✅ implemented |
@@ -196,8 +196,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/tables` | `TableController` | API `GET /api/servers/:s/databases/:db/tables` · (name lists for pickers) | 🗓️ planned (M2) |
 | GET | `/themes` | `ThemesController` | (client-side theme store (no server round trip)) | 🗓️ planned (M1, X16) |
 | POST | `/themes/set` | `ThemeSetController` | (client-side theme store (no server round trip)) | 🗓️ planned (M1, X16) |
-| GET, POST | `/transformation/overview` | `Transformation/OverviewController` | API `GET /api/transformations` · (overview; wrapper: raw cell bytes) | 🗓️ planned (M2) |
-| GET, POST | `/transformation/wrapper` | `Transformation/WrapperController` | API `GET /api/servers/:s/databases/:db/tables/:t/cell` · (overview; wrapper: raw cell bytes) | 🗓️ planned (M2) |
+| GET, POST | `/transformation/overview` | `Transformation/OverviewController` | UI `/s/:s/transformations` · (static plugin catalog (packages/mysql-types transformations.ts)) | ✅ implemented |
+| GET, POST | `/transformation/wrapper` | `Transformation/WrapperController` | API `GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper` · (raw cell bytes; resize=jpeg\|png sends the original image (no GD)) | ✅ implemented |
 | GET, POST | `/triggers` | `Triggers/IndexController` | UI `/s/:s/db/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers` · API `POST /api/servers/:s/databases/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers/editor` · API `GET /api/servers/:s/databases/:db/triggers/export` | ✅ implemented |
 | GET, POST | `/user-password` | `UserPasswordController` | API `POST /api/servers/:s/account/password` | ✅ implemented (M3) |
 | GET, POST | `/version-check` | `VersionCheckController` | API `GET /api/meta/version-check` | 🔀 exception (M1, X20) |
