@@ -31,11 +31,13 @@ import type {
   CreateDatabaseResponse,
   CreateTableFormResponse,
   CreateTableRequest,
+  CreateTrackingVersionRequest,
   DatabaseScope,
   DatabasesQuery,
   DatabasesResponse,
   DdlResponse,
   DefaultFkCheckResponse,
+  DeleteTrackingVersionsRequest,
   DropColumnsRequest,
   DropDatabasesResponse,
   EngineResponse,
@@ -46,6 +48,9 @@ import type {
   ExportPageResponse,
   ExportResponse,
   ExportTemplateResult,
+  FindReplacePreviewResponse,
+  FindReplaceRequest,
+  FindReplaceResponse,
   FormatResponse,
   GetVariableResponse,
   GridSaveRequest,
@@ -65,14 +70,20 @@ import type {
   LoginRequest,
   LoginResponse,
   LogoutResponse,
+  MaintenanceRequest,
   MoveColumnsRequest,
+  MoveCopyRequest,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  OperationsPageResponse,
+  OperationsResponse,
+  OrderByRequest,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
+  PartitionOpsRequest,
   PartitioningRequest,
   PasswordForm,
   PluginsResponse,
@@ -81,17 +92,27 @@ import type {
   QueryRequest,
   QueryResponse,
   QueryStatistics,
+  RangeResponse,
+  RelationDropdownResponse,
+  RelationPageResponse,
+  RelationSaveRequest,
+  RelationSaveResponse,
   RenameIndexRequest,
+  RenameViewRequest,
   ReservedWordCheckResponse,
   SaveIndexRequest,
   SaveRowsRequest,
   SaveRowsResponse,
+  SearchPageResponse,
+  SearchRequest,
+  SearchResponse,
   ServerScope,
   ServerVariablesResponse,
   SetCollationResponse,
   SetVariableResponse,
   SimulateRequest,
   SimulateResponse,
+  SqlActionRequest,
   SqlFormResponse,
   SqlMessage,
   StatementResult,
@@ -99,8 +120,18 @@ import type {
   StatusVariables,
   StatusVariablesRequest,
   StructureResponse,
+  TableOptionsRequest,
   TableScope,
+  ToggleTrackingRequest,
+  TrackingPageResponse,
+  TrackingReportRequest,
+  TrackingReportResponse,
+  TrackingResponse,
+  TrackingSnapshotResponse,
   VersionCheckResponse,
+  ZoomRequest,
+  ZoomResponse,
+  ZoomRowResponse,
 } from '@bettermyadmin/contracts'
 import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
 import type { ClientConfig } from './config.ts'
@@ -257,6 +288,44 @@ export const api = {
   consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+  // table level beyond Structure (docs/features/04-table-level.md)
+  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${tablePath(s)}/operations`),
+  tableOperation: <K extends keyof TableOpBodies>(s: TableRef, op: K, body: TableOpBodies[K]) =>
+    call<OperationsResponse>('POST', `${tablePath(s)}/operations/${op}`, body),
+  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${tablePath(s)}/relation`),
+  tableRelationDropdown: (s: TableRef, q: { foreignDb: string; foreignTable?: string; foreign: boolean }) =>
+    call<RelationDropdownResponse>(
+      'GET',
+      `${tablePath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
+    ),
+  tableRelationSave: (s: TableRef, req: RelationSaveRequest) =>
+    call<RelationSaveResponse>('POST', `${tablePath(s)}/relation`, req),
+  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${tablePath(s)}/search`),
+  tableSearch: (s: TableRef, req: SearchRequest) =>
+    call<SearchResponse>('POST', `${tablePath(s)}/search`, req),
+  tableSearchRange: (s: TableRef, column: string) =>
+    call<RangeResponse>('GET', `${tablePath(s)}/search/range${queryString({ column })}`),
+  tableZoom: (s: TableRef, req: ZoomRequest) =>
+    call<ZoomResponse>('POST', `${tablePath(s)}/search/zoom`, req),
+  tableZoomRow: (s: TableRef, whereClause: string, sig: string) =>
+    call<ZoomRowResponse>('POST', `${tablePath(s)}/search/zoom/row`, { whereClause, sig }),
+  tableFindReplacePreview: (s: TableRef, req: FindReplaceRequest) =>
+    call<FindReplacePreviewResponse>('POST', `${tablePath(s)}/find-replace/preview`, req),
+  tableFindReplace: (s: TableRef, req: FindReplaceRequest) =>
+    call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
+  tableRelationDropFk: (s: TableRef, constraint: string) =>
+    call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
+  tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
+  tableTrackingDelete: (s: TableRef, req: DeleteTrackingVersionsRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions/delete`, req),
+  tableTrackingToggle: (s: TableRef, req: ToggleTrackingRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/toggle`, req),
+  tableTrackingReport: (s: TableRef, req: Partial<TrackingReportRequest> & { version: string }) =>
+    call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
+  tableTrackingSnapshot: (s: TableRef, version: string) =>
+    call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
   // export (docs/features/07-export-import.md)
   exportPage: (server: number, pairs: Array<[string, string]>) =>
     call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
@@ -458,6 +527,16 @@ export const api = {
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
+}
+
+interface TableOpBodies {
+  'order-by': OrderByRequest
+  'move-copy': MoveCopyRequest
+  options: TableOptionsRequest
+  maintenance: MaintenanceRequest
+  sql: SqlActionRequest
+  partitions: PartitionOpsRequest
+  'rename-view': RenameViewRequest
 }
 
 /** Body of POST …/insert-form: signed where clauses (none = insert) and the form toggles. */

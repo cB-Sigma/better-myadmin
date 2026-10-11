@@ -127,3 +127,103 @@ export function phpEmpty(v: unknown): boolean {
     (Array.isArray(v) && v.length === 0)
   )
 }
+
+const utf8 = new TextEncoder()
+const utf8d = new TextDecoder()
+
+/**
+ * PHP `serialize($value)` for the values phpMyAdmin stores (strings, ints, floats, bools, null,
+ * lists and string-keyed arrays). String lengths are UTF-8 byte counts, like PHP's.
+ *
+ * pma: ext/standard/var.c::php_var_serialize
+ */
+export function phpSerialize(value: unknown): string {
+  if (value === null || value === undefined) return 'N;'
+  if (typeof value === 'boolean') return `b:${value ? 1 : 0};`
+  if (typeof value === 'number') return Number.isInteger(value) ? `i:${value};` : `d:${value};`
+  if (typeof value === 'bigint') return `i:${value};`
+  if (typeof value === 'string') return `s:${utf8.encode(value).length}:"${value}";`
+  if (Array.isArray(value)) {
+    return `a:${value.length}:{${value.map((v, i) => `i:${i};${phpSerialize(v)}`).join('')}}`
+  }
+  if (typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>)
+    const key = (k: string) => (/^(0|-?[1-9]\d*)$/.test(k) ? `i:${k};` : phpSerialize(k))
+    return `a:${entries.length}:{${entries.map(([k, v]) => `${key(k)}${phpSerialize(v)}`).join('')}}`
+  }
+  throw new Error(`serialize: unsupported type ${typeof value}`)
+}
+
+/**
+ * `Core::safeUnserialize`: scalars and arrays only (no objects); `null` for anything else or
+ * malformed input. Arrays with keys 0..n-1 in order come back as JS arrays, others as objects.
+ *
+ * pma: src/Core.php::safeUnserialize
+ */
+export function phpUnserialize(data: string): unknown {
+  const bytes = utf8.encode(data)
+  let p = 0
+  const fail = (): never => {
+    throw new Error('unserialize')
+  }
+  const readUntil = (ch: number): string => {
+    const start = p
+    while (p < bytes.length && bytes[p] !== ch) p++
+    if (p >= bytes.length) fail()
+    const s = utf8d.decode(bytes.subarray(start, p))
+    p++
+    return s
+  }
+  const value = (): unknown => {
+    const t = bytes[p]
+    if (t === undefined || (t !== 0x4e && bytes[p + 1] !== 0x3a)) fail()
+    if (t === 0x4e) {
+      if (bytes[p + 1] !== 0x3b) fail()
+      p += 2
+      return null
+    }
+    p += 2
+    switch (t) {
+      case 0x62: // b
+        return readUntil(0x3b) === '1'
+      case 0x69: // i
+        return Number(readUntil(0x3b))
+      case 0x64: // d
+        return Number(readUntil(0x3b))
+      case 0x73: {
+        // s
+        const len = Number(readUntil(0x3a))
+        if (bytes[p] !== 0x22) fail()
+        const s = utf8d.decode(bytes.subarray(p + 1, p + 1 + len))
+        p += 1 + len
+        if (bytes[p] !== 0x22 || bytes[p + 1] !== 0x3b) fail()
+        p += 2
+        return s
+      }
+      case 0x61: {
+        // a
+        const n = Number(readUntil(0x3a))
+        if (bytes[p] !== 0x7b) fail()
+        p++
+        const entries: Array<[string | number, unknown]> = []
+        for (let i = 0; i < n; i++) {
+          const k = value()
+          if (typeof k !== 'string' && typeof k !== 'number') fail()
+          entries.push([k as string | number, value()])
+        }
+        if (bytes[p] !== 0x7d) fail()
+        p++
+        if (entries.every(([k], i) => k === i)) return entries.map(([, v]) => v)
+        return Object.fromEntries(entries.map(([k, v]) => [String(k), v]))
+      }
+      default:
+        return fail()
+    }
+  }
+  try {
+    const v = value()
+    return p === bytes.length ? v : null
+  } catch {
+    return null
+  }
+}

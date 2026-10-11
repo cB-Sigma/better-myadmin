@@ -29,6 +29,7 @@
     "@tanstack/react-table": "8.21.3",
     "@tanstack/react-virtual": "3.13.8",
     "chart.js": "4.4.9",
+    "chartjs-plugin-zoom": "2.2.0",
     "@zxcvbn-ts/core": "3.0.4",
     "clsx": "2.1.1",
     "lucide-react": "0.511.0",

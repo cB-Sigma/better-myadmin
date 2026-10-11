@@ -39,7 +39,7 @@ pageParity('table-structure', {
   ours: { path: `/s/1/db/${FIX.db}/t/${FIX.table}/structure` },
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
   known:
-    'missing "Table structure"/"Relation view" sub-tab links, "Add to central columns", "Remove from central columns", "Track table", "Normalize"; With-selected buttons disabled until a row is checked (always enabled in phpMyAdmin); Indexes/Partitions/Information controls are not in a section (no legend/heading); "Create an index on" textbox labelled differently',
+    'no "Add to central columns" / "Remove from central columns" bulk buttons yet (central columns land with the database-level work); no "Normalize" link yet (the normalization wizard)',
 })
 
 pageParity('table-menu', {

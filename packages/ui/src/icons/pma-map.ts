@@ -53,6 +53,7 @@ import {
   Puzzle,
   RefreshCw,
   Repeat,
+  Replace,
   Search,
   Server,
   Settings,
@@ -111,6 +112,8 @@ export const pmaIcons = {
   b_views: Eye,
   // structure / grid actions
   b_select: ListTree,
+  b_find_replace: Replace,
+  b_report: FileText,
   b_empty: Eraser,
   b_drop: Trash2,
   b_edit: Pencil,

@@ -68,6 +68,7 @@ export {
   FormRow,
   Input,
   Label,
+  NativeCheckbox,
   NativeSelect,
   Radio,
   Select,

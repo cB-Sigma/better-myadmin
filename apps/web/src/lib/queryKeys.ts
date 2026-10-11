@@ -64,4 +64,6 @@ export const qk = {
   transformations: (r: TableRef) => [...qk.tbl(r), 'transformations'] as const,
   /** the Browse tab's /sql run (signed sql + pos from the URL) */
   browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
+  /** a table-level page payload (operations, relation, search, tracking…) */
+  tblPage: (r: TableRef, page: string) => [...qk.tbl(r), page] as const,
 }
