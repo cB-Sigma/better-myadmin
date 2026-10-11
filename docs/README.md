@@ -23,6 +23,7 @@ Start with [Vision and principles](00-vision-and-principles.md).
 | 13 | [Roadmap and milestones](architecture/13-roadmap-and-milestones.md) | M0–M5, risks |
 | 14 | [Development setup](architecture/14-development-setup.md) | Getting a dev environment, common commands, feature workflow |
 | 15 | [Upstream sync](architecture/15-upstream-sync.md) | Following phpMyAdmin after the reference commit: daily check, sync procedure, ledger gate |
+| 16 | [Golden path](architecture/16-golden-path.md) | The one way to add a page, an endpoint and tests, with a canonical example per step; enforced by `pnpm conventions:check` |
 
 ## Features (what we build, exhaustively, from phpMyAdmin's source)
 
