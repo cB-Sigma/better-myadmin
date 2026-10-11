@@ -623,7 +623,6 @@
 /table/privileges:
   api: 'GET /api/servers/:s/databases/:db/tables/:t/privileges'
   ui: '/s/:s/db/:db/t/:table/privileges'
-  planned: M2
 /table/recent-favorite:
   api: 'GET /api/servers/:s/recent-favorite'
   ui: '/s/:s/db/:db/t/:table/recent-favorite'
@@ -664,13 +663,13 @@
   ui: '/s/:s/db/:db/t/:table/structure/browse'
   planned: M2
 /table/structure/central-columns-add:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/central-columns-add'
-  ui: '/s/:s/db/:db/t/:table/structure/central-columns-add'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/structure/central-columns-add'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: row link and With-selected button of the Structure page
 /table/structure/central-columns-remove:
-  api: '/api/servers/:s/databases/:db/tables/:table/structure/central-columns-remove'
-  ui: '/s/:s/db/:db/t/:table/structure/central-columns-remove'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/structure/central-columns-remove'
+  ui: '/s/:s/db/:db/t/:table/structure'
+  note: row link and With-selected button of the Structure page
 /table/structure/change:
   api: '/api/servers/:s/databases/:db/tables/:table/structure/change'
   ui: '/s/:s/db/:db/t/:table/structure/change'

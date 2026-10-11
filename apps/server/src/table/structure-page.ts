@@ -155,6 +155,7 @@ export async function buildStructurePage(
       },
       distinctSql: getDistinctValuesQuery(table, field.Field, tr.gettext('Rows')),
       dropSql: getDropColumnQuery(table, field.Field),
+      inCentralList: features.centralList?.includes(field.Field) ?? false,
     })
   }
 
