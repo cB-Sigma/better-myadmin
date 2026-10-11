@@ -16,6 +16,10 @@ import type {
   BrowseForeignersResponse,
   BrowseRequest,
   CancelResponse,
+  CentralColumn,
+  CentralColumnsActionResponse,
+  CentralColumnsRequest,
+  CentralColumnsResponse,
   ChangeColumnsRequest,
   ChangeFormResponse,
   ChangePasswordRequest,
@@ -28,13 +32,25 @@ import type {
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  CopyFormResponse,
   CreateDatabaseResponse,
   CreateTableFormResponse,
   CreateTableRequest,
   CreateTrackingVersionRequest,
+  DataDictionaryResponse,
   DatabaseScope,
   DatabasesQuery,
   DatabasesResponse,
+  DbActionResponse,
+  DbExportResponse,
+  DbOperationsResponse,
+  DbPrivilegesResponse,
+  DbRenameCopyResponse,
+  DbSearchFormResponse,
+  DbSearchResponse,
+  DbStructureResponse,
+  DbTrackingRequest,
+  DbTrackingResponse,
   DdlResponse,
   DefaultFkCheckResponse,
   DeleteTrackingVersionsRequest,
@@ -45,6 +61,8 @@ import type {
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
+  EventEditorData,
+  EventsListResponse,
   ExportPageResponse,
   ExportResponse,
   ExportTemplateResult,
@@ -71,8 +89,11 @@ import type {
   LoginResponse,
   LogoutResponse,
   MaintenanceRequest,
+  MaintenanceResponse,
   MoveColumnsRequest,
   MoveCopyRequest,
+  MultiTableFormResponse,
+  MultiTableKeysResponse,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
@@ -93,6 +114,7 @@ import type {
   QueryResponse,
   QueryStatistics,
   RangeResponse,
+  RealRowCountResponse,
   RelationDropdownResponse,
   RelationPageResponse,
   RelationSaveRequest,
@@ -100,6 +122,11 @@ import type {
   RenameIndexRequest,
   RenameViewRequest,
   ReservedWordCheckResponse,
+  RoutineEditorData,
+  RoutineEditorOptions,
+  RoutineExecuteForm,
+  RoutineExecuteResponse,
+  RoutinesListResponse,
   SaveIndexRequest,
   SaveRowsRequest,
   SaveRowsResponse,
@@ -110,6 +137,7 @@ import type {
   ServerVariablesResponse,
   SetCollationResponse,
   SetVariableResponse,
+  ShowCreateResponse,
   SimulateRequest,
   SimulateResponse,
   SqlActionRequest,
@@ -128,6 +156,8 @@ import type {
   TrackingReportResponse,
   TrackingResponse,
   TrackingSnapshotResponse,
+  TriggerEditorData,
+  TriggersListResponse,
   VersionCheckResponse,
   ZoomRequest,
   ZoomResponse,
@@ -486,6 +516,106 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/partitions/maintenance`, req),
   removePartitioning: (r: TableRef) =>
     call<DdlResponse>('POST', `${tablePath(r)}/partitions/remove-partitioning`, {}),
+  // database level (docs/features/05-database-level.md)
+  dbStructure: (r: DbRef, q: Record<string, string | undefined>) =>
+    call<DbStructureResponse>('GET', `${dbPath(r)}/structure${queryString(q)}`),
+  dbRealRowCount: (r: DbRef, table: string | null) =>
+    call<RealRowCountResponse>(
+      'GET',
+      `${dbPath(r)}/structure/real-row-count${table === null ? '?all=1' : queryString({ table })}`,
+    ),
+  dbCopyForm: (r: DbRef) => call<CopyFormResponse>('GET', `${dbPath(r)}/structure/copy-form`),
+  /** POST …/structure/{empty,drop,add-prefix,replace-prefix,copy-with-prefix,copy,central-*} */
+  dbStructureAction: (r: DbRef, action: string, body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(r)}/structure/${action}`, body),
+  dbShowCreate: (r: DbRef, tables: string[]) =>
+    call<ShowCreateResponse>('POST', `${dbPath(r)}/structure/show-create`, { tables }),
+  dbMaintenance: (r: DbRef, op: string, tables: string[]) =>
+    call<MaintenanceResponse>('POST', `${dbPath(r)}/structure/maintenance`, { op, tables }),
+  dbOperations: (r: DbRef) => call<DbOperationsResponse>('GET', `${dbPath(r)}/operations`),
+  /** POST …/operations/{comment,collation} */
+  dbOperation: (r: DbRef, action: 'comment' | 'collation', body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(r)}/operations/${action}`, body),
+  dbRenameCopy: (r: DbRef, action: 'rename' | 'copy', body: unknown) =>
+    call<DbRenameCopyResponse>('POST', `${dbPath(r)}/operations/${action}`, body),
+  dbSearchForm: (r: DbRef) => call<DbSearchFormResponse>('GET', `${dbPath(r)}/search`),
+  dbSearch: (r: DbRef, body: unknown) => call<DbSearchResponse>('POST', `${dbPath(r)}/search`, body),
+  dbRoutines: (r: DbRef, q: { type?: string; pos?: number } = {}) =>
+    call<RoutinesListResponse>('GET', `${dbPath(r)}/routines${queryString(q)}`),
+  dbRoutineEditor: (r: DbRef, item?: { name: string; type: string }) =>
+    call<{ options: RoutineEditorOptions; routine: RoutineEditorData | null }>(
+      'GET',
+      `${dbPath(r)}/routines/editor${queryString(item ?? {})}`,
+    ),
+  dbRoutineSave: (r: DbRef, body: unknown) => call<DbActionResponse>('POST', `${dbPath(r)}/routines`, body),
+  dbRoutineExecuteForm: (r: DbRef, name: string, type: string) =>
+    call<RoutineExecuteForm>('GET', `${dbPath(r)}/routines/execute${queryString({ name, type })}`),
+  dbRoutineExecute: (r: DbRef, body: unknown) =>
+    call<RoutineExecuteResponse>('POST', `${dbPath(r)}/routines/execute`, body),
+  dbRoutineExport: (r: DbRef, name: string, type: string) =>
+    call<DbExportResponse>('GET', `${dbPath(r)}/routines/export${queryString({ name, type })}`),
+  dbEvents: (r: DbRef) => call<EventsListResponse>('GET', `${dbPath(r)}/events`),
+  dbEventEditor: (r: DbRef, name: string) =>
+    call<EventEditorData>('GET', `${dbPath(r)}/events/editor${queryString({ name })}`),
+  dbEventSave: (r: DbRef, body: unknown) => call<DbActionResponse>('POST', `${dbPath(r)}/events`, body),
+  dbEventExport: (r: DbRef, name: string) =>
+    call<DbExportResponse>('GET', `${dbPath(r)}/events/export${queryString({ name })}`),
+  /** triggers of the database, or of one table when `table` is given */
+  dbTriggers: (r: DbRef, table = '') =>
+    call<TriggersListResponse>('GET', `${dbPath(r)}/triggers${queryString({ table: table || undefined })}`),
+  dbTriggerEditor: (r: DbRef, table: string, name: string) =>
+    call<TriggerEditorData>(
+      'GET',
+      `${dbPath(r)}/triggers/editor${queryString({ table: table || undefined, name })}`,
+    ),
+  dbTriggerSave: (r: DbRef, table: string, body: unknown) =>
+    call<DbActionResponse>(
+      'POST',
+      `${dbPath(r)}/triggers${queryString({ table: table || undefined })}`,
+      body,
+    ),
+  dbTriggerExport: (r: DbRef, table: string, name: string) =>
+    call<DbExportResponse>(
+      'GET',
+      `${dbPath(r)}/triggers/export${queryString({ table: table || undefined, name })}`,
+    ),
+  dbMultiTableForm: (r: DbRef) => call<MultiTableFormResponse>('GET', `${dbPath(r)}/multi-table-query`),
+  dbMultiTableKeys: (r: DbRef, tables: string[]) =>
+    call<MultiTableKeysResponse>(
+      'GET',
+      `${dbPath(r)}/multi-table-query/tables?${tables.map((t) => `tables=${encodeURIComponent(t)}`).join('&')}`,
+    ),
+  dbDataDictionary: (r: DbRef) => call<DataDictionaryResponse>('GET', `${dbPath(r)}/data-dictionary`),
+  dbPrivileges: (r: DbRef) => call<DbPrivilegesResponse>('GET', `${dbPath(r)}/privileges`),
+  dbTracking: (r: DbRef) => call<DbTrackingResponse>('GET', `${dbPath(r)}/tracking`),
+  dbTrackingAction: (r: DbRef, body: DbTrackingRequest) =>
+    call<DbActionResponse>('POST', `${dbPath(r)}/tracking`, body),
+  dbCentralColumns: (r: DbRef, q: { pos?: number; totalRows?: number } = {}) =>
+    call<CentralColumnsResponse>(
+      'GET',
+      `${dbPath(r)}/central-columns?${new URLSearchParams({
+        ...(q.pos !== undefined ? { pos: String(q.pos) } : {}),
+        ...(q.totalRows !== undefined ? { total_rows: String(q.totalRows) } : {}),
+      })}`,
+    ),
+  dbCentralColumnsAction: (r: DbRef, body: CentralColumnsRequest) =>
+    call<CentralColumnsActionResponse>('POST', `${dbPath(r)}/central-columns`, body),
+  dbCentralColumnsEdit: (r: DbRef, columns: string[]) =>
+    call<CentralColumn[]>(
+      'GET',
+      `${dbPath(r)}/central-columns/edit?${columns.map((c) => `columns=${encodeURIComponent(c)}`).join('&')}`,
+    ),
+  dbCentralColumnsPopulate: (r: DbRef, table: string) =>
+    call<string[]>('GET', `${dbPath(r)}/central-columns/populate?table=${encodeURIComponent(table)}`),
+  favorite: (
+    server: number,
+    body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
+  ) =>
+    call<{ changes: boolean; favoriteTables?: string; message?: { text: string } }>(
+      'POST',
+      `/servers/${server}/favorites`,
+      body,
+    ),
   // Insert/Edit and transformations (docs/features/03-insert-edit-transformations.md)
   insertForm: (r: TableRef, req: InsertFormRequest) =>
     call<InsertFormResponse>('POST', `${tablePath(r)}/insert-form`, req),

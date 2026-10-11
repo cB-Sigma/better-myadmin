@@ -7,6 +7,7 @@ import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
 import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
+import { databaseRoutes } from './database.ts'
 import { exportRoutes } from './export.ts'
 import { importRoutes } from './import.ts'
 import { insertEditRoutes } from './insert-edit.ts'
@@ -67,5 +68,6 @@ serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)
 serverRoutes.route('/:s/databases', tableLevelRoutes)
+serverRoutes.route('/:s/databases', databaseRoutes)
 serverRoutes.route('/:s/databases', insertEditRoutes)
 serverRoutes.route('/:s', serverAdminRoutes)

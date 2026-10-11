@@ -245,7 +245,7 @@ function EnumEditor({
   )
 }
 
-function TypeSelect({
+export function TypeSelect({
   options,
   value,
   onChange,

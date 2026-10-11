@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-232/1106 covered (21.0%): 232 implemented, 24 planned, 850 missing. [Summary](README.md).
+448/1106 covered (40.5%): 448 implemented, 24 planned, 634 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 92/306 (30.1%) covered, 92/306 implemented
+## 04 table level — 120/306 (39.2%) covered, 120/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -77,7 +77,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `columns_definitions/column_name.twig` | 0/2 |  | ⬜ `field_name[*]` ⬜ `link:Pick from Central Columns` |
 | `columns_definitions/partitions.twig` | 0/17 |  | ⬜ `*[comment]` ⬜ `*[data_directory]` ⬜ `*[engine]` ⬜ `*[index_directory]` ⬜ `*[max_rows]` ⬜ `*[min_rows]` ⬜ `*[name]` ⬜ `*[node_group]` ⬜ `*[tablespace]` ⬜ `*[value_type]` ⬜ `*[value]` ⬜ `partition_by` ⬜ `partition_count` ⬜ `partition_expr` ⬜ `subpartition_by` ⬜ `subpartition_count` ⬜ `subpartition_expr` |
 | `columns_definitions/table_fields_definitions.twig` | 0/2 |  | ⬜ `link:Browser display transformation` ⬜ `link:Input transformation` |
-| `create_tracking_version.twig` | 1/14 | ✅ `submit:Create version` | ⬜ `alter_table` ⬜ `alter_view` ⬜ `create_index` ⬜ `create_table` ⬜ `create_view` ⬜ `delete` ⬜ `drop_index` ⬜ `drop_table` ⬜ `drop_view` ⬜ `insert` ⬜ `rename_table` ⬜ `truncate` ⬜ `update` |
+| `create_tracking_version.twig` | 14/14 | ✅ `alter_table` ✅ `alter_view` ✅ `create_index` ✅ `create_table` ✅ `create_view` ✅ `delete` ✅ `drop_index` ✅ `drop_table` ✅ `drop_view` ✅ `insert` ✅ `rename_table` ✅ `submit:Create version` ✅ `truncate` ✅ `update` |  |
 | `indexes.twig` | 0/3 |  | ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Rename` |
 | `modals/create_view.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:createViewModalGoButton` |
 | `modals/enum_set_editor.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:enumEditorGoButton` |
@@ -112,51 +112,51 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/tracking/main.twig` | 7/7 | ✅ `link:Delete version` ✅ `link:Structure snapshot` ✅ `link:Tracking report` ✅ `selected_versions[]` ✅ `submit_mult` ✅ `submit:L113` ✅ `table` |  |
 | `table/zoom_search/index.twig` | 7/7 | ✅ `criteriaColumnNames[]` ✅ `dataLabel` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `maxPlotLimit` ✅ `zoom_submit` |  |
 | `table/zoom_search/result_form.twig` | 4/5 | ✅ `button:Close` ✅ `button:Reset zoom` ✅ `id:dataPointSaveButton` ✅ `link:How to use` | ⬜ `criteriaColumnNullFlags[*]` |
-| `triggers/editor_form.twig` | 0/8 |  | ⬜ `id:format` ⬜ `item_definer` ⬜ `item_definition` ⬜ `item_event` ⬜ `item_name` ⬜ `item_table` ⬜ `item_timing` ⬜ `submit:Go` |
+| `triggers/editor_form.twig` | 7/8 | ✅ `id:format` ✅ `item_definer` ✅ `item_definition` ✅ `item_event` ✅ `item_name` ✅ `item_table` ✅ `item_timing` | ⬜ `submit:Go` |
 | `triggers/export.twig` | 0/1 |  | ⬜ `textarea:L6` |
-| `triggers/list.twig` | 0/5 |  | ⬜ `button:Close` ⬜ `id:checkAllCheckbox` ⬜ `id:triggersEditorModalSaveButton` ⬜ `link:Create new trigger` ⬜ `submit_mult` |
-| `triggers/row.twig` | 0/4 |  | ⬜ `item_name[]` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Export` |
+| `triggers/list.twig` | 5/5 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:triggersEditorModalSaveButton` ✅ `link:Create new trigger` ✅ `submit_mult` |  |
+| `triggers/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
 | `view_create.twig` | 0/10 |  | ⬜ `id:format` ⬜ `submit:Go` ⬜ `view[algorithm]` ⬜ `view[as]` ⬜ `view[column_names]` ⬜ `view[definer]` ⬜ `view[name]` ⬜ `view[or_replace]` ⬜ `view[sql_security]` ⬜ `view[with]` |
 
-## 05 database level — 0/268 (0.0%) covered, 0/268 implemented
+## 05 database level — 188/268 (70.1%) covered, 188/268 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `database/central_columns/edit_table_row.twig` | 0/8 |  | ⬜ `col_extra[*]` ⬜ `field_collation[*]` ⬜ `field_default_type[*]` ⬜ `field_default_value[*]` ⬜ `field_length[*]` ⬜ `field_null[*]` ⬜ `field_type[*]` ⬜ `link:Edit ENUM/SET values` |
-| `database/central_columns/edit.twig` | 0/1 |  | ⬜ `save_multi_central_column_edit` |
-| `database/central_columns/main.twig` | 0/29 |  | ⬜ `col_extra[*]` ⬜ `col_extra[0]` ⬜ `column-select` ⬜ `delete_central_columns` ⬜ `edit_central_columns` ⬜ `field_collation[*]` ⬜ `field_collation[0]` ⬜ `field_default_type[*]` ⬜ `field_default_type[0]` ⬜ `field_default_value[*]` ⬜ `field_default_value[0]` ⬜ `field_length[*]` ⬜ `field_length[0]` ⬜ `field_null[*]` ⬜ `field_null[0]` ⬜ `field_type[*]` ⬜ `field_type[0]` ⬜ `id:add_column_save` ⬜ `id:filterRows` ⬜ `link:Add new column` ⬜ `link:Delete` ⬜ `link:Edit` ⬜ `link:Edit ENUM/SET values` ⬜ `navig` ⬜ `selected_fld[]` ⬜ `submit:Add` ⬜ `submit:Cancel` ⬜ `submit:Save` ⬜ `table-select` |
-| `database/create_table.twig` | 0/3 |  | ⬜ `num_fields` ⬜ `submit:Create` ⬜ `table` |
-| `database/data_dictionary/index.twig` | 0/1 |  | ⬜ `button:Print` |
+| `database/central_columns/edit_table_row.twig` | 7/8 | ✅ `col_extra[*]` ✅ `field_collation[*]` ✅ `field_default_type[*]` ✅ `field_default_value[*]` ✅ `field_length[*]` ✅ `field_null[*]` ✅ `field_type[*]` | ⬜ `link:Edit ENUM/SET values` |
+| `database/central_columns/edit.twig` | 1/1 | ✅ `save_multi_central_column_edit` |  |
+| `database/central_columns/main.twig` | 28/29 | ✅ `col_extra[*]` ✅ `col_extra[0]` ✅ `column-select` ✅ `delete_central_columns` ✅ `edit_central_columns` ✅ `field_collation[*]` ✅ `field_collation[0]` ✅ `field_default_type[*]` ✅ `field_default_type[0]` ✅ `field_default_value[*]` ✅ `field_default_value[0]` ✅ `field_length[*]` ✅ `field_length[0]` ✅ `field_null[*]` ✅ `field_null[0]` ✅ `field_type[*]` ✅ `field_type[0]` ✅ `id:add_column_save` ✅ `id:filterRows` ✅ `link:Add new column` ✅ `link:Delete` ✅ `link:Edit` ✅ `navig` ✅ `selected_fld[]` ✅ `submit:Add` ✅ `submit:Cancel` ✅ `submit:Save` ✅ `table-select` | ⬜ `link:Edit ENUM/SET values` |
+| `database/create_table.twig` | 3/3 | ✅ `num_fields` ✅ `submit:Create` ✅ `table` |  |
+| `database/data_dictionary/index.twig` | 1/1 | ✅ `button:Print` |  |
 | `database/designer/database_tables.twig` | 0/2 |  | ⬜ `id:select_*._*` ⬜ `id:select_all_*` |
 | `database/designer/main.twig` | 0/50 |  | ⬜ `Button` ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `erel_opt` ⬜ `h_operator` ⬜ `h_rel_opt` ⬜ `hoperator` ⬜ `hrel_opt` ⬜ `id:buildQuerySubmitButton` ⬜ `id:designerModalGoButton` ⬜ `id:designerModalNoButton` ⬜ `id:designerModalYesButton` ⬜ `id:e_rename` ⬜ `id:eQuery` ⬜ `id:groupby` ⬜ `id:having` ⬜ `id:hQuery` ⬜ `id:new_name` ⬜ `id:Query` ⬜ `link:Active options` ⬜ `link:Add tables from other databases` ⬜ `link:Angular links` ⬜ `link:Build Query` ⬜ `link:Choose column to display` ⬜ `link:Create relationship` ⬜ `link:Create table` ⬜ `link:Delete pages` ⬜ `link:Export schema` ⬜ `link:Help` ⬜ `link:Hide/Show all` ⬜ `link:Hide/Show tables with no relationship` ⬜ `link:Move Menu` ⬜ `link:New page` ⬜ `link:Open page` ⬜ `link:Pin text` ⬜ `link:Reload` ⬜ `link:Save page` ⬜ `link:Save page as` ⬜ `link:Show/Hide tables list` ⬜ `link:Small/Big All` ⬜ `link:Snap to grid` ⬜ `link:Toggle relationship lines` ⬜ `link:Toggle small/big` ⬜ `link:View in fullscreen` ⬜ `on_delete` ⬜ `on_update` ⬜ `operator` ⬜ `orderby` ⬜ `rel_opt` ⬜ `sql_query` |
 | `database/designer/page_save_as.twig` | 0/2 |  | ⬜ `save_page` ⬜ `selected_value` |
 | `database/designer/page_selector.twig` | 0/1 |  | ⬜ `selected_page` |
 | `database/designer/schema_export.twig` | 0/1 |  | ⬜ `export_type` |
-| `database/events/editor_form.twig` | 0/15 |  | ⬜ `editor_process_*` ⬜ `id:format` ⬜ `item_changetype` ⬜ `item_comment` ⬜ `item_definer` ⬜ `item_definition` ⬜ `item_ends` ⬜ `item_execute_at` ⬜ `item_interval_field` ⬜ `item_interval_value` ⬜ `item_name` ⬜ `item_preserve` ⬜ `item_starts` ⬜ `item_status` ⬜ `item_type` |
-| `database/events/index.twig` | 0/9 |  | ⬜ `button:Close` ⬜ `id:checkAllCheckbox` ⬜ `id:eventsEditorModalSaveButton` ⬜ `item_name[]` ⬜ `link:Create new event` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Export` ⬜ `submit_mult` |
-| `database/events/row.twig` | 0/4 |  | ⬜ `item_name[]` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Export` |
-| `database/multi_table_query/form.twig` | 0/22 |  | ⬜ `button:criteria` ⬜ `button:Query window` ⬜ `button:Remove this column` ⬜ `checkbox:L37` ⬜ `checkbox:Use this column in criteria` ⬜ `id:add_column_button` ⬜ `id:copy_query` ⬜ `id:submit_query` ⬜ `id:update_query_button` ⬜ `logical_op[*]` ⬜ `select:L115` ⬜ `select:L125` ⬜ `select:L133` ⬜ `select:L26` ⬜ `select:L33` ⬜ `select:L83` ⬜ `select:L92` ⬜ `sort[*]` ⬜ `sql_query` ⬜ `text:Column alias` ⬜ `text:Enter criteria as free text` ⬜ `text:Table alias` |
-| `database/operations/index.twig` | 0/18 |  | ⬜ `add_constraints` ⬜ `adjust_privileges` ⬜ `change_all_tables_collations` ⬜ `change_all_tables_columns_collations` ⬜ `comment` ⬜ `create_database_before_copying` ⬜ `db_collation` ⬜ `drop_if_exists` ⬜ `link:Database %s has been dropped.` ⬜ `newname` ⬜ `num_fields` ⬜ `sql_auto_increment` ⬜ `submit_copy` ⬜ `submit:Create` ⬜ `submit:Go` ⬜ `switch_to_new` ⬜ `table` ⬜ `what` |
-| `database/privileges/index.twig` | 0/6 |  | ⬜ `id:usersForm_checkall` ⬜ `link:Add user account` ⬜ `link:Edit privileges` ⬜ `link:Export` ⬜ `selected_usr[]` ⬜ `submit_mult` |
-| `database/routines/editor_form.twig` | 0/19 |  | ⬜ `id:addRoutineParameterButton` ⬜ `id:format` ⬜ `item_adjust_privileges` ⬜ `item_comment` ⬜ `item_definer` ⬜ `item_definition` ⬜ `item_isdeterministic` ⬜ `item_name` ⬜ `item_returnlength` ⬜ `item_returnopts_num` ⬜ `item_returnopts_text` ⬜ `item_returntype` ⬜ `item_securitytype` ⬜ `item_sqldataaccess` ⬜ `item_type` ⬜ `routine_addparameter` ⬜ `routine_changetype` ⬜ `routine_removeparameter` ⬜ `submit:Go` |
-| `database/routines/execute_form.twig` | 0/4 |  | ⬜ `execute_routine` ⬜ `funcs[*]` ⬜ `params[*]` ⬜ `params[*][]` |
-| `database/routines/index.twig` | 0/7 |  | ⬜ `button:Close` ⬜ `filterText` ⬜ `id:checkAllCheckbox` ⬜ `id:routinesEditorModalSaveButton` ⬜ `id:routinesExecuteModalExecuteButton` ⬜ `link:Create new routine` ⬜ `submit_mult` |
-| `database/routines/parameter_row.twig` | 0/8 |  | ⬜ `item_param_dir[*]` ⬜ `item_param_length[*]` ⬜ `item_param_name[*]` ⬜ `item_param_opts_num[*]` ⬜ `item_param_opts_text[*]` ⬜ `item_param_type[*]` ⬜ `link:Drop` ⬜ `link:ENUM/SET editor` |
-| `database/routines/row.twig` | 0/5 |  | ⬜ `item_name[]` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Execute` ⬜ `link:Export` |
-| `database/search/main.twig` | 0/11 |  | ⬜ `criteriaColumnName` ⬜ `criteriaSearchOptionIncludeHex` ⬜ `criteriaSearchString` ⬜ `criteriaSearchType` ⬜ `criteriaTables[]` ⬜ `id:select_all` ⬜ `id:togglequerybox` ⬜ `id:togglesearchformlink` ⬜ `id:togglesearchresultlink` ⬜ `id:unselect_all` ⬜ `submit_search` |
-| `database/search/results.twig` | 0/2 |  | ⬜ `button:Browse` ⬜ `button:Delete` |
-| `database/structure/add_prefix.twig` | 0/1 |  | ⬜ `add_prefix` |
-| `database/structure/bulk_action_modal.twig` | 0/2 |  | ⬜ `button:Cancel` ⬜ `id:bulkActionContinue` |
-| `database/structure/change_prefix_form.twig` | 0/2 |  | ⬜ `from_prefix` ⬜ `to_prefix` |
-| `database/structure/check_all_tables.twig` | 0/5 |  | ⬜ `button:Cancel` ⬜ `id:makeConsistentWithCentralListContinue` ⬜ `id:tablesForm_checkall` ⬜ `link:Check tables having overhead` ⬜ `submit_mult` |
-| `database/structure/copy_form.twig` | 0/6 |  | ⬜ `add_constraints` ⬜ `adjust_privileges` ⬜ `drop_if_exists` ⬜ `sql_auto_increment` ⬜ `target_db` ⬜ `what` |
-| `database/structure/drop_form.twig` | 0/2 |  | ⬜ `fk_checks` ⬜ `mult_btn` |
-| `database/structure/empty_form.twig` | 0/2 |  | ⬜ `fk_checks` ⬜ `mult_btn` |
-| `database/structure/favorite_anchor.twig` | 0/1 |  | ⬜ `link:Remove from Favorites` |
-| `database/structure/index.twig` | 0/2 |  | ⬜ `button:Print` ⬜ `link:Data dictionary` |
-| `database/structure/structure_table_row.twig` | 0/8 |  | ⬜ `link:Browse` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Empty` ⬜ `link:Insert` ⬜ `link:Search` ⬜ `link:Structure` ⬜ `selected_tbl[]` |
-| `database/structure/tracking_icon.twig` | 0/1 |  | ⬜ `link:Tracking is active.` |
-| `database/tracking/tables.twig` | 0/7 |  | ⬜ `link:Delete tracking` ⬜ `link:Structure snapshot` ⬜ `link:Track table` ⬜ `link:Tracking report` ⬜ `link:Versions` ⬜ `selected_tbl[]` ⬜ `submit_mult` |
+| `database/events/editor_form.twig` | 13/15 | ✅ `id:format` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` | ⬜ `editor_process_*` ⬜ `item_changetype` |
+| `database/events/index.twig` | 8/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` | ⬜ `item_name[]` |
+| `database/events/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
+| `database/multi_table_query/form.twig` | 14/22 | ✅ `button:criteria` ✅ `button:Query window` ✅ `button:Remove this column` ✅ `checkbox:Use this column in criteria` ✅ `id:add_column_button` ✅ `id:copy_query` ✅ `id:submit_query` ✅ `id:update_query_button` ✅ `logical_op[*]` ✅ `sort[*]` ✅ `sql_query` ✅ `text:Column alias` ✅ `text:Enter criteria as free text` ✅ `text:Table alias` | ⬜ `checkbox:L37` ⬜ `select:L115` ⬜ `select:L125` ⬜ `select:L133` ⬜ `select:L26` ⬜ `select:L33` ⬜ `select:L83` ⬜ `select:L92` |
+| `database/operations/index.twig` | 17/18 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_tables_collations` ✅ `change_all_tables_columns_collations` ✅ `comment` ✅ `create_database_before_copying` ✅ `db_collation` ✅ `drop_if_exists` ✅ `newname` ✅ `num_fields` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit:Create` ✅ `submit:Go` ✅ `switch_to_new` ✅ `table` ✅ `what` | ⬜ `link:Database %s has been dropped.` |
+| `database/privileges/index.twig` | 6/6 | ✅ `id:usersForm_checkall` ✅ `link:Add user account` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` ✅ `submit_mult` |  |
+| `database/routines/editor_form.twig` | 16/19 | ✅ `id:addRoutineParameterButton` ✅ `id:format` ✅ `item_adjust_privileges` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_isdeterministic` ✅ `item_name` ✅ `item_returnlength` ✅ `item_returnopts_num` ✅ `item_returnopts_text` ✅ `item_returntype` ✅ `item_securitytype` ✅ `item_sqldataaccess` ✅ `item_type` ✅ `routine_addparameter` | ⬜ `routine_changetype` ⬜ `routine_removeparameter` ⬜ `submit:Go` |
+| `database/routines/execute_form.twig` | 3/4 | ✅ `funcs[*]` ✅ `params[*]` ✅ `params[*][]` | ⬜ `execute_routine` |
+| `database/routines/index.twig` | 7/7 | ✅ `button:Close` ✅ `filterText` ✅ `id:checkAllCheckbox` ✅ `id:routinesEditorModalSaveButton` ✅ `id:routinesExecuteModalExecuteButton` ✅ `link:Create new routine` ✅ `submit_mult` |  |
+| `database/routines/parameter_row.twig` | 7/8 | ✅ `item_param_dir[*]` ✅ `item_param_length[*]` ✅ `item_param_name[*]` ✅ `item_param_opts_num[*]` ✅ `item_param_opts_text[*]` ✅ `item_param_type[*]` ✅ `link:Drop` | ⬜ `link:ENUM/SET editor` |
+| `database/routines/row.twig` | 4/5 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Execute` ✅ `link:Export` | ⬜ `item_name[]` |
+| `database/search/main.twig` | 10/11 | ✅ `criteriaColumnName` ✅ `criteriaSearchOptionIncludeHex` ✅ `criteriaSearchString` ✅ `criteriaSearchType` ✅ `criteriaTables[]` ✅ `id:select_all` ✅ `id:togglesearchformlink` ✅ `id:togglesearchresultlink` ✅ `id:unselect_all` ✅ `submit_search` | ⬜ `id:togglequerybox` |
+| `database/search/results.twig` | 2/2 | ✅ `button:Browse` ✅ `button:Delete` |  |
+| `database/structure/add_prefix.twig` | 1/1 | ✅ `add_prefix` |  |
+| `database/structure/bulk_action_modal.twig` | 2/2 | ✅ `button:Cancel` ✅ `id:bulkActionContinue` |  |
+| `database/structure/change_prefix_form.twig` | 2/2 | ✅ `from_prefix` ✅ `to_prefix` |  |
+| `database/structure/check_all_tables.twig` | 5/5 | ✅ `button:Cancel` ✅ `id:makeConsistentWithCentralListContinue` ✅ `id:tablesForm_checkall` ✅ `link:Check tables having overhead` ✅ `submit_mult` |  |
+| `database/structure/copy_form.twig` | 6/6 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `drop_if_exists` ✅ `sql_auto_increment` ✅ `target_db` ✅ `what` |  |
+| `database/structure/drop_form.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
+| `database/structure/empty_form.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
+| `database/structure/favorite_anchor.twig` | 1/1 | ✅ `link:Remove from Favorites` |  |
+| `database/structure/index.twig` | 2/2 | ✅ `button:Print` ✅ `link:Data dictionary` |  |
+| `database/structure/structure_table_row.twig` | 7/8 | ✅ `link:Browse` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Empty` ✅ `link:Insert` ✅ `link:Search` ✅ `link:Structure` | ⬜ `selected_tbl[]` |
+| `database/structure/tracking_icon.twig` | 1/1 | ✅ `link:Tracking is active.` |  |
+| `database/tracking/tables.twig` | 7/7 | ✅ `link:Delete tracking` ✅ `link:Structure snapshot` ✅ `link:Track table` ✅ `link:Tracking report` ✅ `link:Versions` ✅ `selected_tbl[]` ✅ `submit_mult` |  |
 | `src/Database/CentralColumns.php` | 0/1 |  | ⬜ `pos` |
 
 ## 06 server level — 0/243 (0.0%) covered, 0/243 implemented

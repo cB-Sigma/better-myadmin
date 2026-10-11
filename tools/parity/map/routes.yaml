@@ -39,17 +39,17 @@
   planned: M1
   note: 'bookmarks, config'
 /database/central-columns:
-  api: '/api/servers/:s/databases/:db/central-columns'
+  api:
+    - 'GET /api/servers/:s/databases/:db/central-columns'
+    - 'POST /api/servers/:s/databases/:db/central-columns'
+    - 'GET /api/servers/:s/databases/:db/central-columns/edit'
+    - 'GET /api/servers/:s/databases/:db/central-columns/list'
   ui: '/s/:s/db/:db/central-columns'
-  planned: M3
 /database/central-columns/populate:
-  api: '/api/servers/:s/databases/:db/central-columns/populate'
-  ui: '/s/:s/db/:db/central-columns/populate'
-  planned: M3
+  api: 'GET /api/servers/:s/databases/:db/central-columns/populate'
 /database/data-dictionary:
   api: 'GET /api/servers/:s/databases/:db/data-dictionary'
   ui: '/s/:s/db/:db/data-dictionary'
-  planned: M3
 /database/designer:
   api: 'GET /api/servers/:s/databases/:db/designer'
   ui: '/s/:s/db/:db/designer'
@@ -58,8 +58,9 @@
   api:
     - 'GET /api/servers/:s/databases/:db/events'
     - 'POST /api/servers/:s/databases/:db/events'
+    - 'GET /api/servers/:s/databases/:db/events/editor'
+    - 'GET /api/servers/:s/databases/:db/events/export'
   ui: '/s/:s/db/:db/events'
-  planned: M3
 /database/export:
   api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/db/:db/export'
@@ -67,39 +68,40 @@
   api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/db/:db/import'
 /database/multi-table-query:
-  api: '/api/servers/:s/databases/:db/multi-table-query'
+  api: 'GET /api/servers/:s/databases/:db/multi-table-query'
   ui: '/s/:s/db/:db/multi-table-query'
-  planned: M3
 /database/multi-table-query/query:
-  api: '/api/servers/:s/databases/:db/multi-table-query/query'
-  ui: '/s/:s/db/:db/multi-table-query/query'
-  planned: M3
+  api: 'POST /api/servers/:s/query'
+  ui: '/s/:s/db/:db/multi-table-query'
 /database/multi-table-query/tables:
-  api: '/api/servers/:s/databases/:db/multi-table-query/tables'
-  ui: '/s/:s/db/:db/multi-table-query/tables'
-  planned: M3
+  api: 'GET /api/servers/:s/databases/:db/multi-table-query/tables'
 /database/operations:
-  api: '/api/servers/:s/databases/:db/operations'
+  api:
+    - 'GET /api/servers/:s/databases/:db/operations'
+    - 'POST /api/servers/:s/databases/:db/operations/comment'
+    - 'POST /api/servers/:s/databases/:db/operations/rename'
+    - 'POST /api/servers/:s/databases/:db/operations/copy'
   ui: '/s/:s/db/:db/operations'
-  planned: M3
 /database/operations/collation:
-  api: '/api/servers/:s/databases/:db/operations/collation'
-  ui: '/s/:s/db/:db/operations/collation'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/operations/collation'
+  ui: '/s/:s/db/:db/operations'
 /database/privileges:
   api: 'GET /api/servers/:s/databases/:db/privileges'
   ui: '/s/:s/db/:db/privileges'
-  planned: M3
 /database/routines:
   api:
     - 'GET /api/servers/:s/databases/:db/routines'
     - 'POST /api/servers/:s/databases/:db/routines'
+    - 'GET /api/servers/:s/databases/:db/routines/editor'
+    - 'GET /api/servers/:s/databases/:db/routines/execute'
+    - 'POST /api/servers/:s/databases/:db/routines/execute'
+    - 'GET /api/servers/:s/databases/:db/routines/export'
   ui: '/s/:s/db/:db/routines'
-  planned: M3
 /database/search:
-  api: 'POST /api/servers/:s/databases/:db/search'
+  api:
+    - 'GET /api/servers/:s/databases/:db/search'
+    - 'POST /api/servers/:s/databases/:db/search'
   ui: '/s/:s/db/:db/search'
-  planned: M3
 /database/sql:
   api: 'POST /api/servers/:s/query'
   ui: '/s/:s/db/:db/sql'
@@ -115,81 +117,50 @@
 /database/structure:
   api: 'GET /api/servers/:s/databases/:db/structure'
   ui: '/s/:s/db/:db/structure'
-  planned: M3
 /database/structure/add-prefix:
-  api: '/api/servers/:s/databases/:db/structure/add-prefix'
-  ui: '/s/:s/db/:db/structure/add-prefix'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/add-prefix'
+  ui: '/s/:s/db/:db/structure'
 /database/structure/add-prefix-table:
-  api: '/api/servers/:s/databases/:db/structure/add-prefix-table'
-  ui: '/s/:s/db/:db/structure/add-prefix-table'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/add-prefix'
 /database/structure/central-columns/add:
-  api: '/api/servers/:s/databases/:db/structure/central-columns/add'
-  ui: '/s/:s/db/:db/structure/central-columns/add'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/central-add'
 /database/structure/central-columns/make-consistent:
-  api: '/api/servers/:s/databases/:db/structure/central-columns/make-consistent'
-  ui: '/s/:s/db/:db/structure/central-columns/make-consistent'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/central-make-consistent'
 /database/structure/central-columns/remove:
-  api: '/api/servers/:s/databases/:db/structure/central-columns/remove'
-  ui: '/s/:s/db/:db/structure/central-columns/remove'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/central-remove'
 /database/structure/change-prefix-form:
-  api: '/api/servers/:s/databases/:db/structure/change-prefix-form'
-  ui: '/s/:s/db/:db/structure/change-prefix-form'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/replace-prefix'
+  ui: '/s/:s/db/:db/structure'
 /database/structure/copy-form:
-  api: '/api/servers/:s/databases/:db/structure/copy-form'
-  ui: '/s/:s/db/:db/structure/copy-form'
-  planned: M3
+  api: 'GET /api/servers/:s/databases/:db/structure/copy-form'
+  ui: '/s/:s/db/:db/structure'
 /database/structure/copy-table:
-  api: '/api/servers/:s/databases/:db/structure/copy-table'
-  ui: '/s/:s/db/:db/structure/copy-table'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/copy'
 /database/structure/copy-table-with-prefix:
-  api: '/api/servers/:s/databases/:db/structure/copy-table-with-prefix'
-  ui: '/s/:s/db/:db/structure/copy-table-with-prefix'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/copy-with-prefix'
 /database/structure/drop-form:
-  api: '/api/servers/:s/databases/:db/structure/drop-form'
-  ui: '/s/:s/db/:db/structure/drop-form'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/drop'
+  ui: '/s/:s/db/:db/structure'
 /database/structure/drop-table:
-  api: '/api/servers/:s/databases/:db/structure/drop-table'
-  ui: '/s/:s/db/:db/structure/drop-table'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/drop'
 /database/structure/empty-form:
-  api: '/api/servers/:s/databases/:db/structure/empty-form'
-  ui: '/s/:s/db/:db/structure/empty-form'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/empty'
+  ui: '/s/:s/db/:db/structure'
 /database/structure/empty-table:
-  api: '/api/servers/:s/databases/:db/structure/empty-table'
-  ui: '/s/:s/db/:db/structure/empty-table'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/empty'
 /database/structure/favorite-table:
   api: 'POST /api/servers/:s/favorites'
-  ui: '/s/:s/db/:db/structure/favorite-table'
-  planned: M3
 /database/structure/real-row-count:
   api: 'GET /api/servers/:s/databases/:db/structure/real-row-count'
-  ui: '/s/:s/db/:db/structure/real-row-count'
-  planned: M3
 /database/structure/replace-prefix:
-  api: '/api/servers/:s/databases/:db/structure/replace-prefix'
-  ui: '/s/:s/db/:db/structure/replace-prefix'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/replace-prefix'
 /database/structure/show-create:
-  api: 'POST /api/servers/:s/databases/:db/tables/show-create'
-  ui: '/s/:s/db/:db/structure/show-create'
-  planned: M3
+  api: 'POST /api/servers/:s/databases/:db/structure/show-create'
 /database/tracking:
   api:
     - 'GET /api/servers/:s/databases/:db/tracking'
     - 'POST /api/servers/:s/databases/:db/tracking'
   ui: '/s/:s/db/:db/tracking'
-  planned: M3
 /databases:
   api: 'GET /api/servers/:s/databases'
   planned: M3
@@ -769,8 +740,9 @@
   api:
     - 'GET /api/servers/:s/databases/:db/triggers'
     - 'POST /api/servers/:s/databases/:db/triggers'
-  ui: '/s/:s/db/:db[/t/:table]/triggers'
-  planned: M2
+    - 'GET /api/servers/:s/databases/:db/triggers/editor'
+    - 'GET /api/servers/:s/databases/:db/triggers/export'
+  ui: '/s/:s/db/:db/triggers'
 /user-password:
   api: 'POST /api/servers/:s/account/password'
   planned: M3

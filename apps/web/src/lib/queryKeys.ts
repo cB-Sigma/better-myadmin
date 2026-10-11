@@ -34,6 +34,8 @@ export const qk = {
     ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
   db: (r: DbRef) => ['srv', r.server, 'db', r.db] as const,
   dbScope: (r: DbRef) => ['srv', r.server, 'db', r.db, 'scope'] as const,
+  /** a database page (structure, operations, routines, …) with its query */
+  dbPage: (r: DbRef, page: string, q: object = {}) => ['srv', r.server, 'db', r.db, page, q] as const,
   tbl: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table] as const,
   tableScope: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table, 'scope'] as const,
   // SQL tab, bookmarks
