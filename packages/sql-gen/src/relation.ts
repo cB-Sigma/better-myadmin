@@ -6,7 +6,7 @@
 import { backquote } from './quote.ts'
 
 /**
- * ON DELETE / ON UPDATE choices (form value → SQL). Upstream phpMyAdmin lists them as RESTRICT,
+ * ON DELETE / ON UPDATE choices (form value → SQL), in phpMyAdmin's order since 8847e08639: RESTRICT,
  * NO ACTION, CASCADE, SET NULL (RESTRICT is the default MySQL leaves out of SHOW CREATE TABLE).
  */
 export const FK_ACTIONS: ReadonlyArray<readonly [string, string]> = [

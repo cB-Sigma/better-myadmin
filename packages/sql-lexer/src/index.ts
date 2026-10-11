@@ -1,5 +1,5 @@
 /**
- * @bettermyadmin/sql-lexer: a dependency-free TypeScript port of phpmyadmin/sql-parser 6.0.0
+ * @bettermyadmin/sql-lexer: a dependency-free TypeScript port of phpmyadmin/sql-parser 6.0.1
  * (lexer, parser, statement utilities) plus the phpMyAdmin helpers built on top of it.
  */
 

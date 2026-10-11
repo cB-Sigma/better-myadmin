@@ -1,11 +1,5 @@
 # Intentional differences of the Relation view (see tests/ui-parity/README.md for the format).
 rules:
-  - match: { kind: select, name: '/^on_(delete|update)\[\d+\]$/' }
-    ignore: [options, value]
-    exception: X38
-    reason: >-
-      upstream's option order RESTRICT, NO ACTION, CASCADE, SET NULL; an action left out of SHOW CREATE
-      TABLE reads RESTRICT instead of the reference's accidental first option (CASCADE)
   - match: { kind: select, label: Column, section: Internal relationships }
     ignore: [options]
     reason: >-

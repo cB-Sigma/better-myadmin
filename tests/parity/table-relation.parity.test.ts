@@ -54,18 +54,13 @@ async function bmaSave(table: string, body: unknown): Promise<Record<string, unk
 }
 
 /**
- * phpMyAdmin's form. An ON DELETE / ON UPDATE that SHOW CREATE TABLE leaves out (RESTRICT) matches
- * no option of the reference's CASCADE-first list, so the browser posts the first option; upstream
- * phpMyAdmin now lists RESTRICT first (parity exception: the order we use), so such a select posts
- * RESTRICT.
+ * phpMyAdmin's form as the browser posts it. An ON DELETE / ON UPDATE that SHOW CREATE TABLE leaves
+ * out (RESTRICT) matches no option, so the select posts its first one: RESTRICT since upstream
+ * 8847e08639 (the order we use).
  */
 async function pmaForm(table: string): Promise<Pairs> {
   const html = await pma.getPage('/table/relation', { db: DB_PMA, table })
-  let pairs = serializeForm(findForm(html, { action: '/table/relation' }))
-  for (const m of html.matchAll(/<select name="(on_(?:delete|update)\[\d+\])">([\s\S]*?)<\/select>/g)) {
-    if (!/ selected/.test(m[2] ?? '')) pairs = setPair(pairs, m[1] ?? '', 'RESTRICT')
-  }
-  return pairs
+  return serializeForm(findForm(html, { action: '/table/relation' }))
 }
 
 /** BetterMyAdmin's save request from its page: the rows as the form shows them, then `mods`. */
