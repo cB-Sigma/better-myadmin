@@ -116,7 +116,7 @@ Parsers are streaming: SQL (delimiter-aware, uses the lexer, skips `skip_queries
 
 ## Status monitor
 
-`GET /api/servers/:s/status/monitor/stream?interval=…&series=…` is an SSE feed; the server samples `SHOW GLOBAL STATUS` (and `/proc` or `os` module equivalents of `SysInfo` for CPU/memory/swap when the server is local) on the interval and emits deltas per selected series. Log analysis endpoints run the same `general_log`/`slow_log` table queries phpMyAdmin does and return grouped rows. The advisor runs the rule file (ported to a JSON ruleset in `packages/kbs/advisor-rules.json`, with the expression evaluator replicating `Advisor::ruleExprEvaluate` semantics incl. `fired()`, `ADVISOR_bytime`, `ADVISOR_timespanFormat`, `ADVISOR_formatByteDown`).
+`GET /api/servers/:s/status/monitor/stream?interval=…&series=…` is an SSE feed; the server samples `SHOW GLOBAL STATUS` (and `/proc` or `os` module equivalents of `SysInfo` for CPU/memory/swap when the server is local) on the interval and emits deltas per selected series. Log analysis endpoints run the same `general_log`/`slow_log` table queries phpMyAdmin does and return grouped rows. The advisor runs phpMyAdmin's rule set (exported by executing `Rules.php` into `packages/kbs/src/generated/advisor-rules.json`) with a port of Symfony ExpressionLanguage on PHP 8.3 value semantics (`packages/kbs/src/advisor/`), incl. `fired()`, `round()`, `substr()`, `preg_match()`, `ADVISOR_bytime`, `ADVISOR_timespanFormat`, `ADVISOR_formatByteDown` and their coercive argument passing; golden fixtures come from running phpMyAdmin's Advisor with PHP (`packages/kbs/scripts/`).
 
 ## Error model
 

@@ -67,29 +67,28 @@ Conventions:
 | GET | `/api/servers/:s` | server info block for home page (version, type, host, user, charset, SSL status; master shows no protocol version) + web server block + capabilities + metadata-storage status + warnings list | `HomeController` |
 | GET | `/api/servers/:s/metadata-storage/status` | per-table existence and `*work` flags | `/check-relations` |
 | POST | `/api/servers/:s/metadata-storage/create` | create missing pmadb tables (`fixUpMissing`) | `/check-relations` create |
-| GET | `/api/servers/:s/databases?pos=&sortBy=&sortOrder=&withStats=` | db list with collation and (optional) stats | `/server/databases` |
-| POST | `/api/servers/:s/databases` | `{name, collation}` create | `/server/databases/create` |
-| POST | `/api/servers/:s/databases/drop` | `{names[]}` | `/server/databases/destroy` |
-| GET | `/api/servers/:s/variables?filter=` | name, global, session, isEditable, doc | `/server/variables` |
-| GET/POST | `/api/servers/:s/variables/:name` | get / `{value}` set (`SET GLOBAL`) | `/server/variables/get|set/{name}` |
+| GET | `/api/servers/:s/databases?statistics=&pos=&sort_by=&sort_order=` | db list with collation and (optional) stats, create-form data, pager (`DatabasesResponse`) | `/server/databases` |
+| POST | `/api/servers/:s/databases` | `{new_db, db_collation}` create → `{message, sqlQuery, db, route}` | `/server/databases/create` |
+| POST | `/api/servers/:s/databases/drop` | `{selected_dbs[]}` → `{success, message}` | `/server/databases/destroy` |
+| GET | `/api/servers/:s/variables` | name, formatted global and differing session value, isEditable, doc (the `?filter=` is client-side) | `/server/variables` |
+| GET/POST | `/api/servers/:s/variables/:name` | get `{message}` / `{varValue}` set (`SET GLOBAL`) → `{success, variable|error}` | `/server/variables/get|set/{name}` |
 | GET | `/api/servers/:s/collations` | charsets with collations, defaults, descriptions | `/server/collations` |
 | GET | `/api/servers/:s/engines` | list | `/server/engines` |
-| GET | `/api/servers/:s/engines/:engine?page=` | engine details/pages (InnoDB status, buffer pool...) | `/server/engines/{engine}[/{page}]` |
+| GET | `/api/servers/:s/engines/:engine[/:page]` | engine details/pages (`Bufferpool`, `Status`, PBXT `Documentation`) | `/server/engines/{engine}[/{page}]` |
 | GET | `/api/servers/:s/plugins` | grouped plugin list | `/server/plugins` |
 | GET | `/api/servers/:s/status` | overview counters (traffic, connections, uptime, replication summary) | `/server/status` |
-| POST | `/api/servers/:s/status/flush` | `{what:'status'|'tables'}` | flush links |
-| GET | `/api/servers/:s/status/variables?filter=&alertOnly=` | all status vars with categories, docs, trend hints | `/server/status/variables` |
+| GET/POST | `/api/servers/:s/status/variables` | all status vars with sections, alerts, descriptions, doc and related links; POST `{flush: STATUS|TABLES|QUERY CACHE, filterText…}` runs `FLUSH …;` first (the related links' actions) | `/server/status/variables` |
 | GET | `/api/servers/:s/status/queries` | per-command stats | `/server/status/queries` |
-| GET | `/api/servers/:s/processes?showFull=&sortBy=&order=` | process list | `/server/status/processes` |
-| POST | `/api/servers/:s/processes/:id/kill` | `KILL <id>` | `/server/status/processes/kill/{id}` |
+| GET | `/api/servers/:s/status/processes?showExecuting=&full=&order_by_field=&sort_order=` | process list (also the auto-refresh, sent with `full`) | `/server/status/processes`, `/refresh` |
+| POST | `/api/servers/:s/status/processes/:id/kill` | `KILL <id>;` (`CALL mysql.rds_kill` on RDS) → `{success, message}` | `/server/status/processes/kill/{id}` |
 | GET | `/api/servers/:s/status/monitor/stream` (SSE) | live samples | `/server/status/monitor/chart` polling |
 | POST | `/api/servers/:s/status/monitor/log-vars` | `{changes}` set `log_output`, `general_log`, `slow_query_log`, `long_query_time` | `/server/status/monitor/log-vars` |
 | POST | `/api/servers/:s/status/monitor/slow-log` / `general-log` | `{from, to, groupSame, removeVariables}` → grouped rows | `/server/status/monitor/slow-log|general-log` |
 | POST | `/api/servers/:s/status/monitor/query` | `{sql}` → EXPLAIN + profiling for log analysis | `/server/status/monitor/query` |
-| GET | `/api/servers/:s/status/advisor` | fired rules grouped | `/server/status/advisor` |
+| GET | `/api/servers/:s/status/advisor` | `{fired, notfired, unchecked, errors}` | `/server/status/advisor` |
 | GET | `/api/servers/:s/replication` | primary/replica status | `/server/replication` |
 | POST | `/api/servers/:s/replication/*` | `primary/add-user`, `replica/configure`, `replica/control {action: start|stop|reset, thread?: io|sql|both}`, `replica/skip-errors {count}` | `/server/replication` actions |
-| GET | `/api/servers/:s/binlog?log=&pos=&showFull=` | logs list + events page | `/server/binlog` |
+| GET | `/api/servers/:s/binlog?log=&pos=&is_full_query=` | logs list + events page (MaxRows per page) | `/server/binlog` |
 | GET | `/api/servers/:s/privileges/users?initial=&db=&table=` | account list with privilege summary and groups | `/server/privileges` |
 | GET | `/api/servers/:s/privileges/users/:user/:host?tab=global|databases|tables|routines|password|login|export&db=&table=&routine=` | edit payload per tab | `/server/privileges` edit |
 | POST | `/api/servers/:s/privileges/users` | create account (full form payload) | add user |

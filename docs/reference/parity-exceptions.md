@@ -30,6 +30,9 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | X22 | Config | `ForceSSL` documented as deprecated, not acted on | Honoured: redirects to HTTPS and sets HSTS | Useful behind TLS terminators | [Security](../architecture/07-security.md) |
 | X23 | Themes | Colour mode chosen manually per theme | Defaults to `prefers-color-scheme`, manual override kept | Expected on modern desktops | [UI design](../architecture/09-ui-design-system.md) |
 | X24 | Connections | A new MySQL connection per HTTP request, so `postConnect` (`SELECT @@version…`, `SET NAMES`, `SET lc_messages`, `SET collation_connection`) runs on every request | Pooled connections per (session, server); the same set-up statements run once per new connection | Latency; same session state. The parity harness compares session set-up as final state, not per request | [Backend](../architecture/04-backend-architecture.md#connection-manager) |
+| X26 | Server pages | Documentation and external links go through the `/url` redirector (`Core::linkURL`) | Direct links (`target=mysql_doc`, external ones `rel=noopener noreferrer`) | The SPA has no redirector page; `noreferrer` keeps the referrer protection | `apps/server/src/server-admin/context.ts` |
+| X27 | Server pages | Every server controller runs `selectDb('mysql')` for superusers | Not sent | Connections are pooled (X24): a default database would leak into later requests (e.g. unqualified SQL on the server SQL page) | `docs/features/06-server-level.md` |
+| X28 | Databases | Drop runs RelationCleanup::database / Transformations::clear on the pmadb | Hook `setDatabaseDropCleanup` (no-op until the pmadb layer registers it) | The pmadb metadata layer is a separate package | `apps/server/src/server-admin/databases.ts` |
 | X25 | Config | Invalid directive values silently replaced by the default (`MaxRows = 0` → 25) | Startup fails with a readable error naming the directive | A typo should not silently change behaviour | `packages/config/README.md` |
 
 ## Source quirks found in phpMyAdmin master (reproduced unless noted)
@@ -65,3 +68,9 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | Q27 | Login | `login/footer.twig` checks `check_timeout`, which PHP never passes | N/A; our expiry message path is explicit |
 | Q28 | Home | No "Protocol version" row in the server block in master | Reproduce |
 | Q29 | Shell | No "Remember me" checkbox exists; persistence comes from `LoginCookieStore` | Reproduce |
+| Q30 | Variables | A variable name with other characters than `[a-zA-Z0-9_]` sets `error` = "Setting variable failed", which the response renderer overwrites with an empty string (the JS then shows "Request failed!!") | Fix: the message is returned and shown |
+| Q31 | Status processes | The auto-refresh posts `full=` and RefreshController only checks the parameter's presence, so refreshed lists always use `SHOW FULL PROCESSLIST` | Reproduce |
+| Q32 | Binary log | The posted `log` is interpolated unquoted into `SHOW BINLOG EVENTS IN '…'` even when it is not one of the server's logs | Fix: quoted with the string escaper (identical statement for real log names) |
+| Q33 | Advisor | The registered `round` closure takes one argument: `round(value,1)` in justification formulas rounds to an integer | Reproduce (the golden fixtures check it) |
+| Q34 | Variables / status | The knowledge base's first MySQL entry wins for documentation links (`max_connections` → replication-options-binary-log.html) | Reproduce |
+| Q35 | Status | Every Status controller (processes, refresh, kill) gets Server\Status\Data from the DI container: replication status, SHOW GLOBAL STATUS and SHOW GLOBAL VARIABLES run on each request, even when unused | Reproduce (same statements) |
