@@ -483,10 +483,11 @@ function Navigation(props: {
           {nav.hasShowAll && (
             <>
               <td>
-                <label className="flex items-center gap-1 text-sm">
+                <span className="flex items-center gap-1 text-sm">
                   <input
                     type="checkbox"
                     name="navig"
+                    id="showAll_grid"
                     className="showAllRows"
                     value="all"
                     checked={nav.isShowingAll}
@@ -495,8 +496,8 @@ function Navigation(props: {
                       onRun({ maxRows: nav.showAllMaxRows, pos: 0 })
                     }}
                   />
-                  {t('Show all')}
-                </label>
+                  <label htmlFor="showAll_grid">{t('Show all')}</label>
+                </span>
               </td>
               <td>
                 <div className="navigation_separator">|</div>
@@ -579,9 +580,9 @@ function Navigation(props: {
                 <NativeSelect
                   name="sql_query"
                   className="autosubmit"
-                  value={String(grid.sortByKey.options.findIndex((o) => o.selected))}
+                  value={grid.sortByKey.options.find((o) => o.selected)?.sql ?? ''}
                   onChange={(e) => {
-                    const o = grid.sortByKey!.options[Number(e.target.value)]
+                    const o = grid.sortByKey!.options.find((x) => x.sql === e.target.value)
                     if (o === undefined) return
                     onRun({
                       sql: o.sql,
@@ -590,8 +591,8 @@ function Navigation(props: {
                     })
                   }}
                 >
-                  {grid.sortByKey.options.map((o, i) => (
-                    <option key={o.label} value={String(i)}>
+                  {grid.sortByKey.options.map((o) => (
+                    <option key={o.label} value={o.sql}>
                       {o.label}
                     </option>
                   ))}
