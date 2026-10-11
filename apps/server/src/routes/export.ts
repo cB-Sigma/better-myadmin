@@ -8,6 +8,7 @@ import { stream } from 'hono/streaming'
 import { exportPageRoutes } from '../export/page.ts'
 import { openExportSession, userDir } from '../export/service.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { defaultOfPath } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
 
 /**
@@ -48,6 +49,14 @@ exportRoutes.post('/', async (c) => {
   const s = await openExportSession(c, params.str('db'))
   try {
     const prepared = await prepareExport(s.env, params).catch(requestError)
+    // Export::rememberFilename (UserPreferencesHandler::setUserValue)
+    if (prepared.rememberTemplate !== null && prepared.exportType !== 'raw') {
+      const key = { server: 'server', database: 'database', table: 'table' }[prepared.exportType]
+      const path = `Export/file_template_${key}`
+      await (await s.meta.meta())
+        .userPreferences()
+        .persistOption(path, prepared.rememberTemplate, defaultOfPath(path))
+    }
     if (prepared.postedAliases !== null) {
       c.get('session').exportAliases = prepared.postedAliases
     }

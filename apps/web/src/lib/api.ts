@@ -19,6 +19,9 @@ import type {
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
+  ExportPageResponse,
+  ExportResponse,
+  ExportTemplateResult,
   FormatResponse,
   HistoryResponse,
   HomeResponse,
@@ -171,6 +174,35 @@ export const api = {
   consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+  // export (docs/features/07-export-import.md)
+  exportPage: (server: number, pairs: Array<[string, string]>) =>
+    call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
+  /** databases (no db), tables (db) or columns (db + table) for the aliases dialog */
+  exportAliasNames: (server: number, db: string, table: string) =>
+    call<{ names: string[] }>('GET', `/servers/${server}/export/alias-names?${qs({ db, table })}`),
+  exportRun: (server: number, params: Array<[string, string]>) =>
+    call<ExportResponse>('POST', `/servers/${server}/export`, { params }),
+  /** The one-shot download URL of a prepared dump (navigated to, so the browser saves it). */
+  exportDownloadUrl: (server: number, id: string) => `/api/servers/${server}/export/${id}`,
+  /** "View output as text": the dump body. */
+  exportText: async (server: number, id: string): Promise<string> => {
+    const res = await fetch(`/api/servers/${server}/export/${id}`, { credentials: 'same-origin' })
+    if (!res.ok) {
+      const env = ((await res.json().catch(() => null)) as ErrorEnvelope | null)?.error
+      throw new ApiError(res.status, env ?? { code: 'INTERNAL', message: res.statusText })
+    }
+    return res.text()
+  },
+  exportTemplateCreate: (
+    server: number,
+    req: { exportType: string; templateName: string; templateData: string },
+  ) => call<ExportTemplateResult>('POST', `/servers/${server}/export/templates`, req),
+  exportTemplateLoad: (server: number, id: number) =>
+    call<ExportTemplateResult>('GET', `/servers/${server}/export/templates/${id}`),
+  exportTemplateUpdate: (server: number, id: number, templateData: string) =>
+    call<ExportTemplateResult>('POST', `/servers/${server}/export/templates/${id}`, { templateData }),
+  exportTemplateDelete: (server: number, id: number) =>
+    call<ExportTemplateResult>('POST', `/servers/${server}/export/templates/${id}/delete`),
 }
 
 function queryString(q: Record<string, string | number | undefined>): string {

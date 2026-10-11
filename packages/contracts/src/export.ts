@@ -38,6 +38,8 @@ export interface PluginOptionItem {
   checked?: boolean
   header?: PluginOptionItem | null
   items?: PluginOptionItem[]
+  /** database scope: the plugin's configured structure/data choice (`<name>_default` field) */
+  dbDefault?: string
 }
 
 export interface PluginOptionGroup {
@@ -99,3 +101,13 @@ export const ExportTemplateCreate = z.object({
 })
 export const ExportTemplateUpdate = z.object({ templateId: z.number().int(), templateData: z.string() })
 export const ExportTemplateId = z.object({ templateId: z.number().int() })
+
+/** Template CRUD answer (pma: /export/template/* JSON). */
+export interface ExportTemplateResult {
+  success: boolean
+  message?: string
+  /** load: the saved form object as JSON */
+  data?: string
+  /** create: the user's templates of that export type */
+  templates?: Array<{ id: number; name: string }>
+}

@@ -61,9 +61,8 @@
   ui: '/s/:s/db/:db/events'
   planned: M3
 /database/export:
-  api: '/api/servers/:s/databases/:db/export'
+  api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/db/:db/export'
-  planned: M4
 /database/import:
   api: '/api/servers/:s/databases/:db/import'
   ui: '/s/:s/db/:db/import'
@@ -203,41 +202,26 @@
   note: opt-in
 /export:
   api:
-    - GET /api/export/options
-    - POST /api/export/jobs
-  planned: M4
+    - 'POST /api/servers/:s/export'
+    - 'GET /api/servers/:s/export/:id'
   exception: X10
-  note: streaming
+  note: streaming (prepare + one-shot download)
 /export/check-time-out:
-  api: GET /api/export/check-time-out
-  planned: M4
+  api: 'GET /api/servers/:s/export/check-time-out'
   exception: X10
   note: streaming
 /export/tables:
-  api: '/api/export/*'
-  planned: M4
-  exception: X10
-  note: streaming
+  api: 'GET /api/servers/:s/export/page'
+  ui: '/s/:s/db/:db/export'
+  note: 'selected_tbl[] in the search params'
 /export/template/create:
-  api: '/api/export/*'
-  planned: M4
-  exception: X10
-  note: streaming
+  api: 'POST /api/servers/:s/export/templates'
 /export/template/delete:
-  api: '/api/export/*'
-  planned: M4
-  exception: X10
-  note: streaming
+  api: 'POST /api/servers/:s/export/templates/:id/delete'
 /export/template/load:
-  api: '/api/export/*'
-  planned: M4
-  exception: X10
-  note: streaming
+  api: 'GET /api/servers/:s/export/templates/:id'
 /export/template/update:
-  api: '/api/export/*'
-  planned: M4
-  exception: X10
-  note: streaming
+  api: 'POST /api/servers/:s/export/templates/:id'
 /gis-data-editor:
   api: POST /api/gis/preview
   planned: M2
@@ -407,9 +391,8 @@
   ui: '/s/:s/engines/:engine'
   planned: M3
 /server/export:
-  api: '/api/servers/:s/export'
+  api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/export'
-  planned: M4
 /server/import:
   api: '/api/servers/:s/import'
   ui: '/s/:s/import'
@@ -572,13 +555,12 @@
   ui: '/s/:s/db/:db/t/:table/delete/rows'
   planned: M1
 /table/export:
-  api: '/api/servers/:s/databases/:db/tables/:table/export'
+  api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/db/:db/t/:table/export'
-  planned: M4
 /table/export/rows:
-  api: POST /api/export/rows
-  ui: '/s/:s/db/:db/t/:table/export/rows'
-  planned: M4
+  api: 'GET /api/servers/:s/export/page'
+  ui: '/s/:s/db/:db/t/:table/export'
+  note: 'where_clause[] in the search params'
 /table/find-replace:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
   ui: '/s/:s/db/:db/t/:table/find-replace'

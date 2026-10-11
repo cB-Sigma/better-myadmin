@@ -21,4 +21,11 @@ export const qk = {
   dbScope: (s: number, db: string) => ['srv', s, 'db', db, 'scope'] as const,
   tbl: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t] as const,
   tableScope: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'scope'] as const,
+  /** export page view-model of a scope (db/table empty above their scope) */
+  exportPage: (s: number, db: string, t: string, q: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'export', q] as const,
+  exportAliasNames: (s: number, db: string, t: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'aliasNames'] as const,
+  importPage: (s: number, db: string, t: string, q: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
 }
