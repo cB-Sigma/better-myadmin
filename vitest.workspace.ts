@@ -9,6 +9,7 @@ export default defineWorkspace([
         'apps/*/test/unit/**/*.test.ts',
         'apps/web/src/**/*.test.{ts,tsx}',
         'tools/*/test/**/*.test.ts',
+        'tests/ui-parity/**/*.test.ts',
       ],
     },
   },

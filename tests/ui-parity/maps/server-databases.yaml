@@ -1,0 +1,7 @@
+# Intentional differences of Server › Databases (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: checkbox, label: '/^(phpmyadmin|uip_pmadb)$/' }
+    ignore: [disabled, checked]
+    reason: >-
+      environment: each app protects its own configuration storage database from being dropped
+      (the reference's `phpmyadmin`, ours `uip_pmadb`, tests/ui-parity/bma.config.ts)
