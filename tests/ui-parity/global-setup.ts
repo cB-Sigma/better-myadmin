@@ -9,7 +9,8 @@ const repo = join(dirname(fileURLToPath(import.meta.url)), '../..')
 export default async function setup() {
   rmSync(join(repo, '.data/ui-parity'), { recursive: true, force: true })
   const c = await mysql.createConnection({ ...ROOT, multipleStatements: true })
-  await c.query(`DROP DATABASE IF EXISTS ${FIX.db}; CREATE DATABASE ${FIX.db} COLLATE utf8mb4_general_ci;
+  await c.query(`DROP DATABASE IF EXISTS ${FIX.insertDb};
+    DROP DATABASE IF EXISTS ${FIX.db}; CREATE DATABASE ${FIX.db} COLLATE utf8mb4_general_ci;
     CREATE TABLE ${FIX.db}.${FIX.table} (
       id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
       name VARCHAR(40) NOT NULL DEFAULT 'x' COMMENT 'display name',

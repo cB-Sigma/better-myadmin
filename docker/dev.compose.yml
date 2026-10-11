@@ -1,5 +1,6 @@
 # Development and parity services. Usage: docker compose -f docker/dev.compose.yml up -d
-# - mysql84 / mariadb11: test servers (root/root), general log on for the parity harness
+# - mysql84 / mariadb11: test servers (root/root), general log on for the parity harness, as an
+#   indexed MyISAM table (seed/00-general-log.sql; see docs/architecture/14-development-setup.md)
 # - phpmyadmin-ref: phpMyAdmin at the reference commit (docs/reference/reference-commit.txt) on :8081
 # - phpmyadmin-ref-i18n: the same with compiled translations (like a release) on :8082
 services:
@@ -8,13 +9,16 @@ services:
     environment: { MYSQL_ROOT_PASSWORD: root }
     command: ["--general-log=1", "--log-output=TABLE"]
     ports: ["3306:3306"]
-    volumes: ["./seed/pmadb.sql:/docker-entrypoint-initdb.d/01-pmadb.sql:ro"]
+    volumes:
+      - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
+      - "./seed/pmadb.sql:/docker-entrypoint-initdb.d/01-pmadb.sql:ro"
     healthcheck: { test: ["CMD", "mysqladmin", "ping", "-proot"], interval: 5s, retries: 30 }
   mariadb11:
     image: mariadb:11
     environment: { MARIADB_ROOT_PASSWORD: root }
     command: ["--general-log=1", "--log-output=TABLE"]
     ports: ["3307:3306"]
+    volumes: ["./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"]
     healthcheck: { test: ["CMD", "healthcheck.sh", "--connect"], interval: 5s, retries: 30 }
   phpmyadmin-ref:
     build: { context: ./pma-ref }
