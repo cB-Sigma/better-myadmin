@@ -21,15 +21,15 @@ export const pmaControls = {
   // pma: resources/templates/database/central_columns/
   'database/central_columns/edit_table_row.twig#field_type[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_type[${row}]',
+    match: "nm('field_type'",
   },
   'database/central_columns/edit_table_row.twig#field_length[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_length[${row}]',
+    match: "nm('field_length'",
   },
   'database/central_columns/edit_table_row.twig#field_default_type[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_default_type[${row}]',
+    match: "nm('field_default_type'",
   },
   'database/central_columns/edit_table_row.twig#field_default_value[*]': {
     file: 'CentralColumnsPage.tsx',
@@ -37,7 +37,7 @@ export const pmaControls = {
   },
   'database/central_columns/edit_table_row.twig#field_collation[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_collation[${row}]',
+    match: "nm('field_collation'",
   },
   'database/central_columns/edit_table_row.twig#field_null[*]': {
     file: 'CentralColumnsPage.tsx',
@@ -51,15 +51,15 @@ export const pmaControls = {
   'database/central_columns/main.twig#link:Add new column': 'CentralColumnsPage.tsx',
   'database/central_columns/main.twig#field_type[0]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_type[${row}]',
+    match: "nm('field_type'",
   },
   'database/central_columns/main.twig#field_length[0]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_length[${row}]',
+    match: "nm('field_length'",
   },
   'database/central_columns/main.twig#field_default_type[0]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_default_type[${row}]',
+    match: "nm('field_default_type'",
   },
   'database/central_columns/main.twig#field_default_value[0]': {
     file: 'CentralColumnsPage.tsx',
@@ -67,7 +67,7 @@ export const pmaControls = {
   },
   'database/central_columns/main.twig#field_collation[0]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_collation[${row}]',
+    match: "nm('field_collation'",
   },
   'database/central_columns/main.twig#field_null[0]': { file: 'CentralColumnsPage.tsx', match: 'allow_null' },
   'database/central_columns/main.twig#col_extra[0]': { file: 'CentralColumnsPage.tsx', match: "t('A_I')" },
@@ -90,15 +90,15 @@ export const pmaControls = {
   'database/central_columns/main.twig#submit:Save': 'CentralColumnsPage.tsx',
   'database/central_columns/main.twig#field_type[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_type[${row}]',
+    match: "nm('field_type'",
   },
   'database/central_columns/main.twig#field_length[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_length[${row}]',
+    match: "nm('field_length'",
   },
   'database/central_columns/main.twig#field_default_type[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_default_type[${row}]',
+    match: "nm('field_default_type'",
   },
   'database/central_columns/main.twig#field_default_value[*]': {
     file: 'CentralColumnsPage.tsx',
@@ -106,7 +106,7 @@ export const pmaControls = {
   },
   'database/central_columns/main.twig#field_collation[*]': {
     file: 'CentralColumnsPage.tsx',
-    match: 'field_collation[${row}]',
+    match: "nm('field_collation'",
   },
   'database/central_columns/main.twig#field_null[*]': { file: 'CentralColumnsPage.tsx', match: 'allow_null' },
   'database/central_columns/main.twig#col_extra[*]': { file: 'CentralColumnsPage.tsx', match: "t('A_I')" },
@@ -127,7 +127,7 @@ export const pmaControls = {
   'database/events/editor_form.twig#item_interval_field': 'EventsPage.tsx',
   'database/events/editor_form.twig#item_starts': 'EventsPage.tsx',
   'database/events/editor_form.twig#item_ends': 'EventsPage.tsx',
-  'database/events/editor_form.twig#item_definition': 'EventsPage.tsx',
+  'database/events/editor_form.twig#item_definition': { file: 'EventsPage.tsx', match: '<DefinitionEditor' },
   'database/events/editor_form.twig#id:format': 'EventsPage.tsx',
   'database/events/editor_form.twig#item_preserve': 'EventsPage.tsx',
   'database/events/editor_form.twig#item_definer': 'EventsPage.tsx',
@@ -198,7 +198,10 @@ export const pmaControls = {
   'database/routines/editor_form.twig#item_returnlength': 'RoutinesPage.tsx',
   'database/routines/editor_form.twig#item_returnopts_text': 'RoutinesPage.tsx',
   'database/routines/editor_form.twig#item_returnopts_num': 'RoutinesPage.tsx',
-  'database/routines/editor_form.twig#item_definition': 'RoutinesPage.tsx',
+  'database/routines/editor_form.twig#item_definition': {
+    file: 'RoutinesPage.tsx',
+    match: '<DefinitionEditor',
+  },
   'database/routines/editor_form.twig#id:format': 'RoutinesPage.tsx',
   'database/routines/editor_form.twig#item_isdeterministic': 'RoutinesPage.tsx',
   'database/routines/editor_form.twig#item_adjust_privileges': 'RoutinesPage.tsx',
@@ -303,7 +306,7 @@ export const pmaControls = {
   'triggers/editor_form.twig#item_table': 'TriggersPage.tsx',
   'triggers/editor_form.twig#item_timing': 'TriggersPage.tsx',
   'triggers/editor_form.twig#item_event': 'TriggersPage.tsx',
-  'triggers/editor_form.twig#item_definition': 'TriggersPage.tsx',
+  'triggers/editor_form.twig#item_definition': { file: 'TriggersPage.tsx', match: '<DefinitionEditor' },
   'triggers/editor_form.twig#id:format': 'TriggersPage.tsx',
   'triggers/editor_form.twig#item_definer': 'TriggersPage.tsx',
   'triggers/list.twig#id:checkAllCheckbox': 'programs.tsx',

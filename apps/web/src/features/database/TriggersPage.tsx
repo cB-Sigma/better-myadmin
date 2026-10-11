@@ -1,12 +1,12 @@
 import type { SqlMessage, TriggerEditorData } from '@bettermyadmin/contracts'
-import { Button, Input, MySqlDocLink, NativeSelect, Textarea } from '@bettermyadmin/ui'
+import { Button, Input, MySqlDocLink, NativeSelect, Panel, PanelBody } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { path, DbModal, Messages, errorMessage, tableBase } from './common'
+import { path, DbModal, DefinitionEditor, Messages, errorMessage, tableBase } from './common'
 import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 
 /**
@@ -102,6 +102,7 @@ export function TriggersPage({ server, db, table = '' }: { server: number; db: s
       {editor !== null && (
         <TriggerEditor
           server={server}
+          codemirror={q.data?.codemirror ?? false}
           tables={d.tables}
           initial={editor.trigger}
           editMode={editor.original !== null}
@@ -129,6 +130,7 @@ export function TriggersPage({ server, db, table = '' }: { server: number; db: s
 
 function TriggerEditor({
   server,
+  codemirror,
   tables,
   initial,
   editMode,
@@ -136,6 +138,7 @@ function TriggerEditor({
   onSave,
 }: {
   server: number
+  codemirror: boolean
   tables: string[]
   initial: TriggerEditorData
   editMode: boolean
@@ -165,74 +168,86 @@ function TriggerEditor({
       <div className="mb-2 font-semibold">
         {t('Details')} {!editMode && <MySqlDocLink link="CREATE_TRIGGER" />}
       </div>
-      <table className="rte_table w-full text-sm">
-        <tbody>
-          <EditorRow label={t('Trigger name')}>
-            <Input
-              name="item_name"
-              maxLength={64}
-              value={tg.name}
-              onChange={(x) => set({ name: x.target.value })}
-            />
-          </EditorRow>
-          <EditorRow label={t('Table')}>
-            <NativeSelect name="item_table" value={tg.table} onChange={(x) => set({ table: x.target.value })}>
-              {tables.map((tb) => (
-                <option key={tb} value={tb}>
-                  {tb}
-                </option>
-              ))}
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={pgettext('Trigger action time', 'Time')}>
-            <NativeSelect
-              name="item_timing"
-              value={tg.timing}
-              onChange={(x) => set({ timing: x.target.value })}
-            >
-              {['BEFORE', 'AFTER'].map((v) => (
-                <option key={v} value={v}>
-                  {v}
-                </option>
-              ))}
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('Event')}>
-            <NativeSelect name="item_event" value={tg.event} onChange={(x) => set({ event: x.target.value })}>
-              {['INSERT', 'UPDATE', 'DELETE'].map((v) => (
-                <option key={v} value={v}>
-                  {v}
-                </option>
-              ))}
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('Definition')}>
-            <Textarea
-              name="item_definition"
-              rows={15}
-              className="font-mono"
-              value={tg.definition}
-              onChange={(x) => set({ definition: x.target.value })}
-            />
-            <Button
-              id="format"
-              className="mt-1"
-              onClick={() =>
-                void api.sqlFormat(server, tg.definition, false).then((f) => set({ definition: f.sql }))
-              }
-            >
-              {t('Format')}
-            </Button>
-          </EditorRow>
-          <EditorRow label={t('Definer')}>
-            <Input
-              name="item_definer"
-              value={tg.definer}
-              onChange={(x) => set({ definer: x.target.value })}
-            />
-          </EditorRow>
-        </tbody>
-      </table>
+      {/* editor_form.twig: the fields sit in a card headed "Details" */}
+      <Panel title={t('Details')}>
+        <PanelBody>
+          <table className="rte_table w-full text-sm">
+            <tbody>
+              <EditorRow label={t('Trigger name')}>
+                <Input
+                  name="item_name"
+                  maxLength={64}
+                  value={tg.name}
+                  onChange={(x) => set({ name: x.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Table')}>
+                <NativeSelect
+                  name="item_table"
+                  value={tg.table}
+                  onChange={(x) => set({ table: x.target.value })}
+                >
+                  {tables.map((tb) => (
+                    <option key={tb} value={tb}>
+                      {tb}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={pgettext('Trigger action time', 'Time')}>
+                <NativeSelect
+                  name="item_timing"
+                  value={tg.timing}
+                  onChange={(x) => set({ timing: x.target.value })}
+                >
+                  {['BEFORE', 'AFTER'].map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('Event')}>
+                <NativeSelect
+                  name="item_event"
+                  value={tg.event}
+                  onChange={(x) => set({ event: x.target.value })}
+                >
+                  {['INSERT', 'UPDATE', 'DELETE'].map((v) => (
+                    <option key={v} value={v}>
+                      {v}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('Definition')}>
+                <DefinitionEditor
+                  label={t('Definition')}
+                  value={tg.definition}
+                  onChange={(v) => set({ definition: v })}
+                  codemirror={codemirror}
+                />
+                <Button
+                  id="format"
+                  className="mt-1"
+                  onClick={() =>
+                    void api.sqlFormat(server, tg.definition, false).then((f) => set({ definition: f.sql }))
+                  }
+                >
+                  {t('Format')}
+                </Button>
+              </EditorRow>
+              <EditorRow label={t('Definer')}>
+                <Input
+                  name="item_definer"
+                  value={tg.definer}
+                  onChange={(x) => set({ definer: x.target.value })}
+                />
+              </EditorRow>
+            </tbody>
+          </table>
+        </PanelBody>
+      </Panel>
     </DbModal>
   )
 }

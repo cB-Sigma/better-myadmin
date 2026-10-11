@@ -278,6 +278,8 @@ export interface RoutinesListResponse {
   /** CREATE ROUTINE on the database */
   canCreate: boolean
   pager: DbPager | null
+  /** $cfg['CodemirrorEnable']: the definition / query editor is CodeMirror */
+  codemirror: boolean
 }
 
 export const RoutineParam = z.object({
@@ -336,6 +338,8 @@ export interface RoutineEditorData {
 
 export interface RoutineEditorOptions {
   datatypes: string[]
+  /** the type <select> as Generator::getSupportedDatatypes renders it (groups, '-' separators) */
+  types: ColumnFormOptions['types']
   charsets: Array<{ name: string; description: string }>
   numericOptions: string[]
   hasAdjustPrivileges: boolean
@@ -377,6 +381,8 @@ export interface EventsListResponse {
   items: Array<{ name: string; type: string; status: string; dropSql: string }>
   schedulerOn: boolean
   canCreate: boolean
+  /** $cfg['CodemirrorEnable']: the definition / query editor is CodeMirror */
+  codemirror: boolean
 }
 
 export const EventSaveRequest = z.object({
@@ -416,6 +422,8 @@ export interface TriggersListResponse {
   canCreate: boolean
   /** the editor's table select */
   tables: string[]
+  /** $cfg['CodemirrorEnable']: the definition / query editor is CodeMirror */
+  codemirror: boolean
 }
 
 export const TriggerSaveRequest = z.object({
@@ -444,6 +452,8 @@ export interface MultiTableFormResponse {
   tables: Array<{ name: string; columns: string[] }>
   /** default_no_of_columns */
   defaultColumns: number
+  /** $cfg['CodemirrorEnable']: the definition / query editor is CodeMirror */
+  codemirror: boolean
 }
 
 export interface MultiTableKeysResponse {

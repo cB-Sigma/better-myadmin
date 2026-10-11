@@ -16,11 +16,13 @@ import {
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { type ReactNode, useState } from 'react'
+import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
+import { SqlEditor } from '../sql/editor/SqlEditor'
+import type { SqlEditorHandle } from '../sql/editor/types'
 
 /** Shared bits of the database pages (compositions of packages/ui and the SQL message card). */
 
@@ -184,5 +186,47 @@ export function DbModal({
         {footer !== undefined && <DialogFooter>{footer}</DialogFooter>}
       </DialogContent>
     </Dialog>
+  )
+}
+
+/**
+ * The routine / event / trigger definition and the multi-table query box: the SQL editor
+ * (CodeMirror with $cfg['CodemirrorEnable']) kept in step with a controlled value, so Format and
+ * Update query can replace the text.
+ * pma: resources/js/database/routines.ts (CodeMirror.fromTextArea on textarea[name=item_definition]),
+ *      resources/js/database/multi_table_query.ts (CodeMirror on #MultiSqlquery)
+ */
+export function DefinitionEditor({
+  id,
+  label,
+  value,
+  onChange,
+  codemirror,
+  rows = 15,
+}: {
+  id?: string
+  label: string
+  value: string
+  onChange: (v: string) => void
+  codemirror: boolean
+  rows?: number
+}) {
+  const h = useRef<SqlEditorHandle>(null)
+  useEffect(() => {
+    const cur = h.current
+    if (cur !== null && cur.getValue() !== value) cur.setValue(value)
+  }, [value])
+  return (
+    <SqlEditor
+      handleRef={h}
+      {...(id !== undefined ? { id } : {})}
+      ariaLabel={label}
+      initialValue={value}
+      onChange={onChange}
+      rows={rows}
+      codemirror={codemirror}
+      lint={null}
+      autocomplete={null}
+    />
   )
 }

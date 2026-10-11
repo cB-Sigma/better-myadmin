@@ -23,7 +23,7 @@ export async function multiTableForm(ctx: DbCtx): Promise<MultiTableFormResponse
     }
     t.columns.push(r.COLUMN_NAME ?? '')
   }
-  return { tables, defaultColumns: 3 }
+  return { tables, defaultColumns: 3, codemirror: ctx.cfg.CodemirrorEnable }
 }
 
 /** TablesController: the foreign keys between the used tables */
