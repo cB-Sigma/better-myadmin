@@ -6,11 +6,13 @@ import { useState } from 'react'
 import { ApiError, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { HighlightedSql } from '../sql/HighlightedSql'
 import { StatementBlock } from '../sql/Results'
 import type { CardEnv } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
 import { sqlTabRoute } from '../sql/routes'
 import { runQuery } from '../sql/runner'
+import { takeFlash } from '../table/structure/flash'
 
 export interface BrowsePageProps {
   server: number
@@ -32,6 +34,8 @@ export function BrowsePage(props: BrowsePageProps) {
   const navigate = useNavigate()
   const qc = useQueryClient()
   const [other, setOther] = useState<QueryResponse | null>(null)
+  // the message of the Insert/Edit save that came back here (ReplaceController → /sql)
+  const [flash] = useState(() => takeFlash())
   const req = {
     db,
     table,
@@ -88,6 +92,15 @@ export function BrowsePage(props: BrowsePageProps) {
   const res = other ?? q.data
   return (
     <div id="sqlqueryresultsouter" className="max-w-full">
+      {flash.map((m, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: messages are positional
+        <div key={i} className="mb-3 overflow-hidden rounded border border-border">
+          <MessageBox type={m.type} text={m.text} />
+          {m.sql !== undefined && m.sql !== '' && (
+            <HighlightedSql sql={m.sql} className="bg-bg-inset px-3 py-2" />
+          )}
+        </div>
+      ))}
       {res.statements.map((st, i) => (
         <StatementBlock
           key={`${i}-${st.sig}`}

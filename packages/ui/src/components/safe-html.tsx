@@ -46,10 +46,59 @@ const CONFIG: Config = {
   ALLOW_ARIA_ATTR: false,
 }
 
+/**
+ * Output of the browser transformation plugins (Image/Link/Formatted/…, docs/features/03): the message
+ * set plus images, `<iframe srcdoc>` (always sandboxed, never `src`) and table/text-level extras.
+ * pma: src/Plugins/Transformations/Output/*.php
+ */
+export const TRANSFORMATION_HTML_TAGS = [
+  ...SAFE_HTML_TAGS,
+  'abbr',
+  'dfn',
+  'div',
+  'small',
+  'u',
+  'img',
+  'iframe',
+]
+export const TRANSFORMATION_HTML_ATTRS = [
+  ...SAFE_HTML_ATTRS,
+  'src',
+  'alt',
+  'width',
+  'height',
+  'border',
+  'srcdoc',
+  'sandbox',
+  'colspan',
+  'rowspan',
+]
+const TRANSFORMATION_CONFIG: Config = {
+  ALLOWED_TAGS: TRANSFORMATION_HTML_TAGS,
+  ALLOWED_ATTR: TRANSFORMATION_HTML_ATTRS,
+  ALLOW_DATA_ATTR: false,
+  ALLOW_ARIA_ATTR: false,
+  ADD_DATA_URI_TAGS: ['img'],
+}
+
+/** Which allow-list: phpMyAdmin messages (Sanitize::sanitizeMessage) or transformation output. */
+export type SafeHtmlProfile = 'message' | 'transformation'
+
 let hooked = false
 function purifier() {
   if (!hooked && DOMPurify.isSupported) {
     DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+      if (node.nodeName === 'IFRAME') {
+        node.removeAttribute('src')
+        node.setAttribute('sandbox', '')
+        return
+      }
+      if (node.nodeName === 'IMG') {
+        const src = node.getAttribute('src')
+        if (src !== null && !/^(?:https?:\/\/|\.\/|\/|data:image\/)/i.test(src.trim()))
+          node.removeAttribute('src')
+        return
+      }
       if (node.nodeName !== 'A') return
       const href = node.getAttribute('href')
       if (href !== null && !SAFE_HREF.test(href.trim())) node.removeAttribute('href')
@@ -72,9 +121,10 @@ const escapeHtml = (s: string) =>
  * Sanitized HTML string. Without a DOM (server-side, workers, node tests) DOMPurify cannot run,
  * so the input is escaped instead: never unsanitized markup.
  */
-export function sanitizeHtml(html: string): string {
+export function sanitizeHtml(html: string, profile: SafeHtmlProfile = 'message'): string {
   const p = purifier()
-  return p.isSupported ? p.sanitize(html, CONFIG) : escapeHtml(html)
+  if (!p.isSupported) return escapeHtml(html)
+  return p.sanitize(html, profile === 'transformation' ? TRANSFORMATION_CONFIG : CONFIG)
 }
 
 /** A sanitized DocumentFragment (CodeMirror tooltips and other DOM APIs that want nodes). */
@@ -99,12 +149,19 @@ type SafeHtmlProps<T extends ElementType> = {
   html: string
   /** Wrapper element, `span` by default. */
   as?: T
+  /** Allow-list, `message` by default. */
+  profile?: SafeHtmlProfile
 } & Omit<ComponentProps<T>, 'children' | 'dangerouslySetInnerHTML'>
 
 /** `<SafeHtml html={t('… <b>primary</b> …')} />` — the only component allowed to set innerHTML. */
-export function SafeHtml<T extends ElementType = 'span'>({ html, as, ...props }: SafeHtmlProps<T>) {
+export function SafeHtml<T extends ElementType = 'span'>({
+  html,
+  as,
+  profile = 'message',
+  ...props
+}: SafeHtmlProps<T>) {
   const Tag = (as ?? 'span') as ElementType
-  const clean = useMemo(() => sanitizeHtml(html), [html])
+  const clean = useMemo(() => sanitizeHtml(html, profile), [html, profile])
   // biome-ignore lint/security/noDangerouslySetInnerHtml: sanitized above with the Sanitize allow-list
   return <Tag {...props} dangerouslySetInnerHTML={{ __html: clean }} />
 }

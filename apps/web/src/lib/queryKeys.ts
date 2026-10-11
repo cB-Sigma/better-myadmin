@@ -48,6 +48,13 @@ export const qk = {
   indexForm: (r: TableRef, q: object | null) => [...qk.tbl(r), 'index-form', q] as const,
   partitionForm: (r: TableRef) => [...qk.tbl(r), 'partition-form'] as const,
   createTableForm: (r: DbRef) => [...qk.db(r), 'create-form'] as const,
+  // Insert/Edit, FK browser, transformations
+  /** Insert/Edit form for one request (where clauses, toggles, row count) */
+  insertForm: (r: TableRef, req: object) => [...qk.tbl(r), 'insertForm', req] as const,
+  /** a page of the Browse foreign values popup */
+  browseForeigners: (r: TableRef, req: object) => [...qk.tbl(r), 'browseForeigners', req] as const,
+  /** stored MIME types / transformations of a table's columns (Browse grid, Insert form) */
+  transformations: (r: TableRef) => [...qk.tbl(r), 'transformations'] as const,
   /** the Browse tab's /sql run (signed sql + pos from the URL) */
   browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
 }

@@ -12,6 +12,8 @@ import type {
   BookmarkListResponse,
   BookmarkRunRequest,
   BookmarkShowResponse,
+  BrowseForeignersRequest,
+  BrowseForeignersResponse,
   BrowseRequest,
   CancelResponse,
   ChangeColumnsRequest,
@@ -20,6 +22,7 @@ import type {
   ChangePasswordResponse,
   CollationsResponse,
   ColumnFormOptions,
+  ColumnTransformations,
   ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
@@ -48,6 +51,7 @@ import type {
   HomeResponse,
   I18nState,
   IndexFormResponse,
+  InsertFormResponse,
   KillProcessResponse,
   LintRequest,
   LintResponse,
@@ -73,6 +77,8 @@ import type {
   RenameIndexRequest,
   ReservedWordCheckResponse,
   SaveIndexRequest,
+  SaveRowsRequest,
+  SaveRowsResponse,
   ServerScope,
   ServerVariablesResponse,
   SetCollationResponse,
@@ -158,7 +164,8 @@ export interface TableRef extends DbRef {
 
 const srvPath = (s: number) => `/servers/${s}`
 const dbPath = (r: DbRef) => `${srvPath(r.server)}/databases/${encodeURIComponent(r.db)}`
-const tblPath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURIComponent(r.table)}`
+/** API path of a table below `/api` (also the base of the transformation wrapper links). */
+export const tablePath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURIComponent(r.table)}`
 
 /**
  * Every endpoint of the API, grouped by section of docs/architecture/05-api-reference.md. The first
@@ -184,7 +191,7 @@ export const api = {
   versionCheck: () => call<VersionCheckResponse>('GET', '/meta/version-check'),
   serverScope: (server: number) => call<ServerScope>('GET', `/servers/${server}`),
   databaseScope: (r: DbRef) => call<DatabaseScope>('GET', dbPath(r)),
-  tableScope: (r: TableRef) => call<TableScope>('GET', `${tblPath(r)}/capabilities`),
+  tableScope: (r: TableRef) => call<TableScope>('GET', `${tablePath(r)}/capabilities`),
   home: (server: number) => call<HomeResponse>('GET', `/servers/${server}/home`),
   setCollation: (server: number, collation: string) =>
     call<SetCollationResponse>('POST', `/servers/${server}/session/collation`, {
@@ -281,44 +288,55 @@ export const api = {
   plugins: (s: number) => call<PluginsResponse>('GET', `${srvPath(s)}/plugins`),
   binlog: (s: number, q: BinlogQuery) => call<BinlogResponse>('GET', `${srvPath(s)}/binlog${flags(q)}`),
   // table structure (docs/architecture/05-api-reference.md#table-scope)
-  tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tblPath(r)}/structure`),
+  tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tablePath(r)}/structure`),
   changeColumnsForm: (r: TableRef, fields: string[]) =>
     call<ChangeFormResponse>(
       'GET',
-      `${tblPath(r)}/columns/form?${fields.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
+      `${tablePath(r)}/columns/form?${fields.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
     ),
   addColumnsForm: (r: TableRef) =>
-    call<{ options: ColumnFormOptions }>('GET', `${tblPath(r)}/columns/add-form`),
+    call<{ options: ColumnFormOptions }>('GET', `${tablePath(r)}/columns/add-form`),
   createTableForm: (r: DbRef) => call<CreateTableFormResponse>('GET', `${dbPath(r)}/create-table/form`),
   indexForm: (r: TableRef, q: { index?: string; create?: number }) =>
-    call<IndexFormResponse>('GET', `${tblPath(r)}/indexes/form${queryString(q)}`),
-  partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tblPath(r)}/partitions/form`),
+    call<IndexFormResponse>('GET', `${tablePath(r)}/indexes/form${queryString(q)}`),
+  partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tablePath(r)}/partitions/form`),
   createTable: (r: DbRef, req: CreateTableRequest) =>
     call<DdlResponse & { db: string; table: string }>('POST', `${dbPath(r)}/tables`, req),
   addColumns: (r: TableRef, req: AddColumnsRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/columns/add`, req),
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/add`, req),
   changeColumns: (r: TableRef, req: ChangeColumnsRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/columns/change`, req),
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
   dropColumns: (r: TableRef, req: DropColumnsRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/columns/drop`, req),
-  addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tblPath(r)}/columns/key`, req),
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tablePath(r)}/columns/key`, req),
   moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/columns/move`, req),
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/move`, req),
   reservedWordCheck: (r: TableRef, names: string[], table?: string) =>
-    call<ReservedWordCheckResponse>('POST', `${tblPath(r)}/columns/reserved-word-check`, {
+    call<ReservedWordCheckResponse>('POST', `${tablePath(r)}/columns/reserved-word-check`, {
       names,
       ...(table !== undefined ? { table } : {}),
     }),
-  saveIndex: (r: TableRef, req: SaveIndexRequest) => call<DdlResponse>('POST', `${tblPath(r)}/indexes`, req),
+  saveIndex: (r: TableRef, req: SaveIndexRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/indexes`, req),
   renameIndex: (r: TableRef, req: RenameIndexRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/indexes/rename`, req),
-  dropIndex: (r: TableRef, name: string) => call<DdlResponse>('POST', `${tblPath(r)}/indexes/drop`, { name }),
+    call<DdlResponse>('POST', `${tablePath(r)}/indexes/rename`, req),
+  dropIndex: (r: TableRef, name: string) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/indexes/drop`, { name }),
   savePartitioning: (r: TableRef, req: PartitioningRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/partitions/partitioning`, req),
+    call<DdlResponse>('POST', `${tablePath(r)}/partitions/partitioning`, req),
   partitionMaintenance: (r: TableRef, req: PartitionMaintenanceRequest) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/partitions/maintenance`, req),
+    call<DdlResponse>('POST', `${tablePath(r)}/partitions/maintenance`, req),
   removePartitioning: (r: TableRef) =>
-    call<DdlResponse>('POST', `${tblPath(r)}/partitions/remove-partitioning`, {}),
+    call<DdlResponse>('POST', `${tablePath(r)}/partitions/remove-partitioning`, {}),
+  // Insert/Edit and transformations (docs/features/03-insert-edit-transformations.md)
+  insertForm: (r: TableRef, req: InsertFormRequest) =>
+    call<InsertFormResponse>('POST', `${tablePath(r)}/insert-form`, req),
+  saveRows: (r: TableRef, req: SaveRowsRequest) =>
+    call<SaveRowsResponse>('POST', `${tablePath(r)}/rows`, req),
+  browseForeigners: (r: TableRef, req: Partial<BrowseForeignersRequest> & { field: string }) =>
+    call<BrowseForeignersResponse>('POST', `${tablePath(r)}/browse-foreigners`, req),
+  columnTransformations: (r: TableRef) =>
+    call<ColumnTransformations>('GET', `${tablePath(r)}/transformations`),
   // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
   browse: (server: number, req: BrowseRequest) =>
     call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
@@ -347,10 +365,22 @@ export const api = {
   columnPrefs: (
     r: TableRef,
     req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
-  ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tblPath(r)}/uiprefs`, req),
+  ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tablePath(r)}/uiprefs`, req),
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
+}
+
+/** Body of POST …/insert-form: signed where clauses (none = insert) and the form toggles. */
+export interface InsertFormRequest {
+  where?: Array<{ clause: string; sig: string }>
+  copy?: boolean
+  insertRows?: number
+  afterInsert?: string
+  clauseIsUnique?: boolean
+  unsaved?: Array<Record<string, string | null>> | undefined
+  showFunctionFields?: boolean
+  showFieldTypes?: boolean
 }
 
 /** POST /browse: the statement with its grid, the default-bookmark notice and the previous query card. */

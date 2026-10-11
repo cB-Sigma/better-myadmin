@@ -1,0 +1,12 @@
+# Intentional differences of the Insert/Edit form (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: button, label: '/^MySQL accepts additional values not selectable by the datepicker/' }
+    added: >-
+      the calendar trigger of date/time fields is a focusable button (phpMyAdmin's jQuery UI
+      datepicker adds an <img> trigger that the harness does not count as a control)
+  - match: { kind: radio, step: continue insertion }
+    ignore: [checked]
+    reason: >-
+      phpMyAdmin's addNewContinueInsertionFields clones the last row before renaming its inputs, so
+      the clone's checked ENUM radio briefly shares the group of the row it copies and unchecks it
+      (a jQuery cloning artefact); ours keeps every row's default selection
