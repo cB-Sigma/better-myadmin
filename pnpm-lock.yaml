@@ -250,7 +250,11 @@ importers:
         specifier: workspace:*
         version: link:../sql-lexer
 
-  packages/mysql-types: {}
+  packages/mysql-types:
+    dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
 
   packages/sql-gen:
     dependencies:

@@ -41,7 +41,7 @@ export interface IeCtx {
 }
 
 /** /transformation/wrapper URL of one cell (WrapperController parameters). */
-export function wrapperUrl(
+export function wrapperHref(
   ctx: IeCtx,
   key: string,
   whereClause: string,

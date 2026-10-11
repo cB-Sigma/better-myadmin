@@ -9,6 +9,7 @@ import { type Pairs, findForm, removePair, serializeForm, setPair } from './lib/
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { decodeEntities } from './lib/nav-html.ts'
 import { PmaClient, type PmaJson } from './lib/pma.ts'
+import { pmaReachable as reachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the Insert/Edit form save path (docs/features/03-insert-edit-transformations.md).
@@ -32,10 +33,6 @@ const DB_PMA = 'f03_pdb'
 const DB_BMA = 'f03_bdb'
 const dbMap = { [DB_PMA]: 'f03_db', [DB_BMA]: 'f03_db' }
 const PMADB = 'phpmyadmin'
-
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
 
 const SEED = `
   CREATE TABLE parent (id INT PRIMARY KEY, label VARCHAR(20));

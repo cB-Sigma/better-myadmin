@@ -43,7 +43,7 @@ export function ForeignBrowser({
   const [applied, setApplied] = useState({ filter: '', pos: 0, showAll: false })
   const req = { field, data, ...applied }
   const q = useQuery({
-    queryKey: [...qk.tbl(server, db, table), 'browseForeigners', req],
+    queryKey: qk.browseForeigners(server, db, table, req),
     queryFn: () => api.browseForeigners(server, db, table, req),
     placeholderData: (prev) => prev,
   })

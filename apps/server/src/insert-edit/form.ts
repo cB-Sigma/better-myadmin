@@ -59,7 +59,7 @@ import {
   md5,
   mimeMap,
   uniqueMeta,
-  wrapperUrl,
+  wrapperHref,
 } from './context.ts'
 
 export const GIS_TYPES = [
@@ -754,7 +754,7 @@ function inputWidget(
     case 'Input/Image_JPEG_Upload': {
       if (bytes.length === 0) return mk(null, '')
       const hex = bytes.toString('hex')
-      return mk(hex, hex, wrapperUrl(ctx, col.field, x.whereClause))
+      return mk(hex, hex, wrapperHref(ctx, col.field, x.whereClause))
     }
     case 'Input/Text_Plain_FileUpload':
       return bytes.length === 0 ? mk(null, '') : mk(asText, asText)

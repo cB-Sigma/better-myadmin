@@ -9,5 +9,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "fixtures": "php scripts/generate-fixtures.php"
+  },
+  "dependencies": {
+    "@bettermyadmin/i18n": "workspace:*"
   }
 }

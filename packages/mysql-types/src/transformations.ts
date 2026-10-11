@@ -8,6 +8,7 @@
  *      src/Config/Settings/Transformations.php ($cfg['DefaultTransformations'])
  */
 
+import { checkLink as sanitizeCheckLink } from '@bettermyadmin/i18n/bbcode'
 import { bin2hex, htmlspecialchars, toBytes } from './php.ts'
 
 export type TransformationKind = 'output' | 'input' | 'both'
@@ -250,18 +251,7 @@ const asText = (b: string | Uint8Array): string => (typeof b === 'string' ? b : 
 const esc = (s: string) => htmlspecialchars(s)
 
 /** pma: Sanitize::checkLink(url, http = true, other = true) */
-export function checkLink(url: string): boolean {
-  const u = url.toLowerCase()
-  return [
-    'https://',
-    'index.php?route=/url&url=https%3a%2f%2f',
-    './docs/html/',
-    './index.php?',
-    'mailto:',
-    'ftp://',
-    'http://',
-  ].some((s) => u.startsWith(s))
-}
+const checkLink = (url: string): boolean => sanitizeCheckLink(url, true, true)
 
 /** pma: FormatConverter::longToIp */
 export function longToIp(buffer: string): string {
@@ -757,7 +747,7 @@ export interface InputTransformResult {
 export function applyInputTransformation(
   file: string,
   value: string,
-  options: readonly string[],
+  options: readonly string[] = [],
   ctx: {
     defaults?: DefaultTransformations
     pregMatch?: (pattern: string, subject: string) => boolean | null
