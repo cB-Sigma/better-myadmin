@@ -22,7 +22,7 @@ describe('getClientIp matches Core::getIp', () => {
   }
 })
 
-describe('allow()/deny() match phpMyAdmin for every user/ip', () => {
+describe('allow()/deny() match phpMyAdmin for every user/ip [p01-8f6608]', () => {
   for (const c of fixtures.allowDeny) {
     it(`${c.user}@${c.ip}`, () => {
       const ctx = { remoteIp: c.ip, username: c.user, rules: fixtures.rules }
