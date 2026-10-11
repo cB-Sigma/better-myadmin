@@ -72,6 +72,7 @@ export interface ExportRelation {
   pmadb: string | null
   relationFeature: boolean
   browserTransformationFeature: boolean
+  columnCommentsFeature: boolean
   /** pdf_pages / table_coords tables (PdfFeature) */
   pdfFeature: { pdfPages: string; tableCoords: string } | null
   /** RelationParameters::toArray(): configured table name per feature key (`bookmark` → `pma__bookmark`) */
@@ -85,6 +86,4 @@ export interface ExportRelation {
   getForeignKeysData(db: string, table: string): Promise<ExportForeignKey[]>
   /** Transformations::getMime(db, table, strict=true) */
   getMime(db: string, table: string): Promise<Record<string, { mimetype: string }> | null>
-  /** Relation::getComments(db, table) column comments merged with pmadb column_info comments */
-  getComments?(db: string, table: string): Promise<Record<string, string>>
 }

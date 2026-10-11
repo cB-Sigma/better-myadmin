@@ -37,6 +37,7 @@ export function exportRelation(rp: RelationParameters, control: MetaConn | null,
     pmadb: rp.db,
     relationFeature: rp.relationFeature !== null,
     browserTransformationFeature: rp.browserTransformationFeature !== null,
+    columnCommentsFeature: rp.columnCommentsFeature !== null,
     pdfFeature:
       rp.pdfFeature === null
         ? null

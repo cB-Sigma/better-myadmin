@@ -4,6 +4,7 @@ import { type Context, Parser, SelectStatement } from '@bettermyadmin/sql-lexer'
 import { listEncodings } from './charset.ts'
 import type { ExportDbi, ExportRelation } from './dbi.ts'
 import { ExportError } from './errors.ts'
+import { expandUserString } from './expand.ts'
 import { OutputHandler as Output, type OutputHandler, type OutputSink } from './output.ts'
 import { Params } from './params.ts'
 import type { Aliases, ExportPlugin, ExportSettings, ExportType, PluginContext, ToolInfo } from './plugin.ts'
@@ -33,8 +34,9 @@ export interface ExportEnvironment {
   tool: ToolInfo
   timeZone: string
   parserContext: Context
-  /** Util::expandUserString on the file name template (strftime, @SERVER@ …) */
-  expandFilename(template: string, db: string, table: string): Promise<string>
+  /** $cfg['Servers'][$i]['verbose'] and the request's Host (expandUserString) */
+  verbose: string
+  httpHost: string
   now?: Date
 }
 
@@ -271,6 +273,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
     settings,
     host: env.host,
     port: env.port,
+    server: { host: env.host, verbose: env.verbose, httpHost: env.httpHost },
     tool: env.tool,
     db,
     table,
@@ -296,7 +299,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
     filename = getFinalFilename(
       plugin,
       compression,
-      sanitizeFilename(await env.expandFilename(filenameTemplate, db, table), true),
+      sanitizeFilename(await expandUserString(ctx, filenameTemplate), true),
     )
     mimeType =
       compression === 'gzip'

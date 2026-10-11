@@ -49,7 +49,11 @@ export interface PluginProperties {
 
 export const bool = (name: string, text: string, doc?: DocLink): LeafItem =>
   doc === undefined ? { kind: 'bool', name, text } : { kind: 'bool', name, text, doc }
-export const textItem = (name: string, text: string, o: { size?: number; len?: number } = {}): LeafItem => ({
+export const textItem = (
+  name: string,
+  text: string,
+  o: { size?: number; len?: number; doc?: DocLink } = {},
+): LeafItem => ({
   kind: 'text',
   name,
   text,

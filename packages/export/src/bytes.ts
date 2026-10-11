@@ -75,7 +75,10 @@ export function htmlspecialcharsCompat(s: string): string {
 
 /** PHP htmlspecialchars($s) (ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 since PHP 8.1) */
 export function htmlspecialchars(s: string): string {
-  return htmlspecialcharsCompat(s).replace(/'/g, '&#039;')
+  // ENT_SUBSTITUTE: ill-formed UTF-8 becomes U+FFFD
+  return htmlspecialcharsCompat(s)
+    .replace(/'/g, '&#039;')
+    .replace(/(?<![\ud800-\udbff])[\udc80-\udcff]/g, '\ufffd')
 }
 
 /** PHP is_numeric() on a string */

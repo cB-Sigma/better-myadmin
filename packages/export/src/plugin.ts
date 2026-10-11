@@ -1,12 +1,21 @@
 import type { Translator } from '@bettermyadmin/i18n'
 import type { Context } from '@bettermyadmin/sql-lexer'
-import type { ExportDbi, ExportRelation } from './dbi.ts'
+import type { ExportDbi, ExportForeignKey, ExportRelation, ExportResult } from './dbi.ts'
+import { ExportError } from './errors.ts'
 import type { OutputHandler } from './output.ts'
 import type { Params } from './params.ts'
 import type { PluginProperties } from './properties.ts'
 import type { TableInfo } from './tables.ts'
 
 export type ExportType = 'server' | 'database' | 'table' | 'raw'
+
+/** pma: src/ConfigStorage/Foreigners.php */
+export interface Foreigners {
+  data: Record<string, { foreign_db: string; foreign_table: string; foreign_field: string }>
+  keysData: ExportForeignKey[]
+}
+export const foreignersEmpty = (f: Foreigners): boolean =>
+  Object.keys(f.data).length === 0 && f.keysData.length === 0
 export type StructureOrData = 'structure' | 'data' | 'structure_and_data'
 
 /** Alias information for db/table/columns (Export::mergeAliases shape). */
@@ -41,6 +50,8 @@ export interface PluginContext {
   /** $config->selectedServer host / port */
   host: string
   port: string
+  /** expandUserString: the server's host and verbose name, the request's HTTP_HOST */
+  server: { host: string; verbose: string; httpHost: string }
   tool: ToolInfo
   /** Current::$database / Current::$table */
   db: string
@@ -83,6 +94,27 @@ export abstract class ExportPlugin {
 
   protected __(msgid: string): string {
     return this.ctx.tr.gettext(msgid)
+  }
+
+  /** dbi->query($sql, …, QUERY_UNBUFFERED): a failing query aborts the dump. */
+  protected async query(sql: string, unbuffered = true): Promise<ExportResult> {
+    const r = await this.ctx.dbi.select(sql, unbuffered)
+    if (r === null) throw new ExportError(this.ctx.dbi.getError())
+    return r
+  }
+
+  /** setStringValue of the plugins: the request value, else the configuration value, else ''. */
+  protected stringValue(fromRequest: string | undefined, fromConfig: unknown): string {
+    if (fromRequest !== undefined && fromRequest !== '') return fromRequest
+    if (typeof fromConfig === 'string' && fromConfig !== '') return fromConfig
+    if (typeof fromConfig === 'number') return String(fromConfig)
+    return ''
+  }
+
+  /** exportRawQuery of most plugins: select the database, export the result as data */
+  protected async rawAsData(db: string, sqlQuery: string): Promise<void> {
+    if (db !== '') await this.ctx.dbi.selectDb(db)
+    await this.exportData(db, '', sqlQuery)
   }
 
   protected addLine(line: string): Promise<void> {
@@ -155,15 +187,37 @@ export abstract class ExportPlugin {
     return ''
   }
 
+  /** Relation::getForeigners: internal relations and FOREIGN KEY constraints */
+  async getForeigners(db: string, table: string): Promise<Foreigners> {
+    return {
+      data: await this.ctx.relation.getForeignersInternal(db, table),
+      keysData: await this.ctx.relation.getForeignKeysData(db, table),
+    }
+  }
+
+  /** Relation::searchColumnInForeigners */
+  searchColumnInForeigners(
+    foreigners: Foreigners,
+    column: string,
+  ): { foreign_db: string; foreign_table: string; foreign_field: string } | false {
+    const d = foreigners.data[column]
+    if (d !== undefined) return d
+    for (const k of foreigners.keysData) {
+      const i = k.indexList.indexOf(column)
+      if (i === -1) continue
+      return {
+        foreign_field: k.refIndexList[i] ?? '',
+        foreign_db: k.refDbName ?? this.ctx.db,
+        foreign_table: k.refTableName,
+      }
+    }
+    return false
+  }
+
   /** ExportPlugin::getRelationString: "ForeignTable (foreign_field)" */
-  getRelationString(
-    foreigners: Record<string, { foreign_table: string; foreign_field: string }>,
-    fieldName: string,
-    db: string,
-    aliases: Aliases = {},
-  ): string {
-    const f = foreigners[fieldName]
-    if (f === undefined) return ''
+  getRelationString(foreigners: Foreigners, fieldName: string, db: string, aliases: Aliases = {}): string {
+    const f = this.searchColumnInForeigners(foreigners, fieldName)
+    if (f === false) return ''
     const ffield = this.getColumnAlias(aliases, db, f.foreign_table, f.foreign_field)
     const ftable = this.getTableAlias(aliases, db, f.foreign_table)
     return `${ftable} (${ffield})`

@@ -156,6 +156,53 @@ export class TableInfo {
     })
   }
 
+  /** DatabaseInterface::getColumnNames (information_schema, ORDINAL_POSITION) */
+  async getColumnNames(db: string, table: string): Promise<string[]> {
+    const collate = await this.collateForIS()
+    const q = (s: string) => this.dbi.quoteString(s)
+    const rows = await this.dbi.fetchResultSimple(
+      `SELECT \`COLUMN_NAME\`, \`COLUMN_TYPE\` FROM \`information_schema\`.\`COLUMNS\` WHERE \`TABLE_SCHEMA\` ${collate} = ${q(db)} AND \`TABLE_NAME\` ${collate} = ${q(table)} ORDER BY \`ORDINAL_POSITION\``,
+    )
+    return rows.map((r) => r.COLUMN_NAME ?? '')
+  }
+
+  /** Relation::getComments: the non-empty column comments */
+  async getComments(db: string, table: string): Promise<Record<string, string>> {
+    const out: Record<string, string> = {}
+    for (const c of await this.getColumns(db, table)) if (c.comment !== '') out[c.field] = c.comment
+    return out
+  }
+
+  /** Triggers::getDetails (sorted by name) */
+  async getTriggers(
+    db: string,
+    table: string,
+  ): Promise<Array<{ name: string; timing: string; event: string; table: string; statement: string }>> {
+    const q = (s: string) => this.dbi.quoteString(s)
+    let rows: Array<Record<string, string | null>>
+    if (!this.dbi.disableIS) {
+      const collate = await this.collateForIS()
+      let query = `SELECT TRIGGER_SCHEMA, TRIGGER_NAME, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_TIMING, ACTION_STATEMENT, EVENT_OBJECT_SCHEMA, EVENT_OBJECT_TABLE, DEFINER FROM information_schema.TRIGGERS WHERE EVENT_OBJECT_SCHEMA ${collate}= ${q(db)}`
+      if (table !== '') query += ` AND EVENT_OBJECT_TABLE ${collate} = ${q(table)};`
+      rows = await this.dbi.fetchResultSimple(query)
+    } else {
+      let query = `SHOW TRIGGERS FROM ${backquote(db)}`
+      if (table !== '') query += ` LIKE ${q(table)};`
+      rows = await this.dbi.fetchResultSimple(query)
+    }
+    const out = rows
+      .map((r) => ({
+        name: r.Trigger ?? r.TRIGGER_NAME ?? '',
+        timing: r.Timing ?? r.ACTION_TIMING ?? '',
+        event: r.Event ?? r.EVENT_MANIPULATION ?? '',
+        table: r.Table ?? r.EVENT_OBJECT_TABLE ?? '',
+        statement: r.Statement ?? r.ACTION_STATEMENT ?? '',
+      }))
+      .filter((t) => t.name !== '' && t.table !== '')
+    out.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+    return out
+  }
+
   /** DatabaseInterface::getDbCollation */
   async getDbCollation(db: string): Promise<string> {
     if (!this.dbi.disableIS) {

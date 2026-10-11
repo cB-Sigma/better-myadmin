@@ -1,5 +1,5 @@
 import type { ExportEnvironment } from '@bettermyadmin/export'
-import { quoteString } from '@bettermyadmin/sql-gen'
+import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import { Context as SqlContext } from '@bettermyadmin/sql-lexer'
 import type { Context } from 'hono'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
@@ -11,7 +11,6 @@ import type { ServerEnv } from '../routes/server.ts'
 import type { AdminCtx } from '../server-admin/context.ts'
 import { databaseList } from '../server-admin/databases.ts'
 import { APP_VERSION } from '../shell/scope.ts'
-import { expandUserString } from '../util/expand-user-string.ts'
 import { ServerExportDbi } from './dbi.ts'
 import { exportRelation } from './relation.ts'
 
@@ -60,10 +59,14 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
   const meta = new MetaRequest(c, { db })
   // phpMyAdmin connects per request; the pooled link gets the session settings the dump changes back
   const saved = await conn.rows(
-    'SELECT @@session.sql_mode AS m, @@session.sql_quote_show_create AS q, @@session.time_zone AS z',
+    'SELECT @@session.sql_mode AS m, @@session.sql_quote_show_create AS q, @@session.time_zone AS z, DATABASE() AS d',
     'export.session',
   )
   const restore = saved[0]
+  // phpMyAdmin's fresh link has no default database until the dump selects one, which shows in
+  // SHOW CREATE VIEW (names qualified with their database); information_schema has no user views
+  if (restore?.d !== null && restore?.d !== undefined)
+    await conn.query('USE `information_schema`', 'export.session')
   const close = async () => {
     meta.close()
     try {
@@ -73,6 +76,9 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
           `SET SESSION sql_mode = ${quoteString(restore.m ?? '')}, SQL_QUOTE_SHOW_CREATE = ${restore.q === '0' ? 0 : 1}, time_zone = ${quoteString(restore.z ?? 'SYSTEM')}`,
           'export.restore',
         )
+        if (restore.d !== null && restore.d !== undefined) {
+          await conn.query(`USE ${backquote(restore.d)}`, 'export.restore')
+        }
       }
     } catch {
       // the link is released anyway
@@ -117,8 +123,8 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
       tool: EXPORT_TOOL,
       timeZone: PROCESS_TIME_ZONE,
       parserContext: conn.serverInfo?.context ?? new SqlContext(),
-      expandFilename: (template, d, t) =>
-        expandUserString(template, { conn, server, db: d, table: t, httpHost }),
+      verbose: server.verbose,
+      httpHost,
     }
     return { env, conn, cfg, settings, server, meta, admin, user: c.get('creds').user, close }
   } catch (e) {

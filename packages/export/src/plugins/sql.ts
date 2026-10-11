@@ -1073,7 +1073,7 @@ export class ExportSql extends ExportPlugin {
         if (!this.hasCreateTrigger) return
         dump = ''
         const delimiter = '$$'
-        const triggers = await this.#getTriggers(db, table)
+        const triggers = await this.ctx.tables.getTriggers(db, table)
         if (triggers.length > 0) {
           dump +=
             this.#possibleCRLF() +
@@ -1145,36 +1145,6 @@ export class ExportSql extends ExportPlugin {
     // but not in the case of export
     this.sqlConstraintsQuery = ''
     await this.addLine(dump)
-  }
-
-  /** Triggers::getDetails (sorted by name) */
-  async #getTriggers(
-    db: string,
-    table: string,
-  ): Promise<Array<{ name: string; timing: string; event: string; table: string; statement: string }>> {
-    const q = (s: string) => this.ctx.dbi.quoteString(s)
-    let rows: Array<Record<string, string | null>>
-    if (!this.ctx.dbi.disableIS) {
-      const collate = await this.ctx.tables.collateForIS()
-      let query = `SELECT TRIGGER_SCHEMA, TRIGGER_NAME, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_TIMING, ACTION_STATEMENT, EVENT_OBJECT_SCHEMA, EVENT_OBJECT_TABLE, DEFINER FROM information_schema.TRIGGERS WHERE EVENT_OBJECT_SCHEMA ${collate}= ${q(db)}`
-      if (table !== '') query += ` AND EVENT_OBJECT_TABLE ${collate} = ${q(table)};`
-      rows = await this.ctx.dbi.fetchResultSimple(query)
-    } else {
-      let query = `SHOW TRIGGERS FROM ${backquote(db)}`
-      if (table !== '') query += ` LIKE ${q(table)};`
-      rows = await this.ctx.dbi.fetchResultSimple(query)
-    }
-    const out = rows
-      .map((r) => ({
-        name: r.Trigger ?? r.TRIGGER_NAME ?? '',
-        timing: r.Timing ?? r.ACTION_TIMING ?? '',
-        event: r.Event ?? r.EVENT_MANIPULATION ?? '',
-        table: r.Table ?? r.EVENT_OBJECT_TABLE ?? '',
-        statement: r.Statement ?? r.ACTION_STATEMENT ?? '',
-      }))
-      .filter((t) => t.name !== '' && t.table !== '')
-    out.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
-    return out
   }
 
   // ------------------------------------------------------------------ data

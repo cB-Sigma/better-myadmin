@@ -37,6 +37,7 @@ export async function pageContext(
     settings: env.config.Export,
     host: env.host,
     port: env.port,
+    server: { host: env.host, verbose: env.verbose, httpHost: env.httpHost },
     tool: env.tool,
     db: o.db,
     table: o.table,
@@ -63,6 +64,7 @@ export function withValues(
   request: Params | null,
   repopulate: boolean,
   timeoutPassed = false,
+  translate: (s: string) => string = (s) => s,
 ): PluginView['options'] {
   if (groups === null) return null
   const truthy = (v: unknown) =>
@@ -87,9 +89,9 @@ export function withValues(
         items: i.items.map(one),
       }
     }
-    if (i.kind === 'bool') return { ...i, checked: checked(i.name) }
-    if (i.kind === 'message') return { ...i }
-    return { ...i, value: value(i.name) }
+    if (i.kind === 'bool') return { ...i, text: translate(i.text), checked: checked(i.name) }
+    if (i.kind === 'message') return { ...i, text: translate(i.text) }
+    return { ...i, text: translate(i.text), value: translate(value(i.name)) }
   }
   return groups.map((g) => ({ kind: 'main', name: g.name, text: g.text, items: g.items.map(one) }))
 }
@@ -106,6 +108,8 @@ export function pluginViews(
     text: p.getTranslatedText(p.properties.text),
     extension: p.properties.extension,
     forceFile: p.properties.forceFile,
-    options: withValues(p.properties.options, settings, request, repopulate),
+    options: withValues(p.properties.options, settings, request, repopulate, false, (t) =>
+      p.getTranslatedText(t),
+    ),
   }))
 }
