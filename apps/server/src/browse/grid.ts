@@ -796,12 +796,11 @@ export async function buildGrid(
     relationOptions: rp !== undefined && rp.relationFeature !== null && rp.displayFeature !== null,
     columnOrder,
     // getFullOrPartialTextButtonOrLink, placed by getFieldVisibilityParams / getColumnAtRightSide
-    textToggle:
-      a.limited || !hasLinks || !displayParts.textButton || cfg.RowActionLinks === 'none'
-        ? null
-        : view.pftext === 'F'
-          ? { pftext: 'P', title: 'Partial texts' }
-          : { pftext: 'F', title: 'Full texts' },
+    textToggle: a.limited
+      ? null
+      : view.pftext === 'F'
+        ? { pftext: 'P', title: 'Partial texts' }
+        : { pftext: 'F', title: 'Full texts' },
     settings: {
       RowActionLinks: cfg.RowActionLinks,
       RowActionType: cfg.RowActionType,

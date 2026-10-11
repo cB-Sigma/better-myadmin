@@ -296,6 +296,8 @@ export const GridSaveResponse = z.object({
   sql: z.string(),
   /** isNeedToRecheck / truncatableFieldValue: the saved value as re-read */
   recheck: z.string().nullable().optional(),
+  /** row_count: Table::countRecords after the save */
+  rowCount: z.number().int().optional(),
 })
 export type GridSaveResponse = z.infer<typeof GridSaveResponse>
 

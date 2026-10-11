@@ -28,7 +28,7 @@ import { MysqlError, NotFoundError, ValidationError } from '../http/errors.ts'
 import { afterSqlBox } from '../metadata/hooks.ts'
 import { type MetaRequest, withMeta } from '../metadata/service.ts'
 import { getMessageCard } from '../query/message.ts'
-import { getVariable, isAppendLimitClause, setVariable } from '../query/pipeline.ts'
+import { countRecords, getVariable, isAppendLimitClause, setVariable } from '../query/pipeline.ts'
 import { isProfilingSupported } from '../query/profiling.ts'
 import { checkSqlSignature, signSql } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
@@ -255,7 +255,7 @@ browseRoutes.post('/values', async (c) => {
 browseRoutes.post('/save', async (c) => {
   const req = await parseBody(c, GridSaveRequest)
   const tr = c.get('tr')
-  return withBrowse(c, req.db, async (_m, conn) => {
+  return withBrowse(c, req.db, async (_m, conn, settings) => {
     await conn.query(`USE ${backquote(req.db)}`, 'query.select-db')
     const info = conn.serverInfo
     const queries = buildInsertEditQueries(
@@ -333,7 +333,15 @@ browseRoutes.post('/save', async (c) => {
         recheck = undefined
       }
     }
+    // the total row count of the table (row_count)
+    const rowCount = await countRecords(
+      { cfg: settings, conn, executed: [], hmacSecret: '' },
+      req.db,
+      req.table,
+      false,
+    )
     const body: GridSaveResponse = {
+      rowCount,
       success: true,
       message,
       sql: queries.length > 0 ? sql : '',
