@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-28/1106 covered (2.5%): 28 implemented, 24 planned, 1054 missing. [Summary](README.md).
+57/1106 covered (5.2%): 57 implemented, 24 planned, 1025 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -38,18 +38,18 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `setup/home/index.twig` | 0/15 |  | 🗓️ `DefaultLang` 🗓️ `eol` 🗓️ `lang` 🗓️ `link:Check for latest version` 🗓️ `link:Delete` 🗓️ `link:Documentation` 🗓️ `link:Donate` 🗓️ `link:Edit` 🗓️ `link:phpMyAdmin homepage` 🗓️ `link:Show hidden messages` 🗓️ `ServerDefault` 🗓️ `submit` 🗓️ `submit_clear` 🗓️ `submit_display` 🗓️ `submit_download` |
 | `src/Navigation/NavigationTree.php` | 2/2 | ✅ `id:pma_navigation_collapse` ✅ `id:pma_navigation_sync` |  |
 
-## 02 browse results grid — 0/32 (0.0%) covered, 0/32 implemented
+## 02 browse results grid — 24/32 (75.0%) covered, 24/32 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `display/results/checkbox_and_links.twig` | 0/1 |  | ⬜ `rows_to_delete[*]` |
-| `display/results/table.twig` | 0/22 |  | ⬜ `button:Print` ⬜ `display_binary` ⬜ `display_blob` ⬜ `geoOption` ⬜ `hide_transformation` ⬜ `id:extraOptionsButton` ⬜ `id:filterRows` ⬜ `id:resultsForm_*_checkall` ⬜ `link:Copy to clipboard` ⬜ `link:Create view` ⬜ `link:Display chart` ⬜ `link:Export` ⬜ `link:Visualize GIS data` ⬜ `navig` ⬜ `pftext` ⬜ `relational_display` ⬜ `session_max_rows` ⬜ `sql_query` ⬜ `submit_mult` ⬜ `submit:Go` ⬜ `submit:Restore column order` ⬜ `submit:Save edited data` |
+| `display/results/checkbox_and_links.twig` | 1/1 | ✅ `rows_to_delete[*]` |  |
+| `display/results/table.twig` | 22/22 | ✅ `button:Print` ✅ `display_binary` ✅ `display_blob` ✅ `geoOption` ✅ `hide_transformation` ✅ `id:extraOptionsButton` ✅ `id:filterRows` ✅ `id:resultsForm_*_checkall` ✅ `link:Copy to clipboard` ✅ `link:Create view` ✅ `link:Display chart` ✅ `link:Export` ✅ `link:Visualize GIS data` ✅ `navig` ✅ `pftext` ✅ `relational_display` ✅ `session_max_rows` ✅ `sql_query` ✅ `submit_mult` ✅ `submit:Go` ✅ `submit:Restore column order` ✅ `submit:Save edited data` |  |
 | `select_all.twig` | 0/1 |  | ⬜ `id:*_checkall` |
 | `sql/enum_column_dropdown.twig` | 0/1 |  | ⬜ `select:L1` |
 | `sql/no_results_returned.twig` | 0/1 |  | ⬜ `link:Create view` |
 | `sql/relational_column_dropdown.twig` | 0/1 |  | ⬜ `link:Browse foreign values` |
 | `sql/set_column.twig` | 0/1 |  | ⬜ `select:L2` |
-| `src/Display/Results.php` | 0/1 |  | ⬜ `pos` |
+| `src/Display/Results.php` | 1/1 | ✅ `pos` |  |
 | `table/start_and_number_of_rows_fieldset.twig` | 0/3 |  | ⬜ `pos` ⬜ `session_max_rows` ⬜ `submit` |
 
 ## 03 insert edit transformations — 0/28 (0.0%) covered, 0/28 implemented
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 0/1 |  | ⬜ `submit:Go` |
 | `table/insert/value_column_for_other_datatype.twig` | 0/1 |  | ⬜ `fields*` |
 
-## 04 table level — 0/306 (0.0%) covered, 0/306 implemented
+## 04 table level — 2/306 (0.7%) covered, 2/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -85,7 +85,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `modals/preview_sql_confirmation.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:previewSQLConfirmOkButton` |
 | `modals/preview_sql_modal.twig` | 0/1 |  | ⬜ `button:Close` |
 | `table/chart/tbl_chart.twig` | 0/11 |  | ⬜ `barStackedCheckbox` ⬜ `chartSeriesColumnSelect` ⬜ `chartSeriesSelect` ⬜ `chartTitleInput` ⬜ `chartType` ⬜ `chartValueColumnSelect` ⬜ `chartXAxisSelect` ⬜ `link:Save chart as image` ⬜ `seriesColumnCheckbox` ⬜ `xAxisLabelInput` ⬜ `yAxisLabelInput` |
-| `table/delete/confirm.twig` | 0/2 |  | ⬜ `fk_checks` ⬜ `mult_btn` |
+| `table/delete/confirm.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
 | `table/find_replace/index.twig` | 0/8 |  | ⬜ `columnIndex` ⬜ `find` ⬜ `link:Find and replace` ⬜ `link:Table search` ⬜ `link:Zoom search` ⬜ `replaceWith` ⬜ `submit` ⬜ `useRegex` |
 | `table/find_replace/replace_preview.twig` | 0/1 |  | ⬜ `replace` |
 | `table/gis_visualization/gis_visualization.twig` | 0/4 |  | ⬜ `id:saveImageButton` ⬜ `useBaseLayer` ⬜ `visualizationSettings[labelColumn]` ⬜ `visualizationSettings[spatialColumn]` |
@@ -225,11 +225,11 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `preferences/two_factor/confirm.twig` | 0/1 |  | ⬜ `submit:Disable two-factor authentication` |
 | `preferences/two_factor/main.twig` | 0/3 |  | ⬜ `2fa_configure` ⬜ `2fa_remove` ⬜ `submit:Configure two-factor authentication` |
 
-## 09 sql editor query pipeline — 3/28 (10.7%) covered, 3/28 implemented
+## 09 sql editor query pipeline — 6/28 (21.4%) covered, 6/28 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `sql/_bookmark.twig` | 0/3 |  | ⬜ `bkm_all_users` ⬜ `bkm_fields[bkm_label]` ⬜ `submit:Create new bookmark` |
+| `sql/_bookmark.twig` | 3/3 | ✅ `bkm_all_users` ✅ `bkm_fields[bkm_label]` ✅ `submit:Create new bookmark` |  |
 | `sql/query.twig` | 3/25 | ✅ `SQL` ✅ `sql_delimiter` ✅ `sql_query` | ⬜ `action_bookmark` ⬜ `bkm_all_users` ⬜ `bkm_label` ⬜ `bkm_replace` ⬜ `button:Close` ⬜ `dummy` ⬜ `fk_checks` ⬜ `id_bookmark` ⬜ `id:clear` ⬜ `id:delete` ⬜ `id:format` ⬜ `id:formatSingleLine` ⬜ `id:insert` ⬜ `id:saved` ⬜ `id:select` ⬜ `id:selectall` ⬜ `id:update` ⬜ `insert` ⬜ `parameterized` ⬜ `retain_query_box` ⬜ `rollback_query` ⬜ `show_query` |
 
 ## other — 1/1 (100.0%) covered, 1/1 implemented

@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-33/199 covered (16.6%): 29 implemented, 3 exception, 1 n/a, 166 planned. [Summary](README.md).
+39/199 covered (19.6%): 35 implemented, 3 exception, 1 n/a, 160 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -34,18 +34,18 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /setup/show-config` | `Setup/ShowConfigController` | UI /setup | M4 (X7) |
 | 🗓️ | `GET, POST /setup/validate` | `Setup/ValidateController` | UI /setup | M4 (X7) |
 
-## 02 browse results grid — 2/8 (25.0%) covered, 2/8 implemented
+## 02 browse results grid — 8/8 (100.0%) covered, 8/8 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | ✅ | `GET /sql/get-default-fk-check-value` | `Sql/DefaultForeignKeyCheckValueController` | API GET /api/servers/:s/sql/default-fk-check (apps/server/src/routes/sql.ts:139) |  |
-| 🗓️ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API GET /api/servers/:s/databases/:db/tables/:t/enum-values | M1 |
-| 🗓️ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API GET /api/servers/:s/databases/:db/tables/:t/foreign-values | M1 |
-| 🗓️ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API GET /api/servers/:s/databases/:db/tables/:t/enum-values | M1 |
+| ✅ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
+| ✅ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
+| ✅ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:587) |  |
-| 🗓️ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | API /api/servers/:s/databases/:db/tables/:table/delete/confirm<br>UI /s/:s/db/:db/t/:table/delete/confirm | M1 |
-| 🗓️ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/databases/:db/tables/:t/rows/delete<br>UI /s/:s/db/:db/t/:table/delete/rows | M1 |
-| 🗓️ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/databases/:db/tables/:t/cell<br>UI /s/:s/db/:db/t/:table/get-field | M1 |
+| ✅ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the confirmation is rendered in place by the results view (no request of its own) |
+| ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:71) |  |
+| ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:85) |  |
 
 ## 03 insert edit transformations — 0/7 (0.0%) covered, 0/7 implemented
 
@@ -103,7 +103,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET /table/privileges` | `Table/PrivilegesController` | API GET /api/servers/:s/databases/:db/tables/:t/privileges<br>UI /s/:s/db/:db/t/:table/privileges | M2 |
 | 🗓️ | `GET, POST /table/relation` | `Table/RelationController` | API GET /api/servers/:s/databases/:db/tables/:t/relations<br>API POST /api/servers/:s/databases/:db/tables/:t/relations<br>UI /s/:s/db/:db/t/:table/relation | M2 |
 | 🗓️ | `GET, POST /table/search` | `Table/SearchController` | API POST /api/servers/:s/databases/:db/tables/:t/search<br>UI /s/:s/db/:db/t/:table/search | M2 |
-| ✅ | `GET, POST /table/sql` | `Table/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:24)<br>UI /s/:server/db/:db/t/:table/sql (apps/web/src/routes/s/$server/db/$db/t/$table/sql.tsx) |  |
+| ✅ | `GET, POST /table/sql` | `Table/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/t/:table/sql (apps/web/src/routes/s/$server/db/$db/t/$table/sql.tsx) |  |
 | ✅ | `GET, POST /table/structure` | `Table/StructureController` | API GET /api/servers/:s/databases/:db/tables/:t/structure (apps/server/src/routes/table-structure.ts:112)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) |  |
 | 🗓️ | `POST /table/structure/add-key` | `Table/Structure/AddKeyController` | API /api/servers/:s/databases/:db/tables/:table/structure/add-key<br>UI /s/:s/db/:db/t/:table/structure/add-key | M2 |
 | 🗓️ | `POST /table/structure/browse` | `Table/Structure/BrowseController` | API /api/servers/:s/databases/:db/tables/:table/structure/browse<br>UI /s/:s/db/:db/t/:table/structure/browse | M2 |
@@ -242,10 +242,10 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /database/sql` | `Database/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:24)<br>UI /s/:server/db/:db/sql (apps/web/src/routes/s/$server/db/$db/sql.tsx) |  |
+| ✅ | `GET, POST /database/sql` | `Database/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/sql (apps/web/src/routes/s/$server/db/$db/sql.tsx) |  |
 | 🗓️ | `POST /database/sql/autocomplete` | `Database/SqlAutoCompleteController` | API GET /api/servers/:s/sql/autocomplete<br>UI /s/:s/db/:db/sql/autocomplete | M1 |
 | 🗓️ | `POST /database/sql/format` | `Database/SqlFormatController` | API POST /api/servers/:s/sql/format<br>UI /s/:s/db/:db/sql/format | M1 |
-| 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:105) | X9 — chunked upload + SSE progress |
+| 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:148) | X9 — chunked upload + SSE progress |
 | ✅ | `GET, POST /lint` | `LintController` | API POST /api/servers/:s/sql/lint (apps/server/src/routes/sql.ts:66) | client-side lint (SQL tokenizer in the browser) +  fallback |
-| ✅ | `GET, POST /server/sql` | `Server/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:24)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) |  |
-| ✅ | `GET, POST /sql` | `Sql/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:24)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) | server scope only so far; db/table scopes land with M1 |
+| ✅ | `GET, POST /server/sql` | `Server/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) |  |
+| ✅ | `GET, POST /sql` | `Sql/SqlController` | API POST /api/servers/:s/browse (apps/server/src/routes/browse.ts:44)<br>API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import |
