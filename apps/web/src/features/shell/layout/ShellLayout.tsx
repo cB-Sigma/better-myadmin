@@ -10,6 +10,7 @@ import { Outlet, useLocation } from '@tanstack/react-router'
 import { type ReactNode, useEffect, useMemo, useRef } from 'react'
 import { uiSettingsFrom, useConfig } from '../../../lib/config.ts'
 import { tProduct } from '../../../lib/i18n'
+import { AutoloadBanner } from '../../preferences/AutoloadBanner.tsx'
 import { Breadcrumb } from '../Breadcrumb.tsx'
 import { ServerTabBar } from '../ScopeTabBars.tsx'
 import { UserMenu } from '../UserMenu.tsx'
@@ -84,6 +85,7 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                     </div>
                   </div>
                   <div ref={scroller} id="page_scroll" className="min-h-0 flex-1 overflow-auto">
+                    <AutoloadBanner server={server} />
                     {db === '' && (
                       <div className="sticky top-0 z-10 border-b border-(--tab-border) bg-bg px-2 pt-1 print:hidden">
                         <ServerTabBar server={server} />

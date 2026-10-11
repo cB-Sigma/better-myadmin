@@ -1,6 +1,8 @@
 import { FORM_VALIDATORS, type FormValidator, USER_VALIDATORS } from '@bettermyadmin/config'
 import { type Gettext, sprintf } from '@bettermyadmin/i18n'
+import { pcreToRegExp } from '@bettermyadmin/kbs'
 import { arrayRead, phpEmpty } from '@bettermyadmin/metadata'
+import { php } from '@bettermyadmin/mysql-types'
 import { canonical } from './config-file.ts'
 
 /** Util::requestString: the first scalar of an array, trimmed string. */
@@ -12,18 +14,13 @@ export function requestString(value: unknown): string {
   return String(v).trim()
 }
 
-/** PHP is_numeric() on an already trimmed string. */
-export function isNumericString(s: string): boolean {
-  return /^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$/.test(s)
-}
-
 /** PHP 8 `$a <= $b` for an int bound and a scalar value. */
 function lessOrEqual(value: unknown, max: number): boolean {
   if (typeof value === 'number') return value <= max
   if (typeof value === 'boolean') return value ? max >= 1 || max !== 0 : true
   if (value === null || value === undefined) return true
   const s = String(value)
-  if (isNumericString(s.trim())) return Number(s) <= max
+  if (php.isNumericString(s.trim())) return Number(s) <= max
   // non-numeric string vs int: compared as strings
   return s <= String(max)
 }
@@ -36,13 +33,6 @@ export function fieldValidators(path: string, base: Record<string, unknown>): Fo
     args: v.args.map((a) => (a.startsWith('value:') ? String(arrayRead(a.slice(6), base) ?? '') : a)),
   }))
   return [...own, ...user]
-}
-
-/** PCRE `/.../flags` → JS RegExp (validateByRegex patterns are simple). */
-export function pcreToRegExp(pcre: string): RegExp {
-  const m = /^(.)(.*)\1([a-zA-Z]*)$/s.exec(pcre)
-  if (m === null) return new RegExp(pcre)
-  return new RegExp(m[2] as string, (m[3] as string).replace(/[^imsu]/g, ''))
 }
 
 /**
@@ -112,7 +102,8 @@ function runValidator(tr: Gettext, v: FormValidator, path: string, value: unknow
     if (phpEmpty(value)) return ''
     const s = requestString(value)
     const n = Number(s)
-    if (!isNumericString(s) || !Number.isInteger(n) || n < 0 || (!allowZero && n === 0) || n > max) return err
+    if (!php.isNumericString(s) || !Number.isInteger(n) || n < 0 || (!allowZero && n === 0) || n > max)
+      return err
     return ''
   }
   switch (v.name) {
@@ -124,7 +115,9 @@ function runValidator(tr: Gettext, v: FormValidator, path: string, value: unknow
       return number(false, 65535, tr.gettext('Not a valid port number!'))
     case 'validateByRegex':
       if (value === undefined || value === null) return ''
-      return pcreToRegExp(v.args[0] ?? '').test(requestString(value)) ? '' : tr.gettext('Incorrect value!')
+      return pcreToRegExp(v.args[0] ?? '')?.test(requestString(value)) === true
+        ? ''
+        : tr.gettext('Incorrect value!')
     case 'validateUpperBound': {
       const max = Number.parseInt(v.args[0] ?? '0', 10)
       return lessOrEqual(value, max)

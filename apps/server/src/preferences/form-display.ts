@@ -2,8 +2,9 @@ import { FORM_FIELDS, type FormDef, type FormFieldDef, type FormMsg } from '@bet
 import type { PrefsField, PrefsForm, PrefsFormItem, PrefsOption } from '@bettermyadmin/contracts'
 import { type Gettext, convertBBCode, getDocumentationLink, sprintf } from '@bettermyadmin/i18n'
 import { phpIdentical } from '@bettermyadmin/metadata'
+import { php } from '@bettermyadmin/mysql-types'
 import { type ConfigFile, canonical } from './config-file.ts'
-import { fieldValidators, isNumericString, requestString, validate } from './validator.ts'
+import { fieldValidators, requestString, validate } from './validator.ts'
 
 export interface FormDisplayContext {
   tr: Gettext
@@ -46,7 +47,7 @@ export function phpIntval(v: unknown): number {
   if (typeof v === 'number') return Math.trunc(v)
   if (typeof v === 'boolean') return v ? 1 : 0
   const s = requestString(v)
-  if (isNumericString(s)) return Math.trunc(Number(s))
+  if (php.isNumericString(s)) return Math.trunc(Number(s))
   const m = /^[+-]?\d+/.exec(s)
   return m === null ? 0 : Number(m[0])
 }
@@ -61,7 +62,7 @@ export function phpBoolval(v: unknown): boolean {
 }
 
 const phpIsNumeric = (v: unknown): boolean =>
-  typeof v === 'number' || (typeof v === 'string' && isNumericString(v.trim()))
+  typeof v === 'number' || (typeof v === 'string' && php.isNumericString(v.trim()))
 
 /** PHP 8 loose `==` between an array key (int|string) and a scalar. */
 function looseEquals(key: string | number, value: unknown): boolean {
@@ -71,12 +72,12 @@ function looseEquals(key: string | number, value: unknown): boolean {
   if (typeof key === 'number') {
     if (typeof value === 'number') return key === value
     const s = String(value)
-    return isNumericString(s.trim()) ? key === Number(s) : String(key) === s
+    return php.isNumericString(s.trim()) ? key === Number(s) : String(key) === s
   }
   if (typeof value === 'number')
-    return isNumericString(key.trim()) ? Number(key) === value : key === String(value)
+    return php.isNumericString(key.trim()) ? Number(key) === value : key === String(value)
   const s = String(value)
-  if (isNumericString(key.trim()) && isNumericString(s.trim())) return Number(key) === Number(s)
+  if (php.isNumericString(key.trim()) && php.isNumericString(s.trim())) return Number(key) === Number(s)
   return key === s
 }
 

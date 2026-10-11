@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-61/199 covered (30.7%): 53 implemented, 7 exception, 1 n/a, 138 planned. [Summary](README.md).
+69/199 covered (34.7%): 61 implemented, 7 exception, 1 n/a, 130 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -17,9 +17,9 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET /console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API /api/console/* | M1 — bookmarks, config |
 | ✅ | `POST /console/update-config` | `Console/UpdateConfigController` | API POST /api/servers/:s/console/config (apps/server/src/routes/console.ts:77) | bookmarks, config |
 | 🔀 | `GET, POST /error-report` | `ErrorReportController` | API POST /api/telemetry/error (apps/server/src/routes/telemetry.ts:55) | X19 — opt-in |
-| ✅ | `GET, POST /git-revision` | `GitInfoController` | API GET /api/meta/build (apps/server/src/routes/meta.ts:15) |  |
+| ✅ | `GET, POST /git-revision` | `GitInfoController` | API GET /api/meta/build (apps/server/src/routes/meta.ts:17) |  |
 | 🗓️ | `GET /license` | `LicenseController` | UI /about/license | M1 — static |
-| ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:111) |  |
+| ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:190) |  |
 | ➖ | `GET /messages` | `JavaScriptMessagesController` |  | n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent) |
 | ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:42)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:59) | later: GET /api/servers/:s/navigation/hidden/:db, POST /api/servers/:s/navigation/hide, POST /api/servers/:s/navigation/unhide |
 | 🗓️ | `POST /navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API POST /api/servers/:s/navigation/width | M1 — see API reference |
@@ -28,7 +28,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /table/recent-favorite` | `Table/RecentFavoriteController` | API GET /api/servers/:s/recent-favorite<br>UI /s/:s/db/:db/t/:table/recent-favorite | M1 |
 | 🗓️ | `GET /themes` | `ThemesController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🗓️ | `POST /themes/set` | `ThemeSetController` |  | M1 (X16) — client-side theme store (no server round trip) |
-| 🔀 | `GET, POST /version-check` | `VersionCheckController` | API GET /api/meta/version-check (apps/server/src/routes/meta.ts:35) | X20 |
+| 🔀 | `GET, POST /version-check` | `VersionCheckController` | API GET /api/meta/version-check (apps/server/src/routes/meta.ts:58) | X20 |
 | 🗓️ | `GET, POST /` | `Setup/MainController` | API GET /api/servers/:s/navigation/branch<br>UI /setup | M4 (X7) |
 | 🗓️ | `GET, POST /setup` | `Setup/MainController` | UI /setup | M4 (X7) |
 | 🗓️ | `GET, POST /setup/show-config` | `Setup/ShowConfigController` | UI /setup | M4 (X7) |
@@ -224,19 +224,19 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /table/export/rows` | `Table/ExportRowsController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:51)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) | where_clause[] in the search params |
 | ✅ | `GET, POST /table/import` | `Table/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:53)<br>UI /s/:server/db/:db/t/:table/import (apps/web/src/routes/s/$server/db/$db/t/$table/import.tsx) |  |
 
-## 08 settings preferences pmadb — 1/9 (11.1%) covered, 1/9 implemented
+## 08 settings preferences pmadb — 9/9 (100.0%) covered, 9/9 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | ✅ | `GET, POST /check-relations` | `CheckRelationsController` | API GET /api/servers/:s/metadata-storage/status (apps/server/src/routes/metadata.ts:171)<br>API POST /api/servers/:s/metadata-storage/create (apps/server/src/routes/metadata.ts:178) |  |
-| 🗓️ | `GET, POST /preferences/export` | `Preferences/ExportController` | API /api/preferences<br>UI /settings/export | M4 |
-| 🗓️ | `GET, POST /preferences/features` | `Preferences/FeaturesController` | API /api/preferences<br>UI /settings/features | M4 |
-| 🗓️ | `GET, POST /preferences/import` | `Preferences/ImportController` | API /api/preferences<br>UI /settings/import | M4 |
-| 🗓️ | `GET, POST /preferences/main-panel` | `Preferences/MainPanelController` | API /api/preferences<br>UI /settings/main-panel | M4 |
-| 🗓️ | `GET, POST /preferences/manage` | `Preferences/ManageController` | API POST /api/servers/:s/prefs/import<br>API GET /api/servers/:s/prefs/export<br>UI /settings/manage | M4 |
-| 🗓️ | `GET, POST /preferences/navigation` | `Preferences/NavigationController` | API /api/preferences<br>UI /settings/navigation | M4 |
-| 🗓️ | `GET, POST /preferences/sql` | `Preferences/SqlController` | API /api/preferences<br>UI /settings/sql | M4 |
-| 🗓️ | `GET, POST /preferences/two-factor` | `Preferences/TwoFactorController` | API GET /api/servers/:s/two-factor<br>API POST /api/servers/:s/two-factor<br>UI /settings/two-factor | M4 |
+| ✅ | `GET, POST /preferences/export` | `Preferences/ExportController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
+| ✅ | `GET, POST /preferences/features` | `Preferences/FeaturesController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
+| ✅ | `GET, POST /preferences/import` | `Preferences/ImportController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
+| ✅ | `GET, POST /preferences/main-panel` | `Preferences/MainPanelController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
+| ✅ | `GET, POST /preferences/manage` | `Preferences/ManageController` | API GET /api/servers/:s/preferences/manage (apps/server/src/routes/preferences.ts:74)<br>API GET /api/servers/:s/preferences/manage/export (apps/server/src/routes/preferences.ts:81)<br>API GET /api/servers/:s/preferences/manage/json (apps/server/src/routes/preferences.ts:98)<br>API POST /api/servers/:s/preferences/manage/import (apps/server/src/routes/preferences.ts:103)<br>API POST /api/servers/:s/preferences/manage/reset (apps/server/src/routes/preferences.ts:109)<br>API GET /api/servers/:s/preferences/autoload (apps/server/src/routes/preferences.ts:117)<br>API POST /api/servers/:s/preferences/autoload/hide (apps/server/src/routes/preferences.ts:122)<br>UI /s/:server/preferences/manage (apps/web/src/routes/s/$server/preferences/manage.tsx) |  |
+| ✅ | `GET, POST /preferences/navigation` | `Preferences/NavigationController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
+| ✅ | `GET, POST /preferences/sql` | `Preferences/SqlController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
+| ✅ | `GET, POST /preferences/two-factor` | `Preferences/TwoFactorController` | API GET /api/servers/:s/preferences/two-factor (apps/server/src/routes/preferences.ts:128)<br>API POST /api/servers/:s/preferences/two-factor/configure (apps/server/src/routes/preferences.ts:133)<br>API POST /api/servers/:s/preferences/two-factor/remove (apps/server/src/routes/preferences.ts:141)<br>API GET /api/auth/two-factor (apps/server/src/routes/auth.ts:154)<br>API POST /api/auth/two-factor (apps/server/src/routes/auth.ts:171)<br>UI /s/:server/preferences/two-factor (apps/web/src/routes/s/$server/preferences/two-factor.tsx) |  |
 
 ## 09 sql editor query pipeline — 5/7 (71.4%) covered, 4/7 implemented
 

@@ -321,41 +321,53 @@
   exception: X15
   note: static
 /preferences/export:
-  api: /api/preferences
-  ui: /settings/export
-  planned: M4
+  api:
+    - 'GET /api/servers/:s/preferences/forms/:tab'
+    - 'POST /api/servers/:s/preferences/forms/:tab'
+  ui: '/s/:s/preferences/:tab'
 /preferences/features:
-  api: /api/preferences
-  ui: /settings/features
-  planned: M4
+  api:
+    - 'GET /api/servers/:s/preferences/forms/:tab'
+    - 'POST /api/servers/:s/preferences/forms/:tab'
+  ui: '/s/:s/preferences/:tab'
 /preferences/import:
-  api: /api/preferences
-  ui: /settings/import
-  planned: M4
+  api:
+    - 'GET /api/servers/:s/preferences/forms/:tab'
+    - 'POST /api/servers/:s/preferences/forms/:tab'
+  ui: '/s/:s/preferences/:tab'
 /preferences/main-panel:
-  api: /api/preferences
-  ui: /settings/main-panel
-  planned: M4
+  api:
+    - 'GET /api/servers/:s/preferences/forms/:tab'
+    - 'POST /api/servers/:s/preferences/forms/:tab'
+  ui: '/s/:s/preferences/:tab'
 /preferences/manage:
   api:
-    - 'POST /api/servers/:s/prefs/import'
-    - 'GET /api/servers/:s/prefs/export'
-  ui: /settings/manage
-  planned: M4
+    - 'GET /api/servers/:s/preferences/manage'
+    - 'GET /api/servers/:s/preferences/manage/export'
+    - 'GET /api/servers/:s/preferences/manage/json'
+    - 'POST /api/servers/:s/preferences/manage/import'
+    - 'POST /api/servers/:s/preferences/manage/reset'
+    - 'GET /api/servers/:s/preferences/autoload'
+    - 'POST /api/servers/:s/preferences/autoload/hide'
+  ui: '/s/:s/preferences/manage'
 /preferences/navigation:
-  api: /api/preferences
-  ui: /settings/navigation
-  planned: M4
+  api:
+    - 'GET /api/servers/:s/preferences/forms/:tab'
+    - 'POST /api/servers/:s/preferences/forms/:tab'
+  ui: '/s/:s/preferences/:tab'
 /preferences/sql:
-  api: /api/preferences
-  ui: /settings/sql
-  planned: M4
+  api:
+    - 'GET /api/servers/:s/preferences/forms/:tab'
+    - 'POST /api/servers/:s/preferences/forms/:tab'
+  ui: '/s/:s/preferences/:tab'
 /preferences/two-factor:
   api:
-    - 'GET /api/servers/:s/two-factor'
-    - 'POST /api/servers/:s/two-factor'
-  ui: /settings/two-factor
-  planned: M4
+    - 'GET /api/servers/:s/preferences/two-factor'
+    - 'POST /api/servers/:s/preferences/two-factor/configure'
+    - 'POST /api/servers/:s/preferences/two-factor/remove'
+    - 'GET /api/auth/two-factor'
+    - 'POST /api/auth/two-factor'
+  ui: '/s/:s/preferences/two-factor'
 /schema-export:
   api: 'POST /api/servers/:s/databases/:db/schema-export'
   planned: M3

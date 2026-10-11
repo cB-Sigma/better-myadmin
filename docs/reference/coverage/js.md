@@ -4,7 +4,7 @@
 
 What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.
 
-125/966 covered (12.9%): 125 implemented, 12 planned, 829 missing. [Summary](README.md).
+142/966 covered (14.7%): 142 implemented, 12 planned, 812 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 4/237 (1.7%) covered, 4/237 implemented
 
@@ -100,12 +100,12 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `export.ts` | 41/43: ✅ `POST /databases` ✅ `POST /export/template/create` ✅ `POST /export/template/delete` ✅ `POST /export/template/load` ✅ `POST /export/template/update` ✅ `change #checkbox_sql_include_comments` ✅ `change #column_alias_select` ✅ `change #compression` ✅ `change #db_alias_select` ✅ `change #plugins` ✅ `change #table_alias_select` ✅ `change #table_data_all` ✅ `change #table_structure_all` ✅ `change <$create>` ✅ `change <$createOptions>` ✅ `change input[name="table_data[]"]` ✅ `change input[name="table_select[]"]` ✅ `change input[name="table_structure[]"]` ✅ `change input[type='radio'][name='allrows']` ✅ `change input[type='radio'][name='output_format']` ✅ `change input[type='radio'][name='quick_or_custom']` ✅ `change input[type='radio'][name='sql_structure_or_data']` ✅ `change input[type='radio'][name$='_structure_or_data']` ✅ `change input[type="checkbox"][name="as_separate_files"]` ✅ `change select[name="template"]` ✅ `click .alias_remove` ✅ `click #btn_alias_config` ✅ `click #buttonGo` ✅ `click #column_alias_button` ✅ `click #db_alias_button` ✅ `click #db_select_all` ✅ `click #db_unselect_all` ✅ `click #saveAndCloseBtn` ✅ `click #showsqlquery` ✅ `click #table_alias_button` ✅ `click <row> .alias_remove` ✅ `click input[name="createTemplate"]` ✅ `click input[name="deleteTemplate"]` ✅ `click input[name="updateTemplate"]` ✅ `hidden <modal>` ✅ `shown <modal>` | ⬜ `GET /export/check-time-out` ⬜ `POST <url>` |
 | `import.ts` | 7/7: ✅ `GET /import-status` ✅ `change #input_import_file` ✅ `change #plugins` ✅ `change #select_local_import_file` ✅ `click #importmain #buttonGo` ✅ `keyup #text_csv_enclosed` ✅ `submit #import_file_form` |  |
 
-## 08 settings preferences pmadb — 0/17 (0.0%) covered, 0/17 implemented
+## 08 settings preferences pmadb — 17/17 (100.0%) covered, 17/17 implemented
 
 | Script | Covered | Not covered |
 |---|---|---|
-| `modules/config.ts` | 0/13 | ⬜ `POST /preferences/manage` ⬜ `POST index.php` ⬜ `change <$el>` ⬜ `change form.prefs-form` ⬜ `click .optbox input[type=button][name=submit_reset]` ⬜ `click <$cnt> a` ⬜ `click <$radios>` ⬜ `click div.click-hide-message` ⬜ `click div.tab-content .restore-default, .set-value` ⬜ `keyup <$el>` ⬜ `mouseenter div.tab-content .restore-default, .set-value` ⬜ `mouseleave div.tab-content .restore-default, .set-value` ⬜ `submit form.prefs-form` |
-| `modules/page_settings.ts` | 0/4 | ⬜ `click #page_settings_icon` ⬜ `click #pageSettingsModalApplyButton` ⬜ `click #pageSettingsModalCloseButton,#pageSettingsModalCancelButton` ⬜ `click #pma_navigation_settings_icon` |
+| `modules/config.ts` | 13/13: ✅ `POST /preferences/manage` ✅ `POST index.php` ✅ `change <$el>` ✅ `change form.prefs-form` ✅ `click .optbox input[type=button][name=submit_reset]` ✅ `click <$cnt> a` ✅ `click <$radios>` ✅ `click div.click-hide-message` ✅ `click div.tab-content .restore-default, .set-value` ✅ `keyup <$el>` ✅ `mouseenter div.tab-content .restore-default, .set-value` ✅ `mouseleave div.tab-content .restore-default, .set-value` ✅ `submit form.prefs-form` |  |
+| `modules/page_settings.ts` | 4/4: ✅ `click #page_settings_icon` ✅ `click #pageSettingsModalApplyButton` ✅ `click #pageSettingsModalCloseButton,#pageSettingsModalCancelButton` ✅ `click #pma_navigation_settings_icon` |  |
 
 ## 09 sql editor query pipeline — 20/48 (41.7%) covered, 20/48 implemented
 

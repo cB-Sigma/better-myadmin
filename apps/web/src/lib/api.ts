@@ -71,11 +71,20 @@ import type {
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  PageSettingsResponse,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
   PartitioningRequest,
   PasswordForm,
   PluginsResponse,
+  PreferencesFormResponse,
+  PreferencesImportRequest,
+  PreferencesImportResponse,
+  PreferencesJsonResponse,
+  PreferencesManageResponse,
+  PreferencesSaveRequest,
+  PreferencesSaveResponse,
+  PreferencesTab,
   ProcessList,
   ProcessesQuery,
   QueryRequest,
@@ -100,6 +109,13 @@ import type {
   StatusVariablesRequest,
   StructureResponse,
   TableScope,
+  TwoFactorActionResponse,
+  TwoFactorChallengeResponse,
+  TwoFactorConfigureRequest,
+  TwoFactorRemoveRequest,
+  TwoFactorStatusResponse,
+  TwoFactorVerifyRequest,
+  TwoFactorVerifyResponse,
   VersionCheckResponse,
 } from '@bettermyadmin/contracts'
 import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
@@ -455,6 +471,50 @@ export const api = {
     r: TableRef,
     req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
   ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tablePath(r)}/uiprefs`, req),
+  // user preferences (docs/features/08-settings-preferences-pmadb.md)
+  /** pma: /preferences/{features,sql,navigation,main-panel,export,import} */
+  preferencesForm: (server: number, tab: PreferencesTab) =>
+    call<PreferencesFormResponse>('GET', `${srvPath(server)}/preferences/forms/${tab}`),
+  savePreferencesForm: (server: number, tab: PreferencesTab, req: PreferencesSaveRequest) =>
+    call<PreferencesSaveResponse>('POST', `${srvPath(server)}/preferences/forms/${tab}`, req),
+  /** PageSettings::init(group): the "Page-related settings" form of a page */
+  pageSettings: (server: number, group: string) =>
+    call<PageSettingsResponse>('GET', `${srvPath(server)}/preferences/page/${group}`),
+  savePageSettings: (server: number, group: string, req: PreferencesSaveRequest) =>
+    call<PreferencesSaveResponse>('POST', `${srvPath(server)}/preferences/page/${group}`, req),
+  /** pma: /preferences/manage */
+  preferencesManage: (server: number) =>
+    call<PreferencesManageResponse>('GET', `${srvPath(server)}/preferences/manage`),
+  /** submit_export: the download URL (navigated to, so the browser saves it) */
+  preferencesExportUrl: (server: number, type: 'json' | 'php') =>
+    `/api${srvPath(server)}/preferences/manage/export?type=${type}`,
+  /** submit_get_json (Save to browser's storage) */
+  preferencesJson: (server: number) =>
+    call<PreferencesJsonResponse>('GET', `${srvPath(server)}/preferences/manage/json`),
+  importPreferences: (server: number, req: PreferencesImportRequest) =>
+    call<PreferencesImportResponse>('POST', `${srvPath(server)}/preferences/manage/import`, req),
+  resetPreferences: (server: number) =>
+    call<{ ok: boolean; message: SqlMessage | null }>(
+      'POST',
+      `${srvPath(server)}/preferences/manage/reset`,
+      {},
+    ),
+  /** the localStorage import offer (Header: storage type session, not answered yet) */
+  preferencesAutoload: (server: number) =>
+    call<{ show: boolean }>('GET', `${srvPath(server)}/preferences/autoload`),
+  hidePreferencesAutoload: (server: number) =>
+    call<{ ok: true }>('POST', `${srvPath(server)}/preferences/autoload/hide`, {}),
+  /** pma: /preferences/two-factor */
+  twoFactor: (server: number) =>
+    call<TwoFactorStatusResponse>('GET', `${srvPath(server)}/preferences/two-factor`),
+  configureTwoFactor: (server: number, req: TwoFactorConfigureRequest) =>
+    call<TwoFactorActionResponse>('POST', `${srvPath(server)}/preferences/two-factor/configure`, req),
+  removeTwoFactor: (server: number, req: TwoFactorRemoveRequest) =>
+    call<TwoFactorActionResponse>('POST', `${srvPath(server)}/preferences/two-factor/remove`, req),
+  /** the second factor of a pending login (login/twofactor.twig) */
+  twoFactorChallenge: () => call<TwoFactorChallengeResponse>('GET', '/auth/two-factor'),
+  verifyTwoFactor: (req: TwoFactorVerifyRequest) =>
+    call<TwoFactorVerifyResponse>('POST', '/auth/two-factor', req),
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,

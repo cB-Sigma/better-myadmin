@@ -91,14 +91,14 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
 | POST | `/normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | API `/api/servers/:s/databases/:db/tables/:table/normalization/*` | 🗓️ planned (M2) |
 | GET | `/phpinfo` | `PhpInfoController` | UI `/about/runtime` · (static) | 🗓️ planned (M1, X15) |
-| GET, POST | `/preferences/export` | `Preferences/ExportController` | UI `/settings/export` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/features` | `Preferences/FeaturesController` | UI `/settings/features` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/import` | `Preferences/ImportController` | UI `/settings/import` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/main-panel` | `Preferences/MainPanelController` | UI `/settings/main-panel` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/manage` | `Preferences/ManageController` | UI `/settings/manage` · API `POST /api/servers/:s/prefs/import` · API `GET /api/servers/:s/prefs/export` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/navigation` | `Preferences/NavigationController` | UI `/settings/navigation` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/sql` | `Preferences/SqlController` | UI `/settings/sql` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/two-factor` | `Preferences/TwoFactorController` | UI `/settings/two-factor` · API `GET /api/servers/:s/two-factor` · API `POST /api/servers/:s/two-factor` | 🗓️ planned (M4) |
+| GET, POST | `/preferences/export` | `Preferences/ExportController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/features` | `Preferences/FeaturesController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/import` | `Preferences/ImportController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/main-panel` | `Preferences/MainPanelController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/manage` | `Preferences/ManageController` | UI `/s/:s/preferences/manage` · API `GET /api/servers/:s/preferences/manage` · API `GET /api/servers/:s/preferences/manage/export` · API `GET /api/servers/:s/preferences/manage/json` · API `POST /api/servers/:s/preferences/manage/import` · API `POST /api/servers/:s/preferences/manage/reset` · API `GET /api/servers/:s/preferences/autoload` · API `POST /api/servers/:s/preferences/autoload/hide` | ✅ implemented |
+| GET, POST | `/preferences/navigation` | `Preferences/NavigationController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/sql` | `Preferences/SqlController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/two-factor` | `Preferences/TwoFactorController` | UI `/s/:s/preferences/two-factor` · API `GET /api/servers/:s/preferences/two-factor` · API `POST /api/servers/:s/preferences/two-factor/configure` · API `POST /api/servers/:s/preferences/two-factor/remove` · API `GET /api/auth/two-factor` · API `POST /api/auth/two-factor` | ✅ implemented |
 | GET, POST | `/schema-export` | `SchemaExportController` | API `POST /api/servers/:s/databases/:db/schema-export` | 🗓️ planned (M3) |
 | GET, POST | `/server/binlog` | `Server/BinlogController` | UI `/s/:s/binlog` · API `GET /api/servers/:s/binlog` | ✅ implemented (M3) |
 | GET | `/server/collations` | `Server/CollationsController` | UI `/s/:s/collations` · API `GET /api/servers/:s/collations` | ✅ implemented (M3) |
