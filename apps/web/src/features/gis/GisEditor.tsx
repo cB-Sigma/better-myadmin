@@ -50,7 +50,13 @@ export function GisEditor({
   const [v, setV] = useState<GisValue>(init.value)
   const fixedType = columnType.toUpperCase() !== 'GEOMETRY'
   const setGeom = (geom: Geom) => setV((s) => ({ ...s, geom }))
-  const output = resultValue(v)
+  const setGeomNow = (geom: Geom) => {
+    setGeom(geom)
+    setShown((s) => ({ ...s, geom }))
+  }
+  // updateResult() runs on `change` of an input (blur) and on the add/type buttons, not per key
+  const [shown, setShown] = useState<GisValue>(init.value)
+  const output = resultValue(shown)
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent size="xl" id="gisEditorModal" aria-describedby={undefined} modal="static">
@@ -58,7 +64,7 @@ export function GisEditor({
           <DialogTitle>{t('Value for the column "%s"', field)}</DialogTitle>
         </DialogHeader>
         <DialogBody>
-          <form id="gis_data_editor_form" onSubmit={(e) => e.preventDefault()}>
+          <form id="gis_data_editor_form" onSubmit={(e) => e.preventDefault()} onBlur={() => setShown(v)}>
             <div className="flex flex-wrap gap-4">
               <div className="min-w-80 flex-1 space-y-3" id="gis_data">
                 <div className="flex items-end gap-3">
@@ -78,7 +84,7 @@ export function GisEditor({
                         name="gis_data[gis_type]"
                         className="w-full"
                         value={v.geom.type}
-                        onChange={(e) => setGeom(emptyGeom(e.target.value as GisType))}
+                        onChange={(e) => setGeomNow(emptyGeom(e.target.value as GisType))}
                       >
                         {GIS_TYPES.map((g) => (
                           <option key={g} value={g}>
@@ -107,16 +113,16 @@ export function GisEditor({
               </div>
               <Panel className="self-start">
                 <PanelBody>
-                  <Preview geom={v.geom} />
+                  <Preview geom={shown.geom} />
                 </PanelBody>
               </Panel>
             </div>
             <div className="mt-3">
               <Label htmlFor="gis_data_textarea">{t('Output')}</Label>
-              <Textarea id="gis_data_textarea" rows={5} value={output} readOnly />
+              <Textarea key={output} id="gis_data_textarea" rows={5} defaultValue={output} />
             </div>
             <div className="mt-3 flex gap-2">
-              <Button variant="primary" className="gis-copy-data" onClick={() => onCopy(output)}>
+              <Button variant="primary" className="gis-copy-data" onClick={() => onCopy(resultValue(v))}>
                 {t('Copy')}
               </Button>
               <Button onClick={onClose}>{t('Cancel')}</Button>

@@ -179,8 +179,31 @@ export function initialValue(columnType: string, value: string): { type: GisType
   else if (fromValue !== undefined && (GIS_TYPES as readonly string[]).includes(fromValue))
     type = fromValue as GisType
   const parsed = value.trim() === '' ? null : parseGeom(wkt)
-  const geom = parsed !== null && parsed.type === type ? parsed : emptyGeom(type)
+  // an empty value is parsed too (generateParams('')): its first coordinates read as 0 0
+  const geom = parsed !== null && parsed.type === type ? parsed : zeroFirst(emptyGeom(type))
   return { type, value: { srid: String(Number.parseInt(srid, 10) || 0), geom } }
+}
+
+/** The first point of a geometry set to 0 0 (phpMyAdmin casts the empty coordinates to float). */
+function zeroFirst(g: Geom): Geom {
+  const z = (p: Pt[]): Pt[] => p.map((x, i) => (i === 0 ? { x: '0', y: '0' } : x))
+  switch (g.type) {
+    case 'POINT':
+      return { ...g, point: { x: '0', y: '0' } }
+    case 'MULTIPOINT':
+    case 'LINESTRING':
+      return { ...g, points: z(g.points) }
+    case 'MULTILINESTRING':
+    case 'POLYGON':
+      return { ...g, lines: g.lines.map((l, i) => (i === 0 ? z(l) : l)) }
+    case 'MULTIPOLYGON':
+      return {
+        ...g,
+        polygons: g.polygons.map((p, i) => (i === 0 ? p.map((l, j) => (j === 0 ? z(l) : l)) : p)),
+      }
+    case 'GEOMETRYCOLLECTION':
+      return { ...g, geoms: g.geoms.map((x, i) => (i === 0 ? zeroFirst(x) : x)) }
+  }
 }
 
 // ------------------------------------------------------------------ preview

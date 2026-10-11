@@ -1,0 +1,9 @@
+# Intentional differences of the Insert/Edit form (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: button, label: '/^MySQL accepts additional values not selectable by the datepicker/' }
+    added: >-
+      the calendar trigger of date/time fields is a focusable button (phpMyAdmin's jQuery UI
+      datepicker adds an <img> trigger that the harness does not count as a control)
+  - match: { kind: button, label: Close }
+    ignore: [order]
+    reason: the dialog's corner close button comes last in our DOM (Radix Dialog), first in Bootstrap's header

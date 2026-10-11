@@ -57,8 +57,10 @@ test('insert rows through the Insert tab [p03-35434c]', async ({ page }) => {
 
   // Continue insertion: a third row, then back to two
   await page.locator('#insert_rows').fill('3')
+  await page.locator('#insert_rows').press('Enter')
   await expect(form.locator('table.insertRowTable')).toHaveCount(3)
   await page.locator('#insert_rows').fill('2')
+  await page.locator('#insert_rows').press('Enter')
   await expect(form.locator('table.insertRowTable')).toHaveCount(2)
 
   // row 0: name, enum radio, FK dropdown (blank, content-id, blank, id-content)
@@ -80,6 +82,7 @@ test('insert rows through the Insert tab [p03-35434c]', async ({ page }) => {
   await expect(gis).toBeVisible()
   await gis.getByLabel('X', { exact: true }).fill('3')
   await gis.getByLabel('Y', { exact: true }).fill('4')
+  await gis.getByLabel('Y', { exact: true }).blur()
   await expect(gis.locator('#gis_data_textarea')).toHaveValue("'POINT(3 4)',0")
   await gis.getByRole('button', { name: 'Copy' }).click()
 

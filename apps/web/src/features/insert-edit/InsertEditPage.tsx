@@ -215,8 +215,10 @@ function InsertEditForm({
 
   /** "Continue insertion with N rows": rows added/removed client-side */
   const continueInsertion = async (raw: string) => {
-    const n = Math.max(1, Number.parseInt(raw, 10) || 1)
-    setInsertRows(String(n))
+    setInsertRows(raw)
+    // an empty or invalid number is ignored until the user types one (the input has min=1)
+    const n = Number.parseInt(raw, 10)
+    if (Number.isNaN(n) || n < 1) return
     if (n === rows.length) return
     if (n < rows.length) {
       if (
@@ -439,7 +441,12 @@ function InsertEditForm({
             min={1}
             className="w-20"
             value={insertRows}
-            onChange={(e) => void continueInsertion(e.target.value)}
+            // addNewContinueInsertionFields runs on `change` (blur) and Enter, not while typing
+            onChange={(e) => setInsertRows(e.target.value)}
+            onBlur={(e) => void continueInsertion(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void continueInsertion(e.currentTarget.value)
+            }}
           />
         </form>
       )}

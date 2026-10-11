@@ -17,7 +17,7 @@ describe('GIS data editor model', () => {
   })
   it('a fixed column type wins over the value', () => {
     expect(initialValue('point', '').type).toBe('POINT')
-    expect(resultValue(initialValue('point', '').value)).toBe("'POINT( )',0")
+    expect(resultValue(initialValue('point', '').value)).toBe("'POINT(0 0)',0")
   })
 })
 
