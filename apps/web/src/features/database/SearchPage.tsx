@@ -31,8 +31,8 @@ import { path, Messages, errorMessage, tableBase } from './common'
 export function SearchPage({ server, db }: { server: number; db: string }) {
   const confirm = useConfirm()
   const form = useQuery({
-    queryKey: qk.dbPage(server, db, 'search-form'),
-    queryFn: () => api.dbSearchForm(server, db),
+    queryKey: qk.dbPage({ server, db }, 'search-form'),
+    queryFn: () => api.dbSearchForm({ server, db }),
   })
   const [searchString, setSearchString] = useState('')
   const [searchType, setSearchType] = useState('1')
@@ -56,7 +56,10 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       return
     }
     try {
-      const r = await api.dbSearch(server, db, { searchString, searchType, tables, columnName, includeHex })
+      const r = await api.dbSearch(
+        { server, db },
+        { searchString, searchType, tables, columnName, includeHex },
+      )
       setMessages([])
       setResults(r)
       setShowResults(true)
@@ -90,7 +93,10 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       const response = await runQuery(server, { sql, db, table }, 'page')
       setBrowse({ table, response })
       // search.ts: the search runs again so the counts refresh
-      const r = await api.dbSearch(server, db, { searchString, searchType, tables, columnName, includeHex })
+      const r = await api.dbSearch(
+        { server, db },
+        { searchString, searchType, tables, columnName, includeHex },
+      )
       setResults(r)
     } catch (e) {
       setMessages([errorMessage(e)])

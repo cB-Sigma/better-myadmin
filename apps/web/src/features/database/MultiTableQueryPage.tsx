@@ -53,8 +53,8 @@ const newColumn = (): QueryColumn => ({
 
 export function MultiTableQueryPage({ server, db }: { server: number; db: string }) {
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'multi-table-query'),
-    queryFn: () => api.dbMultiTableForm(server, db),
+    queryKey: qk.dbPage({ server, db }, 'multi-table-query'),
+    queryFn: () => api.dbMultiTableForm({ server, db }),
   })
   const [cards, setCards] = useState<QueryColumn[] | null>(null)
   const [sql, setSql] = useState('')
@@ -79,7 +79,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
       return
     }
     try {
-      const keys = await api.dbMultiTableKeys(server, db, used)
+      const keys = await api.dbMultiTableKeys({ server, db }, used)
       setSql(generateQuery(list, keys.foreignKeyConstrains) ?? '')
       setMessages([])
     } catch (e) {

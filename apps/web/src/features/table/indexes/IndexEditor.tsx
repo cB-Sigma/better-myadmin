@@ -1,10 +1,11 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
+import { Button, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
-import { type Scope, structureApi } from '../structure/api'
-import { Button, DocLink, Modal, PreviewSqlModal, errorMessage } from '../structure/ui'
+import { qk } from '../../../lib/queryKeys'
 
 /**
  * Add / edit index dialog and the rename dialog.
@@ -38,7 +39,7 @@ export function IndexEditorForm({
   onDone,
   onCancel,
 }: {
-  scope: Scope
+  scope: TableRef
   form: IndexFormResponse
   onDone: (r: DdlResponse) => void
   onCancel?: () => void
@@ -70,7 +71,7 @@ export function IndexEditorForm({
   const submit = async (dryRun: boolean) => {
     setError(null)
     try {
-      const r = await structureApi.saveIndex(scope, { oldIndex: form.oldIndex, index, dryRun })
+      const r = await api.saveIndex(scope, { oldIndex: form.oldIndex, index, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
@@ -112,7 +113,7 @@ export function IndexEditorForm({
         </label>
         <label className="flex flex-col">
           <strong>
-            {t('Index choice:')} <DocLink page="alter-table" />
+            {t('Index choice:')} <MySqlDocLink link="alter-table" />
           </strong>
           <select
             id="select_index_choice"
@@ -274,12 +275,7 @@ export function IndexEditorForm({
           </Button>
         </div>
       )}
-      {error !== null && (
-        <div className="mt-2 rounded border border-error/40 bg-error-bg px-3 py-2 text-error" role="alert">
-          {error.text}
-          {error.sql !== undefined && <pre className="mt-1 font-mono text-xs">{error.sql}</pre>}
-        </div>
-      )}
+      {error !== null && <MessageBox {...error} flush className="mt-2" />}
       <div className="mt-3 flex justify-end gap-2">
         <Button type="submit" variant="primary">
           {t('Go')}
@@ -289,7 +285,7 @@ export function IndexEditorForm({
         </Button>
         {onCancel !== undefined && <Button onClick={onCancel}>{t('Close')}</Button>}
       </div>
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
     </form>
   )
 }
@@ -301,14 +297,14 @@ export function IndexDialog({
   onClose,
   onDone,
 }: {
-  scope: Scope
+  scope: TableRef
   query: { index?: string; create?: number } | null
   onClose: () => void
   onDone: (r: DdlResponse) => void
 }) {
   const form = useQuery({
-    queryKey: ['index-form', scope, query],
-    queryFn: () => structureApi.indexForm(scope, query ?? {}),
+    queryKey: qk.indexForm(scope, query),
+    queryFn: () => api.indexForm(scope, query ?? {}),
     enabled: query !== null,
     gcTime: 0,
   })
@@ -317,7 +313,7 @@ export function IndexDialog({
       title={query?.index !== undefined ? t('Edit index') : t('Add index')}
       open={query !== null}
       onClose={onClose}
-      wide
+      size="xl"
     >
       {form.data !== undefined && (
         <IndexEditorForm scope={scope} form={form.data} onDone={onDone} onCancel={onClose} />
@@ -332,7 +328,7 @@ export function RenameIndexDialog({
   index,
   onClose,
   onDone,
-}: { scope: Scope; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
+}: { scope: TableRef; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
   const [name, setName] = useState(index ?? '')
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
@@ -341,7 +337,7 @@ export function RenameIndexDialog({
     if (index === null) return
     setError(null)
     try {
-      const r = await structureApi.renameIndex(scope, { oldIndex: index, name, dryRun })
+      const r = await api.renameIndex(scope, { oldIndex: index, name, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
@@ -372,7 +368,7 @@ export function RenameIndexDialog({
           {error.text}
         </div>
       )}
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
     </Modal>
   )
 }

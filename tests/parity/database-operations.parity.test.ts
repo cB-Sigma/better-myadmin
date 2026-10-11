@@ -191,10 +191,10 @@ describe.skipIf(!pmaReachable)('parity: database operations', () => {
     await reseed()
     const r = await both(
       h,
-      () => h.pma.pageGet('/database/operations', { db: P }, true),
+      () => h.pma.getJson('/database/operations', { db: P }),
       () => h.bma.req('GET', bma(B, '/operations')),
     )
-    const html = String(JSON.parse(r.p).message ?? '')
+    const html = String(r.p.message ?? '')
     const b = r.b.json as { hasComment: boolean; dbCollation: string; isDropDatabaseAllowed: boolean }
     expect(b.hasComment).toBe(html.includes('id="formDatabaseComment"'))
     expect(b.isDropDatabaseAllowed).toBe(html.includes('id="drop_db_anchor"'))

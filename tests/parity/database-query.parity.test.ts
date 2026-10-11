@@ -36,7 +36,7 @@ describe.skipIf(!pmaReachable)('parity: multi-table query', () => {
   it('the form lists every table with its columns', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGet('/database/multi-table-query', { db: P }),
+      () => h.pma.getPage('/database/multi-table-query', { db: P }),
       () => h.bma.req('GET', `/api/servers/1/databases/${B}/multi-table-query`),
     )
     const re = /^SELECT TABLE_NAME, COLUMN_NAME FROM information_schema\.columns/

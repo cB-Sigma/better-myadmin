@@ -90,7 +90,7 @@ export function ProgramListPage({
   const shown = items.filter((i) => i.name.toUpperCase().includes(needle))
   const refresh = async () => {
     setSelected([])
-    await qc.invalidateQueries({ queryKey: qk.db(server, db) })
+    await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
     await qc.invalidateQueries({ queryKey: qk.nav(server) })
   }
   const drop = async (sqls: string[]) => {

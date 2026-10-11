@@ -58,20 +58,23 @@ const emptyEvent = (): EventEditorData => ({
 
 export function EventsPage({ server, db }: { server: number; db: string }) {
   const qc = useQueryClient()
-  const q = useQuery({ queryKey: qk.dbPage(server, db, 'events'), queryFn: () => api.dbEvents(server, db) })
+  const q = useQuery({
+    queryKey: qk.dbPage({ server, db }, 'events'),
+    queryFn: () => api.dbEvents({ server, db }),
+  })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [editor, setEditor] = useState<{ event: EventEditorData; original: string | null } | null>(null)
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
   if (d === undefined) return null
-  const refresh = () => qc.invalidateQueries({ queryKey: qk.db(server, db) })
+  const refresh = () => qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
 
   const open = async (name?: string) => {
     try {
       setEditor(
         name === undefined
           ? { event: emptyEvent(), original: null }
-          : { event: await api.dbEventEditor(server, db, name), original: name },
+          : { event: await api.dbEventEditor({ server, db }, name), original: name },
       )
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -106,7 +109,7 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
         empty={t('There are no events to display.')}
         messages={messages}
         setMessages={setMessages}
-        onExport={(name) => api.dbEventExport(server, db, name)}
+        onExport={(name) => api.dbEventExport({ server, db }, name)}
         items={d.items.map((e) => ({
           name: e.name,
           dropSql: e.dropSql,
@@ -147,10 +150,13 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
           onClose={() => setEditor(null)}
           onSave={async (body) => {
             try {
-              const r = await api.dbEventSave(server, db, {
-                ...body,
-                ...(editor.original !== null ? { originalName: editor.original } : {}),
-              })
+              const r = await api.dbEventSave(
+                { server, db },
+                {
+                  ...body,
+                  ...(editor.original !== null ? { originalName: editor.original } : {}),
+                },
+              )
               if (r.messages[0]?.type === 'error') return r.messages
               setMessages(r.messages)
               setEditor(null)

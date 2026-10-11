@@ -5,7 +5,7 @@ import type { HomeResponse, HomeWarning } from '@bettermyadmin/contracts'
 import { languageStats, sprintf } from '@bettermyadmin/i18n'
 import { collationDescription } from '@bettermyadmin/mysql-types'
 import { serverIndexes } from '../config.ts'
-import { arePmadbTablesAllDisabled, hasAllFeatures } from '../pmadb/storage.ts'
+import { arePmadbTablesAllDisabled } from '../pmadb/storage.ts'
 import { readGitInfo } from './git.ts'
 import { APP_VERSION, type ShellCtx, storage } from './scope.ts'
 
@@ -253,7 +253,7 @@ export async function homeData(ctx: ShellCtx, env: HomeEnv): Promise<HomeRespons
 
   const st = await storage(ctx)
   let configStorageMessage: HomeResponse['configStorageMessage'] = null
-  if (!arePmadbTablesAllDisabled(server) && !hasAllFeatures(st) && !cfg.PmaNoRelation_DisableWarning) {
+  if (!arePmadbTablesAllDisabled(server) && !st.allFeatures && !cfg.PmaNoRelation_DisableWarning) {
     configStorageMessage = { type: server.pmadb !== '' ? 'error' : 'notice', zeroConf: cfg.ZeroConf }
   }
 

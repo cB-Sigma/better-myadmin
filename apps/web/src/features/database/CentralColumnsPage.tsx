@@ -5,7 +5,18 @@ import type {
   ColumnFormOptions,
   SqlMessage,
 } from '@bettermyadmin/contracts'
-import { Alert, Button, Checkbox, IconText, Input, Label, NativeSelect, useConfirm } from '@bettermyadmin/ui'
+import {
+  Alert,
+  Button,
+  Checkbox,
+  IconText,
+  Input,
+  Label,
+  NativeSelect,
+  Panel,
+  PanelBody,
+  useConfirm,
+} from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { api } from '../../lib/api'
@@ -201,8 +212,8 @@ const tableClass =
 export function CentralColumnsPage({ server, db }: { server: number; db: string }) {
   const [nav, setNav] = useState<{ pos?: number; totalRows?: number }>({})
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'central-columns', nav),
-    queryFn: () => api.dbCentralColumns(server, db, nav),
+    queryKey: qk.dbPage({ server, db }, 'central-columns', nav),
+    queryFn: () => api.dbCentralColumns({ server, db }, nav),
   })
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
@@ -234,12 +245,12 @@ function CentralColumnsView({
   const [column, setColumn] = useState('')
   const [multi, setMulti] = useState<Array<Draft & { origName: string }> | null>(null)
   const populate = useQuery({
-    queryKey: qk.dbPage(server, db, 'central-columns-populate', { table }),
-    queryFn: () => api.dbCentralColumnsPopulate(server, db, table),
+    queryKey: qk.dbPage({ server, db }, 'central-columns-populate', { table }),
+    queryFn: () => api.dbCentralColumnsPopulate({ server, db }, table),
     enabled: table !== '',
   })
 
-  const refresh = () => qc.invalidateQueries({ queryKey: qk.dbPage(server, db, 'central-columns') })
+  const refresh = () => qc.invalidateQueries({ queryKey: qk.dbPage({ server, db }, 'central-columns') })
   const act = async (fn: () => Promise<CentralColumnsActionResponse>): Promise<boolean> => {
     try {
       const r = await fn()
@@ -301,18 +312,18 @@ function CentralColumnsView({
           onSubmit={(e) => {
             e.preventDefault()
             void act(() =>
-              api.dbCentralColumnsAction(server, db, {
-                action: 'multi-edit',
-                columns: multi.map((m) => ({ origName: m.origName, ...input(m) })),
-              }),
+              api.dbCentralColumnsAction(
+                { server, db },
+                {
+                  action: 'multi-edit',
+                  columns: multi.map((m) => ({ origName: m.origName, ...input(m) })),
+                },
+              ),
             ).then((ok) => ok && setMulti(null))
           }}
         >
-          <div className="rounded-(--radius) border border-border">
-            <div className="border-b border-border bg-bg-subtle px-3 py-2 font-semibold">
-              {t('Structure')}
-            </div>
-            <div className="p-3">
+          <Panel title={t('Structure')}>
+            <PanelBody>
               <table id="table_columns" className={`${tableClass} noclick`}>
                 <thead>
                   <tr className="bg-grid-header">
@@ -341,14 +352,14 @@ function CentralColumnsView({
                   ))}
                 </tbody>
               </table>
-            </div>
+            </PanelBody>
             <div className="flex gap-2 border-t border-border px-3 py-2">
               <Button type="submit" variant="primary" name="save_multi_central_column_edit">
                 {t('Save')}
               </Button>
               <Button onClick={() => setMulti(null)}>{t('Cancel')}</Button>
             </div>
-          </div>
+          </Panel>
         </form>
       </div>
     )
@@ -388,7 +399,7 @@ function CentralColumnsView({
             onSubmit={(e) => {
               e.preventDefault()
               void act(() =>
-                api.dbCentralColumnsAction(server, db, { action: 'add-new', column: input(draft) }),
+                api.dbCentralColumnsAction({ server, db }, { action: 'add-new', column: input(draft) }),
               ).then((ok) => {
                 if (ok) {
                   setDraft(emptyDraft(d.options))
@@ -464,7 +475,9 @@ function CentralColumnsView({
         onSubmit={(e) => {
           e.preventDefault()
           if (column === '') return
-          void act(() => api.dbCentralColumnsAction(server, db, { action: 'add-from-table', table, column }))
+          void act(() =>
+            api.dbCentralColumnsAction({ server, db }, { action: 'add-from-table', table, column }),
+          )
         }}
       >
         <IconText icon="centralColumns_add" text={t('Add column')} />
@@ -564,10 +577,13 @@ function CentralColumnsView({
                               })
                               if (ok)
                                 await act(() =>
-                                  api.dbCentralColumnsAction(server, db, {
-                                    action: 'delete',
-                                    columns: [c.name],
-                                  }),
+                                  api.dbCentralColumnsAction(
+                                    { server, db },
+                                    {
+                                      action: 'delete',
+                                      columns: [c.name],
+                                    },
+                                  ),
                                 )
                             }}
                           >
@@ -607,11 +623,14 @@ function CentralColumnsView({
                             className="edit_save_form"
                             onClick={() =>
                               void act(() =>
-                                api.dbCentralColumnsAction(server, db, {
-                                  action: 'edit',
-                                  origName: c.name,
-                                  column: input(e),
-                                }),
+                                api.dbCentralColumnsAction(
+                                  { server, db },
+                                  {
+                                    action: 'edit',
+                                    origName: c.name,
+                                    column: input(e),
+                                  },
+                                ),
                               ).then((ok) => ok && stopEdit())
                             }
                           >
@@ -655,7 +674,7 @@ function CentralColumnsView({
               onClick={async () => {
                 if (selected.length === 0) return noneSelected()
                 try {
-                  const list = await api.dbCentralColumnsEdit(server, db, selected)
+                  const list = await api.dbCentralColumnsEdit({ server, db }, selected)
                   setMessage(null)
                   setMulti(list.map((c) => ({ ...toDraft(c), origName: c.name })))
                 } catch (err) {
@@ -672,7 +691,7 @@ function CentralColumnsView({
               onClick={async () => {
                 if (selected.length === 0) return noneSelected()
                 const ok = await act(() =>
-                  api.dbCentralColumnsAction(server, db, { action: 'delete', columns: selected }),
+                  api.dbCentralColumnsAction({ server, db }, { action: 'delete', columns: selected }),
                 )
                 if (ok) setSelected([])
               }}

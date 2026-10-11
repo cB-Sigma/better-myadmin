@@ -31,8 +31,8 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
   const navigate = useNavigate()
   const confirm = useConfirm()
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'operations'),
-    queryFn: () => api.dbOperations(server, db),
+    queryKey: qk.dbPage({ server, db }, 'operations'),
+    queryFn: () => api.dbOperations({ server, db }),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [comment, setComment] = useState<string | null>(null)
@@ -61,7 +61,7 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
     try {
       const r = await fn()
       setMessages(r.messages)
-      await qc.invalidateQueries({ queryKey: qk.db(server, db) })
+      await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
       return r
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -80,7 +80,7 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
     }
     if (!(await confirm({ question: `CREATE DATABASE ${renameTo} / DROP DATABASE ${db}` }))) return
     try {
-      const r = await api.dbRenameCopy(server, db, 'rename', {
+      const r = await api.dbRenameCopy({ server, db }, 'rename', {
         newName: renameTo,
         ...(d.dbCollation !== '' ? { collation: d.dbCollation } : {}),
         adjustPrivileges: adjustRename ?? d.hasAdjustPrivileges,
@@ -96,7 +96,7 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
   const copy = async () => {
     if (copyTo === '') return missing()
     try {
-      const r = await api.dbRenameCopy(server, db, 'copy', {
+      const r = await api.dbRenameCopy({ server, db }, 'copy', {
         newName: copyTo,
         ...(d.dbCollation !== '' ? { collation: d.dbCollation } : {}),
         what,
@@ -187,7 +187,10 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
             value={comment ?? d.comment}
             onChange={(e) => setComment(e.target.value)}
           />,
-          go(() => void run(() => api.dbOperation(server, db, 'comment', { comment: comment ?? d.comment }))),
+          go(
+            () =>
+              void run(() => api.dbOperation({ server, db }, 'comment', { comment: comment ?? d.comment })),
+          ),
           'formDatabaseComment',
         )}
       <CreateTableBox server={server} db={db} />
@@ -334,7 +337,7 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
         go(
           () =>
             void run(() =>
-              api.dbOperation(server, db, 'collation', {
+              api.dbOperation({ server, db }, 'collation', {
                 collation: collationValue,
                 changeAllTables: allTables,
                 changeAllColumns: allTables && allColumns,

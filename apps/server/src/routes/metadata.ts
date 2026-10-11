@@ -19,7 +19,6 @@ import {
 import { sprintf } from '@bettermyadmin/i18n'
 import {
   type ConfigStorage,
-  type UiPrefsTableInfo,
   applyVariables,
   arrayRead,
   getUserFormFields,
@@ -31,29 +30,16 @@ import {
   setColumnPreferences,
   validIdentifier,
 } from '@bettermyadmin/metadata'
-import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import { type Context, Hono } from 'hono'
-import type { z } from 'zod'
-import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { NotFoundError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { recordSqlBoxHistory } from '../metadata/hooks.ts'
 import { type MetaRequest, defaultOfPath, resetRelationCache, withMeta } from '../metadata/service.ts'
+import { selectDatabase, tableInfo } from '../metadata/table-info.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import type { ServerEnv } from './server.ts'
 
 export const metadataRoutes = new Hono<ServerEnv>()
-
-async function body<T extends z.ZodTypeAny>(schema: T, raw: unknown): Promise<z.output<T>> {
-  const parsed = schema.safeParse(raw)
-  if (!parsed.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      parsed.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  return parsed.data
-}
-
-const json = (c: { req: { json(): Promise<unknown> } }) => c.req.json().catch(() => ({}))
 
 /**
  * A message through the request's catalogue: `text` (and `detail`) are phpMyAdmin msgids, filled with
@@ -190,7 +176,7 @@ metadataRoutes.get('/metadata-storage/status', (c) =>
 
 /** POST /api/servers/:s/metadata-storage/create — pma: CheckRelationsController (create_pmadb / fixall_pmadb / fix_pmadb) */
 metadataRoutes.post('/metadata-storage/create', async (c) => {
-  const req = await body(StorageCreateRequest, await json(c))
+  const req = await parseJson(c, StorageCreateRequest, {})
   return withMeta(c, { db: req.db ?? '' }, async (m) => {
     const storage = await m.storage()
     let message: UiMessage | null = null
@@ -231,7 +217,7 @@ metadataRoutes.get('/bookmarks', (c) => {
 
 /** POST /api/servers/:s/bookmarks — pma: SqlController::addBookmark, Sql::storeTheQueryAsBookmark (bkm_replace) */
 metadataRoutes.post('/bookmarks', async (c) => {
-  const req = await body(BookmarkCreateRequest, await json(c))
+  const req = await parseJson(c, BookmarkCreateRequest, {})
   return withMeta(c, { db: req.db }, async (m) => {
     const repo = (await m.meta()).bookmarks()
     let ok: boolean
@@ -258,7 +244,7 @@ metadataRoutes.post('/bookmarks', async (c) => {
 metadataRoutes.get('/bookmarks/:id{[0-9]+}', (c) =>
   withMeta(c, {}, async (m) => {
     const b = await (await m.meta()).bookmarks().get(m.user, Number(c.req.param('id')))
-    if (b === null) throw new NotFoundError('Bookmark not found.')
+    if (b === null) throw new NotFoundError(c.get('tr').gettext('Bookmark not found.'))
     return c.json({ bookmark: b, message: msg(c, 'success', 'Showing bookmark') })
   }),
 )
@@ -268,7 +254,7 @@ metadataRoutes.post('/bookmarks/:id{[0-9]+}/delete', (c) =>
   withMeta(c, {}, async (m) => {
     const repo = (await m.meta()).bookmarks()
     const b = await repo.get(m.user, Number(c.req.param('id')))
-    if (b === null) throw new NotFoundError('Bookmark not found.')
+    if (b === null) throw new NotFoundError(c.get('tr').gettext('Bookmark not found.'))
     await repo.delete(b.id)
     return c.json({ success: true, message: msg(c, 'success', 'The bookmark has been deleted.') })
   }),
@@ -276,10 +262,10 @@ metadataRoutes.post('/bookmarks/:id{[0-9]+}/delete', (c) =>
 
 /** POST /api/servers/:s/bookmarks/:id/run — pma: ImportController action_bookmark=0 (+ applyVariables) */
 metadataRoutes.post('/bookmarks/:id{[0-9]+}/run', async (c) => {
-  const req = await body(BookmarkRunRequest, await json(c))
+  const req = await parseJson(c, BookmarkRunRequest, {})
   return withMeta(c, { db: req.db ?? '' }, async (m) => {
     const b = await (await m.meta()).bookmarks().get(req.allUsers ? null : m.user, Number(c.req.param('id')))
-    if (b === null) throw new NotFoundError('Bookmark not found.')
+    if (b === null) throw new NotFoundError(c.get('tr').gettext('Bookmark not found.'))
     const sql = req.variables !== undefined ? applyVariables(b.query, req.variables) : b.query
     const { cfg, pools } = c.get('deps')
     const session = c.get('session')
@@ -366,7 +352,7 @@ metadataRoutes.get('/console/bookmarks', (c) =>
 
 /** POST /api/servers/:s/console/bookmarks — pma: Console\Bookmark\AddController */
 metadataRoutes.post('/console/bookmarks', async (c) => {
-  const req = await body(ConsoleBookmarkAddRequest, await json(c))
+  const req = await parseJson(c, ConsoleBookmarkAddRequest, {})
   return withMeta(c, { db: req.db }, async (m) => {
     const repo = (await m.meta()).bookmarks()
     const b = repo.createBookmark(req.bookmark_query, req.label, m.user, req.db, req.shared)
@@ -427,7 +413,7 @@ metadataRoutes.get('/recent-favorite', (c) =>
 
 /** POST /api/servers/:s/recent — pma: Http\Middleware\RecentTableHandling */
 metadataRoutes.post('/recent', async (c) => {
-  const req = await body(RecentAddRequest, await json(c))
+  const req = await parseJson(c, RecentAddRequest, {})
   return withMeta(c, { db: req.db }, async (m) => {
     const settings = await m.settings()
     const meta = await m.meta()
@@ -444,7 +430,7 @@ metadataRoutes.post('/recent', async (c) => {
 
 /** POST /api/servers/:s/favorites — pma: Database\Structure\FavoriteTableController */
 metadataRoutes.post('/favorites', async (c) => {
-  const req = await body(FavoriteRequest, await json(c))
+  const req = await parseJson(c, FavoriteRequest, {})
   if (req.db === '') return c.json({ changes: false })
   return withMeta(c, { db: req.db }, async (m) => {
     const settings = await m.settings()
@@ -461,12 +447,7 @@ metadataRoutes.post('/favorites', async (c) => {
     const user = createHash('sha1').update(m.user).digest('hex')
     // DbTableExists::selectDatabase (user link)
     const conn = await m.userConn()
-    const selected = validIdentifier(req.db)
-      ? await conn.query(`USE ${backquote(req.db)}`, 'favorite.select-db').then(
-          () => true,
-          () => false,
-        )
-      : false
+    const selected = validIdentifier(req.db) ? await selectDatabase(conn, req.db) : false
     if (!selected) {
       return c.json({ changes: false, message: msg(c, 'error', 'No databases selected.') }, 400)
     }
@@ -500,7 +481,7 @@ metadataRoutes.post('/favorites', async (c) => {
 
 /** POST /api/servers/:s/favorites/sync — pma: SyncFavoriteTablesController */
 metadataRoutes.post('/favorites/sync', async (c) => {
-  const req = await body(FavoriteSyncRequest, await json(c))
+  const req = await parseJson(c, FavoriteSyncRequest, {})
   return withMeta(c, {}, async (m) => {
     const meta = await m.meta()
     if (meta.stores().favorite === null) return c.json({})
@@ -531,39 +512,6 @@ metadataRoutes.post('/favorites/sync', async (c) => {
 // Table UI preferences
 // ---------------------------------------------------------------------------------------------
 
-/** Table::isView / getStatusInfo('CREATE_TIME') / getColumns(false) on the user link. */
-export function tableInfo(m: MetaRequest, db: string, table: string): UiPrefsTableInfo {
-  let status: Promise<{ view: boolean; createTime: string | null }> | null = null
-  const load = () => {
-    status ??= (async () => {
-      const conn = await m.userConn()
-      const view =
-        db === 'information_schema' ||
-        (await conn.value(
-          `SELECT 1 FROM information_schema.VIEWS WHERE TABLE_SCHEMA = ${quoteString(db)} AND TABLE_NAME = ${quoteString(table)}`,
-          'table.is-view',
-        )) !== null
-      const createTime = await conn.value(
-        `SELECT CREATE_TIME FROM information_schema.TABLES WHERE TABLE_SCHEMA = ${quoteString(db)} AND TABLE_NAME = ${quoteString(table)}`,
-        'table.create-time',
-      )
-      return { view, createTime }
-    })()
-    return status
-  }
-  return {
-    isView: async () => (await load()).view,
-    createTime: async () => (await load()).createTime,
-    columns: async () => {
-      const conn = await m.userConn()
-      const rows = await conn
-        .rows(`SHOW COLUMNS FROM ${backquote(db)}.${backquote(table)}`, 'table.columns')
-        .catch(() => [])
-      return rows.map((r) => `${db}.${table}.${r.Field ?? ''}`)
-    },
-  }
-}
-
 /** GET /api/servers/:s/databases/:db/tables/:t/uiprefs — the reader the browse grid uses (Table::getUiProp) */
 metadataRoutes.get('/databases/:db/tables/:t/uiprefs', (c) => {
   const db = c.req.param('db')
@@ -585,7 +533,7 @@ metadataRoutes.get('/databases/:db/tables/:t/uiprefs', (c) => {
 
 /** POST /api/servers/:s/databases/:db/tables/:t/uiprefs — pma: Sql\ColumnPreferencesController */
 metadataRoutes.post('/databases/:db/tables/:t/uiprefs', async (c) => {
-  const req = await body(UiPrefsRequest, await json(c))
+  const req = await parseJson(c, UiPrefsRequest, {})
   const db = c.req.param('db')
   const t = c.req.param('t')
   return withMeta(c, { db }, async (m) => {
@@ -654,7 +602,7 @@ metadataRoutes.get('/prefs', (c) =>
 
 /** POST /api/servers/:s/prefs — replace the stored map (UserPreferences::save, keeps `2fa`) */
 metadataRoutes.post('/prefs', async (c) => {
-  const req = await body(PrefsSaveRequest, await json(c))
+  const req = await parseJson(c, PrefsSaveRequest, {})
   return withMeta(c, {}, async (m) => {
     const r = await (await m.meta()).userPreferences().save(req.configData)
     return r === true
@@ -665,7 +613,7 @@ metadataRoutes.post('/prefs', async (c) => {
 
 /** POST /api/servers/:s/prefs/option — one value (UserPreferencesHandler::setUserValue → persistOption) */
 metadataRoutes.post('/prefs/option', async (c) => {
-  const req = await body(PrefsOptionRequest, await json(c))
+  const req = await parseJson(c, PrefsOptionRequest, {})
   return withMeta(c, {}, async (m) => {
     const def = 'default' in req ? req.default : defaultOfPath(req.path)
     const r = await (await m.meta()).userPreferences().persistOption(req.path, req.value, def)
@@ -705,7 +653,7 @@ metadataRoutes.get('/navigation/hidden', (c) =>
 
 for (const action of ['hide', 'unhide'] as const) {
   metadataRoutes.post(`/navigation/${action}`, async (c) => {
-    const req = await body(NavItemRequest, await json(c))
+    const req = await parseJson(c, NavItemRequest, {})
     return withMeta(c, {}, async (m) => {
       const nav = (await m.meta()).navigationHiding()
       if (nav !== null && req.itemName !== '' && req.itemType !== '' && req.dbName !== '') {

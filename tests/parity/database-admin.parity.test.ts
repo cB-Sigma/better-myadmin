@@ -102,14 +102,14 @@ async function centralStep(pmaAction: () => Promise<unknown>, bmaAction: () => P
 }
 
 const centralPost = (form: Array<[string, string]>) =>
-  h.pma.post('/database/central-columns', [['db', P], ...form])
+  h.pma.postJson('/database/central-columns', [['db', P], ...form])
 const centralReq = (body: unknown) => h.bma.req('POST', bma('/central-columns'), body)
 
 describe.skipIf(!pmaReachable)('parity: central columns', () => {
   it('Structure → add the columns of tables to the central list (duplicates noticed)', async () => {
     const r = await centralStep(
       () =>
-        h.pma.post('/database/structure/central-columns/add', [
+        h.pma.postJson('/database/structure/central-columns/add', [
           ['db', P],
           ['selected_tbl[]', 'parent'],
           ['selected_tbl[]', 'child'],
@@ -118,7 +118,7 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
     )
     const text = (r.b.json as { messages: Array<{ text: string }> }).messages[0]?.text ?? ''
     expect(text).toContain("Could not add 'id','name' as they already exist in central list!")
-    expect(String(r.p)).toContain(
+    expect(JSON.stringify(r.p)).toContain(
       'Could not add &#039;id&#039;,&#039;name&#039; as they already exist in central list!',
     )
   })
@@ -126,7 +126,7 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
   it('the page: rows, tables and the "Showing rows" message', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGet('/database/central-columns', { db: P }),
+      () => h.pma.getPage('/database/central-columns', { db: P }),
       () => h.bma.req('GET', bma('/central-columns')),
     )
     const b = r.b.json as { columns: Array<{ name: string; type: string }>; message: { text: string } }
@@ -255,15 +255,13 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
     const r = await both(
       h,
       () =>
-        h.pma.post('/database/central-columns/populate', [
+        h.pma.postJson('/database/central-columns/populate', [
           ['db', P],
           ['selectedTable', 'other'],
         ]),
       () => h.bma.req('GET', bma('/central-columns/populate?table=other')),
     )
-    const opts = [...String(JSON.parse(String(r.p)).message).matchAll(/<option value="([^"]*)">/g)].map(
-      (m) => m[1],
-    )
+    const opts = [...String(r.p.message).matchAll(/<option value="([^"]*)">/g)].map((m) => m[1])
     expect(r.b.json).toEqual(opts)
     await centralStep(
       () =>
@@ -291,7 +289,7 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
     const r = await both(
       h,
       () =>
-        h.pma.post('/database/structure/central-columns/make-consistent', [
+        h.pma.postJson('/database/structure/central-columns/make-consistent', [
           ['db', P],
           ['selected_tbl[]', 'parent'],
           ['selected_tbl[]', 'child'],
@@ -308,7 +306,7 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
   it('Structure → remove the columns of a table from the central list', async () => {
     await centralStep(
       () =>
-        h.pma.post('/database/structure/central-columns/remove', [
+        h.pma.postJson('/database/structure/central-columns/remove', [
           ['db', P],
           ['selected_tbl[]', 'child'],
         ]),
@@ -327,20 +325,16 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
     const r = await both(
       h,
       () =>
-        h.pma.post(
-          '/database/tracking',
-          [
-            ['db', P],
-            ['selected[]', 'parent'],
-            ['selected[]', 'v'],
-            ['version', '1'],
-            ['alter_table', 'true'],
-            ['create_view', 'true'],
-            ['insert', 'true'],
-            ['submit_create_version', '1'],
-          ],
-          { ajax: false },
-        ),
+        h.pma.postPage('/database/tracking', [
+          ['db', P],
+          ['selected[]', 'parent'],
+          ['selected[]', 'v'],
+          ['version', '1'],
+          ['alter_table', 'true'],
+          ['create_view', 'true'],
+          ['insert', 'true'],
+          ['submit_create_version', '1'],
+        ]),
       () =>
         h.bma.req('POST', bma('/tracking'), {
           action: 'create-version',
@@ -367,7 +361,7 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
   it('the page: tracked and untracked tables, the database log', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGet('/database/tracking', { db: P }),
+      () => h.pma.getPage('/database/tracking', { db: P }),
       () => h.bma.req('GET', bma('/tracking')),
     )
     const b = r.b.json as {
@@ -391,7 +385,7 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
     const one = await both(
       h,
       () =>
-        h.pma.post('/database/tracking', [
+        h.pma.postJson('/database/tracking', [
           ['db', P],
           ['table', 'v'],
           ['delete_tracking', 'true'],
@@ -405,7 +399,7 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
     await both(
       h,
       () =>
-        h.pma.post('/database/tracking', [
+        h.pma.postJson('/database/tracking', [
           ['db', P],
           ['selected_tbl[]', 'parent'],
           ['submit_mult', 'delete_tracking'],
@@ -423,7 +417,7 @@ describe.skipIf(!pmaReachable)('parity: data dictionary and privileges', () => {
   it('data dictionary: tables, column types, defaults, links and indexes', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGet('/database/data-dictionary', { db: P }),
+      () => h.pma.getPage('/database/data-dictionary', { db: P }),
       () => h.bma.req('GET', bma('/data-dictionary')),
     )
     const p = String(r.p)
@@ -450,7 +444,7 @@ describe.skipIf(!pmaReachable)('parity: data dictionary and privileges', () => {
   it('privileges: the accounts with access to the database and their privileges', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGet('/database/privileges', { db: P }),
+      () => h.pma.getPage('/database/privileges', { db: P }),
       () => h.bma.req('GET', bma('/privileges')),
     )
     const p = String(r.p)

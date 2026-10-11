@@ -16,8 +16,8 @@ import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 export function TriggersPage({ server, db, table = '' }: { server: number; db: string; table?: string }) {
   const qc = useQueryClient()
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'triggers', { table }),
-    queryFn: () => api.dbTriggers(server, db, table),
+    queryKey: qk.dbPage({ server, db }, 'triggers', { table }),
+    queryFn: () => api.dbTriggers({ server, db }, table),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [editor, setEditor] = useState<{ trigger: TriggerEditorData; original: string | null } | null>(null)
@@ -41,7 +41,7 @@ export function TriggersPage({ server, db, table = '' }: { server: number; db: s
               },
               original: null,
             }
-          : { trigger: await api.dbTriggerEditor(server, db, table, name), original: name },
+          : { trigger: await api.dbTriggerEditor({ server, db }, table, name), original: name },
       )
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -72,7 +72,7 @@ export function TriggersPage({ server, db, table = '' }: { server: number; db: s
         empty={t('There are no triggers to display.')}
         messages={messages}
         setMessages={setMessages}
-        onExport={(name) => api.dbTriggerExport(server, db, table, name)}
+        onExport={(name) => api.dbTriggerExport({ server, db }, table, name)}
         items={d.items.map((tg) => ({
           name: tg.name,
           dropSql: tg.dropSql,
@@ -108,14 +108,14 @@ export function TriggersPage({ server, db, table = '' }: { server: number; db: s
           onClose={() => setEditor(null)}
           onSave={async (body) => {
             try {
-              const r = await api.dbTriggerSave(server, db, table, {
+              const r = await api.dbTriggerSave({ server, db }, table, {
                 ...body,
                 ...(editor.original !== null ? { originalName: editor.original } : {}),
               })
               if (r.messages[0]?.type === 'error') return r.messages
               setMessages(r.messages)
               setEditor(null)
-              await qc.invalidateQueries({ queryKey: qk.db(server, db) })
+              await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
               return null
             } catch (e) {
               return [errorMessage(e)]

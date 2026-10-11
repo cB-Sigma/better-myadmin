@@ -56,6 +56,19 @@ useQuery({ queryKey: qk.home(1), queryFn })`
     expect(rulesOf([{ path: 'apps/web/src/styles/app.css', text: 'a { color: #fff }' }])).toEqual([])
   })
 
+  it('flags raw dialogs and hand-made cards, alerts and buttons', () => {
+    const file = (text: string) => [{ path: 'apps/web/src/features/x/A.tsx', text }]
+    expect(rulesOf(file('<dialog open />'))).toEqual(['web/no-hand-made-ui'])
+    expect(rulesOf(file('<div role="dialog" />'))).toEqual(['web/no-hand-made-ui'])
+    expect(rulesOf(file('<div className="border-b border-border bg-bg-subtle px-3" />'))).toEqual([
+      'web/no-hand-made-ui',
+    ])
+    expect(rulesOf(file('<div className="rounded border bg-error-bg" />'))).toEqual(['web/no-hand-made-ui'])
+    expect(rulesOf(file('<button className="rounded bg-accent px-2" />'))).toEqual(['web/no-hand-made-ui'])
+    // a badge is not a push button
+    expect(rulesOf(file('<span className="rounded bg-error px-1" />'))).toEqual([])
+  })
+
   it('limits route files to 60 lines', () => {
     const text = Array.from({ length: 61 }, (_, i) => `// ${i}`).join('\n')
     expect(rulesOf([{ path: 'apps/web/src/routes/s/x.tsx', text }])).toEqual(['web/route-size'])
@@ -74,6 +87,9 @@ const label = 'Select all'`
       'server/no-sql-in-routes',
       'server/strings-through-tr',
       'server/validate',
+    ])
+    expect(rulesOf([app, { path: 'apps/server/src/routes/y.ts', text: 'q(`USE ${db}`)' }])).toEqual([
+      'server/no-sql-in-routes',
     ])
     // services may hold SQL
     expect(rulesOf([{ path: 'apps/server/src/x/service.ts', text: "q('SELECT 1')" }])).toEqual([])
@@ -123,6 +139,13 @@ app.post('/other', h)`
       'tests/parity/x.parity.test.ts',
       'OtherClient',
     ])
+  })
+
+  it('flags calls of retired PmaClient helpers', () => {
+    const text =
+      "await pma.post('/sql', f)\nawait h.pma.pagePost('/x', {}, true)\nawait log.get(1)\nmap.get(k)"
+    const v = run([{ path: 'tests/parity/x.parity.test.ts', text }]).violations
+    expect(v.map((x) => x.symbol)).toEqual(['post', 'pagePost'])
   })
 
   it('every rule links a golden-path section', () => {

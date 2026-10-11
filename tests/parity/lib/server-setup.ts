@@ -2,7 +2,7 @@ import mysql from 'mysql2/promise'
 import { testApp, testConfig } from '../../../apps/server/test/support/app.ts'
 import { type AllowedDiff, compareLogs } from './compare.ts'
 import { GeneralLog, type LogEntry } from './general-log.ts'
-import { PmaClient } from './pma.ts'
+import { PmaClient, isPmaUp } from './pma.ts'
 
 /**
  * Shared set-up of the server-level parity suites: two superuser accounts (one per tool, so each
@@ -19,9 +19,7 @@ export const PMA_URL = process.env.BMA_PARITY_PMA_URL ?? 'http://127.0.0.1:8081'
 export const PMA_USER = 'm3srv_pma'
 export const BMA_USER = 'm3srv_bma'
 
-export const pmaReachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+export const pmaReachable = await isPmaUp(PMA_URL)
 
 /**
  * Reads phpMyAdmin performs on every Status page (the DI container builds Server\Status\Data for

@@ -84,13 +84,13 @@ describe.skipIf(!pmaReachable)('parity: database structure page', () => {
       const qs = new URLSearchParams(params).toString()
       const r = await both(
         h,
-        () => h.pma.pageGet('/database/structure', { db: P, ...params }, true),
+        () => h.pma.getJson('/database/structure', { db: P, ...params }),
         () => h.bma.req('GET', bma(`/structure${qs === '' ? '' : `?${qs}`}`)),
       )
       expect(r.b.status, JSON.stringify(r.b.json)).toBe(200)
       expect(pageReads(r.bmaLog)).toEqual(pageReads(r.pmaLog))
       const d = r.b.json as unknown as DbStructureResponse
-      const html = String(JSON.parse(r.p).message ?? '')
+      const html = String(r.p.message ?? '')
       const pmaNames = [...html.matchAll(/<tr id="row_tbl_\d+"[^>]*data-filter-row="([^"]+)"/g)].map(
         (m) => m[1],
       )
@@ -139,7 +139,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'empty with foreign key checks off',
       pma: () =>
-        h.pma.post('/database/structure/empty-table', [
+        h.pma.postJson('/database/structure/empty-table', [
           ['db', P],
           ...sel(['child', 'v', 'm']),
           ['fk_checks', '0'],
@@ -151,7 +151,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'drop tables and a view',
       pma: () =>
-        h.pma.post('/database/structure/drop-table', [
+        h.pma.postJson('/database/structure/drop-table', [
           ['db', P],
           ...sel(['v', 'child', 'm']),
           ['fk_checks', '1'],
@@ -163,7 +163,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'add prefix',
       pma: () =>
-        h.pma.post('/database/structure/add-prefix-table', [
+        h.pma.postJson('/database/structure/add-prefix-table', [
           ['db', P],
           ...sel(['m', 'parent']),
           ['add_prefix', 'x_'],
@@ -174,7 +174,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'replace prefix leaves non-matching names',
       pma: () =>
-        h.pma.post('/database/structure/replace-prefix', [
+        h.pma.postJson('/database/structure/replace-prefix', [
           ['db', P],
           ...sel(['wp_one', 'm']),
           ['from_prefix', 'wp_'],
@@ -191,7 +191,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'copy with prefix',
       pma: () =>
-        h.pma.post('/database/structure/copy-table-with-prefix', [
+        h.pma.postJson('/database/structure/copy-table-with-prefix', [
           ['db', P],
           ...sel(['wp_one', 'parent']),
           ['from_prefix', 'wp_'],
@@ -208,7 +208,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'copy tables (structure and data, constraints, AUTO_INCREMENT, DROP TABLE) to another database',
       pma: () =>
-        h.pma.post('/database/structure/copy-table', [
+        h.pma.postJson('/database/structure/copy-table', [
           ['db', P],
           ...sel(['parent', 'child', 'v']),
           ['target_db', `${P}_t`],
@@ -231,13 +231,13 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'copy structure only, then data only',
       pma: async () => {
-        await h.pma.post('/database/structure/copy-table', [
+        await h.pma.postJson('/database/structure/copy-table', [
           ['db', P],
           ...sel(['m']),
           ['target_db', `${P}_t`],
           ['what', 'structure'],
         ])
-        return h.pma.post('/database/structure/copy-table', [
+        return h.pma.postJson('/database/structure/copy-table', [
           ['db', P],
           ...sel(['m']),
           ['target_db', `${P}_t`],
@@ -260,13 +260,13 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     },
     {
       name: 'check table',
-      pma: () => h.pma.post('/table/maintenance/check', [['db', P], ...selTbl(['parent', 'm'])]),
+      pma: () => h.pma.postJson('/table/maintenance/check', [['db', P], ...selTbl(['parent', 'm'])]),
       bma: () => h.bma.req('POST', bma('/structure/maintenance'), { op: 'check', tables: ['parent', 'm'] }),
       expectSql: /^CHECK TABLE `parent`, `m`$/,
     },
     {
       name: 'optimize table',
-      pma: () => h.pma.post('/table/maintenance/optimize', [['db', P], ...selTbl(['m'])]),
+      pma: () => h.pma.postJson('/table/maintenance/optimize', [['db', P], ...selTbl(['m'])]),
       bma: () => h.bma.req('POST', bma('/structure/maintenance'), { op: 'optimize', tables: ['m'] }),
       expectSql: /^OPTIMIZE TABLE `m`$/,
     },

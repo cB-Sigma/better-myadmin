@@ -24,7 +24,7 @@ afterAll(async () => h?.close())
 async function page<T>(pmaRoute: string, bmaPath: string, params: Record<string, string> = {}, post = false) {
   const r = await both(
     h,
-    () => (post ? h.pma.pagePost(pmaRoute, params, true) : h.pma.pageGet(pmaRoute, params, true)),
+    () => (post ? h.pma.postJson(pmaRoute, params) : h.pma.getJson(pmaRoute, params)),
     () => h.bma.req('GET', `/api/servers/1${bmaPath}`),
   )
   expect(r.b.status, JSON.stringify(r.b.json)).toBe(200)

@@ -6,9 +6,9 @@ import {
 import { type Gettext, englishTranslator } from '@bettermyadmin/i18n'
 import { Hono } from 'hono'
 import { BmaError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { defaultOfPath, withMeta } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
-import { parseBody } from './sql.ts'
 
 export const consoleRoutes = new Hono<ServerEnv>()
 
@@ -76,7 +76,7 @@ consoleRoutes.get('/config', (c) =>
  */
 consoleRoutes.post('/config', async (c) => {
   const tr = c.get('tr')
-  const req = await parseBody(c, ConsoleConfigUpdate)
+  const req = await parseJson(c, ConsoleConfigUpdate)
   const value = parseConsoleValue(req.key, req.value, tr)
   return withMeta(c, {}, async (m) => {
     const path = `Console/${req.key}`

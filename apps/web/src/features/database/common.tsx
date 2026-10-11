@@ -9,6 +9,7 @@ import {
   DialogTitle,
   Input,
   Label,
+  MessageBox,
   NativeSelect,
   Panel,
   PanelBody,
@@ -20,7 +21,6 @@ import { ApiError, api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { MessageBox } from '../sql/SqlMessage'
 
 /** Shared bits of the database pages (compositions of packages/ui and the SQL message card). */
 

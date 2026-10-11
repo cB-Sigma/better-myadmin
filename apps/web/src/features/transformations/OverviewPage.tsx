@@ -1,4 +1,5 @@
 import { getAvailableMimeTypes } from '@bettermyadmin/mysql-types'
+import { Table } from '@bettermyadmin/ui'
 import { pgettext, t } from '../../lib/i18n'
 
 /**
@@ -9,24 +10,24 @@ import { pgettext, t } from '../../lib/i18n'
 export function TransformationOverviewPage() {
   const types = getAvailableMimeTypes()
   const table = (head: string, rows: typeof types.transformation) => (
-    <table className="w-auto border-collapse text-[13px]">
+    <Table zebra className="w-auto">
       <thead>
-        <tr className="border-b border-border">
-          <th className="px-2 py-1 text-start">{head}</th>
-          <th className="px-2 py-1 text-start">{pgettext('for media type transformation', 'Description')}</th>
+        <tr>
+          <th>{head}</th>
+          <th>{pgettext('for media type transformation', 'Description')}</th>
         </tr>
       </thead>
       <tbody>
         {rows.map((p) => (
-          <tr key={p.file} className="border-b border-border odd:bg-bg-subtle">
-            <td className="px-2 py-1 align-middle whitespace-nowrap">
+          <tr key={p.file}>
+            <td className="align-middle whitespace-nowrap">
               {p.mimetype}: {p.label}
             </td>
-            <td className="px-2 py-1 align-middle">{t(p.info)}</td>
+            <td className="align-middle">{t(p.info)}</td>
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   )
   return (
     <div className="space-y-3 p-2" data-testid="transformation-overview">

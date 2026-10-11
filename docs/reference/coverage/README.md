@@ -80,6 +80,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - ``
 - `Add column(s)`
 - `Begin`
+- `Bookmark not found.`
 - `Collation \| WITH `
 - `Collation variant \| WITH `
 - `Column count has to be larger than zero.`
@@ -87,6 +88,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Enter an option`
 - `Invalid server index!`
 - `May be approximate.`
+- `Missing username.`
 - `Next`
 - `Online transaction`
 - `Previous`
@@ -104,4 +106,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 147 API endpoints, 47 SPA routes (4 placeholders/catch-alls), 499 control claims, 774 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 147 API endpoints, 47 SPA routes (4 placeholders/catch-alls), 499 control claims, 805 tests.

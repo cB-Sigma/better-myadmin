@@ -1,5 +1,13 @@
-/** Hierarchical, scope-first query keys (docs/architecture/03-frontend-architecture.md#query-keys). */
+import type { DbRef, TableRef } from './api.ts'
+
+/**
+ * Every query key of the app: hierarchical and scope-first (`['srv', s, 'db', db, 'tbl', t, …]`), so
+ * invalidating a prefix (`qk.srv(s)`, `qk.tbl(ref)`) refreshes the subtree; the arguments mirror
+ * the `api` call (docs/architecture/03-frontend-architecture.md#query-keys, 16-golden-path.md#data).
+ */
 export const qk = {
+  /** every server's data (logout) */
+  allServers: ['srv'] as const,
   auth: ['auth'] as const,
   i18n: ['i18n'] as const,
   srv: (s: number) => ['srv', s] as const,
@@ -10,8 +18,6 @@ export const qk = {
   sqlForm: (s: number, db: string, table: string, q: string) =>
     ['srv', s, 'db', db, 't', table, 'sqlForm', q] as const,
   autocomplete: (s: number, db: string) => ['srv', s, 'db', db, 'autocomplete'] as const,
-  /** ForeignKey::isCheckEnabled (GET /sql/default-fk-check) */
-  defaultFkCheck: (s: number) => ['srv', s, 'defaultFkCheck'] as const,
   consoleConfig: (s: number) => ['srv', s, 'console', 'config'] as const,
   config: ['config-public'] as const,
   versionCheck: ['version-check'] as const,
@@ -19,22 +25,38 @@ export const qk = {
   scope: (s: number) => ['srv', s, 'scope'] as const,
   home: (s: number) => ['srv', s, 'home'] as const,
   passwordForm: (s: number) => ['srv', s, 'account', 'password-form'] as const,
-  db: (s: number, db: string) => ['srv', s, 'db', db] as const,
-  dbScope: (s: number, db: string) => ['srv', s, 'db', db, 'scope'] as const,
+  db: (r: DbRef) => ['srv', r.server, 'db', r.db] as const,
+  dbScope: (r: DbRef) => ['srv', r.server, 'db', r.db, 'scope'] as const,
   /** a database page (structure, operations, routines, …) with its query */
-  dbPage: (s: number, db: string, page: string, q: object = {}) => ['srv', s, 'db', db, page, q] as const,
-  tbl: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t] as const,
-  tableScope: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'scope'] as const,
+  dbPage: (r: DbRef, page: string, q: object = {}) => ['srv', r.server, 'db', r.db, page, q] as const,
+  tbl: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table] as const,
+  tableScope: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table, 'scope'] as const,
+  // SQL tab, bookmarks
+  defaultFkCheck: (s: number) => ['srv', s, 'defaultFkCheck'] as const,
+  bookmarks: (s: number, db: string | null) => ['srv', s, 'bookmarks', db] as const,
+  // server administration
+  allDatabases: (s: number) => ['srv', s, 'databases'] as const,
+  databases: (s: number, q: object) => ['srv', s, 'databases', q] as const,
+  status: (s: number, page: string, q: object = {}) => ['srv', s, 'status', page, q] as const,
+  serverVariables: (s: number) => ['srv', s, 'variables'] as const,
+  collations: (s: number) => ['srv', s, 'collations'] as const,
+  engines: (s: number, engine = '', page = '') => ['srv', s, 'engines', engine, page] as const,
+  plugins: (s: number) => ['srv', s, 'plugins'] as const,
+  binlog: (s: number, q: object) => ['srv', s, 'binlog', q] as const,
+  // table structure (all below qk.tbl: DDL invalidates the table)
+  tableStructure: (r: TableRef) => [...qk.tbl(r), 'structure'] as const,
+  changeColumnsForm: (r: TableRef, fields: string[]) => [...qk.tbl(r), 'change-form', fields] as const,
+  addColumnsForm: (r: TableRef) => [...qk.tbl(r), 'add-form'] as const,
+  indexForm: (r: TableRef, q: object | null) => [...qk.tbl(r), 'index-form', q] as const,
+  partitionForm: (r: TableRef) => [...qk.tbl(r), 'partition-form'] as const,
+  createTableForm: (r: DbRef) => [...qk.db(r), 'create-form'] as const,
+  // Insert/Edit, FK browser, transformations
   /** Insert/Edit form for one request (where clauses, toggles, row count) */
-  insertForm: (s: number, db: string, t: string, req: object) =>
-    ['srv', s, 'db', db, 'tbl', t, 'insertForm', req] as const,
+  insertForm: (r: TableRef, req: object) => [...qk.tbl(r), 'insertForm', req] as const,
   /** a page of the Browse foreign values popup */
-  browseForeigners: (s: number, db: string, t: string, req: object) =>
-    ['srv', s, 'db', db, 'tbl', t, 'browseForeigners', req] as const,
+  browseForeigners: (r: TableRef, req: object) => [...qk.tbl(r), 'browseForeigners', req] as const,
   /** stored MIME types / transformations of a table's columns (Browse grid, Insert form) */
-  transformations: (s: number, db: string, t: string) =>
-    ['srv', s, 'db', db, 'tbl', t, 'transformations'] as const,
+  transformations: (r: TableRef) => [...qk.tbl(r), 'transformations'] as const,
   /** the Browse tab's /sql run (signed sql + pos from the URL) */
-  browse: (s: number, db: string, t: string, q: object) =>
-    ['srv', s, 'db', db, 'tbl', t, 'browse', q] as const,
+  browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
 }

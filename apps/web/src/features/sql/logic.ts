@@ -64,9 +64,6 @@ export const NO_PARAM = 'No parameters found!'
 /** escapeBacktick (resources/js/modules/functions/escape.ts) */
 export const escapeBacktick = (s: string) => s.replaceAll('`', '``')
 
-/** Util::backquote for the column list options (`value="{{ backquote(field.field) }}"`). */
-export const backquote = (s: string) => `\`${s.replaceAll('`', '``')}\``
-
 export type SnippetType = 'selectall' | 'select' | 'insert' | 'update' | 'delete'
 
 /**

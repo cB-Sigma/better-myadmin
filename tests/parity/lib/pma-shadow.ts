@@ -2,6 +2,7 @@ import { type ChildProcess, spawn } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { isPmaUp } from './pma.ts'
 
 /**
  * A second instance of the reference phpMyAdmin whose configuration the test can change between
@@ -61,9 +62,7 @@ foreach (($bmaOverrides['cfg'] ?? []) as $k => $v) { $cfg[$k] = $v; }
   const url = `http://127.0.0.1:${port}`
   const deadline = Date.now() + 15000
   while (Date.now() < deadline) {
-    const ok = await fetch(`${url}/index.php`)
-      .then((r) => r.ok)
-      .catch(() => false)
+    const ok = await isPmaUp(url)
     if (ok) break
     await new Promise((r) => setTimeout(r, 100))
   }

@@ -1,5 +1,6 @@
 /** Levenshtein distance (case-insensitive), iterative two-row version. */
-export function levenshtein(a: string, b: string): number {
+/** Case-insensitive edit distance for "did you mean" directive suggestions (not PHP levenshtein()). */
+export function suggestionDistance(a: string, b: string): number {
   const s = a.toLowerCase()
   const t = b.toLowerCase()
   if (s === t) return 0
@@ -32,7 +33,7 @@ export function nearest(
 ): { candidate: Candidate; distance: number } | undefined {
   let best: { candidate: Candidate; distance: number } | undefined
   for (const c of candidates) {
-    const d = levenshtein(key, c.name)
+    const d = suggestionDistance(key, c.name)
     if (!best || d < best.distance) best = { candidate: c, distance: d }
   }
   return best

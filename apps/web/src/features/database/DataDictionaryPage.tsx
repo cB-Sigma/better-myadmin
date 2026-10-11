@@ -14,8 +14,8 @@ const tableClass =
  */
 export function DataDictionaryPage({ server, db }: { server: number; db: string }) {
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'data-dictionary'),
-    queryFn: () => api.dbDataDictionary(server, db),
+    queryKey: qk.dbPage({ server, db }, 'data-dictionary'),
+    queryFn: () => api.dbDataDictionary({ server, db }),
   })
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data

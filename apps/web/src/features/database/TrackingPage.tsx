@@ -1,5 +1,14 @@
 import type { DbActionResponse, SqlMessage } from '@bettermyadmin/contracts'
-import { Button, Checkbox, IconText, Label, useConfirm } from '@bettermyadmin/ui'
+import {
+  Button,
+  Checkbox,
+  IconText,
+  Label,
+  MessageBox,
+  Panel,
+  PanelBody,
+  useConfirm,
+} from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
@@ -7,7 +16,6 @@ import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { MessageBox } from '../sql/SqlMessage'
 import { path, CreateTableBox, Messages, errorMessage, tableBase } from './common'
 
 const tableClass =
@@ -45,8 +53,8 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
   const qc = useQueryClient()
   const confirm = useConfirm()
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'tracking'),
-    queryFn: () => api.dbTracking(server, db),
+    queryKey: qk.dbPage({ server, db }, 'tracking'),
+    queryFn: () => api.dbTracking({ server, db }),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [tracked, setTracked] = useState<string[]>([])
@@ -63,7 +71,7 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
       setMessages(r.messages)
       setTracked([])
       setUntracked([])
-      await qc.invalidateQueries({ queryKey: qk.db(server, db) })
+      await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
     } catch (e) {
       setMessages([errorMessage(e)])
     }
@@ -80,7 +88,7 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
         ? t('Delete tracking data for these tables?')
         : t('Delete tracking data for this table?'),
     })
-    if (ok) await run(() => api.dbTrackingAction(server, db, { action: 'delete', tables }))
+    if (ok) await run(() => api.dbTrackingAction({ server, db }, { action: 'delete', tables }))
   }
   const startCreate = (tables: string[]) => {
     if (tables.length === 0) {
@@ -111,24 +119,29 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
       ))
     const submit = async () => {
       await run(() =>
-        api.dbTrackingAction(server, db, {
-          action: 'create-version',
-          tables: createFor,
-          version: '1',
-          statements: on,
-        }),
+        api.dbTrackingAction(
+          { server, db },
+          {
+            action: 'create-version',
+            tables: createFor,
+            version: '1',
+            statements: on,
+          },
+        ),
       )
       setCreateFor(null)
     }
     return (
       <div className="my-3">
-        <div className="card mt-3 rounded-(--radius) border border-border">
-          <div className="card-header border-b border-border bg-bg-subtle px-3 py-2 font-semibold">
-            {createFor.length === 1 && createFor[0] !== undefined
+        <Panel
+          className="mt-3"
+          title={
+            createFor.length === 1 && createFor[0] !== undefined
               ? t('Create version %1$s of %2$s', 1, `${db}.${createFor[0]}`)
-              : t('Create version %1$s', 1)}
-          </div>
-          <div className="card-body flex flex-col gap-1 p-3 text-sm">
+              : t('Create version %1$s', 1)
+          }
+        >
+          <PanelBody className="flex flex-col gap-1 text-sm">
             <p>{t('Track these data definition statements:')}</p>
             {box(DDL_TABLE)}
             <br />
@@ -137,14 +150,14 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
             {box(DDL_INDEX)}
             <p>{t('Track these data manipulation statements:')}</p>
             {box(DML)}
-          </div>
+          </PanelBody>
           <div className="card-footer flex gap-2 border-t border-border px-3 py-2">
             <Button variant="primary" onClick={() => void submit()}>
               {t('Create version')}
             </Button>
             <Button onClick={() => setCreateFor(null)}>{t('Cancel')}</Button>
           </div>
-        </div>
+        </Panel>
       </div>
     )
   }
@@ -220,12 +233,15 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
                         title={t('Click to toggle')}
                         onClick={() =>
                           void run(() =>
-                            api.dbTrackingAction(server, db, {
-                              action: 'toggle',
-                              table: v.table,
-                              version: v.version,
-                              active: !v.active,
-                            }),
+                            api.dbTrackingAction(
+                              { server, db },
+                              {
+                                action: 'toggle',
+                                table: v.table,
+                                version: v.version,
+                                active: !v.active,
+                              },
+                            ),
                           )
                         }
                       >

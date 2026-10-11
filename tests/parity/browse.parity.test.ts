@@ -387,7 +387,7 @@ describe.skipIf(!reachable)('parity: Browse / results grid (/sql) vs POST /brows
       const pmaOut: string[] = []
       for (const s of c.steps) {
         const form = s.pma.form.map(([k, v]) => [k, sub(v, DB.pma)] as [string, string])
-        pmaOut.push(await pma.post(s.pma.route, form))
+        pmaOut.push(JSON.stringify(await pma.postJson(s.pma.route, form)))
       }
       const pmaLog = await log.since(U.pma, m1)
       const m2 = await log.marker()
@@ -416,7 +416,7 @@ describe.skipIf(!reachable)('parity: Browse / results grid (/sql) vs POST /brows
       },
     ]
     for (const k of cases) {
-      const p = JSON.parse(await pma.post('/sql', [['db', DB.pma], ...Object.entries(k.form)])) as {
+      const p = (await pma.postJson('/sql', [['db', DB.pma], ...Object.entries(k.form)])) as unknown as {
         message: string
       }
       const text = visibleText(p.message)

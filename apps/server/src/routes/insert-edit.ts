@@ -7,6 +7,7 @@ import { parseTransformationOptions } from '@bettermyadmin/mysql-types'
 import { type Context, Hono } from 'hono'
 import { z } from 'zod'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import type { IeCtx } from '../insert-edit/context.ts'
 import { mimeMap } from '../insert-edit/context.ts'
 import { browseForeigners } from '../insert-edit/foreign.ts'
@@ -17,7 +18,6 @@ import { withMeta } from '../metadata/service.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
 import type { ServerEnv } from './server.ts'
-import { parseBody } from './sql.ts'
 
 /**
  * Insert/Edit form, save, foreign values, transformation wrapper (docs/features/03).
@@ -78,7 +78,7 @@ const FormRequestBody = z.object({
  * with a valid signature (Core::checkSqlQuerySignature); unsigned ones are ignored like phpMyAdmin.
  */
 insertEditRoutes.post('/:db/tables/:t/insert-form', async (c) => {
-  const req = await parseBody(c, FormRequestBody)
+  const req = await parseJson(c, FormRequestBody)
   const { cfg } = c.get('deps')
   const session = c.get('session')
   const clauses = req.where
@@ -104,7 +104,7 @@ insertEditRoutes.post('/:db/tables/:t/insert-form', async (c) => {
 
 /** POST …/tables/:t/rows (pma: /table/replace) */
 insertEditRoutes.post('/:db/tables/:t/rows', async (c) => {
-  const req = await parseBody(c, SaveRowsRequest)
+  const req = await parseJson(c, SaveRowsRequest)
   const { cfg } = c.get('deps')
   const r = await withIe(c, (ctx) => saveRows(ctx, req))
   return c.json(cfg.DBG.sql ? { ...r, executed: c.get('executed') } : r)
@@ -112,7 +112,7 @@ insertEditRoutes.post('/:db/tables/:t/rows', async (c) => {
 
 /** POST …/tables/:t/browse-foreigners (pma: /browse-foreigners) */
 insertEditRoutes.post('/:db/tables/:t/browse-foreigners', async (c) => {
-  const req = await parseBody(c, BrowseForeignersRequest)
+  const req = await parseJson(c, BrowseForeignersRequest)
   return c.json(await withIe(c, (ctx) => browseForeigners(ctx, req)))
 })
 

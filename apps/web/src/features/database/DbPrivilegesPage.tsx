@@ -14,8 +14,8 @@ import { path, Messages, dbBase, enc, errorMessage } from './common'
  */
 export function DbPrivilegesPage({ server, db }: { server: number; db: string }) {
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'privileges'),
-    queryFn: () => api.dbPrivileges(server, db),
+    queryKey: qk.dbPage({ server, db }, 'privileges'),
+    queryFn: () => api.dbPrivileges({ server, db }),
   })
   const [selected, setSelected] = useState<string[]>([])
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />

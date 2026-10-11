@@ -387,7 +387,7 @@ describe.skipIf(!reachable)('parity: navigation tree (/navigation vs /navigation
         await log.settle(BMA_USER)
 
         const m1 = await log.marker()
-        const pr = await pma.navigation(pmaParams(c))
+        const pr = await pma.postJson('/index.php?route=/navigation&ajax_request=1', pmaParams(c))
         const pmaLog = await log.since(PMA_USER, m1)
         expect(pr.success, JSON.stringify(pr)).toBe(true)
 

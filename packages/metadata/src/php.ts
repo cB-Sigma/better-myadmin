@@ -136,13 +136,6 @@ export function phpSerialize(value: unknown): string {
   throw new Error(`serialize: unsupported type ${typeof value}`)
 }
 
-/** `mb_strlen` for UTF-8 text: code points. */
-export function mbStrlen(s: string): number {
-  let n = 0
-  for (const _ of s) n++
-  return n
-}
-
 /** PHP `empty()`. */
 export function phpEmpty(v: unknown): boolean {
   return (

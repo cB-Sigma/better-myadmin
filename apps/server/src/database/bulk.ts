@@ -5,9 +5,10 @@ import type {
   ShowCreateResponse,
 } from '@bettermyadmin/contracts'
 import { relationCleanupTable } from '@bettermyadmin/metadata'
+import { mbStrlen } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { MysqlError, ValidationError } from '../http/errors.ts'
-import { mbStrlen, mbSubstr } from '../navigation/php.ts'
+import { mbSubstr } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import {
   type DbCtx,

@@ -5,7 +5,17 @@ import type {
   RoutineExecuteResponse,
   SqlMessage,
 } from '@bettermyadmin/contracts'
-import { Button, Checkbox, DocLink, Input, MySqlDocLink, NativeSelect, Textarea } from '@bettermyadmin/ui'
+import {
+  Button,
+  Checkbox,
+  DocLink,
+  Input,
+  MySqlDocLink,
+  NativeSelect,
+  Panel,
+  PanelBody,
+  Textarea,
+} from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { api } from '../../lib/api'
@@ -56,8 +66,8 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
   const qc = useQueryClient()
   const [pos, setPos] = useState(0)
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'routines', { pos }),
-    queryFn: () => api.dbRoutines(server, db, { pos }),
+    queryKey: qk.dbPage({ server, db }, 'routines', { pos }),
+    queryFn: () => api.dbRoutines({ server, db }, { pos }),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [editor, setEditor] = useState<{
@@ -74,7 +84,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
 
   const open = async (item?: { name: string; type: string }) => {
     try {
-      const r = await api.dbRoutineEditor(server, db, item)
+      const r = await api.dbRoutineEditor({ server, db }, item)
       setEditor({ options: r.options, routine: r.routine ?? emptyRoutine(), original: item ?? null })
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -83,7 +93,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
   const openExecute = async (name: string, type: string) => {
     try {
       setResult(null)
-      setExecute(await api.dbRoutineExecuteForm(server, db, name, type))
+      setExecute(await api.dbRoutineExecuteForm({ server, db }, name, type))
     } catch (e) {
       setMessages([errorMessage(e)])
     }
@@ -113,7 +123,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
         onExport={async (name) => {
           const r = d.items.find((i) => i.name === name)
           if (r === undefined || !r.canExport) return null
-          return api.dbRoutineExport(server, db, r.name, r.type)
+          return api.dbRoutineExport({ server, db }, r.name, r.type)
         }}
         items={d.items.map((r) => ({
           name: r.name,
@@ -154,16 +164,19 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
           onClose={() => setEditor(null)}
           onSave={async (body) => {
             try {
-              const r = await api.dbRoutineSave(server, db, {
-                ...body,
-                ...(editor.original !== null
-                  ? { originalName: editor.original.name, originalType: editor.original.type }
-                  : {}),
-              })
+              const r = await api.dbRoutineSave(
+                { server, db },
+                {
+                  ...body,
+                  ...(editor.original !== null
+                    ? { originalName: editor.original.name, originalType: editor.original.type }
+                    : {}),
+                },
+              )
               if (r.messages[0]?.type === 'error') return r.messages
               setMessages(r.messages)
               setEditor(null)
-              await qc.invalidateQueries({ queryKey: qk.db(server, db) })
+              await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
               return null
             } catch (e) {
               return [errorMessage(e)]
@@ -179,12 +192,15 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
           onExecute={async (params, funcs) => {
             try {
               setResult(
-                await api.dbRoutineExecute(server, db, {
-                  name: execute.name,
-                  type: execute.type,
-                  params,
-                  funcs,
-                }),
+                await api.dbRoutineExecute(
+                  { server, db },
+                  {
+                    name: execute.name,
+                    type: execute.type,
+                    params,
+                    funcs,
+                  },
+                ),
               )
             } catch (e) {
               setMessages([errorMessage(e)])
@@ -588,9 +604,8 @@ function ExecuteDialog({
           <Messages messages={result.messages} />
           {result.queries.length > 0 && <HighlightedSql sql={result.queries.join('\n')} className="mb-2" />}
           {result.title !== '' && (
-            <div className="mb-2 rounded border border-border">
-              <div className="border-b border-border bg-bg-subtle px-2 py-1">{result.title}</div>
-              <div className="p-2">
+            <Panel title={result.title} className="mb-2">
+              <PanelBody>
                 {result.resultSets.map((rs, i) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: result sets are positional
                   <table key={i} className="mb-2 w-auto text-sm [&_td]:px-2 [&_th]:px-2">
@@ -614,8 +629,8 @@ function ExecuteDialog({
                     </tbody>
                   </table>
                 ))}
-              </div>
-            </div>
+              </PanelBody>
+            </Panel>
           )}
           {result.empty && (
             <Messages
@@ -624,9 +639,8 @@ function ExecuteDialog({
           )}
         </>
       ) : (
-        <div className="rounded border border-border">
-          <div className="border-b border-border bg-bg-subtle px-2 py-1">{t('Routine parameters')}</div>
-          <div className="p-2">
+        <Panel title={t('Routine parameters')}>
+          <PanelBody>
             {form.params.length === 0 ? (
               <p>{t('This routine does not require any parameters.')}</p>
             ) : (
@@ -704,8 +718,8 @@ function ExecuteDialog({
                 </tbody>
               </table>
             )}
-          </div>
-        </div>
+          </PanelBody>
+        </Panel>
       )}
     </DbModal>
   )

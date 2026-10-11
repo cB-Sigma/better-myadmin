@@ -95,8 +95,8 @@ export function DbStructurePage({
   const qc = useQueryClient()
   const navigate = useNavigate()
   const q = useQuery({
-    queryKey: qk.dbPage(server, db, 'structure', search),
-    queryFn: () => api.dbStructure(server, db, search),
+    queryKey: qk.dbPage({ server, db }, 'structure', search),
+    queryFn: () => api.dbStructure({ server, db }, search),
   })
   const fkDefault = useDefaultFkCheck(server)
   const [selected, setSelected] = useState<string[]>([])
@@ -109,7 +109,7 @@ export function DbStructurePage({
 
   const refresh = async () => {
     setCounts({})
-    await qc.invalidateQueries({ queryKey: qk.db(server, db) })
+    await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
     await qc.invalidateQueries({ queryKey: qk.nav(server) })
   }
   const act = async (fn: () => Promise<{ messages: SqlMessage[] }>) => {
@@ -165,7 +165,7 @@ export function DbStructurePage({
     }
     if (value === 'show_create') {
       try {
-        setDialog({ kind: 'show-create', data: await api.dbShowCreate(server, db, tables) })
+        setDialog({ kind: 'show-create', data: await api.dbShowCreate({ server, db }, tables) })
       } catch (e) {
         setMessages([errorMessage(e)])
       }
@@ -193,7 +193,7 @@ export function DbStructurePage({
     }[value]
     if (op !== undefined) {
       try {
-        const r = await api.dbMaintenance(server, db, op, tables)
+        const r = await api.dbMaintenance({ server, db }, op, tables)
         setMaintenance(r)
         setMessages([])
         await refresh()
@@ -205,8 +205,7 @@ export function DbStructurePage({
     if (value === 'sync_unique_columns_central_list' || value === 'delete_unique_columns_central_list') {
       await act(() =>
         api.dbStructureAction(
-          server,
-          db,
+          { server, db },
           value === 'sync_unique_columns_central_list' ? 'central-add' : 'central-remove',
           {
             tables,
@@ -227,7 +226,7 @@ export function DbStructurePage({
         closeLabel: t('Cancel'),
       })
       if (!ok) return
-      await act(() => api.dbStructureAction(server, db, 'central-make-consistent', { tables }))
+      await act(() => api.dbStructureAction({ server, db }, 'central-make-consistent', { tables }))
     }
   }
 
@@ -260,7 +259,7 @@ export function DbStructurePage({
 
   const realCount = async (table: string | null) => {
     try {
-      const r = await api.dbRealRowCount(server, db, table)
+      const r = await api.dbRealRowCount({ server, db }, table)
       if (r.realRowCount !== undefined && table !== null) setCounts({ ...counts, [table]: r.realRowCount })
       if (r.realRowCountAll !== undefined)
         setCounts(Object.fromEntries(r.realRowCountAll.map((x) => [x.table, x.rowCount])))
@@ -337,7 +336,7 @@ export function DbStructurePage({
       setMessages([{ type: 'success', text: t('No change') }])
       return
     }
-    await act(() => api.dbStructureAction(server, db, action, { tables, fkChecks: fk }))
+    await act(() => api.dbStructureAction({ server, db }, action, { tables, fkChecks: fk }))
   }
 
   /** structure.ts truncate_table_anchor / drop_table_anchor, posted to /sql */
@@ -804,8 +803,7 @@ export function DbStructurePage({
             setDialog(null)
             void act(() =>
               api.dbStructureAction(
-                server,
-                db,
+                { server, db },
                 dialog.action,
                 dialog.action === 'add-prefix'
                   ? { tables, prefix: v.from }
@@ -858,8 +856,7 @@ function MaintenanceCard({ m }: { m: MaintenanceResponse }) {
       <PanelBody>
         <Messages messages={m.messages} />
         {m.groups.map((g) => (
-          <div key={g.table} className="mb-2 rounded border border-border">
-            <div className="border-b border-border bg-bg-subtle px-2 py-1 font-semibold">{g.table}</div>
+          <Panel key={g.table} title={g.table} className="mb-2">
             <ul className="px-2 py-1 text-sm">
               {g.rows.map((r, i) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: result rows
@@ -872,7 +869,7 @@ function MaintenanceCard({ m }: { m: MaintenanceResponse }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </Panel>
         ))}
         {m.checksums.length > 0 && (
           <table className="text-sm">
@@ -914,8 +911,8 @@ function CopyTablesDialog({
   onDone: (r: { messages: SqlMessage[] }) => void
 }) {
   const form = useQuery({
-    queryKey: qk.dbPage(scope.server, scope.db, 'copy-form'),
-    queryFn: () => api.dbCopyForm(scope.server, scope.db),
+    queryKey: qk.dbPage(scope, 'copy-form'),
+    queryFn: () => api.dbCopyForm(scope),
   })
   const [target, setTarget] = useState<string | null>(null)
   const [what, setWhat] = useState<'data' | 'structure' | 'dataonly'>('data')
@@ -929,7 +926,7 @@ function CopyTablesDialog({
   const submit = async () => {
     try {
       onDone(
-        await api.dbStructureAction(scope.server, scope.db, 'copy', {
+        await api.dbStructureAction(scope, 'copy', {
           tables,
           targetDb,
           what,
