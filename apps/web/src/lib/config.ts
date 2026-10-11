@@ -22,6 +22,8 @@ export interface ClientConfig {
   InitialSlidersState: 'open' | 'closed' | 'disabled'
   ShowHint: boolean
   DisableShortcutKeys: boolean
+  /** drag and drop import of files dropped on any page */
+  enable_drag_drop_import: boolean
   SendErrorReports: 'ask' | 'always' | 'never'
   TitleDefault: string
   TitleServer: string
@@ -50,6 +52,7 @@ export const DEFAULT_CLIENT_CONFIG: ClientConfig = {
   InitialSlidersState: 'closed',
   ShowHint: true,
   DisableShortcutKeys: false,
+  enable_drag_drop_import: true,
   SendErrorReports: 'ask',
   TitleDefault: '@HTTP_HOST@ | @PHPMYADMIN@',
   TitleServer: '@HTTP_HOST@ / @VSERVER@ | @PHPMYADMIN@',

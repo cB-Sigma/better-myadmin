@@ -92,3 +92,25 @@ test('export a database, view it as text, import it back, import a CSV', async (
   await expect(page.getByText('Import has been successfully finished, 2 queries executed.')).toBeVisible()
   expect(Number(await value(`SELECT SUM(age) FROM ${TARGET}.people`))).toBe(73)
 })
+
+test('drag and drop import into the current database', async ({ page }) => {
+  await page.goto('/')
+  await page.locator('#input_username').fill(USER)
+  await page.locator('#input_password').fill(USER)
+  await page.locator('#input_go').click()
+  await expect(page.locator('#pma_navigation')).toBeVisible()
+  await page.goto(`/s/1/db/${TARGET}/structure`)
+  await expect(page.locator('#topmenu')).toBeVisible()
+  await page.evaluate(() => {
+    const dt = new DataTransfer()
+    dt.items.add(new File(['CREATE TABLE dropped (a INT);'], 'drop.sql', { type: 'text/plain' }))
+    document.body.dispatchEvent(new DragEvent('dragenter', { dataTransfer: dt, bubbles: true }))
+    document.body.dispatchEvent(new DragEvent('drop', { dataTransfer: dt, bubbles: true }))
+  })
+  await expect(page.locator('.pma_sql_import_status')).toContainText('drop.sql')
+  await expect(page.locator('.pma_sql_import_status')).toContainText('Success')
+  const n = await value(
+    `SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA = '${TARGET}' AND TABLE_NAME = 'dropped'`,
+  )
+  expect(Number(n)).toBe(1)
+})

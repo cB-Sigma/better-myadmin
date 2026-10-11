@@ -33,4 +33,28 @@ export const pmaControls = {
     file: 'ImportPage.tsx',
     match: 'Please select the file you want to import:',
   },
+  // pma: resources/js/drag_drop_import.ts
+  'js:drag_drop_import.ts#ajax:POST /import': { file: 'DragDropImport.tsx', match: 'api.importJob' },
+  'js:drag_drop_import.ts#click:.pma_drop_result h2 .close': {
+    file: 'DragDropImport.tsx',
+    match: 'setShown(null)',
+  },
+  'js:drag_drop_import.ts#click:.pma_sql_import_status div li[data-hash="…"] span.filesize span.pma_drop_file_status':
+    { file: 'DragDropImport.tsx', match: 'setShown(u)' },
+  'js:drag_drop_import.ts#click:.pma_sql_import_status h2 .close': {
+    file: 'DragDropImport.tsx',
+    match: 'setStatusOpen(false)',
+  },
+  'js:drag_drop_import.ts#click:.pma_sql_import_status h2 .minimize': {
+    file: 'DragDropImport.tsx',
+    match: 'setMinimized',
+  },
+  'js:drag_drop_import.ts#dragend:document': { file: 'DragDropImport.tsx', match: "'dragend'" },
+  'js:drag_drop_import.ts#dragenter:document': { file: 'DragDropImport.tsx', match: "'dragenter'" },
+  'js:drag_drop_import.ts#dragleave:.pma_drop_handler': { file: 'DragDropImport.tsx', match: 'onDragLeave' },
+  'js:drag_drop_import.ts#dragover:document': { file: 'DragDropImport.tsx', match: "'dragover'" },
+  'js:drag_drop_import.ts#dragstart:document': { file: 'DragDropImport.tsx', match: "'dragstart'" },
+  'js:drag_drop_import.ts#drop:body': { file: 'DragDropImport.tsx', match: "'drop'" },
+  'js:drag_drop_import.ts#drop:document': { file: 'DragDropImport.tsx', match: "'drop'" },
+  'js:drag_drop_import.ts#progress:<xhrobj.upload>': { file: 'DragDropImport.tsx', match: 'percent:' },
 }
