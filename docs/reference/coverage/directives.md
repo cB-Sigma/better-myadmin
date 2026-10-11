@@ -95,8 +95,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/SignonURL` |  |  |
 | ✅ | `Servers/*/socket` | apps/server/src/db/pool-manager.ts:36<br>apps/server/src/db/pool-manager.ts:37 |  |
 | ⬜ | `Servers/*/tracking_add_drop_database` |  |  |
-| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/database/tracking.ts:91<br>apps/server/src/table/tracking.ts:209 |  |
-| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/database/tracking.ts:93<br>apps/server/src/table/tracking.ts:212 |  |
+| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/table/tracking.ts:200 |  |
+| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/table/tracking.ts:203 |  |
 | ⬜ | `Servers/*/tracking_version_auto_create` |  |  |
 | ✅ | `Servers/*/user` | packages/metadata/src/storage.ts:235 |  |
 | ✅ | `Servers/*/verbose` | apps/server/src/export/service.ts:126<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/home.ts:203<br>apps/server/src/shell/home.ts:205<br>apps/server/src/shell/scope.ts:112 |  |
@@ -220,7 +220,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/central_columns` |  |  |
 | ⬜ | `Servers/*/pdf_pages` |  |  |
 | ⬜ | `Servers/*/tracking` |  |  |
-| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:37<br>apps/server/src/database/tracking.ts:73<br>apps/server/src/table/tracking.ts:163<br>apps/server/src/table/tracking.ts:185 |  |
+| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:32<br>apps/server/src/table/tracking.ts:135<br>apps/server/src/table/tracking.ts:174 |  |
 | ⬜ | `SkipLockedTables` |  |  |
 | ✅ | `UseDbSearch` | apps/server/src/database/search.ts:21 |  |
 
