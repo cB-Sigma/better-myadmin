@@ -226,3 +226,31 @@ export interface DbRenameCopyResponse extends DbActionResponse {
   /** the database to continue in (the new one after a rename, or a copy with "Switch to copied database") */
   db: string
 }
+
+// ---------------------------------------------------------------- Search
+
+export interface DbSearchFormResponse {
+  tables: string[]
+}
+
+export const DbSearchRequest = z.object({
+  /** criteriaSearchString */
+  searchString: z.string().default(''),
+  /** criteriaSearchType: '1'..'5' */
+  searchType: z.string().default('1'),
+  /** criteriaTables[] */
+  tables: z.array(z.string()).default([]),
+  /** criteriaColumnName */
+  columnName: z.string().default(''),
+  /** criteriaSearchOptionIncludeHex */
+  includeHex: z.boolean().default(false),
+})
+
+export interface DbSearchResponse {
+  searchString: string
+  /** the search type description ('' for an invalid type) */
+  description: string
+  rows: Array<{ table: string; count: number; selectSql: string; deleteSql: string }>
+  total: number
+  tablesSearched: number
+}

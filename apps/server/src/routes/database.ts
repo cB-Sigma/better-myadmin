@@ -6,6 +6,7 @@ import {
   DbCollationRequest,
   DbCommentRequest,
   DbRenameCopyRequest,
+  DbSearchRequest,
   DbStructureQuery,
   MaintenanceRequest,
   ReplacePrefixRequest,
@@ -24,6 +25,7 @@ import {
 } from '../database/bulk.ts'
 import { parse, withDb } from '../database/context.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
+import { search, searchForm } from '../database/search.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
 import type { ServerEnv } from './server.ts'
 
@@ -129,4 +131,15 @@ databaseRoutes.post('/:db/operations/rename', async (c) => {
 databaseRoutes.post('/:db/operations/copy', async (c) => {
   const req = parse(DbRenameCopyRequest, await body(c))
   return c.json(await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: false })))
+})
+
+// ---------------------------------------------------------------- Search
+
+/** pma: GET /database/search (the form) */
+databaseRoutes.get('/:db/search', async (c) => c.json(await withDb(c, searchForm)))
+
+/** pma: POST /database/search submit_search */
+databaseRoutes.post('/:db/search', async (c) => {
+  const req = parse(DbSearchRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => search(ctx, req)))
 })

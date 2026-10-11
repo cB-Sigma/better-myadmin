@@ -19,6 +19,8 @@ import type {
   DbActionResponse,
   DbOperationsResponse,
   DbRenameCopyResponse,
+  DbSearchFormResponse,
+  DbSearchResponse,
   DbStructureResponse,
   DefaultFkCheckResponse,
   ErrorEnvelope,
@@ -203,6 +205,10 @@ export const api = {
     call<DbActionResponse>('POST', `${dbPath(server, db)}/operations/${action}`, body),
   dbRenameCopy: (server: number, db: string, action: 'rename' | 'copy', body: unknown) =>
     call<DbRenameCopyResponse>('POST', `${dbPath(server, db)}/operations/${action}`, body),
+  dbSearchForm: (server: number, db: string) =>
+    call<DbSearchFormResponse>('GET', `${dbPath(server, db)}/search`),
+  dbSearch: (server: number, db: string, body: unknown) =>
+    call<DbSearchResponse>('POST', `${dbPath(server, db)}/search`, body),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
