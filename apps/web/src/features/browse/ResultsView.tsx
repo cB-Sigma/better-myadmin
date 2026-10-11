@@ -228,6 +228,7 @@ export function ResultsView(props: ResultsViewProps) {
       params: { server, db: grid.db, table: grid.table, _splat: splat },
       search: {
         where: selected,
+        sig: [...checked].map((i) => rows[i]?.whereSig).filter((w): w is string => w !== undefined),
         unique: grid.clauseIsUnique ? '1' : '0',
         action: action === 'copy' ? 'insert' : 'update',
         sql: grid.sql,

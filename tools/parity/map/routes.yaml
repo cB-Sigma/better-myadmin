@@ -8,8 +8,8 @@
 '[/]':
   ui: '/s/:s'
 /browse-foreigners:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/foreign-values'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/browse-foreigners'
+  note: 'modal `ForeignBrowser` of the Insert/Edit form'
 /changelog:
   ui: /about/changelog
   planned: M1
@@ -239,9 +239,8 @@
   exception: X10
   note: streaming
 /gis-data-editor:
-  api: POST /api/gis/preview
-  planned: M2
-  note: 'client component `GisEditor`'
+  ui: '/s/:s/db/:db/t/:table/insert'
+  note: 'client component `GisEditor` (WKT parsing/generation needs no server round trip)'
 /git-revision:
   api: GET /api/meta/build
 /import:
@@ -544,13 +543,13 @@
   ui: '/s/:s/db/:db/t/:table/add-field'
   planned: M2
 /table/change:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/insert-form'
-  ui: '/s/:s/db/:db/t/:table/change'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/insert-form'
+  ui:
+    - '/s/:s/db/:db/t/:table/insert'
+    - '/s/:s/db/:db/t/:table/edit'
 /table/change/rows:
-  api: '/api/servers/:s/databases/:db/tables/:table/change/rows'
-  ui: '/s/:s/db/:db/t/:table/change/rows'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/insert-form'
+  ui: '/s/:s/db/:db/t/:table/edit'
 /table/chart:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/chart'
@@ -783,13 +782,11 @@
   exception: X16
   note: client-side theme store (no server round trip)
 /transformation/overview:
-  api: GET /api/transformations
-  planned: M2
-  note: 'overview; wrapper: raw cell bytes'
+  ui: '/s/:s/transformations'
+  note: static plugin catalog (packages/mysql-types transformations.ts)
 /transformation/wrapper:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/cell'
-  planned: M2
-  note: 'overview; wrapper: raw cell bytes'
+  api: 'GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper'
+  note: raw cell bytes; resize=jpeg|png sends the original image (no GD)
 /triggers:
   api:
     - 'GET /api/servers/:s/databases/:db/triggers'

@@ -7,7 +7,9 @@ import { mysqlDocUrl, pmaDocUrl } from '../../lib/docs'
 import { Trans, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
+import { takeFlash } from '../table/structure/flash'
 import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
+import { HighlightedSql } from './HighlightedSql'
 import { StatementBlock } from './Results'
 import { SimulateModal } from './SimulateModal'
 import { type CardAction, type CardEnv, DocIcon, InlineEditContext, MessageBox } from './SqlMessage'
@@ -54,6 +56,8 @@ const CONFIRM_NAVIGATION = 'You have unsaved changes; are you sure you want to l
  */
 export function SqlPage(props: SqlPageProps) {
   const { server, db, table } = props
+  // the message of the action that came back here (Insert/Edit "Go back to previous page")
+  const [flash] = useState(() => takeFlash())
   const form = useQuery({
     queryKey: qk.sqlForm(server, db, table, props.sql ?? ''),
     queryFn: () => api.sqlForm(server, { db, table, sqlQuery: props.sql }),
@@ -63,7 +67,20 @@ export function SqlPage(props: SqlPageProps) {
     return <MessageBox type="error" text={form.error.message} className="rounded" />
   }
   if (form.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
-  return <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
+  return (
+    <>
+      {flash.map((m, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: messages are positional
+        <div key={i} className="mb-3 overflow-hidden rounded border border-border">
+          <MessageBox type={m.type} text={m.text} />
+          {m.sql !== undefined && m.sql !== '' && (
+            <HighlightedSql sql={m.sql} className="bg-bg-inset px-3 py-2" />
+          )}
+        </div>
+      ))}
+      <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
+    </>
+  )
 }
 
 function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFormResponse }) {

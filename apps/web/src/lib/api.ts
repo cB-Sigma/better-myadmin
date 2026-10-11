@@ -7,10 +7,13 @@ import type {
   BookmarkListResponse,
   BookmarkRunRequest,
   BookmarkShowResponse,
+  BrowseForeignersRequest,
+  BrowseForeignersResponse,
   BrowseRequest,
   CancelResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  ColumnTransformations,
   ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
@@ -32,6 +35,7 @@ import type {
   HistoryResponse,
   HomeResponse,
   I18nState,
+  InsertFormResponse,
   LintRequest,
   LintResponse,
   LoginRequest,
@@ -57,6 +61,8 @@ import type {
   RelationSaveRequest,
   RelationSaveResponse,
   RenameViewRequest,
+  SaveRowsRequest,
+  SaveRowsResponse,
   SearchPageResponse,
   SearchRequest,
   SearchResponse,
@@ -208,43 +214,54 @@ export const api = {
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
   // table level beyond Structure (docs/features/04-table-level.md)
-  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${tablePath(s)}/operations`),
+  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${refPath(s)}/operations`),
   tableOperation: <K extends keyof TableOpBodies>(s: TableRef, op: K, body: TableOpBodies[K]) =>
-    call<OperationsResponse>('POST', `${tablePath(s)}/operations/${op}`, body),
-  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${tablePath(s)}/relation`),
+    call<OperationsResponse>('POST', `${refPath(s)}/operations/${op}`, body),
+  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${refPath(s)}/relation`),
   tableRelationDropdown: (s: TableRef, q: { foreignDb: string; foreignTable?: string; foreign: boolean }) =>
     call<RelationDropdownResponse>(
       'GET',
-      `${tablePath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
+      `${refPath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
     ),
   tableRelationSave: (s: TableRef, req: RelationSaveRequest) =>
-    call<RelationSaveResponse>('POST', `${tablePath(s)}/relation`, req),
-  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${tablePath(s)}/search`),
-  tableSearch: (s: TableRef, req: SearchRequest) =>
-    call<SearchResponse>('POST', `${tablePath(s)}/search`, req),
+    call<RelationSaveResponse>('POST', `${refPath(s)}/relation`, req),
+  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${refPath(s)}/search`),
+  tableSearch: (s: TableRef, req: SearchRequest) => call<SearchResponse>('POST', `${refPath(s)}/search`, req),
   tableSearchRange: (s: TableRef, column: string) =>
-    call<RangeResponse>('GET', `${tablePath(s)}/search/range${queryString({ column })}`),
-  tableZoom: (s: TableRef, req: ZoomRequest) =>
-    call<ZoomResponse>('POST', `${tablePath(s)}/search/zoom`, req),
+    call<RangeResponse>('GET', `${refPath(s)}/search/range${queryString({ column })}`),
+  tableZoom: (s: TableRef, req: ZoomRequest) => call<ZoomResponse>('POST', `${refPath(s)}/search/zoom`, req),
   tableZoomRow: (s: TableRef, whereClause: string, sig: string) =>
-    call<ZoomRowResponse>('POST', `${tablePath(s)}/search/zoom/row`, { whereClause, sig }),
+    call<ZoomRowResponse>('POST', `${refPath(s)}/search/zoom/row`, { whereClause, sig }),
   tableFindReplacePreview: (s: TableRef, req: FindReplaceRequest) =>
-    call<FindReplacePreviewResponse>('POST', `${tablePath(s)}/find-replace/preview`, req),
+    call<FindReplacePreviewResponse>('POST', `${refPath(s)}/find-replace/preview`, req),
   tableFindReplace: (s: TableRef, req: FindReplaceRequest) =>
-    call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
+    call<FindReplaceResponse>('POST', `${refPath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
-    call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
-  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
+    call<OperationsResponse>('POST', `${refPath(s)}/relation/drop-foreign-key`, { constraint }),
+  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${refPath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
-    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
+    call<TrackingResponse>('POST', `${refPath(s)}/tracking/versions`, req),
   tableTrackingDelete: (s: TableRef, req: DeleteTrackingVersionsRequest) =>
-    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions/delete`, req),
+    call<TrackingResponse>('POST', `${refPath(s)}/tracking/versions/delete`, req),
   tableTrackingToggle: (s: TableRef, req: ToggleTrackingRequest) =>
-    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/toggle`, req),
+    call<TrackingResponse>('POST', `${refPath(s)}/tracking/toggle`, req),
   tableTrackingReport: (s: TableRef, req: Partial<TrackingReportRequest> & { version: string }) =>
-    call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
+    call<TrackingReportResponse>('POST', `${refPath(s)}/tracking/report`, req),
   tableTrackingSnapshot: (s: TableRef, version: string) =>
-    call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
+    call<TrackingSnapshotResponse>('GET', `${refPath(s)}/tracking/snapshot${queryString({ version })}`),
+  // Insert/Edit and transformations (docs/features/03-insert-edit-transformations.md)
+  insertForm: (server: number, db: string, table: string, req: InsertFormRequest) =>
+    call<InsertFormResponse>('POST', `${tablePath(server, db, table)}/insert-form`, req),
+  saveRows: (server: number, db: string, table: string, req: SaveRowsRequest) =>
+    call<SaveRowsResponse>('POST', `${tablePath(server, db, table)}/rows`, req),
+  browseForeigners: (
+    server: number,
+    db: string,
+    table: string,
+    req: Partial<BrowseForeignersRequest> & { field: string },
+  ) => call<BrowseForeignersResponse>('POST', `${tablePath(server, db, table)}/browse-foreigners`, req),
+  columnTransformations: (server: number, db: string, table: string) =>
+    call<ColumnTransformations>('GET', `${tablePath(server, db, table)}/transformations`),
   // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
   browse: (server: number, req: BrowseRequest) =>
     call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
@@ -293,8 +310,7 @@ export interface TableRef {
   table: string
 }
 
-const tablePath = (s: TableRef) =>
-  `/servers/${s.server}/databases/${encodeURIComponent(s.db)}/tables/${encodeURIComponent(s.table)}`
+const refPath = (s: TableRef) => tablePath(s.server, s.db, s.table)
 
 interface TableOpBodies {
   'order-by': OrderByRequest
@@ -304,6 +320,23 @@ interface TableOpBodies {
   sql: SqlActionRequest
   partitions: PartitionOpsRequest
   'rename-view': RenameViewRequest
+}
+
+/** Body of POST …/insert-form: signed where clauses (none = insert) and the form toggles. */
+export interface InsertFormRequest {
+  where?: Array<{ clause: string; sig: string }>
+  copy?: boolean
+  insertRows?: number
+  afterInsert?: string
+  clauseIsUnique?: boolean
+  unsaved?: Array<Record<string, string | null>> | undefined
+  showFunctionFields?: boolean
+  showFieldTypes?: boolean
+}
+
+/** `/api` path of a table (also the base of the transformation wrapper links). */
+export function tablePath(server: number, db: string, table: string): string {
+  return `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}`
 }
 
 /** POST /browse: the statement with its grid, the default-bookmark notice and the previous query card. */

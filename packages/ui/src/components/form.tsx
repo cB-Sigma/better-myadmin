@@ -197,13 +197,24 @@ export function Checkbox({ className, ...props }: ComponentProps<typeof Checkbox
 }
 
 /**
- * Native checkbox / radio for forms that mirror a phpMyAdmin form control by control (name, value
+ * Native checkbox for forms that mirror a phpMyAdmin form control by control (name, value
  * and checked state keep real form semantics, e.g. for the UI parity harness).
  */
 export function NativeCheckbox({ className, ...props }: Omit<ComponentProps<'input'>, 'type'>) {
   return <input type="checkbox" className={cn('size-3.5 align-middle accent-accent', className)} {...props} />
 }
 
+// ---------------------------------------------------------------------------------------------
+// Radio — a native radio button (phpMyAdmin's radio groups post with the form and keep ids for
+// keyboard navigation), styled like the other controls
+// ---------------------------------------------------------------------------------------------
+
 export function Radio({ className, ...props }: Omit<ComponentProps<'input'>, 'type'>) {
-  return <input type="radio" className={cn('size-3.5 align-middle accent-accent', className)} {...props} />
+  return (
+    <input
+      type="radio"
+      className={cn('size-3.5 cursor-pointer accent-(--color-accent) align-middle', className)}
+      {...props}
+    />
+  )
 }

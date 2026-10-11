@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-147/1106 covered (13.3%): 147 implemented, 24 planned, 935 missing. [Summary](README.md).
+173/1106 covered (15.6%): 173 implemented, 24 planned, 909 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -52,20 +52,20 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `src/Display/Results.php` | 1/1 | ✅ `pos` |  |
 | `table/start_and_number_of_rows_fieldset.twig` | 0/3 |  | ⬜ `pos` ⬜ `session_max_rows` ⬜ `submit` |
 
-## 03 insert edit transformations — 0/28 (0.0%) covered, 0/28 implemented
+## 03 insert edit transformations — 26/28 (92.9%) covered, 26/28 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `gis_data_editor_form.twig` | 0/7 |  | ⬜ `button:Cancel` ⬜ `button:Copy` ⬜ `gis_data[gis_type]` ⬜ `gis_data[srid]` ⬜ `id:gis_data_textarea` ⬜ `id:useOsmAsBaseLayerSwitch` ⬜ `select:L16` |
+| `gis_data_editor_form.twig` | 6/7 | ✅ `button:Cancel` ✅ `button:Copy` ✅ `gis_data[gis_type]` ✅ `gis_data[srid]` ✅ `id:gis_data_textarea` ✅ `select:L16` | ⬜ `id:useOsmAsBaseLayerSwitch` |
 | `modals/gis_editor.twig` | 0/1 |  | ⬜ `button:Close` |
-| `src/BrowseForeigners.php` | 0/1 |  | ⬜ `pos` |
-| `table/browse_foreigners/column_element.twig` | 0/1 |  | ⬜ `link:Use this value` |
-| `table/browse_foreigners/show_all.twig` | 0/1 |  | ⬜ `foreign_showAll` |
-| `table/insert/actions_panel.twig` | 0/7 |  | ⬜ `after_insert` ⬜ `button:Close` ⬜ `button:Preview SQL` ⬜ `id:buttonYes` ⬜ `id:previewSQLCloseButton` ⬜ `reset:Reset` ⬜ `submit_type` |
-| `table/insert/column_row.twig` | 0/7 |  | ⬜ `button:Edit/Insert` ⬜ `fields_null[multi_edit][*][*]` ⬜ `fields_upload[multi_edit][*][*]` ⬜ `fields[multi_edit][*][*]` ⬜ `fields[multi_edit][*][*][]` ⬜ `funcs[multi_edit][*][*]` ⬜ `link:Browse foreign values` |
-| `table/insert/continue_insertion_form.twig` | 0/1 |  | ⬜ `insert_rows` |
-| `table/insert/get_head_and_foot_of_insert_row_table.twig` | 0/1 |  | ⬜ `submit:Go` |
-| `table/insert/value_column_for_other_datatype.twig` | 0/1 |  | ⬜ `fields*` |
+| `src/BrowseForeigners.php` | 1/1 | ✅ `pos` |  |
+| `table/browse_foreigners/column_element.twig` | 1/1 | ✅ `link:Use this value` |  |
+| `table/browse_foreigners/show_all.twig` | 1/1 | ✅ `foreign_showAll` |  |
+| `table/insert/actions_panel.twig` | 7/7 | ✅ `after_insert` ✅ `button:Close` ✅ `button:Preview SQL` ✅ `id:buttonYes` ✅ `id:previewSQLCloseButton` ✅ `reset:Reset` ✅ `submit_type` |  |
+| `table/insert/column_row.twig` | 7/7 | ✅ `button:Edit/Insert` ✅ `fields_null[multi_edit][*][*]` ✅ `fields_upload[multi_edit][*][*]` ✅ `fields[multi_edit][*][*]` ✅ `fields[multi_edit][*][*][]` ✅ `funcs[multi_edit][*][*]` ✅ `link:Browse foreign values` |  |
+| `table/insert/continue_insertion_form.twig` | 1/1 | ✅ `insert_rows` |  |
+| `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
+| `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
 ## 04 table level — 92/306 (30.1%) covered, 92/306 implemented
 
