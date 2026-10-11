@@ -140,3 +140,16 @@ export function verifyClaim(
     ? null
     : `none of ${candidates.map((c) => `"${c}"`).join(', ')} found in ${claim.file}`
 }
+
+/**
+ * Whether a claim of a JS behaviour (`js:…` key) still holds: the component exists and, when the
+ * entry gives `match`, contains it (recommended: the handler, e.g. `onKeyDown`, or the API path).
+ */
+export function verifyJsClaim(claim: ControlClaim, repo = REPO): string | null {
+  const abs = join(repo, claim.file)
+  if (!existsSync(abs)) return `file ${claim.file} does not exist`
+  if (claim.match === undefined) return null
+  return readFileSync(abs, 'utf8').includes(claim.match)
+    ? null
+    : `"${claim.match}" not found in ${claim.file}`
+}

@@ -27,6 +27,7 @@ import {
   renderChecklist,
   renderControls,
   renderDirectives,
+  renderJs,
   renderMessages,
   renderReadme,
   renderRouteMapDoc,
@@ -56,6 +57,7 @@ export function renderAll({ inv, maps, cov }: Loaded): Map<string, string> {
   out.set(join(COVERAGE_DIR, 'controls.md'), renderControls(cov))
   out.set(join(COVERAGE_DIR, 'directives.md'), renderDirectives(cov))
   out.set(join(COVERAGE_DIR, 'messages.md'), renderMessages(cov, inv))
+  out.set(join(COVERAGE_DIR, 'js.md'), renderJs(cov))
   out.set(join(COVERAGE_DIR, 'checklist.md'), renderChecklist(cov))
   out.set(join(REPO, 'docs/reference/pma-route-map.md'), renderRouteMapDoc(inv, maps, cov))
   return out

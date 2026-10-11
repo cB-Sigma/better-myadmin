@@ -967,6 +967,14 @@
       ],
       "accountedKeys": []
     },
+    "js": {
+      "total": 966,
+      "implemented": 0,
+      "covered": 0,
+      "coverage": 0,
+      "implementedKeys": [],
+      "accountedKeys": []
+    },
     "checklist": {
       "total": 706,
       "implemented": 12,
