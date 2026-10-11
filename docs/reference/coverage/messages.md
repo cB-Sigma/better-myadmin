@@ -4,11 +4,11 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1004/3426 covered (29.3%): 1004 implemented, 33 planned, 2389 missing. [Summary](README.md).
+1230/3426 covered (35.9%): 1230 implemented, 33 planned, 2163 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 192/403 (47.6%) covered, 192/403 implemented
+## 01 shell navigation auth — 195/403 (48.4%) covered, 195/403 implemented
 
-211 msgids not used yet.
+208 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -19,11 +19,10 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/console/display.twig` | 7/42 | `Always expand query messages` · `Execute queries on Enter and insert new line with Shift+Enter. To m…` · `Hide trace` · `Show current browsing query` · `Show query history at start` · `Show trace` · `Switch to dark theme` |
 | `resources/templates/home/index.twig` | 7/35 | `Get more themes!` · `PHP extension:` · `PHP version:` · `phpMyAdmin Demo Server` · `phpMyAdmin Themes` · `Show PHP information` · `You are using the demo server. You can do anything here, but please…` |
 | `resources/js/u2f.ts` | 6/6 | `Client does not support security key. (U2F error)` · `Failed security key activation. (U2F error)` · `Invalid request sent to security key. (U2F error)` · `Invalid security key. (U2F error)` · `Timed out waiting for security key activation. (U2F error)` · `Unknown security key error. (U2F error)` |
-| `src/Navigation/Navigation.php` | 6/6 | `Events:` · `Functions:` · `Groups:` · `Procedures:` · `Tables:` · `Views:` |
 | `resources/js/modules/ajax.ts` | 5/6 | `Error code: %s` · `Error text: %s` · `Indicates that you have made changes to this page; you will be prom…` · `It seems that the connection to server has been lost. Please check …` · `Request aborted!!` |
 | `resources/templates/base.twig` | 5/17 | `Currently running Git revision %1$s from the %2$s branch.` · `Git information missing!` · `Javascript must be enabled past this point!` · `Open new phpMyAdmin window` · `phpMyAdmin Demo Server` |
-| `resources/templates/navigation/main.twig` | 5/11 | `An error has occurred while loading the navigation display` · `Drop files here` · `MariaDB Documentation` · `MySQL Documentation` · `SQL upload` |
 | `src/Controllers/HomeController.php` | 5/15 | `Directory [code]config[/code], which is used by the setup script, s…` · `The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able …` · `The curl extension was not found and allow_url_fopen is disabled. D…` · `The mbstring PHP extension was not found and you seem to be using a…` · `Your PHP parameter [a@https://www.php.net/manual/en/session.configu…` |
+| `src/Navigation/Navigation.php` | 5/6 | `Events:` · `Functions:` · `Groups:` · `Procedures:` · `Views:` |
 | `src/Navigation/NavigationTree.php` | 5/6 | `%s result found` · `Groups` · `Link with main panel` · `There are large item groups in navigation panel which may affect th…` · `Unlink from main panel` |
 | `src/Setup/Index.php` | 5/5 | `A newer version of phpMyAdmin is available and you should consider …` · `No newer stable version is available` · `Reading of version failed. Maybe you're offline or the upgrade serv…` · `Version check` · `You are using Git version, run [kbd]git pull[/kbd] :-)[br]The lates…` |
 | `resources/js/modules/console.ts` | 4/8 | `%s argument(s) passed` · `Hide arguments` · `Show arguments` · `Some error occurred while getting SQL debug info.` |
@@ -33,6 +32,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/setup/error.twig` | 4/5 | `Ignore errors` · `Show form` · `Submitted form contains errors` · `Try to revert erroneous fields to their default values` |
 | `src/Controllers/Setup/HomeController.php` | 4/4 | `Configuration already exists, setup is disabled!` · `If your server is also configured to accept HTTPS requests follow t…` · `Insecure connection` · `You are not using a secure connection; all data (including potentia…` |
 | `resources/templates/login/twofactor/application_configure.twig` | 3/3 | `Authentication code:` · `Please scan following QR code into the two-factor authentication ap…` · `Secret/key:` |
+| `resources/templates/navigation/main.twig` | 3/11 | `An error has occurred while loading the navigation display` · `MariaDB Documentation` · `MySQL Documentation` |
 | `resources/templates/preferences/two_factor/main.twig` | 3/3 | `Deprecated!` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
 | `resources/templates/setup/config/index.twig` | 3/3 | `Configuration file` · `Download` · `Generated configuration file` |
 | `resources/templates/setup/servers/index.twig` | 3/3 | `Add a new server` · `Edit server` · `Something went wrong.` |
@@ -58,13 +58,11 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/TwoFactor/Simple.php` | 2/2 | `For testing purposes only!` · `Simple two-factor authentication` |
 | `src/Plugins/TwoFactor/WebAuthn.php` | 2/2 | `Hardware Security Key (WebAuthn/FIDO2)` · `Provides authentication using hardware security tokens supporting t…` |
 | `src/Theme/ThemeManager.php` | 2/2 | `Default theme %s not found!` · `Theme %s not found!` |
-| `resources/js/drag_drop_import.ts` | 1/2 | `Drop files here` |
 | `resources/js/modules/functions/adjustTotals.ts` | 1/8 | `%d table(s)` |
 | `resources/js/modules/functions/checkNumberOfFields.ts` | 1/1 | `Warning: a form on this page has more than %d fields. On submission…` |
 | `resources/js/modules/functions/isStorageSupported.ts` | 1/1 | `There was a problem accessing your browser storage, some features m…` |
 | `resources/js/triggers.ts` | 1/1 | `Trigger` |
 | `resources/js/webauthn.ts` | 1/1 | `WebAuthn is not available. Please use a supported browser in a secu…` |
-| `resources/templates/database/export/index.twig` | 1/2 | `Tables:` |
 | `resources/templates/error/report_form.twig` | 1/4 | `This report automatically includes data about the error and informa…` |
 | `resources/templates/error/simple.twig` | 1/1 | `Something went wrong` |
 | `resources/templates/javascript/redirect.twig` | 1/1 | `Taking you to the target site.` |
@@ -232,9 +230,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/View/CreateController.php` | 1/2 | `View name can not be empty!` |
 | `src/Table/Maintenance.php` | 1/1 | `` Problems with indexes of table `%s` `` |
 
-## 05 database level — 213/340 (62.6%) covered, 213/340 implemented
+## 05 database level — 216/340 (63.5%) covered, 216/340 implemented
 
-127 msgids not used yet.
+124 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -242,7 +240,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/designer/move.ts` | 21/23 | `%d object(s) created.` · `Add tables from other databases` · `Choose column to display` · `Delete page` · `Do you want to save the changes to the current page?` · `Export relational schema` · `Modifications have been saved` · `Open page` · `Page name` · `Please enter a valid page name` · `Please select a page to continue` · `Please select the primary key or a unique key!` · … +9 |
 | `src/Database/Designer/Common.php` | 11/11 | `Error: FOREIGN KEY relationship could not be added!` · `Error: Internal relationship could not be added!` · `Error: Internal relationship could not be removed!` · `Error: Missing index on column(s).` · `Error: Relational features are disabled!` · `Error: relationship already exists.` · `FOREIGN KEY relationship has been added.` · `FOREIGN KEY relationship has been removed.` · `Internal relationship has been added.` · `Internal relationship has been removed.` · `phpMyAdmin configuration storage is not configured for "Display Fea…` |
 | `src/Plugins/Schema/SchemaPdf.php` | 9/11 | `Landscape` · `Name (Ascending)` · `Name (Descending)` · `Order of the tables` · `Orientation` · `Paper size` · `Portrait` · `Same width for all tables` · `Show grid` |
-| `src/Plugins/Schema/Pdf/PdfRelationSchema.php` | 6/8 | `Creation:` · `Last check:` · `Last update:` · `Relational schema` · `Schema of the %s database` · `Table of contents` |
 | `resources/js/database/operations.ts` | 4/6 | `Changing charset` · `Copying database` · `Processing request` · `Renaming databases` |
 | `resources/templates/database/designer/database_tables.twig` | 4/6 | `Add an option for column "%s".` · `See table structure` · `Select "%s"` · `Show/hide columns` |
 | `src/Plugins/Schema/SchemaDia.php` | 4/4 | `Landscape` · `Orientation` · `Paper size` · `Portrait` |
@@ -251,7 +248,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/designer/page_save_as.twig` | 3/3 | `Create a page and save to it` · `New page name` · `Save to selected page` |
 | `src/Controllers/Database/EventsController.php` | 3/7 | `Add event` · `Edit event` · `No event with name %1$s found in database %2$s.` |
 | `src/Controllers/Database/RoutinesController.php` | 3/8 | `Add routine` · `Edit routine` · `No routine with name %1$s found in database %2$s. You might be lack…` |
-| `src/Plugins/Export/ExportSql.php` | 3/4 | `Creation:` · `Last check:` · `Last update:` |
+| `src/Plugins/Schema/Pdf/PdfRelationSchema.php` | 3/8 | `Relational schema` · `Schema of the %s database` · `Table of contents` |
 | `resources/js/database/search.ts` | 2/7 | `Browsing` · `Deleting` |
 | `resources/js/designer/page.ts` | 2/2 | `Some tables saved in this page might have been renamed or deleted.` · `Untitled` |
 | `resources/templates/database/designer/edit_delete_pages.twig` | 2/2 | `Page to delete` · `Page to open` |
@@ -298,17 +295,17 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Schema/Svg/SvgRelationSchema.php` | 1/1 | `Schema of the %s database - Page %s` |
 | `src/Plugins/Schema/Svg/TableStatsSvg.php` | 1/1 | `The %s table doesn't exist!` |
 
-## 06 server level — 184/915 (20.1%) covered, 184/915 implemented
+## 06 server level — 185/915 (20.2%) covered, 185/915 implemented
 
-731 msgids not used yet.
+730 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Advisory/Rules.php` | 197/197 | `'percona' found in version_comment` · `'source' found in version_comment` · `{long_query_time} is set to 10 seconds or more, thus only slow quer…` · `{tmp_table_size} and {max_heap_table_size} are not the same.` · `%% MyISAM key buffer used: %s%%, this value should be above 95%%` · `%s thread(s) took longer than %s seconds to start, it should be 0` · `%s%% of all clients are aborted. This value should be below 2%%` · `%s%% of all connections are aborted. This value should be below 1%%` · `%s%% of all sorts cause temporary tables, this value should be lowe…` · `%s%% of all temporary tables are being written to disk, this value …` · `Aborted client rate is at %s, this value should be less than 1 per …` · `Aborted connections rate is at %s, this value should be less than 1…` · … +185 |
 | `src/Controllers/Server/Status/VariablesController.php` | 114/114 | `How many temporary files mysqld has created.` · `Key cache miss calculated as rate of physical reads compared to rea…` · `Normally, writes to the InnoDB buffer pool happen in the background…` · `Pending log file writes.` · `Percentage of physical writes compared to write requests (calculate…` · `Percentage of used key cache (calculated value)` · `The amount of data read so far, in bytes.` · `The amount of data written so far, in bytes.` · `The amount of free memory for query cache.` · `The average time to acquire a row lock, in milliseconds.` · `The compiled-in InnoDB page size (default 16KB). Many values are co…` · `The current number of pending fsync() operations.` · … +102 |
 | `resources/js/server/status/monitor.ts` | 57/63 | `Analyzing…` · `Average load` · `Buffered memory` · `Bytes received` · `Bytes sent` · `Cached memory` · `Cached swap` · `Change settings` · `Chart` · `Chart title` · `Connections / Processes` · `Current settings` · … +45 |
-| `resources/templates/server/status/monitor/index.twig` | 56/59 | `Add chart` · `Add chart to grid` · `Add this series` · `Analyse query` · `Analysing and loading logs. This may take a while.` · `Analysing logs` · `Append unit to data values` · `Apply a divisor` · `Cancel request` · `Chart arrangement` · `Chart columns` · `Chart Title` · … +44 |
 | `resources/templates/server/privileges/privileges_table.twig` | 55/58 | `Administration` · `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · … +43 |
+| `resources/templates/server/status/monitor/index.twig` | 55/59 | `Add chart` · `Add chart to grid` · `Add this series` · `Analyse query` · `Analysing and loading logs. This may take a while.` · `Analysing logs` · `Append unit to data values` · `Apply a divisor` · `Cancel request` · `Chart arrangement` · `Chart columns` · `Chart Title` · … +43 |
 | `src/Charsets/Collation.php` | 55/56 | `accent-insensitive (Collation variant)` · `accent-sensitive (Collation variant)` · `binary (Collation variant)` · `case-insensitive (Collation variant)` · `case-sensitive (Collation variant)` · `kana-sensitive (Collation variant)` · `multi-level (Collation variant)` · `no-pad (Collation variant)` · `Arabic (Collation)` · `Armenian (Collation)` · `Baltic (Collation)` · `Binary (Collation)` · … +43 |
 | `src/Server/Privileges.php` | 51/56 | `A user account allowing any user from localhost to connect is prese…` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · … +39 |
 | `src/Engines/Pbxt.php` | 24/25 | `Checkpoint frequency` · `Data file grow size` · `Data log threshold` · `Garbage threshold` · `Index cache size` · `Log buffer size` · `Log cache size` · `Log file count` · `Log file threshold` · `Record cache size` · `Row file grow size` · `The amount of data written to the transaction log before a checkpoi…` · … +12 |
@@ -338,7 +335,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/server/replication/index.twig` | 2/3 | `No privileges` · `This server is not configured as primary in a replication process. …` |
 | `resources/templates/server/user_groups/user_listings.twig` | 2/3 | `No users were found belonging to this user group.` · `Users of '%s' user group` |
 | `resources/js/database/routines.ts` | 1/1 | `Routine` |
-| `resources/js/import.ts` | 1/1 | `Please select the file you want to import:` |
 | `resources/js/replication.ts` | 1/1 | `Do you really want to reset the replica (RESET REPLICA)?` |
 | `resources/js/server/status/queries.ts` | 1/1 | `Number of statements` |
 | `resources/js/server/user_groups.ts` | 1/1 | `Do you really want to delete user group "%s"?` |
@@ -352,76 +348,41 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Server/UserGroupsFormController.php` | 1/1 | `User groups management is not enabled.` |
 | `src/Server/Privileges/AccountLocking.php` | 1/1 | `Account locking is not supported.` |
 
-## 07 export import — 19/293 (6.5%) covered, 19/293 implemented
+## 07 export import — 238/293 (81.2%) covered, 238/293 implemented
 
-274 msgids not used yet.
+55 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Plugins/Export/ExportSql.php` | 65/69 | `(less efficient as indexes will be generated during table creation)` · `(See below for the actual view)` · `%s value` · `%s view` · `<code>INSERT DELAYED</code> statements` · `<code>INSERT IGNORE</code> statements` · `Add %s statement` · `Add statements:` · `Additional custom header comment (\\n splits lines):` · `alias export may not work reliably in all cases.` · `AUTO_INCREMENT for dumped tables` · `AUTO_INCREMENT for table` · … +53 |
-| `resources/templates/export.twig` | 49/50 | `Column (Alias)` · `Database (Alias)` · `Table (Alias)` · `Character set of the file:` · `Compression:` · `Custom - display all possible options` · `Define new aliases` · `Defined aliases` · `Dump all rows` · `Dump some row(s)` · `Encoding Conversion:` · `Existing templates:` · … +37 |
-| `src/Plugins/Export/ExportLatex.php` | 23/27 | `(continued)` · `Content of table @TABLE@` · `data` · `Data dump options` · `Data:` · `Display comments` · `Display foreign key relationships` · `Display media types` · `Dump table` · `Generation Time:` · `Host:` · `Include table caption` · … +11 |
-| `resources/templates/import.twig` | 19/19 | `A compressed file's name must end in <strong>.[format].[compression…` · `Allow the interruption of an import in case the script detects it i…` · `Browse your computer:` · `Character set of the file:` · `Encoding Conversion:` · `File may be compressed (%s) or uncompressed.` · `File to import:` · `File uploads are not allowed on this server.` · `Format-specific options:` · `Other options` · `Partial import:` · `Previous import timed out, after resubmitting will continue from po…` · … +7 |
-| `src/Config/Descriptions.php` | 18/20 | `%s view` · `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Disable foreign key checks` · `Do not abort on INSERT error` · `Do not import empty rows` · `Dump table` · `Enclose export in a transaction` · `Exclude definition of current user` · `Export views as tables` · `Import empty values as NULL` · … +6 |
-| `src/Plugins/Export/ExportOdt.php` | 16/23 | `data` · `Data dump options` · `Display comments` · `Display foreign key relationships` · `Display media types` · `Dump table` · `Dumping data for query result` · `Dumping data for table` · `Object creation options` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · … +4 |
-| `src/Plugins/Import/ImportCsv.php` | 16/16 | `Column names:` · `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Do not abort on INSERT error` · `If the data in each row of the file is not in the same order as in …` · `Import empty values as NULL` · `Import these many number of rows (optional):` · `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` · … +4 |
 | `src/File.php` | 13/15 | `Cannot create temporary file.` · `Cannot read uploaded file.` · `Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc].` · `Error while moving uploaded file.` · `Failed to write file to disk.` · `File upload stopped by extension.` · `File was not an uploaded file.` · `Missing a temporary folder.` · `The uploaded file exceeds the MAX_FILE_SIZE directive that was spec…` · `The uploaded file exceeds the upload_max_filesize directive in php.…` · `The uploaded file was only partially uploaded.` · `Unknown error in file upload.` · … +1 |
-| `resources/js/import.ts` | 12/13 | `%s of %s` · `%s/sec.` · `About %MIN min. %SEC sec. remaining.` · `About %SEC sec. remaining.` · `No files available on server for import!` · `Note: If the file contains multiple tables, they will be combined i…` · `Please be patient, the file is being uploaded. Details about the up…` · `Please enter a valid database name.` · `Please enter a valid table name.` · `The file being uploaded is probably larger than the maximum allowed…` · `The file is being processed, please be patient.` · `Uploading your import file…` |
-| `src/Plugins/Export/ExportTexytext.php` | 12/19 | `data` · `Data dump options` · `Dump table` · `Dumping data for query result` · `Dumping data for table` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · `structure` · `structure and data` · `Structure for view` · `Table structure for table` |
-| `src/Plugins/Export/ExportHtmlword.php` | 11/18 | `data` · `Data dump options` · `Dump table` · `Dumping data for table` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · `structure` · `structure and data` · `Structure for view` · `Table structure for table` |
-| `resources/js/export.ts` | 9/9 | `Column (Alias)` · `Database (Alias)` · `Table (Alias)` · `SQL Query` · `Template was created.` · `Template was deleted.` · `Template was loaded.` · `Template was updated.` · `Your export is incomplete, due to a low execution time limit at the…` |
-| `src/Import/Import.php` | 9/10 | `Change any of its settings by clicking the corresponding "Options" …` · `Edit settings for %s` · `Edit structure by following the "Structure" link.` · `Go to database: %s` · `Go to table: %s` · `Go to view: %s` · `Structure of %s` · `The following structures have either been created or altered. Here …` · `View a structure's contents by clicking on its name.` |
-| `src/Plugins/Export/ExportPdf.php` | 9/10 | `data` · `Dump table` · `Dumping data` · `Query result data` · `Report title:` · `Stand in` · `structure` · `structure and data` · `View structure` |
-| `src/Plugins/Export/ExportXml.php` | 8/11 | `Data dump options` · `Export contents` · `Functions` · `Generation Time:` · `Host:` · `Object creation options (all are recommended)` · `PHP Version:` · `Procedures` |
-| `src/Controllers/Import/ImportController.php` | 7/11 | `However on last run no data has been parsed, this usually means php…` · `Import has been successfully finished, %d query executed.` · `Incorrect format parameter` · `No data was received to import. Either no file name was submitted, …` · `Script timeout passed, if you want to finish import, please %sresub…` · `Showing bookmark` · `You probably tried to upload a file that is too large. Please refer…` |
-| `src/Plugins/Export/ExportCsv.php` | 7/7 | `Columns enclosed with:` · `Columns escaped with:` · `Columns separated with:` · `Lines terminated with:` · `Put columns names in the first row` · `Remove carriage return/line feed characters within columns` · `Replace NULL with:` |
-| `src/Plugins/Export/ExportMediawiki.php` | 6/6 | `data` · `Dump table` · `Export table headers` · `Export table names` · `structure` · `structure and data` |
-| `src/Plugins/Import/ImportOds.php` | 6/6 | `Could not parse OpenDocument Spreadsheet!` · `Do not import empty rows` · `Import currencies <i>(ex. $5.00 to 5.00)</i>` · `Import percentages as proper decimals <i>(ex. 12.00% to .12)</i>` · `The first line of the file contains the table column names <i>(if t…` · `The XML file specified was either malformed or incomplete. Please c…` |
-| `resources/templates/database/export/index.twig` | 5/5 | `@SERVER@ will become the server name and @DATABASE@ will become the…` · `Export the data of all tables.` · `Export the structure of all tables.` · `Exporting a raw query` · `Exporting tables from "%s" database` |
-| `src/Plugins/Import/AbstractImportCsv.php` | 5/5 | `Columns enclosed with:` · `Columns escaped with:` · `Columns separated with:` · `Lines terminated with:` · `Update data when duplicate keys found on import (add ON DUPLICATE K…` |
-| `resources/js/drag_drop_import.ts` | 4/4 | `cancel` · `Import status` · `Select database first` · `Success` |
-| `src/Export/OutputHandler.php` | 4/4 | `Dump has been saved to file %s.` · `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
-| `src/Plugins/Export/ExportExcel.php` | 4/4 | `Excel edition:` · `Put columns names in the first row` · `Remove carriage return/line feed characters within columns` · `Replace NULL with:` |
-| `src/Plugins/Import/ImportLdi.php` | 4/4 | `Column names: ` · `Do not abort on INSERT error` · `This plugin does not support compressed imports!` · `Use LOCAL keyword` |
-| `src/Plugins/Import/ImportShp.php` | 4/4 | `ESRI Shape File` · `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
-| `resources/templates/table/export/index.twig` | 3/3 | `@SERVER@ will become the server name, @DATABASE@ will become the da…` · `Exporting a raw query` · `Exporting rows from "%s" table` |
-| `src/Config/ConfigFile.php` | 3/3 | `data` · `structure` · `structure and data` |
+| `src/Plugins/Import/ImportCsv.php` | 8/16 | `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` · `Lines terminated with` |
+| `resources/js/import.ts` | 5/13 | `%s/sec.` · `About %MIN min. %SEC sec. remaining.` · `About %SEC sec. remaining.` · `Please be patient, the file is being uploaded. Details about the up…` · `The file being uploaded is probably larger than the maximum allowed…` |
+| `src/Plugins/Export/ExportPdf.php` | 5/10 | `Dumping data` · `Query result data` · `Report title:` · `Stand in` · `View structure` |
+| `src/Config/Descriptions.php` | 4/20 | `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Lines terminated with` |
+| `src/Export/OutputHandler.php` | 3/4 | `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
+| `src/Plugins/Import/ImportShp.php` | 3/4 | `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
+| `resources/js/export.ts` | 2/9 | `SQL Query` · `Your export is incomplete, due to a low execution time limit at the…` |
 | `resources/templates/encoding/kanji_encoding_form.twig` | 2/2 | `Convert to Kana` · `None (None encoding conversion)` |
-| `resources/templates/server/export/index.twig` | 2/2 | `@SERVER@ will become the server name.` · `Exporting databases from the current server` |
-| `src/Export/Export.php` | 2/2 | `Back` · `Bad type!` |
-| `src/Plugins/Export/ExportJson.php` | 2/2 | `Output pretty-printed JSON (Use human-readable formatting)` · `Output unicode characters unescaped` |
-| `src/Plugins/Export/ExportOds.php` | 2/2 | `Put columns names in the first row` · `Replace NULL with:` |
-| `src/Plugins/Export/ExportToon.php` | 2/2 | `Columns separated with:` · `Indentation:` |
-| `src/Plugins/Import/ImportSql.php` | 2/2 | `Do not use <code>AUTO_INCREMENT</code> for zero values` · `SQL compatibility mode:` |
-| `src/Plugins/Import/ImportXml.php` | 2/2 | `The XML file specified was either malformed or incomplete. Please c…` · `XML` |
 | `src/ZipExtension.php` | 2/2 | `Error in ZIP archive:` · `No files found inside ZIP archive!` |
-| `resources/js/normalization.ts` | 1/1 | `Back` |
-| `resources/templates/database/import/index.twig` | 1/1 | `Importing into the database "%s"` |
-| `resources/templates/export/template_options.twig` | 1/1 | `Select a template` |
-| `resources/templates/import_status.twig` | 1/1 | `Back` |
-| `resources/templates/preferences/manage/main.twig` | 1/1 | `Browse your computer:` |
-| `resources/templates/server/import/index.twig` | 1/1 | `Importing into the current server` |
-| `resources/templates/server/replication/change_primary.twig` | 1/1 | `Host:` |
-| `resources/templates/server/replication/primary_add_replica_user.twig` | 1/1 | `Host:` |
-| `resources/templates/table/import/index.twig` | 1/1 | `Importing into the table "%s"` |
-| `resources/templates/user_password.twig` | 1/1 | `Back` |
+| `resources/js/drag_drop_import.ts` | 1/4 | `cancel` |
+| `resources/templates/database/export/index.twig` | 1/5 | `Exporting a raw query` |
+| `resources/templates/export.twig` | 1/50 | `Show SQL query` |
+| `resources/templates/table/export/index.twig` | 1/3 | `Exporting a raw query` |
 | `src/Controllers/Database/ExportController.php` | 1/1 | `Could not load export plugins, please check your installation!` |
 | `src/Controllers/Database/ImportController.php` | 1/1 | `Could not load import plugins, please check your installation!` |
-| `src/Controllers/Export/ExportController.php` | 1/1 | `Bad type!` |
+| `src/Controllers/Import/ImportController.php` | 1/11 | `Showing bookmark` |
 | `src/Controllers/Import/StatusController.php` | 1/1 | `Could not load the progress of the import.` |
 | `src/Controllers/Server/ExportController.php` | 1/1 | `Could not load export plugins, please check your installation!` |
 | `src/Controllers/Server/ImportController.php` | 1/1 | `Could not load import plugins, please check your installation!` |
 | `src/Controllers/Table/ExportController.php` | 1/1 | `Could not load export plugins, please check your installation!` |
 | `src/Controllers/Table/ImportController.php` | 1/1 | `Could not load import plugins, please check your installation!` |
-| `src/Html/Generator.php` | 1/2 | `Back` |
-| `src/Navigation/Nodes/NodeFunctionContainer.php` | 1/1 | `Functions` |
-| `src/Navigation/Nodes/NodeProcedureContainer.php` | 1/1 | `Procedures` |
 | `src/Pdf.php` | 1/1 | `Error while creating PDF:` |
-| `src/Plugins.php` | 1/1 | `This format has no options` |
-| `src/Plugins/Export/ExportCodegen.php` | 1/1 | `Format:` |
+| `src/Plugins/Export/ExportLatex.php` | 1/27 | `PHP Version:` |
+| `src/Plugins/Export/ExportSql.php` | 1/69 | `PHP Version:` |
+| `src/Plugins/Export/ExportXml.php` | 1/11 | `PHP Version:` |
 | `src/Plugins/Export/Helpers/Pdf.php` | 1/8 | `Purpose:` |
-| `src/Plugins/Import/ImportMediawiki.php` | 1/1 | `MediaWiki Table` |
-| `src/Plugins/Schema/ExportRelationSchema.php` | 1/1 | `Back` |
+| `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
+| `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
 ## 08 settings preferences pmadb — 12/666 (1.8%) covered, 12/666 implemented
 

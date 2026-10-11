@@ -1,0 +1,13 @@
+# Intentional differences of the import form (see tests/ui-parity/README.md for the format).
+rules:
+  - pma: { kind: file, label: '/^Browse your computer: \(Max: .*\)$/' }
+    ours: { label: '/^Browse your computer: \(Max: .*\)$/' }
+    exception: X9
+    reason: >-
+      the file goes up in chunks, so the limit is $cfg['MaxUploadSize'] (512 MiB by default), not
+      PHP's upload_max_filesize / post_max_size (2 MiB in the reference)
+  - match: { kind: button, label: Import }
+    ignore: [section]
+    reason: >-
+      the submit row follows the last card in both apps; our card titles are h2 headings (Panel),
+      phpMyAdmin's are plain div.card-header, so the preceding-heading fallback names a different section

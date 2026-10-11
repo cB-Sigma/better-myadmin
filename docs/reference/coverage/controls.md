@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-300/1106 covered (27.1%): 300 implemented, 24 planned, 782 missing. [Summary](README.md).
+359/1106 covered (32.5%): 359 implemented, 24 planned, 723 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -199,17 +199,17 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/variables/index.twig` | 0/3 |  | ⬜ `link:Cancel` ⬜ `link:Edit` ⬜ `link:Save` |
 | `user_password.twig` | 0/1 |  | ⬜ `link:Back` |
 
-## 07 export import — 0/63 (0.0%) covered, 0/63 implemented
+## 07 export import — 59/63 (93.7%) covered, 59/63 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `database/export/index.twig` | 0/5 |  | ⬜ `id:table_data_all` ⬜ `id:table_structure_all` ⬜ `table_data[]` ⬜ `table_select[]` ⬜ `table_structure[]` |
+| `database/export/index.twig` | 5/5 | ✅ `id:table_data_all` ✅ `id:table_structure_all` ✅ `table_data[]` ✅ `table_select[]` ✅ `table_structure[]` |  |
 | `encoding/kanji_encoding_form.twig` | 0/2 |  | ⬜ `knjenc` ⬜ `xkana` |
 | `export_modal.twig` | 0/1 |  | ⬜ `button:Close` |
-| `export.twig` | 0/41 |  | ⬜ `aliases_new` ⬜ `aliases[*][alias]` ⬜ `aliases[*][tables][*][alias]` ⬜ `aliases[*][tables][*][colums][*]` ⬜ `allrows` ⬜ `as_separate_files` ⬜ `button:Close` ⬜ `button:Remove` ⬜ `charset` ⬜ `compression` ⬜ `createTemplate` ⬜ `deleteTemplate` ⬜ `filename_template` ⬜ `id:btn_alias_config` ⬜ `id:buttonGo` ⬜ `id:column_alias_button` ⬜ `id:column_alias_name` ⬜ `id:column_alias_select` ⬜ `id:db_alias_button` ⬜ `id:db_alias_name` ⬜ `id:db_alias_select` ⬜ `id:saveAndCloseBtn` ⬜ `id:showsqlquery` ⬜ `id:table_alias_button` ⬜ `id:table_alias_name` ⬜ `id:table_alias_select` ⬜ `limit_from` ⬜ `limit_to` ⬜ `lock_tables` ⬜ `maxsize` ⬜ `onserver` ⬜ `onserver_overwrite` ⬜ `output_format` ⬜ `quick_export_onserver` ⬜ `quick_export_onserver_overwrite` ⬜ `quick_or_custom` ⬜ `remember_template` ⬜ `template` ⬜ `templateName` ⬜ `updateTemplate` ⬜ `what` |
-| `import_status.twig` | 0/1 |  | ⬜ `link:Back` |
-| `import.twig` | 0/10 |  | ⬜ `allow_interrupt` ⬜ `charset_of_file` ⬜ `fk_checks` ⬜ `format` ⬜ `id:buttonGo` ⬜ `id:localFileTab` ⬜ `id:uploadFileTab` ⬜ `import_file` ⬜ `local_import_file` ⬜ `skip_queries` |
-| `server/export/index.twig` | 0/3 |  | ⬜ `db_select[]` ⬜ `id:db_select_all` ⬜ `id:db_unselect_all` |
+| `export.twig` | 40/41 | ✅ `aliases[*][alias]` ✅ `aliases[*][tables][*][alias]` ✅ `aliases[*][tables][*][colums][*]` ✅ `allrows` ✅ `as_separate_files` ✅ `button:Close` ✅ `button:Remove` ✅ `charset` ✅ `compression` ✅ `createTemplate` ✅ `deleteTemplate` ✅ `filename_template` ✅ `id:btn_alias_config` ✅ `id:buttonGo` ✅ `id:column_alias_button` ✅ `id:column_alias_name` ✅ `id:column_alias_select` ✅ `id:db_alias_button` ✅ `id:db_alias_name` ✅ `id:db_alias_select` ✅ `id:saveAndCloseBtn` ✅ `id:showsqlquery` ✅ `id:table_alias_button` ✅ `id:table_alias_name` ✅ `id:table_alias_select` ✅ `limit_from` ✅ `limit_to` ✅ `lock_tables` ✅ `maxsize` ✅ `onserver` ✅ `onserver_overwrite` ✅ `output_format` ✅ `quick_export_onserver` ✅ `quick_export_onserver_overwrite` ✅ `quick_or_custom` ✅ `remember_template` ✅ `template` ✅ `templateName` ✅ `updateTemplate` ✅ `what` | ⬜ `aliases_new` |
+| `import_status.twig` | 1/1 | ✅ `link:Back` |  |
+| `import.twig` | 10/10 | ✅ `allow_interrupt` ✅ `charset_of_file` ✅ `fk_checks` ✅ `format` ✅ `id:buttonGo` ✅ `id:localFileTab` ✅ `id:uploadFileTab` ✅ `import_file` ✅ `local_import_file` ✅ `skip_queries` |  |
+| `server/export/index.twig` | 3/3 | ✅ `db_select[]` ✅ `id:db_select_all` ✅ `id:db_unselect_all` |  |
 
 ## 08 settings preferences pmadb — 0/39 (0.0%) covered, 0/39 implemented
 

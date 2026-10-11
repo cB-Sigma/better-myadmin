@@ -70,7 +70,7 @@ export function Hint({ message }: { message: string }) {
   return (
     <span className="pma_hint inline-flex" {...(ShowHint ? { title: message } : {})}>
       <PmaIcon name="b_help" alt="" />
-      <span className="sr-only">{message}</span>
+      <span className="hidden">{message}</span>
     </span>
   )
 }
