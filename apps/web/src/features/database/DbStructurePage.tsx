@@ -36,6 +36,7 @@ import { runQuery } from '../sql/runner'
 import {
   path,
   CreateTableBox,
+  DbModal,
   ListNavigator,
   Messages,
   dbBase,
@@ -940,6 +941,7 @@ function CopyTablesDialog({
   }
   return (
     <DbModal
+      id="bulkActionModal"
       title={t('Copy tables to')}
       onClose={onClose}
       footer={
@@ -1040,33 +1042,6 @@ function PrefixDialog({
         )}
       </div>
     </DbModal>
-  )
-}
-
-/** The modal of the bulk sub-forms (#bulkActionModal) on packages/ui's Dialog. */
-function DbModal({
-  title,
-  onClose,
-  children,
-  footer,
-  wide = false,
-}: {
-  title: string
-  onClose: () => void
-  children: ReactNode
-  footer?: ReactNode
-  wide?: boolean
-}) {
-  return (
-    <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent size={wide ? 'xl' : 'md'} id="bulkActionModal" aria-describedby={undefined}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <DialogBody>{children}</DialogBody>
-        {footer !== undefined && <DialogFooter>{footer}</DialogFooter>}
-      </DialogContent>
-    </Dialog>
   )
 }
 

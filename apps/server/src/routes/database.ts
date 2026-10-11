@@ -8,8 +8,12 @@ import {
   DbRenameCopyRequest,
   DbSearchRequest,
   DbStructureQuery,
+  EventSaveRequest,
   MaintenanceRequest,
   ReplacePrefixRequest,
+  RoutineExecuteRequest,
+  RoutineSaveRequest,
+  TriggerSaveRequest,
 } from '@bettermyadmin/contracts'
 import { type Context, Hono } from 'hono'
 import {
@@ -24,9 +28,19 @@ import {
   showCreate,
 } from '../database/bulk.ts'
 import { parse, withDb } from '../database/context.ts'
+import { eventData, eventsList, exportEvent, saveEvent } from '../database/events.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
+import {
+  executeForm,
+  executeRoutine,
+  exportRoutine,
+  routineEditor,
+  routinesList,
+  saveRoutine,
+} from '../database/routines.ts'
 import { search, searchForm } from '../database/search.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
+import { exportTrigger, saveTrigger, triggerData, triggersList } from '../database/triggers.ts'
 import type { ServerEnv } from './server.ts'
 
 /**
@@ -143,3 +157,77 @@ databaseRoutes.post('/:db/search', async (c) => {
   const req = parse(DbSearchRequest, await body(c))
   return c.json(await withDb(c, (ctx) => search(ctx, req)))
 })
+
+// ---------------------------------------------------------------- Routines
+
+/** pma: /database/routines (list) */
+databaseRoutes.get('/:db/routines', async (c) =>
+  c.json(await withDb(c, (ctx) => routinesList(ctx, { type: c.req.query('type'), pos: c.req.query('pos') }))),
+)
+
+/** pma: /database/routines add_item / edit_item (the editor's data) */
+databaseRoutes.get('/:db/routines/editor', async (c) => {
+  const name = c.req.query('name')
+  const type = c.req.query('type') ?? ''
+  return c.json(await withDb(c, (ctx) => routineEditor(ctx, name, type)))
+})
+
+/** pma: /database/routines editor_process_add / editor_process_edit */
+databaseRoutes.post('/:db/routines', async (c) => {
+  const req = parse(RoutineSaveRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => saveRoutine(ctx, req)))
+})
+
+/** pma: /database/routines execute_dialog */
+databaseRoutes.get('/:db/routines/execute', async (c) =>
+  c.json(await withDb(c, (ctx) => executeForm(ctx, c.req.query('name') ?? '', c.req.query('type') ?? ''))),
+)
+
+/** pma: /database/routines execute_routine */
+databaseRoutes.post('/:db/routines/execute', async (c) => {
+  const req = parse(RoutineExecuteRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => executeRoutine(ctx, req)))
+})
+
+/** pma: /database/routines export_item */
+databaseRoutes.get('/:db/routines/export', async (c) =>
+  c.json(await withDb(c, (ctx) => exportRoutine(ctx, c.req.query('name') ?? '', c.req.query('type') ?? ''))),
+)
+
+// ---------------------------------------------------------------- Events
+
+/** pma: /database/events */
+databaseRoutes.get('/:db/events', async (c) => c.json(await withDb(c, eventsList)))
+
+databaseRoutes.get('/:db/events/editor', async (c) =>
+  c.json(await withDb(c, (ctx) => eventData(ctx, c.req.query('name') ?? ''))),
+)
+
+databaseRoutes.post('/:db/events', async (c) => {
+  const req = parse(EventSaveRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => saveEvent(ctx, req)))
+})
+
+databaseRoutes.get('/:db/events/export', async (c) =>
+  c.json(await withDb(c, (ctx) => exportEvent(ctx, c.req.query('name') ?? ''))),
+)
+
+// ---------------------------------------------------------------- Triggers (database or table scope)
+
+/** pma: /triggers?db=…[&table=…] */
+databaseRoutes.get('/:db/triggers', async (c) =>
+  c.json(await withDb(c, (ctx) => triggersList(ctx, c.req.query('table') ?? ''))),
+)
+
+databaseRoutes.get('/:db/triggers/editor', async (c) =>
+  c.json(await withDb(c, (ctx) => triggerData(ctx, c.req.query('table') ?? '', c.req.query('name') ?? ''))),
+)
+
+databaseRoutes.post('/:db/triggers', async (c) => {
+  const req = parse(TriggerSaveRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => saveTrigger(ctx, c.req.query('table') ?? '', req)))
+})
+
+databaseRoutes.get('/:db/triggers/export', async (c) =>
+  c.json(await withDb(c, (ctx) => exportTrigger(ctx, c.req.query('table') ?? '', c.req.query('name') ?? ''))),
+)

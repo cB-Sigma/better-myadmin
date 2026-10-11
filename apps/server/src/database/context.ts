@@ -34,6 +34,8 @@ export interface DbCtx {
   control: MetaConn | null
   /** `$_SESSION['tmpval']` of this server login */
   tmpval: Record<string, unknown>
+  /** the per-server session cache (SessionCache) */
+  cache: Record<string, unknown>
   /** the logged-in MySQL user */
   user: string
 }
@@ -90,6 +92,7 @@ export async function withDb<T>(
       rp,
       control: rp.db === null ? null : meta.control,
       tmpval,
+      cache,
       user: login.user,
     })
   } finally {

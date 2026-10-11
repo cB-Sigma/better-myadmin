@@ -254,3 +254,186 @@ export interface DbSearchResponse {
   total: number
   tablesSearched: number
 }
+
+// ---------------------------------------------------------------- Routines / Events / Triggers
+
+/** The export modal of a routine, event or trigger. */
+export interface DbExportResponse {
+  title: string
+  sql: string
+}
+
+export interface RoutinesListResponse {
+  items: Array<{
+    name: string
+    type: string
+    /** DTD_IDENTIFIER */
+    returns: string
+    definer: string
+    dropSql: string
+    canEdit: boolean
+    canExport: boolean
+    canExecute: boolean
+  }>
+  /** CREATE ROUTINE on the database */
+  canCreate: boolean
+  pager: DbPager | null
+}
+
+export const RoutineParam = z.object({
+  dir: z.string().default(''),
+  name: z.string().default(''),
+  type: z.string().default(''),
+  length: z.string().default(''),
+  optsText: z.string().default(''),
+  optsNum: z.string().default(''),
+})
+
+export const RoutineSaveRequest = z.object({
+  name: z.string().default(''),
+  type: z.string().default('PROCEDURE'),
+  /** edit mode: item_original_name / item_original_type */
+  originalName: z.string().optional(),
+  originalType: z.string().optional(),
+  params: z.array(RoutineParam).default([]),
+  returnType: z.string().default(''),
+  returnLength: z.string().default(''),
+  returnOptsText: z.string().default(''),
+  returnOptsNum: z.string().default(''),
+  definition: z.string().default(''),
+  isDeterministic: z.boolean().default(false),
+  adjustPrivileges: z.boolean().default(false),
+  definer: z.string().default(''),
+  securityType: z.string().default(''),
+  sqlDataAccess: z.string().default(''),
+  comment: z.string().default(''),
+})
+export type RoutineSaveRequest = z.output<typeof RoutineSaveRequest>
+
+export interface RoutineEditorData {
+  name: string
+  type: 'PROCEDURE' | 'FUNCTION'
+  params: Array<{
+    dir: string
+    name: string
+    type: string
+    length: string
+    lengthArray: string[]
+    optsText: string
+    optsNum: string
+  }>
+  returnType: string
+  returnLength: string
+  returnOptsText: string
+  returnOptsNum: string
+  definition: string
+  isDeterministic: boolean
+  definer: string
+  securityType: '' | 'DEFINER' | 'INVOKER'
+  sqlDataAccess: string
+  comment: string
+}
+
+export interface RoutineEditorOptions {
+  datatypes: string[]
+  charsets: Array<{ name: string; description: string }>
+  numericOptions: string[]
+  hasAdjustPrivileges: boolean
+}
+
+export interface RoutineExecuteForm {
+  name: string
+  type: string
+  showFunctionFields: boolean
+  params: Array<{
+    index: number
+    name: string
+    type: string
+    inputType: 'text' | 'radio' | 'checkbox'
+    /** ENUM / SET values */
+    values: string[]
+    dateClass: '' | 'datefield' | 'datetimefield'
+    functions: Array<{ value: string; selected: boolean }> | null
+  }>
+}
+
+export const RoutineExecuteRequest = z.object({
+  name: z.string(),
+  type: z.string(),
+  params: z.record(z.union([z.string(), z.array(z.string())])).default({}),
+  funcs: z.record(z.string()).default({}),
+})
+
+export interface RoutineExecuteResponse {
+  messages: SqlMessage[]
+  queries: string[]
+  title: string
+  resultSets: Array<{ fields: string[]; rows: Array<Array<string | null>> }>
+  /** "MySQL returned an empty result set (i.e. zero rows)." */
+  empty: boolean
+}
+
+export interface EventsListResponse {
+  items: Array<{ name: string; type: string; status: string; dropSql: string }>
+  schedulerOn: boolean
+  canCreate: boolean
+}
+
+export const EventSaveRequest = z.object({
+  name: z.string().default(''),
+  originalName: z.string().optional(),
+  status: z.string().default(''),
+  type: z.string().default(''),
+  executeAt: z.string().default(''),
+  intervalValue: z.string().default(''),
+  intervalField: z.string().default(''),
+  starts: z.string().default(''),
+  ends: z.string().default(''),
+  definition: z.string().default(''),
+  preserve: z.boolean().default(false),
+  definer: z.string().default(''),
+  comment: z.string().default(''),
+})
+export type EventSaveRequest = z.output<typeof EventSaveRequest>
+
+export interface EventEditorData {
+  name: string
+  status: string
+  type: string
+  executeAt: string
+  intervalValue: string
+  intervalField: string
+  starts: string
+  ends: string
+  definition: string
+  preserve: boolean
+  definer: string
+  comment: string
+}
+
+export interface TriggersListResponse {
+  items: Array<{ name: string; table: string; timing: string; event: string; dropSql: string }>
+  canCreate: boolean
+  /** the editor's table select */
+  tables: string[]
+}
+
+export const TriggerSaveRequest = z.object({
+  name: z.string().default(''),
+  originalName: z.string().optional(),
+  table: z.string().default(''),
+  timing: z.string().default(''),
+  event: z.string().default(''),
+  definition: z.string().default(''),
+  definer: z.string().default(''),
+})
+export type TriggerSaveRequest = z.output<typeof TriggerSaveRequest>
+
+export interface TriggerEditorData {
+  name: string
+  table: string
+  timing: string
+  event: string
+  definition: string
+  definer: string
+}

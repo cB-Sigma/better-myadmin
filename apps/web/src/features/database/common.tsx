@@ -1,8 +1,21 @@
 import type { DbPager, SqlMessage } from '@bettermyadmin/contracts'
-import { Button, Input, Label, NativeSelect, Panel, PanelBody } from '@bettermyadmin/ui'
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  Label,
+  NativeSelect,
+  Panel,
+  PanelBody,
+} from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { HighlightedSql } from '../sql/HighlightedSql'
@@ -138,5 +151,38 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
         </div>
       </Panel>
     </form>
+  )
+}
+
+/** The modal of the bulk sub-forms (#bulkActionModal) on packages/ui's Dialog. */
+export function DbModal({
+  title,
+  onClose,
+  children,
+  footer,
+  wide = false,
+  id,
+}: {
+  title: string
+  onClose: () => void
+  children: ReactNode
+  footer?: ReactNode
+  wide?: boolean
+  id?: string
+}) {
+  return (
+    <Dialog open onOpenChange={(o) => !o && onClose()}>
+      <DialogContent
+        size={wide ? 'xl' : 'md'}
+        {...(id !== undefined ? { id } : {})}
+        aria-describedby={undefined}
+      >
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        <DialogBody>{children}</DialogBody>
+        {footer !== undefined && <DialogFooter>{footer}</DialogFooter>}
+      </DialogContent>
+    </Dialog>
   )
 }

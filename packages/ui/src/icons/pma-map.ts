@@ -40,10 +40,12 @@ import {
   Lock,
   LogOut,
   type LucideIcon,
+  MessageSquare,
   Minus,
   Network,
   Palette,
   Pencil,
+  Play,
   Plus,
   Printer,
   Puzzle,
@@ -157,6 +159,20 @@ export const pmaIcons = {
   s_collapseall: Minus,
   b_tblanalyse: SlidersHorizontal,
   s_tree: FolderTree,
+  // database level (routines, events, triggers, tracking, central columns, privileges)
+  b_nextpage: Play,
+  b_comment: MessageSquare,
+  b_routine_add: Plus,
+  b_event_add: Plus,
+  b_trigger_add: Plus,
+  b_table_add: FilePlus2,
+  b_deltbl: Trash2,
+  b_versions: ListOrdered,
+  b_report: FileText,
+  s_cancel: XCircle,
+  centralColumns_add: Plus,
+  b_usrcheck: Shield,
+  b_usredit: Pencil,
 } satisfies Record<string, LucideIcon>
 
 export type PmaIconName = keyof typeof pmaIcons

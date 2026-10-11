@@ -17,6 +17,7 @@ import type {
   CopyFormResponse,
   DatabaseScope,
   DbActionResponse,
+  DbExportResponse,
   DbOperationsResponse,
   DbRenameCopyResponse,
   DbSearchFormResponse,
@@ -26,6 +27,8 @@ import type {
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
+  EventEditorData,
+  EventsListResponse,
   FormatResponse,
   HistoryResponse,
   HomeResponse,
@@ -45,6 +48,11 @@ import type {
   QueryRequest,
   QueryResponse,
   RealRowCountResponse,
+  RoutineEditorData,
+  RoutineEditorOptions,
+  RoutineExecuteForm,
+  RoutineExecuteResponse,
+  RoutinesListResponse,
   ServerScope,
   SetCollationResponse,
   ShowCreateResponse,
@@ -52,6 +60,8 @@ import type {
   SimulateResponse,
   SqlFormResponse,
   TableScope,
+  TriggerEditorData,
+  TriggersListResponse,
   VersionCheckResponse,
 } from '@bettermyadmin/contracts'
 import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
@@ -209,6 +219,50 @@ export const api = {
     call<DbSearchFormResponse>('GET', `${dbPath(server, db)}/search`),
   dbSearch: (server: number, db: string, body: unknown) =>
     call<DbSearchResponse>('POST', `${dbPath(server, db)}/search`, body),
+  dbRoutines: (server: number, db: string, q: { type?: string; pos?: number } = {}) =>
+    call<RoutinesListResponse>('GET', `${dbPath(server, db)}/routines${queryString(q)}`),
+  dbRoutineEditor: (server: number, db: string, item?: { name: string; type: string }) =>
+    call<{ options: RoutineEditorOptions; routine: RoutineEditorData | null }>(
+      'GET',
+      `${dbPath(server, db)}/routines/editor${queryString(item ?? {})}`,
+    ),
+  dbRoutineSave: (server: number, db: string, body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(server, db)}/routines`, body),
+  dbRoutineExecuteForm: (server: number, db: string, name: string, type: string) =>
+    call<RoutineExecuteForm>('GET', `${dbPath(server, db)}/routines/execute${queryString({ name, type })}`),
+  dbRoutineExecute: (server: number, db: string, body: unknown) =>
+    call<RoutineExecuteResponse>('POST', `${dbPath(server, db)}/routines/execute`, body),
+  dbRoutineExport: (server: number, db: string, name: string, type: string) =>
+    call<DbExportResponse>('GET', `${dbPath(server, db)}/routines/export${queryString({ name, type })}`),
+  dbEvents: (server: number, db: string) => call<EventsListResponse>('GET', `${dbPath(server, db)}/events`),
+  dbEventEditor: (server: number, db: string, name: string) =>
+    call<EventEditorData>('GET', `${dbPath(server, db)}/events/editor${queryString({ name })}`),
+  dbEventSave: (server: number, db: string, body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(server, db)}/events`, body),
+  dbEventExport: (server: number, db: string, name: string) =>
+    call<DbExportResponse>('GET', `${dbPath(server, db)}/events/export${queryString({ name })}`),
+  /** triggers of the database, or of one table when `table` is given */
+  dbTriggers: (server: number, db: string, table = '') =>
+    call<TriggersListResponse>(
+      'GET',
+      `${dbPath(server, db)}/triggers${queryString({ table: table || undefined })}`,
+    ),
+  dbTriggerEditor: (server: number, db: string, table: string, name: string) =>
+    call<TriggerEditorData>(
+      'GET',
+      `${dbPath(server, db)}/triggers/editor${queryString({ table: table || undefined, name })}`,
+    ),
+  dbTriggerSave: (server: number, db: string, table: string, body: unknown) =>
+    call<DbActionResponse>(
+      'POST',
+      `${dbPath(server, db)}/triggers${queryString({ table: table || undefined })}`,
+      body,
+    ),
+  dbTriggerExport: (server: number, db: string, table: string, name: string) =>
+    call<DbExportResponse>(
+      'GET',
+      `${dbPath(server, db)}/triggers/export${queryString({ table: table || undefined, name })}`,
+    ),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
