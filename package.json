@@ -18,13 +18,15 @@
     "test:parity": "vitest run --project parity",
     "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
     "i18n:import": "pnpm --filter @bettermyadmin/i18n run import",
-    "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity"
+    "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity",
+    "upstream:check": "tsx tools/upstream/check.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@playwright/test": "1.52.0",
     "@types/node": "22.15.3",
     "mysql2": "3.14.1",
+    "tsx": "4.19.4",
     "turbo": "2.5.3",
     "typescript": "5.8.3",
     "vitest": "3.1.3",

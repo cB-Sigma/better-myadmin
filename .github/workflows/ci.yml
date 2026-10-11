@@ -47,3 +47,14 @@ jobs:
       - run: docker compose -f docker/dev.compose.yml up -d --build --wait mysql84 phpmyadmin-ref phpmyadmin-ref-i18n
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:parity
+
+  upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: git clone --filter=blob:none --no-checkout https://github.com/phpmyadmin/phpmyadmin.git ../ref/pma
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm upstream:check --gate
