@@ -58,7 +58,7 @@ const find = (l: NavList | null, label: string): NavNode => {
 }
 
 describe('GET /navigation/tree', () => {
-  it('groups databases by prefix, puts New first and returns the panel settings', async () => {
+  it('groups databases by prefix, puts New first and returns the panel settings [p01-a333a2]', async () => {
     const t = await app()
     try {
       const r = await t.req('GET', '/api/servers/1/navigation/tree')
@@ -91,7 +91,7 @@ describe('GET /navigation/tree', () => {
     }
   })
 
-  it('pages by first-level prefix with FirstLevelNavigationItems and shows the db filter', async () => {
+  it('pages by first-level prefix with FirstLevelNavigationItems and shows the db filter [p01-41d435 p01-79ae51]', async () => {
     const t = await app({ FirstLevelNavigationItems: 1, NavigationTreeDisplayDbFilterMinimum: 2 })
     try {
       const r = await t.req('GET', '/api/servers/1/navigation/tree?pos=1')
@@ -114,7 +114,7 @@ describe('GET /navigation/tree', () => {
     }
   })
 
-  it('computes the initial page from the current database', async () => {
+  it('computes the initial page from the current database [p01-41d435]', async () => {
     const t = await app({ FirstLevelNavigationItems: 1 })
     try {
       const r = await t.req('GET', '/api/servers/1/navigation/tree?db=performance_schema')
@@ -149,7 +149,7 @@ describe('GET /navigation/branch', () => {
     }
   })
 
-  it('expands Tables: natural order, groups, default action icons and links', async () => {
+  it('expands Tables: natural order, groups, default action icons and links [p01-a333a2 p01-d23a2e]', async () => {
     const t = await app({ NavigationTreeDefaultTabTable2: 'sql' })
     try {
       const r = await t.req(
@@ -175,7 +175,7 @@ describe('GET /navigation/branch', () => {
     }
   })
 
-  it('shows the tables directly when Tables is the only container', async () => {
+  it('shows the tables directly when Tables is the only container [p01-5523b6]', async () => {
     const t = await app()
     try {
       const r = await t.req('GET', '/api/servers/1/navigation/branch?path=m1nav_it_b')
@@ -186,7 +186,7 @@ describe('GET /navigation/branch', () => {
     }
   })
 
-  it('lists columns with key, type, truncated default and nullable', async () => {
+  it('lists columns with key, type, truncated default and nullable [p01-60ce39]', async () => {
     const t = await app()
     try {
       const r = await t.req(
@@ -223,7 +223,7 @@ describe('GET /navigation/branch', () => {
     }
   })
 
-  it('warns once about groups larger than 500 items', async () => {
+  it('warns once about groups larger than 500 items [p01-a333a2]', async () => {
     const t = await app()
     try {
       const r = await t.req(
@@ -271,7 +271,7 @@ describe('GET /navigation/branch', () => {
 })
 
 describe('POST /navigation/tree', () => {
-  it('restores expanded branches and reload keeps them', async () => {
+  it('restores expanded branches and reload keeps them [p01-b7e594]', async () => {
     const t = await app()
     try {
       const paths = [

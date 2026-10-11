@@ -1,0 +1,19 @@
+{
+  "name": "@bettermyadmin/conventions",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static convention checks (docs/architecture/16-golden-path.md): one way to fetch, key queries, render HTML, build UI and talk to phpMyAdmin.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "check": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "typescript": "5.8.3",
+    "yaml": "2.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "tsx": "4.19.4"
+  }
+}

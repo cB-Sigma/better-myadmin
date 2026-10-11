@@ -1,0 +1,36 @@
+{# a comment with <input name="commented_out"> #}
+<form id="fixture_form" method="post" action="{{ url('/fixture') }}">
+  {{ get_hidden_inputs(
+    db
+  ) }}
+  <input type="hidden" name="token" value="{{ token }}">
+  <label for="input_name">{{ t('Name:') }}</label>
+  <input type="text" id="input_name" name="name" value="{{ name }}"{% if required %} required{% endif %}>
+  <input type="password" name="pass_{{ i }}" id="pass_{{ i }}">
+  <input type="text" name="{{ dynamic_name }}" placeholder="{{ t('Type to filter') }}">
+  <select name="mode" id="mode_select">
+    <option value="a">{{ t('Option A') }}</option>
+    <option value="b"{{ mode == 'b' ? ' selected' }}>{{ t('Option B') }}</option>
+    <option>plain</option>
+  </select>
+  <select name="db">
+    {% for db in databases %}
+      <option value="{{ db }}">{{ db }}</option>
+    {% endfor %}
+  </select>
+  <input type="radio" name="what" value="structure" id="radio_structure">
+  <input type="radio" name="what" value="data" id="radio_data">
+  <input type="checkbox" name="selected[]" value="t1">
+  <input type="checkbox" name="selected[]" value="t2">
+  <input type="checkbox" name="single" value="1">
+  <textarea name="sql_query" aria-label="{{ t('SQL query') }}"></textarea>
+  <button type="button" class="btn">{{ t('Preview SQL') }}</button>
+  <input type="submit" value="{{ t('Go') }}">
+  <a href="{{ url('/drop') }}" class="ajax">{{ get_icon('b_drop', t('Drop')) }}</a>
+  <a href="{{ url('/drop') }}">{{ t('Drop') }}</a>
+  <a href="{{ db_url }}">{{ db_name }}</a>
+  {{ link_or_button(url('/table/empty'), {'db': db}, t('Empty'), {'class': 'ajax'}) }}
+</form>
+<script>
+  const html = '<input name="from_script">';
+</script>

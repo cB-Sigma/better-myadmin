@@ -56,9 +56,32 @@ The core "exact clone" proof.
 
 ### E2E (Playwright)
 
-- One spec file per feature doc section. Each `- [ ]` checklist item maps to a `test()` whose title is the checklist text, and a script turns the test results back into a checked checklist in the doc (`pnpm parity:report` rewrites the `- [ ]`/`- [x]` markers and appends the test id). The doc is the dashboard.
+- One spec file per feature doc section. Each `- [ ]` checklist item maps to a `test()` whose title contains the item's id (`p01-3f9a2c`, see below) or is the checklist text, and a script turns the test results back into a checked checklist in the doc (`pnpm parity:report` rewrites the `- [ ]`/`- [x]` markers and appends the test reference). The doc is the dashboard.
+- **UI structure parity** (`tests/ui-parity`, `pnpm test:ui-parity`): every page a feature adds needs a `pageParity` case; differences are fixed or mapped with a parity-exception id. A case opens the page in the reference phpMyAdmin and in BetterMyAdmin (each logged in with its own MySQL account), captures the visible interactive controls of both (kind, accessible label, type, value, select options, checked/disabled/required state, section = nearest legend / card header / heading, order within the section), diffs them, then performs the case's interactions in both apps (by accessible name, or per-app code) and diffs again after each step, so dynamic show/hide behaviour is compared too. Unmapped differences fail the case; intentional ones go in `tests/ui-parity/maps/<case>.yaml` (renames need an exception id from the register, `n/a`/`added` need a reason). Screenshots of both apps per step land in `.data/ui-parity/index.html` (review aid, not a gate). A case with differences still to fix carries `known: 'TODO …'` (`test.fail`). See [tests/ui-parity/README.md](../../tests/ui-parity/README.md).
 - Keyboard-only suite, axe suite, perf suite ([Performance](08-performance-and-snappiness.md)).
 - Visual regression (Playwright screenshots) for the four themes × light/dark on 12 key pages, with a 0.1% pixel threshold.
+
+## Mechanical inventories and the parity gate
+
+The checklists are written by people; `tools/parity` makes sure nothing phpMyAdmin has slips through them. It extracts inventories from the reference checkout, maps each item to what replaces it, computes coverage and gates CI on a ratchet. Reports: [docs/reference/coverage](../reference/coverage/README.md).
+
+| Inventory | Extracted from (by executing or parsing phpMyAdmin itself) | Implemented when |
+|---|---|---|
+| Routes (`inventory/routes.json`) | `Routes::collect` run against a recording FastRoute collector (`php/routes.php`), plus the setup script's dispatcher | every target in `map/routes.yaml` exists: Hono registrations under `apps/server/src` (mounts followed through imports) and TanStack file routes under `apps/web/src/routes` (catch-alls and routes rendering `NotImplemented` do not count) |
+| Template controls (`inventory/controls.json`) | every Twig template's inputs, selects (static options), textareas, buttons, submit labels, translated action links, radio/checkbox groups; `link_or_button()`; PHP helpers `Generator::getNavigationLink`, `Util::pageselector` (`php/helpers.php`) | a component claims it (`pma-controls.ts` or `data-pma`, see [conventions](12-project-structure-and-conventions.md#parity-markers)) and the claimed file still shows it |
+| Config directives (`inventory/directives.json`) | the `packages/config` schema, cross-checked with phpMyAdmin's `Settings::asArray()` dump | code outside `packages/config` reads it (`cfg.MaxRows`, `server.DisableIS`, destructuring, `'Export/csv_columns'`) |
+| Messages (`inventory/messages.json`) | `phpmyadmin.pot` ∪ uses found with Twig's own parser (`t()` nodes), PHP tokens (`__()`, `_ngettext()`, `_pgettext()`) and `window.Messages` keys in `resources/js` (`php/messages.php`) | our code translates the msgid (same calls as `pnpm i18n:parity`, plus msgid constants) |
+| JS behaviours (`inventory/js.json`) | `resources/js/**/*.ts` parsed with TypeScript: jQuery/DOM event bindings (`.on('evt', selector)`, shorthands with a handler, `addEventListener`) with the keys keyboard handlers compare, `confirm()`/`alert()`/`.confirm()` with their `window.Messages` keys, AJAX calls (`$.post`/`$.get`/`$.ajax`/`.load`/`fetch`) with their routes, CodeMirror `extraKeys` and commands; key `js:<script>#<event>:<selector>` etc. | a component claims it (`js:` keys in `pma-controls.ts`, optionally with `match`) and the claimed file still exists / contains the match |
+| Checklist items (`map/checklist-ids.json`) | every `- [ ]`/`- [x]` of `docs/features/*.md`, with a stable id minted from file + section + text and kept across edits | a linked test passes |
+
+Items that will not be implemented as phpMyAdmin has them carry a disposition in `tools/parity/map/*.yaml`: `planned: M<n>`, `exception: X<n>` (must exist in [parity exceptions](../reference/parity-exceptions.md)) or `n/a: reason`; a checklist item uses `<!-- parity:n/a: reason -->`. Covered = implemented + exception + n/a. Every item is attributed to a feature area through `map/areas.yaml` (pma path prefix → `docs/features` number). Unused msgids grouped by the templates and PHP files that use them are the "likely missing features" list.
+
+Commands:
+
+- `pnpm parity:inventory` regenerates the inventories (needs PHP and the checkout at `reference-commit.txt`; `PMA_PATH` overrides `/home/user/ref/pma`).
+- `pnpm parity:report [--run[=unit,int,parity,playwright-web,playwright-e2e|all]]` runs the chosen suites with their JSON reporters (results in `.data/parity-results/`, default `--run` = unit), assigns checklist ids, rewrites the checklist markers from the results (a suite that was not run leaves its items' markers alone; a failing linked test unticks), and writes the coverage reports and `docs/reference/pma-route-map.md`.
+- `pnpm parity:check` is the gate (CI job `parity-gate`): it fails when an item the baseline had implemented or covered regresses (unmapped, target removed, claim broken, test unlinked), a map or claim points at something that does not exist, a covered/implemented count or a coverage ratio drops, the inventories were extracted from another commit (or, where the checkout exists, a fresh extraction differs), a map names an unknown exception or milestone, or `pma-route-map.md` is stale. It needs neither PHP nor a database; checklist status comes from the committed markers plus the statically found test links.
+- `pnpm parity:baseline` records the current numbers and item keys in `tools/parity/baseline.json`. Run it when coverage went up; CI never runs it.
 
 ## Fixtures and data
 
@@ -70,7 +93,7 @@ The core "exact clone" proof.
 
 - Vitest workspaces for unit/contract/integration; `--coverage` thresholds 90% lines for `sql-gen`, `sql-lexer`, `mysql-types`, `metadata`, `export`, `import`.
 - Playwright with sharding in CI; traces on failure uploaded as artifacts.
-- `pnpm test` runs unit + contract; `pnpm test:int` integration (needs Docker); `pnpm test:parity` golden parity; `pnpm test:e2e`.
+- `pnpm test` runs unit + contract; `pnpm test:int` integration (needs Docker); `pnpm test:parity` golden parity; `pnpm test:e2e`; `pnpm test:ui-parity` UI structure parity (needs the reference phpMyAdmin).
 - Mutation testing (Stryker) on `sql-gen` and `where.ts` monthly, mirroring phpMyAdmin's use of Infection.
 
 ## Parity exceptions register

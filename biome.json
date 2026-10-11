@@ -11,6 +11,11 @@
       "docs/**",
       ".data/**",
       "**/routeTree.gen.ts",
+      "**/.data/**",
+      "**/test-results/**",
+      "tools/parity/inventory/**",
+      "tools/parity/baseline.json",
+      "tools/parity/map/checklist-ids.json",
       ".claude/**"
     ]
   },

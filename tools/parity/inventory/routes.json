@@ -1,0 +1,2676 @@
+{
+  "_meta": {
+    "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
+    "referenceCommit": "e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1",
+    "source": "src/Routing/Routes.php::collect (FastRoute collector, executed) + Routing::callSetupController",
+    "count": 199
+  },
+  "items": [
+    {
+      "key": "[/]",
+      "path": "[/]",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "HomeController",
+      "file": "src/Controllers/HomeController.php",
+      "variants": [
+        "",
+        "/"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/browse-foreigners",
+      "path": "/browse-foreigners",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "BrowseForeignersController",
+      "file": "src/Controllers/BrowseForeignersController.php",
+      "variants": [
+        "/browse-foreigners"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/changelog",
+      "path": "/changelog",
+      "methods": [
+        "GET"
+      ],
+      "controller": "ChangeLogController",
+      "file": "src/Controllers/ChangeLogController.php",
+      "variants": [
+        "/changelog"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/check-relations",
+      "path": "/check-relations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "CheckRelationsController",
+      "file": "src/Controllers/CheckRelationsController.php",
+      "variants": [
+        "/check-relations"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/collation-connection",
+      "path": "/collation-connection",
+      "methods": [
+        "POST"
+      ],
+      "controller": "CollationConnectionController",
+      "file": "src/Controllers/CollationConnectionController.php",
+      "variants": [
+        "/collation-connection"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/columns",
+      "path": "/columns",
+      "methods": [
+        "POST"
+      ],
+      "controller": "ColumnController",
+      "file": "src/Controllers/ColumnController.php",
+      "variants": [
+        "/columns"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/console/bookmark/add",
+      "path": "/console/bookmark/add",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Console/Bookmark/AddController",
+      "file": "src/Controllers/Console/Bookmark/AddController.php",
+      "variants": [
+        "/console/bookmark/add"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/console/bookmark/refresh",
+      "path": "/console/bookmark/refresh",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Console/Bookmark/RefreshController",
+      "file": "src/Controllers/Console/Bookmark/RefreshController.php",
+      "variants": [
+        "/console/bookmark/refresh"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/console/update-config",
+      "path": "/console/update-config",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Console/UpdateConfigController",
+      "file": "src/Controllers/Console/UpdateConfigController.php",
+      "variants": [
+        "/console/update-config"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/central-columns",
+      "path": "/database/central-columns",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/CentralColumnsController",
+      "file": "src/Controllers/Database/CentralColumnsController.php",
+      "variants": [
+        "/database/central-columns"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/central-columns/populate",
+      "path": "/database/central-columns/populate",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/CentralColumns/PopulateColumnsController",
+      "file": "src/Controllers/Database/CentralColumns/PopulateColumnsController.php",
+      "variants": [
+        "/database/central-columns/populate"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/data-dictionary",
+      "path": "/database/data-dictionary",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Database/DataDictionaryController",
+      "file": "src/Controllers/Database/DataDictionaryController.php",
+      "variants": [
+        "/database/data-dictionary"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/designer",
+      "path": "/database/designer",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/DesignerController",
+      "file": "src/Controllers/Database/DesignerController.php",
+      "variants": [
+        "/database/designer"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/events",
+      "path": "/database/events",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/EventsController",
+      "file": "src/Controllers/Database/EventsController.php",
+      "variants": [
+        "/database/events"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/export",
+      "path": "/database/export",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/ExportController",
+      "file": "src/Controllers/Database/ExportController.php",
+      "variants": [
+        "/database/export"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/import",
+      "path": "/database/import",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/ImportController",
+      "file": "src/Controllers/Database/ImportController.php",
+      "variants": [
+        "/database/import"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/multi-table-query",
+      "path": "/database/multi-table-query",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Database/MultiTableQueryController",
+      "file": "src/Controllers/Database/MultiTableQueryController.php",
+      "variants": [
+        "/database/multi-table-query"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/multi-table-query/query",
+      "path": "/database/multi-table-query/query",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/MultiTableQuery/QueryController",
+      "file": "src/Controllers/Database/MultiTableQuery/QueryController.php",
+      "variants": [
+        "/database/multi-table-query/query"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/multi-table-query/tables",
+      "path": "/database/multi-table-query/tables",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Database/MultiTableQuery/TablesController",
+      "file": "src/Controllers/Database/MultiTableQuery/TablesController.php",
+      "variants": [
+        "/database/multi-table-query/tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/operations",
+      "path": "/database/operations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Operations/DatabaseController",
+      "file": "src/Controllers/Operations/DatabaseController.php",
+      "variants": [
+        "/database/operations"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/operations/collation",
+      "path": "/database/operations/collation",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Operations/Database/CollationController",
+      "file": "src/Controllers/Operations/Database/CollationController.php",
+      "variants": [
+        "/database/operations/collation"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/privileges",
+      "path": "/database/privileges",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Database/PrivilegesController",
+      "file": "src/Controllers/Database/PrivilegesController.php",
+      "variants": [
+        "/database/privileges"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/routines",
+      "path": "/database/routines",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/RoutinesController",
+      "file": "src/Controllers/Database/RoutinesController.php",
+      "variants": [
+        "/database/routines"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/search",
+      "path": "/database/search",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/SearchController",
+      "file": "src/Controllers/Database/SearchController.php",
+      "variants": [
+        "/database/search"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/sql",
+      "path": "/database/sql",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/SqlController",
+      "file": "src/Controllers/Database/SqlController.php",
+      "variants": [
+        "/database/sql"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/sql/autocomplete",
+      "path": "/database/sql/autocomplete",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/SqlAutoCompleteController",
+      "file": "src/Controllers/Database/SqlAutoCompleteController.php",
+      "variants": [
+        "/database/sql/autocomplete"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/sql/format",
+      "path": "/database/sql/format",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/SqlFormatController",
+      "file": "src/Controllers/Database/SqlFormatController.php",
+      "variants": [
+        "/database/sql/format"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure",
+      "path": "/database/structure",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/StructureController",
+      "file": "src/Controllers/Database/StructureController.php",
+      "variants": [
+        "/database/structure"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/add-prefix",
+      "path": "/database/structure/add-prefix",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/AddPrefixController",
+      "file": "src/Controllers/Database/Structure/AddPrefixController.php",
+      "variants": [
+        "/database/structure/add-prefix"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/add-prefix-table",
+      "path": "/database/structure/add-prefix-table",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/AddPrefixTableController",
+      "file": "src/Controllers/Database/Structure/AddPrefixTableController.php",
+      "variants": [
+        "/database/structure/add-prefix-table"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/central-columns/add",
+      "path": "/database/structure/central-columns/add",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/CentralColumns/AddController",
+      "file": "src/Controllers/Database/Structure/CentralColumns/AddController.php",
+      "variants": [
+        "/database/structure/central-columns/add"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/central-columns/make-consistent",
+      "path": "/database/structure/central-columns/make-consistent",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/CentralColumns/MakeConsistentController",
+      "file": "src/Controllers/Database/Structure/CentralColumns/MakeConsistentController.php",
+      "variants": [
+        "/database/structure/central-columns/make-consistent"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/central-columns/remove",
+      "path": "/database/structure/central-columns/remove",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/CentralColumns/RemoveController",
+      "file": "src/Controllers/Database/Structure/CentralColumns/RemoveController.php",
+      "variants": [
+        "/database/structure/central-columns/remove"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/change-prefix-form",
+      "path": "/database/structure/change-prefix-form",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/ChangePrefixFormController",
+      "file": "src/Controllers/Database/Structure/ChangePrefixFormController.php",
+      "variants": [
+        "/database/structure/change-prefix-form"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/copy-form",
+      "path": "/database/structure/copy-form",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/CopyFormController",
+      "file": "src/Controllers/Database/Structure/CopyFormController.php",
+      "variants": [
+        "/database/structure/copy-form"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/copy-table",
+      "path": "/database/structure/copy-table",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/CopyTableController",
+      "file": "src/Controllers/Database/Structure/CopyTableController.php",
+      "variants": [
+        "/database/structure/copy-table"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/copy-table-with-prefix",
+      "path": "/database/structure/copy-table-with-prefix",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/CopyTableWithPrefixController",
+      "file": "src/Controllers/Database/Structure/CopyTableWithPrefixController.php",
+      "variants": [
+        "/database/structure/copy-table-with-prefix"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/drop-form",
+      "path": "/database/structure/drop-form",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/DropFormController",
+      "file": "src/Controllers/Database/Structure/DropFormController.php",
+      "variants": [
+        "/database/structure/drop-form"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/drop-table",
+      "path": "/database/structure/drop-table",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/DropTableController",
+      "file": "src/Controllers/Database/Structure/DropTableController.php",
+      "variants": [
+        "/database/structure/drop-table"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/empty-form",
+      "path": "/database/structure/empty-form",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/EmptyFormController",
+      "file": "src/Controllers/Database/Structure/EmptyFormController.php",
+      "variants": [
+        "/database/structure/empty-form"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/empty-table",
+      "path": "/database/structure/empty-table",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/EmptyTableController",
+      "file": "src/Controllers/Database/Structure/EmptyTableController.php",
+      "variants": [
+        "/database/structure/empty-table"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/favorite-table",
+      "path": "/database/structure/favorite-table",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/FavoriteTableController",
+      "file": "src/Controllers/Database/Structure/FavoriteTableController.php",
+      "variants": [
+        "/database/structure/favorite-table"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/real-row-count",
+      "path": "/database/structure/real-row-count",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/Structure/RealRowCountController",
+      "file": "src/Controllers/Database/Structure/RealRowCountController.php",
+      "variants": [
+        "/database/structure/real-row-count"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/replace-prefix",
+      "path": "/database/structure/replace-prefix",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/ReplacePrefixController",
+      "file": "src/Controllers/Database/Structure/ReplacePrefixController.php",
+      "variants": [
+        "/database/structure/replace-prefix"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/structure/show-create",
+      "path": "/database/structure/show-create",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Database/Structure/ShowCreateController",
+      "file": "src/Controllers/Database/Structure/ShowCreateController.php",
+      "variants": [
+        "/database/structure/show-create"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/database/tracking",
+      "path": "/database/tracking",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Database/TrackingController",
+      "file": "src/Controllers/Database/TrackingController.php",
+      "variants": [
+        "/database/tracking"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/databases",
+      "path": "/databases",
+      "methods": [
+        "POST"
+      ],
+      "controller": "DatabaseController",
+      "file": "src/Controllers/DatabaseController.php",
+      "variants": [
+        "/databases"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/error-report",
+      "path": "/error-report",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "ErrorReportController",
+      "file": "src/Controllers/ErrorReportController.php",
+      "variants": [
+        "/error-report"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export",
+      "path": "/export",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Export/ExportController",
+      "file": "src/Controllers/Export/ExportController.php",
+      "variants": [
+        "/export"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export/check-time-out",
+      "path": "/export/check-time-out",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Export/CheckTimeOutController",
+      "file": "src/Controllers/Export/CheckTimeOutController.php",
+      "variants": [
+        "/export/check-time-out"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export/tables",
+      "path": "/export/tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Export/TablesController",
+      "file": "src/Controllers/Export/TablesController.php",
+      "variants": [
+        "/export/tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export/template/create",
+      "path": "/export/template/create",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Export/Template/CreateController",
+      "file": "src/Controllers/Export/Template/CreateController.php",
+      "variants": [
+        "/export/template/create"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export/template/delete",
+      "path": "/export/template/delete",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Export/Template/DeleteController",
+      "file": "src/Controllers/Export/Template/DeleteController.php",
+      "variants": [
+        "/export/template/delete"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export/template/load",
+      "path": "/export/template/load",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Export/Template/LoadController",
+      "file": "src/Controllers/Export/Template/LoadController.php",
+      "variants": [
+        "/export/template/load"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/export/template/update",
+      "path": "/export/template/update",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Export/Template/UpdateController",
+      "file": "src/Controllers/Export/Template/UpdateController.php",
+      "variants": [
+        "/export/template/update"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/gis-data-editor",
+      "path": "/gis-data-editor",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "GisDataEditorController",
+      "file": "src/Controllers/GisDataEditorController.php",
+      "variants": [
+        "/gis-data-editor"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/git-revision",
+      "path": "/git-revision",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "GitInfoController",
+      "file": "src/Controllers/GitInfoController.php",
+      "variants": [
+        "/git-revision"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/import",
+      "path": "/import",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Import/ImportController",
+      "file": "src/Controllers/Import/ImportController.php",
+      "variants": [
+        "/import"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/import-status",
+      "path": "/import-status",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Import/StatusController",
+      "file": "src/Controllers/Import/StatusController.php",
+      "variants": [
+        "/import-status"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/import/simulate-dml",
+      "path": "/import/simulate-dml",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Import/SimulateDmlController",
+      "file": "src/Controllers/Import/SimulateDmlController.php",
+      "variants": [
+        "/import/simulate-dml"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/license",
+      "path": "/license",
+      "methods": [
+        "GET"
+      ],
+      "controller": "LicenseController",
+      "file": "src/Controllers/LicenseController.php",
+      "variants": [
+        "/license"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/lint",
+      "path": "/lint",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "LintController",
+      "file": "src/Controllers/LintController.php",
+      "variants": [
+        "/lint"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/logout",
+      "path": "/logout",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "LogoutController",
+      "file": "src/Controllers/LogoutController.php",
+      "variants": [
+        "/logout"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/messages",
+      "path": "/messages",
+      "methods": [
+        "GET"
+      ],
+      "controller": "JavaScriptMessagesController",
+      "file": "src/Controllers/JavaScriptMessagesController.php",
+      "variants": [
+        "/messages"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/navigation",
+      "path": "/navigation",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "NavigationController",
+      "file": "src/Controllers/NavigationController.php",
+      "variants": [
+        "/navigation"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/navigation/update-width",
+      "path": "/navigation/update-width",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Navigation/UpdateNavWidthConfigController",
+      "file": "src/Controllers/Navigation/UpdateNavWidthConfigController.php",
+      "variants": [
+        "/navigation/update-width"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization",
+      "path": "/normalization",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Normalization/MainController",
+      "file": "src/Controllers/Normalization/MainController.php",
+      "variants": [
+        "/normalization"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/1nf/step1",
+      "path": "/normalization/1nf/step1",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/FirstNormalForm/FirstStepController",
+      "file": "src/Controllers/Normalization/FirstNormalForm/FirstStepController.php",
+      "variants": [
+        "/normalization/1nf/step1"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/1nf/step2",
+      "path": "/normalization/1nf/step2",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/FirstNormalForm/SecondStepController",
+      "file": "src/Controllers/Normalization/FirstNormalForm/SecondStepController.php",
+      "variants": [
+        "/normalization/1nf/step2"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/1nf/step3",
+      "path": "/normalization/1nf/step3",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/FirstNormalForm/ThirdStepController",
+      "file": "src/Controllers/Normalization/FirstNormalForm/ThirdStepController.php",
+      "variants": [
+        "/normalization/1nf/step3"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/1nf/step4",
+      "path": "/normalization/1nf/step4",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/FirstNormalForm/FourthStepController",
+      "file": "src/Controllers/Normalization/FirstNormalForm/FourthStepController.php",
+      "variants": [
+        "/normalization/1nf/step4"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/2nf/create-new-tables",
+      "path": "/normalization/2nf/create-new-tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/SecondNormalForm/CreateNewTablesController",
+      "file": "src/Controllers/Normalization/SecondNormalForm/CreateNewTablesController.php",
+      "variants": [
+        "/normalization/2nf/create-new-tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/2nf/new-tables",
+      "path": "/normalization/2nf/new-tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/SecondNormalForm/NewTablesController",
+      "file": "src/Controllers/Normalization/SecondNormalForm/NewTablesController.php",
+      "variants": [
+        "/normalization/2nf/new-tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/2nf/step1",
+      "path": "/normalization/2nf/step1",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/SecondNormalForm/FirstStepController",
+      "file": "src/Controllers/Normalization/SecondNormalForm/FirstStepController.php",
+      "variants": [
+        "/normalization/2nf/step1"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/3nf/create-new-tables",
+      "path": "/normalization/3nf/create-new-tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/ThirdNormalForm/CreateNewTablesController",
+      "file": "src/Controllers/Normalization/ThirdNormalForm/CreateNewTablesController.php",
+      "variants": [
+        "/normalization/3nf/create-new-tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/3nf/new-tables",
+      "path": "/normalization/3nf/new-tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/ThirdNormalForm/NewTablesController",
+      "file": "src/Controllers/Normalization/ThirdNormalForm/NewTablesController.php",
+      "variants": [
+        "/normalization/3nf/new-tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/3nf/step1",
+      "path": "/normalization/3nf/step1",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/ThirdNormalForm/FirstStepController",
+      "file": "src/Controllers/Normalization/ThirdNormalForm/FirstStepController.php",
+      "variants": [
+        "/normalization/3nf/step1"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/add-new-primary",
+      "path": "/normalization/add-new-primary",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/AddNewPrimaryController",
+      "file": "src/Controllers/Normalization/AddNewPrimaryController.php",
+      "variants": [
+        "/normalization/add-new-primary"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/create-new-column",
+      "path": "/normalization/create-new-column",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/CreateNewColumnController",
+      "file": "src/Controllers/Normalization/CreateNewColumnController.php",
+      "variants": [
+        "/normalization/create-new-column"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/get-columns",
+      "path": "/normalization/get-columns",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/GetColumnsController",
+      "file": "src/Controllers/Normalization/GetColumnsController.php",
+      "variants": [
+        "/normalization/get-columns"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/move-repeating-group",
+      "path": "/normalization/move-repeating-group",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/MoveRepeatingGroup",
+      "file": "src/Controllers/Normalization/MoveRepeatingGroup.php",
+      "variants": [
+        "/normalization/move-repeating-group"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/normalization/partial-dependencies",
+      "path": "/normalization/partial-dependencies",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Normalization/PartialDependenciesController",
+      "file": "src/Controllers/Normalization/PartialDependenciesController.php",
+      "variants": [
+        "/normalization/partial-dependencies"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/phpinfo",
+      "path": "/phpinfo",
+      "methods": [
+        "GET"
+      ],
+      "controller": "PhpInfoController",
+      "file": "src/Controllers/PhpInfoController.php",
+      "variants": [
+        "/phpinfo"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/export",
+      "path": "/preferences/export",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/ExportController",
+      "file": "src/Controllers/Preferences/ExportController.php",
+      "variants": [
+        "/preferences/export"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/features",
+      "path": "/preferences/features",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/FeaturesController",
+      "file": "src/Controllers/Preferences/FeaturesController.php",
+      "variants": [
+        "/preferences/features"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/import",
+      "path": "/preferences/import",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/ImportController",
+      "file": "src/Controllers/Preferences/ImportController.php",
+      "variants": [
+        "/preferences/import"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/main-panel",
+      "path": "/preferences/main-panel",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/MainPanelController",
+      "file": "src/Controllers/Preferences/MainPanelController.php",
+      "variants": [
+        "/preferences/main-panel"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/manage",
+      "path": "/preferences/manage",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/ManageController",
+      "file": "src/Controllers/Preferences/ManageController.php",
+      "variants": [
+        "/preferences/manage"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/navigation",
+      "path": "/preferences/navigation",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/NavigationController",
+      "file": "src/Controllers/Preferences/NavigationController.php",
+      "variants": [
+        "/preferences/navigation"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/sql",
+      "path": "/preferences/sql",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/SqlController",
+      "file": "src/Controllers/Preferences/SqlController.php",
+      "variants": [
+        "/preferences/sql"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/preferences/two-factor",
+      "path": "/preferences/two-factor",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Preferences/TwoFactorController",
+      "file": "src/Controllers/Preferences/TwoFactorController.php",
+      "variants": [
+        "/preferences/two-factor"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/schema-export",
+      "path": "/schema-export",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "SchemaExportController",
+      "file": "src/Controllers/SchemaExportController.php",
+      "variants": [
+        "/schema-export"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/binlog",
+      "path": "/server/binlog",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/BinlogController",
+      "file": "src/Controllers/Server/BinlogController.php",
+      "variants": [
+        "/server/binlog"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/collations",
+      "path": "/server/collations",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/CollationsController",
+      "file": "src/Controllers/Server/CollationsController.php",
+      "variants": [
+        "/server/collations"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/databases",
+      "path": "/server/databases",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/DatabasesController",
+      "file": "src/Controllers/Server/DatabasesController.php",
+      "variants": [
+        "/server/databases"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/databases/create",
+      "path": "/server/databases/create",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Databases/CreateController",
+      "file": "src/Controllers/Server/Databases/CreateController.php",
+      "variants": [
+        "/server/databases/create"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/databases/destroy",
+      "path": "/server/databases/destroy",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Databases/DestroyController",
+      "file": "src/Controllers/Server/Databases/DestroyController.php",
+      "variants": [
+        "/server/databases/destroy"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/engines",
+      "path": "/server/engines",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/EnginesController",
+      "file": "src/Controllers/Server/EnginesController.php",
+      "variants": [
+        "/server/engines"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/engines/{engine}[/{page}]",
+      "path": "/server/engines/{engine}[/{page}]",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/ShowEngineController",
+      "file": "src/Controllers/Server/ShowEngineController.php",
+      "variants": [
+        "/server/engines/{engine}",
+        "/server/engines/{engine}/{page}"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/export",
+      "path": "/server/export",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/ExportController",
+      "file": "src/Controllers/Server/ExportController.php",
+      "variants": [
+        "/server/export"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/import",
+      "path": "/server/import",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/ImportController",
+      "file": "src/Controllers/Server/ImportController.php",
+      "variants": [
+        "/server/import"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/plugins",
+      "path": "/server/plugins",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/PluginsController",
+      "file": "src/Controllers/Server/PluginsController.php",
+      "variants": [
+        "/server/plugins"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/privileges",
+      "path": "/server/privileges",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/PrivilegesController",
+      "file": "src/Controllers/Server/PrivilegesController.php",
+      "variants": [
+        "/server/privileges"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/privileges/account-lock",
+      "path": "/server/privileges/account-lock",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Privileges/AccountLockController",
+      "file": "src/Controllers/Server/Privileges/AccountLockController.php",
+      "variants": [
+        "/server/privileges/account-lock"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/privileges/account-unlock",
+      "path": "/server/privileges/account-unlock",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Privileges/AccountUnlockController",
+      "file": "src/Controllers/Server/Privileges/AccountUnlockController.php",
+      "variants": [
+        "/server/privileges/account-unlock"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/replication",
+      "path": "/server/replication",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/ReplicationController",
+      "file": "src/Controllers/Server/ReplicationController.php",
+      "variants": [
+        "/server/replication"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/sql",
+      "path": "/server/sql",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/SqlController",
+      "file": "src/Controllers/Server/SqlController.php",
+      "variants": [
+        "/server/sql"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status",
+      "path": "/server/status",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/Status/StatusController",
+      "file": "src/Controllers/Server/Status/StatusController.php",
+      "variants": [
+        "/server/status"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/advisor",
+      "path": "/server/status/advisor",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/Status/AdvisorController",
+      "file": "src/Controllers/Server/Status/AdvisorController.php",
+      "variants": [
+        "/server/status/advisor"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/monitor",
+      "path": "/server/status/monitor",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/Status/MonitorController",
+      "file": "src/Controllers/Server/Status/MonitorController.php",
+      "variants": [
+        "/server/status/monitor"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/monitor/chart",
+      "path": "/server/status/monitor/chart",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Monitor/ChartingDataController",
+      "file": "src/Controllers/Server/Status/Monitor/ChartingDataController.php",
+      "variants": [
+        "/server/status/monitor/chart"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/monitor/general-log",
+      "path": "/server/status/monitor/general-log",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Monitor/GeneralLogController",
+      "file": "src/Controllers/Server/Status/Monitor/GeneralLogController.php",
+      "variants": [
+        "/server/status/monitor/general-log"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/monitor/log-vars",
+      "path": "/server/status/monitor/log-vars",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Monitor/LogVarsController",
+      "file": "src/Controllers/Server/Status/Monitor/LogVarsController.php",
+      "variants": [
+        "/server/status/monitor/log-vars"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/monitor/query",
+      "path": "/server/status/monitor/query",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Monitor/QueryAnalyzerController",
+      "file": "src/Controllers/Server/Status/Monitor/QueryAnalyzerController.php",
+      "variants": [
+        "/server/status/monitor/query"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/monitor/slow-log",
+      "path": "/server/status/monitor/slow-log",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Monitor/SlowLogController",
+      "file": "src/Controllers/Server/Status/Monitor/SlowLogController.php",
+      "variants": [
+        "/server/status/monitor/slow-log"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/processes",
+      "path": "/server/status/processes",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/Status/ProcessesController",
+      "file": "src/Controllers/Server/Status/ProcessesController.php",
+      "variants": [
+        "/server/status/processes"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/processes/kill/{id:\\d+}",
+      "path": "/server/status/processes/kill/{id:\\d+}",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Processes/KillController",
+      "file": "src/Controllers/Server/Status/Processes/KillController.php",
+      "variants": [
+        "/server/status/processes/kill/{id}"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/processes/refresh",
+      "path": "/server/status/processes/refresh",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Status/Processes/RefreshController",
+      "file": "src/Controllers/Server/Status/Processes/RefreshController.php",
+      "variants": [
+        "/server/status/processes/refresh"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/queries",
+      "path": "/server/status/queries",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/Status/QueriesController",
+      "file": "src/Controllers/Server/Status/QueriesController.php",
+      "variants": [
+        "/server/status/queries"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/status/variables",
+      "path": "/server/status/variables",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/Status/VariablesController",
+      "file": "src/Controllers/Server/Status/VariablesController.php",
+      "variants": [
+        "/server/status/variables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/user-groups",
+      "path": "/server/user-groups",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Server/UserGroupsController",
+      "file": "src/Controllers/Server/UserGroupsController.php",
+      "variants": [
+        "/server/user-groups"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/user-groups/edit-form",
+      "path": "/server/user-groups/edit-form",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/UserGroupsFormController",
+      "file": "src/Controllers/Server/UserGroupsFormController.php",
+      "variants": [
+        "/server/user-groups/edit-form"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/variables",
+      "path": "/server/variables",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/VariablesController",
+      "file": "src/Controllers/Server/VariablesController.php",
+      "variants": [
+        "/server/variables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/variables/get/{name}",
+      "path": "/server/variables/get/{name}",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Server/Variables/GetVariableController",
+      "file": "src/Controllers/Server/Variables/GetVariableController.php",
+      "variants": [
+        "/server/variables/get/{name}"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/server/variables/set/{name}",
+      "path": "/server/variables/set/{name}",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Server/Variables/SetVariableController",
+      "file": "src/Controllers/Server/Variables/SetVariableController.php",
+      "variants": [
+        "/server/variables/set/{name}"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sql",
+      "path": "/sql",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Sql/SqlController",
+      "file": "src/Controllers/Sql/SqlController.php",
+      "variants": [
+        "/sql"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sql/get-default-fk-check-value",
+      "path": "/sql/get-default-fk-check-value",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Sql/DefaultForeignKeyCheckValueController",
+      "file": "src/Controllers/Sql/DefaultForeignKeyCheckValueController.php",
+      "variants": [
+        "/sql/get-default-fk-check-value"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sql/get-enum-values",
+      "path": "/sql/get-enum-values",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Sql/EnumValuesController",
+      "file": "src/Controllers/Sql/EnumValuesController.php",
+      "variants": [
+        "/sql/get-enum-values"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sql/get-relational-values",
+      "path": "/sql/get-relational-values",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Sql/RelationalValuesController",
+      "file": "src/Controllers/Sql/RelationalValuesController.php",
+      "variants": [
+        "/sql/get-relational-values"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sql/get-set-values",
+      "path": "/sql/get-set-values",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Sql/SetValuesController",
+      "file": "src/Controllers/Sql/SetValuesController.php",
+      "variants": [
+        "/sql/get-set-values"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sql/set-column-preferences",
+      "path": "/sql/set-column-preferences",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Sql/ColumnPreferencesController",
+      "file": "src/Controllers/Sql/ColumnPreferencesController.php",
+      "variants": [
+        "/sql/set-column-preferences"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/sync-favorite-tables",
+      "path": "/sync-favorite-tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "SyncFavoriteTablesController",
+      "file": "src/Controllers/SyncFavoriteTablesController.php",
+      "variants": [
+        "/sync-favorite-tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/add-field",
+      "path": "/table/add-field",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/AddFieldController",
+      "file": "src/Controllers/Table/AddFieldController.php",
+      "variants": [
+        "/table/add-field"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/change",
+      "path": "/table/change",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/ChangeController",
+      "file": "src/Controllers/Table/ChangeController.php",
+      "variants": [
+        "/table/change"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/change/rows",
+      "path": "/table/change/rows",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/ChangeRowsController",
+      "file": "src/Controllers/Table/ChangeRowsController.php",
+      "variants": [
+        "/table/change/rows"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/chart",
+      "path": "/table/chart",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/ChartController",
+      "file": "src/Controllers/Table/ChartController.php",
+      "variants": [
+        "/table/chart"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/create",
+      "path": "/table/create",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/CreateController",
+      "file": "src/Controllers/Table/CreateController.php",
+      "variants": [
+        "/table/create"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/delete/confirm",
+      "path": "/table/delete/confirm",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/DeleteConfirmController",
+      "file": "src/Controllers/Table/DeleteConfirmController.php",
+      "variants": [
+        "/table/delete/confirm"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/delete/rows",
+      "path": "/table/delete/rows",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/DeleteRowsController",
+      "file": "src/Controllers/Table/DeleteRowsController.php",
+      "variants": [
+        "/table/delete/rows"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/export",
+      "path": "/table/export",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/ExportController",
+      "file": "src/Controllers/Table/ExportController.php",
+      "variants": [
+        "/table/export"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/export/rows",
+      "path": "/table/export/rows",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/ExportRowsController",
+      "file": "src/Controllers/Table/ExportRowsController.php",
+      "variants": [
+        "/table/export/rows"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/find-replace",
+      "path": "/table/find-replace",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/FindReplaceController",
+      "file": "src/Controllers/Table/FindReplaceController.php",
+      "variants": [
+        "/table/find-replace"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/get-field",
+      "path": "/table/get-field",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/GetFieldController",
+      "file": "src/Controllers/Table/GetFieldController.php",
+      "variants": [
+        "/table/get-field"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/gis-visualization",
+      "path": "/table/gis-visualization",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/GisVisualizationController",
+      "file": "src/Controllers/Table/GisVisualizationController.php",
+      "variants": [
+        "/table/gis-visualization"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/import",
+      "path": "/table/import",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/ImportController",
+      "file": "src/Controllers/Table/ImportController.php",
+      "variants": [
+        "/table/import"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/indexes",
+      "path": "/table/indexes",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/IndexesController",
+      "file": "src/Controllers/Table/IndexesController.php",
+      "variants": [
+        "/table/indexes"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/indexes/rename",
+      "path": "/table/indexes/rename",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/IndexRenameController",
+      "file": "src/Controllers/Table/IndexRenameController.php",
+      "variants": [
+        "/table/indexes/rename"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/maintenance/analyze",
+      "path": "/table/maintenance/analyze",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Maintenance/AnalyzeController",
+      "file": "src/Controllers/Table/Maintenance/AnalyzeController.php",
+      "variants": [
+        "/table/maintenance/analyze"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/maintenance/check",
+      "path": "/table/maintenance/check",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Maintenance/CheckController",
+      "file": "src/Controllers/Table/Maintenance/CheckController.php",
+      "variants": [
+        "/table/maintenance/check"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/maintenance/checksum",
+      "path": "/table/maintenance/checksum",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Maintenance/ChecksumController",
+      "file": "src/Controllers/Table/Maintenance/ChecksumController.php",
+      "variants": [
+        "/table/maintenance/checksum"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/maintenance/optimize",
+      "path": "/table/maintenance/optimize",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Maintenance/OptimizeController",
+      "file": "src/Controllers/Table/Maintenance/OptimizeController.php",
+      "variants": [
+        "/table/maintenance/optimize"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/maintenance/repair",
+      "path": "/table/maintenance/repair",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Maintenance/RepairController",
+      "file": "src/Controllers/Table/Maintenance/RepairController.php",
+      "variants": [
+        "/table/maintenance/repair"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/operations",
+      "path": "/table/operations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Operations/TableController",
+      "file": "src/Controllers/Operations/TableController.php",
+      "variants": [
+        "/table/operations"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/analyze",
+      "path": "/table/partition/analyze",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/AnalyzeController",
+      "file": "src/Controllers/Table/Partition/AnalyzeController.php",
+      "variants": [
+        "/table/partition/analyze"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/check",
+      "path": "/table/partition/check",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/CheckController",
+      "file": "src/Controllers/Table/Partition/CheckController.php",
+      "variants": [
+        "/table/partition/check"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/drop",
+      "path": "/table/partition/drop",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/DropController",
+      "file": "src/Controllers/Table/Partition/DropController.php",
+      "variants": [
+        "/table/partition/drop"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/optimize",
+      "path": "/table/partition/optimize",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/OptimizeController",
+      "file": "src/Controllers/Table/Partition/OptimizeController.php",
+      "variants": [
+        "/table/partition/optimize"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/rebuild",
+      "path": "/table/partition/rebuild",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/RebuildController",
+      "file": "src/Controllers/Table/Partition/RebuildController.php",
+      "variants": [
+        "/table/partition/rebuild"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/repair",
+      "path": "/table/partition/repair",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/RepairController",
+      "file": "src/Controllers/Table/Partition/RepairController.php",
+      "variants": [
+        "/table/partition/repair"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/partition/truncate",
+      "path": "/table/partition/truncate",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Partition/TruncateController",
+      "file": "src/Controllers/Table/Partition/TruncateController.php",
+      "variants": [
+        "/table/partition/truncate"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/privileges",
+      "path": "/table/privileges",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Table/PrivilegesController",
+      "file": "src/Controllers/Table/PrivilegesController.php",
+      "variants": [
+        "/table/privileges"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/recent-favorite",
+      "path": "/table/recent-favorite",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/RecentFavoriteController",
+      "file": "src/Controllers/Table/RecentFavoriteController.php",
+      "variants": [
+        "/table/recent-favorite"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/relation",
+      "path": "/table/relation",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/RelationController",
+      "file": "src/Controllers/Table/RelationController.php",
+      "variants": [
+        "/table/relation"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/replace",
+      "path": "/table/replace",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/ReplaceController",
+      "file": "src/Controllers/Table/ReplaceController.php",
+      "variants": [
+        "/table/replace"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/search",
+      "path": "/table/search",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/SearchController",
+      "file": "src/Controllers/Table/SearchController.php",
+      "variants": [
+        "/table/search"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/sql",
+      "path": "/table/sql",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/SqlController",
+      "file": "src/Controllers/Table/SqlController.php",
+      "variants": [
+        "/table/sql"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure",
+      "path": "/table/structure",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/StructureController",
+      "file": "src/Controllers/Table/StructureController.php",
+      "variants": [
+        "/table/structure"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/add-key",
+      "path": "/table/structure/add-key",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/AddKeyController",
+      "file": "src/Controllers/Table/Structure/AddKeyController.php",
+      "variants": [
+        "/table/structure/add-key"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/browse",
+      "path": "/table/structure/browse",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/BrowseController",
+      "file": "src/Controllers/Table/Structure/BrowseController.php",
+      "variants": [
+        "/table/structure/browse"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/central-columns-add",
+      "path": "/table/structure/central-columns-add",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/CentralColumnsAddController",
+      "file": "src/Controllers/Table/Structure/CentralColumnsAddController.php",
+      "variants": [
+        "/table/structure/central-columns-add"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/central-columns-remove",
+      "path": "/table/structure/central-columns-remove",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/CentralColumnsRemoveController",
+      "file": "src/Controllers/Table/Structure/CentralColumnsRemoveController.php",
+      "variants": [
+        "/table/structure/central-columns-remove"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/change",
+      "path": "/table/structure/change",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/Structure/ChangeController",
+      "file": "src/Controllers/Table/Structure/ChangeController.php",
+      "variants": [
+        "/table/structure/change"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/drop",
+      "path": "/table/structure/drop",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/DropColumnController",
+      "file": "src/Controllers/Table/DropColumnController.php",
+      "variants": [
+        "/table/structure/drop"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/drop-confirm",
+      "path": "/table/structure/drop-confirm",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/DropColumnConfirmationController",
+      "file": "src/Controllers/Table/DropColumnConfirmationController.php",
+      "variants": [
+        "/table/structure/drop-confirm"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/fulltext",
+      "path": "/table/structure/fulltext",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/FulltextController",
+      "file": "src/Controllers/Table/Structure/FulltextController.php",
+      "variants": [
+        "/table/structure/fulltext"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/index",
+      "path": "/table/structure/index",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/AddIndexController",
+      "file": "src/Controllers/Table/Structure/AddIndexController.php",
+      "variants": [
+        "/table/structure/index"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/move-columns",
+      "path": "/table/structure/move-columns",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/MoveColumnsController",
+      "file": "src/Controllers/Table/Structure/MoveColumnsController.php",
+      "variants": [
+        "/table/structure/move-columns"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/partitioning",
+      "path": "/table/structure/partitioning",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/PartitioningController",
+      "file": "src/Controllers/Table/Structure/PartitioningController.php",
+      "variants": [
+        "/table/structure/partitioning"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/primary",
+      "path": "/table/structure/primary",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/PrimaryController",
+      "file": "src/Controllers/Table/Structure/PrimaryController.php",
+      "variants": [
+        "/table/structure/primary"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/reserved-word-check",
+      "path": "/table/structure/reserved-word-check",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/ReservedWordCheckController",
+      "file": "src/Controllers/Table/Structure/ReservedWordCheckController.php",
+      "variants": [
+        "/table/structure/reserved-word-check"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/save",
+      "path": "/table/structure/save",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/SaveController",
+      "file": "src/Controllers/Table/Structure/SaveController.php",
+      "variants": [
+        "/table/structure/save"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/spatial",
+      "path": "/table/structure/spatial",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/SpatialController",
+      "file": "src/Controllers/Table/Structure/SpatialController.php",
+      "variants": [
+        "/table/structure/spatial"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/structure/unique",
+      "path": "/table/structure/unique",
+      "methods": [
+        "POST"
+      ],
+      "controller": "Table/Structure/UniqueController",
+      "file": "src/Controllers/Table/Structure/UniqueController.php",
+      "variants": [
+        "/table/structure/unique"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/tracking",
+      "path": "/table/tracking",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/TrackingController",
+      "file": "src/Controllers/Table/TrackingController.php",
+      "variants": [
+        "/table/tracking"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/table/zoom-search",
+      "path": "/table/zoom-search",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Table/ZoomSearchController",
+      "file": "src/Controllers/Table/ZoomSearchController.php",
+      "variants": [
+        "/table/zoom-search"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/tables",
+      "path": "/tables",
+      "methods": [
+        "POST"
+      ],
+      "controller": "TableController",
+      "file": "src/Controllers/TableController.php",
+      "variants": [
+        "/tables"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/themes",
+      "path": "/themes",
+      "methods": [
+        "GET"
+      ],
+      "controller": "ThemesController",
+      "file": "src/Controllers/ThemesController.php",
+      "variants": [
+        "/themes"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/themes/set",
+      "path": "/themes/set",
+      "methods": [
+        "POST"
+      ],
+      "controller": "ThemeSetController",
+      "file": "src/Controllers/ThemeSetController.php",
+      "variants": [
+        "/themes/set"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/transformation/overview",
+      "path": "/transformation/overview",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Transformation/OverviewController",
+      "file": "src/Controllers/Transformation/OverviewController.php",
+      "variants": [
+        "/transformation/overview"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/transformation/wrapper",
+      "path": "/transformation/wrapper",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Transformation/WrapperController",
+      "file": "src/Controllers/Transformation/WrapperController.php",
+      "variants": [
+        "/transformation/wrapper"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/triggers",
+      "path": "/triggers",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Triggers/IndexController",
+      "file": "src/Controllers/Triggers/IndexController.php",
+      "variants": [
+        "/triggers"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/user-password",
+      "path": "/user-password",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "UserPasswordController",
+      "file": "src/Controllers/UserPasswordController.php",
+      "variants": [
+        "/user-password"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/version-check",
+      "path": "/version-check",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "VersionCheckController",
+      "file": "src/Controllers/VersionCheckController.php",
+      "variants": [
+        "/version-check"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/view/create",
+      "path": "/view/create",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "View/CreateController",
+      "file": "src/Controllers/View/CreateController.php",
+      "variants": [
+        "/view/create"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/view/operations",
+      "path": "/view/operations",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Operations/ViewController",
+      "file": "src/Controllers/Operations/ViewController.php",
+      "variants": [
+        "/view/operations"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "setup:/",
+      "path": "/",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Setup/MainController",
+      "file": "src/Controllers/Setup/MainController.php",
+      "variants": [
+        "/"
+      ],
+      "scope": "setup"
+    },
+    {
+      "key": "setup:/setup",
+      "path": "/setup",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Setup/MainController",
+      "file": "src/Controllers/Setup/MainController.php",
+      "variants": [
+        "/setup"
+      ],
+      "scope": "setup"
+    },
+    {
+      "key": "setup:/setup/show-config",
+      "path": "/setup/show-config",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Setup/ShowConfigController",
+      "file": "src/Controllers/Setup/ShowConfigController.php",
+      "variants": [
+        "/setup/show-config"
+      ],
+      "scope": "setup"
+    },
+    {
+      "key": "setup:/setup/validate",
+      "path": "/setup/validate",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Setup/ValidateController",
+      "file": "src/Controllers/Setup/ValidateController.php",
+      "variants": [
+        "/setup/validate"
+      ],
+      "scope": "setup"
+    }
+  ]
+}

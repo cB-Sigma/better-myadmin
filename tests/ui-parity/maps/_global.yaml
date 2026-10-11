@@ -1,0 +1,6 @@
+# Rules for every UI parity case (merged into each tests/ui-parity/maps/<page>.yaml).
+replace:
+  # product name in product-referential strings ("Welcome to BetterMyAdmin", the home card)
+  - ours: BetterMyAdmin
+    pma: phpMyAdmin
+    exception: X33

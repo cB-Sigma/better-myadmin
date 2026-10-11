@@ -159,10 +159,10 @@ function branchQuery(b: Branch): string {
 const t1 = ['m1nav_a', 'tables', 't1']
 
 const CASES: Case[] = [
-  { name: 'databases level with grouping and the New node', state: {} },
+  { name: 'databases level with grouping and the New node [p01-a333a2]', state: {} },
   { name: 'expand a database with tables, views, routines and events', branch: { path: ['m1nav_a'] } },
   {
-    name: 'expand Tables: natural order, "__" groups one level deep',
+    name: 'expand Tables: natural order, "__" groups one level deep [p01-a333a2]',
     branch: { path: ['m1nav_a', 'tables'], pos2Name: 'tables', pos2Value: 0 },
   },
   { name: 'expand Views', branch: { path: ['m1nav_a', 'views'], pos2Name: 'views', pos2Value: 0 } },
@@ -180,7 +180,7 @@ const CASES: Case[] = [
     branch: { path: t1, pos2Name: 'tables', pos2Value: 0 },
   },
   {
-    name: 'expand Columns: key, type, truncated default, nullable',
+    name: 'expand Columns: key, type, truncated default, nullable [p01-60ce39]',
     branch: { path: [...t1, 'columns'], pos2Name: 'tables', pos2Value: 0, pos3Name: 'columns', pos3Value: 0 },
   },
   {
@@ -198,13 +198,13 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'a database whose only container is Tables shows the tables directly',
+    name: 'a database whose only container is Tables shows the tables directly [p01-5523b6]',
     branch: { path: ['m1nav_b_1'] },
   },
   { name: 'a database with only views', branch: { path: ['m1nav_c'] } },
   { name: 'an empty database', branch: { path: ['m1nav_b_2'] }, empty: true },
   {
-    name: '120 tables: item filter, page selector at MaxNavigationItems',
+    name: '120 tables: item filter, page selector at MaxNavigationItems [p01-41d435 p01-79ae51]',
     branch: { path: ['m1nav_big'] },
   },
   {
@@ -240,16 +240,16 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'reload keeps the expanded branches',
+    name: 'reload keeps the expanded branches [p01-b7e594]',
     state: { reload: true, paths: [{ aPath: ['m1nav_a'], vPath: ['m1nav', 'a'] }] },
   },
   {
-    name: 'FirstLevelNavigationItems=2 pages by prefix and shows the db filter at 3',
+    name: 'FirstLevelNavigationItems=2 pages by prefix and shows the db filter at 3 [p01-41d435 p01-79ae51]',
     cfg: { FirstLevelNavigationItems: 2, NavigationTreeDisplayDbFilterMinimum: 3 },
     state: { pos: 2 },
   },
   {
-    name: 'initial page computed from the current database',
+    name: 'initial page computed from the current database [p01-41d435]',
     cfg: { FirstLevelNavigationItems: 2 },
     state: { db: 'performance_schema' },
   },
@@ -264,12 +264,12 @@ const CASES: Case[] = [
     branch: { path: ['m1nav_a', 'tables'], pos2Name: 'tables', pos2Value: 0 },
   },
   {
-    name: 'several table separators and two group levels',
+    name: 'several table separators and two group levels [p01-a333a2]',
     cfg: { NavigationTreeTableSeparator: ['__', '1'], NavigationTreeTableLevel: 2 },
     branch: { path: ['m1nav_a', 'tables'], pos2Name: 'tables', pos2Value: 0 },
   },
   {
-    name: 'NaturalOrder off, second table icon, default tab Structure',
+    name: 'NaturalOrder off, second table icon, default tab Structure [p01-d23a2e]',
     cfg: { NaturalOrder: false, NavigationTreeDefaultTabTable2: 'browse', DefaultTabTable: 'structure' },
     branch: { path: ['m1nav_a', 'tables'], pos2Name: 'tables', pos2Value: 0 },
   },
@@ -289,7 +289,7 @@ const CASES: Case[] = [
   },
   { name: 'another database separator', cfg: { NavigationTreeDbSeparator: 'nav_' }, state: {} },
   {
-    name: 'item filter at NavigationTreeDisplayItemFilterMinimum',
+    name: 'item filter at NavigationTreeDisplayItemFilterMinimum [p01-79ae51]',
     cfg: { NavigationTreeDisplayItemFilterMinimum: 2, MaxNavigationItems: 3 },
     branch: { path: ['m1nav_a', 'tables'], pos2Name: 'tables', pos2Value: 3 },
   },

@@ -1,0 +1,223 @@
+import { mkdirSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { type Browser, type Locator, type Page, expect, test } from '@playwright/test'
+import mysql from 'mysql2/promise'
+import {
+  type CaptureOptions,
+  type Control,
+  SCOPES,
+  SCOPE_EXCLUDE,
+  type ScopeName,
+  captureControls,
+  settle,
+} from './capture.ts'
+import { type DiffResult, diffControls, formatDiff, loadMap, validateMap } from './diff.ts'
+import { type App, ROOT, login, pmaReachable, pmaUrl } from './env.ts'
+
+const repo = join(dirname(fileURLToPath(import.meta.url)), '../../..')
+export const GALLERY_DIR = join(repo, '.data/ui-parity')
+
+/** An action expressed once and run in both apps, located by accessible name inside the scope. */
+export type Action =
+  | { click: string }
+  | { check: string }
+  | { uncheck: string }
+  | { fill: [label: string, text: string] }
+  | { select: [label: string, option: string] }
+  | { press: string }
+  | { hover: string }
+  | { wait: number }
+
+export type PageFn = (page: Page) => Promise<void>
+
+export interface Step {
+  /** shown in the report and the gallery (also the `step` of map selectors) */
+  name: string
+  /** the same action in both apps … */
+  do?: Action | Action[]
+  /** … or one per app (functions get the app's page) */
+  pma?: Action | Action[] | PageFn
+  ours?: Action | Action[] | PageFn
+  /** do not diff after this step (e.g. it only prepares the next one) */
+  noCapture?: boolean
+}
+
+export type Scope = ScopeName | { pma: string; ours: string } | string
+
+export interface PageSpec {
+  /** phpMyAdmin route (`/server/sql`) and query parameters (server=1 is added) */
+  pma: { route: string; params?: Record<string, string> }
+  /** our path (`/s/1/sql`) */
+  ours: { path: string }
+  /** region to compare (default `content`, phpMyAdmin's #page_content) */
+  scope?: Scope
+  /** further selectors to leave out (both apps) */
+  exclude?: string[]
+  /** map file name in tests/ui-parity/maps (default: the case name) */
+  map?: string
+  /** log in first (default true) */
+  auth?: boolean
+  /** SQL run as root before the case (fixtures beyond global-setup's) */
+  sql?: string
+  /** runs after navigation and settle, before the first capture */
+  setup?: (p: { pma: Page; ours: Page }) => Promise<void>
+  /** selector to wait for after navigation (per app) */
+  ready?: { pma?: string; ours?: string }
+  interactions?: Step[]
+  /**
+   * Known unmapped differences: the case is marked test.fail() with this TODO so it turns red as
+   * soon as the page matches (then delete `known` and lock it in).
+   */
+  known?: string
+}
+
+const scopeSel = (s: Scope | undefined, app: App): string => {
+  if (s === undefined) return SCOPES.content
+  if (typeof s === 'object') return s[app]
+  return s in SCOPES ? SCOPES[s as ScopeName] : s
+}
+
+function target(page: Page, scope: string, name: string): Locator {
+  const root = page.locator(scope).first()
+  const opt = { name, exact: true }
+  return root
+    .getByRole('button', opt)
+    .or(root.getByRole('link', opt))
+    .or(root.getByRole('tab', opt))
+    .or(root.getByRole('menuitem', opt))
+    .or(root.getByRole('checkbox', opt))
+    .or(root.getByRole('radio', opt))
+    .first()
+}
+
+async function runAction(page: Page, scope: string, a: Action): Promise<void> {
+  const root = page.locator(scope).first()
+  if ('click' in a) await target(page, scope, a.click).click()
+  else if ('check' in a) await root.getByLabel(a.check, { exact: true }).first().check()
+  else if ('uncheck' in a) await root.getByLabel(a.uncheck, { exact: true }).first().uncheck()
+  else if ('fill' in a) {
+    // typed key by key: phpMyAdmin's filters listen to keyup, not input
+    const box = root.getByLabel(a.fill[0], { exact: true }).first()
+    await box.fill('')
+    await box.pressSequentially(a.fill[1])
+  } else if ('select' in a)
+    await root.getByLabel(a.select[0], { exact: true }).first().selectOption({ label: a.select[1] })
+  else if ('press' in a) await page.keyboard.press(a.press)
+  else if ('hover' in a) await target(page, scope, a.hover).hover()
+  else if ('wait' in a) await page.waitForTimeout(a.wait)
+}
+
+async function runStep(page: Page, app: App, scope: string, s: Step): Promise<void> {
+  const what = s[app] ?? s.do
+  if (what === undefined) return
+  if (typeof what === 'function') await what(page)
+  else for (const a of Array.isArray(what) ? what : [what]) await runAction(page, scope, a)
+}
+
+export interface StepRecord {
+  step: string
+  pma: { url: string; shot: string; controls: Control[] }
+  ours: { url: string; shot: string; controls: Control[] }
+  diff: DiffResult
+}
+
+async function openApp(browser: Browser, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
+  const ctx = await browser.newContext({ baseURL })
+  const page = await ctx.newPage()
+  if (spec.auth !== false) await login(page, app, baseURL)
+  else await ctx.clearCookies()
+  const url = app === 'pma' ? pmaUrl(spec.pma.route, spec.pma.params) : `${baseURL}${spec.ours.path}`
+  await page.goto(url)
+  const ready = spec.ready?.[app]
+  if (ready !== undefined) await expect(page.locator(ready).first()).toBeVisible({ timeout: 30_000 })
+  else await expect(page.locator(scopeSel(spec.scope, app)).first()).toBeVisible({ timeout: 30_000 })
+  await settle(page)
+  return page
+}
+
+/**
+ * One UI parity case: opens the page in both apps, diffs their controls, then performs each
+ * interaction in both and diffs again. Unmapped differences fail the test; screenshots and the
+ * captured controls go to .data/ui-parity/<name>/.
+ */
+export function pageParity(name: string, spec: PageSpec): void {
+  test(name, async ({ browser, baseURL }, info) => {
+    test.skip(!(await pmaReachable()), 'reference phpMyAdmin not reachable (BMA_PARITY_PMA_URL)')
+    if (spec.known !== undefined) {
+      test.fail(true, `TODO(ui-parity): ${spec.known}`)
+      info.annotations.push({ type: 'todo', description: spec.known })
+    }
+    const map = loadMap(spec.map ?? name)
+    const problems = validateMap(map)
+    if (problems.length > 0)
+      throw new Error(`tests/ui-parity/maps/${spec.map ?? name}.yaml:\n  ${problems.join('\n  ')}`)
+    if (spec.sql !== undefined) {
+      const c = await mysql.createConnection({ ...ROOT, multipleStatements: true })
+      await c.query(spec.sql)
+      await c.end()
+    }
+    const base = baseURL ?? ''
+    const pages = {
+      pma: await openApp(browser, base, 'pma', spec),
+      ours: await openApp(browser, base, 'ours', spec),
+    }
+    await spec.setup?.(pages)
+    const dir = join(GALLERY_DIR, slug(name))
+    mkdirSync(dir, { recursive: true })
+    const opts = (app: App): CaptureOptions => ({
+      scope: scopeSel(spec.scope, app),
+      exclude: [...(SCOPE_EXCLUDE[(spec.scope ?? 'content') as ScopeName] ?? []), ...(spec.exclude ?? [])],
+    })
+    const records: StepRecord[] = []
+    const report: string[] = []
+    const capture = async (step: string) => {
+      const side = async (app: App) => {
+        const page = pages[app]
+        await settle(page)
+        const shot = `${String(records.length).padStart(2, '0')}-${slug(step)}-${app}.png`
+        await page.screenshot({ path: join(dir, shot), fullPage: true })
+        return { url: page.url(), shot, controls: await captureControls(page, opts(app)) }
+      }
+      const p = await side('pma')
+      const o = await side('ours')
+      const diff = diffControls(p.controls, o.controls, map, step)
+      records.push({ step, pma: p, ours: o, diff })
+      report.push(formatDiff(name, step, diff))
+      for (const w of diff.warnings) report.push(`  (warning) ${w}`)
+    }
+    try {
+      await capture('initial')
+      for (const s of spec.interactions ?? []) {
+        await runStep(pages.pma, 'pma', scopeSel(spec.scope, 'pma'), s)
+        await runStep(pages.ours, 'ours', scopeSel(spec.scope, 'ours'), s)
+        if (s.noCapture !== true) await capture(s.name)
+      }
+    } finally {
+      writeFileSync(
+        join(dir, 'result.json'),
+        JSON.stringify({ name, spec: specSummary(spec), records }, null, 1),
+      )
+      await pages.pma.context().close()
+      await pages.ours.context().close()
+    }
+    const text = report.join('\n')
+    await info.attach('ui-parity.txt', { body: text, contentType: 'text/plain' })
+    const total = records.reduce((n, r) => n + r.diff.differences.length, 0)
+    expect(total, text).toBe(0)
+  })
+}
+
+const specSummary = (s: PageSpec) => ({
+  pma: s.pma,
+  ours: s.ours,
+  scope: s.scope ?? 'content',
+  known: s.known,
+  steps: (s.interactions ?? []).map((i) => i.name),
+})
+
+export const slug = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
