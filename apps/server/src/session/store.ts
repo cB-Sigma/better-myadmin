@@ -11,11 +11,9 @@ export interface ServerLogin {
   /** Arbitrary server host/port when AllowArbitraryServer was used. */
   host?: string
   port?: number
+  /** DefaultConnectionCollation chosen on the home page (session-level user preference). */
   collation?: string
-  /**
-   * Per-server session cache (pma: SessionCache, `$_SESSION['cache']['server_N']`): facts such as
-   * `mysql_cur_user` or the SHOW GRANTS analysis. Dropped with the login.
-   */
+  /** SessionCache equivalent for this server: is_superuser, binary_logs, menu-levels-*, … (pma: Utils/SessionCache.php) */
   cache?: Record<string, unknown>
 }
 
@@ -34,6 +32,16 @@ export interface SessionData {
   debugSql?: Array<{ sql: string; ms: number; label?: string }>
   /** Query history kept in the session when QueryHistoryDB is off (pma: $_SESSION['sql_history']). */
   sqlHistory?: Array<{ db: string; table: string; sqlquery: string }>
+  /** $_SESSION['profiling']: the Profiling switch is on. */
+  profiling?: boolean
+  /** SessionCache 'profiling_supported' per server index. */
+  profilingSupported?: Record<string, boolean>
+  /** Configuration-storage state owned by src/metadata/service.ts (pma: parts of $_SESSION). */
+  metadata?: Record<string, unknown>
+  /** $_SESSION['partial_logout']: shown once on the home page */
+  partialLogout?: boolean
+  /** SendErrorReports persisted by "Automatically send report next time" (until the prefs layer stores it). */
+  sendErrorReports?: 'ask' | 'always' | 'never'
 }
 
 export interface SessionStore {

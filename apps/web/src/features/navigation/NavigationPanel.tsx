@@ -26,6 +26,7 @@ import {
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { useLogout } from '../shell/UserMenu'
 import { NavTree } from './NavTree'
 import { currentScope } from './links'
 import { type NavFetchers, NavTreeStore } from './store'
@@ -289,16 +290,9 @@ function NavHeader({
   settings,
   onReload,
 }: { server: number; settings: NavSettings | undefined; onReload: () => void }) {
-  const qc = useQueryClient()
-  const logout = useMutation({
-    mutationFn: api.logout,
-    onSuccess: (r) => {
-      // pma: the logout click handler also drops the tree state (sessionStorage.clear())
-      sessionStorage.clear()
-      if (r.logoutUrl !== null) window.location.href = r.logoutUrl
-      else void qc.invalidateQueries({ queryKey: qk.auth })
-    },
-  })
+  // the shell's logout: sessionStorage cleared, then LogoutURL, the partial-logout redirect to the
+  // remaining server (LoginCookieDeleteAll = false) or the login page
+  const logout = useLogout()
   const btn = 'rounded p-1 text-fg-muted hover:bg-nav-pointer hover:text-fg'
   const icon = 'size-4'
   const logoutText = settings?.authType === 'config' ? t('Empty session data') : t('Log out')

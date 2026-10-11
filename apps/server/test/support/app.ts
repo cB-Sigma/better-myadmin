@@ -12,11 +12,16 @@ export const MYSQL = {
   password: process.env.BMA_TEST_PASSWORD ?? 'root',
 }
 
-/** A resolved config (phpMyAdmin defaults) with one test server; overrides use phpMyAdmin names. */
+/**
+ * A resolved config (phpMyAdmin defaults) with one test server; overrides use phpMyAdmin names.
+ * No local metadata store unless a test sets `DataDir` (the default ~/.bettermyadmin would be shared
+ * between runs): without pmadb the tests see phpMyAdmin's behaviour without configuration storage.
+ */
 export function testConfig(o: ConfigInput = {}, server: ServerInput = {}): AppConfig {
   return resolveConfig(
     {
       blowfish_secret: 'test-secret-test-secret-test-secret!',
+      DataDir: '',
       Servers: [{ host: MYSQL.host, port: MYSQL.port, ...server }],
     },
     o,
@@ -58,5 +63,14 @@ export function testApp(cfg = testConfig()) {
     await req('GET', '/api/auth/state')
     return req('POST', '/api/auth/login', { server: 1, username: user, password })
   }
-  return { app, deps, jar, req, login, close: () => deps.pools.closeAll() }
+  return {
+    app,
+    deps,
+    jar,
+    req,
+    login,
+    close: async () => {
+      await deps.pools.closeAll()
+    },
+  }
 }

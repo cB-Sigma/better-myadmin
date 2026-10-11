@@ -45,7 +45,7 @@ Credentials are never written anywhere else (no logs, no error reports).
 
 ## The configuration storage (pmadb)
 
-19 tables, schema from phpMyAdmin's `resources/sql/create_tables.sql`, unchanged. BetterMyAdmin discovers them via `Servers[i].pmadb` + the per-table name keys, with the same auto-detection phpMyAdmin performs when `pmadb` is set but table names are not (defaults `pma__*`). The control connection uses `controluser`/`controlpass` when present, else the logged-in user's connection (same fallback as phpMyAdmin, same consequence: the user needs privileges on `pmadb`).
+19 tables, schema from phpMyAdmin's `resources/sql/create_tables.sql`, unchanged. BetterMyAdmin discovers them via `Servers[i].pmadb` + the per-table name keys, with the same auto-detection phpMyAdmin performs when `pmadb` is set but table names are not (defaults `pma__*`; `Relation::initRelationParamsCache`: the configured `pmadb` or `phpmyadmin`, else the current database). The control connection uses `controluser`/`controlpass` (with `controlhost`/`controlport`/`control_*`) when present, else — or when the control user cannot connect — a second link with the logged-in user's credentials (same fallback as phpMyAdmin, same consequence: the user needs privileges on `pmadb`). phpMyAdmin redoes the discovery on every request; BetterMyAdmin caches the result (`RelationParameters` and the filled-in table names) in the session, per current database while nothing was found, and drops it after a create action (parity exception X26).
 
 | Table (default name) | Gates (phpMyAdmin flag) | Used by | Read/write pattern |
 |---|---|---|---|
@@ -56,7 +56,7 @@ Credentials are never written anywhere else (no logs, no error reports).
 | `pma__column_info` | `commwork`, `mimework` | column comments (for engines that lack native comments), MIME type + transformation + options + input transformation | read per table meta; write from Structure column form |
 | `pma__history` | `historywork` | SQL query history (`QueryHistoryDB`), trimmed to `QueryHistoryMax` | append per executed SQL-tab query |
 | `pma__recent`, `pma__favorite` | `recentwork`, `favoritework` | recent tables dropdown, favorites (star), synced with localStorage | write per table visit / star toggle |
-| `pma__table_uiprefs` | `uiprefswork` | per-user per-table: `sorted_col`, `col_order`, `col_visib`; capped by `MaxTableUiprefs` (oldest evicted) | read per Browse; write on sort/reorder/hide |
+| `pma__table_uiprefs` | `uiprefswork` | per-user per-table: `sorted_col`, `col_order`, `col_visib` (+ the table's `CREATE_TIME`); capped by `MaxTableUiprefs` (oldest evicted) | read once per session and table; write on sort/reorder/hide |
 | `pma__tracking` | `trackingwork` | versions, tracked statements, schema and data SQL logs, snapshots | write on DDL/DML when active |
 | `pma__userconfig` | `userconfigwork` | user preferences JSON + `2fa` + console config + `Export`/`Import` defaults | read at session start; write on Settings save |
 | `pma__users`, `pma__usergroups` | `menuswork` | user groups and allowed menu tabs | read per request (cached), write from User groups page |
@@ -70,9 +70,11 @@ Behavioural rules carried over:
 
 - A feature whose table is missing is hidden or degraded, never erroring. The home page shows phpMyAdmin's warning with "Find out why" (→ status page listing each table and its flag) and a "Create" link when `pmadb` exists but tables do not (`fixUpMissing`); when nothing is configured and `ZeroConf` is on, the "Create a database named 'phpmyadmin' and setup the phpMyAdmin configuration storage there" action is offered, running `create_tables.sql` as the current user.
 - `MaxTableUiprefs` eviction, `QueryHistoryMax` trimming, `NumRecentTables`/`NumFavoriteTables` caps are enforced server-side with the same queries.
-- Writes are done with the exact same column values phpMyAdmin would write (e.g. `col_order` as a comma-separated list, `prefs` JSON for `table_uiprefs`, `config_data` JSON for `userconfig`), verified by round-tripping with phpMyAdmin in the parity test suite.
+- Writes are done with the exact same statements and column values phpMyAdmin would write (PHP `json_encode` output for `prefs` in `table_uiprefs` — `col_order` is a JSON array there, the comma list is only the request format —, `tables` in `recent`/`favorite` and `config_data` in `userconfig`). `packages/metadata` replays statement fixtures recorded from phpMyAdmin's own classes (`scripts/generate-*.php`), and `tests/parity/metadata.parity.test.ts` diffs pmadb rows and statements after the same action in both tools.
 
 ## Local fallback store (new)
+
+Implementation: `packages/metadata` (`LocalMetadataStore` / `SqliteDriver`, `node:sqlite`), file `DataDir/local-metadata.sqlite`, opened on first use. Each per-user feature picks pmadb when phpMyAdmin would use it, else this store, else the session (phpMyAdmin's own fallback); `GET /api/servers/:s/metadata-storage/status` reports the choice per feature. `DataDir = ''` disables the store.
 
 When no pmadb is available, phpMyAdmin keeps user preferences and favorites in browser localStorage. We do the same, and additionally the server keeps a SQLite file (`DataDir/local-metadata.sqlite`) with the *same table shapes* as pmadb, keyed additionally by `(server_index, mysql_user)`. The metadata package has one interface with two drivers (`PmadbDriver`, `SqliteDriver`), so features do not know which is in use. Only the per-user tables are mirrored locally (`userconfig`, `recent`, `favorite`, `table_uiprefs`, `history`, `bookmark`, `designer_settings`, `export_templates`, `savedsearches`); relational metadata (`relation`, `table_info`, `column_info`, `tracking`, `central_columns`, `navigationhiding`, `users`, `usergroups`, `table_coords`, `pdf_pages`) stays off unless pmadb exists, because it describes the database and must be shared across users. The UI tells the user which mode is active with the same warning phpMyAdmin shows.
 

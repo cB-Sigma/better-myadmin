@@ -1,3 +1,5 @@
+import { sprintf } from '@bettermyadmin/i18n'
+import { translatorFor } from '@bettermyadmin/i18n/node'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
@@ -109,5 +111,100 @@ describe('server messages follow the request language', () => {
     await t.req('GET', '/api/i18n?lang=en')
     expect(await q('SELECT * FROM missing')).toEqual([`#1146 - Table '${DB}.missing' doesn't exist`])
     await t.close()
+  })
+
+  it('SQL tab: import mode summary, PHP code, rollback, profiling numbers, simulate, lint, console', async () => {
+    // console options in the session: the shared `phpmyadmin` storage stays untouched
+    const t = testApp(testConfig({}, { pmadb: 'bma_it_i18n_no_storage' }))
+    await t.req('GET', '/api/i18n?lang=de')
+    await t.login()
+    const run = async (body: Record<string, unknown>) =>
+      (await t.req('POST', '/api/servers/1/query', { db: DB, fromQueryBox: true, ...body })).json as {
+        statements: Array<{ message: { text: string }; profiling?: { states: Array<{ percent: string }> } }>
+      }
+
+    // import mode (from the 50th statement): the message of the last statement, "# Rows: n" style
+    const many = `${Array.from({ length: 55 }, () => 'SELECT 1').join(';\n')};`
+    expect((await run({ sql: many })).statements.map((s) => s.message.text)).toEqual(['# Datensätze: 1'])
+    const updates = `${Array.from({ length: 55 }, (_, i) => `UPDATE t SET name = 'x${i}' WHERE id = 1`).join(';\n')};`
+    expect((await run({ sql: updates })).statements.map((s) => s.message.text)).toEqual([
+      '# 1 Datensatz betroffen.',
+    ])
+
+    // "Create PHP code" and "Rollback when finished"
+    expect((await run({ sql: 'SELECT 1', showAsPhp: true })).statements[0]?.message.text).toBe(
+      'Ansicht als PHP-Code',
+    )
+    expect(
+      sec(
+        (await run({ sql: 'UPDATE t SET name = name WHERE id < 0', rollback: true })).statements[0]!.message
+          .text,
+      ),
+    ).toBe('0 Datensatz betroffen. (Die Abfrage dauerte T Sekunden.) [ROLLBACK aufgetreten.]')
+
+    // profiling: Util::formatNumber with the German separators
+    const prof = (await run({ sql: 'SELECT * FROM t', profiling: true })).statements[0]?.profiling
+    if (prof !== undefined) {
+      for (const s of prof.states) expect(s.percent).toMatch(/^(<0,01|[\d.]+,\d\d)$/)
+    }
+    await run({ sql: 'SELECT 1', profiling: false })
+
+    // simulate: "Only single-table UPDATE and DELETE queries can be simulated."
+    const sim = await t.req('POST', '/api/servers/1/query/simulate', { sql: 'SELECT 1', db: DB })
+    expect(sim.json).toMatchObject({
+      sqlData: null,
+      message: 'Nur UPDATE- und DELETE-Abfragen mit einer Tabelle können simuliert werden.',
+    })
+
+    // linter: "%1$s (near <code>%2$s</code>)"
+    const lint = await t.req('POST', '/api/servers/1/sql/lint', { sql: 'SELECT * FROM' })
+    const lints = lint.json.lints as Array<{ message: string }>
+    expect(lints.length).toBeGreaterThan(0)
+    for (const l of lints) expect(l.message).toMatch(/ \(bei <code>.*<\/code>\)$/)
+
+    // console options
+    expect(
+      (await t.req('POST', '/api/servers/1/console/config', { key: 'Mode', value: 'show' })).json,
+    ).toEqual({
+      message: 'Die Konsoleneinstellungen wurden erfolgreich aktualisiert.',
+    })
+    const bad = await t.req('POST', '/api/servers/1/console/config', { key: 'Mode', value: 'nope' })
+    expect((bad.json.error as { message: string }).message).toBe('Unerwarteter Parameterwert.')
+    // back to the default: the stored preference is removed again
+    await t.req('POST', '/api/servers/1/console/config', { key: 'Mode', value: 'info' })
+    await t.close()
+  })
+
+  it('home page: warnings, SSL line and collation descriptions are German', async () => {
+    const t = testApp(testConfig({ blowfish_secret: 'short' }))
+    await t.req('GET', '/api/i18n?lang=de')
+    await t.login()
+    const h = (await t.req('GET', '/api/servers/1/home')).json as {
+      warnings: Array<{ message: string }>
+      databaseServer: { connection: { message: string } } | null
+      collation: {
+        charsets: Array<{ name: string; collations: Array<{ name: string; description: string }> }>
+      }
+    }
+    expect(h.warnings.map((w) => w.message)).toContain(
+      'Die Konfigurationsdatei benötigt einen gültigen Schlüssel für die Cookie-Verschlüsselung. Ein temporärer Schlüssel wurde automatisch für dich generiert. Bitte schau in der [doc@cfg_blowfish_secret]Dokumentation[/doc] nach.',
+    )
+    expect(h.databaseServer?.connection.message).toBe('SSL wird nicht verwendet')
+    const ci = h.collation.charsets.flatMap((c) => c.collations).find((c) => c.name === 'utf8mb4_general_ci')
+    expect(ci?.description).toMatch(/, Beachtet nicht Groß- und Kleinschreibung$/)
+    await t.close()
+  })
+
+  it('the UI msgids of the SQL tab exist in the German catalogue', () => {
+    // the web app renders these with t(); the same catalogue (packages/i18n/po/de.po) is loaded there
+    const de = translatorFor('de')
+    expect(sprintf(de.gettext('%d errors were found during analysis.'), 2)).toBe(
+      '2 Fehler wurden während der Analyse gefunden.',
+    )
+    expect(de.gettext('Affected rows:')).toBe('Betroffene Zeilen:')
+    expect(de.gettext('Static analysis:')).toBe('Statische Analyse:')
+    expect(
+      ['Profiling', 'Detailed profile', 'Summary by state', 'Total Time'].map((m) => de.gettext(m)),
+    ).toEqual(['Messen', 'Detailliertes Profil', 'Zusammenfassung nach Status', 'Gesamtzeit'])
   })
 })

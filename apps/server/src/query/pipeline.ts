@@ -1,4 +1,4 @@
-import type { Executed, StatementResult, Warning } from '@bettermyadmin/contracts'
+import type { Executed, Field, Profiling, StatementResult, Warning } from '@bettermyadmin/contracts'
 import { type Translator, englishTranslator, formatNumber, sprintf } from '@bettermyadmin/i18n'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import {
@@ -9,12 +9,22 @@ import {
   type StatementInfo,
   parseAnalyze,
   replaceClause,
-  splitSqlQueriesToExecute,
+  splitSql,
 } from '@bettermyadmin/sql-lexer'
 import type { AppConfig } from '../config.ts'
-import type { Conn, QueryResult } from '../db/connection.ts'
+import type { Conn, QueryResult, ResultSet } from '../db/connection.ts'
 import { toCell } from '../db/field-meta.ts'
 import { MysqlError } from '../http/errors.ts'
+import type { SessionData } from '../session/store.ts'
+import { bindParameters, handleRollbackRequest, reloadHints, runImport } from './import.ts'
+import { formatError, getMessageCard, mysqlDie } from './message.ts'
+import {
+  checkProfiling,
+  enableProfiling,
+  getDetailedProfilingStats,
+  getProfilingInformation,
+  isProfilingSupported,
+} from './profiling.ts'
 import { signSql } from './signature.ts'
 
 export interface PipelineInput {
@@ -24,7 +34,16 @@ export interface PipelineInput {
   pos: number
   maxRows: number | 'all'
   delimiter: string
+  /** fk_checks posted (true/false) or not (undefined). */
   fkChecks?: boolean | undefined
+  /** rollback_query */
+  rollback?: boolean | undefined
+  /** parameterized + parameters[] */
+  params?: Readonly<Record<string, string>> | undefined
+  /** Sql::$showAsPhp (null: execute) */
+  showAsPhp?: boolean | undefined
+  /** Profiling::check input (profiling / profiling_form). */
+  profiling?: boolean | undefined
 }
 
 export interface PipelineContext {
@@ -32,6 +51,9 @@ export interface PipelineContext {
   conn: Conn
   hmacSecret: string
   executed: Executed[]
+  /** The session ($_SESSION['profiling'], SessionCache). Optional for internal callers. */
+  session?: SessionData
+  server?: number
   /** Parser context for the connected server (keywords per version, sql_mode). */
   context?: Context
   /** Query\Cache 'ExactRows' per `db.table` for this request (Table::countRecords). */
@@ -42,28 +64,299 @@ export interface PipelineContext {
 
 const english = englishTranslator()
 
+export interface SqlBoxResult {
+  statements: StatementResult[]
+  /** ImportController ajax_reload (only sent on the goSql path). */
+  ajaxReload?: { reload?: boolean; tableName?: string }
+  /** ResponseRenderer::$reload → `reloadNavigation` in the AJAX response. */
+  reloadNavigation: boolean
+  /** Current::$database / Current::$table at the end of the request (reloadQuerywindow, params). */
+  db: string
+  table: string
+  /** Current::$sqlQuery at the end (history, reloadQuerywindow.sql_query). */
+  sqlQuery: string
+  /** A transaction was left open for "Rollback when finished": discard the connection. */
+  discardConnection: boolean
+  /**
+   * The request reached ImportController's bookmark step (`bkm_label`): the goSql loop ran to the end
+   * (no mysqlDie exit) or import mode finished with a result.
+   */
+  bookmarkable?: boolean
+}
+
+/** Per-request state shared by the statements of one run (phpMyAdmin's static/session state). */
+interface RunState {
+  showAsPhp: boolean | null
+  rollback: boolean
+  /** ResponseRenderer::$reload */
+  reload: boolean
+  /** Sql::$queryTime survives from one statement to the next (it is an instance property). */
+  queryTime: number
+  /**
+   * phpMyAdmin exits after an error and its connection closes, dropping session settings it changed
+   * (FOREIGN_KEY_CHECKS) and open transactions; a pooled connection in that state is discarded.
+   */
+  discard: boolean
+}
+
+const emptySession = (): SessionData => ({
+  id: '',
+  createdAt: 0,
+  lastSeenAt: 0,
+  csrfToken: '',
+  hmacSecret: '',
+  currentServer: 1,
+  servers: {},
+})
+
 /**
- * The SQL tab path: split by the delimiter (ImportSql/BufferedQuery), then run each statement through
- * Sql::executeQueryAndGetQueryResponse, stopping at the first error unless IgnoreMultiSubmitErrors.
+ * The SQL tab path (POST /import with sql_query): bind parameters, rollback pre-check, reload hints,
+ * split by the delimiter (ImportSql/BufferedQuery), then either the goSql path (each statement through
+ * Sql::executeQueryAndGetQueryResponse) or, from 50 statements on, import mode.
  *
- * pma: src/Controllers/Import/ImportController.php (goSql branch), src/Import/Import.php::runQuery
+ * pma: src/Controllers/Import/ImportController.php::__invoke, src/Import/Import.php::runQuery
  */
-export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Promise<StatementResult[]> {
-  const queries = splitSqlQueriesToExecute(input.sql, { delimiter: input.delimiter })
-  if (ctx.conn.serverInfo !== null) ctx.context = ctx.conn.serverInfo.context
-  if (queries.length === 0) return []
-  const out: StatementResult[] = []
+export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Promise<SqlBoxResult> {
+  const { conn, cfg } = ctx
+  if (conn.serverInfo !== null) ctx.context = conn.serverInfo.context
+  ctx.session ??= emptySession()
+  ctx.server ??= 1
+  const session = ctx.session
+  const server = ctx.server
+  const ctxOpt = ctx.context !== undefined ? { context: ctx.context } : {}
+  ctx.tr ??= english
+  const tr = ctx.tr
+
+  // ProfilingChecking middleware
+  await checkProfiling(input.profiling, conn, session, server)
+
+  const state: RunState = {
+    showAsPhp: input.showAsPhp ?? null,
+    rollback: input.rollback === true,
+    reload: false,
+    queryTime: 0,
+    discard: false,
+  }
   let db = input.db
   let table = input.table
-  for (const sql of queries) {
-    const r = await executeStatement({ ...input, sql, db, table }, ctx)
-    // Sql::handleQueryExecuteError → Generator::mysqlDie + exit: the response is only the error card
-    if (r.kind === 'error' && !ctx.cfg.IgnoreMultiSubmitErrors) return [r]
-    out.push(r)
-    if (r.db !== null) db = r.db
-    table = ''
+  let sql = input.sql
+  const noBackslashEscapes = /\bNO_BACKSLASH_ESCAPES\b/i.test(conn.serverInfo?.sqlMode ?? '')
+
+  // apply values for parameters
+  if (input.params !== undefined) {
+    sql = bindParameters(sql, input.params, (v) => quoteString(v, { noBackslashEscapes }))
   }
-  return out
+
+  // If there is a request to ROLLBACK when finished.
+  let discardConnection = false
+  if (state.rollback) {
+    const refused = await handleRollbackRequest(conn, sql, input.delimiter, db, ctx.context, tr)
+    if (refused !== null) {
+      // Message::rawError + callExit: only the message
+      return {
+        statements: [rawErrorStatement(sql, refused, ctx, db)],
+        reloadNavigation: false,
+        db,
+        table,
+        // callExit happens before Current::$sqlQuery is reset
+        sqlQuery: sql,
+        discardConnection: false,
+      }
+    }
+    discardConnection = true
+  }
+
+  const hints = reloadHints(sql)
+  state.reload = hints.reloadNavigation
+
+  if (db !== '') await conn.query(`USE ${backquote(db)}`, 'query.select-db')
+
+  // ImportSql::doImport, wrapped in ForeignKey::handleDisableCheckInit/Cleanup
+  const fkDefault = (await getVariable(conn, 'FOREIGN_KEY_CHECKS')) === 'ON'
+  let run: Awaited<ReturnType<typeof runImport>>
+  try {
+    if (input.fkChecks !== undefined)
+      await setVariable(conn, 'FOREIGN_KEY_CHECKS', input.fkChecks ? 'ON' : 'OFF')
+    run = await runImport(splitSql(sql, { delimiter: input.delimiter }), {
+      conn,
+      runQuery: state.showAsPhp === null,
+      db,
+      ignoreMultiSubmitErrors: cfg.IgnoreMultiSubmitErrors,
+      tr,
+    })
+  } finally {
+    await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
+  }
+  const goSql = run.goSql || state.showAsPhp !== null
+  let sqlQuery = run.sqlQuery
+  if (run.importMode !== null) {
+    db = run.importMode.db
+    if (run.importMode.reloadNavigation) state.reload = true
+  }
+
+  // Parse and analyze the query, for correct db and table name (skipped when too large)
+  if (Array.from(sqlQuery).length <= cfg.MaxCharactersInDisplayedSQL) {
+    const [, d, tableFromSql, reloadNeeded] = parseAnalyze(sqlQuery, db, true, ctxOpt)
+    db = d
+    state.reload = reloadNeeded
+    if (tableFromSql !== '') table = tableFromSql
+  }
+
+  const base = { reloadNavigation: false, discardConnection }
+
+  // Import mode errors: the first failed query's error card
+  if (run.importMode?.hasError === true) {
+    const failed = run.importMode.failedQueries[0]
+    if (failed !== undefined) {
+      return {
+        ...base,
+        statements: [errorStatement(failed.sql, failed.sql, failed.error, null, ctx, db, undefined)],
+        reloadNavigation: state.reload,
+        db,
+        table,
+        sqlQuery,
+      }
+    }
+  }
+
+  if (goSql) {
+    const queries = run.queriesToBeExecuted.length > 0 ? run.queriesToBeExecuted : [sqlQuery]
+    const out: StatementResult[] = []
+    for (const q of queries) {
+      sqlQuery = q
+      const [info, d, tableFromSql] = parseAnalyze(q, db, true, ctxOpt)
+      db = d
+      // Check if User is allowed to issue a 'DROP DATABASE' Statement
+      if (!cfg.AllowUserDropDatabase && info.flags.dropDatabase && !(await isSuperUser(conn))) {
+        return {
+          ...base,
+          statements: [
+            errorStatement(
+              q,
+              q,
+              tr.gettext('"DROP DATABASE" statements are disabled.'),
+              null,
+              ctx,
+              db,
+              info.flags.queryType,
+            ),
+          ],
+          reloadNavigation: state.reload,
+          db,
+          table,
+          sqlQuery,
+        }
+      }
+      if (tableFromSql !== '') table = tableFromSql
+      const r = await executeStatement({ ...input, sql: q, db, table }, info, state, ctx)
+      // Sql::handleQueryExecuteError → Generator::mysqlDie + exit: the response is only the error card
+      if (r.kind === 'error' && r.error !== undefined) {
+        return {
+          ...base,
+          statements: [r],
+          reloadNavigation: state.reload,
+          db,
+          table,
+          sqlQuery,
+          discardConnection: base.discardConnection || state.discard,
+        }
+      }
+      out.push(r)
+    }
+    return {
+      ...base,
+      statements: out,
+      ajaxReload: hints.ajaxReload,
+      reloadNavigation: state.reload,
+      db,
+      table,
+      sqlQuery,
+      bookmarkable: true,
+    }
+  }
+
+  // import mode tail
+  const im = run.importMode!
+  let message = im.message
+  if (state.rollback) {
+    // We rollback because there might be other queries that need to be executed after this
+    await conn.query('ROLLBACK', 'rollback')
+    message += tr.gettext('[ROLLBACK occurred.]')
+    base.discardConnection = false
+  }
+  const st: StatementResult = {
+    sql: input.sql,
+    executedSql: input.sql,
+    sig: signSql(sqlQuery, ctx.hmacSecret, cfg.blowfish_secret),
+    kind: im.result ? 'import' : 'error',
+    queryType: null,
+    message: { type: im.result ? 'success' : 'error', text: message },
+    queryTime: 0,
+    warnings: [],
+    db: db === '' ? null : db,
+    reload: state.reload,
+  }
+  if (im.result) {
+    st.card = await getMessageCard(sqlQuery, {
+      cfg,
+      showAsPhp: null,
+      db,
+      table,
+      profilingOn: session.profiling === true,
+      profilingSupported: () => isProfilingSupported(conn, session, server),
+    })
+  }
+  return {
+    ...base,
+    statements: [st],
+    reloadNavigation: state.reload,
+    db,
+    table,
+    sqlQuery,
+    bookmarkable: im.result,
+  }
+}
+
+/** A plain error message (Message::rawError), no error card. */
+function rawErrorStatement(sql: string, text: string, ctx: PipelineContext, db: string): StatementResult {
+  return {
+    sql,
+    executedSql: sql,
+    sig: signSql(sql, ctx.hmacSecret, ctx.cfg.blowfish_secret),
+    kind: 'error',
+    queryType: null,
+    message: { type: 'error', text },
+    queryTime: 0,
+    warnings: [],
+    db: db === '' ? null : db,
+    reload: false,
+  }
+}
+
+/** Generator::mysqlDie(serverMessage, sql) as a statement result. */
+function errorStatement(
+  sql: string,
+  shownSql: string,
+  serverMessage: string,
+  errno: number | null,
+  ctx: PipelineContext,
+  db: string,
+  queryType: string | null | undefined,
+  hint: ReturnType<typeof formatError>['hint'] = null,
+): StatementResult {
+  return {
+    sql,
+    executedSql: shownSql,
+    sig: signSql(sql, ctx.hmacSecret, ctx.cfg.blowfish_secret),
+    kind: 'error',
+    queryType: queryType ?? null,
+    message: { type: 'error', text: serverMessage, ...(errno !== null ? { errno } : {}) },
+    error: mysqlDie(serverMessage, shownSql, ctx.cfg, ctx.context, hint),
+    queryTime: 0,
+    warnings: [],
+    db: db === '' ? null : db,
+    reload: false,
+  }
 }
 
 /** Sql::isAppendLimitClause */
@@ -103,16 +396,26 @@ export function isJustBrowsing(info: StatementInfo): boolean {
 const rowsMessage = (tr: Translator, one: string, many: string, n: number) =>
   sprintf(tr.ngettext(one, many, n), n)
 
-async function executeStatement(input: PipelineInput, ctx: PipelineContext): Promise<StatementResult> {
+/** `Query took %01.4f seconds.)` as Results adds it after "(" */
+const queryTook = (tr: Translator, queryTime: number) =>
+  sprintf(`${tr.gettext('Query took %01.4f seconds.')})`, queryTime)
+
+/**
+ * One statement of the goSql path.
+ * pma: src/Sql.php::executeQueryAndGetQueryResponse, ::executeTheQuery
+ */
+async function executeStatement(
+  input: PipelineInput,
+  info: StatementInfo,
+  state: RunState,
+  ctx: PipelineContext,
+): Promise<StatementResult> {
   const { conn, cfg } = ctx
-  const [info, dbAfterParse, tableAfterParse] = parseAnalyze(
-    input.sql,
-    input.db,
-    true,
-    ctx.context !== undefined ? { context: ctx.context } : {},
-  )
-  const db = dbAfterParse
-  const table = tableAfterParse !== '' ? tableAfterParse : input.table
+  const tr = ctx.tr ?? english
+  const session = ctx.session!
+  const server = ctx.server!
+  const db = input.db
+  const table = input.table
   const sig = signSql(input.sql, ctx.hmacSecret, cfg.blowfish_secret)
   const base = {
     sql: input.sql,
@@ -121,26 +424,15 @@ async function executeStatement(input: PipelineInput, ctx: PipelineContext): Pro
     warnings: [] as Warning[],
     reload: false,
   }
-
-  const tr = ctx.tr ?? english
-  // "DROP DATABASE" statements are disabled. (Sql::hasNoRightsToDropDatabase)
-  if (!cfg.AllowUserDropDatabase && info.flags.dropDatabase && !(await isSuperUser(conn))) {
-    return {
-      ...base,
-      executedSql: input.sql,
-      kind: 'error',
-      message: { type: 'error', text: tr.gettext('"DROP DATABASE" statements are disabled.') },
-      queryTime: 0,
-      db: db === '' ? null : db,
-    }
-  }
-
-  if (db !== '') {
-    // hasCurrentDbChanged + selectDb
-    const current = await conn.value('SELECT DATABASE()', 'query.current-db')
-    base.reload = current !== null && current !== db
-    if (current !== db) await conn.query(`USE ${backquote(db)}`, 'query.select-db')
-  }
+  const card = (sqlQuery: string) =>
+    getMessageCard(sqlQuery, {
+      cfg,
+      showAsPhp: state.showAsPhp,
+      db,
+      table,
+      profilingOn: session.profiling === true,
+      profilingSupported: () => isProfilingSupported(conn, session, server),
+    })
 
   const appendLimit = isAppendLimitClause(info, input.maxRows)
   const fullSql =
@@ -148,104 +440,203 @@ async function executeStatement(input: PipelineInput, ctx: PipelineContext): Pro
       ? replaceClause(info.statement, info.parser.list, `LIMIT ${input.pos}, ${input.maxRows}`)
       : input.sql
 
+  if (db !== '') {
+    // hasCurrentDbChanged + selectDb
+    const current = await conn.value('SELECT DATABASE()', 'query.current-db')
+    base.reload = current !== null && current !== db
+    if (current !== db) await conn.query(`USE ${backquote(db)}`, 'query.select-db')
+  }
+  state.reload = base.reload
+
+  // Show as PHP / SQL only: the query is not executed
+  if (state.showAsPhp !== null) {
+    const message = messageForNoRowsReturned(tr, info, 0, '0', 0, state)
+    return {
+      ...base,
+      executedSql: input.sql,
+      kind: 'php',
+      message: {
+        type: state.showAsPhp || info.flags.isAffected || info.flags.isInsert ? 'success' : 'notice',
+        text: message,
+      },
+      queryTime: 0,
+      card: await card(input.sql),
+      db: db === '' ? null : db,
+    }
+  }
+
   // ForeignKey::handleDisableCheckInit
-  const fkDefault =
-    (await conn.rows("SHOW SESSION VARIABLES LIKE 'FOREIGN_KEY_CHECKS';", 'fk.get'))[0]?.Value === 'ON'
+  const fkDefault = (await getVariable(conn, 'FOREIGN_KEY_CHECKS')) === 'ON'
   if (input.fkChecks !== undefined)
     await setVariable(conn, 'FOREIGN_KEY_CHECKS', input.fkChecks ? 'ON' : 'OFF')
 
-  let result: QueryResult
+  await enableProfiling(conn, session, server)
+
+  let result: QueryResult | null = null
+  let errorMessage = ''
   try {
     result = await conn.query(fullSql, 'query.user')
+    state.queryTime = result.ms / 1000
   } catch (e) {
-    await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
-    if (e instanceof MysqlError) {
-      return {
-        ...base,
-        executedSql: fullSql,
-        kind: 'error',
-        message: {
-          type: 'error',
-          text: `#${e.extra.errno ?? 0} - ${e.message}`,
-          ...(e.extra.errno !== undefined ? { errno: e.extra.errno } : {}),
-        },
-        queryTime: 0,
-        db: db === '' ? null : db,
-      }
+    if (!(e instanceof MysqlError)) {
+      await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
+      throw e
     }
-    throw e
+    const formatted = formatError(e.extra.errno ?? 0, e.message, tr)
+    if (!cfg.IgnoreMultiSubmitErrors) {
+      // Generator::mysqlDie + exit (FOREIGN_KEY_CHECKS stays as set: the connection is discarded)
+      if ((await getVariable(conn, 'FOREIGN_KEY_CHECKS')) !== (fkDefault ? 'ON' : 'OFF')) state.discard = true
+      return errorStatement(
+        input.sql,
+        fullSql,
+        formatted.text,
+        e.extra.errno ?? null,
+        ctx,
+        db,
+        info.flags.queryType,
+        formatted.hint,
+      )
+    }
+    errorMessage = formatted.text
   }
-  const queryTime = result.ms / 1000
+  const queryTime = state.queryTime
 
-  const set = result.resultSets[0]
-  const numRows = info.flags.isAffected ? (result.header?.affectedRows ?? 0) : (set?.rows.length ?? 0)
+  const sets = result?.resultSets ?? []
+  const set = sets[0]
+  const numRows = info.flags.isAffected
+    ? (result?.header?.affectedRows ?? 0)
+    : result !== null
+      ? (set?.rows.length ?? 0)
+      : 0
 
-  const unlimNumRows = await countQueryResults(
-    numRows,
-    isJustBrowsing(info),
-    db,
-    table,
-    info,
-    input,
-    appendLimit,
-    ctx,
-  )
+  // mysqli keeps a CALL's further result sets pending: SHOW PROFILE / SHOW WARNINGS fail client-side
+  // ("Commands out of sync") and never reach the server until they are consumed by the results display
+  const pending = info.flags.isProcedure && sets.length > 0
+  const profilingRows = pending ? [] : await getProfilingInformation(conn, session, server)
+
+  const unlimNumRows =
+    result === null
+      ? 0
+      : await countQueryResults(numRows, isJustBrowsing(info), db, table, info, input, appendLimit, ctx)
 
   // DatabaseInterface::getWarnings runs after every executed statement
-  const warnings: Warning[] = (await conn.rows('SHOW WARNINGS', 'query.warnings')).map((w) => ({
-    level: w.Level ?? '',
-    code: Number(w.Code ?? 0),
-    message: w.Message ?? '',
-  }))
+  const warnings: Warning[] = (pending ? [] : await conn.rows('SHOW WARNINGS', 'query.warnings')).map(
+    (w) => ({
+      level: w.Level ?? '',
+      code: Number(w.Code ?? 0),
+      message: w.Message ?? '',
+    }),
+  )
 
-  await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
-
-  const noResults = (numRows === 0 && unlimNumRows === 0) || info.flags.isAffected || set === undefined
-  // insertId() is SELECT LAST_INSERT_ID() (mysqli_insert_id is unreliable for BIGINT keys)
-  const insertId =
-    noResults && info.flags.isInsert
-      ? ((await conn.value('SELECT LAST_INSERT_ID();', 'query.insert-id')) ?? '0')
-      : '0'
-  if (
-    noResults &&
-    set !== undefined &&
-    set.fields.length > 0 &&
-    db !== '' &&
-    table !== '' &&
-    info.flags.queryType === 'SELECT'
-  ) {
-    // the empty results table still runs Results::setDisplayPartsAndTotal → countRecords()
-    await countRecords(ctx, db, table, false)
-  }
-  const r: StatementResult = {
-    ...base,
-    warnings,
-    executedSql: fullSql,
-    kind: noResults ? (set !== undefined && set.fields.length > 0 ? 'empty' : 'affected') : 'resultset',
-    message: noResults
-      ? { type: 'success', text: messageForNoRowsReturned(tr, info, numRows, insertId, queryTime) }
-      : {
-          type: 'success',
-          text: resultsMessage(tr, info, unlimNumRows, numRows, input, queryTime),
-        },
-    queryTime,
-    db: db === '' ? null : db,
-  }
-  if (info.flags.isAffected) r.affectedRows = numRows
-  if (insertId !== '0') r.insertId = insertId
-  if (set !== undefined) {
-    r.result = {
-      fields: set.fields,
-      rows: set.rows.map((row) => row.map((v, i) => toCell(v, set.fields[i]!))),
-      numRows,
-      totalRows: unlimNumRows,
-      approximate: false,
-      pos: input.pos,
-      maxRows: input.maxRows,
-      limitAppended: appendLimit,
+  const profiling: Profiling | null = getDetailedProfilingStats(profilingRows, tr)
+  const noResults = (numRows === 0 && unlimNumRows === 0) || info.flags.isAffected || result === null
+  let r: StatementResult
+  if (noResults) {
+    // insertId() is SELECT LAST_INSERT_ID() (mysqli_insert_id is unreliable for BIGINT keys)
+    const insertId =
+      errorMessage === '' && info.flags.isInsert
+        ? ((await conn.value('SELECT LAST_INSERT_ID();', 'query.insert-id')) ?? '0')
+        : '0'
+    const message =
+      errorMessage !== ''
+        ? { type: 'error' as const, text: errorMessage }
+        : {
+            type: 'success' as const,
+            text: messageForNoRowsReturned(tr, info, numRows, insertId, queryTime, state),
+          }
+    const hasColumns = set !== undefined && set.fields.length > 0
+    if (hasColumns && db !== '' && table !== '' && info.flags.queryType === 'SELECT') {
+      // the empty results table still runs Results::setDisplayPartsAndTotal → countRecords()
+      await countRecords(ctx, db, table, false)
+    }
+    r = {
+      ...base,
+      warnings,
+      executedSql: fullSql,
+      kind: errorMessage !== '' ? 'error' : hasColumns ? 'empty' : 'affected',
+      message,
+      queryTime,
+      card: await card(input.sql),
+      db: db === '' ? null : db,
+    }
+    if (info.flags.isAffected && errorMessage === '') r.affectedRows = numRows
+    if (insertId !== '0') r.insertId = insertId
+    if (set !== undefined && hasColumns) r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
+    if (info.flags.isProcedure) {
+      const more = procedureResults(tr, sets, info, input, queryTime)
+      if (more.length > 0) r.moreResults = more
+    }
+  } else {
+    const text = info.flags.isProcedure
+      ? procedureMessage(tr, numRows, input, queryTime)
+      : resultsMessage(tr, info, unlimNumRows, numRows, input, queryTime)
+    r = {
+      ...base,
+      warnings,
+      executedSql: fullSql,
+      kind: 'resultset',
+      message: { type: 'success', text },
+      queryTime,
+      card: await card(input.sql),
+      db: db === '' ? null : db,
+    }
+    if (set !== undefined) r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
+    if (info.flags.isProcedure) {
+      const more = procedureResults(tr, sets.slice(1), info, input, queryTime)
+      if (more.length > 0) r.moreResults = more
     }
   }
+  if (profiling !== null) r.profiling = profiling
+
+  // ForeignKey::handleDisableCheckCleanup
+  await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
   return r
+}
+
+function toResult(
+  set: ResultSet,
+  numRows: number,
+  unlimNumRows: number,
+  input: PipelineInput,
+  appendLimit: boolean,
+): NonNullable<StatementResult['result']> {
+  return {
+    fields: set.fields as Field[],
+    rows: set.rows.map((row) => row.map((v, i) => toCell(v, set.fields[i]!))),
+    numRows,
+    totalRows: unlimNumRows,
+    approximate: false,
+    pos: input.pos,
+    maxRows: input.maxRows,
+    limitAppended: appendLimit,
+  }
+}
+
+/** Sql::getHtmlForStoredProcedureResults: every non-empty result set gets its own table and message. */
+function procedureResults(
+  tr: Translator,
+  sets: readonly ResultSet[],
+  _info: StatementInfo,
+  input: PipelineInput,
+  queryTime: number,
+): NonNullable<StatementResult['moreResults']> {
+  return sets
+    .filter((s) => s.rows.length > 0)
+    .map((s) => ({
+      fields: s.fields as Field[],
+      rows: s.rows.map((row) => row.map((v, i) => toCell(v, s.fields[i]!))),
+      numRows: s.rows.length,
+      message: procedureMessage(tr, s.rows.length, input, queryTime),
+    }))
+}
+
+/** Results::setMessageInformation for a CALL result set (setProperties(numRows, …, numRows)). */
+function procedureMessage(tr: Translator, numRows: number, input: PipelineInput, queryTime: number): string {
+  const posNext = input.maxRows === 'all' ? 0 : input.pos + input.maxRows
+  const first = input.pos
+  const last = input.maxRows === 'all' || posNext > numRows ? first + numRows - 1 : posNext - 1
+  const totalText = sprintf(tr.gettext('%s total'), formatNumber(tr, numRows, 0))
+  return `${sprintf(tr.gettext('Showing rows %1s - %2s'), first, last)} (${totalText}, ${queryTook(tr, queryTime)}`
 }
 
 /** Sql::countQueryResults */
@@ -342,14 +733,14 @@ async function countRecords(
   }
 }
 
-/** Sql::getMessageForNoRowsReturned (without show-as-PHP and rollback, which are M1) */
+/** Sql::getMessageForNoRowsReturned (the SQL-tab path passes an empty message_to_show) */
 function messageForNoRowsReturned(
   tr: Translator,
   info: StatementInfo,
   numRows: number,
   insertId: string,
   queryTime: number,
-  // the SQL tab path (ImportController goSql) always passes '' here
+  state: Pick<RunState, 'showAsPhp' | 'rollback'>,
   messageToShow = '',
 ): string {
   let msg: string
@@ -368,10 +759,17 @@ function messageForNoRowsReturned(
     msg = rowsMessage(tr, '%1$d row affected.', '%1$d rows affected.', numRows)
   } else if (messageToShow !== '' && info.flags.queryType !== 'SELECT') {
     msg = messageToShow
+  } else if (state.showAsPhp === true) {
+    msg = tr.gettext('Showing as PHP code')
+  } else if (state.showAsPhp === false) {
+    // User disable showing as PHP, query is only displayed
+    msg = tr.gettext('Showing SQL query')
   } else {
     msg = tr.gettext('MySQL returned an empty result set (i.e. zero rows).')
   }
   if (queryTime > 0) msg += ` ${sprintf(`(${tr.gettext('Query took %01.4f seconds.')})`, queryTime)}`
+  // In case of ROLLBACK, notify the user.
+  if (state.rollback) msg += ` ${tr.gettext('[ROLLBACK occurred.]')}`
   return msg
 }
 
@@ -394,10 +792,9 @@ function resultsMessage(
     f.queryType === 'EXPLAIN' ||
     f.queryType === 'SHOW'
   // the bare Message::success() card, "(Query took …)" only when the time is positive
-  const took = sprintf(`${tr.gettext('Query took %01.4f seconds.')})`, queryTime)
-  if (nonData || f.isProcedure) {
+  if (nonData) {
     const done = tr.gettext('Your SQL query has been executed successfully.')
-    return queryTime > 0 ? `${done} (${took}` : done
+    return queryTime > 0 ? `${done} (${queryTook(tr, queryTime)}` : done
   }
   const total = unlimNumRows > 0 ? unlimNumRows : 0
   const statementLimit = (info.statement as { limit?: { offset: unknown; rowCount: unknown } | null } | null)
@@ -417,11 +814,17 @@ function resultsMessage(
     last = posNext - 1
   }
   const totalText = sprintf(tr.gettext('%s total'), formatNumber(tr, total, 0))
-  return `${sprintf(tr.gettext('Showing rows %1s - %2s'), first, last)} (${totalText}, ${took}`
+  return `${sprintf(tr.gettext('Showing rows %1s - %2s'), first, last)} (${totalText}, ${queryTook(tr, queryTime)}`
 }
 
-async function setVariable(conn: Conn, name: string, value: string): Promise<void> {
-  const current = (await conn.rows(`SHOW SESSION VARIABLES LIKE '${name}';`, 'var.get'))[0]?.Value ?? ''
+/** DatabaseInterface::getVariable (session) */
+export async function getVariable(conn: Conn, name: string): Promise<string> {
+  return (await conn.rows(`SHOW SESSION VARIABLES LIKE '${name}';`, 'var.get'))[0]?.Value ?? ''
+}
+
+/** DatabaseInterface::setVariable: SET only when the value differs. */
+export async function setVariable(conn: Conn, name: string, value: string): Promise<void> {
+  const current = await getVariable(conn, name)
   if (current === value) return
   await conn.query(`SET ${name} = ${value};`, 'var.set')
 }

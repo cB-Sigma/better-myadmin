@@ -5,8 +5,11 @@
       "**/dist",
       "**/node_modules",
       "**/fixtures/**/*.json",
+      "packages/kbs/src/data/**",
+      "packages/kbs/test/fixtures.json",
       "**/generated/**",
       "docs/**",
+      ".data/**",
       "**/routeTree.gen.ts",
       ".claude/**"
     ]

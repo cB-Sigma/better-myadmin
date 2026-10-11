@@ -1,0 +1,96 @@
+{
+  "_generated": {"by": "generate-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "json_encode": [
+    {
+      "value": {"db": "shop", "table": "orders"},
+      "php": "{\"db\":\"shop\",\"table\":\"orders\"}"
+    },
+    {
+      "value": [
+        {"db": "a/b", "table": "c\"d"},
+        {"db": "é", "table": "日本"}
+      ],
+      "php": "[{\"db\":\"a\\/b\",\"table\":\"c\\\"d\"},{\"db\":\"\\u00e9\",\"table\":\"\\u65e5\\u672c\"}]"
+    },
+    {
+      "value": {"Console/Mode": "collapse", "MaxRows": 50, "NavigationWidth": 240, "ShowAll": true, "x": null},
+      "php": "{\"Console\\/Mode\":\"collapse\",\"MaxRows\":50,\"NavigationWidth\":240,\"ShowAll\":true,\"x\":null}"
+    },
+    {
+      "value": {
+        "sorted_col": "`id` DESC",
+        "col_order": [2, 0, 1],
+        "col_visib": [1, 0, 1],
+        "CREATE_TIME": "2026-10-08 10:00:00"
+      },
+      "php": "{\"sorted_col\":\"`id` DESC\",\"col_order\":[2,0,1],\"col_visib\":[1,0,1],\"CREATE_TIME\":\"2026-10-08 10:00:00\"}"
+    },
+    {"value": "tab\there\nnew\rline \b\f \u0001\u001f  back\\slash 'q' <>&", "php": "\"tab\\there\\nnew\\rline \\b\\f \\u0001\\u001f  back\\\\slash 'q' <>&\""},
+    {"value": "😀 surrogate pair", "php": "\"\\ud83d\\ude00 surrogate pair\""},
+    {"value": [], "php": "[]"},
+    {
+      "value": {
+        "1": {"db": "x", "table": "y"},
+        "2": {"db": "x", "table": "z"}
+      },
+      "php": "{\"1\":{\"db\":\"x\",\"table\":\"y\"},\"2\":{\"db\":\"x\",\"table\":\"z\"}}"
+    },
+    {
+      "value": {
+        "2fa": {
+          "backend": "application",
+          "settings": {"secret": "ABC"}
+        }
+      },
+      "php": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"ABC\"}}}"
+    },
+    {
+      "value": [0.5, -3, 0, 1.0, 12345678901],
+      "php": "[0.5,-3,0,1,12345678901]"
+    }
+  ],
+  "json_encode_gaps": [
+    {
+      "remove": [0],
+      "php": "{\"1\":{\"db\":\"d\",\"table\":\"t1\"},\"2\":{\"db\":\"d\",\"table\":\"t2\"}}"
+    },
+    {
+      "remove": [1],
+      "php": "{\"0\":{\"db\":\"d\",\"table\":\"t0\"},\"2\":{\"db\":\"d\",\"table\":\"t2\"}}"
+    },
+    {
+      "remove": [2],
+      "php": "[{\"db\":\"d\",\"table\":\"t0\"},{\"db\":\"d\",\"table\":\"t1\"}]"
+    },
+    {
+      "remove": [0, 2],
+      "php": "{\"1\":{\"db\":\"d\",\"table\":\"t1\"}}"
+    },
+    {
+      "remove": [1, 2],
+      "php": "[{\"db\":\"d\",\"table\":\"t0\"}]"
+    }
+  ],
+  "bookmark_variables": [
+    {"query": "SELECT * FROM t WHERE id = /*[VARIABLE1]*/", "variables": {"1":"42"}, "count": 1, "applied": "SELECT * FROM t WHERE id = 42"},
+    {"query": "SELECT * FROM t WHERE a = [VARIABLE1] AND b = [VARIABLE2]", "variables": {"1":"x","2":"y"}, "count": 2, "applied": "SELECT * FROM t WHERE a = x AND b = y"},
+    {"query": "SELECT [VARIABLE] , [VARIABLE1]", "variables": {"1":"v"}, "count": 2, "applied": "SELECT v , v"},
+    {"query": "SELECT /* keep */ 1 /* [VARIABLE1] in comment */, /*[VARIABLE2]*/", "variables": {"1":"A","2":"B"}, "count": 2, "applied": "SELECT  keep */ 1 /* A in comment , B"},
+    {"query": "SELECT * FROM t WHERE a = '/*[VARIABLE1]*/'\nAND b = /*\n[VARIABLE2]\n*/", "variables": {"1":"1","2":"2"}, "count": 2, "applied": "SELECT * FROM t WHERE a = '1'\nAND b = \n2\n"},
+    {"query": "SELECT [VARIABLE1], [VARIABLE3]", "variables": {"1":"one"}, "count": 2, "applied": "SELECT one, [VARIABLE3]"},
+    {"query": "SELECT [VARIABLE2]", "variables": {}, "count": 1, "applied": "SELECT [VARIABLE2]"},
+    {"query": "SELECT 1", "variables": {"1":"unused"}, "count": 0, "applied": "SELECT 1"},
+    {"query": "SELECT [variable1] /*[VARIABLE1]*/ /*[VARIABLE1]*/", "variables": {"1":"Z"}, "count": 2, "applied": "SELECT [variable1] Z Z"}
+  ],
+  "fix_up_mime": [
+    {"in": "image/jpeg", "out": "Image/JPEG"},
+    {"in": "image_png", "out": "Image_PNG"},
+    {"in": "text/plain", "out": "Text/plain"},
+    {"in": "application/octetstream", "out": "Application/octetstream"},
+    {"in": "Text_Plain_Dateformat.php", "out": "Text_Plain_Dateformat.php"},
+    {"in": "text_plain_dateformat.class.php", "out": "Text_Plain_Dateformat.class.php"},
+    {"in": "output/text_plain_bool2text", "out": "Output/text_Plain_Bool2Text"},
+    {"in": "", "out": ""},
+    {"in": "a b_c1d", "out": "AB_C1D"}
+  ]
+}

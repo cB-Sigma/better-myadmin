@@ -1,0 +1,111 @@
+{
+    "max_connections": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#max_connections",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/replication-options-binary-log.html#sysvar_max_connections",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#max_connections",
+        "type": "integer"
+    },
+    "sql_mode": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#sql_mode",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-options.html#option_mysqld_sql-mode",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#sql_mode",
+        "type": "set"
+    },
+    "innodb_buffer_pool_size": {
+        "any": "https://mariadb.com/kb/en/innodb-system-variables/#innodb_buffer_pool_size",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/innodb-parameters.html#sysvar_innodb_buffer_pool_size",
+        "mariadb": "https://mariadb.com/kb/en/innodb-system-variables/#innodb_buffer_pool_size",
+        "type": "integer"
+    },
+    "collation_connection": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#collation_connection",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_collation_connection",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#collation_connection",
+        "type": "string"
+    },
+    "character_set_server": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#character_set_server",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_character_set_server",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#character_set_server",
+        "type": "string"
+    },
+    "Aborted_clients": {
+        "any": "https://mariadb.com/kb/en/server-status-variables/#aborted_clients",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Aborted_clients",
+        "mariadb": "https://mariadb.com/kb/en/server-status-variables/#aborted_clients",
+        "type": null
+    },
+    "aria_block_size": {
+        "any": "https://mariadb.com/kb/en/aria-system-variables/#aria_block_size",
+        "mysql": null,
+        "mariadb": "https://mariadb.com/kb/en/aria-system-variables/#aria_block_size",
+        "type": "integer"
+    },
+    "wsrep_on": {
+        "any": "https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_on",
+        "mysql": null,
+        "mariadb": "https://mariadb.com/kb/en/galera-cluster-system-variables/#wsrep_on",
+        "type": "boolean"
+    },
+    "log_bin": {
+        "any": "https://mariadb.com/kb/en/replication-and-binary-log-system-variables/#log_bin",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/replication-options-binary-log.html#option_mysqld_log-bin",
+        "mariadb": "https://mariadb.com/kb/en/replication-and-binary-log-system-variables/#log_bin",
+        "type": "file name"
+    },
+    "general_log": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#general_log",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_general_log",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#general_log",
+        "type": "boolean"
+    },
+    "version": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#version",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_version",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#version",
+        "type": null
+    },
+    "gtid_mode": {
+        "any": "https://dev.mysql.com/doc/refman/8.0/en/replication-options-gtids.html#sysvar_gtid_mode",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/replication-options-gtids.html#sysvar_gtid_mode",
+        "mariadb": null,
+        "type": "enumeration"
+    },
+    "aurora_lab_mode": {
+        "any": null,
+        "mysql": null,
+        "mariadb": null,
+        "type": null
+    },
+    "not_a_variable": {
+        "any": null,
+        "mysql": null,
+        "mariadb": null,
+        "type": null
+    },
+    "Innodb_buffer_pool_pages_data": {
+        "any": "https://mariadb.com/kb/en/innodb-status-variables/#innodb_buffer_pool_pages_data",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Innodb_buffer_pool_pages_data",
+        "mariadb": "https://mariadb.com/kb/en/innodb-status-variables/#innodb_buffer_pool_pages_data",
+        "type": null
+    },
+    "tx_isolation": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#tx_isolation",
+        "mysql": "https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_tx_isolation",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#tx_isolation",
+        "type": "enumeration"
+    },
+    "default_storage_engine": {
+        "any": "https://mariadb.com/kb/en/server-system-variables/#default_storage_engine",
+        "mysql": "https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html#sysvar_default_storage_engine",
+        "mariadb": "https://mariadb.com/kb/en/server-system-variables/#default_storage_engine",
+        "type": "enumeration"
+    },
+    "AuroraDb_commits": {
+        "any": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Reference.ParameterGroups.html#AuroraMySQL.Reference.GlobalStatusVars",
+        "mysql": "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Reference.ParameterGroups.html#AuroraMySQL.Reference.GlobalStatusVars",
+        "mariadb": null,
+        "type": "integer"
+    },
+    "__static_count": 486
+}

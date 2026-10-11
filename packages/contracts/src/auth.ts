@@ -43,5 +43,10 @@ export const LoginResponse = z.object({
 })
 export type LoginResponse = z.infer<typeof LoginResponse>
 
-export const LogoutResponse = z.object({ ok: z.literal(true), logoutUrl: z.string().nullable() })
+export const LogoutResponse = z.object({
+  ok: z.literal(true),
+  logoutUrl: z.string().nullable(),
+  /** Partial logout (LoginCookieDeleteAll=false): the other server still logged in, shown next. */
+  server: z.number().int().positive().nullable().optional(),
+})
 export type LogoutResponse = z.infer<typeof LogoutResponse>

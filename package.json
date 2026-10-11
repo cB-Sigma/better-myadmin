@@ -16,7 +16,7 @@
     "test:int": "vitest run --project int",
     "test:watch": "vitest --project unit",
     "test:parity": "vitest run --project parity",
-    "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
+    "test:e2e": "pnpm --filter @bettermyadmin/web build && playwright test -c tests/e2e/playwright.config.ts",
     "i18n:import": "pnpm --filter @bettermyadmin/i18n run import",
     "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity",
     "upstream:check": "tsx tools/upstream/check.ts"

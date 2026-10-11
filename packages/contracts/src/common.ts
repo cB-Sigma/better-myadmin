@@ -39,7 +39,4 @@ export type ErrorEnvelope = z.infer<typeof ErrorEnvelope>
 export const Cell = z.union([z.null(), z.string(), z.object({ b64: z.string(), bytes: z.number().int() })])
 export type Cell = z.infer<typeof Cell>
 
-/** Name of the header carrying the double-submit CSRF token. */
-export const CSRF_HEADER = 'X-BMA-Token'
-export const CSRF_COOKIE = 'bma_token'
-export const SESSION_COOKIE = 'bma_sid'
+export { CSRF_COOKIE, CSRF_HEADER, SESSION_COOKIE } from './constants.ts'

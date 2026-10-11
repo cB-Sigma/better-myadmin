@@ -4,6 +4,7 @@ import { createServerContext } from '@bettermyadmin/sql-lexer'
 import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { Conn, type ServerInfo } from './connection.ts'
+import { ControlConnections } from './control.ts'
 
 export interface Credentials {
   user: string
@@ -11,6 +12,8 @@ export interface Credentials {
   /** Overrides for an arbitrary server login. */
   host?: string
   port?: number
+  /** DefaultConnectionCollation for this login (home page selector); overrides the configured one. */
+  collation?: string
 }
 
 /** Map Servers[i] to mysql2 options. pma: src/Config.php::getConnectionParams, src/Dbal/DbiMysqli.php::connect */
@@ -56,7 +59,8 @@ export function versionInt(version: string): number {
 /**
  * Connection set-up, in phpMyAdmin's order: postConnect (version probe, SET NAMES with the default
  * collation, lc_messages, time zone) then setCollation with the configured connection collation.
- * pma: src/Dbal/DatabaseInterface.php::postConnect, ::setCollation
+ * pma: src/Dbal/DatabaseInterface.php::postConnect, ::setCollation,
+ *      src/Config/UserPreferencesHandler.php::setConnectionCollation
  */
 export async function postConnect(
   conn: Conn,
@@ -82,10 +86,14 @@ export async function postConnect(
       .query(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`, 'connect.tz')
       .catch(() => {})
   }
-  // automatically adjust collation if not supported by server
-  const coll =
-    charset === 'utf8' && collation.startsWith('utf8mb4_') ? `utf8_${collation.slice(8)}` : collation
-  await conn.query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation').catch(() => {})
+  // UserPreferencesHandler::setConnectionCollation: nothing to do for '' or the SET NAMES collation
+  const defaultCollation = v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'
+  if (collation !== '' && collation !== defaultCollation) {
+    // automatically adjust collation if not supported by server
+    const coll =
+      charset === 'utf8' && collation.startsWith('utf8mb4_') ? `utf8_${collation.slice(8)}` : collation
+    await conn.query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation').catch(() => {})
+  }
   return {
     version,
     versionInt: v,
@@ -112,9 +120,12 @@ interface PoolEntry {
 export class PoolManager {
   readonly #pools = new Map<string, PoolEntry>()
   readonly #cfg: AppConfig
+  /** The configuration-storage (control user) links. */
+  readonly control: ControlConnections
 
   constructor(cfg: AppConfig) {
     this.#cfg = cfg
+    this.control = new ControlConnections(cfg)
   }
 
   server(index: number): ServerConfig {
@@ -141,7 +152,7 @@ export class PoolManager {
     serverIndex: number,
     creds: Credentials,
     log: Executed[],
-    collation = this.#cfg.DefaultConnectionCollation,
+    collation = creds.collation ?? this.#cfg.DefaultConnectionCollation,
     /** The request language's MySQL locale (Language::getMySQLLocale), '' sends nothing. */
     mysqlLocale = 'en_US',
   ): Promise<Conn> {
@@ -209,6 +220,7 @@ export class PoolManager {
       if (serverIndex !== undefined && entry.serverIndex !== serverIndex) continue
       await this.#endEntry(key, entry)
     }
+    await this.control.dropSession(sessionId, serverIndex)
   }
 
   /** Evicts pools idle for longer than LoginCookieValidity. */
@@ -221,6 +233,7 @@ export class PoolManager {
 
   async closeAll(): Promise<void> {
     for (const [key, entry] of this.#pools) await this.#endEntry(key, entry)
+    await this.control.closeAll()
   }
 
   async #endEntry(key: string, entry: PoolEntry): Promise<void> {

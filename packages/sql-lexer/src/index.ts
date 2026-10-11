@@ -90,4 +90,17 @@ export {
 
 // Errors & linting
 export { getErrors, formatErrors, type ErrorEntry } from './utils/Error.ts'
-export { lint, getLines, findLineNumberAndColumn, type LintMessage } from './utils/Linter.ts'
+export {
+  lint,
+  lintQuery,
+  getLines,
+  findLineNumberAndColumn,
+  EDITOR_SQL_PREFIX,
+  LINT_MSGIDS,
+  type LintMessages,
+  type LintMessage,
+  type LintEditorType,
+} from './utils/Linter.ts'
+
+// Formatting (Utils/Formatter.php, the Format buttons)
+export { Formatter, formatSql, type FormatterOptions, type FormatRule } from './utils/Formatter.ts'

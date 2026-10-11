@@ -37,7 +37,10 @@
   why: Read by phpMyAdmin while rendering the results grid (relations) — arrives in M1.
 - tool: pma
   pattern: "^SELECT @@have_profiling$"
-  why: Profiling checkbox rendering — arrives in M1.
+  why: Profiling::isSupported is cached per session (SessionCache); phpMyAdmin first asks while rendering other pages.
+- tool: bma
+  pattern: "^SELECT @@have_profiling$"
+  why: Profiling::isSupported, cached per session like SessionCache; asked the first time a Refresh-able card is built.
 - tool: pma
   pattern: "^SELECT 1 FROM mysql\\.user LIMIT 1$"
   why: isSuperUser for the menu; BetterMyAdmin evaluates it only for the DROP DATABASE guard.
@@ -74,3 +77,39 @@
 - tool: pma
   pattern: "^SHOW GRANTS FOR CURRENT_USER\\(\\)$"
   why: Menu privilege checks (isGrantUser/isCreateUser) for restricted accounts.
+- tool: pma
+  pattern: "^SHOW TABLES FROM `[^`]+`$"
+  why: DbTableExists checks the database the request ends in (e.g. after USE in import mode) while rendering the menu.
+- tool: pma
+  pattern: "^SELECT 1 FROM `par_db`\\.`[^`]+` LIMIT 1$"
+  why: DbTableExists::hasTable for a table-scope request; BetterMyAdmin validates scope lazily.
+- tool: pma
+  pattern: "^SELECT `CATALOG_NAME` FROM `information_schema`\\.`SCHEMATA` WHERE `SCHEMA_NAME` = "
+  why: phpMyAdmin probes the configuration storage database while rendering; pmadb discovery is cached per session.
+- tool: bma
+  pattern: "^SELECT 1 FROM mysql\\.user LIMIT 1$"
+  why: isSuperUser for the DROP DATABASE guard; phpMyAdmin answers it from SessionCache filled while rendering earlier pages.
+- tool: bma
+  pattern: "^SHOW TABLES FROM `phpmyadmin`$"
+  why: Configuration-storage discovery (Relation::initRelationParamsCache / checkRelationsParam). phpMyAdmin runs it on every request on its control link, which the reference instance logs under its controluser `pma`; the BetterMyAdmin server of sql-box.parity has no controluser, so its control link uses the test user's credentials, once per session.
+- tool: bma
+  pattern: "^SELECT NULL FROM `pma__[a-z_]+` LIMIT 0$"
+  why: Same discovery (Relation::canAccessStorageTable probes), on the user's credentials when no controluser is configured.
+- tool: bma
+  pattern: "^SHOW COLUMNS FROM `phpmyadmin`\\.`pma__column_info` WHERE Field IN "
+  why: Same discovery (Relation::tryUpgradeTransformations), on the user's credentials when no controluser is configured.
+- tool: bma
+  pattern: "^SELECT `config_data`, UNIX_TIMESTAMP\\(`timevalue`\\) ts FROM `phpmyadmin`\\.`pma__userconfig` WHERE "
+  why: UserPreferences::load — phpMyAdmin reads it through its control user on every request, BetterMyAdmin once per session (on the user's credentials when no controluser is configured).
+- tool: bma
+  pattern: "^SELECT CREATE_TIME FROM information_schema\\.TABLES WHERE TABLE_SCHEMA = "
+  why: Table::getStatusInfo('CREATE_TIME') for the UI-preferences check; phpMyAdmin reads it with getTablesFull's `SELECT *, TABLE_SCHEMA AS Db` query (allow-listed for pma above), BetterMyAdmin reads only that column (same value).
+- tool: bma
+  pattern: "^SELECT `tables` FROM `phpmyadmin`\\.`pma__recent` WHERE `username` = "
+  why: RecentFavoriteTables::getFromDb for RecentTableHandling (a request with db + table). phpMyAdmin reads it on its control link (the reference's controluser `pma`, not logged for the test user); the parity server has no controluser, so the read uses the test user's link, once per session.
+- tool: bma
+  pattern: "^SELECT 1 FROM `par_db`\\.`[^`]+` LIMIT 1;?$"
+  why: DbTableExists::hasTable before RecentTableHandling adds the table (phpMyAdmin checks the same table while rendering, allowed for pma above).
+- tool: bma
+  pattern: "^SHOW TABLES FROM `par_db`$"
+  why: ZeroConf configuration-storage discovery in the current database (Relation::fixPmaTables) when the user cannot use the `phpmyadmin` storage; phpMyAdmin runs it on every request (allowed for pma above), BetterMyAdmin once per session.

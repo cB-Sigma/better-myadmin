@@ -62,8 +62,9 @@ test('expand a database, open a table, state restored after reload', async ({ pa
     '/s/1/db/m1nav_e2e/t/orders/structure',
   )
   await orders.getByRole('link', { name: 'orders', exact: true }).click()
-  await expect(page).toHaveURL(/\/s\/1\/db\/m1nav_e2e\/t\/orders\/$/)
-  await expect(page.getByTestId('scope-table')).toHaveText('Table: m1nav_e2e.orders')
+  // the table scope opens DefaultTabTable (Browse) and the breadcrumb names the table
+  await expect(page).toHaveURL(/\/s\/1\/db\/m1nav_e2e\/t\/orders\/browse$/)
+  await expect(page.locator('#server-breadcrumb')).toContainText('Table: orders')
   // link with main panel: the current table is highlighted
   await expect(orders).toHaveAttribute('aria-selected', 'true')
 

@@ -72,7 +72,7 @@ Measured on a mid-range laptop (4× CPU throttle in Lighthouse terms is *not* ap
 
 ## Measurement and CI gates
 
-- **Playwright performance suite** (`apps/web/e2e/perf/*.spec.ts`) runs against dockerized MySQL 8.4 with `sakila` + synthetic big tables, records traces, and asserts: route transition time (from click to `data-loaded` attribute), INP via the `web-vitals` library injected into the page, frame rate during a scripted scroll of the grid (`PerformanceObserver` long-frame count ≤ 2 per 5 s).
+- **Playwright performance suite** (`tests/e2e/perf/*.spec.ts`) runs against dockerized MySQL 8.4 with `sakila` + synthetic big tables, records traces, and asserts: route transition time (from click to `data-loaded` attribute), INP via the `web-vitals` library injected into the page, frame rate during a scripted scroll of the grid (`PerformanceObserver` long-frame count ≤ 2 per 5 s).
 - **Size gates**: `size-limit` on the initial chunk and on each lazy chunk.
 - **Server bench** (`apps/server/bench/*.ts`, autocannon): `/query` with 25 rows p95 ≤ 15 ms over the MySQL time; export throughput; import throughput.
 - **Lighthouse CI** on login and home pages: performance ≥ 95.

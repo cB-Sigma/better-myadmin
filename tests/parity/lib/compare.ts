@@ -106,3 +106,49 @@ export function compareLogs(
   }
   return { ok: problems.length === 0, pma, bma, problems }
 }
+
+/**
+ * Comparison for configuration-storage actions. Writes must be identical and in the same order.
+ * Reads are compared as a multiset inclusion: every read BetterMyAdmin sends, phpMyAdmin sent
+ * too (phpMyAdmin additionally re-probes the storage and reads preferences, menus and lists on
+ * every request to render its pages; BetterMyAdmin caches them per session). BetterMyAdmin-only
+ * reads must be listed in allowed-diffs.yaml. Timestamps are masked.
+ */
+export function compareMetadataLogs(
+  pmaLog: LogEntry[],
+  bmaLog: LogEntry[],
+  dbMap: Record<string, string>,
+): Comparison {
+  const problems: string[] = []
+  // timestamps masked; a leading comment (phpMyAdmin's `/*NOTRACK*/` tracking probes) is not part
+  // of the statement kind
+  const ts = (s: string) =>
+    s
+      .replace(/'\d{4}-\d\d-\d\d \d\d:\d\d:\d\d'/g, "'<TS>'")
+      .replace(/^(\/\*[\s\S]*?\*\/\s*)+(?=SELECT\b)/i, '')
+  const pma = pmaLog.map((e) => ts(normalise(e.sql, dbMap)))
+  const bma = bmaLog
+    .map((e) => ts(normalise(e.sql, dbMap)))
+    .filter((s) => {
+      const hit = allowedDiffs.find((a) => a.tool === 'bma' && a.re.test(s))
+      if (hit !== undefined && classify(s) === 'write') {
+        problems.push(`allowed-diffs pattern ${hit.pattern} matches a write: ${s}`)
+        return true
+      }
+      return hit === undefined
+    })
+  const writes = (xs: string[]) => xs.filter((s) => classify(s) === 'write')
+  const pw = writes(pma)
+  const bw = writes(bma)
+  if (pw.length !== bw.length || pw.some((x, i) => x !== bw[i])) {
+    problems.push(`writes differ:\n  pma: ${JSON.stringify(pw)}\n  bma: ${JSON.stringify(bw)}`)
+  }
+  const pool = new Map<string, number>()
+  for (const s of pma.filter((x) => classify(x) === 'read')) pool.set(s, (pool.get(s) ?? 0) + 1)
+  for (const s of bma.filter((x) => classify(x) === 'read')) {
+    const n = pool.get(s) ?? 0
+    if (n === 0) problems.push(`read not sent by phpMyAdmin: ${s}`)
+    else pool.set(s, n - 1)
+  }
+  return { ok: problems.length === 0, pma, bma, problems }
+}

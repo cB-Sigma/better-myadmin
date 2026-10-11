@@ -32,7 +32,14 @@ async function withDeps<T>(c: Context<ServerEnv>, fn: (deps: NavServiceDeps) => 
   const login = session.servers[String(serverIndex)]
   if (server === undefined || login === undefined) throw new ValidationError('Invalid server index!')
   login.cache ??= {}
-  const conn = await pools.acquire(session.id, serverIndex, c.get('creds'), c.get('executed'))
+  const conn = await pools.acquire(
+    session.id,
+    serverIndex,
+    c.get('creds'),
+    c.get('executed'),
+    undefined,
+    c.get('language').mysqlLocale,
+  )
   try {
     const base = { cfg, server, conn, cache: login.cache }
     return await fn({ ...base, hiding: navigationHiding(base) })

@@ -12,6 +12,16 @@ export class PmaClient {
     this.base = base.replace(/\/$/, '')
   }
 
+  /** GET a page as HTML, redirects followed (no JavaScript runs, so the menu is not collapsed). */
+  get(path: string): Promise<string> {
+    return this.#req(path)
+  }
+
+  /** POST a form the way the page's own forms do (token + server added), optionally over AJAX. */
+  post(path: string, form: Record<string, string>, ajax = false): Promise<string> {
+    return this.#req(path, { token: this.token, server: '1', ...form }, ajax)
+  }
+
   async #req(path: string, form?: Record<string, string>, ajax = false): Promise<string> {
     const headers: Record<string, string> = {}
     if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
@@ -37,6 +47,25 @@ export class PmaClient {
       )
     }
     return res.text()
+  }
+
+  /** Raw request: GET without a form, POST (urlencoded, optionally as XHR) with one. Follows redirects. */
+  request(path: string, form?: Record<string, string>, ajax = false): Promise<string> {
+    return this.#req(path, form, ajax)
+  }
+
+  /** POST a form with the session token and server, as phpMyAdmin's AJAX forms do; parses the JSON reply. */
+  async ajax(path: string, form: Record<string, string> = {}): Promise<Record<string, unknown>> {
+    const body = await this.#req(
+      path,
+      { server: '1', token: this.token, ajax_request: 'true', ...form },
+      true,
+    )
+    try {
+      return JSON.parse(body) as Record<string, unknown>
+    } catch {
+      throw new Error(`phpMyAdmin did not answer JSON for ${path}: ${body.slice(0, 300)}`)
+    }
   }
 
   /** `lang` picks the language like the login page's selector (?lang=xx, then the pma_lang cookie). */
@@ -82,31 +111,98 @@ export class PmaClient {
     db = '',
     table = '',
     delimiter = ';',
-  ): Promise<{ success: boolean; message?: string; error?: string }> {
-    const body = await this.#req(
-      '/index.php?route=/import',
-      {
-        route: '/import',
-        server: '1',
-        db,
-        table,
-        token: this.token,
-        is_js_confirmed: '0',
-        pos: '0',
-        goto: db === '' ? '/server/sql' : table === '' ? '/database/sql' : '/table/sql',
-        message_to_show: 'Your SQL query has been executed successfully.',
-        prev_sql_query: '',
-        sql_query: sql,
-        sql_delimiter: delimiter,
-        fk_checks: '1',
-        SQL: 'Go',
-        ajax_request: 'true',
-        ajax_page_request: 'true',
-      },
-      true,
-    )
+    extra: Record<string, string | null> = {},
+  ): Promise<{ success: boolean; message?: string; error?: string } & Record<string, unknown>> {
+    const form: Record<string, string> = {
+      route: '/import',
+      server: '1',
+      db,
+      table,
+      token: this.token,
+      is_js_confirmed: '0',
+      pos: '0',
+      goto: db === '' ? '/server/sql' : table === '' ? '/database/sql' : '/table/sql',
+      message_to_show: 'Your SQL query has been executed successfully.',
+      prev_sql_query: '',
+      sql_query: sql,
+      sql_delimiter: delimiter,
+      fk_checks: '1',
+      SQL: 'Go',
+      ajax_request: 'true',
+      ajax_page_request: 'true',
+    }
+    // `null` removes a default field
+    for (const [k, v] of Object.entries(extra)) {
+      if (v === null) delete form[k]
+      else form[k] = v
+    }
+    const body = await this.#req('/index.php?route=/import', form, true)
     return JSON.parse(body) as { success: boolean; message?: string; error?: string }
   }
+
+  /** Any AJAX POST to a phpMyAdmin route (index.php?route=...), JSON response. */
+  async postRoute(route: string, form: Record<string, string>): Promise<Record<string, unknown>> {
+    const body = await this.#req(
+      `/index.php?route=${route}`,
+      { route, server: '1', token: this.token, ajax_request: 'true', ...form },
+      true,
+    )
+    return JSON.parse(body) as Record<string, unknown>
+  }
+
+  /** Any AJAX GET (JSON response). */
+  async getRoute(route: string, params: Record<string, string> = {}): Promise<Record<string, unknown>> {
+    const q = new URLSearchParams({ route, server: '1', ajax_request: 'true', ...params })
+    const body = await this.#reqAjaxGet(`/index.php?${q}`)
+    return JSON.parse(body) as Record<string, unknown>
+  }
+
+  /** HTML of a full page (GET). */
+  async routePage(route: string, params: Record<string, string> = {}): Promise<string> {
+    const q = new URLSearchParams({ route, server: '1', ...params })
+    return this.#req(`/index.php?${q}`)
+  }
+
+  #reqAjaxGet(path: string): Promise<string> {
+    return this.#req(path, undefined, true)
+  }
+}
+
+/** Tab labels of `ul#topmenu` (templates/menu/main.twig), in order, without "(current)". */
+export function menuTabs(html: string): string[] {
+  const m = html.match(/<ul id="topmenu"[^>]*>([\s\S]*?)<\/ul>/)
+  if (m === null) return []
+  return [...m[1]!.matchAll(/<li class="nav-item[^"]*">([\s\S]*?)<\/li>/g)].map((li) =>
+    visibleText(li[1]!).replace(/\s*\(current\)$/, ''),
+  )
+}
+
+/** The breadcrumb items and the comment of `nav#server-breadcrumb`. */
+export function breadcrumb(html: string): { items: string[]; comment: string } {
+  const m = html.match(/<nav id="server-breadcrumb"[\s\S]*?<\/nav>/)
+  if (m === null) return { items: [], comment: '' }
+  const items = [...m[0].matchAll(/<li class="breadcrumb-item">([\s\S]*?)<\/li>/g)].map((x) =>
+    visibleText(x[1]!),
+  )
+  const c = m[0].match(/<span class="breadcrumb-comment"[^>]*>([\s\S]*?)<\/span>/)
+  return { items, comment: c === null ? '' : visibleText(c[1]!).replace(/^“|”$/g, '') }
+}
+
+/** The `list-group-item` texts of the home-page card with this header. */
+export function homeCard(html: string, header: string): string[] {
+  const start = html.search(new RegExp(`card-header">\\s*${header}\\s*</div>`))
+  if (start === -1) return []
+  const end = html.indexOf('</ul>', start)
+  return [
+    ...html.slice(start, end).matchAll(/<li[^>]*class="list-group-item[^"]*"[^>]*>([\s\S]*?)<\/li>/g),
+  ].map((x) => visibleText(x[1]!))
+}
+
+/** The warning/notice alerts of the home page (HomeController::$errors), as visible text. */
+export function homeWarnings(html: string): string[] {
+  return [
+    ...html.matchAll(/<div class="alert (?:alert-warning|alert-info)" role="alert">([\s\S]*?)<\/div>/g),
+  ].map((x) => visibleText(x[1]!))
 }
 
 /** Visible text of an HTML fragment, whitespace-collapsed. */

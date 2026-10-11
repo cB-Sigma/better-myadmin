@@ -100,11 +100,11 @@ Zustand stores, one per concern, tiny and serializable:
 | Store | Holds | Persistence |
 |---|---|---|
 | `NavTreeStore` (`features/navigation/store.ts`) | expanded branches and their positions, fast-filter texts, loaded branches, selection, "link with main panel" | expanded paths + positions in `sessionStorage.navTreePaths`, filter texts in `sessionStorage.navTreeSearchFilters` (phpMyAdmin's keys and semantics: restored only for the same server and session token); panel width in `localStorage` until the preferences API lands (phpMyAdmin: `navigation/update-width`) |
-| `useConsoleStore` | open/closed, height, active tab, history (with status/time), options (`AlwaysExpand`, `CurrentQuery`, `EnterExecutes`, `DarkTheme`) | localStorage + server `console/update-config` (pmadb userconfig) to match pMA |
-| `useThemeStore` | theme id, color mode | localStorage + cookie (so the server can preselect for printing) |
+| `useConsoleStore` | open/closed, height, active tab, history (with status/time), options (`AlwaysExpand`, `CurrentQuery`, `EnterExecutes`, `DarkTheme`) | server `console/update-config` → user preferences (configuration storage or session), as in pMA |
+| `useThemeState` (`features/shell/theme`) | theme id, color mode per `ThemePerServer` key (`bma_theme[-N]`, `…_color`) | localStorage + cookie mirror, read by `public/theme-init.js` before first paint |
 | `useGridPrefsStore` | per-table column order/visibility/width (mirrors `table_uiprefs`) | server when `uiprefswork`, else localStorage |
 | `useSelectionStore` (per grid instance) | checked rows, last clicked index for shift-click | none |
-| `useHotkeyStore` | current scope for shortcuts, help overlay open | none |
+| `ShortcutMachine` (`features/shell/hotkeys`) | pending `D`/`T` chords, help overlay open | none |
 
 Everything else is either server state (Query) or URL state (Router).
 
@@ -136,7 +136,7 @@ The most important component. Requirements are enumerated in [Browse / results g
 
 ## SQL editor (`SqlEditor`)
 
-CodeMirror 6 wrapped in a component that reproduces phpMyAdmin's editor UX: `Ctrl+Enter` run (or `Enter` when `ConsoleEnterExecutes` in the console), `Ctrl+Space` autocomplete, lint gutter from the worker, fullscreen toggle, "Format" via `sql-formatter`, "Clear", `Get auto-saved query` (localStorage autosave per scope, same key semantics), parameter binding detection (`:name` highlighted when "Bind parameters" is on), delimiter input, the right-hand "Columns" list with `<<` insertion for the current table, snippet buttons (`SELECT *`, `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CLEAR`, `FORMAT`) producing the same templates. Details: [SQL editor and query pipeline](../features/09-sql-editor-query-pipeline.md).
+CodeMirror 6 wrapped in a component that reproduces phpMyAdmin's editor UX: `Ctrl+Enter` run (or `Enter` when `ConsoleEnterExecutes` in the console), `Ctrl+Space` autocomplete, lint gutter from the worker, "Format" / "Format as a single line" via `POST /sql/format` (the ported `phpmyadmin/sql-parser` Formatter), "Clear", `Get auto-saved query` (localStorage autosave per scope, same key semantics), parameter binding detection (`:name` highlighted when "Bind parameters" is on), delimiter input, the right-hand "Columns" list with `<<` insertion for the current table, snippet buttons (`SELECT *`, `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `CLEAR`, `FORMAT`) producing the same templates. Details: [SQL editor and query pipeline](../features/09-sql-editor-query-pipeline.md).
 
 ## Navigation tree
 
@@ -156,7 +156,7 @@ Tokens as CSS variables on `:root`, four built-in themes ported from phpMyAdmin 
 
 ## Keyboard
 
-A single `useHotkeys` layer with scopes (`global`, `grid`, `editor`, `tree`, `dialog`). phpMyAdmin's shortcuts (`keyhandler.ts`, `shortcuts_handler.ts`: `Ctrl+Alt+H` home, `Ctrl+Alt+D` database structure, `Ctrl+Alt+T` table structure, `Ctrl+Alt+S` SQL, `Ctrl+Alt+F` filter, `Ctrl+Alt+?` help, `Ctrl+Alt+B` back, `Ctrl+Alt+Left/Right` page nav, Esc to close dialogs) are bound as-is and listed in the same help overlay; the full table is in the shell feature doc.
+A single shortcut layer (`features/shell/hotkeys`): phpMyAdmin's `shortcuts_handler.ts` reproduced as a tested state machine — `K` / `Ctrl+K` / `Ctrl+Alt+C` console toggle (dispatched as the `bma:console-toggle` window event), `S` navigation settings (`bma:navigation-settings` when the panel has no settings icon), `D`/`T` then `S` / `F` structure / search (2 s chord window), `E` export, `H` home, `Backspace` back — plus `Ctrl+Enter`/`Alt+Enter` form submit, `Esc` closing dialogs, and our addition `?` for a help overlay listing them. Shortcuts pause while a dialog is open. It is the only key binding for the console: the console listens for `bma:console-toggle` and toggles from the state the previous toggle left, so `Ctrl+K` outside form fields toggles twice like phpMyAdmin (Q45); CodeMirror 6 editors count as the textarea of phpMyAdmin's CodeMirror 5 editors. The full table is in the shell feature doc.
 
 ## i18n
 
