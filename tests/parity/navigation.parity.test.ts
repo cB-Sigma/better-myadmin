@@ -382,6 +382,9 @@ describe.skipIf(!reachable)('parity: navigation tree (/navigation vs /navigation
       const bma = testApp(testConfig(c.cfg ?? {}, c.server ?? {}))
       try {
         await bma.login(BMA_USER, BMA_USER)
+        // phpMyAdmin's login renders the home page: let its statements reach the log first
+        await log.settle(PMA_USER)
+        await log.settle(BMA_USER)
 
         const m1 = await log.marker()
         const pr = await pma.navigation(pmaParams(c))

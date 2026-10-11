@@ -156,7 +156,7 @@ Tokens as CSS variables on `:root`, four built-in themes ported from phpMyAdmin 
 
 ## Keyboard
 
-A single shortcut layer (`features/shell/hotkeys`): phpMyAdmin's `shortcuts_handler.ts` reproduced as a tested state machine — `K` / `Ctrl+K` / `Ctrl+Alt+C` console toggle (dispatched as the `bma:console-toggle` window event), `S` navigation settings (`bma:navigation-settings` when the panel has no settings icon), `D`/`T` then `S` / `F` structure / search (2 s chord window), `E` export, `H` home, `Backspace` back — plus `Ctrl+Enter`/`Alt+Enter` form submit, `Esc` closing dialogs, and our addition `?` for a help overlay listing them. Shortcuts pause while a dialog is open. The full table is in the shell feature doc.
+A single shortcut layer (`features/shell/hotkeys`): phpMyAdmin's `shortcuts_handler.ts` reproduced as a tested state machine — `K` / `Ctrl+K` / `Ctrl+Alt+C` console toggle (dispatched as the `bma:console-toggle` window event), `S` navigation settings (`bma:navigation-settings` when the panel has no settings icon), `D`/`T` then `S` / `F` structure / search (2 s chord window), `E` export, `H` home, `Backspace` back — plus `Ctrl+Enter`/`Alt+Enter` form submit, `Esc` closing dialogs, and our addition `?` for a help overlay listing them. Shortcuts pause while a dialog is open. It is the only key binding for the console: the console listens for `bma:console-toggle` and toggles from the state the previous toggle left, so `Ctrl+K` outside form fields toggles twice like phpMyAdmin (Q45); CodeMirror 6 editors count as the textarea of phpMyAdmin's CodeMirror 5 editors. The full table is in the shell feature doc.
 
 ## i18n
 

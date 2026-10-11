@@ -73,7 +73,7 @@ test.describe('SQL tab', () => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT * FROM t')
     await page.keyboard.press('Control+Enter')
-    await expect(page.getByText(/Showing rows 0 - 2 \(3 total, Query took/)).toBeVisible()
+    await expect(page.getByText(/Showing rows 0\s+-\s+2 \(3 total, Query took/)).toBeVisible()
     await expect(page.locator('#togglequerybox')).toHaveText('Show query box')
     await page.locator('#togglequerybox').click()
     await page.locator('#retain_query_box').check()
@@ -157,7 +157,7 @@ test.describe('SQL tab', () => {
     await page.locator('#param_id').fill('2')
     await page.locator('#param_name').fill('c')
     await page.locator('#button_submit_query').click()
-    await expect(page.getByText(/Showing rows 0 - 1 \(2 total/)).toBeVisible()
+    await expect(page.getByText(/Showing rows 0\s+-\s+1 \(2 total/)).toBeVisible()
     await page.locator('#togglequerybox').click()
     await page.locator('#clear').click()
     await page.locator('#saved').click()
@@ -169,7 +169,7 @@ test.describe('SQL tab', () => {
     await setQuery(page, 'SELECT * FROM t WHERE id = 1')
     await page.keyboard.press('Control+Enter')
     const card = page.locator('.result_query').first()
-    await expect(card).toContainText('Showing rows 0 - 0 (1 total')
+    await expect(card).toContainText(/Showing rows 0\s+-\s+0 \(1 total/)
     // inline editor: Ctrl+Enter saves, the FK checkbox comes from /sql/default-fk-check
     await card.getByText('Edit inline', { exact: true }).click()
     await expect(page.getByText('Enable foreign key checks').last()).toBeVisible()
@@ -178,7 +178,7 @@ test.describe('SQL tab', () => {
     await page.keyboard.press('ControlOrMeta+a')
     await page.keyboard.insertText('SELECT * FROM t WHERE id > 1')
     await page.keyboard.press('Control+Enter')
-    await expect(page.locator('.result_query').first()).toContainText('Showing rows 0 - 1 (2 total')
+    await expect(page.locator('.result_query').first()).toContainText(/Showing rows 0\s+-\s+1 \(2 total/)
     // Explain SQL runs EXPLAIN <query>
     await page.locator('.result_query .tools').first().getByText('Explain SQL', { exact: true }).click()
     await expect(page.locator('.result_query').first()).toContainText('EXPLAIN SELECT * FROM t WHERE id > 1')
@@ -204,6 +204,17 @@ test.describe('console', () => {
     await page.goto('/')
     await page.evaluate(() => window.localStorage.clear())
     await login(page)
+    // the console options are user preferences (the e2e server's local store): start from defaults
+    await page.evaluate(async () => {
+      const token = document.cookie
+        .split('; ')
+        .find((c) => c.startsWith('bma_token='))
+        ?.slice('bma_token='.length)
+      await fetch('/api/servers/1/prefs/reset', {
+        method: 'POST',
+        headers: { 'X-BMA-Token': decodeURIComponent(token ?? '') },
+      })
+    })
   })
 
   test('runs queries, keeps them as messages, keys and options', async ({ page }) => {
@@ -218,7 +229,7 @@ test.describe('console', () => {
     const entry = messages.locator('.message[data-state="successed"]').last()
     await expect(entry).toContainText('SELECT name FROM t WHERE id = 2')
     // the results go to the main panel
-    await expect(page.getByText(/Showing rows 0 - 0 \(1 total/)).toBeVisible()
+    await expect(page.getByText(/Showing rows 0\s+-\s+0 \(1 total/)).toBeVisible()
     // history with the arrow keys
     await input.click()
     await page.keyboard.press('ArrowUp')

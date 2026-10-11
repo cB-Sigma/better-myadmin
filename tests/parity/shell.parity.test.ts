@@ -59,7 +59,7 @@ const reads = (log: LogEntry[]) =>
 /** BetterMyAdmin-only reads, each justified (see also tests/parity/allowed-diffs.yaml). */
 const BMA_ONLY = [
   // the M0 login verifies the credentials on a throw-away connection (auth/cookie.ts probe)
-  /^SELECT version, version_comment$/,
+  /^SELECT (@@)?version, (@@)?version_comment$/,
   // Table::isView/getComment read TABLE_TYPE/TABLE_COMMENT from getTablesFull's cache in phpMyAdmin
   /^SELECT TABLE_TYPE, TABLE_COMMENT FROM information_schema\.TABLES WHERE /,
 ]
