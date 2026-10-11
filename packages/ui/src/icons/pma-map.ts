@@ -63,6 +63,7 @@ import {
   Trash2,
   Upload,
   User,
+  UserPlus,
   Variable,
   Wrench,
   X,
@@ -173,6 +174,7 @@ export const pmaIcons = {
   centralColumns_add: Plus,
   b_usrcheck: Shield,
   b_usredit: Pencil,
+  b_usradd: UserPlus,
 } satisfies Record<string, LucideIcon>
 
 export type PmaIconName = keyof typeof pmaIcons

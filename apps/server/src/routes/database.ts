@@ -2,12 +2,14 @@ import {
   AddPrefixRequest,
   BulkFkRequest,
   BulkTablesRequest,
+  CentralColumnsRequest,
   CopyTablesRequest,
   DbCollationRequest,
   DbCommentRequest,
   DbRenameCopyRequest,
   DbSearchRequest,
   DbStructureQuery,
+  DbTrackingRequest,
   EventSaveRequest,
   MaintenanceRequest,
   ReplacePrefixRequest,
@@ -27,10 +29,22 @@ import {
   replacePrefix,
   showCreate,
 } from '../database/bulk.ts'
+import {
+  centralAddTables,
+  centralColumnsAction,
+  centralColumnsEditRows,
+  centralColumnsPage,
+  centralColumnsPick,
+  centralColumnsPopulate,
+  centralMakeConsistent,
+  centralRemoveTables,
+} from '../database/central-columns.ts'
 import { parse, withDb } from '../database/context.ts'
+import { dataDictionary } from '../database/data-dictionary.ts'
 import { eventData, eventsList, exportEvent, saveEvent } from '../database/events.ts'
 import { multiTableForm, multiTableKeys } from '../database/multi-table.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
+import { dbPrivileges } from '../database/privileges.ts'
 import {
   executeForm,
   executeRoutine,
@@ -41,6 +55,7 @@ import {
 } from '../database/routines.ts'
 import { search, searchForm } from '../database/search.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
+import { trackingAction, trackingPage } from '../database/tracking.ts'
 import { exportTrigger, saveTrigger, triggerData, triggersList } from '../database/triggers.ts'
 import type { ServerEnv } from './server.ts'
 
@@ -242,3 +257,66 @@ databaseRoutes.get('/:db/multi-table-query', async (c) => c.json(await withDb(c,
 databaseRoutes.get('/:db/multi-table-query/tables', async (c) =>
   c.json(await withDb(c, (ctx) => multiTableKeys(ctx, c.req.queries('tables') ?? []))),
 )
+
+// ---------------------------------------------------------------- Central columns
+
+/** pma: /database/central-columns (main; `pos` / `total_rows`) */
+databaseRoutes.get('/:db/central-columns', async (c) =>
+  c.json(
+    await withDb(c, (ctx) =>
+      centralColumnsPage(ctx, { pos: c.req.query('pos'), totalRows: c.req.query('total_rows') }),
+    ),
+  ),
+)
+
+/** pma: /database/central-columns (add_new_column, edit_save, multi_edit_central_column_save, add_column, delete_save) */
+databaseRoutes.post('/:db/central-columns', async (c) => {
+  const req = parse(CentralColumnsRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => centralColumnsAction(ctx, req)))
+})
+
+/** pma: /database/central-columns edit_central_columns_page (selected_fld[]) */
+databaseRoutes.get('/:db/central-columns/edit', async (c) =>
+  c.json(await withDb(c, (ctx) => centralColumnsEditRows(ctx, c.req.queries('columns') ?? []))),
+)
+
+/** pma: /database/central-columns/populate (selectedTable) */
+databaseRoutes.get('/:db/central-columns/populate', async (c) =>
+  c.json(await withDb(c, (ctx) => centralColumnsPopulate(ctx, c.req.query('table') ?? ''))),
+)
+
+/** pma: /database/central-columns getColumnList (cur_table) */
+databaseRoutes.get('/:db/central-columns/list', async (c) =>
+  c.json(await withDb(c, (ctx) => centralColumnsPick(ctx, c.req.query('table') ?? ''))),
+)
+
+/** pma: /database/structure/central-columns/{add,remove,make-consistent} */
+databaseRoutes.post('/:db/structure/central-add', async (c) => {
+  const req = parse(BulkTablesRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => centralAddTables(ctx, req.tables)))
+})
+databaseRoutes.post('/:db/structure/central-remove', async (c) => {
+  const req = parse(BulkTablesRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => centralRemoveTables(ctx, req.tables)))
+})
+databaseRoutes.post('/:db/structure/central-make-consistent', async (c) => {
+  const req = parse(BulkTablesRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => centralMakeConsistent(ctx, req.tables)))
+})
+
+// ---------------------------------------------------------------- Data dictionary, privileges, tracking
+
+/** pma: /database/data-dictionary */
+databaseRoutes.get('/:db/data-dictionary', async (c) => c.json(await withDb(c, dataDictionary)))
+
+/** pma: /database/privileges */
+databaseRoutes.get('/:db/privileges', async (c) => c.json(await withDb(c, dbPrivileges)))
+
+/** pma: /database/tracking */
+databaseRoutes.get('/:db/tracking', async (c) => c.json(await withDb(c, trackingPage)))
+
+/** pma: /database/tracking (delete_tracking, submit_mult=delete_tracking, submit_create_version) */
+databaseRoutes.post('/:db/tracking', async (c) => {
+  const req = parse(DbTrackingRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => trackingAction(ctx, req)))
+})

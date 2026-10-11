@@ -115,6 +115,27 @@ export function isPhpArray(v: unknown): v is unknown[] | Record<string, unknown>
   return v !== null && typeof v === 'object'
 }
 
+/**
+ * PHP `serialize($value)` for the values phpMyAdmin stores (strings, ints, bools, null, arrays).
+ * JS arrays are PHP lists, plain objects are string-keyed arrays (integer-like keys become `i:`).
+ * pma: ext/standard/var.c::php_var_serialize_intern
+ */
+export function phpSerialize(value: unknown): string {
+  if (value === null || value === undefined) return 'N;'
+  if (typeof value === 'boolean') return `b:${value ? 1 : 0};`
+  if (typeof value === 'number') return Number.isInteger(value) ? `i:${value};` : `d:${value};`
+  if (typeof value === 'string') return `s:${new TextEncoder().encode(value).length}:"${value}";`
+  const key = (k: string) => (/^(0|-?[1-9][0-9]*)$/.test(k) ? `i:${k};` : phpSerialize(k))
+  if (Array.isArray(value)) {
+    return `a:${value.length}:{${value.map((v, i) => `i:${i};${phpSerialize(v)}`).join('')}}`
+  }
+  if (typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>)
+    return `a:${entries.length}:{${entries.map(([k, v]) => `${key(k)}${phpSerialize(v)}`).join('')}}`
+  }
+  throw new Error(`serialize: unsupported type ${typeof value}`)
+}
+
 /** `mb_strlen` for UTF-8 text: code points. */
 export function mbStrlen(s: string): number {
   let n = 0

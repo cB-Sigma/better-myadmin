@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { SqlMessage } from './table-structure.ts'
+import type { ColumnFormOptions, SqlMessage } from './table-structure.ts'
 
 /**
  * Database level pages (docs/features/05-database-level.md): Structure, Operations, Search,
@@ -453,4 +453,165 @@ export interface MultiTableKeysResponse {
     REFERENCED_TABLE_NAME: string
     REFERENCED_COLUMN_NAME: string
   }>
+}
+
+// ---------------------------------------------------------------- Data dictionary
+
+export interface DataDictionaryResponse {
+  db: string
+  comment: string
+  tables: Array<{
+    name: string
+    comment: string
+    hasRelation: boolean
+    hasMime: boolean
+    columns: Array<{
+      name: string
+      isPrimary: boolean
+      type: string
+      printType: string
+      isNullable: boolean
+      default: string | null
+      comment: string
+      relation: string
+      mime: string
+    }>
+    indexes: Array<{
+      name: string
+      type: string
+      unique: boolean
+      packed: string
+      comments: string
+      columns: Array<{
+        name: string
+        subPart: number | null
+        cardinality: number | null
+        collation: string | null
+        null: string
+      }>
+    }>
+  }>
+}
+
+// ---------------------------------------------------------------- Privileges (read-only)
+
+export interface DbPrivilegesResponse {
+  db: string
+  isSuperUser: boolean
+  isGrantUser: boolean
+  isCreateUser: boolean
+  error: string | null
+  notice: string | null
+  accounts: Array<{
+    user: string
+    host: string
+    privileges: Array<{
+      /** g = global, d = database, r = routine */
+      type: 'g' | 'd' | 'r'
+      database: string
+      routine: string | null
+      hasGrant: boolean
+      privileges: Array<{ name: string; title: string }>
+    }>
+  }>
+}
+
+// ---------------------------------------------------------------- Tracking (database scope)
+
+export interface DbTrackingResponse {
+  db: string
+  /** the tracking feature of the configuration storage is configured */
+  enabled: boolean
+  /** "No tables found in database." (no table and no database log) */
+  noTables: boolean
+  isSystemSchema: boolean
+  tracked: Array<{
+    table: string
+    version: string
+    created: string
+    updated: string
+    active: boolean
+  }>
+  untracked: string[]
+  /** the database log (`# date user\nstatement` per entry), null when empty */
+  log: string | null
+  /** tracking_default_statements */
+  defaultStatements: string
+}
+
+export const DbTrackingRequest = z.discriminatedUnion('action', [
+  z.object({ action: z.literal('delete'), tables: z.array(z.string()).min(1) }),
+  /** the Status toggle (phpMyAdmin posts it to /table/tracking toggle_activation) */
+  z.object({ action: z.literal('toggle'), table: z.string(), version: z.string(), active: z.boolean() }),
+  z.object({
+    action: z.literal('create-version'),
+    tables: z.array(z.string()).min(1),
+    version: z.string(),
+    /** the ticked statement checkboxes (alter_table, insert, …) */
+    statements: z.array(z.string()).default([]),
+  }),
+])
+export type DbTrackingRequest = z.output<typeof DbTrackingRequest>
+
+// ---------------------------------------------------------------- Central columns
+
+export interface CentralColumn {
+  name: string
+  type: string
+  length: string
+  collation: string
+  isNull: boolean
+  /** 'auto_increment' or '' */
+  extra: string
+  attribute: string
+  /** stored default (null: none) */
+  default: string | null
+  /** NONE | USER_DEFINED | NULL | CURRENT_TIMESTAMP */
+  defaultType: string
+  /** the "As defined:" value shown in the editor */
+  defaultValue: string
+}
+
+export interface CentralColumnsResponse {
+  db: string
+  /** the central columns feature of the configuration storage is configured */
+  enabled: boolean
+  totalRows: number
+  pos: number
+  maxRows: number
+  columns: CentralColumn[]
+  tables: string[]
+  message: SqlMessage | null
+  /** type / collation / attribute lists of the editors */
+  options: ColumnFormOptions
+}
+
+const CentralColumnInput = z.object({
+  name: z.string(),
+  type: z.string(),
+  length: z.string().default(''),
+  /** NONE | USER_DEFINED | NULL | CURRENT_TIMESTAMP */
+  defaultType: z.string().default('NONE'),
+  defaultValue: z.string().default(''),
+  collation: z.string().default(''),
+  attribute: z.string().default(''),
+  isNull: z.boolean().default(false),
+  autoIncrement: z.boolean().default(false),
+})
+
+export const CentralColumnsRequest = z.discriminatedUnion('action', [
+  z.object({ action: z.literal('add-new'), column: CentralColumnInput }),
+  z.object({ action: z.literal('edit'), origName: z.string(), column: CentralColumnInput }),
+  z.object({
+    action: z.literal('multi-edit'),
+    columns: z.array(CentralColumnInput.extend({ origName: z.string() })).min(1),
+  }),
+  z.object({ action: z.literal('add-from-table'), table: z.string(), column: z.string() }),
+  z.object({ action: z.literal('delete'), columns: z.array(z.string()).min(1) }),
+])
+export type CentralColumnsRequest = z.output<typeof CentralColumnsRequest>
+
+export interface CentralColumnsActionResponse {
+  ok: boolean
+  message: SqlMessage | null
 }

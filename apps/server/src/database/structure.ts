@@ -5,6 +5,7 @@ import type {
   RealRowCountResponse,
 } from '@bettermyadmin/contracts'
 import { formatByteDown, formatNumber, localisedDate } from '@bettermyadmin/i18n'
+import { trackedTables } from '@bettermyadmin/metadata'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { pageselectorPages } from '../navigation/list-navigator.ts'
 import { ReplicationInfo } from '../server-admin/replication-info.ts'
@@ -119,26 +120,6 @@ async function getDbInfo(
   return [tables, tables.length]
 }
 
-/** TrackingChecker::getTrackedTables (control link) */
-async function trackedTables(ctx: DbCtx): Promise<Map<string, boolean>> {
-  const f = ctx.rp.trackingFeature
-  const out = new Map<string, boolean>()
-  if (f === null || ctx.control === null) return out
-  const t = `${backquote(f.database)}.${backquote(f.tracking)}`
-  const r = await ctx.control.tryQuery(
-    `SELECT table_name, tracking_active
-            FROM (
-                SELECT table_name, MAX(version) version
-                FROM ${t} WHERE db_name = ${ctx.dbi.quoteString(ctx.db)} AND table_name <> ''
-                GROUP BY table_name
-            ) filtered_tables
-            JOIN ${t} USING(table_name, version)`,
-  )
-  if (r === false) return out
-  for (const row of r.rows) out.set(row.table_name ?? '', row.tracking_active === '1')
-  return out
-}
-
 export async function structurePage(
   ctx: DbCtx,
   q: {
@@ -203,7 +184,7 @@ export async function structurePage(
       summary: null,
     }
   }
-  const tracked = await trackedTables(ctx)
+  const tracked = await trackedTables(ctx.control, ctx.rp, ctx.db)
   const metadata = await ctx.meta.meta()
   const favorites = await metadata.recentFavorite('favorite')
   metadata.storeRecentFavorite(favorites)

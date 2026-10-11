@@ -118,6 +118,9 @@ export async function getTableDef(
       if (ctx.cfg.Export.remove_definer_from_definitions) (st.options as OptionsArray).remove('DEFINER')
       createQuery = st.build()
     }
+    // ExportSql::replaceWithAliases (no aliases): the statement is rebuilt by the parser
+    const rebuilt = new Parser(createQuery).statements[0]
+    if (rebuilt !== undefined) createQuery = rebuilt.build()
     const st = new Parser(createQuery).statements[0] as CreateStatement
     const engine =
       st.entityOptions instanceof OptionsArray ? String(st.entityOptions.get('ENGINE') ?? '') : ''

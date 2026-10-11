@@ -8,6 +8,10 @@ import type {
   BookmarkRunRequest,
   BookmarkShowResponse,
   CancelResponse,
+  CentralColumn,
+  CentralColumnsActionResponse,
+  CentralColumnsRequest,
+  CentralColumnsResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
   ConsoleBookmarkAddRequest,
@@ -15,14 +19,18 @@ import type {
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
   CopyFormResponse,
+  DataDictionaryResponse,
   DatabaseScope,
   DbActionResponse,
   DbExportResponse,
   DbOperationsResponse,
+  DbPrivilegesResponse,
   DbRenameCopyResponse,
   DbSearchFormResponse,
   DbSearchResponse,
   DbStructureResponse,
+  DbTrackingRequest,
+  DbTrackingResponse,
   DefaultFkCheckResponse,
   ErrorEnvelope,
   ErrorReportRequest,
@@ -271,6 +279,34 @@ export const api = {
     call<MultiTableKeysResponse>(
       'GET',
       `${dbPath(server, db)}/multi-table-query/tables?${tables.map((t) => `tables=${encodeURIComponent(t)}`).join('&')}`,
+    ),
+  dbDataDictionary: (server: number, db: string) =>
+    call<DataDictionaryResponse>('GET', `${dbPath(server, db)}/data-dictionary`),
+  dbPrivileges: (server: number, db: string) =>
+    call<DbPrivilegesResponse>('GET', `${dbPath(server, db)}/privileges`),
+  dbTracking: (server: number, db: string) =>
+    call<DbTrackingResponse>('GET', `${dbPath(server, db)}/tracking`),
+  dbTrackingAction: (server: number, db: string, body: DbTrackingRequest) =>
+    call<DbActionResponse>('POST', `${dbPath(server, db)}/tracking`, body),
+  dbCentralColumns: (server: number, db: string, q: { pos?: number; totalRows?: number } = {}) =>
+    call<CentralColumnsResponse>(
+      'GET',
+      `${dbPath(server, db)}/central-columns?${new URLSearchParams({
+        ...(q.pos !== undefined ? { pos: String(q.pos) } : {}),
+        ...(q.totalRows !== undefined ? { total_rows: String(q.totalRows) } : {}),
+      })}`,
+    ),
+  dbCentralColumnsAction: (server: number, db: string, body: CentralColumnsRequest) =>
+    call<CentralColumnsActionResponse>('POST', `${dbPath(server, db)}/central-columns`, body),
+  dbCentralColumnsEdit: (server: number, db: string, columns: string[]) =>
+    call<CentralColumn[]>(
+      'GET',
+      `${dbPath(server, db)}/central-columns/edit?${columns.map((c) => `columns=${encodeURIComponent(c)}`).join('&')}`,
+    ),
+  dbCentralColumnsPopulate: (server: number, db: string, table: string) =>
+    call<string[]>(
+      'GET',
+      `${dbPath(server, db)}/central-columns/populate?table=${encodeURIComponent(table)}`,
     ),
   favorite: (
     server: number,
