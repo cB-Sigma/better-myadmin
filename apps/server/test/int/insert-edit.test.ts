@@ -83,7 +83,7 @@ afterAll(async () => {
 })
 
 describe('insert form', () => {
-  it('describes each column with phpMyAdmin widgets and defaults', async () => {
+  it('describes each column with phpMyAdmin widgets and defaults [p03-1b3909] [p03-7e69f5]', async () => {
     const f = await post(`${base}/t/insert-form`, {})
     expect(f.insertMode).toBe(true)
     expect(f.rows).toHaveLength(2)
@@ -159,7 +159,7 @@ describe('edit form', () => {
     expect(r.next.where[0].clause).toBe('`t`.`id` = 2')
   })
 
-  it('reports an empty result set but still renders the form', async () => {
+  it('reports an empty result set but still renders the form [p03-5c8c94]', async () => {
     const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 999')] })
     expect(f.messages[0].text).toBe('MySQL returned an empty result set (i.e. zero rows).')
     expect(f.rows).toHaveLength(1)

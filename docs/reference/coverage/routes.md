@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-33/199 covered (16.6%): 29 implemented, 3 exception, 1 n/a, 166 planned. [Summary](README.md).
+40/199 covered (20.1%): 36 implemented, 3 exception, 1 n/a, 159 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -34,7 +34,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /setup/show-config` | `Setup/ShowConfigController` | UI /setup | M4 (X7) |
 | 🗓️ | `GET, POST /setup/validate` | `Setup/ValidateController` | UI /setup | M4 (X7) |
 
-## 02 browse results grid — 2/8 (25.0%) covered, 2/8 implemented
+## 02 browse results grid — 3/8 (37.5%) covered, 3/8 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -45,19 +45,19 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:587) |  |
 | 🗓️ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | API /api/servers/:s/databases/:db/tables/:table/delete/confirm<br>UI /s/:s/db/:db/t/:table/delete/confirm | M1 |
 | 🗓️ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/databases/:db/tables/:t/rows/delete<br>UI /s/:s/db/:db/t/:table/delete/rows | M1 |
-| 🗓️ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/databases/:db/tables/:t/cell<br>UI /s/:s/db/:db/t/:table/get-field | M1 |
+| ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/databases/:db/tables/:t/get-field (apps/server/src/routes/insert-edit.ts:164) |  |
 
-## 03 insert edit transformations — 0/7 (0.0%) covered, 0/7 implemented
+## 03 insert edit transformations — 6/7 (85.7%) covered, 6/7 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| 🗓️ | `GET, POST /browse-foreigners` | `BrowseForeignersController` | API GET /api/servers/:s/databases/:db/tables/:t/foreign-values | M2 |
-| 🗓️ | `GET, POST /gis-data-editor` | `GisDataEditorController` | API POST /api/gis/preview | M2 — client component `GisEditor` |
-| 🗓️ | `GET, POST /table/change` | `Table/ChangeController` | API GET /api/servers/:s/databases/:db/tables/:t/insert-form<br>UI /s/:s/db/:db/t/:table/change | M2 |
-| 🗓️ | `POST /table/change/rows` | `Table/ChangeRowsController` | API /api/servers/:s/databases/:db/tables/:table/change/rows<br>UI /s/:s/db/:db/t/:table/change/rows | M2 |
+| ✅ | `GET, POST /browse-foreigners` | `BrowseForeignersController` | API POST /api/servers/:s/databases/:db/tables/:t/browse-foreigners (apps/server/src/routes/insert-edit.ts:114) | modal `ForeignBrowser` of the Insert/Edit form |
+| ✅ | `GET, POST /gis-data-editor` | `GisDataEditorController` | UI /s/:server/db/:db/t/:table/insert (apps/web/src/routes/s/$server/db/$db/t/$table/insert.tsx) | client component `GisEditor` (WKT parsing/generation needs no server round trip) |
+| ✅ | `GET, POST /table/change` | `Table/ChangeController` | API POST /api/servers/:s/databases/:db/tables/:t/insert-form (apps/server/src/routes/insert-edit.ts:80)<br>UI /s/:server/db/:db/t/:table/insert (apps/web/src/routes/s/$server/db/$db/t/$table/insert.tsx)<br>UI /s/:server/db/:db/t/:table/edit (apps/web/src/routes/s/$server/db/$db/t/$table/edit.tsx) |  |
+| ✅ | `POST /table/change/rows` | `Table/ChangeRowsController` | API POST /api/servers/:s/databases/:db/tables/:t/insert-form (apps/server/src/routes/insert-edit.ts:80)<br>UI /s/:server/db/:db/t/:table/edit (apps/web/src/routes/s/$server/db/$db/t/$table/edit.tsx) |  |
 | 🗓️ | `GET, POST /table/replace` | `Table/ReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace<br>API POST /api/servers/:s/databases/:db/tables/:t/rows<br>UI /s/:s/db/:db/t/:table/replace | M2 |
-| 🗓️ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | API GET /api/transformations | M2 — overview; wrapper: raw cell bytes |
-| 🗓️ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/cell | M2 — overview; wrapper: raw cell bytes |
+| ✅ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | UI /s/:server/transformations (apps/web/src/routes/s/$server/transformations.tsx) | static plugin catalog (packages/mysql-types transformations.ts) |
+| ✅ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper (apps/server/src/routes/insert-edit.ts:148) | raw cell bytes; resize=jpeg\|png sends the original image (no GD) |
 
 ## 04 table level — 3/64 (4.7%) covered, 3/64 implemented
 

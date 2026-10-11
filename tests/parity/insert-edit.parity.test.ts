@@ -335,7 +335,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'insert two rows in one statement',
+      name: 'insert two rows in one statement [p03-632952]',
       table: 't',
       mods: [
         { row: 0, col: 'name', value: 'r0' },
@@ -363,9 +363,9 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
         { row: 0, col: 'name', value: 'dup' },
       ],
     },
-    { name: 'preview of an insert', table: 't', preview: true, mods: [{ row: 0, col: 'name', value: 'pv' }] },
+    { name: 'preview of an insert [p03-789dce]', table: 't', preview: true, mods: [{ row: 0, col: 'name', value: 'pv' }] },
     {
-      name: 'edit one row: changed columns only, NULL set',
+      name: 'edit one row: changed columns only, NULL set [p03-30e777]',
       table: 't',
       where: ['`t`.`id` = 1'],
       clauseIsUnique: true,
@@ -439,7 +439,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'GIS point through ST_GeomFromText',
+      name: 'GIS point through ST_GeomFromText [p03-486ab6]',
       table: 'g',
       mods: [
         { row: 0, col: 'id', value: '5' },
@@ -447,14 +447,14 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'GIS edit keeps WKT',
+      name: 'GIS edit keeps WKT [p03-31dbd7]',
       table: 'g',
       where: ['`g`.`id` = 1'],
       clauseIsUnique: true,
       mods: [{ row: 0, col: 'pt', value: "'POINT(5 6)',0" }],
     },
     {
-      name: 'UUID default for a char(36) primary key',
+      name: 'UUID default for a char(36) primary key [p03-074264]',
       table: 'u',
       mask: /'[0-9a-f-]{36}'/g,
       mods: [{ row: 0, col: 'v', value: 'x' }],

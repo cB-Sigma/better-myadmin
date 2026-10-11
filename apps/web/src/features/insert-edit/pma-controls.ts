@@ -1,0 +1,32 @@
+/**
+ * phpMyAdmin template controls implemented by the Insert/Edit feature (docs/architecture/12,
+ * tools/parity/inventory/controls.json keys → component files).
+ */
+export const pmaControls = {
+  'table/insert/actions_panel.twig#after_insert': 'InsertEditPage.tsx',
+  'table/insert/actions_panel.twig#submit_type': 'InsertEditPage.tsx',
+  'table/insert/actions_panel.twig#button:Close': 'InsertEditPage.tsx',
+  'table/insert/actions_panel.twig#button:Preview SQL': 'InsertEditPage.tsx',
+  'table/insert/actions_panel.twig#id:buttonYes': 'InsertEditPage.tsx',
+  'table/insert/actions_panel.twig#id:previewSQLCloseButton': 'InsertEditPage.tsx',
+  'table/insert/actions_panel.twig#reset:Reset': 'InsertEditPage.tsx',
+  'table/insert/column_row.twig#button:Edit/Insert': 'ValueWidget.tsx',
+  'table/insert/column_row.twig#fields[multi_edit][*][*]': { file: 'ValueWidget.tsx', match: 'fields[multi_edit]' },
+  'table/insert/column_row.twig#fields[multi_edit][*][*][]': { file: 'ValueWidget.tsx', match: '${name}[]' },
+  'table/insert/column_row.twig#fields_null[multi_edit][*][*]': { file: 'ValueWidget.tsx', match: 'fields_null[multi_edit]' },
+  'table/insert/column_row.twig#fields_upload[multi_edit][*][*]': { file: 'ValueWidget.tsx', match: 'fields_upload[multi_edit]' },
+  'table/insert/column_row.twig#funcs[multi_edit][*][*]': { file: 'InsertEditPage.tsx', match: 'funcs[multi_edit]' },
+  'table/insert/column_row.twig#link:Browse foreign values': 'ValueWidget.tsx',
+  'table/insert/continue_insertion_form.twig#insert_rows': 'InsertEditPage.tsx',
+  'table/insert/get_head_and_foot_of_insert_row_table.twig#submit:Go': 'InsertEditPage.tsx',
+  'table/insert/value_column_for_other_datatype.twig#fields*': { file: 'ValueWidget.tsx', match: 'fields[multi_edit]' },
+  'table/browse_foreigners/column_element.twig#link:Use this value': 'ForeignBrowser.tsx',
+  'table/browse_foreigners/show_all.twig#foreign_showAll': 'ForeignBrowser.tsx',
+  'src/BrowseForeigners.php#pos': 'ForeignBrowser.tsx',
+  'gis_data_editor_form.twig#button:Cancel': '../gis/GisEditor.tsx',
+  'gis_data_editor_form.twig#button:Copy': '../gis/GisEditor.tsx',
+  'gis_data_editor_form.twig#gis_data[gis_type]': '../gis/GisEditor.tsx',
+  'gis_data_editor_form.twig#gis_data[srid]': '../gis/GisEditor.tsx',
+  'gis_data_editor_form.twig#id:gis_data_textarea': '../gis/GisEditor.tsx',
+  'gis_data_editor_form.twig#select:L16': { file: '../gis/GisEditor.tsx', match: 'gis_type' },
+}

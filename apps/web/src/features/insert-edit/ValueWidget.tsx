@@ -58,7 +58,7 @@ export function ValueWidget(p: WidgetProps) {
             name={name}
             value={v}
             size={w.size}
-            className="w-auto textfield"
+            className="w-auto! textfield"
             data-type={w.dataType}
             data-maxlength={w.maxlength ?? undefined}
             min={w.min ?? undefined}
@@ -86,7 +86,7 @@ export function ValueWidget(p: WidgetProps) {
             name={name}
             rows={w.rows}
             cols={w.cols}
-            className={`w-auto ${w.charField ? 'charField' : ''}`}
+            className={`w-auto! ${w.charField ? 'charField' : ''}`}
             data-type={w.dataType}
             data-maxlength={w.maxlength ?? undefined}
             tabIndex={idx}
@@ -167,7 +167,7 @@ export function ValueWidget(p: WidgetProps) {
           name={name}
           rows={w.rows}
           cols={w.cols}
-          className="w-auto"
+          className="w-auto!"
           data-type="HEX"
           tabIndex={idx}
           value={v}
@@ -181,7 +181,7 @@ export function ValueWidget(p: WidgetProps) {
           id={id}
           name={name}
           size={w.size}
-          className="w-auto textfield"
+          className="w-auto! textfield"
           data-type="HEX"
           value={v}
           onChange={text}
@@ -191,7 +191,7 @@ export function ValueWidget(p: WidgetProps) {
     case 'foreign-link':
       body = (
         <span className="inline-flex items-center gap-1">
-          <Input id={id} name={name} className="w-auto textfield" tabIndex={idx} value={v} onChange={text} />
+          <Input id={id} name={name} className="w-auto! textfield" tabIndex={idx} value={v} onChange={text} />
           <Button variant="link" className="browse_foreign" onClick={p.onBrowseForeign}>
             <PmaIcon name="b_browse" alt="" /> {t('Browse foreign values')}
           </Button>
@@ -217,7 +217,7 @@ export function ValueWidget(p: WidgetProps) {
             id={id}
             name={name}
             size={w.size}
-            className="w-auto textfield"
+            className="w-auto! textfield"
             tabIndex={idx}
             value={v}
             onChange={text}
@@ -280,7 +280,7 @@ export function ValueWidget(p: WidgetProps) {
             id={`salt_${id}`}
             name={`salt[multi_edit][${p.rowId}][${col.md5}]`}
             placeholder={t('Encryption key')}
-            className="w-auto"
+            className="w-auto!"
             value={state.salt}
             onChange={(e) => p.onChange({ salt: e.target.value })}
           />
@@ -357,7 +357,7 @@ function TransformedInput(p: WidgetProps) {
           id={`field_${p.idx}_3`}
           name={name}
           size={40}
-          className={`w-auto ${w.plugin.endsWith('Iptobinary') ? 'transform_IPToBin' : 'transform_IPToLong'}`}
+          className={`w-auto! ${w.plugin.endsWith('Iptobinary') ? 'transform_IPToBin' : 'transform_IPToLong'}`}
           tabIndex={p.idx}
           value={v}
           onChange={(e) => p.onChange({ value: e.target.value })}

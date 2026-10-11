@@ -43,7 +43,7 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test('insert rows through the Insert tab', async ({ page }) => {
+test('insert rows through the Insert tab [p03-35434c]', async ({ page }) => {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)
