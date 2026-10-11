@@ -77,7 +77,7 @@ describe('cookie auth', () => {
     expect((r.json.error as { message: string }).message).toMatch(/^Your password is too long/)
   })
 
-  it('expires after LoginCookieValidity of inactivity with the no-activity message', async () => {
+  it('expires after LoginCookieValidity of inactivity with the no-activity message [p01-d6345b]', async () => {
     t = testApp(testConfig({ LoginCookieValidity: 1 }))
     await t.login()
     const sid = t.jar.get('bma_sid')!

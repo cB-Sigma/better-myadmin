@@ -41,7 +41,7 @@ describe('GET /api/i18n — LanguageManager::selectLanguage', () => {
     await t.close()
   })
 
-  it('Accept-Language, then ?lang= which is remembered in the cookie', async () => {
+  it('Accept-Language, then ?lang= which is remembered in the cookie [p01-728b8d]', async () => {
     const t = testApp()
     expect(
       (await t.req('GET', '/api/i18n', undefined, { 'accept-language': 'fr-FR,fr;q=0.9' })).json.key,
@@ -63,7 +63,7 @@ describe('GET /api/i18n — LanguageManager::selectLanguage', () => {
     await t.close()
   })
 
-  it('Lang forces the language and hides the selector; FilterLanguages restricts the list', async () => {
+  it('Lang forces the language and hides the selector; FilterLanguages restricts the list [p01-728b8d]', async () => {
     const forced = testApp(testConfig({ Lang: 'cs' }))
     expect((await forced.req('GET', '/api/i18n?lang=de')).json).toMatchObject({ key: 'cs', languages: null })
     await forced.close()

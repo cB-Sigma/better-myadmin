@@ -100,7 +100,7 @@ test.describe('fast filter and paging of a container', () => {
     await c.end()
   })
 
-  test('item filter (client and server) and page selector', async ({ page }) => {
+  test('item filter (client and server) and page selector [p01-41d435]', async ({ page }) => {
     // tall enough for the virtualized tree to render a whole page of 50 tables
     await page.setViewportSize({ width: 1280, height: 1600 })
     await page.goto('/')
