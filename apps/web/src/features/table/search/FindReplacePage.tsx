@@ -75,13 +75,9 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
         <form id="find_replace_form" onSubmit={(e) => void submit(e)}>
           <Panel
             title={t('Find and replace')}
-            footer={
-              <>
-                <Button type="submit" variant="primary">
-                  {t('Go')}
-                </Button>
-              </>
-            }
+            footer=<Button type="submit" variant="primary">
+              {t('Go')}
+            </Button>
           >
             <PanelBody>
               <table className="w-auto text-sm">
@@ -149,13 +145,9 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
         <form id="previewReplaceForm" className="mt-3" onSubmit={(e) => void replace(e)}>
           <Panel
             title={t('Find and replace - preview')}
-            footer={
-              <>
-                <Button type="submit" variant="primary" id="buttonReplace">
-                  {t('Replace')}
-                </Button>
-              </>
-            }
+            footer=<Button type="submit" variant="primary" id="buttonReplace">
+              {t('Replace')}
+            </Button>
           >
             <PanelBody>
               <table id="previewTable" className="w-auto text-sm" data-testid="replace-preview">

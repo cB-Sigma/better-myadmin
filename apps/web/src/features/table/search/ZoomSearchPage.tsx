@@ -182,13 +182,9 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
         <form id="zoom_search_form" onSubmit={(e) => void submit(e)}>
           <Panel
             title={t('Do a "query by example" (wildcard: "%") for two different columns')}
-            footer={
-              <>
-                <Button type="submit" variant="primary" name="zoom_submit" id="inputFormSubmitId">
-                  {t('Go')}
-                </Button>
-              </>
-            }
+            footer=<Button type="submit" variant="primary" name="zoom_submit" id="inputFormSubmitId">
+              {t('Go')}
+            </Button>
           >
             <PanelBody>
               <table id="tableFieldsId" className="w-auto text-sm">

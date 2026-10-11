@@ -122,13 +122,9 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
       <form id="tbl_search_form" name="insertForm" onSubmit={(e) => void submit(e)}>
         <Panel
           title={t('Do a "query by example" (wildcard: "%")')}
-          footer={
-            <>
-              <Button type="submit" variant="primary" name="submit">
-                {t('Go')}
-              </Button>
-            </>
-          }
+          footer=<Button type="submit" variant="primary" name="submit">
+            {t('Go')}
+          </Button>
         >
           <PanelBody className="space-y-3">
             <div id="fieldset_table_qbe" className="overflow-x-auto">
