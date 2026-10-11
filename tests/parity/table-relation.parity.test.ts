@@ -60,7 +60,7 @@ async function bmaSave(table: string, body: unknown): Promise<Record<string, unk
  * RESTRICT.
  */
 async function pmaForm(table: string): Promise<Pairs> {
-  const html = await pma.routePage('/table/relation', { db: DB_PMA, table })
+  const html = await pma.getPage('/table/relation', { db: DB_PMA, table })
   let pairs = serializeForm(findForm(html, { action: '/table/relation' }))
   for (const m of html.matchAll(/<select name="(on_(?:delete|update)\[\d+\])">([\s\S]*?)<\/select>/g)) {
     if (!/ selected/.test(m[2] ?? '')) pairs = setPair(pairs, m[1] ?? '', 'RESTRICT')
@@ -166,7 +166,7 @@ const CASES: Case[] = [
   {
     name: 'add a constraint with a name, ON DELETE CASCADE / ON UPDATE SET NULL',
     pma: async () =>
-      pma.post(
+      pma.postPage(
         '/table/relation',
         newRow(await pmaForm('child'), 1, {
           'constraint_name[#]': 'fk_new',
@@ -176,7 +176,6 @@ const CASES: Case[] = [
           'destination_foreign_table[#]': 't',
           'destination_foreign_column[#][]': 'code',
         }),
-        { ajax: false },
       ),
     bma: async () => {
       const r = await bmaRows('child')
@@ -198,9 +197,7 @@ const CASES: Case[] = [
   {
     name: 'change ON UPDATE of an existing constraint (drop + create)',
     pma: async () =>
-      pma.post('/table/relation', setPair(await pmaForm('child'), 'on_update[0]', 'NO_ACTION'), {
-        ajax: false,
-      }),
+      pma.postPage('/table/relation', setPair(await pmaForm('child'), 'on_update[0]', 'NO_ACTION')),
     bma: async () => {
       const r = await bmaRows('child')
       Object.assign(r.foreignKeys[0] ?? {}, { onUpdate: 'NO_ACTION' })
@@ -214,9 +211,7 @@ const CASES: Case[] = [
   {
     name: 'clearing the referenced table drops the constraint',
     pma: async () =>
-      pma.post('/table/relation', setPair(await pmaForm('child'), 'destination_foreign_table[0]', ''), {
-        ajax: false,
-      }),
+      pma.postPage('/table/relation', setPair(await pmaForm('child'), 'destination_foreign_table[0]', '')),
     bma: async () => {
       const r = await bmaRows('child')
       Object.assign(r.foreignKeys[0] ?? {}, { refTable: '' })
@@ -230,14 +225,13 @@ const CASES: Case[] = [
   {
     name: 'a failing change restores the dropped constraint',
     pma: async () =>
-      pma.post(
+      pma.postPage(
         '/table/relation',
         setPair(
           setPair(await pmaForm('child'), 'foreign_key_fields_name[0][]', 'note'),
           'on_delete[0]',
           'RESTRICT',
         ),
-        { ajax: false },
       ),
     bma: async () => {
       const r = await bmaRows('child')
@@ -272,7 +266,7 @@ const CASES: Case[] = [
   {
     name: 'drop a constraint from its row link (via /sql)',
     pma: async () => {
-      const html = await pma.routePage('/table/relation', { db: DB_PMA, table: 'child' })
+      const html = await pma.getPage('/table/relation', { db: DB_PMA, table: 'child' })
       const post =
         /class="drop_foreign_key_anchor ajax"[^>]*data-post="([^"]*)"|data-post="([^"]*)"[^>]*class="drop_foreign_key_anchor ajax"/.exec(
           html,
@@ -296,7 +290,7 @@ const CASES: Case[] = [
       pairs = setPair(pairs, `destination_table[${hash}]`, 'child')
       pairs = setPair(pairs, `destination_column[${hash}]`, 'id')
       pairs = setPair(pairs, 'display_field', 'code')
-      return pma.post('/table/relation', removePair(pairs, 'preview_sql'), { ajax: false })
+      return pma.postPage('/table/relation', removePair(pairs, 'preview_sql'))
     },
     bma: async () => {
       const r = await bmaRows('t')

@@ -78,9 +78,7 @@ async function bmaPost(path: string, body: unknown): Promise<Record<string, unkn
   return r.json
 }
 const pmaPost = (pairs: Record<string, string> | Pairs) =>
-  pma.post('/table/tracking', Array.isArray(pairs) ? pairs : { db: DB_PMA, table: 't', ...pairs }, {
-    ajax: false,
-  })
+  pma.postPage('/table/tracking', Array.isArray(pairs) ? pairs : { db: DB_PMA, table: 't', ...pairs })
 
 async function seed(versions: Array<[string, number]>) {
   for (const [db, user] of [
@@ -120,7 +118,7 @@ async function runCase(c: Case) {
 
 /** the "Create version" form of the page, as the browser posts it */
 async function pmaCreateForm(): Promise<Pairs> {
-  const html = await pma.routePage('/table/tracking', { db: DB_PMA, table: 't' })
+  const html = await pma.getPage('/table/tracking', { db: DB_PMA, table: 't' })
   // the action URL carries db + table (url_params); the hidden inputs only db and selected[]
   // (the navigation settings form is also .disableAjax: start at the create_tracking_version form)
   const at = html.lastIndexOf('<form', html.indexOf('name="submit_create_version"'))
@@ -279,7 +277,7 @@ describe.skipIf(!pmaReachable)('parity: table Tracking (phpMyAdmin forms vs Bett
       ['1', 0],
       ['2', 1],
     ])
-    const html = await pma.routePage('/table/tracking', { db: DB_PMA, table: 't' })
+    const html = await pma.getPage('/table/tracking', { db: DB_PMA, table: 't' })
     const b = (await bma.req('GET', bmaBase)).json as {
       versions: Array<{ version: string; active: boolean }>
       lastVersion: number

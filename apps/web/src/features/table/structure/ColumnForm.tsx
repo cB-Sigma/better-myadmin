@@ -5,10 +5,11 @@ import type {
   FormIndex,
   Partitioning,
 } from '@bettermyadmin/contracts'
+import { Button, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { Fragment, type ReactNode, useState } from 'react'
+import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { PartitionEditor } from './PartitionEditor'
-import { Button, DocLink, Modal, PreviewSqlModal, errorMessage } from './ui'
 
 /**
  * The column definition form shared by Create table, Add column(s) and Change column(s).
@@ -435,13 +436,13 @@ export function ColumnForm({
       <div className="overflow-x-auto">
         <table id="table_columns" className="w-full border-collapse text-sm">
           <caption className="mb-1 text-left font-semibold">
-            {t('Structure')} <DocLink page="create-table" />
+            {t('Structure')} <MySqlDocLink link="create-table" />
           </caption>
           <thead>
             <tr className="bg-grid-header text-left">
               <th className="px-1">{t('Name')}</th>
               <th className="px-1">
-                {t('Type')} <DocLink page="data-types" />
+                {t('Type')} <MySqlDocLink link="data-types" />
               </th>
               <th className="px-1">{t('Length/Values')}</th>
               <th className="px-1">{t('Default')}</th>
@@ -687,7 +688,7 @@ export function ColumnForm({
               <th className="pr-2 text-left align-top">{t('Table comments:')}</th>
               <th className="pr-2 text-left">{t('Collation:')}</th>
               <th className="pr-2 text-left">
-                {t('Storage Engine:')} <DocLink page="storage-engines" />
+                {t('Storage Engine:')} <MySqlDocLink link="storage-engines" />
               </th>
               {tableOptions.engine === 'FEDERATED' && <th className="text-left">{t('Connection:')}</th>}
             </tr>
@@ -751,7 +752,7 @@ export function ColumnForm({
         setTableOptions !== undefined && (
           <div className="mt-3 text-sm">
             <div className="mb-1 font-semibold">
-              {t('PARTITION definition:')} <DocLink page="partitioning" />
+              {t('PARTITION definition:')} <MySqlDocLink link="partitioning" />
             </div>
             <PartitionEditor
               value={tableOptions.partitioning}
@@ -765,7 +766,7 @@ export function ColumnForm({
         {mode !== 'create' && (
           <label className="flex items-center gap-1">
             <input type="checkbox" checked={online} onChange={(e) => setOnline(e.target.checked)} />
-            {t('Online transaction')} <DocLink page="innodb-online-ddl" />
+            {t('Online transaction')} <MySqlDocLink link="innodb-online-ddl" />
           </label>
         )}
         <div className="ml-auto flex gap-2">
@@ -778,25 +779,14 @@ export function ColumnForm({
         </div>
       </div>
       {options.integersLengthRestricted && (
-        <div
-          id="length_not_allowed"
-          className="mt-2 rounded border border-notice/40 bg-notice-bg px-3 py-2 text-sm text-notice"
-        >
+        <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
           {t(
             'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
           )}
-        </div>
+        </MessageBox>
       )}
-      {error !== null && (
-        <div
-          className="mt-2 rounded border border-error/40 bg-error-bg px-3 py-2 text-sm text-error"
-          role="alert"
-        >
-          <div className="whitespace-pre-line">{error.text}</div>
-          {error.sql !== undefined && <pre className="mt-1 font-mono text-xs">{error.sql}</pre>}
-        </div>
-      )}
-      <PreviewSqlModal sql={preview} onClose={() => setPreview(null)} />
+      {error !== null && <MessageBox {...error} flush className="mt-2" />}
+      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
       {enumFor !== null && (
         <EnumEditor
           value={rows[enumFor]?.length ?? ''}

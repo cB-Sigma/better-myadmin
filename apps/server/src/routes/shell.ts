@@ -10,7 +10,7 @@ import {
 } from '@bettermyadmin/contracts'
 import { type Context, Hono } from 'hono'
 import { getServer } from '../config.ts'
-import { ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { MetaRequest, withMeta } from '../metadata/service.ts'
 import { homeData } from '../shell/home.ts'
 import { changePassword, passwordForm } from '../shell/password.ts'
@@ -104,10 +104,9 @@ shellRoutes.get('/databases/:db/tables/:t/capabilities', async (c) => {
  * DefaultConnectionCollation for this login; new pooled connections run SET collation_connection.
  */
 shellRoutes.post('/session/collation', async (c) => {
-  const parsed = SetCollationRequest.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) throw new ValidationError('Invalid request.')
+  const req = await parseJson(c, SetCollationRequest)
   const login = c.get('session').servers[String(c.get('serverIndex'))]!
-  login.collation = parsed.data.collation_connection
+  login.collation = req.collation_connection
   c.get('creds').collation = login.collation
   // open (and set up) a connection with the new collation right away, like the redirect to / does
   await withShell(c, async () => null)
@@ -123,9 +122,8 @@ shellRoutes.get('/account/password', async (c) => {
 
 /** POST /api/servers/:s/account/password (pma: POST /user-password) */
 shellRoutes.post('/account/password', async (c) => {
-  const parsed = ChangePasswordRequest.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) throw new ValidationError('Invalid request.')
-  const result = await withShell(c, (ctx) => changePassword(ctx, parsed.data))
+  const req = await parseJson(c, ChangePasswordRequest)
+  const result = await withShell(c, (ctx) => changePassword(ctx, req))
   // AuthenticationCookie::handlePasswordChange: keep the session logged in with the new password
   const deps = c.get('deps')
   const login = c.get('session').servers[String(c.get('serverIndex'))]!

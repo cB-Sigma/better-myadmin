@@ -3,9 +3,11 @@ import {
   Alert,
   Button,
   Disclosure,
+  DocLink,
   Hint,
   IconText,
   Input,
+  MessageBox,
   NativeSelect,
   Panel,
   PanelBody,
@@ -16,12 +18,11 @@ import {
 import { Link, useNavigate } from '@tanstack/react-router'
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react'
 import { type BrowseResponse, api } from '../../lib/api'
-import { pmaDocUrl } from '../../lib/docs'
 import { pgettext, t } from '../../lib/i18n'
 import { bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { ProfilingCard } from '../sql/ProfilingCard'
 import { ResultGrid } from '../sql/ResultGrid'
-import { type CardEnv, DocIcon, MessageBox, SqlMessage } from '../sql/SqlMessage'
+import { type CardEnv, SqlMessage } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, confirmationText } from '../sql/logic'
 import { GridTable } from './GridTable'
 import { rowsOptions, validRowNumbers } from './logic'
@@ -244,13 +245,13 @@ export function ResultsView(props: ResultsViewProps) {
       {grid.missingUnique !== null && (
         <Alert variant="notice" className="mb-3 flex items-center gap-1">
           <span>{t(MISSING[grid.missingUnique]).replace('%s', '')}</span>
-          <DocIcon href={pmaDocUrl('config', 'cfg_RowActionLinksWithoutUnique')} target="documentation" />
+          <DocLink page="config" anchor="cfg_RowActionLinksWithoutUnique" />
         </Alert>
       )}
       {usingBookmark !== null && (
         <div className="mb-2 flex items-center gap-1 text-sm">
-          <MessageBox type="notice" text={usingBookmark} className="rounded" />
-          <DocIcon href={pmaDocUrl('faq', 'faq6-22')} target="documentation" />
+          <MessageBox type="notice" text={usingBookmark} flush />
+          <DocLink page="faq" anchor="faq6-22" />
         </div>
       )}
       <SqlMessage st={st} env={cardEnv} />
@@ -372,7 +373,8 @@ export function ResultsView(props: ResultsViewProps) {
           key={i}
           type="notice"
           text={`${w.level}: #${w.code}${w.message !== '' ? ` ${w.message}` : ''}`}
-          className="mt-2 rounded"
+          flush
+          className="mt-2"
         />
       ))}
     </section>

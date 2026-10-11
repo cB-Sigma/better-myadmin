@@ -19,8 +19,10 @@ import {
   Panel,
   PanelBody,
   PmaIcon,
+  Table,
   useConfirm,
 } from '@bettermyadmin/ui'
+import { MessageLine } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { type FormEvent, type ReactNode, useState } from 'react'
@@ -28,7 +30,6 @@ import { type TableRef, api } from '../../../lib/api'
 import { Trans, pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { HighlightedSql } from '../../sql/HighlightedSql'
-import { MessageBox } from '../../sql/SqlMessage'
 import { SqlPage } from '../../sql/SqlPage'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 
@@ -56,7 +57,7 @@ const TABLE_STATEMENTS: readonly TrackingStatement[] = [
 
 export function TrackingPage({ scope }: { scope: TableRef }) {
   const qc = useQueryClient()
-  const key = qk.tblPage(scope.server, scope.db, scope.table, 'tracking')
+  const key = qk.tblPage(scope, 'tracking')
   const q = useQuery({ queryKey: key, queryFn: () => api.tableTracking(scope) })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [view, setView] = useState<View>({ kind: 'main' })
@@ -187,22 +188,22 @@ function Main({
       )}
       {page.lastVersion > 0 && (
         <form id="versionsForm" onSubmit={deleteMany} className="flex flex-col gap-2">
-          <table id="versions" className="w-auto text-sm">
+          <Table zebra id="versions" className="w-auto text-sm">
             <thead>
-              <tr className="border-b border-border">
+              <tr>
                 <th className="px-2" />
-                <th className="px-2 text-left">{t('Version')}</th>
-                <th className="px-2 text-left">{t('Created')}</th>
-                <th className="px-2 text-left">{t('Updated')}</th>
-                <th className="px-2 text-left">{t('Status')}</th>
-                <th className="px-2 text-left">{t('Action')}</th>
-                <th className="px-2 text-left">{t('Show')}</th>
+                <th>{t('Version')}</th>
+                <th>{t('Created')}</th>
+                <th>{t('Updated')}</th>
+                <th>{t('Status')}</th>
+                <th>{t('Action')}</th>
+                <th>{t('Show')}</th>
               </tr>
             </thead>
             <tbody>
               {page.versions.map((v) => (
-                <tr key={v.version} className="border-b border-border odd:bg-bg-subtle">
-                  <td className="px-2 text-center">
+                <tr key={v.version}>
+                  <td className="text-center">
                     <NativeCheckbox
                       name="selected_versions[]"
                       id={`selected_versions_${v.version}`}
@@ -217,15 +218,15 @@ function Main({
                       }
                     />
                   </td>
-                  <td className="px-2">
+                  <td>
                     <label htmlFor={`selected_versions_${v.version}`}>
                       <b>{v.version}</b>
                     </label>
                   </td>
-                  <td className="px-2">{v.dateCreated}</td>
-                  <td className="px-2">{v.dateUpdated}</td>
-                  <td className="px-2">{v.active ? t('active') : t('not active')}</td>
-                  <td className="px-2">
+                  <td>{v.dateCreated}</td>
+                  <td>{v.dateUpdated}</td>
+                  <td>{v.active ? t('active') : t('not active')}</td>
+                  <td>
                     <IconLink
                       icon="b_drop"
                       text={t('Delete version')}
@@ -260,7 +261,7 @@ function Main({
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
           <div className="flex items-center gap-3 text-sm">
             <NativeCheckbox
               id="versionsForm_checkall"
@@ -530,29 +531,29 @@ function ReportTable({
   onDelete: (id: number) => void
 }) {
   return (
-    <table id={id} className="w-full text-sm">
+    <Table zebra id={id} className="w-full text-sm">
       <thead>
-        <tr className="border-b border-border">
-          <th className="px-2 text-left">{pgettext('Number', '#')}</th>
-          <th className="px-2 text-left">{t('Date')}</th>
-          <th className="px-2 text-left">{t('Username')}</th>
-          <th className="px-2 text-left">{header}</th>
-          <th className="px-2 text-left">{t('Action')}</th>
+        <tr>
+          <th>{pgettext('Number', '#')}</th>
+          <th>{t('Date')}</th>
+          <th>{t('Username')}</th>
+          <th>{header}</th>
+          <th>{t('Action')}</th>
         </tr>
       </thead>
       <tbody>
         {entries.map((e) => (
-          <tr key={e.lineNumber} className="noclick border-b border-border odd:bg-bg-subtle">
-            <td className="px-2 text-right">
+          <tr key={e.lineNumber} className="noclick">
+            <td className="text-right">
               <small>{e.lineNumber}</small>
             </td>
-            <td className="px-2">
+            <td>
               <small>{e.date}</small>
             </td>
-            <td className="px-2">
+            <td>
               <small>{e.username}</small>
             </td>
-            <td className="px-2">
+            <td>
               {/* Generator::formatSql */}
               <HighlightedSql sql={e.statement.trim()} />
             </td>
@@ -572,7 +573,7 @@ function ReportTable({
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   )
 }
 
@@ -587,34 +588,34 @@ function Snapshot({ data, close }: { data: TrackingSnapshotResponse; close: () =
       {data.sql !== null && (
         // Generator::getMessage(…, $sqlQuery): the statements as text (no query links: nothing ran)
         <div className="result_query overflow-hidden rounded-(--radius) border border-border">
-          <MessageBox
+          <MessageLine
             type="success"
             text={t('Version %s snapshot (SQL code)', data.version)}
-            className="border-0"
+            className="border-x-0 border-t-0"
           />
           <HighlightedSql sql={data.sql.trim()} className="px-3 py-2" />
         </div>
       )}
       <Panel title={t('Structure')}>
         <PanelBody>
-          <table id="tablestructure" className="w-auto text-sm">
+          <Table zebra id="tablestructure" className="w-auto text-sm">
             <thead>
-              <tr className="border-b border-border">
-                <th className="px-2 text-left">{pgettext('Number', '#')}</th>
-                <th className="px-2 text-left">{t('Column')}</th>
-                <th className="px-2 text-left">{t('Type')}</th>
-                <th className="px-2 text-left">{t('Collation')}</th>
-                <th className="px-2 text-left">{t('Null')}</th>
-                <th className="px-2 text-left">{t('Default')}</th>
-                <th className="px-2 text-left">{t('Extra')}</th>
-                <th className="px-2 text-left">{t('Comment')}</th>
+              <tr>
+                <th>{pgettext('Number', '#')}</th>
+                <th>{t('Column')}</th>
+                <th>{t('Type')}</th>
+                <th>{t('Collation')}</th>
+                <th>{t('Null')}</th>
+                <th>{t('Default')}</th>
+                <th>{t('Extra')}</th>
+                <th>{t('Comment')}</th>
               </tr>
             </thead>
             <tbody>
               {data.columns.map((c, i) => (
-                <tr key={c.Field} className="noclick border-b border-border odd:bg-bg-subtle">
-                  <td className="px-2">{i + 1}</td>
-                  <td className="px-2">
+                <tr key={c.Field} className="noclick">
+                  <td>{i + 1}</td>
+                  <td>
                     <strong className="inline-flex items-center gap-1">
                       {c.Field}
                       {c.Key === 'PRI' ? (
@@ -626,55 +627,55 @@ function Snapshot({ data, close }: { data: TrackingSnapshotResponse; close: () =
                       ) : null}
                     </strong>
                   </td>
-                  <td className="px-2">{c.Type}</td>
-                  <td className="px-2">{c.Collation}</td>
-                  <td className="px-2">{c.Null === 'YES' ? t('Yes') : t('No')}</td>
+                  <td>{c.Type}</td>
+                  <td>{c.Collation}</td>
+                  <td>{c.Null === 'YES' ? t('Yes') : t('No')}</td>
                   {/* the key is always defined in the snapshot: a NULL default prints empty */}
-                  <td className="px-2">{bitDefault(c.Type, c.Default)}</td>
-                  <td className="px-2">{c.Extra}</td>
-                  <td className="px-2">{c.Comment}</td>
+                  <td>{bitDefault(c.Type, c.Default)}</td>
+                  <td>{c.Extra}</td>
+                  <td>{c.Comment}</td>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </Table>
         </PanelBody>
       </Panel>
       {data.indexes.length > 0 && (
         <Panel title={t('Indexes')}>
           <PanelBody>
-            <table id="tablestructure_indexes" className="w-auto text-sm">
+            <Table zebra id="tablestructure_indexes" className="w-auto text-sm">
               <thead>
-                <tr className="border-b border-border">
-                  <th className="px-2 text-left">{t('Keyname')}</th>
-                  <th className="px-2 text-left">{t('Type')}</th>
-                  <th className="px-2 text-left">{t('Unique')}</th>
-                  <th className="px-2 text-left">{t('Packed')}</th>
-                  <th className="px-2 text-left">{t('Column')}</th>
-                  <th className="px-2 text-left">{t('Cardinality')}</th>
-                  <th className="px-2 text-left">{t('Collation')}</th>
-                  <th className="px-2 text-left">{t('Null')}</th>
-                  <th className="px-2 text-left">{t('Comment')}</th>
+                <tr>
+                  <th>{t('Keyname')}</th>
+                  <th>{t('Type')}</th>
+                  <th>{t('Unique')}</th>
+                  <th>{t('Packed')}</th>
+                  <th>{t('Column')}</th>
+                  <th>{t('Cardinality')}</th>
+                  <th>{t('Collation')}</th>
+                  <th>{t('Null')}</th>
+                  <th>{t('Comment')}</th>
                 </tr>
               </thead>
               <tbody>
                 {data.indexes.map((x, i) => (
                   // biome-ignore lint/suspicious/noArrayIndexKey: one row per index column
-                  <tr key={i} className="noclick border-b border-border odd:bg-bg-subtle">
-                    <td className="px-2">
+                  <tr key={i} className="noclick">
+                    <td>
                       <strong>{x.Key_name}</strong>
                     </td>
-                    <td className="px-2">{x.Index_type}</td>
-                    <td className="px-2">{x.Non_unique === '0' ? t('Yes') : t('No')}</td>
-                    <td className="px-2">{(x.Packed ?? '') !== '' ? t('Yes') : t('No')}</td>
-                    <td className="px-2">{x.Column_name}</td>
-                    <td className="px-2">{x.Cardinality}</td>
-                    <td className="px-2">{x.Collation}</td>
-                    <td className="px-2">{x.Null}</td>
-                    <td className="px-2">{x.Comment}</td>
+                    <td>{x.Index_type}</td>
+                    <td>{x.Non_unique === '0' ? t('Yes') : t('No')}</td>
+                    <td>{(x.Packed ?? '') !== '' ? t('Yes') : t('No')}</td>
+                    <td>{x.Column_name}</td>
+                    <td>{x.Cardinality}</td>
+                    <td>{x.Collation}</td>
+                    <td>{x.Null}</td>
+                    <td>{x.Comment}</td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </PanelBody>
         </Panel>
       )}

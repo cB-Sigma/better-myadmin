@@ -5,7 +5,7 @@ import { getCreateTableSqlQueries } from '../../packages/metadata/src/resources.
 import { compareMetadataLogs } from './lib/compare.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { type PmaInstance, phpAvailable, startPmaInstance } from './lib/pma-instance.ts'
-import { PmaClient, visibleText } from './lib/pma.ts'
+import { PmaClient, sqlBoxForm, visibleText } from './lib/pma.ts'
 
 /**
  * Golden parity for the configuration storage: the same action in a private phpMyAdmin
@@ -93,26 +93,6 @@ async function dump(x: typeof P, table: string): Promise<unknown[]> {
     `SELECT ${keep.map((c) => `\`${c}\``).join(', ')} FROM \`${x.pmadb}\`.\`${table}\` ORDER BY ${keep.map((c) => `\`${c}\``).join(', ')}`,
   )) as unknown as [Array<Record<string, unknown>>]
   return rows.map((r) => JSON.parse(norm(JSON.stringify(r))))
-}
-
-/** The SQL tab form (sql/query.twig) posted to /import. */
-function sqlBoxForm(sql: string, db: string, extra: Record<string, string> = {}): Record<string, string> {
-  return {
-    route: '/import',
-    db,
-    table: '',
-    is_js_confirmed: '0',
-    pos: '0',
-    goto: '/database/sql',
-    message_to_show: 'Your SQL query has been executed successfully.',
-    prev_sql_query: '',
-    sql_query: sql,
-    sql_delimiter: ';',
-    fk_checks: '1',
-    SQL: 'Go',
-    ajax_page_request: 'true',
-    ...extra,
-  }
 }
 
 type Bma = ReturnType<typeof testApp>
@@ -207,7 +187,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
   const fav = (action: 'add' | 'remove', table: string): Step => ({
     name: `favorite ${action} ${table}`,
     pma: (p) =>
-      p.ajax('/index.php?route=/database/structure/favorite-table', {
+      p.postJson('/index.php?route=/database/structure/favorite-table', {
         db: P.db,
         favorite_table: table,
         [`${action}_favorite`]: 'true',
@@ -244,7 +224,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
   // -------------------------------------------------------------------------------------------
   const recent = (table: string): Step => ({
     name: `recent table ${table}`,
-    pma: (p) => p.request(`/index.php?route=/table/sql&db=${P.db}&table=${table}&ajax_request=true`),
+    pma: (p) => p.getPage(`/index.php?route=/table/sql&db=${P.db}&table=${table}&ajax_request=true`),
     bma: async (b) => (await b.req('POST', '/api/servers/1/recent', { db: B.db, table })).json,
     tables: ['pma__recent'],
   })
@@ -257,7 +237,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
   const storeBkm = (label: string, query: string, shared: boolean): Step => ({
     name: `bookmark this SQL query (${label}${shared ? ', shared' : ''})`,
     pma: (p) =>
-      p.ajax('/index.php?route=/sql', {
+      p.postJson('/index.php?route=/sql', {
         db: P.db,
         goto: 'index.php?route=/sql',
         'bkm_fields[bkm_database]': P.db,
@@ -283,7 +263,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     runStep(pma, bma, {
       name: 'console add',
       pma: (p) =>
-        p.ajax('/index.php?route=/console/bookmark/add', {
+        p.postJson('/index.php?route=/console/bookmark/add', {
           db: P.db,
           label: 'from console',
           bookmark_query: 'SELECT 2',
@@ -308,9 +288,9 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     runStep(pma, bma, {
       name: 'replace',
       pma: (p) =>
-        p.ajax(
+        p.postJson(
           '/index.php?route=/import',
-          sqlBoxForm('SELECT 1', P.db, { bkm_label: 'b1', bkm_replace: '1', no_history: 'true' }),
+          sqlBoxForm('SELECT 1', P.db, '', { bkm_label: 'b1', bkm_replace: '1', no_history: 'true' }),
         ),
       // the SQL tab sends the bookmark fields with the query (one request, like the form)
       bma: async (b) =>
@@ -330,9 +310,9 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     runStep(pma, bma, {
       name: 'sql tab bookmark',
       pma: (p) =>
-        p.ajax(
+        p.postJson(
           '/index.php?route=/import',
-          sqlBoxForm('SELECT 1; SELECT * FROM t WHERE id = 1', P.db, {
+          sqlBoxForm('SELECT 1; SELECT * FROM t WHERE id = 1', P.db, '', {
             bkm_label: 'tab',
             bkm_all_users: 'true',
             no_history: 'true',
@@ -355,9 +335,9 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     runStep(pma, bma, {
       name: 'sql tab bookmark error',
       pma: (p) =>
-        p.ajax(
+        p.postJson(
           '/index.php?route=/import',
-          sqlBoxForm('SELECT * FROM missing', P.db, { bkm_label: 'broken', no_history: 'true' }),
+          sqlBoxForm('SELECT * FROM missing', P.db, '', { bkm_label: 'broken', no_history: 'true' }),
         ),
       bma: async (b) =>
         (
@@ -386,9 +366,9 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     await runStep(pma, bma, {
       name: 'run',
       pma: (p) =>
-        p.ajax(
+        p.postJson(
           '/index.php?route=/import',
-          sqlBoxForm('', P.db, {
+          sqlBoxForm('', P.db, '', {
             id_bookmark: String(ids.pma.byId),
             action_bookmark: '0',
             'bookmark_variable[1]': '2',
@@ -416,9 +396,9 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     runStep(pma, bma, {
       name: 'delete',
       pma: (p) =>
-        p.ajax(
+        p.postJson(
           '/index.php?route=/import',
-          sqlBoxForm('', P.db, { id_bookmark: String(ids.pma.byId), action_bookmark: '2' }),
+          sqlBoxForm('', P.db, '', { id_bookmark: String(ids.pma.byId), action_bookmark: '2' }),
         ),
       bma: async (b) => (await b.req('POST', `/api/servers/1/bookmarks/${ids.bma.byId}/delete`)).json,
       tables: ['pma__bookmark'],
@@ -441,9 +421,9 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     it(`history entry for ${JSON.stringify(h.sql)}`, async () => {
       const sqlFor = (x: typeof P) => h.sql.replaceAll('DB', x.db)
       const m1 = await log.marker()
-      await pma.ajax(
+      await pma.postJson(
         '/index.php?route=/import',
-        sqlBoxForm(sqlFor(P), h.db ?? P.db, { table: h.table ?? '', sql_delimiter: h.delimiter ?? ';' }),
+        sqlBoxForm(sqlFor(P), h.db ?? P.db, '', { table: h.table ?? '', sql_delimiter: h.delimiter ?? ';' }),
       )
       const pmaCtl = await log.since(P.ctl, m1)
       const last = inst.dumps().at(-1)?.sqlHistory?.at(-1)
@@ -484,7 +464,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
   const colPrefs = (name: string, order: string, visib: string, stale = false): Step => ({
     name,
     pma: async (p) =>
-      p.ajax('/index.php?route=/sql/set-column-preferences', {
+      p.postJson('/index.php?route=/sql/set-column-preferences', {
         db: P.db,
         table: 't',
         col_order: order,
@@ -525,7 +505,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
   const nav = (action: 'hide' | 'unhide', itemName: string, itemType: string): Step => ({
     name: `${action} ${itemType} ${itemName}`,
     pma: (p) =>
-      p.ajax('/index.php?route=/navigation', {
+      p.postJson('/index.php?route=/navigation', {
         [`${action}NavItem`]: 'true',
         itemName,
         itemType,
@@ -544,7 +524,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
   // -------------------------------------------------------------------------------------------
   const consoleCfg = (key: string, value: string, via: 'console' | 'prefs' = 'console'): Step => ({
     name: `console setting ${key}=${value}${via === 'prefs' ? ' (generic /prefs/option)' : ''}`,
-    pma: (p) => p.ajax('/index.php?route=/console/update-config', { key, value }),
+    pma: (p) => p.postJson('/index.php?route=/console/update-config', { key, value }),
     // the console's own endpoint (POST /console/config, parseValueParam), or the generic setUserValue
     bma: async (b) =>
       via === 'console'
@@ -575,7 +555,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
     runStep(pma, bma, {
       name: 'reset',
       pma: async (p) => {
-        await p.request('/index.php?route=/preferences/manage', {
+        await p.postPage('/index.php?route=/preferences/manage', {
           submit_clear: '1',
           token: p.token,
           server: '1',
@@ -642,7 +622,7 @@ describe.skipIf(!available)('parity: creating the configuration storage', () => 
     await bma.login(B.user, B.user)
     try {
       // the check page offers the same action
-      const page = visibleText(await pma.request(`/index.php?route=/check-relations&db=${opts.db(P)}`))
+      const page = visibleText(await pma.getPage(`/index.php?route=/check-relations&db=${opts.db(P)}`))
       const status = await bma.req('GET', `/api/servers/1/metadata-storage/status?db=${opts.db(B)}`)
       expect(status.json.offer).toBe(opts.action)
       expect(page).toContain(
@@ -651,7 +631,7 @@ describe.skipIf(!available)('parity: creating the configuration storage', () => 
           : 'Create the phpMyAdmin configuration storage in the current database.',
       )
       const m1 = await log.marker()
-      await pma.request('/index.php?route=/check-relations', {
+      await pma.postPage('/index.php?route=/check-relations', {
         db: opts.db(P),
         [opts.action]: '1',
         goto: 'index.php?route=/database/operations',

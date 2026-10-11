@@ -12,6 +12,7 @@ import {
 import { createServer } from 'node:net'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { isPmaUp } from './pma.ts'
 
 /**
  * A private phpMyAdmin instance for parity cases that need their own `config.inc.php`
@@ -132,9 +133,7 @@ export async function startPmaInstance(
   })
   const url = `http://127.0.0.1:${port}`
   for (let i = 0; i < 100; i++) {
-    const ok = await fetch(`${url}/index.php`)
-      .then((r) => r.status > 0)
-      .catch(() => false)
+    const ok = await isPmaUp(url, { anyStatus: true })
     if (ok) break
     await new Promise((r) => setTimeout(r, 100))
   }

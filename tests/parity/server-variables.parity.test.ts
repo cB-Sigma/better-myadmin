@@ -74,7 +74,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
   it('lists every variable with formatted value, session value and documentation link', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGet('/server/variables', {}, true),
+      () => h.pma.getJson('/server/variables'),
       () => h.bma.req('GET', '/api/servers/1/variables'),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)
@@ -95,7 +95,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
   it('reads a variable for the inline editor', async () => {
     const r = await both(
       h,
-      () => h.pma.pageGetJson('/server/variables/get/max_connect_errors'),
+      () => h.pma.getJson('/server/variables/get/max_connect_errors'),
       () => h.bma.req('GET', '/api/servers/1/variables/max_connect_errors'),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)
@@ -119,7 +119,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
       if (name.includes('plain')) value = original
       const r = await both(
         h,
-        () => h.pma.pagePostJson(`/server/variables/set/${variable}`, { varValue: value }),
+        () => h.pma.postJson(`/server/variables/set/${variable}`, { varValue: value }),
         () => h.bma.req('POST', `/api/servers/1/variables/${variable}`, { varValue: value }),
       )
       const cmp = diff(h, r.pmaLog, r.bmaLog)
@@ -134,7 +134,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
   it('SET GLOBAL of a read-only variable reports the MySQL error', async () => {
     const r = await both(
       h,
-      () => h.pma.pagePostJson('/server/variables/set/version', { varValue: 'x' }),
+      () => h.pma.postJson('/server/variables/set/version', { varValue: 'x' }),
       () => h.bma.req('POST', '/api/servers/1/variables/version', { varValue: 'x' }),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)
@@ -150,7 +150,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
   it('a variable name with other characters is refused without a query', async () => {
     const r = await both(
       h,
-      () => h.pma.pagePostJson('/server/variables/set/foo-bar', { varValue: 'x' }),
+      () => h.pma.postJson('/server/variables/set/foo-bar', { varValue: 'x' }),
       () => h.bma.req('POST', '/api/servers/1/variables/foo-bar', { varValue: 'x' }),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)

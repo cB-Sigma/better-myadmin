@@ -131,7 +131,7 @@ describe.skipIf(!pmaReachable)('parity: databases list', () => {
       const qs = new URLSearchParams(params).toString()
       const r = await both(
         h,
-        () => h.pma.pagePost('/server/databases', params, true),
+        () => h.pma.postJson('/server/databases', params),
         () => h.bma.req('GET', `/api/servers/1/databases${qs === '' ? '' : `?${qs}`}`),
         users,
       )
@@ -159,7 +159,7 @@ describe.skipIf(!pmaReachable)('parity: databases list', () => {
     const r = await both(
       h,
       () =>
-        h.pma.pagePostJson('/server/databases/create', {
+        h.pma.postJson('/server/databases/create', {
           new_db: 'm3srv_db_newp',
           db_collation: 'utf8mb4_bin',
         }),
@@ -193,7 +193,7 @@ describe.skipIf(!pmaReachable)('parity: databases list', () => {
   it('create with an unknown collation drops the collation part; an existing name reports the error', async () => {
     const r = await both(
       h,
-      () => h.pma.pagePostJson('/server/databases/create', { new_db: 'm3srv_db_a', db_collation: 'nope_ci' }),
+      () => h.pma.postJson('/server/databases/create', { new_db: 'm3srv_db_a', db_collation: 'nope_ci' }),
       () => h.bma.req('POST', '/api/servers/1/databases', { new_db: 'm3srv_db_a', db_collation: 'nope_ci' }),
       users,
     )
@@ -228,7 +228,7 @@ describe.skipIf(!pmaReachable)('parity: drop databases', () => {
     const r = await both(
       su,
       () =>
-        su.pma.pagePostJson('/server/databases/destroy', {
+        su.pma.postJson('/server/databases/destroy', {
           'selected_dbs[0]': 'm3srv_db_dropp',
           'selected_dbs[1]': 'mysql',
         }),
@@ -249,7 +249,7 @@ describe.skipIf(!pmaReachable)('parity: drop databases', () => {
   it('nothing to drop', async () => {
     const r = await both(
       su,
-      () => su.pma.pagePostJson('/server/databases/destroy', { 'selected_dbs[0]': 'information_schema' }),
+      () => su.pma.postJson('/server/databases/destroy', { 'selected_dbs[0]': 'information_schema' }),
       () => su.bma.req('POST', '/api/servers/1/databases/drop', { selected_dbs: ['information_schema'] }),
     )
     const cmp = diff(su, r.pmaLog, r.bmaLog)

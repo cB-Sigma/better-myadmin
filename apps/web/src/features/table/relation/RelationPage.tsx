@@ -4,10 +4,12 @@ import {
   Disclosure,
   DocLink,
   Hint,
+  Input,
   Label,
   NativeSelect,
   Panel,
   PanelBody,
+  PreviewSqlDialog,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -15,7 +17,6 @@ import { type FormEvent, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
-import { PreviewSqlDialog } from '../common/PreviewSqlDialog'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 import { StructurePills } from '../common/StructurePills'
 
@@ -27,7 +28,7 @@ import { StructurePills } from '../common/StructurePills'
  */
 export function RelationPage({ scope }: { scope: TableRef }) {
   const q = useQuery({
-    queryKey: qk.tblPage(scope.server, scope.db, scope.table, 'relation'),
+    queryKey: qk.tblPage(scope, 'relation'),
     queryFn: () => api.tableRelation(scope),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
@@ -215,7 +216,7 @@ function RelationForm({
   })
 
   const refresh = async () => {
-    await qc.invalidateQueries({ queryKey: qk.tbl(scope.server, scope.db, scope.table) })
+    await qc.invalidateQueries({ queryKey: qk.tbl(scope) })
   }
   const save = async (e: FormEvent) => {
     e.preventDefault()
@@ -363,9 +364,9 @@ function RelationForm({
                       )}
                     </td>
                     <td className="space-y-1 px-2 py-1">
-                      <input
+                      <Input
                         type="text"
-                        className="h-7 rounded-(--radius) border border-border-strong bg-bg px-2 text-[13px]"
+                        className="max-w-48"
                         name={`constraint_name[${i}]`}
                         value={r.constraintName}
                         placeholder={t('Constraint name')}

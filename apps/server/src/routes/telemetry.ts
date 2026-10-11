@@ -2,7 +2,7 @@ import { ErrorReportRequest, type ErrorReportResponse } from '@bettermyadmin/con
 import { Hono } from 'hono'
 import { getCookie } from 'hono/cookie'
 import type { AppEnv } from '../app.ts'
-import { ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { APP_VERSION } from '../shell/scope.ts'
 
 export const telemetryRoutes = new Hono<AppEnv>()
@@ -53,9 +53,7 @@ function sanitizeException(e: unknown): unknown {
  * pma: src/Controllers/ErrorReportController.php, src/ErrorReport.php
  */
 telemetryRoutes.post('/error', async (c) => {
-  const parsed = ErrorReportRequest.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) throw new ValidationError('Invalid request.')
-  const req = parsed.data
+  const req = await parseJson(c, ErrorReportRequest)
   const { cfg } = c.get('deps')
   const session = c.get('session')
   const setting = session.sendErrorReports ?? cfg.SendErrorReports

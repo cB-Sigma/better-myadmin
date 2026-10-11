@@ -39,7 +39,7 @@ import { ResultMessages, errorMessage } from '../common/ResultMessages'
  */
 export function OperationsPage({ scope }: { scope: TableRef }) {
   const q = useQuery({
-    queryKey: qk.tblPage(scope.server, scope.db, scope.table, 'operations'),
+    queryKey: qk.tblPage(scope, 'operations'),
     queryFn: () => api.tableOperations(scope),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
@@ -79,7 +79,7 @@ function useRunner({ scope, setMessages, setMaint }: Common) {
       const r = await fn()
       setMessages(r.messages)
       setMaint(r.maintenance ?? null)
-      await qc.invalidateQueries({ queryKey: qk.tbl(scope.server, scope.db, scope.table) })
+      await qc.invalidateQueries({ queryKey: qk.tbl(scope) })
       await qc.invalidateQueries({ queryKey: qk.nav(scope.server) })
       await after?.(r)
       return r

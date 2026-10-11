@@ -59,7 +59,7 @@ interface Crit {
 
 /** The search form of phpMyAdmin with criteria, posted like select.ts (empty criteria dropped). */
 async function pmaSearch(crits: Crit[], extra: Pairs = []): Promise<void> {
-  const html = await pma.routePage('/table/search', { db: DB_PMA, table: 't' })
+  const html = await pma.getPage('/table/search', { db: DB_PMA, table: 't' })
   const pairs = serializeForm(findForm(html, { id: 'tbl_search_form' }))
   const keep = pairs.filter(
     ([k]) =>
@@ -202,33 +202,29 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
 
   it('zoom search runs the same LIMITed query', async () => {
     const m = await log.marker()
-    const html = await pma.routePage('/table/zoom-search', { db: DB_PMA, table: 't' })
+    const html = await pma.getPage('/table/zoom-search', { db: DB_PMA, table: 't' })
     const pairs = serializeForm(findForm(html, { id: 'zoom_search_form' })).filter(
       ([k]) => !k.startsWith('criteria') && k !== 'maxPlotLimit' && k !== 'dataLabel',
     )
-    await pma.post(
-      '/table/zoom-search',
-      [
-        ...pairs,
-        ['criteriaColumnNames[]', 'id'],
-        ['criteriaColumnNames[]', 'price'],
-        ['criteriaColumnNames[]', 'name'],
-        ['criteriaColumnNames[]', 'pma_null'],
-        ['criteriaColumnTypes[0]', 'int'],
-        ['criteriaColumnTypes[1]', 'decimal(6,2)'],
-        ['criteriaColumnTypes[2]', 'varchar(20)'],
-        ['criteriaColumnOperators[0]', '>'],
-        ['criteriaValues[0]', '0'],
-        ['criteriaColumnOperators[1]', '='],
-        ['criteriaValues[1]', ''],
-        ['criteriaColumnOperators[2]', 'LIKE'],
-        ['criteriaValues[2]', '%a%'],
-        ['dataLabel', 'name'],
-        ['maxPlotLimit', '100'],
-        ['zoom_submit', 'Go'],
-      ],
-      { ajax: false },
-    )
+    await pma.postPage('/table/zoom-search', [
+      ...pairs,
+      ['criteriaColumnNames[]', 'id'],
+      ['criteriaColumnNames[]', 'price'],
+      ['criteriaColumnNames[]', 'name'],
+      ['criteriaColumnNames[]', 'pma_null'],
+      ['criteriaColumnTypes[0]', 'int'],
+      ['criteriaColumnTypes[1]', 'decimal(6,2)'],
+      ['criteriaColumnTypes[2]', 'varchar(20)'],
+      ['criteriaColumnOperators[0]', '>'],
+      ['criteriaValues[0]', '0'],
+      ['criteriaColumnOperators[1]', '='],
+      ['criteriaValues[1]', ''],
+      ['criteriaColumnOperators[2]', 'LIKE'],
+      ['criteriaValues[2]', '%a%'],
+      ['dataLabel', 'name'],
+      ['maxPlotLimit', '100'],
+      ['zoom_submit', 'Go'],
+    ])
     const pmaLog = (await log.since(PMA_USER, m)).map((e) => normalise(e.sql, dbMap))
     const z = (await post('/search/zoom', {
       criteria: [
@@ -280,19 +276,15 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
         columnIndex: '5',
         ...(regex ? { useRegex: 'on' } : {}),
       })) as PmaJson
-      await pma.post(
-        '/table/find-replace',
-        [
-          ['db', DB_PMA],
-          ['table', 't'],
-          ['replace', 'true'],
-          ['columnIndex', '5'],
-          ['findString', find],
-          ['replaceWith', repl],
-          ['useRegex', regex ? '1' : '0'],
-        ],
-        { ajax: false },
-      )
+      await pma.postPage('/table/find-replace', [
+        ['db', DB_PMA],
+        ['table', 't'],
+        ['replace', 'true'],
+        ['columnIndex', '5'],
+        ['findString', find],
+        ['replaceWith', repl],
+        ['useRegex', regex ? '1' : '0'],
+      ])
       const pmaLog = await log.since(PMA_USER, m1)
       const m2 = await log.marker()
       const bp = (await post('/find-replace/preview', {

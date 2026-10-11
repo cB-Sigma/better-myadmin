@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from '@tanstack/react-router'
-import { api } from '../../lib/api.ts'
+import { api } from '../../lib/api'
 import { qk } from '../../lib/queryKeys.ts'
 
 /** The scope of the current route (server, optional database and table), like CommonParams. */
@@ -19,14 +19,14 @@ export const serverScopeQuery = (server: number) => ({
 })
 
 export const databaseScopeQuery = (server: number, db: string) => ({
-  queryKey: qk.dbScope(server, db),
-  queryFn: () => api.databaseScope(server, db),
+  queryKey: qk.dbScope({ server, db }),
+  queryFn: () => api.databaseScope({ server, db }),
   staleTime: SCOPE_STALE,
 })
 
 export const tableScopeQuery = (server: number, db: string, table: string) => ({
-  queryKey: qk.tableScope(server, db, table),
-  queryFn: () => api.tableScope(server, db, table),
+  queryKey: qk.tableScope({ server, db, table }),
+  queryFn: () => api.tableScope({ server, db, table }),
   staleTime: SCOPE_STALE,
 })
 

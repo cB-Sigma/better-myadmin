@@ -1,6 +1,6 @@
 import { englishTranslator } from '@bettermyadmin/i18n'
+import { collationDescription } from '@bettermyadmin/mysql-types'
 import { describe, expect, it } from 'vitest'
-import { collationDescription } from '../../src/server-admin/charsets.ts'
 import { StatusData, calculateValues, cleanDeprecated } from '../../src/server-admin/status-data.ts'
 import { formatStatusValue, queryName } from '../../src/server-admin/status.ts'
 import { setVariableValue } from '../../src/server-admin/variables.ts'
@@ -11,7 +11,7 @@ const tr = englishTranslator()
 
 describe('Collation::buildDescription', () => {
   for (const [name, description] of Object.entries(fixture.collations)) {
-    it(name, () => expect(collationDescription(tr, name)).toBe(description))
+    it(name, () => expect(collationDescription(name, tr)).toBe(description))
   }
 })
 

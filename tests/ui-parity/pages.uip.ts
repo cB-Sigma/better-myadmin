@@ -13,14 +13,11 @@ pageParity('login', {
   ours: { path: '/' },
   scope: 'page',
   ready: { pma: '#input_username', ours: '#input_username' },
-  known: 'the logo link "phpMyAdmin" above the login form is missing',
 })
 
 pageParity('home', {
   pma: { route: '/' },
   ours: { path: '/s/1' },
-  known:
-    'the "Web server" card has no Documentation link (ours renders one in "Appearance settings"); the "documentation" link phpMyAdmin shows outside the cards sits in our "phpMyAdmin" card',
 })
 
 pageParity('navigation', {
@@ -35,8 +32,6 @@ pageParity('server-sql', {
   pma: { route: '/server/sql' },
   ours: { path: '/s/1/sql' },
   interactions: [{ name: 'bind parameters', do: { check: 'Bind parameters' } }],
-  known:
-    'the SQL box has no section: phpMyAdmin groups its controls under the legend "Run SQL query/queries on server …:", ours renders that title in a plain div (use a fieldset/legend or a labelled group)',
 })
 
 pageParity('table-structure', {
@@ -51,23 +46,18 @@ pageParity('table-menu', {
   pma: { route: '/table/structure', params: { db: FIX.db, table: FIX.table } },
   ours: { path: `/s/1/db/${FIX.db}/t/${FIX.table}/structure` },
   scope: 'menu',
-  known:
-    'ours exposes "Open user account menu" and "Click on the bar to scroll to top of page" as buttons in the menubar; phpMyAdmin has no such controls there',
 })
 
 pageParity('server-variables', {
   pma: { route: '/server/variables' },
   ours: { path: '/s/1/variables' },
   interactions: [{ name: 'filter autocommit', do: { fill: ['Containing the word:', 'autocommit'] } }],
-  known:
-    'ours adds a "Documentation" link to every variable row (phpMyAdmin links the variable name only); the filter box is not in a "Filters" section',
 })
 
 pageParity('server-databases', {
   pma: { route: '/server/databases' },
   ours: { path: '/s/1/databases' },
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
-  known: 'the create form is not in a "Create database" section (phpMyAdmin: card header)',
 })
 
 pageParity('server-status', {

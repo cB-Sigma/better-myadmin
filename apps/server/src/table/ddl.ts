@@ -350,7 +350,11 @@ async function updateMimeTypes(
 /** SaveController::updateColumns after the ALTER: Relation::renameField, then the MIME types */
 async function afterColumnsSaved(
   ctx: DdlCtx,
-  columns: ReadonlyArray<{ name: string; orig: { field: string }; mime?: Out<typeof ColumnMime> | undefined }>,
+  columns: ReadonlyArray<{
+    name: string
+    orig: { field: string }
+    mime?: Out<typeof ColumnMime> | undefined
+  }>,
 ): Promise<void> {
   const meta = ctx.meta
   if (meta != null && meta.control !== null) {

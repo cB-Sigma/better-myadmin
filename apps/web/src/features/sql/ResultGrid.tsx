@@ -1,8 +1,8 @@
 import type { Cell, Field } from '@bettermyadmin/contracts'
+import { formatBytes } from '@bettermyadmin/i18n/format'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { memo, useRef } from 'react'
 import { translator } from '../../lib/i18n'
-import { formatByteDown } from './format'
 
 const ROW_H = 28
 
@@ -20,7 +20,9 @@ const CellView = memo(function CellView({ value, field }: { value: Cell; field: 
   if (field.mappedType === 'blob' || field.flags.blob) {
     // pma: Results::handleNonPrintableContents — Util::formatByteDown($size, 3, 1)
     return (
-      <span className="font-mono text-data-binary">[BLOB - {formatByteDown(translator(), value.bytes)}]</span>
+      <span className="font-mono text-data-binary">
+        [BLOB - {formatBytes(translator(), value.bytes, 3, 1)}]
+      </span>
     )
   }
   if (field.mappedType === 'bit') {

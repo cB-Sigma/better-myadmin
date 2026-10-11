@@ -42,7 +42,7 @@ export function wrapperUrl(loc: CellLocation, extra: Record<string, string> = {}
     p.set('where', loc.where.clause)
     p.set('sig', loc.where.sig)
   }
-  return `/api${tablePath(loc.server, loc.db, loc.table)}/transformation/wrapper?${p}`
+  return `/api${tablePath({ server: loc.server, db: loc.db, table: loc.table })}/transformation/wrapper?${p}`
 }
 
 /** Whether a column has a browser display transformation to apply (BrowseMIME on, plugin known). */
@@ -72,7 +72,7 @@ export function renderTransformation(
     gd2: true,
   })
   if ('sql' in out) return <HighlightedSql sql={out.sql} versionInt={versionInt} />
-  return <SafeHtml html={out.html} />
+  return <SafeHtml profile="transformation" html={out.html} />
 }
 
 /** A `<td>` content for a transformed cell, with phpMyAdmin's classes (`<mime_type> transformed`). */

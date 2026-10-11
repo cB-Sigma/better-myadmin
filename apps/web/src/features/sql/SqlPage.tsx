@@ -1,9 +1,10 @@
 import type { QueryRequest, QueryResponse, SimulateResponse, SqlFormResponse } from '@bettermyadmin/contracts'
+import { backquote } from '@bettermyadmin/sql-gen'
+import { DocLink, MessageBox, MySqlDocLink, Panel, buttonVariants, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useBlocker, useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { mysqlDocUrl, pmaDocUrl } from '../../lib/docs'
 import { Trans, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
@@ -12,7 +13,7 @@ import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
 import { HighlightedSql } from './HighlightedSql'
 import { StatementBlock } from './Results'
 import { SimulateModal } from './SimulateModal'
-import { type CardAction, type CardEnv, DocIcon, InlineEditContext, MessageBox } from './SqlMessage'
+import { type CardAction, type CardEnv, InlineEditContext } from './SqlMessage'
 import { SqlEditor } from './editor/SqlEditor'
 import type { SqlEditorHandle } from './editor/types'
 import {
@@ -21,7 +22,6 @@ import {
   NO_PARAM,
   type SnippetType,
   autoSave,
-  backquote,
   canSimulate,
   checkSqlQuery,
   confirmationText,
@@ -64,7 +64,7 @@ export function SqlPage(props: SqlPageProps) {
     staleTime: 0,
   })
   if (form.error instanceof ApiError) {
-    return <MessageBox type="error" text={form.error.message} className="rounded" />
+    return <MessageBox type="error" text={form.error.message} flush />
   }
   if (form.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
   return (
@@ -334,7 +334,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     setSimulate(await api.simulate(server, { sql: q, db, delimiter }))
   }
 
-  const btn = 'btn'
+  const btn = buttonVariants()
   const legend =
     // SqlQueryForm::init: the msgid, then ': ' and the documentation link
     form.scope === 'server' ? (
@@ -374,11 +374,14 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
         className="mb-4 max-w-6xl"
       >
         {!boxHidden && (
-          <div className="mb-3 rounded border border-border">
-            <div className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-2 text-sm font-semibold">
-              <span>{legend}:</span>
-              <DocIcon href={mysqlDocUrl('SELECT', '', form.server.versionInt)} />
-            </div>
+          <Panel
+            title={
+              <>
+                <span>{legend}:</span>
+                <MySqlDocLink url={mysqlDocUrl('SELECT', '', form.server.versionInt)} />
+              </>
+            }
+          >
             <div className="p-3">
               <div className="flex gap-3">
                 <div className="min-w-0 flex-1">
@@ -481,7 +484,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                       }}
                     />
                     <label htmlFor="parameterized">{t('Bind parameters')}</label>
-                    <DocIcon href={pmaDocUrl('faq', 'faq6-40')} target="documentation" />
+                    <DocLink page="faq" anchor="faq6-40" />
                   </div>
                   {params !== null && (
                     <div className="mb-3 flex flex-wrap gap-3 text-sm" id="parametersDiv">
@@ -641,7 +644,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   <button
                     type="button"
                     id="simulate_dml"
-                    className="btn btn-primary"
+                    className={buttonVariants({ variant: 'primary' })}
                     onClick={() => void onSimulate()}
                   >
                     {t('Simulate query')}
@@ -658,11 +661,11 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   name="SQL"
                   value={t('Go')}
                   disabled={running !== null}
-                  className="btn btn-primary"
+                  className={buttonVariants({ variant: 'primary' })}
                 />
               </div>
             </div>
-          </div>
+          </Panel>
         )}
         {!boxHidden && bookmarks.enabled && bookmarks.bookmarks.length > 0 && (
           <BookmarkedQuery bookmarks={bookmarks.bookmarks} onGo={(b, a, v) => void onBookmark(b, a, v)} />
@@ -670,7 +673,12 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
         {toggleShown && (
           <>
             {boxHidden && <br id="togglequerybox_spacer" />}
-            <button type="button" id="togglequerybox" className="btn" onClick={() => setBoxHidden((h) => !h)}>
+            <button
+              type="button"
+              id="togglequerybox"
+              className={buttonVariants()}
+              onClick={() => setBoxHidden((h) => !h)}
+            >
               {boxHidden ? t('Show query box') : t('Hide query box')}
             </button>
           </>
@@ -678,8 +686,8 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
       </form>
 
       <div id="sqlqueryresultsouter" className="max-w-full">
-        {flash !== null && <MessageBox type="success" text={flash} className="mb-3 rounded" />}
-        {error !== null && <MessageBox type="error" text={error} className="mb-3 rounded" />}
+        {flash !== null && <MessageBox type="success" text={flash} />}
+        {error !== null && <MessageBox type="error" text={error} />}
         {result?.statements.map((st, i) => (
           <StatementBlock key={`${i}-${st.sig}`} st={st} env={env} />
         ))}

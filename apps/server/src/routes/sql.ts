@@ -8,33 +8,20 @@ import {
   type SqlFormResponse,
 } from '@bettermyadmin/contracts'
 import type { Gettext } from '@bettermyadmin/i18n'
-import { backquote, quoteString } from '@bettermyadmin/sql-gen'
+import { backquote } from '@bettermyadmin/sql-gen'
 import { LINT_MSGIDS, type LintMessages, formatSql, lintQuery } from '@bettermyadmin/sql-lexer'
 import { Hono, type Context as HonoContext } from 'hono'
-import type { z } from 'zod'
 import { getServer } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
-import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { NotFoundError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { getVariable } from '../query/pipeline.ts'
 import { isProfilingSupported } from '../query/profiling.ts'
+import { autocompleteTables, databaseExists, tableColumnComments, tableExists } from '../query/sql-tab.ts'
 import { expandUserString } from '../util/expand-user-string.ts'
 import type { ServerEnv } from './server.ts'
 
 export const sqlRoutes = new Hono<ServerEnv>()
-
-export async function parseBody<S extends z.ZodTypeAny>(
-  c: HonoContext<ServerEnv>,
-  schema: S,
-): Promise<z.output<S>> {
-  const parsed = schema.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      parsed.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  return parsed.data as z.output<S>
-}
 
 /** Runs `fn` with a pooled connection of the session for this server. */
 export async function withConn<T>(c: HonoContext<ServerEnv>, fn: (conn: Conn) => Promise<T>): Promise<T> {
@@ -64,7 +51,7 @@ export function lintMessages(tr: Gettext): LintMessages {
  * pma: src/Controllers/LintController.php
  */
 sqlRoutes.post('/lint', async (c) => {
-  const req = await parseBody(c, LintRequest)
+  const req = await parseJson(c, LintRequest)
   const body: LintResponse = {
     lints: await withConn(c, async (conn) =>
       lintQuery(req.sql, req.editorType ?? null, {
@@ -81,7 +68,7 @@ sqlRoutes.post('/lint', async (c) => {
  * pma: src/Controllers/Database/SqlFormatController.php
  */
 sqlRoutes.post('/format', async (c) => {
-  const req = await parseBody(c, FormatRequest)
+  const req = await parseJson(c, FormatRequest)
   const sql = await withConn(c, async (conn) =>
     formatSql(req.sql, {
       singleLine: req.singleLine,
@@ -99,7 +86,7 @@ sqlRoutes.post('/format', async (c) => {
 sqlRoutes.get('/autocomplete', async (c) => {
   const { cfg } = c.get('deps')
   const db = c.req.query('db') ?? ''
-  const tables: AutocompleteResponse['tables'] = {}
+  let tables: AutocompleteResponse['tables'] = {}
   // DatabaseName::tryFrom: non-empty, at most 64 characters, no trailing space
   if (
     cfg.EnableAutocompleteForTablesAndColumns &&
@@ -107,18 +94,7 @@ sqlRoutes.get('/autocomplete', async (c) => {
     Array.from(db).length <= 64 &&
     !/ $/.test(db)
   ) {
-    await withConn(c, async (conn) => {
-      const rows = await conn.rows(
-        `SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, COLUMN_KEY FROM information_schema.columns WHERE table_schema = ${quoteString(db)}`,
-        'sql.autocomplete',
-      )
-      for (const r of rows) {
-        const key = r.COLUMN_KEY === 'PRI' ? ' | Primary' : r.COLUMN_KEY === 'UNI' ? ' | Unique' : ''
-        const name = r.TABLE_NAME ?? ''
-        tables[name] ??= []
-        tables[name].push({ field: r.COLUMN_NAME ?? '', columnHint: (r.COLUMN_TYPE ?? '') + key })
-      }
-    })
+    tables = await withConn(c, (conn) => autocompleteTables(conn, db))
   }
   const body: AutocompleteResponse = { tables }
   return c.json(body)
@@ -161,11 +137,8 @@ sqlRoutes.get('/form', async (c) => {
     let columns: SqlFormResponse['columns'] = []
     if (db !== '') {
       // DbTableExists::selectDatabase / hasTable
-      const dbExists = await conn.value(
-        `SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ${quoteString(db)}`,
-        'sql.form.db-exists',
-      )
-      if (dbExists === null) throw new NotFoundError(c.get('tr').gettext('No databases selected.'))
+      if (!(await databaseExists(conn, db)))
+        throw new NotFoundError(c.get('tr').gettext('No databases selected.'))
       if (table === '') {
         scope = 'database'
         legendName = db
@@ -180,22 +153,11 @@ sqlRoutes.get('/form', async (c) => {
           })
         }
       } else {
-        const lower = Number((await conn.value('SELECT @@lower_case_table_names', 'sql.form.lctn')) ?? 0)
-        const collate = lower === 0 ? 'COLLATE utf8_bin' : lower === 2 ? 'COLLATE utf8_general_ci' : ''
-        const rows = await conn.rows(
-          `SELECT \`COLUMN_NAME\` AS \`Field\`, \`COLUMN_COMMENT\` AS \`Comment\` FROM \`information_schema\`.\`COLUMNS\` WHERE \`TABLE_SCHEMA\` ${collate} = ${quoteString(db)} AND \`TABLE_NAME\` ${collate} = ${quoteString(table)} ORDER BY \`ORDINAL_POSITION\``,
-          'sql.form.columns',
-        )
-        if (rows.length === 0) {
-          const tableExists = await conn.value(
-            `SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = ${quoteString(db)} AND TABLE_NAME = ${quoteString(table)}`,
-            'sql.form.table-exists',
-          )
-          if (tableExists === null) throw new NotFoundError(c.get('tr').gettext('No table selected.'))
-        }
+        columns = await tableColumnComments(conn, db, table)
+        if (columns.length === 0 && !(await tableExists(conn, db, table)))
+          throw new NotFoundError(c.get('tr').gettext('No table selected.'))
         scope = 'table'
         legendName = `${db}.${table}`
-        columns = rows.map((r) => ({ field: r.Field ?? '', comment: r.Comment ?? '' }))
         if (query === '') {
           query = await expandUserString(cfg.DefaultQueryTable, {
             conn,

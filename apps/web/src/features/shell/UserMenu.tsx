@@ -7,13 +7,14 @@ import {
   IconText,
   NativeSelect,
   PmaIcon,
+  buttonVariants,
   pmaDocUrl,
   serverDocUrl,
 } from '@bettermyadmin/ui'
 import { getTheme } from '@bettermyadmin/ui/themes'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { api } from '../../lib/api.ts'
+import { api } from '../../lib/api'
 import { useConfig } from '../../lib/config.ts'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys.ts'
@@ -38,7 +39,7 @@ export function useLogout() {
         window.location.href = r.logoutUrl
         return
       }
-      qc.removeQueries({ queryKey: ['srv'] })
+      qc.removeQueries({ queryKey: qk.allServers })
       await qc.invalidateQueries({ queryKey: qk.auth })
     },
   })
@@ -61,10 +62,7 @@ export function UserMenu({ server }: { server: number }) {
   return (
     <div id="userAccountDropdown">
       <DropdownMenu>
-        <DropdownMenuTrigger
-          className="inline-flex items-center gap-1 rounded border border-border-strong bg-bg px-1.5 py-0.5 text-fg"
-          title={t('Open user account menu')}
-        >
+        <DropdownMenuTrigger className={buttonVariants({ size: 'sm' })} title={t('Open user account menu')}>
           <PmaIcon name="user" alt={t('Open user account menu')} />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="min-w-56">

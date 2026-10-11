@@ -311,7 +311,11 @@ export async function setMime(
   // lowercase mimetype & transformation
   const mimetype = mime.mimetype.toLowerCase()
   const transformation = mime.transformation.toLowerCase()
-  const { transformationOptions: opts, inputTransformation: input, inputTransformationOptions: inputOpts } = mime
+  const {
+    transformationOptions: opts,
+    inputTransformation: input,
+    inputTransformationOptions: inputOpts,
+  } = mime
   const hasValue = mimetype !== '' || transformation !== '' || opts !== '' || input !== '' || inputOpts !== ''
   const test = await conn.query(
     `

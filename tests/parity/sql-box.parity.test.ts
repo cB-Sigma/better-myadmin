@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { compareLogs } from './lib/compare.ts'
 import { GeneralLog } from './lib/general-log.ts'
-import { PmaClient, visibleText } from './lib/pma.ts'
+import { PmaClient, isPmaUp, sqlBoxForm, visibleText } from './lib/pma.ts'
 
 /**
  * Golden parity: the same SQL-tab action in the reference phpMyAdmin and in BetterMyAdmin must
@@ -22,9 +22,7 @@ const DB_PMA = 'par_pma'
 const DB_BMA = 'par_bma'
 const dbMap = { [DB_PMA]: 'par_db', [DB_BMA]: 'par_db', [PMA_USER]: 'parity_user', [BMA_USER]: 'parity_user' }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = await isPmaUp(PMA_URL)
 
 const SEED = (db: string) => `DROP DATABASE IF EXISTS ${db}; CREATE DATABASE ${db}; USE ${db};
   CREATE TABLE t (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(20), qty INT, price DECIMAL(10,2)) ENGINE=InnoDB;
@@ -102,7 +100,10 @@ describe.skipIf(!reachable)('parity: SQL tab (/import) vs POST /query', () => {
       await root.query(SEED(DB_BMA))
 
       const m1 = await log.marker()
-      const pr = await pma.sqlBox(c.sql, DB_PMA, '', c.delimiter ?? ';')
+      const pr = await pma.postJson(
+        '/import',
+        sqlBoxForm(c.sql, DB_PMA, '', { sql_delimiter: c.delimiter ?? ';' }),
+      )
       const pmaLog = await log.since(PMA_USER, m1)
 
       const m2 = await log.marker()

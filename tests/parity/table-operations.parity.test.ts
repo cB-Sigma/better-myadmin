@@ -78,13 +78,13 @@ async function bmaPage(table: string): Promise<Record<string, unknown>> {
 
 /** A form of phpMyAdmin's Operations page, serialised like jQuery's $form.serialize(). */
 async function pmaForm(table: string, id: string, route = '/table/operations'): Promise<Pairs> {
-  const html = await pma.routePage(route, { db: P.db, table })
+  const html = await pma.getPage(route, { db: P.db, table })
   return serializeForm(findForm(html, { id }))
 }
 
 /** The data-post parameters of a link of the Operations page. */
 async function pmaLinkParams(table: string, find: RegExp, route = '/table/operations'): Promise<Pairs> {
-  const html = await pma.routePage(route, { db: P.db, table })
+  const html = await pma.getPage(route, { db: P.db, table })
   const m = find.exec(html)
   if (m === null) throw new Error(`link ${find} not found`)
   const post = /data-post="([^"]*)"/.exec(m[0])?.[1] ?? ''
@@ -161,9 +161,7 @@ const bmaText = (j: unknown) =>
 async function pmaOptions(table: string, mods: Array<[string, string | null]>, ajax: boolean) {
   let pairs = await pmaForm(table, 'tableOptionsForm')
   for (const [k, v] of mods) pairs = v === null ? removePair(pairs, k) : setPair(pairs, k, v)
-  return ajax
-    ? pma.postJson('/table/operations', pairs)
-    : pma.post('/table/operations', pairs, { ajax: false })
+  return ajax ? pma.postJson('/table/operations', pairs) : pma.postPage('/table/operations', pairs)
 }
 
 /** The same form built from BetterMyAdmin's page payload (what the UI posts). */
@@ -210,7 +208,7 @@ const CASES: Case[] = [
         'order_order',
         'desc',
       )
-      return pma.post('/table/operations', pairs, { ajax: false })
+      return pma.postPage('/table/operations', pairs)
     },
     bma: () => bmaPost('nopk', '/order-by', { field: 'b', order: 'desc' }),
   },
@@ -363,12 +361,9 @@ const CASES: Case[] = [
       name: `maintenance: ${op}`,
       tables: [['db', 't']],
       pma: async () =>
-        pma.post(
+        pma.postPage(
           `/table/maintenance/${op}`,
           await pmaLinkParams('t', new RegExp(`<a href="[^"]*maintenance/${op}[^>]*>`)),
-          {
-            ajax: false,
-          },
         ),
       bma: () => bmaPost('t', '/maintenance', { op }),
     }),
@@ -377,12 +372,9 @@ const CASES: Case[] = [
     name: 'maintenance: repair (MyISAM)',
     tables: [['db', 'm']],
     pma: async () =>
-      pma.post(
+      pma.postPage(
         '/table/maintenance/repair',
         await pmaLinkParams('m', /<a href="[^"]*maintenance\/repair[^>]*>/),
-        {
-          ajax: false,
-        },
       ),
     bma: () => bmaPost('m', '/maintenance', { op: 'repair' }),
   },
@@ -453,9 +445,9 @@ const CASES: Case[] = [
     name: 'view: rename',
     tables: [['db', 'v2']],
     pma: async () => {
-      const html = await pma.routePage('/view/operations', { db: P.db, table: 'v' })
+      const html = await pma.getPage('/view/operations', { db: P.db, table: 'v' })
       const pairs = setPair(serializeForm(findForm(html, { action: '/view/operations' })), 'new_name', 'v2')
-      return pma.post('/view/operations', pairs, { ajax: false })
+      return pma.postPage('/view/operations', pairs)
     },
     bma: () => bmaPost('v', '/rename-view', { newName: 'v2' }),
   },
@@ -503,7 +495,7 @@ describe.skipIf(!reachable)('parity: table Operations (phpMyAdmin forms vs Bette
   it('the page offers the same controls and values', async () => {
     await reset()
     for (const table of ['t', 'm', 'h', 'child']) {
-      const html = await pma.routePage('/table/operations', { db: P.db, table })
+      const html = await pma.getPage('/table/operations', { db: P.db, table })
       const b = (await bmaPage(table)) as Record<string, unknown>
       const opts = serializeForm(findForm(html, { id: 'tableOptionsForm' }))
       expect(b.comment, table).toBe(getPair(opts, 'comment'))

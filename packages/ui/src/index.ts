@@ -36,6 +36,7 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Modal,
 } from './components/dialog.tsx'
 export {
   ConfirmDialog,
@@ -64,20 +65,34 @@ export {
   Checkbox,
   Combobox,
   type ComboboxProps,
+  FormRow,
   Input,
   Label,
   NativeCheckbox,
   NativeSelect,
+  Radio,
   Select,
   type SelectOption,
   type SelectProps,
   Textarea,
 } from './components/form.tsx'
 export { Alert, Panel, PanelBody, PanelItem, PanelList } from './components/panel.tsx'
+export { MessageBox, type MessageBoxProps, type MessageBoxType, MessageLine } from './components/message.tsx'
+export { Loading, PageHeader, Table } from './components/page.tsx'
+export { PreviewSqlDialog } from './components/preview-sql.tsx'
+export {
+  SAFE_HTML_ATTRS,
+  SAFE_HTML_TAGS,
+  SafeHtml,
+  type SafeHtmlProfile,
+  TRANSFORMATION_HTML_ATTRS,
+  TRANSFORMATION_HTML_TAGS,
+  sanitizeHtml,
+  sanitizeToFragment,
+  stripTags,
+} from './components/safe-html.tsx'
 export { type MessageHandle, Toaster, removeMessage, showMessage } from './components/toaster.tsx'
 export { Disclosure, type DisclosureProps } from './components/disclosure.tsx'
 export { DocLink, Hint, MySqlDocLink } from './components/doc-link.tsx'
 export { IconLink, type IconLinkProps, IconText, PmaIcon } from './components/icon.tsx'
 export { TabBar, type TabBarProps, type TabItem, type TabLinkComponent } from './components/tab-bar.tsx'
-export { SafeHtml, sanitizeHtml } from './components/safe-html.tsx'
-export { Radio } from './components/form.tsx'

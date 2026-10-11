@@ -1,6 +1,11 @@
 import type {
+  AddColumnsRequest,
+  AddKeyRequest,
+  AdvisorResponse,
   AuthState,
   AutocompleteResponse,
+  BinlogQuery,
+  BinlogResponse,
   BookmarkCreateRequest,
   BookmarkCreateResponse,
   BookmarkDeleteResponse,
@@ -11,18 +16,32 @@ import type {
   BrowseForeignersResponse,
   BrowseRequest,
   CancelResponse,
+  ChangeColumnsRequest,
+  ChangeFormResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  CollationsResponse,
+  ColumnFormOptions,
   ColumnTransformations,
   ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  CreateDatabaseResponse,
+  CreateTableFormResponse,
+  CreateTableRequest,
   CreateTrackingVersionRequest,
   DatabaseScope,
+  DatabasesQuery,
+  DatabasesResponse,
+  DdlResponse,
   DefaultFkCheckResponse,
   DeleteTrackingVersionsRequest,
+  DropColumnsRequest,
+  DropDatabasesResponse,
+  EngineResponse,
+  EnginesResponse,
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
@@ -30,18 +49,22 @@ import type {
   FindReplaceRequest,
   FindReplaceResponse,
   FormatResponse,
+  GetVariableResponse,
   GridSaveRequest,
   GridSaveResponse,
   HistoryResponse,
   HomeResponse,
   I18nState,
+  IndexFormResponse,
   InsertFormResponse,
+  KillProcessResponse,
   LintRequest,
   LintResponse,
   LoginRequest,
   LoginResponse,
   LogoutResponse,
   MaintenanceRequest,
+  MoveColumnsRequest,
   MoveCopyRequest,
   NavBranchQuery,
   NavBranchResponse,
@@ -51,28 +74,45 @@ import type {
   OperationsPageResponse,
   OperationsResponse,
   OrderByRequest,
+  PartitionFormResponse,
+  PartitionMaintenanceRequest,
   PartitionOpsRequest,
+  PartitioningRequest,
   PasswordForm,
+  PluginsResponse,
+  ProcessList,
+  ProcessesQuery,
   QueryRequest,
   QueryResponse,
+  QueryStatistics,
   RangeResponse,
   RelationDropdownResponse,
   RelationPageResponse,
   RelationSaveRequest,
   RelationSaveResponse,
+  RenameIndexRequest,
   RenameViewRequest,
+  ReservedWordCheckResponse,
+  SaveIndexRequest,
   SaveRowsRequest,
   SaveRowsResponse,
   SearchPageResponse,
   SearchRequest,
   SearchResponse,
   ServerScope,
+  ServerVariablesResponse,
   SetCollationResponse,
+  SetVariableResponse,
   SimulateRequest,
   SimulateResponse,
   SqlActionRequest,
   SqlFormResponse,
+  SqlMessage,
   StatementResult,
+  StatusOverview,
+  StatusVariables,
+  StatusVariablesRequest,
+  StructureResponse,
   TableOptionsRequest,
   TableScope,
   ToggleTrackingRequest,
@@ -98,6 +138,20 @@ export class ApiError extends Error {
     this.status = status
     this.envelope = envelope
   }
+}
+
+/**
+ * Any failure as a message for `<MessageBox {...errorMessage(e)} />`: an ApiError shows
+ * `#errno - message` (DatabaseInterface::getError) with its SQL; anything else its text.
+ */
+export function errorMessage(e: unknown): SqlMessage {
+  if (e instanceof ApiError) {
+    const sql = e.envelope.sql
+    const text =
+      e.envelope.errno !== undefined ? `#${e.envelope.errno} - ${e.envelope.message}` : e.envelope.message
+    return sql === undefined ? { type: 'error', text } : { type: 'error', text, sql }
+  }
+  return { type: 'error', text: e instanceof Error ? e.message : String(e) }
 }
 
 function readCookie(name: string): string {
@@ -130,6 +184,25 @@ export async function call<T>(method: 'GET' | 'POST', path: string, body?: unkno
   return json as T
 }
 
+/** The scope argument of database- and table-level endpoints (and of their `qk` keys). */
+export interface DbRef {
+  server: number
+  db: string
+}
+export interface TableRef extends DbRef {
+  table: string
+}
+
+const srvPath = (s: number) => `/servers/${s}`
+const dbPath = (r: DbRef) => `${srvPath(r.server)}/databases/${encodeURIComponent(r.db)}`
+/** API path of a table below `/api` (also the base of the transformation wrapper links). */
+export const tablePath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURIComponent(r.table)}`
+
+/**
+ * Every endpoint of the API, grouped by section of docs/architecture/05-api-reference.md. The first
+ * argument is the scope: `server: number`, a `DbRef` or a `TableRef`. Reads are `<thing>`, writes
+ * `<verb><Thing>` (docs/architecture/16-golden-path.md#data).
+ */
 export const api = {
   authState: () => call<AuthState>('GET', '/auth/state'),
   /** The request language; `lang` selects one (pma: `?lang=` from the language selector). */
@@ -148,13 +221,8 @@ export const api = {
     ),
   versionCheck: () => call<VersionCheckResponse>('GET', '/meta/version-check'),
   serverScope: (server: number) => call<ServerScope>('GET', `/servers/${server}`),
-  databaseScope: (server: number, db: string) =>
-    call<DatabaseScope>('GET', `/servers/${server}/databases/${encodeURIComponent(db)}`),
-  tableScope: (server: number, db: string, table: string) =>
-    call<TableScope>(
-      'GET',
-      `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}/capabilities`,
-    ),
+  databaseScope: (r: DbRef) => call<DatabaseScope>('GET', dbPath(r)),
+  tableScope: (r: TableRef) => call<TableScope>('GET', `${tablePath(r)}/capabilities`),
   home: (server: number) => call<HomeResponse>('GET', `/servers/${server}/home`),
   setCollation: (server: number, collation: string) =>
     call<SetCollationResponse>('POST', `/servers/${server}/session/collation`, {
@@ -214,54 +282,130 @@ export const api = {
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
   // table level beyond Structure (docs/features/04-table-level.md)
-  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${refPath(s)}/operations`),
+  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${tablePath(s)}/operations`),
   tableOperation: <K extends keyof TableOpBodies>(s: TableRef, op: K, body: TableOpBodies[K]) =>
-    call<OperationsResponse>('POST', `${refPath(s)}/operations/${op}`, body),
-  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${refPath(s)}/relation`),
+    call<OperationsResponse>('POST', `${tablePath(s)}/operations/${op}`, body),
+  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${tablePath(s)}/relation`),
   tableRelationDropdown: (s: TableRef, q: { foreignDb: string; foreignTable?: string; foreign: boolean }) =>
     call<RelationDropdownResponse>(
       'GET',
-      `${refPath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
+      `${tablePath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
     ),
   tableRelationSave: (s: TableRef, req: RelationSaveRequest) =>
-    call<RelationSaveResponse>('POST', `${refPath(s)}/relation`, req),
-  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${refPath(s)}/search`),
-  tableSearch: (s: TableRef, req: SearchRequest) => call<SearchResponse>('POST', `${refPath(s)}/search`, req),
+    call<RelationSaveResponse>('POST', `${tablePath(s)}/relation`, req),
+  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${tablePath(s)}/search`),
+  tableSearch: (s: TableRef, req: SearchRequest) =>
+    call<SearchResponse>('POST', `${tablePath(s)}/search`, req),
   tableSearchRange: (s: TableRef, column: string) =>
-    call<RangeResponse>('GET', `${refPath(s)}/search/range${queryString({ column })}`),
-  tableZoom: (s: TableRef, req: ZoomRequest) => call<ZoomResponse>('POST', `${refPath(s)}/search/zoom`, req),
+    call<RangeResponse>('GET', `${tablePath(s)}/search/range${queryString({ column })}`),
+  tableZoom: (s: TableRef, req: ZoomRequest) =>
+    call<ZoomResponse>('POST', `${tablePath(s)}/search/zoom`, req),
   tableZoomRow: (s: TableRef, whereClause: string, sig: string) =>
-    call<ZoomRowResponse>('POST', `${refPath(s)}/search/zoom/row`, { whereClause, sig }),
+    call<ZoomRowResponse>('POST', `${tablePath(s)}/search/zoom/row`, { whereClause, sig }),
   tableFindReplacePreview: (s: TableRef, req: FindReplaceRequest) =>
-    call<FindReplacePreviewResponse>('POST', `${refPath(s)}/find-replace/preview`, req),
+    call<FindReplacePreviewResponse>('POST', `${tablePath(s)}/find-replace/preview`, req),
   tableFindReplace: (s: TableRef, req: FindReplaceRequest) =>
-    call<FindReplaceResponse>('POST', `${refPath(s)}/find-replace`, req),
+    call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
-    call<OperationsResponse>('POST', `${refPath(s)}/relation/drop-foreign-key`, { constraint }),
-  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${refPath(s)}/tracking`),
+    call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
-    call<TrackingResponse>('POST', `${refPath(s)}/tracking/versions`, req),
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
   tableTrackingDelete: (s: TableRef, req: DeleteTrackingVersionsRequest) =>
-    call<TrackingResponse>('POST', `${refPath(s)}/tracking/versions/delete`, req),
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions/delete`, req),
   tableTrackingToggle: (s: TableRef, req: ToggleTrackingRequest) =>
-    call<TrackingResponse>('POST', `${refPath(s)}/tracking/toggle`, req),
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/toggle`, req),
   tableTrackingReport: (s: TableRef, req: Partial<TrackingReportRequest> & { version: string }) =>
-    call<TrackingReportResponse>('POST', `${refPath(s)}/tracking/report`, req),
+    call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
   tableTrackingSnapshot: (s: TableRef, version: string) =>
-    call<TrackingSnapshotResponse>('GET', `${refPath(s)}/tracking/snapshot${queryString({ version })}`),
+    call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
+  // server administration (docs/architecture/05-api-reference.md#server-scope)
+  databases: (s: number, q: DatabasesQuery) =>
+    call<DatabasesResponse>('GET', `${srvPath(s)}/databases${flags(q)}`),
+  createDatabase: (s: number, name: string, collation: string) =>
+    call<CreateDatabaseResponse>('POST', `${srvPath(s)}/databases`, {
+      new_db: name,
+      db_collation: collation,
+    }),
+  dropDatabases: (s: number, names: string[]) =>
+    call<DropDatabasesResponse>('POST', `${srvPath(s)}/databases/drop`, { selected_dbs: names }),
+  statusOverview: (s: number) => call<StatusOverview>('GET', `${srvPath(s)}/status`),
+  processes: (s: number, q: ProcessesQuery) =>
+    call<ProcessList>('GET', `${srvPath(s)}/status/processes${flags(q)}`),
+  killProcess: (s: number, id: string) =>
+    call<KillProcessResponse>('POST', `${srvPath(s)}/status/processes/${id}/kill`),
+  queryStatistics: (s: number) => call<QueryStatistics>('GET', `${srvPath(s)}/status/queries`),
+  statusVariables: (s: number, req: StatusVariablesRequest = {}) =>
+    req.flush !== undefined
+      ? call<StatusVariables>('POST', `${srvPath(s)}/status/variables`, req)
+      : call<StatusVariables>('GET', `${srvPath(s)}/status/variables${flags(req)}`),
+  advisor: (s: number) => call<AdvisorResponse>('GET', `${srvPath(s)}/status/advisor`),
+  serverVariables: (s: number) => call<ServerVariablesResponse>('GET', `${srvPath(s)}/variables`),
+  serverVariable: (s: number, name: string) =>
+    call<GetVariableResponse>('GET', `${srvPath(s)}/variables/${encodeURIComponent(name)}`),
+  setVariable: (s: number, name: string, value: string) =>
+    call<SetVariableResponse>('POST', `${srvPath(s)}/variables/${encodeURIComponent(name)}`, {
+      varValue: value,
+    }),
+  collations: (s: number) => call<CollationsResponse>('GET', `${srvPath(s)}/collations`),
+  engines: (s: number) => call<EnginesResponse>('GET', `${srvPath(s)}/engines`),
+  engine: (s: number, engine: string, page = '') =>
+    call<EngineResponse>(
+      'GET',
+      `${srvPath(s)}/engines/${encodeURIComponent(engine)}${page !== '' ? `/${encodeURIComponent(page)}` : ''}`,
+    ),
+  plugins: (s: number) => call<PluginsResponse>('GET', `${srvPath(s)}/plugins`),
+  binlog: (s: number, q: BinlogQuery) => call<BinlogResponse>('GET', `${srvPath(s)}/binlog${flags(q)}`),
+  // table structure (docs/architecture/05-api-reference.md#table-scope)
+  tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tablePath(r)}/structure`),
+  changeColumnsForm: (r: TableRef, fields: string[]) =>
+    call<ChangeFormResponse>(
+      'GET',
+      `${tablePath(r)}/columns/form?${fields.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
+    ),
+  addColumnsForm: (r: TableRef) =>
+    call<{ options: ColumnFormOptions }>('GET', `${tablePath(r)}/columns/add-form`),
+  createTableForm: (r: DbRef) => call<CreateTableFormResponse>('GET', `${dbPath(r)}/create-table/form`),
+  indexForm: (r: TableRef, q: { index?: string; create?: number }) =>
+    call<IndexFormResponse>('GET', `${tablePath(r)}/indexes/form${queryString(q)}`),
+  partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tablePath(r)}/partitions/form`),
+  createTable: (r: DbRef, req: CreateTableRequest) =>
+    call<DdlResponse & { db: string; table: string }>('POST', `${dbPath(r)}/tables`, req),
+  addColumns: (r: TableRef, req: AddColumnsRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/add`, req),
+  changeColumns: (r: TableRef, req: ChangeColumnsRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
+  dropColumns: (r: TableRef, req: DropColumnsRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tablePath(r)}/columns/key`, req),
+  moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/columns/move`, req),
+  reservedWordCheck: (r: TableRef, names: string[], table?: string) =>
+    call<ReservedWordCheckResponse>('POST', `${tablePath(r)}/columns/reserved-word-check`, {
+      names,
+      ...(table !== undefined ? { table } : {}),
+    }),
+  saveIndex: (r: TableRef, req: SaveIndexRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/indexes`, req),
+  renameIndex: (r: TableRef, req: RenameIndexRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/indexes/rename`, req),
+  dropIndex: (r: TableRef, name: string) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/indexes/drop`, { name }),
+  savePartitioning: (r: TableRef, req: PartitioningRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/partitions/partitioning`, req),
+  partitionMaintenance: (r: TableRef, req: PartitionMaintenanceRequest) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/partitions/maintenance`, req),
+  removePartitioning: (r: TableRef) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/partitions/remove-partitioning`, {}),
   // Insert/Edit and transformations (docs/features/03-insert-edit-transformations.md)
-  insertForm: (server: number, db: string, table: string, req: InsertFormRequest) =>
-    call<InsertFormResponse>('POST', `${tablePath(server, db, table)}/insert-form`, req),
-  saveRows: (server: number, db: string, table: string, req: SaveRowsRequest) =>
-    call<SaveRowsResponse>('POST', `${tablePath(server, db, table)}/rows`, req),
-  browseForeigners: (
-    server: number,
-    db: string,
-    table: string,
-    req: Partial<BrowseForeignersRequest> & { field: string },
-  ) => call<BrowseForeignersResponse>('POST', `${tablePath(server, db, table)}/browse-foreigners`, req),
-  columnTransformations: (server: number, db: string, table: string) =>
-    call<ColumnTransformations>('GET', `${tablePath(server, db, table)}/transformations`),
+  insertForm: (r: TableRef, req: InsertFormRequest) =>
+    call<InsertFormResponse>('POST', `${tablePath(r)}/insert-form`, req),
+  saveRows: (r: TableRef, req: SaveRowsRequest) =>
+    call<SaveRowsResponse>('POST', `${tablePath(r)}/rows`, req),
+  browseForeigners: (r: TableRef, req: Partial<BrowseForeignersRequest> & { field: string }) =>
+    call<BrowseForeignersResponse>('POST', `${tablePath(r)}/browse-foreigners`, req),
+  columnTransformations: (r: TableRef) =>
+    call<ColumnTransformations>('GET', `${tablePath(r)}/transformations`),
   // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
   browse: (server: number, req: BrowseRequest) =>
     call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
@@ -288,29 +432,13 @@ export const api = {
   ) => call<BrowseResponse>('POST', `/servers/${server}/browse/delete-rows`, req),
   /** pma: /sql/set-column-preferences */
   columnPrefs: (
-    server: number,
-    db: string,
-    table: string,
+    r: TableRef,
     req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
-  ) =>
-    call<{ success: boolean; message: { text: string } | null }>(
-      'POST',
-      `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}/uiprefs`,
-      req,
-    ),
+  ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tablePath(r)}/uiprefs`, req),
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
 }
-
-/** A table of a server (the table-scope routes). */
-export interface TableRef {
-  server: number
-  db: string
-  table: string
-}
-
-const refPath = (s: TableRef) => tablePath(s.server, s.db, s.table)
 
 interface TableOpBodies {
   'order-by': OrderByRequest
@@ -334,11 +462,6 @@ export interface InsertFormRequest {
   showFieldTypes?: boolean
 }
 
-/** `/api` path of a table (also the base of the transformation wrapper links). */
-export function tablePath(server: number, db: string, table: string): string {
-  return `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}`
-}
-
 /** POST /browse: the statement with its grid, the default-bookmark notice and the previous query card. */
 export type BrowseResponse = QueryResponse & { usingBookmark: string | null; previous?: StatementResult }
 
@@ -353,4 +476,15 @@ function qs(p: Record<string, string | undefined>): string {
   const u = new URLSearchParams()
   for (const [k, v] of Object.entries(p)) if (v !== undefined && v !== '') u.set(k, v)
   return u.toString()
+}
+
+/** Search params where `true` is `1` and false/empty values are left out (the server pages' GET forms). */
+function flags(q: Record<string, unknown>): string {
+  const p = new URLSearchParams()
+  for (const [k, v] of Object.entries(q)) {
+    if (v === undefined || v === false || v === '') continue
+    p.set(k, v === true ? '1' : String(v))
+  }
+  const s = p.toString()
+  return s === '' ? '' : `?${s}`
 }

@@ -1,4 +1,5 @@
 import type { ResolvedConfig, ServerConfig } from '@bettermyadmin/config'
+import { phpEmpty } from '@bettermyadmin/metadata'
 
 /** The merged configuration (packages/config): phpMyAdmin names, `Servers` keyed "1".."n". */
 export type AppConfig = ResolvedConfig
@@ -14,19 +15,6 @@ export function serverIndexes(cfg: AppConfig): number[] {
     .map(Number)
     .filter((n) => Number.isInteger(n) && n > 0)
     .sort((a, b) => a - b)
-}
-
-/** PHP empty(): '', '0', 0, false, null, [] are empty. */
-export function phpEmpty(v: unknown): boolean {
-  return (
-    v === undefined ||
-    v === null ||
-    v === false ||
-    v === '' ||
-    v === '0' ||
-    v === 0 ||
-    (Array.isArray(v) && v.length === 0)
-  )
 }
 
 /**

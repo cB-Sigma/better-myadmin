@@ -1,4 +1,5 @@
 import type { NavBranchQuery, NavNode, NavSettings, ServerListEntry } from '@bettermyadmin/contracts'
+import { MessageBox } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 import { clsx } from 'clsx'
@@ -193,14 +194,11 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
           </div>
         )}
         {store.errors.length > 0 && (
-          <ul
-            className="mx-2 mb-1 rounded border border-error/40 bg-error-bg px-2 py-1 text-xs text-error"
-            role="alert"
-          >
+          <MessageBox type="error" flush className="mx-2 mb-1">
             {[...new Set(store.errors)].map((e) => (
-              <li key={e}>{e}</li>
+              <div key={e}>{e}</div>
             ))}
-          </ul>
+          </MessageBox>
         )}
         {store.rootError !== null && (
           <p className="mx-2 text-xs text-error" role="alert">

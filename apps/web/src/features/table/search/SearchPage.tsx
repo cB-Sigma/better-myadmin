@@ -54,7 +54,7 @@ export function SearchPage({ scope }: { scope: TableRef }) {
 
 export function useSearchPage(scope: TableRef) {
   return useQuery({
-    queryKey: qk.tblPage(scope.server, scope.db, scope.table, 'search'),
+    queryKey: qk.tblPage(scope, 'search'),
     queryFn: () => api.tableSearchPage(scope),
   })
 }

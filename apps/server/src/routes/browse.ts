@@ -15,10 +15,10 @@ import {
   gridSave,
   gridValue,
 } from '../browse/actions.ts'
+import { parseJson } from '../http/validate.ts'
 import { afterSqlBox } from '../metadata/hooks.ts'
 import { withMeta } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
-import { parseBody } from './sql.ts'
 
 /** The results grid: /sql and its helper routes (docs/features/02-browse-results-grid.md). */
 export const browseRoutes = new Hono<ServerEnv>()
@@ -42,7 +42,7 @@ function withBrowse<T>(c: C, db: string, fn: (x: BrowseCtx) => Promise<T>): Prom
 
 /** POST /api/servers/:s/browse — pma: /sql */
 browseRoutes.post('/', async (c) => {
-  const req = await parseBody(c, BrowseRequest)
+  const req = await parseJson(c, BrowseRequest)
   const r = await withBrowse(c, req.db, (x) => browseResponse(x, req))
   // StatementHistory + RecentTableHandling middlewares
   await afterSqlBox(c, { db: req.db, table: req.table, current: r.current })
@@ -51,25 +51,25 @@ browseRoutes.post('/', async (c) => {
 
 /** POST /browse/grid-value — pma: /sql with grid_edit */
 browseRoutes.post('/grid-value', async (c) => {
-  const req = await parseBody(c, GridValueRequest)
+  const req = await parseJson(c, GridValueRequest)
   return c.json(await withBrowse(c, req.db, (x) => gridValue(x, req)))
 })
 
 /** POST /browse/values — pma: /sql/get-enum-values, /sql/get-set-values, /sql/get-relational-values */
 browseRoutes.post('/values', async (c) => {
-  const req = await parseBody(c, ColumnValuesRequest)
+  const req = await parseJson(c, ColumnValuesRequest)
   return c.json(await withBrowse(c, req.db, (x) => columnValues(x, req)))
 })
 
 /** POST /browse/save — pma: /table/replace (grid edit) */
 browseRoutes.post('/save', async (c) => {
-  const req = await parseBody(c, GridSaveRequest)
+  const req = await parseJson(c, GridSaveRequest)
   return c.json(await withBrowse(c, req.db, (x) => gridSave(x, req)))
 })
 
 /** POST /browse/delete-rows — pma: /table/delete/rows (then the original query again) */
 browseRoutes.post('/delete-rows', async (c) => {
-  const req = await parseBody(c, DeleteRowsRequest)
+  const req = await parseJson(c, DeleteRowsRequest)
   const r = await withBrowse(c, req.db, async (x) => {
     const queries = await deleteRows(x, req)
     return browseResponse(x, BrowseRequest.parse({ db: req.db, table: req.table, sql: req.originalSql }), {
