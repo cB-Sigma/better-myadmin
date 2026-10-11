@@ -48,10 +48,13 @@ pageParity('table-insert-preview-sql', {
   setup: async ({ pma, ours }) => {
     for (const page of [pma, ours]) {
       await page.getByRole('button', { name: 'Preview SQL' }).first().click()
+      // the shown modal can still hold its previous, hidden <code> while the new one renders (slow
+      // reference under load): wait for a visible statement
       await page
         .locator('#previewSqlModal')
         .filter({ visible: true })
         .getByText('INSERT', { exact: false })
+        .filter({ visible: true })
         .first()
         .waitFor()
     }

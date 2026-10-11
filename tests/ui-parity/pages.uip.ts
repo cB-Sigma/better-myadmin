@@ -58,7 +58,13 @@ pageParity('server-variables', {
  * Rows of databases other sessions create and drop on the shared MySQL while the case runs would
  * differ between the two captures: only this run's (`…_<run>`) and the system ones are compared.
  */
-const OTHER_RUNS_DB_ROWS = `tr[data-filter-row]${['INFORMATION_SCHEMA', 'MYSQL', 'PERFORMANCE_SCHEMA', 'SYS', 'PHPMYADMIN']
+const OTHER_RUNS_DB_ROWS = `tr[data-filter-row]${[
+  'INFORMATION_SCHEMA',
+  'MYSQL',
+  'PERFORMANCE_SCHEMA',
+  'SYS',
+  'PHPMYADMIN',
+]
   .map((n) => `:not([data-filter-row="${n}"])`)
   .join('')}:not([data-filter-row$="_${RUN.toUpperCase()}"])`
 
