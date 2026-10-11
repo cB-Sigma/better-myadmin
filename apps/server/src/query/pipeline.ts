@@ -1,4 +1,4 @@
-import type { Executed, Field, Profiling, StatementResult, Warning } from '@bettermyadmin/contracts'
+import type { Executed, Field, GridData, Profiling, StatementResult, Warning } from '@bettermyadmin/contracts'
 import { type Translator, englishTranslator, formatNumber, sprintf } from '@bettermyadmin/i18n'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import {
@@ -44,7 +44,24 @@ export interface PipelineInput {
   showAsPhp?: boolean | undefined
   /** Profiling::check input (profiling / profiling_form). */
   profiling?: boolean | undefined
+  /** Current::$messageToShow (the /sql path: e.g. "The row has been deleted."). */
+  messageToShow?: string | undefined
 }
+
+/** What a results-grid builder receives for a statement with a result set (Results.php). */
+export interface GridHookArgs {
+  set: ResultSet
+  info: StatementInfo
+  input: PipelineInput
+  numRows: number
+  unlimNumRows: number
+  queryTime: number
+  /** the empty-result table (isLimitedDisplay) */
+  limited: boolean
+}
+
+/** Builds the grid data of a result set; may replace the header message (sorted column, view hint). */
+export type GridHook = (a: GridHookArgs) => Promise<{ grid: GridData; message?: string } | null>
 
 export interface PipelineContext {
   cfg: AppConfig
@@ -60,6 +77,8 @@ export interface PipelineContext {
   exactRows?: Map<string, number>
   /** The request language's catalogue (messages are phpMyAdmin's msgids); English when absent. */
   tr?: Translator
+  /** Results grid builder (src/browse/grid.ts); absent: no grid metadata. */
+  grid?: GridHook
 }
 
 const english = englishTranslator()
@@ -85,7 +104,7 @@ export interface SqlBoxResult {
 }
 
 /** Per-request state shared by the statements of one run (phpMyAdmin's static/session state). */
-interface RunState {
+export interface RunState {
   showAsPhp: boolean | null
   rollback: boolean
   /** ResponseRenderer::$reload */
@@ -404,7 +423,7 @@ const queryTook = (tr: Translator, queryTime: number) =>
  * One statement of the goSql path.
  * pma: src/Sql.php::executeQueryAndGetQueryResponse, ::executeTheQuery
  */
-async function executeStatement(
+export async function executeStatement(
   input: PipelineInput,
   info: StatementInfo,
   state: RunState,
@@ -542,7 +561,15 @@ async function executeStatement(
         ? { type: 'error' as const, text: errorMessage }
         : {
             type: 'success' as const,
-            text: messageForNoRowsReturned(tr, info, numRows, insertId, queryTime, state),
+            text: messageForNoRowsReturned(
+              tr,
+              info,
+              numRows,
+              insertId,
+              queryTime,
+              state,
+              input.messageToShow ?? '',
+            ),
           }
     const hasColumns = set !== undefined && set.fields.length > 0
     if (hasColumns && db !== '' && table !== '' && info.flags.queryType === 'SELECT') {
@@ -561,7 +588,13 @@ async function executeStatement(
     }
     if (info.flags.isAffected && errorMessage === '') r.affectedRows = numRows
     if (insertId !== '0') r.insertId = insertId
-    if (set !== undefined && hasColumns) r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
+    if (set !== undefined && hasColumns) {
+      r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
+      if (ctx.grid !== undefined && errorMessage === '' && !info.flags.isAffected) {
+        const g = await ctx.grid({ set, info, input, numRows, unlimNumRows, queryTime, limited: true })
+        if (g !== null) r.grid = g.grid
+      }
+    }
     if (info.flags.isProcedure) {
       const more = procedureResults(tr, sets, info, input, queryTime)
       if (more.length > 0) r.moreResults = more
@@ -580,7 +613,16 @@ async function executeStatement(
       card: await card(input.sql),
       db: db === '' ? null : db,
     }
-    if (set !== undefined) r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
+    if (set !== undefined) {
+      r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
+      if (ctx.grid !== undefined) {
+        const g = await ctx.grid({ set, info, input, numRows, unlimNumRows, queryTime, limited: false })
+        if (g !== null) {
+          r.grid = g.grid
+          if (g.message !== undefined) r.message.text = g.message
+        }
+      }
+    }
     if (info.flags.isProcedure) {
       const more = procedureResults(tr, sets.slice(1), info, input, queryTime)
       if (more.length > 0) r.moreResults = more
@@ -640,7 +682,7 @@ function procedureMessage(tr: Translator, numRows: number, input: PipelineInput,
 }
 
 /** Sql::countQueryResults */
-async function countQueryResults(
+export async function countQueryResults(
   numRows: number,
   justBrowsing: boolean,
   db: string,
@@ -689,7 +731,7 @@ async function countQueryResults(
  * Table::countRecords. The approximate count reads information_schema (a read-only difference from
  * phpMyAdmin's getTablesFull query, same value).
  */
-async function countRecords(
+export async function countRecords(
   ctx: PipelineContext,
   db: string,
   table: string,
@@ -774,7 +816,7 @@ function messageForNoRowsReturned(
 }
 
 /** Results::setMessageInformation, for result sets with a navigation bar. */
-function resultsMessage(
+export function resultsMessage(
   tr: Translator,
   info: StatementInfo,
   unlimNumRows: number,

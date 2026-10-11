@@ -6,6 +6,9 @@ import { MYSQL, testApp, testConfig } from '../support/app.ts'
  * Database → Central columns, Tracking, Data dictionary and Privileges through the API
  * (docs/features/05-database-level.md), with and without the configuration storage.
  */
+// biome-ignore lint/suspicious/noExplicitAny: response JSON read loosely in assertions
+type Any = any
+const J = (r: { json: unknown }): Any => r.json
 const DB = 'f05_it_admin'
 let root: mysql.Connection
 const app = testApp(testConfig({}, { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }))
@@ -32,22 +35,22 @@ afterAll(async () => {
 describe('central columns', () => {
   it('adds the columns of tables, lists them, edits and deletes', async () => {
     let r = await app.req('POST', `${base}/structure/central-add`, { tables: ['a', 'b'] })
-    expect(r.json.messages[0].text).toContain("Could not add 'id' as they already exist in central list!")
+    expect(J(r).messages[0].text).toContain("Could not add 'id' as they already exist in central list!")
     r = await app.req('GET', `${base}/central-columns`)
-    expect(r.json.columns.map((c: { name: string }) => c.name)).toEqual(['a_id', 'id', 'v'])
-    expect(r.json.message.text).toBe('Showing rows 1 - 3.')
-    const v = r.json.columns.find((c: { name: string }) => c.name === 'v')
+    expect(J(r).columns.map((c: { name: string }) => c.name)).toEqual(['a_id', 'id', 'v'])
+    expect(J(r).message.text).toBe('Showing rows 1 - 3.')
+    const v = J(r).columns.find((c: { name: string }) => c.name === 'v')
     expect(v).toMatchObject({ type: 'varchar', length: '10', defaultType: 'USER_DEFINED', defaultValue: 'x' })
     r = await app.req('POST', `${base}/central-columns`, {
       action: 'edit',
       origName: 'v',
       column: { name: 'v2', type: 'VARCHAR', length: '20', isNull: true },
     })
-    expect(r.json.ok).toBe(true)
+    expect(J(r).ok).toBe(true)
     r = await app.req('GET', `${base}/central-columns/populate?table=a`)
-    expect(r.json).toEqual(['v'])
+    expect(J(r)).toEqual(['v'])
     r = await app.req('POST', `${base}/central-columns`, { action: 'delete', columns: ['v2', 'zz'] })
-    expect(r.json.message.text).toBe(
+    expect(J(r).message.text).toBe(
       "Couldn't remove Column(s) 'zz' as they don't exist in central columns list!",
     )
   })
@@ -61,13 +64,13 @@ describe('tracking', () => {
       version: '1',
       statements: ['alter_table', 'insert'],
     })
-    expect(r.json.messages[0].text).toBe(
+    expect(J(r).messages[0].text).toBe(
       'Version 1 was created for selected tables, tracking is active for them.',
     )
     r = await app.req('GET', `${base}/tracking`)
-    expect(r.json.tracked.map((t: { table: string }) => t.table)).toEqual(['a'])
-    expect(r.json.untracked).toEqual(['b'])
-    expect(r.json.log).toMatch(/^# \d{4}-\d\d-\d\d \d\d:\d\d:\d\d \S+\n\nDROP TABLE IF EXISTS `a`;/)
+    expect(J(r).tracked.map((t: { table: string }) => t.table)).toEqual(['a'])
+    expect(J(r).untracked).toEqual(['b'])
+    expect(J(r).log).toMatch(/^# \d{4}-\d\d-\d\d \d\d:\d\d:\d\d \S+\n\nDROP TABLE IF EXISTS `a`;/)
     const [rows] = await root.query(
       `SELECT tracking, schema_snapshot FROM phpmyadmin.pma__tracking WHERE db_name = ?`,
       [DB],
@@ -81,29 +84,29 @@ describe('tracking', () => {
       version: '1',
       active: false,
     })
-    expect(r.json.messages[0].text).toBe(`Tracking for ${DB}.a was deactivated at version 1.`)
+    expect(J(r).messages[0].text).toBe(`Tracking for ${DB}.a was deactivated at version 1.`)
     r = await app.req('POST', `${base}/tracking`, { action: 'delete', tables: ['a'] })
-    expect(r.json.messages[0].text).toBe('Tracking data deleted successfully.')
+    expect(J(r).messages[0].text).toBe('Tracking data deleted successfully.')
     r = await app.req('GET', `${base}/tracking`)
-    expect(r.json.tracked).toEqual([])
+    expect(J(r).tracked).toEqual([])
   })
 })
 
 describe('data dictionary and privileges', () => {
   it('data dictionary', async () => {
     const r = await app.req('GET', `${base}/data-dictionary`)
-    const a = r.json.tables.find((t: { name: string }) => t.name === 'a')
+    const a = J(r).tables.find((t: { name: string }) => t.name === 'a')
     expect(a.comment).toBe('the a')
     expect(a.columns[0]).toMatchObject({ name: 'id', isPrimary: true, printType: 'int' })
     expect(a.columns[1]).toMatchObject({ name: 'v', default: 'x', comment: 'val' })
-    const b = r.json.tables.find((t: { name: string }) => t.name === 'b')
+    const b = J(r).tables.find((t: { name: string }) => t.name === 'b')
     expect(b.hasRelation).toBe(true)
     expect(b.columns[1].relation).toBe('a -> id')
   })
 
   it('privileges (read-only list)', async () => {
     const r = await bare.req('GET', `${base}/privileges`)
-    expect(r.json.isSuperUser).toBe(true)
-    expect(r.json.accounts.some((a: { user: string }) => a.user === 'root')).toBe(true)
+    expect(J(r).isSuperUser).toBe(true)
+    expect(J(r).accounts.some((a: { user: string }) => a.user === 'root')).toBe(true)
   })
 })
