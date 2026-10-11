@@ -1,0 +1,23 @@
+{
+  "name": "@bettermyadmin/parity",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Mechanical parity inventories extracted from phpMyAdmin's source, coverage reports and the CI gate.",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "inventory": "tsx src/cli/inventory.ts",
+    "report": "tsx src/cli/report.ts",
+    "check": "tsx src/cli/check.ts",
+    "baseline": "tsx src/cli/baseline.ts"
+  },
+  "dependencies": {
+    "@bettermyadmin/config": "workspace:*",
+    "typescript": "5.8.3",
+    "yaml": "2.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.3",
+    "tsx": "4.19.4"
+  }
+}

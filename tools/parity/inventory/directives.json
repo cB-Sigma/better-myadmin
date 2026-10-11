@@ -1,0 +1,3722 @@
+{
+  "_meta": {
+    "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
+    "referenceCommit": "e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1",
+    "source": "packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php)",
+    "count": 464
+  },
+  "items": [
+    {
+      "key": "ActionLinksMode",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "AllowArbitraryServer",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "AllowSharedBookmarks",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "AllowThirdPartyFraming",
+      "source": "schema",
+      "type": "mixed",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "AllowUserDropDatabase",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ArbitraryServerRegexp",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "AuthLog",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "AuthLogSuccess",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "AvailableCharsets",
+      "source": "schema",
+      "type": "string-list",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "blowfish_secret",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "BrowseMarkerEnable",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "BrowseMIME",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "BrowsePointerEnable",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "BZipDump",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaApi",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaCsp",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaLoginPrivateKey",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaLoginPublicKey",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaMethod",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaRequestParam",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaResponseParam",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CaptchaSiteVerifyURL",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CharEditing",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "CharTextareaCols",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "CharTextareaRows",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "CheckConfigurationPermissions",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CodemirrorEnable",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "CompressOnFly",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Confirm",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/AlwaysExpand",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/CurrentQuery",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/DarkTheme",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/EnterExecutes",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/GroupQueries",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/Height",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/Mode",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/Order",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/OrderBy",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Console/StartHistory",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ConsoleEnterExecutes",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "CookieSameSite",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "CSPAllow",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DataDir",
+      "source": "schema",
+      "type": "string",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "DBG/demo",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DBG/simple2fa",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DBG/sql",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DBG/sqllog",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DefaultConnectionCollation",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultForeignKeyChecks",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultFunctions",
+      "source": "schema",
+      "type": "record",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DefaultLang",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DefaultQueryDatabase",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DefaultQueryTable",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTabDatabase",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTabServer",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTabTable",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Bool2Text",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/DateFormat",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/External",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Hex",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Inline/0",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Inline/1",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Inline/wrapper_link",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Inline/wrapper_params",
+      "source": "schema",
+      "type": "record",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/PreApPend",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/Substring",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/TextImageLink",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DefaultTransformations/TextLink",
+      "source": "schema",
+      "type": "tuple",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DisableMultiTableMaintenance",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DisableShortcutKeys",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "DisplayServersList",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "enable_drag_drop_import",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "EnableAutocompleteForTablesAndColumns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "environment",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ExecTimeLimit",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/as_separate_files",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/asfile",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/charset",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/codegen_format",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/codegen_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/compression",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_enclosed",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_escape_formulas",
+      "source": "schema",
+      "type": "boolean",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "Export/csv_escaped",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_removeCRLF",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_separator",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/csv_terminated",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/excel_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/excel_edition",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/excel_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/excel_removeCRLF",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/excel_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/file_template_database",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/file_template_server",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/file_template_table",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/format",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/htmlword_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/htmlword_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/htmlword_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/json_pretty_print",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/json_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/json_unicode",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_caption",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_comments",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_data_caption",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_data_continued_caption",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_data_label",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_mime",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_relation",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_structure_caption",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_structure_continued_caption",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_structure_label",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/latex_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/lock_tables",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/mediawiki_caption",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/mediawiki_headers",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/mediawiki_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/method",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/ods_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/ods_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/ods_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/odt_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/odt_comments",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/odt_mime",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/odt_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/odt_relation",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/odt_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/onserver",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/onserver_overwrite",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/pdf_report_title",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/pdf_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/phparray_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/quick_export_onserver",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/quick_export_onserver_overwrite",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/remember_file_template",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/remove_definer_from_definitions",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_auto_increment",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_backquotes",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_compatibility",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_create_database",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_create_table",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_create_trigger",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_create_view",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_dates",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_delayed",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_disable_fk",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_drop_database",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_drop_table",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_header_comment",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_hex_for_binary",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_if_not_exists",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_ignore",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_include_comments",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_insert_syntax",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_max_query_size",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_metadata",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_mime",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_or_replace_view",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_procedure_function",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_relation",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_truncate",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_type",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_use_transaction",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_utc_time",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_view_current_user",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/sql_views_as_tables",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/texytext_columns",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/texytext_null",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/texytext_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Export/toon_indent",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/toon_separator",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/toon_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_contents",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_events",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_functions",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_procedures",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_struc",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_tables",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_triggers",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_export_views",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/xml_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Export/yaml_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "FilterLanguages",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "FirstDayOfCalendar",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "FirstLevelNavigationItems",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ForceSSL",
+      "source": "schema",
+      "type": "boolean",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "ForeignKeyDropdownOrder",
+      "source": "schema",
+      "type": "string-list",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ForeignKeyMaxLimit",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "GD2Available",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "GridEditing",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "GZipDump",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "HideStructureActions",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "IconvExtraParams",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "IgnoreMultiSubmitErrors",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/allow_interrupt",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/charset",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_col_names",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_columns",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_empty_as_null",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_enclosed",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_escaped",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_ignore",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_new_line",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_replace",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/csv_terminated",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/format",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_columns",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_enclosed",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_escaped",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_ignore",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_local_option",
+      "source": "schema",
+      "type": "mixed",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_new_line",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_replace",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ldi_terminated",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/MaxDecompressedSize",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "Import/ods_col_names",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ods_empty_rows",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ods_recognize_currency",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/ods_recognize_percentages",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/skip_queries",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/sql_compatibility",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/sql_no_auto_value_on_zero",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Import/sql_read_as_multibytes",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "InitialSlidersState",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "InsertRows",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Lang",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "LimitChars",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "LinkLengthLimit",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "LintEnable",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Listen/basePath",
+      "source": "schema",
+      "type": "string",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "Listen/host",
+      "source": "schema",
+      "type": "string",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "Listen/port",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "LoginCookieDeleteAll",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "LoginCookieRecall",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "LoginCookieStore",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "LoginCookieValidity",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "LoginCookieValidityDisableWarning",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "LoginRateLimit/enabled",
+      "source": "schema",
+      "type": "boolean",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "LoginRateLimit/maxAttempts",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "LoginRateLimit/maxBackoffSeconds",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "LoginRateLimit/windowSeconds",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "LongtextDoubleTextarea",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxCharactersInDisplayedSQL",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxDbList",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxExactCount",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "MaxExactCountViews",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "MaxNavigationItems",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxRoutineList",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "maxRowPlotLimit",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "MaxRows",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxSizeForInputField",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxTableList",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MaxUploadSize",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "MemoryLimit",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "MinSizeForInputField",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "MysqlMinVersion/human",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "MysqlMinVersion/internal",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "MysqlSslWarningSafeHosts",
+      "source": "schema",
+      "type": "string-list",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "NaturalOrder",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationDisplayLogo",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationDisplayServers",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationLinkWithMainPanel",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationLogoLink",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationLogoLinkWindow",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeAutoexpandSingleDb",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeDbSeparator",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeDefaultTabTable",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeDefaultTabTable2",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeDisplayDbFilterMinimum",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeDisplayItemFilterMinimum",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeEnableExpansion",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeEnableGrouping",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreePointerEnable",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeShowEvents",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeShowFunctions",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeShowProcedures",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeShowTables",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeShowViews",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeTableLevel",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationTreeTableSeparator",
+      "source": "schema",
+      "type": "mixed",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NavigationWidth",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NumFavoriteTables",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "NumRecentTables",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Order",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "PDFDefaultPageSize",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "PDFPageSizes",
+      "source": "schema",
+      "type": "string-list",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "PersistentConnections",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "PmaAbsoluteUri",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "PmaNoRelation_DisableWarning",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "PropertiesNumColumns",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ProtectBinary",
+      "source": "schema",
+      "type": "mixed",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ProxyPass",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ProxyUrl",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ProxyUser",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "QueryHistoryDB",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "QueryHistoryMax",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RecodingEngine",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "RedisUrl",
+      "source": "schema",
+      "type": "string",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "RelationalDisplay",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RememberSorting",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RepeatCells",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ReservedWordDisableWarning",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RetainQueryBox",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RowActionLinks",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RowActionLinksWithoutUnique",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "RowActionType",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "SaveCellsAtOnce",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "SaveDir",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/dia_orientation",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/dia_paper",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/dia_show_color",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/dia_show_keys",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/eps_all_tables_same_width",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/eps_orientation",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/eps_show_color",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/eps_show_keys",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/format",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_all_tables_same_width",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_orientation",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_paper",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_show_color",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_show_grid",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_show_keys",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_table_order",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/pdf_with_doc",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/svg_all_tables_same_width",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/svg_show_color",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Schema/svg_show_keys",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "SendErrorReports",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ServerDefault",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/AllowDeny/order",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/AllowDeny/rules",
+      "source": "schema",
+      "type": "string-list",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/AllowNoPassword",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/AllowRoot",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/auth_http_realm",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/auth_type",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/bookmarktable",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/central_columns",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/column_info",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/compress",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_compress",
+      "source": "schema",
+      "type": "nullable-boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_hide_connection_errors",
+      "source": "schema",
+      "type": "nullable-boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_socket",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl",
+      "source": "schema",
+      "type": "nullable-boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl_ca",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl_ca_path",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl_cert",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl_ciphers",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl_key",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/control_ssl_verify",
+      "source": "schema",
+      "type": "nullable-boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/controlhost",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/controlpass",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/controlport",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/controluser",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/designer_settings",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/DisableIS",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/export_templates",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/favorite",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/hide_connection_errors",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/hide_db",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/history",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/host",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/LogoutURL",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/max_connections",
+      "source": "schema",
+      "type": "integer",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "Servers/*/MaxTableUiprefs",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/navigationhiding",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/only_db",
+      "source": "schema",
+      "type": "mixed",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/password",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/pdf_pages",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/pmadb",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/port",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/recent",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/relation",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/savedsearches",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SessionTimeZone",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonCookieParams/domain",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonCookieParams/httponly",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonCookieParams/lifetime",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonCookieParams/path",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonCookieParams/samesite",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "Servers/*/SignonCookieParams/secure",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonScript",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonSession",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/SignonURL",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/socket",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl_ca",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl_ca_path",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl_cert",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl_ciphers",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl_key",
+      "source": "schema",
+      "type": "nullable-string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/ssl_verify",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/table_coords",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/table_info",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/table_uiprefs",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/tracking",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/tracking_add_drop_database",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/tracking_add_drop_table",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/tracking_add_drop_view",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/tracking_default_statements",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/tracking_version_auto_create",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/user",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/userconfig",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/usergroups",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/users",
+      "source": "schema",
+      "type": "table",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "Servers/*/verbose",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "SessionSavePath",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "SessionStore",
+      "source": "schema",
+      "type": "enum",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
+    },
+    {
+      "key": "ShowAll",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowBrowseComments",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ShowChgPassword",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ShowColumnComments",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowCreateDb",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowDatabasesNavigationAsTree",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowDbStructureCharset",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowDbStructureComment",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowDbStructureCreation",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowDbStructureLastCheck",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowDbStructureLastUpdate",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowFieldTypesInDataEditView",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowFunctionFields",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowGitRevision",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ShowHint",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowPhpInfo",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ShowPropertyComments",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ShowServerInfo",
+      "source": "schema",
+      "type": "mixed",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowSQL",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ShowStats",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "SkipLockedTables",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "SQLQuery/Edit",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "SQLQuery/Explain",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "SQLQuery/Refresh",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "SQLQuery/ShowAsPHP",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TableNavigationLinksMode",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TablePrimaryKeyOrder",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TabsMode",
+      "source": "schema",
+      "type": "enum",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TempDir",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "TextareaAutoSelect",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "TextareaCols",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TextareaRows",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ThemeDefault",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ThemeManager",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ThemePerServer",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "TitleDatabase",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TitleDefault",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TitleServer",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TitleTable",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "TranslationWarningThreshold",
+      "source": "schema",
+      "type": "integer",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "TrustedProxies",
+      "source": "schema",
+      "type": "record",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "UploadDir",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "URLQueryEncryption",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "URLQueryEncryptionSecretKey",
+      "source": "schema",
+      "type": "string",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "UseDbSearch",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "UserprefsDeveloperTab",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "UserprefsDisallow",
+      "source": "schema",
+      "type": "string-list",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "VersionCheck",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": true,
+      "inPma": true
+    },
+    {
+      "key": "ZeroConf",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    },
+    {
+      "key": "ZipDump",
+      "source": "schema",
+      "type": "boolean",
+      "bma": false,
+      "userPref": false,
+      "inPma": true
+    }
+  ]
+}

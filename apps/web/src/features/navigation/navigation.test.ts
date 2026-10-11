@@ -135,7 +135,7 @@ describe('buildRows', () => {
     ])
   })
 
-  it('opens groups and flattened containers in place', () => {
+  it('opens groups and flattened containers in place [p01-5523b6]', () => {
     const rows = buildRows(root, { ...base, expanded: new Set([nodeKey(group), nodeKey(db)]) })
     expect(rows.flatMap((r) => (r.type === 'node' ? [[r.node.label, r.depth]] : []))).toEqual([
       ['New', 0],
@@ -242,7 +242,7 @@ describe('NavTreeStore', () => {
     expect(store.rows()).toHaveLength(2)
   })
 
-  it('link with main panel: opens the database and highlights a table found in a sub container', async () => {
+  it('link with main panel: opens the database and highlights a table found in a sub container [p01-750138]', async () => {
     const { store } = setup(root, branches)
     await store.init('db1')
     await store.showCurrent('db1', 'orders')
@@ -254,7 +254,7 @@ describe('NavTreeStore', () => {
     expect([...store.selected]).toEqual([nodeKey(db1), nodeKey(tables)])
   })
 
-  it('auto-expands the only database when none is selected', async () => {
+  it('auto-expands the only database when none is selected [p01-750138]', async () => {
     const { store } = setup(list([db1]), branches)
     await store.init('')
     await store.showCurrent('', '')
