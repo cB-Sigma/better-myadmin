@@ -152,3 +152,158 @@ describe('two-factor', () => {
     await t2.close()
   })
 })
+
+describe('storage and the running app', () => {
+  it('[p08-3ef43d] without pmadb the preferences live in the session, with the notice flag [p08-5de125]', async () => {
+    const t = await app({ ZeroConf: false }, { pmadb: 'f08_no_storage' })
+    const g = (await t.req('GET', '/api/servers/1/preferences/forms/main-panel')).json as Json
+    expect(g.storage).toBe('session')
+    expect(g.hasConfigStorage).toBe(false)
+    expect((await t.req('GET', '/api/servers/1/preferences/autoload')).json).toEqual({ show: true })
+    const s = (
+      await t.req('POST', '/api/servers/1/preferences/forms/main-panel', {
+        values: posted(g.formSet, { TabsMode: 'text', MaxRows: '50' }),
+      })
+    ).json as Json
+    expect(s.saved).toBe(true)
+    // the session holds them, the running app applies them (config-public)
+    const pub = (await t.req('GET', '/api/meta/config-public')).json as Json
+    expect(pub.TabsMode).toBe('text')
+    expect(pub.MaxRows).toBe(50)
+    const tf = (await t.req('GET', '/api/servers/1/preferences/two-factor')).json as Json
+    expect(tf.enabled).toBe(false)
+    // answering the offer hides it for the session
+    await t.req('POST', '/api/servers/1/preferences/autoload/hide', {})
+    expect((await t.req('GET', '/api/servers/1/preferences/autoload')).json).toEqual({ show: false })
+    await t.close()
+  })
+
+  it('[p08-8fd8fd] UserprefsDisallow: the field is marked, stored but not applied', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    const t = await app({ UserprefsDisallow: ['TabsMode'] })
+    const g = (await t.req('GET', '/api/servers/1/preferences/forms/main-panel')).json as Json
+    const fields = (g.formSet.forms as Json[])
+      .flatMap((f) => (f.items as Json[]).map((i) => i.field as Json | undefined))
+      .filter((f): f is Json => f !== undefined)
+    expect(fields.find((f) => f.path === 'TabsMode')?.disabled).toBe(true)
+    expect(fields.find((f) => f.path === 'MaxRows')?.disabled).toBe(false)
+    await t.req('POST', '/api/servers/1/preferences/forms/main-panel', {
+      values: posted(g.formSet, { TabsMode: 'text' }),
+    })
+    expect((await storedPrefs())?.TabsMode).toBe('text')
+    const pub = (await t.req('GET', '/api/meta/config-public')).json as Json
+    expect(pub.TabsMode).toBe('both')
+    await t.close()
+  })
+
+  it('[p08-69a15f] page settings save like a form [p08-6f0e6e]', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    const t = await app()
+    const g = (await t.req('GET', '/api/servers/1/preferences/page/Edit')).json as Json
+    // the Edit popup: Edit mode and Text fields
+    expect((g.formSet.forms as Json[]).map((f) => f.name)).toEqual(['Edit', 'Text_fields'])
+    const bad = (
+      await t.req('POST', '/api/servers/1/preferences/page/Edit', {
+        values: posted(g.formSet, { InsertRows: '-1' }),
+      })
+    ).json as Json
+    expect(bad.saved).toBe(false)
+    expect(bad.formSet.errorList).toEqual([
+      { name: 'Number of inserted rows', errors: ['Not a positive number!'] },
+    ])
+    const ok = (
+      await t.req('POST', '/api/servers/1/preferences/page/Edit', {
+        values: posted(g.formSet, { InsertRows: '4' }),
+      })
+    ).json as Json
+    expect(ok.saved).toBe(true)
+    expect((await storedPrefs())?.InsertRows).toBe(4)
+    expect((await t.req('GET', '/api/servers/1/preferences/page/Nope')).status).toBe(404)
+    await t.close()
+  })
+})
+
+describe('manage your settings', () => {
+  it('[p08-1c37f1] exports JSON (pretty) and PHP', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    const t = await app()
+    const g = (await t.req('GET', '/api/servers/1/preferences/forms/navigation')).json as Json
+    await t.req('POST', '/api/servers/1/preferences/forms/navigation', {
+      values: posted(g.formSet, { NavigationTreeDbSeparator: '__' }),
+    })
+    const cookie = [...t.jar].map(([k, v]) => `${k}=${v}`).join('; ')
+    const json = await t.app.request('/api/servers/1/preferences/manage/export?type=json', {
+      headers: { cookie, host: 'example.org:8080' },
+    })
+    expect(json.headers.get('content-disposition')).toBe(
+      'attachment; filename="phpMyAdmin-config-example.org_3A8080.json"',
+    )
+    expect(await json.text()).toBe(
+      '{\n    "NavigationTreeDbSeparator": "__",\n    "2fa": {\n        "backend": "",\n        "settings": [],\n        "type": "db"\n    }\n}',
+    )
+    const php = await t.app.request('/api/servers/1/preferences/manage/export?type=php', {
+      headers: { cookie },
+    })
+    expect(await php.text()).toBe(
+      "/* phpMyAdmin configuration snippet */\n\n/* Paste it to your config.inc.php */\n\n$cfg['NavigationTreeDbSeparator'] = '__';\n$cfg['2fa'] = array (\n  'backend' => '',\n  'settings' => \n  array (\n  ),\n  'type' => 'db',\n);\n",
+    )
+    const ls = (await t.req('GET', '/api/servers/1/preferences/manage/json')).json as Json
+    expect(JSON.parse(ls.prefs)).toEqual({
+      NavigationTreeDbSeparator: '__',
+      '2fa': { backend: '', settings: [], type: 'db' },
+    })
+    await t.close()
+  })
+
+  it('[p08-f18efc] import: bad values ask first, Yes imports the rest; merge keeps the current prefs [p08-d20c19]', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    const t = await app()
+    const g = (await t.req('GET', '/api/servers/1/preferences/forms/navigation')).json as Json
+    await t.req('POST', '/api/servers/1/preferences/forms/navigation', {
+      values: posted(g.formSet, { NavigationTreeDbSeparator: '__' }),
+    })
+    const json = JSON.stringify({ MaxRows: 33, TabsMode: 'text', ThemeDefault: 'metro', lang: 'de' })
+    const first = (await t.req('POST', '/api/servers/1/preferences/manage/import', { json, merge: true }))
+      .json as Json
+    expect(first.status).toBe('errors')
+    expect(first.errorList).toEqual([
+      { name: 'Maximum number of rows to display', errors: ['Incorrect value!'] },
+    ])
+    const yes = (
+      await t.req('POST', '/api/servers/1/preferences/manage/import', { json, merge: true, fixErrors: true })
+    ).json as Json
+    expect(yes).toEqual({ status: 'saved', themeDefault: 'metro', lang: 'de', returnUrl: null })
+    const stored = await storedPrefs()
+    expect(stored?.NavigationTreeDbSeparator).toBe('__')
+    expect(stored?.MaxRows).toBeUndefined()
+    // without merge the import starts from the defaults
+    await t.req('POST', '/api/servers/1/preferences/manage/import', {
+      json: JSON.stringify({ ShowSQL: false }),
+    })
+    const after = await storedPrefs()
+    expect(after?.NavigationTreeDbSeparator).toBeUndefined()
+    expect(after?.ShowSQL).toBe(false)
+    const broken = (await t.req('POST', '/api/servers/1/preferences/manage/import', { json: 'nope' }))
+      .json as Json
+    expect(broken).toEqual({
+      status: 'failed',
+      message: { type: 'error', text: 'Could not import configuration' },
+    })
+    await t.close()
+  })
+
+  it('[p08-e23faa] reset keeps only 2fa', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    const t = await app({ DBG: { simple2fa: true } })
+    await t.req('POST', '/api/servers/1/preferences/two-factor/configure', { backend: 'simple' })
+    const g = (await t.req('GET', '/api/servers/1/preferences/forms/sql')).json as Json
+    await t.req('POST', '/api/servers/1/preferences/forms/sql', {
+      values: posted(g.formSet, { ShowSQL: null }),
+    })
+    expect((await storedPrefs())?.ShowSQL).toBe(false)
+    const r = (await t.req('POST', '/api/servers/1/preferences/manage/reset', {})).json as Json
+    expect(r.ok).toBe(true)
+    expect(await storedPrefs()).toEqual({ '2fa': { backend: 'simple', settings: [], type: 'db' } })
+    await t.close()
+  })
+})

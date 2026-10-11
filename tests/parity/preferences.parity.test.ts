@@ -310,3 +310,94 @@ describe.skipIf(!available)('parity: user preferences (pma__userconfig)', () => 
     )
   })
 })
+
+/** The rows of a pma settings form: `[field id, disabled]` for every input row. */
+function pmaRows(html: string): Array<[string, boolean]> {
+  const out: Array<[string, boolean]> = []
+  for (const m of html.matchAll(/<tr( class="([^"]*)")?>\s*<th>\s*<label for="([^"]+)"/g)) {
+    out.push([m[3] as string, (m[2] ?? '').split(/\s+/).includes('disabled-field')])
+  }
+  return out
+}
+
+function bmaRows(formSet: Json): Array<[string, boolean]> {
+  return (formSet.forms as Json[]).flatMap((f) =>
+    (f.items as Json[]).flatMap((i) =>
+      i.kind === 'field' ? [[i.field.id, i.field.disabled] as [string, boolean]] : [],
+    ),
+  )
+}
+
+const SESSION_NOTICE =
+  'Your preferences will be saved for current session only. Storing them permanently requires phpMyAdmin configuration storage.'
+
+describe.skipIf(!available)('parity: preferences without pmadb, UserprefsDisallow', () => {
+  const S = { user: 'f08_susr' }
+  let sinst: PmaInstance
+  let spma: PmaClient
+  let sbma: Bma
+  let sroot: mysql.Connection
+
+  beforeAll(async () => {
+    sroot = await mysql.createConnection({ ...ROOT, multipleStatements: true })
+    await sroot.query(
+      `DROP USER IF EXISTS '${S.user}'@'%'; CREATE USER '${S.user}'@'%' IDENTIFIED BY '${S.user}'`,
+    )
+    sinst = await startPmaInstance(`$cfg['blowfish_secret'] = 'f08-parity-secret-0123456789abcdef!';
+$i = 1;
+$cfg['Servers'][$i]['host'] = ${JSON.stringify(ROOT.host)};
+$cfg['Servers'][$i]['port'] = ${JSON.stringify(String(ROOT.port))};
+$cfg['Servers'][$i]['auth_type'] = 'cookie';
+$cfg['Servers'][$i]['pmadb'] = 'f08_no_storage';
+$cfg['ZeroConf'] = false;
+$cfg['UserprefsDisallow'] = ['TabsMode', 'MaxRows'];`)
+    spma = new PmaClient(sinst.url)
+    await spma.login(S.user, S.user)
+    sbma = testApp(
+      testConfig(
+        { DataDir: '', ZeroConf: false, UserprefsDisallow: ['TabsMode', 'MaxRows'] },
+        { pmadb: 'f08_no_storage' },
+      ),
+    )
+    expect((await sbma.login(S.user, S.user)).status).toBe(200)
+  })
+
+  afterAll(async () => {
+    await sbma?.close()
+    await sinst?.stop()
+    await sroot?.query(`DROP USER IF EXISTS '${S.user}'@'%'`)
+    await sroot?.end()
+  })
+
+  it('[p08-3ef43d] the session-only notice and the disabled rows [p08-8fd8fd]', async () => {
+    const html = await spma.getPage('/preferences/main-panel')
+    expect(visibleText(html).replace(/\s+\./g, '.')).toContain(SESSION_NOTICE)
+    const g = (await sbma.req('GET', '/api/servers/1/preferences/forms/main-panel')).json as Json
+    expect(g.hasConfigStorage).toBe(false)
+    expect(bmaRows(g.formSet)).toEqual(pmaRows(html))
+    expect(bmaRows(g.formSet).filter(([, d]) => d)).toEqual([
+      ['MaxRows', true],
+      ['TabsMode', true],
+    ])
+  })
+
+  it('[p08-1383bd] a save is kept for the session: the same form values afterwards', async () => {
+    const pp = fieldsOnly(
+      serializeForm(findForm(await spma.getPage('/preferences/main-panel'), { cls: 'config-form' })),
+    )
+    const posted = setPair(setPair(pp, 'TabsMode', 'text'), 'ShowStats', '')
+    const noStats = posted.filter(([k]) => k !== 'ShowStats')
+    await spma.postPage('/preferences/main-panel', [...noStats, ['submit_save', 'Apply'], ['tab_hash', '']])
+    await sbma.req('POST', '/api/servers/1/preferences/forms/main-panel', { values: record(noStats) })
+    const after = fieldsOnly(
+      serializeForm(findForm(await spma.getPage('/preferences/main-panel'), { cls: 'config-form' })),
+    )
+    const g = (await sbma.req('GET', '/api/servers/1/preferences/forms/main-panel')).json as Json
+    expect(bmaPairs(g.formSet)).toEqual(after)
+    expect(after.find(([k]) => k === 'ShowStats')).toBeUndefined()
+    // TabsMode is disallowed: stored, but phpMyAdmin keeps rendering icons and text
+    const pills = await spma.getPage('/preferences/manage')
+    expect(pills).toContain('class="icon ic_b_tblops">&nbsp;Features')
+    expect(((await sbma.req('GET', '/api/meta/config-public')).json as Json).TabsMode).toBe('both')
+  })
+})

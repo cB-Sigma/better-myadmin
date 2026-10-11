@@ -26,14 +26,20 @@ import {
   validateField,
 } from './configForm.ts'
 
-/** Field values and the client-side errors of a form set (resources/js/modules/config.ts). */
-export function useConfigForm(formSet: PrefsFormSet) {
+/**
+ * Field values and the client-side errors of a form set (resources/js/modules/config.ts).
+ * `inert`: config.ts reads its defaults and validators from the page's first
+ * `#configInlineParamsData`, the navigation settings' one: a page settings form other than Navi
+ * gets no default marking, no restore links and no client validation.
+ */
+export function useConfigForm(formSet: PrefsFormSet, inert = false) {
   const [values, setValues] = useState<FormValues>(() => initialValues(formSet))
   // client errors by field id; a field without an entry shows the server's inline errors
   const [errors, setErrors] = useState<Record<string, string[]>>({})
   const byId = useMemo(() => new Map(fieldsOf(formSet).map((f) => [f.id, f])), [formSet])
   return {
     formSet,
+    inert,
     values,
     errors,
     /** a value typed or picked (no validation until the change event) */
@@ -42,10 +48,12 @@ export function useConfigForm(formSet: PrefsFormSet) {
     change: (id: string, v: string | boolean) => {
       setValues((s) => ({ ...s, [id]: v }))
       const f = byId.get(id)
-      if (f !== undefined) setErrors((e) => ({ ...e, [id]: validateField(f, v) }))
+      if (f !== undefined && !inert) setErrors((e) => ({ ...e, [id]: validateField(f, v) }))
     },
     /** the Reset button: setDisplayError (its `closest('fieldset')` finds no fields to reset) */
-    revalidate: () => setErrors(validateAll(formSet, values)),
+    revalidate: () => {
+      if (!inert) setErrors(validateAll(formSet, values))
+    },
     posted: () => postedValues(formSet, values),
   }
 }
@@ -184,7 +192,7 @@ export function ConfigForm({
 /** pma: resources/templates/config/form_display/input.twig */
 function FieldRow({ field, state }: { field: PrefsField; state: ConfigFormState }) {
   const value = state.values[field.id] ?? ''
-  const custom = !isDefault(field, value)
+  const custom = !state.inert && !isDefault(field, value)
   const errors = state.errors[field.id] ?? field.errors
   const hasErrors = errors.length > 0
   const mark = cn(custom && 'custom bg-warning-bg', hasErrors && 'field-error border-error!')

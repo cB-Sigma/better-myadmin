@@ -66,7 +66,7 @@ function Body({
   submit: Submit
   onFailed: (f: PrefsFormSet) => void
 }) {
-  const state = useConfigForm(formSet)
+  const state = useConfigForm(formSet, group !== 'Navi')
   const applied = usePrefsSaved(server)
   const save = async (values: Record<string, string>): Promise<boolean> => {
     const r = await api.savePageSettings(server, group, { values })

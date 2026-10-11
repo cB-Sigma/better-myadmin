@@ -18,11 +18,12 @@ const ROOT = {
 const USER = 'f08_e2e'
 const DB = 'f08_e2e'
 
-async function login(page: Page) {
+async function login(page: Page, done = true) {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)
   await page.locator('#input_go').click()
+  if (done) await expect(page.locator('#pma_navigation')).toBeVisible()
 }
 
 test.beforeAll(async () => {
@@ -109,14 +110,14 @@ test('two-factor: configure the application backend, then the login asks for the
 
   // a new login: password first, then the code
   await page.context().clearCookies()
-  await login(page)
+  await login(page, false)
   await expect(
     page.getByText('You have enabled two factor authentication, please confirm your login.'),
   ).toBeVisible()
-  await page.locator('#2faCodeInput').fill('000000')
+  await page.locator('[id="2faCodeInput"]').fill('000000')
   await page.getByRole('button', { name: 'Verify' }).click()
   await expect(page.getByText('Two-factor authentication failed.')).toBeVisible()
-  await page.locator('#2faCodeInput').fill(oathTotp(secret, Math.floor(Date.now() / 30000)))
+  await page.locator('[id="2faCodeInput"]').fill(oathTotp(secret, Math.floor(Date.now() / 30000)))
   await page.getByRole('button', { name: 'Verify' }).click()
   await expect(page.locator('#pma_navigation')).toBeVisible()
 
@@ -124,7 +125,7 @@ test('two-factor: configure the application backend, then the login asks for the
   await page.goto('/s/1/preferences/two-factor')
   await page.getByRole('button', { name: 'Disable two-factor authentication' }).click()
   await expect(page.getByText('Confirm disabling two-factor authentication')).toBeVisible()
-  await page.locator('#2faCodeInput').fill(oathTotp(secret, Math.floor(Date.now() / 30000)))
+  await page.locator('[id="2faCodeInput"]').fill(oathTotp(secret, Math.floor(Date.now() / 30000)))
   await page.getByRole('button', { name: 'Disable two-factor authentication' }).click()
   await expect(page.getByText('Two-factor authentication has been removed.')).toBeVisible()
 })

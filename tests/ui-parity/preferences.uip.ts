@@ -64,3 +64,23 @@ pageParity('preferences-two-factor', {
   ready: { pma: '#user_prefs_tabs', ours: '#user_prefs_tabs' },
   exclude,
 })
+
+/** a database of this suite: uip_db is shared with suites of other worktrees */
+const PS = { db: 'f08_uip', table: 't' }
+const PS_SQL = `CREATE DATABASE IF NOT EXISTS ${PS.db}; CREATE TABLE IF NOT EXISTS ${PS.db}.${PS.table} (id INT PRIMARY KEY);
+  INSERT IGNORE INTO ${PS.db}.${PS.table} VALUES (1), (2);`
+
+// the "Page-related settings" modal of the Browse page (PageSettings::init('Browse'))
+pageParity('page-settings-browse', {
+  sql: `${RESET}; ${PS_SQL}`,
+  pma: { route: '/sql', params: { db: PS.db, table: PS.table, pos: '0' } },
+  ours: { path: `/s/1/db/${PS.db}/t/${PS.table}/browse` },
+  ready: { pma: 'table.table_results', ours: 'table.table_results' },
+  scope: { pma: '#pageSettingsModal .modal-content', ours: '#pageSettingsModal' },
+  setup: async ({ pma, ours }) => {
+    await pma.locator('#page_settings_icon').click()
+    await pma.locator('#pageSettingsModal.show').waitFor()
+    await ours.locator('#page_settings_icon button').click()
+    await ours.locator('#pageSettingsModal select').first().waitFor()
+  },
+})

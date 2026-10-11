@@ -302,11 +302,11 @@ export async function importPrefs(
   const post: PostedForm = {}
   for (const [k, v] of Object.entries(newConfig)) post[k.replaceAll('/', '-')] = v
   cf.resetConfigData()
+  // phpMyAdmin 6.0-dev ends here with a TypeError (FormDisplay::validateSelect(string|bool) gets the
+  // integer defaults) and BaseFormList::process would stop at the first failing form: every form
+  // is processed, the defaults that fill the fields the file lacks are never errors
   let allOk = true
-  for (const f of forms) {
-    allOk = allOk && f.process(post, true)
-    if (!allOk) break
-  }
+  for (const f of forms) allOk = f.process(post, true, { keepDefaults: true }) && allOk
   allOk = allOk && !forms.some((f) => f.hasErrors())
   if (!allOk && req.fixErrors === true) {
     for (const f of forms) f.fixErrors()

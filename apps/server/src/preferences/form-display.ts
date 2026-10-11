@@ -178,7 +178,7 @@ export class FormDisplay {
    * FormDisplay::save via process(): casts the posted values to each field's type and stores them;
    * with `allowPartialSave` false nothing is stored when a value is missing or invalid.
    */
-  process(post: PostedForm, allowPartialSave: boolean): boolean {
+  process(post: PostedForm, allowPartialSave: boolean, opts: { keepDefaults?: boolean } = {}): boolean {
     const tr = this.ctx.tr
     let result = true
     const values: Record<string, unknown> = {}
@@ -189,6 +189,8 @@ export class FormDisplay {
         const key = path.replaceAll('/', '-')
         const def = this.#def(path)
         let v: unknown = post[key]
+        // getFlatDefaultConfig() splits lists starting with null (TextImageLink): no value posted
+        if (v === undefined && opts.keepDefaults === true) continue
         if (v === undefined) {
           if (def.type !== 'boolean') {
             this.errors[form.name] ??= []
@@ -212,6 +214,9 @@ export class FormDisplay {
             break
           case 'select': {
             const r = validateSelect(v, selectValues(def, this.ctx.charsets))
+            // an import posts phpMyAdmin's defaults for the fields the file lacks: FirstDayOfCalendar's
+            // default (0) is no option of its select, that is not an error of the file
+            if (!r.ok && opts.keepDefaults === true && phpIdentical(v, this.cf.getDefault(path))) continue
             if (!r.ok) {
               this.errors[path] ??= []
               this.errors[path]?.push(tr.gettext('Incorrect value!'))
