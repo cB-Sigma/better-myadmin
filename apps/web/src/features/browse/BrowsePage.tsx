@@ -1,0 +1,102 @@
+import type { QueryResponse } from '@bettermyadmin/contracts'
+import { useUiSettings } from '@bettermyadmin/ui'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+import { useState } from 'react'
+import { ApiError, api } from '../../lib/api'
+import { t } from '../../lib/i18n'
+import { qk } from '../../lib/queryKeys'
+import { StatementBlock } from '../sql/Results'
+import { type CardEnv, MessageBox } from '../sql/SqlMessage'
+import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
+import { sqlTabRoute } from '../sql/routes'
+import { runQuery } from '../sql/runner'
+
+export interface BrowsePageProps {
+  server: number
+  db: string
+  table: string
+  /** sql_query + sql_signature of a signed link (FK links, Browse distinct values) */
+  sql?: string | undefined
+  sig?: string | undefined
+  pos?: number | undefined
+}
+
+/**
+ * The table Browse tab: /sql with db + table (default browse query) or a signed query.
+ * pma: src/Controllers/Sql/SqlController.php
+ */
+export function BrowsePage(props: BrowsePageProps) {
+  const { server, db, table } = props
+  const ui = useUiSettings()
+  const navigate = useNavigate()
+  const qc = useQueryClient()
+  const [other, setOther] = useState<QueryResponse | null>(null)
+  const req = {
+    db,
+    table,
+    ...(props.sql !== undefined ? { sql: props.sql } : {}),
+    ...(props.sig !== undefined ? { sig: props.sig } : {}),
+    ...(props.pos !== undefined ? { pos: props.pos } : {}),
+  }
+  const q = useQuery({
+    queryKey: qk.browse(server, db, table, req),
+    queryFn: () => api.browse(server, req),
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnWindowFocus: false,
+    retry: false,
+  })
+
+  const env: CardEnv = {
+    server,
+    versionInt: ui.serverVersion,
+    confirmQuery: (sql) => {
+      const check = checkSqlQuery(sql, ui.Confirm)
+      if (check === 'empty') return false
+      return check !== 'confirm' || window.confirm(confirmationText(sql, t(DO_YOU_REALLY)))
+    },
+    codemirror: true,
+    onAction: (a) => {
+      if (a.type === 'edit') {
+        void navigate({ ...sqlTabRoute(server, a.db, a.table), search: { sql: a.sql } } as never)
+        return
+      }
+      // Explain / Create PHP code / inline edit: the /import path, shown in place of the grid
+      void runQuery(
+        server,
+        {
+          sql: a.sql,
+          db: a.db,
+          table: a.table,
+          fromQueryBox: false,
+          grid: true,
+          ...(a.showAsPhp !== undefined ? { showAsPhp: a.showAsPhp } : {}),
+          ...(a.profiling !== undefined ? { profiling: a.profiling } : {}),
+          ...(a.fkChecks !== undefined ? { fkChecks: a.fkChecks } : {}),
+        },
+        'page',
+      ).then((r) => {
+        setOther(r)
+        if (r.reloadNavigation) void qc.invalidateQueries({ queryKey: qk.srv(server), refetchType: 'active' })
+      })
+    },
+  }
+
+  if (q.error instanceof ApiError)
+    return <MessageBox type="error" text={q.error.message} className="rounded" />
+  if (q.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
+  const res = other ?? q.data
+  return (
+    <div id="sqlqueryresultsouter" className="max-w-full">
+      {res.statements.map((st, i) => (
+        <StatementBlock
+          key={`${i}-${st.sig}`}
+          st={st}
+          env={env}
+          {...(other === null ? { usingBookmark: q.data.usingBookmark, previous: q.data.previous } : {})}
+        />
+      ))}
+    </div>
+  )
+}

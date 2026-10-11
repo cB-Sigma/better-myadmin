@@ -1,0 +1,3 @@
+rules:
+  - ours: { kind: button, label: "Click the drop-down arrow to toggle column's visibility." }
+    added: phpMyAdmin's makegrid.ts appends the same toggle as a bare div.coldrop (no accessible control); ours is a button so the column-visibility list is keyboard reachable

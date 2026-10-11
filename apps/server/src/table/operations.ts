@@ -34,6 +34,7 @@ import { backquote, findDuplicateIndexes } from '@bettermyadmin/sql-gen'
 import { AlterStatement, Context as Ctx, Expression, Parser, parseAnalyze } from '@bettermyadmin/sql-lexer'
 import type { z } from 'zod'
 import { MysqlError } from '../http/errors.ts'
+import { strnatcasecmp } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import type { DdlCtx } from './ddl.ts'
 import { isSystemSchema } from './structure-page.ts'
@@ -84,7 +85,10 @@ const warningText = (w: { level: string; code: number; message: string }) =>
 
 /** pma: DatabaseInterface::getDatabaseList (the databases the user can see) */
 async function databaseList(ctx: DdlCtx): Promise<string[]> {
-  return (await ctx.reader.dbi.fetchSingleColumn('SHOW DATABASES')).map((d) => d ?? '')
+  const list = (
+    await ctx.reader.dbi.fetchSingleColumn('SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`')
+  ).map((d) => d ?? '')
+  return ctx.cfg.NaturalOrder ? list.sort(strnatcasecmp) : list.sort()
 }
 
 /** pma: Table::getCreateOptions */
@@ -220,7 +224,8 @@ export async function operationsPage(ctx: OpsCtx): Promise<OperationsPageRespons
     hasTransactionalAndPageChecksum: engine === 'ARIA',
     transactional: (createOptions.transactional ?? '') === '0' ? '0' : '1',
     pageChecksum: createOptions.page_checksum ?? '',
-    databaseList: dbs.length <= cfg.MaxDbList ? dbs : null,
+    // ListDatabase::getList leaves the system schemas out
+    databaseList: dbs.length <= cfg.MaxDbList ? dbs.filter((d) => !isSystemSchema(d)) : null,
     hasForeignKeys: fks.length > 0,
     hasPrivileges: privs.table && privs.column && privs.isReload,
     switchToNew: ctx.session.switchToNew === true,

@@ -6,6 +6,7 @@ import {
   ArrowUpDown,
   ArrowUpToLine,
   BookOpen,
+  Bookmark,
   Calendar,
   CalendarClock,
   CaseSensitive,
@@ -16,6 +17,7 @@ import {
   Cog,
   Columns3,
   Copy,
+  CornerLeftUp,
   Database,
   Download,
   Eraser,
@@ -40,6 +42,8 @@ import {
   Lock,
   LogOut,
   type LucideIcon,
+  Maximize2,
+  Minimize2,
   Minus,
   Network,
   Palette,
@@ -159,6 +163,14 @@ export const pmaIcons = {
   s_collapseall: Minus,
   b_tblanalyse: SlidersHorizontal,
   s_tree: FolderTree,
+  // results grid (src/Display/Results.php, display/results/table.twig)
+  b_view_add: Eye,
+  b_globe: Globe,
+  b_bookmark: Bookmark,
+  s_really: AlertTriangle,
+  s_fulltext: Maximize2,
+  s_partialtext: Minimize2,
+  select_all_arrow: CornerLeftUp,
 } satisfies Record<string, LucideIcon>
 
 export type PmaIconName = keyof typeof pmaIcons

@@ -23,4 +23,7 @@ export const qk = {
   tableScope: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'scope'] as const,
   /** a table-level page payload (operations, relation, search, tracking…) */
   tblPage: (s: number, db: string, t: string, page: string) => ['srv', s, 'db', db, 'tbl', t, page] as const,
+  /** the Browse tab's /sql run (signed sql + pos from the URL) */
+  browse: (s: number, db: string, t: string, q: object) =>
+    ['srv', s, 'db', db, 'tbl', t, 'browse', q] as const,
 }

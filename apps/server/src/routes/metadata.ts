@@ -532,7 +532,7 @@ metadataRoutes.post('/favorites/sync', async (c) => {
 // ---------------------------------------------------------------------------------------------
 
 /** Table::isView / getStatusInfo('CREATE_TIME') / getColumns(false) on the user link. */
-function tableInfo(m: MetaRequest, db: string, table: string): UiPrefsTableInfo {
+export function tableInfo(m: MetaRequest, db: string, table: string): UiPrefsTableInfo {
   let status: Promise<{ view: boolean; createTime: string | null }> | null = null
   const load = () => {
     status ??= (async () => {
