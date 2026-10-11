@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1424/3426 covered (41.6%): 1424 implemented, 33 planned, 1969 missing. [Summary](README.md).
+1428/3426 covered (41.7%): 1428 implemented, 33 planned, 1965 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 205/403 (50.9%) covered, 205/403 implemented
 
@@ -153,9 +153,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 394/534 (73.8%) covered, 394/534 implemented
+## 04 table level — 398/534 (74.5%) covered, 398/534 implemented
 
-140 msgids not used yet.
+136 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -164,10 +164,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `resources/templates/table/gis_visualization/gis_visualization.twig` | 4/5 | `-- None --` · `Display GIS Visualization` · `Label column` · `Spatial column` |
-| `resources/templates/table/structure/display_structure.twig` | 4/51 | `Edit view` · `Go back` · `Media type:` · `None (None for default)` |
 | `src/Controllers/Table/GisVisualizationController.php` | 4/5 | `Failed to create image` · `Invalid file format, expected one of: ` · `No spatial column found for this SQL query.` · `No SQL query was set to fetch data.` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
-| `resources/templates/view_create.twig` | 3/6 | `Column names` · `Edit view` · `VIEW name` |
+| `resources/templates/table/structure/display_structure.twig` | 3/51 | `Go back` · `Media type:` · `None (None for default)` |
 | `src/Controllers/Table/ChartController.php` | 3/5 | `No data to display` · `No numeric columns present in the table to plot.` · `No SQL query was set to fetch data.` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
@@ -208,7 +207,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
-| `src/Controllers/View/CreateController.php` | 1/2 | `View name can not be empty!` |
 | `src/Normalization.php` | 1/52 | `String (string types)` |
 
 ## 05 database level — 214/340 (62.9%) covered, 214/340 implemented

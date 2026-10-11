@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-147/199 covered (73.9%): 139 implemented, 7 exception, 1 n/a, 52 planned. [Summary](README.md).
+149/199 covered (74.9%): 141 implemented, 7 exception, 1 n/a, 50 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -59,7 +59,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | UI /s/:server/transformations (apps/web/src/routes/s/$server/transformations.tsx) | static plugin catalog (packages/mysql-types transformations.ts) |
 | ✅ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper (apps/server/src/routes/insert-edit.ts:148) | raw cell bytes; resize=jpeg\|png sends the original image (no GD) |
 
-## 04 table level — 58/64 (90.6%) covered, 58/64 implemented
+## 04 table level — 60/64 (93.8%) covered, 60/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -125,8 +125,8 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /table/zoom-search` | `Table/ZoomSearchController` | API GET /api/servers/:s/databases/:db/tables/:t/search (apps/server/src/routes/table-search.ts:21)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom (apps/server/src/routes/table-search.ts:33)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom/row (apps/server/src/routes/table-search.ts:39)<br>UI /s/:server/db/:db/t/:table/zoom-search (apps/web/src/routes/s/$server/db/$db/t/$table/zoom-search.tsx) |  |
 | 🗓️ | `POST /tables` | `TableController` | API GET /api/servers/:s/databases/:db/tables | M2 — name lists for pickers |
 | ✅ | `GET, POST /triggers` | `Triggers/IndexController` | API GET /api/servers/:s/databases/:db/triggers (apps/server/src/routes/database.ts:234)<br>API POST /api/servers/:s/databases/:db/triggers (apps/server/src/routes/database.ts:242)<br>API GET /api/servers/:s/databases/:db/triggers/editor (apps/server/src/routes/database.ts:238)<br>API GET /api/servers/:s/databases/:db/triggers/export (apps/server/src/routes/database.ts:247)<br>UI /s/:server/db/:db/triggers (apps/web/src/routes/s/$server/db/$db/triggers.tsx) |  |
-| 🗓️ | `GET, POST /view/create` | `View/CreateController` | API GET /api/servers/:s/databases/:db/views/:v<br>API POST /api/servers/:s/databases/:db/views<br>UI /s/:s/db/:db/view/* | M2 |
-| 🗓️ | `GET, POST /view/operations` | `Operations/ViewController` | API POST /api/servers/:s/databases/:db/views/:v/operations/*<br>UI /s/:s/db/:db/view/* | M2 |
+| ✅ | `GET, POST /view/create` | `View/CreateController` | API GET /api/servers/:s/databases/:db/views/form (apps/server/src/routes/view-create.ts:15)<br>API POST /api/servers/:s/databases/:db/views (apps/server/src/routes/view-create.ts:20)<br>UI /s/:server/db/:db/view/create (apps/web/src/routes/s/$server/db/$db/view/create.tsx) | also the Create view dialog of the query results |
+| ✅ | `GET, POST /view/operations` | `Operations/ViewController` | API GET /api/servers/:s/databases/:db/tables/:t/operations (apps/server/src/routes/table-ops.ts:30)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/rename-view (apps/server/src/routes/table-ops.ts:62)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the Operations tab of a view |
 
 ## 05 database level — 32/34 (94.1%) covered, 32/34 implemented
 

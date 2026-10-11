@@ -167,6 +167,9 @@ import type {
   TriggerEditorData,
   TriggersListResponse,
   VersionCheckResponse,
+  ViewFormResponse,
+  ViewSaveRequest,
+  ViewSaveResponse,
   ZoomRequest,
   ZoomResponse,
   ZoomRowResponse,
@@ -353,6 +356,10 @@ export const api = {
     call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  // the view form (pma: /view/create)
+  viewForm: (r: DbRef, q: { table?: string | undefined; sql?: string | undefined }) =>
+    call<ViewFormResponse>('GET', `${dbPath(r)}/views/form${queryString(q)}`),
+  viewSave: (r: DbRef, req: ViewSaveRequest) => call<ViewSaveResponse>('POST', `${dbPath(r)}/views`, req),
   tablePrivileges: (s: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(s)}/privileges`),
   tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>

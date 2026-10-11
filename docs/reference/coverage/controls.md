@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-450/1106 covered (40.7%): 450 implemented, 24 planned, 632 missing. [Summary](README.md).
+462/1106 covered (41.8%): 462 implemented, 24 planned, 620 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 122/306 (39.9%) covered, 122/306 implemented
+## 04 table level — 134/306 (43.8%) covered, 134/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -79,7 +79,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `columns_definitions/table_fields_definitions.twig` | 0/2 |  | ⬜ `link:Browser display transformation` ⬜ `link:Input transformation` |
 | `create_tracking_version.twig` | 14/14 | ✅ `alter_table` ✅ `alter_view` ✅ `create_index` ✅ `create_table` ✅ `create_view` ✅ `delete` ✅ `drop_index` ✅ `drop_table` ✅ `drop_view` ✅ `insert` ✅ `rename_table` ✅ `submit:Create version` ✅ `truncate` ✅ `update` |  |
 | `indexes.twig` | 0/3 |  | ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Rename` |
-| `modals/create_view.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:createViewModalGoButton` |
+| `modals/create_view.twig` | 2/2 | ✅ `button:Close` ✅ `id:createViewModalGoButton` |  |
 | `modals/enum_set_editor.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:enumEditorGoButton` |
 | `modals/index_dialog_modal.twig` | 0/4 |  | ⬜ `button:Close` ⬜ `button:Go back` ⬜ `button:Preview SQL` ⬜ `id:indexDialogModalGoButton` |
 | `modals/preview_sql_confirmation.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:previewSQLConfirmOkButton` |
@@ -116,7 +116,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `triggers/export.twig` | 0/1 |  | ⬜ `textarea:L6` |
 | `triggers/list.twig` | 5/5 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:triggersEditorModalSaveButton` ✅ `link:Create new trigger` ✅ `submit_mult` |  |
 | `triggers/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
-| `view_create.twig` | 0/10 |  | ⬜ `id:format` ⬜ `submit:Go` ⬜ `view[algorithm]` ⬜ `view[as]` ⬜ `view[column_names]` ⬜ `view[definer]` ⬜ `view[name]` ⬜ `view[or_replace]` ⬜ `view[sql_security]` ⬜ `view[with]` |
+| `view_create.twig` | 10/10 | ✅ `id:format` ✅ `submit:Go` ✅ `view[algorithm]` ✅ `view[as]` ✅ `view[column_names]` ✅ `view[definer]` ✅ `view[name]` ✅ `view[or_replace]` ✅ `view[sql_security]` ✅ `view[with]` |  |
 
 ## 05 database level — 188/268 (70.1%) covered, 188/268 implemented
 

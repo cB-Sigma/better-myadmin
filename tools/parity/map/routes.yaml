@@ -773,14 +773,16 @@
   exception: X20
 /view/create:
   api:
-    - 'GET /api/servers/:s/databases/:db/views/:v'
+    - 'GET /api/servers/:s/databases/:db/views/form'
     - 'POST /api/servers/:s/databases/:db/views'
-  ui: '/s/:s/db/:db/view/*'
-  planned: M2
+  ui: '/s/:s/db/:db/view/create'
+  note: also the Create view dialog of the query results
 /view/operations:
-  api: 'POST /api/servers/:s/databases/:db/views/:v/operations/*'
-  ui: '/s/:s/db/:db/view/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/operations'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/rename-view'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  note: the Operations tab of a view
 'setup:/':
   api: 'GET /api/servers/:s/navigation/branch'
   ui: /setup

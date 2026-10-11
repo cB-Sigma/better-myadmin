@@ -1,4 +1,10 @@
-import type { BrowseRequest, GridData, GridRow, StatementResult } from '@bettermyadmin/contracts'
+import type {
+  BrowseRequest,
+  GridData,
+  GridRow,
+  SqlMessage as SqlMessageData,
+  StatementResult,
+} from '@bettermyadmin/contracts'
 import {
   Alert,
   Button,
@@ -24,6 +30,8 @@ import { ProfilingCard } from '../sql/ProfilingCard'
 import { ResultGrid } from '../sql/ResultGrid'
 import { type CardEnv, SqlMessage } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, confirmationText } from '../sql/logic'
+import { ResultMessages } from '../table/common/ResultMessages'
+import { CreateViewDialog } from '../table/view/ViewForm'
 import { GridTable } from './GridTable'
 import { rowsOptions, validRowNumbers } from './logic'
 import './grid.css'
@@ -737,6 +745,9 @@ function Operations({
   rows,
 }: { server: number; grid: GridData; st: StatementResult; rows: GridRow[] }) {
   const ops = grid.operations!
+  // the Create view dialog; its success message replaces the result's query box (.result_query)
+  const [createView, setCreateView] = useState(false)
+  const [viewMessages, setViewMessages] = useState<SqlMessageData[]>([])
   const copy = async () => {
     // sql.ts #copyToClipBoard
     const lines: string[] = []
@@ -805,18 +816,26 @@ function Operations({
               </>
             )}
             <span>
-              <Link
-                to="/s/$server/db/$db/$"
-                params={{ server, db: grid.db, _splat: 'view-create' }}
-                search={{ sql: grid.sql, table: grid.table } as never}
-                className="create_view ajax text-accent"
-              >
+              <Button variant="link" className="create_view ajax" onClick={() => setCreateView(true)}>
                 <IconText icon="b_view_add" text={t('Create view')} forceText />
-              </Link>
+              </Button>
             </span>
           </>
         )}
       </PanelBody>
+      {viewMessages.length > 0 && <ResultMessages messages={viewMessages} />}
+      {createView && (
+        <CreateViewDialog
+          server={server}
+          db={grid.db}
+          sql={grid.sql}
+          onClose={() => setCreateView(false)}
+          onDone={(m) => {
+            setViewMessages(m)
+            setCreateView(false)
+          }}
+        />
+      )}
     </Panel>
   )
 }

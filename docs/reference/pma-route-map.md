@@ -201,8 +201,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/triggers` | `Triggers/IndexController` | UI `/s/:s/db/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers` · API `POST /api/servers/:s/databases/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers/editor` · API `GET /api/servers/:s/databases/:db/triggers/export` | ✅ implemented |
 | GET, POST | `/user-password` | `UserPasswordController` | API `POST /api/servers/:s/account/password` | ✅ implemented (M3) |
 | GET, POST | `/version-check` | `VersionCheckController` | API `GET /api/meta/version-check` | 🔀 exception (M1, X20) |
-| GET, POST | `/view/create` | `View/CreateController` | UI `/s/:s/db/:db/view/*` · API `GET /api/servers/:s/databases/:db/views/:v` · API `POST /api/servers/:s/databases/:db/views` | 🗓️ planned (M2) |
-| GET, POST | `/view/operations` | `Operations/ViewController` | UI `/s/:s/db/:db/view/*` · API `POST /api/servers/:s/databases/:db/views/:v/operations/*` | 🗓️ planned (M2) |
+| GET, POST | `/view/create` | `View/CreateController` | UI `/s/:s/db/:db/view/create` · API `GET /api/servers/:s/databases/:db/views/form` · API `POST /api/servers/:s/databases/:db/views` · (also the Create view dialog of the query results) | ✅ implemented |
+| GET, POST | `/view/operations` | `Operations/ViewController` | UI `/s/:s/db/:db/t/:table/operations` · API `GET /api/servers/:s/databases/:db/tables/:t/operations` · API `POST /api/servers/:s/databases/:db/tables/:t/operations/rename-view` · (the Operations tab of a view) | ✅ implemented |
 
 ## Setup script
 

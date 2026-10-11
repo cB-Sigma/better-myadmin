@@ -126,6 +126,19 @@ pageParity('table-privileges', {
   ours: { path: `${T}/${FIX.table}/privileges` },
 })
 
+const VIEW = `CREATE OR REPLACE VIEW ${FIX.db}.uip_v AS SELECT id FROM ${FIX.db}.${FIX.table};`
+
+pageParity('view-create', {
+  pma: { route: '/view/create', params: { db: FIX.db } },
+  ours: { path: `/s/1/db/${FIX.db}/view/create` },
+})
+
+pageParity('view-edit', {
+  sql: VIEW,
+  pma: { route: '/view/create', params: p('uip_v') },
+  ours: { path: `/s/1/db/${FIX.db}/view/create?table=uip_v` },
+})
+
 /** an icon + text link (the reference's accessible name repeats the image's alt) */
 function showLink(text: string): PageFn {
   return (page) => page.locator('#page_content a', { hasText: text }).first().click()
