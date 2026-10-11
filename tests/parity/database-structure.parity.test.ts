@@ -174,7 +174,8 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
     {
       name: 'replace prefix leaves non-matching names',
       pma: () =>
-        h.pma.postJson('/database/structure/replace-prefix', [
+        // phpMyAdmin answers the whole Structure page here, not JSON
+        h.pma.postPage('/database/structure/replace-prefix', [
           ['db', P],
           ...sel(['wp_one', 'm']),
           ['from_prefix', 'wp_'],
