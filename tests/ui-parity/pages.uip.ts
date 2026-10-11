@@ -18,6 +18,9 @@ pageParity('login', {
 pageParity('home', {
   pma: { route: '/' },
   ours: { path: '/s/1' },
+  // the git revision line (ShowGitRevision) names the reference checkout's branch, commit and author:
+  // environment, and it changes with every upstream sync
+  exclude: ['#li_pma_version_git'],
 })
 
 pageParity('navigation', {
