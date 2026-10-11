@@ -1,0 +1,40 @@
+# Dispositions for phpMyAdmin directives our code does not read (yet). A directive that apps/ or
+# packages/ (outside packages/config) reads is implemented whatever this file says.
+# Keys: directive path (`Servers/*/host`) or a prefix ending in `/` or `*`.
+#   planned: M<n> | exception: X<n> | n/a: <reason> | note: <text>
+
+MemoryLimit:
+  n/a: PHP memory_limit; Node has no per-request memory limit (exports and imports stream, X10/X9)
+SessionSavePath:
+  n/a: PHP session.save_path; sessions live in our SessionStore (DataDir / RedisUrl)
+PersistentConnections:
+  exception: X24
+  note: connections are always pooled per session and server
+ExecTimeLimit:
+  exception: X9
+  planned: M4
+  note: no execution time limit in Node; the partial-import UI is kept
+RecodingEngine:
+  exception: X5
+  planned: M4
+IconvExtraParams:
+  exception: X5
+  planned: M4
+ShowPhpInfo:
+  exception: X15
+  planned: M1
+SendErrorReports:
+  exception: X19
+  planned: M1
+VersionCheck:
+  exception: X20
+  planned: M1
+ThemeManager:
+  exception: X16
+  planned: M1
+ThemeDefault:
+  exception: X16
+  planned: M1
+ThemePerServer:
+  exception: X16
+  planned: M1

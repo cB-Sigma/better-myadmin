@@ -5,6 +5,7 @@ dist/
 .env
 .DS_Store
 coverage/
+!docs/reference/coverage/
 *.tsbuildinfo
 bettermyadmin.config.ts
 apps/web/src/routeTree.gen.ts

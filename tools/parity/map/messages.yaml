@@ -1,0 +1,22 @@
+# Dispositions for phpMyAdmin msgids our code does not translate (yet).
+# sources: pma path prefixes; a msgid takes the disposition when every file that uses it matches.
+# msgids:  individual msgids (`context|msgid` for msgctxt entries).
+#   planned: M<n> | exception: X<n> | n/a: <reason> | note: <text>
+
+sources:
+  resources/templates/setup/:
+    exception: X7
+    planned: M4
+  resources/js/setup/:
+    exception: X7
+    planned: M4
+  src/Setup/:
+    exception: X7
+    planned: M4
+  src/Controllers/Setup/:
+    exception: X7
+    planned: M4
+  src/Controllers/PhpInfoController.php:
+    exception: X15
+    planned: M1
+msgids: {}
