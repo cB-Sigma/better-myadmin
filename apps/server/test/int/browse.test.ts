@@ -80,7 +80,7 @@ describe('Browse (/sql)', () => {
     expect(discard.st.executedSql).toBe('SELECT * FROM `t` LIMIT 0, 25')
   })
 
-  it('refuses an unsigned or badly signed query', async () => {
+  it('refuses an unsigned or badly signed query [p02-fae7cc]', async () => {
     const a = await app()
     const r = await a.req('POST', '/api/servers/1/browse', { db: DB, sql: 'SELECT 1', sig: 'nope' })
     expect(r.status).toBe(400)
@@ -115,7 +115,7 @@ describe('Browse (/sql)', () => {
     expect(d.grid.rows[0]!.cells[1]!.fk?.title).toBe('1')
   })
 
-  it('a table without a unique key: no row actions and the notice', async () => {
+  it('a table without a unique key: no row actions and the notice [p02-c56862]', async () => {
     const a = await app()
     const { grid } = await browse(a, { table: 'nk' })
     expect(grid.editable).toBe(false)
@@ -132,7 +132,7 @@ describe('Browse (/sql)', () => {
     expect(w.grid.rows[0]!.del?.sql).toMatch(/ LIMIT 1$/)
   })
 
-  it('TablePrimaryKeyOrder adds an ORDER BY on the primary key', async () => {
+  it('TablePrimaryKeyOrder adds an ORDER BY on the primary key [p02-1f1189]', async () => {
     const a = await app({ TablePrimaryKeyOrder: 'DESC', RememberSorting: false })
     const { st } = await browse(a, { table: 't' })
     expect(st.executedSql).toBe('SELECT * FROM `t` ORDER BY `t`.`id` DESC LIMIT 0, 25')

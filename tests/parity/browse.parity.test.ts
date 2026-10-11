@@ -5,6 +5,7 @@ import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { classify, normalise } from './lib/compare.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { PmaClient, visibleText } from './lib/pma.ts'
+import { pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the Browse tab / results grid (docs/features/02-browse-results-grid.md): every
@@ -26,9 +27,7 @@ const U = { pma: 'f02_up', bma: 'f02_ub' }
 const DB = { pma: 'f02_dbp', bma: 'f02_dbb' }
 const dbMap = { [DB.pma]: 'par_db', [DB.bma]: 'par_db' }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = pmaReachable
 
 const SEED = (db: string) => `DROP DATABASE IF EXISTS ${db}; CREATE DATABASE ${db}; USE ${db};
   CREATE TABLE t (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(80) COMMENT 'the name', qty INT, d DATE, KEY k_qty (qty)) ENGINE=InnoDB;
@@ -86,7 +85,7 @@ const CASES: Case[] = [
     steps: [browse({ table: 't', pos: '0' }, { table: 't' })],
   },
   {
-    name: 'sort link, then the remembered sort on a plain browse, then discard_remembered_sort',
+    name: 'sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT * FROM `t` ORDER BY `t`.`name` DESC', session_max_rows: '25' },
@@ -114,7 +113,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'pagination, Number of rows and Show all',
+    name: 'pagination, Number of rows and Show all [p02-284f7e]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT * FROM `t` WHERE qty > 1', pos: '25' },
@@ -136,7 +135,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'a query with its own LIMIT runs verbatim',
+    name: 'a query with its own LIMIT runs verbatim [p02-9f5692]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT id, name FROM `t` LIMIT 3' },
@@ -145,7 +144,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'FK display values: relational key and display column',
+    name: 'FK display values: relational key and display column [p02-1e062a]',
     steps: [
       browse({ table: 'child', pos: '0' }, { table: 'child' }),
       browse(
@@ -169,7 +168,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'the row Delete link',
+    name: 'the row Delete link [p02-2b0c72]',
     steps: [
       browse(
         {
@@ -198,7 +197,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'grid edit: full value, save with the re-check, NULL',
+    name: 'grid edit: full value, save with the re-check, NULL [p02-85eff6]',
     steps: [
       {
         pma: sql('/sql', {
@@ -276,7 +275,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'grid edit value lists: SET with the full value, relational dropdown',
+    name: 'grid edit value lists: SET with the full value, relational dropdown [p02-10a94f]',
     steps: [
       {
         pma: sql('/sql/get-set-values', {
@@ -315,7 +314,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'Delete with selected: every DELETE with LIMIT 1, then the browse query again',
+    name: 'Delete with selected: every DELETE with LIMIT 1, then the browse query again [p02-a3dbd4]',
     steps: [
       {
         pma: {
@@ -405,7 +404,7 @@ describe.skipIf(!reachable)('parity: Browse / results grid (/sql) vs POST /brows
     })
   }
 
-  it('header message, notices and grid texts match the rendered phpMyAdmin page', async () => {
+  it('header message, notices and grid texts match the rendered phpMyAdmin page [p02-356f71]', async () => {
     await root.query(SEED(DB.pma))
     await root.query(SEED(DB.bma))
     const cases: Array<{ form: Record<string, string>; body: Record<string, unknown> }> = [

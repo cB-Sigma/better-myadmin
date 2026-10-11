@@ -55,9 +55,9 @@ test('browse, sort, page, options, grid edit and delete', async ({ page }) => {
   await expect(page.locator('td[data-originallength="70"]')).toHaveCount(1)
 
   // sort by name descending (plain click twice)
-  await page.locator('th[data-column="name"] a.sortlink').click()
+  await page.locator('th[data-column="name"] .sortlink').click()
   await expect(results.getByText(/\[name: ITEM1\.\.\./)).toBeVisible()
-  await page.locator('th[data-column="name"] a.sortlink').click()
+  await page.locator('th[data-column="name"] .sortlink').click()
   await expect(results.getByText(/\[name: XXX/)).toBeVisible()
 
   // next page
@@ -83,7 +83,7 @@ test('browse, sort, page, options, grid edit and delete', async ({ page }) => {
   // delete a row with the confirmation modal
   const rows = page.locator('table.table_results tbody tr')
   const before = await rows.count()
-  await rows.first().locator('a.delete_row').click()
+  await rows.first().locator('.delete_row').click()
   await page.getByRole('alertdialog').getByRole('button', { name: 'OK' }).click()
   await expect(rows).toHaveCount(before - 1)
   await expect.poll(() => value(`SELECT COUNT(*) FROM ${DB}.t`)).toBe(29)

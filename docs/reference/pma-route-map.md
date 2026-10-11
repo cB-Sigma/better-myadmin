@@ -133,24 +133,24 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET | `/server/variables` | `Server/VariablesController` | UI `/s/:s/variables` · API `GET /api/servers/:s/variables` | ✅ implemented (M3) |
 | GET | `/server/variables/get/{name}` | `Server/Variables/GetVariableController` | UI `/s/:s/variables/get/:name` · API `/api/servers/:s/variables/get/:name` | 🗓️ planned (M3) |
 | POST | `/server/variables/set/{name}` | `Server/Variables/SetVariableController` | UI `/s/:s/variables/set/:name` · API `/api/servers/:s/variables/set/:name` | 🗓️ planned (M3) |
-| GET, POST | `/sql` | `Sql/SqlController` | UI `/s/:s/sql` · API `POST /api/servers/:s/query` · (server scope only so far; db/table scopes land with M1) | ✅ implemented |
+| GET, POST | `/sql` | `Sql/SqlController` | UI `/s/:s/db/:db/t/:table/browse` · API `POST /api/servers/:s/browse` · API `POST /api/servers/:s/query` · (browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import) | ✅ implemented |
 | GET | `/sql/get-default-fk-check-value` | `Sql/DefaultForeignKeyCheckValueController` | API `GET /api/servers/:s/sql/default-fk-check` | ✅ implemented (M1) |
-| POST | `/sql/get-enum-values` | `Sql/EnumValuesController` | API `GET /api/servers/:s/databases/:db/tables/:t/enum-values` | 🗓️ planned (M1) |
-| POST | `/sql/get-relational-values` | `Sql/RelationalValuesController` | API `GET /api/servers/:s/databases/:db/tables/:t/foreign-values` | 🗓️ planned (M1) |
-| POST | `/sql/get-set-values` | `Sql/SetValuesController` | API `GET /api/servers/:s/databases/:db/tables/:t/enum-values` | 🗓️ planned (M1) |
-| POST | `/sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API `POST /api/servers/:s/databases/:db/tables/:t/uiprefs` | ✅ implemented (M1) |
+| POST | `/sql/get-enum-values` | `Sql/EnumValuesController` | API `POST /api/servers/:s/browse/values` | ✅ implemented |
+| POST | `/sql/get-relational-values` | `Sql/RelationalValuesController` | API `POST /api/servers/:s/browse/values` | ✅ implemented |
+| POST | `/sql/get-set-values` | `Sql/SetValuesController` | API `POST /api/servers/:s/browse/values` | ✅ implemented |
+| POST | `/sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API `POST /api/servers/:s/databases/:db/tables/:t/uiprefs` | ✅ implemented |
 | POST | `/sync-favorite-tables` | `SyncFavoriteTablesController` | API `POST /api/servers/:s/favorites` · (sync) | ✅ implemented (M1) |
 | GET, POST | `/table/add-field` | `Table/AddFieldController` | UI `/s/:s/db/:db/t/:table/add-field` · API `POST /api/servers/:s/databases/:db/tables/:t/columns/*` | 🗓️ planned (M2) |
 | GET, POST | `/table/change` | `Table/ChangeController` | UI `/s/:s/db/:db/t/:table/change` · API `GET /api/servers/:s/databases/:db/tables/:t/insert-form` | 🗓️ planned (M2) |
 | POST | `/table/change/rows` | `Table/ChangeRowsController` | UI `/s/:s/db/:db/t/:table/change/rows` · API `/api/servers/:s/databases/:db/tables/:table/change/rows` | 🗓️ planned (M2) |
 | GET, POST | `/table/chart` | `Table/ChartController` | UI `/s/:s/db/:db/t/:table/chart` · API `GET /api/servers/:s/databases/:db/tables/:t/chart` · API `POST /api/servers/:s/databases/:db/tables/:t/chart` | 🗓️ planned (M3) |
 | GET, POST | `/table/create` | `Table/CreateController` | UI `/s/:s/db/:db/t/:table/create` · API `/api/servers/:s/databases/:db/tables/:table/create` | 🗓️ planned (M2) |
-| POST | `/table/delete/confirm` | `Table/DeleteConfirmController` | UI `/s/:s/db/:db/t/:table/delete/confirm` · API `/api/servers/:s/databases/:db/tables/:table/delete/confirm` | 🗓️ planned (M1) |
-| POST | `/table/delete/rows` | `Table/DeleteRowsController` | UI `/s/:s/db/:db/t/:table/delete/rows` · API `POST /api/servers/:s/databases/:db/tables/:t/rows/delete` | 🗓️ planned (M1) |
+| POST | `/table/delete/confirm` | `Table/DeleteConfirmController` | UI `/s/:s/db/:db/t/:table/browse` · (the confirmation is rendered in place by the results view (no request of its own)) | ✅ implemented |
+| POST | `/table/delete/rows` | `Table/DeleteRowsController` | API `POST /api/servers/:s/browse/delete-rows` | ✅ implemented |
 | GET, POST | `/table/export` | `Table/ExportController` | UI `/s/:s/db/:db/t/:table/export` · API `/api/servers/:s/databases/:db/tables/:table/export` | 🗓️ planned (M4) |
 | POST | `/table/export/rows` | `Table/ExportRowsController` | UI `/s/:s/db/:db/t/:table/export/rows` · API `POST /api/export/rows` | 🗓️ planned (M4) |
 | GET, POST | `/table/find-replace` | `Table/FindReplaceController` | UI `/s/:s/db/:db/t/:table/find-replace` · API `POST /api/servers/:s/databases/:db/tables/:t/find-replace` | 🗓️ planned (M2) |
-| GET, POST | `/table/get-field` | `Table/GetFieldController` | UI `/s/:s/db/:db/t/:table/get-field` · API `GET /api/servers/:s/databases/:db/tables/:t/cell` | 🗓️ planned (M1) |
+| GET, POST | `/table/get-field` | `Table/GetFieldController` | API `GET /api/servers/:s/browse/field` | ✅ implemented |
 | GET, POST | `/table/gis-visualization` | `Table/GisVisualizationController` | UI `/s/:s/db/:db/t/:table/gis-visualization` · API `GET /api/servers/:s/databases/:db/tables/:t/gis` | 🗓️ planned (M3) |
 | GET, POST | `/table/import` | `Table/ImportController` | UI `/s/:s/db/:db/t/:table/import` · API `/api/servers/:s/databases/:db/tables/:table/import` | 🗓️ planned (M4) |
 | GET, POST | `/table/indexes` | `Table/IndexesController` | UI `/s/:s/db/:db/t/:table/indexes` · API `/api/servers/:s/databases/:db/tables/:table/indexes` | ✅ implemented (M2) |
