@@ -15,9 +15,9 @@ export function SearchPills({
 }: { scope: TableRef; active: 'search' | 'zoom-search' | 'find-replace' }) {
   const base = `/s/${scope.server}/db/${enc(scope.db)}/t/${enc(scope.table)}`
   const pills = [
-    ['search', 'b_search', 'Table search'],
-    ['zoom-search', 'b_select', 'Zoom search'],
-    ['find-replace', 'b_find_replace', 'Find and replace'],
+    ['search', 'b_search', t('Table search')],
+    ['zoom-search', 'b_select', t('Zoom search')],
+    ['find-replace', 'b_find_replace', t('Find and replace')],
   ] as const
   return (
     <ul className="m-2 flex gap-2 text-sm" data-testid="search-pills">
@@ -29,7 +29,7 @@ export function SearchPills({
             {...(active === key ? { 'aria-current': 'page' as const } : {})}
           >
             <PmaIcon name={icon} alt="" />
-            {t(label)}
+            {label}
           </Link>
         </li>
       ))}

@@ -17,14 +17,14 @@ export function StructurePills({ scope, active }: { scope: TableRef; active: 'st
         className={`rounded px-2 py-1 ${active === key ? 'bg-bg-subtle font-medium' : 'text-accent hover:underline'}`}
         {...(active === key ? { 'aria-current': 'page' as const } : {})}
       >
-        {t(label)}
+        {label}
       </Link>
     </li>
   )
   return (
     <ul className="mb-2 flex gap-2 text-sm print:hidden" data-testid="structure-pills">
-      {pill('structure', 'Table structure')}
-      {pill('relation', 'Relation view')}
+      {pill('structure', t('Table structure'))}
+      {pill('relation', t('Relation view'))}
     </ul>
   )
 }

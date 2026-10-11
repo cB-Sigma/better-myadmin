@@ -111,7 +111,9 @@ export async function relationPage(ctx: OpsCtx): Promise<RelationPageResponse> {
   let columns = ['', ...cols.filter((c) => engine === 'InnoDB' || c.Key !== '').map((c) => c.Field)]
   if (cfg.NaturalOrder) columns = columns.sort(strnatcasecmp)
   // ListDatabase (SCHEMATA, natural order)
-  const databases = (await reader.dbi.fetchSingleColumn('SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`')).map((d) => d ?? '')
+  const databases = (
+    await reader.dbi.fetchSingleColumn('SELECT `SCHEMA_NAME` FROM `INFORMATION_SCHEMA`.`SCHEMATA`')
+  ).map((d) => d ?? '')
   if (cfg.NaturalOrder) databases.sort(strnatcasecmp)
   else databases.sort()
   const foreignKeysOut: RelationPageResponse['foreignKeys'] = []

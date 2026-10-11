@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-39/199 covered (19.6%): 35 implemented, 3 exception, 1 n/a, 160 planned. [Summary](README.md).
+49/199 covered (24.6%): 45 implemented, 3 exception, 1 n/a, 150 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -59,7 +59,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | API GET /api/transformations | M2 — overview; wrapper: raw cell bytes |
 | 🗓️ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/cell | M2 — overview; wrapper: raw cell bytes |
 
-## 04 table level — 3/64 (4.7%) covered, 3/64 implemented
+## 04 table level — 13/64 (20.3%) covered, 13/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -83,16 +83,16 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET, POST /table/add-field` | `Table/AddFieldController` | API POST /api/servers/:s/databases/:db/tables/:t/columns/*<br>UI /s/:s/db/:db/t/:table/add-field | M2 |
 | 🗓️ | `GET, POST /table/chart` | `Table/ChartController` | API GET /api/servers/:s/databases/:db/tables/:t/chart<br>API POST /api/servers/:s/databases/:db/tables/:t/chart<br>UI /s/:s/db/:db/t/:table/chart | M3 |
 | 🗓️ | `GET, POST /table/create` | `Table/CreateController` | API /api/servers/:s/databases/:db/tables/:table/create<br>UI /s/:s/db/:db/t/:table/create | M2 |
-| 🗓️ | `GET, POST /table/find-replace` | `Table/FindReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace<br>UI /s/:s/db/:db/t/:table/find-replace | M2 |
+| ✅ | `GET, POST /table/find-replace` | `Table/FindReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace/preview (apps/server/src/routes/table-search.ts:46)<br>API POST /api/servers/:s/databases/:db/tables/:t/find-replace (apps/server/src/routes/table-search.ts:51)<br>UI /s/:server/db/:db/t/:table/find-replace (apps/web/src/routes/s/$server/db/$db/t/$table/find-replace.tsx) |  |
 | 🗓️ | `GET, POST /table/gis-visualization` | `Table/GisVisualizationController` | API GET /api/servers/:s/databases/:db/tables/:t/gis<br>UI /s/:s/db/:db/t/:table/gis-visualization | M3 |
 | ✅ | `GET, POST /table/indexes` | `Table/IndexesController` | API POST /api/servers/:s/databases/:db/tables/:t/indexes (apps/server/src/routes/table-structure.ts:248)<br>UI /s/:server/db/:db/t/:table/indexes (apps/web/src/routes/s/$server/db/$db/t/$table/indexes.tsx) |  |
 | 🗓️ | `GET, POST /table/indexes/rename` | `Table/IndexRenameController` | API /api/servers/:s/databases/:db/tables/:table/indexes/rename<br>UI /s/:s/db/:db/t/:table/indexes/rename | M2 |
-| 🗓️ | `POST /table/maintenance/analyze` | `Table/Maintenance/AnalyzeController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/analyze<br>UI /s/:s/db/:db/t/:table/maintenance/analyze | M2 |
-| 🗓️ | `POST /table/maintenance/check` | `Table/Maintenance/CheckController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/check<br>UI /s/:s/db/:db/t/:table/maintenance/check | M2 |
-| 🗓️ | `POST /table/maintenance/checksum` | `Table/Maintenance/ChecksumController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/checksum<br>UI /s/:s/db/:db/t/:table/maintenance/checksum | M2 |
-| 🗓️ | `POST /table/maintenance/optimize` | `Table/Maintenance/OptimizeController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/optimize<br>UI /s/:s/db/:db/t/:table/maintenance/optimize | M2 |
-| 🗓️ | `POST /table/maintenance/repair` | `Table/Maintenance/RepairController` | API /api/servers/:s/databases/:db/tables/:table/maintenance/repair<br>UI /s/:s/db/:db/t/:table/maintenance/repair | M2 |
-| 🗓️ | `GET, POST /table/operations` | `Operations/TableController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/*<br>UI /s/:s/db/:db/t/:table/operations | M2 |
+| ✅ | `POST /table/maintenance/analyze` | `Table/Maintenance/AnalyzeController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |
+| ✅ | `POST /table/maintenance/check` | `Table/Maintenance/CheckController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |
+| ✅ | `POST /table/maintenance/checksum` | `Table/Maintenance/ChecksumController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |
+| ✅ | `POST /table/maintenance/optimize` | `Table/Maintenance/OptimizeController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |
+| ✅ | `POST /table/maintenance/repair` | `Table/Maintenance/RepairController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |
+| ✅ | `GET, POST /table/operations` | `Operations/TableController` | API GET /api/servers/:s/databases/:db/tables/:t/operations (apps/server/src/routes/table-ops.ts:30)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/order-by (apps/server/src/routes/table-ops.ts:32)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/move-copy (apps/server/src/routes/table-ops.ts:37)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/options (apps/server/src/routes/table-ops.ts:42)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/partitions (apps/server/src/routes/table-ops.ts:57)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/sql (apps/server/src/routes/table-ops.ts:52)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) |  |
 | 🗓️ | `POST /table/partition/analyze` | `Table/Partition/AnalyzeController` | API /api/servers/:s/databases/:db/tables/:table/partition/analyze<br>UI /s/:s/db/:db/t/:table/partition/analyze | M2 |
 | 🗓️ | `POST /table/partition/check` | `Table/Partition/CheckController` | API /api/servers/:s/databases/:db/tables/:table/partition/check<br>UI /s/:s/db/:db/t/:table/partition/check | M2 |
 | 🗓️ | `POST /table/partition/drop` | `Table/Partition/DropController` | API /api/servers/:s/databases/:db/tables/:table/partition/drop<br>UI /s/:s/db/:db/t/:table/partition/drop | M2 |
@@ -101,8 +101,8 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `POST /table/partition/repair` | `Table/Partition/RepairController` | API /api/servers/:s/databases/:db/tables/:table/partition/repair<br>UI /s/:s/db/:db/t/:table/partition/repair | M2 |
 | 🗓️ | `POST /table/partition/truncate` | `Table/Partition/TruncateController` | API /api/servers/:s/databases/:db/tables/:table/partition/truncate<br>UI /s/:s/db/:db/t/:table/partition/truncate | M2 |
 | 🗓️ | `GET /table/privileges` | `Table/PrivilegesController` | API GET /api/servers/:s/databases/:db/tables/:t/privileges<br>UI /s/:s/db/:db/t/:table/privileges | M2 |
-| 🗓️ | `GET, POST /table/relation` | `Table/RelationController` | API GET /api/servers/:s/databases/:db/tables/:t/relations<br>API POST /api/servers/:s/databases/:db/tables/:t/relations<br>UI /s/:s/db/:db/t/:table/relation | M2 |
-| 🗓️ | `GET, POST /table/search` | `Table/SearchController` | API POST /api/servers/:s/databases/:db/tables/:t/search<br>UI /s/:s/db/:db/t/:table/search | M2 |
+| ✅ | `GET, POST /table/relation` | `Table/RelationController` | API GET /api/servers/:s/databases/:db/tables/:t/relation (apps/server/src/routes/table-relation.ts:10)<br>API GET /api/servers/:s/databases/:db/tables/:t/relation/dropdown (apps/server/src/routes/table-relation.ts:13)<br>API POST /api/servers/:s/databases/:db/tables/:t/relation (apps/server/src/routes/table-relation.ts:28)<br>API POST /api/servers/:s/databases/:db/tables/:t/relation/drop-foreign-key (apps/server/src/routes/table-relation.ts:33)<br>UI /s/:server/db/:db/t/:table/relation (apps/web/src/routes/s/$server/db/$db/t/$table/relation.tsx) |  |
+| ✅ | `GET, POST /table/search` | `Table/SearchController` | API GET /api/servers/:s/databases/:db/tables/:t/search (apps/server/src/routes/table-search.ts:21)<br>API POST /api/servers/:s/databases/:db/tables/:t/search (apps/server/src/routes/table-search.ts:23)<br>API GET /api/servers/:s/databases/:db/tables/:t/search/range (apps/server/src/routes/table-search.ts:29)<br>UI /s/:server/db/:db/t/:table/search (apps/web/src/routes/s/$server/db/$db/t/$table/search.tsx) |  |
 | ✅ | `GET, POST /table/sql` | `Table/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:27)<br>UI /s/:server/db/:db/t/:table/sql (apps/web/src/routes/s/$server/db/$db/t/$table/sql.tsx) |  |
 | ✅ | `GET, POST /table/structure` | `Table/StructureController` | API GET /api/servers/:s/databases/:db/tables/:t/structure (apps/server/src/routes/table-structure.ts:112)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) |  |
 | 🗓️ | `POST /table/structure/add-key` | `Table/Structure/AddKeyController` | API /api/servers/:s/databases/:db/tables/:table/structure/add-key<br>UI /s/:s/db/:db/t/:table/structure/add-key | M2 |
@@ -122,7 +122,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `POST /table/structure/spatial` | `Table/Structure/SpatialController` | API /api/servers/:s/databases/:db/tables/:table/structure/spatial<br>UI /s/:s/db/:db/t/:table/structure/spatial | M2 |
 | 🗓️ | `POST /table/structure/unique` | `Table/Structure/UniqueController` | API /api/servers/:s/databases/:db/tables/:table/structure/unique<br>UI /s/:s/db/:db/t/:table/structure/unique | M2 |
 | 🗓️ | `GET, POST /table/tracking` | `Table/TrackingController` | API GET /api/servers/:s/databases/:db/tables/:t/tracking<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking<br>UI /s/:s/db/:db/t/:table/tracking | M2 |
-| 🗓️ | `GET, POST /table/zoom-search` | `Table/ZoomSearchController` | API POST /api/servers/:s/databases/:db/tables/:t/zoom-search<br>UI /s/:s/db/:db/t/:table/zoom-search | M2 |
+| ✅ | `GET, POST /table/zoom-search` | `Table/ZoomSearchController` | API GET /api/servers/:s/databases/:db/tables/:t/search (apps/server/src/routes/table-search.ts:21)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom (apps/server/src/routes/table-search.ts:33)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom/row (apps/server/src/routes/table-search.ts:39)<br>UI /s/:server/db/:db/t/:table/zoom-search (apps/web/src/routes/s/$server/db/$db/t/$table/zoom-search.tsx) |  |
 | 🗓️ | `POST /tables` | `TableController` | API GET /api/servers/:s/databases/:db/tables | M2 — name lists for pickers |
 | 🗓️ | `GET, POST /triggers` | `Triggers/IndexController` | API GET /api/servers/:s/databases/:db/triggers<br>API POST /api/servers/:s/databases/:db/triggers<br>UI /s/:s/db/:db[/t/:table]/triggers | M2 |
 | 🗓️ | `GET, POST /view/create` | `View/CreateController` | API GET /api/servers/:s/databases/:db/views/:v<br>API POST /api/servers/:s/databases/:db/views<br>UI /s/:s/db/:db/view/* | M2 |

@@ -6,6 +6,7 @@ import { type Pairs, findForm, removePair, serializeForm, setPair } from './lib/
 import { GeneralLog } from './lib/general-log.ts'
 import { decodeEntities } from './lib/nav-html.ts'
 import { PmaClient, type PmaJson } from './lib/pma.ts'
+import { pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the Relation view (docs/features/04-table-level.md#relation-view): FOREIGN KEY
@@ -26,9 +27,7 @@ const DB_PMA = 'f04rel_pdb'
 const DB_BMA = 'f04rel_bdb'
 const dbMap = { [DB_PMA]: 'DB', [DB_BMA]: 'DB', [PMA_USER]: 'USER', [BMA_USER]: 'USER' }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = pmaReachable
 
 const SEED = `
   CREATE TABLE t (id INT NOT NULL, code VARCHAR(10) NOT NULL, label VARCHAR(20), PRIMARY KEY (id), UNIQUE KEY (code)) ENGINE=InnoDB;

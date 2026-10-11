@@ -575,9 +575,10 @@
   ui: '/s/:s/db/:db/t/:table/export/rows'
   planned: M4
 /table/find-replace:
-  api: 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
+  api:
+    - 'POST /api/servers/:s/databases/:db/tables/:t/find-replace/preview'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
   ui: '/s/:s/db/:db/t/:table/find-replace'
-  planned: M2
 /table/get-field:
   api: 'GET /api/servers/:s/browse/field'
 /table/gis-visualization:
@@ -597,29 +598,34 @@
   ui: '/s/:s/db/:db/t/:table/indexes/rename'
   planned: M2
 /table/maintenance/analyze:
-  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/analyze'
-  ui: '/s/:s/db/:db/t/:table/maintenance/analyze'
-  planned: M2
-/table/maintenance/check:
-  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/check'
-  ui: '/s/:s/db/:db/t/:table/maintenance/check'
-  planned: M2
-/table/maintenance/checksum:
-  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/checksum'
-  ui: '/s/:s/db/:db/t/:table/maintenance/checksum'
-  planned: M2
-/table/maintenance/optimize:
-  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/optimize'
-  ui: '/s/:s/db/:db/t/:table/maintenance/optimize'
-  planned: M2
-/table/maintenance/repair:
-  api: '/api/servers/:s/databases/:db/tables/:table/maintenance/repair'
-  ui: '/s/:s/db/:db/t/:table/maintenance/repair'
-  planned: M2
-/table/operations:
-  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/*'
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance'
   ui: '/s/:s/db/:db/t/:table/operations'
-  planned: M2
+  note: the result renders on the Operations page
+/table/maintenance/check:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  note: the result renders on the Operations page
+/table/maintenance/checksum:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  note: the result renders on the Operations page
+/table/maintenance/optimize:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  note: the result renders on the Operations page
+/table/maintenance/repair:
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  note: the result renders on the Operations page
+/table/operations:
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/operations'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/order-by'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/move-copy'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/options'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/partitions'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/sql'
+  ui: '/s/:s/db/:db/t/:table/operations'
 /table/partition/analyze:
   api: '/api/servers/:s/databases/:db/tables/:table/partition/analyze'
   ui: '/s/:s/db/:db/t/:table/partition/analyze'
@@ -658,10 +664,11 @@
   planned: M1
 /table/relation:
   api:
-    - 'GET /api/servers/:s/databases/:db/tables/:t/relations'
-    - 'POST /api/servers/:s/databases/:db/tables/:t/relations'
+    - 'GET /api/servers/:s/databases/:db/tables/:t/relation'
+    - 'GET /api/servers/:s/databases/:db/tables/:t/relation/dropdown'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/relation'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/relation/drop-foreign-key'
   ui: '/s/:s/db/:db/t/:table/relation'
-  planned: M2
 /table/replace:
   api:
     - 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
@@ -669,9 +676,11 @@
   ui: '/s/:s/db/:db/t/:table/replace'
   planned: M2
 /table/search:
-  api: 'POST /api/servers/:s/databases/:db/tables/:t/search'
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/search'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/search'
+    - 'GET /api/servers/:s/databases/:db/tables/:t/search/range'
   ui: '/s/:s/db/:db/t/:table/search'
-  planned: M2
 /table/sql:
   api: 'POST /api/servers/:s/query'
   ui: '/s/:s/db/:db/t/:table/sql'
@@ -753,9 +762,11 @@
   ui: '/s/:s/db/:db/t/:table/tracking'
   planned: M2
 /table/zoom-search:
-  api: 'POST /api/servers/:s/databases/:db/tables/:t/zoom-search'
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/search'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/search/zoom'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/search/zoom/row'
   ui: '/s/:s/db/:db/t/:table/zoom-search'
-  planned: M2
 /tables:
   api: 'GET /api/servers/:s/databases/:db/tables'
   planned: M2

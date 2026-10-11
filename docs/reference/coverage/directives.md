@@ -4,7 +4,7 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-153/449 covered (34.1%): 150 implemented, 1 exception, 2 n/a, 3 planned, 293 missing. [Summary](README.md).
+155/449 covered (34.5%): 152 implemented, 1 exception, 2 n/a, 3 planned, 291 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 67/106 (63.2%) covered, 66/106 implemented
 
@@ -47,7 +47,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `LoginCookieDeleteAll` | apps/server/src/routes/auth.ts:121 |  |
 | ✅ | `LoginCookieRecall` | apps/server/src/routes/auth.ts:27<br>apps/server/src/routes/auth.ts:95 |  |
 | ✅ | `LoginCookieStore` | apps/server/src/app.ts:124<br>apps/server/src/main.ts:112<br>apps/server/src/shell/home.ts:59 |  |
-| ✅ | `LoginCookieValidity` | apps/server/src/app.ts:72<br>apps/server/src/db/pool-manager.ts:229<br>apps/server/src/main.ts:112<br>apps/server/src/routes/server.ts:35<br>apps/server/src/shell/home.ts:59 |  |
+| ✅ | `LoginCookieValidity` | apps/server/src/app.ts:72<br>apps/server/src/db/pool-manager.ts:229<br>apps/server/src/main.ts:112<br>apps/server/src/routes/server.ts:36<br>apps/server/src/shell/home.ts:59 |  |
 | ✅ | `MaxNavigationItems` | apps/server/src/navigation/nodes.ts:511<br>apps/server/src/navigation/nodes.ts:766<br>apps/server/src/navigation/nodes.ts:813<br>apps/server/src/navigation/nodes.ts:818<br>apps/server/src/navigation/tree.ts:664 |  |
 | ✅ | `MysqlSslWarningSafeHosts` | apps/server/src/shell/home.ts:144 |  |
 | ✅ | `NavigationDisplayLogo` | apps/server/src/navigation/service.ts:60<br>apps/web/src/features/navigation/NavigationPanel.tsx:302 |  |
@@ -129,9 +129,9 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:173 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:200 |  |
 | ⬜ | `DefaultTransformations/TextLink` |  |  |
-| ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229 |  |
+| ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/table/search.ts:133 |  |
 | ✅ | `GridEditing` | apps/server/src/browse/grid.ts:685<br>apps/server/src/browse/grid.ts:686 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:812<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/structure-page.ts:366<br>apps/web/src/features/browse/ResultsView.tsx:670<br>apps/web/src/features/table/structure/StructurePage.tsx:785 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:812<br>apps/server/src/table/forms.ts:191<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:207<br>apps/server/src/table/structure-page.ts:366 |  |
 | ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:458<br>apps/server/src/browse/grid.ts:807<br>apps/server/src/browse/grid.ts:1021 |  |
 | ⬜ | `LinkLengthLimit` |  |  |
 | ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:574<br>apps/server/src/query/pipeline.ts:701<br>apps/server/src/query/pipeline.ts:754 |  |
@@ -177,13 +177,13 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowPropertyComments` | apps/server/src/table/structure-page.ts:100 |  |
 | ⬜ | `SQLQuery/Edit` |  |  |
 
-## 04 table level — 3/5 (60.0%) covered, 3/5 implemented
+## 04 table level — 4/5 (80.0%) covered, 4/5 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ⬜ | `DisableMultiTableMaintenance` |  |  |
+| ✅ | `DisableMultiTableMaintenance` | apps/server/src/table/operations.ts:793 |  |
 | ⬜ | `Export/sql_auto_increment` |  |  |
-| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:363<br>apps/web/src/features/table/structure/StructurePage.tsx:246 |  |
+| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:363<br>apps/web/src/features/table/structure/StructurePage.tsx:238 |  |
 | ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:223<br>apps/server/src/table/structure-page.ts:367 |  |
 | ✅ | `ShowStats` | apps/server/src/table/structure-page.ts:254<br>apps/server/src/table/structure-page.ts:364 |  |
 
@@ -408,14 +408,14 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Export/file_template_table` |  |  |
 | ⬜ | `Export/sql_include_comments` |  |  |
 | ⬜ | `Export/sql_max_query_size` |  |  |
-| ✅ | `ForeignKeyMaxLimit` | apps/server/src/browse/actions.ts:193<br>apps/server/src/browse/actions.ts:197<br>apps/server/src/browse/actions.ts:233 |  |
+| ✅ | `ForeignKeyMaxLimit` | apps/server/src/browse/actions.ts:193<br>apps/server/src/browse/actions.ts:197<br>apps/server/src/browse/actions.ts:233<br>apps/server/src/table/search.ts:108<br>apps/server/src/table/search.ts:110 |  |
 | ⬜ | `Import/csv_enclosed` |  |  |
 | ⬜ | `Import/csv_escaped` |  |  |
 | ⬜ | `Import/ldi_enclosed` |  |  |
 | ⬜ | `Import/ldi_escaped` |  |  |
 | ⬜ | `Import/ldi_terminated` |  |  |
 | ⬜ | `Import/sql_read_as_multibytes` |  |  |
-| ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272 |  |
+| ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:228 |  |
 | ⬜ | `MaxRoutineList` |  |  |
 | ⬜ | `MaxTableList` |  |  |
 | ➖ | `MemoryLimit` |  | n/a: PHP memory_limit; Node has no per-request memory limit (exports and imports stream, X10/X9) |
@@ -443,7 +443,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Servers/*/table_coords` |  |  |
 | ⬜ | `Servers/*/table_info` |  |  |
 | ⬜ | `Servers/*/userconfig` |  |  |
-| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:362<br>apps/web/src/features/table/structure/StructurePage.tsx:158<br>apps/web/src/features/table/structure/StructurePage.tsx:220 |  |
+| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:362<br>apps/web/src/features/table/structure/StructurePage.tsx:150<br>apps/web/src/features/table/structure/StructurePage.tsx:212 |  |
 | ⬜ | `ShowDbStructureCharset` |  |  |
 | ⬜ | `ShowDbStructureComment` |  |  |
 | ⬜ | `ShowDbStructureCreation` |  |  |
@@ -460,7 +460,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DBG/sql` | apps/server/src/routes/browse.ts:38<br>apps/server/src/routes/console.ts:64<br>apps/server/src/routes/metadata.ts:329<br>apps/server/src/routes/query.ts:113<br>apps/server/src/routes/table-structure.ts:106 |  |
+| ✅ | `DBG/sql` | apps/server/src/routes/browse.ts:38<br>apps/server/src/routes/console.ts:64<br>apps/server/src/routes/metadata.ts:329<br>apps/server/src/routes/query.ts:113<br>apps/server/src/routes/table-scope.ts:99 |  |
 | ⬜ | `DBG/sqllog` |  |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:105<br>apps/server/src/routes/sql.ts:229 |  |
 | ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/query/pipeline.ts:203<br>apps/server/src/query/pipeline.ts:505 |  |
@@ -472,7 +472,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `SQLQuery/Refresh` |  |  |
 | ⬜ | `SQLQuery/ShowAsPHP` |  |  |
 
-## other — 2/28 (7.1%) covered, 1/28 implemented
+## other — 3/28 (10.7%) covered, 2/28 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -488,7 +488,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Export/xml_export_struc` |  |  |
 | ⬜ | `Export/yaml_structure_or_data` |  |  |
 | ⬜ | `GD2Available` |  |  |
-| ⬜ | `maxRowPlotLimit` |  |  |
+| ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:240<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:244<br>apps/server/src/table/search.ts:206 |  |
 | ⬜ | `MysqlMinVersion/human` |  |  |
 | 🔀 | `PersistentConnections` |  | X24 — connections are always pooled per session and server |
 | ⬜ | `Servers/*/control_compress` |  |  |

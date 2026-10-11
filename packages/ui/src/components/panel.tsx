@@ -11,8 +11,15 @@ export function Panel({
   className,
   children,
   headerId,
+  footer,
   ...props
-}: Omit<ComponentProps<'section'>, 'title'> & { title?: ReactNode; actions?: ReactNode; headerId?: string }) {
+}: Omit<ComponentProps<'section'>, 'title'> & {
+  title?: ReactNode
+  actions?: ReactNode
+  headerId?: string
+  /** `.card-footer.text-end` (the form's submit buttons) */
+  footer?: ReactNode
+}) {
   return (
     <section
       className={cn(
@@ -34,6 +41,9 @@ export function Panel({
         </header>
       )}
       {children}
+      {footer !== undefined && (
+        <footer className="border-t border-(--card-divider) px-3 py-2 text-end">{footer}</footer>
+      )}
     </section>
   )
 }

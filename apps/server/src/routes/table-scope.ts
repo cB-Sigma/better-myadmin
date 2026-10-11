@@ -1,6 +1,5 @@
 import type { MetaConn, RelationParameters } from '@bettermyadmin/metadata'
 import type { Context } from 'hono'
-import type { z } from 'zod'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { withMeta } from '../metadata/service.ts'
 import { signSql } from '../query/signature.ts'
@@ -14,16 +13,7 @@ import type { ServerEnv } from './server.ts'
  * phpMyAdmin's controllers start with.
  */
 
-export function parse<T extends z.ZodTypeAny>(schema: T, value: unknown): z.output<T> {
-  const r = schema.safeParse(value)
-  if (!r.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      r.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  return r.data
-}
+export { parse } from '../http/validate.ts'
 
 export const body = async (c: Context<ServerEnv>) => c.req.json().catch(() => null)
 
@@ -47,7 +37,7 @@ export async function withScope<T>(
   const session = c.get('session')
   const serverIndex = c.get('serverIndex')
   const login = session.servers[String(serverIndex)]
-  if (login === undefined) throw new ValidationError('Invalid server index!')
+  if (login === undefined) throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   login.cache ??= {}
   const cache = login.cache as Record<string, unknown>
   const db = c.req.param('db') ?? ''

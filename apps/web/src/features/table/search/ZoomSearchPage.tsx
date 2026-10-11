@@ -180,7 +180,16 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
       )}
       {shown && (
         <form id="zoom_search_form" onSubmit={(e) => void submit(e)}>
-          <Panel title={t('Do a "query by example" (wildcard: "%") for two different columns')}>
+          <Panel
+            title={t('Do a "query by example" (wildcard: "%") for two different columns')}
+            footer={
+              <>
+                <Button type="submit" variant="primary" name="zoom_submit" id="inputFormSubmitId">
+                  {t('Go')}
+                </Button>
+              </>
+            }
+          >
             <PanelBody>
               <table id="tableFieldsId" className="w-auto text-sm">
                 <thead>
@@ -245,11 +254,6 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
                 </tbody>
               </table>
             </PanelBody>
-            <div className="border-t border-(--card-divider) px-3 py-2 text-end">
-              <Button type="submit" variant="primary" name="zoom_submit" id="inputFormSubmitId">
-                {t('Go')}
-              </Button>
-            </div>
           </Panel>
         </form>
       )}

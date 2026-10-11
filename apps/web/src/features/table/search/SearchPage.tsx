@@ -35,7 +35,7 @@ import {
 } from './criteria'
 
 /**
- * Table search: "query by example". The query runs as a signed /sql link in the table's SQL view.
+ * Table search: "query by example". The query runs as a signed /sql link in the table's Browse view.
  *
  * pma: resources/templates/table/search/index.twig, column_comparison_operators.twig, input_box.twig,
  *      resources/js/table/select.ts
@@ -108,7 +108,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
         order,
       })
       await navigate({
-        to: `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/sql`,
+        to: `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/browse`,
         search: { sql: r.sql, sig: r.sig } as never,
       })
     } catch (err) {
@@ -120,7 +120,16 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
     <>
       <ResultMessages messages={messages} />
       <form id="tbl_search_form" name="insertForm" onSubmit={(e) => void submit(e)}>
-        <Panel title={t('Do a "query by example" (wildcard: "%")')}>
+        <Panel
+          title={t('Do a "query by example" (wildcard: "%")')}
+          footer={
+            <>
+              <Button type="submit" variant="primary" name="submit">
+                {t('Go')}
+              </Button>
+            </>
+          }
+        >
           <PanelBody className="space-y-3">
             <div id="fieldset_table_qbe" className="overflow-x-auto">
               <table className="w-auto text-sm">
@@ -289,11 +298,6 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
               </div>
             </Disclosure>
           </PanelBody>
-          <div className="border-t border-(--card-divider) px-3 py-2 text-end">
-            <Button type="submit" variant="primary" name="submit">
-              {t('Go')}
-            </Button>
-          </div>
         </Panel>
       </form>
 

@@ -7,12 +7,10 @@ import { body, parse, respond, withScope } from './table-scope.ts'
 /** Relation view (pma: /table/relation). Mounted at /api/servers/:s/databases. */
 export const tableRelationRoutes = new Hono<ServerEnv>()
 
-const base = '/:db/tables/:t/relation'
-
-tableRelationRoutes.get(base, async (c) => c.json(await withScope(c, relationPage)))
+tableRelationRoutes.get('/:db/tables/:t/relation', async (c) => c.json(await withScope(c, relationPage)))
 
 /** getDropdownValues=true: ?foreignDb=&foreignTable=&foreign=true */
-tableRelationRoutes.get(`${base}/dropdown`, async (c) =>
+tableRelationRoutes.get('/:db/tables/:t/relation/dropdown', async (c) =>
   c.json(
     await withScope(
       c,
@@ -27,12 +25,12 @@ tableRelationRoutes.get(`${base}/dropdown`, async (c) =>
   ),
 )
 
-tableRelationRoutes.post(base, async (c) => {
+tableRelationRoutes.post('/:db/tables/:t/relation', async (c) => {
   const req = parse(RelationSaveRequest, await body(c))
   return respond(c, await withScope(c, (x) => relationSave(x, req)))
 })
 
-tableRelationRoutes.post(`${base}/drop-foreign-key`, async (c) => {
+tableRelationRoutes.post('/:db/tables/:t/relation/drop-foreign-key', async (c) => {
   const req = parse(DropForeignKeyRequest, await body(c))
   return respond(c, await withScope(c, (x) => dropForeignKey(x, req)))
 })

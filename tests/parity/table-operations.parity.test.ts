@@ -6,6 +6,7 @@ import { type Pairs, findForm, getPair, removePair, serializeForm, setPair } fro
 import { GeneralLog } from './lib/general-log.ts'
 import { decodeEntities } from './lib/nav-html.ts'
 import { PmaClient, type PmaJson, visibleText } from './lib/pma.ts'
+import { pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the table Operations tab (docs/features/04-table-level.md#operations-tab):
@@ -34,9 +35,7 @@ const dbMap = {
   [BMA_USER]: 'USER',
 }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = pmaReachable
 
 const SEED = `
   CREATE TABLE t (

@@ -91,22 +91,6 @@ function useRunner({ scope, setMessages, setMaint }: Common) {
   }
 }
 
-function Card({
-  title,
-  children,
-  footer,
-  id,
-}: { title: ReactNode; children: ReactNode; footer?: ReactNode; id?: string }) {
-  return (
-    <Panel title={title} {...(id !== undefined ? { id } : {})}>
-      {children}
-      {footer !== undefined && (
-        <div className="border-t border-(--card-divider) px-3 py-2 text-end">{footer}</div>
-      )}
-    </Panel>
-  )
-}
-
 const Go = () => (
   <Button type="submit" variant="primary">
     {t('Go')}
@@ -186,7 +170,7 @@ function TableOperations(props: Common) {
       {!page.isSystemSchema && <DeleteCard {...props} />}
       {page.partitions.length > 0 && <PartitionsCard {...props} />}
       {page.foreigners.length > 0 && (
-        <Card title={t('Check referential integrity')}>
+        <Panel title={t('Check referential integrity')}>
           <PanelList>
             {page.foreigners.map((f) => (
               <PanelItem key={f.master}>
@@ -199,7 +183,7 @@ function TableOperations(props: Common) {
               </PanelItem>
             ))}
           </PanelList>
-        </Card>
+        </Panel>
       )}
     </>
   )
@@ -217,7 +201,7 @@ function OrderByCard(props: Common) {
   }
   return (
     <form id="alterTableOrderby" onSubmit={submit}>
-      <Card title={t('Alter table order by')} footer={<Go />}>
+      <Panel title={t('Alter table order by')} footer={<Go />}>
         <PanelBody className="flex flex-wrap items-start gap-4">
           <div>
             <NativeSelect
@@ -252,7 +236,7 @@ function OrderByCard(props: Common) {
             ))}
           </div>
         </PanelBody>
-      </Card>
+      </Panel>
     </form>
   )
 }
@@ -287,7 +271,7 @@ function MoveCard(props: Common) {
   }
   return (
     <form id="moveTableForm" onSubmit={submit}>
-      <Card title={t('Move table to (database.table)')} footer={<Go />}>
+      <Panel title={t('Move table to (database.table)')} footer={<Go />}>
         <PanelBody className="space-y-2">
           <div className="flex items-center gap-1">
             <TargetDb page={page} value={targetDb} onChange={setTargetDb} id="moveTableDatabaseInput" />
@@ -319,7 +303,7 @@ function MoveCard(props: Common) {
             onChange={setPrivs}
           />
         </PanelBody>
-      </Card>
+      </Panel>
     </form>
   )
 }
@@ -418,7 +402,7 @@ function OptionsCard(props: Common) {
   )
   return (
     <form id="tableOptionsForm" onSubmit={(e) => void submit(e)}>
-      <Card title={t('Table options')} footer={<Go />}>
+      <Panel title={t('Table options')} footer={<Go />}>
         <PanelBody className="space-y-3">
           {row(
             <Label htmlFor="renameTableInput">{t('Rename table to')}</Label>,
@@ -557,7 +541,7 @@ function OptionsCard(props: Common) {
               </NativeSelect>,
             )}
         </PanelBody>
-      </Card>
+      </Panel>
     </form>
   )
 }
@@ -614,7 +598,7 @@ function CopyCard(props: Common) {
   )
   return (
     <form id="copyTable" onSubmit={submit}>
-      <Card title={t('Copy table to (database.table)')} footer={<Go />}>
+      <Panel title={t('Copy table to (database.table)')} footer={<Go />}>
         <PanelBody className="space-y-3">
           <div className="flex items-center gap-1">
             <TargetDb page={page} value={targetDb} onChange={setTargetDb} />
@@ -663,7 +647,7 @@ function CopyCard(props: Common) {
             {box('checkbox_switch', 'switch_to_new', 'true', t('Switch to copied table'), 'switchTo')}
           </div>
         </PanelBody>
-      </Card>
+      </Panel>
     </form>
   )
 }
@@ -687,7 +671,7 @@ function MaintenanceCard(props: Common) {
   const sql = (action: SqlActionRequest['action']) => () =>
     void run(() => api.tableOperation(scope, 'sql', { action }))
   return (
-    <Card title={t('Table maintenance')}>
+    <Panel title={t('Table maintenance')}>
       <PanelList id="tbl_maintenance">
         {four && item('Analyze table', 'ANALYZE_TABLE', maint('analyze'))}
         {four && item('Check table', 'CHECK_TABLE', maint('check'))}
@@ -697,7 +681,7 @@ function MaintenanceCard(props: Common) {
         {four && item('Optimize table', 'OPTIMIZE_TABLE', maint('optimize'))}
         {['MYISAM', 'ARIA'].includes(e) && item('Repair table', 'REPAIR_TABLE', maint('repair'))}
       </PanelList>
-    </Card>
+    </Panel>
   )
 }
 
@@ -705,7 +689,7 @@ function MaintenanceCard(props: Common) {
 function useDangerConfirm(server: number) {
   const confirm = useConfirm()
   const fk = useQuery({
-    queryKey: ['srv', server, 'defaultFkCheck'],
+    queryKey: qk.defaultFkCheck(server),
     queryFn: () => api.defaultFkCheck(server),
   })
   const box = useRef(true)
@@ -769,7 +753,7 @@ function DeleteCard(props: Common) {
     </PanelItem>
   )
   return (
-    <Card title={t('Delete data or table')}>
+    <Panel title={t('Delete data or table')}>
       <PanelList>
         {!page.isView &&
           link(
@@ -794,7 +778,7 @@ function DeleteCard(props: Common) {
           'DROP_TABLE',
         )}
       </PanelList>
-    </Card>
+    </Panel>
   )
 }
 
@@ -828,7 +812,7 @@ function PartitionsCard(props: Common) {
   const remove = `ALTER TABLE ${bq(scope.table)} REMOVE PARTITIONING;`
   return (
     <form id="partitionsForm" onSubmit={(e) => void submit(e)}>
-      <Card
+      <Panel
         title={
           <>
             {t('Partition maintenance')} <MySqlDocLink link="partitioning_maintenance" />
@@ -878,7 +862,7 @@ function PartitionsCard(props: Common) {
             </Link>
           </div>
         </PanelBody>
-      </Card>
+      </Panel>
     </form>
   )
 }
@@ -919,7 +903,7 @@ function ViewOperations(props: Common) {
   return (
     <>
       <form onSubmit={submit}>
-        <Card title={t('Operations')} footer={<Go />}>
+        <Panel title={t('Operations')} footer={<Go />}>
           <PanelBody className="flex items-center gap-2">
             <Label htmlFor="newNameInput">{t('Rename view to')}</Label>
             <Input
@@ -932,16 +916,16 @@ function ViewOperations(props: Common) {
               onChange={(e) => setName(e.target.value)}
             />
           </PanelBody>
-        </Card>
+        </Panel>
       </form>
-      <Card title={t('Delete data or table')}>
+      <Panel title={t('Delete data or table')}>
         <PanelBody>
           <Button variant="link" id="drop_view_anchor" className="text-error" onClick={() => void drop()}>
             {t('Delete the view (DROP)')}
           </Button>{' '}
           <MySqlDocLink link="DROP VIEW" />
         </PanelBody>
-      </Card>
+      </Panel>
     </>
   )
 }

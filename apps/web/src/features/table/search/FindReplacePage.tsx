@@ -73,7 +73,16 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
       )}
       {shown && (
         <form id="find_replace_form" onSubmit={(e) => void submit(e)}>
-          <Panel title={t('Find and replace')}>
+          <Panel
+            title={t('Find and replace')}
+            footer={
+              <>
+                <Button type="submit" variant="primary">
+                  {t('Go')}
+                </Button>
+              </>
+            }
+          >
             <PanelBody>
               <table className="w-auto text-sm">
                 <tbody>
@@ -133,17 +142,21 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
                 <Label htmlFor="useRegexId">{t('Use regular expression')}</Label>
               </div>
             </PanelBody>
-            <div className="border-t border-(--card-divider) px-3 py-2 text-end">
-              <Button type="submit" variant="primary">
-                {t('Go')}
-              </Button>
-            </div>
           </Panel>
         </form>
       )}
       {preview !== null && (
         <form id="previewReplaceForm" className="mt-3" onSubmit={(e) => void replace(e)}>
-          <Panel title={t('Find and replace - preview')}>
+          <Panel
+            title={t('Find and replace - preview')}
+            footer={
+              <>
+                <Button type="submit" variant="primary" id="buttonReplace">
+                  {t('Replace')}
+                </Button>
+              </>
+            }
+          >
             <PanelBody>
               <table id="previewTable" className="w-auto text-sm" data-testid="replace-preview">
                 <thead>
@@ -165,11 +178,6 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
                 </tbody>
               </table>
             </PanelBody>
-            <div className="border-t border-(--card-divider) px-3 py-2 text-end">
-              <Button type="submit" variant="primary" id="buttonReplace">
-                {t('Replace')}
-              </Button>
-            </div>
           </Panel>
         </form>
       )}

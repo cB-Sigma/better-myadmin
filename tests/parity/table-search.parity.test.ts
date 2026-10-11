@@ -5,6 +5,7 @@ import { compareWrites, normalise } from './lib/compare.ts'
 import { type Pairs, findForm, serializeForm } from './lib/form.ts'
 import { GeneralLog } from './lib/general-log.ts'
 import { PmaClient, type PmaJson } from './lib/pma.ts'
+import { pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the table Search tab (query by example), Zoom search and Find and replace
@@ -25,9 +26,7 @@ const DB_PMA = 'f04srch_pdb'
 const DB_BMA = 'f04srch_bdb'
 const dbMap = { [DB_PMA]: 'DB', [DB_BMA]: 'DB', [PMA_USER]: 'USER', [BMA_USER]: 'USER' }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = pmaReachable
 
 const SEED = `
   CREATE TABLE t (
