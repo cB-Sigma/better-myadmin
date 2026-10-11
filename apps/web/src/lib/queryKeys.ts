@@ -71,4 +71,7 @@ export const qk = {
   /** a step payload of the normalization wizard */
   normalizationStep: (r: TableRef, step: string, q: object) =>
     [...qk.tbl(r), 'normalization', step, q] as const,
+  /** a visualization of a query result (chart form / rows, GIS) for one request */
+  visualization: (r: TableRef, kind: 'chart' | 'chartData' | 'gis', req: object) =>
+    [...qk.tbl(r), 'visualization', kind, req] as const,
 }

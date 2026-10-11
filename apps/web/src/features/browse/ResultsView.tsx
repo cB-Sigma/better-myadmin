@@ -774,7 +774,7 @@ function Operations({
       window.alert(t('Sorry! Unable to copy'))
     }
   }
-  const tableLink = (splat: string) => ({
+  const tableLink = (splat: string, view = false) => ({
     to: '/s/$server/db/$db/t/$table/$' as const,
     params: { server, db: grid.db, table: ops.export?.table ?? grid.table, _splat: splat },
     search: {
@@ -783,6 +783,13 @@ function Operations({
       ...(ops.export?.singleTable ? { single_table: 'true' } : {}),
       ...(ops.export?.rawQuery ? { raw_query: 'true' } : {}),
       unlim_num_rows: String(ops.export?.unlimNumRows ?? 0),
+      // the chart and GIS forms start at the grid's page ($_SESSION['tmpval'] pos / max_rows)
+      ...(view
+        ? {
+            pos: String(grid.view.pos),
+            ...(grid.view.maxRows === 'all' ? {} : { session_max_rows: String(grid.view.maxRows) }),
+          }
+        : {}),
     },
   })
   return (
@@ -805,11 +812,11 @@ function Operations({
                 <AnyLink {...tableLink('export')} className="btn-link text-accent">
                   <IconText icon="b_tblexport" text={t('Export')} forceText />
                 </AnyLink>
-                <AnyLink {...tableLink('chart')} className="text-accent">
+                <AnyLink {...tableLink('chart', true)} className="text-accent">
                   <IconText icon="b_chart" text={t('Display chart')} forceText />
                 </AnyLink>
                 {ops.gis && (
-                  <AnyLink {...tableLink('gis-visualization')} className="text-accent">
+                  <AnyLink {...tableLink('gis-visualization', true)} className="text-accent">
                     <IconText icon="b_globe" text={t('Visualize GIS data')} forceText />
                   </AnyLink>
                 )}

@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-149/199 covered (74.9%): 141 implemented, 7 exception, 1 n/a, 50 planned. [Summary](README.md).
+151/199 covered (75.9%): 143 implemented, 7 exception, 1 n/a, 48 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -59,7 +59,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | UI /s/:server/transformations (apps/web/src/routes/s/$server/transformations.tsx) | static plugin catalog (packages/mysql-types transformations.ts) |
 | ✅ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper (apps/server/src/routes/insert-edit.ts:148) | raw cell bytes; resize=jpeg\|png sends the original image (no GD) |
 
-## 04 table level — 60/64 (93.8%) covered, 60/64 implemented
+## 04 table level — 62/64 (96.9%) covered, 62/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -81,10 +81,10 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/move-repeating-group (apps/server/src/routes/table-normalization.ts:40)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
 | ✅ | `POST /normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | API POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies (apps/server/src/routes/table-normalization.ts:36)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
 | ✅ | `GET, POST /table/add-field` | `Table/AddFieldController` | API GET /api/servers/:s/databases/:db/tables/:t/columns/add-form (apps/server/src/routes/table-structure.ts:123)<br>API POST /api/servers/:s/databases/:db/tables/:t/columns/add (apps/server/src/routes/table-structure.ts:179)<br>API POST /api/servers/:s/databases/:db/tables/:t/columns/preview (apps/server/src/routes/table-structure.ts:205)<br>UI /s/:server/db/:db/t/:table/structure/add (apps/web/src/routes/s/$server/db/$db/t/$table/structure_.add.tsx) |  |
-| 🗓️ | `GET, POST /table/chart` | `Table/ChartController` | API GET /api/servers/:s/databases/:db/tables/:t/chart<br>API POST /api/servers/:s/databases/:db/tables/:t/chart<br>UI /s/:s/db/:db/t/:table/chart | M3 |
+| ✅ | `GET, POST /table/chart` | `Table/ChartController` | API POST /api/servers/:s/databases/:db/tables/:t/chart (apps/server/src/routes/table-visualization.ts:14)<br>API POST /api/servers/:s/databases/:db/tables/:t/chart/data (apps/server/src/routes/table-visualization.ts:20)<br>UI /s/:server/db/:db/t/:table/chart (apps/web/src/routes/s/$server/db/$db/t/$table/chart.tsx) | the query results' Display chart (the query travels in the body) |
 | ✅ | `GET, POST /table/create` | `Table/CreateController` | API GET /api/servers/:s/databases/:db/create-table/form (apps/server/src/routes/table-structure.ts:152)<br>API POST /api/servers/:s/databases/:db/tables (apps/server/src/routes/table-structure.ts:168)<br>UI /s/:server/db/:db/create-table (apps/web/src/routes/s/$server/db/$db/create-table.tsx) |  |
 | ✅ | `GET, POST /table/find-replace` | `Table/FindReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace/preview (apps/server/src/routes/table-search.ts:46)<br>API POST /api/servers/:s/databases/:db/tables/:t/find-replace (apps/server/src/routes/table-search.ts:51)<br>UI /s/:server/db/:db/t/:table/find-replace (apps/web/src/routes/s/$server/db/$db/t/$table/find-replace.tsx) |  |
-| 🗓️ | `GET, POST /table/gis-visualization` | `Table/GisVisualizationController` | API GET /api/servers/:s/databases/:db/tables/:t/gis<br>UI /s/:s/db/:db/t/:table/gis-visualization | M3 |
+| ✅ | `GET, POST /table/gis-visualization` | `Table/GisVisualizationController` | API POST /api/servers/:s/databases/:db/tables/:t/gis (apps/server/src/routes/table-visualization.ts:26)<br>UI /s/:server/db/:db/t/:table/gis-visualization (apps/web/src/routes/s/$server/db/$db/t/$table/gis-visualization.tsx) | SVG view and PNG / SVG downloads; the OpenStreetMaps base layer and the PDF download are not ported |
 | ✅ | `GET, POST /table/indexes` | `Table/IndexesController` | API GET /api/servers/:s/databases/:db/tables/:t/indexes/form (apps/server/src/routes/table-structure.ts:132)<br>API POST /api/servers/:s/databases/:db/tables/:t/indexes (apps/server/src/routes/table-structure.ts:250)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) | the index editor dialog of the Structure page |
 | ✅ | `GET, POST /table/indexes/rename` | `Table/IndexRenameController` | API GET /api/servers/:s/databases/:db/tables/:t/indexes/form (apps/server/src/routes/table-structure.ts:132)<br>API POST /api/servers/:s/databases/:db/tables/:t/indexes/rename (apps/server/src/routes/table-structure.ts:255)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) | the rename dialog of the Structure page |
 | ✅ | `POST /table/maintenance/analyze` | `Table/Maintenance/AnalyzeController` | API POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance (apps/server/src/routes/table-ops.ts:47)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the result renders on the Operations page |

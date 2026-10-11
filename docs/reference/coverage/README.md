@@ -6,10 +6,10 @@ Mechanical inventories of phpMyAdmin `a57149e1` ([reference-commit.txt](../refer
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Routes | 199 | 141 | 7 | 1 | 50 | 0 | 0 | 0 | 0 | 149 | 74.9% |
-| Template controls | 1106 | 462 | 0 | 0 | 24 | 0 | 0 | 620 | 0 | 462 | 41.8% |
+| Routes | 199 | 143 | 7 | 1 | 48 | 0 | 0 | 0 | 0 | 151 | 75.9% |
+| Template controls | 1106 | 479 | 0 | 0 | 24 | 0 | 0 | 603 | 0 | 479 | 43.3% |
 | Config directives | 449 | 186 | 1 | 2 | 1 | 0 | 0 | 259 | 0 | 189 | 42.1% |
-| Messages (msgids) | 3426 | 1428 | 0 | 0 | 33 | 0 | 0 | 1965 | 0 | 1428 | 41.7% |
+| Messages (msgids) | 3426 | 1458 | 0 | 0 | 33 | 0 | 0 | 1935 | 0 | 1458 | 42.6% |
 | JS behaviours | 966 | 331 | 0 | 0 | 12 | 0 | 0 | 623 | 0 | 331 | 34.3% |
 | Checklist items | 706 | 23 | 0 | 0 | 0 | 13 | 0 | 670 | 0 | 23 | 3.3% |
 
@@ -22,9 +22,9 @@ Covered / total per inventory (directives are attributed to the feature doc that
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
 | [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 10/23 (43.5%) | 24/98 (24.5%) | 70/106 (66.0%) | 205/403 (50.9%) | 4/237 (1.7%) | 11/77 (14.3%) |
-| [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 24/32 (75.0%) | 29/32 (90.6%) | 38/56 (67.9%) | 22/69 (31.9%) | 0/118 (0.0%) |
+| [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 27/32 (84.4%) | 29/32 (90.6%) | 39/56 (69.6%) | 22/69 (31.9%) | 0/118 (0.0%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 6/7 (85.7%) | 26/28 (92.9%) | 12/18 (66.7%) | 52/79 (65.8%) | 18/22 (81.8%) | 11/59 (18.6%) |
-| [04 table level](../../features/04-table-level.md) | M2 | 60/64 (93.8%) | 134/306 (43.8%) | 4/5 (80.0%) | 398/534 (74.5%) | 88/178 (49.4%) | 0/100 (0.0%) |
+| [04 table level](../../features/04-table-level.md) | M2 | 62/64 (96.9%) | 148/306 (48.4%) | 4/5 (80.0%) | 427/534 (80.0%) | 88/178 (49.4%) | 0/100 (0.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 32/34 (94.1%) | 188/268 (70.1%) | 8/32 (25.0%) | 214/340 (62.9%) | 118/198 (59.6%) | 0/111 (0.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 11/31 (35.5%) | 0/243 (0.0%) | 14/18 (77.8%) | 185/915 (20.2%) | 0/131 (0.0%) | 0/49 (0.0%) |
 | [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 59/63 (93.7%) | 10/138 (7.2%) | 238/293 (81.2%) | 61/66 (92.4%) | 0/67 (0.0%) |
@@ -60,14 +60,14 @@ phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by c
 | 20 | `resources/js/table/structure.ts` | 04 table level | M2 | 0 | 0 | 23 | 2 | 48 |
 | 21 | `resources/templates/setup/home/index.twig` | 01 shell navigation auth | M1 | 0 | 15 | 0 | 16 | 46 |
 | 22 | `resources/templates/sql/query.twig` | 09 sql editor query pipeline | M1 | 0 | 22 | 0 | 0 | 44 |
-| 23 | `resources/templates/table/chart/tbl_chart.twig` | 04 table level | M2 | 0 | 11 | 0 | 22 | 44 |
-| 24 | `resources/js/modules/indexes.ts` | 04 table level | M2 | 0 | 0 | 18 | 6 | 42 |
-| 25 | `resources/js/datetimepicker.ts` | other | M5 | 0 | 0 | 0 | 39 | 39 |
-| 26 | `resources/templates/columns_definitions/column_attributes.twig` | 04 table level | M2 | 0 | 19 | 0 | 1 | 39 |
-| 27 | `resources/templates/server/replication/replica_configuration.twig` | 06 server level | M3 | 0 | 11 | 0 | 17 | 39 |
-| 28 | `resources/templates/home/index.twig` | 01 shell navigation auth | M1 | 0 | 15 | 0 | 7 | 37 |
-| 29 | `resources/templates/server/privileges/users_overview.twig` | 06 server level | M3 | 0 | 12 | 0 | 13 | 37 |
-| 30 | `resources/js/modules/ajax.ts` | 01 shell navigation auth | M1 | 0 | 0 | 15 | 5 | 35 |
+| 23 | `resources/js/modules/indexes.ts` | 04 table level | M2 | 0 | 0 | 18 | 6 | 42 |
+| 24 | `resources/js/datetimepicker.ts` | other | M5 | 0 | 0 | 0 | 39 | 39 |
+| 25 | `resources/templates/columns_definitions/column_attributes.twig` | 04 table level | M2 | 0 | 19 | 0 | 1 | 39 |
+| 26 | `resources/templates/server/replication/replica_configuration.twig` | 06 server level | M3 | 0 | 11 | 0 | 17 | 39 |
+| 27 | `resources/templates/home/index.twig` | 01 shell navigation auth | M1 | 0 | 15 | 0 | 7 | 37 |
+| 28 | `resources/templates/server/privileges/users_overview.twig` | 06 server level | M3 | 0 | 12 | 0 | 13 | 37 |
+| 29 | `resources/js/modules/ajax.ts` | 01 shell navigation auth | M1 | 0 | 0 | 15 | 5 | 35 |
+| 30 | `resources/js/table/gis_visualization.ts` | 04 table level | M2 | 0 | 0 | 17 | 0 | 34 |
 
 ## Cross-check notes
 
@@ -115,4 +115,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 199 API endpoints, 62 SPA routes (4 placeholders/catch-alls), 794 control claims, 1009 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 202 API endpoints, 64 SPA routes (4 placeholders/catch-alls), 811 control claims, 1024 tests.

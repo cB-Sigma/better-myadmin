@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1428/3426 covered (41.7%): 1428 implemented, 33 planned, 1965 missing. [Summary](README.md).
+1458/3426 covered (42.6%): 1458 implemented, 33 planned, 1935 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 205/403 (50.9%) covered, 205/403 implemented
 
@@ -106,9 +106,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Theme/Theme.php` | 1/1 | `No valid image path for theme %s found!` |
 | `src/ZipExtension.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
 
-## 02 browse results grid — 38/56 (67.9%) covered, 38/56 implemented
+## 02 browse results grid — 39/56 (69.6%) covered, 39/56 implemented
 
-18 msgids not used yet.
+17 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -116,7 +116,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/makegrid.ts` | 5/15 | `Click to mark/unmark.` · `Column name copying to clipboard failed!` · `Double-click to copy column name.` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
 | `resources/templates/display/results/checkbox_and_links.twig` | 2/2 | `You can also edit most values by clicking directly on them.` · `You can also edit most values by double-clicking directly on them.` |
 | `src/Display/Results.php` | 2/11 | `Full texts` · `Partial texts` |
-| `resources/templates/table/start_and_number_of_rows_fieldset.twig` | 1/2 | `Start row:` |
 | `src/Controllers/Table/GetFieldController.php` | 1/4 | `Invalid table name` |
 
 ## 03 insert edit transformations — 52/79 (65.8%) covered, 52/79 implemented
@@ -153,21 +152,17 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 398/534 (74.5%) covered, 398/534 implemented
+## 04 table level — 427/534 (80.0%) covered, 427/534 implemented
 
-136 msgids not used yet.
+107 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
-| `resources/templates/table/chart/tbl_chart.twig` | 22/22 | `Chart title:` · `Chart type` · `Area (Chart type)` · `Bar (Chart type)` · `Column (Chart type)` · `Line (Chart type)` · `Pie (Chart type)` · `Scatter (Chart type)` · `Spline (Chart type)` · `Timeline (Chart type)` · `Save chart as image` · `Series column:` · … +10 |
 | `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
-| `resources/templates/table/gis_visualization/gis_visualization.twig` | 4/5 | `-- None --` · `Display GIS Visualization` · `Label column` · `Spatial column` |
-| `src/Controllers/Table/GisVisualizationController.php` | 4/5 | `Failed to create image` · `Invalid file format, expected one of: ` · `No spatial column found for this SQL query.` · `No SQL query was set to fetch data.` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/templates/table/structure/display_structure.twig` | 3/51 | `Go back` · `Media type:` · `None (None for default)` |
-| `src/Controllers/Table/ChartController.php` | 3/5 | `No data to display` · `No numeric columns present in the table to plot.` · `No SQL query was set to fetch data.` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
@@ -177,8 +172,8 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
 | `resources/templates/modals/index_dialog_modal.twig` | 2/6 | `Go back` · `Loading` |
-| `resources/templates/table/zoom_search/result_form.twig` | 2/10 | `Loading` · `The generated chart` |
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
+| `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
 | `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
@@ -193,6 +188,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/export.twig` | 1/2 | `Loading` |
 | `resources/templates/modals/preview_sql_confirmation.twig` | 1/2 | `Loading` |
 | `resources/templates/modals/preview_sql_modal.twig` | 1/2 | `Loading` |
+| `resources/templates/table/chart/tbl_chart.twig` | 1/22 | `X Values` |
 | `resources/templates/table/insert/actions_panel.twig` | 1/5 | `Loading` |
 | `resources/templates/table/partition/analyze.twig` | 1/1 | `Analyze partition` |
 | `resources/templates/table/partition/check.twig` | 1/1 | `Check partition` |
@@ -204,6 +200,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/relation/common_form.twig` | 1/17 | `Loading` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
+| `resources/templates/table/zoom_search/result_form.twig` | 1/10 | `Loading` |
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |

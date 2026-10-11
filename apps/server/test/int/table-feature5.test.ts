@@ -66,3 +66,61 @@ describe('view form', () => {
     expect(J(r).messages[0].text).toBe("#1050 - Table 'v' already exists")
   })
 })
+
+describe('chart', () => {
+  it('answers the form data, the rows and the errors', async () => {
+    const sql = 'SELECT name, qty, d FROM t'
+    let r = await app.req('POST', `${base}/tables/t/chart`, { sql, unlimNumRows: 2 })
+    expect(J(r)).toEqual({
+      error: null,
+      columns: [
+        { name: 'name', numeric: false, dateTime: false },
+        { name: 'qty', numeric: true, dateTime: false },
+        { name: 'd', numeric: false, dateTime: true },
+      ],
+      // the last page of 2 rows by $cfg['MaxRows']
+      fieldset: { pos: 0, rows: 25, unlimNumRows: 2, sql },
+    })
+    r = await app.req('POST', `${base}/tables/t/chart/data`, { sql, pos: 1, sessionMaxRows: 5 })
+    expect(J(r)).toEqual({ error: null, data: [{ name: 'b', qty: '2.50', d: '2024-01-02' }] })
+    r = await app.req('POST', `${base}/tables/t/chart/data`, {
+      sql: `${sql} LIMIT 1, 1`,
+      pos: 0,
+      sessionMaxRows: 5,
+    })
+    expect(J(r).data).toEqual([{ name: 'b', qty: '2.50', d: '2024-01-02' }])
+    r = await app.req('POST', `${base}/tables/t/chart/data`, { sql, pos: 5, sessionMaxRows: 5 })
+    expect(J(r)).toEqual({ error: 'No data to display', data: [] })
+    r = await app.req('POST', `${base}/tables/t/chart`, { sql: 'SELECT name FROM t' })
+    expect(J(r).error).toBe('No numeric columns present in the table to plot.')
+    r = await app.req('POST', `${base}/tables/t/chart`, { sql: '' })
+    expect(J(r).error).toBe('No SQL query was set to fetch data.')
+  })
+})
+
+describe('GIS visualization', () => {
+  it('answers the candidates and the rows', async () => {
+    let r = await app.req('POST', `${base}/tables/t/gis`, { sql: 'SELECT * FROM t' })
+    expect(J(r)).toMatchObject({
+      error: null,
+      labelCandidates: ['id', 'name', 'qty', 'd'],
+      spatialCandidates: ['g'],
+      spatialColumn: 'g',
+      labelColumn: '',
+      rows: [
+        { wkt: 'POINT(1 2)', srid: 0, label: '' },
+        { wkt: 'POINT(3 4)', srid: 0, label: '' },
+      ],
+      hasSrid: false,
+    })
+    r = await app.req('POST', `${base}/tables/t/gis`, {
+      sql: 'SELECT * FROM t',
+      labelColumn: 'name',
+      sessionMaxRows: 1,
+      pos: 1,
+    })
+    expect(J(r).rows).toEqual([{ wkt: 'POINT(3 4)', srid: 0, label: 'b' }])
+    r = await app.req('POST', `${base}/tables/t/gis`, { sql: 'SELECT id FROM t' })
+    expect(J(r).error).toBe('No spatial column found for this SQL query.')
+  })
+})

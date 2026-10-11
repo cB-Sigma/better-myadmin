@@ -24,6 +24,9 @@ import type {
   ChangeFormResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  ChartDataRequest,
+  ChartDataResponse,
+  ChartPageResponse,
   CollationsResponse,
   ColumnFormOptions,
   ColumnTransformations,
@@ -73,6 +76,8 @@ import type {
   FindReplaceResponse,
   FormatResponse,
   GetVariableResponse,
+  GisPageRequest,
+  GisPageResponse,
   GridSaveRequest,
   GridSaveResponse,
   HistoryResponse,
@@ -170,6 +175,7 @@ import type {
   ViewFormResponse,
   ViewSaveRequest,
   ViewSaveResponse,
+  VisualizationPageRequest,
   ZoomRequest,
   ZoomResponse,
   ZoomRowResponse,
@@ -360,6 +366,12 @@ export const api = {
   viewForm: (r: DbRef, q: { table?: string | undefined; sql?: string | undefined }) =>
     call<ViewFormResponse>('GET', `${dbPath(r)}/views/form${queryString(q)}`),
   viewSave: (r: DbRef, req: ViewSaveRequest) => call<ViewSaveResponse>('POST', `${dbPath(r)}/views`, req),
+  // the query results' Display chart and GIS visualization (pma: /table/chart, /table/gis-visualization)
+  chartPage: (s: TableRef, req: VisualizationPageRequest) =>
+    call<ChartPageResponse>('POST', `${tablePath(s)}/chart`, req),
+  chartData: (s: TableRef, req: ChartDataRequest) =>
+    call<ChartDataResponse>('POST', `${tablePath(s)}/chart/data`, req),
+  gisPage: (s: TableRef, req: GisPageRequest) => call<GisPageResponse>('POST', `${tablePath(s)}/gis`, req),
   tablePrivileges: (s: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(s)}/privileges`),
   tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
