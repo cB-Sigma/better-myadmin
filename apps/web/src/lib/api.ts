@@ -24,6 +24,10 @@ import type {
   ExportPageResponse,
   ExportResponse,
   ExportTemplateResult,
+  ImportPageResponse,
+  ImportProgress,
+  ImportResult,
+  ImportUploadCreated,
   FormatResponse,
   GridSaveRequest,
   GridSaveResponse,
@@ -208,6 +212,55 @@ export const api = {
     call<ExportTemplateResult>('POST', `/servers/${server}/export/templates/${id}`, { templateData }),
   exportTemplateDelete: (server: number, id: number) =>
     call<ExportTemplateResult>('POST', `/servers/${server}/export/templates/${id}/delete`),
+  // import (docs/features/07-export-import.md; pma: /server/import, /import, /import-status)
+  importPage: (server: number, pairs: Array<[string, string]>) =>
+    call<ImportPageResponse>('GET', `/servers/${server}/import/page?${new URLSearchParams(pairs)}`),
+  /**
+   * Uploads `file` in chunks (resumable offsets), reporting the bytes sent; resolves to the upload id.
+   */
+  importUpload: async (
+    server: number,
+    file: Blob,
+    onProgress: (sent: number) => void,
+    chunkSize = 4 * 1024 * 1024,
+  ): Promise<string> => {
+    const { id } = await call<ImportUploadCreated>('POST', `/servers/${server}/import/uploads`, {})
+    for (let offset = 0; offset < file.size || offset === 0; offset += chunkSize) {
+      const res = await fetch(`/api/servers/${server}/import/uploads/${id}?offset=${offset}`, {
+        method: 'PATCH',
+        headers: { [CSRF_HEADER]: readCookie(CSRF_COOKIE), 'content-type': 'application/octet-stream' },
+        credentials: 'same-origin',
+        body: file.slice(offset, offset + chunkSize),
+      })
+      if (!res.ok) {
+        const env = ((await res.json().catch(() => null)) as ErrorEnvelope | null)?.error
+        throw new ApiError(res.status, env ?? { code: 'INTERNAL', message: res.statusText })
+      }
+      onProgress(Math.min(file.size, offset + chunkSize))
+      if (file.size === 0) break
+    }
+    return id
+  },
+  importJob: (server: number, params: Array<[string, string]>, upload?: { id: string; name: string }) =>
+    call<{ id: string }>('POST', `/servers/${server}/import/jobs`, { params, ...(upload ? { upload } : {}) }),
+  /** Runs the job: `progress` events, then the result (server-sent events). */
+  importEvents: (server: number, id: string, onProgress: (p: ImportProgress) => void): Promise<ImportResult> =>
+    new Promise((resolve, reject) => {
+      const es = new EventSource(`/api/servers/${server}/import/jobs/${id}/events`)
+      es.addEventListener('progress', (e) => onProgress(JSON.parse((e as MessageEvent<string>).data)))
+      es.addEventListener('result', (e) => {
+        es.close()
+        resolve(JSON.parse((e as MessageEvent<string>).data) as ImportResult)
+      })
+      es.addEventListener('failure', (e) => {
+        es.close()
+        reject(new Error((JSON.parse((e as MessageEvent<string>).data) as { message: string }).message))
+      })
+      es.onerror = () => {
+        es.close()
+        reject(new Error('Could not load the progress of the import.'))
+      }
+    }),
   // results grid (docs/features/02-browse-results-grid.md; pma: /sql and its helper routes)
   browse: (server: number, req: BrowseRequest) =>
     call<BrowseResponse>('POST', `/servers/${server}/browse`, req),
