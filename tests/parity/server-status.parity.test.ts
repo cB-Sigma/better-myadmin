@@ -56,7 +56,7 @@ afterAll(async () => {
 async function page(pmaRoute: string, bmaPath: string, params: Record<string, string> = {}, post = false) {
   const r = await both(
     h,
-    () => (post ? h.pma.pagePost(pmaRoute, params, true) : h.pma.pageGet(pmaRoute, params, true)),
+    () => (post ? h.pma.postJson(pmaRoute, params) : h.pma.getJson(pmaRoute, params)),
     () => h.bma.req('GET', `/api/servers/1${bmaPath}`),
   )
   expect(r.b.status, JSON.stringify(r.b.json)).toBe(200)
@@ -250,11 +250,13 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     const r = await both(
       h,
       () =>
-        h.pma.pagePost(
-          '/server/status/processes/refresh',
-          { refresh: 'true', full: '', order_by_field: '', column_name: '', sort_order: '' },
-          true,
-        ),
+        h.pma.postJson('/server/status/processes/refresh', {
+          refresh: 'true',
+          full: '',
+          order_by_field: '',
+          column_name: '',
+          sort_order: '',
+        }),
       () => h.bma.req('GET', '/api/servers/1/status/processes?full=1'),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)
@@ -268,7 +270,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     try {
       const r = await both(
         h,
-        () => h.pma.pagePostJson(`/server/status/processes/kill/${a.threadId}`, { kill: String(a.threadId) }),
+        () => h.pma.postJson(`/server/status/processes/kill/${a.threadId}`, { kill: String(a.threadId) }),
         () => h.bma.req('POST', `/api/servers/1/status/processes/${b.threadId}/kill`),
       )
       const cmp = diff(h, r.pmaLog, r.bmaLog, [], {
@@ -285,7 +287,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
       // killing it again fails with phpMyAdmin's message
       const again = await both(
         h,
-        () => h.pma.pagePostJson(`/server/status/processes/kill/${a.threadId}`, { kill: String(a.threadId) }),
+        () => h.pma.postJson(`/server/status/processes/kill/${a.threadId}`, { kill: String(a.threadId) }),
         () => h.bma.req('POST', `/api/servers/1/status/processes/${b.threadId}/kill`),
       )
       const k2 = again.b.json as unknown as KillProcessResponse
@@ -403,7 +405,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
   it('FLUSH TABLES from the related links (quirk Q15 fixed: the action reaches the page)', async () => {
     const r = await both(
       h,
-      () => h.pma.pagePost('/server/status/variables', { flush: 'TABLES' }, true),
+      () => h.pma.postJson('/server/status/variables', { flush: 'TABLES' }),
       () => h.bma.req('POST', '/api/servers/1/status/variables', { flush: 'TABLES' }),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)
@@ -415,7 +417,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
   it('a flush value outside the list is ignored', async () => {
     const r = await both(
       h,
-      () => h.pma.pagePost('/server/status/variables', { flush: 'PRIVILEGES' }, true),
+      () => h.pma.postJson('/server/status/variables', { flush: 'PRIVILEGES' }),
       () => h.bma.req('POST', '/api/servers/1/status/variables', { flush: 'PRIVILEGES' }),
     )
     const cmp = diff(h, r.pmaLog, r.bmaLog)

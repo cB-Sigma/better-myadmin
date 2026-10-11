@@ -146,7 +146,8 @@ export function linkTarget(href: string): string {
 }
 
 /** phpMyAdmin's AJAX page response (`{success, message: html, …}`) or a full page. */
-export function pageHtml(response: string): string {
+export function pageHtml(response: string | { message?: string; error?: string }): string {
+  if (typeof response !== 'string') return response.message ?? response.error ?? ''
   const t = response.trimStart()
   if (t.startsWith('{')) {
     const j = JSON.parse(t) as { message?: string; error?: string }

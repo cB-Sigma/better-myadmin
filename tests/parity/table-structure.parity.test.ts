@@ -6,7 +6,7 @@ import { compareWrites, normalise } from './lib/compare.ts'
 import { type Pairs, findForm, getPair, removePair, serializeForm, setPair } from './lib/form.ts'
 import { GeneralLog } from './lib/general-log.ts'
 import { decodeEntities, parseHtml } from './lib/nav-html.ts'
-import { PmaClient, type PmaJson, visibleText } from './lib/pma.ts'
+import { PmaClient, type PmaJson, isPmaUp, visibleText } from './lib/pma.ts'
 
 /**
  * Golden parity of the table Structure tab, the column definition form (create / add / change),
@@ -36,9 +36,7 @@ const dbMap = {
   [BMA_USER]: 'm2tbl_user',
 }
 
-const reachable = await fetch(`${PMA_URL}/index.php`)
-  .then((r) => r.ok)
-  .catch(() => false)
+const reachable = await isPmaUp(PMA_URL)
 
 /**
  * phpMyAdmin writes to its configuration storage through the control user (other account, not in
@@ -630,17 +628,13 @@ const CASES: Case[] = [
         ['selected_fld[]', 'kind'],
         ['ajax_page_request', 'true'],
       ])
-      await pma.post(
-        '/table/structure/drop',
-        [
-          ['db', db],
-          ['table', 't'],
-          ['selected[0]', 'price'],
-          ['selected[1]', 'kind'],
-          ['mult_btn', 'Yes'],
-        ],
-        { ajax: false },
-      )
+      await pma.postPage('/table/structure/drop', [
+        ['db', db],
+        ['table', 't'],
+        ['selected[0]', 'price'],
+        ['selected[1]', 'kind'],
+        ['mult_btn', 'Yes'],
+      ])
     },
     bma: () => bmaPost('/tables/t/columns/drop', { columns: ['price', 'kind'], source: 'bulk' }),
   },
@@ -1069,7 +1063,7 @@ describe.skipIf(!reachable)('parity: table structure DDL (phpMyAdmin forms vs Be
         ALTER TABLE t ADD KEY k_dup (name(10), qty), ADD FULLTEXT KEY ft (body);`)
     }
     for (const table of ['t', 'nk', 'p']) {
-      const html = await pma.page(`/index.php?route=/table/structure&db=${DB_PMA}&table=${table}`)
+      const html = await pma.getPage(`/index.php?route=/table/structure&db=${DB_PMA}&table=${table}`)
       const b = await bmaGet(`/tables/${table}/structure`)
       expect(structureFromBma(b), table).toEqual(structureFromPma(html))
     }
