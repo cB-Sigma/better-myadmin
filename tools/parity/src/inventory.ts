@@ -6,12 +6,13 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { directives as schemaDirectives } from '@bettermyadmin/config'
+import { type JsBehaviour, extractJsBehaviours } from './extract/js-behaviours.ts'
 import { msgKey, parsePot } from './extract/pot.ts'
 import { type TemplateControl, parseTemplate } from './extract/twig-controls.ts'
 import { INVENTORY_DIR, PARITY, REPO, pmaHead, readJson, walk, writeJson } from './util.ts'
 
-export type InventoryKind = 'routes' | 'controls' | 'directives' | 'messages'
-export const INVENTORY_KINDS: InventoryKind[] = ['routes', 'controls', 'directives', 'messages']
+export type InventoryKind = 'routes' | 'controls' | 'directives' | 'messages' | 'js'
+export const INVENTORY_KINDS: InventoryKind[] = ['routes', 'controls', 'directives', 'messages', 'js']
 
 export interface InventoryMeta {
   generated: string
@@ -62,11 +63,15 @@ export interface MessageItem {
   refs: string[]
 }
 
+/** A JavaScript behaviour (event binding, dialog, AJAX call, editor shortcut); `file` is the pma path. */
+export type JsItem = JsBehaviour & { file: string }
+
 export interface Inventories {
   routes: Inventory<RouteItem>
   controls: Inventory<ControlItem>
   directives: Inventory<DirectiveItem>
   messages: Inventory<MessageItem>
+  js: Inventory<JsItem>
 }
 
 const GENERATED = 'by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit'
@@ -269,6 +274,24 @@ export function extractMessages(pma: string, commit: string): Inventory<MessageI
   }
 }
 
+export function extractJs(pma: string, commit: string): Inventory<JsItem> {
+  const dir = join(pma, 'resources/js')
+  const items: JsItem[] = []
+  for (const script of walk(dir, (r) => r.endsWith('.ts') && !r.endsWith('.d.ts'))) {
+    for (const b of extractJsBehaviours(script, readFileSync(join(dir, script), 'utf8')))
+      items.push({ ...b, file: `resources/js/${script}` })
+  }
+  items.sort((a, b) => a.key.localeCompare(b.key))
+  return {
+    _meta: meta(
+      commit,
+      'resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys',
+      items.length,
+    ),
+    items,
+  }
+}
+
 // ---------------------------------------------------------------------------
 
 export function inventoryFile(kind: InventoryKind, dir = INVENTORY_DIR): string {
@@ -283,6 +306,7 @@ export function extractAll(pma: string): Inventories {
     controls: extractControls(pma, commit),
     directives: extractDirectives(pma, commit),
     messages: extractMessages(pma, commit),
+    js: extractJs(pma, commit),
   }
 }
 
@@ -301,5 +325,6 @@ export function loadInventories(dir = INVENTORY_DIR): Inventories {
     controls: load<ControlItem>('controls'),
     directives: load<DirectiveItem>('directives'),
     messages: load<MessageItem>('messages'),
+    js: load<JsItem>('js'),
   }
 }

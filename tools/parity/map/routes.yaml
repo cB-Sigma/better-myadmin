@@ -502,24 +502,22 @@
   ui: '/s/:s/variables/set/:name'
   planned: M3
 /sql:
-  api: 'POST /api/servers/:s/query'
-  ui: '/s/:s/sql'
-  note: server scope only so far; db/table scopes land with M1
+  api:
+    - 'POST /api/servers/:s/browse'
+    - 'POST /api/servers/:s/query'
+  ui: '/s/:s/db/:db/t/:table/browse'
+  note: browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import
 /sql/get-default-fk-check-value:
   api: 'GET /api/servers/:s/sql/default-fk-check'
   planned: M1
 /sql/get-enum-values:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/enum-values'
-  planned: M1
+  api: 'POST /api/servers/:s/browse/values'
 /sql/get-relational-values:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/foreign-values'
-  planned: M1
+  api: 'POST /api/servers/:s/browse/values'
 /sql/get-set-values:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/enum-values'
-  planned: M1
+  api: 'POST /api/servers/:s/browse/values'
 /sql/set-column-preferences:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/uiprefs'
-  planned: M1
 /sync-favorite-tables:
   api: 'POST /api/servers/:s/favorites'
   planned: M1
@@ -547,13 +545,10 @@
   ui: '/s/:s/db/:db/t/:table/create'
   planned: M2
 /table/delete/confirm:
-  api: '/api/servers/:s/databases/:db/tables/:table/delete/confirm'
-  ui: '/s/:s/db/:db/t/:table/delete/confirm'
-  planned: M1
+  ui: '/s/:s/db/:db/t/:table/browse'
+  note: the confirmation is rendered in place by the results view (no request of its own)
 /table/delete/rows:
-  api: 'POST /api/servers/:s/databases/:db/tables/:t/rows/delete'
-  ui: '/s/:s/db/:db/t/:table/delete/rows'
-  planned: M1
+  api: 'POST /api/servers/:s/browse/delete-rows'
 /table/export:
   api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/db/:db/t/:table/export'
@@ -566,9 +561,7 @@
   ui: '/s/:s/db/:db/t/:table/find-replace'
   planned: M2
 /table/get-field:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/cell'
-  ui: '/s/:s/db/:db/t/:table/get-field'
-  planned: M1
+  api: 'GET /api/servers/:s/browse/field'
 /table/gis-visualization:
   api: 'GET /api/servers/:s/databases/:db/tables/:t/gis'
   ui: '/s/:s/db/:db/t/:table/gis-visualization'

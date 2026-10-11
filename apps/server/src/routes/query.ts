@@ -7,8 +7,11 @@ import {
   type SimulateResponse,
 } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
+import { gridHook, gridMeta } from '../browse/service.ts'
+import { resolveViewState } from '../browse/view-state.ts'
 import { ValidationError } from '../http/errors.ts'
 import { afterSqlBox } from '../metadata/hooks.ts'
+import { MetaRequest } from '../metadata/service.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { simulateDml } from '../query/simulate.ts'
@@ -48,7 +51,37 @@ queryRoutes.post('/', async (c) => {
   if (runKey !== null) running.set(runKey, conn.threadId)
   let discard = false
   let r: SqlBoxResult | null = null
+  // the results grid (row actions, sort links, FK links) for the SQL tab
+  const meta = req.grid === true ? new MetaRequest(c, { db: req.db ?? '' }) : null
   try {
+    let grid: Parameters<typeof runSqlBox>[1]['grid']
+    if (meta !== null) {
+      const settings = await meta.settings()
+      grid = gridHook(
+        {
+          cfg: settings,
+          conn,
+          tr: c.get('tr'),
+          hmacSecret: session.hmacSecret,
+          server,
+          isBrowseDistinct: false,
+          meta: await gridMeta(meta),
+        },
+        {
+          sqlQuery: (sql) => sql,
+          view: (sql, info, pos, maxRows) =>
+            resolveViewState(
+              session,
+              server,
+              req.db ?? '',
+              sql,
+              info.flags.queryType === 'EXPLAIN',
+              { pos, maxRows },
+              settings,
+            ),
+        },
+      )
+    }
     r = await runSqlBox(
       {
         sql: req.sql,
@@ -63,7 +96,16 @@ queryRoutes.post('/', async (c) => {
         showAsPhp: req.showAsPhp,
         profiling: req.profiling,
       },
-      { cfg, conn, hmacSecret: session.hmacSecret, executed, session, server, tr: c.get('tr') },
+      {
+        cfg,
+        conn,
+        hmacSecret: session.hmacSecret,
+        executed,
+        session,
+        server,
+        tr: c.get('tr'),
+        ...(grid !== undefined ? { grid } : {}),
+      },
     )
     discard = r.discardConnection
     const body: QueryResponse = {
@@ -78,6 +120,7 @@ queryRoutes.post('/', async (c) => {
     if (r.ajaxReload !== undefined) body.ajaxReload = r.ajaxReload
     return c.json(body)
   } finally {
+    meta?.close()
     if (runKey !== null) running.delete(runKey)
     // like PHP's connection close: a transaction left open or a changed session setting is discarded
     if (discard) conn.raw.destroy()

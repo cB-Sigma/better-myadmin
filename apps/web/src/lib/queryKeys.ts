@@ -28,4 +28,7 @@ export const qk = {
     ['srv', s, 'db', db, 'tbl', t, 'aliasNames'] as const,
   importPage: (s: number, db: string, t: string, q: string) =>
     ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
+  /** the Browse tab's /sql run (signed sql + pos from the URL) */
+  browse: (s: number, db: string, t: string, q: object) =>
+    ['srv', s, 'db', db, 'tbl', t, 'browse', q] as const,
 }

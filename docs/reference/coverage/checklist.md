@@ -4,7 +4,7 @@
 
 Every `- [ ]` item of docs/features/*.md. A test links to an item when its title contains the item id (e.g. `p01-3f9a2c`) or the exact item text; status comes from the latest results in .data/parity-results/ (`pnpm parity:report --run`), else from the doc marker.
 
-12/706 covered (1.7%): 12 implemented, 694 missing. [Summary](README.md).
+12/706 covered (1.7%): 12 implemented, 12 untested, 682 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 11/77 (14.3%) covered, 11/77 implemented
 
@@ -26,8 +26,22 @@ Every `- [ ]` item of docs/features/*.md. A test links to an item when its title
 
 ## 02 browse results grid — 0/118 (0.0%) covered, 0/118 implemented
 
-118 items without a linked test.
+106 items without a linked test.
 
+|  | Id | Item | Tests |
+|---|---|---|---|
+| 🧪 | `p02-10a94f` | ENUM → dropdown of values; SET → multi-select (size ≤ 10) with full value re-fetched when truncated; relation → FK dropdown (ordered per … | tests/parity/browse.parity.test.ts:277 › parity: Browse / results grid (/sql) vs POST /browse > grid edit value lists: SET with the full value, relational dropdown [p02-10a94f] |
+| 🧪 | `p02-1e062a` | FK/relation cells are links to `SELECT * FROM \\`fdb\\`.\\`ft\\` WHERE \\`ff\\` = <value>` at `pos=0`; `K` mode shows key with display value as… | tests/parity/browse.parity.test.ts:146 › parity: Browse / results grid (/sql) vs POST /browse > FK display values: relational key and display column [p02-1e062a] |
+| 🧪 | `p02-1f1189` | Browsing a table with no query produces `SELECT * FROM \\`t\\``; with `TablePrimaryKeyOrder` ≠ NONE it appends `ORDER BY \\`t\\`.\\`<first PK … | apps/server/test/int/browse.test.ts:135 › Browse (/sql) > TablePrimaryKeyOrder adds an ORDER BY on the primary key [p02-1f1189] |
+| 🧪 | `p02-284f7e` | The chosen `max_rows`/`pos` are remembered per exact SQL string (md5 of server+db+sql) for the last 10 queries in the session. | tests/parity/browse.parity.test.ts:115 › parity: Browse / results grid (/sql) vs POST /browse > pagination, Number of rows and Show all [p02-284f7e] |
+| 🧪 | `p02-2b0c72` | Delete link → `/sql` with `DELETE FROM \\`t\\` WHERE <clause>` (+ ` LIMIT 1` when the clause is not unique), `message_to_show="The row has … | tests/parity/browse.parity.test.ts:170 › parity: Browse / results grid (/sql) vs POST /browse > the row Delete link [p02-2b0c72] |
+| 🧪 | `p02-356f71` | Header text: `Showing rows %1s - %2s (%s total, Query took %01.4f seconds.)`; when `unlimNumRows !== total` the parenthesis reads `%1$s t… | tests/parity/browse.parity.test.ts:407 › parity: Browse / results grid (/sql) vs POST /browse > header message, notices and grid texts match the rendered phpMyAdmin page [p02-356f71] |
+| 🧪 | `p02-85eff6` | Truncated/transformed cells fetch the full value via `/sql` + `grid_edit` (binary returned as hex). | tests/parity/browse.parity.test.ts:199 › parity: Browse / results grid (/sql) vs POST /browse > grid edit: full value, save with the re-check, NULL [p02-85eff6] |
+| 🧪 | `p02-9f5692` | `LIMIT pos, max_rows` is injected only for SELECT/sub-query statements without their own LIMIT, when the parser found no errors, and `max… | tests/parity/browse.parity.test.ts:137 › parity: Browse / results grid (/sql) vs POST /browse > a query with its own LIMIT runs verbatim [p02-9f5692] |
+| 🧪 | `p02-a3dbd4` | Delete shows a confirmation page listing every `DELETE FROM \\`t\\` WHERE <clause>;`, with "Enable foreign key checks" checkbox, Yes (dange… | tests/parity/browse.parity.test.ts:316 › parity: Browse / results grid (/sql) vs POST /browse > Delete with selected: every DELETE with LIMIT 1, then the browse query again [p02-a3dbd4] |
+| 🧪 | `p02-c56862` | Rows without a unique key (and `RowActionLinksWithoutUnique` on) show the notice "…may result in undesired behavior."; system schemas / n… | apps/server/test/int/browse.test.ts:118 › Browse (/sql) > a table without a unique key: no row actions and the notice [p02-c56862] |
+| 🧪 | `p02-dafcf6` | `RememberSorting`: the last ORDER BY of `SELECT *` single-table queries is stored per table (`sorted_col`) and re-applied to later unsort… | tests/parity/browse.parity.test.ts:87 › parity: Browse / results grid (/sql) vs POST /browse > sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6] |
+| 🧪 | `p02-fae7cc` | A GET `sql_query` is only accepted when accompanied by a valid `sql_signature`; all generated links (sort, FK, refresh, Browse-distinct, … | apps/server/test/int/browse.test.ts:83 › Browse (/sql) > refuses an unsigned or badly signed query [p02-fae7cc] |
 
 ## 03 insert edit transformations — 0/59 (0.0%) covered, 0/59 implemented
 
