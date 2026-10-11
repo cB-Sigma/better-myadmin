@@ -9,7 +9,7 @@
  *      value_column_for_other_datatype.twig, src/ConfigStorage/Relation.php::foreignDropdown
  */
 
-import { readdirSync, lstatSync } from 'node:fs'
+import { lstatSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import type {
   ForeignOption,
@@ -49,7 +49,7 @@ import {
   stripslashes,
 } from '@bettermyadmin/mysql-types'
 import { backquote, getUniqueCondition, isWhereClauseNumeric } from '@bettermyadmin/sql-gen'
-import { strnatcmpEx, phpCompareStrings } from '../navigation/php.ts'
+import { phpCompareStrings, strnatcmpEx } from '../navigation/php.ts'
 import {
   type ForeignData,
   type IeCtx,
@@ -170,6 +170,7 @@ function showAsText(b: Buffer): string | null {
   } catch {
     return null
   }
+  // biome-ignore lint/suspicious/noControlCharactersInRegex: phpMyAdmin's control-character test
   return /[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x9F]/u.test(s) ? null : s
 }
 
@@ -223,7 +224,9 @@ function buildForeignDropdown(
   const list = [...foreign]
   const str = (b: Buffer) => b.toString('utf8')
   if (mode === 'id-content' || mode === 'id-only') {
-    list.sort((a, b) => (natural ? strnatcmpEx(str(a.key), str(b.key), true) : phpCompareStrings(str(a.key), str(b.key))))
+    list.sort((a, b) =>
+      natural ? strnatcmpEx(str(a.key), str(b.key), true) : phpCompareStrings(str(a.key), str(b.key)),
+    )
   } else if (mode === 'content-id') {
     list.sort((a, b) =>
       natural ? strnatcmpEx(str(a.value), str(b.value), true) : phpCompareStrings(str(a.value), str(b.value)),
@@ -279,7 +282,8 @@ export function uploadDirFiles(ctx: IeCtx): string[] | 'error' | null {
 
 /** pma: InsertEdit::getMaxUploadSize → Util::getFormattedMaximumUploadSize */
 function maxUploadSize(ctx: IeCtx, trueType: string): string {
-  const cap = { tinyblob: 256, blob: 65536, mediumblob: 16777216, longblob: 4294967296 }[trueType] ?? 4294967296
+  const cap =
+    { tinyblob: 256, blob: 65536, mediumblob: 16777216, longblob: 4294967296 }[trueType] ?? 4294967296
   const [size, unit] = formatByteDown(ctx.tr, Math.min(ctx.cfg.MaxUploadSize, cap), 4) ?? ['0', '']
   return `(${sprintf(ctx.tr.gettext('Max: %s%s'), size, unit)})`
 }
@@ -311,7 +315,11 @@ export async function buildInsertForm(ctx: IeCtx, req: FormRequest): Promise<Ins
       if (set !== undefined && fieldsMeta.length === 0) fieldsMeta = set.fields
       const raw = set?.rows[0]
       if (set === undefined || raw === undefined) {
-        messages.push({ type: 'success', text: tr.gettext('MySQL returned an empty result set (i.e. zero rows).'), sql })
+        messages.push({
+          type: 'success',
+          text: tr.gettext('MySQL returned an empty result set (i.e. zero rows).'),
+          sql,
+        })
         rows.push(new Map())
         continue
       }
@@ -322,7 +330,10 @@ export async function buildInsertForm(ctx: IeCtx, req: FormRequest): Promise<Ins
     }
   } else {
     insertMode = true
-    const r = await ctx.conn.query(`SELECT * FROM ${backquote(db)}.${backquote(table)} LIMIT 1;`, 'insert.first-row')
+    const r = await ctx.conn.query(
+      `SELECT * FROM ${backquote(db)}.${backquote(table)} LIMIT 1;`,
+      'insert.first-row',
+    )
     fieldsMeta = r.resultSets[0]?.fields ?? []
     const n = req.insertRows !== undefined && req.insertRows >= 1 ? req.insertRows : cfg.InsertRows
     for (let i = 0; i < n; i++) rows.push(null)
@@ -333,11 +344,14 @@ export async function buildInsertForm(ctx: IeCtx, req: FormRequest): Promise<Ins
 
   const tableColumns = await ctx.reader.getColumns(db, table)
   const commentsMap: Record<string, string> = {}
-  if (cfg.ShowPropertyComments) for (const c of tableColumns) if (c.Comment !== '') commentsMap[c.Field] = c.Comment
+  if (cfg.ShowPropertyComments)
+    for (const c of tableColumns) if (c.Comment !== '') commentsMap[c.Field] = c.Comment
   const foreigners = await foreignersOf(ctx)
   const mime = await mimeMap(ctx)
   const isUpload = true
-  const hasBlob = tableColumns.some((c) => isColumnOfType(c.Type, ['blob', 'tinyblob', 'mediumblob', 'longblob']))
+  const hasBlob = tableColumns.some((c) =>
+    isColumnOfType(c.Type, ['blob', 'tinyblob', 'mediumblob', 'longblob']),
+  )
   const server = ctx.reader.server
   const functions = cfg.ShowFunctionFields
     ? getFunctionsForField(server, '', false, (s) => tr.gettext(s)).map(({ value, label, title }) =>
@@ -390,6 +404,7 @@ export async function buildInsertForm(ctx: IeCtx, req: FormRequest): Promise<Ins
     )
     columns.push({
       field: col.field,
+      columnNumber,
       md5: col.md5,
       type: col.type,
       trueType: col.trueType,
@@ -425,6 +440,7 @@ export async function buildInsertForm(ctx: IeCtx, req: FormRequest): Promise<Ins
 
   return {
     insertMode,
+    columnCount: tableColumns.length,
     copy: req.copy,
     columns,
     rows: outRows,
@@ -502,7 +518,11 @@ async function buildCell(ctx: IeCtx, x: CellInput): Promise<InsertCell> {
       } else {
         currentValue = asText
         if (col.isBinary || (col.isBlob && protectBinary !== 'all')) {
-          currentValue = asIs ? asText : typeof current === 'string' ? php.bin2hex(current) : current.toString('hex')
+          currentValue = asIs
+            ? asText
+            : typeof current === 'string'
+              ? php.bin2hex(current)
+              : current.toString('hex')
         } else if (typeof current !== 'string' && (col.isBinary || col.isBlob)) {
           currentValue = current.toString('latin1')
         }
@@ -609,7 +629,10 @@ async function buildCell(ctx: IeCtx, x: CellInput): Promise<InsertCell> {
     return {
       ...base,
       fieldsType: 'enum',
-      widget: mbStrlen(col.type) > 20 ? { kind: 'enum-select', values, selected } : { kind: 'enum-radio', values, selected },
+      widget:
+        mbStrlen(col.type) > 20
+          ? { kind: 'enum-select', values, selected }
+          : { kind: 'enum-radio', values, selected },
     }
   }
   if (col.trueType === 'set') {
@@ -627,14 +650,26 @@ async function buildCell(ctx: IeCtx, x: CellInput): Promise<InsertCell> {
   }
   if (col.isBinary || col.isBlob) {
     const isProtected =
-      (protectBinary === 'blob' && col.isBlob) || protectBinary === 'all' || (protectBinary === 'noblob' && !col.isBlob)
+      (protectBinary === 'blob' && col.isBlob) ||
+      protectBinary === 'all' ||
+      (protectBinary === 'noblob' && !col.isBlob)
     if (isProtected) {
       const n = mbStrlen(stripslashes(data))
       const [size, unit] = formatByteDown(ctx.tr, n, 3, 1) ?? ['0', '']
-      return { ...base, value: '', prev: null, fieldsType: 'protected', widget: { kind: 'protected', size, unit } }
+      return {
+        ...base,
+        value: '',
+        prev: null,
+        fieldsType: 'protected',
+        widget: { kind: 'protected', size, unit },
+      }
     }
     if (col.isBlob || col.length > cfg.LimitChars) {
-      return { ...base, fieldsType: 'hex', widget: { kind: 'hex-textarea', rows: textareaRows, cols: textareaCols } }
+      return {
+        ...base,
+        fieldsType: 'hex',
+        widget: { kind: 'hex-textarea', rows: textareaRows, cols: textareaCols },
+      }
     }
     return {
       ...base,
@@ -645,7 +680,10 @@ async function buildCell(ctx: IeCtx, x: CellInput): Promise<InsertCell> {
 
   // pma: getValueColumnForOtherDatatypes
   const fieldsize = Math.min(
-    Math.max(col.isChar ? Number.parseInt(spec.spec_in_brackets, 10) || 0 : col.length, cfg.MinSizeForInputField),
+    Math.max(
+      col.isChar ? Number.parseInt(spec.spec_in_brackets, 10) || 0 : col.length,
+      cfg.MinSizeForInputField,
+    ),
     cfg.MaxSizeForInputField,
   )
   const charTextarea =

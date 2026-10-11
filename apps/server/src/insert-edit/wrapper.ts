@@ -15,7 +15,11 @@ export interface RawCell {
   headers: Record<string, string>
 }
 
-const empty = (): RawCell => ({ status: 200, body: '', headers: { 'content-type': 'text/html; charset=utf-8' } })
+const empty = (): RawCell => ({
+  status: 200,
+  body: '',
+  headers: { 'content-type': 'text/html; charset=utf-8' },
+})
 
 /** Core::downloadHeader */
 function downloadHeaders(name: string, mime: string, length?: number): Record<string, string> {
@@ -29,12 +33,21 @@ function downloadHeaders(name: string, mime: string, length?: number): Record<st
   return h
 }
 
-async function fetchRow(ctx: IeCtx, where: string | null, sig: string | null): Promise<Map<string, Buffer | null> | null | 'bad'> {
+async function fetchRow(
+  ctx: IeCtx,
+  where: string | null,
+  sig: string | null,
+): Promise<Map<string, Buffer | null> | null | 'bad'> {
   let sql: string
   if (where === null) {
     sql = `SELECT * FROM ${backquote(ctx.table)} LIMIT 1;`
   } else {
-    if (where === '' || sig === null || sig === '' || !checkSqlSignature(where, sig, ctx.hmacSecret, ctx.cfg.blowfish_secret)) {
+    if (
+      where === '' ||
+      sig === null ||
+      sig === '' ||
+      !checkSqlSignature(where, sig, ctx.hmacSecret, ctx.cfg.blowfish_secret)
+    ) {
       return 'bad'
     }
     sql = `SELECT * FROM ${backquote(ctx.table)} WHERE ${where};`
@@ -59,7 +72,11 @@ export async function transformationWrapper(ctx: IeCtx, p: WrapperParams): Promi
   const row = await fetchRow(ctx, p.where, p.sig)
   if (row === 'bad') {
     /* l10n: In case a SQL query did not pass a security check  */
-    return { status: 400, body: ctx.tr.gettext('There is an issue with your request.'), headers: { 'content-type': 'text/plain; charset=utf-8' } }
+    return {
+      status: 400,
+      body: ctx.tr.gettext('There is an issue with your request.'),
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    }
   }
   const value = row?.get(p.key)
   if (row === null || value === null || value === undefined || value.length === 0) return empty()
@@ -74,11 +91,18 @@ export async function transformationWrapper(ctx: IeCtx, p: WrapperParams): Promi
   }
   let contentType: string
   if (p.ct !== undefined && p.ct !== '') contentType = p.ct
-  else contentType = (mediaType !== '' ? mediaType.replaceAll('_', '/') : 'application/octet-stream') + charset
+  else
+    contentType = (mediaType !== '' ? mediaType.replaceAll('_', '/') : 'application/octet-stream') + charset
   // resize=jpeg|png: phpMyAdmin resamples with GD; the original image is sent and the browser
   // scales it to the requested box (parity exception: no image library on the server)
   if (p.resize !== 'jpeg' && p.resize !== 'png' && contentType.toLowerCase().includes('html')) {
-    const s = value.toString('utf8').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;')
+    const s = value
+      .toString('utf8')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
     return { status: 200, body: s, headers: downloadHeaders(p.cn ?? '', contentType) }
   }
   return { status: 200, body: value, headers: downloadHeaders(p.cn ?? '', contentType, value.length) }
@@ -95,12 +119,20 @@ export function detectMime(b: Buffer): string {
 /** GET …/get-field (BLOB download as `<table>-<column>.bin`) */
 export async function getField(ctx: IeCtx, p: { key: string; where: string; sig: string }): Promise<RawCell> {
   if (p.where === '' || !checkSqlSignature(p.where, p.sig, ctx.hmacSecret, ctx.cfg.blowfish_secret)) {
-    return { status: 400, body: ctx.tr.gettext('There is an issue with your request.'), headers: { 'content-type': 'text/plain; charset=utf-8' } }
+    return {
+      status: 400,
+      body: ctx.tr.gettext('There is an issue with your request.'),
+      headers: { 'content-type': 'text/plain; charset=utf-8' },
+    }
   }
   const r = await ctx.conn.query(
     `SELECT ${backquote(p.key)} FROM ${backquote(ctx.table)} WHERE ${p.where} LIMIT 1;`,
     'table.get-field',
   )
   const v = r.resultSets[0]?.rows[0]?.[0] ?? Buffer.alloc(0)
-  return { status: 200, body: v, headers: downloadHeaders(`${ctx.table}-${p.key}.bin`, detectMime(v), v.length) }
+  return {
+    status: 200,
+    body: v,
+    headers: downloadHeaders(`${ctx.table}-${p.key}.bin`, detectMime(v), v.length),
+  }
 }

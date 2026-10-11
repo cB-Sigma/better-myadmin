@@ -132,7 +132,10 @@ export function getAvailableMimeTypes(): {
  * pma: Transformations::getPluginInstance
  */
 export function findTransformationPlugin(file: string): TransformationPlugin | null {
-  const key = file.replace(/\.php$/i, '').replaceAll('\\', '/').toLowerCase()
+  const key = file
+    .replace(/\.php$/i, '')
+    .replaceAll('\\', '/')
+    .toLowerCase()
   return TRANSFORMATION_PLUGINS.find((p) => p.file.toLowerCase() === key) ?? null
 }
 
@@ -177,13 +180,13 @@ export function parseTransformationOptions(optionString: string): string[] {
     if (trimmed.length > 1 && trimmed.startsWith("'") && trimmed.endsWith("'")) {
       option = Array.from(trimmed).slice(1, -1).join('')
     } else if (trimmed.startsWith("'")) {
-      let acc = option.replace(/^[ \t\n\r\0\x0B]+/, '')
+      let acc = ltrimWs(option)
       let rtrimmed = ''
       let next: string | undefined
       // biome-ignore lint/suspicious/noAssignInExpressions: mirrors the PHP loop
       while ((next = parts.shift()) !== undefined) {
         acc += `,${next}`
-        rtrimmed = acc.replace(/[ \t\n\r\0\x0B]+$/, '')
+        rtrimmed = rtrimWs(acc)
         if (rtrimmed.endsWith("'")) break
       }
       option = Array.from(rtrimmed).slice(1, -1).join('')
@@ -193,7 +196,19 @@ export function parseTransformationOptions(optionString: string): string[] {
   return result
 }
 
-const phpTrim = (s: string) => s.replace(/^[ \t\n\r\0\x0B]+|[ \t\n\r\0\x0B]+$/g, '')
+/** PHP trim's default character list: space, \t, \n, \r, \0, \x0B */
+const WS = ' \t\n\r\u0000\u000b'
+const ltrimWs = (s: string) => {
+  let i = 0
+  while (i < s.length && WS.includes(s[i] as string)) i++
+  return s.slice(i)
+}
+const rtrimWs = (s: string) => {
+  let i = s.length
+  while (i > 0 && WS.includes(s[i - 1] as string)) i--
+  return s.slice(0, i)
+}
+const phpTrim = (s: string) => rtrimWs(ltrimWs(s))
 
 /** PHP stripslashes */
 export function stripslashes(s: string): string {
@@ -201,7 +216,10 @@ export function stripslashes(s: string): string {
 }
 
 /** pma: TransformationsPlugin::getOptions — defaults filled in where the option is missing or '' */
-export function withDefaults<T extends readonly unknown[]>(options: readonly string[], defaults: T): unknown[] {
+export function withDefaults<T extends readonly unknown[]>(
+  options: readonly string[],
+  defaults: T,
+): unknown[] {
   return defaults.map((d, i) => {
     const o = options[i]
     return o !== undefined && o !== '' ? o : d
@@ -259,7 +277,12 @@ export function ip2long(ip: string): number | false {
   if (m === null) return false
   const parts = m.slice(1).map(Number)
   if (parts.some((p) => p > 255)) return false
-  return (((parts[0] as number) << 24) >>> 0) + ((parts[1] as number) << 16) + ((parts[2] as number) << 8) + (parts[3] as number)
+  return (
+    (((parts[0] as number) << 24) >>> 0) +
+    ((parts[1] as number) << 16) +
+    ((parts[2] as number) << 8) +
+    (parts[3] as number)
+  )
 }
 
 /** PHP inet_pton */
@@ -281,7 +304,8 @@ export function inetPton(ip: string): Uint8Array | false {
   if (dbl.length > 2) return false
   const left = dbl[0] === '' ? [] : (dbl[0] as string).split(':')
   const right = dbl.length === 2 ? (dbl[1] === '' ? [] : (dbl[1] as string).split(':')) : []
-  const groups = dbl.length === 2 ? [...left, ...Array(8 - left.length - right.length).fill('0'), ...right] : left
+  const groups =
+    dbl.length === 2 ? [...left, ...Array(8 - left.length - right.length).fill('0'), ...right] : left
   if (groups.length !== 8 || groups.some((g) => !/^[0-9a-fA-F]{1,4}$/.test(g))) return false
   const out = new Uint8Array(16)
   groups.forEach((g, i) => {
@@ -372,36 +396,95 @@ export function phpDateFormat(d: Date, format: string, utc: boolean): string {
   const g = (k: 'FullYear' | 'Month' | 'Date' | 'Hours' | 'Minutes' | 'Seconds' | 'Day') =>
     (utc ? d[`getUTC${k}`]() : d[`get${k}`]()) as number
   const pad = (n: number, w = 2) => String(n).padStart(w, '0')
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   let out = ''
   for (let i = 0; i < format.length; i++) {
     const c = format[i] as string
     const h = g('Hours')
     switch (c) {
-      case 'd': out += pad(g('Date')); break
-      case 'j': out += String(g('Date')); break
-      case 'D': out += (days[g('Day')] as string).slice(0, 3); break
-      case 'l': out += days[g('Day')]; break
-      case 'N': out += String(g('Day') === 0 ? 7 : g('Day')); break
-      case 'w': out += String(g('Day')); break
-      case 'm': out += pad(g('Month') + 1); break
-      case 'n': out += String(g('Month') + 1); break
-      case 'M': out += (months[g('Month')] as string).slice(0, 3); break
-      case 'F': out += months[g('Month')]; break
-      case 'Y': out += String(g('FullYear')); break
-      case 'y': out += pad(g('FullYear') % 100); break
-      case 'H': out += pad(h); break
-      case 'G': out += String(h); break
-      case 'h': out += pad(h % 12 === 0 ? 12 : h % 12); break
-      case 'g': out += String(h % 12 === 0 ? 12 : h % 12); break
-      case 'i': out += pad(g('Minutes')); break
-      case 's': out += pad(g('Seconds')); break
-      case 'a': out += h < 12 ? 'am' : 'pm'; break
-      case 'A': out += h < 12 ? 'AM' : 'PM'; break
-      case 'U': out += String(Math.floor(d.getTime() / 1000)); break
-      case '\\': i++; out += format[i] ?? ''; break
-      default: out += c
+      case 'd':
+        out += pad(g('Date'))
+        break
+      case 'j':
+        out += String(g('Date'))
+        break
+      case 'D':
+        out += (days[g('Day')] as string).slice(0, 3)
+        break
+      case 'l':
+        out += days[g('Day')]
+        break
+      case 'N':
+        out += String(g('Day') === 0 ? 7 : g('Day'))
+        break
+      case 'w':
+        out += String(g('Day'))
+        break
+      case 'm':
+        out += pad(g('Month') + 1)
+        break
+      case 'n':
+        out += String(g('Month') + 1)
+        break
+      case 'M':
+        out += (months[g('Month')] as string).slice(0, 3)
+        break
+      case 'F':
+        out += months[g('Month')]
+        break
+      case 'Y':
+        out += String(g('FullYear'))
+        break
+      case 'y':
+        out += pad(g('FullYear') % 100)
+        break
+      case 'H':
+        out += pad(h)
+        break
+      case 'G':
+        out += String(h)
+        break
+      case 'h':
+        out += pad(h % 12 === 0 ? 12 : h % 12)
+        break
+      case 'g':
+        out += String(h % 12 === 0 ? 12 : h % 12)
+        break
+      case 'i':
+        out += pad(g('Minutes'))
+        break
+      case 's':
+        out += pad(g('Seconds'))
+        break
+      case 'a':
+        out += h < 12 ? 'am' : 'pm'
+        break
+      case 'A':
+        out += h < 12 ? 'AM' : 'PM'
+        break
+      case 'U':
+        out += String(Math.floor(d.getTime() / 1000))
+        break
+      case '\\':
+        i++
+        out += format[i] ?? ''
+        break
+      default:
+        out += c
     }
   }
   return out
@@ -411,31 +494,65 @@ export function phpDateFormat(d: Date, format: string, utc: boolean): string {
 export function strftimeFormat(d: Date, format: string, t: (s: string) => string = (s) => s): string {
   const pad = (n: number, w = 2) => String(n).padStart(w, '0')
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  const longMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const longMonths = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const h = d.getHours()
   return format.replace(/%([a-zA-Z%])/g, (all, c: string) => {
     switch (c) {
-      case 'a': return t(days[d.getDay()] as string)
-      case 'A': return t(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][d.getDay()] as string)
-      case 'b': case 'h': return t(months[d.getMonth()] as string)
-      case 'B': return t(longMonths[d.getMonth()] as string)
-      case 'd': return pad(d.getDate())
-      case 'e': return String(d.getDate()).padStart(2, ' ')
-      case 'H': return pad(h)
-      case 'I': return pad(h % 12 === 0 ? 12 : h % 12)
-      case 'm': return pad(d.getMonth() + 1)
-      case 'M': return pad(d.getMinutes())
-      case 'S': return pad(d.getSeconds())
-      case 'p': return h < 12 ? 'AM' : 'PM'
-      case 'y': return pad(d.getFullYear() % 100)
-      case 'Y': return String(d.getFullYear())
+      case 'a':
+        return t(days[d.getDay()] as string)
+      case 'A':
+        return t(
+          ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][
+            d.getDay()
+          ] as string,
+        )
+      case 'b':
+      case 'h':
+        return t(months[d.getMonth()] as string)
+      case 'B':
+        return t(longMonths[d.getMonth()] as string)
+      case 'd':
+        return pad(d.getDate())
+      case 'e':
+        return String(d.getDate()).padStart(2, ' ')
+      case 'H':
+        return pad(h)
+      case 'I':
+        return pad(h % 12 === 0 ? 12 : h % 12)
+      case 'm':
+        return pad(d.getMonth() + 1)
+      case 'M':
+        return pad(d.getMinutes())
+      case 'S':
+        return pad(d.getSeconds())
+      case 'p':
+        return h < 12 ? 'AM' : 'PM'
+      case 'y':
+        return pad(d.getFullYear() % 100)
+      case 'Y':
+        return String(d.getFullYear())
       case 'j': {
         const start = new Date(d.getFullYear(), 0, 1)
         return pad(Math.floor((d.getTime() - start.getTime()) / 86400000) + 1, 3)
       }
-      case '%': return '%'
-      default: return all
+      case '%':
+        return '%'
+      default:
+        return all
     }
   })
 }
@@ -444,7 +561,14 @@ export function strftimeFormat(d: Date, format: string, t: (s: string) => string
 function strtotime(s: string): number | null {
   const m = /^\s*(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?)?\s*$/.exec(s)
   if (m !== null) {
-    const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]), Number(m[4] ?? 0), Number(m[5] ?? 0), Number(m[6] ?? 0))
+    const d = new Date(
+      Number(m[1]),
+      Number(m[2]) - 1,
+      Number(m[3]),
+      Number(m[4] ?? 0),
+      Number(m[5] ?? 0),
+      Number(m[6] ?? 0),
+    )
     return Math.floor(d.getTime() / 1000)
   }
   const tm = /^\s*(\d{1,2}):(\d{2})(?::(\d{2}))?\s*$/.exec(s)
@@ -475,7 +599,9 @@ function dateFormat(buffer: string, options: readonly string[], ctx: TransformCo
     const mo = n(offset, 2)
     const d = n(offset + 2, 2)
     if (checkdate(mo, d, y)) {
-      timestamp = Math.floor(new Date(y, mo - 1, d, n(offset + 4, 2), n(offset + 6, 2), n(offset + 8, 2)).getTime() / 1000)
+      timestamp = Math.floor(
+        new Date(y, mo - 1, d, n(offset + 4, 2), n(offset + 6, 2), n(offset + 8, 2)).getTime() / 1000,
+      )
     }
   } else if (/^[0-9]\d{1,9}$/.test(buffer)) {
     timestamp = Number(buffer)
@@ -588,7 +714,9 @@ export function applyOutputTransformation(
 
 function textLink(text: string, options: readonly string[], defaults: DefaultTransformations): string {
   const o = withDefaults(options, defaults.TextLink)
-  const url = String(o[0] ?? '') + (o[2] !== null && o[2] !== undefined && o[2] !== false && o[2] !== '' && o[2] !== '0' ? '' : text)
+  const url =
+    String(o[0] ?? '') +
+    (o[2] !== null && o[2] !== undefined && o[2] !== false && o[2] !== '' && o[2] !== '0' ? '' : text)
   if (!checkLink(url)) return esc(url)
   const title = o[1] === null || o[1] === undefined ? null : String(o[1])
   return `<a href="${esc(url)}" title="${esc(title ?? '')}" target="_blank" rel="noopener noreferrer">${esc(title ?? text)}</a>`
@@ -630,7 +758,11 @@ export function applyInputTransformation(
   file: string,
   value: string,
   options: readonly string[],
-  ctx: { defaults?: DefaultTransformations; pregMatch?: (pattern: string, subject: string) => boolean | null; t?: (s: string) => string } = {},
+  ctx: {
+    defaults?: DefaultTransformations
+    pregMatch?: (pattern: string, subject: string) => boolean | null
+    t?: (s: string) => string
+  } = {},
 ): InputTransformResult {
   const p = findTransformationPlugin(file)
   const defaults = ctx.defaults ?? DEFAULT_TRANSFORMATIONS

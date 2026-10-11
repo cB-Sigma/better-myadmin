@@ -13,6 +13,7 @@ const DB = 'f03_ie_it'
 let t: ReturnType<typeof testApp>
 let root: mysql.Connection
 
+// biome-ignore lint/suspicious/noExplicitAny: loosely typed API payloads in tests
 type Json = Record<string, any>
 const base = `/api/servers/1/databases/${DB}/tables`
 
@@ -88,7 +89,9 @@ describe('insert form', () => {
     expect(f.rows).toHaveLength(2)
     expect(f.rows[0].ignore).toBeNull()
     expect(f.rows[1].ignore).toBe(true)
-    const cols = Object.fromEntries((f.columns as Json[]).map((c, i) => [c.field, { col: c, cell: f.rows[0].cells[i] }]))
+    const cols = Object.fromEntries(
+      (f.columns as Json[]).map((c, i) => [c.field, { col: c, cell: f.rows[0].cells[i] }]),
+    )
     expect(Object.keys(cols)).not.toContain('doubled')
     expect(cols.name.col.comment).toBe('the name')
     expect(cols.name.cell.widget).toMatchObject({ kind: 'text', size: 30, maxlength: 30 })
@@ -128,7 +131,10 @@ describe('insert form', () => {
 
   it('previews without executing', async () => {
     const f = await post(`${base}/t/insert-form`, {})
-    const r = await post(`${base}/t/rows`, { rows: [{ fields: rowFields(f, 0, { name: 'p' }) }], preview: true })
+    const r = await post(`${base}/t/rows`, {
+      rows: [{ fields: rowFields(f, 0, { name: 'p' }) }],
+      preview: true,
+    })
     expect(r.preview).toHaveLength(1)
     expect(writes(r)).toEqual([])
   })
@@ -167,7 +173,9 @@ describe('edit form', () => {
   it('"No change" when nothing differs', async () => {
     await root.query(`UPDATE ${DB}.t SET flags = NULL WHERE id = 2`)
     const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 2')] })
-    const r = await post(`${base}/t/rows`, { rows: [{ whereClause: '`t`.`id` = 2', fields: rowFields(f, 0) }] })
+    const r = await post(`${base}/t/rows`, {
+      rows: [{ whereClause: '`t`.`id` = 2', fields: rowFields(f, 0) }],
+    })
     expect(r.message.text).toBe('No change')
   })
 })
@@ -190,9 +198,12 @@ describe('foreign values and wrapper', () => {
     )
     expect(ok.status).toBe(200)
     expect(Buffer.from(await ok.arrayBuffer()).toString('hex')).toBe('0102')
-    const bad = await t.app.request(`${base}/t/transformation/wrapper?key=bin&where=${encodeURIComponent(s.clause)}&sig=no`, {
-      headers: { cookie: [...t.jar].map(([k, v]) => `${k}=${v}`).join('; ') },
-    })
+    const bad = await t.app.request(
+      `${base}/t/transformation/wrapper?key=bin&where=${encodeURIComponent(s.clause)}&sig=no`,
+      {
+        headers: { cookie: [...t.jar].map(([k, v]) => `${k}=${v}`).join('; ') },
+      },
+    )
     expect(bad.status).toBe(400)
   })
 })

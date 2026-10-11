@@ -10,7 +10,10 @@ import { type IeCtx, foreignersOf, getForeignData } from './context.ts'
 
 const utf8 = new TextDecoder('utf-8')
 
-export async function browseForeigners(ctx: IeCtx, req: BrowseForeignersRequest): Promise<BrowseForeignersResponse> {
+export async function browseForeigners(
+  ctx: IeCtx,
+  req: BrowseForeignersRequest,
+): Promise<BrowseForeignersResponse> {
   const { cfg } = ctx
   const maxRows = cfg.MaxRows
   // BrowseForeigners::getForeignLimit ("Show all" button value)
@@ -23,10 +26,14 @@ export async function browseForeigners(ctx: IeCtx, req: BrowseForeignersRequest)
   const descriptions = fd.dispRow.map((r) => (r.display === null ? '' : utf8.decode(r.display)))
   const keys = fd.dispRow.map((r) => (r.key === null ? '' : utf8.decode(r.key)))
   // asort($keys): stable sort by value, keeping the original indexes
-  const byKey = keys.map((_, i) => i).sort((a, b) => phpCompareStrings(keys[a] as string, keys[b] as string) || a - b)
+  const byKey = keys
+    .map((_, i) => i)
+    .sort((a, b) => phpCompareStrings(keys[a] as string, keys[b] as string) || a - b)
   const limitChars = cfg.LimitChars
   const describe = (d: string) =>
-    mbStrlen(d) <= limitChars ? { description: d, title: '' } : { description: `${Array.from(d).slice(0, limitChars).join('')}...`, title: d }
+    mbStrlen(d) <= limitChars
+      ? { description: d, title: '' }
+      : { description: `${Array.from(d).slice(0, limitChars).join('')}...`, title: d }
   // `$keyname == $currentValue` (loose comparison)
   const isSel = (k: string) => req.data !== '' && looseEquals(k, req.data)
   let horizontal = 0

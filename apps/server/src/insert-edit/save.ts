@@ -109,7 +109,12 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
       let uploaded: Buffer | null = null
       if (f.upload !== undefined && f.upload !== null && f.upload !== '') {
         uploaded = Buffer.from(f.upload, 'base64')
-      } else if (f.uploadLocal !== undefined && f.uploadLocal !== null && f.uploadLocal !== '' && cfg.UploadDir !== '') {
+      } else if (
+        f.uploadLocal !== undefined &&
+        f.uploadLocal !== null &&
+        f.uploadLocal !== '' &&
+        cfg.UploadDir !== ''
+      ) {
         const r = readUploadDirFile(ctx, f.uploadLocal)
         if ('error' in r) insertErrors.push(r.error)
         else uploaded = r.content
@@ -136,7 +141,9 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
         if (!res.success) {
           insertFail = true
           rowSkipped = true
-          insertErrors.push(sprintf(tr.gettext('Row: %1$s, Column: %2$s, Error: %3$s'), String(rowNumber), f.name, res.error))
+          insertErrors.push(
+            sprintf(tr.gettext('Row: %1$s, Column: %2$s, Error: %3$s'), String(rowNumber), f.name, res.error),
+          )
         }
       }
 
@@ -154,7 +161,14 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
         virtual: f.virtual,
       }
       // values phpMyAdmin fetches while formatting, in the same order
-      if (!f.virtual && isInsert && uploaded === null && f.type === 'protected' && usingKey && row.whereClause) {
+      if (
+        !f.virtual &&
+        isInsert &&
+        uploaded === null &&
+        f.type === 'protected' &&
+        usingKey &&
+        row.whereClause
+      ) {
         if (value !== columnDefaults[f.name]) {
           const r = await ctx.conn.query(
             buildProtectedValueQuery(f.name, ctx.table, row.whereClause),
@@ -163,7 +177,12 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
           field.protectedValue = r.resultSets[0]?.rows[0]?.[0] ?? null
         }
       }
-      if (!f.virtual && uploaded === null && f.function === 'UUID' && !(isInsert && value === columnDefaults[f.name])) {
+      if (
+        !f.virtual &&
+        uploaded === null &&
+        f.function === 'UUID' &&
+        !(isInsert && value === columnDefaults[f.name])
+      ) {
         uuids.push((await ctx.reader.dbi.fetchValue('SELECT UUID()')) || '')
       }
       fields.push(field)
@@ -197,7 +216,8 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
     if (req.afterInsert === 'new_insert') return { action: 'insert' }
     if (req.afterInsert === 'same_insert' || req.afterInsert === 'edit_next') {
       if (!usingKey) return { action: 'insert' }
-      if (req.afterInsert === 'edit_next' && editNext !== null) return { action: 'edit', where: signed([editNext]) }
+      if (req.afterInsert === 'edit_next' && editNext !== null)
+        return { action: 'edit', where: signed([editNext]) }
       return { action: 'edit', where: signed(whereClauses) }
     }
     return { action: 'back' }
@@ -207,7 +227,12 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
     return { message: { type: 'success', text: tr.gettext('No change') }, sqlQuery: '', next: backTarget() }
   }
   if (req.preview) {
-    return { preview: queries, message: { type: 'success', text: '' }, sqlQuery: '', next: { action: 'back' } }
+    return {
+      preview: queries,
+      message: { type: 'success', text: '' },
+      sqlQuery: '',
+      next: { action: 'back' },
+    }
   }
 
   // pma: InsertEdit::executeSqlQuery
@@ -245,9 +270,13 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
   const parts: string[] = []
   let type: SqlMessage['type'] = 'success'
   if (isInsert && (rows.some((r) => r.failed !== true) || rowSkipped)) {
-    parts.push(sprintf(tr.ngettext('%1$d row inserted.', '%1$d rows inserted.', totalAffectedRows), totalAffectedRows))
+    parts.push(
+      sprintf(tr.ngettext('%1$d row inserted.', '%1$d rows inserted.', totalAffectedRows), totalAffectedRows),
+    )
   } else {
-    parts.push(sprintf(tr.ngettext('%1$d row affected.', '%1$d rows affected.', totalAffectedRows), totalAffectedRows))
+    parts.push(
+      sprintf(tr.ngettext('%1$d row affected.', '%1$d rows affected.', totalAffectedRows), totalAffectedRows),
+    )
   }
   if (rowSkipped) {
     parts.push(...insertErrors)

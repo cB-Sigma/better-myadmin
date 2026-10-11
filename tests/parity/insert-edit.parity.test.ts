@@ -1,9 +1,9 @@
 import { createHash } from 'node:crypto'
-import { SESSION_COOKIE } from '../../packages/contracts/src/constants.ts'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { signSql } from '../../apps/server/src/query/signature.ts'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
+import { SESSION_COOKIE } from '../../packages/contracts/src/constants.ts'
 import { compareWrites, normalise } from './lib/compare.ts'
 import { type Pairs, findForm, removePair, serializeForm, setPair } from './lib/form.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
@@ -108,7 +108,14 @@ interface Case {
 
 // ------------------------------------------------------------------ phpMyAdmin side
 
-const NULLIFY: Record<string, 'select' | 'radio' | 'text'> = { '1': 'select', '2': 'radio', '3': 'select', '4': 'select', '5': 'text', '6': 'text' }
+const NULLIFY: Record<string, 'select' | 'radio' | 'text'> = {
+  '1': 'select',
+  '2': 'radio',
+  '3': 'select',
+  '4': 'select',
+  '5': 'text',
+  '6': 'text',
+}
 
 function applyPma(pairs: Pairs, html: string, mods: Mod[], unignore: number[]): Pairs {
   let out = pairs
@@ -166,8 +173,8 @@ async function pmaRun(c: Case, db: string): Promise<{ preview?: string[] }> {
     const j = JSON.parse(
       await pma.post('/table/replace', [...pairs, ['do_save_data', '1'], ['preview_sql', '1']]),
     ) as PmaJson
-    const codes = [...String(j.sql_data ?? '').matchAll(/<code class="sql"[^>]*>([\s\S]*?)<\/code>/g)].map((m) =>
-      decodeEntities((m[1] ?? '').replace(/<[^>]+>/g, '')),
+    const codes = [...String(j.sql_data ?? '').matchAll(/<code class="sql"[^>]*>([\s\S]*?)<\/code>/g)].map(
+      (m) => decodeEntities((m[1] ?? '').replace(/<[^>]+>/g, '')),
     )
     return { preview: codes }
   }
@@ -177,6 +184,7 @@ async function pmaRun(c: Case, db: string): Promise<{ preview?: string[] }> {
 
 // ------------------------------------------------------------------ BetterMyAdmin side
 
+// biome-ignore lint/suspicious/noExplicitAny: loosely typed API payloads in tests
 type Json = Record<string, any>
 
 function signed(clause: string) {
@@ -255,7 +263,9 @@ async function bmaRun(c: Case, db: string): Promise<{ preview?: string[] }> {
 
 async function dump(db: string, table: string): Promise<unknown[]> {
   const [rows] = await root.query({ sql: `SELECT * FROM \`${db}\`.\`${table}\``, rowsAsArray: true })
-  return (rows as unknown[][]).map((r) => r.map((v) => (Buffer.isBuffer(v) ? v.toString('hex') : v instanceof Date ? 'DATE' : v)))
+  return (rows as unknown[][]).map((r) =>
+    r.map((v) => (Buffer.isBuffer(v) ? v.toString('hex') : v instanceof Date ? 'DATE' : v)),
+  )
 }
 
 async function runCase(c: Case): Promise<{ pmaLog: LogEntry[]; bmaLog: LogEntry[] }> {
@@ -268,9 +278,12 @@ async function runCase(c: Case): Promise<{ pmaLog: LogEntry[]; bmaLog: LogEntry[
   const m2 = await log.marker()
   const b = await bmaRun(c, DB_BMA)
   const bmaLog = await log.since(BMA_USER, m2)
-  const mask = (xs: string[]) => (c.mask === undefined ? xs : xs.map((s) => s.replace(c.mask as RegExp, '<MASKED>')))
+  const mask = (xs: string[]) =>
+    c.mask === undefined ? xs : xs.map((s) => s.replace(c.mask as RegExp, '<MASKED>'))
   if (c.preview === true) {
-    expect(mask((b.preview ?? []).map((s) => normalise(s, dbMap)))).toEqual(mask((p.preview ?? []).map((s) => normalise(s, dbMap))))
+    expect(mask((b.preview ?? []).map((s) => normalise(s, dbMap)))).toEqual(
+      mask((p.preview ?? []).map((s) => normalise(s, dbMap))),
+    )
   }
   const cmp = compareWrites(pmaLog, bmaLog, dbMap)
   expect(mask(cmp.bma), `writes of ${c.name}`).toEqual(mask(cmp.pma))
@@ -286,7 +299,9 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
   beforeAll(async () => {
     root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
     for (const u of [PMA_USER, BMA_USER]) {
-      await root.query(`DROP USER IF EXISTS '${u}'@'%'; CREATE USER '${u}'@'%' IDENTIFIED BY '${u}'; GRANT ALL ON *.* TO '${u}'@'%'`)
+      await root.query(
+        `DROP USER IF EXISTS '${u}'@'%'; CREATE USER '${u}'@'%' IDENTIFIED BY '${u}'; GRANT ALL ON *.* TO '${u}'@'%'`,
+      )
     }
     log = await GeneralLog.open(ROOT)
     pma = new PmaClient(PMA_URL)
@@ -413,7 +428,16 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
         { row: 0, col: 'name', value: 'next' },
       ],
     },
-    { name: 'preview of an update', table: 't', where: ['`t`.`id` = 3'], preview: true, mods: [{ row: 0, col: 'created', fn: '' }, { row: 0, col: 'name', value: 'p' }] },
+    {
+      name: 'preview of an update',
+      table: 't',
+      where: ['`t`.`id` = 3'],
+      preview: true,
+      mods: [
+        { row: 0, col: 'created', fn: '' },
+        { row: 0, col: 'name', value: 'p' },
+      ],
+    },
     {
       name: 'GIS point through ST_GeomFromText',
       table: 'g',
@@ -458,7 +482,8 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       l.map((e) => normalise(e.sql, dbMap)).filter((s) => /^SELECT `blb` FROM `t`|^SELECT UUID\(\)/.test(s))
     expect(pick(bmaLog)).toEqual(pick(pmaLog))
     const n = await runCase(cases.find((c) => c.afterInsert === 'edit_next')!)
-    const next = (l: LogEntry[]) => l.map((e) => normalise(e.sql, dbMap)).filter((s) => / WHERE `t`\.`id` > 1 LIMIT 1/.test(s))
+    const next = (l: LogEntry[]) =>
+      l.map((e) => normalise(e.sql, dbMap)).filter((s) => / WHERE `t`\.`id` > 1 LIMIT 1/.test(s))
     expect(next(n.bmaLog)).toEqual(next(n.pmaLog))
     expect(next(n.bmaLog)).toHaveLength(1)
   })
@@ -511,7 +536,13 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       await root.query(`DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`)
     }
     const m1 = await log.marker()
-    await pma.post('/browse-foreigners', { db: DB_PMA, table: 't', field: 'parent_id', foreign_filter: 'o', data: '1' })
+    await pma.post('/browse-foreigners', {
+      db: DB_PMA,
+      table: 't',
+      field: 'parent_id',
+      foreign_filter: 'o',
+      data: '1',
+    })
     const pmaLog = await log.since(PMA_USER, m1)
     const m2 = await log.marker()
     const r = await bma.req('POST', `/api/servers/1/databases/${DB_BMA}/tables/t/browse-foreigners`, {
@@ -520,7 +551,10 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       data: '1',
     })
     const bmaLog = await log.since(BMA_USER, m2)
-    const pick = (l: LogEntry[]) => l.map((e) => normalise(e.sql, dbMap)).filter((s) => /`parent`/.test(s) && !/SHOW|information_schema/i.test(s))
+    const pick = (l: LogEntry[]) =>
+      l
+        .map((e) => normalise(e.sql, dbMap))
+        .filter((s) => /`parent`/.test(s) && !/SHOW|information_schema/i.test(s))
     expect(pick(bmaLog)).toEqual(pick(pmaLog))
     expect((r.json as Json).rows.map((x: Json) => x.left.key)).toEqual(['1', '2'])
   })

@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto'
+import type { Field } from '@bettermyadmin/contracts'
 import type { Translator } from '@bettermyadmin/i18n'
 import {
   type ForeignColumn,
@@ -13,7 +14,6 @@ import {
 } from '@bettermyadmin/metadata'
 import { type ColumnMeta, type ServerInfo, getTypeClass } from '@bettermyadmin/mysql-types'
 import { type UniqueFieldMeta, backquote } from '@bettermyadmin/sql-gen'
-import type { Field } from '@bettermyadmin/contracts'
 import type { AppConfig } from '../config.ts'
 import type { Conn, RawRow } from '../db/connection.ts'
 import type { MetaRequest } from '../metadata/service.ts'
@@ -41,7 +41,12 @@ export interface IeCtx {
 }
 
 /** /transformation/wrapper URL of one cell (WrapperController parameters). */
-export function wrapperUrl(ctx: IeCtx, key: string, whereClause: string, extra: Record<string, string> = {}): string {
+export function wrapperUrl(
+  ctx: IeCtx,
+  key: string,
+  whereClause: string,
+  extra: Record<string, string> = {},
+): string {
   const p = new URLSearchParams({ key, where: whereClause, sig: sign(ctx, whereClause), ...extra })
   return `${ctx.apiBase}/transformation/wrapper?${p}`
 }
@@ -126,7 +131,11 @@ export async function getForeignData(
   const dbi = ctx.reader.dbi
   do {
     if (isForeignEmpty(foreigners)) break
-    const foreigner: InternalRelation | ForeignColumn | false = searchColumnInForeigners(foreigners, field, ctx.db)
+    const foreigner: InternalRelation | ForeignColumn | false = searchColumnInForeigners(
+      foreigners,
+      field,
+      ctx.db,
+    )
     if (foreigner === false) break
     fdb = foreigner.foreign_db
     ftable = foreigner.foreign_table ?? ''
@@ -163,7 +172,10 @@ export async function getForeignData(
       }
       const set = r?.resultSets[0]
       if (set !== undefined && set.rows.length > 0) {
-        dispRow = set.rows.map((row) => ({ key: row[0] ?? null, display: foreignDisplay === '' ? null : (row[1] ?? null) }))
+        dispRow = set.rows.map((row) => ({
+          key: row[0] ?? null,
+          display: foreignDisplay === '' ? null : (row[1] ?? null),
+        }))
       } else {
         dispRow = null
         foreignLink = true
@@ -172,6 +184,7 @@ export async function getForeignData(
       dispRow = null
       foreignLink = true
     }
+    // biome-ignore lint/correctness/noConstantCondition: the do { … break } while (false) of phpMyAdmin
   } while (false)
   if (getTotal && fdb !== null && ftable !== null) {
     theTotal = await countRecordsExact(ctx, fdb, ftable)
@@ -221,7 +234,9 @@ async function countRecordsExact(ctx: IeCtx, db: string, table: string): Promise
     const n = r?.rows.length ?? 0
     return n === max ? -1 : n
   }
-  return Number((await ctx.reader.dbi.fetchValue(`SELECT COUNT(*) FROM ${backquote(db)}.${backquote(table)}`)) || 0)
+  return Number(
+    (await ctx.reader.dbi.fetchValue(`SELECT COUNT(*) FROM ${backquote(db)}.${backquote(table)}`)) || 0,
+  )
 }
 
 export const typeClassOf = (trueType: string) => getTypeClass(trueType)

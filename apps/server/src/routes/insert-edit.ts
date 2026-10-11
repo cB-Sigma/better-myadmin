@@ -7,10 +7,10 @@ import { parseTransformationOptions } from '@bettermyadmin/mysql-types'
 import { type Context, Hono } from 'hono'
 import { z } from 'zod'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
-import { browseForeigners } from '../insert-edit/foreign.ts'
-import { buildInsertForm } from '../insert-edit/form.ts'
 import type { IeCtx } from '../insert-edit/context.ts'
 import { mimeMap } from '../insert-edit/context.ts'
+import { browseForeigners } from '../insert-edit/foreign.ts'
+import { buildInsertForm } from '../insert-edit/form.ts'
 import { saveRows } from '../insert-edit/save.ts'
 import { type RawCell, getField, transformationWrapper } from '../insert-edit/wrapper.ts'
 import { withMeta } from '../metadata/service.ts'
@@ -38,8 +38,10 @@ async function withIe<T>(c: Context<ServerEnv>, fn: (ctx: IeCtx) => Promise<T>):
     if (login === undefined) throw new ValidationError('Invalid server index!')
     login.cache ??= {}
     const reader = new TableReader(conn, login.cache, tr)
-    if (db === '' || !(await reader.selectDb(db))) throw new NotFoundError(tr.gettext('No databases selected.'))
-    if (table === '' || !(await m.tableExists(db, table))) throw new NotFoundError(tr.gettext('No table selected.'))
+    if (db === '' || !(await reader.selectDb(db)))
+      throw new NotFoundError(tr.gettext('No databases selected.'))
+    if (table === '' || !(await m.tableExists(db, table)))
+      throw new NotFoundError(tr.gettext('No table selected.'))
     const ctx: IeCtx = {
       reader,
       conn,
@@ -84,8 +86,10 @@ insertEditRoutes.post('/:db/tables/:t/insert-form', async (c) => {
     .map((w) => w.clause)
   return c.json(
     await withIe(c, async (ctx) => {
-      if (req.showFunctionFields !== undefined) ctx.cfg = { ...ctx.cfg, ShowFunctionFields: req.showFunctionFields }
-      if (req.showFieldTypes !== undefined) ctx.cfg = { ...ctx.cfg, ShowFieldTypesInDataEditView: req.showFieldTypes }
+      if (req.showFunctionFields !== undefined)
+        ctx.cfg = { ...ctx.cfg, ShowFunctionFields: req.showFunctionFields }
+      if (req.showFieldTypes !== undefined)
+        ctx.cfg = { ...ctx.cfg, ShowFieldTypesInDataEditView: req.showFieldTypes }
       return buildInsertForm(ctx, {
         whereClauses: clauses.length > 0 ? clauses : null,
         copy: req.copy && clauses.length > 0,
@@ -135,7 +139,10 @@ insertEditRoutes.get('/:db/tables/:t/transformations', async (c) =>
 )
 
 const send = (r: RawCell) =>
-  new Response(typeof r.body === 'string' ? r.body : new Uint8Array(r.body), { status: r.status, headers: r.headers })
+  new Response(typeof r.body === 'string' ? r.body : new Uint8Array(r.body), {
+    status: r.status,
+    headers: r.headers,
+  })
 
 /** GET …/tables/:t/transformation/wrapper?key&where&sig&ct&cn&resize (pma: /transformation/wrapper) */
 insertEditRoutes.get('/:db/tables/:t/transformation/wrapper', async (c) =>
@@ -157,7 +164,11 @@ insertEditRoutes.get('/:db/tables/:t/transformation/wrapper', async (c) =>
 insertEditRoutes.get('/:db/tables/:t/get-field', async (c) =>
   send(
     await withIe(c, (ctx) =>
-      getField(ctx, { key: c.req.query('key') ?? '', where: c.req.query('where') ?? '', sig: c.req.query('sig') ?? '' }),
+      getField(ctx, {
+        key: c.req.query('key') ?? '',
+        where: c.req.query('where') ?? '',
+        sig: c.req.query('sig') ?? '',
+      }),
     ),
   ),
 )

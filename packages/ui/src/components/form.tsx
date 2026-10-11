@@ -195,3 +195,18 @@ export function Checkbox({ className, ...props }: ComponentProps<typeof Checkbox
     </CheckboxPrimitive.Root>
   )
 }
+
+// ---------------------------------------------------------------------------------------------
+// Radio — a native radio button (phpMyAdmin's radio groups post with the form and keep ids for
+// keyboard navigation), styled like the other controls
+// ---------------------------------------------------------------------------------------------
+
+export function Radio({ className, ...props }: Omit<ComponentProps<'input'>, 'type'>) {
+  return (
+    <input
+      type="radio"
+      className={cn('size-3.5 cursor-pointer accent-(--color-accent) align-middle', className)}
+      {...props}
+    />
+  )
+}

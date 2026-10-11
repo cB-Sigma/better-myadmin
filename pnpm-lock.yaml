@@ -99,6 +99,9 @@ importers:
       '@bettermyadmin/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
+      '@bettermyadmin/mysql-types':
+        specifier: workspace:*
+        version: link:../../packages/mysql-types
       '@bettermyadmin/sql-lexer':
         specifier: workspace:*
         version: link:../../packages/sql-lexer

@@ -85,6 +85,8 @@ export type InsertWidget = z.infer<typeof InsertWidget>
 
 export const InsertColumn = z.object({
   field: z.string(),
+  /** position among all table columns (generated ones included): field ids `field_<n>_<col>` */
+  columnNumber: z.number().int(),
   /** md5(field): the key phpMyAdmin uses in input names */
   md5: z.string(),
   type: z.string(),
@@ -148,6 +150,8 @@ export type InsertRow = z.infer<typeof InsertRow>
 /** GET …/tables/:t/insert-form */
 export const InsertFormResponse = z.object({
   insertMode: z.boolean(),
+  /** count of all table columns (InsertEdit::$fieldIndex = row * count + column + 1) */
+  columnCount: z.number().int(),
   /** default_action=insert (Copy): rows fetched, saved as INSERT */
   copy: z.boolean(),
   columns: z.array(InsertColumn),
@@ -251,8 +255,18 @@ export const BrowseForeignersResponse = z.object({
   rows: z
     .array(
       z.object({
-        left: z.object({ key: z.string(), description: z.string(), title: z.string(), selected: z.boolean() }),
-        right: z.object({ key: z.string(), description: z.string(), title: z.string(), selected: z.boolean() }),
+        left: z.object({
+          key: z.string(),
+          description: z.string(),
+          title: z.string(),
+          selected: z.boolean(),
+        }),
+        right: z.object({
+          key: z.string(),
+          description: z.string(),
+          title: z.string(),
+          selected: z.boolean(),
+        }),
         /** repeat the header before this row (RepeatCells) */
         header: z.boolean(),
       }),
