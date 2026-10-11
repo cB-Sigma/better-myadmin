@@ -42,11 +42,15 @@ export interface MessageMap {
   msgids?: Record<string, Disposition>
 }
 
+/** Keys: item key (`js:table/structure.ts#click:…`), a script (`js:table/structure.ts`) or a prefix ending in `/` or `*`. */
+export type JsMap = Record<string, Disposition>
+
 export interface Maps {
   routes: RouteMap
   directives: DirectiveMap
   controls: ControlMap
   messages: MessageMap
+  js: JsMap
 }
 
 export function loadMaps(dir = MAP_DIR): Maps {
@@ -55,6 +59,7 @@ export function loadMaps(dir = MAP_DIR): Maps {
     directives: readYaml<DirectiveMap>(join(dir, 'directives.yaml'), {}),
     controls: readYaml<ControlMap>(join(dir, 'controls.yaml'), {}),
     messages: readYaml<MessageMap>(join(dir, 'messages.yaml'), {}),
+    js: readYaml<JsMap>(join(dir, 'js.yaml'), {}),
   }
 }
 

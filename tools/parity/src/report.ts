@@ -26,6 +26,7 @@ const KIND_TITLE: Record<CoverageKind, string> = {
   controls: 'Template controls',
   directives: 'Config directives',
   messages: 'Messages (msgids)',
+  js: 'JS behaviours',
   checklist: 'Checklist items',
 }
 
@@ -97,6 +98,7 @@ export interface MissingSource {
   routes: number
   controls: number
   msgids: number
+  js: number
   score: number
 }
 
@@ -109,7 +111,7 @@ export function missingBySource(cov: Coverage, inv: Inventories): MissingSource[
   const get = (source: string, area: string) => {
     let e = m.get(source)
     if (e === undefined) {
-      e = { source, area, routes: 0, controls: 0, msgids: 0, score: 0 }
+      e = { source, area, routes: 0, controls: 0, msgids: 0, js: 0, score: 0 }
       m.set(source, e)
     }
     return e
@@ -124,6 +126,11 @@ export function missingBySource(cov: Coverage, inv: Inventories): MissingSource[
     if (COVERED.has(it.status)) continue
     get(controlFile.get(it.key) ?? it.source, it.area).controls++
   }
+  const jsFile = new Map(inv.js.items.map((j) => [j.key, j.file]))
+  for (const it of cov.kinds.js.items) {
+    if (COVERED.has(it.status)) continue
+    get(jsFile.get(it.key) ?? it.source, it.area).js++
+  }
   const rules = loadAreaRules()
   const msgRefs = new Map(inv.messages.items.map((x) => [x.key, x.refs]))
   for (const it of cov.kinds.messages.items) {
@@ -135,7 +142,7 @@ export function missingBySource(cov: Coverage, inv: Inventories): MissingSource[
       get(f, String(area ?? rules.default)).msgids++
     }
   }
-  for (const e of m.values()) e.score = e.routes * 5 + e.controls * 2 + e.msgids
+  for (const e of m.values()) e.score = e.routes * 5 + e.controls * 2 + e.js * 2 + e.msgids
   return [...m.values()].sort((a, b) => b.score - a.score || a.source.localeCompare(b.source))
 }
 
@@ -177,13 +184,13 @@ export function renderReadme(cov: Coverage, inv: Inventories, top = 30): string 
   lines.push('')
   lines.push(
     'phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by controller), uncovered template controls ' +
-      '(weight 2) and unused msgids (weight 1, by the files that use them). Unused msgids are the best "likely missing feature" signal: ' +
+      '(weight 2), uncovered JS behaviours (weight 2) and unused msgids (weight 1, by the files that use them). Unused msgids are the best "likely missing feature" signal: ' +
       'see [messages.md](messages.md) for the strings themselves.',
   )
   lines.push('')
   lines.push(
     table(
-      ['#', 'phpMyAdmin source', 'Area', 'Milestone', 'Routes', 'Controls', 'Msgids', 'Score'],
+      ['#', 'phpMyAdmin source', 'Area', 'Milestone', 'Routes', 'Controls', 'JS', 'Msgids', 'Score'],
       missingBySource(cov, inv)
         .slice(0, top)
         .map((e, i) => [
@@ -193,6 +200,7 @@ export function renderReadme(cov: Coverage, inv: Inventories, top = 30): string 
           milestoneOf(e.area),
           String(e.routes),
           String(e.controls),
+          String(e.js),
           String(e.msgids),
           String(e.score),
         ]),
@@ -224,7 +232,7 @@ export function renderReadme(cov: Coverage, inv: Inventories, top = 30): string 
   lines.push(
     table(
       ['Inventory', 'Items', 'Extracted from'],
-      (['routes', 'controls', 'directives', 'messages'] as const).map((k) => [
+      (['routes', 'controls', 'directives', 'messages', 'js'] as const).map((k) => [
         `[${k}.json](../../../tools/parity/inventory/${k}.json)`,
         String(inv[k]._meta.count),
         cell(inv[k]._meta.source),
@@ -359,6 +367,38 @@ export function renderDirectives(cov: Coverage): string {
         ]),
       ),
     ]),
+  ].join('\n')
+}
+
+export function renderJs(cov: Coverage): string {
+  return [
+    ...header(
+      'js',
+      cov,
+      "What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. " +
+        'Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.',
+    ),
+    ...perAreaSections(cov, 'js', (items) => {
+      const byScript = groupBy(items, (i) => i.key.slice(3, i.key.indexOf('#')))
+      return [
+        table(
+          ['Script', 'Covered', 'Not covered'],
+          [...byScript.entries()]
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .map(([f, its]) => {
+              const done = its.filter((i) => COVERED.has(i.status))
+              const notDone = its.filter((i) => !COVERED.has(i.status))
+              const show = (i: ItemCoverage) =>
+                `${STATUS_ICON[i.status]} ${code(i.label.length > 80 ? `${i.label.slice(0, 77)}…` : i.label)}`
+              return [
+                code(f),
+                `${done.length}/${its.length}${done.length > 0 ? `: ${done.map(show).join(' ')}` : ''}`,
+                notDone.map(show).join(' '),
+              ]
+            }),
+        ),
+      ]
+    }),
   ].join('\n')
 }
 
