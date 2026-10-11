@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Cell } from './common.ts'
+import { GridData } from './grid.ts'
 
 /** POST /api/servers/:s/query (replaces /import for typed queries and /sql for browse). */
 export const QueryRequest = z.object({
@@ -38,6 +39,8 @@ export const QueryRequest = z.object({
    * "Bookmark this SQL query": bkm_label, bkm_all_users, bkm_replace. The posted `sql` is stored once
    * for the whole text in the request's final database when the run completed (ImportController).
    */
+  /** Build the results grid metadata (row actions, sort links, FK links…) for result sets. */
+  grid: z.boolean().optional(),
   bookmark: z
     .object({
       label: z.string(),
@@ -210,6 +213,8 @@ export const StatementResult = z.object({
   card: SqlCard.nullable().optional(),
   error: MysqlDie.optional(),
   profiling: Profiling.optional(),
+  /** The results grid (Results.php as data) when the request asked for it. */
+  grid: GridData.optional(),
   warnings: z.array(Warning),
   /** Database selected after the statement (changes after USE). */
   db: z.string().nullable(),
