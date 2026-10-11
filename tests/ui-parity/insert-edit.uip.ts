@@ -42,11 +42,17 @@ pageParity('table-insert-preview-sql', {
   pma: { route: '/table/change', params: { db: FIX.db, table: T } },
   ours: { path: `/s/1/db/${FIX.db}/t/${T}/insert` },
   ready: { pma: '#insertForm', ours: '#insertForm' },
-  scope: { pma: '#previewSqlModal .modal-content', ours: '#previewSqlModal' },
+  // phpMyAdmin's page holds two #previewSqlModal (actions panel and table template): the shown one
+  scope: { pma: '#previewSqlModal.show .modal-content', ours: '#previewSqlModal' },
   setup: async ({ pma, ours }) => {
     for (const page of [pma, ours]) {
       await page.getByRole('button', { name: 'Preview SQL' }).first().click()
-      await page.locator('#previewSqlModal').getByText('INSERT INTO').first().waitFor()
+      await page
+        .locator('#previewSqlModal')
+        .filter({ visible: true })
+        .getByText('INSERT', { exact: false })
+        .first()
+        .waitFor()
     }
   },
 })
