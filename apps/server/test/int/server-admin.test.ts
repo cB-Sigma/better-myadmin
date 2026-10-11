@@ -74,7 +74,7 @@ describe('databases', () => {
     expect(d.databaseToCreate).toBe('m3srv_it_')
     expect(d.isDropAllowed).toBe(false)
     const r = await limited.req('POST', '/api/servers/1/databases/drop', { selected_dbs: ['m3srv_it_a'] })
-    expect(r.status).toBe(400)
+    expect(r.json.success).toBe(false)
   })
 
   it('sorting falls back to SCHEMA_NAME, order to asc', async () => {
@@ -93,7 +93,7 @@ describe('databases', () => {
       'CREATE DATABASE `m3srv_it_new` DEFAULT CHARSET=latin1 COLLATE latin1_swedish_ci;',
     )
     const again = await t.req('POST', '/api/servers/1/databases', { new_db: 'm3srv_it_new' })
-    expect(again.status).toBe(400)
+    expect((again.json.message as { type: string }).type).toBe('error')
     expect((again.json.message as { text: string }).text).toMatch(/^#1007 - /)
     const d = await t.req('POST', '/api/servers/1/databases/drop', {
       selected_dbs: ['m3srv_it_new', 'sys', 7],
@@ -148,7 +148,7 @@ describe('status', () => {
         message: { type: 'success', text: `Thread ${c.threadId} was successfully killed.` },
       })
       const k2 = await t.req('POST', `/api/servers/1/status/processes/${c.threadId}/kill`)
-      expect(k2.status).toBe(400)
+      expect(k2.json.success).toBe(false)
     } finally {
       c.destroy()
     }

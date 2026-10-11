@@ -64,14 +64,14 @@ serverAdminRoutes.get('/databases', async (c) => {
 serverAdminRoutes.post('/databases', async (c) => {
   const req = parse(CreateDatabaseRequest, await body(c))
   const res = await withAdmin(c, (ctx) => createDatabase(ctx, req.new_db, req.db_collation))
-  return c.json(res, res.message.type === 'error' ? 400 : 200)
+  return c.json(res)
 })
 
 /** pma: /server/databases/destroy */
 serverAdminRoutes.post('/databases/drop', async (c) => {
   const req = parse(DropDatabasesRequest, await body(c))
   const res = await withAdmin(c, (ctx) => dropDatabases(ctx, req.selected_dbs))
-  return c.json(res, res.success ? 200 : 400)
+  return c.json(res)
 })
 
 /** pma: /server/status */
@@ -97,7 +97,7 @@ serverAdminRoutes.post('/status/processes/:id/kill', async (c) => {
   const id = c.req.param('id')
   const n = /^\d+$/.test(id) ? Number(id) : 0
   const res = await withAdmin(c, (ctx) => killProcess(ctx, n))
-  return c.json(res, res.success ? 200 : 400)
+  return c.json(res)
 })
 
 /** pma: /server/status/queries */
@@ -140,7 +140,7 @@ serverAdminRoutes.post('/variables/:name', async (c) => {
   const name = c.req.param('name')
   const req = parse(SetVariableRequest, await body(c))
   const res = await withAdmin(c, (ctx) => setVariable(ctx, name, req.varValue))
-  return c.json(res, res.success ? 200 : 400)
+  return c.json(res)
 })
 
 /** pma: /server/collations */
