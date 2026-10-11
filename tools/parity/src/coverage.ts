@@ -18,7 +18,7 @@ import { join } from 'node:path'
 import { type AreaRules, areaOf, loadAreaRules, loadAreas } from './areas.ts'
 import { type ChecklistItem, readChecklist } from './checklist.ts'
 import { msgKey } from './extract/pot.ts'
-import type { Inventories, InventoryKind } from './inventory.ts'
+import type { Inventories, InventoryKind, JsItem } from './inventory.ts'
 import {
   type Disposition,
   type Maps,
@@ -29,7 +29,7 @@ import {
   lookup,
 } from './maps.ts'
 import { collectChains, directiveUses, scanMsgids, sourceFiles } from './scan/code.ts'
-import { type ControlClaim, scanControlClaims, verifyClaim } from './scan/controls.ts'
+import { type ControlClaim, scanControlClaims, verifyClaim, verifyJsClaim } from './scan/controls.ts'
 import { type Endpoint, normalizePath, scanHono } from './scan/hono.ts'
 import { type SpaRoute, scanTanstack } from './scan/tanstack.ts'
 import { type TestCase, type TestResult, scanTests } from './tests.ts'
@@ -57,7 +57,14 @@ export const STATUSES: Status[] = [
 ]
 
 export type CoverageKind = InventoryKind | 'checklist'
-export const COVERAGE_KINDS: CoverageKind[] = ['routes', 'controls', 'directives', 'messages', 'checklist']
+export const COVERAGE_KINDS: CoverageKind[] = [
+  'routes',
+  'controls',
+  'directives',
+  'messages',
+  'js',
+  'checklist',
+]
 
 export interface ItemCoverage {
   key: string
@@ -264,7 +271,17 @@ export function computeCoverage(inv: Inventories, maps: Maps, opts: CoverageOpti
   const claims = scanControlClaims(join(repo, 'apps/web/src'), repo)
   const controlByKey = new Map(inv.controls.items.map((c) => [c.key, c]))
   const claimsByKey = new Map<string, ControlClaim[]>()
+  const jsByKey = new Map(inv.js.items.map((j) => [j.key, j]))
+  const jsClaimsByKey = new Map<string, ControlClaim[]>()
   for (const c of claims) {
+    if (c.key.startsWith('js:')) {
+      if (!jsByKey.has(c.key))
+        problems.push(
+          `${c.at}:${c.line}: claims ${c.key}, which is not a phpMyAdmin JS behaviour (see tools/parity/inventory/js.json)`,
+        )
+      else jsClaimsByKey.set(c.key, [...(jsClaimsByKey.get(c.key) ?? []), c])
+      continue
+    }
     if (!controlByKey.has(c.key)) {
       problems.push(
         `${c.at}:${c.line}: claims ${c.key}, which is not a phpMyAdmin control (see tools/parity/inventory/controls.json)`,
@@ -310,6 +327,46 @@ export function computeCoverage(inv: Inventories, maps: Maps, opts: CoverageOpti
         ((k.endsWith('/') || k.endsWith('*')) && c.key.startsWith(k.replace(/\*$/, ''))),
     )
     if (!matches) problems.push(`controls.yaml: ${k} matches no phpMyAdmin control or template`)
+  }
+
+  // --- JS behaviours ------------------------------------------------------------------------
+  const jsItems: ItemCoverage[] = inv.js.items.map((j) => {
+    const d = lookup(maps.js, j.key, [`js:${j.script}`])
+    const item: ItemCoverage = {
+      key: j.key,
+      area: areaOf(j.file, rules),
+      status: 'missing',
+      label: jsLabel(j),
+      source: `${j.file}:${j.line}${j.count > 1 ? ` (×${j.count})` : ''}`,
+      targets: [],
+      problems: dispProblems(d),
+    }
+    const cl = jsClaimsByKey.get(j.key) ?? []
+    if (cl.length > 0) {
+      const errors = cl.map((x) => ({ x, err: verifyJsClaim(x, repo) }))
+      item.targets = cl.map((x) => `${x.file} (${x.via === 'registry' ? x.at : 'data-pma'})`)
+      if (errors.some((e) => e.err === null)) item.status = 'implemented'
+      else {
+        item.status = 'broken'
+        item.problems.push(...errors.map((e) => `${e.x.at}:${e.x.line}: ${e.err}`))
+      }
+    } else {
+      const { status, detail } = fromDisposition(d)
+      item.status = status
+      if (detail !== undefined) item.detail = detail
+    }
+    if (item.problems.length > 0) item.status = 'broken'
+    return item
+  })
+  for (const k of Object.keys(maps.js)) {
+    const p = k.replace(/\*$/, '')
+    const matches = inv.js.items.some(
+      (j) =>
+        j.key === k ||
+        `js:${j.script}` === k ||
+        ((k.endsWith('/') || k.endsWith('*')) && j.key.startsWith(p)),
+    )
+    if (!matches) problems.push(`js.yaml: ${k} matches no phpMyAdmin JS behaviour or script`)
   }
 
   // --- directives ----------------------------------------------------------------------------
@@ -449,7 +506,7 @@ export function computeCoverage(inv: Inventories, maps: Maps, opts: CoverageOpti
   })
 
   // problems attached to items are global problems too
-  const all = [routeItems, controlItems, directiveItems, messageItems, checklistItems]
+  const all = [routeItems, controlItems, directiveItems, messageItems, jsItems, checklistItems]
   for (const items of all)
     for (const it of items) for (const p of it.problems) problems.push(`${it.key}: ${p}`)
 
@@ -460,11 +517,26 @@ export function computeCoverage(inv: Inventories, maps: Maps, opts: CoverageOpti
       controls: finish('controls', controlItems),
       directives: finish('directives', directiveItems),
       messages: finish('messages', messageItems),
+      js: finish('js', jsItems),
       checklist: finish('checklist', checklistItems),
     },
     problems,
     notes,
     scans: { endpoints, spaRoutes, claims, tests, checklist, unknownMsgids },
+  }
+}
+
+/** Short label of a JS behaviour for the reports. */
+export function jsLabel(j: JsItem): string {
+  switch (j.kind) {
+    case 'event':
+      return `${j.event} ${j.selector}${j.keys !== undefined ? ` [${j.keys.join(' ')}]` : ''}`
+    case 'dialog':
+      return `${j.event}(${j.messages?.join(', ') ?? JSON.stringify(j.text ?? '')})`
+    case 'ajax':
+      return `${j.method} ${j.route ?? j.url ?? '?'}`
+    default:
+      return j.key.slice(j.key.indexOf('#') + 1)
   }
 }
 
