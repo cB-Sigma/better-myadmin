@@ -13,7 +13,7 @@ import {
 import { getTheme } from '@bettermyadmin/ui/themes'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { api } from '../../lib/api.ts'
+import { api } from '../../lib/api'
 import { useConfig } from '../../lib/config.ts'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys.ts'
@@ -38,7 +38,7 @@ export function useLogout() {
         window.location.href = r.logoutUrl
         return
       }
-      qc.removeQueries({ queryKey: ['srv'] })
+      qc.removeQueries({ queryKey: qk.allServers })
       await qc.invalidateQueries({ queryKey: qk.auth })
     },
   })

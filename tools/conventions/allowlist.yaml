@@ -2,42 +2,6 @@
 # Every entry needs a reason. The list only shrinks: an entry that no longer matches fails the check.
 # Fields: rule (required), file (exact path, optional), symbol (exact, optional), reason (required).
 allow:
-  - rule: web/api-module
-    file: apps/web/src/features/server/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/api-module
-    file: apps/web/src/features/table/structure/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/bookmarks/provider.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/server/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/shell/UserMenu.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/sql/SqlMessage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/create/CreateTablePage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/indexes/IndexEditor.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/indexes/IndexPage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/structure/ColumnPages.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/structure/StructurePage.tsx
-    reason: present at eec8ae7 (before the checker); being consolidated
-  - rule: web/query-keys
-    file: apps/web/src/features/table/structure/api.ts
-    reason: present at eec8ae7 (before the checker); being consolidated
   - rule: web/no-raw-colors
     file: apps/web/src/features/server/StatusPages.tsx
     reason: present at eec8ae7 (before the checker); being consolidated

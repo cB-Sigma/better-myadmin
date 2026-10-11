@@ -14,10 +14,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, Outlet, useLocation, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, CircleHelp, FileText, FileType, Pause, Play } from 'lucide-react'
 import { type ReactNode, useMemo, useRef, useState } from 'react'
-import { ApiError, errorMessage } from '../../lib/api'
+import { ApiError, api, errorMessage } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { path } from '../../lib/paths'
-import { serverApi, serverKeys } from './api'
+import { qk } from '../../lib/queryKeys'
 
 /** pma: templates/server/status/base.twig — the pills shared by the Status sub-pages */
 export function StatusLayout({ server }: { server: number }) {
@@ -54,8 +54,8 @@ export function StatusLayout({ server }: { server: number }) {
 /** pma: templates/server/status/status/index.twig */
 export function StatusOverviewPage({ server }: { server: number }) {
   const q = useQuery({
-    queryKey: serverKeys.status(server, 'overview'),
-    queryFn: () => serverApi.status(server),
+    queryKey: qk.status(server, 'overview'),
+    queryFn: () => api.statusOverview(server),
   })
   const o = q.data
   if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
@@ -211,18 +211,18 @@ export function ProcessesPage({
   const [auto, setAuto] = useState(false)
   const [rate, setRate] = useState(5)
   const [message, setMessage] = useState<{ type: 'success' | 'error' | 'notice'; text: string } | null>(null)
-  const key = serverKeys.status(server, 'processes', { ...search, auto })
+  const key = qk.status(server, 'processes', { ...search, auto })
   const q = useQuery({
     queryKey: key,
     queryFn: ({ signal }) => {
       void signal
-      return serverApi.processes(server, { ...search, full: auto ? true : search.full })
+      return api.processes(server, { ...search, full: auto ? true : search.full })
     },
     refetchInterval: auto ? rate * 1000 : false,
     placeholderData: (prev) => prev,
   })
   const kill = useMutation({
-    mutationFn: (id: string) => serverApi.kill(server, id),
+    mutationFn: (id: string) => api.killProcess(server, id),
     onSuccess: (r, id) => {
       setMessage(r.message)
       qc.setQueryData<ProcessList>(key, (old) =>
@@ -469,8 +469,8 @@ function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ar
 /** pma: templates/server/status/queries/index.twig */
 export function QueriesPage({ server }: { server: number }) {
   const q = useQuery({
-    queryKey: serverKeys.status(server, 'queries'),
-    queryFn: () => serverApi.queries(server),
+    queryKey: qk.status(server, 'queries'),
+    queryFn: () => api.queryStatistics(server),
   })
   const s = q.data
   if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
@@ -567,15 +567,15 @@ export function StatusVariablesPage({
   initial: { filterText: string; filterAlert: boolean; filterCategory: string; dontFormat: boolean }
 }) {
   const qc = useQueryClient()
-  const key = serverKeys.status(server, 'variables')
-  const q = useQuery({ queryKey: key, queryFn: () => serverApi.statusVariables(server) })
+  const key = qk.status(server, 'variables')
+  const q = useQuery({ queryKey: key, queryFn: () => api.statusVariables(server) })
   const [text, setText] = useState(initial.filterText)
   const [alertOnly, setAlertOnly] = useState(initial.filterAlert)
   const [category, setCategory] = useState(initial.filterCategory)
   const [raw, setRaw] = useState(initial.dontFormat)
   const [flushed, setFlushed] = useState<string | null>(null)
   const flush = useMutation({
-    mutationFn: (f: string) => serverApi.statusVariables(server, { flush: f }),
+    mutationFn: (f: string) => api.statusVariables(server, { flush: f }),
     onSuccess: (r) => {
       setFlushed(r.flushed)
       qc.setQueryData(key, r)
@@ -726,8 +726,8 @@ export function StatusVariablesPage({
 /** pma: templates/server/status/advisor/index.twig */
 export function AdvisorPage({ server }: { server: number }) {
   const q = useQuery({
-    queryKey: serverKeys.status(server, 'advisor'),
-    queryFn: () => serverApi.advisor(server),
+    queryKey: qk.status(server, 'advisor'),
+    queryFn: () => api.advisor(server),
   })
   const [open, setOpen] = useState(0)
   const dialog = useRef<HTMLDialogElement>(null)

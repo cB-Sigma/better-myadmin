@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
+import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from './HighlightedSql'
 import { SqlEditor } from './editor/SqlEditor'
 import type { SqlEditorHandle } from './editor/types'
@@ -178,7 +179,7 @@ function InlineEditor({ card, env, onClose }: { card: SqlCard; env: CardEnv; onC
   const editor = useRef<SqlEditorHandle>(null)
   // pma: /sql/get-default-fk-check-value, loaded when the editor opens
   const fk = useQuery({
-    queryKey: ['srv', env.server, 'defaultFkCheck'],
+    queryKey: qk.defaultFkCheck(env.server),
     queryFn: () => api.defaultFkCheck(env.server),
   })
   const [fkChecks, setFkChecks] = useState<boolean | null>(null)

@@ -1,6 +1,11 @@
 import type {
+  AddColumnsRequest,
+  AddKeyRequest,
+  AdvisorResponse,
   AuthState,
   AutocompleteResponse,
+  BinlogQuery,
+  BinlogResponse,
   BookmarkCreateRequest,
   BookmarkCreateResponse,
   BookmarkDeleteResponse,
@@ -8,40 +13,74 @@ import type {
   BookmarkRunRequest,
   BookmarkShowResponse,
   CancelResponse,
+  ChangeColumnsRequest,
+  ChangeFormResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  CollationsResponse,
+  ColumnFormOptions,
   ConsoleBookmarkAddRequest,
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  CreateDatabaseResponse,
+  CreateTableFormResponse,
+  CreateTableRequest,
   DatabaseScope,
+  DatabasesQuery,
+  DatabasesResponse,
+  DdlResponse,
   DefaultFkCheckResponse,
+  DropColumnsRequest,
+  DropDatabasesResponse,
+  EngineResponse,
+  EnginesResponse,
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
   FormatResponse,
+  GetVariableResponse,
   HistoryResponse,
   HomeResponse,
   I18nState,
+  IndexFormResponse,
+  KillProcessResponse,
   LintRequest,
   LintResponse,
   LoginRequest,
   LoginResponse,
   LogoutResponse,
+  MoveColumnsRequest,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  PartitionFormResponse,
+  PartitionMaintenanceRequest,
+  PartitioningRequest,
   PasswordForm,
+  PluginsResponse,
+  ProcessList,
+  ProcessesQuery,
   QueryRequest,
   QueryResponse,
+  QueryStatistics,
+  RenameIndexRequest,
+  ReservedWordCheckResponse,
+  SaveIndexRequest,
   ServerScope,
+  ServerVariablesResponse,
   SetCollationResponse,
+  SetVariableResponse,
   SimulateRequest,
   SimulateResponse,
   SqlFormResponse,
   SqlMessage,
+  StatusOverview,
+  StatusVariables,
+  StatusVariablesRequest,
+  StructureResponse,
   TableScope,
   VersionCheckResponse,
 } from '@bettermyadmin/contracts'
@@ -103,6 +142,24 @@ export async function call<T>(method: 'GET' | 'POST', path: string, body?: unkno
   return json as T
 }
 
+/** The scope argument of database- and table-level endpoints (and of their `qk` keys). */
+export interface DbRef {
+  server: number
+  db: string
+}
+export interface TableRef extends DbRef {
+  table: string
+}
+
+const srvPath = (s: number) => `/servers/${s}`
+const dbPath = (r: DbRef) => `${srvPath(r.server)}/databases/${encodeURIComponent(r.db)}`
+const tblPath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURIComponent(r.table)}`
+
+/**
+ * Every endpoint of the API, grouped by section of docs/architecture/05-api-reference.md. The first
+ * argument is the scope: `server: number`, a `DbRef` or a `TableRef`. Reads are `<thing>`, writes
+ * `<verb><Thing>` (docs/architecture/16-golden-path.md#data).
+ */
 export const api = {
   authState: () => call<AuthState>('GET', '/auth/state'),
   /** The request language; `lang` selects one (pma: `?lang=` from the language selector). */
@@ -121,13 +178,8 @@ export const api = {
     ),
   versionCheck: () => call<VersionCheckResponse>('GET', '/meta/version-check'),
   serverScope: (server: number) => call<ServerScope>('GET', `/servers/${server}`),
-  databaseScope: (server: number, db: string) =>
-    call<DatabaseScope>('GET', `/servers/${server}/databases/${encodeURIComponent(db)}`),
-  tableScope: (server: number, db: string, table: string) =>
-    call<TableScope>(
-      'GET',
-      `/servers/${server}/databases/${encodeURIComponent(db)}/tables/${encodeURIComponent(table)}/capabilities`,
-    ),
+  databaseScope: (r: DbRef) => call<DatabaseScope>('GET', dbPath(r)),
+  tableScope: (r: TableRef) => call<TableScope>('GET', `${tblPath(r)}/capabilities`),
   home: (server: number) => call<HomeResponse>('GET', `/servers/${server}/home`),
   setCollation: (server: number, collation: string) =>
     call<SetCollationResponse>('POST', `/servers/${server}/session/collation`, {
@@ -186,6 +238,82 @@ export const api = {
   consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+  // server administration (docs/architecture/05-api-reference.md#server-scope)
+  databases: (s: number, q: DatabasesQuery) =>
+    call<DatabasesResponse>('GET', `${srvPath(s)}/databases${flags(q)}`),
+  createDatabase: (s: number, name: string, collation: string) =>
+    call<CreateDatabaseResponse>('POST', `${srvPath(s)}/databases`, {
+      new_db: name,
+      db_collation: collation,
+    }),
+  dropDatabases: (s: number, names: string[]) =>
+    call<DropDatabasesResponse>('POST', `${srvPath(s)}/databases/drop`, { selected_dbs: names }),
+  statusOverview: (s: number) => call<StatusOverview>('GET', `${srvPath(s)}/status`),
+  processes: (s: number, q: ProcessesQuery) =>
+    call<ProcessList>('GET', `${srvPath(s)}/status/processes${flags(q)}`),
+  killProcess: (s: number, id: string) =>
+    call<KillProcessResponse>('POST', `${srvPath(s)}/status/processes/${id}/kill`),
+  queryStatistics: (s: number) => call<QueryStatistics>('GET', `${srvPath(s)}/status/queries`),
+  statusVariables: (s: number, req: StatusVariablesRequest = {}) =>
+    req.flush !== undefined
+      ? call<StatusVariables>('POST', `${srvPath(s)}/status/variables`, req)
+      : call<StatusVariables>('GET', `${srvPath(s)}/status/variables${flags(req)}`),
+  advisor: (s: number) => call<AdvisorResponse>('GET', `${srvPath(s)}/status/advisor`),
+  serverVariables: (s: number) => call<ServerVariablesResponse>('GET', `${srvPath(s)}/variables`),
+  serverVariable: (s: number, name: string) =>
+    call<GetVariableResponse>('GET', `${srvPath(s)}/variables/${encodeURIComponent(name)}`),
+  setVariable: (s: number, name: string, value: string) =>
+    call<SetVariableResponse>('POST', `${srvPath(s)}/variables/${encodeURIComponent(name)}`, {
+      varValue: value,
+    }),
+  collations: (s: number) => call<CollationsResponse>('GET', `${srvPath(s)}/collations`),
+  engines: (s: number) => call<EnginesResponse>('GET', `${srvPath(s)}/engines`),
+  engine: (s: number, engine: string, page = '') =>
+    call<EngineResponse>(
+      'GET',
+      `${srvPath(s)}/engines/${encodeURIComponent(engine)}${page !== '' ? `/${encodeURIComponent(page)}` : ''}`,
+    ),
+  plugins: (s: number) => call<PluginsResponse>('GET', `${srvPath(s)}/plugins`),
+  binlog: (s: number, q: BinlogQuery) => call<BinlogResponse>('GET', `${srvPath(s)}/binlog${flags(q)}`),
+  // table structure (docs/architecture/05-api-reference.md#table-scope)
+  tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tblPath(r)}/structure`),
+  changeColumnsForm: (r: TableRef, fields: string[]) =>
+    call<ChangeFormResponse>(
+      'GET',
+      `${tblPath(r)}/columns/form?${fields.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
+    ),
+  addColumnsForm: (r: TableRef) =>
+    call<{ options: ColumnFormOptions }>('GET', `${tblPath(r)}/columns/add-form`),
+  createTableForm: (r: DbRef) => call<CreateTableFormResponse>('GET', `${dbPath(r)}/create-table/form`),
+  indexForm: (r: TableRef, q: { index?: string; create?: number }) =>
+    call<IndexFormResponse>('GET', `${tblPath(r)}/indexes/form${queryString(q)}`),
+  partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tblPath(r)}/partitions/form`),
+  createTable: (r: DbRef, req: CreateTableRequest) =>
+    call<DdlResponse & { db: string; table: string }>('POST', `${dbPath(r)}/tables`, req),
+  addColumns: (r: TableRef, req: AddColumnsRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/columns/add`, req),
+  changeColumns: (r: TableRef, req: ChangeColumnsRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/columns/change`, req),
+  dropColumns: (r: TableRef, req: DropColumnsRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/columns/drop`, req),
+  addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tblPath(r)}/columns/key`, req),
+  moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/columns/move`, req),
+  reservedWordCheck: (r: TableRef, names: string[], table?: string) =>
+    call<ReservedWordCheckResponse>('POST', `${tblPath(r)}/columns/reserved-word-check`, {
+      names,
+      ...(table !== undefined ? { table } : {}),
+    }),
+  saveIndex: (r: TableRef, req: SaveIndexRequest) => call<DdlResponse>('POST', `${tblPath(r)}/indexes`, req),
+  renameIndex: (r: TableRef, req: RenameIndexRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/indexes/rename`, req),
+  dropIndex: (r: TableRef, name: string) => call<DdlResponse>('POST', `${tblPath(r)}/indexes/drop`, { name }),
+  savePartitioning: (r: TableRef, req: PartitioningRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/partitions/partitioning`, req),
+  partitionMaintenance: (r: TableRef, req: PartitionMaintenanceRequest) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/partitions/maintenance`, req),
+  removePartitioning: (r: TableRef) =>
+    call<DdlResponse>('POST', `${tblPath(r)}/partitions/remove-partitioning`, {}),
 }
 
 function queryString(q: Record<string, string | number | undefined>): string {
@@ -199,4 +327,15 @@ function qs(p: Record<string, string | undefined>): string {
   const u = new URLSearchParams()
   for (const [k, v] of Object.entries(p)) if (v !== undefined && v !== '') u.set(k, v)
   return u.toString()
+}
+
+/** Search params where `true` is `1` and false/empty values are left out (the server pages' GET forms). */
+function flags(q: Record<string, unknown>): string {
+  const p = new URLSearchParams()
+  for (const [k, v] of Object.entries(q)) {
+    if (v === undefined || v === false || v === '') continue
+    p.set(k, v === true ? '1' : String(v))
+  }
+  const s = p.toString()
+  return s === '' ? '' : `?${s}`
 }

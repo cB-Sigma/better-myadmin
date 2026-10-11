@@ -2,7 +2,8 @@ import { MessageBox } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { errorMessage } from '../../../lib/api'
+import { api, errorMessage } from '../../../lib/api'
+import { qk } from '../../../lib/queryKeys'
 import {
   ColumnForm,
   type ColumnRow,
@@ -11,7 +12,6 @@ import {
   indexesFromRows,
   toColumnDef,
 } from '../structure/ColumnForm'
-import { structureApi } from '../structure/api'
 import { setFlash } from '../structure/flash'
 
 /**
@@ -26,8 +26,8 @@ export function CreateTablePage({
   const navigate = useNavigate()
   const qc = useQueryClient()
   const q = useQuery({
-    queryKey: ['srv', server, 'db', db, 'create-form'],
-    queryFn: () => structureApi.createForm({ server, db }),
+    queryKey: qk.createTableForm({ server, db }),
+    queryFn: () => api.createTableForm({ server, db }),
   })
   const [rows, setRows] = useState<ColumnRow[] | null>(null)
   const [opts, setOpts] = useState<TableOptions | null>(null)
@@ -57,17 +57,13 @@ export function CreateTablePage({
       reservedCheck={async (names) => {
         // the reserved-word check needs a table scope; the new table's name is checked too
         try {
-          return await structureApi.reservedWordCheck(
-            { server, db, table: table.table || '_' },
-            names,
-            table.table,
-          )
+          return await api.reservedWordCheck({ server, db, table: table.table || '_' }, names, table.table)
         } catch {
           return { reserved: false, message: '' }
         }
       }}
       submit={(dryRun) =>
-        structureApi.createTable(
+        api.createTable(
           { server, db },
           {
             table: table.table,
@@ -84,7 +80,7 @@ export function CreateTablePage({
       }
       onDone={async (r) => {
         setFlash(r.messages)
-        await qc.invalidateQueries({ queryKey: ['srv', server, 'nav'] })
+        await qc.invalidateQueries({ queryKey: qk.nav(server) })
         const created = (r as { table?: string }).table ?? table.table
         // the JS redirects to the new table's Structure page
         await navigate({

@@ -3,9 +3,9 @@ import { Button, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { errorMessage } from '../../../lib/api'
+import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
-import { type Scope, structureApi } from '../structure/api'
+import { qk } from '../../../lib/queryKeys'
 
 /**
  * Add / edit index dialog and the rename dialog.
@@ -39,7 +39,7 @@ export function IndexEditorForm({
   onDone,
   onCancel,
 }: {
-  scope: Scope
+  scope: TableRef
   form: IndexFormResponse
   onDone: (r: DdlResponse) => void
   onCancel?: () => void
@@ -71,7 +71,7 @@ export function IndexEditorForm({
   const submit = async (dryRun: boolean) => {
     setError(null)
     try {
-      const r = await structureApi.saveIndex(scope, { oldIndex: form.oldIndex, index, dryRun })
+      const r = await api.saveIndex(scope, { oldIndex: form.oldIndex, index, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
@@ -302,14 +302,14 @@ export function IndexDialog({
   onClose,
   onDone,
 }: {
-  scope: Scope
+  scope: TableRef
   query: { index?: string; create?: number } | null
   onClose: () => void
   onDone: (r: DdlResponse) => void
 }) {
   const form = useQuery({
-    queryKey: ['index-form', scope, query],
-    queryFn: () => structureApi.indexForm(scope, query ?? {}),
+    queryKey: qk.indexForm(scope, query),
+    queryFn: () => api.indexForm(scope, query ?? {}),
     enabled: query !== null,
     gcTime: 0,
   })
@@ -333,7 +333,7 @@ export function RenameIndexDialog({
   index,
   onClose,
   onDone,
-}: { scope: Scope; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
+}: { scope: TableRef; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
   const [name, setName] = useState(index ?? '')
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
@@ -342,7 +342,7 @@ export function RenameIndexDialog({
     if (index === null) return
     setError(null)
     try {
-      const r = await structureApi.renameIndex(scope, { oldIndex: index, name, dryRun })
+      const r = await api.renameIndex(scope, { oldIndex: index, name, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {

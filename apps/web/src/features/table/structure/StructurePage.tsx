@@ -12,10 +12,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, KeyRound, ListTree } from 'lucide-react'
 import { useState } from 'react'
-import { errorMessage } from '../../../lib/api'
+import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { qk } from '../../../lib/queryKeys'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
-import { type Scope, structureApi, structureKeys } from './api'
 import { confirmSql } from './confirm'
 import { takeFlash } from './flash'
 
@@ -30,12 +30,12 @@ type Column = StructureResponse['columns'][number]
 const sqlLink = (server: number, sql: string) => `/s/${server}/sql?sql=${encodeURIComponent(sql)}`
 
 export function StructurePage({ server, db, table }: { server: number; db: string; table: string }) {
-  const scope: Scope = { server, db, table }
+  const scope: TableRef = { server, db, table }
   const qc = useQueryClient()
   const navigate = useNavigate()
   const q = useQuery({
-    queryKey: structureKeys.structure(scope),
-    queryFn: () => structureApi.structure(scope),
+    queryKey: qk.tableStructure(scope),
+    queryFn: () => api.tableStructure(scope),
   })
   const [messages, setMessages] = useState<SqlMessage[]>(() => takeFlash())
   const [selected, setSelected] = useState<string[]>([])
@@ -52,8 +52,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const [indexCount, setIndexCount] = useState(1)
 
   const refresh = async () => {
-    await qc.invalidateQueries({ queryKey: structureKeys.table(scope) })
-    await qc.invalidateQueries({ queryKey: ['srv', server, 'nav'] })
+    await qc.invalidateQueries({ queryKey: qk.tbl(scope) })
+    await qc.invalidateQueries({ queryKey: qk.nav(server) })
   }
   const act = async (fn: () => Promise<DdlResponse>) => {
     try {
@@ -80,25 +80,23 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const addKey = async (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT', column: Column) => {
     const clause = type === 'PRIMARY' ? 'ADD PRIMARY KEY' : `ADD ${type}`
     if (!confirmSql(`ALTER TABLE \`${table}\` ${clause}(\`${column.name}\`);`)) return
-    await act(() => structureApi.addKey(scope, { type, columns: [column.name], source: 'row' }))
+    await act(() => api.addKey(scope, { type, columns: [column.name], source: 'row' }))
   }
   const bulkKey = async (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT') => {
     if (selected.length === 0) return setMessages([{ type: 'error', text: t('No column selected.') }])
-    const r = await act(() => structureApi.addKey(scope, { type, columns: selected, source: 'bulk' }))
+    const r = await act(() => api.addKey(scope, { type, columns: selected, source: 'bulk' }))
     if (r?.confirm !== undefined) {
       setConfirm({
         ...r.confirm,
         run: async () => {
-          await act(() =>
-            structureApi.addKey(scope, { type, columns: selected, source: 'bulk', confirmed: true }),
-          )
+          await act(() => api.addKey(scope, { type, columns: selected, source: 'bulk', confirmed: true }))
         },
       })
     }
   }
   const dropColumn = async (c: Column) => {
     if (!confirmSql(c.dropSql)) return
-    await act(() => structureApi.dropColumns(scope, { columns: [c.name], source: 'row' }))
+    await act(() => api.dropColumns(scope, { columns: [c.name], source: 'row' }))
   }
   const orderedSelection = columnNames.filter((n) => selected.includes(n))
 
@@ -303,9 +301,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                     question: t('Do you really want to execute the following query?'),
                     sql: `ALTER TABLE \`${table}\`\n${orderedSelection.map((f) => `  DROP \`${f}\``).join(',\n')};`,
                     run: async () => {
-                      await act(() =>
-                        structureApi.dropColumns(scope, { columns: orderedSelection, source: 'bulk' }),
-                      )
+                      await act(() => api.dropColumns(scope, { columns: orderedSelection, source: 'bulk' }))
                     },
                   })
                 }
@@ -492,7 +488,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                                         question: t('Do you really want to execute the following query?'),
                                         sql: index.dropSql,
                                         run: async () => {
-                                          await act(() => structureApi.dropIndex(scope, index.name))
+                                          await act(() => api.dropIndex(scope, index.name))
                                         },
                                       })
                                     }
@@ -641,7 +637,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 const order = moving
                 setMoving(null)
                 if (order === null || order.join('\u0000') === columnNames.join('\u0000')) return
-                await act(() => structureApi.moveColumns(scope, { order }))
+                await act(() => api.moveColumns(scope, { order }))
               }}
             >
               {t('Go')}
@@ -651,9 +647,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 if (moving === null || moving.join('\u0000') === columnNames.join('\u0000'))
                   return setPreview('')
                 try {
-                  setPreview(
-                    (await structureApi.moveColumns(scope, { order: moving, dryRun: true })).preview ?? '',
-                  )
+                  setPreview((await api.moveColumns(scope, { order: moving, dryRun: true })).preview ?? '')
                 } catch (e) {
                   setPreview(errorMessage(e).text)
                 }
@@ -785,7 +779,7 @@ function PartitionsCard({
   act,
 }: {
   s: StructureResponse
-  scope: Scope
+  scope: TableRef
   act: (fn: () => Promise<DdlResponse>) => Promise<DdlResponse | null>
 }) {
   const p = s.partitions
@@ -812,7 +806,7 @@ function PartitionsCard({
     DROP: t('Drop'),
   }
   const run = (operation: Op, partition: string) => {
-    const go = () => void act(() => structureApi.partitionMaintenance(scope, { operation, partition }))
+    const go = () => void act(() => api.partitionMaintenance(scope, { operation, partition }))
     if (operation === 'DROP') {
       if (
         window.confirm(
@@ -845,7 +839,7 @@ function PartitionsCard({
                 id="remove_partitioning"
                 onClick={() => {
                   if (window.confirm(t('Do you really want to remove partitioning?'))) {
-                    void act(() => structureApi.removePartitioning(scope))
+                    void act(() => api.removePartitioning(scope))
                   }
                 }}
               >

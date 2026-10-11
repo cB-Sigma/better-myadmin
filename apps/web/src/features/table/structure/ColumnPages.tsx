@@ -3,27 +3,27 @@ import { Button, MessageBox, MySqlDocLink, Panel, PanelBody, PreviewSqlDialog } 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { errorMessage } from '../../../lib/api'
+import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { qk } from '../../../lib/queryKeys'
 import { ColumnForm, type ColumnRow, emptyRow, indexesFromRows, toColumnDef } from './ColumnForm'
 import { PartitionEditor } from './PartitionEditor'
-import { type Scope, structureApi, structureKeys } from './api'
 import { setFlash } from './flash'
 
 /**
  * Change column(s) (pma: /table/structure/change → /table/structure/save), Add column(s)
  * (pma: /table/add-field) and Edit partitioning (pma: /table/structure/partitioning).
  */
-const structureHref = (s: Scope) =>
+const structureHref = (s: TableRef) =>
   `/s/${s.server}/db/${encodeURIComponent(s.db)}/t/${encodeURIComponent(s.table)}/structure`
 
-function useBackToStructure(scope: Scope) {
+function useBackToStructure(scope: TableRef) {
   const navigate = useNavigate()
   const qc = useQueryClient()
   return async (messages: Parameters<typeof setFlash>[0]) => {
     setFlash(messages)
-    await qc.invalidateQueries({ queryKey: structureKeys.table(scope) })
-    await qc.invalidateQueries({ queryKey: ['srv', scope.server, 'nav'] })
+    await qc.invalidateQueries({ queryKey: qk.tbl(scope) })
+    await qc.invalidateQueries({ queryKey: qk.nav(scope.server) })
     await navigate({ to: structureHref(scope) })
   }
 }
@@ -49,11 +49,11 @@ const rowFromForm = (c: ChangeFormResponse['columns'][number], options: ColumnFo
   moveOptions: c.moveOptions,
 })
 
-export function ChangeColumnsPage({ scope, fields }: { scope: Scope; fields: string[] }) {
+export function ChangeColumnsPage({ scope, fields }: { scope: TableRef; fields: string[] }) {
   const back = useBackToStructure(scope)
   const q = useQuery({
-    queryKey: [...structureKeys.table(scope), 'change-form', fields],
-    queryFn: () => structureApi.changeForm(scope, fields),
+    queryKey: qk.changeColumnsForm(scope, fields),
+    queryFn: () => api.changeColumnsForm(scope, fields),
     gcTime: 0,
   })
   const [rows, setRows] = useState<ColumnRow[] | null>(null)
@@ -68,9 +68,9 @@ export function ChangeColumnsPage({ scope, fields }: { scope: Scope; fields: str
       options={q.data.options}
       rows={rows}
       setRows={setRows}
-      reservedCheck={(names) => structureApi.reservedWordCheck(scope, names)}
+      reservedCheck={(names) => api.reservedWordCheck(scope, names)}
       submit={(dryRun, online) =>
-        structureApi.changeColumns(scope, {
+        api.changeColumns(scope, {
           columns: rows.map((r) => ({
             ...toColumnDef(r),
             orig: r.orig as NonNullable<ColumnRow['orig']>,
@@ -91,11 +91,11 @@ export function AddColumnsPage({
   num,
   where,
   after,
-}: { scope: Scope; num: number; where: 'first' | 'after' | 'last'; after: string }) {
+}: { scope: TableRef; num: number; where: 'first' | 'after' | 'last'; after: string }) {
   const back = useBackToStructure(scope)
   const q = useQuery({
-    queryKey: [...structureKeys.table(scope), 'add-form'],
-    queryFn: () => structureApi.addForm(scope),
+    queryKey: qk.addColumnsForm(scope),
+    queryFn: () => api.addColumnsForm(scope),
   })
   // AddFieldController: num_fields capped at 4096, default 1
   const count = Math.min(4096, Math.max(1, Math.trunc(num) || 1))
@@ -108,9 +108,9 @@ export function AddColumnsPage({
       options={q.data.options}
       rows={rows}
       setRows={setRows}
-      reservedCheck={(names) => structureApi.reservedWordCheck(scope, names)}
+      reservedCheck={(names) => api.reservedWordCheck(scope, names)}
       submit={(dryRun, online) =>
-        structureApi.addColumns(scope, {
+        api.addColumns(scope, {
           columns: rows.map(toColumnDef),
           indexes: indexesFromRows(rows),
           where,
@@ -125,11 +125,11 @@ export function AddColumnsPage({
 }
 
 /** "Edit partitioning" / "Partition table" (partition_definition_form.twig) */
-export function PartitioningPage({ scope }: { scope: Scope }) {
+export function PartitioningPage({ scope }: { scope: TableRef }) {
   const back = useBackToStructure(scope)
   const q = useQuery({
-    queryKey: [...structureKeys.table(scope), 'partition-form'],
-    queryFn: () => structureApi.partitionForm(scope),
+    queryKey: qk.partitionForm(scope),
+    queryFn: () => api.partitionForm(scope),
     gcTime: 0,
   })
   const [value, setValue] = useState<Partitioning | null>(null)
@@ -142,7 +142,7 @@ export function PartitioningPage({ scope }: { scope: Scope }) {
   if (q.data === undefined || value === null) return null
   const save = async (dryRun: boolean) => {
     try {
-      const r = await structureApi.savePartitioning(scope, { partitioning: value, dryRun })
+      const r = await api.savePartitioning(scope, { partitioning: value, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else void back(r.messages)
     } catch (e) {

@@ -3,9 +3,9 @@ import { Loading, MessageBox, MySqlDocLink, PageHeader, Panel, PanelBody, Table 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Check, Pencil, Variable, X } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { ApiError, errorMessage } from '../../lib/api'
+import { ApiError, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
-import { serverApi, serverKeys } from './api'
+import { qk } from '../../lib/queryKeys'
 
 /** The value cell: `,` gets a zero-width space for wrapping; byte values carry their full number. */
 function ValueText({ v }: { v: ServerVariableValue }) {
@@ -19,7 +19,7 @@ function ValueText({ v }: { v: ServerVariableValue }) {
  * pma: templates/server/variables/index.twig, resources/js/server/variables.ts
  */
 export function VariablesPage({ server, filter: initial }: { server: number; filter: string }) {
-  const q = useQuery({ queryKey: serverKeys.variables(server), queryFn: () => serverApi.variables(server) })
+  const q = useQuery({ queryKey: qk.serverVariables(server), queryFn: () => api.serverVariables(server) })
   const [filter, setFilter] = useState(initial)
   const [message, setMessage] = useState<{ type: 'error' | 'notice'; text: string } | null>(null)
   const needle = filter.toUpperCase().replace(/ /g, '_')
@@ -106,7 +106,7 @@ function VariableRows({
   const startEdit = async () => {
     onMessage(null)
     try {
-      const r = await serverApi.getVariable(server, v.name)
+      const r = await api.serverVariable(server, v.name)
       setEditing(r.message)
     } catch (e) {
       onMessage({ type: 'error', text: e instanceof Error ? e.message : String(e) })
@@ -116,10 +116,10 @@ function VariableRows({
     if (editing === null) return
     setBusy(true)
     try {
-      const r = await serverApi.setVariable(server, v.name, editing)
+      const r = await api.setVariable(server, v.name, editing)
       if (r.variable !== undefined) setValue(r.variable)
       setEditing(null)
-      void qc.invalidateQueries({ queryKey: serverKeys.variables(server) })
+      void qc.invalidateQueries({ queryKey: qk.serverVariables(server) })
     } catch (e) {
       const env = e instanceof ApiError ? e.envelope : null
       const text =

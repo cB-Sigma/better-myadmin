@@ -4,11 +4,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, Check, Database, FileCode2, Shield, Trash2, X } from 'lucide-react'
 import { useRef, useState } from 'react'
-import { errorMessage } from '../../lib/api'
+import { api, errorMessage } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { path } from '../../lib/paths'
 import { qk } from '../../lib/queryKeys'
-import { serverApi, serverKeys } from './api'
 
 export interface DatabasesSearch {
   statistics: boolean
@@ -35,8 +34,8 @@ export function DatabasesPage({
   const qc = useQueryClient()
   const navigate = useNavigate()
   const q = useQuery({
-    queryKey: serverKeys.databases(server, search),
-    queryFn: () => serverApi.databases(server, search),
+    queryKey: qk.databases(server, search),
+    queryFn: () => api.databases(server, search),
     placeholderData: (prev) => prev,
   })
   const [filter, setFilter] = useState('')
@@ -48,12 +47,11 @@ export function DatabasesPage({
   const collationRef = useRef<HTMLSelectElement>(null)
 
   const refresh = () => {
-    void qc.invalidateQueries({ queryKey: serverKeys.allDatabases(server) })
+    void qc.invalidateQueries({ queryKey: qk.allDatabases(server) })
     void qc.invalidateQueries({ queryKey: qk.nav(server) })
   }
   const create = useMutation({
-    mutationFn: (v: { name: string; collation: string }) =>
-      serverApi.createDatabase(server, v.name, v.collation),
+    mutationFn: (v: { name: string; collation: string }) => api.createDatabase(server, v.name, v.collation),
     onSuccess: (r) => {
       setMessage(r.message)
       setCreated(r.sqlQuery?.sql ?? null)
@@ -69,7 +67,7 @@ export function DatabasesPage({
     },
   })
   const drop = useMutation({
-    mutationFn: (names: string[]) => serverApi.dropDatabases(server, names),
+    mutationFn: (names: string[]) => api.dropDatabases(server, names),
     onSuccess: (r) => {
       setMessage(r.message)
       setCreated(null)

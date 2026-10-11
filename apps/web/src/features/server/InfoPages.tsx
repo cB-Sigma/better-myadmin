@@ -13,13 +13,13 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { CaseSensitive, Cog, FileText, FileType, Puzzle, Table2 } from 'lucide-react'
 import { Fragment } from 'react'
-import { errorMessage } from '../../lib/api'
+import { api, errorMessage } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
-import { serverApi, serverKeys } from './api'
+import { qk } from '../../lib/queryKeys'
 
 /** pma: templates/server/collations/index.twig */
 export function CollationsPage({ server }: { server: number }) {
-  const q = useQuery({ queryKey: serverKeys.collations(server), queryFn: () => serverApi.collations(server) })
+  const q = useQuery({ queryKey: qk.collations(server), queryFn: () => api.collations(server) })
   return (
     <div>
       <PageHeader icon={CaseSensitive}>{t('Character sets and collations')}</PageHeader>
@@ -63,7 +63,7 @@ export function CollationsPage({ server }: { server: number }) {
 
 /** pma: templates/server/engines/index.twig */
 export function EnginesPage({ server }: { server: number }) {
-  const q = useQuery({ queryKey: serverKeys.engines(server), queryFn: () => serverApi.engines(server) })
+  const q = useQuery({ queryKey: qk.engines(server), queryFn: () => api.engines(server) })
   return (
     <div>
       <PageHeader icon={Cog}>{t('Storage engines')}</PageHeader>
@@ -104,8 +104,8 @@ export function EnginesPage({ server }: { server: number }) {
 /** pma: templates/server/engines/show.twig, _innodb_buffer_pool.twig */
 export function EnginePage({ server, engine, page }: { server: number; engine: string; page: string }) {
   const q = useQuery({
-    queryKey: serverKeys.engines(server, engine, page),
-    queryFn: () => serverApi.engine(server, engine, page),
+    queryKey: qk.engines(server, engine, page),
+    queryFn: () => api.engine(server, engine, page),
   })
   const e = q.data
   return (
@@ -241,7 +241,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 /** pma: templates/server/plugins/index.twig (+ plugins.ts table sorting by name) */
 export function PluginsPage({ server }: { server: number }) {
-  const q = useQuery({ queryKey: serverKeys.plugins(server), queryFn: () => serverApi.plugins(server) })
+  const q = useQuery({ queryKey: qk.plugins(server), queryFn: () => api.plugins(server) })
   return (
     <div>
       <PageHeader icon={Puzzle}>{t('Plugins')}</PageHeader>
@@ -317,8 +317,8 @@ export function BinlogPage({
   onChange: (s: { log?: string; pos?: number; full?: boolean }) => void
 }) {
   const q = useQuery({
-    queryKey: serverKeys.binlog(server, { log, pos, full }),
-    queryFn: () => serverApi.binlog(server, { log, pos, is_full_query: full }),
+    queryKey: qk.binlog(server, { log, pos, full }),
+    queryFn: () => api.binlog(server, { log, pos, is_full_query: full }),
     placeholderData: (prev) => prev,
   })
   const b = q.data
