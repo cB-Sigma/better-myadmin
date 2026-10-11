@@ -156,7 +156,7 @@ function TriggerEditor({
   return (
     <DbModal
       id="triggersEditorModal"
-      title={t('Trigger editor')}
+      title={editMode ? t('Edit') : t('Create new trigger')}
       wide
       onClose={onClose}
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}

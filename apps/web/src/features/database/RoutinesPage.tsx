@@ -313,7 +313,7 @@ function RoutineEditor({
   return (
     <DbModal
       id="routinesEditorModal"
-      title={t('Routine editor')}
+      title={editMode ? t('Edit') : t('Create new routine')}
       wide
       onClose={onClose}
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}

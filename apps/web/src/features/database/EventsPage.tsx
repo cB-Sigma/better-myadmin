@@ -200,7 +200,7 @@ function EventEditor({
   return (
     <DbModal
       id="eventsEditorModal"
-      title={t('Event editor')}
+      title={editMode ? t('Edit') : t('Create new event')}
       wide
       onClose={onClose}
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}
