@@ -194,7 +194,9 @@ export class MetaRequest {
 
   constructor(c: Context<ServerEnv>, opts: MetaRequestOptions = {}) {
     this.c = c
-    const { cfg, pools } = c.get('deps')
+    const { pools } = c.get('deps')
+    // the configuration without user preferences (Config::$baseSettings)
+    const cfg = (c.get('baseCfg') as AppConfig | undefined) ?? c.get('deps').cfg
     this.cfg = cfg
     this.serverIndex = c.get('serverIndex')
     const server = getServer(cfg, this.serverIndex)
@@ -351,6 +353,27 @@ export class MetaRequest {
       state.prefsCache[key] = cached
     }
     return cached
+  }
+
+  /**
+   * Config::$settings: the configuration with the preferences applied, the `Server/*` block merged
+   * into the selected server (UserPreferencesHandler::loadUserPreferences). The base itself when
+   * nothing is stored.
+   */
+  async effectiveConfig(): Promise<AppConfig> {
+    const { userprefs } = await this.appliedPrefs()
+    if (Object.keys(userprefs).length === 0) return this.cfg
+    const merged = await this.settings()
+    const block = userprefs.Server
+    if (block === null || typeof block !== 'object') return merged
+    const servers = merged.Servers as Record<string, ServerConfig>
+    return {
+      ...merged,
+      Servers: {
+        ...servers,
+        [String(this.serverIndex)]: { ...this.server, ...(block as Partial<ServerConfig>) },
+      },
+    } as AppConfig
   }
 
   /** After a save: drop the cached preferences of this request and of the session. */

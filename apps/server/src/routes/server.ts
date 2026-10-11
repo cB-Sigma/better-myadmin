@@ -3,8 +3,10 @@ import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import type { AppEnv } from '../app.ts'
 import { AuthMessages } from '../auth/cookie.ts'
 import { getServer } from '../config.ts'
+import type { AppConfig } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
+import { withMeta } from '../metadata/service.ts'
 import type { SecretBox } from '../session/crypto.ts'
 import type { ServerLogin } from '../session/store.ts'
 import { browseRoutes } from './browse.ts'
@@ -22,7 +24,15 @@ import { sqlRoutes } from './sql.ts'
 import { tableStructureRoutes } from './table-structure.ts'
 
 export type ServerEnv = AppEnv & {
-  Variables: AppEnv['Variables'] & { serverIndex: number; creds: Credentials }
+  Variables: AppEnv['Variables'] & {
+    serverIndex: number
+    creds: Credentials
+    /**
+     * Config::$baseSettings: the configuration without user preferences. `deps.cfg` of a server
+     * request is Config::$settings, the user's preferences of that server applied.
+     */
+    baseCfg: AppConfig
+  }
 }
 
 export const serverRoutes = new Hono<ServerEnv>()
@@ -48,7 +58,24 @@ const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   session.currentServer = s
   c.set('serverIndex', s)
   c.set('creds', creds)
+  await applyUserPreferences(c)
   await next()
+}
+
+/**
+ * UserPreferencesHandler::loadUserPreferences for the request: every handler below reads the
+ * configuration with the user's preferences (cached per session and server).
+ */
+async function applyUserPreferences(c: Context<ServerEnv>): Promise<void> {
+  if (c.get('baseCfg') !== undefined) return
+  const deps = c.get('deps')
+  c.set('baseCfg', deps.cfg)
+  try {
+    const effective = await withMeta(c, {}, (m) => m.effectiveConfig())
+    if (effective !== deps.cfg) c.set('deps', { ...deps, cfg: effective })
+  } catch {
+    // the preferences cannot be read (storage unreachable): the configuration alone
+  }
 }
 
 /** The decrypted credentials of a server login (null when the ciphertext is stale). */

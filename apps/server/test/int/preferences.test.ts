@@ -307,3 +307,26 @@ describe('manage your settings', () => {
     await t.close()
   })
 })
+
+describe('preferences applied to the running app', () => {
+  it('[p08-5102df] Server/hide_db hides databases from the navigation and the database list', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    await root.query('CREATE DATABASE IF NOT EXISTS f08_hidden_db')
+    await root.query(`GRANT SELECT ON \`f08\\_hidden\\_db\`.* TO '${USER}'@'%'`)
+    const t = await app()
+    const names = async () =>
+      JSON.stringify((await t.req('GET', '/api/servers/1/navigation/tree')).json).includes('f08_hidden_db')
+    expect(await names()).toBe(true)
+    const g = (await t.req('GET', '/api/servers/1/preferences/forms/features')).json as Json
+    const s = (
+      await t.req('POST', '/api/servers/1/preferences/forms/features', {
+        values: posted(g.formSet, { 'Servers-1-hide_db': '^f08_hidden' }),
+      })
+    ).json as Json
+    expect(s.saved).toBe(true)
+    expect((await storedPrefs())?.['Server/hide_db']).toBe('^f08_hidden')
+    expect(await names()).toBe(false)
+    await t.close()
+    await root.query('DROP DATABASE IF EXISTS f08_hidden_db')
+  })
+})
