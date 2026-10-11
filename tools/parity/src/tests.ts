@@ -1,0 +1,335 @@
+/**
+ * Tests and their results.
+ *
+ * Static side: every `describe`/`it`/`test` with a literal title in the Vitest projects
+ * (vitest.workspace.ts) and the Playwright suites, with its describe chain. A checklist item is
+ * linked to a test whose full title contains the item id (`p01-3f9a2c`) or the item's exact text.
+ *
+ * Dynamic side: the JSON reporter outputs saved under .data/parity-results/ by
+ * `pnpm parity:report --run` (vitest-<project>.json, playwright-<suite>.json).
+ */
+import { spawnSync } from 'node:child_process'
+import { existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import ts from 'typescript'
+import { REPO, RESULTS_DIR, readJson, walk } from './util.ts'
+
+export interface TestSuiteDef {
+  /** `vitest-unit`, `vitest-int`, `vitest-parity`, `playwright-web`, `playwright-e2e` */
+  id: string
+  runner: 'vitest' | 'playwright'
+  /** directory to scan, repo-relative */
+  root: string
+  match: RegExp
+}
+
+export const SUITES: TestSuiteDef[] = [
+  {
+    id: 'vitest-unit',
+    runner: 'vitest',
+    root: '.',
+    match:
+      /^(packages\/[^/]+\/test\/(?!int\/).*\.test\.ts|apps\/[^/]+\/test\/unit\/.*\.test\.ts|apps\/web\/src\/.*\.test\.tsx?|tools\/[^/]+\/test\/.*\.test\.ts)$/,
+  },
+  {
+    id: 'vitest-int',
+    runner: 'vitest',
+    root: '.',
+    match: /^(apps\/[^/]+\/test\/int\/.*\.test\.ts|packages\/[^/]+\/test\/int\/.*\.test\.ts)$/,
+  },
+  { id: 'vitest-parity', runner: 'vitest', root: '.', match: /^tests\/parity\/.*\.parity\.test\.ts$/ },
+  { id: 'playwright-web', runner: 'playwright', root: '.', match: /^apps\/web\/e2e\/.*\.spec\.ts$/ },
+  { id: 'playwright-e2e', runner: 'playwright', root: '.', match: /^tests\/e2e\/.*\.e2e\.ts$/ },
+]
+
+export interface TestCase {
+  suite: string
+  file: string
+  line: number
+  /** describe chain + title */
+  titlePath: string[]
+  /** titlePath joined with " > " */
+  fullTitle: string
+}
+
+const TEST_FNS = new Set(['it', 'test'])
+const SUITE_FNS = new Set(['describe', 'suite'])
+
+function calleeRoot(expr: ts.Expression): { name: string; isEachCall: boolean } | null {
+  // it('x'), it.only('x'), test.describe('x'), it.each([...])('x'), test.describe.serial('x')
+  if (ts.isIdentifier(expr)) return { name: expr.text, isEachCall: false }
+  if (ts.isPropertyAccessExpression(expr)) {
+    const base = calleeRoot(expr.expression)
+    if (base === null) return null
+    if (expr.name.text === 'describe' || expr.name.text === 'suite')
+      return { name: 'describe', isEachCall: false }
+    return base
+  }
+  if (ts.isCallExpression(expr)) {
+    const base = calleeRoot(expr.expression)
+    return base === null ? null : { name: base.name, isEachCall: true }
+  }
+  return null
+}
+
+function titleOf(node: ts.Expression | undefined): string | null {
+  if (node === undefined) return null
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text
+  if (ts.isTemplateExpression(node)) {
+    // keep the static parts; substitutions become "…"
+    return node.head.text + node.templateSpans.map((s) => `…${s.literal.text}`).join('')
+  }
+  return null
+}
+
+export function scanTestFile(suite: string, file: string, source: string): TestCase[] {
+  const sf = ts.createSourceFile(
+    file,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    file.endsWith('x') ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+  )
+  const out: TestCase[] = []
+  // `const CASES = [{ name: '…' }, …]` tables, for `for (const c of CASES) it(c.name, …)`
+  const tables = new Map<string, ts.ObjectLiteralExpression[]>()
+  const collect = (node: ts.Node) => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      let init: ts.Expression = node.initializer
+      while (ts.isAsExpression(init) || ts.isSatisfiesExpression(init)) init = init.expression
+      if (ts.isArrayLiteralExpression(init) && init.elements.every(ts.isObjectLiteralExpression)) {
+        tables.set(node.name.text, init.elements as unknown as ts.ObjectLiteralExpression[])
+      }
+    }
+    ts.forEachChild(node, collect)
+  }
+  collect(sf)
+  /** loop variable → the case table it iterates */
+  const loops = new Map<string, ts.ObjectLiteralExpression[]>()
+  const propOf = (o: ts.ObjectLiteralExpression, name: string): string | null => {
+    for (const p of o.properties) {
+      if (
+        ts.isPropertyAssignment(p) &&
+        (ts.isIdentifier(p.name) || ts.isStringLiteral(p.name)) &&
+        p.name.text === name
+      ) {
+        return titleOf(p.initializer)
+      }
+    }
+    return null
+  }
+  const titlesOf = (arg: ts.Expression | undefined): { title: string; at: ts.Node }[] => {
+    const t = titleOf(arg)
+    if (t !== null) return [{ title: t, at: arg! }]
+    if (arg !== undefined && ts.isPropertyAccessExpression(arg) && ts.isIdentifier(arg.expression)) {
+      const rows = loops.get(arg.expression.text)
+      if (rows !== undefined) {
+        return rows.flatMap((r) => {
+          const v = propOf(r, arg.name.text)
+          return v === null ? [] : [{ title: v, at: r }]
+        })
+      }
+    }
+    return []
+  }
+  const visit = (node: ts.Node, chain: string[]) => {
+    if (
+      ts.isForOfStatement(node) &&
+      ts.isVariableDeclarationList(node.initializer) &&
+      ts.isIdentifier(node.expression) &&
+      tables.has(node.expression.text)
+    ) {
+      const decl = node.initializer.declarations[0]
+      if (decl !== undefined && ts.isIdentifier(decl.name))
+        loops.set(decl.name.text, tables.get(node.expression.text)!)
+    }
+    if (ts.isCallExpression(node)) {
+      const root = calleeRoot(node.expression)
+      const many = titlesOf(node.arguments[0])
+      if (root !== null && many.length > 1 && TEST_FNS.has(root.name)) {
+        for (const { title, at } of many) {
+          const titlePath = [...chain, title]
+          out.push({
+            suite,
+            file,
+            line: sf.getLineAndCharacterOfPosition(at.getStart()).line + 1,
+            titlePath,
+            fullTitle: titlePath.join(' > '),
+          })
+        }
+        return
+      }
+      const title = many[0]?.title ?? null
+      if (root !== null && title !== null) {
+        const isSuite = SUITE_FNS.has(root.name)
+        const isTest = TEST_FNS.has(root.name) && !isSuite
+        if (isSuite || isTest) {
+          const titlePath = [...chain, title]
+          if (isTest) {
+            out.push({
+              suite,
+              file,
+              line: sf.getLineAndCharacterOfPosition(node.getStart()).line + 1,
+              titlePath,
+              fullTitle: titlePath.join(' > '),
+            })
+          }
+          for (const arg of node.arguments.slice(1)) visit(arg, isSuite ? titlePath : chain)
+          return
+        }
+      }
+    }
+    ts.forEachChild(node, (c) => visit(c, chain))
+  }
+  visit(sf, [])
+  return out
+}
+
+export function scanTests(repo = REPO): TestCase[] {
+  const out: TestCase[] = []
+  const files = walk(repo, (r) => /\.(test|spec|e2e)\.tsx?$/.test(r), new Set([...SKIP, '.git', 'docs']))
+  for (const s of SUITES) {
+    for (const f of files) {
+      if (!s.match.test(f)) continue
+      out.push(...scanTestFile(s.id, f, readFileSync(join(repo, f), 'utf8')))
+    }
+  }
+  return out
+}
+
+const SKIP = new Set(['node_modules', 'dist', '.turbo', 'coverage', '.data', '.claude', 'test-results'])
+
+// ---------------------------------------------------------------------------
+// Results
+// ---------------------------------------------------------------------------
+
+export type TestStatus = 'passed' | 'failed' | 'skipped'
+
+export interface TestResult {
+  suite: string
+  /** repo-relative file */
+  file: string
+  fullTitle: string
+  status: TestStatus
+}
+
+interface VitestJson {
+  testResults: {
+    name: string
+    assertionResults: { ancestorTitles: string[]; title: string; status: string }[]
+  }[]
+}
+
+interface PlaywrightSpec {
+  title: string
+  file: string
+  tests: { results: { status: string }[]; status?: string }[]
+}
+interface PlaywrightSuite {
+  title: string
+  file?: string
+  specs?: PlaywrightSpec[]
+  suites?: PlaywrightSuite[]
+}
+interface PlaywrightJson {
+  config?: { rootDir?: string }
+  suites: PlaywrightSuite[]
+}
+
+const relTo = (repo: string, p: string) => (p.startsWith(repo) ? p.slice(repo.length + 1) : p)
+
+export function parseVitestJson(suite: string, json: VitestJson, repo = REPO): TestResult[] {
+  return json.testResults.flatMap((f) =>
+    f.assertionResults.map((a) => ({
+      suite,
+      file: relTo(repo, f.name),
+      fullTitle: [...a.ancestorTitles, a.title].join(' > '),
+      status: a.status === 'passed' ? 'passed' : a.status === 'failed' ? 'failed' : 'skipped',
+    })),
+  )
+}
+
+export function parsePlaywrightJson(suite: string, json: PlaywrightJson, repo = REPO): TestResult[] {
+  const rootDir = json.config?.rootDir ?? repo
+  const out: TestResult[] = []
+  const visit = (s: PlaywrightSuite, chain: string[]) => {
+    // top-level suites are files (title = file path); nested ones are describe blocks
+    const isFile = s.file !== undefined && s.title === s.file
+    const next = isFile ? chain : [...chain, s.title]
+    for (const spec of s.specs ?? []) {
+      const results = spec.tests.flatMap((t) => t.results.map((r) => r.status))
+      const status: TestStatus =
+        results.length === 0 || results.every((r) => r === 'skipped')
+          ? 'skipped'
+          : results.at(-1) === 'passed'
+            ? 'passed'
+            : 'failed'
+      out.push({
+        suite,
+        file: relTo(repo, join(rootDir, spec.file)),
+        fullTitle: [...next, spec.title].join(' > '),
+        status,
+      })
+    }
+    for (const c of s.suites ?? []) visit(c, next)
+  }
+  for (const s of json.suites) visit(s, [])
+  return out
+}
+
+export function loadResults(dir = RESULTS_DIR, repo = REPO): { results: TestResult[]; loaded: string[] } {
+  const results: TestResult[] = []
+  const loaded: string[] = []
+  for (const s of SUITES) {
+    const f = join(dir, `${s.id}.json`)
+    if (!existsSync(f)) continue
+    try {
+      const json = readJson<unknown>(f)
+      results.push(
+        ...(s.runner === 'vitest'
+          ? parseVitestJson(s.id, json as VitestJson, repo)
+          : parsePlaywrightJson(s.id, json as PlaywrightJson, repo)),
+      )
+      loaded.push(s.id)
+    } catch (e) {
+      console.warn(`parity: cannot read ${f}: ${(e as Error).message}`)
+    }
+  }
+  return { results, loaded }
+}
+
+/** Runs the suites with their JSON reporters, saving the output under .data/parity-results/. */
+export function runSuites(ids: string[], dir = RESULTS_DIR, repo = REPO): Record<string, number | null> {
+  mkdirSync(dir, { recursive: true })
+  const status: Record<string, number | null> = {}
+  for (const id of ids) {
+    const s = SUITES.find((x) => x.id === id)
+    if (s === undefined) throw new Error(`unknown suite ${id} (${SUITES.map((x) => x.id).join(', ')})`)
+    const out = join(dir, `${id}.json`)
+    const bin = (name: string) => join(repo, 'node_modules/.bin', name)
+    console.log(`parity: running ${id} …`)
+    const r =
+      s.runner === 'vitest'
+        ? spawnSync(
+            bin('vitest'),
+            ['run', '--project', id.replace('vitest-', ''), '--reporter=json', `--outputFile=${out}`],
+            { cwd: repo, stdio: ['ignore', 'ignore', 'inherit'] },
+          )
+        : spawnSync(
+            bin('playwright'),
+            [
+              'test',
+              '-c',
+              id === 'playwright-web' ? 'apps/web' : 'tests/e2e/playwright.config.ts',
+              '--reporter=json',
+            ],
+            {
+              cwd: repo,
+              stdio: ['ignore', 'ignore', 'inherit'],
+              env: { ...process.env, PLAYWRIGHT_JSON_OUTPUT_NAME: out },
+            },
+          )
+    status[id] = r.status
+  }
+  return status
+}
