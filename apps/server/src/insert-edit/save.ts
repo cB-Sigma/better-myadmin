@@ -169,11 +169,8 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
       fields.push(field)
       repopulate[md5(f.name)] = f.isNull ? null : value
     }
-    if (insertFail) {
-      unsaved.push(repopulate)
-      continue
-    }
-    rows.push({ ...(usingKey ? { whereClause: row.whereClause ?? '' } : {}), fields })
+    if (insertFail) unsaved.push(repopulate)
+    rows.push({ ...(usingKey ? { whereClause: row.whereClause ?? '' } : {}), fields, failed: insertFail })
   }
 
   let uuidIndex = 0
@@ -247,7 +244,7 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
 
   const parts: string[] = []
   let type: SqlMessage['type'] = 'success'
-  if (isInsert && (rows.length > 0 || rowSkipped)) {
+  if (isInsert && (rows.some((r) => r.failed !== true) || rowSkipped)) {
     parts.push(sprintf(tr.ngettext('%1$d row inserted.', '%1$d rows inserted.', totalAffectedRows), totalAffectedRows))
   } else {
     parts.push(sprintf(tr.ngettext('%1$d row affected.', '%1$d rows affected.', totalAffectedRows), totalAffectedRows))

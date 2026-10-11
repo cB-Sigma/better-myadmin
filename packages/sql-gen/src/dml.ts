@@ -229,6 +229,12 @@ export interface EditRow {
   })[]
   /** `insert_ignore_<n>` checkbox: skip this new row */
   skip?: boolean
+  /**
+   * An input transformation failed for this row: its values are formatted (and, while no row
+   * was added yet, its columns still enter the INSERT column list, as in phpMyAdmin) but the
+   * row is not written.
+   */
+  failed?: boolean
 }
 
 export interface InsertEditInput {
@@ -288,7 +294,7 @@ export function buildInsertEditQueries(input: InsertEditInput, ctx: DmlContext):
       }
       if (queryPart !== '') queryValues.push(queryPart)
     }
-    if (queryValues.length === 0) return
+    if (row.failed === true || queryValues.length === 0) return
     if (isInsert) {
       valueSets.push(queryValues.join(', '))
     } else {
