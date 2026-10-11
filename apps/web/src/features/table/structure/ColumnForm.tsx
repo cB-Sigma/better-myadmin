@@ -5,7 +5,8 @@ import type {
   FormIndex,
   Partitioning,
 } from '@bettermyadmin/contracts'
-import { Button, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Button, DocLink, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
@@ -39,6 +40,35 @@ export interface ColumnRow {
   key: string
   orig?: ColumnOrig
   moveOptions?: Array<{ value: string; after: string | null; disabled: boolean }>
+  /** the MIME columns (only when the form shows them) */
+  mime?: MimeValues
+}
+
+export interface MimeValues {
+  mimetype: string
+  transformation: string
+  transformationOptions: string
+  inputTransformation: string
+  inputTransformationOptions: string
+}
+
+const EMPTY_MIME: MimeValues = {
+  mimetype: '',
+  transformation: '',
+  transformationOptions: '',
+  inputTransformation: '',
+  inputTransformationOptions: '',
+}
+
+/** the transformation options hint of table_fields_definitions.twig (show_hint) */
+function TransformationOptionsHint() {
+  return (
+    <Hint
+      message={t(
+        "Please enter the values for transformation options using this format: 'a', 100, b,'c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b').",
+      ).replace('<br>', '\n')}
+    />
+  )
 }
 
 export const emptyRow = (): ColumnRow => ({
@@ -392,6 +422,9 @@ export function ColumnForm({
   }
 
   const virtuality = options.virtuality
+  const mimeTypes = options.mime ? options.mimeTypes : null
+  // the transformations overview of this server (the column form sits below /s/$server)
+  const server = Number((useParams({ strict: false }) as { server?: number | string }).server ?? 1)
   return (
     <form
       className={mode === 'create' ? 'create_table_form' : 'append_fields_form'}
@@ -449,7 +482,11 @@ export function ColumnForm({
               <th className="px-1">{t('Collation')}</th>
               <th className="px-1">{t('Attributes')}</th>
               <th className="px-1">{t('Null')}</th>
-              {mode === 'change' && <th className="px-1">{t('Adjust privileges')}</th>}
+              {mode === 'change' && (
+                <th className="px-1">
+                  {t('Adjust privileges')} <DocLink page="faq" anchor="faq6-39" />
+                </th>
+              )}
               {mode !== 'change' && <th className="px-1">{t('Index')}</th>}
               <th className="px-1">
                 <abbr title="AUTO_INCREMENT">A_I</abbr>
@@ -457,6 +494,39 @@ export function ColumnForm({
               <th className="px-1">{t('Comments')}</th>
               {virtuality !== null && <th className="px-1">{t('Virtuality')}</th>}
               {mode === 'change' && <th className="px-1">{t('Move column')}</th>}
+              {mimeTypes !== null && (
+                <>
+                  <th className="px-1">{t('Media type')}</th>
+                  <th className="px-1">
+                    <Link
+                      to="/s/$server/transformations"
+                      params={{ server }}
+                      hash="transformation"
+                      target="_blank"
+                      title={t('List of available transformations and their options')}
+                    >
+                      {t('Browser display transformation')}
+                    </Link>
+                  </th>
+                  <th className="px-1">
+                    {t('Browser display transformation options')} <TransformationOptionsHint />
+                  </th>
+                  <th className="px-1">
+                    <Link
+                      to="/s/$server/transformations"
+                      params={{ server }}
+                      hash="input_transformation"
+                      target="_blank"
+                      title={t('List of available transformations and their options')}
+                    >
+                      {t('Input transformation')}
+                    </Link>
+                  </th>
+                  <th className="px-1">
+                    {t('Input transformation options')} <TransformationOptionsHint />
+                  </th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -471,7 +541,7 @@ export function ColumnForm({
                   <input
                     className="input w-32"
                     name={`field_name[${i}]`}
-                    aria-label={t('Name')}
+                    aria-label={t('Column')}
                     maxLength={64}
                     title={t('Column')}
                     value={r.name}
@@ -563,6 +633,7 @@ export function ColumnForm({
                     type="checkbox"
                     className="allow_null"
                     aria-label={t('Null')}
+                    name={`field_null[${i}]`}
                     checked={r.null}
                     onChange={(e) => update(i, { null: e.target.checked })}
                   />
@@ -572,6 +643,7 @@ export function ColumnForm({
                     <input
                       type="checkbox"
                       aria-label={t('Adjust privileges')}
+                      name={`field_adjust_privileges[${i}]`}
                       disabled={!options.privsAvailable}
                       title={
                         options.privsAvailable
@@ -616,6 +688,7 @@ export function ColumnForm({
                   <input
                     type="checkbox"
                     aria-label="AUTO_INCREMENT"
+                    name={`field_extra[${i}]`}
                     checked={r.autoIncrement}
                     onChange={(e) => update(i, { autoIncrement: e.target.checked })}
                   />
@@ -625,6 +698,7 @@ export function ColumnForm({
                     className="input"
                     rows={1}
                     aria-label={t('Comments')}
+                    name={`field_comments[${i}]`}
                     maxLength={options.commentMaxLength}
                     value={r.comments}
                     onChange={(e) => update(i, { comments: e.target.value })}
@@ -635,6 +709,7 @@ export function ColumnForm({
                     <select
                       className="input virtuality"
                       aria-label={t('Virtuality')}
+                      name={`field_virtuality[${i}]`}
                       value={r.virtuality}
                       onChange={(e) => update(i, { virtuality: e.target.value })}
                     >
@@ -660,6 +735,7 @@ export function ColumnForm({
                     <select
                       className="input"
                       aria-label={t('Move column')}
+                      name={`field_move_to[${i}]`}
                       value={r.moveTo}
                       onChange={(e) => update(i, { moveTo: e.target.value })}
                     >
@@ -674,6 +750,14 @@ export function ColumnForm({
                       ))}
                     </select>
                   </td>
+                )}
+                {mimeTypes !== null && (
+                  <MimeCells
+                    index={i}
+                    mime={r.mime ?? EMPTY_MIME}
+                    types={mimeTypes}
+                    onChange={(mime) => update(i, { mime })}
+                  />
                 )}
               </tr>
             ))}
@@ -765,7 +849,12 @@ export function ColumnForm({
       <div className="mt-3 flex flex-wrap items-center gap-3 rounded border border-border bg-bg-subtle px-3 py-2 text-sm">
         {mode !== 'create' && (
           <label className="flex items-center gap-1">
-            <input type="checkbox" checked={online} onChange={(e) => setOnline(e.target.checked)} />
+            <input
+              type="checkbox"
+              name="online_transaction"
+              checked={online}
+              onChange={(e) => setOnline(e.target.checked)}
+            />
             {t('Online transaction')} <MySqlDocLink link="innodb-online-ddl" />
           </label>
         )}
@@ -803,7 +892,101 @@ export function ColumnForm({
 }
 
 /** ColumnRow → the API's ColumnDef */
-export const toColumnDef = (r: ColumnRow) => ({
+/**
+ * column_attributes.twig, the MIME cells: Media type, Browser display transformation and its
+ * options, Input transformation and its options (field_mimetype[i] …).
+ */
+function MimeCells({
+  index,
+  mime,
+  types,
+  onChange,
+}: {
+  index: number
+  mime: MimeValues
+  types: NonNullable<ColumnFormOptions['mimeTypes']>
+  onChange: (m: MimeValues) => void
+}) {
+  const set = (k: keyof MimeValues, v: string) => onChange({ ...mime, [k]: v })
+  return (
+    <>
+      <td className="p-1 text-center">
+        <select
+          className="input"
+          name={`field_mimetype[${index}]`}
+          aria-label={t('Media type')}
+          value={mime.mimetype}
+          onChange={(e) => set('mimetype', e.target.value)}
+        >
+          <option value="">{'\u00a0'}</option>
+          {types.mimetypes.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td className="p-1 text-center">
+        <select
+          className="input"
+          name={`field_transformation[${index}]`}
+          aria-label={t('Browser display transformation')}
+          value={mime.transformation}
+          onChange={(e) => set('transformation', e.target.value)}
+        >
+          <option value="" title={t('None')} />
+          {types.transformations.map((o) => (
+            <option key={o.value} value={o.value} title={o.title}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td className="p-1 text-center">
+        <input
+          type="text"
+          size={16}
+          className="input"
+          name={`field_transformation_options[${index}]`}
+          aria-label={t('Browser display transformation options')}
+          value={mime.transformationOptions}
+          onChange={(e) => set('transformationOptions', e.target.value)}
+        />
+      </td>
+      <td className="p-1 text-center">
+        <select
+          className="input"
+          name={`field_input_transformation[${index}]`}
+          aria-label={t('Input transformation')}
+          value={mime.inputTransformation}
+          onChange={(e) => set('inputTransformation', e.target.value)}
+        >
+          <option value="" title={t('None')} />
+          {types.inputTransformations.map((o) => (
+            <option key={o.value} value={o.value} title={o.title}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td className="p-1 text-center">
+        <input
+          type="text"
+          size={16}
+          className="input"
+          name={`field_input_transformation_options[${index}]`}
+          aria-label={t('Input transformation options')}
+          value={mime.inputTransformationOptions}
+          onChange={(e) => set('inputTransformationOptions', e.target.value)}
+        />
+      </td>
+    </>
+  )
+}
+
+/** The posted row; the MIME fields go along whenever the form shows them (every row, like phpMyAdmin). */
+export const toColumnDef = (r: ColumnRow, options?: ColumnFormOptions) => ({
+  ...(options?.mime === true ? { mime: r.mime ?? EMPTY_MIME } : {}),
   name: r.name,
   type: r.type,
   length: r.length,

@@ -897,7 +897,8 @@ describe.skipIf(!reachable)('parity: table structure DDL (phpMyAdmin forms vs Be
     log = await GeneralLog.open(ROOT)
     pma = new PmaClient(PMA_URL)
     await pma.login(PMA_USER, PMA_USER)
-    bma = testApp(testConfig())
+    // the configuration storage through the control user, like the reference (pmadb writes are not the user's)
+    bma = testApp(testConfig({}, { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }))
     await bma.login(BMA_USER, BMA_USER)
   })
 

@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-884/3426 covered (25.8%): 884 implemented, 33 planned, 2509 missing. [Summary](README.md).
+889/3426 covered (25.9%): 889 implemented, 33 planned, 2504 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 191/403 (47.4%) covered, 191/403 implemented
 
@@ -160,9 +160,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 285/534 (53.4%) covered, 285/534 implemented
+## 04 table level — 289/534 (54.1%) covered, 289/534 implemented
 
-249 msgids not used yet.
+245 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -175,7 +175,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Triggers/Triggers.php` | 8/8 | `Sorry, we failed to restore the dropped trigger.` · `Trigger %1$s has been created.` · `Trigger %1$s has been modified.` · `You must provide a trigger definition.` · `You must provide a trigger name!` · `You must provide a valid event for the trigger!` · `You must provide a valid table name!` · `You must provide a valid timing for the trigger!` |
 | `resources/templates/database/privileges/index.twig` | 7/10 | `database-specific` · `global` · `No user found.` · `Not enough privilege to view users.` · `routine` · `Users having access to "%s"` · `wildcard` |
 | `resources/templates/table/structure/display_structure.twig` | 7/51 | `Add to central columns` · `Edit view` · `Go back` · `Media type:` · `None (None for default)` · `Normalize` · `Remove from central columns` |
-| `resources/templates/columns_definitions/table_fields_definitions.twig` | 6/12 | `Browser display transformation options` · `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` · `Input transformation options` · `List of available transformations and their options` · `Please enter the values for transformation options using this forma…` |
 | `resources/templates/table/normalization/normalization.twig` | 6/7 | `First step of normalization (1NF)` · `Hint: Please follow the procedure carefully in order to obtain corr…` · `Improve table structure (Normalization):` · `Second step of normalization (1NF+2NF)` · `Select up to what step you want to normalize` · `Third step of normalization (1NF+2NF+3NF)` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `resources/templates/view_create.twig` | 5/6 | `Column names` · `Definer` · `Details` · `Edit view` · `VIEW name` |
@@ -197,6 +196,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
 | `resources/js/table/zoom_search.ts` | 2/3 | `Hide search criteria` · `Show search criteria` |
 | `resources/templates/columns_definitions/column_definitions_form.twig` | 2/14 | `Loading` · `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
+| `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
 | `resources/templates/database/events/editor_form.twig` | 2/5 | `Definer` · `Details` |
 | `resources/templates/database/routines/editor_form.twig` | 2/5 | `Definer` · `Details` |
 | `resources/templates/modals/index_dialog_modal.twig` | 2/6 | `Go back` · `Loading` |
@@ -408,21 +408,21 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Table/PrivilegesController.php` | 1/1 | `No Privileges` |
 | `src/Server/Privileges/AccountLocking.php` | 1/1 | `Account locking is not supported.` |
 
-## 07 export import — 14/293 (4.8%) covered, 14/293 implemented
+## 07 export import — 15/293 (5.1%) covered, 15/293 implemented
 
-279 msgids not used yet.
+278 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Plugins/Export/ExportSql.php` | 66/69 | `(less efficient as indexes will be generated during table creation)` · `(See below for the actual view)` · `%s value` · `%s view` · `<code>INSERT DELAYED</code> statements` · `<code>INSERT IGNORE</code> statements` · `Add %s statement` · `Add statements:` · `Additional custom header comment (\\n splits lines):` · `alias export may not work reliably in all cases.` · `AUTO_INCREMENT for dumped tables` · `AUTO_INCREMENT for table` · … +54 |
 | `resources/templates/export.twig` | 49/50 | `Column (Alias)` · `Database (Alias)` · `Table (Alias)` · `Character set of the file:` · `Compression:` · `Custom - display all possible options` · `Define new aliases` · `Defined aliases` · `Dump all rows` · `Dump some row(s)` · `Encoding Conversion:` · `Existing templates:` · … +37 |
 | `src/Plugins/Export/ExportLatex.php` | 24/27 | `(continued)` · `Content of table @TABLE@` · `data` · `Data dump options` · `Data:` · `Display comments` · `Display foreign key relationships` · `Display media types` · `Dump table` · `Generation Time:` · `Host:` · `Include table caption` · … +12 |
-| `src/Plugins/Export/ExportOdt.php` | 20/23 | `data` · `Data dump options` · `Definition` · `Display comments` · `Display foreign key relationships` · `Display media types` · `Dump table` · `Dumping data for query result` · `Dumping data for table` · `Event` · `Links to` · `Media type` · … +8 |
 | `resources/templates/import.twig` | 19/19 | `A compressed file's name must end in <strong>.[format].[compression…` · `Allow the interruption of an import in case the script detects it i…` · `Browse your computer:` · `Character set of the file:` · `Encoding Conversion:` · `File may be compressed (%s) or uncompressed.` · `File to import:` · `File uploads are not allowed on this server.` · `Format-specific options:` · `Other options` · `Partial import:` · `Previous import timed out, after resubmitting will continue from po…` · … +7 |
-| `src/Config/Descriptions.php` | 19/20 | `%s view` · `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Disable foreign key checks` · `Do not abort on INSERT error` · `Do not import empty rows` · `Dump table` · `Enclose export in a transaction` · `Exclude definition of current user` · `Export views as tables` · `Import empty values as NULL` · … +7 |
-| `src/Plugins/Export/ExportTexytext.php` | 16/19 | `data` · `Data dump options` · `Definition` · `Dump table` · `Dumping data for query result` · `Dumping data for table` · `Event` · `Links to` · `Media type` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · … +4 |
+| `src/Plugins/Export/ExportOdt.php` | 19/23 | `data` · `Data dump options` · `Definition` · `Display comments` · `Display foreign key relationships` · `Display media types` · `Dump table` · `Dumping data for query result` · `Dumping data for table` · `Event` · `Links to` · `Object creation options` · … +7 |
+| `src/Config/Descriptions.php` | 18/20 | `%s view` · `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Disable foreign key checks` · `Do not abort on INSERT error` · `Do not import empty rows` · `Dump table` · `Enclose export in a transaction` · `Exclude definition of current user` · `Export views as tables` · `Import empty values as NULL` · … +6 |
 | `src/Plugins/Import/ImportCsv.php` | 16/16 | `Column names:` · `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Do not abort on INSERT error` · `If the data in each row of the file is not in the same order as in …` · `Import empty values as NULL` · `Import these many number of rows (optional):` · `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` · … +4 |
-| `src/Plugins/Export/ExportHtmlword.php` | 15/18 | `data` · `Data dump options` · `Definition` · `Dump table` · `Dumping data for table` · `Event` · `Links to` · `Media type` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · `structure` · … +3 |
+| `src/Plugins/Export/ExportTexytext.php` | 15/19 | `data` · `Data dump options` · `Definition` · `Dump table` · `Dumping data for query result` · `Dumping data for table` · `Event` · `Links to` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · `structure` · … +3 |
+| `src/Plugins/Export/ExportHtmlword.php` | 14/18 | `data` · `Data dump options` · `Definition` · `Dump table` · `Dumping data for table` · `Event` · `Links to` · `Put columns names in the first row` · `Replace NULL with:` · `Stand-in structure for view` · `structure` · `structure and data` · … +2 |
 | `src/File.php` | 13/15 | `Cannot create temporary file.` · `Cannot read uploaded file.` · `Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc].` · `Error while moving uploaded file.` · `Failed to write file to disk.` · `File upload stopped by extension.` · `File was not an uploaded file.` · `Missing a temporary folder.` · `The uploaded file exceeds the MAX_FILE_SIZE directive that was spec…` · `The uploaded file exceeds the upload_max_filesize directive in php.…` · `The uploaded file was only partially uploaded.` · `Unknown error in file upload.` · … +1 |
 | `resources/js/import.ts` | 12/13 | `%s of %s` · `%s/sec.` · `About %MIN min. %SEC sec. remaining.` · `About %SEC sec. remaining.` · `No files available on server for import!` · `Note: If the file contains multiple tables, they will be combined i…` · `Please be patient, the file is being uploaded. Details about the up…` · `Please enter a valid database name.` · `Please enter a valid table name.` · `The file being uploaded is probably larger than the maximum allowed…` · `The file is being processed, please be patient.` · `Uploading your import file…` |
 | `resources/js/export.ts` | 9/9 | `Column (Alias)` · `Database (Alias)` · `Table (Alias)` · `SQL Query` · `Template was created.` · `Template was deleted.` · `Template was loaded.` · `Template was updated.` · `Your export is incomplete, due to a low execution time limit at the…` |
@@ -434,16 +434,15 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Export/ExportMediawiki.php` | 6/6 | `data` · `Dump table` · `Export table headers` · `Export table names` · `structure` · `structure and data` |
 | `src/Plugins/Import/ImportOds.php` | 6/6 | `Could not parse OpenDocument Spreadsheet!` · `Do not import empty rows` · `Import currencies <i>(ex. $5.00 to 5.00)</i>` · `Import percentages as proper decimals <i>(ex. 12.00% to .12)</i>` · `The first line of the file contains the table column names <i>(if t…` · `The XML file specified was either malformed or incomplete. Please c…` |
 | `resources/templates/database/export/index.twig` | 5/5 | `@SERVER@ will become the server name and @DATABASE@ will become the…` · `Export the data of all tables.` · `Export the structure of all tables.` · `Exporting a raw query` · `Exporting tables from "%s" database` |
-| `src/Plugins/Export/Helpers/Pdf.php` | 5/8 | `Definition` · `Event` · `Links to` · `Media type` · `Purpose:` |
 | `src/Plugins/Import/AbstractImportCsv.php` | 5/5 | `Columns enclosed with:` · `Columns escaped with:` · `Columns separated with:` · `Lines terminated with:` · `Update data when duplicate keys found on import (add ON DUPLICATE K…` |
 | `resources/js/drag_drop_import.ts` | 4/4 | `cancel` · `Import status` · `Select database first` · `Success` |
 | `src/Export/OutputHandler.php` | 4/4 | `Dump has been saved to file %s.` · `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
 | `src/Plugins/Export/ExportExcel.php` | 4/4 | `Excel edition:` · `Put columns names in the first row` · `Remove carriage return/line feed characters within columns` · `Replace NULL with:` |
+| `src/Plugins/Export/Helpers/Pdf.php` | 4/8 | `Definition` · `Event` · `Links to` · `Purpose:` |
 | `src/Plugins/Import/ImportLdi.php` | 4/4 | `Column names: ` · `Do not abort on INSERT error` · `This plugin does not support compressed imports!` · `Use LOCAL keyword` |
 | `src/Plugins/Import/ImportShp.php` | 4/4 | `ESRI Shape File` · `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
 | `resources/templates/table/export/index.twig` | 3/3 | `@SERVER@ will become the server name, @DATABASE@ will become the da…` · `Exporting a raw query` · `Exporting rows from "%s" table` |
 | `src/Config/ConfigFile.php` | 3/3 | `data` · `structure` · `structure and data` |
-| `resources/templates/database/data_dictionary/index.twig` | 2/3 | `Links to` · `Media type` |
 | `resources/templates/encoding/kanji_encoding_form.twig` | 2/2 | `Convert to Kana` · `None (None encoding conversion)` |
 | `resources/templates/server/export/index.twig` | 2/2 | `@SERVER@ will become the server name.` · `Exporting databases from the current server` |
 | `resources/templates/triggers/editor_form.twig` | 2/2 | `Definition` · `Event` |
@@ -456,7 +455,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/ZipExtension.php` | 2/2 | `Error in ZIP archive:` · `No files found inside ZIP archive!` |
 | `resources/js/database/events.ts` | 1/1 | `Event` |
 | `resources/js/normalization.ts` | 1/1 | `Back` |
-| `resources/templates/columns_definitions/table_fields_definitions.twig` | 1/2 | `Media type` |
+| `resources/templates/database/data_dictionary/index.twig` | 1/3 | `Links to` |
 | `resources/templates/database/events/editor_form.twig` | 1/1 | `Definition` |
 | `resources/templates/database/import/index.twig` | 1/1 | `Importing into the database "%s"` |
 | `resources/templates/database/routines/editor_form.twig` | 1/1 | `Definition` |

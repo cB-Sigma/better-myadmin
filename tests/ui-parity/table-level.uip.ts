@@ -78,6 +78,25 @@ pageParity('table-tracking', {
   ],
 })
 
+/** a stored transformation of uip_t.created (in the reference's and our pmadb) */
+const MIME = ['phpmyadmin', FIX.pmadb]
+  .map(
+    (pmadb) => `DELETE FROM ${pmadb}.pma__column_info WHERE db_name = '${FIX.db}';
+  INSERT INTO ${pmadb}.pma__column_info (db_name, table_name, column_name, comment, mimetype, transformation, transformation_options, input_transformation, input_transformation_options)
+  VALUES ('${FIX.db}', '${FIX.table}', 'created', '', 'text_plain', 'output/text_plain_dateformat.php', '0', '', '');`,
+  )
+  .join('\n')
+
+pageParity('table-column-change', {
+  sql: MIME,
+  pma: {
+    route: '/table/structure/change',
+    params: { ...p(FIX.table), field: 'created', change_column: '1' },
+  },
+  ours: { path: `${T}/${FIX.table}/structure/change?fields=created` },
+  known: 'no "Pick from Central Columns" link yet (central columns land with the database-level work)',
+})
+
 /** an icon + text link (the reference's accessible name repeats the image's alt) */
 function showLink(text: string): PageFn {
   return (page) => page.locator('#page_content a', { hasText: text }).first().click()

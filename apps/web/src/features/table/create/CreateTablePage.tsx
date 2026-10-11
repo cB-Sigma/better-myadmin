@@ -67,7 +67,7 @@ export function CreateTablePage({
           { server, db },
           {
             table: table.table,
-            columns: current.map(toColumnDef),
+            columns: current.map((r) => toColumnDef(r, q.data.options)),
             indexes: indexesFromRows(current),
             comment: table.comment,
             collation: table.collation,
