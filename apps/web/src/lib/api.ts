@@ -28,19 +28,28 @@ import type {
   LoginRequest,
   LoginResponse,
   LogoutResponse,
+  MaintenanceRequest,
+  MoveCopyRequest,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  OperationsPageResponse,
+  OperationsResponse,
+  OrderByRequest,
+  PartitionOpsRequest,
   PasswordForm,
   QueryRequest,
   QueryResponse,
+  RenameViewRequest,
   ServerScope,
   SetCollationResponse,
   SimulateRequest,
   SimulateResponse,
+  SqlActionRequest,
   SqlFormResponse,
+  TableOptionsRequest,
   TableScope,
   VersionCheckResponse,
 } from '@bettermyadmin/contracts'
@@ -171,6 +180,30 @@ export const api = {
   consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+  // table level beyond Structure (docs/features/04-table-level.md)
+  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${tablePath(s)}/operations`),
+  tableOperation: <K extends keyof TableOpBodies>(s: TableRef, op: K, body: TableOpBodies[K]) =>
+    call<OperationsResponse>('POST', `${tablePath(s)}/operations/${op}`, body),
+}
+
+/** A table of a server (the table-scope routes). */
+export interface TableRef {
+  server: number
+  db: string
+  table: string
+}
+
+const tablePath = (s: TableRef) =>
+  `/servers/${s.server}/databases/${encodeURIComponent(s.db)}/tables/${encodeURIComponent(s.table)}`
+
+interface TableOpBodies {
+  'order-by': OrderByRequest
+  'move-copy': MoveCopyRequest
+  options: TableOptionsRequest
+  maintenance: MaintenanceRequest
+  sql: SqlActionRequest
+  partitions: PartitionOpsRequest
+  'rename-view': RenameViewRequest
 }
 
 function queryString(q: Record<string, string | number | undefined>): string {

@@ -21,6 +21,7 @@ export * from './relations.ts'
 export * from './resources.ts'
 export * from './sqlite-driver.ts'
 export * from './storage.ts'
+export * from './table-writers.ts'
 export * from './uiprefs.ts'
 export * from './userprefs.ts'
 
