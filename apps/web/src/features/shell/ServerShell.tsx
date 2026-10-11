@@ -1,5 +1,6 @@
 import { useParams } from '@tanstack/react-router'
 import { Suspense, lazy } from 'react'
+import { DragDropImport } from '../import/DragDropImport'
 import { NavigationPanel } from '../navigation/NavigationPanel'
 import { ShellLayout } from './layout/ShellLayout.tsx'
 
@@ -13,14 +14,17 @@ const Console = lazy(() => import('../console/Console'))
 export function ServerShell() {
   const { server } = useParams({ from: '/s/$server' })
   return (
-    <ShellLayout
-      server={server}
-      nav={<NavigationPanel server={server} />}
-      console={
-        <Suspense fallback={null}>
-          <Console server={server} />
-        </Suspense>
-      }
-    />
+    <>
+      <ShellLayout
+        server={server}
+        nav={<NavigationPanel server={server} />}
+        console={
+          <Suspense fallback={null}>
+            <Console server={server} />
+          </Suspense>
+        }
+      />
+      <DragDropImport server={server} />
+    </>
   )
 }

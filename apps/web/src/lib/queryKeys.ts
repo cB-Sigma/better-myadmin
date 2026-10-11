@@ -25,6 +25,13 @@ export const qk = {
   scope: (s: number) => ['srv', s, 'scope'] as const,
   home: (s: number) => ['srv', s, 'home'] as const,
   passwordForm: (s: number) => ['srv', s, 'account', 'password-form'] as const,
+  /** export page view-model of a scope (db/table empty above their scope) */
+  exportPage: (s: number, db: string, t: string, q: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'export', q] as const,
+  exportAliasNames: (s: number, db: string, t: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'aliasNames'] as const,
+  importPage: (s: number, db: string, t: string, q: string) =>
+    ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
   db: (r: DbRef) => ['srv', r.server, 'db', r.db] as const,
   dbScope: (r: DbRef) => ['srv', r.server, 'db', r.db, 'scope'] as const,
   tbl: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table] as const,

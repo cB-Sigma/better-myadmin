@@ -22,8 +22,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET | `/database/data-dictionary` | `Database/DataDictionaryController` | UI `/s/:s/db/:db/data-dictionary` · API `GET /api/servers/:s/databases/:db/data-dictionary` | 🗓️ planned (M3) |
 | GET, POST | `/database/designer` | `Database/DesignerController` | UI `/s/:s/db/:db/designer` · API `GET /api/servers/:s/databases/:db/designer` | 🗓️ planned (M3) |
 | GET, POST | `/database/events` | `Database/EventsController` | UI `/s/:s/db/:db/events` · API `GET /api/servers/:s/databases/:db/events` · API `POST /api/servers/:s/databases/:db/events` | 🗓️ planned (M3) |
-| GET, POST | `/database/export` | `Database/ExportController` | UI `/s/:s/db/:db/export` · API `/api/servers/:s/databases/:db/export` | 🗓️ planned (M4) |
-| GET, POST | `/database/import` | `Database/ImportController` | UI `/s/:s/db/:db/import` · API `/api/servers/:s/databases/:db/import` | 🗓️ planned (M4) |
+| GET, POST | `/database/export` | `Database/ExportController` | UI `/s/:s/db/:db/export` · API `GET /api/servers/:s/export/page` | ✅ implemented |
+| GET, POST | `/database/import` | `Database/ImportController` | UI `/s/:s/db/:db/import` · API `GET /api/servers/:s/import/page` | ✅ implemented |
 | GET | `/database/multi-table-query` | `Database/MultiTableQueryController` | UI `/s/:s/db/:db/multi-table-query` · API `/api/servers/:s/databases/:db/multi-table-query` | 🗓️ planned (M3) |
 | POST | `/database/multi-table-query/query` | `Database/MultiTableQuery/QueryController` | UI `/s/:s/db/:db/multi-table-query/query` · API `/api/servers/:s/databases/:db/multi-table-query/query` | 🗓️ planned (M3) |
 | GET | `/database/multi-table-query/tables` | `Database/MultiTableQuery/TablesController` | UI `/s/:s/db/:db/multi-table-query/tables` · API `/api/servers/:s/databases/:db/multi-table-query/tables` | 🗓️ planned (M3) |
@@ -56,17 +56,17 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/database/tracking` | `Database/TrackingController` | UI `/s/:s/db/:db/tracking` · API `GET /api/servers/:s/databases/:db/tracking` · API `POST /api/servers/:s/databases/:db/tracking` | 🗓️ planned (M3) |
 | POST | `/databases` | `DatabaseController` | API `GET /api/servers/:s/databases` · (name lists for pickers) | ✅ implemented (M3) |
 | GET, POST | `/error-report` | `ErrorReportController` | API `POST /api/telemetry/error` · (opt-in) | 🔀 exception (M1, X19) |
-| GET, POST | `/export` | `Export/ExportController` | API `GET /api/export/options` · API `POST /api/export/jobs` · (streaming) | 🗓️ planned (M4, X10) |
-| GET | `/export/check-time-out` | `Export/CheckTimeOutController` | API `GET /api/export/check-time-out` · (streaming) | 🗓️ planned (M4, X10) |
-| POST | `/export/tables` | `Export/TablesController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
-| POST | `/export/template/create` | `Export/Template/CreateController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
-| POST | `/export/template/delete` | `Export/Template/DeleteController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
-| POST | `/export/template/load` | `Export/Template/LoadController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
-| POST | `/export/template/update` | `Export/Template/UpdateController` | API `/api/export/*` · (streaming) | 🗓️ planned (M4, X10) |
+| GET, POST | `/export` | `Export/ExportController` | API `POST /api/servers/:s/export` · API `GET /api/servers/:s/export/:id` · (streaming (prepare + one-shot download)) | 🔀 exception (X10) |
+| GET | `/export/check-time-out` | `Export/CheckTimeOutController` | API `GET /api/servers/:s/export/check-time-out` · (streaming) | 🔀 exception (X10) |
+| POST | `/export/tables` | `Export/TablesController` | UI `/s/:s/db/:db/export` · API `GET /api/servers/:s/export/page` · (selected_tbl[] in the search params) | ✅ implemented |
+| POST | `/export/template/create` | `Export/Template/CreateController` | API `POST /api/servers/:s/export/templates` | ✅ implemented |
+| POST | `/export/template/delete` | `Export/Template/DeleteController` | API `POST /api/servers/:s/export/templates/:id/delete` | ✅ implemented |
+| POST | `/export/template/load` | `Export/Template/LoadController` | API `GET /api/servers/:s/export/templates/:id` | ✅ implemented |
+| POST | `/export/template/update` | `Export/Template/UpdateController` | API `POST /api/servers/:s/export/templates/:id` | ✅ implemented |
 | GET, POST | `/gis-data-editor` | `GisDataEditorController` | UI `/s/:s/db/:db/t/:table/insert` · (client component `GisEditor` (WKT parsing/generation needs no server round trip)) | ✅ implemented |
 | GET, POST | `/git-revision` | `GitInfoController` | API `GET /api/meta/build` | ✅ implemented |
-| GET, POST | `/import` | `Import/ImportController` | API `GET /api/import/options` · API `POST /api/import/jobs` · (chunked upload + SSE progress) | 🗓️ planned (M4, X9) |
-| GET, POST | `/import-status` | `Import/StatusController` | API `GET /api/import/jobs/:id/events` · (chunked upload + SSE progress) | 🗓️ planned (M4, X9) |
+| GET, POST | `/import` | `Import/ImportController` | API `POST /api/servers/:s/import/uploads` · API `PATCH /api/servers/:s/import/uploads/:id` · API `POST /api/servers/:s/import/jobs` · (chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query)) | 🔀 exception (X9) |
+| GET, POST | `/import-status` | `Import/StatusController` | API `GET /api/servers/:s/import/jobs/:id/events` · (chunked upload + SSE progress) | 🔀 exception (X9) |
 | POST | `/import/simulate-dml` | `Import/SimulateDmlController` | API `POST /api/servers/:s/query/simulate` · (chunked upload + SSE progress) | 🔀 exception (M1, X9) |
 | GET | `/license` | `LicenseController` | UI `/about/license` · (static) | 🗓️ planned (M1) |
 | GET, POST | `/lint` | `LintController` | API `POST /api/servers/:s/sql/lint` · (client-side lint (SQL tokenizer in the browser) +  fallback) | ✅ implemented (M1) |
@@ -107,8 +107,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/server/databases/destroy` | `Server/Databases/DestroyController` | UI `/s/:s/databases/destroy` · API `POST /api/servers/:s/databases/drop` | 🗓️ planned (M3) |
 | GET | `/server/engines` | `Server/EnginesController` | UI `/s/:s/engines` · API `GET /api/servers/:s/engines` | ✅ implemented (M3) |
 | GET | `/server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | UI `/s/:s/engines/:engine` · API `GET /api/servers/:s/engines/:engine` | 🗓️ planned (M3) |
-| GET, POST | `/server/export` | `Server/ExportController` | UI `/s/:s/export` · API `/api/servers/:s/export` | 🗓️ planned (M4) |
-| GET, POST | `/server/import` | `Server/ImportController` | UI `/s/:s/import` · API `/api/servers/:s/import` | 🗓️ planned (M4) |
+| GET, POST | `/server/export` | `Server/ExportController` | UI `/s/:s/export` · API `GET /api/servers/:s/export/page` | ✅ implemented |
+| GET, POST | `/server/import` | `Server/ImportController` | UI `/s/:s/import` · API `GET /api/servers/:s/import/page` | ✅ implemented |
 | GET | `/server/plugins` | `Server/PluginsController` | UI `/s/:s/plugins` · API `GET /api/servers/:s/plugins` | ✅ implemented (M3) |
 | GET, POST | `/server/privileges` | `Server/PrivilegesController` | UI `/s/:s/privileges` · API `GET /api/servers/:s/privileges/users` · API `GET /api/servers/:s/privileges/users/:user/:host` | 🗓️ planned (M3) |
 | POST | `/server/privileges/account-lock` | `Server/Privileges/AccountLockController` | UI `/s/:s/privileges/account-lock` · API `/api/servers/:s/privileges/account-lock` | 🗓️ planned (M3) |
@@ -147,12 +147,12 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/table/create` | `Table/CreateController` | UI `/s/:s/db/:db/t/:table/create` · API `/api/servers/:s/databases/:db/tables/:table/create` | 🗓️ planned (M2) |
 | POST | `/table/delete/confirm` | `Table/DeleteConfirmController` | UI `/s/:s/db/:db/t/:table/browse` · (the confirmation is rendered in place by the results view (no request of its own)) | ✅ implemented |
 | POST | `/table/delete/rows` | `Table/DeleteRowsController` | API `POST /api/servers/:s/browse/delete-rows` | ✅ implemented |
-| GET, POST | `/table/export` | `Table/ExportController` | UI `/s/:s/db/:db/t/:table/export` · API `/api/servers/:s/databases/:db/tables/:table/export` | 🗓️ planned (M4) |
-| POST | `/table/export/rows` | `Table/ExportRowsController` | UI `/s/:s/db/:db/t/:table/export/rows` · API `POST /api/export/rows` | 🗓️ planned (M4) |
+| GET, POST | `/table/export` | `Table/ExportController` | UI `/s/:s/db/:db/t/:table/export` · API `GET /api/servers/:s/export/page` | ✅ implemented |
+| POST | `/table/export/rows` | `Table/ExportRowsController` | UI `/s/:s/db/:db/t/:table/export` · API `GET /api/servers/:s/export/page` · (where_clause[] in the search params) | ✅ implemented |
 | GET, POST | `/table/find-replace` | `Table/FindReplaceController` | UI `/s/:s/db/:db/t/:table/find-replace` · API `POST /api/servers/:s/databases/:db/tables/:t/find-replace/preview` · API `POST /api/servers/:s/databases/:db/tables/:t/find-replace` | ✅ implemented |
 | GET, POST | `/table/get-field` | `Table/GetFieldController` | API `GET /api/servers/:s/browse/field` | ✅ implemented |
 | GET, POST | `/table/gis-visualization` | `Table/GisVisualizationController` | UI `/s/:s/db/:db/t/:table/gis-visualization` · API `GET /api/servers/:s/databases/:db/tables/:t/gis` | 🗓️ planned (M3) |
-| GET, POST | `/table/import` | `Table/ImportController` | UI `/s/:s/db/:db/t/:table/import` · API `/api/servers/:s/databases/:db/tables/:table/import` | 🗓️ planned (M4) |
+| GET, POST | `/table/import` | `Table/ImportController` | UI `/s/:s/db/:db/t/:table/import` · API `GET /api/servers/:s/import/page` | ✅ implemented |
 | GET, POST | `/table/indexes` | `Table/IndexesController` | UI `/s/:s/db/:db/t/:table/indexes` · API `/api/servers/:s/databases/:db/tables/:table/indexes` | ✅ implemented (M2) |
 | GET, POST | `/table/indexes/rename` | `Table/IndexRenameController` | UI `/s/:s/db/:db/t/:table/indexes/rename` · API `/api/servers/:s/databases/:db/tables/:table/indexes/rename` | 🗓️ planned (M2) |
 | POST | `/table/maintenance/analyze` | `Table/Maintenance/AnalyzeController` | UI `/s/:s/db/:db/t/:table/operations` · API `POST /api/servers/:s/databases/:db/tables/:t/operations/maintenance` · (the result renders on the Operations page) | ✅ implemented |

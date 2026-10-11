@@ -26,7 +26,8 @@ const DB_PMA = 'f04mime_pdb'
 const DB_BMA = 'f04mime_bdb'
 const dbMap = { [DB_PMA]: 'DB', [DB_BMA]: 'DB', [PMA_USER]: 'USER', [BMA_USER]: 'USER' }
 
-const SEED = 'CREATE TABLE t (id INT NOT NULL PRIMARY KEY, created INT, note VARCHAR(20), ip BIGINT) ENGINE=InnoDB;'
+const SEED =
+  'CREATE TABLE t (id INT NOT NULL PRIMARY KEY, created INT, note VARCHAR(20), ip BIGINT) ENGINE=InnoDB;'
 
 let log: GeneralLog
 let pma: PmaClient

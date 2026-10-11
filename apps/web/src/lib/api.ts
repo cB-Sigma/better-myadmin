@@ -45,6 +45,9 @@ import type {
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
+  ExportPageResponse,
+  ExportResponse,
+  ExportTemplateResult,
   FindReplacePreviewResponse,
   FindReplaceRequest,
   FindReplaceResponse,
@@ -55,6 +58,10 @@ import type {
   HistoryResponse,
   HomeResponse,
   I18nState,
+  ImportPageResponse,
+  ImportProgress,
+  ImportResult,
+  ImportUploadCreated,
   IndexFormResponse,
   InsertFormResponse,
   KillProcessResponse,
@@ -319,6 +326,88 @@ export const api = {
     call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
   tableTrackingSnapshot: (s: TableRef, version: string) =>
     call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
+  // export (docs/features/07-export-import.md)
+  exportPage: (server: number, pairs: Array<[string, string]>) =>
+    call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
+  /** databases (no db), tables (db) or columns (db + table) for the aliases dialog */
+  exportAliasNames: (server: number, db: string, table: string) =>
+    call<{ names: string[] }>('GET', `/servers/${server}/export/alias-names?${qs({ db, table })}`),
+  exportRun: (server: number, params: Array<[string, string]>) =>
+    call<ExportResponse>('POST', `/servers/${server}/export`, { params }),
+  /** The one-shot download URL of a prepared dump (navigated to, so the browser saves it). */
+  exportDownloadUrl: (server: number, id: string) => `/api/servers/${server}/export/${id}`,
+  /** "View output as text": the dump body. */
+  exportText: async (server: number, id: string): Promise<string> => {
+    const res = await fetch(`/api/servers/${server}/export/${id}`, { credentials: 'same-origin' })
+    if (!res.ok) {
+      const env = ((await res.json().catch(() => null)) as ErrorEnvelope | null)?.error
+      throw new ApiError(res.status, env ?? { code: 'INTERNAL', message: res.statusText })
+    }
+    return res.text()
+  },
+  exportTemplateCreate: (
+    server: number,
+    req: { exportType: string; templateName: string; templateData: string },
+  ) => call<ExportTemplateResult>('POST', `/servers/${server}/export/templates`, req),
+  exportTemplateLoad: (server: number, id: number) =>
+    call<ExportTemplateResult>('GET', `/servers/${server}/export/templates/${id}`),
+  exportTemplateUpdate: (server: number, id: number, templateData: string) =>
+    call<ExportTemplateResult>('POST', `/servers/${server}/export/templates/${id}`, { templateData }),
+  exportTemplateDelete: (server: number, id: number) =>
+    call<ExportTemplateResult>('POST', `/servers/${server}/export/templates/${id}/delete`),
+  // import (docs/features/07-export-import.md; pma: /server/import, /import, /import-status)
+  importPage: (server: number, pairs: Array<[string, string]>) =>
+    call<ImportPageResponse>('GET', `/servers/${server}/import/page?${new URLSearchParams(pairs)}`),
+  /**
+   * Uploads `file` in chunks (resumable offsets), reporting the bytes sent; resolves to the upload id.
+   */
+  importUpload: async (
+    server: number,
+    file: Blob,
+    onProgress: (sent: number) => void,
+    chunkSize = 4 * 1024 * 1024,
+  ): Promise<string> => {
+    const { id } = await call<ImportUploadCreated>('POST', `/servers/${server}/import/uploads`, {})
+    for (let offset = 0; offset < file.size || offset === 0; offset += chunkSize) {
+      const res = await fetch(`/api/servers/${server}/import/uploads/${id}?offset=${offset}`, {
+        method: 'PATCH',
+        headers: { [CSRF_HEADER]: readCookie(CSRF_COOKIE), 'content-type': 'application/octet-stream' },
+        credentials: 'same-origin',
+        body: file.slice(offset, offset + chunkSize),
+      })
+      if (!res.ok) {
+        const env = ((await res.json().catch(() => null)) as ErrorEnvelope | null)?.error
+        throw new ApiError(res.status, env ?? { code: 'INTERNAL', message: res.statusText })
+      }
+      onProgress(Math.min(file.size, offset + chunkSize))
+      if (file.size === 0) break
+    }
+    return id
+  },
+  importJob: (server: number, params: Array<[string, string]>, upload?: { id: string; name: string }) =>
+    call<{ id: string }>('POST', `/servers/${server}/import/jobs`, { params, ...(upload ? { upload } : {}) }),
+  /** Runs the job: `progress` events, then the result (server-sent events). */
+  importEvents: (
+    server: number,
+    id: string,
+    onProgress: (p: ImportProgress) => void,
+  ): Promise<ImportResult> =>
+    new Promise((resolve, reject) => {
+      const es = new EventSource(`/api/servers/${server}/import/jobs/${id}/events`)
+      es.addEventListener('progress', (e) => onProgress(JSON.parse((e as MessageEvent<string>).data)))
+      es.addEventListener('result', (e) => {
+        es.close()
+        resolve(JSON.parse((e as MessageEvent<string>).data) as ImportResult)
+      })
+      es.addEventListener('failure', (e) => {
+        es.close()
+        reject(new Error((JSON.parse((e as MessageEvent<string>).data) as { message: string }).message))
+      })
+      es.onerror = () => {
+        es.close()
+        reject(new Error('Could not load the progress of the import.'))
+      }
+    }),
   // server administration (docs/architecture/05-api-reference.md#server-scope)
   databases: (s: number, q: DatabasesQuery) =>
     call<DatabasesResponse>('GET', `${srvPath(s)}/databases${flags(q)}`),
