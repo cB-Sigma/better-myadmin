@@ -24,7 +24,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:42)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:59) | later: GET /api/servers/:s/navigation/hidden/:db, POST /api/servers/:s/navigation/hide, POST /api/servers/:s/navigation/unhide |
 | 🗓️ | `POST /navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API POST /api/servers/:s/navigation/width | M1 — see API reference |
 | 🗓️ | `GET /phpinfo` | `PhpInfoController` | UI /about/runtime | M1 (X15) — static |
-| ✅ | `POST /sync-favorite-tables` | `SyncFavoriteTablesController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:432) | sync |
+| ✅ | `POST /sync-favorite-tables` | `SyncFavoriteTablesController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:433) | sync |
 | 🗓️ | `GET, POST /table/recent-favorite` | `Table/RecentFavoriteController` | API GET /api/servers/:s/recent-favorite<br>UI /s/:s/db/:db/t/:table/recent-favorite | M1 |
 | 🗓️ | `GET /themes` | `ThemesController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🗓️ | `POST /themes/set` | `ThemeSetController` |  | M1 (X16) — client-side theme store (no server round trip) |
@@ -42,7 +42,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
-| ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:535) |  |
+| ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:536) |  |
 | ✅ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the confirmation is rendered in place by the results view (no request of its own) |
 | ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:71) |  |
 | ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:85) |  |
@@ -228,7 +228,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /check-relations` | `CheckRelationsController` | API GET /api/servers/:s/metadata-storage/status (apps/server/src/routes/metadata.ts:171)<br>API POST /api/servers/:s/metadata-storage/create (apps/server/src/routes/metadata.ts:178) |  |
+| ✅ | `GET, POST /check-relations` | `CheckRelationsController` | API GET /api/servers/:s/metadata-storage/status (apps/server/src/routes/metadata.ts:172)<br>API POST /api/servers/:s/metadata-storage/create (apps/server/src/routes/metadata.ts:179) |  |
 | ✅ | `GET, POST /preferences/export` | `Preferences/ExportController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
 | ✅ | `GET, POST /preferences/features` | `Preferences/FeaturesController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
 | ✅ | `GET, POST /preferences/import` | `Preferences/ImportController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
