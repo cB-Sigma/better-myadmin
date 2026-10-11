@@ -167,7 +167,11 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
         h,
         () => h.pma.postJson('/database/routines', routinePairs(r)),
         () =>
-          h.bma.req('POST', bma('/routines'), routineBody({ ...r, ...(definerB ? { definer: definerB } : {}) })),
+          h.bma.req(
+            'POST',
+            bma('/routines'),
+            routineBody({ ...r, ...(definerB ? { definer: definerB } : {}) }),
+          ),
       )
       const cmp = compareWrites(res.pmaLog, res.bmaLog, dbMap)
       expect(cmp.bma, `pma: ${JSON.stringify(cmp.pma, null, 1)}`).toEqual(cmp.pma)
@@ -199,12 +203,19 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
   it('editor data parsed from SHOW CREATE matches the form phpMyAdmin renders', async () => {
     const res = await both(
       h,
-      () => h.pma.getJson('/database/routines', { db: P, edit_item: '1', item_name: 'f_add', item_type: 'FUNCTION' }),
+      () =>
+        h.pma.getJson('/database/routines', {
+          db: P,
+          edit_item: '1',
+          item_name: 'f_add',
+          item_type: 'FUNCTION',
+        }),
       () => h.bma.req('GET', bma('/routines/editor?name=f_add&type=FUNCTION')),
     )
     const html = String(res.p.message)
-    const d = (res.b.json as { routine: { params: Array<{ name: string }>; returnLength: string; definition: string } })
-      .routine
+    const d = (
+      res.b.json as { routine: { params: Array<{ name: string }>; returnLength: string; definition: string } }
+    ).routine
     expect(html).toContain(`name="item_param_name[0]" type="text" value="${d.params[0]?.name}"`)
     expect(html).toContain(`name="item_returnlength" value="${d.returnLength}"`)
     expect(html).toContain(d.definition.replaceAll('"', '&quot;'))
@@ -261,7 +272,13 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
   it('export wraps SHOW CREATE in DELIMITER', async () => {
     const res = await both(
       h,
-      () => h.pma.getJson('/database/routines', { db: P, export_item: '1', item_name: 'f_add', item_type: 'FUNCTION' }),
+      () =>
+        h.pma.getJson('/database/routines', {
+          db: P,
+          export_item: '1',
+          item_name: 'f_add',
+          item_type: 'FUNCTION',
+        }),
       () => h.bma.req('GET', bma('/routines/export?name=f_add&type=FUNCTION')),
     )
     const b = res.b.json as { title: string; sql: string }

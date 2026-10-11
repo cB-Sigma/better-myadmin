@@ -10,6 +10,8 @@ export const qk = {
   sqlForm: (s: number, db: string, table: string, q: string) =>
     ['srv', s, 'db', db, 't', table, 'sqlForm', q] as const,
   autocomplete: (s: number, db: string) => ['srv', s, 'db', db, 'autocomplete'] as const,
+  /** ForeignKey::isCheckEnabled (GET /sql/default-fk-check) */
+  defaultFkCheck: (s: number) => ['srv', s, 'defaultFkCheck'] as const,
   consoleConfig: (s: number) => ['srv', s, 'console', 'config'] as const,
   config: ['config-public'] as const,
   versionCheck: ['version-check'] as const,

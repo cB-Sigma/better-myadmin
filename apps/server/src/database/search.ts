@@ -1,7 +1,7 @@
 import type { DbSearchFormResponse, DbSearchResponse } from '@bettermyadmin/contracts'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { ValidationError } from '../http/errors.ts'
-import { type DbCtx, getTables } from './context.ts'
+import { type DbCtx, listTables } from './context.ts'
 
 /**
  * Database Search.
@@ -29,7 +29,7 @@ function checkEnabled(ctx: DbCtx): void {
 
 export async function searchForm(ctx: DbCtx): Promise<DbSearchFormResponse> {
   checkEnabled(ctx)
-  return { tables: await getTables(ctx) }
+  return { tables: await listTables(ctx) }
 }
 
 export interface SearchParams {
@@ -43,7 +43,7 @@ export interface SearchParams {
 /** Search::getSearchResults */
 export async function search(ctx: DbCtx, req: SearchParams): Promise<DbSearchResponse> {
   checkEnabled(ctx)
-  const all = await getTables(ctx)
+  const all = await listTables(ctx)
   const n = Number(req.searchType)
   const type = Number.isInteger(n) && n >= 1 && n <= 5 && String(n) === req.searchType ? n : 1
   const description =

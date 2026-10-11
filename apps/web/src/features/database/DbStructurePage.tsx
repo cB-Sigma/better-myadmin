@@ -110,7 +110,7 @@ export function DbStructurePage({
   const refresh = async () => {
     setCounts({})
     await qc.invalidateQueries({ queryKey: qk.db(server, db) })
-    await qc.invalidateQueries({ queryKey: ['srv', server, 'nav'] })
+    await qc.invalidateQueries({ queryKey: qk.nav(server) })
   }
   const act = async (fn: () => Promise<{ messages: SqlMessage[] }>) => {
     try {
@@ -252,7 +252,7 @@ export function DbStructurePage({
         }
       }
       setFavorites({ ...favorites, [tb.name]: !isFav })
-      await qc.invalidateQueries({ queryKey: ['srv', server, 'nav'] })
+      await qc.invalidateQueries({ queryKey: qk.nav(server) })
     } catch (e) {
       setMessages([errorMessage(e)])
     }

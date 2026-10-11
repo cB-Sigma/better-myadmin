@@ -6,7 +6,7 @@ import { backquote } from '@bettermyadmin/sql-gen'
 import { ValidationError } from '../http/errors.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import { isSuperUser } from '../server-admin/context.ts'
-import { type DbCtx, getDbCollation, getTables, isSystemSchema, msg, selectDb } from './context.ts'
+import { type DbCtx, getDbCollation, isSystemSchema, listTables, msg, selectDb } from './context.ts'
 import {
   duplicateInfo,
   fetchColumn,
@@ -82,7 +82,7 @@ export async function changeCollation(
     'operations.collation',
   )
   if (req.changeAllTables) {
-    for (const t of await getTables(ctx)) {
+    for (const t of await listTables(ctx)) {
       if (await isView(ctx, ctx.db, t)) continue
       await ctx.conn.query(
         `ALTER TABLE ${backquote(ctx.db)}.${backquote(t)} DEFAULT ${getCharsetQueryPart(req.collation)}`,
@@ -178,7 +178,7 @@ export async function renameOrCopy(
     }
   }
   await selectDb(ctx, old)
-  const tables = await getTables(ctx, old)
+  const tables = await listTables(ctx, old)
   // getViewsAndCreateSqlViewStandIn
   const views: string[] = []
   for (const t of tables) {

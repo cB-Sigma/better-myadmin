@@ -8,7 +8,7 @@ import { formatByteDown, formatNumber, localisedDate } from '@bettermyadmin/i18n
 import { backquote } from '@bettermyadmin/sql-gen'
 import { pageselectorPages } from '../navigation/list-navigator.ts'
 import { ReplicationInfo } from '../server-admin/replication-info.ts'
-import { type DbCtx, getDbCollation, getTables, isSystemSchema } from './context.ts'
+import { type DbCtx, getDbCollation, isSystemSchema, listTables } from './context.ts'
 import { type TableRow, countRecords, getTablesFull, isMerge, realRowCount, tableCache } from './tables.ts'
 
 /**
@@ -87,7 +87,7 @@ async function getDbInfo(
   const group = groupParam !== undefined && groupParam !== '' ? groupParam : null
   const type = typeParam === 'table' || typeParam === 'view' ? typeParam : null
   if (group === null && type === null) {
-    let names = await getTables(ctx)
+    let names = await listTables(ctx)
     let limitCount = ctx.cfg.MaxTableList
     const total = names.length
     if (sort === 'Name') {
@@ -438,7 +438,7 @@ export async function realRowCountAction(
     return { realRowCount: formatNumber(ctx.tr, await realRowCount(ctx, ctx.db, q.table ?? ''), 0) }
   }
   const out: Array<{ table: string; rowCount: string }> = []
-  for (const table of await getTables(ctx)) {
+  for (const table of await listTables(ctx)) {
     out.push({ table, rowCount: formatNumber(ctx.tr, await realRowCount(ctx, ctx.db, table), 0) })
   }
   return { realRowCountAll: out }

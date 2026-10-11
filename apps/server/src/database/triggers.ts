@@ -9,7 +9,7 @@ import { sprintf } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { NotFoundError } from '../http/errors.ts'
 import { PrivilegeProbe } from '../shell/privileges.ts'
-import { type DbCtx, getTables, msg, tryQuery } from './context.ts'
+import { type DbCtx, listTables, msg, tryQuery } from './context.ts'
 import { errorsMessage } from './routines.ts'
 import { getTriggers, triggerCreateSql } from './table-mover.ts'
 
@@ -36,7 +36,7 @@ export async function triggersList(ctx: DbCtx, table: string): Promise<TriggersL
       ctx.db,
       table === '' ? undefined : table,
     ),
-    tables: await getTables(ctx),
+    tables: await listTables(ctx),
   }
 }
 
@@ -58,7 +58,7 @@ async function triggerQuery(ctx: DbCtx, req: TriggerSaveRequest, errors: string[
   if (EVENTS.includes(req.event)) query += `${req.event} `
   else errors.push(tr.gettext('You must provide a valid event for the trigger!'))
   query += 'ON '
-  if (req.table !== '' && (await getTables(ctx)).includes(req.table)) query += backquote(req.table)
+  if (req.table !== '' && (await listTables(ctx)).includes(req.table)) query += backquote(req.table)
   else errors.push(tr.gettext('You must provide a valid table name!'))
   query += ' FOR EACH ROW '
   if (req.definition !== '') query += req.definition

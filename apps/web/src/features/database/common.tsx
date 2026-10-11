@@ -18,6 +18,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { type ReactNode, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { t } from '../../lib/i18n'
+import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { MessageBox } from '../sql/SqlMessage'
 
@@ -61,7 +62,7 @@ export function errorMessage(e: unknown): SqlMessage {
 /** ForeignKey::isCheckEnabled for the "Enable foreign key checks" boxes */
 export function useDefaultFkCheck(server: number): boolean {
   const q = useQuery({
-    queryKey: ['srv', server, 'defaultFkCheck'],
+    queryKey: qk.defaultFkCheck(server),
     queryFn: () => api.defaultFkCheck(server),
   })
   return q.data?.defaultFkCheckValue ?? true

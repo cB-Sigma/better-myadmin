@@ -173,8 +173,8 @@ export async function isFkCheckEnabled(ctx: DbCtx): Promise<boolean> {
   return (await getVariable(ctx, 'FOREIGN_KEY_CHECKS')) === 'ON'
 }
 
-/** DatabaseInterface::getTables (SHOW TABLES FROM `db`;, natural order) */
-export async function getTables(ctx: DbCtx, db = ctx.db): Promise<string[]> {
+/** DatabaseInterface::listTables (SHOW TABLES FROM `db`;, natural order) */
+export async function listTables(ctx: DbCtx, db = ctx.db): Promise<string[]> {
   const r = await ctx.dbi.tryQuery(`SHOW TABLES FROM ${backquote(db)};`, 'db.tables')
   if (r === null) return []
   const names = r.rows.map((row) => row[0] ?? '')
