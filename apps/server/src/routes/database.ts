@@ -3,6 +3,9 @@ import {
   BulkFkRequest,
   BulkTablesRequest,
   CopyTablesRequest,
+  DbCollationRequest,
+  DbCommentRequest,
+  DbRenameCopyRequest,
   DbStructureQuery,
   MaintenanceRequest,
   ReplacePrefixRequest,
@@ -20,6 +23,7 @@ import {
   showCreate,
 } from '../database/bulk.ts'
 import { parse, withDb } from '../database/context.ts'
+import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
 import type { ServerEnv } from './server.ts'
 
@@ -96,4 +100,33 @@ databaseRoutes.post('/:db/structure/show-create', async (c) => {
 databaseRoutes.post('/:db/structure/maintenance', async (c) => {
   const req = parse(MaintenanceRequest, await body(c))
   return c.json(await withDb(c, (ctx) => maintenance(ctx, req)))
+})
+
+// ---------------------------------------------------------------- Operations
+
+/** pma: GET /database/operations */
+databaseRoutes.get('/:db/operations', async (c) => c.json(await withDb(c, operationsPage)))
+
+/** pma: POST /database/operations comment= */
+databaseRoutes.post('/:db/operations/comment', async (c) => {
+  const req = parse(DbCommentRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => saveComment(ctx, req.comment)))
+})
+
+/** pma: /database/operations/collation */
+databaseRoutes.post('/:db/operations/collation', async (c) => {
+  const req = parse(DbCollationRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => changeCollation(ctx, req)))
+})
+
+/** pma: POST /database/operations db_rename=true */
+databaseRoutes.post('/:db/operations/rename', async (c) => {
+  const req = parse(DbRenameCopyRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: true, what: 'data' })))
+})
+
+/** pma: POST /database/operations db_copy=true */
+databaseRoutes.post('/:db/operations/copy', async (c) => {
+  const req = parse(DbRenameCopyRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: false })))
 })

@@ -105,7 +105,7 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
       }}
     >
       <Panel title={t('Create new table')}>
-        <PanelBody className="flex flex-wrap items-end gap-3">
+        <PanelBody className="flex flex-wrap items-end gap-3 [&_input]:max-w-48">
           <Label className="flex flex-col gap-1">
             {t('Table name')}
             <Input
@@ -124,16 +124,18 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
               type="number"
               name="num_fields"
               min={1}
-              className="w-24"
+              className="max-w-48"
               value={cols}
               onChange={(e) => setCols(Number(e.target.value))}
               required
             />
           </Label>
+        </PanelBody>
+        <div className="flex justify-end border-t border-border px-3 py-2">
           <Button type="submit" variant="primary">
             {t('Create')}
           </Button>
-        </PanelBody>
+        </div>
       </Panel>
     </form>
   )

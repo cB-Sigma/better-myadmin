@@ -17,6 +17,8 @@ import type {
   CopyFormResponse,
   DatabaseScope,
   DbActionResponse,
+  DbOperationsResponse,
+  DbRenameCopyResponse,
   DbStructureResponse,
   DefaultFkCheckResponse,
   ErrorEnvelope,
@@ -194,6 +196,13 @@ export const api = {
     call<ShowCreateResponse>('POST', `${dbPath(server, db)}/structure/show-create`, { tables }),
   dbMaintenance: (server: number, db: string, op: string, tables: string[]) =>
     call<MaintenanceResponse>('POST', `${dbPath(server, db)}/structure/maintenance`, { op, tables }),
+  dbOperations: (server: number, db: string) =>
+    call<DbOperationsResponse>('GET', `${dbPath(server, db)}/operations`),
+  /** POST …/operations/{comment,collation} */
+  dbOperation: (server: number, db: string, action: 'comment' | 'collation', body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(server, db)}/operations/${action}`, body),
+  dbRenameCopy: (server: number, db: string, action: 'rename' | 'copy', body: unknown) =>
+    call<DbRenameCopyResponse>('POST', `${dbPath(server, db)}/operations/${action}`, body),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },

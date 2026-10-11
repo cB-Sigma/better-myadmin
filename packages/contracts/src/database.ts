@@ -177,3 +177,52 @@ export interface CopyFormResponse {
   databases: string[]
   hasAdjustPrivileges: boolean
 }
+
+// ---------------------------------------------------------------- Operations
+
+export interface DbOperationsResponse {
+  db: string
+  isSystemSchema: boolean
+  /** column_info configured: the "Database comment" card */
+  hasComment: boolean
+  comment: string
+  dbCollation: string
+  hasAdjustPrivileges: boolean
+  isDropDatabaseAllowed: boolean
+  /** $_SESSION['pma_switch_to_new'] */
+  switchToNew: boolean
+  charsets: Array<{
+    name: string
+    description: string
+    collations: Array<{ name: string; description: string; isSelected: boolean }>
+  }>
+  /** "The phpMyAdmin configuration storage has been deactivated. %sFind out why%s." */
+  storageNotice: { type: 'notice' | 'error'; text: string } | null
+}
+
+export const DbCommentRequest = z.object({ comment: z.string().default('') })
+
+export const DbCollationRequest = z.object({
+  collation: z.string().default(''),
+  changeAllTables: z.boolean().default(false),
+  changeAllColumns: z.boolean().default(false),
+})
+
+export const DbRenameCopyRequest = z.object({
+  newName: z.string(),
+  /** db_collation (hidden field with the current collation) */
+  collation: z.string().optional(),
+  what: z.enum(['structure', 'data', 'dataonly']).default('data'),
+  createDatabase: z.boolean().default(true),
+  dropIfExists: z.boolean().default(false),
+  autoIncrement: z.boolean().default(true),
+  addConstraints: z.boolean().default(true),
+  adjustPrivileges: z.boolean().default(false),
+  switchToNew: z.boolean().default(false),
+})
+
+export interface DbRenameCopyResponse extends DbActionResponse {
+  newName: string
+  /** the database to continue in (the new one after a rename, or a copy with "Switch to copied database") */
+  db: string
+}
