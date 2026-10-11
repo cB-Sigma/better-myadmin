@@ -8,7 +8,7 @@ Mechanical inventories of phpMyAdmin `e3e877e8` ([reference-commit.txt](../refer
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 199 | 112 | 7 | 1 | 79 | 0 | 0 | 0 | 0 | 120 | 60.3% |
 | Template controls | 1106 | 450 | 0 | 0 | 24 | 0 | 0 | 632 | 0 | 450 | 40.7% |
-| Config directives | 449 | 185 | 1 | 2 | 1 | 0 | 0 | 260 | 0 | 188 | 41.9% |
+| Config directives | 449 | 186 | 1 | 2 | 1 | 0 | 0 | 259 | 0 | 189 | 42.1% |
 | Messages (msgids) | 3426 | 1415 | 0 | 0 | 33 | 0 | 0 | 1978 | 0 | 1415 | 41.3% |
 | JS behaviours | 966 | 331 | 0 | 0 | 12 | 0 | 0 | 623 | 0 | 331 | 34.3% |
 | Checklist items | 706 | 23 | 0 | 0 | 0 | 13 | 0 | 670 | 0 | 23 | 3.3% |
@@ -27,7 +27,7 @@ Covered / total per inventory (directives are attributed to the feature doc that
 | [04 table level](../../features/04-table-level.md) | M2 | 31/64 (48.4%) | 122/306 (39.9%) | 4/5 (80.0%) | 389/534 (72.8%) | 88/178 (49.4%) | 0/100 (0.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 32/34 (94.1%) | 188/268 (70.1%) | 8/32 (25.0%) | 214/340 (62.9%) | 118/198 (59.6%) | 0/111 (0.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 11/31 (35.5%) | 0/243 (0.0%) | 14/18 (77.8%) | 185/915 (20.2%) | 0/131 (0.0%) | 0/49 (0.0%) |
-| [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 59/63 (93.7%) | 9/138 (6.5%) | 238/293 (81.2%) | 61/66 (92.4%) | 0/67 (0.0%) |
+| [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 59/63 (93.7%) | 10/138 (7.2%) | 238/293 (81.2%) | 61/66 (92.4%) | 0/67 (0.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 1/9 (11.1%) | 0/39 (0.0%) | 33/61 (54.1%) | 12/666 (1.8%) | 0/17 (0.0%) | 0/62 (0.0%) |
 | [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 5/7 (71.4%) | 6/28 (21.4%) | 6/11 (54.5%) | 42/46 (91.3%) | 20/48 (41.7%) | 1/63 (1.6%) |
 | other | M5 | — | 1/1 (100.0%) | 3/28 (10.7%) | 44/94 (46.8%) | — | — |

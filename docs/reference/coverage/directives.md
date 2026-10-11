@@ -4,7 +4,7 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-188/449 covered (41.9%): 185 implemented, 1 exception, 2 n/a, 1 planned, 260 missing. [Summary](README.md).
+189/449 covered (42.1%): 186 implemented, 1 exception, 2 n/a, 1 planned, 259 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 70/106 (66.0%) covered, 69/106 implemented
 
@@ -247,7 +247,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowServerInfo` | apps/server/src/shell/home.ts:200 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:143<br>apps/web/src/features/shell/HomePage.tsx:239<br>apps/web/src/features/shell/HomePage.tsx:244<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
 
-## 07 export import — 9/138 (6.5%) covered, 9/138 implemented
+## 07 export import — 10/138 (7.2%) covered, 10/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -312,7 +312,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Export/quick_export_onserver` |  |  |
 | ⬜ | `Export/quick_export_onserver_overwrite` |  |  |
 | ⬜ | `Export/remember_file_template` |  |  |
-| ⬜ | `Export/remove_definer_from_definitions` |  |  |
+| ✅ | `Export/remove_definer_from_definitions` | apps/server/src/table/table-def.ts:48 |  |
 | ⬜ | `Export/sql_backquotes` |  |  |
 | ⬜ | `Export/sql_compatibility` |  |  |
 | ⬜ | `Export/sql_create_database` |  |  |
