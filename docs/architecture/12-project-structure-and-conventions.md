@@ -36,12 +36,14 @@ bettermyadmin/
 
 - **Package manager**: pnpm 9, workspace protocol for internal deps.
 - **Task runner**: Turborepo (`build`, `dev`, `test`, `lint`, `typecheck`) with remote cache.
-- **Lint/format**: Biome (replaces ESLint+Prettier), plus a few custom lint rules via `eslint-plugin-local` where Biome cannot express them (no physical direction Tailwind classes in `packages/ui`; no `fetch` outside `lib/api`; no `useEffect` data fetching; route files under 60 lines).
+- **Lint/format**: Biome (replaces ESLint+Prettier), plus `pnpm conventions:check` (tools/conventions, TypeScript AST, no build) for the rules Biome cannot express: no `fetch` outside `lib/api`, query keys only from `lib/queryKeys`, no `dangerouslySetInnerHTML` outside `SafeHtml`, no local UI primitives, no raw colours, route files ≤ 60 lines, no SQL in route handlers, one parity client — see [golden path](16-golden-path.md#the-checker).
 - **TypeScript**: `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`; project references per package.
 - **Commits**: Conventional Commits; `feat(browse): ...`, scopes are feature folder names or package names. Each PR references the checklist items it completes (`Parity: browse#L120-L131`).
 - **Releases**: Changesets; semver; `release.yml` builds the npm package, Docker image (multi-arch) and Bun binaries.
 
 ## Code conventions
+
+The step-by-step version, with one canonical file per step and the rules `pnpm conventions:check` enforces in CI, is the [golden path](16-golden-path.md). When this section and the golden path disagree, the golden path wins.
 
 ### Naming
 

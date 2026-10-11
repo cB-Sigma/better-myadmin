@@ -23,6 +23,7 @@
     "parity:inventory": "pnpm --filter @bettermyadmin/parity run inventory",
     "parity:report": "pnpm --filter @bettermyadmin/parity run report",
     "parity:check": "pnpm --filter @bettermyadmin/parity run check",
+    "conventions:check": "tsx tools/conventions/src/cli.ts",
     "parity:baseline": "pnpm --filter @bettermyadmin/parity run baseline"
   },
   "devDependencies": {
