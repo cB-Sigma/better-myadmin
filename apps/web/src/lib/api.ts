@@ -42,6 +42,10 @@ import type {
   PasswordForm,
   QueryRequest,
   QueryResponse,
+  RelationDropdownResponse,
+  RelationPageResponse,
+  RelationSaveRequest,
+  RelationSaveResponse,
   RenameViewRequest,
   ServerScope,
   SetCollationResponse,
@@ -184,6 +188,16 @@ export const api = {
   tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${tablePath(s)}/operations`),
   tableOperation: <K extends keyof TableOpBodies>(s: TableRef, op: K, body: TableOpBodies[K]) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/operations/${op}`, body),
+  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${tablePath(s)}/relation`),
+  tableRelationDropdown: (s: TableRef, q: { foreignDb: string; foreignTable?: string; foreign: boolean }) =>
+    call<RelationDropdownResponse>(
+      'GET',
+      `${tablePath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
+    ),
+  tableRelationSave: (s: TableRef, req: RelationSaveRequest) =>
+    call<RelationSaveResponse>('POST', `${tablePath(s)}/relation`, req),
+  tableRelationDropFk: (s: TableRef, constraint: string) =>
+    call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
 }
 
 /** A table of a server (the table-scope routes). */

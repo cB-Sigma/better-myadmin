@@ -51,7 +51,14 @@ test('table options, maintenance, copy, truncate and drop', async ({ page }) => 
   await page.locator('#tableOptionsForm').getByRole('button', { name: 'Go' }).click()
   await expect(page.locator('.result_query').first()).toContainText('ALTER TABLE `t`')
   await expect
-    .poll(async () => (await sql<Array<{ c: string }>>(`SELECT TABLE_COMMENT c FROM information_schema.TABLES WHERE TABLE_SCHEMA='${DB}' AND TABLE_NAME='t'`))[0]?.c)
+    .poll(
+      async () =>
+        (
+          await sql<Array<{ c: string }>>(
+            `SELECT TABLE_COMMENT c FROM information_schema.TABLES WHERE TABLE_SCHEMA='${DB}' AND TABLE_NAME='t'`,
+          )
+        )[0]?.c,
+    )
     .toBe('new comment')
 
   // maintenance: check table
@@ -61,13 +68,13 @@ test('table options, maintenance, copy, truncate and drop', async ({ page }) => 
   // copy (structure and data)
   await page.locator('#copyTable input[name=new_name]').fill('t_copy')
   await page.locator('#copyTable').getByRole('button', { name: 'Go' }).click()
-  await expect
-    .poll(async () => (await sql<unknown[]>(`SELECT * FROM ${DB}.t_copy`)).length)
-    .toBe(2)
+  await expect.poll(async () => (await sql<unknown[]>(`SELECT * FROM ${DB}.t_copy`)).length).toBe(2)
 
   // truncate: confirmation with the foreign key checks box
   await page.locator('#truncate_tbl_anchor').click()
-  await expect(page.locator('#functionConfirmModal')).toContainText('You are about to TRUNCATE a complete table!')
+  await expect(page.locator('#functionConfirmModal')).toContainText(
+    'You are about to TRUNCATE a complete table!',
+  )
   await expect(page.locator('#fk_checks')).toBeChecked()
   await page.locator('#functionConfirmOkButton').click()
   await expect.poll(async () => (await sql<unknown[]>(`SELECT * FROM ${DB}.t`)).length).toBe(0)

@@ -4,6 +4,7 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, KeyRound, ListTree } from 'lucide-react'
 import { useState } from 'react'
 import { t } from '../../../lib/i18n'
+import { StructurePills } from '../common/StructurePills'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
 import { type Scope, structureApi, structureKeys } from './api'
 import { takeFlash } from './flash'
@@ -105,16 +106,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   return (
     <div id="structure_content">
       <h1 className="hidden text-lg print:block">{table}</h1>
-      {s.showRelationTab && (
-        <ul className="mb-2 flex gap-2 text-sm print:hidden">
-          <li>
-            <span className="rounded bg-bg-subtle px-2 py-1 font-medium">{t('Table structure')}</span>
-          </li>
-          <li>
-            <span className="px-2 py-1 text-fg-muted">{t('Relation view')}</span>
-          </li>
-        </ul>
-      )}
+      {s.showRelationTab && <StructurePills scope={scope} active="structure" />}
       {messages.map((m, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: message list
         <MessageBox key={i} message={m} />

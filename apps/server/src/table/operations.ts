@@ -31,7 +31,7 @@ import {
 } from '@bettermyadmin/metadata'
 import { getCharsetQueryPart } from '@bettermyadmin/mysql-types'
 import { backquote, findDuplicateIndexes } from '@bettermyadmin/sql-gen'
-import { AlterStatement, Context as Ctx, Expression, Parser } from '@bettermyadmin/sql-lexer'
+import { AlterStatement, Context as Ctx, Expression, Parser, parseAnalyze } from '@bettermyadmin/sql-lexer'
 import type { z } from 'zod'
 import { MysqlError } from '../http/errors.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
@@ -867,30 +867,67 @@ export async function sqlAction(ctx: OpsCtx, req: Out<typeof SqlActionRequest>) 
     },
   }
   const a = def[req.action]
+  const r = await runSqlLink(ctx, a.sql, a.message, {
+    fkChecks: req.fkChecks,
+    purge: a.purge === true,
+    deleted: req.action === 'delete',
+  })
+  return {
+    ...r,
+    dropped: r.messages[0]?.type === 'success' && (req.action === 'drop' || req.action === 'dropView'),
+  }
+}
+
+/**
+ * A `/sql` link (data-post + getJsConfirmCommonParam): USE, fk_checks when posted, the query,
+ * the configuration-storage purge and Transformations::clear after a DROP, warnings,
+ * FOREIGN_KEY_CHECKS restored. pma: Sql::executeQueryAndGetQueryResponse
+ */
+export async function runSqlLink(
+  ctx: OpsCtx,
+  sql: string,
+  messageToShow: string,
+  opts: { fkChecks?: boolean | undefined; purge?: boolean; deleted?: boolean } = {},
+): Promise<OperationsResponse> {
+  const { reader, tr, db, table } = ctx
   const current = await reader.dbi.fetchValue('SELECT DATABASE()')
   if (current !== db) await reader.selectDb(db)
   // ForeignKey::handleDisableCheckInit
   const fkDefault = (await reader.getSessionVariable('FOREIGN_KEY_CHECKS')) === 'ON'
-  if (req.fkChecks !== undefined) await setVariable(ctx, 'FOREIGN_KEY_CHECKS', req.fkChecks ? 'ON' : 'OFF')
+  if (opts.fkChecks !== undefined) await setVariable(ctx, 'FOREIGN_KEY_CHECKS', opts.fkChecks ? 'ON' : 'OFF')
   let ms = 0
   let affected = 0
   try {
-    const r = await reader.conn.query(a.sql, 'operations.sql')
+    const r = await reader.conn.query(sql, 'operations.sql')
     ms = r.ms
     affected = r.header?.affectedRows ?? 0
   } catch (e) {
     if (e instanceof MysqlError) {
       await setVariable(ctx, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
-      return { messages: [msg('error', errText(e), a.sql)] } satisfies OperationsResponse
+      return { messages: [msg('error', errText(e), sql)] }
     }
     throw e
   }
-  if (a.purge === true && ctx.meta !== null) {
+  const isDrop = /^DROP\s/i.test(sql)
+  if (opts.purge === true && ctx.meta !== null) {
     await cleanupTableInStorage(ctx.meta.control, ctx.meta.rp, db, table)
   }
   // Sql::deleteTransformationInfo → Transformations::clear (user link) after a DROP
   const bt = ctx.meta?.rp.browserTransformationFeature ?? null
-  if (bt !== null && (req.action === 'drop' || req.action === 'dropView')) {
+  if (bt !== null && !isDrop && /^ALTER\s/i.test(sql)) {
+    const lexCtx = reader.conn.serverInfo?.context
+    const st = parseAnalyze(sql, db, true, lexCtx !== undefined ? { context: lexCtx } : {})[0]?.statement
+    const op = st instanceof AlterStatement ? st.altered?.[0] : undefined
+    const field = op?.field
+    const column = field !== null && typeof field === 'object' ? (field?.column ?? '') : ''
+    if (op?.options?.has('DROP') === true && column !== '' && column !== '0') {
+      await reader.dbi.tryQuery(
+        `DELETE FROM ${backquote(bt.database)}.${backquote(bt.columnInfo)} WHERE \`db_name\` = '${db}' AND \`table_name\` = '${table}' AND \`column_name\` = '${column}' `,
+        'operations.transformation-clear',
+      )
+    }
+  }
+  if (bt !== null && isDrop) {
     await reader.dbi.tryQuery(
       `DELETE FROM ${backquote(bt.database)}.${backquote(bt.columnInfo)} WHERE \`db_name\` = '${db}' AND \`table_name\` = '${table}' `,
       'operations.transformation-clear',
@@ -900,18 +937,14 @@ export async function sqlAction(ctx: OpsCtx, req: Out<typeof SqlActionRequest>) 
   await setVariable(ctx, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
   reader.invalidate()
   // Sql::getMessageForNoRowsReturned
-  let text = a.message
-  if (req.action === 'delete') {
+  let text = messageToShow
+  if (opts.deleted === true) {
     text = sprintf(tr.ngettext('%1$d row deleted.', '%1$d rows deleted.', affected), affected)
   } else if (text === '') {
     text = tr.gettext('MySQL returned an empty result set (i.e. zero rows).')
   }
   if (ms > 0) text += ` ${sprintf(`(${tr.gettext('Query took %01.4f seconds.')})`, ms / 1000)}`
-  const messages = [msg('success', text, a.sql), ...warnings.map((w) => msg('notice', w))]
-  return {
-    messages,
-    dropped: req.action === 'drop' || req.action === 'dropView',
-  } satisfies OperationsResponse
+  return { messages: [msg('success', text, sql), ...warnings.map((w) => msg('notice', w))] }
 }
 
 /** DatabaseInterface::setVariable: SET only when the value differs */
