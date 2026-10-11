@@ -2,10 +2,12 @@ import { publicConfig } from '@bettermyadmin/config'
 import type { VersionCheckResponse } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
 import type { AppEnv } from '../app.ts'
-import { serverIndexes } from '../config.ts'
+import { getServer, serverIndexes } from '../config.ts'
+import { withMeta } from '../metadata/service.ts'
 import { readGitInfo } from '../shell/git.ts'
 import { APP_VERSION } from '../shell/scope.ts'
 import { getLatestVersions, latestCompatible } from '../shell/version.ts'
+import { asServerRequest, loginCredentials } from './server.ts'
 
 export const metaRoutes = new Hono<AppEnv>()
 
@@ -24,9 +26,30 @@ metaRoutes.get('/build', (c) => {
 
 /**
  * The client-visible configuration subset (allow-listed directives only, never secrets or
- * `Servers`), the equivalent of the inlined CommonParams/config JS globals.
+ * `Servers`), the equivalent of the inlined CommonParams/config JS globals, with the user's
+ * preferences of the current server merged in.
  */
-metaRoutes.get('/config-public', (c) => c.json(publicConfig(c.get('deps').cfg)))
+metaRoutes.get('/config-public', async (c) => {
+  const { cfg, credBox } = c.get('deps')
+  const session = c.get('session')
+  const server = session.currentServer
+  const login = session.servers[String(server)]
+  // logged in: the user's preferences applied (UserPreferencesHandler::loadUserPreferences)
+  if (login?.twoFactorOk === true && getServer(cfg, server) !== undefined) {
+    const creds = loginCredentials(credBox, login)
+    if (creds !== null) {
+      try {
+        const settings = await asServerRequest(c, server, creds, (sc) =>
+          withMeta(sc, {}, (m) => m.settings()),
+        )
+        return c.json(publicConfig(settings))
+      } catch {
+        // the server is unreachable: the configuration alone
+      }
+    }
+  }
+  return c.json(publicConfig(cfg))
+})
 
 /**
  * GET /api/meta/version-check (pma: /version-check): `{}` when VersionCheck is off or no data,

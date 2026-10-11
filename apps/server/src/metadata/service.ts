@@ -310,6 +310,15 @@ export class MetaRequest {
    */
   async settings(): Promise<AppConfig> {
     if (this.#settings !== null) return this.#settings
+    this.#settings = mergeSettings(this.cfg, (await this.appliedPrefs()).userprefs)
+    return this.#settings
+  }
+
+  /**
+   * `$_SESSION['cache']['server_N']['userprefs']`: UserPreferences::apply of the stored map (with
+   * `Server`, `lang`, `ThemeDefault`, `2fa`), loaded once per session and server.
+   */
+  async appliedPrefs(): Promise<{ userprefs: Record<string, unknown>; type: string }> {
     const state = this.state
     const key = `server_${this.serverIndex}`
     state.prefsCache ??= {}
@@ -341,8 +350,15 @@ export class MetaRequest {
       }
       state.prefsCache[key] = cached
     }
-    this.#settings = mergeSettings(this.cfg, cached.userprefs)
-    return this.#settings
+    return cached
+  }
+
+  /** After a save: drop the cached preferences of this request and of the session. */
+  forgetPrefs(): void {
+    this.#settings = null
+    this.#meta = null
+    const st = this.state
+    if (st.prefsCache !== undefined) delete st.prefsCache[`server_${this.serverIndex}`]
   }
 
   /** DbTableExists::hasTable (user link). */

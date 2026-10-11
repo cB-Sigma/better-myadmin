@@ -1,10 +1,12 @@
 import { sprintf } from '@bettermyadmin/i18n'
-import { Hono, type MiddlewareHandler } from 'hono'
+import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import type { AppEnv } from '../app.ts'
 import { AuthMessages } from '../auth/cookie.ts'
 import { getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
+import type { SecretBox } from '../session/crypto.ts'
+import type { ServerLogin } from '../session/store.ts'
 import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
 import { exportRoutes } from './export.ts'
@@ -12,6 +14,7 @@ import { importRoutes } from './import.ts'
 import { insertEditRoutes } from './insert-edit.ts'
 import { metadataRoutes } from './metadata.ts'
 import { navigationRoutes } from './navigation.ts'
+import { preferencesRoutes } from './preferences.ts'
 import { queryRoutes } from './query.ts'
 import { serverAdminRoutes } from './server-admin.ts'
 import { shellRoutes } from './shell.ts'
@@ -40,17 +43,40 @@ const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
     }
     throw new AuthRequiredError()
   }
+  const creds = loginCredentials(credBox, login)
+  if (creds === null) throw new AuthRequiredError()
+  session.currentServer = s
+  c.set('serverIndex', s)
+  c.set('creds', creds)
+  await next()
+}
+
+/** The decrypted credentials of a server login (null when the ciphertext is stale). */
+export function loginCredentials(credBox: SecretBox, login: ServerLogin): Credentials | null {
   const plain = credBox.decrypt(login.credEnc)
-  if (plain === null) throw new AuthRequiredError()
+  if (plain === null) return null
   const { password } = JSON.parse(plain) as { password: string }
   const creds: Credentials = { user: login.user, password }
   if (login.host !== undefined) creds.host = login.host
   if (login.port !== undefined) creds.port = login.port
-  session.currentServer = s
-  c.set('serverIndex', s)
   if (login.collation !== undefined) creds.collation = login.collation
-  c.set('creds', creds)
-  await next()
+  return creds
+}
+
+/**
+ * Runs `fn` with this request bound to a server login like resolveServer does (for the routes
+ * outside /servers/:s that read the user's preferences: login, config-public).
+ */
+export async function asServerRequest<T>(
+  c: Context<AppEnv>,
+  server: number,
+  creds: Credentials,
+  fn: (c: Context<ServerEnv>) => Promise<T>,
+): Promise<T> {
+  const sc = c as unknown as Context<ServerEnv>
+  sc.set('serverIndex', server)
+  sc.set('creds', creds)
+  return fn(sc)
 }
 serverRoutes.use('/:s', resolveServer)
 serverRoutes.use('/:s/*', resolveServer)
@@ -62,6 +88,7 @@ serverRoutes.route('/:s/sql', sqlRoutes)
 serverRoutes.route('/:s/console', consoleRoutes)
 serverRoutes.route('/:s/export', exportRoutes)
 serverRoutes.route('/:s/import', importRoutes)
+serverRoutes.route('/:s/preferences', preferencesRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)
