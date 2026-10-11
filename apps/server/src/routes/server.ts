@@ -25,7 +25,7 @@ const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   const { cfg, credBox } = c.get('deps')
   const s = Number(c.req.param('s'))
   if (!Number.isInteger(s) || getServer(cfg, s) === undefined)
-    throw new NotFoundError('Invalid server index!')
+    throw new NotFoundError(c.get('tr').gettext('Invalid server index!'))
   const session = c.get('session')
   const login = session.servers[String(s)]
   if (login === undefined || !login.twoFactorOk) {

@@ -8,8 +8,7 @@ import {
   StatusVariablesRequest,
 } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
-import type { z } from 'zod'
-import { ValidationError } from '../http/errors.ts'
+import { jsonBody, parse } from '../http/validate.ts'
 import { collationsPage } from '../server-admin/charsets.ts'
 import { withAdmin } from '../server-admin/context.ts'
 import { createDatabase, databasesPage, dropDatabases } from '../server-admin/databases.ts'
@@ -32,19 +31,6 @@ import type { ServerEnv } from './server.ts'
  */
 export const serverAdminRoutes = new Hono<ServerEnv>()
 
-function parse<T extends z.ZodTypeAny>(schema: T, value: unknown): z.output<T> {
-  const r = schema.safeParse(value)
-  if (!r.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      r.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  return r.data
-}
-
-const body = async (c: { req: { json: () => Promise<unknown> } }) => c.req.json().catch(() => ({}))
-
 /** pma: /server/databases */
 serverAdminRoutes.get('/databases', async (c) => {
   const q = parse(DatabasesQuery, c.req.query())
@@ -62,14 +48,14 @@ serverAdminRoutes.get('/databases', async (c) => {
 
 /** pma: /server/databases/create */
 serverAdminRoutes.post('/databases', async (c) => {
-  const req = parse(CreateDatabaseRequest, await body(c))
+  const req = parse(CreateDatabaseRequest, await jsonBody(c, {}))
   const res = await withAdmin(c, (ctx) => createDatabase(ctx, req.new_db, req.db_collation))
   return c.json(res)
 })
 
 /** pma: /server/databases/destroy */
 serverAdminRoutes.post('/databases/drop', async (c) => {
-  const req = parse(DropDatabasesRequest, await body(c))
+  const req = parse(DropDatabasesRequest, await jsonBody(c, {}))
   const res = await withAdmin(c, (ctx) => dropDatabases(ctx, req.selected_dbs))
   return c.json(res)
 })
@@ -112,7 +98,7 @@ serverAdminRoutes.get('/status/variables', async (c) => {
 
 /** pma: POST /server/status/variables (filters and the FLUSH actions) */
 serverAdminRoutes.post('/status/variables', async (c) => {
-  const req = parse(StatusVariablesRequest, await body(c))
+  const req = parse(StatusVariablesRequest, await jsonBody(c, {}))
   return c.json(await withAdmin(c, (ctx) => statusVariablesPage(ctx, req)))
 })
 
@@ -138,7 +124,7 @@ serverAdminRoutes.get('/variables/:name', async (c) => {
 /** pma: /server/variables/set/{name} */
 serverAdminRoutes.post('/variables/:name', async (c) => {
   const name = c.req.param('name')
-  const req = parse(SetVariableRequest, await body(c))
+  const req = parse(SetVariableRequest, await jsonBody(c, {}))
   const res = await withAdmin(c, (ctx) => setVariable(ctx, name, req.varValue))
   return c.json(res)
 })

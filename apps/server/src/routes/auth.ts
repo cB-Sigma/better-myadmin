@@ -11,6 +11,7 @@ import { cookieLogin } from '../auth/cookie.ts'
 import { getClientIp } from '../auth/ip-allow-deny.ts'
 import { getServer, phpEmpty, serverIndexes, serverLabel } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { forgetServerMetadata } from '../metadata/service.ts'
 import { regenerate } from '../session/manager.ts'
 
@@ -51,17 +52,11 @@ authRoutes.get('/state', (c) => {
 
 authRoutes.post('/login', async (c) => {
   const { cfg, pools, credBox, userBox, store } = c.get('deps')
-  const parsed = LoginRequest.safeParse(await c.req.json().catch(() => null))
-  if (!parsed.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      parsed.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  const req = parsed.data
-  if (getServer(cfg, req.server) === undefined) throw new ValidationError('Invalid server index!')
+  const req = await parseJson(c, LoginRequest)
+  if (getServer(cfg, req.server) === undefined)
+    throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   // an empty username just shows the form again (readCredentials returns false)
-  if (req.username === '') throw new ValidationError('Missing username.')
+  if (req.username === '') throw new ValidationError(c.get('tr').gettext('Missing username.'))
 
   // Node's socket address; TrustedProxies decides whether a forwarded header is believed
   const remote = (c.env as { incoming?: { socket?: { remoteAddress?: string } } } | undefined)?.incoming
@@ -149,7 +144,7 @@ authRoutes.post('/switch-server', async (c) => {
   const { cfg } = c.get('deps')
   const { server } = (await c.req.json().catch(() => ({}))) as { server?: number }
   if (typeof server !== 'number' || getServer(cfg, server) === undefined) {
-    throw new ValidationError('Invalid server index!')
+    throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   }
   c.get('session').currentServer = server
   return c.json({ ok: true })

@@ -75,6 +75,9 @@ const label = 'Select all'`
       'server/strings-through-tr',
       'server/validate',
     ])
+    expect(rulesOf([app, { path: 'apps/server/src/routes/y.ts', text: 'q(`USE ${db}`)' }])).toEqual([
+      'server/no-sql-in-routes',
+    ])
     // services may hold SQL
     expect(rulesOf([{ path: 'apps/server/src/x/service.ts', text: "q('SELECT 1')" }])).toEqual([])
   })

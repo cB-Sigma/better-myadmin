@@ -8,12 +8,13 @@ import {
 } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
 import { ValidationError } from '../http/errors.ts'
+import { parseJson } from '../http/validate.ts'
 import { afterSqlBox } from '../metadata/hooks.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { simulateDml } from '../query/simulate.ts'
 import type { ServerEnv } from './server.ts'
-import { parseBody, withConn } from './sql.ts'
+import { withConn } from './sql.ts'
 
 export const queryRoutes = new Hono<ServerEnv>()
 
@@ -23,7 +24,7 @@ const running = new Map<string, number>()
 /** POST /api/servers/:s/query — the SQL tab (pma: /import with sql_query) */
 queryRoutes.post('/', async (c) => {
   const { cfg, pools } = c.get('deps')
-  const req = await parseBody(c, QueryRequest)
+  const req = await parseJson(c, QueryRequest)
   if (req.sql.trim() === '') throw new ValidationError(c.get('tr').gettext('Missing value in the form!'))
   const session = c.get('session')
   // A query that came from a URL runs only with a valid signature (Core::checkSqlQuerySignature);
@@ -104,7 +105,7 @@ queryRoutes.post('/', async (c) => {
  */
 queryRoutes.post('/simulate', async (c) => {
   const { cfg } = c.get('deps')
-  const req = await parseBody(c, SimulateRequest)
+  const req = await parseJson(c, SimulateRequest)
   const session = c.get('session')
   const body: SimulateResponse = await withConn(c, (conn) =>
     simulateDml(req.sql, req.delimiter, req.db ?? '', conn, conn.serverInfo?.context, {
@@ -119,7 +120,7 @@ queryRoutes.post('/simulate', async (c) => {
 /** POST /api/servers/:s/query/cancel — KILL QUERY on the connection running `queryId`. */
 queryRoutes.post('/cancel', async (c) => {
   const { pools } = c.get('deps')
-  const req = await parseBody(c, CancelRequest)
+  const req = await parseJson(c, CancelRequest)
   const session = c.get('session')
   const server = c.get('serverIndex')
   const threadId = running.get(`${session.id}\u0000${server}\u0000${req.queryId}`)

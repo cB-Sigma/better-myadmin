@@ -18,8 +18,8 @@ import {
 import { sprintf } from '@bettermyadmin/i18n'
 import { Context as SqlContext } from '@bettermyadmin/sql-lexer'
 import { type Context, Hono } from 'hono'
-import type { z } from 'zod'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { jsonBody, parse } from '../http/validate.ts'
 import {
   type DdlCtx,
   addColumns,
@@ -46,26 +46,13 @@ import type { ServerEnv } from './server.ts'
  */
 export const tableStructureRoutes = new Hono<ServerEnv>()
 
-function parse<T extends z.ZodTypeAny>(schema: T, value: unknown): z.output<T> {
-  const r = schema.safeParse(value)
-  if (!r.success) {
-    throw new ValidationError(
-      'Invalid request.',
-      r.error.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
-    )
-  }
-  return r.data
-}
-
-const body = async (c: Context<ServerEnv>) => c.req.json().catch(() => null)
-
 /** A request-scoped reader on a pooled connection of the session. */
 async function withReader<T>(c: Context<ServerEnv>, fn: (reader: TableReader) => Promise<T>): Promise<T> {
   const { pools } = c.get('deps')
   const session = c.get('session')
   const serverIndex = c.get('serverIndex')
   const login = session.servers[String(serverIndex)]
-  if (login === undefined) throw new ValidationError('Invalid server index!')
+  if (login === undefined) throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   login.cache ??= {}
   const conn = await pools.acquire(
     session.id,
@@ -164,7 +151,7 @@ tableStructureRoutes.get('/:db/create-table/form', async (c) => {
 // ---------------------------------------------------------------- writes
 
 tableStructureRoutes.post('/:db/tables', async (c) => {
-  const req = parse(CreateTableRequest, await body(c))
+  const req = parse(CreateTableRequest, await jsonBody(c))
   const db = c.req.param('db')
   return respond(
     c,
@@ -175,33 +162,33 @@ tableStructureRoutes.post('/:db/tables', async (c) => {
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/add', async (c) => {
-  const req = parse(AddColumnsRequest, await body(c))
+  const req = parse(AddColumnsRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => addColumns(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/change', async (c) => {
-  const req = parse(ChangeColumnsRequest, await body(c))
+  const req = parse(ChangeColumnsRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => changeColumns(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/drop', async (c) => {
-  const req = parse(DropColumnsRequest, await body(c))
+  const req = parse(DropColumnsRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => dropColumns(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/key', async (c) => {
-  const req = parse(AddKeyRequest, await body(c))
+  const req = parse(AddKeyRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => addKey(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/move', async (c) => {
-  const req = parse(MoveColumnsRequest, await body(c))
+  const req = parse(MoveColumnsRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => moveColumns(x, req)))
 })
 
 /** POST …/columns/preview {op, body} — every "Preview SQL" button, always a dry run */
 tableStructureRoutes.post('/:db/tables/:t/columns/preview', async (c) => {
-  const req = parse(ColumnsPreviewRequest, await body(c))
+  const req = parse(ColumnsPreviewRequest, await jsonBody(c))
   return respond(
     c,
     await withTable(c, (x) => {
@@ -217,7 +204,7 @@ tableStructureRoutes.post('/:db/tables/:t/columns/preview', async (c) => {
  * `reserved: false` also when ReservedWordDisableWarning is on.
  */
 tableStructureRoutes.post('/:db/tables/:t/columns/reserved-word-check', async (c) => {
-  const req = parse(ReservedWordCheckRequest, await body(c))
+  const req = parse(ReservedWordCheckRequest, await jsonBody(c))
   const cfg = c.get('deps').cfg
   const tr = c.get('tr')
   if (cfg.ReservedWordDisableWarning !== false) {
@@ -246,27 +233,27 @@ tableStructureRoutes.post('/:db/tables/:t/columns/reserved-word-check', async (c
 })
 
 tableStructureRoutes.post('/:db/tables/:t/indexes', async (c) => {
-  const req = parse(SaveIndexRequest, await body(c))
+  const req = parse(SaveIndexRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => saveIndex(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/indexes/rename', async (c) => {
-  const req = parse(RenameIndexRequest, await body(c))
+  const req = parse(RenameIndexRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => renameIndex(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/indexes/drop', async (c) => {
-  const req = parse(DropIndexRequest, await body(c))
+  const req = parse(DropIndexRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => dropIndex(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/partitions/partitioning', async (c) => {
-  const req = parse(PartitioningRequest, await body(c))
+  const req = parse(PartitioningRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => savePartitioning(x, req)))
 })
 
 tableStructureRoutes.post('/:db/tables/:t/partitions/maintenance', async (c) => {
-  const req = parse(PartitionMaintenanceRequest, await body(c))
+  const req = parse(PartitionMaintenanceRequest, await jsonBody(c))
   return respond(c, await withTable(c, (x) => partitionMaintenance(x, req)))
 })
 
