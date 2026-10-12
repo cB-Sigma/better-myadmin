@@ -126,7 +126,7 @@ function NodeRow({
       data-kind={node.kind}
       data-name={node.realName}
       className={clsx(
-        'flex h-[22px] items-center gap-1 whitespace-nowrap pr-1 text-[13px]',
+        'group flex h-[22px] items-center gap-1 whitespace-nowrap pr-1 text-[13px]',
         node.classes,
         pointer && 'hover:bg-nav-pointer',
         row.selected && 'selected bg-nav-pointer font-semibold',

@@ -4,28 +4,28 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-181/199 covered (91.0%): 173 implemented, 7 exception, 1 n/a, 18 planned. [Summary](README.md).
+188/199 covered (94.5%): 179 implemented, 8 exception, 1 n/a, 11 planned. [Summary](README.md).
 
-## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
+## 01 shell navigation auth — 17/23 (73.9%) covered, 13/23 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | ✅ | `GET, POST [/]` | `HomeController` | UI /s/:server (apps/web/src/routes/s/$server/index.tsx) |  |
-| 🗓️ | `GET /changelog` | `ChangeLogController` | UI /about/changelog | M1 — static |
+| ✅ | `GET /changelog` | `ChangeLogController` | API GET /api/servers/:s/about/changelog (apps/server/src/routes/about.ts:25)<br>UI /s/:server/changelog (apps/web/src/routes/s/$server/changelog.tsx) | the project's CHANGELOG.md with phpMyAdmin's rewrites |
 | ✅ | `POST /collation-connection` | `CollationConnectionController` | API POST /api/servers/:s/session/collation (apps/server/src/routes/shell.ts:106) |  |
-| 🗓️ | `POST /console/bookmark/add` | `Console/Bookmark/AddController` | API /api/console/* | M1 — bookmarks, config |
-| 🗓️ | `GET /console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API /api/console/* | M1 — bookmarks, config |
-| ✅ | `POST /console/update-config` | `Console/UpdateConfigController` | API POST /api/servers/:s/console/config (apps/server/src/routes/console.ts:77) | bookmarks, config |
+| ✅ | `POST /console/bookmark/add` | `Console/Bookmark/AddController` | API POST /api/servers/:s/console/bookmarks (apps/server/src/routes/metadata.ts:355) | the console's Add bookmark card |
+| ✅ | `GET /console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API GET /api/servers/:s/console/bookmarks (apps/server/src/routes/metadata.ts:328) | the console's Bookmarks card (Refresh) |
+| ✅ | `POST /console/update-config` | `Console/UpdateConfigController` | API GET /api/servers/:s/console/config (apps/server/src/routes/console.ts:59)<br>API POST /api/servers/:s/console/config (apps/server/src/routes/console.ts:77) |  |
 | 🔀 | `GET, POST /error-report` | `ErrorReportController` | API POST /api/telemetry/error (apps/server/src/routes/telemetry.ts:55) | X19 — opt-in |
 | ✅ | `GET, POST /git-revision` | `GitInfoController` | API GET /api/meta/build (apps/server/src/routes/meta.ts:17) |  |
-| 🗓️ | `GET /license` | `LicenseController` | UI /about/license | M1 — static |
+| ✅ | `GET /license` | `LicenseController` | API GET /api/servers/:s/about/license (apps/server/src/routes/about.ts:19)<br>UI /s/:server/license (apps/web/src/routes/s/$server/license.tsx) |  |
 | ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:190) |  |
 | ➖ | `GET /messages` | `JavaScriptMessagesController` |  | n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent) |
-| ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:42)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:59) | later: GET /api/servers/:s/navigation/hidden/:db, POST /api/servers/:s/navigation/hide, POST /api/servers/:s/navigation/unhide |
-| 🗓️ | `POST /navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API POST /api/servers/:s/navigation/width | M1 — see API reference |
-| 🗓️ | `GET /phpinfo` | `PhpInfoController` | UI /about/runtime | M1 (X15) — static |
-| ✅ | `POST /sync-favorite-tables` | `SyncFavoriteTablesController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:433) | sync |
-| 🗓️ | `GET, POST /table/recent-favorite` | `Table/RecentFavoriteController` | API GET /api/servers/:s/recent-favorite<br>UI /s/:s/db/:db/t/:table/recent-favorite | M1 |
+| ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:42)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:59)<br>API GET /api/servers/:s/navigation/hidden (apps/server/src/routes/metadata.ts:691)<br>API POST /api/servers/:s/navigation/hide (apps/server/src/routes/metadata.ts:716)<br>API POST /api/servers/:s/navigation/unhide (apps/server/src/routes/metadata.ts:717) |  |
+| ✅ | `POST /navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API POST /api/servers/:s/navigation/width (apps/server/src/routes/metadata.ts:663) | the navigation panel's resizer and collapser |
+| 🔀 | `GET /phpinfo` | `PhpInfoController` | API GET /api/servers/:s/about/runtime (apps/server/src/routes/about.ts:37)<br>UI /s/:server/runtime-info (apps/web/src/routes/s/$server/runtime-info.tsx) | X15 — shown with ShowPhpInfo |
+| ✅ | `POST /sync-favorite-tables` | `SyncFavoriteTablesController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:454) | sync |
+| ✅ | `GET, POST /table/recent-favorite` | `Table/RecentFavoriteController` | API GET /api/servers/:s/recent-favorite (apps/server/src/routes/metadata.ts:394)<br>API POST /api/servers/:s/recent-favorite/open (apps/server/src/routes/metadata.ts:420)<br>UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the navigation's Recent / Favorites entries (forget a dropped table, then Browse) |
 | 🗓️ | `GET /themes` | `ThemesController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🗓️ | `POST /themes/set` | `ThemeSetController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🔀 | `GET, POST /version-check` | `VersionCheckController` | API GET /api/meta/version-check (apps/server/src/routes/meta.ts:58) | X20 |
@@ -42,7 +42,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
 | ✅ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:59) |  |
-| ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:536) |  |
+| ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:557) |  |
 | ✅ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the confirmation is rendered in place by the results view (no request of its own) |
 | ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:71) |  |
 | ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:85) |  |
@@ -159,7 +159,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /database/structure/drop-table` | `Database/Structure/DropTableController` | API POST /api/servers/:s/databases/:db/structure/drop (apps/server/src/routes/database.ts:116) |  |
 | ✅ | `POST /database/structure/empty-form` | `Database/Structure/EmptyFormController` | API POST /api/servers/:s/databases/:db/structure/empty (apps/server/src/routes/database.ts:110)<br>UI /s/:server/db/:db/structure (apps/web/src/routes/s/$server/db/$db/structure.tsx) |  |
 | ✅ | `POST /database/structure/empty-table` | `Database/Structure/EmptyTableController` | API POST /api/servers/:s/databases/:db/structure/empty (apps/server/src/routes/database.ts:110) |  |
-| ✅ | `POST /database/structure/favorite-table` | `Database/Structure/FavoriteTableController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:433) |  |
+| ✅ | `POST /database/structure/favorite-table` | `Database/Structure/FavoriteTableController` | API POST /api/servers/:s/favorites (apps/server/src/routes/metadata.ts:454) |  |
 | ✅ | `GET, POST /database/structure/real-row-count` | `Database/Structure/RealRowCountController` | API GET /api/servers/:s/databases/:db/structure/real-row-count (apps/server/src/routes/database.ts:98) |  |
 | ✅ | `POST /database/structure/replace-prefix` | `Database/Structure/ReplacePrefixController` | API POST /api/servers/:s/databases/:db/structure/replace-prefix (apps/server/src/routes/database.ts:128) |  |
 | ✅ | `POST /database/structure/show-create` | `Database/Structure/ShowCreateController` | API POST /api/servers/:s/databases/:db/structure/show-create (apps/server/src/routes/database.ts:146) |  |

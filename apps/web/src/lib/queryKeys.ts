@@ -95,6 +95,13 @@ export const qk = {
   normalizationStep: (r: TableRef, step: string, q: object) =>
     [...qk.tbl(r), 'normalization', step, q] as const,
   /** a visualization of a query result (chart form / rows, GIS) for one request */
+  /** the static pages: List of changes, License, runtime information */
+  about: (server: number, page: 'changelog' | 'license' | 'runtime') =>
+    ['srv', server, 'about', page] as const,
+  /** the navigation's Recent / Favorites lists */
+  recentFavorite: (server: number) => ['srv', server, 'recentFavorite'] as const,
+  /** the hidden navigation items of a database (the Show hidden items dialog) */
+  navHidden: (server: number, db: string) => ['srv', server, 'navHidden', db] as const,
   visualization: (
     r: { server: number; db?: string | undefined; table?: string | undefined },
     kind: 'chart' | 'chartData' | 'gis',

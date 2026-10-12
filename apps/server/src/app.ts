@@ -14,6 +14,7 @@ import { serverRoutes } from './routes/server.ts'
 import { telemetryRoutes } from './routes/telemetry.ts'
 import { type SecretBox, safeEqual } from './session/crypto.ts'
 import { newSession, nowSeconds } from './session/manager.ts'
+import { mergeChanges } from './session/merge.ts'
 import type { SessionData, SessionStore } from './session/store.ts'
 
 export interface AppDeps {
@@ -66,6 +67,10 @@ export function createApp(deps: AppDeps) {
     const id = getCookie(c, SESSION_COOKIE)
     let session = id !== undefined ? deps.store.get(id) : null
     c.set('sessionIsNew', session === null)
+    // the session as stored when the request started: what this request changes (including the
+    // inactivity logout below) is merged over what a concurrent request stored meanwhile
+    // (PHP serialises a session's requests with the session lock)
+    const loaded: unknown = session === null ? null : JSON.parse(JSON.stringify(session))
     if (session === null) session = newSession(deps.cfg.ServerDefault > 0 ? deps.cfg.ServerDefault : 1)
     else if (
       Object.keys(session.servers).length > 0 &&
@@ -78,7 +83,13 @@ export function createApp(deps: AppDeps) {
     }
     c.set('session', session)
     await next()
-    const s = c.get('session')
+    let s = c.get('session')
+    if (loaded !== null && s.id === session.id) {
+      const latest = deps.store.get(s.id)
+      // deleted meanwhile (logout, Session::secure() in another request): never bring it back
+      if (latest === null) return
+      s = mergeChanges(latest, loaded, s)
+    }
     s.lastSeenAt = nowSeconds()
     deps.store.set(s)
     writeSessionCookies(c, s)

@@ -824,6 +824,76 @@ export const api = {
   /** pma: /database/central-columns getColumnList (cur_table): the "Pick from Central Columns" list */
   dbCentralColumnsList: (r: DbRef, table: string) =>
     call<CentralColumn[]>('GET', `${dbPath(r)}/central-columns/list?table=${encodeURIComponent(table)}`),
+  // navigation: Recent / Favorites, hidden items, width (pma: NavigationTree quick warp,
+  // /table/recent-favorite, /sync-favorite-tables, /navigation hide / unhide, /navigation/update-width)
+  // the static pages (pma: /changelog, /license, /phpinfo)
+  aboutChangelog: (server: number) =>
+    call<{ available: true; file: string; html: string } | { available: false; file: string; url: string }>(
+      'GET',
+      `/servers/${server}/about/changelog`,
+    ),
+  aboutLicense: (server: number) =>
+    call<{ available: true; file: string; text: string } | { available: false; file: string; url: string }>(
+      'GET',
+      `/servers/${server}/about/license`,
+    ),
+  aboutRuntime: (server: number) =>
+    call<
+      | { enabled: false }
+      | {
+          enabled: true
+          runtime: { name: string; version: string; versions: Record<string, string> }
+          system: { platform: string; arch: string; release: string }
+          process: {
+            pid: number
+            uptimeSeconds: number
+            rssBytes: number
+            heapUsedBytes: number
+            cwd: string
+          }
+          config: { ShowServerInfo: unknown }
+        }
+    >('GET', `/servers/${server}/about/runtime`),
+  recentFavorite: (server: number) =>
+    call<{
+      recent: Array<{ db: string; table: string }>
+      favorite: Array<{ db: string; table: string }>
+      numRecentTables: number
+      numFavoriteTables: number
+      syncFavorites: boolean
+    }>('GET', `/servers/${server}/recent-favorite`),
+  addRecent: (server: number, t: { db: string; table: string }) =>
+    call<{ recent: Array<{ db: string; table: string }>; message: { text: string } | null }>(
+      'POST',
+      `/servers/${server}/recent`,
+      t,
+    ),
+  openRecentFavorite: (server: number, t: { db: string; table: string }) =>
+    call<{ ok: boolean; message: { type: string; text: string } | null }>(
+      'POST',
+      `/servers/${server}/recent-favorite/open`,
+      t,
+    ),
+  syncFavorites: (server: number, favoriteTables: string) =>
+    call<{ favoriteTables?: string }>('POST', `/servers/${server}/favorites/sync`, { favoriteTables }),
+  navHidden: (server: number, db: string) =>
+    call<{ available: boolean; hidden: Record<string, string[]>; counts: Record<string, number> }>(
+      'GET',
+      `/servers/${server}/navigation/hidden${queryString({ db })}`,
+    ),
+  navHide: (
+    server: number,
+    action: 'hide' | 'unhide',
+    item: { itemType: string; itemName: string; dbName: string },
+  ) => call<{ success: boolean }>('POST', `/servers/${server}/navigation/${action}`, item),
+  navWidth: (server: number, value: number) =>
+    call<{ success: boolean; message: { text: string } | null }>(
+      'POST',
+      `/servers/${server}/navigation/width`,
+      {
+        value,
+      },
+    ),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },

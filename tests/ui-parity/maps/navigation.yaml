@@ -1,0 +1,12 @@
+# Intentional differences of the navigation panel (see tests/ui-parity/README.md for the format).
+rules:
+  - pma: { kind: link, label: '/^`[^`]+`\.`[^`]+`$/', step: recent tables }
+    n/a: >-
+      the Recent list is each app's own history in its own configuration storage (the reference's
+      phpmyadmin database, ours uip_pmadb), filled by whichever cases ran before
+  - ours: { kind: link, label: '/^`[^`]+`\.`[^`]+`$/', step: recent tables }
+    added: the Recent list is each app's own history (see above)
+  - pma: { label: There are no recent tables., step: recent tables }
+    n/a: shown by whichever app has no recent table yet (each app's own history)
+  - ours: { label: There are no recent tables., step: recent tables }
+    added: shown by whichever app has no recent table yet (each app's own history)

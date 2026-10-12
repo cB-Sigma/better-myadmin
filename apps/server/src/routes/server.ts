@@ -9,6 +9,7 @@ import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/erro
 import { withMeta } from '../metadata/service.ts'
 import type { SecretBox } from '../session/crypto.ts'
 import type { ServerLogin } from '../session/store.ts'
+import { aboutRoutes } from './about.ts'
 import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
 import { databaseRoutes } from './database.ts'
@@ -121,6 +122,7 @@ serverRoutes.route('/:s/export', exportRoutes)
 serverRoutes.route('/:s/import', importRoutes)
 serverRoutes.route('/:s/preferences', preferencesRoutes)
 serverRoutes.route('/:s/visualization', serverVisualizationRoutes)
+serverRoutes.route('/:s/about', aboutRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)

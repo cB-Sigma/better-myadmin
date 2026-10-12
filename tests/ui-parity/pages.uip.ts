@@ -27,8 +27,10 @@ pageParity('navigation', {
   pma: { route: '/' },
   ours: { path: '/s/1' },
   scope: 'navigation',
-  interactions: [{ name: 'collapse all', do: { click: 'Collapse all' } }],
-  known: '"Recent" and "Favorites" buttons missing',
+  interactions: [
+    { name: 'collapse all', do: { click: 'Collapse all' } },
+    { name: 'recent tables', do: { click: 'Recent' } },
+  ],
 })
 
 pageParity('server-sql', {

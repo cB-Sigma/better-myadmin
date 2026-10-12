@@ -11,9 +11,9 @@
   api: 'POST /api/servers/:s/databases/:db/tables/:t/browse-foreigners'
   note: 'modal `ForeignBrowser` of the Insert/Edit form'
 /changelog:
-  ui: /about/changelog
-  planned: M1
-  note: static
+  api: 'GET /api/servers/:s/about/changelog'
+  ui: '/s/:s/changelog'
+  note: the project's CHANGELOG.md with phpMyAdmin's rewrites
 /check-relations:
   api:
     - 'GET /api/servers/:s/metadata-storage/status'
@@ -27,17 +27,15 @@
   planned: M2
   note: name lists for pickers
 /console/bookmark/add:
-  api: '/api/console/*'
-  planned: M1
-  note: 'bookmarks, config'
+  api: 'POST /api/servers/:s/console/bookmarks'
+  note: the console's Add bookmark card
 /console/bookmark/refresh:
-  api: '/api/console/*'
-  planned: M1
-  note: 'bookmarks, config'
+  api: 'GET /api/servers/:s/console/bookmarks'
+  note: the console's Bookmarks card (Refresh)
 /console/update-config:
-  api: 'POST /api/servers/:s/console/config'
-  planned: M1
-  note: 'bookmarks, config'
+  api:
+    - 'GET /api/servers/:s/console/config'
+    - 'POST /api/servers/:s/console/config'
 /database/central-columns:
   api:
     - 'GET /api/servers/:s/databases/:db/central-columns'
@@ -223,9 +221,8 @@
   exception: X9
   note: chunked upload + SSE progress
 /license:
-  ui: /about/license
-  planned: M1
-  note: static
+  api: 'GET /api/servers/:s/about/license'
+  ui: '/s/:s/license'
 /lint:
   api: 'POST /api/servers/:s/sql/lint'
   planned: M1
@@ -239,14 +236,12 @@
     - 'GET /api/servers/:s/navigation/tree'
     - 'POST /api/servers/:s/navigation/tree'
     - 'GET /api/servers/:s/navigation/branch'
-  later:
-    - 'GET /api/servers/:s/navigation/hidden/:db'
+    - 'GET /api/servers/:s/navigation/hidden'
     - 'POST /api/servers/:s/navigation/hide'
     - 'POST /api/servers/:s/navigation/unhide'
 /navigation/update-width:
   api: 'POST /api/servers/:s/navigation/width'
-  planned: M1
-  note: see API reference
+  note: the navigation panel's resizer and collapser
 /normalization:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/normalization'
@@ -314,10 +309,10 @@
     - 'POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies'
   ui: '/s/:s/db/:db/t/:table/normalization'
 /phpinfo:
-  ui: /about/runtime
-  planned: M1
+  api: 'GET /api/servers/:s/about/runtime'
+  ui: '/s/:s/runtime-info'
   exception: X15
-  note: static
+  note: shown with ShowPhpInfo
 /preferences/export:
   api:
     - 'GET /api/servers/:s/preferences/forms/:tab'
@@ -647,9 +642,11 @@
   api: 'GET /api/servers/:s/databases/:db/tables/:table/privileges'
   ui: '/s/:s/db/:db/t/:table/privileges'
 /table/recent-favorite:
-  api: 'GET /api/servers/:s/recent-favorite'
-  ui: '/s/:s/db/:db/t/:table/recent-favorite'
-  planned: M1
+  api:
+    - 'GET /api/servers/:s/recent-favorite'
+    - 'POST /api/servers/:s/recent-favorite/open'
+  ui: '/s/:s/db/:db/t/:table/browse'
+  note: the navigation's Recent / Favorites entries (forget a dropped table, then Browse)
 /table/relation:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/relation'

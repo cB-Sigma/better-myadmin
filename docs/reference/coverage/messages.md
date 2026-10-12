@@ -4,31 +4,29 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1871/3426 covered (54.6%): 1871 implemented, 33 planned, 1522 missing. [Summary](README.md).
+1886/3426 covered (55.0%): 1886 implemented, 33 planned, 1507 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 222/403 (55.1%) covered, 222/403 implemented
+## 01 shell navigation auth — 237/403 (58.8%) covered, 237/403 implemented
 
-181 msgids not used yet.
+166 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/templates/setup/home/index.twig` | 16/20 | `- none -` · `Authentication type` · `Check for latest version` · `Configuration file` · `Default language` · `Default server` · `Display` · `Donate` · `Download` · `End of line` · `let the user choose` · `New server` · … +4 |
 | `src/Controllers/JavaScriptMessagesController.php` | 16/23 | `Adding primary key` · `Are you sure you wish to change all the column collations and conve…` · `As per your settings, they are being submitted currently, please be…` · `Click a data point to view and possibly edit the data row.` · `Click reset zoom button to come back to original state.` · `Do you want to copy encryption key?` · `Each point represents a data row.` · `Hovering over a point will show its label.` · `Please look at the bottom of this window.` · `Reset all` · `Some errors have been detected on the server!` · `The plot can be resized by dragging it along the bottom right corner.` · … +4 |
-| `src/Config/Descriptions.php` | 8/14 | `Always expand query messages` · `Authentication type` · `Favorite tables` · `Link with main panel` · `Show current browsing query` · `Show query history at start` · `Switch to dark theme` · `Version check` |
 | `resources/js/modules/functions.ts` | 7/31 | `Edit query` · `Enter each value in a separate field.` · `Extremely weak` · `Good` · `Strong` · `Very weak` · `Weak` |
 | `resources/templates/console/display.twig` | 7/42 | `Always expand query messages` · `Execute queries on Enter and insert new line with Shift+Enter. To m…` · `Hide trace` · `Show current browsing query` · `Show query history at start` · `Show trace` · `Switch to dark theme` |
 | `resources/templates/home/index.twig` | 7/35 | `Get more themes!` · `PHP extension:` · `PHP version:` · `phpMyAdmin Demo Server` · `phpMyAdmin Themes` · `Show PHP information` · `You are using the demo server. You can do anything here, but please…` |
+| `src/Config/Descriptions.php` | 7/14 | `Always expand query messages` · `Authentication type` · `Link with main panel` · `Show current browsing query` · `Show query history at start` · `Switch to dark theme` · `Version check` |
 | `resources/js/u2f.ts` | 6/6 | `Client does not support security key. (U2F error)` · `Failed security key activation. (U2F error)` · `Invalid request sent to security key. (U2F error)` · `Invalid security key. (U2F error)` · `Timed out waiting for security key activation. (U2F error)` · `Unknown security key error. (U2F error)` |
 | `resources/js/modules/ajax.ts` | 5/6 | `Error code: %s` · `Error text: %s` · `Indicates that you have made changes to this page; you will be prom…` · `It seems that the connection to server has been lost. Please check …` · `Request aborted!!` |
 | `resources/templates/base.twig` | 5/17 | `Currently running Git revision %1$s from the %2$s branch.` · `Git information missing!` · `Javascript must be enabled past this point!` · `Open new phpMyAdmin window` · `phpMyAdmin Demo Server` |
 | `src/Controllers/HomeController.php` | 5/15 | `Directory [code]config[/code], which is used by the setup script, s…` · `The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able …` · `The curl extension was not found and allow_url_fopen is disabled. D…` · `The mbstring PHP extension was not found and you seem to be using a…` · `Your PHP parameter [a@https://www.php.net/manual/en/session.configu…` |
-| `src/Navigation/Navigation.php` | 5/6 | `Events:` · `Functions:` · `Groups:` · `Procedures:` · `Views:` |
 | `src/Navigation/NavigationTree.php` | 5/6 | `%s result found` · `Groups` · `Link with main panel` · `There are large item groups in navigation panel which may affect th…` · `Unlink from main panel` |
 | `src/Setup/Index.php` | 5/5 | `A newer version of phpMyAdmin is available and you should consider …` · `No newer stable version is available` · `Reading of version failed. Maybe you're offline or the upgrade serv…` · `Version check` · `You are using Git version, run [kbd]git pull[/kbd] :-)[br]The lates…` |
 | `resources/js/modules/console.ts` | 4/8 | `%s argument(s) passed` · `Hide arguments` · `Show arguments` · `Some error occurred while getting SQL debug info.` |
 | `resources/templates/login/twofactor/key_configure.twig` | 4/4 | `Deprecated!` · `Please connect your FIDO U2F device into your computer's USB port. …` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
 | `resources/templates/login/twofactor/key.twig` | 4/4 | `Deprecated!` · `Please connect your FIDO U2F device into your computer's USB port. …` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
-| `resources/templates/navigation/tree/quick_warp.twig` | 4/4 | `Favorite tables` · `Favorites` · `Recent` · `Recently visited tables` |
 | `resources/templates/setup/error.twig` | 4/5 | `Ignore errors` · `Show form` · `Submitted form contains errors` · `Try to revert erroneous fields to their default values` |
 | `src/Controllers/Setup/HomeController.php` | 4/4 | `Configuration already exists, setup is disabled!` · `If your server is also configured to accept HTTPS requests follow t…` · `Insecure connection` · `You are not using a secure connection; all data (including potentia…` |
 | `resources/templates/navigation/main.twig` | 3/11 | `An error has occurred while loading the navigation display` · `MariaDB Documentation` · `MySQL Documentation` |
@@ -60,13 +58,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/error/simple.twig` | 1/1 | `Something went wrong` |
 | `resources/templates/javascript/redirect.twig` | 1/1 | `Taking you to the target site.` |
 | `resources/templates/login/twofactor/key-https-warning.twig` | 1/1 | `You are not using https to access phpMyAdmin, therefore FIDO U2F de…` |
-| `resources/templates/modals/unhide_nav_item.twig` | 1/1 | `Show hidden navigation tree items.` |
-| `resources/templates/navigation/item_unhide_dialog.twig` | 1/1 | `Unhide` |
-| `resources/templates/recent_favorite_table_favorite.twig` | 1/2 | `There are no favorite tables.` |
-| `resources/templates/recent_favorite_table_recent.twig` | 1/1 | `There are no recent tables.` |
 | `resources/templates/setup/base.twig` | 1/1 | `Overview` |
-| `src/Controllers/ChangeLogController.php` | 1/1 | `The %s file is not available on this system, please visit %s for mo…` |
-| `src/Controllers/LicenseController.php` | 1/1 | `The %s file is not available on this system, please visit %s for mo…` |
 | `src/Controllers/NavigationController.php` | 1/1 | `Fatal error: The navigation can only be accessed via AJAX` |
 | `src/Controllers/Setup/ConfigController.php` | 1/1 | `Configuration already exists, setup is disabled!` |
 | `src/Controllers/Setup/ServerDestroyController.php` | 1/1 | `Configuration already exists, setup is disabled!` |
@@ -78,7 +70,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Http/Middleware/PhpExtensionsChecking.php` | 1/1 | `See %sour documentation%s for more information.` |
 | `src/Http/Middleware/ServerConfigurationChecking.php` | 1/1 | `The ini_get and/or ini_set functions are disabled in php.ini. phpMy…` |
 | `src/Navigation/Nodes/NodeColumnContainer.php` | 1/2 | `New (Create new column)` |
-| `src/Navigation/Nodes/NodeDatabase.php` | 1/3 | `Show hidden items` |
 | `src/Navigation/Nodes/NodeDatabaseContainer.php` | 1/1 | `New (Create new database)` |
 | `src/Navigation/Nodes/NodeEventContainer.php` | 1/2 | `New (Create new event)` |
 | `src/Navigation/Nodes/NodeFunctionContainer.php` | 1/1 | `New (Create new function)` |

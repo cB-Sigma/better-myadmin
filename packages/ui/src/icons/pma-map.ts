@@ -182,6 +182,7 @@ export const pmaIcons = {
   b_favorite: Star,
   b_no_favorite: Star,
   hide: EyeOff,
+  show: Eye,
   s_reload: RefreshCw,
   b_home: Home,
   s_loggoff: LogOut,

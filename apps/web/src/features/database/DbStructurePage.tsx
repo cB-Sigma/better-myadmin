@@ -253,6 +253,8 @@ export function DbStructurePage({
       }
       setFavorites({ ...favorites, [tb.name]: !isFav })
       await qc.invalidateQueries({ queryKey: qk.nav(server) })
+      // the navigation's Favorites list (#favoriteTableList)
+      await qc.invalidateQueries({ queryKey: qk.recentFavorite(server) })
     } catch (e) {
       setMessages([errorMessage(e)])
     }

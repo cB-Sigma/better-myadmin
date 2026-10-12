@@ -412,6 +412,27 @@ metadataRoutes.get('/recent-favorite', (c) =>
   }),
 )
 
+/**
+ * POST /api/servers/:s/recent-favorite/open — pma: /table/recent-favorite (a table chosen in the
+ * Recent / Favorites lists): both lists forget it when it no longer exists; the client then opens
+ * it (`/sql` with db and table)
+ */
+metadataRoutes.post('/recent-favorite/open', async (c) => {
+  const req = await parseJson(c, RecentAddRequest, {})
+  if (!validIdentifier(req.db) || !validIdentifier(req.table)) {
+    return c.json({ ok: false, message: msg(c, 'error', 'Invalid database or table name.') })
+  }
+  return withMeta(c, { db: req.db }, async (m) => {
+    const meta = await m.meta()
+    for (const kind of ['recent', 'favorite'] as const) {
+      const list = await meta.recentFavorite(kind)
+      await list.removeIfInvalid(req)
+      meta.storeRecentFavorite(list)
+    }
+    return c.json({ ok: true, message: null })
+  })
+})
+
 /** POST /api/servers/:s/recent — pma: Http\Middleware\RecentTableHandling */
 metadataRoutes.post('/recent', async (c) => {
   const req = await parseJson(c, RecentAddRequest, {})
@@ -635,6 +656,34 @@ metadataRoutes.post('/prefs/reset', (c) =>
 )
 
 // ---------------------------------------------------------------------------------------------
+// Navigation width (pma: /navigation/update-width)
+// ---------------------------------------------------------------------------------------------
+
+/** POST /api/servers/:s/navigation/width — UpdateNavWidthConfigController: the NavigationWidth preference */
+metadataRoutes.post('/navigation/width', async (c) => {
+  const body = (await c.req.json().catch(() => null)) as { value?: unknown } | null
+  const raw = body?.value
+  // is_numeric($value) && $value >= 0, then (int)
+  const n =
+    typeof raw === 'number'
+      ? raw
+      : typeof raw === 'string' && /^\s*[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?\s*$/.test(raw)
+        ? Number(raw)
+        : Number.NaN
+  if (Number.isNaN(n) || n < 0) {
+    return c.json({ success: false, message: msg(c, 'error', 'Unexpected parameter value.') })
+  }
+  return withMeta(c, {}, async (m) => {
+    const r = await (await m.meta())
+      .userPreferences()
+      .persistOption('NavigationWidth', Math.trunc(n), defaultOfPath('NavigationWidth'))
+    return r === true
+      ? c.json({ success: true, message: null })
+      : c.json({ success: false, message: pkgMsg(c, r) })
+  })
+})
+
+// ---------------------------------------------------------------------------------------------
 // Navigation hiding (pma: NavigationController hideNavItem / unhideNavItem / showUnhideDialog)
 // ---------------------------------------------------------------------------------------------
 
@@ -652,16 +701,17 @@ metadataRoutes.get('/navigation/hidden', (c) =>
   }),
 )
 
-for (const action of ['hide', 'unhide'] as const) {
-  metadataRoutes.post(`/navigation/${action}`, async (c) => {
-    const req = await parseJson(c, NavItemRequest, {})
-    return withMeta(c, {}, async (m) => {
-      const nav = (await m.meta()).navigationHiding()
-      if (nav !== null && req.itemName !== '' && req.itemType !== '' && req.dbName !== '') {
-        if (action === 'hide') await nav.hide(m.user, req.itemName, req.itemType, req.dbName)
-        else await nav.unhide(m.user, req.itemName, req.itemType, req.dbName)
-      }
-      return c.json({ success: true, available: nav !== null })
-    })
+/** POST /api/servers/:s/navigation/hide | /unhide (NavigationController hideNavItem / unhideNavItem) */
+const navItem = (action: 'hide' | 'unhide') => async (c: Context<ServerEnv>) => {
+  const req = await parseJson(c, NavItemRequest, {})
+  return withMeta(c, {}, async (m) => {
+    const nav = (await m.meta()).navigationHiding()
+    if (nav !== null && req.itemName !== '' && req.itemType !== '' && req.dbName !== '') {
+      if (action === 'hide') await nav.hide(m.user, req.itemName, req.itemType, req.dbName)
+      else await nav.unhide(m.user, req.itemName, req.itemType, req.dbName)
+    }
+    return c.json({ success: true, available: nav !== null })
   })
 }
+metadataRoutes.post('/navigation/hide', navItem('hide'))
+metadataRoutes.post('/navigation/unhide', navItem('unhide'))
