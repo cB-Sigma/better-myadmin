@@ -24,6 +24,7 @@ import { shellRoutes } from './shell.ts'
 import { sqlRoutes } from './sql.ts'
 import { tableLevelRoutes } from './table-level.ts'
 import { tableStructureRoutes } from './table-structure.ts'
+import { serverVisualizationRoutes } from './table-visualization.ts'
 
 export type ServerEnv = AppEnv & {
   Variables: AppEnv['Variables'] & {
@@ -118,6 +119,7 @@ serverRoutes.route('/:s/console', consoleRoutes)
 serverRoutes.route('/:s/export', exportRoutes)
 serverRoutes.route('/:s/import', importRoutes)
 serverRoutes.route('/:s/preferences', preferencesRoutes)
+serverRoutes.route('/:s/visualization', serverVisualizationRoutes)
 serverRoutes.route('/:s', metadataRoutes)
 serverRoutes.route('/:s', shellRoutes)
 serverRoutes.route('/:s/databases', tableStructureRoutes)

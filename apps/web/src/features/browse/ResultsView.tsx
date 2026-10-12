@@ -774,24 +774,36 @@ function Operations({
       window.alert(t('Sorry! Unable to copy'))
     }
   }
-  const tableLink = (splat: string, view = false) => ({
+  const exportSearch = {
+    printview: '1',
+    sql: grid.sql,
+    ...(ops.export?.singleTable ? { single_table: 'true' } : {}),
+    ...(ops.export?.rawQuery ? { raw_query: 'true' } : {}),
+    unlim_num_rows: String(ops.export?.unlimNumRows ?? 0),
+  }
+  const exportTable = ops.export?.table ?? grid.table
+  const tableLink = (splat: string) => ({
     to: '/s/$server/db/$db/t/$table/$' as const,
-    params: { server, db: grid.db, table: ops.export?.table ?? grid.table, _splat: splat },
-    search: {
-      printview: '1',
-      sql: grid.sql,
-      ...(ops.export?.singleTable ? { single_table: 'true' } : {}),
-      ...(ops.export?.rawQuery ? { raw_query: 'true' } : {}),
-      unlim_num_rows: String(ops.export?.unlimNumRows ?? 0),
-      // the chart and GIS forms start at the grid's page ($_SESSION['tmpval'] pos / max_rows)
-      ...(view
-        ? {
-            pos: String(grid.view.pos),
-            ...(grid.view.maxRows === 'all' ? {} : { session_max_rows: String(grid.view.maxRows) }),
-          }
-        : {}),
-    },
+    params: { server, db: grid.db, table: exportTable, _splat: splat },
+    search: exportSearch,
   })
+  /**
+   * Display chart / Visualize GIS data: /table/chart with the result's table, else its database,
+   * else the server (ChartController's three branches); they start at the grid's page
+   * ($_SESSION['tmpval'] pos / max_rows)
+   */
+  const viewLink = (splat: 'chart' | 'gis-visualization') => {
+    const search = {
+      ...exportSearch,
+      pos: String(grid.view.pos),
+      ...(grid.view.maxRows === 'all' ? {} : { session_max_rows: String(grid.view.maxRows) }),
+    }
+    if (grid.db === '') return { to: '/s/$server/$' as const, params: { server, _splat: splat }, search }
+    if (exportTable === '') {
+      return { to: '/s/$server/db/$db/$' as const, params: { server, db: grid.db, _splat: splat }, search }
+    }
+    return { ...tableLink(splat), search }
+  }
   return (
     <Panel title={t('Query results operations')} className="d-print-none mb-3">
       <PanelBody className="flex flex-wrap items-center gap-3">
@@ -812,11 +824,11 @@ function Operations({
                 <AnyLink {...tableLink('export')} className="btn-link text-accent">
                   <IconText icon="b_tblexport" text={t('Export')} forceText />
                 </AnyLink>
-                <AnyLink {...tableLink('chart', true)} className="text-accent">
+                <AnyLink {...viewLink('chart')} className="text-accent">
                   <IconText icon="b_chart" text={t('Display chart')} forceText />
                 </AnyLink>
                 {ops.gis && (
-                  <AnyLink {...tableLink('gis-visualization', true)} className="text-accent">
+                  <AnyLink {...viewLink('gis-visualization')} className="text-accent">
                     <IconText icon="b_globe" text={t('Visualize GIS data')} forceText />
                   </AnyLink>
                 )}

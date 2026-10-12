@@ -370,3 +370,26 @@ export function svgDocument(shapes: SvgShape[], width: number, height: number): 
     .join('')
   return `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n<svg version="1.1" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><g>${body}</g></svg>`
 }
+
+/** GisVisualization::asOl: the geometries (prepareRowAsOl) and the colours of the OpenLayers map */
+export function olDataset(
+  rows: ReadonlyArray<{ wkt: string | null; srid: number; label: string }>,
+  width: number,
+  height: number,
+): { geometries: Array<{ wkt: string; srid?: number; label?: string }>; colors: typeof GIS_COLORS } {
+  const valid = rows.flatMap((r) => (r.wkt === null || kindOf(r.wkt) === null ? [] : [{ ...r, wkt: r.wkt }]))
+  // prepareDataSet draws nothing when the extent is empty
+  const geometries =
+    scaleData(
+      valid.map((r) => r.wkt),
+      width,
+      height,
+    ) === null
+      ? []
+      : valid.map((r) => ({
+          wkt: r.wkt,
+          ...(r.srid !== 0 ? { srid: r.srid } : {}),
+          ...(r.label !== '' ? { label: r.label } : {}),
+        }))
+  return { geometries, colors: GIS_COLORS }
+}

@@ -131,6 +131,100 @@ describe.skipIf(!pmaReachable)('parity: Display chart', () => {
   })
 })
 
+/** COM_INIT_DB is logged as `USE \`db\`` (lib/general-log.ts) */
+const uses = (log: Array<{ sql: string }>) => log.map((e) => e.sql).filter((x) => x.startsWith('USE '))
+
+describe.skipIf(!pmaReachable)('parity: Display chart of a result without a table', () => {
+  const raw = 'SELECT 1 AS a, 2.5 AS b UNION SELECT 3, 4.5'
+  it('database level: the form and the rows', async () => {
+    const r = await both(
+      h,
+      () =>
+        h.pma.postPage('/table/chart', [
+          ['db', P],
+          ['sql_query', raw],
+          ['unlim_num_rows', '2'],
+          ['pos', '0'],
+          ['session_max_rows', '25'],
+        ]),
+      () =>
+        h.bma.req('POST', `/api/servers/1/databases/${B}/chart`, {
+          sql: raw,
+          unlimNumRows: 2,
+          pos: 0,
+          sessionMaxRows: 25,
+        }),
+    )
+    const pairs = new Map(serializeForm(findForm(String(r.p), { id: 'tblchartform' })))
+    const b = r.b.json as { error: string | null; columns: Array<{ numeric: boolean }> }
+    expect(b.error).toBeNull()
+    expect(pairs.get('numericCols')).toBe(b.columns.flatMap((c, i) => (c.numeric ? [`${i} `] : [])).join(''))
+    const d = await both(
+      h,
+      () =>
+        h.pma.postJson('/table/chart', [
+          ['db', P],
+          ['sql_query', raw],
+          ['pos', '0'],
+          ['session_max_rows', '25'],
+        ]),
+      () =>
+        h.bma.req('POST', `/api/servers/1/databases/${B}/chart/data`, {
+          sql: raw,
+          pos: 0,
+          sessionMaxRows: 25,
+        }),
+    )
+    // the page selects the database, the ajax submit (no table) does not
+    expect(uses(r.bmaLog)).toEqual(uses(r.pmaLog).map((x) => x.replace(P, B)))
+    expect(uses(d.bmaLog)).toEqual(uses(d.pmaLog))
+    expect((d.b.json as { data: unknown }).data).toEqual(JSON.parse((d.p as { chartData: string }).chartData))
+  })
+
+  it('server level: the rows (mysql selected for a super user)', async () => {
+    const d = await both(
+      h,
+      () =>
+        h.pma.postJson('/table/chart', [
+          ['sql_query', raw],
+          ['pos', '0'],
+          ['session_max_rows', '25'],
+        ]),
+      () =>
+        h.bma.req('POST', '/api/servers/1/visualization/chart/data', {
+          sql: raw,
+          pos: 0,
+          sessionMaxRows: 25,
+        }),
+    )
+    expect((d.b.json as { data: unknown }).data).toEqual(JSON.parse((d.p as { chartData: string }).chartData))
+
+    expect(uses(d.bmaLog)).toEqual(uses(d.pmaLog))
+    // the page selects `mysql` for a super user
+    const p = await both(
+      h,
+      () =>
+        h.pma.postPage('/table/chart', [
+          ['sql_query', raw],
+          ['unlim_num_rows', '2'],
+        ]),
+      () => h.bma.req('POST', '/api/servers/1/visualization/chart', { sql: raw, unlimNumRows: 2 }),
+    )
+    expect(uses(p.pmaLog)).toContain('USE `mysql`')
+    expect(uses(p.bmaLog)).toEqual(uses(p.pmaLog))
+  })
+
+  it('GIS without a database: Missing parameter', async () => {
+    const r = await both(
+      h,
+      () => h.pma.postPage('/table/gis-visualization', [['sql_query', 'SELECT POINT(1, 2) AS g']]),
+      () => h.bma.req('POST', '/api/servers/1/visualization/gis', { sql: 'SELECT POINT(1, 2) AS g' }),
+    )
+    expect(String(r.p)).toContain('Missing parameter: db')
+    expect((r.b.json as { error: string }).error).toBe('Missing parameter: db')
+  })
+})
+
 describe.skipIf(!pmaReachable)('parity: GIS visualization', () => {
   const gisSql = 'SELECT * FROM t'
   it('the candidates, the modified query and the SVG, byte for byte', async () => {

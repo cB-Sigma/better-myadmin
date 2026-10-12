@@ -6,19 +6,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   IconText,
+  Label,
   MessageBox,
+  NativeCheckbox,
   NativeSelect,
   Panel,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Globe, ZoomIn, ZoomOut } from 'lucide-react'
-import { type PointerEvent, type WheelEvent, useMemo, useRef, useState } from 'react'
-import { type TableRef, api, errorMessage } from '../../lib/api'
+import { type PointerEvent, type WheelEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { type VisScope, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { RowsFieldsetInputs } from '../table/chart/ChartPage'
 import type { VisualizationSearch } from '../table/chart/ChartPage'
-import { GIS_PNG_BACKGROUND, hex, svgDocument, svgShapes } from './visualization'
+import type { OlData } from './olMap'
+import { GIS_PNG_BACKGROUND, hex, olDataset, svgDocument, svgShapes } from './visualization'
 
 /**
  * Visualize GIS data of a query result: the label / spatial column selects (autosubmit), the
@@ -27,7 +30,7 @@ import { GIS_PNG_BACKGROUND, hex, svgDocument, svgShapes } from './visualization
  * pma: resources/templates/table/gis_visualization/gis_visualization.twig,
  *      resources/js/table/gis_visualization.ts (SvgVisualization)
  */
-export function GisVisualizationPage({ scope, search }: { scope: TableRef; search: VisualizationSearch }) {
+export function GisVisualizationPage({ scope, search }: { scope: VisScope; search: VisualizationSearch }) {
   const [settings, setSettings] = useState<{
     spatialColumn?: string
     labelColumn?: string
@@ -75,6 +78,9 @@ function GisForm({
   const [pos, setPos] = useState(fieldset.pos)
   const [rows, setRows] = useState(fieldset.rows)
   const shapes = useMemo(() => svgShapes(page.rows, page.width, page.height), [page])
+  const olData = useMemo(() => olDataset(page.rows, page.width, page.height), [page])
+  // If all the rows contain SRID, use OpenStreetMaps on the initial loading (then the switch's state)
+  const [useBaseLayer, setUseBaseLayer] = useState(page.hasSrid)
   const download = (format: 'png' | 'svg') => {
     const doc = svgDocument(shapes, page.width, page.height)
     const name = `${page.spatialColumn}.${format}`
@@ -155,7 +161,17 @@ function GisForm({
                 setRows={setRows}
               />
             </div>
-            <div className="flex w-full items-center justify-end">
+            <div className="flex w-full items-center justify-between">
+              <Label className="flex items-center gap-2" id="useOsmAsBaseLayerSwitchLabel">
+                <NativeCheckbox
+                  role="switch"
+                  name="useBaseLayer"
+                  id="useOsmAsBaseLayerSwitch"
+                  checked={useBaseLayer}
+                  onChange={(e) => setUseBaseLayer(e.target.checked)}
+                />
+                {t('Use OpenStreetMaps as Base Layer')}
+              </Label>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="secondary" id="saveImageButton">
@@ -169,7 +185,10 @@ function GisForm({
               </DropdownMenu>
             </div>
           </form>
-          <SvgPlot shapes={shapes} width={page.width} height={page.height} />
+          <div id="visualization-placeholder" className="relative mt-3" style={{ height: page.height }}>
+            <SvgPlot shapes={shapes} width={page.width} height={page.height} hidden={useBaseLayer} />
+            <OlPlot data={olData} visible={useBaseLayer} />
+          </div>
         </div>
       </Panel>
     </div>
@@ -192,10 +211,12 @@ function SvgPlot({
   shapes,
   width,
   height,
+  hidden,
 }: {
   shapes: ReturnType<typeof svgShapes>
   width: number
   height: number
+  hidden: boolean
 }) {
   const [view, setView] = useState({ x: 0, y: 0, scale: 1 })
   const [tip, setTip] = useState<{ text: string; x: number; y: number } | null>(null)
@@ -238,12 +259,10 @@ function SvgPlot({
   ]
   return (
     <div
-      id="visualization-placeholder"
       ref={box}
-      className="relative mt-3 overflow-hidden border border-border"
-      style={{ height }}
+      className={`visualization-target visualization-target-svg relative h-full overflow-hidden border border-border ${hidden ? 'hidden' : ''}`}
     >
-      <div className="visualization-target visualization-target-svg">
+      <div>
         <svg
           width={width}
           height={height}
@@ -314,5 +333,40 @@ function SvgPlot({
         </div>
       )}
     </div>
+  )
+}
+
+/** OlVisualization: the OpenStreetMaps map, created the first time the switch shows it */
+function OlPlot({ data, visible }: { data: OlData; visible: boolean }) {
+  const target = useRef<HTMLDivElement>(null)
+  const map = useRef<{ updateSize(): void; setTarget(t: undefined): void } | null>(null)
+  useEffect(() => {
+    if (!visible || target.current === null) return
+    if (map.current !== null) {
+      map.current.updateSize()
+      return
+    }
+    const el = target.current
+    let cancelled = false
+    void import('./olMap').then(({ drawOpenLayers }) => {
+      if (!cancelled && map.current === null) map.current = drawOpenLayers(el, data)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [visible, data])
+  // Removes ol.Map's resize listener from window
+  useEffect(
+    () => () => {
+      map.current?.setTarget(undefined)
+      map.current = null
+    },
+    [],
+  )
+  return (
+    <div
+      ref={target}
+      className={`visualization-target visualization-target-ol h-full ${visible ? '' : 'hidden'}`}
+    />
   )
 }

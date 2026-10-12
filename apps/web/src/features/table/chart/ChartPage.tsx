@@ -11,7 +11,7 @@ import {
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { type TableRef, api, errorMessage } from '../../../lib/api'
+import { type VisScope, api, errorMessage } from '../../../lib/api'
 import { pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import type { ChartSettings, ChartType } from './queryChart'
@@ -29,7 +29,7 @@ export interface VisualizationSearch {
   sessionMaxRows?: number | undefined
 }
 
-export function ChartPage({ scope, search }: { scope: TableRef; search: VisualizationSearch }) {
+export function ChartPage({ scope, search }: { scope: VisScope; search: VisualizationSearch }) {
   const req = {
     sql: search.sql,
     unlimNumRows: search.unlimNumRows,
@@ -85,7 +85,7 @@ function ChartForm({
   scope,
   page,
   fieldset,
-}: { scope: TableRef; page: ChartPageResponse; fieldset: RowsFieldset }) {
+}: { scope: VisScope; page: ChartPageResponse; fieldset: RowsFieldset }) {
   const cols = page.columns
   const names = useMemo(() => cols.map((c) => c.name), [cols])
   const numeric = cols.flatMap((c, i) => (c.numeric ? [i] : []))

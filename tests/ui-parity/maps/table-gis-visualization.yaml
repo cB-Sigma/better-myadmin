@@ -1,9 +1,5 @@
 # Intentional differences of the GIS visualization (see tests/ui-parity/README.md for the format).
 rules:
-  - pma: { name: useBaseLayer }
-    n/a: >-
-      the OpenStreetMaps base layer needs OpenLayers and map tiles; not ported (the SVG view is),
-      see docs/features/04-table-level.md#gis-visualization
   - ours: { kind: button, section: Display GIS Visualization, label: '' }
     added: >-
       the SVG's pan and zoom controls: phpMyAdmin's gis_visualization.js appends them as

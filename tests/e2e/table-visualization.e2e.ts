@@ -69,6 +69,13 @@ test('Visualize GIS data', async ({ page }) => {
   await expect(page.locator('circle[data-label="a"]')).toHaveCount(1)
   await page.locator('circle[data-label="b"]').hover()
   await expect(page.locator('#tooltip')).toHaveText('b')
+  // the OpenStreetMaps view (OpenLayers loaded on demand; the tiles may not load offline)
+  await page.locator('#useOsmAsBaseLayerSwitch').check()
+  await expect(page.locator('.visualization-target-ol .ol-viewport')).toBeVisible()
+  await expect(page.locator('.visualization-target-ol .ol-mouse-position')).toHaveCount(1)
+  await expect(page.locator('.visualization-target-svg')).toBeHidden()
+  await page.locator('#useOsmAsBaseLayerSwitch').uncheck()
+  await expect(page.locator('.visualization-target-svg')).toBeVisible()
 })
 
 test('Create view from the results, then Edit view', async ({ page }) => {
@@ -90,4 +97,17 @@ test('Create view from the results, then Edit view', async ({ page }) => {
   await expect(page).toHaveURL(/\/t\/v_t\/structure/)
   await expect(page.getByText('Your SQL query has been executed successfully.')).toBeVisible()
   await expect(page.locator('code', { hasText: 'ALTER ALGORITHM = MERGE' })).toBeVisible()
+})
+
+test('Display chart of a server-level result (no database)', async ({ page }) => {
+  await page.goto('/s/1/sql')
+  await page.locator('#sqlquery .cm-content').click()
+  await page.keyboard.press('ControlOrMeta+a')
+  await page.keyboard.press('Delete')
+  await page.keyboard.insertText('SELECT 1 AS a, 2 AS b UNION SELECT 3, 5')
+  await page.locator('#button_submit_query').click()
+  await page.getByRole('link', { name: 'Display chart' }).click()
+  await expect(page).toHaveURL(/\/s\/1\/chart\?/)
+  await expect(page.locator('#saveChart')).toHaveAttribute('href', /^data:image\/png/)
+  await expect(page.locator('#xAxisLabelInput')).toHaveValue('a')
 })
