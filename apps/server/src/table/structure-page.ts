@@ -52,6 +52,8 @@ export interface StructureFeatures {
    * `column_info` row with the user's connection (Transformations::clear)
    */
   browserTransformation?: { database: string; columnInfo: string } | null
+  /** column → mimetype of `Transformations::getMime(…, strict)`, when the type cell shows it */
+  mediaTypes?: Readonly<Record<string, string>>
 }
 
 export type StructureFeaturesFactory = (db: string, table: string) => Promise<StructureFeatures>
@@ -137,6 +139,10 @@ export async function buildStructurePage(
             ? convertBitDefaultValue(field.Default)
             : field.Default,
       comment: showPropertyComments ? field.Comment : '',
+      // display_structure.twig: "Media type:" mime_map[field].mimetype|replace({'_': '/'})|lower
+      ...(features.mediaTypes?.[field.Field] !== undefined
+        ? { mediaType: features.mediaTypes[field.Field]!.replaceAll('_', '/').toLowerCase() }
+        : {}),
       extra: field.Extra.toUpperCase(),
       isPrimary: primary?.columns.some((c) => c.key === field.Field) ?? false,
       hasIndex: php.looseInArray(field.Field, columnsWithIndex),

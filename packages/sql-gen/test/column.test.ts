@@ -36,7 +36,7 @@ type SpecCase = [ServerVendor, number, SpecArgs, string, string?, string?]
 const spec = loadFixture<{ cases: SpecCase[] }>('field-spec.json')
 
 describe('generateFieldSpec / generateAlter (golden, executed phpMyAdmin Table)', () => {
-  it('has a large matrix', () => {
+  it('has a large matrix [p04-46d957 p04-4fd2f9 p04-969609 p04-ddf0af]', () => {
     expect(spec.cases.length).toBeGreaterThan(5000)
   })
 

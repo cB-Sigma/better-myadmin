@@ -133,12 +133,12 @@ async function bmaDefaultStatements(): Promise<string[]> {
 
 const CASES: Case[] = [
   {
-    name: 'create version 1 with the default statements (snapshot, DROP + CREATE log)',
+    name: 'create version 1 with the default statements (snapshot, DROP + CREATE log) [p04-853d9b]',
     pma: async () => pmaPost(await pmaCreateForm()),
     bma: async () => bmaPost('/versions', { version: '1', statements: await bmaDefaultStatements() }),
   },
   {
-    name: 'create version 2 with some statements unchecked (deactivates version 1)',
+    name: 'create version 2 with some statements unchecked (deactivates version 1) [p04-853d9b p04-777a6c]',
     versions: [['1', 1]],
     pma: async () => {
       const pairs = (await pmaCreateForm()).filter(([k]) => !['drop_table', 'insert', 'truncate'].includes(k))
@@ -153,19 +153,19 @@ const CASES: Case[] = [
       }),
   },
   {
-    name: 'deactivate tracking',
+    name: 'deactivate tracking [p04-777a6c]',
     versions: [['1', 1]],
     pma: () => pmaPost({ version: '1', toggle_activation: 'deactivate_now' }),
     bma: () => bmaPost('/toggle', { version: '1', action: 'deactivate' }),
   },
   {
-    name: 'activate tracking',
+    name: 'activate tracking [p04-777a6c]',
     versions: [['1', 0]],
     pma: () => pmaPost({ version: '1', toggle_activation: 'activate_now' }),
     bma: () => bmaPost('/toggle', { version: '1', action: 'activate' }),
   },
   {
-    name: 'delete a version from its row',
+    name: 'delete a version from its row [p04-777a6c]',
     versions: [
       ['1', 0],
       ['2', 1],
@@ -174,7 +174,7 @@ const CASES: Case[] = [
     bma: () => bmaPost('/versions/delete', { versions: ['2'], multiple: false }),
   },
   {
-    name: 'delete the checked versions',
+    name: 'delete the checked versions [p04-777a6c]',
     versions: [
       ['1', 0],
       ['2', 0],
@@ -191,19 +191,19 @@ const CASES: Case[] = [
     bma: () => bmaPost('/versions/delete', { versions: ['3', '1'], multiple: true }),
   },
   {
-    name: 'delete a data definition entry from the report',
+    name: 'delete a data definition entry from the report [p04-4377f6]',
     versions: [['1', 1]],
     pma: () => pmaPost({ version: '1', report: 'true', delete_ddlog: '1' }),
     bma: () => bmaPost('/report', { version: '1', deleteDdlog: 1 }),
   },
   {
-    name: 'delete a data manipulation entry from the report',
+    name: 'delete a data manipulation entry from the report [p04-4377f6]',
     versions: [['1', 1]],
     pma: () => pmaPost({ version: '1', report: 'true', delete_dmlog: '2' }),
     bma: () => bmaPost('/report', { version: '1', deleteDmlog: 2 }),
   },
   {
-    name: 'export as SQL execution (structure and data of one user, from a date)',
+    name: 'export as SQL execution (structure and data of one user, from a date) [p04-4377f6]',
     versions: [['1', 1]],
     pma: () =>
       pmaPost({
@@ -272,7 +272,7 @@ describe.skipIf(!pmaReachable)('parity: table Tracking (phpMyAdmin forms vs Bett
 
   for (const c of CASES) it(c.name, () => runCase(c))
 
-  it('the page lists the same versions and tracked tables', async () => {
+  it('the page lists the same versions and tracked tables [p04-777a6c]', async () => {
     await seed([
       ['1', 0],
       ['2', 1],
@@ -293,7 +293,7 @@ describe.skipIf(!pmaReachable)('parity: table Tracking (phpMyAdmin forms vs Bett
     expect(html).toContain('Create version 3 of')
   })
 
-  it('the report shows the same rows for each log type and filter', async () => {
+  it('the report shows the same rows for each log type and filter [p04-4377f6]', async () => {
     await seed([['1', 1]])
     const filters: Array<Record<string, string>> = [
       {},
@@ -322,7 +322,7 @@ describe.skipIf(!pmaReachable)('parity: table Tracking (phpMyAdmin forms vs Bett
     }
   })
 
-  it('the SQL dump and the file download hold the same statements', async () => {
+  it('the SQL dump and the file download hold the same statements [p04-4377f6]', async () => {
     await seed([['1', 1]])
     const form = { version: '1', report: 'true', log_type: 'schema_and_data', users: '*' }
     const html = await pmaPost({ ...form, export_type: 'sqldump' })
@@ -340,7 +340,7 @@ describe.skipIf(!pmaReachable)('parity: table Tracking (phpMyAdmin forms vs Bett
     expect(mask(normalise(bf.dump, dbMap))).toBe(mask(normalise(file, dbMap)))
   })
 
-  it('the structure snapshot shows the same SQL, columns and indexes', async () => {
+  it('the structure snapshot shows the same SQL, columns and indexes [p04-9a7eb6]', async () => {
     await seed([])
     await pmaPost(await pmaCreateForm())
     await bmaPost('/versions', { version: '1', statements: await bmaDefaultStatements() })

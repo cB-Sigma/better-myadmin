@@ -532,7 +532,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] For each ORDER BY column present in the result, ` [col: FIRST... - LAST...]` is appended using the first and last row of the **current page**, values upper-cased and truncated to `LimitChars`; BLOB/binary/geometry show `[BLOB - size]`.
 - [ ] Without navigation bar the message is just the success icon + `(Query took %01.4f seconds.)`.
 - [ ] Executed SQL is displayed highlighted only when `ShowSQL` is true and the query is non-empty and not `;`.
-- [ ] PHP session is closed during query execution and reopened afterwards (long queries do not block other tabs).
+- [ ] PHP session is closed during query execution and reopened afterwards (long queries do not block other tabs). <!-- parity:n/a: no PHP session lock; the Node server answers requests of one session concurrently -->
 - [ ] MySQL warnings after execution are appended as notice messages below the result.
 - [ ] `DROP DATABASE` is refused when `AllowUserDropDatabase` is false and user is not superuser: ""DROP DATABASE" statements are disabled."
 - [ ] `USE db` changes trigger a navigation reload (`reload`) in the AJAX response.

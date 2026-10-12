@@ -15,8 +15,12 @@ import {
   ReservedWordCheckRequest,
   type ReservedWordCheckResponse,
   SaveIndexRequest,
+  StructureBrowseRequest,
+  type StructureBrowseResponse,
 } from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n'
+import { getMime } from '@bettermyadmin/metadata'
+import { getBrowseColumnsQuery } from '@bettermyadmin/sql-gen'
 import { Context as SqlContext } from '@bettermyadmin/sql-lexer'
 import { type Context, Hono } from 'hono'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
@@ -91,14 +95,46 @@ const respond = (c: Context<ServerEnv>, r: DdlResponse) => {
 /** GET …/tables/:t/structure (pma: /table/structure) */
 tableStructureRoutes.get('/:db/tables/:t/structure', async (c) =>
   c.json(
-    await withTable(c, async (x) =>
-      buildStructurePage(x.reader, x.cfg, x.tr, x.db, x.table, {
+    await withScope(c, async (x) => {
+      const page = await buildStructurePage(x.reader, x.cfg, x.tr, x.db, x.table, {
         ...(x.features ?? storageFeatures(null)),
         centralList: await centralList(x),
-      }),
-    ),
+        mediaTypes: await mediaTypes(x),
+      })
+      // the Distinct values / Propose table structure links run in the Browse / SQL view (signed)
+      const propose = page.links.proposeTableStructure
+      return {
+        ...page,
+        columns: page.columns.map((col) => ({ ...col, distinctSig: x.sign(col.distinctSql) })),
+        links: { ...page.links, ...(propose !== null ? { proposeSig: x.sign(propose) } : {}) },
+      }
+    }),
   ),
 )
+
+/** POST …/tables/:t/structure/browse (pma: Table\Structure\BrowseController) */
+tableStructureRoutes.post('/:db/tables/:t/structure/browse', async (c) => {
+  const req = parse(StructureBrowseRequest, await jsonBody(c))
+  if (req.columns.length === 0) throw new ValidationError(c.get('tr').gettext('No column selected.'))
+  return c.json(
+    await withScope(c, async (x): Promise<StructureBrowseResponse> => {
+      const sql = getBrowseColumnsQuery(x.db, x.table, req.columns)
+      return { sql, sig: x.sign(sql) }
+    }),
+  )
+})
+
+/**
+ * pma: Table\StructureController (mimeMap) + display_structure.twig: the "Media type:" line needs
+ * ShowPropertyComments, BrowseMIME and both the column comments and browser transformation features.
+ */
+async function mediaTypes(x: DdlCtx): Promise<Record<string, string>> {
+  const meta = x.meta
+  if (!x.cfg.ShowPropertyComments || !x.cfg.BrowseMIME || meta == null || meta.control === null) return {}
+  if (meta.rp.columnCommentsFeature === null || meta.rp.browserTransformationFeature === null) return {}
+  const map = (await getMime(meta.control, meta.rp, x.db, x.table, true)) ?? {}
+  return Object.fromEntries(Object.entries(map).map(([k, v]) => [k, v.mimetype]))
+}
 
 /** POST …/tables/:t/structure/central-columns-{add,remove} (selected_fld[]) */
 tableStructureRoutes.post('/:db/tables/:t/structure/central-columns-add', async (c) => {

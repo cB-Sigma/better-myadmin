@@ -679,8 +679,9 @@
   ui: '/s/:s/db/:db/t/:table/structure'
   note: the row Primary / Unique / Index / Spatial / Fulltext links
 /table/structure/browse:
-  ui: '/s/:s/db/:db/sql'
-  note: With selected Browse runs the SELECT of the checked columns on the SQL page
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/structure/browse'
+  ui: '/s/:s/db/:db/t/:table/browse'
+  note: With selected Browse signs the SELECT of the checked columns and runs it in the Browse view
 /table/structure/central-columns-add:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/structure/central-columns-add'
   ui: '/s/:s/db/:db/t/:table/structure'

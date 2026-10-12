@@ -576,7 +576,7 @@ Structure list
 - [ ] Structure page returns `tableStat` JSON for AJAX refresh.
 
 Column form
-- [ ] Collation dropdowns are empty until focused (template clone) but preselected ones are filled on load.
+- [ ] Collation dropdowns are empty until focused (template clone) but preselected ones are filled on load. <!-- parity:n/a: a DOM-size optimisation of the jQuery form; the SPA renders each select directly -->
 - [ ] Type options carry description tooltips and `data-length-restricted`.
 - [ ] "Edit ENUM/SET values" link only shown for ENUM/SET; editor escapes quotes/backslashes and writes `'a','b'`.
 - [ ] Length required for CHAR/VARCHAR/BIT/BINARY/VARBINARY (alert); UNSIGNED/ZEROFILL rejected on non-numeric types.

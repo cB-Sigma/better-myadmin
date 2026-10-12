@@ -16,7 +16,7 @@ const card = (sql: string, showAsPhp: boolean | null = null, profiling = true) =
   })
 
 describe('Generator::getMessage links', () => {
-  it('Explain / Skip Explain / Skip Analyze', async () => {
+  it('Explain / Skip Explain / Skip Analyze [p02-aa2107]', async () => {
     expect((await card('SELECT 1;'))!.links.explain).toEqual({
       text: 'Explain SQL',
       sql: 'EXPLAIN SELECT 1;',
@@ -38,7 +38,7 @@ describe('Generator::getMessage links', () => {
     expect((await card(' SELECT 1;'))!.links.explain).toBeNull()
   })
 
-  it('Refresh only for ANALYZE/EXPLAIN/SELECT/SHOW and not with PHP; profiling next to it', async () => {
+  it('Refresh only for ANALYZE/EXPLAIN/SELECT/SHOW and not with PHP; profiling next to it [p02-f44b2c p02-2a54e4]', async () => {
     expect((await card('SHOW TABLES;'))!.links).toMatchObject({
       refresh: true,
       profiling: { checked: false },
@@ -58,12 +58,12 @@ describe('Generator::getMessage links', () => {
     })
   })
 
-  it('no card for empty SQL or ";"', async () => {
+  it('no card for empty SQL or ";" [p02-f22617]', async () => {
     expect(await card('')).toBeNull()
     expect(await card(';')).toBeNull()
   })
 
-  it('PHP code with continuation lines', () => {
+  it('PHP code with continuation lines [p02-f4f624]', () => {
     expect(sqlAsPhp('SELECT "a" FROM t\nWHERE x = \'y\'')).toBe(
       '$sql = "SELECT \\"a\\" FROM t\\n"\n    . "WHERE x = \\\'y\\\'";',
     )
@@ -71,7 +71,7 @@ describe('Generator::getMessage links', () => {
 })
 
 describe('Generator::mysqlDie / formatError', () => {
-  it('static analysis, hidden SQL for connect, collapsed blank lines', () => {
+  it('static analysis, hidden SQL for connect, collapsed blank lines [p02-fa2d56]', () => {
     const e = mysqlDie('#1064 - x', "SELECT 'abc", cfg, undefined)
     expect(e.staticAnalysis).toEqual([{ message: "Ending quote ' was expected.", token: '', position: 11 }])
     expect(e.sql).toBe("SELECT 'abc")
@@ -96,7 +96,7 @@ describe('Generator::mysqlDie / formatError', () => {
 })
 
 describe('ImportController reload hints and Import::lookForUse', () => {
-  it('reload hints', () => {
+  it('reload hints [p02-b19bd5]', () => {
     expect(reloadHints('DROP TABLE x')).toEqual({ reloadNavigation: true, ajaxReload: { reload: true } })
     expect(reloadHints('create view v as select 1')).toEqual({
       reloadNavigation: false,
@@ -110,7 +110,7 @@ describe('ImportController reload hints and Import::lookForUse', () => {
     expect(reloadHints('SELECT 1')).toEqual({ reloadNavigation: false, ajaxReload: {} })
   })
 
-  it('lookForUse', () => {
+  it('lookForUse [p02-b19bd5]', () => {
     expect(lookForUse('USE `my``db`;')).toBe('my`db')
     // [\S]+ stops at the first space, like PHP
     expect(lookForUse('USE `my db`;')).toBe('`my')

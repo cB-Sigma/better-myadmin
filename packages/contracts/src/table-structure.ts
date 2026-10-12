@@ -57,6 +57,8 @@ export const StructureColumn = z.object({
   default: z.string().nullable(),
   /** column comment (native) */
   comment: z.string(),
+  /** "Media type: …" line of the type cell (pmadb mimetype, `_` → `/`, lower-cased) when BrowseMIME */
+  mediaType: z.string().optional(),
   /** Extra, upper-cased */
   extra: z.string(),
   isPrimary: z.boolean(),
@@ -71,6 +73,8 @@ export const StructureColumn = z.object({
   }),
   /** "Distinct values" query (Browse with is_browse_distinct) */
   distinctSql: z.string(),
+  /** its sql_signature (the Browse tab runs signed queries only) */
+  distinctSig: z.string().optional(),
   /** "Drop" confirmation / statement */
   dropSql: z.string(),
   /** in pma__central_columns (CentralColumns::findExistingColNames): "Remove from central columns" */
@@ -170,6 +174,8 @@ export const StructureResponse = z.object({
   stats: StructureStats.nullable(),
   links: z.object({
     proposeTableStructure: z.string().nullable(),
+    /** sql_signature of proposeTableStructure */
+    proposeSig: z.string().optional(),
     trackTable: z.boolean(),
     editView: z.boolean(),
   }),
@@ -399,6 +405,13 @@ export type ChangeColumnsRequest = z.input<typeof ChangeColumnsRequest>
 /** /table/structure/central-columns-add | -remove (selected_fld[]) */
 export const CentralColumnsSelectRequest = z.object({ columns: z.array(z.string()).default([]) })
 export type CentralColumnsSelectRequest = z.input<typeof CentralColumnsSelectRequest>
+
+/** POST …/structure/browse (pma: /table/structure/browse): With selected → Browse */
+export const StructureBrowseRequest = z.object({ columns: z.array(z.string()).default([]) })
+export type StructureBrowseRequest = z.input<typeof StructureBrowseRequest>
+/** the SELECT of the checked columns, signed for the Browse tab */
+export const StructureBrowseResponse = z.object({ sql: z.string(), sig: z.string() })
+export type StructureBrowseResponse = z.infer<typeof StructureBrowseResponse>
 
 export const DropColumnsRequest = z.object({
   columns: z.array(z.string().min(1)).min(1),

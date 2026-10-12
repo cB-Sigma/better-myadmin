@@ -328,7 +328,7 @@ MIME types discovered from file names: `application/octetstream`, `image/jpeg`, 
 - [ ] Clicking NULL clears the value widget according to nullify code (select index −1, radios unchecked, text emptied) and resets the function select.
 - [ ] CHAR/VARCHAR render as text input unless `CharEditing=textarea`, the value contains a newline, or declared length > `MaxSizeForInputField`; input size clamped to [`MinSizeForInputField`, `MaxSizeForInputField`]; `data-maxlength` enforced client-side.
 - [ ] TEXT/JSON (and LONGTEXT) render as textarea `TextareaRows×TextareaCols`, doubled for LONGTEXT when `LongtextDoubleTextarea`; CHAR textareas use `CharTextareaRows/Cols` with min 7 rows in `column_row.twig`.
-- [ ] A leading CRLF in textarea content is protected by an extra `\n`.
+- [ ] A leading CRLF in textarea content is protected by an extra `\n`. <!-- parity:n/a: the SPA sets textarea.value, so no HTML parser drops the leading newline -->
 - [ ] TEXT values > 32000 chars show "Because of its length, this column might not be editable."
 - [ ] Integer inputs carry `min`/`max` for the exact MySQL range (signed/unsigned), `inputmode=numeric`, numeric validation on change.
 - [ ] float/double inputs are 100 wide (clamped to 60); geometry inputs 30.

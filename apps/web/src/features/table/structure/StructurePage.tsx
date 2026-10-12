@@ -30,6 +30,9 @@ import { takeFlash } from './flash'
 type Column = StructureResponse['columns'][number]
 
 const sqlLink = (server: number, sql: string) => `/s/${server}/sql?sql=${encodeURIComponent(sql)}`
+/** a signed query run in the table's Browse view (pma: /sql with sql_query + sql_signature) */
+const browseLink = (server: number, db: string, table: string, sql: string, sig: string, distinct = false) =>
+  `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}/browse?sql=${encodeURIComponent(sql)}&sig=${encodeURIComponent(sig)}${distinct ? '&distinct=1' : ''}`
 
 export function StructurePage({ server, db, table }: { server: number; db: string; table: string }) {
   const scope: TableRef = { server, db, table }
@@ -43,9 +46,13 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   })
   const [messages, setMessages] = useState<SqlMessage[]>(() => takeFlash())
   const [selected, setSelected] = useState<string[]>([])
-  const [confirm, setConfirm] = useState<{ question: string; sql: string; run: () => Promise<void> } | null>(
-    null,
-  )
+  const [confirm, setConfirm] = useState<{
+    question: string
+    sql: string
+    run: () => Promise<void>
+    /** the "No" button (pma: DropColumnController answers "No change") */
+    no?: () => void
+  } | null>(null)
   const [indexQuery, setIndexQuery] = useState<{ index?: string; create?: number } | null>(null)
   const [renaming, setRenaming] = useState<string | null>(null)
   const [moving, setMoving] = useState<string[] | null>(null)
@@ -208,6 +215,13 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                   >
                     <bdo dir="ltr" lang="en">
                       {c.abbreviated ? <abbr title={c.printType}>{c.displayedType}</abbr> : c.displayedType}
+                      {/* pma: display_structure.twig (mime_map) */}
+                      {c.mediaType !== undefined && (
+                        <>
+                          <br />
+                          {t('Media type:')} {c.mediaType}
+                        </>
+                      )}
                     </bdo>
                   </td>
                   <td className="px-1">
@@ -252,6 +266,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                               : null
                           }
                           server={server}
+                          db={db}
+                          table={table}
                         />
                       </td>
                     </>
@@ -276,12 +292,15 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             variant="link"
             onClick={() =>
               noneSelected() ||
-              void navigate({
-                to: sqlLink(
-                  server,
-                  `SELECT ${orderedSelection.map((n) => `\`${n.replaceAll('`', '``')}\``).join(', ')} FROM \`${db.replaceAll('`', '``')}\`.\`${table.replaceAll('`', '``')}\``,
-                ),
-              })
+              void (async () => {
+                // pma: Table\Structure\BrowseController — the SELECT runs in the Browse view
+                try {
+                  const r = await api.structureBrowse(scope, orderedSelection)
+                  await navigate({ to: browseLink(server, db, table, r.sql, r.sig) })
+                } catch (e) {
+                  setMessages([errorMessage(e)])
+                }
+              })()
             }
           >
             {t('Browse')}
@@ -309,6 +328,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                     run: async () => {
                       await act(() => api.dropColumns(scope, { columns: orderedSelection, source: 'bulk' }))
                     },
+                    // pma: DropColumnController (mult_btn ≠ Yes)
+                    no: () => setMessages([{ type: 'success', text: t('No change') }]),
                   })
                 }
               >
@@ -360,7 +381,15 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           {t('Print')}
         </Button>
         {editable && s.links.proposeTableStructure !== null && (
-          <Link to={sqlLink(server, s.links.proposeTableStructure)}>{t('Propose table structure')}</Link>
+          <Link
+            to={
+              s.links.proposeSig === undefined
+                ? sqlLink(server, s.links.proposeTableStructure)
+                : `/s/${server}/db/${encodeURIComponent(db)}/sql?sql=${encodeURIComponent(s.links.proposeTableStructure)}&sig=${encodeURIComponent(s.links.proposeSig)}`
+            }
+          >
+            {t('Propose table structure')}
+          </Link>
         )}
         {editable && (
           <>
@@ -647,7 +676,13 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             >
               {t('Yes')}
             </Button>
-            <Button id="buttonNo" onClick={() => setConfirm(null)}>
+            <Button
+              id="buttonNo"
+              onClick={() => {
+                confirm?.no?.()
+                setConfirm(null)
+              }}
+            >
               {t('No')}
             </Button>
           </>
@@ -756,6 +791,8 @@ function RowActions({
   onKey,
   onCentral,
   server,
+  db,
+  table,
 }: {
   column: Column
   hide: boolean
@@ -763,6 +800,8 @@ function RowActions({
   /** null without the central columns feature */
   onCentral: ((op: 'add' | 'remove') => void) | null
   server: number
+  db: string
+  table: string
 }) {
   const items = (
     <ul
@@ -794,7 +833,14 @@ function RowActions({
         </li>
       ))}
       <li className="whitespace-nowrap">
-        <Link to={sqlLink(server, column.distinctSql)} className="px-1">
+        <Link
+          to={
+            column.distinctSig === undefined
+              ? sqlLink(server, column.distinctSql)
+              : browseLink(server, db, table, column.distinctSql, column.distinctSig, true)
+          }
+          className="px-1"
+        >
           {t('Distinct values')}
         </Link>
       </li>
