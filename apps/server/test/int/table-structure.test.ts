@@ -451,6 +451,21 @@ describe('partitions', () => {
   })
 })
 
+describe('index editor choices', () => {
+  beforeAll(() => seed('CREATE TABLE ix (id INT PRIMARY KEY, a INT, KEY ka (a)); CREATE TABLE ixn (a INT, KEY kb (a));'))
+
+  it('offers PRIMARY only without a primary key, when editing it, or for a new index [p04-4cb4a4]', async () => {
+    const allowed = async (table: string, q: string) =>
+      ((await get(`${base}/tables/${table}/indexes/form?${q}`)) as Json).primaryAllowed
+    // editing another index of a table with a primary key: no PRIMARY
+    expect(await allowed('ix', 'index=ka')).toBe(false)
+    expect(await allowed('ix', 'index=PRIMARY')).toBe(true)
+    expect(await allowed('ixn', 'index=kb')).toBe(true)
+    // a new Index has no table for Index::hasPrimary(): PRIMARY is always offered
+    expect(await allowed('ix', 'create=1')).toBe(true)
+  })
+})
+
 describe('Structure links and the bulk Browse', () => {
   const PMADB = { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }
   beforeAll(() =>

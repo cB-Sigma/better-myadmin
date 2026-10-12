@@ -601,7 +601,7 @@ Column form
 
 Index editor
 - [ ] PRIMARY forces name `PRIMARY` (disabled input, re-enabled on submit); non-primary named PRIMARY → error.
-- [ ] PRIMARY option hidden when a PK exists (unless editing it).
+- [ ] PRIMARY option hidden when a PK exists (unless editing it); a new index always offers it (`Index::hasPrimary()` has no table for it).
 - [ ] SPATIAL hides size column, limits to one column, hides add-more; SPATIAL/FULLTEXT disable Index type.
 - [ ] FULLTEXT column list filtered to char/text; SPATIAL to spatial types.
 - [ ] Column rows drag-sortable; slider 1..16 for "Add N column(s) to index".

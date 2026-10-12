@@ -11,7 +11,7 @@ Mechanical inventories of phpMyAdmin `a57149e1` ([reference-commit.txt](../refer
 | Config directives | 449 | 189 | 1 | 2 | 1 | 0 | 0 | 256 | 0 | 192 | 42.8% |
 | Messages (msgids) | 3426 | 1887 | 0 | 0 | 33 | 0 | 0 | 1506 | 0 | 1887 | 55.1% |
 | JS behaviours | 966 | 461 | 0 | 1 | 12 | 0 | 0 | 492 | 0 | 462 | 47.8% |
-| Checklist items | 706 | 23 | 0 | 3 | 0 | 216 | 0 | 464 | 0 | 26 | 3.7% |
+| Checklist items | 706 | 23 | 0 | 3 | 0 | 245 | 0 | 435 | 0 | 26 | 3.7% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
 
@@ -125,4 +125,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 267 API endpoints, 80 SPA routes (3 placeholders/catch-alls), 1247 control claims, 1322 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 267 API endpoints, 80 SPA routes (3 placeholders/catch-alls), 1247 control claims, 1341 tests.

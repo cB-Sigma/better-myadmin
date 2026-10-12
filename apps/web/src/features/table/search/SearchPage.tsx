@@ -334,7 +334,12 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
             <Button
               variant="primary"
               onClick={() => {
-                if (range !== null) patch(range.index, { value: `${range.min}, ${range.max}` })
+                // select.ts #rangeSearchModalGo: "min, max" only when both are given
+                if (range !== null) {
+                  patch(range.index, {
+                    value: range.min !== '' && range.max !== '' ? `${range.min}, ${range.max}` : '',
+                  })
+                }
                 setRange(null)
               }}
             >

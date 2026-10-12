@@ -245,3 +245,81 @@ export async function getTrackedData(
     snapshot: row.schema_snapshot ?? '',
   }
 }
+
+// ---------------------------------------------------------------------------------------------
+// Tracker::handleQuery: logging the executed statements into the tracked versions
+// ---------------------------------------------------------------------------------------------
+
+/** pma: Tracker::isAnyTrackingInProgress — an active version in the database. */
+export async function isAnyTrackingInProgress(
+  conn: MetaConn,
+  rp: RelationParameters,
+  db: string,
+): Promise<boolean> {
+  const f = rp.trackingFeature
+  if (f === null) return false
+  const r = await conn.query(
+    `/*NOTRACK*/ SELECT 1 FROM ${table(f)} WHERE tracking_active = 1 AND db_name = ${q(db)} LIMIT 1`,
+  )
+  return r.rows.length > 0
+}
+
+/** pma: Tracker::getVersion — the last version tracking the statement, -1 when none. */
+export async function trackingVersionFor(
+  conn: MetaConn,
+  rp: RelationParameters,
+  db: string,
+  tableName: string,
+  statement: string,
+): Promise<number> {
+  const f = rp.trackingFeature
+  if (f === null) return -1
+  let sql = `SELECT MAX(version) FROM ${table(f)} WHERE \`db_name\` = ${q(db)} AND \`table_name\` = ${q(tableName)}`
+  if (statement !== '') sql += ` AND FIND_IN_SET('${statement}',tracking) > 0`
+  const r = await conn.tryQuery(sql)
+  if (r === false) return -1
+  const v = r.rows[0] === undefined ? null : Object.values(r.rows[0])[0]
+  return v === null || v === undefined ? -1 : Number.parseInt(v, 10) || 0
+}
+
+/** pma: Tracker::isTracked — the HEAD version of the table is active. */
+export async function isTrackedTable(
+  conn: MetaConn,
+  rp: RelationParameters,
+  db: string,
+  tableName: string,
+): Promise<boolean> {
+  const f = rp.trackingFeature
+  if (f === null) return false
+  const r = await conn.query(
+    `SELECT tracking_active FROM ${table(f)} WHERE db_name = ${q(db)} AND table_name = ${q(tableName)} ORDER BY version DESC LIMIT 1`,
+  )
+  const v = r.rows[0] === undefined ? null : Object.values(r.rows[0])[0]
+  return v !== null && v !== undefined && Number.parseInt(v, 10) === 1
+}
+
+/**
+ * pma: Tracker::handleQuery (the UPDATE): appends the logged statement to schema_sql or data_sql
+ * of the version, for the statements the version tracks; a RENAME TABLE renames the version.
+ */
+export async function appendTrackingLog(
+  conn: MetaConn,
+  rp: RelationParameters,
+  e: {
+    db: string
+    table: string
+    version: number
+    identifier: string
+    saveTo: 'schema_sql' | 'data_sql'
+    query: string
+    date: string
+    renamedTo?: string | undefined
+  },
+): Promise<void> {
+  const f = rp.trackingFeature
+  if (f === null) return
+  let sql = `/*NOTRACK*/\nUPDATE ${table(f)} SET ${backquote(e.saveTo)} = CONCAT(${backquote(e.saveTo)}, ${q(`\n${e.query}`)}), \`date_updated\` = ${q(e.date)}`
+  if (e.identifier === 'RENAME TABLE') sql += `, \`table_name\` = ${q(e.renamedTo ?? '')} `
+  sql += ` WHERE FIND_IN_SET('${e.identifier}',tracking) > 0 AND \`db_name\` = ${q(e.db)}  AND \`table_name\` = ${q(e.table)}  AND \`version\` = ${q(String(e.version))} `
+  await conn.query(sql)
+}

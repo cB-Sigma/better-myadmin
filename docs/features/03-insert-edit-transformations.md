@@ -331,7 +331,7 @@ MIME types discovered from file names: `application/octetstream`, `image/jpeg`, 
 - [ ] A leading CRLF in textarea content is protected by an extra `\n`. <!-- parity:n/a: the SPA sets textarea.value, so no HTML parser drops the leading newline -->
 - [ ] TEXT values > 32000 chars show "Because of its length, this column might not be editable."
 - [ ] Integer inputs carry `min`/`max` for the exact MySQL range (signed/unsigned), `inputmode=numeric`, numeric validation on change.
-- [ ] float/double inputs are 100 wide (clamped to 60); geometry inputs 30.
+- [ ] float/double and geometry inputs are as wide as the column length clamped to `MaxSizeForInputField` (60).
 - [ ] Date/datetime/timestamp/time inputs have a calendar button picker with seconds and fractional seconds per column precision; `time` allows hours up to 99; tooltips explain MySQL accepts more values.
 - [x] Client datetime validation accepts `CURRENT_TIMESTAMP`, `current_timestamp()`, zero datetime, date-only; timestamp years restricted to 1978–2038. <!-- parity:test --> `p03-7f7f64` [insert-edit.test.ts:30](../../apps/web/src/features/insert-edit/insert-edit.test.ts#L30)
 - [ ] `CURRENT_TIMESTAMP[(n)]` typed into a date/datetime/timestamp field is sent unquoted; stored fractional values are padded to 6 digits in the form.

@@ -42,6 +42,7 @@ test.beforeAll(async () => {
     CREATE TABLE ${DB}.t (id INT PRIMARY KEY, a VARCHAR(10), b INT);
     INSERT INTO ${DB}.t VALUES (1, 'x', 5), (2, 'y', 6);
     CREATE VIEW ${DB}.v AS SELECT id, a FROM ${DB}.t;
+    CREATE TABLE ${DB}.geo (id INT PRIMARY KEY, g POINT NOT NULL SRID 0, n VARCHAR(5));
     DROP USER IF EXISTS '${USER}'@'%'; CREATE USER '${USER}'@'%' IDENTIFIED BY '${USER}';
     GRANT ALL ON \`f04\\_e2e\\_struct\`.* TO '${USER}'@'%';`)
 })
@@ -120,4 +121,59 @@ test('views and system schemas list their columns without the Action column [p04
   await page.goto('/s/1/db/information_schema/t/ENGINES/structure')
   await expect(page.getByTestId('structure-row-ENGINE')).toBeVisible()
   await expect(actionHeader(page)).toHaveCount(0)
+})
+
+test('index editor: SPATIAL hides the size column and the add-more slider, one column only, no index type [p04-4973ea]', async ({
+  page,
+}) => {
+  await login(page)
+  await page.goto(`/s/1/db/${DB}/t/geo/structure`)
+  await page.locator('#index_div').getByRole('spinbutton').fill('2')
+  await page.locator('#index_div').getByRole('button', { name: 'Go' }).click()
+  const dlg = page.getByRole('dialog')
+  await expect(
+    dlg.getByRole('columnheader', { name: 'Size' }).or(dlg.locator('th', { hasText: 'Size' })),
+  ).toHaveCount(1)
+  await expect(dlg.getByRole('slider')).toHaveCount(1)
+  await dlg.getByRole('button', { name: 'Advanced options' }).click()
+  await expect(dlg.locator('#select_index_type')).toBeEnabled()
+  await dlg.locator('#select_index_choice').selectOption('SPATIAL')
+  await expect(dlg.locator('th', { hasText: 'Size' })).toHaveCount(0)
+  await expect(dlg.getByRole('slider')).toHaveCount(0)
+  await expect(dlg.locator('#select_index_type')).toBeDisabled()
+  await expect(dlg.getByTestId('index-column-1').getByLabel('Column')).toBeDisabled()
+  // SPATIAL lists the spatial columns only
+  await expect(dlg.getByTestId('index-column-0').getByLabel('Column').locator('option')).toHaveText([
+    '-- Ignore --',
+    'g [point]',
+  ])
+  await dlg.locator('#select_index_choice').selectOption('FULLTEXT')
+  await expect(dlg.locator('#select_index_type')).toBeDisabled()
+})
+
+test('column form: type tooltips, Adjust privileges disabled without the privileges, collation-change warning [p04-488fbc p04-9f1072 p04-928ba0]', async ({
+  page,
+}) => {
+  const dialogs: string[] = []
+  page.on('dialog', (d) => {
+    dialogs.push(d.message())
+    void d.dismiss()
+  })
+  await login(page)
+  await page.goto(`/s/1/db/${DB}/t/t/structure`)
+  await page.getByTestId('structure-row-a').getByRole('link', { name: 'Change' }).click()
+  const row = page.getByTestId('column-row-0')
+  const type = row.getByLabel('Type')
+  await expect(type.locator('option[value="VARCHAR"]').first()).toHaveAttribute('title', /.+/)
+  await expect(type.locator('option[value="VARCHAR"]').first()).toHaveAttribute('data-length-restricted', /^[01]$/)
+  // no column privileges / RELOAD for this account (ColumnsDefinition: privs_available)
+  const adjust = row.getByLabel('Adjust privileges')
+  await expect(adjust).toBeDisabled()
+  await expect(adjust).toHaveAttribute('title', /You don't have sufficient privileges/)
+  await row.getByLabel('Collation').selectOption('utf8mb4_bin')
+  await page.getByRole('button', { name: 'Save' }).click()
+  await expect.poll(() => dialogs.at(-1) ?? '').toContain('Garbled Data')
+  expect(dialogs.at(-1)).toContain('Are you sure you wish to change the collation and convert the data?')
+  // dismissed: nothing ran
+  await expect(page).toHaveURL(/\/structure\/change\?/)
 })

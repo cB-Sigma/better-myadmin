@@ -36,10 +36,23 @@ export interface ServerInfo {
   context: Context
 }
 
+/** Called after every successful statement of a connection (Tracker::handleQuery). */
+type AfterQuery = (conn: Conn, sql: string) => Promise<void>
+let afterQuery: AfterQuery | null = null
+
+/** Installs the hook run after each successful `Conn.query` (DatabaseInterface::query's tracker call). */
+export function setAfterQuery(fn: AfterQuery | null): void {
+  afterQuery = fn
+}
+
+const USE_RE = /^\s*USE\s+(`(?:[^`]|``)+`|[^\s;]+)\s*;?\s*$/i
+
 export class Conn {
   readonly raw: PoolConnection
   readonly log: Executed[]
   serverInfo: ServerInfo | null = null
+  /** The database of the last successful `USE` (`Current::$database` for the tracker). */
+  currentDb = ''
   /**
    * The one file a `LOAD DATA LOCAL INFILE` may read (the uploaded import file of ImportLdi), or
    * null: the server's file request is refused like a client without local_infile.
@@ -74,6 +87,12 @@ export class Conn {
     }
     const ms = performance.now() - start
     this.log.push({ sql, ms, label })
+    const use = USE_RE.exec(sql)
+    if (use !== null) {
+      const name = use[1] as string
+      this.currentDb = name.startsWith('`') ? name.slice(1, -1).replaceAll('``', '`') : name
+    }
+    if (afterQuery !== null) await afterQuery(this, sql)
     return { ...normalise(res[0], res[1]), ms }
   }
 

@@ -14,7 +14,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ArbitraryServerRegexp` | apps/server/src/auth/cookie.ts:78<br>apps/server/src/auth/cookie.ts:81 |  |
 | ⬜ | `AuthLog` |  |  |
 | ⬜ | `AuthLogSuccess` |  |  |
-| ✅ | `blowfish_secret` | apps/server/src/browse/actions.ts:92<br>apps/server/src/browse/actions.ts:375<br>apps/server/src/browse/grid.ts:246<br>apps/server/src/browse/service.ts:123<br>apps/server/src/import/service.ts:415 |  |
+| ✅ | `blowfish_secret` | apps/server/src/browse/actions.ts:92<br>apps/server/src/browse/actions.ts:388<br>apps/server/src/browse/grid.ts:246<br>apps/server/src/browse/service.ts:123<br>apps/server/src/import/service.ts:415 |  |
 | ⬜ | `CaptchaApi` |  |  |
 | ⬜ | `CaptchaCsp` |  |  |
 | ⬜ | `CaptchaLoginPrivateKey` |  |  |
@@ -460,7 +460,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DBG/sql` | apps/server/src/routes/browse.ts:38<br>apps/server/src/routes/console.ts:64<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:316<br>apps/server/src/routes/query.ts:114 |  |
+| ✅ | `DBG/sql` | apps/server/src/routes/browse.ts:39<br>apps/server/src/routes/console.ts:64<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:316<br>apps/server/src/routes/query.ts:114 |  |
 | ⬜ | `DBG/sqllog` |  |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:92<br>apps/server/src/routes/sql.ts:191 |  |
 | ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:147<br>apps/server/src/insert-edit/save.ts:253<br>apps/server/src/query/pipeline.ts:205<br>apps/server/src/query/pipeline.ts:512 |  |

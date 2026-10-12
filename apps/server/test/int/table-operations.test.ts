@@ -171,3 +171,17 @@ describe('the page', () => {
     expect(two.messages[0].type).not.toBe('error')
   })
 })
+
+describe('the Tracking tab', () => {
+  it('only with the tracking feature of the configuration storage [p04-010770]', async () => {
+    const tabs = async (server: Record<string, unknown>) => {
+      const a = testApp(testConfig({}, server))
+      await a.login()
+      const r = await a.req('GET', `${base}/t/capabilities`)
+      await a.close()
+      return ((r.json as Any).tabs as Array<{ key: string }>).map((x) => x.key)
+    }
+    expect(await tabs(PMADB)).toContain('tracking')
+    expect(await tabs({ ...PMADB, tracking: false })).not.toContain('tracking')
+  })
+})

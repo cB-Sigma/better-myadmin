@@ -11,6 +11,7 @@ import {
   browseResponse,
   columnValues,
   deleteRows,
+  detectMime,
   getField,
   gridSave,
   gridValue,
@@ -93,7 +94,8 @@ browseRoutes.get('/field', async (c) => {
   const bytes = await withBrowse(c, q.db, (x) => getField(x, q))
   return new Response(new Uint8Array(bytes), {
     headers: {
-      'content-type': 'application/octet-stream',
+      // Core::downloadHeader(…, Mime::detect($result), …)
+      'content-type': detectMime(bytes),
       'content-disposition': `attachment; filename="${encodeURIComponent(`${q.table}-${q.key}.bin`)}"`,
     },
   })
