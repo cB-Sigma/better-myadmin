@@ -136,9 +136,14 @@ export async function startPmaInstance(
     )
   if (opts.noConfig !== true) writeConfig(configPhp)
   const port = await freePort()
-  const proc: ChildProcess = spawn(PHP, ['-S', `127.0.0.1:${port}`, '-t', join(root, 'public')], {
-    stdio: 'ignore',
-  })
+  // revalidate_freq=0: setConfig() and rewritten included files (SignonScript) apply at once
+  const proc: ChildProcess = spawn(
+    PHP,
+    ['-d', 'opcache.revalidate_freq=0', '-S', `127.0.0.1:${port}`, '-t', join(root, 'public')],
+    {
+      stdio: 'ignore',
+    },
+  )
   const url = `http://127.0.0.1:${port}`
   for (let i = 0; i < 100; i++) {
     const ok = await isPmaUp(url, { anyStatus: true })
