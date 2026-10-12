@@ -12,7 +12,7 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | X4 | Transformations | `Text_Plain_External` can run allow-listed shell programs | No process execution; allow-listed in-process formatters | No shell-out from a web app | [Security](../architecture/07-security.md) |
 | X5 | Charsets | `RecodingEngine=recode` supported | Only `iconv`/`mb` semantics via `iconv-lite` | `recode` is PHP-specific | [Tech stack](../architecture/01-tech-stack.md) |
 | X6 | Config | `config.inc.php` (PHP) | `bettermyadmin.config.ts|json|yaml` + env; `bma import-pma-config` converts | No PHP runtime | [Data model](../architecture/06-data-and-metadata-model.md) |
-| X7 | Setup | `public/setup` PHP script | First-run wizard generating our config | Same purpose, different format | Roadmap M4 |
+| X7 | Setup | `public/setup` PHP script | The same setup script in the SPA (`/setup`), generating phpMyAdmin's config.inc.php byte for byte and the same configuration as `bettermyadmin.config.json` (details X41) | Same purpose, different format | `apps/server/src/setup/` |
 | X8 | Metadata | No metadata without pmadb (localStorage only for prefs/favorites) | Additional SQLite fallback for per-user tables | Avoids a wall when no control user | [D11](../architecture/01-tech-stack.md) |
 | X9 | Import | Partial import driven by PHP time limits | Streaming + resumable chunked upload; UI for partial import kept | Node has no execution time limit | [D12](../architecture/01-tech-stack.md) |
 | X10 | Export | Buffered unless `CompressOnFly` | Always streamed | Memory | [D12](../architecture/01-tech-stack.md) |

@@ -22,8 +22,8 @@ BetterMyAdmin is a tool that, by design, executes arbitrary SQL as whatever user
 - `TrustedProxies` for `X-Forwarded-For` evaluation in allow/deny rules, same semantics.
 - Two-factor: TOTP (RFC 6238, `otpauth://` QR), WebAuthn (resident or roaming keys, same `webauthn` library semantics for challenge storage), and `simple`. Backend and secrets stored in `pmadb.userconfig` under `2fa` exactly like phpMyAdmin so they interoperate.
 - Session expiry: sliding `LoginCookieValidity`, hard `LoginCookieStore`; expiry message and `LoginCookieRecall`. Logout invalidates server-side immediately.
-- `http` auth: `WWW-Authenticate: Basic realm="<auth_http_realm>"`; credentials are used for the connection and then held in the (encrypted) session like cookie auth, not re-sent per request.
-- `signon`: `SignonURL` redirect, session hand-off via `SignonSession` (shared session store key) or `SignonScript` (an HTTP hook returning credentials over a signed request). `LogoutURL` honoured.
+- `http` auth: `WWW-Authenticate: Basic realm="<auth_http_realm>"` (default `BetterMyAdmin <host>`); the Basic credentials are read when a page loads, used for the connection and then held in the (encrypted) session like cookie auth (X42); logout goes to `/?old_usr=<user>`, which refuses the same user once.
+- `signon`: `SignonURL` redirect; the hand-off is a cookie named `SignonSession` holding phpMyAdmin's `PMA_single_signon_*` keys, AES-GCM encrypted with a key derived from `blowfish_secret` (`encodeSignonSession`, `apps/server/examples/signon.ts`), or `SignonScript`, a JS/TS module exporting `getLoginCredentials(user)` (`apps/server/examples/signon-script.ts`) (X40). Login errors are written back into the cookie (`PMA_single_signon_error_message`). `SignonCookieParams` and `LogoutURL` honoured.
 
 ## CSRF and request integrity
 

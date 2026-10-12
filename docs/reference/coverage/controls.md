@@ -4,9 +4,9 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-519/1106 covered (46.9%): 519 implemented, 24 planned, 563 missing. [Summary](README.md).
+540/1106 covered (48.8%): 540 implemented, 4 planned, 562 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 27/98 (27.6%) covered, 27/98 implemented
+## 01 shell navigation auth — 47/98 (48.0%) covered, 47/98 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -32,10 +32,10 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `navigation/tree/quick_warp.twig` | 0/2 |  | ⬜ `button:Favorites` ⬜ `button:Recent` |
 | `recent_favorite_table_favorite.twig` | 0/1 |  | ⬜ `link:Remove from Favorites` |
 | `server/select/index.twig` | 1/1 | ✅ `server` |  |
-| `setup/base.twig` | 0/1 |  | 🗓️ `link:Overview` |
-| `setup/config/index.twig` | 0/2 |  | 🗓️ `submit_download` 🗓️ `textconfig` |
-| `setup/error.twig` | 0/3 |  | 🗓️ `link:Ignore errors` 🗓️ `link:Show form` 🗓️ `link:Try to revert erroneous fields to their default values` |
-| `setup/home/index.twig` | 0/15 |  | 🗓️ `DefaultLang` 🗓️ `eol` 🗓️ `lang` 🗓️ `link:Check for latest version` 🗓️ `link:Delete` 🗓️ `link:Documentation` 🗓️ `link:Donate` 🗓️ `link:Edit` 🗓️ `link:phpMyAdmin homepage` 🗓️ `link:Show hidden messages` 🗓️ `ServerDefault` 🗓️ `submit` 🗓️ `submit_clear` 🗓️ `submit_display` 🗓️ `submit_download` |
+| `setup/base.twig` | 1/1 | ✅ `link:Overview` |  |
+| `setup/config/index.twig` | 2/2 | ✅ `submit_download` ✅ `textconfig` |  |
+| `setup/error.twig` | 3/3 | ✅ `link:Ignore errors` ✅ `link:Show form` ✅ `link:Try to revert erroneous fields to their default values` |  |
+| `setup/home/index.twig` | 14/15 | ✅ `DefaultLang` ✅ `eol` ✅ `lang` ✅ `link:Check for latest version` ✅ `link:Delete` ✅ `link:Documentation` ✅ `link:Edit` ✅ `link:phpMyAdmin homepage` ✅ `link:Show hidden messages` ✅ `ServerDefault` ✅ `submit` ✅ `submit_clear` ✅ `submit_display` ✅ `submit_download` | 🗓️ `link:Donate` |
 | `src/Navigation/NavigationTree.php` | 2/2 | ✅ `id:pma_navigation_collapse` ✅ `id:pma_navigation_sync` |  |
 
 ## 02 browse results grid — 27/32 (84.4%) covered, 27/32 implemented
@@ -211,12 +211,12 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `import.twig` | 10/10 | ✅ `allow_interrupt` ✅ `charset_of_file` ✅ `fk_checks` ✅ `format` ✅ `id:buttonGo` ✅ `id:localFileTab` ✅ `id:uploadFileTab` ✅ `import_file` ✅ `local_import_file` ✅ `skip_queries` |  |
 | `server/export/index.twig` | 3/3 | ✅ `db_select[]` ✅ `id:db_select_all` ✅ `id:db_unselect_all` |  |
 
-## 08 settings preferences pmadb — 37/39 (94.9%) covered, 37/39 implemented
+## 08 settings preferences pmadb — 38/39 (97.4%) covered, 38/39 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `config/form_display/display.twig` | 2/2 | ✅ `submit_reset` ✅ `submit_save` |  |
-| `config/form_display/input.twig` | 10/12 | ✅ `checkbox:L37` ✅ `link:Documentation` ✅ `link:Restore default value` ✅ `link:Set value: %s` ✅ `number:L34` ✅ `password:L29` ✅ `select:L40` ✅ `text:L27` ✅ `text:L32` ✅ `textarea:L47` | ⬜ `*-userprefs-allow` ⬜ `link:Comment` |
+| `config/form_display/input.twig` | 11/12 | ✅ `*-userprefs-allow` ✅ `checkbox:L37` ✅ `link:Documentation` ✅ `link:Restore default value` ✅ `link:Set value: %s` ✅ `number:L34` ✅ `password:L29` ✅ `select:L40` ✅ `text:L27` ✅ `text:L32` ✅ `textarea:L47` | ⬜ `link:Comment` |
 | `preferences/autoload.twig` | 3/3 | ✅ `link:Delete settings` ✅ `link:No` ✅ `link:Yes` |  |
 | `preferences/header.twig` | 8/8 | ✅ `link:Export` ✅ `link:Features` ✅ `link:Import` ✅ `link:Main panel` ✅ `link:Manage your settings` ✅ `link:Navigation panel` ✅ `link:SQL queries` ✅ `link:Two-factor authentication` |  |
 | `preferences/manage/error.twig` | 2/2 | ✅ `submit_ignore` ✅ `submit_import` |  |

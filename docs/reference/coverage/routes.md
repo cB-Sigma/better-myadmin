@@ -4,9 +4,9 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-159/199 covered (79.9%): 151 implemented, 7 exception, 1 n/a, 40 planned. [Summary](README.md).
+163/199 covered (81.9%): 151 implemented, 11 exception, 1 n/a, 36 planned. [Summary](README.md).
 
-## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
+## 01 shell navigation auth — 14/23 (60.9%) covered, 7/23 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -19,7 +19,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🔀 | `GET, POST /error-report` | `ErrorReportController` | API POST /api/telemetry/error (apps/server/src/routes/telemetry.ts:55) | X19 — opt-in |
 | ✅ | `GET, POST /git-revision` | `GitInfoController` | API GET /api/meta/build (apps/server/src/routes/meta.ts:17) |  |
 | 🗓️ | `GET /license` | `LicenseController` | UI /about/license | M1 — static |
-| ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:190) |  |
+| ✅ | `GET, POST /logout` | `LogoutController` | API POST /api/auth/logout (apps/server/src/routes/auth.ts:195) |  |
 | ➖ | `GET /messages` | `JavaScriptMessagesController` |  | n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent) |
 | ✅ | `GET, POST /navigation` | `NavigationController` | API GET /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:42)<br>API POST /api/servers/:s/navigation/tree (apps/server/src/routes/navigation.ts:52)<br>API GET /api/servers/:s/navigation/branch (apps/server/src/routes/navigation.ts:59) | later: GET /api/servers/:s/navigation/hidden/:db, POST /api/servers/:s/navigation/hide, POST /api/servers/:s/navigation/unhide |
 | 🗓️ | `POST /navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API POST /api/servers/:s/navigation/width | M1 — see API reference |
@@ -29,10 +29,10 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🗓️ | `GET /themes` | `ThemesController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🗓️ | `POST /themes/set` | `ThemeSetController` |  | M1 (X16) — client-side theme store (no server round trip) |
 | 🔀 | `GET, POST /version-check` | `VersionCheckController` | API GET /api/meta/version-check (apps/server/src/routes/meta.ts:58) | X20 |
-| 🗓️ | `GET, POST /` | `Setup/MainController` | API GET /api/servers/:s/navigation/branch<br>UI /setup | M4 (X7) |
-| 🗓️ | `GET, POST /setup` | `Setup/MainController` | UI /setup | M4 (X7) |
-| 🗓️ | `GET, POST /setup/show-config` | `Setup/ShowConfigController` | UI /setup | M4 (X7) |
-| 🗓️ | `GET, POST /setup/validate` | `Setup/ValidateController` | UI /setup | M4 (X7) |
+| 🔀 | `GET, POST /` | `Setup/MainController` | API GET /api/setup (apps/server/src/routes/setup.ts:52)<br>API GET /api/setup/form/:formset (apps/server/src/routes/setup.ts:57)<br>API POST /api/setup/form/:formset (apps/server/src/routes/setup.ts:64)<br>API POST /api/setup/form/:formset/revert (apps/server/src/routes/setup.ts:72)<br>API GET /api/setup/servers/:id (apps/server/src/routes/setup.ts:78)<br>API POST /api/setup/servers/:id (apps/server/src/routes/setup.ts:83)<br>API POST /api/setup/servers/:id/revert (apps/server/src/routes/setup.ts:89)<br>API POST /api/setup/servers/:id/delete (apps/server/src/routes/setup.ts:95)<br>API GET /api/setup/config (apps/server/src/routes/setup.ts:107)<br>UI /setup (apps/web/src/routes/setup/index.tsx)<br>UI /setup/form/:formset (apps/web/src/routes/setup/form/$formset.tsx)<br>UI /setup/servers/:id (apps/web/src/routes/setup/servers/$id.tsx)<br>UI /setup/config (apps/web/src/routes/setup/config.tsx) | X41 — MainController: page=form\|config\|servers (mode=add\|edit\|revert\|remove) map to their SPA routes |
+| 🔀 | `GET, POST /setup` | `Setup/MainController` | API GET /api/setup (apps/server/src/routes/setup.ts:52)<br>UI /setup (apps/web/src/routes/setup/index.tsx) | X41 |
+| 🔀 | `GET, POST /setup/show-config` | `Setup/ShowConfigController` | API POST /api/setup/config (apps/server/src/routes/setup.ts:101)<br>API GET /api/setup/config/download (apps/server/src/routes/setup.ts:110)<br>UI /setup (apps/web/src/routes/setup/index.tsx) | X41 |
+| 🔀 | `GET, POST /setup/validate` | `Setup/ValidateController` | API POST /api/setup/validate (apps/server/src/routes/setup.ts:126)<br>UI /setup/servers/:id (apps/web/src/routes/setup/servers/$id.tsx) | X41 |
 
 ## 02 browse results grid — 8/8 (100.0%) covered, 8/8 implemented
 

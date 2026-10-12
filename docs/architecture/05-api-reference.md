@@ -15,16 +15,34 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/auth/state` | `{authenticated, server, user, twoFactorPending, servers:[{index,verbose,host,authType}], loginCookieRecall: username?}` | login page / `AuthenticationCookie` |
-| POST | `/api/auth/login` | `{server, username, password, captchaToken?}` → `{ok, twoFactorRequired?, redirect}`; sets session cookie | cookie auth `authenticate()` |
+| GET | `/api/auth/state` | `{authenticated, server, user, twoFactorPending, servers:[{index,label,authType}], recalledUser, allowArbitraryServer, csrfToken, sessionExpired, authType, failure, captcha}`; a `config` server logs in here (its failure page data in `failure: {kind:'config', notice, noConfigFile, errors}`); `http`/`signon` without a login: `failure.kind` `http` (the 401 page), `error` (error/generic) or `reload` (the page load authenticates) | login page / `Authentication` middleware, `AuthenticationConfig::showFailure` |
+| POST | `/api/auth/login` | `{server, username, password, arbitraryServer?, captchaToken?}` → `{ok, server, twoFactorRequired, csrfToken}`; the captcha is verified against `CaptchaSiteVerifyURL`, failures count towards `LoginRateLimit` (X2) | cookie auth `readCredentials()` / `authenticate()` |
 | GET | `/api/auth/two-factor` | the pending login's challenge `{form, showSubmit, error}` (`form.kind`: application, simple, webauthn_request, invalid) | `login/twofactor.twig` |
 | POST | `/api/auth/two-factor` | `{fields: {2fa_code \| 2fa_confirm \| webauthn_request_response}}` → `{ok, challenge?}`; `ok` marks the login's `twoFactorOk` | `TwoFactor::check` |
-| POST | `/api/auth/logout` | clears session (all servers if `LoginCookieDeleteAll`) → `{logoutUrl}` (`LogoutURL`) | `/logout` |
+| POST | `/api/auth/logout` | clears the session (cookie auth with `LoginCookieDeleteAll` off keeps the other cookie logins: `{server}`) → `{logoutUrl}`: `LogoutURL`, else `/?old_usr=<user>` (http) or `SignonURL` (signon) | `/logout` |
 | POST | `/api/auth/switch-server` | `{server}` for `config`/`signon` types | `?server=` |
 | GET | `/api/servers/:s/account/password` | the change-password form: `{origAuthPlugin, showHashing, showSslNotice, authPlugins[], allowNoPassword}` (refused for `config` auth) | `GET /user-password` |
 | POST | `/api/servers/:s/account/password` | `{nopass, pma_pw, pma_pw2, authentication_plugin?}` → `ALTER USER` / `UPDATE mysql.user` / `SET password` + `FLUSH PRIVILEGES`; `{message, sql}` with the password masked; the session keeps working with the new password | `POST /user-password` |
 | POST | `/api/servers/:s/session/collation` | `{collation_connection}` → stored as this login's `DefaultConnectionCollation`; new pooled connections run `SET collation_connection` (skipped for `''` and the `SET NAMES` collation) | `/collation-connection` |
 | POST | `/api/servers/:s/themes/set` | `{theme}` → `ThemeDefault` in the user preferences (load, set, save); the theme itself lives in the client-side store (X31) | `/themes/set` |
+
+Page loads (`GET` of an SPA path) authenticate `http` and `signon` servers before the SPA is served (`auth/page-gate.ts`): a missing or rejected Basic login answers 401 with `WWW-Authenticate: Basic realm="…"`, a signon server without credentials redirects to `SignonURL` (X42, X40).
+
+## Setup
+
+The setup script; no login, every endpoint answers 404 "Configuration already exists, setup is disabled!" while a configuration file exists (X41).
+
+| Method | Path | Purpose | pMA |
+|---|---|---|---|
+| GET | `/api/setup` | overview: `{pages, messages, servers, languages, eol, canSave}` (`?version_check=1` adds the version message) | `HomeController` |
+| GET/POST | `/api/setup/form/:formset` | a form set (`PrefsFormSet` with `userprefsAllow`) / submit → `{saved}` or the form again or `{errors}` | `FormController` |
+| POST | `/api/setup/form/:formset/revert` | erroneous fields back to their defaults | `mode=revert` |
+| GET/POST | `/api/setup/servers/:id` | the server tabs (0 adds) / submit (as above, `serverId` of a new server with errors) | `ServersController` |
+| POST | `/api/setup/servers/:id/revert`, `/delete` | `mode=revert`, `ServerDestroyController` | |
+| POST | `/api/setup/config` | `{DefaultLang, ServerDefault, eol, action: display\|download\|clear\|save}` | `ShowConfigController` |
+| GET | `/api/setup/config` | `{php, bma, eol, canSave, saved}`: ConfigGenerator's file and the same as bettermyadmin.config.json | `ConfigController` |
+| GET | `/api/setup/config/download` | `?eol&format=php\|bma` the file as an attachment | `submit_download` |
+| POST | `/api/setup/validate` | `{id, values}` AJAX validation: errors by field id (empty lists clear them) | `ValidateController` |
 
 ## Meta
 

@@ -1959,7 +1959,7 @@
       "inPma": false
     },
     {
-      "key": "LoginRateLimit/maxAttempts",
+      "key": "LoginRateLimit/lockoutSeconds",
       "source": "schema",
       "type": "integer",
       "bma": true,
@@ -1967,7 +1967,7 @@
       "inPma": false
     },
     {
-      "key": "LoginRateLimit/lockoutSeconds",
+      "key": "LoginRateLimit/maxAttempts",
       "source": "schema",
       "type": "integer",
       "bma": true,
