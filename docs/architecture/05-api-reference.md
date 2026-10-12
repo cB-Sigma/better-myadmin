@@ -102,14 +102,16 @@ Conventions:
 | GET | `/api/servers/:s/replication` | primary/replica status | `/server/replication` |
 | POST | `/api/servers/:s/replication/*` | `primary/add-user`, `replica/configure`, `replica/control {action: start|stop|reset, thread?: io|sql|both}`, `replica/skip-errors {count}` | `/server/replication` actions |
 | GET | `/api/servers/:s/binlog?log=&pos=&is_full_query=` | logs list + events page (MaxRows per page) | `/server/binlog` |
-| GET | `/api/servers/:s/privileges/users?initial=&db=&table=` | account list with privilege summary and groups | `/server/privileges` |
-| GET | `/api/servers/:s/privileges/users/:user/:host?tab=global|databases|tables|routines|password|login|export&db=&table=&routine=` | edit payload per tab | `/server/privileges` edit |
-| POST | `/api/servers/:s/privileges/users` | create account (full form payload) | add user |
-| POST | `/api/servers/:s/privileges/users/:user/:host/*` | `grants {scope, privileges, limits, ssl}`, `revoke`, `password`, `rename {newUser,newHost, mode}`, `lock`, `unlock`, `expire`, `group {name}` | edit actions, `/server/privileges/account-lock|unlock` |
-| POST | `/api/servers/:s/privileges/users/delete` | `{accounts[], dropDatabases, revoke, reload}` | remove users |
-| GET | `/api/servers/:s/privileges/users/:user/:host/export` | GRANT statements text | export |
-| POST | `/api/servers/:s/privileges/flush` | `FLUSH PRIVILEGES` | reload privileges |
-| GET/POST | `/api/servers/:s/user-groups` | list / create / edit allowed tabs / delete | `/server/user-groups*` |
+| GET | `/api/servers/:s/privileges/users?initial=` | `UsersOverviewResponse`: gate (superuser / grant / create user, menus feature), initials, accounts with global privileges, password, group, grant and lock state, notices | `/server/privileges` |
+| GET | `/api/servers/:s/privileges/add-user?dbname=&tablename=` | `AddUserForm`: login information fields (auth plugins, this host), privileges table, "Database for user account" options | `/server/privileges?adduser=1` |
+| GET | `/api/servers/:s/privileges/user?username=&hostname=&dbname=&tablename=&routinename=` | `UserProperties`: the editor at global, database (also several / wildcard), table, column or routine level — privileges table, specific rights, change password, login information / copy | `/server/privileges` edit |
+| GET | `/api/servers/:s/privileges/validate-username?username=` | `{userExists}` | `/server/privileges?validate_username=1` |
+| POST | `/api/servers/:s/privileges?flush_privileges=` | phpMyAdmin's form fields (`PrivForm`): `adduser_submit`, `update_privs`, `revokeall`, `change_pw`, `change_copy` (mode 1–4), `delete` (`selected_usr[]`, `drop_users_db`, `mode`), `changeUserGroup`; or `?flush_privileges=1`. `PrivActionResponse {success, message, sql, account, addUserError, reload}`; the statements are phpMyAdmin's (X40 aside) | `POST /server/privileges` |
+| POST | `/api/servers/:s/privileges/export` | `{username, hostname}` or `{selected_usr[]}` → `{title, grants}` (SHOW GRANTS text) | `/server/privileges?export=1` |
+| POST | `/api/servers/:s/privileges/account-lock`, `/account-unlock` | `{username, hostname}` → `ALTER USER … ACCOUNT LOCK|UNLOCK` | `/server/privileges/account-lock|unlock` |
+| GET/POST | `/api/servers/:s/user-groups` | list (`UserGroupsResponse`) / add, edit (`addUserGroupSubmit`, `editUserGroupSubmit`), delete (`deleteUserGroup`) through the control user | `/server/user-groups` |
+| GET | `/api/servers/:s/user-groups/users?userGroup=` / `/user-groups/form?userGroup=` | users of a group / add-edit form | `/server/user-groups?viewUsers=1`, `?addUserGroup=1`, `?editUserGroup=1` |
+| GET | `/api/servers/:s/user-groups/edit-form?username=` | the overview's "Edit user group" choice | `/server/user-groups/edit-form` |
 
 ## Database scope
 
@@ -135,7 +137,7 @@ Conventions:
 | POST | `/api/servers/:s/databases/:db/designer/*` | `pages (new/save/save-as/delete/open)`, `coords`, `relation (create/delete)`, `display-field`, `settings`, `tables/add` | designer actions |
 | POST | `/api/servers/:s/databases/:db/schema-export` | `{format: pdf|svg|dia|eps, page?, options}` → file stream | `/schema-export` |
 | GET/POST | `/api/servers/:s/databases/:db/central-columns` | list (paged); add/edit/delete; `populate {table}`; `from-table-columns` | `/database/central-columns*` |
-| GET | `/api/servers/:s/databases/:db/privileges` | users with db privileges | `/database/privileges` |
+| GET | `/api/servers/:s/databases/:db/privileges` | `DbPrivilegesResponse {gate, db, accounts}`: the users of the database (global, database / wildcard, routine rows), from the user accounts module | `/database/privileges` |
 | GET | `/api/servers/:s/databases/:db/tables?names=1` | names only (pickers) | `/tables` |
 
 ## Table scope
@@ -168,7 +170,7 @@ Conventions:
 | GET/POST | `/api/servers/:s/databases/:db/tables/:t/tracking` | report, versions, create, activate/deactivate, delete, export SQL, snapshot | `/table/tracking` |
 | GET/POST | `/api/servers/:s/databases/:db/tables/:t/chart` | data for chart from query | `/table/chart` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/gis?sql=&labelColumn=&spatialColumn=&format=png|svg|pdf` | visualization data / files | `/table/gis-visualization` |
-| GET | `/api/servers/:s/databases/:db/tables/:t/privileges` | table privileges | `/table/privileges` |
+| GET | `/api/servers/:s/databases/:db/tables/:t/privileges` | `DbPrivilegesResponse {gate, db, table, accounts}`: the users of the table (plus table-specific rows) | `/table/privileges` |
 | GET | `/api/servers/:s/databases/:db/tables/:t/insert-form?rows=&where=&clone=` | per-column widget descriptors, functions, defaults, enum/set values, FK info | `/table/change` |
 | POST | `/api/servers/:s/databases/:db/tables/:t/rows` | insert/update: `{rows:[{values, functions, nulls, where?}], afterInsert, ignore[], fkChecks}` | `/table/replace` |
 | POST | `/api/servers/:s/databases/:db/tables/:t/rows/delete` | `{where[]}` | `/table/delete/rows` |

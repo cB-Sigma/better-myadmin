@@ -1,0 +1,7 @@
+# Intentional differences of the table Operations tab (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: select, label: Database }
+    ignore: [options]
+    reason: >-
+      environment: the move / copy target lists every database of the shared MySQL; suites running
+      concurrently create and drop theirs between the two captures

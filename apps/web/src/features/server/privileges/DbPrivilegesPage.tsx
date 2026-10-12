@@ -15,21 +15,28 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { UserCheck } from 'lucide-react'
 import { Fragment, useState } from 'react'
-import { type TableRef, api, errorMessage } from '../../../lib/api'
+import { api, errorMessage } from '../../../lib/api'
 import { Trans, t } from '../../../lib/i18n'
 import { path } from '../../../lib/paths'
 import { qk } from '../../../lib/queryKeys'
-import { checkAllState, editSearch, selectedUserValue } from './privileges.ts'
+import { checkAllState, selectedUserValue } from './privileges.ts'
 import { GateMessages, PrivList, useExportPrivileges } from './shared.tsx'
 
 /**
- * Table → Privileges: every account with access to the table (global, database, wildcard, table and
- * routine privileges), Edit / Export per account, Export of a selection, Add user account.
- * pma: templates/table/privileges/index.twig, src/Controllers/Table/PrivilegesController.php
+ * Database → Privileges and Table → Privileges (with `table`), the users of a database or a table:
+ * every account with access to it (global, database, wildcard, table and routine privileges),
+ * Edit / Export per account, Export of a selection, Add user account.
+ * pma: templates/database/privileges/index.twig, templates/table/privileges/index.twig,
+ *      src/Controllers/Database/PrivilegesController.php, src/Controllers/Table/PrivilegesController.php
  */
-export function TablePrivilegesPage({ table: ref }: { table: TableRef }) {
-  const q = useQuery({ queryKey: qk.tablePrivileges(ref), queryFn: () => api.tablePrivileges(ref) })
-  const exporter = useExportPrivileges(ref.server)
+export function DbPrivilegesPage({ server, db, table }: { server: number; db: string; table?: string }) {
+  const q = useQuery({
+    queryKey:
+      table === undefined ? qk.dbPrivileges({ server, db }) : qk.tablePrivileges({ server, db, table }),
+    queryFn: () =>
+      table === undefined ? api.dbPrivileges({ server, db }) : api.tablePrivileges({ server, db, table }),
+  })
+  const exporter = useExportPrivileges(server)
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const d = q.data
   if (q.error !== null) return <MessageBox {...errorMessage(q.error)} />
@@ -38,21 +45,24 @@ export function TablePrivilegesPage({ table: ref }: { table: TableRef }) {
   const values = d.accounts.map((a) => selectedUserValue(a.user, a.host))
   const all = checkAllState(values.map((v) => selected.has(v)))
   const escapedDb = d.db.replace(/[_%]/g, (c) => `\\${c}`)
-  const tableLink = path(`/s/${ref.server}/db/${encodeURIComponent(d.db)}/t/${encodeURIComponent(d.table)}`)
+  const dbLink = `/s/${server}/db/${encodeURIComponent(d.db)}`
+  const objectLink = path(d.table === undefined ? dbLink : `${dbLink}/t/${encodeURIComponent(d.table)}`)
   return (
     <div className="container">
       <GateMessages gate={d.gate} />
       {d.gate.isSuperUser ? (
         <>
           <PageHeader icon={UserCheck}>
-            <Trans
-              id={'Users having access to "%s"'}
-              args={[
-                <Link key="t" className="text-accent" to={tableLink}>
-                  {d.db}.{d.table}
-                </Link>,
-              ]}
-            />
+            <span>
+              <Trans
+                id={'Users having access to "%s"'}
+                args={[
+                  <Link key="t" className="text-accent" to={objectLink}>
+                    {d.table === undefined ? d.db : `${d.db}.${d.table}`}
+                  </Link>,
+                ]}
+              />
+            </span>
           </PageHeader>
           <form id="usersForm" onSubmit={(e) => e.preventDefault()}>
             <Panel>
@@ -145,13 +155,18 @@ export function TablePrivilegesPage({ table: ref }: { table: TableRef }) {
                                 {d.gate.isGrantUser && (
                                   <Link
                                     className="edit_user_anchor text-accent"
-                                    to={path(`/s/${ref.server}/privileges/user`)}
+                                    to={path(`/s/${server}/privileges/user`)}
+                                    // pma: url('/server/privileges', {username, hostname, dbname, tablename,
+                                    // routinename}): every key, empty ones included
                                     search={
-                                      editSearch(a.user, a.host, {
+                                      {
+                                        username: a.user,
+                                        hostname: a.host,
                                         dbname: p.database !== '*' ? p.database : d.db,
-                                        tablename: p.table !== null && p.table !== '*' ? p.table : d.table,
+                                        tablename:
+                                          p.table !== null && p.table !== '*' ? p.table : (d.table ?? ''),
                                         routinename: p.routine ?? '',
-                                      }) as never
+                                      } as never
                                     }
                                   >
                                     <IconText icon="b_usredit" text={t('Edit privileges')} />
@@ -216,8 +231,10 @@ export function TablePrivilegesPage({ table: ref }: { table: TableRef }) {
           <Link
             className={buttonVariants({ variant: 'primary' })}
             id="add_user_anchor"
-            to={path(`/s/${ref.server}/privileges/add-user`)}
-            search={{ dbname: d.db, tablename: d.table } as never}
+            to={path(`/s/${server}/privileges/add-user`)}
+            search={
+              (d.table === undefined ? { dbname: d.db } : { dbname: d.db, tablename: d.table }) as never
+            }
           >
             <IconText icon="b_usradd" text={t('Add user account')} forceText />
           </Link>

@@ -73,6 +73,8 @@ export const StructureColumn = z.object({
   distinctSql: z.string(),
   /** "Drop" confirmation / statement */
   dropSql: z.string(),
+  /** in pma__central_columns (CentralColumns::findExistingColNames): "Remove from central columns" */
+  inCentralList: z.boolean(),
 })
 export type StructureColumn = z.infer<typeof StructureColumn>
 
@@ -189,6 +191,18 @@ export type StructureResponse = z.infer<typeof StructureResponse>
 
 // ---------------------------------------------------------------- column definition form
 
+/** The MIME columns of a row (field_mimetype, field_transformation[_options], field_input_transformation[_options]). */
+export const ColumnMime = z.object({
+  /** `Text_Plain` (the media type with `/` replaced by `_`), '' for none */
+  mimetype: z.string().default(''),
+  /** plugin file, e.g. `Output/Text_Plain_Dateformat.php` */
+  transformation: z.string().default(''),
+  transformationOptions: z.string().default(''),
+  inputTransformation: z.string().default(''),
+  inputTransformationOptions: z.string().default(''),
+})
+export type ColumnMime = z.input<typeof ColumnMime>
+
 /** One row of the column definition form, in phpMyAdmin's field names (field_*). */
 export const ColumnDef = z.object({
   name: z.string(),
@@ -205,6 +219,8 @@ export const ColumnDef = z.object({
   comments: z.string().default(''),
   virtuality: z.string().nullable().default(''),
   expression: z.string().nullable().default(''),
+  /** posted only when the form shows the MIME columns (ColumnFormOptions.mime) */
+  mime: ColumnMime.optional(),
 })
 export type ColumnDef = z.input<typeof ColumnDef>
 
@@ -316,8 +332,20 @@ export const ColumnFormOptions = z.object({
   charEditing: z.string(),
   /** "Pick from Central Columns" */
   centralColumns: z.boolean(),
+  /** $cfg['MaxRows']: the rows the column selector lists before "See more" (data-maxrows) */
+  maxRows: z.number().int(),
   /** MIME transformation columns (browser transformation + column comments features + BrowseMIME) */
   mime: z.boolean(),
+  /** Transformations::getAvailableMimeTypes for the MIME selects (null when `mime` is false) */
+  mimeTypes: z
+    .object({
+      /** value (`Text_Plain`) and label (`text/plain`) */
+      mimetypes: z.array(z.object({ value: z.string(), label: z.string() })),
+      /** value (plugin file), label (`Date Format (text/plain: Dateformat)`), title (description) */
+      transformations: z.array(z.object({ value: z.string(), label: z.string(), title: z.string() })),
+      inputTransformations: z.array(z.object({ value: z.string(), label: z.string(), title: z.string() })),
+    })
+    .nullable(),
 })
 export type ColumnFormOptions = z.infer<typeof ColumnFormOptions>
 
@@ -326,7 +354,9 @@ export const ChangeFormResponse = z.object({
   options: ColumnFormOptions,
   columns: z.array(
     z.object({
-      values: ColumnDef.required(),
+      values: ColumnDef.omit({ mime: true }).required(),
+      /** the stored MIME settings (Transformations::getMime), null when the form has no MIME columns */
+      mime: ColumnMime.required().nullable(),
       orig: ColumnOrig,
       /** move column select: value, "after %s" argument, disabled */
       moveOptions: z.array(
@@ -366,6 +396,10 @@ export const ChangeColumnsRequest = z.object({
 export type ChangeColumnsRequest = z.input<typeof ChangeColumnsRequest>
 
 /** POST …/tables/:t/columns/drop — `source: 'row'` is the row link (/sql), 'bulk' the Yes/No page */
+/** /table/structure/central-columns-add | -remove (selected_fld[]) */
+export const CentralColumnsSelectRequest = z.object({ columns: z.array(z.string()).default([]) })
+export type CentralColumnsSelectRequest = z.input<typeof CentralColumnsSelectRequest>
+
 export const DropColumnsRequest = z.object({
   columns: z.array(z.string().min(1)).min(1),
   source: z.enum(['row', 'bulk']).default('bulk'),

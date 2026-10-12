@@ -4,9 +4,9 @@ import { parse, parseJson } from '../http/validate.ts'
 import {
   accountLock,
   addUserForm,
+  dbPrivileges,
   exportPrivileges,
   privilegesAction,
-  tablePrivileges,
   userProperties,
   usersOverview,
   validateUsername,
@@ -113,8 +113,14 @@ privilegesRoutes.get('/user-groups/edit-form', async (c) => {
   return c.json(await withPrivileges(c, {}, {}, (p) => userGroupChoice(p, username)))
 })
 
+/** pma: /database/privileges */
+privilegesRoutes.get('/databases/:db/privileges', async (c) => {
+  const db = c.req.param('db')
+  return c.json(await withPrivileges(c, {}, {}, (p) => dbPrivileges(p, db)))
+})
+
 /** pma: /table/privileges */
 privilegesRoutes.get('/databases/:db/tables/:table/privileges', async (c) => {
   const { db, table } = c.req.param()
-  return c.json(await withPrivileges(c, {}, {}, (p) => tablePrivileges(p, db, table)))
+  return c.json(await withPrivileges(c, {}, {}, (p) => dbPrivileges(p, db, table)))
 })

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1 resources/po/lo.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/lo.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-04 01:17+0000\nPO-Revision-Date: 2026-08-01 23:19+0000\nLast-Translator: BoneNI <bounkirdni@gmail.com>\nLanguage-Team: Lao <https://hosted.weblate.org/projects/phpmyadmin/master/lo/>\nLanguage: lo\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-08-01 23:19+0000\nLast-Translator: BoneNI <bounkirdni@gmail.com>\nLanguage-Team: Lao <https://hosted.weblate.org/projects/phpmyadmin/master/lo/>\nLanguage: lo\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "ຕ້ອງເປີດໃຊ້ງານ Javascript ເພື່ອໄປຕໍ່!"

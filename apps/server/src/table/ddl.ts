@@ -12,6 +12,7 @@ import type {
   AddKeyRequest,
   ChangeColumnsRequest,
   ColumnDef,
+  ColumnMime,
   CreateTableRequest,
   DdlResponse,
   DropColumnsRequest,
@@ -27,6 +28,7 @@ import type {
   SqlMessage,
 } from '@bettermyadmin/contracts'
 import { type Translator, sprintf } from '@bettermyadmin/i18n'
+import { renameField, setMime } from '@bettermyadmin/metadata'
 import { php } from '@bettermyadmin/mysql-types'
 import { looseEquals } from '@bettermyadmin/sql-gen'
 import {
@@ -62,6 +64,7 @@ import type { z } from 'zod'
 import type { AppConfig } from '../config.ts'
 import { MysqlError, ValidationError } from '../http/errors.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
+import type { OpsMeta } from './operations.ts'
 import type { TableReader } from './read.ts'
 import { type StructureFeatures, structureFeatures } from './structure-page.ts'
 
@@ -71,6 +74,10 @@ export interface DdlCtx {
   tr: Translator
   db: string
   table: string
+  /** the configuration-storage features of the request (RelationParameters); none when absent */
+  features?: StructureFeatures
+  /** the configuration storage (control link, ui prefs); absent for internal callers */
+  meta?: OpsMeta | null
 }
 
 type Out<T extends z.ZodTypeAny> = z.output<T>
@@ -127,7 +134,7 @@ async function runViaSql(ctx: DdlCtx, sql: string, messageToShow: string): Promi
     throw new MysqlErrorText(r.error, sql)
   }
   await reader.dbi.tryQuery('SHOW WARNINGS')
-  const features = await structureFeatures(ctx.db, ctx.table)
+  const features = await structureFeatures(ctx.db, ctx.table, ctx.features)
   await deleteTransformationInfo(ctx, features, sql)
   await setVariable(ctx, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
   reader.invalidate()
@@ -322,6 +329,43 @@ function toIndexSet(indexes: ReadonlyArray<Out<typeof FormIndex>>): IndexSet {
   }
 }
 
+/**
+ * Transformations::setMime for every posted row with a name ("Update comment table for mime
+ * types [MIME]"), when the form had the MIME columns and $cfg['BrowseMIME'] is on.
+ */
+async function updateMimeTypes(
+  ctx: Pick<DdlCtx, 'cfg' | 'meta'>,
+  db: string,
+  table: string,
+  columns: ReadonlyArray<{ name: string; mime?: Out<typeof ColumnMime> | undefined }>,
+): Promise<void> {
+  const meta = ctx.meta
+  if (!ctx.cfg.BrowseMIME || meta == null || meta.control === null) return
+  for (const c of columns) {
+    if (c.mime === undefined || c.name === '') continue
+    await setMime(meta.control, meta.rp, db, table, c.name, c.mime)
+  }
+}
+
+/** SaveController::updateColumns after the ALTER: Relation::renameField, then the MIME types */
+async function afterColumnsSaved(
+  ctx: DdlCtx,
+  columns: ReadonlyArray<{
+    name: string
+    orig: { field: string }
+    mime?: Out<typeof ColumnMime> | undefined
+  }>,
+): Promise<void> {
+  const meta = ctx.meta
+  if (meta != null && meta.control !== null) {
+    for (const c of columns) {
+      if (looseEquals(c.name, c.orig.field)) continue
+      await renameField(meta.control, meta.rp, ctx.db, ctx.table, c.orig.field, c.name)
+    }
+  }
+  await updateMimeTypes(ctx, ctx.db, ctx.table, columns)
+}
+
 /** pma: AddFieldController (do_save_data) */
 export async function addColumns(ctx: DdlCtx, req: Out<typeof AddColumnsRequest>): Promise<DdlResponse> {
   const { reader, tr } = ctx
@@ -341,6 +385,8 @@ export async function addColumns(ctx: DdlCtx, req: Out<typeof AddColumnsRequest>
   const r = await tryQuery(ctx, sql, 'structure.add-field')
   reader.invalidate()
   if (r.error !== null) throw new MysqlErrorText(r.error, sql)
+  // Update comment table for mime types [MIME]
+  await updateMimeTypes(ctx, ctx.db, ctx.table, req.columns)
   return {
     messages: [
       msg('success', sprintf(tr.gettext('Table %1$s has been altered successfully.'), ctx.table), sql),
@@ -394,6 +440,17 @@ export async function changeColumns(
     },
     { server: reader.server },
   )
+  // a changed column that is part of the remembered sort expression deletes it (before the
+  // preview: phpMyAdmin does it while collecting the changes)
+  const ui = await ctx.meta?.uiPrefs?.(ctx.db, table)
+  if (ui !== undefined) {
+    for (const i of built.changedIndexes) {
+      const sortedCol = await ui.getUiProp('sorted_col')
+      if (String(sortedCol === false ? '' : sortedCol).includes(backquote(columns[i]?.orig ?? ''))) {
+        await ui.removeUiProp('sorted_col')
+      }
+    }
+  }
   if (req.dryRun) return { messages: [], preview: built.sql ?? '' }
   // columns renamed with "Adjust privileges" ticked
   const adjust = new Map<string, string>()
@@ -402,7 +459,10 @@ export async function changeColumns(
     if (c === undefined || c.adjustPrivileges !== true || looseEquals(c.orig, c.name)) continue
     adjust.set(c.orig, c.name)
   }
-  if (built.sql === null) return { messages: [] }
+  if (built.sql === null) {
+    await afterColumnsSaved(ctx, req.columns)
+    return { messages: [] }
+  }
 
   if (!(await reader.selectDb(ctx.db))) {
     throw new MysqlErrorText(reader.dbi.lastError, `USE ${backquote(ctx.db)};`)
@@ -434,6 +494,7 @@ export async function changeColumns(
     const text = changedPrivileges
       ? tr.gettext('Table %1$s has been altered successfully. Privileges have been adjusted.')
       : tr.gettext('Table %1$s has been altered successfully.')
+    await afterColumnsSaved(ctx, req.columns)
     return { messages: [msg('success', sprintf(text, table), built.sql)] }
   }
   // An error happened: change the BLOB columns back to their original definition
@@ -442,6 +503,7 @@ export async function changeColumns(
     getChangeRevertQuery(table, columns, changedToBlob, { server: reader.server }),
     'structure.revert',
   )
+  await afterColumnsSaved(ctx, req.columns)
   return { messages: [msg('error', `${tr.gettext('Query error')}:\n${r.error}`, built.sql)] }
 }
 
@@ -481,6 +543,7 @@ export async function createTable(
   if (req.dryRun) return { messages: [], preview: sql, db, table }
   const r = await tryQuery({ ...ctx, table }, sql, 'structure.create')
   if (r.error !== null) throw new MysqlErrorText(r.error, sql)
+  await updateMimeTypes(ctx, db, table, req.columns)
   return {
     messages: [msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql)],
     db,

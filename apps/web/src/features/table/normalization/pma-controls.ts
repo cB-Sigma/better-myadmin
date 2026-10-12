@@ -1,0 +1,41 @@
+/**
+ * phpMyAdmin controls implemented in this folder (parity registry, read statically by tools/parity;
+ * see docs/architecture/12-project-structure-and-conventions.md 'Parity markers').
+ * pma: resources/templates/table/normalization/normalization.twig, resources/js/normalization.ts
+ */
+export const pmaControls = {
+  'table/normalization/normalization.twig#normalizeTo': 'NormalizationPage.tsx',
+  'table/normalization/normalization.twig#submit_normalize': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/1nf/step2': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/1nf/step3': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/1nf/step4': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/2nf/create-new-tables': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/2nf/new-tables': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/2nf/step1': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/3nf/create-new-tables': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/3nf/new-tables': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/3nf/step1': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/add-new-primary': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/create-new-column': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/get-columns': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/move-repeating-group': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /normalization/partial-dependencies': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /sql': 'NormalizationPage.tsx',
+  'js:normalization.ts#ajax:POST /table/add-field': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#extra #addNewPrimary': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#extra #moveRepeatingGroup': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#extra #noRedundantColumn': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#extra #noRepeatingGroup': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#extra #removeRedundant': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#extra #selectNonAtomicCol': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#goTo2NFFinish': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#goTo3NFFinish': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#mainContent .card-footer #saveNewPrimary': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#mainContent .card-footer #saveSplit': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#mainContent .pickPd': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#mainContent #backEditPd': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#mainContent #showPossiblePd': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#mainContent p #createPrimaryKey': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:#splitGo': 'NormalizationPage.tsx',
+  'js:normalization.ts#click:<input>': 'NormalizationPage.tsx',
+} as const

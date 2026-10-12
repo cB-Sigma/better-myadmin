@@ -25,6 +25,8 @@ export default defineWorkspace([
     test: {
       name: 'parity',
       include: ['tests/parity/**/*.parity.test.ts'],
+      // one run per fixture group across worktrees sharing a MySQL (tests/parity/lib/suite-lock.ts)
+      setupFiles: ['tests/parity/lib/suite-lock.ts'],
       testTimeout: 60000,
       fileParallelism: false,
     },

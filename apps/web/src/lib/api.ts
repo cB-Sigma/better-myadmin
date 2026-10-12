@@ -18,6 +18,10 @@ import type {
   BrowseForeignersResponse,
   BrowseRequest,
   CancelResponse,
+  CentralColumn,
+  CentralColumnsActionResponse,
+  CentralColumnsRequest,
+  CentralColumnsResponse,
   ChangeColumnsRequest,
   ChangeFormResponse,
   ChangePasswordRequest,
@@ -31,14 +35,30 @@ import type {
   ConsoleBookmarkAddResponse,
   ConsoleBookmarksResponse,
   ConsoleConfigResponse,
+  CopyFormResponse,
   CreateDatabaseResponse,
   CreateTableFormResponse,
   CreateTableRequest,
+  CreateTables2NFRequest,
+  CreateTables3NFRequest,
+  CreateTrackingVersionRequest,
+  DataDictionaryResponse,
   DatabaseScope,
   DatabasesQuery,
   DatabasesResponse,
+  DbActionResponse,
+  DbExportResponse,
+  DbOperationsResponse,
+  DbPrivilegesResponse,
+  DbRenameCopyResponse,
+  DbSearchFormResponse,
+  DbSearchResponse,
+  DbStructureResponse,
+  DbTrackingRequest,
+  DbTrackingResponse,
   DdlResponse,
   DefaultFkCheckResponse,
+  DeleteTrackingVersionsRequest,
   DropColumnsRequest,
   DropDatabasesResponse,
   EngineResponse,
@@ -46,11 +66,16 @@ import type {
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
+  EventEditorData,
+  EventsListResponse,
   ExportPageResponse,
   ExportPrivilegesRequest,
   ExportPrivilegesResponse,
   ExportResponse,
   ExportTemplateResult,
+  FindReplacePreviewResponse,
+  FindReplaceRequest,
+  FindReplaceResponse,
   FormatResponse,
   GetVariableResponse,
   GridSaveRequest,
@@ -70,14 +95,29 @@ import type {
   LoginRequest,
   LoginResponse,
   LogoutResponse,
+  MaintenanceRequest,
   MoveColumnsRequest,
+  MoveCopyRequest,
+  MoveRepeatingGroupRequest,
+  MultiTableFormResponse,
+  MultiTableKeysResponse,
   NavBranchQuery,
   NavBranchResponse,
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  NewTables2NFResponse,
+  NewTables3NFResponse,
+  Normalization3NFStepResponse,
+  NormalizationResult,
+  NormalizationTableResponse,
+  OperationsPageResponse,
+  OperationsResponse,
+  OrderByRequest,
+  PartialDependenciesResponse,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
+  PartitionOpsRequest,
   PartitioningRequest,
   PasswordForm,
   PluginsResponse,
@@ -89,17 +129,34 @@ import type {
   QueryRequest,
   QueryResponse,
   QueryStatistics,
+  RangeResponse,
+  RealRowCountResponse,
+  RelationDropdownResponse,
+  RelationPageResponse,
+  RelationSaveRequest,
+  RelationSaveResponse,
   RenameIndexRequest,
+  RenameViewRequest,
   ReservedWordCheckResponse,
+  RoutineEditorData,
+  RoutineEditorOptions,
+  RoutineExecuteForm,
+  RoutineExecuteResponse,
+  RoutinesListResponse,
   SaveIndexRequest,
   SaveRowsRequest,
   SaveRowsResponse,
+  SearchPageResponse,
+  SearchRequest,
+  SearchResponse,
   ServerScope,
   ServerVariablesResponse,
   SetCollationResponse,
   SetVariableResponse,
+  ShowCreateResponse,
   SimulateRequest,
   SimulateResponse,
+  SqlActionRequest,
   SqlFormResponse,
   SqlMessage,
   StatementResult,
@@ -107,8 +164,16 @@ import type {
   StatusVariables,
   StatusVariablesRequest,
   StructureResponse,
-  TablePrivilegesResponse,
+  TableOptionsRequest,
   TableScope,
+  ToggleTrackingRequest,
+  TrackingPageResponse,
+  TrackingReportRequest,
+  TrackingReportResponse,
+  TrackingResponse,
+  TrackingSnapshotResponse,
+  TriggerEditorData,
+  TriggersListResponse,
   UserGroupForm,
   UserGroupUsersResponse,
   UserGroupsResponse,
@@ -116,6 +181,9 @@ import type {
   UsersOverviewResponse,
   ValidateUsernameResponse,
   VersionCheckResponse,
+  ZoomRequest,
+  ZoomResponse,
+  ZoomRowResponse,
 } from '@bettermyadmin/contracts'
 import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
 import type { ClientConfig } from './config.ts'
@@ -272,6 +340,60 @@ export const api = {
   consoleConfig: (server: number) => call<ConsoleConfigResponse>('GET', `/servers/${server}/console/config`),
   consoleConfigUpdate: (server: number, key: string, value: string) =>
     call<{ message: string }>('POST', `/servers/${server}/console/config`, { key, value }),
+  // table level beyond Structure (docs/features/04-table-level.md)
+  tableOperations: (s: TableRef) => call<OperationsPageResponse>('GET', `${tablePath(s)}/operations`),
+  tableOperation: <K extends keyof TableOpBodies>(s: TableRef, op: K, body: TableOpBodies[K]) =>
+    call<OperationsResponse>('POST', `${tablePath(s)}/operations/${op}`, body),
+  tableRelation: (s: TableRef) => call<RelationPageResponse>('GET', `${tablePath(s)}/relation`),
+  tableRelationDropdown: (s: TableRef, q: { foreignDb: string; foreignTable?: string; foreign: boolean }) =>
+    call<RelationDropdownResponse>(
+      'GET',
+      `${tablePath(s)}/relation/dropdown${queryString({ ...q, foreign: String(q.foreign) })}`,
+    ),
+  tableRelationSave: (s: TableRef, req: RelationSaveRequest) =>
+    call<RelationSaveResponse>('POST', `${tablePath(s)}/relation`, req),
+  tableSearchPage: (s: TableRef) => call<SearchPageResponse>('GET', `${tablePath(s)}/search`),
+  tableSearch: (s: TableRef, req: SearchRequest) =>
+    call<SearchResponse>('POST', `${tablePath(s)}/search`, req),
+  tableSearchRange: (s: TableRef, column: string) =>
+    call<RangeResponse>('GET', `${tablePath(s)}/search/range${queryString({ column })}`),
+  tableZoom: (s: TableRef, req: ZoomRequest) =>
+    call<ZoomResponse>('POST', `${tablePath(s)}/search/zoom`, req),
+  tableZoomRow: (s: TableRef, whereClause: string, sig: string) =>
+    call<ZoomRowResponse>('POST', `${tablePath(s)}/search/zoom/row`, { whereClause, sig }),
+  tableFindReplacePreview: (s: TableRef, req: FindReplaceRequest) =>
+    call<FindReplacePreviewResponse>('POST', `${tablePath(s)}/find-replace/preview`, req),
+  tableFindReplace: (s: TableRef, req: FindReplaceRequest) =>
+    call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
+  tableRelationDropFk: (s: TableRef, constraint: string) =>
+    call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
+  tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
+  tableTrackingDelete: (s: TableRef, req: DeleteTrackingVersionsRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions/delete`, req),
+  tableTrackingToggle: (s: TableRef, req: ToggleTrackingRequest) =>
+    call<TrackingResponse>('POST', `${tablePath(s)}/tracking/toggle`, req),
+  tableTrackingReport: (s: TableRef, req: Partial<TrackingReportRequest> & { version: string }) =>
+    call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
+  tableTrackingSnapshot: (s: TableRef, version: string) =>
+    call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
+  // normalization wizard (pma: /normalization/**)
+  normalization: (s: TableRef) => call<NormalizationTableResponse>('GET', `${tablePath(s)}/normalization`),
+  normalization3NFStep: (s: TableRef, tables: string[]) =>
+    call<Normalization3NFStepResponse>('POST', `${tablePath(s)}/normalization/3nf/step1`, { tables }),
+  normalizationPartialDependencies: (s: TableRef) =>
+    call<PartialDependenciesResponse>('POST', `${tablePath(s)}/normalization/partial-dependencies`, {}),
+  normalizationMoveRepeatingGroup: (s: TableRef, req: MoveRepeatingGroupRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/move-repeating-group`, req),
+  normalizationNewTables2NF: (s: TableRef, pd: Array<[string, string[]]>) =>
+    call<NewTables2NFResponse>('POST', `${tablePath(s)}/normalization/2nf/new-tables`, { pd }),
+  normalizationCreateTables2NF: (s: TableRef, req: CreateTables2NFRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/2nf/create-new-tables`, req),
+  normalizationNewTables3NF: (s: TableRef, pd: Record<string, string[]>, tables: Array<[string, string[]]>) =>
+    call<NewTables3NFResponse>('POST', `${tablePath(s)}/normalization/3nf/new-tables`, { pd, tables }),
+  normalizationCreateTables3NF: (s: TableRef, req: CreateTables3NFRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/3nf/create-new-tables`, req),
   // export (docs/features/07-export-import.md)
   exportPage: (server: number, pairs: Array<[string, string]>) =>
     call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
@@ -427,7 +549,7 @@ export const api = {
     ),
   chooseUserGroup: (s: number, username: string) =>
     call<ChooseUserGroupResponse>('GET', `${srvPath(s)}/user-groups/edit-form${phpQuery({ username })}`),
-  tablePrivileges: (r: TableRef) => call<TablePrivilegesResponse>('GET', `${tablePath(r)}/privileges`),
+  tablePrivileges: (r: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(r)}/privileges`),
   // table structure (docs/architecture/05-api-reference.md#table-scope)
   tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tablePath(r)}/structure`),
   changeColumnsForm: (r: TableRef, fields: string[]) =>
@@ -438,8 +560,11 @@ export const api = {
   addColumnsForm: (r: TableRef) =>
     call<{ options: ColumnFormOptions }>('GET', `${tablePath(r)}/columns/add-form`),
   createTableForm: (r: DbRef) => call<CreateTableFormResponse>('GET', `${dbPath(r)}/create-table/form`),
-  indexForm: (r: TableRef, q: { index?: string; create?: number }) =>
-    call<IndexFormResponse>('GET', `${tablePath(r)}/indexes/form${queryString(q)}`),
+  indexForm: (r: TableRef, q: { index?: string; create?: number; primary?: boolean }) =>
+    call<IndexFormResponse>(
+      'GET',
+      `${tablePath(r)}/indexes/form${queryString({ ...q, primary: q.primary === true ? '1' : undefined })}`,
+    ),
   partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tablePath(r)}/partitions/form`),
   createTable: (r: DbRef, req: CreateTableRequest) =>
     call<DdlResponse & { db: string; table: string }>('POST', `${dbPath(r)}/tables`, req),
@@ -449,6 +574,9 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
   dropColumns: (r: TableRef, req: DropColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  /** pma: /table/structure/central-columns-{add,remove} */
+  structureCentralColumns: (r: TableRef, op: 'add' | 'remove', columns: string[]) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/structure/central-columns-${op}`, { columns }),
   addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tablePath(r)}/columns/key`, req),
   moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/move`, req),
@@ -469,6 +597,109 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/partitions/maintenance`, req),
   removePartitioning: (r: TableRef) =>
     call<DdlResponse>('POST', `${tablePath(r)}/partitions/remove-partitioning`, {}),
+  // database level (docs/features/05-database-level.md)
+  dbStructure: (r: DbRef, q: Record<string, string | undefined>) =>
+    call<DbStructureResponse>('GET', `${dbPath(r)}/structure${queryString(q)}`),
+  dbRealRowCount: (r: DbRef, table: string | null) =>
+    call<RealRowCountResponse>(
+      'GET',
+      `${dbPath(r)}/structure/real-row-count${table === null ? '?all=1' : queryString({ table })}`,
+    ),
+  dbCopyForm: (r: DbRef) => call<CopyFormResponse>('GET', `${dbPath(r)}/structure/copy-form`),
+  /** POST …/structure/{empty,drop,add-prefix,replace-prefix,copy-with-prefix,copy,central-*} */
+  dbStructureAction: (r: DbRef, action: string, body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(r)}/structure/${action}`, body),
+  dbShowCreate: (r: DbRef, tables: string[]) =>
+    call<ShowCreateResponse>('POST', `${dbPath(r)}/structure/show-create`, { tables }),
+  dbMaintenance: (r: DbRef, op: string, tables: string[]) =>
+    call<OperationsResponse>('POST', `${dbPath(r)}/structure/maintenance`, { op, tables }),
+  dbOperations: (r: DbRef) => call<DbOperationsResponse>('GET', `${dbPath(r)}/operations`),
+  /** POST …/operations/{comment,collation} */
+  dbOperation: (r: DbRef, action: 'comment' | 'collation', body: unknown) =>
+    call<DbActionResponse>('POST', `${dbPath(r)}/operations/${action}`, body),
+  dbRenameCopy: (r: DbRef, action: 'rename' | 'copy', body: unknown) =>
+    call<DbRenameCopyResponse>('POST', `${dbPath(r)}/operations/${action}`, body),
+  dbSearchForm: (r: DbRef) => call<DbSearchFormResponse>('GET', `${dbPath(r)}/search`),
+  dbSearch: (r: DbRef, body: unknown) => call<DbSearchResponse>('POST', `${dbPath(r)}/search`, body),
+  dbRoutines: (r: DbRef, q: { type?: string; pos?: number } = {}) =>
+    call<RoutinesListResponse>('GET', `${dbPath(r)}/routines${queryString(q)}`),
+  dbRoutineEditor: (r: DbRef, item?: { name: string; type: string }) =>
+    call<{ options: RoutineEditorOptions; routine: RoutineEditorData | null }>(
+      'GET',
+      `${dbPath(r)}/routines/editor${queryString(item ?? {})}`,
+    ),
+  dbRoutineSave: (r: DbRef, body: unknown) => call<DbActionResponse>('POST', `${dbPath(r)}/routines`, body),
+  dbRoutineExecuteForm: (r: DbRef, name: string, type: string) =>
+    call<RoutineExecuteForm>('GET', `${dbPath(r)}/routines/execute${queryString({ name, type })}`),
+  dbRoutineExecute: (r: DbRef, body: unknown) =>
+    call<RoutineExecuteResponse>('POST', `${dbPath(r)}/routines/execute`, body),
+  dbRoutineExport: (r: DbRef, name: string, type: string) =>
+    call<DbExportResponse>('GET', `${dbPath(r)}/routines/export${queryString({ name, type })}`),
+  dbEvents: (r: DbRef) => call<EventsListResponse>('GET', `${dbPath(r)}/events`),
+  dbEventEditor: (r: DbRef, name: string) =>
+    call<EventEditorData>('GET', `${dbPath(r)}/events/editor${queryString({ name })}`),
+  dbEventSave: (r: DbRef, body: unknown) => call<DbActionResponse>('POST', `${dbPath(r)}/events`, body),
+  dbEventExport: (r: DbRef, name: string) =>
+    call<DbExportResponse>('GET', `${dbPath(r)}/events/export${queryString({ name })}`),
+  /** triggers of the database, or of one table when `table` is given */
+  dbTriggers: (r: DbRef, table = '') =>
+    call<TriggersListResponse>('GET', `${dbPath(r)}/triggers${queryString({ table: table || undefined })}`),
+  dbTriggerEditor: (r: DbRef, table: string, name: string) =>
+    call<TriggerEditorData>(
+      'GET',
+      `${dbPath(r)}/triggers/editor${queryString({ table: table || undefined, name })}`,
+    ),
+  dbTriggerSave: (r: DbRef, table: string, body: unknown) =>
+    call<DbActionResponse>(
+      'POST',
+      `${dbPath(r)}/triggers${queryString({ table: table || undefined })}`,
+      body,
+    ),
+  dbTriggerExport: (r: DbRef, table: string, name: string) =>
+    call<DbExportResponse>(
+      'GET',
+      `${dbPath(r)}/triggers/export${queryString({ table: table || undefined, name })}`,
+    ),
+  dbMultiTableForm: (r: DbRef) => call<MultiTableFormResponse>('GET', `${dbPath(r)}/multi-table-query`),
+  dbMultiTableKeys: (r: DbRef, tables: string[]) =>
+    call<MultiTableKeysResponse>(
+      'GET',
+      `${dbPath(r)}/multi-table-query/tables?${tables.map((t) => `tables=${encodeURIComponent(t)}`).join('&')}`,
+    ),
+  dbDataDictionary: (r: DbRef) => call<DataDictionaryResponse>('GET', `${dbPath(r)}/data-dictionary`),
+  dbPrivileges: (r: DbRef) => call<DbPrivilegesResponse>('GET', `${dbPath(r)}/privileges`),
+  dbTracking: (r: DbRef) => call<DbTrackingResponse>('GET', `${dbPath(r)}/tracking`),
+  dbTrackingAction: (r: DbRef, body: DbTrackingRequest) =>
+    call<DbActionResponse>('POST', `${dbPath(r)}/tracking`, body),
+  dbCentralColumns: (r: DbRef, q: { pos?: number; totalRows?: number } = {}) =>
+    call<CentralColumnsResponse>(
+      'GET',
+      `${dbPath(r)}/central-columns?${new URLSearchParams({
+        ...(q.pos !== undefined ? { pos: String(q.pos) } : {}),
+        ...(q.totalRows !== undefined ? { total_rows: String(q.totalRows) } : {}),
+      })}`,
+    ),
+  dbCentralColumnsAction: (r: DbRef, body: CentralColumnsRequest) =>
+    call<CentralColumnsActionResponse>('POST', `${dbPath(r)}/central-columns`, body),
+  dbCentralColumnsEdit: (r: DbRef, columns: string[]) =>
+    call<CentralColumn[]>(
+      'GET',
+      `${dbPath(r)}/central-columns/edit?${columns.map((c) => `columns=${encodeURIComponent(c)}`).join('&')}`,
+    ),
+  dbCentralColumnsPopulate: (r: DbRef, table: string) =>
+    call<string[]>('GET', `${dbPath(r)}/central-columns/populate?table=${encodeURIComponent(table)}`),
+  /** pma: /database/central-columns getColumnList (cur_table): the "Pick from Central Columns" list */
+  dbCentralColumnsList: (r: DbRef, table: string) =>
+    call<CentralColumn[]>('GET', `${dbPath(r)}/central-columns/list?table=${encodeURIComponent(table)}`),
+  favorite: (
+    server: number,
+    body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
+  ) =>
+    call<{ changes: boolean; favoriteTables?: string; message?: { text: string } }>(
+      'POST',
+      `/servers/${server}/favorites`,
+      body,
+    ),
   // Insert/Edit and transformations (docs/features/03-insert-edit-transformations.md)
   insertForm: (r: TableRef, req: InsertFormRequest) =>
     call<InsertFormResponse>('POST', `${tablePath(r)}/insert-form`, req),
@@ -510,6 +741,16 @@ export const api = {
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
+}
+
+interface TableOpBodies {
+  'order-by': OrderByRequest
+  'move-copy': MoveCopyRequest
+  options: TableOptionsRequest
+  maintenance: MaintenanceRequest
+  sql: SqlActionRequest
+  partitions: PartitionOpsRequest
+  'rename-view': RenameViewRequest
 }
 
 /** Body of POST …/insert-form: signed where clauses (none = insert) and the form toggles. */

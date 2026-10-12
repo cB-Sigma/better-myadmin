@@ -1,3 +1,4 @@
+import { FIX as SHARED } from './lib/env.ts'
 import { pageParity } from './lib/parity.ts'
 
 /**
@@ -5,8 +6,8 @@ import { pageParity } from './lib/parity.ts'
  * transformation overview (docs/features/03-insert-edit-transformations.md).
  */
 const T = 'uip_ie'
-/** a database of this suite: uip_db is shared with suites of other worktrees */
-const FIX = { db: 'f03_uip' }
+/** this suite's own database (per run, dropped by global-teardown) */
+const FIX = { db: SHARED.insertDb }
 const SQL = `CREATE DATABASE IF NOT EXISTS ${FIX.db}; DROP TABLE IF EXISTS ${FIX.db}.${T}; DROP TABLE IF EXISTS ${FIX.db}.uip_ie_parent;
   CREATE TABLE ${FIX.db}.uip_ie_parent (id INT PRIMARY KEY, label VARCHAR(20));
   INSERT INTO ${FIX.db}.uip_ie_parent VALUES (1, 'one'), (2, 'two');
@@ -47,10 +48,13 @@ pageParity('table-insert-preview-sql', {
   setup: async ({ pma, ours }) => {
     for (const page of [pma, ours]) {
       await page.getByRole('button', { name: 'Preview SQL' }).first().click()
+      // the shown modal can still hold its previous, hidden <code> while the new one renders (slow
+      // reference under load): wait for a visible statement
       await page
         .locator('#previewSqlModal')
         .filter({ visible: true })
         .getByText('INSERT', { exact: false })
+        .filter({ visible: true })
         .first()
         .waitFor()
     }

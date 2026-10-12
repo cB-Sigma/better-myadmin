@@ -137,13 +137,20 @@ export const pmaControls = {
   'server/user_groups/user_groups.twig#button:Delete': 'UserGroupsPage.tsx',
   'server/user_groups/user_groups.twig#id:deleteUserGroupConfirm': 'UserGroupsPage.tsx',
   'server/user_groups/user_groups.twig#link:Add user group': 'UserGroupsPage.tsx',
+  // pma: resources/templates/database/privileges/index.twig (the same page without a table)
+  'database/privileges/index.twig#id:usersForm_checkall': 'DbPrivilegesPage.tsx',
+  'database/privileges/index.twig#link:Add user account': 'DbPrivilegesPage.tsx',
+  'database/privileges/index.twig#link:Edit privileges': 'DbPrivilegesPage.tsx',
+  'database/privileges/index.twig#link:Export': 'DbPrivilegesPage.tsx',
+  'database/privileges/index.twig#selected_usr[]': 'DbPrivilegesPage.tsx',
+  'database/privileges/index.twig#submit_mult': 'DbPrivilegesPage.tsx',
   // pma: resources/templates/table/privileges/index.twig
-  'table/privileges/index.twig#id:usersForm_checkall': 'TablePrivilegesPage.tsx',
-  'table/privileges/index.twig#link:Add user account': 'TablePrivilegesPage.tsx',
-  'table/privileges/index.twig#link:Edit privileges': 'TablePrivilegesPage.tsx',
-  'table/privileges/index.twig#link:Export': 'TablePrivilegesPage.tsx',
-  'table/privileges/index.twig#selected_usr[]': 'TablePrivilegesPage.tsx',
-  'table/privileges/index.twig#submit_mult': 'TablePrivilegesPage.tsx',
+  'table/privileges/index.twig#id:usersForm_checkall': 'DbPrivilegesPage.tsx',
+  'table/privileges/index.twig#link:Add user account': 'DbPrivilegesPage.tsx',
+  'table/privileges/index.twig#link:Edit privileges': 'DbPrivilegesPage.tsx',
+  'table/privileges/index.twig#link:Export': 'DbPrivilegesPage.tsx',
+  'table/privileges/index.twig#selected_usr[]': 'DbPrivilegesPage.tsx',
+  'table/privileges/index.twig#submit_mult': 'DbPrivilegesPage.tsx',
   // pma: resources/js/server/privileges.ts, resources/js/server/user_groups.ts
   'js:server/privileges.ts#ajax:GET /server/user-groups/edit-form': {
     file: 'UsersPage.tsx',

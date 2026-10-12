@@ -66,8 +66,12 @@ export function setStructureFeaturesFactory(f: StructureFeaturesFactory): void {
   featuresFactory = f
 }
 
-export function structureFeatures(db: string, table: string): Promise<StructureFeatures> {
-  return featuresFactory(db, table)
+export function structureFeatures(
+  db: string,
+  table: string,
+  given?: StructureFeatures,
+): Promise<StructureFeatures> {
+  return given !== undefined ? Promise.resolve(given) : featuresFactory(db, table)
 }
 
 /** "YYYY-MM-DD HH:MM:SS" as PHP's DateTimeImmutable in the UTC default time zone */
@@ -87,11 +91,12 @@ export async function buildStructurePage(
   tr: Translator,
   db: string,
   table: string,
+  given?: StructureFeatures,
 ): Promise<StructureResponse> {
   const systemSchema = isSystemSchema(db)
   const isView = await reader.isView(db, table)
   const engine = isView ? tr.gettext('View') : (await reader.getEngine(db, table)).toUpperCase()
-  const features = await structureFeatures(db, table)
+  const features = await structureFeatures(db, table, given)
   const indexes = await reader.getIndexes(db, table)
   const primary = indexes.find((i) => i.name === 'PRIMARY') ?? null
   const columnsWithIndex = getColumnsWithIndex(indexes, ['UNIQUE', 'INDEX', 'SPATIAL', 'FULLTEXT'])
@@ -150,6 +155,7 @@ export async function buildStructurePage(
       },
       distinctSql: getDistinctValuesQuery(table, field.Field, tr.gettext('Rows')),
       dropSql: getDropColumnQuery(table, field.Field),
+      inCentralList: features.centralList?.includes(field.Field) ?? false,
     })
   }
 

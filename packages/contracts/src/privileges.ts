@@ -297,11 +297,15 @@ export const AccountPrivileges = z.object({
 })
 export type AccountPrivileges = z.infer<typeof AccountPrivileges>
 
-/** table/privileges/index.twig */
-export const TablePrivilegesResponse = z.object({
+/**
+ * Database → Privileges and Table → Privileges (with `table`): the users of a database or a table.
+ * `db` and `table` are lower-cased under lower_case_table_names=1.
+ * pma: templates/database/privileges/index.twig, templates/table/privileges/index.twig
+ */
+export const DbPrivilegesResponse = z.object({
   gate: PrivGate,
   db: z.string(),
-  table: z.string(),
+  table: z.string().optional(),
   accounts: z.array(AccountPrivileges),
 })
-export type TablePrivilegesResponse = z.infer<typeof TablePrivilegesResponse>
+export type DbPrivilegesResponse = z.infer<typeof DbPrivilegesResponse>

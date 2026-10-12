@@ -10,6 +10,7 @@ import {
   escapeGrantWildcards,
   extractPrivInfo,
   fillInTablePrivileges,
+  grantOptionFix,
   isDatabaseNameWildcard,
   oldPasswordsQuery,
   parseProcPriv,
@@ -136,8 +137,65 @@ describe('Update privileges statements (golden)', () => {
       expect(requireClause(c.post), label).toBe(c.require)
       expect(withClause(c.post, fl), label).toBe(c.with)
       const q = updatePrivilegesQueries(c.post, fl, privs, c.itemType, c.dbAndTable, 'u', 'h', c.dbname)
-      expect([q.grant, q.alter], label).toEqual(c.queries)
+      expect([q.grant, q.alter], label).toEqual([x40(c), c.queries[1]])
     }
+  })
+})
+
+/**
+ * Exception X40 (phpmyadmin/phpmyadmin#19605): phpMyAdmin's GRANT of an edit with Grant_priv=Y on
+ * MySQL ≥ 8.0.11 lacks the requested grant option, at every level; ours ends with
+ * ` WITH GRANT OPTION`. Everything else is phpMyAdmin's statement.
+ */
+function x40(c: UpdateCase): string {
+  const fixed = c.vendor === 'mysql' && c.version >= 80011 && c.post.Grant_priv === 'Y'
+  return fixed ? c.queries[0].replace(/;$/, `${grantOptionFix};`) : c.queries[0]
+}
+
+describe('X40: the grant option of an Edit privileges GRANT on MySQL ≥ 8.0.11', () => {
+  const post = { Select_priv: 'Y', Grant_priv: 'Y', grant_count: '99' }
+  const privs = extractPrivInfo(null, post)
+  const mysql8 = { versionInt: 80400, isMariaDb: false }
+
+  it('phpMyAdmin drops it (golden): the GRANT has no WITH GRANT OPTION, ALTER USER is empty', () => {
+    const golden = f.update.filter(
+      (c) => c.vendor === 'mysql' && c.version >= 80011 && c.post.Grant_priv === 'Y',
+    )
+    expect(golden.length).toBeGreaterThan(0)
+    for (const c of golden) {
+      expect(c.queries[0]).not.toContain('GRANT OPTION')
+      expect(c.queries[1]).not.toContain('GRANT OPTION')
+    }
+  })
+
+  it.each([
+    ['database', '', '`d\\_b`.*', 'd\\_b'],
+    ['table', '', '`db`.`t`', 'db'],
+    ['routine', 'PROCEDURE', '`db`.`p`', 'db'],
+  ])("%s level: GRANT … WITH GRANT OPTION; then phpMyAdmin's ALTER USER", (_, itemType, target, db) => {
+    const q = updatePrivilegesQueries(post, mysql8, privs, itemType, target, 'u', 'h', db)
+    expect(q.grant).toBe(`GRANT SELECT ON ${itemType} ${target} TO 'u'@'h' WITH GRANT OPTION;`)
+    expect(q.alter).toBe("ALTER USER 'u'@'h' ;")
+  })
+
+  it("global level: phpMyAdmin's ALTER USER keeps its REQUIRE clause", () => {
+    const g = updatePrivilegesQueries({ ...post, ssl_type: 'NONE' }, mysql8, privs, '', '*.*', 'u', 'h', '')
+    expect(g.grant).toBe("GRANT SELECT ON  *.* TO 'u'@'h' WITH GRANT OPTION;")
+    expect(g.alter).toBe("ALTER USER 'u'@'h'  REQUIRE NONE;")
+  })
+
+  it('unchanged: MariaDB, MySQL < 8.0.11 and without Grant_priv', () => {
+    for (const fl of [
+      { versionInt: 110400, isMariaDb: true },
+      { versionInt: 80010, isMariaDb: false },
+    ]) {
+      const q = updatePrivilegesQueries(post, fl, privs, '', '`db`.*', 'u', 'h', 'db')
+      expect(q.grant).toBe("GRANT SELECT ON  `db`.* TO 'u'@'h' WITH GRANT OPTION;")
+      expect(q.alter).toBeNull()
+    }
+    const none = { Select_priv: 'Y', grant_count: '99' }
+    const n = updatePrivilegesQueries(none, mysql8, extractPrivInfo(null, none), '', '`db`.*', 'u', 'h', 'db')
+    expect(n.grant).toBe("GRANT SELECT ON  `db`.* TO 'u'@'h';")
   })
 })
 

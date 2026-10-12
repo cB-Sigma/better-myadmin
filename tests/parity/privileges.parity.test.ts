@@ -82,16 +82,27 @@ async function pair<P, B>(
   pmaAction: () => Promise<P>,
   bmaAction: () => Promise<B>,
   setup = '',
-): Promise<{ p: P; b: B; pmaLog: LogEntry[]; bmaLog: LogEntry[] }> {
+  /** an account whose SHOW GRANTS is read (as root) after each tool's action */
+  grantsOf?: string,
+): Promise<{ p: P; b: B; pmaLog: LogEntry[]; bmaLog: LogEntry[]; pmaGrants: string[]; bmaGrants: string[] }> {
+  const grants = async () => {
+    if (grantsOf === undefined) return []
+    const [rows] = (await h.root.query(`SHOW GRANTS FOR ${grantsOf}`)) as unknown as [
+      Array<Record<string, string>>,
+    ]
+    return rows.map((r) => Object.values(r)[0] ?? '')
+  }
   await h.root.query(FIXTURE + setup)
   const m1 = await h.log.marker()
   const p = await pmaAction()
   const pmaLog = await h.log.since(users.pma, m1)
+  const pmaGrants = await grants()
   await h.root.query(FIXTURE + setup)
   const m2 = await h.log.marker()
   const b = await bmaAction()
   const bmaLog = await h.log.since(users.bma, m2)
-  return { p, b, pmaLog, bmaLog }
+  const bmaGrants = await grants()
+  return { p, b, pmaLog, bmaLog, pmaGrants, bmaGrants }
 }
 
 /**
@@ -176,9 +187,40 @@ const pmaMessage = (j: PmaJson) =>
     .replace(/\s+/g, ' ')
     .trim()
 
+/**
+ * Exception X40 (phpmyadmin/phpmyadmin#19605) applies: MySQL/Percona ≥ 8.0.11, where phpMyAdmin's
+ * Edit privileges GRANT silently drops the requested grant option and ours keeps it.
+ */
+let x40 = false
+const WGO = ' WITH GRANT OPTION'
+/** SHOW GRANTS lines on `target` of each tool: ours has the grant option, phpMyAdmin's lacks it (X40) */
+function expectX40(r: { pmaGrants: string[]; bmaGrants: string[] }, target: RegExp) {
+  const on = (xs: string[]) => xs.filter((g) => target.test(g))
+  expect(on(r.bmaGrants).length, JSON.stringify(r.bmaGrants)).toBeGreaterThan(0)
+  expect(
+    on(r.bmaGrants).every((g) => g.endsWith(WGO)),
+    JSON.stringify(r.bmaGrants),
+  ).toBe(true)
+  if (x40) {
+    // phpMyAdmin's grants of this level: no grant option (recorded, the bug)
+    expect(
+      on(r.pmaGrants).some((g) => g.endsWith(WGO)),
+      JSON.stringify(r.pmaGrants),
+    ).toBe(false)
+  } else {
+    expect(on(r.pmaGrants)).toEqual(on(r.bmaGrants))
+  }
+}
+
 beforeAll(async () => {
   if (!pmaReachable) return
   h = await startHarness({}, users, STORAGE)
+  const [v] = (await h.root.query('SELECT VERSION() AS v')) as unknown as [Array<{ v: string }>]
+  const m = /^(\d+)\.(\d+)\.(\d+)/.exec(v[0]?.v ?? '')
+  x40 =
+    !/mariadb/i.test(v[0]?.v ?? '') &&
+    m !== null &&
+    Number(m[1]) * 10000 + Number(m[2]) * 100 + Number(m[3]) >= 80011
   await h.root.query(FIXTURE)
   // warm both sessions up (session-cached privilege probes, storage discovery)
   await pmaView({})
@@ -377,7 +419,13 @@ async function allGlobalBoxes(): Promise<string[]> {
 /** An action in both tools; the message texts must match too. */
 async function action(
   form: Array<[string, string]>,
-  opts: { setup?: string; query?: Record<string, string>; extra?: AllowedDiff[]; failing?: boolean } = {},
+  opts: {
+    setup?: string
+    query?: Record<string, string>
+    extra?: AllowedDiff[]
+    failing?: boolean
+    grantsOf?: string
+  } = {},
 ) {
   const query = opts.query ?? {}
   const r = await pair(
@@ -387,6 +435,7 @@ async function action(
         : pmaPost(form),
     () => bmaPost(toBody(form), query, opts.failing),
     opts.setup,
+    opts.grantsOf,
   )
   const cmp = same(r, opts.extra)
   if (opts.failing === true) {
@@ -583,17 +632,26 @@ describe.skipIf(!pmaReachable)('parity: update privileges [p06-de1797] [p06-cee9
     ])
   })
 
-  it('global level with GRANT', async () => {
-    const r = await action([
-      ...acc('f06u_t1'),
-      ['Select_priv', 'Y'],
-      ['Grant_priv', 'Y'],
-      ['ssl_type', 'NONE'],
-      ['grant_count', await globalGrantCount()],
-      ['update_privs', '1'],
-    ])
+  it('global level with GRANT (X40: ours keeps the grant option)', async () => {
+    const r = await action(
+      [
+        ...acc('f06u_t1'),
+        ['Select_priv', 'Y'],
+        ['Grant_priv', 'Y'],
+        ['ssl_type', 'NONE'],
+        ['grant_count', await globalGrantCount()],
+        ['update_privs', '1'],
+      ],
+      { grantsOf: "'f06u_t1'@'%'" },
+    )
     expect(writes(r.cmp)[0]).toBe("REVOKE ALL PRIVILEGES ON *.* FROM 'f06u_t1'@'%'")
-    expect(writes(r.cmp)[1]).toBe("GRANT SELECT ON *.* TO 'f06u_t1'@'%'")
+    expect(writes(r.cmp)[1]).toBe(`GRANT SELECT ON *.* TO 'f06u_t1'@'%'${WGO}`)
+    if (x40) {
+      // phpMyAdmin's statements: no grant option anywhere, the ALTER USER is sent by both unchanged
+      expect(r.cmp.pma.find((x) => x.startsWith('GRANT'))).toBe("GRANT SELECT ON *.* TO 'f06u_t1'@'%'")
+      expect(writes(r.cmp)[2]).toBe("ALTER USER 'f06u_t1'@'%' REQUIRE NONE")
+    }
+    expectX40(r, /^GRANT .* ON \*\.\* TO /)
   })
 
   it('database level', async () => {
@@ -613,16 +671,65 @@ describe.skipIf(!pmaReachable)('parity: update privileges [p06-de1797] [p06-cee9
     ])
   })
 
-  it('a wildcard database with GRANT', async () => {
-    const r = await action([
-      ...acc('f06u_t2'),
-      ['dbname', 'f06u\\_d%'],
-      ['Delete_priv', 'Y'],
-      ['Grant_priv', 'Y'],
-      ['grant_count', '19'],
-      ['update_privs', '1'],
-    ])
-    expect(writes(r.cmp)[1]).toBe("GRANT DELETE ON `f06u\\_d%`.* TO 'f06u_t2'@'%'")
+  it('a wildcard database with GRANT (X40: ours keeps the grant option)', async () => {
+    const r = await action(
+      [
+        ...acc('f06u_t2'),
+        ['dbname', 'f06u\\_d%'],
+        ['Delete_priv', 'Y'],
+        ['Grant_priv', 'Y'],
+        ['grant_count', '19'],
+        ['update_privs', '1'],
+      ],
+      { grantsOf: "'f06u_t2'@'%'" },
+    )
+    expect(writes(r.cmp)[1]).toBe("GRANT DELETE ON `f06u\\_d%`.* TO 'f06u_t2'@'%' WITH GRANT OPTION")
+    if (x40) {
+      expect(r.cmp.pma.find((x) => x.startsWith('GRANT'))).toBe(
+        "GRANT DELETE ON `f06u\\_d%`.* TO 'f06u_t2'@'%'",
+      )
+      expect(writes(r.cmp)[2]).toBe("ALTER USER 'f06u_t2'@'%'")
+    }
+    expectX40(r, /^GRANT .* ON `f06u\\_d%`\.\* TO /)
+  })
+
+  it('table level with GRANT (X40)', async () => {
+    const r = await action(
+      [
+        ...acc('f06u_t2'),
+        ['dbname', 'f06u\\_db'],
+        ['tablename', 't2'],
+        ['grant_count', '13'],
+        ['column_count', '1'],
+        ['Delete_priv', 'Y'],
+        ['Grant_priv', 'Y'],
+        ['update_privs', '1'],
+      ],
+      { grantsOf: "'f06u_t2'@'%'" },
+    )
+    expect(writes(r.cmp).find((s) => s.startsWith('GRANT'))).toBe(
+      "GRANT DELETE ON `f06u_db`.`t2` TO 'f06u_t2'@'%' WITH GRANT OPTION",
+    )
+    expectX40(r, /^GRANT .* ON `f06u_db`\.`t2` TO /)
+  })
+
+  it('routine level with GRANT (X40)', async () => {
+    const r = await action(
+      [
+        ...acc('f06u_t2'),
+        ['dbname', 'f06uroutines'],
+        ['routinename', 'p1'],
+        ['grant_count', '3'],
+        ['Execute_priv', 'Y'],
+        ['Grant_priv', 'Y'],
+        ['update_privs', '1'],
+      ],
+      { grantsOf: "'f06u_t2'@'%'" },
+    )
+    expect(writes(r.cmp).find((s) => s.startsWith('GRANT'))).toBe(
+      "GRANT EXECUTE ON PROCEDURE `f06uroutines`.`p1` TO 'f06u_t2'@'%' WITH GRANT OPTION",
+    )
+    expectX40(r, /^GRANT .* ON PROCEDURE `f06uroutines`\.`p1` TO /)
   })
 
   it('several databases at once (pred_dbname[])', async () => {

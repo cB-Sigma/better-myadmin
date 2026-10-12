@@ -34,6 +34,8 @@ export const qk = {
     ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
   db: (r: DbRef) => ['srv', r.server, 'db', r.db] as const,
   dbScope: (r: DbRef) => ['srv', r.server, 'db', r.db, 'scope'] as const,
+  /** a database page (structure, operations, routines, …) with its query */
+  dbPage: (r: DbRef, page: string, q: object = {}) => ['srv', r.server, 'db', r.db, page, q] as const,
   tbl: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table] as const,
   tableScope: (r: TableRef) => ['srv', r.server, 'db', r.db, 'tbl', r.table, 'scope'] as const,
   // SQL tab, bookmarks
@@ -59,6 +61,7 @@ export const qk = {
   chooseUserGroup: (s: number, u: string) => ['srv', s, 'privileges', 'user-groups', 'choose', u] as const,
   // table structure (all below qk.tbl: DDL invalidates the table)
   tableStructure: (r: TableRef) => [...qk.tbl(r), 'structure'] as const,
+  dbPrivileges: (r: DbRef) => [...qk.db(r), 'privileges'] as const,
   tablePrivileges: (r: TableRef) => [...qk.tbl(r), 'privileges'] as const,
   changeColumnsForm: (r: TableRef, fields: string[]) => [...qk.tbl(r), 'change-form', fields] as const,
   addColumnsForm: (r: TableRef) => [...qk.tbl(r), 'add-form'] as const,
@@ -74,4 +77,9 @@ export const qk = {
   transformations: (r: TableRef) => [...qk.tbl(r), 'transformations'] as const,
   /** the Browse tab's /sql run (signed sql + pos from the URL) */
   browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
+  /** a table-level page payload (operations, relation, search, tracking…) */
+  tblPage: (r: TableRef, page: string) => [...qk.tbl(r), page] as const,
+  /** a step payload of the normalization wizard */
+  normalizationStep: (r: TableRef, step: string, q: object) =>
+    [...qk.tbl(r), 'normalization', step, q] as const,
 }

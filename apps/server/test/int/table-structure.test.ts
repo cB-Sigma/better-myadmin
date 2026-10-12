@@ -309,6 +309,8 @@ describe('row actions, bulk buttons, drop', () => {
     expect(executedWrites(r)).toEqual([
       'SET FOREIGN_KEY_CHECKS = OFF;',
       'ALTER TABLE `k` DROP `c`;',
+      // Sql::deleteTransformationInfo → Transformations::clear (the user link, browser transformations on)
+      "DELETE FROM `phpmyadmin`.`pma__column_info` WHERE `db_name` = 'm2tbl_it' AND `table_name` = 'k' AND `column_name` = 'c' ",
       'SET FOREIGN_KEY_CHECKS = ON;',
     ])
     expect(String((r.messages as Json[])[0]?.text)).toMatch(

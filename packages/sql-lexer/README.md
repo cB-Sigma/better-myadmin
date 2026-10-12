@@ -1,7 +1,7 @@
 # @bettermyadmin/sql-lexer
 
 Dependency-free, browser-safe TypeScript port of [phpmyadmin/sql-parser](https://github.com/phpmyadmin/sql-parser)
-**6.0.0** (the version phpMyAdmin pins) plus the phpMyAdmin helpers built on it (decision D7). It gives the
+**6.0.1** (the version phpMyAdmin pins) plus the phpMyAdmin helpers built on it (decision D7). It gives the
 same results as the PHP code: same tokens, same statements, same errors, same `StatementFlags`.
 
 Every ported file/function carries a `// pma: <php file>::<symbol>` pointer to the mirrored source.

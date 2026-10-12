@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
+import { StructurePills } from '../common/StructurePills'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
 import { confirmSql } from './confirm'
 import { takeFlash } from './flash'
@@ -99,20 +100,17 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
     await act(() => api.dropColumns(scope, { columns: [c.name], source: 'row' }))
   }
   const orderedSelection = columnNames.filter((n) => selected.includes(n))
+  /** the With-selected buttons are always enabled; without a selection the action answers this */
+  const noneSelected = () => {
+    if (selected.length > 0) return false
+    setMessages([{ type: 'error', text: t('No column selected.') }])
+    return true
+  }
 
   return (
     <div id="structure_content">
       <h1 className="hidden text-lg print:block">{table}</h1>
-      {s.showRelationTab && (
-        <ul className="mb-2 flex gap-2 text-sm print:hidden">
-          <li>
-            <span className="rounded bg-bg-subtle px-2 py-1 font-medium">{t('Table structure')}</span>
-          </li>
-          <li>
-            <span className="px-2 py-1 text-fg-muted">{t('Relation view')}</span>
-          </li>
-        </ul>
-      )}
+      {s.showRelationTab && <StructurePills scope={scope} active="structure" />}
       {messages.map((m, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: message list
         <MessageBox key={i} {...m} />
@@ -245,6 +243,11 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                           column={c}
                           hide={s.config.HideStructureActions}
                           onKey={(type) => void addKey(type, c)}
+                          onCentral={
+                            s.features.centralColumns
+                              ? (op) => void act(() => api.structureCentralColumns(scope, op, [c.name]))
+                              : null
+                          }
                           server={server}
                         />
                       </td>
@@ -268,8 +271,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           <em className="mx-1">{t('With selected:')}</em>
           <Button
             variant="link"
-            disabled={selected.length === 0}
             onClick={() =>
+              noneSelected() ||
               void navigate({
                 to: sqlLink(
                   server,
@@ -284,8 +287,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             <>
               <Button
                 variant="link"
-                disabled={selected.length === 0}
                 onClick={() =>
+                  noneSelected() ||
                   void navigate({
                     to: `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}/structure/change?${orderedSelection.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
                   })
@@ -295,8 +298,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
               </Button>
               <Button
                 variant="link"
-                disabled={selected.length === 0}
                 onClick={() =>
+                  noneSelected() ||
                   setConfirm({
                     question: t('Do you really want to execute the following query?'),
                     sql: `ALTER TABLE \`${table}\`\n${orderedSelection.map((f) => `  DROP \`${f}\``).join(',\n')};`,
@@ -310,12 +313,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
               </Button>
               {s.engine !== 'ARCHIVE' &&
                 (['PRIMARY', 'UNIQUE', 'INDEX', 'SPATIAL', 'FULLTEXT'] as const).map((k) => (
-                  <Button
-                    key={k}
-                    variant="link"
-                    disabled={selected.length === 0}
-                    onClick={() => void bulkKey(k)}
-                  >
+                  <Button key={k} variant="link" onClick={() => void bulkKey(k)}>
                     {t(
                       k === 'PRIMARY'
                         ? 'Primary'
@@ -327,6 +325,20 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                               ? 'Spatial'
                               : 'Fulltext',
                     )}
+                  </Button>
+                ))}
+              {s.engine !== 'ARCHIVE' &&
+                s.features.centralColumns &&
+                (['add', 'remove'] as const).map((op) => (
+                  <Button
+                    key={op}
+                    variant="link"
+                    onClick={() =>
+                      noneSelected() ||
+                      void act(() => api.structureCentralColumns(scope, op, orderedSelection))
+                    }
+                  >
+                    {op === 'add' ? t('Add to central columns') : t('Remove from central columns')}
                   </Button>
                 ))}
             </>
@@ -344,11 +356,24 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         )}
         {editable && (
           <>
+            {s.links.trackTable && (
+              <Link to="/s/$server/db/$db/t/$table/tracking" params={{ server, db, table }}>
+                {t('Track table')}
+              </Link>
+            )}
             <Button variant="link" id="move_columns_anchor" onClick={() => setMoving([...columnNames])}>
               {t('Move columns')}
             </Button>
+            <Link to="/s/$server/db/$db/t/$table/normalization" params={{ server, db, table }}>
+              {t('Normalize')}
+            </Link>
             <Link to={sqlLink(server, `SHOW CREATE TABLE \`${db}\`.\`${table}\``)}>{t('Show create')}</Link>
           </>
+        )}
+        {s.isView && !s.isSystemSchema && s.links.trackTable && (
+          <Link to="/s/$server/db/$db/t/$table/tracking" params={{ server, db, table }}>
+            {t('Track view')}
+          </Link>
         )}
       </div>
 
@@ -421,7 +446,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 min={1}
                 max={16}
                 required
-                aria-label={t('Create an index on %s columns', '')}
+                name="added_fields"
                 value={indexCount}
                 onChange={(e) => setIndexCount(Number(e.target.value))}
               />
@@ -721,11 +746,14 @@ function RowActions({
   column,
   hide,
   onKey,
+  onCentral,
   server,
 }: {
   column: Column
   hide: boolean
   onKey: (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT') => void
+  /** null without the central columns feature */
+  onCentral: ((op: 'add' | 'remove') => void) | null
   server: number
 }) {
   const items = (
@@ -762,6 +790,19 @@ function RowActions({
           {t('Distinct values')}
         </Link>
       </li>
+      {onCentral !== null && (
+        <li className="browse whitespace-nowrap">
+          {column.inCentralList ? (
+            <Button variant="link" onClick={() => onCentral('remove')}>
+              {t('Remove from central columns')}
+            </Button>
+          ) : (
+            <Button variant="link" onClick={() => onCentral('add')}>
+              {t('Add to central columns')}
+            </Button>
+          )}
+        </li>
+      )}
     </ul>
   )
   if (!hide) return items

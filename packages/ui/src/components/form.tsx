@@ -196,6 +196,14 @@ export function Checkbox({ className, ...props }: ComponentProps<typeof Checkbox
   )
 }
 
+/**
+ * Native checkbox for forms that mirror a phpMyAdmin form control by control (name, value
+ * and checked state keep real form semantics, e.g. for the UI parity harness).
+ */
+export function NativeCheckbox({ className, ...props }: Omit<ComponentProps<'input'>, 'type'>) {
+  return <input type="checkbox" className={cn('size-3.5 align-middle accent-accent', className)} {...props} />
+}
+
 // ---------------------------------------------------------------------------------------------
 // FormRow — label left (220 px), control right; stacked below 900 px (docs/architecture/09)
 // ---------------------------------------------------------------------------------------------

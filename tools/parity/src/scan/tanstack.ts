@@ -6,6 +6,7 @@
  *   $param               → `:param`
  *   $.tsx                → splat `*` (catch-all; never counts as an implemented target)
  *   _layout / (group)    → pathless segments
+ *   segment_             → the segment, not nested under its layout (`structure_.add` → structure/add)
  *   __root.tsx           → skipped
  */
 import { readFileSync } from 'node:fs'
@@ -35,7 +36,8 @@ export function fileToRoute(relFile: string): { path: string; splat: boolean } |
         splat = true
         return '*'
       }
-      return s.startsWith('$') ? `:${s.slice(1)}` : s
+      const seg = s.length > 1 && s.endsWith('_') ? s.slice(0, -1) : s
+      return seg.startsWith('$') ? `:${seg.slice(1)}` : seg
     })
   return { path: `/${parts.join('/')}`.replace(/\/+$/, '') || '/', splat }
 }

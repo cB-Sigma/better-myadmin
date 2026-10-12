@@ -1,0 +1,17 @@
+# Intentional differences of the Relation view (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: select, label: Column, section: Internal relationships }
+    ignore: [options]
+    reason: >-
+      Q57: the reference renders a duplicate selected empty option in a column dropdown without a
+      stored relation
+  - match: { label: '/^(Internal relationships|Choose column to display:|Preview SQL|Save|Documentation)$/' }
+    ignore: [section]
+    reason: >-
+      the controls after a card read its title as their section in ours (Panel titles are headings,
+      phpMyAdmin's card headers are not); same order and labels
+  - match: { kind: select, label: Database }
+    ignore: [options]
+    reason: >-
+      environment: the database lists show every database of the shared MySQL; suites running
+      concurrently create and drop theirs between the two captures

@@ -47,6 +47,7 @@ const rowFromForm = (c: ChangeFormResponse['columns'][number], options: ColumnFo
   key: 'none',
   orig: c.orig,
   moveOptions: c.moveOptions,
+  ...(c.mime !== null ? { mime: c.mime } : {}),
 })
 
 export function ChangeColumnsPage({ scope, fields }: { scope: TableRef; fields: string[] }) {
@@ -72,7 +73,7 @@ export function ChangeColumnsPage({ scope, fields }: { scope: TableRef; fields: 
       submit={(dryRun, online) =>
         api.changeColumns(scope, {
           columns: rows.map((r) => ({
-            ...toColumnDef(r),
+            ...toColumnDef(r, q.data.options),
             orig: r.orig as NonNullable<ColumnRow['orig']>,
             moveTo: r.moveTo,
             adjustPrivileges: r.adjustPrivileges,
@@ -111,7 +112,7 @@ export function AddColumnsPage({
       reservedCheck={(names) => api.reservedWordCheck(scope, names)}
       submit={(dryRun, online) =>
         api.addColumns(scope, {
-          columns: rows.map(toColumnDef),
+          columns: rows.map((r) => toColumnDef(r, q.data.options)),
           indexes: indexesFromRows(rows),
           where,
           afterField: after,

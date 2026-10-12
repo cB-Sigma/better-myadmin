@@ -1,4 +1,4 @@
-import { FIX } from './lib/env.ts'
+import { FIX, RUN } from './lib/env.ts'
 import { pageParity } from './lib/parity.ts'
 
 /**
@@ -18,6 +18,9 @@ pageParity('login', {
 pageParity('home', {
   pma: { route: '/' },
   ours: { path: '/s/1' },
+  // the git revision line (ShowGitRevision) names the reference checkout's branch, commit and author:
+  // environment, and it changes with every upstream sync
+  exclude: ['#li_pma_version_git'],
 })
 
 pageParity('navigation', {
@@ -38,8 +41,6 @@ pageParity('table-structure', {
   pma: { route: '/table/structure', params: { db: FIX.db, table: FIX.table } },
   ours: { path: `/s/1/db/${FIX.db}/t/${FIX.table}/structure` },
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
-  known:
-    'missing "Table structure"/"Relation view" sub-tab links, "Add to central columns", "Remove from central columns", "Track table", "Normalize"; With-selected buttons disabled until a row is checked (always enabled in phpMyAdmin); Indexes/Partitions/Information controls are not in a section (no legend/heading); "Create an index on" textbox labelled differently',
 })
 
 pageParity('table-menu', {
@@ -54,9 +55,24 @@ pageParity('server-variables', {
   interactions: [{ name: 'filter autocommit', do: { fill: ['Containing the word:', 'autocommit'] } }],
 })
 
+/**
+ * Rows of databases other sessions create and drop on the shared MySQL while the case runs would
+ * differ between the two captures: only this run's (`…_<run>`) and the system ones are compared.
+ */
+const OTHER_RUNS_DB_ROWS = `tr[data-filter-row]${[
+  'INFORMATION_SCHEMA',
+  'MYSQL',
+  'PERFORMANCE_SCHEMA',
+  'SYS',
+  'PHPMYADMIN',
+]
+  .map((n) => `:not([data-filter-row="${n}"])`)
+  .join('')}:not([data-filter-row$="_${RUN.toUpperCase()}"])`
+
 pageParity('server-databases', {
   pma: { route: '/server/databases' },
   ours: { path: '/s/1/databases' },
+  exclude: [OTHER_RUNS_DB_ROWS],
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
 })
 

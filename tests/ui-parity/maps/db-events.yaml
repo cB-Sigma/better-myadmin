@@ -1,0 +1,3 @@
+rules:
+  - ours: { kind: button, label: 'ON / OFF', section: 'Event scheduler status' }
+    added: phpMyAdmin's scheduler switch is a JS toggle on a div (toggleAjax, no accessible control); ours is a button so it is keyboard reachable

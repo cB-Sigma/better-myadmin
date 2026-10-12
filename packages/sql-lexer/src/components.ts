@@ -482,7 +482,11 @@ export class IntoKeyword implements Component {
 
   build(): string {
     if (this.dest instanceof Expression) {
-      const columns = !empty(this.columns) ? '(`' + (this.columns as string[]).join('`, `') + '`)' : ''
+      // sql-parser 6.0.1: the columns go through Context::escapeAll (quoting mode, embedded backquotes)
+      const columns =
+        this.columns === null || this.columns.length === 0
+          ? ''
+          : '(' + Context.current.escapeAll(this.columns).join(', ') + ')'
       return str(this.dest) + columns
     }
     if (this.values !== null) return implode(', ', this.values)

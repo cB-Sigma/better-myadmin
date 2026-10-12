@@ -295,10 +295,20 @@ export function revokeGrantOptionQuery(
   return `REVOKE GRANT OPTION ON ${itemType} ${dbAndTable} FROM ${accountName(user, host)};`
 }
 
+/** The suffix of exception X40 (see updatePrivilegesQueries). */
+export const grantOptionFix = ' WITH GRANT OPTION'
+
 /**
  * The GRANT (+ ALTER USER on MySQL ≥ 8.0.11) of "Update user privileges"; `dbname === ''` is the
  * global level (REQUIRE clause, resource limits).
  * pma: Privileges::generateQueriesForUpdatePrivileges
+ *
+ * Exception X40 (docs/reference/parity-exceptions.md): on MySQL/Percona ≥ 8.0.11 phpMyAdmin moves
+ * the WITH clause to ALTER USER, which drops GRANT OPTION, and never adds `WITH GRANT OPTION` to the
+ * GRANT (phpmyadmin/phpmyadmin#19605): the requested grant option is silently lost, at every level
+ * (global, database, table, routine). With Grant_priv=Y we end the GRANT with ` WITH GRANT OPTION`
+ * (as the add-user path does); the ALTER USER stays byte-identical to phpMyAdmin's. MariaDB and
+ * MySQL < 8.0.11 are unchanged.
  */
 export function updatePrivilegesQueries(
   post: PrivForm,
@@ -326,6 +336,7 @@ export function updatePrivilegesQueries(
     if (alter !== null) alter += withClause(post, f)
     else grant += withClause(post, f)
   }
+  if (alter !== null && post.Grant_priv === 'Y') grant += grantOptionFix
   grant += ';'
   if (alter !== null) alter += ';'
   return { grant, alter }

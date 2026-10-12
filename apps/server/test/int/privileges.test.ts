@@ -1,8 +1,8 @@
 import type {
   AddUserForm,
+  DbPrivilegesResponse,
   ExportPrivilegesResponse,
   PrivActionResponse,
-  TablePrivilegesResponse,
   UserGroupsResponse,
   UserProperties,
   UsersOverviewResponse,
@@ -181,10 +181,9 @@ describe('user accounts', () => {
       grant_count: '19',
       update_privs: '1',
     })
-    // MySQL ≥ 8.0.11: the GRANT OPTION of a database level goes to an (empty) ALTER USER, so it is not
-    // granted (phpMyAdmin's generateQueriesForUpdatePrivileges); MariaDB keeps WITH GRANT OPTION
+    // the grant option is kept on every server: on MySQL ≥ 8.0.11 phpMyAdmin drops it, exception X40
     expect((await grants("'f06u_it_b'@'%'")).join('\n')).toMatch(
-      /GRANT INSERT ON [`']f06u\\_it\\_db[`']\.\* TO /,
+      /GRANT INSERT ON [`']f06u\\_it\\_db[`']\.\* TO .* WITH GRANT OPTION/,
     )
     await post({
       username: 'f06u_it_b',
@@ -203,6 +202,39 @@ describe('user accounts', () => {
     await post({ username: 'f06u_it_b', hostname: '%', dbname: 'f06uitroutine' })
     await post({ username: 'f06u_it_b', hostname: '%', dbname: 'f06u\\_it\\_db', revokeall: '1' })
     expect((await grants("'f06u_it_b'@'%'")).join('\n')).not.toMatch(/ON [`']f06u\\_it\\_db[`']\.\*/)
+  })
+
+  it('X40: Grant_priv keeps the grant option at global, table and routine level (phpmyadmin#19605)', async () => {
+    const edit = (form: Record<string, string>) =>
+      post({ username: 'f06u_it_b', hostname: '%', Grant_priv: 'Y', update_privs: '1', ...form })
+    await edit({ Select_priv: 'Y', grant_count: '27', ssl_type: 'NONE' })
+    const g = async () => (await grants("'f06u_it_b'@'%'")).join('\n')
+    expect(await g()).toMatch(/GRANT SELECT ON \*\.\* TO .* WITH GRANT OPTION/)
+    await edit({
+      dbname: 'f06u\\_it\\_db',
+      tablename: 't',
+      column_count: '2',
+      grant_count: '13',
+      Delete_priv: 'Y',
+    })
+    expect(await g()).toMatch(/GRANT DELETE ON [`']f06u_it_db[`']\.[`']t[`'] TO .* WITH GRANT OPTION/)
+    // (the routine type is looked up with the posted name: unescaped here, see the phpMyAdmin quirk)
+    await edit({ dbname: 'f06u_it_db', routinename: 'p', grant_count: '3', Execute_priv: 'Y' })
+    expect(await g()).toMatch(
+      /GRANT EXECUTE ON PROCEDURE [`']f06u_it_db[`']\.[`']p[`'] TO .* WITH GRANT OPTION/,
+    )
+    // back to the state of the next tests: no global grant option (on MySQL 8.4 the global REVOKE ALL
+    // of this edit also drops the routine grant; elsewhere it is revoked explicitly)
+    await post({
+      username: 'f06u_it_b',
+      hostname: '%',
+      Select_priv: 'Y',
+      grant_count: '27',
+      update_privs: '1',
+    })
+    if ((await g()).includes('f06u_it_db`.`p`') || (await g()).includes("f06u_it_db'.'p'")) {
+      await root.query("REVOKE EXECUTE, GRANT OPTION ON PROCEDURE f06u_it_db.p FROM 'f06u_it_b'@'%'")
+    }
   })
 
   it('changes the password of another account [p06-d38b0c]', async () => {
@@ -313,7 +345,7 @@ describe('user accounts', () => {
   it('Table → Privileges lists the accounts with access to the table', async () => {
     // (on MySQL 8.4 the global REVOKE ALL above also dropped the table and column grants)
     await root.query("GRANT UPDATE (b) ON f06u_it_db.t TO 'f06u_it_b'@'%'")
-    const d = await get<TablePrivilegesResponse>('/databases/f06u_it_db/tables/t/privileges')
+    const d = await get<DbPrivilegesResponse>('/databases/f06u_it_db/tables/t/privileges')
     const b = d.accounts.find((a) => a.user === 'f06u_it_b')
     expect(b?.privileges.map((p) => p.type)).toContain('t')
   })

@@ -1,3 +1,6 @@
+import { createHash } from 'node:crypto'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { type Page, expect } from '@playwright/test'
 
 /** MySQL used by both tools (the reference phpMyAdmin's server 1 must point at the same one). */
@@ -10,11 +13,33 @@ export const ROOT = {
 
 export const PMA_URL = (process.env.BMA_PARITY_PMA_URL ?? 'http://127.0.0.1:8081').replace(/\/$/, '')
 
-/** One account per tool (same privileges), so the two sessions never share server-side state. */
-export const USERS = { pma: 'uip_pma', ours: 'uip_bma' } as const
+/**
+ * This checkout's suffix for every account and database of the run: several worktrees (agents) share
+ * one MySQL, and a fixed `uip_pma` could be dropped or recreated by another run mid-way. Stable per
+ * worktree (hash of its path), so global-setup, the workers and the teardown agree; `BMA_UIP_RUN`
+ * overrides it (e.g. two runs from one checkout).
+ */
+export const RUN = (
+  process.env.BMA_UIP_RUN ??
+  createHash('sha1')
+    .update(resolve(dirname(fileURLToPath(import.meta.url)), '../../..'))
+    .digest('hex')
+    .slice(0, 6)
+).replace(/[^a-z0-9]/gi, '')
 
-/** Objects created by global-setup for the cases (all prefixed uip_). */
-export const FIX = { db: 'uip_db', table: 'uip_t', pmadb: 'uip_pmadb' } as const
+/** One account per tool (same privileges), so the two sessions never share server-side state. */
+export const USERS = { pma: `uip_pma_${RUN}`, ours: `uip_bma_${RUN}` } as const
+
+/**
+ * Objects created by global-setup for the cases and dropped by global-teardown (all prefixed uip_,
+ * suffixed with RUN): the shared fixture, our configuration storage, the Insert/Edit database.
+ */
+export const FIX = {
+  db: `uip_db_${RUN}`,
+  table: 'uip_t',
+  pmadb: `uip_pmadb_${RUN}`,
+  insertDb: `uip_ie_${RUN}`,
+} as const
 
 export type App = 'pma' | 'ours'
 export const APPS: App[] = ['pma', 'ours']

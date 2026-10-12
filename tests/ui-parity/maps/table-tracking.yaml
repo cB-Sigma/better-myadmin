@@ -1,0 +1,28 @@
+# Intentional differences of the table Tracking tab (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { name: '/^(alter|rename|create|drop)_(table|view|index)$|^(insert|update|delete|truncate)$/' }
+    ignore: [section]
+    reason: >-
+      the "Create version" card title is a heading in ours (Panel), phpMyAdmin's .card-header holds no
+      control so its checkboxes read the page's previous heading; same controls, same order
+  - match: { label: Create version }
+    ignore: [section]
+    reason: the button of the same card (see above)
+  - match: { step: tracking report }
+    ignore: [section]
+    reason: >-
+      phpMyAdmin's report <h3> is the preceding heading of every control below it (the versions list
+      included); ours keeps the cards' own titles
+  - match: { step: structure snapshot }
+    ignore: [section]
+    reason: >-
+      phpMyAdmin's snapshot <h3> is the preceding heading of every control below it; ours titles the
+      snapshot's Structure and Indexes tables as Panels
+  - pma: { kind: link, label: '/^(Edit inline|Edit|Create PHP code)$/', step: structure snapshot }
+    n/a: >-
+      Generator::getMessage attaches the query links to the snapshot SQL although nothing ran; ours
+      shows the statements as text
+  - ours: { kind: link, label: '/^(int|varchar)$/' }
+    added: >-
+      the shared SQL highlighter (features/sql/HighlightedSql) also links data types to the MySQL
+      manual; phpMyAdmin's links keywords only

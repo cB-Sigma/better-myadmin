@@ -342,6 +342,7 @@ Routine-level page (`edit_routine_privileges.twig`, reached with `routinename`):
 Server-side updates:
 - `update_privs` (`updatePrivileges`): target `dbAndTable` = `*.*` / `` `db`.* `` / `` `db`.`table` `` (db wildcards unescaped at table level). Executes `REVOKE ALL PRIVILEGES ON [PROCEDURE|FUNCTION] target FROM 'u'@'h';` (failure tolerated – see issue #9673), `REVOKE GRANT OPTION ON … FROM …;` unless `Grant_priv=Y` (failure tolerated), then unless (table level and result would be `USAGE`) `GRANT <privs> ON … TO 'u'@'h'` + at global level the REQUIRE clause, + WITH clause when `Grant_priv=Y` or any resource limit posted; MySQL ≥ 8.0.11 puts REQUIRE/WITH into `ALTER USER 'u'@'h' …;` instead. Message "You have updated the privileges for %s." AJAX extra: `new_privileges` HTML, `db_specific_privs`/`db_wildcard_privs` flags (wildcard = unescaped `_`/`%` in dbname).
 - Column privileges (table level): `Select_priv[]`, `Insert_priv[]`, `Update_priv[]`, `References_priv[]` arrays of column names; `extractPrivInfo` emits `SELECT (\`c1\`, \`c2\`)` when a subset is chosen, plain `SELECT` when all `column_count` columns are chosen and the matching `*_priv_none` box is unchecked, nothing when `*_none` is checked.
+- BetterMyAdmin difference X40: on MySQL/Percona ≥ 8.0.11 with `Grant_priv=Y` the GRANT ends with ` WITH GRANT OPTION` (phpMyAdmin loses the grant option there, #19605); the ALTER USER is unchanged.
 - `revokeall` (`getMessageAndSqlQueryForPrivilegesRevoke`): `REVOKE ALL PRIVILEGES ON [type] target FROM …;` + `REVOKE GRANT OPTION ON … FROM …;` (second may fail silently); message "You have revoked the privileges for %s."
 - `change_copy` (`getDataForChangeOrCopyUser` + `addUser` + `getDbSpecificPrivsQueriesForChangeOrCopyUser` + `getTablePrivsQueriesForChangeOrCopyUser`): same user@host → error "Username and hostname didn't change. If you only want to change the password, 'Change password' tab should be used."; missing old user → notice "No user found."; reads the old row (`SELECT * FROM mysql.user WHERE …`) to copy `ssl_type/ssl_cipher/x509_issuer/x509_subject` and the stored password hash (`authentication_string` vs `Password` depending on version/plugin); queues `CREATE USER` + global `GRANT` (privileges from the submitted global table), then for every `mysql.db` row `GRANT <privs> ON \`db\`.* TO new [WITH GRANT OPTION];`, for every `tables_priv` row `GRANT <privs>[, SELECT (cols)…] ON \`db\`.\`t\` TO new [WITH GRANT OPTION];` (column lists from `columns_priv`); modes 1–3 additionally run the delete flow for the old account (`mode<4`; mode 3 adds `FLUSH PRIVILEGES`); copies the user-group assignment (`old_usergroup`). All queued queries are executed in order (`getDataForQueries`), the masked versions shown.
 - `change_pw` → `updatePassword` (below).
@@ -654,11 +655,25 @@ Status / Monitor
 Variables
 - `GET /api/server/variables` returning `{name, globalValue, sessionValue, type, docUrl, editable}` using the mariadb-mysql-kbs dataset for type/doc; `PATCH /api/server/variables/{name}` with the same unit parsing and read-back; inline editing with Enter/Escape.
 
-Users & privileges
+Users & privileges (implemented: `packages/sql-gen/src/privileges.ts`, `packages/metadata/src/user-groups.ts`, `apps/server/src/privileges/`, `apps/web/src/features/server/privileges/`)
+- The database and table Privileges tabs are the "users of a database / table" view of the same module (`dbPrivileges`, `DbPrivilegesPage`); there is one implementation.
+- Statements are golden-tested against phpMyAdmin's own `Privileges` code run over 13 MySQL/MariaDB versions (`packages/sql-gen/scripts/generate-privileges-fixtures.php`), and compared statement by statement in `tests/parity/privileges.parity.test.ts` / `user-groups.parity.test.ts`.
 - Model the privilege catalog as data (table above) and render the three-group checkbox form from it; keep `grant_count`/ALL PRIVILEGES semantics and column-level multiselects.
 - Keep the exact SQL generation strategy per server flavour/version (CREATE USER … IDENTIFIED WITH/VIA/BY/AS/USING, SET PASSWORD, ALTER USER REQUIRE/WITH on MySQL ≥ 8.0.11, REVOKE-then-GRANT update sequence, tolerant REVOKE failures) in a `UserSqlBuilder` with unit tests per matrix cell; always show the masked statements to the user.
 - Overview should be paginated/virtualised; the "initials" behaviour becomes a first-letter filter; export opens a code viewer; lock/unlock and group assignment are optimistic row updates.
 - Change password reuses one component for self (`/user-password`) and others (editor tab), including zxcvbn strength scoring with the custom dictionary and the AllowNoPassword confirmation.
+
+Reproduced phpMyAdmin quirks (user accounts; checked against the reference, kept for statement parity unless noted)
+- No `grant_count` posted → every posted privilege counts as "all of them": the GRANT says `ALL PRIVILEGES`.
+- **Fixed, exception X40** ([#19605](https://github.com/phpmyadmin/phpmyadmin/issues/19605)): on MySQL/Percona ≥ 8.0.11 "Update user privileges" with Grant_priv=Y moves the WITH clause to `ALTER USER` (an empty `ALTER USER 'u'@'h' ;` at database, table and routine level), which drops GRANT OPTION, and the GRANT never gets `WITH GRANT OPTION`. We append ` WITH GRANT OPTION` to the GRANT at every level; the ALTER USER is phpMyAdmin's, byte for byte.
+- A routine of a database whose posted name carries escaped wildcards (`f06u\_db`): `getRoutineType` looks it up with the escaped name, finds nothing, and the GRANT / REVOKE with an empty item type fails (phpMyAdmin dies with the MySQL error; so do we).
+- Copy user (modes 1–4) does not escape backquotes in column lists (`SELECT (`c`q`)`: broken SQL) and does not copy the global privileges (only GRANT USAGE).
+- "Do not change the password" (`pred_password=keep`) on MySQL 8 sends the stored hash as the new clear-text password.
+- `updatePassword`'s MariaDB branch tests `>= 10000` (always taken on MariaDB).
+- The db / table links under the editor (`user_properties.twig`) are shown only at table level.
+- Check-all boxes: a group box is checked when any of its boxes is; group boxes never follow the individual boxes.
+- The edit pages always render the sub-navigation pills (`addOrUpdateSubmenu`), even for one section; the copy form appears at every level; the Generate-password row is appended at the end of the login card; disabled initials are `<a href="#">`.
+- MySQL 8.4 (server behaviour, not phpMyAdmin): `REVOKE ALL PRIVILEGES ON *.*` also removes table, column and routine grants.
 
 Replication / Binlog / Engines / Plugins / Charsets
 - Replication actions as explicit endpoints (`start|stop` with `thread: io|sql|both`, `reset`, `skip {count}`, `change-primary`), each returning the executed statements; keep version-aware statement selection in one `ReplicationSql` helper; the primary-configuration snippet is purely client-side.

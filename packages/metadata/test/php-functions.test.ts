@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { applyVariables, getVariableCount } from '../src/bookmarks.ts'
 import { getUserFormFields } from '../src/index.ts'
-import { PhpSparseList, phpJsonEncode } from '../src/php.ts'
+import { PhpSparseList, phpJsonEncode, phpSerialize, phpUnserialize } from '../src/php.ts'
 import { fixUpMime } from '../src/relations.ts'
 import { getCreateTableSqlQueries } from '../src/resources.ts'
 import { applyUserPreferences } from '../src/userprefs.ts'
@@ -73,4 +73,31 @@ describe('UserFormList::getFields / UserPreferences::apply', () => {
       expect(applyUserPreferences(c.config_data, getUserFormFields(false), c.disallow)).toEqual(c.applied)
     })
   }
+})
+
+describe('serialize / Core::safeUnserialize', () => {
+  const value = {
+    COLUMNS: [
+      {
+        Field: 'id',
+        Type: 'int',
+        Collation: null,
+        Null: 'NO',
+        Key: 'PRI',
+        Default: null,
+        Extra: '',
+        Comment: 'é',
+      },
+    ],
+    INDEXES: [{ Non_unique: '0', x: true, y: 1.5, z: 3 }],
+  }
+  // php -r 'echo serialize([...]);' (PHP 8)
+  const golden =
+    'a:2:{s:7:"COLUMNS";a:1:{i:0;a:8:{s:5:"Field";s:2:"id";s:4:"Type";s:3:"int";s:9:"Collation";N;s:4:"Null";s:2:"NO";s:3:"Key";s:3:"PRI";s:7:"Default";N;s:5:"Extra";s:0:"";s:7:"Comment";s:2:"é";}}s:7:"INDEXES";a:1:{i:0;a:4:{s:10:"Non_unique";s:1:"0";s:1:"x";b:1;s:1:"y";d:1.5;s:1:"z";i:3;}}}'
+  it('serializes like PHP', () => expect(phpSerialize(value)).toBe(golden))
+  it('round-trips', () => expect(phpUnserialize(golden)).toEqual(value))
+  it('rejects objects and malformed input', () => {
+    expect(phpUnserialize('O:8:"stdClass":0:{}')).toBeNull()
+    expect(phpUnserialize('a:1:{')).toBeNull()
+  })
 })

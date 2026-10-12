@@ -1,11 +1,11 @@
 import type {
   AddUserForm,
+  DbPrivilegesResponse,
   ExportPrivilegesResponse,
   PrivActionResponse,
   PrivForm,
   PrivGate,
   PrivMessage,
-  TablePrivilegesResponse,
   UserProperties,
   UsersOverviewResponse,
   ValidateUsernameResponse,
@@ -496,17 +496,21 @@ export async function accountLock(
   }
 }
 
-/** pma: Table\PrivilegesController (getAllPrivileges with the table) */
-export async function tablePrivileges(
+/**
+ * The users of a database, or of a table: Database\PrivilegesController and
+ * Table\PrivilegesController (getAllPrivileges with the table). Like them it only validates the
+ * names; it neither selects the database nor checks the table.
+ */
+export async function dbPrivileges(
   p: Privileges,
   db0: string,
-  table0: string,
-): Promise<TablePrivilegesResponse> {
+  table0?: string,
+): Promise<DbPrivilegesResponse> {
   let db = db0
   let table = table0
   if ((await p.ctx.dbi.getLowerCaseNames()) === 1) {
     db = db.toLowerCase()
-    table = table.toLowerCase()
+    table = table?.toLowerCase()
   }
   const grant = await p.isGrantUser()
   const create = await p.isCreateUser()
@@ -522,7 +526,8 @@ export async function tablePrivileges(
     isCreateUser: create,
     menusWork: p.menus !== null,
   }
-  if (gate.noPrivileges) return { gate, db, table, accounts: [] }
-  const accounts = superUser ? await p.allPrivileges(db, table) : []
-  return { gate, db, table, accounts }
+  const named = table === undefined ? { gate, db } : { gate, db, table }
+  if (gate.noPrivileges) return { ...named, accounts: [] }
+  const accounts = superUser ? await p.allPrivileges(db, table ?? null) : []
+  return { ...named, accounts }
 }

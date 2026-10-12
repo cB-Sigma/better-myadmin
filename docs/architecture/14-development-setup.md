@@ -77,6 +77,14 @@ Planned and not yet wired: `pnpm parity:report`, `pnpm docs:gen`, `pnpm storyboo
 - `pnpm compare <url-path>` opens the same page in BetterMyAdmin and the reference phpMyAdmin side by side in the browser.
 - To inspect what phpMyAdmin ran for an action: `docker compose exec mysql84 mysql -e "SELECT argument FROM mysql.general_log ORDER BY event_time DESC LIMIT 20"`.
 
+## Sharing one MySQL between worktrees (agents, CI jobs)
+
+Several checkouts may run suites against the same server at once. Three mechanisms keep them apart:
+
+- **General log** (`mysql.general_log`, read by `tests/parity/lib/general-log.ts`): the dev compose servers create it as **MyISAM with an `event_time` index** (`docker/seed/00-general-log.sql`); on an existing server the first `GeneralLog.open()` that finds no other reader converts it. A read costs its time window, not the whole log (with the default CSV engine every `since()` scanned it: ~90 s at 887k rows).
+- **Rotation**: `GeneralLog.open()` truncates the log when it holds more than 100k rows (`BMA_GENERAL_LOG_ROTATE_AT`) **and no suite holds a marker**. Every reader registers a holder file (pid) in `.data/general-log-holders/` of the main checkout (shared by all its worktrees; `BMA_LOG_HOLDERS_DIR` overrides), removed at close or process exit; files of dead processes are ignored. Registration and rotation run under the `general-log-holders.lock` mutex.
+- **Fixtures**: UI parity accounts and databases carry a per-worktree suffix (`uip_pma_<run>`, `uip_db_<run>`, `uip_pmadb_<run>`, `uip_ie_<run>`; `tests/ui-parity/lib/env.ts`, `BMA_UIP_RUN`) and are dropped by its global-teardown. Parity suites keep their fixed fixtures (`m1meta_*`, `m3srv_*`, `f03_*` …) but take a server-wide `GET_LOCK('bma_parity:<suite>')` for the whole file (`tests/parity/lib/suite-lock.ts`; the server-* suites share one group), so the same suite started from two worktrees runs one after the other (`BMA_PARITY_LOCK_WAIT`, default 30 min).
+
 ## Directory for generated/runtime data
 
 `.data/` (git-ignored): SQLite session store, local metadata fallback, upload/save dirs, generated secret in non-dev runs.
