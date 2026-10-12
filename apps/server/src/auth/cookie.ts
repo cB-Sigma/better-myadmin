@@ -67,4 +67,3 @@ export async function cookieLogin(
   await connectLogin(pools, input.serverIndex, creds, tr)
   return creds
 }
-

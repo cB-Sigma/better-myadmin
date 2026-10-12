@@ -7,7 +7,12 @@ import { signonPageAuth } from './signon.ts'
 /** A page load of the SPA (not the API, a hashed asset, a static file or the setup script). */
 export function isPageRequest(method: string, path: string): boolean {
   if (method !== 'GET' && method !== 'HEAD') return false
-  if (path.startsWith('/api/') || path.startsWith('/assets/') || path === '/setup' || path.startsWith('/setup/'))
+  if (
+    path.startsWith('/api/') ||
+    path.startsWith('/assets/') ||
+    path === '/setup' ||
+    path.startsWith('/setup/')
+  )
     return false
   const last = path.slice(path.lastIndexOf('/') + 1)
   return !last.includes('.') || last.endsWith('.html')

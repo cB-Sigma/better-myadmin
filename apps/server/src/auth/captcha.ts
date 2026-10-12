@@ -97,7 +97,10 @@ export async function verifyCaptcha(
 ): Promise<void> {
   if (!captchaEnabled(cfg)) return
   if (response === undefined || phpEmpty(response)) {
-    throw new LoginFailure('form', tr.gettext('Missing Captcha verification, maybe it has been blocked by adblock?'))
+    throw new LoginFailure(
+      'form',
+      tr.gettext('Missing Captcha verification, maybe it has been blocked by adblock?'),
+    )
   }
   const url = cfg.CaptchaSiteVerifyURL === '' ? SITE_VERIFY_URL : cfg.CaptchaSiteVerifyURL
   const codes = await siteVerify(url, cfg.CaptchaLoginPrivateKey, response, remoteIp, fetchImpl)

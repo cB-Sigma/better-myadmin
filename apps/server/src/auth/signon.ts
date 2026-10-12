@@ -124,7 +124,10 @@ export async function signonPageAuth(c: Context<AppEnv>, server: number): Promis
     } catch (e) {
       if (!(e instanceof SignonError)) throw e
       return {
-        error: sprintf(tr.gettext('Can not find signon authentication script: %s'), "$cfg['Servers'][$i]['SignonScript']"),
+        error: sprintf(
+          tr.gettext('Can not find signon authentication script: %s'),
+          "$cfg['Servers'][$i]['SignonScript']",
+        ),
       }
     }
   } else if (cookieValue !== undefined) {
@@ -174,5 +177,10 @@ export async function signonPageAuth(c: Context<AppEnv>, server: number): Promis
 }
 
 function writeSignonSession(c: Context<AppEnv>, s: ServerConfig, data: SignonSessionData): void {
-  setCookie(c, s.SignonSession, encodeSignonSession(c.get('deps').cfg.blowfish_secret, data), signonCookieOptions(s))
+  setCookie(
+    c,
+    s.SignonSession,
+    encodeSignonSession(c.get('deps').cfg.blowfish_secret, data),
+    signonCookieOptions(s),
+  )
 }

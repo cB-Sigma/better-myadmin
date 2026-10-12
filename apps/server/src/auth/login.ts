@@ -65,9 +65,12 @@ function connectionErrno(e: unknown): number | undefined {
 }
 
 /** Core::getIp: Node's socket address, a forwarded header only from TrustedProxies. */
-// biome-ignore lint/suspicious/noExplicitAny: any route context
-export function requestClientIp(c: Context<any, any, any>, trustedProxies: Record<string, string>): string | false {
-  const remote = (c.env as { incoming?: { socket?: { remoteAddress?: string } } } | undefined)?.incoming?.socket
-    ?.remoteAddress
+export function requestClientIp(
+  // biome-ignore lint/suspicious/noExplicitAny: any route context
+  c: Context<any, any, any>,
+  trustedProxies: Record<string, string>,
+): string | false {
+  const remote = (c.env as { incoming?: { socket?: { remoteAddress?: string } } } | undefined)?.incoming
+    ?.socket?.remoteAddress
   return getClientIp(remote?.replace(/^::ffff:/, ''), trustedProxies, (n) => c.req.header(n))
 }

@@ -32,7 +32,10 @@ export class LoginRateLimiter {
       this.#lockedUntil.delete(key)
       return null
     }
-    return sprintf(tr.gettext('Too many failed login attempts. Please try again in %s seconds.'), String(left))
+    return sprintf(
+      tr.gettext('Too many failed login attempts. Please try again in %s seconds.'),
+      String(left),
+    )
   }
 
   failed(ip: string | false, user: string): void {

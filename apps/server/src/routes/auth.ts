@@ -204,8 +204,7 @@ authRoutes.post('/logout', async (c) => {
   else if (s?.auth_type === 'http') {
     const base = cfg.Listen.basePath === '' ? '/' : cfg.Listen.basePath
     logoutUrl = `${base.endsWith('/') ? base : `${base}/`}?old_usr=${encodeURIComponent(user)}`
-  }
-  else if (s?.auth_type === 'signon' && s.SignonURL !== '') logoutUrl = s.SignonURL
+  } else if (s?.auth_type === 'signon' && s.SignonURL !== '') logoutUrl = s.SignonURL
   const cookieAuth = s?.auth_type === 'cookie'
   delete session.servers[String(server)]
   forgetServerMetadata(session, server)

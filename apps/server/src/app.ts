@@ -69,7 +69,12 @@ export function createApp(deps: AppDeps) {
   const gate = authPageGate()
   app.use('*', async (c, next) => {
     if (!isPageRequest(c.req.method, c.req.path)) return next()
-    return session(c, () => language(c, () => gate(c, next)))
+    await session(c, async () => {
+      await language(c, async () => {
+        const r = await gate(c, next)
+        if (r instanceof Response) c.res = r
+      })
+    })
   })
 
   // CSRF: double submit on every non-GET request (pma: TokenRequestParamChecking)

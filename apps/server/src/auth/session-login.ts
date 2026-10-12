@@ -68,14 +68,13 @@ export async function withTwoFactor<T>(
  * session for that server. `secure`: Session::secure() (a new session id and token, cookie auth's
  * readCredentials on a form login); the logins on other servers are kept.
  */
-// biome-ignore lint/suspicious/noExplicitAny: any route context
 export async function storeLogin(
-  c: Context<any, any, any>,
+  c: Context<AppEnv>,
   server: number,
   creds: Credentials,
   opts: { secure: boolean },
 ): Promise<ServerLogin> {
-  const ac = c as Context<AppEnv>
+  const ac = c
   const { credBox, store } = ac.get('deps')
   const session = opts.secure ? regenerate(store, ac.get('session'), server) : ac.get('session')
   session.currentServer = server
