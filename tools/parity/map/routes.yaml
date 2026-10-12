@@ -51,9 +51,18 @@
   api: 'GET /api/servers/:s/databases/:db/data-dictionary'
   ui: '/s/:s/db/:db/data-dictionary'
 /database/designer:
-  api: 'GET /api/servers/:s/databases/:db/designer'
+  api:
+    - 'GET /api/servers/:s/databases/:db/designer'
+    - 'GET /api/servers/:s/databases/:db/designer/pages'
+    - 'GET /api/servers/:s/databases/:db/designer/table'
+    - 'GET /api/servers/:s/databases/:db/designer/export'
+    - 'POST /api/servers/:s/databases/:db/designer/save-page'
+    - 'POST /api/servers/:s/databases/:db/designer/delete-page'
+    - 'POST /api/servers/:s/databases/:db/designer/display-field'
+    - 'POST /api/servers/:s/databases/:db/designer/add-relation'
+    - 'POST /api/servers/:s/databases/:db/designer/remove-relation'
+    - 'POST /api/servers/:s/databases/:db/designer/setting'
   ui: '/s/:s/db/:db/designer'
-  planned: M3
 /database/events:
   api:
     - 'GET /api/servers/:s/databases/:db/events'
@@ -329,7 +338,8 @@
   planned: M4
 /schema-export:
   api: 'POST /api/servers/:s/databases/:db/schema-export'
-  planned: M3
+  ui: '/s/:s/db/:db/designer'
+  note: 'PDF (TCPDF) is not ported: the Dia, EPS and SVG plugins are'
 /server/binlog:
   api: 'GET /api/servers/:s/binlog'
   ui: '/s/:s/binlog'

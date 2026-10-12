@@ -20,6 +20,7 @@
     "@bettermyadmin/kbs": "workspace:*",
     "@bettermyadmin/metadata": "workspace:*",
     "@bettermyadmin/mysql-types": "workspace:*",
+    "@bettermyadmin/schema": "workspace:*",
     "@bettermyadmin/sql-gen": "workspace:*",
     "@bettermyadmin/sql-lexer": "workspace:*",
     "@hono/node-server": "1.14.1",

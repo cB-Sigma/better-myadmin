@@ -25,6 +25,14 @@ export {
   type LanguageSelection,
   mysqlLocaleFor,
 } from './languages.ts'
-export { htmlspecialchars, numberFormat, phpRound, type SprintfArg, sprintf } from './php.ts'
+export {
+  htmlspecialchars,
+  numberFormat,
+  phpFloatToString,
+  phpFloatval,
+  phpRound,
+  type SprintfArg,
+  sprintf,
+} from './php.ts'
 export { type PluralRule, pluralRule } from './plural.ts'
 export { type Gettext, Translator, englishTranslator } from './translator.ts'

@@ -4,7 +4,7 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-189/449 covered (42.1%): 186 implemented, 1 exception, 2 n/a, 1 planned, 259 missing. [Summary](README.md).
+190/449 covered (42.3%): 187 implemented, 1 exception, 2 n/a, 1 planned, 258 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 70/106 (66.0%) covered, 69/106 implemented
 
@@ -24,8 +24,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `CaptchaResponseParam` |  |  |
 | ⬜ | `CaptchaSiteVerifyURL` |  |  |
 | ⬜ | `CheckConfigurationPermissions` |  |  |
-| ✅ | `CodemirrorEnable` | apps/server/src/routes/sql.ts:189<br>apps/web/src/features/sql/SqlPage.tsx:125<br>apps/web/src/features/sql/SqlPage.tsx:136<br>apps/web/src/features/sql/SqlPage.tsx:303<br>apps/web/src/features/sql/SqlPage.tsx:395 |  |
-| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:575<br>apps/web/src/features/database/TrackingPage.tsx:86<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822 |  |
+| ✅ | `CodemirrorEnable` | apps/server/src/database/designer.ts:232<br>apps/server/src/database/events.ts:76<br>apps/server/src/database/multi-table.ts:26<br>apps/server/src/database/routines.ts:105<br>apps/server/src/database/triggers.ts:34 |  |
+| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:585<br>apps/web/src/features/database/TrackingPage.tsx:86<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822 |  |
 | ⬜ | `Console/EnterExecutes` |  |  |
 | ⬜ | `Console/Mode` |  |  |
 | ⬜ | `Console/StartHistory` |  |  |
@@ -173,7 +173,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `MaxSizeForInputField` | apps/server/src/insert-edit/form.ts:687<br>apps/server/src/insert-edit/form.ts:693 |  |
 | ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:220<br>apps/server/src/browse/actions.ts:222<br>apps/server/src/database/context.ts:181<br>apps/server/src/database/tables.ts:77<br>apps/server/src/database/tables.ts:141 |  |
 | ✅ | `ShowFieldTypesInDataEditView` | apps/server/src/insert-edit/form.ts:449 |  |
-| ✅ | `ShowFunctionFields` | apps/server/src/database/routines.ts:401<br>apps/server/src/database/routines.ts:438<br>apps/server/src/insert-edit/form.ts:356<br>apps/server/src/insert-edit/form.ts:383<br>apps/server/src/insert-edit/form.ts:403 |  |
+| ✅ | `ShowFunctionFields` | apps/server/src/database/routines.ts:412<br>apps/server/src/database/routines.ts:449<br>apps/server/src/insert-edit/form.ts:356<br>apps/server/src/insert-edit/form.ts:383<br>apps/server/src/insert-edit/form.ts:403 |  |
 | ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/table/structure-page.ts:105 |  |
 | ⬜ | `SQLQuery/Edit` |  |  |
 
@@ -247,7 +247,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowServerInfo` | apps/server/src/shell/home.ts:200 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:143<br>apps/web/src/features/shell/HomePage.tsx:239<br>apps/web/src/features/shell/HomePage.tsx:244<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
 
-## 07 export import — 10/138 (7.2%) covered, 10/138 implemented
+## 07 export import — 11/138 (8.0%) covered, 11/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -380,7 +380,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Import/sql_compatibility` |  |  |
 | ⬜ | `Import/sql_no_auto_value_on_zero` |  |  |
 | ⬜ | `PDFDefaultPageSize` |  |  |
-| ⬜ | `PDFPageSizes` |  |  |
+| ✅ | `PDFPageSizes` | apps/server/src/database/schema-export.ts:28 |  |
 | ✅ | `RecodingEngine` | apps/server/src/export/page.ts:211<br>apps/server/src/export/service.ts:118<br>apps/server/src/import/page.ts:109<br>apps/server/src/import/service.ts:209<br>apps/server/src/import/service.ts:211 | X5 |
 | ✅ | `SaveDir` | apps/server/src/export/page.ts:202<br>apps/server/src/export/service.ts:117<br>apps/server/src/routes/export.ts:65<br>packages/export/src/export.ts:223 |  |
 | ⬜ | `Schema/format` |  |  |
@@ -416,7 +416,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Import/ldi_terminated` |  |  |
 | ⬜ | `Import/sql_read_as_multibytes` |  |  |
 | ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:236 |  |
-| ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:90 |  |
+| ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:91 |  |
 | ✅ | `MaxTableList` | apps/server/src/database/structure.ts:92<br>apps/server/src/database/structure.ts:168<br>apps/server/src/database/structure.ts:378 |  |
 | ➖ | `MemoryLimit` |  | n/a: PHP memory_limit; Node has no per-request memory limit (exports and imports stream, X10/X9) |
 | ✅ | `MinSizeForInputField` | apps/server/src/insert-edit/form.ts:685 |  |

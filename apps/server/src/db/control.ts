@@ -110,7 +110,7 @@ export class ControlConn implements MetaConn {
 function toOutcome(res: unknown, fields: unknown): QueryOutcome {
   const isHeader = (x: unknown): x is ResultSetHeader =>
     typeof x === 'object' && x !== null && !Array.isArray(x) && 'affectedRows' in x
-  if (isHeader(res)) return { fields: [], rows: [], affectedRows: res.affectedRows }
+  if (isHeader(res)) return { fields: [], rows: [], affectedRows: res.affectedRows, insertId: res.insertId }
   // multi-statement: take the first result set
   let rows = res as unknown[]
   let fs = fields as Array<FieldPacket | FieldPacket[] | undefined> | undefined

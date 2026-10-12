@@ -1,0 +1,237 @@
+/* The Designer (pma: public/themes/pmahomme/scss/_designer.scss), with the theme's tokens. */
+
+.designer {
+  position: relative;
+}
+
+.designer.content_fullscreen {
+  overflow: auto;
+  background: var(--bg);
+}
+
+.designer #name-panel {
+  font-weight: bold;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.designer .designer_header {
+  /* phpMyAdmin's side menu: a column of icons over the canvas, the texts shown on hover */
+  position: absolute;
+  top: 24px;
+  left: 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 2px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-weight: bold;
+}
+
+.designer .designer_header.right {
+  left: auto;
+  right: 0;
+}
+
+.designer .designer_header a {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  margin: 1px 0;
+  padding: 0 3px;
+  border: 1px dotted transparent;
+  color: var(--fg);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.designer a.M_butt:hover {
+  border: 1px solid var(--accent);
+  background: var(--warning-bg);
+}
+
+.designer a.M_butt_Selected_down {
+  border: 1px solid var(--border-strong);
+  background: var(--success-bg);
+}
+
+.designer #canvas_outer {
+  position: relative;
+  width: 100%;
+  display: block;
+}
+
+.designer #osn_tab {
+  position: relative;
+  background: var(--bg);
+  min-width: 100%;
+}
+
+.designer #canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.designer .designer_tab {
+  background: var(--bg);
+  color: var(--fg);
+  border-collapse: collapse;
+  border: 1px solid var(--border-strong);
+  user-select: none;
+  font-size: 12px;
+}
+
+.designer .designer_tab td {
+  padding: 1px 3px;
+}
+
+.designer .designer_tab .header {
+  background: var(--bg-subtle);
+}
+
+.designer .tab_zag,
+.designer .tab_zag_2 {
+  text-align: center;
+  cursor: move;
+  padding: 1px;
+  font-weight: bold;
+}
+
+.designer .tab_zag_2 {
+  background: var(--warning-bg);
+}
+
+.designer .owner {
+  font-weight: normal;
+  color: var(--fg-muted);
+}
+
+.designer .tab_field,
+.designer .tab_field_3 {
+  cursor: default;
+}
+
+.designer .tab_field_3 {
+  background: var(--error-bg);
+}
+
+.designer .tab_field:hover,
+.designer .tab_field_3:hover {
+  background: var(--success-bg);
+}
+
+.designer .small_tab {
+  vertical-align: top;
+  background: var(--accent);
+  color: var(--accent-fg);
+  cursor: default;
+  text-align: center;
+  font-weight: bold;
+  width: 1px;
+}
+
+.designer .small_tab:hover,
+.designer .small_tab_pref:hover {
+  background: var(--warning);
+  color: var(--accent-fg);
+}
+
+.designer .small_tab_pref,
+.designer .select_all {
+  text-align: center;
+  width: 1px;
+  vertical-align: top;
+}
+
+.designer #designer_hint {
+  white-space: nowrap;
+  z-index: 3;
+  padding: 0 4px;
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+}
+
+.designer #layer_menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 98;
+  width: 220px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+}
+
+/* sideMenuRight: the list moves to the other side with the menu */
+.designer #layer_menu.float-start {
+  right: auto;
+  left: 0;
+}
+
+.designer .scroll_tab {
+  overflow: auto;
+  width: 100%;
+  max-height: 500px;
+}
+
+.designer .designer_Tabs {
+  cursor: default;
+  color: var(--accent);
+  white-space: nowrap;
+  font-weight: bold;
+  padding-inline-start: 3px;
+  border: 1px solid var(--border);
+}
+
+.designer .designer_Tabs:hover {
+  background: var(--warning-bg);
+}
+
+.designer-pane {
+  z-index: 100;
+  border-collapse: separate;
+}
+
+.designer-pane .input_tab {
+  background: var(--bg-elevated);
+  color: var(--fg);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 2px 8px var(--border-strong);
+  padding: 4px;
+}
+
+.designer-pane td {
+  padding: 2px;
+}
+
+.designer .panel {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 350px;
+  max-height: 500px;
+  overflow: auto;
+  padding-top: 34px;
+  z-index: 102;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.designer .trigger {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  padding: 10px 40px 10px 15px;
+  background: var(--fg);
+  color: var(--bg);
+  text-decoration: none;
+  z-index: 102;
+}
+
+.designer .trigger:hover {
+  background: var(--warning-bg);
+  color: var(--fg);
+}

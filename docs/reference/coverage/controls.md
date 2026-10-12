@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-448/1106 covered (40.5%): 448 implemented, 24 planned, 634 missing. [Summary](README.md).
+504/1106 covered (45.6%): 504 implemented, 24 planned, 578 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
 
@@ -118,7 +118,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `triggers/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
 | `view_create.twig` | 0/10 |  | ⬜ `id:format` ⬜ `submit:Go` ⬜ `view[algorithm]` ⬜ `view[as]` ⬜ `view[column_names]` ⬜ `view[definer]` ⬜ `view[name]` ⬜ `view[or_replace]` ⬜ `view[sql_security]` ⬜ `view[with]` |
 
-## 05 database level — 188/268 (70.1%) covered, 188/268 implemented
+## 05 database level — 244/268 (91.0%) covered, 244/268 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -127,11 +127,11 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/central_columns/main.twig` | 28/29 | ✅ `col_extra[*]` ✅ `col_extra[0]` ✅ `column-select` ✅ `delete_central_columns` ✅ `edit_central_columns` ✅ `field_collation[*]` ✅ `field_collation[0]` ✅ `field_default_type[*]` ✅ `field_default_type[0]` ✅ `field_default_value[*]` ✅ `field_default_value[0]` ✅ `field_length[*]` ✅ `field_length[0]` ✅ `field_null[*]` ✅ `field_null[0]` ✅ `field_type[*]` ✅ `field_type[0]` ✅ `id:add_column_save` ✅ `id:filterRows` ✅ `link:Add new column` ✅ `link:Delete` ✅ `link:Edit` ✅ `navig` ✅ `selected_fld[]` ✅ `submit:Add` ✅ `submit:Cancel` ✅ `submit:Save` ✅ `table-select` | ⬜ `link:Edit ENUM/SET values` |
 | `database/create_table.twig` | 3/3 | ✅ `num_fields` ✅ `submit:Create` ✅ `table` |  |
 | `database/data_dictionary/index.twig` | 1/1 | ✅ `button:Print` |  |
-| `database/designer/database_tables.twig` | 0/2 |  | ⬜ `id:select_*._*` ⬜ `id:select_all_*` |
-| `database/designer/main.twig` | 0/50 |  | ⬜ `Button` ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `erel_opt` ⬜ `h_operator` ⬜ `h_rel_opt` ⬜ `hoperator` ⬜ `hrel_opt` ⬜ `id:buildQuerySubmitButton` ⬜ `id:designerModalGoButton` ⬜ `id:designerModalNoButton` ⬜ `id:designerModalYesButton` ⬜ `id:e_rename` ⬜ `id:eQuery` ⬜ `id:groupby` ⬜ `id:having` ⬜ `id:hQuery` ⬜ `id:new_name` ⬜ `id:Query` ⬜ `link:Active options` ⬜ `link:Add tables from other databases` ⬜ `link:Angular links` ⬜ `link:Build Query` ⬜ `link:Choose column to display` ⬜ `link:Create relationship` ⬜ `link:Create table` ⬜ `link:Delete pages` ⬜ `link:Export schema` ⬜ `link:Help` ⬜ `link:Hide/Show all` ⬜ `link:Hide/Show tables with no relationship` ⬜ `link:Move Menu` ⬜ `link:New page` ⬜ `link:Open page` ⬜ `link:Pin text` ⬜ `link:Reload` ⬜ `link:Save page` ⬜ `link:Save page as` ⬜ `link:Show/Hide tables list` ⬜ `link:Small/Big All` ⬜ `link:Snap to grid` ⬜ `link:Toggle relationship lines` ⬜ `link:Toggle small/big` ⬜ `link:View in fullscreen` ⬜ `on_delete` ⬜ `on_update` ⬜ `operator` ⬜ `orderby` ⬜ `rel_opt` ⬜ `sql_query` |
-| `database/designer/page_save_as.twig` | 0/2 |  | ⬜ `save_page` ⬜ `selected_value` |
-| `database/designer/page_selector.twig` | 0/1 |  | ⬜ `selected_page` |
-| `database/designer/schema_export.twig` | 0/1 |  | ⬜ `export_type` |
+| `database/designer/database_tables.twig` | 2/2 | ✅ `id:select_*._*` ✅ `id:select_all_*` |  |
+| `database/designer/main.twig` | 50/50 | ✅ `Button` ✅ `button:Cancel` ✅ `button:Close` ✅ `erel_opt` ✅ `h_operator` ✅ `h_rel_opt` ✅ `hoperator` ✅ `hrel_opt` ✅ `id:buildQuerySubmitButton` ✅ `id:designerModalGoButton` ✅ `id:designerModalNoButton` ✅ `id:designerModalYesButton` ✅ `id:e_rename` ✅ `id:eQuery` ✅ `id:groupby` ✅ `id:having` ✅ `id:hQuery` ✅ `id:new_name` ✅ `id:Query` ✅ `link:Active options` ✅ `link:Add tables from other databases` ✅ `link:Angular links` ✅ `link:Build Query` ✅ `link:Choose column to display` ✅ `link:Create relationship` ✅ `link:Create table` ✅ `link:Delete pages` ✅ `link:Export schema` ✅ `link:Help` ✅ `link:Hide/Show all` ✅ `link:Hide/Show tables with no relationship` ✅ `link:Move Menu` ✅ `link:New page` ✅ `link:Open page` ✅ `link:Pin text` ✅ `link:Reload` ✅ `link:Save page` ✅ `link:Save page as` ✅ `link:Show/Hide tables list` ✅ `link:Small/Big All` ✅ `link:Snap to grid` ✅ `link:Toggle relationship lines` ✅ `link:Toggle small/big` ✅ `link:View in fullscreen` ✅ `on_delete` ✅ `on_update` ✅ `operator` ✅ `orderby` ✅ `rel_opt` ✅ `sql_query` |  |
+| `database/designer/page_save_as.twig` | 2/2 | ✅ `save_page` ✅ `selected_value` |  |
+| `database/designer/page_selector.twig` | 1/1 | ✅ `selected_page` |  |
+| `database/designer/schema_export.twig` | 1/1 | ✅ `export_type` |  |
 | `database/events/editor_form.twig` | 13/15 | ✅ `id:format` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` | ⬜ `editor_process_*` ⬜ `item_changetype` |
 | `database/events/index.twig` | 8/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` | ⬜ `item_name[]` |
 | `database/events/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |

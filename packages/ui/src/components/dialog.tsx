@@ -128,6 +128,7 @@ export function Modal({
   footer,
   size = 'lg',
   id,
+  closeLabel,
 }: {
   title: ReactNode
   open: boolean
@@ -136,10 +137,17 @@ export function Modal({
   footer?: ReactNode
   size?: keyof typeof sizes
   id?: string
+  /** aria-label of the corner × (DialogContent `closeLabel`; the Designer's modals say "Cancel") */
+  closeLabel?: string
 }) {
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent size={size} aria-describedby={undefined} {...(id !== undefined ? { id } : {})}>
+      <DialogContent
+        size={size}
+        aria-describedby={undefined}
+        {...(id !== undefined ? { id } : {})}
+        {...(closeLabel !== undefined ? { closeLabel } : {})}
+      >
         <DialogHeader>
           <DialogTitle className="text-sm">{title}</DialogTitle>
         </DialogHeader>

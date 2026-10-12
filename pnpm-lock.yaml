@@ -68,6 +68,9 @@ importers:
       '@bettermyadmin/mysql-types':
         specifier: workspace:*
         version: link:../../packages/mysql-types
+      '@bettermyadmin/schema':
+        specifier: workspace:*
+        version: link:../../packages/schema
       '@bettermyadmin/sql-gen':
         specifier: workspace:*
         version: link:../../packages/sql-gen
@@ -305,6 +308,12 @@ importers:
         version: link:../sql-lexer
 
   packages/mysql-types:
+    dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
+
+  packages/schema:
     dependencies:
       '@bettermyadmin/i18n':
         specifier: workspace:*
