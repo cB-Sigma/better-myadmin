@@ -123,6 +123,11 @@ export const ConsoleConfigResponse = z.object({
   debugSql: z.boolean(),
   maxCharactersInDisplayedSql: z.number().int(),
   confirm: z.boolean(),
+  /**
+   * The lint context of the connected server: the console's input is linted like the SQL box
+   * (pma: modules/console.ts lint: CodeMirror.sqlLint → /lint)
+   */
+  server: z.object({ versionInt: z.number().int(), isMariaDb: z.boolean(), sqlMode: z.string() }),
 })
 export type ConsoleConfigResponse = z.infer<typeof ConsoleConfigResponse>
 

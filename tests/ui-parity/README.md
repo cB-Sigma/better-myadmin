@@ -72,7 +72,7 @@ rules:
 ```
 
 Selectors take `kind`, `label`, `name`, `section` (exact, or `/regex/flags`) and `step` (a step name,
-`initial` after load). Rules that matched nothing are reported as warnings.
+`initial` after load, or a `/regex/` of step names). Rules that matched nothing are reported as warnings.
 
 ## Known gaps
 

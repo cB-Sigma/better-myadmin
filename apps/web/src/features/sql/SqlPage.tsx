@@ -569,6 +569,8 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     <label className="flex items-center gap-1">
                       <input
                         type="checkbox"
+                        name="bkm_all_users"
+                        value="true"
                         id="id_bkm_all_users"
                         checked={bkmShared}
                         onChange={(e) => setBkmShared(e.target.checked)}
@@ -580,6 +582,8 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     <label className="flex items-center gap-1">
                       <input
                         type="checkbox"
+                        name="bkm_replace"
+                        value="true"
                         id="id_bkm_replace"
                         checked={bkmReplace}
                         onChange={(e) => setBkmReplace(e.target.checked)}

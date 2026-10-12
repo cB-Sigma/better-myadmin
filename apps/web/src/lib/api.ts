@@ -32,6 +32,7 @@ import type {
   ChooseUserGroupResponse,
   CollationsResponse,
   ColumnFormOptions,
+  ColumnNamesResponse,
   ColumnTransformations,
   ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
@@ -202,6 +203,7 @@ import type {
   StatusVariables,
   StatusVariablesRequest,
   StructureResponse,
+  TableNamesResponse,
   TableOptionsRequest,
   TableScope,
   ToggleTrackingRequest,
@@ -296,8 +298,17 @@ export async function call<T>(
     }
     throw new ApiError(res.status, env)
   }
+  // $cfg['DBG']['sql']: the statements of any response go to the console's Debug SQL card
+  // (pma: modules/console.ts $(document).on('ajaxSuccess') → ConsoleDebug.showLog(data.debug))
+  const executed = (json as { executed?: unknown } | null)?.executed
+  if (Array.isArray(executed) && executed.length > 0) {
+    window.dispatchEvent(new CustomEvent(DEBUG_SQL_EVENT, { detail: executed }))
+  }
   return json as T
 }
+
+/** Dispatched on `window` with the `executed` statements of an API response (DBG.sql). */
+export const DEBUG_SQL_EVENT = 'bma:debug-sql'
 
 /** The scope argument of database- and table-level endpoints (and of their `qk` keys). */
 export interface DbRef {
@@ -478,8 +489,14 @@ export const api = {
   exportPage: (server: number, pairs: Array<[string, string]>) =>
     call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
   /** databases (no db), tables (db) or columns (db + table) for the aliases dialog */
-  exportAliasNames: (server: number, db: string, table: string) =>
-    call<{ names: string[] }>('GET', `/servers/${server}/export/alias-names?${qs({ db, table })}`),
+  /** databases, or the tables of `db` (the export aliases dialog, the Designer) */
+  exportAliasNames: (server: number, db: string) =>
+    call<{ names: string[] }>('GET', `/servers/${server}/export/alias-names?${qs({ db })}`),
+  // the pickers' name lists (pma: /tables, /columns)
+  tableNames: (server: number, db: string) =>
+    call<TableNamesResponse>('POST', `/servers/${server}/tables`, { db }),
+  columnNames: (server: number, db: string, table: string) =>
+    call<ColumnNamesResponse>('POST', `/servers/${server}/columns`, { db, table }),
   exportRun: (server: number, params: Array<[string, string]>) =>
     call<ExportResponse>('POST', `/servers/${server}/export`, { params }),
   /** The one-shot download URL of a prepared dump (navigated to, so the browser saves it). */

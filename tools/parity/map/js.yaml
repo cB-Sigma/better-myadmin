@@ -14,3 +14,11 @@ js:error_report.ts:
   planned: M1
 js:server/privileges.ts#change:#checkbox_SSL_priv:
   n/a: 'dead handler: no template renders #checkbox_SSL_priv (the SSL radios are handled by input[name="ssl_type"])'
+js:modules/console.ts#click:<$targetMessage> .action.dbg_show_trace:
+  n/a: 'Debug SQL backtraces: $cfg[''DBG''][''sql''] logs a PHP call stack per statement; the Node server has no PHP backtrace to show'
+js:modules/console.ts#click:<$targetMessage> .action.dbg_hide_trace:
+  n/a: 'Debug SQL backtraces: no PHP call stack (see dbg_show_trace)'
+js:modules/console.ts#click:<$targetMessage> .action.dbg_show_args:
+  n/a: 'Debug SQL backtraces: the arguments of the PHP stack frames (see dbg_show_trace)'
+js:modules/console.ts#click:<$targetMessage> .action.dbg_hide_args:
+  n/a: 'Debug SQL backtraces: the arguments of the PHP stack frames (see dbg_show_trace)'

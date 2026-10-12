@@ -17,12 +17,18 @@ export function HighlightedSql({
   sql,
   versionInt = 0,
   highlight = true,
+  docLinks = true,
   className = '',
 }: {
   sql: string
   versionInt?: number
   /** false for the PHP code (code.php is not highlighted) */
   highlight?: boolean
+  /**
+   * false: the classes only, without the manual links — the console's messages, bookmarks and debug
+   * log (pma: CodeMirror.runMode(text, 'text/x-sql', elem) in modules/console.ts)
+   */
+  docLinks?: boolean
   className?: string
 }) {
   const [spans, setSpans] = useState<SqlSpan[] | null>(null)
@@ -47,7 +53,7 @@ export function HighlightedSql({
               ) : (
                 // biome-ignore lint/suspicious/noArrayIndexKey: spans are positional
                 <span key={i} className={s.cls}>
-                  {s.doc !== undefined ? (
+                  {s.doc !== undefined && docLinks ? (
                     <a
                       target="mysql_doc"
                       rel="noopener noreferrer"

@@ -284,6 +284,23 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
       },
     }))
 
+  it('console: refresh the bookmarks (/console/bookmark/refresh)', () =>
+    runStep(pma, bma, {
+      name: 'console refresh',
+      pma: (p) => p.getJson('/index.php?route=/console/bookmark/refresh'),
+      bma: async (b) => (await b.req('GET', '/api/servers/1/console/bookmarks')).json,
+      tables: [],
+      check: (pr, br) => {
+        // Console::getBookmarkContent: the welcome line and one entry per bookmark (labels, in order)
+        const html = String(pr.console_message_bookmark ?? '')
+        expect(visibleText(html)).toContain(String(br.welcomeMessage))
+        const labels = [...html.matchAll(/<span class="bookmark_label[^"]*">([^<]*)<\/span>/g)].map(
+          (m) => m[1],
+        )
+        expect((br.bookmarks as Array<{ label: string }>).map((x) => x.label)).toEqual(labels)
+      },
+    }))
+
   it('SQL box with bkm_label + bkm_replace replaces same-label bookmarks', () =>
     runStep(pma, bma, {
       name: 'replace',

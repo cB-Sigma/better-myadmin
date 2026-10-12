@@ -599,7 +599,13 @@ export async function executeStatement(
       r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
       if (ctx.grid !== undefined && errorMessage === '' && !info.flags.isAffected) {
         const g = await ctx.grid({ set, info, input, numRows, unlimNumRows, queryTime, limited: true })
-        if (g !== null) r.grid = g.grid
+        if (g !== null) {
+          r.grid = g.grid
+          // sql/no_results_returned.twig: "Query results operations" with Create view only
+          if (!info.flags.isProcedure) {
+            r.grid.operations = { print: false, procedure: false, export: null, gis: false }
+          }
+        }
       }
     }
     if (info.flags.isProcedure) {
