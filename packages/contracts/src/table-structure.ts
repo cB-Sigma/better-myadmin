@@ -73,6 +73,8 @@ export const StructureColumn = z.object({
   distinctSql: z.string(),
   /** "Drop" confirmation / statement */
   dropSql: z.string(),
+  /** in pma__central_columns (CentralColumns::findExistingColNames): "Remove from central columns" */
+  inCentralList: z.boolean(),
 })
 export type StructureColumn = z.infer<typeof StructureColumn>
 
@@ -330,6 +332,8 @@ export const ColumnFormOptions = z.object({
   charEditing: z.string(),
   /** "Pick from Central Columns" */
   centralColumns: z.boolean(),
+  /** $cfg['MaxRows']: the rows the column selector lists before "See more" (data-maxrows) */
+  maxRows: z.number().int(),
   /** MIME transformation columns (browser transformation + column comments features + BrowseMIME) */
   mime: z.boolean(),
   /** Transformations::getAvailableMimeTypes for the MIME selects (null when `mime` is false) */
@@ -392,6 +396,10 @@ export const ChangeColumnsRequest = z.object({
 export type ChangeColumnsRequest = z.input<typeof ChangeColumnsRequest>
 
 /** POST …/tables/:t/columns/drop — `source: 'row'` is the row link (/sql), 'bulk' the Yes/No page */
+/** /table/structure/central-columns-add | -remove (selected_fld[]) */
+export const CentralColumnsSelectRequest = z.object({ columns: z.array(z.string()).default([]) })
+export type CentralColumnsSelectRequest = z.input<typeof CentralColumnsSelectRequest>
+
 export const DropColumnsRequest = z.object({
   columns: z.array(z.string().min(1)).min(1),
   source: z.enum(['row', 'bulk']).default('bulk'),

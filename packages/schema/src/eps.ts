@@ -4,7 +4,7 @@ import {
   type SchemaResult,
   type SchemaTableData,
   coordinatesOf,
-  fieldsOf,
+  shownFields,
   floatStr,
   relationEnds,
   relationsOf,
@@ -64,7 +64,7 @@ export function epsSchema(req: SchemaRequest, data: ReadonlyMap<string, SchemaTa
     let t = tables.get(name)
     if (t === undefined) {
       const d = data.get(name) as SchemaTableData
-      const fields = fieldsOf(d, showKeys)
+      const fields = shownFields(d, showKeys)
       const { x, y } = coordinatesOf(req, name)
       t = { name, fields, x, y, width: 0, heightCell: fontSize + 4 }
       for (const f of fields) t.width = Math.max(t.width, getStringWidth(f, font, fontSize))

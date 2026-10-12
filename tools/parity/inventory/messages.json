@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1",
+    "referenceCommit": "a57149e1f6273eb326b153487ad070893dd9e19c",
     "source": "resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys)",
     "count": 3426
   },
@@ -185,7 +185,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:323",
-        "src/Plugins/Export/ExportSql.php:337"
+        "src/Plugins/Export/ExportSql.php:324"
       ]
     },
     {
@@ -194,8 +194,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1927",
-        "src/Plugins/Export/ExportSql.php:1941"
+        "src/Plugins/Export/ExportSql.php:1927"
       ]
     },
     {
@@ -594,8 +593,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:331",
-        "src/Plugins/Export/ExportSql.php:344"
+        "src/Plugins/Export/ExportSql.php:331"
       ]
     },
     {
@@ -605,8 +603,7 @@
       "plural": null,
       "refs": [
         "src/Config/Descriptions.php:707",
-        "src/Plugins/Export/ExportSql.php:360",
-        "src/Plugins/Export/ExportSql.php:373"
+        "src/Plugins/Export/ExportSql.php:360"
       ]
     },
     {
@@ -758,8 +755,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:419",
-        "src/Plugins/Export/ExportSql.php:433"
+        "src/Plugins/Export/ExportSql.php:419"
       ]
     },
     {
@@ -769,9 +765,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:428",
-        "src/Plugins/Export/ExportSql.php:442",
-        "src/Plugins/Export/ExportSql.php:455",
-        "src/Plugins/Export/ExportSql.php:469"
+        "src/Plugins/Export/ExportSql.php:455"
       ]
     },
     {
@@ -1410,18 +1404,11 @@
       "refs": [
         "src/Plugins/Export/ExportSql.php:282",
         "src/Plugins/Export/ExportSql.php:291",
-        "src/Plugins/Export/ExportSql.php:295",
-        "src/Plugins/Export/ExportSql.php:304",
         "src/Plugins/Export/ExportSql.php:308",
         "src/Plugins/Export/ExportSql.php:317",
-        "src/Plugins/Export/ExportSql.php:321",
-        "src/Plugins/Export/ExportSql.php:330",
         "src/Plugins/Export/ExportSql.php:341",
-        "src/Plugins/Export/ExportSql.php:354",
         "src/Plugins/Export/ExportSql.php:369",
-        "src/Plugins/Export/ExportSql.php:378",
-        "src/Plugins/Export/ExportSql.php:382",
-        "src/Plugins/Export/ExportSql.php:391"
+        "src/Plugins/Export/ExportSql.php:378"
       ]
     },
     {
@@ -1615,7 +1602,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:136"
+        "src/Controllers/Database/EventsController.php:137"
       ]
     },
     {
@@ -1750,7 +1737,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:170"
+        "src/Controllers/Database/RoutinesController.php:171"
       ]
     },
     {
@@ -1768,8 +1755,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:274",
-        "src/Plugins/Export/ExportSql.php:287"
+        "src/Plugins/Export/ExportSql.php:274"
       ]
     },
     {
@@ -1871,8 +1857,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:180",
-        "src/Plugins/Export/ExportSql.php:192"
+        "src/Plugins/Export/ExportSql.php:180"
       ]
     },
     {
@@ -1985,11 +1970,8 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:1442",
-        "src/Plugins/Export/ExportSql.php:1456",
         "src/Plugins/Export/ExportSql.php:1865",
-        "src/Plugins/Export/ExportSql.php:1879",
-        "src/Plugins/Export/ExportSql.php:582",
-        "src/Plugins/Export/ExportSql.php:596"
+        "src/Plugins/Export/ExportSql.php:582"
       ]
     },
     {
@@ -3122,8 +3104,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1629",
-        "src/Plugins/Export/ExportSql.php:1643"
+        "src/Plugins/Export/ExportSql.php:1629"
       ]
     },
     {
@@ -3132,8 +3113,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1630",
-        "src/Plugins/Export/ExportSql.php:1644"
+        "src/Plugins/Export/ExportSql.php:1630"
       ]
     },
     {
@@ -3474,7 +3454,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:469",
-        "src/Plugins/Export/ExportSql.php:484"
+        "src/Plugins/Export/ExportSql.php:470"
       ]
     },
     {
@@ -6128,8 +6108,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1578",
-        "src/Plugins/Export/ExportSql.php:1592"
+        "src/Plugins/Export/ExportSql.php:1578"
       ]
     },
     {
@@ -6138,8 +6117,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1579",
-        "src/Plugins/Export/ExportSql.php:1593"
+        "src/Plugins/Export/ExportSql.php:1579"
       ]
     },
     {
@@ -6967,7 +6945,6 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:2504",
-        "src/Plugins/Export/ExportSql.php:2518",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:540"
       ]
     },
@@ -7273,7 +7250,6 @@
         "src/Plugins/Export/ExportOdt.php:79",
         "src/Plugins/Export/ExportPdf.php:79",
         "src/Plugins/Export/ExportSql.php:256",
-        "src/Plugins/Export/ExportSql.php:268",
         "src/Plugins/Export/ExportTexytext.php:71"
       ]
     },
@@ -7299,8 +7275,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:401",
-        "src/Plugins/Export/ExportSql.php:415"
+        "src/Plugins/Export/ExportSql.php:401"
       ]
     },
     {
@@ -7436,8 +7411,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportLatex.php:287",
-        "src/Plugins/Export/ExportSql.php:1970",
-        "src/Plugins/Export/ExportSql.php:1984"
+        "src/Plugins/Export/ExportSql.php:1970"
       ]
     },
     {
@@ -7631,7 +7605,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:2539",
-        "src/Plugins/Export/ExportSql.php:2554"
+        "src/Plugins/Export/ExportSql.php:2540"
       ]
     },
     {
@@ -7692,7 +7666,6 @@
         "resources/templates/menu/main.twig:16",
         "src/Plugins/Export/ExportLatex.php:250",
         "src/Plugins/Export/ExportSql.php:907",
-        "src/Plugins/Export/ExportSql.php:921",
         "src/Plugins/Export/ExportXml.php:356",
         "src/Plugins/Export/Helpers/Pdf.php:147"
       ]
@@ -8661,8 +8634,7 @@
       "plural": null,
       "refs": [
         "src/Config/Descriptions.php:690",
-        "src/Plugins/Export/ExportSql.php:222",
-        "src/Plugins/Export/ExportSql.php:234"
+        "src/Plugins/Export/ExportSql.php:222"
       ]
     },
     {
@@ -8882,7 +8854,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:172",
-        "src/Plugins/Export/ExportSql.php:185"
+        "src/Plugins/Export/ExportSql.php:173"
       ]
     },
     {
@@ -8902,8 +8874,7 @@
       "refs": [
         "src/Plugins/Export/ExportLatex.php:149",
         "src/Plugins/Export/ExportOdt.php:96",
-        "src/Plugins/Export/ExportSql.php:194",
-        "src/Plugins/Export/ExportSql.php:206"
+        "src/Plugins/Export/ExportSql.php:194"
       ]
     },
     {
@@ -8942,8 +8913,7 @@
       "refs": [
         "src/Plugins/Export/ExportLatex.php:162",
         "src/Plugins/Export/ExportOdt.php:109",
-        "src/Plugins/Export/ExportSql.php:202",
-        "src/Plugins/Export/ExportSql.php:214"
+        "src/Plugins/Export/ExportSql.php:202"
       ]
     },
     {
@@ -9687,7 +9657,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:493",
-        "src/Plugins/Export/ExportSql.php:508"
+        "src/Plugins/Export/ExportSql.php:494"
       ]
     },
     {
@@ -9726,7 +9696,6 @@
         "src/Plugins/Export/ExportOdt.php:74",
         "src/Plugins/Export/ExportPdf.php:75",
         "src/Plugins/Export/ExportSql.php:252",
-        "src/Plugins/Export/ExportSql.php:264",
         "src/Plugins/Export/ExportTexytext.php:66"
       ]
     },
@@ -9737,7 +9706,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:502",
-        "src/Plugins/Export/ExportSql.php:517"
+        "src/Plugins/Export/ExportSql.php:503"
       ]
     },
     {
@@ -9768,7 +9737,6 @@
         "src/Plugins/Export/ExportHtmlword.php:167",
         "src/Plugins/Export/ExportOdt.php:209",
         "src/Plugins/Export/ExportSql.php:2079",
-        "src/Plugins/Export/ExportSql.php:2093",
         "src/Plugins/Export/ExportTexytext.php:137"
       ]
     },
@@ -9854,7 +9822,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:140"
+        "src/Controllers/Database/EventsController.php:141"
       ]
     },
     {
@@ -9934,7 +9902,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:174"
+        "src/Controllers/Database/RoutinesController.php:175"
       ]
     },
     {
@@ -10434,8 +10402,7 @@
       "plural": null,
       "refs": [
         "src/Config/Descriptions.php:717",
-        "src/Plugins/Export/ExportSql.php:212",
-        "src/Plugins/Export/ExportSql.php:224"
+        "src/Plugins/Export/ExportSql.php:212"
       ]
     },
     {
@@ -10454,7 +10421,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:386",
-        "src/Plugins/Export/ExportSql.php:400"
+        "src/Plugins/Export/ExportSql.php:387"
       ]
     },
     {
@@ -10771,10 +10738,10 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:189",
-        "src/Controllers/Database/RoutinesController.php:254",
-        "src/Controllers/Database/RoutinesController.php:284",
-        "src/Controllers/Database/RoutinesController.php:350",
+        "src/Controllers/Database/EventsController.php:190",
+        "src/Controllers/Database/RoutinesController.php:255",
+        "src/Controllers/Database/RoutinesController.php:285",
+        "src/Controllers/Database/RoutinesController.php:351",
         "src/Controllers/Triggers/IndexController.php:207"
       ]
     },
@@ -10784,7 +10751,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:237"
+        "src/Controllers/Database/EventsController.php:238"
       ]
     },
     {
@@ -10793,8 +10760,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:413",
-        "src/Controllers/Database/RoutinesController.php:414"
+        "src/Controllers/Database/RoutinesController.php:402",
+        "src/Controllers/Database/RoutinesController.php:403"
       ]
     },
     {
@@ -10852,8 +10819,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1983",
-        "src/Plugins/Export/ExportSql.php:1997"
+        "src/Plugins/Export/ExportSql.php:1983"
       ]
     },
     {
@@ -10862,8 +10828,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1363",
-        "src/Plugins/Export/ExportSql.php:1377"
+        "src/Plugins/Export/ExportSql.php:1363"
       ]
     },
     {
@@ -11116,7 +11081,6 @@
         "src/Navigation/Nodes/NodeEventContainer.php:23",
         "src/Navigation/Nodes/NodeEventContainer.php:25",
         "src/Plugins/Export/ExportSql.php:977",
-        "src/Plugins/Export/ExportSql.php:991",
         "src/Plugins/Export/ExportXml.php:92",
         "src/Util.php:1394"
       ]
@@ -11168,8 +11132,7 @@
       "refs": [
         "src/Config/Descriptions.php:172",
         "src/Config/Descriptions.php:706",
-        "src/Plugins/Export/ExportSql.php:354",
-        "src/Plugins/Export/ExportSql.php:367"
+        "src/Plugins/Export/ExportSql.php:354"
       ]
     },
     {
@@ -11226,8 +11189,8 @@
       "plural": null,
       "refs": [
         "resources/templates/database/routines/index.twig:113",
-        "src/Controllers/Database/RoutinesController.php:335",
-        "src/Controllers/Database/RoutinesController.php:343"
+        "src/Controllers/Database/RoutinesController.php:336",
+        "src/Controllers/Database/RoutinesController.php:344"
       ]
     },
     {
@@ -11465,8 +11428,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:239",
-        "src/Plugins/Export/ExportSql.php:251"
+        "src/Plugins/Export/ExportSql.php:239"
       ]
     },
     {
@@ -11493,7 +11455,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:217"
+        "src/Controllers/Database/EventsController.php:218"
       ]
     },
     {
@@ -11502,7 +11464,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:395"
+        "src/Controllers/Database/RoutinesController.php:384"
       ]
     },
     {
@@ -11650,8 +11612,7 @@
       "plural": null,
       "refs": [
         "src/Config/Descriptions.php:691",
-        "src/Plugins/Export/ExportSql.php:232",
-        "src/Plugins/Export/ExportSql.php:244"
+        "src/Plugins/Export/ExportSql.php:232"
       ]
     },
     {
@@ -12626,8 +12587,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:439",
-        "src/Plugins/Export/ExportSql.php:453"
+        "src/Plugins/Export/ExportSql.php:439"
       ]
     },
     {
@@ -12639,7 +12599,6 @@
         "src/Navigation/Nodes/NodeFunctionContainer.php:23",
         "src/Navigation/Nodes/NodeFunctionContainer.php:27",
         "src/Plugins/Export/ExportSql.php:630",
-        "src/Plugins/Export/ExportSql.php:644",
         "src/Plugins/Export/ExportXml.php:97"
       ]
     },
@@ -12774,7 +12733,6 @@
       "refs": [
         "src/Plugins/Export/ExportLatex.php:229",
         "src/Plugins/Export/ExportSql.php:746",
-        "src/Plugins/Export/ExportSql.php:760",
         "src/Plugins/Export/ExportXml.php:201"
       ]
     },
@@ -13563,7 +13521,6 @@
         "resources/templates/server/replication/primary_add_replica_user.twig:29",
         "src/Plugins/Export/ExportLatex.php:223",
         "src/Plugins/Export/ExportSql.php:739",
-        "src/Plugins/Export/ExportSql.php:753",
         "src/Plugins/Export/ExportXml.php:195"
       ]
     },
@@ -14177,7 +14134,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:185",
-        "src/Plugins/Export/ExportSql.php:198"
+        "src/Plugins/Export/ExportSql.php:186"
       ]
     },
     {
@@ -14187,7 +14144,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:459",
-        "src/Plugins/Export/ExportSql.php:474"
+        "src/Plugins/Export/ExportSql.php:460"
       ]
     },
     {
@@ -14437,8 +14394,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1605",
-        "src/Plugins/Export/ExportSql.php:1619"
+        "src/Plugins/Export/ExportSql.php:1605"
       ]
     },
     {
@@ -14447,8 +14403,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1606",
-        "src/Plugins/Export/ExportSql.php:1620"
+        "src/Plugins/Export/ExportSql.php:1606"
       ]
     },
     {
@@ -14628,7 +14583,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:464",
-        "src/Plugins/Export/ExportSql.php:479"
+        "src/Plugins/Export/ExportSql.php:465"
       ]
     },
     {
@@ -14665,8 +14620,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:413",
-        "src/Plugins/Export/ExportSql.php:427"
+        "src/Plugins/Export/ExportSql.php:413"
       ]
     },
     {
@@ -14954,8 +14908,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:579",
-        "src/Plugins/Export/ExportSql.php:593"
+        "src/Plugins/Export/ExportSql.php:579"
       ]
     },
     {
@@ -14964,8 +14917,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1439",
-        "src/Plugins/Export/ExportSql.php:1453"
+        "src/Plugins/Export/ExportSql.php:1439"
       ]
     },
     {
@@ -14974,8 +14926,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1862",
-        "src/Plugins/Export/ExportSql.php:1876"
+        "src/Plugins/Export/ExportSql.php:1862"
       ]
     },
     {
@@ -15237,7 +15188,6 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:2520",
-        "src/Plugins/Export/ExportSql.php:2534",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:562"
       ]
     },
@@ -15270,7 +15220,6 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:2512",
-        "src/Plugins/Export/ExportSql.php:2526",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:551"
       ]
     },
@@ -16299,8 +16248,7 @@
       "plural": null,
       "refs": [
         "src/Config/Descriptions.php:711",
-        "src/Plugins/Export/ExportSql.php:486",
-        "src/Plugins/Export/ExportSql.php:500"
+        "src/Plugins/Export/ExportSql.php:486"
       ]
     },
     {
@@ -16536,8 +16484,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1681",
-        "src/Plugins/Export/ExportSql.php:1695"
+        "src/Plugins/Export/ExportSql.php:1681"
       ]
     },
     {
@@ -16573,8 +16520,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1037",
-        "src/Plugins/Export/ExportSql.php:1051"
+        "src/Plugins/Export/ExportSql.php:1037"
       ]
     },
     {
@@ -16583,8 +16529,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1103",
-        "src/Plugins/Export/ExportSql.php:1117"
+        "src/Plugins/Export/ExportSql.php:1103"
       ]
     },
     {
@@ -16593,8 +16538,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1096",
-        "src/Plugins/Export/ExportSql.php:1110"
+        "src/Plugins/Export/ExportSql.php:1096"
       ]
     },
     {
@@ -17212,8 +17156,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Import/ImportShp.php:201",
-        "src/Plugins/Import/ImportShp.php:204"
+        "src/Plugins/Import/ImportShp.php:201"
       ]
     },
     {
@@ -17363,7 +17306,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:474",
-        "src/Plugins/Export/ExportSql.php:489"
+        "src/Plugins/Export/ExportSql.php:475"
       ]
     },
     {
@@ -17670,13 +17613,13 @@
         "resources/js/server/databases.ts:36",
         "src/Controllers/Database/DesignerController.php:175",
         "src/Controllers/Database/DesignerController.php:180",
-        "src/Controllers/Database/EventsController.php:52",
+        "src/Controllers/Database/EventsController.php:53",
         "src/Controllers/Database/ExportController.php:57",
         "src/Controllers/Database/ExportController.php:62",
         "src/Controllers/Database/ImportController.php:62",
         "src/Controllers/Database/ImportController.php:67",
-        "src/Controllers/Database/RoutinesController.php:77",
-        "src/Controllers/Database/RoutinesController.php:95",
+        "src/Controllers/Database/RoutinesController.php:78",
+        "src/Controllers/Database/RoutinesController.php:96",
         "src/Controllers/Database/SearchController.php:53",
         "src/Controllers/Database/SearchController.php:58",
         "src/Controllers/Database/SqlController.php:54",
@@ -17762,7 +17705,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:191"
+        "src/Controllers/Database/EventsController.php:192"
       ]
     },
     {
@@ -17972,8 +17915,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:286",
-        "src/Controllers/Database/RoutinesController.php:352"
+        "src/Controllers/Database/RoutinesController.php:287",
+        "src/Controllers/Database/RoutinesController.php:353"
       ]
     },
     {
@@ -17982,8 +17925,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:256",
-        "src/Controllers/Database/RoutinesController.php:257"
+        "src/Controllers/Database/RoutinesController.php:257",
+        "src/Controllers/Database/RoutinesController.php:258"
       ]
     },
     {
@@ -18033,7 +17976,7 @@
       "plural": null,
       "refs": [
         "resources/js/database/search.ts:221",
-        "src/Controllers/Database/RoutinesController.php:85",
+        "src/Controllers/Database/RoutinesController.php:86",
         "src/Controllers/Database/Structure/AddPrefixController.php:35",
         "src/Controllers/Database/Structure/CentralColumns/AddController.php:39",
         "src/Controllers/Database/Structure/CentralColumns/MakeConsistentController.php:38",
@@ -18220,7 +18163,6 @@
         "src/Controllers/JavaScriptMessagesController.php:219",
         "src/Display/Results.php:921",
         "src/Plugins/Export/ExportSql.php:1970",
-        "src/Plugins/Export/ExportSql.php:1984",
         "src/Plugins/Schema/SchemaPdf.php:96"
       ]
     },
@@ -18761,8 +18703,7 @@
       "refs": [
         "src/Plugins/Export/ExportLatex.php:124",
         "src/Plugins/Export/ExportOdt.php:89",
-        "src/Plugins/Export/ExportSql.php:267",
-        "src/Plugins/Export/ExportSql.php:280"
+        "src/Plugins/Export/ExportSql.php:267"
       ]
     },
     {
@@ -19970,7 +19911,6 @@
       "refs": [
         "src/Plugins/Export/ExportLatex.php:232",
         "src/Plugins/Export/ExportSql.php:752",
-        "src/Plugins/Export/ExportSql.php:766",
         "src/Plugins/Export/ExportXml.php:204"
       ]
     },
@@ -20956,7 +20896,6 @@
         "src/Navigation/Nodes/NodeProcedureContainer.php:23",
         "src/Navigation/Nodes/NodeProcedureContainer.php:27",
         "src/Plugins/Export/ExportSql.php:619",
-        "src/Plugins/Export/ExportSql.php:633",
         "src/Plugins/Export/ExportXml.php:102"
       ]
     },
@@ -21916,8 +21855,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1711",
-        "src/Plugins/Export/ExportSql.php:1725"
+        "src/Plugins/Export/ExportSql.php:1711"
       ]
     },
     {
@@ -24015,7 +23953,6 @@
         "resources/templates/home/index.twig:197",
         "src/Plugins/Export/ExportLatex.php:231",
         "src/Plugins/Export/ExportSql.php:750",
-        "src/Plugins/Export/ExportSql.php:764",
         "src/Plugins/Export/ExportXml.php:203"
       ]
     },
@@ -26047,7 +25984,6 @@
         "src/Plugins/Export/ExportHtmlword.php:462",
         "src/Plugins/Export/ExportOdt.php:584",
         "src/Plugins/Export/ExportSql.php:1924",
-        "src/Plugins/Export/ExportSql.php:1938",
         "src/Plugins/Export/ExportTexytext.php:418"
       ]
     },
@@ -26371,7 +26307,6 @@
         "src/Plugins/Export/ExportOdt.php:79",
         "src/Plugins/Export/ExportPdf.php:79",
         "src/Plugins/Export/ExportSql.php:256",
-        "src/Plugins/Export/ExportSql.php:268",
         "src/Plugins/Export/ExportTexytext.php:71"
       ]
     },
@@ -26425,7 +26360,6 @@
         "src/Plugins/Export/ExportOdt.php:79",
         "src/Plugins/Export/ExportPdf.php:79",
         "src/Plugins/Export/ExportSql.php:256",
-        "src/Plugins/Export/ExportSql.php:268",
         "src/Plugins/Export/ExportTexytext.php:71"
       ]
     },
@@ -26450,7 +26384,6 @@
         "src/Plugins/Export/ExportHtmlword.php:456",
         "src/Plugins/Export/ExportOdt.php:576",
         "src/Plugins/Export/ExportSql.php:1881",
-        "src/Plugins/Export/ExportSql.php:1895",
         "src/Plugins/Export/ExportTexytext.php:414"
       ]
     },
@@ -26460,8 +26393,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:1896",
-        "src/Plugins/Export/ExportSql.php:1910"
+        "src/Plugins/Export/ExportSql.php:1896"
       ]
     },
     {
@@ -26779,8 +26711,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:450",
-        "src/Plugins/Export/ExportSql.php:464"
+        "src/Plugins/Export/ExportSql.php:450"
       ]
     },
     {
@@ -27238,7 +27169,6 @@
         "src/Plugins/Export/ExportHtmlword.php:439",
         "src/Plugins/Export/ExportOdt.php:556",
         "src/Plugins/Export/ExportSql.php:1815",
-        "src/Plugins/Export/ExportSql.php:1829",
         "src/Plugins/Export/ExportTexytext.php:401"
       ]
     },
@@ -28040,7 +27970,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/EventsController.php:69"
+        "src/Controllers/Database/EventsController.php:70"
       ]
     },
     {
@@ -28221,8 +28151,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Import/ImportShp.php:246",
-        "src/Plugins/Import/ImportShp.php:249"
+        "src/Plugins/Import/ImportShp.php:246"
       ]
     },
     {
@@ -30180,8 +30109,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Import/ImportShp.php:113",
-        "src/Plugins/Import/ImportShp.php:176",
-        "src/Plugins/Import/ImportShp.php:179"
+        "src/Plugins/Import/ImportShp.php:176"
       ]
     },
     {
@@ -31310,7 +31238,6 @@
         "src/Plugins/Export/ExportOdt.php:566",
         "src/Plugins/Export/ExportPdf.php:173",
         "src/Plugins/Export/ExportSql.php:1833",
-        "src/Plugins/Export/ExportSql.php:1847",
         "src/Plugins/Export/ExportTexytext.php:408",
         "src/Plugins/Export/ExportXml.php:112",
         "src/Util.php:1395",
@@ -31355,9 +31282,7 @@
       "plural": null,
       "refs": [
         "src/Plugins/Export/ExportSql.php:2042",
-        "src/Plugins/Export/ExportSql.php:2056",
-        "src/Plugins/Export/ExportSql.php:405",
-        "src/Plugins/Export/ExportSql.php:419"
+        "src/Plugins/Export/ExportSql.php:405"
       ]
     },
     {
@@ -32132,8 +32057,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/ExportSql.php:348",
-        "src/Plugins/Export/ExportSql.php:361"
+        "src/Plugins/Export/ExportSql.php:348"
       ]
     },
     {

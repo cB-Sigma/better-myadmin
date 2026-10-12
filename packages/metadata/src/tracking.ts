@@ -167,6 +167,10 @@ export interface TrackingLogEntry {
   statement: string
 }
 
+/** rtrim()'s default characters: " \t\n\r\0\x0B" */
+// biome-ignore lint/suspicious/noControlCharactersInRegex: PHP's rtrim set includes NUL and VT
+const PHP_RTRIM = /[ \t\n\r\0\x0B]+$/
+
 /** Tracking::getTrackedData: the log entries of one log column (`schema_sql` / `data_sql`). */
 export function parseTrackingLog(log: string | null): TrackingLogEntry[] {
   const out: TrackingLogEntry[] = []
@@ -175,11 +179,47 @@ export function parseTrackingLog(log: string | null): TrackingLogEntry[] {
     const cps = [...entry]
     const nl = cps.indexOf('\n')
     const date = cps.slice(0, 19).join('')
-    const username = cps.slice(20, nl === -1 ? cps.length : nl).join('')
-    const statement = nl === -1 ? '' : cps.slice(nl).join('').trimEnd()
+    // mb_substr($e, 20, mb_strpos($e, "\n") - 20): a negative length counts from the end
+    const len = (nl === -1 ? 0 : nl) - 20
+    const username = (len >= 0 ? cps.slice(20, 20 + len) : cps.slice(20, cps.length + len)).join('')
+    const statement = (nl === -1 ? '' : cps.slice(nl).join('')).replace(PHP_RTRIM, '')
     out.push({ date, username, statement })
   }
   return out
+}
+
+/** Tracking::getListOfVersionsOfTable: every version row of one table, newest first. */
+export async function trackingVersions(
+  conn: MetaConn | null,
+  rp: RelationParameters,
+  db: string,
+  tableName: string,
+): Promise<Row[]> {
+  const f = rp.trackingFeature
+  if (conn === null || f === null) return []
+  const r = await conn.query(
+    `SELECT * FROM ${table(f)} WHERE db_name = ${q(db)} AND table_name = ${q(tableName)} ORDER BY version DESC`,
+  )
+  return r.rows
+}
+
+/** Tracking::changeTrackingData: rewrites one log column (`schema_sql` / `data_sql`). */
+export async function changeTrackingData(
+  conn: MetaConn | null,
+  rp: RelationParameters,
+  db: string,
+  tableName: string,
+  version: string,
+  column: 'schema_sql' | 'data_sql',
+  entries: TrackingLogEntry[],
+): Promise<boolean> {
+  const f = rp.trackingFeature
+  if (conn === null || f === null) return false
+  const text = entries.map((d) => `# log ${d.date} ${d.username}${d.statement}\n`).join('')
+  const r = await conn.tryQuery(
+    `UPDATE ${table(f)} SET \`${column}\` = ${q(text)} WHERE \`db_name\` = ${q(db)} AND \`table_name\` = ${q(tableName)} AND \`version\` = ${q(version)}`,
+  )
+  return r !== false
 }
 
 /** Tracking::getTrackedData($db, $table, $version): the row, parsed. */

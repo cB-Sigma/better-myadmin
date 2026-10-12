@@ -21,6 +21,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { AliasDialog } from './AliasDialog'
 import { ExportOutput } from './ExportOutput'
@@ -68,6 +69,8 @@ export function ExportPage({
   /** the request fields (single_table, sql_query, where clauses, repopulated values …) */
   request?: Array<[string, string]>
 }) {
+  // pma: Server|Database|Table ExportController: PageSettings::init('Export')
+  usePagePrefs(server, 'Export')
   const pairs = useMemo<Array<[string, string]>>(
     () => [
       ['scope', scope],

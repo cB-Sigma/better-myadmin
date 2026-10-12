@@ -121,6 +121,8 @@ export const MaintenanceResult = z.object({
   op: MaintenanceOp,
   /** Analyze table / Check table / … */
   title: z.string(),
+  /** the MySQL manual page of the statement (ANALYZE_TABLE …) */
+  docPage: z.string(),
   rows: z.array(z.object({ table: z.string(), op: z.string(), msgType: z.string(), msgText: z.string() })),
   /** checksum: Table | Checksum (null in italics) */
   checksums: z.array(z.object({ table: z.string(), checksum: z.string().nullable() })).optional(),

@@ -25,6 +25,7 @@ import { ApiError, type InsertFormRequest, api, errorMessage } from '../../lib/a
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { GisEditor } from '../gis/GisEditor'
+import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { useLockPage } from '../shell/page-chrome'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { setFlash } from '../table/structure/flash'
@@ -63,6 +64,8 @@ export interface InsertEditPageProps {
  */
 export function InsertEditPage(props: InsertEditPageProps) {
   const { server, db, table } = props
+  // pma: Table\ChangeController: PageSettings::init('Edit')
+  usePagePrefs(server, 'Edit')
   const [req, setReq] = useState<InsertFormRequest>({
     where: props.where,
     copy: props.copy === true,

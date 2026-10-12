@@ -4,7 +4,7 @@ import {
   type SchemaResult,
   type SchemaTableData,
   coordinatesOf,
-  fieldsOf,
+  shownFields,
   floatStr,
   pick,
   relationEnds,
@@ -50,7 +50,7 @@ export function svgSchema(req: SchemaRequest, data: ReadonlyMap<string, SchemaTa
 
   const make = (name: string, keys: boolean): SvgTable => {
     const t = data.get(name) as SchemaTableData
-    const fields = fieldsOf(t, keys)
+    const fields = shownFields(t, keys)
     const { x, y } = coordinatesOf(req, name)
     const heightCell = FONT_SIZE + 4
     const s: SvgTable = {

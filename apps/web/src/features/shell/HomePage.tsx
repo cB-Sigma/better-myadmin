@@ -219,7 +219,7 @@ function GeneralSettings(props: {
           )}
         </PanelItem>
         <PanelItem id="li_user_preferences">
-          <Link to="/s/$server/$" params={{ server, _splat: 'settings' }}>
+          <Link to="/s/$server/preferences/manage" params={{ server }}>
             <IconText icon="b_tblops" text={t('More settings')} forceText />
           </Link>
         </PanelItem>

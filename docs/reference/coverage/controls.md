@@ -4,9 +4,9 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-504/1106 covered (45.6%): 504 implemented, 24 planned, 578 missing. [Summary](README.md).
+575/1106 covered (52.0%): 575 implemented, 24 planned, 507 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 24/98 (24.5%) covered, 24/98 implemented
+## 01 shell navigation auth — 27/98 (27.6%) covered, 27/98 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -20,9 +20,9 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `home/themes.twig` | 0/1 |  | ⬜ `set_theme` |
 | `list_navigator.twig` | 4/4 | ✅ `link:Begin` ✅ `link:End` ✅ `link:Next` ✅ `link:Previous` |  |
 | `login/form.twig` | 6/6 | ✅ `id:input_go` ✅ `lang` ✅ `pma_password` ✅ `pma_servername` ✅ `pma_username` ✅ `server` |  |
-| `login/twofactor.twig` | 0/1 |  | ⬜ `submit:Verify` |
-| `login/twofactor/application_configure.twig` | 0/1 |  | ⬜ `2fa_code` |
-| `login/twofactor/application.twig` | 0/1 |  | ⬜ `2fa_code` |
+| `login/twofactor.twig` | 1/1 | ✅ `submit:Verify` |  |
+| `login/twofactor/application_configure.twig` | 1/1 | ✅ `2fa_code` |  |
+| `login/twofactor/application.twig` | 1/1 | ✅ `2fa_code` |  |
 | `menu/main.twig` | 2/5 | ✅ `link:(current)` ✅ `link:Server:` | ⬜ `button:Toggle navigation` ⬜ `link:Database:` ⬜ `link:View:` |
 | `modals/unhide_nav_item.twig` | 0/1 |  | ⬜ `button:Close` |
 | `navigation/item_unhide_dialog.twig` | 0/1 |  | ⬜ `link:Unhide` |
@@ -38,7 +38,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `setup/home/index.twig` | 0/15 |  | 🗓️ `DefaultLang` 🗓️ `eol` 🗓️ `lang` 🗓️ `link:Check for latest version` 🗓️ `link:Delete` 🗓️ `link:Documentation` 🗓️ `link:Donate` 🗓️ `link:Edit` 🗓️ `link:phpMyAdmin homepage` 🗓️ `link:Show hidden messages` 🗓️ `ServerDefault` 🗓️ `submit` 🗓️ `submit_clear` 🗓️ `submit_display` 🗓️ `submit_download` |
 | `src/Navigation/NavigationTree.php` | 2/2 | ✅ `id:pma_navigation_collapse` ✅ `id:pma_navigation_sync` |  |
 
-## 02 browse results grid — 24/32 (75.0%) covered, 24/32 implemented
+## 02 browse results grid — 27/32 (84.4%) covered, 27/32 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -50,7 +50,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `sql/relational_column_dropdown.twig` | 0/1 |  | ⬜ `link:Browse foreign values` |
 | `sql/set_column.twig` | 0/1 |  | ⬜ `select:L2` |
 | `src/Display/Results.php` | 1/1 | ✅ `pos` |  |
-| `table/start_and_number_of_rows_fieldset.twig` | 0/3 |  | ⬜ `pos` ⬜ `session_max_rows` ⬜ `submit` |
+| `table/start_and_number_of_rows_fieldset.twig` | 3/3 | ✅ `pos` ✅ `session_max_rows` ✅ `submit` |  |
 
 ## 03 insert edit transformations — 26/28 (92.9%) covered, 26/28 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 120/306 (39.2%) covered, 120/306 implemented
+## 04 table level — 148/306 (48.4%) covered, 148/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -79,19 +79,19 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `columns_definitions/table_fields_definitions.twig` | 0/2 |  | ⬜ `link:Browser display transformation` ⬜ `link:Input transformation` |
 | `create_tracking_version.twig` | 14/14 | ✅ `alter_table` ✅ `alter_view` ✅ `create_index` ✅ `create_table` ✅ `create_view` ✅ `delete` ✅ `drop_index` ✅ `drop_table` ✅ `drop_view` ✅ `insert` ✅ `rename_table` ✅ `submit:Create version` ✅ `truncate` ✅ `update` |  |
 | `indexes.twig` | 0/3 |  | ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Rename` |
-| `modals/create_view.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:createViewModalGoButton` |
+| `modals/create_view.twig` | 2/2 | ✅ `button:Close` ✅ `id:createViewModalGoButton` |  |
 | `modals/enum_set_editor.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:enumEditorGoButton` |
 | `modals/index_dialog_modal.twig` | 0/4 |  | ⬜ `button:Close` ⬜ `button:Go back` ⬜ `button:Preview SQL` ⬜ `id:indexDialogModalGoButton` |
 | `modals/preview_sql_confirmation.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:previewSQLConfirmOkButton` |
 | `modals/preview_sql_modal.twig` | 0/1 |  | ⬜ `button:Close` |
-| `table/chart/tbl_chart.twig` | 0/11 |  | ⬜ `barStackedCheckbox` ⬜ `chartSeriesColumnSelect` ⬜ `chartSeriesSelect` ⬜ `chartTitleInput` ⬜ `chartType` ⬜ `chartValueColumnSelect` ⬜ `chartXAxisSelect` ⬜ `link:Save chart as image` ⬜ `seriesColumnCheckbox` ⬜ `xAxisLabelInput` ⬜ `yAxisLabelInput` |
+| `table/chart/tbl_chart.twig` | 11/11 | ✅ `barStackedCheckbox` ✅ `chartSeriesColumnSelect` ✅ `chartSeriesSelect` ✅ `chartTitleInput` ✅ `chartType` ✅ `chartValueColumnSelect` ✅ `chartXAxisSelect` ✅ `link:Save chart as image` ✅ `seriesColumnCheckbox` ✅ `xAxisLabelInput` ✅ `yAxisLabelInput` |  |
 | `table/delete/confirm.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
 | `table/find_replace/index.twig` | 8/8 | ✅ `columnIndex` ✅ `find` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `replaceWith` ✅ `submit` ✅ `useRegex` |  |
 | `table/find_replace/replace_preview.twig` | 1/1 | ✅ `replace` |  |
-| `table/gis_visualization/gis_visualization.twig` | 0/4 |  | ⬜ `id:saveImageButton` ⬜ `useBaseLayer` ⬜ `visualizationSettings[labelColumn]` ⬜ `visualizationSettings[spatialColumn]` |
+| `table/gis_visualization/gis_visualization.twig` | 3/4 | ✅ `id:saveImageButton` ✅ `visualizationSettings[labelColumn]` ✅ `visualizationSettings[spatialColumn]` | ⬜ `useBaseLayer` |
 | `table/index_form.twig` | 0/13 |  | ⬜ `button:Advanced options` ⬜ `button:Go` ⬜ `id:add_fields` ⬜ `id:preview_index_frm` ⬜ `index[columns][collations][]` ⬜ `index[columns][names][]` ⬜ `index[columns][sub_parts][]` ⬜ `index[Index_choice]` ⬜ `index[Index_comment]` ⬜ `index[Index_type]` ⬜ `index[Key_block_size]` ⬜ `index[Key_name]` ⬜ `index[Parser]` |
 | `table/index_rename_form.twig` | 0/2 |  | ⬜ `id:preview_index_frm` ⬜ `index` |
-| `table/normalization/normalization.twig` | 0/2 |  | ⬜ `normalizeTo` ⬜ `submit_normalize` |
+| `table/normalization/normalization.twig` | 2/2 | ✅ `normalizeTo` ✅ `submit_normalize` |  |
 | `table/operations/index.twig` | 34/36 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_collations` ✅ `comment` ✅ `drop_if_exists` ✅ `link:Analyze table` ✅ `link:Check table` ✅ `link:Checksum table` ✅ `link:Defragment table` ✅ `link:Flush the table (FLUSH)` ✅ `link:Optimize table` ✅ `link:Remove partitioning` ✅ `link:Repair table` ✅ `new_auto_increment` ✅ `new_checksum` ✅ `new_delay_key_write` ✅ `new_name` ✅ `new_pack_keys` ✅ `new_page_checksum` ✅ `new_row_format` ✅ `new_tbl_storage_engine` ✅ `new_transactional` ✅ `order_field` ✅ `order_order` ✅ `partition_name[]` ✅ `partition_operation` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit_move` ✅ `submit:Go` ✅ `switch_to_new` ✅ `target_db` ✅ `tbl_collation` ✅ `what` | ⬜ `link:Table %s has been emptied.` ⬜ `link:View %s has been dropped.` |
 | `table/operations/view.twig` | 2/3 | ✅ `new_name` ✅ `submit:Go` | ⬜ `link:View %s has been dropped.` |
 | `table/page_with_secondary_tabs.twig` | 0/2 |  | ⬜ `link:Relation view` ⬜ `link:Table structure` |
@@ -116,7 +116,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `triggers/export.twig` | 0/1 |  | ⬜ `textarea:L6` |
 | `triggers/list.twig` | 5/5 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:triggersEditorModalSaveButton` ✅ `link:Create new trigger` ✅ `submit_mult` |  |
 | `triggers/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
-| `view_create.twig` | 0/10 |  | ⬜ `id:format` ⬜ `submit:Go` ⬜ `view[algorithm]` ⬜ `view[as]` ⬜ `view[column_names]` ⬜ `view[definer]` ⬜ `view[name]` ⬜ `view[or_replace]` ⬜ `view[sql_security]` ⬜ `view[with]` |
+| `view_create.twig` | 10/10 | ✅ `id:format` ✅ `submit:Go` ✅ `view[algorithm]` ✅ `view[as]` ✅ `view[column_names]` ✅ `view[definer]` ✅ `view[name]` ✅ `view[or_replace]` ✅ `view[sql_security]` ✅ `view[with]` |  |
 
 ## 05 database level — 244/268 (91.0%) covered, 244/268 implemented
 
@@ -211,19 +211,19 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `import.twig` | 10/10 | ✅ `allow_interrupt` ✅ `charset_of_file` ✅ `fk_checks` ✅ `format` ✅ `id:buttonGo` ✅ `id:localFileTab` ✅ `id:uploadFileTab` ✅ `import_file` ✅ `local_import_file` ✅ `skip_queries` |  |
 | `server/export/index.twig` | 3/3 | ✅ `db_select[]` ✅ `id:db_select_all` ✅ `id:db_unselect_all` |  |
 
-## 08 settings preferences pmadb — 0/39 (0.0%) covered, 0/39 implemented
+## 08 settings preferences pmadb — 37/39 (94.9%) covered, 37/39 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `config/form_display/display.twig` | 0/2 |  | ⬜ `submit_reset` ⬜ `submit_save` |
-| `config/form_display/input.twig` | 0/12 |  | ⬜ `*-userprefs-allow` ⬜ `checkbox:L37` ⬜ `link:Comment` ⬜ `link:Documentation` ⬜ `link:Restore default value` ⬜ `link:Set value: %s` ⬜ `number:L34` ⬜ `password:L29` ⬜ `select:L40` ⬜ `text:L27` ⬜ `text:L32` ⬜ `textarea:L47` |
-| `preferences/autoload.twig` | 0/3 |  | ⬜ `link:Delete settings` ⬜ `link:No` ⬜ `link:Yes` |
-| `preferences/header.twig` | 0/8 |  | ⬜ `link:Export` ⬜ `link:Features` ⬜ `link:Import` ⬜ `link:Main panel` ⬜ `link:Manage your settings` ⬜ `link:Navigation panel` ⬜ `link:SQL queries` ⬜ `link:Two-factor authentication` |
-| `preferences/manage/error.twig` | 0/2 |  | ⬜ `submit_ignore` ⬜ `submit_import` |
-| `preferences/manage/main.twig` | 0/7 |  | ⬜ `export_type` ⬜ `import_file` ⬜ `import_merge` ⬜ `import_type` ⬜ `submit_clear` ⬜ `submit_export` ⬜ `submit_import` |
-| `preferences/two_factor/configure.twig` | 0/1 |  | ⬜ `submit:Enable two-factor authentication` |
-| `preferences/two_factor/confirm.twig` | 0/1 |  | ⬜ `submit:Disable two-factor authentication` |
-| `preferences/two_factor/main.twig` | 0/3 |  | ⬜ `2fa_configure` ⬜ `2fa_remove` ⬜ `submit:Configure two-factor authentication` |
+| `config/form_display/display.twig` | 2/2 | ✅ `submit_reset` ✅ `submit_save` |  |
+| `config/form_display/input.twig` | 10/12 | ✅ `checkbox:L37` ✅ `link:Documentation` ✅ `link:Restore default value` ✅ `link:Set value: %s` ✅ `number:L34` ✅ `password:L29` ✅ `select:L40` ✅ `text:L27` ✅ `text:L32` ✅ `textarea:L47` | ⬜ `*-userprefs-allow` ⬜ `link:Comment` |
+| `preferences/autoload.twig` | 3/3 | ✅ `link:Delete settings` ✅ `link:No` ✅ `link:Yes` |  |
+| `preferences/header.twig` | 8/8 | ✅ `link:Export` ✅ `link:Features` ✅ `link:Import` ✅ `link:Main panel` ✅ `link:Manage your settings` ✅ `link:Navigation panel` ✅ `link:SQL queries` ✅ `link:Two-factor authentication` |  |
+| `preferences/manage/error.twig` | 2/2 | ✅ `submit_ignore` ✅ `submit_import` |  |
+| `preferences/manage/main.twig` | 7/7 | ✅ `export_type` ✅ `import_file` ✅ `import_merge` ✅ `import_type` ✅ `submit_clear` ✅ `submit_export` ✅ `submit_import` |  |
+| `preferences/two_factor/configure.twig` | 1/1 | ✅ `submit:Enable two-factor authentication` |  |
+| `preferences/two_factor/confirm.twig` | 1/1 | ✅ `submit:Disable two-factor authentication` |  |
+| `preferences/two_factor/main.twig` | 3/3 | ✅ `2fa_configure` ✅ `2fa_remove` ✅ `submit:Configure two-factor authentication` |  |
 
 ## 09 sql editor query pipeline — 6/28 (21.4%) covered, 6/28 implemented
 

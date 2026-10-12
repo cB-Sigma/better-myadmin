@@ -9,9 +9,8 @@ import { sprintf } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { NotFoundError } from '../http/errors.ts'
 import { PrivilegeProbe } from '../shell/privileges.ts'
-import { type DbCtx, msg, tryQuery } from './context.ts'
+import { type DbCtx, fetchColumn, msg, tryQuery } from './context.ts'
 import { errorsMessage } from './routines.ts'
-import { fetchColumn } from './table-mover.ts'
 
 /**
  * Database → Events: list, scheduler status, editor, export.

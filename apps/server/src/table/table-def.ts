@@ -42,7 +42,11 @@ export function sqlStructurePlugin(ctx: DefCtx, autoIncrement = false): ExportSq
     }),
     tr: ctx.tr,
     parserContext: conn.serverInfo?.context ?? new Context(),
-    settings: ctx.cfg.Export as unknown as Record<string, unknown>,
+    // $cfg['Export'] (the plugin reads remove_definer_from_definitions for views)
+    settings: {
+      ...(ctx.cfg.Export as unknown as Record<string, unknown>),
+      remove_definer_from_definitions: ctx.cfg.Export.remove_definer_from_definitions,
+    },
     autoIncrement,
   })
 }

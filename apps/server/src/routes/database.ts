@@ -6,7 +6,6 @@ import {
   CopyTablesRequest,
   DbCollationRequest,
   DbCommentRequest,
-  DbMaintenanceRequest,
   DbRenameCopyRequest,
   DbSearchRequest,
   DbStructureQuery,
@@ -20,6 +19,7 @@ import {
   DesignerSettingRequest,
   DesignerTableQuery,
   EventSaveRequest,
+  MaintenanceRequest,
   ReplacePrefixRequest,
   RoutineExecuteRequest,
   RoutineSaveRequest,
@@ -34,7 +34,6 @@ import {
   copyWithPrefix,
   dropTables,
   emptyTables,
-  maintenance,
   replacePrefix,
   showCreate,
 } from '../database/bulk.ts'
@@ -78,6 +77,7 @@ import { search, searchForm } from '../database/search.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
 import { trackingAction, trackingPage } from '../database/tracking.ts'
 import { exportTrigger, saveTrigger, triggerData, triggersList } from '../database/triggers.ts'
+import { maintenance } from '../table/maintenance.ts'
 import type { ServerEnv } from './server.ts'
 
 /**
@@ -151,8 +151,8 @@ databaseRoutes.post('/:db/structure/show-create', async (c) => {
 
 /** pma: /table/maintenance/{analyze,check,checksum,optimize,repair} */
 databaseRoutes.post('/:db/structure/maintenance', async (c) => {
-  const req = parse(DbMaintenanceRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => maintenance(ctx, req)))
+  const req = parse(MaintenanceRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => maintenance(ctx, { ...req, tables: req.tables ?? [] })))
 })
 
 // ---------------------------------------------------------------- Operations

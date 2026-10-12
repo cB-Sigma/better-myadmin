@@ -3,7 +3,7 @@ import {
   type SchemaResult,
   type SchemaTableData,
   coordinatesOf,
-  fieldsOf,
+  shownFields,
   floatStr,
   pick,
   relationsOf,
@@ -115,7 +115,7 @@ export function diaSchema(req: SchemaRequest, data: ReadonlyMap<string, SchemaTa
     tables.set(name, {
       id: ++objectId,
       name,
-      fields: fieldsOf(d, showKeys),
+      fields: shownFields(d, showKeys),
       primary: d.primary,
       displayField: d.displayField,
       x,

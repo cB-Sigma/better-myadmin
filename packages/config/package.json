@@ -8,7 +8,8 @@
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
-    "fixtures:pma": "php scripts/dump-pma-defaults.php \"${PMA_ROOT:-../../../ref/pma}\" > test/fixtures/pma-defaults.json && php scripts/dump-pma-configs.php \"${PMA_ROOT:-../../../ref/pma}\" > test/fixtures/pma-configs.json"
+    "fixtures:pma": "php scripts/dump-pma-defaults.php \"${PMA_ROOT:-../../../ref/pma}\" > test/fixtures/pma-defaults.json && php scripts/dump-pma-configs.php \"${PMA_ROOT:-../../../ref/pma}\" > test/fixtures/pma-configs.json",
+    "forms:pma": "php scripts/dump-pma-forms.php \"${PMA_ROOT:-../../../ref/pma}\" > src/generated/pma-forms.json"
   },
   "dependencies": {
     "yaml": "2.7.1",

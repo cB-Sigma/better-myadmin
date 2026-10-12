@@ -2589,6 +2589,9 @@ export class SelectStatement extends Statement {
         }
       }
 
+      // sql-parser 6.0.1: only aliased tables enter the alias map (an unaliased one no longer maps '')
+      if (alias === undefined || alias === null || alias === '') continue
+
       tables[thisDb] ??= {}
       ;(tables[thisDb] as Record<string, string>)[str(alias)] = table
     }

@@ -24,6 +24,9 @@ import type {
   ChangeFormResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  ChartDataRequest,
+  ChartDataResponse,
+  ChartPageResponse,
   CollationsResponse,
   ColumnFormOptions,
   ColumnTransformations,
@@ -36,6 +39,8 @@ import type {
   CreateDatabaseResponse,
   CreateTableFormResponse,
   CreateTableRequest,
+  CreateTables2NFRequest,
+  CreateTables3NFRequest,
   CreateTrackingVersionRequest,
   DataDictionaryResponse,
   DatabaseScope,
@@ -80,6 +85,8 @@ import type {
   FindReplaceResponse,
   FormatResponse,
   GetVariableResponse,
+  GisPageRequest,
+  GisPageResponse,
   GridSaveRequest,
   GridSaveResponse,
   HistoryResponse,
@@ -98,9 +105,9 @@ import type {
   LoginResponse,
   LogoutResponse,
   MaintenanceRequest,
-  MaintenanceResponse,
   MoveColumnsRequest,
   MoveCopyRequest,
+  MoveRepeatingGroupRequest,
   MultiTableFormResponse,
   MultiTableKeysResponse,
   NavBranchQuery,
@@ -108,15 +115,30 @@ import type {
   NavTreeQuery,
   NavTreeRequest,
   NavTreeResponse,
+  NewTables2NFResponse,
+  NewTables3NFResponse,
+  Normalization3NFStepResponse,
+  NormalizationResult,
+  NormalizationTableResponse,
   OperationsPageResponse,
   OperationsResponse,
   OrderByRequest,
+  PageSettingsResponse,
+  PartialDependenciesResponse,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
   PartitionOpsRequest,
   PartitioningRequest,
   PasswordForm,
   PluginsResponse,
+  PreferencesFormResponse,
+  PreferencesImportRequest,
+  PreferencesImportResponse,
+  PreferencesJsonResponse,
+  PreferencesManageResponse,
+  PreferencesSaveRequest,
+  PreferencesSaveResponse,
+  PreferencesTab,
   ProcessList,
   ProcessesQuery,
   QueryRequest,
@@ -170,7 +192,18 @@ import type {
   TrackingSnapshotResponse,
   TriggerEditorData,
   TriggersListResponse,
+  TwoFactorActionResponse,
+  TwoFactorChallengeResponse,
+  TwoFactorConfigureRequest,
+  TwoFactorRemoveRequest,
+  TwoFactorStatusResponse,
+  TwoFactorVerifyRequest,
+  TwoFactorVerifyResponse,
   VersionCheckResponse,
+  ViewFormResponse,
+  ViewSaveRequest,
+  ViewSaveResponse,
+  VisualizationPageRequest,
   ZoomRequest,
   ZoomResponse,
   ZoomRowResponse,
@@ -357,6 +390,17 @@ export const api = {
     call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  // the view form (pma: /view/create)
+  viewForm: (r: DbRef, q: { table?: string | undefined; sql?: string | undefined }) =>
+    call<ViewFormResponse>('GET', `${dbPath(r)}/views/form${queryString(q)}`),
+  viewSave: (r: DbRef, req: ViewSaveRequest) => call<ViewSaveResponse>('POST', `${dbPath(r)}/views`, req),
+  // the query results' Display chart and GIS visualization (pma: /table/chart, /table/gis-visualization)
+  chartPage: (s: TableRef, req: VisualizationPageRequest) =>
+    call<ChartPageResponse>('POST', `${tablePath(s)}/chart`, req),
+  chartData: (s: TableRef, req: ChartDataRequest) =>
+    call<ChartDataResponse>('POST', `${tablePath(s)}/chart/data`, req),
+  gisPage: (s: TableRef, req: GisPageRequest) => call<GisPageResponse>('POST', `${tablePath(s)}/gis`, req),
+  tablePrivileges: (s: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(s)}/privileges`),
   tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
     call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
@@ -368,6 +412,22 @@ export const api = {
     call<TrackingReportResponse>('POST', `${tablePath(s)}/tracking/report`, req),
   tableTrackingSnapshot: (s: TableRef, version: string) =>
     call<TrackingSnapshotResponse>('GET', `${tablePath(s)}/tracking/snapshot${queryString({ version })}`),
+  // normalization wizard (pma: /normalization/**)
+  normalization: (s: TableRef) => call<NormalizationTableResponse>('GET', `${tablePath(s)}/normalization`),
+  normalization3NFStep: (s: TableRef, tables: string[]) =>
+    call<Normalization3NFStepResponse>('POST', `${tablePath(s)}/normalization/3nf/step1`, { tables }),
+  normalizationPartialDependencies: (s: TableRef) =>
+    call<PartialDependenciesResponse>('POST', `${tablePath(s)}/normalization/partial-dependencies`, {}),
+  normalizationMoveRepeatingGroup: (s: TableRef, req: MoveRepeatingGroupRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/move-repeating-group`, req),
+  normalizationNewTables2NF: (s: TableRef, pd: Array<[string, string[]]>) =>
+    call<NewTables2NFResponse>('POST', `${tablePath(s)}/normalization/2nf/new-tables`, { pd }),
+  normalizationCreateTables2NF: (s: TableRef, req: CreateTables2NFRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/2nf/create-new-tables`, req),
+  normalizationNewTables3NF: (s: TableRef, pd: Record<string, string[]>, tables: Array<[string, string[]]>) =>
+    call<NewTables3NFResponse>('POST', `${tablePath(s)}/normalization/3nf/new-tables`, { pd, tables }),
+  normalizationCreateTables3NF: (s: TableRef, req: CreateTables3NFRequest) =>
+    call<NormalizationResult>('POST', `${tablePath(s)}/normalization/3nf/create-new-tables`, req),
   // export (docs/features/07-export-import.md)
   exportPage: (server: number, pairs: Array<[string, string]>) =>
     call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
@@ -497,8 +557,11 @@ export const api = {
   addColumnsForm: (r: TableRef) =>
     call<{ options: ColumnFormOptions }>('GET', `${tablePath(r)}/columns/add-form`),
   createTableForm: (r: DbRef) => call<CreateTableFormResponse>('GET', `${dbPath(r)}/create-table/form`),
-  indexForm: (r: TableRef, q: { index?: string; create?: number }) =>
-    call<IndexFormResponse>('GET', `${tablePath(r)}/indexes/form${queryString(q)}`),
+  indexForm: (r: TableRef, q: { index?: string; create?: number; primary?: boolean }) =>
+    call<IndexFormResponse>(
+      'GET',
+      `${tablePath(r)}/indexes/form${queryString({ ...q, primary: q.primary === true ? '1' : undefined })}`,
+    ),
   partitionForm: (r: TableRef) => call<PartitionFormResponse>('GET', `${tablePath(r)}/partitions/form`),
   createTable: (r: DbRef, req: CreateTableRequest) =>
     call<DdlResponse & { db: string; table: string }>('POST', `${dbPath(r)}/tables`, req),
@@ -508,6 +571,9 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
   dropColumns: (r: TableRef, req: DropColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  /** pma: /table/structure/central-columns-{add,remove} */
+  structureCentralColumns: (r: TableRef, op: 'add' | 'remove', columns: string[]) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/structure/central-columns-${op}`, { columns }),
   addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tablePath(r)}/columns/key`, req),
   moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/move`, req),
@@ -543,7 +609,7 @@ export const api = {
   dbShowCreate: (r: DbRef, tables: string[]) =>
     call<ShowCreateResponse>('POST', `${dbPath(r)}/structure/show-create`, { tables }),
   dbMaintenance: (r: DbRef, op: string, tables: string[]) =>
-    call<MaintenanceResponse>('POST', `${dbPath(r)}/structure/maintenance`, { op, tables }),
+    call<OperationsResponse>('POST', `${dbPath(r)}/structure/maintenance`, { op, tables }),
   dbOperations: (r: DbRef) => call<DbOperationsResponse>('GET', `${dbPath(r)}/operations`),
   /** POST …/operations/{comment,collation} */
   dbOperation: (r: DbRef, action: 'comment' | 'collation', body: unknown) =>
@@ -644,6 +710,9 @@ export const api = {
     call<{ success: boolean }>('POST', `${dbPath(r)}/designer/setting`, { index, value }),
   schemaExport: (r: DbRef, body: SchemaExportRequest) =>
     call<SchemaExportResponse>('POST', `${dbPath(r)}/schema-export`, body),
+  /** pma: /database/central-columns getColumnList (cur_table): the "Pick from Central Columns" list */
+  dbCentralColumnsList: (r: DbRef, table: string) =>
+    call<CentralColumn[]>('GET', `${dbPath(r)}/central-columns/list?table=${encodeURIComponent(table)}`),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
@@ -691,6 +760,50 @@ export const api = {
     r: TableRef,
     req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
   ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tablePath(r)}/uiprefs`, req),
+  // user preferences (docs/features/08-settings-preferences-pmadb.md)
+  /** pma: /preferences/{features,sql,navigation,main-panel,export,import} */
+  preferencesForm: (server: number, tab: PreferencesTab) =>
+    call<PreferencesFormResponse>('GET', `${srvPath(server)}/preferences/forms/${tab}`),
+  savePreferencesForm: (server: number, tab: PreferencesTab, req: PreferencesSaveRequest) =>
+    call<PreferencesSaveResponse>('POST', `${srvPath(server)}/preferences/forms/${tab}`, req),
+  /** PageSettings::init(group): the "Page-related settings" form of a page */
+  pageSettings: (server: number, group: string) =>
+    call<PageSettingsResponse>('GET', `${srvPath(server)}/preferences/page/${group}`),
+  savePageSettings: (server: number, group: string, req: PreferencesSaveRequest) =>
+    call<PreferencesSaveResponse>('POST', `${srvPath(server)}/preferences/page/${group}`, req),
+  /** pma: /preferences/manage */
+  preferencesManage: (server: number) =>
+    call<PreferencesManageResponse>('GET', `${srvPath(server)}/preferences/manage`),
+  /** submit_export: the download URL (navigated to, so the browser saves it) */
+  preferencesExportUrl: (server: number, type: 'json' | 'php') =>
+    `/api${srvPath(server)}/preferences/manage/export?type=${type}`,
+  /** submit_get_json (Save to browser's storage) */
+  preferencesJson: (server: number) =>
+    call<PreferencesJsonResponse>('GET', `${srvPath(server)}/preferences/manage/json`),
+  importPreferences: (server: number, req: PreferencesImportRequest) =>
+    call<PreferencesImportResponse>('POST', `${srvPath(server)}/preferences/manage/import`, req),
+  resetPreferences: (server: number) =>
+    call<{ ok: boolean; message: SqlMessage | null }>(
+      'POST',
+      `${srvPath(server)}/preferences/manage/reset`,
+      {},
+    ),
+  /** the localStorage import offer (Header: storage type session, not answered yet) */
+  preferencesAutoload: (server: number) =>
+    call<{ show: boolean }>('GET', `${srvPath(server)}/preferences/autoload`),
+  hidePreferencesAutoload: (server: number) =>
+    call<{ ok: true }>('POST', `${srvPath(server)}/preferences/autoload/hide`, {}),
+  /** pma: /preferences/two-factor */
+  twoFactor: (server: number) =>
+    call<TwoFactorStatusResponse>('GET', `${srvPath(server)}/preferences/two-factor`),
+  configureTwoFactor: (server: number, req: TwoFactorConfigureRequest) =>
+    call<TwoFactorActionResponse>('POST', `${srvPath(server)}/preferences/two-factor/configure`, req),
+  removeTwoFactor: (server: number, req: TwoFactorRemoveRequest) =>
+    call<TwoFactorActionResponse>('POST', `${srvPath(server)}/preferences/two-factor/remove`, req),
+  /** the second factor of a pending login (login/twofactor.twig) */
+  twoFactorChallenge: () => call<TwoFactorChallengeResponse>('GET', '/auth/two-factor'),
+  verifyTwoFactor: (req: TwoFactorVerifyRequest) =>
+    call<TwoFactorVerifyResponse>('POST', '/auth/two-factor', req),
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,

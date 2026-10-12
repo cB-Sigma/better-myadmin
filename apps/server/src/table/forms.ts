@@ -90,6 +90,7 @@ export async function columnFormOptions(
     privsAvailable,
     charEditing: cfg.CharEditing,
     centralColumns: features.centralColumns,
+    maxRows: cfg.MaxRows,
     mime: showMime(cfg, meta),
     mimeTypes: showMime(cfg, meta) ? mimeTypeOptions(tr) : null,
   }
@@ -212,7 +213,7 @@ export async function indexForm(
   cfg: AppConfig,
   db: string,
   table: string,
-  q: { index?: string | undefined; create?: number | undefined },
+  q: { index?: string | undefined; create?: number | undefined; primary?: boolean | undefined },
 ): Promise<IndexFormResponse> {
   const indexes = await reader.getIndexes(db, table)
   const hasPrimary = indexes.some((i) => i.name === 'PRIMARY')
@@ -249,6 +250,19 @@ export async function indexForm(
         comment: '',
         columns: [],
       }
+    }
+  } else if (q.primary === true) {
+    // normalization.js #createPrimaryKey: index[Key_name]=PRIMARY + add_fields=1&added_fields=1
+    // → new Index(['Key_name' => 'PRIMARY']) (choice PRIMARY), one column row
+    addFields = 1
+    index = {
+      name: 'PRIMARY',
+      choice: 'PRIMARY',
+      keyBlockSize: '0',
+      type: '',
+      parser: '',
+      comment: '',
+      columns: [],
     }
   } else {
     // In most cases an index may consist of up to 16 columns

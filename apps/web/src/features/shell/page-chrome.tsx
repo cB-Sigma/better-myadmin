@@ -13,8 +13,8 @@ import { type ReactNode, createContext, useContext, useEffect, useMemo, useState
 import { t } from '../../lib/i18n'
 
 /**
- * Page-level chrome a page can opt into: the "Page-related settings" gear (PageSettings forms come
- * with the preferences layer; pages register their form here) and the lock icon of `lock-page`
+ * Page-level chrome a page can opt into: the "Page-related settings" gear (pages register their
+ * PageSettings form with features/preferences/PageSettings.tsx usePagePrefs) and the lock icon of `lock-page`
  * forms with the unsaved-changes confirmation.
  * pma: src/Config/PageSettings.php, resources/js/modules/page_settings.ts, modules/ajax.ts (lockPageHandler)
  */
@@ -24,7 +24,8 @@ export interface PageSettingsRegistration {
   group: string
   /** The form; it should submit itself when `apply` is called */
   render: () => ReactNode
-  apply: () => void | Promise<void>
+  /** Submits the form; `false` keeps the modal open (the form shows its errors) */
+  apply: () => unknown
 }
 
 interface Chrome {
@@ -109,16 +110,18 @@ export function PageIcons({ onTop }: { onTop: () => void }) {
             </DialogHeader>
             <DialogBody>{settings.render()}</DialogBody>
             <DialogFooter>
+              {/* pma: page_settings.ts — #pageSettingsModalApplyButton is a btn-secondary */}
               <Button
-                variant="primary"
+                id="pageSettingsModalApplyButton"
                 onClick={async () => {
-                  await settings.apply()
-                  setOpen(false)
+                  if ((await settings.apply()) !== false) setOpen(false)
                 }}
               >
-                Apply
+                {t('Apply')}
               </Button>
-              <Button onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+              <Button id="pageSettingsModalCancelButton" onClick={() => setOpen(false)}>
+                {t('Cancel')}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>

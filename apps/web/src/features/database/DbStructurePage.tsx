@@ -1,7 +1,7 @@
 import type {
   DbStructureResponse,
   DbStructureTable,
-  MaintenanceResponse,
+  MaintenanceResult,
   ShowCreateResponse,
   SqlMessage,
 } from '@bettermyadmin/contracts'
@@ -33,6 +33,7 @@ import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { runQuery } from '../sql/runner'
+import { MaintenanceResults } from '../table/common/MaintenanceResults'
 import {
   path,
   CreateTableBox,
@@ -101,7 +102,7 @@ export function DbStructurePage({
   const fkDefault = useDefaultFkCheck(server)
   const [selected, setSelected] = useState<string[]>([])
   const [messages, setMessages] = useState<SqlMessage[]>([])
-  const [maintenance, setMaintenance] = useState<MaintenanceResponse | null>(null)
+  const [maintenance, setMaintenance] = useState<MaintenanceResult | null>(null)
   const [dialog, setDialog] = useState<DialogState>(null)
   const [filter, setFilter] = useState('')
   const [counts, setCounts] = useState<Record<string, string>>({})
@@ -194,8 +195,8 @@ export function DbStructurePage({
     if (op !== undefined) {
       try {
         const r = await api.dbMaintenance({ server, db }, op, tables)
-        setMaintenance(r)
-        setMessages([])
+        setMaintenance(r.maintenance ?? null)
+        setMessages(r.messages)
         await refresh()
       } catch (e) {
         setMessages([errorMessage(e)])
@@ -378,7 +379,7 @@ export function DbStructurePage({
   return (
     <div id="tableslistcontainer">
       <Messages messages={messages} />
-      {maintenance !== null && <MaintenanceCard m={maintenance} />}
+      {maintenance !== null && <MaintenanceResults result={maintenance} />}
       {d.tables.length === 0 ? (
         <Alert variant="notice" className="mb-3">
           {t('No tables found in database.')}
@@ -521,7 +522,7 @@ export function DbStructurePage({
                             <td className="text-center print:hidden">
                               {tb.isView ? (
                                 <Link
-                                  to={path(`${dbBase(server, db)}/view-create`)}
+                                  to={path(`${dbBase(server, db)}/view/create`)}
                                   search={{ table: tb.name } as never}
                                 >
                                   <IconText icon="b_edit" text={t('Edit')} />
@@ -847,55 +848,6 @@ export function DbStructurePage({
         </DbModal>
       )}
     </div>
-  )
-}
-
-function MaintenanceCard({ m }: { m: MaintenanceResponse }) {
-  return (
-    <Panel title={m.title} className="mb-3">
-      <PanelBody>
-        <Messages messages={m.messages} />
-        {m.groups.map((g) => (
-          <Panel key={g.table} title={g.table} className="mb-2">
-            <ul className="px-2 py-1 text-sm">
-              {g.rows.map((r, i) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: result rows
-                <li key={i}>
-                  {r.operation.toLowerCase() !== m.docPage.split('_')[0]?.toLowerCase() && (
-                    <span className="mr-1 rounded bg-bg-inset px-1">{r.operation}</span>
-                  )}
-                  <span className="mr-1 rounded bg-bg-inset px-1">{r.type}</span>
-                  {r.text}
-                </li>
-              ))}
-            </ul>
-          </Panel>
-        ))}
-        {m.checksums.length > 0 && (
-          <table className="text-sm">
-            <thead>
-              <tr>
-                <th className="pr-4 text-left">{t('Table')}</th>
-                <th className="text-left">{t('Checksum')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {m.checksums.map((r) => (
-                <tr key={r.table}>
-                  <td className="pr-4">{r.table}</td>
-                  <td className="text-right">{r.checksum ?? <em className="text-fg-muted">NULL</em>}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {m.warnings.map((w) => (
-          <Alert key={w} variant="notice">
-            {w}
-          </Alert>
-        ))}
-      </PanelBody>
-    </Panel>
   )
 }
 

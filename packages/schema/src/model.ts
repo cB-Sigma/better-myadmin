@@ -60,7 +60,7 @@ export function coordinatesOf(req: SchemaRequest, table: string): { x: number; y
 }
 
 /** TableStats::validateTableAndLoadFields (showKeys: the unique index columns) */
-export function fieldsOf(t: SchemaTableData, showKeys: boolean): string[] {
+export function shownFields(t: SchemaTableData, showKeys: boolean): string[] {
   return showKeys ? [...new Set(t.indexColumns)] : t.columns
 }
 

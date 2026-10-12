@@ -5,10 +5,12 @@ import { PrivilegeProbe } from '../shell/privileges.ts'
 import type { DbCtx } from './context.ts'
 
 /**
- * Database → Privileges: the accounts with access to the database (read-only, linking to the user
- * editor).
- * pma: src/Controllers/Database/PrivilegesController.php, src/Server/Privileges.php::getAllPrivileges,
- *      ::extractPrivInfo, ::getGrantsArray, templates/database/privileges/index.twig
+ * Database → Privileges and Table → Privileges: the accounts with access to the database (or the
+ * table), read-only, linking to the user editor.
+ * pma: src/Controllers/Database/PrivilegesController.php, src/Controllers/Table/PrivilegesController.php,
+ *      src/Server/Privileges.php::getAllPrivileges, ::getTablePrivileges, ::getSpecificPrivilege,
+ *      ::extractPrivInfo, ::getGrantsArray, ::getTableGrantsArray,
+ *      templates/database/privileges/index.twig, templates/table/privileges/index.twig
  */
 
 /** Privileges::getGrantsArray */
@@ -53,14 +55,30 @@ function grants(tr: Translator): Array<[string, string, string]> {
   ]
 }
 
-/** Privileges::extractPrivInfo($row, enableHTML) as {name, title} */
+/** Privileges::getTableGrantsArray (SELECT / INSERT / UPDATE are not in it upstream) */
+function tableGrants(tr: Translator): Array<[string, string, string]> {
+  const g = (k: string, n: string, d: string): [string, string, string] => [k, n, tr.gettext(d)]
+  return [
+    g('Delete', 'DELETE', 'Allows deleting data.'),
+    g('Create', 'CREATE', 'Allows creating new tables.'),
+    g('Drop', 'DROP', 'Allows dropping tables.'),
+    g('Index', 'INDEX', 'Allows creating and dropping indexes.'),
+    g('Alter', 'ALTER', 'Allows altering the structure of existing tables.'),
+    g('Create View', 'CREATE_VIEW', 'Allows creating new views.'),
+    g('Show view', 'SHOW_VIEW', 'Allows performing SHOW CREATE VIEW queries.'),
+    g('Trigger', 'TRIGGER', 'Allows creating and dropping triggers.'),
+  ]
+}
+
+/** Privileges::extractPrivInfo($row, enableHTML, $tablePrivs) as {name, title} */
 function extractPrivInfo(
   tr: Translator,
   row: Record<string, string | null>,
+  tablePrivs = false,
 ): Array<{ name: string; title: string }> {
   const privs: Array<{ name: string; title: string }> = []
   let all = true
-  for (const [key, name, title] of grants(tr)) {
+  for (const [key, name, title] of tablePrivs ? tableGrants(tr) : grants(tr)) {
     const v = row[key]
     if (v === undefined || v === null) continue
     if (v === 'Y') privs.push({ name, title })
@@ -93,10 +111,14 @@ const PRIV_LIST = [
   'Trigger_priv',
 ]
 
-export async function dbPrivileges(ctx: DbCtx): Promise<DbPrivilegesResponse> {
+export async function dbPrivileges(ctx: DbCtx, tableName?: string): Promise<DbPrivilegesResponse> {
   const { tr } = ctx
   let db = ctx.db
-  if ((await ctx.dbi.getLowerCaseNames()) === 1) db = db.toLowerCase()
+  let table = tableName
+  if ((await ctx.dbi.getLowerCaseNames()) === 1) {
+    db = db.toLowerCase()
+    table = table?.toLowerCase()
+  }
   const v = ctx.conn.serverInfo?.versionInt ?? 0
   const maria = ctx.conn.serverInfo?.isMariaDb ?? false
   const p = new PrivilegeProbe(ctx.conn, ctx.server, ctx.cache)
@@ -105,6 +127,7 @@ export async function dbPrivileges(ctx: DbCtx): Promise<DbPrivilegesResponse> {
   const superUser = await isSuperUser(ctx.dbi)
   const base: DbPrivilegesResponse = {
     db,
+    ...(table === undefined ? {} : { table }),
     isSuperUser: superUser,
     isGrantUser: grant,
     isCreateUser: create,
@@ -133,19 +156,32 @@ export async function dbPrivileges(ctx: DbCtx): Promise<DbPrivilegesResponse> {
             )
             ORDER BY \`User\` ASC, \`Host\` ASC, \`Db\` ASC;
         `)
+  // Privileges::getTablePrivileges
+  const tables =
+    table === undefined
+      ? []
+      : await ctx.dbi.fetchResultSimple(`
+            SELECT \`User\`, \`Host\`, \`Db\`, 't' AS \`Type\`, \`Table_name\`, \`Table_priv\`
+            FROM \`mysql\`.\`tables_priv\`
+            WHERE
+                ${ctx.dbi.quoteString(db)} LIKE \`Db\` AND
+                ${ctx.dbi.quoteString(table)} LIKE \`Table_name\` AND
+                NOT (\`Table_priv\` = '' AND Column_priv = '')
+            ORDER BY \`User\` ASC, \`Host\` ASC, \`Db\` ASC, \`Table_priv\` ASC;
+        `)
   const routines = await ctx.dbi.fetchResultSimple(`
             SELECT *, 'r' AS \`Type\`
             FROM \`mysql\`.\`procs_priv\`
             WHERE Db = ${ctx.dbi.quoteString(db)};`)
   const accounts = new Map<string, DbPrivilegesResponse['accounts'][number]>()
-  for (const r of [...rows, ...routines]) {
+  for (const r of [...rows, ...tables, ...routines]) {
     const key = `${r.User ?? ''}@${r.Host ?? ''}`
     let a = accounts.get(key)
     if (a === undefined) {
       a = { user: r.User ?? '', host: r.Host ?? '', privileges: [] }
       accounts.set(key, a)
     }
-    const type = (r.Type ?? 'g') as 'g' | 'd' | 'r'
+    const type = (r.Type ?? 'g') as 'g' | 'd' | 't' | 'r'
     if (type === 'r') {
       const procPriv = r.Proc_priv ?? ''
       a.privileges.push({
@@ -154,6 +190,19 @@ export async function dbPrivileges(ctx: DbCtx): Promise<DbPrivilegesResponse> {
         routine: r.Routine_name ?? '',
         hasGrant: procPriv.includes('Grant'),
         privileges: procPriv.split(',').map((x) => ({ name: x.toUpperCase(), title: '' })),
+      })
+    } else if (type === 't') {
+      const tablePriv = (r.Table_priv ?? '').split(',')
+      const specific = Object.fromEntries(
+        tableGrants(tr).map(([k]) => [k, tablePriv.includes(k) ? 'Y' : 'N']),
+      )
+      a.privileges.push({
+        type,
+        database: r.Db ?? '',
+        routine: null,
+        table: r.Table_name ?? '',
+        hasGrant: (r.Table_priv ?? '').includes('Grant'),
+        privileges: extractPrivInfo(tr, specific, true),
       })
     } else {
       a.privileges.push({

@@ -9,9 +9,9 @@ import { sprintf } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { NotFoundError } from '../http/errors.ts'
 import { PrivilegeProbe } from '../shell/privileges.ts'
+import { getTriggers, triggerCreateSql } from '../table/table-mover.ts'
 import { type DbCtx, listTables, msg, tryQuery } from './context.ts'
 import { errorsMessage } from './routines.ts'
-import { getTriggers, triggerCreateSql } from './table-mover.ts'
 
 /**
  * Triggers, database scope (`table` '') or table scope.

@@ -152,22 +152,6 @@ export const CopyTablesRequest = z.object({
   adjustPrivileges: z.boolean().default(false),
 })
 
-export const DbMaintenanceRequest = z.object({
-  tables,
-  op: z.enum(['analyze', 'check', 'checksum', 'optimize', 'repair']),
-})
-
-export interface MaintenanceResponse {
-  title: string
-  docPage: string
-  messages: SqlMessage[]
-  /** analyze/check/optimize/repair: Msg rows grouped by table */
-  groups: Array<{ table: string; rows: Array<{ operation: string; type: string; text: string }> }>
-  /** checksum */
-  checksums: Array<{ table: string; checksum: string | null }>
-  warnings: string[]
-}
-
 export interface ShowCreateResponse {
   tables: Array<{ name: string; sql: string }>
   views: Array<{ name: string; sql: string }>
@@ -507,6 +491,8 @@ export interface DataDictionaryResponse {
 
 export interface DbPrivilegesResponse {
   db: string
+  /** the table of /table/privileges (lower-cased like the database under lower_case_table_names=1) */
+  table?: string
   isSuperUser: boolean
   isGrantUser: boolean
   isCreateUser: boolean
@@ -516,10 +502,12 @@ export interface DbPrivilegesResponse {
     user: string
     host: string
     privileges: Array<{
-      /** g = global, d = database, r = routine */
-      type: 'g' | 'd' | 'r'
+      /** g = global, d = database, t = table (/table/privileges only), r = routine */
+      type: 'g' | 'd' | 't' | 'r'
       database: string
       routine: string | null
+      /** the table name of a `t` entry */
+      table?: string
       hasGrant: boolean
       privileges: Array<{ name: string; title: string }>
     }>

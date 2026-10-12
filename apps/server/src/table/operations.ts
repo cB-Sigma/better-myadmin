@@ -40,7 +40,13 @@ import { strnatcasecmp } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import type { DdlCtx } from './ddl.ts'
 import { isSystemSchema } from './structure-page.ts'
-import { getTableDef } from './table-def.ts'
+import {
+  type MoverCtx,
+  getTriggers,
+  newMoveState,
+  moveCopy as sharedMoveCopy,
+  triggerCreateSql,
+} from './table-mover.ts'
 
 type Out<T extends z.ZodTypeAny> = z.output<T>
 
@@ -62,6 +68,7 @@ export interface OpsCtx extends DdlCtx {
   server: ServerConfig
   /** the logged-in MySQL user ($cfg['Server']['user']) */
   user: string
+  serverIndex: number
 }
 
 const msg = (type: SqlMessage['type'], text: string, sql?: string): SqlMessage =>
@@ -348,7 +355,7 @@ async function renameTable(
   if (error !== null) {
     if (handleTriggers) {
       await reader.selectDb(db)
-      for (const t of triggers) await query(ctx, createTriggerSql(t, ''), 'rename.trigger-restore')
+      for (const t of triggers) await query(ctx, triggerCreateSql(t, ''), 'rename.trigger-restore')
     }
     return { ok: false, error }
   }
@@ -363,41 +370,6 @@ async function renameTable(
     db: newDb,
     sql,
   }
-}
-
-export interface TriggerRow {
-  name: string
-  timing: string
-  event: string
-  table: string
-  statement: string
-  definer: string
-}
-
-/** pma: Triggers::getDetails (information_schema), sorted by name */
-export async function getTriggers(ctx: DdlCtx, db: string, table = ''): Promise<TriggerRow[]> {
-  const collate = await ctx.reader.dbi.collateForIS()
-  const q = (s: string) => ctx.reader.dbi.quoteString(s)
-  let sql =
-    'SELECT TRIGGER_SCHEMA, TRIGGER_NAME, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_TIMING, ACTION_STATEMENT, EVENT_OBJECT_SCHEMA, EVENT_OBJECT_TABLE, DEFINER' +
-    ` FROM information_schema.TRIGGERS WHERE EVENT_OBJECT_SCHEMA ${collate}= ${q(db)}`
-  if (table !== '') sql += ` AND EVENT_OBJECT_TABLE ${collate} = ${q(table)};`
-  const rows = await ctx.reader.dbi.fetchResultSimple(sql)
-  return rows
-    .map((r) => ({
-      name: r.TRIGGER_NAME ?? '',
-      timing: r.ACTION_TIMING ?? '',
-      event: r.EVENT_MANIPULATION ?? '',
-      table: r.EVENT_OBJECT_TABLE ?? '',
-      statement: r.ACTION_STATEMENT ?? '',
-      definer: r.DEFINER ?? '',
-    }))
-    .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
-}
-
-/** pma: QueryGenerator::getCreateTrigger */
-export function createTriggerSql(t: TriggerRow, delimiter: string): string {
-  return `CREATE TRIGGER ${backquote(t.name)} ${t.timing} ${t.event} ON ${backquote(t.table)}\n FOR EACH ROW ${t.statement}\n${delimiter}\n`
 }
 
 // ---------------------------------------------------------------- privileges
@@ -473,41 +445,19 @@ export async function moveCopy(ctx: OpsCtx, req: Out<typeof MoveCopyRequest>) {
     return fail(tr.gettext(move ? "Can't move table to same one!" : "Can't copy table to same one!"))
   }
   if (!move) ctx.session.switchToNew = req.switchToNew
-  const sqlLog: string[] = []
-  const what = move ? 'move' : req.what
-  let renamed = false
-  if (move) {
-    const r = await renameTable(ctx, req.newName, targetDb)
-    if (r.ok) {
-      renamed = true
-      sqlLog.push(r.sql)
-    }
-  }
-  if (!renamed) {
-    const dbs = await databaseList(ctx)
-    if (!dbs.includes(db)) return fail(sprintf(tr.gettext('Source database `%s` was not found!'), db))
-    if (!dbs.includes(targetDb))
-      return fail(sprintf(tr.gettext('Target database `%s` was not found!'), targetDb))
-    await reader.selectDb(targetDb)
-    let maintainRelations = false
-    if (what !== 'dataonly') {
-      maintainRelations = await handleStructureCreation(ctx, targetDb, req.newName, req, what, sqlLog)
-    }
-    if (what !== 'structure' && !(await reader.isView(targetDb, req.newName))) {
-      await copyData(ctx, targetDb, req.newName, sqlLog)
-    }
-    if (move) {
-      await reader.selectDb(db)
-      const drop = `${(await reader.isView(db, table)) ? 'DROP VIEW ' : 'DROP TABLE '}${backquote(db)}.${backquote(table)}`
-      await query(ctx, drop, 'move.drop')
-      sqlLog.push(`${drop};`)
-      if (ctx.meta !== null) {
-        await renameTableInStorage(ctx.meta.control, ctx.meta.rp, db, targetDb, table, req.newName)
-      }
-    } else if (what !== 'dataonly' && !maintainRelations && ctx.meta !== null) {
-      await duplicateTableInfo(ctx.meta.control, ctx.meta.rp, db, table, targetDb, req.newName)
-    }
-  }
+  const st = newMoveState(req.autoIncrement)
+  const ok = await sharedMoveCopy(
+    moverOf(ctx),
+    st,
+    db,
+    table,
+    targetDb,
+    req.newName,
+    move ? 'move' : req.what,
+    'single',
+    req.dropIfExists && !move,
+  )
+  if (!ok) return fail(st.error ?? '')
   reader.invalidate()
   let text: string
   if (req.adjustPrivileges) {
@@ -534,106 +484,6 @@ export async function moveCopy(ctx: OpsCtx, req: Out<typeof MoveCopyRequest>) {
 }
 
 const fail = (text: string): OperationsResponse => ({ messages: [msg('error', text)] })
-
-/** pma: TableMover::handleStructureCreation */
-async function handleStructureCreation(
-  ctx: OpsCtx,
-  targetDb: string,
-  targetTable: string,
-  req: Out<typeof MoveCopyRequest>,
-  what: string,
-  sqlLog: string[],
-): Promise<boolean> {
-  const { reader, db, table } = ctx
-  const context = reader.conn.serverInfo?.context
-  const isView = await reader.isView(db, table)
-  const def = await getTableDef(ctx, db, table, isView, req.autoIncrement)
-  const destination = new Expression(targetDb, targetTable, '')
-  const build = <T>(fn: () => T) => Ctx.run(context, fn)
-  let maintainRelations = false
-  if (req.dropIfExists && what !== 'move') {
-    const targetIsView = await reader.isView(targetDb, targetTable)
-    const drop = build(() => `DROP ${targetIsView ? 'VIEW' : 'TABLE'} IF EXISTS ${destination.build()};`)
-    await query(ctx, drop, 'copy.drop-if-exists')
-    sqlLog.push(drop)
-    maintainRelations = true
-  }
-  // Phase 2: the new structure
-  const create = build(() => {
-    const st = new Parser(def.create).statements[0] as
-      | { name: Expression | null; build(): string }
-      | undefined
-    if (st === undefined) return null
-    st.name = destination
-    return `${st.build()};`
-  })
-  if (create !== null) {
-    if (what === 'move') await reader.selectDb(targetDb)
-    await query(ctx, create, 'copy.create')
-    sqlLog.push(create)
-  }
-  // Phase 3: constraints (moves only), names removed
-  if (what === 'move' && def.constraints !== '') {
-    const c = build(() => {
-      const st = new Parser(def.constraints).statements[0]
-      if (!(st instanceof AlterStatement)) return def.constraints
-      st.table = destination
-      for (const a of st.altered ?? []) if (a.options?.has('CONSTRAINT') === true) a.field = null
-      return `${st.build()};`
-    })
-    sqlLog.push(c)
-    await query(ctx, c, 'move.constraints')
-  }
-  // Phase 4: indexes
-  if (def.indexes !== null) {
-    const statements = build(() =>
-      new Parser(def.indexes).statements.map((st) => {
-        if (st instanceof AlterStatement) {
-          st.table = destination
-          for (const a of st.altered ?? []) if (a.options?.has('CONSTRAINT') === true) a.field = null
-        }
-        return `${st.build()};`
-      }),
-    )
-    for (const s of statements) await query(ctx, s, 'copy.indexes')
-    sqlLog.push(statements.join(''))
-  }
-  // Phase 5: AUTO_INCREMENT
-  if (def.autoIncrements !== null) {
-    const a = build(() => {
-      const st = new Parser(def.autoIncrements ?? '').statements[0]
-      if (!(st instanceof AlterStatement)) return null
-      st.table = destination
-      return `${st.build()};`
-    })
-    if (a !== null) {
-      await query(ctx, a, 'copy.auto-increment')
-      sqlLog.push(a)
-    }
-  }
-  return maintainRelations
-}
-
-/** pma: TableMover::copyData */
-async function copyData(ctx: OpsCtx, targetDb: string, targetTable: string, sqlLog: string[]) {
-  const { reader, db, table } = ctx
-  await query(ctx, "SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO'", 'copy.sql-mode')
-  sqlLog.push("SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';")
-  // Table::getNonGeneratedColumns
-  const cols = (await reader.dbi.fetchResultSimple(`SHOW COLUMNS FROM ${backquote(db)}.${backquote(table)}`))
-    .filter((c) => {
-      const extra = c.Extra ?? ''
-      return !(
-        (extra.includes('GENERATED') || extra.includes('VIRTUAL')) &&
-        !extra.includes('DEFAULT_GENERATED')
-      )
-    })
-    .map((c) => backquote(c.Field ?? ''))
-  if (cols.length === 0) return
-  const sql = `INSERT INTO ${backquote(targetDb)}.${backquote(targetTable)}(${cols.join(', ')}) SELECT ${cols.join(', ')} FROM ${backquote(db)}.${backquote(table)}`
-  await query(ctx, sql, 'copy.data')
-  sqlLog.push(`${sql};`)
-}
 
 // ---------------------------------------------------------------- table options
 
@@ -785,64 +635,6 @@ export async function renameView(ctx: OpsCtx, req: Out<typeof RenameViewRequest>
 
 // ---------------------------------------------------------------- maintenance
 
-const MAINT_TITLES: Record<string, string> = {
-  analyze: 'Analyze table',
-  check: 'Check table',
-  checksum: 'Checksum table',
-  optimize: 'Optimize table',
-  repair: 'Repair table',
-}
-
-/** pma: src/Controllers/Table/Maintenance/*Controller.php + src/Table/Maintenance.php */
-export async function maintenance(ctx: OpsCtx, req: Out<typeof MaintenanceRequest>) {
-  const { reader, tr, cfg } = ctx
-  const tables = req.tables ?? [ctx.table]
-  if (tables.length === 0 || tables.some((t) => t === '')) return fail(tr.gettext('No table selected.'))
-  if (cfg.DisableMultiTableMaintenance && tables.length > 1) {
-    return fail(tr.gettext('Maintenance operations on multiple tables are disabled.'))
-  }
-  const sql = `${req.op.toUpperCase()} TABLE ${tables.map((t) => backquote(t)).join(', ')};`
-  await reader.selectDb(ctx.db)
-  const rows = await reader.dbi.fetchResultSimple(sql)
-  reader.invalidate()
-  const result: MaintenanceResult = { op: req.op, title: tr.gettext(MAINT_TITLES[req.op] ?? ''), rows: [] }
-  if (req.op === 'checksum') {
-    result.checksums = rows.map((r) => ({ table: r.Table ?? '', checksum: r.Checksum ?? null }))
-    result.notices = (await getWarnings(ctx)).map(warningText)
-  } else {
-    result.rows = rows.map((r) => ({
-      table: r.Table ?? '',
-      op: r.Op ?? '',
-      msgType: r.Msg_type ?? '',
-      msgText: r.Msg_text ?? '',
-    }))
-  }
-  if (req.op === 'check') {
-    const notices: string[] = []
-    for (const t of tables) {
-      const dup = findDuplicateIndexes(await reader.getIndexes(ctx.db, t))
-      if (dup.length === 0) continue
-      notices.push(sprintf(tr.gettext('Problems with indexes of table `%s`'), t))
-      for (const [a, b] of dup) {
-        notices.push(
-          sprintf(
-            tr.gettext(
-              'The indexes %1$s and %2$s seem to be equal and one of them could possibly be removed.',
-            ),
-            a,
-            b,
-          ),
-        )
-      }
-    }
-    result.notices = notices
-  }
-  return {
-    messages: [msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql)],
-    maintenance: result,
-  } satisfies OperationsResponse
-}
-
 // ---------------------------------------------------------------- /sql links
 
 /**
@@ -965,3 +757,14 @@ async function setVariable(ctx: DdlCtx, name: string, value: string): Promise<vo
   if ((await ctx.reader.getSessionVariable(name)) === value) return
   await ctx.reader.conn.query(`SET ${name} = ${value};`, 'var.set')
 }
+
+/** the request as the TableMover sees it */
+const moverOf = (ctx: OpsCtx): MoverCtx => ({
+  reader: ctx.reader,
+  cfg: ctx.cfg,
+  tr: ctx.tr,
+  server: ctx.server,
+  serverIndex: ctx.serverIndex,
+  rp: ctx.meta?.rp ?? null,
+  control: ctx.meta?.control ?? null,
+})
