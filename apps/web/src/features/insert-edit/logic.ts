@@ -164,8 +164,25 @@ export function validateCell(
   s: CellState,
   t: (m: string, ...a: string[]) => string,
 ): string | null {
-  if (s.fn !== '' || s.isNull || Array.isArray(s.value) || s.value === '') return null
   const w = cell.widget
+  // the function select's rules (change.ts validationFunctionForMd5 / validationFunctionForAesDesEncrypt)
+  if (s.fn === 'MD5') {
+    const max = w.kind === 'text' || w.kind === 'textarea' ? w.maxlength : null
+    if (max !== null && max < 32) return t('This column can not contain a 32 chars value')
+  }
+  if (s.fn === 'AES_ENCRYPT' || s.fn === 'DES_ENCRYPT') {
+    const dataType =
+      w.kind === 'text' || w.kind === 'textarea'
+        ? w.dataType
+        : w.kind === 'hex-input' || w.kind === 'hex-textarea'
+          ? 'HEX'
+          : ''
+    if (dataType !== 'HEX' && dataType !== 'CHAR')
+      return t(
+        'These functions are meant to return a binary result; to avoid inconsistent results you should store it in a BINARY, VARBINARY, or BLOB column.',
+      )
+  }
+  if (s.fn !== '' || s.isNull || Array.isArray(s.value) || s.value === '') return null
   const v = s.value
   if (['date', 'datetime', 'timestamp', 'time'].includes(col.trueType) && !isDateTime(v, col.trueType)) {
     return t('Please enter a valid date or time')

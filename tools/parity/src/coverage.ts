@@ -22,6 +22,7 @@ import type { Inventories, InventoryKind, JsItem } from './inventory.ts'
 import {
   type Disposition,
   type Maps,
+  type MessageMap,
   dispositionProblems,
   list,
   loadExceptionIds,
@@ -141,6 +142,62 @@ function fromDisposition(d: Disposition | undefined): { status: Status; detail?:
       detail: `${d.planned}${d.exception !== undefined ? ` (${d.exception})` : ''}${note}`,
     }
   return { status: 'missing', ...(d.note !== undefined ? { detail: d.note } : {}) }
+}
+
+/**
+ * messages.yaml `data`: the msgids of a JSON data file translated at render time, credited to the
+ * function that translates them.
+ */
+function dataMsgids(data: MessageMap['data'], repo: string, problems: string[]): Map<string, string[]> {
+  const out = new Map<string, string[]>()
+  for (const [file, entries] of Object.entries(data ?? {})) {
+    let json: unknown
+    try {
+      json = JSON.parse(readFileSync(join(repo, file), 'utf8'))
+    } catch {
+      problems.push(`messages.yaml: data file ${file} cannot be read`)
+      continue
+    }
+    for (const { paths, at } of entries) {
+      const [atFile = '', fn = ''] = at.split('::')
+      let src = ''
+      try {
+        src = readFileSync(join(repo, atFile), 'utf8')
+      } catch {
+        problems.push(`messages.yaml: ${at} does not exist`)
+        continue
+      }
+      // a function or a method of that name; its translator call within the next lines
+      const m = new RegExp(`function ${fn}\\(|^\\s+(?:async )?${fn}\\(`, 'm').exec(src)
+      const body = m === null ? -1 : m.index
+      if (body < 0 || !/\b(p?gettext)\((?!['"`])/.test(src.slice(body, body + 3000))) {
+        problems.push(`messages.yaml: ${at} is not a function calling a translator on a non-literal`)
+        continue
+      }
+      const line = src.slice(0, body).split('\n').length
+      for (const path of paths) {
+        let nodes: unknown[] = [json]
+        for (const seg of path.split('.')) {
+          nodes = nodes.flatMap((n) => {
+            if (n === null || typeof n !== 'object') return []
+            if (seg === '*') return Object.values(n as Record<string, unknown>)
+            return seg in (n as object) ? [(n as Record<string, unknown>)[seg]] : []
+          })
+        }
+        for (const n of nodes) {
+          const key =
+            typeof n === 'string'
+              ? n
+              : n !== null && typeof n === 'object' && typeof (n as { msgid?: unknown }).msgid === 'string'
+                ? msgKey((n as { msgid: string }).msgid, (n as { context?: string }).context)
+                : null
+          if (key === null || key === '') continue
+          out.set(key, [...(out.get(key) ?? []), `${atFile}:${line}`])
+        }
+      }
+    }
+  }
+  return out
 }
 
 /**
@@ -463,6 +520,35 @@ export function computeCoverage(inv: Inventories, maps: Maps, opts: CoverageOpti
   const used = new Map<string, string[]>()
   for (const u of msgUses) used.set(u.key, [...(used.get(u.key) ?? []), `${u.file}:${u.line}`])
   const msgMap = maps.messages
+  for (const [k, v] of dataMsgids(msgMap.data, repo, problems)) used.set(k, [...(used.get(k) ?? []), ...v])
+  for (const [k, d] of Object.entries(msgMap.msgids ?? {})) {
+    if (d.via === undefined) continue
+    const key = k.includes('|') ? msgKey(k.slice(k.indexOf('|') + 1), k.slice(0, k.indexOf('|'))) : k
+    const lines = (() => {
+      try {
+        return readFileSync(join(repo, d.via), 'utf8').split('\n')
+      } catch {
+        return []
+      }
+    })()
+    const msgid = k.includes('|') ? k.slice(k.indexOf('|') + 1) : k
+    const at = lines.findIndex(
+      (l) =>
+        /\bmsgid:/.test(l) &&
+        (l.includes(JSON.stringify(msgid)) || l.includes(`'${msgid.replaceAll("'", "\\'")}'`)),
+    )
+    // the literal may sit on the line after `msgid:`
+    const next = lines.findIndex(
+      (l, i) =>
+        i > 0 &&
+        /\bmsgid:\s*$/.test(lines[i - 1] ?? '') &&
+        (l.includes(JSON.stringify(msgid)) || l.includes(`'${msgid.replaceAll("'", "\\'")}'`)),
+    )
+    const line = at >= 0 ? at : next
+    if (line < 0)
+      problems.push(`messages.yaml: msgid ${JSON.stringify(k)} is not a \`msgid:\` literal in ${d.via}`)
+    else used.set(key, [...(used.get(key) ?? []), `${d.via}:${line + 1}`])
+  }
   const knownKeys = new Set(inv.messages.items.map((m) => m.key))
   const messageItems: ItemCoverage[] = inv.messages.items.map((m) => {
     const files = effectiveFiles(m.refs)

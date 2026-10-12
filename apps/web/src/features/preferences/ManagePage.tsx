@@ -1,12 +1,14 @@
 import type { PreferencesImportResponse } from '@bettermyadmin/contracts'
 import {
   Checkbox,
+  DocLink,
   Label,
   Loading,
   MessageBox,
   Panel,
   PanelBody,
   Radio,
+  SafeHtml,
   buttonVariants,
   cn,
 } from '@bettermyadmin/ui'
@@ -117,6 +119,22 @@ export function ManagePage({ server, saved }: { server: number; saved: boolean }
             onImport={(json, merge) => importPrefs.mutate({ json, merge })}
             busy={importPrefs.isPending}
           />
+          {q.data?.moreSettings === true && (
+            // exists_setup_and_not_exists_config
+            <Panel title={t('More settings')} className="mt-4">
+              <PanelBody>
+                <SafeHtml
+                  as="span"
+                  html={t(
+                    'You can set more settings by modifying config.inc.php, eg. by using %sSetup script%s.',
+                    '<a href="/setup" target="_blank">',
+                    '</a>',
+                  )}
+                />{' '}
+                <DocLink page="setup" anchor="setup-script" />
+              </PanelBody>
+            </Panel>
+          )}
         </div>
         <div>
           <ExportCard server={server} />

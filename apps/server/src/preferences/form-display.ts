@@ -475,6 +475,8 @@ export class FormDisplay {
       type,
       name: describe(tr, path, 'name'),
       desc: describe(tr, path, 'desc'),
+      // FormDisplay::displayFieldInput userprefs_comment: input.twig shows it in the setup script only
+      ...(setup && describe(tr, path, 'cmt') !== '' ? { comment: describe(tr, path, 'cmt') } : {}),
       doc,
       value: shown,
       isDefault,

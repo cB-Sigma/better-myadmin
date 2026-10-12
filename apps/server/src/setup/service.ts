@@ -53,6 +53,11 @@ export interface SetupCtx {
  */
 export function setupDisabled(deps: AppDeps, cwd = process.cwd()): boolean {
   if (deps.cfg.DBG.demo) return false
+  return configFileExists(deps, cwd)
+}
+
+/** `file_exists(CONFIG_FILE)`: one was loaded at start or has been written into the working directory. */
+export function configFileExists(deps: AppDeps, cwd = process.cwd()): boolean {
   if (deps.configFile !== undefined) return true
   return CONFIG_FILE_NAMES.some((n) => existsSync(join(cwd, n)))
 }
