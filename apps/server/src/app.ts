@@ -1,7 +1,8 @@
 import { CSRF_COOKIE, CSRF_HEADER, type Executed, SESSION_COOKIE } from '@bettermyadmin/contracts'
 import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
-import { type Context, Hono } from 'hono'
+import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
+import { authPageGate, isPageRequest } from './auth/page-gate.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
@@ -28,6 +29,8 @@ export interface AppDeps {
   configuredSecret?: string
   /** True when blowfish_secret was generated into DataDir because the configuration had none. */
   secretGenerated?: boolean
+  /** The configuration file that was loaded (none: defaults and environment only). */
+  configFile?: string
 }
 
 export interface AppEnv {
@@ -57,34 +60,17 @@ export function createApp(deps: AppDeps) {
 
   app.use('*', securityHeaders(deps.cfg))
 
-  // session: load or create; cookie carries only the id
-  app.use('/api/*', async (c, next) => {
-    c.set('deps', deps)
-    c.set('executed', [])
-    const proto = c.req.header('x-forwarded-proto') ?? new URL(c.req.url).protocol.replace(':', '')
-    c.set('isHttps', proto === 'https')
-    const id = getCookie(c, SESSION_COOKIE)
-    let session = id !== undefined ? deps.store.get(id) : null
-    c.set('sessionIsNew', session === null)
-    if (session === null) session = newSession(deps.cfg.ServerDefault > 0 ? deps.cfg.ServerDefault : 1)
-    else if (
-      Object.keys(session.servers).length > 0 &&
-      nowSeconds() - session.lastSeenAt > deps.cfg.LoginCookieValidity
-    ) {
-      // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY)
-      session.servers = {}
-      session.expired = true
-      void deps.pools.dropSession(session.id)
-    }
-    c.set('session', session)
-    await next()
-    const s = c.get('session')
-    s.lastSeenAt = nowSeconds()
-    deps.store.set(s)
-    writeSessionCookies(c, s)
-  })
+  const session = sessionMiddleware(deps)
+  const language = languageLoading(languageManager(deps.cfg))
+  app.use('/api/*', session)
+  app.use('/api/*', language)
 
-  app.use('/api/*', languageLoading(languageManager(deps.cfg)))
+  // page loads authenticate the http / signon servers (the SPA itself is served by main.ts)
+  const gate = authPageGate()
+  app.use('*', async (c, next) => {
+    if (!isPageRequest(c.req.method, c.req.path)) return next()
+    return session(c, () => language(c, () => gate(c, next)))
+  })
 
   // CSRF: double submit on every non-GET request (pma: TokenRequestParamChecking)
   app.use('/api/*', async (c, next) => {
@@ -110,6 +96,35 @@ export function createApp(deps: AppDeps) {
 }
 
 export type App = ReturnType<typeof createApp>
+
+/** The session: loaded or created, the cookie carries only the id; inactivity drops the logins. */
+function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
+  return async (c, next) => {
+    c.set('deps', deps)
+    c.set('executed', [])
+    const proto = c.req.header('x-forwarded-proto') ?? new URL(c.req.url).protocol.replace(':', '')
+    c.set('isHttps', proto === 'https')
+    const id = getCookie(c, SESSION_COOKIE)
+    let session = id !== undefined ? deps.store.get(id) : null
+    c.set('sessionIsNew', session === null)
+    if (session === null) session = newSession(deps.cfg.ServerDefault > 0 ? deps.cfg.ServerDefault : 1)
+    else if (
+      Object.keys(session.servers).length > 0 &&
+      nowSeconds() - session.lastSeenAt > deps.cfg.LoginCookieValidity
+    ) {
+      // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY)
+      session.servers = {}
+      session.expired = true
+      void deps.pools.dropSession(session.id)
+    }
+    c.set('session', session)
+    await next()
+    const s = c.get('session')
+    s.lastSeenAt = nowSeconds()
+    deps.store.set(s)
+    writeSessionCookies(c, s)
+  }
+}
 
 // biome-ignore lint/suspicious/noExplicitAny: any route path/input
 export function writeSessionCookies(c: Context<AppEnv, any, any>, s: SessionData) {

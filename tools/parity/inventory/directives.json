@@ -1967,7 +1967,7 @@
       "inPma": false
     },
     {
-      "key": "LoginRateLimit/maxBackoffSeconds",
+      "key": "LoginRateLimit/lockoutSeconds",
       "source": "schema",
       "type": "integer",
       "bma": true,

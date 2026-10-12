@@ -818,13 +818,13 @@ export const configNode = group({
     },
     { bma: true },
   ),
-  /** Per (IP, username) failed-login limiter with exponential backoff; on by default. */
+  /** Per (IP, username) failed-login limiter: maxAttempts failures within windowSeconds lock the pair out for lockoutSeconds; on by default. */
   LoginRateLimit: group(
     {
       enabled: bool(true, { bma: true }),
       maxAttempts: int(5, { min: 1, bma: true }),
       windowSeconds: int(900, { min: 1, bma: true }),
-      maxBackoffSeconds: int(300, { min: 0, bma: true }),
+      lockoutSeconds: int(300, { min: 0, bma: true }),
     },
     { bma: true },
   ),
