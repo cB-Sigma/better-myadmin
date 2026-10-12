@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-161/199 covered (80.9%): 153 implemented, 7 exception, 1 n/a, 38 planned. [Summary](README.md).
+176/199 covered (88.4%): 168 implemented, 7 exception, 1 n/a, 23 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 10/23 (43.5%) covered, 7/23 implemented
 
@@ -164,43 +164,43 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /database/structure/replace-prefix` | `Database/Structure/ReplacePrefixController` | API POST /api/servers/:s/databases/:db/structure/replace-prefix (apps/server/src/routes/database.ts:129) |  |
 | ✅ | `POST /database/structure/show-create` | `Database/Structure/ShowCreateController` | API POST /api/servers/:s/databases/:db/structure/show-create (apps/server/src/routes/database.ts:147) |  |
 | ✅ | `GET, POST /database/tracking` | `Database/TrackingController` | API GET /api/servers/:s/databases/:db/tracking (apps/server/src/routes/database.ts:337)<br>API POST /api/servers/:s/databases/:db/tracking (apps/server/src/routes/database.ts:340)<br>UI /s/:server/db/:db/tracking (apps/web/src/routes/s/$server/db/$db/tracking.tsx) |  |
-| ✅ | `POST /databases` | `DatabaseController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:35) | name lists for pickers |
+| ✅ | `POST /databases` | `DatabaseController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:61) | name lists for pickers |
 | ✅ | `GET, POST /schema-export` | `SchemaExportController` | API POST /api/servers/:s/databases/:db/schema-export (apps/server/src/routes/database.ts:406)<br>UI /s/:server/db/:db/designer (apps/web/src/routes/s/$server/db/$db/designer.tsx) | PDF (TCPDF) is not ported: the Dia, EPS and SVG plugins are |
 
-## 06 server level — 11/31 (35.5%) covered, 11/31 implemented
+## 06 server level — 26/31 (83.9%) covered, 26/31 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| ✅ | `GET, POST /server/binlog` | `Server/BinlogController` | API GET /api/servers/:s/binlog (apps/server/src/routes/server-admin.ts:149)<br>UI /s/:server/binlog (apps/web/src/routes/s/$server/binlog.tsx) |  |
-| ✅ | `GET /server/collations` | `Server/CollationsController` | API GET /api/servers/:s/collations (apps/server/src/routes/server-admin.ts:133)<br>UI /s/:server/collations (apps/web/src/routes/s/$server/collations.tsx) |  |
-| ✅ | `GET, POST /server/databases` | `Server/DatabasesController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:35)<br>UI /s/:server/databases (apps/web/src/routes/s/$server/databases.tsx) |  |
-| 🗓️ | `POST /server/databases/create` | `Server/Databases/CreateController` | API POST /api/servers/:s/databases<br>UI /s/:s/databases/create | M3 |
-| 🗓️ | `POST /server/databases/destroy` | `Server/Databases/DestroyController` | API POST /api/servers/:s/databases/drop<br>UI /s/:s/databases/destroy | M3 |
-| ✅ | `GET /server/engines` | `Server/EnginesController` | API GET /api/servers/:s/engines (apps/server/src/routes/server-admin.ts:136)<br>UI /s/:server/engines (apps/web/src/routes/s/$server/engines/index.tsx) |  |
-| 🗓️ | `GET /server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | API GET /api/servers/:s/engines/:engine<br>UI /s/:s/engines/:engine | M3 |
-| ✅ | `GET /server/plugins` | `Server/PluginsController` | API GET /api/servers/:s/plugins (apps/server/src/routes/server-admin.ts:146)<br>UI /s/:server/plugins (apps/web/src/routes/s/$server/plugins.tsx) |  |
+| ✅ | `GET, POST /server/binlog` | `Server/BinlogController` | API GET /api/servers/:s/binlog (apps/server/src/routes/server-admin.ts:222)<br>UI /s/:server/binlog (apps/web/src/routes/s/$server/binlog.tsx) |  |
+| ✅ | `GET /server/collations` | `Server/CollationsController` | API GET /api/servers/:s/collations (apps/server/src/routes/server-admin.ts:206)<br>UI /s/:server/collations (apps/web/src/routes/s/$server/collations.tsx) |  |
+| ✅ | `GET, POST /server/databases` | `Server/DatabasesController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:61)<br>UI /s/:server/databases (apps/web/src/routes/s/$server/databases.tsx) |  |
+| ✅ | `POST /server/databases/create` | `Server/Databases/CreateController` | API POST /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:76)<br>UI /s/:server/databases (apps/web/src/routes/s/$server/databases.tsx) |  |
+| ✅ | `POST /server/databases/destroy` | `Server/Databases/DestroyController` | API POST /api/servers/:s/databases/drop (apps/server/src/routes/server-admin.ts:83)<br>UI /s/:server/databases (apps/web/src/routes/s/$server/databases.tsx) |  |
+| ✅ | `GET /server/engines` | `Server/EnginesController` | API GET /api/servers/:s/engines (apps/server/src/routes/server-admin.ts:209)<br>UI /s/:server/engines (apps/web/src/routes/s/$server/engines/index.tsx) |  |
+| ✅ | `GET /server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | API GET /api/servers/:s/engines/:engine/:page (apps/server/src/routes/server-admin.ts:212)<br>UI /s/:server/engines/:engine (apps/web/src/routes/s/$server/engines/$engine/index.tsx) |  |
+| ✅ | `GET /server/plugins` | `Server/PluginsController` | API GET /api/servers/:s/plugins (apps/server/src/routes/server-admin.ts:219)<br>UI /s/:server/plugins (apps/web/src/routes/s/$server/plugins.tsx) |  |
 | 🗓️ | `GET, POST /server/privileges` | `Server/PrivilegesController` | API GET /api/servers/:s/privileges/users<br>API GET /api/servers/:s/privileges/users/:user/:host<br>UI /s/:s/privileges | M3 |
 | 🗓️ | `POST /server/privileges/account-lock` | `Server/Privileges/AccountLockController` | API /api/servers/:s/privileges/account-lock<br>UI /s/:s/privileges/account-lock | M3 |
 | 🗓️ | `POST /server/privileges/account-unlock` | `Server/Privileges/AccountUnlockController` | API /api/servers/:s/privileges/account-unlock<br>UI /s/:s/privileges/account-unlock | M3 |
-| 🗓️ | `GET, POST /server/replication` | `Server/ReplicationController` | API GET /api/servers/:s/replication<br>API POST /api/servers/:s/replication/*<br>UI /s/:s/replication | M3 |
-| ✅ | `GET /server/status` | `Server/Status/StatusController` | API GET /api/servers/:s/status (apps/server/src/routes/server-admin.ts:64)<br>UI /s/:server/status (apps/web/src/routes/s/$server/status/index.tsx) |  |
-| ✅ | `GET /server/status/advisor` | `Server/Status/AdvisorController` | API GET /api/servers/:s/status/advisor (apps/server/src/routes/server-admin.ts:106)<br>UI /s/:server/status/advisor (apps/web/src/routes/s/$server/status/advisor.tsx) |  |
-| 🗓️ | `GET /server/status/monitor` | `Server/Status/MonitorController` | API GET /api/servers/:s/status/monitor/* | M3 (X11) — SSE stream for charts |
-| 🗓️ | `POST /server/status/monitor/chart` | `Server/Status/Monitor/ChartingDataController` | API GET /api/servers/:s/status/monitor/stream | M3 (X11) — SSE stream for charts |
-| 🗓️ | `POST /server/status/monitor/general-log` | `Server/Status/Monitor/GeneralLogController` | API GET /api/servers/:s/status/monitor/* | M3 (X11) — SSE stream for charts |
-| 🗓️ | `POST /server/status/monitor/log-vars` | `Server/Status/Monitor/LogVarsController` | API POST /api/servers/:s/status/monitor/log-vars | M3 (X11) — SSE stream for charts |
-| 🗓️ | `POST /server/status/monitor/query` | `Server/Status/Monitor/QueryAnalyzerController` | API POST /api/servers/:s/status/monitor/query | M3 (X11) — SSE stream for charts |
-| 🗓️ | `POST /server/status/monitor/slow-log` | `Server/Status/Monitor/SlowLogController` | API GET /api/servers/:s/status/monitor/* | M3 (X11) — SSE stream for charts |
-| 🗓️ | `GET, POST /server/status/processes` | `Server/Status/ProcessesController` | API GET /api/servers/:s/processes<br>UI /s/:s/status/processes | M3 |
-| 🗓️ | `POST /server/status/processes/kill/{id:\\d+}` | `Server/Status/Processes/KillController` | API POST /api/servers/:s/processes/:id/kill | M3 |
-| 🗓️ | `POST /server/status/processes/refresh` | `Server/Status/Processes/RefreshController` | API /api/servers/:s/status/processes/refresh<br>UI /s/:s/status/processes/refresh | M3 |
-| ✅ | `GET /server/status/queries` | `Server/Status/QueriesController` | API GET /api/servers/:s/status/queries (apps/server/src/routes/server-admin.ts:90)<br>UI /s/:server/status/queries (apps/web/src/routes/s/$server/status/queries.tsx) |  |
-| ✅ | `GET, POST /server/status/variables` | `Server/Status/VariablesController` | API GET /api/servers/:s/status/variables (apps/server/src/routes/server-admin.ts:93)<br>UI /s/:server/status/variables (apps/web/src/routes/s/$server/status/variables.tsx) |  |
+| ✅ | `GET, POST /server/replication` | `Server/ReplicationController` | API GET /api/servers/:s/replication (apps/server/src/routes/server-admin.ts:238)<br>API POST /api/servers/:s/replication/control (apps/server/src/routes/server-admin.ts:253)<br>API POST /api/servers/:s/replication/skip-errors (apps/server/src/routes/server-admin.ts:263)<br>API POST /api/servers/:s/replication/change-primary (apps/server/src/routes/server-admin.ts:273)<br>API POST /api/servers/:s/replication/replica-user (apps/server/src/routes/server-admin.ts:288)<br>UI /s/:server/replication (apps/web/src/routes/s/$server/replication.tsx) | the add-replica-user form posts to /server/privileges in phpMyAdmin (replication/replica-user here) |
+| ✅ | `GET /server/status` | `Server/Status/StatusController` | API GET /api/servers/:s/status (apps/server/src/routes/server-admin.ts:90)<br>UI /s/:server/status (apps/web/src/routes/s/$server/status/index.tsx) |  |
+| ✅ | `GET /server/status/advisor` | `Server/Status/AdvisorController` | API GET /api/servers/:s/status/advisor (apps/server/src/routes/server-admin.ts:132)<br>UI /s/:server/status/advisor (apps/web/src/routes/s/$server/status/advisor.tsx) |  |
+| ✅ | `GET /server/status/monitor` | `Server/Status/MonitorController` | API GET /api/servers/:s/status/monitor (apps/server/src/routes/server-admin.ts:142)<br>UI /s/:server/status/monitor (apps/web/src/routes/s/$server/status/monitor.tsx) | polled like phpMyAdmin (X11 withdrawn) |
+| ✅ | `POST /server/status/monitor/chart` | `Server/Status/Monitor/ChartingDataController` | API POST /api/servers/:s/status/monitor/chart (apps/server/src/routes/server-admin.ts:145) |  |
+| ✅ | `POST /server/status/monitor/general-log` | `Server/Status/Monitor/GeneralLogController` | API POST /api/servers/:s/status/monitor/general-log (apps/server/src/routes/server-admin.ts:157) |  |
+| ✅ | `POST /server/status/monitor/log-vars` | `Server/Status/Monitor/LogVarsController` | API POST /api/servers/:s/status/monitor/log-vars (apps/server/src/routes/server-admin.ts:175) |  |
+| ✅ | `POST /server/status/monitor/query` | `Server/Status/Monitor/QueryAnalyzerController` | API POST /api/servers/:s/status/monitor/query (apps/server/src/routes/server-admin.ts:181) |  |
+| ✅ | `POST /server/status/monitor/slow-log` | `Server/Status/Monitor/SlowLogController` | API POST /api/servers/:s/status/monitor/slow-log (apps/server/src/routes/server-admin.ts:151) |  |
+| ✅ | `GET, POST /server/status/processes` | `Server/Status/ProcessesController` | API GET /api/servers/:s/status/processes (apps/server/src/routes/server-admin.ts:93)<br>UI /s/:server/status/processes (apps/web/src/routes/s/$server/status/processes.tsx) |  |
+| ✅ | `POST /server/status/processes/kill/{id:\\d+}` | `Server/Status/Processes/KillController` | API POST /api/servers/:s/status/processes/:id/kill (apps/server/src/routes/server-admin.ts:108) |  |
+| ✅ | `POST /server/status/processes/refresh` | `Server/Status/Processes/RefreshController` | API GET /api/servers/:s/status/processes (apps/server/src/routes/server-admin.ts:93) | the auto-refresh requests the list with `full` (quirk Q51) |
+| ✅ | `GET /server/status/queries` | `Server/Status/QueriesController` | API GET /api/servers/:s/status/queries (apps/server/src/routes/server-admin.ts:116)<br>UI /s/:server/status/queries (apps/web/src/routes/s/$server/status/queries.tsx) |  |
+| ✅ | `GET, POST /server/status/variables` | `Server/Status/VariablesController` | API GET /api/servers/:s/status/variables (apps/server/src/routes/server-admin.ts:119)<br>API POST /api/servers/:s/status/variables (apps/server/src/routes/server-admin.ts:126)<br>UI /s/:server/status/variables (apps/web/src/routes/s/$server/status/variables.tsx) |  |
 | 🗓️ | `GET, POST /server/user-groups` | `Server/UserGroupsController` | API /api/servers/:s/user-groups<br>UI /s/:s/user-groups | M3 |
 | 🗓️ | `GET /server/user-groups/edit-form` | `Server/UserGroupsFormController` | API /api/servers/:s/user-groups/edit-form<br>UI /s/:s/user-groups/edit-form | M3 |
-| ✅ | `GET /server/variables` | `Server/VariablesController` | API GET /api/servers/:s/variables (apps/server/src/routes/server-admin.ts:116)<br>UI /s/:server/variables (apps/web/src/routes/s/$server/variables.tsx) |  |
-| 🗓️ | `GET /server/variables/get/{name}` | `Server/Variables/GetVariableController` | API /api/servers/:s/variables/get/:name<br>UI /s/:s/variables/get/:name | M3 |
-| 🗓️ | `POST /server/variables/set/{name}` | `Server/Variables/SetVariableController` | API /api/servers/:s/variables/set/:name<br>UI /s/:s/variables/set/:name | M3 |
+| ✅ | `GET /server/variables` | `Server/VariablesController` | API GET /api/servers/:s/variables (apps/server/src/routes/server-admin.ts:189)<br>UI /s/:server/variables (apps/web/src/routes/s/$server/variables.tsx) |  |
+| ✅ | `GET /server/variables/get/{name}` | `Server/Variables/GetVariableController` | API GET /api/servers/:s/variables/:name (apps/server/src/routes/server-admin.ts:192) |  |
+| ✅ | `POST /server/variables/set/{name}` | `Server/Variables/SetVariableController` | API POST /api/servers/:s/variables/:name (apps/server/src/routes/server-admin.ts:198) |  |
 | ✅ | `GET, POST /user-password` | `UserPasswordController` | API POST /api/servers/:s/account/password (apps/server/src/routes/shell.ts:124) |  |
 
 ## 07 export import — 16/16 (100.0%) covered, 12/16 implemented
