@@ -11,6 +11,7 @@ import { type ReactNode, useEffect, useMemo, useRef } from 'react'
 import { uiSettingsFrom, useConfig } from '../../../lib/config.ts'
 import { tProduct } from '../../../lib/i18n'
 import { AutoloadBanner } from '../../preferences/AutoloadBanner.tsx'
+import { HighlightedSql } from '../../sql/HighlightedSql'
 import { Breadcrumb } from '../Breadcrumb.tsx'
 import { ServerTabBar } from '../ScopeTabBars.tsx'
 import { UserMenu } from '../UserMenu.tsx'
@@ -45,7 +46,10 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
   useThemeState({ themeDefault: cfg.ThemeDefault, perServer: cfg.ThemePerServer, server })
 
   const ui = useMemo(
-    () => uiSettingsFrom(cfg, scope.data?.versionInt ?? 0, scope.data?.isMariaDb ?? false),
+    () => ({
+      ...uiSettingsFrom(cfg, scope.data?.versionInt ?? 0, scope.data?.isMariaDb ?? false),
+      renderSql: (sql: string) => <HighlightedSql sql={sql} versionInt={scope.data?.versionInt ?? 0} />,
+    }),
     [cfg, scope.data?.versionInt, scope.data?.isMariaDb],
   )
 

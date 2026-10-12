@@ -1,0 +1,6 @@
+# Intentional differences of the index editor page (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: slider, label: 'Add 1 column(s) to index' }
+    added: >-
+      the "Add %s column(s) to index" slider is a native range input; phpMyAdmin's jQuery UI slider
+      (a <span> handle) is not counted as a control by the harness

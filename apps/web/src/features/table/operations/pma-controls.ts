@@ -53,4 +53,17 @@ export const pmaControls = {
   'js:table/operations.ts#submit:#moveTableForm': 'OperationsPage.tsx',
   'js:table/operations.ts#submit:#partitionsForm': 'OperationsPage.tsx',
   'js:table/operations.ts#submit:#tableOptionsForm': 'OperationsPage.tsx',
+  // link_or_button anchors whose message_to_show the inventory lists as their label
+  'table/operations/index.twig#link:Table %s has been emptied.': {
+    file: 'OperationsPage.tsx',
+    match: "'truncate_tbl_anchor'",
+  },
+  'table/operations/index.twig#link:View %s has been dropped.': {
+    file: 'OperationsPage.tsx',
+    match: "'drop_tbl_anchor'",
+  },
+  'table/operations/view.twig#link:View %s has been dropped.': {
+    file: 'OperationsPage.tsx',
+    match: 'id="drop_view_anchor"',
+  },
 } as const

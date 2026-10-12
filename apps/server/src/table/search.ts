@@ -165,6 +165,7 @@ export async function searchPage(ctx: OpsCtx): Promise<SearchPageResponse> {
     let input: SearchPageResponse['columns'][number]['input']
     const foreign = await foreignOptions(ctx, name, foreigners)
     if (Array.isArray(foreign)) input = { kind: 'foreign', foreign }
+    else if (foreign === 'browse') input = { kind: 'foreignLink' }
     else if (GIS_DATA_TYPES.includes(type)) input = { kind: 'gis' }
     else if (type.startsWith('enum')) input = { kind: 'enum', values: parseEnumSetValues(type, false) }
     else if (isInt || isFloat) {

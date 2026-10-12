@@ -19,7 +19,8 @@ export function IndexPage({ scope, query }: { scope: TableRef; query: { index?: 
   if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined) return null
   return (
-    <Panel title={query.index !== undefined ? t('Edit index') : t('Add index')}>
+    // index_form.twig: a `.card` without header
+    <Panel>
       <PanelBody>
         <IndexEditorForm
           scope={scope}

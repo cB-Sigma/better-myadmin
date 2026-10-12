@@ -1,0 +1,9 @@
+# Intentional differences of the Move columns dialog (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: button, label: '/ [↑↓]$/' }
+    added: >-
+      phpMyAdmin moves the columns by dragging the list items (jQuery UI sortable, no control); ours
+      also moves them with up/down buttons for keyboard users
+  - match: { kind: button, label: Close }
+    ignore: [order]
+    reason: the dialog's corner close button comes last in our DOM (Radix Dialog), first in Bootstrap's header

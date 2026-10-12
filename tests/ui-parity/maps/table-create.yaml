@@ -1,0 +1,7 @@
+# Intentional differences of the Create table form (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: select, name: '/^field_collation\[\d+\]$/' }
+    ignore: [options]
+    reason: >-
+      phpMyAdmin renders the collation selects empty and fills them from a <template> on focus
+      (columnDefinitions); ours renders the options up front, the same list once filled

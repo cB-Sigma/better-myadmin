@@ -13,6 +13,7 @@ export function StructurePills({ scope, active }: { scope: TableRef; active: 'st
   const pill = (key: 'structure' | 'relation', label: string) => (
     <li>
       <Link
+        id={key === 'structure' ? 'table_structure_id' : 'table_relation_id'}
         to={`${base}/${key}` as string}
         className={`rounded px-2 py-1 ${active === key ? 'bg-bg-subtle font-medium' : 'text-accent hover:underline'}`}
         {...(active === key ? { 'aria-current': 'page' as const } : {})}
