@@ -46,7 +46,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `LoginCookieDeleteAll` | apps/server/src/routes/auth.ts:196 |  |
 | ✅ | `LoginCookieRecall` | apps/server/src/routes/auth.ts:36<br>apps/server/src/routes/auth.ts:100 |  |
 | ✅ | `LoginCookieStore` | apps/server/src/app.ts:124<br>apps/server/src/main.ts:112<br>apps/server/src/shell/home.ts:59 |  |
-| ✅ | `LoginCookieValidity` | apps/server/src/app.ts:72<br>apps/server/src/db/pool-manager.ts:229<br>apps/server/src/main.ts:112<br>apps/server/src/routes/server.ts:53<br>apps/server/src/shell/home.ts:59 |  |
+| ✅ | `LoginCookieValidity` | apps/server/src/app.ts:72<br>apps/server/src/db/pool-manager.ts:229<br>apps/server/src/main.ts:112<br>apps/server/src/routes/server.ts:54<br>apps/server/src/shell/home.ts:59 |  |
 | ✅ | `MaxNavigationItems` | apps/server/src/navigation/nodes.ts:511<br>apps/server/src/navigation/nodes.ts:766<br>apps/server/src/navigation/nodes.ts:813<br>apps/server/src/navigation/nodes.ts:818<br>apps/server/src/navigation/tree.ts:664 |  |
 | ✅ | `MysqlSslWarningSafeHosts` | apps/server/src/shell/home.ts:144 |  |
 | ✅ | `NavigationDisplayLogo` | apps/server/src/navigation/service.ts:60<br>apps/web/src/features/navigation/NavigationPanel.tsx:301 |  |

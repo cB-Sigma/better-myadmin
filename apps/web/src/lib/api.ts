@@ -266,6 +266,19 @@ export interface TableRef extends DbRef {
 const srvPath = (s: number) => `/servers/${s}`
 const dbPath = (r: DbRef) => `${srvPath(r.server)}/databases/${encodeURIComponent(r.db)}`
 /** API path of a table below `/api` (also the base of the transformation wrapper links). */
+/** a query result's scope: its table, else its database, else the server (Results::getResultsOperations) */
+export interface VisScope {
+  server: number
+  db?: string | undefined
+  table?: string | undefined
+}
+const visPath = (s: VisScope) =>
+  s.db === undefined || s.db === ''
+    ? `${srvPath(s.server)}/visualization`
+    : s.table === undefined || s.table === ''
+      ? dbPath({ server: s.server, db: s.db })
+      : tablePath({ server: s.server, db: s.db, table: s.table })
+
 export const tablePath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURIComponent(r.table)}`
 
 /**
@@ -383,11 +396,11 @@ export const api = {
     call<ViewFormResponse>('GET', `${dbPath(r)}/views/form${queryString(q)}`),
   viewSave: (r: DbRef, req: ViewSaveRequest) => call<ViewSaveResponse>('POST', `${dbPath(r)}/views`, req),
   // the query results' Display chart and GIS visualization (pma: /table/chart, /table/gis-visualization)
-  chartPage: (s: TableRef, req: VisualizationPageRequest) =>
-    call<ChartPageResponse>('POST', `${tablePath(s)}/chart`, req),
-  chartData: (s: TableRef, req: ChartDataRequest) =>
-    call<ChartDataResponse>('POST', `${tablePath(s)}/chart/data`, req),
-  gisPage: (s: TableRef, req: GisPageRequest) => call<GisPageResponse>('POST', `${tablePath(s)}/gis`, req),
+  chartPage: (s: VisScope, req: VisualizationPageRequest) =>
+    call<ChartPageResponse>('POST', `${visPath(s)}/chart`, req),
+  chartData: (s: VisScope, req: ChartDataRequest) =>
+    call<ChartDataResponse>('POST', `${visPath(s)}/chart/data`, req),
+  gisPage: (s: VisScope, req: GisPageRequest) => call<GisPageResponse>('POST', `${visPath(s)}/gis`, req),
   tablePrivileges: (s: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(s)}/privileges`),
   tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>

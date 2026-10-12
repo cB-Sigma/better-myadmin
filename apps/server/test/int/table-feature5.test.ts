@@ -124,3 +124,19 @@ describe('GIS visualization', () => {
     expect(J(r).error).toBe('No spatial column found for this SQL query.')
   })
 })
+
+describe('chart of a result without a table', () => {
+  it('answers at the database and the server level', async () => {
+    const sql = 'SELECT 1 AS a, 2 AS b'
+    let r = await app.req('POST', `${base}/chart`, { sql, unlimNumRows: 1 })
+    expect(J(r).columns.map((c: Any) => c.name)).toEqual(['a', 'b'])
+    r = await app.req('POST', `${base}/chart/data`, { sql, pos: 0, sessionMaxRows: 25 })
+    expect(J(r).data).toEqual([{ a: '1', b: '2' }])
+    r = await app.req('POST', '/api/servers/1/visualization/chart', { sql, unlimNumRows: 1 })
+    expect(J(r).error).toBeNull()
+    r = await app.req('POST', '/api/servers/1/visualization/chart/data', { sql, pos: 0, sessionMaxRows: 25 })
+    expect(J(r).data).toEqual([{ a: '1', b: '2' }])
+    r = await app.req('POST', '/api/servers/1/visualization/gis', { sql: 'SELECT POINT(1, 2) AS g' })
+    expect(J(r).error).toBe('Missing parameter: db')
+  })
+})

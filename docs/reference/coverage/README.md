@@ -116,4 +116,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 218 API endpoints, 67 SPA routes (4 placeholders/catch-alls), 869 control claims, 1071 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 224 API endpoints, 71 SPA routes (4 placeholders/catch-alls), 869 control claims, 1076 tests.

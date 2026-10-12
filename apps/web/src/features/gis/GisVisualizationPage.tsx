@@ -15,7 +15,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Globe, ZoomIn, ZoomOut } from 'lucide-react'
 import { type PointerEvent, type WheelEvent, useEffect, useMemo, useRef, useState } from 'react'
-import { type TableRef, api, errorMessage } from '../../lib/api'
+import { type VisScope, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { RowsFieldsetInputs } from '../table/chart/ChartPage'
@@ -30,7 +30,7 @@ import { GIS_PNG_BACKGROUND, hex, olDataset, svgDocument, svgShapes } from './vi
  * pma: resources/templates/table/gis_visualization/gis_visualization.twig,
  *      resources/js/table/gis_visualization.ts (SvgVisualization)
  */
-export function GisVisualizationPage({ scope, search }: { scope: TableRef; search: VisualizationSearch }) {
+export function GisVisualizationPage({ scope, search }: { scope: VisScope; search: VisualizationSearch }) {
   const [settings, setSettings] = useState<{
     spatialColumn?: string
     labelColumn?: string
