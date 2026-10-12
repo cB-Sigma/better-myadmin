@@ -18,6 +18,7 @@ import {
 import { parseJson } from '../http/validate.ts'
 import { afterSqlBox } from '../metadata/hooks.ts'
 import { withMeta } from '../metadata/service.ts'
+import { setTrackedDatabase } from '../table/tracker.ts'
 import type { ServerEnv } from './server.ts'
 
 /** The results grid: /sql and its helper routes (docs/features/02-browse-results-grid.md). */
@@ -26,7 +27,8 @@ export const browseRoutes = new Hono<ServerEnv>()
 type C = HonoContext<ServerEnv>
 
 /** One request with the user's connection and the configuration storage. */
-function withBrowse<T>(c: C, db: string, fn: (x: BrowseCtx) => Promise<T>): Promise<T> {
+async function withBrowse<T>(c: C, db: string, fn: (x: BrowseCtx) => Promise<T>): Promise<T> {
+  await setTrackedDatabase(c, db)
   return withMeta(c, { db }, async (m) =>
     fn({
       m,

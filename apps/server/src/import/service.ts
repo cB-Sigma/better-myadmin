@@ -86,7 +86,7 @@ export async function runFileImport(
     if (!IMPORT_FORMATS.includes(format)) {
       return out({ message: { type: 'error', html: __('Incorrect format parameter') } })
     }
-    if (db !== '') await conn.query(`USE ${backquote(db)}`, 'import.select-db')
+    if (db !== '') await conn.selectDb(db, 'import.select-db')
     // memory_limit -1: 10 MB chunks, read limit an eighth of it
     const readLimit = (10 * 1024 * 1024) / 8
 
