@@ -95,7 +95,13 @@ export const MessageType = z.enum(['success', 'notice', 'error'])
 export const Warning = z.object({ level: z.string(), code: z.number().int(), message: z.string() })
 export type Warning = z.infer<typeof Warning>
 
-export const Executed = z.object({ sql: z.string(), ms: z.number(), label: z.string().optional() })
+export const Executed = z.object({
+  sql: z.string(),
+  ms: z.number(),
+  label: z.string().optional(),
+  /** the statement's warning count (DBG/sqllog) */
+  warnings: z.number().optional(),
+})
 export type Executed = z.infer<typeof Executed>
 
 /** The action links under the executed SQL (Generator::getMessage), in display order. */

@@ -73,8 +73,9 @@ export class Conn {
       throw e
     }
     const ms = performance.now() - start
-    this.log.push({ sql, ms, label })
-    return { ...normalise(res[0], res[1]), ms }
+    const out = normalise(res[0], res[1])
+    this.log.push({ sql, ms, label, ...(out.header !== null ? { warnings: out.header.warningStatus } : {}) })
+    return { ...out, ms }
   }
 
   /** Convenience for internal queries: rows as utf8 strings keyed by column name. */

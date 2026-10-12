@@ -9,6 +9,7 @@ import { getServer } from '../../src/config.ts'
 import { controlServer } from '../../src/db/control.ts'
 import { connectionOptions } from '../../src/db/pool-manager.ts'
 import { worldWritable } from '../../src/http/config-permissions.ts'
+import { sqlLogLine } from '../../src/http/sql-log.ts'
 import { httpRequest } from '../../src/util/http-request.ts'
 import { testConfig } from '../support/app.ts'
 
@@ -165,5 +166,16 @@ describe('ProxyUrl / ProxyUser / ProxyPass (HttpRequest)', () => {
     } finally {
       proxy.close()
     }
+  })
+})
+
+describe("$cfg['DBG']['sqllog'] (DatabaseInterface::query)", () => {
+  it('the syslog line of a statement', () => {
+    expect(sqlLogLine('/api/servers/1/sql', { sql: 'SELECT 1', ms: 1234, warnings: 2 })).toBe(
+      'SQL[index.php?route=/api/servers/1/sql]: 1.234(W:2,C:y,L:0x00) > SELECT 1',
+    )
+    expect(sqlLogLine('/x', { sql: 'SELECT 2', ms: 0, label: 'pmadb' })).toBe(
+      'SQL[index.php?route=/x]: 0.000(W:0,C:y,L:0x01) > SELECT 2',
+    )
   })
 })

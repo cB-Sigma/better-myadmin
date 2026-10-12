@@ -8,7 +8,7 @@ Mechanical inventories of phpMyAdmin `a57149e1` ([reference-commit.txt](../refer
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 199 | 179 | 12 | 1 | 7 | 0 | 0 | 0 | 0 | 192 | 96.5% |
 | Template controls | 1106 | 806 | 0 | 0 | 4 | 0 | 0 | 296 | 0 | 806 | 72.9% |
-| Config directives | 449 | 421 | 2 | 18 | 1 | 0 | 0 | 7 | 0 | 441 | 98.2% |
+| Config directives | 449 | 424 | 2 | 20 | 3 | 0 | 0 | 0 | 0 | 446 | 99.3% |
 | Messages (msgids) | 3426 | 1949 | 0 | 0 | 3 | 0 | 0 | 1474 | 0 | 1949 | 56.9% |
 | JS behaviours | 966 | 461 | 0 | 1 | 12 | 0 | 0 | 492 | 0 | 462 | 47.8% |
 | Checklist items | 706 | 23 | 0 | 0 | 0 | 58 | 0 | 625 | 0 | 23 | 3.3% |
@@ -22,15 +22,15 @@ Covered / total per inventory (directives are attributed to the feature doc that
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
 | [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 21/23 (91.3%) | 47/98 (48.0%) | 107/109 (98.2%) | 279/403 (69.2%) | 4/237 (1.7%) | 11/77 (14.3%) |
-| [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 27/32 (84.4%) | 31/32 (96.9%) | 39/56 (69.6%) | 22/69 (31.9%) | 0/118 (0.0%) |
+| [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 27/32 (84.4%) | 32/32 (100.0%) | 39/56 (69.6%) | 22/69 (31.9%) | 0/118 (0.0%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 6/7 (85.7%) | 26/28 (92.9%) | 16/16 (100.0%) | 53/79 (67.1%) | 18/22 (81.8%) | 11/59 (18.6%) |
 | [04 table level](../../features/04-table-level.md) | M2 | 62/64 (96.9%) | 155/306 (50.7%) | 5/5 (100.0%) | 428/534 (80.1%) | 88/178 (49.4%) | 0/100 (0.0%) |
-| [05 database level](../../features/05-database-level.md) | M3 | 34/34 (100.0%) | 244/268 (91.0%) | 30/31 (96.8%) | 299/340 (87.9%) | 193/198 (97.5%) | 0/111 (0.0%) |
+| [05 database level](../../features/05-database-level.md) | M3 | 34/34 (100.0%) | 244/268 (91.0%) | 31/31 (100.0%) | 299/340 (87.9%) | 193/198 (97.5%) | 0/111 (0.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 203/243 (83.5%) | 17/17 (100.0%) | 433/915 (47.3%) | 39/131 (29.8%) | 0/49 (0.0%) |
-| [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 59/63 (93.7%) | 136/138 (98.6%) | 238/293 (81.2%) | 61/66 (92.4%) | 0/67 (0.0%) |
+| [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 59/63 (93.7%) | 137/138 (99.3%) | 238/293 (81.2%) | 61/66 (92.4%) | 0/67 (0.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 9/9 (100.0%) | 38/39 (97.4%) | 62/62 (100.0%) | 90/666 (13.5%) | 17/17 (100.0%) | 0/62 (0.0%) |
-| [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 5/7 (71.4%) | 6/28 (21.4%) | 10/11 (90.9%) | 42/46 (91.3%) | 20/48 (41.7%) | 1/63 (1.6%) |
-| other | M5 | — | 1/1 (100.0%) | 27/28 (96.4%) | 48/94 (51.1%) | — | — |
+| [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 5/7 (71.4%) | 6/28 (21.4%) | 11/11 (100.0%) | 42/46 (91.3%) | 20/48 (41.7%) | 1/63 (1.6%) |
+| other | M5 | — | 1/1 (100.0%) | 28/28 (100.0%) | 48/94 (51.1%) | — | — |
 
 ## Top 30 missing
 
@@ -129,4 +129,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 278 API endpoints, 84 SPA routes (3 placeholders/catch-alls), 1268 control claims, 1303 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 278 API endpoints, 84 SPA routes (3 placeholders/catch-alls), 1268 control claims, 1308 tests.

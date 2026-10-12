@@ -1,7 +1,7 @@
 import { chmodSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { afterAll, describe, expect, it } from 'vitest'
+import { afterAll, describe, expect, it, vi } from 'vitest'
 import { testApp, testConfig } from '../support/app.ts'
 
 /**
@@ -94,6 +94,51 @@ describe('server directives', () => {
       expect(r.json.settings).toMatchObject(Console)
     } finally {
       await t.close()
+    }
+  })
+
+  it('DBG/sqllog: every statement of a request is logged with DBG/sql on', async () => {
+    for (const sqllog of [true, false]) {
+      const t = testApp(testConfig({ DBG: { sql: true, sqllog } }))
+      const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      try {
+        await t.login()
+        spy.mockClear()
+        await t.req('POST', '/api/servers/1/query', { sql: 'SELECT 1 AS f01a_x', db: '', fromQueryBox: true })
+        const lines = spy.mock.calls.map((a) => String(a[0])).filter((l) => l.startsWith('SQL['))
+        if (sqllog)
+          expect(
+            lines.some((l) =>
+              /^SQL\[index\.php\?route=\/api\/servers\/1\/query\]: \d+\.\d{3}\(W:\d+,C:y,L:0x00\) > SELECT 1 AS f01a_x/.test(
+                l,
+              ),
+            ),
+          ).toBe(true)
+        else expect(lines).toEqual([])
+      } finally {
+        spy.mockRestore()
+        await t.close()
+      }
+    }
+  })
+
+  it('environment: development shows the internal error, production hides it', async () => {
+    for (const environment of ['development', 'production'] as const) {
+      const t = testApp(testConfig({ environment }))
+      const spy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      t.deps.store.get = () => {
+        throw new TypeError('f01a boom')
+      }
+      try {
+        const r = await t.req('GET', '/api/auth/state', undefined, { cookie: 'bma_sid=f01a' })
+        expect(r.status).toBe(500)
+        const message = (r.json.error as { message: string }).message
+        if (environment === 'development') expect(message).toMatch(/^TypeError: f01a boom \(.+\)$/)
+        else expect(message).toBe('Internal error.')
+      } finally {
+        spy.mockRestore()
+        await t.close()
+      }
     }
   })
 })

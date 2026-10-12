@@ -10,6 +10,7 @@ import type { PoolManager } from './db/pool-manager.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { securityHeaders } from './http/headers.ts'
+import { sqlLog } from './http/sql-log.ts'
 import { languageLoading, languageManager } from './i18n.ts'
 import { authRoutes } from './routes/auth.ts'
 import { i18nRoutes } from './routes/i18n.ts'
@@ -60,6 +61,13 @@ export function createApp(deps: AppDeps) {
   app.onError((err, c) => {
     if (err instanceof BmaError) return c.json(err.toEnvelope(), err.status as 400)
     console.error(err)
+    // `environment` = development shows the exception and where it was raised
+    // pma: src/Error/ErrorHandler.php::handleException (hideLocation)
+    if (deps.cfg.environment === 'development') {
+      const where = err.stack?.split('\n')[1]?.trim().replace(/^at /, '') ?? ''
+      const message = `${err.name}: ${err.message}${where === '' ? '' : ` (${where})`}`
+      return c.json({ error: { code: 'INTERNAL', message } }, 500)
+    }
     return c.json({ error: { code: 'INTERNAL', message: 'Internal error.' } }, 500)
   })
 
@@ -69,6 +77,7 @@ export function createApp(deps: AppDeps) {
   const language = languageLoading(languageManager(deps.cfg))
   const permissions = configPermissions()
   app.use('/api/*', session)
+  app.use('/api/*', sqlLog())
   app.use('/api/*', language)
   app.use('/api/*', permissions)
 
