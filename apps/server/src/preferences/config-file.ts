@@ -1,5 +1,5 @@
 import { defaults, serverDefaults } from '@bettermyadmin/config'
-import { arrayRead, arrayWrite, phpIdentical } from '@bettermyadmin/metadata'
+import { arrayRead, arrayWrite, phpEmpty, phpIdentical } from '@bettermyadmin/metadata'
 
 /** A PHP array as decoded here: a list (JS array) or a string-keyed map. */
 type PhpArray = Record<string, unknown> | unknown[]
@@ -78,14 +78,39 @@ function remove(a: Record<string, unknown> | unknown[], key: string): void {
 export class ConfigFile {
   #data: Record<string, unknown> = {}
   readonly #defaults: Record<string, unknown>
-  readonly #base: Record<string, unknown>
+  /** null in the setup script (ConfigFile::$isInSetup) */
+  readonly #base: Record<string, unknown> | null
   #allowed: Set<string> | null = null
   #mapping: Record<string, string> = {}
+  #persist: Set<string> = new Set()
 
-  /** `base`: the configuration without user preferences (Config::$baseSettings) */
-  constructor(base: Record<string, unknown>, defaultsTree: Record<string, unknown> = defaultSettingsTree()) {
+  /**
+   * `base`: the configuration without user preferences (Config::$baseSettings); null for the
+   * setup script, whose `data` is the configuration being written ($_SESSION['ConfigFile<server>']).
+   */
+  constructor(
+    base: Record<string, unknown> | null,
+    defaultsTree: Record<string, unknown> = defaultSettingsTree(),
+    data: Record<string, unknown> = {},
+  ) {
     this.#base = base
     this.#defaults = defaultsTree
+    this.#data = data
+  }
+
+  /** The stored values (what the session keeps). */
+  data(): Record<string, unknown> {
+    return this.#data
+  }
+
+  /** pma: ConfigFile::setPersistKeys */
+  setPersistKeys(keys: readonly string[]): void {
+    this.#persist = new Set(keys)
+  }
+
+  /** pma: ConfigFile::getPersistKeysMap (in the order given) */
+  getPersistKeys(): string[] {
+    return [...this.#persist]
   }
 
   setAllowedKeys(keys: readonly string[] | null): void {
@@ -103,10 +128,22 @@ export class ConfigFile {
   /** pma: ConfigFile::set */
   set(path: string, value: unknown, canonicalPath: string = canonical(path)): void {
     if (this.#allowed !== null && !this.#allowed.has(canonicalPath)) return
+    // a persisted path is never removed
+    if (this.#persist.has(canonicalPath)) {
+      arrayWrite(path, this.#data, value)
+      return
+    }
     const defaultValue = this.getDefault(canonicalPath)
-    // keep a value that config.inc.php changed even when it equals the default
-    const instanceDefault = arrayRead(canonicalPath, this.#base)
-    if (phpIdentical(value, defaultValue) && phpIdentical(instanceDefault, defaultValue)) {
+    let remove: boolean
+    if (this.#base === null) {
+      // setup: remove if it has the default value or is empty
+      remove = phpIdentical(value, defaultValue) || (phpEmpty(value) && phpEmpty(defaultValue))
+    } else {
+      // keep a value that config.inc.php changed even when it equals the default
+      const instanceDefault = arrayRead(canonicalPath, this.#base)
+      remove = phpIdentical(value, defaultValue) && phpIdentical(instanceDefault, defaultValue)
+    }
+    if (remove) {
       arrayRemove(path, this.#data)
       return
     }
@@ -141,9 +178,77 @@ export class ConfigFile {
     return flatArray(this.#defaults)
   }
 
+  /** pma: ConfigFile::getServerCount */
+  getServerCount(): number {
+    const servers = this.#data.Servers
+    return servers !== null && typeof servers === 'object' ? Object.keys(servers).length : 0
+  }
+
+  /** pma: ConfigFile::getServers */
+  getServers(): Record<string, Record<string, unknown>> {
+    return (this.#data.Servers ?? {}) as Record<string, Record<string, unknown>>
+  }
+
+  #hasServer(id: number): boolean {
+    const v = this.getServers()[String(id)]
+    return v !== undefined && v !== null
+  }
+
+  /** pma: ConfigFile::getServerDSN */
+  getServerDSN(id: number): string {
+    if (!this.#hasServer(id)) return ''
+    const path = `Servers/${id}`
+    let dsn = 'mysqli://'
+    if (this.getValue(`${path}/auth_type`) === 'config') {
+      dsn += String(this.getValue(`${path}/user`) ?? '')
+      if (!phpEmpty(this.getValue(`${path}/password`))) dsn += ':***'
+      dsn += '@'
+    }
+    if (this.getValue(`${path}/host`) !== 'localhost') {
+      dsn += String(this.getValue(`${path}/host`) ?? '')
+      const port = this.getValue(`${path}/port`)
+      if (!phpEmpty(port)) dsn += `:${port}`
+    } else {
+      dsn += String(this.getValue(`${path}/socket`) ?? '')
+    }
+    return dsn
+  }
+
+  /** pma: ConfigFile::getServerName */
+  getServerName(id: number): string {
+    if (!this.#hasServer(id)) return ''
+    const verbose = this.get(`Servers/${id}/verbose`)
+    if (!phpEmpty(verbose)) return String(verbose)
+    const host = this.get(`Servers/${id}/host`)
+    return phpEmpty(host) ? 'localhost' : String(host)
+  }
+
+  /** pma: ConfigFile::removeServer: the next servers move down one index. */
+  removeServer(id: number): void {
+    if (!this.#hasServer(id)) return
+    const servers = this.getServers()
+    const last = this.getServerCount()
+    for (let i = id; i < last; i++) servers[String(i)] = servers[String(i + 1)] as Record<string, unknown>
+    delete servers[String(last)]
+    if (this.#data.ServerDefault === undefined || this.#data.ServerDefault !== last) return
+    delete this.#data.ServerDefault
+  }
+
+  /** pma: ConfigFile::getConfig: the stored tree, mapped keys written back. */
+  getConfig(): Record<string, unknown> {
+    const c = structuredClone(this.#data)
+    for (const [mapTo, mapFrom] of Object.entries(this.#mapping)) {
+      if (arrayRead(mapTo, c) === null) continue
+      arrayWrite(mapTo, c, arrayRead(mapFrom, c))
+      arrayRemove(mapFrom, c)
+    }
+    return c
+  }
+
   /** pma: ConfigFile::getConfigArray (mapped keys move to the end) */
   getConfigArray(): Record<string, unknown> {
     const c = flatArray(this.#data)
+    for (const key of this.#persist) if (!(key in c)) c[key] = this.getDefault(canonical(key))
     for (const [mapTo, mapFrom] of Object.entries(this.#mapping)) {
       if (c[mapFrom] === undefined || c[mapFrom] === null) continue
       const v = c[mapFrom]

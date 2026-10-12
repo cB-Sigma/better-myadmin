@@ -78,6 +78,7 @@ function normaliseValidators(raw: RawValidators): Record<string, FormValidator[]
 const json = data as unknown as {
   user: FormTabDef[]
   page: FormTabDef[]
+  setup: FormTabDef[]
   fields: Record<string, FormFieldDef>
   validators: RawValidators
   userValidators: RawValidators
@@ -87,7 +88,9 @@ const json = data as unknown as {
 export const USER_FORMS: readonly FormTabDef[] = json.user
 /** PageFormList (PageSettings::init groups). */
 export const PAGE_FORMS: readonly FormTabDef[] = json.page
-/** Every field of the user and page forms. */
+/** SetupFormList: the setup script's form sets (Config, Export, Features, …, Servers, Sql). */
+export const SETUP_FORMS: readonly FormTabDef[] = json.setup
+/** Every field of the user, page and setup forms. */
 export const FORM_FIELDS: Readonly<Record<string, FormFieldDef>> = json.fields
 /** ConfigFile `_validators` */
 export const FORM_VALIDATORS: Readonly<Record<string, FormValidator[]>> = normaliseValidators(json.validators)
@@ -101,6 +104,11 @@ export function userFormTab(tab: string, developerTab: boolean): FormTabDef | un
   const def = USER_FORMS.find((t) => t.tab === tab)
   if (def === undefined || def.tab !== 'Features' || developerTab) return def
   return { ...def, forms: def.forms.filter((f) => f.name !== 'Developer') }
+}
+
+/** SetupFormList::get(formset) */
+export function setupFormTab(formset: string): FormTabDef | undefined {
+  return SETUP_FORMS.find((t) => t.tab === formset)
 }
 
 /** PageFormList::get(group) */

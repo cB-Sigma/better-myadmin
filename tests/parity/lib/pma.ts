@@ -145,7 +145,8 @@ export class PmaClient {
 
 /** `/index.php?route=<route>` (or the given `/index.php…` path) with `params` appended. */
 function url(target: string, params: Array<[string, string]> = []): string {
-  const base = target.startsWith('/index.php') ? target : `/index.php?route=${target}`
+  const base =
+    target.startsWith('/index.php') || target.startsWith('/setup/') ? target : `/index.php?route=${target}`
   if (params.length === 0) return base
   return `${base}${base.includes('?') ? '&' : '?'}${new URLSearchParams(params)}`
 }

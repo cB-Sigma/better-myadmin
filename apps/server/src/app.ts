@@ -12,6 +12,7 @@ import { authRoutes } from './routes/auth.ts'
 import { i18nRoutes } from './routes/i18n.ts'
 import { metaRoutes } from './routes/meta.ts'
 import { serverRoutes } from './routes/server.ts'
+import { setupRoutes } from './routes/setup.ts'
 import { telemetryRoutes } from './routes/telemetry.ts'
 import { type SecretBox, safeEqual } from './session/crypto.ts'
 import { newSession, nowSeconds } from './session/manager.ts'
@@ -94,6 +95,7 @@ export function createApp(deps: AppDeps) {
   app.route('/api/i18n', i18nRoutes)
   app.route('/api/servers', serverRoutes)
   app.route('/api/telemetry', telemetryRoutes)
+  app.route('/api/setup', setupRoutes)
 
   app.all('/api/*', (c) => c.json({ error: { code: 'NOT_FOUND', message: 'Not found.' } }, 404))
 

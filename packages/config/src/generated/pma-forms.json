@@ -1,7 +1,7 @@
 {
     "_meta": {
         "source": "phpMyAdmin Config/Forms",
-        "commit": "e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1"
+        "commit": "a57149e1f6273eb326b153487ad070893dd9e19c"
     },
     "user": [
         {
@@ -1968,6 +1968,1450 @@
                         },
                         {
                             "groupEnd": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "setup": [
+        {
+            "tab": "Config",
+            "name": "",
+            "forms": [
+                {
+                    "name": "Config",
+                    "title": "Config",
+                    "desc": "",
+                    "items": [
+                        {
+                            "path": "DefaultLang"
+                        },
+                        {
+                            "path": "ServerDefault"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Export",
+            "name": "Export",
+            "forms": [
+                {
+                    "name": "Export_defaults",
+                    "title": "Export defaults",
+                    "desc": "Customize default export options.",
+                    "items": [
+                        {
+                            "path": "Export/method"
+                        },
+                        {
+                            "group": "Quick"
+                        },
+                        {
+                            "path": "Export/quick_export_onserver"
+                        },
+                        {
+                            "path": "Export/quick_export_onserver_overwrite"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "Custom"
+                        },
+                        {
+                            "path": "Export/format"
+                        },
+                        {
+                            "path": "Export/compression"
+                        },
+                        {
+                            "path": "Export/charset"
+                        },
+                        {
+                            "path": "Export/lock_tables"
+                        },
+                        {
+                            "path": "Export/as_separate_files"
+                        },
+                        {
+                            "path": "Export/asfile",
+                            "setvalue": ":group"
+                        },
+                        {
+                            "path": "Export/onserver"
+                        },
+                        {
+                            "path": "Export/onserver_overwrite"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "path": "Export/file_template_table"
+                        },
+                        {
+                            "path": "Export/file_template_database"
+                        },
+                        {
+                            "path": "Export/file_template_server"
+                        }
+                    ]
+                },
+                {
+                    "name": "Sql",
+                    "title": "SQL",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "path": "Export/sql_include_comments",
+                            "setvalue": ":group"
+                        },
+                        {
+                            "path": "Export/sql_dates"
+                        },
+                        {
+                            "path": "Export/sql_relation"
+                        },
+                        {
+                            "path": "Export/sql_mime"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "path": "Export/sql_use_transaction"
+                        },
+                        {
+                            "path": "Export/sql_disable_fk"
+                        },
+                        {
+                            "path": "Export/sql_views_as_tables"
+                        },
+                        {
+                            "path": "Export/sql_metadata"
+                        },
+                        {
+                            "path": "Export/sql_compatibility"
+                        },
+                        {
+                            "path": "Export/sql_structure_or_data"
+                        },
+                        {
+                            "group": "Structure"
+                        },
+                        {
+                            "path": "Export/sql_drop_database"
+                        },
+                        {
+                            "path": "Export/sql_create_database"
+                        },
+                        {
+                            "path": "Export/sql_drop_table"
+                        },
+                        {
+                            "path": "Export/sql_create_table",
+                            "setvalue": ":group"
+                        },
+                        {
+                            "path": "Export/sql_if_not_exists"
+                        },
+                        {
+                            "path": "Export/sql_auto_increment"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "path": "Export/sql_create_view",
+                            "setvalue": ":group"
+                        },
+                        {
+                            "path": "Export/sql_view_current_user"
+                        },
+                        {
+                            "path": "Export/sql_or_replace_view"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "path": "Export/sql_procedure_function"
+                        },
+                        {
+                            "path": "Export/sql_create_trigger"
+                        },
+                        {
+                            "path": "Export/sql_backquotes"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "Data"
+                        },
+                        {
+                            "path": "Export/sql_delayed"
+                        },
+                        {
+                            "path": "Export/sql_ignore"
+                        },
+                        {
+                            "path": "Export/sql_type"
+                        },
+                        {
+                            "path": "Export/sql_insert_syntax"
+                        },
+                        {
+                            "path": "Export/sql_max_query_size"
+                        },
+                        {
+                            "path": "Export/sql_hex_for_binary"
+                        },
+                        {
+                            "path": "Export/sql_utc_time"
+                        }
+                    ]
+                },
+                {
+                    "name": "CodeGen",
+                    "title": "CodeGen",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "path": "Export/codegen_format"
+                        }
+                    ]
+                },
+                {
+                    "name": "Csv",
+                    "title": "CSV",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "group": "CSV"
+                        },
+                        {
+                            "path": "Export/csv_separator"
+                        },
+                        {
+                            "path": "Export/csv_enclosed"
+                        },
+                        {
+                            "path": "Export/csv_escaped"
+                        },
+                        {
+                            "path": "Export/csv_terminated"
+                        },
+                        {
+                            "path": "Export/csv_null"
+                        },
+                        {
+                            "path": "Export/csv_removeCRLF"
+                        },
+                        {
+                            "path": "Export/csv_columns"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "CSV for MS Excel"
+                        },
+                        {
+                            "path": "Export/excel_null"
+                        },
+                        {
+                            "path": "Export/excel_removeCRLF"
+                        },
+                        {
+                            "path": "Export/excel_columns"
+                        },
+                        {
+                            "path": "Export/excel_edition"
+                        }
+                    ]
+                },
+                {
+                    "name": "Latex",
+                    "title": "LaTeX",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "path": "Export/latex_caption"
+                        },
+                        {
+                            "path": "Export/latex_structure_or_data"
+                        },
+                        {
+                            "group": "Structure"
+                        },
+                        {
+                            "path": "Export/latex_structure_caption"
+                        },
+                        {
+                            "path": "Export/latex_structure_continued_caption"
+                        },
+                        {
+                            "path": "Export/latex_structure_label"
+                        },
+                        {
+                            "path": "Export/latex_relation"
+                        },
+                        {
+                            "path": "Export/latex_comments"
+                        },
+                        {
+                            "path": "Export/latex_mime"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "Data"
+                        },
+                        {
+                            "path": "Export/latex_columns"
+                        },
+                        {
+                            "path": "Export/latex_data_caption"
+                        },
+                        {
+                            "path": "Export/latex_data_continued_caption"
+                        },
+                        {
+                            "path": "Export/latex_data_label"
+                        },
+                        {
+                            "path": "Export/latex_null"
+                        }
+                    ]
+                },
+                {
+                    "name": "Microsoft_Office",
+                    "title": "Microsoft Office",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "group": "Microsoft Word 2000"
+                        },
+                        {
+                            "path": "Export/htmlword_structure_or_data"
+                        },
+                        {
+                            "path": "Export/htmlword_null"
+                        },
+                        {
+                            "path": "Export/htmlword_columns"
+                        }
+                    ]
+                },
+                {
+                    "name": "Open_Document",
+                    "title": "OpenDocument",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "group": "OpenDocument Spreadsheet"
+                        },
+                        {
+                            "path": "Export/ods_columns"
+                        },
+                        {
+                            "path": "Export/ods_null"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "OpenDocument Text"
+                        },
+                        {
+                            "path": "Export/odt_structure_or_data"
+                        },
+                        {
+                            "group": "Structure"
+                        },
+                        {
+                            "path": "Export/odt_relation"
+                        },
+                        {
+                            "path": "Export/odt_comments"
+                        },
+                        {
+                            "path": "Export/odt_mime"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "Data"
+                        },
+                        {
+                            "path": "Export/odt_columns"
+                        },
+                        {
+                            "path": "Export/odt_null"
+                        }
+                    ]
+                },
+                {
+                    "name": "Texy",
+                    "title": "Texy! text",
+                    "desc": "Customize default options",
+                    "items": [
+                        {
+                            "path": "Export/texytext_structure_or_data"
+                        },
+                        {
+                            "group": "Data"
+                        },
+                        {
+                            "path": "Export/texytext_null"
+                        },
+                        {
+                            "path": "Export/texytext_columns"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Features",
+            "name": "Features",
+            "forms": [
+                {
+                    "name": "General",
+                    "title": "General",
+                    "desc": "Set some commonly used options.",
+                    "items": [
+                        {
+                            "path": "VersionCheck"
+                        },
+                        {
+                            "path": "NaturalOrder"
+                        },
+                        {
+                            "path": "InitialSlidersState"
+                        },
+                        {
+                            "path": "LoginCookieValidity"
+                        },
+                        {
+                            "path": "SkipLockedTables"
+                        },
+                        {
+                            "path": "DisableMultiTableMaintenance"
+                        },
+                        {
+                            "path": "ShowHint"
+                        },
+                        {
+                            "path": "SendErrorReports"
+                        },
+                        {
+                            "path": "ConsoleEnterExecutes"
+                        },
+                        {
+                            "path": "DisableShortcutKeys"
+                        },
+                        {
+                            "path": "FirstDayOfCalendar"
+                        }
+                    ]
+                },
+                {
+                    "name": "Databases",
+                    "title": "Databases",
+                    "desc": "",
+                    "items": [
+                        {
+                            "path": "MaxDbList"
+                        },
+                        {
+                            "path": "MaxTableList"
+                        },
+                        {
+                            "path": "DefaultConnectionCollation"
+                        }
+                    ]
+                },
+                {
+                    "name": "Text_fields",
+                    "title": "Text fields",
+                    "desc": "Customize text input fields.",
+                    "items": [
+                        {
+                            "path": "CharEditing"
+                        },
+                        {
+                            "path": "MinSizeForInputField"
+                        },
+                        {
+                            "path": "MaxSizeForInputField"
+                        },
+                        {
+                            "path": "CharTextareaCols"
+                        },
+                        {
+                            "path": "CharTextareaRows"
+                        },
+                        {
+                            "path": "TextareaCols"
+                        },
+                        {
+                            "path": "TextareaRows"
+                        },
+                        {
+                            "path": "LongtextDoubleTextarea"
+                        }
+                    ]
+                },
+                {
+                    "name": "Page_titles",
+                    "title": "Page titles",
+                    "desc": "Specify browser's title bar text. Refer to [doc@faq6-27]documentation[/doc] for magic strings that can be used to get special values.",
+                    "items": [
+                        {
+                            "path": "TitleDefault"
+                        },
+                        {
+                            "path": "TitleTable"
+                        },
+                        {
+                            "path": "TitleDatabase"
+                        },
+                        {
+                            "path": "TitleServer"
+                        }
+                    ]
+                },
+                {
+                    "name": "Warnings",
+                    "title": "Warnings",
+                    "desc": "Disable some of the warnings shown by phpMyAdmin.",
+                    "items": [
+                        {
+                            "path": "PmaNoRelation_DisableWarning"
+                        },
+                        {
+                            "path": "LoginCookieValidityDisableWarning"
+                        },
+                        {
+                            "path": "ReservedWordDisableWarning"
+                        }
+                    ]
+                },
+                {
+                    "name": "Console",
+                    "title": "Console",
+                    "desc": "",
+                    "items": [
+                        {
+                            "path": "Console/Mode"
+                        },
+                        {
+                            "path": "Console/StartHistory"
+                        },
+                        {
+                            "path": "Console/AlwaysExpand"
+                        },
+                        {
+                            "path": "Console/CurrentQuery"
+                        },
+                        {
+                            "path": "Console/EnterExecutes"
+                        },
+                        {
+                            "path": "Console/DarkTheme"
+                        },
+                        {
+                            "path": "Console/Height"
+                        },
+                        {
+                            "path": "Console/GroupQueries"
+                        },
+                        {
+                            "path": "Console/OrderBy"
+                        },
+                        {
+                            "path": "Console/Order"
+                        }
+                    ]
+                },
+                {
+                    "name": "Developer",
+                    "title": "Developer",
+                    "desc": "Settings for phpMyAdmin developers.",
+                    "items": [
+                        {
+                            "path": "UserprefsDeveloperTab"
+                        },
+                        {
+                            "path": "DBG/sql"
+                        }
+                    ]
+                },
+                {
+                    "name": "Import_export",
+                    "title": "Import / export",
+                    "desc": "Set import and export directories and compression options.",
+                    "items": [
+                        {
+                            "path": "UploadDir"
+                        },
+                        {
+                            "path": "SaveDir"
+                        },
+                        {
+                            "path": "RecodingEngine",
+                            "setvalue": ":group"
+                        },
+                        {
+                            "path": "IconvExtraParams"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "path": "ZipDump"
+                        },
+                        {
+                            "path": "GZipDump"
+                        },
+                        {
+                            "path": "BZipDump"
+                        },
+                        {
+                            "path": "CompressOnFly"
+                        }
+                    ]
+                },
+                {
+                    "name": "Security",
+                    "title": "Security",
+                    "desc": "Please note that phpMyAdmin is just a user interface and its features do not limit MySQL.",
+                    "items": [
+                        {
+                            "path": "blowfish_secret"
+                        },
+                        {
+                            "path": "CheckConfigurationPermissions"
+                        },
+                        {
+                            "path": "TrustedProxies"
+                        },
+                        {
+                            "path": "AllowUserDropDatabase"
+                        },
+                        {
+                            "path": "AllowArbitraryServer"
+                        },
+                        {
+                            "path": "ArbitraryServerRegexp"
+                        },
+                        {
+                            "path": "LoginCookieRecall"
+                        },
+                        {
+                            "path": "LoginCookieStore"
+                        },
+                        {
+                            "path": "LoginCookieDeleteAll"
+                        },
+                        {
+                            "path": "CaptchaLoginPublicKey"
+                        },
+                        {
+                            "path": "CaptchaLoginPrivateKey"
+                        },
+                        {
+                            "path": "CaptchaSiteVerifyURL"
+                        }
+                    ]
+                },
+                {
+                    "name": "Other_core_settings",
+                    "title": "Other core settings",
+                    "desc": "Settings that didn't fit anywhere else.",
+                    "items": [
+                        {
+                            "path": "PersistentConnections"
+                        },
+                        {
+                            "path": "ExecTimeLimit"
+                        },
+                        {
+                            "path": "MemoryLimit"
+                        },
+                        {
+                            "path": "UseDbSearch"
+                        },
+                        {
+                            "path": "ProxyUrl"
+                        },
+                        {
+                            "path": "ProxyUser"
+                        },
+                        {
+                            "path": "ProxyPass"
+                        },
+                        {
+                            "path": "AllowThirdPartyFraming"
+                        },
+                        {
+                            "path": "ZeroConf"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Import",
+            "name": "Import",
+            "forms": [
+                {
+                    "name": "Import_defaults",
+                    "title": "Import defaults",
+                    "desc": "Customize default common import options.",
+                    "items": [
+                        {
+                            "path": "Import/format"
+                        },
+                        {
+                            "path": "Import/charset"
+                        },
+                        {
+                            "path": "Import/allow_interrupt"
+                        },
+                        {
+                            "path": "Import/skip_queries"
+                        },
+                        {
+                            "path": "enable_drag_drop_import"
+                        }
+                    ]
+                },
+                {
+                    "name": "Sql",
+                    "title": "SQL",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "path": "Import/sql_compatibility"
+                        },
+                        {
+                            "path": "Import/sql_no_auto_value_on_zero"
+                        },
+                        {
+                            "path": "Import/sql_read_as_multibytes"
+                        }
+                    ]
+                },
+                {
+                    "name": "Csv",
+                    "title": "CSV",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "group": "CSV"
+                        },
+                        {
+                            "path": "Import/csv_replace"
+                        },
+                        {
+                            "path": "Import/csv_ignore"
+                        },
+                        {
+                            "path": "Import/csv_empty_as_null"
+                        },
+                        {
+                            "path": "Import/csv_terminated"
+                        },
+                        {
+                            "path": "Import/csv_enclosed"
+                        },
+                        {
+                            "path": "Import/csv_escaped"
+                        },
+                        {
+                            "path": "Import/csv_col_names"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "CSV using LOAD DATA"
+                        },
+                        {
+                            "path": "Import/ldi_replace"
+                        },
+                        {
+                            "path": "Import/ldi_ignore"
+                        },
+                        {
+                            "path": "Import/ldi_terminated"
+                        },
+                        {
+                            "path": "Import/ldi_enclosed"
+                        },
+                        {
+                            "path": "Import/ldi_escaped"
+                        },
+                        {
+                            "path": "Import/ldi_local_option"
+                        }
+                    ]
+                },
+                {
+                    "name": "Open_Document",
+                    "title": "OpenDocument",
+                    "desc": "Customize default options.",
+                    "items": [
+                        {
+                            "group": "OpenDocument Spreadsheet"
+                        },
+                        {
+                            "path": "Import/ods_col_names"
+                        },
+                        {
+                            "path": "Import/ods_empty_rows"
+                        },
+                        {
+                            "path": "Import/ods_recognize_percentages"
+                        },
+                        {
+                            "path": "Import/ods_recognize_currency"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Main",
+            "name": "Main panel",
+            "forms": [
+                {
+                    "name": "Startup",
+                    "title": "Startup",
+                    "desc": "Customize startup page.",
+                    "items": [
+                        {
+                            "path": "ShowCreateDb"
+                        },
+                        {
+                            "path": "ShowStats"
+                        },
+                        {
+                            "path": "ShowServerInfo"
+                        },
+                        {
+                            "path": "ShowPhpInfo"
+                        },
+                        {
+                            "path": "ShowChgPassword"
+                        }
+                    ]
+                },
+                {
+                    "name": "DbStructure",
+                    "title": "Database structure",
+                    "desc": "Choose which details to show in the database structure (list of tables).",
+                    "items": [
+                        {
+                            "path": "ShowDbStructureCharset"
+                        },
+                        {
+                            "path": "ShowDbStructureComment"
+                        },
+                        {
+                            "path": "ShowDbStructureCreation"
+                        },
+                        {
+                            "path": "ShowDbStructureLastUpdate"
+                        },
+                        {
+                            "path": "ShowDbStructureLastCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "TableStructure",
+                    "title": "Table structure",
+                    "desc": "Settings for the table structure (list of columns).",
+                    "items": [
+                        {
+                            "path": "HideStructureActions"
+                        },
+                        {
+                            "path": "ShowColumnComments"
+                        },
+                        {
+                            "group": "Default transformations"
+                        },
+                        {
+                            "path": "DefaultTransformations/Hex"
+                        },
+                        {
+                            "path": "DefaultTransformations/Substring"
+                        },
+                        {
+                            "path": "DefaultTransformations/Bool2Text"
+                        },
+                        {
+                            "path": "DefaultTransformations/External"
+                        },
+                        {
+                            "path": "DefaultTransformations/PreApPend"
+                        },
+                        {
+                            "path": "DefaultTransformations/DateFormat"
+                        },
+                        {
+                            "path": "DefaultTransformations/Inline"
+                        },
+                        {
+                            "path": "DefaultTransformations/TextImageLink"
+                        },
+                        {
+                            "path": "DefaultTransformations/TextLink"
+                        },
+                        {
+                            "groupEnd": true
+                        }
+                    ]
+                },
+                {
+                    "name": "Browse",
+                    "title": "Browse mode",
+                    "desc": "Customize browse mode.",
+                    "items": [
+                        {
+                            "path": "TableNavigationLinksMode"
+                        },
+                        {
+                            "path": "ActionLinksMode"
+                        },
+                        {
+                            "path": "ShowAll"
+                        },
+                        {
+                            "path": "MaxRows"
+                        },
+                        {
+                            "path": "Order"
+                        },
+                        {
+                            "path": "BrowsePointerEnable"
+                        },
+                        {
+                            "path": "BrowseMarkerEnable"
+                        },
+                        {
+                            "path": "GridEditing"
+                        },
+                        {
+                            "path": "SaveCellsAtOnce"
+                        },
+                        {
+                            "path": "RepeatCells"
+                        },
+                        {
+                            "path": "LimitChars"
+                        },
+                        {
+                            "path": "RowActionLinks"
+                        },
+                        {
+                            "path": "RowActionLinksWithoutUnique"
+                        },
+                        {
+                            "path": "TablePrimaryKeyOrder"
+                        },
+                        {
+                            "path": "RememberSorting"
+                        },
+                        {
+                            "path": "RelationalDisplay"
+                        }
+                    ]
+                },
+                {
+                    "name": "Edit",
+                    "title": "Edit mode",
+                    "desc": "Customize edit mode.",
+                    "items": [
+                        {
+                            "path": "ProtectBinary"
+                        },
+                        {
+                            "path": "ShowFunctionFields"
+                        },
+                        {
+                            "path": "ShowFieldTypesInDataEditView"
+                        },
+                        {
+                            "path": "InsertRows"
+                        },
+                        {
+                            "path": "ForeignKeyDropdownOrder"
+                        },
+                        {
+                            "path": "ForeignKeyMaxLimit"
+                        }
+                    ]
+                },
+                {
+                    "name": "Tabs",
+                    "title": "Tabs",
+                    "desc": "Choose how you want tabs to work.",
+                    "items": [
+                        {
+                            "path": "TabsMode"
+                        },
+                        {
+                            "path": "DefaultTabServer"
+                        },
+                        {
+                            "path": "DefaultTabDatabase"
+                        },
+                        {
+                            "path": "DefaultTabTable"
+                        }
+                    ]
+                },
+                {
+                    "name": "DisplayRelationalSchema",
+                    "title": "Display relational schema",
+                    "desc": "",
+                    "items": [
+                        {
+                            "path": "PDFDefaultPageSize"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Navi",
+            "name": "Navigation panel",
+            "forms": [
+                {
+                    "name": "Navi_panel",
+                    "title": "Navigation panel",
+                    "desc": "Customize appearance of the navigation panel.",
+                    "items": [
+                        {
+                            "path": "ShowDatabasesNavigationAsTree"
+                        },
+                        {
+                            "path": "NavigationLinkWithMainPanel"
+                        },
+                        {
+                            "path": "NavigationDisplayLogo"
+                        },
+                        {
+                            "path": "NavigationLogoLink"
+                        },
+                        {
+                            "path": "NavigationLogoLinkWindow"
+                        },
+                        {
+                            "path": "NavigationTreePointerEnable"
+                        },
+                        {
+                            "path": "FirstLevelNavigationItems"
+                        },
+                        {
+                            "path": "NavigationTreeDisplayItemFilterMinimum"
+                        },
+                        {
+                            "path": "NumRecentTables"
+                        },
+                        {
+                            "path": "NumFavoriteTables"
+                        },
+                        {
+                            "path": "NavigationWidth"
+                        }
+                    ]
+                },
+                {
+                    "name": "Navi_tree",
+                    "title": "Navigation tree",
+                    "desc": "Customize the navigation tree.",
+                    "items": [
+                        {
+                            "path": "MaxNavigationItems"
+                        },
+                        {
+                            "path": "NavigationTreeEnableGrouping"
+                        },
+                        {
+                            "path": "NavigationTreeEnableExpansion"
+                        },
+                        {
+                            "path": "NavigationTreeShowTables"
+                        },
+                        {
+                            "path": "NavigationTreeShowViews"
+                        },
+                        {
+                            "path": "NavigationTreeShowFunctions"
+                        },
+                        {
+                            "path": "NavigationTreeShowProcedures"
+                        },
+                        {
+                            "path": "NavigationTreeShowEvents"
+                        },
+                        {
+                            "path": "NavigationTreeAutoexpandSingleDb"
+                        }
+                    ]
+                },
+                {
+                    "name": "Navi_servers",
+                    "title": "Servers",
+                    "desc": "Servers display options.",
+                    "items": [
+                        {
+                            "path": "NavigationDisplayServers"
+                        },
+                        {
+                            "path": "DisplayServersList"
+                        }
+                    ]
+                },
+                {
+                    "name": "Navi_databases",
+                    "title": "Databases",
+                    "desc": "Databases display options.",
+                    "items": [
+                        {
+                            "path": "NavigationTreeDisplayDbFilterMinimum"
+                        },
+                        {
+                            "path": "NavigationTreeDbSeparator"
+                        }
+                    ]
+                },
+                {
+                    "name": "Navi_tables",
+                    "title": "Tables",
+                    "desc": "Tables display options.",
+                    "items": [
+                        {
+                            "path": "NavigationTreeDefaultTabTable"
+                        },
+                        {
+                            "path": "NavigationTreeDefaultTabTable2"
+                        },
+                        {
+                            "path": "NavigationTreeTableSeparator"
+                        },
+                        {
+                            "path": "NavigationTreeTableLevel"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Servers",
+            "name": "",
+            "forms": [
+                {
+                    "name": "Server",
+                    "title": "Basic settings",
+                    "desc": "Enter server connection parameters.",
+                    "items": [
+                        {
+                            "path": "Servers/1/verbose"
+                        },
+                        {
+                            "path": "Servers/1/host"
+                        },
+                        {
+                            "path": "Servers/1/port"
+                        },
+                        {
+                            "path": "Servers/1/socket"
+                        },
+                        {
+                            "path": "Servers/1/ssl"
+                        },
+                        {
+                            "path": "Servers/1/compress"
+                        }
+                    ]
+                },
+                {
+                    "name": "Server_auth",
+                    "title": "Authentication",
+                    "desc": "Authentication settings.",
+                    "items": [
+                        {
+                            "path": "Servers/1/auth_type"
+                        },
+                        {
+                            "group": "Config authentication"
+                        },
+                        {
+                            "path": "Servers/1/user"
+                        },
+                        {
+                            "path": "Servers/1/password"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "HTTP authentication"
+                        },
+                        {
+                            "path": "Servers/1/auth_http_realm"
+                        },
+                        {
+                            "groupEnd": true
+                        },
+                        {
+                            "group": "Signon authentication"
+                        },
+                        {
+                            "path": "Servers/1/SignonSession"
+                        },
+                        {
+                            "path": "Servers/1/SignonURL"
+                        },
+                        {
+                            "path": "Servers/1/LogoutURL"
+                        }
+                    ]
+                },
+                {
+                    "name": "Server_config",
+                    "title": "Server configuration",
+                    "desc": "Advanced server configuration, do not change these options unless you know what they are for.",
+                    "items": [
+                        {
+                            "path": "Servers/1/only_db"
+                        },
+                        {
+                            "path": "Servers/1/hide_db"
+                        },
+                        {
+                            "path": "Servers/1/AllowRoot"
+                        },
+                        {
+                            "path": "Servers/1/AllowNoPassword"
+                        },
+                        {
+                            "path": "Servers/1/DisableIS"
+                        },
+                        {
+                            "path": "Servers/1/AllowDeny/order"
+                        },
+                        {
+                            "path": "Servers/1/AllowDeny/rules"
+                        },
+                        {
+                            "path": "Servers/1/SessionTimeZone"
+                        }
+                    ]
+                },
+                {
+                    "name": "Server_pmadb",
+                    "title": "Configuration storage",
+                    "desc": "Configure phpMyAdmin configuration storage to gain access to additional features, see [doc@linked-tables]phpMyAdmin configuration storage[/doc] in documentation.",
+                    "items": [
+                        {
+                            "path": "Servers/1/pmadb",
+                            "setvalue": "phpmyadmin"
+                        },
+                        {
+                            "path": "Servers/1/controlhost"
+                        },
+                        {
+                            "path": "Servers/1/controlport"
+                        },
+                        {
+                            "path": "Servers/1/controluser"
+                        },
+                        {
+                            "path": "Servers/1/controlpass"
+                        },
+                        {
+                            "path": "Servers/1/bookmarktable",
+                            "setvalue": "pma__bookmark"
+                        },
+                        {
+                            "path": "Servers/1/relation",
+                            "setvalue": "pma__relation"
+                        },
+                        {
+                            "path": "Servers/1/userconfig",
+                            "setvalue": "pma__userconfig"
+                        },
+                        {
+                            "path": "Servers/1/users",
+                            "setvalue": "pma__users"
+                        },
+                        {
+                            "path": "Servers/1/usergroups",
+                            "setvalue": "pma__usergroups"
+                        },
+                        {
+                            "path": "Servers/1/navigationhiding",
+                            "setvalue": "pma__navigationhiding"
+                        },
+                        {
+                            "path": "Servers/1/table_info",
+                            "setvalue": "pma__table_info"
+                        },
+                        {
+                            "path": "Servers/1/column_info",
+                            "setvalue": "pma__column_info"
+                        },
+                        {
+                            "path": "Servers/1/history",
+                            "setvalue": "pma__history"
+                        },
+                        {
+                            "path": "Servers/1/recent",
+                            "setvalue": "pma__recent"
+                        },
+                        {
+                            "path": "Servers/1/favorite",
+                            "setvalue": "pma__favorite"
+                        },
+                        {
+                            "path": "Servers/1/table_uiprefs",
+                            "setvalue": "pma__table_uiprefs"
+                        },
+                        {
+                            "path": "Servers/1/tracking",
+                            "setvalue": "pma__tracking"
+                        },
+                        {
+                            "path": "Servers/1/table_coords",
+                            "setvalue": "pma__table_coords"
+                        },
+                        {
+                            "path": "Servers/1/pdf_pages",
+                            "setvalue": "pma__pdf_pages"
+                        },
+                        {
+                            "path": "Servers/1/savedsearches",
+                            "setvalue": "pma__savedsearches"
+                        },
+                        {
+                            "path": "Servers/1/central_columns",
+                            "setvalue": "pma__central_columns"
+                        },
+                        {
+                            "path": "Servers/1/designer_settings",
+                            "setvalue": "pma__designer_settings"
+                        },
+                        {
+                            "path": "Servers/1/export_templates",
+                            "setvalue": "pma__export_templates"
+                        },
+                        {
+                            "path": "Servers/1/MaxTableUiprefs",
+                            "setvalue": "100"
+                        }
+                    ]
+                },
+                {
+                    "name": "Server_tracking",
+                    "title": "Changes tracking",
+                    "desc": "Tracking of changes made in database. Requires the phpMyAdmin configuration storage.",
+                    "items": [
+                        {
+                            "path": "Servers/1/tracking_version_auto_create"
+                        },
+                        {
+                            "path": "Servers/1/tracking_default_statements"
+                        },
+                        {
+                            "path": "Servers/1/tracking_add_drop_view"
+                        },
+                        {
+                            "path": "Servers/1/tracking_add_drop_table"
+                        },
+                        {
+                            "path": "Servers/1/tracking_add_drop_database"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "tab": "Sql",
+            "name": "SQL queries",
+            "forms": [
+                {
+                    "name": "Sql_queries",
+                    "title": "SQL queries",
+                    "desc": "SQL queries settings.",
+                    "items": [
+                        {
+                            "path": "ShowSQL"
+                        },
+                        {
+                            "path": "Confirm"
+                        },
+                        {
+                            "path": "QueryHistoryMax"
+                        },
+                        {
+                            "path": "IgnoreMultiSubmitErrors"
+                        },
+                        {
+                            "path": "MaxCharactersInDisplayedSQL"
+                        },
+                        {
+                            "path": "RetainQueryBox"
+                        },
+                        {
+                            "path": "CodemirrorEnable"
+                        },
+                        {
+                            "path": "LintEnable"
+                        },
+                        {
+                            "path": "EnableAutocompleteForTablesAndColumns"
+                        },
+                        {
+                            "path": "DefaultForeignKeyChecks"
+                        },
+                        {
+                            "path": "QueryHistoryDB"
+                        },
+                        {
+                            "path": "AllowSharedBookmarks"
+                        }
+                    ]
+                },
+                {
+                    "name": "Sql_box",
+                    "title": "SQL Query box",
+                    "desc": "Customize links shown in SQL Query boxes.",
+                    "items": [
+                        {
+                            "path": "SQLQuery/Edit"
+                        },
+                        {
+                            "path": "SQLQuery/Explain"
+                        },
+                        {
+                            "path": "SQLQuery/ShowAsPHP"
+                        },
+                        {
+                            "path": "SQLQuery/Refresh"
                         }
                     ]
                 }
@@ -4055,6 +5499,493 @@
         "Import/ods_recognize_currency": {
             "type": "boolean",
             "name": "Import currencies ($5.00 to 5.00)"
+        },
+        "DefaultLang": {
+            "type": "string"
+        },
+        "ServerDefault": {
+            "type": "integer"
+        },
+        "UserprefsDeveloperTab": {
+            "type": "boolean",
+            "name": "Enable the Developer tab in settings",
+            "desc": "When disabled, users cannot set any of the options below, regardless of the checkbox on the right."
+        },
+        "UploadDir": {
+            "type": "string",
+            "name": "Upload directory",
+            "desc": "Directory on server where you can upload files for import."
+        },
+        "SaveDir": {
+            "type": "string",
+            "name": "Save directory",
+            "desc": "Directory where exports can be saved on server."
+        },
+        "RecodingEngine": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "auto",
+                    "label": {
+                        "msgid": "auto"
+                    }
+                },
+                {
+                    "key": "iconv",
+                    "label": {
+                        "msgid": "iconv"
+                    }
+                },
+                {
+                    "key": "mb",
+                    "label": {
+                        "msgid": "mb"
+                    }
+                },
+                {
+                    "key": "none",
+                    "label": {
+                        "msgid": "none"
+                    }
+                }
+            ],
+            "name": "Recoding engine",
+            "desc": "Select which functions will be used for character set conversion."
+        },
+        "IconvExtraParams": {
+            "type": "string",
+            "name": "Extra parameters for iconv"
+        },
+        "ZipDump": {
+            "type": "boolean",
+            "name": "ZIP",
+            "desc": "Enable ZIP compression for import and export operations."
+        },
+        "GZipDump": {
+            "type": "boolean",
+            "name": "GZip",
+            "desc": "Enable gzip compression for import and export operations."
+        },
+        "BZipDump": {
+            "type": "boolean",
+            "name": "Bzip2",
+            "desc": "Enable bzip2 compression for import operations."
+        },
+        "CompressOnFly": {
+            "type": "boolean",
+            "name": "Compress on the fly",
+            "desc": "Compress gzip exports on the fly without the need for much memory; if you encounter problems with created gzip files disable this feature."
+        },
+        "blowfish_secret": {
+            "type": "string",
+            "name": "Blowfish secret",
+            "desc": "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
+        },
+        "CheckConfigurationPermissions": {
+            "type": "boolean",
+            "name": "Check config file permissions"
+        },
+        "TrustedProxies": {
+            "type": "array",
+            "name": "List of trusted proxies for IP allow/deny",
+            "desc": "Input proxies as [kbd]IP: trusted HTTP header[/kbd]. The following example specifies that phpMyAdmin should trust a HTTP_X_FORWARDED_FOR (X-Forwarded-For) header coming from the proxy 1.2.3.4:[br][kbd]1.2.3.4: HTTP_X_FORWARDED_FOR[/kbd]."
+        },
+        "AllowUserDropDatabase": {
+            "type": "boolean",
+            "name": "Show \"Drop database\" link to normal users"
+        },
+        "AllowArbitraryServer": {
+            "type": "boolean",
+            "name": "Allow login to any MySQL server",
+            "desc": "If enabled, user can enter any MySQL server in login form for cookie auth."
+        },
+        "ArbitraryServerRegexp": {
+            "type": "string",
+            "name": "Restrict login to MySQL server",
+            "desc": "Restricts the MySQL servers the user can enter when a login to an arbitrary MySQL server is enabled by matching the IP or hostname of the MySQL server to the given regular expression."
+        },
+        "LoginCookieRecall": {
+            "type": "boolean",
+            "name": "Recall user name",
+            "desc": "Define whether the previous login should be recalled or not in [kbd]cookie[/kbd] authentication mode."
+        },
+        "LoginCookieStore": {
+            "type": "integer",
+            "name": "Login cookie store",
+            "desc": "Defines how long (in seconds) a login cookie should be stored in browser. The default of 0 means that it will be kept for the existing session only, and will be deleted as soon as you close the browser window. This is recommended for non-trusted environments."
+        },
+        "LoginCookieDeleteAll": {
+            "type": "boolean",
+            "name": "Delete all cookies on logout",
+            "desc": "If TRUE, logout deletes cookies for all servers; when set to FALSE, logout only occurs for the current server. Setting this to FALSE makes it easy to forget to log out from other servers when connected to multiple servers."
+        },
+        "CaptchaLoginPublicKey": {
+            "type": "string",
+            "name": "Public key for reCAPTCHA",
+            "desc": "Enter your public key for the reCAPTCHA service on your domain."
+        },
+        "CaptchaLoginPrivateKey": {
+            "type": "string",
+            "name": "Private key for reCAPTCHA",
+            "desc": "Enter your private key for your domain reCAPTCHA service."
+        },
+        "CaptchaSiteVerifyURL": {
+            "type": "string",
+            "name": "URL for reCAPTCHA siteverify",
+            "desc": "Enter your siteverify URL for your reCAPTCHA service."
+        },
+        "PersistentConnections": {
+            "type": "boolean",
+            "name": "Persistent connections",
+            "desc": "Use persistent connections to MySQL databases."
+        },
+        "ExecTimeLimit": {
+            "type": "integer",
+            "name": "Maximum execution time",
+            "desc": "Set the number of seconds a script is allowed to run ([kbd]0[/kbd] for no limit)."
+        },
+        "MemoryLimit": {
+            "type": "short_string",
+            "name": "Memory limit",
+            "desc": "The number of bytes a script is allowed to allocate, e.g. [kbd]32M[/kbd] ([kbd]-1[/kbd] for no limit and [kbd]0[/kbd] for no change)."
+        },
+        "UseDbSearch": {
+            "type": "boolean",
+            "name": "Use database search",
+            "desc": "Allow for searching inside the entire database."
+        },
+        "ProxyUrl": {
+            "type": "string",
+            "name": "Proxy URL",
+            "desc": "The URL of the proxy to be used when retrieving the information about the latest version of phpMyAdmin, or when submitting error reports. You need this if the server where phpMyAdmin is installed does not have direct access to the Internet. The format is: \"hostname:portnumber\"."
+        },
+        "ProxyUser": {
+            "type": "string",
+            "name": "Proxy username",
+            "desc": "The username for authenticating with the proxy. By default, no authentication is performed. If a username is supplied, Basic Authentication will be performed. No other types of authentication are currently supported."
+        },
+        "ProxyPass": {
+            "type": "string",
+            "name": "Proxy password",
+            "desc": "The password for authenticating with the proxy."
+        },
+        "AllowThirdPartyFraming": {
+            "type": "boolean",
+            "name": "Allow third party framing",
+            "desc": "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
+        },
+        "ZeroConf": {
+            "type": "boolean",
+            "name": "Enable Zero Configuration mode",
+            "desc": "Enable Zero Configuration mode which lets you set up phpMyAdmin configuration storage tables automatically."
+        },
+        "ShowPhpInfo": {
+            "type": "boolean",
+            "name": "Show phpinfo() link",
+            "desc": "Shows link to [a@https://www.php.net/manual/en/function.phpinfo.php]phpinfo()[/a] output."
+        },
+        "ShowChgPassword": {
+            "type": "boolean",
+            "name": "Show password change form",
+            "desc": "Please note that enabling this has no effect with [kbd]config[/kbd] authentication mode because the password is hard coded in the configuration file; this does not limit the ability to execute the same command directly."
+        },
+        "Servers/1/verbose": {
+            "type": "string",
+            "name": "Verbose name of this server",
+            "desc": "A user-friendly description of this server. Leave blank to display the hostname instead."
+        },
+        "Servers/1/host": {
+            "type": "string",
+            "name": "Server hostname",
+            "desc": "Hostname where MySQL server is running."
+        },
+        "Servers/1/port": {
+            "type": "integer",
+            "name": "Server port",
+            "desc": "Port on which MySQL server is listening, leave empty for default."
+        },
+        "Servers/1/socket": {
+            "type": "string",
+            "name": "Server socket",
+            "desc": "Socket on which MySQL server is listening, leave empty for default."
+        },
+        "Servers/1/ssl": {
+            "type": "boolean",
+            "name": "Use SSL",
+            "desc": "Enable SSL for connection to MySQL server."
+        },
+        "Servers/1/compress": {
+            "type": "boolean",
+            "name": "Compress connection",
+            "desc": "Compress connection to MySQL server."
+        },
+        "Servers/1/auth_type": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "config",
+                    "label": {
+                        "msgid": "config"
+                    }
+                },
+                {
+                    "key": "http",
+                    "label": {
+                        "msgid": "http"
+                    }
+                },
+                {
+                    "key": "signon",
+                    "label": {
+                        "msgid": "signon"
+                    }
+                },
+                {
+                    "key": "cookie",
+                    "label": {
+                        "msgid": "cookie"
+                    }
+                }
+            ],
+            "name": "Authentication type",
+            "desc": "Authentication method to use."
+        },
+        "Servers/1/user": {
+            "type": "string",
+            "name": "User for config auth",
+            "desc": "Leave empty if not using config auth."
+        },
+        "Servers/1/password": {
+            "type": "string",
+            "name": "Password for config auth",
+            "desc": "Leave empty if not using config auth."
+        },
+        "Servers/1/auth_http_realm": {
+            "type": "string",
+            "name": "HTTP Realm",
+            "desc": "HTTP Basic Auth Realm name to display when doing HTTP Auth."
+        },
+        "Servers/1/SignonSession": {
+            "type": "string",
+            "name": "Signon session name",
+            "desc": "See [doc@authentication-modes]authentication types[/doc] for an example."
+        },
+        "Servers/1/SignonURL": {
+            "type": "string",
+            "name": "Signon URL"
+        },
+        "Servers/1/LogoutURL": {
+            "type": "string",
+            "name": "Logout URL"
+        },
+        "Servers/1/AllowRoot": {
+            "type": "boolean",
+            "name": "Allow root login"
+        },
+        "Servers/1/AllowNoPassword": {
+            "type": "boolean",
+            "name": "Allow logins without a password"
+        },
+        "Servers/1/DisableIS": {
+            "type": "boolean",
+            "name": "Disable use of INFORMATION_SCHEMA",
+            "desc": "More information on [a@https://github.com/phpmyadmin/phpmyadmin/issues/8970]phpMyAdmin issue tracker[/a] and [a@https://bugs.mysql.com/19588]MySQL Bugs[/a]"
+        },
+        "Servers/1/AllowDeny/order": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "",
+                    "label": {
+                        "msgid": ""
+                    }
+                },
+                {
+                    "key": "deny,allow",
+                    "label": {
+                        "msgid": "deny,allow"
+                    }
+                },
+                {
+                    "key": "allow,deny",
+                    "label": {
+                        "msgid": "allow,deny"
+                    }
+                },
+                {
+                    "key": "explicit",
+                    "label": {
+                        "msgid": "explicit"
+                    }
+                }
+            ],
+            "name": "Host authorization order",
+            "desc": "Leave blank if not used."
+        },
+        "Servers/1/AllowDeny/rules": {
+            "type": "array",
+            "name": "Host authorization rules",
+            "desc": "Leave blank for defaults."
+        },
+        "Servers/1/SessionTimeZone": {
+            "type": "string",
+            "name": "Session timezone",
+            "desc": "Sets the effective timezone; possibly different than the one from your database server"
+        },
+        "Servers/1/pmadb": {
+            "type": "string",
+            "name": "Database name",
+            "desc": "Database used for relations, bookmarks, and PDF features. See [doc@linked-tables]pmadb[/doc] for complete information. Leave blank for no support. Suggested: [kbd]phpmyadmin[/kbd]."
+        },
+        "Servers/1/controlhost": {
+            "type": "string",
+            "name": "Control host",
+            "desc": "An alternate host to hold the configuration storage; leave blank to use the already defined host."
+        },
+        "Servers/1/controlport": {
+            "type": "string",
+            "name": "Control port",
+            "desc": "An alternate port to connect to the host that holds the configuration storage; leave blank to use the default port, or the already defined port, if the controlhost equals host."
+        },
+        "Servers/1/controluser": {
+            "type": "string",
+            "name": "Control user",
+            "desc": "A special MySQL user configured with limited permissions, more information available on [doc@linked-tables]documentation[/doc]."
+        },
+        "Servers/1/controlpass": {
+            "type": "string",
+            "name": "Control user password"
+        },
+        "Servers/1/bookmarktable": {
+            "type": "string",
+            "name": "Bookmark table",
+            "desc": "Leave blank for no [doc@bookmarks@]bookmark[/doc] support, suggested: [kbd]pma__bookmark[/kbd]"
+        },
+        "Servers/1/relation": {
+            "type": "string",
+            "name": "Relation table",
+            "desc": "Leave blank for no [doc@relations@]relation-links[/doc] support, suggested: [kbd]pma__relation[/kbd]."
+        },
+        "Servers/1/userconfig": {
+            "type": "string",
+            "name": "User preferences storage table",
+            "desc": "Leave blank for no user preferences storage in database, suggested: [kbd]pma__userconfig[/kbd]."
+        },
+        "Servers/1/users": {
+            "type": "string",
+            "name": "Users table",
+            "desc": "Both this table and the user groups table are required to enable the configurable menus feature; leaving either one of them blank will disable this feature, suggested: [kbd]pma__users[/kbd]."
+        },
+        "Servers/1/usergroups": {
+            "type": "string",
+            "name": "User groups table",
+            "desc": "Both this table and the users table are required to enable the configurable menus feature; leaving either one of them blank will disable this feature, suggested: [kbd]pma__usergroups[/kbd]."
+        },
+        "Servers/1/navigationhiding": {
+            "type": "string",
+            "name": "Hidden navigation items table",
+            "desc": "Leave blank to disable the feature to hide and show navigation items, suggested: [kbd]pma__navigationhiding[/kbd]."
+        },
+        "Servers/1/table_info": {
+            "type": "string",
+            "name": "Display columns table",
+            "desc": "Table to describe the display columns, leave blank for no support; suggested: [kbd]pma__table_info[/kbd]."
+        },
+        "Servers/1/column_info": {
+            "type": "string",
+            "name": "Column information table",
+            "desc": "Leave blank for no column comments/media types, suggested: [kbd]pma__column_info[/kbd]."
+        },
+        "Servers/1/history": {
+            "type": "string",
+            "name": "SQL query history table",
+            "desc": "Leave blank for no SQL query history support, suggested: [kbd]pma__history[/kbd]."
+        },
+        "Servers/1/recent": {
+            "type": "string",
+            "name": "Recently used table",
+            "desc": "Leave blank for no \"persistent\" recently used tables across sessions, suggested: [kbd]pma__recent[/kbd]."
+        },
+        "Servers/1/favorite": {
+            "type": "string",
+            "name": "Favorites table",
+            "desc": "Leave blank for no \"persistent\" favorite tables across sessions, suggested: [kbd]pma__favorite[/kbd]."
+        },
+        "Servers/1/table_uiprefs": {
+            "type": "string",
+            "name": "UI preferences table",
+            "desc": "Leave blank for no \"persistent\" tables' UI preferences across sessions, suggested: [kbd]pma__table_uiprefs[/kbd]."
+        },
+        "Servers/1/tracking": {
+            "type": "string",
+            "name": "SQL query tracking table",
+            "desc": "Leave blank for no SQL query tracking support, suggested: [kbd]pma__tracking[/kbd]."
+        },
+        "Servers/1/table_coords": {
+            "type": "string",
+            "name": "Designer and PDF schema: table coordinates",
+            "desc": "Leave blank for no PDF schema support, suggested: [kbd]pma__table_coords[/kbd]."
+        },
+        "Servers/1/pdf_pages": {
+            "type": "string",
+            "name": "PDF schema: pages table",
+            "desc": "Leave blank for no PDF schema support, suggested: [kbd]pma__pdf_pages[/kbd]."
+        },
+        "Servers/1/savedsearches": {
+            "type": "string"
+        },
+        "Servers/1/central_columns": {
+            "type": "string",
+            "name": "Central columns table",
+            "desc": "Leave blank for no central columns support, suggested: [kbd]pma__central_columns[/kbd]."
+        },
+        "Servers/1/designer_settings": {
+            "type": "string"
+        },
+        "Servers/1/export_templates": {
+            "type": "string",
+            "name": "Export templates table",
+            "desc": "Leave blank for no export template support, suggested: [kbd]pma__export_templates[/kbd]."
+        },
+        "Servers/1/MaxTableUiprefs": {
+            "type": "integer",
+            "name": "Maximal number of table preferences to store",
+            "desc": "Limits number of table preferences which are stored in database, the oldest records are automatically removed."
+        },
+        "Servers/1/tracking_version_auto_create": {
+            "type": "boolean",
+            "name": "Automatically create versions",
+            "desc": "Whether the tracking mechanism creates versions for tables and views automatically."
+        },
+        "Servers/1/tracking_default_statements": {
+            "type": "string",
+            "name": "Statements to track",
+            "desc": "Defines the list of statements the auto-creation uses for new versions."
+        },
+        "Servers/1/tracking_add_drop_view": {
+            "type": "boolean",
+            "name": "Add DROP VIEW",
+            "desc": "Whether a DROP VIEW IF EXISTS statement will be added as first line to the log when creating a view."
+        },
+        "Servers/1/tracking_add_drop_table": {
+            "type": "boolean",
+            "name": "Add DROP TABLE",
+            "desc": "Whether a DROP TABLE IF EXISTS statement will be added as first line to the log when creating a table."
+        },
+        "Servers/1/tracking_add_drop_database": {
+            "type": "boolean",
+            "name": "Add DROP DATABASE",
+            "desc": "Whether a DROP DATABASE IF EXISTS statement will be added as first line to the log when creating a database."
+        },
+        "QueryHistoryDB": {
+            "type": "boolean",
+            "name": "Permanent query history",
+            "desc": "Enable if you want DB-based query history (requires phpMyAdmin configuration storage). If disabled, this utilizes JS-routines to display query history (lost by window close)."
+        },
+        "AllowSharedBookmarks": {
+            "type": "boolean",
+            "name": "Allow shared bookmarks between users",
+            "desc": "Allow users to create bookmarks that are available for all other users"
         }
     },
     "validators": {
