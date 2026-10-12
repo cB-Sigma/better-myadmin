@@ -141,7 +141,7 @@ export default function CodeMirrorEditor(props: SqlEditorProps & { handleRef?: R
       state: EditorState.create({ doc: latest.current.initialValue, extensions }),
     })
     viewRef.current = view
-    view.focus()
+    if (latest.current.focusOnLoad?.() === true) view.focus()
     return () => {
       view.destroy()
       viewRef.current = null

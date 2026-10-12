@@ -391,6 +391,8 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   <SqlEditor
                     handleRef={editor}
                     id="sqlquery"
+                    // onloadCodeMirrorEditor: the SQL box has the focus after loading
+                    autoFocus
                     ariaLabel={t('SQL query')}
                     initialValue={initial}
                     rows={s.TextareaRows}

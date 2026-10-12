@@ -509,6 +509,8 @@ function ConsoleDock({
               <div className="query_input border-t border-border">
                 <SqlEditor
                   handleRef={input}
+                  // Console.show(true): the input has the focus once the console opens
+                  autoFocus
                   ariaLabel={t('SQL Query Console')}
                   initialValue=""
                   rows={2}
