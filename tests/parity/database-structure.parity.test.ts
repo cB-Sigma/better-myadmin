@@ -88,19 +88,39 @@ describe.skipIf(!pmaReachable)('parity: database structure page', () => {
         () => h.bma.req('GET', bma(`/structure${qs === '' ? '' : `?${qs}`}`)),
       )
       expect(r.b.status, JSON.stringify(r.b.json)).toBe(200)
-      expect(pageReads(r.bmaLog)).toEqual(pageReads(r.pmaLog))
+      // tables of the same size (row estimate) keep the server's order of `ORDER BY Data_length`
+      // (`Rows`), which it may change between two requests (InnoDB's row estimates move too): those
+      // sorts compare the reads as a multiset, and the size order is checked
+      const unstable = params.sort === 'size' || params.sort === 'records'
+      if (unstable) expect([...pageReads(r.bmaLog)].sort()).toEqual([...pageReads(r.pmaLog)].sort())
+      if (params.sort === 'size') {
+        const [sizes] = (await h.root.query(
+          'SELECT TABLE_NAME AS t, DATA_LENGTH + INDEX_LENGTH AS s FROM information_schema.TABLES WHERE TABLE_SCHEMA = ?',
+          [B],
+        )) as unknown as [Array<{ t: string; s: number | null }>]
+        const size = new Map(sizes.map((x) => [x.t, Number(x.s ?? 0)]))
+        const counted = pageReads(r.bmaLog)
+          .map((q) => /^SELECT COUNT\(\*\) FROM `DB`\.`([^`]+)`/.exec(q)?.[1])
+          .filter((t): t is string => t !== undefined)
+        const order = counted.map((t) => size.get(t) ?? 0)
+        expect(order).toEqual([...order].sort((a, b) => a - b))
+      } else if (!unstable) expect(pageReads(r.bmaLog)).toEqual(pageReads(r.pmaLog))
       const d = r.b.json as unknown as DbStructureResponse
       const html = String(r.p.message ?? '')
       const pmaNames = [...html.matchAll(/<tr id="row_tbl_\d+"[^>]*data-filter-row="([^"]+)"/g)].map(
         (m) => m[1],
       )
-      expect(d.tables.map((t) => t.name.toUpperCase())).toEqual(pmaNames)
+      // (ties of the size and row sorts: see above)
+      const ord = <T>(xs: T[]) => (unstable ? [...xs].sort() : xs)
+      expect(ord(d.tables.map((t) => t.name.toUpperCase()))).toEqual(ord(pmaNames))
       const pmaRows = [
         ...html.matchAll(/<td class="value tbl_rows[^"]*"\s+data-table="([^"]+)">\s*([\s\S]*?)<\/td>/g),
       ].map((m) => [m[1], (m[2] ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, '')])
       expect(
-        d.tables.filter((t) => t.rows !== null).map((t) => [t.name, `${t.approx ? '~' : ''}${t.rowsText}`]),
-      ).toEqual(pmaRows)
+        ord(
+          d.tables.filter((t) => t.rows !== null).map((t) => [t.name, `${t.approx ? '~' : ''}${t.rowsText}`]),
+        ),
+      ).toEqual(ord(pmaRows))
     })
   }
 

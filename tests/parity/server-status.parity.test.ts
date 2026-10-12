@@ -12,6 +12,7 @@ import { formatStatusValue } from '../../apps/server/src/server-admin/status.ts'
 import { englishTranslator } from '../../packages/i18n/src/index.ts'
 import { $, $$, type Node, classes, hasClass, linkTarget, pageHtml, parse, shape, text } from './lib/html.ts'
 import { type Harness, ROOT, both, diff, pmaReachable, startHarness, suiteUsers } from './lib/server-setup.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Golden parity of the Status pages: overview, processes (list, filters, sorting, full texts,
@@ -139,10 +140,13 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
       command: text(td[5]!),
       time: shape(text(td[6]!)),
       state: text(td[7]!),
-      info: text(td[8]!),
+      // MariaDB adds the Progress column before the query
+      ...(td.length > 9 ? { progress: shape(text(td[8]!)) } : {}),
+      info: text(td[td.length - 1]!),
     }
   }
 
+  const isMariaDb = TARGET === 'mariadb'
   const ourRow = (p: ProcessList['rows'][number]) => ({
     kill: p.id,
     id: p.id,
@@ -156,6 +160,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     command: p.command,
     time: shape(p.time),
     state: p.state,
+    ...(p.progress !== undefined && isMariaDb ? { progress: shape(p.progress) } : {}),
     info: p.info ?? '---',
   })
 

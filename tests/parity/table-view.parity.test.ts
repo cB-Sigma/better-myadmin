@@ -167,7 +167,8 @@ describe.skipIf(!pmaReachable)('parity: view form', () => {
     r = await step('create', { name: 'v3', as: 'SELECT nope FROM t' })
     expect(r.b.ok).toBe(false)
     const m = r.b.messages[0]
-    expect(m?.text).toMatch(/^#1054 - Unknown column 'nope' in 'field list'$/)
+    // the server's wording of the clause (MySQL 'field list', MariaDB 'SELECT')
+    expect(m?.text).toMatch(/^#1054 - Unknown column 'nope' in '(field list|SELECT)'$/)
     // phpMyAdmin: '<i>' + statement + '</i><br><br>' + error
     expect(r.p).toContain(
       `<i>${(m?.sql ?? '').replaceAll('\r\n', '\\r\\n').replaceAll(B, P)}</i><br><br>#1054 - Unknown column &#039;nope&#039;`,

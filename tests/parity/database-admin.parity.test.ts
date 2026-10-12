@@ -244,10 +244,14 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
     expect(JSON.stringify(r.p).replaceAll('&#039;', "'")).toContain(
       '#1064 - You have an error in your SQL syntax',
     )
-    expect(JSON.stringify(r.p).replaceAll('&#039;', "'")).toContain("near ', col_collation = ")
-    expect((r.b.json as { message: { text: string } }).message.text).toMatch(
-      /^#1064 - You have an error in your SQL syntax.*near ', col_collation = /,
-    )
+    // the server's own wording of where it stopped (MySQL: "near ', col_collation = …", MariaDB:
+    // "near ' col_collation = …"): the same in both answers
+    const near = (s: string) => /near '(.{0,20})/.exec(s)?.[1]
+    const pmaNear = near(JSON.parse(JSON.stringify(r.p).replaceAll('&#039;', "'")).message ?? '')
+    expect(pmaNear).toMatch(/^,? col_collation = /)
+    const ours = (r.b.json as { message: { text: string } }).message.text
+    expect(ours).toMatch(/^#1064 - You have an error in your SQL syntax/)
+    expect(near(ours)).toBe(pmaNear)
     expect((r.b.json as { ok: boolean }).ok).toBe(false)
   })
 

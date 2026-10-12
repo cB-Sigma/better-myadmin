@@ -7,6 +7,7 @@ import { type Pairs, findForm, getPair, removePair, serializeForm, setPair } fro
 import { GeneralLog } from './lib/general-log.ts'
 import { decodeEntities, parseHtml } from './lib/nav-html.ts'
 import { PmaClient, type PmaJson, isPmaUp, visibleText } from './lib/pma.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Golden parity of the table Structure tab, the column definition form (create / add / change),
@@ -61,7 +62,7 @@ const SEED = `
     kind ENUM('a','b''c') NOT NULL DEFAULT 'a',
     flags BIT(4) DEFAULT b'0101',
     doubled BIGINT GENERATED ALWAYS AS (qty * 2) VIRTUAL,
-    geo POINT NOT NULL SRID 0,
+    geo POINT NOT NULL${TARGET === 'mariadb' ? '' : ' SRID 0'},
     PRIMARY KEY (id),
     KEY k_name (name(10), qty)
   ) ENGINE=InnoDB COMMENT 'seed';

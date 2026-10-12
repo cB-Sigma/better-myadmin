@@ -91,7 +91,13 @@ const settings = async (user: string) =>
 
 /** Control-user writes about this suite (the user is shared with other suites). */
 function controlWrites(r: { pmaLog: Array<{ sql: string }>; bmaLog: Array<{ sql: string }> }) {
-  const w = compareWrites(r.pmaLog as never, r.bmaLog as never, dbMap, [/^\/\*NOTRACK\*\/\s*SELECT/])
+  // RecentTableHandling records any request with db and table parameters (the designer's AJAX calls
+  // too); our SPA records the opened table itself (POST /recent), like the other suites exclude it.
+  // On a pmadb where the table is already the most recent one phpMyAdmin skips the write.
+  const w = compareWrites(r.pmaLog as never, r.bmaLog as never, dbMap, [
+    /^\/\*NOTRACK\*\/\s*SELECT/,
+    /`pma__recent`/,
+  ])
   const mine = (xs: string[]) => xs.filter((s) => s.includes("'DB'") || s.includes("'USER'")).map(maskPages)
   return { pma: mine(w.pma), bma: mine(w.bma) }
 }

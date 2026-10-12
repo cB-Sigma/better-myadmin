@@ -303,10 +303,19 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     ['second page', { pos: '25' }, '?pos=25'],
     ['third page (previous keeps a position)', { pos: '50' }, '?pos=50'],
     ['full queries', { is_full_query: '1' }, '?is_full_query=1'],
-    ['a log by name', { log: 'binlog.000001', pos: '10' }, '?log=binlog.000001&pos=10'],
+    // the server's first binary log (MySQL `binlog.000001`, MariaDB `mariadb-bin.000001`)
+    ['a log by name', { log: '{first}', pos: '10' }, '?log={first}&pos=10'],
   ]
-  for (const [name, params, qs] of BINLOG_CASES) {
+  for (const [name, params0, qs0] of BINLOG_CASES) {
     it(`Binary log: ${name}`, async () => {
+      const [[first]] = (await h.root.query({ sql: 'SHOW BINARY LOGS', rowsAsArray: true })) as unknown as [
+        [[string]],
+      ]
+      const log = encodeURIComponent(first[0])
+      const params = Object.fromEntries(
+        Object.entries(params0).map(([k, v]) => [k, v.replace('{first}', first[0])]),
+      )
+      const qs = qs0.replace('{first}', log)
       const { html, json } = await page<BinlogResponse>('/server/binlog', `/binlog${qs}`, params, true)
       expect(binlogFromJson(json)).toEqual(binlogFromHtml(html))
     })
