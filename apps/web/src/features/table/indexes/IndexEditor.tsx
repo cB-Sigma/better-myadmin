@@ -13,7 +13,22 @@ import { qk } from '../../../lib/queryKeys'
  * pma: resources/templates/table/index_form.twig, index_rename_form.twig,
  *      resources/js/modules/indexes.ts (checkIndexName, checkIndexType), functions.ts::indexEditorDialog
  */
-type EditorIndex = IndexFormResponse['index']
+export type EditorIndex = IndexFormResponse['index']
+
+/** IndexesController `create_edit_table`: the columns of the create/add form (`columns` JSON) */
+export interface FormTarget {
+  name: string
+  type: string
+  colIndex: number
+}
+
+/** the form's live actions: the modal's buttons drive it */
+export interface EditorActions {
+  go: () => void
+  preview: () => void
+  /** the index as the form holds it (indexes.ts::addColumnToIndex reads the inputs) */
+  value: () => EditorIndex
+}
 
 const SPATIAL_TYPES = [
   'geometry',
@@ -39,6 +54,7 @@ export function IndexEditorForm({
   onDone,
   onCancel,
   actions,
+  targets,
 }: {
   scope: TableRef
   form: IndexFormResponse
@@ -48,7 +64,12 @@ export function IndexEditorForm({
    * In #indexDialogModal the form's card-footer is removed and the modal's own Go / Preview SQL
    * buttons drive it (functions.ts::indexDialogModal); the preview then has "Go back".
    */
-  actions?: { current: { go: () => void; preview: () => void } | null }
+  actions?: { current: EditorActions | null }
+  /**
+   * create_edit_table (the create table / add columns form): the column selects list these
+   * columns by their form index, Index choice is disabled and the form has no footer.
+   */
+  targets?: FormTarget[]
 }) {
   const [index, setIndex] = useState<EditorIndex>(form.index)
   const [addN, setAddN] = useState(1)
@@ -87,14 +108,14 @@ export function IndexEditorForm({
   }
 
   if (actions !== undefined)
-    actions.current = { go: () => void submit(false), preview: () => void submit(true) }
+    actions.current = { go: () => void submit(false), preview: () => void submit(true), value: () => index }
   const spatial = index.choice === 'SPATIAL'
   return (
     <form
       id="index_frm"
       onSubmit={(e) => {
         e.preventDefault()
-        void submit(false)
+        if (targets === undefined) void submit(false)
       }}
       className="text-sm"
     >
@@ -129,6 +150,7 @@ export function IndexEditorForm({
             id="select_index_choice"
             className="input"
             value={index.choice}
+            disabled={targets !== undefined}
             onChange={(e) => setChoice(e.target.value as EditorIndex['choice'])}
           >
             {form.primaryAllowed && <option value="PRIMARY">PRIMARY</option>}
@@ -246,13 +268,20 @@ export function IndexEditorForm({
                   onChange={(e) => setCol(i, { name: e.target.value })}
                 >
                   <option value="">-- {t('Ignore')} --</option>
-                  {form.fields
-                    .filter(([, type]) => columnAllowed(index.choice, type))
-                    .map(([name, type]) => (
-                      <option key={name} value={name}>
-                        {name} [{type}]
-                      </option>
-                    ))}
+                  {targets !== undefined
+                    ? // the add_fields rows list every posted column, valued by its form index
+                      targets.map((f) => (
+                        <option key={f.colIndex} value={String(f.colIndex)}>
+                          {f.name} [{f.type}]
+                        </option>
+                      ))
+                    : form.fields
+                        .filter(([, type]) => columnAllowed(index.choice, type))
+                        .map(([name, type]) => (
+                          <option key={name} value={name}>
+                            {name} [{type}]
+                          </option>
+                        ))}
                 </select>
               </td>
               {!spatial && (
@@ -321,7 +350,7 @@ export function IndexEditorForm({
         </div>
       )}
       {error !== null && <MessageBox {...error} flush className="mt-2" />}
-      {actions === undefined && (
+      {actions === undefined && targets === undefined && (
         <div className="mt-3 flex justify-end gap-2">
           <Button type="submit" variant="primary">
             {t('Go')}
@@ -363,7 +392,7 @@ export function IndexDialog({
     enabled: query !== null,
     gcTime: 0,
   })
-  const actions = useRef<{ go: () => void; preview: () => void } | null>(null)
+  const actions = useRef<EditorActions | null>(null)
   return (
     <Modal
       id="indexDialogModal"

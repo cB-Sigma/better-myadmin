@@ -126,15 +126,15 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |---|---|---|---|
 | ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:371<br>apps/web/src/features/sql/SqlPage.tsx:546 |  |
 | ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:286<br>apps/server/src/routes/metadata.ts:213<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:368 |  |
-| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:479<br>apps/web/src/features/browse/GridTable.tsx:514<br>apps/web/src/features/browse/GridTable.tsx:577 |  |
-| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:480<br>apps/web/src/features/browse/GridTable.tsx:510<br>apps/web/src/features/browse/GridTable.tsx:577 |  |
+| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:627<br>apps/web/src/features/browse/GridTable.tsx:647<br>apps/web/src/features/browse/GridTable.tsx:668<br>apps/web/src/features/browse/GridTable.tsx:760 |  |
+| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:628<br>apps/web/src/features/browse/GridTable.tsx:684<br>apps/web/src/features/browse/GridTable.tsx:760 |  |
 | ✅ | `DefaultForeignKeyChecks` | apps/server/src/database/context.ts:172<br>apps/server/src/database/context.ts:173<br>apps/server/src/import/page.ts:144<br>apps/server/src/routes/sql.ts:106<br>apps/server/src/routes/sql.ts:107 |  |
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:146 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:162 |  |
 | ⬜ | `DefaultTransformations/TextLink` |  |  |
 | ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/insert-edit/form.ts:194<br>apps/server/src/table/search.ts:133 |  |
 | ✅ | `GridEditing` | apps/server/src/browse/grid.ts:693<br>apps/server/src/browse/grid.ts:694 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:286<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:208<br>apps/server/src/table/structure-page.ts:372 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:90<br>apps/server/src/table/forms.ts:287<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:208 |  |
 | ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:466<br>apps/server/src/browse/grid.ts:816<br>apps/server/src/browse/grid.ts:1030 |  |
 | ⬜ | `LinkLengthLimit` |  |  |
 | ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/database/structure.ts:240<br>apps/server/src/database/tables.ts:224<br>apps/server/src/export/page.ts:39<br>apps/server/src/query/pipeline.ts:714 |  |
@@ -144,10 +144,10 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
 | ✅ | `RememberSorting` | apps/server/src/browse/service.ts:67 |  |
 | ✅ | `RepeatCells` | apps/server/src/browse/view-state.ts:54<br>apps/server/src/browse/view-state.ts:105<br>apps/server/src/insert-edit/foreign.ts:44 |  |
-| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:814<br>apps/web/src/features/browse/GridTable.tsx:124<br>apps/web/src/features/browse/GridTable.tsx:458 |  |
+| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:814<br>apps/web/src/features/browse/GridTable.tsx:144<br>apps/web/src/features/browse/GridTable.tsx:606 |  |
 | ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:308 |  |
-| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:815<br>apps/web/src/features/browse/GridTable.tsx:366<br>apps/web/src/features/browse/GridTable.tsx:377<br>apps/web/src/features/browse/GridTable.tsx:399 |  |
-| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:817<br>apps/web/src/features/browse/GridTable.tsx:227<br>apps/web/src/features/browse/GridTable.tsx:290 |  |
+| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:815<br>apps/web/src/features/browse/GridTable.tsx:513<br>apps/web/src/features/browse/GridTable.tsx:524<br>apps/web/src/features/browse/GridTable.tsx:546 |  |
+| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:817<br>apps/web/src/features/browse/GridTable.tsx:260<br>apps/web/src/features/browse/GridTable.tsx:323 |  |
 | ✅ | `Servers/*/MaxTableUiprefs` | apps/server/src/metadata/service.ts:292 |  |
 | ⬜ | `Servers/*/table_uiprefs` |  |  |
 | ✅ | `ShowAll` | apps/server/src/browse/grid.ts:594<br>apps/server/src/browse/grid.ts:824<br>apps/server/src/insert-edit/foreign.ts:22 |  |
@@ -161,8 +161,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:105 |  |
-| ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:91 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:106 |  |
+| ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:92 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |
 | ⬜ | `DefaultTransformations/External` |  |  |
@@ -488,7 +488,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Export/xml_export_struc` |  |  |
 | ⬜ | `Export/yaml_structure_or_data` |  |  |
 | ⬜ | `GD2Available` |  |  |
-| ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:236<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:240<br>apps/server/src/table/search.ts:207 |  |
+| ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:256<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:260<br>apps/server/src/table/search.ts:207 |  |
 | ⬜ | `MysqlMinVersion/human` |  |  |
 | 🔀 | `PersistentConnections` |  | X24 — connections are always pooled per session and server |
 | ⬜ | `Servers/*/control_compress` |  |  |

@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1949/3426 covered (56.9%): 1949 implemented, 3 planned, 1474 missing. [Summary](README.md).
+1956/3426 covered (57.1%): 1956 implemented, 3 planned, 1467 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 279/403 (69.2%) covered, 279/403 implemented
 
@@ -71,14 +71,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Theme/Theme.php` | 1/1 | `No valid image path for theme %s found!` |
 | `src/ZipExtension.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
 
-## 02 browse results grid — 39/56 (69.6%) covered, 39/56 implemented
+## 02 browse results grid — 41/56 (73.2%) covered, 41/56 implemented
 
-17 msgids not used yet.
+15 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/templates/display/results/table.twig` | 9/25 | `Display column for relationships` · `Full texts` · `Hide browser transformation` · `Partial texts` · `Relational key` · `Show binary contents` · `Show BLOB contents` · `Well Known Binary` · `Well Known Text` |
-| `resources/js/makegrid.ts` | 5/15 | `Click to mark/unmark.` · `Column name copying to clipboard failed!` · `Double-click to copy column name.` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
+| `resources/js/makegrid.ts` | 3/15 | `Column name copying to clipboard failed!` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
 | `resources/templates/display/results/checkbox_and_links.twig` | 2/2 | `You can also edit most values by clicking directly on them.` · `You can also edit most values by double-clicking directly on them.` |
 | `src/Display/Results.php` | 2/11 | `Full texts` · `Partial texts` |
 | `src/Controllers/Table/GetFieldController.php` | 1/4 | `Invalid table name` |
@@ -115,15 +115,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 429/534 (80.3%) covered, 429/534 implemented
+## 04 table level — 433/534 (81.1%) covered, 433/534 implemented
 
-105 msgids not used yet.
+101 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
 | `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
-| `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
@@ -139,6 +138,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
 | `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
 | `resources/js/database/search.ts` | 1/4 | `Searching` |
+| `resources/js/modules/indexes.ts` | 1/12 | `Dropping Primary Key/Index` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/select.ts` | 1/6 | `Searching` |
@@ -263,16 +263,16 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 89/666 (13.4%) covered, 89/666 implemented
+## 08 settings preferences pmadb — 90/666 (13.5%) covered, 90/666 implemented
 
-577 msgids not used yet.
+576 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Config/Descriptions.php` | 467/474 | `[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, …` · `A dropdown will be used if fewer items are present.` · `A special MySQL user configured with limited permissions, more info…` · `A user-friendly description of this server. Leave blank to display …` · `Add DROP DATABASE` · `Add DROP VIEW` · `Add IF NOT EXISTS (less efficient as indexes will be generated duri…` · `Add ON DUPLICATE KEY UPDATE` · `Advanced server configuration, do not change these options unless y…` · `Allow for searching inside the entire database.` · `Allow interrupt of import in case script detects it is close to tim…` · `Allow login to any MySQL server` · … +455 |
 | `resources/templates/relation/check_relations.twig` | 33/34 | `%sCreate%s a database named '%s' and setup the phpMyAdmin configura…` · `%sCreate%s missing phpMyAdmin configuration storage tables.` · `%sCreate%s the phpMyAdmin configuration storage in the current data…` · `Bookmarked SQL query:` · `Browser transformation:` · `Configurable menus:` · `Configuration of pmadb…` · `OK (Correctly working)` · `Create a pma user and give access to these tables.` · `Create the needed tables with the <code>%screate_tables.sql</code>.` · `Designer and creation of PDFs:` · `Display features:` · … +21 |
 | `src/Config/ConfigFile.php` | 32/33 | `Always send error reports` · `Ask before sending error reports` · `Both` · `both of the above` · `Click` · `Closed` · `complete inserts` · `Custom - display all possible options to configure` · `Custom - like above, but without the quick/custom choice` · `Disable` · `display column` · `Double click` · … +20 |
-| `resources/js/validator-messages.ts` | 15/20 | `Please enter a valid credit card number` · `Please enter a valid date` · `Please enter a valid date ( ISO )` · `Please enter a valid email address` · `Please enter a valid number` · `Please enter a valid URL` · `Please enter a value between {0} and {1}` · `Please enter a value between {0} and {1} characters long` · `Please enter at least {0} characters` · `Please enter only digits` · `Please enter the same value again` · `Please fix this field` · … +3 |
+| `resources/js/validator-messages.ts` | 14/20 | `Please enter a valid credit card number` · `Please enter a valid date` · `Please enter a valid date ( ISO )` · `Please enter a valid email address` · `Please enter a valid URL` · `Please enter a value between {0} and {1}` · `Please enter a value between {0} and {1} characters long` · `Please enter at least {0} characters` · `Please enter only digits` · `Please enter the same value again` · `Please fix this field` · `These functions are meant to return a binary result; to avoid incon…` · … +2 |
 | `resources/js/datetimepicker.ts` | 7/7 | `Friday (Week day name)` · `Monday (Week day name)` · `Saturday (Week day name)` · `Sunday (Week day name)` · `Thursday (Week day name)` · `Tuesday (Week day name)` · `Wednesday (Week day name)` |
 | `src/Config/Forms/User/ExportForm.php` | 7/7 | `CSV` · `CSV for MS Excel` · `Custom` · `Microsoft Word 2000` · `OpenDocument Spreadsheet` · `OpenDocument Text` · `Quick` |
 | `src/Config/FormDisplay.php` | 5/7 | `"%s" requires %s extension` · `Compressed export will not work due to missing function %s.` · `Compressed import will not work due to missing function %s.` · `maximum %s` · `unavailable` |

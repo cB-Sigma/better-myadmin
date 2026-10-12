@@ -22,8 +22,19 @@ import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { AddIndexFormDialog, IndexTypeDialog } from './AddIndexDialog'
 import { CentralColumnPicker } from './CentralColumnPicker'
 import { PartitionEditor } from './PartitionEditor'
+import {
+  type DraftIndex,
+  type IndexChoice,
+  emptyIndexLists,
+  formIndexes,
+  indexLabels,
+  parseDataIndex,
+  removeColumnFromIndex,
+  setIndex,
+} from './advanced-index'
 
 /**
  * The column definition form shared by Create table, Add column(s) and Change column(s).
@@ -51,6 +62,8 @@ export interface ColumnRow {
   adjustPrivileges: boolean
   /** create/add: the Index select (none, primary, unique, index, fulltext, spatial) */
   key: string
+  /** the select's `data-index` ("unique,0"): the form index the row was added to (indexes.ts) */
+  dataIndex?: string
   orig?: ColumnOrig
   moveOptions?: Array<{ value: string; after: string | null; disabled: boolean }>
   /** the MIME columns (only when the form shows them) */
@@ -119,22 +132,6 @@ export interface TableOptions {
 }
 
 export type FormMode = 'create' | 'add' | 'change'
-
-/** The five index buckets of the create/add forms, from the per-column Index selects. */
-export function indexesFromRows(rows: ColumnRow[]): FormIndex[] {
-  const out: FormIndex[] = []
-  const primary = rows.flatMap((r, i) =>
-    r.key === 'primary' && r.name !== '' ? [{ colIndex: i, size: '' }] : [],
-  )
-  // PRIMARY always composes (Indexes.addColumnToIndex on the existing primary key)
-  if (primary.length > 0) out.push({ choice: 'PRIMARY', keyName: 'PRIMARY', columns: primary })
-  rows.forEach((r, i) => {
-    if (r.name === '' || r.key === 'none' || r.key === 'primary') return
-    const choice = r.key.toUpperCase() as FormIndex['choice']
-    out.push({ choice, keyName: '', columns: [{ colIndex: i, size: '' }] })
-  })
-  return out
-}
 
 const LENGTH_REQUIRED = ['VARCHAR', 'CHAR', 'BIT', 'VARBINARY', 'BINARY']
 const NUM_TYPES = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL']
@@ -412,7 +409,7 @@ export function ColumnForm({
   tableOptions?: TableOptions
   setTableOptions?: (o: TableOptions) => void
   /** runs (or previews with dryRun) the form */
-  submit: (dryRun: boolean, online: boolean) => Promise<DdlResponse>
+  submit: (dryRun: boolean, online: boolean, indexes: FormIndex[]) => Promise<DdlResponse>
   reservedCheck: (names: string[]) => Promise<{ reserved: boolean; message: string }>
   onDone: (r: DdlResponse) => void
   header?: ReactNode
@@ -426,17 +423,91 @@ export function ColumnForm({
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   const [addCount, setAddCount] = useState(defaultNumFields)
 
-  const update = (i: number, patch: Partial<ColumnRow>) => {
-    setRows(
-      rows.map((r, j) => {
-        if (j !== i) return r
-        const next = { ...r, ...patch }
-        // ticking A_I picks PRIMARY in the Index select (functions.ts input[value=AUTO_INCREMENT])
-        if (patch.autoIncrement === true && mode !== 'change' && next.key === 'none') next.key = 'primary'
-        return next
-      }),
-    )
+  const update = (i: number, patch: Partial<ColumnRow>) =>
+    setRows(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)))
+
+  // ---- the form's indexes (indexes.ts): the Index selects open #addIndexModal
+  const [lists, setLists] = useState(emptyIndexLists)
+  const [pending, setPending] = useState<
+    | {
+        kind: 'form'
+        choice: IndexChoice
+        arrayIndex: number
+        colIndex: number
+        targets: number[]
+        initial: DraftIndex
+      }
+    | { kind: 'type'; choice: IndexChoice; colIndex: number }
+    | null
+  >(null)
+  const names = rows.map((r) => r.name)
+  const labels = indexLabels(lists, names)
+  const newIndex = (choice: IndexChoice): DraftIndex => ({
+    keyName: choice === 'primary' ? 'PRIMARY' : '',
+    comment: '',
+    choice: choice.toUpperCase() as DraftIndex['choice'],
+    keyBlockSize: '',
+    parser: '',
+    type: '',
+    columns: [],
+  })
+  /** addColumnToIndex: store the index, point the row's select at it */
+  const addColumnToIndex = (
+    base: ColumnRow[],
+    choice: IndexChoice,
+    arrayIndex: number,
+    colIndex: number,
+    index: DraftIndex,
+  ) => {
+    let l = lists
+    let at = arrayIndex
+    if (colIndex >= 0) {
+      const before = l[choice].length
+      l = removeColumnFromIndex(l, base[colIndex]?.dataIndex, colIndex)
+      const prev = parseDataIndex(base[colIndex]?.dataIndex)
+      if (prev?.choice === choice && l[choice].length < before && prev.arrayIndex < at) at--
+    }
+    at = Math.min(at, l[choice].length)
+    setLists(setIndex(l, choice, at, index))
+    return colIndex >= 0
+      ? base.map((r, j) => (j === colIndex ? { ...r, dataIndex: `${choice},${at}` } : r))
+      : base
   }
+  /** change select[name*="field_key"] (showDialog false: the A_I box adds to PRIMARY without a dialog) */
+  const keyChanged = (base: ColumnRow[], i: number, value: string, showDialog: boolean): ColumnRow[] => {
+    const row = base[i]
+    if (row === undefined) return base
+    if (value === 'none') {
+      setLists(removeColumnFromIndex(lists, row.dataIndex, i))
+      return base.map((r, j) => (j === i ? { ...r, key: 'none', dataIndex: '' } : r))
+    }
+    const choice = value as IndexChoice
+    const next = base.map((r, j) => (j === i ? { ...r, key: value } : r))
+    const source = lists[choice]
+    const existing = source[0]
+    if (source.length === 0 || (choice === 'primary' && existing !== undefined)) {
+      const initial = existing !== undefined && choice === 'primary' ? existing : newIndex(choice)
+      const targets = [...initial.columns.map((c) => c.colIndex), i]
+      if (!showDialog) {
+        return addColumnToIndex(next, choice, 0, i, {
+          ...initial,
+          columns: targets.map((c) => ({ colIndex: c, size: '' })),
+        })
+      }
+      setPending({ kind: 'form', choice, arrayIndex: 0, colIndex: i, targets, initial })
+      return next
+    }
+    setPending({ kind: 'type', choice, colIndex: i })
+    return next
+  }
+  /** #addIndexModalCancelButton: the select goes back to the index it was in (or ---) */
+  const cancelIndex = (colIndex: number) => {
+    setPending(null)
+    if (colIndex < 0) return
+    update(colIndex, { key: parseDataIndex(rows[colIndex]?.dataIndex)?.choice ?? 'none' })
+  }
+  const targetsOf = (cols: number[]) =>
+    cols.map((c) => ({ name: rows[c]?.name ?? '', type: (rows[c]?.type ?? '').toLowerCase(), colIndex: c }))
 
   const run = async (dryRun: boolean) => {
     setError(null)
@@ -468,7 +539,7 @@ export function ColumnForm({
     }
     setBusy(true)
     try {
-      const r = await submit(dryRun, online)
+      const r = await submit(dryRun, online, formIndexes(lists))
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
@@ -733,7 +804,9 @@ export function ColumnForm({
                       aria-label={t('Index')}
                       value={`${r.key}_${i}`}
                       // column_attributes.twig: the option values carry the row number (none_0, primary_0…)
-                      onChange={(e) => update(i, { key: e.target.value.replace(/_\d+$/, '') })}
+                      onChange={(e) =>
+                        setRows(keyChanged(rows, i, e.target.value.replace(/_\d+$/, ''), true))
+                      }
                     >
                       {(
                         [
@@ -750,6 +823,30 @@ export function ColumnForm({
                         </option>
                       ))}
                     </select>
+                    {labels.has(i) && (
+                      // the index's name (or its columns) under the select; reopens the index form
+                      <Button
+                        variant="link"
+                        id={`index_name_${i}_8`}
+                        className="ajax show_index_dialog block h-auto p-0"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          const prev = parseDataIndex(r.dataIndex)
+                          const index = prev === null ? undefined : lists[prev.choice][prev.arrayIndex]
+                          if (prev === null || index === undefined) return
+                          setPending({
+                            kind: 'form',
+                            choice: prev.choice,
+                            arrayIndex: prev.arrayIndex,
+                            colIndex: -1,
+                            targets: index.columns.map((c) => c.colIndex),
+                            initial: index,
+                          })
+                        }}
+                      >
+                        <small>{labels.get(i)}</small>
+                      </Button>
+                    )}
                   </td>
                 )}
                 <td className="p-1 text-center">
@@ -758,7 +855,17 @@ export function ColumnForm({
                     aria-label="AUTO_INCREMENT"
                     name={`field_extra[${i}]`}
                     checked={r.autoIncrement}
-                    onChange={(e) => update(i, { autoIncrement: e.target.checked })}
+                    onChange={(e) => {
+                      const next = rows.map((x, j) =>
+                        j === i ? { ...x, autoIncrement: e.target.checked } : x,
+                      )
+                      // functions.ts input[value=AUTO_INCREMENT]: none_N becomes primary_N, change([false])
+                      setRows(
+                        e.target.checked && mode !== 'change' && r.key === 'none'
+                          ? keyChanged(next, i, 'primary', false)
+                          : next,
+                      )
+                    }}
                   />
                 </td>
                 <td className="p-1">
@@ -947,6 +1054,53 @@ export function ColumnForm({
         )}
       {error !== null && <MessageBox {...error} flush className="mt-2" />}
       <PreviewSqlDialog highlight sql={preview} onClose={() => setPreview(null)} />
+      {pending?.kind === 'form' && (
+        <AddIndexFormDialog
+          key={`${pending.choice}-${pending.arrayIndex}-${pending.colIndex}`}
+          scope={{ server, db: params.db ?? '', table: params.table ?? '' }}
+          targets={targetsOf(pending.targets)}
+          initial={pending.initial}
+          sliders={options.sliders}
+          onGo={(index) => {
+            setPending(null)
+            setRows(addColumnToIndex(rows, pending.choice, pending.arrayIndex, pending.colIndex, index))
+          }}
+          onCancel={() => cancelIndex(pending.colIndex)}
+          onClose={() => setPending(null)}
+        />
+      )}
+      {pending?.kind === 'type' && (
+        <IndexTypeDialog
+          choice={pending.choice}
+          source={lists[pending.choice]}
+          colIndex={pending.colIndex}
+          names={names}
+          onSingle={() =>
+            setPending({
+              kind: 'form',
+              choice: pending.choice,
+              arrayIndex: lists[pending.choice].length,
+              colIndex: pending.colIndex,
+              targets: [pending.colIndex],
+              initial: newIndex(pending.choice),
+            })
+          }
+          onComposite={(arrayIndex) => {
+            const index = lists[pending.choice][arrayIndex]
+            if (index === undefined) return
+            setPending({
+              kind: 'form',
+              choice: pending.choice,
+              arrayIndex,
+              colIndex: pending.colIndex,
+              targets: [...index.columns.map((c) => c.colIndex), pending.colIndex],
+              initial: index,
+            })
+          }}
+          onCancel={() => cancelIndex(pending.colIndex)}
+          onClose={() => setPending(null)}
+        />
+      )}
       {enumFor !== null && (
         <EnumEditor
           value={rows[enumFor]?.length ?? ''}

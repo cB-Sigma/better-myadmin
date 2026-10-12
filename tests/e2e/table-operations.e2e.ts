@@ -73,7 +73,9 @@ test('table options, maintenance, copy, truncate and drop', async ({ page }) => 
   await page.locator('#copyTable').getByRole('button', { name: 'Go' }).click()
   // the copy runs after the click returns: wait for its message before reading the new table
   // (expect.poll does not retry a query that throws "doesn't exist")
-  await expect(page.getByText('Table `f04ops_e2e`.`t` has been copied to `f04ops_e2e`.`t_copy`.')).toBeVisible()
+  await expect(
+    page.getByText('Table `f04ops_e2e`.`t` has been copied to `f04ops_e2e`.`t_copy`.'),
+  ).toBeVisible()
   await expect.poll(async () => (await sql<unknown[]>(`SELECT * FROM ${DB}.t_copy`)).length).toBe(2)
 
   // truncate: confirmation with the foreign key checks box

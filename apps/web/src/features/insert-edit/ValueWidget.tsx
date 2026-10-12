@@ -384,7 +384,7 @@ function TransformedInput(p: WidgetProps) {
  * timepicker): picks a value in MySQL format; fractional seconds follow the column precision.
  * pma: resources/js/modules/functions.ts::addDateTimePicker
  */
-function DateTimePicker({
+export function DateTimePicker({
   kind,
   decimals,
   trueType,
