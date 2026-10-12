@@ -1,3 +1,4 @@
+import { N_ } from '@bettermyadmin/i18n'
 import { checkPassword } from '../shell/home/password.ts'
 
 /**
@@ -49,7 +50,7 @@ export function checkAddUser(f: {
   password: string
   password2: string
 }): string | null {
-  if (f.hostname === '') return 'The host name is empty!'
-  if (f.predUsername === 'userdefined' && f.username === '') return 'The user name is empty!'
+  if (f.hostname === '') return N_('The host name is empty!')
+  if (f.predUsername === 'userdefined' && f.username === '') return N_('The user name is empty!')
   return checkPassword(f.predPassword === 'none', f.password, f.password2)
 }

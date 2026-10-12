@@ -75,7 +75,7 @@ The step-by-step version, with one canonical file per step and the rules `pnpm c
 - Data: `useQuery`/`useSuspenseQuery` with keys from `lib/queryKeys.ts`; mutations declare `invalidates` arrays.
 - Components receive data, not query hooks, below the page level (keeps them testable in Storybook).
 - Styling: Tailwind utilities + CSS variables; no inline style objects except for virtualizer transforms and measured widths.
-- i18n: `t` / `Trans` / `ngettext` / `pgettext` with phpMyAdmin's exact msgids (no Lingui macros, they rewrite msgids); never concatenate translated fragments; `pnpm i18n:parity` must stay clean.
+- i18n: `t` / `Trans` / `ngettext` / `pgettext` with phpMyAdmin's exact msgids (no Lingui macros, they rewrite msgids); never concatenate translated fragments; `pnpm i18n:parity` must stay clean. A msgid kept in a table or returned by a pure function and translated where it is shown (`t(row.title)`, `tr.gettext(message)`) is marked at its literal with `N_('…')` / `NC_('context', '…')` (gettext_noop, `@bettermyadmin/i18n`), so `pnpm i18n:parity` and the coverage scan see it; mark only literals that really are translated before they reach the user. Data generated from phpMyAdmin (`packages/kbs/src/generated/*.json`) counts through the `t(obj.prop)` / `t(map[key])` that translates it (tools/parity/src/scan/code.ts).
 - Accessibility: every interactive element is a `button`, `a`, or input; `div onClick` is banned by lint.
 
 ### Backend

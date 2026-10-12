@@ -8,6 +8,7 @@
  * pma: src/Server/Privileges.php
  */
 
+import { N_ } from '@bettermyadmin/i18n'
 import { backquote, escapeMysqlWildcards, quoteString } from './quote.ts'
 
 /** The posted form, PHP-style: `name[]` fields are arrays, a missing key is `isset() === false`. */
@@ -73,55 +74,61 @@ export function userHostCondition(user: string, host: string): string {
 
 /** [column/key, SQL privilege, description msgid] — pma: Privileges::getGrantsArray */
 export const GRANTS: ReadonlyArray<readonly [string, string, string]> = [
-  ['Select_priv', 'SELECT', 'Allows reading data.'],
-  ['Insert_priv', 'INSERT', 'Allows inserting and replacing data.'],
-  ['Update_priv', 'UPDATE', 'Allows changing data.'],
-  ['Delete_priv', 'DELETE', 'Allows deleting data.'],
-  ['Create_priv', 'CREATE', 'Allows creating new databases and tables.'],
-  ['Drop_priv', 'DROP', 'Allows dropping databases and tables.'],
-  ['Reload_priv', 'RELOAD', "Allows reloading server settings and flushing the server's caches."],
-  ['Shutdown_priv', 'SHUTDOWN', 'Allows shutting down the server.'],
-  ['Process_priv', 'PROCESS', 'Allows viewing processes of all users.'],
-  ['File_priv', 'FILE', 'Allows importing data from and exporting data into files.'],
-  ['References_priv', 'REFERENCES', 'Has no effect in this MySQL version.'],
-  ['Index_priv', 'INDEX', 'Allows creating and dropping indexes.'],
-  ['Alter_priv', 'ALTER', 'Allows altering the structure of existing tables.'],
-  ['Show_db_priv', 'SHOW DATABASES', 'Gives access to the complete list of databases.'],
+  ['Select_priv', 'SELECT', N_('Allows reading data.')],
+  ['Insert_priv', 'INSERT', N_('Allows inserting and replacing data.')],
+  ['Update_priv', 'UPDATE', N_('Allows changing data.')],
+  ['Delete_priv', 'DELETE', N_('Allows deleting data.')],
+  ['Create_priv', 'CREATE', N_('Allows creating new databases and tables.')],
+  ['Drop_priv', 'DROP', N_('Allows dropping databases and tables.')],
+  ['Reload_priv', 'RELOAD', N_("Allows reloading server settings and flushing the server's caches.")],
+  ['Shutdown_priv', 'SHUTDOWN', N_('Allows shutting down the server.')],
+  ['Process_priv', 'PROCESS', N_('Allows viewing processes of all users.')],
+  ['File_priv', 'FILE', N_('Allows importing data from and exporting data into files.')],
+  ['References_priv', 'REFERENCES', N_('Has no effect in this MySQL version.')],
+  ['Index_priv', 'INDEX', N_('Allows creating and dropping indexes.')],
+  ['Alter_priv', 'ALTER', N_('Allows altering the structure of existing tables.')],
+  ['Show_db_priv', 'SHOW DATABASES', N_('Gives access to the complete list of databases.')],
   [
     'Super_priv',
     'SUPER',
-    'Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users.',
+    N_(
+      'Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users.',
+    ),
   ],
-  ['Create_tmp_table_priv', 'CREATE TEMPORARY TABLES', 'Allows creating temporary tables.'],
-  ['Lock_tables_priv', 'LOCK TABLES', 'Allows locking tables for the current thread.'],
-  ['Repl_slave_priv', 'REPLICATION SLAVE', 'Needed for the replication replicas.'],
-  ['Repl_client_priv', 'REPLICATION CLIENT', 'Allows the user to ask where the replicas / primaries are.'],
-  ['Create_view_priv', 'CREATE VIEW', 'Allows creating new views.'],
-  ['Event_priv', 'EVENT', 'Allows to set up events for the event scheduler.'],
-  ['Trigger_priv', 'TRIGGER', 'Allows creating and dropping triggers.'],
+  ['Create_tmp_table_priv', 'CREATE TEMPORARY TABLES', N_('Allows creating temporary tables.')],
+  ['Lock_tables_priv', 'LOCK TABLES', N_('Allows locking tables for the current thread.')],
+  ['Repl_slave_priv', 'REPLICATION SLAVE', N_('Needed for the replication replicas.')],
+  [
+    'Repl_client_priv',
+    'REPLICATION CLIENT',
+    N_('Allows the user to ask where the replicas / primaries are.'),
+  ],
+  ['Create_view_priv', 'CREATE VIEW', N_('Allows creating new views.')],
+  ['Event_priv', 'EVENT', N_('Allows to set up events for the event scheduler.')],
+  ['Trigger_priv', 'TRIGGER', N_('Allows creating and dropping triggers.')],
   // for table privs:
-  ['Create View_priv', 'CREATE VIEW', 'Allows creating new views.'],
-  ['Show_view_priv', 'SHOW VIEW', 'Allows performing SHOW CREATE VIEW queries.'],
+  ['Create View_priv', 'CREATE VIEW', N_('Allows creating new views.')],
+  ['Show_view_priv', 'SHOW VIEW', N_('Allows performing SHOW CREATE VIEW queries.')],
   // for table privs:
-  ['Show view_priv', 'SHOW VIEW', 'Allows performing SHOW CREATE VIEW queries.'],
-  ['Delete_history_priv', 'DELETE HISTORY', 'Allows deleting historical rows.'],
-  ['Delete versioning rows_priv', 'DELETE HISTORY', 'Allows deleting historical rows.'],
-  ['Create_routine_priv', 'CREATE ROUTINE', 'Allows creating stored routines.'],
-  ['Alter_routine_priv', 'ALTER ROUTINE', 'Allows altering and dropping stored routines.'],
-  ['Create_user_priv', 'CREATE USER', 'Allows creating, dropping and renaming user accounts.'],
-  ['Execute_priv', 'EXECUTE', 'Allows executing stored routines.'],
+  ['Show view_priv', 'SHOW VIEW', N_('Allows performing SHOW CREATE VIEW queries.')],
+  ['Delete_history_priv', 'DELETE HISTORY', N_('Allows deleting historical rows.')],
+  ['Delete versioning rows_priv', 'DELETE HISTORY', N_('Allows deleting historical rows.')],
+  ['Create_routine_priv', 'CREATE ROUTINE', N_('Allows creating stored routines.')],
+  ['Alter_routine_priv', 'ALTER ROUTINE', N_('Allows altering and dropping stored routines.')],
+  ['Create_user_priv', 'CREATE USER', N_('Allows creating, dropping and renaming user accounts.')],
+  ['Execute_priv', 'EXECUTE', N_('Allows executing stored routines.')],
 ]
 
 /** pma: Privileges::getTableGrantsArray (keyed by the `Table_priv` SET member) */
 export const TABLE_GRANTS: ReadonlyArray<readonly [string, string, string]> = [
-  ['Delete', 'DELETE', 'Allows deleting data.'],
-  ['Create', 'CREATE', 'Allows creating new tables.'],
-  ['Drop', 'DROP', 'Allows dropping tables.'],
-  ['Index', 'INDEX', 'Allows creating and dropping indexes.'],
-  ['Alter', 'ALTER', 'Allows altering the structure of existing tables.'],
-  ['Create View', 'CREATE_VIEW', 'Allows creating new views.'],
-  ['Show view', 'SHOW_VIEW', 'Allows performing SHOW CREATE VIEW queries.'],
-  ['Trigger', 'TRIGGER', 'Allows creating and dropping triggers.'],
+  ['Delete', 'DELETE', N_('Allows deleting data.')],
+  ['Create', 'CREATE', N_('Allows creating new tables.')],
+  ['Drop', 'DROP', N_('Allows dropping tables.')],
+  ['Index', 'INDEX', N_('Allows creating and dropping indexes.')],
+  ['Alter', 'ALTER', N_('Allows altering the structure of existing tables.')],
+  ['Create View', 'CREATE_VIEW', N_('Allows creating new views.')],
+  ['Show view', 'SHOW_VIEW', N_('Allows performing SHOW CREATE VIEW queries.')],
+  ['Trigger', 'TRIGGER', N_('Allows creating and dropping triggers.')],
 ]
 
 /** One entry of extractPrivInfo: the privilege, its description msgid, the backquoted column list. */
@@ -133,8 +140,8 @@ export interface PrivItem {
   columns: string | null
 }
 
-export const USAGE_TITLE = 'No privileges.'
-export const ALL_PRIVILEGES_TITLE = 'Includes all privileges except GRANT.'
+export const USAGE_TITLE = N_('No privileges.')
+export const ALL_PRIVILEGES_TITLE = N_('Includes all privileges except GRANT.')
 
 /**
  * The SET members of `mysql.tables_priv.Table_priv` from `SHOW COLUMNS … LIKE 'Table_priv'`'s Type,

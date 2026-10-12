@@ -6,6 +6,7 @@
  *   ngettext('…', '…', n) _ngettext(…)            → msgid + msgid_plural
  *   pgettext('ctx', '…') npgettext('ctx', '…', '…', n)
  *   <Trans id="…" …/>
+ *   N_('…') NC_('ctx', '…')                       → msgid markers (packages/i18n/src/noop.ts)
  * (also as methods: `tr.gettext('…')`). A string phpMyAdmin never had usually means a feature phpMyAdmin
  * never had; deliberate ones carry `// i18n-new: <reason>` on the same or the previous line.
  * Exit code 1 when unannotated unknown msgids exist.
@@ -21,9 +22,9 @@ const repo = resolve(here, '../../..')
 const pot = parsePo(readFileSync(join(here, '../po/phpmyadmin.pot'), 'utf8'))
 const known = new Set(pot.entries.map(moKey))
 
-const SINGULAR = new Set(['t', '__', 'gettext', '_gettext'])
+const SINGULAR = new Set(['t', 'tProduct', '__', 'gettext', '_gettext', 'N_'])
 const PLURAL = new Set(['ngettext', '_ngettext'])
-const CONTEXT = new Set(['pgettext', '_pgettext'])
+const CONTEXT = new Set(['pgettext', '_pgettext', 'NC_'])
 const CONTEXT_PLURAL = new Set(['npgettext', '_npgettext'])
 
 interface Use {

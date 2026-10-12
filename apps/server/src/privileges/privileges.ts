@@ -10,7 +10,7 @@ import type {
   SpecificRights,
   UserOverviewRow,
 } from '@bettermyadmin/contracts'
-import { sprintf } from '@bettermyadmin/i18n'
+import { N_, sprintf } from '@bettermyadmin/i18n'
 import {
   type MenusFeature,
   type MetaConn,
@@ -70,11 +70,11 @@ type RightsEntry = { row: PrivRow; columnDefault: boolean; canDelete: boolean }
 
 /** Plugins::getTranslatedDescription msgids */
 const PLUGIN_DESCRIPTIONS = new Set([
-  'Native MySQL authentication',
-  'SHA256 password authentication',
-  'Caching sha2 authentication',
-  'Unix Socket based authentication',
-  'Old MySQL-4.0 authentication',
+  N_('Native MySQL authentication'),
+  N_('SHA256 password authentication'),
+  N_('Caching sha2 authentication'),
+  N_('Unix Socket based authentication'),
+  N_('Old MySQL-4.0 authentication'),
 ])
 
 /** A failure of updatePassword (UpdateAuthPluginFailure / UserPasswordUpdateFailure): Generator::mysqlDie. */
@@ -973,8 +973,8 @@ export class Privileges {
     const p = this.post
     if (isset(p.pma_pw) && isset(p.pma_pw2) && empty(p.nopass)) {
       if (looseNotEqual(str(p.pma_pw), str(p.pma_pw2)))
-        return this.#msg('error', "The passwords aren't the same!")
-      if (empty(p.pma_pw) || empty(p.pma_pw2)) return this.#msg('error', 'The password is empty!')
+        return this.#msg('error', N_("The passwords aren't the same!"))
+      if (empty(p.pma_pw) || empty(p.pma_pw2)) return this.#msg('error', N_('The password is empty!'))
     }
     const pw = str(p.pma_pw)
     const plugin =
@@ -1027,7 +1027,7 @@ export class Privileges {
     await this.#try('FLUSH PRIVILEGES;', 'privileges.flush')
     const message = this.#msg(
       'success',
-      'The password for %s was changed successfully.',
+      N_('The password for %s was changed successfully.'),
       `'${user}'@'${host}'`,
     )
     if (origValue !== null)
@@ -1056,7 +1056,7 @@ export class Privileges {
     await this.#query(q0, 'privileges.revoke')
     if ((await this.#try(q1, 'privileges.revokeGrant')) === null) q1 = ''
     return {
-      message: this.#msg('success', 'You have revoked the privileges for %s.', `'${user}'@'${host}'`),
+      message: this.#msg('success', N_('You have revoked the privileges for %s.'), `'${user}'@'${host}'`),
       sql: `${q0} ${q1}`,
     }
   }
@@ -1085,7 +1085,7 @@ export class Privileges {
     if (grant !== null) await this.#query(grant, 'privileges.grant')
     if (alter !== null) await this.#query(alter, 'privileges.alterUser')
     return {
-      message: this.#msg('success', 'You have updated the privileges for %s.', `'${user}'@'${host}'`),
+      message: this.#msg('success', N_('You have updated the privileges for %s.'), `'${user}'@'${host}'`),
       sql: `${q0} ${q1} ${grant ?? ''} ${alter ?? ''}`,
     }
   }
@@ -1327,7 +1327,7 @@ export class Privileges {
   /** pma: Privileges::deleteUser */
   async deleteUser(queries0: string[]): Promise<{ message: PrivMessage; sql: string }> {
     if (queries0.length === 0)
-      return { message: this.#msg('error', 'No users selected for deleting!'), sql: '' }
+      return { message: this.#msg('error', N_('No users selected for deleting!')), sql: '' }
     const queries = [...queries0]
     if (looseEq(this.post.mode, 3)) {
       queries.push(`# ${this.#t('Reloading the privileges')} …`)
@@ -1343,7 +1343,7 @@ export class Privileges {
       message:
         errors !== ''
           ? { type: 'error', text: errors }
-          : this.#msg('success', 'The selected users have been deleted successfully.'),
+          : this.#msg('success', N_('The selected users have been deleted successfully.')),
       sql: queries.join('\n'),
     }
   }
@@ -1372,7 +1372,7 @@ export class Privileges {
     let message: PrivMessage | null = null
     if (isset(this.get.flush_privileges)) {
       await this.#try('FLUSH PRIVILEGES;', 'privileges.flush')
-      message = this.#msg('success', 'The privileges were reloaded successfully.')
+      message = this.#msg('success', N_('The privileges were reloaded successfully.'))
     }
     if (isset(this.get.validate_username))
       return this.#msg('success', 'Your SQL query has been executed successfully.')

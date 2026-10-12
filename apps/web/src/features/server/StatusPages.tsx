@@ -408,7 +408,8 @@ function Pie({ labels, data, ariaLabel }: { labels: string[]; data: number[]; ar
         <title>{ariaLabel}</title>
         {slices.map((s) => (
           <path key={s.label} d={s.d} style={{ fill: s.color }}>
-            <title>{`${s.label}: ${s.v}`}</title>
+            {/* Chart.js' tooltip: the slice label, then "<dataset label>: <value>" (numberOfStatements) */}
+            <title>{`${s.label}\n${t('Number of statements')}: ${s.v}`}</title>
           </path>
         ))}
       </svg>

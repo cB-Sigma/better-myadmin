@@ -75,7 +75,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ServerDefault` | apps/server/src/setup/service.ts:71<br>apps/web/src/features/setup/OverviewPage.tsx:207<br>apps/web/src/features/setup/OverviewPage.tsx:209<br>apps/web/src/features/setup/OverviewPage.tsx:210<br>apps/server/src/app.ts:139 |  |
 | ✅ | `Servers/*/AllowDeny/order` | apps/server/src/auth/login.ts:24<br>apps/server/src/auth/login.ts:25 |  |
 | ✅ | `Servers/*/AllowDeny/rules` | apps/server/src/auth/login.ts:28 |  |
-| ✅ | `Servers/*/AllowNoPassword` | apps/server/src/setup/checks.ts:158<br>apps/server/src/auth/login.ts:35<br>apps/server/src/privileges/privileges.ts:428<br>apps/server/src/shell/password.ts:86 |  |
+| ✅ | `Servers/*/AllowNoPassword` | apps/server/src/setup/checks.ts:158<br>apps/server/src/auth/login.ts:35<br>apps/server/src/privileges/privileges.ts:428<br>apps/server/src/shell/password.ts:87 |  |
 | ✅ | `Servers/*/AllowRoot` | apps/server/src/auth/login.ts:33 |  |
 | ✅ | `Servers/*/auth_http_realm` | apps/server/src/auth/http.ts:40<br>apps/server/src/auth/http.ts:42 |  |
 | ✅ | `Servers/*/auth_type` | apps/server/src/preferences/validator.ts:189<br>apps/server/src/preferences/validator.ts:192<br>apps/server/src/setup/checks.ts:137<br>apps/server/src/setup/service.ts:78<br>apps/server/src/navigation/service.ts:68 |  |
@@ -153,7 +153,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowAll` | apps/server/src/browse/grid.ts:594<br>apps/server/src/browse/grid.ts:824<br>apps/server/src/insert-edit/foreign.ts:22 |  |
 | ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:625 |  |
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:100<br>apps/server/src/query/message.ts:83 |  |
-| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:820<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:92 |  |
+| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:820<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:94 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
 | ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:401 |  |
 
@@ -241,7 +241,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/ssl_verify` | apps/server/src/db/control.ts:31<br>apps/server/src/db/pool-manager.ts:49 |  |
 | ✅ | `Servers/*/usergroups` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:61<br>packages/metadata/src/storage.ts:84<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:194 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/users` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:60<br>packages/metadata/src/storage.ts:83<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:193 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
-| ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:264<br>apps/server/src/shell/password.ts:30 |  |
+| ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:264<br>apps/server/src/shell/password.ts:31 |  |
 | ✅ | `ShowGitRevision` | apps/server/src/routes/meta.ts:18<br>apps/server/src/shell/home.ts:260 |  |
 | ✅ | `ShowServerInfo` | apps/web/src/features/shell/AboutPages.tsx:65<br>apps/server/src/shell/about.ts:112<br>apps/server/src/shell/home.ts:200 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:143<br>apps/web/src/features/shell/HomePage.tsx:239<br>apps/web/src/features/shell/HomePage.tsx:244<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
