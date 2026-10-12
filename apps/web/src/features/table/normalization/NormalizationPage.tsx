@@ -18,7 +18,7 @@ import { qk } from '../../../lib/queryKeys'
 import { ResultMessages } from '../common/ResultMessages'
 import { IndexDialog } from '../indexes/IndexEditor'
 import { CentralColumnPicker } from '../structure/CentralColumnPicker'
-import { ColumnForm, type ColumnRow, emptyRow, indexesFromRows, toColumnDef } from '../structure/ColumnForm'
+import { ColumnForm, type ColumnRow, emptyRow, toColumnDef } from '../structure/ColumnForm'
 
 /**
  * The normalization wizard: 1NF (atomic columns, a primary key, repeating groups, redundant
@@ -254,10 +254,10 @@ function NewColumns({
         rows={rows}
         setRows={setRows}
         reservedCheck={(names) => api.reservedWordCheck(env.scope, names)}
-        submit={(dryRun) =>
+        submit={(dryRun, _online, indexes) =>
           api.addColumns(env.scope, {
             columns: rows.map((r) => toColumnDef(r, options)),
-            indexes: indexesFromRows(rows),
+            indexes,
             where: 'last',
             dryRun,
           })

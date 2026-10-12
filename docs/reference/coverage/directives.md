@@ -4,17 +4,17 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-207/449 covered (46.1%): 204 implemented, 1 exception, 2 n/a, 1 planned, 241 missing. [Summary](README.md).
+448/449 covered (99.8%): 426 implemented, 2 exception, 20 n/a, 1 planned. [Summary](README.md).
 
-## 01 shell navigation auth — 90/109 (82.6%) covered, 89/109 implemented
+## 01 shell navigation auth — 109/109 (100.0%) covered, 107/109 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `AllowArbitraryServer` | apps/server/src/setup/checks.ts:175<br>apps/server/src/setup/checks.ts:178<br>apps/server/src/setup/checks.ts:179<br>apps/server/src/auth/cookie.ts:47<br>apps/server/src/routes/auth.ts:74 |  |
+| ✅ | `AllowArbitraryServer` | apps/server/src/setup/checks.ts:175<br>apps/server/src/setup/checks.ts:178<br>apps/server/src/setup/checks.ts:179<br>apps/server/src/auth/cookie.ts:47<br>apps/server/src/routes/auth.ts:75 |  |
 | ✅ | `ArbitraryServerRegexp` | apps/server/src/auth/cookie.ts:48<br>apps/server/src/auth/cookie.ts:51 |  |
-| ⬜ | `AuthLog` |  |  |
-| ⬜ | `AuthLogSuccess` |  |  |
-| ✅ | `blowfish_secret` | apps/server/src/setup/checks.ts:85<br>apps/server/src/setup/checks.ts:105<br>apps/server/src/setup/checks.ts:166<br>apps/server/src/setup/config-generator.ts:69<br>apps/server/src/auth/signon.ts:134 |  |
+| ✅ | `AuthLog` | apps/server/src/auth/auth-log.ts:31<br>apps/server/src/auth/auth-log.ts:42 |  |
+| ✅ | `AuthLogSuccess` | apps/server/src/auth/auth-log.ts:31<br>apps/server/src/auth/auth-log.ts:41 |  |
+| ✅ | `blowfish_secret` | apps/server/src/setup/checks.ts:85<br>apps/server/src/setup/checks.ts:105<br>apps/server/src/setup/checks.ts:166<br>apps/server/src/setup/config-generator.ts:69<br>apps/server/src/auth/signon.ts:135 |  |
 | ✅ | `CaptchaApi` | apps/server/src/auth/captcha.ts:22<br>apps/server/src/auth/captcha.ts:33 |  |
 | ✅ | `CaptchaCsp` | apps/server/src/auth/captcha.ts:43 |  |
 | ✅ | `CaptchaLoginPrivateKey` | apps/server/src/auth/captcha.ts:25<br>apps/server/src/auth/captcha.ts:106 |  |
@@ -23,29 +23,29 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `CaptchaRequestParam` | apps/server/src/auth/captcha.ts:23<br>apps/server/src/auth/captcha.ts:34 |  |
 | ✅ | `CaptchaResponseParam` | apps/server/src/auth/captcha.ts:24<br>apps/server/src/auth/captcha.ts:35 |  |
 | ✅ | `CaptchaSiteVerifyURL` | apps/server/src/auth/captcha.ts:105 |  |
-| ⬜ | `CheckConfigurationPermissions` |  |  |
+| ✅ | `CheckConfigurationPermissions` | apps/server/src/http/config-permissions.ts:23 |  |
 | ✅ | `CodemirrorEnable` | apps/server/src/database/designer.ts:232<br>apps/server/src/database/events.ts:75<br>apps/server/src/database/multi-table.ts:26<br>apps/server/src/database/routines.ts:104<br>apps/server/src/database/triggers.ts:34 |  |
 | ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:585<br>apps/web/src/features/database/TrackingPage.tsx:86<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822 |  |
-| ⬜ | `Console/EnterExecutes` |  |  |
-| ⬜ | `Console/Mode` |  |  |
-| ⬜ | `Console/StartHistory` |  |  |
-| ⬜ | `ConsoleEnterExecutes` |  |  |
-| ✅ | `CookieSameSite` | apps/server/src/app.ts:151<br>apps/server/src/i18n.ts:37 |  |
+| ✅ | `Console/EnterExecutes` | apps/server/src/routes/console.ts:19<br>apps/web/src/features/console/Console.tsx:351<br>apps/web/src/features/console/Console.tsx:479<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:711 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/Mode` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:41<br>apps/web/src/features/console/Console.tsx:102<br>apps/web/src/features/console/Console.tsx:223<br>apps/web/src/features/console/Console.tsx:230 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/StartHistory` | apps/server/src/routes/console.ts:16<br>apps/web/src/features/console/Console.tsx:178<br>apps/web/src/features/console/Console.tsx:189<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:708 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ➖ | `ConsoleEnterExecutes` |  | n/a: Header.php passes it to the page but no script reads it (Console/EnterExecutes is the setting) |
+| ✅ | `CookieSameSite` | apps/server/src/app.ts:170<br>apps/server/src/i18n.ts:37 |  |
 | ✅ | `CSPAllow` | apps/server/src/http/headers.ts:10 |  |
-| ✅ | `DBG/demo` | apps/server/src/setup/service.ts:55<br>apps/server/src/setup/service.ts:105 |  |
-| ✅ | `DefaultLang` | apps/server/src/setup/service.ts:65<br>apps/web/src/features/setup/OverviewPage.tsx:193<br>apps/web/src/features/setup/OverviewPage.tsx:195<br>apps/web/src/features/setup/OverviewPage.tsx:196<br>apps/server/src/i18n.ts:13 |  |
+| ✅ | `DBG/demo` | apps/server/src/setup/service.ts:55<br>apps/server/src/setup/service.ts:110 |  |
+| ✅ | `DefaultLang` | apps/server/src/setup/service.ts:70<br>apps/web/src/features/setup/OverviewPage.tsx:193<br>apps/web/src/features/setup/OverviewPage.tsx:195<br>apps/web/src/features/setup/OverviewPage.tsx:196<br>apps/server/src/i18n.ts:13 |  |
 | ✅ | `DefaultTabServer` | apps/server/src/navigation/service.ts:65<br>apps/web/src/features/shell/Breadcrumb.tsx:34 |  |
 | ✅ | `DefaultTabTable` | apps/server/src/navigation/nodes.ts:693<br>apps/server/src/privileges/service.ts:224<br>apps/web/src/features/shell/Breadcrumb.tsx:45<br>apps/web/src/routes/s/$server/db/$db/t/$table/index.tsx:13 |  |
-| ⬜ | `DefaultTransformations/Inline/1` |  |  |
+| ✅ | `DefaultTransformations/Inline/1` | packages/mysql-types/src/transformations.ts:733 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
 | ✅ | `DisableShortcutKeys` | apps/web/src/features/shell/layout/ShellLayout.tsx:123 |  |
 | ✅ | `DisplayServersList` | apps/server/src/navigation/service.ts:64<br>apps/web/src/features/navigation/NavigationPanel.tsx:403 |  |
 | ✅ | `enable_drag_drop_import` | apps/web/src/features/import/DragDropImport.tsx:66 |  |
 | ✅ | `FilterLanguages` | apps/server/src/i18n.ts:14<br>packages/i18n/src/languages.ts:105 |  |
 | ✅ | `FirstLevelNavigationItems` | apps/server/src/navigation/nodes.ts:325<br>apps/server/src/navigation/nodes.ts:344<br>apps/server/src/navigation/nodes.ts:375<br>apps/server/src/navigation/tree.ts:125<br>apps/server/src/navigation/tree.ts:650 |  |
 | ✅ | `Lang` | apps/server/src/i18n.ts:12<br>apps/server/src/routes/i18n.ts:22<br>packages/i18n/src/languages.ts:168 |  |
-| ✅ | `LoginCookieDeleteAll` | apps/server/src/routes/auth.ts:214 |  |
-| ✅ | `LoginCookieRecall` | apps/server/src/routes/auth.ts:56<br>apps/server/src/routes/auth.ts:125 |  |
-| ✅ | `LoginCookieStore` | apps/server/src/setup/checks.ts:214<br>apps/server/src/app.ts:157<br>apps/server/src/main.ts:113<br>apps/server/src/shell/home.ts:59 |  |
+| ✅ | `LoginCookieDeleteAll` | apps/server/src/routes/auth.ts:219 |  |
+| ✅ | `LoginCookieRecall` | apps/server/src/routes/auth.ts:57<br>apps/server/src/routes/auth.ts:130 |  |
+| ✅ | `LoginCookieStore` | apps/server/src/setup/checks.ts:214<br>apps/server/src/app.ts:176<br>apps/server/src/main.ts:113<br>apps/server/src/shell/home.ts:59 |  |
 | ✅ | `LoginCookieValidity` | apps/server/src/setup/checks.ts:197<br>apps/server/src/setup/checks.ts:201<br>apps/server/src/setup/checks.ts:202<br>apps/server/src/setup/checks.ts:218<br>apps/server/src/setup/checks.ts:219 |  |
 | ✅ | `MaxNavigationItems` | apps/server/src/navigation/nodes.ts:511<br>apps/server/src/navigation/nodes.ts:766<br>apps/server/src/navigation/nodes.ts:813<br>apps/server/src/navigation/nodes.ts:818<br>apps/server/src/navigation/tree.ts:664 |  |
 | ✅ | `MysqlSslWarningSafeHosts` | apps/server/src/shell/home.ts:144 |  |
@@ -62,46 +62,46 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NavigationTreeEnableExpansion` | apps/server/src/navigation/nodes.ts:304<br>apps/server/src/navigation/nodes.ts:310<br>apps/server/src/navigation/service.ts:59<br>apps/server/src/navigation/service.ts:107<br>apps/server/src/navigation/tree.ts:334 |  |
 | ✅ | `NavigationTreeEnableGrouping` | apps/server/src/navigation/nodes.ts:181<br>apps/server/src/navigation/nodes.ts:444<br>apps/server/src/navigation/nodes.ts:576 |  |
 | ✅ | `NavigationTreePointerEnable` | apps/server/src/navigation/service.ts:57<br>apps/web/src/features/navigation/NavTree.tsx:74 |  |
-| ✅ | `NavigationTreeTableSeparator` | apps/server/src/database/structure.ts:111<br>apps/server/src/navigation/nodes.ts:577 |  |
-| ✅ | `NavigationWidth` | apps/server/src/routes/metadata.ts:679<br>apps/server/src/navigation/service.ts:55<br>apps/web/src/features/navigation/NavigationPanel.tsx:128 |  |
-| ✅ | `NumFavoriteTables` | apps/server/src/database/structure.ts:148<br>apps/server/src/metadata/service.ts:294<br>apps/server/src/navigation/service.ts:67<br>apps/server/src/routes/metadata.ts:407<br>apps/server/src/routes/metadata.ts:485 |  |
-| ✅ | `NumRecentTables` | apps/server/src/metadata/hooks.ts:59<br>apps/server/src/metadata/service.ts:293<br>apps/server/src/navigation/service.ts:66<br>apps/server/src/routes/metadata.ts:406<br>apps/server/src/routes/metadata.ts:444 |  |
-| ✅ | `PmaAbsoluteUri` | apps/server/src/preferences/service.ts:146<br>apps/server/src/preferences/service.ts:148 |  |
-| ⬜ | `ProxyPass` |  |  |
-| ⬜ | `ProxyUrl` |  |  |
-| ⬜ | `ProxyUser` |  |  |
-| ✅ | `QueryHistoryDB` | apps/server/src/metadata/service.ts:290<br>apps/server/src/routes/metadata.ts:384<br>packages/metadata/src/history.ts:39<br>packages/metadata/src/history.ts:50 |  |
-| ✅ | `SendErrorReports` | apps/server/src/routes/telemetry.ts:59<br>apps/web/src/features/shell/layout/ShellLayout.tsx:124 | X19 |
-| ✅ | `ServerDefault` | apps/server/src/setup/service.ts:66<br>apps/web/src/features/setup/OverviewPage.tsx:207<br>apps/web/src/features/setup/OverviewPage.tsx:209<br>apps/web/src/features/setup/OverviewPage.tsx:210<br>apps/server/src/app.ts:122 |  |
+| ✅ | `NavigationTreeTableSeparator` | apps/server/src/database/structure.ts:112<br>apps/server/src/database/structure.ts:143<br>apps/server/src/navigation/nodes.ts:577 |  |
+| ✅ | `NavigationWidth` | apps/server/src/routes/metadata.ts:681<br>apps/server/src/navigation/service.ts:55<br>apps/web/src/features/navigation/NavigationPanel.tsx:128 |  |
+| ✅ | `NumFavoriteTables` | apps/server/src/database/structure.ts:200<br>apps/server/src/metadata/service.ts:291<br>apps/server/src/navigation/service.ts:67<br>apps/server/src/routes/metadata.ts:409<br>apps/server/src/routes/metadata.ts:487 |  |
+| ✅ | `NumRecentTables` | apps/server/src/metadata/hooks.ts:59<br>apps/server/src/metadata/service.ts:290<br>apps/server/src/navigation/service.ts:66<br>apps/server/src/routes/metadata.ts:408<br>apps/server/src/routes/metadata.ts:446 |  |
+| ✅ | `PmaAbsoluteUri` | apps/server/src/preferences/service.ts:154<br>apps/server/src/preferences/service.ts:156 |  |
+| ✅ | `ProxyPass` | apps/server/src/util/http-request.ts:35 |  |
+| ✅ | `ProxyUrl` | apps/server/src/util/http-request.ts:71<br>apps/server/src/util/http-request.ts:75 |  |
+| ✅ | `ProxyUser` | apps/server/src/util/http-request.ts:33<br>apps/server/src/util/http-request.ts:35 |  |
+| ✅ | `QueryHistoryDB` | apps/server/src/metadata/service.ts:287<br>apps/server/src/routes/metadata.ts:386<br>packages/metadata/src/history.ts:39<br>packages/metadata/src/history.ts:50 |  |
+| ✅ | `SendErrorReports` | apps/server/src/routes/telemetry.ts:60<br>apps/web/src/features/shell/layout/ShellLayout.tsx:124 | X19 |
+| ✅ | `ServerDefault` | apps/server/src/setup/service.ts:71<br>apps/web/src/features/setup/OverviewPage.tsx:207<br>apps/web/src/features/setup/OverviewPage.tsx:209<br>apps/web/src/features/setup/OverviewPage.tsx:210<br>apps/server/src/app.ts:139 |  |
 | ✅ | `Servers/*/AllowDeny/order` | apps/server/src/auth/login.ts:24<br>apps/server/src/auth/login.ts:25 |  |
 | ✅ | `Servers/*/AllowDeny/rules` | apps/server/src/auth/login.ts:28 |  |
-| ✅ | `Servers/*/AllowNoPassword` | apps/server/src/setup/checks.ts:158<br>apps/server/src/auth/login.ts:35<br>apps/server/src/privileges/privileges.ts:428<br>apps/server/src/shell/password.ts:86 |  |
+| ✅ | `Servers/*/AllowNoPassword` | apps/server/src/setup/checks.ts:158<br>apps/server/src/auth/login.ts:35<br>apps/server/src/privileges/privileges.ts:428<br>apps/server/src/shell/password.ts:87 |  |
 | ✅ | `Servers/*/AllowRoot` | apps/server/src/auth/login.ts:33 |  |
-| ✅ | `Servers/*/auth_http_realm` | apps/server/src/auth/http.ts:39<br>apps/server/src/auth/http.ts:41 |  |
-| ✅ | `Servers/*/auth_type` | apps/server/src/preferences/validator.ts:189<br>apps/server/src/preferences/validator.ts:192<br>apps/server/src/setup/checks.ts:137<br>apps/server/src/setup/service.ts:73<br>apps/server/src/navigation/service.ts:68 |  |
-| ✅ | `Servers/*/compress` | apps/server/src/db/pool-manager.ts:35 |  |
-| ⬜ | `Servers/*/controlhost` |  |  |
-| ⬜ | `Servers/*/controlport` |  |  |
-| ✅ | `Servers/*/controluser` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:236<br>apps/server/src/preferences/validator.ts:237<br>apps/server/src/preferences/validator.ts:253<br>apps/server/src/shell/home.ts:67 |  |
-| ✅ | `Servers/*/DisableIS` | apps/server/src/database/events.ts:46<br>apps/server/src/database/tables.ts:122<br>apps/server/src/export/service.ts:103<br>apps/server/src/metadata/service.ts:296<br>apps/server/src/metadata/service.ts:339 |  |
-| ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/login.ts:53 |  |
-| ✅ | `Servers/*/host` | apps/server/src/preferences/validator.ts:215<br>apps/server/src/preferences/validator.ts:250<br>apps/server/src/setup/service.ts:70<br>apps/server/src/auth/cookie.ts:59<br>apps/server/src/auth/http.ts:40 |  |
-| ⬜ | `Servers/*/LogoutURL` |  |  |
-| ✅ | `Servers/*/password` | apps/server/src/preferences/validator.ts:219<br>apps/server/src/setup/service.ts:75 |  |
-| ✅ | `Servers/*/SessionTimeZone` | apps/server/src/db/pool-manager.ts:88<br>apps/server/src/db/pool-manager.ts:90 |  |
-| ⬜ | `Servers/*/SignonCookieParams/httponly` |  |  |
-| ⬜ | `Servers/*/SignonCookieParams/samesite` |  |  |
-| ⬜ | `Servers/*/SignonCookieParams/secure` |  |  |
-| ⬜ | `Servers/*/SignonScript` |  |  |
-| ✅ | `Servers/*/SignonSession` | apps/server/src/preferences/validator.ts:185<br>apps/server/src/preferences/validator.ts:201<br>apps/server/src/preferences/validator.ts:202 |  |
-| ✅ | `Servers/*/SignonURL` | apps/server/src/preferences/validator.ts:186<br>apps/server/src/preferences/validator.ts:207<br>apps/server/src/preferences/validator.ts:208 |  |
-| ✅ | `Servers/*/socket` | apps/server/src/preferences/validator.ts:217<br>apps/server/src/preferences/validator.ts:252<br>apps/server/src/setup/service.ts:72<br>apps/server/src/db/pool-manager.ts:39<br>apps/server/src/db/pool-manager.ts:40 |  |
-| ⬜ | `Servers/*/tracking_add_drop_database` |  |  |
-| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/table/tracking.ts:200 |  |
-| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/table/tracking.ts:203 |  |
-| ✅ | `Servers/*/tracking_version_auto_create` | apps/server/src/table/tracker.ts:184 |  |
-| ✅ | `Servers/*/user` | apps/server/src/preferences/validator.ts:184<br>apps/server/src/preferences/validator.ts:195<br>apps/server/src/preferences/validator.ts:196<br>apps/server/src/preferences/validator.ts:218<br>apps/server/src/setup/service.ts:74 |  |
-| ✅ | `Servers/*/verbose` | apps/server/src/setup/service.ts:69<br>apps/server/src/auth/http.ts:40<br>apps/server/src/export/service.ts:126<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/home.ts:203 |  |
+| ✅ | `Servers/*/auth_http_realm` | apps/server/src/auth/http.ts:40<br>apps/server/src/auth/http.ts:42 |  |
+| ✅ | `Servers/*/auth_type` | apps/server/src/preferences/validator.ts:189<br>apps/server/src/preferences/validator.ts:192<br>apps/server/src/setup/checks.ts:137<br>apps/server/src/setup/service.ts:78<br>apps/server/src/navigation/service.ts:68 |  |
+| ✅ | `Servers/*/compress` | apps/server/src/db/control.ts:25<br>apps/server/src/db/pool-manager.ts:37 |  |
+| ✅ | `Servers/*/controlhost` | apps/server/src/db/control.ts:18 |  |
+| ✅ | `Servers/*/controlport` | apps/server/src/db/control.ts:35 |  |
+| ✅ | `Servers/*/controluser` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:236<br>apps/server/src/preferences/validator.ts:237<br>apps/server/src/preferences/validator.ts:253<br>apps/server/src/db/control.ts:47 |  |
+| ✅ | `Servers/*/DisableIS` | apps/server/src/database/events.ts:46<br>apps/server/src/database/tables.ts:122<br>apps/server/src/export/service.ts:103<br>apps/server/src/metadata/service.ts:293<br>apps/server/src/metadata/service.ts:336 |  |
+| ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/login.ts:54<br>apps/server/src/db/control.ts:33<br>apps/server/src/db/control.ts:222 |  |
+| ✅ | `Servers/*/host` | apps/server/src/preferences/validator.ts:215<br>apps/server/src/preferences/validator.ts:250<br>apps/server/src/setup/service.ts:75<br>apps/server/src/auth/cookie.ts:59<br>apps/server/src/auth/http.ts:41 |  |
+| ✅ | `Servers/*/LogoutURL` | apps/server/src/routes/auth.ts:208 |  |
+| ✅ | `Servers/*/password` | apps/server/src/preferences/validator.ts:219<br>apps/server/src/setup/service.ts:80 |  |
+| ✅ | `Servers/*/SessionTimeZone` | apps/server/src/db/pool-manager.ts:117<br>apps/server/src/db/pool-manager.ts:119 |  |
+| ✅ | `Servers/*/SignonCookieParams/httponly` | apps/server/src/auth/signon.ts:73 |  |
+| ✅ | `Servers/*/SignonCookieParams/samesite` | apps/server/src/auth/signon.ts:68 |  |
+| ✅ | `Servers/*/SignonCookieParams/secure` | apps/server/src/auth/signon.ts:72 |  |
+| ✅ | `Servers/*/SignonScript` | apps/server/src/auth/signon.ts:120<br>apps/server/src/auth/signon.ts:122<br>apps/server/src/auth/signon.ts:124 |  |
+| ✅ | `Servers/*/SignonSession` | apps/server/src/preferences/validator.ts:185<br>apps/server/src/preferences/validator.ts:201<br>apps/server/src/preferences/validator.ts:202<br>apps/server/src/auth/signon.ts:120<br>apps/server/src/auth/signon.ts:185 |  |
+| ✅ | `Servers/*/SignonURL` | apps/server/src/preferences/validator.ts:186<br>apps/server/src/preferences/validator.ts:207<br>apps/server/src/preferences/validator.ts:208<br>apps/server/src/auth/signon.ts:117<br>apps/server/src/routes/auth.ts:212 |  |
+| ✅ | `Servers/*/socket` | apps/server/src/preferences/validator.ts:217<br>apps/server/src/preferences/validator.ts:252<br>apps/server/src/setup/service.ts:77<br>apps/server/src/db/control.ts:24<br>apps/server/src/db/pool-manager.ts:41 |  |
+| ✅ | `Servers/*/tracking_add_drop_database` | apps/server/src/table/tracker.ts:159 |  |
+| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/table/tracking.ts:199 |  |
+| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/table/tracking.ts:202 |  |
+| ✅ | `Servers/*/tracking_version_auto_create` | apps/server/src/table/tracker.ts:139 |  |
+| ✅ | `Servers/*/user` | apps/server/src/preferences/validator.ts:184<br>apps/server/src/preferences/validator.ts:195<br>apps/server/src/preferences/validator.ts:196<br>apps/server/src/preferences/validator.ts:218<br>apps/server/src/setup/service.ts:79 |  |
+| ✅ | `Servers/*/verbose` | apps/server/src/setup/service.ts:74<br>apps/server/src/auth/http.ts:41<br>apps/server/src/export/service.ts:126<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/home.ts:203 |  |
 | ➖ | `SessionSavePath` |  | n/a: PHP session.save_path; sessions live in our SessionStore (DataDir / RedisUrl) |
 | ✅ | `ShowCreateDb` | apps/server/src/navigation/nodes.ts:449<br>apps/server/src/server-admin/databases.ts:243<br>apps/server/src/server-admin/databases.ts:263 |  |
 | ✅ | `ShowDatabasesNavigationAsTree` | apps/server/src/navigation/nodes.ts:181<br>apps/server/src/navigation/nodes.ts:444<br>apps/server/src/navigation/tree.ts:535 |  |
@@ -109,7 +109,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowPhpInfo` | apps/server/src/routes/about.ts:39<br>apps/server/src/shell/home.ts:272 | X15 |
 | ✅ | `TabsMode` | apps/web/src/features/preferences/PrefsHeader.tsx:59<br>packages/ui/src/components/icon.tsx:42<br>apps/web/src/features/shell/Breadcrumb.tsx:27<br>apps/web/src/features/shell/layout/ShellLayout.tsx:70<br>apps/web/src/lib/config.ts:78 |  |
 | ✅ | `TempDir` | apps/server/src/setup/checks.ts:240<br>apps/server/src/setup/checks.ts:241 |  |
-| ✅ | `ThemePerServer` | apps/server/src/main.ts:90<br>apps/web/src/features/preferences/ManagePage.tsx:54<br>apps/web/src/features/shell/HomePage.tsx:233<br>apps/web/src/features/shell/UserMenu.tsx:56<br>apps/web/src/features/shell/layout/ShellLayout.tsx:46 | X16 |
+| ✅ | `ThemePerServer` | apps/server/src/main.ts:90<br>apps/web/src/features/preferences/ManagePage.tsx:56<br>apps/web/src/features/shell/HomePage.tsx:233<br>apps/web/src/features/shell/UserMenu.tsx:56<br>apps/web/src/features/shell/layout/ShellLayout.tsx:46 | X16 |
 | ✅ | `TitleDatabase` | apps/web/src/features/shell/title.ts:46 |  |
 | ✅ | `TitleDefault` | apps/web/src/features/shell/title.ts:48 |  |
 | ✅ | `TitleServer` | apps/web/src/features/shell/title.ts:47 |  |
@@ -117,136 +117,136 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `TranslationWarningThreshold` | apps/server/src/shell/home.ts:126 |  |
 | ✅ | `URLQueryEncryption` | apps/server/src/shell/home.ts:95 |  |
 | ✅ | `URLQueryEncryptionSecretKey` | apps/server/src/shell/home.ts:96 |  |
-| ✅ | `UserprefsDeveloperTab` | apps/server/src/metadata/service.ts:350<br>apps/server/src/preferences/service.ts:87<br>apps/server/src/routes/metadata.ts:589 |  |
+| ✅ | `UserprefsDeveloperTab` | apps/server/src/metadata/service.ts:347<br>apps/server/src/preferences/service.ts:87<br>apps/server/src/routes/metadata.ts:591 |  |
 | ✅ | `VersionCheck` | apps/server/src/routes/meta.ts:61<br>apps/server/src/shell/home.ts:273 | X20 |
 
-## 02 browse results grid — 29/32 (90.6%) covered, 29/32 implemented
+## 02 browse results grid — 32/32 (100.0%) covered, 31/32 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:377<br>apps/web/src/features/sql/SqlPage.tsx:546 |  |
-| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:289<br>apps/server/src/routes/metadata.ts:213<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:368 |  |
-| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:479<br>apps/web/src/features/browse/GridTable.tsx:514<br>apps/web/src/features/browse/GridTable.tsx:577 |  |
-| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:480<br>apps/web/src/features/browse/GridTable.tsx:510<br>apps/web/src/features/browse/GridTable.tsx:577 |  |
+| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:371<br>apps/web/src/features/sql/SqlPage.tsx:546 |  |
+| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:286<br>apps/server/src/routes/metadata.ts:215<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:368 |  |
+| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:628<br>apps/web/src/features/browse/GridTable.tsx:648<br>apps/web/src/features/browse/GridTable.tsx:669<br>apps/web/src/features/browse/GridTable.tsx:761 |  |
+| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:629<br>apps/web/src/features/browse/GridTable.tsx:685<br>apps/web/src/features/browse/GridTable.tsx:761 |  |
 | ✅ | `DefaultForeignKeyChecks` | apps/server/src/database/context.ts:172<br>apps/server/src/database/context.ts:173<br>apps/server/src/import/page.ts:144<br>apps/server/src/routes/sql.ts:106<br>apps/server/src/routes/sql.ts:107 |  |
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:146 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:162 |  |
-| ⬜ | `DefaultTransformations/TextLink` |  |  |
+| ✅ | `DefaultTransformations/TextLink` | packages/mysql-types/src/transformations.ts:106<br>packages/mysql-types/src/transformations.ts:706 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
 | ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/insert-edit/form.ts:194<br>apps/server/src/table/search.ts:133 |  |
 | ✅ | `GridEditing` | apps/server/src/browse/grid.ts:693<br>apps/server/src/browse/grid.ts:694 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:286<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:208<br>apps/server/src/table/structure-page.ts:378 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:90<br>apps/server/src/table/forms.ts:287<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:208 |  |
 | ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:466<br>apps/server/src/browse/grid.ts:816<br>apps/server/src/browse/grid.ts:1030 |  |
-| ⬜ | `LinkLengthLimit` |  |  |
-| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/database/structure.ts:240<br>apps/server/src/database/tables.ts:224<br>apps/server/src/export/page.ts:39<br>apps/server/src/query/pipeline.ts:714 |  |
+| ➖ | `LinkLengthLimit` |  | n/a: Generator::linkOrButton turns a link whose URL is longer into a POST (data-post); the SPA navigates client-side and sends parameters in API bodies, so no URL length applies |
+| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/database/structure.ts:292<br>apps/server/src/database/tables.ts:224<br>apps/server/src/export/page.ts:39<br>apps/server/src/query/pipeline.ts:714 |  |
 | ✅ | `MaxRows` | apps/server/src/browse/grid.ts:595<br>apps/server/src/browse/grid.ts:823<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/database/central-columns.ts:119 |  |
 | ✅ | `Order` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:51<br>apps/web/src/features/console/Console.tsx:987<br>apps/web/src/features/console/Console.tsx:990<br>apps/web/src/features/sql/ProfilingCard.tsx:70 |  |
 | ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1115<br>apps/server/src/insert-edit/form.ts:403<br>apps/server/src/insert-edit/form.ts:477 |  |
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
 | ✅ | `RememberSorting` | apps/server/src/browse/service.ts:67 |  |
 | ✅ | `RepeatCells` | apps/server/src/browse/view-state.ts:54<br>apps/server/src/browse/view-state.ts:105<br>apps/server/src/insert-edit/foreign.ts:44 |  |
-| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:814<br>apps/web/src/features/browse/GridTable.tsx:124<br>apps/web/src/features/browse/GridTable.tsx:458 |  |
+| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:814<br>apps/web/src/features/browse/GridTable.tsx:145<br>apps/web/src/features/browse/GridTable.tsx:607 |  |
 | ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:308 |  |
-| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:815<br>apps/web/src/features/browse/GridTable.tsx:366<br>apps/web/src/features/browse/GridTable.tsx:377<br>apps/web/src/features/browse/GridTable.tsx:399 |  |
-| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:817<br>apps/web/src/features/browse/GridTable.tsx:227<br>apps/web/src/features/browse/GridTable.tsx:290 |  |
-| ✅ | `Servers/*/MaxTableUiprefs` | apps/server/src/metadata/service.ts:295 |  |
-| ⬜ | `Servers/*/table_uiprefs` |  |  |
+| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:815<br>apps/web/src/features/browse/GridTable.tsx:514<br>apps/web/src/features/browse/GridTable.tsx:525<br>apps/web/src/features/browse/GridTable.tsx:547 |  |
+| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:817<br>apps/web/src/features/browse/GridTable.tsx:261<br>apps/web/src/features/browse/GridTable.tsx:324 |  |
+| ✅ | `Servers/*/MaxTableUiprefs` | apps/server/src/metadata/service.ts:292 |  |
+| ✅ | `Servers/*/table_uiprefs` | packages/metadata/src/storage.ts:35<br>packages/metadata/src/storage.ts:57<br>packages/metadata/src/storage.ts:80<br>packages/metadata/src/storage.ts:102 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `ShowAll` | apps/server/src/browse/grid.ts:594<br>apps/server/src/browse/grid.ts:824<br>apps/server/src/insert-edit/foreign.ts:22 |  |
 | ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:625 |  |
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:100<br>apps/server/src/query/message.ts:83 |  |
-| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:820<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:92 |  |
+| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:820<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:94 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
 | ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:401 |  |
 
-## 03 insert edit transformations — 11/16 (68.8%) covered, 11/16 implemented
+## 03 insert edit transformations — 16/16 (100.0%) covered, 13/16 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/routes/table-structure.ts:133<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:105 |  |
-| ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:91 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:106 |  |
+| ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:92 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |
-| ⬜ | `DefaultTransformations/External` |  |  |
-| ⬜ | `DefaultTransformations/Hex` |  |  |
-| ⬜ | `DefaultTransformations/Inline/wrapper_link` |  |  |
-| ⬜ | `DefaultTransformations/Inline/wrapper_params` |  |  |
+| 🔀 | `DefaultTransformations/External` |  | X4 |
+| ✅ | `DefaultTransformations/Hex` | packages/mysql-types/src/transformations.ts:92<br>packages/mysql-types/src/transformations.ts:643 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ➖ | `DefaultTransformations/Inline/wrapper_link` |  | n/a: filled at run time by the transformation wrapper URL, not a configuration value (the wrapper URL is built per cell) |
+| ➖ | `DefaultTransformations/Inline/wrapper_params` |  | n/a: filled at run time by the transformation wrapper URL, not a configuration value (the wrapper URL is built per cell) |
 | ✅ | `InsertRows` | apps/server/src/insert-edit/form.ts:338<br>apps/server/src/insert-edit/form.ts:454 |  |
 | ✅ | `LongtextDoubleTextarea` | apps/server/src/insert-edit/form.ts:580<br>apps/server/src/insert-edit/form.ts:585<br>apps/server/src/insert-edit/form.ts:602 |  |
 | ✅ | `MaxSizeForInputField` | apps/server/src/insert-edit/form.ts:687<br>apps/server/src/insert-edit/form.ts:693 |  |
-| ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:220<br>apps/server/src/browse/actions.ts:222<br>apps/server/src/database/context.ts:185<br>apps/server/src/database/tables.ts:77<br>apps/server/src/database/tables.ts:141 |  |
+| ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:220<br>apps/server/src/browse/actions.ts:222<br>apps/server/src/database/context.ts:185<br>apps/server/src/database/structure.ts:169<br>apps/server/src/database/tables.ts:77 |  |
 | ✅ | `ShowFieldTypesInDataEditView` | apps/server/src/insert-edit/form.ts:449 |  |
 | ✅ | `ShowFunctionFields` | apps/server/src/database/routines.ts:411<br>apps/server/src/database/routines.ts:448<br>apps/server/src/insert-edit/form.ts:356<br>apps/server/src/insert-edit/form.ts:383<br>apps/server/src/insert-edit/form.ts:403 |  |
-| ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/routes/table-structure.ts:133<br>apps/server/src/table/structure-page.ts:107 |  |
-| ⬜ | `SQLQuery/Edit` |  |  |
+| ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/table/structure-page.ts:105 |  |
+| ✅ | `SQLQuery/Edit` | apps/server/src/query/message.ts:108<br>apps/server/src/query/message.ts:118 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
 
-## 04 table level — 4/5 (80.0%) covered, 4/5 implemented
+## 04 table level — 5/5 (100.0%) covered, 5/5 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:155<br>apps/server/src/table/maintenance.ts:58 |  |
-| ⬜ | `Export/sql_auto_increment` |  |  |
-| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:375<br>apps/web/src/features/table/structure/StructurePage.tsx:265 |  |
-| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:267<br>apps/server/src/table/structure-page.ts:379 |  |
-| ✅ | `ShowStats` | apps/server/src/database/structure.ts:138<br>apps/server/src/table/structure-page.ts:266<br>apps/server/src/table/structure-page.ts:376 |  |
+| ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:207<br>apps/server/src/table/maintenance.ts:58 |  |
+| ✅ | `Export/sql_auto_increment` | packages/export/src/plugins/sql.ts:254<br>packages/export/src/plugins/sql.ts:1584 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:369<br>apps/web/src/features/table/structure/StructurePage.tsx:251 |  |
+| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:231<br>apps/server/src/table/structure-page.ts:373 |  |
+| ✅ | `ShowStats` | apps/server/src/database/structure.ts:190<br>apps/server/src/table/structure-page.ts:260<br>apps/server/src/table/structure-page.ts:370 |  |
 
-## 05 database level — 7/31 (22.6%) covered, 7/31 implemented
+## 05 database level — 31/31 (100.0%) covered, 24/31 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
 | ✅ | `AllowUserDropDatabase` | apps/server/src/database/operations.ts:66<br>apps/server/src/query/pipeline.ts:251<br>apps/server/src/server-admin/databases.ts:280<br>apps/server/src/server-admin/databases.ts:361 |  |
 | ✅ | `DefaultTabDatabase` | apps/server/src/navigation/nodes.ts:468<br>apps/server/src/privileges/service.ts:223<br>apps/server/src/server-admin/databases.ts:281<br>apps/server/src/server-admin/databases.ts:334<br>apps/web/src/features/shell/Breadcrumb.tsx:44 |  |
-| ⬜ | `DefaultTransformations/Inline/0` |  |  |
-| ✅ | `MaxExactCountViews` | apps/server/src/database/structure.ts:324<br>apps/server/src/database/tables.ts:228<br>apps/server/src/database/tables.ts:232<br>apps/server/src/database/tables.ts:236<br>apps/server/src/export/page.ts:44 |  |
-| ⬜ | `MysqlMinVersion/internal` |  |  |
-| ✅ | `PmaNoRelation_DisableWarning` | apps/server/src/database/operations.ts:51<br>apps/server/src/routes/metadata.ts:129<br>apps/server/src/shell/home.ts:256 |  |
-| ✅ | `PropertiesNumColumns` | apps/server/src/database/structure.ts:139<br>apps/server/src/database/structure.ts:156 |  |
-| ⬜ | `Schema/dia_orientation` |  |  |
-| ⬜ | `Schema/dia_paper` |  |  |
-| ⬜ | `Schema/dia_show_color` |  |  |
-| ⬜ | `Schema/dia_show_keys` |  |  |
-| ⬜ | `Schema/eps_all_tables_same_width` |  |  |
-| ⬜ | `Schema/eps_orientation` |  |  |
-| ⬜ | `Schema/eps_show_color` |  |  |
-| ⬜ | `Schema/eps_show_keys` |  |  |
-| ⬜ | `Schema/pdf_all_tables_same_width` |  |  |
-| ⬜ | `Schema/pdf_orientation` |  |  |
-| ⬜ | `Schema/pdf_paper` |  |  |
-| ⬜ | `Schema/pdf_show_color` |  |  |
-| ⬜ | `Schema/pdf_show_grid` |  |  |
-| ⬜ | `Schema/pdf_show_keys` |  |  |
-| ⬜ | `Schema/pdf_with_doc` |  |  |
-| ⬜ | `Schema/svg_all_tables_same_width` |  |  |
-| ⬜ | `Schema/svg_show_color` |  |  |
-| ⬜ | `Schema/svg_show_keys` |  |  |
-| ⬜ | `Servers/*/central_columns` |  |  |
-| ⬜ | `Servers/*/pdf_pages` |  |  |
-| ⬜ | `Servers/*/tracking` |  |  |
-| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:32<br>apps/server/src/table/tracking.ts:135<br>apps/server/src/table/tracking.ts:174 |  |
-| ⬜ | `SkipLockedTables` |  |  |
+| ✅ | `DefaultTransformations/Inline/0` | packages/mysql-types/src/transformations.ts:216<br>packages/mysql-types/src/transformations.ts:298<br>packages/mysql-types/src/transformations.ts:388<br>packages/mysql-types/src/transformations.ts:485<br>packages/mysql-types/src/transformations.ts:587 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ✅ | `MaxExactCountViews` | apps/server/src/database/structure.ts:376<br>apps/server/src/database/tables.ts:228<br>apps/server/src/database/tables.ts:232<br>apps/server/src/database/tables.ts:236<br>apps/server/src/export/page.ts:44 |  |
+| ✅ | `MysqlMinVersion/internal` | apps/server/src/auth/login.ts:60 |  |
+| ✅ | `PmaNoRelation_DisableWarning` | apps/server/src/database/operations.ts:51<br>apps/server/src/routes/metadata.ts:130<br>apps/server/src/shell/home.ts:256 |  |
+| ✅ | `PropertiesNumColumns` | apps/server/src/database/structure.ts:191<br>apps/server/src/database/structure.ts:208 |  |
+| ✅ | `Schema/dia_orientation` | packages/schema/src/index.ts:44 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_paper` | packages/schema/src/index.ts:60 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_all_tables_same_width` | packages/schema/src/index.ts:71 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_orientation` | packages/schema/src/index.ts:44 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ➖ | `Schema/pdf_all_tables_same_width` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_orientation` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_paper` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_show_color` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_show_grid` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_show_keys` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_with_doc` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ✅ | `Schema/svg_all_tables_same_width` | packages/schema/src/index.ts:80 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Servers/*/central_columns` | packages/metadata/src/storage.ts:41<br>packages/metadata/src/storage.ts:64<br>packages/metadata/src/storage.ts:87<br>packages/metadata/src/storage.ts:96 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/pdf_pages` | packages/metadata/src/storage.ts:29<br>packages/metadata/src/storage.ts:53<br>packages/metadata/src/storage.ts:76<br>packages/metadata/src/storage.ts:180<br>packages/metadata/src/storage.ts:182 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/tracking` | packages/metadata/src/storage.ts:36<br>packages/metadata/src/storage.ts:58<br>packages/metadata/src/storage.ts:81<br>packages/metadata/src/storage.ts:101 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:32<br>apps/server/src/table/tracking.ts:134<br>apps/server/src/table/tracking.ts:173 |  |
+| ✅ | `SkipLockedTables` | apps/server/src/database/structure.ts:186 |  |
 | ✅ | `UseDbSearch` | apps/server/src/database/search.ts:21 |  |
 
-## 06 server level — 13/17 (76.5%) covered, 13/17 implemented
+## 06 server level — 17/17 (100.0%) covered, 16/17 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:159<br>apps/server/src/import/service.ts:258<br>apps/server/src/routes/shell.ts:81<br>apps/server/src/server-admin/context.ts:60 |  |
-| ⬜ | `LoginCookieValidityDisableWarning` |  |  |
+| ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:193<br>apps/server/src/import/service.ts:258<br>apps/server/src/routes/shell.ts:81<br>apps/server/src/server-admin/context.ts:60 |  |
+| ➖ | `LoginCookieValidityDisableWarning` |  | n/a: HomeController only gates the warning that PHP's session.gc_maxlifetime is lower than LoginCookieValidity; no PHP session here |
 | ✅ | `NavigationDisplayServers` | apps/server/src/navigation/service.ts:63<br>apps/server/src/shell/home.ts:263<br>apps/web/src/features/navigation/NavigationPanel.tsx:401 |  |
-| ✅ | `Servers/*/controlpass` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:242<br>apps/server/src/preferences/validator.ts:243<br>apps/server/src/preferences/validator.ts:254<br>apps/server/src/shell/home.ts:67 |  |
-| ✅ | `Servers/*/ssl` | apps/server/src/setup/checks.ts:112<br>apps/server/src/db/pool-manager.ts:46 |  |
-| ✅ | `Servers/*/ssl_ca` | apps/server/src/db/pool-manager.ts:50 |  |
-| ⬜ | `Servers/*/ssl_ca_path` |  |  |
-| ✅ | `Servers/*/ssl_cert` | apps/server/src/db/pool-manager.ts:49 |  |
-| ✅ | `Servers/*/ssl_ciphers` | apps/server/src/db/pool-manager.ts:51 |  |
-| ✅ | `Servers/*/ssl_key` | apps/server/src/db/pool-manager.ts:48 |  |
-| ✅ | `Servers/*/ssl_verify` | apps/server/src/db/pool-manager.ts:47 |  |
-| ⬜ | `Servers/*/usergroups` |  |  |
-| ⬜ | `Servers/*/users` |  |  |
-| ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:264<br>apps/server/src/shell/password.ts:30 |  |
+| ✅ | `Servers/*/controlpass` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:242<br>apps/server/src/preferences/validator.ts:243<br>apps/server/src/preferences/validator.ts:254<br>apps/server/src/db/control.ts:47 |  |
+| ✅ | `Servers/*/ssl` | apps/server/src/setup/checks.ts:112<br>apps/server/src/db/control.ts:26<br>apps/server/src/db/pool-manager.ts:48 |  |
+| ✅ | `Servers/*/ssl_ca` | apps/server/src/db/control.ts:29<br>apps/server/src/db/pool-manager.ts:54 |  |
+| ✅ | `Servers/*/ssl_ca_path` | apps/server/src/db/control.ts:30<br>apps/server/src/db/pool-manager.ts:55 |  |
+| ✅ | `Servers/*/ssl_cert` | apps/server/src/db/control.ts:28<br>apps/server/src/db/pool-manager.ts:52 |  |
+| ✅ | `Servers/*/ssl_ciphers` | apps/server/src/db/control.ts:31<br>apps/server/src/db/pool-manager.ts:58 |  |
+| ✅ | `Servers/*/ssl_key` | apps/server/src/db/control.ts:27<br>apps/server/src/db/pool-manager.ts:51 |  |
+| ✅ | `Servers/*/ssl_verify` | apps/server/src/db/control.ts:32<br>apps/server/src/db/pool-manager.ts:49 |  |
+| ✅ | `Servers/*/usergroups` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:61<br>packages/metadata/src/storage.ts:84<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:194 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/users` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:60<br>packages/metadata/src/storage.ts:83<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:193 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:264<br>apps/server/src/shell/password.ts:31 |  |
 | ✅ | `ShowGitRevision` | apps/server/src/routes/meta.ts:18<br>apps/server/src/shell/home.ts:260 |  |
 | ✅ | `ShowServerInfo` | apps/web/src/features/shell/AboutPages.tsx:65<br>apps/server/src/shell/about.ts:112<br>apps/server/src/shell/home.ts:200 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:143<br>apps/web/src/features/shell/HomePage.tsx:239<br>apps/web/src/features/shell/HomePage.tsx:244<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
 
-## 07 export import — 11/138 (8.0%) covered, 11/138 implemented
+## 07 export import — 137/138 (99.3%) covered, 133/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -254,172 +254,172 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `BZipDump` | apps/server/src/setup/checks.ts:245<br>apps/server/src/setup/checks.ts:248<br>apps/server/src/setup/checks.ts:249<br>apps/server/src/import/page.ts:95<br>apps/server/src/import/page.ts:128 |  |
 | ✅ | `CompressOnFly` | apps/server/src/export/service.ts:116<br>packages/export/src/export.ts:261<br>packages/export/src/export.ts:324 |  |
 | ✅ | `ExecTimeLimit` | apps/server/src/export/page.ts:228 | X9 |
-| ⬜ | `Export/as_separate_files` |  |  |
-| ⬜ | `Export/asfile` |  |  |
-| ⬜ | `Export/charset` |  |  |
-| ⬜ | `Export/codegen_structure_or_data` |  |  |
-| ⬜ | `Export/compression` |  |  |
-| ⬜ | `Export/csv_columns` |  |  |
-| ⬜ | `Export/csv_enclosed` |  |  |
-| ⬜ | `Export/csv_escaped` |  |  |
-| ⬜ | `Export/csv_null` |  |  |
-| ⬜ | `Export/csv_removeCRLF` |  |  |
-| ⬜ | `Export/csv_separator` |  |  |
-| ⬜ | `Export/csv_structure_or_data` |  |  |
-| ⬜ | `Export/csv_terminated` |  |  |
-| ⬜ | `Export/excel_columns` |  |  |
-| ⬜ | `Export/excel_edition` |  |  |
-| ⬜ | `Export/excel_null` |  |  |
-| ⬜ | `Export/excel_removeCRLF` |  |  |
-| ⬜ | `Export/format` |  |  |
-| ⬜ | `Export/htmlword_columns` |  |  |
-| ⬜ | `Export/htmlword_null` |  |  |
-| ⬜ | `Export/htmlword_structure_or_data` |  |  |
-| ⬜ | `Export/json_pretty_print` |  |  |
-| ⬜ | `Export/json_unicode` |  |  |
-| ⬜ | `Export/latex_caption` |  |  |
-| ⬜ | `Export/latex_columns` |  |  |
-| ⬜ | `Export/latex_comments` |  |  |
-| ⬜ | `Export/latex_data_caption` |  |  |
-| ⬜ | `Export/latex_data_continued_caption` |  |  |
-| ⬜ | `Export/latex_data_label` |  |  |
-| ⬜ | `Export/latex_mime` |  |  |
-| ⬜ | `Export/latex_null` |  |  |
-| ⬜ | `Export/latex_relation` |  |  |
-| ⬜ | `Export/latex_structure_caption` |  |  |
-| ⬜ | `Export/latex_structure_continued_caption` |  |  |
-| ⬜ | `Export/latex_structure_label` |  |  |
-| ⬜ | `Export/latex_structure_or_data` |  |  |
-| ⬜ | `Export/lock_tables` |  |  |
-| ⬜ | `Export/mediawiki_caption` |  |  |
-| ⬜ | `Export/mediawiki_headers` |  |  |
-| ⬜ | `Export/mediawiki_structure_or_data` |  |  |
-| ⬜ | `Export/method` |  |  |
-| ⬜ | `Export/ods_columns` |  |  |
-| ⬜ | `Export/ods_null` |  |  |
-| ⬜ | `Export/odt_columns` |  |  |
-| ⬜ | `Export/odt_comments` |  |  |
-| ⬜ | `Export/odt_mime` |  |  |
-| ⬜ | `Export/odt_null` |  |  |
-| ⬜ | `Export/odt_relation` |  |  |
-| ⬜ | `Export/odt_structure_or_data` |  |  |
-| ⬜ | `Export/onserver` |  |  |
-| ⬜ | `Export/onserver_overwrite` |  |  |
-| ⬜ | `Export/pdf_report_title` |  |  |
-| ⬜ | `Export/pdf_structure_or_data` |  |  |
-| ⬜ | `Export/phparray_structure_or_data` |  |  |
-| ⬜ | `Export/quick_export_onserver` |  |  |
-| ⬜ | `Export/quick_export_onserver_overwrite` |  |  |
-| ⬜ | `Export/remember_file_template` |  |  |
+| ✅ | `Export/as_separate_files` | apps/server/src/export/page.ts:175<br>apps/server/src/export/page.ts:218 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/asfile` | apps/server/src/export/page.ts:208 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/charset` | packages/export/src/plugins/htmlword.ts:61<br>packages/export/src/plugins/sql.ts:551<br>packages/export/src/plugins/xml.ts:89<br>apps/server/src/export/page.ts:212 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/codegen_structure_or_data` | packages/export/src/plugins/codegen.ts:107<br>packages/export/src/plugins/codegen.ts:200<br>packages/export/src/plugins/codegen.ts:201 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/compression` | apps/server/src/export/page.ts:174 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_columns` | packages/export/src/plugins/csv.ts:45<br>packages/export/src/plugins/csv.ts:141 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_enclosed` | packages/export/src/plugins/csv.ts:40<br>packages/export/src/plugins/csv.ts:142 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_escaped` | packages/export/src/plugins/csv.ts:41<br>packages/export/src/plugins/csv.ts:143 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_null` | packages/export/src/plugins/csv.ts:43<br>packages/export/src/plugins/csv.ts:145 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_removeCRLF` | packages/export/src/plugins/csv.ts:44<br>packages/export/src/plugins/csv.ts:144 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_separator` | packages/export/src/plugins/csv.ts:39<br>packages/export/src/plugins/csv.ts:140 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_structure_or_data` | packages/export/src/plugins/csv.ts:46<br>packages/export/src/plugins/csv.ts:135<br>packages/export/src/plugins/csv.ts:136 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_terminated` | packages/export/src/plugins/csv.ts:42<br>packages/export/src/plugins/csv.ts:139 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_columns` | packages/export/src/plugins/csv.ts:180<br>packages/export/src/plugins/csv.ts:249 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_edition` | packages/export/src/plugins/csv.ts:183<br>packages/export/src/plugins/csv.ts:247 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_null` | packages/export/src/plugins/csv.ts:178<br>packages/export/src/plugins/csv.ts:251 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_removeCRLF` | packages/export/src/plugins/csv.ts:179<br>packages/export/src/plugins/csv.ts:250 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/format` | packages/export/src/plugins/codegen.ts:64<br>packages/export/src/plugins/codegen.ts:68<br>packages/export/src/plugins/codegen.ts:134<br>packages/export/src/plugins/codegen.ts:209<br>apps/server/src/export/page.ts:133 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/htmlword_columns` | packages/export/src/plugins/htmlword.ts:46<br>packages/export/src/plugins/htmlword.ts:232 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/htmlword_null` | packages/export/src/plugins/htmlword.ts:45<br>packages/export/src/plugins/htmlword.ts:236 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/htmlword_structure_or_data` | packages/export/src/plugins/htmlword.ts:42<br>packages/export/src/plugins/htmlword.ts:228<br>packages/export/src/plugins/htmlword.ts:229 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/json_pretty_print` | packages/export/src/plugins/json.ts:36<br>packages/export/src/plugins/json.ts:150 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/json_unicode` | packages/export/src/plugins/json.ts:37<br>packages/export/src/plugins/json.ts:151 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_caption` | packages/export/src/plugins/latex.ts:65<br>packages/export/src/plugins/latex.ts:268 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_columns` | packages/export/src/plugins/latex.ts:83<br>packages/export/src/plugins/latex.ts:269 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_comments` | packages/export/src/plugins/latex.ts:76<br>packages/export/src/plugins/latex.ts:272 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_data_caption` | packages/export/src/plugins/latex.ts:84<br>packages/export/src/plugins/latex.ts:273 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_data_continued_caption` | packages/export/src/plugins/latex.ts:85<br>packages/export/src/plugins/latex.ts:275<br>packages/export/src/plugins/latex.ts:276 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_data_label` | packages/export/src/plugins/latex.ts:86<br>packages/export/src/plugins/latex.ts:278 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_mime` | packages/export/src/plugins/latex.ts:78<br>packages/export/src/plugins/latex.ts:271 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_null` | packages/export/src/plugins/latex.ts:87<br>packages/export/src/plugins/latex.ts:279 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_relation` | packages/export/src/plugins/latex.ts:75<br>packages/export/src/plugins/latex.ts:270 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_caption` | packages/export/src/plugins/latex.ts:70<br>packages/export/src/plugins/latex.ts:281<br>packages/export/src/plugins/latex.ts:282 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_continued_caption` | packages/export/src/plugins/latex.ts:71<br>packages/export/src/plugins/latex.ts:285<br>packages/export/src/plugins/latex.ts:286 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_label` | packages/export/src/plugins/latex.ts:72<br>packages/export/src/plugins/latex.ts:288 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_or_data` | packages/export/src/plugins/latex.ts:66<br>packages/export/src/plugins/latex.ts:264<br>packages/export/src/plugins/latex.ts:265 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/lock_tables` | apps/server/src/export/page.ts:207 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/mediawiki_caption` | packages/export/src/plugins/text.ts:58<br>packages/export/src/plugins/text.ts:162 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/mediawiki_headers` | packages/export/src/plugins/text.ts:59<br>packages/export/src/plugins/text.ts:163 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/mediawiki_structure_or_data` | packages/export/src/plugins/text.ts:53<br>packages/export/src/plugins/text.ts:158<br>packages/export/src/plugins/text.ts:159 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/method` | apps/server/src/export/page.ts:195<br>apps/server/src/export/page.ts:196 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/ods_columns` | packages/export/src/plugins/opendocument.ts:123<br>packages/export/src/plugins/opendocument.ts:195 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/ods_null` | packages/export/src/plugins/opendocument.ts:122<br>packages/export/src/plugins/opendocument.ts:196 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_columns` | packages/export/src/plugins/opendocument.ts:235<br>packages/export/src/plugins/opendocument.ts:442 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_comments` | packages/export/src/plugins/opendocument.ts:228<br>packages/export/src/plugins/opendocument.ts:445 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_mime` | packages/export/src/plugins/opendocument.ts:230<br>packages/export/src/plugins/opendocument.ts:444 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_null` | packages/export/src/plugins/opendocument.ts:236<br>packages/export/src/plugins/opendocument.ts:446 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_relation` | packages/export/src/plugins/opendocument.ts:227<br>packages/export/src/plugins/opendocument.ts:443 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_structure_or_data` | packages/export/src/plugins/opendocument.ts:222<br>packages/export/src/plugins/opendocument.ts:438<br>packages/export/src/plugins/opendocument.ts:439 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/onserver` | apps/server/src/export/page.ts:203 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/onserver_overwrite` | apps/server/src/export/page.ts:204 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `Export/pdf_report_title` |  | n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered) |
+| ➖ | `Export/pdf_structure_or_data` |  | n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered) |
+| ✅ | `Export/phparray_structure_or_data` | packages/export/src/plugins/simple.ts:105<br>packages/export/src/plugins/simple.ts:177<br>packages/export/src/plugins/simple.ts:178 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/quick_export_onserver` | apps/server/src/export/page.ts:205 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/quick_export_onserver_overwrite` | apps/server/src/export/page.ts:206 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/remember_file_template` | apps/server/src/export/page.ts:210 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/remove_definer_from_definitions` | apps/server/src/table/table-def.ts:48 |  |
-| ⬜ | `Export/sql_backquotes` |  |  |
-| ⬜ | `Export/sql_compatibility` |  |  |
-| ⬜ | `Export/sql_create_database` |  |  |
-| ⬜ | `Export/sql_create_table` |  |  |
-| ⬜ | `Export/sql_create_trigger` |  |  |
-| ⬜ | `Export/sql_create_view` |  |  |
-| ⬜ | `Export/sql_dates` |  |  |
-| ⬜ | `Export/sql_delayed` |  |  |
-| ⬜ | `Export/sql_disable_fk` |  |  |
-| ⬜ | `Export/sql_drop_database` |  |  |
-| ⬜ | `Export/sql_drop_table` |  |  |
-| ⬜ | `Export/sql_header_comment` |  |  |
-| ⬜ | `Export/sql_hex_for_binary` |  |  |
-| ⬜ | `Export/sql_if_not_exists` |  |  |
-| ⬜ | `Export/sql_ignore` |  |  |
-| ⬜ | `Export/sql_insert_syntax` |  |  |
-| ⬜ | `Export/sql_metadata` |  |  |
-| ⬜ | `Export/sql_mime` |  |  |
-| ⬜ | `Export/sql_or_replace_view` |  |  |
-| ⬜ | `Export/sql_procedure_function` |  |  |
-| ⬜ | `Export/sql_relation` |  |  |
-| ⬜ | `Export/sql_structure_or_data` |  |  |
-| ⬜ | `Export/sql_truncate` |  |  |
-| ⬜ | `Export/sql_type` |  |  |
-| ⬜ | `Export/sql_use_transaction` |  |  |
-| ⬜ | `Export/sql_utc_time` |  |  |
-| ⬜ | `Export/sql_view_current_user` |  |  |
-| ⬜ | `Export/sql_views_as_tables` |  |  |
-| ⬜ | `Export/texytext_columns` |  |  |
-| ⬜ | `Export/texytext_null` |  |  |
-| ⬜ | `Export/texytext_structure_or_data` |  |  |
-| ⬜ | `Export/toon_indent` |  |  |
-| ⬜ | `Export/toon_separator` |  |  |
-| ⬜ | `Export/toon_structure_or_data` |  |  |
-| ⬜ | `Export/xml_export_contents` |  |  |
-| ⬜ | `Export/xml_export_events` |  |  |
-| ⬜ | `Export/xml_export_functions` |  |  |
-| ⬜ | `Export/xml_export_procedures` |  |  |
-| ⬜ | `Export/xml_export_tables` |  |  |
-| ⬜ | `Export/xml_export_triggers` |  |  |
-| ⬜ | `Export/xml_export_views` |  |  |
-| ⬜ | `Export/xml_structure_or_data` |  |  |
+| ✅ | `Export/sql_backquotes` | packages/export/src/plugins/sql.ts:285<br>packages/export/src/plugins/sql.ts:1558 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_compatibility` | packages/export/src/plugins/sql.ts:192<br>packages/export/src/plugins/sql.ts:1566 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_database` | packages/export/src/plugins/sql.ts:229<br>packages/export/src/plugins/sql.ts:1572 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_table` | packages/export/src/plugins/sql.ts:246<br>packages/export/src/plugins/sql.ts:1575 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_trigger` | packages/export/src/plugins/sql.ts:279<br>packages/export/src/plugins/sql.ts:1579 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_view` | packages/export/src/plugins/sql.ts:262<br>packages/export/src/plugins/sql.ts:1578 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_dates` | packages/export/src/plugins/sql.ts:155<br>packages/export/src/plugins/sql.ts:1561 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_delayed` | packages/export/src/plugins/sql.ts:295<br>packages/export/src/plugins/sql.ts:1586 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_disable_fk` | packages/export/src/plugins/sql.ts:181<br>packages/export/src/plugins/sql.ts:1565 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_drop_database` | packages/export/src/plugins/sql.ts:221<br>packages/export/src/plugins/sql.ts:1593 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_drop_table` | packages/export/src/plugins/sql.ts:241<br>packages/export/src/plugins/sql.ts:1573 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_header_comment` | packages/export/src/plugins/sql.ts:153<br>packages/export/src/plugins/sql.ts:1563 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_hex_for_binary` | packages/export/src/plugins/sql.ts:333<br>packages/export/src/plugins/sql.ts:1591 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_if_not_exists` | packages/export/src/plugins/sql.ts:251<br>packages/export/src/plugins/sql.ts:1582 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_ignore` | packages/export/src/plugins/sql.ts:296<br>packages/export/src/plugins/sql.ts:1587 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_insert_syntax` | packages/export/src/plugins/sql.ts:304<br>packages/export/src/plugins/sql.ts:1588 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_metadata` | packages/export/src/plugins/sql.ts:186<br>packages/export/src/plugins/sql.ts:1595 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_mime` | packages/export/src/plugins/sql.ts:163<br>packages/export/src/plugins/sql.ts:1560 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_or_replace_view` | packages/export/src/plugins/sql.ts:268<br>packages/export/src/plugins/sql.ts:1583 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_procedure_function` | packages/export/src/plugins/sql.ts:274<br>packages/export/src/plugins/sql.ts:1574 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_relation` | packages/export/src/plugins/sql.ts:160<br>packages/export/src/plugins/sql.ts:1559 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_structure_or_data` | packages/export/src/plugins/sql.ts:203<br>packages/export/src/plugins/sql.ts:1554<br>packages/export/src/plugins/sql.ts:1555 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_truncate` | packages/export/src/plugins/sql.ts:293<br>packages/export/src/plugins/sql.ts:1585 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_type` | packages/export/src/plugins/sql.ts:298<br>packages/export/src/plugins/sql.ts:1576 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_use_transaction` | packages/export/src/plugins/sql.ts:177<br>packages/export/src/plugins/sql.ts:1564 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_utc_time` | packages/export/src/plugins/sql.ts:337<br>packages/export/src/plugins/sql.ts:1592 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_view_current_user` | packages/export/src/plugins/sql.ts:267<br>packages/export/src/plugins/sql.ts:1580 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_views_as_tables` | packages/export/src/plugins/sql.ts:185<br>packages/export/src/plugins/sql.ts:1594 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/texytext_columns` | packages/export/src/plugins/text.ts:195<br>packages/export/src/plugins/text.ts:375 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/texytext_null` | packages/export/src/plugins/text.ts:196<br>packages/export/src/plugins/text.ts:379 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/texytext_structure_or_data` | packages/export/src/plugins/text.ts:192<br>packages/export/src/plugins/text.ts:371<br>packages/export/src/plugins/text.ts:372 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/toon_indent` | packages/export/src/plugins/simple.ts:207<br>packages/export/src/plugins/simple.ts:261<br>packages/export/src/plugins/simple.ts:264<br>packages/export/src/plugins/simple.ts:265 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/toon_separator` | packages/export/src/plugins/simple.ts:206<br>packages/export/src/plugins/simple.ts:260 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/toon_structure_or_data` | packages/export/src/plugins/simple.ts:208<br>packages/export/src/plugins/simple.ts:256<br>packages/export/src/plugins/simple.ts:257 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_contents` | packages/export/src/plugins/xml.ts:46<br>packages/export/src/plugins/xml.ts:218 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_events` | packages/export/src/plugins/xml.ts:39<br>packages/export/src/plugins/xml.ts:219 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_functions` | packages/export/src/plugins/xml.ts:40<br>packages/export/src/plugins/xml.ts:220 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_procedures` | packages/export/src/plugins/xml.ts:41<br>packages/export/src/plugins/xml.ts:221 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_tables` | packages/export/src/plugins/xml.ts:42<br>packages/export/src/plugins/xml.ts:222 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_triggers` | packages/export/src/plugins/xml.ts:43<br>packages/export/src/plugins/xml.ts:223 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_views` | packages/export/src/plugins/xml.ts:44<br>packages/export/src/plugins/xml.ts:224 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_structure_or_data` | packages/export/src/plugins/xml.ts:37<br>packages/export/src/plugins/xml.ts:214<br>packages/export/src/plugins/xml.ts:215 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `GZipDump` | apps/server/src/export/page.ts:215<br>apps/server/src/export/service.ts:115<br>apps/server/src/import/page.ts:94<br>apps/server/src/import/page.ts:127<br>apps/server/src/import/service.ts:125 |  |
 | 🗓️ | `IconvExtraParams` |  | M4 (X5) |
-| ⬜ | `Import/allow_interrupt` |  |  |
-| ⬜ | `Import/charset` |  |  |
-| ⬜ | `Import/csv_col_names` |  |  |
-| ⬜ | `Import/csv_columns` |  |  |
-| ⬜ | `Import/csv_empty_as_null` |  |  |
-| ⬜ | `Import/csv_ignore` |  |  |
-| ⬜ | `Import/csv_new_line` |  |  |
-| ⬜ | `Import/csv_replace` |  |  |
-| ⬜ | `Import/csv_terminated` |  |  |
-| ⬜ | `Import/format` |  |  |
-| ⬜ | `Import/ldi_columns` |  |  |
-| ⬜ | `Import/ldi_ignore` |  |  |
-| ⬜ | `Import/ldi_local_option` |  |  |
-| ⬜ | `Import/ldi_new_line` |  |  |
-| ⬜ | `Import/ldi_replace` |  |  |
-| ⬜ | `Import/ods_col_names` |  |  |
-| ⬜ | `Import/ods_empty_rows` |  |  |
-| ⬜ | `Import/ods_recognize_currency` |  |  |
-| ⬜ | `Import/ods_recognize_percentages` |  |  |
-| ⬜ | `Import/skip_queries` |  |  |
-| ⬜ | `Import/sql_compatibility` |  |  |
-| ⬜ | `Import/sql_no_auto_value_on_zero` |  |  |
-| ⬜ | `PDFDefaultPageSize` |  |  |
+| ✅ | `Import/allow_interrupt` | apps/server/src/import/page.ts:88<br>apps/server/src/import/page.ts:90 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/charset` | packages/import/src/plugins/xml.ts:49<br>apps/server/src/import/page.ts:138 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_col_names` | packages/import/src/plugins/csv.ts:72<br>packages/import/src/plugins/csv.ts:108 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_columns` | packages/import/src/plugins/csv.ts:86<br>packages/import/src/plugins/csv.ts:105 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_empty_as_null` | packages/import/src/plugins/csv.ts:92<br>packages/import/src/plugins/csv.ts:109 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_ignore` | packages/import/src/plugins/csv.ts:91<br>packages/import/src/plugins/csv.ts:100 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_new_line` | packages/import/src/plugins/csv.ts:46<br>packages/import/src/plugins/csv.ts:104 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_replace` | packages/import/src/plugins/csv.ts:40<br>packages/import/src/plugins/csv.ts:99 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_terminated` | packages/import/src/plugins/csv.ts:43<br>packages/import/src/plugins/csv.ts:101 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/format` | apps/server/src/import/page.ts:81 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_columns` | packages/import/src/plugins/csv.ts:443<br>packages/import/src/plugins/csv.ts:471 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_ignore` | packages/import/src/plugins/csv.ts:444<br>packages/import/src/plugins/csv.ts:465 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_local_option` | packages/import/src/plugins/csv.ts:445<br>packages/import/src/plugins/csv.ts:462<br>apps/server/src/import/page.ts:64<br>apps/server/src/import/page.ts:67 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_new_line` | packages/import/src/plugins/csv.ts:46<br>packages/import/src/plugins/csv.ts:470 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_replace` | packages/import/src/plugins/csv.ts:40<br>packages/import/src/plugins/csv.ts:464 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_col_names` | packages/import/src/plugins/ods.ts:44<br>packages/import/src/plugins/ods.ts:66 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_empty_rows` | packages/import/src/plugins/ods.ts:49<br>packages/import/src/plugins/ods.ts:65 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_recognize_currency` | packages/import/src/plugins/ods.ts:54<br>packages/import/src/plugins/ods.ts:64 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_recognize_percentages` | packages/import/src/plugins/ods.ts:51<br>packages/import/src/plugins/ods.ts:63 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/skip_queries` | apps/server/src/import/page.ts:83<br>apps/server/src/import/page.ts:85 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/sql_compatibility` | packages/import/src/plugins/sql.ts:28<br>packages/import/src/plugins/sql.ts:47 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/sql_no_auto_value_on_zero` | packages/import/src/plugins/sql.ts:34<br>packages/import/src/plugins/sql.ts:48 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `PDFDefaultPageSize` |  | n/a: read only by GisVisualization::asPdfFile, offered when TCPDF is installed, which the reference build does not ship either (no PDF download is offered) |
 | ✅ | `PDFPageSizes` | apps/server/src/database/schema-export.ts:28 |  |
 | ✅ | `RecodingEngine` | apps/server/src/export/page.ts:211<br>apps/server/src/export/service.ts:118<br>apps/server/src/import/page.ts:109<br>apps/server/src/import/service.ts:209<br>apps/server/src/import/service.ts:211 | X5 |
-| ✅ | `SaveDir` | apps/server/src/setup/checks.ts:238<br>apps/server/src/setup/checks.ts:239<br>apps/server/src/setup/service.ts:68<br>apps/server/src/export/page.ts:202<br>apps/server/src/export/service.ts:117 |  |
-| ⬜ | `Schema/format` |  |  |
-| ⬜ | `Schema/pdf_table_order` |  |  |
-| ⬜ | `Servers/*/export_templates` |  |  |
-| ⬜ | `Servers/*/savedsearches` |  |  |
-| ✅ | `UploadDir` | apps/server/src/setup/service.ts:67<br>apps/server/src/import/page.ts:103<br>apps/server/src/import/page.ts:105<br>apps/server/src/import/page.ts:133<br>apps/server/src/import/service.ts:101 |  |
+| ✅ | `SaveDir` | apps/server/src/setup/checks.ts:238<br>apps/server/src/setup/checks.ts:239<br>apps/server/src/setup/service.ts:73<br>apps/server/src/export/page.ts:202<br>apps/server/src/export/service.ts:117 |  |
+| ✅ | `Schema/format` | apps/server/src/database/schema-export.ts:53<br>apps/server/src/database/schema-export.ts:54 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ➖ | `Schema/pdf_table_order` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ✅ | `Servers/*/export_templates` | packages/metadata/src/storage.ts:43<br>packages/metadata/src/storage.ts:66<br>packages/metadata/src/storage.ts:89<br>packages/metadata/src/storage.ts:94 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/savedsearches` | packages/metadata/src/storage.ts:40<br>packages/metadata/src/storage.ts:63<br>packages/metadata/src/storage.ts:86<br>packages/metadata/src/storage.ts:97 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `UploadDir` | apps/server/src/setup/service.ts:72<br>apps/server/src/import/page.ts:103<br>apps/server/src/import/page.ts:105<br>apps/server/src/import/page.ts:133<br>apps/server/src/import/service.ts:101 |  |
 | ✅ | `ZipDump` | apps/server/src/export/page.ts:214<br>apps/server/src/export/service.ts:114<br>apps/server/src/import/page.ts:96<br>apps/server/src/import/page.ts:129<br>apps/server/src/import/service.ts:125 |  |
 
-## 08 settings preferences pmadb — 33/62 (53.2%) covered, 32/62 implemented
+## 08 settings preferences pmadb — 62/62 (100.0%) covered, 60/62 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
 | ✅ | `CharTextareaRows` | apps/server/src/insert-edit/form.ts:579<br>apps/server/src/insert-edit/form.ts:699 |  |
-| ⬜ | `Console/AlwaysExpand` |  |  |
-| ⬜ | `Console/CurrentQuery` |  |  |
-| ⬜ | `Console/DarkTheme` |  |  |
-| ⬜ | `Console/GroupQueries` |  |  |
-| ⬜ | `Console/Height` |  |  |
-| ⬜ | `Console/Order` |  |  |
-| ⬜ | `Console/OrderBy` |  |  |
-| ✅ | `DBG/simple2fa` | apps/server/src/preferences/service.ts:156 |  |
-| ⬜ | `DefaultTransformations/TextImageLink` |  |  |
-| ⬜ | `Export/codegen_format` |  |  |
-| ⬜ | `Export/file_template_database` |  |  |
-| ⬜ | `Export/file_template_server` |  |  |
-| ⬜ | `Export/file_template_table` |  |  |
-| ⬜ | `Export/sql_include_comments` |  |  |
-| ⬜ | `Export/sql_max_query_size` |  |  |
+| ✅ | `Console/AlwaysExpand` | apps/server/src/routes/console.ts:17<br>apps/web/src/features/console/Console.tsx:195<br>apps/web/src/features/console/Console.tsx:197<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:707 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/CurrentQuery` | apps/server/src/routes/console.ts:18<br>apps/web/src/features/console/Console.tsx:214<br>apps/web/src/features/console/Console.tsx:217<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:709 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/DarkTheme` | apps/server/src/routes/console.ts:20<br>apps/web/src/features/console/Console.tsx:471<br>apps/web/src/features/console/Console.tsx:521<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:714 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/GroupQueries` | apps/server/src/routes/console.ts:21<br>apps/web/src/features/console/Console.tsx:962<br>apps/web/src/features/console/Console.tsx:972<br>apps/web/src/features/console/Console.tsx:994<br>apps/web/src/features/console/Console.tsx:1017 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/Height` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:43<br>apps/web/src/features/console/Console.tsx:104<br>apps/web/src/features/console/Console.tsx:380 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/Order` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:51<br>apps/web/src/features/console/Console.tsx:977<br>apps/web/src/features/console/Console.tsx:987<br>apps/web/src/features/console/Console.tsx:990 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `Console/OrderBy` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:50<br>apps/web/src/features/console/Console.tsx:972<br>apps/web/src/features/console/Console.tsx:974<br>apps/web/src/features/console/Console.tsx:997 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
+| ✅ | `DBG/simple2fa` | apps/server/src/preferences/service.ts:164 |  |
+| ✅ | `DefaultTransformations/TextImageLink` | packages/mysql-types/src/transformations.ts:679 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ✅ | `Export/codegen_format` | packages/export/src/plugins/codegen.ts:108<br>packages/export/src/plugins/codegen.ts:204<br>packages/export/src/plugins/codegen.ts:208 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/file_template_database` | apps/server/src/export/page.ts:169 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/file_template_server` | apps/server/src/export/page.ts:172 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/file_template_table` | apps/server/src/export/page.ts:171 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_include_comments` | packages/export/src/plugins/sql.ts:169<br>packages/export/src/plugins/sql.ts:175<br>packages/export/src/plugins/sql.ts:1562 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_max_query_size` | packages/export/src/plugins/sql.ts:331<br>packages/export/src/plugins/sql.ts:1590 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `FirstDayOfCalendar` | apps/server/src/insert-edit/form.ts:458 |  |
 | ✅ | `ForeignKeyMaxLimit` | apps/server/src/browse/actions.ts:193<br>apps/server/src/browse/actions.ts:197<br>apps/server/src/browse/actions.ts:233<br>apps/server/src/insert-edit/context.ts:143<br>apps/server/src/insert-edit/form.ts:186 |  |
-| ⬜ | `Import/csv_enclosed` |  |  |
-| ⬜ | `Import/csv_escaped` |  |  |
-| ⬜ | `Import/ldi_enclosed` |  |  |
-| ⬜ | `Import/ldi_escaped` |  |  |
-| ⬜ | `Import/ldi_terminated` |  |  |
-| ⬜ | `Import/sql_read_as_multibytes` |  |  |
+| ✅ | `Import/csv_enclosed` | packages/import/src/plugins/csv.ts:44<br>packages/import/src/plugins/csv.ts:102 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_escaped` | packages/import/src/plugins/csv.ts:45<br>packages/import/src/plugins/csv.ts:103 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_enclosed` | packages/import/src/plugins/csv.ts:44<br>packages/import/src/plugins/csv.ts:468 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_escaped` | packages/import/src/plugins/csv.ts:45<br>packages/import/src/plugins/csv.ts:469 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_terminated` | packages/import/src/plugins/csv.ts:43<br>packages/import/src/plugins/csv.ts:467 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `Import/sql_read_as_multibytes` |  | n/a: phpMyAdmin reads it nowhere but the Import settings form (Q12) |
 | ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:243 |  |
 | ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:90 |  |
-| ✅ | `MaxTableList` | apps/server/src/database/structure.ts:92<br>apps/server/src/database/structure.ts:168<br>apps/server/src/database/structure.ts:378 |  |
+| ✅ | `MaxTableList` | apps/server/src/database/structure.ts:93<br>apps/server/src/database/structure.ts:220<br>apps/server/src/database/structure.ts:430 |  |
 | ➖ | `MemoryLimit` |  | n/a: PHP memory_limit; Node has no per-request memory limit (exports and imports stream, X10/X9) |
 | ✅ | `MinSizeForInputField` | apps/server/src/insert-edit/form.ts:685 |  |
 | ✅ | `NavigationTreeShowEvents` | apps/server/src/navigation/tree.ts:298 |  |
@@ -428,79 +428,79 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NavigationTreeShowTables` | apps/server/src/navigation/tree.ts:294 |  |
 | ✅ | `NavigationTreeShowViews` | apps/server/src/navigation/tree.ts:295 |  |
 | ✅ | `NavigationTreeTableLevel` | apps/server/src/navigation/nodes.ts:583 |  |
-| ✅ | `QueryHistoryMax` | apps/server/src/metadata/service.ts:291<br>packages/metadata/src/history.ts:38<br>packages/metadata/src/history.ts:40 |  |
+| ✅ | `QueryHistoryMax` | apps/server/src/metadata/service.ts:288<br>packages/metadata/src/history.ts:38<br>packages/metadata/src/history.ts:40 |  |
 | ✅ | `Servers/*/column_info` | packages/metadata/src/storage.ts:163<br>packages/metadata/src/storage.ts:169 |  |
-| ⬜ | `Servers/*/designer_settings` |  |  |
-| ⬜ | `Servers/*/favorite` |  |  |
+| ✅ | `Servers/*/designer_settings` | packages/metadata/src/storage.ts:42<br>packages/metadata/src/storage.ts:65<br>packages/metadata/src/storage.ts:88<br>packages/metadata/src/storage.ts:95 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/favorite` | packages/metadata/src/storage.ts:34<br>packages/metadata/src/storage.ts:56<br>packages/metadata/src/storage.ts:79<br>packages/metadata/src/storage.ts:103 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/hide_db` | apps/server/src/preferences/config-file.ts:17<br>apps/web/src/features/setup/SetupForms.tsx:180<br>apps/server/src/navigation/nodes.ts:256<br>apps/server/src/navigation/nodes.ts:285<br>apps/server/src/navigation/nodes.ts:286 |  |
-| ⬜ | `Servers/*/history` |  |  |
-| ⬜ | `Servers/*/navigationhiding` |  |  |
+| ✅ | `Servers/*/history` | packages/metadata/src/storage.ts:32<br>packages/metadata/src/storage.ts:54<br>packages/metadata/src/storage.ts:77<br>packages/metadata/src/storage.ts:105 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/navigationhiding` | packages/metadata/src/storage.ts:39<br>packages/metadata/src/storage.ts:62<br>packages/metadata/src/storage.ts:85<br>packages/metadata/src/storage.ts:98 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/only_db` | apps/server/src/preferences/config-file.ts:18<br>apps/server/src/navigation/nodes.ts:262<br>apps/server/src/server-admin/databases.ts:58 |  |
-| ✅ | `Servers/*/pmadb` | apps/server/src/preferences/validator.ts:232<br>apps/server/src/database/operations.ts:53<br>apps/server/src/routes/metadata.ts:127<br>apps/server/src/server-admin/databases.ts:220<br>apps/server/src/server-admin/databases.ts:364 |  |
-| ✅ | `Servers/*/port` | apps/server/src/preferences/validator.ts:216<br>apps/server/src/preferences/validator.ts:251<br>apps/server/src/setup/service.ts:71<br>apps/server/src/db/pool-manager.ts:43<br>apps/server/src/export/service.ts:122 |  |
-| ⬜ | `Servers/*/recent` |  |  |
-| ⬜ | `Servers/*/relation` |  |  |
-| ⬜ | `Servers/*/table_coords` |  |  |
-| ⬜ | `Servers/*/table_info` |  |  |
-| ⬜ | `Servers/*/userconfig` |  |  |
-| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:374<br>apps/web/src/features/table/structure/StructurePage.tsx:170<br>apps/web/src/features/table/structure/StructurePage.tsx:239 |  |
-| ✅ | `ShowDbStructureCharset` | apps/server/src/database/structure.ts:149 |  |
-| ✅ | `ShowDbStructureComment` | apps/server/src/database/structure.ts:150 |  |
-| ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:151<br>apps/server/src/database/structure.ts:310 |  |
-| ✅ | `ShowDbStructureLastCheck` | apps/server/src/database/structure.ts:153<br>apps/server/src/database/structure.ts:316 |  |
-| ✅ | `ShowDbStructureLastUpdate` | apps/server/src/database/structure.ts:152<br>apps/server/src/database/structure.ts:313 |  |
+| ✅ | `Servers/*/pmadb` | apps/server/src/preferences/validator.ts:232<br>apps/server/src/database/operations.ts:53<br>apps/server/src/routes/metadata.ts:128<br>apps/server/src/server-admin/databases.ts:220<br>apps/server/src/server-admin/databases.ts:364 |  |
+| ✅ | `Servers/*/port` | apps/server/src/preferences/validator.ts:216<br>apps/server/src/preferences/validator.ts:251<br>apps/server/src/setup/service.ts:76<br>apps/server/src/db/control.ts:23<br>apps/server/src/db/pool-manager.ts:45 |  |
+| ✅ | `Servers/*/recent` | packages/metadata/src/storage.ts:33<br>packages/metadata/src/storage.ts:55<br>packages/metadata/src/storage.ts:78<br>packages/metadata/src/storage.ts:104 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/relation` | packages/metadata/src/storage.ts:26<br>packages/metadata/src/storage.ts:27<br>packages/metadata/src/storage.ts:49<br>packages/metadata/src/storage.ts:72<br>packages/metadata/src/storage.ts:106 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/table_coords` | packages/metadata/src/storage.ts:29<br>packages/metadata/src/storage.ts:51<br>packages/metadata/src/storage.ts:74<br>packages/metadata/src/storage.ts:180<br>packages/metadata/src/storage.ts:181 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/table_info` | packages/metadata/src/storage.ts:27<br>packages/metadata/src/storage.ts:50<br>packages/metadata/src/storage.ts:73<br>packages/metadata/src/storage.ts:177<br>packages/metadata/src/storage.ts:178 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `Servers/*/userconfig` | packages/metadata/src/storage.ts:37<br>packages/metadata/src/storage.ts:59<br>packages/metadata/src/storage.ts:82<br>packages/metadata/src/storage.ts:100 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:368<br>apps/web/src/features/table/structure/StructurePage.tsx:163<br>apps/web/src/features/table/structure/StructurePage.tsx:225 |  |
+| ✅ | `ShowDbStructureCharset` | apps/server/src/database/structure.ts:201 |  |
+| ✅ | `ShowDbStructureComment` | apps/server/src/database/structure.ts:202 |  |
+| ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:203<br>apps/server/src/database/structure.ts:362 |  |
+| ✅ | `ShowDbStructureLastCheck` | apps/server/src/database/structure.ts:205<br>apps/server/src/database/structure.ts:368 |  |
+| ✅ | `ShowDbStructureLastUpdate` | apps/server/src/database/structure.ts:204<br>apps/server/src/database/structure.ts:365 |  |
 | ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:397 |  |
 | ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:396<br>apps/web/src/features/sql/SqlPage.tsx:525 |  |
-| ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:590<br>packages/metadata/src/userprefs.ts:147<br>apps/server/src/main.ts:88<br>apps/server/src/preferences/service.ts:323<br>apps/server/src/routes/shell.ts:147 | X16 |
-| ✅ | `TrustedProxies` | apps/server/src/preferences/form-display.ts:297<br>apps/web/src/features/setup/SetupForms.tsx:180<br>apps/server/src/auth/config.ts:25<br>apps/server/src/auth/http.ts:69<br>apps/server/src/auth/signon.ts:163 |  |
-| ✅ | `UserprefsDisallow` | apps/server/src/preferences/form-display.ts:222<br>apps/server/src/preferences/form-display.ts:309<br>apps/server/src/preferences/form-display.ts:459<br>apps/server/src/metadata/service.ts:351<br>apps/server/src/preferences/service.ts:99 |  |
-| ✅ | `ZeroConf` | apps/server/src/routes/metadata.ts:128<br>apps/server/src/shell/home.ts:257 |  |
+| ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:592<br>packages/metadata/src/userprefs.ts:154<br>apps/server/src/main.ts:88<br>apps/server/src/preferences/service.ts:331<br>apps/server/src/routes/shell.ts:147 | X16 |
+| ✅ | `TrustedProxies` | apps/server/src/preferences/form-display.ts:297<br>apps/web/src/features/setup/SetupForms.tsx:180<br>apps/server/src/app.ts:145<br>apps/server/src/auth/config.ts:26<br>apps/server/src/auth/http.ts:70 |  |
+| ✅ | `UserprefsDisallow` | apps/server/src/preferences/form-display.ts:222<br>apps/server/src/preferences/form-display.ts:309<br>apps/server/src/preferences/form-display.ts:459<br>apps/server/src/metadata/service.ts:348<br>apps/server/src/preferences/service.ts:99 |  |
+| ✅ | `ZeroConf` | apps/server/src/routes/metadata.ts:129<br>apps/server/src/shell/home.ts:257 |  |
 
-## 09 sql editor query pipeline — 6/11 (54.5%) covered, 6/11 implemented
+## 09 sql editor query pipeline — 11/11 (100.0%) covered, 11/11 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DBG/sql` | apps/server/src/routes/browse.ts:39<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:316<br>apps/server/src/routes/query.ts:114 |  |
-| ⬜ | `DBG/sqllog` |  |  |
+| ✅ | `DBG/sql` | apps/server/src/http/sql-log.ts:31<br>apps/server/src/routes/browse.ts:40<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:318 |  |
+| ✅ | `DBG/sqllog` | apps/server/src/http/sql-log.ts:31 |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:92<br>apps/server/src/routes/sql.ts:191 |  |
 | ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:147<br>apps/server/src/insert-edit/save.ts:253<br>apps/server/src/query/pipeline.ts:205<br>apps/server/src/query/pipeline.ts:512 |  |
 | ✅ | `LintEnable` | apps/server/src/routes/sql.ts:190<br>apps/web/src/features/sql/SqlPage.tsx:139 |  |
-| ✅ | `MaxCharactersInDisplayedSQL` | apps/server/src/browse/actions.ts:84<br>apps/server/src/metadata/service.ts:292<br>apps/server/src/query/message.ts:47<br>apps/server/src/query/message.ts:48<br>apps/server/src/query/message.ts:88 |  |
+| ✅ | `MaxCharactersInDisplayedSQL` | apps/server/src/browse/actions.ts:84<br>apps/server/src/metadata/service.ts:289<br>apps/server/src/query/message.ts:47<br>apps/server/src/query/message.ts:48<br>apps/server/src/query/message.ts:88 |  |
 | ✅ | `RetainQueryBox` | apps/server/src/routes/sql.ts:188<br>apps/web/src/features/sql/SqlPage.tsx:100 |  |
-| ⬜ | `Servers/*/bookmarktable` |  |  |
-| ⬜ | `SQLQuery/Explain` |  |  |
-| ⬜ | `SQLQuery/Refresh` |  |  |
-| ⬜ | `SQLQuery/ShowAsPHP` |  |  |
+| ✅ | `Servers/*/bookmarktable` | packages/metadata/src/storage.ts:28<br>packages/metadata/src/storage.ts:71 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
+| ✅ | `SQLQuery/Explain` | apps/server/src/query/message.ts:92 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
+| ✅ | `SQLQuery/Refresh` | apps/server/src/query/message.ts:113 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
+| ✅ | `SQLQuery/ShowAsPHP` | apps/server/src/query/message.ts:110 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
 
-## other — 3/28 (10.7%) covered, 2/28 implemented
+## other — 28/28 (100.0%) covered, 26/28 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
 | ✅ | `AllowThirdPartyFraming` | apps/server/src/http/headers.ts:14<br>apps/server/src/http/headers.ts:16<br>apps/server/src/http/headers.ts:34<br>apps/server/src/http/headers.ts:35 |  |
-| ⬜ | `DefaultTransformations/Bool2Text` |  |  |
-| ⬜ | `DefaultTransformations/DateFormat` |  |  |
-| ⬜ | `DefaultTransformations/PreApPend` |  |  |
-| ⬜ | `DefaultTransformations/Substring` |  |  |
-| ⬜ | `environment` |  |  |
-| ⬜ | `Export/excel_structure_or_data` |  |  |
-| ⬜ | `Export/json_structure_or_data` |  |  |
-| ⬜ | `Export/ods_structure_or_data` |  |  |
-| ⬜ | `Export/xml_export_struc` |  |  |
-| ⬜ | `Export/yaml_structure_or_data` |  |  |
-| ⬜ | `GD2Available` |  |  |
-| ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:236<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:240<br>apps/server/src/table/search.ts:207 |  |
-| ⬜ | `MysqlMinVersion/human` |  |  |
+| ✅ | `DefaultTransformations/Bool2Text` | packages/mysql-types/src/transformations.ts:98<br>packages/mysql-types/src/transformations.ts:667 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ✅ | `DefaultTransformations/DateFormat` | packages/mysql-types/src/transformations.ts:581 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ✅ | `DefaultTransformations/PreApPend` | packages/mysql-types/src/transformations.ts:108<br>packages/mysql-types/src/transformations.ts:695 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ✅ | `DefaultTransformations/Substring` | packages/mysql-types/src/transformations.ts:109<br>packages/mysql-types/src/transformations.ts:716 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
+| ✅ | `environment` | apps/server/src/app.ts:66 |  |
+| ✅ | `Export/excel_structure_or_data` | packages/export/src/plugins/csv.ts:191<br>packages/export/src/plugins/csv.ts:243<br>packages/export/src/plugins/csv.ts:244 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/json_structure_or_data` | packages/export/src/plugins/json.ts:35<br>packages/export/src/plugins/json.ts:146<br>packages/export/src/plugins/json.ts:147 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/ods_structure_or_data` | packages/export/src/plugins/opendocument.ts:124<br>packages/export/src/plugins/opendocument.ts:191<br>packages/export/src/plugins/opendocument.ts:192 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `Export/xml_export_struc` |  | n/a: phpMyAdmin reads it nowhere (Settings only; ExportXml uses xml_structure_or_data) |
+| ✅ | `Export/yaml_structure_or_data` | packages/export/src/plugins/simple.ts:25<br>packages/export/src/plugins/simple.ts:82<br>packages/export/src/plugins/simple.ts:83 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `GD2Available` | apps/web/src/features/transformations/registry.tsx:80 |  |
+| ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:256<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:260<br>apps/server/src/table/search.ts:207 |  |
+| ✅ | `MysqlMinVersion/human` | apps/server/src/auth/login.ts:63 |  |
 | 🔀 | `PersistentConnections` |  | X24 — connections are always pooled per session and server |
-| ⬜ | `Servers/*/control_compress` |  |  |
-| ⬜ | `Servers/*/control_hide_connection_errors` |  |  |
-| ⬜ | `Servers/*/control_socket` |  |  |
-| ⬜ | `Servers/*/control_ssl` |  |  |
-| ⬜ | `Servers/*/control_ssl_ca` |  |  |
-| ⬜ | `Servers/*/control_ssl_ca_path` |  |  |
-| ⬜ | `Servers/*/control_ssl_cert` |  |  |
-| ⬜ | `Servers/*/control_ssl_ciphers` |  |  |
-| ⬜ | `Servers/*/control_ssl_key` |  |  |
-| ⬜ | `Servers/*/control_ssl_verify` |  |  |
-| ⬜ | `Servers/*/SignonCookieParams/domain` |  |  |
-| ⬜ | `Servers/*/SignonCookieParams/lifetime` |  |  |
-| ⬜ | `Servers/*/SignonCookieParams/path` |  |  |
+| ✅ | `Servers/*/control_compress` | apps/server/src/db/control.ts:37 |  |
+| ✅ | `Servers/*/control_hide_connection_errors` | apps/server/src/db/control.ts:45<br>apps/server/src/db/control.ts:46 |  |
+| ✅ | `Servers/*/control_socket` | apps/server/src/db/control.ts:36 |  |
+| ✅ | `Servers/*/control_ssl` | apps/server/src/db/control.ts:38 |  |
+| ✅ | `Servers/*/control_ssl_ca` | apps/server/src/db/control.ts:41 |  |
+| ✅ | `Servers/*/control_ssl_ca_path` | apps/server/src/db/control.ts:42 |  |
+| ✅ | `Servers/*/control_ssl_cert` | apps/server/src/db/control.ts:40 |  |
+| ✅ | `Servers/*/control_ssl_ciphers` | apps/server/src/db/control.ts:43 |  |
+| ✅ | `Servers/*/control_ssl_key` | apps/server/src/db/control.ts:39 |  |
+| ✅ | `Servers/*/control_ssl_verify` | apps/server/src/db/control.ts:44 |  |
+| ✅ | `Servers/*/SignonCookieParams/domain` | apps/server/src/auth/signon.ts:71 |  |
+| ✅ | `Servers/*/SignonCookieParams/lifetime` | apps/server/src/auth/signon.ts:74 |  |
+| ✅ | `Servers/*/SignonCookieParams/path` | apps/server/src/auth/signon.ts:70 |  |

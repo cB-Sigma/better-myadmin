@@ -83,7 +83,13 @@ export function ValueInput({
   const [browse, setBrowse] = useState(false)
   const [gis, setGis] = useState(false)
   const name = `criteriaValues[${index}]`
-  const common = { name, id: `fieldID_${index}`, disabled, 'aria-label': t('Value') }
+  const common = {
+    name,
+    id: `fieldID_${index}`,
+    disabled,
+    'aria-label': t('Value'),
+    'data-type': column.dataType,
+  }
   const inp = column.input
   if (inp.kind === 'foreignLink' && scope !== undefined) {
     return (
@@ -198,6 +204,47 @@ export function ValueInput({
       onChange={(e) => onChange(e.target.value)}
     />
   )
+}
+
+const LIKES = ['LIKE', 'LIKE %...%', 'NOT LIKE', 'NOT LIKE %...%']
+const MULTIPLE = ['IN (...)', 'NOT IN (...)', 'BETWEEN', 'NOT BETWEEN']
+
+/**
+ * The jQuery Validation rule of a criteria value (change.ts verifyAfterSearchFieldChange, set up on
+ * focus and on operator change, checked on keyup and submit): LIKE operators skip it; INT values
+ * must be numbers (lists for IN / BETWEEN) within the column's range, FLOAT values numbers.
+ * Returns the message, or null. Selects are not validated.
+ */
+export function searchFieldError(c: SearchColumn, operator: string, value: string): string | null {
+  if (c.input.kind !== 'number' && c.input.kind !== 'text') return null
+  if (LIKES.includes(operator)) return null
+  const v = value.trim()
+  if (v === '') return null
+  if (c.dataType === 'INT') {
+    if (MULTIPLE.includes(operator)) {
+      // validationFunctionForMultipleInt
+      const ok =
+        v
+          .replace(/ /g, '')
+          .match(/^(((0x[0-9a-f]+)|([+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)(e[+-]?[0-9]+)?))(,|$))+$/i) !==
+        null
+      return ok ? null : t('Please enter a valid number!')
+    }
+    // validationFunctionForInt (the second alternative is not anchored at the start, as in pma)
+    if (v.match(/^(0x[0-9a-f]+$)|([+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)(e[+-]?[0-9]+)?)$/i) === null)
+      return t('Please enter a valid number!')
+    const n = Number(v)
+    if (!Number.isNaN(n) && c.input.min !== undefined && n < Number(c.input.min))
+      return t('Please enter a value greater than or equal to {0}').replace('{0}', c.input.min)
+    if (!Number.isNaN(n) && c.input.max !== undefined && n > Number(c.input.max))
+      return t('Please enter a value less than or equal to {0}').replace('{0}', c.input.max)
+    return null
+  }
+  if (c.dataType === 'FLOAT') {
+    // jQuery Validation `number`
+    return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(v) ? null : t('Please enter a valid number')
+  }
+  return null
 }
 
 /** The criteria to send: rows with a value, a unary operator or a unary geometry function (select.ts). */

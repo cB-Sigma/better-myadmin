@@ -11,7 +11,7 @@ import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/erro
 import { withMeta } from '../metadata/service.ts'
 import type { SecretBox } from '../session/crypto.ts'
 import type { ServerLogin } from '../session/store.ts'
-import { withTracker } from '../table/tracker.ts'
+import { enableTracker } from '../table/tracker.ts'
 import { aboutRoutes } from './about.ts'
 import { browseRoutes } from './browse.ts'
 import { consoleRoutes } from './console.ts'
@@ -78,8 +78,13 @@ const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   c.set('serverIndex', s)
   c.set('creds', creds)
   await applyUserPreferences(c)
-  // the Authentication middleware's Tracker::enable()
-  await withTracker(c, next)
+  // Authentication middleware: Tracker::enable once the server is connected
+  const endTracker = await enableTracker(c)
+  try {
+    await next()
+  } finally {
+    endTracker()
+  }
 }
 
 /**

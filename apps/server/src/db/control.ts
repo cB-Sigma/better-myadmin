@@ -1,9 +1,11 @@
 import type { Executed } from '@bettermyadmin/contracts'
 import type { MetaConn, QueryOutcome } from '@bettermyadmin/metadata'
 import mysql, { type FieldPacket, type Pool, type PoolConnection, type ResultSetHeader } from 'mysql2/promise'
+import { connectionErrorMessage } from '../auth/failure.ts'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { isMysqlError } from '../http/errors.ts'
 import { type Credentials, connectionOptions } from './pool-manager.ts'
+import { afterQuery } from './query-hook.ts'
 
 /**
  * Connection parameters of the control link: control user/password, `controlhost` (else the
@@ -12,34 +14,37 @@ import { type Credentials, connectionOptions } from './pool-manager.ts'
  *
  * pma: src/Config.php::getConnectionParams (ConnectionType::ControlUser)
  */
-export function controlServer(s: ServerConfig): { server: ServerConfig; creds: Credentials } {
-  const host = s.controlhost !== '' ? s.controlhost : s.host
-  const same = host === s.host
+export function controlServer(server: ServerConfig): { server: ServerConfig; creds: Credentials } {
+  const host = server.controlhost !== '' ? server.controlhost : server.host
+  const same = host === server.host
   const out: ServerConfig = {
-    ...s,
+    ...server,
     host: host === '' ? 'localhost' : host,
-    port: same ? s.port : '',
-    socket: same ? s.socket : '',
-    compress: same ? s.compress : false,
-    ssl: same ? s.ssl : false,
-    ssl_key: same ? s.ssl_key : null,
-    ssl_cert: same ? s.ssl_cert : null,
-    ssl_ca: same ? s.ssl_ca : null,
-    ssl_ca_path: same ? s.ssl_ca_path : null,
-    ssl_ciphers: same ? s.ssl_ciphers : null,
-    ssl_verify: same ? s.ssl_verify : true,
+    port: same ? server.port : '',
+    socket: same ? server.socket : '',
+    compress: same ? server.compress : false,
+    ssl: same ? server.ssl : false,
+    ssl_key: same ? server.ssl_key : null,
+    ssl_cert: same ? server.ssl_cert : null,
+    ssl_ca: same ? server.ssl_ca : null,
+    ssl_ca_path: same ? server.ssl_ca_path : null,
+    ssl_ciphers: same ? server.ssl_ciphers : null,
+    ssl_verify: same ? server.ssl_verify : true,
+    hide_connection_errors: same ? server.hide_connection_errors : false,
   }
-  if (s.controlport !== '') out.port = s.controlport
-  if (s.control_socket !== null) out.socket = s.control_socket
-  if (s.control_compress !== null) out.compress = s.control_compress
-  if (s.control_ssl !== null) out.ssl = s.control_ssl
-  if (s.control_ssl_key !== null) out.ssl_key = s.control_ssl_key
-  if (s.control_ssl_cert !== null) out.ssl_cert = s.control_ssl_cert
-  if (s.control_ssl_ca !== null) out.ssl_ca = s.control_ssl_ca
-  if (s.control_ssl_ca_path !== null) out.ssl_ca_path = s.control_ssl_ca_path
-  if (s.control_ssl_ciphers !== null) out.ssl_ciphers = s.control_ssl_ciphers
-  if (s.control_ssl_verify !== null) out.ssl_verify = s.control_ssl_verify
-  return { server: out, creds: { user: s.controluser, password: s.controlpass } }
+  if (server.controlport !== '') out.port = server.controlport
+  if (server.control_socket !== null) out.socket = server.control_socket
+  if (server.control_compress !== null) out.compress = server.control_compress
+  if (server.control_ssl !== null) out.ssl = server.control_ssl
+  if (server.control_ssl_key !== null) out.ssl_key = server.control_ssl_key
+  if (server.control_ssl_cert !== null) out.ssl_cert = server.control_ssl_cert
+  if (server.control_ssl_ca !== null) out.ssl_ca = server.control_ssl_ca
+  if (server.control_ssl_ca_path !== null) out.ssl_ca_path = server.control_ssl_ca_path
+  if (server.control_ssl_ciphers !== null) out.ssl_ciphers = server.control_ssl_ciphers
+  if (server.control_ssl_verify !== null) out.ssl_verify = server.control_ssl_verify
+  if (server.control_hide_connection_errors !== null)
+    out.hide_connection_errors = server.control_hide_connection_errors
+  return { server: out, creds: { user: server.controluser, password: server.controlpass } }
 }
 
 /**
@@ -57,8 +62,10 @@ export class ControlConn implements MetaConn {
     this.log = log
   }
 
-  async #exec(sql: string): Promise<QueryOutcome> {
+  /** `hook`: tryQuery runs Tracker::handleQuery; select_db and multi_query do not. */
+  async #exec(sql: string, hook = true): Promise<QueryOutcome> {
     const start = performance.now()
+    let logged = false
     try {
       const [res, fields] = (await this.raw.query({ sql, rowsAsArray: true, typeCast: false })) as [
         unknown,
@@ -66,7 +73,11 @@ export class ControlConn implements MetaConn {
       ]
       this.lastError = ''
       this.lastErrno = 0
-      return toOutcome(res, fields)
+      const out = toOutcome(res, fields)
+      this.log.push({ sql, ms: performance.now() - start, label: 'pmadb' })
+      logged = true
+      if (hook) await afterQuery(this.log, sql, null)
+      return out
     } catch (e) {
       if (isMysqlError(e)) {
         this.lastError = e.sqlMessage ?? e.message
@@ -77,7 +88,7 @@ export class ControlConn implements MetaConn {
       }
       throw e
     } finally {
-      this.log.push({ sql, ms: performance.now() - start, label: 'pmadb' })
+      if (!logged) this.log.push({ sql, ms: performance.now() - start, label: 'pmadb' })
     }
   }
 
@@ -95,11 +106,19 @@ export class ControlConn implements MetaConn {
 
   /** COM_INIT_DB equivalent (the parity harness renders phpMyAdmin's Init DB as this statement). */
   async selectDb(db: string): Promise<boolean> {
-    return (await this.tryQuery(`USE \`${db.replaceAll('`', '``')}\``)) !== false
+    return (await this.#try(`USE \`${db.replaceAll('`', '``')}\``, false)) !== false
   }
 
   async tryMultiQuery(sql: string): Promise<boolean> {
-    return (await this.tryQuery(sql)) !== false
+    return (await this.#try(sql, false)) !== false
+  }
+
+  async #try(sql: string, hook: boolean): Promise<QueryOutcome | false> {
+    try {
+      return await this.#exec(sql, hook)
+    } catch {
+      return false
+    }
   }
 
   release(): void {
@@ -198,7 +217,15 @@ export class ControlConnections {
         entry.lastUsed = Date.now()
         return { conn: new ControlConn(raw, log), viaControlUser: true, error: null }
       } catch (e) {
-        error = isMysqlError(e) ? (e.sqlMessage ?? e.message) : e instanceof Error ? e.message : String(e)
+        // pma: src/Dbal/DbiMysqli.php::connect (1045 hidden by the control link's hide_connection_errors)
+        error =
+          isMysqlError(e) && e.errno === 1045 && server.hide_connection_errors
+            ? connectionErrorMessage(e, true)
+            : isMysqlError(e)
+              ? (e.sqlMessage ?? e.message)
+              : e instanceof Error
+                ? e.message
+                : String(e)
         this.#shared.delete(serverIndex)
         await entry.pool.end().catch(() => {})
       }

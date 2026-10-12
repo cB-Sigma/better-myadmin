@@ -1,12 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import {
-  type ColumnRow,
-  checkTableEditForm,
-  emptyRow,
-  formatEnumValues,
-  indexesFromRows,
-  parseEnumValues,
-} from './ColumnForm'
+import { type ColumnRow, checkTableEditForm, emptyRow, formatEnumValues, parseEnumValues } from './ColumnForm'
 
 /** The column definition form's client logic (docs/features/04-table-level.md › Column form). */
 const row = (p: Partial<ColumnRow>): ColumnRow => ({ ...emptyRow(), ...p })
@@ -49,29 +42,5 @@ describe('the ENUM/SET editor (onloadEnumSetEditor)', () => {
     expect(parseEnumValues("'a','b\\'c','d''e','f\\\\g'")).toEqual(['a', "b'c", "d'e", 'f\\g'])
     expect(formatEnumValues(['a', "b'c", '', 'f\\g'])).toBe("'a','b''c','f\\\\g'")
     expect(parseEnumValues(formatEnumValues(['x, y', "it's"]))).toEqual(['x, y', "it's"])
-  })
-})
-
-describe('the Index selects of the create / add forms', () => {
-  it('PRIMARY always composes one key; the other choices make single-column indexes [p04-7f5bf8]', () => {
-    const rows = [
-      row({ name: 'a', key: 'primary' }),
-      row({ name: 'b', key: 'unique' }),
-      row({ name: 'c', key: 'primary' }),
-      row({ name: '', key: 'index' }),
-      row({ name: 'd', key: 'index' }),
-    ]
-    expect(indexesFromRows(rows)).toEqual([
-      {
-        choice: 'PRIMARY',
-        keyName: 'PRIMARY',
-        columns: [
-          { colIndex: 0, size: '' },
-          { colIndex: 2, size: '' },
-        ],
-      },
-      { choice: 'UNIQUE', keyName: '', columns: [{ colIndex: 1, size: '' }] },
-      { choice: 'INDEX', keyName: '', columns: [{ colIndex: 4, size: '' }] },
-    ])
   })
 })

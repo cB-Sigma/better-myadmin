@@ -58,6 +58,24 @@ describe('Generator::getMessage links', () => {
     })
   })
 
+  it("$cfg['SQLQuery'] Edit / Explain / ShowAsPHP / Refresh off hide their links", async () => {
+    const off = await getMessageCard('SELECT 1;', {
+      cfg: testConfig({ SQLQuery: { Edit: false, Explain: false, ShowAsPHP: false, Refresh: false } }),
+      showAsPhp: null,
+      db: 'd',
+      table: '',
+      profilingOn: false,
+      profilingSupported: async () => true,
+    })
+    expect(off!.links).toMatchObject({
+      edit: false,
+      editInline: false,
+      explain: null,
+      php: null,
+      refresh: false,
+    })
+  })
+
   it('no card for empty SQL or ";" [p02-f22617]', async () => {
     expect(await card('')).toBeNull()
     expect(await card(';')).toBeNull()

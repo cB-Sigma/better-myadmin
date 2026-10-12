@@ -1,3 +1,5 @@
+import type { QueryResponse } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import {
   Hint,
   Loading,
@@ -9,14 +11,20 @@ import {
   SafeHtml,
   Table,
   buttonVariants,
+  useUiSettings,
 } from '@bettermyadmin/ui'
-import { useQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { CaseSensitive, Cog, FileText, FileType, Puzzle, Table2 } from 'lucide-react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { api, errorMessage } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { StatementBlock } from '../sql/Results'
+import { type CardEnv, QueryCard } from '../sql/SqlMessage'
+import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
+import { sqlTabRoute } from '../sql/routes'
+import { runQuery } from '../sql/runner'
 
 /** pma: templates/server/collations/index.twig */
 export function CollationsPage({ server }: { server: number }) {
@@ -239,10 +247,10 @@ function BufferPool({ b }: { b: import('@bettermyadmin/contracts').InnodbBufferP
 }
 
 const STATUS_LABEL: Record<string, string> = {
-  INACTIVE: 'inactive',
-  DISABLED: 'disabled',
-  DELETING: 'deleting',
-  DELETED: 'deleted',
+  INACTIVE: N_('inactive'),
+  DISABLED: N_('disabled'),
+  DELETING: N_('deleting'),
+  DELETED: N_('deleted'),
 }
 
 /** pma: templates/server/plugins/index.twig (+ plugins.ts table sorting by name) */
@@ -328,6 +336,52 @@ export function BinlogPage({
     placeholderData: (prev) => prev,
   })
   const b = q.data
+  const ui = useUiSettings()
+  const navigate = useNavigate()
+  const qc = useQueryClient()
+  // a link of the query card ran its query: /sql's result replaces the page (AJAX.responseHandler)
+  const [other, setOther] = useState<QueryResponse | null>(null)
+  const env: CardEnv = {
+    server,
+    versionInt: ui.serverVersion,
+    confirmQuery: (sql) => {
+      const check = checkSqlQuery(sql, ui.Confirm)
+      if (check === 'empty') return false
+      return check !== 'confirm' || window.confirm(confirmationText(sql, t(DO_YOU_REALLY)))
+    },
+    codemirror: true,
+    onAction: (a) => {
+      if (a.type === 'edit') {
+        void navigate({ ...sqlTabRoute(server, '', ''), search: { sql: a.sql } } as never)
+        return
+      }
+      void runQuery(
+        server,
+        {
+          sql: a.sql,
+          db: a.db,
+          table: a.table,
+          fromQueryBox: false,
+          grid: true,
+          ...(a.showAsPhp !== undefined ? { showAsPhp: a.showAsPhp } : {}),
+          ...(a.profiling !== undefined ? { profiling: a.profiling } : {}),
+          ...(a.fkChecks !== undefined ? { fkChecks: a.fkChecks } : {}),
+        },
+        'page',
+      ).then((r) => {
+        setOther(r)
+        if (r.reloadNavigation) void qc.invalidateQueries({ queryKey: qk.srv(server), refetchType: 'active' })
+      })
+    },
+  }
+  if (other !== null)
+    return (
+      <div id="sqlqueryresultsouter" className="max-w-full">
+        {other.statements.map((st, i) => (
+          <StatementBlock key={`${i}-${st.sig}`} st={st} env={env} />
+        ))}
+      </div>
+    )
   const nav = (label: string, icon: string, to: { pos?: number }) =>
     b?.hasIcons === true && !b.hasText ? (
       <button
@@ -386,7 +440,17 @@ export function BinlogPage({
               </PanelBody>
             </Panel>
           </form>
-          <MessageBox type="success" text={b.sqlMessage.message.text} sql={b.sqlMessage.sql} />
+          {b.card !== null ? (
+            <QueryCard
+              type={b.sqlMessage.message.type}
+              text={b.sqlMessage.message.text}
+              card={b.card}
+              sig=""
+              env={env}
+            />
+          ) : (
+            <MessageBox type="success" text={b.sqlMessage.message.text} />
+          )}
           <Table zebra className="w-full" id="binlogTable">
             <thead>
               <tr>

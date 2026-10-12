@@ -34,7 +34,9 @@ async function get(path: string, status = 200) {
 const executedWrites = (j: Json) =>
   (j.executed as Array<{ sql: string }>)
     .map((e) => e.sql)
-    .filter((s) => !/^(SELECT|SHOW|USE|SET (NAMES|lc_messages|collation_connection))/i.test(s))
+    .filter(
+      (s) => !/^(\/\*NOTRACK\*\/\s*)?(SELECT|SHOW|USE|SET (NAMES|lc_messages|collation_connection))/i.test(s),
+    )
 
 beforeAll(async () => {
   root = await mysql.createConnection({ ...MYSQL, multipleStatements: true })

@@ -1,6 +1,8 @@
 import type { BinlogResponse, PluginsResponse } from '@bettermyadmin/contracts'
 import { formatByteDown } from '@bettermyadmin/i18n'
 import { quoteString } from '@bettermyadmin/sql-gen'
+import { getMessageCard } from '../query/message.ts'
+import { isProfilingSupported } from '../query/profiling.ts'
 import type { AdminCtx } from './context.ts'
 
 /** PHP ksort() of string keys (the plugin types): byte order */
@@ -90,6 +92,19 @@ export async function binlogPage(
     }
   })
   const mode = cfg.TableNavigationLinksMode
+  // Generator::getMessage(Message::success(), $sqlQuery): the card at server level (no db, no table)
+  const session = ctx.session
+  const card = await getMessageCard(sql, {
+    cfg,
+    showAsPhp: null,
+    db: '',
+    table: '',
+    profilingOn: session?.profiling === true,
+    profilingSupported: () =>
+      session === undefined
+        ? Promise.resolve(false)
+        : isProfilingSupported(ctx.conn, session, ctx.serverIndex),
+  })
   return {
     binaryLogs,
     fileCount: logs.size,
@@ -100,6 +115,7 @@ export async function binlogPage(
       message: { type: 'success', text: tr.gettext('Your SQL query has been executed successfully.') },
       sql,
     },
+    card,
     events,
     pos: position,
     isFullQuery: q.isFullQuery,

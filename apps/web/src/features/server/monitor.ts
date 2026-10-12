@@ -312,6 +312,21 @@ export function parseImportedConfig(
   return json as { monitorCharts: Record<string, MonitorChart>; monitorSettings: MonitorSettings }
 }
 
+/**
+ * What rebuildGrid needs of an imported configuration, else it throws (and the import falls back to
+ * the default grid with strFailedBuildingGrid): settings to parse (`localStorage.monitorSettings =
+ * JSON.stringify(undefined)` is not JSON) and charts with their series and nodes.
+ */
+export function checkImportedGrid(json: { monitorCharts: unknown; monitorSettings: unknown }): void {
+  const settings = json.monitorSettings
+  if (settings === null || typeof settings !== 'object') throw new Error('monitorSettings')
+  for (const chart of Object.values(json.monitorCharts as Record<string, unknown>)) {
+    const c = chart as Partial<MonitorChart> | null
+    if (c === null || typeof c !== 'object' || !Array.isArray(c.nodes) || !Array.isArray(c.series))
+      throw new Error('monitorCharts')
+  }
+}
+
 export interface ReadPoint {
   value?: string | number | null
   busy?: number

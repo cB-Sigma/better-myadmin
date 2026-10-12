@@ -1,10 +1,16 @@
 import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
 /**
  * SQL files vendored from phpMyAdmin's `resources/sql/` (unchanged from reference commit e3e877e8 through a57149e1f6).
  * pma: SQL_DIR
  */
 const read = (name: string) => readFileSync(new URL(`../resources/${name}`, import.meta.url), 'utf8')
+
+/** SQL_DIR: the directory holding create_tables.sql (shown by the storage check page). */
+export function sqlDir(): string {
+  return fileURLToPath(new URL('../resources/', import.meta.url))
+}
 
 let createTables: string | null = null
 let upgradeColumnInfo: string | null = null

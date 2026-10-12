@@ -6,8 +6,9 @@ import type {
 } from '@bettermyadmin/contracts'
 import { formatByteDown, formatNumber, localisedDate } from '@bettermyadmin/i18n'
 import { trackedTables } from '@bettermyadmin/metadata'
-import { backquote } from '@bettermyadmin/sql-gen'
+import { backquote, escapeMysqlWildcards } from '@bettermyadmin/sql-gen'
 import { pageselectorPages } from '../navigation/list-navigator.ts'
+import { strnatcasecmp } from '../navigation/php.ts'
 import { ReplicationInfo } from '../server-admin/replication-info.ts'
 import { type DbCtx, getDbCollation, isSystemSchema, listTables } from './context.ts'
 import { type TableRow, countRecords, getTablesFull, isMerge, realRowCount, tableCache } from './tables.ts'
@@ -120,6 +121,55 @@ async function getDbInfo(
   return [tables, tables.length]
 }
 
+/**
+ * `SkipLockedTables`: the tables in use (`SHOW OPEN TABLES … In_use > 0`) are listed without their
+ * status, the others with getTablesFull; no table in use lists nothing, like phpMyAdmin.
+ * pma: src/Controllers/Database/StructureController.php::getTablesWhenOpen
+ */
+async function getTablesWhenOpen(
+  ctx: DbCtx,
+  groupParam: string | undefined,
+  typeParam: string | undefined,
+): Promise<[TableRow[], number]> {
+  const { db } = ctx
+  const open = await ctx.dbi.fetchResultSimple(`SHOW OPEN TABLES FROM ${backquote(db)} WHERE In_use > 0;`)
+  const openNames = open.map((r) => r.Table ?? '')
+  if (openNames.length === 0) return [[], 0]
+  const q = (v: string) => ctx.dbi.quoteString(v)
+  const column = backquote(`Tables_in_${db}`)
+  let where = ''
+  const group = groupParam ?? ''
+  if (group !== '') {
+    const sep = ctx.cfg.NavigationTreeTableSeparator
+    const sepStr = typeof sep === 'string' ? sep : Array.isArray(sep) ? String(sep[0] ?? '') : ''
+    where += ` WHERE (${column} LIKE ${q(`${escapeMysqlWildcards(group + sepStr)}%`)} OR ${column} LIKE ${q(escapeMysqlWildcards(group))})`
+  }
+  if (typeParam === 'table' || typeParam === 'view') {
+    where += where !== '' ? ' AND' : ' WHERE'
+    where +=
+      typeParam === 'view'
+        ? " `Table_type` NOT IN ('BASE TABLE', 'SYSTEM VERSIONED')"
+        : " `Table_type` IN ('BASE TABLE', 'SYSTEM VERSIONED')"
+  }
+  const names = (await ctx.dbi.fetchResultSimple(`SHOW FULL TABLES FROM ${backquote(db)}${where}`)).map(
+    (r) => Object.values(r)[0] ?? '',
+  )
+  const tables = new Map<string, TableRow>()
+  const rest: string[] = []
+  for (const name of names) {
+    if (name === '' || name === '0') break // while ($tableName = fetchValue()): a falsy name ends it
+    if (!openNames.includes(name)) rest.push(name)
+    else
+      tables.set(name, { TABLE_NAME: name, ENGINE: '', TABLE_TYPE: '', TABLE_ROWS: '0', TABLE_COMMENT: '' })
+  }
+  if (rest.length > 0)
+    for (const row of await getTablesFull(ctx, db, { table: rest }))
+      if (!tables.has(row.TABLE_NAME ?? '')) tables.set(row.TABLE_NAME ?? '', row)
+  let out = [...tables]
+  if (ctx.cfg.NaturalOrder) out = out.sort(([a], [b]) => strnatcasecmp(a, b))
+  return [out.map(([, r]) => r), out.length]
+}
+
 export async function structurePage(
   ctx: DbCtx,
   q: {
@@ -132,8 +182,10 @@ export async function structurePage(
 ): Promise<DbStructureResponse> {
   const { cfg, tr, db } = ctx
   const position = tableListPosition(ctx, q.pos)
-  // SkipLockedTables (getTablesWhenOpen) is not implemented: getDbInfo is used either way
-  const [rawTables, total] = await getDbInfo(ctx, q.sort, q.sort_order, q.tbl_group, q.tbl_type, position)
+  // StructureController::getDatabaseInfo
+  const [rawTables, total] = cfg.SkipLockedTables
+    ? await getTablesWhenOpen(ctx, q.tbl_group, q.tbl_type)
+    : await getDbInfo(ctx, q.sort, q.sort_order, q.tbl_group, q.tbl_type, position)
   const system = isSystemSchema(db)
   const isShowStats = cfg.ShowStats && !system
   const isShowDbDetails = cfg.PropertiesNumColumns < 2

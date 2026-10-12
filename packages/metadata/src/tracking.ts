@@ -1,5 +1,18 @@
 import { backquote, quoteString as q } from '@bettermyadmin/sql-gen'
-import type { MetaConn, Row } from './conn.ts'
+import {
+  AlterStatement,
+  CreateStatement,
+  DeleteStatement,
+  DropStatement,
+  Expression,
+  InsertStatement,
+  Parser,
+  RenameStatement,
+  type Token,
+  TruncateStatement,
+  UpdateStatement,
+} from '@bettermyadmin/sql-lexer'
+import { type MetaConn, type Row, fetchValue } from './conn.ts'
 import type { RelationParameters } from './relation-parameters.ts'
 
 /**
@@ -247,11 +260,123 @@ export async function getTrackedData(
 }
 
 // ---------------------------------------------------------------------------------------------
-// Tracker::handleQuery: logging the executed statements into the tracked versions
+// Tracker::handleQuery: the statements logged into the versions being tracked
 // ---------------------------------------------------------------------------------------------
 
-/** pma: Tracker::isAnyTrackingInProgress — an active version in the database. */
-export async function isAnyTrackingInProgress(
+/** Tracker::parseQuery's result: the statement identifier, its kind and table. */
+export interface TrackedQuery {
+  type?: 'DDL' | 'DML'
+  identifier?: string
+  /** null: the statement names no table (phpMyAdmin then logs nothing) */
+  tablename?: string | null
+  tablename_after_rename?: string | null
+  /** `Current::$database` as the statement changes it (USE, CREATE / ALTER / DROP DATABASE) */
+  database?: string | null
+}
+
+type OptionMap = Map<number, unknown> | undefined
+
+const tokenValue = (t: Token | undefined): string | null =>
+  t === undefined || t.value === null || t.value === undefined ? null : String(t.value)
+
+/**
+ * Tracker::parseQuery: the first statement's identifier (`CREATE TABLE`, `ALTER VIEW`, `INSERT`, …),
+ * DDL or DML, and the table it acts on, read from phpMyAdmin's SQL parser with its default context.
+ * pma: src/Tracking/Tracker.php::parseQuery
+ */
+export function parseTrackedQuery(query: string): TrackedQuery {
+  const parser = new Parser(query)
+  const tokens = parser.list?.tokens ?? []
+  const result: TrackedQuery = {}
+  // Parse USE statement, need it for SQL dump imports
+  if (tokenValue(tokens[0]) === 'USE') result.database = tokenValue(tokens[2])
+
+  const statement = parser.statements[0]
+  if (statement === undefined) return result
+  const options: OptionMap = (statement as { options?: { options?: Map<number, unknown> } | null }).options
+    ?.options
+  const opt = (i: number): unknown => options?.get(i)
+  const empty = options === undefined || options.size === 0
+
+  // DDL statements
+  result.type = 'DDL'
+  if (statement instanceof CreateStatement) {
+    if (empty || opt(6) === undefined) return result
+    const o = opt(6)
+    if (o === 'VIEW' || o === 'TABLE') {
+      result.identifier = `CREATE ${o}`
+      result.tablename = statement.name?.table ?? null
+    } else if (o === 'DATABASE') {
+      result.identifier = 'CREATE DATABASE'
+      result.tablename = ''
+      // In case of CREATE DATABASE, database field of the CreateStatement is the name of the database
+      result.database = statement.name?.database ?? null
+    } else if (o === 'INDEX' || o === 'UNIQUE INDEX' || o === 'FULLTEXT INDEX' || o === 'SPATIAL INDEX') {
+      result.identifier = 'CREATE INDEX'
+      // In case of CREATE INDEX, we have to get the table name from body of the statement
+      result.tablename =
+        tokenValue(statement.body[3]) === '.' ? tokenValue(statement.body[4]) : tokenValue(statement.body[2])
+    }
+  } else if (statement instanceof AlterStatement) {
+    if (empty || opt(3) === undefined) return result
+    const o = opt(3)
+    if (o === 'VIEW' || o === 'TABLE') {
+      result.identifier = `ALTER ${o}`
+      result.tablename = statement.table?.table ?? null
+    } else if (o === 'DATABASE') {
+      result.identifier = 'ALTER DATABASE'
+      result.tablename = ''
+      result.database = statement.table?.table ?? null
+    }
+  } else if (statement instanceof DropStatement) {
+    if (empty || opt(1) === undefined) return result
+    const o = opt(1)
+    const first = statement.fields?.[0]
+    const firstTable = first instanceof Expression ? first.table : null
+    if (o === 'VIEW' || o === 'TABLE') {
+      result.identifier = `DROP ${o}`
+      result.tablename = firstTable
+    } else if (o === 'DATABASE') {
+      result.identifier = 'DROP DATABASE'
+      result.tablename = ''
+      result.database = firstTable
+    } else if (o === 'INDEX') {
+      result.identifier = 'DROP INDEX'
+      result.tablename = statement.table?.table ?? null
+    }
+  } else if (statement instanceof RenameStatement) {
+    result.identifier = 'RENAME TABLE'
+    result.tablename = statement.renames?.[0]?.old?.table ?? null
+    result.tablename_after_rename = statement.renames?.[0]?.new?.table ?? null
+  }
+  if (result.identifier !== undefined) return result
+
+  // DML statements
+  result.type = 'DML'
+  if (statement instanceof UpdateStatement) {
+    const t = statement.tables?.[0]
+    result.identifier = 'UPDATE'
+    result.tablename = t instanceof Expression ? t.table : null
+  }
+  if (statement instanceof InsertStatement) {
+    const dest = statement.into?.dest
+    result.identifier = 'INSERT'
+    result.tablename = dest instanceof Expression ? dest.table : null
+  }
+  if (statement instanceof DeleteStatement) {
+    const t = statement.from?.[0]
+    result.identifier = 'DELETE'
+    result.tablename = t instanceof Expression ? t.table : null
+  }
+  if (statement instanceof TruncateStatement) {
+    result.identifier = 'TRUNCATE'
+    result.tablename = statement.table?.table ?? null
+  }
+  return result
+}
+
+/** Tracker::isAnyTrackingInProgress: one active version in the database. */
+export async function anyTrackingInProgress(
   conn: MetaConn,
   rp: RelationParameters,
   db: string,
@@ -264,26 +389,8 @@ export async function isAnyTrackingInProgress(
   return r.rows.length > 0
 }
 
-/** pma: Tracker::getVersion — the last version tracking the statement, -1 when none. */
-export async function trackingVersionFor(
-  conn: MetaConn,
-  rp: RelationParameters,
-  db: string,
-  tableName: string,
-  statement: string,
-): Promise<number> {
-  const f = rp.trackingFeature
-  if (f === null) return -1
-  let sql = `SELECT MAX(version) FROM ${table(f)} WHERE \`db_name\` = ${q(db)} AND \`table_name\` = ${q(tableName)}`
-  if (statement !== '') sql += ` AND FIND_IN_SET('${statement}',tracking) > 0`
-  const r = await conn.tryQuery(sql)
-  if (r === false) return -1
-  const v = r.rows[0] === undefined ? null : Object.values(r.rows[0])[0]
-  return v === null || v === undefined ? -1 : Number.parseInt(v, 10) || 0
-}
-
-/** pma: Tracker::isTracked — the HEAD version of the table is active. */
-export async function isTrackedTable(
+/** Tracker::isTracked: the newest version of the table is active. */
+export async function isTableTracked(
   conn: MetaConn,
   rp: RelationParameters,
   db: string,
@@ -291,34 +398,78 @@ export async function isTrackedTable(
 ): Promise<boolean> {
   const f = rp.trackingFeature
   if (f === null) return false
-  const r = await conn.query(
+  const v = await fetchValue(
+    conn,
     `SELECT tracking_active FROM ${table(f)} WHERE db_name = ${q(db)} AND table_name = ${q(tableName)} ORDER BY version DESC LIMIT 1`,
   )
-  const v = r.rows[0] === undefined ? null : Object.values(r.rows[0])[0]
-  return v !== null && v !== undefined && Number.parseInt(v, 10) === 1
+  return Number.parseInt(String(v === false || v === null ? 0 : v), 10) === 1
 }
 
-/**
- * pma: Tracker::handleQuery (the UPDATE): appends the logged statement to schema_sql or data_sql
- * of the version, for the statements the version tracks; a RENAME TABLE renames the version.
- */
+/** Tracker::getVersion: the newest version tracking `statement` (-1 when none). */
+export async function trackedVersion(
+  conn: MetaConn,
+  rp: RelationParameters,
+  db: string,
+  tableName: string,
+  statement: string | null = null,
+): Promise<number> {
+  const f = rp.trackingFeature
+  if (f === null) return -1
+  let sql = `SELECT MAX(version) FROM ${table(f)} WHERE \`db_name\` = ${q(db)} AND \`table_name\` = ${q(tableName)}`
+  if (statement !== null && statement !== '') sql += ` AND FIND_IN_SET('${statement}',tracking) > 0`
+  const r = await conn.tryQuery(sql)
+  if (r === false) return -1
+  const field = r.fields[0]
+  const v = field === undefined ? undefined : r.rows[0]?.[field]
+  return v === null || v === undefined ? -1 : Number.parseInt(v, 10) || 0
+}
+
+/** The INSERT of Tracker::createDatabaseVersion (no table, no snapshot). */
+export async function insertDatabaseVersion(
+  conn: MetaConn,
+  rp: RelationParameters,
+  v: { db: string; version: string; date: string; schemaSql: string; trackingSet: string },
+): Promise<boolean> {
+  const f = rp.trackingFeature
+  if (f === null) return false
+  await conn.query(
+    `/*NOTRACK*/\nINSERT INTO ${table(f)} (db_name, table_name, version, date_created, date_updated, schema_snapshot, schema_sql, data_sql, tracking) values (${[
+      v.db,
+      '',
+      v.version,
+      v.date,
+      v.date,
+      '',
+      v.schemaSql,
+      '\n',
+      v.trackingSet,
+    ]
+      .map((x) => q(x))
+      .join(', ')})`,
+  )
+  return true
+}
+
+/** The UPDATE of Tracker::handleQuery: one log entry appended to `schema_sql` / `data_sql`. */
 export async function appendTrackingLog(
   conn: MetaConn,
   rp: RelationParameters,
   e: {
+    saveTo: 'schema_sql' | 'data_sql' | ''
+    entry: string
+    date: string
+    identifier: string
     db: string
     table: string
     version: number
-    identifier: string
-    saveTo: 'schema_sql' | 'data_sql'
-    query: string
-    date: string
-    renamedTo?: string | undefined
+    renamedTo?: string | null
   },
 ): Promise<void> {
   const f = rp.trackingFeature
   if (f === null) return
-  let sql = `/*NOTRACK*/\nUPDATE ${table(f)} SET ${backquote(e.saveTo)} = CONCAT(${backquote(e.saveTo)}, ${q(`\n${e.query}`)}), \`date_updated\` = ${q(e.date)}`
+  const col = backquote(e.saveTo)
+  let sql = `/*NOTRACK*/\nUPDATE ${table(f)} SET ${col} = CONCAT(${col}, ${q(`\n${e.entry}`)}), \`date_updated\` = ${q(e.date)}`
+  // If table was renamed we have to change the tablename attribute in pma_tracking too
   if (e.identifier === 'RENAME TABLE') sql += `, \`table_name\` = ${q(e.renamedTo ?? '')} `
   sql += ` WHERE FIND_IN_SET('${e.identifier}',tracking) > 0 AND \`db_name\` = ${q(e.db)}  AND \`table_name\` = ${q(e.table)}  AND \`version\` = ${q(String(e.version))} `
   await conn.query(sql)

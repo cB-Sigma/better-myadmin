@@ -294,7 +294,7 @@ function intCast(s: string): bigint {
  * @@collation_database (phpMyAdmin then re-selects the current database, none on a server page).
  */
 async function dbCollation(ctx: AdminCtx, db: string): Promise<string | null> {
-  await ctx.dbi.tryQuery(`USE ${backquote(db)}`, 'databases.selectDb')
+  await ctx.dbi.conn.selectDb(db, 'databases.selectDb')
   const v = await ctx.dbi.fetchValue('SELECT @@collation_database')
   return typeof v === 'string' ? v : null
 }

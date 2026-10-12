@@ -5,7 +5,7 @@ import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { classify, normalise } from './lib/compare.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { PmaClient, visibleText } from './lib/pma.ts'
-import { pmaReachable } from './lib/server-setup.ts'
+import { PMA_STORAGE, pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the Browse tab / results grid (docs/features/02-browse-results-grid.md): every
@@ -364,7 +364,7 @@ describe.skipIf(!reachable)('parity: Browse / results grid (/sql) vs POST /brows
     await forgetUiPrefs()
     log = await GeneralLog.open(ROOT)
     await pma.login(U.pma, U.pma)
-    bma = testApp(testConfig())
+    bma = testApp(testConfig({}, PMA_STORAGE))
     await bma.login(U.bma, U.bma)
   })
 

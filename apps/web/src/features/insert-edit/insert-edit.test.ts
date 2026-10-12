@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { generateWkt, initialValue, parseGeom, resultValue } from '../gis/gis'
-import { arrowTarget, fieldIndex, isDateTime } from './logic'
+import { arrowTarget, fieldIndex, isDateTime, validateCell } from './logic'
 
 describe('GIS data editor model', () => {
   it('generates WKT with phpMyAdmin minimum point counts [p03-6f8311]', () => {
@@ -32,5 +32,28 @@ describe('Insert/Edit form rules', () => {
     expect(isDateTime('2020-02-30', 'date')).toBe(false)
     expect(isDateTime('2040-01-01 00:00:00', 'timestamp')).toBe(false)
     expect(isDateTime('838:59:59', 'time')).toBe(true)
+  })
+})
+
+describe('function select rules (change.ts validationFunctionForMd5 / ForAesDesEncrypt)', () => {
+  const text = (maxlength: number | null, dataType: string) =>
+    ({ widget: { kind: 'text', size: 20, maxlength, min: null, max: null, dataType, picker: null } }) as never
+  const state = (fn: string) => ({ fn, isNull: false, value: 'x' }) as never
+  const col = { trueType: 'varchar', isChar: true } as never
+  const tr = (m: string) => m
+  it('MD5 into a column shorter than 32 characters', () => {
+    expect(validateCell(col, text(20, 'CHAR'), state('MD5'), tr)).toBe(
+      'This column can not contain a 32 chars value',
+    )
+    expect(validateCell(col, text(40, 'CHAR'), state('MD5'), tr)).toBeNull()
+  })
+  it('AES_ENCRYPT / DES_ENCRYPT outside a CHAR or HEX column', () => {
+    expect(validateCell(col, text(null, 'NUMBER'), state('AES_ENCRYPT'), tr)).toMatch(
+      /^These functions are meant/,
+    )
+    expect(validateCell(col, text(null, 'CHAR'), state('DES_ENCRYPT'), tr)).toBeNull()
+    expect(
+      validateCell(col, { widget: { kind: 'hex-input', size: 10 } } as never, state('AES_ENCRYPT'), tr),
+    ).toBeNull()
   })
 })

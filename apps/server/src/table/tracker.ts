@@ -1,232 +1,272 @@
-import { AsyncLocalStorage } from 'node:async_hooks'
 import {
   type RelationParameters,
+  anyTrackingInProgress,
   appendTrackingLog,
-  isAnyTrackingInProgress,
-  isTrackedTable,
+  insertDatabaseVersion,
+  isTableTracked,
+  parseTrackedQuery,
+  trackedVersion,
   trackingDate,
   trackingLogComment,
-  trackingVersionFor,
 } from '@bettermyadmin/metadata'
-import {
-  AlterStatement,
-  CreateStatement,
-  DeleteStatement,
-  DropStatement,
-  Expression,
-  InsertStatement,
-  Parser,
-  RenameStatement,
-  TruncateStatement,
-  UpdateStatement,
-} from '@bettermyadmin/sql-lexer'
+import { backquote } from '@bettermyadmin/sql-gen'
 import type { Context } from 'hono'
 import { getServer } from '../config.ts'
-import { type Conn, setAfterQuery } from '../db/connection.ts'
+import type { Conn } from '../db/connection.ts'
+import { setQueryHook } from '../db/query-hook.ts'
 import { MetaRequest } from '../metadata/service.ts'
 import type { ServerEnv } from '../routes/server.ts'
 import { TableReader } from './read.ts'
 import { createVersion } from './tracking.ts'
 
 /**
- * Tracker::handleQuery: every statement the user's connection runs successfully is appended to
- * the log of the table's tracked version (schema_sql for DDL, data_sql for DML), and a CREATE
- * TABLE / VIEW in a database with active tracking may start a version
- * (`tracking_version_auto_create`). Enabled for the authenticated requests (pma: the
- * Authentication middleware's Tracker::enable()), with the per-request caches of Tracker.
- *
- * pma: src/Tracking/Tracker.php::handleQuery, parseQuery
+ * Tracker::handleQuery for one request: every statement that succeeds on the user or the control
+ * link (DatabaseInterface::tryQuery) while the configuration storage has the tracking feature is
+ * appended to the active version tracking it, as `# log <date> <user>\n<statement>` in schema_sql
+ * (DDL) or data_sql (DML); with `tracking_version_auto_create`, CREATE TABLE / VIEW / DATABASE
+ * start version 1. Enabled once the server is authenticated (Authentication middleware's
+ * Tracker::enable), its caches (isAnyTrackingInProgress, isTracked) live for the request like
+ * phpMyAdmin's static ones.
+ * pma: src/Tracking/Tracker.php::handleQuery, createDatabaseVersion, src/Dbal/DatabaseInterface.php::tryQuery
  */
+export class RequestTracker {
+  readonly #c: Context<ServerEnv>
+  #meta: MetaRequest | null = null
+  #rp: RelationParameters | null = null
+  /** resolving the storage: its own statements are not handled (phpMyAdmin enables the tracker after) */
+  #resolving = false
+  /** the storage could not be read: no tracking for this request */
+  #failed = false
+  /** `Current::$database` as changed by the statements (USE, CREATE / ALTER / DROP DATABASE) */
+  #database: string | null = null
+  /** the request's database when a route knows it before the statements run (body parameters) */
+  #requestDb: string | null = null
+  readonly #inProgress = new Map<string, boolean>()
+  readonly #tracked = new Map<string, boolean>()
 
-interface TrackerState {
-  c: Context<ServerEnv>
-  meta: MetaRequest | null
-  /** Tracker::$trackedDatabaseCache */
-  anyTracking: Map<string, boolean>
-  /** Tracker::$trackingCache */
-  tracked: Map<string, boolean>
-  /** the tracker's own queries are not tracked */
-  busy: boolean
+  constructor(c: Context<ServerEnv>) {
+    this.#c = c
+  }
+
+  /** `Current::$database`: the request's `db` parameter, then what the statements changed it to. */
+  currentDatabase(): string {
+    if (this.#database !== null) return this.#database
+    if (this.#requestDb !== null) return this.#requestDb
+    // `…/databases/<db>/…`: also before the route's own parameters are known (middleware)
+    // (POST …/databases/drop is the server's Drop databases action)
+    const path = this.#c.req.path
+    const m = /\/databases\/([^/]+)/.exec(path)
+    if (m !== null && !(this.#c.req.method === 'POST' && path.endsWith('/databases/drop'))) {
+      try {
+        return decodeURIComponent(m[1] ?? '')
+      } catch {
+        return m[1] ?? ''
+      }
+    }
+    return this.#c.req.query('db') ?? ''
+  }
+
+  async setRequestDatabase(db: string): Promise<void> {
+    this.#requestDb = db
+    await this.prime()
+  }
+
   /**
-   * `Current::$database` of the request: the route's database, '' for the SQL views (their
-   * statements `USE` the posted one), null for the server-level pages (no database: not tracked)
+   * The isAnyTrackingInProgress probe phpMyAdmin's first statement after Tracker::enable sends
+   * (its per-request preference read on the control link): BetterMyAdmin keeps those reads in the
+   * session, so the probe is sent when the tracker starts, before the route's statements.
    */
-  requestDb: string | null
-}
-
-/** The SQL views whose database comes in the body (pma: /sql, /import with `db`). */
-const SQL_VIEWS = /^\/api\/servers\/\d+\/(query|browse|import|sql)(\/|$)/
-
-function requestDbOf(path: string): string | null {
-  const m = /^\/api\/servers\/\d+\/databases\/([^/]+)/.exec(path)
-  if (m !== null) return decodeURIComponent(m[1] as string)
-  return SQL_VIEWS.test(path) ? '' : null
-}
-
-const als = new AsyncLocalStorage<TrackerState>()
-
-/** Runs the rest of the request with the tracker enabled. */
-export async function withTracker(c: Context<ServerEnv>, next: () => Promise<void>): Promise<void> {
-  const st: TrackerState = {
-    c,
-    meta: null,
-    anyTracking: new Map(),
-    tracked: new Map(),
-    busy: false,
-    requestDb: requestDbOf(c.req.path),
+  async prime(): Promise<void> {
+    const dbname = this.currentDatabase().replace(/^`+|`+$/g, '')
+    if (dbname === '' || this.#inProgress.has(dbname)) return
+    const rp = await this.#relation()
+    if (rp === null || rp.trackingFeature === null || this.#meta === null) return
+    this.#inProgress.set(dbname, await anyTrackingInProgress(this.#meta.control, rp, dbname))
   }
-  try {
-    await als.run(st, next)
-  } finally {
-    st.meta?.close()
-  }
-}
 
-/** The statements Tracker::parseQuery can identify (a cheap test before any storage query). */
-const CANDIDATE = /\b(CREATE|ALTER|DROP|RENAME|UPDATE|INSERT|DELETE|TRUNCATE)\b/i
-
-export interface ParsedTrackedQuery {
-  type: 'DDL' | 'DML'
-  identifier: string
-  tablename: string
-  tablenameAfterRename?: string
-}
-
-const tableOf = (e: unknown): string | null => (e instanceof Expression && e.table !== null ? e.table : null)
-
-/** pma: Tracker::parseQuery (the statement identifier, its type and table); null when none. */
-export function parseTrackedQuery(query: string): ParsedTrackedQuery | null {
-  const parser = new Parser(query)
-  const statement = parser.statements[0]
-  if (statement === undefined) return null
-  const options = statement.options?.options
-  const opt = (i: number) => options?.get(i)
-  const ddl = (identifier: string, tablename: string | null | undefined) =>
-    tablename === null || tablename === undefined ? null : { type: 'DDL' as const, identifier, tablename }
-  if (statement instanceof CreateStatement) {
-    const o = opt(6)
-    if (o === 'VIEW' || o === 'TABLE') return ddl(`CREATE ${o}`, statement.name?.table)
-    if (o === 'DATABASE') return ddl('CREATE DATABASE', '')
-    if (o === 'INDEX' || o === 'UNIQUE INDEX' || o === 'FULLTEXT INDEX' || o === 'SPATIAL INDEX') {
-      const b = statement.body
-      return ddl('CREATE INDEX', String((b[3]?.value === '.' ? b[4]?.value : b[2]?.value) ?? ''))
+  /** Tracker::isActive: enabled and the storage has the tracking feature. */
+  async #relation(): Promise<RelationParameters | null> {
+    if (this.#rp !== null) return this.#rp
+    if (this.#resolving || this.#failed) return null
+    this.#resolving = true
+    try {
+      this.#meta = new MetaRequest(this.#c, { db: this.currentDatabase() })
+      this.#rp = await this.#meta.relationParameters()
+    } catch {
+      this.#failed = true
+      return null
+    } finally {
+      this.#resolving = false
     }
-    return null
+    return this.#rp
   }
-  if (statement instanceof AlterStatement) {
-    const o = opt(3)
-    if (o === 'VIEW' || o === 'TABLE') return ddl(`ALTER ${o}`, statement.table?.table)
-    if (o === 'DATABASE') return ddl('ALTER DATABASE', '')
-    return null
-  }
-  if (statement instanceof DropStatement) {
-    const o = opt(1)
-    if (o === 'VIEW' || o === 'TABLE') return ddl(`DROP ${o}`, tableOf(statement.fields?.[0]))
-    if (o === 'DATABASE') return ddl('DROP DATABASE', '')
-    if (o === 'INDEX') return ddl('DROP INDEX', statement.table?.table)
-    return null
-  }
-  if (statement instanceof RenameStatement) {
-    const r = statement.renames?.[0]
-    const old = r?.old?.table
-    if (old === null || old === undefined) return null
-    return {
-      type: 'DDL',
-      identifier: 'RENAME TABLE',
-      tablename: old,
-      tablenameAfterRename: r?.new?.table ?? '',
-    }
-  }
-  const dml = (identifier: string, tablename: string | null | undefined) =>
-    tablename === null || tablename === undefined ? null : { type: 'DML' as const, identifier, tablename }
-  if (statement instanceof UpdateStatement) return dml('UPDATE', tableOf(statement.tables?.[0]))
-  if (statement instanceof InsertStatement) {
-    const dest = statement.into?.dest
-    return dml('INSERT', dest instanceof Expression ? dest.table : null)
-  }
-  if (statement instanceof DeleteStatement) return dml('DELETE', tableOf(statement.from?.[0]))
-  if (statement instanceof TruncateStatement) return dml('TRUNCATE', statement.table?.table)
-  return null
-}
 
-/** pma: Tracker::handleQuery */
-async function handleQuery(conn: Conn, queryIn: string): Promise<void> {
-  const st = als.getStore()
-  if (st === undefined || st.busy || st.requestDb === null) return
-  // If query is marked as untouchable, leave
-  if (queryIn.startsWith('/*NOTRACK*/') || !CANDIDATE.test(queryIn)) return
-  const query = queryIn.endsWith(';') ? queryIn : `${queryIn};\n`
-  const dbname = (conn.currentDb !== '' ? conn.currentDb : st.requestDb).replace(/^`+|`+$/g, '')
-  if (dbname === '') return
-  st.busy = true
-  try {
-    // the tracker's own storage statements stay out of the request's Debug SQL list
-    st.meta ??= new MetaRequest(st.c, { db: dbname, log: [] })
-    const meta = st.meta
-    const rp: RelationParameters = await meta.relationParameters()
-    if (rp.trackingFeature === null || rp.db === null) return
-    const control = meta.control
-    let any = st.anyTracking.get(dbname)
-    if (any === undefined) {
-      any = await isAnyTrackingInProgress(control, rp, dbname)
-      st.anyTracking.set(dbname, any)
+  /** pma: Tracker::handleQuery */
+  async handle(sql: string, userConn: Conn | null): Promise<void> {
+    // If query is marked as untouchable, leave
+    if (sql.startsWith('/*NOTRACK*/')) return
+    let query = sql.endsWith(';') ? sql : `${sql};\n`
+    // Get database name; it can be empty
+    const dbname = this.currentDatabase().replace(/^`+|`+$/g, '')
+    if (dbname === '') return
+    const rp = await this.#relation()
+    if (rp === null || rp.trackingFeature === null || this.#meta === null) return
+    const control = this.#meta.control
+    // Tracker::changeTracking clears the database's cache before its UPDATE (activation changes)
+    const changed = changedTrackingDb(sql, rp)
+    if (changed !== null) this.#inProgress.delete(changed)
+    let inProgress = this.#inProgress.get(dbname)
+    if (inProgress === undefined) {
+      inProgress = await anyTrackingInProgress(control, rp, dbname)
+      this.#inProgress.set(dbname, inProgress)
     }
-    if (!any) return
+    if (!inProgress) return
+
+    // Get some information about query
     const result = parseTrackedQuery(query)
-    // the table name was not found (issue #16837)
-    if (result === null) return
-    let version = await trackingVersionFor(control, rp, dbname, result.tablename, result.identifier)
-    const cfg = st.c.get('deps').cfg
-    const server = getServer(cfg, st.c.get('serverIndex'))
+    if (result.database !== undefined) this.#database = result.database ?? ''
+    // If we found a valid statement; the table name may be missing (issue #16837)
+    if (result.identifier === undefined) return
+    if (result.tablename === undefined || result.tablename === null) return
+    const tablename = result.tablename
+
+    const version = await trackedVersion(control, rp, dbname, tablename, result.identifier)
+    const server = getServer(this.#c.get('deps').cfg, this.#c.get('serverIndex'))
     if (server === undefined) return
-    const user = st.c.get('creds').user
+    const user = this.#c.get('creds').user
+
     // If version not exists and auto-creation is enabled
     if (server.tracking_version_auto_create && version === -1) {
       if (result.identifier === 'CREATE TABLE' || result.identifier === 'CREATE VIEW') {
-        const cache = (st.c.get('session').servers[String(st.c.get('serverIndex'))]?.cache ?? {}) as Record<
-          string,
-          unknown
-        >
-        const reader = new TableReader(conn, cache, st.c.get('tr'))
+        const conn = userConn ?? (await this.#meta.userConn())
         await createVersion(
-          { reader, cfg, tr: st.c.get('tr'), server, user, control, rp },
+          {
+            reader: new TableReader(conn, {}, this.#c.get('tr')),
+            cfg: this.#c.get('deps').cfg,
+            tr: this.#c.get('tr'),
+            server,
+            user,
+            control,
+            rp,
+          },
           dbname,
-          result.tablename,
+          tablename,
           '1',
           '',
           result.identifier === 'CREATE VIEW',
         )
+      } else if (result.identifier === 'CREATE DATABASE') {
+        await this.#createDatabaseVersion(dbname, '1', query, rp, user, server.tracking_add_drop_database)
       }
     }
-    // If version exists (pma reads it before the auto-creation)
+
+    // If version exists
     if (version === -1) return
-    let tracked = st.tracked.get(`${dbname}\u0000${result.tablename}`)
-    if (tracked === undefined) {
-      tracked = await isTrackedTable(control, rp, dbname, result.tablename)
-      st.tracked.set(`${dbname}\u0000${result.tablename}`, tracked)
-    }
-    if (!tracked) return
+    if (!(await this.#isTracked(dbname, tablename, rp))) return
+
+    const saveTo = result.type === 'DDL' ? 'schema_sql' : result.type === 'DML' ? 'data_sql' : ''
     const date = trackingDate()
     // Cut off `dbname`. from query
-    const escaped = dbname.replace(/[.\\+*?[^\]$(){}=!<>|:\-#/]/g, '\\$&')
-    const cut = query.replace(new RegExp(`\`${escaped}\`\\s?\\.`, 'g'), '')
-    version = Math.trunc(version)
+    const esc = dbname.replace(/[.\\+*?[^\]$(){}=!<>|:\-#/]/g, '\\$&')
+    query = query.replace(new RegExp(`\`${esc}\`\\s?\\.`, 'g'), '')
+    // Add log information
+    query = trackingLogComment(date, user) + query
     await appendTrackingLog(control, rp, {
-      db: dbname,
-      table: result.tablename,
-      version,
-      identifier: result.identifier,
-      saveTo: result.type === 'DDL' ? 'schema_sql' : 'data_sql',
-      query: trackingLogComment(date, user) + cut,
+      saveTo,
+      entry: query,
       date,
-      renamedTo: result.tablenameAfterRename,
+      identifier: result.identifier,
+      db: dbname,
+      table: tablename,
+      version,
+      renamedTo: result.tablename_after_rename ?? null,
     })
-  } catch (e) {
-    // the user's statement ran; a failing log write must not fail it
-    console.error('tracking:', e)
-  } finally {
-    st.busy = false
+  }
+
+  /** pma: Tracker::isTracked (cached for the request) */
+  async #isTracked(db: string, table: string, rp: RelationParameters): Promise<boolean> {
+    const key = `${db}\u0000${table}`
+    const hit = this.#tracked.get(key)
+    if (hit !== undefined) return hit
+    if (this.#meta === null) return false
+    const r = await isTableTracked(this.#meta.control, rp, db, table)
+    this.#tracked.set(key, r)
+    return r
+  }
+
+  /** pma: Tracker::createDatabaseVersion (its default statement set) */
+  async #createDatabaseVersion(
+    db: string,
+    version: string,
+    query: string,
+    rp: RelationParameters,
+    user: string,
+    addDrop: boolean,
+  ): Promise<void> {
+    if (this.#meta === null) return
+    const date = trackingDate()
+    const log = trackingLogComment(date, user)
+    let createSql = ''
+    if (addDrop) createSql += `${log}DROP DATABASE IF EXISTS ${backquote(db)};\n`
+    createSql += log + query
+    await insertDatabaseVersion(this.#meta.control, rp, {
+      db,
+      version,
+      date,
+      schemaSql: createSql,
+      trackingSet: 'CREATE DATABASE,ALTER DATABASE,DROP DATABASE',
+    })
+  }
+
+  close(): void {
+    this.#meta?.close()
+    this.#meta = null
   }
 }
 
-setAfterQuery(handleQuery)
+/** The database of Tracker::changeTracking's `UPDATE … SET tracking_active = n WHERE db_name = '…'`. */
+function changedTrackingDb(sql: string, rp: RelationParameters): string | null {
+  const f = rp.trackingFeature
+  if (f === null) return null
+  const head = `UPDATE ${backquote(f.database)}.${backquote(f.tracking)} SET \`tracking_active\` = `
+  if (!sql.startsWith(head)) return null
+  const m = /^\d+ WHERE `db_name` = '((?:[^'\\]|\\.)*)'/.exec(sql.slice(head.length))
+  return m === null
+    ? null
+    : (m[1] ?? '').replace(/\\(.)/g, (_, ch: string) =>
+        ch === '0' ? '\0' : ch === 'n' ? '\n' : ch === 'r' ? '\r' : ch === 'Z' ? '\x1a' : ch,
+      )
+}
+
+const trackers = new WeakMap<object, RequestTracker>()
+
+/**
+ * Tracker::enable for an authenticated server request: the hook on the request's statements.
+ * Returns the function that ends it (the request's links are released).
+ */
+export async function enableTracker(c: Context<ServerEnv>): Promise<() => void> {
+  const log = c.get('executed')
+  if (trackers.has(log)) return () => {}
+  const tracker = new RequestTracker(c)
+  trackers.set(log, tracker)
+  setQueryHook(log, (sql, conn) => tracker.handle(sql, conn))
+  try {
+    await tracker.prime()
+  } catch (e) {
+    console.error(e)
+  }
+  return () => {
+    setQueryHook(log, null)
+    trackers.delete(log)
+    tracker.close()
+  }
+}
+
+/** The request's database for the tracker when it comes in the body (the SQL box, import, browse). */
+export async function setTrackedDatabase(c: Context<ServerEnv>, db: string): Promise<void> {
+  try {
+    await trackers.get(c.get('executed'))?.setRequestDatabase(db)
+  } catch (e) {
+    console.error(e)
+  }
+}

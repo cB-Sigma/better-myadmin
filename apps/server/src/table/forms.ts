@@ -87,6 +87,7 @@ export async function columnFormOptions(
     havePartitioning: await reader.havePartitioning(),
     integersLengthRestricted: isIntegersLengthRestricted(server),
     commentMaxLength: server.version >= 50503 ? 1024 : 255,
+    sliders: cfg.InitialSlidersState,
     privsAvailable,
     charEditing: cfg.CharEditing,
     centralColumns: features.centralColumns,

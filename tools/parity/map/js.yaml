@@ -22,3 +22,9 @@ js:modules/console.ts#click:<$targetMessage> .action.dbg_show_args:
   n/a: 'Debug SQL backtraces: the arguments of the PHP stack frames (see dbg_show_trace)'
 js:modules/console.ts#click:<$targetMessage> .action.dbg_hide_args:
   n/a: 'Debug SQL backtraces: the arguments of the PHP stack frames (see dbg_show_trace)'
+js:replication.ts#click:#replica_synchronization_href:
+  n/a: 'dead handler: no template renders #replica_synchronization_href / #replica_synchronization_gui (replica_configuration.twig has status, control and error management only)'
+js:replication.ts#click:#nopass_0:
+  n/a: 'dead handler: #nopass_0 is in server/privileges/change_password.twig, which the replication page (the only one loading replication.js) does not render'
+"js:replication.ts#click:<$('#nopass_1') as JQuery<HTMLInputEleme…>":
+  n/a: 'dead handler: #nopass_1 is in server/privileges/change_password.twig, which the replication page (the only one loading replication.js) does not render'

@@ -8,6 +8,8 @@ import type { ServerEnv } from '../routes/server.ts'
 import type { SecretBox } from '../session/crypto.ts'
 import { regenerate } from '../session/manager.ts'
 import type { ServerLogin } from '../session/store.ts'
+import { logUser } from './auth-log.ts'
+import { requestClientIp } from './login.ts'
 
 /** The decrypted credentials of a server login (null when the ciphertext is stale). */
 export function loginCredentials(credBox: SecretBox, login: ServerLogin): Credentials | null {
@@ -90,6 +92,8 @@ export async function storeLogin(
   delete session.expired
   forgetServerMetadata(session, server)
   ac.set('session', session)
+  // Authentication middleware: Logging::logUser($user) once the login is verified
+  logUser(ac.get('deps').cfg, creds.user, 'ok', requestClientIp(ac, ac.get('deps').cfg.TrustedProxies))
   // AuthenticationPlugin::checkTwoFactor: the configured backend's check (none passes)
   login.twoFactorOk = await withTwoFactor(ac, server, login, (tf) => tf.check({}), true)
   return login

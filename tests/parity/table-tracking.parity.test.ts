@@ -60,8 +60,7 @@ const trk = (db: string, user: string, version: string, active: number, set = 'U
   )
 }
 
-const ours = (s: string) =>
-  s.includes('f04trk_') && !s.startsWith('/*NOTRACK*/ SELECT') && !s.includes('`pma__recent`')
+const ours = (s: string) => s.includes('f04trk_') && !s.includes('`pma__recent`')
 
 interface Case {
   name: string

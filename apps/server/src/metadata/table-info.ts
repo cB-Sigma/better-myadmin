@@ -5,10 +5,7 @@ import type { MetaRequest } from './service.ts'
 
 /** DbTableExists::selectDatabase on the user link (`USE db`); false when it fails. */
 export function selectDatabase(conn: Conn, db: string): Promise<boolean> {
-  return conn.query(`USE ${backquote(db)}`, 'favorite.select-db').then(
-    () => true,
-    () => false,
-  )
+  return conn.selectDb(db, 'favorite.select-db')
 }
 
 /** Table::isView / getStatusInfo('CREATE_TIME') / getColumns(false) on the user link. */

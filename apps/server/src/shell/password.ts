@@ -1,4 +1,5 @@
 import type { ChangePasswordResponse, PasswordForm } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import { quoteString } from '@bettermyadmin/sql-gen'
 import { ForbiddenError, MysqlError, ValidationError } from '../http/errors.ts'
 import { PrivilegeProbe } from './privileges.ts'
@@ -8,11 +9,11 @@ export const NOT_ALLOWED = "You don't have sufficient privileges to be here righ
 
 /** Plugins::getTranslatedDescription — msgids for the server's English descriptions. */
 const PLUGIN_DESCRIPTIONS = new Set([
-  'Native MySQL authentication',
-  'SHA256 password authentication',
-  'Caching sha2 authentication',
-  'Unix Socket based authentication',
-  'Old MySQL-4.0 authentication',
+  N_('Native MySQL authentication'),
+  N_('SHA256 password authentication'),
+  N_('Caching sha2 authentication'),
+  N_('Unix Socket based authentication'),
+  N_('Old MySQL-4.0 authentication'),
 ])
 
 function facts(ctx: ShellCtx) {
@@ -63,7 +64,7 @@ export async function passwordForm(ctx: ShellCtx): Promise<PasswordForm> {
   const origAuthPlugin = await currentAuthPlugin(ctx, '', '')
   const isNew = (isMySqlOrPercona && v >= 50507) || (isMariaDb && v >= 50200)
   const hasMore = isMySqlOrPercona && v >= 50706 // `|| ($dbi->isSuperUser() && $editOthers)`, editOthers = false
-  let authPlugins = [{ name: 'mysql_native_password', description: 'Native MySQL authentication' }]
+  let authPlugins = [{ name: 'mysql_native_password', description: N_('Native MySQL authentication') }]
   if (isNew && hasMore) {
     const rows = await ctx.conn.rows(
       "SELECT `PLUGIN_NAME`, `PLUGIN_DESCRIPTION` FROM `information_schema`.`PLUGINS` WHERE `PLUGIN_TYPE` = 'AUTHENTICATION';",
@@ -90,9 +91,9 @@ export async function passwordForm(ctx: ShellCtx): Promise<PasswordForm> {
 /** UserPassword::setChangePasswordMsg */
 export function validatePassword(pw: string, pw2: string, noPassword: boolean): string | null {
   if (noPassword) return null
-  if (pw === '' || pw2 === '') return 'The password is empty!'
-  if (pw !== pw2) return "The passwords aren't the same!"
-  if (Buffer.byteLength(pw, 'utf8') > 256) return 'Password is too long!'
+  if (pw === '' || pw2 === '') return N_('The password is empty!')
+  if (pw !== pw2) return N_("The passwords aren't the same!")
+  if (Buffer.byteLength(pw, 'utf8') > 256) return N_('Password is too long!')
   return null
 }
 

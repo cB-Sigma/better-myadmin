@@ -52,9 +52,7 @@ export function normalise(sql: string, dbMap: Record<string, string> = {}): stri
 export type Kind = 'session' | 'read' | 'write'
 
 /** Connection set-up, reads (SELECT/SHOW/EXPLAIN without INTO), everything else is a write. */
-export function classify(sqlIn: string): Kind {
-  // phpMyAdmin marks its own storage statements /*NOTRACK*/ (Tracker::handleQuery skips them)
-  const sql = sqlIn.replace(/^\/\*NOTRACK\*\/\s*/, '')
+export function classify(sql: string): Kind {
   // per-connection set-up: PHP connects on every request, we keep pooled connections
   if (
     /^(SET (NAMES|lc_messages|collation_connection|`time_zone`)\b|USE |SELECT @@version, @@version_comment, @@sql_mode$)/i.test(

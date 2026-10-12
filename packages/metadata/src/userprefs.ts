@@ -15,6 +15,8 @@ export interface PrefsMessage {
   type: 'error'
   text: string
   detail?: string
+  /** the storage database could not be accessed (an extra line) */
+  inaccessible?: true
 }
 
 /** `$_SESSION['userconfig']` */
@@ -100,7 +102,12 @@ export class UserPreferences {
     this.invalidate()
     const r = await this.backend.save(this.username, json)
     if (r === true) return true
-    return { type: 'error', text: r.error, ...(r.detail !== undefined ? { detail: r.detail } : {}) }
+    return {
+      type: 'error',
+      text: r.error,
+      ...(r.detail !== undefined ? { detail: r.detail } : {}),
+      ...(r.inaccessible === true ? { inaccessible: true as const } : {}),
+    }
   }
 
   /**

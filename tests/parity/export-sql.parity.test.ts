@@ -13,7 +13,7 @@ import {
   withFields,
 } from './lib/export.ts'
 import { PmaClient } from './lib/pma.ts'
-import { PMA_URL, pmaReachable } from './lib/server-setup.ts'
+import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden byte parity of the SQL export (docs/features/07-export-import.md, SQL plugin): the same
@@ -228,7 +228,7 @@ describe.skipIf(!pmaReachable)('export SQL parity', () => {
     await seedDatabase(root, `${DB}2`)
     pma = new PmaClient(PMA_URL)
     await pma.login(USERS.pma, USERS.pma)
-    bma = testApp(testConfig({}))
+    bma = testApp(testConfig({}, PMA_STORAGE))
     await bma.login(USERS.bma, USERS.bma)
     await root.query(PMADB_CLEAN + PMADB_SEED)
     bmaStorage = testApp(testConfig({}, { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }))

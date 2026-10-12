@@ -7,7 +7,7 @@ import { createZip } from '../../packages/export/src/zip.ts'
 import { ROOT, createAccounts, withFields } from './lib/export.ts'
 import { type ImportFile, type Pairs, bmaImport, pmaImport, pmaImportForm } from './lib/import.ts'
 import { PmaClient } from './lib/pma.ts'
-import { PMA_URL, pmaReachable } from './lib/server-setup.ts'
+import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Import parity (docs/features/07-export-import.md): the same file and form (scraped from
@@ -341,7 +341,7 @@ describe.skipIf(!pmaReachable)('import parity', () => {
     await root.query(reset(DBS.pma) + reset(DBS.bma))
     pma = new PmaClient(PMA_URL)
     await pma.login(USERS.pma, USERS.pma)
-    bma = testApp(testConfig({}))
+    bma = testApp(testConfig({}, PMA_STORAGE))
     const r = await bma.login(USERS.bma, USERS.bma)
     token = String(r.json.csrfToken ?? '')
     dbForm = await pmaImportForm(pma, 'database', { db: DBS.pma })

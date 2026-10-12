@@ -59,7 +59,7 @@ metaRoutes.get('/version-check', async (c) => {
   const { cfg } = c.get('deps')
   const url = process.env.BMA_VERSION_FEED_URL ?? ''
   if (!cfg.VersionCheck || url === '') return c.json({} satisfies VersionCheckResponse)
-  const releases = await getLatestVersions(url)
+  const releases = await getLatestVersions(url, Date.now(), cfg)
   if (releases === null) return c.json({} satisfies VersionCheckResponse)
   const session = c.get('session')
   const single = serverIndexes(cfg).length === 1

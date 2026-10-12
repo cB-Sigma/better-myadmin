@@ -90,15 +90,15 @@ export async function userGroupForm(p: Privileges, userGroup: string | null): Pr
       ? await userGroupAllowedTabs(f.conn, f.menus, userGroup)
       : { server: [], db: [], table: [] }
   const titles = {
-    server: 'Server-level tabs',
-    db: 'Database-level tabs',
-    table: 'Table-level tabs',
-  } as const
+    server: t('Server-level tabs'),
+    db: t('Database-level tabs'),
+    table: t('Table-level tabs'),
+  }
   return {
     userGroup,
     levels: USER_GROUP_LEVELS.map((level) => ({
       level,
-      title: t(titles[level]),
+      title: titles[level],
       tabs: MENU_TAB_LIST[level].map(([tab, name]) => ({
         tab,
         name: t(name),

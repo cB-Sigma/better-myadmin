@@ -1,3 +1,4 @@
+import { type ProxySettings, httpRequest } from '../util/http-request.ts'
 /**
  * Version check against BetterMyAdmin's release feed (parity exception X20), with phpMyAdmin's
  * caching, release selection and version arithmetic. The feed has phpMyAdmin's shape:
@@ -129,13 +130,18 @@ export function latestCompatible(
 const cache = new Map<string, { at: number; body: string }>()
 
 /** Fetches the feed, cached 6 hours (pma caches per session; the feed is the same for everyone). */
-export async function getLatestVersions(url: string, now = Date.now()): Promise<Release[] | null> {
+export async function getLatestVersions(
+  url: string,
+  now = Date.now(),
+  proxy: ProxySettings = { ProxyUrl: '', ProxyUser: '', ProxyPass: '' },
+): Promise<Release[] | null> {
   let body = cache.get(url)?.body
   const at = cache.get(url)?.at ?? 0
   let save = false
   if (body === undefined || now >= at + 6 * 3600 * 1000) {
-    body = await fetch(url, { signal: AbortSignal.timeout(10_000) })
-      .then((r) => (r.ok ? r.text() : '{}'))
+    // HttpRequest::create through ProxyUrl; a status other than 200 reads as no data
+    body = await httpRequest(proxy, url)
+      .then((r) => (r.status === 200 ? r.body : '{}'))
       .catch(() => '{}')
     save = true
   }

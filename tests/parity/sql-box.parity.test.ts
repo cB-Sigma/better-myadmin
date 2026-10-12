@@ -4,6 +4,7 @@ import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { compareLogs } from './lib/compare.ts'
 import { GeneralLog } from './lib/general-log.ts'
 import { PmaClient, isPmaUp, sqlBoxForm, visibleText } from './lib/pma.ts'
+import { PMA_STORAGE } from './lib/server-setup.ts'
 
 /**
  * Golden parity: the same SQL-tab action in the reference phpMyAdmin and in BetterMyAdmin must
@@ -83,7 +84,7 @@ describe.skipIf(!reachable)('parity: SQL tab (/import) vs POST /query', () => {
     log = await GeneralLog.open(ROOT)
     pma = new PmaClient(PMA_URL)
     await pma.login(PMA_USER, PMA_USER)
-    bma = testApp(testConfig())
+    bma = testApp(testConfig({}, PMA_STORAGE))
     await bma.login(BMA_USER, BMA_USER)
   })
 

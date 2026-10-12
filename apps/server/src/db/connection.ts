@@ -1,10 +1,12 @@
 import { createReadStream } from 'node:fs'
 import { Readable } from 'node:stream'
 import type { Executed } from '@bettermyadmin/contracts'
+import { backquote } from '@bettermyadmin/sql-gen'
 import type { Context } from '@bettermyadmin/sql-lexer'
 import type { FieldPacket, PoolConnection, ResultSetHeader } from 'mysql2/promise'
 import { MysqlError, isMysqlError } from '../http/errors.ts'
 import { type RawField, toField } from './field-meta.ts'
+import { afterQuery } from './query-hook.ts'
 
 export type RawRow = Array<Buffer | null>
 
@@ -36,23 +38,10 @@ export interface ServerInfo {
   context: Context
 }
 
-/** Called after every successful statement of a connection (Tracker::handleQuery). */
-type AfterQuery = (conn: Conn, sql: string) => Promise<void>
-let afterQuery: AfterQuery | null = null
-
-/** Installs the hook run after each successful `Conn.query` (DatabaseInterface::query's tracker call). */
-export function setAfterQuery(fn: AfterQuery | null): void {
-  afterQuery = fn
-}
-
-const USE_RE = /^\s*USE\s+(`(?:[^`]|``)+`|[^\s;]+)\s*;?\s*$/i
-
 export class Conn {
   readonly raw: PoolConnection
   readonly log: Executed[]
   serverInfo: ServerInfo | null = null
-  /** The database of the last successful `USE` (`Current::$database` for the tracker). */
-  currentDb = ''
   /**
    * The one file a `LOAD DATA LOCAL INFILE` may read (the uploaded import file of ImportLdi), or
    * null: the server's file request is refused like a client without local_infile.
@@ -68,7 +57,20 @@ export class Conn {
     return this.raw.threadId
   }
 
-  async query(sql: string, label: string): Promise<QueryResult> {
+  /**
+   * DatabaseInterface::selectDb (mysqli::select_db): `USE db` without the tryQuery hook
+   * (Tracker::handleQuery would read it as a USE statement of the request).
+   */
+  async selectDb(db: string, label: string): Promise<boolean> {
+    try {
+      await this.query(`USE ${backquote(db)}`, label, false)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  async query(sql: string, label: string, hook = true): Promise<QueryResult> {
     const start = performance.now()
     let res: [unknown, unknown]
     try {
@@ -86,14 +88,10 @@ export class Conn {
       throw e
     }
     const ms = performance.now() - start
-    this.log.push({ sql, ms, label })
-    const use = USE_RE.exec(sql)
-    if (use !== null) {
-      const name = use[1] as string
-      this.currentDb = name.startsWith('`') ? name.slice(1, -1).replaceAll('``', '`') : name
-    }
-    if (afterQuery !== null) await afterQuery(this, sql)
-    return { ...normalise(res[0], res[1]), ms }
+    const out = normalise(res[0], res[1])
+    this.log.push({ sql, ms, label, ...(out.header !== null ? { warnings: out.header.warningStatus } : {}) })
+    if (hook) await afterQuery(this.log, sql, this)
+    return { ...out, ms }
   }
 
   /** Convenience for internal queries: rows as utf8 strings keyed by column name. */

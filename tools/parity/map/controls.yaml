@@ -14,3 +14,5 @@ home/index.twig#link:Show PHP information:
 error/report_form.twig:
   exception: X19
   planned: M1
+user_password.twig#link:Back:
+  n/a: 'rendered only when the change-password form is posted without JavaScript (UserPasswordController non-AJAX branch); the SPA always takes the AJAX path, whose result shows in the dialog and the page message'

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
-import { ColumnForm, type ColumnRow, emptyRow, indexesFromRows, toColumnDef } from './ColumnForm'
+import { ColumnForm, type ColumnRow, emptyRow, toColumnDef } from './ColumnForm'
 import { PartitionEditor } from './PartitionEditor'
 import { setFlash } from './flash'
 
@@ -110,10 +110,10 @@ export function AddColumnsPage({
       rows={rows}
       setRows={setRows}
       reservedCheck={(names) => api.reservedWordCheck(scope, names)}
-      submit={(dryRun, online) =>
+      submit={(dryRun, online, indexes) =>
         api.addColumns(scope, {
           columns: rows.map((r) => toColumnDef(r, q.data.options)),
-          indexes: indexesFromRows(rows),
+          indexes,
           where,
           afterField: after,
           onlineTransaction: online,

@@ -10,6 +10,7 @@ import {
   NativeSelect,
   Panel,
   PanelBody,
+  PmaIcon,
   Radio,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
@@ -30,6 +31,7 @@ import {
   type ReadPoint,
   type StorageLike,
   axisKind,
+  checkImportedGrid,
   clearStored,
   defaultChartGrid,
   exportConfig,
@@ -444,6 +446,7 @@ function Monitor({ server, facts }: { server: number; facts: MonitorFacts }) {
           }
           const st = storage()
           try {
+            checkImportedGrid(json)
             st?.setItem('monitorCharts', JSON.stringify(json.monitorCharts))
             st?.setItem('monitorSettings', JSON.stringify(json.monitorSettings))
             init()
@@ -475,6 +478,9 @@ function Monitor({ server, facts }: { server: number; facts: MonitorFacts }) {
           </>
         }
       >
+        <span aria-label={t('Warning:')}>
+          <PmaIcon name="s_attention" alt="" />
+        </span>{' '}
         {t(
           'While requesting new chart data the server returned an invalid response. This is most likely because your session expired. Reloading the page and reentering your credentials should help.',
         )}
@@ -487,6 +493,9 @@ function Monitor({ server, facts }: { server: number; facts: MonitorFacts }) {
         id="incompatibleMonitorConfigModal"
         footer={<Button onClick={() => setModal(null)}>{t('Close')}</Button>}
       >
+        <span aria-label={t('Warning:')}>
+          <PmaIcon name="s_attention" alt="" />
+        </span>{' '}
         {t(
           'The chart arrangement configuration in your browsers local storage is not compatible anymore to the newer version of the monitor dialog. It is very likely that your current configuration will not work anymore. Please reset your configuration to default in the [em]Settings[/em] menu.',
         ).replace(/\[\/?em\]/g, '')}

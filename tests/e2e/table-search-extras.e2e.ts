@@ -97,5 +97,20 @@ test('empty criteria are left out; all columns selected posts no column list [p0
     ['name', 'IS NULL', ''],
   ])
   expect(body.columns).toBeNull()
-  await expect(page).toHaveURL(/\/t\/t\/browse\?/)
+})
+
+test('results show under the form, which hides; Show/Hide search criteria toggles it [p04-d067e0]', async ({
+  page,
+}) => {
+  await searchPage(page)
+  await expect(page.locator('#togglesearchformlink')).toHaveCount(0)
+  await row(page, 'qty').getByLabel('Value').fill('5')
+  await page.getByRole('button', { name: 'Go' }).click()
+  await expect(page.locator('table.table_results')).toBeVisible()
+  const toggle = page.locator('#togglesearchformlink')
+  await expect(toggle).toHaveText('Show search criteria')
+  await expect(row(page, 'qty')).toBeHidden()
+  await toggle.click()
+  await expect(toggle).toHaveText('Hide search criteria')
+  await expect(row(page, 'qty')).toBeVisible()
 })

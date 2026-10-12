@@ -9,6 +9,7 @@ import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
 import { importPage } from '../import/page.ts'
 import { runFileImport } from '../import/service.ts'
+import { enableTracker, setTrackedDatabase } from '../table/tracker.ts'
 import type { ServerEnv } from './server.ts'
 
 /**
@@ -125,6 +126,9 @@ importRoutes.get('/jobs/:id{[0-9a-f]{32}}/events', (c) => {
   jobs.delete(id)
   return streamSSE(c, async (stream) => {
     let last = 0
+    // the import runs after the request's handler returned: its own Tracker::enable
+    const endTracker = await enableTracker(c)
+    await setTrackedDatabase(c, job.pairs.find(([k]) => k === 'db')?.[1] ?? '')
     try {
       const result: ImportResult = await runFileImport(c, job.pairs, job.upload, (p) => {
         const now = Date.now()
@@ -137,6 +141,7 @@ importRoutes.get('/jobs/:id{[0-9a-f]{32}}/events', (c) => {
       const message = e instanceof Error ? `${e.message}${process.env.F07_DEBUG ? e.stack : ''}` : String(e)
       await stream.writeSSE({ event: 'failure', data: JSON.stringify({ message }) })
     } finally {
+      endTracker()
       if (job.upload !== null) rmSync(job.upload.path, { force: true })
     }
   })

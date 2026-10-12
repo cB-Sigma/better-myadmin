@@ -1,3 +1,4 @@
+import { N_ } from '@bettermyadmin/i18n'
 /**
  * Pure helpers of the change-password dialog (unit-tested).
  * pma: resources/js/modules/functions.ts::checkPassword, suggestPassword, checkPasswordStrength
@@ -22,8 +23,8 @@ function defaultRandom(n: number): Int32Array {
 /** checkPassword: the alert text, or null when the form may be submitted. */
 export function checkPassword(noPassword: boolean, pw: string, pw2: string): string | null {
   if (noPassword) return null
-  if (pw === '') return 'The password is empty!'
-  if (pw !== pw2) return "The passwords aren't the same!"
+  if (pw === '') return N_('The password is empty!')
+  if (pw !== pw2) return N_("The passwords aren't the same!")
   return null
 }
 

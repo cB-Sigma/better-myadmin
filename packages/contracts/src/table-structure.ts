@@ -331,6 +331,8 @@ export const ColumnFormOptions = z.object({
   havePartitioning: z.boolean(),
   /** Compatibility::isIntegersLengthRestricted → #length_not_allowed alert */
   integersLengthRestricted: z.boolean(),
+  /** $cfg['InitialSlidersState'] (the Add index dialog's Advanced options) */
+  sliders: z.string().default('closed'),
   /** comment maxlength (1024 on MySQL ≥ 5.5.3) */
   commentMaxLength: z.number().int(),
   /** UserPrivileges column + reload: "Adjust privileges" ticked and enabled */
