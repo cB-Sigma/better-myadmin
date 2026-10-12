@@ -71,4 +71,6 @@ export const pmaControls = {
   'js:gis_data_editor.ts#click:#gis_editor button.gis-copy-data': '../gis/GisEditor.tsx',
   'js:gis_data_editor.ts#hidden:<$gisEditorModal>': '../gis/GisEditor.tsx',
   'js:transformations/image_upload.ts#change:input.image-upload': 'ValueWidget.tsx',
+  // pma: resources/js — browser behaviours (js.json)
+  'js:table/change.ts#click:<$thisElement>': { file: 'ValueWidget.tsx', match: 'className="checkbox_null"' },
 }

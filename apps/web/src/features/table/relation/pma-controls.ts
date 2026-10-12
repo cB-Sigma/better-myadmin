@@ -35,4 +35,13 @@ export const pmaControls = {
     file: 'RelationPage.tsx',
     match: "k === 'onDelete' ? 'on_delete' : 'on_update'",
   },
+  // pma: resources/js — browser behaviours (js.json)
+  'js:table/relation.ts#ajax:POST /table/relation': {
+    file: 'RelationPage.tsx',
+    match: 'api.tableRelationDropdown(scope',
+  },
+  'js:table/relation.ts#ajax:POST <url>': {
+    file: 'RelationPage.tsx',
+    match: 'api.tableRelationDropFk(scope, constraint)',
+  },
 } as const

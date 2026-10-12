@@ -4,14 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api, errorMessage } from '../../../lib/api'
 import { qk } from '../../../lib/queryKeys'
-import {
-  ColumnForm,
-  type ColumnRow,
-  type TableOptions,
-  emptyRow,
-  indexesFromRows,
-  toColumnDef,
-} from '../structure/ColumnForm'
+import { ColumnForm, type ColumnRow, type TableOptions, emptyRow, toColumnDef } from '../structure/ColumnForm'
 import { setFlash } from '../structure/flash'
 
 /**
@@ -63,13 +56,13 @@ export function CreateTablePage({
           return { reserved: false, message: '' }
         }
       }}
-      submit={(dryRun) =>
+      submit={(dryRun, _online, indexes) =>
         api.createTable(
           { server, db },
           {
             table: table.table,
             columns: current.map((r) => toColumnDef(r, q.data.options)),
-            indexes: indexesFromRows(current),
+            indexes,
             comment: table.comment,
             collation: table.collation,
             engine: table.engine,

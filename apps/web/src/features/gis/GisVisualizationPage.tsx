@@ -14,7 +14,7 @@ import {
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Globe, ZoomIn, ZoomOut } from 'lucide-react'
-import { type PointerEvent, type WheelEvent, useEffect, useMemo, useRef, useState } from 'react'
+import { type PointerEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { type VisScope, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -219,6 +219,16 @@ function SvgPlot({
   hidden: boolean
 }) {
   const [view, setView] = useState({ x: 0, y: 0, scale: 1 })
+  // resize(): the plot fills the target, the view shifted by half the growth; zoom_world resets
+  // to the original size first (reset)
+  const [size, setSize] = useState({ width, height })
+  const fit = (from: { width: number; height: number }, base: { x: number; y: number; scale: number }) => {
+    const el = box.current
+    const w = Math.ceil(el?.clientWidth || from.width)
+    const h = Math.ceil(el?.clientHeight || from.height)
+    setSize({ width: w, height: h })
+    setView({ ...base, x: base.x + (w - from.width) / 2, y: base.y + (h - from.height) / 2 })
+  }
   const [tip, setTip] = useState<{ text: string; x: number; y: number } | null>(null)
   const drag = useRef<{ x: number; y: number } | null>(null)
   const box = useRef<HTMLDivElement>(null)
@@ -232,11 +242,34 @@ function SvgPlot({
       x: p.x - (p.x - v.x) * factor,
       y: p.y - (p.y - v.y) * factor,
     }))
-  const center = { x: width / 2, y: height / 2 }
-  const onWheel = (e: WheelEvent) => {
-    if (e.deltaY === 0) return
-    zoomAt(rel(e), e.deltaY > 0 ? 1 / ZOOM_FACTOR : ZOOM_FACTOR)
-  }
+  const center = { x: size.width / 2, y: size.height / 2 }
+  const latest = useRef({ size, view })
+  latest.current = { size, view }
+  // show() and $(window).on('resize') call resize()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: fit reads the latest size and view
+  useEffect(() => {
+    if (hidden) return
+    const onResize = () => fit(latest.current.size, latest.current.view)
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [hidden])
+  // addEventListener('wheel', …, { passive: false }): the page does not scroll while zooming
+  const svg = useRef<SVGSVGElement>(null)
+  const zoomRef = useRef(zoomAt)
+  zoomRef.current = zoomAt
+  // biome-ignore lint/correctness/useExhaustiveDependencies: bound once; rel reads the box ref
+  useEffect(() => {
+    const el = svg.current
+    if (el === null) return
+    const onWheel = (e: globalThis.WheelEvent) => {
+      if (e.deltaY === 0) return
+      e.preventDefault()
+      zoomRef.current(rel(e), e.deltaY > 0 ? 1 / ZOOM_FACTOR : ZOOM_FACTOR)
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [])
   const onPointerMove = (e: PointerEvent) => {
     if (drag.current === null) return
     const dx = Math.round(e.clientX - drag.current.x)
@@ -254,7 +287,11 @@ function SvgPlot({
     ['up_arrow', <ArrowUp key="u" className="size-3" />, () => setView((v) => ({ ...v, y: v.y + 100 }))],
     ['down_arrow', <ArrowDown key="d" className="size-3" />, () => setView((v) => ({ ...v, y: v.y - 100 }))],
     ['zoom_in', <ZoomIn key="i" className="size-3" />, () => zoomAt(center, ZOOM_FACTOR)],
-    ['zoom_world', <Globe key="w" className="size-3" />, () => setView({ x: 0, y: 0, scale: 1 })],
+    [
+      'zoom_world',
+      <Globe key="w" className="size-3" />,
+      () => fit({ width, height }, { x: 0, y: 0, scale: 1 }),
+    ],
     ['zoom_out', <ZoomOut key="o" className="size-3" />, () => zoomAt(center, 1 / ZOOM_FACTOR)],
   ]
   return (
@@ -264,12 +301,12 @@ function SvgPlot({
     >
       <div>
         <svg
-          width={width}
-          height={height}
+          width={size.width}
+          height={size.height}
           className="cursor-move touch-none"
           role="img"
           aria-label={t('Display GIS Visualization')}
-          onWheel={onWheel}
+          ref={svg}
           onDoubleClick={(e) => zoomAt(rel(e), ZOOM_FACTOR)}
           onPointerDown={(e) => {
             drag.current = { x: e.clientX, y: e.clientY }
@@ -317,6 +354,8 @@ function SvgPlot({
           key={cls}
           type="button"
           className={`button ${cls} absolute rounded border border-border bg-bg-elevated p-0.5`}
+          // .on('dragstart', '.button', () => false)
+          onDragStart={(e) => e.preventDefault()}
           style={{ left: 8 + (i < 4 ? i * 18 : (i - 4) * 18), top: i < 4 ? 8 : 30 }}
           onClick={run}
         >

@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3030/3426 covered (88.4%): 2996 implemented, 4 exception, 30 n/a, 5 planned, 391 missing. [Summary](README.md).
+3037/3426 covered (88.6%): 3003 implemented, 4 exception, 30 n/a, 4 planned, 385 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 287/403 (71.2%) covered, 287/403 implemented
 
@@ -68,14 +68,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Theme/Theme.php` | 1/1 | `No valid image path for theme %s found!` |
 | `src/ZipExtension.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
 
-## 02 browse results grid — 41/56 (73.2%) covered, 41/56 implemented
+## 02 browse results grid — 43/56 (76.8%) covered, 43/56 implemented
 
-15 msgids not used yet.
+13 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/templates/display/results/table.twig` | 9/25 | `Display column for relationships` · `Full texts` · `Hide browser transformation` · `Partial texts` · `Relational key` · `Show binary contents` · `Show BLOB contents` · `Well Known Binary` · `Well Known Text` |
-| `resources/js/makegrid.ts` | 5/15 | `Click to mark/unmark.` · `Column name copying to clipboard failed!` · `Double-click to copy column name.` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
+| `resources/js/makegrid.ts` | 3/15 | `Column name copying to clipboard failed!` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
 | `src/Display/Results.php` | 2/11 | `Full texts` · `Partial texts` |
 | `src/Controllers/Table/GetFieldController.php` | 1/4 | `Invalid table name` |
 
@@ -111,15 +111,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 436/534 (81.6%) covered, 436/534 implemented
+## 04 table level — 440/534 (82.4%) covered, 440/534 implemented
 
-98 msgids not used yet.
+94 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
 | `resources/templates/table/operations/index.twig` | 6/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` |
-| `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
@@ -131,6 +130,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
 | `resources/js/database/search.ts` | 1/4 | `Searching` |
+| `resources/js/modules/indexes.ts` | 1/12 | `Dropping Primary Key/Index` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
 | `resources/js/table/operations.ts` | 1/7 | `You are about to DELETE all the rows of the table!` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
@@ -234,13 +234,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 664/666 (99.7%) covered, 630/666 implemented
+## 08 settings preferences pmadb — 665/666 (99.8%) covered, 631/666 implemented
 
-2 msgids not used yet.
+1 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `resources/js/validator-messages.ts` | 2/20 | `Please enter a valid number` · `This field is required` |
+| `resources/js/validator-messages.ts` | 1/20 | `This field is required` |
 
 ## 09 sql editor query pipeline — 42/46 (91.3%) covered, 42/46 implemented
 

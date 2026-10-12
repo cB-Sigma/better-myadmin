@@ -159,7 +159,7 @@ export const pmaControls = {
   },
   'columns_definitions/column_attributes.twig#field_key[*]': {
     file: 'ColumnForm.tsx',
-    match: 'update(i, { key: e.target.value.replace(',
+    match: 'keyChanged(rows, i, e.target.value',
   },
   'columns_definitions/column_attributes.twig#field_extra[*]': {
     file: 'ColumnForm.tsx',
@@ -288,4 +288,97 @@ export const pmaControls = {
   },
   'modals/enum_set_editor.twig#id:enumEditorGoButton': 'ColumnForm.tsx',
   'modals/preview_sql_modal.twig#button:Close': { file: 'ColumnForm.tsx', match: '<PreviewSqlDialog' },
+  // pma: resources/js — browser behaviours (js.json)
+  'js:table/structure.ts#ajax:GET <data.structure_refresh_route>': {
+    file: 'ColumnPages.tsx',
+    match: 'useBackToStructure(scope)',
+  },
+  'js:table/structure.ts#ajax:POST <{ url: formUrl, data: formData, success…>': {
+    file: 'StructurePage.tsx',
+    match: 'dryRun: true })).preview',
+  },
+  "js:table/structure.ts#ajax:POST <$('#fieldsForm').attr('action')>": {
+    file: 'StructurePage.tsx',
+    match: 'await refresh()',
+  },
+  "js:table/structure.ts#ajax:POST <$form.attr('action')>": {
+    file: 'ColumnPages.tsx',
+    match: 'api.addColumns(scope, {',
+  },
+  "js:table/structure.ts#ajax:POST <$form.prop('action')>": {
+    file: 'StructurePage.tsx',
+    match: 'api.moveColumns(scope, { order })',
+  },
+  'js:table/structure.ts#ajax:POST <this.formAction>': {
+    file: 'StructurePage.tsx',
+    match: "api.dropColumns(scope, { columns: orderedSelection, source: 'bulk' })",
+  },
+  'js:table/structure.ts#ajax:POST <url>': {
+    file: 'StructurePage.tsx',
+    match: "api.dropColumns(scope, { columns: [c.name], source: 'row' })",
+  },
+  'js:table/structure.ts#change:select[name=after_field]': {
+    file: 'StructurePage.tsx',
+    match: "afterField === 'first' ? 'first' : 'after'",
+  },
+  'js:table/structure.ts#click:#designerModalGoButton': {
+    file: 'StructurePage.tsx',
+    match: 'id="designerModalGoButton"',
+  },
+  'js:table/structure.ts#click:#fieldsForm button.mult_submit': {
+    file: 'StructurePage.tsx',
+    match: 'const noneSelected = () =>',
+  },
+  'js:table/structure.ts#click:#move_columns_anchor': {
+    file: 'StructurePage.tsx',
+    match: 'move_columns_anchor',
+  },
+  'js:table/structure.ts#click:#remove_partitioning.ajax': {
+    file: 'StructurePage.tsx',
+    match: 'id="remove_partitioning"',
+  },
+  'js:table/structure.ts#click:a.add_key.ajax': {
+    file: 'StructurePage.tsx',
+    match: 'className={`add_key ${cls}`}',
+  },
+  'js:table/structure.ts#click:a.drop_column_anchor.ajax': {
+    file: 'StructurePage.tsx',
+    match: 'className="drop_column_anchor"',
+  },
+  'js:table/structure.ts#click:a[id^=partition_action].ajax': {
+    file: 'StructurePage.tsx',
+    match: 'id={`partition_action_${op}`}',
+  },
+  'js:table/structure.ts#confirm:strChangeColumnCollation': {
+    file: 'ColumnForm.tsx',
+    match: "t('Garbled Data')",
+  },
+  'js:table/structure.ts#confirm:strDoYouReally': {
+    file: 'StructurePage.tsx',
+    match: 'if (!confirmSql(c.dropSql)) return',
+  },
+  'js:table/structure.ts#confirm:strDropPartitionWarning': {
+    file: 'StructurePage.tsx',
+    match: 'Do you really want to DROP the selected partition(s)?',
+  },
+  'js:table/structure.ts#confirm:strRemovePartitioningWarning': {
+    file: 'StructurePage.tsx',
+    match: "t('Do you really want to remove partitioning?')",
+  },
+  'js:table/structure.ts#confirm:strTruncatePartitionWarning': {
+    file: 'StructurePage.tsx',
+    match: "t('Do you really want to TRUNCATE the selected partition(s)?')",
+  },
+  'js:table/structure.ts#hidden.bs.modal:<designerModalPreviewModal>': {
+    file: 'StructurePage.tsx',
+    match: 'onBack: () => setPreview(null)',
+  },
+  'js:table/structure.ts#shown.bs.modal:<designerModalPreviewModal>': {
+    file: 'StructurePage.tsx',
+    match: "return setPreview('')",
+  },
+  'js:table/structure.ts#submit:.append_fields_form.ajax': {
+    file: 'ColumnForm.tsx',
+    match: "'append_fields_form'",
+  },
 }

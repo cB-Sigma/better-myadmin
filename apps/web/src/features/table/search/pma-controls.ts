@@ -66,4 +66,53 @@ export const pmaControls = {
     file: 'ZoomSearchPage.tsx',
     match: 'criteriaColumnNullFlags[${i}]',
   },
+  // pma: resources/js — browser behaviours (js.json)
+  'js:table/select.ts#ajax:POST /table/search': {
+    file: 'SearchPage.tsx',
+    match: 'api.tableSearchRange(scope, c.name)',
+  },
+  "js:table/select.ts#ajax:POST <$searchForm.attr('action')>": {
+    file: 'SearchPage.tsx',
+    match: 'api.tableSearch(scope, {',
+  },
+  'js:table/select.ts#change:<item>': {
+    file: 'SearchPage.tsx',
+    match: 'searchFieldError(c, r.operator, r.value)',
+  },
+  'js:table/select.ts#click:#rangeSearchModalGo': {
+    file: 'SearchPage.tsx',
+    match: 'id="rangeSearchModalGo"',
+  },
+  'js:table/select.ts#click:#togglesearchformlink': {
+    file: 'SearchPage.tsx',
+    match: 'setFormShown(!formShown)',
+  },
+  'js:table/select.ts#show.bs.modal:<gisEditorModal>': {
+    file: 'criteria.tsx',
+    match: "geomFunc === 'Envelope'",
+  },
+  'js:table/zoom_search.ts#ajax:POST /sql': {
+    file: 'ZoomSearchPage.tsx',
+    match: 'await runQuery(scope.server',
+  },
+  'js:table/zoom_search.ts#ajax:POST /table/zoom-search': {
+    file: 'ZoomSearchPage.tsx',
+    match: 'const setColumn = (i: number, name: string)',
+  },
+  'js:table/zoom_search.ts#change:<item>': {
+    file: 'ZoomSearchPage.tsx',
+    match: 'searchFieldError(col, r.c.operator, r.c.value)',
+  },
+  'js:table/zoom_search.ts#click:button.button-reset': {
+    file: 'ZoomSearchPage.tsx',
+    match: 'className="button-reset"',
+  },
+  'js:table/zoom_search.ts#keydown:#dataDisplay :input': {
+    file: 'ZoomSearchPage.tsx',
+    match: 'id="dataDisplay"',
+  },
+  "js:table/find_replace.ts#ajax:POST <findReplaceForm.attr('action')>": {
+    file: 'FindReplacePage.tsx',
+    match: 'api.tableFindReplacePreview(scope, req)',
+  },
 } as const
