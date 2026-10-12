@@ -43,7 +43,25 @@ pageParity('table-search', {
   sql: CHILD,
   pma: { route: '/table/search', params: p('uip_child') },
   ours: { path: `${T}/uip_child/search` },
-  interactions: [{ name: 'extra options', do: { click: 'Extra options' } }],
+  interactions: [
+    { name: 'extra options', do: { click: 'Extra options' } },
+    {
+      // select.ts shows the GIS editor button for functions returning a geometry
+      name: 'geometry function',
+      pma: (p) =>
+        p
+          .locator('select.geom_func')
+          .first()
+          .selectOption('Envelope')
+          .then(() => undefined),
+      ours: (p) =>
+        p
+          .locator('select.geom_func')
+          .first()
+          .selectOption('Envelope')
+          .then(() => undefined),
+    },
+  ],
 })
 
 pageParity('table-zoom-search', {

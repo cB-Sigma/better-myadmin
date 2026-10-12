@@ -430,6 +430,8 @@ function DataPointDialog({
                     <td>
                       {c.nullable && (
                         <NativeCheckbox
+                          name={`criteriaColumnNullFlags[${i}]`}
+                          id={`edit_fields_null_id_${i}`}
                           className="checkbox_null"
                           aria-label={`${c.name} ${t('Null')}`}
                           checked={values[c.name] === null}

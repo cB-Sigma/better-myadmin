@@ -16,7 +16,8 @@ export const SearchColumn = z.object({
   /** INT | FLOAT | upper-cased clean type (input_box.twig column_data_type) */
   dataType: z.string(),
   input: z.object({
-    kind: z.enum(['text', 'number', 'enum', 'foreign', 'gis']),
+    /** foreignLink: too many referenced rows for a list — a text box and "Browse foreign values" */
+    kind: z.enum(['text', 'number', 'enum', 'foreign', 'foreignLink', 'gis']),
     /** textfield datefield / datetimefield / bit */
     className: z.string().optional(),
     min: z.string().optional(),

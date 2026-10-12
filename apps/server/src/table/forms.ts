@@ -265,8 +265,9 @@ export async function indexForm(
       columns: [],
     }
   } else {
-    // In most cases an index may consist of up to 16 columns
-    addFields = q.create !== undefined && q.create >= 2 ? Math.min(Math.trunc(q.create), 16) : 1
+    // create_index: in most cases an index may consist of up to 16 columns; without it (the
+    // navigation's "New" link is a plain GET) the form has no column rows
+    addFields = q.create === undefined ? 0 : q.create >= 2 ? Math.min(Math.trunc(q.create), 16) : 1
     // `new Index()`: Non_unique defaults to false, so Index::set() makes the choice UNIQUE
     index = { name: '', choice: 'UNIQUE', keyBlockSize: '0', type: '', parser: '', comment: '', columns: [] }
   }

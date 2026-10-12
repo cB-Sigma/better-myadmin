@@ -5,7 +5,19 @@ import type {
   FormIndex,
   Partitioning,
 } from '@bettermyadmin/contracts'
-import { Button, DocLink, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import {
+  Button,
+  DocLink,
+  Hint,
+  MessageBox,
+  Modal,
+  MySqlDocLink,
+  Panel,
+  PanelBody,
+  PmaIcon,
+  PreviewSqlDialog,
+  buttonVariants,
+} from '@bettermyadmin/ui'
 import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
@@ -52,6 +64,12 @@ export interface MimeValues {
   inputTransformation: string
   inputTransformationOptions: string
 }
+
+/** create / add: no `move_columns`, the new column counts as the first (current_index 0) */
+const NO_MOVE: NonNullable<ColumnRow['moveOptions']> = [
+  { value: '', after: null, disabled: false },
+  { value: '-first', after: null, disabled: true },
+]
 
 const EMPTY_MIME: MimeValues = {
   mimetype: '',
@@ -204,44 +222,73 @@ function EnumEditor({
       onClose={onClose}
       footer={
         <>
-          <Button variant="primary" onClick={() => onSave(formatEnumValues(values))}>
+          <Button id="enumEditorGoButton" variant="primary" onClick={() => onSave(formatEnumValues(values))}>
             {t('Go')}
           </Button>
           <Button onClick={onClose}>{t('Close')}</Button>
         </>
       }
     >
-      <p className="mb-2 text-sm">
-        {column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
-      </p>
-      <table className="w-full text-sm">
-        <tbody>
-          {values.map((v, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: editable value rows
-            <tr key={i}>
-              <td className="py-0.5">
-                <input
-                  className="input"
-                  aria-label={t('Value')}
-                  value={v}
-                  onChange={(e) => setValues(values.map((x, j) => (j === i ? e.target.value : x)))}
-                />
-              </td>
-              <td className="px-1">
-                <Button variant="link" onClick={() => setValues(values.filter((_, j) => j !== i))}>
-                  {t('Drop')}
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="mt-2 flex items-center gap-2 text-sm">
-        <input type="range" min={1} max={20} value={add} onChange={(e) => setAdd(Number(e.target.value))} />
-        <Button onClick={() => setValues([...values, ...Array.from({ length: add }, () => '')])}>
-          {t('Add %d value(s)', add)}
-        </Button>
-      </div>
+      <Panel
+        id="enum_editor"
+        title={column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
+        footer={
+          <div className="flex items-center gap-2 text-sm">
+            <input
+              type="range"
+              min={1}
+              max={20}
+              value={add}
+              onChange={(e) => setAdd(Number(e.target.value))}
+            />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                setValues([...values, ...Array.from({ length: add }, () => '')])
+              }}
+            >
+              <input
+                type="submit"
+                className={`add_value ${buttonVariants({ variant: 'primary' })}`}
+                value={t('Add %d value(s)', add)}
+              />
+            </form>
+          </div>
+        }
+      >
+        <PanelBody>
+          <p className="mb-2 text-sm">
+            <PmaIcon name="s_notice" /> {t('Enter each value in a separate field.')}
+          </p>
+          <table className="values w-full text-sm">
+            <tbody>
+              {values.map((v, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: editable value rows
+                <tr key={i}>
+                  <td className="py-0.5">
+                    {/* the editor's inputs have no label in phpMyAdmin either */}
+                    <input
+                      type="text"
+                      className="input"
+                      value={v}
+                      onChange={(e) => setValues(values.map((x, j) => (j === i ? e.target.value : x)))}
+                    />
+                  </td>
+                  <td className="drop px-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setValues(values.filter((_, j) => j !== i))}
+                    >
+                      <PmaIcon name="b_drop" alt={t('Drop')} />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </PanelBody>
+      </Panel>
     </Modal>
   )
 }
@@ -464,6 +511,8 @@ export function ColumnForm({
               type="number"
               className="input w-16"
               min={1}
+              name="added_fields"
+              id="added_fields"
               aria-label={t('Add column(s)')}
               value={addCount}
               onChange={(e) => setAddCount(Number(e.target.value))}
@@ -504,7 +553,8 @@ export function ColumnForm({
               </th>
               <th className="px-1">{t('Comments')}</th>
               {virtuality !== null && <th className="px-1">{t('Virtuality')}</th>}
-              {mode === 'change' && <th className="px-1">{t('Move column')}</th>}
+              {/* `fields_meta is defined` holds in every mode (null in create/add) */}
+              <th className="px-1">{t('Move column')}</th>
               {mimeTypes !== null && (
                 <>
                   <th className="px-1">{t('Media type')}</th>
@@ -678,27 +728,27 @@ export function ColumnForm({
                 {mode !== 'change' && (
                   <td className="p-1">
                     <select
+                      name={`field_key[${i}]`}
                       className="input"
                       aria-label={t('Index')}
-                      value={r.key}
-                      onChange={(e) => update(i, { key: e.target.value })}
+                      value={`${r.key}_${i}`}
+                      // column_attributes.twig: the option values carry the row number (none_0, primary_0…)
+                      onChange={(e) => update(i, { key: e.target.value.replace(/_\d+$/, '') })}
                     >
-                      <option value="none">---</option>
-                      <option value="primary" title={t('Primary')}>
-                        PRIMARY
-                      </option>
-                      <option value="unique" title={t('Unique')}>
-                        UNIQUE
-                      </option>
-                      <option value="index" title={t('Index')}>
-                        INDEX
-                      </option>
-                      <option value="fulltext" title={t('Fulltext')}>
-                        FULLTEXT
-                      </option>
-                      <option value="spatial" title={t('Spatial')}>
-                        SPATIAL
-                      </option>
+                      {(
+                        [
+                          ['none', '---', undefined],
+                          ['primary', 'PRIMARY', t('Primary')],
+                          ['unique', 'UNIQUE', t('Unique')],
+                          ['index', 'INDEX', t('Index')],
+                          ['fulltext', 'FULLTEXT', t('Fulltext')],
+                          ['spatial', 'SPATIAL', t('Spatial')],
+                        ] as const
+                      ).map(([key, label, title]) => (
+                        <option key={key} value={`${key}_${i}`} title={title}>
+                          {label}
+                        </option>
+                      ))}
                     </select>
                   </td>
                 )}
@@ -748,27 +798,25 @@ export function ColumnForm({
                     )}
                   </td>
                 )}
-                {mode === 'change' && (
-                  <td className="p-1">
-                    <select
-                      className="input"
-                      aria-label={t('Move column')}
-                      name={`field_move_to[${i}]`}
-                      value={r.moveTo}
-                      onChange={(e) => update(i, { moveTo: e.target.value })}
-                    >
-                      {(r.moveOptions ?? []).map((o) => (
-                        <option key={o.value} value={o.value} disabled={o.disabled}>
-                          {o.value === ''
-                            ? ' '
-                            : o.value === '-first'
-                              ? t('first')
-                              : t('after %s', `\`${o.after}\``)}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                )}
+                <td className="p-1">
+                  <select
+                    className="input"
+                    aria-label={t('Move column')}
+                    name={`field_move_to[${i}]`}
+                    value={r.moveTo}
+                    onChange={(e) => update(i, { moveTo: e.target.value })}
+                  >
+                    {(r.moveOptions ?? NO_MOVE).map((o) => (
+                      <option key={o.value} value={o.value} disabled={o.disabled}>
+                        {o.value === ''
+                          ? ' '
+                          : o.value === '-first'
+                            ? t('first')
+                            : t('after %s', `\`${o.after}\``)}
+                      </option>
+                    ))}
+                  </select>
+                </td>
                 {mimeTypes !== null && (
                   <MimeCells
                     index={i}
@@ -820,7 +868,7 @@ export function ColumnForm({
                 <select
                   className="input"
                   name="tbl_storage_engine"
-                  aria-label={t('Storage Engine:')}
+                  aria-label={t('Storage engine')}
                   value={tableOptions.engine}
                   onChange={(e) => setTableOptions({ ...tableOptions, engine: e.target.value })}
                 >
@@ -885,15 +933,20 @@ export function ColumnForm({
           </Button>
         </div>
       </div>
-      {options.integersLengthRestricted && (
-        <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
-          {t(
-            'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
-          )}
-        </MessageBox>
-      )}
+      {/* functions.ts showWarningForIntTypes: shown while a selected type is length-restricted */}
+      {options.integersLengthRestricted &&
+        rows.some((r) =>
+          options.types.some((o) => !('separator' in o) && o.type === r.type && o.lengthRestricted),
+        ) && (
+          <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
+            {t(
+              'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
+            )}{' '}
+            <MySqlDocLink url="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-19.html" />
+          </MessageBox>
+        )}
       {error !== null && <MessageBox {...error} flush className="mt-2" />}
-      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog highlight sql={preview} onClose={() => setPreview(null)} />
       {enumFor !== null && (
         <EnumEditor
           value={rows[enumFor]?.length ?? ''}
