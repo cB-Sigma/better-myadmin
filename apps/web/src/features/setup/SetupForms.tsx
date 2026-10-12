@@ -91,11 +91,13 @@ function SetupFormBody(props: {
   const save = useMutation({
     mutationFn: props.save,
     onSuccess: async (r) => {
-      await qc.invalidateQueries({ queryKey: qk.setup })
       if (r.saved) {
+        await qc.invalidateQueries({ queryKey: qk.setup })
         await navigate({ to: '/setup' })
         return
       }
+      // the page is not refetched (a refetch would remount this form): the overview is stale only
+      void qc.invalidateQueries({ queryKey: qk.setupOverview(false) })
       if (r.formSet !== undefined) {
         setShown(r.formSet)
         setRevision((n) => n + 1)
@@ -189,5 +191,7 @@ function FormState({
     } else if (form.name === 'Server') void validate('Server', values)
   }
   const state = useConfigForm(formSet, false, onChange)
-  return <ConfigForm state={state} showButtons isSetup onSubmit={onSubmit} />
+  // the overview's links open a form with `#<form name>`
+  const [tab, setTab] = useState(() => window.location.hash.replace(/^#/, ''))
+  return <ConfigForm state={state} showButtons isSetup onSubmit={onSubmit} tab={tab} onTab={setTab} />
 }

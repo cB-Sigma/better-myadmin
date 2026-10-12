@@ -796,19 +796,34 @@
   ui: '/s/:s/db/:db/t/:table/operations'
   note: the Operations tab of a view
 'setup:/':
-  api: 'GET /api/servers/:s/navigation/branch'
-  ui: /setup
-  planned: M4
-  exception: X7
+  api:
+    - 'GET /api/setup'
+    - 'GET /api/setup/form/:formset'
+    - 'POST /api/setup/form/:formset'
+    - 'POST /api/setup/form/:formset/revert'
+    - 'GET /api/setup/servers/:id'
+    - 'POST /api/setup/servers/:id'
+    - 'POST /api/setup/servers/:id/revert'
+    - 'POST /api/setup/servers/:id/delete'
+    - 'GET /api/setup/config'
+  ui:
+    - /setup
+    - /setup/form/:formset
+    - /setup/servers/:id
+    - /setup/config
+  exception: X41
+  note: 'MainController: page=form|config|servers (mode=add|edit|revert|remove) map to their SPA routes'
 'setup:/setup':
+  api: 'GET /api/setup'
   ui: /setup
-  planned: M4
-  exception: X7
+  exception: X41
 'setup:/setup/show-config':
+  api:
+    - 'POST /api/setup/config'
+    - 'GET /api/setup/config/download'
   ui: /setup
-  planned: M4
-  exception: X7
+  exception: X41
 'setup:/setup/validate':
-  ui: /setup
-  planned: M4
-  exception: X7
+  api: 'POST /api/setup/validate'
+  ui: /setup/servers/:id
+  exception: X41

@@ -64,6 +64,11 @@ export function setupLinkUrl(u: string): string {
   return u
 }
 
+/** The `?page=…` links of a converted message as SPA routes. */
+export function setupLinks(html: string): string {
+  return html.replace(/href="(\?page=[^"]*)"/g, (_m, u: string) => `href="${setupLinkUrl(u)}"`)
+}
+
 const security = '[a@?page=form&formset=Features#tab_Security]'
 const importExport = '[a@?page=form&formset=Features#tab_Import_export]'
 
@@ -75,7 +80,7 @@ const importExport = '[a@?page=form&formset=Features#tab_Import_export]'
  * pma: src/Config/ServerConfigChecks.php
  */
 export function performConfigChecks(cf: ConfigFile, messages: SetupMessageList, tr: Gettext): void {
-  const bb = (s: string) => convertBBCode(tr, s, false, { isSetup: true, linkUrl: setupLinkUrl })
+  const bb = (s: string) => setupLinks(convertBBCode(tr, s, false, { isSetup: true }))
   const name = (path: string) => describe(tr, path, 'name')
   const blowfishSecret = String(cf.get('blowfish_secret', '') ?? '')
 

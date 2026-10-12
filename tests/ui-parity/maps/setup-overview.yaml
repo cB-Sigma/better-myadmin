@@ -1,0 +1,12 @@
+# Intentional differences of the setup overview (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: select, label: '/^(Language|Default language)$/' }
+    ignore: [options]
+    reason: >-
+      environment: the reference phpMyAdmin is built without translations (docker/pma-ref,
+      PMA_TRANSLATIONS=0), so its lists hold English only; ours bundles them (option values keep
+      LanguageManager's codes)
+  - pma: { kind: link, label: Donate }
+    n/a: different project (X41) — BetterMyAdmin takes no donations
+  - ours: { kind: button, label: Save }
+    added: Save writes the configuration into a writable config/ directory (X41); shown only then

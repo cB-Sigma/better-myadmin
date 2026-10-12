@@ -154,8 +154,12 @@ export function ConfigForm({
               </h5>
               {form.desc !== '' && <SafeHtml html={form.desc} as="h6" className="mb-2 text-fg-muted" />}
               <fieldset className="optbox">
-                {/* pmahomme: `.config-form legend { display: none; }` */}
-                <legend className="hidden">
+                {/* pmahomme: `.config-form legend { display: none; }`; the setup styles show it */}
+                <legend
+                  className={
+                    isSetup ? 'mb-2 rounded border border-border px-2 py-0.5 font-semibold' : 'hidden'
+                  }
+                >
                   <SafeHtml html={form.title} as="span" />
                 </legend>
                 {(state.errors[form.name] ?? form.errors).length > 0 && (
@@ -325,7 +329,8 @@ function FieldRow({
       </th>
       <td className="border-t border-border py-1 align-top">
         {control}
-        {field.setvalue !== undefined && (
+        {/* the setup pages never run config.ts' setupRestoreField: both links stay hidden */}
+        {field.setvalue !== undefined && !isSetup && (
           <a
             className="set-value ms-1 inline-block opacity-25 hover:opacity-100"
             href={`#${field.id}=${field.setvalue}`}
@@ -338,17 +343,19 @@ function FieldRow({
             <PmaIcon name="b_edit" alt={t('Set value: %s', field.setvalue)} />
           </a>
         )}
-        <a
-          className="restore-default ms-1 inline-block opacity-25 hover:opacity-100"
-          href={`#${field.id}`}
-          title={restoreTitle}
-          onClick={(e) => {
-            e.preventDefault()
-            state.change(field.id, restoredValue(field))
-          }}
-        >
-          {custom && <PmaIcon name="s_reload" alt={restoreTitle} />}
-        </a>
+        {!isSetup && (
+          <a
+            className="restore-default ms-1 inline-block opacity-25 hover:opacity-100"
+            href={`#${field.id}`}
+            title={restoreTitle}
+            onClick={(e) => {
+              e.preventDefault()
+              state.change(field.id, restoredValue(field))
+            }}
+          >
+            {custom && <PmaIcon name="s_reload" alt={restoreTitle} />}
+          </a>
+        )}
         {hasErrors && (
           <dl className="inline_errors my-1 text-xs text-error">
             {errors.map((e) => (

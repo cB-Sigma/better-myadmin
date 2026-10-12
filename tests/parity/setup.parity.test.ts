@@ -200,7 +200,7 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
     }
   })
 
-  it('[p01-984896] validateServer: a new server is not validated (quirk), an edited one is', async () => {
+  it('[p01-984896] validateServer: a new server is not validated (Q62), an edited one is', async () => {
     const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     const errorsOf = (r: SetupSaveResponse) =>

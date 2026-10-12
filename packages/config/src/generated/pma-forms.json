@@ -2542,19 +2542,6 @@
                     ]
                 },
                 {
-                    "name": "Developer",
-                    "title": "Developer",
-                    "desc": "Settings for phpMyAdmin developers.",
-                    "items": [
-                        {
-                            "path": "UserprefsDeveloperTab"
-                        },
-                        {
-                            "path": "DBG/sql"
-                        }
-                    ]
-                },
-                {
                     "name": "Import_export",
                     "title": "Import / export",
                     "desc": "Set import and export directories and compression options.",
@@ -2629,6 +2616,19 @@
                         },
                         {
                             "path": "CaptchaSiteVerifyURL"
+                        }
+                    ]
+                },
+                {
+                    "name": "Developer",
+                    "title": "Developer",
+                    "desc": "Settings for phpMyAdmin developers.",
+                    "items": [
+                        {
+                            "path": "UserprefsDeveloperTab"
+                        },
+                        {
+                            "path": "DBG/sql"
                         }
                     ]
                 },
@@ -3419,1223 +3419,11 @@
         }
     ],
     "fields": {
-        "VersionCheck": {
-            "type": "boolean",
-            "name": "Version check",
-            "desc": "Enables check for latest version on main phpMyAdmin page."
-        },
-        "NaturalOrder": {
-            "type": "boolean",
-            "name": "Natural order",
-            "desc": "Use natural order for sorting table and database names."
-        },
-        "InitialSlidersState": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "open",
-                    "label": {
-                        "msgid": "Open"
-                    }
-                },
-                {
-                    "key": "closed",
-                    "label": {
-                        "msgid": "Closed"
-                    }
-                },
-                {
-                    "key": "disabled",
-                    "label": {
-                        "msgid": "Disabled"
-                    }
-                }
-            ],
-            "name": "Initial state for sliders"
-        },
-        "LoginCookieValidity": {
-            "type": "integer",
-            "name": "Login cookie validity",
-            "desc": "Define how long (in seconds) a login cookie is valid."
-        },
-        "SkipLockedTables": {
-            "type": "boolean",
-            "name": "Skip locked tables",
-            "desc": "Mark used tables and make it possible to show databases with locked tables."
-        },
-        "DisableMultiTableMaintenance": {
-            "type": "boolean",
-            "name": "Disable multi table maintenance",
-            "desc": "Disable the table maintenance mass operations, like optimizing or repairing the selected tables of a database."
-        },
-        "ShowHint": {
-            "type": "boolean",
-            "name": "Show hint",
-            "desc": "Whether to show hint or not."
-        },
-        "SendErrorReports": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "ask",
-                    "label": {
-                        "msgid": "Ask before sending error reports"
-                    }
-                },
-                {
-                    "key": "always",
-                    "label": {
-                        "msgid": "Always send error reports"
-                    }
-                },
-                {
-                    "key": "never",
-                    "label": {
-                        "msgid": "Never send error reports"
-                    }
-                }
-            ],
-            "name": "Send error reports",
-            "desc": "Choose the default action when sending error reports."
-        },
-        "ConsoleEnterExecutes": {
-            "type": "boolean",
-            "name": "Enter executes queries in console",
-            "desc": "Queries are executed by pressing Enter (instead of Ctrl+Enter). New lines will be inserted with Shift+Enter."
-        },
-        "DisableShortcutKeys": {
-            "type": "boolean",
-            "name": "Disable shortcut keys",
-            "desc": "Disable shortcut keys"
-        },
-        "FirstDayOfCalendar": {
-            "type": "select",
-            "values": [
-                {
-                    "key": 1,
-                    "label": {
-                        "msgid": "Monday",
-                        "context": "Week day name"
-                    }
-                },
-                {
-                    "key": 2,
-                    "label": {
-                        "msgid": "Tuesday",
-                        "context": "Week day name"
-                    }
-                },
-                {
-                    "key": 3,
-                    "label": {
-                        "msgid": "Wednesday",
-                        "context": "Week day name"
-                    }
-                },
-                {
-                    "key": 4,
-                    "label": {
-                        "msgid": "Thursday",
-                        "context": "Week day name"
-                    }
-                },
-                {
-                    "key": 5,
-                    "label": {
-                        "msgid": "Friday",
-                        "context": "Week day name"
-                    }
-                },
-                {
-                    "key": 6,
-                    "label": {
-                        "msgid": "Saturday",
-                        "context": "Week day name"
-                    }
-                },
-                {
-                    "key": 7,
-                    "label": {
-                        "msgid": "Sunday",
-                        "context": "Week day name"
-                    }
-                }
-            ],
-            "name": "First day of calendar"
-        },
-        "Servers/1/only_db": {
-            "type": "array",
-            "name": "Show only listed databases",
-            "desc": "You can use MySQL wildcard characters (% and _), escape them if you want to use their literal instances, i.e. use [kbd]'my\\_db'[/kbd] and not [kbd]'my_db'[/kbd]."
-        },
-        "Servers/1/hide_db": {
-            "type": "string",
-            "name": "Hide databases",
-            "desc": "Hide databases matching regular expression (PCRE)."
-        },
-        "MaxDbList": {
-            "type": "integer",
-            "name": "Maximum databases",
-            "desc": "Maximum number of databases displayed in database list.",
-            "cmt": "Users cannot set a higher value"
-        },
-        "MaxTableList": {
-            "type": "integer",
-            "name": "Maximum tables",
-            "desc": "Maximum number of tables displayed in table list.",
-            "cmt": "Users cannot set a higher value"
-        },
-        "DefaultConnectionCollation": {
-            "type": "string",
-            "name": "Server connection collation"
-        },
-        "CharEditing": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "input",
-                    "label": {
-                        "msgid": "input"
-                    }
-                },
-                {
-                    "key": "textarea",
-                    "label": {
-                        "msgid": "textarea"
-                    }
-                }
-            ],
-            "name": "CHAR columns editing",
-            "desc": "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
-        },
-        "MinSizeForInputField": {
-            "type": "integer",
-            "name": "Minimum size for input field",
-            "desc": "Defines the minimum size for input fields generated for CHAR and VARCHAR columns."
-        },
-        "MaxSizeForInputField": {
-            "type": "integer",
-            "name": "Maximum size for input field",
-            "desc": "Defines the maximum size for input fields generated for CHAR and VARCHAR columns."
-        },
-        "CharTextareaCols": {
-            "type": "integer",
-            "name": "CHAR textarea columns",
-            "desc": "Number of columns for CHAR/VARCHAR textareas."
-        },
-        "CharTextareaRows": {
-            "type": "integer",
-            "name": "CHAR textarea rows",
-            "desc": "Number of rows for CHAR/VARCHAR textareas."
-        },
-        "TextareaCols": {
-            "type": "integer",
-            "name": "Textarea columns",
-            "desc": "Textarea size (columns) in edit mode, this value will be emphasized for SQL query textareas (*2)."
-        },
-        "TextareaRows": {
-            "type": "integer",
-            "name": "Textarea rows",
-            "desc": "Textarea size (rows) in edit mode, this value will be emphasized for SQL query textareas (*2)."
-        },
-        "LongtextDoubleTextarea": {
-            "type": "boolean",
-            "name": "Bigger textarea for LONGTEXT",
-            "desc": "Double size of textarea for LONGTEXT columns."
-        },
-        "TitleDefault": {
-            "type": "string",
-            "name": "Default title",
-            "desc": "Title of browser window when nothing is selected."
-        },
-        "TitleTable": {
-            "type": "string",
-            "name": "Table",
-            "desc": "Title of browser window when a table is selected."
-        },
-        "TitleDatabase": {
-            "type": "string",
-            "name": "Database",
-            "desc": "Title of browser window when a database is selected."
-        },
-        "TitleServer": {
-            "type": "string",
-            "name": "Server",
-            "desc": "Title of browser window when a server is selected."
-        },
-        "PmaNoRelation_DisableWarning": {
-            "type": "boolean",
-            "name": "Missing phpMyAdmin configuration storage tables",
-            "desc": "Disable the default warning that is displayed on the database details Structure page if any of the required tables for the phpMyAdmin configuration storage could not be found."
-        },
-        "LoginCookieValidityDisableWarning": {
-            "type": "boolean",
-            "name": "Login cookie validity warning",
-            "desc": "Disable the default warning that is displayed on the main page if the value of the PHP setting session.gc_maxlifetime is less than the value of `LoginCookieValidity`."
-        },
-        "ReservedWordDisableWarning": {
-            "type": "boolean",
-            "name": "MySQL reserved word warning",
-            "desc": "Disable the default warning that is displayed on the Structure page if column names in a table are reserved MySQL words."
-        },
-        "Console/Mode": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "info",
-                    "label": {
-                        "msgid": "info"
-                    }
-                },
-                {
-                    "key": "show",
-                    "label": {
-                        "msgid": "show"
-                    }
-                },
-                {
-                    "key": "collapse",
-                    "label": {
-                        "msgid": "collapse"
-                    }
-                }
-            ],
-            "name": "Console mode"
-        },
-        "Console/StartHistory": {
-            "type": "boolean",
-            "name": "Show query history at start"
-        },
-        "Console/AlwaysExpand": {
-            "type": "boolean",
-            "name": "Always expand query messages"
-        },
-        "Console/CurrentQuery": {
-            "type": "boolean",
-            "name": "Show current browsing query"
-        },
-        "Console/EnterExecutes": {
-            "type": "boolean",
-            "name": "Execute queries on Enter and insert new line with Shift+Enter"
-        },
-        "Console/DarkTheme": {
-            "type": "boolean",
-            "name": "Switch to dark theme"
-        },
-        "Console/Height": {
-            "type": "integer",
-            "name": "Console height"
-        },
-        "Console/GroupQueries": {
-            "type": "boolean",
-            "name": "Group queries"
-        },
-        "Console/OrderBy": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "exec",
-                    "label": {
-                        "msgid": "exec"
-                    }
-                },
-                {
-                    "key": "time",
-                    "label": {
-                        "msgid": "time"
-                    }
-                },
-                {
-                    "key": "count",
-                    "label": {
-                        "msgid": "count"
-                    }
-                }
-            ],
-            "name": "Order by"
-        },
-        "Console/Order": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "asc",
-                    "label": {
-                        "msgid": "asc"
-                    }
-                },
-                {
-                    "key": "desc",
-                    "label": {
-                        "msgid": "desc"
-                    }
-                }
-            ],
-            "name": "Order"
-        },
-        "DBG/sql": {
-            "type": "boolean",
-            "name": "Debug SQL",
-            "desc": "Log SQL queries and their execution time, to be displayed in the console"
-        },
-        "ShowSQL": {
-            "type": "boolean",
-            "name": "Show SQL queries",
-            "desc": "Defines whether SQL queries generated by phpMyAdmin should be displayed."
-        },
-        "Confirm": {
-            "type": "boolean",
-            "name": "Confirm DROP queries",
-            "desc": "Whether a warning (\"Are your really sure…\") should be displayed when you're about to lose data."
-        },
-        "QueryHistoryMax": {
-            "type": "integer",
-            "name": "Query history length",
-            "desc": "How many queries are kept in history.",
-            "cmt": "Users cannot set a higher value"
-        },
-        "IgnoreMultiSubmitErrors": {
-            "type": "boolean",
-            "name": "Ignore multiple statement errors",
-            "desc": "If enabled, phpMyAdmin continues computing multiple-statement queries even if one of the queries failed."
-        },
-        "MaxCharactersInDisplayedSQL": {
-            "type": "integer",
-            "name": "Maximum displayed SQL length",
-            "desc": "Maximum number of characters used when a SQL query is displayed."
-        },
-        "RetainQueryBox": {
-            "type": "boolean",
-            "name": "Retain query box",
-            "desc": "Defines whether the query box should stay on-screen after its submission."
-        },
-        "CodemirrorEnable": {
-            "type": "boolean",
-            "name": "Enable CodeMirror",
-            "desc": "Use user-friendly editor for editing SQL queries (CodeMirror) with syntax highlighting and line numbers."
-        },
-        "LintEnable": {
-            "type": "boolean",
-            "name": "Enable linter",
-            "desc": "Find any errors in the query before executing it. Requires CodeMirror to be enabled."
-        },
-        "EnableAutocompleteForTablesAndColumns": {
-            "type": "boolean",
-            "name": "Enable autocomplete for table and column names",
-            "desc": "Autocomplete of the table and column names in the SQL queries."
-        },
-        "DefaultForeignKeyChecks": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "default",
-                    "label": {
-                        "msgid": "Server default"
-                    }
-                },
-                {
-                    "key": "enable",
-                    "label": {
-                        "msgid": "Enable"
-                    }
-                },
-                {
-                    "key": "disable",
-                    "label": {
-                        "msgid": "Disable"
-                    }
-                }
-            ],
-            "name": "Foreign key checks",
-            "desc": "Default value for foreign key checks checkbox for some queries."
-        },
-        "SQLQuery/Edit": {
-            "type": "boolean",
-            "name": "Edit"
-        },
-        "SQLQuery/Explain": {
-            "type": "boolean",
-            "name": "Explain SQL"
-        },
-        "SQLQuery/ShowAsPHP": {
-            "type": "boolean",
-            "name": "Create PHP code"
-        },
-        "SQLQuery/Refresh": {
-            "type": "boolean",
-            "name": "Refresh"
-        },
-        "ShowDatabasesNavigationAsTree": {
-            "type": "boolean",
-            "name": "Show databases navigation as tree",
-            "desc": "In the navigation panel, replaces the database tree with a selector"
-        },
-        "NavigationLinkWithMainPanel": {
-            "type": "boolean",
-            "name": "Link with main panel",
-            "desc": "Link with main panel by highlighting the current database or table."
-        },
-        "NavigationDisplayLogo": {
-            "type": "boolean",
-            "name": "Display logo",
-            "desc": "Show logo in navigation panel."
-        },
-        "NavigationLogoLink": {
-            "type": "string",
-            "name": "Logo link URL",
-            "desc": "URL where logo in the navigation panel will point to."
-        },
-        "NavigationLogoLinkWindow": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "main",
-                    "label": {
-                        "msgid": "main"
-                    }
-                },
-                {
-                    "key": "new",
-                    "label": {
-                        "msgid": "new"
-                    }
-                }
-            ],
-            "name": "Logo link target",
-            "desc": "Open the linked page in the main window ([code]main[/code]) or in a new one ([code]new[/code])."
-        },
-        "NavigationTreePointerEnable": {
-            "type": "boolean",
-            "name": "Enable highlighting",
-            "desc": "Highlight server under the mouse cursor."
-        },
-        "FirstLevelNavigationItems": {
-            "type": "integer",
-            "name": "Maximum items on first level",
-            "desc": "The number of items that can be displayed on each page on the first level of the navigation tree."
-        },
-        "NavigationTreeDisplayItemFilterMinimum": {
-            "type": "integer",
-            "name": "Minimum number of items to display the filter box",
-            "desc": "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
-        },
-        "NumRecentTables": {
-            "type": "integer",
-            "name": "Recently used tables",
-            "desc": "Maximum number of recently used tables; set 0 to disable."
-        },
-        "NumFavoriteTables": {
-            "type": "integer",
-            "name": "Favorite tables",
-            "desc": "Maximum number of favorite tables; set 0 to disable."
-        },
-        "NavigationWidth": {
-            "type": "integer",
-            "name": "Navigation panel width",
-            "desc": "Set to 0 to collapse navigation panel."
-        },
-        "MaxNavigationItems": {
-            "type": "integer",
-            "name": "Maximum items in branch",
-            "desc": "The number of items that can be displayed on each page of the navigation tree."
-        },
-        "NavigationTreeEnableGrouping": {
-            "type": "boolean",
-            "name": "Group items in the tree",
-            "desc": "Group items in the navigation tree (determined by the separator defined in the Databases and Tables tabs above)."
-        },
-        "NavigationTreeEnableExpansion": {
-            "type": "boolean",
-            "name": "Enable navigation tree expansion",
-            "desc": "Whether to offer the possibility of tree expansion in the navigation panel."
-        },
-        "NavigationTreeShowTables": {
-            "type": "boolean",
-            "name": "Show tables in tree",
-            "desc": "Whether to show tables under database in the navigation tree"
-        },
-        "NavigationTreeShowViews": {
-            "type": "boolean",
-            "name": "Show views in tree",
-            "desc": "Whether to show views under database in the navigation tree"
-        },
-        "NavigationTreeShowFunctions": {
-            "type": "boolean",
-            "name": "Show functions in tree",
-            "desc": "Whether to show functions under database in the navigation tree"
-        },
-        "NavigationTreeShowProcedures": {
-            "type": "boolean",
-            "name": "Show procedures in tree",
-            "desc": "Whether to show procedures under database in the navigation tree"
-        },
-        "NavigationTreeShowEvents": {
-            "type": "boolean",
-            "name": "Show events in tree",
-            "desc": "Whether to show events under database in the navigation tree"
-        },
-        "NavigationTreeAutoexpandSingleDb": {
-            "type": "boolean",
-            "name": "Expand single database",
-            "desc": "Whether to expand single database in the navigation tree automatically."
-        },
-        "NavigationDisplayServers": {
-            "type": "boolean",
-            "name": "Display servers selection",
-            "desc": "Display server choice at the top of the navigation panel."
-        },
-        "DisplayServersList": {
-            "type": "boolean",
-            "name": "Display servers as a list",
-            "desc": "Show server listing as a list instead of a drop down."
-        },
-        "NavigationTreeDisplayDbFilterMinimum": {
-            "type": "integer",
-            "name": "Minimum number of databases to display the database filter box"
-        },
-        "NavigationTreeDbSeparator": {
-            "type": "short_string",
-            "name": "Database tree separator",
-            "desc": "String that separates databases into different tree levels."
-        },
-        "NavigationTreeDefaultTabTable": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "/table/structure",
-                    "label": {
-                        "msgid": "Structure"
-                    }
-                },
-                {
-                    "key": "/table/sql",
-                    "label": {
-                        "msgid": "SQL"
-                    }
-                },
-                {
-                    "key": "/table/search",
-                    "label": {
-                        "msgid": "Search"
-                    }
-                },
-                {
-                    "key": "/table/change",
-                    "label": {
-                        "msgid": "Insert"
-                    }
-                },
-                {
-                    "key": "/sql",
-                    "label": {
-                        "msgid": "Browse"
-                    }
-                }
-            ],
-            "name": "Target for quick access icon"
-        },
-        "NavigationTreeDefaultTabTable2": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "",
-                    "label": {
-                        "msgid": ""
-                    }
-                },
-                {
-                    "key": "/table/structure",
-                    "label": {
-                        "msgid": "Structure"
-                    }
-                },
-                {
-                    "key": "/table/sql",
-                    "label": {
-                        "msgid": "SQL"
-                    }
-                },
-                {
-                    "key": "/table/search",
-                    "label": {
-                        "msgid": "Search"
-                    }
-                },
-                {
-                    "key": "/table/change",
-                    "label": {
-                        "msgid": "Insert"
-                    }
-                },
-                {
-                    "key": "/sql",
-                    "label": {
-                        "msgid": "Browse"
-                    }
-                }
-            ],
-            "name": "Target for second quick access icon"
-        },
-        "NavigationTreeTableSeparator": {
-            "type": "short_string",
-            "name": "Table tree separator",
-            "desc": "String that separates tables into different tree levels."
-        },
-        "NavigationTreeTableLevel": {
-            "type": "integer",
-            "name": "Maximum table tree depth"
-        },
-        "ShowCreateDb": {
-            "type": "boolean",
-            "name": "Show create database form"
-        },
-        "ShowStats": {
-            "type": "boolean",
-            "name": "Show statistics",
-            "desc": "Allow to display database and table statistics (e.g. space usage)."
-        },
-        "ShowServerInfo": {
-            "type": "boolean",
-            "name": "Show detailed MySQL server information"
-        },
-        "ShowDbStructureCharset": {
-            "type": "boolean",
-            "name": "Show table charset",
-            "desc": "Show or hide a column displaying the charset for all tables."
-        },
-        "ShowDbStructureComment": {
-            "type": "boolean",
-            "name": "Show table comments",
-            "desc": "Show or hide a column displaying the comments for all tables."
-        },
-        "ShowDbStructureCreation": {
-            "type": "boolean",
-            "name": "Show creation timestamp",
-            "desc": "Show or hide a column displaying the Creation timestamp for all tables."
-        },
-        "ShowDbStructureLastUpdate": {
-            "type": "boolean",
-            "name": "Show last update timestamp",
-            "desc": "Show or hide a column displaying the Last update timestamp for all tables."
-        },
-        "ShowDbStructureLastCheck": {
-            "type": "boolean",
-            "name": "Show last check timestamp",
-            "desc": "Show or hide a column displaying the Last check timestamp for all tables."
-        },
-        "HideStructureActions": {
-            "type": "boolean",
-            "name": "Hide table structure actions",
-            "desc": "Whether the table structure actions should be hidden."
-        },
-        "ShowColumnComments": {
-            "type": "boolean",
-            "name": "Show column comments",
-            "desc": "Whether column comments should be shown in table structure view"
-        },
-        "DefaultTransformations/Hex": {
-            "type": "array",
-            "name": "Default transformations for Hex",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/Substring": {
-            "type": "array",
-            "name": "Default transformations for Substring",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/Bool2Text": {
-            "type": "array",
-            "name": "Default transformations for Bool2Text",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/External": {
-            "type": "array",
-            "name": "Default transformations for External",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/PreApPend": {
-            "type": "array",
-            "name": "Default transformations for PreApPend",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/DateFormat": {
-            "type": "array",
-            "name": "Default transformations for DateFormat",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/Inline": {
-            "type": "array",
-            "name": "Default transformations for Inline",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/TextImageLink": {
-            "type": "array",
-            "name": "Default transformations for TextImageLink",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "DefaultTransformations/TextLink": {
-            "type": "array",
-            "name": "Default transformations for TextLink",
-            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
-        },
-        "TableNavigationLinksMode": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "icons",
-                    "label": {
-                        "msgid": "Icons"
-                    }
-                },
-                {
-                    "key": "text",
-                    "label": {
-                        "msgid": "Text"
-                    }
-                },
-                {
-                    "key": "both",
-                    "label": {
-                        "msgid": "Both"
-                    }
-                }
-            ],
-            "name": "Table navigation bar",
-            "desc": "Use only icons, only text or both."
-        },
-        "ActionLinksMode": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "icons",
-                    "label": {
-                        "msgid": "Icons"
-                    }
-                },
-                {
-                    "key": "text",
-                    "label": {
-                        "msgid": "Text"
-                    }
-                },
-                {
-                    "key": "both",
-                    "label": {
-                        "msgid": "Both"
-                    }
-                }
-            ],
-            "name": "How to display various action links",
-            "desc": "Use only icons, only text or both."
-        },
-        "ShowAll": {
-            "type": "boolean",
-            "name": "Allow to display all the rows",
-            "desc": "Whether a user should be displayed a \"show all (rows)\" button."
-        },
-        "MaxRows": {
-            "type": "select",
-            "values": [
-                {
-                    "key": 25,
-                    "label": 25
-                },
-                {
-                    "key": 50,
-                    "label": 50
-                },
-                {
-                    "key": 100,
-                    "label": 100
-                },
-                {
-                    "key": 250,
-                    "label": 250
-                },
-                {
-                    "key": 500,
-                    "label": 500
-                }
-            ],
-            "name": "Maximum number of rows to display",
-            "desc": "Number of rows displayed when browsing a result set. If the result set contains more rows, \"Previous\" and \"Next\" links will be shown."
-        },
-        "Order": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "ASC",
-                    "label": {
-                        "msgid": "ASC"
-                    }
-                },
-                {
-                    "key": "DESC",
-                    "label": {
-                        "msgid": "DESC"
-                    }
-                },
-                {
-                    "key": "SMART",
-                    "label": {
-                        "msgid": "SMART"
-                    }
-                }
-            ],
-            "name": "Default sorting order",
-            "desc": "[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, DATE, DATETIME and TIMESTAMP, ascending order otherwise."
-        },
-        "BrowsePointerEnable": {
-            "type": "boolean",
-            "name": "Highlight pointer",
-            "desc": "Highlight row pointed by the mouse cursor."
-        },
-        "BrowseMarkerEnable": {
-            "type": "boolean",
-            "name": "Row marker",
-            "desc": "Highlight selected rows."
-        },
-        "GridEditing": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "click",
-                    "label": {
-                        "msgid": "Click"
-                    }
-                },
-                {
-                    "key": "double-click",
-                    "label": {
-                        "msgid": "Double click"
-                    }
-                },
-                {
-                    "key": "disabled",
-                    "label": {
-                        "msgid": "Disabled"
-                    }
-                }
-            ],
-            "name": "Grid editing: trigger action"
-        },
-        "SaveCellsAtOnce": {
-            "type": "boolean",
-            "name": "Grid editing: save all edited cells at once"
-        },
-        "RepeatCells": {
-            "type": "integer",
-            "name": "Repeat headers",
-            "desc": "Repeat the headers every X cells, [kbd]0[/kbd] deactivates this feature."
-        },
-        "LimitChars": {
-            "type": "integer",
-            "name": "Limit column characters",
-            "desc": "Maximum number of characters shown in any non-numeric column on browse view."
-        },
-        "RowActionLinks": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "none",
-                    "label": {
-                        "msgid": "Nowhere"
-                    }
-                },
-                {
-                    "key": "left",
-                    "label": {
-                        "msgid": "Left"
-                    }
-                },
-                {
-                    "key": "right",
-                    "label": {
-                        "msgid": "Right"
-                    }
-                },
-                {
-                    "key": "both",
-                    "label": {
-                        "msgid": "Both"
-                    }
-                }
-            ],
-            "name": "Where to show the table row links",
-            "desc": "These are Edit, Copy and Delete links."
-        },
-        "RowActionLinksWithoutUnique": {
-            "type": "boolean",
-            "name": "Show row links anyway",
-            "desc": "Whether to show row links even in the absence of a unique key."
-        },
-        "TablePrimaryKeyOrder": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "NONE",
-                    "label": {
-                        "msgid": "None"
-                    }
-                },
-                {
-                    "key": "ASC",
-                    "label": {
-                        "msgid": "Ascending"
-                    }
-                },
-                {
-                    "key": "DESC",
-                    "label": {
-                        "msgid": "Descending"
-                    }
-                }
-            ],
-            "name": "Primary key default sort order",
-            "desc": "Default sort order for tables with a primary key."
-        },
-        "RememberSorting": {
-            "type": "boolean",
-            "name": "Remember table's sorting",
-            "desc": "When browsing tables, the sorting of each table is remembered."
-        },
-        "RelationalDisplay": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "K",
-                    "label": {
-                        "msgid": "key"
-                    }
-                },
-                {
-                    "key": "D",
-                    "label": {
-                        "msgid": "display column"
-                    }
-                }
-            ],
-            "name": "Relational display",
-            "desc": "For display Options"
-        },
-        "ProtectBinary": {
-            "type": "select",
-            "values": [
-                {
-                    "key": 0,
-                    "label": false
-                },
-                {
-                    "key": "blob",
-                    "label": {
-                        "msgid": "blob"
-                    }
-                },
-                {
-                    "key": "noblob",
-                    "label": {
-                        "msgid": "noblob"
-                    }
-                },
-                {
-                    "key": "all",
-                    "label": {
-                        "msgid": "all"
-                    }
-                }
-            ],
-            "name": "Protect binary columns",
-            "desc": "Disallow BLOB and BINARY columns from editing."
-        },
-        "ShowFunctionFields": {
-            "type": "boolean",
-            "name": "Show function fields",
-            "desc": "Display the function fields in edit/insert mode."
-        },
-        "ShowFieldTypesInDataEditView": {
-            "type": "boolean",
-            "name": "Show field types",
-            "desc": "Defines whether or not type fields should be initially displayed in edit/insert mode."
-        },
-        "InsertRows": {
-            "type": "integer",
-            "name": "Number of inserted rows",
-            "desc": "How many rows can be inserted at one time."
-        },
-        "ForeignKeyDropdownOrder": {
-            "type": "array",
-            "name": "Foreign key dropdown order",
-            "desc": "Sort order for items in a foreign-key dropdown box; [kbd]content[/kbd] is the referenced data, [kbd]id[/kbd] is the key value."
-        },
-        "ForeignKeyMaxLimit": {
-            "type": "integer",
-            "name": "Foreign key limit",
-            "desc": "A dropdown will be used if fewer items are present."
-        },
-        "TabsMode": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "icons",
-                    "label": {
-                        "msgid": "Icons"
-                    }
-                },
-                {
-                    "key": "text",
-                    "label": {
-                        "msgid": "Text"
-                    }
-                },
-                {
-                    "key": "both",
-                    "label": {
-                        "msgid": "Both"
-                    }
-                }
-            ],
-            "name": "How to display the menu tabs",
-            "desc": "Use only icons, only text or both."
-        },
-        "DefaultTabServer": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "/",
-                    "label": {
-                        "msgid": "Welcome"
-                    }
-                },
-                {
-                    "key": "/server/databases",
-                    "label": {
-                        "msgid": "Databases"
-                    }
-                },
-                {
-                    "key": "/server/status",
-                    "label": {
-                        "msgid": "Status"
-                    }
-                },
-                {
-                    "key": "/server/variables",
-                    "label": {
-                        "msgid": "Variables"
-                    }
-                },
-                {
-                    "key": "/server/privileges",
-                    "label": {
-                        "msgid": "Privileges"
-                    }
-                }
-            ],
-            "name": "Default server tab",
-            "desc": "Tab that is displayed when entering a server."
-        },
-        "DefaultTabDatabase": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "/database/structure",
-                    "label": {
-                        "msgid": "Structure"
-                    }
-                },
-                {
-                    "key": "/database/sql",
-                    "label": {
-                        "msgid": "SQL"
-                    }
-                },
-                {
-                    "key": "/database/search",
-                    "label": {
-                        "msgid": "Search"
-                    }
-                },
-                {
-                    "key": "/database/operations",
-                    "label": {
-                        "msgid": "Operations"
-                    }
-                }
-            ],
-            "name": "Default database tab",
-            "desc": "Tab that is displayed when entering a database."
-        },
-        "DefaultTabTable": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "/table/structure",
-                    "label": {
-                        "msgid": "Structure"
-                    }
-                },
-                {
-                    "key": "/table/sql",
-                    "label": {
-                        "msgid": "SQL"
-                    }
-                },
-                {
-                    "key": "/table/search",
-                    "label": {
-                        "msgid": "Search"
-                    }
-                },
-                {
-                    "key": "/table/change",
-                    "label": {
-                        "msgid": "Insert"
-                    }
-                },
-                {
-                    "key": "/sql",
-                    "label": {
-                        "msgid": "Browse"
-                    }
-                }
-            ],
-            "name": "Default table tab",
-            "desc": "Tab that is displayed when entering a table."
-        },
-        "PDFDefaultPageSize": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "A3",
-                    "label": {
-                        "msgid": "A3"
-                    }
-                },
-                {
-                    "key": "A4",
-                    "label": {
-                        "msgid": "A4"
-                    }
-                },
-                {
-                    "key": "A5",
-                    "label": {
-                        "msgid": "A5"
-                    }
-                },
-                {
-                    "key": "letter",
-                    "label": {
-                        "msgid": "letter"
-                    }
-                },
-                {
-                    "key": "legal",
-                    "label": {
-                        "msgid": "legal"
-                    }
-                }
-            ],
-            "name": "Paper size"
+        "DefaultLang": {
+            "type": "string"
+        },
+        "ServerDefault": {
+            "type": "integer"
         },
         "Export/method": {
             "type": "select",
@@ -5295,6 +4083,527 @@
             "type": "boolean",
             "name": "Put columns names in the first row"
         },
+        "VersionCheck": {
+            "type": "boolean",
+            "name": "Version check",
+            "desc": "Enables check for latest version on main phpMyAdmin page."
+        },
+        "NaturalOrder": {
+            "type": "boolean",
+            "name": "Natural order",
+            "desc": "Use natural order for sorting table and database names."
+        },
+        "InitialSlidersState": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "open",
+                    "label": {
+                        "msgid": "Open"
+                    }
+                },
+                {
+                    "key": "closed",
+                    "label": {
+                        "msgid": "Closed"
+                    }
+                },
+                {
+                    "key": "disabled",
+                    "label": {
+                        "msgid": "Disabled"
+                    }
+                }
+            ],
+            "name": "Initial state for sliders"
+        },
+        "LoginCookieValidity": {
+            "type": "integer",
+            "name": "Login cookie validity",
+            "desc": "Define how long (in seconds) a login cookie is valid."
+        },
+        "SkipLockedTables": {
+            "type": "boolean",
+            "name": "Skip locked tables",
+            "desc": "Mark used tables and make it possible to show databases with locked tables."
+        },
+        "DisableMultiTableMaintenance": {
+            "type": "boolean",
+            "name": "Disable multi table maintenance",
+            "desc": "Disable the table maintenance mass operations, like optimizing or repairing the selected tables of a database."
+        },
+        "ShowHint": {
+            "type": "boolean",
+            "name": "Show hint",
+            "desc": "Whether to show hint or not."
+        },
+        "SendErrorReports": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "ask",
+                    "label": {
+                        "msgid": "Ask before sending error reports"
+                    }
+                },
+                {
+                    "key": "always",
+                    "label": {
+                        "msgid": "Always send error reports"
+                    }
+                },
+                {
+                    "key": "never",
+                    "label": {
+                        "msgid": "Never send error reports"
+                    }
+                }
+            ],
+            "name": "Send error reports",
+            "desc": "Choose the default action when sending error reports."
+        },
+        "ConsoleEnterExecutes": {
+            "type": "boolean",
+            "name": "Enter executes queries in console",
+            "desc": "Queries are executed by pressing Enter (instead of Ctrl+Enter). New lines will be inserted with Shift+Enter."
+        },
+        "DisableShortcutKeys": {
+            "type": "boolean",
+            "name": "Disable shortcut keys",
+            "desc": "Disable shortcut keys"
+        },
+        "FirstDayOfCalendar": {
+            "type": "select",
+            "values": [
+                {
+                    "key": 1,
+                    "label": {
+                        "msgid": "Monday",
+                        "context": "Week day name"
+                    }
+                },
+                {
+                    "key": 2,
+                    "label": {
+                        "msgid": "Tuesday",
+                        "context": "Week day name"
+                    }
+                },
+                {
+                    "key": 3,
+                    "label": {
+                        "msgid": "Wednesday",
+                        "context": "Week day name"
+                    }
+                },
+                {
+                    "key": 4,
+                    "label": {
+                        "msgid": "Thursday",
+                        "context": "Week day name"
+                    }
+                },
+                {
+                    "key": 5,
+                    "label": {
+                        "msgid": "Friday",
+                        "context": "Week day name"
+                    }
+                },
+                {
+                    "key": 6,
+                    "label": {
+                        "msgid": "Saturday",
+                        "context": "Week day name"
+                    }
+                },
+                {
+                    "key": 7,
+                    "label": {
+                        "msgid": "Sunday",
+                        "context": "Week day name"
+                    }
+                }
+            ],
+            "name": "First day of calendar"
+        },
+        "MaxDbList": {
+            "type": "integer",
+            "name": "Maximum databases",
+            "desc": "Maximum number of databases displayed in database list.",
+            "cmt": "Users cannot set a higher value"
+        },
+        "MaxTableList": {
+            "type": "integer",
+            "name": "Maximum tables",
+            "desc": "Maximum number of tables displayed in table list.",
+            "cmt": "Users cannot set a higher value"
+        },
+        "DefaultConnectionCollation": {
+            "type": "string",
+            "name": "Server connection collation"
+        },
+        "CharEditing": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "input",
+                    "label": {
+                        "msgid": "input"
+                    }
+                },
+                {
+                    "key": "textarea",
+                    "label": {
+                        "msgid": "textarea"
+                    }
+                }
+            ],
+            "name": "CHAR columns editing",
+            "desc": "Defines which type of editing controls should be used for CHAR and VARCHAR columns; [kbd]input[/kbd] - allows limiting of input length, [kbd]textarea[/kbd] - allows newlines in columns."
+        },
+        "MinSizeForInputField": {
+            "type": "integer",
+            "name": "Minimum size for input field",
+            "desc": "Defines the minimum size for input fields generated for CHAR and VARCHAR columns."
+        },
+        "MaxSizeForInputField": {
+            "type": "integer",
+            "name": "Maximum size for input field",
+            "desc": "Defines the maximum size for input fields generated for CHAR and VARCHAR columns."
+        },
+        "CharTextareaCols": {
+            "type": "integer",
+            "name": "CHAR textarea columns",
+            "desc": "Number of columns for CHAR/VARCHAR textareas."
+        },
+        "CharTextareaRows": {
+            "type": "integer",
+            "name": "CHAR textarea rows",
+            "desc": "Number of rows for CHAR/VARCHAR textareas."
+        },
+        "TextareaCols": {
+            "type": "integer",
+            "name": "Textarea columns",
+            "desc": "Textarea size (columns) in edit mode, this value will be emphasized for SQL query textareas (*2)."
+        },
+        "TextareaRows": {
+            "type": "integer",
+            "name": "Textarea rows",
+            "desc": "Textarea size (rows) in edit mode, this value will be emphasized for SQL query textareas (*2)."
+        },
+        "LongtextDoubleTextarea": {
+            "type": "boolean",
+            "name": "Bigger textarea for LONGTEXT",
+            "desc": "Double size of textarea for LONGTEXT columns."
+        },
+        "TitleDefault": {
+            "type": "string",
+            "name": "Default title",
+            "desc": "Title of browser window when nothing is selected."
+        },
+        "TitleTable": {
+            "type": "string",
+            "name": "Table",
+            "desc": "Title of browser window when a table is selected."
+        },
+        "TitleDatabase": {
+            "type": "string",
+            "name": "Database",
+            "desc": "Title of browser window when a database is selected."
+        },
+        "TitleServer": {
+            "type": "string",
+            "name": "Server",
+            "desc": "Title of browser window when a server is selected."
+        },
+        "PmaNoRelation_DisableWarning": {
+            "type": "boolean",
+            "name": "Missing phpMyAdmin configuration storage tables",
+            "desc": "Disable the default warning that is displayed on the database details Structure page if any of the required tables for the phpMyAdmin configuration storage could not be found."
+        },
+        "LoginCookieValidityDisableWarning": {
+            "type": "boolean",
+            "name": "Login cookie validity warning",
+            "desc": "Disable the default warning that is displayed on the main page if the value of the PHP setting session.gc_maxlifetime is less than the value of `LoginCookieValidity`."
+        },
+        "ReservedWordDisableWarning": {
+            "type": "boolean",
+            "name": "MySQL reserved word warning",
+            "desc": "Disable the default warning that is displayed on the Structure page if column names in a table are reserved MySQL words."
+        },
+        "Console/Mode": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "info",
+                    "label": {
+                        "msgid": "info"
+                    }
+                },
+                {
+                    "key": "show",
+                    "label": {
+                        "msgid": "show"
+                    }
+                },
+                {
+                    "key": "collapse",
+                    "label": {
+                        "msgid": "collapse"
+                    }
+                }
+            ],
+            "name": "Console mode"
+        },
+        "Console/StartHistory": {
+            "type": "boolean",
+            "name": "Show query history at start"
+        },
+        "Console/AlwaysExpand": {
+            "type": "boolean",
+            "name": "Always expand query messages"
+        },
+        "Console/CurrentQuery": {
+            "type": "boolean",
+            "name": "Show current browsing query"
+        },
+        "Console/EnterExecutes": {
+            "type": "boolean",
+            "name": "Execute queries on Enter and insert new line with Shift+Enter"
+        },
+        "Console/DarkTheme": {
+            "type": "boolean",
+            "name": "Switch to dark theme"
+        },
+        "Console/Height": {
+            "type": "integer",
+            "name": "Console height"
+        },
+        "Console/GroupQueries": {
+            "type": "boolean",
+            "name": "Group queries"
+        },
+        "Console/OrderBy": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "exec",
+                    "label": {
+                        "msgid": "exec"
+                    }
+                },
+                {
+                    "key": "time",
+                    "label": {
+                        "msgid": "time"
+                    }
+                },
+                {
+                    "key": "count",
+                    "label": {
+                        "msgid": "count"
+                    }
+                }
+            ],
+            "name": "Order by"
+        },
+        "Console/Order": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "asc",
+                    "label": {
+                        "msgid": "asc"
+                    }
+                },
+                {
+                    "key": "desc",
+                    "label": {
+                        "msgid": "desc"
+                    }
+                }
+            ],
+            "name": "Order"
+        },
+        "UploadDir": {
+            "type": "string",
+            "name": "Upload directory",
+            "desc": "Directory on server where you can upload files for import."
+        },
+        "SaveDir": {
+            "type": "string",
+            "name": "Save directory",
+            "desc": "Directory where exports can be saved on server."
+        },
+        "RecodingEngine": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "auto",
+                    "label": {
+                        "msgid": "auto"
+                    }
+                },
+                {
+                    "key": "iconv",
+                    "label": {
+                        "msgid": "iconv"
+                    }
+                },
+                {
+                    "key": "mb",
+                    "label": {
+                        "msgid": "mb"
+                    }
+                },
+                {
+                    "key": "none",
+                    "label": {
+                        "msgid": "none"
+                    }
+                }
+            ],
+            "name": "Recoding engine",
+            "desc": "Select which functions will be used for character set conversion."
+        },
+        "IconvExtraParams": {
+            "type": "string",
+            "name": "Extra parameters for iconv"
+        },
+        "ZipDump": {
+            "type": "boolean",
+            "name": "ZIP",
+            "desc": "Enable ZIP compression for import and export operations."
+        },
+        "GZipDump": {
+            "type": "boolean",
+            "name": "GZip",
+            "desc": "Enable gzip compression for import and export operations."
+        },
+        "BZipDump": {
+            "type": "boolean",
+            "name": "Bzip2",
+            "desc": "Enable bzip2 compression for import operations."
+        },
+        "CompressOnFly": {
+            "type": "boolean",
+            "name": "Compress on the fly",
+            "desc": "Compress gzip exports on the fly without the need for much memory; if you encounter problems with created gzip files disable this feature."
+        },
+        "blowfish_secret": {
+            "type": "string",
+            "name": "Blowfish secret",
+            "desc": "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
+        },
+        "CheckConfigurationPermissions": {
+            "type": "boolean",
+            "name": "Check config file permissions"
+        },
+        "TrustedProxies": {
+            "type": "array",
+            "name": "List of trusted proxies for IP allow/deny",
+            "desc": "Input proxies as [kbd]IP: trusted HTTP header[/kbd]. The following example specifies that phpMyAdmin should trust a HTTP_X_FORWARDED_FOR (X-Forwarded-For) header coming from the proxy 1.2.3.4:[br][kbd]1.2.3.4: HTTP_X_FORWARDED_FOR[/kbd]."
+        },
+        "AllowUserDropDatabase": {
+            "type": "boolean",
+            "name": "Show \"Drop database\" link to normal users"
+        },
+        "AllowArbitraryServer": {
+            "type": "boolean",
+            "name": "Allow login to any MySQL server",
+            "desc": "If enabled, user can enter any MySQL server in login form for cookie auth."
+        },
+        "ArbitraryServerRegexp": {
+            "type": "string",
+            "name": "Restrict login to MySQL server",
+            "desc": "Restricts the MySQL servers the user can enter when a login to an arbitrary MySQL server is enabled by matching the IP or hostname of the MySQL server to the given regular expression."
+        },
+        "LoginCookieRecall": {
+            "type": "boolean",
+            "name": "Recall user name",
+            "desc": "Define whether the previous login should be recalled or not in [kbd]cookie[/kbd] authentication mode."
+        },
+        "LoginCookieStore": {
+            "type": "integer",
+            "name": "Login cookie store",
+            "desc": "Defines how long (in seconds) a login cookie should be stored in browser. The default of 0 means that it will be kept for the existing session only, and will be deleted as soon as you close the browser window. This is recommended for non-trusted environments."
+        },
+        "LoginCookieDeleteAll": {
+            "type": "boolean",
+            "name": "Delete all cookies on logout",
+            "desc": "If TRUE, logout deletes cookies for all servers; when set to FALSE, logout only occurs for the current server. Setting this to FALSE makes it easy to forget to log out from other servers when connected to multiple servers."
+        },
+        "CaptchaLoginPublicKey": {
+            "type": "string",
+            "name": "Public key for reCAPTCHA",
+            "desc": "Enter your public key for the reCAPTCHA service on your domain."
+        },
+        "CaptchaLoginPrivateKey": {
+            "type": "string",
+            "name": "Private key for reCAPTCHA",
+            "desc": "Enter your private key for your domain reCAPTCHA service."
+        },
+        "CaptchaSiteVerifyURL": {
+            "type": "string",
+            "name": "URL for reCAPTCHA siteverify",
+            "desc": "Enter your siteverify URL for your reCAPTCHA service."
+        },
+        "UserprefsDeveloperTab": {
+            "type": "boolean",
+            "name": "Enable the Developer tab in settings",
+            "desc": "When disabled, users cannot set any of the options below, regardless of the checkbox on the right."
+        },
+        "DBG/sql": {
+            "type": "boolean",
+            "name": "Debug SQL",
+            "desc": "Log SQL queries and their execution time, to be displayed in the console"
+        },
+        "PersistentConnections": {
+            "type": "boolean",
+            "name": "Persistent connections",
+            "desc": "Use persistent connections to MySQL databases."
+        },
+        "ExecTimeLimit": {
+            "type": "integer",
+            "name": "Maximum execution time",
+            "desc": "Set the number of seconds a script is allowed to run ([kbd]0[/kbd] for no limit)."
+        },
+        "MemoryLimit": {
+            "type": "short_string",
+            "name": "Memory limit",
+            "desc": "The number of bytes a script is allowed to allocate, e.g. [kbd]32M[/kbd] ([kbd]-1[/kbd] for no limit and [kbd]0[/kbd] for no change)."
+        },
+        "UseDbSearch": {
+            "type": "boolean",
+            "name": "Use database search",
+            "desc": "Allow for searching inside the entire database."
+        },
+        "ProxyUrl": {
+            "type": "string",
+            "name": "Proxy URL",
+            "desc": "The URL of the proxy to be used when retrieving the information about the latest version of phpMyAdmin, or when submitting error reports. You need this if the server where phpMyAdmin is installed does not have direct access to the Internet. The format is: \"hostname:portnumber\"."
+        },
+        "ProxyUser": {
+            "type": "string",
+            "name": "Proxy username",
+            "desc": "The username for authenticating with the proxy. By default, no authentication is performed. If a username is supplied, Basic Authentication will be performed. No other types of authentication are currently supported."
+        },
+        "ProxyPass": {
+            "type": "string",
+            "name": "Proxy password",
+            "desc": "The password for authenticating with the proxy."
+        },
+        "AllowThirdPartyFraming": {
+            "type": "boolean",
+            "name": "Allow third party framing",
+            "desc": "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
+        },
+        "ZeroConf": {
+            "type": "boolean",
+            "name": "Enable Zero Configuration mode",
+            "desc": "Enable Zero Configuration mode which lets you set up phpMyAdmin configuration storage tables automatically."
+        },
         "Import/format": {
             "type": "select",
             "values": [
@@ -5500,184 +4809,18 @@
             "type": "boolean",
             "name": "Import currencies ($5.00 to 5.00)"
         },
-        "DefaultLang": {
-            "type": "string"
-        },
-        "ServerDefault": {
-            "type": "integer"
-        },
-        "UserprefsDeveloperTab": {
+        "ShowCreateDb": {
             "type": "boolean",
-            "name": "Enable the Developer tab in settings",
-            "desc": "When disabled, users cannot set any of the options below, regardless of the checkbox on the right."
+            "name": "Show create database form"
         },
-        "UploadDir": {
-            "type": "string",
-            "name": "Upload directory",
-            "desc": "Directory on server where you can upload files for import."
-        },
-        "SaveDir": {
-            "type": "string",
-            "name": "Save directory",
-            "desc": "Directory where exports can be saved on server."
-        },
-        "RecodingEngine": {
-            "type": "select",
-            "values": [
-                {
-                    "key": "auto",
-                    "label": {
-                        "msgid": "auto"
-                    }
-                },
-                {
-                    "key": "iconv",
-                    "label": {
-                        "msgid": "iconv"
-                    }
-                },
-                {
-                    "key": "mb",
-                    "label": {
-                        "msgid": "mb"
-                    }
-                },
-                {
-                    "key": "none",
-                    "label": {
-                        "msgid": "none"
-                    }
-                }
-            ],
-            "name": "Recoding engine",
-            "desc": "Select which functions will be used for character set conversion."
-        },
-        "IconvExtraParams": {
-            "type": "string",
-            "name": "Extra parameters for iconv"
-        },
-        "ZipDump": {
+        "ShowStats": {
             "type": "boolean",
-            "name": "ZIP",
-            "desc": "Enable ZIP compression for import and export operations."
+            "name": "Show statistics",
+            "desc": "Allow to display database and table statistics (e.g. space usage)."
         },
-        "GZipDump": {
+        "ShowServerInfo": {
             "type": "boolean",
-            "name": "GZip",
-            "desc": "Enable gzip compression for import and export operations."
-        },
-        "BZipDump": {
-            "type": "boolean",
-            "name": "Bzip2",
-            "desc": "Enable bzip2 compression for import operations."
-        },
-        "CompressOnFly": {
-            "type": "boolean",
-            "name": "Compress on the fly",
-            "desc": "Compress gzip exports on the fly without the need for much memory; if you encounter problems with created gzip files disable this feature."
-        },
-        "blowfish_secret": {
-            "type": "string",
-            "name": "Blowfish secret",
-            "desc": "Secret passphrase used for encrypting cookies in [kbd]cookie[/kbd] authentication."
-        },
-        "CheckConfigurationPermissions": {
-            "type": "boolean",
-            "name": "Check config file permissions"
-        },
-        "TrustedProxies": {
-            "type": "array",
-            "name": "List of trusted proxies for IP allow/deny",
-            "desc": "Input proxies as [kbd]IP: trusted HTTP header[/kbd]. The following example specifies that phpMyAdmin should trust a HTTP_X_FORWARDED_FOR (X-Forwarded-For) header coming from the proxy 1.2.3.4:[br][kbd]1.2.3.4: HTTP_X_FORWARDED_FOR[/kbd]."
-        },
-        "AllowUserDropDatabase": {
-            "type": "boolean",
-            "name": "Show \"Drop database\" link to normal users"
-        },
-        "AllowArbitraryServer": {
-            "type": "boolean",
-            "name": "Allow login to any MySQL server",
-            "desc": "If enabled, user can enter any MySQL server in login form for cookie auth."
-        },
-        "ArbitraryServerRegexp": {
-            "type": "string",
-            "name": "Restrict login to MySQL server",
-            "desc": "Restricts the MySQL servers the user can enter when a login to an arbitrary MySQL server is enabled by matching the IP or hostname of the MySQL server to the given regular expression."
-        },
-        "LoginCookieRecall": {
-            "type": "boolean",
-            "name": "Recall user name",
-            "desc": "Define whether the previous login should be recalled or not in [kbd]cookie[/kbd] authentication mode."
-        },
-        "LoginCookieStore": {
-            "type": "integer",
-            "name": "Login cookie store",
-            "desc": "Defines how long (in seconds) a login cookie should be stored in browser. The default of 0 means that it will be kept for the existing session only, and will be deleted as soon as you close the browser window. This is recommended for non-trusted environments."
-        },
-        "LoginCookieDeleteAll": {
-            "type": "boolean",
-            "name": "Delete all cookies on logout",
-            "desc": "If TRUE, logout deletes cookies for all servers; when set to FALSE, logout only occurs for the current server. Setting this to FALSE makes it easy to forget to log out from other servers when connected to multiple servers."
-        },
-        "CaptchaLoginPublicKey": {
-            "type": "string",
-            "name": "Public key for reCAPTCHA",
-            "desc": "Enter your public key for the reCAPTCHA service on your domain."
-        },
-        "CaptchaLoginPrivateKey": {
-            "type": "string",
-            "name": "Private key for reCAPTCHA",
-            "desc": "Enter your private key for your domain reCAPTCHA service."
-        },
-        "CaptchaSiteVerifyURL": {
-            "type": "string",
-            "name": "URL for reCAPTCHA siteverify",
-            "desc": "Enter your siteverify URL for your reCAPTCHA service."
-        },
-        "PersistentConnections": {
-            "type": "boolean",
-            "name": "Persistent connections",
-            "desc": "Use persistent connections to MySQL databases."
-        },
-        "ExecTimeLimit": {
-            "type": "integer",
-            "name": "Maximum execution time",
-            "desc": "Set the number of seconds a script is allowed to run ([kbd]0[/kbd] for no limit)."
-        },
-        "MemoryLimit": {
-            "type": "short_string",
-            "name": "Memory limit",
-            "desc": "The number of bytes a script is allowed to allocate, e.g. [kbd]32M[/kbd] ([kbd]-1[/kbd] for no limit and [kbd]0[/kbd] for no change)."
-        },
-        "UseDbSearch": {
-            "type": "boolean",
-            "name": "Use database search",
-            "desc": "Allow for searching inside the entire database."
-        },
-        "ProxyUrl": {
-            "type": "string",
-            "name": "Proxy URL",
-            "desc": "The URL of the proxy to be used when retrieving the information about the latest version of phpMyAdmin, or when submitting error reports. You need this if the server where phpMyAdmin is installed does not have direct access to the Internet. The format is: \"hostname:portnumber\"."
-        },
-        "ProxyUser": {
-            "type": "string",
-            "name": "Proxy username",
-            "desc": "The username for authenticating with the proxy. By default, no authentication is performed. If a username is supplied, Basic Authentication will be performed. No other types of authentication are currently supported."
-        },
-        "ProxyPass": {
-            "type": "string",
-            "name": "Proxy password",
-            "desc": "The password for authenticating with the proxy."
-        },
-        "AllowThirdPartyFraming": {
-            "type": "boolean",
-            "name": "Allow third party framing",
-            "desc": "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
-        },
-        "ZeroConf": {
-            "type": "boolean",
-            "name": "Enable Zero Configuration mode",
-            "desc": "Enable Zero Configuration mode which lets you set up phpMyAdmin configuration storage tables automatically."
+            "name": "Show detailed MySQL server information"
         },
         "ShowPhpInfo": {
             "type": "boolean",
@@ -5688,6 +4831,766 @@
             "type": "boolean",
             "name": "Show password change form",
             "desc": "Please note that enabling this has no effect with [kbd]config[/kbd] authentication mode because the password is hard coded in the configuration file; this does not limit the ability to execute the same command directly."
+        },
+        "ShowDbStructureCharset": {
+            "type": "boolean",
+            "name": "Show table charset",
+            "desc": "Show or hide a column displaying the charset for all tables."
+        },
+        "ShowDbStructureComment": {
+            "type": "boolean",
+            "name": "Show table comments",
+            "desc": "Show or hide a column displaying the comments for all tables."
+        },
+        "ShowDbStructureCreation": {
+            "type": "boolean",
+            "name": "Show creation timestamp",
+            "desc": "Show or hide a column displaying the Creation timestamp for all tables."
+        },
+        "ShowDbStructureLastUpdate": {
+            "type": "boolean",
+            "name": "Show last update timestamp",
+            "desc": "Show or hide a column displaying the Last update timestamp for all tables."
+        },
+        "ShowDbStructureLastCheck": {
+            "type": "boolean",
+            "name": "Show last check timestamp",
+            "desc": "Show or hide a column displaying the Last check timestamp for all tables."
+        },
+        "HideStructureActions": {
+            "type": "boolean",
+            "name": "Hide table structure actions",
+            "desc": "Whether the table structure actions should be hidden."
+        },
+        "ShowColumnComments": {
+            "type": "boolean",
+            "name": "Show column comments",
+            "desc": "Whether column comments should be shown in table structure view"
+        },
+        "DefaultTransformations/Hex": {
+            "type": "array",
+            "name": "Default transformations for Hex",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/Substring": {
+            "type": "array",
+            "name": "Default transformations for Substring",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/Bool2Text": {
+            "type": "array",
+            "name": "Default transformations for Bool2Text",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/External": {
+            "type": "array",
+            "name": "Default transformations for External",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/PreApPend": {
+            "type": "array",
+            "name": "Default transformations for PreApPend",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/DateFormat": {
+            "type": "array",
+            "name": "Default transformations for DateFormat",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/Inline": {
+            "type": "array",
+            "name": "Default transformations for Inline",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/TextImageLink": {
+            "type": "array",
+            "name": "Default transformations for TextImageLink",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "DefaultTransformations/TextLink": {
+            "type": "array",
+            "name": "Default transformations for TextLink",
+            "desc": "Values for options list for default transformations. These will be overwritten if transformation is filled in at table structure page."
+        },
+        "TableNavigationLinksMode": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "icons",
+                    "label": {
+                        "msgid": "Icons"
+                    }
+                },
+                {
+                    "key": "text",
+                    "label": {
+                        "msgid": "Text"
+                    }
+                },
+                {
+                    "key": "both",
+                    "label": {
+                        "msgid": "Both"
+                    }
+                }
+            ],
+            "name": "Table navigation bar",
+            "desc": "Use only icons, only text or both."
+        },
+        "ActionLinksMode": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "icons",
+                    "label": {
+                        "msgid": "Icons"
+                    }
+                },
+                {
+                    "key": "text",
+                    "label": {
+                        "msgid": "Text"
+                    }
+                },
+                {
+                    "key": "both",
+                    "label": {
+                        "msgid": "Both"
+                    }
+                }
+            ],
+            "name": "How to display various action links",
+            "desc": "Use only icons, only text or both."
+        },
+        "ShowAll": {
+            "type": "boolean",
+            "name": "Allow to display all the rows",
+            "desc": "Whether a user should be displayed a \"show all (rows)\" button."
+        },
+        "MaxRows": {
+            "type": "select",
+            "values": [
+                {
+                    "key": 25,
+                    "label": 25
+                },
+                {
+                    "key": 50,
+                    "label": 50
+                },
+                {
+                    "key": 100,
+                    "label": 100
+                },
+                {
+                    "key": 250,
+                    "label": 250
+                },
+                {
+                    "key": 500,
+                    "label": 500
+                }
+            ],
+            "name": "Maximum number of rows to display",
+            "desc": "Number of rows displayed when browsing a result set. If the result set contains more rows, \"Previous\" and \"Next\" links will be shown."
+        },
+        "Order": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "ASC",
+                    "label": {
+                        "msgid": "ASC"
+                    }
+                },
+                {
+                    "key": "DESC",
+                    "label": {
+                        "msgid": "DESC"
+                    }
+                },
+                {
+                    "key": "SMART",
+                    "label": {
+                        "msgid": "SMART"
+                    }
+                }
+            ],
+            "name": "Default sorting order",
+            "desc": "[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, DATE, DATETIME and TIMESTAMP, ascending order otherwise."
+        },
+        "BrowsePointerEnable": {
+            "type": "boolean",
+            "name": "Highlight pointer",
+            "desc": "Highlight row pointed by the mouse cursor."
+        },
+        "BrowseMarkerEnable": {
+            "type": "boolean",
+            "name": "Row marker",
+            "desc": "Highlight selected rows."
+        },
+        "GridEditing": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "click",
+                    "label": {
+                        "msgid": "Click"
+                    }
+                },
+                {
+                    "key": "double-click",
+                    "label": {
+                        "msgid": "Double click"
+                    }
+                },
+                {
+                    "key": "disabled",
+                    "label": {
+                        "msgid": "Disabled"
+                    }
+                }
+            ],
+            "name": "Grid editing: trigger action"
+        },
+        "SaveCellsAtOnce": {
+            "type": "boolean",
+            "name": "Grid editing: save all edited cells at once"
+        },
+        "RepeatCells": {
+            "type": "integer",
+            "name": "Repeat headers",
+            "desc": "Repeat the headers every X cells, [kbd]0[/kbd] deactivates this feature."
+        },
+        "LimitChars": {
+            "type": "integer",
+            "name": "Limit column characters",
+            "desc": "Maximum number of characters shown in any non-numeric column on browse view."
+        },
+        "RowActionLinks": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "none",
+                    "label": {
+                        "msgid": "Nowhere"
+                    }
+                },
+                {
+                    "key": "left",
+                    "label": {
+                        "msgid": "Left"
+                    }
+                },
+                {
+                    "key": "right",
+                    "label": {
+                        "msgid": "Right"
+                    }
+                },
+                {
+                    "key": "both",
+                    "label": {
+                        "msgid": "Both"
+                    }
+                }
+            ],
+            "name": "Where to show the table row links",
+            "desc": "These are Edit, Copy and Delete links."
+        },
+        "RowActionLinksWithoutUnique": {
+            "type": "boolean",
+            "name": "Show row links anyway",
+            "desc": "Whether to show row links even in the absence of a unique key."
+        },
+        "TablePrimaryKeyOrder": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "NONE",
+                    "label": {
+                        "msgid": "None"
+                    }
+                },
+                {
+                    "key": "ASC",
+                    "label": {
+                        "msgid": "Ascending"
+                    }
+                },
+                {
+                    "key": "DESC",
+                    "label": {
+                        "msgid": "Descending"
+                    }
+                }
+            ],
+            "name": "Primary key default sort order",
+            "desc": "Default sort order for tables with a primary key."
+        },
+        "RememberSorting": {
+            "type": "boolean",
+            "name": "Remember table's sorting",
+            "desc": "When browsing tables, the sorting of each table is remembered."
+        },
+        "RelationalDisplay": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "K",
+                    "label": {
+                        "msgid": "key"
+                    }
+                },
+                {
+                    "key": "D",
+                    "label": {
+                        "msgid": "display column"
+                    }
+                }
+            ],
+            "name": "Relational display",
+            "desc": "For display Options"
+        },
+        "ProtectBinary": {
+            "type": "select",
+            "values": [
+                {
+                    "key": 0,
+                    "label": false
+                },
+                {
+                    "key": "blob",
+                    "label": {
+                        "msgid": "blob"
+                    }
+                },
+                {
+                    "key": "noblob",
+                    "label": {
+                        "msgid": "noblob"
+                    }
+                },
+                {
+                    "key": "all",
+                    "label": {
+                        "msgid": "all"
+                    }
+                }
+            ],
+            "name": "Protect binary columns",
+            "desc": "Disallow BLOB and BINARY columns from editing."
+        },
+        "ShowFunctionFields": {
+            "type": "boolean",
+            "name": "Show function fields",
+            "desc": "Display the function fields in edit/insert mode."
+        },
+        "ShowFieldTypesInDataEditView": {
+            "type": "boolean",
+            "name": "Show field types",
+            "desc": "Defines whether or not type fields should be initially displayed in edit/insert mode."
+        },
+        "InsertRows": {
+            "type": "integer",
+            "name": "Number of inserted rows",
+            "desc": "How many rows can be inserted at one time."
+        },
+        "ForeignKeyDropdownOrder": {
+            "type": "array",
+            "name": "Foreign key dropdown order",
+            "desc": "Sort order for items in a foreign-key dropdown box; [kbd]content[/kbd] is the referenced data, [kbd]id[/kbd] is the key value."
+        },
+        "ForeignKeyMaxLimit": {
+            "type": "integer",
+            "name": "Foreign key limit",
+            "desc": "A dropdown will be used if fewer items are present."
+        },
+        "TabsMode": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "icons",
+                    "label": {
+                        "msgid": "Icons"
+                    }
+                },
+                {
+                    "key": "text",
+                    "label": {
+                        "msgid": "Text"
+                    }
+                },
+                {
+                    "key": "both",
+                    "label": {
+                        "msgid": "Both"
+                    }
+                }
+            ],
+            "name": "How to display the menu tabs",
+            "desc": "Use only icons, only text or both."
+        },
+        "DefaultTabServer": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "/",
+                    "label": {
+                        "msgid": "Welcome"
+                    }
+                },
+                {
+                    "key": "/server/databases",
+                    "label": {
+                        "msgid": "Databases"
+                    }
+                },
+                {
+                    "key": "/server/status",
+                    "label": {
+                        "msgid": "Status"
+                    }
+                },
+                {
+                    "key": "/server/variables",
+                    "label": {
+                        "msgid": "Variables"
+                    }
+                },
+                {
+                    "key": "/server/privileges",
+                    "label": {
+                        "msgid": "Privileges"
+                    }
+                }
+            ],
+            "name": "Default server tab",
+            "desc": "Tab that is displayed when entering a server."
+        },
+        "DefaultTabDatabase": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "/database/structure",
+                    "label": {
+                        "msgid": "Structure"
+                    }
+                },
+                {
+                    "key": "/database/sql",
+                    "label": {
+                        "msgid": "SQL"
+                    }
+                },
+                {
+                    "key": "/database/search",
+                    "label": {
+                        "msgid": "Search"
+                    }
+                },
+                {
+                    "key": "/database/operations",
+                    "label": {
+                        "msgid": "Operations"
+                    }
+                }
+            ],
+            "name": "Default database tab",
+            "desc": "Tab that is displayed when entering a database."
+        },
+        "DefaultTabTable": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "/table/structure",
+                    "label": {
+                        "msgid": "Structure"
+                    }
+                },
+                {
+                    "key": "/table/sql",
+                    "label": {
+                        "msgid": "SQL"
+                    }
+                },
+                {
+                    "key": "/table/search",
+                    "label": {
+                        "msgid": "Search"
+                    }
+                },
+                {
+                    "key": "/table/change",
+                    "label": {
+                        "msgid": "Insert"
+                    }
+                },
+                {
+                    "key": "/sql",
+                    "label": {
+                        "msgid": "Browse"
+                    }
+                }
+            ],
+            "name": "Default table tab",
+            "desc": "Tab that is displayed when entering a table."
+        },
+        "PDFDefaultPageSize": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "A3",
+                    "label": {
+                        "msgid": "A3"
+                    }
+                },
+                {
+                    "key": "A4",
+                    "label": {
+                        "msgid": "A4"
+                    }
+                },
+                {
+                    "key": "A5",
+                    "label": {
+                        "msgid": "A5"
+                    }
+                },
+                {
+                    "key": "letter",
+                    "label": {
+                        "msgid": "letter"
+                    }
+                },
+                {
+                    "key": "legal",
+                    "label": {
+                        "msgid": "legal"
+                    }
+                }
+            ],
+            "name": "Paper size"
+        },
+        "ShowDatabasesNavigationAsTree": {
+            "type": "boolean",
+            "name": "Show databases navigation as tree",
+            "desc": "In the navigation panel, replaces the database tree with a selector"
+        },
+        "NavigationLinkWithMainPanel": {
+            "type": "boolean",
+            "name": "Link with main panel",
+            "desc": "Link with main panel by highlighting the current database or table."
+        },
+        "NavigationDisplayLogo": {
+            "type": "boolean",
+            "name": "Display logo",
+            "desc": "Show logo in navigation panel."
+        },
+        "NavigationLogoLink": {
+            "type": "string",
+            "name": "Logo link URL",
+            "desc": "URL where logo in the navigation panel will point to."
+        },
+        "NavigationLogoLinkWindow": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "main",
+                    "label": {
+                        "msgid": "main"
+                    }
+                },
+                {
+                    "key": "new",
+                    "label": {
+                        "msgid": "new"
+                    }
+                }
+            ],
+            "name": "Logo link target",
+            "desc": "Open the linked page in the main window ([code]main[/code]) or in a new one ([code]new[/code])."
+        },
+        "NavigationTreePointerEnable": {
+            "type": "boolean",
+            "name": "Enable highlighting",
+            "desc": "Highlight server under the mouse cursor."
+        },
+        "FirstLevelNavigationItems": {
+            "type": "integer",
+            "name": "Maximum items on first level",
+            "desc": "The number of items that can be displayed on each page on the first level of the navigation tree."
+        },
+        "NavigationTreeDisplayItemFilterMinimum": {
+            "type": "integer",
+            "name": "Minimum number of items to display the filter box",
+            "desc": "Defines the minimum number of items (tables, views, routines and events) to display a filter box."
+        },
+        "NumRecentTables": {
+            "type": "integer",
+            "name": "Recently used tables",
+            "desc": "Maximum number of recently used tables; set 0 to disable."
+        },
+        "NumFavoriteTables": {
+            "type": "integer",
+            "name": "Favorite tables",
+            "desc": "Maximum number of favorite tables; set 0 to disable."
+        },
+        "NavigationWidth": {
+            "type": "integer",
+            "name": "Navigation panel width",
+            "desc": "Set to 0 to collapse navigation panel."
+        },
+        "MaxNavigationItems": {
+            "type": "integer",
+            "name": "Maximum items in branch",
+            "desc": "The number of items that can be displayed on each page of the navigation tree."
+        },
+        "NavigationTreeEnableGrouping": {
+            "type": "boolean",
+            "name": "Group items in the tree",
+            "desc": "Group items in the navigation tree (determined by the separator defined in the Databases and Tables tabs above)."
+        },
+        "NavigationTreeEnableExpansion": {
+            "type": "boolean",
+            "name": "Enable navigation tree expansion",
+            "desc": "Whether to offer the possibility of tree expansion in the navigation panel."
+        },
+        "NavigationTreeShowTables": {
+            "type": "boolean",
+            "name": "Show tables in tree",
+            "desc": "Whether to show tables under database in the navigation tree"
+        },
+        "NavigationTreeShowViews": {
+            "type": "boolean",
+            "name": "Show views in tree",
+            "desc": "Whether to show views under database in the navigation tree"
+        },
+        "NavigationTreeShowFunctions": {
+            "type": "boolean",
+            "name": "Show functions in tree",
+            "desc": "Whether to show functions under database in the navigation tree"
+        },
+        "NavigationTreeShowProcedures": {
+            "type": "boolean",
+            "name": "Show procedures in tree",
+            "desc": "Whether to show procedures under database in the navigation tree"
+        },
+        "NavigationTreeShowEvents": {
+            "type": "boolean",
+            "name": "Show events in tree",
+            "desc": "Whether to show events under database in the navigation tree"
+        },
+        "NavigationTreeAutoexpandSingleDb": {
+            "type": "boolean",
+            "name": "Expand single database",
+            "desc": "Whether to expand single database in the navigation tree automatically."
+        },
+        "NavigationDisplayServers": {
+            "type": "boolean",
+            "name": "Display servers selection",
+            "desc": "Display server choice at the top of the navigation panel."
+        },
+        "DisplayServersList": {
+            "type": "boolean",
+            "name": "Display servers as a list",
+            "desc": "Show server listing as a list instead of a drop down."
+        },
+        "NavigationTreeDisplayDbFilterMinimum": {
+            "type": "integer",
+            "name": "Minimum number of databases to display the database filter box"
+        },
+        "NavigationTreeDbSeparator": {
+            "type": "short_string",
+            "name": "Database tree separator",
+            "desc": "String that separates databases into different tree levels."
+        },
+        "NavigationTreeDefaultTabTable": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "/table/structure",
+                    "label": {
+                        "msgid": "Structure"
+                    }
+                },
+                {
+                    "key": "/table/sql",
+                    "label": {
+                        "msgid": "SQL"
+                    }
+                },
+                {
+                    "key": "/table/search",
+                    "label": {
+                        "msgid": "Search"
+                    }
+                },
+                {
+                    "key": "/table/change",
+                    "label": {
+                        "msgid": "Insert"
+                    }
+                },
+                {
+                    "key": "/sql",
+                    "label": {
+                        "msgid": "Browse"
+                    }
+                }
+            ],
+            "name": "Target for quick access icon"
+        },
+        "NavigationTreeDefaultTabTable2": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "",
+                    "label": {
+                        "msgid": ""
+                    }
+                },
+                {
+                    "key": "/table/structure",
+                    "label": {
+                        "msgid": "Structure"
+                    }
+                },
+                {
+                    "key": "/table/sql",
+                    "label": {
+                        "msgid": "SQL"
+                    }
+                },
+                {
+                    "key": "/table/search",
+                    "label": {
+                        "msgid": "Search"
+                    }
+                },
+                {
+                    "key": "/table/change",
+                    "label": {
+                        "msgid": "Insert"
+                    }
+                },
+                {
+                    "key": "/sql",
+                    "label": {
+                        "msgid": "Browse"
+                    }
+                }
+            ],
+            "name": "Target for second quick access icon"
+        },
+        "NavigationTreeTableSeparator": {
+            "type": "short_string",
+            "name": "Table tree separator",
+            "desc": "String that separates tables into different tree levels."
+        },
+        "NavigationTreeTableLevel": {
+            "type": "integer",
+            "name": "Maximum table tree depth"
         },
         "Servers/1/verbose": {
             "type": "string",
@@ -5777,6 +5680,16 @@
         "Servers/1/LogoutURL": {
             "type": "string",
             "name": "Logout URL"
+        },
+        "Servers/1/only_db": {
+            "type": "array",
+            "name": "Show only listed databases",
+            "desc": "You can use MySQL wildcard characters (% and _), escape them if you want to use their literal instances, i.e. use [kbd]'my\\_db'[/kbd] and not [kbd]'my_db'[/kbd]."
+        },
+        "Servers/1/hide_db": {
+            "type": "string",
+            "name": "Hide databases",
+            "desc": "Hide databases matching regular expression (PCRE)."
         },
         "Servers/1/AllowRoot": {
             "type": "boolean",
@@ -5977,6 +5890,77 @@
             "name": "Add DROP DATABASE",
             "desc": "Whether a DROP DATABASE IF EXISTS statement will be added as first line to the log when creating a database."
         },
+        "ShowSQL": {
+            "type": "boolean",
+            "name": "Show SQL queries",
+            "desc": "Defines whether SQL queries generated by phpMyAdmin should be displayed."
+        },
+        "Confirm": {
+            "type": "boolean",
+            "name": "Confirm DROP queries",
+            "desc": "Whether a warning (\"Are your really sure…\") should be displayed when you're about to lose data."
+        },
+        "QueryHistoryMax": {
+            "type": "integer",
+            "name": "Query history length",
+            "desc": "How many queries are kept in history.",
+            "cmt": "Users cannot set a higher value"
+        },
+        "IgnoreMultiSubmitErrors": {
+            "type": "boolean",
+            "name": "Ignore multiple statement errors",
+            "desc": "If enabled, phpMyAdmin continues computing multiple-statement queries even if one of the queries failed."
+        },
+        "MaxCharactersInDisplayedSQL": {
+            "type": "integer",
+            "name": "Maximum displayed SQL length",
+            "desc": "Maximum number of characters used when a SQL query is displayed."
+        },
+        "RetainQueryBox": {
+            "type": "boolean",
+            "name": "Retain query box",
+            "desc": "Defines whether the query box should stay on-screen after its submission."
+        },
+        "CodemirrorEnable": {
+            "type": "boolean",
+            "name": "Enable CodeMirror",
+            "desc": "Use user-friendly editor for editing SQL queries (CodeMirror) with syntax highlighting and line numbers."
+        },
+        "LintEnable": {
+            "type": "boolean",
+            "name": "Enable linter",
+            "desc": "Find any errors in the query before executing it. Requires CodeMirror to be enabled."
+        },
+        "EnableAutocompleteForTablesAndColumns": {
+            "type": "boolean",
+            "name": "Enable autocomplete for table and column names",
+            "desc": "Autocomplete of the table and column names in the SQL queries."
+        },
+        "DefaultForeignKeyChecks": {
+            "type": "select",
+            "values": [
+                {
+                    "key": "default",
+                    "label": {
+                        "msgid": "Server default"
+                    }
+                },
+                {
+                    "key": "enable",
+                    "label": {
+                        "msgid": "Enable"
+                    }
+                },
+                {
+                    "key": "disable",
+                    "label": {
+                        "msgid": "Disable"
+                    }
+                }
+            ],
+            "name": "Foreign key checks",
+            "desc": "Default value for foreign key checks checkbox for some queries."
+        },
         "QueryHistoryDB": {
             "type": "boolean",
             "name": "Permanent query history",
@@ -5986,6 +5970,22 @@
             "type": "boolean",
             "name": "Allow shared bookmarks between users",
             "desc": "Allow users to create bookmarks that are available for all other users"
+        },
+        "SQLQuery/Edit": {
+            "type": "boolean",
+            "name": "Edit"
+        },
+        "SQLQuery/Explain": {
+            "type": "boolean",
+            "name": "Explain SQL"
+        },
+        "SQLQuery/ShowAsPHP": {
+            "type": "boolean",
+            "name": "Create PHP code"
+        },
+        "SQLQuery/Refresh": {
+            "type": "boolean",
+            "name": "Refresh"
         }
     },
     "validators": {

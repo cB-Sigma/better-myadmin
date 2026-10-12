@@ -50,8 +50,8 @@ export const pmaReachable = (): Promise<boolean> =>
     .catch(() => false)
 
 /** phpMyAdmin URL of `route` with `params` (server=1 added). */
-export function pmaUrl(route: string, params: Record<string, string> = {}): string {
-  return `${PMA_URL}/index.php?${new URLSearchParams({ route, server: '1', ...params })}`
+export function pmaUrl(route: string, params: Record<string, string> = {}, base = PMA_URL): string {
+  return `${base}/index.php?${new URLSearchParams({ route, server: '1', ...params })}`
 }
 
 /** Logs in through the login form; both apps use phpMyAdmin's ids. */

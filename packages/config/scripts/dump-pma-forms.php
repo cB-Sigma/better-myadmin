@@ -136,6 +136,12 @@ $userClasses = (new ReflectionClass(UserFormList::class))->getStaticPropertyValu
 $pageClasses = (new ReflectionClass(PageFormList::class))->getStaticPropertyValue('all');
 $setupClasses = (new ReflectionClass(SetupFormList::class))->getStaticPropertyValue('all');
 
+// the setup script runs with the default configuration: no Developer tab in the parent FeaturesForm,
+// so Setup\FeaturesForm appends its own after Security
+$config->config = new Config\Settings([]);
+$setupForms = $dumpList($setupClasses);
+$config->config = new Config\Settings(['UserprefsDeveloperTab' => true]);
+
 $commit = trim((string) @shell_exec('git -C ' . escapeshellarg($pmaRoot) . ' rev-parse HEAD'));
 
 $dbEntries = (new ReflectionMethod(ConfigFile::class, 'getAllowedValues'))->invoke($configFile);
@@ -145,7 +151,7 @@ echo json_encode(
         '_meta' => ['source' => 'phpMyAdmin Config/Forms', 'commit' => $commit],
         'user' => $dumpList($userClasses),
         'page' => $dumpList($pageClasses),
-        'setup' => $dumpList($setupClasses),
+        'setup' => $setupForms,
         'fields' => $fields,
         'validators' => $dbEntries['_validators'],
         'userValidators' => $dbEntries['_userValidators'],

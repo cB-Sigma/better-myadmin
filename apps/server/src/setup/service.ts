@@ -27,7 +27,7 @@ import { FormDisplay, type FormDisplayContext, type PostedForm } from '../prefer
 import { type ConnectionTest, validateSetup } from '../preferences/validator.ts'
 import type { SessionData } from '../session/store.ts'
 import { getLatestVersions, latestCompatible, versionToInt } from '../shell/version.ts'
-import { SetupMessageList, type SetupMessages, performConfigChecks, setupLinkUrl } from './checks.ts'
+import { SetupMessageList, type SetupMessages, performConfigChecks, setupLinks } from './checks.ts'
 import { generateBmaConfig, generateConfigFile } from './config-generator.ts'
 
 /**
@@ -97,7 +97,7 @@ export function saveDir(cwd = process.cwd()): string | null {
   }
 }
 
-const msg = (tr: Gettext, s: string) => convertBBCode(tr, s, false, { isSetup: true, linkUrl: setupLinkUrl })
+const msg = (tr: Gettext, s: string) => setupLinks(convertBBCode(tr, s, false, { isSetup: true }))
 
 /** Validator::testDBConnection (skipped on the demo server) */
 function connectionTest(deps: AppDeps, tr: Gettext): ConnectionTest {
