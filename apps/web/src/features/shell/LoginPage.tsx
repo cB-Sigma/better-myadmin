@@ -204,20 +204,23 @@ export function LoginPage({ state }: { state: AuthState }) {
  * The logo linking to the project's homepage and "Welcome to BetterMyAdmin" (X33).
  * pma: resources/templates/login/header.twig
  */
-export function LoginHeader() {
+export function LoginHeader({ logo = true }: { logo?: boolean }) {
   return (
     <div className="mb-6 flex flex-col items-center gap-2 text-center">
-      {/* pma: login/header.twig — the logo links to the project's homepage (tabindex -1) */}
-      <a
-        href={PROJECT_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="logo"
-        tabIndex={-1}
-        aria-label="BetterMyAdmin"
-      >
-        <Database className="size-12 text-accent" aria-hidden />
-      </a>
+      {/* pma: login/header.twig — the logo links to the project's homepage (tabindex -1); the
+          config / http failure pages have the heading only */}
+      {logo && (
+        <a
+          href={PROJECT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="logo"
+          tabIndex={-1}
+          aria-label="BetterMyAdmin"
+        >
+          <Database className="size-12 text-accent" aria-hidden />
+        </a>
+      )}
       <h1 className="text-xl font-semibold">
         <Trans
           id="Welcome to %s"

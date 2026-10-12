@@ -39,7 +39,7 @@ function ConfigFailurePage({
   }, [])
   return (
     <div id="loginform" className="mx-auto max-w-3xl px-4 py-10">
-      <LoginHeader />
+      <LoginHeader logo={false} />
       <div className="mx-auto w-3/4 space-y-3 text-sm">
         {failure.notice !== null && <MessageBox type="notice" text={failure.notice} />}
         {failure.noConfigFile && (
@@ -94,7 +94,7 @@ function HttpDeniedPage() {
   }, [])
   return (
     <div id="loginform" className="mx-auto max-w-md px-4 py-10">
-      <LoginHeader />
+      <LoginHeader logo={false} />
       <h3>
         <MessageBox type="error" text={t('Wrong username/password. Access denied.')} />
       </h3>
