@@ -255,6 +255,10 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
         aria-label={label}
         placeholder={label}
         value={value}
+        // FastFilter.events.focus: a typed filter is selected
+        onFocus={(e) => {
+          if (e.currentTarget.value !== '') e.currentTarget.select()
+        }}
         onChange={(e) => store.setFilter(ownerKey, e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') void store.search(row.filter, ownerKey, e.currentTarget.value)
@@ -268,6 +272,12 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
       >
         X
       </button>
+      {/* FastFilter.request: the throbber while the server searches */}
+      {store.searching.has(ownerKey) && (
+        <span className="throbber" role="status" aria-label={t('Loading…')}>
+          <LoaderCircle className="size-3.5 animate-spin text-fg-muted" aria-hidden />
+        </span>
+      )}
     </div>
   )
 }

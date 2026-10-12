@@ -5,7 +5,17 @@ import type {
   FormIndex,
   Partitioning,
 } from '@bettermyadmin/contracts'
-import { Button, DocLink, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import {
+  Button,
+  DocLink,
+  Hint,
+  MessageBox,
+  Modal,
+  MySqlDocLink,
+  PmaIcon,
+  PreviewSqlDialog,
+  showMessage,
+} from '@bettermyadmin/ui'
 import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
@@ -121,25 +131,35 @@ export function indexesFromRows(rows: ColumnRow[]): FormIndex[] {
 const LENGTH_REQUIRED = ['VARCHAR', 'CHAR', 'BIT', 'VARBINARY', 'BINARY']
 const NUM_TYPES = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL']
 
-/** pma: functions.ts::checkTableEditForm — the alert text, or null when the form is valid */
-export function checkTableEditForm(rows: ColumnRow[], mode: FormMode, table: string): string | null {
+/**
+ * pma: functions.ts::checkTableEditForm — the problem, or null when the form is valid: an `alert`,
+ * or (an attribute a type does not take) an error notification (ajaxShowMessage)
+ */
+export function checkTableEditForm(
+  rows: ColumnRow[],
+  mode: FormMode,
+  table: string,
+): { text: string; notify: boolean } | null {
   let atLeastOne = false
   for (const r of rows) {
     if (LENGTH_REQUIRED.includes(r.type) && Number.isNaN(Number.parseInt(r.length, 10)) && r.name !== '') {
-      return t('Please enter a valid length!')
+      return { text: t('Please enter a valid length!'), notify: false }
     }
     const attr = r.attribute.toUpperCase()
     if (
-      (attr === 'UNSIGNED' || attr === 'UNSIGNED ZEROFILL') &&
-      !NUM_TYPES.includes(r.type) &&
+      (attr === 'UNSIGNED' || attr === 'UNSIGNED ZEROFILL' || attr === 'ZEROFILL') &&
+      !NUM_TYPES.includes(r.type.toUpperCase()) &&
       r.name !== ''
     ) {
-      return `${r.type} ${t('does not support the UNSIGNED attribute.')}`
+      return {
+        text: `${r.type.toUpperCase()} ${t('does not support the UNSIGNED attribute.')}`,
+        notify: true,
+      }
     }
     if (r.name.trim() !== '') atLeastOne = true
   }
-  if (!atLeastOne) return t('Missing value in the form!')
-  if (mode === 'create' && table === '') return t('Missing value in the form!')
+  if (!atLeastOne) return { text: t('Missing value in the form!'), notify: false }
+  if (mode === 'create' && table === '') return { text: t('Missing value in the form!'), notify: false }
   return null
 }
 
@@ -211,36 +231,59 @@ function EnumEditor({
         </>
       }
     >
-      <p className="mb-2 text-sm">
-        {column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
-      </p>
-      <table className="w-full text-sm">
-        <tbody>
-          {values.map((v, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: editable value rows
-            <tr key={i}>
-              <td className="py-0.5">
-                <input
-                  className="input"
-                  aria-label={t('Value')}
-                  value={v}
-                  onChange={(e) => setValues(values.map((x, j) => (j === i ? e.target.value : x)))}
-                />
-              </td>
-              <td className="px-1">
-                <Button variant="link" onClick={() => setValues(values.filter((_, j) => j !== i))}>
-                  {t('Drop')}
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="mt-2 flex items-center gap-2 text-sm">
-        <input type="range" min={1} max={20} value={add} onChange={(e) => setAdd(Number(e.target.value))} />
-        <Button onClick={() => setValues([...values, ...Array.from({ length: add }, () => '')])}>
-          {t('Add %d value(s)', add)}
-        </Button>
+      <div id="enum_editor">
+        <p className="mb-2 text-sm font-semibold">
+          {column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
+        </p>
+        <p className="mb-2 flex items-center gap-1 text-sm">
+          <PmaIcon name="s_notice" alt="" />
+          {t('Enter each value in a separate field.')}
+        </p>
+        <table className="w-full text-sm">
+          <tbody>
+            {values.map((v, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: editable value rows
+              <tr key={i}>
+                <td className="py-0.5">
+                  <input
+                    className="input"
+                    aria-label={t('Value')}
+                    value={v}
+                    onChange={(e) => setValues(values.map((x, j) => (j === i ? e.target.value : x)))}
+                  />
+                </td>
+                <td className="px-1">
+                  {/* td.drop removes the row */}
+                  <Button
+                    variant="link"
+                    className="drop"
+                    onClick={() => setValues(values.filter((_, j) => j !== i))}
+                  >
+                    {t('Drop')}
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="mt-2 flex items-center gap-2 text-sm">
+          {/* the slider (1 to 9) and "Add %d value(s)" (input.add_value) */}
+          <input
+            type="range"
+            className="slider"
+            min={1}
+            max={9}
+            aria-label={t('Add %d value(s)', add)}
+            value={add}
+            onChange={(e) => setAdd(Number(e.target.value))}
+          />
+          <Button
+            className="add_value"
+            onClick={() => setValues([...values, ...Array.from({ length: add }, () => '')])}
+          >
+            {t('Add %d value(s)', add)}
+          </Button>
+        </div>
       </div>
     </Modal>
   )
@@ -378,6 +421,8 @@ export function ColumnForm({
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   const [addCount, setAddCount] = useState(defaultNumFields)
+  // submit_num_fields: the form gets more column rows
+  const addFields = () => setRows([...rows, ...Array.from({ length: Math.max(1, addCount) }, emptyRow)])
 
   const update = (i: number, patch: Partial<ColumnRow>) => {
     setRows(
@@ -396,7 +441,8 @@ export function ColumnForm({
     if (!dryRun) {
       const problem = checkTableEditForm(rows, mode, tableOptions?.table ?? '')
       if (problem !== null) {
-        window.alert(problem)
+        if (problem.notify) showMessage(problem.text, null, 'error')
+        else window.alert(problem.text)
         return
       }
       const reserved = await reservedCheck(rows.map((r) => r.name).filter((n) => n !== ''))
@@ -462,16 +508,21 @@ export function ColumnForm({
             {t('Add')}
             <input
               type="number"
+              name="added_fields"
               className="input w-16"
               min={1}
               aria-label={t('Add column(s)')}
               value={addCount}
               onChange={(e) => setAddCount(Number(e.target.value))}
+              // Enter adds the columns instead of submitting the form (input[name=added_fields] keydown)
+              onKeyDown={(e) => {
+                if (e.key !== 'Enter') return
+                e.preventDefault()
+                addFields()
+              }}
             />
             {t('column(s)')}
-            <Button
-              onClick={() => setRows([...rows, ...Array.from({ length: Math.max(1, addCount) }, emptyRow)])}
-            >
+            <Button name="submit_num_fields" onClick={addFields}>
               {t('Go')}
             </Button>
           </span>
@@ -653,7 +704,13 @@ export function ColumnForm({
                     aria-label={t('Null')}
                     name={`field_null[${i}]`}
                     checked={r.null}
-                    onChange={(e) => update(i, { null: e.target.checked })}
+                    // validateDefaultValue: a column that is no longer nullable loses a NULL default
+                    onChange={(e) =>
+                      update(i, {
+                        null: e.target.checked,
+                        ...(!e.target.checked && r.defaultType === 'NULL' ? { defaultType: 'NONE' } : {}),
+                      })
+                    }
                   />
                 </td>
                 {mode === 'change' && (

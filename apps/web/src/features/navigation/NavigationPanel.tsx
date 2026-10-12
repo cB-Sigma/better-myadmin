@@ -10,6 +10,7 @@ import {
   Database,
   Home,
   Link as LinkIcon,
+  LoaderCircle,
   LogOut,
   RefreshCw,
   Settings,
@@ -118,6 +119,7 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
   }, [store, loaded, synced, db, table])
 
   const settings = store.root?.settings
+  const [syncHover, setSyncHover] = useState(false)
   const [width, setWidth] = useState(() => readWidth(DEFAULT_WIDTH))
   const lastWidth = useRef(0)
   const appliedConfigWidth = useRef(false)
@@ -159,12 +161,13 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
         aria-label={t('Navigation panel')}
         hidden={width === 0}
       >
-        <NavHeader server={server} settings={settings} onReload={() => void reload()} />
+        <NavHeader server={server} settings={settings} onReload={reload} />
         {settings !== undefined && auth.data !== undefined && (
           <ServerChoice server={server} settings={settings} servers={auth.data.servers} />
         )}
         {quickWarp ?? <QuickWarp server={server} />}
         {store.root?.controls === true && (
+          // pma: #pma_navigation_sync shows, while hovered, the icon of what a click does
           <div id="navigation_controls" className="flex items-center gap-1 px-2 pb-1">
             <button
               type="button"
@@ -180,17 +183,19 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
               type="button"
               id="pma_navigation_sync"
               className="rounded p-1 text-fg-muted hover:bg-nav-pointer hover:text-fg"
-              title={store.synced ? 'Unlink from main panel' : 'Link with main panel'}
+              title={store.synced ? t('Unlink from main panel') : t('Link with main panel')}
               aria-pressed={store.synced}
+              onMouseEnter={() => setSyncHover(true)}
+              onMouseLeave={() => setSyncHover(false)}
               onClick={() => store.setSynced(!store.synced)}
             >
-              {store.synced ? (
+              {store.synced !== syncHover ? (
                 <LinkIcon className="size-4" aria-hidden />
               ) : (
                 <Unlink className="size-4" aria-hidden />
               )}
               <span className="sr-only">
-                {store.synced ? 'Unlink from main panel' : 'Link with main panel'}
+                {store.synced ? t('Unlink from main panel') : t('Link with main panel')}
               </span>
             </button>
           </div>
@@ -204,7 +209,7 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
         )}
         {store.rootError !== null && (
           <p className="mx-2 text-xs text-error" role="alert">
-            An error has occurred while loading the navigation display
+            {t('An error has occurred while loading the navigation display')}
           </p>
         )}
         {settings !== undefined && (
@@ -226,7 +231,7 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
         id="pma_navigation_collapser"
         className="absolute top-1 z-10 flex h-5 w-4 items-center justify-center rounded border border-border bg-bg-subtle text-xs text-fg-muted hover:text-fg"
         style={{ left: Math.max(width - 18, 3) }}
-        title={width === 0 ? 'Show panel' : 'Hide panel'}
+        title={width === 0 ? t('Show panel') : t('Hide panel')}
         onClick={() => {
           // pma: ResizeHandler.collapse — toggles between 0 and the previous width (240 when unknown)
           const panelWidth = width === 0 && lastWidth.current === 0 ? DEFAULT_WIDTH : lastWidth.current
@@ -292,7 +297,9 @@ function NavHeader({
   server,
   settings,
   onReload,
-}: { server: number; settings: NavSettings | undefined; onReload: () => void }) {
+}: { server: number; settings: NavSettings | undefined; onReload: () => Promise<void> }) {
+  // #pma_navigation_reload: the throbber shows until the tree is back (Navigation.reload's callback)
+  const [reloading, setReloading] = useState(false)
   // the shell's logout: sessionStorage cleared, then LogoutURL, the partial-logout redirect to the
   // remaining server (LoginCookieDeleteAll = false) or the login page
   const logout = useLogout()
@@ -347,11 +354,19 @@ function NavHeader({
           id="pma_navigation_reload"
           className={btn}
           title={t('Reload navigation panel')}
-          onClick={onReload}
+          onClick={() => {
+            setReloading(true)
+            void onReload().finally(() => setReloading(false))
+          }}
         >
           <RefreshCw className={icon} aria-hidden />
           <span className="sr-only">{t('Reload navigation panel')}</span>
         </button>
+        {reloading && (
+          <span className="throbber p-1" role="status" aria-label={t('Loading…')}>
+            <LoaderCircle className={`${icon} animate-spin text-fg-muted`} aria-hidden />
+          </span>
+        )}
       </div>
     </div>
   )
