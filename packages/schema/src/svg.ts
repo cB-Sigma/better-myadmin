@@ -4,11 +4,11 @@ import {
   type SchemaResult,
   type SchemaTableData,
   coordinatesOf,
-  shownFields,
   floatStr,
   pick,
   relationEnds,
   relationsOf,
+  shownFields,
   titleOf,
 } from './model.ts'
 import { XmlWriter } from './xml-writer.ts'

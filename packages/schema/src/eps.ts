@@ -4,10 +4,10 @@ import {
   type SchemaResult,
   type SchemaTableData,
   coordinatesOf,
-  shownFields,
   floatStr,
   relationEnds,
   relationsOf,
+  shownFields,
   titleLine,
   titleOf,
 } from './model.ts'

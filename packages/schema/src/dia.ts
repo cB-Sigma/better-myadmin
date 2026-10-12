@@ -3,10 +3,10 @@ import {
   type SchemaResult,
   type SchemaTableData,
   coordinatesOf,
-  shownFields,
   floatStr,
   pick,
   relationsOf,
+  shownFields,
 } from './model.ts'
 import { XmlWriter } from './xml-writer.ts'
 
