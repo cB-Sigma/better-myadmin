@@ -535,10 +535,10 @@
   ui: '/s/:s/db/:db/t/:table/edit'
 /table/chart:
   api:
-    - 'GET /api/servers/:s/databases/:db/tables/:t/chart'
     - 'POST /api/servers/:s/databases/:db/tables/:t/chart'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/chart/data'
   ui: '/s/:s/db/:db/t/:table/chart'
-  planned: M3
+  note: the query results' Display chart (the query travels in the body)
 /table/create:
   api:
     - 'GET /api/servers/:s/databases/:db/create-table/form'
@@ -564,9 +564,9 @@
 /table/get-field:
   api: 'GET /api/servers/:s/browse/field'
 /table/gis-visualization:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/gis'
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/gis'
   ui: '/s/:s/db/:db/t/:table/gis-visualization'
-  planned: M3
+  note: SVG view and PNG / SVG downloads; the OpenStreetMaps base layer and the PDF download are not ported
 /table/import:
   api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/db/:db/t/:table/import'
@@ -785,14 +785,16 @@
   exception: X20
 /view/create:
   api:
-    - 'GET /api/servers/:s/databases/:db/views/:v'
+    - 'GET /api/servers/:s/databases/:db/views/form'
     - 'POST /api/servers/:s/databases/:db/views'
-  ui: '/s/:s/db/:db/view/*'
-  planned: M2
+  ui: '/s/:s/db/:db/view/create'
+  note: also the Create view dialog of the query results
 /view/operations:
-  api: 'POST /api/servers/:s/databases/:db/views/:v/operations/*'
-  ui: '/s/:s/db/:db/view/*'
-  planned: M2
+  api:
+    - 'GET /api/servers/:s/databases/:db/tables/:t/operations'
+    - 'POST /api/servers/:s/databases/:db/tables/:t/operations/rename-view'
+  ui: '/s/:s/db/:db/t/:table/operations'
+  note: the Operations tab of a view
 'setup:/':
   api: 'GET /api/servers/:s/navigation/branch'
   ui: /setup

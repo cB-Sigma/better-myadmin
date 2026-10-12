@@ -1,4 +1,10 @@
-import type { BrowseRequest, GridData, GridRow, StatementResult } from '@bettermyadmin/contracts'
+import type {
+  BrowseRequest,
+  GridData,
+  GridRow,
+  SqlMessage as SqlMessageData,
+  StatementResult,
+} from '@bettermyadmin/contracts'
 import {
   Alert,
   Button,
@@ -24,6 +30,8 @@ import { ProfilingCard } from '../sql/ProfilingCard'
 import { ResultGrid } from '../sql/ResultGrid'
 import { type CardEnv, SqlMessage } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, confirmationText } from '../sql/logic'
+import { ResultMessages } from '../table/common/ResultMessages'
+import { CreateViewDialog } from '../table/view/ViewForm'
 import { GridTable } from './GridTable'
 import { rowsOptions, validRowNumbers } from './logic'
 import './grid.css'
@@ -737,6 +745,9 @@ function Operations({
   rows,
 }: { server: number; grid: GridData; st: StatementResult; rows: GridRow[] }) {
   const ops = grid.operations!
+  // the Create view dialog; its success message replaces the result's query box (.result_query)
+  const [createView, setCreateView] = useState(false)
+  const [viewMessages, setViewMessages] = useState<SqlMessageData[]>([])
   const copy = async () => {
     // sql.ts #copyToClipBoard
     const lines: string[] = []
@@ -763,7 +774,7 @@ function Operations({
       window.alert(t('Sorry! Unable to copy'))
     }
   }
-  const tableLink = (splat: string) => ({
+  const tableLink = (splat: string, view = false) => ({
     to: '/s/$server/db/$db/t/$table/$' as const,
     params: { server, db: grid.db, table: ops.export?.table ?? grid.table, _splat: splat },
     search: {
@@ -772,6 +783,13 @@ function Operations({
       ...(ops.export?.singleTable ? { single_table: 'true' } : {}),
       ...(ops.export?.rawQuery ? { raw_query: 'true' } : {}),
       unlim_num_rows: String(ops.export?.unlimNumRows ?? 0),
+      // the chart and GIS forms start at the grid's page ($_SESSION['tmpval'] pos / max_rows)
+      ...(view
+        ? {
+            pos: String(grid.view.pos),
+            ...(grid.view.maxRows === 'all' ? {} : { session_max_rows: String(grid.view.maxRows) }),
+          }
+        : {}),
     },
   })
   return (
@@ -794,29 +812,37 @@ function Operations({
                 <AnyLink {...tableLink('export')} className="btn-link text-accent">
                   <IconText icon="b_tblexport" text={t('Export')} forceText />
                 </AnyLink>
-                <AnyLink {...tableLink('chart')} className="text-accent">
+                <AnyLink {...tableLink('chart', true)} className="text-accent">
                   <IconText icon="b_chart" text={t('Display chart')} forceText />
                 </AnyLink>
                 {ops.gis && (
-                  <AnyLink {...tableLink('gis-visualization')} className="text-accent">
+                  <AnyLink {...tableLink('gis-visualization', true)} className="text-accent">
                     <IconText icon="b_globe" text={t('Visualize GIS data')} forceText />
                   </AnyLink>
                 )}
               </>
             )}
             <span>
-              <Link
-                to="/s/$server/db/$db/$"
-                params={{ server, db: grid.db, _splat: 'view-create' }}
-                search={{ sql: grid.sql, table: grid.table } as never}
-                className="create_view ajax text-accent"
-              >
+              <Button variant="link" className="create_view ajax" onClick={() => setCreateView(true)}>
                 <IconText icon="b_view_add" text={t('Create view')} forceText />
-              </Link>
+              </Button>
             </span>
           </>
         )}
       </PanelBody>
+      {viewMessages.length > 0 && <ResultMessages messages={viewMessages} />}
+      {createView && (
+        <CreateViewDialog
+          server={server}
+          db={grid.db}
+          sql={grid.sql}
+          onClose={() => setCreateView(false)}
+          onDone={(m) => {
+            setViewMessages(m)
+            setCreateView(false)
+          }}
+        />
+      )}
     </Panel>
   )
 }
