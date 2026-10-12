@@ -91,8 +91,25 @@ Several checkouts may run suites against the same server at once. Three mechanis
 
 - Compose: `mysql84-replica` (:3308, server-id 2, no binary log) replicates `mysql84` from its position at creation time as `bma_repl` (`docker/seed/02-replication-user.sql`, `docker/seed/replica/10-replica.sh`). It applies only the `f06r_repl` database and skips every error (`--replica-skip-errors=all`): the other suites' statements on the shared primary are parsed by the replica before its database filter applies and would otherwise stop the SQL thread. `phpmyadmin-ref-replica` (:8083, `PMA_REPLICA=1`: no configuration storage, `AllowArbitraryServer` on) is the reference for it.
 - Without Docker for the reference (a local checkout on :8081): start the replica container with host networking (`--network host … --port=3308 --report-host=127.0.0.1 --replicate-do-db=f06r_repl --replica-skip-errors=all --skip-log-bin`, `REPLICA_SOURCE_HOST=127.0.0.1`) and the second reference instance with `docker/pma-ref/local-replica.sh` (a symlink copy of the checkout with its own `config.inc.php`, so the :8081 instance is untouched).
-- Overrides: `BMA_PARITY_REPLICA_HOST` / `_PORT` (the replica's MySQL), `BMA_PARITY_REPLICA_PMA_URL`, `BMA_PARITY_REPLICA_SOURCE_HOST` / `_PORT` (the primary as both the reference and the replica reach it, entered in "Change or reconfigure primary server"; with compose networking use `mysql84`).
+- Overrides: `BMA_PARITY_REPLICA_HOST` / `_PORT` (the replica's MySQL), `BMA_PARITY_REPLICA_PMA_URL`, `BMA_PARITY_REPLICA_SOURCE_HOST` / `_PORT` (the primary as the reference and the replica reach it, entered in phpMyAdmin's "Change or reconfigure primary server"; with compose networking `mysql84` / `mariadb11` and 3306, as CI sets them) and `BMA_PARITY_REPLICA_SOURCE_HOST_OURS` / `_PORT_OURS` (the same server as our app reaches it, default the target's `BMA_TEST_HOST` / `BMA_TEST_PORT`; the statements are compared with phpMyAdmin's host and port mapped to ours).
 - The suites never change replication or logging variables on the shared primary: every START/STOP/RESET/CHANGE and SET GLOBAL runs on the replica, which the suite points back at the primary (`restoreReplica`) when it ends.
+
+## MariaDB reference (`BMA_PARITY_TARGET=mariadb`) <a id="mariadb"></a>
+
+Every parity suite also runs against MariaDB: `BMA_PARITY_TARGET=mariadb pnpm test:parity` (CI: the `mariadb` entry of the `parity` matrix). `tests/parity/lib/target.ts`, the first setup file of the parity project, only fills the variables the suites already read when they are unset:
+
+| | `mysql` (default) | `mariadb` |
+|---|---|---|
+| server (`BMA_TEST_PORT`) | mysql84 :3306 | mariadb11 (MariaDB 11.4, binary log on) :3307 |
+| reference (`BMA_PARITY_PMA_URL`) | :8081 | :8084 (`phpmyadmin-ref-mariadb`, its own pmadb `phpmyadmin` with control user pma/pmapass from `docker/seed/pmadb.sql`) |
+| replica (`BMA_PARITY_REPLICA_PORT` / `_PMA_URL`) | mysql84-replica :3308 / :8083 | mariadb11-replica :3309 / :8085 (`docker/seed/replica/10-replica-mariadb.sh`: CHANGE MASTER TO without GTID) |
+| translated reference | :8082 | none (the i18n suite skips itself) |
+
+Our app is pointed at the same server (server 1 of `testConfig`). The suite locks (`GET_LOCK`), the general-log holders and the per-run fixture names work per server, so a MySQL and a MariaDB run can go on at the same time. Suites with MySQL-only fixtures pick them by vendor (`TARGET` from `tests/parity/lib/target.ts`, or the server version); MariaDB-only behaviour of phpMyAdmin is registered as Q entries in [parity-exceptions.md](../reference/parity-exceptions.md).
+
+First triage (all 37 suites pass on both targets): the differences were MySQL-only fixtures, made vendor-aware — `SRID 0` columns, `binlog.000001`, the Progress column of MariaDB's process list, the server's wording of syntax and unknown-column errors, `SET PASSWORD` for one's own account and `mysql_native_password` still available on MariaDB, the replica's `Slave_*` status columns, `CHANGE MASTER TO` / `SHOW BINLOG STATUS` / `SQL_SLAVE_SKIP_COUNTER`, ARCHIVE as a plugin (`docker/seed/03-mariadb-plugins.sql`) — and fixture state that only a fresh pmadb showed (the recent-tables writes depend on what `pma__recent` already holds; ties of the size and row sorts). `tests/parity/mariadb-objects.parity.test.ts` covers MariaDB-only objects (system-versioned tables, sequences).
+
+Locally without Docker for phpMyAdmin: start the containers with host networking (`docker run --network host mariadb:11.4 --port=3307 --server-id=11 --log-bin=mariadb-bin --general-log=1 --log-output=TABLE` with the three seeds; the replica with `--port=3309 --replicate-do-db=f06r_repl --slave-skip-errors=all` and `REPLICA_SOURCE_HOST=127.0.0.1 REPLICA_SOURCE_PORT=3307`) and the references with `docker/pma-ref/local-instance.sh /home/user/ref/pma-mariadb 8084 3307 pmadb` and `… /home/user/ref/pma-mariadb-replica 8085 3309 replica`.
 
 ## Directory for generated/runtime data
 

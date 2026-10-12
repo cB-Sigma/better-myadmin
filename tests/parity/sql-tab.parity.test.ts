@@ -342,10 +342,11 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
       c.check?.({ pma: pr, pmaText, pmaHtml, bma: res })
 
       // 3. statements sent to MySQL. Configuration storage (pma__*) writes such as the transformation
-      // cleanup after DROP belong to the pmadb features and are compared there.
+      // cleanup after DROP and the recent tables, on both sides) belong to the pmadb features and are
+      // compared there (whether a recent-table write happens depends on what the stored list holds).
       const cmp = compareLogs(
         pmaLog.filter((e) => !/`pma__\w+`/.test(e.sql)),
-        bmaLog,
+        bmaLog.filter((e) => !/`pma__\w+`/.test(e.sql)),
         dbMap,
       )
       expect(cmp.problems, cmp.problems.join('\n')).toEqual([])

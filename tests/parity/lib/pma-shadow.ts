@@ -46,6 +46,9 @@ export async function startPmaShadow(port: number, base: Record<string, unknown>
     `<?php
 declare(strict_types=1);
 require ${phpString(join(PMA_ROOT, 'config.inc.php'))};
+// the server of the parity target (BMA_PARITY_TARGET, tests/parity/lib/target.ts), not the checkout's
+$cfg['Servers'][1]['host'] = ${phpString(process.env.BMA_TEST_HOST ?? '127.0.0.1')};
+$cfg['Servers'][1]['port'] = ${phpString(process.env.BMA_TEST_PORT ?? '3306')};
 $bmaBase = json_decode(${phpString(JSON.stringify(base))}, true);
 foreach (($bmaBase['server'] ?? []) as $k => $v) { $cfg['Servers'][1][$k] = $v; }
 foreach (($bmaBase['cfg'] ?? []) as $k => $v) { $cfg[$k] = $v; }
