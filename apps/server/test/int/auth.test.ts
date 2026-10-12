@@ -93,6 +93,55 @@ describe('cookie auth', () => {
     })
   })
 
+  it('the idle check: the reported idle time, not the check request, decides (functions.ts onloadIdleEvent)', async () => {
+    t = testApp(testConfig({ LoginCookieValidity: 60 }))
+    await t.login()
+    expect((await t.req('GET', '/api/auth/state')).json.loginCookieValidity).toBe(60)
+    const sid = t.jar.get('bma_sid')!
+    const age = (seconds: number) => {
+      const s = t.deps.store.get(sid)!
+      s.lastSeenAt -= seconds
+      if (s.browserAccess !== undefined) {
+        for (const k of Object.keys(s.browserAccess)) s.browserAccess[k] = (s.browserAccess[k] ?? 0) - seconds
+      }
+      t.deps.store.set(s)
+    }
+    // active window: the check succeeds and keeps the session
+    expect((await t.req('POST', '/api/auth/check-timeout', { guid: 'w1', access_time: 0 })).json).toEqual({
+      success: true,
+    })
+    // 50 s later the user has been idle all along: the check does not count as activity
+    age(50)
+    const before = t.deps.store.get(sid)!.lastSeenAt
+    expect(
+      (await t.req('POST', '/api/auth/check-timeout', { guid: 'w1', access_time: 50 })).json.success,
+    ).toBe(true)
+    expect(t.deps.store.get(sid)!.lastSeenAt).toBe(before)
+    // 15 s more: 65 s without activity → logged out, with the inactivity message
+    age(15)
+    const r = await t.req('POST', '/api/auth/check-timeout', { guid: 'w1', access_time: 65 })
+    expect(r.json).toEqual({
+      success: false,
+      message:
+        'You have been automatically logged out due to inactivity of 60 seconds. Once you log in again, you should be able to resume the work where you left off.',
+    })
+    expect((await t.req('GET', '/api/auth/state')).json.authenticated).toBe(false)
+  })
+
+  it('the idle check: another active window keeps the login', async () => {
+    t = testApp(testConfig({ LoginCookieValidity: 60 }))
+    await t.login()
+    const sid = t.jar.get('bma_sid')!
+    const s = t.deps.store.get(sid)!
+    s.lastSeenAt -= 70
+    // window w2 reported activity 10 s ago
+    s.browserAccess = { w2: Math.floor(Date.now() / 1000) - 10 }
+    t.deps.store.set(s)
+    expect(
+      (await t.req('POST', '/api/auth/check-timeout', { guid: 'w1', access_time: 70 })).json.success,
+    ).toBe(true)
+  })
+
   it('logout clears every server login (LoginCookieDeleteAll)', async () => {
     t = testApp()
     await t.login()

@@ -30,6 +30,11 @@ export interface SessionData {
   servers: Record<string, ServerLogin>
   /** Set when logins were dropped for inactivity; cleared on the next login. */
   expired?: boolean
+  /**
+   * $_SESSION['browser_access_time']: per browser window (guid) the time of the user's last
+   * activity, reported by the idle check (`lastSeenAt` is the 'default' entry, the last request).
+   */
+  browserAccess?: Record<string, number>
   /** Debug SQL entries of the last request when DBG.sql is on. */
   debugSql?: Array<{ sql: string; ms: number; label?: string }>
   /** Query history kept in the session when QueryHistoryDB is off (pma: $_SESSION['sql_history']). */

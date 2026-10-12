@@ -13,7 +13,17 @@ import { LanguageLabel, LanguageSelect } from './LanguageSelect'
  * Cookie-auth login form.
  * pma: resources/templates/login/form.twig, src/Plugins/Auth/AuthenticationCookie.php::showLoginForm
  */
-export function LoginPage({ state }: { state: AuthState }) {
+export function LoginPage({
+  state,
+  error: shownError,
+  onLoggedIn,
+}: {
+  state: AuthState
+  /** a failure shown above the form (the inactivity logout of the expired-login form) */
+  error?: string
+  /** after logging in (the expired-login form goes on with the page) */
+  onLoggedIn?: () => void
+}) {
   const qc = useQueryClient()
   const [server, setServer] = useState(state.server)
   const [username, setUsername] = useState(state.recalledUser ?? '')
@@ -43,7 +53,10 @@ export function LoginPage({ state }: { state: AuthState }) {
         ...(state.allowArbitraryServer ? { arbitraryServer: arbitrary } : {}),
         ...(captchaToken !== undefined ? { captchaToken } : {}),
       }),
-    onSuccess: () => qc.invalidateQueries({ queryKey: qk.auth }),
+    onSuccess: () => {
+      onLoggedIn?.()
+      return qc.invalidateQueries({ queryKey: qk.auth })
+    },
     // a captcha answer is good for one verification
     onSettled: () => (window as CaptchaWindow)[captchaGlobal(captcha)]?.reset?.(),
   })
@@ -70,6 +83,7 @@ export function LoginPage({ state }: { state: AuthState }) {
   let error: string | null = null
   if (login.error instanceof ApiError) error = login.error.message
   else if (login.error) error = login.error.message
+  else if (shownError !== undefined && shownError !== '') error = shownError
   else if (state.sessionExpired) error = t('Your session has expired. Please log in again.')
 
   return (

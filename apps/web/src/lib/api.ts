@@ -29,6 +29,8 @@ import type {
   ChartDataRequest,
   ChartDataResponse,
   ChartPageResponse,
+  CheckTimeoutRequest,
+  CheckTimeoutResponse,
   ChooseUserGroupResponse,
   CollationsResponse,
   ColumnFormOptions,
@@ -290,20 +292,33 @@ export async function call<T>(
   const headers: Record<string, string> = { accept: 'application/json' }
   if (body !== undefined) headers['content-type'] = 'application/json'
   if (method !== 'GET') headers[CSRF_HEADER] = readCookie(CSRF_COOKIE)
-  const res = await fetch(`/api${path}`, {
-    method,
-    headers,
-    credentials: 'same-origin',
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
-    ...(signal !== undefined ? { signal } : {}),
-  })
+  let res: Response
+  try {
+    res = await fetch(`/api${path}`, {
+      method,
+      headers,
+      credentials: 'same-origin',
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+      ...(signal !== undefined ? { signal } : {}),
+    })
+  } catch (e) {
+    // no answer at all (connection lost); an aborted request is not reported (status 0 'abort')
+    if (!(e instanceof DOMException && e.name === 'AbortError')) {
+      requestFailed({ path, status: 0, statusText: e instanceof Error ? e.message : String(e) })
+    }
+    throw e
+  }
   const json = (await res.json().catch(() => null)) as unknown
   if (!res.ok) {
-    const env = (json as ErrorEnvelope | null)?.error ?? {
-      code: 'INTERNAL' as const,
-      message: res.statusText,
+    const env = (json as ErrorEnvelope | null)?.error
+    // not one of our error envelopes (a proxy's or the server's own failure page)
+    if (env === undefined) requestFailed({ path, status: res.status, statusText: res.statusText })
+    // the login is gone (inactivity, logout in another window): the gate shows the login form
+    // again (pma: redirect_flag → handleRedirectAndReload)
+    if (res.status === 401 && (env?.code === 'AUTH_REQUIRED' || env?.code === 'AUTH_EXPIRED')) {
+      window.dispatchEvent(new CustomEvent(AUTH_LOST_EVENT, { detail: env.code }))
     }
-    throw new ApiError(res.status, env)
+    throw new ApiError(res.status, env ?? { code: 'INTERNAL' as const, message: res.statusText })
   }
   // $cfg['DBG']['sql']: the statements of any response go to the console's Debug SQL card
   // (pma: modules/console.ts $(document).on('ajaxSuccess') → ConsoleDebug.showLog(data.debug))
@@ -312,6 +327,23 @@ export async function call<T>(
     window.dispatchEvent(new CustomEvent(DEBUG_SQL_EVENT, { detail: executed }))
   }
   return json as T
+}
+
+/** Dispatched on `window` when an API request answers 401: the session lost its login. */
+export const AUTH_LOST_EVENT = 'bma:auth-lost'
+
+/** Dispatched on `window` when a request failed without one of our error envelopes. */
+export const REQUEST_FAILED_EVENT = 'bma:request-failed'
+export interface RequestFailure {
+  path: string
+  /** 0 when there was no answer */
+  status: number
+  statusText: string
+}
+function requestFailed(f: RequestFailure): void {
+  // pma: AJAX.getFatalErrorHandler skips the git revision and console option requests
+  if (typeof window === 'undefined' || /\/console\/config$|\/git-revision/.test(f.path)) return
+  window.dispatchEvent(new CustomEvent<RequestFailure>(REQUEST_FAILED_EVENT, { detail: f }))
 }
 
 /** Dispatched on `window` with the `executed` statements of an API response (DBG.sql). */
@@ -381,6 +413,8 @@ export const api = {
   i18n: (lang?: string) =>
     call<I18nState>('GET', lang === undefined ? '/i18n' : `/i18n?lang=${encodeURIComponent(lang)}`),
   login: (req: LoginRequest) => call<LoginResponse>('POST', '/auth/login', req),
+  /** the idle check (pma: POST / with check_timeout) */
+  checkTimeout: (req: CheckTimeoutRequest) => call<CheckTimeoutResponse>('POST', '/auth/check-timeout', req),
   logout: () => call<LogoutResponse>('POST', '/auth/logout'),
   query: (server: number, req: QueryRequest) => call<QueryResponse>('POST', `/servers/${server}/query`, req),
   // shell (docs/architecture/05-api-reference.md#server-scope)
