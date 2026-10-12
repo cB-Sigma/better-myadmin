@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-519/1106 covered (46.9%): 519 implemented, 24 planned, 563 missing. [Summary](README.md).
+520/1106 covered (47.0%): 520 implemented, 24 planned, 562 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 27/98 (27.6%) covered, 27/98 implemented
 
@@ -67,7 +67,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 148/306 (48.4%) covered, 148/306 implemented
+## 04 table level — 149/306 (48.7%) covered, 149/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -88,7 +88,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/delete/confirm.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
 | `table/find_replace/index.twig` | 8/8 | ✅ `columnIndex` ✅ `find` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `replaceWith` ✅ `submit` ✅ `useRegex` |  |
 | `table/find_replace/replace_preview.twig` | 1/1 | ✅ `replace` |  |
-| `table/gis_visualization/gis_visualization.twig` | 3/4 | ✅ `id:saveImageButton` ✅ `visualizationSettings[labelColumn]` ✅ `visualizationSettings[spatialColumn]` | ⬜ `useBaseLayer` |
+| `table/gis_visualization/gis_visualization.twig` | 4/4 | ✅ `id:saveImageButton` ✅ `useBaseLayer` ✅ `visualizationSettings[labelColumn]` ✅ `visualizationSettings[spatialColumn]` |  |
 | `table/index_form.twig` | 0/13 |  | ⬜ `button:Advanced options` ⬜ `button:Go` ⬜ `id:add_fields` ⬜ `id:preview_index_frm` ⬜ `index[columns][collations][]` ⬜ `index[columns][names][]` ⬜ `index[columns][sub_parts][]` ⬜ `index[Index_choice]` ⬜ `index[Index_comment]` ⬜ `index[Index_type]` ⬜ `index[Key_block_size]` ⬜ `index[Key_name]` ⬜ `index[Parser]` |
 | `table/index_rename_form.twig` | 0/2 |  | ⬜ `id:preview_index_frm` ⬜ `index` |
 | `table/normalization/normalization.twig` | 2/2 | ✅ `normalizeTo` ✅ `submit_normalize` |  |

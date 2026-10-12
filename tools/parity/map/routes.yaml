@@ -566,7 +566,7 @@
 /table/gis-visualization:
   api: 'POST /api/servers/:s/databases/:db/tables/:t/gis'
   ui: '/s/:s/db/:db/t/:table/gis-visualization'
-  note: SVG view and PNG / SVG downloads; the OpenStreetMaps base layer and the PDF download are not ported
+  note: SVG and OpenStreetMaps views, PNG / SVG downloads (no PDF, as on the reference without TCPDF)
 /table/import:
   api: 'GET /api/servers/:s/import/page'
   ui: '/s/:s/db/:db/t/:table/import'

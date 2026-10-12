@@ -162,10 +162,10 @@ function fromResults(link: string, ready: { pma: string; ours: string }): PageSp
 
 pageParity('table-chart', fromResults('Display chart', { pma: '#tblchartform', ours: '#tblchartform' }))
 
-pageParity(
-  'table-gis-visualization',
-  fromResults('Visualize GIS data', { pma: '#gis_div', ours: '#gis_div' }),
-)
+pageParity('table-gis-visualization', {
+  ...fromResults('Visualize GIS data', { pma: '#gis_div', ours: '#gis_div' }),
+  interactions: [{ name: 'OpenStreetMaps', do: { check: 'Use OpenStreetMaps as Base Layer' } }],
+})
 
 /** an icon + text link (the reference's accessible name repeats the image's alt) */
 function showLink(text: string): PageFn {

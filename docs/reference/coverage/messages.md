@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1534/3426 covered (44.8%): 1534 implemented, 33 planned, 1859 missing. [Summary](README.md).
+1535/3426 covered (44.8%): 1535 implemented, 33 planned, 1858 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 222/403 (55.1%) covered, 222/403 implemented
 
@@ -107,15 +107,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Display/Results.php` | 2/11 | `Full texts` · `Partial texts` |
 | `src/Controllers/Table/GetFieldController.php` | 1/4 | `Invalid table name` |
 
-## 03 insert edit transformations — 52/79 (65.8%) covered, 52/79 implemented
+## 03 insert edit transformations — 53/79 (67.1%) covered, 53/79 implemented
 
-27 msgids not used yet.
+26 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php` | 2/2 | `LINUX ONLY: Launches an external application and feeds it the colum…` · `You are using the external transformation command line options fiel…` |
-| `resources/templates/gis_data_editor_form.twig` | 1/5 | `Use OpenStreetMaps as Base Layer` |
-| `resources/templates/table/gis_visualization/gis_visualization.twig` | 1/1 | `Use OpenStreetMaps as Base Layer` |
 | `src/Plugins/Transformations/Abs/Bool2TextTransformationsPlugin.php` | 1/1 | `Converts Boolean values to text (default 'T' and 'F'). First option…` |
 | `src/Plugins/Transformations/Abs/DateFormatTransformationsPlugin.php` | 1/2 | `Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp colu…` |
 | `src/Plugins/Transformations/Abs/DownloadTransformationsPlugin.php` | 1/1 | `Displays a link to download the binary data of the column. You can …` |

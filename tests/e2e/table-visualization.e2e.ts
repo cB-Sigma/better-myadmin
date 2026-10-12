@@ -69,6 +69,13 @@ test('Visualize GIS data', async ({ page }) => {
   await expect(page.locator('circle[data-label="a"]')).toHaveCount(1)
   await page.locator('circle[data-label="b"]').hover()
   await expect(page.locator('#tooltip')).toHaveText('b')
+  // the OpenStreetMaps view (OpenLayers loaded on demand; the tiles may not load offline)
+  await page.locator('#useOsmAsBaseLayerSwitch').check()
+  await expect(page.locator('.visualization-target-ol .ol-viewport')).toBeVisible()
+  await expect(page.locator('.visualization-target-ol .ol-mouse-position')).toHaveCount(1)
+  await expect(page.locator('.visualization-target-svg')).toBeHidden()
+  await page.locator('#useOsmAsBaseLayerSwitch').uncheck()
+  await expect(page.locator('.visualization-target-svg')).toBeVisible()
 })
 
 test('Create view from the results, then Edit view', async ({ page }) => {
