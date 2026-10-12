@@ -30,6 +30,7 @@ import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PageSettingsForm } from '../preferences/PageSettings.tsx'
 import { useLogout } from '../shell/UserMenu'
+import { CreateViewDialog } from '../table/view/ViewForm'
 import { NodeControls, QuickWarp } from './NavExtras'
 import { NavTree } from './NavTree'
 import { currentScope } from './links'
@@ -120,6 +121,8 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
 
   const settings = store.root?.settings
   const [syncHover, setSyncHover] = useState(false)
+  // li.new_view a.ajax: "New" under Views opens the create view dialog over the page
+  const [newViewDb, setNewViewDb] = useState<string | null>(null)
   const [width, setWidth] = useState(() => readWidth(DEFAULT_WIDTH))
   const lastWidth = useRef(0)
   const appliedConfigWidth = useRef(false)
@@ -222,6 +225,20 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
               ((node) => <NodeControls server={server} node={node} onChanged={() => void reload()} />)
             }
             onPrefetch={prefetch}
+            onNewView={setNewViewDb}
+          />
+        )}
+        {newViewDb !== null && (
+          <CreateViewDialog
+            server={server}
+            db={newViewDb}
+            sql=""
+            onClose={() => setNewViewDb(null)}
+            onDone={() => {
+              // handleCreateViewModal: the dialog closes and the navigation reloads
+              setNewViewDb(null)
+              void reload()
+            }}
           />
         )}
       </aside>
@@ -306,7 +323,7 @@ function NavHeader({
   const btn = 'rounded p-1 text-fg-muted hover:bg-nav-pointer hover:text-fg'
   const icon = 'size-4'
   const logoutText = settings?.authType === 'config' ? t('Empty session data') : t('Log out')
-  const docsTitle = settings?.isMariaDb === true ? 'MariaDB Documentation' : 'MySQL Documentation'
+  const docsTitle = settings?.isMariaDb === true ? t('MariaDB Documentation') : t('MySQL Documentation')
   return (
     <div id="pma_navigation_header">
       {(settings?.NavigationDisplayLogo ?? true) && (

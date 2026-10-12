@@ -181,6 +181,17 @@ test('column form: added_fields Enter, ENUM/SET editor, NULL default, UNSIGNED n
   await r1.getByLabel('Null').uncheck()
   await expect(r1.getByLabel('Default')).toHaveValue('NONE')
 
+  // showWarningForIntTypes: the integer width notice while a row has an integer type
+  await expect(page.locator('#length_not_allowed')).toContainText(
+    'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
+  )
+  // resetAttributeForNonNumericType: a non-numeric type drops UNSIGNED
+  const r2 = page.getByTestId('column-row-2')
+  await r2.getByLabel('Type').selectOption('INT')
+  await r2.getByLabel('Attributes').selectOption('UNSIGNED')
+  await r2.getByLabel('Type').selectOption('DATE')
+  await expect(r2.getByLabel('Attributes')).toHaveValue('')
+
   // checkTableEditForm: UNSIGNED / ZEROFILL on a text type is refused with a notification
   await page.getByRole('textbox', { name: 'Table name:' }).fill('checks')
   await r1.getByLabel('Column', { exact: true }).fill('label')

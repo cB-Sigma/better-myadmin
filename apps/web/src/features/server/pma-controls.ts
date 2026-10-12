@@ -101,4 +101,9 @@ export const pmaControls = {
   'server/variables/index.twig#link:Save': 'VariablesPage.tsx',
   'server/variables/index.twig#link:Cancel': 'VariablesPage.tsx',
   'server/variables/index.twig#link:Edit': 'VariablesPage.tsx',
+  // pma: resources/js/modules/functions/event-loader.ts (#filterText)
+  'js:modules/functions/event-loader.ts#keyup:#filterText': {
+    file: 'DatabasesPage.tsx',
+    match: "const needle = filter.toUpperCase().replace(/ /g, '_')",
+  },
 }

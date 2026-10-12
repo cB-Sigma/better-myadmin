@@ -18,6 +18,8 @@ import { ErrorReporting, PageErrorBoundary } from '../errors/ErrorReporting.tsx'
 import { ShortcutLayer } from '../hotkeys/useShortcuts.tsx'
 import { PageChromeProvider, PageIcons } from '../page-chrome.tsx'
 import { useScopeParams, useServerScope } from '../scope.ts'
+import { CheckAllRanges } from '../session/CheckAllRanges.tsx'
+import { DemoNotice, isDemo } from '../session/DemoNotice.tsx'
 import { IdleCheck } from '../session/IdleCheck.tsx'
 import { RequestErrors } from '../session/RequestErrors.tsx'
 import { useThemeState } from '../theme/theme.ts'
@@ -112,6 +114,9 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                         )}
                       </a>
                     </div>
+                    {(cfg.DBG as { demo?: boolean } | undefined)?.demo === true && (
+                      <DemoNotice server={server} />
+                    )}
                   </div>
                 </div>
               </div>
@@ -122,6 +127,7 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
             <ErrorReporting server={server} setting={cfg.SendErrorReports} />
             <RequestErrors />
             <IdleCheck />
+            <CheckAllRanges />
           </PageChromeProvider>
         </ConfirmProvider>
       </TooltipProvider>

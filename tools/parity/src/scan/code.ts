@@ -158,7 +158,8 @@ export function directiveUses(path: string, idx: ReturnType<typeof collectChains
 // ---------------------------------------------------------------------------
 
 // tProduct: t() with the product name substituted (apps/web/src/lib/i18n.tsx, X33)
-const SINGULAR = new Set(['t', '__', 'gettext', '_gettext', 'tProduct'])
+// N_: gettext_noop, a msgid translated later (where the text is shown)
+const SINGULAR = new Set(['t', '__', 'gettext', '_gettext', 'tProduct', 'N_'])
 const PLURAL = new Set(['ngettext', '_ngettext'])
 const CONTEXT = new Set(['pgettext', '_pgettext'])
 const CONTEXT_PLURAL = new Set(['npgettext', '_npgettext'])

@@ -4,10 +4,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { CircleHelp, Database } from 'lucide-react'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { PROJECT_URL } from '../../lib/config'
+import { PROJECT_URL, useConfig } from '../../lib/config'
 import { Trans, t, useLanguage } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { LanguageLabel, LanguageSelect } from './LanguageSelect'
+import { DemoServerCard, isDemo } from './session/DemoNotice'
 
 /**
  * Cookie-auth login form.
@@ -32,6 +33,7 @@ export function LoginPage({
   const userRef = useRef<HTMLInputElement>(null)
   const passRef = useRef<HTMLInputElement>(null)
   const { state: lang } = useLanguage()
+  const cfg = useConfig()
 
   // focus the password field when a username is prefilled, else the username (functions.ts)
   // biome-ignore lint/correctness/useExhaustiveDependencies: focus once on mount, like functions.ts
@@ -89,7 +91,19 @@ export function LoginPage({
   return (
     <div className="mx-auto max-w-md px-4 py-10">
       <LoginHeader />
+      {isDemo(cfg) && <DemoServerCard />}
 
+      {/* login/header.twig #js-https-mismatch: shown when the browser and the server disagree */}
+      {(window.location.protocol === 'https:') !== state.isHttps && (
+        <MessageBox
+          id="js-https-mismatch"
+          type="error"
+          className="mb-4"
+          text={t(
+            'There is a mismatch between HTTPS indicated on the server and client. This can lead to a non working phpMyAdmin or a security risk. Please fix your server configuration to indicate HTTPS properly.',
+          )}
+        />
+      )}
       {[lang?.warning ?? null, error].map(
         (msg) => msg !== null && <MessageBox key={msg} type="error" text={msg} className="mb-4" />,
       )}

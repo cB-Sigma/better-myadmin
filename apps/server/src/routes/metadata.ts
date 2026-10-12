@@ -39,6 +39,9 @@ import { selectDatabase, tableInfo } from '../metadata/table-info.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import type { ServerEnv } from './server.ts'
 
+/** gettext_noop: a msgid that `msg` translates */
+const N_ = (msgid: string): string => msgid
+
 export const metadataRoutes = new Hono<ServerEnv>()
 
 /**
@@ -420,7 +423,7 @@ metadataRoutes.get('/recent-favorite', (c) =>
 metadataRoutes.post('/recent-favorite/open', async (c) => {
   const req = await parseJson(c, RecentAddRequest, {})
   if (!validIdentifier(req.db) || !validIdentifier(req.table)) {
-    return c.json({ ok: false, message: msg(c, 'error', 'Invalid database or table name.') })
+    return c.json({ ok: false, message: msg(c, 'error', N_('Invalid database or table name.')) })
   }
   return withMeta(c, { db: req.db }, async (m) => {
     const meta = await m.meta()

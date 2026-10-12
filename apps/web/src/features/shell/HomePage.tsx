@@ -1,4 +1,4 @@
-import type { HomeResponse } from '@bettermyadmin/contracts'
+import type { GitUser, HomeResponse } from '@bettermyadmin/contracts'
 import {
   Alert,
   Button,
@@ -20,12 +20,13 @@ import { useState } from 'react'
 import { api } from '../../lib/api.ts'
 import { PROJECT_URL } from '../../lib/config'
 import { useConfig } from '../../lib/config.ts'
-import { pgettext, t } from '../../lib/i18n'
+import { Trans, pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys.ts'
 import { BBCode } from './bbcode.tsx'
 import { ChangePasswordDialog, type PasswordChanged } from './home/ChangePasswordDialog.tsx'
 import { LanguageSlot, useLanguageChoice } from './home/LanguageSlot.tsx'
 import { VersionInfo } from './home/VersionInfo.tsx'
+import { DemoServerCard, isDemo } from './session/DemoNotice.tsx'
 import { colorModeText, setTheme, useThemeState } from './theme/theme.ts'
 import { ThemesDialog } from './themes/ThemeCards.tsx'
 
@@ -40,6 +41,7 @@ export function HomePage() {
   const { server } = useParams({ from: '/s/$server' })
   const home = useQuery({ queryKey: qk.home(server), queryFn: () => api.home(server) })
   const [changed, setChanged] = useState<PasswordChanged | null>(null)
+  const cfg = useConfig()
   if (home.isPending) return null
   if (home.isError) return <Alert variant="error">{home.error.message}</Alert>
   const h = home.data
@@ -62,6 +64,7 @@ export function HomePage() {
       )}
       <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-12">
         <div className="space-y-6 lg:col-span-7">
+          {isDemo(cfg) && <DemoServerCard variant="home" />}
           <GeneralSettings server={server} home={h} onPasswordChanged={setChanged} />
           <AppearanceSettings server={server} />
         </div>
@@ -384,7 +387,33 @@ function AppCard({ server, home }: { server: number; home: HomeResponse }) {
         {git !== null && (
           <PanelItem className="ps-0" id="li_pma_version_git">
             {t('Git revision:')} <strong title={git.message ?? ''}>{git.hash.slice(0, 7)}</strong>{' '}
-            {git.branch === null ? `(${t('no branch')})` : t('from %s branch', git.branch)}
+            {git.branch === null ? (
+              `(${t('no branch')})`
+            ) : (
+              <>
+                {t('from %s branch', git.branch)},<br />
+              </>
+            )}
+            {/* home/git_info.twig: the committer, and the author when it is someone else */}
+            {git.committer !== null && (
+              <Trans
+                id="committed on %s by %s"
+                args={[git.committer.date, <GitUserLink key="c" user={git.committer} />]}
+              />
+            )}
+            {git.author !== null &&
+              git.committer !== null &&
+              (git.author.name !== git.committer.name ||
+                git.author.email !== git.committer.email ||
+                git.author.date !== git.committer.date) && (
+                <>
+                  ,<br />
+                  <Trans
+                    id="authored on %s by %s"
+                    args={[git.author.date, <GitUserLink key="a" user={git.author} />]}
+                  />
+                </>
+              )}
           </PanelItem>
         )}
         <PanelItem className="ps-0">
@@ -420,4 +449,8 @@ function AppCard({ server, home }: { server: number; home: HomeResponse }) {
       </PanelList>
     </Panel>
   )
+}
+
+function GitUserLink({ user }: { user: GitUser }) {
+  return <a href={`mailto:${user.email}`}>{user.name}</a>
 }

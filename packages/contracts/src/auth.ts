@@ -66,6 +66,8 @@ export const AuthState = z.object({
   captcha: CaptchaSettings.nullable(),
   /** $cfg['LoginCookieValidity'] (seconds): the idle check's schedule (functions.ts onloadIdleEvent) */
   loginCookieValidity: z.number().int(),
+  /** the server sees an HTTPS request (CommonParams is_https; the login form compares it, js-https-mismatch) */
+  isHttps: z.boolean(),
 })
 export type AuthState = z.infer<typeof AuthState>
 

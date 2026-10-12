@@ -140,9 +140,10 @@ export function ErrorReporting({ server, setting }: { server: number; setting: '
                 >
                   {t('Show report details')}
                 </Button>
+                {/* error_report.ts: the cog opens Settings → Features (SendErrorReports) */}
                 <Link
-                  to="/s/$server/$"
-                  params={{ server, _splat: 'settings/features' }}
+                  to="/s/$server/preferences/$tab"
+                  params={{ server, tab: 'features' }}
                   title={t('Change report settings')}
                 >
                   <PmaIcon name="s_cog" alt={t('Change report settings')} />

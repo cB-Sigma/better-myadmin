@@ -5,6 +5,7 @@
  * pma: src/Navigation/NavigationTree.php
  */
 import type { NavContainer, NavList, NavNode, NavNodeKind, NavPath } from '@bettermyadmin/contracts'
+import { sprintf } from '@bettermyadmin/i18n'
 import { mbStrlen } from '@bettermyadmin/mysql-types'
 import { php } from '@bettermyadmin/mysql-types'
 import { listNavigator } from './list-navigator.ts'
@@ -381,7 +382,7 @@ export class NavigationTree {
     const groups = new Map<string, Node>()
     for (const [key, value] of prefixes) {
       if (value > 500 && !this.#largeGroupWarning) {
-        this.errors.push(LARGE_GROUP_WARNING)
+        this.errors.push(this.#ctx.tr.gettext(LARGE_GROUP_WARNING))
         this.#largeGroupWarning = true
       }
       const intKey = isIntKey(key)
@@ -424,7 +425,10 @@ export class NavigationTree {
         const group = new Node(this.#ctx, key, 'container', true)
         group.separators = node.separators
         group.separatorDepth = node.separatorDepth - 1
-        group.icon = new Icon('b_group', 'Groups', node.icon.route, { ...node.icon.params, tbl_group: key })
+        group.icon = new Icon('b_group', this.#ctx.tr.gettext('Groups'), node.icon.route, {
+          ...node.icon.params,
+          tbl_group: key,
+        })
         group.pos2 = node.pos2
         group.pos3 = node.pos3
         if (node instanceof NodeTableContainer || node instanceof NodeViewContainer) {
@@ -479,7 +483,7 @@ export class NavigationTree {
       } else {
         n = await this.#tree.getPresence('databases', this.#searchClause)
       }
-      results = `${n} ${n === 1 ? 'result found' : 'results found'}`
+      results = sprintf(this.#ctx.tr.ngettext('%s result found', '%s results found', n), n)
     }
     return { list: node === false ? false : list, results, searchResults: hasSearchClause }
   }

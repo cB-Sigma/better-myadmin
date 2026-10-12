@@ -29,6 +29,7 @@ import { type FormEvent, type ReactNode, useRef, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
+import { InlineHtml } from '../../shell/inline-html'
 import { MaintenanceResults } from '../common/MaintenanceResults'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 
@@ -342,10 +343,16 @@ function OptionsCard(props: Common) {
     if (f.collation !== page.collation && f.changeAllCollations) {
       const ok = await confirm({
         question: (
+          // Messages.strChangeAllColumnCollationsWarning
           <span>
-            {t(
-              'Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the "Change" Link) on the table structure page. </b>',
-            ).replace(/<\/?b>/g, '')}
+            <InlineHtml
+              text={t(
+                'Through this operation, MySQL attempts to map the data values between collations. If the character sets are incompatible, there may be data loss and this lost data may <b>NOT</b> be recoverable simply by changing back the column collation(s). <b>To convert existing data, it is suggested to use the column(s) editing feature (the "Change" Link) on the table structure page. </b>',
+              )}
+            />
+            <br />
+            <br />
+            {t('Are you sure you wish to change all the column collations and convert the data?')}
           </span>
         ),
       })

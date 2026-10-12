@@ -3,8 +3,15 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_CLIENT_CONFIG } from '../../lib/config.ts'
 import { BBCode } from './bbcode.tsx'
 import { parseVersionString, versionNotice } from './home/VersionInfo.tsx'
-import { PASSWORD_CHARS, checkPassword, strengthDictionary, suggestPassword } from './home/password.ts'
+import {
+  PASSWORD_CHARS,
+  checkPassword,
+  strengthDictionary,
+  strengthLabel,
+  suggestPassword,
+} from './home/password.ts'
 import { CHORD_MS, type KeyInfo, ShortcutMachine } from './hotkeys/shortcuts.ts'
+import { DemoServerCard, isDemo } from './session/DemoNotice.tsx'
 import {
   DB_TABS,
   SERVER_TABS,
@@ -176,5 +183,29 @@ describe('BBCode (Sanitize::convertBBCode)', () => {
   })
   it('refuses javascript: links and odd targets', () => {
     expect(html('[a@javascript:alert(1)]x[/a]')).toBe('[a@javascript:alert(1)]x')
+  })
+})
+
+describe('the demo server (DBG/demo) and the password strength labels', () => {
+  it("isDemo reads $cfg['DBG']['demo']; the card carries base.twig's notice", () => {
+    expect(isDemo({ DBG: { demo: true } })).toBe(true)
+    expect(isDemo({ DBG: { demo: false } })).toBe(false)
+    expect(isDemo({})).toBe(false)
+    const html = renderToStaticMarkup(<DemoServerCard />)
+    expect(html).toContain('BetterMyAdmin Demo Server')
+    expect(html).toContain(
+      'You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at <a',
+    )
+  })
+
+  it('checkPasswordStrength: the zxcvbn score as text', () => {
+    expect([0, 1, 2, 3, 4, null].map(strengthLabel)).toEqual([
+      'Extremely weak',
+      'Very weak',
+      'Weak',
+      'Good',
+      'Strong',
+      '',
+    ])
   })
 })

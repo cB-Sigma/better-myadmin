@@ -20,6 +20,7 @@ import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { useFormLock } from '../../shell/page-chrome'
 import { CentralColumnPicker } from './CentralColumnPicker'
 import { PartitionEditor } from './PartitionEditor'
 
@@ -130,6 +131,8 @@ export function indexesFromRows(rows: ColumnRow[]): FormIndex[] {
 
 const LENGTH_REQUIRED = ['VARCHAR', 'CHAR', 'BIT', 'VARBINARY', 'BINARY']
 const NUM_TYPES = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL']
+/** the integer types whose display width MySQL 8.0.19+ ignores (data-length-restricted=1) */
+const LENGTH_RESTRICTED = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT']
 
 /**
  * pma: functions.ts::checkTableEditForm — the problem, or null when the form is valid: an `alert`,
@@ -418,6 +421,8 @@ export function ColumnForm({
   const [preview, setPreview] = useState<string | null>(null)
   const [enumFor, setEnumFor] = useState<number | null>(null)
   const [pickFor, setPickFor] = useState<number | null>(null)
+  // form.create_table_form / append_fields_form are lock-page forms (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   const [addCount, setAddCount] = useState(defaultNumFields)
@@ -431,6 +436,14 @@ export function ColumnForm({
         const next = { ...r, ...patch }
         // ticking A_I picks PRIMARY in the Index select (functions.ts input[value=AUTO_INCREMENT])
         if (patch.autoIncrement === true && mode !== 'change' && next.key === 'none') next.key = 'primary'
+        // resetAttributeForNonNumericType (select.column_type change): UNSIGNED / ZEROFILL go with a
+        // non-numeric type
+        if (
+          patch.type !== undefined &&
+          !NUM_TYPES.includes(patch.type.toUpperCase()) &&
+          ['UNSIGNED', 'UNSIGNED ZEROFILL', 'ZEROFILL'].includes(next.attribute.toUpperCase())
+        )
+          next.attribute = ''
         return next
       }),
     )
@@ -484,6 +497,7 @@ export function ColumnForm({
   const server = Number(params.server ?? 1)
   return (
     <form
+      ref={lockRef}
       className={mode === 'create' ? 'create_table_form' : 'append_fields_form'}
       onSubmit={(e) => {
         e.preventDefault()
@@ -942,13 +956,17 @@ export function ColumnForm({
           </Button>
         </div>
       </div>
-      {options.integersLengthRestricted && (
-        <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
-          {t(
-            'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
-          )}
-        </MessageBox>
-      )}
+      {/* showWarningForIntTypes: only while a row has a type whose width is ignored
+          (Compatibility::isIntegersSupportLength, data-length-restricted) */}
+      {options.integersLengthRestricted &&
+        rows.some((r) => LENGTH_RESTRICTED.includes(r.type.toUpperCase())) && (
+          <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
+            {t(
+              'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
+            )}{' '}
+            <MySqlDocLink url="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-19.html" />
+          </MessageBox>
+        )}
       {error !== null && <MessageBox {...error} flush className="mt-2" />}
       <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
       {enumFor !== null && (

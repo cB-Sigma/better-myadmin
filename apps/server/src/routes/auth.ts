@@ -81,6 +81,7 @@ authRoutes.get('/state', async (c) => {
     failure,
     captcha: authType === 'cookie' ? captchaSettings(cfg) : null,
     loginCookieValidity: cfg.LoginCookieValidity,
+    isHttps: c.get('isHttps'),
   }
   return c.json(body)
 })

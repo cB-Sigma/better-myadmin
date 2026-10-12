@@ -3,6 +3,7 @@ import { quoteString } from '@bettermyadmin/sql-gen'
 import { createServerContext } from '@bettermyadmin/sql-lexer'
 import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
+import { ServerTooOldError } from '../http/errors.ts'
 import { Conn, type ServerInfo } from './connection.ts'
 import { ControlConnections } from './control.ts'
 
@@ -200,6 +201,12 @@ export class PoolManager {
       entry.locales.set(marker, mysqlLocale)
     }
     conn.serverInfo = entry.serverInfo
+    // DatabaseServerVersionChecking: nothing works below MysqlMinVersion
+    const min = this.#cfg.MysqlMinVersion
+    if (entry.serverInfo !== null && entry.serverInfo.versionInt < min.internal) {
+      raw.release()
+      throw new ServerTooOldError(min.human)
+    }
     return conn
   }
 

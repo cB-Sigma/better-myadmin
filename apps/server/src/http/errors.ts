@@ -43,9 +43,10 @@ export class NotFoundError extends BmaError {
 }
 
 export class CsrfError extends BmaError {
-  constructor() {
+  /** `message`: the request's translation of "Error: Token mismatch" */
+  constructor(message = 'Error: Token mismatch') {
     // pma: src/Http/Middleware/TokenRequestParamChecking.php (AJAX branch)
-    super('CSRF', 'Error: Token mismatch', 403)
+    super('CSRF', message, 403)
   }
 }
 
@@ -77,5 +78,16 @@ export class MysqlError extends BmaError {
     if (sql !== undefined) extra.sql = sql
     if (statementIndex !== undefined) extra.statementIndex = statementIndex
     super('MYSQL_ERROR', e.sqlMessage ?? e.message, 400, extra)
+  }
+}
+
+/**
+ * The server is older than $cfg['MysqlMinVersion'] (translated with the request's language in
+ * app.onError: "You should upgrade to %s %s or later.").
+ * pma: src/Http/Middleware/DatabaseServerVersionChecking.php
+ */
+export class ServerTooOldError extends BmaError {
+  constructor(readonly minVersion: string) {
+    super('UNSUPPORTED_SERVER', `You should upgrade to MySQL ${minVersion} or later.`, 500)
   }
 }

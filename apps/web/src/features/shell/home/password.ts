@@ -4,6 +4,7 @@
  */
 
 /** suggestPassword: 16 characters from this alphabet (note phpMyAdmin's "…WYXZ" order). */
+import { t } from '../../../lib/i18n'
 export const PASSWORD_CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWYXZ@!_.*/()[]-'
 
 export function suggestPassword(random: (n: number) => Int32Array = defaultRandom): string {
@@ -28,7 +29,23 @@ export function checkPassword(noPassword: boolean, pw: string, pw2: string): str
 }
 
 /** Strength labels for zxcvbn scores 0–4 (Messages.strExtrWeak … strStrong). */
-export const STRENGTH_LABELS = ['Extremely weak', 'Very weak', 'Weak', 'Good', 'Strong'] as const
+/** checkPasswordStrength: the zxcvbn score (0 to 4) as text, '' before anything was typed. */
+export function strengthLabel(score: number | null): string {
+  switch (score) {
+    case 0:
+      return t('Extremely weak')
+    case 1:
+      return t('Very weak')
+    case 2:
+      return t('Weak')
+    case 3:
+      return t('Good')
+    case 4:
+      return t('Strong')
+    default:
+      return ''
+  }
+}
 
 /** Words that must not make a password look strong (checkPasswordStrength's custom dictionary). */
 export function strengthDictionary(username: string): string[] {

@@ -448,4 +448,12 @@ export const pmaControls = {
   'js:triggers.ts#hidden.bs.modal:<triggersExportModal>': 'TriggersPage.tsx',
   'js:triggers.ts#shown.bs.modal:<triggersEditorModal>': 'TriggersPage.tsx',
   'js:triggers.ts#shown.bs.modal:<triggersExportModal>': 'TriggersPage.tsx',
+  // pma: resources/js/modules/functions/event-loader.ts (.checkall-filter)
+  'js:modules/functions/event-loader.ts#click:.checkall-filter': {
+    file: 'DbStructurePage.tsx',
+    match: 'setSelected(d.tables.filter((tb) => tb.overhead !== null).map((tb) => tb.name))',
+  },
+  // pma: resources/templates/error/simple.twig, filter.twig
+  'error/simple.twig#link:Go back': { file: 'SearchPage.tsx', match: "{t('Go back')}" },
+  'filter.twig#filterText': { file: 'DbStructurePage.tsx', match: 'id="filterText"' },
 }

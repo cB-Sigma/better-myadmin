@@ -530,7 +530,7 @@ export function GridTable(props: Props) {
               <Button
                 variant="link"
                 size="sm"
-                className="sortlink h-auto"
+                className="sortlink group h-auto"
                 title={`${t(MSG.sortHint)}\n${t(MSG.multiSortHint).replace('<br>', '\n')}`}
                 onClick={(e) => {
                   const sort = c.sort!
@@ -544,11 +544,22 @@ export function GridTable(props: Props) {
                 {c.sort!.dir !== null && (
                   <>
                     {' '}
-                    <PmaIcon
-                      name={c.sort!.dir === 'DESC' ? 's_desc' : 's_asc'}
-                      alt={t(c.sort!.dir === 'DESC' ? 'Descending' : 'Ascending')}
-                      className="soimg"
-                    />{' '}
+                    {/* .sortlink mouseover / mouseout toggle the .soimg pair: hovering shows the
+                        other direction (Results::getSortingUrlParams) */}
+                    <span className="inline-flex group-hover:hidden">
+                      <PmaIcon
+                        name={c.sort!.dir === 'DESC' ? 's_desc' : 's_asc'}
+                        alt={t(c.sort!.dir === 'DESC' ? 'Descending' : 'Ascending')}
+                        className="soimg"
+                      />
+                    </span>
+                    <span className="hidden group-hover:inline-flex">
+                      <PmaIcon
+                        name={c.sort!.dir === 'DESC' ? 's_asc' : 's_desc'}
+                        alt={t(c.sort!.dir === 'DESC' ? 'Ascending' : 'Descending')}
+                        className="soimg"
+                      />
+                    </span>{' '}
                     <small>{c.sort!.position}</small>
                   </>
                 )}

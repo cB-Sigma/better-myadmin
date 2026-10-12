@@ -27,9 +27,9 @@ import { qk } from '../../../lib/queryKeys'
 import {
   EMPTY_WITH_ALLOW_NO_PASSWORD_OFF,
   SHA256_NOTICE,
-  STRENGTH_LABELS,
   checkPassword,
   passwordScore,
+  strengthLabel,
   suggestPassword,
 } from '../../shell/home/password.ts'
 import { InlineHtml } from '../../shell/inline-html.tsx'
@@ -657,9 +657,7 @@ function ChangePasswordSection({
                     <span>{pgettext('Password strength', 'Strength:')}</span>
                     <meter max={4} id="change_password_strength_meter" value={score ?? 0} />
                   </div>
-                  <span id="change_password_strength">
-                    {score === null ? '' : t(STRENGTH_LABELS[score] ?? '')}
-                  </span>
+                  <span id="change_password_strength">{strengthLabel(score)}</span>
                 </td>
               </tr>
               {showHashing && (

@@ -4,72 +4,14 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1947/3426 covered (56.8%): 1947 implemented, 3 planned, 1476 missing. [Summary](README.md).
+2076/3426 covered (60.6%): 2019 implemented, 9 exception, 48 n/a, 1350 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 278/403 (69.0%) covered, 278/403 implemented
+## 01 shell navigation auth — 403/403 (100.0%) covered, 346/403 implemented
 
-125 msgids not used yet.
+0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Controllers/JavaScriptMessagesController.php` | 16/23 | `Adding primary key` · `Are you sure you wish to change all the column collations and conve…` · `As per your settings, they are being submitted currently, please be…` · `Click a data point to view and possibly edit the data row.` · `Click reset zoom button to come back to original state.` · `Do you want to copy encryption key?` · `Each point represents a data row.` · `Hovering over a point will show its label.` · `Please look at the bottom of this window.` · `Reset all` · `Some errors have been detected on the server!` · `The plot can be resized by dragging it along the bottom right corner.` · … +4 |
-| `resources/js/modules/functions.ts` | 7/31 | `Edit query` · `Enter each value in a separate field.` · `Extremely weak` · `Good` · `Strong` · `Very weak` · `Weak` |
-| `resources/templates/console/display.twig` | 7/42 | `Always expand query messages` · `Execute queries on Enter and insert new line with Shift+Enter. To m…` · `Hide trace` · `Show current browsing query` · `Show query history at start` · `Show trace` · `Switch to dark theme` |
-| `resources/templates/home/index.twig` | 7/35 | `Get more themes!` · `PHP extension:` · `PHP version:` · `phpMyAdmin Demo Server` · `phpMyAdmin Themes` · `Show PHP information` · `You are using the demo server. You can do anything here, but please…` |
-| `resources/js/u2f.ts` | 6/6 | `Client does not support security key. (U2F error)` · `Failed security key activation. (U2F error)` · `Invalid request sent to security key. (U2F error)` · `Invalid security key. (U2F error)` · `Timed out waiting for security key activation. (U2F error)` · `Unknown security key error. (U2F error)` |
-| `resources/js/modules/ajax.ts` | 5/6 | `Error code: %s` · `Error text: %s` · `Indicates that you have made changes to this page; you will be prom…` · `It seems that the connection to server has been lost. Please check …` · `Request aborted!!` |
-| `resources/templates/base.twig` | 5/17 | `Currently running Git revision %1$s from the %2$s branch.` · `Git information missing!` · `Javascript must be enabled past this point!` · `Open new phpMyAdmin window` · `phpMyAdmin Demo Server` |
-| `src/Config/Descriptions.php` | 5/14 | `Always expand query messages` · `Link with main panel` · `Show current browsing query` · `Show query history at start` · `Switch to dark theme` |
-| `src/Controllers/HomeController.php` | 5/15 | `Directory [code]config[/code], which is used by the setup script, s…` · `The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able …` · `The curl extension was not found and allow_url_fopen is disabled. D…` · `The mbstring PHP extension was not found and you seem to be using a…` · `Your PHP parameter [a@https://www.php.net/manual/en/session.configu…` |
-| `src/Navigation/NavigationTree.php` | 5/6 | `%s result found` · `Groups` · `Link with main panel` · `There are large item groups in navigation panel which may affect th…` · `Unlink from main panel` |
-| `resources/js/modules/console.ts` | 4/8 | `%s argument(s) passed` · `Hide arguments` · `Show arguments` · `Some error occurred while getting SQL debug info.` |
-| `resources/templates/login/twofactor/key_configure.twig` | 4/4 | `Deprecated!` · `Please connect your FIDO U2F device into your computer's USB port. …` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
-| `resources/templates/login/twofactor/key.twig` | 4/4 | `Deprecated!` · `Please connect your FIDO U2F device into your computer's USB port. …` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
-| `resources/templates/navigation/main.twig` | 3/11 | `An error has occurred while loading the navigation display` · `MariaDB Documentation` · `MySQL Documentation` |
-| `resources/templates/preferences/two_factor/main.twig` | 3/3 | `Deprecated!` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
-| `src/Error/ErrorHandler.php` | 3/5 | `Ignore All` · `Report` · `Too many error messages, some are not displayed.` |
-| `src/Routing/Routing.php` | 3/3 | `Error 404! The page %s was not found.` · `Error 405! Request method not allowed.` · `The routing cache could not be written, you need to adjust permissi…` |
-| `resources/js/modules/navigation.ts` | 2/2 | `Hide panel` · `Show panel` |
-| `resources/js/modules/navigation/event-loader.ts` | 2/2 | `Link with main panel` · `Unlink from main panel` |
-| `resources/templates/home/git_info.twig` | 2/5 | `authored on %s by %s` · `committed on %s by %s` |
-| `resources/templates/home/themes.twig` | 2/2 | `Screenshot of the %s theme.` · `Take it` |
-| `resources/templates/login/form.twig` | 2/8 | `phpMyAdmin Demo Server` · `You are using the demo server. You can do anything here, but please…` |
-| `resources/templates/login/header.twig` | 2/3 | `Javascript must be enabled past this point!` · `There is a mismatch between HTTPS indicated on the server and clien…` |
-| `resources/templates/setup/home/index.twig` | 2/20 | `Donate` · `phpMyAdmin homepage` |
-| `src/Favorites/RecentFavoriteTables.php` | 2/2 | `Could not save favorite table!` · `Could not save recent table!` |
-| `src/Http/Middleware/RequestProblemChecking.php` | 2/2 | `GLOBALS overwrite attempt` · `possible exploit` |
-| `src/Http/Middleware/TokenRequestParamChecking.php` | 2/2 | `Error: Token mismatch` · `Failed to set session cookie. Maybe you are using HTTP instead of H…` |
-| `src/Theme/ThemeManager.php` | 2/2 | `Default theme %s not found!` · `Theme %s not found!` |
-| `resources/js/modules/functions/adjustTotals.ts` | 1/8 | `%d table(s)` |
-| `resources/js/modules/functions/checkNumberOfFields.ts` | 1/1 | `Warning: a form on this page has more than %d fields. On submission…` |
-| `resources/js/modules/functions/isStorageSupported.ts` | 1/1 | `There was a problem accessing your browser storage, some features m…` |
-| `resources/js/modules/git-info.ts` | 1/4 | `There was an error in loading the Git information.` |
-| `resources/js/triggers.ts` | 1/1 | `Trigger` |
-| `resources/templates/error/report_form.twig` | 1/4 | `This report automatically includes data about the error and informa…` |
-| `resources/templates/error/simple.twig` | 1/1 | `Something went wrong` |
-| `resources/templates/javascript/redirect.twig` | 1/1 | `Taking you to the target site.` |
-| `resources/templates/login/twofactor/key-https-warning.twig` | 1/1 | `You are not using https to access phpMyAdmin, therefore FIDO U2F de…` |
-| `resources/templates/setup/servers/index.twig` | 1/3 | `Something went wrong.` |
-| `src/Controllers/NavigationController.php` | 1/1 | `Fatal error: The navigation can only be accessed via AJAX` |
-| `src/Controllers/Table/RecentFavoriteController.php` | 1/1 | `Invalid database or table name.` |
-| `src/Core.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
-| `src/Http/Middleware/DatabaseServerVersionChecking.php` | 1/1 | `You should upgrade to %s %s or later.` |
-| `src/Http/Middleware/PhpExtensionsChecking.php` | 1/1 | `See %sour documentation%s for more information.` |
-| `src/Http/Middleware/ServerConfigurationChecking.php` | 1/1 | `The ini_get and/or ini_set functions are disabled in php.ini. phpMy…` |
-| `src/Navigation/Nodes/NodeColumnContainer.php` | 1/2 | `New (Create new column)` |
-| `src/Navigation/Nodes/NodeDatabaseContainer.php` | 1/1 | `New (Create new database)` |
-| `src/Navigation/Nodes/NodeEventContainer.php` | 1/2 | `New (Create new event)` |
-| `src/Navigation/Nodes/NodeFunctionContainer.php` | 1/1 | `New (Create new function)` |
-| `src/Navigation/Nodes/NodeIndexContainer.php` | 1/1 | `New (Create new index)` |
-| `src/Navigation/Nodes/NodeProcedure.php` | 1/1 | `Procedure` |
-| `src/Navigation/Nodes/NodeProcedureContainer.php` | 1/1 | `New (Create new procedure)` |
-| `src/Navigation/Nodes/NodeTableContainer.php` | 1/1 | `New (Create new table)` |
-| `src/Navigation/Nodes/NodeTrigger.php` | 1/1 | `Trigger` |
-| `src/Navigation/Nodes/NodeTriggerContainer.php` | 1/1 | `New (Create new trigger)` |
-| `src/Navigation/Nodes/NodeViewContainer.php` | 1/2 | `New (Create new view)` |
-| `src/Plugins/TwoFactor/Key.php` | 1/2 | `Provides authentication using hardware security tokens supporting F…` |
-| `src/Theme/Theme.php` | 1/1 | `No valid image path for theme %s found!` |
-| `src/ZipExtension.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
 
 ## 02 browse results grid — 39/56 (69.6%) covered, 39/56 implemented
 
@@ -115,9 +57,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 428/534 (80.1%) covered, 428/534 implemented
+## 04 table level — 430/534 (80.5%) covered, 430/534 implemented
 
-106 msgids not used yet.
+104 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -125,27 +67,25 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
-| `resources/templates/table/structure/display_structure.twig` | 3/51 | `Go back` · `Media type:` · `None (None for default)` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
-| `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
 | `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
+| `resources/templates/table/structure/display_structure.twig` | 2/51 | `Media type:` · `None (None for default)` |
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
 | `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
+| `src/Table/Table.php` | 2/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/database/search.ts` | 1/4 | `Searching` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/select.ts` | 1/6 | `Searching` |
 | `resources/js/table/structure.ts` | 1/8 | `Dropping column` |
 | `resources/templates/columns_definitions/column_definitions_form.twig` | 1/14 | `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
-| `resources/templates/error/simple.twig` | 1/1 | `Go back` |
-| `resources/templates/modals/index_dialog_modal.twig` | 1/6 | `Go back` |
 | `resources/templates/table/chart/tbl_chart.twig` | 1/22 | `X Values` |
 | `resources/templates/table/partition/analyze.twig` | 1/1 | `Analyze partition` |
 | `resources/templates/table/partition/check.twig` | 1/1 | `Check partition` |
@@ -204,17 +144,17 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
 | `src/Plugins/Schema/Pdf/Pdf.php` | 1/1 | `PDF export page` |
 
-## 06 server level — 433/915 (47.3%) covered, 433/915 implemented
+## 06 server level — 435/915 (47.5%) covered, 435/915 implemented
 
-482 msgids not used yet.
+480 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Advisory/Rules.php` | 197/197 | `'percona' found in version_comment` · `'source' found in version_comment` · `{long_query_time} is set to 10 seconds or more, thus only slow quer…` · `{tmp_table_size} and {max_heap_table_size} are not the same.` · `%% MyISAM key buffer used: %s%%, this value should be above 95%%` · `%s thread(s) took longer than %s seconds to start, it should be 0` · `%s%% of all clients are aborted. This value should be below 2%%` · `%s%% of all connections are aborted. This value should be below 1%%` · `%s%% of all sorts cause temporary tables, this value should be lowe…` · `%s%% of all temporary tables are being written to disk, this value …` · `Aborted client rate is at %s, this value should be less than 1 per …` · `Aborted connections rate is at %s, this value should be less than 1…` · … +185 |
 | `src/Controllers/Server/Status/VariablesController.php` | 114/114 | `How many temporary files mysqld has created.` · `Key cache miss calculated as rate of physical reads compared to rea…` · `Normally, writes to the InnoDB buffer pool happen in the background…` · `Pending log file writes.` · `Percentage of physical writes compared to write requests (calculate…` · `Percentage of used key cache (calculated value)` · `The amount of data read so far, in bytes.` · `The amount of data written so far, in bytes.` · `The amount of free memory for query cache.` · `The average time to acquire a row lock, in milliseconds.` · `The compiled-in InnoDB page size (default 16KB). Many values are co…` · `The current number of pending fsync() operations.` · … +102 |
 | `src/Charsets/Collation.php` | 55/56 | `accent-insensitive (Collation variant)` · `accent-sensitive (Collation variant)` · `binary (Collation variant)` · `case-insensitive (Collation variant)` · `case-sensitive (Collation variant)` · `kana-sensitive (Collation variant)` · `multi-level (Collation variant)` · `no-pad (Collation variant)` · `Arabic (Collation)` · `Armenian (Collation)` · `Baltic (Collation)` · `Binary (Collation)` · … +43 |
-| `src/Server/Privileges.php` | 42/56 | `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · `Allows creating, dropping and renaming user accounts.` · … +30 |
 | `resources/templates/server/privileges/privileges_table.twig` | 41/58 | `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · … +29 |
+| `src/Server/Privileges.php` | 40/56 | `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · `Allows creating, dropping and renaming user accounts.` · … +28 |
 | `src/Engines/Pbxt.php` | 24/25 | `Checkpoint frequency` · `Data file grow size` · `Data log threshold` · `Garbage threshold` · `Index cache size` · `Log buffer size` · `Log cache size` · `Log file count` · `Log file threshold` · `Record cache size` · `Row file grow size` · `The amount of data written to the transaction log before a checkpoi…` · … +12 |
 | `src/Engines/Myisam.php` | 12/12 | `Automatic recovery mode` · `Data pointer size` · `If the temporary file used for fast MyISAM index creation would be …` · `If this value is greater than 1, MyISAM table indexes are created i…` · `Maximum size for temporary files on index creation` · `Maximum size for temporary sort files` · `Repair threads` · `Sort buffer size` · `The buffer that is allocated when sorting MyISAM indexes during a R…` · `The default pointer size in bytes, to be used by CREATE TABLE for M…` · `The maximum size of the temporary file MySQL is allowed to use whil…` · `The mode for automatic recovery of crashed MyISAM tables, as set vi…` |
 | `src/Engines/Innodb.php` | 8/9 | `Autoextend increment` · `Buffer Pool` · `Buffer pool size` · `Data files` · `Data home directory` · `The common part of the directory path for all InnoDB data files.` · `The increment size for extending the size of an autoextending table…` · `The size of the memory buffer InnoDB uses to cache data and indexes…` |

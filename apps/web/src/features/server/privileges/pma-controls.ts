@@ -280,4 +280,50 @@ export const pmaControls = {
     file: 'UserGroupsPage.tsx',
     match: 'setRemove(g.name)',
   },
+  // pma: resources/js/modules/functions.ts (login information fields)
+  "js:modules/functions.ts#click:<$('<input>') as JQuery<HTMLInputElement>>": {
+    file: 'LoginInformationFields.tsx',
+    match: 'id="button_generate_password"',
+  },
+  'js:modules/functions.ts#change:#pma_hostname': {
+    file: 'LoginInformationFields.tsx',
+    match: 'id="pma_hostname"',
+  },
+  'js:modules/functions.ts#change:#pma_username': {
+    file: 'LoginInformationFields.tsx',
+    match: 'id="pma_username"',
+  },
+  'js:modules/functions.ts#change:#select_pred_hostname': {
+    file: 'LoginInformationFields.tsx',
+    match: 'id="select_pred_hostname"',
+  },
+  'js:modules/functions.ts#change:#select_pred_password': {
+    file: 'LoginInformationFields.tsx',
+    match: 'id="select_pred_password"',
+  },
+  'js:modules/functions.ts#change:#select_pred_username': {
+    file: 'LoginInformationFields.tsx',
+    match: 'id="select_pred_username"',
+  },
+  'js:modules/functions.ts#change:#text_pma_pw,#text_pma_pw2': {
+    file: 'LoginInformationFields.tsx',
+    match: "if (e.target.value !== '') setPredPw('userdefined')",
+  },
+  // pma: resources/js/modules/functions/event-loader.ts (check all boxes)
+  'js:modules/functions/event-loader.ts#change:document': {
+    file: 'UsersPage.tsx',
+    match: 'const all = checkAllState(values.map((v) => selected.has(v)))',
+  },
+  'js:modules/functions/event-loader.ts#change:input.checkall_box': {
+    file: 'UsersPage.tsx',
+    match: 'onChange={(e) => setSelected(e.target.checked ? new Set(values) : new Set())}',
+  },
+  'js:modules/functions/event-loader.ts#change:input.sub_checkall_box': {
+    file: 'PrivilegesTableFields.tsx',
+    match: 'className="sub_checkall_box"',
+  },
+  'js:modules/functions/event-loader.ts#change:…, input.checkall_box:checkbox:enabled': {
+    file: 'PrivilegesTableFields.tsx',
+    match: 'ref.current.indeterminate = s.indeterminate',
+  },
 }

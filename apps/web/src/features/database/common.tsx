@@ -20,6 +20,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { useFormLock } from '../shell/page-chrome'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { SqlEditor } from '../sql/editor/SqlEditor'
 import type { SqlEditorHandle } from '../sql/editor/types'
@@ -105,11 +106,14 @@ export function ListNavigator({ pager, onPos }: { pager: DbPager | null; onPos: 
 
 /** database/create_table.twig — the "Create new table" box */
 export function CreateTableBox({ server, db }: { server: number; db: string }) {
+  // form.lock-page (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [cols, setCols] = useState(4)
   return (
     <form
+      ref={lockRef}
       id="createTableMinimalForm"
       className="mb-3 print:hidden"
       onSubmit={(e) => {

@@ -107,6 +107,8 @@ export function DbStructurePage({
   const [filter, setFilter] = useState('')
   const [counts, setCounts] = useState<Record<string, string>>({})
   const [favorites, setFavorites] = useState<Record<string, boolean>>({})
+  // adjustTotals: after a row's Empty / Drop the summary is recounted on the page ("%d table(s)")
+  const [adjusted, setAdjusted] = useState(false)
 
   const refresh = async () => {
     setCounts({})
@@ -371,6 +373,7 @@ export function DbStructurePage({
             sql,
           },
         ])
+        setAdjusted(true)
       }
       await refresh()
     } catch (e) {
@@ -454,7 +457,7 @@ export function DbStructurePage({
                           <Checkbox
                             id={`checkbox_tbl_${i + 1}`}
                             aria-label={tb.name}
-                            className={tb.overhead !== null ? 'tbl-overhead' : ''}
+                            className={tb.overhead !== null ? 'checkall tbl-overhead' : 'checkall'}
                             checked={selected.includes(tb.name)}
                             onCheckedChange={(v) =>
                               setSelected(
@@ -644,7 +647,9 @@ export function DbStructurePage({
                     <tr className="bg-grid-header [&_th]:px-2 [&_th]:py-1">
                       <th className="print:hidden" />
                       <th className="tbl_num whitespace-nowrap text-left">
-                        {t(d.summary.numTables === 1 ? '%s table' : '%s tables', String(rows.length))}
+                        {adjusted
+                          ? t('%d table(s)', rows.length)
+                          : t(d.summary.numTables === 1 ? '%s table' : '%s tables', String(rows.length))}
                       </th>
                       {d.replicaStatus && <th>{t('Replication')}</th>}
                       <th colSpan={actionCols} className="text-left print:hidden">

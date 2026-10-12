@@ -27,6 +27,25 @@ describe('cookie auth', () => {
     expect(r.json.error).toMatchObject({ code: 'CSRF', message: 'Error: Token mismatch' })
   })
 
+  it('a login whose session cookie did not come back says so (TokenRequestParamChecking set_session)', async () => {
+    t = testApp()
+    const st = await t.req('GET', '/api/auth/state')
+    // the browser did not keep the cookie (a secure cookie over HTTP)
+    t.jar.clear()
+    const r = await t.req(
+      'POST',
+      '/api/auth/login',
+      { server: 1, username: 'root', password: 'x' },
+      { 'X-BMA-Token': String(st.json.csrfToken) },
+    )
+    expect(r.status).toBe(403)
+    expect(r.json.error).toMatchObject({
+      code: 'CSRF',
+      message:
+        'Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin.',
+    })
+  })
+
   it('logs in, rotates the session id, recalls the username', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
@@ -149,6 +168,21 @@ describe('cookie auth', () => {
     expect(r.json).toEqual({ ok: true, logoutUrl: null, server: null })
     const s = await t.req('GET', '/api/auth/state')
     expect(s.json.authenticated).toBe(false)
+  })
+
+  it('a server older than MysqlMinVersion: "You should upgrade to MySQL … or later." (DatabaseServerVersionChecking)', async () => {
+    t = testApp(testConfig({ MysqlMinVersion: { internal: 990000, human: '99.0.0' } }))
+    await t.login()
+    const r = await t.req('GET', '/api/servers/1/home')
+    expect(r.status).toBe(500)
+    expect(r.json.error).toMatchObject({
+      code: 'UNSUPPORTED_SERVER',
+      message: 'You should upgrade to MySQL 99.0.0 or later.',
+    })
+    const de = await t.req('GET', '/api/servers/1/home?lang=de')
+    expect((de.json.error as { message: string }).message).not.toBe(
+      'You should upgrade to MySQL 99.0.0 or later.',
+    )
   })
 
   it('sets security headers', async () => {

@@ -31,4 +31,24 @@ export const pmaControls = {
     file: '../preferences/ConfigForm.tsx',
     match: 'userprefs-allow',
   },
+  // pma: resources/js/setup/scripts.ts
+  'js:setup/scripts.ts#ajax:POST /setup/validate': {
+    file: 'SetupForms.tsx',
+    match: 'api.setupValidate(id, data)',
+  },
+  "js:setup/scripts.ts#ajax:POST <$this.attr('href')>": {
+    file: 'OverviewPage.tsx',
+    match: 'api.deleteSetupServer(id)',
+  },
+  'js:setup/scripts.ts#change:.autosubmit': { file: 'OverviewPage.tsx', match: '<LanguageSelect' },
+  'js:setup/scripts.ts#click:.delete-server': {
+    file: 'OverviewPage.tsx',
+    match: 'className="delete-server"',
+  },
+  'js:setup/scripts.ts#click:.userprefs-allow': {
+    file: '../preferences/ConfigForm.tsx',
+    match: 'if (e.target === e.currentTarget)',
+  },
+  'js:setup/scripts.ts#click:#no_https a': { file: 'OverviewPage.tsx', match: "m.id === 'no_https'" },
+  'js:setup/scripts.ts#click:<link>': { file: 'OverviewPage.tsx', match: 'id="show_hidden_messages"' },
 } as const

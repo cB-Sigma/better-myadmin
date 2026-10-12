@@ -87,4 +87,17 @@ export const pmaControls = {
   'js:sql.ts#submit:.bookmarkQueryForm': 'ResultsView.tsx',
   'js:sql.ts#click:form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resultsForm"].ajax input[name="submit_mult"]':
     'ResultsView.tsx',
+  // pma: resources/js/modules/functions.ts (sort links), functions/event-loader.ts (create view)
+  'js:modules/functions.ts#mouseover:.sortlink': {
+    file: 'GridTable.tsx',
+    match: 'className="hidden group-hover:inline-flex"',
+  },
+  'js:modules/functions.ts#mouseout:.sortlink': {
+    file: 'GridTable.tsx',
+    match: 'className="inline-flex group-hover:hidden"',
+  },
+  'js:modules/functions/event-loader.ts#click:a.create_view.ajax': {
+    file: 'ResultsView.tsx',
+    match: 'className="create_view ajax"',
+  },
 }

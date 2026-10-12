@@ -1,11 +1,11 @@
 import { CSRF_COOKIE, CSRF_HEADER, type Executed, SESSION_COOKIE } from '@bettermyadmin/contracts'
-import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
+import { type Language, type LanguageManager, type Translator, sprintf } from '@bettermyadmin/i18n'
 import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { authPageGate, isPageRequest } from './auth/page-gate.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
-import { BmaError, CsrfError } from './http/errors.ts'
+import { BmaError, CsrfError, ServerTooOldError } from './http/errors.ts'
 import { securityHeaders } from './http/headers.ts'
 import { languageLoading, languageManager } from './i18n.ts'
 import { authRoutes } from './routes/auth.ts'
@@ -57,6 +57,14 @@ export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>()
 
   app.onError((err, c) => {
+    if (err instanceof ServerTooOldError) {
+      const message = sprintf(
+        c.get('tr').gettext('You should upgrade to %s %s or later.'),
+        'MySQL',
+        err.minVersion,
+      )
+      return c.json({ error: { code: err.code, message } }, 500)
+    }
     if (err instanceof BmaError) return c.json(err.toEnvelope(), err.status as 400)
     console.error(err)
     return c.json({ error: { code: 'INTERNAL', message: 'Internal error.' } }, 500)
@@ -87,7 +95,17 @@ export function createApp(deps: AppDeps) {
     if (m !== 'GET' && m !== 'HEAD' && m !== 'OPTIONS') {
       const header = c.req.header(CSRF_HEADER) ?? ''
       if (c.get('sessionIsNew') || header === '' || !safeEqual(header, c.get('session').csrfToken)) {
-        throw new CsrfError()
+        // the login form's session (set_session) did not come back: its cookie was not stored
+        if (c.get('sessionIsNew') && c.req.path === '/api/auth/login') {
+          throw new CsrfError(
+            c
+              .get('tr')
+              .gettext(
+                'Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin.',
+              ),
+          )
+        }
+        throw new CsrfError(c.get('tr').gettext('Error: Token mismatch'))
       }
     }
     await next()
