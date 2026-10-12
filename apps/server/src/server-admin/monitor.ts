@@ -298,7 +298,7 @@ export async function queryAnalyzer(
 ): Promise<MonitorQueryResponse> {
   await prepare(ctx)
   const { dbi } = ctx
-  if (database !== '') await dbi.tryQuery(`USE ${backquote(database)}`, 'monitor.selectDb')
+  if (database !== '') await dbi.conn.selectDb(database, 'monitor.selectDb')
   const profiling =
     ctx.session !== undefined ? await isProfilingSupported(ctx.conn, ctx.session, ctx.serverIndex) : false
   if (profiling) await ctx.conn.query('SET PROFILING=1;', 'monitor.profiling')

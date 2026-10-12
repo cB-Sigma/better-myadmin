@@ -3,6 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { GeneralLog } from './lib/general-log.ts'
 import { PmaClient, isPmaUp, sqlBoxForm, visibleText } from './lib/pma.ts'
+import { PMA_STORAGE } from './lib/server-setup.ts'
 
 /**
  * Language parity: a German session gets the same SQL-tab messages (translated by phpMyAdmin's
@@ -89,7 +90,7 @@ describe.skipIf(!reachable)('parity: German session (lang=de) — messages and l
     log = await GeneralLog.open(ROOT)
     pma = new PmaClient(PMA_URL)
     await pma.login(PMA_USER, PMA_USER, 1, 'de')
-    bma = testApp(testConfig())
+    bma = testApp(testConfig({}, PMA_STORAGE))
     // the login page's language selector: GET /api/i18n?lang=de sets the language cookie
     const st = await bma.req('GET', '/api/i18n?lang=de')
     expect(st.json).toMatchObject({ key: 'de', code: 'de', dir: 'ltr' })

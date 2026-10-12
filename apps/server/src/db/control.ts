@@ -5,6 +5,7 @@ import { connectionErrorMessage } from '../auth/failure.ts'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { isMysqlError } from '../http/errors.ts'
 import { type Credentials, connectionOptions } from './pool-manager.ts'
+import { afterQuery } from './query-hook.ts'
 
 /**
  * Connection parameters of the control link: control user/password, `controlhost` (else the
@@ -61,8 +62,10 @@ export class ControlConn implements MetaConn {
     this.log = log
   }
 
-  async #exec(sql: string): Promise<QueryOutcome> {
+  /** `hook`: tryQuery runs Tracker::handleQuery; select_db and multi_query do not. */
+  async #exec(sql: string, hook = true): Promise<QueryOutcome> {
     const start = performance.now()
+    let logged = false
     try {
       const [res, fields] = (await this.raw.query({ sql, rowsAsArray: true, typeCast: false })) as [
         unknown,
@@ -70,7 +73,11 @@ export class ControlConn implements MetaConn {
       ]
       this.lastError = ''
       this.lastErrno = 0
-      return toOutcome(res, fields)
+      const out = toOutcome(res, fields)
+      this.log.push({ sql, ms: performance.now() - start, label: 'pmadb' })
+      logged = true
+      if (hook) await afterQuery(this.log, sql, null)
+      return out
     } catch (e) {
       if (isMysqlError(e)) {
         this.lastError = e.sqlMessage ?? e.message
@@ -81,7 +88,7 @@ export class ControlConn implements MetaConn {
       }
       throw e
     } finally {
-      this.log.push({ sql, ms: performance.now() - start, label: 'pmadb' })
+      if (!logged) this.log.push({ sql, ms: performance.now() - start, label: 'pmadb' })
     }
   }
 
@@ -99,11 +106,19 @@ export class ControlConn implements MetaConn {
 
   /** COM_INIT_DB equivalent (the parity harness renders phpMyAdmin's Init DB as this statement). */
   async selectDb(db: string): Promise<boolean> {
-    return (await this.tryQuery(`USE \`${db.replaceAll('`', '``')}\``)) !== false
+    return (await this.#try(`USE \`${db.replaceAll('`', '``')}\``, false)) !== false
   }
 
   async tryMultiQuery(sql: string): Promise<boolean> {
-    return (await this.tryQuery(sql)) !== false
+    return (await this.#try(sql, false)) !== false
+  }
+
+  async #try(sql: string, hook: boolean): Promise<QueryOutcome | false> {
+    try {
+      return await this.#exec(sql, hook)
+    } catch {
+      return false
+    }
   }
 
   release(): void {

@@ -22,6 +22,12 @@ export const BMA_USER = 'm3srv_bma'
 export const pmaReachable = await isPmaUp(PMA_URL)
 
 /**
+ * The reference phpMyAdmin's configuration storage (its config.inc.php): BetterMyAdmin is given
+ * the same control user and pmadb, so both tools' storage statements run on the control link.
+ */
+export const PMA_STORAGE = { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' } as const
+
+/**
  * Reads phpMyAdmin performs on every Status page (the DI container builds Server\Status\Data for
  * each Status controller) or per request (menu, privileges, pmadb), next to the page's own.
  */
@@ -69,7 +75,9 @@ export async function startHarness(
   const bma = testApp(
     testConfig(
       cfg,
-      target.root === ROOT ? server : { host: target.root.host, port: target.root.port, ...server },
+      target.root === ROOT
+        ? { ...PMA_STORAGE, ...server }
+        : { host: target.root.host, port: target.root.port, ...server },
     ),
   )
   await bma.login(users.bma, users.bma)
