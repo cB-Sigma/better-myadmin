@@ -131,7 +131,7 @@ async function replicaConfiguration(
       (r[slave] !== undefined && r[slave] !== null && r[slave] !== 'No') ||
       (r[replica] !== undefined && r[replica] !== null && r[replica] !== 'No')
     // phpMyAdmin reads the IO state of a REPLICA-keyword server from Replica_SQL_Running and passes
-    // the two states swapped to the template (Q16, Q60): fixed, each flag is its own thread's
+    // the two states swapped to the template (Q16, Q62): fixed, each flag is its own thread's
     io = running('Slave_IO_Running', 'Replica_IO_Running')
     sql = running('Slave_SQL_Running', 'Replica_SQL_Running')
     // getHtmlForReplicationStatusTable loads its own ReplicationInfo

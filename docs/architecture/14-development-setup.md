@@ -85,6 +85,15 @@ Several checkouts may run suites against the same server at once. Three mechanis
 - **Rotation**: `GeneralLog.open()` truncates the log when it holds more than 100k rows (`BMA_GENERAL_LOG_ROTATE_AT`) **and no suite holds a marker**. Every reader registers a holder file (pid) in `.data/general-log-holders/` of the main checkout (shared by all its worktrees; `BMA_LOG_HOLDERS_DIR` overrides), removed at close or process exit; files of dead processes are ignored. Registration and rotation run under the `general-log-holders.lock` mutex.
 - **Fixtures**: UI parity accounts and databases carry a per-worktree suffix (`uip_pma_<run>`, `uip_db_<run>`, `uip_pmadb_<run>`, `uip_ie_<run>`; `tests/ui-parity/lib/env.ts`, `BMA_UIP_RUN`) and are dropped by its global-teardown. Parity suites keep their fixed fixtures (`m1meta_*`, `m3srv_*`, `f03_*` …) but take a server-wide `GET_LOCK('bma_parity:<suite>')` for the whole file (`tests/parity/lib/suite-lock.ts`; the server-* suites share one group), so the same suite started from two worktrees runs one after the other (`BMA_PARITY_LOCK_WAIT`, default 30 min).
 
+## The dev replica (Server › Replication, logging variables of the monitor)
+
+`tests/parity/server-replication.parity.test.ts` and the logging-variable cases of `server-monitor` need a live replica and a reference phpMyAdmin whose only server it is; they skip themselves without them.
+
+- Compose: `mysql84-replica` (:3308, server-id 2, no binary log) replicates `mysql84` from its position at creation time as `bma_repl` (`docker/seed/02-replication-user.sql`, `docker/seed/replica/10-replica.sh`). It applies only the `f06r_repl` database and skips every error (`--replica-skip-errors=all`): the other suites' statements on the shared primary are parsed by the replica before its database filter applies and would otherwise stop the SQL thread. `phpmyadmin-ref-replica` (:8083, `PMA_REPLICA=1`: no configuration storage, `AllowArbitraryServer` on) is the reference for it.
+- Without Docker for the reference (a local checkout on :8081): start the replica container with host networking (`--network host … --port=3308 --report-host=127.0.0.1 --replicate-do-db=f06r_repl --replica-skip-errors=all --skip-log-bin`, `REPLICA_SOURCE_HOST=127.0.0.1`) and the second reference instance with `docker/pma-ref/local-replica.sh` (a symlink copy of the checkout with its own `config.inc.php`, so the :8081 instance is untouched).
+- Overrides: `BMA_PARITY_REPLICA_HOST` / `_PORT` (the replica's MySQL), `BMA_PARITY_REPLICA_PMA_URL`, `BMA_PARITY_REPLICA_SOURCE_HOST` / `_PORT` (the primary as both the reference and the replica reach it, entered in "Change or reconfigure primary server"; with compose networking use `mysql84`).
+- The suites never change replication or logging variables on the shared primary: every START/STOP/RESET/CHANGE and SET GLOBAL runs on the replica, which the suite points back at the primary (`restoreReplica`) when it ends.
+
 ## Directory for generated/runtime data
 
 `.data/` (git-ignored): SQLite session store, local metadata fallback, upload/save dirs, generated secret in non-dev runs.

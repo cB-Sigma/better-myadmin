@@ -371,23 +371,18 @@
 /server/databases:
   api: 'GET /api/servers/:s/databases'
   ui: '/s/:s/databases'
-  planned: M3
 /server/databases/create:
   api: 'POST /api/servers/:s/databases'
-  ui: '/s/:s/databases/create'
-  planned: M3
+  ui: '/s/:s/databases'
 /server/databases/destroy:
   api: 'POST /api/servers/:s/databases/drop'
-  ui: '/s/:s/databases/destroy'
-  planned: M3
+  ui: '/s/:s/databases'
 /server/engines:
   api: 'GET /api/servers/:s/engines'
   ui: '/s/:s/engines'
-  planned: M3
 '/server/engines/{engine}[/{page}]':
-  api: 'GET /api/servers/:s/engines/:engine'
+  api: 'GET /api/servers/:s/engines/:engine/:page?'
   ui: '/s/:s/engines/:engine'
-  planned: M3
 /server/export:
   api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/export'
@@ -415,69 +410,51 @@
 /server/replication:
   api:
     - 'GET /api/servers/:s/replication'
-    - 'POST /api/servers/:s/replication/*'
+    - 'POST /api/servers/:s/replication/control'
+    - 'POST /api/servers/:s/replication/skip-errors'
+    - 'POST /api/servers/:s/replication/change-primary'
+    - 'POST /api/servers/:s/replication/replica-user'
   ui: '/s/:s/replication'
-  planned: M3
+  note: 'the add-replica-user form posts to /server/privileges in phpMyAdmin (replication/replica-user here)'
 /server/sql:
   api: 'POST /api/servers/:s/query'
   ui: '/s/:s/sql'
 /server/status:
   api: 'GET /api/servers/:s/status'
   ui: '/s/:s/status'
-  planned: M3
 /server/status/advisor:
   api: 'GET /api/servers/:s/status/advisor'
   ui: '/s/:s/status/advisor'
-  planned: M3
 /server/status/monitor:
-  api: 'GET /api/servers/:s/status/monitor/*'
-  planned: M3
-  exception: X11
-  note: SSE stream for charts
+  api: 'GET /api/servers/:s/status/monitor'
+  ui: '/s/:s/status/monitor'
+  note: polled like phpMyAdmin (X11 withdrawn)
 /server/status/monitor/chart:
-  api: 'GET /api/servers/:s/status/monitor/stream'
-  planned: M3
-  exception: X11
-  note: SSE stream for charts
+  api: 'POST /api/servers/:s/status/monitor/chart'
 /server/status/monitor/general-log:
-  api: 'GET /api/servers/:s/status/monitor/*'
-  planned: M3
-  exception: X11
-  note: SSE stream for charts
+  api: 'POST /api/servers/:s/status/monitor/general-log'
 /server/status/monitor/log-vars:
   api: 'POST /api/servers/:s/status/monitor/log-vars'
-  planned: M3
-  exception: X11
-  note: SSE stream for charts
 /server/status/monitor/query:
   api: 'POST /api/servers/:s/status/monitor/query'
-  planned: M3
-  exception: X11
-  note: SSE stream for charts
 /server/status/monitor/slow-log:
-  api: 'GET /api/servers/:s/status/monitor/*'
-  planned: M3
-  exception: X11
-  note: SSE stream for charts
+  api: 'POST /api/servers/:s/status/monitor/slow-log'
 /server/status/processes:
-  api: 'GET /api/servers/:s/processes'
+  api: 'GET /api/servers/:s/status/processes'
   ui: '/s/:s/status/processes'
-  planned: M3
 '/server/status/processes/kill/{id:\d+}':
-  api: 'POST /api/servers/:s/processes/:id/kill'
-  planned: M3
+  api: 'POST /api/servers/:s/status/processes/:id/kill'
 /server/status/processes/refresh:
-  api: '/api/servers/:s/status/processes/refresh'
-  ui: '/s/:s/status/processes/refresh'
-  planned: M3
+  api: 'GET /api/servers/:s/status/processes'
+  note: the auto-refresh requests the list with `full` (quirk Q51)
 /server/status/queries:
   api: 'GET /api/servers/:s/status/queries'
   ui: '/s/:s/status/queries'
-  planned: M3
 /server/status/variables:
-  api: 'GET /api/servers/:s/status/variables'
+  api:
+    - 'GET /api/servers/:s/status/variables'
+    - 'POST /api/servers/:s/status/variables'
   ui: '/s/:s/status/variables'
-  planned: M3
 /server/user-groups:
   api: '/api/servers/:s/user-groups'
   ui: '/s/:s/user-groups'
@@ -489,15 +466,10 @@
 /server/variables:
   api: 'GET /api/servers/:s/variables'
   ui: '/s/:s/variables'
-  planned: M3
 '/server/variables/get/{name}':
-  api: '/api/servers/:s/variables/get/:name'
-  ui: '/s/:s/variables/get/:name'
-  planned: M3
+  api: 'GET /api/servers/:s/variables/:name'
 '/server/variables/set/{name}':
-  api: '/api/servers/:s/variables/set/:name'
-  ui: '/s/:s/variables/set/:name'
-  planned: M3
+  api: 'POST /api/servers/:s/variables/:name'
 /sql:
   api:
     - 'POST /api/servers/:s/browse'

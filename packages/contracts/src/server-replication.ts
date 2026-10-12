@@ -63,7 +63,7 @@ export const ReplicationPage = z.object({
       isReplica: z.boolean(),
       /**
        * The thread states (they choose the error boxes, link labels and actions). phpMyAdmin passes
-       * them swapped and reads the IO state from Replica_SQL_Running (Q16, Q60: fixed).
+       * them swapped and reads the IO state from Replica_SQL_Running (Q16, Q62: fixed).
        */
       sqlRunning: z.boolean(),
       ioRunning: z.boolean(),

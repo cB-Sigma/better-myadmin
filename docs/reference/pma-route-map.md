@@ -102,37 +102,37 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/schema-export` | `SchemaExportController` | API `POST /api/servers/:s/databases/:db/schema-export` | 🗓️ planned (M3) |
 | GET, POST | `/server/binlog` | `Server/BinlogController` | UI `/s/:s/binlog` · API `GET /api/servers/:s/binlog` | ✅ implemented (M3) |
 | GET | `/server/collations` | `Server/CollationsController` | UI `/s/:s/collations` · API `GET /api/servers/:s/collations` | ✅ implemented (M3) |
-| GET, POST | `/server/databases` | `Server/DatabasesController` | UI `/s/:s/databases` · API `GET /api/servers/:s/databases` | ✅ implemented (M3) |
-| POST | `/server/databases/create` | `Server/Databases/CreateController` | UI `/s/:s/databases/create` · API `POST /api/servers/:s/databases` | 🗓️ planned (M3) |
-| POST | `/server/databases/destroy` | `Server/Databases/DestroyController` | UI `/s/:s/databases/destroy` · API `POST /api/servers/:s/databases/drop` | 🗓️ planned (M3) |
-| GET | `/server/engines` | `Server/EnginesController` | UI `/s/:s/engines` · API `GET /api/servers/:s/engines` | ✅ implemented (M3) |
-| GET | `/server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | UI `/s/:s/engines/:engine` · API `GET /api/servers/:s/engines/:engine` | 🗓️ planned (M3) |
+| GET, POST | `/server/databases` | `Server/DatabasesController` | UI `/s/:s/databases` · API `GET /api/servers/:s/databases` | ✅ implemented |
+| POST | `/server/databases/create` | `Server/Databases/CreateController` | UI `/s/:s/databases` · API `POST /api/servers/:s/databases` | ✅ implemented |
+| POST | `/server/databases/destroy` | `Server/Databases/DestroyController` | UI `/s/:s/databases` · API `POST /api/servers/:s/databases/drop` | ✅ implemented |
+| GET | `/server/engines` | `Server/EnginesController` | UI `/s/:s/engines` · API `GET /api/servers/:s/engines` | ✅ implemented |
+| GET | `/server/engines/{engine}[/{page}]` | `Server/ShowEngineController` | UI `/s/:s/engines/:engine` · API `GET /api/servers/:s/engines/:engine/:page?` | ✅ implemented |
 | GET, POST | `/server/export` | `Server/ExportController` | UI `/s/:s/export` · API `GET /api/servers/:s/export/page` | ✅ implemented |
 | GET, POST | `/server/import` | `Server/ImportController` | UI `/s/:s/import` · API `GET /api/servers/:s/import/page` | ✅ implemented |
 | GET | `/server/plugins` | `Server/PluginsController` | UI `/s/:s/plugins` · API `GET /api/servers/:s/plugins` | ✅ implemented (M3) |
 | GET, POST | `/server/privileges` | `Server/PrivilegesController` | UI `/s/:s/privileges` · API `GET /api/servers/:s/privileges/users` · API `GET /api/servers/:s/privileges/users/:user/:host` | 🗓️ planned (M3) |
 | POST | `/server/privileges/account-lock` | `Server/Privileges/AccountLockController` | UI `/s/:s/privileges/account-lock` · API `/api/servers/:s/privileges/account-lock` | 🗓️ planned (M3) |
 | POST | `/server/privileges/account-unlock` | `Server/Privileges/AccountUnlockController` | UI `/s/:s/privileges/account-unlock` · API `/api/servers/:s/privileges/account-unlock` | 🗓️ planned (M3) |
-| GET, POST | `/server/replication` | `Server/ReplicationController` | UI `/s/:s/replication` · API `GET /api/servers/:s/replication` · API `POST /api/servers/:s/replication/*` | 🗓️ planned (M3) |
+| GET, POST | `/server/replication` | `Server/ReplicationController` | UI `/s/:s/replication` · API `GET /api/servers/:s/replication` · API `POST /api/servers/:s/replication/control` · API `POST /api/servers/:s/replication/skip-errors` · API `POST /api/servers/:s/replication/change-primary` · API `POST /api/servers/:s/replication/replica-user` · (the add-replica-user form posts to /server/privileges in phpMyAdmin (replication/replica-user here)) | ✅ implemented |
 | GET, POST | `/server/sql` | `Server/SqlController` | UI `/s/:s/sql` · API `POST /api/servers/:s/query` | ✅ implemented |
-| GET | `/server/status` | `Server/Status/StatusController` | UI `/s/:s/status` · API `GET /api/servers/:s/status` | ✅ implemented (M3) |
-| GET | `/server/status/advisor` | `Server/Status/AdvisorController` | UI `/s/:s/status/advisor` · API `GET /api/servers/:s/status/advisor` | ✅ implemented (M3) |
-| GET | `/server/status/monitor` | `Server/Status/MonitorController` | API `GET /api/servers/:s/status/monitor/*` · (SSE stream for charts) | 🗓️ planned (M3, X11) |
-| POST | `/server/status/monitor/chart` | `Server/Status/Monitor/ChartingDataController` | API `GET /api/servers/:s/status/monitor/stream` · (SSE stream for charts) | 🗓️ planned (M3, X11) |
-| POST | `/server/status/monitor/general-log` | `Server/Status/Monitor/GeneralLogController` | API `GET /api/servers/:s/status/monitor/*` · (SSE stream for charts) | 🗓️ planned (M3, X11) |
-| POST | `/server/status/monitor/log-vars` | `Server/Status/Monitor/LogVarsController` | API `POST /api/servers/:s/status/monitor/log-vars` · (SSE stream for charts) | 🗓️ planned (M3, X11) |
-| POST | `/server/status/monitor/query` | `Server/Status/Monitor/QueryAnalyzerController` | API `POST /api/servers/:s/status/monitor/query` · (SSE stream for charts) | 🗓️ planned (M3, X11) |
-| POST | `/server/status/monitor/slow-log` | `Server/Status/Monitor/SlowLogController` | API `GET /api/servers/:s/status/monitor/*` · (SSE stream for charts) | 🗓️ planned (M3, X11) |
-| GET, POST | `/server/status/processes` | `Server/Status/ProcessesController` | UI `/s/:s/status/processes` · API `GET /api/servers/:s/processes` | 🗓️ planned (M3) |
-| POST | `/server/status/processes/kill/{id:\\d+}` | `Server/Status/Processes/KillController` | API `POST /api/servers/:s/processes/:id/kill` | 🗓️ planned (M3) |
-| POST | `/server/status/processes/refresh` | `Server/Status/Processes/RefreshController` | UI `/s/:s/status/processes/refresh` · API `/api/servers/:s/status/processes/refresh` | 🗓️ planned (M3) |
-| GET | `/server/status/queries` | `Server/Status/QueriesController` | UI `/s/:s/status/queries` · API `GET /api/servers/:s/status/queries` | ✅ implemented (M3) |
-| GET, POST | `/server/status/variables` | `Server/Status/VariablesController` | UI `/s/:s/status/variables` · API `GET /api/servers/:s/status/variables` | ✅ implemented (M3) |
+| GET | `/server/status` | `Server/Status/StatusController` | UI `/s/:s/status` · API `GET /api/servers/:s/status` | ✅ implemented |
+| GET | `/server/status/advisor` | `Server/Status/AdvisorController` | UI `/s/:s/status/advisor` · API `GET /api/servers/:s/status/advisor` | ✅ implemented |
+| GET | `/server/status/monitor` | `Server/Status/MonitorController` | UI `/s/:s/status/monitor` · API `GET /api/servers/:s/status/monitor` · (polled like phpMyAdmin (X11 withdrawn)) | ✅ implemented |
+| POST | `/server/status/monitor/chart` | `Server/Status/Monitor/ChartingDataController` | API `POST /api/servers/:s/status/monitor/chart` | ✅ implemented |
+| POST | `/server/status/monitor/general-log` | `Server/Status/Monitor/GeneralLogController` | API `POST /api/servers/:s/status/monitor/general-log` | ✅ implemented |
+| POST | `/server/status/monitor/log-vars` | `Server/Status/Monitor/LogVarsController` | API `POST /api/servers/:s/status/monitor/log-vars` | ✅ implemented |
+| POST | `/server/status/monitor/query` | `Server/Status/Monitor/QueryAnalyzerController` | API `POST /api/servers/:s/status/monitor/query` | ✅ implemented |
+| POST | `/server/status/monitor/slow-log` | `Server/Status/Monitor/SlowLogController` | API `POST /api/servers/:s/status/monitor/slow-log` | ✅ implemented |
+| GET, POST | `/server/status/processes` | `Server/Status/ProcessesController` | UI `/s/:s/status/processes` · API `GET /api/servers/:s/status/processes` | ✅ implemented |
+| POST | `/server/status/processes/kill/{id:\\d+}` | `Server/Status/Processes/KillController` | API `POST /api/servers/:s/status/processes/:id/kill` | ✅ implemented |
+| POST | `/server/status/processes/refresh` | `Server/Status/Processes/RefreshController` | API `GET /api/servers/:s/status/processes` · (the auto-refresh requests the list with `full` (quirk Q51)) | ✅ implemented |
+| GET | `/server/status/queries` | `Server/Status/QueriesController` | UI `/s/:s/status/queries` · API `GET /api/servers/:s/status/queries` | ✅ implemented |
+| GET, POST | `/server/status/variables` | `Server/Status/VariablesController` | UI `/s/:s/status/variables` · API `GET /api/servers/:s/status/variables` · API `POST /api/servers/:s/status/variables` | ✅ implemented |
 | GET, POST | `/server/user-groups` | `Server/UserGroupsController` | UI `/s/:s/user-groups` · API `/api/servers/:s/user-groups` | 🗓️ planned (M3) |
 | GET | `/server/user-groups/edit-form` | `Server/UserGroupsFormController` | UI `/s/:s/user-groups/edit-form` · API `/api/servers/:s/user-groups/edit-form` | 🗓️ planned (M3) |
-| GET | `/server/variables` | `Server/VariablesController` | UI `/s/:s/variables` · API `GET /api/servers/:s/variables` | ✅ implemented (M3) |
-| GET | `/server/variables/get/{name}` | `Server/Variables/GetVariableController` | UI `/s/:s/variables/get/:name` · API `/api/servers/:s/variables/get/:name` | 🗓️ planned (M3) |
-| POST | `/server/variables/set/{name}` | `Server/Variables/SetVariableController` | UI `/s/:s/variables/set/:name` · API `/api/servers/:s/variables/set/:name` | 🗓️ planned (M3) |
+| GET | `/server/variables` | `Server/VariablesController` | UI `/s/:s/variables` · API `GET /api/servers/:s/variables` | ✅ implemented |
+| GET | `/server/variables/get/{name}` | `Server/Variables/GetVariableController` | API `GET /api/servers/:s/variables/:name` | ✅ implemented |
+| POST | `/server/variables/set/{name}` | `Server/Variables/SetVariableController` | API `POST /api/servers/:s/variables/:name` | ✅ implemented |
 | GET, POST | `/sql` | `Sql/SqlController` | UI `/s/:s/db/:db/t/:table/browse` · API `POST /api/servers/:s/browse` · API `POST /api/servers/:s/query` · (browse path (Browse tab, sort/page/options links, Refresh, row Delete, FK links); the SQL tab runs /import) | ✅ implemented |
 | GET | `/sql/get-default-fk-check-value` | `Sql/DefaultForeignKeyCheckValueController` | API `GET /api/servers/:s/sql/default-fk-check` | ✅ implemented (M1) |
 | POST | `/sql/get-enum-values` | `Sql/EnumValuesController` | API `POST /api/servers/:s/browse/values` | ✅ implemented |

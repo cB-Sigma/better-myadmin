@@ -462,7 +462,7 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
       const html = parse(pageHtml(res.p))
       const rep = res.b.replica!
       // each flag is its own thread's state (phpMyAdmin swaps them and reads the IO state from
-      // Replica_SQL_Running: Q16, Q60)
+      // Replica_SQL_Running: Q16, Q62)
       expect([rep.ioRunning, rep.sqlRunning]).toEqual([io, sql])
       const ours = {
         errors: [

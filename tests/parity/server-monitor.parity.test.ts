@@ -194,7 +194,7 @@ describe.skipIf(!pmaReachable)('parity: status monitor', () => {
       )
       const bm = res.b.message!
       if ('crashed' in res.p) {
-        // Q61: an argument that does not start with a word and a space (a comment, `(`) makes
+        // Q63: an argument that does not start with a word and a space (a comment, `(`) makes
         // mb_strtolower(null) throw; ours counts it under the empty type
         expect(res.p.crashed).toContain('TypeError')
         expect(res.b.success).toBe(true)

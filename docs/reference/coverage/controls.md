@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-519/1106 covered (46.9%): 519 implemented, 24 planned, 563 missing. [Summary](README.md).
+605/1106 covered (54.7%): 605 implemented, 24 planned, 477 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 27/98 (27.6%) covered, 27/98 implemented
 
@@ -159,14 +159,14 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/tracking/tables.twig` | 7/7 | ✅ `link:Delete tracking` ✅ `link:Structure snapshot` ✅ `link:Track table` ✅ `link:Tracking report` ✅ `link:Versions` ✅ `selected_tbl[]` ✅ `submit_mult` |  |
 | `src/Database/CentralColumns.php` | 0/1 |  | ⬜ `pos` |
 
-## 06 server level — 0/243 (0.0%) covered, 0/243 implemented
+## 06 server level — 86/243 (35.4%) covered, 86/243 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `modals/change_password.twig` | 0/3 |  | ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `id:changePasswordGoButton` |
 | `server/binlog/index.twig` | 0/6 |  | ⬜ `link:Next` ⬜ `link:Previous` ⬜ `link:Show full queries` ⬜ `link:Truncate shown queries` ⬜ `log` ⬜ `submit:Go` |
 | `server/databases/index.twig` | 0/16 |  | ⬜ `button:Cancel` ⬜ `db_collation` ⬜ `filterText` ⬜ `id:buttonGo` ⬜ `id:checkAllCheckbox` ⬜ `id:dropDatabaseModalDropButton` ⬜ `link:Ascending` ⬜ `link:Check privileges` ⬜ `link:Collation` ⬜ `link:Database` ⬜ `link:Enable statistics` ⬜ `link:Jump to database '%s'` ⬜ `link:SQL` ⬜ `new_db` ⬜ `selected_dbs[]` ⬜ `submit_mult` |
-| `server/engines/show.twig` | 0/1 |  | ⬜ `link:Variables` |
+| `server/engines/show.twig` | 1/1 | ✅ `link:Variables` |  |
 | `server/privileges/add_user_fieldset.twig` | 0/1 |  | ⬜ `link:Add user account` |
 | `server/privileges/add_user.twig` | 0/4 |  | ⬜ `createdb-1` ⬜ `createdb-2` ⬜ `createdb-3` ⬜ `id:adduser_submit` |
 | `server/privileges/change_password.twig` | 0/5 |  | ⬜ `authentication_plugin` ⬜ `nopass` ⬜ `pma_pw` ⬜ `pma_pw2` ⬜ `submit:Go` |
@@ -181,22 +181,22 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/privileges/user_overview.twig` | 0/1 |  | ⬜ `link:Add user account` |
 | `server/privileges/user_properties.twig` | 0/2 |  | ⬜ `mode` ⬜ `submit:Go` |
 | `server/privileges/users_overview.twig` | 0/12 |  | ⬜ `button:Close` ⬜ `button:Edit user group` ⬜ `button:Unlock` ⬜ `delete` ⬜ `drop_users_db` ⬜ `id:editUserGroupModalSaveButton` ⬜ `id:usersForm_checkall` ⬜ `link:Add user account` ⬜ `link:Edit privileges` ⬜ `link:Export` ⬜ `selected_usr[]` ⬜ `submit_mult` |
-| `server/replication/change_primary.twig` | 0/5 |  | ⬜ `hostname` ⬜ `id:confreplica_submit` ⬜ `pma_pw` ⬜ `text_port` ⬜ `username` |
-| `server/replication/database_multibox.twig` | 0/3 |  | ⬜ `db_select[]` ⬜ `link:Select all` ⬜ `link:Unselect all` |
-| `server/replication/primary_add_replica_user.twig` | 0/10 |  | ⬜ `generated_pw` ⬜ `hostname` ⬜ `id:adduser_submit` ⬜ `id:button_generate_password` ⬜ `pma_pw` ⬜ `pma_pw2` ⬜ `pred_hostname` ⬜ `pred_password` ⬜ `pred_username` ⬜ `username` |
-| `server/replication/primary_configuration.twig` | 0/2 |  | ⬜ `db_type` ⬜ `id:goButton` |
-| `server/replication/primary_replication.twig` | 0/3 |  | ⬜ `link:Add replica replication user` ⬜ `link:Show connected replicas` ⬜ `link:Show primary status` |
-| `server/replication/replica_configuration.twig` | 0/11 |  | ⬜ `id:goButton` ⬜ `link:Change or reconfigure primary server` ⬜ `link:Control replica:` ⬜ `link:Error management:` ⬜ `link:Reset replica` ⬜ `link:See replica status table` ⬜ `link:Skip current error` ⬜ `link:Start IO Thread only` ⬜ `link:Start SQL Thread only` ⬜ `primary_connection` ⬜ `sr_replica_skip_error` |
+| `server/replication/change_primary.twig` | 5/5 | ✅ `hostname` ✅ `id:confreplica_submit` ✅ `pma_pw` ✅ `text_port` ✅ `username` |  |
+| `server/replication/database_multibox.twig` | 3/3 | ✅ `db_select[]` ✅ `link:Select all` ✅ `link:Unselect all` |  |
+| `server/replication/primary_add_replica_user.twig` | 10/10 | ✅ `generated_pw` ✅ `hostname` ✅ `id:adduser_submit` ✅ `id:button_generate_password` ✅ `pma_pw` ✅ `pma_pw2` ✅ `pred_hostname` ✅ `pred_password` ✅ `pred_username` ✅ `username` |  |
+| `server/replication/primary_configuration.twig` | 2/2 | ✅ `db_type` ✅ `id:goButton` |  |
+| `server/replication/primary_replication.twig` | 3/3 | ✅ `link:Add replica replication user` ✅ `link:Show connected replicas` ✅ `link:Show primary status` |  |
+| `server/replication/replica_configuration.twig` | 11/11 | ✅ `id:goButton` ✅ `link:Change or reconfigure primary server` ✅ `link:Control replica:` ✅ `link:Error management:` ✅ `link:Reset replica` ✅ `link:See replica status table` ✅ `link:Skip current error` ✅ `link:Start IO Thread only` ✅ `link:Start SQL Thread only` ✅ `primary_connection` ✅ `sr_replica_skip_error` |  |
 | `server/status/advisor/index.twig` | 0/3 |  | ⬜ `button:Close` ⬜ `button:Instructions` ⬜ `button:L61` |
 | `server/status/base.twig` | 0/6 |  | ⬜ `link:Advisor` ⬜ `link:All status variables` ⬜ `link:Monitor` ⬜ `link:Processes` ⬜ `link:Query statistics` ⬜ `link:Server` |
-| `server/status/monitor/index.twig` | 0/41 |  | ⬜ `button:Cancel request` ⬜ `button:Close` ⬜ `button:Import` ⬜ `button:Instructions/Setup` ⬜ `button:Settings` ⬜ `chartTitle` ⬜ `chartType` ⬜ `dateEnd` ⬜ `dateStart` ⬜ `differentialValue` ⬜ `file` ⬜ `id:addChartButton` ⬜ `id:analysingLogsLogDataLoadedModalJumpButton` ⬜ `id:closeModalButton` ⬜ `id:limitTypes` ⬜ `id:logAnalyseModalGeneralLogButton` ⬜ `id:logAnalyseModalSlowLogButton` ⬜ `id:monitorAddNewChartButton` ⬜ `id:monitorDoneRearrangeChartButton` ⬜ `id:monitorExportConfigButton` ⬜ `id:monitorImportConfigImportButton` ⬜ `id:monitorPauseResumeButton` ⬜ `id:monitorRearrangeChartButton` ⬜ `id:monitorResetConfigButton` ⬜ `id:queryAnalyzerModalAnalyseButton` ⬜ `id:removeVariables` ⬜ `id:serverResponseErrorModalReloadButton` ⬜ `id:sqlquery` ⬜ `link:Add this series` ⬜ `link:Clear series` ⬜ `link:KiB` ⬜ `link:MiB` ⬜ `monitorChartColumns` ⬜ `monitorChartRefreshRate` ⬜ `presetCharts` ⬜ `useDivisor` ⬜ `useUnit` ⬜ `valueDivisor` ⬜ `valueUnit` ⬜ `varChartList` ⬜ `variableInput` |
-| `server/status/processes/index.twig` | 0/4 |  | ⬜ `link:Start auto refresh` ⬜ `refreshRate` ⬜ `showExecuting` ⬜ `submit:Refresh` |
-| `server/status/processes/list.twig` | 0/3 |  | ⬜ `link:Descending` ⬜ `link:Kill` ⬜ `link:Truncate shown queries` |
+| `server/status/monitor/index.twig` | 41/41 | ✅ `button:Cancel request` ✅ `button:Close` ✅ `button:Import` ✅ `button:Instructions/Setup` ✅ `button:Settings` ✅ `chartTitle` ✅ `chartType` ✅ `dateEnd` ✅ `dateStart` ✅ `differentialValue` ✅ `file` ✅ `id:addChartButton` ✅ `id:analysingLogsLogDataLoadedModalJumpButton` ✅ `id:closeModalButton` ✅ `id:limitTypes` ✅ `id:logAnalyseModalGeneralLogButton` ✅ `id:logAnalyseModalSlowLogButton` ✅ `id:monitorAddNewChartButton` ✅ `id:monitorDoneRearrangeChartButton` ✅ `id:monitorExportConfigButton` ✅ `id:monitorImportConfigImportButton` ✅ `id:monitorPauseResumeButton` ✅ `id:monitorRearrangeChartButton` ✅ `id:monitorResetConfigButton` ✅ `id:queryAnalyzerModalAnalyseButton` ✅ `id:removeVariables` ✅ `id:serverResponseErrorModalReloadButton` ✅ `id:sqlquery` ✅ `link:Add this series` ✅ `link:Clear series` ✅ `link:KiB` ✅ `link:MiB` ✅ `monitorChartColumns` ✅ `monitorChartRefreshRate` ✅ `presetCharts` ✅ `useDivisor` ✅ `useUnit` ✅ `valueDivisor` ✅ `valueUnit` ✅ `varChartList` ✅ `variableInput` |  |
+| `server/status/processes/index.twig` | 4/4 | ✅ `link:Start auto refresh` ✅ `refreshRate` ✅ `showExecuting` ✅ `submit:Refresh` |  |
+| `server/status/processes/list.twig` | 3/3 | ✅ `link:Descending` ✅ `link:Kill` ✅ `link:Truncate shown queries` |  |
 | `server/status/variables/index.twig` | 0/5 |  | ⬜ `dontFormat` ⬜ `filterAlert` ⬜ `filterCategory` ⬜ `filterText` ⬜ `submit:Refresh` |
 | `server/user_groups/edit_user_groups.twig` | 0/3 |  | ⬜ `id:addUsersForm_checkall` ⬜ `submit:Add user group` ⬜ `userGroup` |
 | `server/user_groups/tab_list.twig` | 0/1 |  | ⬜ `*_*` |
 | `server/user_groups/user_groups.twig` | 0/4 |  | ⬜ `button:Close` ⬜ `button:Delete` ⬜ `id:deleteUserGroupConfirm` ⬜ `link:Add user group` |
-| `server/variables/index.twig` | 0/3 |  | ⬜ `link:Cancel` ⬜ `link:Edit` ⬜ `link:Save` |
+| `server/variables/index.twig` | 3/3 | ✅ `link:Cancel` ✅ `link:Edit` ✅ `link:Save` |  |
 | `user_password.twig` | 0/1 |  | ⬜ `link:Back` |
 
 ## 07 export import — 59/63 (93.7%) covered, 59/63 implemented

@@ -70,6 +70,11 @@ export function createMonitorChart(
           min: o.range.min,
           max: o.range.max,
           ticks: { maxTicksLimit: 5, callback: (v) => clock(Number(v)) },
+          // refreshChartGrid's labels: five ticks spread over the shown span, the last at its end
+          afterBuildTicks: (axis) => {
+            const step = (axis.max - axis.min) / 5
+            axis.ticks = [4, 3, 2, 1, 0].map((i) => ({ value: axis.max - step * i }))
+          },
         },
         y: {
           stacked,

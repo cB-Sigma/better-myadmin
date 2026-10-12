@@ -16,7 +16,7 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | X8 | Metadata | No metadata without pmadb (localStorage only for prefs/favorites) | Additional SQLite fallback for per-user tables | Avoids a wall when no control user | [D11](../architecture/01-tech-stack.md) |
 | X9 | Import | Partial import driven by PHP time limits | Streaming + resumable chunked upload; UI for partial import kept | Node has no execution time limit | [D12](../architecture/01-tech-stack.md) |
 | X10 | Export | Buffered unless `CompressOnFly` | Always streamed | Memory | [D12](../architecture/01-tech-stack.md) |
-| X11 | Status monitor | AJAX polling | SSE stream | Fewer requests, smoother charts; same UI | [Backend](../architecture/04-backend-architecture.md) |
+| X11 | Status monitor | AJAX polling | *Withdrawn*: the monitor polls `/status/monitor/chart` like phpMyAdmin (same `requiredData`, one request per refresh) | — | [Backend](../architecture/04-backend-architecture.md) |
 | X12 | SQL formatting | `phpmyadmin/sql-parser` Formatter | *Withdrawn*: the Formatter is ported exactly (fixture-tested), no difference left | — | [D7](../architecture/01-tech-stack.md) |
 | X13 | Browse | "Show all" refused above threshold | Same refusal and message; confirm to proceed uses virtualized rendering | Capability, not behaviour change | [Frontend](../architecture/03-frontend-architecture.md) |
 | X14 | Query | No cancel | Cancel button issues `KILL QUERY` | Additive | [API](../architecture/05-api-reference.md) |
@@ -65,7 +65,7 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | Q13 | Export | No `allow_recoding` directive, no "Dump TIME columns in UTC" option | Reproduce |
 | Q14 | Import | `UploadSession` progress plugin disabled in selection chain | N/A: we have SSE progress |
 | Q15 | Status | Flush links in `Data::getLinks()` target root path, so flush POST lands on home; no "Flush status" link generated | Fix in ours: links target the flush endpoint; recorded |
-| Q16 | Replication | `replica_sql_running`/`replica_io_running` passed swapped to the template | Fix in ours; recorded |
+| Q16 | Replication | `replica_sql_running`/`replica_io_running` passed swapped to the template | Fixed: each flag is its own thread's state (error boxes, link labels and actions); see Q62 |
 | Q17 | Status | `Key_buffer_fraction` alert key never matches synthetic `Key_buffer_fraction_%` (dead alert) | Fix in ours; recorded |
 | Q18 | Status overview | No flush/refresh links in master | Reproduce |
 | Q19 | Structure | `geomtrycollection` typo in spatial type lists | Fix spelling in ours (MySQL accepts `GEOMETRYCOLLECTION`); recorded |
@@ -111,3 +111,7 @@ Every intentional difference between BetterMyAdmin and phpMyAdmin (reference com
 | Q59 | Relation view | Preview SQL still writes the internal relations (pma__relation) before answering | Reproduce |
 | Q60 | View form | The browser transformations of the underlying columns are meant to be copied to a new view, but `getColumnMapFromSql` reads the columns of `SELECT * FROM (…) AS tmp LIMIT 0`, whose table is `tmp`, so no `pma__column_info` row ever matches (the reads still run on the user's link) | Reproduce |
 | Q61 | View form | After a successful CREATE / ALTER VIEW the dialog's answer is StructureController's page, which needs `table`: from the navigation's "New" (no table) it answers "Missing parameter: table" and the dialog stays open although the view exists | Fix: the success message with the statement; the page form opens the view's Structure |
+| Q62 | Replication | `getHtmlForReplicaConfiguration` reads the IO thread state of a REPLICA-keyword server from `Replica_SQL_Running` (`isset(Replica_IO_Running) && Replica_SQL_Running !== 'No'`) | Fixed with Q16 (tests/parity/server-replication.parity.test.ts records phpMyAdmin's labels) |
+| Q63 | Status monitor | General-log statistics: a logged statement that does not start with a word and a space (a comment, `(`) leaves `$match[1]` unset and `mb_strtolower(null)` throws a TypeError (internal error page) | Not reproduced: counted under the empty statement type |
+| Q64 | Status monitor | monitor.ts posts `limitTypes` / `removeVariables` as the strings `true` / `false`; `(bool) 'false'` is true, so both options are always on | Reproduce (ours posts the same strings and casts them like PHP) |
+| Q65 | Replication | Skipping errors (`sr_replica_skip_error`) sets no message and the change-primary result is a session flash shown on the next render | Reproduce (no message for skipping; the change-primary message comes with the page of the action) |
