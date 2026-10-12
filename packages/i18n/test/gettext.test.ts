@@ -54,9 +54,15 @@ describe('gettext matches phpMyAdmin (motranslator) on .mo files compiled by pol
     expect(en.pgettext('Short month name for May', 'May')).toBe('May')
   })
 
-  it('every shipped catalogue holds exactly the .mo content (keys and translations)', () => {
+  it('the fixture covers every shipped catalogue', () => {
     expect(Object.keys(fx.digests).sort()).toEqual([...shippedLocales].sort())
-    for (const code of shippedLocales) {
+  })
+
+  // one test per catalogue: parsing and compiling all of them is seconds of CPU, which in a single
+  // test outran the default timeout whenever the parallel suite loaded the machine
+  it.each([...shippedLocales])(
+    'the %s catalogue holds exactly the .mo content (keys and translations)',
+    (code) => {
       const text = readFileSync(new URL(`../po/${code}.po`, import.meta.url), 'utf8')
       const c = compileCatalog(text)
       expect(c.pluralForms, code).toMatch(/nplurals=/)
@@ -66,6 +72,6 @@ describe('gettext matches phpMyAdmin (motranslator) on .mo files compiled by pol
       expect(Object.keys(c.messages).length, code).toBe(lines.length)
       const md5 = createHash('md5').update(lines.join('\u0002')).digest('hex')
       expect([lines.length, md5], code).toEqual(fx.digests[code])
-    }
-  })
+    },
+  )
 })
