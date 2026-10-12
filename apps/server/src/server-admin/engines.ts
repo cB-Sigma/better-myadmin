@@ -123,7 +123,7 @@ export async function enginePage(ctx: AdminCtx, engine: string, page: string): P
   const isInnodb = lower === 'innodb' || lower === 'innobase'
   // the engine id of a known row is its name; an unknown (PBMS) keeps 'dummy'
   const engineId = row !== undefined ? engine : 'dummy'
-  const infoPages = isInnodb && support < SUPPORT.YES ? {} : cls.infoPages
+  const infoPages: Record<string, string> = isInnodb && support < SUPPORT.YES ? {} : cls.infoPages
   const message =
     support === SUPPORT.DEFAULT
       ? tr.gettext('%s is the default storage engine on this MySQL server.')
@@ -139,7 +139,7 @@ export async function enginePage(ctx: AdminCtx, engine: string, page: string): P
     title,
     comment,
     docUrl: mysqlDocuUrl(cls.helpPage.replace('{engine}', engineId), '', ctx.versionInt),
-    infoPages: Object.entries(infoPages).map(([id, label]) => ({ id, label: tr.gettext(label) })),
+    infoPages: Object.keys(infoPages).map((id) => ({ id, label: tr.gettext(infoPages[id]!) })),
     page,
     support: sprintf(message, title),
     variables: await variablesStatus(ctx, cls, engineId),

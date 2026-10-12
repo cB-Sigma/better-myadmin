@@ -449,7 +449,8 @@ function QueryAnalyzer({
 
 function Analysis({ result }: { result: MonitorQueryResponse['message'] }) {
   const [shown, setShown] = useState(0)
-  const [chartView, setChartView] = useState(true)
+  // both are shown until a#showNums / a#showChart hides the other one
+  const [view, setView] = useState<'both' | 'nums' | 'chart'>('both')
   const canvas = useRef<HTMLCanvasElement>(null)
   const chart = useRef<Chart | null>(null)
   const profiling = (result.profiling ?? []).map((p) => ({
@@ -489,7 +490,7 @@ function Analysis({ result }: { result: MonitorQueryResponse['message'] }) {
               // biome-ignore lint/suspicious/noArrayIndexKey: EXPLAIN rows are positional
               <Fragment key={i}>
                 {i > 0 && ', '}
-                <Button variant="link" onClick={() => setShown(i)}>
+                <Button variant="link" data-href={`#showExplain-${i}`} onClick={() => setShown(i)}>
                   {i}
                 </Button>
               </Fragment>
@@ -533,15 +534,15 @@ function Analysis({ result }: { result: MonitorQueryResponse['message'] }) {
             {t('Profiling results')} <MySqlDocLink link="general-thread-states" />
           </b>{' '}
           (
-          <Button variant="link" onClick={() => setChartView(false)}>
+          <Button variant="link" data-href="#showNums" onClick={() => setView('nums')}>
             {pgettext('Display format', 'Table')}
           </Button>
           ,{' '}
-          <Button variant="link" onClick={() => setChartView(true)}>
+          <Button variant="link" data-href="#showChart" onClick={() => setView('chart')}>
             {t('Chart')}
           </Button>
           )
-          {!chartView && (
+          {view !== 'chart' && (
             <Table zebra className="queryNums mt-2 w-auto">
               <thead>
                 <tr>
@@ -566,8 +567,8 @@ function Analysis({ result }: { result: MonitorQueryResponse['message'] }) {
               </tbody>
             </Table>
           )}
-          <div className={chartView ? 'h-[500px]' : 'hidden'}>
-            <canvas id="queryProfilingCanvas" role="img" ref={canvas} />
+          <div className="h-[500px]">
+            <canvas id="queryProfilingCanvas" role="img" ref={canvas} hidden={view === 'nums'} />
           </div>
         </div>
       )}

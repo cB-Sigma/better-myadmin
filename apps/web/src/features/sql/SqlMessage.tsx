@@ -58,12 +58,37 @@ export function SqlMessage({ st, env, message }: { st: StatementResult; env: Car
         role={st.message.type === 'error' ? 'alert' : 'status'}
         data-message-type={st.message.type}
       />
-      <SqlCardBody card={card} st={st} env={env} />
+      <SqlCardBody card={card} sig={st.sig} env={env} />
     </div>
   )
 }
 
-function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; env: CardEnv }) {
+/**
+ * The same card for a message a page builds itself (Generator::getMessage outside /sql, e.g. the
+ * binary log page): message line, SQL and the links, acting through `env`.
+ */
+export function QueryCard(props: {
+  type: 'success' | 'notice' | 'error'
+  text: string
+  card: SqlCard
+  sig: string
+  env: CardEnv
+}) {
+  return (
+    <div className="result_query mb-3 overflow-hidden rounded border border-border">
+      <MessageLine
+        type={props.type}
+        text={props.text}
+        className="rounded-t border-x-0 border-t-0"
+        role={props.type === 'error' ? 'alert' : 'status'}
+        data-message-type={props.type}
+      />
+      <SqlCardBody card={props.card} sig={props.sig} env={props.env} />
+    </div>
+  )
+}
+
+function SqlCardBody({ card, sig, env }: { card: SqlCard; sig: string; env: CardEnv }) {
   const { open, setOpen } = useContext(InlineEditContext)
   const key = useRef(`${Math.random()}`).current
   const editing = open === key
@@ -94,7 +119,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
                   db: card.db,
                   table: card.table,
                   profiling: e.target.checked,
-                  sig: st.sig,
+                  sig,
                 })
               }
             />
@@ -162,9 +187,7 @@ function SqlCardBody({ card, st, env }: { card: SqlCard; st: StatementResult; en
           <button
             type="button"
             className={link}
-            onClick={() =>
-              env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, sig: st.sig })
-            }
+            onClick={() => env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, sig })}
           >
             {t('Refresh')}
           </button>

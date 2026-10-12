@@ -3,6 +3,7 @@
  *
  * pma: src/Charsets/Collation.php::buildDescription and helpers
  */
+import { NC_ } from '@bettermyadmin/i18n'
 
 /** The gettext functions the descriptions need (the request translator). */
 export interface CollationTranslator {
@@ -13,50 +14,50 @@ export interface CollationTranslator {
 const identity: CollationTranslator = { gettext: (s) => s, pgettext: (_c, s) => s }
 
 const LEVEL0: Record<string, string> = {
-  binary: 'Binary',
-  utf8mb4: 'Unicode',
-  ucs2: 'Unicode',
-  utf8: 'Unicode',
-  utf8mb3: 'Unicode',
-  utf16: 'Unicode',
-  utf16le: 'Unicode',
-  utf16be: 'Unicode',
-  utf32: 'Unicode',
-  ascii: 'West European',
-  cp850: 'West European',
-  dec8: 'West European',
-  hp8: 'West European',
-  latin1: 'West European',
-  macroman: 'West European',
-  cp1250: 'Central European',
-  cp852: 'Central European',
-  latin2: 'Central European',
-  macce: 'Central European',
-  cp866: 'Russian',
-  koi8r: 'Russian',
-  gb2312: 'Simplified Chinese',
-  gbk: 'Simplified Chinese',
-  big5: 'Traditional Chinese',
-  gb18030: 'Chinese',
-  sjis: 'Japanese',
-  ujis: 'Japanese',
-  cp932: 'Japanese',
-  eucjpms: 'Japanese',
-  cp1257: 'Baltic',
-  latin7: 'Baltic',
-  armscii8: 'Armenian',
-  armscii: 'Armenian',
-  cp1251: 'Cyrillic',
-  cp1256: 'Arabic',
-  euckr: 'Korean',
-  hebrew: 'Hebrew',
-  geostd8: 'Georgian',
-  greek: 'Greek',
-  keybcs2: 'Czech-Slovak',
-  koi8u: 'Ukrainian',
-  latin5: 'Turkish',
-  swe7: 'Swedish',
-  tis620: 'Thai',
+  binary: NC_('Collation', 'Binary'),
+  utf8mb4: NC_('Collation', 'Unicode'),
+  ucs2: NC_('Collation', 'Unicode'),
+  utf8: NC_('Collation', 'Unicode'),
+  utf8mb3: NC_('Collation', 'Unicode'),
+  utf16: NC_('Collation', 'Unicode'),
+  utf16le: NC_('Collation', 'Unicode'),
+  utf16be: NC_('Collation', 'Unicode'),
+  utf32: NC_('Collation', 'Unicode'),
+  ascii: NC_('Collation', 'West European'),
+  cp850: NC_('Collation', 'West European'),
+  dec8: NC_('Collation', 'West European'),
+  hp8: NC_('Collation', 'West European'),
+  latin1: NC_('Collation', 'West European'),
+  macroman: NC_('Collation', 'West European'),
+  cp1250: NC_('Collation', 'Central European'),
+  cp852: NC_('Collation', 'Central European'),
+  latin2: NC_('Collation', 'Central European'),
+  macce: NC_('Collation', 'Central European'),
+  cp866: NC_('Collation', 'Russian'),
+  koi8r: NC_('Collation', 'Russian'),
+  gb2312: NC_('Collation', 'Simplified Chinese'),
+  gbk: NC_('Collation', 'Simplified Chinese'),
+  big5: NC_('Collation', 'Traditional Chinese'),
+  gb18030: NC_('Collation', 'Chinese'),
+  sjis: NC_('Collation', 'Japanese'),
+  ujis: NC_('Collation', 'Japanese'),
+  cp932: NC_('Collation', 'Japanese'),
+  eucjpms: NC_('Collation', 'Japanese'),
+  cp1257: NC_('Collation', 'Baltic'),
+  latin7: NC_('Collation', 'Baltic'),
+  armscii8: NC_('Collation', 'Armenian'),
+  armscii: NC_('Collation', 'Armenian'),
+  cp1251: NC_('Collation', 'Cyrillic'),
+  cp1256: NC_('Collation', 'Arabic'),
+  euckr: NC_('Collation', 'Korean'),
+  hebrew: NC_('Collation', 'Hebrew'),
+  geostd8: NC_('Collation', 'Georgian'),
+  greek: NC_('Collation', 'Greek'),
+  keybcs2: NC_('Collation', 'Czech-Slovak'),
+  koi8u: NC_('Collation', 'Ukrainian'),
+  latin5: NC_('Collation', 'Turkish'),
+  swe7: NC_('Collation', 'Swedish'),
+  tis620: NC_('Collation', 'Thai'),
 }
 const UNICODE_CHARSETS = new Set([
   'utf8mb4',
@@ -73,62 +74,62 @@ const UNICODE_CHARSETS = new Set([
 /** level 1 tokens → name; `null`: the name is left as is ("general") */
 const LEVEL1: Record<string, string | null> = {
   general: null,
-  bulgarian: 'Bulgarian',
-  bg: 'Bulgarian',
-  croatian: 'Croatian',
-  hr: 'Croatian',
-  czech: 'Czech',
-  cs: 'Czech',
-  danish: 'Danish',
-  da: 'Danish',
-  english: 'English',
-  en: 'English',
-  esperanto: 'Esperanto',
-  eo: 'Esperanto',
-  estonian: 'Estonian',
-  et: 'Estonian',
-  german1: 'German (dictionary order)',
-  german2: 'German (phone book order)',
-  hungarian: 'Hungarian',
-  hu: 'Hungarian',
-  icelandic: 'Icelandic',
-  is: 'Icelandic',
-  japanese: 'Japanese',
-  ja: 'Japanese',
-  la: 'Classical Latin',
-  latvian: 'Latvian',
-  lv: 'Latvian',
-  lithuanian: 'Lithuanian',
-  lt: 'Lithuanian',
-  korean: 'Korean',
-  ko: 'Korean',
-  myanmar: 'Burmese',
-  my: 'Burmese',
-  persian: 'Persian',
-  polish: 'Polish',
-  pl: 'Polish',
-  roman: 'West European',
-  romanian: 'Romanian',
-  ro: 'Romanian',
-  ru: 'Russian',
-  si: 'Sinhalese',
-  sinhala: 'Sinhalese',
-  slovak: 'Slovak',
-  sk: 'Slovak',
-  slovenian: 'Slovenian',
-  sl: 'Slovenian',
-  spanish: 'Spanish (modern)',
-  spanish2: 'Spanish (traditional)',
-  swedish: 'Swedish',
-  sv: 'Swedish',
-  thai: 'Thai',
-  th: 'Thai',
-  turkish: 'Turkish',
-  tr: 'Turkish',
-  ukrainian: 'Ukrainian',
-  uk: 'Ukrainian',
-  vietnamese: 'Vietnamese',
-  vi: 'Vietnamese',
+  bulgarian: NC_('Collation', 'Bulgarian'),
+  bg: NC_('Collation', 'Bulgarian'),
+  croatian: NC_('Collation', 'Croatian'),
+  hr: NC_('Collation', 'Croatian'),
+  czech: NC_('Collation', 'Czech'),
+  cs: NC_('Collation', 'Czech'),
+  danish: NC_('Collation', 'Danish'),
+  da: NC_('Collation', 'Danish'),
+  english: NC_('Collation', 'English'),
+  en: NC_('Collation', 'English'),
+  esperanto: NC_('Collation', 'Esperanto'),
+  eo: NC_('Collation', 'Esperanto'),
+  estonian: NC_('Collation', 'Estonian'),
+  et: NC_('Collation', 'Estonian'),
+  german1: NC_('Collation', 'German (dictionary order)'),
+  german2: NC_('Collation', 'German (phone book order)'),
+  hungarian: NC_('Collation', 'Hungarian'),
+  hu: NC_('Collation', 'Hungarian'),
+  icelandic: NC_('Collation', 'Icelandic'),
+  is: NC_('Collation', 'Icelandic'),
+  japanese: NC_('Collation', 'Japanese'),
+  ja: NC_('Collation', 'Japanese'),
+  la: NC_('Collation', 'Classical Latin'),
+  latvian: NC_('Collation', 'Latvian'),
+  lv: NC_('Collation', 'Latvian'),
+  lithuanian: NC_('Collation', 'Lithuanian'),
+  lt: NC_('Collation', 'Lithuanian'),
+  korean: NC_('Collation', 'Korean'),
+  ko: NC_('Collation', 'Korean'),
+  myanmar: NC_('Collation', 'Burmese'),
+  my: NC_('Collation', 'Burmese'),
+  persian: NC_('Collation', 'Persian'),
+  polish: NC_('Collation', 'Polish'),
+  pl: NC_('Collation', 'Polish'),
+  roman: NC_('Collation', 'West European'),
+  romanian: NC_('Collation', 'Romanian'),
+  ro: NC_('Collation', 'Romanian'),
+  ru: NC_('Collation', 'Russian'),
+  si: NC_('Collation', 'Sinhalese'),
+  sinhala: NC_('Collation', 'Sinhalese'),
+  slovak: NC_('Collation', 'Slovak'),
+  sk: NC_('Collation', 'Slovak'),
+  slovenian: NC_('Collation', 'Slovenian'),
+  sl: NC_('Collation', 'Slovenian'),
+  spanish: NC_('Collation', 'Spanish (modern)'),
+  spanish2: NC_('Collation', 'Spanish (traditional)'),
+  swedish: NC_('Collation', 'Swedish'),
+  sv: NC_('Collation', 'Swedish'),
+  thai: NC_('Collation', 'Thai'),
+  th: NC_('Collation', 'Thai'),
+  turkish: NC_('Collation', 'Turkish'),
+  tr: NC_('Collation', 'Turkish'),
+  ukrainian: NC_('Collation', 'Ukrainian'),
+  uk: NC_('Collation', 'Ukrainian'),
+  vietnamese: NC_('Collation', 'Vietnamese'),
+  vi: NC_('Collation', 'Vietnamese'),
 }
 
 const VARIANTS: Record<string, string> = {
@@ -139,15 +140,15 @@ const VARIANTS: Record<string, string> = {
 }
 
 const SUFFIXES: Record<string, string> = {
-  ci: 'case-insensitive',
-  cs: 'case-sensitive',
-  ai: 'accent-insensitive',
-  as: 'accent-sensitive',
-  ks: 'kana-sensitive',
-  w2: 'multi-level',
-  l2: 'multi-level',
-  bin: 'binary',
-  nopad: 'no-pad',
+  ci: NC_('Collation variant', 'case-insensitive'),
+  cs: NC_('Collation variant', 'case-sensitive'),
+  ai: NC_('Collation variant', 'accent-insensitive'),
+  as: NC_('Collation variant', 'accent-sensitive'),
+  ks: NC_('Collation variant', 'kana-sensitive'),
+  w2: NC_('Collation variant', 'multi-level'),
+  l2: NC_('Collation variant', 'multi-level'),
+  bin: NC_('Collation variant', 'binary'),
+  nopad: NC_('Collation variant', 'no-pad'),
 }
 
 /**
@@ -170,7 +171,7 @@ export function collationDescription(collation: string, tr: CollationTranslator 
       if (part === 'utf8mb4') variant = 'UCA 4.0.0'
       const n = Object.hasOwn(LEVEL0, part) ? LEVEL0[part] : undefined
       if (n === undefined) {
-        name = c('Unknown')
+        name = tr.pgettext('Collation', 'Unknown')
         unknown = true
       } else {
         name = c(n)
@@ -183,13 +184,13 @@ export function collationDescription(collation: string, tr: CollationTranslator 
       // getNameForLevel1
       let found = true
       if (part === 'chinese' || part === 'cn' || part === 'zh') {
-        if (unicode) name = c('Chinese')
+        if (unicode) name = tr.pgettext('Collation', 'Chinese')
       } else if (part === 'german' || part === 'de') {
         level = 2
       } else if (part === 'es') {
         level = 3
       } else if (part === 'unicode') {
-        if (unknown) name = c('Unicode')
+        if (unknown) name = tr.pgettext('Collation', 'Unicode')
       } else if (Object.hasOwn(LEVEL1, part)) {
         const n = LEVEL1[part]
         if (n !== null && n !== undefined) name = c(n)
@@ -201,18 +202,18 @@ export function collationDescription(collation: string, tr: CollationTranslator 
     if (level === 2) {
       level = 4
       if (part === 'pb') {
-        name = c('German (phone book order)')
+        name = tr.pgettext('Collation', 'German (phone book order)')
         continue
       }
-      name = c('German (dictionary order)')
+      name = tr.pgettext('Collation', 'German (dictionary order)')
     }
     if (level === 3) {
       level = 4
       if (part === 'trad') {
-        name = c('Spanish (traditional)')
+        name = tr.pgettext('Collation', 'Spanish (traditional)')
         continue
       }
-      name = c('Spanish (modern)')
+      name = tr.pgettext('Collation', 'Spanish (modern)')
     }
     if (level === 4) {
       level = 5

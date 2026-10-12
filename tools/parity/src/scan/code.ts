@@ -5,10 +5,17 @@
  *   `server.DisableIS`, `cfg.Servers[i].host`), destructuring (`const { MaxRows } = cfg`), and
  *   string literals equal to a directive path (`'Export/csv_columns'`);
  * - translated msgids: the same calls as `pnpm i18n:parity` (packages/i18n/scripts/parity.ts):
- *   t/__/gettext/_gettext, ngettext/_ngettext, pgettext/_pgettext, npgettext/_npgettext, `<Trans id>`,
- *   plus non-literal arguments resolved through msgid constants: `X.key` where
- *   `const X = { key: '…' }`, `X` where `const X = '…'`, and `t(obj.prop)` on a value of unknown
- *   origin → every literal `prop: '…'` in the file and the files it imports (e.g. tab tables).
+ *   t/tProduct/__/gettext/_gettext, ngettext/_ngettext, pgettext/_pgettext, npgettext/_npgettext,
+ *   `<Trans id>`, plus non-literal arguments resolved through msgid constants: `X.key` where
+ *   `const X = { key: '…' }`, `X` where `const X = '…'`, `t(obj.prop)` on a value of unknown
+ *   origin → every literal `prop: '…'` in the file and the files it imports (e.g. tab tables),
+ *   and both branches of `t(cond ? 'a' : 'b')`;
+ * - msgid markers `N_('…')` / `NC_('ctx', '…')` (gettext_noop, packages/i18n): a msgid kept untranslated
+ *   in a table and translated where it is shown;
+ * - JSON message tables (data generated from phpMyAdmin): a JSON file imported by the file, directly or
+ *   re-exported by a package entry it imports (`@bettermyadmin/kbs` → `export { default as x } from
+ *   './generated/x.json'`), contributes its string properties to `t(obj.prop)` and its string maps
+ *   (`"descriptions": { "Uptime": "…" }`) to `t(descriptions[name])` / `t(x.descriptions[name])`.
  */
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
@@ -157,15 +164,98 @@ export function directiveUses(path: string, idx: ReturnType<typeof collectChains
 // Msgids
 // ---------------------------------------------------------------------------
 
-const SINGULAR = new Set(['t', '__', 'gettext', '_gettext'])
+const SINGULAR = new Set(['t', 'tProduct', '__', 'gettext', '_gettext', 'N_'])
 const PLURAL = new Set(['ngettext', '_ngettext'])
-const CONTEXT = new Set(['pgettext', '_pgettext'])
+const CONTEXT = new Set(['pgettext', '_pgettext', 'NC_'])
 const CONTEXT_PLURAL = new Set(['npgettext', '_npgettext'])
 
 export interface MsgidUse extends Use {
   key: string
   /** how it was found: literal call, constant, property table */
-  via: 'literal' | 'constant' | 'property'
+  via: 'literal' | 'constant' | 'property' | 'json'
+}
+
+/** String properties and string maps of a JSON message table. */
+interface JsonTable {
+  props: Map<string, string[]>
+  maps: Map<string, string[]>
+}
+
+function jsonTable(abs: string): JsonTable {
+  const t: JsonTable = { props: new Map(), maps: new Map() }
+  const push = (m: Map<string, string[]>, k: string, v: string) => {
+    const list = m.get(k)
+    if (list === undefined) m.set(k, [v])
+    else list.push(v)
+  }
+  const visit = (v: unknown) => {
+    if (Array.isArray(v)) for (const x of v) visit(x)
+    else if (v !== null && typeof v === 'object') {
+      for (const [k, x] of Object.entries(v)) {
+        if (typeof x === 'string') push(t.props, k, x)
+        else if (x !== null && typeof x === 'object' && !Array.isArray(x)) {
+          const values = Object.values(x)
+          if (values.length > 0 && values.every((y) => typeof y === 'string'))
+            for (const y of values) push(t.maps, k, y as string)
+        }
+        visit(x)
+      }
+    }
+  }
+  try {
+    visit(JSON.parse(readFileSync(abs, 'utf8')))
+  } catch {
+    // not JSON: no table
+  }
+  return t
+}
+
+/** `@bettermyadmin/<name>[/sub]` → the entry file of that workspace package (its `exports`). */
+function workspaceEntry(repo: string, spec: string): string | null {
+  const m = /^(@bettermyadmin\/[^/]+)(\/.*)?$/.exec(spec)
+  if (m === null) return null
+  for (const root of ['packages', 'apps']) {
+    const dir = join(repo, root, m[1]!.slice('@bettermyadmin/'.length))
+    const pkgFile = join(dir, 'package.json')
+    if (!existsSync(pkgFile)) continue
+    const pkg = JSON.parse(readFileSync(pkgFile, 'utf8')) as { name?: string; exports?: unknown }
+    if (pkg.name !== m[1]) continue
+    const sub = `.${m[2] ?? ''}`
+    const exp = pkg.exports
+    const target =
+      typeof exp === 'string' && sub === '.'
+        ? exp
+        : exp !== null && typeof exp === 'object'
+          ? (exp as Record<string, unknown>)[sub]
+          : undefined
+    if (typeof target === 'string') return resolve(dir, target)
+  }
+  return null
+}
+
+/** The JSON files a module imports, and those that the package entries it imports re-export. */
+function jsonImports(sf: ts.SourceFile, file: string, repo: string): string[] {
+  const out: string[] = []
+  const specs = (s: ts.SourceFile, reexportsOnly: boolean) =>
+    s.statements.flatMap((st) =>
+      (ts.isImportDeclaration(st) && !reexportsOnly) || ts.isExportDeclaration(st)
+        ? st.moduleSpecifier !== undefined && ts.isStringLiteral(st.moduleSpecifier)
+          ? [st.moduleSpecifier.text]
+          : []
+        : [],
+    )
+  for (const spec of specs(sf, false)) {
+    if (spec.startsWith('.')) {
+      if (spec.endsWith('.json')) out.push(resolve(dirname(file), spec))
+      continue
+    }
+    const entry = workspaceEntry(repo, spec)
+    if (entry === null || !existsSync(entry)) continue
+    const esf = ts.createSourceFile(entry, readFileSync(entry, 'utf8'), ts.ScriptTarget.Latest, true)
+    for (const r of specs(esf, true))
+      if (r.startsWith('.') && r.endsWith('.json')) out.push(resolve(dirname(entry), r))
+  }
+  return out.filter((f) => existsSync(f))
 }
 
 function importsOf(sf: ts.SourceFile, file: string, known: Set<string>): string[] {
@@ -228,16 +318,42 @@ export function scanMsgids(files: SourceFile[], repo = REPO): MsgidUse[] {
     visit(sf)
   }
 
+  const tables = new Map<string, JsonTable>()
+  const tableOf = (abs: string) => {
+    let t = tables.get(abs)
+    if (t === undefined) {
+      t = jsonTable(abs)
+      tables.set(abs, t)
+    }
+    return t
+  }
   const out: MsgidUse[] = []
   for (const { file, sf } of files) {
     const abs = join(repo, file)
     const imported = importsOf(sf, abs, absFiles).map((a) => rel(repo, a))
+    const json = jsonImports(sf, abs, repo).map(tableOf)
     const add = (node: ts.Node, key: string, via: MsgidUse['via']) =>
       out.push({ file, line: sf.getLineAndCharacterOfPosition(node.getStart()).line + 1, key, via })
     const resolveArg = (n: ts.Expression | undefined): { values: string[]; via: MsgidUse['via'] } | null => {
       if (n === undefined) return null
       const l = lit(n)
       if (l !== null) return { values: [l], via: 'literal' }
+      let e = n
+      while (ts.isNonNullExpression(e) || ts.isParenthesizedExpression(e) || ts.isAsExpression(e))
+        e = e.expression
+      if (ts.isConditionalExpression(e)) {
+        // `t(lock ? 'a' : 'b')`: both msgids
+        const a = resolveArg(e.whenTrue)
+        const b = resolveArg(e.whenFalse)
+        if (a === null || b === null) return null
+        return { values: [...a.values, ...b.values], via: a.via === 'literal' ? b.via : a.via }
+      }
+      if (ts.isElementAccessExpression(e) && lit(e.argumentExpression) === null) {
+        // a string map of a JSON table: `descriptions[name]`, `x.descriptions[name]`
+        const o = chain(e.expression).at(-1)
+        const values = o === undefined ? [] : json.flatMap((t) => t.maps.get(o) ?? [])
+        return values.length > 0 ? { values, via: 'json' } : null
+      }
       const c = chain(n)
       if (c.includes('?') || c.includes('()') || c.includes('[]')) return null
       const k = c.join('.')
@@ -246,7 +362,9 @@ export function scanMsgids(files: SourceFile[], repo = REPO): MsgidUse[] {
       if (c.length >= 2) {
         const prop = c.at(-1)!
         const values = [file, ...imported].flatMap((f) => propLits.get(f)?.get(prop) ?? [])
-        if (values.length > 0) return { values, via: 'property' }
+        const fromJson = json.flatMap((t) => t.props.get(prop) ?? [])
+        if (values.length > 0) return { values: [...values, ...fromJson], via: 'property' }
+        if (fromJson.length > 0) return { values: fromJson, via: 'json' }
       }
       return null
     }
