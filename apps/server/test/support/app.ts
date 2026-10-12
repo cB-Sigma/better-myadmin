@@ -55,9 +55,12 @@ export function testApp(cfg = testConfig()) {
       const [k, v] = kv!.split('=')
       if (k !== undefined && v !== undefined) jar.set(k, v)
     }
-    const json = (await res.json()) as Record<string, unknown>
+    // pages (auth/page-gate.ts) answer with HTML
+    const isJson = (res.headers.get('content-type') ?? '').includes('json')
+    const text = isJson ? '' : await res.text()
+    const json = (isJson ? await res.json() : {}) as Record<string, unknown>
     if (typeof json.csrfToken === 'string') token = json.csrfToken
-    return { status: res.status, json, res }
+    return { status: res.status, json, res, text }
   }
   async function login(user = MYSQL.user, password = MYSQL.password) {
     await req('GET', '/api/auth/state')

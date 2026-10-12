@@ -17,6 +17,7 @@ import { type FormEvent, type ReactNode, useMemo, useRef, useState } from 'react
 import { t } from '../../lib/i18n'
 import {
   type FormValues,
+  allowId,
   fieldsOf,
   initialValues,
   isDefault,
@@ -32,7 +33,12 @@ import {
  * `#configInlineParamsData`, the navigation settings' one: a page settings form other than Navi
  * gets no default marking, no restore links and no client validation.
  */
-export function useConfigForm(formSet: PrefsFormSet, inert = false) {
+export function useConfigForm(
+  formSet: PrefsFormSet,
+  inert = false,
+  /** after a committed change (the setup script's AJAX validators) */
+  onChange?: (id: string, values: FormValues) => void,
+) {
   const [values, setValues] = useState<FormValues>(() => initialValues(formSet))
   // client errors by field id; a field without an entry shows the server's inline errors
   const [errors, setErrors] = useState<Record<string, string[]>>({})
@@ -49,7 +55,10 @@ export function useConfigForm(formSet: PrefsFormSet, inert = false) {
       setValues((s) => ({ ...s, [id]: v }))
       const f = byId.get(id)
       if (f !== undefined && !inert) setErrors((e) => ({ ...e, [id]: validateField(f, v) }))
+      onChange?.(id, { ...values, [id]: v })
     },
+    /** window.Config.displayErrors: errors by field id or form name (AJAX validation) */
+    displayErrors: (e: Record<string, string[]>) => setErrors((cur) => ({ ...cur, ...e })),
     /** the Reset button: setDisplayError (its `closest('fieldset')` finds no fields to reset) */
     revalidate: () => {
       if (!inert) setErrors(validateAll(formSet, values))
@@ -78,9 +87,12 @@ export function ConfigForm({
   onSubmit,
   tab,
   onTab,
+  isSetup = false,
 }: {
   state: ConfigFormState
   showButtons: boolean
+  /** the setup script: a third column with the "Allow users to customize" checkboxes */
+  isSetup?: boolean
   onSubmit: (posted: Record<string, string>) => void
   /** the active form (`tab_hash`) */
   tab?: string
@@ -142,15 +154,19 @@ export function ConfigForm({
               </h5>
               {form.desc !== '' && <SafeHtml html={form.desc} as="h6" className="mb-2 text-fg-muted" />}
               <fieldset className="optbox">
-                {/* pmahomme: `.config-form legend { display: none; }` */}
-                <legend className="hidden">
+                {/* pmahomme: `.config-form legend { display: none; }`; the setup styles show it */}
+                <legend
+                  className={
+                    isSetup ? 'mb-2 rounded border border-border px-2 py-0.5 font-semibold' : 'hidden'
+                  }
+                >
                   <SafeHtml html={form.title} as="span" />
                 </legend>
-                {form.errors.length > 0 && (
+                {(state.errors[form.name] ?? form.errors).length > 0 && (
                   // the form error list (`dl.errors`, window.Config.displayErrors)
                   <Alert variant="error" className="mb-3">
                     <dl className="errors">
-                      {form.errors.map((e) => (
+                      {(state.errors[form.name] ?? form.errors).map((e) => (
                         <SafeHtml key={e} html={e} as="dd" />
                       ))}
                     </dl>
@@ -165,7 +181,7 @@ export function ConfigForm({
                           className={`group-header group-header-${item.group}`}
                         >
                           <th
-                            colSpan={2}
+                            colSpan={isSetup ? 3 : 2}
                             className={cn(
                               'border-t border-border bg-bg-subtle px-2 py-1 text-left',
                               pad(`group-header-${item.group}`),
@@ -175,7 +191,7 @@ export function ConfigForm({
                           </th>
                         </tr>
                       ) : (
-                        <FieldRow key={item.field.id} field={item.field} state={state} />
+                        <FieldRow key={item.field.id} field={item.field} state={state} isSetup={isSetup} />
                       ),
                     )}
                   </tbody>
@@ -190,7 +206,11 @@ export function ConfigForm({
 }
 
 /** pma: resources/templates/config/form_display/input.twig */
-function FieldRow({ field, state }: { field: PrefsField; state: ConfigFormState }) {
+function FieldRow({
+  field,
+  state,
+  isSetup,
+}: { field: PrefsField; state: ConfigFormState; isSetup: boolean }) {
   const value = state.values[field.id] ?? ''
   const custom = !state.inert && !isDefault(field, value)
   const errors = state.errors[field.id] ?? field.errors
@@ -309,7 +329,8 @@ function FieldRow({ field, state }: { field: PrefsField; state: ConfigFormState 
       </th>
       <td className="border-t border-border py-1 align-top">
         {control}
-        {field.setvalue !== undefined && (
+        {/* the setup pages never run config.ts' setupRestoreField: both links stay hidden */}
+        {field.setvalue !== undefined && !isSetup && (
           <a
             className="set-value ms-1 inline-block opacity-25 hover:opacity-100"
             href={`#${field.id}=${field.setvalue}`}
@@ -322,17 +343,19 @@ function FieldRow({ field, state }: { field: PrefsField; state: ConfigFormState 
             <PmaIcon name="b_edit" alt={t('Set value: %s', field.setvalue)} />
           </a>
         )}
-        <a
-          className="restore-default ms-1 inline-block opacity-25 hover:opacity-100"
-          href={`#${field.id}`}
-          title={restoreTitle}
-          onClick={(e) => {
-            e.preventDefault()
-            state.change(field.id, restoredValue(field))
-          }}
-        >
-          {custom && <PmaIcon name="s_reload" alt={restoreTitle} />}
-        </a>
+        {!isSetup && (
+          <a
+            className="restore-default ms-1 inline-block opacity-25 hover:opacity-100"
+            href={`#${field.id}`}
+            title={restoreTitle}
+            onClick={(e) => {
+              e.preventDefault()
+              state.change(field.id, restoredValue(field))
+            }}
+          >
+            {custom && <PmaIcon name="s_reload" alt={restoreTitle} />}
+          </a>
+        )}
         {hasErrors && (
           <dl className="inline_errors my-1 text-xs text-error">
             {errors.map((e) => (
@@ -341,6 +364,22 @@ function FieldRow({ field, state }: { field: PrefsField; state: ConfigFormState 
           </dl>
         )}
       </td>
+      {isSetup &&
+        (field.userprefsAllow !== undefined ? (
+          <td
+            className="userprefs-allow w-8 border-t border-border py-1 text-center align-top"
+            title={t('Allow users to customize this value')}
+          >
+            <Checkbox
+              name={allowId(field)}
+              aria-label={t('Allow users to customize this value')}
+              checked={state.values[allowId(field)] === true}
+              onCheckedChange={(c) => state.set(allowId(field), c === true)}
+            />
+          </td>
+        ) : (
+          <td className="border-t border-border">&nbsp;</td>
+        ))}
     </tr>
   )
 }

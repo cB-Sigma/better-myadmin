@@ -16,14 +16,14 @@ BetterMyAdmin is a tool that, by design, executes arbitrary SQL as whatever user
 
 - Plugins mirror `auth_type`: `cookie`, `config`, `http`, `signon` ([tech stack D10](01-tech-stack.md#d10-auth-model-mirrors-phpmyadmins-auth_type-options)).
 - **Credentials at rest**: encrypted (AES-256-GCM, key via HKDF from `blowfish_secret`) in the server-side session store only. The cookie is an opaque session id. phpMyAdmin encrypts the password into the cookie itself; we moved it server-side because a leaked cookie then yields nothing without the server's store.
-- **Brute force**: login attempts are rate-limited per (IP, username) with exponential backoff (phpMyAdmin relies on `CaptchaLogin*`; we support the same reCAPTCHA v2/v3/hCaptcha/Turnstile directives *and* add the limiter, on by default, directive `LoginRateLimit`).
+- **Brute force**: login attempts are rate-limited per (IP, username): 5 failures within 900 s lock the pair out for 300 s (configurable) (phpMyAdmin relies on `CaptchaLogin*`; we support the same reCAPTCHA v2/v3/hCaptcha/Turnstile directives *and* add the limiter, on by default, directive `LoginRateLimit`).
 - `AllowRoot` (default true), `AllowNoPassword` (default false), `AllowDeny` with `order` (`deny,allow` / `allow,deny` / `explicit`) and the rule syntax (`allow|deny <user> from <ip|cidr|localhost|localnetA|...|%>`) are enforced after successful MySQL auth exactly as `IpAllowDeny` does, with the same error texts.
 - `AllowArbitraryServer` off by default; when on, `ArbitraryServerRegexp` restricts hosts and the connection is still made only with the submitted credentials. The arbitrary host never reaches the pmadb control connection.
 - `TrustedProxies` for `X-Forwarded-For` evaluation in allow/deny rules, same semantics.
 - Two-factor: TOTP (RFC 6238, `otpauth://` QR), WebAuthn (resident or roaming keys, same `webauthn` library semantics for challenge storage), and `simple`. Backend and secrets stored in `pmadb.userconfig` under `2fa` exactly like phpMyAdmin so they interoperate.
 - Session expiry: sliding `LoginCookieValidity`, hard `LoginCookieStore`; expiry message and `LoginCookieRecall`. Logout invalidates server-side immediately.
-- `http` auth: `WWW-Authenticate: Basic realm="<auth_http_realm>"`; credentials are used for the connection and then held in the (encrypted) session like cookie auth, not re-sent per request.
-- `signon`: `SignonURL` redirect, session hand-off via `SignonSession` (shared session store key) or `SignonScript` (an HTTP hook returning credentials over a signed request). `LogoutURL` honoured.
+- `http` auth: `WWW-Authenticate: Basic realm="<auth_http_realm>"` (default `BetterMyAdmin <host>`); the Basic credentials are read when a page loads, used for the connection and then held in the (encrypted) session like cookie auth (X45); logout goes to `/?old_usr=<user>`, which refuses the same user once.
+- `signon`: `SignonURL` redirect; the hand-off is a cookie named `SignonSession` holding phpMyAdmin's `PMA_single_signon_*` keys, AES-GCM encrypted with a key derived from `blowfish_secret` (`encodeSignonSession`, `apps/server/examples/signon.ts`), or `SignonScript`, a JS/TS module exporting `getLoginCredentials(user)` (`apps/server/examples/signon-script.ts`) (X43). Login errors are written back into the cookie (`PMA_single_signon_error_message`). `SignonCookieParams` and `LogoutURL` honoured.
 
 ## CSRF and request integrity
 

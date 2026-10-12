@@ -8,14 +8,19 @@ import { fieldValidators, requestString, validate } from './validator.ts'
 
 export interface FormDisplayContext {
   tr: Gettext
-  /** Config::$baseSettings (no user preferences), `Servers` keyed from 1 */
-  base: Record<string, unknown>
+  /** Config::$baseSettings (no user preferences), `Servers` keyed from 1; null in the setup script */
+  base: Record<string, unknown> | null
   /** UserFormList::getFields() */
   userprefsKeys: ReadonlySet<string>
   /** $cfg['UserprefsDisallow'] */
   disallow: ReadonlySet<string>
   /** $cfg['AvailableCharsets'] */
   charsets: readonly string[]
+  /**
+   * FormDisplay::registerForm's server id (the setup script's Servers form): `Servers/1/…` fields
+   * are read and posted as `Servers/<id>/…`; 0 is a new server, saved as the next index.
+   */
+  serverId?: number | null
 }
 
 /** A posted form: browser-style strings, `string[]` for multi-valued names. */
@@ -153,21 +158,45 @@ export class FormDisplay {
     return FORM_FIELDS[path] ?? { type: 'string' }
   }
 
-  /** FormDisplay::validate (once) */
-  validate(): void {
-    if (this.#validated) return
+  /** registerForm: the work path of a field (its server index) */
+  #work(path: string): string {
+    const id = this.ctx.serverId
+    return id === undefined || id === null ? path : path.replace('Servers/1/', `Servers/${id}/`)
+  }
+
+  /** the system path of a work path or form name (array_search($path, $this->systemPaths)) */
+  #toWork(systemPath: string): string {
+    return FORM_FIELDS[systemPath] !== undefined ? this.#work(systemPath) : systemPath
+  }
+
+  /** The paths and values validate() checks (system paths). */
+  validationInput(): { paths: string[]; values: Record<string, unknown> } {
     const paths: string[] = []
     const values: Record<string, unknown> = {}
     for (const form of this.forms) {
       paths.push(form.name)
       for (const path of fieldsOf(form)) {
-        values[path] = this.cf.getValue(path)
+        values[path] = this.cf.getValue(this.#work(path))
         paths.push(path)
       }
     }
-    const errors = validate(this.ctx.tr, paths, values, this.ctx.base)
-    if (Object.keys(errors).length > 0) this.errors = errors
+    return { paths, values }
+  }
+
+  /** The validation errors (keyed by system path or form name) become this form set's errors. */
+  setValidationErrors(errors: Record<string, string[]>): void {
+    if (Object.keys(errors).length > 0) {
+      this.errors = {}
+      for (const [path, list] of Object.entries(errors)) this.errors[this.#toWork(path)] = list
+    }
     this.#validated = true
+  }
+
+  /** FormDisplay::validate (once) */
+  validate(): void {
+    if (this.#validated) return
+    const { paths, values } = this.validationInput()
+    this.setValidationErrors(validate(this.ctx.tr, paths, values, this.ctx.base))
   }
 
   hasErrors(): boolean {
@@ -178,15 +207,25 @@ export class FormDisplay {
    * FormDisplay::save via process(): casts the posted values to each field's type and stores them;
    * with `allowPartialSave` false nothing is stored when a value is missing or invalid.
    */
-  process(post: PostedForm, allowPartialSave: boolean, opts: { keepDefaults?: boolean } = {}): boolean {
+  process(
+    post: PostedForm,
+    allowPartialSave: boolean,
+    opts: { keepDefaults?: boolean; skipValidation?: boolean } = {},
+  ): boolean {
     const tr = this.ctx.tr
     let result = true
     const values: Record<string, unknown> = {}
-    const toSave: string[] = []
+    const toSave: Array<[work: string, path: string]> = []
+    const setup = this.ctx.base === null
+    // $form->index === 0: a new server, saved as the next one
+    const changeIndex = this.ctx.serverId === 0 ? this.cf.getServerCount() + 1 : null
+    const disallow = new Set(setup ? ((this.cf.get('UserprefsDisallow', []) as string[]) ?? []) : [])
     this.errors = {}
+    this.#validated = false
     for (const form of this.forms) {
       for (const path of fieldsOf(form)) {
-        const key = path.replaceAll('/', '-')
+        const work = this.#work(path)
+        const key = work.replaceAll('/', '-')
         const def = this.#def(path)
         let v: unknown = post[key]
         // getFlatDefaultConfig() splits lists starting with null (TextImageLink): no value posted
@@ -201,6 +240,11 @@ export class FormDisplay {
             continue
           }
           v = false
+        }
+        // user preferences allow/disallow (setup)
+        if (setup && this.ctx.userprefsKeys.has(path)) {
+          if (post[`${key}-userprefs-allow`] !== undefined) disallow.delete(path)
+          else disallow.add(path)
         }
         switch (def.type) {
           case 'double':
@@ -218,8 +262,8 @@ export class FormDisplay {
             // default (0) is no option of its select, that is not an error of the file
             if (!r.ok && opts.keepDefaults === true && phpIdentical(v, this.cf.getDefault(path))) continue
             if (!r.ok) {
-              this.errors[path] ??= []
-              this.errors[path]?.push(tr.gettext('Incorrect value!'))
+              this.errors[work] ??= []
+              this.errors[work]?.push(tr.gettext('Incorrect value!'))
               result = false
               continue
             }
@@ -237,24 +281,43 @@ export class FormDisplay {
           }
         }
         values[path] = v
-        toSave.push(path)
+        toSave.push([
+          changeIndex === null ? work : work.replace('Servers/0/', `Servers/${changeIndex}/`),
+          path,
+        ])
       }
     }
     if (!allowPartialSave && this.hasErrors()) {
-      this.validate()
+      if (opts.skipValidation !== true) this.validate()
       return result
     }
-    for (const path of toSave) this.cf.set(path, values[path], path)
-    this.validate()
+    for (const [work, path] of toSave) {
+      let value = values[path]
+      // TrustedProxies requires changes before saving: `IP: header` pairs, other lines kept as -N
+      if (path === 'TrustedProxies') {
+        const proxies: Record<string, unknown> = {}
+        let i = 0
+        for (const line of (value as string[]) ?? []) {
+          const m = /^(.+):(?:[ ]?)(\w+)$/.exec(line)
+          if (m !== null) proxies[(m[1] as string).trim()] = (m[2] as string).trim()
+          else proxies[`-${i++}`] = line
+        }
+        value = proxies
+      }
+      this.cf.set(work, value, path)
+    }
+    if (setup) this.cf.set('UserprefsDisallow', [...disallow])
+    if (opts.skipValidation !== true) this.validate()
     return result
   }
 
   /** FormDisplay::fixErrors: fields with errors get their default value. */
   fixErrors(): void {
     this.validate()
-    for (const path of Object.keys(this.errors)) {
+    for (const work of Object.keys(this.errors)) {
+      const path = canonical(work)
       if (FORM_FIELDS[path] === undefined) continue
-      this.cf.set(path, this.cf.getDefault(canonical(path)))
+      this.cf.set(work, this.cf.getDefault(path))
     }
   }
 
@@ -262,10 +325,13 @@ export class FormDisplay {
   displayErrors(): Array<{ name: string; errors: string[] }> {
     this.validate()
     const tr = this.ctx.tr
-    return Object.entries(this.errors).map(([path, errors]) => ({
-      name: FORM_FIELDS[path] !== undefined ? describe(tr, path, 'name') : formTitle(tr, path, this.forms),
-      errors,
-    }))
+    return Object.entries(this.errors).map(([work, errors]) => {
+      const path = canonical(work)
+      return {
+        name: FORM_FIELDS[path] !== undefined ? describe(tr, path, 'name') : formTitle(tr, work, this.forms),
+        errors,
+      }
+    })
   }
 
   /** FormDisplay::getDisplay: the tabs (one per form) with their rows. */
@@ -307,8 +373,9 @@ export class FormDisplay {
   #field(path: string, trClass: string, setvalue: string | undefined): PrefsField {
     const tr = this.ctx.tr
     const def = this.#def(path)
-    const id = path.replaceAll('/', '-')
-    let value = this.cf.get(path)
+    const work = this.#work(path)
+    const id = work.replaceAll('/', '-')
+    let value = this.cf.get(work)
     let valueDefault = this.cf.getDefault(path)
     let isDefault = false
     if (value === null || phpIdentical(value, valueDefault)) {
@@ -387,7 +454,11 @@ export class FormDisplay {
         jsDefault = echo(valueDefault)
     }
 
-    const allow = this.ctx.userprefsKeys.has(path) ? !this.ctx.disallow.has(path) : null
+    const setup = this.ctx.base === null
+    const disallowed = setup
+      ? ((this.cf.get('UserprefsDisallow', []) as string[] | null) ?? []).includes(path)
+      : this.ctx.disallow.has(path)
+    const allow = this.ctx.userprefsKeys.has(path) ? !disallowed : null
     const doc =
       path.startsWith('Import') || path.startsWith('Export')
         ? ''
@@ -409,9 +480,11 @@ export class FormDisplay {
       isDefault,
       jsDefault: jsDefault as PrefsField['jsDefault'],
       ...(options !== undefined ? { options } : {}),
-      disabled: allow === false,
+      // the setup script shows the "allow users to customize" checkbox instead of disabling
+      disabled: !setup && allow === false,
+      ...(setup && allow !== null ? { userprefsAllow: allow } : {}),
       ...(setvalue !== undefined ? { setvalue } : {}),
-      errors: this.errors[path] ?? [],
+      errors: this.errors[work] ?? [],
       validators: fieldValidators(path, this.ctx.base).map((v) => ({
         name: v.name,
         args: v.name === 'validateUpperBound' ? v.args.map((a) => Number(a)) : v.args,

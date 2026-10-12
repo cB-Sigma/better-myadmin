@@ -13,6 +13,10 @@ export interface PostOptions {
   file?: { field: string; name: string; data: Buffer } | null
   binary?: boolean
   onHeaders?: (status: number, headers: Headers) => void
+  /** extra request headers (e.g. `authorization` for http auth) */
+  headers?: Record<string, string>
+  /** answer a redirect instead of following it (signon, logout) */
+  noRedirect?: boolean
 }
 
 /** A form body: an object, or ordered pairs when a key repeats (`selected_fld[]`, …). */
@@ -62,8 +66,8 @@ export class PmaClient {
   }
 
   /** A full page (no JavaScript runs, so e.g. the menu is not collapsed). */
-  getPage(target: string, params: Record<string, string> = {}): Promise<string> {
-    return this.#send(url(target, Object.entries(params)))
+  getPage(target: string, params: Record<string, string> = {}, opts: PostOptions = {}): Promise<string> {
+    return this.#send(url(target, Object.entries(params)), undefined, false, opts)
   }
 
   /** An AJAX GET, JSON-decoded. */
@@ -104,7 +108,7 @@ export class PmaClient {
     ajax = false,
     opts: PostOptions = {},
   ): Promise<string> {
-    const headers: Record<string, string> = {}
+    const headers: Record<string, string> = { ...opts.headers }
     if (this.#cookies.size > 0) headers.cookie = [...this.#cookies].map(([k, v]) => `${k}=${v}`).join('; ')
     let payload: string | FormData | undefined
     if (body !== undefined && opts.file !== undefined) {
@@ -133,7 +137,7 @@ export class PmaClient {
       else this.#cookies.set(kv.slice(0, i), v)
     }
     if (opts.binary === true) return Buffer.from(await res.arrayBuffer()).toString('latin1')
-    if (res.status >= 300 && res.status < 400) {
+    if (res.status >= 300 && res.status < 400 && opts.noRedirect !== true) {
       const loc = res.headers.get('location') ?? '/'
       return this.#send(
         loc.startsWith('http') ? new URL(loc).pathname + new URL(loc).search : `/${loc.replace(/^\.\//, '')}`,
@@ -145,7 +149,8 @@ export class PmaClient {
 
 /** `/index.php?route=<route>` (or the given `/index.php…` path) with `params` appended. */
 function url(target: string, params: Array<[string, string]> = []): string {
-  const base = target.startsWith('/index.php') ? target : `/index.php?route=${target}`
+  const base =
+    target.startsWith('/index.php') || target.startsWith('/setup/') ? target : `/index.php?route=${target}`
   if (params.length === 0) return base
   return `${base}${base.includes('?') ? '&' : '?'}${new URLSearchParams(params)}`
 }

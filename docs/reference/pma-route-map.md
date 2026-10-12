@@ -208,7 +208,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 
 | Methods | Path | Controller | BetterMyAdmin equivalent | Status |
 |---|---|---|---|---|
-| GET, POST | `/` | `Setup/MainController` | UI `/setup` · API `GET /api/servers/:s/navigation/branch` | 🗓️ planned (M4, X7) |
-| GET, POST | `/setup` | `Setup/MainController` | UI `/setup` | 🗓️ planned (M4, X7) |
-| GET, POST | `/setup/show-config` | `Setup/ShowConfigController` | UI `/setup` | 🗓️ planned (M4, X7) |
-| GET, POST | `/setup/validate` | `Setup/ValidateController` | UI `/setup` | 🗓️ planned (M4, X7) |
+| GET, POST | `/` | `Setup/MainController` | UI `/setup` · UI `/setup/form/:formset` · UI `/setup/servers/:id` · UI `/setup/config` · API `GET /api/setup` · API `GET /api/setup/form/:formset` · API `POST /api/setup/form/:formset` · API `POST /api/setup/form/:formset/revert` · API `GET /api/setup/servers/:id` · API `POST /api/setup/servers/:id` · API `POST /api/setup/servers/:id/revert` · API `POST /api/setup/servers/:id/delete` · API `GET /api/setup/config` · (MainController: page=form\|config\|servers (mode=add\|edit\|revert\|remove) map to their SPA routes) | 🔀 exception (X44) |
+| GET, POST | `/setup` | `Setup/MainController` | UI `/setup` · API `GET /api/setup` | 🔀 exception (X44) |
+| GET, POST | `/setup/show-config` | `Setup/ShowConfigController` | UI `/setup` · API `POST /api/setup/config` · API `GET /api/setup/config/download` | 🔀 exception (X44) |
+| GET, POST | `/setup/validate` | `Setup/ValidateController` | UI `/setup/servers/:id` · API `POST /api/setup/validate` | 🔀 exception (X44) |

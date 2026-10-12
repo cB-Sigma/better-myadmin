@@ -24,9 +24,13 @@ export function initialValues(formSet: PrefsFormSet): FormValues {
   const out: FormValues = {}
   for (const f of fieldsOf(formSet)) {
     out[f.id] = f.type === 'select' ? selectValue(f, String(f.value)) : f.value
+    if (f.userprefsAllow !== undefined) out[allowId(f)] = f.userprefsAllow
   }
   return out
 }
+
+/** The setup script's "Allow users to customize this value" checkbox name. */
+export const allowId = (f: PrefsField) => `${f.id}-userprefs-allow`
 
 /** checkFieldDefault: compared with `data-default-values` strictly (select: `[value]`). */
 export function isDefault(field: PrefsField, value: string | boolean): boolean {
@@ -119,6 +123,7 @@ export function postedValues(formSet: PrefsFormSet, values: FormValues): Record<
     if (f.type === 'checkbox') {
       if (v === true) out[f.id] = 'on'
     } else out[f.id] = String(v ?? '')
+    if (f.userprefsAllow !== undefined && values[allowId(f)] === true) out[allowId(f)] = 'on'
   }
   return out
 }

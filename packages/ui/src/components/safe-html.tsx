@@ -37,7 +37,8 @@ export const SAFE_HTML_TAGS = [
   'td',
 ]
 export const SAFE_HTML_ATTRS = ['href', 'target', 'rel', 'title', 'class', 'dir', 'lang']
-const SAFE_HREF = /^(?:https?:\/\/|\.\/|#)/i
+/** absolute, `./`-relative, fragment and same-origin (`/path`, not `//host`) links */
+const SAFE_HREF = /^(?:https?:\/\/|\.\/|#|\/(?!\/))/i
 
 const CONFIG: Config = {
   ALLOWED_TAGS: SAFE_HTML_TAGS,

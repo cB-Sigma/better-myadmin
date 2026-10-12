@@ -1,7 +1,14 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { type Browser, type Locator, type Page, expect, test } from '@playwright/test'
+import {
+  type Browser,
+  type BrowserContextOptions,
+  type Locator,
+  type Page,
+  expect,
+  test,
+} from '@playwright/test'
 import mysql from 'mysql2/promise'
 import {
   type CaptureOptions,
@@ -13,7 +20,7 @@ import {
   settle,
 } from './capture.ts'
 import { type DiffResult, diffControls, formatDiff, loadMap, validateMap } from './diff.ts'
-import { type App, ROOT, login, pmaReachable, pmaUrl } from './env.ts'
+import { type App, PMA_URL, ROOT, login, pmaReachable, pmaUrl } from './env.ts'
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 export const GALLERY_DIR = join(repo, '.data/ui-parity')
@@ -46,8 +53,11 @@ export interface Step {
 export type Scope = ScopeName | { pma: string; ours: string } | string
 
 export interface PageSpec {
-  /** phpMyAdmin route (`/server/sql`) and query parameters (server=1 is added) */
-  pma: { route: string; params?: Record<string, string> }
+  /**
+   * phpMyAdmin route (`/server/sql`) and query parameters (server=1 is added); or `path`, a URL
+   * path of the instance (`/setup/index.php?route=/setup`) taken as is
+   */
+  pma: { route: string; params?: Record<string, string>; path?: string }
   /** our path (`/s/1/sql`) */
   ours: { path: string }
   /** region to compare (default `content`, phpMyAdmin's #page_content) */
@@ -58,6 +68,13 @@ export interface PageSpec {
   map?: string
   /** log in first (default true) */
   auth?: boolean
+  /**
+   * Other instances than the shared ones (the setup script without a configuration file, the
+   * other auth types): their base URLs, read when the case runs (started in a beforeAll).
+   */
+  bases?: () => { pma?: string; ours?: string }
+  /** browser context options per app (e.g. `httpCredentials` for http auth) */
+  context?: Partial<Record<App, BrowserContextOptions>>
   /** SQL run as root before the case (fixtures beyond global-setup's) */
   sql?: string
   /** runs after navigation and settle, before the first capture */
@@ -123,11 +140,17 @@ export interface StepRecord {
 }
 
 async function openApp(browser: Browser, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
-  const ctx = await browser.newContext({ baseURL })
+  const ctx = await browser.newContext({ baseURL, ...spec.context?.[app] })
   const page = await ctx.newPage()
   if (spec.auth !== false) await login(page, app, baseURL)
   else await ctx.clearCookies()
-  const url = app === 'pma' ? pmaUrl(spec.pma.route, spec.pma.params) : `${baseURL}${spec.ours.path}`
+  const bases = spec.bases?.() ?? {}
+  const url =
+    app === 'pma'
+      ? spec.pma.path !== undefined
+        ? `${bases.pma ?? PMA_URL}${spec.pma.path}`
+        : pmaUrl(spec.pma.route, spec.pma.params, bases.pma)
+      : `${bases.ours ?? baseURL}${spec.ours.path}`
   await page.goto(url)
   const ready = spec.ready?.[app]
   if (ready !== undefined) await expect(page.locator(ready).first()).toBeVisible({ timeout: 30_000 })

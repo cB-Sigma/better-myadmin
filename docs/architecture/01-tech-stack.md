@@ -101,7 +101,7 @@ Hono runs on Node and Bun unchanged, is tiny, has first-class streaming (`stream
 - `cookie` (default): login form, credentials encrypted with a server secret (`blowfish_secret` equivalent, 32 bytes, auto-generated on first run if missing like phpMyAdmin's `ZeroConf`), stored **server-side** in the session store. The browser cookie carries only a random session id (HttpOnly, SameSite=Lax, Secure when behind HTTPS). This is stricter than phpMyAdmin (which stores the encrypted password in the cookie) while keeping identical UX: `LoginCookieValidity`, `LoginCookieStore`, `LoginCookieRecall` (prefill last username), `LoginCookieDeleteAll`.
 - `config`: credentials in the server config file, no login screen.
 - `http`: Basic auth challenge, same realm directive.
-- `signon`: external session hand-off via a signed URL, equivalent of `SignonURL`/`SignonScript`.
+- `signon`: external session hand-off through an encrypted `SignonSession` cookie or a `SignonScript` JS module, with the `SignonURL` redirect (parity exception X43).
 - Two-factor: TOTP (`application`), WebAuthn (`key`), `simple` (confirm). Stored in `pmadb.userconfig` under the `2fa` key exactly as phpMyAdmin does, so a user's 2FA configured in phpMyAdmin works in BetterMyAdmin.
 
 Details in [Security](07-security.md) and [Shell, navigation, auth](../features/01-shell-navigation-auth.md).

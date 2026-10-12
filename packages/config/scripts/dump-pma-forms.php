@@ -1,12 +1,12 @@
 <?php
 /**
- * Dumps phpMyAdmin's user preference and page settings forms as JSON: the tabs, their form
+ * Dumps phpMyAdmin's user preference, page settings and setup script forms as JSON: the tabs, their form
  * groups and fields (in order, with `:group:` headers), each field's type, select values,
  * name / description / comment (untranslated msgids, BBCode kept) and the validators.
  *
  * Usage: php packages/config/scripts/dump-pma-forms.php /path/to/phpmyadmin > packages/config/src/generated/pma-forms.json
  *
- * pma: src/Config/Forms/User/*, src/Config/Forms/Page/*, src/Config/Form.php::readTypes,
+ * pma: src/Config/Forms/User/*, src/Config/Forms/Page/*, src/Config/Forms/Setup/*, src/Config/Form.php::readTypes,
  *      src/Config/Form.php::getOptionValueList, src/Config/ConfigFile.php::getAllowedValues,
  *      src/Config/Descriptions.php::getString, src/Config/Validator.php::loadValidators
  *
@@ -42,6 +42,7 @@ use PhpMyAdmin\Config\ConfigFile;
 use PhpMyAdmin\Config\Descriptions;
 use PhpMyAdmin\Config\Form;
 use PhpMyAdmin\Config\Forms\Page\PageFormList;
+use PhpMyAdmin\Config\Forms\Setup\SetupFormList;
 use PhpMyAdmin\Config\Forms\User\UserFormList;
 
 $config = Config::getInstance();
@@ -133,6 +134,13 @@ $dumpList = static function (array $classes) use ($configFile, $describe): array
 
 $userClasses = (new ReflectionClass(UserFormList::class))->getStaticPropertyValue('all');
 $pageClasses = (new ReflectionClass(PageFormList::class))->getStaticPropertyValue('all');
+$setupClasses = (new ReflectionClass(SetupFormList::class))->getStaticPropertyValue('all');
+
+// the setup script runs with the default configuration: no Developer tab in the parent FeaturesForm,
+// so Setup\FeaturesForm appends its own after Security
+$config->config = new Config\Settings([]);
+$setupForms = $dumpList($setupClasses);
+$config->config = new Config\Settings(['UserprefsDeveloperTab' => true]);
 
 $commit = trim((string) @shell_exec('git -C ' . escapeshellarg($pmaRoot) . ' rev-parse HEAD'));
 
@@ -143,6 +151,7 @@ echo json_encode(
         '_meta' => ['source' => 'phpMyAdmin Config/Forms', 'commit' => $commit],
         'user' => $dumpList($userClasses),
         'page' => $dumpList($pageClasses),
+        'setup' => $setupForms,
         'fields' => $fields,
         'validators' => $dbEntries['_validators'],
         'userValidators' => $dbEntries['_userValidators'],

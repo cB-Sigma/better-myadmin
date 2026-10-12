@@ -11,6 +11,8 @@ export interface ServerLogin {
   /** Arbitrary server host/port when AllowArbitraryServer was used. */
   host?: string
   port?: number
+  /** Signon `PMA_single_signon_cfgupdate`: server settings merged for this login (AuthenticationSignon). */
+  cfgUpdate?: Record<string, unknown>
   /** DefaultConnectionCollation chosen on the home page (session-level user preference). */
   collation?: string
   /** SessionCache equivalent for this server: is_superuser, binary_logs, menu-levels-*, … (pma: Utils/SessionCache.php) */
@@ -38,6 +40,10 @@ export interface SessionData {
   profilingSupported?: Record<string, boolean>
   /** Configuration-storage state owned by src/metadata/service.ts (pma: parts of $_SESSION). */
   metadata?: Record<string, unknown>
+  /** Why the last page load of an http / signon server did not log in (auth/page-gate.ts). */
+  authFailure?: { server: number; failure: { kind: 'http' } | { kind: 'error'; message: string } }
+  /** The setup script: $_SESSION['ConfigFile<server>'], ['messages'], ['eol'] (src/setup/service.ts). */
+  setup?: { config: Record<string, unknown>; messages?: unknown; eol?: 'unix' | 'win'; saved?: string }
   /** $_SESSION['partial_logout']: shown once on the home page */
   partialLogout?: boolean
   /** $_SESSION['tmpval']['query'][md5]: per-query grid state of the last 10 queries (src/browse/view-state.ts). */

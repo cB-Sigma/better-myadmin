@@ -18,6 +18,8 @@ export {
   formFields,
   PAGE_FORMS,
   pageFormTab,
+  SETUP_FORMS,
+  setupFormTab,
   USER_FORMS,
   USER_VALIDATORS,
   userFormFieldPaths,

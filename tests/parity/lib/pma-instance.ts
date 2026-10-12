@@ -92,7 +92,14 @@ function shadowTree(root: string): void {
   mkdirSync(join(root, 'public'))
   for (const entry of readdirSync(join(PMA_PATH, 'public'))) {
     if (entry === 'index.php') copyFileSync(join(PMA_PATH, 'public', entry), join(root, 'public', entry))
-    else symlinkSync(join(PMA_PATH, 'public', entry), join(root, 'public', entry))
+    else if (entry !== 'setup') symlinkSync(join(PMA_PATH, 'public', entry), join(root, 'public', entry))
+  }
+  // the setup script's ROOT_PATH (and so its config.inc.php check) is the shadow root too
+  mkdirSync(join(root, 'public', 'setup'))
+  for (const entry of readdirSync(join(PMA_PATH, 'public', 'setup'))) {
+    const from = join(PMA_PATH, 'public', 'setup', entry)
+    if (entry === 'index.php') copyFileSync(from, join(root, 'public', 'setup', entry))
+    else symlinkSync(from, join(root, 'public', 'setup', entry))
   }
   mkdirSync(join(root, 'app'))
   for (const entry of readdirSync(join(PMA_PATH, 'app'))) {
@@ -105,7 +112,8 @@ function shadowTree(root: string): void {
 
 export async function startPmaInstance(
   configPhp: string,
-  opts: { dumpState?: boolean } = {},
+  /** `noConfig`: no config.inc.php (the setup script runs only then; `configPhp` is ignored) */
+  opts: { dumpState?: boolean; noConfig?: boolean } = {},
 ): Promise<PmaInstance> {
   const root = mkdtempSync(join(tmpdir(), 'bma-pma-'))
   shadowTree(root)
@@ -126,11 +134,16 @@ export async function startPmaInstance(
       join(root, 'config.inc.php'),
       `<?php\ndeclare(strict_types=1);\n$cfg['TempDir'] = ${JSON.stringify(join(root, 'tmp'))};\n${php}\n`,
     )
-  writeConfig(configPhp)
+  if (opts.noConfig !== true) writeConfig(configPhp)
   const port = await freePort()
-  const proc: ChildProcess = spawn(PHP, ['-S', `127.0.0.1:${port}`, '-t', join(root, 'public')], {
-    stdio: 'ignore',
-  })
+  // revalidate_freq=0: setConfig() and rewritten included files (SignonScript) apply at once
+  const proc: ChildProcess = spawn(
+    PHP,
+    ['-d', 'opcache.revalidate_freq=0', '-S', `127.0.0.1:${port}`, '-t', join(root, 'public')],
+    {
+      stdio: 'ignore',
+    },
+  )
   const url = `http://127.0.0.1:${port}`
   for (let i = 0; i < 100; i++) {
     const ok = await isPmaUp(url, { anyStatus: true })

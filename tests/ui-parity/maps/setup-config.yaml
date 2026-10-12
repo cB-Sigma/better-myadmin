@@ -1,0 +1,11 @@
+# Intentional differences of the setup script's configuration file page (tests/ui-parity/README.md).
+rules:
+  - match: { kind: textbox, label: 'Generated configuration file' }
+    ignore: [value]
+    reason: >-
+      the header line carries the product version and the generation date (the bytes after it are
+      compared by tests/parity/setup.parity.test.ts)
+  - ours: { kind: link, label: config.inc.php }
+    added: the tab of phpMyAdmin's file next to our own format (X44)
+  - ours: { kind: link, label: bettermyadmin.config.json }
+    added: the same configuration in BetterMyAdmin's format (X44)
