@@ -1,5 +1,5 @@
 import type { NavBranchQuery, NavNode, NavSettings, ServerListEntry } from '@bettermyadmin/contracts'
-import { MessageBox } from '@bettermyadmin/ui'
+import { Button, MessageBox, Modal } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 import { clsx } from 'clsx'
@@ -27,6 +27,7 @@ import {
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { PageSettingsForm } from '../preferences/PageSettings.tsx'
 import { useLogout } from '../shell/UserMenu'
 import { NavTree } from './NavTree'
 import { currentScope } from './links'
@@ -336,16 +337,7 @@ function NavHeader({
           <BookText className={icon} aria-hidden />
           <span className="sr-only">{docsTitle}</span>
         </a>
-        <button
-          type="button"
-          id="pma_navigation_settings_icon"
-          className={btn}
-          title={t('Navigation panel settings')}
-          disabled
-        >
-          <Settings className={icon} aria-hidden />
-          <span className="sr-only">{t('Navigation panel settings')}</span>
-        </button>
+        <NaviSettingsButton server={server} className={btn} iconClass={icon} />
         <button
           type="button"
           id="pma_navigation_reload"
@@ -444,5 +436,59 @@ function ServerChoice({
         ))}
       </select>
     </div>
+  )
+}
+
+/**
+ * The navigation gear: the Navi page settings (`#pma_navigation_settings`) in the "Page-related
+ * settings" modal; hidden on the preferences pages (`disableNaviSettings`).
+ * pma: src/Controllers/NavigationController.php (PageSettings::init('Navi', 'pma_navigation_settings')),
+ *      resources/js/modules/page_settings.ts::showNaviSettings
+ */
+function NaviSettingsButton({
+  server,
+  className,
+  iconClass,
+}: { server: number; className: string; iconClass: string }) {
+  const [open, setOpen] = useState(false)
+  const submit = useRef<(() => Promise<boolean>) | null>(null)
+  const { pathname } = useLocation()
+  if (/\/preferences\//.test(pathname)) return null
+  return (
+    <>
+      <button
+        type="button"
+        id="pma_navigation_settings_icon"
+        className={className}
+        title={t('Navigation panel settings')}
+        onClick={() => setOpen(true)}
+      >
+        <Settings className={iconClass} aria-hidden />
+        <span className="sr-only">{t('Navigation panel settings')}</span>
+      </button>
+      <Modal
+        id="pageSettingsModal"
+        title={t('Page-related settings')}
+        open={open}
+        onClose={() => setOpen(false)}
+        footer={
+          <>
+            <Button
+              id="pageSettingsModalApplyButton"
+              onClick={async () => {
+                if (submit.current === null || (await submit.current())) setOpen(false)
+              }}
+            >
+              {t('Apply')}
+            </Button>
+            <Button id="pageSettingsModalCancelButton" onClick={() => setOpen(false)}>
+              {t('Cancel')}
+            </Button>
+          </>
+        }
+      >
+        <PageSettingsForm server={server} group="Navi" submit={submit} />
+      </Modal>
+    </>
   )
 }

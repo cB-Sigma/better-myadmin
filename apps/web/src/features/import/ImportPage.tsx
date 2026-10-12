@@ -20,6 +20,7 @@ import { api } from '../../lib/api'
 import { t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PluginOptions } from '../export/PluginOptions'
+import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { StatementBlock } from '../sql/Results'
 import { type CardEnv, ErrorCard } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
@@ -47,6 +48,8 @@ export function ImportPage({
   /** repopulated values (format, timeout_passed, offset, local_import_file …) */
   request?: Array<[string, string]>
 }) {
+  // pma: Server|Database|Table ImportController: PageSettings::init('Import')
+  usePagePrefs(server, 'Import')
   const pairs = useMemo<Array<[string, string]>>(
     () => [
       ...(db !== '' ? [['db', db] as [string, string]] : []),

@@ -3,7 +3,7 @@
  * Lists phpMyAdmin commits that are not yet reflected in BetterMyAdmin, classified by feature area,
  * and checks the ledger.
  *
- *   pnpm upstream:check [--pma ../ref/pma] [--ref origin/master] [--fetch] [--json]
+ *   pnpm upstream:check [--pma ../ref/pma-upstream.git] [--ref origin/master] [--fetch] [--json]
  *
  * - "pinned": the commit in docs/reference/reference-commit.txt (what the docs, fixtures and the
  *   reference instance describe).
@@ -13,7 +13,7 @@
  *   version change (from composer.lock) so the next sync knows what to port.
  */
 import { execFileSync } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
@@ -94,10 +94,19 @@ export function sqlParserVersion(pma: string, commit: string): string | null {
   }
 }
 
+/**
+ * The git checkout to read upstream history from: the blobless clone `../ref/pma-upstream.git`
+ * when present (cheap to fetch, independent of the reference instance), else `../ref/pma`.
+ */
+function defaultPmaGit(): string {
+  const clone = resolve(repo, '../ref/pma-upstream.git')
+  return existsSync(clone) ? clone : resolve(repo, '../ref/pma')
+}
+
 function main() {
   const { values } = parseArgs({
     options: {
-      pma: { type: 'string', default: resolve(repo, '../ref/pma') },
+      pma: { type: 'string', default: defaultPmaGit() },
       ref: { type: 'string', default: 'origin/master' },
       fetch: { type: 'boolean', default: false },
       json: { type: 'boolean', default: false },

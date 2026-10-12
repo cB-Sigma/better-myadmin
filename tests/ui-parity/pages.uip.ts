@@ -28,7 +28,7 @@ pageParity('navigation', {
   ours: { path: '/s/1' },
   scope: 'navigation',
   interactions: [{ name: 'collapse all', do: { click: 'Collapse all' } }],
-  known: '"Recent" and "Favorites" buttons missing; "Navigation panel settings" is disabled in ours',
+  known: '"Recent" and "Favorites" buttons missing',
 })
 
 pageParity('server-sql', {
@@ -41,8 +41,6 @@ pageParity('table-structure', {
   pma: { route: '/table/structure', params: { db: FIX.db, table: FIX.table } },
   ours: { path: `/s/1/db/${FIX.db}/t/${FIX.table}/structure` },
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
-  known:
-    'no "Add to central columns" / "Remove from central columns" bulk buttons yet (central columns land with the database-level work)',
 })
 
 pageParity('table-menu', {

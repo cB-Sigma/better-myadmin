@@ -3,9 +3,12 @@ import {
   LoginRequest,
   type LoginResponse,
   type LogoutResponse,
+  type TwoFactorChallengeResponse,
+  TwoFactorVerifyRequest,
+  type TwoFactorVerifyResponse,
 } from '@bettermyadmin/contracts'
 import { phpEmpty } from '@bettermyadmin/metadata'
-import { Hono } from 'hono'
+import { type Context, Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { type AppEnv, writeSessionCookies } from '../app.ts'
 import { cookieLogin } from '../auth/cookie.ts'
@@ -13,8 +16,12 @@ import { getClientIp } from '../auth/ip-allow-deny.ts'
 import { getServer, serverIndexes, serverLabel } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
-import { forgetServerMetadata } from '../metadata/service.ts'
+import { forgetServerMetadata, withMeta } from '../metadata/service.ts'
+import { prefsCtx, twoFactorCtx } from '../preferences/service.ts'
+import { TwoFactor } from '../preferences/two-factor.ts'
 import { regenerate } from '../session/manager.ts'
+import type { ServerLogin } from '../session/store.ts'
+import { asServerRequest, loginCredentials } from './server.ts'
 
 /** pmaUser-N equivalent: the recalled username cookie. */
 const userCookie = (server: number) => `bma_user_${server}`
@@ -75,17 +82,19 @@ authRoutes.post('/login', async (c) => {
 
   // Session::secure(): new id + token on login, logins on other servers are kept
   const session = regenerate(store, c.get('session'), req.server)
-  session.servers[String(req.server)] = {
+  const login: ServerLogin = {
     user: creds.user,
     credEnc: credBox.encrypt(JSON.stringify({ password: creds.password })),
-    // two-factor is not implemented yet (M4); the flag is already part of the model
-    twoFactorOk: true,
+    twoFactorOk: false,
     ...(creds.host !== undefined ? { host: creds.host } : {}),
     ...(creds.port !== undefined ? { port: creds.port } : {}),
   }
+  session.servers[String(req.server)] = login
   delete session.expired
   forgetServerMetadata(session, req.server)
   c.set('session', session)
+  // AuthenticationPlugin::checkTwoFactor: the configured backend's check (none passes)
+  login.twoFactorOk = await withTwoFactor(c, req.server, login, (tf) => tf.check({}), true)
   writeSessionCookies(c, session)
 
   if (cfg.LoginCookieRecall && cfg.blowfish_secret !== '') {
@@ -102,9 +111,79 @@ authRoutes.post('/login', async (c) => {
   const body: LoginResponse = {
     ok: true,
     server: req.server,
-    twoFactorRequired: false,
+    twoFactorRequired: !login.twoFactorOk,
     csrfToken: session.csrfToken,
   }
+  return c.json(body)
+})
+
+/**
+ * The login's TwoFactor (user preferences of that server). `fallback` when the preferences cannot
+ * be read (no reachable server or storage).
+ */
+async function withTwoFactor<T>(
+  c: Context<AppEnv>,
+  server: number,
+  login: ServerLogin,
+  fn: (tf: TwoFactor) => Promise<T>,
+  fallback: T,
+): Promise<T> {
+  const creds = loginCredentials(c.get('deps').credBox, login)
+  if (creds === null) return fallback
+  try {
+    return await asServerRequest(c, server, creds, (sc) =>
+      withMeta(sc, {}, async (m) => {
+        const ctx = await prefsCtx(m)
+        return fn(await TwoFactor.create(ctx.prefs, twoFactorCtx(ctx)))
+      }),
+    )
+  } catch {
+    return fallback
+  }
+}
+
+const pendingLogin = (c: Context<AppEnv>): ServerLogin => {
+  const session = c.get('session')
+  const login = session.servers[String(session.currentServer)]
+  if (login === undefined || login.twoFactorOk)
+    throw new ValidationError(c.get('tr').gettext('Missing username.'))
+  return login
+}
+
+/** GET /api/auth/two-factor — login/twofactor.twig: the second factor of a pending login */
+authRoutes.get('/two-factor', async (c) => {
+  const login = pendingLogin(c)
+  const server = c.get('session').currentServer
+  const body = await withTwoFactor<TwoFactorChallengeResponse>(
+    c,
+    server,
+    login,
+    async (tf) => {
+      const r = tf.render()
+      return { form: r.form, showSubmit: tf.showSubmit, error: null }
+    },
+    { form: { kind: 'invalid' }, showSubmit: false, error: null },
+  )
+  return c.json(body)
+})
+
+/** POST /api/auth/two-factor — TwoFactor::check with the posted fields; cached in the session */
+authRoutes.post('/two-factor', async (c) => {
+  const req = await parseJson(c, TwoFactorVerifyRequest)
+  const login = pendingLogin(c)
+  const server = c.get('session').currentServer
+  const body = await withTwoFactor<TwoFactorVerifyResponse>(
+    c,
+    server,
+    login,
+    async (tf) => {
+      if (await tf.check(req.fields)) return { ok: true }
+      const r = tf.render()
+      return { ok: false, challenge: { form: r.form, showSubmit: tf.showSubmit, error: r.error } }
+    },
+    { ok: false },
+  )
+  if (body.ok) login.twoFactorOk = true
   return c.json(body)
 })
 

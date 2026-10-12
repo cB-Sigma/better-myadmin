@@ -6,6 +6,7 @@ import type {
   DbActionResponse,
   SqlMessage,
 } from '@bettermyadmin/contracts'
+import type { Translator } from '@bettermyadmin/i18n'
 import {
   type CentralColumnDef,
   type CentralColumnRow,
@@ -35,7 +36,7 @@ import { type DbCtx, listTables, msg, selectDb, tf } from './context.ts'
  */
 
 /** CentralColumns message of a repository result (null: success). */
-export function centralMessage(ctx: DbCtx, r: CentralResult): SqlMessage | null {
+export function centralMessage(ctx: { tr: Translator }, r: CentralResult): SqlMessage | null {
   const { tr } = ctx
   if (r.ok) return null
   switch (r.kind) {

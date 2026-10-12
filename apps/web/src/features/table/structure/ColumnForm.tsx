@@ -10,6 +10,7 @@ import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { CentralColumnPicker } from './CentralColumnPicker'
 import { PartitionEditor } from './PartitionEditor'
 
 /**
@@ -365,6 +366,7 @@ export function ColumnForm({
   const [online, setOnline] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
   const [enumFor, setEnumFor] = useState<number | null>(null)
+  const [pickFor, setPickFor] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   const [addCount, setAddCount] = useState(defaultNumFields)
@@ -424,7 +426,8 @@ export function ColumnForm({
   const virtuality = options.virtuality
   const mimeTypes = options.mime ? options.mimeTypes : null
   // the transformations overview of this server (the column form sits below /s/$server)
-  const server = Number((useParams({ strict: false }) as { server?: number | string }).server ?? 1)
+  const params = useParams({ strict: false }) as { server?: number | string; db?: string; table?: string }
+  const server = Number(params.server ?? 1)
   return (
     <form
       className={mode === 'create' ? 'create_table_form' : 'append_fields_form'}
@@ -547,6 +550,13 @@ export function ColumnForm({
                     value={r.name}
                     onChange={(e) => update(i, { name: e.target.value })}
                   />
+                  {options.centralColumns && (
+                    <p className="column_name" id={`central_columns_${i}_0`}>
+                      <Button variant="link" className="central_columns_dialog" onClick={() => setPickFor(i)}>
+                        {t('Pick from Central Columns')}
+                      </Button>
+                    </p>
+                  )}
                 </td>
                 <td className="p-1">
                   <TypeSelect
@@ -885,6 +895,16 @@ export function ColumnForm({
             update(enumFor, { length: v })
             setEnumFor(null)
           }}
+        />
+      )}
+      {pickFor !== null && params.db !== undefined && (
+        <CentralColumnPicker
+          server={server}
+          db={params.db}
+          table={mode === 'create' ? '' : (params.table ?? '')}
+          maxRows={options.maxRows}
+          onPick={(patch) => update(pickFor, patch)}
+          onClose={() => setPickFor(null)}
         />
       )}
     </form>

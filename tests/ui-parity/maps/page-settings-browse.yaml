@@ -1,0 +1,5 @@
+# Intentional differences of the Browse page settings modal (see tests/ui-parity/README.md).
+rules:
+  - match: { kind: button, label: Close }
+    ignore: [order]
+    reason: the dialog's corner close button comes last in our DOM (Radix Dialog), first in Bootstrap's header

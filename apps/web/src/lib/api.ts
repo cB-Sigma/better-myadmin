@@ -24,6 +24,9 @@ import type {
   ChangeFormResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
+  ChartDataRequest,
+  ChartDataResponse,
+  ChartPageResponse,
   CollationsResponse,
   ColumnFormOptions,
   ColumnTransformations,
@@ -73,6 +76,8 @@ import type {
   FindReplaceResponse,
   FormatResponse,
   GetVariableResponse,
+  GisPageRequest,
+  GisPageResponse,
   GridSaveRequest,
   GridSaveResponse,
   HistoryResponse,
@@ -115,6 +120,7 @@ import type {
   OperationsPageResponse,
   OperationsResponse,
   OrderByRequest,
+  PageSettingsResponse,
   PartialDependenciesResponse,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
@@ -122,6 +128,14 @@ import type {
   PartitioningRequest,
   PasswordForm,
   PluginsResponse,
+  PreferencesFormResponse,
+  PreferencesImportRequest,
+  PreferencesImportResponse,
+  PreferencesJsonResponse,
+  PreferencesManageResponse,
+  PreferencesSaveRequest,
+  PreferencesSaveResponse,
+  PreferencesTab,
   ProcessList,
   ProcessesQuery,
   QueryRequest,
@@ -178,7 +192,18 @@ import type {
   TrackingSnapshotResponse,
   TriggerEditorData,
   TriggersListResponse,
+  TwoFactorActionResponse,
+  TwoFactorChallengeResponse,
+  TwoFactorConfigureRequest,
+  TwoFactorRemoveRequest,
+  TwoFactorStatusResponse,
+  TwoFactorVerifyRequest,
+  TwoFactorVerifyResponse,
   VersionCheckResponse,
+  ViewFormResponse,
+  ViewSaveRequest,
+  ViewSaveResponse,
+  VisualizationPageRequest,
   ZoomRequest,
   ZoomResponse,
   ZoomRowResponse,
@@ -372,6 +397,17 @@ export const api = {
     call<FindReplaceResponse>('POST', `${tablePath(s)}/find-replace`, req),
   tableRelationDropFk: (s: TableRef, constraint: string) =>
     call<OperationsResponse>('POST', `${tablePath(s)}/relation/drop-foreign-key`, { constraint }),
+  // the view form (pma: /view/create)
+  viewForm: (r: DbRef, q: { table?: string | undefined; sql?: string | undefined }) =>
+    call<ViewFormResponse>('GET', `${dbPath(r)}/views/form${queryString(q)}`),
+  viewSave: (r: DbRef, req: ViewSaveRequest) => call<ViewSaveResponse>('POST', `${dbPath(r)}/views`, req),
+  // the query results' Display chart and GIS visualization (pma: /table/chart, /table/gis-visualization)
+  chartPage: (s: TableRef, req: VisualizationPageRequest) =>
+    call<ChartPageResponse>('POST', `${tablePath(s)}/chart`, req),
+  chartData: (s: TableRef, req: ChartDataRequest) =>
+    call<ChartDataResponse>('POST', `${tablePath(s)}/chart/data`, req),
+  gisPage: (s: TableRef, req: GisPageRequest) => call<GisPageResponse>('POST', `${tablePath(s)}/gis`, req),
+  tablePrivileges: (s: TableRef) => call<DbPrivilegesResponse>('GET', `${tablePath(s)}/privileges`),
   tableTracking: (s: TableRef) => call<TrackingPageResponse>('GET', `${tablePath(s)}/tracking`),
   tableTrackingCreate: (s: TableRef, req: CreateTrackingVersionRequest) =>
     call<TrackingResponse>('POST', `${tablePath(s)}/tracking/versions`, req),
@@ -571,6 +607,9 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
   dropColumns: (r: TableRef, req: DropColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  /** pma: /table/structure/central-columns-{add,remove} */
+  structureCentralColumns: (r: TableRef, op: 'add' | 'remove', columns: string[]) =>
+    call<DdlResponse>('POST', `${tablePath(r)}/structure/central-columns-${op}`, { columns }),
   addKey: (r: TableRef, req: AddKeyRequest) => call<DdlResponse>('POST', `${tablePath(r)}/columns/key`, req),
   moveColumns: (r: TableRef, req: MoveColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/move`, req),
@@ -682,6 +721,9 @@ export const api = {
     ),
   dbCentralColumnsPopulate: (r: DbRef, table: string) =>
     call<string[]>('GET', `${dbPath(r)}/central-columns/populate?table=${encodeURIComponent(table)}`),
+  /** pma: /database/central-columns getColumnList (cur_table): the "Pick from Central Columns" list */
+  dbCentralColumnsList: (r: DbRef, table: string) =>
+    call<CentralColumn[]>('GET', `${dbPath(r)}/central-columns/list?table=${encodeURIComponent(table)}`),
   favorite: (
     server: number,
     body: { db: string; table: string; action: 'add' | 'remove'; favoriteTables: string },
@@ -729,6 +771,50 @@ export const api = {
     r: TableRef,
     req: { col_order?: string; col_visib?: string; table_create_time?: string | null },
   ) => call<{ success: boolean; message: { text: string } | null }>('POST', `${tablePath(r)}/uiprefs`, req),
+  // user preferences (docs/features/08-settings-preferences-pmadb.md)
+  /** pma: /preferences/{features,sql,navigation,main-panel,export,import} */
+  preferencesForm: (server: number, tab: PreferencesTab) =>
+    call<PreferencesFormResponse>('GET', `${srvPath(server)}/preferences/forms/${tab}`),
+  savePreferencesForm: (server: number, tab: PreferencesTab, req: PreferencesSaveRequest) =>
+    call<PreferencesSaveResponse>('POST', `${srvPath(server)}/preferences/forms/${tab}`, req),
+  /** PageSettings::init(group): the "Page-related settings" form of a page */
+  pageSettings: (server: number, group: string) =>
+    call<PageSettingsResponse>('GET', `${srvPath(server)}/preferences/page/${group}`),
+  savePageSettings: (server: number, group: string, req: PreferencesSaveRequest) =>
+    call<PreferencesSaveResponse>('POST', `${srvPath(server)}/preferences/page/${group}`, req),
+  /** pma: /preferences/manage */
+  preferencesManage: (server: number) =>
+    call<PreferencesManageResponse>('GET', `${srvPath(server)}/preferences/manage`),
+  /** submit_export: the download URL (navigated to, so the browser saves it) */
+  preferencesExportUrl: (server: number, type: 'json' | 'php') =>
+    `/api${srvPath(server)}/preferences/manage/export?type=${type}`,
+  /** submit_get_json (Save to browser's storage) */
+  preferencesJson: (server: number) =>
+    call<PreferencesJsonResponse>('GET', `${srvPath(server)}/preferences/manage/json`),
+  importPreferences: (server: number, req: PreferencesImportRequest) =>
+    call<PreferencesImportResponse>('POST', `${srvPath(server)}/preferences/manage/import`, req),
+  resetPreferences: (server: number) =>
+    call<{ ok: boolean; message: SqlMessage | null }>(
+      'POST',
+      `${srvPath(server)}/preferences/manage/reset`,
+      {},
+    ),
+  /** the localStorage import offer (Header: storage type session, not answered yet) */
+  preferencesAutoload: (server: number) =>
+    call<{ show: boolean }>('GET', `${srvPath(server)}/preferences/autoload`),
+  hidePreferencesAutoload: (server: number) =>
+    call<{ ok: true }>('POST', `${srvPath(server)}/preferences/autoload/hide`, {}),
+  /** pma: /preferences/two-factor */
+  twoFactor: (server: number) =>
+    call<TwoFactorStatusResponse>('GET', `${srvPath(server)}/preferences/two-factor`),
+  configureTwoFactor: (server: number, req: TwoFactorConfigureRequest) =>
+    call<TwoFactorActionResponse>('POST', `${srvPath(server)}/preferences/two-factor/configure`, req),
+  removeTwoFactor: (server: number, req: TwoFactorRemoveRequest) =>
+    call<TwoFactorActionResponse>('POST', `${srvPath(server)}/preferences/two-factor/remove`, req),
+  /** the second factor of a pending login (login/twofactor.twig) */
+  twoFactorChallenge: () => call<TwoFactorChallengeResponse>('GET', '/auth/two-factor'),
+  verifyTwoFactor: (req: TwoFactorVerifyRequest) =>
+    call<TwoFactorVerifyResponse>('POST', '/auth/two-factor', req),
   /** /table/get-field download URL */
   gridFieldUrl: (server: number, p: { db: string; table: string; where: string; sig: string; key: string }) =>
     `/api/servers/${server}/browse/field?${new URLSearchParams(p)}`,
