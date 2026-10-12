@@ -53,6 +53,11 @@ export interface SetupCtx {
  */
 export function setupDisabled(deps: AppDeps, cwd = process.cwd()): boolean {
   if (deps.cfg.DBG.demo) return false
+  return configFileExists(deps, cwd)
+}
+
+/** `file_exists(CONFIG_FILE)`: one was loaded at start or has been written into the working directory. */
+export function configFileExists(deps: AppDeps, cwd = process.cwd()): boolean {
   if (deps.configFile !== undefined) return true
   return CONFIG_FILE_NAMES.some((n) => existsSync(join(cwd, n)))
 }
@@ -196,7 +201,7 @@ async function checkVersion(ctx: SetupCtx, messages: SetupMessageList): Promise<
   const { tr } = ctx
   const id = `version_check${randomBytes(8).toString('hex')}`
   const url = process.env.BMA_VERSION_FEED_URL ?? ''
-  const releases = url === '' ? null : await getLatestVersions(url)
+  const releases = url === '' ? null : await getLatestVersions(url, Date.now(), ctx.deps.cfg)
   if (releases === null) {
     messages.set(
       'error',

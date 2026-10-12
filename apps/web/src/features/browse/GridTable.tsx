@@ -14,6 +14,7 @@ import { Link } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../../lib/api'
+import { useConfig } from '../../lib/config'
 import { t } from '../../lib/i18n'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { renderTransformation } from '../transformations/registry'
@@ -674,6 +675,7 @@ function GridTransformed({
   versionInt,
 }: { tf: NonNullable<GridCell['tf']>; server: number; versionInt: number }) {
   const bytes = Uint8Array.from(atob(tf.b64), (c) => c.charCodeAt(0))
+  const cfg = useConfig()
   return renderTransformation(
     {
       mimetype: tf.mimetype,
@@ -686,6 +688,7 @@ function GridTransformed({
     { server, db: tf.db, table: tf.table, column: tf.column, where: { clause: tf.where, sig: tf.sig } },
     { isInt: tf.isInt, isBinary: tf.isBinary },
     versionInt,
+    cfg,
   )
 }
 

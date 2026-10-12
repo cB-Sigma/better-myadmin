@@ -5,6 +5,10 @@
  *   planned: M<n>        not built yet; lands in milestone M<n> (docs/architecture/13)
  *   exception: X<n>|Q<n> intentional difference registered in docs/reference/parity-exceptions.md
  *   n/a: <reason>        nothing to build (PHP-specific, removed upstream, …)
+ * and, for directives read under a computed name (export plugin options `${format}_columns`,
+ * transformation option lists), the files that hold the name:
+ *   via: <file|dir> | [<file|dir>, …]  the directive's last path segment must occur there as a quoted
+ *                        string (verified; a prefix key applies to every directive under it)
  * and, for routes, the targets that implement it:
  *   api: 'METHOD /api/…' | ['…']    Hono endpoints (method optional)
  *   ui:  '/s/:s/…' | ['…']          SPA routes
@@ -32,14 +36,24 @@ export interface RouteMapEntry extends Disposition {
 
 export type RouteMap = Record<string, RouteMapEntry>
 /** Keys: directive path, or a prefix ending in `/` or `*`. */
-export type DirectiveMap = Record<string, Disposition>
+export type DirectiveMap = Record<string, Disposition & { via?: string | string[] }>
 /** Keys: control key, template name, or template directory prefix ending in `/`. */
 export type ControlMap = Record<string, Disposition>
 export interface MessageMap {
   /** pma source path prefixes: a msgid all of whose uses are under such prefixes takes the disposition. */
   sources?: Record<string, Disposition>
-  /** individual msgid keys (`context\u0004msgid` written as `context|msgid`). */
-  msgids?: Record<string, Disposition>
+  /**
+   * individual msgid keys (`context\u0004msgid` written as `context|msgid`). `via`: a package file
+   * that holds the msgid as a `msgid: '…'` property its caller translates (packages without a
+   * translator); verified, the use is credited there.
+   */
+  msgids?: Record<string, Disposition & { via?: string }>
+  /**
+   * msgids held as data and translated at render time: JSON file → entries of `paths` (dot paths,
+   * `*` any key or index; the value is a msgid string or a `{ msgid, context }` object) translated
+   * by `at` (`file::function`, which must exist and call a translator on a non-literal argument).
+   */
+  data?: Record<string, Array<{ paths: string[]; at: string }>>
 }
 
 /** Keys: item key (`js:table/structure.ts#click:…`), a script (`js:table/structure.ts`) or a prefix ending in `/` or `*`. */

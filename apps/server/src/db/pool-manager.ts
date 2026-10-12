@@ -1,3 +1,5 @@
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
 import type { Executed } from '@bettermyadmin/contracts'
 import { quoteString } from '@bettermyadmin/sql-gen'
 import { createServerContext } from '@bettermyadmin/sql-lexer'
@@ -45,13 +47,40 @@ export function connectionOptions(configured: ServerConfig, creds: Credentials):
   }
   if (server.ssl) {
     const ssl: NonNullable<Exclude<PoolOptions['ssl'], string>> = { rejectUnauthorized: server.ssl_verify }
-    if (server.ssl_key) ssl.key = server.ssl_key
-    if (server.ssl_cert) ssl.cert = server.ssl_cert
-    if (server.ssl_ca) ssl.ca = server.ssl_ca
+    // mysqli::ssl_set(key, cert, ca, capath, cipher) takes file paths
+    if (server.ssl_key) ssl.key = pemOf(server.ssl_key)
+    if (server.ssl_cert) ssl.cert = pemOf(server.ssl_cert)
+    const ca = [
+      ...(server.ssl_ca ? [pemOf(server.ssl_ca)] : []),
+      ...(server.ssl_ca_path ? caDirectory(server.ssl_ca_path) : []),
+    ]
+    if (ca.length > 0) ssl.ca = ca
     if (server.ssl_ciphers) ssl.ciphers = server.ssl_ciphers
     opts.ssl = ssl
   }
   return opts
+}
+
+/** A PEM given as a file path (phpMyAdmin's ssl_* directives) is read; anything else is the PEM itself. */
+export function pemOf(value: string): string {
+  if (value.includes('-----BEGIN')) return value
+  try {
+    return readFileSync(value, 'utf8')
+  } catch {
+    return value
+  }
+}
+
+/** `ssl_ca_path` (mysqli's capath): every certificate file of the directory. */
+export function caDirectory(dir: string): string[] {
+  try {
+    return readdirSync(dir)
+      .filter((f) => /\.(pem|crt|cer)$/i.test(f))
+      .sort()
+      .map((f) => readFileSync(join(dir, f), 'utf8'))
+  } catch {
+    return []
+  }
 }
 
 /** "8.4.2-log" → 80402 (DatabaseInterface::setVersion) */
@@ -130,6 +159,11 @@ export class PoolManager {
   constructor(cfg: AppConfig) {
     this.#cfg = cfg
     this.control = new ControlConnections(cfg)
+  }
+
+  /** the configuration the pools were made for */
+  get config(): AppConfig {
+    return this.#cfg
   }
 
   server(index: number): ServerConfig {

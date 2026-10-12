@@ -1116,6 +1116,7 @@ export const CLIENT_VISIBLE_EXTRA_PATHS: readonly string[] = [
   'DefaultQueryTable',
   'DefaultQueryDatabase',
   'LinkLengthLimit',
+  'GD2Available', // the Inline transformation (Config::isGd2Available)
   'maxRowPlotLimit',
   'MaxRoutineList',
   'ZipDump',

@@ -29,6 +29,8 @@ export const PrefsField = z.object({
   type: z.enum(['text', 'password', 'short_text', 'number_text', 'checkbox', 'select', 'list']),
   name: z.string(),
   desc: z.string(),
+  /** the setup script's field comment (Descriptions `cmt`), shown as the b_tblops icon's tooltip */
+  comment: z.string().optional(),
   /** documentation link ('' for Import/Export fields) */
   doc: z.string(),
   /** the shown value: checkbox state, selected option value, textarea text, input text */
@@ -124,7 +126,7 @@ export type PageSettingsResponse = z.infer<typeof PageSettingsResponse>
 
 /** GET /api/servers/:s/preferences/manage */
 export const PreferencesManageResponse = PrefsHeader.extend({
-  /** the "More settings" card (setup script without config file): never in BetterMyAdmin */
+  /** the "More settings" card: the setup script is available (no configuration file) */
   moreSettings: z.boolean(),
   /** the HTTP_HOST part of the export file names */
   host: z.string(),

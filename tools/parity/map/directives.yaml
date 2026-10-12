@@ -38,3 +38,127 @@ ThemeDefault:
 ThemePerServer:
   exception: X16
   planned: M1
+
+# Export / Import / Schema: the plugin options are named after the directives and take their
+# defaults from $cfg[type][name] (Plugins::getDefault / checkboxCheck), the page settings are read
+# by name; apps/server/test/int/directives-export-import.test.ts changes every one at once.
+Export/:
+  via:
+    - packages/export/src/plugins
+    - apps/server/src/export/page.ts
+  note: option or page-setting name (Plugins::getDefault)
+Import/:
+  via:
+    - packages/import/src/plugins
+    - apps/server/src/import/page.ts
+  note: option or page-setting name (Plugins::getDefault)
+Schema/:
+  via:
+    - packages/schema/src/index.ts
+    - apps/server/src/database/schema-export.ts
+  note: option name (Plugins::getDefault, $cfg['Schema'])
+Export/pdf_report_title:
+  n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)
+Export/pdf_structure_or_data:
+  n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)
+Schema/pdf_*:
+  n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)
+Export/xml_export_struc:
+  n/a: phpMyAdmin reads it nowhere (Settings only; ExportXml uses xml_structure_or_data)
+Import/sql_read_as_multibytes:
+  n/a: phpMyAdmin reads it nowhere but the Import settings form (Q12)
+
+# Console: console/display.twig receives $cfg['Console'] (GET /console/config), the web console
+# applies each key; apps/server/test/int/directives-server.test.ts.
+Console/:
+  via:
+    - apps/server/src/routes/console.ts
+    - apps/web/src/features/console
+  note: settings.Console, read by key in the console (Console.setConfig)
+ConsoleEnterExecutes:
+  n/a: Header.php passes it to the page but no script reads it (Console/EnterExecutes is the setting)
+LoginCookieValidityDisableWarning:
+  n/a: HomeController only gates the warning that PHP's session.gc_maxlifetime is lower than LoginCookieValidity; no PHP session here
+# SQLQuery: Generator::getMessage links; apps/server/test/unit/sql-message.test.ts
+SQLQuery/:
+  via: apps/server/src/query/message.ts
+  note: cfg.SQLQuery read by key (Generator::getMessage)
+# DefaultTransformations: TransformationsPlugin::getOptions($options, $cfg['DefaultTransformations'][name]);
+# packages/mysql-types/test/transformation-defaults.test.ts
+DefaultTransformations/:
+  via: packages/mysql-types/src/transformations.ts
+  note: defaults.<Plugin> (TransformationsPlugin::getOptions)
+DefaultTransformations/External:
+  exception: X4
+DefaultTransformations/Inline/wrapper_link:
+  n/a: filled at run time by the transformation wrapper URL, not a configuration value (the wrapper URL is built per cell)
+DefaultTransformations/Inline/wrapper_params:
+  n/a: filled at run time by the transformation wrapper URL, not a configuration value (the wrapper URL is built per cell)
+# configuration storage table names: Relation::fillRelationParamsWithTableNames, recorded against
+# phpMyAdmin in packages/metadata/test/storage.test.ts ("all tables, explicit names", "custom table name")
+Servers/*/relation:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/table_info:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/table_coords:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/pdf_pages:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/history:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/recent:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/favorite:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/table_uiprefs:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/tracking:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/userconfig:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/users:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/usergroups:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/navigationhiding:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/savedsearches:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/central_columns:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/designer_settings:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/export_templates:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+Servers/*/bookmarktable:
+  via: packages/metadata/src/storage.ts
+  note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
+# Tracker::handleQuery (the log hook of DatabaseInterface::query) is not ported yet
+# (docs/features/04-table-level.md#tracking): these two act only inside it.
+Servers/*/tracking_add_drop_database:
+  planned: M2
+  note: read by Tracker::createDatabaseVersion, which only handleQuery calls (CREATE DATABASE with tracking_version_auto_create)
+Servers/*/tracking_version_auto_create:
+  planned: M2
+  note: read by Tracker::handleQuery
+LinkLengthLimit:
+  n/a: Generator::linkOrButton turns a link whose URL is longer into a POST (data-post); the SPA navigates client-side and sends parameters in API bodies, so no URL length applies
+PDFDefaultPageSize:
+  n/a: read only by GisVisualization::asPdfFile, offered when TCPDF is installed, which the reference build does not ship either (no PDF download is offered)

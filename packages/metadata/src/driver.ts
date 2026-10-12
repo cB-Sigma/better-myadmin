@@ -20,7 +20,8 @@ export interface HistoryRow {
   timevalue: string
 }
 
-export type SaveResult = true | { error: string; detail?: string }
+/** `inaccessible`: the storage database cannot be accessed any more (UserPreferences::hasAccessToDatabase) */
+export type SaveResult = true | { error: string; detail?: string; inaccessible?: true }
 
 export interface BookmarkBackend {
   /** BookmarkRepository::getList */

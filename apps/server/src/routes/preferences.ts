@@ -27,6 +27,7 @@ import {
   savePageSettings,
   twoFactorStatus,
 } from '../preferences/service.ts'
+import { configFileExists } from '../setup/service.ts'
 import type { ServerEnv } from './server.ts'
 
 /**
@@ -73,7 +74,11 @@ preferencesRoutes.post('/page/:group', async (c) => {
 /** GET …/manage — pma: /preferences/manage */
 preferencesRoutes.get('/manage', (c) =>
   withMeta(c, {}, async (m) =>
-    c.json({ ...header(await prefsCtx(m)), moreSettings: false, host: c.req.header('host') ?? '' }),
+    c.json({
+      ...header(await prefsCtx(m)), // exists_setup_and_not_exists_config: the setup script runs while no configuration file exists
+      moreSettings: !configFileExists(c.get('deps')),
+      host: c.req.header('host') ?? '',
+    }),
   ),
 )
 

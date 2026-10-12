@@ -5,7 +5,8 @@ import type { AppEnv } from '../app.ts'
 import { getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import type { ServerLogin } from '../session/store.ts'
-import type { LoginFailure } from './failure.ts'
+import { logUser } from './auth-log.ts'
+import { LoginFailure } from './failure.ts'
 import { checkRules, connectLogin, requestClientIp } from './login.ts'
 import { storeLogin } from './session-login.ts'
 
@@ -22,8 +23,14 @@ export async function configLogin(c: Context<AppEnv>, server: number): Promise<S
   if (s === undefined) throw new Error(`Unknown server ${server}`)
   const tr = c.get('tr')
   const creds: Credentials = { user: s.user, password: s.password }
-  checkRules(s, creds.user, creds.password, requestClientIp(c, cfg.TrustedProxies), tr)
-  await connectLogin(pools, server, creds, tr)
+  const ip = requestClientIp(c, cfg.TrustedProxies)
+  try {
+    checkRules(s, creds.user, creds.password, ip, tr)
+    await connectLogin(pools, server, creds, tr)
+  } catch (e) {
+    if (e instanceof LoginFailure) logUser(cfg, creds.user, e.failureType, ip)
+    throw e
+  }
   return storeLogin(c, server, creds, { secure: false })
 }
 

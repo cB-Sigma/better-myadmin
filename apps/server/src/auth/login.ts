@@ -1,8 +1,8 @@
-import type { Gettext } from '@bettermyadmin/i18n'
+import { type Gettext, sprintf } from '@bettermyadmin/i18n'
 import type { Context } from 'hono'
 import type { ServerConfig } from '../config.ts'
-import type { Credentials, PoolManager } from '../db/pool-manager.ts'
-import { isMysqlError } from '../http/errors.ts'
+import { type Credentials, type PoolManager, versionInt } from '../db/pool-manager.ts'
+import { BmaError, isMysqlError } from '../http/errors.ts'
 import { AuthMessages, LoginFailure, connectionErrorMessage } from './failure.ts'
 import { getClientIp, isForbiddenByRules } from './ip-allow-deny.ts'
 
@@ -44,8 +44,9 @@ export async function connectLogin(
   tr: Gettext,
 ): Promise<void> {
   const server = pools.server(serverIndex)
+  let version: string
   try {
-    await pools.probe(serverIndex, creds)
+    version = (await pools.probe(serverIndex, creds)).version
   } catch (e) {
     const errno = isMysqlError(e) ? e.errno : connectionErrno(e)
     throw new LoginFailure(
@@ -54,6 +55,14 @@ export async function connectLogin(
       errno,
     )
   }
+  // DatabaseServerVersionChecking: MysqlMinVersion
+  const { MysqlMinVersion } = pools.config
+  if (versionInt(version) < MysqlMinVersion.internal)
+    throw new BmaError(
+      'UNSUPPORTED_SERVER',
+      sprintf(tr.gettext('You should upgrade to %s %s or later.'), 'MySQL', MysqlMinVersion.human),
+      500,
+    )
 }
 
 /** The mysqli error number of a network failure (2003 refused/unreachable, 2002 host/socket). */

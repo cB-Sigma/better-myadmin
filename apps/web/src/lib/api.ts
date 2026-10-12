@@ -209,6 +209,9 @@ import type {
   StatusOverview,
   StatusVariables,
   StatusVariablesRequest,
+  StorageCreateRequest,
+  StorageCreateResponse,
+  StorageStatusResponse,
   StructureResponse,
   TableNamesResponse,
   TableOptionsRequest,
@@ -695,6 +698,12 @@ export const api = {
       `${srvPath(s)}/privileges/account-${lock ? 'lock' : 'unlock'}`,
       req,
     ),
+  /** CheckRelationsController: the configuration storage status */
+  storageStatus: (s: number, db: string) =>
+    call<StorageStatusResponse>('GET', `${srvPath(s)}/metadata-storage/status?${qs({ db })}`),
+  /** CheckRelationsController create_pmadb / fixall_pmadb / fix_pmadb */
+  storageCreate: (s: number, req: StorageCreateRequest) =>
+    call<StorageCreateResponse>('POST', `${srvPath(s)}/metadata-storage/create`, req),
   userGroups: (s: number) => call<UserGroupsResponse>('GET', `${srvPath(s)}/user-groups`),
   /** deleteUserGroup / addUserGroupSubmit / editUserGroupSubmit (+ the `<level>_<tab>` boxes) */
   submitUserGroups: (s: number, form: PrivForm) =>

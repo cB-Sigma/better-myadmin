@@ -21,7 +21,7 @@ import type {
   TwoFactorStatusResponse,
 } from '@bettermyadmin/contracts'
 import { type PhpValue, jsonEncode, sanitizeFilename, varExportValue } from '@bettermyadmin/export'
-import { type Translator, phpUrlencode } from '@bettermyadmin/i18n'
+import { type Translator, htmlspecialchars, phpUrlencode } from '@bettermyadmin/i18n'
 import {
   type PrefsMessage,
   type UserPreferences,
@@ -117,9 +117,17 @@ export function header(ctx: PrefsCtx): PrefsHeader {
   return { storage: ctx.prefs.kind, hasConfigStorage: ctx.prefs.kind !== 'session' }
 }
 
-/** UserPreferences::save failure: "Could not save configuration" + the control link error */
-function prefsMessage(r: PrefsMessage): SqlMessage {
-  return { type: 'error', text: [r.text, ...(r.detail !== undefined ? [r.detail] : [])].join('<br><br>') }
+/**
+ * UserPreferences::save failure: "Could not save configuration", the control link error and, when
+ * the storage database cannot be accessed any more, that notice (htmlspecialchars).
+ */
+export function prefsMessage(tr: Translator, r: PrefsMessage): SqlMessage {
+  const lines = [tr.gettext('Could not save configuration'), ...(r.detail !== undefined ? [r.detail] : [])]
+  if (r.inaccessible === true)
+    lines.push(
+      htmlspecialchars(tr.gettext('The phpMyAdmin configuration storage database could not be accessed.')),
+    )
+  return { type: 'error', text: lines.join('<br><br>') }
 }
 
 function formSet(fd: FormDisplay, error: SqlMessage | null = null): PrefsFormSet {
@@ -184,7 +192,7 @@ export async function saveFormPage(
       ctx.m.forgetPrefs()
       return { saved: true }
     }
-    error = prefsMessage(r)
+    error = prefsMessage(ctx.tr, r)
   }
   return { saved: false, formSet: formSet(fd, error) }
 }
@@ -220,7 +228,7 @@ export async function savePageSettings(
       ctx.m.forgetPrefs()
       return { saved: true }
     }
-    error = prefsMessage(r)
+    error = prefsMessage(ctx.tr, r)
   }
   return { saved: false, formSet: formSet(fd, error) }
 }
@@ -316,7 +324,7 @@ export async function importPrefs(
 
   const conf = configuration as Record<string, unknown>
   const r = await ctx.prefs.save(cf.getConfigArray())
-  if (r !== true) return { status: 'failed', message: prefsMessage(r) }
+  if (r !== true) return { status: 'failed', message: prefsMessage(ctx.tr, r) }
   ctx.m.forgetPrefs()
   return {
     status: 'saved',
@@ -329,7 +337,7 @@ export async function importPrefs(
 /** submit_clear: save([]) (the smart merge keeps `2fa`) */
 export async function resetPrefs(ctx: PrefsCtx): Promise<true | SqlMessage> {
   const r = await ctx.prefs.save({})
-  if (r !== true) return prefsMessage(r)
+  if (r !== true) return prefsMessage(ctx.tr, r)
   ctx.m.forgetPrefs()
   return true
 }

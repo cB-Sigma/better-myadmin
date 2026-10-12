@@ -329,6 +329,12 @@ function FieldRow({
       </th>
       <td className="border-t border-border py-1 align-top">
         {control}
+        {isSetup && field.comment !== undefined && (
+          // input.twig: an `<a class="userprefs-comment">` without href, only its tooltip
+          <span className="userprefs-comment ms-1 inline-block cursor-help" title={field.comment}>
+            <PmaIcon name="b_tblops" alt={t('Comment')} />
+          </span>
+        )}
         {/* the setup pages never run config.ts' setupRestoreField: both links stay hidden */}
         {field.setvalue !== undefined && !isSetup && (
           <a

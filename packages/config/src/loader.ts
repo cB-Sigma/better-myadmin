@@ -86,9 +86,12 @@ export async function readConfigFile(file: string): Promise<unknown> {
     try {
       text = await readFile(file, 'utf8')
     } catch (e) {
-      throw new ConfigError([
-        { path: '', message: `cannot read config file: ${(e as Error).message}`, source: name },
-      ])
+      // pma: src/Config.php::loadFromFile (English: the configuration loads before the language)
+      const message =
+        (e as NodeJS.ErrnoException).code === 'EACCES'
+          ? `Existing configuration file (${file}) is not readable.`
+          : `cannot read config file: ${(e as Error).message}`
+      throw new ConfigError([{ path: '', message, source: name }])
     }
     try {
       return lower.endsWith('.json') ? JSON.parse(text) : parseYaml(text)

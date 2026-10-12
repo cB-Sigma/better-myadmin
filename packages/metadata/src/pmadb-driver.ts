@@ -235,11 +235,11 @@ class PmadbUserConfig implements UserConfigBackend {
         ? `SHOW DATABASES LIKE ${q(escapeMysqlWildcards(this.database))}`
         : `SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ${q(this.database)}`
       const canAccess = (await fetchSingleRow(this.conn, access)) !== null
+      // the messages are translated by the caller
       return {
         error: 'Could not save configuration',
-        detail: canAccess
-          ? detail
-          : `${detail}\n\nThe phpMyAdmin configuration storage database could not be accessed.`,
+        detail,
+        ...(canAccess ? {} : { inaccessible: true as const }),
       }
     }
     return true
