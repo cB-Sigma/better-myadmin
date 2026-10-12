@@ -19,6 +19,7 @@ import { exportRoutes } from './export.ts'
 import { importRoutes } from './import.ts'
 import { insertEditRoutes } from './insert-edit.ts'
 import { metadataRoutes } from './metadata.ts'
+import { nameListRoutes } from './name-lists.ts'
 import { navigationRoutes } from './navigation.ts'
 import { preferencesRoutes } from './preferences.ts'
 import { privilegesRoutes } from './privileges.ts'
@@ -118,3 +119,4 @@ serverRoutes.route('/:s/databases', databaseRoutes)
 serverRoutes.route('/:s/databases', insertEditRoutes)
 serverRoutes.route('/:s', serverAdminRoutes)
 serverRoutes.route('/:s', privilegesRoutes)
+serverRoutes.route('/:s', nameListRoutes)

@@ -4,14 +4,14 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-806/1106 covered (72.9%): 806 implemented, 4 planned, 296 missing. [Summary](README.md).
+837/1106 covered (75.7%): 837 implemented, 4 planned, 265 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 47/98 (48.0%) covered, 47/98 implemented
+## 01 shell navigation auth — 56/98 (57.1%) covered, 56/98 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `base.twig` | 0/9 |  | ⬜ `button:Open user account menu` ⬜ `link:Click on the bar to scroll to top of page` ⬜ `link:Log out` ⬜ `link:MariaDB documentation` ⬜ `link:Open new phpMyAdmin window` ⬜ `link:phpMyAdmin Demo Server` ⬜ `link:phpMyAdmin documentation` ⬜ `link:Settings` ⬜ `themeColorMode` |
-| `console/display.twig` | 0/9 |  | ⬜ `always_expand` ⬜ `current_query` ⬜ `dark_theme` ⬜ `enter_executes` ⬜ `label` ⬜ `shared` ⬜ `start_history` ⬜ `submit` ⬜ `targetdb` |
+| `console/display.twig` | 9/9 | ✅ `always_expand` ✅ `current_query` ✅ `dark_theme` ✅ `enter_executes` ✅ `label` ✅ `shared` ✅ `start_history` ✅ `submit` ✅ `targetdb` |  |
 | `error/report_form.twig` | 0/2 |  | 🗓️ `always_send` 🗓️ `description` |
 | `error/report_modal.twig` | 0/3 |  | ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `id:errorReportModalConfirm` |
 | `error/simple.twig` | 0/1 |  | ⬜ `link:Go back` |
@@ -225,12 +225,12 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `preferences/two_factor/confirm.twig` | 1/1 | ✅ `submit:Disable two-factor authentication` |  |
 | `preferences/two_factor/main.twig` | 3/3 | ✅ `2fa_configure` ✅ `2fa_remove` ✅ `submit:Configure two-factor authentication` |  |
 
-## 09 sql editor query pipeline — 6/28 (21.4%) covered, 6/28 implemented
+## 09 sql editor query pipeline — 28/28 (100.0%) covered, 28/28 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `sql/_bookmark.twig` | 3/3 | ✅ `bkm_all_users` ✅ `bkm_fields[bkm_label]` ✅ `submit:Create new bookmark` |  |
-| `sql/query.twig` | 3/25 | ✅ `SQL` ✅ `sql_delimiter` ✅ `sql_query` | ⬜ `action_bookmark` ⬜ `bkm_all_users` ⬜ `bkm_label` ⬜ `bkm_replace` ⬜ `button:Close` ⬜ `dummy` ⬜ `fk_checks` ⬜ `id_bookmark` ⬜ `id:clear` ⬜ `id:delete` ⬜ `id:format` ⬜ `id:formatSingleLine` ⬜ `id:insert` ⬜ `id:saved` ⬜ `id:select` ⬜ `id:selectall` ⬜ `id:update` ⬜ `insert` ⬜ `parameterized` ⬜ `retain_query_box` ⬜ `rollback_query` ⬜ `show_query` |
+| `sql/query.twig` | 25/25 | ✅ `action_bookmark` ✅ `bkm_all_users` ✅ `bkm_label` ✅ `bkm_replace` ✅ `button:Close` ✅ `dummy` ✅ `fk_checks` ✅ `id_bookmark` ✅ `id:clear` ✅ `id:delete` ✅ `id:format` ✅ `id:formatSingleLine` ✅ `id:insert` ✅ `id:saved` ✅ `id:select` ✅ `id:selectall` ✅ `id:update` ✅ `insert` ✅ `parameterized` ✅ `retain_query_box` ✅ `rollback_query` ✅ `show_query` ✅ `SQL` ✅ `sql_delimiter` ✅ `sql_query` |  |
 
 ## other — 1/1 (100.0%) covered, 1/1 implemented
 

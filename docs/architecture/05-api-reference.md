@@ -230,11 +230,14 @@ The setup script; no login, every endpoint answers 404 "Configuration already ex
 | GET | `/api/servers/:s/sql/default-fk-check` | `{defaultFkCheckValue}` from `DefaultForeignKeyChecks` + server var | `/sql/get-default-fk-check-value` |
 | GET | `/api/servers/:s/sql/form?db=&table=&sqlQuery=` | what the SQL tab renders server-side: scope, legend name, prefilled query (`DefaultQuery*` expanded), columns, FK default, profiling support, server parser context, SQL-box settings; 404 "No databases selected." / "No table selected." | `/server/sql`, `/database/sql`, `/table/sql` |
 | GET | `/api/servers/:s/sql/history` | `{history: rows newest first, or false, queryHistoryDB}`; `POST /query` records the last statement like `StatementHistory` (`noHistory` skips it) | `Console\History::getHistory` |
-| GET | `/api/servers/:s/console/config` | `{settings (Console/* with the user preferences applied), debugSql, maxCharactersInDisplayedSql, confirm}` | `console/display.twig` data |
+| GET | `/api/servers/:s/console/config` | `{settings (Console/* with the user preferences applied), debugSql, maxCharactersInDisplayedSql, confirm, server {versionInt, isMariaDb, sqlMode} (the lint context of the console inputs)}` | `console/display.twig` data |
 | POST | `/api/servers/:s/console/config` | `{key, value}` validated like `parseValueParam` (400 "Unexpected parameter value."), stored as `Console/<key>` in the user preferences (configuration storage or session) → `{message}` | `/console/update-config` |
 | GET/POST | `/api/servers/:s/bookmarks` | `?db=` list (own + shared); create `{db, label, query, shared, replace}`; `GET /:id` show; `POST /:id/delete`; `POST /:id/run {db, variables, allUsers, noHistory}` runs it through the SQL-box pipeline | bookmark forms, `/import` `id_bookmark` / `action_bookmark` |
 | GET/POST | `/api/servers/:s/console/bookmarks` | console list with *Showing N bookmarks (both private and shared)*; add `{db, label, bookmark_query, shared}` → *Succeeded* / *Failed* | `/console/bookmark/refresh`, `/console/bookmark/add` |
 | POST | `/api/servers/:s/query/sign` | `{sql}` → `{sig}` for building browse links (FK traversal, search redirects) | `Core::signSqlQuery` |
+
+| POST | `/api/servers/:s/tables` | `{db}` → `{success, tables}` (`SHOW TABLES FROM`, NaturalOrder); no `db`: `{success: false, message: 'Error'}` | `/tables` (TableController) |
+| POST | `/api/servers/:s/columns` | `{db, table}` → `{success, columns}` (the information_schema column query, ORDINAL_POSITION) | `/columns` (ColumnController) |
 
 ## Export
 

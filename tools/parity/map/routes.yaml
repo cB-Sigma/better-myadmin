@@ -23,19 +23,19 @@
   api: 'POST /api/servers/:s/session/collation'
   planned: M1
 /columns:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/columns'
-  planned: M2
-  note: name lists for pickers
+  api: 'POST /api/servers/:s/columns'
+  note: 'name list of the export aliases dialog (ColumnController: the information_schema column query)'
 /console/bookmark/add:
   api: 'POST /api/servers/:s/console/bookmarks'
-  note: the console's Add bookmark card
+  note: 'the console''s "Add bookmark" card'
 /console/bookmark/refresh:
   api: 'GET /api/servers/:s/console/bookmarks'
-  note: the console's Bookmarks card (Refresh)
+  note: 'the console''s Bookmarks card (Console::getBookmarkContent as data)'
 /console/update-config:
   api:
     - 'GET /api/servers/:s/console/config'
     - 'POST /api/servers/:s/console/config'
+  note: 'the console options (UpdateConfigController::parseValueParam); GET …/console/config reads them'
 /database/central-columns:
   api:
     - 'GET /api/servers/:s/databases/:db/central-columns'
@@ -115,12 +115,10 @@
   planned: M1
 /database/sql/autocomplete:
   api: 'GET /api/servers/:s/sql/autocomplete'
-  ui: '/s/:s/db/:db/sql/autocomplete'
-  planned: M1
+  note: 'AJAX of the SQL editors (SQL tab, console): tables and columns of ?db='
 /database/sql/format:
   api: 'POST /api/servers/:s/sql/format'
-  ui: '/s/:s/db/:db/sql/format'
-  planned: M1
+  note: 'AJAX of the SQL tab''s Format / Format as a single line'
 /database/structure:
   api: 'GET /api/servers/:s/databases/:db/structure'
   ui: '/s/:s/db/:db/structure'
@@ -655,11 +653,11 @@
     - 'POST /api/servers/:s/databases/:db/tables/:t/relation/drop-foreign-key'
   ui: '/s/:s/db/:db/t/:table/relation'
 /table/replace:
-  api:
-    - 'POST /api/servers/:s/databases/:db/tables/:t/find-replace'
-    - 'POST /api/servers/:s/databases/:db/tables/:t/rows'
-  ui: '/s/:s/db/:db/t/:table/replace'
-  planned: M2
+  api: 'POST /api/servers/:s/databases/:db/tables/:t/rows'
+  ui:
+    - '/s/:s/db/:db/t/:table/insert'
+    - '/s/:s/db/:db/t/:table/edit'
+  note: 'the Insert/Edit form submission (ReplaceController: INSERT / UPDATE / INSERT IGNORE / REPLACE, the after-insert target); find and replace is /table/find-replace'
 /table/search:
   api:
     - 'GET /api/servers/:s/databases/:db/tables/:t/search'
@@ -753,9 +751,8 @@
     - 'POST /api/servers/:s/databases/:db/tables/:t/search/zoom/row'
   ui: '/s/:s/db/:db/t/:table/zoom-search'
 /tables:
-  api: 'GET /api/servers/:s/databases/:db/tables'
-  planned: M2
-  note: name lists for pickers
+  api: 'POST /api/servers/:s/tables'
+  note: 'name list of the export aliases dialog (TableController: SHOW TABLES FROM, NaturalOrder)'
 /themes:
   planned: M1
   exception: X16

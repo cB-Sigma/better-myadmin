@@ -53,22 +53,23 @@ export function AliasDialog({
   const [tableAlias, setTableAlias] = useState('')
   const [columnAlias, setColumnAlias] = useState('')
   const dbs = useQuery({
-    queryKey: qk.exportAliasNames(server, '', ''),
-    queryFn: () => api.exportAliasNames(server, '', ''),
+    queryKey: qk.exportAliasNames(server, ''),
+    queryFn: () => api.exportAliasNames(server, ''),
     enabled: open && currentDb === '',
   })
+  // pma: export.ts #db_alias_select change → POST /tables, #table_alias_select change → POST /columns
   const tables = useQuery({
-    queryKey: qk.exportAliasNames(server, db, ''),
-    queryFn: () => api.exportAliasNames(server, db, ''),
+    queryKey: qk.tableNames(server, db),
+    queryFn: () => api.tableNames(server, db),
     enabled: open && db !== '' && currentTable === '',
   })
   const columns = useQuery({
-    queryKey: qk.exportAliasNames(server, db, table),
-    queryFn: () => api.exportAliasNames(server, db, table),
+    queryKey: qk.columnNames(server, db, table),
+    queryFn: () => api.columnNames(server, db, table),
     enabled: open && db !== '' && table !== '',
   })
   const dbOptions = currentDb !== '' ? [currentDb] : (dbs.data?.names ?? [])
-  const tableOptions = db === '' ? [] : currentTable !== '' ? [currentTable] : (tables.data?.names ?? [])
+  const tableOptions = db === '' ? [] : currentTable !== '' ? [currentTable] : (tables.data?.tables ?? [])
   const add = (type: string, label: string, name: string, value: string) =>
     onRows([...rows.filter((r) => r.name !== name), { type, label, name, value }])
 
@@ -234,7 +235,7 @@ export function AliasDialog({
                     onChange={(e) => setColumn(e.currentTarget.value)}
                   >
                     <option value="" />
-                    {(table === '' ? [] : (columns.data?.names ?? [])).map((n) => (
+                    {(table === '' ? [] : (columns.data?.columns ?? [])).map((n) => (
                       <option key={n} value={n}>
                         {n}
                       </option>

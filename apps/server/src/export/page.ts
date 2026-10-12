@@ -253,18 +253,16 @@ async function isView(s: ExportSession, db: string, table: string): Promise<bool
 }
 
 /**
- * GET …/export/alias-names?db=&table= — the aliases dialog's lists: databases, tables of `db`,
- * columns of `db.table` (pma: /databases, /tables, /columns AJAX lists).
+ * GET …/export/alias-names?db= — the databases of the aliases dialog (export.twig lists them), or
+ * the tables of `db` (the Designer). The dialog's tables and columns come from /tables and /columns
+ * (routes/name-lists.ts), like phpMyAdmin's export.ts.
  */
 exportPageRoutes.get('/alias-names', async (c) => {
   const db = c.req.query('db') ?? ''
-  const table = c.req.query('table') ?? ''
   const s = await openExportSession(c, db)
   try {
     if (db === '') return c.json({ names: await databaseList(s.admin) })
-    if (table === '') return c.json({ names: await pageTables(s, db) })
-    const cols = await s.env.dbi.fetchSingleColumn(`SHOW COLUMNS FROM ${backquote(db)}.${backquote(table)}`)
-    return c.json({ names: cols })
+    return c.json({ names: await pageTables(s, db) })
   } finally {
     await s.close()
   }

@@ -34,8 +34,10 @@ export const qk = {
   /** export page view-model of a scope (db/table empty above their scope) */
   exportPage: (s: number, db: string, t: string, q: string) =>
     ['srv', s, 'db', db, 'tbl', t, 'export', q] as const,
-  exportAliasNames: (s: number, db: string, t: string) =>
-    ['srv', s, 'db', db, 'tbl', t, 'aliasNames'] as const,
+  exportAliasNames: (s: number, db: string) => ['srv', s, 'db', db, 'aliasNames'] as const,
+  // the pickers' name lists (pma: /tables, /columns)
+  tableNames: (s: number, db: string) => ['srv', s, 'db', db, 'tableNames'] as const,
+  columnNames: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'columnNames'] as const,
   importPage: (s: number, db: string, t: string, q: string) =>
     ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
   db: (r: DbRef) => ['srv', r.server, 'db', r.db] as const,

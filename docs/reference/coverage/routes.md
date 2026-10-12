@@ -4,7 +4,7 @@
 
 Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and what replaces it. Mapping: `tools/parity/map/routes.yaml`.
 
-192/199 covered (96.5%): 179 implemented, 12 exception, 1 n/a, 7 planned. [Summary](README.md).
+197/199 covered (99.0%): 184 implemented, 12 exception, 1 n/a, 2 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 21/23 (91.3%) covered, 13/23 implemented
 
@@ -13,9 +13,9 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST [/]` | `HomeController` | UI /s/:server (apps/web/src/routes/s/$server/index.tsx) |  |
 | ✅ | `GET /changelog` | `ChangeLogController` | API GET /api/servers/:s/about/changelog (apps/server/src/routes/about.ts:25)<br>UI /s/:server/changelog (apps/web/src/routes/s/$server/changelog.tsx) | the project's CHANGELOG.md with phpMyAdmin's rewrites |
 | ✅ | `POST /collation-connection` | `CollationConnectionController` | API POST /api/servers/:s/session/collation (apps/server/src/routes/shell.ts:106) |  |
-| ✅ | `POST /console/bookmark/add` | `Console/Bookmark/AddController` | API POST /api/servers/:s/console/bookmarks (apps/server/src/routes/metadata.ts:355) | the console's Add bookmark card |
-| ✅ | `GET /console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API GET /api/servers/:s/console/bookmarks (apps/server/src/routes/metadata.ts:328) | the console's Bookmarks card (Refresh) |
-| ✅ | `POST /console/update-config` | `Console/UpdateConfigController` | API GET /api/servers/:s/console/config (apps/server/src/routes/console.ts:59)<br>API POST /api/servers/:s/console/config (apps/server/src/routes/console.ts:77) |  |
+| ✅ | `POST /console/bookmark/add` | `Console/Bookmark/AddController` | API POST /api/servers/:s/console/bookmarks (apps/server/src/routes/metadata.ts:355) | the console's "Add bookmark" card |
+| ✅ | `GET /console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API GET /api/servers/:s/console/bookmarks (apps/server/src/routes/metadata.ts:328) | the console's Bookmarks card (Console::getBookmarkContent as data) |
+| ✅ | `POST /console/update-config` | `Console/UpdateConfigController` | API GET /api/servers/:s/console/config (apps/server/src/routes/console.ts:59)<br>API POST /api/servers/:s/console/config (apps/server/src/routes/console.ts:83) | the console options (UpdateConfigController::parseValueParam); GET …/console/config reads them |
 | 🔀 | `GET, POST /error-report` | `ErrorReportController` | API POST /api/telemetry/error (apps/server/src/routes/telemetry.ts:55) | X19 — opt-in |
 | ✅ | `GET, POST /git-revision` | `GitInfoController` | API GET /api/meta/build (apps/server/src/routes/meta.ts:17) |  |
 | ✅ | `GET /license` | `LicenseController` | API GET /api/servers/:s/about/license (apps/server/src/routes/about.ts:19)<br>UI /s/:server/license (apps/web/src/routes/s/$server/license.tsx) |  |
@@ -47,7 +47,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:71) |  |
 | ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:85) |  |
 
-## 03 insert edit transformations — 6/7 (85.7%) covered, 6/7 implemented
+## 03 insert edit transformations — 7/7 (100.0%) covered, 7/7 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
@@ -55,15 +55,15 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /gis-data-editor` | `GisDataEditorController` | UI /s/:server/db/:db/t/:table/insert (apps/web/src/routes/s/$server/db/$db/t/$table/insert.tsx) | client component `GisEditor` (WKT parsing/generation needs no server round trip) |
 | ✅ | `GET, POST /table/change` | `Table/ChangeController` | API POST /api/servers/:s/databases/:db/tables/:t/insert-form (apps/server/src/routes/insert-edit.ts:80)<br>UI /s/:server/db/:db/t/:table/insert (apps/web/src/routes/s/$server/db/$db/t/$table/insert.tsx)<br>UI /s/:server/db/:db/t/:table/edit (apps/web/src/routes/s/$server/db/$db/t/$table/edit.tsx) |  |
 | ✅ | `POST /table/change/rows` | `Table/ChangeRowsController` | API POST /api/servers/:s/databases/:db/tables/:t/insert-form (apps/server/src/routes/insert-edit.ts:80)<br>UI /s/:server/db/:db/t/:table/edit (apps/web/src/routes/s/$server/db/$db/t/$table/edit.tsx) |  |
-| 🗓️ | `GET, POST /table/replace` | `Table/ReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/find-replace<br>API POST /api/servers/:s/databases/:db/tables/:t/rows<br>UI /s/:s/db/:db/t/:table/replace | M2 |
+| ✅ | `GET, POST /table/replace` | `Table/ReplaceController` | API POST /api/servers/:s/databases/:db/tables/:t/rows (apps/server/src/routes/insert-edit.ts:106)<br>UI /s/:server/db/:db/t/:table/insert (apps/web/src/routes/s/$server/db/$db/t/$table/insert.tsx)<br>UI /s/:server/db/:db/t/:table/edit (apps/web/src/routes/s/$server/db/$db/t/$table/edit.tsx) | the Insert/Edit form submission (ReplaceController: INSERT / UPDATE / INSERT IGNORE / REPLACE, the after-insert target); find and replace is /table/find-replace |
 | ✅ | `GET, POST /transformation/overview` | `Transformation/OverviewController` | UI /s/:server/transformations (apps/web/src/routes/s/$server/transformations.tsx) | static plugin catalog (packages/mysql-types transformations.ts) |
 | ✅ | `GET, POST /transformation/wrapper` | `Transformation/WrapperController` | API GET /api/servers/:s/databases/:db/tables/:t/transformation/wrapper (apps/server/src/routes/insert-edit.ts:148) | raw cell bytes; resize=jpeg\|png sends the original image (no GD) |
 
-## 04 table level — 62/64 (96.9%) covered, 62/64 implemented
+## 04 table level — 64/64 (100.0%) covered, 64/64 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
-| 🗓️ | `POST /columns` | `ColumnController` | API GET /api/servers/:s/databases/:db/tables/:t/columns | M2 — name lists for pickers |
+| ✅ | `POST /columns` | `ColumnController` | API POST /api/servers/:s/columns (apps/server/src/routes/name-lists.ts:18) | name list of the export aliases dialog (ColumnController: the information_schema column query) |
 | ✅ | `GET, POST /normalization` | `Normalization/MainController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
 | ✅ | `POST /normalization/1nf/step1` | `Normalization/FirstNormalForm/FirstStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
 | ✅ | `POST /normalization/1nf/step2` | `Normalization/FirstNormalForm/SecondStepController` | API GET /api/servers/:s/databases/:db/tables/:t/normalization (apps/server/src/routes/table-normalization.ts:27)<br>UI /s/:server/db/:db/t/:table/normalization (apps/web/src/routes/s/$server/db/$db/t/$table/normalization.tsx) |  |
@@ -123,7 +123,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /table/structure/unique` | `Table/Structure/UniqueController` | API POST /api/servers/:s/databases/:db/tables/:t/columns/key (apps/server/src/routes/table-structure.ts:194)<br>UI /s/:server/db/:db/t/:table/structure (apps/web/src/routes/s/$server/db/$db/t/$table/structure.tsx) | With selected Unique |
 | ✅ | `GET, POST /table/tracking` | `Table/TrackingController` | API GET /api/servers/:s/databases/:db/tables/:t/tracking (apps/server/src/routes/table-tracking.ts:25)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/versions (apps/server/src/routes/table-tracking.ts:28)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/versions/delete (apps/server/src/routes/table-tracking.ts:34)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/toggle (apps/server/src/routes/table-tracking.ts:40)<br>API POST /api/servers/:s/databases/:db/tables/:t/tracking/report (apps/server/src/routes/table-tracking.ts:46)<br>API GET /api/servers/:s/databases/:db/tables/:t/tracking/snapshot (apps/server/src/routes/table-tracking.ts:52)<br>UI /s/:server/db/:db/t/:table/tracking (apps/web/src/routes/s/$server/db/$db/t/$table/tracking.tsx) |  |
 | ✅ | `GET, POST /table/zoom-search` | `Table/ZoomSearchController` | API GET /api/servers/:s/databases/:db/tables/:t/search (apps/server/src/routes/table-search.ts:21)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom (apps/server/src/routes/table-search.ts:33)<br>API POST /api/servers/:s/databases/:db/tables/:t/search/zoom/row (apps/server/src/routes/table-search.ts:39)<br>UI /s/:server/db/:db/t/:table/zoom-search (apps/web/src/routes/s/$server/db/$db/t/$table/zoom-search.tsx) |  |
-| 🗓️ | `POST /tables` | `TableController` | API GET /api/servers/:s/databases/:db/tables | M2 — name lists for pickers |
+| ✅ | `POST /tables` | `TableController` | API POST /api/servers/:s/tables (apps/server/src/routes/name-lists.ts:12) | name list of the export aliases dialog (TableController: SHOW TABLES FROM, NaturalOrder) |
 | ✅ | `GET, POST /triggers` | `Triggers/IndexController` | API GET /api/servers/:s/databases/:db/triggers (apps/server/src/routes/database.ts:254)<br>API POST /api/servers/:s/databases/:db/triggers (apps/server/src/routes/database.ts:262)<br>API GET /api/servers/:s/databases/:db/triggers/editor (apps/server/src/routes/database.ts:258)<br>API GET /api/servers/:s/databases/:db/triggers/export (apps/server/src/routes/database.ts:267)<br>UI /s/:server/db/:db/triggers (apps/web/src/routes/s/$server/db/$db/triggers.tsx) |  |
 | ✅ | `GET, POST /view/create` | `View/CreateController` | API GET /api/servers/:s/databases/:db/views/form (apps/server/src/routes/view-create.ts:15)<br>API POST /api/servers/:s/databases/:db/views (apps/server/src/routes/view-create.ts:20)<br>UI /s/:server/db/:db/view/create (apps/web/src/routes/s/$server/db/$db/view/create.tsx) | also the Create view dialog of the query results |
 | ✅ | `GET, POST /view/operations` | `Operations/ViewController` | API GET /api/servers/:s/databases/:db/tables/:t/operations (apps/server/src/routes/table-ops.ts:30)<br>API POST /api/servers/:s/databases/:db/tables/:t/operations/rename-view (apps/server/src/routes/table-ops.ts:62)<br>UI /s/:server/db/:db/t/:table/operations (apps/web/src/routes/s/$server/db/$db/t/$table/operations.tsx) | the Operations tab of a view |
@@ -212,10 +212,10 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | 🔀 | `GET, POST /export` | `Export/ExportController` | API POST /api/servers/:s/export (apps/server/src/routes/export.ts:45)<br>API GET /api/servers/:s/export/:id} (apps/server/src/routes/export.ts:125) | X10 — streaming (prepare + one-shot download) |
 | 🔀 | `GET /export/check-time-out` | `Export/CheckTimeOutController` | API GET /api/servers/:s/export/check-time-out (apps/server/src/routes/export.ts:166) | X10 — streaming |
 | ✅ | `POST /export/tables` | `Export/TablesController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:51)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) | selected_tbl[] in the search params |
-| ✅ | `POST /export/template/create` | `Export/Template/CreateController` | API POST /api/servers/:s/export/templates (apps/server/src/export/page.ts:295) |  |
-| ✅ | `POST /export/template/delete` | `Export/Template/DeleteController` | API POST /api/servers/:s/export/templates/:id/delete (apps/server/src/export/page.ts:334) |  |
-| ✅ | `POST /export/template/load` | `Export/Template/LoadController` | API GET /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:312) |  |
-| ✅ | `POST /export/template/update` | `Export/Template/UpdateController` | API POST /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:322) |  |
+| ✅ | `POST /export/template/create` | `Export/Template/CreateController` | API POST /api/servers/:s/export/templates (apps/server/src/export/page.ts:293) |  |
+| ✅ | `POST /export/template/delete` | `Export/Template/DeleteController` | API POST /api/servers/:s/export/templates/:id/delete (apps/server/src/export/page.ts:332) |  |
+| ✅ | `POST /export/template/load` | `Export/Template/LoadController` | API GET /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:310) |  |
+| ✅ | `POST /export/template/update` | `Export/Template/UpdateController` | API POST /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:320) |  |
 | 🔀 | `GET, POST /import` | `Import/ImportController` | API POST /api/servers/:s/import/uploads (apps/server/src/routes/import.ts:56)<br>API PATCH /api/servers/:s/import/uploads/:id} (apps/server/src/routes/import.ts:67)<br>API POST /api/servers/:s/import/jobs (apps/server/src/routes/import.ts:92) | X9 — chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query) |
 | 🔀 | `GET, POST /import-status` | `Import/StatusController` | API GET /api/servers/:s/import/jobs/:id}/events (apps/server/src/routes/import.ts:115) | X9 — chunked upload + SSE progress |
 | ✅ | `GET, POST /server/export` | `Server/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:51)<br>UI /s/:server/export (apps/web/src/routes/s/$server/export.tsx) |  |
@@ -238,13 +238,13 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `GET, POST /preferences/sql` | `Preferences/SqlController` | API GET /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:42)<br>API POST /api/servers/:s/preferences/forms/:tab (apps/server/src/routes/preferences.ts:48)<br>UI /s/:server/preferences/:tab (apps/web/src/routes/s/$server/preferences/$tab.tsx) |  |
 | ✅ | `GET, POST /preferences/two-factor` | `Preferences/TwoFactorController` | API GET /api/servers/:s/preferences/two-factor (apps/server/src/routes/preferences.ts:128)<br>API POST /api/servers/:s/preferences/two-factor/configure (apps/server/src/routes/preferences.ts:133)<br>API POST /api/servers/:s/preferences/two-factor/remove (apps/server/src/routes/preferences.ts:141)<br>API GET /api/auth/two-factor (apps/server/src/routes/auth.ts:154)<br>API POST /api/auth/two-factor (apps/server/src/routes/auth.ts:171)<br>UI /s/:server/preferences/two-factor (apps/web/src/routes/s/$server/preferences/two-factor.tsx) |  |
 
-## 09 sql editor query pipeline — 5/7 (71.4%) covered, 4/7 implemented
+## 09 sql editor query pipeline — 7/7 (100.0%) covered, 6/7 implemented
 
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | ✅ | `GET, POST /database/sql` | `Database/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/db/:db/sql (apps/web/src/routes/s/$server/db/$db/sql.tsx) |  |
-| 🗓️ | `POST /database/sql/autocomplete` | `Database/SqlAutoCompleteController` | API GET /api/servers/:s/sql/autocomplete<br>UI /s/:s/db/:db/sql/autocomplete | M1 |
-| 🗓️ | `POST /database/sql/format` | `Database/SqlFormatController` | API POST /api/servers/:s/sql/format<br>UI /s/:s/db/:db/sql/format | M1 |
+| ✅ | `POST /database/sql/autocomplete` | `Database/SqlAutoCompleteController` | API GET /api/servers/:s/sql/autocomplete (apps/server/src/routes/sql.ts:86) | AJAX of the SQL editors (SQL tab, console): tables and columns of ?db= |
+| ✅ | `POST /database/sql/format` | `Database/SqlFormatController` | API POST /api/servers/:s/sql/format (apps/server/src/routes/sql.ts:70) | AJAX of the SQL tab's Format / Format as a single line |
 | 🔀 | `POST /import/simulate-dml` | `Import/SimulateDmlController` | API POST /api/servers/:s/query/simulate (apps/server/src/routes/query.ts:149) | X9 — chunked upload + SSE progress |
 | ✅ | `GET, POST /lint` | `LintController` | API POST /api/servers/:s/sql/lint (apps/server/src/routes/sql.ts:53) | client-side lint (SQL tokenizer in the browser) +  fallback |
 | ✅ | `GET, POST /server/sql` | `Server/SqlController` | API POST /api/servers/:s/query (apps/server/src/routes/query.ts:28)<br>UI /s/:server/sql (apps/web/src/routes/s/$server/sql.tsx) |  |

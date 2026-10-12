@@ -1,0 +1,26 @@
+# Intentional differences of the console (see tests/ui-parity/README.md for the format).
+rules:
+  - ours:
+      kind: button
+      label: '/^(Console|Clear|History|Options|Bookmarks|Refresh|Add|Expand|Collapse|Requery|Edit|Explain|Profiling|Bookmark|Delete|Restore default values|Close)$/'
+    added: >-
+      phpMyAdmin's console toolbars and message actions are clickable <div>/<span> elements
+      (`.toolbar .button`, `.switch_button`, `.action`), which the harness does not count as
+      controls; ours are buttons with the same texts, in the same places
+  - pma:
+      label: '/^(Always expand query messages|Show query history at start|Show current browsing query|Execute queries on Enter|Switch to dark theme)/'
+      step: '/^(initial|open|run a query|bookmarks|add bookmark)$/'
+    n/a: >-
+      phpMyAdmin keeps every console card in the DOM and slides the closed ones out of the console
+      (the harness still sees them); ours renders the open card only. The Options card is compared
+      in the "options" step
+  - pma:
+      label: '/^(Label:|Target database:|Share this bookmark|OK|)$/'
+      step: '/^(initial|open|run a query|options|bookmarks)$/'
+    n/a: >-
+      the "Add bookmark" card, likewise kept in phpMyAdmin's DOM while closed; compared in the
+      "add bookmark" step
+  - pma: { kind: textbox, step: initial }
+    n/a: >-
+      the collapsed console: phpMyAdmin's query input (CodeMirror) exists while the console is
+      collapsed, ours is rendered when it opens; compared from the "open" step

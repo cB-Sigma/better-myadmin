@@ -397,12 +397,12 @@ export function AddTablesModal({
   const [table, setTable] = useState('')
   // pma: `SHOW databases;` / `SHOW tables;` through /sql
   const dbs = useQuery({
-    queryKey: qk.exportAliasNames(server, '', ''),
-    queryFn: () => api.exportAliasNames(server, '', ''),
+    queryKey: qk.exportAliasNames(server, ''),
+    queryFn: () => api.exportAliasNames(server, ''),
   })
   const tables = useQuery({
-    queryKey: qk.exportAliasNames(server, db, ''),
-    queryFn: () => api.exportAliasNames(server, db, ''),
+    queryKey: qk.exportAliasNames(server, db),
+    queryFn: () => api.exportAliasNames(server, db),
     enabled: db !== '',
   })
   // the list shows the database's tables from the first one on (no "None" entry)
