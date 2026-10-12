@@ -1,5 +1,5 @@
 import { FIX } from './lib/env.ts'
-import { type PageFn, pageParity } from './lib/parity.ts'
+import { type PageFn, type PageSpec, pageParity } from './lib/parity.ts'
 
 /**
  * UI parity of the table-level pages beyond Structure (docs/features/04-table-level.md):
@@ -125,6 +125,47 @@ pageParity('table-privileges', {
   pma: { route: '/table/privileges', params: p(FIX.table) },
   ours: { path: `${T}/${FIX.table}/privileges` },
 })
+
+const VIEW = `CREATE OR REPLACE VIEW ${FIX.db}.uip_v AS SELECT id FROM ${FIX.db}.${FIX.table};`
+
+pageParity('view-create', {
+  pma: { route: '/view/create', params: { db: FIX.db } },
+  ours: { path: `/s/1/db/${FIX.db}/view/create` },
+})
+
+pageParity('view-edit', {
+  sql: VIEW,
+  pma: { route: '/view/create', params: p('uip_v') },
+  ours: { path: `/s/1/db/${FIX.db}/view/create?table=uip_v` },
+})
+
+/** rows of uip_child for the results' Display chart and Visualize GIS data */
+const PLOTTED = `${CHILD}
+  DELETE FROM ${FIX.db}.uip_child;
+  INSERT INTO ${FIX.db}.uip_child (id, t_id, note, g) VALUES
+    (1, NULL, 'a', ST_GeomFromText('POINT(1 2)')), (2, NULL, 'b', ST_GeomFromText('POINT(4 6)'));`
+
+/** opens a page from the Browse results' "Query results operations" */
+function fromResults(link: string, ready: { pma: string; ours: string }): PageSpec {
+  return {
+    sql: PLOTTED,
+    pma: { route: '/sql', params: { db: FIX.db, table: 'uip_child', pos: '0' } },
+    ours: { path: `${T}/uip_child/browse` },
+    setup: async ({ pma, ours }) => {
+      await pma.locator('#page_content a', { hasText: link }).first().click()
+      await pma.locator(ready.pma).first().waitFor()
+      await ours.locator('a', { hasText: link }).first().click()
+      await ours.locator(ready.ours).first().waitFor()
+    },
+  }
+}
+
+pageParity('table-chart', fromResults('Display chart', { pma: '#tblchartform', ours: '#tblchartform' }))
+
+pageParity(
+  'table-gis-visualization',
+  fromResults('Visualize GIS data', { pma: '#gis_div', ours: '#gis_div' }),
+)
 
 /** an icon + text link (the reference's accessible name repeats the image's alt) */
 function showLink(text: string): PageFn {

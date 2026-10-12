@@ -351,6 +351,11 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       <hr className="my-3 border-border print:hidden" />
 
       <div id="structure-action-links" className="mb-3 flex flex-wrap gap-3 text-sm print:hidden">
+        {s.links.editView && (
+          <Link to="/s/$server/db/$db/view/create" params={{ server, db }} search={{ table }}>
+            {t('Edit view')}
+          </Link>
+        )}
         <Button variant="link" className="jsPrintButton" onClick={() => window.print()}>
           {t('Print')}
         </Button>
