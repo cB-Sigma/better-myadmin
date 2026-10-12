@@ -1,6 +1,8 @@
 import type {
+  AccountLockRequest,
   AddColumnsRequest,
   AddKeyRequest,
+  AddUserForm,
   AdvisorResponse,
   AuthState,
   AutocompleteResponse,
@@ -27,6 +29,7 @@ import type {
   ChartDataRequest,
   ChartDataResponse,
   ChartPageResponse,
+  ChooseUserGroupResponse,
   CollationsResponse,
   ColumnFormOptions,
   ColumnTransformations,
@@ -78,6 +81,8 @@ import type {
   EventEditorData,
   EventsListResponse,
   ExportPageResponse,
+  ExportPrivilegesRequest,
+  ExportPrivilegesResponse,
   ExportResponse,
   ExportTemplateResult,
   FindReplacePreviewResponse,
@@ -145,6 +150,9 @@ import type {
   PreferencesSaveRequest,
   PreferencesSaveResponse,
   PreferencesTab,
+  PrivActionResponse,
+  PrivForm,
+  PrivMessage,
   ProcessList,
   ProcessesQuery,
   QueryRequest,
@@ -211,6 +219,12 @@ import type {
   TwoFactorStatusResponse,
   TwoFactorVerifyRequest,
   TwoFactorVerifyResponse,
+  UserGroupForm,
+  UserGroupUsersResponse,
+  UserGroupsResponse,
+  UserProperties,
+  UsersOverviewResponse,
+  ValidateUsernameResponse,
   VersionCheckResponse,
   ViewFormResponse,
   ViewSaveRequest,
@@ -608,6 +622,42 @@ export const api = {
   ) => call<ReplicationActionResponse>('POST', `${srvPath(s)}/replication/change-primary`, req),
   addReplicaUser: (s: number, req: ReplicaUserRequest) =>
     call<ReplicaUserResponse>('POST', `${srvPath(s)}/replication/replica-user`, req),
+  // user accounts and user groups (docs/features/06-server-level.md; pma: /server/privileges, /server/user-groups)
+  usersOverview: (s: number, q: PrivForm) =>
+    call<UsersOverviewResponse>('GET', `${srvPath(s)}/privileges/users${phpQuery(q)}`),
+  addUserForm: (s: number, q: PrivForm) =>
+    call<AddUserForm>('GET', `${srvPath(s)}/privileges/add-user${phpQuery(q)}`),
+  userProperties: (s: number, q: PrivForm) =>
+    call<UserProperties>('GET', `${srvPath(s)}/privileges/user${phpQuery(q)}`),
+  validateUsername: (s: number, username: string) =>
+    call<ValidateUsernameResponse>(
+      'GET',
+      `${srvPath(s)}/privileges/validate-username${phpQuery({ username })}`,
+    ),
+  /** The privileges forms as phpMyAdmin posts them (add user, update, revoke, password, copy, delete, group); `query` is `$_GET` (flush_privileges). */
+  submitPrivileges: (s: number, form: PrivForm, query: PrivForm = {}) =>
+    call<PrivActionResponse>('POST', `${srvPath(s)}/privileges${phpQuery(query)}`, form),
+  exportPrivileges: (s: number, req: ExportPrivilegesRequest) =>
+    call<ExportPrivilegesResponse>('POST', `${srvPath(s)}/privileges/export`, req),
+  lockAccount: (s: number, req: AccountLockRequest, lock: boolean) =>
+    call<{ message: PrivMessage }>(
+      'POST',
+      `${srvPath(s)}/privileges/account-${lock ? 'lock' : 'unlock'}`,
+      req,
+    ),
+  userGroups: (s: number) => call<UserGroupsResponse>('GET', `${srvPath(s)}/user-groups`),
+  /** deleteUserGroup / addUserGroupSubmit / editUserGroupSubmit (+ the `<level>_<tab>` boxes) */
+  submitUserGroups: (s: number, form: PrivForm) =>
+    call<UserGroupsResponse>('POST', `${srvPath(s)}/user-groups`, form),
+  userGroupUsers: (s: number, userGroup: string) =>
+    call<UserGroupUsersResponse>('GET', `${srvPath(s)}/user-groups/users${phpQuery({ userGroup })}`),
+  userGroupForm: (s: number, userGroup: string | null) =>
+    call<UserGroupForm>(
+      'GET',
+      `${srvPath(s)}/user-groups/form${userGroup === null ? '' : phpQuery({ userGroup })}`,
+    ),
+  chooseUserGroup: (s: number, username: string) =>
+    call<ChooseUserGroupResponse>('GET', `${srvPath(s)}/user-groups/edit-form${phpQuery({ username })}`),
   // table structure (docs/architecture/05-api-reference.md#table-scope)
   tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tablePath(r)}/structure`),
   changeColumnsForm: (r: TableRef, fields: string[]) =>
@@ -909,6 +959,17 @@ function qs(p: Record<string, string | undefined>): string {
 }
 
 /** Search params where `true` is `1` and false/empty values are left out (the server pages' GET forms). */
+/** `$_GET` of a phpMyAdmin request: empty values kept, lists as `name[]` */
+function phpQuery(q: PrivForm): string {
+  const p = new URLSearchParams()
+  for (const [k, v] of Object.entries(q)) {
+    if (Array.isArray(v)) for (const x of v) p.append(`${k}[]`, x)
+    else p.append(k, v)
+  }
+  const s = p.toString()
+  return s === '' ? '' : `?${s}`
+}
+
 function flags(q: Record<string, unknown>): string {
   const p = new URLSearchParams()
   for (const [k, v] of Object.entries(q)) {

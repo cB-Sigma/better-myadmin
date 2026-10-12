@@ -63,7 +63,6 @@ import {
 import { eventData, eventsList, exportEvent, saveEvent } from '../database/events.ts'
 import { multiTableForm, multiTableKeys } from '../database/multi-table.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
-import { dbPrivileges } from '../database/privileges.ts'
 import {
   executeForm,
   executeRoutine,
@@ -329,9 +328,6 @@ databaseRoutes.post('/:db/structure/central-make-consistent', async (c) => {
 
 /** pma: /database/data-dictionary */
 databaseRoutes.get('/:db/data-dictionary', async (c) => c.json(await withDb(c, dataDictionary)))
-
-/** pma: /database/privileges */
-databaseRoutes.get('/:db/privileges', async (c) => c.json(await withDb(c, dbPrivileges)))
 
 /** pma: /database/tracking */
 databaseRoutes.get('/:db/tracking', async (c) => c.json(await withDb(c, trackingPage)))

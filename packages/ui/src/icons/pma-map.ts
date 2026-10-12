@@ -55,6 +55,7 @@ import {
   ListOrdered,
   ListTree,
   Lock,
+  LockOpen,
   LogOut,
   type LucideIcon,
   Maximize,
@@ -94,7 +95,11 @@ import {
   Type,
   Upload,
   User,
+  UserCheck,
+  UserMinus,
+  UserPen,
   UserPlus,
+  Users,
   Variable,
   Wand2,
   Waypoints,
@@ -208,9 +213,6 @@ export const pmaIcons = {
   b_versions: ListOrdered,
   s_cancel: XCircle,
   centralColumns_add: Plus,
-  b_usrcheck: Shield,
-  b_usredit: Pencil,
-  b_usradd: UserPlus,
   // results grid (src/Display/Results.php, display/results/table.twig)
   b_view_add: Eye,
   b_globe: Globe,
@@ -258,6 +260,13 @@ export const pmaIcons = {
   'designer/Field_small_char': Type,
   'designer/Field_small_int': Hash,
   'designer/Field_small_date': Calendar,
+  // user accounts (server/privileges/*.twig)
+  b_usradd: UserPlus,
+  b_usrlist: Users,
+  b_usredit: UserPen,
+  b_usrdrop: UserMinus,
+  b_usrcheck: UserCheck,
+  s_unlock: LockOpen,
 } satisfies Record<string, LucideIcon>
 
 export type PmaIconName = keyof typeof pmaIcons

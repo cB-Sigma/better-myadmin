@@ -487,33 +487,6 @@ export interface DataDictionaryResponse {
   }>
 }
 
-// ---------------------------------------------------------------- Privileges (read-only)
-
-export interface DbPrivilegesResponse {
-  db: string
-  /** the table of /table/privileges (lower-cased like the database under lower_case_table_names=1) */
-  table?: string
-  isSuperUser: boolean
-  isGrantUser: boolean
-  isCreateUser: boolean
-  error: string | null
-  notice: string | null
-  accounts: Array<{
-    user: string
-    host: string
-    privileges: Array<{
-      /** g = global, d = database, t = table (/table/privileges only), r = routine */
-      type: 'g' | 'd' | 't' | 'r'
-      database: string
-      routine: string | null
-      /** the table name of a `t` entry */
-      table?: string
-      hasGrant: boolean
-      privileges: Array<{ name: string; title: string }>
-    }>
-  }>
-}
-
 // ---------------------------------------------------------------- Tracking (database scope)
 
 export interface DbTrackingResponse {

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { DbPrivilegesPage } from '../../../../../features/database/DbPrivilegesPage'
+import { DbPrivilegesPage } from '../../../../../features/server/privileges/DbPrivilegesPage'
 
 /** pma: /database/privileges */
 export const Route = createFileRoute('/s/$server/db/$db/privileges')({

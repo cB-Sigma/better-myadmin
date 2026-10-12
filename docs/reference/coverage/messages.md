@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1793/3426 covered (52.3%): 1793 implemented, 33 planned, 1600 missing. [Summary](README.md).
+1871/3426 covered (54.6%): 1871 implemented, 33 planned, 1522 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 222/403 (55.1%) covered, 222/403 implemented
 
@@ -139,9 +139,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 427/534 (80.0%) covered, 427/534 implemented
+## 04 table level — 428/534 (80.1%) covered, 428/534 implemented
 
-107 msgids not used yet.
+106 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -155,10 +155,8 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
 | `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
-| `resources/templates/columns_definitions/column_definitions_form.twig` | 2/14 | `Loading` · `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
-| `resources/templates/modals/index_dialog_modal.twig` | 2/6 | `Go back` · `Loading` |
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
@@ -169,14 +167,10 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/select.ts` | 1/6 | `Searching` |
 | `resources/js/table/structure.ts` | 1/8 | `Dropping column` |
-| `resources/templates/database/designer/main.twig` | 1/7 | `Loading` |
+| `resources/templates/columns_definitions/column_definitions_form.twig` | 1/14 | `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
 | `resources/templates/error/simple.twig` | 1/1 | `Go back` |
-| `resources/templates/export_modal.twig` | 1/2 | `Loading` |
-| `resources/templates/export.twig` | 1/2 | `Loading` |
-| `resources/templates/modals/preview_sql_confirmation.twig` | 1/2 | `Loading` |
-| `resources/templates/modals/preview_sql_modal.twig` | 1/2 | `Loading` |
+| `resources/templates/modals/index_dialog_modal.twig` | 1/6 | `Go back` |
 | `resources/templates/table/chart/tbl_chart.twig` | 1/22 | `X Values` |
-| `resources/templates/table/insert/actions_panel.twig` | 1/5 | `Loading` |
 | `resources/templates/table/partition/analyze.twig` | 1/1 | `Analyze partition` |
 | `resources/templates/table/partition/check.twig` | 1/1 | `Check partition` |
 | `resources/templates/table/partition/drop.twig` | 1/1 | `Drop partition` |
@@ -184,10 +178,8 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/rebuild.twig` | 1/1 | `Rebuild partition` |
 | `resources/templates/table/partition/repair.twig` | 1/1 | `Repair partition` |
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
-| `resources/templates/table/relation/common_form.twig` | 1/17 | `Loading` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
-| `resources/templates/table/zoom_search/result_form.twig` | 1/10 | `Loading` |
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
@@ -236,49 +228,30 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
 | `src/Plugins/Schema/Pdf/Pdf.php` | 1/1 | `PDF export page` |
 
-## 06 server level — 357/915 (39.0%) covered, 357/915 implemented
+## 06 server level — 433/915 (47.3%) covered, 433/915 implemented
 
-558 msgids not used yet.
+482 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Advisory/Rules.php` | 197/197 | `'percona' found in version_comment` · `'source' found in version_comment` · `{long_query_time} is set to 10 seconds or more, thus only slow quer…` · `{tmp_table_size} and {max_heap_table_size} are not the same.` · `%% MyISAM key buffer used: %s%%, this value should be above 95%%` · `%s thread(s) took longer than %s seconds to start, it should be 0` · `%s%% of all clients are aborted. This value should be below 2%%` · `%s%% of all connections are aborted. This value should be below 1%%` · `%s%% of all sorts cause temporary tables, this value should be lowe…` · `%s%% of all temporary tables are being written to disk, this value …` · `Aborted client rate is at %s, this value should be less than 1 per …` · `Aborted connections rate is at %s, this value should be less than 1…` · … +185 |
 | `src/Controllers/Server/Status/VariablesController.php` | 114/114 | `How many temporary files mysqld has created.` · `Key cache miss calculated as rate of physical reads compared to rea…` · `Normally, writes to the InnoDB buffer pool happen in the background…` · `Pending log file writes.` · `Percentage of physical writes compared to write requests (calculate…` · `Percentage of used key cache (calculated value)` · `The amount of data read so far, in bytes.` · `The amount of data written so far, in bytes.` · `The amount of free memory for query cache.` · `The average time to acquire a row lock, in milliseconds.` · `The compiled-in InnoDB page size (default 16KB). Many values are co…` · `The current number of pending fsync() operations.` · … +102 |
-| `resources/templates/server/privileges/privileges_table.twig` | 55/58 | `Administration` · `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · … +43 |
 | `src/Charsets/Collation.php` | 55/56 | `accent-insensitive (Collation variant)` · `accent-sensitive (Collation variant)` · `binary (Collation variant)` · `case-insensitive (Collation variant)` · `case-sensitive (Collation variant)` · `kana-sensitive (Collation variant)` · `multi-level (Collation variant)` · `no-pad (Collation variant)` · `Arabic (Collation)` · `Armenian (Collation)` · `Baltic (Collation)` · `Binary (Collation)` · … +43 |
-| `src/Server/Privileges.php` | 49/56 | `A user account allowing any user from localhost to connect is prese…` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · … +37 |
+| `src/Server/Privileges.php` | 42/56 | `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · `Allows creating, dropping and renaming user accounts.` · … +30 |
+| `resources/templates/server/privileges/privileges_table.twig` | 41/58 | `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · … +29 |
 | `src/Engines/Pbxt.php` | 24/25 | `Checkpoint frequency` · `Data file grow size` · `Data log threshold` · `Garbage threshold` · `Index cache size` · `Log buffer size` · `Log cache size` · `Log file count` · `Log file threshold` · `Record cache size` · `Row file grow size` · `The amount of data written to the transaction log before a checkpoi…` · … +12 |
-| `resources/templates/server/privileges/users_overview.twig` | 12/20 | `New (Create new user)` · `Drop the databases that have the same names as the users.` · `Edit user group` · `Global privileges` · `Lock (Lock the account.)` · `Lock this account.` · `Remove selected user accounts` · `Revoke all active privileges from the users and delete them afterwa…` · `The selected user was not found in the privilege table.` · `Unlock (Unlock the account.)` · `Unlock this account.` · `User group` |
 | `src/Engines/Myisam.php` | 12/12 | `Automatic recovery mode` · `Data pointer size` · `If the temporary file used for fast MyISAM index creation would be …` · `If this value is greater than 1, MyISAM table indexes are created i…` · `Maximum size for temporary files on index creation` · `Maximum size for temporary sort files` · `Repair threads` · `Sort buffer size` · `The buffer that is allocated when sorting MyISAM indexes during a R…` · `The default pointer size in bytes, to be used by CREATE TABLE for M…` · `The maximum size of the temporary file MySQL is allowed to use whil…` · `The mode for automatic recovery of crashed MyISAM tables, as set vi…` |
-| `resources/templates/server/privileges/user_properties.twig` | 11/12 | `… delete the old one from the user tables and reload the privileges…` · `… delete the old one from the user tables.` · `… keep the old one.` · `… revoke all active privileges from the old one and delete it after…` · `Change login information / Copy user account` · `Create a new user account with the same privileges and …` · `Edit privileges:` · `Login Information` · `Note: You are attempting to edit privileges of the user with which …` · `The selected user was not found in the privilege table.` · `User account` |
-| `resources/js/server/privileges.ts` | 9/10 | `Do you really want to revoke the selected user(s) ?` · `Lock (Lock the account.)` · `Lock this account.` · `No accounts selected.` · `Removing Selected Users` · `The host name is empty!` · `The user name is empty!` · `Unlock (Unlock the account.)` · `Unlock this account.` |
-| `resources/templates/server/privileges/edit_routine_privileges.twig` | 9/11 | `Allows altering and dropping this routine.` · `Allows executing this routine.` · `Allows user to give to other users or remove from other users privi…` · `Edit privileges:` · `Note: MySQL privilege names are expressed in English.` · `Note: You are attempting to edit privileges of the user with which …` · `Routine` · `Routine-specific privileges` · `User account` |
 | `src/Engines/Innodb.php` | 8/9 | `Autoextend increment` · `Buffer Pool` · `Buffer pool size` · `Data files` · `Data home directory` · `The common part of the directory path for all InnoDB data files.` · `The increment size for extending the size of an autoextending table…` · `The size of the memory buffer InnoDB uses to cache data and indexes…` |
-| `resources/templates/server/privileges/login_information_fields.twig` | 7/23 | `An account already exists with the same username but possibly a dif…` · `Authentication plugin` · `Do not change the password` · `Host name:` · `Login Information` · `Password hashing method` · `Use text field` |
-| `resources/templates/server/privileges/privileges_summary.twig` | 7/9 | `Add privileges on the following database(s):` · `Add privileges on the following routine:` · `Add privileges on the following table:` · `Column-specific privileges` · `Table-specific privileges` · `Use text field` · `Wildcards % and _ should be escaped with a \\ to use them literally.` |
-| `resources/templates/server/user_groups/user_groups.twig` | 6/6 | `Add user group` · `Database level tabs` · `Delete user group` · `Server level tabs` · `Table level tabs` · `User groups` |
-| `resources/templates/server/privileges/add_user.twig` | 5/6 | `Create database with same name and grant all privileges.` · `Create user` · `Database for user account` · `Grant all privileges on database %s.` · `Grant all privileges on wildcard name (username\\_%).` |
-| `resources/templates/server/user_groups/edit_user_groups.twig` | 5/6 | `Add user group` · `Edit user group` · `Edit user group: '%s'` · `Group name:` · `User group menu assignments` |
 | `resources/templates/server/plugins/index.twig` | 4/7 | `deleted` · `deleting` · `disabled` · `inactive` |
+| `resources/templates/server/privileges/user_properties.twig` | 4/12 | `… delete the old one from the user tables and reload the privileges…` · `… delete the old one from the user tables.` · `… keep the old one.` · `… revoke all active privileges from the old one and delete it after…` |
 | `src/Server/Plugins.php` | 4/5 | `Caching sha2 authentication` · `Old MySQL-4.0 authentication` · `SHA256 password authentication` · `Unix Socket based authentication` |
 | `src/UserPassword.php` | 3/4 | `Password is too long!` · `The password is empty!` · `The passwords aren't the same!` |
 | `resources/js/modules/functions.ts` | 2/2 | `The password is empty!` · `The passwords aren't the same!` |
-| `resources/templates/server/privileges/subnav.twig` | 2/2 | `User accounts overview` · `User groups` |
-| `resources/templates/server/privileges/user_overview.twig` | 2/3 | `New (Create new user)` · `User accounts overview` |
-| `resources/templates/server/user_groups/user_listings.twig` | 2/3 | `No users were found belonging to this user group.` · `Users of '%s' user group` |
-| `resources/js/database/routines.ts` | 1/1 | `Routine` |
+| `resources/js/server/privileges.ts` | 2/10 | `The host name is empty!` · `The user name is empty!` |
 | `resources/js/server/status/queries.ts` | 1/1 | `Number of statements` |
-| `resources/js/server/user_groups.ts` | 1/1 | `Do you really want to delete user group "%s"?` |
-| `resources/templates/server/privileges/add_user_fieldset.twig` | 1/2 | `New (Create new user)` |
-| `resources/templates/server/privileges/choose_user_group.twig` | 1/1 | `User group:` |
-| `resources/templates/server/privileges/initials_row.twig` | 1/2 | `Pagination of user accounts` |
-| `resources/templates/server/privileges/new_user_ajax.twig` | 1/3 | `Edit user group` |
 | `resources/templates/server/status/monitor/index.twig` | 1/59 | `Warning:` |
 | `src/Controllers/Server/Privileges/AccountLockController.php` | 1/1 | `The account %s@%s has been successfully locked.` |
 | `src/Controllers/Server/Privileges/AccountUnlockController.php` | 1/1 | `The account %s@%s has been successfully unlocked.` |
-| `src/Controllers/Server/PrivilegesController.php` | 1/4 | `Username and hostname didn't change. If you only want to change the…` |
-| `src/Controllers/Server/UserGroupsFormController.php` | 1/1 | `User groups management is not enabled.` |
-| `src/Server/Privileges/AccountLocking.php` | 1/1 | `Account locking is not supported.` |
 
 ## 07 export import — 238/293 (81.2%) covered, 238/293 implemented
 
@@ -316,9 +289,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 68/666 (10.2%) covered, 68/666 implemented
+## 08 settings preferences pmadb — 69/666 (10.4%) covered, 69/666 implemented
 
-598 msgids not used yet.
+597 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -331,9 +304,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/datetimepicker.ts` | 7/7 | `Friday (Week day name)` · `Monday (Week day name)` · `Saturday (Week day name)` · `Sunday (Week day name)` · `Thursday (Week day name)` · `Tuesday (Week day name)` · `Wednesday (Week day name)` |
 | `src/Config/Forms/User/ExportForm.php` | 7/7 | `CSV` · `CSV for MS Excel` · `Custom` · `Microsoft Word 2000` · `OpenDocument Spreadsheet` · `OpenDocument Text` · `Quick` |
 | `src/Config/FormDisplay.php` | 5/7 | `"%s" requires %s extension` · `Compressed export will not work due to missing function %s.` · `Compressed import will not work due to missing function %s.` · `maximum %s` · `unavailable` |
-| `src/ConfigStorage/UserGroups.php` | 4/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` · `View users` |
 | `src/Config/Forms/Setup/ServersForm.php` | 3/3 | `Config authentication` · `HTTP authentication` · `Signon authentication` |
 | `src/Config/Forms/User/ImportForm.php` | 3/4 | `CSV` · `CSV using LOAD DATA` · `OpenDocument Spreadsheet` |
+| `src/ConfigStorage/UserGroups.php` | 3/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` |
 | `src/Config.php` | 2/2 | `Existing configuration file (%s) is not readable.` · `Wrong permissions on configuration file, should not be world writable!` |
 | `src/Config/UserPreferences.php` | 2/2 | `Could not save configuration` · `The phpMyAdmin configuration storage database could not be accessed.` |
 | `resources/templates/config/form_display/input.twig` | 1/5 | `Allow users to customize this value` |

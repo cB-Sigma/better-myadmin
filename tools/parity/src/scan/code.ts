@@ -256,7 +256,8 @@ export function scanMsgids(files: SourceFile[], repo = REPO): MsgidUse[] {
         const name = ts.isIdentifier(callee)
           ? callee.text
           : ts.isPropertyAccessExpression(callee)
-            ? callee.name.text
+            ? // `this.#t(…)`: a private translator method counts like `t(…)`
+              callee.name.text.replace(/^#/, '')
             : ''
         const [a, b, c] = node.arguments
         if (SINGULAR.has(name)) {

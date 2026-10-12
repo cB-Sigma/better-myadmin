@@ -5,6 +5,11 @@
 #   tool:    pma | bma   which side may send it without the other
 #   pattern: JavaScript regex, matched against the normalised statement
 #   why:     justification reviewed in the PR
+#
+# A write may differ only through a registered exception (docs/reference/parity-exceptions.md),
+# as a suffix entry (tool: bma, `exception`): our statement is phpMyAdmin's statement matching
+# `pattern` plus exactly `suffix`, at the same position, and `followedBy` must match phpMyAdmin's
+# next write.
 - tool: pma
   pattern: "^SHOW TABLES FROM `phpmyadmin`$"
   why: phpMyAdmin probes the configuration storage on every request; BetterMyAdmin caches pmadb discovery per session (M0 has no pmadb yet).
@@ -128,3 +133,9 @@
 - tool: bma
   pattern: "^SELECT @@basedir$"
   why: DatabaseInterface::isAmazonRds, session-cached in both tools (SessionCache is_amazon_rds).
+- tool: bma
+  exception: X40
+  pattern: "^GRANT [A-Z ,()`a-z0-9_]+ ON (PROCEDURE |FUNCTION )?(?:\\*\\.\\*|`(?:[^`]|``)+`\\.(?:\\*|`(?:[^`]|``)+`)) TO '(?:[^'\\\\]|\\\\.)*'@'(?:[^'\\\\]|\\\\.)*'$"
+  suffix: " WITH GRANT OPTION"
+  followedBy: "^ALTER USER '(?:[^'\\\\]|\\\\.)*'@'(?:[^'\\\\]|\\\\.)*' ?( REQUIRE .*| WITH .*)?$"
+  why: "X40: phpMyAdmin bug, silently drops the requested grant option (https://github.com/phpmyadmin/phpmyadmin/issues/19605). On MySQL >= 8.0.11 an Edit privileges GRANT with Grant_priv=Y (global, database, table or routine) ends with WITH GRANT OPTION in BetterMyAdmin; phpMyAdmin's following ALTER USER is sent unchanged."

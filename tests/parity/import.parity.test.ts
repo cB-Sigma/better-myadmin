@@ -248,6 +248,25 @@ const cases: Array<{
     changes: { format: 'csv', csv_new_db_name: `${DBS.pma}_new`, csv_new_tbl_name: 'nt' },
     file: f('srv.csv', '1,2\n3,4\n'),
   },
+  // LOAD DATA (table scope): the reference MySQL runs with local_infile=OFF and secure_file_priv
+  {
+    name: 'ldi, LOCAL',
+    form: () => tableForm,
+    changes: { format: 'ldi', ldi_local_option: 'something', ldi_terminated: ',' },
+    file: f('t.ldi', '7,seven,7.5\n'),
+  },
+  {
+    name: 'ldi, server file',
+    form: () => tableForm,
+    changes: { format: 'ldi', ldi_local_option: null, ldi_ignore: 'something', ldi_columns: 'id, name' },
+    file: f('t2.ldi', '8;eight\n'),
+  },
+  {
+    name: 'ldi, compressed',
+    form: () => tableForm,
+    changes: { format: 'ldi' },
+    file: f('t3.ldi.gz', gzipSync(Buffer.from('9;nine;1\n'))),
+  },
   { name: 'mediawiki', form: () => dbForm, changes: { format: 'mediawiki' }, file: f('wiki.txt', WIKI) },
   {
     name: 'ods, column names, percentages, currency',

@@ -406,17 +406,27 @@
 /server/privileges:
   api:
     - 'GET /api/servers/:s/privileges/users'
-    - 'GET /api/servers/:s/privileges/users/:user/:host'
+    - 'GET /api/servers/:s/privileges/add-user'
+    - 'GET /api/servers/:s/privileges/user'
+    - 'GET /api/servers/:s/privileges/validate-username'
+    - 'POST /api/servers/:s/privileges'
+    - 'POST /api/servers/:s/privileges/export'
+  ui:
+    - '/s/:s/privileges'
+    - '/s/:s/privileges/add-user'
+    - '/s/:s/privileges/user'
+  planned: M3
+  note: 'one route in phpMyAdmin (overview, ?adduser, the user editor at every level, the posted actions, ?export, ?validate_username, ?flush_privileges)'
+/server/privileges/account-lock:
+  api: 'POST /api/servers/:s/privileges/account-lock'
   ui: '/s/:s/privileges'
   planned: M3
-/server/privileges/account-lock:
-  api: '/api/servers/:s/privileges/account-lock'
-  ui: '/s/:s/privileges/account-lock'
-  planned: M3
+  note: 'AJAX action of the overview Lock button'
 /server/privileges/account-unlock:
-  api: '/api/servers/:s/privileges/account-unlock'
-  ui: '/s/:s/privileges/account-unlock'
+  api: 'POST /api/servers/:s/privileges/account-unlock'
+  ui: '/s/:s/privileges'
   planned: M3
+  note: 'AJAX action of the overview Unlock button'
 /server/replication:
   api:
     - 'GET /api/servers/:s/replication'
@@ -466,13 +476,18 @@
     - 'POST /api/servers/:s/status/variables'
   ui: '/s/:s/status/variables'
 /server/user-groups:
-  api: '/api/servers/:s/user-groups'
+  api:
+    - 'GET /api/servers/:s/user-groups'
+    - 'POST /api/servers/:s/user-groups'
+    - 'GET /api/servers/:s/user-groups/users'
+    - 'GET /api/servers/:s/user-groups/form'
   ui: '/s/:s/user-groups'
   planned: M3
 /server/user-groups/edit-form:
-  api: '/api/servers/:s/user-groups/edit-form'
-  ui: '/s/:s/user-groups/edit-form'
+  api: 'GET /api/servers/:s/user-groups/edit-form'
+  ui: '/s/:s/privileges'
   planned: M3
+  note: 'body of the overview modal #editUserGroupModal'
 /server/variables:
   api: 'GET /api/servers/:s/variables'
   ui: '/s/:s/variables'
@@ -629,7 +644,7 @@
   ui: '/s/:s/db/:db/t/:table/structure'
   note: the Partitions card of the Structure page
 /table/privileges:
-  api: 'GET /api/servers/:s/databases/:db/tables/:t/privileges'
+  api: 'GET /api/servers/:s/databases/:db/tables/:table/privileges'
   ui: '/s/:s/db/:db/t/:table/privileges'
 /table/recent-favorite:
   api: 'GET /api/servers/:s/recent-favorite'

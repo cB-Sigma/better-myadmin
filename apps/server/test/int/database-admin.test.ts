@@ -106,7 +106,7 @@ describe('data dictionary and privileges', () => {
 
   it('privileges (read-only list)', async () => {
     const r = await bare.req('GET', `${base}/privileges`)
-    expect(J(r).isSuperUser).toBe(true)
+    expect(J(r).gate.isSuperUser).toBe(true)
     expect(J(r).accounts.some((a: { user: string }) => a.user === 'root')).toBe(true)
   })
 })

@@ -53,6 +53,7 @@ export const suiteUsers = (tag: string) => ({ pma: `${PMA_USER}_${tag}`, bma: `$
 export async function startHarness(
   cfg: Parameters<typeof testConfig>[0] = {},
   users: { pma: string; bma: string; grant?: string } = { pma: PMA_USER, bma: BMA_USER },
+  /** `$cfg['Servers'][1]` overrides of the BetterMyAdmin server (controluser, pmadb, …) */
   server: Parameters<typeof testConfig>[1] = {},
   target: { root: typeof ROOT; pmaUrl: string } = { root: ROOT, pmaUrl: PMA_URL },
 ): Promise<Harness> {

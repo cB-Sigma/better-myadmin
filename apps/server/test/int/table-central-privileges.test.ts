@@ -60,7 +60,7 @@ describe('table Privileges', () => {
   it('lists the accounts with access to the table', async () => {
     const r = await bare.req('GET', `${base}/tables/a/privileges`)
     expect(r.status).toBe(200)
-    expect(J(r)).toMatchObject({ db: DB, table: 'a', isSuperUser: true, error: null })
+    expect(J(r)).toMatchObject({ db: DB, table: 'a', gate: { isSuperUser: true, noPrivileges: false } })
     expect(J(r).accounts.some((a: Any) => a.privileges.some((p: Any) => p.type === 'g'))).toBe(true)
   })
 })

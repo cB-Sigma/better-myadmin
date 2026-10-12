@@ -179,16 +179,6 @@ export const pmaControls = {
   'database/operations/index.twig#db_collation': 'OperationsPage.tsx',
   'database/operations/index.twig#change_all_tables_collations': 'OperationsPage.tsx',
   'database/operations/index.twig#change_all_tables_columns_collations': 'OperationsPage.tsx',
-  // pma: resources/templates/database/privileges/
-  'database/privileges/index.twig#selected_usr[]': {
-    file: 'DbPrivilegesPage.tsx',
-    match: 'checkbox_sel_users_',
-  },
-  'database/privileges/index.twig#link:Edit privileges': 'DbPrivilegesPage.tsx',
-  'database/privileges/index.twig#link:Export': 'DbPrivilegesPage.tsx',
-  'database/privileges/index.twig#id:usersForm_checkall': 'DbPrivilegesPage.tsx',
-  'database/privileges/index.twig#submit_mult': 'DbPrivilegesPage.tsx',
-  'database/privileges/index.twig#link:Add user account': 'DbPrivilegesPage.tsx',
   // pma: resources/templates/database/routines/
   'database/routines/editor_form.twig#item_name': 'RoutinesPage.tsx',
   'database/routines/editor_form.twig#item_type': 'RoutinesPage.tsx',

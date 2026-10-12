@@ -6,11 +6,41 @@ export interface AllowedDiff {
   tool: 'pma' | 'bma'
   pattern: string
   why: string
+  /**
+   * A write of a registered exception (docs/reference/parity-exceptions.md): BetterMyAdmin's
+   * statement is phpMyAdmin's (matching `pattern`) plus exactly this suffix. Nothing is dropped.
+   */
+  suffix?: string
+  /** With `suffix`: phpMyAdmin's next write must match this too. */
+  followedBy?: string
+  /** With `suffix`: the exception id (X…). */
+  exception?: string
 }
 
-const allowedDiffs = (
+type Compiled = AllowedDiff & { re: RegExp }
+
+const allowedDiffs: Compiled[] = (
   parse(readFileSync(new URL('../allowed-diffs.yaml', import.meta.url), 'utf8')) as AllowedDiff[]
 ).map((a) => ({ ...a, re: new RegExp(a.pattern) }))
+
+/**
+ * BetterMyAdmin's writes with each registered suffix difference mapped back to phpMyAdmin's
+ * statement: position i only, when phpMyAdmin's write i matches the pattern, ours is exactly it plus
+ * the suffix, and phpMyAdmin's next write matches `followedBy`.
+ */
+function unsuffixed(pmaWrites: string[], bmaWrites: string[], rules: Compiled[]): string[] {
+  return bmaWrites.map((b, i) => {
+    const p = pmaWrites[i]
+    if (p === undefined) return b
+    for (const r of rules) {
+      if (r.suffix === undefined || b !== p + r.suffix || !r.re.test(p)) continue
+      const next = pmaWrites[i + 1]
+      if (r.followedBy !== undefined && (next === undefined || !new RegExp(r.followedBy).test(next))) continue
+      return p
+    }
+    return b
+  })
+}
 
 /** Collapse whitespace, strip the trailing delimiter, map per-tool database names to one name. */
 export function normalise(sql: string, dbMap: Record<string, string> = {}): string {
@@ -87,7 +117,7 @@ export function compareLogs(
     log
       .map((e) => normalise(e.sql, dbMap))
       .filter((s) => {
-        const hit = allowed.find((a) => a.tool === tool && a.re.test(s))
+        const hit = allowed.find((a) => a.tool === tool && a.suffix === undefined && a.re.test(s))
         if (hit !== undefined && classify(s) === 'write') {
           problems.push(`allowed-diffs pattern ${hit.pattern} matches a write: ${s}`)
           return true
@@ -106,7 +136,8 @@ export function compareLogs(
     return state
   }
   const eq = (a: string[], b: string[]) => a.length === b.length && a.every((x, i) => x === b[i])
-  if (!eq(of('write', pma), of('write', bma))) {
+  const suffixRules = allowed.filter((a) => a.tool === 'bma' && a.suffix !== undefined)
+  if (!eq(of('write', pma), unsuffixed(of('write', pma), of('write', bma), suffixRules))) {
     problems.push(
       `writes differ:\n  pma: ${JSON.stringify(of('write', pma))}\n  bma: ${JSON.stringify(of('write', bma))}`,
     )
@@ -149,7 +180,7 @@ export function compareMetadataLogs(
   const bma = bmaLog
     .map((e) => ts(normalise(e.sql, dbMap)))
     .filter((s) => {
-      const hit = allowedDiffs.find((a) => a.tool === 'bma' && a.re.test(s))
+      const hit = allowedDiffs.find((a) => a.tool === 'bma' && a.suffix === undefined && a.re.test(s))
       if (hit !== undefined && classify(s) === 'write') {
         problems.push(`allowed-diffs pattern ${hit.pattern} matches a write: ${s}`)
         return true
