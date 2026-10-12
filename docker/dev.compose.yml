@@ -3,6 +3,8 @@
 #   indexed MyISAM table (seed/00-general-log.sql; see docs/architecture/14-development-setup.md)
 # - phpmyadmin-ref: phpMyAdmin at the reference commit (docs/reference/reference-commit.txt) on :8081
 # - phpmyadmin-ref-i18n: the same with compiled translations (like a release) on :8082
+# - mysql84-replica (:3308): a replica of mysql84 (seed/replica/10-replica.sh), and
+#   phpmyadmin-ref-replica (:8083) whose only server it is, for tests/parity/server-replication
 services:
   mysql84:
     image: mysql:8.4
@@ -12,6 +14,27 @@ services:
     volumes:
       - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
       - "./seed/pmadb.sql:/docker-entrypoint-initdb.d/01-pmadb.sql:ro"
+      - "./seed/02-replication-user.sql:/docker-entrypoint-initdb.d/02-replication-user.sql:ro"
+    healthcheck: { test: ["CMD", "mysqladmin", "ping", "-proot"], interval: 5s, retries: 30 }
+  mysql84-replica:
+    image: mysql:8.4
+    environment: { MYSQL_ROOT_PASSWORD: root, REPLICA_SOURCE_HOST: mysql84, REPLICA_SOURCE_PORT: "3306" }
+    # no binary log (a replica only); applies only f06r_repl, and the other suites' statements never
+    # stop it (the replica parses a statement before its database filter applies)
+    command:
+      - --server-id=2
+      - --skip-log-bin
+      - --report-host=mysql84-replica
+      - --report-port=3306
+      - --replicate-do-db=f06r_repl
+      - --replica-skip-errors=all
+      - --general-log=1
+      - --log-output=TABLE
+    ports: ["3308:3306"]
+    volumes:
+      - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
+      - "./seed/replica/10-replica.sh:/docker-entrypoint-initdb.d/10-replica.sh:ro"
+    depends_on: { mysql84: { condition: service_healthy } }
     healthcheck: { test: ["CMD", "mysqladmin", "ping", "-proot"], interval: 5s, retries: 30 }
   mariadb11:
     image: mariadb:11
@@ -31,3 +54,8 @@ services:
     environment: { PMA_HOST: mysql84 }
     ports: ["8082:8081"]
     depends_on: { mysql84: { condition: service_healthy } }
+  phpmyadmin-ref-replica:
+    build: { context: ./pma-ref }
+    environment: { PMA_HOST: mysql84-replica, PMA_REPLICA: "1" }
+    ports: ["8083:8081"]
+    depends_on: { mysql84-replica: { condition: service_healthy } }

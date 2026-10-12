@@ -50,6 +50,9 @@ export const qk = {
   engines: (s: number, engine = '', page = '') => ['srv', s, 'engines', engine, page] as const,
   plugins: (s: number) => ['srv', s, 'plugins'] as const,
   binlog: (s: number, q: object) => ['srv', s, 'binlog', q] as const,
+  replication: (s: number, q: object = {}) => ['srv', s, 'replication', q] as const,
+  monitor: (s: number) => ['srv', s, 'status', 'monitor'] as const,
+  monitorLogVars: (s: number) => ['srv', s, 'status', 'monitor', 'log-vars'] as const,
   // table structure (all below qk.tbl: DDL invalidates the table)
   tableStructure: (r: TableRef) => [...qk.tbl(r), 'structure'] as const,
   changeColumnsForm: (r: TableRef, fields: string[]) => [...qk.tbl(r), 'change-form', fields] as const,

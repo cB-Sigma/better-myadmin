@@ -30,6 +30,7 @@ export {
   numberFormat,
   phpFloatToString,
   phpFloatval,
+  phpIntval,
   phpRound,
   type SprintfArg,
   sprintf,

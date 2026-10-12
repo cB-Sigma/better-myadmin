@@ -21,6 +21,7 @@ import { ApiError, api, errorMessage } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { path } from '../../lib/paths'
 import { qk } from '../../lib/queryKeys'
+import { ReplicationStatusTable } from './ReplicationPage'
 
 /** pma: templates/server/status/base.twig — the pills shared by the Status sub-pages */
 export function StatusLayout({ server }: { server: number }) {
@@ -152,39 +153,7 @@ export function StatusOverviewPage({ server }: { server: number }) {
           <hr className="my-3 border-border" />
           <h3 className="mb-2 text-base font-semibold">{t('Replication status')}</h3>
           {o.replication.map((r) => (
-            <div key={r.type} id={`replication_${r.type}_section`}>
-              <h4 className="mb-1 text-sm font-semibold" id={`replication_${r.type}`}>
-                {r.type === 'primary' ? t('Primary status') : t('Replica status')}
-              </h4>
-              <Table zebra className="mb-3" id={`server${r.type}replicationsummary`}>
-                <thead>
-                  <tr>
-                    <th>{t('Variable')}</th>
-                    <th>{t('Value')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {r.variables.map((v) => (
-                    <tr key={v.name}>
-                      <td>{v.name}</td>
-                      <td className="text-end font-mono">
-                        <span
-                          className={
-                            v.status === 'text-danger'
-                              ? 'text-error'
-                              : v.status === 'text-success'
-                                ? 'text-success'
-                                : ''
-                          }
-                        >
-                          {v.value}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
+            <ReplicationStatusTable key={r.type} table={r} title />
           ))}
         </>
       )}

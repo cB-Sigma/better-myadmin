@@ -10,7 +10,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `AllowArbitraryServer` | apps/server/src/auth/cookie.ts:77<br>apps/server/src/routes/auth.ts:54 |  |
+| ✅ | `AllowArbitraryServer` | apps/server/src/auth/cookie.ts:77<br>apps/server/src/routes/auth.ts:54<br>apps/server/src/server-admin/replication.ts:279 |  |
 | ✅ | `ArbitraryServerRegexp` | apps/server/src/auth/cookie.ts:78<br>apps/server/src/auth/cookie.ts:81 |  |
 | ⬜ | `AuthLog` |  |  |
 | ⬜ | `AuthLogSuccess` |  |  |
@@ -82,7 +82,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/controluser` | apps/server/src/shell/home.ts:67 |  |
 | ✅ | `Servers/*/DisableIS` | apps/server/src/database/events.ts:46<br>apps/server/src/database/tables.ts:122<br>apps/server/src/export/service.ts:103<br>apps/server/src/metadata/service.ts:293<br>apps/server/src/metadata/service.ts:336 |  |
 | ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/cookie.ts:115 |  |
-| ✅ | `Servers/*/host` | apps/server/src/auth/cookie.ts:89<br>apps/server/src/db/pool-manager.ts:35<br>apps/server/src/export/service.ts:121<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/scope.ts:111 |  |
+| ✅ | `Servers/*/host` | apps/server/src/auth/cookie.ts:89<br>apps/server/src/db/pool-manager.ts:35<br>apps/server/src/export/service.ts:121<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/server-admin/monitor.ts:45 |  |
 | ⬜ | `Servers/*/LogoutURL` |  |  |
 | ⬜ | `Servers/*/password` |  |  |
 | ✅ | `Servers/*/SessionTimeZone` | apps/server/src/db/pool-manager.ts:85<br>apps/server/src/db/pool-manager.ts:87 |  |
@@ -225,7 +225,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:156<br>apps/server/src/import/service.ts:256<br>apps/server/src/routes/shell.ts:81 |  |
+| ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:156<br>apps/server/src/import/service.ts:256<br>apps/server/src/routes/shell.ts:81<br>apps/server/src/server-admin/context.ts:60 |  |
 | ⬜ | `LoginCookieValidityDisableWarning` |  |  |
 | ✅ | `NavigationDisplayServers` | apps/server/src/navigation/service.ts:63<br>apps/server/src/shell/home.ts:263<br>apps/web/src/features/navigation/NavigationPanel.tsx:397 |  |
 | ✅ | `Servers/*/controlpass` | apps/server/src/shell/home.ts:67 |  |
