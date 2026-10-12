@@ -47,13 +47,34 @@ interface TrackerState {
   tracked: Map<string, boolean>
   /** the tracker's own queries are not tracked */
   busy: boolean
+  /**
+   * `Current::$database` of the request: the route's database, '' for the SQL views (their
+   * statements `USE` the posted one), null for the server-level pages (no database: not tracked)
+   */
+  requestDb: string | null
+}
+
+/** The SQL views whose database comes in the body (pma: /sql, /import with `db`). */
+const SQL_VIEWS = /^\/api\/servers\/\d+\/(query|browse|import|sql)(\/|$)/
+
+function requestDbOf(path: string): string | null {
+  const m = /^\/api\/servers\/\d+\/databases\/([^/]+)/.exec(path)
+  if (m !== null) return decodeURIComponent(m[1] as string)
+  return SQL_VIEWS.test(path) ? '' : null
 }
 
 const als = new AsyncLocalStorage<TrackerState>()
 
 /** Runs the rest of the request with the tracker enabled. */
 export async function withTracker(c: Context<ServerEnv>, next: () => Promise<void>): Promise<void> {
-  const st: TrackerState = { c, meta: null, anyTracking: new Map(), tracked: new Map(), busy: false }
+  const st: TrackerState = {
+    c,
+    meta: null,
+    anyTracking: new Map(),
+    tracked: new Map(),
+    busy: false,
+    requestDb: requestDbOf(c.req.path),
+  }
   try {
     await als.run(st, next)
   } finally {
@@ -131,15 +152,16 @@ export function parseTrackedQuery(query: string): ParsedTrackedQuery | null {
 /** pma: Tracker::handleQuery */
 async function handleQuery(conn: Conn, queryIn: string): Promise<void> {
   const st = als.getStore()
-  if (st === undefined || st.busy) return
+  if (st === undefined || st.busy || st.requestDb === null) return
   // If query is marked as untouchable, leave
   if (queryIn.startsWith('/*NOTRACK*/') || !CANDIDATE.test(queryIn)) return
   const query = queryIn.endsWith(';') ? queryIn : `${queryIn};\n`
-  const dbname = conn.currentDb.replace(/^`+|`+$/g, '')
+  const dbname = (conn.currentDb !== '' ? conn.currentDb : st.requestDb).replace(/^`+|`+$/g, '')
   if (dbname === '') return
   st.busy = true
   try {
-    st.meta ??= new MetaRequest(st.c, { db: dbname })
+    // the tracker's own storage statements stay out of the request's Debug SQL list
+    st.meta ??= new MetaRequest(st.c, { db: dbname, log: [] })
     const meta = st.meta
     const rp: RelationParameters = await meta.relationParameters()
     if (rp.trackingFeature === null || rp.db === null) return

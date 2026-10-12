@@ -1,6 +1,7 @@
 import { homedir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { defaults } from '@bettermyadmin/config'
+import type { Executed } from '@bettermyadmin/contracts'
 import {
   ConfigStorage,
   LocalMetadataStore,
@@ -173,6 +174,8 @@ function snapshot(s: StorageServer): StorageTables {
 export interface MetaRequestOptions {
   /** The request's current database (`Current::$database`, used by ZeroConf). */
   db?: string
+  /** Where the control link logs its statements (default: the request's Debug SQL list). */
+  log?: Executed[]
 }
 
 /**
@@ -206,7 +209,7 @@ export class MetaRequest {
     this.currentDb = opts.db ?? ''
     const session = c.get('session')
     this.control = new LazyControl(() =>
-      pools.control.acquire(session.id, this.serverIndex, c.get('creds'), c.get('executed')),
+      pools.control.acquire(session.id, this.serverIndex, c.get('creds'), opts.log ?? c.get('executed')),
     )
   }
 

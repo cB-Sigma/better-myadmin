@@ -64,7 +64,7 @@ describe('Tracker::handleQuery', () => {
     expect(await logs('u')).toEqual([])
   })
 
-  it('creates version 1 of a new table with tracking_version_auto_create', async () => {
+  it('creates version 1 of a new table with tracking_version_auto_create [p04-cc268e]', async () => {
     const a = testApp(testConfig({}, { ...PMADB, tracking_version_auto_create: true }))
     await a.login()
     await run(a, 'CREATE TABLE n (id INT)')

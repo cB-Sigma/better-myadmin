@@ -139,3 +139,6 @@
   suffix: " WITH GRANT OPTION"
   followedBy: "^ALTER USER '(?:[^'\\\\]|\\\\.)*'@'(?:[^'\\\\]|\\\\.)*' ?( REQUIRE .*| WITH .*)?$"
   why: "X40: phpMyAdmin bug, silently drops the requested grant option (https://github.com/phpmyadmin/phpmyadmin/issues/19605). On MySQL >= 8.0.11 an Edit privileges GRANT with Grant_priv=Y (global, database, table or routine) ends with WITH GRANT OPTION in BetterMyAdmin; phpMyAdmin's following ALTER USER is sent unchanged."
+- tool: bma
+  pattern: "^/\\*NOTRACK\\*/ SELECT 1 FROM `[^`]+`\\.`pma__tracking` WHERE tracking_active = 1 AND db_name = "
+  why: Tracker::isAnyTrackingInProgress runs on the control link; our harness configures no control user for some suites, so it lands on the user's connection (phpMyAdmin's goes through its control user).

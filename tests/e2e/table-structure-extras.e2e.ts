@@ -165,7 +165,10 @@ test('column form: type tooltips, Adjust privileges disabled without the privile
   const row = page.getByTestId('column-row-0')
   const type = row.getByLabel('Type')
   await expect(type.locator('option[value="VARCHAR"]').first()).toHaveAttribute('title', /.+/)
-  await expect(type.locator('option[value="VARCHAR"]').first()).toHaveAttribute('data-length-restricted', /^[01]$/)
+  await expect(type.locator('option[value="VARCHAR"]').first()).toHaveAttribute(
+    'data-length-restricted',
+    /^[01]$/,
+  )
   // no column privileges / RELOAD for this account (ColumnsDefinition: privs_available)
   const adjust = row.getByLabel('Adjust privileges')
   await expect(adjust).toBeDisabled()

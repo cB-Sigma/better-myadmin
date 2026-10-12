@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1949/3426 covered (56.9%): 1949 implemented, 3 planned, 1474 missing. [Summary](README.md).
+1950/3426 covered (56.9%): 1950 implemented, 3 planned, 1473 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 279/403 (69.2%) covered, 279/403 implemented
 
@@ -115,9 +115,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 429/534 (80.3%) covered, 429/534 implemented
+## 04 table level — 430/534 (80.5%) covered, 430/534 implemented
 
-105 msgids not used yet.
+104 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -132,7 +132,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
-| `resources/templates/table/structure/display_structure.twig` | 2/51 | `Media type:` · `None (None for default)` |
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
@@ -152,6 +151,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/rebuild.twig` | 1/1 | `Rebuild partition` |
 | `resources/templates/table/partition/repair.twig` | 1/1 | `Repair partition` |
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
+| `resources/templates/table/structure/display_structure.twig` | 1/51 | `None (None for default)` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |

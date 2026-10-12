@@ -452,7 +452,9 @@ describe('partitions', () => {
 })
 
 describe('index editor choices', () => {
-  beforeAll(() => seed('CREATE TABLE ix (id INT PRIMARY KEY, a INT, KEY ka (a)); CREATE TABLE ixn (a INT, KEY kb (a));'))
+  beforeAll(() =>
+    seed('CREATE TABLE ix (id INT PRIMARY KEY, a INT, KEY ka (a)); CREATE TABLE ixn (a INT, KEY kb (a));'),
+  )
 
   it('offers PRIMARY only without a primary key, when editing it, or for a new index [p04-4cb4a4]', async () => {
     const allowed = async (table: string, q: string) =>
