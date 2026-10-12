@@ -35,5 +35,6 @@ export {
   type SprintfArg,
   sprintf,
 } from './php.ts'
+export { NC_, N_ } from './noop.ts'
 export { type PluralRule, pluralRule } from './plural.ts'
 export { type Gettext, Translator, englishTranslator } from './translator.ts'

@@ -17,9 +17,12 @@ const DB = 'f04ops_e2e'
 
 async function sql<T = unknown>(q: string): Promise<T> {
   const c = await mysql.createConnection(ROOT)
-  const [rows] = await c.query(q)
-  await c.end()
-  return rows as T
+  try {
+    const [rows] = await c.query(q)
+    return rows as T
+  } finally {
+    await c.end()
+  }
 }
 
 test.beforeAll(async () => {
@@ -68,6 +71,11 @@ test('table options, maintenance, copy, truncate and drop', async ({ page }) => 
   // copy (structure and data)
   await page.locator('#copyTable input[name=new_name]').fill('t_copy')
   await page.locator('#copyTable').getByRole('button', { name: 'Go' }).click()
+  // the copy runs after the click returns: wait for its message before reading the new table
+  // (expect.poll does not retry a query that throws "doesn't exist")
+  await expect(
+    page.getByText('Table `f04ops_e2e`.`t` has been copied to `f04ops_e2e`.`t_copy`.'),
+  ).toBeVisible()
   await expect.poll(async () => (await sql<unknown[]>(`SELECT * FROM ${DB}.t_copy`)).length).toBe(2)
 
   // truncate: confirmation with the foreign key checks box

@@ -1,4 +1,5 @@
 import type { PrivilegesTable } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import { Button, Input, NativeSelect, Panel, PanelBody, buttonVariants } from '@bettermyadmin/ui'
 import { useEffect, useRef, useState } from 'react'
 import { pgettext, t } from '../../../lib/i18n'
@@ -280,9 +281,9 @@ export function PrivilegesTableFields({ table }: { table: PrivilegesTable }) {
                   <div id="require_ssl_div">
                     {(
                       [
-                        ['NONE', 'REQUIRE NONE', 'Does not require SSL-encrypted connections.'],
-                        ['ANY', 'REQUIRE SSL', 'Requires SSL-encrypted connections.'],
-                        ['X509', 'REQUIRE X509', 'Requires a valid X509 certificate.'],
+                        ['NONE', 'REQUIRE NONE', N_('Does not require SSL-encrypted connections.')],
+                        ['ANY', 'REQUIRE SSL', N_('Requires SSL-encrypted connections.')],
+                        ['X509', 'REQUIRE X509', N_('Requires a valid X509 certificate.')],
                         ['SPECIFIED', 'SPECIFIED', ''],
                       ] as const
                     ).map(([v, label, title]) => (
@@ -308,21 +309,21 @@ export function PrivilegesTableFields({ table }: { table: PrivilegesTable }) {
                             'ssl_cipher',
                             'text_ssl_cipher',
                             'REQUIRE CIPHER',
-                            'Requires that a specific cipher method be used for a connection.',
+                            N_('Requires that a specific cipher method be used for a connection.'),
                             m.ssl.cipher,
                           ],
                           [
                             'x509_issuer',
                             'text_x509_issuer',
                             'REQUIRE ISSUER',
-                            'Requires that a valid X509 certificate issued by this CA be presented.',
+                            N_('Requires that a valid X509 certificate issued by this CA be presented.'),
                             m.ssl.issuer,
                           ],
                           [
                             'x509_subject',
                             'text_x509_subject',
                             'REQUIRE SUBJECT',
-                            'Requires that a valid X509 certificate with this subject be presented.',
+                            N_('Requires that a valid X509 certificate with this subject be presented.'),
                             m.ssl.subject,
                           ],
                         ] as const

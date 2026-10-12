@@ -134,3 +134,44 @@ pageParity(
     'p',
   ),
 )
+
+pageParity('server-status-variables', {
+  pma: { route: '/server/status/variables' },
+  ours: { path: '/s/1/status/variables' },
+  // the values move between the two captures; the controls are the filters and the links
+  exclude: ['#serverStatusVariables tbody'],
+  interactions: [
+    { name: 'filter', do: { fill: ['Containing the word:', 'innodb'] } },
+    { name: 'alert values', do: { check: 'Show only alert values' } },
+    { name: 'unformatted', do: { check: 'Show unformatted values' } },
+    { name: 'category', do: { select: ['Filter by category…', 'InnoDB'] } },
+  ],
+})
+
+pageParity('server-binlog', {
+  pma: { route: '/server/binlog' },
+  ours: { path: '/s/1/binlog' },
+  // the events of the shared server's log come and go
+  exclude: ['#binlogTable tbody'],
+  interactions: [{ name: 'full queries', do: { click: 'Show full queries' } }],
+})
+
+pageParity('server-advisor', {
+  pma: { route: '/server/status/advisor' },
+  ours: { path: '/s/1/status/advisor' },
+  // which rules fire depends on the shared server's counters at the moment of each capture
+  exclude: ['#rulesAccordion'],
+})
+
+pageParity('server-advisor-instructions', {
+  pma: { route: '/server/status/advisor' },
+  ours: { path: '/s/1/status/advisor' },
+  scope: { pma: '#advisorInstructionsModal.show .modal-content', ours: '#advisorInstructionsModal' },
+  ready: { pma: '#page_content', ours: '#page_content' },
+  setup: async ({ pma, ours }) => {
+    for (const page of [pma, ours]) {
+      await page.locator('#page_content button', { hasText: 'Instructions' }).first().click()
+      await page.locator('#advisorInstructionsModal p').first().waitFor()
+    }
+  },
+})

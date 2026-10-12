@@ -22,7 +22,14 @@ import { runQuery } from '../../sql/runner'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 import { useSearchPage } from './SearchPage'
 import { SearchPills } from './SearchPills'
-import { type Criterion, OperatorSelect, UNARY, ValueInput, initialCriterion } from './criteria'
+import {
+  type Criterion,
+  OperatorSelect,
+  UNARY,
+  ValueInput,
+  initialCriterion,
+  searchFieldError,
+} from './criteria'
 
 /**
  * Zoom search: two columns plotted against each other, a click on a point edits its row.
@@ -89,8 +96,16 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
   const x = rows[0]?.column ?? 'pma_null'
   const y = rows[1]?.column ?? 'pma_null'
 
+  // comparisonOperatorOnChange → verifyAfterSearchFieldChange(index, '#zoom_search_form')
+  const errors = rows.map((r) => {
+    const col = byName(r.column)
+    return col === undefined || UNARY.includes(r.c.operator)
+      ? null
+      : searchFieldError(col, r.c.operator, r.c.value)
+  })
   const submit = async (e: FormEvent) => {
     e.preventDefault()
+    if (errors.some((x) => x !== null)) return
     // zoom_search.ts: #inputFormSubmitId validation
     if (x === 'pma_null' || y === 'pma_null') return void showMessage(t('Select two columns'), null, 'error')
     if (x === y) return void showMessage(t('Select two different columns'), null, 'error')
@@ -162,6 +177,11 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
               disabled={UNARY.includes(r.c.operator)}
               onChange={(v) => patch(i, { value: v })}
             />
+          )}
+          {errors[i] != null && (
+            <label className="error block text-xs text-error" htmlFor={`fieldID_${i}`}>
+              {errors[i]}
+            </label>
           )}
         </td>
       </tr>
@@ -323,7 +343,12 @@ function ZoomResult({
           <Button size="sm" id="help_dialog" onClick={() => setHelp(true)}>
             {t('How to use')}
           </Button>
-          <Button size="sm" id="zoom_reset" onClick={() => chart.current?.resetZoom()}>
+          <Button
+            size="sm"
+            id="zoom_reset"
+            className="button-reset"
+            onClick={() => chart.current?.resetZoom()}
+          >
             {t('Reset zoom')}
           </Button>
         </div>
@@ -415,7 +440,8 @@ function DataPointDialog({
               void save()
             }}
           >
-            <table className="w-full text-sm">
+            {/* #dataDisplay: Enter in a field saves (keydown #dataDisplay :input) */}
+            <table id="dataDisplay" className="w-full text-sm">
               <thead>
                 <tr className="text-left">
                   <th>{t('Column')}</th>

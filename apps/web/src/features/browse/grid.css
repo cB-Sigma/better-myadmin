@@ -106,3 +106,17 @@ table.navigation td {
     display: none !important;
   }
 }
+
+/* makegrid.ts cell selection (_tables.scss .cell-selected) and column resizing (_common.scss .colborder) */
+.table_results .cell-selected {
+  outline: 1px solid var(--accent);
+}
+.table_results .cell-selected.with-bg-color {
+  background-color: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.table_results .colborder_active {
+  border-right: 2px solid var(--error);
+}
+.user-select-none {
+  user-select: none;
+}

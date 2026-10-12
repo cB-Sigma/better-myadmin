@@ -4,6 +4,7 @@ import {
   MONITOR_PROTOCOL_VERSION,
   type StorageLike,
   axisKind,
+  checkImportedGrid,
   clearStored,
   defaultChartGrid,
   exportConfig,
@@ -107,6 +108,14 @@ describe('monitor storage (phpMyAdmin keys and format)', () => {
     expect(parseImportedConfig(json)?.monitorSettings).toEqual(DEFAULT_SETTINGS)
     expect(parseImportedConfig('{not json')).toBeNull()
     expect(parseImportedConfig('{"monitorSettings":{}}')).toBeNull()
+  })
+
+  it('an imported grid rebuildGrid cannot build (strFailedBuildingGrid)', () => {
+    const grid = orderedCharts(defaultChartGrid('Linux', false, t))
+    const ok = parseImportedConfig(exportConfig(grid, DEFAULT_SETTINGS))!
+    expect(() => checkImportedGrid(ok)).not.toThrow()
+    expect(() => checkImportedGrid({ monitorCharts: ok.monitorCharts, monitorSettings: undefined })).toThrow()
+    expect(() => checkImportedGrid({ monitorCharts: { c0: { title: 'x' } }, monitorSettings: {} })).toThrow()
   })
 })
 

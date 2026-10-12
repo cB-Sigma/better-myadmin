@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-988/1106 covered (89.3%): 988 implemented, 4 planned, 114 missing. [Summary](README.md).
+1028/1106 covered (92.9%): 1027 implemented, 1 n/a, 4 planned, 74 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 56/98 (57.1%) covered, 56/98 implemented
 
@@ -159,13 +159,13 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/tracking/tables.twig` | 7/7 | ✅ `link:Delete tracking` ✅ `link:Structure snapshot` ✅ `link:Track table` ✅ `link:Tracking report` ✅ `link:Versions` ✅ `selected_tbl[]` ✅ `submit_mult` |  |
 | `src/Database/CentralColumns.php` | 0/1 |  | ⬜ `pos` |
 
-## 06 server level — 203/243 (83.5%) covered, 203/243 implemented
+## 06 server level — 243/243 (100.0%) covered, 242/243 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `modals/change_password.twig` | 0/3 |  | ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `id:changePasswordGoButton` |
-| `server/binlog/index.twig` | 0/6 |  | ⬜ `link:Next` ⬜ `link:Previous` ⬜ `link:Show full queries` ⬜ `link:Truncate shown queries` ⬜ `log` ⬜ `submit:Go` |
-| `server/databases/index.twig` | 0/16 |  | ⬜ `button:Cancel` ⬜ `db_collation` ⬜ `filterText` ⬜ `id:buttonGo` ⬜ `id:checkAllCheckbox` ⬜ `id:dropDatabaseModalDropButton` ⬜ `link:Ascending` ⬜ `link:Check privileges` ⬜ `link:Collation` ⬜ `link:Database` ⬜ `link:Enable statistics` ⬜ `link:Jump to database '%s'` ⬜ `link:SQL` ⬜ `new_db` ⬜ `selected_dbs[]` ⬜ `submit_mult` |
+| `modals/change_password.twig` | 3/3 | ✅ `button:Cancel` ✅ `button:Close` ✅ `id:changePasswordGoButton` |  |
+| `server/binlog/index.twig` | 6/6 | ✅ `link:Next` ✅ `link:Previous` ✅ `link:Show full queries` ✅ `link:Truncate shown queries` ✅ `log` ✅ `submit:Go` |  |
+| `server/databases/index.twig` | 16/16 | ✅ `button:Cancel` ✅ `db_collation` ✅ `filterText` ✅ `id:buttonGo` ✅ `id:checkAllCheckbox` ✅ `id:dropDatabaseModalDropButton` ✅ `link:Ascending` ✅ `link:Check privileges` ✅ `link:Collation` ✅ `link:Database` ✅ `link:Enable statistics` ✅ `link:Jump to database '%s'` ✅ `link:SQL` ✅ `new_db` ✅ `selected_dbs[]` ✅ `submit_mult` |  |
 | `server/engines/show.twig` | 1/1 | ✅ `link:Variables` |  |
 | `server/privileges/add_user_fieldset.twig` | 1/1 | ✅ `link:Add user account` |  |
 | `server/privileges/add_user.twig` | 4/4 | ✅ `createdb-1` ✅ `createdb-2` ✅ `createdb-3` ✅ `id:adduser_submit` |  |
@@ -187,17 +187,17 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/replication/primary_configuration.twig` | 2/2 | ✅ `db_type` ✅ `id:goButton` |  |
 | `server/replication/primary_replication.twig` | 3/3 | ✅ `link:Add replica replication user` ✅ `link:Show connected replicas` ✅ `link:Show primary status` |  |
 | `server/replication/replica_configuration.twig` | 11/11 | ✅ `id:goButton` ✅ `link:Change or reconfigure primary server` ✅ `link:Control replica:` ✅ `link:Error management:` ✅ `link:Reset replica` ✅ `link:See replica status table` ✅ `link:Skip current error` ✅ `link:Start IO Thread only` ✅ `link:Start SQL Thread only` ✅ `primary_connection` ✅ `sr_replica_skip_error` |  |
-| `server/status/advisor/index.twig` | 0/3 |  | ⬜ `button:Close` ⬜ `button:Instructions` ⬜ `button:L61` |
-| `server/status/base.twig` | 0/6 |  | ⬜ `link:Advisor` ⬜ `link:All status variables` ⬜ `link:Monitor` ⬜ `link:Processes` ⬜ `link:Query statistics` ⬜ `link:Server` |
+| `server/status/advisor/index.twig` | 3/3 | ✅ `button:Close` ✅ `button:Instructions` ✅ `button:L61` |  |
+| `server/status/base.twig` | 6/6 | ✅ `link:Advisor` ✅ `link:All status variables` ✅ `link:Monitor` ✅ `link:Processes` ✅ `link:Query statistics` ✅ `link:Server` |  |
 | `server/status/monitor/index.twig` | 41/41 | ✅ `button:Cancel request` ✅ `button:Close` ✅ `button:Import` ✅ `button:Instructions/Setup` ✅ `button:Settings` ✅ `chartTitle` ✅ `chartType` ✅ `dateEnd` ✅ `dateStart` ✅ `differentialValue` ✅ `file` ✅ `id:addChartButton` ✅ `id:analysingLogsLogDataLoadedModalJumpButton` ✅ `id:closeModalButton` ✅ `id:limitTypes` ✅ `id:logAnalyseModalGeneralLogButton` ✅ `id:logAnalyseModalSlowLogButton` ✅ `id:monitorAddNewChartButton` ✅ `id:monitorDoneRearrangeChartButton` ✅ `id:monitorExportConfigButton` ✅ `id:monitorImportConfigImportButton` ✅ `id:monitorPauseResumeButton` ✅ `id:monitorRearrangeChartButton` ✅ `id:monitorResetConfigButton` ✅ `id:queryAnalyzerModalAnalyseButton` ✅ `id:removeVariables` ✅ `id:serverResponseErrorModalReloadButton` ✅ `id:sqlquery` ✅ `link:Add this series` ✅ `link:Clear series` ✅ `link:KiB` ✅ `link:MiB` ✅ `monitorChartColumns` ✅ `monitorChartRefreshRate` ✅ `presetCharts` ✅ `useDivisor` ✅ `useUnit` ✅ `valueDivisor` ✅ `valueUnit` ✅ `varChartList` ✅ `variableInput` |  |
 | `server/status/processes/index.twig` | 4/4 | ✅ `link:Start auto refresh` ✅ `refreshRate` ✅ `showExecuting` ✅ `submit:Refresh` |  |
 | `server/status/processes/list.twig` | 3/3 | ✅ `link:Descending` ✅ `link:Kill` ✅ `link:Truncate shown queries` |  |
-| `server/status/variables/index.twig` | 0/5 |  | ⬜ `dontFormat` ⬜ `filterAlert` ⬜ `filterCategory` ⬜ `filterText` ⬜ `submit:Refresh` |
+| `server/status/variables/index.twig` | 5/5 | ✅ `dontFormat` ✅ `filterAlert` ✅ `filterCategory` ✅ `filterText` ✅ `submit:Refresh` |  |
 | `server/user_groups/edit_user_groups.twig` | 3/3 | ✅ `id:addUsersForm_checkall` ✅ `submit:Add user group` ✅ `userGroup` |  |
 | `server/user_groups/tab_list.twig` | 1/1 | ✅ `*_*` |  |
 | `server/user_groups/user_groups.twig` | 4/4 | ✅ `button:Close` ✅ `button:Delete` ✅ `id:deleteUserGroupConfirm` ✅ `link:Add user group` |  |
 | `server/variables/index.twig` | 3/3 | ✅ `link:Cancel` ✅ `link:Edit` ✅ `link:Save` |  |
-| `user_password.twig` | 0/1 |  | ⬜ `link:Back` |
+| `user_password.twig` | 1/1 | ➖ `link:Back` |  |
 
 ## 07 export import — 59/63 (93.7%) covered, 59/63 implemented
 
