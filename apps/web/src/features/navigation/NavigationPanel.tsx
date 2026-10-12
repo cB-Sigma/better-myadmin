@@ -1,5 +1,5 @@
 import type { NavBranchQuery, NavNode, NavSettings, ServerListEntry } from '@bettermyadmin/contracts'
-import { Button, MessageBox, Modal } from '@bettermyadmin/ui'
+import { Button, MessageBox, Modal, showMessage } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 import { clsx } from 'clsx'
@@ -29,6 +29,7 @@ import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PageSettingsForm } from '../preferences/PageSettings.tsx'
 import { useLogout } from '../shell/UserMenu'
+import { NodeControls, QuickWarp } from './NavExtras'
 import { NavTree } from './NavTree'
 import { currentScope } from './links'
 import { type NavFetchers, NavTreeStore } from './store'
@@ -57,18 +58,23 @@ function readWidth(fallback: number): number {
   return typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : fallback
 }
 
-function saveWidth(width: number): void {
+/** the width for the next first paint, and updateNavigationWidthConfig (the NavigationWidth preference) */
+function saveWidth(width: number, server: number): void {
   try {
     localStorage.setItem(WIDTH_KEY, String(width))
   } catch {
     // storage unavailable
   }
+  void api.navWidth(server, width).then((r) => {
+    if (!r.success && r.message !== null) showMessage(r.message.text, false, 'error')
+  })
 }
 
 /**
  * The left navigation panel (pma: navigation/main.twig + navigation.ts): header links, server
  * selector, quick warp slot, tree controls and the virtualized tree, with a drag handle and a
- * collapser. The panel width is kept in localStorage (pma posts it to /navigation/update-width).
+ * collapser. The width is the NavigationWidth preference (/navigation/update-width), cached in
+ * localStorage for the first paint.
  */
 export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationPanelProps) {
   const qc = useQueryClient()
@@ -116,14 +122,9 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
   const lastWidth = useRef(0)
   const appliedConfigWidth = useRef(false)
   useEffect(() => {
-    // the configured NavigationWidth applies until the user resizes the panel
+    // NavigationWidth (the user's preference, saved by /navigation/update-width) once the settings load
     if (settings === undefined || appliedConfigWidth.current) return
     appliedConfigWidth.current = true
-    try {
-      if (localStorage.getItem(WIDTH_KEY) !== null) return
-    } catch {
-      // storage unavailable
-    }
     if (window.innerWidth >= 768) setWidth(settings.NavigationWidth)
   }, [settings])
 
@@ -162,7 +163,7 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
         {settings !== undefined && auth.data !== undefined && (
           <ServerChoice server={server} settings={settings} servers={auth.data.servers} />
         )}
-        {quickWarp}
+        {quickWarp ?? <QuickWarp server={server} />}
         {store.root?.controls === true && (
           <div id="navigation_controls" className="flex items-center gap-1 px-2 pb-1">
             <button
@@ -211,12 +212,15 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
             store={store}
             rows={store.rows()}
             settings={settings}
-            nodeControls={nodeControls}
+            nodeControls={
+              nodeControls ??
+              ((node) => <NodeControls server={server} node={node} onChanged={() => void reload()} />)
+            }
             onPrefetch={prefetch}
           />
         )}
       </aside>
-      <Resizer width={width} onResize={setWidth} onDone={(w) => saveWidth(w)} />
+      <Resizer width={width} onResize={setWidth} onDone={(w) => saveWidth(w, server)} />
       <button
         type="button"
         id="pma_navigation_collapser"
@@ -228,7 +232,7 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
           const panelWidth = width === 0 && lastWidth.current === 0 ? DEFAULT_WIDTH : lastWidth.current
           lastWidth.current = width
           setWidth(panelWidth)
-          saveWidth(panelWidth)
+          saveWidth(panelWidth, server)
         }}
       >
         {width === 0 ? '→' : '←'}

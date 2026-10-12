@@ -14,6 +14,7 @@ import { serverRoutes } from './routes/server.ts'
 import { telemetryRoutes } from './routes/telemetry.ts'
 import { type SecretBox, safeEqual } from './session/crypto.ts'
 import { newSession, nowSeconds } from './session/manager.ts'
+import { mergeChanges } from './session/merge.ts'
 import type { SessionData, SessionStore } from './session/store.ts'
 
 export interface AppDeps {
@@ -77,8 +78,13 @@ export function createApp(deps: AppDeps) {
       void deps.pools.dropSession(session.id)
     }
     c.set('session', session)
+    // the session as loaded: only what this request changes is written over what a concurrent
+    // request of the same session stored meanwhile (PHP serialises them with the session lock)
+    const loaded: unknown = JSON.parse(JSON.stringify(session))
     await next()
-    const s = c.get('session')
+    let s = c.get('session')
+    const latest = s.id === session.id ? deps.store.get(s.id) : null
+    if (latest !== null) s = mergeChanges(latest, loaded, s)
     s.lastSeenAt = nowSeconds()
     deps.store.set(s)
     writeSessionCookies(c, s)

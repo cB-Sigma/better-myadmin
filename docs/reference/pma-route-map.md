@@ -10,13 +10,13 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 |---|---|---|---|---|
 | GET, POST | `[/]` | `HomeController` | UI `/s/:s` | ✅ implemented |
 | GET, POST | `/browse-foreigners` | `BrowseForeignersController` | API `POST /api/servers/:s/databases/:db/tables/:t/browse-foreigners` · (modal `ForeignBrowser` of the Insert/Edit form) | ✅ implemented |
-| GET | `/changelog` | `ChangeLogController` | UI `/about/changelog` · (static) | 🗓️ planned (M1) |
+| GET | `/changelog` | `ChangeLogController` | UI `/s/:s/changelog` · API `GET /api/servers/:s/about/changelog` · (the project's CHANGELOG.md with phpMyAdmin's rewrites) | ✅ implemented |
 | GET, POST | `/check-relations` | `CheckRelationsController` | API `GET /api/servers/:s/metadata-storage/status` · API `POST /api/servers/:s/metadata-storage/create` | ✅ implemented (M4) |
 | POST | `/collation-connection` | `CollationConnectionController` | API `POST /api/servers/:s/session/collation` | ✅ implemented (M1) |
 | POST | `/columns` | `ColumnController` | API `GET /api/servers/:s/databases/:db/tables/:t/columns` · (name lists for pickers) | 🗓️ planned (M2) |
-| POST | `/console/bookmark/add` | `Console/Bookmark/AddController` | API `/api/console/*` · (bookmarks, config) | 🗓️ planned (M1) |
-| GET | `/console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API `/api/console/*` · (bookmarks, config) | 🗓️ planned (M1) |
-| POST | `/console/update-config` | `Console/UpdateConfigController` | API `POST /api/servers/:s/console/config` · (bookmarks, config) | ✅ implemented (M1) |
+| POST | `/console/bookmark/add` | `Console/Bookmark/AddController` | API `POST /api/servers/:s/console/bookmarks` · (the console's Add bookmark card) | ✅ implemented |
+| GET | `/console/bookmark/refresh` | `Console/Bookmark/RefreshController` | API `GET /api/servers/:s/console/bookmarks` · (the console's Bookmarks card (Refresh)) | ✅ implemented |
+| POST | `/console/update-config` | `Console/UpdateConfigController` | API `GET /api/servers/:s/console/config` · API `POST /api/servers/:s/console/config` | ✅ implemented |
 | GET, POST | `/database/central-columns` | `Database/CentralColumnsController` | UI `/s/:s/db/:db/central-columns` · API `GET /api/servers/:s/databases/:db/central-columns` · API `POST /api/servers/:s/databases/:db/central-columns` · API `GET /api/servers/:s/databases/:db/central-columns/edit` · API `GET /api/servers/:s/databases/:db/central-columns/list` | ✅ implemented |
 | POST | `/database/central-columns/populate` | `Database/CentralColumns/PopulateColumnsController` | API `GET /api/servers/:s/databases/:db/central-columns/populate` | ✅ implemented |
 | GET | `/database/data-dictionary` | `Database/DataDictionaryController` | UI `/s/:s/db/:db/data-dictionary` · API `GET /api/servers/:s/databases/:db/data-dictionary` | ✅ implemented |
@@ -68,12 +68,12 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/import` | `Import/ImportController` | API `POST /api/servers/:s/import/uploads` · API `PATCH /api/servers/:s/import/uploads/:id` · API `POST /api/servers/:s/import/jobs` · (chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query)) | 🔀 exception (X9) |
 | GET, POST | `/import-status` | `Import/StatusController` | API `GET /api/servers/:s/import/jobs/:id/events` · (chunked upload + SSE progress) | 🔀 exception (X9) |
 | POST | `/import/simulate-dml` | `Import/SimulateDmlController` | API `POST /api/servers/:s/query/simulate` · (chunked upload + SSE progress) | 🔀 exception (M1, X9) |
-| GET | `/license` | `LicenseController` | UI `/about/license` · (static) | 🗓️ planned (M1) |
+| GET | `/license` | `LicenseController` | UI `/s/:s/license` · API `GET /api/servers/:s/about/license` | ✅ implemented |
 | GET, POST | `/lint` | `LintController` | API `POST /api/servers/:s/sql/lint` · (client-side lint (SQL tokenizer in the browser) +  fallback) | ✅ implemented (M1) |
 | GET, POST | `/logout` | `LogoutController` | API `POST /api/auth/logout` | ✅ implemented |
 | GET | `/messages` | `JavaScriptMessagesController` | n/a: i18n catalogues ship with the SPA bundle (window.Messages has no equivalent) | ➖ n/a |
-| GET, POST | `/navigation` | `NavigationController` | API `GET /api/servers/:s/navigation/tree` · API `POST /api/servers/:s/navigation/tree` · API `GET /api/servers/:s/navigation/branch` · later `GET /api/servers/:s/navigation/hidden/:db` · later `POST /api/servers/:s/navigation/hide` · later `POST /api/servers/:s/navigation/unhide` | ✅ implemented |
-| POST | `/navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API `POST /api/servers/:s/navigation/width` · (see API reference) | 🗓️ planned (M1) |
+| GET, POST | `/navigation` | `NavigationController` | API `GET /api/servers/:s/navigation/tree` · API `POST /api/servers/:s/navigation/tree` · API `GET /api/servers/:s/navigation/branch` · API `GET /api/servers/:s/navigation/hidden` · API `POST /api/servers/:s/navigation/hide` · API `POST /api/servers/:s/navigation/unhide` | ✅ implemented |
+| POST | `/navigation/update-width` | `Navigation/UpdateNavWidthConfigController` | API `POST /api/servers/:s/navigation/width` · (the navigation panel's resizer and collapser) | ✅ implemented |
 | GET, POST | `/normalization` | `Normalization/MainController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
 | POST | `/normalization/1nf/step1` | `Normalization/FirstNormalForm/FirstStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
 | POST | `/normalization/1nf/step2` | `Normalization/FirstNormalForm/SecondStepController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
@@ -90,7 +90,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/normalization/get-columns` | `Normalization/GetColumnsController` | UI `/s/:s/db/:db/t/:table/normalization` · API `GET /api/servers/:s/databases/:db/tables/:t/normalization` | ✅ implemented |
 | POST | `/normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/move-repeating-group` | ✅ implemented |
 | POST | `/normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies` | ✅ implemented |
-| GET | `/phpinfo` | `PhpInfoController` | UI `/about/runtime` · (static) | 🗓️ planned (M1, X15) |
+| GET | `/phpinfo` | `PhpInfoController` | UI `/s/:s/runtime-info` · API `GET /api/servers/:s/about/runtime` · (shown with ShowPhpInfo) | 🔀 exception (X15) |
 | GET, POST | `/preferences/export` | `Preferences/ExportController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
 | GET, POST | `/preferences/features` | `Preferences/FeaturesController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
 | GET, POST | `/preferences/import` | `Preferences/ImportController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
@@ -169,7 +169,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/table/partition/repair` | `Table/Partition/RepairController` | UI `/s/:s/db/:db/t/:table/structure` · API `POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance` · (the Partitions card of the Structure page) | ✅ implemented |
 | POST | `/table/partition/truncate` | `Table/Partition/TruncateController` | UI `/s/:s/db/:db/t/:table/structure` · API `POST /api/servers/:s/databases/:db/tables/:t/partitions/maintenance` · (the Partitions card of the Structure page) | ✅ implemented |
 | GET | `/table/privileges` | `Table/PrivilegesController` | UI `/s/:s/db/:db/t/:table/privileges` · API `GET /api/servers/:s/databases/:db/tables/:t/privileges` | ✅ implemented |
-| GET, POST | `/table/recent-favorite` | `Table/RecentFavoriteController` | UI `/s/:s/db/:db/t/:table/recent-favorite` · API `GET /api/servers/:s/recent-favorite` | 🗓️ planned (M1) |
+| GET, POST | `/table/recent-favorite` | `Table/RecentFavoriteController` | UI `/s/:s/db/:db/t/:table/browse` · API `GET /api/servers/:s/recent-favorite` · API `POST /api/servers/:s/recent-favorite/open` · (the navigation's Recent / Favorites entries (forget a dropped table, then Browse)) | ✅ implemented |
 | GET, POST | `/table/relation` | `Table/RelationController` | UI `/s/:s/db/:db/t/:table/relation` · API `GET /api/servers/:s/databases/:db/tables/:t/relation` · API `GET /api/servers/:s/databases/:db/tables/:t/relation/dropdown` · API `POST /api/servers/:s/databases/:db/tables/:t/relation` · API `POST /api/servers/:s/databases/:db/tables/:t/relation/drop-foreign-key` | ✅ implemented |
 | GET, POST | `/table/replace` | `Table/ReplaceController` | UI `/s/:s/db/:db/t/:table/replace` · API `POST /api/servers/:s/databases/:db/tables/:t/find-replace` · API `POST /api/servers/:s/databases/:db/tables/:t/rows` | 🗓️ planned (M2) |
 | GET, POST | `/table/search` | `Table/SearchController` | UI `/s/:s/db/:db/t/:table/search` · API `GET /api/servers/:s/databases/:db/tables/:t/search` · API `POST /api/servers/:s/databases/:db/tables/:t/search` · API `GET /api/servers/:s/databases/:db/tables/:t/search/range` | ✅ implemented |

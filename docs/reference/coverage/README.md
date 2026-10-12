@@ -6,10 +6,10 @@ Mechanical inventories of phpMyAdmin `a57149e1` ([reference-commit.txt](../refer
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Routes | 199 | 151 | 7 | 1 | 40 | 0 | 0 | 0 | 0 | 159 | 79.9% |
+| Routes | 199 | 157 | 8 | 1 | 33 | 0 | 0 | 0 | 0 | 166 | 83.4% |
 | Template controls | 1106 | 520 | 0 | 0 | 24 | 0 | 0 | 562 | 0 | 520 | 47.0% |
 | Config directives | 449 | 188 | 1 | 2 | 1 | 0 | 0 | 257 | 0 | 191 | 42.5% |
-| Messages (msgids) | 3426 | 1535 | 0 | 0 | 33 | 0 | 0 | 1858 | 0 | 1535 | 44.8% |
+| Messages (msgids) | 3426 | 1550 | 0 | 0 | 33 | 0 | 0 | 1843 | 0 | 1550 | 45.2% |
 | JS behaviours | 966 | 348 | 0 | 0 | 12 | 0 | 0 | 606 | 0 | 348 | 36.0% |
 | Checklist items | 706 | 23 | 0 | 0 | 0 | 39 | 0 | 644 | 0 | 23 | 3.3% |
 
@@ -21,7 +21,7 @@ Covered / total per inventory (directives are attributed to the feature doc that
 
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
-| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 10/23 (43.5%) | 27/98 (27.6%) | 71/105 (67.6%) | 222/403 (55.1%) | 4/237 (1.7%) | 11/77 (14.3%) |
+| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 17/23 (73.9%) | 27/98 (27.6%) | 71/105 (67.6%) | 237/403 (58.8%) | 4/237 (1.7%) | 11/77 (14.3%) |
 | [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 27/32 (84.4%) | 29/32 (90.6%) | 39/56 (69.6%) | 22/69 (31.9%) | 0/118 (0.0%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 6/7 (85.7%) | 26/28 (92.9%) | 11/16 (68.8%) | 53/79 (67.1%) | 18/22 (81.8%) | 11/59 (18.6%) |
 | [04 table level](../../features/04-table-level.md) | M2 | 62/64 (96.9%) | 149/306 (48.7%) | 4/5 (80.0%) | 427/534 (80.0%) | 88/178 (49.4%) | 0/100 (0.0%) |
@@ -38,7 +38,7 @@ phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by c
 
 | # | phpMyAdmin source | Area | Milestone | Routes | Controls | JS | Msgids | Score |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `src/Config/Descriptions.php` | 08 settings preferences pmadb | M4 | 0 | 0 | 0 | 480 | 480 |
+| 1 | `src/Config/Descriptions.php` | 08 settings preferences pmadb | M4 | 0 | 0 | 0 | 479 | 479 |
 | 2 | `src/Advisory/Rules.php` | 06 server level | M3 | 0 | 0 | 0 | 197 | 197 |
 | 3 | `resources/js/modules/functions.ts` | 01 shell navigation auth | M1 | 0 | 0 | 83 | 10 | 176 |
 | 4 | `resources/templates/server/privileges/privileges_table.twig` | 06 server level | M3 | 0 | 55 | 0 | 55 | 165 |
@@ -116,4 +116,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3426 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 224 API endpoints, 71 SPA routes (4 placeholders/catch-alls), 869 control claims, 1076 tests.
+Checklist items: 706 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 231 API endpoints, 74 SPA routes (4 placeholders/catch-alls), 869 control claims, 1088 tests.
