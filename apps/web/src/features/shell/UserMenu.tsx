@@ -116,7 +116,7 @@ export function UserMenu({ server }: { server: number }) {
             </div>
           )}
           <DropdownMenuItem asChild>
-            <Link to="/s/$server/$" params={{ server, _splat: 'settings' }}>
+            <Link to="/s/$server/preferences/manage" params={{ server }}>
               <IconText icon="s_cog" text={t('Settings')} />
             </Link>
           </DropdownMenuItem>

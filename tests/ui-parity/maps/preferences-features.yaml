@@ -1,0 +1,11 @@
+# Intentional differences of Settings › Features (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: select, label: 'Console mode' }
+    ignore: [value, options]
+    reason: >-
+      phpMyAdmin's console stores `Console/Mode` (collapse) through setUserValue the first time it
+      loads after the login, before this page renders; our console keeps the default until the user
+      changes it
+  - pma: { kind: link, label: 'Restore default value', step: Console }
+    n/a: >-
+      the restore link of that stored Console mode (same cause as the rule above)

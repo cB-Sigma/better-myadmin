@@ -29,7 +29,14 @@ export const SERVER_TABS: Record<ServerTabKey, TabDef> = {
   },
   export: { text: 'Export', icon: 'b_export', path: 'export' },
   import: { text: 'Import', icon: 'b_import', path: 'import' },
-  settings: { text: 'Settings', icon: 'b_tblops', path: 'settings', prefix: true },
+  // pma: Menu.php — /preferences/manage, active on every /preferences/* route
+  settings: {
+    text: 'Settings',
+    icon: 'b_tblops',
+    path: 'preferences/manage',
+    activePaths: ['preferences'],
+    prefix: true,
+  },
   binlog: { text: 'Binary log', icon: 's_tbl', path: 'binlog' },
   replication: { text: 'Replication', icon: 's_replication', path: 'replication' },
   vars: { text: 'Variables', icon: 's_vars', path: 'variables' },

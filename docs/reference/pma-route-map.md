@@ -91,14 +91,14 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/normalization/move-repeating-group` | `Normalization/MoveRepeatingGroup` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/move-repeating-group` | ✅ implemented |
 | POST | `/normalization/partial-dependencies` | `Normalization/PartialDependenciesController` | UI `/s/:s/db/:db/t/:table/normalization` · API `POST /api/servers/:s/databases/:db/tables/:t/normalization/partial-dependencies` | ✅ implemented |
 | GET | `/phpinfo` | `PhpInfoController` | UI `/about/runtime` · (static) | 🗓️ planned (M1, X15) |
-| GET, POST | `/preferences/export` | `Preferences/ExportController` | UI `/settings/export` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/features` | `Preferences/FeaturesController` | UI `/settings/features` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/import` | `Preferences/ImportController` | UI `/settings/import` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/main-panel` | `Preferences/MainPanelController` | UI `/settings/main-panel` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/manage` | `Preferences/ManageController` | UI `/settings/manage` · API `POST /api/servers/:s/prefs/import` · API `GET /api/servers/:s/prefs/export` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/navigation` | `Preferences/NavigationController` | UI `/settings/navigation` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/sql` | `Preferences/SqlController` | UI `/settings/sql` · API `/api/preferences` | 🗓️ planned (M4) |
-| GET, POST | `/preferences/two-factor` | `Preferences/TwoFactorController` | UI `/settings/two-factor` · API `GET /api/servers/:s/two-factor` · API `POST /api/servers/:s/two-factor` | 🗓️ planned (M4) |
+| GET, POST | `/preferences/export` | `Preferences/ExportController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/features` | `Preferences/FeaturesController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/import` | `Preferences/ImportController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/main-panel` | `Preferences/MainPanelController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/manage` | `Preferences/ManageController` | UI `/s/:s/preferences/manage` · API `GET /api/servers/:s/preferences/manage` · API `GET /api/servers/:s/preferences/manage/export` · API `GET /api/servers/:s/preferences/manage/json` · API `POST /api/servers/:s/preferences/manage/import` · API `POST /api/servers/:s/preferences/manage/reset` · API `GET /api/servers/:s/preferences/autoload` · API `POST /api/servers/:s/preferences/autoload/hide` | ✅ implemented |
+| GET, POST | `/preferences/navigation` | `Preferences/NavigationController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/sql` | `Preferences/SqlController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
+| GET, POST | `/preferences/two-factor` | `Preferences/TwoFactorController` | UI `/s/:s/preferences/two-factor` · API `GET /api/servers/:s/preferences/two-factor` · API `POST /api/servers/:s/preferences/two-factor/configure` · API `POST /api/servers/:s/preferences/two-factor/remove` · API `GET /api/auth/two-factor` · API `POST /api/auth/two-factor` | ✅ implemented |
 | GET, POST | `/schema-export` | `SchemaExportController` | API `POST /api/servers/:s/databases/:db/schema-export` | 🗓️ planned (M3) |
 | GET, POST | `/server/binlog` | `Server/BinlogController` | UI `/s/:s/binlog` · API `GET /api/servers/:s/binlog` | ✅ implemented (M3) |
 | GET | `/server/collations` | `Server/CollationsController` | UI `/s/:s/collations` · API `GET /api/servers/:s/collations` | ✅ implemented (M3) |
@@ -143,7 +143,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/table/add-field` | `Table/AddFieldController` | UI `/s/:s/db/:db/t/:table/structure/add` · API `GET /api/servers/:s/databases/:db/tables/:t/columns/add-form` · API `POST /api/servers/:s/databases/:db/tables/:t/columns/add` · API `POST /api/servers/:s/databases/:db/tables/:t/columns/preview` | ✅ implemented |
 | GET, POST | `/table/change` | `Table/ChangeController` | UI `/s/:s/db/:db/t/:table/insert` · UI `/s/:s/db/:db/t/:table/edit` · API `POST /api/servers/:s/databases/:db/tables/:t/insert-form` | ✅ implemented |
 | POST | `/table/change/rows` | `Table/ChangeRowsController` | UI `/s/:s/db/:db/t/:table/edit` · API `POST /api/servers/:s/databases/:db/tables/:t/insert-form` | ✅ implemented |
-| GET, POST | `/table/chart` | `Table/ChartController` | UI `/s/:s/db/:db/t/:table/chart` · API `GET /api/servers/:s/databases/:db/tables/:t/chart` · API `POST /api/servers/:s/databases/:db/tables/:t/chart` | 🗓️ planned (M3) |
+| GET, POST | `/table/chart` | `Table/ChartController` | UI `/s/:s/db/:db/t/:table/chart` · API `POST /api/servers/:s/databases/:db/tables/:t/chart` · API `POST /api/servers/:s/databases/:db/tables/:t/chart/data` · (the query results' Display chart (the query travels in the body)) | ✅ implemented |
 | GET, POST | `/table/create` | `Table/CreateController` | UI `/s/:s/db/:db/create-table` · API `GET /api/servers/:s/databases/:db/create-table/form` · API `POST /api/servers/:s/databases/:db/tables` | ✅ implemented |
 | POST | `/table/delete/confirm` | `Table/DeleteConfirmController` | UI `/s/:s/db/:db/t/:table/browse` · (the confirmation is rendered in place by the results view (no request of its own)) | ✅ implemented |
 | POST | `/table/delete/rows` | `Table/DeleteRowsController` | API `POST /api/servers/:s/browse/delete-rows` | ✅ implemented |
@@ -151,7 +151,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/table/export/rows` | `Table/ExportRowsController` | UI `/s/:s/db/:db/t/:table/export` · API `GET /api/servers/:s/export/page` · (where_clause[] in the search params) | ✅ implemented |
 | GET, POST | `/table/find-replace` | `Table/FindReplaceController` | UI `/s/:s/db/:db/t/:table/find-replace` · API `POST /api/servers/:s/databases/:db/tables/:t/find-replace/preview` · API `POST /api/servers/:s/databases/:db/tables/:t/find-replace` | ✅ implemented |
 | GET, POST | `/table/get-field` | `Table/GetFieldController` | API `GET /api/servers/:s/browse/field` | ✅ implemented |
-| GET, POST | `/table/gis-visualization` | `Table/GisVisualizationController` | UI `/s/:s/db/:db/t/:table/gis-visualization` · API `GET /api/servers/:s/databases/:db/tables/:t/gis` | 🗓️ planned (M3) |
+| GET, POST | `/table/gis-visualization` | `Table/GisVisualizationController` | UI `/s/:s/db/:db/t/:table/gis-visualization` · API `POST /api/servers/:s/databases/:db/tables/:t/gis` · (SVG view and PNG / SVG downloads; the OpenStreetMaps base layer and the PDF download are not ported) | ✅ implemented |
 | GET, POST | `/table/import` | `Table/ImportController` | UI `/s/:s/db/:db/t/:table/import` · API `GET /api/servers/:s/import/page` | ✅ implemented |
 | GET, POST | `/table/indexes` | `Table/IndexesController` | UI `/s/:s/db/:db/t/:table/structure` · API `GET /api/servers/:s/databases/:db/tables/:t/indexes/form` · API `POST /api/servers/:s/databases/:db/tables/:t/indexes` · (the index editor dialog of the Structure page) | ✅ implemented |
 | GET, POST | `/table/indexes/rename` | `Table/IndexRenameController` | UI `/s/:s/db/:db/t/:table/structure` · API `GET /api/servers/:s/databases/:db/tables/:t/indexes/form` · API `POST /api/servers/:s/databases/:db/tables/:t/indexes/rename` · (the rename dialog of the Structure page) | ✅ implemented |
@@ -201,8 +201,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/triggers` | `Triggers/IndexController` | UI `/s/:s/db/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers` · API `POST /api/servers/:s/databases/:db/triggers` · API `GET /api/servers/:s/databases/:db/triggers/editor` · API `GET /api/servers/:s/databases/:db/triggers/export` | ✅ implemented |
 | GET, POST | `/user-password` | `UserPasswordController` | API `POST /api/servers/:s/account/password` | ✅ implemented (M3) |
 | GET, POST | `/version-check` | `VersionCheckController` | API `GET /api/meta/version-check` | 🔀 exception (M1, X20) |
-| GET, POST | `/view/create` | `View/CreateController` | UI `/s/:s/db/:db/view/*` · API `GET /api/servers/:s/databases/:db/views/:v` · API `POST /api/servers/:s/databases/:db/views` | 🗓️ planned (M2) |
-| GET, POST | `/view/operations` | `Operations/ViewController` | UI `/s/:s/db/:db/view/*` · API `POST /api/servers/:s/databases/:db/views/:v/operations/*` | 🗓️ planned (M2) |
+| GET, POST | `/view/create` | `View/CreateController` | UI `/s/:s/db/:db/view/create` · API `GET /api/servers/:s/databases/:db/views/form` · API `POST /api/servers/:s/databases/:db/views` · (also the Create view dialog of the query results) | ✅ implemented |
+| GET, POST | `/view/operations` | `Operations/ViewController` | UI `/s/:s/db/:db/t/:table/operations` · API `GET /api/servers/:s/databases/:db/tables/:t/operations` · API `POST /api/servers/:s/databases/:db/tables/:t/operations/rename-view` · (the Operations tab of a view) | ✅ implemented |
 
 ## Setup script
 

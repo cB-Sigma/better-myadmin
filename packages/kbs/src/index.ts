@@ -20,6 +20,6 @@ export {
   vsprintf,
 } from './advisor/advisor.ts'
 export { ExpressionLanguage, tokenize } from './advisor/expression.ts'
-export { type PhpValue, PhpError } from './advisor/php.ts'
+export { type PhpValue, PhpError, pcreToRegExp } from './advisor/php.ts'
 export { default as statusVariables } from './generated/status-variables.json' with { type: 'json' }
 export { default as engineData } from './generated/engines.json' with { type: 'json' }

@@ -1,0 +1,6 @@
+# Intentional differences of Settings › Two-factor authentication (see tests/ui-parity/README.md).
+rules:
+  - ours: { kind: radio, label: '/^Authentication Application \(2FA\)/' }
+    added: >-
+      the reference checkout lacks pragmarx/google2fa-qrcode and bacon/bacon-qr-code (it lists them as
+      missing); BetterMyAdmin implements the TOTP backend and its QR code without them

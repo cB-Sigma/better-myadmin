@@ -44,6 +44,10 @@ export interface SessionData {
   gridQueries?: Record<string, Record<string, unknown>>
   /** SendErrorReports persisted by "Automatically send report next time" (until the prefs layer stores it). */
   sendErrorReports?: 'ask' | 'always' | 'never'
+  /** `2fa_application_key` and the WebAuthn options of the two-factor backends (src/preferences/two-factor.ts) */
+  twoFactor?: { applicationKey?: string; webauthnCreation?: string; webauthnRequest?: string }
+  /** $_SESSION['userprefs_autoload']: the localStorage import offer was answered or used */
+  userprefsAutoload?: boolean
   /** $_SESSION['tmpval']['aliases']: the last export's rename-dialog aliases (Back link repopulation). */
   exportAliases?: Record<string, unknown>
 }

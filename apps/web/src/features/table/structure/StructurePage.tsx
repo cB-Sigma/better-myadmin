@@ -15,6 +15,7 @@ import { useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
+import { usePagePrefs } from '../../preferences/PageSettings.tsx'
 import { StructurePills } from '../common/StructurePills'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
 import { confirmSql } from './confirm'
@@ -32,6 +33,8 @@ const sqlLink = (server: number, sql: string) => `/s/${server}/sql?sql=${encodeU
 
 export function StructurePage({ server, db, table }: { server: number; db: string; table: string }) {
   const scope: TableRef = { server, db, table }
+  // pma: Table\StructureController: PageSettings::init('TableStructure')
+  usePagePrefs(server, 'TableStructure')
   const qc = useQueryClient()
   const navigate = useNavigate()
   const q = useQuery({
@@ -348,6 +351,11 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       <hr className="my-3 border-border print:hidden" />
 
       <div id="structure-action-links" className="mb-3 flex flex-wrap gap-3 text-sm print:hidden">
+        {s.links.editView && (
+          <Link to="/s/$server/db/$db/view/create" params={{ server, db }} search={{ table }}>
+            {t('Edit view')}
+          </Link>
+        )}
         <Button variant="link" className="jsPrintButton" onClick={() => window.print()}>
           {t('Print')}
         </Button>

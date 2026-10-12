@@ -17,3 +17,15 @@ A sync that brings in one of these fixes retires the exception: remove the code 
 | Exception | Upstream | Retire when |
 |---|---|---|
 | X40 (Edit privileges drops the grant option on MySQL ≥ 8.0.11) | [phpmyadmin/phpmyadmin#19605](https://github.com/phpmyadmin/phpmyadmin/issues/19605) | retire X40 when upstream fixes #19605: `generateQueriesForUpdatePrivileges` appends `WITH GRANT OPTION` to the GRANT. Then drop `grantOptionFix` in `packages/sql-gen/src/privileges.ts`, the `x40()` mapping in `packages/sql-gen/test/privileges.test.ts` (regenerate `privileges.json`), the X40 entry of `tests/parity/allowed-diffs.yaml` and the `x40` branches of `tests/parity/privileges.parity.test.ts` |
+## Upstream history clone
+
+The check reads history from `../ref/pma-upstream.git` when that exists, else from the reference
+instance `../ref/pma`. It is a blobless bare clone, so fetching it is cheap and does not depend on
+the reference checkout's git state:
+
+```sh
+git clone --bare --filter=blob:none --single-branch -b master \
+  https://github.com/phpmyadmin/phpmyadmin.git ../ref/pma-upstream.git
+git -C ../ref/pma-upstream.git config remote.origin.fetch '+refs/heads/master:refs/remotes/origin/master'
+git -C ../ref/pma-upstream.git fetch origin
+```

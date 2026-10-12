@@ -116,3 +116,22 @@ export function varExport(v: string | null | number): string {
   if (typeof v === 'number') return String(v)
   return `'${v.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'`
 }
+
+/**
+ * PHP var_export() of any value: lists and maps as `array (\n  key => value,\n)`, nested arrays
+ * on their own line, `true`/`false`/`NULL`.
+ */
+export function varExportValue(v: PhpValue, level = 1): string {
+  if (v === null) return 'NULL'
+  if (typeof v === 'boolean') return v ? 'true' : 'false'
+  if (typeof v === 'number' || typeof v === 'string') return varExport(v)
+  const entries: Array<[string | number, PhpValue]> = Array.isArray(v)
+    ? v.map((x, i) => [i, x])
+    : [...v].map(([k, x]) => [/^(0|-?[1-9]\d*)$/.test(k) ? Number(k) : k, x])
+  const pad = '  '.repeat(level - 1)
+  let out = `${level > 1 ? `\n${pad}` : ''}array (\n`
+  for (const [k, x] of entries) {
+    out += `${pad}  ${typeof k === 'number' ? k : varExport(k)} => ${varExportValue(x, level + 1)},\n`
+  }
+  return `${out}${pad})`
+}

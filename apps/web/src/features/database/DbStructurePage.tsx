@@ -522,7 +522,7 @@ export function DbStructurePage({
                             <td className="text-center print:hidden">
                               {tb.isView ? (
                                 <Link
-                                  to={path(`${dbBase(server, db)}/view-create`)}
+                                  to={path(`${dbBase(server, db)}/view/create`)}
                                   search={{ table: tb.name } as never}
                                 >
                                   <IconText icon="b_edit" text={t('Edit')} />

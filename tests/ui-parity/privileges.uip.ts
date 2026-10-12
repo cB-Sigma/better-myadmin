@@ -17,10 +17,21 @@ GRANT INSERT ON ${FIX.db}.${FIX.table} TO 'f06u_uip2'@'%';
 GRANT SELECT (id, name) ON ${FIX.db}.${FIX.table} TO 'f06u_uip2'@'%';
 `
 
+/**
+ * Other runs (agents, CI jobs) create and drop their own accounts on the shared server between the
+ * two captures: only this case's f06u_uip* rows are compared, and the initials bar, whose presence
+ * depends on the server's total account count, is left out.
+ */
+const OTHER_ACCOUNTS = [
+  '#userRightsTable tbody tr:not(:has(input[name="selected_usr[]"][value^="f06u_uip"]))',
+  '#userAccountsPagination',
+]
+
 pageParity('server-privileges', {
   pma: { route: '/server/privileges', params: { initial: 'F' } },
   ours: { path: '/s/1/privileges?initial=F' },
   sql: ACCOUNTS,
+  exclude: OTHER_ACCOUNTS,
   ready: { pma: '#userRightsTable', ours: '#userRightsTable' },
   interactions: [{ name: 'check all', do: { check: 'Check all' } }],
 })

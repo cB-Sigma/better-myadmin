@@ -163,7 +163,8 @@ async function storageStatus(m: MetaRequest, storage: ConfigStorage): Promise<St
     }),
     features: FEATURES.map(([flag, label]) => ({ flag, label, enabled: arr[flag] === true })),
     stores: (await m.meta()).stores(),
-    controlError: m.control.opened?.error ?? null,
+    // the discovery may be cached (the login's two-factor check read the preferences): open the link
+    controlError: (await m.control.get()).error ?? null,
   }
 }
 

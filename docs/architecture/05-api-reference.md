@@ -17,7 +17,8 @@ Conventions:
 |---|---|---|---|
 | GET | `/api/auth/state` | `{authenticated, server, user, twoFactorPending, servers:[{index,verbose,host,authType}], loginCookieRecall: username?}` | login page / `AuthenticationCookie` |
 | POST | `/api/auth/login` | `{server, username, password, captchaToken?}` → `{ok, twoFactorRequired?, redirect}`; sets session cookie | cookie auth `authenticate()` |
-| POST | `/api/auth/two-factor` | `{code}` or WebAuthn assertion → `{ok}` | `TwoFactor::check` |
+| GET | `/api/auth/two-factor` | the pending login's challenge `{form, showSubmit, error}` (`form.kind`: application, simple, webauthn_request, invalid) | `login/twofactor.twig` |
+| POST | `/api/auth/two-factor` | `{fields: {2fa_code \| 2fa_confirm \| webauthn_request_response}}` → `{ok, challenge?}`; `ok` marks the login's `twoFactorOk` | `TwoFactor::check` |
 | POST | `/api/auth/logout` | clears session (all servers if `LoginCookieDeleteAll`) → `{logoutUrl}` (`LogoutURL`) | `/logout` |
 | POST | `/api/auth/switch-server` | `{server}` for `config`/`signon` types | `?server=` |
 | GET | `/api/servers/:s/account/password` | the change-password form: `{origAuthPlugin, showHashing, showSslNotice, authPlugins[], allowNoPassword}` (refused for `config` auth) | `GET /user-password` |
@@ -33,7 +34,7 @@ Conventions:
 | GET | `/api/meta/version-check` | `{}` or `{version, date}` of the latest compatible release (respects `VersionCheck`; feed from `BMA_VERSION_FEED_URL`, cached 6 h) | `/version-check` |
 | GET | `/api/meta/health` | liveness | — |
 | GET | `/api/i18n[?lang=xx]` | `{key, code, dir, languages: [{key, name}] \| null, warning}`: the request language (`Lang` → `lang` param → `bma_lang` cookie → Accept-Language → User-Agent → `DefaultLang`), the selector options when phpMyAdmin shows the selector, "Ignoring unsupported language code." when applicable; `lang` sets the cookie. Every API response uses the request language for its messages | `LanguageManager::selectLanguage`, `?lang=` |
-| GET | `/api/meta/config-public` | the subset of config the client needs (directives flagged client-visible in `packages/config`) | inlined JS globals |
+| GET | `/api/meta/config-public` | the subset of config the client needs (directives flagged client-visible in `packages/config`), with the logged-in user's preferences of the current server applied | inlined JS globals |
 | POST | `/api/telemetry/error` | `{exception_type, get_settings?}` → `{report_setting}`; without `send_error_report` → `{report}` (modal preview); with it → sends to `BMA_ERROR_REPORT_URL` or the server log, `{message}`; `always_send` persists `SendErrorReports=always` | `/error-report` |
 
 ## Preferences and page settings
@@ -44,10 +45,17 @@ Conventions:
 | POST | `/api/servers/:s/prefs` | `{configData}` replaces the stored flat map (`2fa` kept when absent); pmadb `userconfig`, else local store, else session. Form validation arrives with the Settings UI | `UserPreferences::save` |
 | POST | `/api/servers/:s/prefs/option` | `{path, value, default?}` one value, removed when equal to the default (phpMyAdmin's when omitted) | `UserPreferencesHandler::setUserValue` (`/console/update-config`, theme, lang, nav width...) |
 | POST | `/api/servers/:s/prefs/reset` | wipe all preferences (`save([])`, which keeps `2fa`) | `/preferences/manage` Reset (`submit_clear`) |
-| POST | `/api/servers/:s/prefs/import` | `{json}` or `{file}` + `merge?` | `/preferences/manage` import |
-| GET | `/api/servers/:s/prefs/export?format=json|php` | download | `/preferences/manage` export |
-| GET | `/api/servers/:s/prefs/forms` | the form definitions (groups, fields, types, validators) for Settings tabs and page-settings gear | `Config/Forms/*` |
-| GET/POST | `/api/servers/:s/two-factor` | current backend; `POST {backend, setupToken...}` configure/disable | `/preferences/two-factor` |
+| GET/POST | `/api/servers/:s/preferences/forms/:tab` | a Settings tab (`features`, `sql`, `navigation`, `main-panel`, `export`, `import`): `{storage, hasConfigStorage, formSet}` (forms → groups/fields with type, value, JS default, options, validators, disabled, errors); `POST {values (browser-style), revert?}` → `{saved}` or `{saved:false, formSet}` with the errors | `/preferences/<tab>` (FormDisplay) |
+| GET/POST | `/api/servers/:s/preferences/page/:group` | the page-related settings form (`Browse`, `DbStructure`, `Edit`, `Export`, `Import`, `Navi`, `Sql`, `TableStructure`); `POST {values}` like a tab | `PageSettings::init` |
+| GET | `/api/servers/:s/preferences/manage` | `{storage, hasConfigStorage, moreSettings, host}` | `/preferences/manage` |
+| GET | `/api/servers/:s/preferences/manage/export?type=json\|php` | download `phpMyAdmin-config-<host>.json\|php` | `submit_export` |
+| GET | `/api/servers/:s/preferences/manage/json` | `{prefs, mtime}` for the browser's storage | `submit_get_json` |
+| POST | `/api/servers/:s/preferences/manage/import` | `{json, merge?, fixErrors?, returnUrl?}` → `saved \| errors (errorList) \| failed` | `submit_import` |
+| POST | `/api/servers/:s/preferences/manage/reset` | `save([])` (keeps `2fa`) | `submit_clear` |
+| GET/POST | `/api/servers/:s/preferences/autoload[/hide]` | the localStorage import offer (session storage, once per session) | `prefs_autoload` |
+| GET | `/api/servers/:s/preferences/two-factor` | `{enabled, hasBackends, backendId, backendName, backendDescription, backends, missing}` | `/preferences/two-factor` |
+| POST | `/api/servers/:s/preferences/two-factor/configure` | `{backend, fields?}` → `done \| setup (form, error)` | `2fa_configure` |
+| POST | `/api/servers/:s/preferences/two-factor/remove` | `{fields?}` → `done \| confirm (form, error)` | `2fa_remove` |
 | POST | `/api/servers/:s/navigation/width` | `{width}` | `/navigation/update-width` |
 
 ## Navigation tree

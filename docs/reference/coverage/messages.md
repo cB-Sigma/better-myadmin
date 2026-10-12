@@ -4,11 +4,11 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1509/3426 covered (44.0%): 1509 implemented, 33 planned, 1884 missing. [Summary](README.md).
+1619/3426 covered (47.3%): 1619 implemented, 33 planned, 1774 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 205/403 (50.9%) covered, 205/403 implemented
+## 01 shell navigation auth — 222/403 (55.1%) covered, 222/403 implemented
 
-198 msgids not used yet.
+181 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -31,7 +31,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/navigation/tree/quick_warp.twig` | 4/4 | `Favorite tables` · `Favorites` · `Recent` · `Recently visited tables` |
 | `resources/templates/setup/error.twig` | 4/5 | `Ignore errors` · `Show form` · `Submitted form contains errors` · `Try to revert erroneous fields to their default values` |
 | `src/Controllers/Setup/HomeController.php` | 4/4 | `Configuration already exists, setup is disabled!` · `If your server is also configured to accept HTTPS requests follow t…` · `Insecure connection` · `You are not using a secure connection; all data (including potentia…` |
-| `resources/templates/login/twofactor/application_configure.twig` | 3/3 | `Authentication code:` · `Please scan following QR code into the two-factor authentication ap…` · `Secret/key:` |
 | `resources/templates/navigation/main.twig` | 3/11 | `An error has occurred while loading the navigation display` · `MariaDB Documentation` · `MySQL Documentation` |
 | `resources/templates/preferences/two_factor/main.twig` | 3/3 | `Deprecated!` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
 | `resources/templates/setup/config/index.twig` | 3/3 | `Configuration file` · `Download` · `Generated configuration file` |
@@ -48,29 +47,19 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/home/themes.twig` | 2/2 | `Screenshot of the %s theme.` · `Take it` |
 | `resources/templates/login/form.twig` | 2/8 | `phpMyAdmin Demo Server` · `You are using the demo server. You can do anything here, but please…` |
 | `resources/templates/login/header.twig` | 2/3 | `Javascript must be enabled past this point!` · `There is a mismatch between HTTPS indicated on the server and clien…` |
-| `resources/templates/login/twofactor/application.twig` | 2/2 | `Authentication code:` · `Open the two-factor authentication app on your device to view your …` |
 | `src/Controllers/Setup/FormController.php` | 2/2 | `Configuration already exists, setup is disabled!` · `Incorrect form specified!` |
 | `src/Favorites/RecentFavoriteTables.php` | 2/2 | `Could not save favorite table!` · `Could not save recent table!` |
 | `src/Http/Middleware/RequestProblemChecking.php` | 2/2 | `GLOBALS overwrite attempt` · `possible exploit` |
 | `src/Http/Middleware/TokenRequestParamChecking.php` | 2/2 | `Error: Token mismatch` · `Failed to set session cookie. Maybe you are using HTTP instead of H…` |
-| `src/Plugins/TwoFactor/Application.php` | 2/2 | `Authentication Application (2FA)` · `Provides authentication using HOTP and TOTP applications such as Fr…` |
-| `src/Plugins/TwoFactor/Key.php` | 2/2 | `Hardware Security Key (FIDO U2F)` · `Provides authentication using hardware security tokens supporting F…` |
-| `src/Plugins/TwoFactor/Simple.php` | 2/2 | `For testing purposes only!` · `Simple two-factor authentication` |
-| `src/Plugins/TwoFactor/WebAuthn.php` | 2/2 | `Hardware Security Key (WebAuthn/FIDO2)` · `Provides authentication using hardware security tokens supporting t…` |
 | `src/Theme/ThemeManager.php` | 2/2 | `Default theme %s not found!` · `Theme %s not found!` |
 | `resources/js/modules/functions/adjustTotals.ts` | 1/8 | `%d table(s)` |
 | `resources/js/modules/functions/checkNumberOfFields.ts` | 1/1 | `Warning: a form on this page has more than %d fields. On submission…` |
 | `resources/js/modules/functions/isStorageSupported.ts` | 1/1 | `There was a problem accessing your browser storage, some features m…` |
 | `resources/js/triggers.ts` | 1/1 | `Trigger` |
-| `resources/js/webauthn.ts` | 1/1 | `WebAuthn is not available. Please use a supported browser in a secu…` |
 | `resources/templates/error/report_form.twig` | 1/4 | `This report automatically includes data about the error and informa…` |
 | `resources/templates/error/simple.twig` | 1/1 | `Something went wrong` |
 | `resources/templates/javascript/redirect.twig` | 1/1 | `Taking you to the target site.` |
-| `resources/templates/login/twofactor.twig` | 1/1 | `Verify` |
-| `resources/templates/login/twofactor/invalid.twig` | 1/1 | `The configured two factor authentication is not available, please i…` |
 | `resources/templates/login/twofactor/key-https-warning.twig` | 1/1 | `You are not using https to access phpMyAdmin, therefore FIDO U2F de…` |
-| `resources/templates/login/twofactor/webauthn_creation.twig` | 1/1 | `Please connect your WebAuthn/FIDO2 device. Then confirm registratio…` |
-| `resources/templates/login/twofactor/webauthn_request.twig` | 1/1 | `Please connect your WebAuthn/FIDO2 device. Then confirm login on th…` |
 | `resources/templates/modals/unhide_nav_item.twig` | 1/1 | `Show hidden navigation tree items.` |
 | `resources/templates/navigation/item_unhide_dialog.twig` | 1/1 | `Unhide` |
 | `resources/templates/recent_favorite_table_favorite.twig` | 1/2 | `There are no favorite tables.` |
@@ -102,13 +91,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Navigation/Nodes/NodeViewContainer.php` | 1/2 | `New (Create new view)` |
 | `src/Plugins/Auth/AuthenticationHttp.php` | 1/3 | `Wrong username/password. Access denied.` |
 | `src/Plugins/Auth/AuthenticationSignon.php` | 1/1 | `Can not find signon authentication script: %s` |
-| `src/Plugins/AuthenticationPlugin.php` | 1/1 | `You have enabled two factor authentication, please confirm your login.` |
+| `src/Plugins/TwoFactor/Key.php` | 1/2 | `Provides authentication using hardware security tokens supporting F…` |
 | `src/Theme/Theme.php` | 1/1 | `No valid image path for theme %s found!` |
 | `src/ZipExtension.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
 
-## 02 browse results grid — 38/56 (67.9%) covered, 38/56 implemented
+## 02 browse results grid — 39/56 (69.6%) covered, 39/56 implemented
 
-18 msgids not used yet.
+17 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -116,7 +105,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/makegrid.ts` | 5/15 | `Click to mark/unmark.` · `Column name copying to clipboard failed!` · `Double-click to copy column name.` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
 | `resources/templates/display/results/checkbox_and_links.twig` | 2/2 | `You can also edit most values by clicking directly on them.` · `You can also edit most values by double-clicking directly on them.` |
 | `src/Display/Results.php` | 2/11 | `Full texts` · `Partial texts` |
-| `resources/templates/table/start_and_number_of_rows_fieldset.twig` | 1/2 | `Start row:` |
 | `src/Controllers/Table/GetFieldController.php` | 1/4 | `Invalid table name` |
 
 ## 03 insert edit transformations — 52/79 (65.8%) covered, 52/79 implemented
@@ -153,22 +141,17 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 395/534 (74.0%) covered, 395/534 implemented
+## 04 table level — 428/534 (80.1%) covered, 428/534 implemented
 
-139 msgids not used yet.
+106 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
-| `resources/templates/table/chart/tbl_chart.twig` | 22/22 | `Chart title:` · `Chart type` · `Area (Chart type)` · `Bar (Chart type)` · `Column (Chart type)` · `Line (Chart type)` · `Pie (Chart type)` · `Scatter (Chart type)` · `Spline (Chart type)` · `Timeline (Chart type)` · `Save chart as image` · `Series column:` · … +10 |
 | `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
 | `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
-| `resources/templates/table/gis_visualization/gis_visualization.twig` | 4/5 | `-- None --` · `Display GIS Visualization` · `Label column` · `Spatial column` |
-| `resources/templates/table/structure/display_structure.twig` | 4/51 | `Edit view` · `Go back` · `Media type:` · `None (None for default)` |
-| `src/Controllers/Table/GisVisualizationController.php` | 4/5 | `Failed to create image` · `Invalid file format, expected one of: ` · `No spatial column found for this SQL query.` · `No SQL query was set to fetch data.` |
 | `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
-| `resources/templates/view_create.twig` | 3/6 | `Column names` · `Edit view` · `VIEW name` |
-| `src/Controllers/Table/ChartController.php` | 3/5 | `No data to display` · `No numeric columns present in the table to plot.` · `No SQL query was set to fetch data.` |
+| `resources/templates/table/structure/display_structure.twig` | 3/51 | `Go back` · `Media type:` · `None (None for default)` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
 | `src/Table/Table.php` | 3/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Could not save table UI preferences!` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
@@ -177,6 +160,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
+| `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
 | `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
@@ -188,6 +172,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/columns_definitions/column_definitions_form.twig` | 1/14 | `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
 | `resources/templates/error/simple.twig` | 1/1 | `Go back` |
 | `resources/templates/modals/index_dialog_modal.twig` | 1/6 | `Go back` |
+| `resources/templates/table/chart/tbl_chart.twig` | 1/22 | `X Values` |
 | `resources/templates/table/partition/analyze.twig` | 1/1 | `Analyze partition` |
 | `resources/templates/table/partition/check.twig` | 1/1 | `Check partition` |
 | `resources/templates/table/partition/drop.twig` | 1/1 | `Drop partition` |
@@ -197,11 +182,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
-| `resources/templates/table/zoom_search/result_form.twig` | 1/10 | `The generated chart` |
 | `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
-| `src/Controllers/View/CreateController.php` | 1/2 | `View name can not be empty!` |
 | `src/Normalization.php` | 1/52 | `String (string types)` |
 
 ## 05 database level — 214/340 (62.9%) covered, 214/340 implemented
@@ -339,45 +322,30 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 13/666 (2.0%) covered, 13/666 implemented
+## 08 settings preferences pmadb — 68/666 (10.2%) covered, 68/666 implemented
 
-653 msgids not used yet.
+598 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Config/Descriptions.php` | 469/474 | `[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, …` · `A dropdown will be used if fewer items are present.` · `A special MySQL user configured with limited permissions, more info…` · `A user-friendly description of this server. Leave blank to display …` · `Add DROP DATABASE` · `Add DROP VIEW` · `Add IF NOT EXISTS (less efficient as indexes will be generated duri…` · `Add ON DUPLICATE KEY UPDATE` · `Advanced server configuration, do not change these options unless y…` · `Allow for searching inside the entire database.` · `Allow interrupt of import in case script detects it is close to tim…` · `Allow login to any MySQL server` · … +457 |
-| `resources/templates/relation/check_relations.twig` | 34/34 | `%sCreate%s a database named '%s' and setup the phpMyAdmin configura…` · `%sCreate%s missing phpMyAdmin configuration storage tables.` · `%sCreate%s the phpMyAdmin configuration storage in the current data…` · `Bookmarked SQL query:` · `Browser transformation:` · `Configurable menus:` · `Configuration of pmadb…` · `OK (Correctly working)` · `Create a pma user and give access to these tables.` · `Create the needed tables with the <code>%screate_tables.sql</code>.` · `Designer and creation of PDFs:` · `Disabled` · … +22 |
-| `src/Config/ConfigFile.php` | 33/33 | `Always send error reports` · `Ask before sending error reports` · `Both` · `both of the above` · `Click` · `Closed` · `complete inserts` · `Custom - display all possible options to configure` · `Custom - like above, but without the quick/custom choice` · `Disable` · `Disabled` · `display column` · … +21 |
+| `src/Config/Descriptions.php` | 467/474 | `[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, …` · `A dropdown will be used if fewer items are present.` · `A special MySQL user configured with limited permissions, more info…` · `A user-friendly description of this server. Leave blank to display …` · `Add DROP DATABASE` · `Add DROP VIEW` · `Add IF NOT EXISTS (less efficient as indexes will be generated duri…` · `Add ON DUPLICATE KEY UPDATE` · `Advanced server configuration, do not change these options unless y…` · `Allow for searching inside the entire database.` · `Allow interrupt of import in case script detects it is close to tim…` · `Allow login to any MySQL server` · … +455 |
+| `resources/templates/relation/check_relations.twig` | 33/34 | `%sCreate%s a database named '%s' and setup the phpMyAdmin configura…` · `%sCreate%s missing phpMyAdmin configuration storage tables.` · `%sCreate%s the phpMyAdmin configuration storage in the current data…` · `Bookmarked SQL query:` · `Browser transformation:` · `Configurable menus:` · `Configuration of pmadb…` · `OK (Correctly working)` · `Create a pma user and give access to these tables.` · `Create the needed tables with the <code>%screate_tables.sql</code>.` · `Designer and creation of PDFs:` · `Display features:` · … +21 |
+| `src/Config/ConfigFile.php` | 32/33 | `Always send error reports` · `Ask before sending error reports` · `Both` · `both of the above` · `Click` · `Closed` · `complete inserts` · `Custom - display all possible options to configure` · `Custom - like above, but without the quick/custom choice` · `Disable` · `display column` · `Double click` · … +20 |
 | `resources/js/validator-messages.ts` | 15/20 | `Please enter a valid credit card number` · `Please enter a valid date` · `Please enter a valid date ( ISO )` · `Please enter a valid email address` · `Please enter a valid number` · `Please enter a valid URL` · `Please enter a value between {0} and {1}` · `Please enter a value between {0} and {1} characters long` · `Please enter at least {0} characters` · `Please enter only digits` · `Please enter the same value again` · `Please fix this field` · … +3 |
-| `resources/templates/preferences/manage/main.twig` | 15/17 | `Configuration has been saved.` · `Existing settings will be overwritten!` · `Import from browser's storage` · `Import from file` · `Merge with current configuration` · `Save as JSON file` · `Save as PHP file` · `Save to browser's storage` · `Saved on: @DATE@` · `Settings will be imported from your browser's local storage.` · `Settings will be saved in your browser's local storage.` · `This feature is not supported by your web browser` · … +3 |
 | `src/Config/ServerConfigChecks.php` | 14/14 | `%1$sBzip2 compression and decompression%2$s requires functions (%3$…` · `%1$sGZip compression and decompression%2$s requires functions (%3$s…` · `%1$sLogin cookie validity%2$s greater than %3$ssession.gc_maxlifeti…` · `%sLogin cookie validity%s should be set to 1800 seconds (30 minutes…` · `%sZip compression%s requires functions (%s) which are unavailable o…` · `%sZip decompression%s requires functions (%s) which are unavailable…` · `If using [kbd]cookie[/kbd] authentication and %sLogin cookie store%…` · `If you feel this is necessary, use additional protection settings -…` · `This %soption%s should be disabled as it allows attackers to brutef…` · `This value should be double checked to ensure that this directory i…` · `You allow for connecting to the server without a password.` · `You didn't have blowfish secret set and have enabled [kbd]cookie[/k…` · … +2 |
-| `src/Config/Validator.php` | 14/14 | `Could not connect to the database server!` · `Empty phpMyAdmin control user password while using phpMyAdmin confi…` · `Empty phpMyAdmin control user while using phpMyAdmin configuration …` · `Empty signon session name while using [kbd]signon[/kbd] authenticat…` · `Empty signon URL while using [kbd]signon[/kbd] authentication method!` · `Empty username while using [kbd]config[/kbd] authentication method!` · `Incorrect IP address: %s` · `Incorrect value:` · `Incorrect value!` · `Invalid authentication type!` · `Not a non-negative number!` · `Not a positive number!` · … +2 |
-| `resources/templates/preferences/two_factor/main.twig` | 10/10 | `Configure two-factor authentication` · `Disable two-factor authentication` · `Following composer packages are missing:` · `Please install optional dependencies to enable more authentication …` · `Two-factor authentication is available and configured for this acco…` · `Two-factor authentication is available, but not configured for this…` · `Two-factor authentication is not available, enable phpMyAdmin confi…` · `Two-factor authentication is not available, please install optional…` · `Two-factor authentication status` · `You have enabled two factor authentication.` |
+| `src/Config/Validator.php` | 9/14 | `Could not connect to the database server!` · `Empty phpMyAdmin control user password while using phpMyAdmin confi…` · `Empty phpMyAdmin control user while using phpMyAdmin configuration …` · `Empty signon session name while using [kbd]signon[/kbd] authenticat…` · `Empty signon URL while using [kbd]signon[/kbd] authentication method!` · `Empty username while using [kbd]config[/kbd] authentication method!` · `Incorrect IP address: %s` · `Incorrect value:` · `Invalid authentication type!` |
 | `resources/js/datetimepicker.ts` | 7/7 | `Friday (Week day name)` · `Monday (Week day name)` · `Saturday (Week day name)` · `Sunday (Week day name)` · `Thursday (Week day name)` · `Tuesday (Week day name)` · `Wednesday (Week day name)` |
-| `resources/templates/preferences/header.twig` | 7/9 | `Configuration has been saved.` · `Features` · `Main panel` · `Manage your settings` · `SQL queries` · `Two-factor authentication` · `Your preferences will be saved for current session only. Storing th…` |
-| `src/Config/FormDisplay.php` | 7/7 | `"%s" requires %s extension` · `Compressed export will not work due to missing function %s.` · `Compressed import will not work due to missing function %s.` · `Incorrect value!` · `maximum %s` · `Missing data for %s` · `unavailable` |
 | `src/Config/Forms/User/ExportForm.php` | 7/7 | `CSV` · `CSV for MS Excel` · `Custom` · `Microsoft Word 2000` · `OpenDocument Spreadsheet` · `OpenDocument Text` · `Quick` |
-| `resources/js/modules/config.ts` | 5/5 | `Incorrect value!` · `Not a non-negative number!` · `Not a positive number!` · `Not a valid port number!` · `Value must be less than or equal to %s!` |
-| `resources/templates/config/form_display/input.twig` | 5/5 | `Allow users to customize this value` · `Disabled` · `Restore default value` · `Set value: %s` · `This setting is disabled, it will not be applied to your configurat…` |
-| `resources/templates/preferences/two_factor/confirm.twig` | 3/3 | `By disabling two factor authentication you will be again able to lo…` · `Confirm disabling two-factor authentication` · `Disable two-factor authentication` |
+| `src/Config/FormDisplay.php` | 5/7 | `"%s" requires %s extension` · `Compressed export will not work due to missing function %s.` · `Compressed import will not work due to missing function %s.` · `maximum %s` · `unavailable` |
 | `src/Config/Forms/Setup/ServersForm.php` | 3/3 | `Config authentication` · `HTTP authentication` · `Signon authentication` |
 | `src/Config/Forms/User/ImportForm.php` | 3/4 | `CSV` · `CSV using LOAD DATA` · `OpenDocument Spreadsheet` |
 | `src/ConfigStorage/UserGroups.php` | 3/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` |
-| `src/Controllers/Preferences/ManageController.php` | 3/3 | `Could not import configuration` · `Paste it to your config.inc.php` · `phpMyAdmin configuration snippet` |
-| `resources/templates/preferences/autoload.twig` | 2/2 | `Delete settings` · `Your browser has phpMyAdmin configuration for this domain. Would yo…` |
-| `resources/templates/preferences/manage/error.twig` | 2/2 | `Configuration contains incorrect data for some fields.` · `Do you want to import remaining settings?` |
-| `resources/templates/preferences/two_factor/configure.twig` | 2/2 | `Configure two-factor authentication` · `Enable two-factor authentication` |
 | `src/Config.php` | 2/2 | `Existing configuration file (%s) is not readable.` · `Wrong permissions on configuration file, should not be world writable!` |
-| `src/Config/Forms/User/MainForm.php` | 2/2 | `Default transformations` · `Main panel` |
 | `src/Config/UserPreferences.php` | 2/2 | `Could not save configuration` · `The phpMyAdmin configuration storage database could not be accessed.` |
 | `src/ConfigStorage/Relation.php` | 2/2 | `no description` · `You do not have necessary privileges to create a database named '%s…` |
-| `src/Controllers/Preferences/TwoFactorController.php` | 2/2 | `Two-factor authentication has been configured.` · `Two-factor authentication has been removed.` |
-| `resources/js/modules/page_settings.ts` | 1/1 | `Apply` |
-| `resources/templates/config/form_display/display.twig` | 1/2 | `Apply` |
-| `resources/templates/preferences/forms/main.twig` | 1/1 | `Cannot save settings, submitted form contains errors!` |
-| `src/Config/Forms/User/FeaturesForm.php` | 1/1 | `Features` |
-| `src/Config/Forms/User/SqlForm.php` | 1/1 | `SQL queries` |
-| `src/Config/PageSettings.php` | 1/1 | `Cannot save settings, submitted configuration form contains errors!` |
+| `resources/templates/config/form_display/input.twig` | 1/5 | `Allow users to customize this value` |
+| `resources/templates/preferences/manage/main.twig` | 1/17 | `You can set more settings by modifying config.inc.php, eg. by using…` |
+| `src/Config/Forms/User/MainForm.php` | 1/2 | `Default transformations` |
 | `src/Config/Settings.php` | 1/1 | `Server %d` |
 | `src/Html/Generator.php` | 1/2 | `Explain SQL` |
 
@@ -390,14 +358,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Sql.php` | 3/5 | `Bookmark %s has been created.` · `Current selection does not contain a unique column. Grid edit, chec…` · `Current selection does not contain a unique column. Grid edit, Edit…` |
 | `src/Controllers/Sql/SqlController.php` | 2/2 | `Bookmark %s has been created.` · `Bookmark not created!` |
 
-## other — 44/94 (46.8%) covered, 44/94 implemented
+## other — 48/94 (51.1%) covered, 48/94 implemented
 
-50 msgids not used yet.
+46 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/js/datetimepicker.ts` | 32/51 | `Time (A specific point in the day, as shown on a clock)` · `Wk (Column header for week of the year in calendar)` · `Fr (Minimal week day name for Friday)` · `Mo (Minimal week day name for Monday)` · `Sa (Minimal week day name for Saturday)` · `Su (Minimal week day name for Sunday)` · `Th (Minimal week day name for Thursday)` · `Tu (Minimal week day name for Tuesday)` · `We (Minimal week day name for Wednesday)` · `April (Month name)` · `August (Month name)` · `December (Month name)` · … +20 |
-| `src/Plugins/TwoFactorPlugin.php` | 4/4 | `Login using password only.` · `No Two-Factor Authentication` · `Two-factor authentication failed: %s` · `Two-factor authentication failed.` |
 | `src/Html/Generator.php` | 3/13 | `Jump to database “%s”.` · `Skip Analyze SQL` · `Skip Explain SQL` |
 | `src/Identifiers/InvalidTableName.php` | 3/3 | `The table name cannot be longer than %d characters.` · `The table name cannot end with a space character.` · `The table name must be a non-empty string.` |
 | `src/Identifiers/InvalidTriggerName.php` | 3/3 | `The trigger name cannot be longer than %d characters.` · `The trigger name cannot end with a space character.` · `The trigger name must not be empty.` |

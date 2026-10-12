@@ -75,6 +75,15 @@ export const qk = {
   browseForeigners: (r: TableRef, req: object) => [...qk.tbl(r), 'browseForeigners', req] as const,
   /** stored MIME types / transformations of a table's columns (Browse grid, Insert form) */
   transformations: (r: TableRef) => [...qk.tbl(r), 'transformations'] as const,
+  // user preferences: everything below qk.prefs(s) is refreshed after a save
+  prefs: (s: number) => ['srv', s, 'prefs'] as const,
+  preferencesForm: (s: number, tab: string) => ['srv', s, 'prefs', 'form', tab] as const,
+  pageSettings: (s: number, group: string) => ['srv', s, 'prefs', 'page', group] as const,
+  preferencesManage: (s: number) => ['srv', s, 'prefs', 'manage'] as const,
+  preferencesAutoload: (s: number) => ['srv', s, 'prefs', 'autoload'] as const,
+  twoFactor: (s: number) => ['srv', s, 'prefs', 'two-factor'] as const,
+  /** the login challenge (no server scope: the login is pending) */
+  twoFactorChallenge: ['auth', 'two-factor'] as const,
   /** the Browse tab's /sql run (signed sql + pos from the URL) */
   browse: (r: TableRef, q: object) => [...qk.tbl(r), 'browse', q] as const,
   /** a table-level page payload (operations, relation, search, tracking…) */
@@ -82,4 +91,7 @@ export const qk = {
   /** a step payload of the normalization wizard */
   normalizationStep: (r: TableRef, step: string, q: object) =>
     [...qk.tbl(r), 'normalization', step, q] as const,
+  /** a visualization of a query result (chart form / rows, GIS) for one request */
+  visualization: (r: TableRef, kind: 'chart' | 'chartData' | 'gis', req: object) =>
+    [...qk.tbl(r), 'visualization', kind, req] as const,
 }

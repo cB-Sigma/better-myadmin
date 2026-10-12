@@ -35,6 +35,7 @@ import {
 import { sqlTabRoute } from './routes'
 import { newQueryId, runQuery, scopeKey, takePendingResults } from './runner'
 import './sql.css'
+import { usePagePrefs } from '../preferences/PageSettings.tsx'
 
 export interface SqlPageProps {
   server: number
@@ -56,6 +57,8 @@ const CONFIRM_NAVIGATION = 'You have unsaved changes; are you sure you want to l
  */
 export function SqlPage(props: SqlPageProps) {
   const { server, db, table } = props
+  // pma: Server|Database|Table SqlController: PageSettings::init('Sql')
+  usePagePrefs(server, 'Sql')
   // the message of the action that came back here (Insert/Edit "Go back to previous page")
   const [flash] = useState(() => takeFlash())
   const form = useQuery({
