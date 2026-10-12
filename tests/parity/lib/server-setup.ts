@@ -46,21 +46,31 @@ export interface Harness {
 /** Account names per suite (suites may run concurrently: each needs its own general-log users). */
 export const suiteUsers = (tag: string) => ({ pma: `${PMA_USER}_${tag}`, bma: `${BMA_USER}_${tag}` })
 
+/**
+ * `target` points both tools at another MySQL and phpMyAdmin (the dev replica: its MySQL root and
+ * the reference instance whose server it is); our app then gets that host and port as server 1.
+ */
 export async function startHarness(
   cfg: Parameters<typeof testConfig>[0] = {},
   users: { pma: string; bma: string; grant?: string } = { pma: PMA_USER, bma: BMA_USER },
   server: Parameters<typeof testConfig>[1] = {},
+  target: { root: typeof ROOT; pmaUrl: string } = { root: ROOT, pmaUrl: PMA_URL },
 ): Promise<Harness> {
-  const root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
+  const root = await mysql.createConnection({ ...target.root, multipleStatements: true })
   for (const u of [users.pma, users.bma]) {
     await root.query(
       `DROP USER IF EXISTS '${u}'@'%'; CREATE USER '${u}'@'%' IDENTIFIED BY '${u}'; ${users.grant?.replaceAll('{user}', u) ?? `GRANT ALL ON *.* TO '${u}'@'%' WITH GRANT OPTION`}`,
     )
   }
-  const log = await GeneralLog.open(ROOT)
-  const pma = new PmaClient(PMA_URL)
+  const log = await GeneralLog.open(target.root)
+  const pma = new PmaClient(target.pmaUrl)
   await pma.login(users.pma, users.pma)
-  const bma = testApp(testConfig(cfg, server))
+  const bma = testApp(
+    testConfig(
+      cfg,
+      target.root === ROOT ? server : { host: target.root.host, port: target.root.port, ...server },
+    ),
+  )
   await bma.login(users.bma, users.bma)
   return {
     users: { pma: users.pma, bma: users.bma },

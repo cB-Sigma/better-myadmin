@@ -91,6 +91,12 @@ import type {
   LoginResponse,
   LogoutResponse,
   MaintenanceRequest,
+  MonitorChartResponse,
+  MonitorLogRequest,
+  MonitorLogResponse,
+  MonitorLogVarsResponse,
+  MonitorPage,
+  MonitorQueryResponse,
   MoveColumnsRequest,
   MoveCopyRequest,
   MoveRepeatingGroupRequest,
@@ -129,6 +135,12 @@ import type {
   RelationSaveResponse,
   RenameIndexRequest,
   RenameViewRequest,
+  ReplicaControlRequest,
+  ReplicaUserRequest,
+  ReplicaUserResponse,
+  ReplicationActionResponse,
+  ReplicationPage,
+  ReplicationQuery,
   ReservedWordCheckResponse,
   RoutineEditorData,
   RoutineEditorOptions,
@@ -208,7 +220,13 @@ function readCookie(name: string): string {
 }
 
 /** The only place in the web app allowed to call fetch. */
-export async function call<T>(method: 'GET' | 'POST', path: string, body?: unknown): Promise<T> {
+export async function call<T>(
+  method: 'GET' | 'POST',
+  path: string,
+  body?: unknown,
+  /** aborts the request (a cancelled log analysis, a monitor torn down) */
+  signal?: AbortSignal,
+): Promise<T> {
   const headers: Record<string, string> = { accept: 'application/json' }
   if (body !== undefined) headers['content-type'] = 'application/json'
   if (method !== 'GET') headers[CSRF_HEADER] = readCookie(CSRF_COOKIE)
@@ -217,6 +235,7 @@ export async function call<T>(method: 'GET' | 'POST', path: string, body?: unkno
     headers,
     credentials: 'same-origin',
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    ...(signal !== undefined ? { signal } : {}),
   })
   const json = (await res.json().catch(() => null)) as unknown
   if (!res.ok) {
@@ -478,6 +497,20 @@ export const api = {
   killProcess: (s: number, id: string) =>
     call<KillProcessResponse>('POST', `${srvPath(s)}/status/processes/${id}/kill`),
   queryStatistics: (s: number) => call<QueryStatistics>('GET', `${srvPath(s)}/status/queries`),
+  monitor: (s: number) => call<MonitorPage>('GET', `${srvPath(s)}/status/monitor`),
+  monitorChart: (s: number, requiredData: string, signal?: AbortSignal) =>
+    call<MonitorChartResponse>('POST', `${srvPath(s)}/status/monitor/chart`, { requiredData }, signal),
+  monitorLog: (s: number, log: 'slow' | 'general', req: MonitorLogRequest, signal?: AbortSignal) =>
+    call<MonitorLogResponse>(
+      'POST',
+      `${srvPath(s)}/status/monitor/${log === 'slow' ? 'slow-log' : 'general-log'}`,
+      req,
+      signal,
+    ),
+  monitorLogVars: (s: number, set?: { varName: string; varValue: string }) =>
+    call<MonitorLogVarsResponse>('POST', `${srvPath(s)}/status/monitor/log-vars`, set ?? {}),
+  monitorQuery: (s: number, database: string, query: string) =>
+    call<MonitorQueryResponse>('POST', `${srvPath(s)}/status/monitor/query`, { database, query }),
   statusVariables: (s: number, req: StatusVariablesRequest = {}) =>
     req.flush !== undefined
       ? call<StatusVariables>('POST', `${srvPath(s)}/status/variables`, req)
@@ -499,6 +532,21 @@ export const api = {
     ),
   plugins: (s: number) => call<PluginsResponse>('GET', `${srvPath(s)}/plugins`),
   binlog: (s: number, q: BinlogQuery) => call<BinlogResponse>('GET', `${srvPath(s)}/binlog${flags(q)}`),
+  replication: (s: number, q: ReplicationQuery) =>
+    call<ReplicationPage>('GET', `${srvPath(s)}/replication${flags(q)}`),
+  replicaControl: (s: number, req: ReplicaControlRequest) =>
+    call<ReplicationActionResponse>('POST', `${srvPath(s)}/replication/control`, req),
+  replicaSkipErrors: (s: number, count: string, primaryConnection?: string) =>
+    call<ReplicationActionResponse>('POST', `${srvPath(s)}/replication/skip-errors`, {
+      count,
+      primary_connection: primaryConnection,
+    }),
+  changePrimary: (
+    s: number,
+    req: { username: string; password: string; hostname: string; port: string; primary_connection?: string },
+  ) => call<ReplicationActionResponse>('POST', `${srvPath(s)}/replication/change-primary`, req),
+  addReplicaUser: (s: number, req: ReplicaUserRequest) =>
+    call<ReplicaUserResponse>('POST', `${srvPath(s)}/replication/replica-user`, req),
   // table structure (docs/architecture/05-api-reference.md#table-scope)
   tableStructure: (r: TableRef) => call<StructureResponse>('GET', `${tablePath(r)}/structure`),
   changeColumnsForm: (r: TableRef, fields: string[]) =>

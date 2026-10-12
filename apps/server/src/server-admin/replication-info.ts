@@ -1,3 +1,9 @@
+import {
+  setDefaultPrimaryConnectionSql,
+  showAllReplicasStatusSql,
+  showBinLogStatusSql,
+  showReplicaStatusSql,
+} from '@bettermyadmin/sql-gen'
 import type { NavDbi } from '../navigation/dbi.ts'
 
 type Rows = Array<Record<string, string | null>>
@@ -63,6 +69,8 @@ export class ReplicationInfo {
   ]
 
   primaryStatus: Rows = []
+  /** the multi-source connection load() selected (UrlParams::$params['primary_connection']) */
+  connection: string | null = null
   replicaStatus: Rows = []
   primaryInfo: { status: boolean; doDb: string[]; ignoreDb: string[] } = {
     status: false,
@@ -85,15 +93,23 @@ export class ReplicationInfo {
     this.#isMariaDb = isMariaDb
   }
 
-  /** ReplicationInfo::load — the multi-source `primary_connection` (MariaDB) is the replication page's. */
-  async load(): Promise<this> {
-    this.primaryStatus = await this.#dbi.fetchResultSimple(this.#showBinLogStatusStmt())
-    const v = this.#versionInt
-    this.replicaStatus = await this.#dbi.fetchResultSimple(
-      (!this.#isMariaDb && v >= 80022) || (this.#isMariaDb && v >= 100501)
-        ? 'SHOW REPLICA STATUS'
-        : 'SHOW SLAVE STATUS',
-    )
+  /**
+   * ReplicationInfo::load — with a MariaDB multi-source `connection`, the replica status is the one
+   * of that connection (`SET @@default_master_connection`).
+   */
+  async load(connection: string | null = null): Promise<this> {
+    const flavour = { versionInt: this.#versionInt, isMariaDb: this.#isMariaDb }
+    this.primaryStatus = await this.#dbi.fetchResultSimple(showBinLogStatusSql(flavour))
+    if (connection !== null && connection !== '') {
+      const multi = showAllReplicasStatusSql(flavour)
+      const multiStatus = multi === null ? [] : await this.#dbi.fetchResultSimple(multi)
+      if (multiStatus.length > 0) {
+        // DatabaseInterface::query: a failure is fatal (MysqlError)
+        await this.#dbi.conn.query(setDefaultPrimaryConnectionSql(connection), 'replication.connection')
+        this.connection = connection
+      }
+    }
+    this.replicaStatus = await this.#dbi.fetchResultSimple(showReplicaStatusSql(flavour))
     const fill = (status: Rows, key: string): string[] => {
       const v0 = status[0]?.[key]
       // empty($status[0][$key])
@@ -111,13 +127,6 @@ export class ReplicationInfo {
     }
     return this
   }
-
-  /** Compatibility::getShowBinLogStatusStmt */
-  #showBinLogStatusStmt(): string {
-    if (!this.#isMariaDb && this.#versionInt >= 80200) return 'SHOW BINARY LOG STATUS'
-    if (this.#isMariaDb && this.#versionInt >= 100502) return 'SHOW BINLOG STATUS'
-    return 'SHOW MASTER STATUS'
-  }
 }
 
 /**
@@ -129,11 +138,12 @@ export async function replicationStatusTable(
   versionInt: number,
   isMariaDb: boolean,
   type: 'primary' | 'replica',
+  connection: string | null = null,
 ): Promise<{
   type: 'primary' | 'replica'
   variables: Array<{ name: string; value: string; status: '' | 'text-danger' | 'text-success' }>
 }> {
-  const info = await new ReplicationInfo(dbi, versionInt, isMariaDb).load()
+  const info = await new ReplicationInfo(dbi, versionInt, isMariaDb).load(connection)
   const names = type === 'primary' ? ReplicationInfo.primaryVariables : ReplicationInfo.replicaVariables
   const status = type === 'primary' ? info.primaryStatus : info.replicaStatus
   const alerts: Record<string, string> =
