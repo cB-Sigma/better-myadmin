@@ -28,6 +28,7 @@ import {
   phpJsonEncode,
   relationParametersToArray,
   setColumnPreferences,
+  sqlDir,
   validIdentifier,
 } from '@bettermyadmin/metadata'
 import { type Context, Hono } from 'hono'
@@ -154,6 +155,7 @@ async function storageStatus(m: MetaRequest, storage: ConfigStorage): Promise<St
     arePmadbTablesDefined: storage.arePmadbTablesDefined(),
     arePmadbTablesAllDisabled: storage.arePmadbTablesAllDisabled(),
     configurationStorageDbName: storage.getConfigurationStorageDbName(),
+    sqlDir: sqlDir(),
     homeNotice,
     operationsNotice,
     offer,

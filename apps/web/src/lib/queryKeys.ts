@@ -64,6 +64,8 @@ export const qk = {
   usersOverview: (s: number, q: object) => ['srv', s, 'privileges', 'users', q] as const,
   addUserForm: (s: number, q: object) => ['srv', s, 'privileges', 'add-user', q] as const,
   userProperties: (s: number, q: object) => ['srv', s, 'privileges', 'user', q] as const,
+  /** the configuration storage status (check-relations) */
+  storageStatus: (s: number, db: string) => ['srv', s, 'metadata-storage', db] as const,
   userGroups: (s: number) => ['srv', s, 'privileges', 'user-groups'] as const,
   userGroupUsers: (s: number, g: string) => ['srv', s, 'privileges', 'user-groups', 'users', g] as const,
   userGroupForm: (s: number, g: string | null) => ['srv', s, 'privileges', 'user-groups', 'form', g] as const,
