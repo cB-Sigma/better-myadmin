@@ -4,7 +4,7 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-206/449 covered (45.9%): 203 implemented, 1 exception, 2 n/a, 1 planned, 242 missing. [Summary](README.md).
+365/449 covered (81.3%): 350 implemented, 1 exception, 14 n/a, 1 planned, 83 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 89/109 (81.7%) covered, 88/109 implemented
 
@@ -178,17 +178,17 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/table/structure-page.ts:105 |  |
 | ⬜ | `SQLQuery/Edit` |  |  |
 
-## 04 table level — 4/5 (80.0%) covered, 4/5 implemented
+## 04 table level — 5/5 (100.0%) covered, 5/5 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
 | ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:155<br>apps/server/src/table/maintenance.ts:58 |  |
-| ⬜ | `Export/sql_auto_increment` |  |  |
+| ✅ | `Export/sql_auto_increment` | packages/export/src/plugins/sql.ts:254<br>packages/export/src/plugins/sql.ts:1584 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:369<br>apps/web/src/features/table/structure/StructurePage.tsx:247 |  |
 | ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:225<br>apps/server/src/table/structure-page.ts:373 |  |
 | ✅ | `ShowStats` | apps/server/src/database/structure.ts:138<br>apps/server/src/table/structure-page.ts:260<br>apps/server/src/table/structure-page.ts:370 |  |
 
-## 05 database level — 7/31 (22.6%) covered, 7/31 implemented
+## 05 database level — 25/31 (80.6%) covered, 18/31 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -199,24 +199,24 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `MysqlMinVersion/internal` |  |  |
 | ✅ | `PmaNoRelation_DisableWarning` | apps/server/src/database/operations.ts:51<br>apps/server/src/routes/metadata.ts:129<br>apps/server/src/shell/home.ts:256 |  |
 | ✅ | `PropertiesNumColumns` | apps/server/src/database/structure.ts:139<br>apps/server/src/database/structure.ts:156 |  |
-| ⬜ | `Schema/dia_orientation` |  |  |
-| ⬜ | `Schema/dia_paper` |  |  |
-| ⬜ | `Schema/dia_show_color` |  |  |
-| ⬜ | `Schema/dia_show_keys` |  |  |
-| ⬜ | `Schema/eps_all_tables_same_width` |  |  |
-| ⬜ | `Schema/eps_orientation` |  |  |
-| ⬜ | `Schema/eps_show_color` |  |  |
-| ⬜ | `Schema/eps_show_keys` |  |  |
-| ⬜ | `Schema/pdf_all_tables_same_width` |  |  |
-| ⬜ | `Schema/pdf_orientation` |  |  |
-| ⬜ | `Schema/pdf_paper` |  |  |
-| ⬜ | `Schema/pdf_show_color` |  |  |
-| ⬜ | `Schema/pdf_show_grid` |  |  |
-| ⬜ | `Schema/pdf_show_keys` |  |  |
-| ⬜ | `Schema/pdf_with_doc` |  |  |
-| ⬜ | `Schema/svg_all_tables_same_width` |  |  |
-| ⬜ | `Schema/svg_show_color` |  |  |
-| ⬜ | `Schema/svg_show_keys` |  |  |
+| ✅ | `Schema/dia_orientation` | packages/schema/src/index.ts:44 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_paper` | packages/schema/src/index.ts:60 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_all_tables_same_width` | packages/schema/src/index.ts:71 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_orientation` | packages/schema/src/index.ts:44 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ➖ | `Schema/pdf_all_tables_same_width` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_orientation` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_paper` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_show_color` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_show_grid` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_show_keys` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ➖ | `Schema/pdf_with_doc` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ✅ | `Schema/svg_all_tables_same_width` | packages/schema/src/index.ts:80 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
 | ⬜ | `Servers/*/central_columns` |  |  |
 | ⬜ | `Servers/*/pdf_pages` |  |  |
 | ⬜ | `Servers/*/tracking` |  |  |
@@ -246,7 +246,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowServerInfo` | apps/web/src/features/shell/AboutPages.tsx:65<br>apps/server/src/shell/about.ts:112<br>apps/server/src/shell/home.ts:200 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:143<br>apps/web/src/features/shell/HomePage.tsx:239<br>apps/web/src/features/shell/HomePage.tsx:244<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
 
-## 07 export import — 11/138 (8.0%) covered, 11/138 implemented
+## 07 export import — 134/138 (97.1%) covered, 131/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -254,142 +254,142 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `BZipDump` | apps/server/src/setup/checks.ts:245<br>apps/server/src/setup/checks.ts:248<br>apps/server/src/setup/checks.ts:249<br>apps/server/src/import/page.ts:95<br>apps/server/src/import/page.ts:128 |  |
 | ✅ | `CompressOnFly` | apps/server/src/export/service.ts:116<br>packages/export/src/export.ts:261<br>packages/export/src/export.ts:324 |  |
 | ✅ | `ExecTimeLimit` | apps/server/src/export/page.ts:228 | X9 |
-| ⬜ | `Export/as_separate_files` |  |  |
-| ⬜ | `Export/asfile` |  |  |
-| ⬜ | `Export/charset` |  |  |
-| ⬜ | `Export/codegen_structure_or_data` |  |  |
-| ⬜ | `Export/compression` |  |  |
-| ⬜ | `Export/csv_columns` |  |  |
-| ⬜ | `Export/csv_enclosed` |  |  |
-| ⬜ | `Export/csv_escaped` |  |  |
-| ⬜ | `Export/csv_null` |  |  |
-| ⬜ | `Export/csv_removeCRLF` |  |  |
-| ⬜ | `Export/csv_separator` |  |  |
-| ⬜ | `Export/csv_structure_or_data` |  |  |
-| ⬜ | `Export/csv_terminated` |  |  |
-| ⬜ | `Export/excel_columns` |  |  |
-| ⬜ | `Export/excel_edition` |  |  |
-| ⬜ | `Export/excel_null` |  |  |
-| ⬜ | `Export/excel_removeCRLF` |  |  |
-| ⬜ | `Export/format` |  |  |
-| ⬜ | `Export/htmlword_columns` |  |  |
-| ⬜ | `Export/htmlword_null` |  |  |
-| ⬜ | `Export/htmlword_structure_or_data` |  |  |
-| ⬜ | `Export/json_pretty_print` |  |  |
-| ⬜ | `Export/json_unicode` |  |  |
-| ⬜ | `Export/latex_caption` |  |  |
-| ⬜ | `Export/latex_columns` |  |  |
-| ⬜ | `Export/latex_comments` |  |  |
-| ⬜ | `Export/latex_data_caption` |  |  |
-| ⬜ | `Export/latex_data_continued_caption` |  |  |
-| ⬜ | `Export/latex_data_label` |  |  |
-| ⬜ | `Export/latex_mime` |  |  |
-| ⬜ | `Export/latex_null` |  |  |
-| ⬜ | `Export/latex_relation` |  |  |
-| ⬜ | `Export/latex_structure_caption` |  |  |
-| ⬜ | `Export/latex_structure_continued_caption` |  |  |
-| ⬜ | `Export/latex_structure_label` |  |  |
-| ⬜ | `Export/latex_structure_or_data` |  |  |
-| ⬜ | `Export/lock_tables` |  |  |
-| ⬜ | `Export/mediawiki_caption` |  |  |
-| ⬜ | `Export/mediawiki_headers` |  |  |
-| ⬜ | `Export/mediawiki_structure_or_data` |  |  |
-| ⬜ | `Export/method` |  |  |
-| ⬜ | `Export/ods_columns` |  |  |
-| ⬜ | `Export/ods_null` |  |  |
-| ⬜ | `Export/odt_columns` |  |  |
-| ⬜ | `Export/odt_comments` |  |  |
-| ⬜ | `Export/odt_mime` |  |  |
-| ⬜ | `Export/odt_null` |  |  |
-| ⬜ | `Export/odt_relation` |  |  |
-| ⬜ | `Export/odt_structure_or_data` |  |  |
-| ⬜ | `Export/onserver` |  |  |
-| ⬜ | `Export/onserver_overwrite` |  |  |
-| ⬜ | `Export/pdf_report_title` |  |  |
-| ⬜ | `Export/pdf_structure_or_data` |  |  |
-| ⬜ | `Export/phparray_structure_or_data` |  |  |
-| ⬜ | `Export/quick_export_onserver` |  |  |
-| ⬜ | `Export/quick_export_onserver_overwrite` |  |  |
-| ⬜ | `Export/remember_file_template` |  |  |
+| ✅ | `Export/as_separate_files` | apps/server/src/export/page.ts:175<br>apps/server/src/export/page.ts:218 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/asfile` | apps/server/src/export/page.ts:208 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/charset` | packages/export/src/plugins/htmlword.ts:61<br>packages/export/src/plugins/sql.ts:551<br>packages/export/src/plugins/xml.ts:89<br>apps/server/src/export/page.ts:212 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/codegen_structure_or_data` | packages/export/src/plugins/codegen.ts:107<br>packages/export/src/plugins/codegen.ts:200<br>packages/export/src/plugins/codegen.ts:201 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/compression` | apps/server/src/export/page.ts:174 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_columns` | packages/export/src/plugins/csv.ts:45<br>packages/export/src/plugins/csv.ts:141 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_enclosed` | packages/export/src/plugins/csv.ts:40<br>packages/export/src/plugins/csv.ts:142 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_escaped` | packages/export/src/plugins/csv.ts:41<br>packages/export/src/plugins/csv.ts:143 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_null` | packages/export/src/plugins/csv.ts:43<br>packages/export/src/plugins/csv.ts:145 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_removeCRLF` | packages/export/src/plugins/csv.ts:44<br>packages/export/src/plugins/csv.ts:144 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_separator` | packages/export/src/plugins/csv.ts:39<br>packages/export/src/plugins/csv.ts:140 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_structure_or_data` | packages/export/src/plugins/csv.ts:46<br>packages/export/src/plugins/csv.ts:135<br>packages/export/src/plugins/csv.ts:136 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/csv_terminated` | packages/export/src/plugins/csv.ts:42<br>packages/export/src/plugins/csv.ts:139 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_columns` | packages/export/src/plugins/csv.ts:180<br>packages/export/src/plugins/csv.ts:249 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_edition` | packages/export/src/plugins/csv.ts:183<br>packages/export/src/plugins/csv.ts:247 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_null` | packages/export/src/plugins/csv.ts:178<br>packages/export/src/plugins/csv.ts:251 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/excel_removeCRLF` | packages/export/src/plugins/csv.ts:179<br>packages/export/src/plugins/csv.ts:250 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/format` | packages/export/src/plugins/codegen.ts:64<br>packages/export/src/plugins/codegen.ts:68<br>packages/export/src/plugins/codegen.ts:134<br>packages/export/src/plugins/codegen.ts:209<br>apps/server/src/export/page.ts:133 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/htmlword_columns` | packages/export/src/plugins/htmlword.ts:46<br>packages/export/src/plugins/htmlword.ts:232 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/htmlword_null` | packages/export/src/plugins/htmlword.ts:45<br>packages/export/src/plugins/htmlword.ts:236 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/htmlword_structure_or_data` | packages/export/src/plugins/htmlword.ts:42<br>packages/export/src/plugins/htmlword.ts:228<br>packages/export/src/plugins/htmlword.ts:229 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/json_pretty_print` | packages/export/src/plugins/json.ts:36<br>packages/export/src/plugins/json.ts:150 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/json_unicode` | packages/export/src/plugins/json.ts:37<br>packages/export/src/plugins/json.ts:151 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_caption` | packages/export/src/plugins/latex.ts:65<br>packages/export/src/plugins/latex.ts:268 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_columns` | packages/export/src/plugins/latex.ts:83<br>packages/export/src/plugins/latex.ts:269 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_comments` | packages/export/src/plugins/latex.ts:76<br>packages/export/src/plugins/latex.ts:272 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_data_caption` | packages/export/src/plugins/latex.ts:84<br>packages/export/src/plugins/latex.ts:273 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_data_continued_caption` | packages/export/src/plugins/latex.ts:85<br>packages/export/src/plugins/latex.ts:275<br>packages/export/src/plugins/latex.ts:276 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_data_label` | packages/export/src/plugins/latex.ts:86<br>packages/export/src/plugins/latex.ts:278 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_mime` | packages/export/src/plugins/latex.ts:78<br>packages/export/src/plugins/latex.ts:271 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_null` | packages/export/src/plugins/latex.ts:87<br>packages/export/src/plugins/latex.ts:279 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_relation` | packages/export/src/plugins/latex.ts:75<br>packages/export/src/plugins/latex.ts:270 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_caption` | packages/export/src/plugins/latex.ts:70<br>packages/export/src/plugins/latex.ts:281<br>packages/export/src/plugins/latex.ts:282 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_continued_caption` | packages/export/src/plugins/latex.ts:71<br>packages/export/src/plugins/latex.ts:285<br>packages/export/src/plugins/latex.ts:286 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_label` | packages/export/src/plugins/latex.ts:72<br>packages/export/src/plugins/latex.ts:288 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/latex_structure_or_data` | packages/export/src/plugins/latex.ts:66<br>packages/export/src/plugins/latex.ts:264<br>packages/export/src/plugins/latex.ts:265 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/lock_tables` | apps/server/src/export/page.ts:207 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/mediawiki_caption` | packages/export/src/plugins/text.ts:58<br>packages/export/src/plugins/text.ts:162 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/mediawiki_headers` | packages/export/src/plugins/text.ts:59<br>packages/export/src/plugins/text.ts:163 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/mediawiki_structure_or_data` | packages/export/src/plugins/text.ts:53<br>packages/export/src/plugins/text.ts:158<br>packages/export/src/plugins/text.ts:159 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/method` | apps/server/src/export/page.ts:195<br>apps/server/src/export/page.ts:196 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/ods_columns` | packages/export/src/plugins/opendocument.ts:123<br>packages/export/src/plugins/opendocument.ts:195 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/ods_null` | packages/export/src/plugins/opendocument.ts:122<br>packages/export/src/plugins/opendocument.ts:196 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_columns` | packages/export/src/plugins/opendocument.ts:235<br>packages/export/src/plugins/opendocument.ts:442 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_comments` | packages/export/src/plugins/opendocument.ts:228<br>packages/export/src/plugins/opendocument.ts:445 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_mime` | packages/export/src/plugins/opendocument.ts:230<br>packages/export/src/plugins/opendocument.ts:444 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_null` | packages/export/src/plugins/opendocument.ts:236<br>packages/export/src/plugins/opendocument.ts:446 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_relation` | packages/export/src/plugins/opendocument.ts:227<br>packages/export/src/plugins/opendocument.ts:443 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/odt_structure_or_data` | packages/export/src/plugins/opendocument.ts:222<br>packages/export/src/plugins/opendocument.ts:438<br>packages/export/src/plugins/opendocument.ts:439 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/onserver` | apps/server/src/export/page.ts:203 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/onserver_overwrite` | apps/server/src/export/page.ts:204 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `Export/pdf_report_title` |  | n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered) |
+| ➖ | `Export/pdf_structure_or_data` |  | n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered) |
+| ✅ | `Export/phparray_structure_or_data` | packages/export/src/plugins/simple.ts:105<br>packages/export/src/plugins/simple.ts:177<br>packages/export/src/plugins/simple.ts:178 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/quick_export_onserver` | apps/server/src/export/page.ts:205 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/quick_export_onserver_overwrite` | apps/server/src/export/page.ts:206 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/remember_file_template` | apps/server/src/export/page.ts:210 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/remove_definer_from_definitions` | apps/server/src/table/table-def.ts:48 |  |
-| ⬜ | `Export/sql_backquotes` |  |  |
-| ⬜ | `Export/sql_compatibility` |  |  |
-| ⬜ | `Export/sql_create_database` |  |  |
-| ⬜ | `Export/sql_create_table` |  |  |
-| ⬜ | `Export/sql_create_trigger` |  |  |
-| ⬜ | `Export/sql_create_view` |  |  |
-| ⬜ | `Export/sql_dates` |  |  |
-| ⬜ | `Export/sql_delayed` |  |  |
-| ⬜ | `Export/sql_disable_fk` |  |  |
-| ⬜ | `Export/sql_drop_database` |  |  |
-| ⬜ | `Export/sql_drop_table` |  |  |
-| ⬜ | `Export/sql_header_comment` |  |  |
-| ⬜ | `Export/sql_hex_for_binary` |  |  |
-| ⬜ | `Export/sql_if_not_exists` |  |  |
-| ⬜ | `Export/sql_ignore` |  |  |
-| ⬜ | `Export/sql_insert_syntax` |  |  |
-| ⬜ | `Export/sql_metadata` |  |  |
-| ⬜ | `Export/sql_mime` |  |  |
-| ⬜ | `Export/sql_or_replace_view` |  |  |
-| ⬜ | `Export/sql_procedure_function` |  |  |
-| ⬜ | `Export/sql_relation` |  |  |
-| ⬜ | `Export/sql_structure_or_data` |  |  |
-| ⬜ | `Export/sql_truncate` |  |  |
-| ⬜ | `Export/sql_type` |  |  |
-| ⬜ | `Export/sql_use_transaction` |  |  |
-| ⬜ | `Export/sql_utc_time` |  |  |
-| ⬜ | `Export/sql_view_current_user` |  |  |
-| ⬜ | `Export/sql_views_as_tables` |  |  |
-| ⬜ | `Export/texytext_columns` |  |  |
-| ⬜ | `Export/texytext_null` |  |  |
-| ⬜ | `Export/texytext_structure_or_data` |  |  |
-| ⬜ | `Export/toon_indent` |  |  |
-| ⬜ | `Export/toon_separator` |  |  |
-| ⬜ | `Export/toon_structure_or_data` |  |  |
-| ⬜ | `Export/xml_export_contents` |  |  |
-| ⬜ | `Export/xml_export_events` |  |  |
-| ⬜ | `Export/xml_export_functions` |  |  |
-| ⬜ | `Export/xml_export_procedures` |  |  |
-| ⬜ | `Export/xml_export_tables` |  |  |
-| ⬜ | `Export/xml_export_triggers` |  |  |
-| ⬜ | `Export/xml_export_views` |  |  |
-| ⬜ | `Export/xml_structure_or_data` |  |  |
+| ✅ | `Export/sql_backquotes` | packages/export/src/plugins/sql.ts:285<br>packages/export/src/plugins/sql.ts:1558 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_compatibility` | packages/export/src/plugins/sql.ts:192<br>packages/export/src/plugins/sql.ts:1566 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_database` | packages/export/src/plugins/sql.ts:229<br>packages/export/src/plugins/sql.ts:1572 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_table` | packages/export/src/plugins/sql.ts:246<br>packages/export/src/plugins/sql.ts:1575 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_trigger` | packages/export/src/plugins/sql.ts:279<br>packages/export/src/plugins/sql.ts:1579 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_create_view` | packages/export/src/plugins/sql.ts:262<br>packages/export/src/plugins/sql.ts:1578 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_dates` | packages/export/src/plugins/sql.ts:155<br>packages/export/src/plugins/sql.ts:1561 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_delayed` | packages/export/src/plugins/sql.ts:295<br>packages/export/src/plugins/sql.ts:1586 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_disable_fk` | packages/export/src/plugins/sql.ts:181<br>packages/export/src/plugins/sql.ts:1565 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_drop_database` | packages/export/src/plugins/sql.ts:221<br>packages/export/src/plugins/sql.ts:1593 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_drop_table` | packages/export/src/plugins/sql.ts:241<br>packages/export/src/plugins/sql.ts:1573 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_header_comment` | packages/export/src/plugins/sql.ts:153<br>packages/export/src/plugins/sql.ts:1563 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_hex_for_binary` | packages/export/src/plugins/sql.ts:333<br>packages/export/src/plugins/sql.ts:1591 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_if_not_exists` | packages/export/src/plugins/sql.ts:251<br>packages/export/src/plugins/sql.ts:1582 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_ignore` | packages/export/src/plugins/sql.ts:296<br>packages/export/src/plugins/sql.ts:1587 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_insert_syntax` | packages/export/src/plugins/sql.ts:304<br>packages/export/src/plugins/sql.ts:1588 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_metadata` | packages/export/src/plugins/sql.ts:186<br>packages/export/src/plugins/sql.ts:1595 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_mime` | packages/export/src/plugins/sql.ts:163<br>packages/export/src/plugins/sql.ts:1560 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_or_replace_view` | packages/export/src/plugins/sql.ts:268<br>packages/export/src/plugins/sql.ts:1583 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_procedure_function` | packages/export/src/plugins/sql.ts:274<br>packages/export/src/plugins/sql.ts:1574 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_relation` | packages/export/src/plugins/sql.ts:160<br>packages/export/src/plugins/sql.ts:1559 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_structure_or_data` | packages/export/src/plugins/sql.ts:203<br>packages/export/src/plugins/sql.ts:1554<br>packages/export/src/plugins/sql.ts:1555 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_truncate` | packages/export/src/plugins/sql.ts:293<br>packages/export/src/plugins/sql.ts:1585 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_type` | packages/export/src/plugins/sql.ts:298<br>packages/export/src/plugins/sql.ts:1576 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_use_transaction` | packages/export/src/plugins/sql.ts:177<br>packages/export/src/plugins/sql.ts:1564 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_utc_time` | packages/export/src/plugins/sql.ts:337<br>packages/export/src/plugins/sql.ts:1592 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_view_current_user` | packages/export/src/plugins/sql.ts:267<br>packages/export/src/plugins/sql.ts:1580 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_views_as_tables` | packages/export/src/plugins/sql.ts:185<br>packages/export/src/plugins/sql.ts:1594 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/texytext_columns` | packages/export/src/plugins/text.ts:195<br>packages/export/src/plugins/text.ts:375 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/texytext_null` | packages/export/src/plugins/text.ts:196<br>packages/export/src/plugins/text.ts:379 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/texytext_structure_or_data` | packages/export/src/plugins/text.ts:192<br>packages/export/src/plugins/text.ts:371<br>packages/export/src/plugins/text.ts:372 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/toon_indent` | packages/export/src/plugins/simple.ts:207<br>packages/export/src/plugins/simple.ts:261<br>packages/export/src/plugins/simple.ts:264<br>packages/export/src/plugins/simple.ts:265 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/toon_separator` | packages/export/src/plugins/simple.ts:206<br>packages/export/src/plugins/simple.ts:260 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/toon_structure_or_data` | packages/export/src/plugins/simple.ts:208<br>packages/export/src/plugins/simple.ts:256<br>packages/export/src/plugins/simple.ts:257 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_contents` | packages/export/src/plugins/xml.ts:46<br>packages/export/src/plugins/xml.ts:218 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_events` | packages/export/src/plugins/xml.ts:39<br>packages/export/src/plugins/xml.ts:219 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_functions` | packages/export/src/plugins/xml.ts:40<br>packages/export/src/plugins/xml.ts:220 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_procedures` | packages/export/src/plugins/xml.ts:41<br>packages/export/src/plugins/xml.ts:221 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_tables` | packages/export/src/plugins/xml.ts:42<br>packages/export/src/plugins/xml.ts:222 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_triggers` | packages/export/src/plugins/xml.ts:43<br>packages/export/src/plugins/xml.ts:223 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_export_views` | packages/export/src/plugins/xml.ts:44<br>packages/export/src/plugins/xml.ts:224 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/xml_structure_or_data` | packages/export/src/plugins/xml.ts:37<br>packages/export/src/plugins/xml.ts:214<br>packages/export/src/plugins/xml.ts:215 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `GZipDump` | apps/server/src/export/page.ts:215<br>apps/server/src/export/service.ts:115<br>apps/server/src/import/page.ts:94<br>apps/server/src/import/page.ts:127<br>apps/server/src/import/service.ts:125 |  |
 | 🗓️ | `IconvExtraParams` |  | M4 (X5) |
-| ⬜ | `Import/allow_interrupt` |  |  |
-| ⬜ | `Import/charset` |  |  |
-| ⬜ | `Import/csv_col_names` |  |  |
-| ⬜ | `Import/csv_columns` |  |  |
-| ⬜ | `Import/csv_empty_as_null` |  |  |
-| ⬜ | `Import/csv_ignore` |  |  |
-| ⬜ | `Import/csv_new_line` |  |  |
-| ⬜ | `Import/csv_replace` |  |  |
-| ⬜ | `Import/csv_terminated` |  |  |
-| ⬜ | `Import/format` |  |  |
-| ⬜ | `Import/ldi_columns` |  |  |
-| ⬜ | `Import/ldi_ignore` |  |  |
-| ⬜ | `Import/ldi_local_option` |  |  |
-| ⬜ | `Import/ldi_new_line` |  |  |
-| ⬜ | `Import/ldi_replace` |  |  |
-| ⬜ | `Import/ods_col_names` |  |  |
-| ⬜ | `Import/ods_empty_rows` |  |  |
-| ⬜ | `Import/ods_recognize_currency` |  |  |
-| ⬜ | `Import/ods_recognize_percentages` |  |  |
-| ⬜ | `Import/skip_queries` |  |  |
-| ⬜ | `Import/sql_compatibility` |  |  |
-| ⬜ | `Import/sql_no_auto_value_on_zero` |  |  |
+| ✅ | `Import/allow_interrupt` | apps/server/src/import/page.ts:88<br>apps/server/src/import/page.ts:90 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/charset` | packages/import/src/plugins/xml.ts:49<br>apps/server/src/import/page.ts:138 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_col_names` | packages/import/src/plugins/csv.ts:72<br>packages/import/src/plugins/csv.ts:108 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_columns` | packages/import/src/plugins/csv.ts:86<br>packages/import/src/plugins/csv.ts:105 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_empty_as_null` | packages/import/src/plugins/csv.ts:92<br>packages/import/src/plugins/csv.ts:109 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_ignore` | packages/import/src/plugins/csv.ts:91<br>packages/import/src/plugins/csv.ts:100 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_new_line` | packages/import/src/plugins/csv.ts:46<br>packages/import/src/plugins/csv.ts:104 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_replace` | packages/import/src/plugins/csv.ts:40<br>packages/import/src/plugins/csv.ts:99 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_terminated` | packages/import/src/plugins/csv.ts:43<br>packages/import/src/plugins/csv.ts:101 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/format` | apps/server/src/import/page.ts:81 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_columns` | packages/import/src/plugins/csv.ts:443<br>packages/import/src/plugins/csv.ts:471 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_ignore` | packages/import/src/plugins/csv.ts:444<br>packages/import/src/plugins/csv.ts:465 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_local_option` | packages/import/src/plugins/csv.ts:445<br>packages/import/src/plugins/csv.ts:462<br>apps/server/src/import/page.ts:64<br>apps/server/src/import/page.ts:67 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_new_line` | packages/import/src/plugins/csv.ts:46<br>packages/import/src/plugins/csv.ts:470 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_replace` | packages/import/src/plugins/csv.ts:40<br>packages/import/src/plugins/csv.ts:464 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_col_names` | packages/import/src/plugins/ods.ts:44<br>packages/import/src/plugins/ods.ts:66 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_empty_rows` | packages/import/src/plugins/ods.ts:49<br>packages/import/src/plugins/ods.ts:65 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_recognize_currency` | packages/import/src/plugins/ods.ts:54<br>packages/import/src/plugins/ods.ts:64 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ods_recognize_percentages` | packages/import/src/plugins/ods.ts:51<br>packages/import/src/plugins/ods.ts:63 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/skip_queries` | apps/server/src/import/page.ts:83<br>apps/server/src/import/page.ts:85 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/sql_compatibility` | packages/import/src/plugins/sql.ts:28<br>packages/import/src/plugins/sql.ts:47 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/sql_no_auto_value_on_zero` | packages/import/src/plugins/sql.ts:34<br>packages/import/src/plugins/sql.ts:48 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ⬜ | `PDFDefaultPageSize` |  |  |
 | ✅ | `PDFPageSizes` | apps/server/src/database/schema-export.ts:28 |  |
 | ✅ | `RecodingEngine` | apps/server/src/export/page.ts:211<br>apps/server/src/export/service.ts:118<br>apps/server/src/import/page.ts:109<br>apps/server/src/import/service.ts:209<br>apps/server/src/import/service.ts:211 | X5 |
 | ✅ | `SaveDir` | apps/server/src/setup/checks.ts:238<br>apps/server/src/setup/checks.ts:239<br>apps/server/src/setup/service.ts:68<br>apps/server/src/export/page.ts:202<br>apps/server/src/export/service.ts:117 |  |
-| ⬜ | `Schema/format` |  |  |
-| ⬜ | `Schema/pdf_table_order` |  |  |
+| ✅ | `Schema/format` | apps/server/src/database/schema-export.ts:53<br>apps/server/src/database/schema-export.ts:54 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ➖ | `Schema/pdf_table_order` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
 | ⬜ | `Servers/*/export_templates` |  |  |
 | ⬜ | `Servers/*/savedsearches` |  |  |
 | ✅ | `UploadDir` | apps/server/src/setup/service.ts:67<br>apps/server/src/import/page.ts:103<br>apps/server/src/import/page.ts:105<br>apps/server/src/import/page.ts:133<br>apps/server/src/import/service.ts:101 |  |
 | ✅ | `ZipDump` | apps/server/src/export/page.ts:214<br>apps/server/src/export/service.ts:114<br>apps/server/src/import/page.ts:96<br>apps/server/src/import/page.ts:129<br>apps/server/src/import/service.ts:125 |  |
 
-## 08 settings preferences pmadb — 33/62 (53.2%) covered, 32/62 implemented
+## 08 settings preferences pmadb — 45/62 (72.6%) covered, 43/62 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -403,20 +403,20 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `Console/OrderBy` |  |  |
 | ✅ | `DBG/simple2fa` | apps/server/src/preferences/service.ts:156 |  |
 | ⬜ | `DefaultTransformations/TextImageLink` |  |  |
-| ⬜ | `Export/codegen_format` |  |  |
-| ⬜ | `Export/file_template_database` |  |  |
-| ⬜ | `Export/file_template_server` |  |  |
-| ⬜ | `Export/file_template_table` |  |  |
-| ⬜ | `Export/sql_include_comments` |  |  |
-| ⬜ | `Export/sql_max_query_size` |  |  |
+| ✅ | `Export/codegen_format` | packages/export/src/plugins/codegen.ts:108<br>packages/export/src/plugins/codegen.ts:204<br>packages/export/src/plugins/codegen.ts:208 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/file_template_database` | apps/server/src/export/page.ts:169 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/file_template_server` | apps/server/src/export/page.ts:172 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/file_template_table` | apps/server/src/export/page.ts:171 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_include_comments` | packages/export/src/plugins/sql.ts:169<br>packages/export/src/plugins/sql.ts:175<br>packages/export/src/plugins/sql.ts:1562 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/sql_max_query_size` | packages/export/src/plugins/sql.ts:331<br>packages/export/src/plugins/sql.ts:1590 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `FirstDayOfCalendar` | apps/server/src/insert-edit/form.ts:458 |  |
 | ✅ | `ForeignKeyMaxLimit` | apps/server/src/browse/actions.ts:193<br>apps/server/src/browse/actions.ts:197<br>apps/server/src/browse/actions.ts:233<br>apps/server/src/insert-edit/context.ts:143<br>apps/server/src/insert-edit/form.ts:186 |  |
-| ⬜ | `Import/csv_enclosed` |  |  |
-| ⬜ | `Import/csv_escaped` |  |  |
-| ⬜ | `Import/ldi_enclosed` |  |  |
-| ⬜ | `Import/ldi_escaped` |  |  |
-| ⬜ | `Import/ldi_terminated` |  |  |
-| ⬜ | `Import/sql_read_as_multibytes` |  |  |
+| ✅ | `Import/csv_enclosed` | packages/import/src/plugins/csv.ts:44<br>packages/import/src/plugins/csv.ts:102 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/csv_escaped` | packages/import/src/plugins/csv.ts:45<br>packages/import/src/plugins/csv.ts:103 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_enclosed` | packages/import/src/plugins/csv.ts:44<br>packages/import/src/plugins/csv.ts:468 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_escaped` | packages/import/src/plugins/csv.ts:45<br>packages/import/src/plugins/csv.ts:469 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Import/ldi_terminated` | packages/import/src/plugins/csv.ts:43<br>packages/import/src/plugins/csv.ts:467 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `Import/sql_read_as_multibytes` |  | n/a: phpMyAdmin reads it nowhere but the Import settings form (Q12) |
 | ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:243 |  |
 | ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:90 |  |
 | ✅ | `MaxTableList` | apps/server/src/database/structure.ts:92<br>apps/server/src/database/structure.ts:168<br>apps/server/src/database/structure.ts:378 |  |
@@ -472,7 +472,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `SQLQuery/Refresh` |  |  |
 | ⬜ | `SQLQuery/ShowAsPHP` |  |  |
 
-## other — 3/28 (10.7%) covered, 2/28 implemented
+## other — 8/28 (28.6%) covered, 6/28 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -482,11 +482,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ⬜ | `DefaultTransformations/PreApPend` |  |  |
 | ⬜ | `DefaultTransformations/Substring` |  |  |
 | ⬜ | `environment` |  |  |
-| ⬜ | `Export/excel_structure_or_data` |  |  |
-| ⬜ | `Export/json_structure_or_data` |  |  |
-| ⬜ | `Export/ods_structure_or_data` |  |  |
-| ⬜ | `Export/xml_export_struc` |  |  |
-| ⬜ | `Export/yaml_structure_or_data` |  |  |
+| ✅ | `Export/excel_structure_or_data` | packages/export/src/plugins/csv.ts:191<br>packages/export/src/plugins/csv.ts:243<br>packages/export/src/plugins/csv.ts:244 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/json_structure_or_data` | packages/export/src/plugins/json.ts:35<br>packages/export/src/plugins/json.ts:146<br>packages/export/src/plugins/json.ts:147 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/ods_structure_or_data` | packages/export/src/plugins/opendocument.ts:124<br>packages/export/src/plugins/opendocument.ts:191<br>packages/export/src/plugins/opendocument.ts:192 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ➖ | `Export/xml_export_struc` |  | n/a: phpMyAdmin reads it nowhere (Settings only; ExportXml uses xml_structure_or_data) |
+| ✅ | `Export/yaml_structure_or_data` | packages/export/src/plugins/simple.ts:25<br>packages/export/src/plugins/simple.ts:82<br>packages/export/src/plugins/simple.ts:83 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ⬜ | `GD2Available` |  |  |
 | ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:236<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:240<br>apps/server/src/table/search.ts:206 |  |
 | ⬜ | `MysqlMinVersion/human` |  |  |

@@ -5,6 +5,10 @@
  *   planned: M<n>        not built yet; lands in milestone M<n> (docs/architecture/13)
  *   exception: X<n>|Q<n> intentional difference registered in docs/reference/parity-exceptions.md
  *   n/a: <reason>        nothing to build (PHP-specific, removed upstream, …)
+ * and, for directives read under a computed name (export plugin options `${format}_columns`,
+ * transformation option lists), the files that hold the name:
+ *   via: <file|dir> | [<file|dir>, …]  the directive's last path segment must occur there as a quoted
+ *                        string (verified; a prefix key applies to every directive under it)
  * and, for routes, the targets that implement it:
  *   api: 'METHOD /api/…' | ['…']    Hono endpoints (method optional)
  *   ui:  '/s/:s/…' | ['…']          SPA routes
@@ -32,7 +36,7 @@ export interface RouteMapEntry extends Disposition {
 
 export type RouteMap = Record<string, RouteMapEntry>
 /** Keys: directive path, or a prefix ending in `/` or `*`. */
-export type DirectiveMap = Record<string, Disposition>
+export type DirectiveMap = Record<string, Disposition & { via?: string | string[] }>
 /** Keys: control key, template name, or template directory prefix ending in `/`. */
 export type ControlMap = Record<string, Disposition>
 export interface MessageMap {

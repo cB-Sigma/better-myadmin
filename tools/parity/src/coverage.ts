@@ -13,8 +13,8 @@
  *   untested     checklist only: a test is linked but there is no passing result
  * Covered = implemented + exception + n/a.
  */
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { join, relative } from 'node:path'
 import { type AreaRules, areaOf, loadAreaRules, loadAreas } from './areas.ts'
 import { type ChecklistItem, readChecklist } from './checklist.ts'
 import { msgKey } from './extract/pot.ts'
@@ -141,6 +141,42 @@ function fromDisposition(d: Disposition | undefined): { status: Status; detail?:
       detail: `${d.planned}${d.exception !== undefined ? ` (${d.exception})` : ''}${note}`,
     }
   return { status: 'missing', ...(d.note !== undefined ? { detail: d.note } : {}) }
+}
+
+/**
+ * `via` of a directive disposition: the files (or directories) where the directive's last path
+ * segment occurs as a quoted string, a property access or a template-literal suffix (the option or
+ * field name the code reads the setting with: `settings[name]`, `exp.format`, `${format}_show_color`).
+ */
+function viaUses(key: string, via: string | string[] | undefined, repo: string): string[] {
+  if (via === undefined) return []
+  const name = key.split('/').at(-1) ?? key
+  const out: string[] = []
+  const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const rest = name.includes('_') ? name.slice(name.indexOf('_')) : null
+  // a quoted name, a property access (`exp.format`) or a template suffix (`${format}_show_color`)
+  const quoted = new RegExp(
+    `['"\`]${esc(name)}['"\`]|\\.${esc(name)}\\b${rest !== null ? `|\\}${esc(rest)}\\\`` : ''}`,
+  )
+  const scan = (abs: string) => {
+    let st: ReturnType<typeof statSync>
+    try {
+      st = statSync(abs)
+    } catch {
+      return
+    }
+    if (st.isDirectory()) {
+      for (const e of readdirSync(abs)) scan(join(abs, e))
+      return
+    }
+    if (!/\.tsx?$/.test(abs) || /\.test\.tsx?$|\/test\//.test(abs)) return
+    const lines = readFileSync(abs, 'utf8').split('\n')
+    lines.forEach((l, i) => {
+      if (quoted.test(l)) out.push(`${relative(repo, abs)}:${i + 1}`)
+    })
+  }
+  for (const v of Array.isArray(via) ? via : [via]) scan(join(repo, v))
+  return out
 }
 
 // ---------------------------------------------------------------------------
@@ -389,9 +425,15 @@ export function computeCoverage(inv: Inventories, maps: Maps, opts: CoverageOpti
       targets: uses.slice(0, 5).map((u) => `${u.file}:${u.line}`),
       problems: dispProblems(d),
     }
+    const via =
+      uses.length > 0 ? [] : viaUses(dir.key, (d as { via?: string | string[] } | undefined)?.via, repo)
     if (uses.length > 0) {
       item.status = 'implemented'
       if (d?.exception !== undefined) item.detail = String(d.exception)
+    } else if (via.length > 0) {
+      item.status = 'implemented'
+      item.targets = via.slice(0, 5)
+      item.detail = `read under a computed name${d?.note !== undefined ? ` — ${d.note}` : ''}`
     } else {
       const { status, detail } = fromDisposition(d)
       item.status = status

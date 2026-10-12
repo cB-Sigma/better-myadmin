@@ -38,3 +38,32 @@ ThemeDefault:
 ThemePerServer:
   exception: X16
   planned: M1
+
+# Export / Import / Schema: the plugin options are named after the directives and take their
+# defaults from $cfg[type][name] (Plugins::getDefault / checkboxCheck), the page settings are read
+# by name; apps/server/test/int/directives-export-import.test.ts changes every one at once.
+Export/:
+  via:
+    - packages/export/src/plugins
+    - apps/server/src/export/page.ts
+  note: option or page-setting name (Plugins::getDefault)
+Import/:
+  via:
+    - packages/import/src/plugins
+    - apps/server/src/import/page.ts
+  note: option or page-setting name (Plugins::getDefault)
+Schema/:
+  via:
+    - packages/schema/src/index.ts
+    - apps/server/src/database/schema-export.ts
+  note: option name (Plugins::getDefault, $cfg['Schema'])
+Export/pdf_report_title:
+  n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)
+Export/pdf_structure_or_data:
+  n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)
+Schema/pdf_*:
+  n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)
+Export/xml_export_struc:
+  n/a: phpMyAdmin reads it nowhere (Settings only; ExportXml uses xml_structure_or_data)
+Import/sql_read_as_multibytes:
+  n/a: phpMyAdmin reads it nowhere but the Import settings form (Q12)
