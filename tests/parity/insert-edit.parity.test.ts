@@ -10,6 +10,7 @@ import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { decodeEntities } from './lib/nav-html.ts'
 import { PmaClient, type PmaJson } from './lib/pma.ts'
 import { pmaReachable as reachable } from './lib/server-setup.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Golden parity of the Insert/Edit form save path (docs/features/03-insert-edit-transformations.md).
@@ -59,7 +60,7 @@ const SEED = `
     ('first', 1, 'b1', 0x0102, 0xCAFE, '2020-01-01', '2020-01-01 10:00:00.123', '2020-01-01 00:00:00', 1),
     ('second', 2, NULL, NULL, NULL, NULL, NULL, '2020-01-02 00:00:00', NULL),
     ('third', 3, 'b3', NULL, NULL, NULL, NULL, '2020-01-03 00:00:00', 2);
-  CREATE TABLE g (id INT PRIMARY KEY, pt POINT NOT NULL SRID 0);
+  CREATE TABLE g (id INT PRIMARY KEY, pt POINT NOT NULL${TARGET === 'mariadb' ? '' : ' SRID 0'});
   INSERT INTO g VALUES (1, ST_GeomFromText('POINT(1 2)'));
   CREATE TABLE u (k CHAR(36) NOT NULL PRIMARY KEY, v VARCHAR(80), ip VARBINARY(16), code VARCHAR(10));
 `

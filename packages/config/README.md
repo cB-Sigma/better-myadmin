@@ -82,7 +82,7 @@ Values are coerced according to the directive's type:
 | `DataDir` | `~/.bettermyadmin` | generated secret, SQLite session store, local metadata. `~` is not expanded here; the server resolves it |
 | `SessionStore`, `RedisUrl` | `'sqlite'`, `''` | session store backend |
 | `Listen.{host,port,basePath}` | `127.0.0.1`, `8080`, `/` | HTTP listener |
-| `LoginRateLimit.{enabled,maxAttempts,windowSeconds,maxBackoffSeconds}` | `true, 5, 900, 300` | failed-login limiter (X2) |
+| `LoginRateLimit.{enabled,maxAttempts,windowSeconds,lockoutSeconds}` | `true, 5, 900, 300` | failed-login limiter (X2) |
 | `ForceSSL` | `false` | honoured, unlike phpMyAdmin (X22) |
 | `MaxUploadSize` | 512 MiB | upload limit (phpMyAdmin uses PHP's `upload_max_filesize`) |
 | `Servers[i].max_connections` | `4` | mysql2 pool size |

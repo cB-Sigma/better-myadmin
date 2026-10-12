@@ -175,7 +175,10 @@ export async function isFkCheckEnabled(ctx: DbCtx): Promise<boolean> {
 }
 
 /** DatabaseInterface::listTables (SHOW TABLES FROM `db`;, natural order) */
-export async function listTables(ctx: DbCtx, db = ctx.db): Promise<string[]> {
+export async function listTables(
+  ctx: Pick<DbCtx, 'dbi' | 'cfg'> & { db?: string },
+  db = ctx.db ?? '',
+): Promise<string[]> {
   const r = await ctx.dbi.tryQuery(`SHOW TABLES FROM ${backquote(db)};`, 'db.tables')
   if (r === null) return []
   const names = r.rows.map((row) => row[0] ?? '')

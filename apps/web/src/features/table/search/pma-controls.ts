@@ -59,4 +59,11 @@ export const pmaControls = {
   'js:table/zoom_search.ts#click:#togglesearchformlink': 'ZoomSearchPage.tsx',
   'js:table/find_replace.ts#click:#toggle_find': 'FindReplacePage.tsx',
   'js:table/find_replace.ts#submit:#find_replace_form': 'FindReplacePage.tsx',
+  // pma: table/search/input_box.twig (foreignLink, GIS in the table search), zoom_search/result_form.twig
+  'table/search/input_box.twig#link:Browse foreign values': 'criteria.tsx',
+  'table/search/input_box.twig#button:Edit/Insert': 'criteria.tsx',
+  'table/zoom_search/result_form.twig#criteriaColumnNullFlags[*]': {
+    file: 'ZoomSearchPage.tsx',
+    match: 'criteriaColumnNullFlags[${i}]',
+  },
 } as const

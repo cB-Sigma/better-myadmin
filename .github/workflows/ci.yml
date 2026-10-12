@@ -51,14 +51,29 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:int
 
+  # the same suites against each reference pair (tests/parity/lib/target.ts)
   parity:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: mysql
+            services: mysql84 phpmyadmin-ref phpmyadmin-ref-i18n mysql84-replica phpmyadmin-ref-replica
+          - target: mariadb
+            services: mariadb11 phpmyadmin-ref-mariadb mariadb11-replica phpmyadmin-ref-mariadb-replica
+    env:
+      BMA_PARITY_TARGET: ${{ matrix.target }}
+      # in compose networking the reference and the replica reach the primary by its service name and
+      # port 3306; our app (on the runner) by the published port (tests/parity/server-replication)
+      BMA_PARITY_REPLICA_SOURCE_HOST: ${{ matrix.target == 'mariadb' && 'mariadb11' || 'mysql84' }}
+      BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: docker compose -f docker/dev.compose.yml up -d --build --wait mysql84 phpmyadmin-ref phpmyadmin-ref-i18n
+      - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:parity
 

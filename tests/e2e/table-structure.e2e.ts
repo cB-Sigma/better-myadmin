@@ -57,8 +57,8 @@ test('create table, add / change a column, add indexes, drop a column [p04-92945
   const r0 = page.getByTestId('column-row-0')
   await r0.getByLabel('Column', { exact: true }).fill('id')
   await r0.getByLabel('AUTO_INCREMENT').check()
-  // ticking A_I selects PRIMARY in the Index column
-  await expect(r0.getByLabel('Index')).toHaveValue('primary')
+  // ticking A_I selects PRIMARY in the Index column (the option values carry the row number, as in column_attributes.twig)
+  await expect(r0.getByLabel('Index')).toHaveValue('primary_0')
   const r1 = page.getByTestId('column-row-1')
   await r1.getByLabel('Column', { exact: true }).fill('title')
   await r1.getByLabel('Type').selectOption('VARCHAR')

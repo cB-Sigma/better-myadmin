@@ -34,7 +34,7 @@ export interface Selector {
   label?: string
   name?: string
   section?: string
-  /** only in this interaction step (`initial` = after load) */
+  /** only in this interaction step (`initial` = after load), or the steps a `/regex/` matches */
   step?: string
 }
 
@@ -177,7 +177,7 @@ const textMatch = (pattern: string | undefined, actual: string | undefined): boo
 
 export function selects(sel: Selector | undefined, c: Control, step: string, section = c.section): boolean {
   if (sel === undefined) return false
-  if (sel.step !== undefined && sel.step !== step) return false
+  if (sel.step !== undefined && !textMatch(sel.step, step)) return false
   if (sel.kind !== undefined && sel.kind !== c.kind) return false
   return textMatch(sel.label, c.label) && textMatch(sel.name, c.name) && textMatch(sel.section, section)
 }
@@ -418,7 +418,7 @@ export function diffControls(
   }
 
   rules.forEach((r, i) => {
-    const restricted = [r.pma, r.ours, r.match].some((s) => s?.step !== undefined && s.step !== step)
+    const restricted = [r.pma, r.ours, r.match].some((s) => s?.step !== undefined && !textMatch(s.step, step))
     if (!used.has(i) && !restricted && r.global !== true)
       warnings.push(`map rule ${i + 1} matched nothing in step "${step}"`)
   })

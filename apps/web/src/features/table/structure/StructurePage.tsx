@@ -57,6 +57,10 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const [renaming, setRenaming] = useState<string | null>(null)
   const [moving, setMoving] = useState<string[] | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
+  /** confirmPreviewSql before dropping an index (#previewSqlConfirmModal) */
+  const [dropIndex, setDropIndex] = useState<{ sql: string; name: string } | null>(null)
+  /** #moveColumnsErrorModal */
+  const [moveError, setMoveError] = useState<string | null>(null)
   const [maintenance, setMaintenance] = useState<DdlResponse['maintenance'] | null>(null)
   const [addCount, setAddCount] = useState(1)
   const [after, setAfter] = useState<string | null>(null)
@@ -545,15 +549,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                                   <Button
                                     variant="link"
                                     className="drop_primary_key_index_anchor"
-                                    onClick={() =>
-                                      setConfirm({
-                                        question: t('Do you really want to execute the following query?'),
-                                        sql: index.dropSql,
-                                        run: async () => {
-                                          await act(() => api.dropIndex(scope, index.name))
-                                        },
-                                      })
-                                    }
+                                    onClick={() => setDropIndex({ sql: index.dropSql, name: index.name })}
                                   >
                                     {t('Drop')}
                                   </Button>
@@ -694,23 +690,33 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       </Modal>
 
       <Modal
+        id="moveColumnsModal"
         title={t('Move columns')}
-        open={moving !== null}
+        open={moving !== null && preview === null}
         onClose={() => setMoving(null)}
         footer={
           <>
             <Button
+              id="designerModalGoButton"
               variant="primary"
               onClick={async () => {
                 const order = moving
                 setMoving(null)
                 if (order === null || order.join('\u0000') === columnNames.join('\u0000')) return
-                await act(() => api.moveColumns(scope, { order }))
+                // pma: structure.ts — a failed move shows #moveColumnsErrorModal
+                try {
+                  const r = await api.moveColumns(scope, { order })
+                  setMessages(r.messages)
+                  await refresh()
+                } catch (e) {
+                  setMoveError(errorMessage(e).text)
+                }
               }}
             >
               {t('Go')}
             </Button>
             <Button
+              id="designerModalPreviewButton"
               onClick={async () => {
                 if (moving === null || moving.join('\u0000') === columnNames.join('\u0000'))
                   return setPreview('')
@@ -723,7 +729,9 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             >
               {t('Preview SQL')}
             </Button>
-            <Button onClick={() => setMoving(null)}>{t('Close')}</Button>
+            <Button id="designerModalCloseButton" onClick={() => setMoving(null)}>
+              {t('Close')}
+            </Button>
           </>
         }
       >
@@ -750,7 +758,32 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           ))}
         </ul>
       </Modal>
-      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog
+        highlight
+        sql={preview}
+        onClose={() => setPreview(null)}
+        // #designerModalPreviewModal: "Go back" to Move columns
+        {...(moving !== null ? { onBack: () => setPreview(null) } : {})}
+      />
+      <PreviewSqlDialog
+        highlight
+        sql={dropIndex?.sql ?? null}
+        onClose={() => setDropIndex(null)}
+        onConfirm={async () => {
+          const d = dropIndex
+          setDropIndex(null)
+          if (d !== null) await act(() => api.dropIndex(scope, d.name))
+        }}
+      />
+      <Modal
+        id="moveColumnsErrorModal"
+        title={t('Error')}
+        open={moveError !== null}
+        onClose={() => setMoveError(null)}
+        footer={<Button onClick={() => setMoveError(null)}>{t('OK')}</Button>}
+      >
+        <MessageBox type="error" text={moveError ?? ''} />
+      </Modal>
       <IndexDialog
         scope={scope}
         query={indexQuery}
@@ -862,7 +895,9 @@ function RowActions({
   if (!hide) return items
   return (
     <details className="relative">
-      <summary className="cursor-pointer text-accent">{t('More')}</summary>
+      <summary id="moreActionsButton" className="cursor-pointer text-accent">
+        {t('More')}
+      </summary>
       {items}
     </details>
   )

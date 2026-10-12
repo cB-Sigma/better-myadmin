@@ -514,3 +514,13 @@ Parser errors: `isAppendLimitClause` is false when `parser->errors !== []` so a 
 **Bookmarks/history.** Tables `bookmark(id, dbase, user, label, query)` and `history(id, username, db, table, timevalue, sqlquery)` map directly; keep variable syntax `[VARIABLE]`/`[VARIABLEn]` and the comment-unwrapping rule for compatibility, but consider escaping options. History should be written server-side on execution (not via a middleware observing `Current::$sqlQuery`) with the same cap/purge; keep session fallback when DB history is off. Console: keep the shortcuts, history navigation, requery/explain/profiling actions and per-user persisted options.
 
 **Security parity.** Signed `sql_query` URLs (HMAC with per-session secret) for GET execution; `AllowUserDropDatabase`; confirm prompts (configurable via `Confirm`); never run queries when generating PHP code; lint endpoint parses only.
+
+**Implementation notes (BetterMyAdmin).** Parity registries: `apps/web/src/features/sql/pma-controls.ts` (sql/query.twig, resources/js/sql.ts) and `apps/web/src/features/console/pma-controls.ts` (console/display.twig, resources/js/modules/console.ts); UI parity cases in `tests/ui-parity/sql.uip.ts` (`db-sql`, `table-sql`, `table-sql-results`, `console`; `server-sql` in pages.uip.ts); statements in `tests/parity/sql-tab.parity.test.ts`, `metadata.parity.test.ts` (bookmarks, console bookmarks add/refresh, history) and `name-lists.parity.test.ts` (/tables, /columns). Behaviours aligned with phpMyAdmin in this pass:
+- a console query is the SQL box request (`grid`), so the main panel gets the full results (operations, "Bookmark this SQL query") in the context the query sets (the response's db and table, like the /import response's menu);
+- an empty result set shows "Query results operations" with Create view only (sql/no_results_returned.twig);
+- the console's message list and input scroll as one `.content` (Console.scrollBottom);
+- both console inputs lint (CodeMirror.sqlLint) and complete tables and columns on input and Ctrl+Space (codeMirrorAutoCompleteOnInputRead); the console's highlighting has no manual links (CodeMirror.runMode);
+- the Options and Debug SQL cards close with their own title (`.switch_button`); text selection is off while the console is resized (`selectstart`);
+- Debug SQL shows the statements of every API response that reports them (`$(document).on('ajaxSuccess')`), not only the console's; PHP backtraces (Show trace / arguments) are n/a;
+- the view form's plain AS textarea selects its text on the first click (`#view_as` selectContent).
+

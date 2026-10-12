@@ -6,6 +6,7 @@ import { DB_TABS, SERVER_TABS, TABLE_TABS } from '../../apps/web/src/features/sh
 import { classify, normalise } from './lib/compare.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { PmaClient, breadcrumb, homeCard, homeWarnings, isPmaUp, menuTabs, visibleText } from './lib/pma.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Golden parity of the shell: the tab sets, breadcrumb comments, home-page blocks and warnings,
@@ -302,6 +303,14 @@ describe.skipIf(!reachable)(
       const r = await changeBoth('pw', 'm1shell-new-Pw1')
       expect(r.pmaJson.success).toBe(true)
       expect(visibleText(r.pmaJson.message ?? '')).toContain('The profile has been updated.')
+      if (TARGET === 'mariadb') {
+        // MariaDB: SET PASSWORD = PASSWORD(…) for one's own account (Privileges::getChangePasswordSql)
+        const sql = String((r.ours.json as { sql?: string }).sql ?? '')
+        expect(sql).toMatch(/^SET password = PASSWORD\('\*\*\*'\)$/i)
+        expect(visibleText(r.pmaJson.message ?? '')).toContain(sql)
+        expect(r.bmaWrites).toEqual(r.pmaWrites)
+        return
+      }
       expect(visibleText(r.pmaJson.message ?? '')).toContain(
         "ALTER USER 'm1shell_pa_pw'@'%' IDENTIFIED BY '***'",
       )
@@ -317,6 +326,12 @@ describe.skipIf(!reachable)(
     it('change password as a user who can read mysql.user: WITH mysql_native_password, refused by MySQL 8.4 (quirk Q43)', async () => {
       const r = await changeBoth('su', 'm1shell-new-Pw2')
       expect(r.bmaWrites).toEqual(r.pmaWrites)
+      if (TARGET === 'mariadb') {
+        // MariaDB still has mysql_native_password: both succeed with the same statements
+        expect(r.pmaJson.success).toBe(true)
+        expect(r.ours.status).toBe(200)
+        return
+      }
       expect(r.pmaWrites).toEqual([
         "ALTER USER 'user_su'@'%' IDENTIFIED WITH 'mysql_native_password' BY <secret>",
       ])

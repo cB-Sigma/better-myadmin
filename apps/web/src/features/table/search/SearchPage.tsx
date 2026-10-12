@@ -187,6 +187,8 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                             value={r.value}
                             disabled={UNARY.includes(r.operator)}
                             onChange={(v) => patch(i, { value: v })}
+                            scope={scope}
+                            geomFunc={r.geomFunc}
                           />
                         </td>
                       </tr>

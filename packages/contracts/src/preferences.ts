@@ -46,6 +46,8 @@ export const PrefsField = z.object({
   disabled: z.boolean(),
   /** "Set value" link value */
   setvalue: z.string().optional(),
+  /** setup script: the "Allow users to customize this value" checkbox (`<id>-userprefs-allow`) */
+  userprefsAllow: z.boolean().optional(),
   /** inline errors (HTML) */
   errors: z.array(z.string()),
   /** registered JS validators (`data-field-validators`) */

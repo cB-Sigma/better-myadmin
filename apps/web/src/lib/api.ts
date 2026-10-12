@@ -32,6 +32,7 @@ import type {
   ChooseUserGroupResponse,
   CollationsResponse,
   ColumnFormOptions,
+  ColumnNamesResponse,
   ColumnTransformations,
   ColumnValuesResponse,
   ConsoleBookmarkAddRequest,
@@ -191,6 +192,13 @@ import type {
   ServerVariablesResponse,
   SetCollationResponse,
   SetVariableResponse,
+  SetupConfigRequest,
+  SetupConfigResponse,
+  SetupFormResponse,
+  SetupOverview,
+  SetupSaveRequest,
+  SetupSaveResponse,
+  SetupServerResponse,
   ShowCreateResponse,
   SimulateRequest,
   SimulateResponse,
@@ -203,6 +211,7 @@ import type {
   StatusVariablesRequest,
   StructureBrowseResponse,
   StructureResponse,
+  TableNamesResponse,
   TableOptionsRequest,
   TableScope,
   ToggleTrackingRequest,
@@ -297,8 +306,17 @@ export async function call<T>(
     }
     throw new ApiError(res.status, env)
   }
+  // $cfg['DBG']['sql']: the statements of any response go to the console's Debug SQL card
+  // (pma: modules/console.ts $(document).on('ajaxSuccess') → ConsoleDebug.showLog(data.debug))
+  const executed = (json as { executed?: unknown } | null)?.executed
+  if (Array.isArray(executed) && executed.length > 0) {
+    window.dispatchEvent(new CustomEvent(DEBUG_SQL_EVENT, { detail: executed }))
+  }
   return json as T
 }
+
+/** Dispatched on `window` with the `executed` statements of an API response (DBG.sql). */
+export const DEBUG_SQL_EVENT = 'bma:debug-sql'
 
 /** The scope argument of database- and table-level endpoints (and of their `qk` keys). */
 export interface DbRef {
@@ -334,6 +352,32 @@ export const tablePath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURICompon
  */
 export const api = {
   authState: () => call<AuthState>('GET', '/auth/state'),
+  // setup script (docs/architecture/05-api-reference.md#setup)
+  setupOverview: (versionCheck = false) =>
+    call<SetupOverview>('GET', versionCheck ? '/setup?version_check=1' : '/setup'),
+  setupForm: (formset: string) =>
+    call<SetupFormResponse>('GET', `/setup/form/${encodeURIComponent(formset)}`),
+  saveSetupForm: (formset: string, req: SetupSaveRequest) =>
+    call<SetupSaveResponse>('POST', `/setup/form/${encodeURIComponent(formset)}`, req),
+  revertSetupForm: (formset: string) =>
+    call<{ ok: true }>('POST', `/setup/form/${encodeURIComponent(formset)}/revert`, {}),
+  setupServer: (id: number) => call<SetupServerResponse>('GET', `/setup/servers/${id}`),
+  saveSetupServer: (id: number, req: SetupSaveRequest) =>
+    call<SetupSaveResponse>('POST', `/setup/servers/${id}`, req),
+  revertSetupServer: (id: number) => call<{ ok: true }>('POST', `/setup/servers/${id}/revert`, {}),
+  deleteSetupServer: (id: number) => call<{ ok: true }>('POST', `/setup/servers/${id}/delete`, {}),
+  postSetupConfig: (req: SetupConfigRequest) => call<{ ok: true }>('POST', '/setup/config', req),
+  setupConfig: (eol: string) =>
+    call<SetupConfigResponse>('GET', `/setup/config?eol=${encodeURIComponent(eol)}`),
+  /** ValidateController: errors by field id / fieldset (empty lists clear them), or a failure message */
+  setupValidate: (id: string, values: Record<string, unknown>) =>
+    call<Record<string, string[]> | { success: false; message: string }>('POST', '/setup/validate', {
+      id,
+      values: JSON.stringify(values),
+    }),
+  /** submit_download: the generated file's URL (navigated to, so the browser saves it) */
+  setupDownloadUrl: (eol: string, format: 'php' | 'bma' = 'php') =>
+    `/api/setup/config/download?eol=${encodeURIComponent(eol)}${format === 'bma' ? '&format=bma' : ''}`,
   /** The request language; `lang` selects one (pma: `?lang=` from the language selector). */
   i18n: (lang?: string) =>
     call<I18nState>('GET', lang === undefined ? '/i18n' : `/i18n?lang=${encodeURIComponent(lang)}`),
@@ -479,8 +523,14 @@ export const api = {
   exportPage: (server: number, pairs: Array<[string, string]>) =>
     call<ExportPageResponse>('GET', `/servers/${server}/export/page?${new URLSearchParams(pairs)}`),
   /** databases (no db), tables (db) or columns (db + table) for the aliases dialog */
-  exportAliasNames: (server: number, db: string, table: string) =>
-    call<{ names: string[] }>('GET', `/servers/${server}/export/alias-names?${qs({ db, table })}`),
+  /** databases, or the tables of `db` (the export aliases dialog, the Designer) */
+  exportAliasNames: (server: number, db: string) =>
+    call<{ names: string[] }>('GET', `/servers/${server}/export/alias-names?${qs({ db })}`),
+  // the pickers' name lists (pma: /tables, /columns)
+  tableNames: (server: number, db: string) =>
+    call<TableNamesResponse>('POST', `/servers/${server}/tables`, { db }),
+  columnNames: (server: number, db: string, table: string) =>
+    call<ColumnNamesResponse>('POST', `/servers/${server}/columns`, { db, table }),
   exportRun: (server: number, params: Array<[string, string]>) =>
     call<ExportResponse>('POST', `/servers/${server}/export`, { params }),
   /** The one-shot download URL of a prepared dump (navigated to, so the browser saves it). */

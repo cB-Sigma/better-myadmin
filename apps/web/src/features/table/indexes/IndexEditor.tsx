@@ -1,8 +1,8 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
-import { Button, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Button, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowUp } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
@@ -38,14 +38,21 @@ export function IndexEditorForm({
   form,
   onDone,
   onCancel,
+  actions,
 }: {
   scope: TableRef
   form: IndexFormResponse
   onDone: (r: DdlResponse) => void
   onCancel?: () => void
+  /**
+   * In #indexDialogModal the form's card-footer is removed and the modal's own Go / Preview SQL
+   * buttons drive it (functions.ts::indexDialogModal); the preview then has "Go back".
+   */
+  actions?: { current: { go: () => void; preview: () => void } | null }
 }) {
   const [index, setIndex] = useState<EditorIndex>(form.index)
   const [addN, setAddN] = useState(1)
+  const [addShown, setAddShown] = useState(false)
   const [advanced, setAdvanced] = useState(form.sliders === 'open')
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
@@ -79,6 +86,8 @@ export function IndexEditorForm({
     }
   }
 
+  if (actions !== undefined)
+    actions.current = { go: () => void submit(false), preview: () => void submit(true) }
   const spatial = index.choice === 'SPATIAL'
   return (
     <form
@@ -89,33 +98,34 @@ export function IndexEditorForm({
       }}
       className="text-sm"
     >
-      <div className="mb-2 flex flex-wrap gap-4">
-        <label className="flex flex-col">
+      <div className="index_info mb-2 flex flex-wrap gap-4">
+        <div className="flex flex-col">
           <strong>
-            {t('Index name:')}{' '}
-            <span
-              title={t('"PRIMARY" <b>must</b> be the name of and <b>only of</b> a primary key!').replace(
-                /<\/?b>/g,
-                '',
-              )}
-            >
-              ⓘ
-            </span>
+            <label htmlFor="input_index_name">
+              {t('Index name:')}{' '}
+              <Hint message={t('"PRIMARY" <b>must</b> be the name of and <b>only of</b> a primary key!')} />
+            </label>
           </strong>
           <input
+            type="text"
+            name="index[Key_name]"
             id="input_index_name"
             className="input w-56"
+            size={25}
             maxLength={64}
             value={index.name}
             disabled={index.choice === 'PRIMARY'}
             onChange={(e) => setIndex({ ...index, name: e.target.value })}
           />
-        </label>
-        <label className="flex flex-col">
+        </div>
+        <div className="flex flex-col">
           <strong>
-            {t('Index choice:')} <MySqlDocLink link="alter-table" />
+            <label htmlFor="select_index_choice">
+              {t('Index choice:')} <MySqlDocLink link="alter-table" />
+            </label>
           </strong>
           <select
+            name="index[Index_choice]"
             id="select_index_choice"
             className="input"
             value={index.choice}
@@ -127,26 +137,37 @@ export function IndexEditorForm({
             <option value="SPATIAL">SPATIAL</option>
             <option value="FULLTEXT">FULLTEXT</option>
           </select>
-        </label>
+        </div>
       </div>
       {form.sliders !== 'disabled' && (
-        <Button className="mb-2" onClick={() => setAdvanced(!advanced)} aria-expanded={advanced}>
+        <Button className="mb-2" size="sm" onClick={() => setAdvanced(!advanced)} aria-expanded={advanced}>
           {t('Advanced options')}
         </Button>
       )}
       {(advanced || form.sliders === 'disabled') && (
-        <div className="mb-2 grid max-w-xl grid-cols-2 gap-2">
-          <label className="flex flex-col">
-            <strong>{t('Key block size:')}</strong>
+        <div id="advancedOptions" className="mb-2 grid max-w-xl grid-cols-2 gap-2">
+          <div className="flex flex-col">
+            <strong>
+              <label htmlFor="input_key_block_size">{t('Key block size:')}</label>
+            </strong>
             <input
+              type="text"
+              name="index[Key_block_size]"
+              id="input_key_block_size"
               className="input"
+              size={30}
               value={index.keyBlockSize}
               onChange={(e) => setIndex({ ...index, keyBlockSize: e.target.value })}
             />
-          </label>
-          <label className="flex flex-col">
-            <strong>{t('Index type:')}</strong>
+          </div>
+          <div className="flex flex-col">
+            <strong>
+              <label htmlFor="select_index_type">
+                {t('Index type:')} <MySqlDocLink link="alter-table" />
+              </label>
+            </strong>
             <select
+              name="index[Index_type]"
               id="select_index_type"
               className="input"
               value={index.type}
@@ -159,24 +180,37 @@ export function IndexEditorForm({
                 </option>
               ))}
             </select>
-          </label>
-          <label className="flex flex-col">
-            <strong>{t('Parser:')}</strong>
+          </div>
+          <div className="flex flex-col">
+            <strong>
+              {/* the template's label points at input_parser, the field is input_parse */}
+              <label htmlFor="input_parse">{t('Parser:')}</label>
+            </strong>
             <input
+              type="text"
+              name="index[Parser]"
+              id="input_parse"
               className="input"
+              size={30}
               value={index.parser}
               onChange={(e) => setIndex({ ...index, parser: e.target.value })}
             />
-          </label>
-          <label className="flex flex-col">
-            <strong>{t('Comment:')}</strong>
+          </div>
+          <div className="flex flex-col">
+            <strong>
+              <label htmlFor="input_index_comment">{t('Comment:')}</label>
+            </strong>
             <input
+              type="text"
+              name="index[Index_comment]"
+              id="input_index_comment"
               className="input"
+              size={30}
               maxLength={1024}
               value={index.comment}
               onChange={(e) => setIndex({ ...index, comment: e.target.value })}
             />
-          </label>
+          </div>
         </div>
       )}
       <table id="index_columns" className="w-full">
@@ -204,6 +238,7 @@ export function IndexEditorForm({
               </td>
               <td>
                 <select
+                  name="index[columns][names][]"
                   className="input"
                   aria-label={t('Column')}
                   value={c.name}
@@ -223,6 +258,9 @@ export function IndexEditorForm({
               {!spatial && (
                 <td>
                   <input
+                    type="text"
+                    size={5}
+                    name="index[columns][sub_parts][]"
                     className="input w-16"
                     aria-label={t('Size')}
                     value={c.subPart}
@@ -232,6 +270,7 @@ export function IndexEditorForm({
               )}
               <td>
                 <select
+                  name="index[columns][collations][]"
                   className="input"
                   aria-label={t('Collation')}
                   value={c.collation}
@@ -258,9 +297,15 @@ export function IndexEditorForm({
             max={16}
             value={addN}
             aria-label={t('Add %s column(s) to index', addN)}
-            onChange={(e) => setAddN(Number(e.target.value))}
+            onChange={(e) => {
+              setAddN(Number(e.target.value))
+              setAddShown(true)
+            }}
           />
+          {/* .add_fields is hidden until the slider moves (indexes.ts) */}
           <Button
+            id="add_fields"
+            className={addShown ? undefined : 'hidden'}
             onClick={() =>
               setIndex({
                 ...index,
@@ -276,16 +321,23 @@ export function IndexEditorForm({
         </div>
       )}
       {error !== null && <MessageBox {...error} flush className="mt-2" />}
-      <div className="mt-3 flex justify-end gap-2">
-        <Button type="submit" variant="primary">
-          {t('Go')}
-        </Button>
-        <Button id="preview_index_frm" onClick={() => void submit(true)}>
-          {t('Preview SQL')}
-        </Button>
-        {onCancel !== undefined && <Button onClick={onCancel}>{t('Close')}</Button>}
-      </div>
-      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
+      {actions === undefined && (
+        <div className="mt-3 flex justify-end gap-2">
+          <Button type="submit" variant="primary">
+            {t('Go')}
+          </Button>
+          <Button id="preview_index_frm" onClick={() => void submit(true)}>
+            {t('Preview SQL')}
+          </Button>
+          {onCancel !== undefined && <Button onClick={onCancel}>{t('Close')}</Button>}
+        </div>
+      )}
+      <PreviewSqlDialog
+        highlight
+        sql={preview}
+        onClose={() => setPreview(null)}
+        {...(actions !== undefined ? { onBack: () => setPreview(null) } : {})}
+      />
     </form>
   )
 }
@@ -311,19 +363,39 @@ export function IndexDialog({
     enabled: query !== null,
     gcTime: 0,
   })
+  const actions = useRef<{ go: () => void; preview: () => void } | null>(null)
   return (
     <Modal
+      id="indexDialogModal"
       title={title ?? (query?.index !== undefined ? t('Edit index') : t('Add index'))}
       open={query !== null}
       onClose={onClose}
       size="xl"
+      footer={
+        <>
+          <Button id="indexDialogModalGoButton" variant="primary" onClick={() => actions.current?.go()}>
+            {t('Go')}
+          </Button>
+          <Button onClick={() => actions.current?.preview()}>{t('Preview SQL')}</Button>
+          <Button onClick={onClose}>{t('Close')}</Button>
+        </>
+      }
     >
       {form.data !== undefined && (
-        <IndexEditorForm scope={scope} form={form.data} onDone={onDone} onCancel={onClose} />
+        <IndexEditorForm
+          scope={scope}
+          form={form.data}
+          onDone={onDone}
+          onCancel={onClose}
+          actions={actions}
+        />
       )}
     </Modal>
   )
 }
+
+/** checkIndexName runs on the rename form too (no index choice there): a PRIMARY name is cleared */
+const initialName = (i: string | null) => (i === null || i === 'PRIMARY' ? '' : i)
 
 /** #indexDialogModal with index_rename_form.twig */
 export function RenameIndexDialog({
@@ -332,10 +404,10 @@ export function RenameIndexDialog({
   onClose,
   onDone,
 }: { scope: TableRef; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
-  const [name, setName] = useState(index ?? '')
+  const [name, setName] = useState(initialName(index))
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
-  useEffect(() => setName(index ?? ''), [index])
+  useEffect(() => setName(initialName(index)), [index])
   const submit = async (dryRun: boolean) => {
     if (index === null) return
     setError(null)
@@ -349,12 +421,13 @@ export function RenameIndexDialog({
   }
   return (
     <Modal
+      id="indexDialogModal"
       title={t('Rename index')}
       open={index !== null}
       onClose={onClose}
       footer={
         <>
-          <Button variant="primary" onClick={() => void submit(false)}>
+          <Button id="indexDialogModalGoButton" variant="primary" onClick={() => void submit(false)}>
             {t('Go')}
           </Button>
           <Button onClick={() => void submit(true)}>{t('Preview SQL')}</Button>
@@ -362,16 +435,36 @@ export function RenameIndexDialog({
         </>
       }
     >
-      <label className="flex flex-col text-sm">
-        <strong>{t('Index name:')}</strong>
-        <input className="input" maxLength={64} value={name} onChange={(e) => setName(e.target.value)} />
-      </label>
+      <form
+        id="index_frm"
+        onSubmit={(e) => {
+          e.preventDefault()
+          void submit(false)
+        }}
+      >
+        <label className="flex flex-col text-sm" htmlFor="input_index_name">
+          <strong>{t('Index name:')}</strong>
+        </label>
+        <input
+          id="input_index_name"
+          name="index"
+          className="input"
+          maxLength={64}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </form>
       {error !== null && (
         <div className="mt-2 text-sm text-error" role="alert">
           {error.text}
         </div>
       )}
-      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog
+        highlight
+        sql={preview}
+        onClose={() => setPreview(null)}
+        onBack={() => setPreview(null)}
+      />
     </Modal>
   )
 }

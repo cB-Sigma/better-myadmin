@@ -14,10 +14,13 @@ export interface Credentials {
   port?: number
   /** DefaultConnectionCollation for this login (home page selector); overrides the configured one. */
   collation?: string
+  /** Server settings merged over Servers[i] for this login (signon `PMA_single_signon_cfgupdate`). */
+  overrides?: Record<string, unknown>
 }
 
 /** Map Servers[i] to mysql2 options. pma: src/Config.php::getConnectionParams, src/Dbal/DbiMysqli.php::connect */
-export function connectionOptions(server: ServerConfig, creds: Credentials): PoolOptions {
+export function connectionOptions(configured: ServerConfig, creds: Credentials): PoolOptions {
+  const server = creds.overrides === undefined ? configured : { ...configured, ...creds.overrides }
   const opts: PoolOptions = {
     user: creds.user,
     password: creds.password,

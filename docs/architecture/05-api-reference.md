@@ -15,16 +15,34 @@ Conventions:
 
 | Method | Path | Purpose | pMA |
 |---|---|---|---|
-| GET | `/api/auth/state` | `{authenticated, server, user, twoFactorPending, servers:[{index,verbose,host,authType}], loginCookieRecall: username?}` | login page / `AuthenticationCookie` |
-| POST | `/api/auth/login` | `{server, username, password, captchaToken?}` → `{ok, twoFactorRequired?, redirect}`; sets session cookie | cookie auth `authenticate()` |
+| GET | `/api/auth/state` | `{authenticated, server, user, twoFactorPending, servers:[{index,label,authType}], recalledUser, allowArbitraryServer, csrfToken, sessionExpired, authType, failure, captcha}`; a `config` server logs in here (its failure page data in `failure: {kind:'config', notice, noConfigFile, errors}`); `http`/`signon` without a login: `failure.kind` `http` (the 401 page), `error` (error/generic) or `reload` (the page load authenticates) | login page / `Authentication` middleware, `AuthenticationConfig::showFailure` |
+| POST | `/api/auth/login` | `{server, username, password, arbitraryServer?, captchaToken?}` → `{ok, server, twoFactorRequired, csrfToken}`; the captcha is verified against `CaptchaSiteVerifyURL`, failures count towards `LoginRateLimit` (X2) | cookie auth `readCredentials()` / `authenticate()` |
 | GET | `/api/auth/two-factor` | the pending login's challenge `{form, showSubmit, error}` (`form.kind`: application, simple, webauthn_request, invalid) | `login/twofactor.twig` |
 | POST | `/api/auth/two-factor` | `{fields: {2fa_code \| 2fa_confirm \| webauthn_request_response}}` → `{ok, challenge?}`; `ok` marks the login's `twoFactorOk` | `TwoFactor::check` |
-| POST | `/api/auth/logout` | clears session (all servers if `LoginCookieDeleteAll`) → `{logoutUrl}` (`LogoutURL`) | `/logout` |
+| POST | `/api/auth/logout` | clears the session (cookie auth with `LoginCookieDeleteAll` off keeps the other cookie logins: `{server}`) → `{logoutUrl}`: `LogoutURL`, else `/?old_usr=<user>` (http) or `SignonURL` (signon) | `/logout` |
 | POST | `/api/auth/switch-server` | `{server}` for `config`/`signon` types | `?server=` |
 | GET | `/api/servers/:s/account/password` | the change-password form: `{origAuthPlugin, showHashing, showSslNotice, authPlugins[], allowNoPassword}` (refused for `config` auth) | `GET /user-password` |
 | POST | `/api/servers/:s/account/password` | `{nopass, pma_pw, pma_pw2, authentication_plugin?}` → `ALTER USER` / `UPDATE mysql.user` / `SET password` + `FLUSH PRIVILEGES`; `{message, sql}` with the password masked; the session keeps working with the new password | `POST /user-password` |
 | POST | `/api/servers/:s/session/collation` | `{collation_connection}` → stored as this login's `DefaultConnectionCollation`; new pooled connections run `SET collation_connection` (skipped for `''` and the `SET NAMES` collation) | `/collation-connection` |
 | POST | `/api/servers/:s/themes/set` | `{theme}` → `ThemeDefault` in the user preferences (load, set, save); the theme itself lives in the client-side store (X31) | `/themes/set` |
+
+Page loads (`GET` of an SPA path) authenticate `http` and `signon` servers before the SPA is served (`auth/page-gate.ts`): a missing or rejected Basic login answers 401 with `WWW-Authenticate: Basic realm="…"`, a signon server without credentials redirects to `SignonURL` (X45, X43).
+
+## Setup
+
+The setup script; no login, every endpoint answers 404 "Configuration already exists, setup is disabled!" while a configuration file exists (X44).
+
+| Method | Path | Purpose | pMA |
+|---|---|---|---|
+| GET | `/api/setup` | overview: `{pages, messages, servers, languages, eol, canSave}` (`?version_check=1` adds the version message) | `HomeController` |
+| GET/POST | `/api/setup/form/:formset` | a form set (`PrefsFormSet` with `userprefsAllow`) / submit → `{saved}` or the form again or `{errors}` | `FormController` |
+| POST | `/api/setup/form/:formset/revert` | erroneous fields back to their defaults | `mode=revert` |
+| GET/POST | `/api/setup/servers/:id` | the server tabs (0 adds) / submit (as above, `serverId` of a new server with errors) | `ServersController` |
+| POST | `/api/setup/servers/:id/revert`, `/delete` | `mode=revert`, `ServerDestroyController` | |
+| POST | `/api/setup/config` | `{DefaultLang, ServerDefault, eol, action: display\|download\|clear\|save}` | `ShowConfigController` |
+| GET | `/api/setup/config` | `{php, bma, eol, canSave, saved}`: ConfigGenerator's file and the same as bettermyadmin.config.json | `ConfigController` |
+| GET | `/api/setup/config/download` | `?eol&format=php\|bma` the file as an attachment | `submit_download` |
+| POST | `/api/setup/validate` | `{id, values}` AJAX validation: errors by field id (empty lists clear them) | `ValidateController` |
 
 ## Meta
 
@@ -212,11 +230,14 @@ Conventions:
 | GET | `/api/servers/:s/sql/default-fk-check` | `{defaultFkCheckValue}` from `DefaultForeignKeyChecks` + server var | `/sql/get-default-fk-check-value` |
 | GET | `/api/servers/:s/sql/form?db=&table=&sqlQuery=` | what the SQL tab renders server-side: scope, legend name, prefilled query (`DefaultQuery*` expanded), columns, FK default, profiling support, server parser context, SQL-box settings; 404 "No databases selected." / "No table selected." | `/server/sql`, `/database/sql`, `/table/sql` |
 | GET | `/api/servers/:s/sql/history` | `{history: rows newest first, or false, queryHistoryDB}`; `POST /query` records the last statement like `StatementHistory` (`noHistory` skips it) | `Console\History::getHistory` |
-| GET | `/api/servers/:s/console/config` | `{settings (Console/* with the user preferences applied), debugSql, maxCharactersInDisplayedSql, confirm}` | `console/display.twig` data |
+| GET | `/api/servers/:s/console/config` | `{settings (Console/* with the user preferences applied), debugSql, maxCharactersInDisplayedSql, confirm, server {versionInt, isMariaDb, sqlMode} (the lint context of the console inputs)}` | `console/display.twig` data |
 | POST | `/api/servers/:s/console/config` | `{key, value}` validated like `parseValueParam` (400 "Unexpected parameter value."), stored as `Console/<key>` in the user preferences (configuration storage or session) → `{message}` | `/console/update-config` |
 | GET/POST | `/api/servers/:s/bookmarks` | `?db=` list (own + shared); create `{db, label, query, shared, replace}`; `GET /:id` show; `POST /:id/delete`; `POST /:id/run {db, variables, allUsers, noHistory}` runs it through the SQL-box pipeline | bookmark forms, `/import` `id_bookmark` / `action_bookmark` |
 | GET/POST | `/api/servers/:s/console/bookmarks` | console list with *Showing N bookmarks (both private and shared)*; add `{db, label, bookmark_query, shared}` → *Succeeded* / *Failed* | `/console/bookmark/refresh`, `/console/bookmark/add` |
 | POST | `/api/servers/:s/query/sign` | `{sql}` → `{sig}` for building browse links (FK traversal, search redirects) | `Core::signSqlQuery` |
+
+| POST | `/api/servers/:s/tables` | `{db}` → `{success, tables}` (`SHOW TABLES FROM`, NaturalOrder); no `db`: `{success: false, message: 'Error'}` | `/tables` (TableController) |
+| POST | `/api/servers/:s/columns` | `{db, table}` → `{success, columns}` (the information_schema column query, ORDINAL_POSITION) | `/columns` (ColumnController) |
 
 ## Export
 

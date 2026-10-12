@@ -73,6 +73,7 @@ async function main() {
     userBox: new SecretBox(secret, 'username'),
     configuredSecret,
     secretGenerated: configuredSecret === '',
+    ...(loaded.file !== undefined ? { configFile: loaded.file } : {}),
   }
   const app = createApp(deps)
 

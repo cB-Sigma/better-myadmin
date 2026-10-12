@@ -10,6 +10,12 @@ export const qk = {
   allServers: ['srv'] as const,
   auth: ['auth'] as const,
   i18n: ['i18n'] as const,
+  /** the setup script (no server scope): everything under ['setup'] */
+  setup: ['setup'] as const,
+  setupOverview: (versionCheck: boolean) => ['setup', 'overview', versionCheck] as const,
+  setupForm: (formset: string) => ['setup', 'form', formset] as const,
+  setupServer: (id: number) => ['setup', 'server', id] as const,
+  setupConfig: (eol: string) => ['setup', 'config', eol] as const,
   srv: (s: number) => ['srv', s] as const,
   /** Navigation tree: the root and every branch (docs/architecture/03-frontend-architecture.md#query-keys). */
   nav: (s: number) => ['srv', s, 'nav'] as const,
@@ -28,8 +34,10 @@ export const qk = {
   /** export page view-model of a scope (db/table empty above their scope) */
   exportPage: (s: number, db: string, t: string, q: string) =>
     ['srv', s, 'db', db, 'tbl', t, 'export', q] as const,
-  exportAliasNames: (s: number, db: string, t: string) =>
-    ['srv', s, 'db', db, 'tbl', t, 'aliasNames'] as const,
+  exportAliasNames: (s: number, db: string) => ['srv', s, 'db', db, 'aliasNames'] as const,
+  // the pickers' name lists (pma: /tables, /columns)
+  tableNames: (s: number, db: string) => ['srv', s, 'db', db, 'tableNames'] as const,
+  columnNames: (s: number, db: string, t: string) => ['srv', s, 'db', db, 'tbl', t, 'columnNames'] as const,
   importPage: (s: number, db: string, t: string, q: string) =>
     ['srv', s, 'db', db, 'tbl', t, 'import', q] as const,
   db: (r: DbRef) => ['srv', r.server, 'db', r.db] as const,

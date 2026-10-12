@@ -188,15 +188,21 @@ tableStructureRoutes.get('/:db/tables/:t/partitions/form', async (c) =>
 tableStructureRoutes.get('/:db/create-table/form', async (c) => {
   const db = c.req.param('db')
   const tr = c.get('tr')
-  return c.json(
-    await withReader(c, async (reader) => {
-      if (!(await reader.selectDb(db))) {
-        throw new NotFoundError(sprintf(tr.gettext("'%s' database does not exist."), db))
-      }
+  // the Central columns picker and the MIME columns need the configuration storage (Normal::getForm)
+  const form = await withScope(
+    c,
+    async (x) => ({
+      options: await columnFormOptions(x.reader, x.cfg, x.tr, db, '', { features: x.features, meta: x.meta }),
       // CreateController::getNumberOfFieldsFromRequest: 4 rows by default
-      return { options: await columnFormOptions(reader, c.get('deps').cfg, tr, db, ''), defaultColumns: 4 }
+      defaultColumns: 4,
     }),
-  )
+    { table: false },
+  ).catch((e: unknown) => {
+    if (e instanceof NotFoundError)
+      throw new NotFoundError(sprintf(tr.gettext("'%s' database does not exist."), db))
+    throw e
+  })
+  return c.json(form)
 })
 
 // ---------------------------------------------------------------- writes

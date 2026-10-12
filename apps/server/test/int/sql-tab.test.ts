@@ -220,6 +220,24 @@ describe('SQL form, autocomplete and console endpoints', () => {
     expect((await a.req('GET', `/api/servers/1/sql/autocomplete?db=${DB}`)).json.tables).toEqual({})
   })
 
+  it('name lists of the pickers: /tables and /columns', async () => {
+    const a = await app()
+    const t = await a.req('POST', '/api/servers/1/tables', { db: DB })
+    expect(t.status).toBe(200)
+    expect(t.json.success).toBe(true)
+    const tables = t.json.tables as string[]
+    expect(tables.length).toBeGreaterThan(0)
+    const first = tables[0] as string
+    const c = await a.req('POST', '/api/servers/1/columns', { db: DB, table: first })
+    expect(c.json.success).toBe(true)
+    expect((c.json.columns as string[]).length).toBeGreaterThan(0)
+    expect((await a.req('POST', '/api/servers/1/tables', {})).json).toMatchObject({
+      success: false,
+      message: 'Error',
+    })
+    expect((await a.req('POST', '/api/servers/1/columns', { db: DB })).json.success).toBe(false)
+  })
+
   it('console options: defaults, validation, persistence in the user preferences (session)', async () => {
     // a configured storage that does not exist: no pmadb features, the preferences live in the session
     // (the shared MySQL's `phpmyadmin` storage is not touched, other test files run concurrently)
@@ -237,6 +255,10 @@ describe('SQL form, autocomplete and console endpoints', () => {
       OrderBy: 'exec',
       Order: 'asc',
     })
+    // the lint context of the console's inputs
+    const server = g.json.server as { versionInt: number; sqlMode: string }
+    expect(server.versionInt).toBeGreaterThan(50000)
+    expect(typeof server.sqlMode).toBe('string')
     const ok = await a.req('POST', '/api/servers/1/console/config', { key: 'EnterExecutes', value: 'true' })
     expect(ok.json.message).toBe('Console settings has been updated successfully.')
     await a.req('POST', '/api/servers/1/console/config', { key: 'Height', value: '240' })

@@ -59,11 +59,17 @@ export function parseConsoleValue(
 consoleRoutes.get('/config', (c) =>
   withMeta(c, {}, async (m) => {
     const settings = await m.settings()
+    const info = (await m.userConn()).serverInfo
     const body: ConsoleConfigResponse = {
       settings: settings.Console as ConsoleSettings,
       debugSql: settings.DBG.sql,
       maxCharactersInDisplayedSql: settings.MaxCharactersInDisplayedSQL,
       confirm: settings.Confirm,
+      server: {
+        versionInt: info?.versionInt ?? 0,
+        isMariaDb: info?.isMariaDb ?? false,
+        sqlMode: info?.sqlMode ?? '',
+      },
     }
     return c.json(body)
   }),

@@ -154,6 +154,9 @@ function ViewFields({
               handleRef={editor}
               id="view_as"
               ariaLabel="AS"
+              // pma: sql.ts $('#view_as').on('click', selectContent) — the plain textarea's text is
+              // selected on the first click (CodeMirror hides the textarea)
+              autoSelect
               initialValue={view.as}
               rows={15}
               cols={40}

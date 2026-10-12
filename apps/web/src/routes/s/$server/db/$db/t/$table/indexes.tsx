@@ -11,7 +11,9 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/indexes')({
     return (
       <IndexPage
         scope={{ server, db, table }}
-        query={s.index !== undefined ? { index: s.index } : { create: s.create ?? 1 }}
+        query={
+          s.index !== undefined ? { index: s.index } : s.create !== undefined ? { create: s.create } : {}
+        }
       />
     )
   },

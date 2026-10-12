@@ -1,7 +1,9 @@
 import { sprintf } from '@bettermyadmin/i18n'
 import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import type { AppEnv } from '../app.ts'
-import { AuthMessages } from '../auth/cookie.ts'
+import { configLogin } from '../auth/config.ts'
+import { AuthMessages, LoginFailure } from '../auth/failure.ts'
+import { loginCredentials } from '../auth/session-login.ts'
 import { getServer } from '../config.ts'
 import type { AppConfig } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
@@ -18,6 +20,7 @@ import { exportRoutes } from './export.ts'
 import { importRoutes } from './import.ts'
 import { insertEditRoutes } from './insert-edit.ts'
 import { metadataRoutes } from './metadata.ts'
+import { nameListRoutes } from './name-lists.ts'
 import { navigationRoutes } from './navigation.ts'
 import { preferencesRoutes } from './preferences.ts'
 import { privilegesRoutes } from './privileges.ts'
@@ -50,7 +53,17 @@ const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   if (!Number.isInteger(s) || getServer(cfg, s) === undefined)
     throw new NotFoundError(c.get('tr').gettext('Invalid server index!'))
   const session = c.get('session')
-  const login = session.servers[String(s)]
+  let login = session.servers[String(s)]
+  // AuthenticationConfig: a config server logs in with the configured credentials
+  if (login === undefined && getServer(cfg, s)?.auth_type === 'config') {
+    try {
+      login = await configLogin(c as unknown as Context<AppEnv>, s)
+    } catch (e) {
+      if (!(e instanceof LoginFailure)) throw e
+      session.currentServer = s
+      throw new AuthRequiredError()
+    }
+  }
   if (login === undefined || !login.twoFactorOk) {
     if (session.expired === true) {
       throw new AuthExpiredError(
@@ -85,33 +98,8 @@ async function applyUserPreferences(c: Context<ServerEnv>): Promise<void> {
   }
 }
 
-/** The decrypted credentials of a server login (null when the ciphertext is stale). */
-export function loginCredentials(credBox: SecretBox, login: ServerLogin): Credentials | null {
-  const plain = credBox.decrypt(login.credEnc)
-  if (plain === null) return null
-  const { password } = JSON.parse(plain) as { password: string }
-  const creds: Credentials = { user: login.user, password }
-  if (login.host !== undefined) creds.host = login.host
-  if (login.port !== undefined) creds.port = login.port
-  if (login.collation !== undefined) creds.collation = login.collation
-  return creds
-}
+export { asServerRequest, loginCredentials } from '../auth/session-login.ts'
 
-/**
- * Runs `fn` with this request bound to a server login like resolveServer does (for the routes
- * outside /servers/:s that read the user's preferences: login, config-public).
- */
-export async function asServerRequest<T>(
-  c: Context<AppEnv>,
-  server: number,
-  creds: Credentials,
-  fn: (c: Context<ServerEnv>) => Promise<T>,
-): Promise<T> {
-  const sc = c as unknown as Context<ServerEnv>
-  sc.set('serverIndex', server)
-  sc.set('creds', creds)
-  return fn(sc)
-}
 serverRoutes.use('/:s', resolveServer)
 serverRoutes.use('/:s/*', resolveServer)
 
@@ -133,3 +121,4 @@ serverRoutes.route('/:s/databases', databaseRoutes)
 serverRoutes.route('/:s/databases', insertEditRoutes)
 serverRoutes.route('/:s', serverAdminRoutes)
 serverRoutes.route('/:s', privilegesRoutes)
+serverRoutes.route('/:s', nameListRoutes)

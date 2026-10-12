@@ -1,16 +1,21 @@
-import type { ConsoleSettings, Executed, QueryResponse } from '@bettermyadmin/contracts'
+import type {
+  ConsoleConfigResponse,
+  ConsoleSettings,
+  Executed,
+  QueryResponse,
+} from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n/php'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { SquareTerminal } from 'lucide-react'
 import { type MouseEvent as ReactMouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { api } from '../../lib/api'
+import { DEBUG_SQL_EVENT, api } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { SqlEditor } from '../sql/editor/SqlEditor'
-import type { SqlEditorHandle } from '../sql/editor/types'
+import type { SqlEditorHandle, SqlEditorProps } from '../sql/editor/types'
 import {
   CONSOLE_DELETE_BOOKMARK_CONFIRM,
   CONSOLE_REQUERY_CONFIRM,
@@ -75,6 +80,7 @@ export default function Console({ server }: { server: number }) {
       initial={{ ...CONSOLE_DEFAULTS, ...remote.data.settings }}
       debugSql={remote.data.debugSql}
       confirm={remote.data.confirm}
+      lintServer={remote.data.server}
     />
   )
 }
@@ -84,7 +90,14 @@ function ConsoleDock({
   initial,
   debugSql,
   confirm,
-}: { server: number; initial: ConsoleSettings; debugSql: boolean; confirm: boolean }) {
+  lintServer,
+}: {
+  server: number
+  initial: ConsoleSettings
+  debugSql: boolean
+  confirm: boolean
+  lintServer: ConsoleConfigResponse['server']
+}) {
   const [settings, setSettings] = useState(initial)
   const mode0 = normaliseMode(initial.Mode)
   const [open, setOpen] = useState(mode0 === 'show')
@@ -92,6 +105,12 @@ function ConsoleDock({
   const [messages, setMessages] = useState<ConsoleMessage[]>([])
   const [card, setCard] = useState<'options' | 'bookmarks' | 'debug' | null>(null)
   const [debugLog, setDebugLog] = useState<Executed[] | null>(null)
+  // the Debug SQL card shows the statements of the last request that reported them
+  useEffect(() => {
+    const onDebug = (e: Event) => setDebugLog((e as CustomEvent<Executed[]>).detail)
+    window.addEventListener(DEBUG_SQL_EVENT, onDebug)
+    return () => window.removeEventListener(DEBUG_SQL_EVENT, onDebug)
+  }, [])
   const [addBookmark, setAddBookmark] = useState<{
     label: string
     db: string
@@ -102,9 +121,37 @@ function ConsoleDock({
   const navigate = useNavigate()
   const qc = useQueryClient()
   const input = useRef<SqlEditorHandle>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  // Console.scrollBottom after every appended or updated message (and when the console opens)
+  const lastMessage = messages.at(-1)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: scrolls on these changes only
+  useEffect(() => {
+    // pma: $consoleContent.scrollTop($consoleMessages.height())
+    const el = contentRef.current
+    const list = el?.querySelector<HTMLElement>('.console_message_container')
+    if (el != null && list != null) el.scrollTop = list.offsetHeight
+  }, [messages.length, lastMessage?.state, open])
   const historyCount = useRef(0)
   const historyPreserveCurrent = useRef('')
   const bookmarks = useBookmarks(server)
+  // pma: both console inputs lint (CodeMirror.sqlLint) and complete tables and columns of the
+  // current database on input and Ctrl+Space (codeMirrorAutoCompleteOnInputRead)
+  const lint = useMemo(() => ({ server: lintServer }), [lintServer])
+  const [wantAutocomplete, setWantAutocomplete] = useState(false)
+  const autocompleteQuery = useQuery({
+    queryKey: qk.autocomplete(server, scope.db),
+    queryFn: () => api.sqlAutocomplete(server, scope.db),
+    enabled: wantAutocomplete,
+    staleTime: Number.POSITIVE_INFINITY,
+  })
+  const autocomplete = useMemo(
+    () =>
+      autocompleteQuery.data !== undefined
+        ? { tables: autocompleteQuery.data.tables, defaultTable: scope.table }
+        : null,
+    [autocompleteQuery.data, scope.table],
+  )
+  const onInput = useCallback(() => setWantAutocomplete(true), [])
 
   const set = useCallback(
     <K extends keyof ConsoleSettings>(key: K, value: ConsoleSettings[K]) => {
@@ -233,16 +280,27 @@ function ConsoleDock({
       }
       void runQuery(
         server,
-        { sql, db, table, fromQueryBox: true, ...(opts.profiling === true ? { profiling: true } : {}) },
+        // the SQL box request: the full results display (operations, "Bookmark this SQL query")
+        {
+          sql,
+          db,
+          table,
+          fromQueryBox: true,
+          grid: true,
+          ...(opts.profiling === true ? { profiling: true } : {}),
+        },
         'console',
         id,
       )
         .then((res) => {
           update(res)
           if (res.executed.length > 0) setDebugLog(res.executed)
-          // the response becomes the main panel's content
-          setPendingResults(scopeKey(server, db, table), res)
-          void navigate(sqlTabRoute(server, db, table) as never)
+          // the response becomes the main panel's content, in the context the query set
+          // (pma: the /import response's db and table drive the menu of the main panel)
+          const rdb = res.db ?? db
+          const rtable = res.table ?? table
+          setPendingResults(scopeKey(server, rdb, rtable), res)
+          void navigate(sqlTabRoute(server, rdb, rtable) as never)
         })
         .catch(() => update(null))
       // Navigation.reload()
@@ -313,13 +371,17 @@ function ConsoleDock({
       h = startH + (startY - ev.pageY)
       setHeight(Math.max(32, h))
     }
+    // no text selection while dragging ($(document).on('selectstart', () => false))
+    const noSelect = (ev: Event) => ev.preventDefault()
     const up = () => {
       window.removeEventListener('mousemove', move)
       window.removeEventListener('mouseup', up)
+      document.removeEventListener('selectstart', noSelect)
       set('Height', Math.max(1, Math.round(h)))
     }
     window.addEventListener('mousemove', move)
     window.addEventListener('mouseup', up)
+    document.addEventListener('selectstart', noSelect)
   }
 
   const shownHeight = open ? Math.min(Math.max(92, height), window.innerHeight - 25) : undefined
@@ -402,17 +464,17 @@ function ConsoleDock({
 
         {open && (
           <div className="relative overflow-hidden" style={{ height: (shownHeight ?? 92) - 30 }}>
+            {/* pma: one scrolling .content (messages, then the input), scrolled to the bottom on
+                each new message (Console.scrollBottom) */}
             <div
-              className={`content flex h-full flex-col ${settings.DarkTheme ? 'console_dark_theme' : ''}`}
+              ref={contentRef}
+              className={`content h-full overflow-auto ${settings.DarkTheme ? 'console_dark_theme' : ''}`}
               onClick={(e) => {
                 if (e.target === e.currentTarget) input.current?.focus()
               }}
               onKeyDown={() => {}}
             >
-              <div
-                className="console_message_container min-h-0 flex-1 overflow-auto px-2 py-1"
-                data-testid="console-messages"
-              >
+              <div className="console_message_container px-2 py-1" data-testid="console-messages">
                 <div className="message welcome text-fg-subtle">
                   {settings.EnterExecutes
                     ? t('Press Enter to execute query')
@@ -452,8 +514,9 @@ function ConsoleDock({
                   rows={2}
                   height={56}
                   codemirror
-                  lint={null}
-                  autocomplete={null}
+                  lint={lint}
+                  autocomplete={autocomplete}
+                  onChange={onInput}
                   keys={keys}
                   dark={settings.DarkTheme}
                   className="console_query_input rounded-none border-0"
@@ -469,7 +532,9 @@ function ConsoleDock({
                   onClick={() => setCard(null)}
                 />
                 <div className="card absolute inset-y-0 right-0 left-[6%] overflow-auto border-l border-border bg-bg-elevated">
-                  {card === 'options' && <OptionsCard settings={settings} set={set} />}
+                  {card === 'options' && (
+                    <OptionsCard settings={settings} set={set} onClose={() => setCard(null)} />
+                  )}
                   {card === 'bookmarks' && (
                     <BookmarksCard
                       server={server}
@@ -479,10 +544,11 @@ function ConsoleDock({
                       setAdd={setAddBookmark}
                       onRequery={(b) => execute(b.query, { db: b.db })}
                       onClose={() => setCard(null)}
+                      editing={{ lint, autocomplete, onInput }}
                     />
                   )}
                   {card === 'debug' && debugLog !== null && (
-                    <DebugCard log={debugLog} settings={settings} set={set} />
+                    <DebugCard log={debugLog} settings={settings} set={set} onClose={() => setCard(null)} />
                   )}
                 </div>
               </>
@@ -576,6 +642,7 @@ function MessageEntry({
       >
         <span aria-hidden>{glyph}</span>
         <HighlightedSql
+          docLinks={false}
           sql={m.sql}
           className={`query min-w-0 ${m.expanded ? 'whitespace-pre-wrap' : 'truncate whitespace-nowrap'}`}
         />
@@ -587,9 +654,12 @@ function MessageEntry({
 function OptionsCard({
   settings,
   set,
+  onClose,
 }: {
   settings: ConsoleSettings
   set: <K extends keyof ConsoleSettings>(k: K, v: ConsoleSettings[K]) => void
+  /** the card's switch_button hides it (Console.hideCard) */
+  onClose: () => void
 }) {
   const sw = (
     key: 'AlwaysExpand' | 'StartHistory' | 'CurrentQuery' | 'EnterExecutes' | 'DarkTheme',
@@ -610,7 +680,9 @@ function OptionsCard({
   return (
     <div id="pma_console_options">
       <div className="toolbar flex items-center gap-3 border-b border-border bg-bg-subtle px-2 py-1">
-        <span className="font-semibold">{t('Options')}</span>
+        <button type="button" className="switch_button font-semibold" onClick={onClose}>
+          {t('Options')}
+        </button>
         <button
           type="button"
           className="default rounded px-2 hover:bg-nav-pointer"
@@ -645,6 +717,13 @@ function OptionsCard({
   )
 }
 
+/** Lint and autocomplete of the console inputs (the console's and the "Add bookmark" one). */
+interface EditorAssist {
+  lint: SqlEditorProps['lint']
+  autocomplete: SqlEditorProps['autocomplete']
+  onInput: () => void
+}
+
 function BookmarksCard({
   server,
   list,
@@ -653,8 +732,10 @@ function BookmarksCard({
   setAdd,
   onRequery,
   onClose,
+  editing,
 }: {
   server: number
+  editing: EditorAssist
   list: BookmarkEntry[]
   refetch: () => void
   add: { label: string; db: string; sql: string; shared: boolean } | null
@@ -667,7 +748,7 @@ function BookmarksCard({
   return (
     <div id="pma_bookmarks" className="relative h-full">
       <div className="toolbar flex items-center gap-3 border-b border-border bg-bg-subtle px-2 py-1">
-        <button type="button" className="font-semibold" onClick={onClose}>
+        <button type="button" className="switch_button font-semibold" onClick={onClose}>
           {t('Bookmarks')}
         </button>
         <button type="button" className="refresh rounded px-2 hover:bg-nav-pointer" onClick={refetch}>
@@ -747,7 +828,11 @@ function BookmarksCard({
                   {b.label}
                 </span>
               </div>
-              <HighlightedSql sql={b.query} className={isOpen ? '' : 'truncate whitespace-nowrap'} />
+              <HighlightedSql
+                docLinks={false}
+                sql={b.query}
+                className={isOpen ? '' : 'truncate whitespace-nowrap'}
+              />
             </div>
           )
         })}
@@ -759,6 +844,7 @@ function BookmarksCard({
           </div>
           <AddBookmarkForm
             server={server}
+            editing={editing}
             initial={add}
             onDone={() => {
               setAdd(null)
@@ -775,8 +861,10 @@ function AddBookmarkForm({
   server,
   initial,
   onDone,
+  editing,
 }: {
   server: number
+  editing: EditorAssist
   initial: { label: string; db: string; sql: string; shared: boolean }
   onDone: () => void
 }) {
@@ -819,6 +907,7 @@ function AddBookmarkForm({
         </label>
         <button
           type="button"
+          name="submit"
           className="btn btn-primary"
           onClick={async () => {
             const sql = editor.current?.getValue() ?? ''
@@ -842,8 +931,9 @@ function AddBookmarkForm({
         initialValue={initial.sql}
         rows={3}
         codemirror
-        lint={null}
-        autocomplete={null}
+        lint={editing.lint}
+        autocomplete={editing.autocomplete}
+        onChange={editing.onInput}
         className="bookmark_add_input"
       />
     </div>
@@ -858,7 +948,10 @@ function DebugCard({
   log,
   settings,
   set,
+  onClose,
 }: {
+  /** the card's switch_button hides it (Console.hideCard) */
+  onClose: () => void
   log: Executed[]
   settings: ConsoleSettings
   set: <K extends keyof ConsoleSettings>(k: K, v: ConsoleSettings[K]) => void
@@ -887,7 +980,9 @@ function DebugCard({
   return (
     <div id="debug_console">
       <div className="toolbar flex flex-wrap items-center gap-2 border-b border-border bg-bg-subtle px-2 py-1">
-        <span className="font-semibold">{t('Debug SQL')}</span>
+        <button type="button" className="switch_button font-semibold" onClick={onClose}>
+          {t('Debug SQL')}
+        </button>
         <span>{t('Order:')}</span>
         <button type="button" className={b(settings.Order === 'asc')} onClick={() => set('Order', 'asc')}>
           {t('ascending')}
@@ -956,7 +1051,7 @@ function DebugCard({
                   <span>{`${r.time.toFixed(6)}s (${totalTime > 0 ? ((r.time * 100) / totalTime).toFixed(2) : '0'}%)`}</span>
                 </span>
               </div>
-              <HighlightedSql sql={r.sql} />
+              <HighlightedSql docLinks={false} sql={r.sql} />
             </div>
           ))}
         </div>

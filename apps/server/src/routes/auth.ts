@@ -11,27 +11,47 @@ import { phpEmpty } from '@bettermyadmin/metadata'
 import { type Context, Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { type AppEnv, writeSessionCookies } from '../app.ts'
+import { captchaSettings, verifyCaptcha } from '../auth/captcha.ts'
+import { configFailure, configLogin } from '../auth/config.ts'
 import { cookieLogin } from '../auth/cookie.ts'
-import { getClientIp } from '../auth/ip-allow-deny.ts'
+import { LoginFailure } from '../auth/failure.ts'
+import { requestClientIp } from '../auth/login.ts'
+import { loginRateLimiter } from '../auth/rate-limit.ts'
+import { storeLogin, withTwoFactor } from '../auth/session-login.ts'
 import { getServer, serverIndexes, serverLabel } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
-import { forgetServerMetadata, withMeta } from '../metadata/service.ts'
-import { prefsCtx, twoFactorCtx } from '../preferences/service.ts'
-import { TwoFactor } from '../preferences/two-factor.ts'
+import { forgetServerMetadata } from '../metadata/service.ts'
 import { regenerate } from '../session/manager.ts'
 import type { ServerLogin } from '../session/store.ts'
-import { asServerRequest, loginCredentials } from './server.ts'
 
 /** pmaUser-N equivalent: the recalled username cookie. */
 const userCookie = (server: number) => `bma_user_${server}`
 
 export const authRoutes = new Hono<AppEnv>()
 
-authRoutes.get('/state', (c) => {
+/**
+ * GET /api/auth/state — the current server's login. A `config` server logs in here
+ * (AuthenticationConfig); `http` / `signon` log in when the page loads (auth/page-gate.ts).
+ * pma: src/Http/Middleware/Authentication.php, src/Plugins/Auth/*::showLoginForm / ::showFailure
+ */
+authRoutes.get('/state', async (c) => {
   const { cfg, userBox } = c.get('deps')
   const session = c.get('session')
-  const login = session.servers[String(session.currentServer)]
+  const authType = (getServer(cfg, session.currentServer)?.auth_type ?? 'cookie') as AuthState['authType']
+  let login: ServerLogin | undefined = session.servers[String(session.currentServer)]
+  let failure: AuthState['failure'] = null
+  if (login === undefined && authType === 'config') {
+    try {
+      login = await configLogin(c, session.currentServer)
+    } catch (e) {
+      if (!(e instanceof LoginFailure)) throw e
+      failure = { kind: 'config', ...configFailure(e, c.get('deps').configFile !== undefined, c.get('tr')) }
+    }
+  } else if (login === undefined && (authType === 'http' || authType === 'signon')) {
+    const f = c.get('session').authFailure
+    failure = f !== undefined && f.server === session.currentServer ? f.failure : { kind: 'reload' }
+  }
   let recalledUser: string | null = null
   if (cfg.LoginCookieRecall && cfg.blowfish_secret !== '') {
     const enc = getCookie(c, userCookie(session.currentServer))
@@ -54,47 +74,52 @@ authRoutes.get('/state', (c) => {
     allowArbitraryServer: cfg.AllowArbitraryServer,
     csrfToken: session.csrfToken,
     sessionExpired: session.expired === true,
+    authType,
+    failure,
+    captcha: authType === 'cookie' ? captchaSettings(cfg) : null,
   }
   return c.json(body)
 })
 
+/**
+ * POST /api/auth/login — the cookie auth form: captcha, rate limit (X2), credentials, rules,
+ * connection, then Session::secure and the second factor.
+ * pma: src/Plugins/Auth/AuthenticationCookie.php::readCredentials, src/Plugins/AuthenticationPlugin.php::authenticate
+ */
 authRoutes.post('/login', async (c) => {
-  const { cfg, pools, credBox, userBox, store } = c.get('deps')
+  const { cfg, pools, userBox } = c.get('deps')
   const req = await parseJson(c, LoginRequest)
-  if (getServer(cfg, req.server) === undefined)
-    throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
+  const tr = c.get('tr')
+  if (getServer(cfg, req.server) === undefined) throw new ValidationError(tr.gettext('Invalid server index!'))
   // an empty username just shows the form again (readCredentials returns false)
-  if (req.username === '') throw new ValidationError(c.get('tr').gettext('Missing username.'))
+  if (req.username === '') throw new ValidationError(tr.gettext('Missing username.'))
 
-  // Node's socket address; TrustedProxies decides whether a forwarded header is believed
-  const remote = (c.env as { incoming?: { socket?: { remoteAddress?: string } } } | undefined)?.incoming
-    ?.socket?.remoteAddress
-  const remoteIp = getClientIp(remote?.replace(/^::ffff:/, ''), cfg.TrustedProxies, (n) => c.req.header(n))
+  const remoteIp = requestClientIp(c, cfg.TrustedProxies)
+  await verifyCaptcha(cfg, req.captchaToken, remoteIp, tr)
+  const limiter = loginRateLimiter(cfg)
+  const locked = limiter.lockedMessage(remoteIp, req.username, tr)
+  if (locked !== null) throw new LoginFailure('form', locked)
 
-  const creds = await cookieLogin(cfg, pools, {
-    serverIndex: req.server,
-    username: req.username,
-    password: req.password,
-    arbitraryServer: req.arbitraryServer,
-    remoteIp,
-    tr: c.get('tr'),
-  })
+  let creds: Awaited<ReturnType<typeof cookieLogin>>
+  try {
+    creds = await cookieLogin(cfg, pools, {
+      serverIndex: req.server,
+      username: req.username,
+      password: req.password,
+      arbitraryServer: req.arbitraryServer,
+      remoteIp,
+      tr,
+    })
+  } catch (e) {
+    if (e instanceof LoginFailure && e.failureType !== 'form') limiter.failed(remoteIp, req.username)
+    throw e
+  }
+  limiter.succeeded(remoteIp, req.username)
 
   // Session::secure(): new id + token on login, logins on other servers are kept
-  const session = regenerate(store, c.get('session'), req.server)
-  const login: ServerLogin = {
-    user: creds.user,
-    credEnc: credBox.encrypt(JSON.stringify({ password: creds.password })),
-    twoFactorOk: false,
-    ...(creds.host !== undefined ? { host: creds.host } : {}),
-    ...(creds.port !== undefined ? { port: creds.port } : {}),
-  }
-  session.servers[String(req.server)] = login
-  delete session.expired
-  forgetServerMetadata(session, req.server)
-  c.set('session', session)
-  // AuthenticationPlugin::checkTwoFactor: the configured backend's check (none passes)
-  login.twoFactorOk = await withTwoFactor(c, req.server, login, (tf) => tf.check({}), true)
+  const login = await storeLogin(c, req.server, creds, { secure: true })
+  const session = c.get('session')
+  delete session.authFailure
   writeSessionCookies(c, session)
 
   if (cfg.LoginCookieRecall && cfg.blowfish_secret !== '') {
@@ -116,31 +141,6 @@ authRoutes.post('/login', async (c) => {
   }
   return c.json(body)
 })
-
-/**
- * The login's TwoFactor (user preferences of that server). `fallback` when the preferences cannot
- * be read (no reachable server or storage).
- */
-async function withTwoFactor<T>(
-  c: Context<AppEnv>,
-  server: number,
-  login: ServerLogin,
-  fn: (tf: TwoFactor) => Promise<T>,
-  fallback: T,
-): Promise<T> {
-  const creds = loginCredentials(c.get('deps').credBox, login)
-  if (creds === null) return fallback
-  try {
-    return await asServerRequest(c, server, creds, (sc) =>
-      withMeta(sc, {}, async (m) => {
-        const ctx = await prefsCtx(m)
-        return fn(await TwoFactor.create(ctx.prefs, twoFactorCtx(ctx)))
-      }),
-    )
-  } catch {
-    return fallback
-  }
-}
 
 const pendingLogin = (c: Context<AppEnv>): ServerLogin => {
   const session = c.get('session')
@@ -187,32 +187,47 @@ authRoutes.post('/two-factor', async (c) => {
   return c.json(body)
 })
 
+/**
+ * POST /api/auth/logout — LogoutURL or the auth type's login form URL; cookie auth with
+ * LoginCookieDeleteAll off keeps the other cookie logins (partial logout).
+ * pma: src/Plugins/AuthenticationPlugin.php::logOut, src/Plugins/Auth/AuthenticationCookie.php::logOut
+ */
 authRoutes.post('/logout', async (c) => {
   const { cfg, pools } = c.get('deps')
   const session = c.get('session')
   const server = session.currentServer
-  const logoutUrl = getServer(cfg, server)?.LogoutURL ?? ''
-  // LoginCookieDeleteAll: drop every server login, else only the current one
-  if (cfg.LoginCookieDeleteAll) {
-    const all = Object.keys(session.servers).map(Number)
-    session.servers = {}
-    for (const s of all) forgetServerMetadata(session, s)
-    await pools.dropSession(session.id)
-  } else {
-    delete session.servers[String(server)]
-    forgetServerMetadata(session, server)
-    await pools.dropSession(session.id, server)
-  }
-  const remaining = Object.keys(session.servers).map(Number)
+  const s = getServer(cfg, server)
+  const user = session.servers[String(server)]?.user ?? ''
+  // getLoginFormURL: http asks again for another user, signon goes back to its form
+  let logoutUrl: string | null = null
+  if (s !== undefined && s.LogoutURL !== '') logoutUrl = s.LogoutURL
+  else if (s?.auth_type === 'http') {
+    const base = cfg.Listen.basePath === '' ? '/' : cfg.Listen.basePath
+    logoutUrl = `${base.endsWith('/') ? base : `${base}/`}?old_usr=${encodeURIComponent(user)}`
+  } else if (s?.auth_type === 'signon' && s.SignonURL !== '') logoutUrl = s.SignonURL
+  const cookieAuth = s?.auth_type === 'cookie'
+  delete session.servers[String(server)]
+  forgetServerMetadata(session, server)
+  await pools.dropSession(session.id, server)
+  // the other servers still holding a cookie login (pmaAuth-N cookies)
+  const remaining =
+    cfg.LoginCookieDeleteAll || !cookieAuth
+      ? []
+      : Object.keys(session.servers)
+          .map(Number)
+          .filter((n) => getServer(cfg, n)?.auth_type === 'cookie')
   if (remaining.length === 0) {
+    // session_unset() + session_destroy()
+    for (const n of Object.keys(session.servers).map(Number)) forgetServerMetadata(session, n)
+    await pools.dropSession(session.id)
     const fresh = regenerate(c.get('deps').store, session, server)
     fresh.servers = {}
     c.set('session', fresh)
-    const body: LogoutResponse = { ok: true, logoutUrl: logoutUrl === '' ? null : logoutUrl, server: null }
+    const body: LogoutResponse = { ok: true, logoutUrl, server: null }
     return c.json(body)
   }
-  // AuthenticationPlugin::logOut: redirect to the (last) other authenticated server with
-  // $_SESSION['partial_logout'], whose home page shows the partial-logout message
+  // redirect to the (last) other authenticated server with $_SESSION['partial_logout'], whose
+  // home page shows the partial-logout message
   const other = Math.max(...remaining)
   session.partialLogout = true
   session.currentServer = other

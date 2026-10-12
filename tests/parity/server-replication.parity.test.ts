@@ -9,6 +9,7 @@ import type { LogEntry } from './lib/general-log.ts'
 import { $, $$, type Node, elements, hasClass, pageHtml, parse, text } from './lib/html.ts'
 import { isPmaUp } from './lib/pma.ts'
 import { type Harness, ROOT, both, diff, pmaReachable, startHarness } from './lib/server-setup.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Golden parity of Server › Replication against both replication roles of the dev setup:
@@ -29,12 +30,29 @@ const REPLICA_ROOT = {
   port: Number(process.env.BMA_PARITY_REPLICA_PORT ?? 3308),
 }
 const REPLICA_PMA = process.env.BMA_PARITY_REPLICA_PMA_URL ?? 'http://127.0.0.1:8083'
-/** The primary as both the reference and the replica reach it (host networking: 127.0.0.1:3306) */
+/**
+ * The primary as the reference and the replica reach it (host networking: 127.0.0.1:3306), entered
+ * in phpMyAdmin's change-primary form; `OURS` is the same server as our app reaches it (they differ
+ * in compose networking, where the reference reaches it by service name). The statements are
+ * compared with phpMyAdmin's host and port mapped to ours.
+ */
 const SOURCE = {
   host: process.env.BMA_PARITY_REPLICA_SOURCE_HOST ?? '127.0.0.1',
-  port: Number(process.env.BMA_PARITY_REPLICA_SOURCE_PORT ?? 3306),
+  port: Number(process.env.BMA_PARITY_REPLICA_SOURCE_PORT ?? ROOT.port),
   user: 'bma_repl',
   password: 'bma_repl',
+}
+const OURS = {
+  host: process.env.BMA_PARITY_REPLICA_SOURCE_HOST_OURS ?? ROOT.host,
+  port: Number(process.env.BMA_PARITY_REPLICA_SOURCE_PORT_OURS ?? ROOT.port),
+}
+const SOURCE_SAME = SOURCE.host === OURS.host && SOURCE.port === OURS.port
+/** MariaDB says MASTER in CHANGE MASTER TO, SHOW BINLOG STATUS and SQL_SLAVE_SKIP_COUNTER */
+const MARIADB = TARGET === 'mariadb'
+const SQL = {
+  binlogStatus: MARIADB ? 'SHOW BINLOG STATUS' : 'SHOW BINARY LOG STATUS',
+  change: MARIADB ? 'CHANGE MASTER TO' : 'CHANGE REPLICATION SOURCE TO',
+  skip: MARIADB ? 'SQL_SLAVE_SKIP_COUNTER' : 'SQL_REPLICA_SKIP_COUNTER',
 }
 const USERS = { pma: 'f06r_pma', bma: 'f06r_bma' }
 const NEW_USERS = { pma: 'f06r_new_p', bma: 'f06r_new_b' }
@@ -131,6 +149,17 @@ const alertsIn = (html: Node, id: string, cls = 'alert') => {
         .map((e) => text(e).trim())
 }
 
+/** phpMyAdmin's host and port of the primary as ours (they differ only in compose networking) */
+const mapSource = (log: LogEntry[]): LogEntry[] =>
+  SOURCE_SAME
+    ? log
+    : log.map((e) => ({
+        ...e,
+        sql: e.sql
+          .replace(`_HOST='${SOURCE.host}'`, `_HOST='${OURS.host}'`)
+          .replace(new RegExp(`_PORT=${SOURCE.port}\\b`), `_PORT=${OURS.port}`),
+      }))
+
 /** Positions of the shared primary's binary log and the relay log move between the two requests. */
 const maskLog = (log: LogEntry[]): LogEntry[] =>
   log.map((e) => ({ ...e, sql: e.sql.replace(/((?:SOURCE|MASTER)_LOG_POS\s*=\s*)\d+/gi, '$1N') }))
@@ -151,6 +180,8 @@ const MOVING = new Set([
   'File',
   'Source_Log_File',
   'Relay_Source_Log_File',
+  'Master_Log_File',
+  'Relay_Master_Log_File',
 ])
 
 /** status_table.twig rows: [name, value (moving ones masked), status class] */
@@ -182,7 +213,10 @@ async function setThreads(root: mysql.Connection, io: boolean, sql: boolean) {
   await root.query(sql ? 'START REPLICA SQL_THREAD' : 'STOP REPLICA SQL_THREAD')
   for (let i = 0; i < 50; i++) {
     const [[s]] = (await root.query('SHOW REPLICA STATUS')) as unknown as [[Record<string, string>]]
-    if ((s.Replica_IO_Running === 'Yes') === io && (s.Replica_SQL_Running === 'Yes') === sql) return
+    // MariaDB keeps the Slave_* column names
+    const ioOn = (s.Replica_IO_Running ?? s.Slave_IO_Running) === 'Yes'
+    const sqlOn = (s.Replica_SQL_Running ?? s.Slave_SQL_Running) === 'Yes'
+    if (ioOn === io && sqlOn === sql) return
     await new Promise((res) => setTimeout(res, 200))
   }
   throw new Error(`replica threads did not reach io=${io} sql=${sql}`)
@@ -191,11 +225,12 @@ async function setThreads(root: mysql.Connection, io: boolean, sql: boolean) {
 /** Points the replica back at the dev primary from its current position and starts it. */
 async function restoreReplica(root: mysql.Connection) {
   const primary = await mysql.createConnection({ ...SOURCE, host: ROOT.host, port: ROOT.port })
-  const [[pos]] = (await primary.query('SHOW BINARY LOG STATUS')) as unknown as [[Record<string, string>]]
+  const [[pos]] = (await primary.query(SQL.binlogStatus)) as unknown as [[Record<string, string>]]
   await primary.end()
   await root.query('STOP REPLICA')
+  const p = MARIADB ? 'MASTER' : 'SOURCE'
   await root.query(
-    `CHANGE REPLICATION SOURCE TO SOURCE_HOST=?, SOURCE_PORT=?, SOURCE_USER=?, SOURCE_PASSWORD=?, SOURCE_LOG_FILE=?, SOURCE_LOG_POS=${Number(pos.Position)}, GET_SOURCE_PUBLIC_KEY=1`,
+    `${SQL.change} ${p}_HOST=?, ${p}_PORT=?, ${p}_USER=?, ${p}_PASSWORD=?, ${p}_LOG_FILE=?, ${p}_LOG_POS=${Number(pos.Position)}${MARIADB ? ', MASTER_USE_GTID=no' : ', GET_SOURCE_PUBLIC_KEY=1'}`,
     [SOURCE.host, SOURCE.port, SOURCE.user, SOURCE.password, pos.File],
   )
   await setThreads(root, true, true)
@@ -478,8 +513,9 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
         actions: [!io || !sql ? 'start' : 'stop', !sql ? 'start' : 'stop', !io ? 'start' : 'stop'],
       }
       expect([rep.fullAction, rep.sqlAction, rep.ioAction]).toEqual(ours.actions)
-      // phpMyAdmin's IO flag is Replica_SQL_Running, and the template gets the two swapped
-      const pmaIo = sql
+      // phpMyAdmin's IO flag is Replica_SQL_Running (Q62; MariaDB has the Slave_* columns, which it
+      // reads right), and the template gets the two swapped (Q16)
+      const pmaIo = MARIADB ? io : sql
       const pmaSql = sql
       const pmaView = {
         errors: [
@@ -573,7 +609,7 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
     )
     const cmp = diff(h, res.pmaLog, res.bmaLog)
     expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
-    expect(cmp.bma).toContain('SET GLOBAL SQL_REPLICA_SKIP_COUNTER = 2')
+    expect(cmp.bma).toContain(`SET GLOBAL ${SQL.skip} = 2`)
     expect(res.b.message).toBeNull()
     expect(alertsIn(parse(pageHtml(res.p)), 'replication')).toEqual([])
   })
@@ -583,6 +619,7 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
     const primaryLog = p.log
     const auxUser = SOURCE.user
     const form = { username: SOURCE.user, hostname: SOURCE.host }
+    const ours = { username: SOURCE.user, hostname: OURS.host }
     const pmaAux: LogEntry[] = []
     const bmaAux: LogEntry[] = []
     const res = await bothFrom(
@@ -603,25 +640,25 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
       async () => {
         const m = await primaryLog.marker()
         const out = await bmaJson<ReplicationActionResponse>(h, 'POST', '/replication/change-primary', {
-          ...form,
+          ...ours,
           password: SOURCE.password,
-          port: String(SOURCE.port),
+          port: String(OURS.port),
         })
         bmaAux.push(...(await primaryLog.since(auxUser, m)).filter(notReplicaThread))
         return out
       },
     )
-    const cmp = diff(h, maskLog(res.pmaLog), maskLog(res.bmaLog))
+    const cmp = diff(h, maskLog(mapSource(res.pmaLog)), maskLog(res.bmaLog))
     expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
-    expect(cmp.bma.some((s) => s.startsWith('CHANGE REPLICATION SOURCE TO'))).toBe(true)
+    expect(cmp.bma.some((s) => s.startsWith(SQL.change))).toBe(true)
     expect(cmp.bma).toContain('STOP REPLICA')
     expect(cmp.bma).not.toContain('START REPLICA')
     // the auxiliary connection to the primary only reads the position
     expect(bmaAux.map((e) => e.sql)).toEqual(pmaAux.map((e) => e.sql))
-    expect(bmaAux.map((e) => e.sql)).toContain('SHOW BINARY LOG STATUS')
+    expect(bmaAux.map((e) => e.sql)).toContain(SQL.binlogStatus)
     expect(res.b.success).toBe(true)
     const msg = $$(parse(pageHtml(res.p)), 'div.alert-success').map((d) => text(d).trim())
-    expect(msg).toContain(res.b.message!.text)
+    expect(msg).toContain(res.b.message!.text.replace(OURS.host, SOURCE.host))
     await restoreReplica(h.root)
 
     // a primary that refuses the login
@@ -638,15 +675,15 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
         }),
       () =>
         bmaJson<ReplicationActionResponse>(h, 'POST', '/replication/change-primary', {
-          ...form,
+          ...ours,
           password: 'wrong',
-          port: String(SOURCE.port),
+          port: String(OURS.port),
         }),
     )
     const c2 = diff(h, bad.pmaLog, bad.bmaLog)
     expect(c2.problems, c2.problems.join('\n')).toEqual([])
     expect(c2.bma.some((s) => /^(STOP|CHANGE)/.test(s))).toBe(false)
     const err = alertsIn(parse(pageHtml(bad.p)), 'replication', 'alert-danger')
-    expect(err).toEqual([bad.b.message!.text])
+    expect(err).toEqual([bad.b.message!.text.replace(OURS.host, SOURCE.host)])
   })
 })

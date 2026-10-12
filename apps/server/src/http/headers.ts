@@ -1,4 +1,5 @@
 import type { MiddlewareHandler } from 'hono'
+import { captchaCsp } from '../auth/captcha.ts'
 import type { AppConfig } from '../config.ts'
 
 /**
@@ -7,7 +8,8 @@ import type { AppConfig } from '../config.ts'
  */
 export function securityHeaders(cfg: AppConfig): MiddlewareHandler {
   const allow = cfg.CSPAllow.trim()
-  const extra = allow === '' ? '' : ` ${allow}`
+  // the captcha hosts come first, like Header::getCspHeader ($captchaUrl . $cspAllow)
+  const extra = captchaCsp(cfg) + (allow === '' ? '' : ` ${allow}`)
   const frameAncestors =
     cfg.AllowThirdPartyFraming === true
       ? '*'
@@ -15,7 +17,7 @@ export function securityHeaders(cfg: AppConfig): MiddlewareHandler {
         ? "'self'"
         : "'none'"
   const csp = [
-    "default-src 'self'",
+    `default-src 'self'${captchaCsp(cfg)}`,
     `script-src 'self' 'wasm-unsafe-eval'${extra}`,
     "style-src 'self' 'unsafe-inline'",
     `img-src 'self' data: blob:${extra} https://tile.openstreetmap.org`,
