@@ -2,9 +2,12 @@ import { CSRF_COOKIE, CSRF_HEADER, type Executed, SESSION_COOKIE } from '@better
 import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
 import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
+import { logUser } from './auth/auth-log.ts'
+import { requestClientIp } from './auth/login.ts'
 import { authPageGate, isPageRequest } from './auth/page-gate.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
+import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { securityHeaders } from './http/headers.ts'
 import { languageLoading, languageManager } from './i18n.ts'
@@ -64,8 +67,10 @@ export function createApp(deps: AppDeps) {
 
   const session = sessionMiddleware(deps)
   const language = languageLoading(languageManager(deps.cfg))
+  const permissions = configPermissions()
   app.use('/api/*', session)
   app.use('/api/*', language)
+  app.use('/api/*', permissions)
 
   // page loads authenticate the http / signon servers (the SPA itself is served by main.ts)
   const gate = authPageGate()
@@ -73,7 +78,10 @@ export function createApp(deps: AppDeps) {
     if (!isPageRequest(c.req.method, c.req.path)) return next()
     await session(c, async () => {
       await language(c, async () => {
-        const r = await gate(c, next)
+        const r = await permissions(c, async () => {
+          const g = await gate(c, next)
+          if (g instanceof Response) c.res = g
+        })
         if (r instanceof Response) c.res = r
       })
     })
@@ -124,7 +132,9 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
       Object.keys(session.servers).length > 0 &&
       nowSeconds() - session.lastSeenAt > deps.cfg.LoginCookieValidity
     ) {
-      // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY)
+      // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY, logged by logFailure)
+      const ip = requestClientIp(c, deps.cfg.TrustedProxies)
+      for (const login of Object.values(session.servers)) logUser(deps.cfg, login.user, 'no-activity', ip)
       session.servers = {}
       session.expired = true
       void deps.pools.dropSession(session.id)

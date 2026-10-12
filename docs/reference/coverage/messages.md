@@ -4,11 +4,11 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1947/3426 covered (56.8%): 1947 implemented, 3 planned, 1476 missing. [Summary](README.md).
+1949/3426 covered (56.9%): 1949 implemented, 3 planned, 1474 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 278/403 (69.0%) covered, 278/403 implemented
+## 01 shell navigation auth — 279/403 (69.2%) covered, 279/403 implemented
 
-125 msgids not used yet.
+124 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -53,7 +53,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/NavigationController.php` | 1/1 | `Fatal error: The navigation can only be accessed via AJAX` |
 | `src/Controllers/Table/RecentFavoriteController.php` | 1/1 | `Invalid database or table name.` |
 | `src/Core.php` | 1/1 | `The %s extension is missing. Please check your PHP configuration.` |
-| `src/Http/Middleware/DatabaseServerVersionChecking.php` | 1/1 | `You should upgrade to %s %s or later.` |
 | `src/Http/Middleware/PhpExtensionsChecking.php` | 1/1 | `See %sour documentation%s for more information.` |
 | `src/Http/Middleware/ServerConfigurationChecking.php` | 1/1 | `The ini_get and/or ini_set functions are disabled in php.ini. phpMy…` |
 | `src/Navigation/Nodes/NodeColumnContainer.php` | 1/2 | `New (Create new column)` |
@@ -265,9 +264,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 89/666 (13.4%) covered, 89/666 implemented
+## 08 settings preferences pmadb — 90/666 (13.5%) covered, 90/666 implemented
 
-577 msgids not used yet.
+576 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -282,9 +281,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Config/Forms/Setup/ServersForm.php` | 3/3 | `Config authentication` · `HTTP authentication` · `Signon authentication` |
 | `src/Config/Forms/User/ImportForm.php` | 3/4 | `CSV` · `CSV using LOAD DATA` · `OpenDocument Spreadsheet` |
 | `src/ConfigStorage/UserGroups.php` | 3/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` |
-| `src/Config.php` | 2/2 | `Existing configuration file (%s) is not readable.` · `Wrong permissions on configuration file, should not be world writable!` |
 | `src/Config/UserPreferences.php` | 2/2 | `Could not save configuration` · `The phpMyAdmin configuration storage database could not be accessed.` |
 | `resources/templates/preferences/manage/main.twig` | 1/17 | `You can set more settings by modifying config.inc.php, eg. by using…` |
+| `src/Config.php` | 1/2 | `Existing configuration file (%s) is not readable.` |
 | `src/Config/Forms/User/MainForm.php` | 1/2 | `Default transformations` |
 | `src/Config/Settings.php` | 1/1 | `Server %d` |
 | `src/ConfigStorage/Relation.php` | 1/2 | `You do not have necessary privileges to create a database named '%s…` |

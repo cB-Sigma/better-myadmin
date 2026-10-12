@@ -196,7 +196,7 @@ async function checkVersion(ctx: SetupCtx, messages: SetupMessageList): Promise<
   const { tr } = ctx
   const id = `version_check${randomBytes(8).toString('hex')}`
   const url = process.env.BMA_VERSION_FEED_URL ?? ''
-  const releases = url === '' ? null : await getLatestVersions(url)
+  const releases = url === '' ? null : await getLatestVersions(url, Date.now(), ctx.deps.cfg)
   if (releases === null) {
     messages.set(
       'error',
