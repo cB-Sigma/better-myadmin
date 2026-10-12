@@ -107,9 +107,9 @@ export function GenericErrorPage({ message }: { message: string }) {
   return (
     <div className="p-4 text-[small]">
       <h1 className="bg-error px-2 py-1 text-[1.4em] font-bold text-white">BetterMyAdmin - {t('Error')}</h1>
-      <div className="errormessage border border-error bg-error-bg">
-        <SafeHtml html={message} as="p" className="p-2" />
-      </div>
+      <MessageBox type="error" className="errormessage rounded-none">
+        <SafeHtml html={message} as="p" />
+      </MessageBox>
     </div>
   )
 }

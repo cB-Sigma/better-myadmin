@@ -159,6 +159,13 @@ import type {
   ServerVariablesResponse,
   SetCollationResponse,
   SetVariableResponse,
+  SetupConfigRequest,
+  SetupConfigResponse,
+  SetupFormResponse,
+  SetupOverview,
+  SetupSaveRequest,
+  SetupSaveResponse,
+  SetupServerResponse,
   ShowCreateResponse,
   SimulateRequest,
   SimulateResponse,
@@ -275,6 +282,32 @@ export const tablePath = (r: TableRef) => `${dbPath(r)}/tables/${encodeURICompon
  */
 export const api = {
   authState: () => call<AuthState>('GET', '/auth/state'),
+  // setup script (docs/architecture/05-api-reference.md#setup)
+  setupOverview: (versionCheck = false) =>
+    call<SetupOverview>('GET', versionCheck ? '/setup?version_check=1' : '/setup'),
+  setupForm: (formset: string) =>
+    call<SetupFormResponse>('GET', `/setup/form/${encodeURIComponent(formset)}`),
+  saveSetupForm: (formset: string, req: SetupSaveRequest) =>
+    call<SetupSaveResponse>('POST', `/setup/form/${encodeURIComponent(formset)}`, req),
+  revertSetupForm: (formset: string) =>
+    call<{ ok: true }>('POST', `/setup/form/${encodeURIComponent(formset)}/revert`, {}),
+  setupServer: (id: number) => call<SetupServerResponse>('GET', `/setup/servers/${id}`),
+  saveSetupServer: (id: number, req: SetupSaveRequest) =>
+    call<SetupSaveResponse>('POST', `/setup/servers/${id}`, req),
+  revertSetupServer: (id: number) => call<{ ok: true }>('POST', `/setup/servers/${id}/revert`, {}),
+  deleteSetupServer: (id: number) => call<{ ok: true }>('POST', `/setup/servers/${id}/delete`, {}),
+  postSetupConfig: (req: SetupConfigRequest) => call<{ ok: true }>('POST', '/setup/config', req),
+  setupConfig: (eol: string) =>
+    call<SetupConfigResponse>('GET', `/setup/config?eol=${encodeURIComponent(eol)}`),
+  /** ValidateController: errors by field id / fieldset (empty lists clear them), or a failure message */
+  setupValidate: (id: string, values: Record<string, unknown>) =>
+    call<Record<string, string[]> | { success: false; message: string }>('POST', '/setup/validate', {
+      id,
+      values: JSON.stringify(values),
+    }),
+  /** submit_download: the generated file's URL (navigated to, so the browser saves it) */
+  setupDownloadUrl: (eol: string, format: 'php' | 'bma' = 'php') =>
+    `/api/setup/config/download?eol=${encodeURIComponent(eol)}${format === 'bma' ? '&format=bma' : ''}`,
   /** The request language; `lang` selects one (pma: `?lang=` from the language selector). */
   i18n: (lang?: string) =>
     call<I18nState>('GET', lang === undefined ? '/i18n' : `/i18n?lang=${encodeURIComponent(lang)}`),

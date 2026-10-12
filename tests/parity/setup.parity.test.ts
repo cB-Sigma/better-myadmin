@@ -28,32 +28,27 @@ let inst: PmaInstance
 type Json = Record<string, any>
 type Msg = Pick<SetupMessage, 'id' | 'type' | 'title' | 'hidden'> & { text: string }
 
-/** phpMyAdmin's setup pages through its forms. */
-class PmaSetup {
-  readonly c: PmaClient
-  constructor(url: string) {
-    this.c = new PmaClient(url)
-  }
-  async home(query = ''): Promise<string> {
-    const html = await this.c.getPage(`/setup/index.php?route=/setup${query}`)
-    this.c.token = html.match(/name="token" value="([^"]+)"/)?.[1] ?? this.c.token
-    return html
-  }
-  async formPairs(path: string): Promise<Pairs> {
-    return serializeForm(findForm(await this.c.getPage(path), { cls: 'config-form' }))
-  }
-  async post(path: string, pairs: Pairs): Promise<string> {
-    return this.c.postPage(path, setPair(pairs, 'submit_save', 'Apply'))
-  }
-  download(eol: 'unix' | 'win', serverDefault = '1'): Promise<string> {
-    return this.c.postPage('/setup/index.php?route=/setup/show-config', {
-      DefaultLang: 'en',
-      ServerDefault: serverDefault,
-      eol,
-      submit_download: 'Download',
-    })
-  }
+/** phpMyAdmin's overview (it carries the form token). */
+async function pmaHome(c: PmaClient, query = ''): Promise<string> {
+  const html = await c.getPage(`/setup/index.php?route=/setup${query}`)
+  c.token = html.match(/name="token" value="([^"]+)"/)?.[1] ?? c.token
+  return html
 }
+/** The fields a page's config form posts. */
+async function pmaFormPairs(c: PmaClient, path: string): Promise<Pairs> {
+  return serializeForm(findForm(await c.getPage(path), { cls: 'config-form' }))
+}
+/** submit_save of a setup form. */
+const pmaSave = (c: PmaClient, path: string, pairs: Pairs): Promise<string> =>
+  c.postPage(path, setPair(pairs, 'submit_save', 'Apply'))
+/** submit_download of the overview's configuration file card. */
+const pmaDownload = (c: PmaClient, eol: 'unix' | 'win', serverDefault = '1'): Promise<string> =>
+  c.postPage('/setup/index.php?route=/setup/show-config', {
+    DefaultLang: 'en',
+    ServerDefault: serverDefault,
+    eol,
+    submit_download: 'Download',
+  })
 
 /** BetterMyAdmin's setup API, posting what the SPA's form posts. */
 class BmaSetup {
@@ -181,32 +176,32 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
   })
 
   it('[p01-984896] a cookie server: same form fields, overview messages, servers and config.inc.php', async () => {
-    const p = new PmaSetup(inst.url)
+    const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     try {
-      const [ph, bh] = [await p.home(), await b.home()]
+      const [ph, bh] = [await pmaHome(pc), await b.home()]
       expect(sameSystem(bmaMessages(bh))).toEqual(sameSystem(pmaMessages(ph)))
 
-      const pmaForm = await p.formPairs(SERVER_ADD)
+      const pmaForm = await pmaFormPairs(pc, SERVER_ADD)
       const bmaForm = (await b.t.req('GET', '/api/setup/servers/0')).json.formSet as PrefsFormSet
       expect(bmaPairs(bmaForm)).toEqual(fieldsOnly(pmaForm))
 
       const pairs = setPair(setPair(pmaForm, 'Servers-0-host', ROOT.host), 'Servers-0-auth_type', 'cookie')
-      await p.post(SERVER_ADD, pairs)
+      await pmaSave(pc, SERVER_ADD, pairs)
       expect((await b.post('/api/setup/servers/0', pairs)).saved).toBe(true)
 
-      const [ph2, bh2] = [await p.home(), await b.home()]
+      const [ph2, bh2] = [await pmaHome(pc), await b.home()]
       expect(bmaServers(bh2)).toEqual(pmaServers(ph2))
       expect(sameSystem(bmaMessages(bh2))).toEqual(sameSystem(pmaMessages(ph2)))
 
-      expect(mask(await b.download('unix'))).toBe(mask(await p.download('unix')))
+      expect(mask(await b.download('unix'))).toBe(mask(await pmaDownload(pc, 'unix')))
     } finally {
       await b.t.close()
     }
   })
 
   it('[p01-984896] validateServer: a new server is not validated (quirk), an edited one is', async () => {
-    const p = new PmaSetup(inst.url)
+    const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     const errorsOf = (r: SetupSaveResponse) =>
       (r.errors ?? []).map((e) => ({ name: visibleText(e.name), errors: e.errors.map(visibleText) }))
@@ -214,11 +209,11 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
     const strip = (l: Array<{ name: string; errors: string[] }>) =>
       l.map((e) => ({ ...e, errors: e.errors.map((x) => x.replace(/'@'[^']*'/, "'@'HOST'")) }))
     try {
-      await p.home()
+      await pmaHome(pc)
       await b.home()
       const set = (pairs: Pairs, kv: string[][]) =>
         kv.reduce((acc, [k, v]) => setPair(acc, k as string, v as string), pairs)
-      const bad = set(await p.formPairs(SERVER_ADD), [
+      const bad = set(await pmaFormPairs(pc, SERVER_ADD), [
         ['Servers-0-host', ROOT.host],
         ['Servers-0-port', String(ROOT.port)],
         ['Servers-0-auth_type', 'config'],
@@ -226,12 +221,12 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
         ['Servers-0-password', 'wrong'],
       ])
       // FormDisplay::validate reads the values of `Servers/0/…` (nothing there): saved unchecked
-      expect(pmaErrorList(await p.post(SERVER_ADD, bad))).toEqual([])
+      expect(pmaErrorList(await pmaSave(pc, SERVER_ADD, bad))).toEqual([])
       expect((await b.post('/api/setup/servers/0', bad)).saved).toBe(true)
 
       // editing server 1 validates its values: the connection test fails
-      const edit = await p.formPairs(serverEdit(1))
-      const pe = pmaErrorList(await p.post(serverEdit(1), edit))
+      const edit = await pmaFormPairs(pc, serverEdit(1))
+      const pe = pmaErrorList(await pmaSave(pc, serverEdit(1), edit))
       const be = await b.post('/api/setup/servers/1', edit)
       expect(be.saved).toBe(false)
       expect(strip(errorsOf(be))).toEqual(strip(pe))
@@ -243,19 +238,19 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
         ['Servers-1-password', USER],
         ['Servers-1-AllowNoPassword', 'on'],
       ])
-      expect(pmaErrorList(await p.post(serverEdit(1), fixed))).toEqual([])
+      expect(pmaErrorList(await pmaSave(pc, serverEdit(1), fixed))).toEqual([])
       expect((await b.post('/api/setup/servers/1', fixed)).saved).toBe(true)
 
       // a signon server without SignonURL, then edited
-      const sso = set(await p.formPairs(SERVER_ADD), [
+      const sso = set(await pmaFormPairs(pc, SERVER_ADD), [
         ['Servers-0-host', 'sso.example'],
         ['Servers-0-auth_type', 'signon'],
         ['Servers-0-SignonSession', 'SignonSession'],
       ])
-      await p.post(SERVER_ADD, sso)
+      await pmaSave(pc, SERVER_ADD, sso)
       await b.post('/api/setup/servers/0', sso)
-      const ssoEdit = await p.formPairs(serverEdit(2))
-      const pe2 = pmaErrorList(await p.post(serverEdit(2), ssoEdit))
+      const ssoEdit = await pmaFormPairs(pc, serverEdit(2))
+      const pe2 = pmaErrorList(await pmaSave(pc, serverEdit(2), ssoEdit))
       const be2 = await b.post('/api/setup/servers/2', ssoEdit)
       expect(errorsOf(be2)).toEqual(pe2)
       expect(pe2.flatMap((e) => e.errors)).toContain(
@@ -263,31 +258,31 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
       )
 
       // mode=revert puts the erroneous fields back to their defaults
-      await p.c.getPage('/setup/index.php?route=/setup&page=servers&mode=revert&id=2')
+      await pc.getPage('/setup/index.php?route=/setup&page=servers&mode=revert&id=2')
       await b.t.req('POST', '/api/setup/servers/2/revert', {})
 
-      const [ph, bh] = [await p.home(), await b.home()]
+      const [ph, bh] = [await pmaHome(pc), await b.home()]
       expect(bmaServers(bh)).toEqual(pmaServers(ph))
       expect(sameSystem(bmaMessages(bh))).toEqual(sameSystem(pmaMessages(ph)))
-      expect(mask(await b.download('win', '2'))).toBe(mask(await p.download('win', '2')))
+      expect(mask(await b.download('win', '2'))).toBe(mask(await pmaDownload(pc, 'win', '2')))
     } finally {
       await b.t.close()
     }
   })
 
   it('[p01-984896] Features form (security settings), TrustedProxies, deleting a server', async () => {
-    const p = new PmaSetup(inst.url)
+    const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     try {
-      await p.home()
+      await pmaHome(pc)
       await b.home()
       for (const host of ['db1.example', 'db2.example']) {
-        const add = setPair(await p.formPairs(SERVER_ADD), 'Servers-0-host', host)
-        await p.post(SERVER_ADD, add)
+        const add = setPair(await pmaFormPairs(pc, SERVER_ADD), 'Servers-0-host', host)
+        await pmaSave(pc, SERVER_ADD, add)
         await b.post('/api/setup/servers/0', add)
       }
       const path = '/setup/index.php?route=/setup&page=form&formset=Features'
-      const pmaForm = await p.formPairs(path)
+      const pmaForm = await pmaFormPairs(pc, path)
       const bmaForm = (await b.t.req('GET', '/api/setup/form/Features')).json.formSet as PrefsFormSet
       // the secret generated by the overview's checks is random on both sides
       const noSecret = (l: Pairs) =>
@@ -303,21 +298,21 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
       ].reduce((acc, [k, v]) => setPair(acc, k as string, v as string), pmaForm)
       // NaturalOrder off: the posted checkbox is absent; users may not change MaxDbList
       const posted = changed.filter(([k]) => k !== 'NaturalOrder' && k !== 'MaxDbList-userprefs-allow')
-      const pr = await p.post(path, posted)
+      const pr = await pmaSave(pc, path, posted)
       const br = await b.post('/api/setup/form/Features', posted)
       expect(
         (br.errors ?? []).map((e) => ({ name: visibleText(e.name), errors: e.errors.map(visibleText) })),
       ).toEqual(pmaErrorList(pr))
 
       // delete server 1: server 2 becomes 1
-      await p.c.postPage('/setup/index.php?route=/setup&page=servers&mode=remove&id=1', {})
+      await pc.postPage('/setup/index.php?route=/setup&page=servers&mode=remove&id=1', {})
       await b.t.req('POST', '/api/setup/servers/1/delete', {})
       await b.home() // ServerDestroyController redirects to the overview
 
-      const [ph, bh] = [await p.home(), await b.home()]
+      const [ph, bh] = [await pmaHome(pc), await b.home()]
       expect(bmaServers(bh)).toEqual(pmaServers(ph))
       expect(sameSystem(bmaMessages(bh))).toEqual(sameSystem(pmaMessages(ph)))
-      const [pf, bf] = [await p.download('unix'), await b.download('unix')]
+      const [pf, bf] = [await pmaDownload(pc, 'unix'), await b.download('unix')]
       expect(bf).toContain("$cfg['blowfish_secret'] = \\sodium_hex2bin('")
       expect(mask(bf)).toBe(mask(pf))
       // a 32-byte secret is kept as is
