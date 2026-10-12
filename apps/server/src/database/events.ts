@@ -72,6 +72,7 @@ export async function eventsList(ctx: DbCtx): Promise<EventsListResponse> {
   return {
     items,
     schedulerOn: v.toUpperCase() === 'ON' || v === '1',
+    codemirror: ctx.cfg.CodemirrorEnable,
     canCreate: await new PrivilegeProbe(ctx.conn, ctx.server, ctx.cache).hasPrivilege('EVENT', ctx.db),
   }
 }

@@ -59,6 +59,15 @@ import type {
   DdlResponse,
   DefaultFkCheckResponse,
   DeleteTrackingVersionsRequest,
+  DesignerActionResponse,
+  DesignerAddRelationRequest,
+  DesignerPagesResponse,
+  DesignerQuery,
+  DesignerRemoveRelationRequest,
+  DesignerResponse,
+  DesignerSavePageRequest,
+  DesignerSavePageResponse,
+  DesignerTable,
   DropColumnsRequest,
   DropDatabasesResponse,
   EngineResponse,
@@ -152,6 +161,9 @@ import type {
   SaveIndexRequest,
   SaveRowsRequest,
   SaveRowsResponse,
+  SchemaExportFormResponse,
+  SchemaExportRequest,
+  SchemaExportResponse,
   SearchPageResponse,
   SearchRequest,
   SearchResponse,
@@ -673,6 +685,31 @@ export const api = {
     ),
   dbCentralColumnsPopulate: (r: DbRef, table: string) =>
     call<string[]>('GET', `${dbPath(r)}/central-columns/populate?table=${encodeURIComponent(table)}`),
+  // Designer and schema export (pma: /database/designer, /schema-export)
+  designer: (r: DbRef, q: DesignerQuery) =>
+    call<DesignerResponse>('GET', `${dbPath(r)}/designer${queryString(q)}`),
+  designerPages: (r: DbRef) => call<DesignerPagesResponse>('GET', `${dbPath(r)}/designer/pages`),
+  designerTable: (r: DbRef, db: string, table: string) =>
+    call<DesignerTable[]>('GET', `${dbPath(r)}/designer/table${queryString({ db, table })}`),
+  designerExportForm: (r: DbRef, page: number) =>
+    call<SchemaExportFormResponse>(
+      'GET',
+      `${dbPath(r)}/designer/export${queryString({ page: String(page) })}`,
+    ),
+  designerSavePage: (r: DbRef, body: DesignerSavePageRequest) =>
+    call<DesignerSavePageResponse>('POST', `${dbPath(r)}/designer/save-page`, body),
+  designerDeletePage: (r: DbRef, selectedPage: string) =>
+    call<{ success: boolean }>('POST', `${dbPath(r)}/designer/delete-page`, { selected_page: selectedPage }),
+  designerDisplayField: (r: DbRef, body: { db: string; table: string; field: string }) =>
+    call<DesignerActionResponse>('POST', `${dbPath(r)}/designer/display-field`, body),
+  designerAddRelation: (r: DbRef, body: DesignerAddRelationRequest) =>
+    call<DesignerActionResponse>('POST', `${dbPath(r)}/designer/add-relation`, body),
+  designerRemoveRelation: (r: DbRef, body: DesignerRemoveRelationRequest) =>
+    call<DesignerActionResponse>('POST', `${dbPath(r)}/designer/remove-relation`, body),
+  designerSetting: (r: DbRef, index: string, value: string) =>
+    call<{ success: boolean }>('POST', `${dbPath(r)}/designer/setting`, { index, value }),
+  schemaExport: (r: DbRef, body: SchemaExportRequest) =>
+    call<SchemaExportResponse>('POST', `${dbPath(r)}/schema-export`, body),
   /** pma: /database/central-columns getColumnList (cur_table): the "Pick from Central Columns" list */
   dbCentralColumnsList: (r: DbRef, table: string) =>
     call<CentralColumn[]>('GET', `${dbPath(r)}/central-columns/list?table=${encodeURIComponent(table)}`),

@@ -1,7 +1,0 @@
-rules:
-  # the generated query: phpMyAdmin turns the textarea into a CodeMirror editor, ours stays a plain
-  # textarea (known gap, docs/features/05-database-level.md); the two only differ in that
-  - pma: { kind: textbox, name: sql_query }
-    n/a: CodeMirror editor in phpMyAdmin — ours is the plain textarea below (known gap)
-  - ours: { kind: textbox, name: sql_query }
-    added: the plain textarea standing in for phpMyAdmin's CodeMirror editor (known gap)

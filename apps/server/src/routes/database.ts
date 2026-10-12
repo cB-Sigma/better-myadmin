@@ -10,11 +10,20 @@ import {
   DbSearchRequest,
   DbStructureQuery,
   DbTrackingRequest,
+  DesignerAddRelationRequest,
+  DesignerDeletePageRequest,
+  DesignerDisplayFieldRequest,
+  DesignerQuery,
+  DesignerRemoveRelationRequest,
+  DesignerSavePageRequest,
+  DesignerSettingRequest,
+  DesignerTableQuery,
   EventSaveRequest,
   MaintenanceRequest,
   ReplacePrefixRequest,
   RoutineExecuteRequest,
   RoutineSaveRequest,
+  SchemaExportRequest,
   TriggerSaveRequest,
 } from '@bettermyadmin/contracts'
 import { type Context, Hono } from 'hono'
@@ -40,6 +49,17 @@ import {
 } from '../database/central-columns.ts'
 import { parse, withDb } from '../database/context.ts'
 import { dataDictionary } from '../database/data-dictionary.ts'
+import {
+  designerAddRelation,
+  designerAddTable,
+  designerDelete,
+  designerPage,
+  designerPageList,
+  designerRemoveRelation,
+  designerSavePage,
+  designerSetDisplayField,
+  designerSetting,
+} from '../database/designer.ts'
 import { eventData, eventsList, exportEvent, saveEvent } from '../database/events.ts'
 import { multiTableForm, multiTableKeys } from '../database/multi-table.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
@@ -52,6 +72,7 @@ import {
   routinesList,
   saveRoutine,
 } from '../database/routines.ts'
+import { schemaExport, schemaExportForm } from '../database/schema-export.ts'
 import { search, searchForm } from '../database/search.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
 import { trackingAction, trackingPage } from '../database/tracking.ts'
@@ -319,4 +340,70 @@ databaseRoutes.get('/:db/tracking', async (c) => c.json(await withDb(c, tracking
 databaseRoutes.post('/:db/tracking', async (c) => {
   const req = parse(DbTrackingRequest, await body(c))
   return c.json(await withDb(c, (ctx) => trackingAction(ctx, req)))
+})
+
+// ---------------------------------------------------------------- Designer
+
+/** GET …/:db/designer?page=&query= (pma: /database/designer) */
+databaseRoutes.get('/:db/designer', async (c) => {
+  const q = parse(DesignerQuery, c.req.query())
+  return c.json(await withDb(c, (ctx) => designerPage(ctx, q)))
+})
+
+/** GET …/:db/designer/pages (pma: /database/designer dialog=edit|delete|save_as) */
+databaseRoutes.get('/:db/designer/pages', async (c) => c.json(await withDb(c, designerPageList)))
+
+/** GET …/:db/designer/table?db=&table= (pma: /database/designer dialog=add_table) */
+databaseRoutes.get('/:db/designer/table', async (c) => {
+  const q = parse(DesignerTableQuery, c.req.query())
+  return c.json(await withDb(c, (ctx) => designerAddTable(ctx, q.db, q.table)))
+})
+
+/** GET …/:db/designer/export?page=&format= (pma: /database/designer dialog=export) */
+databaseRoutes.get('/:db/designer/export', async (c) => {
+  const page = Number.parseInt(c.req.query('page') ?? '0', 10) || 0
+  const format = c.req.query('format') ?? ''
+  return c.json(await withDb(c, async (ctx) => schemaExportForm(ctx, page, format)))
+})
+
+/** pma: /database/designer operation=savePage */
+databaseRoutes.post('/:db/designer/save-page', async (c) => {
+  const req = parse(DesignerSavePageRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => designerSavePage(ctx, req)))
+})
+
+/** pma: /database/designer operation=deletePage */
+databaseRoutes.post('/:db/designer/delete-page', async (c) => {
+  const req = parse(DesignerDeletePageRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => designerDelete(ctx, req.selected_page)))
+})
+
+/** pma: /database/designer operation=setDisplayField */
+databaseRoutes.post('/:db/designer/display-field', async (c) => {
+  const req = parse(DesignerDisplayFieldRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => designerSetDisplayField(ctx, req.db, req.table, req.field)))
+})
+
+/** pma: /database/designer operation=addNewRelation */
+databaseRoutes.post('/:db/designer/add-relation', async (c) => {
+  const req = parse(DesignerAddRelationRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => designerAddRelation(ctx, req)))
+})
+
+/** pma: /database/designer operation=removeRelation */
+databaseRoutes.post('/:db/designer/remove-relation', async (c) => {
+  const req = parse(DesignerRemoveRelationRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => designerRemoveRelation(ctx, req)))
+})
+
+/** pma: /database/designer operation=save_setting_value */
+databaseRoutes.post('/:db/designer/setting', async (c) => {
+  const req = parse(DesignerSettingRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => designerSetting(ctx, req.index, req.value)))
+})
+
+/** pma: /schema-export */
+databaseRoutes.post('/:db/schema-export', async (c) => {
+  const req = parse(SchemaExportRequest, await body(c))
+  return c.json(await withDb(c, (ctx) => schemaExport(ctx, req)))
 })

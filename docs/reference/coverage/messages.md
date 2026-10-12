@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-1534/3426 covered (44.8%): 1534 implemented, 33 planned, 1859 missing. [Summary](README.md).
+1620/3426 covered (47.3%): 1620 implemented, 33 planned, 1773 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 222/403 (55.1%) covered, 222/403 implemented
 
@@ -195,39 +195,28 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
 | `src/Normalization.php` | 1/52 | `String (string types)` |
 
-## 05 database level — 214/340 (62.9%) covered, 214/340 implemented
+## 05 database level — 299/340 (87.9%) covered, 299/340 implemented
 
-126 msgids not used yet.
+41 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `resources/templates/database/designer/main.twig` | 35/40 | `Active options` · `Add tables from other databases` · `Aggregate` · `Angular links` · `Build Query` · `Choose column to display` · `Create relationship` · `Delete pages` · `Delete relationship` · `Direct links` · `Except` · `Exit fullscreen` · … +23 |
-| `resources/js/designer/move.ts` | 21/23 | `%d object(s) created.` · `Add tables from other databases` · `Choose column to display` · `Delete page` · `Do you want to save the changes to the current page?` · `Export relational schema` · `Modifications have been saved` · `Open page` · `Page name` · `Please enter a valid page name` · `Please select a page to continue` · `Please select the primary key or a unique key!` · … +9 |
-| `src/Database/Designer/Common.php` | 11/11 | `Error: FOREIGN KEY relationship could not be added!` · `Error: Internal relationship could not be added!` · `Error: Internal relationship could not be removed!` · `Error: Missing index on column(s).` · `Error: Relational features are disabled!` · `Error: relationship already exists.` · `FOREIGN KEY relationship has been added.` · `FOREIGN KEY relationship has been removed.` · `Internal relationship has been added.` · `Internal relationship has been removed.` · `phpMyAdmin configuration storage is not configured for "Display Fea…` |
-| `src/Plugins/Schema/SchemaPdf.php` | 9/11 | `Landscape` · `Name (Ascending)` · `Name (Descending)` · `Order of the tables` · `Orientation` · `Paper size` · `Portrait` · `Same width for all tables` · `Show grid` |
 | `resources/js/database/operations.ts` | 4/6 | `Changing charset` · `Copying database` · `Processing request` · `Renaming databases` |
-| `resources/templates/database/designer/database_tables.twig` | 4/6 | `Add an option for column "%s".` · `See table structure` · `Select "%s"` · `Show/hide columns` |
-| `src/Plugins/Schema/SchemaDia.php` | 4/4 | `Landscape` · `Orientation` · `Paper size` · `Portrait` |
-| `src/Plugins/Schema/SchemaEps.php` | 4/4 | `Landscape` · `Orientation` · `Portrait` · `Same width for all tables` |
+| `src/Plugins/Schema/SchemaPdf.php` | 4/11 | `Name (Ascending)` · `Name (Descending)` · `Order of the tables` · `Show grid` |
 | `resources/js/database/structure.ts` | 3/6 | `Add table prefix` · `Processing request` · `Replace table with prefix` |
-| `resources/templates/database/designer/page_save_as.twig` | 3/3 | `Create a page and save to it` · `New page name` · `Save to selected page` |
 | `src/Controllers/Database/EventsController.php` | 3/7 | `Add event` · `Edit event` · `No event with name %1$s found in database %2$s.` |
 | `src/Controllers/Database/RoutinesController.php` | 3/8 | `Add routine` · `Edit routine` · `No routine with name %1$s found in database %2$s. You might be lack…` |
 | `src/Plugins/Schema/Pdf/PdfRelationSchema.php` | 3/8 | `Relational schema` · `Schema of the %s database` · `Table of contents` |
 | `resources/js/database/search.ts` | 2/7 | `Browsing` · `Deleting` |
-| `resources/js/designer/page.ts` | 2/2 | `Some tables saved in this page might have been renamed or deleted.` · `Untitled` |
-| `resources/templates/database/designer/edit_delete_pages.twig` | 2/2 | `Page to delete` · `Page to open` |
 | `resources/templates/database/events/index.twig` | 2/14 | `Event editor` · `Export event` |
 | `resources/templates/database/routines/editor_form.twig` | 2/19 | `Change to %s` · `Remove last parameter` |
 | `resources/templates/database/routines/index.twig` | 2/12 | `Export routine` · `Routine editor` |
 | `src/Database/CentralColumns.php` | 2/5 | `Could not add %1$s as they already exist in central list!` · `Couldn't remove Column(s) %1$s as they don't exist in central colum…` |
 | `src/Database/Routines.php` | 2/19 | `Routine %1$s has been modified.` · `Routine %1$s has been modified. Privileges have been adjusted.` |
-| `src/Plugins/SchemaPlugin.php` | 2/2 | `Only show keys` · `Show color` |
 | `resources/js/database/events.ts` | 1/4 | `Processing request` |
 | `resources/js/database/routines.ts` | 1/6 | `Processing request` |
 | `resources/js/database/tracking.ts` | 1/3 | `Deleting tracking data` |
-| `resources/js/designer/database.ts` | 1/1 | `You can not open, save or delete your page layout, as IndexedDB is …` |
-| `resources/js/designer/history.ts` | 1/3 | `Column name` |
+| `resources/js/designer/move.ts` | 1/23 | `Processing request` |
 | `resources/js/modules/ajax-message.ts` | 1/1 | `Processing request` |
 | `resources/js/modules/functions.ts` | 1/4 | `Processing request` |
 | `resources/js/modules/indexes.ts` | 1/3 | `Processing request` |
@@ -240,25 +229,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/central_columns/edit_table_row.twig` | 1/3 | `None (for default)` |
 | `resources/templates/database/central_columns/edit.twig` | 1/5 | `A_I (Auto Increment)` |
 | `resources/templates/database/central_columns/main.twig` | 1/18 | `None (for default)` |
-| `resources/templates/database/designer/page_selector.twig` | 1/1 | `Select page` |
-| `resources/templates/database/designer/schema_export.twig` | 1/1 | `Select export relational type:` |
+| `resources/templates/database/designer/main.twig` | 1/40 | `Except` |
 | `resources/templates/database/events/editor_form.twig` | 1/9 | `Change to %s` |
 | `resources/templates/database/operations/index.twig` | 1/18 | `Database %s has been dropped.` |
 | `resources/templates/database/structure/body_for_table_summary.twig` | 1/5 | `%s table` |
-| `src/Config/Descriptions.php` | 1/4 | `Paper size` |
 | `src/Controllers/Database/CentralColumnsController.php` | 1/1 | `Showing rows %1$s - %2$s.` |
-| `src/Controllers/Database/DesignerController.php` | 1/1 | `There already exists a page named "%s" please rename it to somethin…` |
 | `src/Controllers/Database/TrackingController.php` | 1/5 | `Version %1$s was created for selected tables, tracking is active fo…` |
 | `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
-| `src/Plugins/Schema/Dia/TableStatsDia.php` | 1/1 | `The %s table doesn't exist!` |
-| `src/Plugins/Schema/Eps/EpsRelationSchema.php` | 1/1 | `Schema of the %s database - Page %s` |
-| `src/Plugins/Schema/Eps/TableStatsEps.php` | 1/1 | `The %s table doesn't exist!` |
-| `src/Plugins/Schema/ExportRelationSchema.php` | 1/1 | `SCHEMA ERROR: ` |
 | `src/Plugins/Schema/Pdf/Pdf.php` | 1/1 | `PDF export page` |
-| `src/Plugins/Schema/Pdf/TableStatsPdf.php` | 1/1 | `The %s table doesn't exist!` |
-| `src/Plugins/Schema/SchemaSvg.php` | 1/1 | `Same width for all tables` |
-| `src/Plugins/Schema/Svg/SvgRelationSchema.php` | 1/1 | `Schema of the %s database - Page %s` |
-| `src/Plugins/Schema/Svg/TableStatsSvg.php` | 1/1 | `The %s table doesn't exist!` |
 
 ## 06 server level — 185/915 (20.2%) covered, 185/915 implemented
 
@@ -349,9 +327,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 67/666 (10.1%) covered, 67/666 implemented
+## 08 settings preferences pmadb — 68/666 (10.2%) covered, 68/666 implemented
 
-599 msgids not used yet.
+598 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -369,11 +347,11 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Config/Forms/User/ImportForm.php` | 3/4 | `CSV` · `CSV using LOAD DATA` · `OpenDocument Spreadsheet` |
 | `src/Config.php` | 2/2 | `Existing configuration file (%s) is not readable.` · `Wrong permissions on configuration file, should not be world writable!` |
 | `src/Config/UserPreferences.php` | 2/2 | `Could not save configuration` · `The phpMyAdmin configuration storage database could not be accessed.` |
-| `src/ConfigStorage/Relation.php` | 2/2 | `no description` · `You do not have necessary privileges to create a database named '%s…` |
 | `resources/templates/config/form_display/input.twig` | 1/5 | `Allow users to customize this value` |
 | `resources/templates/preferences/manage/main.twig` | 1/17 | `You can set more settings by modifying config.inc.php, eg. by using…` |
 | `src/Config/Forms/User/MainForm.php` | 1/2 | `Default transformations` |
 | `src/Config/Settings.php` | 1/1 | `Server %d` |
+| `src/ConfigStorage/Relation.php` | 1/2 | `You do not have necessary privileges to create a database named '%s…` |
 | `src/Html/Generator.php` | 1/2 | `Explain SQL` |
 
 ## 09 sql editor query pipeline — 42/46 (91.3%) covered, 42/46 implemented

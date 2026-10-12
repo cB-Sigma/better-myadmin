@@ -1,0 +1,6 @@
+rules:
+  - match: { kind: link, label: '/^(v|>)$/' }
+    ignore: [label]
+    reason: >-
+      phpMyAdmin's accessible name of these side menu links is the arrow image's alt text (v, >), a
+      state glyph; ours names the action (the image's title, also the text shown on hover)

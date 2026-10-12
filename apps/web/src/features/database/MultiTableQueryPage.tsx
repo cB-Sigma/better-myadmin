@@ -18,7 +18,7 @@ import { qk } from '../../lib/queryKeys'
 import { StatementBlock } from '../sql/Results'
 import type { CardEnv } from '../sql/SqlMessage'
 import { runQuery } from '../sql/runner'
-import { Messages, errorMessage } from './common'
+import { DefinitionEditor, Messages, errorMessage } from './common'
 import {
   OPERATORS,
   type QueryColumn,
@@ -405,13 +405,13 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
               + {t('Add column')}
             </Button>
             <div className="mt-3">
-              <Textarea
+              <DefinitionEditor
                 id="MultiSqlquery"
-                name="sql_query"
+                label={t('SQL query')}
                 rows={6}
-                className="font-mono"
                 value={sql}
-                onChange={(e) => setSql(e.target.value)}
+                onChange={setSql}
+                codemirror={d.codemirror}
               />
             </div>
           </PanelBody>

@@ -22,7 +22,8 @@ import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { DbModal, ListNavigator, Messages, errorMessage } from './common'
+import { TypeSelect } from '../table/structure/ColumnForm'
+import { DbModal, DefinitionEditor, ListNavigator, Messages, errorMessage } from './common'
 import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 
 /**
@@ -46,10 +47,22 @@ const NO_LENGTH = [
 ]
 const needsLength = (type: string) => type === 'ENUM' || type === 'SET' || type.startsWith('VAR')
 
-const emptyRoutine = (): RoutineEditorData => ({
+const emptyRoutine = (o: RoutineEditorOptions): RoutineEditorData => ({
   name: '',
   type: 'PROCEDURE',
-  params: [],
+  // pma: RoutinesController — a new routine (add mode, no parameters yet) starts with one empty row
+  // (its selects show their first option, which is what the browser would post)
+  params: [
+    {
+      dir: 'IN',
+      name: '',
+      type: o.datatypes[0] ?? '',
+      length: '',
+      lengthArray: [],
+      optsText: '',
+      optsNum: '',
+    },
+  ],
   returnType: '',
   returnLength: '',
   returnOptsText: '',
@@ -85,7 +98,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
   const open = async (item?: { name: string; type: string }) => {
     try {
       const r = await api.dbRoutineEditor({ server, db }, item)
-      setEditor({ options: r.options, routine: r.routine ?? emptyRoutine(), original: item ?? null })
+      setEditor({ options: r.options, routine: r.routine ?? emptyRoutine(r.options), original: item ?? null })
     } catch (e) {
       setMessages([errorMessage(e)])
     }
@@ -158,6 +171,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
       {editor !== null && (
         <RoutineEditor
           server={server}
+          codemirror={q.data?.codemirror ?? false}
           options={editor.options}
           initial={editor.routine}
           editMode={editor.original !== null}
@@ -215,6 +229,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
 
 function RoutineEditor({
   server,
+  codemirror,
   options,
   initial,
   editMode,
@@ -222,6 +237,7 @@ function RoutineEditor({
   onSave,
 }: {
   server: number
+  codemirror: boolean
   options: RoutineEditorOptions
   initial: RoutineEditorData
   editMode: boolean
@@ -237,14 +253,9 @@ function RoutineEditor({
   const isFunction = r.type === 'FUNCTION'
   const returnType = r.returnType !== '' ? r.returnType : (options.datatypes[0] ?? '')
 
+  // Generator::getSupportedDatatypes: the column form's type select (groups, '-' separators)
   const typeSelect = (value: string, onChange: (v: string) => void, name: string) => (
-    <NativeSelect name={name} value={value} onChange={(e) => onChange(e.target.value)}>
-      {options.datatypes.map((dt) => (
-        <option key={dt} value={dt}>
-          {dt}
-        </option>
-      ))}
-    </NativeSelect>
+    <TypeSelect options={options} name={name} label="" value={value} onChange={onChange} />
   )
   const charsetSelect = (value: string, onChange: (v: string) => void, name: string) => (
     <NativeSelect lang="en" dir="ltr" name={name} value={value} onChange={(e) => onChange(e.target.value)}>
@@ -322,237 +333,253 @@ function RoutineEditor({
       <div className="mb-2 font-semibold">
         {t('Details')} {!editMode && <MySqlDocLink link="CREATE_PROCEDURE" />}
       </div>
-      <table className="rte_table w-full text-sm">
-        <tbody>
-          <EditorRow label={t('Routine name')}>
-            <Input
-              name="item_name"
-              maxLength={64}
-              value={r.name}
-              onChange={(e) => set({ name: e.target.value })}
-            />
-          </EditorRow>
-          <EditorRow label={t('Type')}>
-            <NativeSelect
-              name="item_type"
-              value={r.type}
-              onChange={(e) => set({ type: e.target.value === 'FUNCTION' ? 'FUNCTION' : 'PROCEDURE' })}
-            >
-              <option value="PROCEDURE">PROCEDURE</option>
-              <option value="FUNCTION">FUNCTION</option>
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('Parameters')}>
-            <table className="routine_params_table text-sm [&_td]:p-1 [&_th]:p-1">
-              <thead>
-                <tr className="text-left">
-                  {!isFunction && <th className="routine_direction_cell">{t('Direction')}</th>}
-                  <th>{t('Name')}</th>
-                  <th>{t('Type')}</th>
-                  <th>{t('Length/Values')}</th>
-                  <th colSpan={2}>{t('Options')}</th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                {r.params.map((p, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: parameters are positional (item_param_*[i])
-                  <tr key={i}>
-                    {!isFunction && (
-                      <td>
-                        <NativeSelect
-                          name={`item_param_dir[${i}]`}
-                          value={p.dir}
-                          onChange={(e) => setParam(i, { dir: e.target.value })}
-                        >
-                          {['IN', 'OUT', 'INOUT'].map((dir) => (
-                            <option key={dir} value={dir}>
-                              {dir}
-                            </option>
-                          ))}
-                        </NativeSelect>
-                      </td>
-                    )}
-                    <td>
-                      <Input
-                        name={`item_param_name[${i}]`}
-                        value={p.name}
-                        onChange={(e) => setParam(i, { name: e.target.value })}
-                      />
-                    </td>
-                    <td>{typeSelect(p.type, (v) => setParam(i, { type: v }), `item_param_type[${i}]`)}</td>
-                    <td>
-                      {NO_LENGTH.includes(p.type) ? (
-                        <span className="no_len">---</span>
-                      ) : (
-                        <Input
-                          name={`item_param_length[${i}]`}
-                          value={p.length}
-                          onChange={(e) => setParam(i, { length: e.target.value })}
-                        />
-                      )}
-                    </td>
-                    <td colSpan={2}>
-                      {opts(
-                        p.type,
-                        () =>
-                          charsetSelect(
-                            p.optsText,
-                            (v) => setParam(i, { optsText: v }),
-                            `item_param_opts_text[${i}]`,
-                          ),
-                        () =>
-                          numSelect(
-                            p.optsNum,
-                            (v) => setParam(i, { optsNum: v }),
-                            `item_param_opts_num[${i}]`,
-                          ),
-                      )}
-                    </td>
-                    <td>
-                      <Button
-                        variant="link"
-                        className="routine_param_remove_anchor"
-                        onClick={() => set({ params: r.params.filter((_, j) => j !== i) })}
-                      >
-                        {t('Drop')}
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </EditorRow>
-          <EditorRow label="">
-            <Button
-              variant="primary"
-              id="addRoutineParameterButton"
-              onClick={() =>
-                set({
-                  params: [
-                    ...r.params,
-                    {
-                      dir: 'IN',
-                      name: '',
-                      type: options.datatypes[0] ?? 'INT',
-                      length: '',
-                      lengthArray: [],
-                      optsText: '',
-                      optsNum: '',
-                    },
-                  ],
-                })
-              }
-            >
-              {t('Add parameter')}
-            </Button>
-          </EditorRow>
-          <EditorRow label={t('Return type')} hidden={!isFunction}>
-            {typeSelect(returnType, (v) => set({ returnType: v }), 'item_returntype')}
-          </EditorRow>
-          <EditorRow label={t('Return length/values')} hidden={!isFunction}>
-            {NO_LENGTH.includes(returnType) ? (
-              <span className="no_len">---</span>
-            ) : (
-              <Input
-                name="item_returnlength"
-                value={r.returnLength}
-                onChange={(e) => set({ returnLength: e.target.value })}
-              />
-            )}
-          </EditorRow>
-          <EditorRow label={t('Return options')} hidden={!isFunction}>
-            {opts(
-              returnType,
-              () =>
-                charsetSelect(r.returnOptsText, (v) => set({ returnOptsText: v }), 'item_returnopts_text'),
-              () => numSelect(r.returnOptsNum, (v) => set({ returnOptsNum: v }), 'item_returnopts_num'),
-            )}
-          </EditorRow>
-          <EditorRow label={t('Definition')}>
-            <Textarea
-              name="item_definition"
-              rows={15}
-              className="font-mono"
-              value={r.definition}
-              onChange={(e) => set({ definition: e.target.value })}
-            />
-            <Button
-              id="format"
-              className="mt-1"
-              onClick={() =>
-                void api.sqlFormat(server, r.definition, false).then((f) => set({ definition: f.sql }))
-              }
-            >
-              {t('Format')}
-            </Button>
-          </EditorRow>
-          <EditorRow label={t('Is deterministic')}>
-            <Checkbox
-              name="item_isdeterministic"
-              checked={r.isDeterministic}
-              onCheckedChange={(v) => set({ isDeterministic: v === true })}
-            />
-          </EditorRow>
-          {editMode && (
-            <EditorRow
-              label={
-                <>
-                  {t('Adjust privileges')} <DocLink page="faq" anchor="faq6-39" />
-                </>
-              }
-            >
-              <Checkbox
-                name="item_adjust_privileges"
-                checked={adjust}
-                disabled={!options.hasAdjustPrivileges}
-                title={
-                  options.hasAdjustPrivileges
-                    ? undefined
-                    : t(
-                        'You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details.',
-                      )
-                }
-                onCheckedChange={(v) => setAdjust(v === true)}
-              />
-            </EditorRow>
-          )}
-          <EditorRow label={t('Definer')}>
-            <Input name="item_definer" value={r.definer} onChange={(e) => set({ definer: e.target.value })} />
-          </EditorRow>
-          <EditorRow label={t('Security type')}>
-            <NativeSelect
-              name="item_securitytype"
-              value={r.securityType === '' ? 'DEFINER' : r.securityType}
-              onChange={(e) => set({ securityType: e.target.value === 'INVOKER' ? 'INVOKER' : 'DEFINER' })}
-            >
-              <option value="DEFINER">DEFINER</option>
-              <option value="INVOKER">INVOKER</option>
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('SQL data access')}>
-            <NativeSelect
-              name="item_sqldataaccess"
-              value={r.sqlDataAccess}
-              onChange={(e) => set({ sqlDataAccess: e.target.value })}
-            >
-              {['CONTAINS SQL', 'NO SQL', 'READS SQL DATA', 'MODIFIES SQL DATA'].map((a) => (
-                <option key={a} value={a}>
-                  {a}
-                </option>
-              ))}
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('Comment')}>
-            <Input
-              name="item_comment"
-              maxLength={64}
-              value={r.comment}
-              onChange={(e) => set({ comment: e.target.value })}
-            />
-          </EditorRow>
-        </tbody>
-      </table>
+      {/* editor_form.twig: the fields sit in a card headed "Details" */}
+      <Panel title={t('Details')}>
+        <PanelBody>
+          <table className="rte_table w-full text-sm">
+            <tbody>
+              <EditorRow label={t('Routine name')}>
+                <Input
+                  name="item_name"
+                  maxLength={64}
+                  value={r.name}
+                  onChange={(e) => set({ name: e.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Type')}>
+                <NativeSelect
+                  name="item_type"
+                  value={r.type}
+                  onChange={(e) => set({ type: e.target.value === 'FUNCTION' ? 'FUNCTION' : 'PROCEDURE' })}
+                >
+                  <option value="PROCEDURE">PROCEDURE</option>
+                  <option value="FUNCTION">FUNCTION</option>
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('Parameters')}>
+                <table className="routine_params_table text-sm [&_td]:p-1 [&_th]:p-1">
+                  <thead>
+                    <tr className="text-left">
+                      {!isFunction && <th className="routine_direction_cell">{t('Direction')}</th>}
+                      <th>{t('Name')}</th>
+                      <th>{t('Type')}</th>
+                      <th>{t('Length/Values')}</th>
+                      <th colSpan={2}>{t('Options')}</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {r.params.map((p, i) => (
+                      // biome-ignore lint/suspicious/noArrayIndexKey: parameters are positional (item_param_*[i])
+                      <tr key={i}>
+                        {!isFunction && (
+                          <td>
+                            <NativeSelect
+                              name={`item_param_dir[${i}]`}
+                              value={p.dir}
+                              onChange={(e) => setParam(i, { dir: e.target.value })}
+                            >
+                              {['IN', 'OUT', 'INOUT'].map((dir) => (
+                                <option key={dir} value={dir}>
+                                  {dir}
+                                </option>
+                              ))}
+                            </NativeSelect>
+                          </td>
+                        )}
+                        <td>
+                          <Input
+                            name={`item_param_name[${i}]`}
+                            value={p.name}
+                            onChange={(e) => setParam(i, { name: e.target.value })}
+                          />
+                        </td>
+                        <td>
+                          {typeSelect(p.type, (v) => setParam(i, { type: v }), `item_param_type[${i}]`)}
+                        </td>
+                        <td>
+                          {NO_LENGTH.includes(p.type) ? (
+                            <span className="no_len">---</span>
+                          ) : (
+                            <Input
+                              name={`item_param_length[${i}]`}
+                              value={p.length}
+                              onChange={(e) => setParam(i, { length: e.target.value })}
+                            />
+                          )}
+                        </td>
+                        <td colSpan={2}>
+                          {opts(
+                            p.type,
+                            () =>
+                              charsetSelect(
+                                p.optsText,
+                                (v) => setParam(i, { optsText: v }),
+                                `item_param_opts_text[${i}]`,
+                              ),
+                            () =>
+                              numSelect(
+                                p.optsNum,
+                                (v) => setParam(i, { optsNum: v }),
+                                `item_param_opts_num[${i}]`,
+                              ),
+                          )}
+                        </td>
+                        <td>
+                          <Button
+                            variant="link"
+                            className="routine_param_remove_anchor"
+                            onClick={() => set({ params: r.params.filter((_, j) => j !== i) })}
+                          >
+                            {t('Drop')}
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </EditorRow>
+              <EditorRow label="">
+                <Button
+                  variant="primary"
+                  id="addRoutineParameterButton"
+                  onClick={() =>
+                    set({
+                      params: [
+                        ...r.params,
+                        {
+                          dir: 'IN',
+                          name: '',
+                          type: options.datatypes[0] ?? 'INT',
+                          length: '',
+                          lengthArray: [],
+                          optsText: '',
+                          optsNum: '',
+                        },
+                      ],
+                    })
+                  }
+                >
+                  {t('Add parameter')}
+                </Button>
+              </EditorRow>
+              <EditorRow label={t('Return type')} hidden={!isFunction}>
+                {typeSelect(returnType, (v) => set({ returnType: v }), 'item_returntype')}
+              </EditorRow>
+              <EditorRow label={t('Return length/values')} hidden={!isFunction}>
+                {NO_LENGTH.includes(returnType) ? (
+                  <span className="no_len">---</span>
+                ) : (
+                  <Input
+                    name="item_returnlength"
+                    value={r.returnLength}
+                    onChange={(e) => set({ returnLength: e.target.value })}
+                  />
+                )}
+              </EditorRow>
+              <EditorRow label={t('Return options')} hidden={!isFunction}>
+                {opts(
+                  returnType,
+                  () =>
+                    charsetSelect(
+                      r.returnOptsText,
+                      (v) => set({ returnOptsText: v }),
+                      'item_returnopts_text',
+                    ),
+                  () => numSelect(r.returnOptsNum, (v) => set({ returnOptsNum: v }), 'item_returnopts_num'),
+                )}
+              </EditorRow>
+              <EditorRow label={t('Definition')}>
+                <DefinitionEditor
+                  label={t('Definition')}
+                  value={r.definition}
+                  onChange={(v) => set({ definition: v })}
+                  codemirror={codemirror}
+                />
+                <Button
+                  id="format"
+                  className="mt-1"
+                  onClick={() =>
+                    void api.sqlFormat(server, r.definition, false).then((f) => set({ definition: f.sql }))
+                  }
+                >
+                  {t('Format')}
+                </Button>
+              </EditorRow>
+              <EditorRow label={t('Is deterministic')}>
+                <Checkbox
+                  name="item_isdeterministic"
+                  checked={r.isDeterministic}
+                  onCheckedChange={(v) => set({ isDeterministic: v === true })}
+                />
+              </EditorRow>
+              {editMode && (
+                <EditorRow
+                  label={
+                    <>
+                      {t('Adjust privileges')} <DocLink page="faq" anchor="faq6-39" />
+                    </>
+                  }
+                >
+                  <Checkbox
+                    name="item_adjust_privileges"
+                    checked={adjust}
+                    disabled={!options.hasAdjustPrivileges}
+                    title={
+                      options.hasAdjustPrivileges
+                        ? undefined
+                        : t(
+                            'You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details.',
+                          )
+                    }
+                    onCheckedChange={(v) => setAdjust(v === true)}
+                  />
+                </EditorRow>
+              )}
+              <EditorRow label={t('Definer')}>
+                <Input
+                  name="item_definer"
+                  value={r.definer}
+                  onChange={(e) => set({ definer: e.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Security type')}>
+                <NativeSelect
+                  name="item_securitytype"
+                  value={r.securityType === '' ? 'DEFINER' : r.securityType}
+                  onChange={(e) =>
+                    set({ securityType: e.target.value === 'INVOKER' ? 'INVOKER' : 'DEFINER' })
+                  }
+                >
+                  <option value="DEFINER">DEFINER</option>
+                  <option value="INVOKER">INVOKER</option>
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('SQL data access')}>
+                <NativeSelect
+                  name="item_sqldataaccess"
+                  value={r.sqlDataAccess}
+                  onChange={(e) => set({ sqlDataAccess: e.target.value })}
+                >
+                  {['CONTAINS SQL', 'NO SQL', 'READS SQL DATA', 'MODIFIES SQL DATA'].map((a) => (
+                    <option key={a} value={a}>
+                      {a}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('Comment')}>
+                <Input
+                  name="item_comment"
+                  maxLength={64}
+                  value={r.comment}
+                  onChange={(e) => set({ comment: e.target.value })}
+                />
+              </EditorRow>
+            </tbody>
+          </table>
+        </PanelBody>
+      </Panel>
     </DbModal>
   )
 }

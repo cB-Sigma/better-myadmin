@@ -1,0 +1,12 @@
+rules:
+  - match: { kind: link, label: '/^(v|>)$/' }
+    ignore: [label]
+    reason: >-
+      phpMyAdmin's accessible name of these side menu links is the arrow image's alt text (v, >), a
+      state glyph; ours names the action (the image's title, also the text shown on hover)
+  - pma: { kind: link, label: v, step: 'tables list' }
+    n/a: >-
+      the two arrow links over the tables list are named only by their image's alt (v); ours are the
+      same toggles as buttons named after the action (added below)
+  - ours: { kind: button, label: '/^Hide\/Show (all|tables with no relationship)$/', step: 'tables list' }
+    added: the "Hide/Show all" and "Hide/Show tables with no relationship" toggles (phpMyAdmin's two v links)

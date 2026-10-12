@@ -1,0 +1,2 @@
+# the Bootstrap modal puts its × first in the header; our Dialog renders it last, after the footer
+ignoreOrder: ['Delete page']

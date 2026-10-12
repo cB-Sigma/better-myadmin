@@ -15,7 +15,7 @@ import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { runQuery } from '../sql/runner'
-import { DbModal, Messages, errorMessage } from './common'
+import { DbModal, DefinitionEditor, Messages, errorMessage } from './common'
 import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 
 /**
@@ -145,6 +145,7 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
       {editor !== null && (
         <EventEditor
           server={server}
+          codemirror={q.data?.codemirror ?? false}
           initial={editor.event}
           editMode={editor.original !== null}
           onClose={() => setEditor(null)}
@@ -174,12 +175,14 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
 
 function EventEditor({
   server,
+  codemirror,
   initial,
   editMode,
   onClose,
   onSave,
 }: {
   server: number
+  codemirror: boolean
   initial: EventEditorData
   editMode: boolean
   onClose: () => void
@@ -209,118 +212,126 @@ function EventEditor({
       <div className="mb-2 font-semibold">
         {t('Details')} {!editMode && <MySqlDocLink link="CREATE_EVENT" />}
       </div>
-      <table className="rte_table w-full text-sm">
-        <tbody>
-          <EditorRow label={t('Event name')}>
-            <Input
-              name="item_name"
-              maxLength={64}
-              value={e.name}
-              onChange={(x) => set({ name: x.target.value })}
-            />
-          </EditorRow>
-          <EditorRow label={t('Status')}>
-            <NativeSelect
-              name="item_status"
-              value={e.status}
-              onChange={(x) => set({ status: x.target.value })}
-            >
-              {STATUSES.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('Event type')}>
-            <NativeSelect name="item_type" value={e.type} onChange={(x) => set({ type: x.target.value })}>
-              <option value="RECURRING">RECURRING</option>
-              <option value="ONE TIME">ONE TIME</option>
-            </NativeSelect>
-          </EditorRow>
-          <EditorRow label={t('Execute at')} hidden={recurring}>
-            <Input
-              name="item_execute_at"
-              className="datetimefield"
-              value={e.executeAt}
-              onChange={(x) => set({ executeAt: x.target.value })}
-            />
-          </EditorRow>
-          <EditorRow label={t('Execute every')} hidden={!recurring}>
-            <div className="flex gap-2">
-              <Input
-                name="item_interval_value"
-                className="max-w-40"
-                value={e.intervalValue}
-                onChange={(x) => set({ intervalValue: x.target.value })}
-              />
-              <NativeSelect
-                name="item_interval_field"
-                value={e.intervalField}
-                onChange={(x) => set({ intervalField: x.target.value })}
-              >
-                {INTERVALS.map((i) => (
-                  <option key={i} value={i}>
-                    {i}
-                  </option>
-                ))}
-              </NativeSelect>
-            </div>
-          </EditorRow>
-          <EditorRow label={pgettext('Start of recurring event', 'Start')} hidden={!recurring}>
-            <Input
-              name="item_starts"
-              className="datetimefield"
-              value={e.starts}
-              onChange={(x) => set({ starts: x.target.value })}
-            />
-          </EditorRow>
-          <EditorRow label={pgettext('End of recurring event', 'End')} hidden={!recurring}>
-            <Input
-              name="item_ends"
-              className="datetimefield"
-              value={e.ends}
-              onChange={(x) => set({ ends: x.target.value })}
-            />
-          </EditorRow>
-          <EditorRow label={t('Definition')}>
-            <Textarea
-              name="item_definition"
-              rows={15}
-              className="font-mono"
-              value={e.definition}
-              onChange={(x) => set({ definition: x.target.value })}
-            />
-            <Button
-              id="format"
-              className="mt-1"
-              onClick={() =>
-                void api.sqlFormat(server, e.definition, false).then((f) => set({ definition: f.sql }))
-              }
-            >
-              {t('Format')}
-            </Button>
-          </EditorRow>
-          <EditorRow label={t('On completion preserve')}>
-            <Checkbox
-              name="item_preserve"
-              checked={e.preserve}
-              onCheckedChange={(v) => set({ preserve: v === true })}
-            />
-          </EditorRow>
-          <EditorRow label={t('Definer')}>
-            <Input name="item_definer" value={e.definer} onChange={(x) => set({ definer: x.target.value })} />
-          </EditorRow>
-          <EditorRow label={t('Comment')}>
-            <Input
-              name="item_comment"
-              maxLength={64}
-              value={e.comment}
-              onChange={(x) => set({ comment: x.target.value })}
-            />
-          </EditorRow>
-        </tbody>
-      </table>
+      {/* editor_form.twig: the fields sit in a card headed "Details" */}
+      <Panel title={t('Details')}>
+        <PanelBody>
+          <table className="rte_table w-full text-sm">
+            <tbody>
+              <EditorRow label={t('Event name')}>
+                <Input
+                  name="item_name"
+                  maxLength={64}
+                  value={e.name}
+                  onChange={(x) => set({ name: x.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Status')}>
+                <NativeSelect
+                  name="item_status"
+                  value={e.status}
+                  onChange={(x) => set({ status: x.target.value })}
+                >
+                  {STATUSES.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('Event type')}>
+                <NativeSelect name="item_type" value={e.type} onChange={(x) => set({ type: x.target.value })}>
+                  <option value="RECURRING">RECURRING</option>
+                  <option value="ONE TIME">ONE TIME</option>
+                </NativeSelect>
+              </EditorRow>
+              <EditorRow label={t('Execute at')} hidden={recurring}>
+                <Input
+                  name="item_execute_at"
+                  className="datetimefield"
+                  value={e.executeAt}
+                  onChange={(x) => set({ executeAt: x.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Execute every')} hidden={!recurring}>
+                <div className="flex gap-2">
+                  <Input
+                    name="item_interval_value"
+                    className="max-w-40"
+                    value={e.intervalValue}
+                    onChange={(x) => set({ intervalValue: x.target.value })}
+                  />
+                  <NativeSelect
+                    name="item_interval_field"
+                    value={e.intervalField}
+                    onChange={(x) => set({ intervalField: x.target.value })}
+                  >
+                    {INTERVALS.map((i) => (
+                      <option key={i} value={i}>
+                        {i}
+                      </option>
+                    ))}
+                  </NativeSelect>
+                </div>
+              </EditorRow>
+              <EditorRow label={pgettext('Start of recurring event', 'Start')} hidden={!recurring}>
+                <Input
+                  name="item_starts"
+                  className="datetimefield"
+                  value={e.starts}
+                  onChange={(x) => set({ starts: x.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={pgettext('End of recurring event', 'End')} hidden={!recurring}>
+                <Input
+                  name="item_ends"
+                  className="datetimefield"
+                  value={e.ends}
+                  onChange={(x) => set({ ends: x.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Definition')}>
+                <DefinitionEditor
+                  label={t('Definition')}
+                  value={e.definition}
+                  onChange={(v) => set({ definition: v })}
+                  codemirror={codemirror}
+                />
+                <Button
+                  id="format"
+                  className="mt-1"
+                  onClick={() =>
+                    void api.sqlFormat(server, e.definition, false).then((f) => set({ definition: f.sql }))
+                  }
+                >
+                  {t('Format')}
+                </Button>
+              </EditorRow>
+              <EditorRow label={t('On completion preserve')}>
+                <Checkbox
+                  name="item_preserve"
+                  checked={e.preserve}
+                  onCheckedChange={(v) => set({ preserve: v === true })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Definer')}>
+                <Input
+                  name="item_definer"
+                  value={e.definer}
+                  onChange={(x) => set({ definer: x.target.value })}
+                />
+              </EditorRow>
+              <EditorRow label={t('Comment')}>
+                <Input
+                  name="item_comment"
+                  maxLength={64}
+                  value={e.comment}
+                  onChange={(x) => set({ comment: x.target.value })}
+                />
+              </EditorRow>
+            </tbody>
+          </table>
+        </PanelBody>
+      </Panel>
     </DbModal>
   )
 }

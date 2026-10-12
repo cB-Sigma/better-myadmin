@@ -14,6 +14,8 @@ export interface QueryOutcome {
   fields: string[]
   rows: Row[]
   affectedRows: number
+  /** AUTO_INCREMENT id of an INSERT (mysqli insert_id), when the driver reports it */
+  insertId?: number
 }
 
 export class MetaQueryError extends Error {

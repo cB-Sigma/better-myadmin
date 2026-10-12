@@ -301,10 +301,12 @@ export function diffControls(
       }
     }
   }
-  // 3. same kind and name (a relabelled field): a label difference rather than missing + extra
+  // 3. same kind and name (a relabelled field), else same id (phpMyAdmin's unlabelled icon links):
+  // a label difference rather than missing + extra
   for (const p of [...pmaLeft]) {
-    if (p.name === undefined) continue
-    const o = [...oursLeft].find((c) => group(c) === group(p) && c.name === p.name)
+    const ident = (c: Control) => c.name ?? c.id
+    if (ident(p) === undefined) continue
+    const o = [...oursLeft].find((c) => group(c) === group(p) && ident(c) === ident(p))
     if (o === undefined) continue
     pairs.push({ pma: p, ours: o })
     pmaLeft.delete(p)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg viewBox="5 15 465 305" width="460px" height="290px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <rect width="162" height="20" x="20" y="30" style="fill:#007;stroke:black;"/>
+   <text width="162" height="20" x="25" y="44" style="fill:#fff;" font-family="Arial" font-size="16px">162x20.000000 parent</text>
+   <rect width="162" height="20" x="20" y="50" style="fill:none;stroke:black;"/>
+   <text width="162" height="20" x="25" y="64" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="162" height="20" x="20" y="70" style="fill:none;stroke:black;"/>
+   <text width="162" height="20" x="25" y="84" style="fill:black;" font-family="Arial" font-size="16px">name</text>
+   <rect width="150" height="20" x="300" y="120.5" style="fill:#007;stroke:black;"/>
+   <text width="150" height="20" x="305" y="134.5" style="fill:#fff;" font-family="Arial" font-size="16px">150x20.000000 child</text>
+   <rect width="150" height="20" x="300" y="140.5" style="fill:none;stroke:black;"/>
+   <text width="150" height="20" x="305" y="154.5" style="fill:black;" font-family="Arial" font-size="16px">id</text>
+   <rect width="150" height="20" x="300" y="160.5" style="fill:none;stroke:black;"/>
+   <text width="150" height="20" x="305" y="174.5" style="fill:black;" font-family="Arial" font-size="16px">parent_id</text>
+   <rect width="150" height="20" x="300" y="180.5" style="fill:none;stroke:black;"/>
+   <text width="150" height="20" x="305" y="194.5" style="fill:black;" font-family="Arial" font-size="16px">note_text</text>
+   <rect width="248" height="20" x="50" y="250" style="fill:#007;stroke:black;"/>
+   <text width="248" height="20" x="55" y="264" style="fill:#fff;" font-family="Arial" font-size="16px">248x20.000000 Wide_Table_Name</text>
+   <rect width="248" height="20" x="50" y="270" style="fill:none;stroke:black;"/>
+   <text width="248" height="20" x="55" y="284" style="fill:black;" font-family="Arial" font-size="16px">x</text>
+</svg>

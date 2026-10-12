@@ -95,23 +95,31 @@ function EditorCells({
   draft,
   onChange,
   row,
+  addRow = false,
 }: {
   options: ColumnFormOptions
   draft: Draft
   onChange: (d: Draft) => void
   row: number
+  /**
+   * The "Add new column" row: central_columns.ts renames each control after its cell (col_name,
+   * col_type, …) and phpMyAdmin labels none of them (the name only has title="Column").
+   */
+  addRow?: boolean
 }) {
   const set = (p: Partial<Draft>) => onChange({ ...draft, ...p })
+  const nm = (field: string, cell: string) => (addRow ? cell : `${field}[${row}]`)
+  const lbl = (text: string) => (addRow ? undefined : text)
   return (
     <>
       <td className="text-nowrap">
         <Input
           id={`field_${row}_0`}
-          name={`field_name[${row}]`}
+          name={nm('field_name', 'col_name')}
           maxLength={64}
           size={10}
           title={t('Column')}
-          aria-label={t('Name')}
+          aria-label={lbl(t('Name'))}
           required
           value={draft.name}
           onChange={(e) => set({ name: e.target.value })}
@@ -120,7 +128,8 @@ function EditorCells({
       <td className="text-nowrap">
         <TypeSelect
           options={options}
-          name={`field_type[${row}]`}
+          name={nm('field_type', 'col_type')}
+          {...(addRow ? { label: '' } : {})}
           value={draft.type}
           onChange={(v) => set({ type: v })}
         />
@@ -128,18 +137,18 @@ function EditorCells({
       <td className="text-nowrap">
         <Input
           id={`field_${row}_2`}
-          name={`field_length[${row}]`}
+          name={nm('field_length', 'col_length')}
           size={8}
-          aria-label={t('Length/Value')}
+          aria-label={lbl(t('Length/Value'))}
           value={draft.length}
           onChange={(e) => set({ length: e.target.value })}
         />
       </td>
       <td className="text-nowrap">
         <NativeSelect
-          name={`field_default_type[${row}]`}
+          name={nm('field_default_type', 'col_default')}
           className="default_type"
-          aria-label={t('Default')}
+          aria-label={lbl(t('Default'))}
           value={draft.defaultType}
           onChange={(e) => set({ defaultType: e.target.value })}
         >
@@ -162,21 +171,22 @@ function EditorCells({
       <td className="text-nowrap">
         <CollationSelect
           options={options}
-          name={`field_collation[${row}]`}
-          label={t('Collation')}
+          name={nm('field_collation', 'collation')}
+          label={lbl(t('Collation')) ?? ''}
           value={draft.collation}
           onChange={(v) => set({ collation: v })}
         />
       </td>
       <td className="text-nowrap">
         <NativeSelect
-          name={`field_attribute[${row}]`}
-          aria-label={t('Attribute')}
-          value={draft.attribute}
+          name={nm('field_attribute', 'col_attribute')}
+          aria-label={lbl(t('Attribute'))}
+          // column_attribute.twig: values as listed, the selection compared upper-cased
+          value={options.attributes.find((a) => a.toUpperCase() === draft.attribute.toUpperCase()) ?? ''}
           onChange={(e) => set({ attribute: e.target.value })}
         >
           {options.attributes.map((a) => (
-            <option key={a} value={a.toUpperCase()}>
+            <option key={a} value={a}>
               {a}
             </option>
           ))}
@@ -185,14 +195,14 @@ function EditorCells({
       <td className="text-nowrap">
         <Checkbox
           className="allow_null"
-          aria-label={t('Null')}
+          aria-label={lbl(t('Null'))}
           checked={draft.isNull}
           onCheckedChange={(v) => set({ isNull: v === true })}
         />
       </td>
       <td className="text-nowrap">
         <Checkbox
-          aria-label={t('A_I')}
+          aria-label={lbl(t('A_I'))}
           checked={draft.autoIncrement}
           onCheckedChange={(v) => set({ autoIncrement: v === true })}
         />
@@ -389,8 +399,8 @@ function CentralColumnsView({
       {pageMessage !== null && <Messages messages={[pageMessage]} />}
       <div id="add_col_div" className="topmargin my-3">
         <Button variant="link" onClick={() => setShowAdd(!showAdd)}>
-          <span>{showAdd ? '-' : '+'}</span>
-          {t('Add new column')}
+          {/* main.twig: <span>+</span>Add new column, read as one word */}
+          {`${showAdd ? '-' : '+'}${t('Add new column')}`}
         </Button>
         {showAdd && (
           <form
@@ -423,7 +433,7 @@ function CentralColumnsView({
               <tbody>
                 <tr>
                   <td />
-                  <EditorCells options={d.options} draft={draft} row={0} onChange={setDraft} />
+                  <EditorCells options={d.options} draft={draft} row={0} onChange={setDraft} addRow />
                   <td>
                     <Button id="add_column_save" type="submit" variant="primary">
                       {t('Save')}

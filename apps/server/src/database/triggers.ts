@@ -31,12 +31,18 @@ export async function triggersList(ctx: DbCtx, table: string): Promise<TriggersL
   }))
   return {
     items,
+    codemirror: ctx.cfg.CodemirrorEnable,
     canCreate: await new PrivilegeProbe(ctx.conn, ctx.server, ctx.cache).hasPrivilege(
       'TRIGGER',
       ctx.db,
       table === '' ? undefined : table,
     ),
-    tables: await listTables(ctx),
+    // pma: Triggers::getTables — base (and system-versioned) tables only
+    tables: (
+      await ctx.dbi.fetchResultSimple(
+        `SELECT \`TABLE_NAME\` FROM \`INFORMATION_SCHEMA\`.\`TABLES\` WHERE \`TABLE_SCHEMA\`=${ctx.dbi.quoteString(ctx.db)} AND \`TABLE_TYPE\` IN ('BASE TABLE', 'SYSTEM VERSIONED')`,
+      )
+    ).map((r) => r.TABLE_NAME ?? ''),
   }
 }
 

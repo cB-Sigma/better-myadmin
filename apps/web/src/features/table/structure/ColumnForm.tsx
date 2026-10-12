@@ -251,7 +251,15 @@ export function TypeSelect({
   value,
   onChange,
   name,
-}: { options: ColumnFormOptions; value: string; onChange: (v: string) => void; name: string }) {
+  label,
+}: {
+  options: Pick<ColumnFormOptions, 'types'>
+  value: string
+  onChange: (v: string) => void
+  name: string
+  /** accessible name ('' for none, as in phpMyAdmin's central columns add row); default "Type" */
+  label?: string
+}) {
   const groups: Array<{ group: string | null; items: ColumnFormOptions['types'] }> = []
   for (const o of options.types) {
     const last = groups.at(-1)
@@ -277,7 +285,7 @@ export function TypeSelect({
     <select
       className="input column_type"
       name={name}
-      aria-label={t('Type')}
+      aria-label={label ?? t('Type')}
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >

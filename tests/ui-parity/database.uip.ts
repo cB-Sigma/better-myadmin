@@ -39,8 +39,6 @@ pageParity('db-triggers', db('/triggers', 'triggers'))
 const editor = (route: string, path: string, modal: string, open: string, ready: string): PageSpec =>
   db(route, path, {
     scope: { pma: `#${modal}.show .modal-content`, ours: `#${modal}` },
-    known:
-      'TODO the editor fields are not yet grouped in a "Details" panel; phpMyAdmin also starts the routine editor with one parameter row and keeps the definition in CodeMirror',
     // the scope only exists once setup opened the dialog
     ready: { pma: '#page_content', ours: '#page_content' },
     setup: async ({ pma, ours }) => {
@@ -71,8 +69,6 @@ pageParity('db-tracking', db('/database/tracking', 'tracking'))
 pageParity(
   'db-central-columns',
   db('/database/central-columns', 'central-columns', {
-    known:
-      'TODO the Add new column row keeps field_*[0] names and labels where phpMyAdmin renames the controls col_* (central_columns.ts) and shows no labels',
     interactions: [
       {
         name: 'add new column',

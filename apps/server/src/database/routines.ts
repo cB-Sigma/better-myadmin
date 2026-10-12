@@ -10,6 +10,7 @@ import type {
 import { sprintf } from '@bettermyadmin/i18n'
 import {
   getAllFunctions,
+  getDatatypeOptions,
   getDefaultFunctionForField,
   getFunctionsForField,
   getSupportedDatatypes,
@@ -96,7 +97,12 @@ export async function routinesList(ctx: DbCtx, q: { type?: string | undefined; p
   const superUser = await isSuperUser(ctx.dbi)
   const items = []
   for (const r of rows) items.push(await rowFor(ctx, r, hasCreate, hasExecute, superUser))
-  const out: RoutinesListResponse = { items, canCreate: hasCreate, pager: pager(total, pos, max) }
+  const out: RoutinesListResponse = {
+    items,
+    canCreate: hasCreate,
+    pager: pager(total, pos, max),
+    codemirror: ctx.cfg.CodemirrorEnable,
+  }
   return out
 }
 
@@ -364,6 +370,11 @@ export async function routineEditorOptions(ctx: DbCtx) {
   const p = await getPrivileges(ctx.dbi)
   return {
     datatypes: getSupportedDatatypes(serverInfo(ctx)),
+    types: getDatatypeOptions(serverInfo(ctx), '', (s) => ctx.tr.gettext(s)).map((o) =>
+      'separator' in o
+        ? { separator: true as const, group: o.group }
+        : { group: o.group, type: o.type, description: o.description, lengthRestricted: o.lengthRestricted },
+    ),
     charsets: (await ctx.reader.getCharsets()).map((c) => ({ name: c.name, description: c.description })),
     numericOptions: NUMERIC_OPTIONS,
     hasAdjustPrivileges: p.routines && p.isReload,

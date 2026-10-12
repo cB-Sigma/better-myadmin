@@ -31,6 +31,20 @@ describe('diffControls', () => {
     ])
   })
 
+  it('pairs unlabelled controls of phpMyAdmin with ours by id when neither has a name', () => {
+    const pma = list(
+      c({ kind: 'link', label: '', id: 'savePos' }),
+      c({ kind: 'link', label: '', id: 'SaveAs' }),
+    )
+    const ours = list(
+      c({ kind: 'link', label: 'Save page', id: 'savePos' }),
+      c({ kind: 'link', label: 'Save page as', id: 'SaveAs' }),
+    )
+    const r = diffControls(pma, ours)
+    expect(types(r)).toEqual([])
+    expect(r.notes.join('\n')).toContain('accessible name added')
+  })
+
   it('treats link vs button as a note, and ignores names and checkbox values', () => {
     const pma = list(
       c({ kind: 'link', label: 'Log out' }),
