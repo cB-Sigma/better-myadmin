@@ -97,7 +97,7 @@ async function viewRows(db: string, table: string) {
 }
 
 describe.skipIf(!pmaReachable)('parity: view form', () => {
-  it('create a view with every option (OR REPLACE, definer, security, columns, check option)', async () => {
+  it('create a view with every option (OR REPLACE, definer, security, columns, check option) [p04-74ef44]', async () => {
     const r = await step('create', {
       orReplace: true,
       algorithm: 'MERGE',
@@ -128,7 +128,7 @@ describe.skipIf(!pmaReachable)('parity: view form', () => {
     expect(await viewRows(B, 'v2')).toEqual([])
   })
 
-  it('Edit view: the form is prefilled from INFORMATION_SCHEMA.VIEWS and SHOW CREATE', async () => {
+  it('Edit view: the form is prefilled from INFORMATION_SCHEMA.VIEWS and SHOW CREATE [p04-74ef44]', async () => {
     const r = await both(
       h,
       () => h.pma.getPage('/view/create', { db: P, table: 'v1' }),
@@ -146,7 +146,7 @@ describe.skipIf(!pmaReachable)('parity: view form', () => {
     expect(mask(String(b.as))).toBe(mask(pairs.get('view[as]') ?? ''))
   })
 
-  it('alter the view', async () => {
+  it('alter the view [p04-74ef44]', async () => {
     const r = await step('alter', {
       algorithm: 'TEMPTABLE',
       definer: `${users.pma}@%`,
@@ -160,7 +160,7 @@ describe.skipIf(!pmaReachable)('parity: view form', () => {
     ])
   })
 
-  it('errors: an empty name, a failing statement', async () => {
+  it('errors: an empty name, a failing statement [p04-74ef44]', async () => {
     let r = await step('create', { name: '', as: 'SELECT 1' })
     expect(r.p).toContain('View name can not be empty!')
     expect(r.b.messages[0]).toEqual({ type: 'error', text: 'View name can not be empty!' })

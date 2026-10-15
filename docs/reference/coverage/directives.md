@@ -124,7 +124,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:371<br>apps/web/src/features/sql/SqlPage.tsx:546 |  |
+| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:377<br>apps/web/src/features/sql/SqlPage.tsx:546 |  |
 | ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:286<br>apps/server/src/routes/metadata.ts:215<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:368 |  |
 | ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:628<br>apps/web/src/features/browse/GridTable.tsx:648<br>apps/web/src/features/browse/GridTable.tsx:669<br>apps/web/src/features/browse/GridTable.tsx:761 |  |
 | ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:629<br>apps/web/src/features/browse/GridTable.tsx:685<br>apps/web/src/features/browse/GridTable.tsx:761 |  |
@@ -161,7 +161,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:106 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/routes/table-structure.ts:133<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:106 |  |
 | ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:92 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |
@@ -175,7 +175,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:220<br>apps/server/src/browse/actions.ts:222<br>apps/server/src/database/context.ts:185<br>apps/server/src/database/structure.ts:169<br>apps/server/src/database/tables.ts:77 |  |
 | ✅ | `ShowFieldTypesInDataEditView` | apps/server/src/insert-edit/form.ts:449 |  |
 | ✅ | `ShowFunctionFields` | apps/server/src/database/routines.ts:411<br>apps/server/src/database/routines.ts:448<br>apps/server/src/insert-edit/form.ts:356<br>apps/server/src/insert-edit/form.ts:383<br>apps/server/src/insert-edit/form.ts:403 |  |
-| ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/table/structure-page.ts:105 |  |
+| ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/routes/table-structure.ts:133<br>apps/server/src/table/structure-page.ts:107 |  |
 | ✅ | `SQLQuery/Edit` | apps/server/src/query/message.ts:108<br>apps/server/src/query/message.ts:118 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
 
 ## 04 table level — 5/5 (100.0%) covered, 5/5 implemented
@@ -184,9 +184,9 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |---|---|---|---|
 | ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:207<br>apps/server/src/table/maintenance.ts:58 |  |
 | ✅ | `Export/sql_auto_increment` | packages/export/src/plugins/sql.ts:254<br>packages/export/src/plugins/sql.ts:1584 | read under a computed name — option or page-setting name (Plugins::getDefault) |
-| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:369<br>apps/web/src/features/table/structure/StructurePage.tsx:251 |  |
-| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:231<br>apps/server/src/table/structure-page.ts:373 |  |
-| ✅ | `ShowStats` | apps/server/src/database/structure.ts:190<br>apps/server/src/table/structure-page.ts:260<br>apps/server/src/table/structure-page.ts:370 |  |
+| ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:375<br>apps/web/src/features/table/structure/StructurePage.tsx:265 |  |
+| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:267<br>apps/server/src/table/structure-page.ts:379 |  |
+| ✅ | `ShowStats` | apps/server/src/database/structure.ts:190<br>apps/server/src/table/structure-page.ts:266<br>apps/server/src/table/structure-page.ts:376 |  |
 
 ## 05 database level — 31/31 (100.0%) covered, 24/31 implemented
 
@@ -443,7 +443,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/table_coords` | packages/metadata/src/storage.ts:29<br>packages/metadata/src/storage.ts:51<br>packages/metadata/src/storage.ts:74<br>packages/metadata/src/storage.ts:180<br>packages/metadata/src/storage.ts:181 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/table_info` | packages/metadata/src/storage.ts:27<br>packages/metadata/src/storage.ts:50<br>packages/metadata/src/storage.ts:73<br>packages/metadata/src/storage.ts:177<br>packages/metadata/src/storage.ts:178 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/userconfig` | packages/metadata/src/storage.ts:37<br>packages/metadata/src/storage.ts:59<br>packages/metadata/src/storage.ts:82<br>packages/metadata/src/storage.ts:100 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
-| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:368<br>apps/web/src/features/table/structure/StructurePage.tsx:163<br>apps/web/src/features/table/structure/StructurePage.tsx:225 |  |
+| ✅ | `ShowColumnComments` | apps/server/src/table/structure-page.ts:374<br>apps/web/src/features/table/structure/StructurePage.tsx:170<br>apps/web/src/features/table/structure/StructurePage.tsx:239 |  |
 | ✅ | `ShowDbStructureCharset` | apps/server/src/database/structure.ts:201 |  |
 | ✅ | `ShowDbStructureComment` | apps/server/src/database/structure.ts:202 |  |
 | ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:203<br>apps/server/src/database/structure.ts:362 |  |
@@ -460,7 +460,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DBG/sql` | apps/server/src/http/sql-log.ts:31<br>apps/server/src/routes/browse.ts:40<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:318 |  |
+| ✅ | `DBG/sql` | apps/server/src/http/sql-log.ts:31<br>apps/server/src/routes/browse.ts:41<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:318 |  |
 | ✅ | `DBG/sqllog` | apps/server/src/http/sql-log.ts:31 |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:92<br>apps/server/src/routes/sql.ts:191 |  |
 | ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:147<br>apps/server/src/insert-edit/save.ts:253<br>apps/server/src/query/pipeline.ts:205<br>apps/server/src/query/pipeline.ts:512 |  |

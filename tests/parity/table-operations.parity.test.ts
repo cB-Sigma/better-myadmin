@@ -490,9 +490,82 @@ describe.skipIf(!reachable)('parity: table Operations (phpMyAdmin forms vs Bette
     await bma?.close()
   })
 
-  for (const c of CASES) it(c.name, () => runCase(c))
+  // the cases a checklist item of docs/features/04-table-level.md rests on, as literal titles
+  const claimed = new Set<string>()
+  const run = (name: string) => {
+    claimed.add(name)
+    return () => {
+      const c = CASES.find((x) => x.name === name)
+      if (c === undefined) throw new Error(`no case ${name}`)
+      return runCase(c)
+    }
+  }
+  it('alter table order by (descending) [p04-2f4327]', run('alter table order by (descending)'))
+  it(
+    'move (rename) within the database, privileges adjusted, with a trigger [p04-f60570]',
+    run('move (rename) within the database, privileges adjusted, with a trigger'),
+  )
+  it(
+    'move to another database (triggers dropped first) [p04-f60570]',
+    run('move to another database (triggers dropped first)'),
+  )
+  it(
+    'copy structure and data with AUTO_INCREMENT value (indexes, fulltext, generated column) [p04-2674e4]',
+    run('copy structure and data with AUTO_INCREMENT value (indexes, fulltext, generated column)'),
+  )
+  it(
+    'copy structure only of a table with a foreign key, privileges adjusted [p04-2674e4]',
+    run('copy structure only of a table with a foreign key, privileges adjusted'),
+  )
+  it(
+    'copy data only into an existing table, with DROP TABLE first [p04-2674e4]',
+    run('copy data only into an existing table, with DROP TABLE first'),
+  )
+  it(
+    'table options: comment, collation and AUTO_INCREMENT (InnoDB) [p04-b5340d]',
+    run('table options: comment, collation and AUTO_INCREMENT (InnoDB)'),
+  )
+  it(
+    'table options: engine change to MyISAM and ROW_FORMAT [p04-b5340d]',
+    run('table options: engine change to MyISAM and ROW_FORMAT'),
+  )
+  it(
+    'table options (MyISAM): PACK_KEYS, CHECKSUM, DELAY_KEY_WRITE, ROW_FORMAT [p04-b5340d]',
+    run('table options (MyISAM): PACK_KEYS, CHECKSUM, DELAY_KEY_WRITE, ROW_FORMAT'),
+  )
+  it(
+    'table options: rename and change all column collations (AJAX) [p04-72588d]',
+    run('table options: rename and change all column collations (AJAX)'),
+  )
+  it('maintenance: analyze [p04-f822b0]', run('maintenance: analyze'))
+  it('maintenance: repair (MyISAM) [p04-f822b0]', run('maintenance: repair (MyISAM)'))
+  it('defragment (via /sql) [p04-f822b0]', run('defragment (via /sql)'))
+  it('flush (via /sql) [p04-f822b0]', run('flush (via /sql)'))
+  it(
+    'truncate with foreign key checks on (via /sql) [p04-b6e8f9]',
+    run('truncate with foreign key checks on (via /sql)'),
+  )
+  it(
+    'delete with foreign key checks on (via /sql) [p04-b6e8f9]',
+    run('delete with foreign key checks on (via /sql)'),
+  )
+  it(
+    'drop with foreign key checks off (via /sql) [p04-b6e8f9]',
+    run('drop with foreign key checks off (via /sql)'),
+  )
+  it(
+    'partition maintenance: analyze two partitions [p04-408957]',
+    run('partition maintenance: analyze two partitions'),
+  )
+  it('partition maintenance: coalesce (HASH) [p04-408957]', run('partition maintenance: coalesce (HASH)'))
+  it('view: rename [p04-c3d646]', run('view: rename'))
+  it(
+    'view: drop (via /sql, no foreign key checkbox) [p04-c3d646]',
+    run('view: drop (via /sql, no foreign key checkbox)'),
+  )
+  for (const c of CASES) if (!claimed.has(c.name)) it(c.name, () => runCase(c))
 
-  it('the page offers the same controls and values', async () => {
+  it('the page offers the same controls and values [p04-b5340d p04-2f4327 p04-f822b0 p04-408957]', async () => {
     await reset()
     for (const table of ['t', 'm', 'h', 'child']) {
       const html = await pma.getPage('/table/operations', { db: P.db, table })

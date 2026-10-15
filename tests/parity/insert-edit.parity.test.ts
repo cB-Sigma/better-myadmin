@@ -340,7 +340,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'insert with functions, salt and NULL',
+      name: 'insert with functions, salt and NULL [p03-b4eb7d]',
       table: 't',
       mods: [
         { row: 0, col: 'name', value: 'secret', fn: 'SHA2', salt: '256' },
@@ -351,7 +351,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'insert ignore',
+      name: 'insert ignore [p03-6d6c71]',
       table: 't',
       submitType: 'insertignore',
       mods: [
@@ -388,7 +388,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'multi-row edit',
+      name: 'multi-row edit [p03-dd9d80]',
       table: 't',
       where: ['`t`.`id` = 1', '`t`.`id` = 3'],
       clauseIsUnique: true,
@@ -400,7 +400,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'edit then "Insert as new row" (protected BLOB copied)',
+      name: 'edit then "Insert as new row" (protected BLOB copied) [p03-6d6c71 p03-4997ee]',
       table: 't',
       where: ['`t`.`id` = 1'],
       clauseIsUnique: true,
@@ -411,7 +411,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       ],
     },
     {
-      name: 'copy row',
+      name: 'copy row [p03-dd9d80]',
       table: 't',
       where: ['`t`.`id` = 3'],
       copy: true,
@@ -419,7 +419,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       mods: [{ row: 0, col: 'created', fn: '' }],
     },
     {
-      name: 'edit with "edit next row"',
+      name: 'edit with "edit next row" [p03-28b5f4]',
       table: 't',
       where: ['`t`.`id` = 1'],
       clauseIsUnique: true,
@@ -455,7 +455,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       mods: [{ row: 0, col: 'pt', value: "'POINT(5 6)',0" }],
     },
     {
-      name: 'UUID default for a char(36) primary key [p03-074264]',
+      name: 'UUID default for a char(36) primary key [p03-074264 p03-4c37d2]',
       table: 'u',
       mask: /'[0-9a-f-]{36}'/g,
       mods: [{ row: 0, col: 'v', value: 'x' }],
@@ -504,7 +504,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       await root.query(`DELETE FROM ${PMADB}.pma__column_info WHERE db_name IN ('${DB_PMA}', '${DB_BMA}')`)
     })
 
-    it('IPv4/IPv6 To Binary and a passing regex', async () => {
+    it('IPv4/IPv6 To Binary and a passing regex [p03-98a476]', async () => {
       await runCase({
         name: 'ip',
         table: 'u',
@@ -516,7 +516,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
       })
     })
 
-    it('a failing regex skips the row', async () => {
+    it('a failing regex skips the row [p03-98a476 p03-3ac27e]', async () => {
       await runCase({
         name: 'regex',
         table: 'u',
@@ -532,7 +532,7 @@ describe.skipIf(!reachable)('Insert/Edit parity', () => {
     })
   })
 
-  it('browse foreign values reads the same pages', async () => {
+  it('browse foreign values reads the same pages [p03-d20896]', async () => {
     for (const db of [DB_PMA, DB_BMA]) {
       await root.query(`DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`)
     }

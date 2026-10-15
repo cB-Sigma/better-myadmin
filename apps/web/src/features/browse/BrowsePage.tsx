@@ -23,6 +23,8 @@ export interface BrowsePageProps {
   sql?: string | undefined
   sig?: string | undefined
   pos?: number | undefined
+  /** is_browse_distinct (Structure → Distinct values) */
+  distinct?: boolean | undefined
 }
 
 /**
@@ -45,6 +47,7 @@ export function BrowsePage(props: BrowsePageProps) {
     ...(props.sql !== undefined ? { sql: props.sql } : {}),
     ...(props.sig !== undefined ? { sig: props.sig } : {}),
     ...(props.pos !== undefined ? { pos: props.pos } : {}),
+    ...(props.distinct === true ? { isBrowseDistinct: true } : {}),
   }
   const q = useQuery({
     queryKey: qk.browse({ server, db, table }, req),

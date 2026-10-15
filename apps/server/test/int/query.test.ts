@@ -38,7 +38,7 @@ async function q(sql: string, extra: Record<string, unknown> = {}): Promise<St[]
 }
 
 describe('query pipeline (Sql.php parity)', () => {
-  it('appends LIMIT pos, max_rows to a plain SELECT … FROM and counts exactly when just browsing', async () => {
+  it('appends LIMIT pos, max_rows to a plain SELECT … FROM and counts exactly when just browsing [p02-9f5692 p02-b29af3]', async () => {
     const [st] = await q('SELECT * FROM t')
     expect(st!.executedSql).toBe('SELECT * FROM t LIMIT 0, 25')
     expect(st!.result!.rows).toHaveLength(25)
@@ -55,7 +55,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(st!.message.text).toMatch(/^Showing rows 25 - 29 \(30 total,/)
   })
 
-  it('does not limit SELECT without FROM, or a query with its own LIMIT', async () => {
+  it('does not limit SELECT without FROM, or a query with its own LIMIT [p02-9f5692 p02-290262]', async () => {
     const [a] = await q('SELECT 1')
     expect(a!.executedSql).toBe('SELECT 1;')
     const [b] = await q('SELECT * FROM t LIMIT 3')
@@ -63,7 +63,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(b!.result!.rows).toHaveLength(3)
   })
 
-  it('wraps a non-trivial SELECT in SELECT COUNT(*) FROM (…) as cnt', async () => {
+  it('wraps a non-trivial SELECT in SELECT COUNT(*) FROM (…) as cnt [p02-b29af3]', async () => {
     const [st] = await q("SELECT id, name FROM t WHERE name LIKE 'row%' ORDER BY id DESC", { maxRows: 5 })
     expect(st!.result!.totalRows).toBe(29)
     const r = await t.req('POST', '/api/servers/1/query', {
@@ -85,7 +85,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(st!.result!.fields[0]!.flags.numeric).toBe(true)
   })
 
-  it('INSERT reports rows inserted and the inserted row id [p09-a212a5]', async () => {
+  it('INSERT reports rows inserted and the inserted row id [p09-a212a5 p02-68785a]', async () => {
     const [st] = await q("INSERT INTO t (name) VALUES ('x'), ('y')")
     expect(st!.kind).toBe('affected')
     expect(st!.message.text).toMatch(/^2 rows inserted\.\nInserted row id: 32 \(Query took/)
@@ -98,7 +98,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(same!.message.text).toMatch(/^0 rows affected\./)
   })
 
-  it('UPDATE matching nothing says 0 rows affected; DDL says executed successfully [p09-a212a5]', async () => {
+  it('UPDATE matching nothing says 0 rows affected; DDL says executed successfully [p09-a212a5 p02-68785a]', async () => {
     const [u] = await q("UPDATE t SET name = 'z' WHERE id = -1")
     expect(u!.message.text).toMatch(/^0 rows affected\./)
     const [c] = await q('CREATE TABLE IF NOT EXISTS t2 (a INT)')
@@ -106,7 +106,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(c!.message.text).toMatch(/^MySQL returned an empty result set \(i\.e\. zero rows\)\./)
   })
 
-  it('empty result set with columns [p09-a212a5]', async () => {
+  it('empty result set with columns [p09-a212a5 p02-68785a p02-141e59]', async () => {
     const [st] = await q('SELECT * FROM t WHERE id = -1')
     expect(st!.kind).toBe('empty')
     expect(st!.message.text).toMatch(/^MySQL returned an empty result set \(i\.e\. zero rows\)\./)
@@ -119,7 +119,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(custom).toHaveLength(2)
   })
 
-  it('stops at the first error and reports #errno - message', async () => {
+  it('stops at the first error and reports #errno - message [p02-fa2d56]', async () => {
     const sts = await q('SELECT 1; SELECT * FROM nope; SELECT 1')
     // like mysqlDie: the response is only the error, showing the SQL actually sent
     expect(sts).toHaveLength(1)
@@ -135,7 +135,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(sts[1]!.result!.rows[0]![0]).toBe(DB)
   })
 
-  it('SHOW is not limited and has no navigation message', async () => {
+  it('SHOW is not limited and has no navigation message [p02-507e37]', async () => {
     const [st] = await q('SHOW TABLES')
     expect(st!.executedSql).toBe('SHOW TABLES;')
     expect(st!.message.text).toMatch(/^Your SQL query has been executed successfully\. \(Query took/)
