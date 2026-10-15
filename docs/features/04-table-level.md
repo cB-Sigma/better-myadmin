@@ -648,7 +648,7 @@ Tracking
 - [ ] Create version pre-checks statements from `tracking_default_statements`; view vs table statement sets.
 - [ ] Report filter by type/date range/users; per-entry delete; export file / dump box / execute (alert).
 - [ ] Snapshot shows DROP+CREATE SQL and structure/indexes tables.
-- [ ] Logged queries prefixed with `# log date user`; `/*NOTRACK*/` bypass; auto-create version option.
+- [x] Logged queries prefixed with `# log date user`; `/*NOTRACK*/` bypass; auto-create version option. <!-- parity:test --> `p04-cc268e` [tracker.test.ts:32](../../apps/server/test/int/tracker.test.ts#L32)
 
 Triggers
 - [ ] Privilege-gated create/edit/drop; export always.

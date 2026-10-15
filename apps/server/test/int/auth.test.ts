@@ -14,7 +14,7 @@ describe('cookie auth', () => {
     expect(r.json.servers).toEqual([{ index: 1, label: `${MYSQL.host}:${MYSQL.port}`, authType: 'cookie' }])
   })
 
-  it('rejects a POST without the CSRF token', async () => {
+  it('rejects a POST without the CSRF token [p01-180699]', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
     const r = await t.req(
@@ -27,7 +27,7 @@ describe('cookie auth', () => {
     expect(r.json.error).toMatchObject({ code: 'CSRF', message: 'Error: Token mismatch' })
   })
 
-  it('logs in, rotates the session id, recalls the username', async () => {
+  it('logs in, rotates the session id, recalls the username [p01-570894] [p01-3b0124]', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
     const before = t.jar.get('bma_sid')
@@ -93,7 +93,7 @@ describe('cookie auth', () => {
     })
   })
 
-  it('logout clears every server login (LoginCookieDeleteAll)', async () => {
+  it('logout clears every server login (LoginCookieDeleteAll) [p01-389871]', async () => {
     t = testApp()
     await t.login()
     const r = await t.req('POST', '/api/auth/logout')

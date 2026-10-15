@@ -204,7 +204,7 @@ describe('with a configuration storage and a control user', () => {
     ])
   })
 
-  it('recent tables from the SQL box and POST /recent; favorites with the cap', async () => {
+  it('recent tables from the SQL box and POST /recent; favorites with the cap [p01-56fa30]', async () => {
     await t.req('POST', '/api/servers/1/query', { sql: 'SELECT 1', db: DATA, table: 't', fromQueryBox: true })
     let r = await t.req('POST', '/api/servers/1/recent', { db: DATA, table: 't2' })
     expect(r.json.recent).toEqual([
@@ -285,7 +285,7 @@ describe('with a configuration storage and a control user', () => {
     )
   })
 
-  it('navigation hiding', async () => {
+  it('navigation hiding [p01-f71193]', async () => {
     await t.req('POST', '/api/servers/1/navigation/hide', { itemName: 't', itemType: 'table', dbName: DATA })
     await t.req('POST', '/api/servers/1/navigation/hide', { itemName: 'v', itemType: 'view', dbName: DATA })
     let r = await t.req('GET', `/api/servers/1/navigation/hidden?db=${DATA}`)

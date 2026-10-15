@@ -519,8 +519,8 @@ Requested with `printview=1` (POST) — used by "Export"/"Display chart"/"Create
 Parity acceptance list. Each item is something the clone must reproduce; the citation in parentheses is the source.
 
 ### Query handling, counting and header message
-- [ ] A GET `sql_query` is only accepted when accompanied by a valid `sql_signature`; all generated links (sort, FK, refresh, Browse-distinct, simulate "matched rows") carry one (`SqlController`, `Core::signSqlQuery`).
-- [ ] Browsing a table with no query produces `SELECT * FROM \`t\``; with `TablePrimaryKeyOrder` ≠ NONE it appends `ORDER BY \`t\`.\`<first PK col>\` ASC|DESC` (`Sql::getDefaultSqlQueryForBrowse`).
+- [x] A GET `sql_query` is only accepted when accompanied by a valid `sql_signature`; all generated links (sort, FK, refresh, Browse-distinct, simulate "matched rows") carry one (`SqlController`, `Core::signSqlQuery`). <!-- parity:test --> `p02-fae7cc` [browse.test.ts:83](../../apps/server/test/int/browse.test.ts#L83)
+- [x] Browsing a table with no query produces `SELECT * FROM \`t\``; with `TablePrimaryKeyOrder` ≠ NONE it appends `ORDER BY \`t\`.\`<first PK col>\` ASC|DESC` (`Sql::getDefaultSqlQueryForBrowse`). <!-- parity:test --> `p02-1f1189` [browse.test.ts:135](../../apps/server/test/int/browse.test.ts#L135)
 - [ ] A bookmark whose label equals the table name (same db, same user) replaces the default browse query and shows the notice "Using bookmark "%s" as default browse query." with FAQ 6.22 link.
 - [ ] `RememberSorting`: the last ORDER BY of `SELECT *` single-table queries is stored per table (`sorted_col`) and re-applied to later unsorted `SELECT *` browses; not applied when the request originates from the query box (`sql_from_query_box`) or from "Sort by key"; a stored column that no longer exists is discarded; `discard_remembered_sort=1` skips it.
 - [ ] `LIMIT pos, max_rows` is injected only for SELECT/sub-query statements without their own LIMIT, when the parser found no errors, and `max_rows !== 'all'`; export (`INTO OUTFILE`) and `PROCEDURE ANALYSE` are excluded.
@@ -606,7 +606,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] WHERE clause preference: PRIMARY → UNIQUE → all columns (`clause_is_unique=false`, row anchor class `nonunique`); REAL columns compared via `CONCAT(col)`; binary/BLOB via `CAST(0x… AS BINARY)` (< 1000 bytes) or `CHAR_LENGTH(col)=n` when sole field or skipped; geometry via `CAST(0x… AS BINARY)` (< 5000); BIT via `b'…'`; NULL via `IS NULL`; aliases mapped back to original columns; table aliases replaced by real table unless it is a view.
 - [ ] Each row carries hidden `where_clause` and JSON `condition_array` for client-side updates.
 - [ ] Shift+click on checkboxes selects a range; checked rows get `marked table-active`.
-- [ ] Rows without a unique key (and `RowActionLinksWithoutUnique` on) show the notice "…may result in undesired behavior."; system schemas / non-unique results show "…features are not available." with doc link `cfg_RowActionLinksWithoutUnique`.
+- [x] Rows without a unique key (and `RowActionLinksWithoutUnique` on) show the notice "…may result in undesired behavior."; system schemas / non-unique results show "…features are not available." with doc link `cfg_RowActionLinksWithoutUnique`. <!-- parity:test --> `p02-c56862` [browse.test.ts:118](../../apps/server/test/int/browse.test.ts#L118)
 - [ ] Multi-table (JOIN/sub-query) results, `information_schema`-like schemas, and results from multiple tables never show row actions or grid editing; updatable views do.
 
 ### Bulk actions

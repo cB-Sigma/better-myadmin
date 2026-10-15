@@ -26,7 +26,7 @@ afterAll(async () => {
 })
 
 describe('Recent tables', () => {
-  it('adds the visited tables, forgets a dropped one when it is opened', async () => {
+  it('adds the visited tables, forgets a dropped one when it is opened [p01-56fa30]', async () => {
     await app.req('POST', '/api/servers/1/recent', { db: DB, table: 'a' })
     let r = await app.req('POST', '/api/servers/1/recent', { db: DB, table: 'b' })
     expect(J(r).recent.slice(0, 2)).toEqual([
@@ -48,7 +48,7 @@ describe('Recent tables', () => {
 })
 
 describe('navigation width', () => {
-  it('stores NavigationWidth, refuses a negative value', async () => {
+  it('stores NavigationWidth, refuses a negative value [p01-34f437]', async () => {
     let r = await app.req('POST', '/api/servers/1/navigation/width', { value: -1 })
     expect(J(r)).toMatchObject({ success: false, message: { text: 'Unexpected parameter value.' } })
     r = await app.req('POST', '/api/servers/1/navigation/width', { value: '310.7' })

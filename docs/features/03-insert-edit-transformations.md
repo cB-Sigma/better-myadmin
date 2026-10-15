@@ -315,7 +315,7 @@ MIME types discovered from file names: `application/octetstream`, `image/jpeg`, 
 
 ## Micro-behaviours checklist
 
-- [ ] Insert tab opens `/table/change` with `InsertRows` (default 2) blank row tables; rows ≥1 carry a pre-checked "Ignore" checkbox.
+- [x] Insert tab opens `/table/change` with `InsertRows` (default 2) blank row tables; rows ≥1 carry a pre-checked "Ignore" checkbox. <!-- parity:test --> `p03-35434c` [insert-edit.e2e.ts:46](../../tests/e2e/insert-edit.e2e.ts#L46)
 - [ ] Rows repopulated after a failed input transformation render with Ignore unchecked and the typed values as-is.
 - [ ] Any field change (or GIS copy, or FK pick) unchecks the row's Ignore checkbox and the field's NULL checkbox.
 - [ ] Column header "Type" and "Function" are links titled "Hide"; when hidden a "Show : Function : Type" link row appears above the first table; toggling POSTs `ShowFunctionFields`/`ShowFieldTypesInDataEditView` as 1/0.

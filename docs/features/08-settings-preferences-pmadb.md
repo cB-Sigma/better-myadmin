@@ -588,46 +588,46 @@ Independent of pmadb: a static map for `mysql.*` and `information_schema.*` tabl
 
 Settings pages
 - [ ] Eight pill tabs in fixed order; icons follow `TabsMode`; current tab highlighted; all links non-Ajax.
-- [ ] Banner *Configuration has been saved.* appears only when `?saved=1` is in the URL (after a redirect), on every settings tab.
-- [ ] Notice about session-only storage appears whenever `pma__userconfig` is unavailable, including on the 2FA tab.
+- [x] Banner *Configuration has been saved.* appears only when `?saved=1` is in the URL (after a redirect), on every settings tab. <!-- parity:test --> `p08-a8211e` [preferences.e2e.ts:46](../../tests/e2e/preferences.e2e.ts#L46)
+- [x] Notice about session-only storage appears whenever `pma__userconfig` is unavailable, including on the 2FA tab. <!-- parity:test --> `p08-3ef43d` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
 - [ ] Navigation gear hidden while on a settings page.
-- [ ] Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; active tab restored via `tab_hash` after redirect.
-- [ ] A field equal to the phpMyAdmin default is not stored (key removed from the JSON) unless `config.inc.php` overrides the default - then the user's explicit default *is* stored.
-- [ ] Restore-default icon visible only when value differs from default; hover raises opacity; click sets value and fires `change` (re-validates, unmarks `custom`).
-- [ ] Fields in `UserprefsDisallow` are rendered disabled with a "Disabled" badge and are ignored on save/apply even if posted.
+- [x] Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; active tab restored via `tab_hash` after redirect. <!-- parity:test --> `p08-ee115b` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71)
+- [x] A field equal to the phpMyAdmin default is not stored (key removed from the JSON) unless `config.inc.php` overrides the default - then the user's explicit default *is* stored. <!-- parity:test --> `p08-9b4f97` [preferences.test.ts:59](../../apps/server/test/unit/preferences.test.ts#L59)
+- [x] Restore-default icon visible only when value differs from default; hover raises opacity; click sets value and fires `change` (re-validates, unmarks `custom`). <!-- parity:test --> `p08-779a14` [configForm.test.ts:48](../../apps/web/src/features/preferences/configForm.test.ts#L48) +1
+- [x] Fields in `UserprefsDisallow` are rendered disabled with a "Disabled" badge and are ignored on save/apply even if posted. <!-- parity:test --> `p08-8fd8fd` [preferences.test.ts:181](../../apps/server/test/int/preferences.test.ts#L181)
 - [ ] Setup shows a third column with "Allow users to customize this value" checkboxes; unchecking adds the path to `UserprefsDisallow` in the generated file.
-- [ ] Numeric validators run on keyup for text inputs; selects/checkboxes on change; whole form re-validated after a browser refresh restores values (`check_page_refresh`).
-- [ ] Upper-bound validators for `MaxDbList`, `MaxTableList`, `MaxRoutineList`, `QueryHistoryMax` use the admin's `config.inc.php` value, shown as comment *maximum N*.
-- [ ] `hide_db` validated as a PCRE body (delimiter `/` added); `MemoryLimit` must match `-1|\d+[kmg]?`.
+- [x] Numeric validators run on keyup for text inputs; selects/checkboxes on change; whole form re-validated after a browser refresh restores values (`check_page_refresh`). <!-- parity:test --> `p08-d2dece` [preferences.test.ts:13](../../apps/server/test/unit/preferences.test.ts#L13) +1
+- [x] Upper-bound validators for `MaxDbList`, `MaxTableList`, `MaxRoutineList`, `QueryHistoryMax` use the admin's `config.inc.php` value, shown as comment *maximum N*. <!-- parity:test --> `p08-8ef8d5` [preferences.test.ts:21](../../apps/server/test/unit/preferences.test.ts#L21)
+- [x] `hide_db` validated as a PCRE body (delimiter `/` added); `MemoryLimit` must match `-1|\d+[kmg]?`. <!-- parity:test --> `p08-84b620` [preferences.test.ts:28](../../apps/server/test/unit/preferences.test.ts#L28)
 - [ ] Save failure keeps the posted values on screen with inline errors and a red summary; a `revert` POST resets only erroneous fields.
-- [ ] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected.
-- [ ] Saving any form re-persists the `2fa` block (never lost by a partial save).
+- [x] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected. <!-- parity:test --> `p08-5102df` [preferences.test.ts:66](../../apps/server/test/unit/preferences.test.ts#L66) +1
+- [x] Saving any form re-persists the `2fa` block (never lost by a partial save). <!-- parity:test --> `p08-0b1f72` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71)
 - [ ] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`).
 - [ ] Console toggles, `NavigationWidth` drags etc. persist via `setUserValue`; with session storage they additionally fall back to cookies when a cookie name is provided.
 
 Manage your settings
 - [ ] Import-from-browser and Save-to-browser radios are disabled until JS enables them; unsupported localStorage shows the unsupported notice and disables submit.
-- [ ] Import shows *Saved on: <local date>* from `localStorage.configMtimeLocal` or *You have no saved settings!*; submit disabled when importing from an empty storage.
-- [ ] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest).
-- [ ] Merge checkbox keeps existing prefs under imported ones; otherwise import starts from defaults (prefs not in the file are reset).
+- [x] Import shows *Saved on: <local date>* from `localStorage.configMtimeLocal` or *You have no saved settings!*; submit disabled when importing from an empty storage. <!-- parity:test --> `p08-10a75c` [configForm.test.ts:97](../../apps/web/src/features/preferences/configForm.test.ts#L97)
+- [x] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest). <!-- parity:test --> `p08-f18efc` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258)
+- [x] Merge checkbox keeps existing prefs under imported ones; otherwise import starts from defaults (prefs not in the file are reset). <!-- parity:test --> `p08-d20c19` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258)
 - [ ] Import applies `ThemeDefault` immediately (theme cookie) and redirects with `lang=` when the language differs.
-- [ ] Export JSON is pretty-printed; PHP export emits `$cfg['a']['b'] = ...;` lines; both named `phpMyAdmin-config-<host>.<ext>`.
+- [x] Export JSON is pretty-printed; PHP export emits `$cfg['a']['b'] = ...;` lines; both named `phpMyAdmin-config-<host>.<ext>`. <!-- parity:test --> `p08-1c37f1` [preferences.test.ts:227](../../apps/server/test/int/preferences.test.ts#L227)
 - [ ] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message.
-- [ ] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie.
-- [ ] Autoload banner shown once per session when prefs are session-based and `localStorage.config` exists; Yes imports with `return_url` back to the current page; No/Delete hide it for the session (`prefs_autoload=hide`).
+- [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:295](../../apps/server/test/int/preferences.test.ts#L295)
+- [x] Autoload banner shown once per session when prefs are session-based and `localStorage.config` exists; Yes imports with `return_url` back to the current page; No/Delete hide it for the session (`prefs_autoload=hide`). <!-- parity:test --> `p08-5de125` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
 - [ ] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not.
 
 Page settings
-- [ ] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view.
-- [ ] Modal "Page-related settings" with Apply (submits) and Cancel (restores DOM clone, discarding edits).
-- [ ] Successful save redirects to the same URL; errors render above the page content.
-- [ ] Edit popup shows both Edit-mode and Text-fields groups; Browse popup shows the Browse-mode group only.
+- [x] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view. <!-- parity:test --> `p08-8abc69` [preferences.e2e.ts:71](../../tests/e2e/preferences.e2e.ts#L71)
+- [x] Modal "Page-related settings" with Apply (submits) and Cancel (restores DOM clone, discarding edits). <!-- parity:test --> `p08-4eeac3` [preferences.e2e.ts:71](../../tests/e2e/preferences.e2e.ts#L71)
+- [x] Successful save redirects to the same URL; errors render above the page content. <!-- parity:test --> `p08-69a15f` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
+- [x] Edit popup shows both Edit-mode and Text-fields groups; Browse popup shows the Browse-mode group only. <!-- parity:test --> `p08-6f0e6e` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
 
 Two-factor
 - [ ] Tab unusable without pmadb (explicit message).
-- [ ] Backend list: none, (simple if DBG), application if deps, WebAuthn always, key (U2F) if dep; missing deps listed with composer package names.
+- [x] Backend list: none, (simple if DBG), application if deps, WebAuthn always, key (U2F) if dep; missing deps listed with composer package names. <!-- parity:test --> `p08-47e665` [webauthn.test.ts:62](../../apps/server/test/unit/webauthn.test.ts#L62)
 - [ ] Configure is a two-step POST (choose -> setup form -> verify); failure re-renders the setup form with *Two-factor authentication failed[: reason]*.
-- [ ] Application secret stable within the session until verified; QR label `phpMyAdmin (<host>)`.
+- [x] Application secret stable within the session until verified; QR label `phpMyAdmin (<host>)`. <!-- parity:test --> `p08-3db3a5` [preferences.test.ts:97](../../apps/server/test/unit/preferences.test.ts#L97)
 - [ ] Disabling requires passing the current challenge; U2F pages show the deprecation alert and HTTPS warning.
 - [ ] Login shows the 2FA step after password success; the check result is cached in session; `Invalid` backend blocks login.
 
