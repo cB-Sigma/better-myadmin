@@ -1,7 +1,10 @@
 import mysql from 'mysql2/promise'
 import { E2E, MYSQL } from './fixtures.ts'
+import { holdSuiteLock } from './suite-lock.ts'
 
 export default async function setup() {
+  // one e2e run per MySQL at a time (fixed m1shell_*, m3srv_*, f06j_* objects)
+  const release = await holdSuiteLock('bma_browser:e2e', MYSQL)
   const c = await mysql.createConnection({ ...MYSQL, multipleStatements: true })
   await c.query(`DROP DATABASE IF EXISTS ${E2E.db}; CREATE DATABASE ${E2E.db};
     CREATE TABLE ${E2E.db}.t (id INT PRIMARY KEY, name VARCHAR(20)) COMMENT='E2E table';
@@ -11,4 +14,5 @@ export default async function setup() {
       GRANT SELECT ON ${E2E.db}.* TO '${u}'@'%';`)
   }
   await c.end()
+  return release
 }

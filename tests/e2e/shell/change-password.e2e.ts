@@ -16,7 +16,13 @@ test.describe('change password', () => {
     await login(page, E2E.pw, E2E.pw)
     await page.locator('#change_password_anchor').click()
     const dialog = page.getByRole('dialog', { name: 'Change password' })
-    await expect(dialog.locator('#select_authentication_plugin_cp')).toHaveValue('mysql_native_password')
+    // the hashing select is MySQL's (UserPassword: not on MariaDB)
+    const c = await mysql.createConnection(MYSQL)
+    const [[v]] = (await c.query('SELECT VERSION() AS v')) as unknown as [[{ v: string }]]
+    await c.end()
+    const mariadb = /mariadb/i.test(v.v)
+    if (mariadb) await expect(dialog.locator('#select_authentication_plugin_cp')).toHaveCount(0)
+    else await expect(dialog.locator('#select_authentication_plugin_cp')).toHaveValue('mysql_native_password')
 
     // checkPassword: alert() for mismatching passwords
     await dialog.locator('#text_pma_change_pw').fill('abc')
@@ -43,7 +49,9 @@ test.describe('change password', () => {
     await expect(dialog.locator('#change_password_strength')).toHaveText(/weak|Good|Strong/)
     await dialog.getByRole('button', { name: 'Go' }).click()
     await expect(page.getByText('The profile has been updated.')).toBeVisible()
-    await expect(page.locator('code.sql')).toHaveText(`ALTER USER '${E2E.pw}'@'%' IDENTIFIED BY '***'`)
+    await expect(page.locator('code.sql')).toHaveText(
+      mariadb ? "SET password = PASSWORD('***')" : `ALTER USER '${E2E.pw}'@'%' IDENTIFIED BY '***'`,
+    )
 
     // the session keeps working, and the new password logs in
     await page.reload()

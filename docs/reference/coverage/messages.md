@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3037/3426 covered (88.6%): 3003 implemented, 4 exception, 30 n/a, 4 planned, 385 missing. [Summary](README.md).
+3039/3426 covered (88.7%): 3005 implemented, 4 exception, 30 n/a, 4 planned, 383 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 287/403 (71.2%) covered, 287/403 implemented
 
@@ -199,9 +199,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 07 export import — 242/293 (82.6%) covered, 242/293 implemented
+## 07 export import — 244/293 (83.3%) covered, 244/293 implemented
 
-51 msgids not used yet.
+49 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -212,7 +212,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Export/OutputHandler.php` | 3/4 | `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
 | `src/Plugins/Import/ImportShp.php` | 3/4 | `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
 | `resources/js/export.ts` | 2/9 | `SQL Query` · `Your export is incomplete, due to a low execution time limit at the…` |
-| `resources/templates/encoding/kanji_encoding_form.twig` | 2/2 | `Convert to Kana` · `None (None encoding conversion)` |
 | `src/ZipExtension.php` | 2/2 | `Error in ZIP archive:` · `No files found inside ZIP archive!` |
 | `resources/js/drag_drop_import.ts` | 1/4 | `cancel` |
 | `resources/templates/database/export/index.twig` | 1/5 | `Exporting a raw query` |

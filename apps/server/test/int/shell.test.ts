@@ -177,7 +177,7 @@ describe('GET /api/servers/:s/databases/:db — database tabs (Menu::getDbTabs)'
     expect(k).not.toContain('central_columns')
   })
 
-  it('the database comment comes from pma__column_info when column comments work', async () => {
+  it('the database comment comes from pma__column_info when column comments work [p08-d94efe]', async () => {
     t = testApp(storageCfg())
     await t.login()
     const r = await t.req('GET', `/api/servers/1/databases/${DB}`)
@@ -302,7 +302,7 @@ describe('GET …/tables/:t/capabilities — table tabs (Menu::getTableTabs)', (
 })
 
 describe('GET /api/servers/:s/home (HomeController)', () => {
-  it('returns the blocks and the warnings phpMyAdmin would show', async () => {
+  it('returns the blocks and the warnings phpMyAdmin would show [p06-f6908d]', async () => {
     t = testApp(testConfig({}, { controluser: 'pma', controlpass: 'pmapass' }))
     await t.login()
     const r = await t.req('GET', '/api/servers/1/home', undefined, { host: '127.0.0.1:8080' })
@@ -345,14 +345,14 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     )
   })
 
-  it('config storage notice: Error when pmadb is configured but incomplete', async () => {
+  it('config storage notice: Error when pmadb is configured but incomplete [p06-f6908d]', async () => {
     t = testApp(storageCfg())
     await t.login()
     const r = await t.req('GET', '/api/servers/1/home')
     expect(r.json.configStorageMessage).toEqual({ type: 'error', zeroConf: true })
   })
 
-  it('ShowServerInfo = false hides the Database server and Web server blocks', async () => {
+  it('ShowServerInfo = false hides the Database server and Web server blocks [p06-f6908d]', async () => {
     t = testApp(testConfig({ ShowServerInfo: false }))
     await t.login()
     const r = await t.req('GET', '/api/servers/1/home')

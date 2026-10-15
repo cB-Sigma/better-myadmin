@@ -74,7 +74,9 @@ async function restoreReplica() {
 
 test.skip(!isReplica, 'the dev replica is not running')
 
-test('replica: status, control and error management toggles; Reset replica asks first', async ({ page }) => {
+test('replica: status, control and error management toggles; Reset replica asks first [p06-3c4d46]', async ({
+  page,
+}) => {
   await page.goto('/')
   await page.locator('#input_username').fill(REPLICA.user)
   await page.locator('#input_password').fill(REPLICA.password)

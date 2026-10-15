@@ -151,7 +151,7 @@ describe('version check (git-info.ts)', () => {
     expect(parseVersionString('5.2.1-rc2')).toBe(502010000 - 22)
     expect(parseVersionString('5.2.1-beta1')).toBe(502010000 - 41)
   })
-  it('newer / security / up to date', () => {
+  it('newer / security / up to date [p06-f6908d]', () => {
     expect(versionNotice('1.2.0', '1.2.0')).toEqual({ upToDate: true, newer: false, security: false })
     // "security" = only the 4th (hotfix) part differs: Math.floor(v / 10000) compares major.minor.patch
     expect(versionNotice('1.2.0', '1.2.0.1')).toEqual({ upToDate: false, newer: true, security: true })

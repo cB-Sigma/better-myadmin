@@ -91,7 +91,9 @@ test('databases: empty name alert, create, sort links, check all, drop', async (
   await expect(page.locator(`tr[data-filter-row="${DB.toUpperCase()}_NEW"]`)).toHaveCount(0)
 })
 
-test('processes: refresh rate, auto refresh, header sort, full queries', async ({ page }) => {
+test('processes: refresh rate, auto refresh, header sort, full queries [p06-9768f8] [p06-0b7c03] [p06-5727d3]', async ({
+  page,
+}) => {
   await login(page)
   await page.goto('/s/1/status/processes')
   await page.locator('#id_refreshRate').selectOption('2')
@@ -110,9 +112,25 @@ test('processes: refresh rate, auto refresh, header sort, full queries', async (
   await expect(
     page.locator('#tableprocesslist thead').getByRole('button', { name: 'Truncate shown queries' }),
   ).toBeVisible()
+
+  // "Show only active" submits by itself (autosubmit); Refresh fetches the list again
+  await page.locator('#showExecuting').check()
+  await expect(page).toHaveURL(/showExecuting=true/)
+  const refreshed = page.waitForResponse((r) => /\/status\/processes/.test(r.url()))
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click()
+  expect((await refreshed).ok()).toBe(true)
+  // system users have no privileges link, the others link to their account; db cells to the database
+  const rowsOf = page.locator('#tableprocesslist tbody tr')
+  await expect(rowsOf.first()).toBeVisible()
+  await page.locator('#showExecuting').uncheck()
+  const own = page.locator('#tableprocesslist tbody tr', { hasText: USER }).first()
+  await expect(own.locator('td').nth(2).getByRole('link', { name: USER })).toHaveAttribute(
+    'href',
+    /\/privileges\?username=f06j_e2e/,
+  )
 })
 
-test('status variables: word, alert, category and unformatted filters', async ({ page }) => {
+test('status variables: word, alert, category and unformatted filters [p06-65e09f]', async ({ page }) => {
   await login(page)
   await page.goto('/s/1/status/variables')
   const rows = page.locator('#serverStatusVariables tbody tr:visible')
@@ -135,9 +153,43 @@ test('status variables: word, alert, category and unformatted filters', async ({
   await page.locator('#filterAlert').check()
   const alerts = await rows.count()
   expect(alerts).toBe(await page.locator('#serverStatusVariables tbody tr:visible td .text-error').count())
+  await page.locator('#filterAlert').uncheck()
+
+  // an invalid regular expression marks the field (.error) and filters nothing
+  await page.locator('#filterText').fill('uptime(')
+  await expect(page.locator('#filterText')).toHaveClass(/\berror\b/)
+  await page.locator('#filterText').fill('uptime')
+  await expect(page.locator('#filterText')).not.toHaveClass(/\berror\b/)
+  // Refresh reloads the values and keeps the filters
+  const refreshed = page.waitForResponse((r) => /\/status\/variables/.test(r.url()))
+  await page.getByRole('button', { name: 'Refresh', exact: true }).click()
+  expect((await refreshed).ok()).toBe(true)
+  await expect(page.locator('#filterText')).toHaveValue('uptime')
+  await expect(rows.first()).toContainText(/^Uptime/)
 })
 
-test('server variables: edit, Escape, Cancel and Save', async ({ page }) => {
+test('status pages without SHOW GLOBAL STATUS: each page shows its own error [p06-032e98]', async ({
+  page,
+}) => {
+  await login(page)
+  // the API answers of an account whose SHOW GLOBAL STATUS fails (Data::$dataLoaded false)
+  await page.route(/\/api\/servers\/1\/status(\/(queries|variables|advisor))?(\?.*)?$/, async (route) => {
+    const r = await route.fetch()
+    const json = { ...(await r.json()), isDataLoaded: false }
+    await route.fulfill({ response: r, json })
+  })
+  for (const [path, message] of [
+    ['', 'Not enough privilege to view server status.'],
+    ['/queries', 'Not enough privilege to view query statistics.'],
+    ['/variables', 'Not enough privilege to view status variables.'],
+    ['/advisor', 'Not enough privilege to view the advisor.'],
+  ]) {
+    await page.goto(`/s/1/status${path}`)
+    await expect(page.getByText(message)).toBeVisible()
+  }
+})
+
+test('server variables: edit, Escape, Cancel and Save [p06-d139b2]', async ({ page }) => {
   const c = await mysql.createConnection(ROOT)
   const [rows] = await c.query('SELECT @@GLOBAL.max_connect_errors AS v')
   const original = Number((rows as Array<{ v: number }>)[0]!.v)
@@ -169,7 +221,7 @@ test('server variables: edit, Escape, Cancel and Save', async ({ page }) => {
   }
 })
 
-test('replication on the primary: status toggles, replica user password, configuration wizard', async ({
+test('replication on the primary: status toggles, replica user password, configuration wizard [p06-3af6a2]', async ({
   page,
 }) => {
   await login(page)
@@ -203,7 +255,7 @@ test('replication on the primary: status toggles, replica user password, configu
   await expect(rep).not.toContainText('binlog_do_db=')
 })
 
-test('binary log: the query card runs its links through /sql', async ({ page }) => {
+test('binary log: the query card runs its links through /sql [p06-debfa6]', async ({ page }) => {
   await login(page)
   await page.goto('/s/1/binlog')
   const card = page.locator('.result_query').first()
@@ -220,6 +272,28 @@ test('binary log: the query card runs its links through /sql', async ({ page }) 
   await expect(page).toHaveURL(/\/s\/1\/sql\?sql=SHOW/)
 })
 
+test('plugins: jump buttons, status badges, sortable tables but the Description column [p06-e5aa2e]', async ({
+  page,
+}) => {
+  await login(page)
+  await page.goto('/s/1/plugins')
+  const engines = page.locator('#plugins-storageengine')
+  await expect(page.getByRole('link', { name: 'STORAGE ENGINE' })).toHaveAttribute(
+    'href',
+    '#plugins-storageengine',
+  )
+  const names = () =>
+    engines.locator('tbody th').evaluateAll((ths) => ths.map((th) => th.firstChild?.textContent ?? ''))
+  const asc = await names()
+  const cmp = (a: string, b: string) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+  expect(asc).toEqual([...asc].sort(cmp))
+  await engines.locator('thead').getByRole('button', { name: 'Plugin' }).click()
+  expect(await names()).toEqual([...asc].sort(cmp).reverse())
+  await engines.locator('thead').getByRole('button', { name: 'License' }).click()
+  await expect(engines.locator('thead th[aria-sort="ascending"]')).toHaveText('License')
+  await expect(engines.locator('thead th', { hasText: 'Description' }).getByRole('button')).toHaveCount(0)
+})
+
 /** Monitor: everything but the charts' pixels. */
 test.describe('monitor', () => {
   test.beforeEach(async ({ page }) => {
@@ -232,7 +306,9 @@ test.describe('monitor', () => {
     await expect(page.locator('#chartGrid .monitorChart').first()).toBeVisible()
   })
 
-  test('pause/resume, settings, rearranging, export, import and reset', async ({ page }) => {
+  test('pause/resume, settings, rearranging, export, import and reset [p06-f985d3] [p06-94e73a]', async ({
+    page,
+  }) => {
     const chart = page.waitForResponse((r) => /\/status\/monitor\/chart$/.test(r.url()))
     await page.locator('#monitorPauseResumeButton').click()
     expect((await chart).ok()).toBe(true)
@@ -300,7 +376,7 @@ test.describe('monitor', () => {
     )
   })
 
-  test('add chart: presets, series with divisor and unit, clear, the empty-series alert', async ({
+  test('add chart: presets, series with divisor and unit, clear, the empty-series alert [p06-3de1f6]', async ({
     page,
   }) => {
     await page.getByRole('button', { name: 'Settings', exact: true }).click()
@@ -357,7 +433,7 @@ test.describe('monitor', () => {
     await expect(dialog).toHaveCount(0)
   })
 
-  test('instructions: log variables and a set link', async ({ page }) => {
+  test('instructions: log variables and a set link [p06-f985d3]', async ({ page }) => {
     const c = await mysql.createConnection(ROOT)
     const [rows] = await c.query('SELECT @@GLOBAL.long_query_time AS v')
     const original = Number((rows as Array<{ v: number }>)[0]!.v)
@@ -386,7 +462,57 @@ test.describe('monitor', () => {
     }
   })
 
-  test('log analysis from the general log, then the query analyzer', async ({ page }) => {
+  test('refresh failure modal with Reload; a cancelled analysis; an empty slow log [p06-94e73a] [p06-599f02]', async ({
+    page,
+  }) => {
+    // "Monitor refresh failed": a chart refresh that gets no answer
+    await page.route(/\/status\/monitor\/chart$/, (route) => route.abort())
+    const failed = page.locator('#serverResponseErrorModal')
+    await expect(failed).toBeVisible({ timeout: 15_000 })
+    await expect(failed).toContainText(
+      'While requesting new chart data the server returned an invalid response.',
+    )
+    await page.unroute(/\/status\/monitor\/chart$/)
+    const reloaded = page.waitForEvent('load')
+    await page.locator('#serverResponseErrorModalReloadButton').click()
+    await reloaded
+    await expect(page.locator('#serverResponseErrorModal')).toHaveCount(0)
+    await page.waitForResponse((r) => /\/status\/monitor\/chart$/.test(r.url()))
+
+    // the loading dialog cancels the log request (logRequest.abort())
+    let release = () => {}
+    await page.route(/\/status\/monitor\/general-log$/, (route) => {
+      release = () => void route.abort().catch(() => {})
+    })
+    await page.locator('#chartGrid .monitorChart canvas').first().click()
+    await expect(page.locator('#logAnalyseModal')).toBeVisible()
+    await page.locator('#logAnalyseModalGeneralLogButton').click()
+    const loading = page.locator('#analysingLogsModal')
+    await expect(loading).toContainText('Analysing and loading logs. This may take a while.')
+    await loading.getByRole('button', { name: 'Cancel request' }).click()
+    await expect(loading).toHaveCount(0)
+    release()
+    await expect(page.locator('#serverResponseErrorModal')).toHaveCount(0)
+    await page.unroute(/\/status\/monitor\/general-log$/)
+
+    // the slow log of the window is empty on the dev servers (slow_query_log off): "No data found"
+    const c = await mysql.createConnection(ROOT)
+    const [[slow]] = (await c.query('SELECT @@GLOBAL.slow_query_log AS s')) as unknown as [[{ s: number }]]
+    await c.end()
+    test.skip(Number(slow.s) === 1, 'the slow log is on: the window may have rows')
+    await page.locator('#chartGrid .monitorChart canvas').first().click()
+    const posted = page.waitForResponse((r) => /\/status\/monitor\/slow-log$/.test(r.url()))
+    await page.locator('#logAnalyseModalSlowLogButton').click()
+    expect((await posted).ok()).toBe(true)
+    const none = page.locator('#analysingLogsNoDataFoundModal')
+    await expect(none).toBeVisible()
+    await none.getByRole('button', { name: 'Close' }).last().click()
+    await expect(none).toHaveCount(0)
+  })
+
+  test('log analysis from the general log, then the query analyzer [p06-599f02] [p06-d6900b] [p06-95d2b5]', async ({
+    page,
+  }) => {
     const c = await mysql.createConnection(ROOT)
     const [[vars]] = (await c.query(
       'SELECT @@GLOBAL.general_log AS g, @@GLOBAL.log_output AS o',

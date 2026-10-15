@@ -159,7 +159,9 @@ test('login rate limit: locked out after the failed attempts (X2)', async ({ pag
   ).toBeVisible()
 })
 
-test('setup wizard: add a server, display the files, delete it [p01-984896]', async ({ page }) => {
+test('setup wizard: add a server, display the files, delete it [p01-984896] [p08-7737a8]', async ({
+  page,
+}) => {
   const i = await start()
   await page.goto(`${i.url}/setup`)
   await expect(page.getByText('There are no configured servers')).toBeVisible()
@@ -183,7 +185,7 @@ test('setup wizard: add a server, display the files, delete it [p01-984896]', as
   await expect(page.getByText('There are no configured servers')).toBeVisible()
 })
 
-test('setup is disabled once a configuration file exists [p01-e2f8e5]', async ({ page }) => {
+test('setup is disabled once a configuration file exists [p01-e2f8e5] [p08-f2ccb9]', async ({ page }) => {
   const i = await start({ Servers: [host] })
   await page.goto(`${i.url}/setup`)
   await expect(page.getByText('Configuration already exists, setup is disabled!')).toBeVisible()

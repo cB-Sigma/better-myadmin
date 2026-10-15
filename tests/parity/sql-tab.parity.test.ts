@@ -69,7 +69,7 @@ const many = (n: number, f: (i: number) => string) => Array.from({ length: n }, 
 
 const CASES: Case[] = [
   {
-    name: 'bind parameters: values substituted, non-numeric quoted',
+    name: 'bind parameters: values substituted, non-numeric quoted [p09-ec9fe2]',
     sql: 'SELECT * FROM t WHERE id = :id OR name = :name OR id = :id2',
     pma: {
       parameterized: 'on',
@@ -80,31 +80,31 @@ const CASES: Case[] = [
     bma: { params: { ':id': '3', ':name': "it'em5", ':id2': '1e1' } },
   },
   {
-    name: 'rollback when finished: START TRANSACTION, message, nothing kept',
+    name: 'rollback when finished: START TRANSACTION, message, nothing kept [p09-aa1339]',
     sql: 'UPDATE t SET qty = 99 WHERE id < 3; DELETE FROM t WHERE id = 40',
     pma: { rollback_query: '1' },
     bma: { rollback: true },
   },
   {
-    name: 'rollback refused for a non-transactional table',
+    name: 'rollback refused for a non-transactional table [p09-aa1339]',
     sql: 'UPDATE my SET v = 5',
     pma: { rollback_query: '1' },
     bma: { rollback: true },
   },
   {
-    name: 'rollback refused for SELECT',
+    name: 'rollback refused for SELECT [p09-aa1339]',
     sql: 'SELECT 1',
     pma: { rollback_query: '1' },
     bma: { rollback: true },
   },
   {
-    name: 'rollback refused with the server error of the table check',
+    name: 'rollback refused with the server error of the table check [p09-aa1339]',
     sql: 'UPDATE nope SET a = 1',
     pma: { rollback_query: '1' },
     bma: { rollback: true },
   },
   {
-    name: 'foreign key checks disabled for the request',
+    name: 'foreign key checks disabled for the request [p09-1fc182]',
     sql: 'INSERT INTO child VALUES (1, 999)',
     pma: { fk_checks: '0' },
     bma: { fkChecks: false },
@@ -115,13 +115,13 @@ const CASES: Case[] = [
     bma: { fkChecks: true },
   },
   {
-    name: 'Create PHP code: not executed, one card for the whole text',
+    name: 'Create PHP code: not executed, one card for the whole text [p09-550737]',
     sql: 'SELECT * FROM t;\nUPDATE t SET qty = 1 WHERE id = 1',
     pma: { show_as_php: '1' },
     bma: { showAsPhp: true },
   },
   {
-    name: 'show_as_php=0: Showing SQL query',
+    name: 'show_as_php=0: Showing SQL query [p09-550737]',
     sql: 'SELECT 1',
     pma: { show_as_php: '0' },
     bma: { showAsPhp: false },
@@ -133,7 +133,7 @@ const CASES: Case[] = [
     bma: { showAsPhp: true },
   },
   {
-    name: 'profiling: SET PROFILING=1 and SHOW PROFILE around the query',
+    name: 'profiling: SET PROFILING=1 and SHOW PROFILE around the query [p09-33158a]',
     sql: 'SELECT * FROM t WHERE qty > 3',
     pma: { profiling: 'on' },
     bma: { profiling: true },
@@ -147,45 +147,45 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'import mode: exactly 50 statements keep the transcript',
+    name: 'import mode: exactly 50 statements keep the transcript [p09-9a56f6]',
     sql: many(50, (i) => `SELECT ${i};`),
     importMode: true,
   },
   {
-    name: 'import mode: more than 50 statements disable the SQL display',
+    name: 'import mode: more than 50 statements disable the SQL display [p09-9a56f6]',
     sql: `${many(52, (i) => `SELECT ${i};`)}\nUPDATE t SET qty = qty + 1 WHERE id < 3;\nDELETE FROM t WHERE id > 100;`,
     importMode: true,
   },
   {
-    name: 'import mode: the first error stops and shows its card',
+    name: 'import mode: the first error stops and shows its card [p09-9a56f6]',
     sql: `${many(51, (i) => `SELECT ${i};`)}\nSELECT * FROM nope;\nSELECT 2;`,
     importMode: true,
   },
   {
-    name: 'import mode: USE switches the database',
+    name: 'import mode: USE switches the database [p09-410573]',
     sql: `USE mysql;\n${many(50, () => 'SELECT DATABASE();')}`,
     importMode: true,
   },
-  { name: 'CALL with several result sets', sql: 'CALL p()' },
-  { name: 'CALL with an empty result set', sql: 'CALL pe()' },
+  { name: 'CALL with several result sets [p09-c6af25]', sql: 'CALL p()' },
+  { name: 'CALL with an empty result set [p09-c6af25]', sql: 'CALL pe()' },
   {
-    name: 'DROP DATABASE is refused for a non-superuser',
+    name: 'DROP DATABASE is refused for a non-superuser [p09-15a63a]',
     sql: 'DROP DATABASE IF EXISTS somedb',
     low: true,
   },
   {
-    name: 'long query: truncated display, no Explain / PHP links',
+    name: 'long query: truncated display, no Explain / PHP links [p09-16d3bb]',
     sql: `SELECT id /* ${'x'.repeat(1100)} */ FROM t WHERE id = 1`,
   },
   { name: 'Skip Explain SQL', sql: 'EXPLAIN SELECT * FROM t WHERE id = 2' },
   { name: 'Skip Explain SQL with FORMAT', sql: 'EXPLAIN FORMAT=JSON SELECT * FROM t WHERE id = 2' },
-  { name: 'static analysis errors in the error card', sql: "SELECT * FROM t WHERE name = 'abc" },
+  { name: 'static analysis errors in the error card [p09-a25a57]', sql: "SELECT * FROM t WHERE name = 'abc" },
   {
-    name: 'RENAME TABLE: ajax_reload with the new table name',
+    name: 'RENAME TABLE: ajax_reload with the new table name [p09-410573]',
     sql: 'RENAME TABLE t2 TO t2_renamed',
   },
-  { name: 'CREATE TABLE: ajax_reload reload', sql: 'CREATE TABLE t3 (a INT)' },
-  { name: 'DROP TABLE: reload hints', sql: 'DROP TABLE t2' },
+  { name: 'CREATE TABLE: ajax_reload reload [p09-410573]', sql: 'CREATE TABLE t3 (a INT)' },
+  { name: 'DROP TABLE: reload hints [p09-410573]', sql: 'DROP TABLE t2' },
   {
     name: 'table scope: edit links go to the table SQL tab',
     sql: 'SELECT * FROM t WHERE id < 3',
@@ -196,10 +196,13 @@ const CASES: Case[] = [
     sql: `SELECT * FROM ${'%DB%'}.t LIMIT 2`,
     db: '',
   },
-  { name: 'warnings are reported', sql: 'SELECT 1/0' },
+  { name: 'warnings are reported [p09-001dd4]', sql: 'SELECT 1/0' },
   { name: 'UPDATE without WHERE (no confirm server side)', sql: 'UPDATE t SET qty = qty' },
   { name: 'SHOW has Refresh and Profiling', sql: 'SHOW TABLES' },
-  { name: 'multi-statement with USE keeps the page database', sql: 'USE mysql; SELECT * FROM t LIMIT 1' },
+  {
+    name: 'multi-statement with USE keeps the page database [p09-410573]',
+    sql: 'USE mysql; SELECT * FROM t LIMIT 1',
+  },
   {
     name: 'SELECT from another database sets Current::$database',
     sql: 'SELECT 1; SELECT * FROM mysql.db LIMIT 1',
@@ -401,7 +404,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
       }
     }
 
-    it('autocomplete lists tables and columns with hints', async () => {
+    it('autocomplete lists tables and columns with hints [p09-d9ff25]', async () => {
       const m1 = await log.marker()
       const pr = await pma.super.postJson('/database/sql/autocomplete', { db: DB_PMA, no_debug: 'true' })
       const pmaLog = await log.since(U.pma, m1)
@@ -413,7 +416,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
       expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
     })
 
-    it('default foreign key check value', async () => {
+    it('default foreign key check value [p09-1fc182]', async () => {
       const pr = await pma.super.getJson('/sql/get-default-fk-check-value')
       const br = await bma.super.req('GET', '/api/servers/1/sql/default-fk-check')
       expect(br.json.defaultFkCheckValue).toBe(pr.default_fk_check_value)
@@ -431,7 +434,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
       'UPDATE t SET nope = 1',
     ]
     for (const sql of SIMULATE) {
-      it(`simulate: ${sql}`, async () => {
+      it(`simulate: ${sql} [p09-4e070d]`, async () => {
         const m1 = await log.marker()
         const pr = await pma.super.postJson('/import/simulate-dml', {
           db: DB_PMA,

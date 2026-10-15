@@ -41,7 +41,7 @@ test.describe('themes', () => {
     await ctx.close()
   })
 
-  test('the gallery shows one card per theme with "Take it"', async ({ page }) => {
+  test('the gallery shows one card per theme with "Take it" [p06-c67ed8]', async ({ page }) => {
     await login(page)
     await page.getByRole('button', { name: 'View all' }).click()
     const dialog = page.getByRole('dialog', { name: 'phpMyAdmin Themes' })

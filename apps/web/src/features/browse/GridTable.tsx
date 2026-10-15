@@ -414,7 +414,8 @@ export function GridTable(props: Props) {
     const key = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSel(emptySelection)
       const a = document.activeElement
-      if (a?.matches('input, textarea, select')) return
+      // CodeMirror 6 edits a contenteditable (CodeMirror 5 in phpMyAdmin used a hidden textarea)
+      if (a?.matches('input, textarea, select') || a?.closest('[contenteditable="true"]')) return
       if ((e.ctrlKey || e.metaKey) && e.code === 'KeyA') {
         e.preventDefault()
         window.getSelection()?.removeAllRanges()

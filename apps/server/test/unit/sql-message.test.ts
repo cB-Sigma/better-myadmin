@@ -16,7 +16,7 @@ const card = (sql: string, showAsPhp: boolean | null = null, profiling = true) =
   })
 
 describe('Generator::getMessage links', () => {
-  it('Explain / Skip Explain / Skip Analyze', async () => {
+  it('Explain / Skip Explain / Skip Analyze [p09-0c49c5]', async () => {
     expect((await card('SELECT 1;'))!.links.explain).toEqual({
       text: 'Explain SQL',
       sql: 'EXPLAIN SELECT 1;',
@@ -38,7 +38,7 @@ describe('Generator::getMessage links', () => {
     expect((await card(' SELECT 1;'))!.links.explain).toBeNull()
   })
 
-  it('Refresh only for ANALYZE/EXPLAIN/SELECT/SHOW and not with PHP; profiling next to it', async () => {
+  it('Refresh only for ANALYZE/EXPLAIN/SELECT/SHOW and not with PHP; profiling next to it [p09-0c49c5] [p09-280f8a]', async () => {
     expect((await card('SHOW TABLES;'))!.links).toMatchObject({
       refresh: true,
       profiling: { checked: false },
@@ -58,7 +58,7 @@ describe('Generator::getMessage links', () => {
     })
   })
 
-  it("$cfg['SQLQuery'] Edit / Explain / ShowAsPHP / Refresh off hide their links", async () => {
+  it("$cfg['SQLQuery'] Edit / Explain / ShowAsPHP / Refresh off hide their links [p09-0c49c5]", async () => {
     const off = await getMessageCard('SELECT 1;', {
       cfg: testConfig({ SQLQuery: { Edit: false, Explain: false, ShowAsPHP: false, Refresh: false } }),
       showAsPhp: null,
@@ -76,12 +76,12 @@ describe('Generator::getMessage links', () => {
     })
   })
 
-  it('no card for empty SQL or ";"', async () => {
+  it('no card for empty SQL or ";" [p09-ac586d]', async () => {
     expect(await card('')).toBeNull()
     expect(await card(';')).toBeNull()
   })
 
-  it('PHP code with continuation lines', () => {
+  it('PHP code with continuation lines [p09-550737]', () => {
     expect(sqlAsPhp('SELECT "a" FROM t\nWHERE x = \'y\'')).toBe(
       '$sql = "SELECT \\"a\\" FROM t\\n"\n    . "WHERE x = \\\'y\\\'";',
     )
@@ -89,7 +89,7 @@ describe('Generator::getMessage links', () => {
 })
 
 describe('Generator::mysqlDie / formatError', () => {
-  it('static analysis, hidden SQL for connect, collapsed blank lines', () => {
+  it('static analysis, hidden SQL for connect, collapsed blank lines [p09-a25a57]', () => {
     const e = mysqlDie('#1064 - x', "SELECT 'abc", cfg, undefined)
     expect(e.staticAnalysis).toEqual([{ message: "Ending quote ' was expected.", token: '', position: 11 }])
     expect(e.sql).toBe("SELECT 'abc")
@@ -114,7 +114,7 @@ describe('Generator::mysqlDie / formatError', () => {
 })
 
 describe('ImportController reload hints and Import::lookForUse', () => {
-  it('reload hints', () => {
+  it('reload hints [p09-410573]', () => {
     expect(reloadHints('DROP TABLE x')).toEqual({ reloadNavigation: true, ajaxReload: { reload: true } })
     expect(reloadHints('create view v as select 1')).toEqual({
       reloadNavigation: false,
@@ -128,7 +128,7 @@ describe('ImportController reload hints and Import::lookForUse', () => {
     expect(reloadHints('SELECT 1')).toEqual({ reloadNavigation: false, ajaxReload: {} })
   })
 
-  it('lookForUse', () => {
+  it('lookForUse [p09-410573]', () => {
     expect(lookForUse('USE `my``db`;')).toBe('my`db')
     // [\S]+ stops at the first space, like PHP
     expect(lookForUse('USE `my db`;')).toBe('`my')
@@ -138,7 +138,7 @@ describe('ImportController reload hints and Import::lookForUse', () => {
 })
 
 describe('Sql::getDetailedProfilingStats', () => {
-  it('aggregates by ucwords(state), sorted by total time', () => {
+  it('aggregates by ucwords(state), sorted by total time [p09-33158a]', () => {
     const p = getDetailedProfilingStats([
       { Status: 'starting', Duration: '0.000050' },
       { Status: 'executing', Duration: '0.000200' },

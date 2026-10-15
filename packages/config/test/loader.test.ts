@@ -30,7 +30,7 @@ const errorOf = (fn: () => unknown): ConfigError => {
 }
 
 describe('loadConfig: files', () => {
-  it('without file and env returns the defaults', async () => {
+  it('without file and env returns the defaults [p08-f2ccb9]', async () => {
     const r = await loadConfig({ cwd: dir, env: {} })
     expect(r.file).toBeUndefined()
     expect(r.config).toStrictEqual(defaultConfig())
@@ -225,7 +225,7 @@ describe('validation errors are readable', () => {
 })
 
 describe('phpMyAdmin semantics', () => {
-  it('Servers: array element 0 is server 1; object keys are 1-based; Servers[0] ignored', () => {
+  it('Servers: array element 0 is server 1; object keys are 1-based; Servers[0] ignored [p08-18cb5e]', () => {
     expect(Object.keys(resolveConfig({ Servers: [{ host: 'a' }, { host: 'b' }] }).Servers)).toStrictEqual([
       '1',
       '2',
@@ -293,13 +293,17 @@ describe('phpMyAdmin semantics', () => {
     expect(c.DefaultTransformations.TextLink).toStrictEqual([null, 'title', null])
   })
 
-  it('aliases: secret -> blowfish_secret, control_* -> control*', () => {
+  it('aliases: secret -> blowfish_secret, control_* -> control* [p08-7bc4a5]', () => {
     const c = resolveConfig({
       secret: 'x'.repeat(32),
-      Servers: [{ control_host: 'h', control_password: 'p' }],
-    })
+      Servers: [
+        { control_host: 'h', control_password: 'p' },
+        { control_port: 3307, control_user: 'u', control_pass: 'q' },
+      ],
+    } as unknown as ConfigInput)
     expect(c.blowfish_secret).toBe('x'.repeat(32))
     expect(c.Servers[1]).toMatchObject({ controlhost: 'h', controlpass: 'p' })
+    expect(c.Servers[2]).toMatchObject({ controlport: '3307', controluser: 'u', controlpass: 'q' })
     const r = resolveLayers([{ value: { secret: 'a', blowfish_secret: 'b' }, label: 'x' }])
     expect(r.config.blowfish_secret).toBe('b')
     expect(r.warnings).toStrictEqual(['secret: ignored because "blowfish_secret" is also set'])
@@ -318,7 +322,7 @@ describe('phpMyAdmin semantics', () => {
     expect(c.DefaultTransformations.Hex).toStrictEqual([4])
   })
 
-  it('maps legacy values like phpMyAdmin setters', () => {
+  it('maps legacy values like phpMyAdmin setters [p08-81d59d]', () => {
     const c = resolveConfig({
       DefaultTabServer: 'welcome',
       DefaultTabDatabase: 'db_operations.php',
@@ -329,6 +333,19 @@ describe('phpMyAdmin semantics', () => {
     expect(c.DefaultTabDatabase).toBe('/database/operations')
     expect(c.NavigationTreeDefaultTabTable).toBe('/table/change')
     expect(c.TablePrimaryKeyOrder).toBe('DESC')
+    // the legacy tab words of every DefaultTab* / NavigationTreeDefaultTab* directive
+    const words = resolveConfig({
+      DefaultTabServer: 'databases',
+      DefaultTabDatabase: 'structure',
+      DefaultTabTable: 'browse',
+      NavigationTreeDefaultTabTable: 'structure',
+      NavigationTreeDefaultTabTable2: 'browse',
+    })
+    expect(words.DefaultTabServer).toBe('/server/databases')
+    expect(words.DefaultTabDatabase).toBe('/database/structure')
+    expect(words.DefaultTabTable).toBe('/sql')
+    expect(words.NavigationTreeDefaultTabTable).toBe('/table/structure')
+    expect(words.NavigationTreeDefaultTabTable2).toBe('/sql')
   })
 
   it('warns about UserprefsDisallow entries that are not user preferences', () => {

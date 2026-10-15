@@ -178,7 +178,7 @@ describe.skipIf(!reachable)(
       })
     }
 
-    it('home page: Database server card, collation list, warnings', async () => {
+    it('home page: Database server card, collation list, warnings [p06-f6908d]', async () => {
       const pma = new PmaClient(PMA_URL)
       const bma = testApp(bmaConfig())
       try {

@@ -3,7 +3,8 @@ import { join } from 'node:path'
 
 /**
  * The second e2e server (playwright.config.ts): the dev replica (mysql84-replica, :3308 by default,
- * docker/dev.compose.yml) for server-replica.e2e.ts. Same options as bma.config.ts.
+ * docker/dev.compose.yml) for server-replica.e2e.ts, plus the primary as server 2 for the server
+ * selection of home.e2e.ts. Same options as bma.config.ts.
  */
 export default {
   blowfish_secret: 'e2e-secret-e2e-secret-e2e-secret-0123',
@@ -14,6 +15,14 @@ export default {
       host: process.env.BMA_PARITY_REPLICA_HOST ?? process.env.BMA_TEST_HOST ?? '127.0.0.1',
       port: Number(process.env.BMA_PARITY_REPLICA_PORT ?? 3308),
       pmadb: 'm1e2e_no_storage',
+      verbose: 'Dev replica',
+    },
+    // a second server for the home page's server selection (home.e2e.ts)
+    {
+      host: process.env.BMA_TEST_HOST ?? '127.0.0.1',
+      port: Number(process.env.BMA_TEST_PORT ?? 3306),
+      pmadb: 'm1e2e_no_storage',
+      only_db: ['f06j_home_a', 'f06j_home_b'],
     },
   ],
 }

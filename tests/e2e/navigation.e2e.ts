@@ -45,7 +45,11 @@ test('expand a database, open a table, state restored after reload', async ({ pa
   const names = await nav
     .locator('[role=treeitem]')
     .evaluateAll((els) => els.map((e) => e.getAttribute('data-name')))
-  expect(names).toEqual(['information_schema', 'm1nav_e2e', 'performance_schema'])
+  // the databases the account sees (MySQL 8 lists performance_schema to everyone, MariaDB does not)
+  const c = await mysql.createConnection({ ...ROOT, user: USER, password: USER })
+  const [rows] = (await c.query('SHOW DATABASES')) as unknown as [Array<{ Database: string }>]
+  await c.end()
+  expect(names).toEqual(rows.map((r) => r.Database).sort())
 
   // expand the database: Tables and Views containers
   await dbRow.getByRole('button', { name: 'Expand/Collapse' }).click()

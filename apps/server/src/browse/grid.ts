@@ -60,6 +60,7 @@ import type { GridHookArgs } from '../query/pipeline.ts'
 import { countRecords } from '../query/pipeline.ts'
 import { signSql } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
+import { defaultTransformation } from './default-transformations.ts'
 
 export interface GridEnv {
   cfg: AppConfig
@@ -696,7 +697,7 @@ export async function buildGrid(
   const metas = fields.map(uniqueMeta)
   const urlSqlQuery = urlSql(info, sqlQuery)
   const fkCache = new Map<string, string | null>()
-  const mediaTypes = await mediaTypeMap(env, fields)
+  const mediaTypes = await mediaTypeMap(env, fields, isShow ? sqlQuery : null)
   const rows: GridRow[] = []
   const hasLinks = displayParts.editLink || displayParts.deleteLink !== 'none'
   for (const raw of a.limited ? [] : set.rows) {
@@ -748,7 +749,25 @@ export async function buildGrid(
         urlSqlQuery,
       })
       const where = whereByTable.get(meta.orgTable) ?? ''
-      row.cells.push(applyTransformation(cell, raw[i] ?? null, meta, mediaTypes, where, sign))
+      const cellRaw = raw[i] ?? null
+      const stored = mediaTypes.get(`${meta.db}.${meta.orgTable}.${meta.orgName}`)
+      // Results::getRowValues: the syntax highlighting of predefined columns wins over a stored one
+      const predefined =
+        cellRaw !== null && !env.view.hideTransformation && cellRaw.toString('utf8').trim() !== ''
+          ? defaultTransformation(env.meta?.rp ?? null, db, meta.orgTable, meta.orgName)
+          : null
+      const m =
+        predefined !== null
+          ? {
+              column_name: meta.orgName,
+              mimetype: predefined.mimetype,
+              transformation: predefined.transformation,
+              transformation_options: stored?.transformation_options ?? '',
+              input_transformation: '',
+              input_transformation_options: '',
+            }
+          : stored
+      row.cells.push(applyTransformation(cell, cellRaw, meta, m, where, sign))
     }
     rows.push(row)
   }
@@ -1260,11 +1279,34 @@ async function rowData(
  * transformation" display option is off.
  * pma: src/Display/Results.php::getTable (mediaTypeMap), Transformations::getMime(strict = false, fullName = true)
  */
-async function mediaTypeMap(env: GridEnv, fields: Field[]): Promise<Map<string, MimeInfo>> {
+async function mediaTypeMap(
+  env: GridEnv,
+  fields: Field[],
+  showQuery: string | null,
+): Promise<Map<string, MimeInfo>> {
   const out = new Map<string, MimeInfo>()
   const meta = env.meta
   if (!env.cfg.BrowseMIME || env.view.hideTransformation || meta === null) return out
   if (meta.rp.browserTransformationFeature === null || meta.control === null) return out
+  // the special browser transformation of some SHOW statements (`..Info`, `..Create Table`)
+  if (showQuery !== null) {
+    const which =
+      /^SHOW\s+(VARIABLES|(FULL\s+)?PROCESSLIST|STATUS|TABLE|GRANTS|CREATE|LOGS|DATABASES|FIELDS)/i.exec(
+        showQuery,
+      )
+    const sql = (column: string): MimeInfo => ({
+      column_name: column,
+      mimetype: 'Text_Plain',
+      transformation: 'output/Text_Plain_Sql.php',
+      transformation_options: '',
+      input_transformation: '',
+      input_transformation_options: '',
+    })
+    if (which?.[1] !== undefined) {
+      if (which[1].toUpperCase().includes('PROCESSLIST')) out.set('..Info', sql('Info'))
+      if (/CREATE\s+TABLE/i.test(showQuery)) out.set('..Create Table', sql('Create Table'))
+    }
+  }
   const seen = new Set<string>()
   for (const f of fields) {
     const key = `${f.db}\u0000${f.orgTable}`
@@ -1281,12 +1323,11 @@ function applyTransformation(
   cell: GridCell,
   raw: Buffer | null,
   meta: Field,
-  mediaTypes: Map<string, MimeInfo>,
+  m: MimeInfo | undefined,
   where: string,
   sign: (s: string) => string,
 ): GridCell {
   if (raw === null || cell.k === 'null') return cell
-  const m = mediaTypes.get(`${meta.db}.${meta.orgTable}.${meta.orgName}`)
   if (m === undefined || m.mimetype === '' || m.transformation === '') return cell
   const plugin = findTransformationPlugin(m.transformation)
   if (plugin === null || plugin.kind === 'input') return cell

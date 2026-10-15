@@ -85,7 +85,7 @@ const CASES: Case[] = [
     steps: [browse({ table: 't', pos: '0' }, { table: 't' })],
   },
   {
-    name: 'sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6]',
+    name: 'sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6] [p09-a6b162]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT * FROM `t` ORDER BY `t`.`name` DESC', session_max_rows: '25' },

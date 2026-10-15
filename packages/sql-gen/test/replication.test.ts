@@ -15,7 +15,7 @@ const mysql = (versionInt: number) => ({ versionInt, isMariaDb: false })
 const maria = (versionInt: number) => ({ versionInt, isMariaDb: true })
 
 /** phpMyAdmin's terminology per server (src/Replication/*.php, Compatibility::getShowBinLogStatusStmt) */
-describe('replication statements', () => {
+describe('replication statements [p06-ba939d]', () => {
   it('binary log status: SHOW BINARY LOG STATUS (MySQL 8.2+), SHOW BINLOG STATUS (MariaDB 10.5.2+)', () => {
     expect(showBinLogStatusSql(mysql(80411))).toBe('SHOW BINARY LOG STATUS')
     expect(showBinLogStatusSql(mysql(80200))).toBe('SHOW BINARY LOG STATUS')

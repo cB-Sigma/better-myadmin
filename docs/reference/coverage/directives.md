@@ -25,7 +25,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `CaptchaSiteVerifyURL` | apps/server/src/auth/captcha.ts:105 |  |
 | ✅ | `CheckConfigurationPermissions` | apps/server/src/http/config-permissions.ts:23 |  |
 | ✅ | `CodemirrorEnable` | apps/server/src/database/designer.ts:232<br>apps/server/src/database/events.ts:75<br>apps/server/src/database/multi-table.ts:26<br>apps/server/src/database/routines.ts:104<br>apps/server/src/database/triggers.ts:34 |  |
-| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:585<br>apps/web/src/features/database/TrackingPage.tsx:86<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822 |  |
+| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:585<br>apps/web/src/features/database/TrackingPage.tsx:86<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:841 |  |
 | ✅ | `Console/EnterExecutes` | apps/server/src/routes/console.ts:19<br>apps/web/src/features/console/Console.tsx:351<br>apps/web/src/features/console/Console.tsx:479<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:711 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
 | ✅ | `Console/Mode` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:41<br>apps/web/src/features/console/Console.tsx:102<br>apps/web/src/features/console/Console.tsx:223<br>apps/web/src/features/console/Console.tsx:230 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
 | ✅ | `Console/StartHistory` | apps/server/src/routes/console.ts:16<br>apps/web/src/features/console/Console.tsx:178<br>apps/web/src/features/console/Console.tsx:189<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:708 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
@@ -38,7 +38,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DefaultTabTable` | apps/server/src/navigation/nodes.ts:693<br>apps/server/src/privileges/service.ts:224<br>apps/web/src/features/shell/Breadcrumb.tsx:45<br>apps/web/src/routes/s/$server/db/$db/t/$table/index.tsx:13 |  |
 | ✅ | `DefaultTransformations/Inline/1` | packages/mysql-types/src/transformations.ts:733 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
 | ✅ | `DisableShortcutKeys` | apps/web/src/features/shell/layout/ShellLayout.tsx:123 |  |
-| ✅ | `DisplayServersList` | apps/server/src/navigation/service.ts:64<br>apps/web/src/features/navigation/NavigationPanel.tsx:403 |  |
+| ✅ | `DisplayServersList` | apps/server/src/navigation/service.ts:64<br>apps/server/src/shell/home.ts:264<br>apps/web/src/features/navigation/NavigationPanel.tsx:403 |  |
 | ✅ | `enable_drag_drop_import` | apps/web/src/features/import/DragDropImport.tsx:66 |  |
 | ✅ | `FilterLanguages` | apps/server/src/i18n.ts:14<br>packages/i18n/src/languages.ts:105 |  |
 | ✅ | `FirstLevelNavigationItems` | apps/server/src/navigation/nodes.ts:325<br>apps/server/src/navigation/nodes.ts:344<br>apps/server/src/navigation/nodes.ts:375<br>apps/server/src/navigation/tree.ts:125<br>apps/server/src/navigation/tree.ts:650 |  |
@@ -106,10 +106,10 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowCreateDb` | apps/server/src/navigation/nodes.ts:449<br>apps/server/src/server-admin/databases.ts:243<br>apps/server/src/server-admin/databases.ts:263 |  |
 | ✅ | `ShowDatabasesNavigationAsTree` | apps/server/src/navigation/nodes.ts:181<br>apps/server/src/navigation/nodes.ts:444<br>apps/server/src/navigation/tree.ts:535 |  |
 | ✅ | `ShowHint` | apps/web/src/lib/config.ts:83<br>packages/ui/src/components/doc-link.tsx:69 |  |
-| ✅ | `ShowPhpInfo` | apps/server/src/routes/about.ts:39<br>apps/server/src/shell/home.ts:272 | X15 |
+| ✅ | `ShowPhpInfo` | apps/server/src/routes/about.ts:39<br>apps/server/src/shell/home.ts:273 | X15 |
 | ✅ | `TabsMode` | apps/web/src/features/preferences/PrefsHeader.tsx:59<br>packages/ui/src/components/icon.tsx:42<br>apps/web/src/features/shell/Breadcrumb.tsx:27<br>apps/web/src/features/shell/layout/ShellLayout.tsx:70<br>apps/web/src/lib/config.ts:78 |  |
 | ✅ | `TempDir` | apps/server/src/setup/checks.ts:240<br>apps/server/src/setup/checks.ts:241 |  |
-| ✅ | `ThemePerServer` | apps/server/src/main.ts:90<br>apps/web/src/features/preferences/ManagePage.tsx:56<br>apps/web/src/features/shell/HomePage.tsx:233<br>apps/web/src/features/shell/UserMenu.tsx:56<br>apps/web/src/features/shell/layout/ShellLayout.tsx:46 | X16 |
+| ✅ | `ThemePerServer` | apps/server/src/main.ts:90<br>apps/web/src/features/preferences/ManagePage.tsx:56<br>apps/web/src/features/shell/HomePage.tsx:263<br>apps/web/src/features/shell/UserMenu.tsx:56<br>apps/web/src/features/shell/layout/ShellLayout.tsx:46 | X16 |
 | ✅ | `TitleDatabase` | apps/web/src/features/shell/title.ts:46 |  |
 | ✅ | `TitleDefault` | apps/web/src/features/shell/title.ts:48 |  |
 | ✅ | `TitleServer` | apps/web/src/features/shell/title.ts:47 |  |
@@ -118,50 +118,50 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `URLQueryEncryption` | apps/server/src/shell/home.ts:95 |  |
 | ✅ | `URLQueryEncryptionSecretKey` | apps/server/src/shell/home.ts:96 |  |
 | ✅ | `UserprefsDeveloperTab` | apps/server/src/metadata/service.ts:347<br>apps/server/src/preferences/service.ts:87<br>apps/server/src/routes/metadata.ts:591 |  |
-| ✅ | `VersionCheck` | apps/server/src/routes/meta.ts:61<br>apps/server/src/shell/home.ts:273 | X20 |
+| ✅ | `VersionCheck` | apps/server/src/routes/meta.ts:61<br>apps/server/src/shell/home.ts:274 | X20 |
 
 ## 02 browse results grid — 32/32 (100.0%) covered, 31/32 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:371<br>apps/web/src/features/sql/SqlPage.tsx:546 |  |
-| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:825<br>apps/server/src/metadata/service.ts:286<br>apps/server/src/routes/metadata.ts:215<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:368 |  |
-| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:819<br>apps/web/src/features/browse/GridTable.tsx:628<br>apps/web/src/features/browse/GridTable.tsx:648<br>apps/web/src/features/browse/GridTable.tsx:669<br>apps/web/src/features/browse/GridTable.tsx:761 |  |
-| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:818<br>apps/web/src/features/browse/GridTable.tsx:629<br>apps/web/src/features/browse/GridTable.tsx:685<br>apps/web/src/features/browse/GridTable.tsx:761 |  |
+| ✅ | `ActionLinksMode` | packages/ui/src/components/icon.tsx:42<br>packages/ui/src/components/icon.tsx:54<br>apps/server/src/routes/sql.ts:196<br>apps/server/src/table/structure-page.ts:371<br>apps/web/src/features/sql/SqlPage.tsx:551 |  |
+| ✅ | `AllowSharedBookmarks` | apps/server/src/browse/grid.ts:844<br>apps/server/src/metadata/service.ts:286<br>apps/server/src/routes/metadata.ts:215<br>apps/server/src/routes/sql.ts:197<br>apps/web/src/features/browse/ResultsView.tsx:368 |  |
+| ✅ | `BrowseMarkerEnable` | apps/server/src/browse/grid.ts:838<br>apps/web/src/features/browse/GridTable.tsx:629<br>apps/web/src/features/browse/GridTable.tsx:649<br>apps/web/src/features/browse/GridTable.tsx:670<br>apps/web/src/features/browse/GridTable.tsx:762 |  |
+| ✅ | `BrowsePointerEnable` | apps/server/src/browse/grid.ts:837<br>apps/web/src/features/browse/GridTable.tsx:630<br>apps/web/src/features/browse/GridTable.tsx:686<br>apps/web/src/features/browse/GridTable.tsx:762 |  |
 | ✅ | `DefaultForeignKeyChecks` | apps/server/src/database/context.ts:172<br>apps/server/src/database/context.ts:173<br>apps/server/src/import/page.ts:144<br>apps/server/src/routes/sql.ts:106<br>apps/server/src/routes/sql.ts:107 |  |
 | ✅ | `DefaultQueryDatabase` | apps/server/src/routes/sql.ts:146 |  |
 | ✅ | `DefaultQueryTable` | apps/server/src/routes/sql.ts:162 |  |
 | ✅ | `DefaultTransformations/TextLink` | packages/mysql-types/src/transformations.ts:106<br>packages/mysql-types/src/transformations.ts:706 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
 | ✅ | `ForeignKeyDropdownOrder` | apps/server/src/browse/actions.ts:229<br>apps/server/src/insert-edit/form.ts:194<br>apps/server/src/table/search.ts:133 |  |
-| ✅ | `GridEditing` | apps/server/src/browse/grid.ts:693<br>apps/server/src/browse/grid.ts:694 |  |
-| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:821<br>apps/server/src/table/forms.ts:90<br>apps/server/src/table/forms.ts:287<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:208 |  |
-| ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:466<br>apps/server/src/browse/grid.ts:816<br>apps/server/src/browse/grid.ts:1030 |  |
+| ✅ | `GridEditing` | apps/server/src/browse/grid.ts:694<br>apps/server/src/browse/grid.ts:695 |  |
+| ✅ | `InitialSlidersState` | apps/server/src/browse/grid.ts:840<br>apps/server/src/table/forms.ts:90<br>apps/server/src/table/forms.ts:287<br>apps/server/src/table/relation.ts:171<br>apps/server/src/table/search.ts:208 |  |
+| ✅ | `LimitChars` | apps/server/src/browse/actions.ts:214<br>apps/server/src/browse/actions.ts:216<br>apps/server/src/browse/grid.ts:467<br>apps/server/src/browse/grid.ts:835<br>apps/server/src/browse/grid.ts:1049 |  |
 | ➖ | `LinkLengthLimit` |  | n/a: Generator::linkOrButton turns a link whose URL is longer into a POST (data-post); the SPA navigates client-side and sends parameters in API bodies, so no URL length applies |
-| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:582<br>apps/server/src/database/structure.ts:292<br>apps/server/src/database/tables.ts:224<br>apps/server/src/export/page.ts:39<br>apps/server/src/query/pipeline.ts:714 |  |
-| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:595<br>apps/server/src/browse/grid.ts:823<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/database/central-columns.ts:119 |  |
+| ✅ | `MaxExactCount` | apps/server/src/browse/grid.ts:583<br>apps/server/src/database/structure.ts:292<br>apps/server/src/database/tables.ts:224<br>apps/server/src/export/page.ts:39<br>apps/server/src/query/pipeline.ts:714 |  |
+| ✅ | `MaxRows` | apps/server/src/browse/grid.ts:596<br>apps/server/src/browse/grid.ts:842<br>apps/server/src/browse/view-state.ts:57<br>apps/server/src/browse/view-state.ts:98<br>apps/server/src/database/central-columns.ts:119 |  |
 | ✅ | `Order` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:51<br>apps/web/src/features/console/Console.tsx:987<br>apps/web/src/features/console/Console.tsx:990<br>apps/web/src/features/sql/ProfilingCard.tsx:70 |  |
-| ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1115<br>apps/server/src/insert-edit/form.ts:403<br>apps/server/src/insert-edit/form.ts:477 |  |
+| ✅ | `ProtectBinary` | apps/server/src/browse/grid.ts:1134<br>apps/server/src/insert-edit/form.ts:403<br>apps/server/src/insert-edit/form.ts:477 |  |
 | ✅ | `RelationalDisplay` | apps/server/src/browse/view-state.ts:70 |  |
 | ✅ | `RememberSorting` | apps/server/src/browse/service.ts:67 |  |
 | ✅ | `RepeatCells` | apps/server/src/browse/view-state.ts:54<br>apps/server/src/browse/view-state.ts:105<br>apps/server/src/insert-edit/foreign.ts:44 |  |
-| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:814<br>apps/web/src/features/browse/GridTable.tsx:145<br>apps/web/src/features/browse/GridTable.tsx:607 |  |
-| ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:308 |  |
-| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:815<br>apps/web/src/features/browse/GridTable.tsx:514<br>apps/web/src/features/browse/GridTable.tsx:525<br>apps/web/src/features/browse/GridTable.tsx:547 |  |
-| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:817<br>apps/web/src/features/browse/GridTable.tsx:261<br>apps/web/src/features/browse/GridTable.tsx:324 |  |
+| ✅ | `RowActionLinks` | apps/server/src/browse/grid.ts:833<br>apps/web/src/features/browse/GridTable.tsx:145<br>apps/web/src/features/browse/GridTable.tsx:608 |  |
+| ✅ | `RowActionLinksWithoutUnique` | apps/server/src/browse/grid.ts:309 |  |
+| ✅ | `RowActionType` | packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:834<br>apps/web/src/features/browse/GridTable.tsx:515<br>apps/web/src/features/browse/GridTable.tsx:526<br>apps/web/src/features/browse/GridTable.tsx:548 |  |
+| ✅ | `SaveCellsAtOnce` | apps/server/src/browse/grid.ts:836<br>apps/web/src/features/browse/GridTable.tsx:261<br>apps/web/src/features/browse/GridTable.tsx:324 |  |
 | ✅ | `Servers/*/MaxTableUiprefs` | apps/server/src/metadata/service.ts:292 |  |
 | ✅ | `Servers/*/table_uiprefs` | packages/metadata/src/storage.ts:35<br>packages/metadata/src/storage.ts:57<br>packages/metadata/src/storage.ts:80<br>packages/metadata/src/storage.ts:102 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
-| ✅ | `ShowAll` | apps/server/src/browse/grid.ts:594<br>apps/server/src/browse/grid.ts:824<br>apps/server/src/insert-edit/foreign.ts:22 |  |
-| ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:625 |  |
+| ✅ | `ShowAll` | apps/server/src/browse/grid.ts:595<br>apps/server/src/browse/grid.ts:843<br>apps/server/src/insert-edit/foreign.ts:22 |  |
+| ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:626 |  |
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:100<br>apps/server/src/query/message.ts:83 |  |
-| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:820<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:94 |  |
+| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:282<br>packages/ui/src/components/icon.tsx:42<br>apps/server/src/browse/grid.ts:839<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/server-admin/plugins-binlog.ts:94 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
-| ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:401 |  |
+| ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:406 |  |
 
 ## 03 insert edit transformations — 16/16 (100.0%) covered, 13/16 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1266<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:106 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1289<br>apps/server/src/routes/insert-edit.ts:123<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:106 |  |
 | ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:92 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |
@@ -241,10 +241,10 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/ssl_verify` | apps/server/src/db/control.ts:31<br>apps/server/src/db/pool-manager.ts:49 |  |
 | ✅ | `Servers/*/usergroups` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:61<br>packages/metadata/src/storage.ts:84<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:194 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/users` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:60<br>packages/metadata/src/storage.ts:83<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:193 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
-| ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:264<br>apps/server/src/shell/password.ts:31 |  |
+| ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:265<br>apps/server/src/shell/password.ts:31 |  |
 | ✅ | `ShowGitRevision` | apps/server/src/routes/meta.ts:18<br>apps/server/src/shell/home.ts:260 |  |
 | ✅ | `ShowServerInfo` | apps/web/src/features/shell/AboutPages.tsx:65<br>apps/server/src/shell/about.ts:112<br>apps/server/src/shell/home.ts:200 |  |
-| ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:143<br>apps/web/src/features/shell/HomePage.tsx:239<br>apps/web/src/features/shell/HomePage.tsx:244<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
+| ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:144<br>apps/web/src/features/shell/HomePage.tsx:269<br>apps/web/src/features/shell/HomePage.tsx:274<br>apps/web/src/features/shell/themes/ThemesPage.tsx:15 | X16 |
 
 ## 07 export import — 137/138 (99.3%) covered, 133/138 implemented
 
@@ -449,9 +449,9 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowDbStructureCreation` | apps/server/src/database/structure.ts:203<br>apps/server/src/database/structure.ts:362 |  |
 | ✅ | `ShowDbStructureLastCheck` | apps/server/src/database/structure.ts:205<br>apps/server/src/database/structure.ts:368 |  |
 | ✅ | `ShowDbStructureLastUpdate` | apps/server/src/database/structure.ts:204<br>apps/server/src/database/structure.ts:365 |  |
-| ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:397 |  |
-| ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:396<br>apps/web/src/features/sql/SqlPage.tsx:525 |  |
-| ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:592<br>packages/metadata/src/userprefs.ts:154<br>apps/server/src/main.ts:88<br>apps/server/src/preferences/service.ts:331<br>apps/server/src/routes/shell.ts:147 | X16 |
+| ✅ | `TextareaCols` | apps/server/src/insert-edit/form.ts:586<br>apps/server/src/insert-edit/form.ts:587<br>apps/server/src/routes/sql.ts:192<br>apps/web/src/features/sql/SqlPage.tsx:402 |  |
+| ✅ | `TextareaRows` | apps/server/src/insert-edit/form.ts:581<br>apps/server/src/insert-edit/form.ts:582<br>apps/server/src/routes/sql.ts:193<br>apps/web/src/features/sql/SqlPage.tsx:401<br>apps/web/src/features/sql/SqlPage.tsx:530 |  |
+| ✅ | `ThemeDefault` | apps/server/src/routes/metadata.ts:592<br>apps/server/src/routes/shell.ts:148<br>packages/metadata/src/userprefs.ts:154<br>apps/server/src/main.ts:88<br>apps/server/src/preferences/service.ts:331 | X16 |
 | ✅ | `TrustedProxies` | apps/server/src/preferences/form-display.ts:297<br>apps/web/src/features/setup/SetupForms.tsx:180<br>apps/server/src/app.ts:145<br>apps/server/src/auth/config.ts:26<br>apps/server/src/auth/http.ts:70 |  |
 | ✅ | `UserprefsDisallow` | apps/server/src/preferences/form-display.ts:222<br>apps/server/src/preferences/form-display.ts:309<br>apps/server/src/preferences/form-display.ts:459<br>apps/server/src/metadata/service.ts:348<br>apps/server/src/preferences/service.ts:99 |  |
 | ✅ | `ZeroConf` | apps/server/src/routes/metadata.ts:129<br>apps/server/src/shell/home.ts:257 |  |
@@ -464,9 +464,9 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DBG/sqllog` | apps/server/src/http/sql-log.ts:31 |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:92<br>apps/server/src/routes/sql.ts:191 |  |
 | ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:147<br>apps/server/src/insert-edit/save.ts:253<br>apps/server/src/query/pipeline.ts:205<br>apps/server/src/query/pipeline.ts:512 |  |
-| ✅ | `LintEnable` | apps/server/src/routes/sql.ts:190<br>apps/web/src/features/sql/SqlPage.tsx:139 |  |
+| ✅ | `LintEnable` | apps/server/src/routes/sql.ts:190<br>apps/web/src/features/sql/SqlPage.tsx:141 |  |
 | ✅ | `MaxCharactersInDisplayedSQL` | apps/server/src/browse/actions.ts:84<br>apps/server/src/metadata/service.ts:289<br>apps/server/src/query/message.ts:47<br>apps/server/src/query/message.ts:48<br>apps/server/src/query/message.ts:88 |  |
-| ✅ | `RetainQueryBox` | apps/server/src/routes/sql.ts:188<br>apps/web/src/features/sql/SqlPage.tsx:100 |  |
+| ✅ | `RetainQueryBox` | apps/server/src/routes/sql.ts:188<br>apps/web/src/features/sql/SqlPage.tsx:101 |  |
 | ✅ | `Servers/*/bookmarktable` | packages/metadata/src/storage.ts:28<br>packages/metadata/src/storage.ts:71 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `SQLQuery/Explain` | apps/server/src/query/message.ts:92 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
 | ✅ | `SQLQuery/Refresh` | apps/server/src/query/message.ts:113 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |

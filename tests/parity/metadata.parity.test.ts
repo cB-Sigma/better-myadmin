@@ -301,7 +301,7 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
       },
     }))
 
-  it('SQL box with bkm_label + bkm_replace replaces same-label bookmarks', () =>
+  it('SQL box with bkm_label + bkm_replace replaces same-label bookmarks [p09-8e8a52]', () =>
     runStep(pma, bma, {
       name: 'replace',
       pma: (p) =>
@@ -671,7 +671,7 @@ describe.skipIf(!available)('parity: creating the configuration storage', () => 
     }
   }
 
-  it('fix_pmadb: create the missing tables (every table name configured, custom names kept)', () =>
+  it('fix_pmadb: create the missing tables (every table name configured, custom names kept) [p08-c68812]', () =>
     scenario({
       action: 'fix_pmadb',
       db: () => '',
@@ -700,7 +700,7 @@ describe.skipIf(!available)('parity: creating the configuration storage', () => 
       prepare: (x) => createStorage(x.zc, ['pma__bookmark', 'pma__relation', 'pma__userconfig']),
     }))
 
-  it('fixall_pmadb: create the storage in the current database (ZeroConf)', () =>
+  it('fixall_pmadb: create the storage in the current database (ZeroConf) [p08-c68812] [p08-19523b]', () =>
     scenario({
       action: 'fixall_pmadb',
       db: (x) => x.zc,
