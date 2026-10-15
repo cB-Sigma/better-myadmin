@@ -635,12 +635,12 @@ Breadcrumb: Server (`s_host`, "Server:") → Database (`s_db`, "Database:", + �
 - [ ] Other headers: `X-XSS-Protection: 1; mode=block`, `X-Content-Type-Options: nosniff`, `X-Permitted-Cross-Domain-Policies: none`, `X-Robots-Tag: noindex, nofollow`, `Permissions-Policy: fullscreen=(self), interest-cohort=()`, no-cache set, `Content-Type: text/html; charset=utf-8`.
 - [ ] Cookies: `HttpOnly`, `Secure` on HTTPS, `SameSite=$cfg['CookieSameSite']` (`Strict`), `__Secure-` prefix + `_https` suffix on HTTPS; password cookie encrypted with a per-session key, username cookie with `blowfish_secret`; `LoginCookieValidity` inactivity enforcement; `LoginCookieStore`; `LoginCookieDeleteAll`.
 - [ ] Session: `use_strict_mode`, `use_only_cookies`, no trans-sid, regenerate on login, `session_unset/destroy` on full logout; `SessionSavePath` optional.
-- [ ] `AllowArbitraryServer` (`false`) + `ArbitraryServerRegexp`; `p:` prefix stripping; `AllowRoot` (`true`), `AllowNoPassword` (`false`).
+- [x] `AllowArbitraryServer` (`false`) + `ArbitraryServerRegexp`; `p:` prefix stripping; `AllowRoot` (`true`), `AllowNoPassword` (`false`). <!-- parity:test --> `p01-c1d562` [auth-types.test.ts:68](../../apps/server/test/int/auth-types.test.ts#L68) +1
 - [x] IP `AllowDeny` (`IpAllowDeny.php`): `order` `''|deny,allow|allow,deny|explicit`; rules `<allow|deny> <user|%> [from] <ip|cidr|range|all|localhost|localnetA|B|C>` (IPv4 `[a-b]` octet ranges and CIDR; IPv6 exact, trailing `[hex-hex]`, CIDR); `allow,deny`/`explicit` → allowed only if an allow rule matches and no deny rule; `deny,allow` → denied if a deny matches and no allow. Docs examples: `'allow bob from all'`, `'allow mary from 192.168.100.[50-100]'`, `'allow % from 192.168.[5-6].10'`, `'allow root from 192.168.5.50'`. Client IP from `REMOTE_ADDR`, or the first entry of the header configured in `$cfg['TrustedProxies']` (`['1.2.3.4' => 'HTTP_X_FORWARDED_FOR']`) when the proxy matches. <!-- parity:test --> `p01-8f6608` [ip-allow-deny.test.ts:27](../../apps/server/test/unit/ip-allow-deny.test.ts#L27)
-- [ ] Captcha on login (`CaptchaMethod` invisible/checkbox, reCAPTCHA v2 API) — optional.
+- [x] Captcha on login (`CaptchaMethod` invisible/checkbox, reCAPTCHA v2 API) — optional. <!-- parity:test --> `p01-f1880c` [auth-types.test.ts:250](../../apps/server/test/int/auth-types.test.ts#L250) +1
 - [ ] `URLQueryEncryption` (`false`) + `URLQueryEncryptionSecretKey`: encrypts `db, table, field, sql_query, sql_signature, where_clause, goto, back, message_to_show, username, hostname, dbname, tablename` into one `eq` param. SQL query signatures via the HMAC secret (`Core::signSqlQuery/checkSqlQuerySignature`).
 - [ ] `goto`/`back` restricted to `index.php` (`Core::checkPageValidity`); `Sanitize::checkLink()` restricts logo/other links to `https://`, `/url&url=https…`, `./docs/html/`, `./index.php?` (+ `http://` when allowed, `mailto:`/`ftp://` for "other").
-- [ ] Config file world-writable check (`CheckConfigurationPermissions=true`); setup disabled once `config/config.inc.php` exists; leftover `config/` directory warning on home.
+- [x] Config file world-writable check (`CheckConfigurationPermissions=true`); setup disabled once `config/config.inc.php` exists; leftover `config/` directory warning on home. <!-- parity:test --> `p01-e2f8e5` [setup.test.ts:15](../../apps/server/test/int/setup.test.ts#L15) +1
 - [ ] `ForceSSL` is documented as deprecated and **not implemented** in `src/` (*not found*); `PmaAbsoluteUri` (`''`) only influences `isHttps()`/app-id derivation.
 - [ ] `blowfish_secret` length warnings; `MysqlSslWarningSafeHosts`; default `pma`/`pmapass` control-user warning; `hide_connection_errors`.
 - [ ] Auth logging (`AuthLog`, `AuthLogSuccess`); request flood guards ("possible exploit", "GLOBALS overwrite attempt"); password length cap (2000) on login, 256 on change.
@@ -706,7 +706,7 @@ Auth
 - [ ] Cookie login redirects (302) after POST so cookies take effect; username recalled via `LoginCookieRecall`; password cookie lifetime per `LoginCookieStore`.
 - [x] Inactivity logout message with the configured seconds; "Your session has expired. Please log in again." on `session_expired`. <!-- parity:test --> `p01-d6345b` [auth.test.ts:80](../../apps/server/test/int/auth.test.ts#L80)
 - [ ] Server dropdown vs arbitrary server input; `ArbitraryServerRegexp`; language card on login.
-- [ ] Captcha (invisible/checkbox) when fully configured; CSP extended accordingly.
+- [x] Captcha (invisible/checkbox) when fully configured; CSP extended accordingly. <!-- parity:test --> `p01-cdb8f8` [auth-types.test.ts:237](../../apps/server/test/int/auth-types.test.ts#L237) +1
 - [ ] 2FA prompt after password; Application (TOTP + QR), WebAuthn, U2F (deprecated), Simple (debug); configure/disable in Settings with confirmation.
 - [ ] Logout via JS-built POST form with token; `LoginCookieDeleteAll`; partial logout message; `LogoutURL`.
 - [ ] Config auth failure page with "Retry to connect" and server list; HTTP auth 401 realm; signon redirect flows.
@@ -719,7 +719,7 @@ Home / themes / languages / misc
 - [ ] Theme cookie (`pma_theme[-N]`, `_color`), per-theme colour modes, `data-bs-theme`, RTL stylesheet variant.
 - [ ] JS error reporting (TraceKit) with ask/always/never, report modal, "Automatically send report next time", "Change report settings", "Ignore".
 - [ ] `/url` redirector allow-list; docs link conventions (pma docs page#anchor, MySQL refman by version, PHP manual by language, MariaDB KB).
-- [ ] Setup script only without `config.inc.php`: overview messages, servers table, config file display/download/clear, server form tabs with AJAX validation, feature forms, generated `config.inc.php` with `sodium_hex2bin` secret.
+- [x] Setup script only without `config.inc.php`: overview messages, servers table, config file display/download/clear, server form tabs with AJAX validation, feature forms, generated `config.inc.php` with `sodium_hex2bin` secret. <!-- parity:test --> `p01-984896` [setup.test.ts:27](../../apps/server/test/int/setup.test.ts#L27) +7
 
 ## Rebuild notes (modern SPA mapping)
 

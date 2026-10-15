@@ -123,14 +123,14 @@ const cases: Array<{
   file: ((db: string) => ImportFile | null) | ImportFile | null
 }> = [
   {
-    name: 'sql, a few statements (goSql)',
+    name: 'sql, a few statements (goSql) [p07-2162b4]',
     form: () => dbForm,
     file: f(
       'a.sql',
       'CREATE TABLE s1 (a INT, b VARCHAR(5));\nINSERT INTO s1 VALUES (1, "x"), (2, "y");\nSELECT * FROM s1;\n',
     ),
   },
-  { name: 'sql, 61 statements (import mode)', form: () => dbForm, file: f('many.sql', many) },
+  { name: 'sql, 61 statements (import mode) [p07-2162b4]', form: () => dbForm, file: f('many.sql', many) },
   {
     name: 'sql, error in goSql',
     form: () => dbForm,
@@ -148,18 +148,18 @@ const cases: Array<{
     file: f('skip.sql', many),
   },
   {
-    name: 'sql, BOM and CR line ends',
+    name: 'sql, BOM and CR line ends [p07-78ed9c]',
     form: () => dbForm,
     file: f('bom.sql', '﻿CREATE TABLE s3 (a INT);\rINSERT INTO s3 VALUES (1);\r\nINSERT INTO s3 VALUES (2);'),
   },
-  { name: 'sql, gzip', form: () => dbForm, file: f('g.sql.gz', gzipSync(Buffer.from(many))) },
+  { name: 'sql, gzip [p07-85c45c]', form: () => dbForm, file: f('g.sql.gz', gzipSync(Buffer.from(many))) },
   {
-    name: 'sql, zip',
+    name: 'sql, zip [p07-85c45c]',
     form: () => dbForm,
     file: f('z.sql.zip', createZip(Buffer.from(many), 'z.sql', new Date(0))),
   },
   {
-    name: 'sql, latin1 file',
+    name: 'sql, latin1 file [p07-02628c]',
     form: () => dbForm,
     changes: { charset_of_file: 'iso-8859-1' },
     file: f(
@@ -174,19 +174,19 @@ const cases: Array<{
     file: f('ai.sql', 'CREATE TABLE s5 (id INT AUTO_INCREMENT PRIMARY KEY);\nINSERT INTO s5 VALUES (0);\n'),
   },
   {
-    name: 'sql, foreign key checks off',
+    name: 'sql, foreign key checks off [p07-abd2aa]',
     form: () => dbForm,
     changes: { fk_checks: '0' },
     file: f('fk.sql', 'INSERT INTO kid VALUES (1, 42);\n'),
   },
   {
-    name: 'sql, foreign key checks on',
+    name: 'sql, foreign key checks on [p07-abd2aa]',
     form: () => dbForm,
     changes: { fk_checks: ['0', '1'] },
     file: f('fk2.sql', 'INSERT INTO kid VALUES (2, 43);\n'),
   },
   {
-    name: 'csv, new table with column names',
+    name: 'csv, new table with column names [p07-b1fc0b]',
     form: () => dbForm,
     changes: { format: 'csv', csv_col_names: 'something' },
     file: f(
@@ -195,7 +195,7 @@ const cases: Array<{
     ),
   },
   {
-    name: 'csv, no column names, semicolons, empty as NULL',
+    name: 'csv, no column names, semicolons, empty as NULL [p07-e0700d]',
     form: () => dbForm,
     changes: { format: 'csv', csv_terminated: ';', csv_enclosed: "'", csv_empty_as_null: 'something' },
     file: f('semi.csv', "1;'a;b';\r\n2;;x\r\n"),
@@ -231,7 +231,7 @@ const cases: Array<{
     file: f('bad2.csv', '5,five\n'),
   },
   {
-    name: 'csv, invalid separator',
+    name: 'csv, invalid separator [p07-e0700d]',
     form: () => dbForm,
     changes: { format: 'csv', csv_terminated: '' },
     file: f('bad3.csv', 'a\n'),
@@ -250,26 +250,26 @@ const cases: Array<{
   },
   // LOAD DATA (table scope): the reference MySQL runs with local_infile=OFF and secure_file_priv
   {
-    name: 'ldi, LOCAL',
+    name: 'ldi, LOCAL [p07-d5749f]',
     form: () => tableForm,
     changes: { format: 'ldi', ldi_local_option: 'something', ldi_terminated: ',' },
     file: f('t.ldi', '7,seven,7.5\n'),
   },
   {
-    name: 'ldi, server file',
+    name: 'ldi, server file [p07-d5749f]',
     form: () => tableForm,
     changes: { format: 'ldi', ldi_local_option: null, ldi_ignore: 'something', ldi_columns: 'id, name' },
     file: f('t2.ldi', '8;eight\n'),
   },
   {
-    name: 'ldi, compressed',
+    name: 'ldi, compressed [p07-d5749f]',
     form: () => tableForm,
     changes: { format: 'ldi' },
     file: f('t3.ldi.gz', gzipSync(Buffer.from('9;nine;1\n'))),
   },
   { name: 'mediawiki', form: () => dbForm, changes: { format: 'mediawiki' }, file: f('wiki.txt', WIKI) },
   {
-    name: 'ods, column names, percentages, currency',
+    name: 'ods, column names, percentages, currency [p07-3e1771]',
     form: () => dbForm,
     changes: { format: 'ods', ods_col_names: 'something' },
     file: f('book.ods', ods),
@@ -292,7 +292,7 @@ const cases: Array<{
     file: (db) => f('data.xml', XML_DATA(db)),
   },
   {
-    name: 'xml, structure',
+    name: 'xml, structure [p07-712f57]',
     form: () => dbForm,
     changes: { format: 'xml' },
     file: f('struct.xml', XML_STRUCT),
@@ -304,7 +304,7 @@ const cases: Array<{
     file: f('bad.xml', '<pma_xml_export><database'),
   },
   { name: 'shp, points', form: () => dbForm, changes: { format: 'shp' }, file: f('pts.shp', shp()) },
-  { name: 'no file', form: () => dbForm, file: null },
+  { name: 'no file [p07-797ff9]', form: () => dbForm, file: null },
   {
     name: 'incorrect format',
     form: () => dbForm,

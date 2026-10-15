@@ -58,6 +58,8 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [tracked, setTracked] = useState<string[]>([])
+  const [sortV, setSortV] = useState({ col: 1, desc: false })
+  const [sortU, setSortU] = useState({ col: 1, desc: false })
   const [untracked, setUntracked] = useState<string[]>([])
   const [createFor, setCreateFor] = useState<string[] | null>(null)
   const [statements, setStatements] = useState<string[] | null>(null)
@@ -194,6 +196,35 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
     />
   )
   const trackedNames = d.tracked.map((v) => v.table)
+  // tracking.ts tablesorter: sortList [[1, 0]] (Table ascending); Last version sorts as an integer
+  const cmp = (a: string, b: string) => a.localeCompare(b)
+  const versions = [...d.tracked].sort((a, b) => {
+    const k = sortV.col
+    const r =
+      k === 2
+        ? Number(a.version) - Number(b.version)
+        : cmp(
+            k === 3 ? a.created : k === 4 ? a.updated : a.table,
+            k === 3 ? b.created : k === 4 ? b.updated : b.table,
+          )
+    return sortV.desc ? -r : r
+  })
+  const noVersions = [...d.untracked].sort((a, b) => (sortU.desc ? -cmp(a, b) : cmp(a, b)))
+  const sortTh = (
+    label: string,
+    col: number,
+    s0: { col: number; desc: boolean },
+    set0: (s: { col: number; desc: boolean }) => void,
+  ) => (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: phpMyAdmin's tablesorter header is a clickable th
+    <th
+      className="header cursor-pointer select-none"
+      aria-sort={s0.col === col ? (s0.desc ? 'descending' : 'ascending') : 'none'}
+      onClick={() => set0({ col, desc: s0.col === col ? !s0.desc : false })}
+    >
+      {label}
+    </th>
+  )
 
   return (
     <div className="my-3">
@@ -206,17 +237,17 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
               <thead>
                 <tr className="bg-grid-header">
                   <th />
-                  <th>{t('Table')}</th>
-                  <th>{t('Last version')}</th>
-                  <th>{t('Created')}</th>
-                  <th>{t('Updated')}</th>
+                  {sortTh(t('Table'), 1, sortV, setSortV)}
+                  {sortTh(t('Last version'), 2, sortV, setSortV)}
+                  {sortTh(t('Created'), 3, sortV, setSortV)}
+                  {sortTh(t('Updated'), 4, sortV, setSortV)}
                   <th>{t('Status')}</th>
                   <th>{t('Action')}</th>
                   <th>{t('Show')}</th>
                 </tr>
               </thead>
               <tbody>
-                {d.tracked.map((v) => (
+                {versions.map((v) => (
                   <tr key={v.table} className="odd:bg-grid-odd even:bg-grid-even hover:bg-grid-hover">
                     <td className="text-center">{check(v.table, tracked, setTracked)}</td>
                     <th>
@@ -303,12 +334,12 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
               <thead>
                 <tr className="bg-grid-header">
                   <th />
-                  <th>{t('Table')}</th>
+                  {sortTh(t('Table'), 1, sortU, setSortU)}
                   <th>{t('Action')}</th>
                 </tr>
               </thead>
               <tbody>
-                {d.untracked.map((name) => (
+                {noVersions.map((name) => (
                   <tr key={name} className="odd:bg-grid-odd even:bg-grid-even hover:bg-grid-hover">
                     <td className="text-center">{check(name, untracked, setUntracked)}</td>
                     <th>

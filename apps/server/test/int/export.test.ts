@@ -65,7 +65,7 @@ describe('export page', () => {
     expect((r.json.tables as Array<{ select: boolean }>).map((x) => x.select)).toEqual([false, true])
   })
 
-  it('table scope: rows card with the row count, SQL options only with single_table', async () => {
+  it('table scope: rows card with the row count, SQL options only with single_table [p07-d8b116 p07-c3ad37]', async () => {
     const r = await page({ scope: 'table', db: DB, table: 'a' })
     expect(r.json.rows).toEqual({ allrows: '1', limitTo: '2', limitFrom: '0' })
     const sql = (r.json.plugins as Array<{ name: string; options: unknown }>).find((p) => p.name === 'sql')
@@ -77,7 +77,7 @@ describe('export page', () => {
     expect(sql2?.options).not.toBeNull()
   })
 
-  it('rows export: where clauses replace the WHERE and the LIMIT is dropped', async () => {
+  it('rows export: where clauses replace the WHERE and the LIMIT is dropped [p07-91d400]', async () => {
     const r = await page({
       scope: 'table',
       db: DB,
@@ -121,7 +121,7 @@ describe('export run', () => {
     ['sql_backquotes', 'y'],
   ]
 
-  it('streams the dump as an attachment named from the template', async () => {
+  it('streams the dump as an attachment named from the template [p07-b8f822]', async () => {
     const { prep, res, body } = await download(base)
     expect(prep.json.filename).toBe(`a-${new Date().getFullYear()}.sql`)
     expect(res?.headers.get('content-type')).toBe('text/x-sql')
@@ -140,7 +140,7 @@ describe('export run', () => {
     expect(body).not.toContain('SET NAMES')
   })
 
-  it('saves on the server, refusing to overwrite unless asked', async () => {
+  it('saves on the server, refusing to overwrite unless asked [p07-49a9bb]', async () => {
     const params: Array<[string, string]> = [...base, ['onserver', 'saveit']]
     const first = await t.req('POST', '/api/servers/1/export', { params })
     const file = join(saveDir, `a-${new Date().getFullYear()}.sql`)

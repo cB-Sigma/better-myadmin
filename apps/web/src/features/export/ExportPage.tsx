@@ -134,6 +134,8 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
   )
   const templateNameRef = useRef<HTMLInputElement>(null)
   const [, rerender] = useState(0)
+  /** #checkbox_sql_include_comments changed to unchecked: the comment options are disabled */
+  const [commentsOff, setCommentsOff] = useState(false)
 
   // database scope: plugins without a structure/data radio force both (setupTableStructureOrData)
   const forced = isDb && current !== undefined && structureRadio(current) === null
@@ -150,9 +152,12 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
       }
       if (sod === 'structure') d.add('sql_auto_increment')
       if (isDb && tables.every((x) => !x.data)) d.add('sql_auto_increment')
+      // export.ts: unchecking "Display comments" fades and disables the #ul_include_comments items
+      if (commentsOff)
+        for (const n of ['sql_header_comment', 'sql_dates', 'sql_relation', 'sql_mime']) d.add(n)
     }
     return d
-  }, [plugin, radios, isDb, tables])
+  }, [plugin, radios, isDb, tables, commentsOff])
 
   const pairsOf = (): Array<[string, string]> => {
     const form = formRef.current
@@ -160,7 +165,36 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
     return [...new FormData(form).entries()].map(([k, v]) => [k, String(v)] as [string, string])
   }
 
+  // export.ts checkTimeOut: ExecTimeLimit (+ 1 s margin) after the click, ask whether the run timed out
+  const timeOut = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(
+    () => () => {
+      if (timeOut.current !== null) clearTimeout(timeOut.current)
+    },
+    [],
+  )
+  const checkTimeOut = (limit: number) => {
+    if (limit === 0) return
+    if (timeOut.current !== null) clearTimeout(timeOut.current)
+    timeOut.current = setTimeout(
+      () =>
+        void api
+          .exportCheckTimeOut(server)
+          .then((d) => {
+            if (d.message === 'timeout')
+              showMessage(
+                t('Your export is incomplete, due to a low execution time limit at the PHP level!'),
+                false,
+                'error',
+              )
+          })
+          .catch(() => {}),
+      (limit + 1) * 1000,
+    )
+  }
+
   const submit = async (pairs: Array<[string, string]>) => {
+    checkTimeOut(page.execTimeLimit)
     setBusy(true)
     try {
       const r = await api.exportRun(server, pairs)
@@ -209,6 +243,7 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
   }
 
   const onOption = (name: string, value: string, checked: boolean) => {
+    if (name === 'sql_include_comments') setCommentsOff(!checked)
     if (name.endsWith('_structure_or_data') && checked) {
       setRadios((r) => ({ ...r, [name.slice(0, -'_structure_or_data'.length)]: value }))
     }
@@ -289,389 +324,328 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
     showMessage(t('Template was loaded.'))
   }
 
-  if (output !== null) {
-    return (
-      <ExportOutput
-        text={output.text}
-        onBack={() => setOutput(null)}
-        onRefresh={() => void submit(output.pairs)}
-      />
-    )
-  }
-
   const hiddenTemplateExclude = page.exportType
   return (
-    <div className="container my-3">
-      <h2 className="my-3 flex items-center gap-2 text-lg">
-        <PmaIcon name="b_export" alt={t('Export')} />
-        {page.title}
-      </h2>
-
-      {flash !== null && (
-        <Alert variant={flash.type === 'success' ? 'success' : 'error'} className="mb-3">
-          {flash.text}
-        </Alert>
+    <>
+      {output !== null && (
+        <ExportOutput
+          text={output.text}
+          // the Back link re-posts the form with repopulate=1: the form stays as it was posted
+          onBack={() => setOutput(null)}
+          onRefresh={() => void submit(output.pairs)}
+        />
       )}
+      <div className="container my-3" hidden={output !== null}>
+        <h2 className="my-3 flex items-center gap-2 text-lg">
+          <PmaIcon name="b_export" alt={t('Export')} />
+          {page.title}
+        </h2>
 
-      {page.templates.enabled && (
-        <Panel title={t('Export templates:')} className="mb-3">
-          <PanelBody className="grid gap-3 md:grid-cols-2">
-            <form
-              className="disableAjax"
-              onSubmit={(e) => {
-                e.preventDefault()
-                const name = templateNameRef.current?.value ?? ''
-                if (name === '' || formRef.current === null) return
-                void api
-                  .exportTemplateCreate(server, {
-                    exportType: hiddenTemplateExclude,
-                    templateName: name,
-                    templateData: JSON.stringify(getTemplateData(formRef.current)),
-                  })
-                  .then((r) => {
-                    if (!r.success) {
-                      showMessage(r.message ?? '', false)
-                      return
-                    }
-                    if (templateNameRef.current !== null) templateNameRef.current.value = ''
-                    const list = r.templates ?? []
-                    setTemplates(list)
-                    const created = list.find((x) => x.name === name)
-                    if (created !== undefined) setTemplateId(String(created.id))
-                    showMessage(t('Template was created.'))
-                  })
-              }}
-            >
-              <fieldset>
-                <legend>{t('New template:')}</legend>
-                <div className="flex flex-wrap items-center gap-3">
-                  <label htmlFor="templateName">{t('Template name')}</label>
-                  <Input
-                    ref={templateNameRef}
-                    type="text"
-                    name="templateName"
-                    id="templateName"
-                    maxLength={64}
-                    placeholder={t('Template name')}
-                    required
-                    className="w-48"
-                  />
-                  <Button type="submit" variant="secondary" name="createTemplate" id="createTemplate">
-                    {t('Create')}
-                  </Button>
-                </div>
-              </fieldset>
-            </form>
-            <form id="existingTemplatesForm" className="disableAjax" onSubmit={(e) => e.preventDefault()}>
-              <fieldset>
-                <legend>{t('Existing templates:')}</legend>
-                <div className="flex flex-wrap items-center gap-3">
-                  <label htmlFor="template">{t('Template:')}</label>
-                  <NativeSelect
-                    name="template"
-                    id="template"
-                    required
-                    value={templateId}
-                    onChange={(e) => void loadTemplate(e.currentTarget.value)}
-                  >
-                    <option value="">-- {t('Select a template')} --</option>
-                    {templates.map((x) => (
-                      <option key={x.id} value={String(x.id)}>
-                        {x.name}
-                      </option>
-                    ))}
-                  </NativeSelect>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    name="updateTemplate"
-                    id="updateTemplate"
-                    onClick={() => {
-                      if (templateId === '' || formRef.current === null) return
-                      void api
-                        .exportTemplateUpdate(
-                          server,
-                          Number(templateId),
-                          JSON.stringify(getTemplateData(formRef.current)),
-                        )
-                        .then((r) =>
-                          r.success
-                            ? showMessage(t('Template was updated.'))
-                            : showMessage(r.message ?? '', false),
-                        )
-                    }}
-                  >
-                    {t('Update')}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    name="deleteTemplate"
-                    id="deleteTemplate"
-                    onClick={() => {
-                      if (templateId === '') return
-                      void api.exportTemplateDelete(server, Number(templateId)).then((r) => {
-                        if (!r.success) {
-                          showMessage(r.message ?? '', false)
-                          return
-                        }
-                        setTemplates((ts) => ts.filter((x) => String(x.id) !== templateId))
-                        setTemplateId('')
-                        showMessage(t('Template was deleted.'))
-                      })
-                    }}
-                  >
-                    {t('Delete')}
-                  </Button>
-                </div>
-              </fieldset>
-            </form>
-          </PanelBody>
-        </Panel>
-      )}
+        {flash !== null && (
+          <Alert variant={flash.type === 'success' ? 'success' : 'error'} className="mb-3">
+            {flash.text}
+          </Alert>
+        )}
 
-      {page.sqlQuery !== '' && (
-        <Panel title={pgettext('Title of the option on the Export page', 'SQL query:')} className="mb-3">
-          <PanelBody>
-            <div id="sqlqueryform">
-              <Button type="button" variant="secondary" id="showsqlquery" onClick={() => setSqlOpen(true)}>
-                {pgettext('Button to show the SQL query on the export page', 'Show SQL query')}
-              </Button>
-            </div>
-          </PanelBody>
-          <Dialog open={sqlOpen} onOpenChange={setSqlOpen}>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>{pgettext('Title of the option on the Export page', 'SQL query:')}</DialogTitle>
-              </DialogHeader>
-              <DialogBody>
-                <HighlightedSql sql={page.sqlQuery} />
-              </DialogBody>
-              <DialogFooter>
-                <Button type="button" variant="secondary" onClick={() => setSqlOpen(false)}>
-                  {t('Close')}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </Panel>
-      )}
-
-      <form
-        ref={formRef}
-        method="post"
-        name="dump"
-        className="disableAjax"
-        onSubmit={(e) => {
-          e.preventDefault()
-          void submit(pairsOf())
-        }}
-      >
-        <input type="hidden" name="db" value={page.db} />
-        <input type="hidden" name="table" value={page.table} />
-        <input type="hidden" name="export_type" value={page.exportType} />
-        <input type="hidden" name="export_method" value={page.exportMethod} />
-        <input type="hidden" name="template_id" value={templateId} />
-        {page.singleTable && <input type="hidden" name="single_table" value="1" />}
-        {page.sqlQuery !== '' && <input type="hidden" name="sql_query" value={page.sqlQuery} />}
-
-        {page.exportMethod !== 'custom-no-form' && (
-          <Panel title={t('Export method:')} className="mb-3" id="quick_or_custom">
-            <PanelBody>
-              <div className="form-check flex items-center gap-2">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="quick_or_custom"
-                  value="quick"
-                  id="radio_quick_export"
-                  defaultChecked={page.quickOrCustom === 'quick'}
-                  onChange={(e) => e.currentTarget.checked && setCustom(false)}
-                />
-                <label className="form-check-label" htmlFor="radio_quick_export">
-                  {t('Quick - display only the minimal options')}
-                </label>
-              </div>
-              <div className="form-check flex items-center gap-2">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="quick_or_custom"
-                  value="custom"
-                  id="radio_custom_export"
-                  defaultChecked={page.quickOrCustom === 'custom'}
-                  onChange={(e) => e.currentTarget.checked && setCustom(true)}
-                />
-                <label className="form-check-label" htmlFor="radio_custom_export">
-                  {t('Custom - display all possible options')}
-                </label>
-              </div>
+        {page.templates.enabled && (
+          <Panel title={t('Export templates:')} className="mb-3">
+            <PanelBody className="grid gap-3 md:grid-cols-2">
+              <form
+                className="disableAjax"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const name = templateNameRef.current?.value ?? ''
+                  if (name === '' || formRef.current === null) return
+                  void api
+                    .exportTemplateCreate(server, {
+                      exportType: hiddenTemplateExclude,
+                      templateName: name,
+                      templateData: JSON.stringify(getTemplateData(formRef.current)),
+                    })
+                    .then((r) => {
+                      if (!r.success) {
+                        showMessage(r.message ?? '', false)
+                        return
+                      }
+                      if (templateNameRef.current !== null) templateNameRef.current.value = ''
+                      const list = r.templates ?? []
+                      setTemplates(list)
+                      const created = list.find((x) => x.name === name)
+                      if (created !== undefined) setTemplateId(String(created.id))
+                      showMessage(t('Template was created.'))
+                    })
+                }}
+              >
+                <fieldset>
+                  <legend>{t('New template:')}</legend>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <label htmlFor="templateName">{t('Template name')}</label>
+                    <Input
+                      ref={templateNameRef}
+                      type="text"
+                      name="templateName"
+                      id="templateName"
+                      maxLength={64}
+                      placeholder={t('Template name')}
+                      required
+                      className="w-48"
+                    />
+                    <Button type="submit" variant="secondary" name="createTemplate" id="createTemplate">
+                      {t('Create')}
+                    </Button>
+                  </div>
+                </fieldset>
+              </form>
+              <form id="existingTemplatesForm" className="disableAjax" onSubmit={(e) => e.preventDefault()}>
+                <fieldset>
+                  <legend>{t('Existing templates:')}</legend>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <label htmlFor="template">{t('Template:')}</label>
+                    <NativeSelect
+                      name="template"
+                      id="template"
+                      required
+                      value={templateId}
+                      onChange={(e) => void loadTemplate(e.currentTarget.value)}
+                    >
+                      <option value="">-- {t('Select a template')} --</option>
+                      {templates.map((x) => (
+                        <option key={x.id} value={String(x.id)}>
+                          {x.name}
+                        </option>
+                      ))}
+                    </NativeSelect>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      name="updateTemplate"
+                      id="updateTemplate"
+                      onClick={() => {
+                        if (templateId === '' || formRef.current === null) return
+                        void api
+                          .exportTemplateUpdate(
+                            server,
+                            Number(templateId),
+                            JSON.stringify(getTemplateData(formRef.current)),
+                          )
+                          .then((r) =>
+                            r.success
+                              ? showMessage(t('Template was updated.'))
+                              : showMessage(r.message ?? '', false),
+                          )
+                      }}
+                    >
+                      {t('Update')}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      name="deleteTemplate"
+                      id="deleteTemplate"
+                      onClick={() => {
+                        if (templateId === '') return
+                        void api.exportTemplateDelete(server, Number(templateId)).then((r) => {
+                          if (!r.success) {
+                            showMessage(r.message ?? '', false)
+                            return
+                          }
+                          setTemplates((ts) => ts.filter((x) => String(x.id) !== templateId))
+                          setTemplateId('')
+                          showMessage(t('Template was deleted.'))
+                        })
+                      }}
+                    >
+                      {t('Delete')}
+                    </Button>
+                  </div>
+                </fieldset>
+              </form>
             </PanelBody>
           </Panel>
         )}
 
-        <Panel title={t('Format:')} className="mb-3" id="format">
-          <PanelBody>
-            <NativeSelect
-              id="plugins"
-              name="what"
-              aria-label={t('File format to export')}
-              value={plugin}
-              onChange={(e) => changePlugin(e.currentTarget.value)}
-            >
-              {page.plugins.map((p) => (
-                <option key={p.name} value={p.name} data-is-binary={p.forceFile ? 'true' : 'false'}>
-                  {p.text}
-                </option>
-              ))}
-            </NativeSelect>
-          </PanelBody>
-        </Panel>
-
-        {page.exportType === 'server' && page.databases !== undefined && (
-          <Panel title={t('Databases')} className="mb-3" id="databases_and_tables" hidden={!custom}>
+        {page.sqlQuery !== '' && (
+          <Panel title={pgettext('Title of the option on the Export page', 'SQL query:')} className="mb-3">
             <PanelBody>
-              <div className="mb-3 flex gap-2">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  id="db_select_all"
-                  onClick={() => {
-                    for (const o of (document.getElementById('db_select') as HTMLSelectElement).options)
-                      o.selected = true
-                  }}
-                >
-                  {t('Select all')}
-                </Button>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  id="db_unselect_all"
-                  onClick={() => {
-                    for (const o of (document.getElementById('db_select') as HTMLSelectElement).options)
-                      o.selected = false
-                  }}
-                >
-                  {t('Unselect all')}
+              <div id="sqlqueryform">
+                <Button type="button" variant="secondary" id="showsqlquery" onClick={() => setSqlOpen(true)}>
+                  {pgettext('Button to show the SQL query on the export page', 'Show SQL query')}
                 </Button>
               </div>
+            </PanelBody>
+            <Dialog open={sqlOpen} onOpenChange={setSqlOpen}>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>
+                    {pgettext('Title of the option on the Export page', 'SQL query:')}
+                  </DialogTitle>
+                </DialogHeader>
+                <DialogBody>
+                  <HighlightedSql sql={page.sqlQuery} />
+                </DialogBody>
+                <DialogFooter>
+                  <Button type="button" variant="secondary" onClick={() => setSqlOpen(false)}>
+                    {t('Close')}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </Panel>
+        )}
+
+        <form
+          ref={formRef}
+          method="post"
+          name="dump"
+          className="disableAjax"
+          onSubmit={(e) => {
+            e.preventDefault()
+            void submit(pairsOf())
+          }}
+        >
+          <input type="hidden" name="db" value={page.db} />
+          <input type="hidden" name="table" value={page.table} />
+          <input type="hidden" name="export_type" value={page.exportType} />
+          <input type="hidden" name="export_method" value={page.exportMethod} />
+          <input type="hidden" name="template_id" value={templateId} />
+          {page.singleTable && <input type="hidden" name="single_table" value="1" />}
+          {page.sqlQuery !== '' && <input type="hidden" name="sql_query" value={page.sqlQuery} />}
+
+          {page.exportMethod !== 'custom-no-form' && (
+            <Panel title={t('Export method:')} className="mb-3" id="quick_or_custom">
+              <PanelBody>
+                <div className="form-check flex items-center gap-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="quick_or_custom"
+                    value="quick"
+                    id="radio_quick_export"
+                    defaultChecked={page.quickOrCustom === 'quick'}
+                    onChange={(e) => e.currentTarget.checked && setCustom(false)}
+                  />
+                  <label className="form-check-label" htmlFor="radio_quick_export">
+                    {t('Quick - display only the minimal options')}
+                  </label>
+                </div>
+                <div className="form-check flex items-center gap-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="quick_or_custom"
+                    value="custom"
+                    id="radio_custom_export"
+                    defaultChecked={page.quickOrCustom === 'custom'}
+                    onChange={(e) => e.currentTarget.checked && setCustom(true)}
+                  />
+                  <label className="form-check-label" htmlFor="radio_custom_export">
+                    {t('Custom - display all possible options')}
+                  </label>
+                </div>
+              </PanelBody>
+            </Panel>
+          )}
+
+          <Panel title={t('Format:')} className="mb-3" id="format">
+            <PanelBody>
               <NativeSelect
-                name="db_select[]"
-                id="db_select"
-                size={10}
-                multiple
-                aria-label={t('Databases')}
-                defaultValue={page.databases.filter((d) => d.selected).map((d) => d.name)}
-                className="h-auto w-full"
+                id="plugins"
+                name="what"
+                aria-label={t('File format to export')}
+                value={plugin}
+                onChange={(e) => changePlugin(e.currentTarget.value)}
               >
-                {page.databases.map((d) => (
-                  <option key={d.name} value={d.name}>
-                    {d.name}
+                {page.plugins.map((p) => (
+                  <option key={p.name} value={p.name} data-is-binary={p.forceFile ? 'true' : 'false'}>
+                    {p.text}
                   </option>
                 ))}
               </NativeSelect>
             </PanelBody>
           </Panel>
-        )}
 
-        {page.exportType === 'database' && (
-          <Panel title={t('Tables:')} className="mb-3" id="databases_and_tables" hidden={!custom}>
-            <PanelBody style={{ overflowY: 'scroll', maxHeight: '20em' }}>
-              <input type="hidden" name="structure_or_data_forced" value={forced ? '1' : '0'} />
-              <table className="export_table_select w-full text-[13px]">
-                <thead>
-                  <tr>
-                    <th />
-                    <th className="text-start">{t('Tables')}</th>
-                    <th
-                      className="export_structure text-center"
-                      style={forced ? { opacity: 0.4 } : undefined}
-                    >
-                      {t('Structure')}
-                    </th>
-                    <th className="export_data text-center" style={forced ? { opacity: 0.4 } : undefined}>
-                      {t('Data')}
-                    </th>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td className="align-middle">{t('Select all')}</td>
-                    <td className="export_structure text-center">
-                      <input
-                        type="checkbox"
-                        id="table_structure_all"
-                        aria-label={t('Export the structure of all tables.')}
-                        checked={strAll}
-                        ref={(el) => {
-                          if (el !== null) el.indeterminate = strSome && !strAll
-                        }}
-                        disabled={forced}
-                        onChange={(e) => {
-                          const on = e.currentTarget.checked
-                          updateTables((ts) => ts.map((x) => ({ ...x, structure: on, select: on || x.data })))
-                        }}
-                      />
-                    </td>
-                    <td className="export_data text-center">
-                      <input
-                        type="checkbox"
-                        id="table_data_all"
-                        aria-label={t('Export the data of all tables.')}
-                        checked={dataAll}
-                        ref={(el) => {
-                          if (el !== null) el.indeterminate = dataSome && !dataAll
-                        }}
-                        disabled={forced}
-                        onChange={(e) => {
-                          const on = e.currentTarget.checked
-                          updateTables((ts) => ts.map((x) => ({ ...x, data: on, select: on || x.structure })))
-                        }}
-                      />
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tables.map((x, i) => (
-                    <tr key={x.name} className={x.structure && x.data ? 'marked' : undefined}>
-                      <td>
-                        <input
-                          className="checkall"
-                          type="checkbox"
-                          name="table_select[]"
-                          value={x.name}
-                          checked={x.select}
-                          ref={(el) => {
-                            if (el !== null) el.indeterminate = x.select && x.structure !== x.data && !forced
-                          }}
-                          onChange={(e) => {
-                            const on = e.currentTarget.checked
-                            updateTables((ts) =>
-                              ts.map((y, j) =>
-                                j === i
-                                  ? {
-                                      ...y,
-                                      select: on,
-                                      structure: forced ? y.structure : on,
-                                      data: forced ? y.data : on,
-                                    }
-                                  : y,
-                              ),
-                            )
-                          }}
-                        />
-                      </td>
-                      <td className="align-middle text-nowrap">{x.name}</td>
+          {page.exportType === 'server' && page.databases !== undefined && (
+            <Panel title={t('Databases')} className="mb-3" id="databases_and_tables" hidden={!custom}>
+              <PanelBody>
+                <div className="mb-3 flex gap-2">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    id="db_select_all"
+                    onClick={() => {
+                      for (const o of (document.getElementById('db_select') as HTMLSelectElement).options)
+                        o.selected = true
+                    }}
+                  >
+                    {t('Select all')}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    id="db_unselect_all"
+                    onClick={() => {
+                      for (const o of (document.getElementById('db_select') as HTMLSelectElement).options)
+                        o.selected = false
+                    }}
+                  >
+                    {t('Unselect all')}
+                  </Button>
+                </div>
+                <NativeSelect
+                  name="db_select[]"
+                  id="db_select"
+                  size={10}
+                  multiple
+                  aria-label={t('Databases')}
+                  defaultValue={page.databases.filter((d) => d.selected).map((d) => d.name)}
+                  className="h-auto w-full"
+                >
+                  {page.databases.map((d) => (
+                    <option key={d.name} value={d.name}>
+                      {d.name}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </PanelBody>
+            </Panel>
+          )}
+
+          {page.exportType === 'database' && (
+            <Panel title={t('Tables:')} className="mb-3" id="databases_and_tables" hidden={!custom}>
+              <PanelBody style={{ overflowY: 'scroll', maxHeight: '20em' }}>
+                <input type="hidden" name="structure_or_data_forced" value={forced ? '1' : '0'} />
+                <table className="export_table_select w-full text-[13px]">
+                  <thead>
+                    <tr>
+                      <th />
+                      <th className="text-start">{t('Tables')}</th>
+                      <th
+                        className="export_structure text-center"
+                        style={forced ? { opacity: 0.4 } : undefined}
+                      >
+                        {t('Structure')}
+                      </th>
+                      <th className="export_data text-center" style={forced ? { opacity: 0.4 } : undefined}>
+                        {t('Data')}
+                      </th>
+                    </tr>
+                    <tr>
+                      <td />
+                      <td className="align-middle">{t('Select all')}</td>
                       <td className="export_structure text-center">
                         <input
                           type="checkbox"
-                          name="table_structure[]"
-                          value={x.name}
-                          checked={x.structure}
+                          id="table_structure_all"
+                          aria-label={t('Export the structure of all tables.')}
+                          checked={strAll}
+                          ref={(el) => {
+                            if (el !== null) el.indeterminate = strSome && !strAll
+                          }}
                           disabled={forced}
                           onChange={(e) => {
                             const on = e.currentTarget.checked
                             updateTables((ts) =>
-                              ts.map((y, j) => (j === i ? { ...y, structure: on, select: on || y.data } : y)),
+                              ts.map((x) => ({ ...x, structure: on, select: on || x.data })),
                             )
                           }}
                         />
@@ -679,380 +653,454 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
                       <td className="export_data text-center">
                         <input
                           type="checkbox"
-                          name="table_data[]"
-                          value={x.name}
-                          checked={x.data}
+                          id="table_data_all"
+                          aria-label={t('Export the data of all tables.')}
+                          checked={dataAll}
+                          ref={(el) => {
+                            if (el !== null) el.indeterminate = dataSome && !dataAll
+                          }}
                           disabled={forced}
                           onChange={(e) => {
                             const on = e.currentTarget.checked
                             updateTables((ts) =>
-                              ts.map((y, j) => (j === i ? { ...y, data: on, select: on || y.structure } : y)),
+                              ts.map((x) => ({ ...x, data: on, select: on || x.structure })),
                             )
                           }}
                         />
                       </td>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </PanelBody>
-          </Panel>
-        )}
+                  </thead>
+                  <tbody>
+                    {tables.map((x, i) => (
+                      <tr key={x.name} className={x.structure && x.data ? 'marked' : undefined}>
+                        <td>
+                          <input
+                            className="checkall"
+                            type="checkbox"
+                            name="table_select[]"
+                            value={x.name}
+                            checked={x.select}
+                            ref={(el) => {
+                              if (el !== null)
+                                el.indeterminate = x.select && x.structure !== x.data && !forced
+                            }}
+                            onChange={(e) => {
+                              const on = e.currentTarget.checked
+                              updateTables((ts) =>
+                                ts.map((y, j) =>
+                                  j === i
+                                    ? {
+                                        ...y,
+                                        select: on,
+                                        structure: forced ? y.structure : on,
+                                        data: forced ? y.data : on,
+                                      }
+                                    : y,
+                                ),
+                              )
+                            }}
+                          />
+                        </td>
+                        <td className="align-middle text-nowrap">{x.name}</td>
+                        <td className="export_structure text-center">
+                          <input
+                            type="checkbox"
+                            name="table_structure[]"
+                            value={x.name}
+                            checked={x.structure}
+                            disabled={forced}
+                            onChange={(e) => {
+                              const on = e.currentTarget.checked
+                              updateTables((ts) =>
+                                ts.map((y, j) =>
+                                  j === i ? { ...y, structure: on, select: on || y.data } : y,
+                                ),
+                              )
+                            }}
+                          />
+                        </td>
+                        <td className="export_data text-center">
+                          <input
+                            type="checkbox"
+                            name="table_data[]"
+                            value={x.name}
+                            checked={x.data}
+                            disabled={forced}
+                            onChange={(e) => {
+                              const on = e.currentTarget.checked
+                              updateTables((ts) =>
+                                ts.map((y, j) =>
+                                  j === i ? { ...y, data: on, select: on || y.structure } : y,
+                                ),
+                              )
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </PanelBody>
+            </Panel>
+          )}
 
-        {page.rows !== null && page.rows !== undefined && (
-          <Panel
-            title={t('Rows:')}
-            className="mb-3"
-            id="rows"
-            hidden={!custom || (showOrData === 'structure' && !isDb)}
-          >
-            <PanelBody>
-              <div className="form-check flex items-center gap-2">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="allrows"
-                  value="1"
-                  id="radio_allrows_1"
-                  defaultChecked={!someRows}
-                  onChange={(e) => e.currentTarget.checked && setSomeRows(false)}
-                />
-                <label className="form-check-label" htmlFor="radio_allrows_1">
-                  {t('Dump all rows')}
-                </label>
-              </div>
-              <div className="form-check mb-2 flex items-center gap-2">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="allrows"
-                  value="0"
-                  id="radio_allrows_0"
-                  defaultChecked={someRows}
-                  onChange={(e) => e.currentTarget.checked && setSomeRows(true)}
-                />
-                <label className="form-check-label" htmlFor="radio_allrows_0">
-                  {t('Dump some row(s)')}
-                </label>
-              </div>
-              <ul className="list-group">
-                <li className="list-group-item py-1" style={someRows ? undefined : { opacity: 0.4 }}>
-                  <label className="form-label block" htmlFor="limit_to">
-                    {t('Number of rows:')}
-                  </label>
-                  <Input
-                    type="text"
-                    id="limit_to"
-                    name="limit_to"
-                    size={5}
-                    defaultValue={page.rows.limitTo}
-                    disabled={!someRows}
-                    className="w-24"
-                    onFocus={(e) => e.currentTarget.select()}
+          {page.rows !== null && page.rows !== undefined && (
+            <Panel
+              title={t('Rows:')}
+              className="mb-3"
+              id="rows"
+              hidden={!custom || (showOrData === 'structure' && !isDb)}
+            >
+              <PanelBody>
+                <div className="form-check flex items-center gap-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="allrows"
+                    value="1"
+                    id="radio_allrows_1"
+                    defaultChecked={!someRows}
+                    onChange={(e) => e.currentTarget.checked && setSomeRows(false)}
                   />
-                </li>
-                <li className="list-group-item py-1" style={someRows ? undefined : { opacity: 0.4 }}>
-                  <label className="form-label block" htmlFor="limit_from">
-                    {t('Row to begin at:')}
+                  <label className="form-check-label" htmlFor="radio_allrows_1">
+                    {t('Dump all rows')}
                   </label>
-                  <Input
-                    type="text"
-                    id="limit_from"
-                    name="limit_from"
-                    size={5}
-                    defaultValue={page.rows.limitFrom}
-                    disabled={!someRows}
-                    className="w-24"
-                    onFocus={(e) => e.currentTarget.select()}
+                </div>
+                <div className="form-check mb-2 flex items-center gap-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="allrows"
+                    value="0"
+                    id="radio_allrows_0"
+                    defaultChecked={someRows}
+                    onChange={(e) => e.currentTarget.checked && setSomeRows(true)}
                   />
-                </li>
-              </ul>
-            </PanelBody>
-          </Panel>
-        )}
-
-        {page.saveDir !== '' && (
-          <Panel title={t('Output:')} className="mb-3" id="output_quick_export" hidden={custom}>
-            <PanelBody>
-              <Switch
-                name="quick_export_onserver"
-                value="saveit"
-                id="checkbox_quick_dump_onserver"
-                defaultChecked={page.quickExportOnServer}
-              >
-                <OptionText text={t('Save on server in the directory <strong>%s</strong>', page.saveDir)} />
-              </Switch>
-              <Switch
-                name="quick_export_onserver_overwrite"
-                value="saveitover"
-                id="checkbox_quick_dump_onserver_overwrite"
-                defaultChecked={page.quickExportOnServerOverwrite}
-              >
-                {t('Overwrite existing file(s)')}
-              </Switch>
-            </PanelBody>
-          </Panel>
-        )}
-
-        <AliasDialog
-          server={server}
-          db={page.db}
-          table={page.table}
-          open={aliasesOpen}
-          rows={aliasRows}
-          onRows={setAliasRows}
-          onOpenChange={(open) => {
-            setAliasesOpen(open)
-            if (!open) {
-              const kept = aliasRows.filter((r) => r.value !== '')
-              setAliasRows(kept)
-              setHasAliases(kept.length > 0)
-            }
-          }}
-        />
-        {aliasRows
-          .filter((r) => r.value !== '')
-          .map((r) => (
-            <input key={r.name} type="hidden" name={r.name} value={r.value} />
-          ))}
-
-        <Panel title={t('Output:')} className="mb-3" id="output" hidden={!custom}>
-          <ul className="divide-y divide-(--card-divider) text-[13px]">
-            <li className="list-group-item px-3 py-1.5">
-              <div className="form-check form-switch flex items-center gap-2">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="btn_alias_config"
-                  checked={hasAliases}
-                  onChange={() => setAliasesOpen(true)}
-                />
-                <label className="form-check-label" htmlFor="btn_alias_config">
-                  {t('Rename exported databases/tables/columns')}
-                </label>
-              </div>
-            </li>
-            {page.exportType !== 'server' && (
-              <li className="list-group-item px-3 py-1.5">
-                <Switch
-                  name="lock_tables"
-                  value="y"
-                  id="checkbox_lock_tables"
-                  defaultChecked={page.lockTables}
-                >
-                  <OptionText text={t('Use %s statement', '<code>LOCK TABLES</code>')} />
-                </Switch>
-              </li>
-            )}
-            <li className="list-group-item px-3 py-1.5">
-              <div
-                className="form-check flex items-center gap-2"
-                style={current?.forceFile ? { opacity: 0.4 } : undefined}
-              >
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  id="radio_view_as_text"
-                  name="output_format"
-                  value="astext"
-                  checked={!asFile}
-                  disabled={current?.forceFile === true}
-                  onChange={(e) => e.currentTarget.checked && setAsFile(false)}
-                />
-                <label className="form-check-label" htmlFor="radio_view_as_text">
-                  {t('View output as text')}
-                </label>
-              </div>
-              <div className="form-check mb-2 flex items-center gap-2">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="output_format"
-                  value="sendit"
-                  id="radio_dump_asfile"
-                  checked={asFile}
-                  onChange={(e) => e.currentTarget.checked && setAsFile(true)}
-                />
-                <label className="form-check-label" htmlFor="radio_dump_asfile">
-                  {t('Save output to a file')}
-                </label>
-              </div>
-              <div className="flex gap-3">
-                <div className="w-px bg-(--card-divider)" />
-                <ul
-                  className="list-group grow"
-                  id="ul_save_asfile"
-                  style={asFile ? undefined : { opacity: 0.4 }}
-                >
-                  {page.saveDir !== '' && (
-                    <li className="list-group-item py-1">
-                      <Switch
-                        name="onserver"
-                        value="saveit"
-                        id="checkbox_dump_onserver"
-                        defaultChecked={page.onServer}
-                      >
-                        <OptionText
-                          text={t('Save on server in the directory <strong>%s</strong>', page.saveDir)}
-                        />
-                      </Switch>
-                      <Switch
-                        name="onserver_overwrite"
-                        value="saveitover"
-                        id="checkbox_dump_onserver_overwrite"
-                        defaultChecked={page.onServerOverwrite}
-                      >
-                        {t('Overwrite existing file(s)')}
-                      </Switch>
-                    </li>
-                  )}
-                  <li className="list-group-item py-1">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <label htmlFor="filename_template" className="inline-flex items-center gap-1">
-                        {t('File name template:')}
-                        <Hint
-                          message={t(
-                            "This value is interpreted using the 'strftime' function, so you can use time formatting strings. Additionally the following transformations will happen: %s Other text will be kept as is. See the FAQ 6.27 for details.",
-                            filenameHint,
-                          )}
-                        />
-                      </label>
-                      <Input
-                        type="text"
-                        name="filename_template"
-                        id="filename_template"
-                        defaultValue={page.filenameTemplate}
-                        className="w-56"
-                      />
-                      <Switch
-                        name="remember_template"
-                        id="checkbox_remember_template"
-                        defaultChecked={page.rememberTemplate}
-                      >
-                        {t('Use this for future exports')}
-                      </Switch>
-                    </div>
+                  <label className="form-check-label" htmlFor="radio_allrows_0">
+                    {t('Dump some row(s)')}
+                  </label>
+                </div>
+                <ul className="list-group">
+                  <li className="list-group-item py-1" style={someRows ? undefined : { opacity: 0.4 }}>
+                    <label className="form-label block" htmlFor="limit_to">
+                      {t('Number of rows:')}
+                    </label>
+                    <Input
+                      type="text"
+                      id="limit_to"
+                      name="limit_to"
+                      size={5}
+                      defaultValue={page.rows.limitTo}
+                      disabled={!someRows}
+                      className="w-24"
+                      onFocus={(e) => e.currentTarget.select()}
+                    />
                   </li>
-                  {page.charsets !== null && (
-                    <li className="list-group-item py-1">
-                      <div className="flex items-center gap-3">
-                        <label htmlFor="select_charset">{t('Character set of the file:')}</label>
-                        <NativeSelect
-                          id="select_charset"
-                          name="charset"
-                          ref={charsetRef}
-                          defaultValue={page.charset === '' ? 'utf-8' : page.charset}
+                  <li className="list-group-item py-1" style={someRows ? undefined : { opacity: 0.4 }}>
+                    <label className="form-label block" htmlFor="limit_from">
+                      {t('Row to begin at:')}
+                    </label>
+                    <Input
+                      type="text"
+                      id="limit_from"
+                      name="limit_from"
+                      size={5}
+                      defaultValue={page.rows.limitFrom}
+                      disabled={!someRows}
+                      className="w-24"
+                      onFocus={(e) => e.currentTarget.select()}
+                    />
+                  </li>
+                </ul>
+              </PanelBody>
+            </Panel>
+          )}
+
+          {page.saveDir !== '' && (
+            <Panel title={t('Output:')} className="mb-3" id="output_quick_export" hidden={custom}>
+              <PanelBody>
+                <Switch
+                  name="quick_export_onserver"
+                  value="saveit"
+                  id="checkbox_quick_dump_onserver"
+                  defaultChecked={page.quickExportOnServer}
+                >
+                  <OptionText text={t('Save on server in the directory <strong>%s</strong>', page.saveDir)} />
+                </Switch>
+                <Switch
+                  name="quick_export_onserver_overwrite"
+                  value="saveitover"
+                  id="checkbox_quick_dump_onserver_overwrite"
+                  defaultChecked={page.quickExportOnServerOverwrite}
+                >
+                  {t('Overwrite existing file(s)')}
+                </Switch>
+              </PanelBody>
+            </Panel>
+          )}
+
+          <AliasDialog
+            server={server}
+            db={page.db}
+            table={page.table}
+            open={aliasesOpen}
+            rows={aliasRows}
+            onRows={setAliasRows}
+            onOpenChange={(open) => {
+              setAliasesOpen(open)
+              if (!open) {
+                const kept = aliasRows.filter((r) => r.value !== '')
+                setAliasRows(kept)
+                setHasAliases(kept.length > 0)
+              }
+            }}
+          />
+          {aliasRows
+            .filter((r) => r.value !== '')
+            .map((r) => (
+              <input key={r.name} type="hidden" name={r.name} value={r.value} />
+            ))}
+
+          <Panel title={t('Output:')} className="mb-3" id="output" hidden={!custom}>
+            <ul className="divide-y divide-(--card-divider) text-[13px]">
+              <li className="list-group-item px-3 py-1.5">
+                <div className="form-check form-switch flex items-center gap-2">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id="btn_alias_config"
+                    checked={hasAliases}
+                    onChange={() => setAliasesOpen(true)}
+                  />
+                  <label className="form-check-label" htmlFor="btn_alias_config">
+                    {t('Rename exported databases/tables/columns')}
+                  </label>
+                </div>
+              </li>
+              {page.exportType !== 'server' && (
+                <li className="list-group-item px-3 py-1.5">
+                  <Switch
+                    name="lock_tables"
+                    value="y"
+                    id="checkbox_lock_tables"
+                    defaultChecked={page.lockTables}
+                  >
+                    <OptionText text={t('Use %s statement', '<code>LOCK TABLES</code>')} />
+                  </Switch>
+                </li>
+              )}
+              <li className="list-group-item px-3 py-1.5">
+                <div
+                  className="form-check flex items-center gap-2"
+                  style={current?.forceFile ? { opacity: 0.4 } : undefined}
+                >
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    id="radio_view_as_text"
+                    name="output_format"
+                    value="astext"
+                    checked={!asFile}
+                    disabled={current?.forceFile === true}
+                    onChange={(e) => e.currentTarget.checked && setAsFile(false)}
+                  />
+                  <label className="form-check-label" htmlFor="radio_view_as_text">
+                    {t('View output as text')}
+                  </label>
+                </div>
+                <div className="form-check mb-2 flex items-center gap-2">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="output_format"
+                    value="sendit"
+                    id="radio_dump_asfile"
+                    checked={asFile}
+                    onChange={(e) => e.currentTarget.checked && setAsFile(true)}
+                  />
+                  <label className="form-check-label" htmlFor="radio_dump_asfile">
+                    {t('Save output to a file')}
+                  </label>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-px bg-(--card-divider)" />
+                  <ul
+                    className="list-group grow"
+                    id="ul_save_asfile"
+                    style={asFile ? undefined : { opacity: 0.4 }}
+                  >
+                    {page.saveDir !== '' && (
+                      <li className="list-group-item py-1">
+                        <Switch
+                          name="onserver"
+                          value="saveit"
+                          id="checkbox_dump_onserver"
+                          defaultChecked={page.onServer}
                         >
-                          {page.charsets.map((cs) => (
-                            <option key={cs} value={cs}>
-                              {cs}
-                            </option>
-                          ))}
-                        </NativeSelect>
+                          <OptionText
+                            text={t('Save on server in the directory <strong>%s</strong>', page.saveDir)}
+                          />
+                        </Switch>
+                        <Switch
+                          name="onserver_overwrite"
+                          value="saveitover"
+                          id="checkbox_dump_onserver_overwrite"
+                          defaultChecked={page.onServerOverwrite}
+                        >
+                          {t('Overwrite existing file(s)')}
+                        </Switch>
+                      </li>
+                    )}
+                    <li className="list-group-item py-1">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <label htmlFor="filename_template" className="inline-flex items-center gap-1">
+                          {t('File name template:')}
+                          <Hint
+                            message={t(
+                              "This value is interpreted using the 'strftime' function, so you can use time formatting strings. Additionally the following transformations will happen: %s Other text will be kept as is. See the FAQ 6.27 for details.",
+                              filenameHint,
+                            )}
+                          />
+                        </label>
+                        <Input
+                          type="text"
+                          name="filename_template"
+                          id="filename_template"
+                          defaultValue={page.filenameTemplate}
+                          className="w-56"
+                        />
+                        <Switch
+                          name="remember_template"
+                          id="checkbox_remember_template"
+                          defaultChecked={page.rememberTemplate}
+                        >
+                          {t('Use this for future exports')}
+                        </Switch>
                       </div>
                     </li>
-                  )}
-                  {page.compressions.length > 0 ? (
-                    <li className="list-group-item py-1">
-                      <div className="flex items-center gap-3">
-                        <label htmlFor="compression">{t('Compression:')}</label>
-                        <NativeSelect
-                          id="compression"
-                          name="compression"
-                          ref={compressionRef}
-                          defaultValue={page.compression}
-                          onChange={(e) => {
-                            // For separate-file exports only ZIP compression is allowed
-                            if (e.currentTarget.value !== 'zip' && separateRef.current !== null) {
-                              separateRef.current.checked = false
-                            }
+                    {page.charsets !== null && (
+                      <li className="list-group-item py-1">
+                        <div className="flex items-center gap-3">
+                          <label htmlFor="select_charset">{t('Character set of the file:')}</label>
+                          <NativeSelect
+                            id="select_charset"
+                            name="charset"
+                            ref={charsetRef}
+                            defaultValue={page.charset === '' ? 'utf-8' : page.charset}
+                          >
+                            {page.charsets.map((cs) => (
+                              <option key={cs} value={cs}>
+                                {cs}
+                              </option>
+                            ))}
+                          </NativeSelect>
+                        </div>
+                      </li>
+                    )}
+                    {page.compressions.length > 0 ? (
+                      <li className="list-group-item py-1">
+                        <div className="flex items-center gap-3">
+                          <label htmlFor="compression">{t('Compression:')}</label>
+                          <NativeSelect
+                            id="compression"
+                            name="compression"
+                            ref={compressionRef}
+                            defaultValue={page.compression}
+                            onChange={(e) => {
+                              // For separate-file exports only ZIP compression is allowed
+                              if (e.currentTarget.value !== 'zip' && separateRef.current !== null) {
+                                separateRef.current.checked = false
+                              }
+                            }}
+                          >
+                            <option value="none">{t('None')}</option>
+                            {page.compressions.includes('zip') && <option value="zip">{t('zipped')}</option>}
+                            {page.compressions.includes('gzip') && (
+                              <option value="gzip">{t('gzipped')}</option>
+                            )}
+                          </NativeSelect>
+                        </div>
+                      </li>
+                    ) : (
+                      <input type="hidden" name="compression" value={page.compression} />
+                    )}
+                    {(page.exportType === 'server' || page.exportType === 'database') && (
+                      <li className="list-group-item py-1">
+                        <Switch
+                          id="checkbox_as_separate_files"
+                          name="as_separate_files"
+                          value={page.exportType}
+                          defaultChecked={page.asSeparateFiles}
+                          inputRef={separateRef}
+                          onChange={(on) => {
+                            if (on && compressionRef.current !== null) compressionRef.current.value = 'zip'
                           }}
                         >
-                          <option value="none">{t('None')}</option>
-                          {page.compressions.includes('zip') && <option value="zip">{t('zipped')}</option>}
-                          {page.compressions.includes('gzip') && <option value="gzip">{t('gzipped')}</option>}
-                        </NativeSelect>
-                      </div>
-                    </li>
-                  ) : (
-                    <input type="hidden" name="compression" value={page.compression} />
-                  )}
-                  {(page.exportType === 'server' || page.exportType === 'database') && (
-                    <li className="list-group-item py-1">
-                      <Switch
-                        id="checkbox_as_separate_files"
-                        name="as_separate_files"
-                        value={page.exportType}
-                        defaultChecked={page.asSeparateFiles}
-                        inputRef={separateRef}
-                        onChange={(on) => {
-                          if (on && compressionRef.current !== null) compressionRef.current.value = 'zip'
-                        }}
-                      >
-                        {page.exportType === 'server'
-                          ? t('Export databases as separate files')
-                          : t('Export tables as separate files')}
-                      </Switch>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </li>
-            <li className="list-group-item px-3 py-1.5">
-              <label htmlFor="maxsize" className="form-label block">
-                {t('Skip tables larger than:')}
-              </label>
-              <Input
-                type="number"
-                id="maxsize"
-                name="maxsize"
-                aria-describedby="maxsizeHelp"
-                className="max-w-xs"
-              />
-              <div id="maxsizeHelp" className="form-text text-fg-muted">
-                {t('The size is measured in MiB.')}
-              </div>
-            </li>
-          </ul>
-        </Panel>
+                          {page.exportType === 'server'
+                            ? t('Export databases as separate files')
+                            : t('Export tables as separate files')}
+                        </Switch>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </li>
+              <li className="list-group-item px-3 py-1.5">
+                <label htmlFor="maxsize" className="form-label block">
+                  {t('Skip tables larger than:')}
+                </label>
+                <Input
+                  type="number"
+                  id="maxsize"
+                  name="maxsize"
+                  aria-describedby="maxsizeHelp"
+                  className="max-w-xs"
+                />
+                <div id="maxsizeHelp" className="form-text text-fg-muted">
+                  {t('The size is measured in MiB.')}
+                </div>
+              </li>
+            </ul>
+          </Panel>
 
-        <Panel
-          title={t('Format-specific options:')}
-          className="mb-3"
-          id="format_specific_opts"
-          hidden={!custom}
-        >
-          <PanelBody>
-            {page.plugins.map((p) => (
-              <PluginOptions
-                key={p.name}
-                plugin={isDb ? withDbScopeRadios(p) : p}
-                hidden={p.name !== plugin}
-                disabled={p.name === plugin ? disabled : new Set()}
-                onChange={onOption}
-                sectionsHidden={sectionVisibility(
-                  p.name,
-                  isDb ? 'structure_and_data' : (radios[p.name] ?? ''),
-                )}
-                forcedOn={isDb && p.name === 'sql' ? FORCED_DB : NONE}
-              />
-            ))}
-          </PanelBody>
-        </Panel>
-
-        <div id="submit">
-          <Button
-            id="buttonGo"
-            type="submit"
-            variant="primary"
-            disabled={busy}
-            data-exec-time-limit={String(page.execTimeLimit)}
+          <Panel
+            title={t('Format-specific options:')}
+            className="mb-3"
+            id="format_specific_opts"
+            hidden={!custom}
           >
-            {t('Export')}
-          </Button>
-        </div>
-      </form>
-    </div>
+            <PanelBody>
+              {page.plugins.map((p) => (
+                <PluginOptions
+                  key={p.name}
+                  plugin={isDb ? withDbScopeRadios(p) : p}
+                  hidden={p.name !== plugin}
+                  disabled={p.name === plugin ? disabled : new Set()}
+                  onChange={onOption}
+                  sectionsHidden={sectionVisibility(
+                    p.name,
+                    isDb ? 'structure_and_data' : (radios[p.name] ?? ''),
+                  )}
+                  forcedOn={isDb && p.name === 'sql' ? FORCED_DB : NONE}
+                />
+              ))}
+            </PanelBody>
+          </Panel>
+
+          <div id="submit">
+            <Button
+              id="buttonGo"
+              type="submit"
+              variant="primary"
+              disabled={busy}
+              data-exec-time-limit={String(page.execTimeLimit)}
+            >
+              {t('Export')}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
   )
 }
 

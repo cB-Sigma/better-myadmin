@@ -155,7 +155,7 @@ describe.skipIf(!pmaReachable)('parity: designer pages', () => {
     expect((r.b.json as { id: number }).id).toBeGreaterThan(0)
   })
 
-  it('savePage new with a taken name: the message, nothing written', async () => {
+  it('savePage new with a taken name: the message, nothing written [p05-3c7130]', async () => {
     const r = await both(
       h,
       () =>
@@ -297,7 +297,7 @@ describe.skipIf(!pmaReachable)('parity: designer pages', () => {
 })
 
 describe.skipIf(!pmaReachable)('parity: display field, relations, settings', () => {
-  it('setDisplayField, then clear it', async () => {
+  it('setDisplayField, then clear it [p05-1b1083]', async () => {
     for (const field of ['name', '']) {
       const r = await both(
         h,
@@ -317,7 +317,7 @@ describe.skipIf(!pmaReachable)('parity: display field, relations, settings', () 
     }
   })
 
-  it('addNewRelation between MyISAM tables: an internal relation', async () => {
+  it('addNewRelation between MyISAM tables: an internal relation [p05-cec42b]', async () => {
     const rel = (db: string) => ({
       DB1: db,
       T1: 'm1',
@@ -347,7 +347,7 @@ describe.skipIf(!pmaReachable)('parity: display field, relations, settings', () 
     expect(String(r.p.message)).toContain('Internal relationship has been added.')
   })
 
-  it('addNewRelation between InnoDB tables: a FOREIGN KEY; then the missing index and the duplicate', async () => {
+  it('addNewRelation between InnoDB tables: a FOREIGN KEY; then the missing index and the duplicate [p05-cec42b]', async () => {
     const add = (db: string, f2: string) => ({
       DB1: db,
       T1: 'parent',
@@ -408,7 +408,7 @@ describe.skipIf(!pmaReachable)('parity: display field, relations, settings', () 
     expect(await relations(B)).toEqual(await relations(P))
   })
 
-  it('save_setting_value: inserted, then merged into the JSON', async () => {
+  it('save_setting_value: inserted, then merged into the JSON [p05-8248ec]', async () => {
     for (const [index, value] of [
       ['angular_direct', 'angular'],
       ['snap_to_grid', 'on'],
@@ -490,14 +490,14 @@ describe.skipIf(!pmaReachable)('parity: relational schema export', () => {
     return { p: exact(p), b: exact(b.data), disposition: exact(disposition), fileName: exact(b.fileName) }
   }
 
-  it('SVG (relations, table dimensions, same width)', async () => {
+  it('SVG (relations, table dimensions, same width) [p07-9b4b39]', async () => {
     const r = await run('svg', { svg_show_table_dimension: 'y', svg_all_tables_same_width: 'y' })
     expect(r.b).toBe(r.p)
     expect(r.b).toContain('<line ')
     expect(r.disposition).toContain(`filename="${r.fileName}"`)
   })
 
-  it('Dia (keys only, landscape, letter)', async () => {
+  it('Dia (keys only, landscape, letter) [p07-9b4b39]', async () => {
     const r = await run('dia', { dia_show_keys: 'y', dia_orientation: 'L', dia_paper: 'letter' })
     expect(r.b).toBe(r.p)
     expect(r.b).toContain('Database - Reference')

@@ -519,16 +519,16 @@ Requested with `printview=1` (POST) — used by "Export"/"Display chart"/"Create
 Parity acceptance list. Each item is something the clone must reproduce; the citation in parentheses is the source.
 
 ### Query handling, counting and header message
-- [ ] A GET `sql_query` is only accepted when accompanied by a valid `sql_signature`; all generated links (sort, FK, refresh, Browse-distinct, simulate "matched rows") carry one (`SqlController`, `Core::signSqlQuery`).
-- [ ] Browsing a table with no query produces `SELECT * FROM \`t\``; with `TablePrimaryKeyOrder` ≠ NONE it appends `ORDER BY \`t\`.\`<first PK col>\` ASC|DESC` (`Sql::getDefaultSqlQueryForBrowse`).
+- [x] A GET `sql_query` is only accepted when accompanied by a valid `sql_signature`; all generated links (sort, FK, refresh, Browse-distinct, simulate "matched rows") carry one (`SqlController`, `Core::signSqlQuery`). <!-- parity:test --> `p02-fae7cc` [browse.test.ts:83](../../apps/server/test/int/browse.test.ts#L83)
+- [x] Browsing a table with no query produces `SELECT * FROM \`t\``; with `TablePrimaryKeyOrder` ≠ NONE it appends `ORDER BY \`t\`.\`<first PK col>\` ASC|DESC` (`Sql::getDefaultSqlQueryForBrowse`). <!-- parity:test --> `p02-1f1189` [browse.test.ts:135](../../apps/server/test/int/browse.test.ts#L135)
 - [ ] A bookmark whose label equals the table name (same db, same user) replaces the default browse query and shows the notice "Using bookmark "%s" as default browse query." with FAQ 6.22 link.
-- [ ] `RememberSorting`: the last ORDER BY of `SELECT *` single-table queries is stored per table (`sorted_col`) and re-applied to later unsorted `SELECT *` browses; not applied when the request originates from the query box (`sql_from_query_box`) or from "Sort by key"; a stored column that no longer exists is discarded; `discard_remembered_sort=1` skips it.
-- [ ] `LIMIT pos, max_rows` is injected only for SELECT/sub-query statements without their own LIMIT, when the parser found no errors, and `max_rows !== 'all'`; export (`INTO OUTFILE`) and `PROCEDURE ANALYSE` are excluded.
+- [x] `RememberSorting`: the last ORDER BY of `SELECT *` single-table queries is stored per table (`sorted_col`) and re-applied to later unsorted `SELECT *` browses; not applied when the request originates from the query box (`sql_from_query_box`) or from "Sort by key"; a stored column that no longer exists is discarded; `discard_remembered_sort=1` skips it. <!-- parity:test --> `p02-dafcf6` [browse.parity.test.ts:87](../../tests/parity/browse.parity.test.ts#L87)
+- [x] `LIMIT pos, max_rows` is injected only for SELECT/sub-query statements without their own LIMIT, when the parser found no errors, and `max_rows !== 'all'`; export (`INTO OUTFILE`) and `PROCEDURE ANALYSE` are excluded. <!-- parity:test --> `p02-9f5692` [browse.parity.test.ts:137](../../tests/parity/browse.parity.test.ts#L137)
 - [ ] Queries with their own LIMIT show no navigation bar and the header uses the user's offset/count for "Showing rows a - b".
 - [ ] Row total is `pos + numRows` without a count query when the returned page is shorter than `max_rows`.
 - [ ] "Just browsing" single-table queries use `SHOW TABLE STATUS` row estimate when ≥ `MaxExactCount`, else `SELECT COUNT(*)`; other SELECTs use `SELECT COUNT(*) FROM (<query minus ORDER BY/LIMIT, SELECT list → 1 unless GROUP BY/DISTINCT/UNION, SQL_NO_CACHE removed>) as cnt`.
 - [ ] Views with `MaxExactCountViews = 0` report total −1: header shows "Showing rows X - ..." with a hint icon "This view has at least this number of rows." and no total; no page selector; no End button; Next always available.
-- [ ] Header text: `Showing rows %1s - %2s (%s total, Query took %01.4f seconds.)`; when `unlimNumRows !== total` the parenthesis reads `%1$s total, %2$s in query`; numbers are locale-formatted (`Util::formatNumber`).
+- [x] Header text: `Showing rows %1s - %2s (%s total, Query took %01.4f seconds.)`; when `unlimNumRows !== total` the parenthesis reads `%1$s total, %2$s in query`; numbers are locale-formatted (`Util::formatNumber`). <!-- parity:test --> `p02-356f71` [browse.parity.test.ts:407](../../tests/parity/browse.parity.test.ts#L407)
 - [ ] For each ORDER BY column present in the result, ` [col: FIRST... - LAST...]` is appended using the first and last row of the **current page**, values upper-cased and truncated to `LimitChars`; BLOB/binary/geometry show `[BLOB - size]`.
 - [ ] Without navigation bar the message is just the success icon + `(Query took %01.4f seconds.)`.
 - [ ] Executed SQL is displayed highlighted only when `ShowSQL` is true and the query is non-empty and not `;`.
@@ -556,7 +556,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] Page selector shown only when > 1 page and not Show-all; current page bold; condensed page list for ≥ 200 pages (first 5, last 5, ±10 around current, 5 % steps, powers-of-two distances).
 - [ ] "Show all" checkbox appears when `ShowAll` or total ≤ 500; enabling asks "Do you really want to see all of the rows? For a big table this could crash the browser."; disabling returns to `MaxRows` rows at `pos=0`.
 - [ ] "Number of rows" select offers 25/50/100/250/500 (+ the current custom value, sorted; "All" disabled option when showing all); change autosubmits; `session_max_rows ≥ 1` and `0 ≤ pos ≤ total−1` validated client side ("Not a valid row number").
-- [ ] The chosen `max_rows`/`pos` are remembered per exact SQL string (md5 of server+db+sql) for the last 10 queries in the session.
+- [x] The chosen `max_rows`/`pos` are remembered per exact SQL string (md5 of server+db+sql) for the last 10 queries in the session. <!-- parity:test --> `p02-284f7e` [browse.parity.test.ts:115](../../tests/parity/browse.parity.test.ts#L115)
 - [ ] Sort links carry `session_max_rows` so that "Show all" survives re-sorting.
 - [ ] "Filter rows" box filters the current page client-side across all `data-column` headers, mirrors its text to the twin box, hides non-matching rows live on keyup.
 - [ ] "Sort by key" select lists `<index> (ASC)` / `(DESC)` per index plus "None", selected according to the current ORDER BY; autosubmits the rewritten query with `sort_by_key=1` (bypasses remembered sort).
@@ -601,19 +601,19 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] Edit/Copy/Delete content is icon/text/both per `RowActionType`.
 - [ ] Edit link → `/table/change` with `where_clause`, `where_clause_signature`, `clause_is_unique`, `sql_query` (SELECT list + FROM only when the query is ≥ 200 chars), `default_action=update`; Copy identical with `default_action=insert`.
 - [ ] Edit cell tooltip: "You can also edit most values by (double-)clicking directly on them." (placement right/left), absent when grid editing is disabled.
-- [ ] Delete link → `/sql` with `DELETE FROM \`t\` WHERE <clause>` (+ ` LIMIT 1` when the clause is not unique), `message_to_show="The row has been deleted."`, `goto` back to the browse query; confirm "Do you really want to execute "<SQL>"?" unless `Confirm` is false; on success the row is removed from the DOM without reloading.
+- [x] Delete link → `/sql` with `DELETE FROM \`t\` WHERE <clause>` (+ ` LIMIT 1` when the clause is not unique), `message_to_show="The row has been deleted."`, `goto` back to the browse query; confirm "Do you really want to execute "<SQL>"?" unless `Confirm` is false; on success the row is removed from the DOM without reloading. <!-- parity:test --> `p02-2b0c72` [browse.parity.test.ts:170](../../tests/parity/browse.parity.test.ts#L170)
 - [ ] `SHOW [FULL] PROCESSLIST` rows get a "Kill" action running `KILL <id>` against db `mysql`.
 - [ ] WHERE clause preference: PRIMARY → UNIQUE → all columns (`clause_is_unique=false`, row anchor class `nonunique`); REAL columns compared via `CONCAT(col)`; binary/BLOB via `CAST(0x… AS BINARY)` (< 1000 bytes) or `CHAR_LENGTH(col)=n` when sole field or skipped; geometry via `CAST(0x… AS BINARY)` (< 5000); BIT via `b'…'`; NULL via `IS NULL`; aliases mapped back to original columns; table aliases replaced by real table unless it is a view.
 - [ ] Each row carries hidden `where_clause` and JSON `condition_array` for client-side updates.
 - [ ] Shift+click on checkboxes selects a range; checked rows get `marked table-active`.
-- [ ] Rows without a unique key (and `RowActionLinksWithoutUnique` on) show the notice "…may result in undesired behavior."; system schemas / non-unique results show "…features are not available." with doc link `cfg_RowActionLinksWithoutUnique`.
+- [x] Rows without a unique key (and `RowActionLinksWithoutUnique` on) show the notice "…may result in undesired behavior."; system schemas / non-unique results show "…features are not available." with doc link `cfg_RowActionLinksWithoutUnique`. <!-- parity:test --> `p02-c56862` [browse.test.ts:118](../../apps/server/test/int/browse.test.ts#L118)
 - [ ] Multi-table (JOIN/sub-query) results, `information_schema`-like schemas, and results from multiple tables never show row actions or grid editing; updatable views do.
 
 ### Bulk actions
 - [ ] "Check all" toggles every row checkbox; "With selected: Edit / Copy / Delete / Export (SELECT only)".
 - [ ] Submitting with nothing selected returns "No row selected." for Edit/Copy/Export/Delete.
 - [ ] Edit opens the multi-row edit form; Copy opens insert forms prefilled; Export exports only the selected rows (`single_table`).
-- [ ] Delete shows a confirmation page listing every `DELETE FROM \`t\` WHERE <clause>;`, with "Enable foreign key checks" checkbox, Yes (danger) / No; Yes executes each delete with `LIMIT 1`, then re-runs the original browse query and shows the executed DELETEs above the grid.
+- [x] Delete shows a confirmation page listing every `DELETE FROM \`t\` WHERE <clause>;`, with "Enable foreign key checks" checkbox, Yes (danger) / No; Yes executes each delete with `LIMIT 1`, then re-runs the original browse query and shows the executed DELETEs above the grid. <!-- parity:test --> `p02-a3dbd4` [browse.parity.test.ts:316](../../tests/parity/browse.parity.test.ts#L316)
 - [ ] `clause_is_unique` for the bulk form is computed from the last row of the page.
 
 ### Cell rendering
@@ -623,7 +623,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] BIT shown as binary digits (`printableBitValue`).
 - [ ] BINARY/BLOB shown as `[BINARY - 12 B]`/`[BLOB - 1.2 KiB]` (`[BLOB - NULL]` for NULL), wrapped in a download link to `/table/get-field` (file `<table>-<col>.bin`, MIME sniffed); with Show binary/BLOB contents the value is shown as UTF-8 text or `0x<hex>` when not printable, truncated; grid editing disabled when the placeholder is shown or `ProtectBinary` forbids.
 - [ ] Geometry: `[GEOMETRY - size]` link, or WKT text (server-converted), or WKB hex without SRID (needs Show binary contents) — never grid-editable.
-- [ ] FK/relation cells are links to `SELECT * FROM \`fdb\`.\`ft\` WHERE \`ff\` = <value>` at `pos=0`; `K` mode shows key with display value as tooltip, `D` mode shows display value (italic NULL if null) with key as tooltip; "Link not found!" when no matching foreign row; display value truncated to `LimitChars`; lookups cached per page.
+- [x] FK/relation cells are links to `SELECT * FROM \`fdb\`.\`ft\` WHERE \`ff\` = <value>` at `pos=0`; `K` mode shows key with display value as tooltip, `D` mode shows display value (italic NULL if null) with key as tooltip; "Link not found!" when no matching foreign row; display value truncated to `LimitChars`; lookups cached per page. <!-- parity:test --> `p02-1e062a` [browse.parity.test.ts:146](../../tests/parity/browse.parity.test.ts#L146)
 - [ ] Display column resolution: `pma__table_info.display_field` → emulated for `information_schema.CHARACTER_SETS/TABLES` → first CHAR-class column → none.
 - [ ] Both pmadb internal relations and native FOREIGN KEYs (from `SHOW CREATE TABLE`) produce FK links; `information_schema`/`mysql` tables get emulated relations and special links (e.g. user → privileges page).
 - [ ] Browse-distinct results (`is_browse_distinct=1`) link each distinct value back to the filtered table.
@@ -634,8 +634,8 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] Trigger per `GridEditing` (click / double-click / disabled); on relational links in double-click mode a single click (700 ms) follows the link and a double-click edits.
 - [ ] Editor type: textarea for `string`/`blob`/`json`, input otherwise; sized to the cell; cursor at end; JSON pretty-printed.
 - [ ] NULL checkbox (unless NOT NULL) with auto-uncheck on typing and auto-check on emptying; checking clears the editor.
-- [ ] ENUM → dropdown of values; SET → multi-select (size ≤ 10) with full value re-fetched when truncated; relation → FK dropdown (ordered per `ForeignKeyDropdownOrder`, natural sort, blank separators) or "Browse foreign values" modal when ≥ `ForeignKeyMaxLimit` rows.
-- [ ] Truncated/transformed cells fetch the full value via `/sql` + `grid_edit` (binary returned as hex).
+- [x] ENUM → dropdown of values; SET → multi-select (size ≤ 10) with full value re-fetched when truncated; relation → FK dropdown (ordered per `ForeignKeyDropdownOrder`, natural sort, blank separators) or "Browse foreign values" modal when ≥ `ForeignKeyMaxLimit` rows. <!-- parity:test --> `p02-10a94f` [browse.parity.test.ts:277](../../tests/parity/browse.parity.test.ts#L277)
+- [x] Truncated/transformed cells fetch the full value via `/sql` + `grid_edit` (binary returned as hex). <!-- parity:test --> `p02-85eff6` [browse.parity.test.ts:199](../../tests/parity/browse.parity.test.ts#L199)
 - [ ] Date/time cells get a datetimepicker with precision from `data-decimals`; invalid typed values hide the picker.
 - [ ] Enter saves (Shift+Enter newline in textarea); Esc cancels; click outside saves; Ctrl/Alt+arrows move editing between cells saving on the way.
 - [ ] Hex cells validate `^(0x)?[a-f0-9]*$` ("Please enter a valid hexadecimal string…").

@@ -73,6 +73,11 @@ test('create table: the Index selects open the Add index dialogs (indexes.ts)', 
   await expect(page.locator('#index_name_0_8')).toHaveText('u_ab')
   await expect(page.locator('#index_name_1_8')).toHaveText('u_ab')
 
+  // Q69: "---" takes the column out of its index (phpMyAdmin's removeColumnFromIndex never does)
+  await row(1).getByLabel('Index').selectOption('none_1')
+  await expect(page.locator('#index_name_1_8')).toHaveCount(0)
+  await expect(page.locator('#index_name_0_8')).toHaveText('u_ab')
+
   // Cancel puts the select back to the index it was in
   await row(2).getByLabel('Index').selectOption('index_2')
   await modal.locator('#addIndexModalCancelButton').click()
@@ -80,5 +85,7 @@ test('create table: the Index selects open the Add index dialogs (indexes.ts)', 
 
   await page.getByRole('button', { name: 'Save' }).click()
   await expect(page).toHaveURL(/\/t\/keyed\/structure$/)
-  expect(await showCreate('keyed')).toContain('UNIQUE KEY `u_ab` (`a`,`b`)')
+  const ddl = await showCreate('keyed')
+  expect(ddl).toContain('UNIQUE KEY `u_ab` (`a`)')
+  expect(ddl).not.toContain('`b`)')
 })

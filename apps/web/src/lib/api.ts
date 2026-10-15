@@ -537,6 +537,9 @@ export const api = {
     call<ExportResponse>('POST', `/servers/${server}/export`, { params }),
   /** The one-shot download URL of a prepared dump (navigated to, so the browser saves it). */
   exportDownloadUrl: (server: number, id: string) => `/api/servers/${server}/export/${id}`,
+  /** pma: /export/check-time-out ('success' | 'timeout') */
+  exportCheckTimeOut: (server: number) =>
+    call<{ message: string }>('GET', `/servers/${server}/export/check-time-out`),
   /** "View output as text": the dump body. */
   exportText: async (server: number, id: string): Promise<string> => {
     const res = await fetch(`/api/servers/${server}/export/${id}`, { credentials: 'same-origin' })

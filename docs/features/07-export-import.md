@@ -595,78 +595,78 @@ Common (`SchemaPlugin::addCommonOptions`): "Show color" `<name>_show_color` (tru
 ## Micro-behaviours checklist
 
 Export page
-- [ ] Format dropdown sorted case-insensitively by display text; invalid `format`/`what` falls back to `sql`.
-- [ ] Choosing a `forceFile` format (ods, odt, pdf, toon, yaml, htmlword) forces "Save output to a file" and disables "View output as text".
-- [ ] Choosing "CSV for MS Excel" sets file charset to `windows-1252`; any other format resets it to `utf-8`.
-- [ ] Quick mode hides tables/rows/output/format-specific cards and shows only the quick save-on-server card (which exists only when `SaveDir` is set).
-- [ ] `Export/method = custom-no-form` removes the Quick/Custom radios and behaves as custom.
-- [ ] Database scope: per-plugin structure/data radio is replaced by hidden `structure_and_data` + `_default`; CREATE TABLE forced on; plugins without a radio disable the Structure/Data columns and set `structure_or_data_forced=1`.
-- [ ] Database scope: `sql_procedure_function` auto-checks only when both header "select all" boxes are fully checked.
-- [ ] No data checkbox checked → data option group collapses and `sql_auto_increment` is disabled.
-- [ ] SQL `data` radio disables dates/relation/mime; `structure` disables auto-increment and hides the Rows card.
-- [ ] "Display comments" unchecked fades and disables header-comment, dates, relation, mime inputs.
-- [ ] Separate-files checkbox forces `zip`; non-zip compression unchecks it; server-side separate files are ignored unless compression is `zip`.
-- [ ] `LOCK TABLES` switch absent at server scope; locks are `READ` and always released in `finally`.
-- [ ] Rows card only for a non-MERGE single table; "Number of rows" prefilled with `unlim_num_rows` or `countRecords()`; sub-inputs disabled unless "Dump some row(s)"; LIMIT only applied when `allrows=0`, `limit_to>0`, `limit_from>=0`.
-- [ ] Rows export from results: `rows_to_delete[]` values become `WHERE (c1) OR (c2)…`; the SELECT's own `LIMIT` is stripped; `single_table` forced.
-- [ ] `single_table` absent at table scope → SQL plugin exposes no options (unless `raw_query`); LaTeX/ODT hide their structure groups.
-- [ ] Raw query export: filename is always `export.<ext>`; title "Exporting a raw query"; no tables/rows blocks.
-- [ ] Filename template: `strftime` applied first, then `@SERVER@/@DATABASE@/@TABLE@/@HTTP_HOST@/@VERBOSE@/@VSERVER@/@PHPMYADMIN@/@COLUMNS@` and legacy `__SERVER__/__DB__/__TABLE__`; `.` and anything but letters/digits/`_`/`-` replaced by `_`; extension appended once (case-insensitive check); `.gz`/`.zip` appended after.
-- [ ] "Use this for future exports" persists the template per scope (user prefs + cookie `pma_<server|db|table>_filename_template`).
-- [ ] Save on server: path `userDir(SaveDir)` with `/`/`\` in the file name replaced by `_`; distinct overwrite flags for quick vs custom; errors/success as flash messages and redirect back to the scope export page.
-- [ ] Download removes `Content-Encoding`, sets `url_rewriter.tags` empty; gzip is skipped when the server already compresses (`zlib.output_compression` or `ob_gzhandler`) unless saving to file or the UA is Chrome.
-- [ ] `CompressOnFly` applies to gzip only: flush when buffered output exceeds `(memory_limit − 1.5 MB)/8`.
-- [ ] Charset conversion only for file output, only when engine ≠ none and charset ∈ `listEncodings()` and ≠ `utf-8`; SQL header `SET NAMES` uses the MySQL name from `$mysqlCharsetMap`.
-- [ ] "Skip tables larger than N MiB" compares `data_length+index_length` and silently skips both structure and data of that table (checked only when structure is included).
-- [ ] View-as-text page: Back link re-posts scalar params with `repopulate=1` (restores aliases from session, forces "View output as text", ignores config defaults for checkboxes), Refresh re-posts the full form (F5 intercepted), Copy to clipboard.
-- [ ] Time-out check: `ExecTimeLimit` seconds + 1 after clicking Export, GET `/export/check-time-out`; error toast on `timeout`.
-- [ ] Templates: CRUD scoped to current user and export type; unique (user, type, name); load applies `null` as "uncheck"; Create/Update/Delete via AJAX with the four toast messages.
-- [ ] Aliases modal: DB/table/column pickers loaded lazily; empty rows pruned on close; switch reflects presence of aliases; column aliases keyed `[colums]` (source mismatch — decide whether to replicate).
+- [x] Format dropdown sorted case-insensitively by display text; invalid `format`/`what` falls back to `sql`. <!-- parity:test --> `p07-d147db` [export-import-checklist.test.ts:101](../../apps/server/test/int/export-import-checklist.test.ts#L101)
+- [x] Choosing a `forceFile` format (ods, odt, pdf, toon, yaml, htmlword) forces "Save output to a file" and disables "View output as text". <!-- parity:test --> `p07-6c8c06` [export-import-checklist.e2e.ts:56](../../tests/e2e/export-import-checklist.e2e.ts#L56)
+- [x] Choosing "CSV for MS Excel" sets file charset to `windows-1252`; any other format resets it to `utf-8`. <!-- parity:test --> `p07-736d72` [export-import-checklist.e2e.ts:69](../../tests/e2e/export-import-checklist.e2e.ts#L69)
+- [x] Quick mode hides tables/rows/output/format-specific cards and shows only the quick save-on-server card (which exists only when `SaveDir` is set). <!-- parity:test --> `p07-d027c7` [export-import-checklist.e2e.ts:44](../../tests/e2e/export-import-checklist.e2e.ts#L44)
+- [x] `Export/method = custom-no-form` removes the Quick/Custom radios and behaves as custom. <!-- parity:test --> `p07-6176b4` [export-import-checklist.test.ts:110](../../apps/server/test/int/export-import-checklist.test.ts#L110)
+- [x] Database scope: per-plugin structure/data radio is replaced by hidden `structure_and_data` + `_default`; CREATE TABLE forced on; plugins without a radio disable the Structure/Data columns and set `structure_or_data_forced=1`. <!-- parity:test --> `p07-f237fe` [export-import-checklist.e2e.ts:123](../../tests/e2e/export-import-checklist.e2e.ts#L123)
+- [x] Database scope: `sql_procedure_function` auto-checks only when both header "select all" boxes are fully checked. <!-- parity:test --> `p07-2cc81e` [export-import-checklist.e2e.ts:109](../../tests/e2e/export-import-checklist.e2e.ts#L109)
+- [x] No data checkbox checked → data option group collapses and `sql_auto_increment` is disabled. <!-- parity:test --> `p07-e8a701` [export-import-checklist.e2e.ts:109](../../tests/e2e/export-import-checklist.e2e.ts#L109)
+- [x] SQL `data` radio disables dates/relation/mime; `structure` disables auto-increment and hides the Rows card. <!-- parity:test --> `p07-c5982b` [export-import-checklist.e2e.ts:95](../../tests/e2e/export-import-checklist.e2e.ts#L95)
+- [x] "Display comments" unchecked fades and disables header-comment, dates, relation, mime inputs. <!-- parity:test --> `p07-73ee1f` [export-import-checklist.e2e.ts:81](../../tests/e2e/export-import-checklist.e2e.ts#L81)
+- [x] Separate-files checkbox forces `zip`; non-zip compression unchecks it; server-side separate files are ignored unless compression is `zip`. <!-- parity:test --> `p07-6c1430` [export-sql.parity.test.ts:142](../../tests/parity/export-sql.parity.test.ts#L142)
+- [x] `LOCK TABLES` switch absent at server scope; locks are `READ` and always released in `finally`. <!-- parity:test --> `p07-35f358` [export-sql.parity.test.ts:154](../../tests/parity/export-sql.parity.test.ts#L154)
+- [x] Rows card only for a non-MERGE single table; "Number of rows" prefilled with `unlim_num_rows` or `countRecords()`; sub-inputs disabled unless "Dump some row(s)"; LIMIT only applied when `allrows=0`, `limit_to>0`, `limit_from>=0`. <!-- parity:test --> `p07-d8b116` [export.test.ts:68](../../apps/server/test/int/export.test.ts#L68)
+- [x] Rows export from results: `rows_to_delete[]` values become `WHERE (c1) OR (c2)…`; the SELECT's own `LIMIT` is stripped; `single_table` forced. <!-- parity:test --> `p07-91d400` [export.test.ts:80](../../apps/server/test/int/export.test.ts#L80)
+- [x] `single_table` absent at table scope → SQL plugin exposes no options (unless `raw_query`); LaTeX/ODT hide their structure groups. <!-- parity:test --> `p07-c3ad37` [export.test.ts:68](../../apps/server/test/int/export.test.ts#L68)
+- [x] Raw query export: filename is always `export.<ext>`; title "Exporting a raw query"; no tables/rows blocks. <!-- parity:test --> `p07-967550` [export-sql.parity.test.ts:193](../../tests/parity/export-sql.parity.test.ts#L193)
+- [x] Filename template: `strftime` applied first, then `@SERVER@/@DATABASE@/@TABLE@/@HTTP_HOST@/@VERBOSE@/@VSERVER@/@PHPMYADMIN@/@COLUMNS@` and legacy `__SERVER__/__DB__/__TABLE__`; `.` and anything but letters/digits/`_`/`-` replaced by `_`; extension appended once (case-insensitive check); `.gz`/`.zip` appended after. <!-- parity:test --> `p07-b8f822` [export.test.ts:124](../../apps/server/test/int/export.test.ts#L124)
+- [x] "Use this for future exports" persists the template per scope (user prefs + cookie `pma_<server|db|table>_filename_template`). <!-- parity:test --> `p07-b71369` [export-import-checklist.test.ts:122](../../apps/server/test/int/export-import-checklist.test.ts#L122)
+- [x] Save on server: path `userDir(SaveDir)` with `/`/`\` in the file name replaced by `_`; distinct overwrite flags for quick vs custom; errors/success as flash messages and redirect back to the scope export page. <!-- parity:test --> `p07-49a9bb` [export.test.ts:143](../../apps/server/test/int/export.test.ts#L143)
+- [x] Download removes `Content-Encoding`, sets `url_rewriter.tags` empty; gzip is skipped when the server already compresses (`zlib.output_compression` or `ob_gzhandler`) unless saving to file or the UA is Chrome. <!-- parity:test --> `p07-cf608f` [export-import-checklist.test.ts:157](../../apps/server/test/int/export-import-checklist.test.ts#L157)
+- [x] `CompressOnFly` applies to gzip only: flush when buffered output exceeds `(memory_limit − 1.5 MB)/8`. <!-- parity:test --> `p07-95720d` [export-import-checklist.test.ts:157](../../apps/server/test/int/export-import-checklist.test.ts#L157)
+- [x] Charset conversion only for file output, only when engine ≠ none and charset ∈ `listEncodings()` and ≠ `utf-8`; SQL header `SET NAMES` uses the MySQL name from `$mysqlCharsetMap`. <!-- parity:test --> `p07-65bcd4` [export-sql.parity.test.ts:149](../../tests/parity/export-sql.parity.test.ts#L149)
+- [x] "Skip tables larger than N MiB" compares `data_length+index_length` and silently skips both structure and data of that table (checked only when structure is included). <!-- parity:test --> `p07-e2aaab` [export-sql.parity.test.ts:155](../../tests/parity/export-sql.parity.test.ts#L155)
+- [x] View-as-text page: Back link re-posts scalar params with `repopulate=1` (restores aliases from session, forces "View output as text", ignores config defaults for checkboxes), Refresh re-posts the full form (F5 intercepted), Copy to clipboard. <!-- parity:test --> `p07-5f94e1` [export-import-checklist.e2e.ts:139](../../tests/e2e/export-import-checklist.e2e.ts#L139)
+- [x] Time-out check: `ExecTimeLimit` seconds + 1 after clicking Export, GET `/export/check-time-out`; error toast on `timeout`. <!-- parity:test --> `p07-dba95e` [export-import-checklist.test.ts:115](../../apps/server/test/int/export-import-checklist.test.ts#L115)
+- [x] Templates: CRUD scoped to current user and export type; unique (user, type, name); load applies `null` as "uncheck"; Create/Update/Delete via AJAX with the four toast messages. <!-- parity:test --> `p07-15847a` [export-import-checklist.test.ts:70](../../apps/server/test/int/export-import-checklist.test.ts#L70)
+- [x] Aliases modal: DB/table/column pickers loaded lazily; empty rows pruned on close; switch reflects presence of aliases; column aliases keyed `[colums]` (source mismatch — decide whether to replicate). <!-- parity:test --> `p07-a32e1d` [export-import-checklist.e2e.ts:155](../../tests/e2e/export-import-checklist.e2e.ts#L155)
 
 SQL output
-- [ ] Header banner lines exactly as listed; blank lines only when comments are on.
-- [ ] `SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";` only for compatibility `NONE`.
-- [ ] `START TRANSACTION;`/`COMMIT;`, `SET FOREIGN_KEY_CHECKS=0/1;`, `SET time_zone = "+00:00";` per options; connection time zone restored.
-- [ ] Charset preamble/restore only for file output.
-- [ ] Routines before tables; events last; triggers right after each table's data; views after all tables with stand-ins first (single-file mode only).
-- [ ] Keys, constraints and AUTO_INCREMENT split out into deferred `ALTER TABLE` blocks flushed at DB footer in order indexes → auto-increments → views → constraints, each with "for dumped tables"/"for table" banners; skipped for ARCHIVE engine; kept inline with `IF NOT EXISTS`.
-- [ ] FULLTEXT keys one `ALTER TABLE` each.
-- [ ] `AUTO_INCREMENT=<n>` appended only if the option is on, the table has the attribute and the table's data is being exported.
-- [ ] Extended inserts split at `sql_max_query_size`; `0` disables.
-- [ ] UPDATE mode writes one statement per row with a unique-condition WHERE; REPLACE/IGNORE/DELAYED keyword placement as specified.
-- [ ] BIT → `b'…'`, GEOMETRY → `0x…`, binary → `0x…` only with hex option, empty binary → `''`.
-- [ ] MSSQL: ANSI quotes, type rewrites, `SET IDENTITY_INSERT t ON ;`/`OFF;` around data.
-- [ ] DEFINER stripped from views when "Exclude definition of current user" or global `remove_definer_from_definitions`; routines/events only with the global flag.
-- [ ] Metadata block uses `USE pmadb;` and `@LAST_PAGE` for pdf_pages/table_coords.
+- [x] Header banner lines exactly as listed; blank lines only when comments are on. <!-- parity:test --> `p07-ac34e1` [export-sql.parity.test.ts:48](../../tests/parity/export-sql.parity.test.ts#L48) +1
+- [x] `SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";` only for compatibility `NONE`. <!-- parity:test --> `p07-8ea5f1` [export-sql.parity.test.ts:48](../../tests/parity/export-sql.parity.test.ts#L48) +1
+- [x] `START TRANSACTION;`/`COMMIT;`, `SET FOREIGN_KEY_CHECKS=0/1;`, `SET time_zone = "+00:00";` per options; connection time zone restored. <!-- parity:test --> `p07-8d25af` [export-sql.parity.test.ts:48](../../tests/parity/export-sql.parity.test.ts#L48) +2
+- [x] Charset preamble/restore only for file output. <!-- parity:test --> `p07-8cba02` [export-sql.parity.test.ts:53](../../tests/parity/export-sql.parity.test.ts#L53)
+- [x] Routines before tables; events last; triggers right after each table's data; views after all tables with stand-ins first (single-file mode only). <!-- parity:test --> `p07-082881` [export-sql.parity.test.ts:48](../../tests/parity/export-sql.parity.test.ts#L48)
+- [x] Keys, constraints and AUTO_INCREMENT split out into deferred `ALTER TABLE` blocks flushed at DB footer in order indexes → auto-increments → views → constraints, each with "for dumped tables"/"for table" banners; skipped for ARCHIVE engine; kept inline with `IF NOT EXISTS`. <!-- parity:test --> `p07-16d4c6` [export-sql.parity.test.ts:48](../../tests/parity/export-sql.parity.test.ts#L48) +1
+- [x] FULLTEXT keys one `ALTER TABLE` each. <!-- parity:test --> `p07-b70b31` [export-import-checklist.test.ts:149](../../apps/server/test/int/export-import-checklist.test.ts#L149)
+- [x] `AUTO_INCREMENT=<n>` appended only if the option is on, the table has the attribute and the table's data is being exported. <!-- parity:test --> `p07-e00e83` [export-sql.parity.test.ts:66](../../tests/parity/export-sql.parity.test.ts#L66)
+- [x] Extended inserts split at `sql_max_query_size`; `0` disables. <!-- parity:test --> `p07-bf25c1` [export-sql.parity.test.ts:75](../../tests/parity/export-sql.parity.test.ts#L75) +2
+- [x] UPDATE mode writes one statement per row with a unique-condition WHERE; REPLACE/IGNORE/DELAYED keyword placement as specified. <!-- parity:test --> `p07-0e07e2` [export-sql.parity.test.ts:102](../../tests/parity/export-sql.parity.test.ts#L102) +3
+- [x] BIT → `b'…'`, GEOMETRY → `0x…`, binary → `0x…` only with hex option, empty binary → `''`. <!-- parity:test --> `p07-d565d2` [export-sql.parity.test.ts:91](../../tests/parity/export-sql.parity.test.ts#L91)
+- [x] MSSQL: ANSI quotes, type rewrites, `SET IDENTITY_INSERT t ON ;`/`OFF;` around data. <!-- parity:test --> `p07-40938a` [export-sql.parity.test.ts:126](../../tests/parity/export-sql.parity.test.ts#L126)
+- [x] DEFINER stripped from views when "Exclude definition of current user" or global `remove_definer_from_definitions`; routines/events only with the global flag. <!-- parity:test --> `p07-1c04ca` [export-sql.parity.test.ts:115](../../tests/parity/export-sql.parity.test.ts#L115)
+- [x] Metadata block uses `USE pmadb;` and `@LAST_PAGE` for pdf_pages/table_coords. <!-- parity:test --> `p07-ab7ea3` [export-sql.parity.test.ts:224](../../tests/parity/export-sql.parity.test.ts#L224)
 
 Import page
-- [ ] "Browse your computer: (Max: NNNKiB)" from `min(upload_max_filesize, post_max_size)`.
-- [ ] Tabs "Upload a file"/"Select file to import" only when both uploads and `UploadDir` are available; local tab pre-selected when resuming a local file.
-- [ ] UploadDir listing filtered by `\.(ext1|ext2…)(\.(gz|bz2|zip))?$`, excludes symlinks, "There are no files to import!" when empty, error when unreadable.
-- [ ] Charset select is encoding list when conversion is supported; else MySQL charsets with `utf8` default and `SET NAMES` behaviour.
-- [ ] Choosing a file auto-selects the matching format (ignoring a compression suffix).
-- [ ] Enclosure/escape inputs capped at one char client-side (two allowed if first is `\`).
-- [ ] Allow-interrupt uses `max_execution_time − 1` with a 5 s safety margin; `0` means never interrupt.
-- [ ] Skip-queries input hidden when resuming; `skip=<offset>` hidden field + info banner shown.
-- [ ] FK checks: hidden `fk_checks=0` + switch `1`; server sets/restores `FOREIGN_KEY_CHECKS`.
-- [ ] Oversized upload (empty POST) → FAQ 1.16 error; no file and no text → "No data was received to import…".
-- [ ] Compression detected by magic bytes, not extension; zip is read fully into memory; bzip2/gzip streamed.
-- [ ] BOM stripped from the first chunk; chunk size grows ×2 up to ×8 of 32 KiB, capped by `memory_limit/8`.
-- [ ] First 50 statements are deferred to the `/sql` results page unless `forceExecute`; beyond that executed directly; displayed SQL dropped when too long.
-- [ ] Success message "Import has been successfully finished, N queries executed." + "(filename)" + created-structures list for CSV/ODS/XML/SHP/MediaWiki.
-- [ ] Timeout message with resubmit link carrying `timeout_passed`, `offset`, `local_import_file`; extra sentence when no progress.
-- [ ] Progress bar only with the `uploadprogress` extension; otherwise "Please be patient…" text; form targets a hidden iframe only when a progress handler exists.
-- [ ] Drag-and-drop requires a selected DB, accepts `sql|xml|ldi|mediawiki|shp` (+`gz|bz2|zip`), posts fixed defaults, shows per-file progress/cancel/result.
-- [ ] CSV: separator validation messages; Excel trailing-`;` hack; `NULL` literal → NULL; `csv_partial_import` ineffective (source quirk).
-- [ ] LDI: table scope only; rejects compressed/charset-converted input; `skip_queries` → `IGNORE n LINES`; LOCAL default from `@@local_infile`.
-- [ ] ODS: sheet → table, `number-columns-repeated`, alpha column names, percentage/currency numeric values.
-- [ ] XML: `pma:` structure executed as `CREATE TABLE IF NOT EXISTS`; selected DB overrides file DB.
+- [x] "Browse your computer: (Max: NNNKiB)" from `min(upload_max_filesize, post_max_size)`. <!-- parity:test --> `p07-e0cbaa` [export-import-checklist.test.ts:206](../../apps/server/test/int/export-import-checklist.test.ts#L206) +1
+- [x] Tabs "Upload a file"/"Select file to import" only when both uploads and `UploadDir` are available; local tab pre-selected when resuming a local file. <!-- parity:test --> `p07-f1893a` [export-import-checklist.test.ts:212](../../apps/server/test/int/export-import-checklist.test.ts#L212) +1
+- [x] UploadDir listing filtered by `\.(ext1|ext2…)(\.(gz|bz2|zip))?$`, excludes symlinks, "There are no files to import!" when empty, error when unreadable. <!-- parity:test --> `p07-e1518d` [import.test.ts:120](../../apps/server/test/int/import.test.ts#L120)
+- [x] Charset select is encoding list when conversion is supported; else MySQL charsets with `utf8` default and `SET NAMES` behaviour. <!-- parity:test --> `p07-02628c` [import.parity.test.ts:161](../../tests/parity/import.parity.test.ts#L161)
+- [x] Choosing a file auto-selects the matching format (ignoring a compression suffix). <!-- parity:test --> `p07-50895c` [import.test.ts:6](../../apps/web/src/features/import/import.test.ts#L6)
+- [x] Enclosure/escape inputs capped at one char client-side (two allowed if first is `\`). <!-- parity:test --> `p07-22fafd` [import.test.ts:13](../../apps/web/src/features/import/import.test.ts#L13)
+- [x] Allow-interrupt uses `max_execution_time − 1` with a 5 s safety margin; `0` means never interrupt. <!-- parity:test --> `p07-89e7c9` [export-import-checklist.test.ts:219](../../apps/server/test/int/export-import-checklist.test.ts#L219)
+- [x] Skip-queries input hidden when resuming; `skip=<offset>` hidden field + info banner shown. <!-- parity:test --> `p07-ca9144` [export-import-checklist.test.ts:219](../../apps/server/test/int/export-import-checklist.test.ts#L219) +1
+- [x] FK checks: hidden `fk_checks=0` + switch `1`; server sets/restores `FOREIGN_KEY_CHECKS`. <!-- parity:test --> `p07-abd2aa` [import.parity.test.ts:176](../../tests/parity/import.parity.test.ts#L176) +1
+- [x] Oversized upload (empty POST) → FAQ 1.16 error; no file and no text → "No data was received to import…". <!-- parity:test --> `p07-797ff9` [import.parity.test.ts:307](../../tests/parity/import.parity.test.ts#L307)
+- [x] Compression detected by magic bytes, not extension; zip is read fully into memory; bzip2/gzip streamed. <!-- parity:test --> `p07-85c45c` [import.test.ts:49](../../packages/import/test/import.test.ts#L49) +2
+- [x] BOM stripped from the first chunk; chunk size grows ×2 up to ×8 of 32 KiB, capped by `memory_limit/8`. <!-- parity:test --> `p07-78ed9c` [import.test.ts:64](../../packages/import/test/import.test.ts#L64) +1
+- [x] First 50 statements are deferred to the `/sql` results page unless `forceExecute`; beyond that executed directly; displayed SQL dropped when too long. <!-- parity:test --> `p07-2162b4` [import.parity.test.ts:125](../../tests/parity/import.parity.test.ts#L125) +1
+- [x] Success message "Import has been successfully finished, N queries executed." + "(filename)" + created-structures list for CSV/ODS/XML/SHP/MediaWiki. <!-- parity:test --> `p07-b1fc0b` [import.parity.test.ts:188](../../tests/parity/import.parity.test.ts#L188)
+- [x] Timeout message with resubmit link carrying `timeout_passed`, `offset`, `local_import_file`; extra sentence when no progress. <!-- parity:test --> `p07-5a8804` [export-import-checklist.test.ts:219](../../apps/server/test/int/export-import-checklist.test.ts#L219) +1
+- [x] Progress bar only with the `uploadprogress` extension; otherwise "Please be patient…" text; form targets a hidden iframe only when a progress handler exists. <!-- parity:test --> `p07-573c56` [export-import-checklist.e2e.ts:200](../../tests/e2e/export-import-checklist.e2e.ts#L200)
+- [x] Drag-and-drop requires a selected DB, accepts `sql|xml|ldi|mediawiki|shp` (+`gz|bz2|zip`), posts fixed defaults, shows per-file progress/cancel/result. <!-- parity:test --> `p07-ca06b4` [import.test.ts:21](../../apps/web/src/features/import/import.test.ts#L21)
+- [x] CSV: separator validation messages; Excel trailing-`;` hack; `NULL` literal → NULL; `csv_partial_import` ineffective (source quirk). <!-- parity:test --> `p07-e0700d` [import.parity.test.ts:197](../../tests/parity/import.parity.test.ts#L197) +1
+- [x] LDI: table scope only; rejects compressed/charset-converted input; `skip_queries` → `IGNORE n LINES`; LOCAL default from `@@local_infile`. <!-- parity:test --> `p07-d5749f` [import.parity.test.ts:252](../../tests/parity/import.parity.test.ts#L252) +2
+- [x] ODS: sheet → table, `number-columns-repeated`, alpha column names, percentage/currency numeric values. <!-- parity:test --> `p07-3e1771` [import.parity.test.ts:271](../../tests/parity/import.parity.test.ts#L271)
+- [x] XML: `pma:` structure executed as `CREATE TABLE IF NOT EXISTS`; selected DB overrides file DB. <!-- parity:test --> `p07-712f57` [import.parity.test.ts:294](../../tests/parity/import.parity.test.ts#L294)
 
 Schema export
-- [ ] Dialog lists Dia/EPS/PDF/SVG with per-format options; PDF hidden without TCPDF.
-- [ ] Coordinates and table list always come from the posted canvas state (`t_x/t_y/t_tbl…`); `offline_export` when Designer tables are not configured.
-- [ ] File name = page description when a saved page is exported online, else `<db>`.
-- [ ] Only relations between selected tables are drawn; keys-only mode shows indexed columns only.
+- [x] Dialog lists Dia/EPS/PDF/SVG with per-format options; PDF hidden without TCPDF. <!-- parity:test --> `p07-8281fd` [export-import-checklist.test.ts:174](../../apps/server/test/int/export-import-checklist.test.ts#L174)
+- [x] Coordinates and table list always come from the posted canvas state (`t_x/t_y/t_tbl…`); `offline_export` when Designer tables are not configured. <!-- parity:test --> `p07-a8542e` [export-import-checklist.test.ts:194](../../apps/server/test/int/export-import-checklist.test.ts#L194)
+- [x] File name = page description when a saved page is exported online, else `<db>`. <!-- parity:test --> `p07-164735` [export-import-checklist.test.ts:182](../../apps/server/test/int/export-import-checklist.test.ts#L182)
+- [x] Only relations between selected tables are drawn; keys-only mode shows indexed columns only. <!-- parity:test --> `p07-9b4b39` [database-designer.parity.test.ts:493](../../tests/parity/database-designer.parity.test.ts#L493) +1
 - [ ] PDF data dictionary pages, TOC, bookmarks, internal links; grid labels in scaled coordinates.
 
 ---

@@ -47,7 +47,7 @@ describe('the create/add form indexes (indexes.ts)', () => {
     expect(labels.has(0)).toBe(false)
   })
 
-  it('removes a column, and the index once empty', () => {
+  it('removes a column, and the index once empty (Q69: phpMyAdmin keeps it)', () => {
     let l = setIndex(emptyIndexLists(), 'unique', 0, idx('UNIQUE', [1, 2]))
     l = removeColumnFromIndex(l, 'unique,0', 1)
     expect(l.unique[0]?.columns.map((c) => c.colIndex)).toEqual([2])
