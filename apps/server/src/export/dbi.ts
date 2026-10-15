@@ -242,7 +242,7 @@ export class ServerExportDbi implements ExportDbi {
   }
 
   async selectDb(db: string): Promise<boolean> {
-    return this.tryQuery(`USE ${backquote(db)}`)
+    return this.conn.selectDb(db, 'export')
   }
 
   getDatabaseList(): Promise<string[]> {

@@ -4,9 +4,9 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-446/449 covered (99.3%): 424 implemented, 2 exception, 20 n/a, 3 planned. [Summary](README.md).
+448/449 covered (99.8%): 426 implemented, 2 exception, 20 n/a, 1 planned. [Summary](README.md).
 
-## 01 shell navigation auth — 107/109 (98.2%) covered, 105/109 implemented
+## 01 shell navigation auth — 109/109 (100.0%) covered, 107/109 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -25,7 +25,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `CaptchaSiteVerifyURL` | apps/server/src/auth/captcha.ts:105 |  |
 | ✅ | `CheckConfigurationPermissions` | apps/server/src/http/config-permissions.ts:23 |  |
 | ✅ | `CodemirrorEnable` | apps/server/src/database/designer.ts:232<br>apps/server/src/database/events.ts:75<br>apps/server/src/database/multi-table.ts:26<br>apps/server/src/database/routines.ts:104<br>apps/server/src/database/triggers.ts:34 |  |
-| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:585<br>apps/web/src/features/database/TrackingPage.tsx:88<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822 |  |
+| ✅ | `Confirm` | apps/web/src/features/database/CentralColumnsPage.tsx:585<br>apps/web/src/features/database/TrackingPage.tsx:86<br>apps/web/src/features/server/DatabasesPage.tsx:414<br>packages/ui/src/components/confirm-dialog.tsx:91<br>apps/server/src/browse/grid.ts:822 |  |
 | ✅ | `Console/EnterExecutes` | apps/server/src/routes/console.ts:19<br>apps/web/src/features/console/Console.tsx:351<br>apps/web/src/features/console/Console.tsx:479<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:711 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
 | ✅ | `Console/Mode` | apps/server/src/routes/console.ts:23<br>apps/server/src/routes/console.ts:41<br>apps/web/src/features/console/Console.tsx:102<br>apps/web/src/features/console/Console.tsx:223<br>apps/web/src/features/console/Console.tsx:230 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
 | ✅ | `Console/StartHistory` | apps/server/src/routes/console.ts:16<br>apps/web/src/features/console/Console.tsx:178<br>apps/web/src/features/console/Console.tsx:189<br>apps/web/src/features/console/Console.tsx:665<br>apps/web/src/features/console/Console.tsx:708 | read under a computed name — settings.Console, read by key in the console (Console.setConfig) |
@@ -38,7 +38,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DefaultTabTable` | apps/server/src/navigation/nodes.ts:693<br>apps/server/src/privileges/service.ts:224<br>apps/web/src/features/shell/Breadcrumb.tsx:45<br>apps/web/src/routes/s/$server/db/$db/t/$table/index.tsx:13 |  |
 | ✅ | `DefaultTransformations/Inline/1` | packages/mysql-types/src/transformations.ts:733 | read under a computed name — defaults.<Plugin> (TransformationsPlugin::getOptions) |
 | ✅ | `DisableShortcutKeys` | apps/web/src/features/shell/layout/ShellLayout.tsx:123 |  |
-| ✅ | `DisplayServersList` | apps/server/src/navigation/service.ts:64<br>apps/web/src/features/navigation/NavigationPanel.tsx:423 |  |
+| ✅ | `DisplayServersList` | apps/server/src/navigation/service.ts:64<br>apps/web/src/features/navigation/NavigationPanel.tsx:403 |  |
 | ✅ | `enable_drag_drop_import` | apps/web/src/features/import/DragDropImport.tsx:66 |  |
 | ✅ | `FilterLanguages` | apps/server/src/i18n.ts:14<br>packages/i18n/src/languages.ts:105 |  |
 | ✅ | `FirstLevelNavigationItems` | apps/server/src/navigation/nodes.ts:325<br>apps/server/src/navigation/nodes.ts:344<br>apps/server/src/navigation/nodes.ts:375<br>apps/server/src/navigation/tree.ts:125<br>apps/server/src/navigation/tree.ts:650 |  |
@@ -49,10 +49,10 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `LoginCookieValidity` | apps/server/src/setup/checks.ts:197<br>apps/server/src/setup/checks.ts:201<br>apps/server/src/setup/checks.ts:202<br>apps/server/src/setup/checks.ts:218<br>apps/server/src/setup/checks.ts:219 |  |
 | ✅ | `MaxNavigationItems` | apps/server/src/navigation/nodes.ts:511<br>apps/server/src/navigation/nodes.ts:766<br>apps/server/src/navigation/nodes.ts:813<br>apps/server/src/navigation/nodes.ts:818<br>apps/server/src/navigation/tree.ts:664 |  |
 | ✅ | `MysqlSslWarningSafeHosts` | apps/server/src/shell/home.ts:144 |  |
-| ✅ | `NavigationDisplayLogo` | apps/server/src/navigation/service.ts:60<br>apps/web/src/features/navigation/NavigationPanel.tsx:325 |  |
+| ✅ | `NavigationDisplayLogo` | apps/server/src/navigation/service.ts:60<br>apps/web/src/features/navigation/NavigationPanel.tsx:305 |  |
 | ✅ | `NavigationLinkWithMainPanel` | apps/server/src/navigation/service.ts:56<br>apps/web/src/features/navigation/store.ts:203 |  |
-| ✅ | `NavigationLogoLink` | apps/server/src/navigation/service.ts:61<br>apps/web/src/features/navigation/NavigationPanel.tsx:388 |  |
-| ✅ | `NavigationLogoLinkWindow` | apps/server/src/navigation/service.ts:62<br>apps/web/src/features/navigation/NavigationPanel.tsx:399 |  |
+| ✅ | `NavigationLogoLink` | apps/server/src/navigation/service.ts:61<br>apps/web/src/features/navigation/NavigationPanel.tsx:368 |  |
+| ✅ | `NavigationLogoLinkWindow` | apps/server/src/navigation/service.ts:62<br>apps/web/src/features/navigation/NavigationPanel.tsx:379 |  |
 | ✅ | `NavigationTreeAutoexpandSingleDb` | apps/server/src/navigation/service.ts:58<br>apps/web/src/features/navigation/store.ts:592 |  |
 | ✅ | `NavigationTreeDbSeparator` | apps/server/src/navigation/nodes.ts:214<br>apps/server/src/navigation/nodes.ts:330<br>apps/server/src/navigation/nodes.ts:350<br>apps/server/src/navigation/nodes.ts:397<br>apps/server/src/navigation/nodes.ts:445 |  |
 | ✅ | `NavigationTreeDefaultTabTable` | apps/server/src/navigation/nodes.ts:690 |  |
@@ -79,12 +79,12 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/AllowRoot` | apps/server/src/auth/login.ts:33 |  |
 | ✅ | `Servers/*/auth_http_realm` | apps/server/src/auth/http.ts:40<br>apps/server/src/auth/http.ts:42 |  |
 | ✅ | `Servers/*/auth_type` | apps/server/src/preferences/validator.ts:189<br>apps/server/src/preferences/validator.ts:192<br>apps/server/src/setup/checks.ts:137<br>apps/server/src/setup/service.ts:78<br>apps/server/src/navigation/service.ts:68 |  |
-| ✅ | `Servers/*/compress` | apps/server/src/db/control.ts:24<br>apps/server/src/db/pool-manager.ts:37 |  |
-| ✅ | `Servers/*/controlhost` | apps/server/src/db/control.ts:17 |  |
-| ✅ | `Servers/*/controlport` | apps/server/src/db/control.ts:34 |  |
-| ✅ | `Servers/*/controluser` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:236<br>apps/server/src/preferences/validator.ts:237<br>apps/server/src/preferences/validator.ts:253<br>apps/server/src/db/control.ts:46 |  |
+| ✅ | `Servers/*/compress` | apps/server/src/db/control.ts:25<br>apps/server/src/db/pool-manager.ts:37 |  |
+| ✅ | `Servers/*/controlhost` | apps/server/src/db/control.ts:18 |  |
+| ✅ | `Servers/*/controlport` | apps/server/src/db/control.ts:35 |  |
+| ✅ | `Servers/*/controluser` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:236<br>apps/server/src/preferences/validator.ts:237<br>apps/server/src/preferences/validator.ts:253<br>apps/server/src/db/control.ts:47 |  |
 | ✅ | `Servers/*/DisableIS` | apps/server/src/database/events.ts:46<br>apps/server/src/database/tables.ts:122<br>apps/server/src/export/service.ts:103<br>apps/server/src/metadata/service.ts:293<br>apps/server/src/metadata/service.ts:336 |  |
-| ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/login.ts:54<br>apps/server/src/db/control.ts:32<br>apps/server/src/db/control.ts:207 |  |
+| ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/login.ts:54<br>apps/server/src/db/control.ts:33<br>apps/server/src/db/control.ts:222 |  |
 | ✅ | `Servers/*/host` | apps/server/src/preferences/validator.ts:215<br>apps/server/src/preferences/validator.ts:250<br>apps/server/src/setup/service.ts:75<br>apps/server/src/auth/cookie.ts:59<br>apps/server/src/auth/http.ts:41 |  |
 | ✅ | `Servers/*/LogoutURL` | apps/server/src/routes/auth.ts:208 |  |
 | ✅ | `Servers/*/password` | apps/server/src/preferences/validator.ts:219<br>apps/server/src/setup/service.ts:80 |  |
@@ -95,11 +95,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/SignonScript` | apps/server/src/auth/signon.ts:120<br>apps/server/src/auth/signon.ts:122<br>apps/server/src/auth/signon.ts:124 |  |
 | ✅ | `Servers/*/SignonSession` | apps/server/src/preferences/validator.ts:185<br>apps/server/src/preferences/validator.ts:201<br>apps/server/src/preferences/validator.ts:202<br>apps/server/src/auth/signon.ts:120<br>apps/server/src/auth/signon.ts:185 |  |
 | ✅ | `Servers/*/SignonURL` | apps/server/src/preferences/validator.ts:186<br>apps/server/src/preferences/validator.ts:207<br>apps/server/src/preferences/validator.ts:208<br>apps/server/src/auth/signon.ts:117<br>apps/server/src/routes/auth.ts:212 |  |
-| ✅ | `Servers/*/socket` | apps/server/src/preferences/validator.ts:217<br>apps/server/src/preferences/validator.ts:252<br>apps/server/src/setup/service.ts:77<br>apps/server/src/db/control.ts:23<br>apps/server/src/db/pool-manager.ts:41 |  |
-| 🗓️ | `Servers/*/tracking_add_drop_database` |  | M2 — read by Tracker::createDatabaseVersion, which only handleQuery calls (CREATE DATABASE with tracking_version_auto_create) |
-| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/table/tracking.ts:200 |  |
-| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/table/tracking.ts:203 |  |
-| 🗓️ | `Servers/*/tracking_version_auto_create` |  | M2 — read by Tracker::handleQuery |
+| ✅ | `Servers/*/socket` | apps/server/src/preferences/validator.ts:217<br>apps/server/src/preferences/validator.ts:252<br>apps/server/src/setup/service.ts:77<br>apps/server/src/db/control.ts:24<br>apps/server/src/db/pool-manager.ts:41 |  |
+| ✅ | `Servers/*/tracking_add_drop_database` | apps/server/src/table/tracker.ts:159 |  |
+| ✅ | `Servers/*/tracking_add_drop_table` | apps/server/src/table/tracking.ts:199 |  |
+| ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/table/tracking.ts:202 |  |
+| ✅ | `Servers/*/tracking_version_auto_create` | apps/server/src/table/tracker.ts:139 |  |
 | ✅ | `Servers/*/user` | apps/server/src/preferences/validator.ts:184<br>apps/server/src/preferences/validator.ts:195<br>apps/server/src/preferences/validator.ts:196<br>apps/server/src/preferences/validator.ts:218<br>apps/server/src/setup/service.ts:79 |  |
 | ✅ | `Servers/*/verbose` | apps/server/src/setup/service.ts:74<br>apps/server/src/auth/http.ts:41<br>apps/server/src/export/service.ts:126<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/home.ts:203 |  |
 | ➖ | `SessionSavePath` |  | n/a: PHP session.save_path; sessions live in our SessionStore (DataDir / RedisUrl) |
@@ -220,7 +220,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/central_columns` | packages/metadata/src/storage.ts:41<br>packages/metadata/src/storage.ts:64<br>packages/metadata/src/storage.ts:87<br>packages/metadata/src/storage.ts:96 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/pdf_pages` | packages/metadata/src/storage.ts:29<br>packages/metadata/src/storage.ts:53<br>packages/metadata/src/storage.ts:76<br>packages/metadata/src/storage.ts:180<br>packages/metadata/src/storage.ts:182 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/tracking` | packages/metadata/src/storage.ts:36<br>packages/metadata/src/storage.ts:58<br>packages/metadata/src/storage.ts:81<br>packages/metadata/src/storage.ts:101 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
-| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:32<br>apps/server/src/table/tracking.ts:135<br>apps/server/src/table/tracking.ts:174 |  |
+| ✅ | `Servers/*/tracking_default_statements` | apps/server/src/database/tracking.ts:32<br>apps/server/src/table/tracking.ts:134<br>apps/server/src/table/tracking.ts:173 |  |
 | ✅ | `SkipLockedTables` | apps/server/src/database/structure.ts:186 |  |
 | ✅ | `UseDbSearch` | apps/server/src/database/search.ts:21 |  |
 
@@ -230,15 +230,15 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |---|---|---|---|
 | ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:193<br>apps/server/src/import/service.ts:258<br>apps/server/src/routes/shell.ts:81<br>apps/server/src/server-admin/context.ts:60 |  |
 | ➖ | `LoginCookieValidityDisableWarning` |  | n/a: HomeController only gates the warning that PHP's session.gc_maxlifetime is lower than LoginCookieValidity; no PHP session here |
-| ✅ | `NavigationDisplayServers` | apps/server/src/navigation/service.ts:63<br>apps/server/src/shell/home.ts:263<br>apps/web/src/features/navigation/NavigationPanel.tsx:421 |  |
-| ✅ | `Servers/*/controlpass` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:242<br>apps/server/src/preferences/validator.ts:243<br>apps/server/src/preferences/validator.ts:254<br>apps/server/src/db/control.ts:46 |  |
-| ✅ | `Servers/*/ssl` | apps/server/src/setup/checks.ts:112<br>apps/server/src/db/control.ts:25<br>apps/server/src/db/pool-manager.ts:48 |  |
-| ✅ | `Servers/*/ssl_ca` | apps/server/src/db/control.ts:28<br>apps/server/src/db/pool-manager.ts:54 |  |
-| ✅ | `Servers/*/ssl_ca_path` | apps/server/src/db/control.ts:29<br>apps/server/src/db/pool-manager.ts:55 |  |
-| ✅ | `Servers/*/ssl_cert` | apps/server/src/db/control.ts:27<br>apps/server/src/db/pool-manager.ts:52 |  |
-| ✅ | `Servers/*/ssl_ciphers` | apps/server/src/db/control.ts:30<br>apps/server/src/db/pool-manager.ts:58 |  |
-| ✅ | `Servers/*/ssl_key` | apps/server/src/db/control.ts:26<br>apps/server/src/db/pool-manager.ts:51 |  |
-| ✅ | `Servers/*/ssl_verify` | apps/server/src/db/control.ts:31<br>apps/server/src/db/pool-manager.ts:49 |  |
+| ✅ | `NavigationDisplayServers` | apps/server/src/navigation/service.ts:63<br>apps/server/src/shell/home.ts:263<br>apps/web/src/features/navigation/NavigationPanel.tsx:401 |  |
+| ✅ | `Servers/*/controlpass` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:242<br>apps/server/src/preferences/validator.ts:243<br>apps/server/src/preferences/validator.ts:254<br>apps/server/src/db/control.ts:47 |  |
+| ✅ | `Servers/*/ssl` | apps/server/src/setup/checks.ts:112<br>apps/server/src/db/control.ts:26<br>apps/server/src/db/pool-manager.ts:48 |  |
+| ✅ | `Servers/*/ssl_ca` | apps/server/src/db/control.ts:29<br>apps/server/src/db/pool-manager.ts:54 |  |
+| ✅ | `Servers/*/ssl_ca_path` | apps/server/src/db/control.ts:30<br>apps/server/src/db/pool-manager.ts:55 |  |
+| ✅ | `Servers/*/ssl_cert` | apps/server/src/db/control.ts:28<br>apps/server/src/db/pool-manager.ts:52 |  |
+| ✅ | `Servers/*/ssl_ciphers` | apps/server/src/db/control.ts:31<br>apps/server/src/db/pool-manager.ts:58 |  |
+| ✅ | `Servers/*/ssl_key` | apps/server/src/db/control.ts:27<br>apps/server/src/db/pool-manager.ts:51 |  |
+| ✅ | `Servers/*/ssl_verify` | apps/server/src/db/control.ts:32<br>apps/server/src/db/pool-manager.ts:49 |  |
 | ✅ | `Servers/*/usergroups` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:61<br>packages/metadata/src/storage.ts:84<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:194 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/users` | packages/metadata/src/storage.ts:38<br>packages/metadata/src/storage.ts:60<br>packages/metadata/src/storage.ts:83<br>packages/metadata/src/storage.ts:192<br>packages/metadata/src/storage.ts:193 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `ShowChgPassword` | apps/server/src/shell/home.ts:264<br>apps/server/src/shell/password.ts:31 |  |
@@ -419,7 +419,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ➖ | `Import/sql_read_as_multibytes` |  | n/a: phpMyAdmin reads it nowhere but the Import settings form (Q12) |
 | ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:243 |  |
 | ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:90 |  |
-| ✅ | `MaxTableList` | apps/server/src/database/structure.ts:93<br>apps/server/src/database/structure.ts:220<br>apps/server/src/database/structure.ts:431 |  |
+| ✅ | `MaxTableList` | apps/server/src/database/structure.ts:93<br>apps/server/src/database/structure.ts:220<br>apps/server/src/database/structure.ts:430 |  |
 | ➖ | `MemoryLimit` |  | n/a: PHP memory_limit; Node has no per-request memory limit (exports and imports stream, X10/X9) |
 | ✅ | `MinSizeForInputField` | apps/server/src/insert-edit/form.ts:685 |  |
 | ✅ | `NavigationTreeShowEvents` | apps/server/src/navigation/tree.ts:298 |  |
@@ -437,7 +437,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/navigationhiding` | packages/metadata/src/storage.ts:39<br>packages/metadata/src/storage.ts:62<br>packages/metadata/src/storage.ts:85<br>packages/metadata/src/storage.ts:98 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/only_db` | apps/server/src/preferences/config-file.ts:18<br>apps/server/src/navigation/nodes.ts:262<br>apps/server/src/server-admin/databases.ts:58 |  |
 | ✅ | `Servers/*/pmadb` | apps/server/src/preferences/validator.ts:232<br>apps/server/src/database/operations.ts:53<br>apps/server/src/routes/metadata.ts:128<br>apps/server/src/server-admin/databases.ts:220<br>apps/server/src/server-admin/databases.ts:364 |  |
-| ✅ | `Servers/*/port` | apps/server/src/preferences/validator.ts:216<br>apps/server/src/preferences/validator.ts:251<br>apps/server/src/setup/service.ts:76<br>apps/server/src/db/control.ts:22<br>apps/server/src/db/pool-manager.ts:45 |  |
+| ✅ | `Servers/*/port` | apps/server/src/preferences/validator.ts:216<br>apps/server/src/preferences/validator.ts:251<br>apps/server/src/setup/service.ts:76<br>apps/server/src/db/control.ts:23<br>apps/server/src/db/pool-manager.ts:45 |  |
 | ✅ | `Servers/*/recent` | packages/metadata/src/storage.ts:33<br>packages/metadata/src/storage.ts:55<br>packages/metadata/src/storage.ts:78<br>packages/metadata/src/storage.ts:104 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/relation` | packages/metadata/src/storage.ts:26<br>packages/metadata/src/storage.ts:27<br>packages/metadata/src/storage.ts:49<br>packages/metadata/src/storage.ts:72<br>packages/metadata/src/storage.ts:106 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/table_coords` | packages/metadata/src/storage.ts:29<br>packages/metadata/src/storage.ts:51<br>packages/metadata/src/storage.ts:74<br>packages/metadata/src/storage.ts:180<br>packages/metadata/src/storage.ts:181 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
@@ -460,7 +460,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DBG/sql` | apps/server/src/http/sql-log.ts:31<br>apps/server/src/routes/browse.ts:38<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:318 |  |
+| ✅ | `DBG/sql` | apps/server/src/http/sql-log.ts:31<br>apps/server/src/routes/browse.ts:40<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:110<br>apps/server/src/routes/metadata.ts:318 |  |
 | ✅ | `DBG/sqllog` | apps/server/src/http/sql-log.ts:31 |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:92<br>apps/server/src/routes/sql.ts:191 |  |
 | ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:147<br>apps/server/src/insert-edit/save.ts:253<br>apps/server/src/query/pipeline.ts:205<br>apps/server/src/query/pipeline.ts:512 |  |
@@ -491,16 +491,16 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `maxRowPlotLimit` | apps/web/src/features/table/search/ZoomSearchPage.tsx:256<br>apps/web/src/features/table/search/ZoomSearchPage.tsx:260<br>apps/server/src/table/search.ts:207 |  |
 | ✅ | `MysqlMinVersion/human` | apps/server/src/auth/login.ts:63 |  |
 | 🔀 | `PersistentConnections` |  | X24 — connections are always pooled per session and server |
-| ✅ | `Servers/*/control_compress` | apps/server/src/db/control.ts:36 |  |
-| ✅ | `Servers/*/control_hide_connection_errors` | apps/server/src/db/control.ts:44<br>apps/server/src/db/control.ts:45 |  |
-| ✅ | `Servers/*/control_socket` | apps/server/src/db/control.ts:35 |  |
-| ✅ | `Servers/*/control_ssl` | apps/server/src/db/control.ts:37 |  |
-| ✅ | `Servers/*/control_ssl_ca` | apps/server/src/db/control.ts:40 |  |
-| ✅ | `Servers/*/control_ssl_ca_path` | apps/server/src/db/control.ts:41 |  |
-| ✅ | `Servers/*/control_ssl_cert` | apps/server/src/db/control.ts:39 |  |
-| ✅ | `Servers/*/control_ssl_ciphers` | apps/server/src/db/control.ts:42 |  |
-| ✅ | `Servers/*/control_ssl_key` | apps/server/src/db/control.ts:38 |  |
-| ✅ | `Servers/*/control_ssl_verify` | apps/server/src/db/control.ts:43 |  |
+| ✅ | `Servers/*/control_compress` | apps/server/src/db/control.ts:37 |  |
+| ✅ | `Servers/*/control_hide_connection_errors` | apps/server/src/db/control.ts:45<br>apps/server/src/db/control.ts:46 |  |
+| ✅ | `Servers/*/control_socket` | apps/server/src/db/control.ts:36 |  |
+| ✅ | `Servers/*/control_ssl` | apps/server/src/db/control.ts:38 |  |
+| ✅ | `Servers/*/control_ssl_ca` | apps/server/src/db/control.ts:41 |  |
+| ✅ | `Servers/*/control_ssl_ca_path` | apps/server/src/db/control.ts:42 |  |
+| ✅ | `Servers/*/control_ssl_cert` | apps/server/src/db/control.ts:40 |  |
+| ✅ | `Servers/*/control_ssl_ciphers` | apps/server/src/db/control.ts:43 |  |
+| ✅ | `Servers/*/control_ssl_key` | apps/server/src/db/control.ts:39 |  |
+| ✅ | `Servers/*/control_ssl_verify` | apps/server/src/db/control.ts:44 |  |
 | ✅ | `Servers/*/SignonCookieParams/domain` | apps/server/src/auth/signon.ts:71 |  |
 | ✅ | `Servers/*/SignonCookieParams/lifetime` | apps/server/src/auth/signon.ts:74 |  |
 | ✅ | `Servers/*/SignonCookieParams/path` | apps/server/src/auth/signon.ts:70 |  |
