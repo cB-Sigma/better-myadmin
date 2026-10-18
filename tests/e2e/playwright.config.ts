@@ -16,6 +16,9 @@ const repo = join(dirname(fileURLToPath(import.meta.url)), '../..')
 const port = Number(process.env.BMA_E2E_PORT ?? 8099)
 /** our app on the dev replica (server-replica.e2e.ts) */
 const replicaPort = Number(process.env.BMA_E2E_REPLICA_PORT ?? port + 1)
+/** our app with two servers (f01-servers.e2e.ts); the suite reads the same variable */
+const twoServersPort = Number(process.env.BMA_E2E_TWO_SERVERS_PORT ?? port + 2)
+process.env.BMA_E2E_TWO_SERVERS_PORT = String(twoServersPort)
 const chromium =
   process.env.PW_CHROMIUM ?? process.env.BMA_CHROMIUM ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
 
@@ -40,6 +43,7 @@ export default defineConfig({
     { config: 'bma.config.ts', port },
     // the dev replica (mysql84-replica :3308) for server-replica.e2e.ts
     { config: 'bma-replica.config.ts', port: replicaPort },
+    { config: 'bma-two-servers.config.ts', port: twoServersPort },
   ].map((s) => ({
     command: `${join(repo, 'apps/server/node_modules/.bin/tsx')} ${join(repo, 'apps/server/src/main.ts')} --config ${join(repo, 'tests/e2e', s.config)} --port ${s.port} --host 127.0.0.1 --static ${join(repo, 'apps/web/dist')}`,
     url: `http://127.0.0.1:${s.port}/api/meta/health`,
