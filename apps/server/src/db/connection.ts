@@ -54,6 +54,9 @@ export function changesSessionState(sql: string, label: string): boolean {
   return !STATELESS.test(sql) || USER_VARIABLE.test(sql.replace(/@@/g, ''))
 }
 
+/** The label of the statements typed by the user (SQL tab, console): the ones a cancel may kill. */
+export const USER_STATEMENT = 'query.user'
+
 export class Conn {
   readonly raw: PoolConnection
   readonly log: Executed[]
@@ -68,6 +71,13 @@ export class Conn {
    * null: the server's file request is refused like a client without local_infile.
    */
   localInfile: string | null = null
+  /** The label of the statement in flight (null when idle): a cancel kills only the user's statement. */
+  activeLabel: string | null = null
+  /**
+   * A cancel that came before the user's statement started (the pipeline's own statements were
+   * running): that statement is not sent and fails like a killed query.
+   */
+  cancelled = false
 
   constructor(raw: PoolConnection, log: Executed[]) {
     this.raw = raw
@@ -92,9 +102,19 @@ export class Conn {
   }
 
   async query(sql: string, label: string, hook = true): Promise<QueryResult> {
+    if (label === USER_STATEMENT && this.cancelled) {
+      this.cancelled = false
+      this.log.push({ sql, ms: 0, label })
+      throw new MysqlError(
+        { errno: 1317, sqlState: '70100', message: 'Query execution was interrupted' },
+        sql,
+      )
+    }
+
     if (!this.dirty && changesSessionState(sql, label)) this.dirty = true
     const start = performance.now()
     let res: [unknown, unknown]
+    this.activeLabel = label
     try {
       // typeCast:false keeps every value as the exact bytes the server sent (docs/architecture/06 numeric fidelity)
       res = (await this.raw.query({
@@ -108,6 +128,8 @@ export class Conn {
       this.log.push({ sql, ms, label })
       if (isMysqlError(e)) throw new MysqlError(e, sql)
       throw e
+    } finally {
+      this.activeLabel = null
     }
     const ms = performance.now() - start
     const out = normalise(res[0], res[1])

@@ -37,6 +37,24 @@ async function login(page: Page) {
   await expect(page.locator('#pma_navigation')).toBeVisible()
 }
 
+/**
+ * The user preferences of the e2e server's store are shared by every test of the run: start from
+ * the defaults (an open console, Console/Mode "show", takes the focus when a page loads).
+ */
+async function resetPrefs(page: Page) {
+  await page.evaluate(async () => {
+    const token = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith('bma_token='))
+      ?.slice('bma_token='.length)
+    const r = await fetch('/api/servers/1/prefs/reset', {
+      method: 'POST',
+      headers: { 'X-BMA-Token': decodeURIComponent(token ?? '') },
+    })
+    if (!r.ok) throw new Error(`prefs reset: ${r.status}`)
+  })
+}
+
 const editor = (page: Page) => page.locator('#sqlquery .cm-content')
 
 async function setQuery(page: Page, sql: string) {
@@ -57,6 +75,7 @@ test.describe('SQL tab extras', () => {
   test.beforeEach(async ({ page }) => {
     await login(page)
     await page.evaluate(() => window.localStorage.clear())
+    await resetPrefs(page)
   })
 
   test('the query in the URL fills the editor without running it [p09-097a18]', async ({ page }) => {
@@ -193,6 +212,9 @@ test.describe('SQL tab extras', () => {
   test('Kanji conversion options only in the Japanese locale [p09-b31fd8]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await expect(page.locator('#kanji_encoding')).toHaveCount(0)
+    // every response writes the language cookie: leave the app first, so that no request still in
+    // flight writes "en" back after the switch
+    await page.goto('about:blank')
     await page.goto('/api/i18n?lang=ja')
     try {
       await page.goto(`/s/1/db/${DB}/sql`)
