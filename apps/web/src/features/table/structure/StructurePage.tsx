@@ -395,15 +395,19 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           {t('Print')}
         </Button>
         {editable && s.links.proposeTableStructure !== null && (
-          <Link
-            to={
-              s.links.proposeSig === undefined
-                ? sqlLink(server, s.links.proposeTableStructure)
-                : `/s/${server}/db/${encodeURIComponent(db)}/sql?sql=${encodeURIComponent(s.links.proposeTableStructure)}&sig=${encodeURIComponent(s.links.proposeSig)}`
-            }
-          >
-            {t('Propose table structure')}
-          </Link>
+          <>
+            <Link
+              to={
+                s.links.proposeSig === undefined
+                  ? sqlLink(server, s.links.proposeTableStructure)
+                  : `/s/${server}/db/${encodeURIComponent(db)}/sql?sql=${encodeURIComponent(s.links.proposeTableStructure)}&sig=${encodeURIComponent(s.links.proposeSig)}`
+              }
+            >
+              {t('Propose table structure')}
+            </Link>
+            {/* show_mysql_docu('procedure_analyse') (MariaDB, MySQL < 8.0) */}
+            <MySqlDocLink link="procedure_analyse" />
+          </>
         )}
         {editable && (
           <>

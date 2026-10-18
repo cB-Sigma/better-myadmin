@@ -1,3 +1,5 @@
+// first: the target sets BMA_TEST_PORT before lib/env.ts reads it
+import './lib/target.ts'
 import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
