@@ -1,0 +1,34 @@
+name: nightly
+# the long or rarely-changing suites kept out of the PR checks (ci.yml): run every night and on demand
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  # UI structure parity against MariaDB 11.4 and its reference phpMyAdmin (tests/ui-parity/lib/target.ts)
+  ui-parity-mariadb:
+    runs-on: ubuntu-latest
+    env:
+      BMA_PARITY_TARGET: mariadb
+      BMA_TEST_PORT: "3307"
+      # phpmyadmin-ref-mariadb (docker/dev.compose.yml); without it global-setup would start a
+      # private reference from a local checkout
+      BMA_PARITY_PMA_URL: http://127.0.0.1:8084
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: docker compose -f docker/dev.compose.yml up -d --build --wait mariadb11 phpmyadmin-ref-mariadb
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:ui-parity
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-parity-mariadb-results
+          path: |
+            .data/ui-parity-results
+            .data/ui-parity
+          if-no-files-found: ignore
