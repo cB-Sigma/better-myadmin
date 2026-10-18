@@ -225,7 +225,7 @@ describe('validation errors are readable', () => {
 })
 
 describe('phpMyAdmin semantics', () => {
-  it('Servers: array element 0 is server 1; object keys are 1-based; Servers[0] ignored', () => {
+  it('Servers: array element 0 is server 1; object keys are 1-based; Servers[0] ignored [p08-18cb5e]', () => {
     expect(Object.keys(resolveConfig({ Servers: [{ host: 'a' }, { host: 'b' }] }).Servers)).toStrictEqual([
       '1',
       '2',
@@ -293,7 +293,7 @@ describe('phpMyAdmin semantics', () => {
     expect(c.DefaultTransformations.TextLink).toStrictEqual([null, 'title', null])
   })
 
-  it('aliases: secret -> blowfish_secret, control_* -> control*', () => {
+  it('aliases: secret -> blowfish_secret, control_* -> control* [p08-7bc4a5]', () => {
     const c = resolveConfig({
       secret: 'x'.repeat(32),
       Servers: [{ control_host: 'h', control_password: 'p' }],
@@ -318,7 +318,7 @@ describe('phpMyAdmin semantics', () => {
     expect(c.DefaultTransformations.Hex).toStrictEqual([4])
   })
 
-  it('maps legacy values like phpMyAdmin setters', () => {
+  it('maps legacy values like phpMyAdmin setters [p08-81d59d]', () => {
     const c = resolveConfig({
       DefaultTabServer: 'welcome',
       DefaultTabDatabase: 'db_operations.php',

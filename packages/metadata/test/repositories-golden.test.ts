@@ -118,9 +118,20 @@ function metadata(
 
 const groups = [...new Set(fx.ops.map((o) => o.group))]
 
+/** Feature 08 checklist items each group proves (docs/features/08-settings-preferences-pmadb.md). */
+const CHECKLIST: Record<string, string> = {
+  bookmarks: '[p08-dd1f62]',
+  history: '[p08-96d5e0]',
+  recent: '[p08-ca3864]',
+  favorite: '[p08-ca3864]',
+  uiprefs: '[p08-5921ba]',
+  relation: '[p08-d83080] [p08-d94efe]',
+  foreign: '[p08-8e4b43]',
+}
+
 describe('pmadb repositories replay phpMyAdmin’s statements', () => {
   for (const group of groups) {
-    it(group, async () => {
+    it(`${group} ${CHECKLIST[group] ?? ''}`.trim(), async () => {
       const ops = fx.ops.filter((o) => o.group === group)
       const { conn, done } = replay(ops)
       const state: MetaSessionState = {}

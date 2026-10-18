@@ -180,7 +180,7 @@ describe('with a configuration storage and a control user', () => {
     ])
   })
 
-  it('records SQL-box history in pmadb like StatementHistory, trimmed to QueryHistoryMax', async () => {
+  it('records SQL-box history in pmadb like StatementHistory, trimmed to QueryHistoryMax [p08-96d5e0]', async () => {
     await root.query(`DELETE FROM ${PMADB}.pma__history`)
     const q = (sql: string, extra: Record<string, unknown> = {}) =>
       t.req('POST', '/api/servers/1/query', { sql, db: DATA, fromQueryBox: true, ...extra })
@@ -204,7 +204,7 @@ describe('with a configuration storage and a control user', () => {
     ])
   })
 
-  it('recent tables from the SQL box and POST /recent; favorites with the cap [p01-56fa30]', async () => {
+  it('recent tables from the SQL box and POST /recent; favorites with the cap [p01-56fa30] [p08-ca3864]', async () => {
     await t.req('POST', '/api/servers/1/query', { sql: 'SELECT 1', db: DATA, table: 't', fromQueryBox: true })
     let r = await t.req('POST', '/api/servers/1/recent', { db: DATA, table: 't2' })
     expect(r.json.recent).toEqual([
@@ -319,7 +319,7 @@ describe('with a configuration storage and a control user', () => {
 })
 
 describe('ZeroConf: storage in the current database', () => {
-  it('offers fixall_pmadb, creates the tables, then finds them', async () => {
+  it('offers fixall_pmadb, creates the tables, then finds them [p08-19523b] [p08-9f5c8d]', async () => {
     const t = testApp(testConfig({ DataDir: '' }, { controluser: CTL2, controlpass: CTL2 }))
     await t.login(USER, USER)
     await root.query(`CREATE DATABASE IF NOT EXISTS ${CUR}`)
@@ -352,7 +352,7 @@ describe('ZeroConf: storage in the current database', () => {
     await t.close()
   })
 
-  it('fix_pmadb creates only the missing tables when every name is configured', async () => {
+  it('fix_pmadb creates only the missing tables when every name is configured [p08-c68812]', async () => {
     await createStorage(CUR, ['pma__bookmark', 'pma__relation'])
     const names = {
       bookmarktable: 'pma__bookmark',

@@ -9,6 +9,7 @@ import type { AppConfig } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { AuthExpiredError, AuthRequiredError, NotFoundError } from '../http/errors.ts'
 import { withMeta } from '../metadata/service.ts'
+import { syncLanguagePreference } from '../preferences/language-sync.ts'
 import type { SecretBox } from '../session/crypto.ts'
 import type { ServerLogin } from '../session/store.ts'
 import { enableTracker } from '../table/tracker.ts'
@@ -96,7 +97,10 @@ async function applyUserPreferences(c: Context<ServerEnv>): Promise<void> {
   const deps = c.get('deps')
   c.set('baseCfg', deps.cfg)
   try {
-    const effective = await withMeta(c, {}, (m) => m.effectiveConfig())
+    const effective = await withMeta(c, {}, async (m) => {
+      await syncLanguagePreference(c as unknown as Context<AppEnv>, m)
+      return m.effectiveConfig()
+    })
     if (effective !== deps.cfg) c.set('deps', { ...deps, cfg: effective })
   } catch {
     // the preferences cannot be read (storage unreachable): the configuration alone

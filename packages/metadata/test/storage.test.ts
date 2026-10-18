@@ -136,9 +136,29 @@ function serverFrom(setup: Scenario['setup']): StorageServer {
 
 const UPGRADE = 'column_info needs the 4.3 upgrade'
 
+/** Feature 08 checklist items each scenario proves (docs/features/08-settings-preferences-pmadb.md). */
+const CHECKLIST: Record<string, string> = {
+  'no pmadb configured, nothing found': '[p08-0c056a]',
+  'pmadb configured but missing': '[p08-0c056a] [p08-19523b]',
+  'all tables, auto-detected names': '[p08-759df7]',
+  'all tables, explicit names': '[p08-759df7]',
+  'subset of tables, auto-detected': '[p08-ac345c] [p08-d5ec83]',
+  'custom table name': '[p08-759df7]',
+  'features disabled with false': '[p08-759df7] [p08-d5ec83]',
+  'all features disabled': '[p08-759df7]',
+  [UPGRADE]: '[p08-5b639b]',
+  'control user cannot read one table': '[p08-ac345c]',
+  'tables in the current database are picked up (ZeroConf)': '[p08-0c056a]',
+  'fix_pmadb creates the missing tables (explicit names)': '[p08-c68812]',
+  'fix_pmadb with disabled tables skips them': '[p08-c68812]',
+  'fixall_pmadb creates the storage in the current database': '[p08-c68812] [p08-19523b]',
+  'create_pmadb creates the database and the tables': '[p08-c68812] [p08-19523b]',
+  'create_pmadb without privileges': '[p08-19523b]',
+}
+
 describe('ConfigStorage (Relation.php) against phpMyAdmin run on a real server', () => {
   for (const sc of fixture.scenarios) {
-    it(sc.name, async () => {
+    it(`${sc.name} ${CHECKLIST[sc.name] ?? ''}`.trim(), async () => {
       const { conn, tablesAfter } = emulate(sc)
       const server = serverFrom(sc.setup)
       const storage = new ConfigStorage(conn, server)

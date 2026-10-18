@@ -136,7 +136,7 @@ describe('env overrides (BMA__ double-underscore paths)', () => {
     expect(config.Servers[2]?.port).toBe('3307')
   })
 
-  it('accepts the secret alias and the control_* aliases', async () => {
+  it('accepts the secret alias and the control_* aliases [p08-7bc4a5]', async () => {
     const { config } = await load({ BMA__secret: 's'.repeat(32), BMA__Servers__1__control_user: 'pma' })
     expect(config.blowfish_secret).toBe('s'.repeat(32))
     expect(config.Servers[1]?.controluser).toBe('pma')

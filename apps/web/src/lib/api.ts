@@ -419,8 +419,8 @@ export const api = {
   changePassword: (server: number, req: ChangePasswordRequest) =>
     call<ChangePasswordResponse>('POST', `/servers/${server}/account/password`, req),
   /** ThemeSetController's ThemeDefault in the user preferences */
-  themeSet: (server: number, theme: string) =>
-    call<{ ok: boolean }>('POST', `/servers/${server}/themes/set`, { theme }),
+  themeSet: (server: number, theme: string, sync = false) =>
+    call<{ ok: boolean }>('POST', `/servers/${server}/themes/set`, sync ? { theme, sync } : { theme }),
   errorReport: (req: ErrorReportRequest) => call<ErrorReportResponse>('POST', '/telemetry/error', req),
   navTree: (server: number, q: NavTreeQuery = {}) =>
     call<NavTreeResponse>('GET', `/servers/${server}/navigation/tree${queryString(q)}`),
