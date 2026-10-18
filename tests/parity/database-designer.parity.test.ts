@@ -378,11 +378,16 @@ describe.skipIf(!pmaReachable)('parity: display field, relations, settings', () 
       expect((r.b.json as { message: { text: string } }).message.text).toBe(text)
       expect(String(r.p.message ?? r.p.error)).toContain(text)
     }
-    const [[a], [b]] = (await Promise.all([
+    // each query answers [rows, fields]: the first row of each (destructuring [[a], [b]] took the
+    // rows array, whose ['Create Table'] is undefined on both sides, so nothing was compared)
+    const [pr, br] = (await Promise.all([
       h.root.query(`SHOW CREATE TABLE ${P}.child`),
       h.root.query(`SHOW CREATE TABLE ${B}.child`),
-    ])) as unknown as Array<Array<Record<string, string>>>
-    expect(mask(String(b?.['Create Table']))).toBe(mask(String(a?.['Create Table'])))
+    ])) as unknown as Array<[Array<Record<string, string>>]>
+    const a = pr?.[0][0]?.['Create Table']
+    const b = br?.[0][0]?.['Create Table']
+    expect(a).toContain('CREATE TABLE')
+    expect(mask(String(b))).toBe(mask(String(a)))
   })
 
   it('removeRelation: the FOREIGN KEY dropped, then the internal relation deleted', async () => {
@@ -413,7 +418,7 @@ describe.skipIf(!pmaReachable)('parity: display field, relations, settings', () 
       ['angular_direct', 'angular'],
       ['snap_to_grid', 'on'],
       ['relation_lines', 'false'],
-    ]) {
+    ] as const) {
       const r = await both(
         h,
         () =>

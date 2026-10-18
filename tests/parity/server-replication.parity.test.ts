@@ -274,9 +274,9 @@ describe.skipIf(!pmaReachable)('parity: replication on the primary [p06-3af6a2]'
     const html = parse(pageHtml(res.p))
     const pmaDbs = $$(html, '#db_select option').map((o) => o.attrs.value ?? '')
     const ours = res.b.primaryConfiguration!.databases
-    // databases other suites created or dropped between the two requests may differ
-    const churn = new Set([...before, ...after].filter((d) => before.includes(d) !== after.includes(d)))
-    expect(ours.filter((d) => !churn.has(d))).toEqual(pmaDbs.filter((d) => !churn.has(d)))
+    // databases other suites created or dropped meanwhile (even both) may differ: compare the stable ones
+    const stable = new Set(before.filter((d) => after.includes(d)))
+    expect(ours.filter((d) => stable.has(d))).toEqual(pmaDbs.filter((d) => stable.has(d)))
     expect(ours).not.toContain('information_schema')
     expect(ours).toContain('mysql')
     expect(res.b.replica).toBeNull()

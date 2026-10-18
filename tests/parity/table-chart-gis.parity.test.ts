@@ -97,7 +97,7 @@ describe.skipIf(!pmaReachable)('parity: Display chart', () => {
       () => h.bma.req('POST', bma('/chart/data'), { sql, pos: 2, sessionMaxRows: 3 }),
     )
     expect(statements(r.bmaLog)).toEqual(statements(r.pmaLog))
-    const p = JSON.parse((r.p as { chartData: string }).chartData)
+    const p = JSON.parse((r.p as unknown as { chartData: string }).chartData)
     expect((r.b.json as { data: unknown }).data).toEqual(p)
   })
 
@@ -178,7 +178,9 @@ describe.skipIf(!pmaReachable)('parity: Display chart of a result without a tabl
     // the page selects the database, the ajax submit (no table) does not
     expect(uses(r.bmaLog)).toEqual(uses(r.pmaLog).map((x) => x.replace(P, B)))
     expect(uses(d.bmaLog)).toEqual(uses(d.pmaLog))
-    expect((d.b.json as { data: unknown }).data).toEqual(JSON.parse((d.p as { chartData: string }).chartData))
+    expect((d.b.json as { data: unknown }).data).toEqual(
+      JSON.parse((d.p as unknown as { chartData: string }).chartData),
+    )
   })
 
   it('server level: the rows (mysql selected for a super user)', async () => {
@@ -197,7 +199,9 @@ describe.skipIf(!pmaReachable)('parity: Display chart of a result without a tabl
           sessionMaxRows: 25,
         }),
     )
-    expect((d.b.json as { data: unknown }).data).toEqual(JSON.parse((d.p as { chartData: string }).chartData))
+    expect((d.b.json as { data: unknown }).data).toEqual(
+      JSON.parse((d.p as unknown as { chartData: string }).chartData),
+    )
 
     expect(uses(d.bmaLog)).toEqual(uses(d.pmaLog))
     // the page selects `mysql` for a super user

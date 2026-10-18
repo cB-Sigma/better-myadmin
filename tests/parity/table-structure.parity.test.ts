@@ -1133,7 +1133,7 @@ describe.skipIf(!reachable)('parity: table structure DDL (phpMyAdmin forms vs Be
         expect(structureFromBma(b), table).toEqual(page)
         // only a mimetype (not a transformation alone) adds the "Media type:" line
         if (table === 't') {
-          expect(page.columns.filter((c) => /Media type/.test(c.type)).map((c) => c.type)).toEqual([
+          expect(page.columns.filter((c) => /Media type/.test(String(c.type))).map((c) => c.type)).toEqual([
             'varchar(30) Media type: text/plain',
           ])
         }
