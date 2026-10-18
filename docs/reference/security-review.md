@@ -23,10 +23,10 @@ phpMyAdmin or needs configuration an administrator chose.
 | S3 | Medium | Signed SQL: the Edit form's "Go back" signed an unsigned query of the URL | fixed |
 | S4 | Medium | Signed SQL: the Export page exported (ran) an unsigned `sql_query` of the URL | fixed |
 | S5 | Medium | Auth: the login rate limit (X2) let concurrent attempts through | fixed |
-| L1 | Low | Auth: no limit on second-factor codes | open (as phpMyAdmin) |
-| L2 | Low | Bookmarks: another user's private bookmark can be shown or run by id | open (as phpMyAdmin) |
-| L3 | Low | Setup: open without a login until a configuration file exists | open (as phpMyAdmin) |
-| L4 | Low | Logging: Debug SQL and `DBG/sqllog` hold the passwords of `CREATE USER` / `ALTER USER` | open (as phpMyAdmin) |
+| L1 | Low | Auth: no limit on second-factor codes | verified as phpMyAdmin, kept |
+| L2 | Low | Bookmarks: another user's private bookmark can be run by id (showing it is refused) | verified as phpMyAdmin, kept |
+| L3 | Low | Setup: open without a login until a configuration file exists | verified as phpMyAdmin, kept; documented and warned at start |
+| L4 | Low | Logging: passwords of `CREATE USER` in Debug SQL | phpMyAdmin shows them; ours are masked |
 
 ## High
 
@@ -141,34 +141,53 @@ delayed.
 
 **Test.** `security.test.ts` "S5": 3 attempts, then 7 lockouts.
 
-## Low (as phpMyAdmin)
+## Low (verified against phpMyAdmin)
 
-### L1 No limit on second-factor codes
+Each of these was checked against a running phpMyAdmin. The check used a private instance of the
+reference checkout, with its own pmadb and `$cfg['DBG']['sql']` on, and then against ours. The test
+is `tests/parity/security-lows.parity.test.ts`, which runs both sides.
 
-`POST /api/auth/two-factor` checks a 6-digit TOTP with no attempt limit. An attacker who has the
-password can try codes. phpMyAdmin has no limit either. Recommendation: count failed codes in the
-login rate limiter.
+### L1 No limit on second-factor attempts
 
-### L2 Other users' private bookmarks by id
+`POST /api/auth/two-factor` accepts any number of failed codes; an attacker who has the password can
+try codes (a 6-digit TOTP).
 
-`POST /bookmarks/:id/run` with `allUsers: true` and `GET /bookmarks/:id` read a bookmark by id
-regardless of its owner. The query text of another user's private bookmark can be disclosed. It
-runs with the caller's own MySQL privileges. This is phpMyAdmin's `action_bookmark_all`
-(`ImportController`).
+**phpMyAdmin.** The same. Twenty failed second-factor submissions, then a good one, still log in:
+`AuthenticationPlugin::checkTwoFactor` counts nothing. The reference has no `google2fa`, so its
+debug `simple` backend was used; the flow is the backend-independent `checkTwoFactor`. We behave
+the same (twenty wrong TOTP codes, then the right one logs in). Kept for parity. A limit through
+the X2 rate limiter would be the improvement if it is ever wanted.
+
+### L2 Another user's private bookmark by id
+
+**phpMyAdmin.** User A asking to *show* user B's private bookmark (`action_bookmark=1`) is
+refused: `get()` filters on A. But A can *run* it with `action_bookmark=0&action_bookmark_all=1`
+(`get(null, $id)`), so the run discloses B's query and result. The query runs with A's own MySQL
+privileges.
+
+**Ours.** The same: `GET /bookmarks/:id` is refused for another user's bookmark, and
+`POST /bookmarks/:id/run` with `allUsers` runs it. Kept for parity. It is a phpMyAdmin weakness
+worth reporting upstream.
 
 ### L3 The setup script without a login
 
-`/api/setup` is open while no configuration file exists, as phpMyAdmin's `setup/` is. It is closed
-as soon as one exists (`setupDisabled`). Deployments should ship a configuration file.
+**phpMyAdmin.** `setup/` is open while `config.inc.php` does not exist (the instance started
+without one serves it).
 
-### L4 Passwords in Debug SQL and the SQL log
+**Ours.** The same. `/api/setup` answers 404 ("Configuration already exists, setup is disabled!")
+once a configuration file is loaded or written. The default install now documents it in
+`README.md` and `docs/architecture/07-security.md`. The server also warns at start while setup is
+open (`setupOpenWarning`, unit-tested in `apps/server/test/unit/setup-warning.test.ts`).
 
-With `$cfg['DBG']['sql']`, the statements of a request are returned to the browser and, with
-`sqllog`, written to the server's error output. They include `CREATE USER … IDENTIFIED BY '…'` and
-`ALTER USER … IDENTIFIED BY '…'` with the password in plain text, as in phpMyAdmin. The
-`PASSWORD()` hashing queries are already masked as `'***'`. The displayed SQL of the privileges
-and change-password pages is masked. The SQL history only records what the user typed in the SQL
-box.
+### L4 Passwords in Debug SQL
+
+**phpMyAdmin.** With `$cfg['DBG']['sql']`, the JSON `debug` of an Add user request holds
+`CREATE USER … BY '<the password>'` in plain text. `DBG/sqllog` logs the same statements to
+syslog.
+
+**Ours.** Stricter. The statement is recorded masked (`BY '***'`) in the request's statements, and
+so in the SQL log; the statements shown on the page are masked too. Our privileges responses carry
+no Debug SQL list at all. Kept: masking a secret is not a behaviour to copy back.
 
 ## Reviewed, no finding
 
