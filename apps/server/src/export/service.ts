@@ -66,7 +66,7 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
   // phpMyAdmin's fresh link has no default database until the dump selects one, which shows in
   // SHOW CREATE VIEW (names qualified with their database); information_schema has no user views
   if (restore?.d !== null && restore?.d !== undefined)
-    await conn.query('USE `information_schema`', 'export.session')
+    await conn.selectDb('information_schema', 'export.session')
   const close = async () => {
     meta.close()
     try {

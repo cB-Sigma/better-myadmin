@@ -299,7 +299,7 @@ describe('with a configuration storage and a control user', () => {
     expect(r.json.hidden).toEqual({ view: ['v'] })
   })
 
-  it('caches the storage discovery per session: later requests only send the feature query [p08-ac345c]', async () => {
+  it('caches the storage discovery per session: later requests only send the tracking probe and the feature query [p08-ac345c]', async () => {
     const [[mark]] = (await root.query({ sql: 'SELECT NOW(6)', rowsAsArray: true })) as unknown as [
       [[string]],
     ]
@@ -311,6 +311,8 @@ describe('with a configuration storage and a control user', () => {
       [`${CTL}[%`, mark[0]],
     )
     expect((log[0] as Array<{ a: string }>).map((x) => x.a)).toEqual([
+      // Tracker::isAnyTrackingInProgress, the first statement of a request with a database
+      `/*NOTRACK*/ SELECT 1 FROM \`${PMADB}\`.\`pma__tracking\` WHERE tracking_active = 1 AND db_name = '${DATA}' LIMIT 1`,
       `SELECT * FROM \`${PMADB}\`.\`pma__bookmark\` WHERE (\`user\` = '${USER}' OR \`user\` = '') AND dbase = '${DATA}' ORDER BY label ASC`,
     ])
   })

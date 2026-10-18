@@ -7,6 +7,7 @@ import { GeneralLog } from './lib/general-log.ts'
 import { type Entry, listFromJson, pathFromHtml, stateFromHtml } from './lib/nav-html.ts'
 import { type PmaShadow, canStartShadow, startPmaShadow } from './lib/pma-shadow.ts'
 import { PmaClient } from './lib/pma.ts'
+import { PMA_STORAGE } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the navigation tree: the same /navigation request in phpMyAdmin (a private
@@ -379,7 +380,7 @@ describe.skipIf(!reachable)('parity: navigation tree (/navigation vs /navigation
       shadow.configure({ ...(c.cfg ? { cfg: c.cfg } : {}), ...(c.server ? { server: c.server } : {}) })
       const pma = new PmaClient(shadow.url)
       await pma.login(PMA_USER, PMA_USER)
-      const bma = testApp(testConfig(c.cfg ?? {}, c.server ?? {}))
+      const bma = testApp(testConfig(c.cfg ?? {}, { ...PMA_STORAGE, ...(c.server ?? {}) }))
       try {
         await bma.login(BMA_USER, BMA_USER)
         // phpMyAdmin's login renders the home page: let its statements reach the log first

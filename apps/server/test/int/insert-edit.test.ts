@@ -29,7 +29,7 @@ function signed(clause: string) {
 const writes = (j: Json) =>
   ((j.executed ?? []) as Array<{ sql: string }>)
     .map((e) => e.sql)
-    .filter((s) => !/^(SELECT|SHOW|USE|SET )/i.test(s))
+    .filter((s) => !/^(\/\*NOTRACK\*\/\s*)?(SELECT|SHOW|USE|SET )/i.test(s))
 
 /** the fields a browser posts for one row of the form, with overrides by column */
 function rowFields(form: Json, rowId: number, values: Record<string, string | null> = {}) {

@@ -150,14 +150,6 @@ Servers/*/export_templates:
 Servers/*/bookmarktable:
   via: packages/metadata/src/storage.ts
   note: DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames)
-# Tracker::handleQuery (the log hook of DatabaseInterface::query) is not ported yet
-# (docs/features/04-table-level.md#tracking): these two act only inside it.
-Servers/*/tracking_add_drop_database:
-  planned: M2
-  note: read by Tracker::createDatabaseVersion, which only handleQuery calls (CREATE DATABASE with tracking_version_auto_create)
-Servers/*/tracking_version_auto_create:
-  planned: M2
-  note: read by Tracker::handleQuery
 LinkLengthLimit:
   n/a: Generator::linkOrButton turns a link whose URL is longer into a POST (data-post); the SPA navigates client-side and sends parameters in API bodies, so no URL length applies
 PDFDefaultPageSize:

@@ -3,8 +3,7 @@
  * filters, entry deletion and the three exports, the structure snapshot. Every configuration-storage
  * statement goes through the control link, as phpMyAdmin's `queryAsControlUser`.
  *
- * Not ported: Tracker::handleQuery (the logging hook phpMyAdmin runs inside
- * DatabaseInterface::query for every user statement) — see docs/features/04-table-level.md#tracking.
+ * The statements run afterwards are logged by Tracker::handleQuery (table/tracker.ts).
  *
  * pma: src/Controllers/Table/TrackingController.php, src/Tracking/Tracking.php,
  *      src/Tracking/Tracker.php, src/Tracking/TrackingChecker.php

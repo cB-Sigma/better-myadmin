@@ -5,7 +5,7 @@ import { compareWrites, normalise } from './lib/compare.ts'
 import { type Pairs, findForm, serializeForm } from './lib/form.ts'
 import { GeneralLog } from './lib/general-log.ts'
 import { PmaClient, type PmaJson } from './lib/pma.ts'
-import { pmaReachable } from './lib/server-setup.ts'
+import { PMA_STORAGE, pmaReachable } from './lib/server-setup.ts'
 
 /**
  * Golden parity of the table Search tab (query by example), Zoom search and Find and replace
@@ -165,7 +165,7 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
     log = await GeneralLog.open(ROOT)
     pma = new PmaClient(PMA_URL)
     await pma.login(PMA_USER, PMA_USER)
-    bma = testApp(testConfig())
+    bma = testApp(testConfig({}, PMA_STORAGE))
     await bma.login(BMA_USER, BMA_USER)
   })
 

@@ -1,10 +1,12 @@
 import { createReadStream } from 'node:fs'
 import { Readable } from 'node:stream'
 import type { Executed } from '@bettermyadmin/contracts'
+import { backquote } from '@bettermyadmin/sql-gen'
 import type { Context } from '@bettermyadmin/sql-lexer'
 import type { FieldPacket, PoolConnection, ResultSetHeader } from 'mysql2/promise'
 import { MysqlError, isMysqlError } from '../http/errors.ts'
 import { type RawField, toField } from './field-meta.ts'
+import { afterQuery } from './query-hook.ts'
 
 export type RawRow = Array<Buffer | null>
 
@@ -55,7 +57,20 @@ export class Conn {
     return this.raw.threadId
   }
 
-  async query(sql: string, label: string): Promise<QueryResult> {
+  /**
+   * DatabaseInterface::selectDb (mysqli::select_db): `USE db` without the tryQuery hook
+   * (Tracker::handleQuery would read it as a USE statement of the request).
+   */
+  async selectDb(db: string, label: string): Promise<boolean> {
+    try {
+      await this.query(`USE ${backquote(db)}`, label, false)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  async query(sql: string, label: string, hook = true): Promise<QueryResult> {
     const start = performance.now()
     let res: [unknown, unknown]
     try {
@@ -75,6 +90,7 @@ export class Conn {
     const ms = performance.now() - start
     const out = normalise(res[0], res[1])
     this.log.push({ sql, ms, label, ...(out.header !== null ? { warnings: out.header.warningStatus } : {}) })
+    if (hook) await afterQuery(this.log, sql, this)
     return { ...out, ms }
   }
 
