@@ -1,12 +1,10 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import type { Executed } from '@bettermyadmin/contracts'
-import { N_ } from '@bettermyadmin/i18n'
 import { quoteString } from '@bettermyadmin/sql-gen'
 import { createServerContext } from '@bettermyadmin/sql-lexer'
 import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
-import { addUserError } from '../http/user-errors.ts'
 import { type BudgetedPool, ConnectionBudget } from './budget.ts'
 import { Conn, type ServerInfo } from './connection.ts'
 import { ControlConnections } from './control.ts'
@@ -104,9 +102,7 @@ export async function postConnect(
   server: ServerConfig,
   collation: string,
   mysqlLocale = 'en_US',
-  serverIndex = 1,
 ): Promise<ServerInfo> {
-  const setupErrors: NonNullable<ServerInfo['setupErrors']> = []
   const row = (await conn.rows('SELECT @@version, @@version_comment, @@sql_mode', 'connect.version'))[0]
   const version = row?.['@@version'] ?? ''
   const versionComment = row?.['@@version_comment'] ?? ''
@@ -121,14 +117,9 @@ export async function postConnect(
   if (mysqlLocale !== '')
     await conn.query(`SET lc_messages = '${mysqlLocale}';`, 'connect.locale').catch(() => {})
   if (server.SessionTimeZone !== '') {
-    await conn.query(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`, 'connect.tz').catch(() =>
-      setupErrors.push({
-        msgid: N_(
-          "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server.",
-        ),
-        args: [server.SessionTimeZone, serverIndex, serverIndex],
-      }),
-    )
+    await conn
+      .query(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`, 'connect.tz')
+      .catch(() => {})
   }
   // UserPreferencesHandler::setConnectionCollation: nothing to do for '' or the SET NAMES collation
   const defaultCollation = v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'
@@ -136,9 +127,7 @@ export async function postConnect(
     // automatically adjust collation if not supported by server
     const coll =
       charset === 'utf8' && collation.startsWith('utf8mb4_') ? `utf8_${collation.slice(8)}` : collation
-    await conn
-      .query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation')
-      .catch(() => setupErrors.push({ msgid: N_('Failed to set configured collation connection!') }))
+    await conn.query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation').catch(() => {})
   }
   return {
     version,
@@ -148,7 +137,6 @@ export async function postConnect(
     isPercona: versionComment.toLowerCase().includes('percona'),
     sqlMode,
     context: createServerContext(v, isMariaDb, sqlMode),
-    ...(setupErrors.length > 0 ? { setupErrors } : {}),
   }
 }
 
@@ -331,13 +319,7 @@ export class PoolManager {
     raw.destroy = () => destroy()
     const marker = raw.connection as unknown as object
     if (!entry.initialised.has(marker)) {
-      entry.serverInfo = await postConnect(
-        conn,
-        this.server(serverIndex),
-        collation,
-        mysqlLocale,
-        serverIndex,
-      )
+      entry.serverInfo = await postConnect(conn, this.server(serverIndex), collation, mysqlLocale)
       entry.initialised.add(marker)
       entry.locales.set(marker, mysqlLocale)
     } else if ((entry.locales.get(marker) ?? '') !== mysqlLocale) {
@@ -348,7 +330,6 @@ export class PoolManager {
       entry.locales.set(marker, mysqlLocale)
     }
     conn.serverInfo = entry.serverInfo
-    for (const e of entry.serverInfo?.setupErrors ?? []) addUserError(e)
     return conn
   }
 

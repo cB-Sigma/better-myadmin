@@ -13,7 +13,6 @@ import { BmaError, CsrfError } from './http/errors.ts'
 import { isHttpsRequest, securityHeaders } from './http/headers.ts'
 import { requestProblemChecking } from './http/request-problems.ts'
 import { sqlLog } from './http/sql-log.ts'
-import { userErrors } from './http/user-errors.ts'
 import { languageLoading, languageManager } from './i18n.ts'
 import { authRoutes } from './routes/auth.ts'
 import { i18nRoutes } from './routes/i18n.ts'
@@ -88,8 +87,6 @@ export function createApp(deps: AppDeps) {
   app.use('/api/*', language)
   app.use('/api/*', permissions)
   app.use('/api/*', requestProblemChecking())
-  // ErrorHandler user errors of the request (http/user-errors.ts)
-  app.use('/api/*', userErrors())
 
   // page loads authenticate the http / signon servers (the SPA itself is served by main.ts)
   const gate = authPageGate()

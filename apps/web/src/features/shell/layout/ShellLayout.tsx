@@ -17,7 +17,6 @@ import { DemoBanner } from '../DemoBanner.tsx'
 import { ServerTabBar } from '../ScopeTabBars.tsx'
 import { UserMenu } from '../UserMenu.tsx'
 import { ErrorReporting, PageErrorBoundary } from '../errors/ErrorReporting.tsx'
-import { UserErrors } from '../errors/UserErrors.tsx'
 import { ShortcutLayer } from '../hotkeys/useShortcuts.tsx'
 import { PageChromeProvider, PageIcons } from '../page-chrome.tsx'
 import { useScopeParams, useServerScope } from '../scope.ts'
@@ -149,7 +148,6 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                         )}
                       </a>
                     </div>
-                    <UserErrors />
                     <DemoBanner server={server} />
                   </div>
                 </div>

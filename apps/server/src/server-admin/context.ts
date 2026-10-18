@@ -6,7 +6,6 @@ import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { Conn } from '../db/connection.ts'
 import { connectionOptions, postConnect } from '../db/pool-manager.ts'
 import { ValidationError } from '../http/errors.ts'
-import { addUserError } from '../http/user-errors.ts'
 import { NavDbi } from '../navigation/dbi.ts'
 import type { ServerEnv } from '../routes/server.ts'
 import type { SessionData } from '../session/store.ts'
@@ -60,9 +59,7 @@ export async function withAdmin<T>(
       server,
       creds.collation ?? cfg.DefaultConnectionCollation,
       locale,
-      serverIndex,
     )
-    for (const e of conn.serverInfo.setupErrors ?? []) addUserError(e)
   } else {
     conn = await pools.acquire(session.id, serverIndex, creds, c.get('executed'), undefined, locale)
     end = async () => {}

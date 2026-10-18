@@ -251,7 +251,6 @@ import type {
 } from '@bettermyadmin/contracts'
 import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
 import type { ClientConfig } from './config.ts'
-import { collectUserErrors } from './user-errors.ts'
 
 /** An API error carrying the server's envelope (message texts are phpMyAdmin's). */
 export class ApiError extends Error {
@@ -313,7 +312,6 @@ export async function call<T>(
     }
     throw e
   }
-  collectUserErrors(res)
   const json = (await res.json().catch(() => null)) as unknown
   if (!res.ok) {
     const env = (json as ErrorEnvelope | null)?.error
