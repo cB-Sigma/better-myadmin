@@ -14,7 +14,7 @@ describe('cookie auth', () => {
     expect(r.json.servers).toEqual([{ index: 1, label: `${MYSQL.host}:${MYSQL.port}`, authType: 'cookie' }])
   })
 
-  it('rejects a POST without the CSRF token', async () => {
+  it('rejects a POST without the CSRF token [p01-180699]', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
     const r = await t.req(
@@ -46,7 +46,7 @@ describe('cookie auth', () => {
     })
   })
 
-  it('logs in, rotates the session id, recalls the username', async () => {
+  it('logs in, rotates the session id, recalls the username [p01-570894] [p01-3b0124]', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
     const before = t.jar.get('bma_sid')
@@ -112,7 +112,7 @@ describe('cookie auth', () => {
     })
   })
 
-  it('the idle check: the reported idle time, not the check request, decides (functions.ts onloadIdleEvent)', async () => {
+  it('the idle check: the reported idle time, not the check request, decides (functions.ts onloadIdleEvent) [p01-66071e]', async () => {
     t = testApp(testConfig({ LoginCookieValidity: 60 }))
     await t.login()
     expect((await t.req('GET', '/api/auth/state')).json.loginCookieValidity).toBe(60)
@@ -147,7 +147,7 @@ describe('cookie auth', () => {
     expect((await t.req('GET', '/api/auth/state')).json.authenticated).toBe(false)
   })
 
-  it('the idle check: another active window keeps the login', async () => {
+  it('the idle check: another active window keeps the login [p01-66071e]', async () => {
     t = testApp(testConfig({ LoginCookieValidity: 60 }))
     await t.login()
     const sid = t.jar.get('bma_sid')!
@@ -161,7 +161,7 @@ describe('cookie auth', () => {
     ).toBe(true)
   })
 
-  it('logout clears every server login (LoginCookieDeleteAll)', async () => {
+  it('logout clears every server login (LoginCookieDeleteAll) [p01-389871]', async () => {
     t = testApp()
     await t.login()
     const r = await t.req('POST', '/api/auth/logout')

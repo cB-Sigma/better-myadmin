@@ -1099,7 +1099,7 @@ export const CLIENT_VISIBLE_EXTRA_PATHS: readonly string[] = [
   'ShowPhpInfo',
   'ShowChgPassword',
   'ShowGitRevision',
-  'DBG/demo', // base.twig #pma_demo
+  'DBG/demo', // the demo server banner (Footer::getDisplay is_demo)
   'AllowUserDropDatabase',
   'UseDbSearch',
   'RowActionType',

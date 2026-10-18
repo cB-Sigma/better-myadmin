@@ -9,10 +9,10 @@ import { sessionOverlay } from './session/IdleCheck'
 
 /** Like phpMyAdmin, any URL shows the login form until the user is authenticated. */
 export function AuthGate({ children }: { children: ReactNode }) {
+  const qc = useQueryClient()
   const state = useQuery({ queryKey: qk.auth, queryFn: api.authState, staleTime: Number.POSITIVE_INFINITY })
   // a request answered 401: read the login state again, which shows the login form with "Your
   // session has expired" after inactivity (pma: redirect_flag → handleRedirectAndReload)
-  const qc = useQueryClient()
   // the reloaded login page says so (session_expired=1)
   const [lost, setLost] = useState(false)
   useEffect(() => {

@@ -948,7 +948,7 @@ function AddBookmarkForm({
  * Debug SQL: the statements the last request ran, grouped or not, in execution order, by time or count.
  * pma: resources/js/modules/console.ts::ConsoleDebug (backtraces are not collected)
  */
-function DebugCard({
+export function DebugCard({
   log,
   settings,
   set,

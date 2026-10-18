@@ -10,7 +10,7 @@ test.describe('change password', () => {
     await c.end()
   })
 
-  test('validation alerts, strength meter, generator, success message with the masked SQL, new password works', async ({
+  test('validation alerts, strength meter, generator, success message with the masked SQL, new password works [p01-2a8d28]', async ({
     page,
   }) => {
     await login(page, E2E.pw, E2E.pw)
@@ -53,7 +53,7 @@ test.describe('change password', () => {
     await login(page, E2E.pw, 'm1shell-E2e-new')
   })
 
-  test('No Password with AllowNoPassword = false asks for confirmation', async ({ page }) => {
+  test('No Password with AllowNoPassword = false asks for confirmation [p01-2a8d28]', async ({ page }) => {
     await login(page, E2E.pw, E2E.pw)
     await page.locator('#change_password_anchor').click()
     const dialog = page.getByRole('dialog', { name: 'Change password' })

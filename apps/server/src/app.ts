@@ -9,7 +9,8 @@ import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
-import { securityHeaders } from './http/headers.ts'
+import { isHttpsRequest, securityHeaders } from './http/headers.ts'
+import { requestProblemChecking } from './http/request-problems.ts'
 import { sqlLog } from './http/sql-log.ts'
 import { languageLoading, languageManager } from './i18n.ts'
 import { authRoutes } from './routes/auth.ts'
@@ -82,6 +83,7 @@ export function createApp(deps: AppDeps) {
   app.use('/api/*', sqlLog())
   app.use('/api/*', language)
   app.use('/api/*', permissions)
+  app.use('/api/*', requestProblemChecking())
 
   // page loads authenticate the http / signon servers (the SPA itself is served by main.ts)
   const gate = authPageGate()
@@ -139,8 +141,7 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     c.set('deps', deps)
     c.set('executed', [])
-    const proto = c.req.header('x-forwarded-proto') ?? new URL(c.req.url).protocol.replace(':', '')
-    c.set('isHttps', proto === 'https')
+    c.set('isHttps', isHttpsRequest(c.req.header('x-forwarded-proto'), c.req.url))
     const id = getCookie(c, SESSION_COOKIE)
     let session = id !== undefined ? deps.store.get(id) : null
     c.set('sessionIsNew', session === null)
@@ -187,7 +188,7 @@ export function lastActivity(s: SessionData): number {
 // biome-ignore lint/suspicious/noExplicitAny: any route path/input
 export function writeSessionCookies(c: Context<AppEnv, any, any>, s: SessionData) {
   const { cfg } = c.get('deps')
-  const secure = c.get('isHttps')
+  const secure = c.get('isHttps') || cfg.ForceSSL
   const sameSite = (['Lax', 'Strict', 'None'].includes(cfg.CookieSameSite) ? cfg.CookieSameSite : 'Strict') as
     | 'Lax'
     | 'Strict'

@@ -1,46 +1,6 @@
-import { MessageBox, Panel, PanelBody } from '@bettermyadmin/ui'
-import { useQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
-import { api } from '../../../lib/api'
+import { Panel, PanelBody } from '@bettermyadmin/ui'
 import { PROJECT_URL } from '../../../lib/config'
-import { Trans, t, tProduct } from '../../../lib/i18n'
-import { qk } from '../../../lib/queryKeys'
-
-/**
- * The demo server's footer notice ($cfg['DBG']['demo']): a link home and the running git revision
- * and branch (or "Git information missing!").
- * pma: resources/templates/base.twig (#pma_demo), src/Footer.php::getGitRevisionInfo
- */
-export function DemoNotice({ server }: { server: number }) {
-  const build = useQuery({ queryKey: qk.build, queryFn: api.build, staleTime: Number.POSITIVE_INFINITY })
-  const commit = build.data?.commit ?? null
-  const branch = build.data?.branch ?? null
-  const ext = { target: '_blank', rel: 'noopener noreferrer' } as const
-  return (
-    <div id="pma_demo" className="px-3 pb-2 print:hidden">
-      <MessageBox type="notice">
-        <Link to="/s/$server" params={{ server }}>
-          {tProduct('phpMyAdmin Demo Server')}:
-        </Link>{' '}
-        {commit !== null && branch !== null ? (
-          <Trans
-            id="Currently running Git revision %1$s from the %2$s branch."
-            args={[
-              <a key="rev" href={`${PROJECT_URL}/commit/${commit}`} {...ext}>
-                {commit}
-              </a>,
-              <a key="branch" href={`${PROJECT_URL}/tree/${branch}`} {...ext}>
-                {branch}
-              </a>,
-            ]}
-          />
-        ) : (
-          t('Git information missing!')
-        )}
-      </MessageBox>
-    </div>
-  )
-}
+import { Trans, tProduct } from '../../../lib/i18n'
 
 /** `$cfg['DBG']['demo']`: this is the demo server (the shell's client-visible DBG/demo). */
 export function isDemo(cfg: Record<string, unknown>): boolean {

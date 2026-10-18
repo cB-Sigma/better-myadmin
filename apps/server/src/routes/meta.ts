@@ -15,7 +15,9 @@ metaRoutes.get('/health', (c) => c.json({ ok: true }))
 
 /** pma: /git-revision (GitInfoController) */
 metaRoutes.get('/build', (c) => {
-  const git = c.get('deps').cfg.ShowGitRevision ? readGitInfo() : null
+  // the demo server banner always reads it (Footer::getDisplay: new Git(true))
+  const { cfg } = c.get('deps')
+  const git = cfg.ShowGitRevision || cfg.DBG.demo ? readGitInfo() : null
   return c.json({
     name: 'BetterMyAdmin',
     version: APP_VERSION,

@@ -318,8 +318,12 @@ export async function call<T>(
     // not one of our error envelopes (a proxy's or the server's own failure page)
     if (env === undefined) requestFailed({ path, status: res.status, statusText: res.statusText })
     // the login is gone (inactivity, logout in another window): the gate shows the login form
-    // again (pma: redirect_flag → handleRedirectAndReload)
-    if (res.status === 401 && (env?.code === 'AUTH_REQUIRED' || env?.code === 'AUTH_EXPIRED')) {
+    // again (pma: redirect_flag → handleRedirectAndReload); the login calls' own 401s do not count
+    if (
+      res.status === 401 &&
+      (env?.code === 'AUTH_REQUIRED' || env?.code === 'AUTH_EXPIRED') &&
+      !path.startsWith('/auth/')
+    ) {
       window.dispatchEvent(new CustomEvent(AUTH_LOST_EVENT, { detail: env.code }))
     }
     throw new ApiError(res.status, env ?? { code: 'INTERNAL' as const, message: res.statusText })

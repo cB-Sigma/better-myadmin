@@ -7,7 +7,7 @@ import { E2E, login } from '../fixtures.ts'
  * ajax.ts getFatalErrorHandler ("Error in processing request").
  */
 test.describe('session', () => {
-  test('the idle check finds the login gone: the login form opens over the page, which then goes on', async ({
+  test('the idle check finds the login gone: the login form opens over the page, which then goes on [p01-66071e]', async ({
     page,
   }) => {
     await page.clock.install()
