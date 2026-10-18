@@ -111,14 +111,14 @@ test('processes: refresh rate, auto refresh, header sort, full queries [p06-9768
   await page.locator('#tableprocesslist thead .sortlink', { hasText: 'Time' }).click()
   await expect(page).toHaveURL(/order_by_field=Time/)
   await page.locator('#tableprocesslist thead').getByRole('button', { name: 'Show full queries' }).click()
-  await expect(page).toHaveURL(/full=true/)
+  await expect(page).toHaveURL(/full=1/)
   await expect(
     page.locator('#tableprocesslist thead').getByRole('button', { name: 'Truncate shown queries' }),
   ).toBeVisible()
 
   // "Show only active" submits by itself (autosubmit); Refresh fetches the list again
   await page.locator('#showExecuting').check()
-  await expect(page).toHaveURL(/showExecuting=true/)
+  await expect(page).toHaveURL(/showExecuting=1/)
   const refreshed = page.waitForResponse((r) => /\/status\/processes/.test(r.url()))
   await page.getByRole('button', { name: 'Refresh', exact: true }).click()
   expect((await refreshed).ok()).toBe(true)

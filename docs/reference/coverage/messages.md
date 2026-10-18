@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3395/3428 covered (99.0%): 3249 implemented, 13 exception, 133 n/a, 1 planned, 32 missing. [Summary](README.md).
+3427/3428 covered (100.0%): 3281 implemented, 13 exception, 133 n/a, 1 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 404/404 (100.0%) covered, 349/404 implemented
 
@@ -70,10 +70,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## other — 91/123 (74.0%) covered, 81/123 implemented
+## other — 123/123 (100.0%) covered, 113/123 implemented
 
-32 msgids not used yet.
+0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `resources/js/datetimepicker.ts` | 32/51 | `Time (A specific point in the day, as shown on a clock)` · `Wk (Column header for week of the year in calendar)` · `Fr (Minimal week day name for Friday)` · `Mo (Minimal week day name for Monday)` · `Sa (Minimal week day name for Saturday)` · `Su (Minimal week day name for Sunday)` · `Th (Minimal week day name for Thursday)` · `Tu (Minimal week day name for Tuesday)` · `We (Minimal week day name for Wednesday)` · `April (Month name)` · `August (Month name)` · `December (Month name)` · … +20 |

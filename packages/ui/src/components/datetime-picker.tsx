@@ -131,6 +131,8 @@ export function DateTimeCalendar(props: DateTimeCalendarProps) {
     month: init.date?.month ?? today.getMonth(),
   }))
   const [timeText, setTimeText] = useState(() => formatPickerTime(o.timeFormat, init.time))
+  // tp_inst.timezone: the browser's offset (selectLocalTimezone)
+  const [timezone, setTimezone] = useState(() => -new Date().getTimezoneOffset())
   const withTime = props.kind !== 'date'
   const timeOnly = props.kind === 'time'
 
@@ -153,6 +155,8 @@ export function DateTimeCalendar(props: DateTimeCalendarProps) {
       className="ui-datepicker-year mx-0.5 rounded border border-border bg-surface px-0.5"
       data-handler="selectYear"
       data-event="change"
+      // jQuery UI's selectYearLabel (not translated by phpMyAdmin)
+      aria-label="Select year"
       value={view.year}
       onChange={(e) => setView({ ...view, year: Number(e.target.value) })}
     >
@@ -197,7 +201,19 @@ export function DateTimeCalendar(props: DateTimeCalendarProps) {
               onClick={() => move(-1)}
               onKeyDown={(e) => e.key === 'Enter' && move(-1)}
             >
-              <span className="ui-icon ui-icon-circle-triangle-w">{names.prevText}</span>
+              {/* ui-icon: the text is hidden behind the circle-triangle icon */}
+              <span className="ui-icon ui-icon-circle-triangle-w inline-flex">
+                <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true">
+                  <circle cx="8" cy="8" r="7.5" fill="currentColor" />
+                  <path
+                    d="M10 4 L6 8 L10 12"
+                    stroke="var(--color-surface, #fff)"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                </svg>
+                <span className="sr-only">{names.prevText}</span>
+              </span>
             </a>
             <div className="ui-datepicker-title flex-1 text-center font-bold">
               {names.showMonthAfterYear ? (
@@ -223,7 +239,19 @@ export function DateTimeCalendar(props: DateTimeCalendarProps) {
               onClick={() => move(1)}
               onKeyDown={(e) => e.key === 'Enter' && move(1)}
             >
-              <span className="ui-icon ui-icon-circle-triangle-e">{names.nextText}</span>
+              {/* ui-icon: the text is hidden behind the circle-triangle icon */}
+              <span className="ui-icon ui-icon-circle-triangle-e inline-flex">
+                <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true">
+                  <circle cx="8" cy="8" r="7.5" fill="currentColor" />
+                  <path
+                    d="M6 4 L10 8 L6 12"
+                    stroke="var(--color-surface, #fff)"
+                    strokeWidth="2"
+                    fill="none"
+                  />
+                </svg>
+                <span className="sr-only">{names.nextText}</span>
+              </span>
             </a>
           </div>
           <table className="ui-datepicker-calendar w-full border-collapse text-center">
@@ -329,14 +357,19 @@ export function DateTimeCalendar(props: DateTimeCalendarProps) {
                 }}
               />
             </dd>
-            {units
-              .filter(([, , show]) => show)
-              .map(([unit, label, , max]) => (
+            {/*
+              every unit is drawn: the addon marks the units it does not show `ui_tpicker_unit_hide`, a
+              class phpMyAdmin has no CSS for (it does not load the addon's stylesheet), so they show;
+              moving them changes nothing the time format writes
+            */}
+            {units.map(([unit, label, show, max]) => {
+              const hide = show ? '' : ' ui_tpicker_unit_hide'
+              return (
                 <Fragment key={unit}>
-                  <dt className={`ui_tpicker_${unit}_label`}>{label}</dt>
-                  <dd className={`ui_tpicker_${unit} m-0`}>
+                  <dt className={`ui_tpicker_${unit}_label${hide}`}>{label}</dt>
+                  <dd className={`ui_tpicker_${unit}${hide} m-0`}>
                     <Slider
-                      className={`ui_tpicker_${unit}_slider`}
+                      className={`ui_tpicker_${unit}_slider${hide}`}
                       label={label}
                       value={time[unit]}
                       max={max}
@@ -344,13 +377,43 @@ export function DateTimeCalendar(props: DateTimeCalendarProps) {
                     />
                   </dd>
                 </Fragment>
-              ))}
+              )
+            })}
+            {/* showTimezone is off (hidden the same way, so shown): its value is never written */}
+            <dt className="ui_tpicker_timezone_label ui_tpicker_unit_hide">{names.timezoneText}</dt>
+            <dd className="ui_tpicker_timezone ui_tpicker_unit_hide m-0">
+              <select
+                className="rounded border border-border bg-surface px-0.5"
+                aria-label={names.timezoneText}
+                value={timezone}
+                onChange={(e) => setTimezone(Number(e.target.value))}
+              >
+                {TIMEZONES.map((z) => (
+                  <option key={z} value={z}>
+                    {timezoneLabel(z)}
+                  </option>
+                ))}
+              </select>
+            </dd>
           </dl>
         </div>
       )}
       {props.note !== undefined && <p className="note m-1 text-fg-muted">{props.note}</p>}
     </div>
   )
+}
+
+/** The addon's default timezoneList (minutes) */
+const TIMEZONES = [
+  -720, -660, -600, -570, -540, -480, -420, -360, -300, -270, -240, -210, -180, -120, -60, 0, 60, 120, 180,
+  210, 240, 270, 300, 330, 345, 360, 390, 420, 480, 525, 540, 570, 600, 630, 660, 690, 720, 765, 780, 840,
+]
+
+/** $.timepicker.timezoneOffsetString(tz, iso8601 = false): `+0530` */
+function timezoneLabel(tz: number): string {
+  const minutes = tz % 60
+  const hours = (tz - minutes) / 60
+  return `${tz >= 0 ? '+' : '-'}${`0${Math.abs(hours)}`.slice(-2)}${`0${Math.abs(minutes)}`.slice(-2)}`
 }
 
 /** A jQuery UI slider (`div.ui-slider` with its `span.ui-slider-handle`), mouse and keyboard. */

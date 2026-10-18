@@ -91,7 +91,16 @@ test('insert: DATETIME writes the day and the time and stays open; the sliders s
   await expect(picker(page).locator('.ui-datepicker-month')).toHaveText('July')
   await expect(picker(page).locator('td.ui-datepicker-current-day a')).toHaveText('4')
   await expect(picker(page).locator('.ui_tpicker_time_label')).toHaveText('Time')
-  await expect(picker(page).locator('dt')).toHaveText(['Time', 'Hour', 'Minute', 'Second'])
+  // every unit shows, as in phpMyAdmin (the addon's hide class has no CSS there); the format is HH:mm:ss
+  await expect(picker(page).locator('dt')).toHaveText([
+    'Time',
+    'Hour',
+    'Minute',
+    'Second',
+    'Millisecond',
+    'Microsecond',
+    'Time zone',
+  ])
   await expect(picker(page).locator('.ui_tpicker_time_input')).toHaveValue('05:06:07')
   await picker(page).locator('td[data-handler="selectDay"] a', { hasText: /^20$/ }).click()
   await expect(field(page, 'dt')).toHaveValue('2023-07-20 05:06:07')
@@ -108,13 +117,13 @@ test('insert: DATETIME writes the day and the time and stays open; the sliders s
   await expect(picker(page)).toHaveCount(0)
 })
 
-test('insert: DATETIME(3) gets the millisecond slider; TIME(6) is a time-only picker up to 99 hours', async ({
+test('insert: DATETIME(3) writes milliseconds; TIME(6) is a time-only picker up to 99 hours', async ({
   page,
 }) => {
   await page.goto(`/s/1/db/${DB}/t/t/insert`)
   await field(page, 'dt3').fill('2023-01-02 03:04:05.678')
   await trigger(page, 'dt3').click()
-  await expect(picker(page).locator('dt')).toHaveText(['Time', 'Hour', 'Minute', 'Second', 'Millisecond'])
+  // DATETIME(3): HH:mm:ss.l
   await expect(picker(page).locator('.ui_tpicker_time_input')).toHaveValue('03:04:05.678')
   await page.keyboard.press('Escape')
 
@@ -130,6 +139,7 @@ test('insert: DATETIME(3) gets the millisecond slider; TIME(6) is a time-only pi
     'Second',
     'Millisecond',
     'Microsecond',
+    'Time zone',
   ])
   const hour = picker(page).getByRole('slider', { name: 'Hour' })
   await hour.focus()
@@ -164,6 +174,6 @@ test('table search: date and datetime criteria get the picker, DATETIME(3) and T
   await expect(row('dt3').locator('.ui-datepicker-trigger')).toHaveCount(0)
   await expect(row('t6').locator('.ui-datepicker-trigger')).toHaveCount(0)
   await row('dt').locator('.ui-datepicker-trigger').click()
-  // no data-decimals on the search cell: seconds only
-  await expect(picker(page).locator('dt')).toHaveText(['Time', 'Hour', 'Minute', 'Second'])
+  // no data-decimals on the search cell: HH:mm:ss
+  await expect(picker(page).locator('.ui_tpicker_time_input')).toHaveValue(/^\d\d:\d\d:\d\d$/)
 })

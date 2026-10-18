@@ -172,7 +172,7 @@ export const pmaControls = {
     file: 'GridTable.tsx',
     match: "props.edited && (hasClass(cell.cls, 'truncated')",
   },
-  'js:makegrid.ts#keyup:<$inputField>': { file: 'GridTable.tsx', match: '<DateTimePicker' },
+  'js:makegrid.ts#keyup:<$inputField>': { file: 'GridTable.tsx', match: 'pickerCanShow(pickerKind, value)' },
   'js:makegrid.ts#keyup:<g.cEdit> .edit_box': {
     file: 'GridTable.tsx',
     match: "props.edited && (hasClass(cell.cls, 'truncated')",
