@@ -33,7 +33,7 @@ afterAll(async () => {
 })
 
 describe('central columns', () => {
-  it('adds the columns of tables, lists them, edits and deletes', async () => {
+  it('adds the columns of tables, lists them, edits and deletes [p05-b6cb36]', async () => {
     let r = await app.req('POST', `${base}/structure/central-add`, { tables: ['a', 'b'] })
     expect(J(r).messages[0].text).toContain("Could not add 'id' as they already exist in central list!")
     r = await app.req('GET', `${base}/central-columns`)

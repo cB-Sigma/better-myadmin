@@ -36,12 +36,12 @@ describe('database structure', () => {
     expect((r.json.summary as { numTables: number }).numTables).toBe(2)
   })
 
-  it('redirects a position past the end to the last page', async () => {
+  it('redirects a position past the end to the last page [p05-9533c7]', async () => {
     const r = await app.req('GET', `${base}/structure?pos=10`)
     expect(r.json.redirectPos).toBe(2)
   })
 
-  it('shows the view with -1 rows (MaxExactCountViews = 0)', async () => {
+  it('shows the view with -1 rows (MaxExactCountViews = 0) [p05-be3af8]', async () => {
     const r = await app.req('GET', `${base}/structure?pos=2`)
     const v = (r.json.tables as Array<{ name: string; isView: boolean; rowsText: string }>).find(
       (t) => t.name === 'v',
@@ -49,7 +49,7 @@ describe('database structure', () => {
     expect(v).toMatchObject({ isView: true, rowsText: '-1' })
   })
 
-  it('copies tables to another database, adds a prefix and shows create', async () => {
+  it('copies tables to another database, adds a prefix and shows create [p05-d5ead9]', async () => {
     const copy = await app.req('POST', `${base}/structure/copy`, {
       tables: ['a', 'c'],
       targetDb: `${DB}_copy`,
@@ -64,7 +64,7 @@ describe('database structure', () => {
     expect((sc.json.views as unknown[]).length).toBe(1)
   })
 
-  it('runs table maintenance and empties/drops with confirmation', async () => {
+  it('runs table maintenance and empties/drops with confirmation [p05-a7eaad]', async () => {
     const m = await app.req('POST', `${base}/structure/maintenance`, { op: 'check', tables: ['a'] })
     expect((m.json.maintenance as { rows: Array<{ table: string }> }).rows[0]?.table).toBe('a')
     const no = await app.req('POST', `${base}/structure/empty`, { tables: ['a'], confirmed: false })

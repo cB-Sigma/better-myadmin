@@ -3,14 +3,14 @@ import { dropExtension, isFileDrag } from './DragDropImport'
 import { matchFormat, oneCharacter } from './ImportPage'
 
 describe('import page behaviours (import.ts)', () => {
-  it('picks the format from the file name, a compression suffix ignored', () => {
+  it('picks the format from the file name, a compression suffix ignored [p07-50895c]', () => {
     const formats = ['csv', 'sql', 'xml']
     expect(matchFormat('C:\\fakepath\\Dump.SQL.gz', formats)).toBe('sql')
     expect(matchFormat('a.csv.zip', formats)).toBe('csv')
     expect(matchFormat('a.txt', formats)).toBeNull()
   })
 
-  it('keeps one enclosure character unless the first is an escape', () => {
+  it('keeps one enclosure character unless the first is an escape [p07-22fafd]', () => {
     expect(oneCharacter('""')).toBe('"')
     expect(oneCharacter('\\"')).toBe('\\"')
     expect(oneCharacter("'")).toBe("'")
@@ -18,7 +18,7 @@ describe('import page behaviours (import.ts)', () => {
 })
 
 describe('drag and drop import (drag_drop_import.ts)', () => {
-  it('accepts sql, xml, ldi, mediawiki and shp, optionally compressed', () => {
+  it('accepts sql, xml, ldi, mediawiki and shp, optionally compressed [p07-ca06b4]', () => {
     expect(dropExtension('a.sql.gz')).toBe('sql')
     expect(dropExtension('b.shp')).toBe('shp')
     expect(dropExtension('c.csv')).toBe('')

@@ -46,7 +46,7 @@ const pos = (table: string, x: number, y: number, h = true) => ({
 })
 
 describe('designer', () => {
-  it('a new page shows every table at a random place, with icons, keys and the relation', async () => {
+  it('a new page shows every table at a random place, with icons, keys and the relation [p05-1864e4]', async () => {
     const r = J(await app.req('GET', `${base}/designer`))
     expect(r.displayPage).toBe(-1)
     expect(r.selectedPage).toBeNull()
@@ -166,7 +166,7 @@ describe('designer', () => {
     expect(r.message.text).toBe('Internal relationship has been removed.')
   })
 
-  it('without a pmadb: pages kept in the per-user storage (X8)', async () => {
+  it('without a pmadb: pages kept in the per-user storage (X8) [p05-585808]', async () => {
     const r = J(await bare.req('GET', `${base}/designer`))
     expect(r.tablesEnabled).toBe(true)
     expect(r.displayPage).toBe(-1)

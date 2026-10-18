@@ -190,7 +190,7 @@ describe.skipIf(!pmaReachable)('parity: databases list', () => {
     expect(text(parse(String(r.p.message)))).toBe(c.message.text.replace('m3srv_db_newb', 'm3srv_db_newp'))
   })
 
-  it('create with an unknown collation drops the collation part; an existing name reports the error', async () => {
+  it('create with an unknown collation drops the collation part; an existing name reports the error [p05-f14700]', async () => {
     const r = await both(
       h,
       () => h.pma.postJson('/server/databases/create', { new_db: 'm3srv_db_a', db_collation: 'nope_ci' }),
@@ -224,7 +224,7 @@ describe.skipIf(!pmaReachable)('parity: drop databases', () => {
   const withoutPmadb = (log: Array<{ command: string; sql: string }>) =>
     log.filter((e) => !/^DELETE FROM `phpmyadmin`\.`pma__/.test(e.sql))
 
-  it('drops the selected databases, skipping system schemas', async () => {
+  it('drops the selected databases, skipping system schemas [p05-684480]', async () => {
     const r = await both(
       su,
       () =>
