@@ -3,6 +3,7 @@ import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { signSql } from '../../src/query/signature.ts'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { isMariaDb } from '../support/vendor.ts'
 
 /**
  * Insert/Edit form, save, foreign values and the transformation wrapper against a live MySQL
@@ -96,8 +97,10 @@ describe('insert form', () => {
     expect(cols.name.col.comment).toBe('the name')
     expect(cols.name.cell.widget).toMatchObject({ kind: 'text', size: 30, maxlength: 30 })
     // MySQL 8 reports `int unsigned`: InsertEditColumn::$trueType keeps the attribute, so phpMyAdmin
-    // finds no integer range for it; a signed `int` gets one
-    expect(cols.qty.cell.widget).toMatchObject({ kind: 'text', min: null, dataType: '' })
+    // finds no integer range for it; a signed `int` gets one. MariaDB reports `int(10) unsigned`, whose
+    // trueType is `int` (everything from the parenthesis cut): the unsigned range applies
+    if (isMariaDb) expect(cols.qty.cell.widget).toMatchObject({ kind: 'text', min: '0', dataType: 'INT' })
+    else expect(cols.qty.cell.widget).toMatchObject({ kind: 'text', min: null, dataType: '' })
     expect(cols.parent_id.col.trueType).toBe('int')
     expect(cols.body.cell.widget.kind).toBe('textarea')
     expect(cols.kind.cell.widget).toMatchObject({ kind: 'enum-radio', selected: 'a' })

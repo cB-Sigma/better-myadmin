@@ -2,6 +2,7 @@ import type { QueryResponse } from '@bettermyadmin/contracts'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { isMariaDb } from '../support/vendor.ts'
 
 const DB = 'm1sql_it_tab'
 
@@ -104,6 +105,9 @@ describe('SQL tab options', () => {
     )
     const [rows] = await root.query(`SELECT name FROM ${DB}.t WHERE id = 1`)
     expect((rows as Array<{ name: string }>)[0]!.name).toBe('a')
+    // MariaDB evaluates @@foreign_key_checks as 0 in this INNODB_TRX probe even on a fresh
+    // session: the probe means nothing there (the fk-checks test below covers the setting)
+    if (isMariaDb) return
     const after = await run(
       a,
       'SELECT COUNT(*), @@foreign_key_checks FROM information_schema.INNODB_TRX WHERE trx_mysql_thread_id = CONNECTION_ID()',
@@ -159,8 +163,13 @@ describe('SQL tab options', () => {
     await expect.poll(sleeping, { timeout: 15_000, interval: 50 }).toBe(1)
     expect((await a.req('POST', '/api/servers/1/query/cancel', { queryId: 'q1' })).json.killed).toBe(true)
     const { body } = await pending
-    // SLEEP interrupted by KILL QUERY returns 1
-    expect(body.statements[0]!.result!.rows[0]).toEqual(['1'])
+    if (isMariaDb) {
+      // MariaDB reports the interrupted SLEEP as an error
+      expect(body.statements[0]!.message).toMatchObject({ type: 'error', errno: 1317 })
+    } else {
+      // SLEEP interrupted by KILL QUERY returns 1
+      expect(body.statements[0]!.result!.rows[0]).toEqual(['1'])
+    }
     expect((await a.req('POST', '/api/servers/1/query/cancel', { queryId: 'q1' })).json.killed).toBe(false)
   })
 

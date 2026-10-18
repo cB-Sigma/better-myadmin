@@ -8,6 +8,7 @@ import { ROOT, createAccounts, withFields } from './lib/export.ts'
 import { type ImportFile, type Pairs, bmaImport, pmaImport, pmaImportForm } from './lib/import.ts'
 import { PmaClient } from './lib/pma.ts'
 import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Import parity (docs/features/07-export-import.md): the same file and form (scraped from
@@ -360,6 +361,20 @@ describe.skipIf(!pmaReachable)('import parity', () => {
     }
   })
 
+  /**
+   * LOAD DATA INFILE of the uploaded file (ImportLdi without LOCAL) is read by the server, which runs
+   * in its own container: MySQL refuses both tools' paths (secure_file_priv), MariaDB (no
+   * secure_file_priv) answers by path: #13 when the directory exists (phpMyAdmin's /tmp/phpXXXX), #1290
+   * when it does not (our upload directory). The statements are the same; the error is the environment's.
+   */
+  const serverFileError = (m: string) =>
+    TARGET === 'mariadb'
+      ? m.replace(
+          /^error: #(13 - Can't get stat of '[^']*' \(Errcode: 2 "No such file or directory"\)|1290 - The MariaDB server is running with the --secure-file-priv option so it cannot execute this statement)$/,
+          'error: <the server cannot read the uploaded file>',
+        )
+      : m
+
   for (const c of cases) {
     it(c.name, async () => {
       await root.query(reset(DBS.pma) + reset(DBS.bma))
@@ -368,8 +383,8 @@ describe.skipIf(!pmaReachable)('import parity', () => {
       const file = (db: string) => (typeof c.file === 'function' ? c.file(db) : c.file)
       const p = await pmaImport(pma, pairs, file(DBS.pma))
       const b = await bmaImport(bma, token, bPairs, file(DBS.bma))
-      const norm = (m: string[]) => m.map((x) => x.replaceAll(DBS.bma, DBS.pma))
-      expect(norm(b.messages)).toEqual(p)
+      const norm = (m: string[]) => m.map((x) => serverFileError(x.replaceAll(DBS.bma, DBS.pma)))
+      expect(norm(b.messages)).toEqual(p.map(serverFileError))
       expect((await snapshot(DBS.bma)).replaceAll(DBS.bma, DBS.pma)).toBe(await snapshot(DBS.pma))
       const [news] = (await root.query(`SHOW DATABASES LIKE '${DBS.pma}_new'`)) as unknown as [unknown[]]
       if (news.length > 0) {

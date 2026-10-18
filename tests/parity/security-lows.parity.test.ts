@@ -5,6 +5,7 @@ import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { getCreateTableSqlQueries } from '../../packages/metadata/src/resources.ts'
 import { type PmaInstance, phpAvailable, startPmaInstance } from './lib/pma-instance.ts'
 import { PmaClient } from './lib/pma.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * The low findings of docs/reference/security-review.md, checked against a running phpMyAdmin
@@ -175,7 +176,8 @@ describe.skipIf(!available)('security lows against phpMyAdmin', () => {
       ['pred_password', 'userdefined'],
       ['pma_pw', NEW_PW],
       ['pma_pw2', NEW_PW],
-      ['authentication_plugin', 'caching_sha2_password'],
+      // caching_sha2_password is not loaded on MariaDB: CREATE USER … VIA would fail in both tools
+      ['authentication_plugin', TARGET === 'mariadb' ? 'mysql_native_password' : 'caching_sha2_password'],
       ['ssl_type', 'NONE'],
       ['adduser_submit', '1'],
     ] as Array<[string, string]>
@@ -207,7 +209,8 @@ describe.skipIf(!available)('security lows against phpMyAdmin', () => {
         // stricter than phpMyAdmin: the logged CREATE USER is masked
         const create = lines.filter((l) => l.includes('> CREATE USER'))
         expect(create).toHaveLength(1)
-        expect(create[0]).toContain("BY '***'")
+        // MariaDB: CREATE USER … VIA <plugin> USING <hash>, the hash masked too
+        expect(create[0]).toContain(TARGET === 'mariadb' ? "USING '***'" : "BY '***'")
         expect(lines.some((l) => l.includes(NEW_PW))).toBe(false)
         expect(JSON.stringify((r.json as { sql?: string }).sql ?? '')).not.toContain(NEW_PW)
       } finally {

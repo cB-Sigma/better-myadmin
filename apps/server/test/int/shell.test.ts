@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { isMariaDb, serverType } from '../support/vendor.ts'
 
 /** Objects of this suite are all prefixed m1shell_. */
 const DB = 'm1shell_db'
@@ -85,7 +86,7 @@ describe('GET /api/servers/:s — server tabs (Menu::getServerTabs)', () => {
       index: 1,
       name: `${MYSQL.host}:${MYSQL.port}`,
       authType: 'cookie',
-      isMariaDb: false,
+      isMariaDb,
       capabilities: { isSuperUser: true, isGrantUser: true, hasBinaryLogs: true, currentUser: ['root', '%'] },
     })
   })
@@ -319,11 +320,13 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     ).toBe('Unicode (UCA 9.0.0), accent-insensitive, case-insensitive')
     expect(home.databaseServer).toMatchObject({
       host: `${MYSQL.host} via TCP/IP`,
-      type: 'MySQL',
+      type: serverType,
       connection: { message: 'SSL is not being used', danger: false },
       charset: 'UTF-8 Unicode (utf8mb4)',
     })
-    expect(home.databaseServer.version).toMatch(/^8\.\d+\.\d+.* - /)
+    expect(home.databaseServer.version).toMatch(
+      isMariaDb ? /^\d+\.\d+\.\d+-MariaDB.* - / : /^8\.\d+\.\d+.* - /,
+    )
     expect(home.webServer.database).toMatch(/^libmysql - mysql2 \d+\.\d+\.\d+$/)
     const texts = home.warnings.map((w: { message: string }) => w.message)
     expect(texts).toContain(
@@ -405,14 +408,16 @@ describe('change password (/user-password)', () => {
     t = testApp()
     await t.login(PW, PW)
     const f = await t.req('GET', '/api/servers/1/account/password')
+    // getFormForChangePassword: more plugins only on MySQL >= 5.7.6 (or a superuser editing others);
+    // on MariaDB the list is Native MySQL authentication alone and the hashing choice is hidden
     expect(f.json).toMatchObject({
       origAuthPlugin: 'mysql_native_password',
-      showHashing: true,
+      showHashing: !isMariaDb,
       allowNoPassword: false,
     })
-    expect((f.json.authPlugins as Array<{ name: string }>).map((p) => p.name)).toContain(
-      'caching_sha2_password',
-    )
+    const plugins = (f.json.authPlugins as Array<{ name: string }>).map((p) => p.name)
+    if (isMariaDb) expect(plugins).toEqual(['mysql_native_password'])
+    else expect(plugins).toContain('caching_sha2_password')
   })
 
   it('changes the password with the preselected plugin: plain ALTER USER, session kept, new password works [p01-2a8d28]', async () => {
@@ -429,7 +434,8 @@ describe('change password (/user-password)', () => {
     expect(r.json, JSON.stringify(r.json)).toEqual({
       ok: true,
       message: 'The profile has been updated.',
-      sql: `ALTER USER '${PW}'@'%' IDENTIFIED BY '***'`,
+      // UserPassword::changePassword: ALTER USER on MySQL >= 5.7.6, SET password = PASSWORD() on MariaDB
+      sql: isMariaDb ? "SET password = PASSWORD('***')" : `ALTER USER '${PW}'@'%' IDENTIFIED BY '***'`,
     })
     expect((await t.req('POST', '/api/servers/1/query', { sql: 'SELECT 1' })).status).toBe(200)
     const t2 = testApp()
@@ -447,6 +453,16 @@ describe('change password (/user-password)', () => {
       pma_pw2: 'm1shell_new',
       authentication_plugin: 'caching_sha2_password',
     })
+    if (isMariaDb) {
+      // MariaDB: the plugin is not part of the statement, SET password = PASSWORD() succeeds
+      expect(r.json).toEqual({
+        ok: true,
+        message: 'The profile has been updated.',
+        sql: "SET password = PASSWORD('***')",
+      })
+      await root.query(`ALTER USER '${PW}'@'%' IDENTIFIED BY '${PW}'`)
+      return
+    }
     expect(r.json.error).toMatchObject({
       errno: 1227,
       sql: `ALTER USER '${PW}'@'%' IDENTIFIED WITH caching_sha2_password BY '***'`,

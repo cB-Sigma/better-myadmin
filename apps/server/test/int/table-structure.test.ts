@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { intType, isMariaDb, utf8mb4Default, utf8mb4DefaultDescription } from '../support/vendor.ts'
 
 /**
  * Table Structure tab, column definition form, index editor and partitions against a live MySQL
@@ -59,7 +60,7 @@ describe('GET structure', () => {
       flags BIT(3) DEFAULT b'101',
       ts TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       kind ENUM('a','b''c') NOT NULL DEFAULT 'a',
-      g POINT NOT NULL SRID 0,
+      g POINT NOT NULL${isMariaDb ? '' : ' SRID 0'},
       PRIMARY KEY (id), KEY k (name, id), KEY k2 (name, id), SPATIAL KEY sp (g)
     ) ENGINE=InnoDB COMMENT='tbl comment';`),
   )
@@ -71,7 +72,7 @@ describe('GET structure', () => {
     expect(cols.map((c) => c.name)).toEqual(['id', 'name', 'body', 'flags', 'ts', 'kind', 'g'])
     const [id, name, body, flags, ts, kind, g] = cols
     expect(id).toMatchObject({
-      printType: 'int',
+      printType: intType(),
       isPrimary: true,
       hasIndex: true,
       extra: 'AUTO_INCREMENT',
@@ -81,11 +82,9 @@ describe('GET structure', () => {
     expect(name).toMatchObject({
       comment: 'the name',
       isNull: true,
-      collation: { name: 'utf8mb4_0900_ai_ci' },
+      collation: { name: utf8mb4Default },
     })
-    expect((name?.collation as Json).description).toBe(
-      'Unicode (UCA 9.0.0), accent-insensitive, case-insensitive',
-    )
+    expect((name?.collation as Json).description).toBe(utf8mb4DefaultDescription)
     expect((name?.actions as Json).fulltext).toBe(true)
     expect(body?.actions).toEqual({
       primary: false,
@@ -95,8 +94,15 @@ describe('GET structure', () => {
       fulltext: true,
     })
     expect(flags?.default).toBe('101')
-    expect(ts).toMatchObject({ attribute: 'on update CURRENT_TIMESTAMP', default: 'CURRENT_TIMESTAMP' })
-    expect(ts?.extra).toBe('DEFAULT_GENERATED ON UPDATE CURRENT_TIMESTAMP')
+    if (isMariaDb) {
+      // MariaDB's Extra is lowercase `on update current_timestamp()`: StructureController's
+      // case-sensitive str_contains finds no attribute, the default is shown as reported
+      expect(ts).toMatchObject({ attribute: '', default: 'current_timestamp()' })
+      expect(ts?.extra).toBe('ON UPDATE CURRENT_TIMESTAMP()')
+    } else {
+      expect(ts).toMatchObject({ attribute: 'on update CURRENT_TIMESTAMP', default: 'CURRENT_TIMESTAMP' })
+      expect(ts?.extra).toBe('DEFAULT_GENERATED ON UPDATE CURRENT_TIMESTAMP')
+    }
     expect(kind?.printType).toBe("enum('a', 'b''c')")
     expect((g?.actions as Json).spatial).toBe(true)
     expect(name?.distinctSql).toBe(
@@ -216,7 +222,10 @@ describe('create table, add and change columns', () => {
     const columns: Json[] = rows.map((r) => ({ ...r.values, orig: r.orig }))
     // untouched: id is re-stated (A_I box vs "auto_increment"), label is not
     const unchanged = await post(`${base}/tables/c1/columns/change`, { columns, dryRun: true })
-    expect(unchanged.preview).toBe('ALTER TABLE `c1` CHANGE `id` `id` INT NOT NULL AUTO_INCREMENT;')
+    // the length comes from the column's type: MariaDB reports int(11)
+    expect(unchanged.preview).toBe(
+      `ALTER TABLE \`c1\` CHANGE \`id\` \`id\` INT${isMariaDb ? '(11)' : ''} NOT NULL AUTO_INCREMENT;`,
+    )
     const renamed = columns.map((c) => (c.name === 'label' ? { ...c, name: 'title', length: '60' } : c))
     const r = await post(`${base}/tables/c1/columns/change`, { columns: renamed, onlineTransaction: false })
     expect((r.messages as Json[])[0]).toMatchObject({
@@ -280,6 +289,14 @@ describe('row actions, bulk buttons, drop', () => {
     const p = await post(`${base}/tables/k/columns/key`, { type: 'PRIMARY', columns: ['b'] })
     expect(executedWrites(p)).toEqual(['ALTER TABLE `k` DROP PRIMARY KEY, ADD PRIMARY KEY(`b`);'])
     const err = await post(`${base}/tables/k/columns/key`, { type: 'INDEX', columns: ['c'] })
+    if (isMariaDb) {
+      // MariaDB indexes a TEXT column without a prefix length (#1170 is MySQL's)
+      expect((err.messages as Json[])[0]).toMatchObject({
+        type: 'success',
+        sql: 'ALTER TABLE `k` ADD INDEX(`c`);',
+      })
+      return
+    }
     expect((err.messages as Json[])[0]).toMatchObject({
       type: 'error',
       sql: 'ALTER TABLE `k` ADD INDEX(`c`);',
@@ -368,9 +385,9 @@ describe('index editor', () => {
       { name: 'name', subPart: '', collation: '' },
     ])
     expect(form.fields).toEqual([
-      ['id', 'int'],
+      ['id', intType()],
       ['name', 'varchar(50)'],
-      ['qty', 'int'],
+      ['qty', intType()],
     ])
     const bad = await post(
       `${base}/tables/i/indexes`,
