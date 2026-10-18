@@ -115,7 +115,7 @@ describe('change form prefill (ColumnsDefinition::displayForm, column_attributes
     )
   })
 
-  it('move column options', () => {
+  it('move column options [p04-6268d7]', () => {
     expect(moveColumnOptions(['a', 'b', 'c'], 'b')).toEqual([
       { value: '', after: null, disabled: false },
       { value: '-first', after: null, disabled: false },

@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3039/3426 covered (88.7%): 3005 implemented, 4 exception, 30 n/a, 4 planned, 383 missing. [Summary](README.md).
+3038/3426 covered (88.7%): 3004 implemented, 4 exception, 30 n/a, 4 planned, 384 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 287/403 (71.2%) covered, 287/403 implemented
 
@@ -111,9 +111,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 440/534 (82.4%) covered, 440/534 implemented
+## 04 table level — 441/534 (82.6%) covered, 441/534 implemented
 
-94 msgids not used yet.
+93 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -124,7 +124,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
-| `resources/templates/table/structure/display_structure.twig` | 2/51 | `Media type:` · `None (None for default)` |
 | `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
@@ -145,6 +144,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/rebuild.twig` | 1/1 | `Rebuild partition` |
 | `resources/templates/table/partition/repair.twig` | 1/1 | `Repair partition` |
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
+| `resources/templates/table/structure/display_structure.twig` | 1/51 | `None (None for default)` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
@@ -199,9 +199,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 07 export import — 244/293 (83.3%) covered, 244/293 implemented
+## 07 export import — 242/293 (82.6%) covered, 242/293 implemented
 
-49 msgids not used yet.
+51 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -212,6 +212,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Export/OutputHandler.php` | 3/4 | `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
 | `src/Plugins/Import/ImportShp.php` | 3/4 | `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
 | `resources/js/export.ts` | 2/9 | `SQL Query` · `Your export is incomplete, due to a low execution time limit at the…` |
+| `resources/templates/encoding/kanji_encoding_form.twig` | 2/2 | `Convert to Kana` · `None (None encoding conversion)` |
 | `src/ZipExtension.php` | 2/2 | `Error in ZIP archive:` · `No files found inside ZIP archive!` |
 | `resources/js/drag_drop_import.ts` | 1/4 | `cancel` |
 | `resources/templates/database/export/index.twig` | 1/5 | `Exporting a raw query` |

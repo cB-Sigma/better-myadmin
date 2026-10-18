@@ -33,12 +33,9 @@ const SEED = (db: string) => `DROP DATABASE IF EXISTS ${db}; CREATE DATABASE ${d
 
 /** The typed queries; every case runs on a freshly seeded database in each tool. */
 const CASES: Array<{ name: string; sql: string; delimiter?: string }> = [
+  { name: 'browse-style SELECT * gets LIMIT and an exact count [p02-b29af3] [p09-4df052] [p09-7438a7]', sql: 'SELECT * FROM t' },
   {
-    name: 'browse-style SELECT * gets LIMIT and an exact count [p09-4df052] [p09-7438a7]',
-    sql: 'SELECT * FROM t',
-  },
-  {
-    name: 'SELECT with WHERE and ORDER BY gets the COUNT(*) wrapper [p09-4df052] [p09-7438a7]',
+    name: 'SELECT with WHERE and ORDER BY gets the COUNT(*) wrapper [p02-b29af3] [p09-4df052] [p09-7438a7]',
     sql: 'SELECT id, name FROM t WHERE qty > 2 ORDER BY id DESC',
   },
   {
@@ -46,7 +43,7 @@ const CASES: Array<{ name: string; sql: string; delimiter?: string }> = [
     sql: 'SELECT qty, COUNT(*) AS n FROM t GROUP BY qty',
   },
   { name: 'DISTINCT', sql: 'SELECT DISTINCT qty FROM t' },
-  { name: 'user LIMIT is respected [p09-662a39]', sql: 'SELECT * FROM t LIMIT 5' },
+  { name: 'user LIMIT is respected [p02-9f5692] [p09-662a39]', sql: 'SELECT * FROM t LIMIT 5' },
   { name: 'SELECT without FROM [p09-662a39]', sql: 'SELECT 1 + 1 AS two' },
   { name: 'SHOW', sql: 'SHOW TABLES' },
   { name: 'EXPLAIN', sql: 'EXPLAIN SELECT * FROM t' },

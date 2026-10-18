@@ -90,21 +90,21 @@ function indexFromPost(p: PostedIndex): IndexInput {
 }
 
 describe('Structure row actions and bulk buttons (golden, executed phpMyAdmin)', () => {
-  it('Generator::getAddIndexSql', () => {
+  it('Generator::getAddIndexSql [p04-5ea0c3]', () => {
     for (const c of fx.addIndex) {
       expect(getAddIndexSql(c.type, c.table, c.columns)).toBe(c.sql)
       expect(getAddKeyQuery(c.type as 'INDEX', c.table, c.columns, true)).toBe(c.sql)
     }
   })
 
-  it('Generator::getAddPrimaryKeyStatement', () => {
+  it('Generator::getAddPrimaryKeyStatement [p04-5ea0c3]', () => {
     for (const c of fx.addPrimary) {
       expect(getAddPrimaryKeyStatement(c.table, c.column, c.hasPrimary)).toBe(c.sql)
       expect(getAddKeyQuery('PRIMARY', c.table, [c.column, 'ignored'], c.hasPrimary)).toBe(c.sql)
     }
   })
 
-  it('Generator::getQueryForPartitioningTable', () => {
+  it('Generator::getQueryForPartitioningTable [p04-408957]', () => {
     for (const c of fx.partitionOps) {
       expect(getQueryForPartitioningTable(c.table, c.operation, c.partitions)).toBe(c.sql)
     }
@@ -136,7 +136,7 @@ describe('Structure row actions and bulk buttons (golden, executed phpMyAdmin)',
 describe('Index editor (golden, executed Table\\Indexes)', () => {
   it('has a matrix', () => expect(fx.indexCreateOrEdit.length).toBeGreaterThan(100))
 
-  it('getSqlQueryForIndexCreateOrEdit', () => {
+  it('getSqlQueryForIndexCreateOrEdit [p04-04b04d]', () => {
     for (const c of fx.indexCreateOrEdit) {
       const r = getSqlQueryForIndexCreateOrEdit(c.old, indexFromPost(c.post), 'd`b', 't`x', {
         isTokuDb: c.tokudb,
@@ -146,7 +146,7 @@ describe('Index editor (golden, executed Table\\Indexes)', () => {
     }
   })
 
-  it('getSqlQueryForRename', () => {
+  it('getSqlQueryForRename [p04-99728b]', () => {
     for (const c of fx.rename) {
       const index: IndexInput = {
         name: c.new,
@@ -164,7 +164,7 @@ describe('Index editor (golden, executed Table\\Indexes)', () => {
     }
   })
 
-  it('Index::getFromTable, findDuplicates, getColumnsWithIndex and the edit form round trip', () => {
+  it('Index::getFromTable, findDuplicates, getColumnsWithIndex and the edit form round trip [p04-58bbc9]', () => {
     for (const c of fx.fromShowIndexes) {
       const indexes = indexesFromShowIndexes(c.rows)
       expect(
@@ -207,7 +207,7 @@ describe('Index editor (golden, executed Table\\Indexes)', () => {
 
 describe('Move columns (golden, executed MoveColumnsController on live SHOW CREATE TABLE)', () => {
   const ctx = createServerContext(80400, false, '')
-  it('generateAlterTableSql', () => {
+  it('generateAlterTableSql [p04-511b9e]', () => {
     for (const c of fx.moveColumns) {
       const r = getMoveColumnsQuery(c.create, c.order, ctx)
       expect(r.sql, `${c.table} ${JSON.stringify(c.order)}`).toBe(c.sql)
@@ -289,7 +289,7 @@ describe('Change columns', () => {
     },
   }
 
-  it('builds the ALTER, the BLOB conversion and the revert', () => {
+  it('builds the ALTER, the BLOB conversion and the revert [p04-7544dc]', () => {
     const q = getChangeColumnsQuery(
       { table: 't', columns: [base], columnsWithPrimaryOrUnique: ['id'], onlineTransaction: true },
       { server },
@@ -316,7 +316,7 @@ describe('Change columns', () => {
     ).toBeNull()
   })
 
-  it('MEDIUMTEXT/LONGTEXT convert to the matching BLOB, virtual columns keep the expression', () => {
+  it('MEDIUMTEXT/LONGTEXT convert to the matching BLOB, virtual columns keep the expression [p04-7544dc]', () => {
     const v = {
       ...base,
       virtuality: 'VIRTUAL',
@@ -330,7 +330,7 @@ describe('Change columns', () => {
 })
 
 describe('literal statements of the Structure templates', () => {
-  it('row and index drop, distinct values, browse, partitions', () => {
+  it('row and index drop, distinct values, browse, partitions [p04-a12911 p04-e3d505]', () => {
     expect(getDropColumnQuery('my`t', 'c`1')).toBe('ALTER TABLE `my``t` DROP `c``1`;')
     expect(getDropColumnsQuery('t', ['a'])).toBe('ALTER TABLE `t` DROP `a`;')
     expect(getDropColumnsQuery('t', ['a', 'b'])).toBe('ALTER TABLE `t` DROP `a`, DROP `b`;')

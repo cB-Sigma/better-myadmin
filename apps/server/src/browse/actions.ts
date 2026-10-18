@@ -17,7 +17,7 @@ import type {
   StatementResult,
 } from '@bettermyadmin/contracts'
 import { type Translator, sprintf } from '@bettermyadmin/i18n'
-import { parseEnumSetValues } from '@bettermyadmin/mysql-types'
+import { mbStrlen, parseEnumSetValues } from '@bettermyadmin/mysql-types'
 import {
   type EditField,
   backquote,
@@ -361,6 +361,19 @@ export async function deleteRows(x: BrowseCtx, req: z.output<typeof DeleteRowsRe
     await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
   }
   return queries
+}
+
+/**
+ * The content type of a downloaded value from its first bytes (JPEG, GIF, PNG, else binary).
+ * pma: src/Mime.php::detect
+ */
+export function detectMime(bytes: Uint8Array): string {
+  const len = mbStrlen(bytes)
+  const starts = (prefix: number[]) => prefix.every((b, i) => bytes[i] === b)
+  if (len >= 2 && starts([0xff, 0xd8])) return 'image/jpeg'
+  if (len >= 3 && starts([0x47, 0x49, 0x46])) return 'image/gif'
+  if (len >= 4 && starts([0x89, 0x50, 0x4e, 0x47])) return 'image/png'
+  return 'application/octet-stream'
 }
 
 /**

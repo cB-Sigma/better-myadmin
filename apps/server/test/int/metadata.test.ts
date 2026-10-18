@@ -102,7 +102,7 @@ describe('with a configuration storage and a control user', () => {
     })
   })
 
-  it('bookmarks: create, list, show, run with variables, console, delete [p09-714ea3] [p09-8e8a52]', async () => {
+  it('bookmarks: create, list, show, run with variables, console, delete [p02-62c852] [p09-714ea3] [p09-8e8a52]', async () => {
     let r = await t.req('POST', '/api/servers/1/bookmarks', {
       db: DATA,
       label: 'by id',
@@ -238,7 +238,7 @@ describe('with a configuration storage and a control user', () => {
     expect(r.json.syncFavorites).toBe(true)
   })
 
-  it('table UI preferences: column order/visibility tied to CREATE_TIME', async () => {
+  it('table UI preferences: column order/visibility tied to CREATE_TIME [p02-19721f p02-3b326e]', async () => {
     let r = await t.req('GET', `/api/servers/1/databases/${DATA}/tables/t/uiprefs`)
     const createTime = r.json.createTime as string
     expect(createTime).toMatch(/^\d{4}-\d\d-\d\d \d\d:\d\d:\d\d$/)

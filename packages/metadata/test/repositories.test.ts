@@ -53,7 +53,7 @@ describe('bookmarks (BookmarkRepository / Bookmark)', () => {
     ])
   })
 
-  it('createBookmark rules: AllowSharedBookmarks, empty label/query, no user [p08-dd1f62]', () => {
+  it('createBookmark rules: AllowSharedBookmarks, empty label/query, no user [p02-62c852] [p08-dd1f62]', () => {
     const conn = new FakeConn()
     const noShare = new BookmarkRepository(new PmadbDriver(conn, rp()).bookmarks, false)
     expect(noShare.createBookmark('q', 'l', 'u', 'd', true)).toEqual({
@@ -245,7 +245,7 @@ describe('table UI preferences (Table.php)', () => {
     return { t, slot: () => slot }
   }
 
-  it('saves col_order / col_visib with CREATE_TIME and trims to MaxTableUiprefs [p08-5921ba]', async () => {
+  it('saves col_order / col_visib with CREATE_TIME and trims to MaxTableUiprefs [p02-19721f p02-e55a88] [p08-5921ba]', async () => {
     const conn = new FakeConn((sql) => (sql.startsWith('SELECT COUNT') ? ok([{ 'COUNT(*)': '5' }]) : ok([])))
     const { t } = make(conn)
     expect(
@@ -267,7 +267,7 @@ describe('table UI preferences (Table.php)', () => {
     expect(await t.getUiProp('col_order')).toEqual([1, 0])
   })
 
-  it('refuses col_order when the table was altered, and drops stale values', async () => {
+  it('refuses col_order when the table was altered, and drops stale values [p02-3b326e]', async () => {
     const conn = new FakeConn((sql) =>
       sql.startsWith('SELECT `prefs`')
         ? ok([{ prefs: '{"col_order":["1","0"],"CREATE_TIME":"old","sorted_col":"`gone` ASC"}' }])

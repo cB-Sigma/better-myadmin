@@ -83,7 +83,7 @@ afterAll(async () => {
 })
 
 describe('insert form', () => {
-  it('describes each column with phpMyAdmin widgets and defaults [p03-1b3909] [p03-7e69f5]', async () => {
+  it('describes each column with phpMyAdmin widgets and defaults [p03-1b3909] [p03-7e69f5 p03-79ba1c p03-490417 p03-2e3f92 p03-b3c9a2 p03-4997ee p03-4c37d2 p03-cb66f4 p03-eee6f5 p03-6e8f03 p03-e71e0e p03-0a843f]', async () => {
     const f = await post(`${base}/t/insert-form`, {})
     expect(f.insertMode).toBe(true)
     expect(f.rows).toHaveLength(2)
@@ -113,7 +113,7 @@ describe('insert form', () => {
     expect(f.functions.at(-1)).toMatchObject({ value: 'PHP_PASSWORD_HASH' })
   })
 
-  it('inserts the non-ignored rows in one statement with the default NOW()', async () => {
+  it('inserts the non-ignored rows in one statement with the default NOW() [p03-c84958 p03-28b5f4]', async () => {
     const f = await post(`${base}/t/insert-form`, {})
     const r = await post(`${base}/t/rows`, {
       rows: [
@@ -141,7 +141,7 @@ describe('insert form', () => {
 })
 
 describe('edit form', () => {
-  it('loads the row, saves only changed columns and finds the next row', async () => {
+  it('loads the row, saves only changed columns and finds the next row [p03-28b5f4 p03-2e3f92]', async () => {
     const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 1')], clauseIsUnique: true })
     expect(f.insertMode).toBe(false)
     expect(f.foundUniqueKey).toBe(true)
@@ -165,12 +165,12 @@ describe('edit form', () => {
     expect(f.rows).toHaveLength(1)
   })
 
-  it('ignores unsigned where clauses', async () => {
+  it('ignores unsigned where clauses [p03-69bc10]', async () => {
     const f = await post(`${base}/t/insert-form`, { where: [{ clause: '`t`.`id` = 1', sig: 'x' }] })
     expect(f.insertMode).toBe(true)
   })
 
-  it('"No change" when nothing differs', async () => {
+  it('"No change" when nothing differs [p03-c84958]', async () => {
     await root.query(`UPDATE ${DB}.t SET flags = NULL WHERE id = 2`)
     const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 2')] })
     const r = await post(`${base}/t/rows`, {
@@ -181,7 +181,7 @@ describe('edit form', () => {
 })
 
 describe('foreign values and wrapper', () => {
-  it('browses the referenced table [p08-ad6ee4]', async () => {
+  it('browses the referenced table [p03-d20896] [p08-ad6ee4]', async () => {
     const r = await post(`${base}/t/browse-foreigners`, { field: 'parent_id', data: '2' })
     expect(r.total).toBe(2)
     expect(r.rows.map((x: Json) => x.left.key)).toEqual(['1', '2'])
@@ -190,7 +190,7 @@ describe('foreign values and wrapper', () => {
     expect(f.rows).toHaveLength(1)
   })
 
-  it('streams a cell through the wrapper only with a valid signature', async () => {
+  it('streams a cell through the wrapper only with a valid signature [p03-d452fe]', async () => {
     const s = signed('`t`.`id` = 1')
     const ok = await t.app.request(
       `${base}/t/transformation/wrapper?key=bin&where=${encodeURIComponent(s.clause)}&sig=${s.sig}`,
@@ -223,7 +223,7 @@ describe('browser display transformations in the Browse grid', () => {
     await s?.close()
   })
 
-  it('marks transformed cells; Hide browser transformation turns them off', async () => {
+  it('marks transformed cells; Hide browser transformation turns them off [p03-0f872c p02-15262e]', async () => {
     const run = async (hide: boolean) =>
       (
         (await s.req('POST', '/api/servers/1/browse', { db: DB, table: 't', hideTransformation: hide }))

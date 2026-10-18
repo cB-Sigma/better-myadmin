@@ -48,7 +48,7 @@ const statements = (log: Array<{ sql: string }>) =>
   log.map((e) => normalise(e.sql, dbMap)).filter((s) => /FROM (t\b|\(SELECT \* FROM t\))/.test(s))
 
 describe.skipIf(!pmaReachable)('parity: Display chart', () => {
-  it('the form: columns, numeric and date-time columns, the fieldset', async () => {
+  it('the form: columns, numeric and date-time columns, the fieldset [p04-bc6299]', async () => {
     const r = await both(
       h,
       () =>
@@ -83,7 +83,7 @@ describe.skipIf(!pmaReachable)('parity: Display chart', () => {
     expect(pairs.get('xAxisLabelInput')).toBe('id')
   })
 
-  it("the form's submit: the query with the form's LIMIT and its rows", async () => {
+  it("the form's submit: the query with the form's LIMIT and its rows [p04-bc6299]", async () => {
     const r = await both(
       h,
       () =>
@@ -227,7 +227,7 @@ describe.skipIf(!pmaReachable)('parity: Display chart of a result without a tabl
 
 describe.skipIf(!pmaReachable)('parity: GIS visualization', () => {
   const gisSql = 'SELECT * FROM t'
-  it('the candidates, the modified query and the SVG, byte for byte', async () => {
+  it('the candidates, the modified query and the SVG, byte for byte [p04-1f3c9c]', async () => {
     const r = await both(
       h,
       () =>

@@ -8,10 +8,12 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/browse')({
     sql: z.string().optional(),
     sig: z.string().optional(),
     pos: z.coerce.number().int().min(0).optional(),
+    /** is_browse_distinct=1 */
+    distinct: z.coerce.number().int().optional(),
   }),
   component: function TableBrowse() {
     const { server, db, table } = Route.useParams()
-    const search = Route.useSearch()
-    return <BrowsePage server={server} db={db} table={table} {...search} />
+    const { distinct, ...search } = Route.useSearch()
+    return <BrowsePage server={server} db={db} table={table} {...search} distinct={distinct === 1} />
   },
 })

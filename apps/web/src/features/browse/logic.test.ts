@@ -21,7 +21,7 @@ const parts = {
 }
 
 describe('results grid logic', () => {
-  it('header layout per RowActionLinks (getFieldVisibilityParams / getColumnAtRightSide)', () => {
+  it('header layout per RowActionLinks (getFieldVisibilityParams / getColumnAtRightSide) [p02-31ba46]', () => {
     expect(headerLayout(parts, 'left')).toMatchObject({
       before: 'toggle',
       after: 'empty-td',
@@ -42,7 +42,7 @@ describe('results grid logic', () => {
     expect(headerLayout(noLinks, 'left')).toMatchObject({ before: 'none', after: 'empty-td', colspan: 1 })
   })
 
-  it('Number of rows options include the current custom value', () => {
+  it('Number of rows options include the current custom value [p02-1e3bfc]', () => {
     expect(rowsOptions(25)).toEqual([25, 50, 100, 250, 500])
     expect(rowsOptions(30)).toEqual([25, 30, 50, 100, 250, 500])
     expect(rowsOptions('all')).toEqual([25, 50, 100, 250, 500])
@@ -51,7 +51,7 @@ describe('results grid logic', () => {
     expect(validRowNumbers(25, 9, 10)).toBe(true)
   })
 
-  it('rewrites the condition of an edited key column (makegrid postEditedCell)', () => {
+  it('rewrites the condition of an edited key column (makegrid postEditedCell) [p02-ae4d44]', () => {
     const cond: Array<[string, string]> = [
       ['`t`.`a`', '= 1'],
       ['`t`.`b`', "= 'x'"],
@@ -61,7 +61,7 @@ describe('results grid logic', () => {
     expect(clauseOf(rewriteCondition(cond, 't', 'b', null))).toBe('`t`.`a` = 1 AND `t`.`b` IS NULL')
   })
 
-  it('filter rows, hex validation, re-truncation', () => {
+  it('filter rows, hex validation, re-truncation [p02-fbe95b p02-b9d7d4 p02-784009]', () => {
     expect(rowMatchesFilter('Item1 Alpha', 'alpha item')).toBe(true)
     expect(rowMatchesFilter('Item1 Alpha', 'beta')).toBe(false)
     expect(isValidHex('0xAbC0')).toBe(true)

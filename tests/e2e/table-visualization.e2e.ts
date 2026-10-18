@@ -45,7 +45,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page.locator('table.table_results')).toBeVisible()
 })
 
-test('Display chart', async ({ page }) => {
+test('Display chart [p04-bc6299 p02-7d28de]', async ({ page }) => {
   await page.getByRole('link', { name: 'Display chart' }).click()
   await expect(page.getByRole('heading', { name: 'Display chart' })).toBeVisible()
   // the chart is drawn: the save link carries the canvas image
@@ -61,7 +61,7 @@ test('Display chart', async ({ page }) => {
   await expect(page.locator('#barStackedCheckbox')).toBeVisible()
 })
 
-test('Visualize GIS data', async ({ page }) => {
+test('Visualize GIS data [p04-1f3c9c]', async ({ page }) => {
   await page.getByRole('link', { name: 'Visualize GIS data' }).click()
   await expect(page.getByRole('heading', { name: 'Display GIS Visualization' })).toBeVisible()
   await expect(page.locator('#visualization-placeholder circle.point')).toHaveCount(2)
@@ -78,7 +78,7 @@ test('Visualize GIS data', async ({ page }) => {
   await expect(page.locator('.visualization-target-svg')).toBeVisible()
 })
 
-test('Create view from the results, then Edit view', async ({ page }) => {
+test('Create view from the results, then Edit view [p04-74ef44 p02-7d28de]', async ({ page }) => {
   await page.getByRole('button', { name: 'Create view' }).click()
   const dialog = page.locator('#createViewModal')
   await expect(dialog).toBeVisible()

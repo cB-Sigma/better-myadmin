@@ -44,7 +44,7 @@ afterAll(async () => {
 })
 
 describe('Browse (/sql)', () => {
-  it('default browse query, navigation, unique conditions, comments', async () => {
+  it('default browse query, navigation, unique conditions, comments [p02-26b09f p02-3ec720 p02-dc194e p02-50ad5b p02-3e8068]', async () => {
     const a = await app()
     const { st, grid } = await browse(a, { table: 't' })
     expect(st.executedSql).toBe('SELECT * FROM `t` LIMIT 0, 25')
@@ -67,7 +67,7 @@ describe('Browse (/sql)', () => {
     )
   })
 
-  it('remembers the sort order and re-applies it to a plain browse [p09-a6b162]', async () => {
+  it('remembers the sort order and re-applies it to a plain browse [p02-dafcf6 p02-b74767 p02-c390b7] [p09-a6b162]', async () => {
     const a = await app()
     const first = await browse(a, { table: 't' })
     const sort = first.grid.columns.find((c) => c.name === 'name')!.sort!.single
@@ -87,7 +87,7 @@ describe('Browse (/sql)', () => {
     expect(JSON.stringify(r.json)).toContain('Missing parameter:')
   })
 
-  it('pagination and Show all are remembered per query', async () => {
+  it('pagination and Show all are remembered per query [p02-284f7e p02-437552]', async () => {
     const a = await app()
     const p2 = await browse(a, { table: 't', sql: 'SELECT * FROM `t`', pos: 25 })
     expect(p2.st.executedSql).toBe('SELECT * FROM `t` LIMIT 25, 25')
@@ -99,7 +99,7 @@ describe('Browse (/sql)', () => {
     expect(all.grid.navigation?.isShowingAll).toBe(true)
   })
 
-  it('FK links with the display column, NULL keys untouched', async () => {
+  it('FK links with the display column, NULL keys untouched [p02-1e062a p02-2e6fb1]', async () => {
     const a = await app()
     const { grid } = await browse(a, { table: 'child', sql: 'SELECT * FROM `child` ORDER BY `id`' })
     const fk = grid.rows[0]!.cells[1]!.fk!
@@ -115,7 +115,7 @@ describe('Browse (/sql)', () => {
     expect(d.grid.rows[0]!.cells[1]!.fk?.title).toBe('1')
   })
 
-  it('a table without a unique key: no row actions and the notice [p02-c56862]', async () => {
+  it('a table without a unique key: no row actions and the notice [p02-c56862 p02-ed7243 p02-03ff49]', async () => {
     const a = await app()
     const { grid } = await browse(a, { table: 'nk' })
     expect(grid.editable).toBe(false)
@@ -138,7 +138,7 @@ describe('Browse (/sql)', () => {
     expect(st.executedSql).toBe('SELECT * FROM `t` ORDER BY `t`.`id` DESC LIMIT 0, 25')
   })
 
-  it('single-row delete keeps the deleted message; bulk delete re-runs the query', async () => {
+  it('single-row delete keeps the deleted message; bulk delete re-runs the query [p02-2b0c72 p02-a3dbd4]', async () => {
     const a = await app()
     const del = await browse(a, {
       table: 't',
@@ -161,7 +161,7 @@ describe('Browse (/sql)', () => {
     expect(body.statements[0]!.grid?.total).toBe(27)
   })
 
-  it('grid edit: save, full value, enum / set / relational editors', async () => {
+  it('grid edit: save, full value, enum / set / relational editors [p02-10a94f p02-85eff6 p03-995b4e]', async () => {
     const a = await app()
     const save = await a.req('POST', '/api/servers/1/browse/save', {
       db: DB,
@@ -210,7 +210,7 @@ describe('Browse (/sql)', () => {
     expect(opts[1]?.label).toMatch(/ - \d+$/)
   })
 
-  it('the SQL tab returns the grid when asked', async () => {
+  it('the SQL tab returns the grid when asked [p02-c75482]', async () => {
     const a = await app()
     const r = await a.req('POST', '/api/servers/1/query', {
       sql: 'SELECT * FROM t WHERE qty = 1',

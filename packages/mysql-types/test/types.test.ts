@@ -46,7 +46,7 @@ describe('Types (golden, executed phpMyAdmin)', () => {
     }
   })
 
-  it('getTypeOperators', () => {
+  it('getTypeOperators [p04-3ef752]', () => {
     for (const [type, nullable, ops] of f.operators) {
       expect(getTypeOperators(type, nullable), `${type} ${nullable}`).toEqual(ops)
     }
@@ -58,7 +58,7 @@ describe('Types (golden, executed phpMyAdmin)', () => {
     }
   })
 
-  it('isUnaryOperator / displayOfOperator', () => {
+  it('isUnaryOperator / displayOfOperator [p04-3ef752]', () => {
     for (const [op, unary] of Object.entries(f.unary)) expect(isUnaryOperator(op), op).toBe(unary)
     for (const [op, d] of Object.entries(f.displayOfOperator)) expect(displayOfOperator(op), op).toBe(d)
   })
