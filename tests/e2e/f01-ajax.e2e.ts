@@ -107,7 +107,11 @@ test('[p01-211041] a failing request shows its error; a lost session brings back
   await page.goto('/s/1/status')
   await expect(page.getByText('f01a broken')).toBeVisible()
   await page.unroute('**/api/servers/1/status')
-  await context.clearCookies()
+  // the session ends on the server (clearing the cookies is not enough: a response still in flight
+  // sets the session cookie again)
+  const token = (await context.cookies()).find((c) => c.name === 'bma_token')?.value ?? ''
+  const out = await page.request.post('/api/auth/logout', { headers: { 'X-BMA-Token': token } })
+  expect(out.ok()).toBe(true)
   // a page not loaded (nor preloaded) yet in this session; a background request may bring the
   // login form back first, which detaches the menu
   await page
