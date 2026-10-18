@@ -30,11 +30,11 @@ const fks = [
 ]
 
 describe('multi-table query generator (query_generator.ts)', () => {
-  it('nothing selected', () => {
+  it('nothing selected [p05-661434]', () => {
     expect(generateQuery([col({ table: '', column: '' })], [])).toBeNull()
   })
 
-  it('joins tables through foreign keys, comma-joins the others, aliases', () => {
+  it('joins tables through foreign keys, comma-joins the others, aliases [p05-661434]', () => {
     const q = generateQuery(
       [
         col({ table: 'parent', column: '*' }),
@@ -48,7 +48,7 @@ describe('multi-table query generator (query_generator.ts)', () => {
     )
   })
 
-  it('criteria: escaping, IN de-duplication, BETWEEN, IS NULL, another column, AND/OR', () => {
+  it('criteria: escaping, IN de-duplication, BETWEEN, IS NULL, another column, AND/OR [p05-86eabf]', () => {
     const q = generateQuery(
       [
         col({

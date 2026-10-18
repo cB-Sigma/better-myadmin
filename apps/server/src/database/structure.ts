@@ -371,7 +371,7 @@ export async function structurePage(
     // isRowCountApproximated
     let approx = false
     let viewHint = false
-    if (rowsValue !== null && (engine !== null || view)) {
+    if (rowsValue !== null && ((engine !== null && engine !== '') || view)) {
       approx = !view && (engine === 'InnoDB' || engine === 'TokuDB') && !counted
       if (view && rowsValue >= cfg.MaxExactCountViews) {
         approx = true
@@ -379,8 +379,9 @@ export async function structurePage(
       }
     }
     overallApprox = overallApprox || approx
-    // the cells are rendered when TABLE_ROWS is set and (ENGINE or a view)
-    const regular = rowsValue !== null && (engine !== null || view)
+    // the cells are rendered when TABLE_ROWS is set and (ENGINE or a view); Twig's `!= null` is
+    // loose, so the empty ENGINE of a table in use (getTablesWhenOpen) counts as none: "in use"
+    const regular = rowsValue !== null && ((engine !== null && engine !== '') || view)
     const trackedState = tracked.get(name)
     tables.push({
       name,
@@ -408,7 +409,7 @@ export async function structurePage(
       inUse:
         regular || view
           ? null
-          : cur.Comment !== null && cur.Comment !== ''
+          : cur.Comment !== undefined && cur.Comment !== null && cur.Comment !== ''
             ? (cur.Comment ?? '')
             : tr.gettext('in use'),
     })

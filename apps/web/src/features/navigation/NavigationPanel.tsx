@@ -129,10 +129,30 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
   }, [settings])
 
   const reload = useCallback(async () => {
-    qc.removeQueries({ queryKey: qk.nav(server) })
+    qc.removeQueries({ queryKey: qk.nav(server), predicate: (q) => q.queryKey[3] !== 'reload-signal' })
     await store.reload()
     if (store.synced) await store.showCurrent(scope.current.db, scope.current.table)
   }, [qc, server, store])
+
+  // Navigation.reload(): a page that invalidates the navigation queries (qk.nav / qk.srv, e.g. after
+  // creating, renaming or dropping a database) reloads the tree. The tree loads outside the query
+  // cache, so a signal query under qk.nav stands for it: invalidated, it refetches a new stamp.
+  const signal = useQuery({
+    queryKey: qk.navReloadSignal(server),
+    queryFn: () => Date.now(),
+    staleTime: Number.POSITIVE_INFINITY,
+  })
+  const firstSignal = useRef<number | null>(null)
+  useEffect(() => {
+    if (signal.data === undefined) return
+    if (firstSignal.current === null) {
+      firstSignal.current = signal.data
+      return
+    }
+    if (signal.data === firstSignal.current) return
+    firstSignal.current = signal.data
+    void reload()
+  }, [signal.data, reload])
 
   const prefetch = useCallback(
     (node: NavNode) => {

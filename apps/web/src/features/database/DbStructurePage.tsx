@@ -32,6 +32,7 @@ import type { ReactNode } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { runQuery } from '../sql/runner'
 import { MaintenanceResults } from '../table/common/MaintenanceResults'
 import {
@@ -91,6 +92,8 @@ export function DbStructurePage({
   search: DbStructureSearch
   onSearch: (s: DbStructureSearch) => void
 }) {
+  // pma: Database\StructureController: PageSettings::init('DbStructure')
+  usePagePrefs(server, 'DbStructure')
   const scope = { server, db }
   const confirm = useConfirm()
   const qc = useQueryClient()

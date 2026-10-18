@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { colorByTarget, dragTo, hitsStart, line2, line3, relationLine, rgb } from './designer'
 
 describe('designer canvas (move.ts)', () => {
-  it('relationLine: the closest sides, rows 7 px below their top', () => {
+  it('relationLine: the closest sides, rows 7 px below their top [p05-d2699b]', () => {
     // master on the left, referenced table to the right: right side of master → left side of foreign
     const l = relationLine({ left: 10, top: 20, width: 100 }, 40, { left: 300, top: 50, width: 80 }, 20)
     expect(l).toEqual({ x1: 111, x2: 300, y1: 67, y2: 77, side: null })
@@ -51,13 +51,13 @@ describe('designer canvas (move.ts)', () => {
     expect(colorByTarget(targets, 'f')).toBe(rgb(167, 0, 0))
   })
 
-  it('dragTo: grid snapping and the x/y clamp', () => {
+  it('dragTo: grid snapping and the x/y clamp [p05-39dc32]', () => {
     expect(dragTo({ x: 100, y: 100 }, 17, 23, true)).toEqual({ raw: { x: 117, y: 123 }, x: 110, y: 120 })
     expect(dragTo({ x: 5, y: 5 }, -10, -10, false)).toEqual({ raw: { x: -5, y: -5 }, x: 0, y: -5 })
     expect(dragTo({ x: 50, y: 5 }, 0, -10, false)).toEqual({ raw: { x: 50, y: -5 }, x: 50, y: 0 })
   })
 
-  it('canvasClick: hit area around the start point', () => {
+  it('canvasClick: hit area around the start point [p05-e7645a]', () => {
     const l = { x1: 100, y1: 50, x2: 0, y2: 0, side: null }
     expect(hitsStart(l, 105, 55)).toBe(true)
     expect(hitsStart(l, 110, 50)).toBe(false)

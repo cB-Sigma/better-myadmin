@@ -25,7 +25,7 @@ const contr: ContrRelation[] = [
 ]
 
 describe('visual query builder (history.ts)', () => {
-  it('builds SELECT … FROM with a LEFT JOIN along the relation, WHERE, ORDER BY', () => {
+  it('builds SELECT … FROM with a LEFT JOIN along the relation, WHERE, ORDER BY [p05-32645c]', () => {
     let s = storeColumn(emptyQueryBuilder(), 'parent', 'name', true)
     s = storeColumn(s, 'child', 'id', true)
     let r = addObject(s, 'child', 'id', 1, { ...emptyOptions(), relOpt: '>', query: '1', newName: 'cid' })

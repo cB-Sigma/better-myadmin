@@ -539,9 +539,9 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [x] `fk_checks` request param sets `FOREIGN_KEY_CHECKS` ON/OFF for the duration of the request and restores the previous value afterwards. <!-- parity:test --> `p02-b10e84` [sql-tab.test.ts:114](../../apps/server/test/int/sql-tab.test.ts#L114) +1
 
 ### Result header card tools
-- [x] "Edit inline" replaces the SQL display with an editor + FK-checks checkbox (default fetched from `/sql/get-default-fk-check-value`) + Go/Cancel; Go posts `show_query=1` to `/import`. Only one inline editor at a time. <!-- parity:test --> `p02-9128e7` [sql-editor.e2e.ts:169](../../tests/e2e/sql-editor.e2e.ts#L169)
-- [x] "Edit" goes to the SQL tab of table/db/server with the query prefilled (`show_query=1`). <!-- parity:test --> `p02-88edc9` [sql-tab.parity.test.ts:193](../../tests/parity/sql-tab.parity.test.ts#L193) +1
-- [x] "Explain SQL" only for queries beginning with `SELECT`; "Skip Explain SQL"/"Skip Analyze SQL" when already prefixed (supports `ANALYZE`, `FORMAT=JSON|TREE|TRADITIONAL`). <!-- parity:test --> `p02-aa2107` [sql-message.test.ts:19](../../apps/server/test/unit/sql-message.test.ts#L19) +3
+- [ ] "Edit inline" replaces the SQL display with an editor + FK-checks checkbox (default fetched from `/sql/get-default-fk-check-value`) + Go/Cancel; Go posts `show_query=1` to `/import`. Only one inline editor at a time.
+- [ ] "Edit" goes to the SQL tab of table/db/server with the query prefilled (`show_query=1`).
+- [ ] "Explain SQL" only for queries beginning with `SELECT`; "Skip Explain SQL"/"Skip Analyze SQL" when already prefixed (supports `ANALYZE`, `FORMAT=JSON|TREE|TRADITIONAL`).
 - [x] "Create PHP code" renders `$sql = "…";` with newline concatenation; in that mode links become "Without PHP code" and "Submit query". <!-- parity:test --> `p02-f4f624` [sql-message.test.ts:84](../../apps/server/test/unit/sql-message.test.ts#L84) +2
 - [x] "Refresh" only for `ANALYZE|EXPLAIN|SELECT|SHOW` and not in PHP mode. <!-- parity:test --> `p02-f44b2c` [sql-message.test.ts:41](../../apps/server/test/unit/sql-message.test.ts#L41) +1
 - [x] Explain / PHP / Edit-inline links disappear when the query is longer than `MaxCharactersInDisplayedSQL`. <!-- parity:test --> `p02-40a8f8` [sql-tab.test.ts:56](../../apps/server/test/int/sql-tab.test.ts#L56) +1
