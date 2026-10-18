@@ -46,6 +46,8 @@ export interface AppEnv {
     session: SessionData
     /** True when the session did not exist before this request. */
     sessionIsNew: boolean
+    /** The idle check reports the user's activity itself: the request does not count as activity. */
+    keepLastSeen?: boolean
     executed: Executed[]
     isHttps: boolean
     /** The request's language (LanguageManager::selectLanguage) and its catalogue. */
@@ -104,7 +106,17 @@ export function createApp(deps: AppDeps) {
     if (m !== 'GET' && m !== 'HEAD' && m !== 'OPTIONS') {
       const header = c.req.header(CSRF_HEADER) ?? ''
       if (c.get('sessionIsNew') || header === '' || !safeEqual(header, c.get('session').csrfToken)) {
-        throw new CsrfError()
+        // the login form's session (set_session) did not come back: its cookie was not stored
+        if (c.get('sessionIsNew') && c.req.path === '/api/auth/login') {
+          throw new CsrfError(
+            c
+              .get('tr')
+              .gettext(
+                'Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin.',
+              ),
+          )
+        }
+        throw new CsrfError(c.get('tr').gettext('Error: Token mismatch'))
       }
     }
     await next()
@@ -140,7 +152,7 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
     if (session === null) session = newSession(deps.cfg.ServerDefault > 0 ? deps.cfg.ServerDefault : 1)
     else if (
       Object.keys(session.servers).length > 0 &&
-      nowSeconds() - session.lastSeenAt > deps.cfg.LoginCookieValidity
+      nowSeconds() - lastActivity(session) > deps.cfg.LoginCookieValidity
     ) {
       // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY, logged by logFailure)
       const ip = requestClientIp(c, deps.cfg.TrustedProxies)
@@ -158,10 +170,19 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
       if (latest === null) return
       s = mergeChanges(latest, loaded, s)
     }
-    s.lastSeenAt = nowSeconds()
+    if (c.get('keepLastSeen') !== true) s.lastSeenAt = nowSeconds()
     deps.store.set(s)
     writeSessionCookies(c, s)
   }
+}
+
+/**
+ * The latest activity of the session: its last request or a window's reported activity.
+ * pma: AuthenticationCookie::readCredentials (browser_access_time entries older than
+ *      LoginCookieValidity are dropped; none left → logged out for inactivity)
+ */
+export function lastActivity(s: SessionData): number {
+  return Math.max(s.lastSeenAt, ...Object.values(s.browserAccess ?? {}))
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: any route path/input

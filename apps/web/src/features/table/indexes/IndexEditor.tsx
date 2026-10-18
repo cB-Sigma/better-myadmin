@@ -2,7 +2,7 @@ import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
 import { Button, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowUp } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
@@ -73,6 +73,11 @@ export function IndexEditorForm({
 }) {
   const [index, setIndex] = useState<EditorIndex>(form.index)
   const [addN, setAddN] = useState(1)
+  // the index name gets the focus when it is empty (showIndexEditDialog)
+  const nameRef = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    if (nameRef.current !== null && nameRef.current.value === '') nameRef.current.focus()
+  }, [])
   const [addShown, setAddShown] = useState(false)
   const [advanced, setAdvanced] = useState(form.sliders === 'open')
   const [preview, setPreview] = useState<string | null>(null)
@@ -128,6 +133,7 @@ export function IndexEditorForm({
             </label>
           </strong>
           <input
+            ref={nameRef}
             type="text"
             name="index[Key_name]"
             id="input_index_name"
@@ -265,7 +271,10 @@ export function IndexEditorForm({
                   aria-label={t('Column')}
                   value={c.name}
                   disabled={spatial && i > 0}
-                  onChange={(e) => setCol(i, { name: e.target.value })}
+                  onChange={(e) => {
+                    setCol(i, { name: e.target.value })
+                    focusSize(e)
+                  }}
                 >
                   <option value="">-- {t('Ignore')} --</option>
                   {targets !== undefined
@@ -303,7 +312,10 @@ export function IndexEditorForm({
                   className="input"
                   aria-label={t('Collation')}
                   value={c.collation}
-                  onChange={(e) => setCol(i, { collation: e.target.value })}
+                  onChange={(e) => {
+                    setCol(i, { collation: e.target.value })
+                    focusSize(e)
+                  }}
                 >
                   <option value="">{t('None')}</option>
                   <option value="A" title="ASC">
@@ -496,4 +508,13 @@ export function RenameIndexDialog({
       />
     </Modal>
   )
+}
+
+/**
+ * A value picked in an index column row focuses its Size input (tempSetFocus).
+ * pma: resources/js/modules/functions.ts::showIndexEditDialog (table#index_columns select change)
+ */
+function focusSize(e: ChangeEvent<HTMLSelectElement>) {
+  if (e.currentTarget.value === '') return
+  e.currentTarget.closest('tr')?.querySelector('input')?.focus()
 }

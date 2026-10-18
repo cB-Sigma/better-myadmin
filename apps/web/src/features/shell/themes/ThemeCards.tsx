@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from '@bettermyadmin/ui'
 import { THEMES } from '@bettermyadmin/ui/themes'
-import { t as tr } from '../../../lib/i18n'
+import { t, tProduct } from '../../../lib/i18n'
 
 /**
  * The theme gallery: one card per theme with its screenshot, "name (version)" and "Take it".
@@ -17,34 +17,34 @@ import { t as tr } from '../../../lib/i18n'
 export function ThemeCards({ onTake, active }: { onTake: (id: string) => void; active: string }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {THEMES.map((t) => (
+      {THEMES.map((theme) => (
         <div
-          key={t.id}
-          data-theme-card={t.id}
+          key={theme.id}
+          data-theme-card={theme.id}
           className="flex h-full flex-col overflow-hidden rounded-(--radius) border border-(--card-border) bg-(--card-bg)"
         >
           <div className="h-[16vh] overflow-hidden bg-bg-inset">
             <img
-              src={`/themes/${t.id}/screen.png`}
-              alt={tr('Screenshot of the %s theme.', t.name)}
+              src={`/themes/${theme.id}/screen.png`}
+              alt={t('Screenshot of the %s theme.', theme.name)}
               className="h-full w-full object-cover object-top"
               loading="lazy"
             />
           </div>
           <div className="flex-1 p-3">
             <h5 className="text-base font-semibold">
-              {t.name} <small className="font-normal text-fg-muted">({t.version})</small>
+              {theme.name} <small className="font-normal text-fg-muted">({theme.version})</small>
             </h5>
           </div>
           <div className="border-t border-(--card-border) bg-(--grid-header-bg) p-2">
             <Button
               variant="primary"
               name="set_theme"
-              value={t.id}
-              onClick={() => onTake(t.id)}
-              aria-pressed={active === t.id}
+              value={theme.id}
+              onClick={() => onTake(theme.id)}
+              aria-pressed={active === theme.id}
             >
-              {tr('Take it')}
+              {t('Take it')}
             </Button>
           </div>
         </div>
@@ -64,7 +64,7 @@ export function ThemesDialog(props: {
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <DialogContent size="xl" id="themesModal" aria-describedby={undefined}>
         <DialogHeader>
-          <DialogTitle>{tr('phpMyAdmin Themes')}</DialogTitle>
+          <DialogTitle>{tProduct('phpMyAdmin Themes')}</DialogTitle>
         </DialogHeader>
         <DialogBody>
           <ThemeCards
@@ -77,7 +77,7 @@ export function ThemesDialog(props: {
         </DialogBody>
         <DialogFooter>
           {/* phpMyAdmin's "Get more themes!" links to CSS themes BetterMyAdmin cannot load (parity exceptions X30) */}
-          <Button onClick={() => props.onOpenChange(false)}>{tr('Close')}</Button>
+          <Button onClick={() => props.onOpenChange(false)}>{t('Close')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

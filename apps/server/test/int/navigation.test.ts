@@ -1,4 +1,6 @@
 import type { NavBranchResponse, NavList, NavNode, NavTreeResponse } from '@bettermyadmin/contracts'
+import { sprintf } from '@bettermyadmin/i18n'
+import { translatorFor } from '@bettermyadmin/i18n/node'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
@@ -144,6 +146,35 @@ describe('GET /navigation/branch', () => {
       const tables = find(body.list, 'Tables')
       expect(tables).toMatchObject({ kind: 'container', container: 'tables', loaded: false, flatten: false })
       expect(labels(tables.children)).toEqual(['New'])
+    } finally {
+      await t.close()
+    }
+  })
+
+  it("names and titles follow the request's language (__('Tables'), _pgettext('Create new table', 'New'))", async () => {
+    const t = await app()
+    const de = translatorFor('de')
+    try {
+      // ?lang= beats the language cookie the login set
+      const r = await t.req('GET', '/api/servers/1/navigation/branch?path=m1nav_it_a&lang=de')
+      const body = r.json as unknown as NavBranchResponse
+      // sorted by the translated names, as NavigationTree::sortNode does
+      expect(labels(body.list)).toEqual([de.gettext('Views'), de.gettext('Tables')])
+      expect(de.gettext('Tables')).not.toBe('Tables')
+      const tables = find(body.list, de.gettext('Tables'))
+      // the container keeps its real name for the paths
+      expect(tables.container).toBe('tables')
+      expect(labels(tables.children)).toEqual([de.pgettext('Create new table', 'New')])
+      const b = await t.req(
+        'GET',
+        '/api/servers/1/navigation/branch?path=m1nav_it_a&path=tables&pos2Name=tables&pos2Value=0&searchClause2=t1&lang=de',
+      )
+      const branch = b.json as unknown as NavBranchResponse
+      expect(find(branch.list, 't1').icons[0]?.title).toBe(de.gettext('Structure'))
+      // (motranslator's German plural rule `(n != 1)` is a boolean, so the singular form is used: as phpMyAdmin)
+      const n = Number.parseInt(branch.results ?? '', 10)
+      expect(branch.results).toBe(sprintf(de.ngettext('%s result found', '%s results found', n), n))
+      expect(branch.results).not.toContain('result')
     } finally {
       await t.close()
     }

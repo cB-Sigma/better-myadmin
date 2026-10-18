@@ -1,5 +1,6 @@
 import { useParams } from '@tanstack/react-router'
 import { useConfig } from '../../../lib/config.ts'
+import { tProduct } from '../../../lib/i18n'
 import { setTheme, useThemeState } from '../theme/theme.ts'
 import { ThemeCards } from './ThemeCards.tsx'
 
@@ -11,7 +12,7 @@ export function ThemesPage() {
   const theme = useThemeState(opts)
   return (
     <section>
-      <h2 className="mb-3 text-base font-semibold">phpMyAdmin Themes</h2>
+      <h2 className="mb-3 text-base font-semibold">{tProduct('phpMyAdmin Themes')}</h2>
       <ThemeCards active={theme.theme} onTake={(id) => (cfg.ThemeManager ? setTheme(opts, id) : undefined)} />
     </section>
   )

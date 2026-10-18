@@ -755,13 +755,12 @@
   api: 'POST /api/servers/:s/tables'
   note: 'name list of the export aliases dialog (TableController: SHOW TABLES FROM, NaturalOrder)'
 /themes:
-  planned: M1
-  exception: X16
-  note: client-side theme store (no server round trip)
+  ui: '/s/:s/themes'
+  note: 'the theme gallery (themes.twig): this page and the home page''s #themesModal; the themes ship with the client (X16)'
 /themes/set:
-  planned: M1
-  exception: X16
-  note: client-side theme store (no server round trip)
+  api: 'POST /api/servers/:s/themes/set'
+  exception: X31
+  note: 'client-side theme store; ThemeDefault is saved in the user preferences through the API'
 /transformation/overview:
   ui: '/s/:s/transformations'
   note: static plugin catalog (packages/mysql-types transformations.ts)

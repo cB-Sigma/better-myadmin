@@ -87,6 +87,19 @@ export const pmaControls = {
   'js:sql.ts#submit:.bookmarkQueryForm': 'ResultsView.tsx',
   'js:sql.ts#click:form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resultsForm"].ajax input[name="submit_mult"]':
     'ResultsView.tsx',
+  // pma: resources/js/modules/functions.ts (sort links), functions/event-loader.ts (create view)
+  'js:modules/functions.ts#mouseover:.sortlink': {
+    file: 'GridTable.tsx',
+    match: 'className="hidden group-hover:inline-flex"',
+  },
+  'js:modules/functions.ts#mouseout:.sortlink': {
+    file: 'GridTable.tsx',
+    match: 'className="inline-flex group-hover:hidden"',
+  },
+  'js:modules/functions/event-loader.ts#click:a.create_view.ajax': {
+    file: 'ResultsView.tsx',
+    match: 'className="create_view ajax"',
+  },
   // pma: resources/js — browser behaviours (js.json)
   'js:makegrid.ts#change:<$editArea> span.curr_value': { file: 'GridTable.tsx', match: 'onPick={(key) => {' },
   'js:makegrid.ts#change:<g.cEdit> .edit_box': {
@@ -173,7 +186,7 @@ export const pmaControls = {
   'js:makegrid.ts#mouseenter:<g.t> th.draggable': { file: 'GridTable.tsx', match: "' cursor-move'" },
   'js:makegrid.ts#mouseenter:<t> th.draggable a': {
     file: 'GridTable.tsx',
-    match: 'className="sortlink h-auto"',
+    match: 'className="sortlink group h-auto"',
   },
   'js:makegrid.ts#mouseleave:<g.t> td.data': {
     file: 'GridTable.tsx',
@@ -185,7 +198,7 @@ export const pmaControls = {
   },
   'js:makegrid.ts#mouseleave:<t> th.draggable a': {
     file: 'GridTable.tsx',
-    match: 'className="sortlink h-auto"',
+    match: 'className="sortlink group h-auto"',
   },
   'js:makegrid.ts#mousemove:document': {
     file: 'GridTable.tsx',

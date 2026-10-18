@@ -150,6 +150,10 @@ export const HomeWarning = z.object({
 })
 export type HomeWarning = z.infer<typeof HomeWarning>
 
+/** A commit's author or committer (pma: Git::extractDataFormTextBody). */
+export const GitUser = z.object({ name: z.string(), email: z.string(), date: z.string() })
+export type GitUser = z.infer<typeof GitUser>
+
 export const HomeResponse = z.object({
   /** `Select::render` in the General settings card (ServerDefault = 0, or several servers + NavigationDisplayServers) */
   hasServerSelection: z.boolean(),
@@ -189,7 +193,14 @@ export const HomeResponse = z.object({
     name: z.string(),
     version: z.string(),
     git: z
-      .object({ hash: z.string(), branch: z.string().nullable(), message: z.string().nullable() })
+      .object({
+        hash: z.string(),
+        branch: z.string().nullable(),
+        message: z.string().nullable(),
+        /** home/git_info.twig "committed on %s by %s" / "authored on %s by %s" (loose commit objects) */
+        author: GitUser.nullable(),
+        committer: GitUser.nullable(),
+      })
       .nullable(),
   }),
   warnings: z.array(HomeWarning),

@@ -64,7 +64,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const [maintenance, setMaintenance] = useState<DdlResponse['maintenance'] | null>(null)
   const [addCount, setAddCount] = useState(1)
   const [after, setAfter] = useState<string | null>(null)
-  const [indexCount, setIndexCount] = useState(1)
+  const [indexCount, setIndexCount] = useState('1')
 
   const refresh = async () => {
     await qc.invalidateQueries({ queryKey: qk.tbl(scope) })
@@ -471,13 +471,18 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
             </>
           }
           footer={
+            // pma: indexes.ts (.add_index click) → checkFormElementInRange(form, 'added_fields', …): the
+            // click handler runs before the browser's own validation
             <form
               className="flex items-center gap-1 text-sm"
+              noValidate
               onSubmit={(e) => {
                 e.preventDefault()
-                if (!(indexCount >= 1))
-                  return void window.alert(t('Column count has to be larger than zero.'))
-                setIndexQuery({ create: indexCount })
+                const n = Number.parseInt(indexCount, 10)
+                if (Number.isNaN(n)) return void window.alert(t('Please enter a valid number!'))
+                if (n < 0) return void window.alert(t('Column count has to be larger than zero.'))
+                setIndexCount(String(n))
+                setIndexQuery({ create: n })
               }}
             >
               {t('Create an index on %s columns').split('%s')[0]}
@@ -489,7 +494,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 required
                 name="added_fields"
                 value={indexCount}
-                onChange={(e) => setIndexCount(Number(e.target.value))}
+                onChange={(e) => setIndexCount(e.target.value)}
               />
               {t('Create an index on %s columns').split('%s')[1]}
               <Button type="submit" variant="primary" className="add_index">

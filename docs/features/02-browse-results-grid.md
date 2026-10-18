@@ -658,7 +658,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [x] Rollback when finished only for DML on transactional tables. <!-- parity:test --> `p02-b3ba1b` [sql-tab.parity.test.ts:89](../../tests/parity/sql-tab.parity.test.ts#L89) +1
 - [x] Query box: Show this query here again (localStorage), Retain query box (collapse toggle), Bind parameters, Delimiter, FK checks, bookmark label/shared/replace, auto-save & "Get auto-saved query", SELECT*/SELECT/INSERT/UPDATE/DELETE/Clear/Format templates, column insert list. <!-- parity:test --> `p02-390d7c` [sql-editor.e2e.ts:74](../../tests/e2e/sql-editor.e2e.ts#L74) +1
 - [ ] Page-settings gear on Browse exposes exactly the 16 `Browse` directives listed above.
-- [x] Global keyboard shortcuts (D/T prefixes, K console, E export, H home, Backspace back) are inactive while typing. <!-- parity:test --> `p02-a7b23d` [shell.test.tsx:103](../../apps/web/src/features/shell/shell.test.tsx#L103)
+- [x] Global keyboard shortcuts (D/T prefixes, K console, E export, H home, Backspace back) are inactive while typing. <!-- parity:test --> `p02-a7b23d` [shell.test.tsx:110](../../apps/web/src/features/shell/shell.test.tsx#L110)
 
 ---
 

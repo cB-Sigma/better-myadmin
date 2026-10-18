@@ -42,13 +42,14 @@ export interface HomeEnv {
   partialLogout: boolean
   /** DefaultConnectionCollation in effect for this login */
   connectionCollation: string
+  /** the setup script's `config/` directory exists (default: looked up in the working directory) */
+  setupConfigDir?: boolean
 }
 
 /**
  * HomeController::checkRequirements, adapted to the Node runtime: the PHP extension checks (#1, #2),
  * `session.gc_maxlifetime` (#3: our session store keeps sessions at least twice
- * max(LoginCookieValidity, LoginCookieStore)), the leftover setup `config/` directory (#8) and the
- * Twig cache (#9) cannot occur; the translation-completeness notice (#11) is wired by the i18n layer.
+ * max(LoginCookieValidity, LoginCookieStore)) and the Twig cache (#9) cannot occur; the translation-completeness notice (#11) is wired by the i18n layer.
  */
 export function homeWarnings(
   ctx: Pick<ShellCtx, 'cfg' | 'server' | 'tr' | 'lang'>,
@@ -112,6 +113,15 @@ export function homeWarnings(
         ),
       })
     }
+  }
+  // the setup script's Save writes into `config/` (phpMyAdmin 4's setup): it should go afterwards
+  if (env.setupConfigDir ?? existsSync(join(process.cwd(), 'config'))) {
+    out.push({
+      severity: 'warning',
+      message: tr.gettext(
+        'Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration.',
+      ),
+    })
   }
   if (env.httpHost === '') {
     out.push({

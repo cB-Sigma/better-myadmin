@@ -76,4 +76,57 @@ export const pmaControls = {
   },
   'js:sql.ts#ajax:POST …&ajax_request=1': { file: '../insert-edit/ForeignBrowser.tsx', match: 'setApplied(' },
   'js:sql.ts#click:<formId>': { file: '../insert-edit/ForeignBrowser.tsx', match: 'showAll: true' },
+  // pma: resources/js/modules/functions.ts (SQL editor, inline edit)
+  'js:modules/functions.ts#ajax:GET /sql/get-default-fk-check-value': {
+    file: 'SqlMessage.tsx',
+    match: 'queryFn: () => api.defaultFkCheck(env.server)',
+  },
+  'js:modules/functions.ts#ajax:POST /database/sql/autocomplete': {
+    file: 'SqlPage.tsx',
+    match: 'const [wantAutocomplete, setWantAutocomplete] = useState(false)',
+  },
+  'js:modules/functions.ts#alert:strFormEmpty': { file: 'SqlPage.tsx', match: 'window.alert(t(FORM_EMPTY))' },
+  'js:modules/functions.ts#confirm:strDoYouReally': {
+    file: 'SqlPage.tsx',
+    match: 'window.confirm(confirmationText(sql, t(DO_YOU_REALLY)))',
+  },
+  'js:modules/functions.ts#blur:<window.codeMirrorEditor>': {
+    file: 'SqlPage.tsx',
+    match: 'onBlur={() => updateParameters(parameterized)}',
+  },
+  'js:modules/functions.ts#blur:<$elm>': {
+    file: 'SqlPage.tsx',
+    match: 'onBlur={() => updateParameters(parameterized)}',
+  },
+  'js:modules/functions.ts#change:#parameterized': { file: 'SqlPage.tsx', match: 'id="parameterized"' },
+  'js:modules/functions.ts#change:<codemirrorEditor>': {
+    file: 'SqlPage.tsx',
+    match: 'useFormLock(editor.current?.isDirty() === true)',
+  },
+  'js:modules/functions.ts#inputRead:<codemirrorEditor>': {
+    file: 'editor/CodeMirrorEditor.tsx',
+    match: 'autocompletion({ activateOnTyping: true, defaultKeymap: true })',
+  },
+  'js:modules/functions.ts#key:Ctrl-Space': {
+    file: 'editor/CodeMirrorEditor.tsx',
+    match: "{ key: 'Ctrl-Space', run: startCompletion }",
+  },
+  'js:modules/functions.ts#click:a.inline_edit_sql': { file: 'SqlMessage.tsx', match: 'inline_edit_sql' },
+  'js:modules/functions.ts#click:input#sql_query_edit_save': {
+    file: 'SqlMessage.tsx',
+    match: 'id="sql_query_edit_save"',
+  },
+  'js:modules/functions.ts#click:input#sql_query_edit_discard': {
+    file: 'SqlMessage.tsx',
+    match: 'id="sql_query_edit_discard"',
+  },
+  'js:modules/functions.ts#keydown:<$inlineEditor>': {
+    file: 'SqlMessage.tsx',
+    match: "{ key: 'Ctrl-Enter', run: saveKey },",
+  },
+  'js:modules/functions.ts#keydown:<codeMirrorInlineEditor.getWrapperElemen…>': {
+    file: 'SqlMessage.tsx',
+    match: "{ key: 'Mod-Enter', run: saveKey },",
+  },
+  'js:modules/functions.ts#click:a.copyQueryBtn': { file: 'SqlMessage.tsx', match: 'copyQueryBtn' },
 }

@@ -3,6 +3,7 @@ import { Button, Input, Label, NativeCheckbox, NativeSelect, Panel, PanelBody } 
 import { type FormEvent, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { useFormLock } from '../../shell/page-chrome'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 import { useSearchPage } from './SearchPage'
 import { SearchPills } from './SearchPills'
@@ -26,6 +27,8 @@ export function FindReplacePage({ scope }: { scope: TableRef }) {
 }
 
 function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }) {
+  // form.lock-page (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const [find, setFind] = useState('')
   const [replaceWith, setReplaceWith] = useState('')
   const [columnIndex, setColumnIndex] = useState(page.charColumns[0]?.index ?? 0)
@@ -72,7 +75,7 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
         </div>
       )}
       {shown && (
-        <form id="find_replace_form" onSubmit={(e) => void submit(e)}>
+        <form ref={lockRef} id="find_replace_form" onSubmit={(e) => void submit(e)}>
           <Panel
             title={t('Find and replace')}
             footer=<Button type="submit" variant="primary">

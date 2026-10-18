@@ -107,6 +107,12 @@ export function ConfigForm({
   }
   const submit = (e: FormEvent) => {
     e.preventDefault()
+    // navigation/event-loader.ts: submitting a form.config-form forgets the navigation tree's state
+    try {
+      window.sessionStorage.removeItem('navTreePaths')
+    } catch {
+      // storage unavailable
+    }
     onSubmit(state.posted())
   }
   return (
@@ -372,9 +378,15 @@ function FieldRow({
       </td>
       {isSetup &&
         (field.userprefsAllow !== undefined ? (
+          // biome-ignore lint/a11y/useKeyWithClickEvents: a mouse convenience around the checkbox, which takes the keyboard itself
           <td
             className="userprefs-allow w-8 border-t border-border py-1 text-center align-top"
             title={t('Allow users to customize this value')}
+            // pma: setup/scripts.ts — a click in the cell (not on the box) toggles it
+            onClick={(e) => {
+              if (e.target === e.currentTarget)
+                state.set(allowId(field), state.values[allowId(field)] !== true)
+            }}
           >
             <Checkbox
               name={allowId(field)}

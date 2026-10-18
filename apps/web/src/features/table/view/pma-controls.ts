@@ -16,4 +16,21 @@ export const pmaControls = {
   'view_create.twig#submit:Go': { file: 'ViewForm.tsx', match: 'type="submit"' },
   'modals/create_view.twig#id:createViewModalGoButton': 'ViewForm.tsx',
   'modals/create_view.twig#button:Close': { file: 'ViewForm.tsx', match: "t('Close')" },
+  // pma: resources/js/modules/functions/handleCreateViewModal.ts
+  'js:modules/functions/handleCreateViewModal.ts#ajax:POST /view/create': {
+    file: 'ViewForm.tsx',
+    match: 'api.viewSave(scope, { operation: form.operation, view: { ...current, as } })',
+  },
+  "js:modules/functions/handleCreateViewModal.ts#ajax:POST <$this.attr('href')>": {
+    file: 'ViewForm.tsx',
+    match: 'queryFn: () => api.viewForm(scope, q)',
+  },
+  'js:modules/functions/handleCreateViewModal.ts#click:#createViewModalGoButton': {
+    file: 'ViewForm.tsx',
+    match: 'id="createViewModalGoButton"',
+  },
+  'js:modules/functions/handleCreateViewModal.ts#shown:#createViewModal': {
+    file: 'ViewForm.tsx',
+    match: 'id="createViewModal"',
+  },
 }

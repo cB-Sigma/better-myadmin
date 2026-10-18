@@ -19,6 +19,35 @@ sources:
   src/Controllers/PhpInfoController.php:
     exception: X15
     planned: M1
+  src/Http/Middleware/RequestProblemChecking.php:
+    n/a: 'PHP superglobal checks ($GLOBALS overwrite, $_REQUEST arrays): no PHP request globals'
+  src/Http/Middleware/PhpExtensionsChecking.php:
+    n/a: 'PHP extensions (mysqli, ctype, json, …): the Node runtime has none to miss'
+  src/Http/Middleware/ServerConfigurationChecking.php:
+    n/a: 'php.ini ini_get / ini_set: no PHP configuration'
+  src/Error/ErrorHandler.php:
+    n/a: 'PHP errors of the request (#pma_errors): the Node server raises none to show or report'
+  src/Controllers/NavigationController.php:
+    n/a: 'the navigation is an API (JSON) for the SPA, never a page of its own'
+  src/Theme/:
+    exception: X16
+    note: the themes ship with the client; an unknown ThemeDefault falls back to the default theme
+  resources/js/u2f.ts:
+    n/a: 'FIDO U2F (the two-factor `key` backend) is never available: its library is missing (TwoFactor::getMissingDeps) and browsers removed the U2F API'
+  resources/templates/login/twofactor/key.twig:
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
+  resources/templates/login/twofactor/key_configure.twig:
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
+  resources/templates/login/twofactor/key-https-warning.twig:
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
+  src/Plugins/TwoFactor/Key.php:
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
+  resources/js/modules/functions/checkNumberOfFields.ts:
+    n/a: 'PHP max_input_vars: the forms post JSON to the Node server, which has no field count limit'
+  resources/js/modules/git-info.ts:
+    n/a: 'the git revision comes with the home page data (GET /api/servers/:s/home), there is no separate request to fail'
+  resources/templates/javascript/redirect.twig:
+    n/a: 'external links open directly (rel="noopener noreferrer"); there is no /url redirect page'
 
 # The settings forms (FormDisplay, Descriptions, Forms/*): generated/pma-forms.json keeps the msgids,
 # translated (and BBCode converted) when a form is rendered.
@@ -35,6 +64,74 @@ data:
     - paths: [setup.*.name]
       at: apps/server/src/setup/service.ts::setupPages
 msgids:
+  '%s argument(s) passed':
+    n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
+  Hide arguments:
+    n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
+  Show arguments:
+    n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
+  Hide trace:
+    n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
+  Show trace:
+    n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
+  Some error occurred while getting SQL debug info.:
+    n/a: 'the debug statements arrive as structured JSON (`executed`), never as a string that fails to parse'
+  Some errors have been detected on the server!:
+    n/a: 'PHP errors of the request (src/Error/ErrorHandler.php)'
+  As per your settings, they are being submitted currently, please be patient.:
+    n/a: 'PHP errors of the request (src/Error/ErrorHandler.php)'
+  Please look at the bottom of this window.:
+    n/a: 'PHP errors of the request (src/Error/ErrorHandler.php)'
+  Adding primary key:
+    n/a: 'Messages.strAddingPrimaryKey: no phpMyAdmin script uses it'
+  Reset all:
+    n/a: 'Messages.strResetAll: no phpMyAdmin script uses it'
+  Total memory:
+    n/a: 'Messages.strTotalMemory: no phpMyAdmin script uses it'
+  Total swap:
+    n/a: 'Messages.strTotalSwap: no phpMyAdmin script uses it'
+  Do you want to copy encryption key?:
+    n/a: 'Messages.strCopyEncryptionKey: no phpMyAdmin script uses it'
+  "You haven't saved the changes in the layout. They will be lost if you don't save them. Do you want to continue?":
+    n/a: 'Messages.strLeavingDesigner: no phpMyAdmin script uses it'
+  Request aborted!!:
+    n/a: 'a new page load supersedes the pending one in the router (its queries keep running); no request is aborted'
+  The %s extension is missing. Please check your PHP configuration.:
+    n/a: 'PHP extensions: the Node runtime has none to miss'
+  "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this.":
+    n/a: 'Twig template cache: there are no server-side templates'
+  The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled.:
+    n/a: 'PHP extensions: Node fetches over HTTP itself'
+  The mbstring PHP extension was not found and you seem to be using a multibyte charset. Without the mbstring extension phpMyAdmin is unable to split strings correctly and it may result in unexpected results.:
+    n/a: 'PHP extensions: JavaScript strings are Unicode'
+  'Your PHP parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is lower than cookie validity configured in phpMyAdmin, because of this, your login might expire sooner than configured in phpMyAdmin.':
+    n/a: 'session.gc_maxlifetime: the session store keeps sessions twice max(LoginCookieValidity, LoginCookieStore)'
+  The routing cache could not be written, you need to adjust permissions on the folder/file "%s":
+    n/a: 'FastRoute cache file: the SPA routes are compiled into the client'
+  Error 405! Request method not allowed.:
+    n/a: 'the SPA serves every page with GET; the API answers its own 404/405 JSON errors'
+  'PHP extension:':
+    exception: X30
+  'PHP version:':
+    exception: X30
+  Show PHP information:
+    exception: X15
+    note: '"Show runtime information" (HomePage.tsx)'
+  Get more themes!:
+    exception: X30
+  Donate:
+    exception: X44
+  phpMyAdmin homepage:
+    exception: X33
+    note: '"BetterMyAdmin homepage" (setup OverviewPage.tsx)'
+  Something went wrong.:
+    n/a: 'setup/servers/index.twig with an unknown mode: the setup routes are /setup/servers/:id (0 adds), there is no mode parameter'
+  Deprecated!:
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts); preferences/two_factor/main.twig shows it for the `key` backend only'
+  The FIDO U2F API has been deprecated in favor of the Web Authentication API (WebAuthn).:
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
+  "You can still use Firefox to authenticate your account using the FIDO U2F API, however it's recommended that you use the WebAuthn authentication instead.":
+    n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
   "\"%s\" requires %s extension":
     n/a: "FormDisplay::setComments puts it in $opts['comment'], which input.twig never shows (it shows userprefs_comment)"
   "Compressed export will not work due to missing function %s.":

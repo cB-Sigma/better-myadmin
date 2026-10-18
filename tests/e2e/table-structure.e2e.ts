@@ -134,3 +134,74 @@ test('create table, add / change a column, add indexes, drop a column [p04-92945
   await expect(page.getByTestId('message-text').first()).toContainText('Column qty has been dropped.')
   expect(await showCreate('items')).not.toContain('`qty`')
 })
+
+/**
+ * The column form's helpers (functions.ts): Enter in "Add … column(s)", the ENUM/SET editor, a
+ * NULL default dropped with Null, and UNSIGNED / ZEROFILL on a type without it.
+ */
+test('column form: added_fields Enter, ENUM/SET editor, NULL default, UNSIGNED notice', async ({ page }) => {
+  await page.goto('/')
+  await page.locator('#input_username').fill(USER)
+  await page.locator('#input_password').fill(USER)
+  await page.locator('#input_go').click()
+  await expect(page.locator('#pma_navigation')).toBeVisible()
+  await page.goto(`/s/1/db/${DB}/create-table`)
+  await expect(page.locator('[data-testid^=column-row-]')).toHaveCount(4)
+
+  // Enter in added_fields adds the rows (the form is not sent)
+  const added = page.locator('input[name=added_fields]')
+  await added.fill('2')
+  await added.press('Enter')
+  await expect(page.locator('[data-testid^=column-row-]')).toHaveCount(6)
+  await expect(page).toHaveURL(/\/create-table$/)
+
+  // the ENUM/SET editor
+  const r0 = page.getByTestId('column-row-0')
+  await r0.getByLabel('Column', { exact: true }).fill('kind')
+  await r0.getByLabel('Type').selectOption('ENUM')
+  await r0.getByRole('button', { name: 'Edit ENUM/SET values' }).click()
+  const ed = page.getByRole('dialog', { name: 'ENUM/SET editor' })
+  await expect(ed).toContainText('Values for column "kind"')
+  await expect(ed).toContainText('Enter each value in a separate field.')
+  await expect(ed.locator('table.values input')).toHaveCount(4)
+  const slider = ed.locator('input.slider')
+  await expect(slider).toHaveAttribute('max', '9')
+  await slider.fill('3')
+  await ed.getByRole('button', { name: 'Add 3 value(s)' }).click()
+  await expect(ed.locator('table.values input')).toHaveCount(7)
+  await ed.locator('table.values input').nth(0).fill('a')
+  await ed.locator('table.values input').nth(1).fill("it's")
+  await ed.locator('td.drop button').nth(2).click()
+  await expect(ed.locator('table.values input')).toHaveCount(6)
+  await ed.getByRole('button', { name: 'Go' }).click()
+  await expect(r0.getByLabel('Length/Values')).toHaveValue("'a','it''s'")
+
+  // validateDefaultValue: unticking Null drops a NULL default
+  const r1 = page.getByTestId('column-row-1')
+  await r1.getByLabel('Null').check()
+  await r1.getByLabel('Default').selectOption('NULL')
+  await r1.getByLabel('Null').uncheck()
+  await expect(r1.getByLabel('Default')).toHaveValue('NONE')
+
+  // showWarningForIntTypes: the integer width notice while a row has an integer type
+  await expect(page.locator('#length_not_allowed')).toContainText(
+    'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
+  )
+  // resetAttributeForNonNumericType: a non-numeric type drops UNSIGNED
+  const r2 = page.getByTestId('column-row-2')
+  await r2.getByLabel('Type').selectOption('INT')
+  await r2.getByLabel('Attributes').selectOption('UNSIGNED')
+  await r2.getByLabel('Type').selectOption('DATE')
+  await expect(r2.getByLabel('Attributes')).toHaveValue('')
+
+  // checkTableEditForm: UNSIGNED / ZEROFILL on a text type is refused with a notification
+  await page.getByRole('textbox', { name: 'Table name:' }).fill('checks')
+  await r1.getByLabel('Column', { exact: true }).fill('label')
+  await r1.getByLabel('Type').selectOption('TEXT')
+  await r1.getByLabel('Attributes').selectOption('UNSIGNED ZEROFILL')
+  await page.getByRole('button', { name: 'Save' }).click()
+  await expect(page.locator('.ajax_notification')).toContainText(
+    'TEXT does not support the UNSIGNED attribute.',
+  )
+  await expect(page).toHaveURL(/\/create-table$/)
+})
