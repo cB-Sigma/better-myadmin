@@ -34,7 +34,7 @@ export const RULES: Rule[] = [
   },
   { re: /^src\/(Navigation|Controllers\/Navigation|Server\/Select)/, area: F.shell, kind: 'behaviour' },
   {
-    re: /^src\/(Plugins\/Auth|Plugins\/TwoFactor|TwoFactor|Controllers\/Home|Theme|I18n|Header|Footer|Menu|Console|Controllers\/Console|Controllers\/Logout|IpAllowDeny|Session|Http)/,
+    re: /^src\/(Plugins\/Auth|Plugins\/TwoFactor|TwoFactor|Controllers\/Home|Theme|I18n|Header|Footer|Menu|Console|Controllers\/Console|Controllers\/Logout|IpAllowDeny|Session|Http|Sanitize\.php)/,
     area: F.shell,
     kind: 'behaviour',
   },
