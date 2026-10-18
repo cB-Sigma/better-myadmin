@@ -1,13 +1,15 @@
 /**
- * Configuration loading: defaults <- config file <- environment.
+ * Configuration loading: defaults <- phpMyAdmin image variables <- config file <- environment.
  *
  * pma: src/Config.php::loadFromFile (config.inc.php) — replaced by
  * `bettermyadmin.config.{ts,js,mjs,json,yaml,yml}` (parity exception X6).
  */
 import { access, readFile } from 'node:fs/promises'
+import { createRequire } from 'node:module'
 import { basename, isAbsolute, resolve as resolvePath } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { parse as parseYaml } from 'yaml'
+import { parseDockerEnv } from './docker-env.ts'
 import { ENV_CONFIG_FILE, parseEnv } from './env.ts'
 import { ConfigError } from './errors.ts'
 import { type Layer, type ResolveResult, resolveLayers } from './resolve.ts'
@@ -77,6 +79,53 @@ async function findConfigFile(cwd: string): Promise<{ file: string | undefined; 
   return { file: found[0], warnings }
 }
 
+/**
+ * Imports a TypeScript config file as an ES module wherever it sits (Node would treat a `.ts`
+ * outside a `"type": "module"` package as CommonJS): esbuild compiles it, with the relative
+ * imports it makes, into one ES module; package imports stay imports, pinned to the file the
+ * config's directory resolves them to, else to the one this package does (so
+ * `import { defineConfig } from '@bettermyadmin/config'` works outside a checkout too). The
+ * module is imported from a `data:` URL: nothing is written, and every import it keeps is an
+ * absolute URL.
+ */
+async function importTypeScript(file: string): Promise<{ default?: unknown }> {
+  const { build } = await import('esbuild')
+  const fromConfig = createRequire(file)
+  const fromHere = createRequire(import.meta.url)
+  const result = await build({
+    entryPoints: [file],
+    bundle: true,
+    format: 'esm',
+    platform: 'node',
+    target: 'node22',
+    write: false,
+    logLevel: 'silent',
+    plugins: [
+      {
+        name: 'pin-packages',
+        setup(b) {
+          b.onResolve({ filter: /^[^./]/ }, (args) => {
+            if (args.path.startsWith('node:')) return { path: args.path, external: true }
+            for (const req of [fromConfig, fromHere]) {
+              try {
+                return { path: pathToFileURL(req.resolve(args.path)).href, external: true }
+              } catch {
+                // try the next one
+              }
+            }
+            // a built-in without `node:`, or an error when the module is imported
+            return { path: args.path, external: true }
+          })
+        },
+      },
+    ],
+  })
+  const code = result.outputFiles[0]?.text ?? ''
+  return (await import(`data:text/javascript;base64,${Buffer.from(code).toString('base64')}`)) as {
+    default?: unknown
+  }
+}
+
 /** Reads a config file into a raw (unvalidated) object. */
 export async function readConfigFile(file: string): Promise<unknown> {
   const name = basename(file)
@@ -102,12 +151,14 @@ export async function readConfigFile(file: string): Promise<unknown> {
   if (/\.(c|m)?(t|j)s$/.test(lower)) {
     let mod: { default?: unknown }
     try {
-      mod = (await import(pathToFileURL(file).href)) as { default?: unknown }
+      mod = /\.[cm]?ts$/.test(lower)
+        ? await importTypeScript(file)
+        : ((await import(pathToFileURL(file).href)) as { default?: unknown })
     } catch (e) {
       const err = e as NodeJS.ErrnoException
       const hint =
-        err.code === 'ERR_UNKNOWN_FILE_EXTENSION' && lower.endsWith('ts')
-          ? ' (this Node.js version cannot import TypeScript; use Node >= 22.18, run through tsx, or use a .js/.json/.yaml config)'
+        err.code === 'ERR_UNKNOWN_FILE_EXTENSION'
+          ? " (a TypeScript module it imports needs Node >= 22.18 or tsx; BetterMyAdmin's launcher registers tsx)"
           : ''
       throw new ConfigError([
         { path: '', message: `cannot load config module: ${err.message}${hint}`, source: name },
@@ -130,7 +181,8 @@ export async function readConfigFile(file: string): Promise<unknown> {
 }
 
 /**
- * Loads the configuration: defaults <- config file <- environment. Throws {@link ConfigError}
+ * Loads the configuration: defaults <- the phpMyAdmin image's variables <- config file <- BMA_*
+ * environment. Throws {@link ConfigError}
  * listing every unknown directive (with the nearest known name) and invalid value.
  */
 export async function loadConfig(options: LoadConfigOptions = {}): Promise<LoadedConfig> {
@@ -153,13 +205,16 @@ export async function loadConfig(options: LoadConfigOptions = {}): Promise<Loade
   }
 
   const layers: Layer[] = []
+  // the official phpMyAdmin image's PMA_* variables (its config.user.inc.php overrides them)
+  const dockerLayer = parseDockerEnv(env)
+  layers.push({ value: dockerLayer.value, label: 'environment', origins: dockerLayer.origins })
   if (file !== undefined) layers.push({ value: await readConfigFile(file), label: basename(file) })
   const envLayer = parseEnv(env)
   layers.push({ value: envLayer.value, label: 'environment', origins: envLayer.origins })
 
   let result: ResolveResult
   try {
-    result = resolveLayers(layers, envLayer.issues)
+    result = resolveLayers(layers, [...dockerLayer.issues, ...envLayer.issues])
   } catch (e) {
     if (e instanceof ConfigError && file !== undefined) {
       throw new ConfigError(e.issues, `Invalid BetterMyAdmin configuration (${file})`)

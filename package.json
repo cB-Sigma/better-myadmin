@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
+    "start": "node apps/server/bin/bettermyadmin.mjs",
     "typecheck": "turbo run typecheck && pnpm run typecheck:tests",
     "typecheck:tests": "tsc -p tests/parity/tsconfig.json && tsc -p tests/e2e/tsconfig.json && tsc -p tests/ui-parity/tsconfig.json && tsc -p tsconfig.scripts.json",
     "lint": "biome check .",
@@ -19,6 +20,8 @@
     "test:parity": "vitest run --project parity",
     "test:mariadb": "BMA_TEST_PORT=3307 vitest run --project int && BMA_PARITY_TARGET=mariadb vitest run --project parity",
     "test:e2e": "pnpm --filter @bettermyadmin/web build && playwright test -c tests/e2e/playwright.config.ts",
+    "test:smoke": "pnpm build && playwright test -c tests/smoke/playwright.config.ts",
+    "test:smoke:docker": "BMA_SMOKE=docker playwright test -c tests/smoke/playwright.config.ts",
     "test:ui-parity": "pnpm --filter @bettermyadmin/web build && playwright test -c tests/ui-parity/playwright.config.ts",
     "i18n:import": "pnpm --filter @bettermyadmin/i18n run import",
     "i18n:parity": "pnpm --filter @bettermyadmin/i18n run parity",

@@ -1,0 +1,17 @@
+# Only the sources the image builds from (docker build context)
+**/node_modules
+**/dist
+**/.turbo
+**/*.tsbuildinfo
+.data
+.git
+.claude
+coverage
+docs
+tests
+test-results
+playwright-report
+**/test
+docker
+bettermyadmin.config.*
+.env
