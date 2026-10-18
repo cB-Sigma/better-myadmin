@@ -36,6 +36,11 @@ export interface ServerInfo {
   sqlMode: string
   /** Context::setMode(@@sql_mode) + Context::loadClosest(MySql|MariaDb + version) */
   context: Context
+  /**
+   * ErrorHandler::addUserError of postConnect / setCollation (the time zone or the collation could
+   * not be set): shown above the page on every request that uses such a connection.
+   */
+  userErrors: Array<'timezone' | 'collation'>
 }
 
 /**

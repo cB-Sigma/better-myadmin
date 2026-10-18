@@ -1,3 +1,4 @@
+import type { Page } from '@playwright/test'
 import { type PageSpec, pageParity } from './lib/parity.ts'
 
 /**
@@ -66,6 +67,20 @@ pageParity('table-triggers', {
   ours: { path: `/s/1/db/${DB}/t/parent/triggers` },
 })
 pageParity('db-tracking', db('/database/tracking', 'tracking'))
+/**
+ * The Add row of Central columns with type ENUM. central_columns.ts renames the Add row's controls
+ * after their cells (col_type); phpMyAdmin shows the form open while the list is empty, and an
+ * "Add new column" click toggles it, so it is opened first when hidden.
+ */
+async function enumType(page: Page, toggle: string): Promise<void> {
+  const type = page.locator('#add_col_div select[name="col_type"]')
+  if (!(await type.isVisible())) {
+    await page.locator(toggle).first().click()
+    await type.waitFor({ state: 'visible', timeout: 10_000 })
+  }
+  await type.selectOption('ENUM', { timeout: 10_000 })
+}
+
 pageParity(
   'db-central-columns',
   db('/database/central-columns', 'central-columns', {
@@ -75,8 +90,28 @@ pageParity(
         pma: async (page) => page.locator('#add_col_div > a').click({ force: true }),
         ours: async (page) => page.locator('#add_col_div button').first().click(),
       },
+      {
+        // p.enum_notice: the "Edit ENUM/SET values" link shows once the type is ENUM or SET
+        name: 'ENUM type shows the ENUM/SET editor link',
+        pma: (page) => enumType(page, '#add_col_div > a'),
+        ours: (page) => enumType(page, '#add_col_div button'),
+      },
     ],
   }),
 )
+// the ENUM/SET editor opened from the Add row (functions.ts a.open_enum_editor)
+pageParity('db-central-columns-enum-editor', {
+  ...db('/database/central-columns', 'central-columns'),
+  scope: { pma: '#enumEditorModal.show .modal-content', ours: '[role=dialog]:has(#enumEditorGoButton)' },
+  ready: { pma: '#page_content', ours: '#page_content' },
+  setup: async ({ pma, ours }) => {
+    await enumType(pma, '#add_col_div > a')
+    await pma.locator('#add_col_div a.open_enum_editor').first().click()
+    await enumType(ours, '#add_col_div button')
+    await ours.getByRole('button', { name: 'Edit ENUM/SET values' }).first().click()
+    await pma.locator('#enumEditorModal.show .modal-content #enumEditorGoButton').first().waitFor()
+    await ours.locator('[role=dialog]:has(#enumEditorGoButton) #enumEditorGoButton').first().waitFor()
+  },
+})
 pageParity('db-data-dictionary', db('/database/data-dictionary', 'data-dictionary'))
 pageParity('db-privileges', db('/database/privileges', 'privileges'))

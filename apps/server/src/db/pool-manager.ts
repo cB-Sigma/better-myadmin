@@ -108,6 +108,7 @@ export async function postConnect(
   const versionComment = row?.['@@version_comment'] ?? ''
   const sqlMode = row?.['@@sql_mode'] ?? ''
   const v = versionInt(version)
+  const userErrors: ServerInfo['userErrors'] = []
   const isMariaDb = version.toLowerCase().includes('mariadb')
   const charset = v > 50503 ? 'utf8mb4' : 'utf8'
   await conn.query(
@@ -119,7 +120,7 @@ export async function postConnect(
   if (server.SessionTimeZone !== '') {
     await conn
       .query(`SET \`time_zone\` = ${quoteString(server.SessionTimeZone)}`, 'connect.tz')
-      .catch(() => {})
+      .catch(() => userErrors.push('timezone'))
   }
   // UserPreferencesHandler::setConnectionCollation: nothing to do for '' or the SET NAMES collation
   const defaultCollation = v > 50503 ? 'utf8mb4_general_ci' : 'utf8_general_ci'
@@ -127,7 +128,9 @@ export async function postConnect(
     // automatically adjust collation if not supported by server
     const coll =
       charset === 'utf8' && collation.startsWith('utf8mb4_') ? `utf8_${collation.slice(8)}` : collation
-    await conn.query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation').catch(() => {})
+    await conn
+      .query(`SET collation_connection = ${quoteString(coll)};`, 'connect.collation')
+      .catch(() => userErrors.push('collation'))
   }
   return {
     version,
@@ -137,6 +140,7 @@ export async function postConnect(
     isPercona: versionComment.toLowerCase().includes('percona'),
     sqlMode,
     context: createServerContext(v, isMariaDb, sqlMode),
+    userErrors,
   }
 }
 
@@ -330,6 +334,15 @@ export class PoolManager {
       entry.locales.set(marker, mysqlLocale)
     }
     conn.serverInfo = entry.serverInfo
+    // phpMyAdmin connects (and fails to set them) on every request
+    for (const kind of entry.serverInfo?.userErrors ?? []) {
+      const server = this.server(serverIndex)
+      requestScope()?.userErrors.push(
+        kind === 'timezone'
+          ? { kind, timeZone: server.SessionTimeZone, server: serverIndex }
+          : { kind, server: serverIndex },
+      )
+    }
     return conn
   }
 

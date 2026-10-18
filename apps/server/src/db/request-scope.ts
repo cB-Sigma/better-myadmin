@@ -1,4 +1,5 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
+import type { UserError } from '@bettermyadmin/contracts'
 
 /** One connection handed to several holders of the same request. */
 export interface SharedLink<T> {
@@ -18,13 +19,15 @@ export interface RequestScope {
   links: Map<string, SharedLink<unknown>>
   /** connections this request holds (any pool): such a request never waits for the budget */
   held: number
+  /** ErrorHandler::addUserError of the connection set-up, sent with the response */
+  userErrors: UserError[]
 }
 
 const storage = new AsyncLocalStorage<RequestScope>()
 
 /** Runs `fn` (one HTTP request) in its own scope. */
 export function runInRequestScope<T>(fn: () => Promise<T>): Promise<T> {
-  return storage.run({ links: new Map(), held: 0 }, fn)
+  return storage.run({ links: new Map(), held: 0, userErrors: [] }, fn)
 }
 
 export function requestScope(): RequestScope | undefined {

@@ -21,6 +21,7 @@ import { t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PluginOptions } from '../export/PluginOptions'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
+import { KanjiEncodingForm } from '../sql/KanjiEncodingForm'
 import { StatementBlock } from '../sql/Results'
 import { type CardEnv, ErrorCard } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
@@ -592,7 +593,8 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
           {page.kanji && (
             <Panel title={t('Encoding Conversion:')} className="mb-3" id="kanji_encoding">
               <PanelBody>
-                <input type="hidden" name="knjenc" value="" />
+                {/* Encoding::canConvertKanji(): the Japanese locale (encoding/kanji_encoding_form.twig) */}
+                <KanjiEncodingForm />
               </PanelBody>
             </Panel>
           )}
