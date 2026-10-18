@@ -11,7 +11,7 @@ Mechanical inventories of phpMyAdmin `328b8d80` ([reference-commit.txt](../refer
 | Config directives | 449 | 426 | 2 | 20 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
 | Messages (msgids) | 3428 | 3071 | 13 | 76 | 1 | 0 | 0 | 267 | 0 | 3160 | 92.2% |
 | JS behaviours | 966 | 938 | 0 | 13 | 1 | 0 | 0 | 14 | 0 | 951 | 98.4% |
-| Checklist items | 707 | 622 | 0 | 4 | 0 | 33 | 3 | 45 | 0 | 626 | 88.5% |
+| Checklist items | 707 | 646 | 0 | 5 | 0 | 0 | 12 | 44 | 0 | 651 | 92.1% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
 
@@ -21,15 +21,15 @@ Covered / total per inventory (directives are attributed to the feature doc that
 
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
-| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 97/98 (99.0%) | 109/109 (100.0%) | 404/404 (100.0%) | 236/237 (99.6%) | 67/77 (87.0%) |
+| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 97/98 (99.0%) | 109/109 (100.0%) | 404/404 (100.0%) | 236/237 (99.6%) | 76/77 (98.7%) |
 | [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 27/32 (84.4%) | 32/32 (100.0%) | 43/56 (76.8%) | 69/69 (100.0%) | 80/118 (67.8%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 7/7 (100.0%) | 26/28 (92.9%) | 16/16 (100.0%) | 53/79 (67.1%) | 19/22 (86.4%) | 58/59 (98.3%) |
 | [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 450/543 (82.9%) | 178/178 (100.0%) | 96/100 (96.0%) |
-| [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 220/240 (91.7%) | 31/31 (100.0%) | 269/301 (89.4%) | 175/180 (97.2%) | 85/112 (75.9%) |
+| [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 220/240 (91.7%) | 31/31 (100.0%) | 269/301 (89.4%) | 175/180 (97.2%) | 112/112 (100.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
 | [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 59/63 (93.7%) | 137/138 (99.3%) | 245/293 (83.6%) | 61/66 (92.4%) | 66/67 (98.5%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 9/9 (100.0%) | 38/39 (97.4%) | 62/62 (100.0%) | 665/666 (99.8%) | 17/17 (100.0%) | 62/62 (100.0%) |
-| [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 7/7 (100.0%) | 28/28 (100.0%) | 11/11 (100.0%) | 42/46 (91.3%) | 47/48 (97.9%) | 63/63 (100.0%) |
+| [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 7/7 (100.0%) | 28/28 (100.0%) | 11/11 (100.0%) | 42/46 (91.3%) | 47/48 (97.9%) | 52/63 (82.5%) |
 | other | M5 | 2/2 (100.0%) | 25/29 (86.2%) | 28/28 (100.0%) | 72/123 (58.5%) | 18/18 (100.0%) | — |
 
 ## Top 30 missing
