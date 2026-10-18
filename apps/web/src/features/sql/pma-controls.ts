@@ -129,4 +129,6 @@ export const pmaControls = {
     match: "{ key: 'Mod-Enter', run: saveKey },",
   },
   'js:modules/functions.ts#click:a.copyQueryBtn': { file: 'SqlMessage.tsx', match: 'copyQueryBtn' },
+  'encoding/kanji_encoding_form.twig#knjenc': 'KanjiEncodingForm.tsx',
+  'encoding/kanji_encoding_form.twig#xkana': 'KanjiEncodingForm.tsx',
 }

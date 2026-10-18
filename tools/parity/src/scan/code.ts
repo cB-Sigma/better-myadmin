@@ -10,6 +10,9 @@
  *   `const X = { key: '…' }`, `X` where `const X = '…'`, `t(obj.prop)` on a value of unknown
  *   origin → every literal `prop: '…'` in the file and the files it imports (e.g. tab tables),
  *   and both branches of `t(cond ? 'a' : 'b')`;
+ * - msgid wrappers: a function or method with a parameter named `msgid` that its body passes to a
+ *   translator (`tf(tr, msgid, …)`, `imp.error(msgid, …)`): its literal argument at that position
+ *   counts, in the declaring file and the files importing it;
  * - msgid markers `N_('…')` / `NC_('ctx', '…')` (gettext_noop, packages/i18n): a msgid kept untranslated
  *   in a table and translated where it is shown;
  * - JSON message tables (data generated from phpMyAdmin): a JSON file imported by the file, directly or
@@ -281,16 +284,68 @@ function importsOf(sf: ts.SourceFile, file: string, known: Set<string>): string[
   return out
 }
 
+/**
+ * `function f(…, msgid, …)`, `f = (…, msgid) =>`, `f(msgid) {}` (a method or property) whose body
+ * hands `msgid` to a singular translator call: its name and the parameter's position.
+ */
+function msgidWrapper(node: ts.Node): { name: string; index: number } | null {
+  let name: string | null = null
+  let fn: (ts.SignatureDeclaration & { body?: ts.Node | undefined }) | null = null
+  if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
+    name =
+      ts.isIdentifier(node.name) || ts.isPrivateIdentifier(node.name)
+        ? node.name.text.replace(/^#/, '')
+        : null
+    fn = node
+  } else if (
+    (ts.isVariableDeclaration(node) || ts.isPropertyAssignment(node)) &&
+    ts.isIdentifier(node.name) &&
+    node.initializer !== undefined &&
+    (ts.isArrowFunction(node.initializer) || ts.isFunctionExpression(node.initializer))
+  ) {
+    name = node.name.text
+    fn = node.initializer
+  }
+  if (name === null || fn === null || fn.body === undefined) return null
+  const index = fn.parameters.findIndex((p) => ts.isIdentifier(p.name) && p.name.text === 'msgid')
+  if (index < 0) return null
+  let translated = false
+  const look = (n: ts.Node) => {
+    if (translated) return
+    if (ts.isCallExpression(n)) {
+      const callee = n.expression
+      const cn = ts.isIdentifier(callee)
+        ? callee.text
+        : ts.isPropertyAccessExpression(callee)
+          ? callee.name.text.replace(/^#/, '')
+          : ''
+      const a = n.arguments[0]
+      if (SINGULAR.has(cn) && a !== undefined && ts.isIdentifier(a) && a.text === 'msgid') translated = true
+    }
+    ts.forEachChild(n, look)
+  }
+  look(fn.body)
+  return translated ? { name, index } : null
+}
+
 export function scanMsgids(files: SourceFile[], repo = REPO): MsgidUse[] {
   // constant tables: X → literal, X.k → literal
   const constants = new Map<string, string>()
   // per file: prop name → literals assigned to it in object literals
   const propLits = new Map<string, Map<string, string[]>>()
+  // per file: msgid wrapper name → the position of its `msgid` parameter
+  const wrappers = new Map<string, Map<string, number>>()
   const absFiles = new Set(files.map((f) => join(repo, f.file)))
   for (const { file, sf } of files) {
     const props = new Map<string, string[]>()
     propLits.set(file, props)
     const visit = (node: ts.Node) => {
+      const w = msgidWrapper(node)
+      if (w !== null) {
+        const list = wrappers.get(file)
+        if (list === undefined) wrappers.set(file, new Map([[w.name, w.index]]))
+        else list.set(w.name, w.index)
+      }
       if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
         let init: ts.Expression = node.initializer
         while (ts.isAsExpression(init) || ts.isSatisfiesExpression(init)) init = init.expression
@@ -332,6 +387,8 @@ export function scanMsgids(files: SourceFile[], repo = REPO): MsgidUse[] {
     const abs = join(repo, file)
     const imported = importsOf(sf, abs, absFiles).map((a) => rel(repo, a))
     const json = jsonImports(sf, abs, repo).map(tableOf)
+    const scopeWrappers = new Map<string, number>()
+    for (const f of [...imported, file]) for (const [k, v] of wrappers.get(f) ?? []) scopeWrappers.set(k, v)
     const add = (node: ts.Node, key: string, via: MsgidUse['via']) =>
       out.push({ file, line: sf.getLineAndCharacterOfPosition(node.getStart()).line + 1, key, via })
     const resolveArg = (n: ts.Expression | undefined): { values: string[]; via: MsgidUse['via'] } | null => {
@@ -384,6 +441,12 @@ export function scanMsgids(files: SourceFile[], repo = REPO): MsgidUse[] {
         } else if (PLURAL.has(name)) {
           const r = resolveArg(a)
           if (r !== null) for (const v of r.values) add(node, v, r.via)
+        } else if (
+          scopeWrappers.has(name) &&
+          !(ts.isPropertyAccessExpression(callee) && callee.expression.getText() === 'console')
+        ) {
+          const l = lit(node.arguments[scopeWrappers.get(name)!])
+          if (l !== null) add(node, l, 'literal')
         } else if (CONTEXT.has(name) || CONTEXT_PLURAL.has(name)) {
           const ctx = lit(a)
           const r = resolveArg(b)

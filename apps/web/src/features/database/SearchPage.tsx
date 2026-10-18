@@ -81,6 +81,9 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
   const [showResults, setShowResults] = useState(true)
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [browse, setBrowse] = useState<{ table: string; response: QueryResponse } | null>(null)
+  // #sqlqueryform: the result of "Delete", with the #togglequerybox button
+  const [deleted, setDeleted] = useState<QueryResponse | null>(null)
+  const [queryBox, setQueryBox] = useState(true)
 
   if (form.isError) return <SimpleError server={server} db={db} message={errorMessage(form.error).text} />
   if (form.data === undefined) return null
@@ -88,6 +91,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
 
   const submit = async () => {
     setBrowse(null)
+    setDeleted(null)
     if (tables.length === 0) {
       setMessages([{ type: 'error', text: t('No table selected.') }])
       return
@@ -118,21 +122,31 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
   }
 
   const browseResults = async (table: string, sql: string) => {
+    // search.ts: ajaxShowMessage(strBrowsing, false), removed with the results
+    const box = showMessage(t('Browsing'), false)
     try {
       const response = await runQuery(server, { sql, db, table }, 'page')
+      setDeleted(null)
       setBrowse({ table, response })
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 
   const deleteResults = async (table: string, sql: string) => {
     if (!(await confirm({ question: t('Delete the matches for the %s table?', table), destructive: true })))
       return
+    const box = showMessage(t('Deleting'), false)
     try {
       const response = await runQuery(server, { sql, db, table }, 'page')
-      setBrowse({ table, response })
-      // search.ts: the search runs again so the counts refresh
+      // search.ts: the browse results and table info hide, the deletion's result shows in
+      // #sqlqueryform with "Hide query box"
+      setBrowse(null)
+      setDeleted(response)
+      setQueryBox(true)
+      // the search runs again so the counts refresh
       const r = await api.dbSearch(
         { server, db },
         { searchString, searchType, tables, columnName, includeHex },
@@ -140,6 +154,8 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       setResults(r)
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 
@@ -337,6 +353,19 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
             <StatementBlock key={i} st={st} env={env} />
           ))}
         </div>
+      )}
+      <div id="sqlqueryform" className="clearfloat">
+        {deleted !== null &&
+          queryBox &&
+          deleted.statements.map((st, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: statements are positional
+            <StatementBlock key={i} st={st} env={env} />
+          ))}
+      </div>
+      {deleted !== null && (
+        <Button variant="secondary" id="togglequerybox" onClick={() => setQueryBox(!queryBox)}>
+          {queryBox ? t('Hide query box') : t('Show query box')}
+        </Button>
       )}
     </div>
   )

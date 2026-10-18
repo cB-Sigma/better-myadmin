@@ -99,4 +99,6 @@ export const pmaControls = {
   'js:export.ts#click:<row> .alias_remove': 'AliasDialog.tsx',
   'js:export.ts#hidden:<modal>': 'AliasDialog.tsx',
   'js:export.ts#shown:<modal>': 'AliasDialog.tsx',
+  // the alias rows added in the dialog (export.ts clones the hidden aliases_new row)
+  'export.twig#aliases_new': { file: 'AliasDialog.tsx', match: 'name={r.name}' },
 }

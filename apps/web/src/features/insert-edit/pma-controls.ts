@@ -73,4 +73,6 @@ export const pmaControls = {
   'js:transformations/image_upload.ts#change:input.image-upload': 'ValueWidget.tsx',
   // pma: resources/js — browser behaviours (js.json)
   'js:table/change.ts#click:<$thisElement>': { file: 'ValueWidget.tsx', match: 'className="checkbox_null"' },
+  'gis_data_editor_form.twig#id:useOsmAsBaseLayerSwitch': '../gis/GisEditor.tsx',
+  'modals/gis_editor.twig#button:Close': { file: '../gis/GisEditor.tsx', match: 'id="gisEditorModal"' },
 }

@@ -460,4 +460,50 @@ export const pmaControls = {
   // pma: resources/templates/error/simple.twig, filter.twig
   'error/simple.twig#link:Go back': { file: 'SearchPage.tsx', match: "{t('Go back')}" },
   'filter.twig#filterText': { file: 'DbStructurePage.tsx', match: 'id="filterText"' },
+  // central columns, multi-table query, operations, routines, events, search, structure
+  'database/central_columns/edit_table_row.twig#link:Edit ENUM/SET values': 'CentralColumnsPage.tsx',
+  'database/central_columns/main.twig#link:Edit ENUM/SET values': 'CentralColumnsPage.tsx',
+  'src/Database/CentralColumns.php#pos': { file: 'CentralColumnsPage.tsx', match: 'name="pos"' },
+  'database/multi_table_query/form.twig#select:L26': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="tableNameSelect"',
+  },
+  'database/multi_table_query/form.twig#select:L33': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="columnNameSelect"',
+  },
+  'database/multi_table_query/form.twig#checkbox:L37': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="show_col"',
+  },
+  'database/multi_table_query/form.twig#select:L83': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="columnNameSelect opColumn"',
+  },
+  'database/multi_table_query/form.twig#select:L92': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="criteria_op"',
+  },
+  'database/multi_table_query/form.twig#select:L115': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="criteria_rhs"',
+  },
+  'database/multi_table_query/form.twig#select:L125': {
+    file: 'MultiTableQueryPage.tsx',
+    match: '<tr className="rhs_table">',
+  },
+  'database/multi_table_query/form.twig#select:L133': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'className="columnNameSelect"',
+  },
+  'database/operations/index.twig#link:Database %s has been dropped.': {
+    file: 'OperationsPage.tsx',
+    match: 'Database %s has been dropped.',
+  },
+  'database/routines/parameter_row.twig#link:ENUM/SET editor': 'RoutinesPage.tsx',
+  'database/routines/row.twig#item_name[]': { file: 'programs.tsx', match: 'name="item_name[]"' },
+  'events/index.twig#item_name[]': { file: 'programs.tsx', match: 'name="item_name[]"' },
+  'events/row.twig#item_name[]': { file: 'programs.tsx', match: 'name="item_name[]"' },
+  'database/search/main.twig#id:togglequerybox': 'SearchPage.tsx',
+  'database/structure/structure_table_row.twig#selected_tbl[]': 'DbStructurePage.tsx',
 }

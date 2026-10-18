@@ -235,6 +235,9 @@ export function ProgramListPage({
                     <td>
                       <Checkbox
                         aria-label={item.name}
+                        className="checkall"
+                        name="item_name[]"
+                        value={item.name}
                         checked={selected.includes(item.name)}
                         onCheckedChange={(v) =>
                           setSelected(

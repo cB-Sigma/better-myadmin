@@ -179,7 +179,7 @@ exportPageRoutes.get('/page', async (c) => {
       session.exportAliases !== undefined && JSON.stringify(session.exportAliases).match(/:"[^"]/) !== null
     const title =
       exportType === 'raw'
-        ? tr.pgettext('A query that the user has written freely', 'Exporting a raw query')
+        ? tr.gettext('Exporting a raw query')
         : exportType === 'server'
           ? tr.gettext('Exporting databases from the current server')
           : exportType === 'database'

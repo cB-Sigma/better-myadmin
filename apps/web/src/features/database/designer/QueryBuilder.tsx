@@ -1,3 +1,4 @@
+import { N_ } from '@bettermyadmin/i18n'
 import {
   Button,
   Input,
@@ -30,7 +31,7 @@ const REL_OPTS: Array<[string, string]> = [
   ['<=', '<='],
   ['NOT', 'NOT'],
   ['IN', 'IN'],
-  ['EXCEPT', 'Except'],
+  ['EXCEPT', N_('Except')],
   ['NOT IN', 'NOT IN'],
 ]
 const AGGREGATES: Array<[string, string]> = [

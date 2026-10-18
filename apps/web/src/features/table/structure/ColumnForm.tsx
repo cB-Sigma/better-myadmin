@@ -231,7 +231,8 @@ export function formatEnumValues(values: string[]): string {
     .join(',')
 }
 
-function EnumEditor({
+/** The ENUM/SET values editor (functions.ts `a.open_enum_editor`). */
+export function EnumEditor({
   value,
   column,
   onClose,
@@ -795,7 +796,11 @@ export function ColumnForm({
                   >
                     {options.defaultTypes.map((d) => (
                       <option key={d} value={d}>
-                        {d === 'NONE' ? t('None') : d === 'USER_DEFINED' ? t('As defined:') : d}
+                        {d === 'NONE'
+                          ? pgettext('for default', 'None')
+                          : d === 'USER_DEFINED'
+                            ? t('As defined:')
+                            : d}
                       </option>
                     ))}
                   </select>
