@@ -5,7 +5,7 @@ import { quoteString } from '@bettermyadmin/sql-gen'
 import { createServerContext } from '@bettermyadmin/sql-lexer'
 import mysql, { type Pool, type PoolConnection, type PoolOptions } from 'mysql2/promise'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
-import { type BudgetedPool, ConnectionBudget } from './budget.ts'
+import { type BudgetedPool, ConnectionBudget, isIdle } from './budget.ts'
 import { Conn, type ServerInfo } from './connection.ts'
 import { ControlConnections } from './control.ts'
 import { type SharedLink, requestScope } from './request-scope.ts'
@@ -299,6 +299,7 @@ export class PoolManager {
         busy: new Set(),
         ended: false,
         pending: 0,
+        waiting: 0,
         initialised: new WeakSet(),
         locales: new WeakMap(),
         serverInfo: null,
@@ -385,7 +386,7 @@ export class PoolManager {
   async evictIdle(now = Date.now()): Promise<void> {
     const max = this.#cfg.ConnectionPool.idleTimeout * 1000
     for (const [key, entry] of this.#pools) {
-      if (entry.busy.size === 0 && now - entry.lastUsed > max) await this.#endEntry(key, entry)
+      if (isIdle(entry) && now - entry.lastUsed > max) await this.#endEntry(key, entry)
     }
     await this.control.evictIdle(now, max)
   }
