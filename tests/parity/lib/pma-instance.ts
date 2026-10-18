@@ -1,6 +1,7 @@
 import { type ChildProcess, spawn, spawnSync } from 'node:child_process'
 import {
   copyFileSync,
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -68,7 +69,14 @@ const PMA_PATH = process.env.PMA_PATH ?? '/home/user/ref/pma'
 const BUILD_MO = fileURLToPath(new URL('../../../packages/i18n/scripts/build-mo.py', import.meta.url))
 const PHP = process.env.BMA_PARITY_PHP ?? 'php'
 
+/**
+ * Whether a private instance can start: PHP and the reference checkout (PMA_PATH) with its vendor
+ * tree. CI runners have PHP but no checkout (the references are compose containers there), so
+ * the suites that need a private instance skip instead of failing on the missing tree.
+ */
 export function phpAvailable(): boolean {
+  if (!existsSync(join(PMA_PATH, 'public', 'index.php')) || !existsSync(join(PMA_PATH, 'vendor')))
+    return false
   try {
     return spawnSync(PHP, ['-r', 'echo PHP_VERSION;'], { encoding: 'utf8' }).status === 0
   } catch {

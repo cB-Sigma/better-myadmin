@@ -100,6 +100,9 @@ jobs:
             services: mysql84 phpmyadmin-ref
     env:
       BMA_TEST_PORT: ${{ matrix.port || '3306' }}
+      # the compose reference (phpmyadmin-ref, :8081): without it ui-parity's global-setup starts a
+      # private reference from a local checkout and php, which a runner does not have
+      BMA_PARITY_PMA_URL: http://127.0.0.1:8081
       # the replica reaches the primary by its service name (server-replica.e2e.ts restores it)
       BMA_PARITY_REPLICA_SOURCE_HOST: mysql84
       BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
