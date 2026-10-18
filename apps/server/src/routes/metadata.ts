@@ -49,12 +49,12 @@ export const metadataRoutes = new Hono<ServerEnv>()
 const msg = (
   c: Context<ServerEnv>,
   type: UiMessage['type'],
-  text: string,
+  msgid: string,
   detail?: string,
   args: string[] = [],
 ): UiMessage => {
   const tr = c.get('tr')
-  const t = args.length > 0 ? sprintf(tr.gettext(text), ...args) : tr.gettext(text)
+  const t = args.length > 0 ? sprintf(tr.gettext(msgid), ...args) : tr.gettext(msgid)
   return detail === undefined || detail === ''
     ? { type, text: t }
     : { type, text: t, detail: tr.gettext(detail) }

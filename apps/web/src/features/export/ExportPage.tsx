@@ -19,7 +19,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { pgettext, t } from '../../lib/i18n'
+import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { HighlightedSql } from '../sql/HighlightedSql'
@@ -465,20 +465,19 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
         )}
 
         {page.sqlQuery !== '' && (
-          <Panel title={pgettext('Title of the option on the Export page', 'SQL query:')} className="mb-3">
+          <Panel title={t('SQL query:')} className="mb-3">
             <PanelBody>
               <div id="sqlqueryform">
                 <Button type="button" variant="secondary" id="showsqlquery" onClick={() => setSqlOpen(true)}>
-                  {pgettext('Button to show the SQL query on the export page', 'Show SQL query')}
+                  {t('Show SQL query')}
                 </Button>
               </div>
             </PanelBody>
             <Dialog open={sqlOpen} onOpenChange={setSqlOpen}>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>
-                    {pgettext('Title of the option on the Export page', 'SQL query:')}
-                  </DialogTitle>
+                  {/* export.ts: #showSqlQueryModalLabel = Messages.strQuery */}
+                  <DialogTitle>{t('SQL Query')}</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
                   <HighlightedSql sql={page.sqlQuery} />

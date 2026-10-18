@@ -12,6 +12,8 @@ import {
   Panel,
   PanelBody,
   PmaIcon,
+  removeMessage,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
@@ -113,17 +115,22 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
   }
 
   const browseResults = async (table: string, sql: string) => {
+    // search.ts: ajaxShowMessage(strBrowsing, false), removed with the results
+    const box = showMessage(t('Browsing'), false)
     try {
       const response = await runQuery(server, { sql, db, table }, 'page')
       setBrowse({ table, response })
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 
   const deleteResults = async (table: string, sql: string) => {
     if (!(await confirm({ question: t('Delete the matches for the %s table?', table), destructive: true })))
       return
+    const box = showMessage(t('Deleting'), false)
     try {
       const response = await runQuery(server, { sql, db, table }, 'page')
       setBrowse({ table, response })
@@ -135,6 +142,8 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       setResults(r)
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 

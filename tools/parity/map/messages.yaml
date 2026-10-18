@@ -48,6 +48,18 @@ sources:
     n/a: 'the git revision comes with the home page data (GET /api/servers/:s/home), there is no separate request to fail'
   resources/templates/javascript/redirect.twig:
     n/a: 'external links open directly (rel="noopener noreferrer"); there is no /url redirect page'
+  src/File.php:
+    n/a: 'PHP file uploads ($_FILES error codes, move_uploaded_file, open_basedir temp copies): the browser streams the file to the Node server in chunks (POST/PATCH /import/uploads)'
+  src/Pdf.php:
+    n/a: 'TCPDF: no PDF export or PDF schema is offered (the reference build does not ship TCPDF either; directives.yaml Export/pdf_*, Schema/pdf_*)'
+  src/Plugins/Export/ExportPdf.php:
+    n/a: 'ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)'
+  src/Plugins/Export/Helpers/Pdf.php:
+    n/a: 'ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)'
+  src/Plugins/Schema/SchemaPdf.php:
+    n/a: 'SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)'
+  src/Plugins/Schema/Pdf/:
+    n/a: 'SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)'
 
 # The settings forms (FormDisplay, Descriptions, Forms/*): generated/pma-forms.json keeps the msgids,
 # translated (and BBCode converted) when a form is rendered.
@@ -64,6 +76,30 @@ data:
     - paths: [setup.*.name]
       at: apps/server/src/setup/service.ts::setupPages
 msgids:
+  Could not load export plugins, please check your installation!:
+    n/a: 'the export plugins are modules compiled into the server (packages/export): the list cannot come back empty'
+  Could not load import plugins, please check your installation!:
+    n/a: 'the import plugins are modules compiled into the server (packages/import): the list cannot come back empty'
+  Could not load schema plugins, please check your installation!:
+    n/a: 'the schema plugins are modules compiled into the server (packages/schema): the list cannot come back empty'
+  'PHP Version:':
+    n/a: 'the dump headers name the runtime that wrote them: "Node.js Version:" (apps/server/src/export/service.ts)'
+  Please be patient, the file is being uploaded. Details about the upload are not available.:
+    n/a: 'Messages.uploadProgressNoDetails: shown without an upload progress extension; the chunked upload always knows its progress'
+  The file being uploaded is probably larger than the maximum allowed size.:
+    n/a: 'Messages.uploadProgressMaximumAllowedSize: the PHP progress extension reports 0/0 for a body over post_max_size; the chunked upload has no such limit to cross unseen'
+  Add routine:
+    n/a: 'the editor title of the no-JS page; the AJAX editor modal takes its title from the clicked link (routines.ts, Issue #15810)'
+  Edit routine:
+    n/a: 'the editor title of the no-JS page; the AJAX editor modal takes its title from the clicked link (routines.ts, Issue #15810)'
+  Routine editor:
+    n/a: 'placeholder label of #routinesEditorModal, replaced by the clicked link''s title before the modal shows (routines.ts)'
+  Export routine:
+    n/a: 'placeholder label of #routinesExportModal, replaced by the response title before the modal shows (routines.ts)'
+  Change to %s:
+    n/a: 'the no-JS editor form (is_ajax false) of routines and events; the AJAX editor has a PROCEDURE/FUNCTION (ONE TIME/RECURRING) select instead'
+  Remove last parameter:
+    n/a: 'the no-JS routine editor form (is_ajax false); the AJAX editor removes each parameter row with its own button'
   '%s argument(s) passed':
     n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
   Hide arguments:

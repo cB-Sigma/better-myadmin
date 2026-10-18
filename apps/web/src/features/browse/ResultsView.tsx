@@ -5,6 +5,7 @@ import type {
   SqlMessage as SqlMessageData,
   StatementResult,
 } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import {
   Alert,
   Button,
@@ -37,10 +38,12 @@ import { rowsOptions, validRowNumbers } from './logic'
 import './grid.css'
 
 const MISSING = {
-  unavailable:
+  unavailable: N_(
     'Current selection does not contain a unique column. Grid edit, checkbox, Edit, Copy and Delete features are not available. %s',
-  undesired:
+  ),
+  undesired: N_(
     'Current selection does not contain a unique column. Grid edit, Edit, Copy and Delete features may result in undesired behavior. %s',
+  ),
 } as const
 
 /** Link with a computed (splat) destination the route types cannot narrow. */

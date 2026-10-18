@@ -7,6 +7,7 @@ import {
   MessageBox,
   Panel,
   PanelBody,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -90,7 +91,10 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
         ? t('Delete tracking data for these tables?')
         : t('Delete tracking data for this table?'),
     })
-    if (ok) await run(() => api.dbTrackingAction({ server, db }, { action: 'delete', tables }))
+    if (!ok) return
+    // tracking.ts: ajaxShowMessage(strDeletingTrackingData)
+    showMessage(t('Deleting tracking data'))
+    await run(() => api.dbTrackingAction({ server, db }, { action: 'delete', tables }))
   }
   const startCreate = (tables: string[]) => {
     if (tables.length === 0) {
