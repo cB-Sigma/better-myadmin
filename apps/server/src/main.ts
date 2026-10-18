@@ -118,7 +118,8 @@ async function main() {
 
   const sweep = setInterval(() => {
     store.sweep(Math.floor(Date.now() / 1000), Math.max(cfg.LoginCookieValidity, cfg.LoginCookieStore) * 2)
-    void pools.evictIdle()
+    // the connections of swept (or otherwise deleted) sessions
+    void pools.dropSessionsExcept((id) => store.get(id) !== null)
   }, 60_000)
   sweep.unref()
 
