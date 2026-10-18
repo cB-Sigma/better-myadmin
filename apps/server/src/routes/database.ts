@@ -151,7 +151,9 @@ databaseRoutes.post('/:db/structure/show-create', async (c) => {
 /** pma: /table/maintenance/{analyze,check,checksum,optimize,repair} */
 databaseRoutes.post('/:db/structure/maintenance', async (c) => {
   const req = parse(MaintenanceRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => maintenance(ctx, { ...req, tables: req.tables ?? [] })))
+  return c.json(
+    await withDb(c, (ctx) => maintenance(ctx, { ...req, tables: req.tables ?? [] }, '', c.get('session'))),
+  )
 })
 
 // ---------------------------------------------------------------- Operations

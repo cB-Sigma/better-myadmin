@@ -161,11 +161,22 @@ export class TableReader {
     return row
   }
 
-  /** pma: Table::isView (TABLE_TYPE from the cached status; information_schema tables are views) */
+  /**
+   * pma: Table::isView — TABLE_TYPE of a status already read, information_schema tables are views,
+   * else information_schema.VIEWS (not TABLES: reading a new table's status between its CREATE and
+   * the copied rows would keep MySQL 8's cached statistics at 0 rows, information_schema_stats_expiry).
+   * DisableIS (SHOW TABLE STATUS) is not distinguished: getStatus reads information_schema too.
+   */
   async isView(db: string, table: string): Promise<boolean> {
-    const s = await this.getStatus(db, table)
-    if (s !== null) return s.TABLE_TYPE === 'VIEW' || s.TABLE_TYPE === 'SYSTEM VIEW'
-    return db === 'information_schema'
+    if (db === '' || table === '') return false
+    const s = this.#status.get(`${db}\u0000${table}`)
+    if (s !== undefined && s !== null) return s.TABLE_TYPE === 'VIEW' || s.TABLE_TYPE === 'SYSTEM VIEW'
+    if (db === 'information_schema') return true
+    const q = (v: string) => this.dbi.quoteString(v)
+    const r = await this.dbi.tryQuery(
+      `SELECT 1 FROM information_schema.VIEWS WHERE TABLE_SCHEMA = ${q(db)} AND TABLE_NAME = ${q(table)}`,
+    )
+    return (r?.rows.length ?? 0) > 0
   }
 
   /** pma: Table::getStorageEngine (upper-cased by the callers) */

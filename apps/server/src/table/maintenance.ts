@@ -17,6 +17,9 @@ import { backquote, findDuplicateIndexes } from '@bettermyadmin/sql-gen'
 import type { z } from 'zod'
 import type { AppConfig } from '../config.ts'
 import { MysqlError } from '../http/errors.ts'
+import { getMessageCard } from '../query/message.ts'
+import { isProfilingSupported } from '../query/profiling.ts'
+import type { SessionData } from '../session/store.ts'
 import type { TableReader } from './read.ts'
 
 interface MaintenanceCtx {
@@ -24,6 +27,7 @@ interface MaintenanceCtx {
   cfg: AppConfig
   tr: Translator
   db: string
+  serverIndex: number
 }
 
 /** the title and MySQL documentation page of each operation */
@@ -49,6 +53,8 @@ export async function maintenance(
   ctx: MaintenanceCtx,
   req: z.output<typeof MaintenanceRequest>,
   defaultTable = '',
+  /** the login's session: the card's Profiling switch (isset($_SESSION['profiling'])) */
+  session?: SessionData,
 ): Promise<OperationsResponse> {
   const { reader, tr, cfg } = ctx
   const tables = req.tables ?? (defaultTable === '' ? [] : [defaultTable])
@@ -75,10 +81,8 @@ export async function maintenance(
     result.notices = (w?.rows ?? []).map((r) => `${r[0] ?? ''}: #${r[1] ?? ''} ${r[2] ?? ''}`)
   } else {
     result.rows = rows.map((r) => ({
-      // Message::fromArray: the table without its database prefix
-      table: (r.Table ?? '').includes('.')
-        ? (r.Table ?? '').slice((r.Table ?? '').indexOf('.') + 1)
-        : (r.Table ?? ''),
+      // Message::fromArray: the server's Table, `db`.`table` (the card header)
+      table: r.Table ?? '',
       op: r.Op ?? '',
       msgType: r.Msg_type ?? '',
       msgText: r.Msg_text ?? '',
@@ -104,8 +108,22 @@ export async function maintenance(
     }
     result.notices = notices
   }
+  // Generator::getMessage: the card of the statement (Profiling and Refresh for ANALYZE)
+  const card = await getMessageCard(sql, {
+    cfg,
+    showAsPhp: null,
+    db: ctx.db,
+    table: defaultTable,
+    profilingOn: session?.profiling === true,
+    profilingSupported: () =>
+      session === undefined
+        ? Promise.resolve(false)
+        : isProfilingSupported(reader.conn, session, ctx.serverIndex),
+  })
   return {
-    messages: [msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql)],
+    messages: [
+      { ...msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql), card },
+    ],
     maintenance: result,
   }
 }
