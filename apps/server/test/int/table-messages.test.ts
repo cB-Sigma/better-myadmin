@@ -96,3 +96,13 @@ describe('favorite tables (TableName::from)', () => {
     })
   })
 })
+
+describe('events', () => {
+  it('editing an event that does not exist: "No event with name … found in database …"', async () => {
+    const r = await app.req('GET', `/api/servers/1/databases/${DB}/events/editor?name=nope`)
+    expect(r.status).toBe(404)
+    expect(error(r)).toBe(
+      `Error in processing request: No event with name \`nope\` found in database \`${DB}\`.`,
+    )
+  })
+})

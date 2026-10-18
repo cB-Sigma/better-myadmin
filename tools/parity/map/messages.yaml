@@ -246,3 +246,11 @@ msgids:
   "Users":
     via: packages/metadata/src/user-groups.ts
     note: Util::getMenuTabList (the user group tab labels); translated by apps/server/src/privileges/user-groups.ts and allowedTabNames' caller
+  "Event editor":
+    n/a: "events/index.twig's placeholder modal title; events.ts replaces it with the link's title or text (\"Create new event\", \"Edit\") before the modal shows, as our editor dialog titles do"
+  "Export event":
+    n/a: "events/index.twig's placeholder modal title; events.ts replaces it with the export response's title before the modal shows"
+  "Add event":
+    n/a: "Events IndexController's title: the <h2> of the non-AJAX editor page (AJAX callers title the modal with the link text); the SPA only has the AJAX flow"
+  "Edit event":
+    n/a: "Events IndexController's title: the <h2> of the non-AJAX editor page (AJAX callers title the modal with the link text); the SPA only has the AJAX flow"
