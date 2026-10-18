@@ -104,6 +104,7 @@ export function localStore(cfg: AppConfig): LocalMetadataStore | null {
 
 class LazyControl implements MetaConn {
   #acquired: AcquiredControl | null = null
+  #opening: Promise<AcquiredControl> | null = null
   readonly #open: () => Promise<AcquiredControl>
 
   constructor(open: () => Promise<AcquiredControl>) {
@@ -111,8 +112,13 @@ class LazyControl implements MetaConn {
   }
 
   async get(): Promise<AcquiredControl> {
-    this.#acquired ??= await this.#open()
-    return this.#acquired
+    if (this.#acquired !== null) return this.#acquired
+    // concurrent first uses open one link
+    this.#opening ??= this.#open().then((a) => {
+      this.#acquired = a
+      return a
+    })
+    return this.#opening
   }
 
   get opened(): AcquiredControl | null {
@@ -188,6 +194,7 @@ export class MetaRequest {
   readonly currentDb: string
   readonly control: LazyControl
   #userConn: Conn | null = null
+  #userConnOpening: Promise<Conn> | null = null
   #storage: ConfigStorage | null = null
   #meta: Metadata | null = null
   #settings: AppConfig | null = null
@@ -216,10 +223,12 @@ export class MetaRequest {
 
   /** The user's own connection (DbTableExists, table status, columns). */
   async userConn(): Promise<Conn> {
-    if (this.#userConn === null) {
+    if (this.#userConn !== null) return this.#userConn
+    // concurrent first uses take one connection
+    this.#userConnOpening ??= (async () => {
       const { pools } = this.c.get('deps')
       const session = this.c.get('session')
-      this.#userConn = await pools.acquire(
+      const conn = await pools.acquire(
         session.id,
         this.serverIndex,
         this.c.get('creds'),
@@ -227,8 +236,10 @@ export class MetaRequest {
         undefined,
         this.c.get('language').mysqlLocale,
       )
-    }
-    return this.#userConn
+      this.#userConn = conn
+      return conn
+    })()
+    return this.#userConnOpening
   }
 
   /** Relation::initRelationParamsCache + getRelationParameters, cached in the session. */

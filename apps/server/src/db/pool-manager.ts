@@ -8,6 +8,7 @@ import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { type BudgetedPool, ConnectionBudget } from './budget.ts'
 import { Conn, type ServerInfo } from './connection.ts'
 import { ControlConnections } from './control.ts'
+import { type SharedLink, requestScope } from './request-scope.ts'
 
 export interface Credentials {
   user: string
@@ -139,6 +140,9 @@ export async function postConnect(
   }
 }
 
+/** mysql2's connectionLimit when the budget enforces the limit */
+export const UNLIMITED = 1000
+
 interface PoolEntry extends BudgetedPool {
   initialised: WeakSet<object>
   /** lc_messages each physical connection was last set to. */
@@ -209,6 +213,11 @@ export class PoolManager {
     }
   }
 
+  /**
+   * The request's user link: a second acquire in the same request (withDb, then MetaRequest, the
+   * tracker) gets the connection it already holds, like phpMyAdmin's one link per request. Every
+   * holder calls `conn.raw.release()`; the connection goes back (or is closed) after the last.
+   */
   async acquire(
     sessionId: string,
     serverIndex: number,
@@ -217,6 +226,53 @@ export class PoolManager {
     collation = creds.collation ?? this.#cfg.DefaultConnectionCollation,
     /** The request language's MySQL locale (Language::getMySQLLocale), '' sends nothing. */
     mysqlLocale = 'en_US',
+  ): Promise<Conn> {
+    const scope = requestScope()
+    if (scope === undefined) return this.#open(sessionId, serverIndex, creds, log, collation, mysqlLocale)
+    const linkKey = `user\u0000${sessionId}\u0000${serverIndex}\u0000${collation}\u0000${mysqlLocale}`
+    const shared = scope.links.get(linkKey) as SharedLink<Promise<Conn>> | undefined
+    if (shared !== undefined) {
+      shared.refs++
+      return shared.conn
+    }
+    const holdsAny = scope.held > 0
+    const link: SharedLink<Promise<Conn>> = { conn: Promise.resolve(null as unknown as Conn), refs: 1 }
+    link.conn = this.#open(sessionId, serverIndex, creds, log, collation, mysqlLocale, holdsAny).then(
+      (conn) => {
+        scope.held++
+        const realRelease = conn.raw.release.bind(conn.raw)
+        const finish = () => {
+          if (--link.refs > 0) return
+          scope.links.delete(linkKey)
+          scope.held--
+          realRelease()
+        }
+        conn.raw.release = finish
+        // a holder's discard (rollback, changed foreign key checks): closed after the last holder
+        conn.raw.destroy = () => {
+          conn.dirty = true
+          finish()
+        }
+        return conn
+      },
+      (e: unknown) => {
+        scope.links.delete(linkKey)
+        throw e
+      },
+    )
+    scope.links.set(linkKey, link as SharedLink<unknown>)
+    return link.conn
+  }
+
+  async #open(
+    sessionId: string,
+    serverIndex: number,
+    creds: Credentials,
+    log: Executed[],
+    collation = creds.collation ?? this.#cfg.DefaultConnectionCollation,
+    /** The request language's MySQL locale (Language::getMySQLLocale), '' sends nothing. */
+    mysqlLocale = 'en_US',
+    holdsAny = false,
   ): Promise<Conn> {
     const key = `${sessionId}\u0000${serverIndex}`
     let entry = this.#pools.get(key)
@@ -229,13 +285,16 @@ export class PoolManager {
       entry = {
         pool: mysql.createPool({
           ...connectionOptions(server, creds),
-          connectionLimit: server.max_connections ?? 4,
+          // the per-session limit is the budget's (it lets a request that holds a connection
+          // through); mysql2's own limit would make such a request wait
+          connectionLimit: UNLIMITED,
           ...idleOptions(this.#cfg.ConnectionPool.idleTimeout, server.max_connections ?? 4),
         }),
         lastUsed: Date.now(),
         open: 0,
         busy: new Set(),
         ended: false,
+        pending: 0,
         initialised: new WeakSet(),
         locales: new WeakMap(),
         serverInfo: null,
@@ -247,11 +306,17 @@ export class PoolManager {
     }
     entry.lastUsed = Date.now()
     const pool = entry.pool
-    const raw: PoolConnection = await this.budget.getConnection(entry, () => pool.getConnection())
+    const limit = this.server(serverIndex).max_connections ?? 4
+    const raw: PoolConnection = await this.budget.getConnection(entry, () => pool.getConnection(), {
+      limit,
+      mayWait: !holdsAny,
+    })
     const conn = new Conn(raw, log)
     // a connection whose session state may differ from a fresh one's is closed, not reused
     const release = raw.release.bind(raw)
-    raw.release = () => (conn.dirty ? raw.destroy() : release())
+    const destroy = raw.destroy.bind(raw)
+    raw.release = () => (conn.dirty ? destroy() : release())
+    raw.destroy = () => destroy()
     const marker = raw.connection as unknown as object
     if (!entry.initialised.has(marker)) {
       entry.serverInfo = await postConnect(conn, this.server(serverIndex), collation, mysqlLocale)
