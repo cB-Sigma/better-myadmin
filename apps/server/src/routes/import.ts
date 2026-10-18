@@ -68,8 +68,10 @@ importRoutes.post('/uploads', (c) => {
 importRoutes.patch('/uploads/:id{[0-9a-f]{32}}', async (c) => {
   const u = uploads.get(c.req.param('id'))
   if (u === undefined || u.sessionId !== c.get('session').id)
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new NotFoundError(c.get('tr').gettext('Not found.'))
   const offset = Number(c.req.query('offset') ?? '-1')
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (offset !== u.size) throw new ValidationError(c.get('tr').gettext('Invalid request.'))
   const body = Buffer.from(await c.req.arrayBuffer())
   const max = c.get('deps').cfg.MaxUploadSize
@@ -97,6 +99,7 @@ importRoutes.post('/jobs', async (c) => {
   if (body.upload !== undefined) {
     const u = uploads.get(body.upload.id)
     if (u === undefined || u.sessionId !== c.get('session').id)
+      // i18n-new: API error (phpMyAdmin has no JSON API)
       throw new NotFoundError(c.get('tr').gettext('Not found.'))
     upload = { path: u.path, name: body.upload.name }
     uploads.delete(body.upload.id)
@@ -121,6 +124,7 @@ importRoutes.get('/jobs/:id{[0-9a-f]{32}}/events', (c) => {
     job.sessionId !== c.get('session').id ||
     job.serverIndex !== c.get('serverIndex')
   ) {
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new NotFoundError(c.get('tr').gettext('Not found.'))
   }
   jobs.delete(id)

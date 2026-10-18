@@ -251,7 +251,7 @@
       "subject": "Refactor Sanitize::convertBBCode()",
       "status": "not-applicable",
       "areas": ["features/01-shell-navigation-auth", "tests"],
-      "notes": "refactor, same output: the replace pairs become a constant and [dochelpicon] gets its own strtr pass after them; no pair overlaps it or produces it, so one pass and two give the same text (ours: packages/i18n/src/bbcode.ts, apps/web/src/features/shell/bbcode.tsx)."
+      "notes": "refactor, same output: the replace pairs become a constant and [dochelpicon] gets its own strtr pass after them; no pair overlaps it or produces it, so one pass and two give the same text (ours: packages/i18n/src/bbcode.ts, apps/web/src/features/shell/bbcode.tsx). sync a15cd540cf: packages/i18n/test/fixtures/bbcode.json regenerated identical (all locales); generate-fixtures.php only resets the removed static on older trees."
     }
   ]
 }

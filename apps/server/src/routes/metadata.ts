@@ -248,6 +248,7 @@ metadataRoutes.post('/bookmarks', async (c) => {
 metadataRoutes.get('/bookmarks/:id{[0-9]+}', (c) =>
   withMeta(c, {}, async (m) => {
     const b = await (await m.meta()).bookmarks().get(m.user, Number(c.req.param('id')))
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     if (b === null) throw new NotFoundError(c.get('tr').gettext('Bookmark not found.'))
     return c.json({ bookmark: b, message: msg(c, 'success', 'Showing bookmark') })
   }),
@@ -258,6 +259,7 @@ metadataRoutes.post('/bookmarks/:id{[0-9]+}/delete', (c) =>
   withMeta(c, {}, async (m) => {
     const repo = (await m.meta()).bookmarks()
     const b = await repo.get(m.user, Number(c.req.param('id')))
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     if (b === null) throw new NotFoundError(c.get('tr').gettext('Bookmark not found.'))
     await repo.delete(b.id)
     return c.json({ success: true, message: msg(c, 'success', 'The bookmark has been deleted.') })
@@ -269,6 +271,7 @@ metadataRoutes.post('/bookmarks/:id{[0-9]+}/run', async (c) => {
   const req = await parseJson(c, BookmarkRunRequest, {})
   return withMeta(c, { db: req.db ?? '' }, async (m) => {
     const b = await (await m.meta()).bookmarks().get(req.allUsers ? null : m.user, Number(c.req.param('id')))
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     if (b === null) throw new NotFoundError(c.get('tr').gettext('Bookmark not found.'))
     const sql = req.variables !== undefined ? applyVariables(b.query, req.variables) : b.query
     const { cfg, pools } = c.get('deps')

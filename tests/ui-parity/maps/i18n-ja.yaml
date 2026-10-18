@@ -1,0 +1,15 @@
+# Intentional differences of the translated cases (tests/ui-parity/i18n.uip.ts): those of the English
+# cases (home.yaml, table-insert.yaml…), with their labels in this language where a rule names one.
+rules:
+  - ours: { kind: button, label: '...' }
+    added: >-
+      the calendar trigger of date/time fields is a focusable button (phpMyAdmin's jQuery UI
+      datepicker adds an <img> trigger that the harness does not count as a control)
+  - ours: { kind: select, name: themeColorMode }
+    added: every theme has a dark variant, so the colour-mode select is always shown
+    exception: X31
+  - pma: { kind: link, label: 'ドキュメント', section: 'ウェブサーバ' }
+    n/a: >-
+      the Web server card lists 4 PHP-extension documentation links in phpMyAdmin and 3 Node.js
+      module links in ours
+    exception: X30

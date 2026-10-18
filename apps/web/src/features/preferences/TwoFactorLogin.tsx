@@ -19,7 +19,8 @@ export function TwoFactorLogin() {
     onSuccess: async (r) => {
       setFields({})
       if (r.ok) {
-        await qc.invalidateQueries({ queryKey: qk.auth })
+        // exact: the challenge (['auth', 'two-factor']) would refetch and fail once verified
+        await qc.invalidateQueries({ queryKey: qk.auth, exact: true })
         return
       }
       if (r.challenge !== undefined) qc.setQueryData(qk.twoFactorChallenge, r.challenge)

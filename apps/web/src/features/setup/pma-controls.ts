@@ -20,7 +20,7 @@ export const pmaControls = {
   // X33: the project's homepage
   'setup/home/index.twig#link:phpMyAdmin homepage': {
     file: 'OverviewPage.tsx',
-    match: 'BetterMyAdmin homepage',
+    match: "tProduct('phpMyAdmin homepage')",
   },
   'setup/error.twig#link:Try to revert erroneous fields to their default values': 'SetupForms.tsx',
   'setup/error.twig#link:Ignore errors': 'SetupForms.tsx',

@@ -197,6 +197,39 @@ test.describe('import page', () => {
     await expect(page.locator('#text_skip_queries')).toBeHidden()
   })
 
+  test('the result: no Back after a successful import or a failed SELECT (Back only when a statement the import runs itself fails); the Import tab shows the form again', async ({
+    page,
+  }) => {
+    const upload = async (sqlText: string) => {
+      await page.locator('#input_import_file').setInputFiles({
+        name: 'x.sql',
+        mimeType: 'text/plain',
+        buffer: Buffer.from(sqlText),
+      })
+      await page.locator('#buttonGo').click()
+      await expect(page.locator('#import_form_status')).toBeVisible()
+    }
+    await page.goto(`/s/1/db/${DB}/import`)
+    await upload('SELECT 1;\n')
+    // fewer than 50 statements: the SQL tab's result of the statement
+    await expect(page.locator('#import_form_status')).toContainText('Showing rows 0 -  0 (1 total')
+    await expect(page.locator('#import_form_status').getByRole('button', { name: 'Back' })).toHaveCount(0)
+    // the Import tab: the form again
+    await page.locator('#topmenu').getByRole('link', { name: 'Import' }).click()
+    await expect(page.locator('#import_file_form')).toBeVisible()
+    // a failed SELECT goes to the SQL tab's result (Sql::handleQueryExecuteError: mysqlDie without a back URL)
+    await upload('SELECT * FROM no_such_table;\n')
+    await expect(page.locator('#import_form_status')).toContainText("doesn't exist")
+    await expect(page.locator('#import_form_status').getByRole('button', { name: 'Back' })).toHaveCount(0)
+    await page.locator('#topmenu').getByRole('link', { name: 'Import' }).click()
+    // from the 50th statement on the import runs them itself (Import::runQuery); one fails:
+    // $my_die, mysqlDie with $errorUrl and Generator::getBackUrlHtml's Back
+    await upload(`${'DO 1;\n'.repeat(50)}INSERT INTO no_such_table VALUES (1);\n`)
+    await expect(page.locator('#import_form_status')).toContainText("doesn't exist")
+    await page.locator('#import_form_status').getByRole('button', { name: 'Back' }).click()
+    await expect(page.locator('#import_file_form')).toBeVisible()
+  })
+
   test('the import shows "The file is being processed, please be patient." while it runs [p07-573c56]', async ({
     page,
   }) => {

@@ -1,5 +1,6 @@
 import type { MaintenanceResult } from '@bettermyadmin/contracts'
-import { Alert, Panel, PanelItem, PanelList } from '@bettermyadmin/ui'
+import { Alert, MySqlDocLink, Panel, PanelItem, PanelList } from '@bettermyadmin/ui'
+import type { ReactNode } from 'react'
 import { t } from '../../../lib/i18n'
 
 /**
@@ -50,11 +51,22 @@ export function MaintenanceRows({
 }
 
 /** pma: templates/table/maintenance/{analyze,check,checksum,optimize,repair}.twig */
-export function MaintenanceResults({ result }: { result: MaintenanceResult }) {
+export function MaintenanceResults({
+  result,
+  message,
+}: {
+  result: MaintenanceResult
+  /** the page's Generator::getMessage card, under the heading (`message|raw`) */
+  message?: ReactNode
+}) {
   const tables = [...new Set(result.rows.map((r) => r.table))]
   return (
     <div className="space-y-2" data-testid="maintenance-result">
-      <h2 className="text-lg">{result.title}</h2>
+      <h2 className="flex items-center gap-1 text-lg">
+        {result.title}
+        <MySqlDocLink link={result.docPage} />
+      </h2>
+      {message}
       {result.checksums !== undefined ? (
         <table className="text-sm">
           <thead>

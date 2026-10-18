@@ -384,10 +384,10 @@ function NavHeader({
           href="https://docs.phpmyadmin.net/en/latest/"
           target="_blank"
           rel="noopener noreferrer"
-          title="phpMyAdmin documentation"
+          title={t('phpMyAdmin documentation')}
         >
           <BookOpen className={icon} aria-hidden />
-          <span className="sr-only">phpMyAdmin documentation</span>
+          <span className="sr-only">{t('phpMyAdmin documentation')}</span>
         </a>
         <a
           className={btn}
@@ -472,7 +472,7 @@ function ServerChoice({
   if (settings.DisplayServersList) {
     return (
       <div id="serverChoice" className="px-3 pb-2 text-[13px]">
-        Current server:
+        {t('Current server:')}
         <ul id="list_server" className="ml-3 list-disc">
           {servers.map((s) => (
             <li key={s.index}>
@@ -501,7 +501,7 @@ function ServerChoice({
           if (v > 0) go(v)
         }}
       >
-        <option value="0">(Servers) ...</option>
+        <option value="0">({t('Servers')}) ...</option>
         {servers.map((s) => (
           <option key={s.index} value={String(s.index)}>
             {s.label}

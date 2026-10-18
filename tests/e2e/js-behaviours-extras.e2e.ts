@@ -71,7 +71,9 @@ test('routine execute dialog: Enter in a parameter executes (routines.ts keyup f
   const value = dialog.locator('form.rte_form input').first()
   await value.fill('21')
   await value.press('Enter')
-  await expect(dialog).toContainText('42')
+  // slidingMessage(data.message) on the page, the modal hides
+  await expect(dialog).toHaveCount(0)
+  await expect(page.locator('#PMA_slidingMessage')).toContainText('42')
 })
 
 test('real row count: the throbber replaces the count while it loads and takes no clicks (structure.ts)', async ({

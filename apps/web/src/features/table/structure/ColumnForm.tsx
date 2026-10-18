@@ -633,7 +633,7 @@ export function ColumnForm({
       {mode === 'create' && tableOptions !== undefined && setTableOptions !== undefined && (
         <div id="table_name_col_no_outer" className="mb-3 flex flex-wrap items-center gap-4 text-sm">
           <label className="flex items-center gap-1">
-            {t('Table name:')}
+            {t('Table name')}:
             <input
               className="input w-72"
               name="table"
@@ -651,7 +651,7 @@ export function ColumnForm({
               min={1}
               name="added_fields"
               id="added_fields"
-              aria-label={t('Add column(s)')}
+              aria-label={`${t('Add')} ${t('column(s)')}`}
               value={addCount}
               onChange={(e) => setAddCount(Number(e.target.value))}
               // Enter adds the columns instead of submitting the form (input[name=added_fields] keydown)

@@ -117,7 +117,7 @@ test('1NF → 3NF: repeating group, partial and transitive dependencies, step by
   expect(await columns('table2')).toBe('dept,dept_city')
 })
 
-test('1NF: the split form and a new primary key column (Q75), then a redundant column', async ({ page }) => {
+test('1NF: the split form and a new primary key column (Q76), then a redundant column', async ({ page }) => {
   await page.goto(`/s/1/db/${DB}/t/np/normalization`)
   await page.locator('#normalizeTable').getByRole('button', { name: 'Go' }).click()
   await page.locator('#selectNonAtomicCol').selectOption('full_name')

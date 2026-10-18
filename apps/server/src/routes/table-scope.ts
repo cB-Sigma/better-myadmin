@@ -40,6 +40,7 @@ export async function withScope<T>(
   const session = c.get('session')
   const serverIndex = c.get('serverIndex')
   const login = session.servers[String(serverIndex)]
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (login === undefined) throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   login.cache ??= {}
   const cache = login.cache as Record<string, unknown>
@@ -47,6 +48,7 @@ export async function withScope<T>(
   const table = c.req.param('t') ?? ''
   const tr = c.get('tr')
   const server = getServer(cfg, serverIndex)
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (server === undefined) throw new ValidationError(tr.gettext('Invalid server index!'))
   const run = async (meta: OpsMeta | null) => {
     const conn = await pools.acquire(

@@ -6,7 +6,7 @@
  */
 import { access, readFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
-import { basename, isAbsolute, resolve as resolvePath } from 'node:path'
+import { basename, dirname, isAbsolute, resolve as resolvePath } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { parse as parseYaml } from 'yaml'
 import { parseDockerEnv } from './docker-env.ts'
@@ -101,6 +101,30 @@ async function importTypeScript(file: string): Promise<{ default?: unknown }> {
     write: false,
     logLevel: 'silent',
     plugins: [
+      {
+        // the bundle runs from a data: URL: each bundled file keeps its own import.meta.url,
+        // .dirname and .filename (a config that locates files next to itself)
+        name: 'import-meta',
+        setup(b) {
+          b.onLoad({ filter: /\.[cm]?[jt]sx?$/ }, async (args) => {
+            const text = await readFile(args.path, 'utf8')
+            const url = JSON.stringify(pathToFileURL(args.path).href)
+            const contents = text
+              .replaceAll('import.meta.url', url)
+              .replaceAll('import.meta.dirname', JSON.stringify(dirname(args.path)))
+              .replaceAll('import.meta.filename', JSON.stringify(args.path))
+            const ext = args.path.slice(args.path.lastIndexOf('.') + 1)
+            const loader = ext.includes('t')
+              ? ext.endsWith('x')
+                ? 'tsx'
+                : 'ts'
+              : ext.endsWith('x')
+                ? 'jsx'
+                : 'js'
+            return { contents, loader }
+          })
+        },
+      },
       {
         name: 'pin-packages',
         setup(b) {

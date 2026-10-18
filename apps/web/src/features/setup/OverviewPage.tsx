@@ -16,7 +16,7 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api, errorMessage } from '../../lib/api'
 import { PROJECT_URL } from '../../lib/config'
-import { t } from '../../lib/i18n'
+import { t, tProduct } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { LanguageLabel, LanguageSelect } from '../shell/LanguageSelect'
 import { SetupLayout } from './SetupLayout'
@@ -261,7 +261,7 @@ function Overview({ data }: { data: SetupOverview }) {
 
       <div id="footer" className="mt-4 flex gap-4 text-[13px]">
         <a href={PROJECT_URL} target="_blank" rel="noopener noreferrer">
-          {t('BetterMyAdmin homepage')}
+          {tProduct('phpMyAdmin homepage')}
         </a>
         <Link to="/setup" search={{ version_check: 1 }}>
           {t('Check for latest version')}

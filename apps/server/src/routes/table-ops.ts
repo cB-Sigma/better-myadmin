@@ -46,7 +46,10 @@ tableOpsRoutes.post('/:db/tables/:t/operations/options', async (c) => {
 
 tableOpsRoutes.post('/:db/tables/:t/operations/maintenance', async (c) => {
   const req = parse(MaintenanceRequest, await body(c))
-  return respond(c, await withScope(c, (x) => maintenance(x, req, x.table), { meta: false }))
+  return respond(
+    c,
+    await withScope(c, (x) => maintenance(x, req, x.table, c.get('session')), { meta: false }),
+  )
 })
 
 tableOpsRoutes.post('/:db/tables/:t/operations/sql', async (c) => {

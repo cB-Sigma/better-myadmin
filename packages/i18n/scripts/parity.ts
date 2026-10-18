@@ -7,7 +7,9 @@
  *   pgettext('ctx', '…') npgettext('ctx', '…', '…', n)
  *   <Trans id="…" …/>
  *   N_('…') NC_('ctx', '…')                       → msgid markers (packages/i18n/src/noop.ts)
- * (also as methods: `tr.gettext('…')`). A string phpMyAdmin never had usually means a feature phpMyAdmin
+ * (also as methods: `tr.gettext('…')`; a conditional `t(c ? '…' : '…')` counts both branches). A
+ * singular call on a msgid phpMyAdmin only has as a plural or with a context never finds its
+ * translation, so the report names the call it needs (ngettext / pgettext). A string phpMyAdmin never had usually means a feature phpMyAdmin
  * never had; deliberate ones carry `// i18n-new: <reason>` on the same or the previous line.
  * Exit code 1 when unannotated unknown msgids exist.
  */
@@ -21,6 +23,16 @@ const here = dirname(fileURLToPath(import.meta.url))
 const repo = resolve(here, '../../..')
 const pot = parsePo(readFileSync(join(here, '../po/phpmyadmin.pot'), 'utf8'))
 const known = new Set(pot.entries.map(moKey))
+/** msgid → how phpMyAdmin translates it when it has no plain singular entry */
+const elsewhere = new Map<string, string>()
+for (const e of pot.entries) {
+  if (e.msgidPlural === null && e.msgctxt === null) continue
+  const how =
+    e.msgidPlural !== null
+      ? `ngettext('${e.msgid}', '${e.msgidPlural}', n)`
+      : `pgettext('${e.msgctxt}', '${e.msgid}')`
+  for (const id of [e.msgid, e.msgidPlural ?? e.msgid]) if (!elsewhere.has(id)) elsewhere.set(id, how)
+}
 
 const SINGULAR = new Set(['t', 'tProduct', '__', 'gettext', '_gettext', 'N_'])
 const PLURAL = new Set(['ngettext', '_ngettext'])
@@ -47,6 +59,16 @@ function* sourceFiles(dir: string): Generator<string> {
 const literal = (n: ts.Node | undefined): string | null =>
   n !== undefined && (ts.isStringLiteral(n) || ts.isNoSubstitutionTemplateLiteral(n)) ? n.text : null
 
+/** the literals a msgid argument can be: a literal, or both branches of `c ? '…' : '…'` */
+function literals(arg: ts.Node | undefined): string[] {
+  if (arg === undefined) return []
+  let n = arg
+  while (ts.isParenthesizedExpression(n)) n = n.expression
+  if (ts.isConditionalExpression(n)) return [...literals(n.whenTrue), ...literals(n.whenFalse)]
+  const v = literal(n)
+  return v === null ? [] : [v]
+}
+
 function scan(file: string): Use[] {
   const text = readFileSync(file, 'utf8')
   const sf = ts.createSourceFile(
@@ -72,7 +94,7 @@ function scan(file: string): Use[] {
           ? callee.name.text
           : ''
       const [a, b, c] = node.arguments
-      if (SINGULAR.has(name) && literal(a) !== null) add(node, literal(a)!)
+      if (SINGULAR.has(name) && literals(a).length > 0) for (const v of literals(a)) add(node, v)
       else if (PLURAL.has(name) && literal(a) !== null && literal(b) !== null)
         add(node, moKey({ msgctxt: null, msgid: literal(a)!, msgidPlural: literal(b) }))
       else if (CONTEXT.has(name) && literal(a) !== null && literal(b) !== null)
@@ -107,7 +129,10 @@ for (const root of ['apps', 'packages']) {
   for (const file of sourceFiles(join(repo, root))) uses.push(...scan(file))
 }
 const unknown = uses.filter((u) => !known.has(u.key))
-const show = (k: string) => JSON.stringify(k.replace('\u0004', ' | ').replace('\u0000', ' / '))
+const show = (k: string) => {
+  const hint = elsewhere.get(k)
+  return `${JSON.stringify(k.replace('\u0004', ' | ').replace('\u0000', ' / '))}${hint !== undefined ? `  (phpMyAdmin: ${hint})` : ''}`
+}
 const distinct = new Set(uses.map((u) => u.key))
 console.log(
   `${uses.length} translated strings (${distinct.size} distinct msgids) in our code, ${known.size} msgids in phpMyAdmin's catalogue.`,

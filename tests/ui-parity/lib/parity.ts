@@ -73,6 +73,11 @@ export interface PageSpec {
   /** log in first (default true) */
   auth?: boolean
   /**
+   * The session's language (default: none chosen, English). The reference must have compiled
+   * translations: pass a translated instance through `bases` (startPmaInstance `locales`).
+   */
+  lang?: string
+  /**
    * Other instances than the shared ones (the setup script without a configuration file, the
    * other auth types): their base URLs, read when the case runs (started in a beforeAll).
    */
@@ -163,9 +168,17 @@ async function openApp(browser: Browser, baseURL: string, app: App, spec: PageSp
 
 async function openPage(ctx: BrowserContext, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
   const page = await ctx.newPage()
-  if (spec.auth !== false) await login(page, app, baseURL)
-  else await ctx.clearCookies()
   const bases = spec.bases?.() ?? {}
+  if (spec.auth !== false)
+    await login(
+      page,
+      app,
+      baseURL,
+      spec.lang === undefined
+        ? {}
+        : { lang: spec.lang, ...(bases.pma !== undefined ? { pmaBase: bases.pma } : {}) },
+    )
+  else await ctx.clearCookies()
   const url =
     app === 'pma'
       ? spec.pma.path !== undefined

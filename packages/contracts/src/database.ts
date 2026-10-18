@@ -341,7 +341,8 @@ export interface RoutineExecuteForm {
     /** ENUM / SET values */
     values: string[]
     dateClass: '' | 'datefield' | 'datetimefield'
-    functions: Array<{ value: string; selected: boolean }> | null
+    /** Generator::getFunctionsForField: the label differs from the value for password_hash() only */
+    functions: Array<{ value: string; label: string; selected: boolean; title?: string }> | null
   }>
 }
 

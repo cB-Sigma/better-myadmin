@@ -2,6 +2,7 @@ import { Menu } from 'lucide-react'
 import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { PmaIconName } from '../icons/pma-map.ts'
 import { cn } from '../lib/cn.ts'
+import { decodeEntities } from '../lib/entities.ts'
 import { iconParts } from '../lib/link-mode.ts'
 import { HAMBURGER_BREAKPOINT, visibleTabCount } from '../lib/overflow.ts'
 import { useUiSettings } from '../settings.tsx'
@@ -111,8 +112,9 @@ export function TabBar({ items, ariaLabel, link: Link, id = 'topmenu', className
 
   const content = (t: TabItem) => (
     <>
-      {parts.icon && <PmaIcon name={t.icon} alt={parts.text ? '' : t.label} />}
-      {parts.text && <span>{t.label}</span>}
+      {/* get_icon(tab.icon, tab.text): the text is printed raw, entities render */}
+      {parts.icon && <PmaIcon name={t.icon} alt={parts.text ? '' : decodeEntities(t.label)} />}
+      {parts.text && <span>{decodeEntities(t.label)}</span>}
       {t.active && <span className="sr-only">{gettext('(current)')}</span>}
     </>
   )

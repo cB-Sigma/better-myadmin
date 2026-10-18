@@ -44,9 +44,12 @@ function bma_activate(string $code, string $localeDir): void
     _setlocale(0, $code);
     _bindtextdomain('phpmyadmin', $localeDir);
     _textdomain('phpmyadmin');
-    Sanitize::class; // replacePairs is cached per request in phpMyAdmin; reset it per locale
-    $r = new ReflectionProperty(Sanitize::class, 'replacePairs');
-    $r->setValue(null, []);
+    // before 8e6af1a04f, Sanitize cached its BBCode pairs (with the translated [dochelpicon]) in a
+    // static per request: reset it per locale. Since then it translates on every call.
+    if (property_exists(Sanitize::class, 'replacePairs')) {
+        $r = new ReflectionProperty(Sanitize::class, 'replacePairs');
+        $r->setValue(null, []);
+    }
 }
 
 function bma_mo(string $code, string $localeDir): string

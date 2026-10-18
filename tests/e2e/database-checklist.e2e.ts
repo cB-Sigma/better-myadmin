@@ -312,10 +312,11 @@ test.describe('multi-table query', () => {
     const colSel = page.locator('select.columnNameSelect, select[name^="criteriaColumns"]').first()
     await colSel.selectOption('*')
     await expect(page.locator('.col_alias').first()).toBeDisabled()
+    // form.twig's logical_operator row is not hidden: "Add as" AND / OR from the first criteria column
     await page.locator('.criteria_col').nth(0).check()
-    await expect(page.locator('input[type=radio][value=OR]')).toHaveCount(0)
-    await page.locator('.criteria_col').nth(1).check()
     await expect(page.locator('input[type=radio][value=OR]').first()).toBeVisible()
+    await page.locator('.criteria_col').nth(1).check()
+    await expect(page.locator('input[type=radio][value=OR]')).toHaveCount(2)
   })
 })
 

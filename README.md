@@ -2,7 +2,7 @@
 
 A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `328b8d80` ([reference-commit.txt](docs/reference/reference-commit.txt)).
 
-Status: a port of every phpMyAdmin 6.0.0-dev feature area (upstream `328b8d80`), checked against a running phpMyAdmin on MySQL 8.4 and MariaDB 11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 99.9%, config directives 99.8%, messages 100%, JS behaviours 99.9%; feature checklist 91.7% (648 of 707 items; 43 missing, 16 failing). The setup wizard is pending a decision. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
+Status: a port of every phpMyAdmin 6.0.0-dev feature area (upstream `a15cd540`), checked against a running phpMyAdmin on MySQL 8.4 and MariaDB 11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 99.8%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). The setup wizard is pending a decision. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
 
 Start with [docs/README.md](docs/README.md), then [docs/00-vision-and-principles.md](docs/00-vision-and-principles.md) and [development setup](docs/architecture/14-development-setup.md).
 

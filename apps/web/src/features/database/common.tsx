@@ -18,7 +18,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { t } from '../../lib/i18n'
+import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { useLockPage } from '../shell/page-chrome'
 import { HighlightedSql } from '../sql/HighlightedSql'
@@ -82,8 +82,8 @@ export function ListNavigator({ pager, onPos }: { pager: DbPager | null; onPos: 
     )
   return (
     <div className="mb-2 flex flex-wrap items-center gap-2 text-sm print:hidden" data-testid="list-navigator">
-      {link(pager.begin, '<<', t('Begin'))}
-      {link(pager.prev, '<', t('Previous'))}
+      {link(pager.begin, '<<', pgettext('First page', 'Begin'))}
+      {link(pager.prev, '<', pgettext('Previous page', 'Previous'))}
       <Label className="flex items-center gap-1">
         {t('Page number:')}
         <NativeSelect
@@ -98,8 +98,8 @@ export function ListNavigator({ pager, onPos }: { pager: DbPager | null; onPos: 
           ))}
         </NativeSelect>
       </Label>
-      {link(pager.next, '>', t('Next'))}
-      {link(pager.end, '>>', t('End'))}
+      {link(pager.next, '>', pgettext('Next page', 'Next'))}
+      {link(pager.end, '>>', pgettext('Last page', 'End'))}
     </div>
   )
 }

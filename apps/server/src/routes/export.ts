@@ -129,6 +129,7 @@ exportRoutes.get('/:id{[0-9a-f]{32}}', async (c: Context<ServerEnv>) => {
     job.sessionId !== c.get('session').id ||
     job.serverIndex !== c.get('serverIndex')
   ) {
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new NotFoundError(c.get('tr').gettext('Not found.'))
   }
   pending.delete(c.req.param('id') ?? '')

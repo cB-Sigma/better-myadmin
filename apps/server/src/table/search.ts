@@ -342,6 +342,7 @@ async function connectionCharset(ctx: OpsCtx): Promise<string> {
 async function columnOf(ctx: OpsCtx, index: number): Promise<string> {
   const info = await loadTableInfo(ctx)
   const c = info.names[index]
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (c === undefined) throw new ValidationError(ctx.tr.gettext('Invalid column.'))
   return c
 }

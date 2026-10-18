@@ -4,7 +4,7 @@ import { MYSQL } from './fixtures.ts'
 
 /**
  * The Designer's relation flows driven like a user, compared side by side with the reference:
- * "Create relationship" (the key check, a FOREIGN KEY, a foreign column without an index (Q76)),
+ * "Create relationship" (the key check, a FOREIGN KEY, a foreign column without an index (Q77)),
  * deleting a relation from its line, and the visual query builder's column options. Objects
  * prefixed m1qad_.
  */
@@ -92,7 +92,7 @@ test('Create relationship: the referenced column must be a key; a FOREIGN KEY on
   expect(await fks()).toHaveLength(1)
 })
 
-test('Create relationship to a column without an index: the database is sent, the FK refused (Q76)', async ({
+test('Create relationship to a column without an index: the database is sent, the FK refused (Q77)', async ({
   page,
 }) => {
   await open(page)

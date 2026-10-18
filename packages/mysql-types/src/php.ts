@@ -29,14 +29,31 @@ export function bin2hex(value: string | Uint8Array): string {
  * character (maximal-subpart replacement, same as WHATWG TextDecoder).
  */
 export function mbStrlen(value: string | Uint8Array): number {
-  if (typeof value === 'string') {
-    let n = 0
-    for (const _ of value) n++
-    return n
+  const s = typeof value === 'string' ? value : decoder.decode(value)
+  // code points: UTF-16 units less the surrogate pairs (a lone surrogate counts as one, like for…of)
+  let n = s.length
+  for (let i = 0; i < s.length - 1; i++) {
+    const c = s.charCodeAt(i)
+    if (c >= 0xd800 && c <= 0xdbff) {
+      const d = s.charCodeAt(i + 1)
+      if (d >= 0xdc00 && d <= 0xdfff) {
+        n--
+        i++
+      }
+    }
   }
-  let n = 0
-  for (const _ of decoder.decode(value)) n++
   return n
+}
+
+/**
+ * Whether `mb_strlen($s)` is at least `n`, without counting a long value: a code point is at most
+ * two UTF-16 units and at most four UTF-8 bytes (an ill-formed subsequence at least one byte).
+ */
+export function mbStrlenAtLeast(value: string | Uint8Array, n: number): boolean {
+  const units = typeof value === 'string' ? value.length : value.byteLength
+  if (Math.ceil(units / (typeof value === 'string' ? 2 : 4)) >= n) return true
+  if (units < n) return false
+  return mbStrlen(value) >= n
 }
 
 /** Bytes interpreted as a "binary string": one JS char per byte (latin1). */

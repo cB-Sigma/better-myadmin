@@ -1,5 +1,5 @@
 /**
- * A QR code encoder for the two-factor setup (byte mode, error correction level L), the algorithm
+ * A QR code encoder for the two-factor setup (UTF-8 ECI + byte mode, error correction level L), the algorithm
  * of bacon/bacon-qr-code (ZXing's Encoder) that phpMyAdmin's Google2FA-QRCode uses: minimal
  * version, mask chosen by the lowest penalty, so the module matrix is the same.
  *
@@ -265,9 +265,10 @@ function penalty(m: Matrix): number {
       const v = at(x, y)
       if (v === at(x + 1, y) && v === at(x, y + 1) && v === at(x + 1, y + 1)) p += 3
     }
-  // rule 3
+  // rule 3 (the four light modules must lie inside the matrix)
   const white = (get: (k: number) => number, from: number, to: number) => {
-    for (let k = Math.max(from, 0); k < Math.min(to, size); k++) if (get(k) === 1) return false
+    if (from < 0 || to > size) return false
+    for (let k = from; k < to; k++) if (get(k) === 1) return false
     return true
   }
   let n3 = 0
@@ -313,16 +314,26 @@ function penalty(m: Matrix): number {
 export function qrMatrix(text: string): string[] {
   const bytes = [...new TextEncoder().encode(text)]
   const ccBits = (v: number) => (v < 10 ? 8 : 16)
-  const fits = (v: number) => Math.ceil((4 + ccBits(v) + bytes.length * 8) / 8) <= dataCapacity(v)
-  let version = 1
-  while (version <= EC_L.length && !fits(version)) version++
-  if (version > EC_L.length) throw new Error('QR code: text too long')
+  // Google2FA-QRCode passes 'utf-8', so Encoder::encode prefixes an ECI segment (designator 26)
+  const header = 12 + 4
+  // Encoder::chooseVersion (intdiv(bits + 8, 8) input bytes), first with version 1's character
+  // count bits, then with the provisional version's
+  const chooseVersion = (bits: number) => {
+    let v = 1
+    while (v <= EC_L.length && dataCapacity(v) < Math.floor((bits + 8) / 8)) v++
+    if (v > EC_L.length) throw new Error('QR code: text too long')
+    return v
+  }
+  const provisional = chooseVersion(header + ccBits(1) + bytes.length * 8)
+  const version = chooseVersion(header + ccBits(provisional) + bytes.length * 8)
   const capacity = dataCapacity(version)
 
   const bits: number[] = []
   const put = (value: number, n: number) => {
     for (let i = n - 1; i >= 0; i--) bits.push((value >> i) & 1)
   }
+  put(0b0111, 4)
+  put(26, 8)
   put(0b0100, 4)
   put(bytes.length, ccBits(version))
   for (const b of bytes) put(b, 8)

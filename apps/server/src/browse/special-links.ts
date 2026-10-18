@@ -121,6 +121,13 @@ export interface SpecialLinkUrl {
  * the current database, the column's original table and name, all lower-cased), or null.
  * `rowInfo` maps every lower-cased original column name of the row to its value (NULL absent).
  */
+/** Whether the column of `db`.`table` has a special schema link (before decoding the row for one). */
+export function hasSpecialSchemaLink(db: string, table: string, column: string): boolean {
+  const d = db.toLowerCase()
+  if (d !== 'mysql' && d !== 'information_schema') return false
+  return LINKS[d][table.toLowerCase()]?.[column.toLowerCase()] !== undefined
+}
+
 export function specialSchemaLink(
   cfg: { DefaultTabTable: string; DefaultTabDatabase: string },
   db: string,

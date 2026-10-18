@@ -131,3 +131,66 @@ describe.skipIf(!reachable)('parity: German session (lang=de) — messages and l
     })
   }
 })
+
+/**
+ * The same SQL-box messages in a sample of languages (docs/architecture/10-i18n-and-accessibility.md):
+ * three-form plurals (pl, ru), Arabic and Hebrew (RTL, partly untranslated catalogues), CJK
+ * (ja, zh_CN, no plural forms), and the boolean-expression catalogues (fr, pt_BR: always form 0).
+ * The counts 1, 3, 5 and 22 hit every form of those rules.
+ */
+const LANGS = ['pl', 'ru', 'ar', 'he', 'ja', 'zh_CN', 'fr', 'pt_BR']
+const PLURAL_SQL = [
+  'UPDATE t SET qty = 1 WHERE id = 1',
+  'UPDATE t SET qty = 2 WHERE id <= 3',
+  'UPDATE t SET qty = 3 WHERE id <= 5',
+  'UPDATE t SET qty = 4 WHERE id <= 22',
+  'DELETE FROM t WHERE id > 35',
+  'SELECT * FROM big',
+  "INSERT INTO t (name, qty) VALUES ('a', 1), ('b', 2)",
+  'SELECT * FROM t WHERE id = -1',
+]
+const maskAnyTime = (s: string) => s.replace(/\d+[.,٫]\d{4}/g, 'T')
+
+describe.skipIf(!reachable)('parity: SQL messages and plural forms in other languages', () => {
+  let root: mysql.Connection
+
+  beforeAll(async () => {
+    root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
+    for (const u of [PMA_USER, BMA_USER]) {
+      await root.query(
+        `CREATE USER IF NOT EXISTS '${u}'@'%' IDENTIFIED BY '${u}'; GRANT ALL ON *.* TO '${u}'@'%'`,
+      )
+    }
+  })
+
+  afterAll(async () => {
+    await root?.query(`DROP DATABASE IF EXISTS ${DB_PMA}; DROP DATABASE IF EXISTS ${DB_BMA}`)
+    await root?.end()
+  })
+
+  for (const lang of LANGS) {
+    it(`${lang}: affected/deleted/inserted rows, totals and empty results [p09-a212a5]`, async () => {
+      const pma = new PmaClient(PMA_URL)
+      await pma.login(PMA_USER, PMA_USER, 1, lang)
+      const bma = testApp(testConfig({}, PMA_STORAGE))
+      try {
+        expect((await bma.req('GET', `/api/i18n?lang=${lang}`)).json).toMatchObject({ code: lang })
+        await bma.login(BMA_USER, BMA_USER)
+        await root.query(SEED(DB_PMA))
+        await root.query(SEED(DB_BMA))
+        for (const sql of PLURAL_SQL) {
+          const pr = await pma.postJson('/import', sqlBoxForm(sql, DB_PMA))
+          const br = await bma.req('POST', '/api/servers/1/query', { sql, db: DB_BMA, fromQueryBox: true })
+          const statements = (br.json.statements ?? []) as Array<{ message: { text: string } }>
+          const text = maskAnyTime(
+            statements[0]?.message.text.replace(/\s+/g, ' ') ?? JSON.stringify(br.json),
+          )
+          const pmaText = maskAnyTime(visibleText(pr.message ?? pr.error ?? '').replace(/\s+/g, ' '))
+          expect(pmaText, `${lang}: ${sql}`).toContain(text.replaceAll(DB_BMA, DB_PMA))
+        }
+      } finally {
+        await bma.close()
+      }
+    })
+  }
+})

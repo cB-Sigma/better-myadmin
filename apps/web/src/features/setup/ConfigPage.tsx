@@ -22,7 +22,9 @@ export function ConfigPage({ eol }: { eol: string }) {
   return (
     <SetupLayout pages={d.pages} formset="">
       <h2 className="mb-3 text-lg font-semibold">{t('Configuration file')}</h2>
-      {d.saved !== null && <MessageBox type="success" text={t('Configuration saved to file %s', d.saved)} />}
+      {
+        d.saved !== null && <MessageBox type="success" text={t('Configuration saved to file %s', d.saved)} /> // i18n-new: saving to a file (phpMyAdmin 6 setup only downloads)
+      }
       <NavTabs
         items={[
           { id: 'php', label: 'config.inc.php' },

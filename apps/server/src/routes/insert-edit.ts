@@ -35,6 +35,7 @@ async function withIe<T>(c: Context<ServerEnv>, fn: (ctx: IeCtx) => Promise<T>):
   return withMeta(c, { db }, async (m) => {
     const conn = await m.userConn()
     const login = session.servers[String(serverIndex)]
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     if (login === undefined) throw new ValidationError(tr.gettext('Invalid server index!'))
     login.cache ??= {}
     const reader = new TableReader(conn, login.cache, tr)

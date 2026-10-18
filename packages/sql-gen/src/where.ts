@@ -97,6 +97,14 @@ export function getUniqueCondition(
   const uniqueKeyArray = new Map<string, string>()
   const nonPrimaryConditionArray = new Map<string, string>()
 
+  // the fields of the condition with their key: the value of a non-key field is built only when
+  // no key condition is found (it is the all-columns fallback; a 500 KB text would be quoted per row)
+  const entries: Array<{
+    meta: UniqueFieldMeta
+    i: number
+    conKey: string
+    value?: [string | null, string]
+  }> = []
   fields.forEach((meta, i) => {
     let orgName = meta.orgName
     let table = meta.table
@@ -132,33 +140,41 @@ export function getUniqueCondition(
       meta.mappedType === 'real'
         ? `CONCAT(${backquote(table)}.${backquote(orgName)})`
         : `${backquote(table)}.${backquote(orgName)}`
-
-    let condition = ` ${conKey} `
-    const value = row[i] ?? null
-    const [conVal, newCondition] = getConditionValue(
-      value,
-      meta,
+    entries.push({ meta, i, conKey })
+  })
+  const conditionValueOf = (e: (typeof entries)[number]): [string | null, string] => {
+    e.value ??= getConditionValue(
+      row[e.i] ?? null,
+      e.meta,
       fieldsCount,
-      conKey,
-      condition,
+      e.conKey,
+      ` ${e.conKey} `,
       options.quote,
     )
-    condition = newCondition
-    if (conVal === null) return
+    return e.value
+  }
 
-    condition += `${conVal} AND`
-
-    if (meta.isPrimaryKey) {
+  for (const e of entries) {
+    if (!e.meta.isPrimaryKey && !e.meta.isUniqueKey) continue
+    const [conVal, newCondition] = conditionValueOf(e)
+    if (conVal === null) continue
+    const condition = `${newCondition}${conVal} AND`
+    if (e.meta.isPrimaryKey) {
       primaryKey += condition
-      primaryKeyArray.set(conKey, conVal)
-    } else if (meta.isUniqueKey) {
+      primaryKeyArray.set(e.conKey, conVal)
+    } else {
       uniqueKey += condition
-      uniqueKeyArray.set(conKey, conVal)
+      uniqueKeyArray.set(e.conKey, conVal)
     }
-
-    nonPrimaryCondition += condition
-    nonPrimaryConditionArray.set(conKey, conVal)
-  })
+  }
+  if (primaryKey === '' && uniqueKey === '' && !forceUnique) {
+    for (const e of entries) {
+      const [conVal, newCondition] = conditionValueOf(e)
+      if (conVal === null) continue
+      nonPrimaryCondition += `${newCondition}${conVal} AND`
+      nonPrimaryConditionArray.set(e.conKey, conVal)
+    }
+  }
 
   let preferredCondition = ''
   let conditionArray = new Map<string, string>()
@@ -203,7 +219,8 @@ function getConditionValue(
   } else if (isBlobAndIsBinaryCharset || (!php.looseEqualsZero(row) && isBinaryString)) {
     // hexify only if this is a true not empty BLOB or a BINARY
     // do not waste memory building a too big condition
-    const rowLength = php.mbStrlen(row)
+    // (a long value is not counted unless it is the only field: 25 BLOBs of 1 MB a page)
+    const rowLength = fieldsCount === 1 || !php.mbStrlenAtLeast(row, 1000) ? php.mbStrlen(row) : 1000
     if (rowLength > 0 && rowLength < 1000) {
       // use a CAST if possible, to avoid problems if the field contains wildcard characters % or _
       conditionValue = `= CAST(0x${php.bin2hex(row)} AS BINARY)`

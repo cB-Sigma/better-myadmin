@@ -51,6 +51,7 @@ export function TriggersPage({ server, db, table = '' }: { server: number; db: s
   return (
     <>
       <ProgramListPage
+        codemirror={q.data?.codemirror ?? false}
         server={server}
         db={db}
         table={table}

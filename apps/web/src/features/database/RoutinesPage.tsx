@@ -134,7 +134,9 @@ export function RoutinesPage({
 
   return (
     <>
+      {result !== null && <ExecuteResult result={result} />}
       <ProgramListPage
+        codemirror={q.data?.codemirror ?? false}
         filterable
         noExportable
         server={server}
@@ -222,21 +224,21 @@ export function RoutinesPage({
       {execute !== null && (
         <ExecuteDialog
           form={execute}
-          result={result}
           onClose={() => setExecute(null)}
           onExecute={async (params, funcs) => {
             try {
-              setResult(
-                await api.dbRoutineExecute(
-                  { server, db },
-                  {
-                    name: execute.name,
-                    type: execute.type,
-                    params,
-                    funcs,
-                  },
-                ),
+              const r = await api.dbRoutineExecute(
+                { server, db },
+                { name: execute.name, type: execute.type, params, funcs },
               )
+              // routines.ts: success → slidingMessage(data.message) and the modal hides; a failed
+              // query → ajaxShowMessage(data.error, false), the modal stays
+              if (r.messages.some((m) => m.type === 'error')) {
+                showMessage(r.messages.map((m) => m.text).join('\n'), false, 'error')
+                return
+              }
+              setResult(r)
+              setExecute(null)
             } catch (e) {
               setMessages([errorMessage(e)])
               setExecute(null)
@@ -627,12 +629,10 @@ function RoutineEditor({
 
 function ExecuteDialog({
   form,
-  result,
   onClose,
   onExecute,
 }: {
   form: RoutineExecuteForm
-  result: RoutineExecuteResponse | null
   onClose: () => void
   onExecute: (params: Record<string, string | string[]>, funcs: Record<string, string>) => Promise<void>
 }) {
@@ -652,146 +652,107 @@ function ExecuteDialog({
       footer={
         <>
           <Button onClick={onClose}>{t('Close')}</Button>
-          {result === null && (
-            <Button variant="primary" id="routinesExecuteModalExecuteButton" onClick={execute}>
-              {t('Execute')}
-            </Button>
-          )}
+          <Button variant="primary" id="routinesExecuteModalExecuteButton" onClick={execute}>
+            {t('Execute')}
+          </Button>
         </>
       }
     >
-      {result !== null ? (
-        <>
-          <Messages messages={result.messages} />
-          {result.queries.length > 0 && <HighlightedSql sql={result.queries.join('\n')} className="mb-2" />}
-          {result.title !== '' && (
-            <Panel title={result.title} className="mb-2">
-              <PanelBody>
-                {result.resultSets.map((rs, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: result sets are positional
-                  <table key={i} className="mb-2 w-auto text-sm [&_td]:px-2 [&_th]:px-2">
-                    <thead>
-                      <tr>
-                        {rs.fields.map((f) => (
-                          <th key={f}>{f}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rs.rows.map((row, j) => (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: rows are positional
-                        <tr key={j} className="odd:bg-grid-odd even:bg-grid-even">
-                          {row.map((v, k) => (
-                            // biome-ignore lint/suspicious/noArrayIndexKey: cells are positional
-                            <td key={k}>{v === null ? <i>NULL</i> : v}</td>
-                          ))}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                ))}
-              </PanelBody>
-            </Panel>
-          )}
-          {result.empty && (
-            <Messages
-              messages={[{ type: 'notice', text: t('MySQL returned an empty result set (i.e. zero rows).') }]}
-            />
-          )}
-        </>
-      ) : (
-        // routines.ts: keyup Enter anywhere in form.rte_form executes the routine
-        <form
-          className="rte_form"
-          onSubmit={(e) => e.preventDefault()}
-          onKeyUp={(e) => {
-            e.preventDefault()
-            if (e.key === 'Enter') execute()
-          }}
-        >
-          <Panel title={t('Routine parameters')}>
-            <PanelBody>
-              {form.params.length === 0 ? (
-                <p>{t('This routine does not require any parameters.')}</p>
-              ) : (
-                <table className="rte_table w-auto text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2">
-                  <thead>
-                    <tr className="text-left">
-                      <th>{t('Name')}</th>
-                      <th>{t('Type')}</th>
-                      {form.showFunctionFields && <th>{t('Function')}</th>}
-                      <th>{t('Value')}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {form.params.map((p) => (
-                      <tr key={p.name}>
-                        <td>{p.name}</td>
-                        <td>{p.type}</td>
-                        {form.showFunctionFields && (
-                          <td>
-                            {p.functions === null ? (
-                              '--'
-                            ) : (
-                              <NativeSelect
-                                name={`funcs[${p.name}]`}
-                                value={funcs[p.name] ?? ''}
-                                onChange={(e) => setFuncs({ ...funcs, [p.name]: e.target.value })}
-                              >
-                                {p.functions.map((f) => (
-                                  <option key={f.value} value={f.value}>
-                                    {f.value}
-                                  </option>
-                                ))}
-                              </NativeSelect>
-                            )}
-                          </td>
-                        )}
-                        <td className="whitespace-nowrap">
-                          {p.inputType === 'text' ? (
-                            <Input
-                              className={p.dateClass}
-                              name={`params[${p.name}]`}
-                              value={String(values[p.name] ?? '')}
-                              onChange={(e) => setValues({ ...values, [p.name]: e.target.value })}
-                            />
+      {/* routines.ts: keyup Enter anywhere in form.rte_form executes the routine */}
+      <form
+        className="rte_form"
+        onSubmit={(e) => e.preventDefault()}
+        onKeyUp={(e) => {
+          e.preventDefault()
+          if (e.key === 'Enter') execute()
+        }}
+      >
+        <Panel title={t('Routine parameters')}>
+          <PanelBody>
+            {form.params.length === 0 ? (
+              <p>{t('This routine does not require any parameters.')}</p>
+            ) : (
+              <table className="rte_table w-auto text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2">
+                <thead>
+                  <tr className="text-left">
+                    <th>{t('Name')}</th>
+                    <th>{t('Type')}</th>
+                    {form.showFunctionFields && <th>{t('Function')}</th>}
+                    <th>{t('Value')}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {form.params.map((p) => (
+                    <tr key={p.name}>
+                      <td>{p.name}</td>
+                      <td>{p.type}</td>
+                      {form.showFunctionFields && (
+                        <td>
+                          {p.functions === null ? (
+                            '--'
                           ) : (
-                            p.values.map((v) => (
-                              <label key={v} className="block">
-                                <input
-                                  type={p.inputType}
-                                  name={`params[${p.name}][]`}
-                                  value={v}
-                                  checked={
-                                    p.inputType === 'radio'
-                                      ? values[p.name] === v
-                                      : (values[p.name] as string[] | undefined)?.includes(v) === true
-                                  }
-                                  onChange={(e) => {
-                                    if (p.inputType === 'radio') setValues({ ...values, [p.name]: v })
-                                    else {
-                                      const cur = (values[p.name] as string[] | undefined) ?? []
-                                      setValues({
-                                        ...values,
-                                        [p.name]: e.target.checked ? [...cur, v] : cur.filter((x) => x !== v),
-                                      })
-                                    }
-                                  }}
-                                />{' '}
-                                {v}
-                              </label>
-                            ))
+                            <NativeSelect
+                              name={`funcs[${p.name}]`}
+                              value={funcs[p.name] ?? ''}
+                              onChange={(e) => setFuncs({ ...funcs, [p.name]: e.target.value })}
+                            >
+                              {p.functions.map((f) => (
+                                <option
+                                  key={f.value}
+                                  value={f.value}
+                                  {...(f.title !== undefined ? { title: f.title } : {})}
+                                >
+                                  {f.label}
+                                </option>
+                              ))}
+                            </NativeSelect>
                           )}
                         </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-            </PanelBody>
-          </Panel>
-        </form>
-      )}
+                      )}
+                      <td className="whitespace-nowrap">
+                        {p.inputType === 'text' ? (
+                          <Input
+                            className={p.dateClass}
+                            name={`params[${p.name}]`}
+                            value={String(values[p.name] ?? '')}
+                            onChange={(e) => setValues({ ...values, [p.name]: e.target.value })}
+                          />
+                        ) : (
+                          p.values.map((v) => (
+                            <label key={v} className="block">
+                              <input
+                                type={p.inputType}
+                                name={`params[${p.name}][]`}
+                                value={v}
+                                checked={
+                                  p.inputType === 'radio'
+                                    ? values[p.name] === v
+                                    : (values[p.name] as string[] | undefined)?.includes(v) === true
+                                }
+                                onChange={(e) => {
+                                  if (p.inputType === 'radio') setValues({ ...values, [p.name]: v })
+                                  else {
+                                    const cur = (values[p.name] as string[] | undefined) ?? []
+                                    setValues({
+                                      ...values,
+                                      [p.name]: e.target.checked ? [...cur, v] : cur.filter((x) => x !== v),
+                                    })
+                                  }
+                                }}
+                              />{' '}
+                              {v}
+                            </label>
+                          ))
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </PanelBody>
+        </Panel>
+      </form>
     </DbModal>
   )
 }
@@ -836,5 +797,53 @@ function ParamLength({
         />
       )}
     </>
+  )
+}
+
+/**
+ * The execution's answer (message, the queries, Execution results of routine …) as
+ * routines.ts slidingMessage puts it at the top of the page once the dialog is closed.
+ * pma: src/Database/Routines.php::handleExecuteRoutine
+ */
+function ExecuteResult({ result }: { result: RoutineExecuteResponse }) {
+  return (
+    <div id="PMA_slidingMessage" className="mb-3">
+      <Messages messages={result.messages} />
+      {result.queries.length > 0 && <HighlightedSql sql={result.queries.join('\n')} className="mb-2" />}
+      {result.title !== '' && (
+        <Panel title={result.title} className="mb-2">
+          <PanelBody>
+            {result.resultSets.map((rs, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: result sets are positional
+              <table key={i} className="mb-2 w-auto text-sm [&_td]:px-2 [&_th]:px-2">
+                <thead>
+                  <tr>
+                    {rs.fields.map((f) => (
+                      <th key={f}>{f}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rs.rows.map((row, j) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: rows are positional
+                    <tr key={j} className="odd:bg-grid-odd even:bg-grid-even">
+                      {row.map((v, k) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: cells are positional
+                        <td key={k}>{v === null ? <i>NULL</i> : v}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ))}
+          </PanelBody>
+        </Panel>
+      )}
+      {result.empty && (
+        <Messages
+          messages={[{ type: 'notice', text: t('MySQL returned an empty result set (i.e. zero rows).') }]}
+        />
+      )}
+    </div>
   )
 }

@@ -8,7 +8,6 @@ import {
   MySqlDocLink,
   PmaIcon,
   type PmaIconName,
-  Textarea,
   showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
@@ -18,7 +17,7 @@ import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PageMessages } from '../sql/page-card'
 import { runQuery } from '../sql/runner'
-import { DbModal, Messages, errorMessage } from './common'
+import { DbModal, DefinitionEditor, Messages, errorMessage } from './common'
 
 /**
  * The list page shared by Routines, Events and Triggers (rte lists): heading, Check all / Export /
@@ -59,7 +58,10 @@ export function ProgramListPage({
   tableId,
   filterable = false,
   noExportable = false,
+  codemirror = false,
 }: {
+  /** the export dialog's SQL editor (getSqlEditor: CodeMirror with CodemirrorEnable) */
+  codemirror?: boolean
   /** routines.ts: a bulk export without an exportable selection says "No routine is exportable…" */
   noExportable?: boolean
   server: number
@@ -306,7 +308,14 @@ export function ProgramListPage({
           onClose={() => setExported(null)}
           footer={<Button onClick={() => setExported(null)}>{t('Close')}</Button>}
         >
-          <Textarea rows={15} readOnly value={exported.sql} className="font-mono text-xs" />
+          {/* routines.ts showExport: the SQL in #routinesExportTextarea, then getSqlEditor on it */}
+          <DefinitionEditor
+            id="routinesExportTextarea"
+            label={exported.title}
+            value={exported.sql}
+            onChange={() => {}}
+            codemirror={codemirror}
+          />
         </DbModal>
       )}
     </div>

@@ -276,7 +276,7 @@ function NewColumns({
           api.addColumns(env.scope, {
             columns: rows.map((r) => toColumnDef(r, options)),
             // saveNewPrimary posts field_key[0]=primary_0, which /table/add-field no longer reads
-            // (indexes are a JSON list now): the new column is made the PRIMARY KEY (Q75)
+            // (indexes are a JSON list now): the new column is made the PRIMARY KEY (Q76)
             indexes:
               saveId === 'saveNewPrimary'
                 ? [{ choice: 'PRIMARY', columns: [{ colIndex: 0, size: '' }] }]
