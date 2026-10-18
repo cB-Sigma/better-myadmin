@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010",
+    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d",
     "source": "resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys)",
     "count": 3428
   },
@@ -9391,6 +9391,7 @@
         "src/Engines/Pbxt.php:167",
         "src/Html/Generator.php:672",
         "src/Html/MySQLDocumentation.php:51",
+        "src/Sanitize.php:183",
         "src/Sanitize.php:189"
       ]
     },

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 /**
- * SQL files vendored from phpMyAdmin's `resources/sql/` (unchanged from reference commit e3e877e8 through 328b8d8003).
+ * SQL files vendored from phpMyAdmin's `resources/sql/` (unchanged from reference commit e3e877e8 through a15cd540cf).
  * pma: SQL_DIR
  */
 const read = (name: string) => readFileSync(new URL(`../resources/${name}`, import.meta.url), 'utf8')
