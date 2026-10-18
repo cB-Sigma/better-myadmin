@@ -93,24 +93,39 @@ export function pmaUrl(route: string, params: Record<string, string> = {}, base 
  * login form, without rendering the login page and the home page of both apps first (the login
  * pages themselves are compared by auth.uip.ts and pages.uip.ts).
  */
-export async function login(page: Page, app: App, baseURL: string): Promise<void> {
+export async function login(
+  page: Page,
+  app: App,
+  baseURL: string,
+  /**
+   * `lang`: the session's language, picked like the login page's selector (phpMyAdmin's
+   * `?lang=` sets pma_lang; ours `GET /api/i18n?lang=` sets bma_lang); `pmaBase`: another
+   * reference instance than PMA_URL
+   */
+  opts: { lang?: string; pmaBase?: string } = {},
+): Promise<void> {
   const user = USERS[app]
   const http = page.context().request
   if (app === 'pma') {
-    const form = await (await http.get(pmaUrl('/'))).text()
+    const base = opts.pmaBase ?? PMA_URL
+    const form = await (
+      await http.get(pmaUrl('/', opts.lang !== undefined ? { lang: opts.lang } : {}, base))
+    ).text()
     const field = (name: string) => form.match(new RegExp(`name="${name}" value="([^"]*)"`))?.[1] ?? ''
-    const home = await http.post(`${PMA_URL}/index.php?route=/`, {
+    const home = await http.post(`${base}/index.php?route=/`, {
       form: {
         token: field('token'),
         set_session: field('set_session'),
         pma_username: user,
         pma_password: user,
         server: '1',
+        ...(opts.lang !== undefined ? { lang: opts.lang } : {}),
       },
     })
     if (/id="login_form"/.test(await home.text())) throw new Error(`phpMyAdmin login of ${user} failed`)
     return
   }
+  if (opts.lang !== undefined) await http.get(`${baseURL}/api/i18n?lang=${encodeURIComponent(opts.lang)}`)
   const state = (await (await http.get(`${baseURL}/api/auth/state`)).json()) as { csrfToken?: string }
   const r = await http.post(`${baseURL}/api/auth/login`, {
     data: { server: 1, username: user, password: user },

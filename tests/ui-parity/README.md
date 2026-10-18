@@ -46,6 +46,9 @@ pageParity('table-indexes', {
   key by key), `{ select: [label, option] }`, `{ press: key }`, `{ wait: ms }`, or a list; `pma`/`ours`
   take per-app actions or `async (page) => …`. Controls are found by accessible name inside the scope.
 - `setup(pages)`, `sql` (run as root first), `ready` (selectors to wait for), `exclude` (selectors).
+- `lang`: log both sessions in with that language (default none: English). The run's reference is the
+  English-only checkout, so pass a translated one through `bases` (`startPmaInstance(…, { locales })`,
+  as `i18n.uip.ts` does).
 - `known: 'TODO …'` marks a case whose differences are still to be fixed (`test.fail`): it turns red
   once the page matches, then delete `known`.
 

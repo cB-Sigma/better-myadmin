@@ -490,7 +490,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 e.preventDefault()
                 const n = Number.parseInt(indexCount, 10)
                 if (Number.isNaN(n)) return void window.alert(t('Please enter a valid number!'))
-                if (n < 0) return void window.alert(t('Column count has to be larger than zero.'))
+                if (n < 0) return void window.alert('Column count has to be larger than zero.') // pma: indexes.ts, untranslated
                 setIndexCount(String(n))
                 setIndexQuery({ create: n })
               }}

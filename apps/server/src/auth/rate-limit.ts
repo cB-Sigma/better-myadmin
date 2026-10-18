@@ -33,6 +33,7 @@ export class LoginRateLimiter {
       return null
     }
     return sprintf(
+      // i18n-new: login rate limiting (phpMyAdmin has none)
       tr.gettext('Too many failed login attempts. Please try again in %s seconds.'),
       String(left),
     )

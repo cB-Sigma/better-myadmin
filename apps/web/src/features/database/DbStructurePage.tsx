@@ -5,7 +5,7 @@ import type {
   ShowCreateResponse,
   SqlMessage,
 } from '@bettermyadmin/contracts'
-import { N_ } from '@bettermyadmin/i18n'
+import { N_, formatNumber, sprintf } from '@bettermyadmin/i18n'
 import {
   Alert,
   Button,
@@ -31,7 +31,7 @@ import { ArrowDown, ArrowUp, LoaderCircle, Printer } from 'lucide-react'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { api } from '../../lib/api'
-import { t } from '../../lib/i18n'
+import { ngettext, t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { runQuery } from '../sql/runner'
@@ -340,6 +340,9 @@ export function DbStructurePage({
     : (d.summary?.rowsText ?? '0')
   const sumApprox = anyCounted ? d.tables.some(rowApprox) : (d.summary?.approx ?? false)
   const actionCols = (d.isSystemSchema ? 3 : 6) + (c.numFavoriteTables > 0 ? 1 : 0)
+  const approximateHint = t(
+    'May be approximate. Click on the number to get the exact count. See [doc@faq3-11]FAQ 3.11[/doc].',
+  ).replace(/\[\/?doc[^\]]*\]/g, '')
   const allChecked = d.tables.length > 0 && d.tables.every((tb) => selected.includes(tb.name))
 
   /** The "Enable foreign key checks" box of the confirmations; null when cancelled. */
@@ -443,13 +446,8 @@ export function DbStructurePage({
                     </th>
                     <th>
                       {sortLink('records', t('Rows'), 'DESC')}{' '}
-                      <span
-                        className="pma_hint"
-                        title={t(
-                          'May be approximate. Click on the number to get the exact count. See [doc@faq3-11]FAQ 3.11[/doc].',
-                        ).replace(/\[\/?doc[^\]]*\]/g, '')}
-                      >
-                        <PmaIcon name="s_info" alt={t('May be approximate.')} />
+                      <span className="pma_hint" title={approximateHint}>
+                        <PmaIcon name="s_info" alt={approximateHint} />
                       </span>
                     </th>
                     {c.showDbDetails && (
@@ -683,7 +681,10 @@ export function DbStructurePage({
                       <th className="tbl_num whitespace-nowrap text-left">
                         {adjusted
                           ? t('%d table(s)', rows.length)
-                          : t(d.summary.numTables === 1 ? '%s table' : '%s tables', String(rows.length))}
+                          : sprintf(
+                              ngettext('%s table', '%s tables', rows.length),
+                              formatNumber(translator(), rows.length, 0),
+                            )}
                       </th>
                       {d.replicaStatus && <th>{t('Replication')}</th>}
                       <th colSpan={actionCols} className="text-left print:hidden">

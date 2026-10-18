@@ -56,6 +56,7 @@ preferencesRoutes.post('/forms/:tab', async (c) => {
 preferencesRoutes.get('/page/:group', (c) =>
   withMeta(c, {}, async (m) => {
     const r = pageSettings(await prefsCtx(m), c.req.param('group'))
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     if (r === null) throw new NotFoundError(c.get('tr').gettext('Invalid page settings group.'))
     return c.json(r)
   }),
@@ -66,6 +67,7 @@ preferencesRoutes.post('/page/:group', async (c) => {
   const req = await parseJson(c, PreferencesSaveRequest)
   return withMeta(c, {}, async (m) => {
     const r = await savePageSettings(await prefsCtx(m), c.req.param('group'), req.values)
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     if (r === null) throw new NotFoundError(c.get('tr').gettext('Invalid page settings group.'))
     return c.json(r)
   })

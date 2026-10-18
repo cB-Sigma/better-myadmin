@@ -547,7 +547,7 @@ function PrimaryConfiguration({ databases, onGo }: { databases: string[]; onGo: 
       }
     >
       <PanelBody className="space-y-2">
-        <p>
+        <p id="db_type_label">
           {t(
             'This server is not configured as a primary server in a replication process. You can choose from either replicating all databases and ignoring some of them (useful if you want to replicate a majority of the databases) or you can choose to ignore all databases by default and allow only certain databases to be replicated. Please select the mode:',
           )}
@@ -555,7 +555,7 @@ function PrimaryConfiguration({ databases, onGo }: { databases: string[]; onGo: 
         <NativeSelect
           name="db_type"
           id="db_type"
-          aria-label={t('Please select the mode:')}
+          aria-labelledby="db_type_label"
           className="w-auto"
           value={mode}
           onChange={(e) => setMode(e.target.value as 'all' | 'ign')}

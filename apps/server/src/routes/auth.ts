@@ -130,8 +130,10 @@ authRoutes.post('/login', async (c) => {
   const { cfg, pools, userBox } = c.get('deps')
   const req = await parseJson(c, LoginRequest)
   const tr = c.get('tr')
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (getServer(cfg, req.server) === undefined) throw new ValidationError(tr.gettext('Invalid server index!'))
   // an empty username just shows the form again (readCredentials returns false)
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (req.username === '') throw new ValidationError(tr.gettext('Missing username.'))
 
   const remoteIp = requestClientIp(c, cfg.TrustedProxies)
@@ -192,6 +194,7 @@ const pendingLogin = (c: Context<AppEnv>): ServerLogin => {
   const session = c.get('session')
   const login = session.servers[String(session.currentServer)]
   if (login === undefined || login.twoFactorOk)
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new ValidationError(c.get('tr').gettext('Missing username.'))
   return login
 }
@@ -285,6 +288,7 @@ authRoutes.post('/switch-server', async (c) => {
   const { cfg } = c.get('deps')
   const { server } = (await c.req.json().catch(() => ({}))) as { server?: number }
   if (typeof server !== 'number' || getServer(cfg, server) === undefined) {
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   }
   c.get('session').currentServer = server

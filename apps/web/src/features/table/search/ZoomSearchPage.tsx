@@ -366,7 +366,8 @@ function ZoomResult({
       <Dialog open={help} onOpenChange={setHelp}>
         <DialogContent id="helpModal">
           <DialogHeader>
-            <DialogTitle>{t('Zoom search instructions')}</DialogTitle>
+            {/* pma: strHelpTitle is not passed through __() */}
+            <DialogTitle>Zoom search instructions</DialogTitle>
           </DialogHeader>
           <DialogBody>
             <ul className="list-disc ps-5">

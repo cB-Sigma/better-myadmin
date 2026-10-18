@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { type PmaIconName, pmaIconOutline, pmaIcons } from '../icons/pma-map.ts'
 import { cn } from '../lib/cn.ts'
+import { decodeEntities } from '../lib/entities.ts'
 import { iconParts } from '../lib/link-mode.ts'
 import { type LinkMode, type UiSettings, useUiSettings } from '../settings.tsx'
 
@@ -63,10 +64,12 @@ export function IconText({
 }) {
   const settings = useUiSettings()
   const parts = iconParts(modeValue ?? settings[mode], forceText)
+  // getIcon prints its text raw: entities in a translation render
+  const shown = decodeEntities(text)
   return (
     <span className="inline-flex items-center gap-1 whitespace-nowrap">
-      {parts.icon && <PmaIcon name={icon} alt={parts.text ? '' : text} />}
-      {parts.text && <span>{text}</span>}
+      {parts.icon && <PmaIcon name={icon} alt={parts.text ? '' : shown} />}
+      {parts.text && <span>{shown}</span>}
     </span>
   )
 }

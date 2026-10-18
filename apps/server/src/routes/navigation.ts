@@ -20,6 +20,7 @@ async function withDeps<T>(c: Context<ServerEnv>, fn: (deps: NavServiceDeps) => 
   const server = getServer(cfg, serverIndex)
   const login = session.servers[String(serverIndex)]
   if (server === undefined || login === undefined)
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   login.cache ??= {}
   const conn = await pools.acquire(

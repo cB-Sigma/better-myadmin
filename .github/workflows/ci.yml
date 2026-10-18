@@ -15,6 +15,8 @@ jobs:
       - run: pnpm lint
       # docs/architecture/16-golden-path.md: static, no database (tools/conventions)
       - run: pnpm conventions:check
+      # every translated msgid is phpMyAdmin's (or annotated // i18n-new:), plural/context calls included
+      - run: pnpm i18n:parity
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm --filter @bettermyadmin/web build

@@ -9,7 +9,7 @@ Mechanical inventories of phpMyAdmin `a15cd540` ([reference-commit.txt](../refer
 | Routes | 200 | 186 | 13 | 1 | 0 | 0 | 0 | 0 | 0 | 200 | 100.0% |
 | Template controls | 1106 | 1096 | 3 | 7 | 0 | 0 | 0 | 0 | 0 | 1106 | 100.0% |
 | Config directives | 449 | 428 | 1 | 19 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
-| Messages (msgids) | 3428 | 3283 | 13 | 131 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
+| Messages (msgids) | 3428 | 3284 | 12 | 131 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
 | JS behaviours | 966 | 953 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 966 | 100.0% |
 | Checklist items | 707 | 701 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 707 | 100.0% |
 
@@ -49,7 +49,6 @@ phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by c
 Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 
 - ``
-- `%s tables`
 - `<br><br>`
 - `A3`
 - `A4`
@@ -63,21 +62,15 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Add CREATE TRIGGER`
 - `Add CREATE VIEW`
 - `Add DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT / TRIGGER`
-- `Add column(s)`
-- `Begin`
-- `BetterMyAdmin homepage`
 - `Bookmark not found.`
 - `CodeGen`
 - `Collation \| WITH `
 - `Collation variant \| WITH `
-- `Column count has to be larger than zero.`
 - `Config`
 - `Configuration saved to file %s`
 - `DB2`
 - `DESC`
 - `EXECUTE`
-- `End`
-- `Enter an option`
 - `Excel 2003 / Macintosh`
 - `Excel 2008 / Macintosh`
 - `GRANT`
@@ -94,28 +87,21 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `MSSQL`
 - `MYSQL323`
 - `MYSQL40`
-- `May be approximate.`
 - `Missing username.`
 - `NHibernate C# DO`
 - `NHibernate XML`
 - `NONE`
-- `Next`
 - `Not found.`
 - `OR REPLACE view`
 - `ORACLE`
 - `OpenDocument`
-- `Please select the mode:`
-- `Previous`
 - `REPLACE`
 - `SMART`
-- `Sorry! Unable to copy`
 - `TRADITIONAL`
-- `Table name:`
 - `Too many failed login attempts. Please try again in %s seconds.`
 - `UPDATE`
 - `WITH `
 - `Windows`
-- `Zoom search instructions`
 - `all`
 - `allow,deny`
 - `asc`
@@ -174,4 +160,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3428 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2050 control claims, 1877 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2050 control claims, 1896 tests.

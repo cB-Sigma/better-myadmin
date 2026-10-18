@@ -60,6 +60,7 @@ async function withReader<T>(c: Context<ServerEnv>, fn: (reader: TableReader) =>
   const session = c.get('session')
   const serverIndex = c.get('serverIndex')
   const login = session.servers[String(serverIndex)]
+  // i18n-new: API error (phpMyAdmin has no JSON API)
   if (login === undefined) throw new ValidationError(c.get('tr').gettext('Invalid server index!'))
   login.cache ??= {}
   const conn = await pools.acquire(

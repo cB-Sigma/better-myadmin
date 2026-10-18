@@ -52,6 +52,7 @@ const resolveServer: MiddlewareHandler<ServerEnv> = async (c, next) => {
   const { cfg, credBox } = c.get('deps')
   const s = Number(c.req.param('s'))
   if (!Number.isInteger(s) || getServer(cfg, s) === undefined)
+    // i18n-new: API error (phpMyAdmin has no JSON API)
     throw new NotFoundError(c.get('tr').gettext('Invalid server index!'))
   const session = c.get('session')
   let login = session.servers[String(s)]

@@ -12,6 +12,8 @@ import {
 import { createServer } from 'node:net'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { languageStats } from '../../../packages/i18n/src/generated/catalog-index.ts'
 import { isPmaUp } from './pma.ts'
 
 /**
@@ -63,6 +65,7 @@ register_shutdown_function(static function () {
 }
 
 const PMA_PATH = process.env.PMA_PATH ?? '/home/user/ref/pma'
+const BUILD_MO = fileURLToPath(new URL('../../../packages/i18n/scripts/build-mo.py', import.meta.url))
 const PHP = process.env.BMA_PARITY_PHP ?? 'php'
 
 export function phpAvailable(): boolean {
@@ -84,10 +87,26 @@ function freePort(): Promise<number> {
   })
 }
 
-function shadowTree(root: string): void {
+function shadowTree(root: string, locales: readonly string[] = []): void {
   for (const entry of readdirSync(PMA_PATH)) {
     if (['public', 'app', 'config.inc.php', 'tmp'].includes(entry)) continue
+    if (entry === 'resources' && locales.length > 0) continue
     symlinkSync(join(PMA_PATH, entry), join(root, entry))
+  }
+  if (locales.length > 0) {
+    // resources/ of the checkout, plus the compiled catalogues a release ships (a git checkout has
+    // no resources/locale: bin/generate-mo needs msgfmt), compiled with polib like
+    // packages/i18n/scripts/serve-localized-pma.sh
+    mkdirSync(join(root, 'resources'))
+    for (const entry of readdirSync(join(PMA_PATH, 'resources'))) {
+      if (entry !== 'locale') symlinkSync(join(PMA_PATH, 'resources', entry), join(root, 'resources', entry))
+    }
+    const r = spawnSync(
+      'python3',
+      ['-I', BUILD_MO, PMA_PATH, join(root, 'resources', 'locale'), ...locales],
+      { encoding: 'utf8' },
+    )
+    if (r.status !== 0) throw new Error(`build-mo.py failed (pip install polib?)\n${r.stderr}`)
   }
   mkdirSync(join(root, 'public'))
   for (const entry of readdirSync(join(PMA_PATH, 'public'))) {
@@ -108,6 +127,12 @@ function shadowTree(root: string): void {
   }
   mkdirSync(join(root, 'app', 'cache'))
   mkdirSync(join(root, 'tmp'))
+  // a release's app/language_stats.inc.php (generated with the catalogues, absent from a checkout):
+  // the home page's incomplete-translation notice reads it
+  if (locales.length > 0 && !readdirSync(join(PMA_PATH, 'app')).includes('language_stats.inc.php')) {
+    const rows = Object.entries(languageStats).map(([k, v]) => `    ${JSON.stringify(k)} => ${v},`)
+    writeFileSync(join(root, 'app', 'language_stats.inc.php'), `<?php\n\nreturn [\n${rows.join('\n')}\n];\n`)
+  }
 }
 
 export async function startPmaInstance(
@@ -118,10 +143,12 @@ export async function startPmaInstance(
     noConfig?: boolean
     /** PHP_CLI_SERVER_WORKERS: the built-in server answers this many requests at once (default 1) */
     workers?: number
+    /** compiled translations for these locale codes (default none: English only, like the checkout) */
+    locales?: readonly string[]
   } = {},
 ): Promise<PmaInstance> {
   const root = mkdtempSync(join(tmpdir(), 'bma-pma-'))
-  shadowTree(root)
+  shadowTree(root, opts.locales)
   const dumpFile = join(root, 'tmp', 'state-dump.jsonl')
   writeFileSync(dumpFile, '')
   if (opts.dumpState === true) {

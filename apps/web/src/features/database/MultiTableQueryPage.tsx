@@ -336,7 +336,8 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                                         <div key={k} className="flex gap-1">
                                           <Input
                                             className="val"
-                                            placeholder={t('Enter an option')}
+                                            // pma: multi_table_query.ts hard-codes it in English
+                                            placeholder="Enter an option"
                                             value={v}
                                             onChange={(e) =>
                                               setCrit(i, {
