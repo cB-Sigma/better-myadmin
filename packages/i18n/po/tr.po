@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/tr.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/tr.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-08-16 08:11+0000\nLast-Translator: Oğuz Ersen <oguz@ersen.moe>\nLanguage-Team: Turkish <https://hosted.weblate.org/projects/phpmyadmin/master/tr/>\nLanguage: tr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-08-16 08:11+0000\nLast-Translator: Oğuz Ersen <oguz@ersen.moe>\nLanguage-Team: Turkish <https://hosted.weblate.org/projects/phpmyadmin/master/tr/>\nLanguage: tr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Bu kısmı geçmek için Javascript etkinleştirilmek zorundadır!"
@@ -683,89 +683,6 @@ msgstr "Sayfa seç"
 msgid "Select export relational type:"
 msgstr "Dışa aktarma ilişkisel türünü seçin:"
 
-msgid "Details"
-msgstr "Ayrıntılar"
-
-msgid "Event name"
-msgstr "Olay adı"
-
-msgid "Status"
-msgstr "Durum"
-
-msgid "Event type"
-msgstr "Olay türü"
-
-msgid "Change to %s"
-msgstr "%s'a değiştir"
-
-msgid "Execute at"
-msgstr "Çalıştır"
-
-msgid "Execute every"
-msgstr "Çalıştır; her"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Başlama"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Bitiş"
-
-msgid "Definition"
-msgstr "Tanım"
-
-msgid "Format"
-msgstr "Biçim"
-
-msgid "On completion preserve"
-msgstr "Tamamlamada koruma"
-
-msgid "Definer"
-msgstr "Tanımlayıcı"
-
-msgid "Events"
-msgstr "Olaylar"
-
-msgid "Check all"
-msgstr "Tümünü işaretle"
-
-msgid "Export"
-msgstr "Dışa aktar"
-
-msgid "Drop"
-msgstr "Kaldır"
-
-msgid "Create new event"
-msgstr "Yeni olay oluştur"
-
-msgid "There are no events to display."
-msgstr "Görüntülemek için olaylar yok."
-
-msgid "Event scheduler status"
-msgstr "Olay zamanlayıcısı durumu"
-
-msgid "Click to toggle"
-msgstr "Değiştirmek için tıklayın"
-
-msgid "ON"
-msgstr "AÇIK"
-
-msgid "OFF"
-msgstr "KAPALI"
-
-msgid "Event editor"
-msgstr "Olay düzenleyicisi"
-
-msgid "Loading…"
-msgstr "Yükleniyor…"
-
-msgid "Save changes"
-msgstr "Değişiklikleri kaydet"
-
-msgid "Export event"
-msgstr "Olayı dışa aktar"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ sunucu adı ve @DATABASE@ veritabanı adı olacak."
 
@@ -946,11 +863,17 @@ msgstr "yordam"
 msgid "Edit privileges"
 msgstr "Yetkileri düzenle"
 
+msgid "Export"
+msgstr "Dışa aktar"
+
 msgid "No user found."
 msgstr "Bulunan kullanıcı yok."
 
 msgid "With selected:"
 msgstr "Seçilileri:"
+
+msgid "Check all"
+msgstr "Tümünü işaretle"
 
 msgid "Not enough privilege to view users."
 msgstr "Kullanıcıları görüntülemek için yetersiz yetki."
@@ -958,8 +881,14 @@ msgstr "Kullanıcıları görüntülemek için yetersiz yetki."
 msgid "Add user account"
 msgstr "Kullanıcı hesabı ekle"
 
+msgid "Details"
+msgstr "Ayrıntılar"
+
 msgid "Routine name"
 msgstr "Yordam adı"
+
+msgid "Change to %s"
+msgstr "%s'a değiştir"
 
 msgid "Parameters"
 msgstr "Parametreler"
@@ -985,11 +914,20 @@ msgstr "Dönüş seçenekleri"
 msgid "Charset"
 msgstr "Karakter grubu"
 
+msgid "Definition"
+msgstr "Tanım"
+
+msgid "Format"
+msgstr "Biçim"
+
 msgid "Is deterministic"
 msgstr "Belirleyici"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Bu işlemi yapmak için yeterli yetkilere sahip değilsiniz; Lütfen daha fazla ayrıntı için belgelere bakın."
+
+msgid "Definer"
+msgstr "Tanımlayıcı"
 
 msgid "Security type"
 msgstr "Güvenlik türü"
@@ -1009,6 +947,9 @@ msgstr "Bu yordam herhangi bir parametre gerektirmez."
 msgid "Routines"
 msgstr "Yordamlar"
 
+msgid "Drop"
+msgstr "Kaldır"
+
 msgid "Search"
 msgstr "Ara"
 
@@ -1023,6 +964,12 @@ msgstr "Dönüşler"
 
 msgid "Routine editor"
 msgstr "Yordam düzenleyicisi"
+
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+msgid "Save changes"
+msgstr "Değişiklikleri kaydet"
 
 msgid "Export routine"
 msgstr "Yordamı dışa aktar"
@@ -1276,6 +1223,12 @@ msgstr "Oluşturuldu"
 msgid "Updated"
 msgstr "Güncellendi"
 
+msgid "Status"
+msgstr "Durum"
+
+msgid "Click to toggle"
+msgstr "Değiştirmek için tıklayın"
+
 msgid "active"
 msgstr "etkin"
 
@@ -1421,6 +1374,53 @@ msgstr "Bir şeyler ters gitti"
 
 msgid "Go back"
 msgstr "Geri dön"
+
+msgid "Event name"
+msgstr "Olay adı"
+
+msgid "Event type"
+msgstr "Olay türü"
+
+msgid "Execute at"
+msgstr "Çalıştır"
+
+msgid "Execute every"
+msgstr "Çalıştır; her"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Başlama"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Bitiş"
+
+msgid "On completion preserve"
+msgstr "Tamamlamada koruma"
+
+msgid "Events"
+msgstr "Olaylar"
+
+msgid "Create new event"
+msgstr "Yeni olay oluştur"
+
+msgid "There are no events to display."
+msgstr "Görüntülemek için olaylar yok."
+
+msgid "Event scheduler status"
+msgstr "Olay zamanlayıcısı durumu"
+
+msgid "ON"
+msgstr "AÇIK"
+
+msgid "OFF"
+msgstr "KAPALI"
+
+msgid "Event editor"
+msgstr "Olay düzenleyicisi"
+
+msgid "Export event"
+msgstr "Olayı dışa aktar"
 
 msgid "Select a template"
 msgstr "Bir şablon seçin"
@@ -6600,27 +6600,6 @@ msgstr "\"%s\" adında bir sayfa zaten var, lütfen başka bir adla yeniden adla
 msgid "No databases selected."
 msgstr "Seçilen veritabanları yok."
 
-msgid "The event was dropped immediately after creation."
-msgstr "Olay oluşturulduktan hemen sonra kaldırıldı."
-
-msgid "Add event"
-msgstr "Olay ekle"
-
-msgid "Edit event"
-msgstr "Olay düzenle"
-
-msgid "Error in processing request:"
-msgstr "İstek işlemede hata:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "%2$s veritabanında %1$s adıyla olay bulunamadı."
-
-msgid "Export of event %s"
-msgstr "%s olayını dışa aktarma"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "İstek işlenirken hata oldu: %2$s veritabanında %1$s adıyla olay bulunamadı."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Dışa aktarma eklentileri yüklenemedi, lütfen kurulumunuzu denetleyin!"
 
@@ -6641,6 +6620,9 @@ msgstr "Yordam ekle"
 
 msgid "Edit routine"
 msgstr "Yordamı düzenle"
+
+msgid "Error in processing request:"
+msgstr "İstek işlemede hata:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "%2$s veritabanında bulunan %1$s adında yordam yok. Bu yordamı düzenlemek için gerekli yetkiler yetersiz olabilir."
@@ -6695,6 +6677,24 @@ msgstr "Eğer herhangi bir sorunla karşılaşırsanız lütfen hata raporunu el
 
 msgid "You may want to refresh the page."
 msgstr "Sayfayı yenilemek isteyebilirsiniz."
+
+msgid "Export of event %s"
+msgstr "%s olayını dışa aktarma"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "İstek işlenirken hata oldu: %2$s veritabanında %1$s adıyla olay bulunamadı."
+
+msgid "The event was dropped immediately after creation."
+msgstr "Olay oluşturulduktan hemen sonra kaldırıldı."
+
+msgid "Add event"
+msgstr "Olay ekle"
+
+msgid "Edit event"
+msgstr "Olay düzenle"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "%2$s veritabanında %1$s adıyla olay bulunamadı."
 
 msgid "Bad type!"
 msgstr "Kötü tür!"
@@ -8642,53 +8642,26 @@ msgstr "İç ilişki kaldırıldı."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Şema eklentileri yüklenemedi, lütfen kurulumunuzu denetleyin!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Geçersiz yordam türü: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Şurada belirtilen sorgu başarısız oldu: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL çıktısı: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Üzgünüm, kaldırılmış olayı geri yükleme başarısız oldu."
-
-msgid "The backed up query was:"
-msgstr "Yedeklenmiş sorgu:"
-
-msgid "Event %1$s has been modified."
-msgstr "Olay %1$s değiştirildi."
-
-msgid "Event %1$s has been created."
-msgstr "Olay %1$s oluşturuldu."
+msgid "Routine %1$s has been created."
+msgstr "Yordam %1$s oluşturuldu."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "İsteğiniz işlenirken bir ya da daha fazla hata meydana geldi:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Tanımlayıcı \"kullanıcıadı@anamakineadı\" biçiminde olmak zorundadır!"
-
-msgid "You must provide an event name!"
-msgstr "Bir olay adı vermek zorundasınız!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Her olay için geçerli aralık değeri vermek zorundasınız."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Olay için geçerli bir yürütme zamanı vermek zorundasınız."
-
-msgid "You must provide a valid type for the event."
-msgstr "Olay için geçerli bir tür vermek zorundasınız."
-
-msgid "You must provide an event definition."
-msgstr "Bir olay tanımı vermek zorundasınız."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Geçersiz yordam türü: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Yordam %1$s oluşturuldu."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Üzgünüm, kaldırılmış yordamı geri yükleme başarısız oldu."
+
+msgid "The backed up query was:"
+msgstr "Yedeklenmiş sorgu:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Yordam %1$s değiştirildi. Yetkiler ayarlandı."
@@ -8707,6 +8680,9 @@ msgstr "ENUM, SET, VARCHAR ve VARBINARY türünün yordam parametreleri için uz
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Yordam için geçerli bir dönüş türü vermek zorundasınız."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Tanımlayıcı \"kullanıcıadı@anamakineadı\" biçiminde olmak zorundadır!"
 
 msgid "Invalid routine type!"
 msgstr "Geçersiz yordam türü!"
@@ -8895,6 +8871,30 @@ msgstr "Çok fazla hata mesajı, bazıları görüntülenmedi."
 
 msgid "Report"
 msgstr "Raporla"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Üzgünüm, kaldırılmış olayı geri yükleme başarısız oldu."
+
+msgid "Event %1$s has been modified."
+msgstr "Olay %1$s değiştirildi."
+
+msgid "Event %1$s has been created."
+msgstr "Olay %1$s oluşturuldu."
+
+msgid "You must provide an event name!"
+msgstr "Bir olay adı vermek zorundasınız!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Her olay için geçerli aralık değeri vermek zorundasınız."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Olay için geçerli bir yürütme zamanı vermek zorundasınız."
+
+msgid "You must provide a valid type for the event."
+msgstr "Olay için geçerli bir tür vermek zorundasınız."
+
+msgid "You must provide an event definition."
+msgstr "Bir olay tanımı vermek zorundasınız."
 
 msgid "Cannot log in to the database server."
 msgstr "Veritabanı sunucusuna oturum açılamıyor."

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/lo.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/lo.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-08-01 23:19+0000\nLast-Translator: BoneNI <bounkirdni@gmail.com>\nLanguage-Team: Lao <https://hosted.weblate.org/projects/phpmyadmin/master/lo/>\nLanguage: lo\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-08-01 23:19+0000\nLast-Translator: BoneNI <bounkirdni@gmail.com>\nLanguage-Team: Lao <https://hosted.weblate.org/projects/phpmyadmin/master/lo/>\nLanguage: lo\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "ຕ້ອງເປີດໃຊ້ງານ Javascript ເພື່ອໄປຕໍ່!"
@@ -683,89 +683,6 @@ msgstr "ເລືອກໜ້າ"
 msgid "Select export relational type:"
 msgstr "ເລືອກປະເພດຄວາມສຳພັນທີ່ຈະສົ່ງອອກ:"
 
-msgid "Details"
-msgstr "ລາຍລະອຽດ"
-
-msgid "Event name"
-msgstr "ຊື່ Event"
-
-msgid "Status"
-msgstr "ສະຖານະ"
-
-msgid "Event type"
-msgstr "ປະເພດເຫດການ"
-
-msgid "Change to %s"
-msgstr "ປ່ຽນເປັນ %s"
-
-msgid "Execute at"
-msgstr "ປະມວນຜົນເມື່ອ"
-
-msgid "Execute every"
-msgstr "ປະມວນຜົນທຸກໆ"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "ເລີ່ມ"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "ສິ້ນສຸດ"
-
-msgid "Definition"
-msgstr "ຄຳນິຍາມ (Definition)"
-
-msgid "Format"
-msgstr "ຮູບແບບ"
-
-msgid "On completion preserve"
-msgstr "ໃຫ້ຮັກສາໄວ້ເມື່ອສຳເລັດ"
-
-msgid "Definer"
-msgstr "ຜູ້ກຳນົດ"
-
-msgid "Events"
-msgstr "ອີເວັ້ນ (Events)"
-
-msgid "Check all"
-msgstr "ເລືອກທັງໝົດ"
-
-msgid "Export"
-msgstr "ສົ່ງອອກ"
-
-msgid "Drop"
-msgstr "ລຶບ"
-
-msgid "Create new event"
-msgstr "ສ້າງເຫດການໃໝ່"
-
-msgid "There are no events to display."
-msgstr "ບໍ່ມີ Event ທີ່ຈະສະແດງ."
-
-msgid "Event scheduler status"
-msgstr "ສະຖານະການຕັ້ງເວລາ Event"
-
-msgid "Click to toggle"
-msgstr "ຄລິກເພື່ອເປີດ/ປິດ"
-
-msgid "ON"
-msgstr "ເປີດ"
-
-msgid "OFF"
-msgstr "ປິດ"
-
-msgid "Event editor"
-msgstr "ແກ້ໄຂເຫດການ"
-
-msgid "Loading…"
-msgstr "ກຳລັງໂຫຼດ…"
-
-msgid "Save changes"
-msgstr "ບັນທຶກການປ່ຽນແປງ"
-
-msgid "Export event"
-msgstr "ສົ່ງອອກເຫດການ"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ ຈະກາຍເປັນຊື່ເຊີເວີ ແລະ @DATABASE@ ຈະກາຍເປັນຊື່ຖານຂໍ້ມູນ."
 
@@ -946,11 +863,17 @@ msgstr "routine"
 msgid "Edit privileges"
 msgstr "ແກ້ໄຂສິດ"
 
+msgid "Export"
+msgstr "ສົ່ງອອກ"
+
 msgid "No user found."
 msgstr "ບໍ່ພົບຜູ້ໃຊ້."
 
 msgid "With selected:"
 msgstr "ກັບລາຍການທີ່ເລືອກ:"
+
+msgid "Check all"
+msgstr "ເລືອກທັງໝົດ"
 
 msgid "Not enough privilege to view users."
 msgstr "ບໍ່ມີສິດພຽງພໍໃນການເບິ່ງລາຍຊື່ຜູ້ໃຊ້."
@@ -958,8 +881,14 @@ msgstr "ບໍ່ມີສິດພຽງພໍໃນການເບິ່ງລ
 msgid "Add user account"
 msgstr "ເພີ່ມບັນຊີຜູ້ໃຊ້"
 
+msgid "Details"
+msgstr "ລາຍລະອຽດ"
+
 msgid "Routine name"
 msgstr "ຊື່ Routine"
+
+msgid "Change to %s"
+msgstr "ປ່ຽນເປັນ %s"
 
 msgid "Parameters"
 msgstr "ພາລາມິເຕີ (Parameters)"
@@ -985,11 +914,20 @@ msgstr "ຕົວເລືອກການສົ່ງຄ່າກັບ"
 msgid "Charset"
 msgstr "ຊຸດຕົວອັກສອນ (Charset)"
 
+msgid "Definition"
+msgstr "ຄຳນິຍາມ (Definition)"
+
+msgid "Format"
+msgstr "ຮູບແບບ"
+
 msgid "Is deterministic"
 msgstr "ເປັນ Deterministic"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "ເຈົ້າບໍ່ມີສິດພຽງພໍທີ່ຈະດຳເນີນການນີ້; ກະລຸນາເບິ່ງລາຍລະອຽດໃນເອກະສານປະກອບ."
+
+msgid "Definer"
+msgstr "ຜູ້ກຳນົດ"
 
 msgid "Security type"
 msgstr "ປະເພດຄວາມປອດໄພ"
@@ -1009,6 +947,9 @@ msgstr "Routine ນີ້ບໍ່ຕ້ອງການພາຣາມິເຕ�
 msgid "Routines"
 msgstr "ຣູທີນ (Routines)"
 
+msgid "Drop"
+msgstr "ລຶບ"
+
 msgid "Search"
 msgstr "ຄົ້ນຫາ"
 
@@ -1023,6 +964,12 @@ msgstr "ຄ່າທີ່ສົ່ງກັບ"
 
 msgid "Routine editor"
 msgstr "ແກ້ໄຂ Routine"
+
+msgid "Loading…"
+msgstr "ກຳລັງໂຫຼດ…"
+
+msgid "Save changes"
+msgstr "ບັນທຶກການປ່ຽນແປງ"
 
 msgid "Export routine"
 msgstr "ສົ່ງອອກ Routine"
@@ -1273,6 +1220,12 @@ msgstr "ສ້າງເມື່ອ"
 msgid "Updated"
 msgstr "ອັບເດດເມື່ອ"
 
+msgid "Status"
+msgstr "ສະຖານະ"
+
+msgid "Click to toggle"
+msgstr "ຄລິກເພື່ອເປີດ/ປິດ"
+
 msgid "active"
 msgstr "ເຮັດວຽກຢູ່"
 
@@ -1418,6 +1371,53 @@ msgstr "ມີບາງຢ່າງຜິດພາດ"
 
 msgid "Go back"
 msgstr "ກັບຄືນ"
+
+msgid "Event name"
+msgstr "ຊື່ Event"
+
+msgid "Event type"
+msgstr "ປະເພດເຫດການ"
+
+msgid "Execute at"
+msgstr "ປະມວນຜົນເມື່ອ"
+
+msgid "Execute every"
+msgstr "ປະມວນຜົນທຸກໆ"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "ເລີ່ມ"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "ສິ້ນສຸດ"
+
+msgid "On completion preserve"
+msgstr "ໃຫ້ຮັກສາໄວ້ເມື່ອສຳເລັດ"
+
+msgid "Events"
+msgstr "ອີເວັ້ນ (Events)"
+
+msgid "Create new event"
+msgstr "ສ້າງເຫດການໃໝ່"
+
+msgid "There are no events to display."
+msgstr "ບໍ່ມີ Event ທີ່ຈະສະແດງ."
+
+msgid "Event scheduler status"
+msgstr "ສະຖານະການຕັ້ງເວລາ Event"
+
+msgid "ON"
+msgstr "ເປີດ"
+
+msgid "OFF"
+msgstr "ປິດ"
+
+msgid "Event editor"
+msgstr "ແກ້ໄຂເຫດການ"
+
+msgid "Export event"
+msgstr "ສົ່ງອອກເຫດການ"
 
 msgid "Select a template"
 msgstr "ເລືອກແມ່ແບບ"
@@ -6594,27 +6594,6 @@ msgstr "ມີໜ້າຊື່ \"%s\" ຢູ່ແລ້ວ, ກະລຸນ�
 msgid "No databases selected."
 msgstr "ບໍ່ມີຖານຂໍ້ມູນທີ່ຖືກເລືອກ."
 
-msgid "The event was dropped immediately after creation."
-msgstr "ເຫດການຖືກລຶບອອກທັນທີຫຼັງຈາກທີ່ສ້າງ."
-
-msgid "Add event"
-msgstr "ເພີ່ມ Event"
-
-msgid "Edit event"
-msgstr "ແກ້ໄຂ Event"
-
-msgid "Error in processing request:"
-msgstr "ເກີດຂໍ້ຜິດພາດໃນການປະມວນຜົນຄຳຮ້ອງຂໍ:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "ບໍ່ພົບ Event ທີ່ມີຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s."
-
-msgid "Export of event %s"
-msgstr "ສົ່ງອອກ Event %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "ຂໍ້ຜິດພາດ: ບໍ່ພົບ event ຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "ບໍ່ສາມາດໂຫຼດປລັກອິນສົ່ງອອກໄດ້!"
 
@@ -6635,6 +6614,9 @@ msgstr "ເພີ່ມ Routine"
 
 msgid "Edit routine"
 msgstr "ແກ້ໄຂ Routine"
+
+msgid "Error in processing request:"
+msgstr "ເກີດຂໍ້ຜິດພາດໃນການປະມວນຜົນຄຳຮ້ອງຂໍ:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "ບໍ່ພົບ Routine ທີ່ມີຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s. ທ່ານອາດຈະບໍ່ມີສິດພຽງພໍໃນການແກ້ໄຂ Routine ນີ້."
@@ -6689,6 +6671,24 @@ msgstr "ຫາກທ່ານພົບກັບບັນຫາໃດໆ ກະ�
 
 msgid "You may want to refresh the page."
 msgstr "ທ່ານອາດຈະຕ້ອງການໂຫຼດໜ້ານີ້ໃໝ່ (Refresh)."
+
+msgid "Export of event %s"
+msgstr "ສົ່ງອອກ Event %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "ຂໍ້ຜິດພາດ: ບໍ່ພົບ event ຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s."
+
+msgid "The event was dropped immediately after creation."
+msgstr "ເຫດການຖືກລຶບອອກທັນທີຫຼັງຈາກທີ່ສ້າງ."
+
+msgid "Add event"
+msgstr "ເພີ່ມ Event"
+
+msgid "Edit event"
+msgstr "ແກ້ໄຂ Event"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "ບໍ່ພົບ Event ທີ່ມີຊື່ %1$s ໃນຖານຂໍ້ມູນ %2$s."
 
 msgid "Bad type!"
 msgstr "ປະເພດບໍ່ຖືກຕ້ອງ!"
@@ -8632,53 +8632,26 @@ msgstr "ລຶບຄວາມສຳພັນພາຍໃນແລ້ວ."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "ບໍ່ສາມາດໂຫຼດປລັກອິນ schema ໄດ້!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "ປະເພດ Routine ບໍ່ຖືກຕ້ອງ: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "ຄຳສັ່ງ Query ຕໍ່ໄປນີ້ລົ້ມເຫຼວ: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL ແຈ້ງວ່າ: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "ຂໍໂທດ, ບໍ່ສາມາດກູ້ຄືນ Event ທີ່ຖືກລຶບໄປໄດ້."
-
-msgid "The backed up query was:"
-msgstr "Query ທີ່ສຳຮອງໄວ້ຄື:"
-
-msgid "Event %1$s has been modified."
-msgstr "Event %1$s ຖືກແກ້ໄຂແລ້ວ."
-
-msgid "Event %1$s has been created."
-msgstr "Event %1$s ຖືກສ້າງແລ້ວ."
+msgid "Routine %1$s has been created."
+msgstr "Routine %1$s ຖືກສ້າງແລ້ວ."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "ເກີດຂໍ້ຜິດພາດໜຶ່ງຢ່າງ ຫຼື ຫຼາຍຢ່າງໃນຂະນະທີ່ກຳລັງປະມວນຜົນຄຳຮ້ອງຂໍຂອງທ່ານ:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "ຜູ້ກຳນົດຕ້ອງຢູ່ໃນຮູບແບບ \"ຊື່ຜູ້ໃຊ້@ຊື່ໂຮສ\"!"
-
-msgid "You must provide an event name!"
-msgstr "ທ່ານຕ້ອງລະບຸຊື່ Event!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "ທ່ານຕ້ອງລະບຸຄ່າຊ່ວງເວລາ (Interval) ທີ່ຖືກຕ້ອງໃຫ້ກັບ Event."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "ທ່ານຕ້ອງລະບຸເວລາປະມວນຜົນທີ່ຖືກຕ້ອງໃຫ້ກັບ Event."
-
-msgid "You must provide a valid type for the event."
-msgstr "ທ່ານຕ້ອງລະບຸປະເພດທີ່ຖືກຕ້ອງໃຫ້ກັບ Event."
-
-msgid "You must provide an event definition."
-msgstr "ທ່ານຕ້ອງລະບຸຄຳນິຍາມ (Definition) ໃຫ້ກັບ Event."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "ປະເພດ Routine ບໍ່ຖືກຕ້ອງ: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Routine %1$s ຖືກສ້າງແລ້ວ."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "ຂໍໂທດ, ບໍ່ສາມາດກູ້ຄືນ Routine ທີ່ຖືກລຶບໄປໄດ້."
+
+msgid "The backed up query was:"
+msgstr "Query ທີ່ສຳຮອງໄວ້ຄື:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Routine %1$s ຖືກແກ້ໄຂແລ້ວ. ສິດການໃຊ້ງານໄດ້ຖືກປັບປຸງແລ້ວ."
@@ -8697,6 +8670,9 @@ msgstr "ທ່ານຕ້ອງລະບຸ ຄວາມຍາວ/ຄ່າ ໃ
 
 msgid "You must provide a valid return type for the routine."
 msgstr "ທ່ານຕ້ອງລະບຸປະເພດການສົ່ງຄ່າກັບ (Return type) ທີ່ຖືກຕ້ອງໃຫ້ກັບ Routine."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "ຜູ້ກຳນົດຕ້ອງຢູ່ໃນຮູບແບບ \"ຊື່ຜູ້ໃຊ້@ຊື່ໂຮສ\"!"
 
 msgid "Invalid routine type!"
 msgstr "ປະເພດຣູທີນບໍ່ຖືກຕ້ອງ!"
@@ -8884,6 +8860,30 @@ msgstr "ຂໍ້ຄວາມຜິດພາດຫຼາຍເກີນໄປ, �
 
 msgid "Report"
 msgstr "ລາຍງານ"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "ຂໍໂທດ, ບໍ່ສາມາດກູ້ຄືນ Event ທີ່ຖືກລຶບໄປໄດ້."
+
+msgid "Event %1$s has been modified."
+msgstr "Event %1$s ຖືກແກ້ໄຂແລ້ວ."
+
+msgid "Event %1$s has been created."
+msgstr "Event %1$s ຖືກສ້າງແລ້ວ."
+
+msgid "You must provide an event name!"
+msgstr "ທ່ານຕ້ອງລະບຸຊື່ Event!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "ທ່ານຕ້ອງລະບຸຄ່າຊ່ວງເວລາ (Interval) ທີ່ຖືກຕ້ອງໃຫ້ກັບ Event."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "ທ່ານຕ້ອງລະບຸເວລາປະມວນຜົນທີ່ຖືກຕ້ອງໃຫ້ກັບ Event."
+
+msgid "You must provide a valid type for the event."
+msgstr "ທ່ານຕ້ອງລະບຸປະເພດທີ່ຖືກຕ້ອງໃຫ້ກັບ Event."
+
+msgid "You must provide an event definition."
+msgstr "ທ່ານຕ້ອງລະບຸຄຳນິຍາມ (Definition) ໃຫ້ກັບ Event."
 
 msgid "Cannot log in to the database server."
 msgstr "ບໍ່ສາມາດເຂົ້າສູ່ລະບົບເຊີເວີຖານຂໍ້ມູນໄດ້."

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/zh_CN.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/zh_CN.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-06-24 15:01+0000\nLast-Translator: reducedradius <flytothehighest@users.noreply.hosted.weblate.org>\nLanguage-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hans/>\nLanguage: zh_CN\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.7.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-10-15 09:51+0000\nLast-Translator: Lesterbor <qianfan@users.noreply.hosted.weblate.org>\nLanguage-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hans/>\nLanguage: zh_CN\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "该处必须启用 Javascript！"
@@ -683,83 +683,6 @@ msgstr "选择页"
 msgid "Select export relational type:"
 msgstr "选择导出关系类型："
 
-msgid "Details"
-msgstr "详细"
-
-msgid "Event name"
-msgstr "事件名称"
-
-msgid "Status"
-msgstr "状态"
-
-msgid "Event type"
-msgstr "事件类型"
-
-msgid "Change to %s"
-msgstr "改为 %s"
-
-msgid "Execute at"
-msgstr "运行时间"
-
-msgid "Execute every"
-msgstr "运行周期"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "起始时间"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "终止时间"
-
-msgid "Definition"
-msgstr "定义"
-
-msgid "Format"
-msgstr "格式"
-
-msgid "On completion preserve"
-msgstr "过期后禁用事件而不删除"
-
-msgid "Definer"
-msgstr "用户"
-
-msgid "Events"
-msgstr "事件"
-
-msgid "Check all"
-msgstr "全选"
-
-msgid "Export"
-msgstr "导出"
-
-msgid "Drop"
-msgstr "删除"
-
-msgid "Create new event"
-msgstr "新建视图"
-
-msgid "There are no events to display."
-msgstr "没有事件。"
-
-msgid "Event scheduler status"
-msgstr "事件计划状态"
-
-msgid "Click to toggle"
-msgstr "点击切换"
-
-msgid "ON"
-msgstr "开"
-
-msgid "OFF"
-msgstr "关"
-
-msgid "Loading…"
-msgstr "正在加载…"
-
-msgid "Save changes"
-msgstr "保存修改"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@将变成服务器名称，@DATABASE@ 将变成数据库名。"
 
@@ -937,11 +860,17 @@ msgstr "程序"
 msgid "Edit privileges"
 msgstr "修改权限"
 
+msgid "Export"
+msgstr "导出"
+
 msgid "No user found."
 msgstr "未找到用户。"
 
 msgid "With selected:"
 msgstr "选中项："
+
+msgid "Check all"
+msgstr "全选"
 
 msgid "Not enough privilege to view users."
 msgstr "没有足够的权限来查看用户。"
@@ -949,8 +878,14 @@ msgstr "没有足够的权限来查看用户。"
 msgid "Add user account"
 msgstr "新增用户账户"
 
+msgid "Details"
+msgstr "详细"
+
 msgid "Routine name"
 msgstr "程序名称"
+
+msgid "Change to %s"
+msgstr "改为 %s"
 
 msgid "Parameters"
 msgstr "参数"
@@ -976,11 +911,20 @@ msgstr "返回选项"
 msgid "Charset"
 msgstr "字符集"
 
+msgid "Definition"
+msgstr "定义"
+
+msgid "Format"
+msgstr "格式"
+
 msgid "Is deterministic"
 msgstr "是否固定"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "您没有足够的权限执行此操作，请参考说明文档了解详情。"
+
+msgid "Definer"
+msgstr "用户"
 
 msgid "Security type"
 msgstr "安全类型"
@@ -997,6 +941,9 @@ msgstr "函数"
 msgid "Routines"
 msgstr "程序"
 
+msgid "Drop"
+msgstr "删除"
+
 msgid "Search"
 msgstr "搜索"
 
@@ -1008,6 +955,12 @@ msgstr "没有程序。"
 
 msgid "Returns"
 msgstr "返回"
+
+msgid "Loading…"
+msgstr "正在加载…"
+
+msgid "Save changes"
+msgstr "保存修改"
 
 msgid "Execute routine"
 msgstr "运行程序"
@@ -1047,6 +1000,9 @@ msgstr "使用正则表达式"
 
 msgid "Options:"
 msgstr "选项："
+
+msgid "include hex matches"
+msgstr "包括hex匹配"
 
 msgid "Inside tables:"
 msgstr "于下列表："
@@ -1248,6 +1204,12 @@ msgstr "创建"
 msgid "Updated"
 msgstr "更新"
 
+msgid "Status"
+msgstr "状态"
+
+msgid "Click to toggle"
+msgstr "点击切换"
+
 msgid "active"
 msgstr "启用"
 
@@ -1393,6 +1355,47 @@ msgstr "出了点问题"
 
 msgid "Go back"
 msgstr "回去"
+
+msgid "Event name"
+msgstr "事件名称"
+
+msgid "Event type"
+msgstr "事件类型"
+
+msgid "Execute at"
+msgstr "运行时间"
+
+msgid "Execute every"
+msgstr "运行周期"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "起始时间"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "终止时间"
+
+msgid "On completion preserve"
+msgstr "过期后禁用事件而不删除"
+
+msgid "Events"
+msgstr "事件"
+
+msgid "Create new event"
+msgstr "新建视图"
+
+msgid "There are no events to display."
+msgstr "没有事件。"
+
+msgid "Event scheduler status"
+msgstr "事件计划状态"
+
+msgid "ON"
+msgstr "开"
+
+msgid "OFF"
+msgstr "关"
 
 msgid "Select a template"
 msgstr "选择一个模板"
@@ -6498,27 +6501,6 @@ msgstr "已经有名为 “%s” 的页面了，请重新命名。"
 msgid "No databases selected."
 msgstr "没有已选择的数据库。"
 
-msgid "The event was dropped immediately after creation."
-msgstr "本事件在创建后立刻被删除。"
-
-msgid "Add event"
-msgstr "添加事件"
-
-msgid "Edit event"
-msgstr "编辑事件"
-
-msgid "Error in processing request:"
-msgstr "处理请求时遇到错误:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "在数据库 %2$s 中找不到名为 %1$s 的事件。"
-
-msgid "Export of event %s"
-msgstr "导出事件 %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "处理请求时出错：在数据库 %2$s 中找不到名为 %1$s 的事件。"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "无法加载导出插件，请检查安装！"
 
@@ -6539,6 +6521,9 @@ msgstr "添加程序"
 
 msgid "Edit routine"
 msgstr "编辑程序"
+
+msgid "Error in processing request:"
+msgstr "处理请求时遇到错误:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "在数据库%2$s中找不到名称为%1$s的例程。您可能缺少编辑此例程的必要权限。"
@@ -6593,6 +6578,24 @@ msgstr "如果您遇到问题，请手动提交漏洞报告。"
 
 msgid "You may want to refresh the page."
 msgstr "您需要刷新当前页面。"
+
+msgid "Export of event %s"
+msgstr "导出事件 %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "处理请求时出错：在数据库 %2$s 中找不到名为 %1$s 的事件。"
+
+msgid "The event was dropped immediately after creation."
+msgstr "本事件在创建后立刻被删除。"
+
+msgid "Add event"
+msgstr "添加事件"
+
+msgid "Edit event"
+msgstr "编辑事件"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "在数据库 %2$s 中找不到名为 %1$s 的事件。"
 
 msgid "Bad type!"
 msgstr "类型无效！"
@@ -8497,53 +8500,26 @@ msgstr "已移除内联关系。"
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "无法加载schema插件，请检查您的安装！"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "无效的程序类型: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "下列查询失败了: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL 返回： "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "抱歉，恢复已删除的事件失败。"
-
-msgid "The backed up query was:"
-msgstr "已备份的查询为:"
-
-msgid "Event %1$s has been modified."
-msgstr "已修改事件 %1$s 。"
-
-msgid "Event %1$s has been created."
-msgstr "已创建事件 %1$s 。"
+msgid "Routine %1$s has been created."
+msgstr "已创建程序 %1$s 。"
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "处理请求时发生了一个或多个错误:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "用户必须是 \"用户名@主机名\" 格式！"
-
-msgid "You must provide an event name!"
-msgstr "请输入事件名称!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "请设置一个有效的运行周期。"
-
-msgid "You must provide a valid execution time for the event."
-msgstr "请设置一个有效的运行时间。"
-
-msgid "You must provide a valid type for the event."
-msgstr "请选择一个有效的事件类型。"
-
-msgid "You must provide an event definition."
-msgstr "请输入事件定义。"
-
-msgid "Invalid routine type: \"%s\""
-msgstr "无效的程序类型: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "已创建程序 %1$s 。"
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "抱歉，恢复已删除的程序失败。"
+
+msgid "The backed up query was:"
+msgstr "已备份的查询为:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "已修改程序 %1$s 。已调整权限。"
@@ -8562,6 +8538,9 @@ msgstr "请设置 ENUM、SET、VARCHAR 和 VARBINARY 类型参数的长度/值�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "请设置一个有效的返回类型。"
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "用户必须是 \"用户名@主机名\" 格式！"
 
 msgid "You must provide a routine name!"
 msgstr "需要程序名称!"
@@ -8746,6 +8725,30 @@ msgstr "错误信息太多，部分未显示。"
 
 msgid "Report"
 msgstr "报告"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "抱歉，恢复已删除的事件失败。"
+
+msgid "Event %1$s has been modified."
+msgstr "已修改事件 %1$s 。"
+
+msgid "Event %1$s has been created."
+msgstr "已创建事件 %1$s 。"
+
+msgid "You must provide an event name!"
+msgstr "请输入事件名称!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "请设置一个有效的运行周期。"
+
+msgid "You must provide a valid execution time for the event."
+msgstr "请设置一个有效的运行时间。"
+
+msgid "You must provide a valid type for the event."
+msgstr "请选择一个有效的事件类型。"
+
+msgid "You must provide an event definition."
+msgstr "请输入事件定义。"
 
 msgid "Cannot log in to the database server."
 msgstr "无法登录 MySQL 服务器。"

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/da.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/da.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Danish <https://hosted.weblate.org/projects/phpmyadmin/master/da/>\nLanguage: da\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Danish <https://hosted.weblate.org/projects/phpmyadmin/master/da/>\nLanguage: da\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Herefter skal JavaScript være slået til!"
@@ -613,77 +613,6 @@ msgstr "Nyt sidenavn"
 msgid "Select page"
 msgstr "Vælg side"
 
-msgid "Details"
-msgstr "Detaljer"
-
-msgid "Event name"
-msgstr "Hændelsesnavn"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Event type"
-msgstr "Hændelsestype"
-
-msgid "Change to %s"
-msgstr "Ændr til %s"
-
-msgid "Execute at"
-msgstr "Udfør per"
-
-msgid "Execute every"
-msgstr "Udfør hver"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Start"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Slut"
-
-msgid "Definition"
-msgstr "Definition"
-
-msgid "Format"
-msgstr "Format"
-
-msgid "On completion preserve"
-msgstr "Efter udførsel bevar"
-
-msgid "Definer"
-msgstr "Opretter"
-
-msgid "Events"
-msgstr "Hændelser"
-
-msgid "Check all"
-msgstr "Vælg alle"
-
-msgid "Export"
-msgstr "Eksportér"
-
-msgid "Drop"
-msgstr "Slet"
-
-msgid "There are no events to display."
-msgstr "Der er ingen hændelser at vise."
-
-msgid "Event scheduler status"
-msgstr "Status for hændelsesskeduler"
-
-msgid "Click to toggle"
-msgstr "Klik for at skifte"
-
-msgid "ON"
-msgstr "TIL"
-
-msgid "OFF"
-msgstr "FRA"
-
-msgid "Loading…"
-msgstr "Indlæser…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Eksporterer tabeller fra database \"%s\""
 
@@ -813,11 +742,17 @@ msgstr "rutine"
 msgid "Edit privileges"
 msgstr "Ret privilegier"
 
+msgid "Export"
+msgstr "Eksportér"
+
 msgid "No user found."
 msgstr "Ingen bruger fundet."
 
 msgid "With selected:"
 msgstr "Med det markerede:"
+
+msgid "Check all"
+msgstr "Vælg alle"
 
 msgid "Not enough privilege to view users."
 msgstr "Ikke tilstrækkelige privilegier til at se brugere."
@@ -825,8 +760,14 @@ msgstr "Ikke tilstrækkelige privilegier til at se brugere."
 msgid "Add user account"
 msgstr "Tilføj bruger"
 
+msgid "Details"
+msgstr "Detaljer"
+
 msgid "Routine name"
 msgstr "Rutinenavn"
+
+msgid "Change to %s"
+msgstr "Ændr til %s"
 
 msgid "Parameters"
 msgstr "Parametre"
@@ -852,8 +793,17 @@ msgstr "Retur-indstillinger"
 msgid "Charset"
 msgstr "Tegnsæt"
 
+msgid "Definition"
+msgstr "Definition"
+
+msgid "Format"
+msgstr "Format"
+
 msgid "Is deterministic"
 msgstr "Er deterministisk"
+
+msgid "Definer"
+msgstr "Opretter"
 
 msgid "Security type"
 msgstr "Sikkerhedstype"
@@ -870,6 +820,9 @@ msgstr "Funktion"
 msgid "Routines"
 msgstr "Rutiner"
 
+msgid "Drop"
+msgstr "Slet"
+
 msgid "Search"
 msgstr "Søg"
 
@@ -878,6 +831,9 @@ msgstr "Der er ingen rutiner at vise."
 
 msgid "Returns"
 msgstr "Returværdier"
+
+msgid "Loading…"
+msgstr "Indlæser…"
 
 msgid "Execute routine"
 msgstr "Udfør rutine"
@@ -1117,6 +1073,12 @@ msgstr "Oprettet"
 msgid "Updated"
 msgstr "Opdateret"
 
+msgid "Status"
+msgstr "Status"
+
+msgid "Click to toggle"
+msgstr "Klik for at skifte"
+
 msgid "active"
 msgstr "aktiv"
 
@@ -1244,6 +1206,44 @@ msgstr "Indsend fejlrapport"
 
 msgid "Send error report"
 msgstr "Send fejlrapporter"
+
+msgid "Event name"
+msgstr "Hændelsesnavn"
+
+msgid "Event type"
+msgstr "Hændelsestype"
+
+msgid "Execute at"
+msgstr "Udfør per"
+
+msgid "Execute every"
+msgstr "Udfør hver"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Slut"
+
+msgid "On completion preserve"
+msgstr "Efter udførsel bevar"
+
+msgid "Events"
+msgstr "Hændelser"
+
+msgid "There are no events to display."
+msgstr "Der er ingen hændelser at vise."
+
+msgid "Event scheduler status"
+msgstr "Status for hændelsesskeduler"
+
+msgid "ON"
+msgstr "TIL"
+
+msgid "OFF"
+msgstr "FRA"
 
 msgid "Select a template"
 msgstr "Vælg en skabelon"
@@ -5600,21 +5600,6 @@ msgstr "Viser rækkerne %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Ingen databaser valgt."
 
-msgid "Add event"
-msgstr "Tilføj hændelse"
-
-msgid "Edit event"
-msgstr "Rediger hændelse"
-
-msgid "Error in processing request:"
-msgstr "Fejl i udførsel af forespørgsel:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Ingen hændelse med navnet %1$s fundet i database %2$s."
-
-msgid "Export of event %s"
-msgstr "Eksport af hændelse %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Kunne ikke indlæse eksportplugins, tjek venligst din installation!"
 
@@ -5629,6 +5614,9 @@ msgstr "Tilføj rutine"
 
 msgid "Edit routine"
 msgstr "Rediger rutine"
+
+msgid "Error in processing request:"
+msgstr "Fejl i udførsel af forespørgsel:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Ingen rutine med navnet %1$s fundet i database %2$s. Du kan mangle de nødvendige privilegier for at redigere denne rutine."
@@ -5677,6 +5665,18 @@ msgstr "Hvis du stødte på problemer, så indsend venligst en fejlrapport manue
 
 msgid "You may want to refresh the page."
 msgstr "Du skal muligvis genindlæse siden."
+
+msgid "Export of event %s"
+msgstr "Eksport af hændelse %s"
+
+msgid "Add event"
+msgstr "Tilføj hændelse"
+
+msgid "Edit event"
+msgstr "Rediger hændelse"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Ingen hændelse med navnet %1$s fundet i database %2$s."
 
 msgid "Bad type!"
 msgstr "Forkert type!"
@@ -7208,53 +7208,26 @@ msgstr "Den interne relation er blevet fjernet."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Kunne ikke indlæse skemaudvidelser, tjek venligst din installation!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Invalid rutinetype: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Den følgende forespørgsel fejlede: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL returnerede: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Beklager, det lykkedes ikke at genetablere den slettede hændelse."
-
-msgid "The backed up query was:"
-msgstr "Den gemte forespørgsel var:"
-
-msgid "Event %1$s has been modified."
-msgstr "Hændelse \"%1$s\" er blevet ændret."
-
-msgid "Event %1$s has been created."
-msgstr "Hændelse %1$s er oprettet."
+msgid "Routine %1$s has been created."
+msgstr "Rutine %1$s er oprettet."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Der er opstået fejl under behandling af anmodningen:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Opretter skal være i formatet \"brugernavn@værtsnavn\"!"
-
-msgid "You must provide an event name!"
-msgstr "Du skal angive et hændelsesnavn!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Du skal angive en gyldig intervalværdi for hændelsen."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Du skal angive et gyldigt kørselstidspunkt for hændelsen."
-
-msgid "You must provide a valid type for the event."
-msgstr "Du skal angive en gyldig type for hændelsen."
-
-msgid "You must provide an event definition."
-msgstr "Du skal angive en hændelsesdefinition."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Invalid rutinetype: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Rutine %1$s er oprettet."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Beklager, det lykkedes ikke at genetablere den slettede rutine."
+
+msgid "The backed up query was:"
+msgstr "Den gemte forespørgsel var:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutine \"%1$s\" er blevet ændret. Privilegier er rettet til."
@@ -7273,6 +7246,9 @@ msgstr "Du skal angive længde/værdier for rutineparametre af typen ENUM, SET, 
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Du skal angive en gyldig returtype for rutinen."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Opretter skal være i formatet \"brugernavn@værtsnavn\"!"
 
 msgid "You must provide a routine name!"
 msgstr "Du skal angive et rutinenavn!"
@@ -7449,6 +7425,30 @@ msgstr "For mange fejlmeddelelser, nogle vises ikke."
 
 msgid "Report"
 msgstr "Rapport"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Beklager, det lykkedes ikke at genetablere den slettede hændelse."
+
+msgid "Event %1$s has been modified."
+msgstr "Hændelse \"%1$s\" er blevet ændret."
+
+msgid "Event %1$s has been created."
+msgstr "Hændelse %1$s er oprettet."
+
+msgid "You must provide an event name!"
+msgstr "Du skal angive et hændelsesnavn!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Du skal angive en gyldig intervalværdi for hændelsen."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Du skal angive et gyldigt kørselstidspunkt for hændelsen."
+
+msgid "You must provide a valid type for the event."
+msgstr "Du skal angive en gyldig type for hændelsen."
+
+msgid "You must provide an event definition."
+msgstr "Du skal angive en hændelsesdefinition."
 
 msgid "Access denied!"
 msgstr "Adgang nægtet!"

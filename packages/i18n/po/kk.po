@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/kk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/kk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Kazakh <https://hosted.weblate.org/projects/phpmyadmin/master/kk/>\nLanguage: kk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Kazakh <https://hosted.weblate.org/projects/phpmyadmin/master/kk/>\nLanguage: kk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Osy sátten bastap Javascript qosýly bolýy qajet!"
@@ -619,77 +619,6 @@ msgstr "Jańa bet aty"
 msgid "Select page"
 msgstr "Betti bólekteý"
 
-msgid "Details"
-msgstr "Egjeıler"
-
-msgid "Event name"
-msgstr "Oqıǵa aty"
-
-msgid "Status"
-msgstr "Mártebesi"
-
-msgid "Event type"
-msgstr "Oqıǵa túri"
-
-msgid "Change to %s"
-msgstr "%s úshin ózgertý"
-
-msgid "Execute at"
-msgstr "Oryndaý mezgili"
-
-msgid "Execute every"
-msgstr "Oryndaý kezi"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Bastaýy"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Sońy"
-
-msgid "Definition"
-msgstr "Anyqtamasy"
-
-msgid "Format"
-msgstr "Pishim"
-
-msgid "On completion preserve"
-msgstr "Aıaqtalǵannan keıin saqtap otyrý"
-
-msgid "Definer"
-msgstr "Anyqtaýshy"
-
-msgid "Events"
-msgstr "Oqıǵalar"
-
-msgid "Check all"
-msgstr "Barlyǵyn belgileý"
-
-msgid "Export"
-msgstr "Eksport"
-
-msgid "Drop"
-msgstr "Joıý"
-
-msgid "There are no events to display."
-msgstr "Munda beınelenetin oqıǵalar joq."
-
-msgid "Event scheduler status"
-msgstr "Oqıǵa josparlaýshy mártebesi"
-
-msgid "Click to toggle"
-msgstr "Aýystyrý úshin basyńyz"
-
-msgid "ON"
-msgstr "QOS"
-
-msgid "OFF"
-msgstr "ÓSH"
-
-msgid "Loading…"
-msgstr "Júktelýde…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Kestelerdi«%s» derekqorynan eksporttaý"
 
@@ -852,11 +781,17 @@ msgstr "rásim"
 msgid "Edit privileges"
 msgstr "Artyqshylyqtardy óńdeý"
 
+msgid "Export"
+msgstr "Eksport"
+
 msgid "No user found."
 msgstr "Paıdalanushy tabylmady."
 
 msgid "With selected:"
 msgstr "Bólektelgendermen:"
+
+msgid "Check all"
+msgstr "Barlyǵyn belgileý"
 
 msgid "Not enough privilege to view users."
 msgstr "Paıdalanýshylardy qaraý úshin artyqshylyqtar jetkiliksiz."
@@ -864,8 +799,14 @@ msgstr "Paıdalanýshylardy qaraý úshin artyqshylyqtar jetkiliksiz."
 msgid "Add user account"
 msgstr "Paıdalanushy tirkelgisin ústeý"
 
+msgid "Details"
+msgstr "Egjeıler"
+
 msgid "Routine name"
 msgstr "Rásim aty"
+
+msgid "Change to %s"
+msgstr "%s úshin ózgertý"
 
 msgid "Parameters"
 msgstr "Parametrler"
@@ -891,8 +832,17 @@ msgstr "Qaıtarym opsıalary"
 msgid "Charset"
 msgstr "Tańbalar jıyny"
 
+msgid "Definition"
+msgstr "Anyqtamasy"
+
+msgid "Format"
+msgstr "Pishim"
+
 msgid "Is deterministic"
 msgstr "Sheshýshi"
+
+msgid "Definer"
+msgstr "Anyqtaýshy"
 
 msgid "Security type"
 msgstr "Qaýipsizdik túri"
@@ -909,6 +859,9 @@ msgstr "Funksıa"
 msgid "Routines"
 msgstr "Rásimder"
 
+msgid "Drop"
+msgstr "Joıý"
+
 msgid "Search"
 msgstr "Izdeý"
 
@@ -917,6 +870,9 @@ msgstr "Munda beınelenetin rásimder joq."
 
 msgid "Returns"
 msgstr "Qaıtarady"
+
+msgid "Loading…"
+msgstr "Júktelýde…"
 
 msgid "Execute routine"
 msgstr "Rásimdi oryndaý"
@@ -1156,6 +1112,12 @@ msgstr "Jasaldy"
 msgid "Updated"
 msgstr "Jańartylǵan"
 
+msgid "Status"
+msgstr "Mártebesi"
+
+msgid "Click to toggle"
+msgstr "Aýystyrý úshin basyńyz"
+
 msgid "active"
 msgstr "belsendi"
 
@@ -1286,6 +1248,44 @@ msgstr "Qate esebin jiberý"
 
 msgid "Send error report"
 msgstr "Qate esebin jiberý"
+
+msgid "Event name"
+msgstr "Oqıǵa aty"
+
+msgid "Event type"
+msgstr "Oqıǵa túri"
+
+msgid "Execute at"
+msgstr "Oryndaý mezgili"
+
+msgid "Execute every"
+msgstr "Oryndaý kezi"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Bastaýy"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Sońy"
+
+msgid "On completion preserve"
+msgstr "Aıaqtalǵannan keıin saqtap otyrý"
+
+msgid "Events"
+msgstr "Oqıǵalar"
+
+msgid "There are no events to display."
+msgstr "Munda beınelenetin oqıǵalar joq."
+
+msgid "Event scheduler status"
+msgstr "Oqıǵa josparlaýshy mártebesi"
+
+msgid "ON"
+msgstr "QOS"
+
+msgid "OFF"
+msgstr "ÓSH"
 
 msgid "Select a template"
 msgstr "Úlgini bólekteńiz"
@@ -5786,21 +5786,6 @@ msgstr "%1$s - %2$s joldardy kórsetý."
 msgid "No databases selected."
 msgstr "Derekqorlar bólektelmegen."
 
-msgid "Add event"
-msgstr "Oqıǵa ústeý"
-
-msgid "Edit event"
-msgstr "Oqıǵany óńdeý"
-
-msgid "Error in processing request:"
-msgstr "Saýaldy óńdep shyǵarý kezindegi qate:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "%2$s derekqorynda %1$s ataýy bar oqıǵa tabylmady."
-
-msgid "Export of event %s"
-msgstr "%s oqıǵasyn eksporttaý"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Eksporttaý plagınderi júktelmedi, ornatylymdy tekserińiz!"
 
@@ -5818,6 +5803,9 @@ msgstr "Rásimdi ústeý"
 
 msgid "Edit routine"
 msgstr "Rásimdi óńdeý"
+
+msgid "Error in processing request:"
+msgstr "Saýaldy óńdep shyǵarý kezindegi qate:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "%2$s derekqorynda %1$s ataýy bar rásim tabylmady. Bul rásimdi óńdeý úshin qajetti artyqshylyqtaryńyz jetispeýi múmkin."
@@ -5866,6 +5854,18 @@ msgstr "Eger kezkelgen máseleler týyndasa, qate týraly esepti qolmen jiberiń
 
 msgid "You may want to refresh the page."
 msgstr "Betti jańartýdy qalaýyńyz múmkin."
+
+msgid "Export of event %s"
+msgstr "%s oqıǵasyn eksporttaý"
+
+msgid "Add event"
+msgstr "Oqıǵa ústeý"
+
+msgid "Edit event"
+msgstr "Oqıǵany óńdeý"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "%2$s derekqorynda %1$s ataýy bar oqıǵa tabylmady."
 
 msgid "Bad type!"
 msgstr "Nashar túr!"
@@ -7424,53 +7424,26 @@ msgstr "Ishki qatynastyq alastaldy."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Sulba plagınderin júkteý múmkin emes, ornatylymdy tekserińiz!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Jaramsyz rásim túri: «%s»"
+
 msgid "The following query has failed: \"%s\""
 msgstr "Kelesi saýal oryndalmady: «%s»"
 
 msgid "MySQL said: "
 msgstr "MySQL habarlaýy: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Joıylǵan oqıǵany qalpyna keltire almadyq."
-
-msgid "The backed up query was:"
-msgstr "Saqtyq kóshirmesi jasalǵan saýal:"
-
-msgid "Event %1$s has been modified."
-msgstr "%1$s oqıǵasy ózgertildi."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s oqıǵasy jasalǵan."
+msgid "Routine %1$s has been created."
+msgstr "%1$s rásimi jasaldy."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Saýalyńyzdy óńdegen kezde bir nemese kóbirek qate oryn aldy:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Anyqtaysh «username@hostname» pishiminde bolýy qajet!"
-
-msgid "You must provide an event name!"
-msgstr "Oqıǵa ataýyn jetkizýińiz qajet!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Oqıǵa úshin jaramdy aralǵyq mánin jetkizýińiz qajet."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Oqıǵa úshin jaramdy oryndaý ýaqytyn jetkizýińiz qajet."
-
-msgid "You must provide a valid type for the event."
-msgstr "Oqıǵa úshin jaramdy túrin jetkizýińiz qajet."
-
-msgid "You must provide an event definition."
-msgstr "Oqyǵa anyqtamasyn jetkizýińiz qajet."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Jaramsyz rásim túri: «%s»"
-
-msgid "Routine %1$s has been created."
-msgstr "%1$s rásimi jasaldy."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Joıylǵan rásimdi qalpyna keltire almadyq."
+
+msgid "The backed up query was:"
+msgstr "Saqtyq kóshirmesi jasalǵan saýal:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "%1$s rásimi ózgertildi. Artyqshylyqtar naqtylandy."
@@ -7489,6 +7462,9 @@ msgstr "ENUM, SET, VARCHAR jáne VARBINARY túrleriniń rásim parametrleri úsh
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Rásim úshin jaramdy qaıtarý túrin jetkizýińiz  mindetti."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Anyqtaysh «username@hostname» pishiminde bolýy qajet!"
 
 msgid "You must provide a routine name!"
 msgstr "Rásim atyn jetkizýińiz qajet!"
@@ -7665,6 +7641,30 @@ msgstr "Tym kóp qate týraly habarlar, keıbireýleri beınelenbeıdi."
 
 msgid "Report"
 msgstr "Esep"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Joıylǵan oqıǵany qalpyna keltire almadyq."
+
+msgid "Event %1$s has been modified."
+msgstr "%1$s oqıǵasy ózgertildi."
+
+msgid "Event %1$s has been created."
+msgstr "%1$s oqıǵasy jasalǵan."
+
+msgid "You must provide an event name!"
+msgstr "Oqıǵa ataýyn jetkizýińiz qajet!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Oqıǵa úshin jaramdy aralǵyq mánin jetkizýińiz qajet."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Oqıǵa úshin jaramdy oryndaý ýaqytyn jetkizýińiz qajet."
+
+msgid "You must provide a valid type for the event."
+msgstr "Oqıǵa úshin jaramdy túrin jetkizýińiz qajet."
+
+msgid "You must provide an event definition."
+msgstr "Oqyǵa anyqtamasyn jetkizýińiz qajet."
 
 msgid "Access denied!"
 msgstr "Qatynaýdan bastartyldy!"

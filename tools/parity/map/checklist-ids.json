@@ -1897,7 +1897,7 @@
   "p05-396223": {
     "file": "docs/features/05-database-level.md",
     "section": "Micro-behaviours checklist › Events",
-    "text": "Scheduler toggle issues `SET GLOBAL event_scheduler=\"ON\"|\"OFF\"`."
+    "text": "Scheduler toggle issues `SET GLOBAL event_scheduler=\"ON\"|\"OFF\"`; it shows on only for `ON`."
   },
   "p05-39dc32": {
     "file": "docs/features/05-database-level.md",
@@ -2098,6 +2098,11 @@
     "file": "docs/features/05-database-level.md",
     "section": "Micro-behaviours checklist › Search",
     "text": "Hex option adds `HEX(col) LIKE …` clauses."
+  },
+  "p05-8a82ee": {
+    "file": "docs/features/05-database-level.md",
+    "section": "Micro-behaviours checklist › Events",
+    "text": "Scheduler `DISABLED`: only the notice \"The event scheduler is disabled.\", no list, editor or export."
   },
   "p05-8e2280": {
     "file": "docs/features/05-database-level.md",

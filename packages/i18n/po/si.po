@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/si.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/si.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Sinhala <https://hosted.weblate.org/projects/phpmyadmin/master/si/>\nLanguage: si\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Sinhala <https://hosted.weblate.org/projects/phpmyadmin/master/si/>\nLanguage: si\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "මෙම ස්ථානයයෙන් පසු JavaScript සක්‍රිය කර තිබීම අවශ්‍යය!"
@@ -265,77 +265,6 @@ msgstr "ඉදිරිපත් කරන්න"
 msgid "Select page"
 msgstr "පිටුව තෝරන්න"
 
-msgid "Details"
-msgstr "විස්තර"
-
-msgid "Event name"
-msgstr "සිද්ධියේ නම"
-
-msgid "Status"
-msgstr "තත්වය"
-
-msgid "Event type"
-msgstr "සිද්ධි වර්ගය"
-
-msgid "Change to %s"
-msgstr "%s ලෙස වෙනස් කරන්න"
-
-msgid "Execute at"
-msgstr "ක්‍රියාත්මක කල යුත්තේ"
-
-msgid "Execute every"
-msgstr "ක්‍රියාත්මක කරන්න සෑම"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "අරඹන්න"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "නවතන්න"
-
-msgid "Definition"
-msgstr "අර්ථ දැක්වීම"
-
-msgid "Format"
-msgstr "ආකෘතිය"
-
-msgid "On completion preserve"
-msgstr "සමාප්තියේදී සුරකින්න"
-
-msgid "Definer"
-msgstr "අර්ථ දක්වන්නා"
-
-msgid "Events"
-msgstr "සිද්ධි"
-
-msgid "Check all"
-msgstr "සියල්ල තෝරාගන්න"
-
-msgid "Export"
-msgstr "අපනයනය"
-
-msgid "Drop"
-msgstr "හලන්න"
-
-msgid "There are no events to display."
-msgstr "පෙන්වීම සඳහා සිද්ධි නොමැත."
-
-msgid "Event scheduler status"
-msgstr "සිද්ධි නියමකාරනියේ තත්වය"
-
-msgid "Click to toggle"
-msgstr "මාරු කිරීමට ක්ලික් කරන්න"
-
-msgid "ON"
-msgstr "සක්‍රීයයි"
-
-msgid "OFF"
-msgstr "අක්‍රීයයි"
-
-msgid "Loading…"
-msgstr "පූරණය කෙරෙමින්…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "\"%s\" දත්තගබඩාවෙන් වගු අපනයනය කිරීම"
 
@@ -441,17 +370,29 @@ msgstr "අව්‍යවස්ථිත කාඩ්පත"
 msgid "routine"
 msgstr "නෛත්‍යක"
 
+msgid "Export"
+msgstr "අපනයනය"
+
 msgid "No user found."
 msgstr "භාවිතා කරන්නන් හමු නොවිණි."
 
 msgid "With selected:"
 msgstr "තෝරාගත්:"
 
+msgid "Check all"
+msgstr "සියල්ල තෝරාගන්න"
+
 msgid "Add user account"
 msgstr "භාවිත ගිණුමක් එක් කරන්න"
 
+msgid "Details"
+msgstr "විස්තර"
+
 msgid "Routine name"
 msgstr "නෛත්‍යකයේ නම"
+
+msgid "Change to %s"
+msgstr "%s ලෙස වෙනස් කරන්න"
 
 msgid "Parameters"
 msgstr "පරාමිතියන්"
@@ -477,8 +418,17 @@ msgstr "ප්‍රතිදාන විකල්ප"
 msgid "Charset"
 msgstr "අක්ෂර කට්ටලය"
 
+msgid "Definition"
+msgstr "අර්ථ දැක්වීම"
+
+msgid "Format"
+msgstr "ආකෘතිය"
+
 msgid "Is deterministic"
 msgstr "නිර්ණයනය කල හැකිද යන වග"
+
+msgid "Definer"
+msgstr "අර්ථ දක්වන්නා"
 
 msgid "Security type"
 msgstr "ආරක්ෂණ වර්ගය"
@@ -495,6 +445,9 @@ msgstr "ශ්‍රිතය"
 msgid "Routines"
 msgstr "නෛත්‍යක"
 
+msgid "Drop"
+msgstr "හලන්න"
+
 msgid "Search"
 msgstr "සෙවීම"
 
@@ -503,6 +456,9 @@ msgstr "පෙන්වීම සඳහා නෛත්‍යක නොමැත
 
 msgid "Returns"
 msgstr "ප්‍රතිදානය"
+
+msgid "Loading…"
+msgstr "පූරණය කෙරෙමින්…"
 
 msgid "Execute routine"
 msgstr "නෛත්‍යකය ක්‍රියාත්මක කරන්න"
@@ -685,6 +641,12 @@ msgstr "සාදන ලදි"
 msgid "Updated"
 msgstr "යාවත්කාලීන කරන ලදි"
 
+msgid "Status"
+msgstr "තත්වය"
+
+msgid "Click to toggle"
+msgstr "මාරු කිරීමට ක්ලික් කරන්න"
+
 msgid "active"
 msgstr "සක්‍රිය"
 
@@ -785,6 +747,44 @@ msgstr "Kana වෙත පරිවර්තනය කරන්න"
 
 msgid "Error"
 msgstr "දෝෂය"
+
+msgid "Event name"
+msgstr "සිද්ධියේ නම"
+
+msgid "Event type"
+msgstr "සිද්ධි වර්ගය"
+
+msgid "Execute at"
+msgstr "ක්‍රියාත්මක කල යුත්තේ"
+
+msgid "Execute every"
+msgstr "ක්‍රියාත්මක කරන්න සෑම"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "අරඹන්න"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "නවතන්න"
+
+msgid "On completion preserve"
+msgstr "සමාප්තියේදී සුරකින්න"
+
+msgid "Events"
+msgstr "සිද්ධි"
+
+msgid "There are no events to display."
+msgstr "පෙන්වීම සඳහා සිද්ධි නොමැත."
+
+msgid "Event scheduler status"
+msgstr "සිද්ධි නියමකාරනියේ තත්වය"
+
+msgid "ON"
+msgstr "සක්‍රීයයි"
+
+msgid "OFF"
+msgstr "අක්‍රීයයි"
 
 msgid "Export templates:"
 msgstr "අපනයන ආකෘති:"
@@ -3279,18 +3279,6 @@ msgstr "%1$s - %2$s පේළි පෙන්වමින්."
 msgid "No databases selected."
 msgstr "දත්තගබඩාවක් තෝරාගෙන නොමැත."
 
-msgid "Add event"
-msgstr "සිද්ධියක් එක් කරන්න"
-
-msgid "Edit event"
-msgstr "සිද්ධිය සංස්කරණය කරන්න"
-
-msgid "Error in processing request:"
-msgstr "ඉල්ලීම පිරිසැකසීමේදී දෝශ ඇතිවිය:"
-
-msgid "Export of event %s"
-msgstr "%s සිද්ධියේ අපනයන"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "අපනයන පේණු පූරණය කල නොහැකි විය, ඔබගේ ස්ථාපනය පරීක්ෂා කර බලන්න!"
 
@@ -3305,6 +3293,9 @@ msgstr "නෛත්‍යකයක් එක් කරන්න"
 
 msgid "Edit routine"
 msgstr "නෛත්‍යකය සංස්කරණ කරන්න"
+
+msgid "Error in processing request:"
+msgstr "ඉල්ලීම පිරිසැකසීමේදී දෝශ ඇතිවිය:"
 
 msgid "Export of routine %s"
 msgstr "%s නෛත්‍යකයේ අපනයනය"
@@ -3341,6 +3332,15 @@ msgstr "ඔබ යම් දෝෂ වලට මුහුණදී නම් ඔ
 
 msgid "You may want to refresh the page."
 msgstr "ඔබ පිටුව ප්‍රතිපුර්ණය කිරීමට ඔබට අවශ්ය විය හැක."
+
+msgid "Export of event %s"
+msgstr "%s සිද්ධියේ අපනයන"
+
+msgid "Add event"
+msgstr "සිද්ධියක් එක් කරන්න"
+
+msgid "Edit event"
+msgstr "සිද්ධිය සංස්කරණය කරන්න"
 
 msgid "Bad type!"
 msgstr "වැරදි වර්ගය!"
@@ -4039,53 +4039,26 @@ msgstr "ප්‍රේරකය සංස්කරණය කරන්න"
 msgid "The %s extension is missing. Please check your PHP configuration."
 msgstr "%s දිගුව සොයාගත නොහැක. කරුණාකර ඔබගේ PHP වින්‍යාසයන් පරීක්ෂා කර බලන්න."
 
+msgid "Invalid routine type: \"%s\""
+msgstr "වලංගු නැති නෛත්‍යක වර්ගය: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "පහත විමසුම් අසමත් විය: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL පවසන ලදි: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "හලන ලද සිද්ධිය ප්‍රතිස්ථාපනය කිරීම අසමත් විය."
-
-msgid "The backed up query was:"
-msgstr "රක්ෂිත විමසුම වූයේ:"
-
-msgid "Event %1$s has been modified."
-msgstr "%1$s සිද්ධිය වෙනස් කරන ලදි."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s සිද්ධිය සාදන ලදි."
+msgid "Routine %1$s has been created."
+msgstr "%1$s නෛත්‍යකය සාදන ලදි."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "ඔබගේ ඉල්ලීම පිරිසකසන අතරතුර දෝෂ එකක් හෝ වැඩි ගණනක් ඇති විය:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "අර්ථ දක්වන්නා \"භාවිත නාමය@සේවාදායක නාමය\" ආකෘතියේ විය යුතුය!"
-
-msgid "You must provide an event name!"
-msgstr "ඔබ සිද්ධිය සඳහා නමක් ලබාදිය යුතුයි!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "ඔබ සිද්ධිය සඳහා වලංගු කාල පරතරයක් ලබාදිය යුතුයි."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "ඔබ සිද්ධිය සඳහා වලංගු ක්‍රියාත්මක කිරීමේ වෙලාවක් ලබාදිය යුතුයි."
-
-msgid "You must provide a valid type for the event."
-msgstr "ඔබ සිද්ධිය සඳහා වලංගු වර්ගයක් ලබාදිය යුතුයි."
-
-msgid "You must provide an event definition."
-msgstr "ඔබ සිද්ධි අර්ථ දැක්වීමක් ලබාදිය යුතුයි."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "වලංගු නැති නෛත්‍යක වර්ගය: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "%1$s නෛත්‍යකය සාදන ලදි."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "හලන ලද නෛත්‍යකය ප්‍රතිස්ථාපනය කිරීම අසමත් විය."
+
+msgid "The backed up query was:"
+msgstr "රක්ෂිත විමසුම වූයේ:"
 
 msgid "Routine %1$s has been modified."
 msgstr "%1$s නෛත්‍යකය වෙනස් කරන ලදී."
@@ -4101,6 +4074,9 @@ msgstr "ENUM, SET, VARCHAR සහ VARBINARY වර්ගවල නෛත්‍�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "නෛත්‍යකය සඳහා ඔබ වලංගු ප්‍රතිදාන වර්ගයක් ලබා දිය යුතුය."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "අර්ථ දක්වන්නා \"භාවිත නාමය@සේවාදායක නාමය\" ආකෘතියේ විය යුතුය!"
 
 msgid "You must provide a routine name!"
 msgstr "ඔබ නෛත්යකය සඳහා නමක් ලබාදිය යුතුයි!"
@@ -4158,6 +4134,30 @@ msgstr "ලොග බෆරයේ විශාලත්වය"
 
 msgid "Too many error messages, some are not displayed."
 msgstr "දෝෂ පණිවුඩ ප්‍රමාණය ඉක්මවා ගොස් ඇත, ඇතැමෙක් ප්‍රදර්ශනය නොකෙරේ."
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "හලන ලද සිද්ධිය ප්‍රතිස්ථාපනය කිරීම අසමත් විය."
+
+msgid "Event %1$s has been modified."
+msgstr "%1$s සිද්ධිය වෙනස් කරන ලදි."
+
+msgid "Event %1$s has been created."
+msgstr "%1$s සිද්ධිය සාදන ලදි."
+
+msgid "You must provide an event name!"
+msgstr "ඔබ සිද්ධිය සඳහා නමක් ලබාදිය යුතුයි!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "ඔබ සිද්ධිය සඳහා වලංගු කාල පරතරයක් ලබාදිය යුතුයි."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "ඔබ සිද්ධිය සඳහා වලංගු ක්‍රියාත්මක කිරීමේ වෙලාවක් ලබාදිය යුතුයි."
+
+msgid "You must provide a valid type for the event."
+msgstr "ඔබ සිද්ධිය සඳහා වලංගු වර්ගයක් ලබාදිය යුතුයි."
+
+msgid "You must provide an event definition."
+msgstr "ඔබ සිද්ධි අර්ථ දැක්වීමක් ලබාදිය යුතුයි."
 
 msgid "Access denied!"
 msgstr "පිවිසුම වලක්වා ඇත!"

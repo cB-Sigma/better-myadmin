@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ro.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ro.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2025-12-29 11:00+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Romanian <https://hosted.weblate.org/projects/phpmyadmin/master/ro/>\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2025-12-29 11:00+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Romanian <https://hosted.weblate.org/projects/phpmyadmin/master/ro/>\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript trebuie să fie activat peste acest punct!"
@@ -625,74 +625,6 @@ msgstr "Nume pagină nouă"
 msgid "Select page"
 msgstr "Selectează pagina"
 
-msgid "Details"
-msgstr "Detalii"
-
-msgid "Event name"
-msgstr "Nume eveniment"
-
-msgid "Status"
-msgstr "Stare"
-
-msgid "Event type"
-msgstr "Tip de eveniment"
-
-msgid "Change to %s"
-msgstr "Schimbă în %s"
-
-msgid "Execute at"
-msgstr "Execută la"
-
-msgid "Execute every"
-msgstr "Execută fiecare"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Început"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Sfârșit"
-
-msgid "Definition"
-msgstr "Definiție"
-
-msgid "Format"
-msgstr "Format"
-
-msgid "On completion preserve"
-msgstr "Păstrare definitivă"
-
-msgid "Events"
-msgstr "Evenimente"
-
-msgid "Check all"
-msgstr "Bifează tot"
-
-msgid "Export"
-msgstr "Exportă"
-
-msgid "Drop"
-msgstr "Elimină"
-
-msgid "There are no events to display."
-msgstr "Nu există niciun eveniment de afișat."
-
-msgid "Event scheduler status"
-msgstr "Stare programator de evenimente"
-
-msgid "Click to toggle"
-msgstr "Dă clic pentru a comuta"
-
-msgid "ON"
-msgstr "PORNIT"
-
-msgid "OFF"
-msgstr "OPRIT"
-
-msgid "Loading…"
-msgstr "Încarc…"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ va deveni numele server-ului și @DATABASE@ va deveni numele bazei de date."
 
@@ -867,11 +799,17 @@ msgstr "rutină"
 msgid "Edit privileges"
 msgstr "Editează privilegiile"
 
+msgid "Export"
+msgstr "Exportă"
+
 msgid "No user found."
 msgstr "Niciun utilizator găsit."
 
 msgid "With selected:"
 msgstr "Cu cele selectate:"
+
+msgid "Check all"
+msgstr "Bifează tot"
 
 msgid "Not enough privilege to view users."
 msgstr "Nu ai privilegii suficiente pentru a vedea utilizatorii."
@@ -879,8 +817,14 @@ msgstr "Nu ai privilegii suficiente pentru a vedea utilizatorii."
 msgid "Add user account"
 msgstr "Adaugă cont utilizator"
 
+msgid "Details"
+msgstr "Detalii"
+
 msgid "Routine name"
 msgstr "Nume rutină"
+
+msgid "Change to %s"
+msgstr "Schimbă în %s"
 
 msgid "Parameters"
 msgstr "Parametri"
@@ -906,6 +850,12 @@ msgstr "Opțiuni revenire"
 msgid "Charset"
 msgstr "Set de caractere"
 
+msgid "Definition"
+msgstr "Definiție"
+
+msgid "Format"
+msgstr "Format"
+
 msgid "Is deterministic"
 msgstr "Este determinat"
 
@@ -927,6 +877,9 @@ msgstr "Funcție"
 msgid "Routines"
 msgstr "Rutine"
 
+msgid "Drop"
+msgstr "Elimină"
+
 msgid "Search"
 msgstr "Caută"
 
@@ -935,6 +888,9 @@ msgstr "Nu există nicio rutină de afișat."
 
 msgid "Returns"
 msgstr "Reveniri"
+
+msgid "Loading…"
+msgstr "Încarc…"
 
 msgid "Execute routine"
 msgstr "Execută rutina"
@@ -1173,6 +1129,12 @@ msgstr "Creată"
 msgid "Updated"
 msgstr "Actualizată"
 
+msgid "Status"
+msgstr "Stare"
+
+msgid "Click to toggle"
+msgstr "Dă clic pentru a comuta"
+
 msgid "active"
 msgstr "activă"
 
@@ -1303,6 +1265,44 @@ msgstr "Trimite raportul de erori"
 
 msgid "Something went wrong"
 msgstr "Ceva nu a mers bine"
+
+msgid "Event name"
+msgstr "Nume eveniment"
+
+msgid "Event type"
+msgstr "Tip de eveniment"
+
+msgid "Execute at"
+msgstr "Execută la"
+
+msgid "Execute every"
+msgstr "Execută fiecare"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Început"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Sfârșit"
+
+msgid "On completion preserve"
+msgstr "Păstrare definitivă"
+
+msgid "Events"
+msgstr "Evenimente"
+
+msgid "There are no events to display."
+msgstr "Nu există niciun eveniment de afișat."
+
+msgid "Event scheduler status"
+msgstr "Stare programator de evenimente"
+
+msgid "ON"
+msgstr "PORNIT"
+
+msgid "OFF"
+msgstr "OPRIT"
 
 msgid "Select a template"
 msgstr "Selectează un șablon"
@@ -5971,21 +5971,6 @@ msgstr "Există deja o pagină numită „%s”. Te rog să o redenumești în a
 msgid "No databases selected."
 msgstr "Nicio bază de date selectată."
 
-msgid "Add event"
-msgstr "Adaugă eveniment"
-
-msgid "Edit event"
-msgstr "Editează evenimentul"
-
-msgid "Error in processing request:"
-msgstr "Eroare la procesarea cererii:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Niciun eveniment cu numele %1$s găsit în baza de date %2$s."
-
-msgid "Export of event %s"
-msgstr "Exportul evenimentului %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Nu am putut încărca modulele de export, te rog verifică-ți instalarea!"
 
@@ -6003,6 +5988,9 @@ msgstr "Adaugă rutină"
 
 msgid "Edit routine"
 msgstr "Editează rutina"
+
+msgid "Error in processing request:"
+msgstr "Eroare la procesarea cererii:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Nicio rutină cu numele %1$s găsită în baza de date %2$s. S-ar putea să fie blocate privilegiile necesare pentru a edita această rutină."
@@ -6051,6 +6039,18 @@ msgstr "Dacă întâmpini orice fel de probleme, te rog trimite manual un raport
 
 msgid "You may want to refresh the page."
 msgstr "Poate vrei să reîmprospătezi pagina."
+
+msgid "Export of event %s"
+msgstr "Exportul evenimentului %s"
+
+msgid "Add event"
+msgstr "Adaugă eveniment"
+
+msgid "Edit event"
+msgstr "Editează evenimentul"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Niciun eveniment cu numele %1$s găsit în baza de date %2$s."
 
 msgid "Bad type!"
 msgstr "Tip incorect!"
@@ -7737,50 +7737,26 @@ msgstr "Relația internă a fost înlăturată."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Nu am putut încărca modulele din schemă, te rog verifică-ți instalarea!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Tip de rutină invalid: „%s”"
+
 msgid "The following query has failed: \"%s\""
 msgstr "Următoarea interogare a eșuat: „%s”"
 
 msgid "MySQL said: "
 msgstr "MySQL zice: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Regretăm, nu am putut restaura evenimentul eliminat."
-
-msgid "The backed up query was:"
-msgstr "Interogarea de siguranță era:"
-
-msgid "Event %1$s has been modified."
-msgstr "Evenimentul %1$s a fost modificat."
-
-msgid "Event %1$s has been created."
-msgstr "Evenimentul %1$s a fost creat."
+msgid "Routine %1$s has been created."
+msgstr "Rutina %1$s a fost creată."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Au apărut una sau mai multe erori în timpul procesării cererii tale:"
 
-msgid "You must provide an event name!"
-msgstr "Trebuie să furnizezi un nume de eveniment!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Trebuie să furnizezi o valoare validă a intervalului pentru eveniment."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Trebuie să furnizezi un timp valid de execuție pentru eveniment."
-
-msgid "You must provide a valid type for the event."
-msgstr "Trebuie să furnizezi un tip valid de eveniment."
-
-msgid "You must provide an event definition."
-msgstr "Trebuie să furnizezi o definiție a evenimentului."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Tip de rutină invalid: „%s”"
-
-msgid "Routine %1$s has been created."
-msgstr "Rutina %1$s a fost creată."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Regretăm, nu am reușit să restaurăm rutina eliminată."
+
+msgid "The backed up query was:"
+msgstr "Interogarea de siguranță era:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutina %1$s a fost modificată. Privilegiile au fost ajustate."
@@ -7976,6 +7952,30 @@ msgstr "Prea multe mesaje de eroare, unele nu sunt afișate."
 
 msgid "Report"
 msgstr "Raport"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Regretăm, nu am putut restaura evenimentul eliminat."
+
+msgid "Event %1$s has been modified."
+msgstr "Evenimentul %1$s a fost modificat."
+
+msgid "Event %1$s has been created."
+msgstr "Evenimentul %1$s a fost creat."
+
+msgid "You must provide an event name!"
+msgstr "Trebuie să furnizezi un nume de eveniment!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Trebuie să furnizezi o valoare validă a intervalului pentru eveniment."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Trebuie să furnizezi un timp valid de execuție pentru eveniment."
+
+msgid "You must provide a valid type for the event."
+msgstr "Trebuie să furnizezi un tip valid de eveniment."
+
+msgid "You must provide an event definition."
+msgstr "Trebuie să furnizezi o definiție a evenimentului."
 
 msgid "Access denied!"
 msgstr "Acces refuzat!"

@@ -63,6 +63,188 @@
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync a57149e1f6: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): 51 catalogues re-imported; the change is the POT creation date and source references, no msgid/msgstr of a shipped catalogue changed."
+    },
+    {
+      "commit": "563e59a378b48efbbba8583d99e43f341e1d9c09",
+      "subject": "Add windows to CI for PHP and JS testing",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync 328b8d8003: Windows jobs in the upstream CI workflows."
+    },
+    {
+      "commit": "35d195b871d7ee17d024568ece824f3f3ec17079",
+      "subject": "Update create-release.sh",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync 328b8d8003: upstream release script (scripts/create-release.sh)."
+    },
+    {
+      "commit": "ec35d89aec5cb1a4d4f92158ea86d294859b516f",
+      "subject": "Sort files",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync 328b8d8003: upstream release script (scripts/create-release.sh), file list sorted."
+    },
+    {
+      "commit": "00418f6507a1fd0adc7ac8c5dd9778b1dd52d1dc",
+      "subject": "Extract EventsControllerTest fixtures into files",
+      "status": "not-applicable",
+      "areas": ["tooling", "tests"],
+      "notes": "sync 328b8d8003: PHPUnit EventsControllerTest fixtures moved into files; static-analysis baselines. No behaviour."
+    },
+    {
+      "commit": "fc3c643dc80c41ef98e0ed09736207cc36a34653",
+      "subject": "Move Database\\EventsController to Events\\IndexController",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: Database\\EventsController becomes Events\\IndexController. Our API keeps GET/POST …/databases/:db/events; tools/parity/map/routes.yaml maps the new /events route."
+    },
+    {
+      "commit": "2b5b66989bc94c4fe94fb3a853252e8ef4e408d2",
+      "subject": "Rename route /database/events to /events",
+      "status": "ported",
+      "areas": ["features/05-database-level", "features/01-shell-navigation-auth"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: the route /database/events is now /events (Menu events tab, NodeEvent / NodeEventContainer links, SpecialSchemaLinks). routes.yaml, docs/features/01 and 05, docs/architecture/05-api-reference.md, the parity suite (tests/parity/database-programs.parity.test.ts) and the ui-parity case now use /events; the navigation nodes (Events container, New, each event) carry /events in apps/server/src/navigation/nodes.ts and the SPA maps it to /s/:s/db/:db/events (navHref, apps/web/src/features/navigation/links.ts); navigation parity 41/41."
+    },
+    {
+      "commit": "da70d30b7525a27fa56caaddf8637c0384abb08f",
+      "subject": "Move js/database/events.ts to js/events.ts",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: resources/js/database/events.ts moves to resources/js/events.ts: the JS behaviour claims in apps/web/src/features/database/pma-controls.ts are renamed to js:events.ts."
+    },
+    {
+      "commit": "6bc9e8da1a41e7a062f35308e1b5dc8b19d26999",
+      "subject": "Move class Database\\Events to Events\\Events",
+      "status": "ported",
+      "areas": ["features/05-database-level", "features/07-export-import"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: Database\\Events becomes Events\\Events with STATUS/TYPE/INTERVAL constants; templates move to events/{index,row,editor-form}.twig (control claims renamed). ExportSql/ExportXml/Operations only change imports."
+    },
+    {
+      "commit": "3727b25df4e0a7d5c46f5f59424f98dbdca87fce",
+      "subject": "Add unit tests for events export",
+      "status": "ported",
+      "areas": ["features/05-database-level", "tests"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: PHPUnit tests for the export, and two lines in IndexController that the later commits replace."
+    },
+    {
+      "commit": "6bf47b5355fdc890bfabfaa37ad87fe90d96905c",
+      "subject": "Translated using Weblate (Latvian)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: QA_5_2 Latvian translation, carried into master by the po update: pnpm i18n:import."
+    },
+    {
+      "commit": "0ff4ebe5a2b5a2a9a95421a3d6ba299cd21b2621",
+      "subject": "Translated using Weblate (Latvian)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: Latvian translation: pnpm i18n:import."
+    },
+    {
+      "commit": "5cb2daea60344f60300d7bde6685d22ab52c5497",
+      "subject": "Extract event export action into Events\\ExportController",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: the export action moves to Events\\ExportController on GET /events/export (no export_item flag). routes.yaml maps /events/export to GET …/databases/:db/events/export, our existing endpoint; the parity case \"list and export\" now calls /events/export. A missing or unknown db answers \"No database selected.\" on both routes (was \"No databases selected.\" / missing parameter): ported through withDb(noDatabase), parity case \"an unknown database\"."
+    },
+    {
+      "commit": "37b73b3e5922058aeaf24cdd797e8de9aa733f7f",
+      "subject": "Add unit tests for create event action in Events\\IndexController",
+      "status": "ported",
+      "areas": ["features/05-database-level", "tests"],
+      "notes": "sync 328b8d8003: The Events refactor (fc3c643dc8, 2b5b66989b, da70d30b75, 6bc9e8da1a, 5cb2daea60, 3727b25df4, 37b73b3e59) is ported as one change: create event through getQueryFromRequest(request) / hasEventPrivilege; editor-form.twig only re-indents an {% if %} (same output)."
+    },
+    {
+      "commit": "05917fbe4ed9a0e75b8e120069b9d0ac99cd668d",
+      "subject": "Refactor Events::getQueryFromRequest",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 328b8d8003: Events::getQueryFromRequest reads the body through ServerRequest: every check is now \"non-empty string\" instead of PHP empty(), so an interval value of 0 is accepted (EVERY 0 …, refused by the server) and item_interval_field no longer has to be non-empty before the list check. Ported in apps/server/src/database/events.ts (the \"0\" exclusion dropped; the other fields already used non-empty-string checks); golden parity case \"interval value 0 reaches the server\"."
+    },
+    {
+      "commit": "030ac2744850f297b863da53710323d277ec99c3",
+      "subject": "Translated using Weblate (Latvian)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: QA_5_2 Latvian translation: pnpm i18n:import."
+    },
+    {
+      "commit": "0fc9b38ced359453d827f407e955d60092a7bac6",
+      "subject": "Translated using Weblate (Latvian)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: Latvian translation: pnpm i18n:import."
+    },
+    {
+      "commit": "15fea63d5312d51cfc8c39a5a1240e7c35dde097",
+      "subject": "Translated using Weblate (Chinese (Simplified Han script))",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: QA_5_2 Chinese (Simplified) translation: pnpm i18n:import."
+    },
+    {
+      "commit": "8b007f5a1fea5d07f9d842e236fa71a1aa718ad0",
+      "subject": "Translated using Weblate (Chinese (Simplified Han script))",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: Chinese (Simplified) translation: pnpm i18n:import."
+    },
+    {
+      "commit": "d284996d6b3f3d259f4b83b07749169a2b6ecacb",
+      "subject": "Fix event scheduler toggle in Bootstrap theme",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 328b8d8003: QA_5_2, merged by 19958e00b0: the Bootstrap theme styles .toggle-container (was .container), and the merge makes events/index.twig mark the switch \"on\" only for scheduler_state == ON. Our switch (EventsPage.tsx) is on only for schedulerState ON; parity case \"the list: scheduler state and its toggle\" checks the class on MySQL (ON) and in the MariaDB spot check (OFF). The theme CSS itself: our UI has its own styles."
+    },
+    {
+      "commit": "99e7f2db71604e91c058c216381cb39c4dec6ccd",
+      "subject": "Disable Events page when event scheduler is disabled",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync 328b8d8003: QA_5_2, merged by 19958e00b0 into Events\\IndexController / ExportController: with event_scheduler DISABLED (server started with --event-scheduler=DISABLED, error 1577 otherwise) the list, the editor and the export do nothing and the page shows \"The event scheduler is disabled.\". Ported: getEventSchedulerStatus returns ON/OFF/DISABLED (EventsListResponse.schedulerState), the list is empty and editor/save/export answer the notice, EventsPage shows only the notice. Golden parity cases run on a MySQL 8.4 started with --event-scheduler=DISABLED and its own reference instance (all events cases pass there), docs/features/05 updated with a checklist item."
+    },
+    {
+      "commit": "5d720115861ec329a1aa15a3158fb43e79d312b0",
+      "subject": "Refactor CollationsController",
+      "status": "not-applicable",
+      "areas": ["features/06-server-level", "tests"],
+      "notes": "sync 328b8d8003: CollationsController reads the charsets and collations in __invoke instead of the constructor: the same queries in the same order, the same page. Server Charsets parity unchanged."
+    },
+    {
+      "commit": "3b3ef210332e8b578d19c6ee4d5ce623ee766d30",
+      "subject": "Pass Config to ResponseRenderer so that we don't rely on Global state",
+      "status": "not-applicable",
+      "areas": ["tooling", "tests"],
+      "notes": "sync 328b8d8003: Config passed to the test ResponseRenderer stub; PHPUnit and static-analysis baselines only, no output change."
+    },
+    {
+      "commit": "2e0eb3216e5d6ad75eddb278aedf662003cd6939",
+      "subject": "Fix error in mutation-tests.yml CI workflow",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync 328b8d8003: upstream CI workflow (mutation tests)."
+    },
+    {
+      "commit": "5e5fe6a72fc9d1ff996278e63d7f3d02e74aa2d0",
+      "subject": "Update testGetSysInfo",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync 328b8d8003: PHPUnit SysInfo test only."
+    },
+    {
+      "commit": "2a22f984c643981e6514b8eef18197d7151395c9",
+      "subject": "Remove nodejs's experimental flag for yarn test command",
+      "status": "not-applicable",
+      "areas": ["tooling", "dependencies"],
+      "notes": "sync 328b8d8003: the yarn test script and CI: no dependency version change."
+    },
+    {
+      "commit": "328b8d80039c6edc237598e7a6fc039065f42010",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 328b8d8003: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): new msgid \"The event scheduler is disabled.\", the moved source references, the Latvian and Chinese (Simplified) translations."
     }
   ]
 }

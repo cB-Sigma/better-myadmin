@@ -30,6 +30,8 @@ export function navHref(server: number, route: string, params: NavParams): strin
   else if (route.startsWith('/database/')) path = `${dbBase}/${route.slice('/database/'.length)}`
   else if (route.startsWith('/table/')) path = `${tblBase}/${route.slice('/table/'.length)}`
   else if (route === '/triggers') path = `${table !== undefined ? tblBase : dbBase}/triggers`
+  // the Events page is /events (and /events/export) since phpMyAdmin 2b5b66989b
+  else if (route === '/events') path = `${dbBase}/events`
   else if (route.startsWith('/view/')) path = `${dbBase}/view/${route.slice('/view/'.length)}`
   else path = `${srv}${route}`
   const qs = rest.toString()

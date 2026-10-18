@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ru.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ru.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-08-17 13:51+0000\nLast-Translator: Andrei Stepanov <adem4ik@gmail.com>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-08-17 13:51+0000\nLast-Translator: Andrei Stepanov <adem4ik@gmail.com>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Для полноценной работы необходимо включить JavaScript!"
@@ -683,89 +683,6 @@ msgstr "Выберите страницу"
 msgid "Select export relational type:"
 msgstr "Выберите тип экспортных реляций:"
 
-msgid "Details"
-msgstr "Детали"
-
-msgid "Event name"
-msgstr "Название события"
-
-msgid "Status"
-msgstr "Состояние"
-
-msgid "Event type"
-msgstr "Тип события"
-
-msgid "Change to %s"
-msgstr "Изменить на %s"
-
-msgid "Execute at"
-msgstr "Выполнить в"
-
-msgid "Execute every"
-msgstr "Выполнять каждые"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Начало"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Конец"
-
-msgid "Definition"
-msgstr "Определение"
-
-msgid "Format"
-msgstr "Формат"
-
-msgid "On completion preserve"
-msgstr "Сохранить при окончании"
-
-msgid "Definer"
-msgstr "Определитель"
-
-msgid "Events"
-msgstr "События"
-
-msgid "Check all"
-msgstr "Отметить все"
-
-msgid "Export"
-msgstr "Экспорт"
-
-msgid "Drop"
-msgstr "Удалить"
-
-msgid "Create new event"
-msgstr "Создать новое событие"
-
-msgid "There are no events to display."
-msgstr "Отсутствуют события для отображения."
-
-msgid "Event scheduler status"
-msgstr "Статус планировщика событий"
-
-msgid "Click to toggle"
-msgstr "Кликните для переключения"
-
-msgid "ON"
-msgstr "ВКЛЮЧИТЬ"
-
-msgid "OFF"
-msgstr "ОТКЛЮЧИТЬ"
-
-msgid "Event editor"
-msgstr "Редактор событий"
-
-msgid "Loading…"
-msgstr "Загрузка…"
-
-msgid "Save changes"
-msgstr "Сохранить изменения"
-
-msgid "Export event"
-msgstr "Экспортировать событие"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@DATABASE@ будет замещено именем базы данных."
 
@@ -946,11 +863,17 @@ msgstr "процедура"
 msgid "Edit privileges"
 msgstr "Редактировать привилегии"
 
+msgid "Export"
+msgstr "Экспорт"
+
 msgid "No user found."
 msgstr "Пользователь не найден."
 
 msgid "With selected:"
 msgstr "С отмеченными:"
+
+msgid "Check all"
+msgstr "Отметить все"
 
 msgid "Not enough privilege to view users."
 msgstr "Недостаточно прав для просмотра пользователей."
@@ -958,8 +881,14 @@ msgstr "Недостаточно прав для просмотра пользо
 msgid "Add user account"
 msgstr "Добавить учётную запись пользователя"
 
+msgid "Details"
+msgstr "Детали"
+
 msgid "Routine name"
 msgstr "Имя процедуры"
+
+msgid "Change to %s"
+msgstr "Изменить на %s"
 
 msgid "Parameters"
 msgstr "Параметры"
@@ -985,11 +914,20 @@ msgstr "Вернуть параметры"
 msgid "Charset"
 msgstr "Кодировка"
 
+msgid "Definition"
+msgstr "Определение"
+
+msgid "Format"
+msgstr "Формат"
+
 msgid "Is deterministic"
 msgstr "Определяющий"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "У вас недостаточно прав для выполнения этой операции. Пожалуйста, обратитесь к документации за подробностями."
+
+msgid "Definer"
+msgstr "Определитель"
 
 msgid "Security type"
 msgstr "Тип безопасности"
@@ -1009,6 +947,9 @@ msgstr "Эта процедура не требует параметров."
 msgid "Routines"
 msgstr "Процедуры"
 
+msgid "Drop"
+msgstr "Удалить"
+
 msgid "Search"
 msgstr "Поиск"
 
@@ -1023,6 +964,12 @@ msgstr "Возвращает"
 
 msgid "Routine editor"
 msgstr "Редактор процедуры"
+
+msgid "Loading…"
+msgstr "Загрузка…"
+
+msgid "Save changes"
+msgstr "Сохранить изменения"
 
 msgid "Export routine"
 msgstr "Экспорт процедуры"
@@ -1279,6 +1226,12 @@ msgstr "Создано"
 msgid "Updated"
 msgstr "Обновлёно"
 
+msgid "Status"
+msgstr "Состояние"
+
+msgid "Click to toggle"
+msgstr "Кликните для переключения"
+
 msgid "active"
 msgstr "включено"
 
@@ -1424,6 +1377,53 @@ msgstr "Что-то пошло не так"
 
 msgid "Go back"
 msgstr "Назад"
+
+msgid "Event name"
+msgstr "Название события"
+
+msgid "Event type"
+msgstr "Тип события"
+
+msgid "Execute at"
+msgstr "Выполнить в"
+
+msgid "Execute every"
+msgstr "Выполнять каждые"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Начало"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Конец"
+
+msgid "On completion preserve"
+msgstr "Сохранить при окончании"
+
+msgid "Events"
+msgstr "События"
+
+msgid "Create new event"
+msgstr "Создать новое событие"
+
+msgid "There are no events to display."
+msgstr "Отсутствуют события для отображения."
+
+msgid "Event scheduler status"
+msgstr "Статус планировщика событий"
+
+msgid "ON"
+msgstr "ВКЛЮЧИТЬ"
+
+msgid "OFF"
+msgstr "ОТКЛЮЧИТЬ"
+
+msgid "Event editor"
+msgstr "Редактор событий"
+
+msgid "Export event"
+msgstr "Экспортировать событие"
 
 msgid "Select a template"
 msgstr "Выберите шаблон"
@@ -6606,27 +6606,6 @@ msgstr "Страница с именем \"%s\" уже существует, у�
 msgid "No databases selected."
 msgstr "Ни одна база данных не выбрана."
 
-msgid "The event was dropped immediately after creation."
-msgstr "Событие было отменено сразу после создания."
-
-msgid "Add event"
-msgstr "Добавить событие"
-
-msgid "Edit event"
-msgstr "Редактировать событие"
-
-msgid "Error in processing request:"
-msgstr "Ошибка при обработке запроса:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "В базе данных %2$s не найдено событие с именем %1$s."
-
-msgid "Export of event %s"
-msgstr "Экспортировать событие %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Ошибка обработки запроса: Событие с именем %1$s не найдено в базе данных %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Отсутствуют плагины экспорта. Проверьте содержимое установленной копии phpMyAdmin!"
 
@@ -6647,6 +6626,9 @@ msgstr "Добавить процедуру"
 
 msgid "Edit routine"
 msgstr "Изменить процедуру"
+
+msgid "Error in processing request:"
+msgstr "Ошибка при обработке запроса:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Процедура с именем %1$s не найдена в базе данных %2$s. Возможно, у вас отсутствуют привилегии, необходимые для правки этой процедуры."
@@ -6701,6 +6683,24 @@ msgstr "Если у вас возникают проблемы, отправьт
 
 msgid "You may want to refresh the page."
 msgstr "Возможно вы хотите перезагрузить страницу."
+
+msgid "Export of event %s"
+msgstr "Экспортировать событие %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Ошибка обработки запроса: Событие с именем %1$s не найдено в базе данных %2$s."
+
+msgid "The event was dropped immediately after creation."
+msgstr "Событие было отменено сразу после создания."
+
+msgid "Add event"
+msgstr "Добавить событие"
+
+msgid "Edit event"
+msgstr "Редактировать событие"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "В базе данных %2$s не найдено событие с именем %1$s."
 
 msgid "Bad type!"
 msgstr "Неучтённый тип!"
@@ -8652,53 +8652,26 @@ msgstr "Внутренняя ссылка удалена."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Не удалось загрузить плагины схемы, проверьте содержимое установленной копии phpMyAdmin, пожалуйста!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Ошибочный тип процедуры: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Данный запрос не был выполнен: \"%s\""
 
 msgid "MySQL said: "
 msgstr "Ответ MySQL: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Невозможно восстановить удаленное событие."
-
-msgid "The backed up query was:"
-msgstr "Сохраненный запрос был:"
-
-msgid "Event %1$s has been modified."
-msgstr "Было изменено событие %1$s."
-
-msgid "Event %1$s has been created."
-msgstr "Было создано событие %1$s."
+msgid "Routine %1$s has been created."
+msgstr "Была создана процедура %1$s."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "При обработке вашего запроса были обнаружены ошибки:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Определитель должен быть в формате \"username@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "Необходимо задать имя события!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Необходимо задать корректный интервал значений для события."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Необходимо задать корректное время выполнения события."
-
-msgid "You must provide a valid type for the event."
-msgstr "Необходимо задать корректный тип события."
-
-msgid "You must provide an event definition."
-msgstr "Вы должны задать определение события."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Ошибочный тип процедуры: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Была создана процедура %1$s."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Невозможно восстановить удаленную процедуру."
+
+msgid "The backed up query was:"
+msgstr "Сохраненный запрос был:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Была изменена процедура %1$s. Привилегии обновлены."
@@ -8717,6 +8690,9 @@ msgstr "Вы должны задать длину/значения для пар
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Необходимо задать корректный возвращаемый тип для процедуры."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Определитель должен быть в формате \"username@hostname\"!"
 
 msgid "Invalid routine type!"
 msgstr "Недопустимый тип процедуры!"
@@ -8906,6 +8882,30 @@ msgstr "Слишком большое количество сообщений о
 
 msgid "Report"
 msgstr "Отчёт"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Невозможно восстановить удаленное событие."
+
+msgid "Event %1$s has been modified."
+msgstr "Было изменено событие %1$s."
+
+msgid "Event %1$s has been created."
+msgstr "Было создано событие %1$s."
+
+msgid "You must provide an event name!"
+msgstr "Необходимо задать имя события!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Необходимо задать корректный интервал значений для события."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Необходимо задать корректное время выполнения события."
+
+msgid "You must provide a valid type for the event."
+msgstr "Необходимо задать корректный тип события."
+
+msgid "You must provide an event definition."
+msgstr "Вы должны задать определение события."
 
 msgid "Cannot log in to the database server."
 msgstr "Невозможно войти на сервер базы данных."

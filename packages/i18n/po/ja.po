@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ja.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ja.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: Sandra Swift <nolamiller1203+weblate@gmail.com>\nLanguage-Team: Japanese <https://hosted.weblate.org/projects/phpmyadmin/master/ja/>\nLanguage: ja\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: Sandra Swift <nolamiller1203+weblate@gmail.com>\nLanguage-Team: Japanese <https://hosted.weblate.org/projects/phpmyadmin/master/ja/>\nLanguage: ja\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript を有効にしてください！"
@@ -683,89 +683,6 @@ msgstr "ページを選択してください"
 msgid "Select export relational type:"
 msgstr "エクスポートするリレーショナルタイプを選択してください:"
 
-msgid "Details"
-msgstr "詳細"
-
-msgid "Event name"
-msgstr "イベント名"
-
-msgid "Status"
-msgstr "状態"
-
-msgid "Event type"
-msgstr "イベント種別"
-
-msgid "Change to %s"
-msgstr "%s に変更する"
-
-msgid "Execute at"
-msgstr "実行日時"
-
-msgid "Execute every"
-msgstr "実行間隔"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "開始"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "終了"
-
-msgid "Definition"
-msgstr "定義"
-
-msgid "Format"
-msgstr "フォーマット"
-
-msgid "On completion preserve"
-msgstr "完了後もイベントを残す"
-
-msgid "Definer"
-msgstr "定義者"
-
-msgid "Events"
-msgstr "イベント"
-
-msgid "Check all"
-msgstr "すべてチェックする"
-
-msgid "Export"
-msgstr "エクスポート"
-
-msgid "Drop"
-msgstr "削除"
-
-msgid "Create new event"
-msgstr "新しいイベントを作成する"
-
-msgid "There are no events to display."
-msgstr "表示できるイベントがありません。"
-
-msgid "Event scheduler status"
-msgstr "イベントスケジュールの状態"
-
-msgid "Click to toggle"
-msgstr "クリックでオン／オフ切り替え"
-
-msgid "ON"
-msgstr "オン"
-
-msgid "OFF"
-msgstr "オフ"
-
-msgid "Event editor"
-msgstr "イベントエディタ"
-
-msgid "Loading…"
-msgstr "読み込み中…"
-
-msgid "Save changes"
-msgstr "変更の保存"
-
-msgid "Export event"
-msgstr "イベントのエクスポート"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ はサーバ名、@DATABASE@ はデータベース名になります。"
 
@@ -946,11 +863,17 @@ msgstr "ルーチン"
 msgid "Edit privileges"
 msgstr "権限を編集"
 
+msgid "Export"
+msgstr "エクスポート"
+
 msgid "No user found."
 msgstr "ユーザが存在しません。"
 
 msgid "With selected:"
 msgstr "チェックしたものを:"
+
+msgid "Check all"
+msgstr "すべてチェックする"
 
 msgid "Not enough privilege to view users."
 msgstr "ユーザを表示するために十分な権限がありません。"
@@ -958,8 +881,14 @@ msgstr "ユーザを表示するために十分な権限がありません。"
 msgid "Add user account"
 msgstr "ユーザアカウントを追加する"
 
+msgid "Details"
+msgstr "詳細"
+
 msgid "Routine name"
 msgstr "ルーチン名"
+
+msgid "Change to %s"
+msgstr "%s に変更する"
 
 msgid "Parameters"
 msgstr "パラメータ"
@@ -985,11 +914,20 @@ msgstr "返り値のオプション"
 msgid "Charset"
 msgstr "文字セット"
 
+msgid "Definition"
+msgstr "定義"
+
+msgid "Format"
+msgstr "フォーマット"
+
 msgid "Is deterministic"
 msgstr "DETERMINISTIC"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "この操作を行うのに十分な権限がありません。詳細についてはドキュメンテーションを参照してください。"
+
+msgid "Definer"
+msgstr "定義者"
 
 msgid "Security type"
 msgstr "SQL SECURITY"
@@ -1009,6 +947,9 @@ msgstr "このルーチンは引数を必要としません。"
 msgid "Routines"
 msgstr "ルーチン"
 
+msgid "Drop"
+msgstr "削除"
+
 msgid "Search"
 msgstr "検索"
 
@@ -1023,6 +964,12 @@ msgstr "返り値"
 
 msgid "Routine editor"
 msgstr "ルーチンエディタ"
+
+msgid "Loading…"
+msgstr "読み込み中…"
+
+msgid "Save changes"
+msgstr "変更の保存"
 
 msgid "Export routine"
 msgstr "ルーチンのエクスポート"
@@ -1270,6 +1217,12 @@ msgstr "作成日時"
 msgid "Updated"
 msgstr "更新日時"
 
+msgid "Status"
+msgstr "状態"
+
+msgid "Click to toggle"
+msgstr "クリックでオン／オフ切り替え"
+
 msgid "active"
 msgstr "アクティブ"
 
@@ -1415,6 +1368,53 @@ msgstr "問題が発生しました"
 
 msgid "Go back"
 msgstr "戻る"
+
+msgid "Event name"
+msgstr "イベント名"
+
+msgid "Event type"
+msgstr "イベント種別"
+
+msgid "Execute at"
+msgstr "実行日時"
+
+msgid "Execute every"
+msgstr "実行間隔"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "開始"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "終了"
+
+msgid "On completion preserve"
+msgstr "完了後もイベントを残す"
+
+msgid "Events"
+msgstr "イベント"
+
+msgid "Create new event"
+msgstr "新しいイベントを作成する"
+
+msgid "There are no events to display."
+msgstr "表示できるイベントがありません。"
+
+msgid "Event scheduler status"
+msgstr "イベントスケジュールの状態"
+
+msgid "ON"
+msgstr "オン"
+
+msgid "OFF"
+msgstr "オフ"
+
+msgid "Event editor"
+msgstr "イベントエディタ"
+
+msgid "Export event"
+msgstr "イベントのエクスポート"
 
 msgid "Select a template"
 msgstr "テンプレートを選択してください"
@@ -6579,24 +6579,6 @@ msgstr "\"%s\" という名前のページが既にあるので、他の名前�
 msgid "No databases selected."
 msgstr "データベースが選択されていません。"
 
-msgid "Add event"
-msgstr "イベントを追加する"
-
-msgid "Edit event"
-msgstr "イベントを編集する"
-
-msgid "Error in processing request:"
-msgstr "要求処理中でのエラー:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "データベース %2$s に %1$s という名前のイベントはありません。"
-
-msgid "Export of event %s"
-msgstr "イベント %s をエクスポートする"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "リクエストの処理中にエラーが発生しました：データベース %2$s に %1$s という名前のイベントはありません。"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "エクスポートプラグインをロードできません。正しくインストールされているか確認してください!"
 
@@ -6617,6 +6599,9 @@ msgstr "ルーチンを追加する"
 
 msgid "Edit routine"
 msgstr "ルーチンを編集する"
+
+msgid "Error in processing request:"
+msgstr "要求処理中でのエラー:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "データベース「%2$s」で「%1$s」のルーチンはありません。このルーチンを編集する為に必要な権限がない可能性があります。"
@@ -6671,6 +6656,21 @@ msgstr "問題が発生する場合は、バグ報告を手動で送信してく
 
 msgid "You may want to refresh the page."
 msgstr "このページを再ロードすることがほしいみたい。"
+
+msgid "Export of event %s"
+msgstr "イベント %s をエクスポートする"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "リクエストの処理中にエラーが発生しました：データベース %2$s に %1$s という名前のイベントはありません。"
+
+msgid "Add event"
+msgstr "イベントを追加する"
+
+msgid "Edit event"
+msgstr "イベントを編集する"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "データベース %2$s に %1$s という名前のイベントはありません。"
 
 msgid "Bad type!"
 msgstr "エクスポート形式が正しくありません！"
@@ -8602,53 +8602,26 @@ msgstr "内部リレーションを削除しました。"
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "スキーマのプラグインが読み込めません。正しくインストールされているか確認してください！"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "ルーチンタイプが不正です: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "クエリの実行に失敗しました：『%s』"
 
 msgid "MySQL said: "
 msgstr "MySQL のメッセージ: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "申し訳ありませんが、削除されたイベントの復元に失敗しました。"
-
-msgid "The backed up query was:"
-msgstr "バックアップされていたクエリ:"
-
-msgid "Event %1$s has been modified."
-msgstr "イベント %1$s を変更しました。"
-
-msgid "Event %1$s has been created."
-msgstr "イベント %1$s を作成しました。"
+msgid "Routine %1$s has been created."
+msgstr "ルーチン %1$s を作成しました。"
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "リクエストの処理中に 1 つ以上のエラーが発生しました："
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "定義者の指定は「ユーザ名@ホスト名」の形式でなければなりません!"
-
-msgid "You must provide an event name!"
-msgstr "イベント名は必須です!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "有効な実行間隔を指定してください。"
-
-msgid "You must provide a valid execution time for the event."
-msgstr "有効な実行日時を指定してください。"
-
-msgid "You must provide a valid type for the event."
-msgstr "有効な種別イベントを指定してください。"
-
-msgid "You must provide an event definition."
-msgstr "イベントの定義は必須です。"
-
-msgid "Invalid routine type: \"%s\""
-msgstr "ルーチンタイプが不正です: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "ルーチン %1$s を作成しました。"
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "申し訳ありませんが、削除されたルーチンの復元に失敗しました。"
+
+msgid "The backed up query was:"
+msgstr "バックアップされていたクエリ:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "ルーチン %1$s を変更しました。権限が変更されました。"
@@ -8667,6 +8640,9 @@ msgstr "ルーチンパラメータが ENUM、SET、VARCHAR、VARBINARY の場�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "ルーチンに対して、有効な返り値の種類を指定してください。"
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "定義者の指定は「ユーザ名@ホスト名」の形式でなければなりません!"
 
 msgid "Invalid routine type!"
 msgstr "ルーチンタイプが不正です。"
@@ -8854,6 +8830,30 @@ msgstr "エラーメッセージが多すぎます。いくつかは表示され
 
 msgid "Report"
 msgstr "レポート"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "申し訳ありませんが、削除されたイベントの復元に失敗しました。"
+
+msgid "Event %1$s has been modified."
+msgstr "イベント %1$s を変更しました。"
+
+msgid "Event %1$s has been created."
+msgstr "イベント %1$s を作成しました。"
+
+msgid "You must provide an event name!"
+msgstr "イベント名は必須です!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "有効な実行間隔を指定してください。"
+
+msgid "You must provide a valid execution time for the event."
+msgstr "有効な実行日時を指定してください。"
+
+msgid "You must provide a valid type for the event."
+msgstr "有効な種別イベントを指定してください。"
+
+msgid "You must provide an event definition."
+msgstr "イベントの定義は必須です。"
 
 msgid "Cannot log in to the database server."
 msgstr "データベースサーバにログインできません。"
