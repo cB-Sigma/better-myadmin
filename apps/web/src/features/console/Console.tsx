@@ -677,6 +677,8 @@ function OptionsCard({
         role="switch"
         aria-checked={settings[key]}
         id={`consoleOptions${key}Checkbox`}
+        // console/display.twig names (always_expand, start_history, …)
+        name={key.replace(/(?<=[a-z])(?=[A-Z])/g, '_').toLowerCase()}
         checked={settings[key]}
         onChange={(e) => set(key, e.target.checked)}
       />

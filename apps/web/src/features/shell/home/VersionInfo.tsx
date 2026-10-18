@@ -1,3 +1,4 @@
+import { PROJECT_URL } from '@bettermyadmin/contracts/constants'
 import { Alert, PanelItem } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../../../lib/api.ts'
@@ -59,7 +60,7 @@ export function VersionInfo({ version, check }: { version: string; check: boolea
             <span className="latest">
               {t(', latest stable version:')}{' '}
               <a
-                href={`https://github.com/cB-Abhinav-Gautam/better-myadmin/releases/tag/v${encodeURIComponent(data.version)}`}
+                href={`${PROJECT_URL}/releases/tag/v${encodeURIComponent(data.version)}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

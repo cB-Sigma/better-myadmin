@@ -142,6 +142,9 @@ test('charsets, engines, plugins, binary log [p06-b19775] [p06-e1da5c] [p06-e5aa
 
   await page.goto('/s/1/plugins')
   await expect(page.locator('#plugins-storageengine')).toContainText('InnoDB')
+  // plugins/index.twig: the name, a space, the status badge (QA: "FEDERATEDdisabled" in the text)
+  const disabled = page.locator('#plugins-storageengine tr', { hasText: 'FEDERATED' }).locator('th')
+  await expect(disabled).toHaveText(/^FEDERATED\s+disabled$/)
 
   await page.goto('/s/1/binlog')
   await expect(page.getByRole('heading', { name: 'Binary log' })).toBeVisible()

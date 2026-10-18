@@ -345,7 +345,7 @@ function PluginTable({ type: ty }: { type: PluginType }) {
         {rows.map((p) => (
           <tr key={p.name} className="noclick">
             <th>
-              {p.name}
+              {p.name}{' '}
               {p.status !== 'ACTIVE' && (
                 <span className="ms-1 rounded bg-error px-1 text-xs text-bg">
                   {STATUS_LABEL[p.status] !== undefined ? t(STATUS_LABEL[p.status]!) : ''}

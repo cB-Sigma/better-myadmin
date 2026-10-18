@@ -44,12 +44,13 @@ export function PreferencesFormPage({
         setFailed(null)
         await applied()
         setRevision((n) => n + 1)
-        // getUrlToRedirect: ?saved=1 and the tab hash
+        // getUrlToRedirect: ?saved=1 and the posted tab_hash, which no script of phpMyAdmin fills
+        // (display.twig's hidden input stays ''): the page opens again on its first form
+        setActive('')
         await navigate({
           to: '/s/$server/preferences/$tab',
           params: { server, tab },
           search: { saved: 1 },
-          hash: active,
         })
         return
       }
