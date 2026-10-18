@@ -97,3 +97,20 @@ export { DocLink, Hint, MySqlDocLink } from './components/doc-link.tsx'
 export { IconLink, type IconLinkProps, IconText, PmaIcon } from './components/icon.tsx'
 export { TabBar, type TabBarProps, type TabItem, type TabLinkComponent } from './components/tab-bar.tsx'
 export { NavPills, type NavPillItem, NavTabs, type NavTabItem } from './components/nav.tsx'
+export {
+  DateTimeCalendar,
+  type DateTimeCalendarProps,
+  DateTimeTrigger,
+} from './components/datetime-picker.tsx'
+export {
+  DEFAULT_PICKER_OPTIONS,
+  type PickerKind,
+  type PickerOptions,
+  calendarGrid,
+  formatPickerTime,
+  formatPickerValue,
+  isPickerKind,
+  parsePickerValue,
+  pickerCanShow,
+  pickerOptionsFor,
+} from './lib/datetime.ts'
