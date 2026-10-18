@@ -33,6 +33,7 @@ import {
   scanParameters,
   snippetQuery,
 } from './logic'
+import { FlashMessages, usePageCardEnv } from './page-card'
 import { sqlTabRoute } from './routes'
 import { newQueryId, runQuery, scopeKey, takePendingResults } from './runner'
 import './sql.css'
@@ -62,6 +63,7 @@ export function SqlPage(props: SqlPageProps) {
   usePagePrefs(server, 'Sql')
   // the message of the action that came back here (Insert/Edit "Go back to previous page")
   const [flash] = useState(() => takeFlash())
+  const { env, replacement } = usePageCardEnv(server)
   const form = useQuery({
     queryKey: qk.sqlForm(server, db, table, props.sql ?? ''),
     queryFn: () => api.sqlForm(server, { db, table, sqlQuery: props.sql }),
@@ -71,17 +73,11 @@ export function SqlPage(props: SqlPageProps) {
     return <MessageBox type="error" text={form.error.message} flush />
   }
   if (form.data === undefined) return <div className="text-sm text-fg-subtle">{t('Loading…')}</div>
+  // a link of a message's query card ran its query: the result replaces the page
+  if (replacement !== null) return replacement
   return (
     <>
-      {flash.map((m, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: messages are positional
-        <div key={i} className="mb-3 overflow-hidden rounded border border-border">
-          <MessageBox type={m.type} text={m.text} />
-          {m.sql !== undefined && m.sql !== '' && (
-            <HighlightedSql sql={m.sql} className="bg-bg-inset px-3 py-2" />
-          )}
-        </div>
-      ))}
+      <FlashMessages messages={flash} scope={{ db, table }} env={env} />
       <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
     </>
   )

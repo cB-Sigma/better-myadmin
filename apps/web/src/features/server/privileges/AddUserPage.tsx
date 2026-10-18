@@ -68,7 +68,7 @@ export function AddUserPage({ server, search }: { server: number; search: AddUse
         setResult({ message: r.message, sql: r.sql })
         return
       }
-      setFlash({ message: r.message, sql: r.sql })
+      setFlash({ message: r.message, sql: r.sql, card: r.card })
       void navigate({
         to: path(`/s/${server}/privileges/user`),
         search: editSearch(r.account.username, r.account.hostname) as never,

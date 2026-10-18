@@ -110,3 +110,38 @@ test('leaving the form with a modified field asks for confirmation [p03-06384d]'
   await expect.poll(() => messages.length).toBe(1)
   await expect(page).toHaveURL(/\/t\/w\/insert/)
 })
+
+const ID = 'b80bb7740288fda1f201890375a60c8f' // md5('id')
+
+test('after Go: the message with its query card, the SQL box showing the INSERT; a failed INSERT is mysqlDie with Edit [p03-28b5f4] [p03-c84958]', async ({
+  page,
+}) => {
+  await insertForm(page)
+  await value(page, 0, ID).fill('901')
+  await value(page, 0, NAME).fill('qa-card')
+  await page.locator('#insertForm [type=submit]:visible').last().click()
+  // Generator::getMessage on /table/sql: message, SQL and the Edit inline / Edit / PHP links
+  const card = page.locator('.result_query').first()
+  await expect(card).toContainText('1 row inserted.')
+  await expect(card).toContainText("INSERT INTO `w` (`id`, `name`, `d`) VALUES ('901', 'qa-card', NULL);")
+  for (const link of ['Edit inline', 'Edit', 'Create PHP code']) {
+    await expect(card.getByText(link, { exact: true }).first()).toBeVisible()
+  }
+  // GotoDefault /table/sql: the box holds the statements that ran (Current::$sqlQuery)
+  await expect(page.locator('.cm-content').first()).toContainText("VALUES ('901', 'qa-card', NULL);")
+
+  // the same id again: DatabaseInterface::query fails → mysqlDie(…, true): Error, SQL query: Copy
+  // Edit, MySQL said
+  await page.goto(`/s/1/db/${DB}/t/w/insert`)
+  await expect(page.locator('#insertForm table.insertRowTable')).toHaveCount(2)
+  await value(page, 0, ID).fill('901')
+  await page.locator('#insertForm [type=submit]:visible').last().click()
+  const err = page.getByRole('alert').filter({ hasText: 'MySQL said:' })
+  await expect(err).toContainText('Error')
+  await expect(err).toContainText("#1062 - Duplicate entry '901' for key 'w.PRIMARY'")
+  // the form is still modified (lock-page): leaving it asks first
+  page.once('dialog', (d) => void d.accept())
+  await err.getByRole('link', { name: 'Edit' }).click()
+  await expect(page).toHaveURL(/\/t\/w\/sql\?/)
+  await expect(page.locator('.cm-content').first()).toContainText("VALUES ('901', NULL, NULL)")
+})

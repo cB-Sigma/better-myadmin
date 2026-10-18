@@ -1,10 +1,17 @@
-import type { ExportPrivilegesRequest, PrivGate, PrivItem, PrivMessage } from '@bettermyadmin/contracts'
+import type {
+  ExportPrivilegesRequest,
+  PrivGate,
+  PrivItem,
+  PrivMessage,
+  SqlCard,
+} from '@bettermyadmin/contracts'
 import { Button, MessageBox, Modal, SafeHtml, Textarea, removeMessage, showMessage } from '@bettermyadmin/ui'
 import { Link, useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { path } from '../../../lib/paths'
+import { type CardEnv, QueryCard } from '../../sql/SqlMessage'
 
 /**
  * Pieces shared by the User accounts pages: the sub-navigation pills, the access-gate messages,
@@ -43,7 +50,21 @@ export function GateMessages({ gate }: { gate: PrivGate }) {
 }
 
 /** A privileges action message (Generator::getMessage: the message with the SQL that ran). */
-export function PrivMessageBox({ message, sql }: { message: PrivMessage; sql?: string }) {
+export function PrivMessageBox({
+  message,
+  sql,
+  card,
+  env,
+}: {
+  message: PrivMessage
+  sql?: string
+  /** Generator::getMessage's query card: the SQL with Edit inline / Edit / Create PHP code */
+  card?: SqlCard | null | undefined
+  env?: CardEnv
+}) {
+  if (card !== undefined && card !== null && env !== undefined && message.html !== true) {
+    return <QueryCard type={message.type} text={message.text} card={card} sig="" env={env} />
+  }
   if (message.html === true)
     return (
       <MessageBox type={message.type} {...(sql !== undefined && sql !== '' ? { sql } : {})}>
