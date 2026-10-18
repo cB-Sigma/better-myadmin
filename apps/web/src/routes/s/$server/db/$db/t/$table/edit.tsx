@@ -1,8 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { InsertEditPage } from '../../../../../../../features/insert-edit/InsertEditPage'
+import { qs } from '../../../../../../../lib/search'
 
-const list = z.union([z.coerce.string(), z.array(z.coerce.string())]).optional()
+const list = qs.list()
 const asList = (v: string | string[] | undefined) => (v === undefined ? [] : Array.isArray(v) ? v : [v])
 
 /**
@@ -14,11 +15,11 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/edit')({
   validateSearch: z.object({
     where: list,
     sig: list,
-    action: z.enum(['insert', 'update']).optional(),
-    unique: z.coerce.number().optional(),
-    goto: z.string().optional(),
+    action: qs.oneOf(['insert', 'update']),
+    unique: qs.int(),
+    goto: qs.str(),
     /** the Browse query (sql_query) */
-    sql: z.string().optional(),
+    sql: qs.str(),
   }),
   component: function Edit() {
     const { server, db, table } = Route.useParams()

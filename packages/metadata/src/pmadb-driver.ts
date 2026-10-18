@@ -181,7 +181,11 @@ class PmadbUiPrefs implements UiPrefsBackend {
   ): Promise<SaveResult> {
     const sqlQuery = ` REPLACE INTO ${this.table} (username, db_name, table_name, prefs) VALUES (${q(username)}, ${q(db)}, ${q(table)}, ${q(json)})`
     if ((await this.conn.tryQuery(sqlQuery)) === false) {
-      return { error: 'Could not save table UI preferences!', detail: this.conn.lastError }
+      return {
+        error: 'Could not save table UI preferences!',
+        msgid: 'Could not save table UI preferences!',
+        detail: this.conn.lastError,
+      }
     }
     // remove some old rows in table_uiprefs if it exceeds the configured maximum rows
     const rowsCount = Number((await fetchValue(this.conn, `SELECT COUNT(*) FROM ${this.table}`)) || 0)
@@ -189,8 +193,11 @@ class PmadbUiPrefs implements UiPrefsBackend {
       const numRowsToDelete = rowsCount - maxRows
       const del = ` DELETE FROM ${this.table} ORDER BY last_update ASC LIMIT ${numRowsToDelete}`
       if ((await this.conn.tryQuery(del)) === false) {
+        // pma: the %s is MySQLDocumentation::showDocumentation('config', 'cfg_Servers_MaxTableUiprefs')
         return {
           error: "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] )",
+          msgid: "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] %s)",
+          args: [''],
           detail: this.conn.lastError,
         }
       }

@@ -1,14 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { DatabasesPage } from '../../../features/server/DatabasesPage'
+import { qs } from '../../../lib/search'
 
 /** pma: /server/databases */
 export const Route = createFileRoute('/s/$server/databases')({
   validateSearch: z.object({
-    statistics: z.boolean().catch(false).default(false),
-    pos: z.coerce.number().int().min(0).catch(0).default(0),
-    sort_by: z.string().catch('').default(''),
-    sort_order: z.string().catch('').default(''),
+    statistics: qs.flag(),
+    pos: qs.intOr(0, 0),
+    sort_by: qs.strOr(''),
+    sort_order: qs.strOr(''),
   }),
   component: function Databases() {
     const { server } = Route.useParams()

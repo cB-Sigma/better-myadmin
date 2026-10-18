@@ -370,6 +370,18 @@ export const ChangeFormResponse = z.object({
       moveOptions: z.array(
         z.object({ value: z.string(), after: z.string().nullable(), disabled: z.boolean() }),
       ),
+      /**
+       * Relation::checkChildForeignReferences, only before MySQL 5.6.6 (renaming a column bound in a
+       * foreign key): name and type locked, the name's title says why
+       */
+      status: z
+        .object({
+          isEditable: z.boolean(),
+          isReferenced: z.boolean(),
+          isForeignKey: z.boolean(),
+          references: z.array(z.string()),
+        })
+        .optional(),
     }),
   ),
 })

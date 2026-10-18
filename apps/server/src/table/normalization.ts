@@ -20,7 +20,7 @@ import type {
   SqlMessage,
 } from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n'
-import { extractColumnSpec, getColumns as getTypeCatalog } from '@bettermyadmin/mysql-types'
+import { extractColumnSpec, getColumns as getTypeCatalog, typeGroupLabel } from '@bettermyadmin/mysql-types'
 import {
   type NewTables3NF,
   backquote,
@@ -55,8 +55,12 @@ async function columnNames(ctx: DdlCtx, table: string): Promise<string[]> {
 async function columnsList(ctx: DdlCtx, category: 'all' | 'String') {
   let allowed: string[] | null = null
   if (category !== 'all') {
+    // pma: $types->getColumns()[_pgettext('string types', 'String')] (translated keys on both sides)
+    const pg = (c: string, m: string) => ctx.tr.pgettext(c, m)
+    const key = pg('string types', 'String')
     const group = getTypeCatalog(ctx.reader.server).find(
-      (e): e is { group: string; types: string[] } => typeof e === 'object' && e.group === category,
+      (e): e is { group: string; types: string[] } =>
+        typeof e === 'object' && e.group === category && typeGroupLabel(e.group, pg) === key,
     )
     allowed = group?.types ?? []
   }

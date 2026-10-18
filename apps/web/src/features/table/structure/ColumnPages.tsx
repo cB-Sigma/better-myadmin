@@ -48,6 +48,7 @@ const rowFromForm = (c: ChangeFormResponse['columns'][number], options: ColumnFo
   orig: c.orig,
   moveOptions: c.moveOptions,
   ...(c.mime !== null ? { mime: c.mime } : {}),
+  ...(c.status !== undefined ? { status: c.status } : {}),
 })
 
 export function ChangeColumnsPage({ scope, fields }: { scope: TableRef; fields: string[] }) {

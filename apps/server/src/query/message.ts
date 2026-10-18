@@ -1,5 +1,5 @@
 import type { MysqlDie, SqlCard } from '@bettermyadmin/contracts'
-import { type Gettext, englishTranslator } from '@bettermyadmin/i18n'
+import { type Gettext, N_, englishTranslator } from '@bettermyadmin/i18n'
 import { type Context, Lexer, Parser, getErrors } from '@bettermyadmin/sql-lexer'
 import type { AppConfig } from '../config.ts'
 import { addslashes } from '../util/php.ts'
@@ -91,15 +91,15 @@ export async function getMessageCard(sqlQuery: string, o: CardOptions): Promise<
   let explain: SqlCard['links']['explain'] = null
   if (sqlBox.Explain && !queryTooBig) {
     if (isSelect) {
-      explain = { text: 'Explain SQL', sql: `EXPLAIN ${sqlQuery}` }
+      explain = { text: N_('Explain SQL') as 'Explain SQL', sql: `EXPLAIN ${sqlQuery}` }
     } else if (new RegExp(`${EXPLAIN_RE}SELECT${SP}+`, 'i').test(sqlQuery)) {
       explain = {
-        text: 'Skip Explain SQL',
+        text: N_('Skip Explain SQL') as 'Skip Explain SQL',
         sql: sqlQuery.replace(new RegExp(EXPLAIN_RE, 'i'), ''),
       }
     } else if (new RegExp(`${ANALYZE_RE}SELECT${SP}+`, 'i').test(sqlQuery)) {
       explain = {
-        text: 'Skip Analyze SQL',
+        text: N_('Skip Analyze SQL') as 'Skip Analyze SQL',
         sql: sqlQuery.replace(new RegExp(ANALYZE_RE, 'i'), ''),
       }
     }

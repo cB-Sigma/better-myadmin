@@ -21,7 +21,16 @@ export interface HistoryRow {
 }
 
 /** `inaccessible`: the storage database cannot be accessed any more (UserPreferences::hasAccessToDatabase) */
-export type SaveResult = true | { error: string; detail?: string; inaccessible?: true }
+export type SaveResult =
+  | true
+  | {
+      error: string
+      detail?: string
+      inaccessible?: true
+      /** the msgid (and its sprintf arguments) the caller translates, when it differs from `error` */
+      msgid?: string
+      args?: string[]
+    }
 
 export interface BookmarkBackend {
   /** BookmarkRepository::getList */

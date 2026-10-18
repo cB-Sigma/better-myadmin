@@ -4,7 +4,7 @@
 
 What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.
 
-776/966 covered (80.3%): 768 implemented, 8 n/a, 12 planned, 178 missing. [Summary](README.md).
+775/966 covered (80.2%): 767 implemented, 8 n/a, 12 planned, 178 missing, 1 broken. [Summary](README.md).
 
 ## 01 shell navigation auth — 61/237 (25.7%) covered, 57/237 implemented
 
@@ -44,7 +44,7 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `table/change.ts` | 10/10: ✅ `change #insert_rows` ✅ `change <$thisElement>` ✅ `change select[name="submit_type"]` ✅ `click <$thisElement>` ✅ `click button.gis-copy-data` ✅ `click input.checkbox_null` ✅ `click input[name^='insert_ignore_']` ✅ `confirm(strConfirmRowChange)` ✅ `keypress #insert_rows` ✅ `show.bs.modal <gisEditorModal>` |  |
 | `transformations/image_upload.ts` | 1/1: ✅ `change input.image-upload` |  |
 
-## 04 table level — 178/178 (100.0%) covered, 178/178 implemented
+## 04 table level — 177/178 (99.4%) covered, 177/178 implemented
 
 | Script | Covered | Not covered |
 |---|---|---|
@@ -53,7 +53,7 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `table/chart.ts` | 14/14: ✅ `POST <$form.attr('action')>` ✅ `blur #chartTitleInput` ✅ `change #chartSeriesColumnSelect` ✅ `change #chartSeriesSelect` ✅ `change #chartValueColumnSelect` ✅ `change #chartXAxisSelect` ✅ `click #barStackedCheckbox` ✅ `click #seriesColumnCheckbox` ✅ `click input[name="chartType"]` ✅ `focus #chartTitleInput` ✅ `keyup #chartTitleInput` ✅ `keyup #xAxisLabelInput` ✅ `keyup #yAxisLabelInput` ✅ `submit <$('#tblchartform') as JQuery<HTMLFormEl…>` |  |
 | `table/find_replace.ts` | 3/3: ✅ `POST <findReplaceForm.attr('action')>` ✅ `click #toggle_find` ✅ `submit #find_replace_form` |  |
 | `table/gis_visualization.ts` | 17/17: ✅ `click #useOsmAsBaseLayerSwitch` ✅ `click <this.target> .down_arrow` ✅ `click <this.target> .left_arrow` ✅ `click <this.target> .right_arrow` ✅ `click <this.target> .up_arrow` ✅ `click <this.target> .zoom_in` ✅ `click <this.target> .zoom_out` ✅ `click <this.target> .zoom_world` ✅ `dblclick <this.svgEl>` ✅ `drag <this.svgEl>` ✅ `dragstart <this.svgEl>` ✅ `dragstart <this.target> .button` ✅ `mouseleave <this.svgEl> .vector` ✅ `mousemove <this.svgEl> .vector` ✅ `pointermove <map>` ✅ `resize window` ✅ `wheel <this.svgEl>` |  |
-| `table/operations.ts` | 17/17: ✅ `POST <$form.attr('action')>` ✅ `POST <$link.attr('href')>` ✅ `POST <url>` ✅ `click #delete_tbl_anchor.ajax` ✅ `click #drop_tbl_anchor.ajax` ✅ `click #drop_view_anchor.ajax` ✅ `click #tbl_maintenance li a.maintain_action.ajax` ✅ `click #truncate_tbl_anchor.ajax` ✅ `confirm("")` ✅ `confirm(strChangeAllColumnCollationsWarning)` ✅ `confirm(strDropPartitionWarning)` ✅ `confirm(strDropTableStrongWarning)` ✅ `confirm(strTruncatePartitionWarning)` ✅ `submit #copyTable.ajax` ✅ `submit #moveTableForm` ✅ `submit #partitionsForm` ✅ `submit #tableOptionsForm` |  |
+| `table/operations.ts` | 16/17: ✅ `POST <$form.attr('action')>` ✅ `POST <$link.attr('href')>` ✅ `POST <url>` ✅ `click #delete_tbl_anchor.ajax` ✅ `click #drop_tbl_anchor.ajax` ✅ `click #drop_view_anchor.ajax` ✅ `click #tbl_maintenance li a.maintain_action.ajax` ✅ `click #truncate_tbl_anchor.ajax` ✅ `confirm(strChangeAllColumnCollationsWarning)` ✅ `confirm(strDropPartitionWarning)` ✅ `confirm(strDropTableStrongWarning)` ✅ `confirm(strTruncatePartitionWarning)` ✅ `submit #copyTable.ajax` ✅ `submit #moveTableForm` ✅ `submit #partitionsForm` ✅ `submit #tableOptionsForm` | 💥 `confirm("")` |
 | `table/relation.ts` | 7/7: ✅ `POST /table/relation` ✅ `POST <url>` ✅ `change select[name^="destination_db"], select[name^="destination_table"], sel…` ✅ `click a.add_foreign_key` ✅ `click a.add_foreign_key_field` ✅ `click a.drop_foreign_key_anchor.ajax` ✅ `confirm(strDoYouReally)` |  |
 | `table/select.ts` | 9/9: ✅ `POST /table/search` ✅ `POST <$searchForm.attr('action')>` ✅ `change <item>` ✅ `change select.geom_func` ✅ `change select[name*="criteriaColumnOperators"]` ✅ `click #rangeSearchModalGo` ✅ `click #togglesearchformlink` ✅ `show.bs.modal <gisEditorModal>` ✅ `submit #tbl_search_form.ajax` |  |
 | `table/structure.ts` | 23/23: ✅ `GET <data.structure_refresh_route>` ✅ `POST <{ url: formUrl, data: formData, success…>` ✅ `POST <$('#fieldsForm').attr('action')>` ✅ `POST <$form.attr('action')>` ✅ `POST <$form.prop('action')>` ✅ `POST <this.formAction>` ✅ `POST <url>` ✅ `change select[name=after_field]` ✅ `click #designerModalGoButton` ✅ `click #fieldsForm button.mult_submit` ✅ `click #move_columns_anchor` ✅ `click #remove_partitioning.ajax` ✅ `click a.add_key.ajax` ✅ `click a.drop_column_anchor.ajax` ✅ `click a[id^=partition_action].ajax` ✅ `confirm(strChangeColumnCollation)` ✅ `confirm(strDoYouReally)` ✅ `confirm(strDropPartitionWarning)` ✅ `confirm(strRemovePartitioningWarning)` ✅ `confirm(strTruncatePartitionWarning)` ✅ `hidden.bs.modal <designerModalPreviewModal>` ✅ `shown.bs.modal <designerModalPreviewModal>` ✅ `submit .append_fields_form.ajax` |  |

@@ -112,3 +112,43 @@ msgids:
   "You do not have necessary privileges to create a database named '%s'. You may go to 'Operations' tab of any database to set up the phpMyAdmin configuration storage there.":
     via: packages/metadata/src/storage.ts
     note: Relation::createPmaDatabase; translated with its msgid by routes/metadata.ts (pkgMsg)
+  "You are using the external transformation command line options field, which has been deprecated for security reasons. Add all command line options directly to the definition in %s.":
+    n/a: "ExternalTransformationsPlugin::applyTransformation returns the buffer before it when $allowedPrograms is empty, as it is in phpMyAdmin's source (we never run a program either)"
+  "Cannot save UI property \"%s\". The changes made will not be persistent after you refresh this page. Please check if the table structure has been changed.":
+    via: packages/metadata/src/uiprefs.ts
+    note: Table::setUiProp; translated with its msgid by routes/metadata.ts (pkgMsg)
+  "Could not save table UI preferences!":
+    via: packages/metadata/src/pmadb-driver.ts
+    note: Table::saveUiPrefsToDb; translated with its msgid by routes/metadata.ts (pkgMsg)
+  "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] %s)":
+    via: packages/metadata/src/pmadb-driver.ts
+    note: Table::saveUiPrefsToDb; translated with its msgid by routes/metadata.ts (pkgMsg)
+  "Trigger editor":
+    n/a: "triggers/list.twig's placeholder modal title; triggers.ts replaces it with the link's title or text (\"Create new trigger\", \"Edit\") before the modal shows, as our editor dialog titles do"
+  "Export trigger":
+    n/a: "triggers/list.twig's placeholder modal title; triggers.ts replaces it with the export response's title before the modal shows"
+  "Add trigger":
+    n/a: "Triggers IndexController's title: the <h2> of the non-AJAX editor page (AJAX callers title the modal with the link text); the SPA only has the AJAX flow"
+  "Edit trigger":
+    n/a: "Triggers IndexController's title: the <h2> of the non-AJAX editor page (AJAX callers title the modal with the link text); the SPA only has the AJAX flow"
+  "Invalid file format, expected one of: ":
+    n/a: "GisVisualizationController answers it for a saveToFile request naming an unknown fileFormat; our PNG / SVG files are drawn in the browser from a menu of exactly those formats, no request carries a format"
+  "Y Values":
+    n/a: "tbl_chart.twig's initial #yAxisLabelInput value; chart.ts's onload runs onDataSeriesChange, which replaces it with the series name or strYValues (\"Y values\") before the chart is drawn"
+  "X Values":
+    n/a: "tbl_chart.twig shows it only when xaxis == -1; xaxis is always the first column's index (null without columns, and null != -1)"
+  "Jump to database “%s”.":
+    n/a: "Generator::getDbLink's title; nothing in phpMyAdmin calls getDbLink (no PHP caller, no Twig function)"
+  "The trigger name must not be empty.":
+    n/a: "InvalidTriggerName: phpMyAdmin only builds TriggerName with tryFrom(), which returns null instead of throwing"
+  "The trigger name cannot be longer than %d characters.":
+    n/a: "InvalidTriggerName: phpMyAdmin only builds TriggerName with tryFrom(), which returns null instead of throwing"
+  "The trigger name cannot end with a space character.":
+    n/a: "InvalidTriggerName: phpMyAdmin only builds TriggerName with tryFrom(), which returns null instead of throwing"
+  "Invalid authentication method set in configuration:":
+    n/a: "AuthenticationPluginFactory's default arm is unreachable: Settings\\Server::setAuthType turns any other auth_type into 'cookie'"
+  "Session not found.":
+    n/a: "FlashMessenger throws it when built without a started PHP session, which phpMyAdmin's request flow never does; our flash messages live in the server session store"
+  "Users":
+    via: packages/metadata/src/user-groups.ts
+    note: Util::getMenuTabList (the user group tab labels); translated by apps/server/src/privileges/user-groups.ts and allowedTabNames' caller

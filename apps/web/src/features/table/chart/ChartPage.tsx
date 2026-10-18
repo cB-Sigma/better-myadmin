@@ -99,7 +99,7 @@ function ChartForm({
     type: 'line',
     title: '',
     xaxisLabel: names[xaxis] ?? '',
-    yaxisLabel: initialSeries.length === 1 ? (names[initialSeries[0] ?? 0] ?? '') : t('Y Values'),
+    yaxisLabel: initialSeries.length === 1 ? (names[initialSeries[0] ?? 0] ?? '') : t('Y values'),
     stackSeries: false,
     mainAxis: xaxis,
     selectedSeries: initialSeries,
@@ -172,7 +172,7 @@ function ChartForm({
     set({
       selectedSeries: selected,
       ...(one ? {} : settings.type === 'pie' ? { type: 'line' as const } : {}),
-      yaxisLabel: one ? (names[selected[0] ?? 0] ?? '') : t('Y Values'),
+      yaxisLabel: one ? (names[selected[0] ?? 0] ?? '') : t('Y values'),
     })
   }
   const shown = (type: ChartType) =>
