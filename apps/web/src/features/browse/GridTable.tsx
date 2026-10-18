@@ -1,14 +1,19 @@
 import type { Cell, Field, GridCell, GridData, GridRow } from '@bettermyadmin/contracts'
 import {
   Button,
+  DateTimeCalendar,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   IconText,
   NativeSelect,
+  type PickerKind,
   PmaIcon,
   Textarea,
+  pickerCanShow,
+  pickerOptionsFor,
   showMessage,
+  useUiSettings,
 } from '@bettermyadmin/ui'
 import { Link } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
@@ -17,7 +22,7 @@ import { api } from '../../lib/api'
 import { useConfig } from '../../lib/config'
 import { t } from '../../lib/i18n'
 import { ForeignBrowser } from '../insert-edit/ForeignBrowser'
-import { DateTimePicker } from '../insert-edit/ValueWidget'
+import { pickerTip } from '../insert-edit/ValueWidget'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { renderTransformation } from '../transformations/registry'
 import {
@@ -1028,6 +1033,20 @@ function CellEditor(props: {
   const isDate = ['timefield', 'datefield', 'datetimefield', 'timestampfield'].some((c) =>
     hasClass(cell.cls, c),
   )
+  // the td's data-type (makegrid: addDatepicker($inputField, $td.attr('data-type'), …))
+  const pickerKind: PickerKind | null = hasClass(cell.cls, 'datefield')
+    ? 'date'
+    : hasClass(cell.cls, 'timefield')
+      ? 'time'
+      : hasClass(cell.cls, 'timestampfield')
+        ? 'timestamp'
+        : hasClass(cell.cls, 'datetimefield')
+          ? 'datetime'
+          : null
+  const { FirstDayOfCalendar } = useUiSettings()
+  const [typed, setTyped] = useState(0)
+  // datepicker('show') right away (makegrid showEditArea)
+  const [pickerShown, setPickerShown] = useState(true)
   // showEditArea: time values get the fractional digits of the column (.000 / .000000)
   const initial = (() => {
     const v = isNull ? '' : rawText(props.raw, props.field)
@@ -1193,6 +1212,7 @@ function CellEditor(props: {
       onKeyDown={onKeyDown}
       onChange={(e) => {
         setValue(e.target.value)
+        setTyped((n) => n + 1)
         if (e.target.value !== '') setNullChecked(false)
         else if (!notNull) setNullChecked(true)
       }}
@@ -1223,14 +1243,29 @@ function CellEditor(props: {
             }}
           />
         )}
-        {isDate && (
-          <DateTimePicker
-            kind={
-              hasClass(cell.cls, 'datefield') ? 'date' : hasClass(cell.cls, 'timefield') ? 'time' : 'datetime'
-            }
-            decimals={column.decimals}
-            trueType={column.dataType}
-            onPick={(v) => {
+        {pickerKind !== null && (
+          // showOn 'button': the trigger after the edit box shows and hides the picker
+          <button
+            type="button"
+            className="ui-datepicker-trigger inline-flex cursor-pointer items-center p-0.5"
+            title="..."
+            aria-label="..."
+            onClick={() => setPickerShown((v) => !v)}
+          >
+            <PmaIcon name="b_calendar" alt="" />
+          </button>
+        )}
+        {pickerKind !== null && pickerShown && pickerCanShow(pickerKind, value) && (
+          // the picker shown in the edit area (#ui-datepicker-div moved into cEdit, position: relative);
+          // a typed value is read again (datepicker('show') on keyup), an invalid one hides it
+          <DateTimeCalendar
+            key={typed}
+            inline
+            kind={pickerKind}
+            value={value}
+            options={{ ...pickerOptionsFor(pickerKind, column.decimals, FirstDayOfCalendar), hourMax: 23 }}
+            {...(pickerTip(pickerKind) !== undefined ? { note: pickerTip(pickerKind) as string } : {})}
+            onChange={(v) => {
               setValue(v)
               setNullChecked(false)
             }}

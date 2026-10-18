@@ -36,6 +36,11 @@ export interface ServerInfo {
   sqlMode: string
   /** Context::setMode(@@sql_mode) + Context::loadClosest(MySql|MariaDb + version) */
   context: Context
+  /**
+   * postConnect's user errors (the session time zone or the configured collation refused): every
+   * request on this connection shows them (http/user-errors.ts), as phpMyAdmin connects per request
+   */
+  setupErrors?: Array<{ msgid: string; args?: Array<string | number> }>
 }
 
 /**

@@ -2,14 +2,16 @@ import type { InsertCell, InsertColumn } from '@bettermyadmin/contracts'
 import {
   Button,
   Checkbox,
+  DateTimeTrigger,
   Input,
   NativeSelect,
+  type PickerKind,
   PmaIcon,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
   Radio,
   Textarea,
+  isPickerKind,
+  pickerOptionsFor,
+  useUiSettings,
 } from '@bettermyadmin/ui'
 import { useState } from 'react'
 import { t } from '../../lib/i18n'
@@ -65,13 +67,16 @@ export function ValueWidget(p: WidgetProps) {
             max={w.max ?? undefined}
             inputMode={w.dataType === 'INT' ? 'numeric' : undefined}
             tabIndex={idx}
+            // addDateTimePicker's tooltip on .timefield / .datefield
+            title={w.picker === 'time' || w.picker === 'date' ? pickerTip(w.picker) : undefined}
             onChange={text}
           />
           {w.picker !== null && (
             <DateTimePicker
-              kind={w.picker}
+              // the td's data-type: the column's true type (timestamp has its own)
+              kind={isPickerKind(col.trueType) ? col.trueType : w.picker}
               decimals={col.decimals}
-              trueType={col.trueType}
+              value={v}
               onPick={(value) => p.onChange({ value })}
             />
           )}
@@ -379,67 +384,47 @@ function TransformedInput(p: WidgetProps) {
   }
 }
 
+/** strMysqlAllowedValuesTipDate / …Time: the tooltip of a `.datefield` / `.timefield` (and the picker's note) */
+export function pickerTip(kind: PickerKind): string | undefined {
+  if (kind === 'time')
+    return t(
+      'MySQL accepts additional values not selectable by the slider; key in those values directly if desired',
+    )
+  if (kind === 'date')
+    return t(
+      'MySQL accepts additional values not selectable by the datepicker; key in those values directly if desired',
+    )
+  return undefined
+}
+
 /**
- * The calendar button of `.datefield/.timefield/.datetimefield` (jQuery UI datepicker +
- * timepicker): picks a value in MySQL format; fractional seconds follow the column precision.
+ * The calendar trigger of `.datefield/.timefield/.datetimefield` (addDateTimePicker): phpMyAdmin's
+ * jQuery UI date and time picker, the fractional seconds following the column precision.
  * pma: resources/js/modules/functions.ts::addDateTimePicker
  */
 export function DateTimePicker({
   kind,
   decimals,
-  trueType,
+  value,
   onPick,
 }: {
-  kind: 'date' | 'time' | 'datetime'
+  kind: PickerKind
   decimals: number
-  trueType: string
+  value: string
   onPick: (v: string) => void
 }) {
-  const [open, setOpen] = useState(false)
-  const [v, setV] = useState('')
-  const step = decimals > 0 ? 1 / 10 ** Math.min(decimals, 3) : 1
-  const type = kind === 'date' ? 'date' : kind === 'time' ? 'time' : 'datetime-local'
+  const { FirstDayOfCalendar } = useUiSettings()
+  const tip = pickerTip(kind)
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="ui-datepicker-trigger"
-          title={t(
-            'MySQL accepts additional values not selectable by the datepicker; key in those values directly if desired',
-          )}
-        >
-          <PmaIcon name="b_calendar" alt="" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-72 space-y-2 p-2 text-xs">
-        <Input
-          type={type}
-          step={kind === 'date' ? undefined : step}
-          value={v}
-          onChange={(e) => setV(e.target.value)}
-        />
-        <p className="text-fg-muted">
-          {t(
-            'MySQL accepts additional values not selectable by the slider; key in those values directly if desired',
-          )}
-        </p>
-        <Button
-          size="sm"
-          variant="primary"
-          onClick={() => {
-            let out = v.replace('T', ' ')
-            if (kind !== 'date' && /\d\d:\d\d$/.test(out)) out += ':00'
-            if (trueType === 'time' && out === '') out = ''
-            onPick(out)
-            setOpen(false)
-          }}
-        >
-          {t('Done')}
-        </Button>
-      </PopoverContent>
-    </Popover>
+    <DateTimeTrigger
+      kind={kind}
+      value={value}
+      onChange={onPick}
+      options={pickerOptionsFor(kind, decimals, FirstDayOfCalendar)}
+      // jQuery UI's buttonText, the title and alt of the trigger image
+      title="..."
+      {...(tip !== undefined ? { note: tip } : {})}
+    />
   )
 }
 

@@ -216,6 +216,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                             onChange={(v) => patch(i, { value: v })}
                             scope={scope}
                             geomFunc={r.geomFunc}
+                            picker
                           />
                           {errors[i] != null && (
                             <label className="error block text-xs text-error" htmlFor={`fieldID_${i}`}>
