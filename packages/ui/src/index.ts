@@ -77,6 +77,7 @@ export {
   Textarea,
 } from './components/form.tsx'
 export { Alert, Panel, PanelBody, PanelItem, PanelList } from './components/panel.tsx'
+export { ToggleButton } from './components/toggle-button.tsx'
 export { MessageBox, type MessageBoxProps, type MessageBoxType, MessageLine } from './components/message.tsx'
 export { Loading, PageHeader, Table } from './components/page.tsx'
 export { PreviewSqlDialog } from './components/preview-sql.tsx'

@@ -78,3 +78,19 @@ test('Empty of a referenced table: the error page of the failed TRUNCATE (Genera
   await expect(err.getByRole('link', { name: 'Edit' })).toBeVisible()
   await expect(page.locator('#tablesForm')).toHaveCount(0)
 })
+
+test('Make consistent with central list: the confirmation has Cancel, then Continue (check_all_tables.twig)', async ({
+  page,
+}) => {
+  // the central columns feature (configuration storage, which the e2e server has none of)
+  await page.route(/\/databases\/f07_e2e_bulk\/structure(\?.*)?$/, async (route) => {
+    const json = await (await route.fetch()).json()
+    await route.fulfill({ json: { ...json, config: { ...json.config, centralColumns: true } } })
+  })
+  await login(page)
+  await withSelected(page, ['logs'], 'make_consistent_with_central_list')
+  const dialog = page.getByRole('alertdialog')
+  await expect(dialog).toContainText('This action may change some of the columns definition.')
+  await expect(dialog.getByRole('button')).toHaveText(['Cancel', 'Continue'])
+  await dialog.getByRole('button', { name: 'Cancel' }).click()
+})

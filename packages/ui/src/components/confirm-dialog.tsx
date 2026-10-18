@@ -16,6 +16,11 @@ export interface ConfirmOptions {
   /** Red OK button for destructive actions (DROP/TRUNCATE/DELETE). */
   destructive?: boolean
   /**
+   * A page's own Bootstrap modal instead of `#functionConfirmModal`: the dismiss button first and a
+   * primary OK button (e.g. check_all_tables.twig's Cancel / Continue).
+   */
+  cancelFirst?: boolean
+  /**
    * Ignore `$cfg['Confirm']` and always ask. phpMyAdmin bypasses only the `$.fn.confirm` path when
    * Confirm is off; a few prompts (e.g. empty password with AllowNoPassword=false) use it too.
    */
@@ -109,18 +114,32 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
             <div className="p-3 text-sm break-words">{props.question}</div>
           </AlertDialog.Description>
           <div className="flex justify-end gap-2 border-t border-border bg-bg-subtle px-3 py-2">
+            {props.cancelFirst === true && (
+              <AlertDialog.Cancel className={cn(buttonVariants({ variant: 'secondary' }))}>
+                {memo.close}
+              </AlertDialog.Cancel>
+            )}
             <AlertDialog.Action
               id="functionConfirmOkButton"
               className={cn(
-                buttonVariants({ variant: props.destructive === true ? 'destructive' : 'secondary' }),
+                buttonVariants({
+                  variant:
+                    props.destructive === true
+                      ? 'destructive'
+                      : props.cancelFirst === true
+                        ? 'primary'
+                        : 'secondary',
+                }),
               )}
               onClick={props.onConfirm}
             >
               {memo.ok}
             </AlertDialog.Action>
-            <AlertDialog.Cancel className={cn(buttonVariants({ variant: 'secondary' }))}>
-              {memo.close}
-            </AlertDialog.Cancel>
+            {props.cancelFirst !== true && (
+              <AlertDialog.Cancel className={cn(buttonVariants({ variant: 'secondary' }))}>
+                {memo.close}
+              </AlertDialog.Cancel>
+            )}
           </div>
         </AlertDialog.Content>
       </AlertDialog.Portal>

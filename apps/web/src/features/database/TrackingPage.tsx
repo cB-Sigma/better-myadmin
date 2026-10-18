@@ -6,6 +6,8 @@ import {
   Label,
   Panel,
   PanelBody,
+  ToggleButton,
+  removeMessage,
   showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
@@ -63,6 +65,7 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
   const [untracked, setUntracked] = useState<string[]>([])
   const [createFor, setCreateFor] = useState<string[] | null>(null)
   const [statements, setStatements] = useState<string[] | null>(null)
+  const [toggling, setToggling] = useState<string | null>(null)
   // Generator::getMessage's card links of the Database Log (a link's result replaces the page)
   const { env, replacement } = usePageCardEnv(server)
 
@@ -79,6 +82,21 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
       await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
     } catch (e) {
       setMessages([errorMessage(e)])
+    }
+  }
+  // functions.ts toggleButton: ajaxShowMessage() while it runs, no message after (empty callback)
+  const toggle = async (table: string, version: string, active: boolean) => {
+    setToggling(table)
+    const box = showMessage()
+    try {
+      await api.dbTrackingAction({ server, db }, { action: 'toggle', table, version, active })
+      removeMessage(box)
+      await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
+    } catch (e) {
+      removeMessage(box)
+      showMessage(errorMessage(e).text, false, 'error')
+    } finally {
+      setToggling(null)
     }
   }
   const deleteTracking = async (tables: string[], multiple: boolean) => {
@@ -263,27 +281,14 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
                     <td>{v.created}</td>
                     <td>{v.updated}</td>
                     <td>
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className={`toggle-container ${v.active ? 'on' : 'off'}`}
+                      <ToggleButton
+                        on={v.active}
+                        onLabel={t('active')}
+                        offLabel={t('not active')}
                         title={t('Click to toggle')}
-                        onClick={() =>
-                          void run(() =>
-                            api.dbTrackingAction(
-                              { server, db },
-                              {
-                                action: 'toggle',
-                                table: v.table,
-                                version: v.version,
-                                active: !v.active,
-                              },
-                            ),
-                          )
-                        }
-                      >
-                        {v.active ? t('active') : t('not active')}
-                      </Button>
+                        disabled={toggling !== null}
+                        onToggle={() => void toggle(v.table, v.version, !v.active)}
+                      />
                     </td>
                     <td>
                       <Button
