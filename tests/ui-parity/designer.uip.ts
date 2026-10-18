@@ -106,8 +106,10 @@ pageParity(
       interactions: [
         {
           name: 'column options',
-          pma: (p) => p.locator('.small_tab_pref_click_opt').first().click({ force: true }),
-          ours: (p) => p.locator('.small_tab_pref_click_opt').first().click({ force: true }),
+          // the click event itself, as the relation rows: a pointer click lands on whatever covers
+          // the cell (the tables are placed at random and can overlap)
+          pma: (p) => p.locator('.small_tab_pref_click_opt').first().dispatchEvent('click'),
+          ours: (p) => p.locator('.small_tab_pref_click_opt').first().dispatchEvent('click'),
         },
       ],
     },

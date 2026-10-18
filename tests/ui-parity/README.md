@@ -16,6 +16,8 @@ like the shared :8081 instance (server 1 = that MySQL, storage `phpmyadmin`, con
 checkout's parity runs. `BMA_PARITY_PMA_URL` uses an existing instance instead; cases are skipped when it is
 down. A case's `sql` fixture runs with `lock_wait_timeout = 20`, so a DDL blocked by a metadata lock fails
 that case instead of stalling every later one; a page that fails to open closes its browser context.
+`BMA_PARITY_TARGET=mariadb` (`pnpm test:ui-parity:mariadb`) runs both apps against mariadb11 :3307 instead
+(`lib/target.ts`; the private reference follows `BMA_TEST_PORT`).
 The run uses `BMA_UIP_WORKERS` Playwright workers (default 4): files run in parallel, the cases of a
 file in order on one worker. Each worker has its own suffix `<run>` = `<checkout>w<index>` (`<checkout>`
 a hash of the worktree path, `BMA_UIP_RUN` overrides it; `<index>` Playwright's TEST_PARALLEL_INDEX),

@@ -148,7 +148,7 @@ describe('GET /navigation/tree', () => {
         'm1nav_it_a',
         'm1nav_it_b',
         'm1nav_it_large',
-        'performance_schema',
+        ...SYSTEM_DBS,
       ])
       // the options of #navi_db_select: the databases without New, in the order of the query
       expect(body.dbSelect).toEqual([
@@ -156,7 +156,7 @@ describe('GET /navigation/tree', () => {
         'm1nav_it_a',
         'm1nav_it_b',
         'm1nav_it_large',
-        'performance_schema',
+        ...SYSTEM_DBS,
       ])
     } finally {
       await t.close()
