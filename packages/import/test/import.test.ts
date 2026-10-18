@@ -46,7 +46,7 @@ function importOf(text: string, statements: string[] = []): Import {
 }
 
 describe('import file', () => {
-  it('detects and opens gzip, bzip2 and zip by their magic bytes', () => {
+  it('detects and opens gzip, bzip2 and zip by their magic bytes [p07-85c45c]', () => {
     expect(compressionOf(gzipSync(Buffer.from('x')))).toBe('application/gzip')
     const bz = Buffer.from(
       'QlpoOTFBWSZTWb43xuUAAAReAAAQQAAgCAoEDAAgACIGhtQgyYhCzmWzxdyRThQkL43xuUA=',
@@ -61,7 +61,7 @@ describe('import file', () => {
     )
   })
 
-  it('skips a UTF-8 byte order mark in the first chunk', () => {
+  it('skips a UTF-8 byte order mark in the first chunk [p07-78ed9c]', () => {
     const imp = importOf('﻿SELECT 1;')
     expect((imp.getNextChunk() as Buffer).toString()).toBe('SELECT 1;')
   })

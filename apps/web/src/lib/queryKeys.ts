@@ -19,6 +19,8 @@ export const qk = {
   srv: (s: number) => ['srv', s] as const,
   /** Navigation tree: the root and every branch (docs/architecture/03-frontend-architecture.md#query-keys). */
   nav: (s: number) => ['srv', s, 'nav'] as const,
+  /** NavigationPanel: invalidated with qk.nav, its new stamp reloads the tree */
+  navReloadSignal: (s: number) => ['srv', s, 'nav', 'reload-signal'] as const,
   navTree: (s: number, q: object) => ['srv', s, 'nav', 'dbs', q] as const,
   navBranch: (s: number, q: object) => ['srv', s, 'nav', 'db', q] as const,
   sqlForm: (s: number, db: string, table: string, q: string) =>

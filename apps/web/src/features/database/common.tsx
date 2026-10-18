@@ -20,7 +20,7 @@ import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { useFormLock } from '../shell/page-chrome'
+import { useLockPage } from '../shell/page-chrome'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { SqlEditor } from '../sql/editor/SqlEditor'
 import type { SqlEditorHandle } from '../sql/editor/types'
@@ -106,22 +106,26 @@ export function ListNavigator({ pager, onPos }: { pager: DbPager | null; onPos: 
 
 /** database/create_table.twig — the "Create new table" box */
 export function CreateTableBox({ server, db }: { server: number; db: string }) {
-  // form.lock-page (AJAX.lockPageHandler)
-  const lockRef = useFormLock()
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [cols, setCols] = useState(4)
+  // `lock-page`: a changed form asks before leaving the page, its own submit does not
+  const [submitted, setSubmitted] = useState(false)
+  useLockPage(!submitted && (name !== '' || cols !== 4))
+  useEffect(() => {
+    if (!submitted) return
+    void navigate({
+      to: path(`${dbBase(server, db)}/create-table`),
+      search: { table: name, num_fields: cols } as never,
+    })
+  }, [submitted, navigate, server, db, name, cols])
   return (
     <form
-      ref={lockRef}
       id="createTableMinimalForm"
-      className="mb-3 print:hidden"
+      className="lock-page mb-3 print:hidden"
       onSubmit={(e) => {
         e.preventDefault()
-        void navigate({
-          to: path(`${dbBase(server, db)}/create-table`),
-          search: { table: name, num_fields: cols } as never,
-        })
+        setSubmitted(true)
       }}
     >
       <Panel title={t('Create new table')}>
@@ -131,6 +135,7 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
             <Input
               type="text"
               name="table"
+              id="createTableNameInput"
               maxLength={64}
               autoComplete="off"
               value={name}
@@ -142,6 +147,7 @@ export function CreateTableBox({ server, db }: { server: number; db: string }) {
             <Input
               type="number"
               name="num_fields"
+              id="createTableNumFieldsInput"
               min={1}
               className="max-w-48"
               value={cols}

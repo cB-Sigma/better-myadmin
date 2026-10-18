@@ -56,7 +56,7 @@ const reseed = () => h.root.query(seed(P, users.pma) + seed(B, users.bma))
 const bma = (db: string, path: string) => `/api/servers/1/databases/${db}${path}`
 
 describe.skipIf(!pmaReachable)('parity: database operations', () => {
-  it('copy structure and data with every option', async () => {
+  it('copy structure and data with every option [p05-187236]', async () => {
     await reseed()
     const r = await both(
       h,
@@ -118,7 +118,7 @@ describe.skipIf(!pmaReachable)('parity: database operations', () => {
     expect(cmp.bma, `pma: ${JSON.stringify(cmp.pma, null, 1)}`).toEqual(cmp.pma)
   })
 
-  it('rename with privilege adjustment', async () => {
+  it('rename with privilege adjustment [p05-1a14a6]', async () => {
     await reseed()
     const r = await both(
       h,
@@ -144,7 +144,7 @@ describe.skipIf(!pmaReachable)('parity: database operations', () => {
     expect(cmp.bma.at(-1) === 'FLUSH PRIVILEGES' || cmp.bma.includes('DROP DATABASE `DB`')).toBe(true)
   })
 
-  it('same name and invalid names are refused', async () => {
+  it('same name and invalid names are refused [p05-312a1f]', async () => {
     await reseed()
     const r = await both(
       h,
@@ -163,7 +163,7 @@ describe.skipIf(!pmaReachable)('parity: database operations', () => {
     expect(compareWrites(r.pmaLog, r.bmaLog, dbMap).bma).toEqual([])
   })
 
-  it('collation with all tables and columns', async () => {
+  it('collation with all tables and columns [p05-7be12a]', async () => {
     await reseed()
     const r = await both(
       h,

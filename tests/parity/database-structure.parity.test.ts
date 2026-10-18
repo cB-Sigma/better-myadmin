@@ -124,7 +124,7 @@ describe.skipIf(!pmaReachable)('parity: database structure page', () => {
     })
   }
 
-  it('real row count of one table and of all tables', async () => {
+  it('real row count of one table and of all tables [p05-b35450]', async () => {
     const r = await both(
       h,
       () => h.pma.getJson('/database/structure/real-row-count', { db: P, table: 'parent' }),
@@ -169,7 +169,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
       expectSql: /^TRUNCATE `child`$/,
     },
     {
-      name: 'drop tables and a view',
+      name: 'drop tables and a view [p05-a7eaad]',
       pma: () =>
         h.pma.postJson('/database/structure/drop-table', [
           ['db', P],
@@ -192,7 +192,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
       expectSql: /^ALTER TABLE `m` RENAME `x_m`$/,
     },
     {
-      name: 'replace prefix leaves non-matching names',
+      name: 'replace prefix leaves non-matching names [p05-fdecd7]',
       pma: () =>
         // phpMyAdmin answers the whole Structure page here, not JSON
         h.pma.postPage('/database/structure/replace-prefix', [
@@ -210,7 +210,7 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
       expectSql: /^ALTER TABLE `wp_one` RENAME `zz_one`$/,
     },
     {
-      name: 'copy with prefix',
+      name: 'copy with prefix [p05-fdecd7]',
       pma: () =>
         h.pma.postJson('/database/structure/copy-table-with-prefix', [
           ['db', P],

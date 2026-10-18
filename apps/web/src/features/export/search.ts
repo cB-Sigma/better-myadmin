@@ -4,17 +4,18 @@ import { z } from 'zod'
  * The export page's request parameters (links from the results grid, DB structure "With
  * selected: Export", the SQL tab): phpMyAdmin's names.
  */
+// the router parses `?single_table=true` / `?offset=1` into a boolean / number: coerced back
 export const exportSearch = z.object({
-  single_table: z.string().optional(),
-  sql_query: z.string().optional(),
-  raw_query: z.string().optional(),
-  unlim_num_rows: z.string().optional(),
+  single_table: z.coerce.string().optional(),
+  sql_query: z.coerce.string().optional(),
+  raw_query: z.coerce.string().optional(),
+  unlim_num_rows: z.coerce.string().optional(),
   /** rows export: one unique WHERE condition per selected row (pma: rows_to_delete[]) */
-  where_clause: z.array(z.string()).optional(),
+  where_clause: z.array(z.coerce.string()).optional(),
   /** DB structure "With selected: Export" */
-  selected_tbl: z.array(z.string()).optional(),
-  what: z.string().optional(),
-  format: z.string().optional(),
+  selected_tbl: z.array(z.coerce.string()).optional(),
+  what: z.coerce.string().optional(),
+  format: z.coerce.string().optional(),
 })
 export type ExportSearch = z.infer<typeof exportSearch>
 

@@ -112,7 +112,11 @@ export function PluginOptions({
         )
       case 'text':
         return (
-          <li key={`t-${item.name}`} className="list-group-item py-1">
+          <li
+            key={`t-${item.name}`}
+            className="list-group-item py-1"
+            style={off ? { opacity: 0.4 } : undefined}
+          >
             <label htmlFor={`text_${item.name}`} className="form-label block">
               <OptionText text={item.text} />
             </label>

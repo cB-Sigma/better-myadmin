@@ -117,7 +117,7 @@ describe('import job', () => {
     expect(rows[0].n).toBe(55)
   })
 
-  it('imports a file from the UploadDir', async () => {
+  it('imports a file from the UploadDir [p07-e1518d]', async () => {
     const { result } = await run([...base, ['format', 'sql'], ['local_import_file', 'srv.sql']])
     expect((result.statements as Array<{ message: { text: string } }>)[0]?.message.text).toMatch(
       /^1 row inserted\./,
