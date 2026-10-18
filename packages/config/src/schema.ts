@@ -828,10 +828,30 @@ export const configNode = group({
     },
     { bma: true },
   ),
+  /**
+   * `$allowedPrograms` of the External transformation (phpMyAdmin: edited in
+   * src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php): each entry is a program
+   * with its fixed arguments (`/usr/bin/tidy -q`). Empty (the default, as in phpMyAdmin's source):
+   * the transformation shows the value unchanged. The program runs without a shell (X4).
+   */
+  TransformationsExternalPrograms: list([], { bma: true }),
   /** Removed from phpMyAdmin in 4.6.0; honoured by BetterMyAdmin (HTTPS redirect + HSTS). */
   ForceSSL: bool(false, { bma: true }),
   /** Upload size limit in bytes (phpMyAdmin uses PHP's `upload_max_filesize`). */
   MaxUploadSize: int(536870912, { min: 1, bma: true }),
+  /**
+   * MySQL connections kept between requests (X24; phpMyAdmin connects per request): an idle
+   * connection closes after idleTimeout seconds, every pool of the process together holds at most
+   * maxTotal, and a request waits up to waitTimeout seconds for one when they are all in use.
+   */
+  ConnectionPool: group(
+    {
+      idleTimeout: int(10, { min: 0, bma: true }),
+      maxTotal: int(50, { min: 1, bma: true }),
+      waitTimeout: int(30, { min: 0, bma: true }),
+    },
+    { bma: true },
+  ),
 })
 
 // ---------------------------------------------------------------------------

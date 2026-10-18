@@ -133,7 +133,7 @@ export const pmaControls = {
   },
   'js:makegrid.ts#dragstart:<g.t> th a': {
     file: 'GridTable.tsx',
-    match: 'onDragStart={() => setDragFrom(j)}',
+    match: 'onDragStart={(e) => e.preventDefault()}',
   },
   'js:makegrid.ts#focus:<g.cEditStd> .edit_box': { file: 'GridTable.tsx', match: 'b.focus()' },
   'js:makegrid.ts#focus:<g.cEditTextarea> .edit_box': { file: 'GridTable.tsx', match: 'b.focus()' },
@@ -172,7 +172,7 @@ export const pmaControls = {
     file: 'GridTable.tsx',
     match: "props.edited && (hasClass(cell.cls, 'truncated')",
   },
-  'js:makegrid.ts#keyup:<$inputField>': { file: 'GridTable.tsx', match: '<DateTimePicker' },
+  'js:makegrid.ts#keyup:<$inputField>': { file: 'GridTable.tsx', match: 'pickerCanShow(pickerKind, value)' },
   'js:makegrid.ts#keyup:<g.cEdit> .edit_box': {
     file: 'GridTable.tsx',
     match: "props.edited && (hasClass(cell.cls, 'truncated')",
@@ -241,4 +241,10 @@ export const pmaControls = {
     file: '../server/MonitorPage.tsx',
     match: 'dragFrom.current = i',
   },
+  // grid edit's inline editors and the no-results operations card
+  'select_all.twig#id:*_checkall': { file: '../database/TrackingPage.tsx', match: '_checkall' },
+  'sql/enum_column_dropdown.twig#select:L1': { file: 'GridTable.tsx', match: 'multiple={isSet}' },
+  'sql/set_column.twig#select:L2': { file: 'GridTable.tsx', match: "isSet ? 'resize-vertical'" },
+  'sql/relational_column_dropdown.twig#link:Browse foreign values': 'GridTable.tsx',
+  'sql/no_results_returned.twig#link:Create view': 'ResultsView.tsx',
 }

@@ -13,7 +13,13 @@ import {
   collationDescription,
   unquoteDefaultValue,
 } from '@bettermyadmin/mysql-types'
-import { type ShowIndexRow, type TableIndex, backquote, indexesFromShowIndexes } from '@bettermyadmin/sql-gen'
+import {
+  type ShowIndexRow,
+  type TableIndex,
+  backquote,
+  indexesFromShowIndexes,
+  quoteString,
+} from '@bettermyadmin/sql-gen'
 import type { Conn } from '../db/connection.ts'
 import { NavDbi } from '../navigation/dbi.ts'
 
@@ -285,6 +291,23 @@ export class TableReader {
   async getSessionVariable(name: string): Promise<string | null> {
     const r = await this.dbi.tryQuery(`SHOW SESSION VARIABLES LIKE '${name}';`)
     return r?.rows[0]?.[1] ?? null
+  }
+
+  /** pma: Relation::getChildReferences for one column ([] with DisableIS) */
+  async childReferences(
+    db: string,
+    table: string,
+    column: string,
+    disableIs: boolean,
+  ): Promise<Array<{ table_schema: string; table_name: string }>> {
+    if (disableIs) return []
+    const r = await this.dbi.tryQuery(
+      `SELECT \`column_name\`, \`table_name\`, \`table_schema\`, \`referenced_column_name\` FROM \`information_schema\`.\`key_column_usage\` WHERE \`referenced_table_name\` = ${quoteString(table)} AND \`referenced_table_schema\` = ${quoteString(db)} AND \`referenced_column_name\` = ${quoteString(column)}`,
+    )
+    return (r?.rows ?? []).map((row) => ({
+      table_name: String(row[1] ?? ''),
+      table_schema: String(row[2] ?? ''),
+    }))
   }
 
   /** pma: Table::getNameAndTypeOfTheColumns (ENUM/SET values re-spaced) */

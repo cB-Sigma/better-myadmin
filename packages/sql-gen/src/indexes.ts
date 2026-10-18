@@ -5,6 +5,7 @@
  *      src/Query/Generator.php::getSqlQueryForIndexRename
  */
 
+import { N_ } from '@bettermyadmin/i18n'
 import { type ServerInfo, isCompatibleRenameIndex, php } from '@bettermyadmin/mysql-types'
 import { type QuoteOptions, backquote, quoteString } from './quote.ts'
 
@@ -94,7 +95,7 @@ export function getSqlQueryForIndexCreateOrEdit(
   switch (index.choice) {
     case 'PRIMARY':
       if (index.name !== '' && index.name !== 'PRIMARY') {
-        error = 'The name of the primary key must be "PRIMARY"!'
+        error = N_('The name of the primary key must be "PRIMARY"!')
       }
       sql += ' ADD PRIMARY KEY'
       break
@@ -102,7 +103,7 @@ export function getSqlQueryForIndexCreateOrEdit(
     case 'UNIQUE':
     case 'INDEX':
     case 'SPATIAL':
-      if (index.name === 'PRIMARY') error = "Can't rename index to PRIMARY!"
+      if (index.name === 'PRIMARY') error = N_("Can't rename index to PRIMARY!")
       sql += ` ADD ${index.choice}`
       if (index.name !== '') sql += ` ${backquote(index.name)}`
       break
@@ -117,7 +118,7 @@ export function getSqlQueryForIndexCreateOrEdit(
     else if (c.collation === 'D') f += ' DESC'
     return f
   })
-  if (fields.length === 0) error = 'No index parts defined!'
+  if (fields.length === 0) error = N_('No index parts defined!')
   else sql += ` (${fields.join(', ')})`
 
   const kbs = index.keyBlockSize
@@ -182,10 +183,10 @@ export function getSqlQueryForRename(
   }
   let error: string | null = null
   if (oldIndexName === 'PRIMARY' && index.name !== '' && index.name !== 'PRIMARY') {
-    error = 'The name of the primary key must be "PRIMARY"!'
+    error = N_('The name of the primary key must be "PRIMARY"!')
   }
   const name = oldIndexName === 'PRIMARY' && index.name === '' ? 'PRIMARY' : index.name
-  if (name === 'PRIMARY') error = "Can't rename index to PRIMARY!"
+  if (name === 'PRIMARY') error = N_("Can't rename index to PRIMARY!")
   return { sql: getSqlQueryForIndexRename(db, table, oldIndexName, name), error }
 }
 

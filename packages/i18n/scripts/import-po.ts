@@ -22,7 +22,11 @@ import { isCompiled, parsePo, poStatistics } from '../src/po.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const pkg = resolve(here, '..')
-const pmaRoot = resolve(process.env.PMA_ROOT ?? join(pkg, '../../../ref/pma'))
+// ../ref sits next to the main checkout, which a linked worktree is not: resolve it from git's common dir
+const mainCheckout = dirname(
+  resolve(pkg, execFileSync('git', ['rev-parse', '--git-common-dir'], { cwd: pkg, encoding: 'utf8' }).trim()),
+)
+const pmaRoot = resolve(process.env.PMA_ROOT ?? join(mainCheckout, '../ref/pma'))
 const poDir = join(pmaRoot, 'resources/po')
 const outDir = join(pkg, 'po')
 /** bin/remove-incomplete-mo THRESHOLD */

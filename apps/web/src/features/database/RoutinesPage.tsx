@@ -14,15 +14,16 @@ import {
   NativeSelect,
   Panel,
   PanelBody,
+  PmaIcon,
   Textarea,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { TypeSelect } from '../table/structure/ColumnForm'
+import { EnumEditor, TypeSelect } from '../table/structure/ColumnForm'
 import { DbModal, DefinitionEditor, ListNavigator, Messages, errorMessage } from './common'
 import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 
@@ -75,7 +76,16 @@ const emptyRoutine = (o: RoutineEditorOptions): RoutineEditorData => ({
   comment: '',
 })
 
-export function RoutinesPage({ server, db }: { server: number; db: string }) {
+export function RoutinesPage({
+  server,
+  db,
+  editItem = null,
+}: {
+  server: number
+  db: string
+  /** `edit_item=1&item_name=…&item_type=…`: open that routine's editor */
+  editItem?: { name: string; type: string } | null
+}) {
   const qc = useQueryClient()
   const [pos, setPos] = useState(0)
   const q = useQuery({
@@ -90,6 +100,14 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
   } | null>(null)
   const [execute, setExecute] = useState<RoutineExecuteForm | null>(null)
   const [result, setResult] = useState<RoutineExecuteResponse | null>(null)
+  const openRef = useRef<(item: { name: string; type: string }) => Promise<void>>(async () => {})
+  // once, after the list has loaded (the route keys the page by db)
+  const opened = useRef(false)
+  useEffect(() => {
+    if (editItem === null || opened.current || q.data === undefined) return
+    opened.current = true
+    void openRef.current(editItem)
+  })
 
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
@@ -103,6 +121,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
       setMessages([errorMessage(e)])
     }
   }
+  openRef.current = open
   const openExecute = async (name: string, type: string) => {
     try {
       setResult(null)
@@ -419,10 +438,12 @@ function RoutineEditor({
                           {NO_LENGTH.includes(p.type) ? (
                             <span className="no_len">---</span>
                           ) : (
-                            <Input
-                              name={`item_param_length[${i}]`}
+                            <ParamLength
+                              index={i}
+                              type={p.type}
+                              name={p.name}
                               value={p.length}
-                              onChange={(e) => setParam(i, { length: e.target.value })}
+                              onChange={(length) => setParam(i, { length })}
                             />
                           )}
                         </td>
@@ -618,6 +639,8 @@ function ExecuteDialog({
     Object.fromEntries(form.params.map((p) => [p.name, p.functions?.find((f) => f.selected)?.value ?? ''])),
   )
   const title = `${t('Execute routine')} \`${form.name}\``
+  const execute = () =>
+    void onExecute(Object.fromEntries(form.params.map((p) => [p.name, values[p.name] ?? ''])), funcs)
   return (
     <DbModal
       id="routinesExecuteModal"
@@ -628,16 +651,7 @@ function ExecuteDialog({
         <>
           <Button onClick={onClose}>{t('Close')}</Button>
           {result === null && (
-            <Button
-              variant="primary"
-              id="routinesExecuteModalExecuteButton"
-              onClick={() =>
-                void onExecute(
-                  Object.fromEntries(form.params.map((p) => [p.name, values[p.name] ?? ''])),
-                  funcs,
-                )
-              }
-            >
+            <Button variant="primary" id="routinesExecuteModalExecuteButton" onClick={execute}>
               {t('Execute')}
             </Button>
           )}
@@ -684,88 +698,141 @@ function ExecuteDialog({
           )}
         </>
       ) : (
-        <Panel title={t('Routine parameters')}>
-          <PanelBody>
-            {form.params.length === 0 ? (
-              <p>{t('This routine does not require any parameters.')}</p>
-            ) : (
-              <table className="rte_table w-auto text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2">
-                <thead>
-                  <tr className="text-left">
-                    <th>{t('Name')}</th>
-                    <th>{t('Type')}</th>
-                    {form.showFunctionFields && <th>{t('Function')}</th>}
-                    <th>{t('Value')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {form.params.map((p) => (
-                    <tr key={p.name}>
-                      <td>{p.name}</td>
-                      <td>{p.type}</td>
-                      {form.showFunctionFields && (
-                        <td>
-                          {p.functions === null ? (
-                            '--'
+        // routines.ts: keyup Enter anywhere in form.rte_form executes the routine
+        <form
+          className="rte_form"
+          onSubmit={(e) => e.preventDefault()}
+          onKeyUp={(e) => {
+            e.preventDefault()
+            if (e.key === 'Enter') execute()
+          }}
+        >
+          <Panel title={t('Routine parameters')}>
+            <PanelBody>
+              {form.params.length === 0 ? (
+                <p>{t('This routine does not require any parameters.')}</p>
+              ) : (
+                <table className="rte_table w-auto text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2">
+                  <thead>
+                    <tr className="text-left">
+                      <th>{t('Name')}</th>
+                      <th>{t('Type')}</th>
+                      {form.showFunctionFields && <th>{t('Function')}</th>}
+                      <th>{t('Value')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {form.params.map((p) => (
+                      <tr key={p.name}>
+                        <td>{p.name}</td>
+                        <td>{p.type}</td>
+                        {form.showFunctionFields && (
+                          <td>
+                            {p.functions === null ? (
+                              '--'
+                            ) : (
+                              <NativeSelect
+                                name={`funcs[${p.name}]`}
+                                value={funcs[p.name] ?? ''}
+                                onChange={(e) => setFuncs({ ...funcs, [p.name]: e.target.value })}
+                              >
+                                {p.functions.map((f) => (
+                                  <option key={f.value} value={f.value}>
+                                    {f.value}
+                                  </option>
+                                ))}
+                              </NativeSelect>
+                            )}
+                          </td>
+                        )}
+                        <td className="whitespace-nowrap">
+                          {p.inputType === 'text' ? (
+                            <Input
+                              className={p.dateClass}
+                              name={`params[${p.name}]`}
+                              value={String(values[p.name] ?? '')}
+                              onChange={(e) => setValues({ ...values, [p.name]: e.target.value })}
+                            />
                           ) : (
-                            <NativeSelect
-                              name={`funcs[${p.name}]`}
-                              value={funcs[p.name] ?? ''}
-                              onChange={(e) => setFuncs({ ...funcs, [p.name]: e.target.value })}
-                            >
-                              {p.functions.map((f) => (
-                                <option key={f.value} value={f.value}>
-                                  {f.value}
-                                </option>
-                              ))}
-                            </NativeSelect>
+                            p.values.map((v) => (
+                              <label key={v} className="block">
+                                <input
+                                  type={p.inputType}
+                                  name={`params[${p.name}][]`}
+                                  value={v}
+                                  checked={
+                                    p.inputType === 'radio'
+                                      ? values[p.name] === v
+                                      : (values[p.name] as string[] | undefined)?.includes(v) === true
+                                  }
+                                  onChange={(e) => {
+                                    if (p.inputType === 'radio') setValues({ ...values, [p.name]: v })
+                                    else {
+                                      const cur = (values[p.name] as string[] | undefined) ?? []
+                                      setValues({
+                                        ...values,
+                                        [p.name]: e.target.checked ? [...cur, v] : cur.filter((x) => x !== v),
+                                      })
+                                    }
+                                  }}
+                                />{' '}
+                                {v}
+                              </label>
+                            ))
                           )}
                         </td>
-                      )}
-                      <td className="whitespace-nowrap">
-                        {p.inputType === 'text' ? (
-                          <Input
-                            className={p.dateClass}
-                            name={`params[${p.name}]`}
-                            value={String(values[p.name] ?? '')}
-                            onChange={(e) => setValues({ ...values, [p.name]: e.target.value })}
-                          />
-                        ) : (
-                          p.values.map((v) => (
-                            <label key={v} className="block">
-                              <input
-                                type={p.inputType}
-                                name={`params[${p.name}][]`}
-                                value={v}
-                                checked={
-                                  p.inputType === 'radio'
-                                    ? values[p.name] === v
-                                    : (values[p.name] as string[] | undefined)?.includes(v) === true
-                                }
-                                onChange={(e) => {
-                                  if (p.inputType === 'radio') setValues({ ...values, [p.name]: v })
-                                  else {
-                                    const cur = (values[p.name] as string[] | undefined) ?? []
-                                    setValues({
-                                      ...values,
-                                      [p.name]: e.target.checked ? [...cur, v] : cur.filter((x) => x !== v),
-                                    })
-                                  }
-                                }}
-                              />{' '}
-                              {v}
-                            </label>
-                          ))
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </PanelBody>
-        </Panel>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </PanelBody>
+          </Panel>
+        </form>
       )}
     </DbModal>
+  )
+}
+
+/**
+ * A parameter's length/values with the ENUM/SET editor link (`div.enum_hint`, shown for ENUM and
+ * SET by routines.ts setOptionsForParameter).
+ * pma: resources/templates/database/routines/parameter_row.twig
+ */
+function ParamLength({
+  index,
+  type,
+  name,
+  value,
+  onChange,
+}: { index: number; type: string; name: string; value: string; onChange: (v: string) => void }) {
+  const [editing, setEditing] = useState(false)
+  return (
+    <>
+      <Input
+        id={`item_param_length_${index}`}
+        name={`item_param_length[${index}]`}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      {(type === 'ENUM' || type === 'SET') && (
+        <div className="enum_hint">
+          <Button variant="link" className="open_enum_editor h-auto p-0" onClick={() => setEditing(true)}>
+            <PmaIcon name="b_edit" alt={t('ENUM/SET editor')} />
+          </Button>
+        </div>
+      )}
+      {editing && (
+        <EnumEditor
+          value={value}
+          column={name}
+          onClose={() => setEditing(false)}
+          onSave={(v) => {
+            onChange(v)
+            setEditing(false)
+          }}
+        />
+      )}
+    </>
   )
 }

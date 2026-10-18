@@ -1,26 +1,32 @@
 import { z } from 'zod'
+import { qs } from '../../lib/search'
 
 /**
  * The export page's request parameters (links from the results grid, DB structure "With
  * selected: Export", the SQL tab): phpMyAdmin's names.
  */
-// the router parses `?single_table=true` / `?offset=1` into a boolean / number: coerced back
+// read like $_GET (lib/search.ts): strings, `k[]=` lists
 export const exportSearch = z.object({
-  single_table: z.coerce.string().optional(),
-  sql_query: z.coerce.string().optional(),
-  raw_query: z.coerce.string().optional(),
-  unlim_num_rows: z.coerce.string().optional(),
+  single_table: qs.str(),
+  sql_query: qs.str(),
+  /** the signature of sql_query (Core::signSqlQuery): an unsigned query of the URL is not exported */
+  sql_signature: qs.str(),
+  raw_query: qs.str(),
+  unlim_num_rows: qs.str(),
   /** rows export: one unique WHERE condition per selected row (pma: rows_to_delete[]) */
-  where_clause: z.array(z.coerce.string()).optional(),
-  /** DB structure "With selected: Export" */
-  selected_tbl: z.array(z.coerce.string()).optional(),
-  what: z.coerce.string().optional(),
-  format: z.coerce.string().optional(),
+  where_clause: qs.list(),
+  /** DB structure "With selected: Export" (pma: selected_tbl[]; our bulk action sends table_select[]) */
+  selected_tbl: qs.list(),
+  table_select: qs.list(),
+  what: qs.str(),
+  format: qs.str(),
 })
 export type ExportSearch = z.infer<typeof exportSearch>
 
 export function searchPairs(s: ExportSearch): Array<[string, string]> {
   const out: Array<[string, string]> = []
+  // a query of the URL always goes with a signature ('' never verifies)
+  if (s.sql_query !== undefined && s.sql_signature === undefined) out.push(['sql_signature', ''])
   for (const [k, v] of Object.entries(s)) {
     if (v === undefined) continue
     if (Array.isArray(v)) for (const x of v) out.push([`${k}[]`, x])

@@ -4,6 +4,10 @@ ARG PMA_COMMIT=e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1
 # 1 = compile the translations like a release (bin/generate-mo + bin/remove-incomplete-mo);
 # a plain checkout has no resources/locale and is English-only
 ARG PMA_TRANSLATIONS=0
+# locales guaranteed to be offered: an empty catalog resources/locale/<code>/LC_MESSAGES/phpmyadmin.mo
+# for each code the build did not compile (texts stay English, Current::$lang is the code), e.g. "ja"
+# for the Kanji conversion of tests/parity/export-kanji.parity.test.ts (Encoding::canConvertKanji)
+ARG PMA_LOCALE_STUBS=""
 RUN apt-get update && apt-get install -y --no-install-recommends git unzip libzip-dev nodejs npm gettext \
  && docker-php-ext-install mysqli zip && npm install -g yarn@1.22.22 && rm -rf /var/lib/apt/lists/*
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -12,7 +16,9 @@ RUN git clone --filter=blob:none https://github.com/phpmyadmin/phpmyadmin.git pm
  && cd pma && git checkout "$PMA_COMMIT" \
  && COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --no-interaction --prefer-source \
  && yarn install --frozen-lockfile --non-interactive \
- && if [ "$PMA_TRANSLATIONS" = 1 ]; then ./bin/generate-mo --quiet && ./bin/remove-incomplete-mo; fi
+ && if [ "$PMA_TRANSLATIONS" = 1 ]; then ./bin/generate-mo --quiet && ./bin/remove-incomplete-mo; fi \
+ && for l in $PMA_LOCALE_STUBS; do [ -e "resources/locale/$l" ] \
+      || { mkdir -p "resources/locale/$l/LC_MESSAGES" && : > "resources/locale/$l/LC_MESSAGES/phpmyadmin.mo"; }; done
 COPY config.inc.php /srv/pma/config.inc.php
 WORKDIR /srv/pma
 EXPOSE 8081

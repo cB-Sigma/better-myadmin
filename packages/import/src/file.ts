@@ -33,15 +33,16 @@ export class ImportFile {
   #content: Buffer
   #offset = 0
   readonly #raw: Buffer
-  readonly #tr: (s: string) => string
+  /** the translator (`__`) */
+  readonly #t: (s: string) => string
 
-  constructor(raw: Buffer, support: CompressionSupport, tr: (s: string) => string = (s) => s) {
+  constructor(raw: Buffer, support: CompressionSupport, t: (s: string) => string = (s) => s) {
     this.#raw = raw
-    this.#tr = tr
+    this.#t = t
     this.compression = compressionOf(raw.subarray(0, 4))
     const unsupported = () =>
       new ImportFileError(
-        tr(
+        t(
           'You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration.',
         ).replace('%s', this.compression),
       )
@@ -69,9 +70,9 @@ export class ImportFile {
     try {
       entries = readZip(this.#raw)
     } catch {
-      throw new ImportFileError(`${this.#tr('Error in ZIP archive:')} Not a zip archive`)
+      throw new ImportFileError(`${this.#t('Error in ZIP archive:')} Not a zip archive`)
     }
-    if (entries.length === 0) throw new ImportFileError(this.#tr('No files found inside ZIP archive!'))
+    if (entries.length === 0) throw new ImportFileError(this.#t('No files found inside ZIP archive!'))
     const first = entries[0] as { name: string; data: Buffer }
     let entry = specificEntry
     /* Is the the zip really an ODS file? */
@@ -81,7 +82,7 @@ export class ImportFile {
     if (entry === null) return first.data
     const hit = entries.find((e) => entry.test(e.name))
     if (hit === undefined || hit.data.length === 0) {
-      throw new ImportFileError(`${this.#tr('Error in ZIP archive:')} Could not find "${String(entry)}"`)
+      throw new ImportFileError(`${this.#t('Error in ZIP archive:')} Could not find "${String(entry)}"`)
     }
     return hit.data
   }

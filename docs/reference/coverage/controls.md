@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-1070/1106 covered (96.7%): 1066 implemented, 3 exception, 1 n/a, 36 missing. [Summary](README.md).
+1106/1106 covered (100.0%): 1096 implemented, 3 exception, 7 n/a. [Summary](README.md).
 
 ## 01 shell navigation auth — 98/98 (100.0%) covered, 95/98 implemented
 
@@ -38,26 +38,26 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `setup/home/index.twig` | 15/15 | ✅ `DefaultLang` ✅ `eol` ✅ `lang` ✅ `link:Check for latest version` ✅ `link:Delete` ✅ `link:Documentation` 🔀 `link:Donate` ✅ `link:Edit` ✅ `link:phpMyAdmin homepage` ✅ `link:Show hidden messages` ✅ `ServerDefault` ✅ `submit` ✅ `submit_clear` ✅ `submit_display` ✅ `submit_download` |  |
 | `src/Navigation/NavigationTree.php` | 2/2 | ✅ `id:pma_navigation_collapse` ✅ `id:pma_navigation_sync` |  |
 
-## 02 browse results grid — 27/32 (84.4%) covered, 27/32 implemented
+## 02 browse results grid — 32/32 (100.0%) covered, 32/32 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `display/results/checkbox_and_links.twig` | 1/1 | ✅ `rows_to_delete[*]` |  |
 | `display/results/table.twig` | 22/22 | ✅ `button:Print` ✅ `display_binary` ✅ `display_blob` ✅ `geoOption` ✅ `hide_transformation` ✅ `id:extraOptionsButton` ✅ `id:filterRows` ✅ `id:resultsForm_*_checkall` ✅ `link:Copy to clipboard` ✅ `link:Create view` ✅ `link:Display chart` ✅ `link:Export` ✅ `link:Visualize GIS data` ✅ `navig` ✅ `pftext` ✅ `relational_display` ✅ `session_max_rows` ✅ `sql_query` ✅ `submit_mult` ✅ `submit:Go` ✅ `submit:Restore column order` ✅ `submit:Save edited data` |  |
-| `select_all.twig` | 0/1 |  | ⬜ `id:*_checkall` |
-| `sql/enum_column_dropdown.twig` | 0/1 |  | ⬜ `select:L1` |
-| `sql/no_results_returned.twig` | 0/1 |  | ⬜ `link:Create view` |
-| `sql/relational_column_dropdown.twig` | 0/1 |  | ⬜ `link:Browse foreign values` |
-| `sql/set_column.twig` | 0/1 |  | ⬜ `select:L2` |
+| `select_all.twig` | 1/1 | ✅ `id:*_checkall` |  |
+| `sql/enum_column_dropdown.twig` | 1/1 | ✅ `select:L1` |  |
+| `sql/no_results_returned.twig` | 1/1 | ✅ `link:Create view` |  |
+| `sql/relational_column_dropdown.twig` | 1/1 | ✅ `link:Browse foreign values` |  |
+| `sql/set_column.twig` | 1/1 | ✅ `select:L2` |  |
 | `src/Display/Results.php` | 1/1 | ✅ `pos` |  |
 | `table/start_and_number_of_rows_fieldset.twig` | 3/3 | ✅ `pos` ✅ `session_max_rows` ✅ `submit` |  |
 
-## 03 insert edit transformations — 26/28 (92.9%) covered, 26/28 implemented
+## 03 insert edit transformations — 28/28 (100.0%) covered, 28/28 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `gis_data_editor_form.twig` | 6/7 | ✅ `button:Cancel` ✅ `button:Copy` ✅ `gis_data[gis_type]` ✅ `gis_data[srid]` ✅ `id:gis_data_textarea` ✅ `select:L16` | ⬜ `id:useOsmAsBaseLayerSwitch` |
-| `modals/gis_editor.twig` | 0/1 |  | ⬜ `button:Close` |
+| `gis_data_editor_form.twig` | 7/7 | ✅ `button:Cancel` ✅ `button:Copy` ✅ `gis_data[gis_type]` ✅ `gis_data[srid]` ✅ `id:gis_data_textarea` ✅ `id:useOsmAsBaseLayerSwitch` ✅ `select:L16` |  |
+| `modals/gis_editor.twig` | 1/1 | ✅ `button:Close` |  |
 | `src/BrowseForeigners.php` | 1/1 | ✅ `pos` |  |
 | `table/browse_foreigners/column_element.twig` | 1/1 | ✅ `link:Use this value` |  |
 | `table/browse_foreigners/show_all.twig` | 1/1 | ✅ `foreign_showAll` |  |
@@ -118,13 +118,13 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `triggers/row.twig` | 4/4 | ✅ `item_name[]` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` |  |
 | `view_create.twig` | 10/10 | ✅ `id:format` ✅ `submit:Go` ✅ `view[algorithm]` ✅ `view[as]` ✅ `view[column_names]` ✅ `view[definer]` ✅ `view[name]` ✅ `view[or_replace]` ✅ `view[sql_security]` ✅ `view[with]` |  |
 
-## 05 database level — 220/240 (91.7%) covered, 220/240 implemented
+## 05 database level — 240/240 (100.0%) covered, 236/240 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `database/central_columns/edit_table_row.twig` | 7/8 | ✅ `col_extra[*]` ✅ `field_collation[*]` ✅ `field_default_type[*]` ✅ `field_default_value[*]` ✅ `field_length[*]` ✅ `field_null[*]` ✅ `field_type[*]` | ⬜ `link:Edit ENUM/SET values` |
+| `database/central_columns/edit_table_row.twig` | 8/8 | ✅ `col_extra[*]` ✅ `field_collation[*]` ✅ `field_default_type[*]` ✅ `field_default_value[*]` ✅ `field_length[*]` ✅ `field_null[*]` ✅ `field_type[*]` ✅ `link:Edit ENUM/SET values` |  |
 | `database/central_columns/edit.twig` | 1/1 | ✅ `save_multi_central_column_edit` |  |
-| `database/central_columns/main.twig` | 28/29 | ✅ `col_extra[*]` ✅ `col_extra[0]` ✅ `column-select` ✅ `delete_central_columns` ✅ `edit_central_columns` ✅ `field_collation[*]` ✅ `field_collation[0]` ✅ `field_default_type[*]` ✅ `field_default_type[0]` ✅ `field_default_value[*]` ✅ `field_default_value[0]` ✅ `field_length[*]` ✅ `field_length[0]` ✅ `field_null[*]` ✅ `field_null[0]` ✅ `field_type[*]` ✅ `field_type[0]` ✅ `id:add_column_save` ✅ `id:filterRows` ✅ `link:Add new column` ✅ `link:Delete` ✅ `link:Edit` ✅ `navig` ✅ `selected_fld[]` ✅ `submit:Add` ✅ `submit:Cancel` ✅ `submit:Save` ✅ `table-select` | ⬜ `link:Edit ENUM/SET values` |
+| `database/central_columns/main.twig` | 29/29 | ✅ `col_extra[*]` ✅ `col_extra[0]` ✅ `column-select` ✅ `delete_central_columns` ✅ `edit_central_columns` ✅ `field_collation[*]` ✅ `field_collation[0]` ✅ `field_default_type[*]` ✅ `field_default_type[0]` ✅ `field_default_value[*]` ✅ `field_default_value[0]` ✅ `field_length[*]` ✅ `field_length[0]` ✅ `field_null[*]` ✅ `field_null[0]` ✅ `field_type[*]` ✅ `field_type[0]` ✅ `id:add_column_save` ✅ `id:filterRows` ✅ `link:Add new column` ✅ `link:Delete` ✅ `link:Edit` ✅ `link:Edit ENUM/SET values` ✅ `navig` ✅ `selected_fld[]` ✅ `submit:Add` ✅ `submit:Cancel` ✅ `submit:Save` ✅ `table-select` |  |
 | `database/create_table.twig` | 3/3 | ✅ `num_fields` ✅ `submit:Create` ✅ `table` |  |
 | `database/data_dictionary/index.twig` | 1/1 | ✅ `button:Print` |  |
 | `database/designer/database_tables.twig` | 2/2 | ✅ `id:select_*._*` ✅ `id:select_all_*` |  |
@@ -132,15 +132,15 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/designer/page_save_as.twig` | 2/2 | ✅ `save_page` ✅ `selected_value` |  |
 | `database/designer/page_selector.twig` | 1/1 | ✅ `selected_page` |  |
 | `database/designer/schema_export.twig` | 1/1 | ✅ `export_type` |  |
-| `database/multi_table_query/form.twig` | 14/22 | ✅ `button:criteria` ✅ `button:Query window` ✅ `button:Remove this column` ✅ `checkbox:Use this column in criteria` ✅ `id:add_column_button` ✅ `id:copy_query` ✅ `id:submit_query` ✅ `id:update_query_button` ✅ `logical_op[*]` ✅ `sort[*]` ✅ `sql_query` ✅ `text:Column alias` ✅ `text:Enter criteria as free text` ✅ `text:Table alias` | ⬜ `checkbox:L37` ⬜ `select:L115` ⬜ `select:L125` ⬜ `select:L133` ⬜ `select:L26` ⬜ `select:L33` ⬜ `select:L83` ⬜ `select:L92` |
-| `database/operations/index.twig` | 17/18 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_tables_collations` ✅ `change_all_tables_columns_collations` ✅ `comment` ✅ `create_database_before_copying` ✅ `db_collation` ✅ `drop_if_exists` ✅ `newname` ✅ `num_fields` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit:Create` ✅ `submit:Go` ✅ `switch_to_new` ✅ `table` ✅ `what` | ⬜ `link:Database %s has been dropped.` |
+| `database/multi_table_query/form.twig` | 22/22 | ✅ `button:criteria` ✅ `button:Query window` ✅ `button:Remove this column` ✅ `checkbox:L37` ✅ `checkbox:Use this column in criteria` ✅ `id:add_column_button` ✅ `id:copy_query` ✅ `id:submit_query` ✅ `id:update_query_button` ✅ `logical_op[*]` ✅ `select:L115` ✅ `select:L125` ✅ `select:L133` ✅ `select:L26` ✅ `select:L33` ✅ `select:L83` ✅ `select:L92` ✅ `sort[*]` ✅ `sql_query` ✅ `text:Column alias` ✅ `text:Enter criteria as free text` ✅ `text:Table alias` |  |
+| `database/operations/index.twig` | 18/18 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_tables_collations` ✅ `change_all_tables_columns_collations` ✅ `comment` ✅ `create_database_before_copying` ✅ `db_collation` ✅ `drop_if_exists` ✅ `link:Database %s has been dropped.` ✅ `newname` ✅ `num_fields` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit:Create` ✅ `submit:Go` ✅ `switch_to_new` ✅ `table` ✅ `what` |  |
 | `database/privileges/index.twig` | 6/6 | ✅ `id:usersForm_checkall` ✅ `link:Add user account` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` ✅ `submit_mult` |  |
-| `database/routines/editor_form.twig` | 16/19 | ✅ `id:addRoutineParameterButton` ✅ `id:format` ✅ `item_adjust_privileges` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_isdeterministic` ✅ `item_name` ✅ `item_returnlength` ✅ `item_returnopts_num` ✅ `item_returnopts_text` ✅ `item_returntype` ✅ `item_securitytype` ✅ `item_sqldataaccess` ✅ `item_type` ✅ `routine_addparameter` | ⬜ `routine_changetype` ⬜ `routine_removeparameter` ⬜ `submit:Go` |
-| `database/routines/execute_form.twig` | 3/4 | ✅ `funcs[*]` ✅ `params[*]` ✅ `params[*][]` | ⬜ `execute_routine` |
+| `database/routines/editor_form.twig` | 19/19 | ✅ `id:addRoutineParameterButton` ✅ `id:format` ✅ `item_adjust_privileges` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_isdeterministic` ✅ `item_name` ✅ `item_returnlength` ✅ `item_returnopts_num` ✅ `item_returnopts_text` ✅ `item_returntype` ✅ `item_securitytype` ✅ `item_sqldataaccess` ✅ `item_type` ✅ `routine_addparameter` ➖ `routine_changetype` ➖ `routine_removeparameter` ➖ `submit:Go` |  |
+| `database/routines/execute_form.twig` | 4/4 | ➖ `execute_routine` ✅ `funcs[*]` ✅ `params[*]` ✅ `params[*][]` |  |
 | `database/routines/index.twig` | 7/7 | ✅ `button:Close` ✅ `filterText` ✅ `id:checkAllCheckbox` ✅ `id:routinesEditorModalSaveButton` ✅ `id:routinesExecuteModalExecuteButton` ✅ `link:Create new routine` ✅ `submit_mult` |  |
-| `database/routines/parameter_row.twig` | 7/8 | ✅ `item_param_dir[*]` ✅ `item_param_length[*]` ✅ `item_param_name[*]` ✅ `item_param_opts_num[*]` ✅ `item_param_opts_text[*]` ✅ `item_param_type[*]` ✅ `link:Drop` | ⬜ `link:ENUM/SET editor` |
-| `database/routines/row.twig` | 4/5 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Execute` ✅ `link:Export` | ⬜ `item_name[]` |
-| `database/search/main.twig` | 10/11 | ✅ `criteriaColumnName` ✅ `criteriaSearchOptionIncludeHex` ✅ `criteriaSearchString` ✅ `criteriaSearchType` ✅ `criteriaTables[]` ✅ `id:select_all` ✅ `id:togglesearchformlink` ✅ `id:togglesearchresultlink` ✅ `id:unselect_all` ✅ `submit_search` | ⬜ `id:togglequerybox` |
+| `database/routines/parameter_row.twig` | 8/8 | ✅ `item_param_dir[*]` ✅ `item_param_length[*]` ✅ `item_param_name[*]` ✅ `item_param_opts_num[*]` ✅ `item_param_opts_text[*]` ✅ `item_param_type[*]` ✅ `link:Drop` ✅ `link:ENUM/SET editor` |  |
+| `database/routines/row.twig` | 5/5 | ✅ `item_name[]` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Execute` ✅ `link:Export` |  |
+| `database/search/main.twig` | 11/11 | ✅ `criteriaColumnName` ✅ `criteriaSearchOptionIncludeHex` ✅ `criteriaSearchString` ✅ `criteriaSearchType` ✅ `criteriaTables[]` ✅ `id:select_all` ✅ `id:togglequerybox` ✅ `id:togglesearchformlink` ✅ `id:togglesearchresultlink` ✅ `id:unselect_all` ✅ `submit_search` |  |
 | `database/search/results.twig` | 2/2 | ✅ `button:Browse` ✅ `button:Delete` |  |
 | `database/structure/add_prefix.twig` | 1/1 | ✅ `add_prefix` |  |
 | `database/structure/bulk_action_modal.twig` | 2/2 | ✅ `button:Cancel` ✅ `id:bulkActionContinue` |  |
@@ -151,10 +151,10 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/structure/empty_form.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
 | `database/structure/favorite_anchor.twig` | 1/1 | ✅ `link:Remove from Favorites` |  |
 | `database/structure/index.twig` | 2/2 | ✅ `button:Print` ✅ `link:Data dictionary` |  |
-| `database/structure/structure_table_row.twig` | 7/8 | ✅ `link:Browse` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Empty` ✅ `link:Insert` ✅ `link:Search` ✅ `link:Structure` | ⬜ `selected_tbl[]` |
+| `database/structure/structure_table_row.twig` | 8/8 | ✅ `link:Browse` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Empty` ✅ `link:Insert` ✅ `link:Search` ✅ `link:Structure` ✅ `selected_tbl[]` |  |
 | `database/structure/tracking_icon.twig` | 1/1 | ✅ `link:Tracking is active.` |  |
 | `database/tracking/tables.twig` | 7/7 | ✅ `link:Delete tracking` ✅ `link:Structure snapshot` ✅ `link:Track table` ✅ `link:Tracking report` ✅ `link:Versions` ✅ `selected_tbl[]` ✅ `submit_mult` |  |
-| `src/Database/CentralColumns.php` | 0/1 |  | ⬜ `pos` |
+| `src/Database/CentralColumns.php` | 1/1 | ✅ `pos` |  |
 
 ## 06 server level — 243/243 (100.0%) covered, 242/243 implemented
 
@@ -196,24 +196,24 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/variables/index.twig` | 3/3 | ✅ `link:Cancel` ✅ `link:Edit` ✅ `link:Save` |  |
 | `user_password.twig` | 1/1 | ➖ `link:Back` |  |
 
-## 07 export import — 59/63 (93.7%) covered, 59/63 implemented
+## 07 export import — 63/63 (100.0%) covered, 63/63 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `database/export/index.twig` | 5/5 | ✅ `id:table_data_all` ✅ `id:table_structure_all` ✅ `table_data[]` ✅ `table_select[]` ✅ `table_structure[]` |  |
-| `encoding/kanji_encoding_form.twig` | 0/2 |  | ⬜ `knjenc` ⬜ `xkana` |
-| `export_modal.twig` | 0/1 |  | ⬜ `button:Close` |
-| `export.twig` | 40/41 | ✅ `aliases[*][alias]` ✅ `aliases[*][tables][*][alias]` ✅ `aliases[*][tables][*][colums][*]` ✅ `allrows` ✅ `as_separate_files` ✅ `button:Close` ✅ `button:Remove` ✅ `charset` ✅ `compression` ✅ `createTemplate` ✅ `deleteTemplate` ✅ `filename_template` ✅ `id:btn_alias_config` ✅ `id:buttonGo` ✅ `id:column_alias_button` ✅ `id:column_alias_name` ✅ `id:column_alias_select` ✅ `id:db_alias_button` ✅ `id:db_alias_name` ✅ `id:db_alias_select` ✅ `id:saveAndCloseBtn` ✅ `id:showsqlquery` ✅ `id:table_alias_button` ✅ `id:table_alias_name` ✅ `id:table_alias_select` ✅ `limit_from` ✅ `limit_to` ✅ `lock_tables` ✅ `maxsize` ✅ `onserver` ✅ `onserver_overwrite` ✅ `output_format` ✅ `quick_export_onserver` ✅ `quick_export_onserver_overwrite` ✅ `quick_or_custom` ✅ `remember_template` ✅ `template` ✅ `templateName` ✅ `updateTemplate` ✅ `what` | ⬜ `aliases_new` |
+| `encoding/kanji_encoding_form.twig` | 2/2 | ✅ `knjenc` ✅ `xkana` |  |
+| `export_modal.twig` | 1/1 | ✅ `button:Close` |  |
+| `export.twig` | 41/41 | ✅ `aliases_new` ✅ `aliases[*][alias]` ✅ `aliases[*][tables][*][alias]` ✅ `aliases[*][tables][*][colums][*]` ✅ `allrows` ✅ `as_separate_files` ✅ `button:Close` ✅ `button:Remove` ✅ `charset` ✅ `compression` ✅ `createTemplate` ✅ `deleteTemplate` ✅ `filename_template` ✅ `id:btn_alias_config` ✅ `id:buttonGo` ✅ `id:column_alias_button` ✅ `id:column_alias_name` ✅ `id:column_alias_select` ✅ `id:db_alias_button` ✅ `id:db_alias_name` ✅ `id:db_alias_select` ✅ `id:saveAndCloseBtn` ✅ `id:showsqlquery` ✅ `id:table_alias_button` ✅ `id:table_alias_name` ✅ `id:table_alias_select` ✅ `limit_from` ✅ `limit_to` ✅ `lock_tables` ✅ `maxsize` ✅ `onserver` ✅ `onserver_overwrite` ✅ `output_format` ✅ `quick_export_onserver` ✅ `quick_export_onserver_overwrite` ✅ `quick_or_custom` ✅ `remember_template` ✅ `template` ✅ `templateName` ✅ `updateTemplate` ✅ `what` |  |
 | `import_status.twig` | 1/1 | ✅ `link:Back` |  |
 | `import.twig` | 10/10 | ✅ `allow_interrupt` ✅ `charset_of_file` ✅ `fk_checks` ✅ `format` ✅ `id:buttonGo` ✅ `id:localFileTab` ✅ `id:uploadFileTab` ✅ `import_file` ✅ `local_import_file` ✅ `skip_queries` |  |
 | `server/export/index.twig` | 3/3 | ✅ `db_select[]` ✅ `id:db_select_all` ✅ `id:db_unselect_all` |  |
 
-## 08 settings preferences pmadb — 38/39 (97.4%) covered, 38/39 implemented
+## 08 settings preferences pmadb — 39/39 (100.0%) covered, 39/39 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
 | `config/form_display/display.twig` | 2/2 | ✅ `submit_reset` ✅ `submit_save` |  |
-| `config/form_display/input.twig` | 11/12 | ✅ `*-userprefs-allow` ✅ `checkbox:L37` ✅ `link:Documentation` ✅ `link:Restore default value` ✅ `link:Set value: %s` ✅ `number:L34` ✅ `password:L29` ✅ `select:L40` ✅ `text:L27` ✅ `text:L32` ✅ `textarea:L47` | ⬜ `link:Comment` |
+| `config/form_display/input.twig` | 12/12 | ✅ `*-userprefs-allow` ✅ `checkbox:L37` ✅ `link:Comment` ✅ `link:Documentation` ✅ `link:Restore default value` ✅ `link:Set value: %s` ✅ `number:L34` ✅ `password:L29` ✅ `select:L40` ✅ `text:L27` ✅ `text:L32` ✅ `textarea:L47` |  |
 | `preferences/autoload.twig` | 3/3 | ✅ `link:Delete settings` ✅ `link:No` ✅ `link:Yes` |  |
 | `preferences/header.twig` | 8/8 | ✅ `link:Export` ✅ `link:Features` ✅ `link:Import` ✅ `link:Main panel` ✅ `link:Manage your settings` ✅ `link:Navigation panel` ✅ `link:SQL queries` ✅ `link:Two-factor authentication` |  |
 | `preferences/manage/error.twig` | 2/2 | ✅ `submit_ignore` ✅ `submit_import` |  |
@@ -229,11 +229,11 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `sql/_bookmark.twig` | 3/3 | ✅ `bkm_all_users` ✅ `bkm_fields[bkm_label]` ✅ `submit:Create new bookmark` |  |
 | `sql/query.twig` | 25/25 | ✅ `action_bookmark` ✅ `bkm_all_users` ✅ `bkm_label` ✅ `bkm_replace` ✅ `button:Close` ✅ `dummy` ✅ `fk_checks` ✅ `id_bookmark` ✅ `id:clear` ✅ `id:delete` ✅ `id:format` ✅ `id:formatSingleLine` ✅ `id:insert` ✅ `id:saved` ✅ `id:select` ✅ `id:selectall` ✅ `id:update` ✅ `insert` ✅ `parameterized` ✅ `retain_query_box` ✅ `rollback_query` ✅ `show_query` ✅ `SQL` ✅ `sql_delimiter` ✅ `sql_query` |  |
 
-## other — 25/29 (86.2%) covered, 25/29 implemented
+## other — 29/29 (100.0%) covered, 27/29 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `events/editor-form.twig` | 13/15 | ✅ `id:format` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` | ⬜ `editor_process_*` ⬜ `item_changetype` |
-| `events/index.twig` | 8/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` | ⬜ `item_name[]` |
-| `events/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
+| `events/editor-form.twig` | 15/15 | ➖ `editor_process_*` ✅ `id:format` ➖ `item_changetype` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` |  |
+| `events/index.twig` | 9/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `item_name[]` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` |  |
+| `events/row.twig` | 4/4 | ✅ `item_name[]` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` |  |
 | `src/Html/Generator.php` | 1/1 | ✅ `select:pageselector` |  |

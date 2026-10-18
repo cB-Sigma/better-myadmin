@@ -38,7 +38,7 @@ export function writeGallery(dir: string): string | null {
       for (const side of ['pma', 'ours'] as const) {
         const s = r[side]
         body.push(
-          `<figure><figcaption>${side === 'pma' ? 'phpMyAdmin' : 'BetterMyAdmin'} · ${s.controls.length} controls · <a href="${esc(s.url)}">${esc(s.url)}</a></figcaption><a href="${c.slug}/${s.shot}"><img loading="lazy" src="${c.slug}/${s.shot}" alt=""></a></figure>`,
+          `<figure><figcaption>${side === 'pma' ? 'phpMyAdmin' : 'BetterMyAdmin'} · ${s.controls.length} controls · <a href="${esc(s.url)}">${esc(s.url)}</a></figcaption>${s.shot === '' ? '<p class="ok">no differences (screenshots with BMA_UIP_SHOTS=all)</p>' : `<a href="${c.slug}/${s.shot}"><img loading="lazy" src="${c.slug}/${s.shot}" alt=""></a>`}</figure>`,
         )
       }
       body.push('</div>')

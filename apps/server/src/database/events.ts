@@ -194,7 +194,16 @@ export async function eventData(ctx: DbCtx, name: string): Promise<EventEditorDa
         ` FROM \`INFORMATION_SCHEMA\`.\`EVENTS\` WHERE EVENT_SCHEMA ${await ctx.dbi.collateForIS()}=${ctx.dbi.quoteString(ctx.db)} AND EVENT_NAME=${ctx.dbi.quoteString(name)};`,
     )
   )[0]
-  if (r === undefined) throw new NotFoundError(ctx.tr.gettext('Error in processing request:'))
+  if (r === undefined) {
+    // pma: Events\IndexController (edit_item of an event that does not exist)
+    throw new NotFoundError(
+      `${ctx.tr.gettext('Error in processing request:')} ${sprintf(
+        ctx.tr.gettext('No event with name %1$s found in database %2$s.'),
+        backquote(name),
+        backquote(ctx.db),
+      )}`,
+    )
+  }
   return {
     name: r.EVENT_NAME ?? '',
     status: r.STATUS ?? '',

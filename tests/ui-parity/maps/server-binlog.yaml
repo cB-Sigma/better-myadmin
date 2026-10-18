@@ -1,0 +1,8 @@
+# Intentional differences of the binary log page (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: select, name: log }
+    ignore: [options]
+    reason: >-
+      the option labels carry each log file's size (`binlog.000002 (12.56 MiB)`), which grows between
+      the two captures while other suites write to the shared server; the file names and the
+      selected log are compared by the binlog parity suite

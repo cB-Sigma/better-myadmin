@@ -234,6 +234,7 @@ import type {
   TwoFactorStatusResponse,
   TwoFactorVerifyRequest,
   TwoFactorVerifyResponse,
+  UserError,
   UserGroupForm,
   UserGroupUsersResponse,
   UserGroupsResponse,
@@ -249,8 +250,15 @@ import type {
   ZoomResponse,
   ZoomRowResponse,
 } from '@bettermyadmin/contracts'
-import { CSRF_COOKIE, CSRF_HEADER } from '@bettermyadmin/contracts/constants'
+import { CSRF_COOKIE, CSRF_HEADER, USER_ERRORS_HEADER } from '@bettermyadmin/contracts/constants'
 import type { ClientConfig } from './config.ts'
+
+/** The import's event stream broke (pma: StatusController "Could not load the progress of the import."). */
+export class ImportProgressLost extends Error {
+  constructor() {
+    super('import progress lost')
+  }
+}
 
 /** An API error carrying the server's envelope (message texts are phpMyAdmin's). */
 export class ApiError extends Error {
@@ -313,6 +321,16 @@ export async function call<T>(
     throw e
   }
   const json = (await res.json().catch(() => null)) as unknown
+  // ErrorHandler::addUserError of the connection set-up, shown above the page (UserErrors.tsx)
+  const userErrors = res.headers.get(USER_ERRORS_HEADER)
+  if (userErrors !== null) {
+    try {
+      const detail = JSON.parse(decodeURIComponent(userErrors)) as UserError[]
+      window.dispatchEvent(new CustomEvent(USER_ERRORS_EVENT, { detail }))
+    } catch {
+      // not ours
+    }
+  }
   if (!res.ok) {
     const env = (json as ErrorEnvelope | null)?.error
     // not one of our error envelopes (a proxy's or the server's own failure page)
@@ -339,6 +357,8 @@ export async function call<T>(
 
 /** Dispatched on `window` when an API request answers 401: the session lost its login. */
 export const AUTH_LOST_EVENT = 'bma:auth-lost'
+/** a response carried connection user errors (UserError[]) */
+export const USER_ERRORS_EVENT = 'bma:user-errors'
 
 /** Dispatched on `window` when a request failed without one of our error envelopes. */
 export const REQUEST_FAILED_EVENT = 'bma:request-failed'
@@ -616,11 +636,13 @@ export const api = {
     file: Blob,
     onProgress: (sent: number) => void,
     chunkSize = 4 * 1024 * 1024,
+    signal?: AbortSignal,
   ): Promise<string> => {
     const { id } = await call<ImportUploadCreated>('POST', `/servers/${server}/import/uploads`, {})
     for (let offset = 0; offset < file.size || offset === 0; offset += chunkSize) {
       const res = await fetch(`/api/servers/${server}/import/uploads/${id}?offset=${offset}`, {
         method: 'PATCH',
+        ...(signal !== undefined ? { signal } : {}),
         headers: { [CSRF_HEADER]: readCookie(CSRF_COOKIE), 'content-type': 'application/octet-stream' },
         credentials: 'same-origin',
         body: file.slice(offset, offset + chunkSize),
@@ -641,9 +663,14 @@ export const api = {
     server: number,
     id: string,
     onProgress: (p: ImportProgress) => void,
+    signal?: AbortSignal,
   ): Promise<ImportResult> =>
     new Promise((resolve, reject) => {
       const es = new EventSource(`/api/servers/${server}/import/jobs/${id}/events`)
+      signal?.addEventListener('abort', () => {
+        es.close()
+        reject(signal.reason)
+      })
       es.addEventListener('progress', (e) => onProgress(JSON.parse((e as MessageEvent<string>).data)))
       es.addEventListener('result', (e) => {
         es.close()
@@ -655,7 +682,7 @@ export const api = {
       })
       es.onerror = () => {
         es.close()
-        reject(new Error('Could not load the progress of the import.'))
+        reject(new ImportProgressLost())
       }
     }),
   // server administration (docs/architecture/05-api-reference.md#server-scope)

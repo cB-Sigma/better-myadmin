@@ -822,7 +822,7 @@
   "p02-bda6fe": {
     "file": "docs/features/02-browse-results-grid.md",
     "section": "Micro-behaviours checklist › Display options",
-    "text": "Panel collapsible per `InitialSlidersState` (`closed` default, `open`, `disabled` = always open without toggle)."
+    "text": "Panel collapsible: the \"Extra options\" button toggles the panel, closed on every page (`table.twig` `collapse`; unlike other sliders `InitialSlidersState` is not read)."
   },
   "p02-be287b": {
     "file": "docs/features/02-browse-results-grid.md",

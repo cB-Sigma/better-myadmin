@@ -1,6 +1,7 @@
 import type { MonitorLogResponse, MonitorQueryResponse } from '@bettermyadmin/contracts'
 import {
   Button,
+  DateTimeTrigger,
   Hint,
   Input,
   Label,
@@ -15,6 +16,8 @@ import {
   SafeHtml,
   Table,
   Textarea,
+  parsePickerValue,
+  useUiSettings,
 } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Chart } from 'chart.js'
@@ -75,6 +78,27 @@ export function LogAnalysis({
   const [analyzer, setAnalyzer] = useState<LogRow | null>(null)
   const table = useRef<HTMLDivElement>(null)
   void serverTimeDiff
+  // dateStart / dateEnd: readonly fields, set by their pickers (setDate(min) / setDate(max))
+  const [dates, setDates] = useState<{ start: string; end: string } | null>(null)
+  const [shownRange, setShownRange] = useState(range)
+  if (range !== shownRange) {
+    setShownRange(range)
+    setDates(range === null ? null : { start: dateTime(range.from), end: dateTime(range.to) })
+  }
+  const { FirstDayOfCalendar } = useUiSettings()
+  const pickerOptions = {
+    showMillisec: false,
+    showMicrosec: false,
+    timeFormat: 'HH:mm:ss',
+    firstDay: FirstDayOfCalendar,
+  }
+  /** `Date.parse($input.datepicker('getDate').toString()) || fallback` */
+  const picked = (v: string | undefined, fallback: number) => {
+    const p = parsePickerValue('datetime', v ?? '', new Date())
+    if (p.date === null) return fallback
+    const t = p.time
+    return new Date(p.date.year, p.date.month, p.date.day, t.hour, t.minute, t.second).getTime() || fallback
+  }
 
   const load = async (src: 'slow' | 'general') => {
     if (range === null) return
@@ -86,8 +110,8 @@ export function LogAnalysis({
         server,
         src,
         {
-          time_start: String(Math.round(range.from / 1000)),
-          time_end: String(Math.round(range.to / 1000)),
+          time_start: String(Math.round(picked(dates?.start, range.from) / 1000)),
+          time_end: String(Math.round(picked(dates?.end, range.to) / 1000)),
           // jQuery posts the booleans as "true" / "false"
           removeVariables: String(removeVariables),
           limitTypes: String(limitTypes),
@@ -145,7 +169,19 @@ export function LogAnalysis({
                 aria-label={t('Selected time range:')}
                 className="datetimefield w-44"
                 readOnly
-                value={dateTime(range.from)}
+                value={dates?.start ?? dateTime(range.from)}
+              />
+              <DateTimeTrigger
+                kind="datetime"
+                value={dates?.start ?? dateTime(range.from)}
+                options={pickerOptions}
+                title="..."
+                onChange={(v) =>
+                  setDates((d) => ({
+                    ...(d ?? { start: dateTime(range.from), end: dateTime(range.to) }),
+                    start: v,
+                  }))
+                }
               />
               -
               <Input
@@ -154,7 +190,19 @@ export function LogAnalysis({
                 aria-label={t('Selected time range:')}
                 className="datetimefield w-44"
                 readOnly
-                value={dateTime(range.to)}
+                value={dates?.end ?? dateTime(range.to)}
+              />
+              <DateTimeTrigger
+                kind="datetime"
+                value={dates?.end ?? dateTime(range.to)}
+                options={pickerOptions}
+                title="..."
+                onChange={(v) =>
+                  setDates((d) => ({
+                    ...(d ?? { start: dateTime(range.from), end: dateTime(range.to) }),
+                    end: v,
+                  }))
+                }
               />
             </p>
             <div className="flex items-center gap-1.5">

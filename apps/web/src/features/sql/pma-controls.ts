@@ -99,6 +99,11 @@ export const pmaControls = {
     match: 'onBlur={() => updateParameters(parameterized)}',
   },
   'js:modules/functions.ts#change:#parameterized': { file: 'SqlPage.tsx', match: 'id="parameterized"' },
+  // the same Linter (phpmyadmin/sql-parser port) runs in a worker instead of the /lint round trip
+  'js:codemirror/addon/lint/sql-lint.ts#ajax:POST /lint': {
+    file: 'editor/lintClient.ts',
+    match: 'export function lintInWorker(',
+  },
   'js:modules/functions.ts#change:<codemirrorEditor>': {
     file: 'SqlPage.tsx',
     match: 'useFormLock(editor.current?.isDirty() === true)',
@@ -129,4 +134,6 @@ export const pmaControls = {
     match: "{ key: 'Mod-Enter', run: saveKey },",
   },
   'js:modules/functions.ts#click:a.copyQueryBtn': { file: 'SqlMessage.tsx', match: 'copyQueryBtn' },
+  'encoding/kanji_encoding_form.twig#knjenc': 'KanjiEncodingForm.tsx',
+  'encoding/kanji_encoding_form.twig#xkana': 'KanjiEncodingForm.tsx',
 }

@@ -155,6 +155,8 @@ insertEditRoutes.get('/:db/tables/:t/transformation/wrapper', async (c) =>
         ct: c.req.query('ct'),
         cn: c.req.query('cn'),
         resize: c.req.query('resize'),
+        newWidth: c.req.query('newWidth'),
+        newHeight: c.req.query('newHeight'),
       }),
     ),
   ),

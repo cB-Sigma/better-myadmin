@@ -80,9 +80,15 @@ test.beforeAll(async () => {
   })
   await new Promise<void>((r) => stub.listen(0, '127.0.0.1', r))
   stubUrl = `http://127.0.0.1:${(stub.address() as AddressInfo).port}`
-  for (const [name, v] of Object.entries(VARIANTS)) {
-    instances[name] = { pma: await startPmaInstance(v.pma()), ours: await startBmaInstance(v.ours()) }
-  }
+  // the instances boot at once (each of ours is a tsx process: slow under load, one by one it
+  // outran the hook timeout)
+  test.setTimeout(180_000)
+  await Promise.all(
+    Object.entries(VARIANTS).map(async ([name, v]) => {
+      const [pma, ours] = await Promise.all([startPmaInstance(v.pma()), startBmaInstance(v.ours())])
+      instances[name] = { pma, ours }
+    }),
+  )
 })
 test.afterAll(async () => {
   for (const i of Object.values(instances)) {

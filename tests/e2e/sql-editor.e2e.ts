@@ -42,10 +42,29 @@ async function setQuery(page: Page, sql: string) {
   await page.keyboard.insertText(sql)
 }
 
+/**
+ * The user preferences of the e2e server's store are shared by every test of the run: start from
+ * the defaults (an open console, Console/Mode "show", takes the focus when a page loads).
+ */
+async function resetPrefs(page: Page) {
+  await page.evaluate(async () => {
+    const token = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith('bma_token='))
+      ?.slice('bma_token='.length)
+    const r = await fetch('/api/servers/1/prefs/reset', {
+      method: 'POST',
+      headers: { 'X-BMA-Token': decodeURIComponent(token ?? '') },
+    })
+    if (!r.ok) throw new Error(`prefs reset: ${r.status}`)
+  })
+}
+
 test.describe('SQL tab', () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => window.localStorage.clear())
     await login(page)
+    await resetPrefs(page)
   })
 
   test('table scope: legend, DefaultQueryTable, columns and snippets [p09-0cd66f] [p09-625a43] [p09-50c42a] [p09-74590b]', async ({
@@ -221,16 +240,11 @@ test.describe('console', () => {
     await page.evaluate(() => window.localStorage.clear())
     await login(page)
     // the console options are user preferences (the e2e server's local store): start from defaults
-    await page.evaluate(async () => {
-      const token = document.cookie
-        .split('; ')
-        .find((c) => c.startsWith('bma_token='))
-        ?.slice('bma_token='.length)
-      await fetch('/api/servers/1/prefs/reset', {
-        method: 'POST',
-        headers: { 'X-BMA-Token': decodeURIComponent(token ?? '') },
-      })
-    })
+    await resetPrefs(page)
+  })
+  // and leave them so: an open console (Console/Mode) would take the focus in later files
+  test.afterEach(async ({ page }) => {
+    await resetPrefs(page)
   })
 
   test('runs queries, keeps them as messages, keys and options [p09-c24913]', async ({ page }) => {

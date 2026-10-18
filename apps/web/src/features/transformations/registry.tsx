@@ -66,6 +66,8 @@ export function renderTransformation(
   versionInt = 0,
   /** the client configuration (`DefaultTransformations`, `GD2Available`) */
   cfg: Record<string, unknown> = {},
+  /** Text_Plain_External: the output of the program the server ran */
+  external?: string,
 ): ReactNode {
   const out = applyOutputTransformation(tr.transformation, value, tr.transformationOptions, {
     meta,
@@ -76,8 +78,9 @@ export function renderTransformation(
       ? { defaults: cfg.DefaultTransformations as NonNullable<TransformContext['defaults']> }
       : {}),
     // Config::isGd2Available: 'no' shows the image at 320×240 instead of a resized thumbnail link
-    // ('auto' is available: the wrapper answers the thumbnail request with the original image)
+    // ('auto' is available: the wrapper resamples like GD, apps/server/src/insert-edit/image.ts)
     gd2: cfg.GD2Available !== 'no',
+    ...(external !== undefined ? { external } : {}),
   })
   if ('sql' in out) return <HighlightedSql sql={out.sql} versionInt={versionInt} />
   return <SafeHtml profile="transformation" html={out.html} />

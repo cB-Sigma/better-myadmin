@@ -5,11 +5,12 @@ import type {
   UsersOverviewResponse,
 } from '@bettermyadmin/contracts'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { type AllowedDiff, compareLogs } from './lib/compare.ts'
+import { type AllowedDiff, classify, compareLogs } from './lib/compare.ts'
 import type { LogEntry } from './lib/general-log.ts'
 import { $, $$, type Node, pageHtml, parse, text } from './lib/html.ts'
 import type { PmaForm, PmaJson } from './lib/pma.ts'
 import { type Harness, pmaReachable, startHarness } from './lib/server-setup.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Golden parity of Server → User accounts (docs/features/06-server-level.md): the overview, the
@@ -22,6 +23,14 @@ import { type Harness, pmaReachable, startHarness } from './lib/server-setup.ts'
  * Accounts: f06u_pma / f06u_bma (the tools), f06u_t* (the edited accounts), all dropped afterwards.
  */
 const users = { pma: 'f06u_pma', bma: 'f06u_bma' }
+const MARIADB = TARGET === 'mariadb'
+/**
+ * The plugins the forms post: MySQL 8.4's caching_sha2_password / sha256_password are not loaded on
+ * MariaDB (mysql_native_password, mysql_old_password and unix_socket are), where both tools would
+ * send the same failing CREATE USER … VIA <plugin>
+ */
+const PLUGIN = MARIADB ? 'mysql_native_password' : 'caching_sha2_password'
+const PLUGIN_SHA256 = MARIADB ? 'mysql_native_password' : 'sha256_password'
 const STORAGE = { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }
 let h: Harness
 
@@ -35,13 +44,25 @@ const DROP_ACCOUNTS = [
   "'f06u_new'@'10.1.2.3'",
   "''@'f06u.example'",
   "'f06u_cp'@'%'",
+  "'f06u_cp'@'localhost'",
 ]
   .map((a) => `DROP USER IF EXISTS ${a};`)
   .join(' ')
 
+/**
+ * MariaDB keeps the grant tables in Aria: rows go to the slots that dropped accounts freed, so the
+ * unordered `SELECT * FROM mysql.db` of Copy user would return another order in each tool's turn.
+ * Compacting them after the drops gives both turns the same insertion order (InnoDB on MySQL keeps
+ * primary-key order).
+ */
+const MARIADB_COMPACT = MARIADB
+  ? 'OPTIMIZE TABLE mysql.db, mysql.tables_priv, mysql.columns_priv, mysql.procs_priv, mysql.global_priv;'
+  : ''
+
 /** The fixture accounts and objects (run as root before each tool's turn). */
 const FIXTURE = `
 ${DROP_ACCOUNTS}
+${MARIADB_COMPACT}
 DROP DATABASE IF EXISTS f06u_db; DROP DATABASE IF EXISTS f06u_new; DROP DATABASE IF EXISTS f06u_t1; DROP DATABASE IF EXISTS f06uroutines;
 CREATE DATABASE f06u_db; CREATE DATABASE f06uroutines;
 CREATE PROCEDURE f06uroutines.p1() SELECT 1;
@@ -193,20 +214,16 @@ const pmaMessage = (j: PmaJson) =>
  */
 let x40 = false
 const WGO = ' WITH GRANT OPTION'
+/** a SHOW GRANTS line with the grant option: MariaDB lists the resource limits after it */
+const hasGrantOption = (g: string) => (MARIADB ? / WITH GRANT OPTION( |$)/.test(g) : g.endsWith(WGO))
 /** SHOW GRANTS lines on `target` of each tool: ours has the grant option, phpMyAdmin's lacks it (X40) */
 function expectX40(r: { pmaGrants: string[]; bmaGrants: string[] }, target: RegExp) {
   const on = (xs: string[]) => xs.filter((g) => target.test(g))
   expect(on(r.bmaGrants).length, JSON.stringify(r.bmaGrants)).toBeGreaterThan(0)
-  expect(
-    on(r.bmaGrants).every((g) => g.endsWith(WGO)),
-    JSON.stringify(r.bmaGrants),
-  ).toBe(true)
+  expect(on(r.bmaGrants).every(hasGrantOption), JSON.stringify(r.bmaGrants)).toBe(true)
   if (x40) {
     // phpMyAdmin's grants of this level: no grant option (recorded, the bug)
-    expect(
-      on(r.pmaGrants).some((g) => g.endsWith(WGO)),
-      JSON.stringify(r.pmaGrants),
-    ).toBe(false)
+    expect(on(r.pmaGrants).some(hasGrantOption), JSON.stringify(r.pmaGrants)).toBe(false)
   } else {
     expect(on(r.pmaGrants)).toEqual(on(r.bmaGrants))
   }
@@ -464,7 +481,7 @@ const NEW_DB_MENU: AllowedDiff[] = [
   },
 ]
 
-const writes = (c: { bma: string[] }) => c.bma.filter((s) => !/^(SELECT|SHOW|USE)\b/.test(s))
+const writes = (c: { bma: string[] }) => c.bma.filter((s) => classify(s) === 'write')
 
 describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
   it('text fields, password, plugin, same-name database, wildcard grant, privileges, limits', async () => {
@@ -477,7 +494,7 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
         ['pred_password', 'userdefined'],
         ['pma_pw', 'Secret_123'],
         ['pma_pw2', 'Secret_123'],
-        ['authentication_plugin', 'caching_sha2_password'],
+        ['authentication_plugin', PLUGIN],
         ['createdb-1', 'on'],
         ['createdb-2', 'on'],
         ['Select_priv', 'Y'],
@@ -494,6 +511,23 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
       ],
       { extra: NEW_DB_MENU },
     )
+    if (MARIADB) {
+      // MariaDB: old_passwords for PASSWORD(), CREATE USER … VIA <plugin> USING <hash>, and the
+      // requirements and limits in the GRANT (ALTER USER … REQUIRE is MySQL >= 8.0.11's)
+      expect(writes(r.cmp)).toEqual([
+        'SET `old_passwords` = 0',
+        "CREATE USER 'f06u_new'@'%' IDENTIFIED VIA mysql_native_password USING '*CBF378A5884C6C220CE0FBFE0DD4FECC194E4A6B'",
+        "GRANT SELECT, INSERT, CREATE TEMPORARY TABLES ON *.* TO 'f06u_new'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 5 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 2",
+        'CREATE DATABASE IF NOT EXISTS `f06u_new`',
+        "GRANT ALL PRIVILEGES ON `f06u\\_new`.* TO 'f06u_new'@'%'",
+        "GRANT ALL PRIVILEGES ON `f06u\\_new\\_%`.* TO 'f06u_new'@'%'",
+      ])
+      expect(r.b.sql).toBe(
+        "CREATE USER 'f06u_new'@'%' IDENTIFIED VIA mysql_native_password USING '***';GRANT SELECT, INSERT, CREATE TEMPORARY TABLES ON *.* TO 'f06u_new'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 5 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 2;CREATE DATABASE IF NOT EXISTS `f06u_new`;GRANT ALL PRIVILEGES ON `f06u\\_new`.* TO 'f06u_new'@'%';GRANT ALL PRIVILEGES ON `f06u\\_new\\_%`.* TO 'f06u_new'@'%';",
+      )
+      expect(r.b.reload).toBe(true)
+      return
+    }
     expect(writes(r.cmp)).toEqual([
       "CREATE USER 'f06u_new'@'%' IDENTIFIED WITH 'caching_sha2_password' BY <secret>",
       "GRANT SELECT, INSERT, CREATE TEMPORARY TABLES ON *.* TO 'f06u_new'@'%' WITH GRANT OPTION",
@@ -518,7 +552,7 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
       ['pred_password', 'none'],
       ['pma_pw', ''],
       ['pma_pw2', ''],
-      ['authentication_plugin', 'caching_sha2_password'],
+      ['authentication_plugin', PLUGIN],
       ...boxes.map((b): [string, string] => [b, 'Y']),
       ['max_questions', '0'],
       ['max_updates', '0'],
@@ -531,6 +565,12 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
       ['grant_count', await globalGrantCount()],
       ['adduser_submit', '1'],
     ])
+    if (MARIADB) {
+      expect(writes(r.cmp)[2]).toBe(
+        "GRANT ALL PRIVILEGES ON *.* TO 'f06u_new'@'localhost' REQUIRE CIPHER 'EDH-RSA-DES-CBC3-SHA' AND ISSUER '/C=SE/O=f06u\\'s CA' WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0",
+      )
+      return
+    }
     expect(writes(r.cmp)[1]).toBe("GRANT ALL PRIVILEGES ON *.* TO 'f06u_new'@'localhost' WITH GRANT OPTION")
     expect(writes(r.cmp)[2]).toContain("REQUIRE CIPHER 'EDH-RSA-DES-CBC3-SHA' AND ISSUER")
   })
@@ -544,7 +584,7 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
       ['pred_password', 'userdefined'],
       ['pma_pw', 'Secret_456'],
       ['pma_pw2', 'Secret_456'],
-      ['authentication_plugin', 'sha256_password'],
+      ['authentication_plugin', PLUGIN_SHA256],
       ['createdb-3', 'on'],
       ['dbname', 'f06u\\_db'],
       ['Execute_priv', 'Y'],
@@ -552,6 +592,15 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
       ['grant_count', await globalGrantCount()],
       ['adduser_submit', '1'],
     ])
+    if (MARIADB) {
+      expect(writes(r.cmp)).toEqual([
+        'SET `old_passwords` = 0',
+        "CREATE USER 'f06u_new'@'10.1.2.3' IDENTIFIED VIA mysql_native_password USING '*29A7DBE0D8EA9DE07DF72F2AB94E1C10790E1965'",
+        "GRANT EXECUTE ON *.* TO 'f06u_new'@'10.1.2.3' REQUIRE X509",
+        "GRANT ALL PRIVILEGES ON `f06u\\_db`.* TO 'f06u_new'@'10.1.2.3'",
+      ])
+      return
+    }
     expect(writes(r.cmp)).toEqual([
       "CREATE USER 'f06u_new'@'10.1.2.3' IDENTIFIED WITH 'sha256_password' BY <secret>",
       "GRANT EXECUTE ON *.* TO 'f06u_new'@'10.1.2.3'",
@@ -624,6 +673,15 @@ describe.skipIf(!pmaReachable)('parity: update privileges [p06-de1797] [p06-cee9
       ['grant_count', await globalGrantCount()],
       ['update_privs', '1'],
     ])
+    if (MARIADB) {
+      // the requirements and limits stay in the GRANT on MariaDB
+      expect(writes(r.cmp)).toEqual([
+        "REVOKE ALL PRIVILEGES ON *.* FROM 'f06u_t1'@'%'",
+        "REVOKE GRANT OPTION ON *.* FROM 'f06u_t1'@'%'",
+        "GRANT SELECT, RELOAD, PROCESS ON *.* TO 'f06u_t1'@'%' REQUIRE X509 WITH MAX_QUERIES_PER_HOUR 10 MAX_CONNECTIONS_PER_HOUR 30 MAX_UPDATES_PER_HOUR 20 MAX_USER_CONNECTIONS 40",
+      ])
+      return
+    }
     expect(writes(r.cmp)).toEqual([
       "REVOKE ALL PRIVILEGES ON *.* FROM 'f06u_t1'@'%'",
       "REVOKE GRANT OPTION ON *.* FROM 'f06u_t1'@'%'",
@@ -645,7 +703,9 @@ describe.skipIf(!pmaReachable)('parity: update privileges [p06-de1797] [p06-cee9
       { grantsOf: "'f06u_t1'@'%'" },
     )
     expect(writes(r.cmp)[0]).toBe("REVOKE ALL PRIVILEGES ON *.* FROM 'f06u_t1'@'%'")
-    expect(writes(r.cmp)[1]).toBe(`GRANT SELECT ON *.* TO 'f06u_t1'@'%'${WGO}`)
+    expect(writes(r.cmp)[1]).toBe(
+      `GRANT SELECT ON *.* TO 'f06u_t1'@'%'${MARIADB ? ' REQUIRE NONE' : ''}${WGO}`,
+    )
     if (x40) {
       // phpMyAdmin's statements: no grant option anywhere, the ALTER USER is sent by both unchanged
       expect(r.cmp.pma.find((x) => x.startsWith('GRANT'))).toBe("GRANT SELECT ON *.* TO 'f06u_t1'@'%'")
@@ -868,11 +928,14 @@ describe.skipIf(!pmaReachable)('parity: change password of another account [p06-
       ['nopass', '0'],
       ['pma_pw', 'Neu_pw_1'],
       ['pma_pw2', 'Neu_pw_1'],
-      ['authentication_plugin', 'caching_sha2_password'],
+      ['authentication_plugin', PLUGIN],
       ['change_pw', '1'],
     ])
     expect(writes(r.cmp)).toEqual([
-      "ALTER USER 'f06u_t1'@'%' IDENTIFIED WITH 'caching_sha2_password' BY <secret>",
+      // getChangePasswordQueryAlterUserMySQL is MySQL's: MariaDB gets SET PASSWORD FOR … = PASSWORD()
+      MARIADB
+        ? "SET PASSWORD FOR 'f06u_t1'@'%' = PASSWORD ('Neu_pw_1')"
+        : "ALTER USER 'f06u_t1'@'%' IDENTIFIED WITH 'caching_sha2_password' BY <secret>",
       'FLUSH PRIVILEGES',
     ])
   })
@@ -893,7 +956,7 @@ describe.skipIf(!pmaReachable)('parity: change login information / copy user [p0
     ['username', 'f06u_cp'],
     ['pred_hostname', 'any'],
     ['hostname', '%'],
-    ['authentication_plugin', 'caching_sha2_password'],
+    ['authentication_plugin', PLUGIN],
     ['mode', mode],
     ['change_copy', '1'],
     ...(extra.some(([k]) => k === 'pred_password')
@@ -904,7 +967,13 @@ describe.skipIf(!pmaReachable)('parity: change login information / copy user [p0
   it('mode 4: keep the old account, keep the password; database, table and column grants', async () => {
     const r = await action(copy('4'))
     const w = writes(r.cmp)
-    expect(w[0]).toMatch(/^CREATE USER 'f06u_cp'@'%' IDENTIFIED WITH 'caching_sha2_password'/)
+    if (MARIADB) {
+      // the old account's hash is kept: USING its mysql.user authentication_string
+      expect(w.slice(0, 2)).toEqual([
+        'SET `old_passwords` = 0',
+        "CREATE USER 'f06u_cp'@'%' IDENTIFIED VIA mysql_native_password USING '*DA84A9AD3DB5DD7DEA90D50A7F545288D21365A8'",
+      ])
+    } else expect(w[0]).toMatch(/^CREATE USER 'f06u_cp'@'%' IDENTIFIED WITH 'caching_sha2_password'/)
     expect(w).toContain(
       "GRANT INSERT, TRIGGER, SELECT (`a`, `b`), UPDATE (`b`) ON `f06u_db`.`t1` TO 'f06u_cp'@'%'",
     )

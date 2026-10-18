@@ -16,6 +16,8 @@ import {
   Panel,
   PanelBody,
   Radio,
+  removeMessage,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { type FormEvent, useState } from 'react'
@@ -114,6 +116,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
     e.preventDefault()
     // jQuery Validation stops the submit while a field is invalid
     if (errors.some((x) => x !== null)) return
+    const box = showMessage(t('Searching'), false)
     try {
       const r = await api.tableSearch(scope, {
         distinct,
@@ -129,6 +132,8 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
       window.scrollTo({ top: 0 })
     } catch (err) {
       setMessages([errorMessage(err)])
+    } finally {
+      removeMessage(box)
     }
   }
 
@@ -211,6 +216,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                             onChange={(v) => patch(i, { value: v })}
                             scope={scope}
                             geomFunc={r.geomFunc}
+                            picker
                           />
                           {errors[i] != null && (
                             <label className="error block text-xs text-error" htmlFor={`fieldID_${i}`}>

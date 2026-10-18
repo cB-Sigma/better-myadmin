@@ -14,6 +14,7 @@ import type { AppConfig } from './config.ts'
 import { PoolManager } from './db/pool-manager.ts'
 import { SecretBox } from './session/crypto.ts'
 import { SqliteSessionStore } from './session/store.ts'
+import { setupOpenWarning } from './setup/service.ts'
 
 function expandHome(p: string): string {
   return p === '~' || p.startsWith('~/') ? join(homedir(), p.slice(1)) : p
@@ -77,6 +78,8 @@ async function main() {
     ...(loaded.file !== undefined ? { configFile: loaded.file } : {}),
   }
   const app = createApp(deps)
+  const setupWarning = setupOpenWarning(deps)
+  if (setupWarning !== null) console.warn(`setup: ${setupWarning}`)
 
   // static SPA: hashed assets are immutable, everything else falls back to index.html
   const here = dirname(fileURLToPath(import.meta.url))
@@ -118,7 +121,8 @@ async function main() {
 
   const sweep = setInterval(() => {
     store.sweep(Math.floor(Date.now() / 1000), Math.max(cfg.LoginCookieValidity, cfg.LoginCookieStore) * 2)
-    void pools.evictIdle()
+    // the connections of swept (or otherwise deleted) sessions
+    void pools.dropSessionsExcept((id) => store.get(id) !== null)
   }, 60_000)
   sweep.unref()
 

@@ -36,17 +36,53 @@ export interface ServerInfo {
   sqlMode: string
   /** Context::setMode(@@sql_mode) + Context::loadClosest(MySql|MariaDb + version) */
   context: Context
+  /**
+   * ErrorHandler::addUserError of postConnect / setCollation (the time zone or the collation could
+   * not be set): shown above the page on every request that uses such a connection.
+   */
+  userErrors: Array<'timezone' | 'collation'>
 }
+
+/**
+ * Statements that leave nothing on the connection for a later request: plain reads. Anything else
+ * may (`SET`, `USE`, transactions, temporary tables, locks, user variables, `LAST_INSERT_ID()`,
+ * prepared statements, profiling), so the connection is not reused after it.
+ */
+const STATELESS =
+  /^\s*(?:\/\*[\s\S]*?\*\/\s*)*(?:SELECT|SHOW|EXPLAIN|DESCRIBE|DESC|WITH|CHECK|CHECKSUM|ANALYZE|OPTIMIZE|REPAIR)\b/i
+const USER_VARIABLE =
+  /@[A-Za-z0-9_$.`'"]|\bINTO\b|\bFOR\s+UPDATE\b|\bLOCK\s+IN\s+SHARE\s+MODE\b|\bGET_LOCK\s*\(/i
+
+/** True when `sql` (not one of the connection set-up statements) may change the session state. */
+export function changesSessionState(sql: string, label: string): boolean {
+  if (label.startsWith('connect.')) return false
+  return !STATELESS.test(sql) || USER_VARIABLE.test(sql.replace(/@@/g, ''))
+}
+
+/** The label of the statements typed by the user (SQL tab, console): the ones a cancel may kill. */
+export const USER_STATEMENT = 'query.user'
 
 export class Conn {
   readonly raw: PoolConnection
   readonly log: Executed[]
   serverInfo: ServerInfo | null = null
   /**
+   * The session state may differ from a fresh connection's: phpMyAdmin connects per request, so the
+   * pool closes such a connection on release instead of handing it to the next request.
+   */
+  dirty = false
+  /**
    * The one file a `LOAD DATA LOCAL INFILE` may read (the uploaded import file of ImportLdi), or
    * null: the server's file request is refused like a client without local_infile.
    */
   localInfile: string | null = null
+  /** The label of the statement in flight (null when idle): a cancel kills only the user's statement. */
+  activeLabel: string | null = null
+  /**
+   * A cancel that came before the user's statement started (the pipeline's own statements were
+   * running): that statement is not sent and fails like a killed query.
+   */
+  cancelled = false
 
   constructor(raw: PoolConnection, log: Executed[]) {
     this.raw = raw
@@ -71,8 +107,19 @@ export class Conn {
   }
 
   async query(sql: string, label: string, hook = true): Promise<QueryResult> {
+    if (label === USER_STATEMENT && this.cancelled) {
+      this.cancelled = false
+      this.log.push({ sql, ms: 0, label })
+      throw new MysqlError(
+        { errno: 1317, sqlState: '70100', message: 'Query execution was interrupted' },
+        sql,
+      )
+    }
+
+    if (!this.dirty && changesSessionState(sql, label)) this.dirty = true
     const start = performance.now()
     let res: [unknown, unknown]
+    this.activeLabel = label
     try {
       // typeCast:false keeps every value as the exact bytes the server sent (docs/architecture/06 numeric fidelity)
       res = (await this.raw.query({
@@ -86,6 +133,8 @@ export class Conn {
       this.log.push({ sql, ms, label })
       if (isMysqlError(e)) throw new MysqlError(e, sql)
       throw e
+    } finally {
+      this.activeLabel = null
     }
     const ms = performance.now() - start
     const out = normalise(res[0], res[1])
@@ -124,6 +173,8 @@ export class Conn {
     params: Array<string | number | null>,
     label: string,
   ): Promise<Array<Record<string, string | null>>> {
+    // the statement stays prepared on the connection (phpMyAdmin's closes with its connection)
+    this.dirty = true
     const start = performance.now()
     try {
       const [rows] = await this.raw.execute({ sql, values: params })

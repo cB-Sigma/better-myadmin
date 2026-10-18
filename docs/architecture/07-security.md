@@ -25,11 +25,13 @@ BetterMyAdmin is a tool that, by design, executes arbitrary SQL as whatever user
 - `http` auth: `WWW-Authenticate: Basic realm="<auth_http_realm>"` (default `BetterMyAdmin <host>`); the Basic credentials are read when a page loads, used for the connection and then held in the (encrypted) session like cookie auth (X45); logout goes to `/?old_usr=<user>`, which refuses the same user once.
 - `signon`: `SignonURL` redirect; the hand-off is a cookie named `SignonSession` holding phpMyAdmin's `PMA_single_signon_*` keys, AES-GCM encrypted with a key derived from `blowfish_secret` (`encodeSignonSession`, `apps/server/examples/signon.ts`), or `SignonScript`, a JS/TS module exporting `getLoginCredentials(user)` (`apps/server/examples/signon-script.ts`) (X43). Login errors are written back into the cookie (`PMA_single_signon_error_message`). `SignonCookieParams` and `LogoutURL` honoured.
 
+- **The setup script** (`/setup`) needs no login while no configuration file exists, like phpMyAdmin's `setup/`, and is closed (404) as soon as one is loaded or written. The server warns at start while it is open (`setup: no configuration file …`). A deployment ships a configuration file, or stays private until it has one.
+
 ## CSRF and request integrity
 
 - Every state-changing request requires header `X-BMA-Token` equal to the `bma_token` cookie value (double submit); the token rotates on login. GET routes are side-effect free, enforced by a contract test. This is the equivalent of phpMyAdmin's `token` parameter and `TokenRequestParamChecking`.
 - Cookies: `HttpOnly` (session), `SameSite=Lax`, `Secure` when the request is HTTPS or `ForceSSL` is on, `Path` scoped to `basePath`.
-- **Signed SQL in URLs**: `sql`+`sig` (HMAC-SHA256 over `sql|db|server|sessionId`) exactly as `Core::signSqlQuery`/`checkSqlQuerySignature`. A GET with a bad or missing signature never executes; it opens the editor prefilled. This is what makes FK-traversal links and search redirects safe to share within a session.
+- **Signed SQL in URLs**: `sql`+`sig` (HMAC-SHA256 of the query with the session's secret and `blowfish_secret`) exactly as `Core::signSqlQuery`/`checkSqlQuerySignature`. A page that reads SQL from its URL (Browse, Display chart, GIS visualization, Edit's "Go back", Export's `sql_query`) always sends the signature, `''` when the URL has none, and the server drops a query whose signature does not verify; the SQL tab only prefills the editor. A link can therefore never run SQL through the app's own CSRF token ([security review](../reference/security-review.md) S2–S4).
 - Redirects: only to relative paths within the app or to hosts in the `AllowedRedirect` allow-list (phpMyAdmin's `Core::isAllowedDomain` list for docs/MySQL/MariaDB sites); the `url.php`-style outbound link page is reproduced (`/goto?url=` shows the destination and opens in a new tab) so Referer never leaks the app URL.
 
 ## Headers
@@ -48,7 +50,7 @@ Set on every response (equivalent of `Core::headerJSON`/`Header::sendHttpHeaders
 - **Export file injection**: CSV/Excel cells beginning with `=`, `+`, `-`, `@` are escaped per the plugin's existing behaviour only (phpMyAdmin does not neutralize formulas; we add an opt-in `Export.csv_escape_formulas`, default off, to stay byte-compatible by default and document the risk).
 - **Path traversal**: `UploadDir`/`SaveDir` listings and reads use `realpath` containment checks (`FileListing`, `File::checkUploadedFile` equivalents) and the import "select from server directory" accepts only basenames present in the listing.
 - **Zip bombs / decompression**: decompression is streamed with a configurable output cap (`Import.MaxDecompressedSize`, default 10 × `MaxUploadSize`).
-- **Shell**: none. phpMyAdmin's `RecodingEngine=recode` and `Text_Plain_External` shell-out are replaced by in-process `iconv` and a no-exec policy; `External` transformation is implemented with an allow-listed set of pure-JS formatters.
+- **Shell**: none. phpMyAdmin's `RecodingEngine=recode` is replaced by in-process `iconv`. The `External` transformation runs only the programs an administrator lists in `TransformationsExternalPrograms` (empty by default, phpMyAdmin's shipped state), without a shell, with a timeout and an output cap (X4).
 
 ## Information disclosure
 

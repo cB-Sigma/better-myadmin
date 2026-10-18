@@ -1,7 +1,7 @@
 import type { UiSettings } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { api } from './api.ts'
-import { t } from './i18n'
+import { pgettext, t } from './i18n'
 import { qk } from './queryKeys.ts'
 
 type LinkMode = 'icons' | 'text' | 'both'
@@ -36,6 +36,7 @@ export interface ClientConfig {
   VersionCheck: boolean
   NavigationDisplayServers: boolean
   ServerDefault: number
+  FirstDayOfCalendar: number
   [key: string]: unknown
 }
 
@@ -65,6 +66,7 @@ export const DEFAULT_CLIENT_CONFIG: ClientConfig = {
   VersionCheck: true,
   NavigationDisplayServers: true,
   ServerDefault: 1,
+  FirstDayOfCalendar: 0,
 }
 
 export function useConfig(): ClientConfig {
@@ -84,6 +86,10 @@ export function uiSettingsFrom(cfg: ClientConfig, serverVersion = 0, isMariaDb =
     serverVersion,
     isMariaDb,
     gettext: (msgid) => t(msgid),
+    pgettext: (context, msgid) => pgettext(context, msgid),
+    // Settings::getFirstDayOfCalendar: 1-7 kept, anything else 0
+    FirstDayOfCalendar:
+      cfg.FirstDayOfCalendar >= 1 && cfg.FirstDayOfCalendar <= 7 ? Math.trunc(cfg.FirstDayOfCalendar) : 0,
   }
 }
 

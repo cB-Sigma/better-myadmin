@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { intType } from '../support/vendor.ts'
 
 /**
  * Database → Central columns, Tracking, Data dictionary and Privileges through the API
@@ -97,7 +98,7 @@ describe('data dictionary and privileges', () => {
     const r = await app.req('GET', `${base}/data-dictionary`)
     const a = J(r).tables.find((t: { name: string }) => t.name === 'a')
     expect(a.comment).toBe('the a')
-    expect(a.columns[0]).toMatchObject({ name: 'id', isPrimary: true, printType: 'int' })
+    expect(a.columns[0]).toMatchObject({ name: 'id', isPrimary: true, printType: intType() })
     expect(a.columns[1]).toMatchObject({ name: 'v', default: 'x', comment: 'val' })
     const b = J(r).tables.find((t: { name: string }) => t.name === 'b')
     expect(b.hasRelation).toBe(true)

@@ -1,10 +1,11 @@
 import type { SearchColumn } from '@bettermyadmin/contracts'
-import { Button, Input, NativeSelect, PmaIcon } from '@bettermyadmin/ui'
+import { Button, Input, NativeSelect, PmaIcon, isPickerKind } from '@bettermyadmin/ui'
 import { useState } from 'react'
 import type { TableRef } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { GisEditor } from '../../gis/GisEditor'
 import { ForeignBrowser } from '../../insert-edit/ForeignBrowser'
+import { DateTimePicker } from '../../insert-edit/ValueWidget'
 
 /** pma: Types::getUnaryOperators */
 export const UNARY = ['IS NULL', 'IS NOT NULL', "= ''", "!= ''"]
@@ -69,6 +70,7 @@ export function ValueInput({
   onChange,
   scope,
   geomFunc = '',
+  picker = false,
 }: {
   column: SearchColumn
   index: number
@@ -79,6 +81,11 @@ export function ValueInput({
   scope?: TableRef
   /** the row's geometry function: the GIS editor shows for functions returning a geometry */
   geomFunc?: string
+  /**
+   * the table search's `<td data-type>`: addDateTimePicker gives `.datefield` / `.datetimefield`
+   * a picker when the type is date, datetime or timestamp (zoom search has no data-type: none)
+   */
+  picker?: boolean
 }) {
   const [browse, setBrowse] = useState(false)
   const [gis, setGis] = useState(false)
@@ -194,16 +201,28 @@ export function ValueInput({
       />
     )
   }
-  return (
+  const className = inp.className ?? 'textfield'
+  const field = (
     <Input
       {...common}
       type="text"
       size={40}
-      className={`w-80 ${inp.className ?? 'textfield'}`}
+      className={`w-80 ${className}`}
       value={value}
       onChange={(e) => onChange(e.target.value)}
     />
   )
+  const kind = column.type
+  if (picker && /\b(datefield|datetimefield)\b/.test(className) && isPickerKind(kind)) {
+    // no data-decimals on the td: no fractional seconds
+    return (
+      <span className="inline-flex items-center gap-1">
+        {field}
+        <DateTimePicker kind={kind} decimals={0} value={value} onPick={onChange} />
+      </span>
+    )
+  }
+  return field
 }
 
 const LIKES = ['LIKE', 'LIKE %...%', 'NOT LIKE', 'NOT LIKE %...%']

@@ -8,7 +8,6 @@
  */
 
 import { lstatSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
 import type { SaveRowsRequest, SaveRowsResponse, SqlMessage } from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n'
 import {
@@ -26,7 +25,9 @@ import {
   getUniqueCondition,
 } from '@bettermyadmin/sql-gen'
 import bcrypt from 'bcryptjs'
+import { checkSqlSignature } from '../query/signature.ts'
 import { phpRegex } from '../util/php-regex.ts'
+import { securePath, userDir } from '../util/secure-path.ts'
 import { type IeCtx, assoc, md5, mimeMap, sign, uniqueMeta } from './context.ts'
 
 /** PHP password_hash($value, PASSWORD_DEFAULT): bcrypt, cost 10, `$2y$` prefix */
@@ -62,10 +63,9 @@ async function columnDefaultValues(ctx: IeCtx): Promise<Record<string, string | 
 
 /** File::setLocalSelectedFile: content of an UploadDir file, or an error message */
 function readUploadDirFile(ctx: IeCtx, name: string): { content: Buffer } | { error: string } {
-  const dir = ctx.cfg.UploadDir
-  const userDir = (dir.endsWith('/') ? dir : `${dir}/`).replaceAll('%u', ctx.user.replace(/[/\\]/g, ''))
-  // Core::securePath
-  const path = join(userDir, name.replace(/\.\.[/\\]/g, ''))
+  // Util::userDir(UploadDir) . Core::securePath($name): every run of dots becomes one dot, so no
+  // `..` segment survives ("....//" left `../` behind with the former one-pass `../` removal)
+  const path = userDir(ctx.user, ctx.cfg.UploadDir) + securePath(name)
   try {
     if (lstatSync(path).isSymbolicLink()) return { error: ctx.tr.gettext('File is a symbolic link') }
     return { content: readFileSync(path) }
@@ -77,6 +77,12 @@ function readUploadDirFile(ctx: IeCtx, name: string): { content: Buffer } | { er
 /** POST …/rows (pma: /table/replace) */
 export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRowsResponse> {
   const { tr, cfg } = ctx
+  // the Browse query of "Go back": only with a valid signature when one is sent (it came from a URL)
+  const backQuery =
+    req.sqlQuerySig === undefined ||
+    checkSqlSignature(req.sqlQuery, req.sqlQuerySig, ctx.hmacSecret, ctx.cfg.blowfish_secret)
+      ? req.sqlQuery
+      : ''
   const usingKey = req.rows.some((r) => r.whereClause !== null)
   const whereClauses = usingKey ? req.rows.map((r) => r.whereClause ?? '') : []
   const signed = (clauses: string[]) => clauses.map((clause) => ({ clause, sig: sign(ctx, clause) }))
@@ -221,8 +227,8 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
       return { action: 'edit', where: signed(whereClauses) }
     }
     // getGotoInclude: from Browse (goto /sql) the query runs again
-    return req.sqlQuery !== ''
-      ? { action: 'back', sql: { sql: req.sqlQuery, sig: sign(ctx, req.sqlQuery) } }
+    return backQuery !== ''
+      ? { action: 'back', sql: { sql: backQuery, sig: sign(ctx, backQuery) } }
       : { action: 'back' }
   }
 

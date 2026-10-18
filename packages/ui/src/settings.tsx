@@ -27,6 +27,10 @@ export interface UiSettings {
   isMariaDb: boolean
   /** `__()` of the page language for the kit's own texts (phpMyAdmin msgids); identity = English. */
   gettext: (msgid: string) => string
+  /** `_pgettext()` of the page language (the calendar's month and day names) */
+  pgettext: (context: string, msgid: string) => string
+  /** $cfg['FirstDayOfCalendar'] (window.firstDayOfCalendar, variables.twig) */
+  FirstDayOfCalendar: number
   /** highlightSql: the app's highlighted `<pre><code class="sql">` (keywords linked to the manual) */
   renderSql?: (sql: string) => ReactNode
 }
@@ -42,6 +46,8 @@ export const defaultUiSettings: UiSettings = {
   serverVersion: 0,
   isMariaDb: false,
   gettext: (msgid) => msgid,
+  pgettext: (_context, msgid) => msgid,
+  FirstDayOfCalendar: 0,
 }
 
 const Ctx = createContext<UiSettings>(defaultUiSettings)

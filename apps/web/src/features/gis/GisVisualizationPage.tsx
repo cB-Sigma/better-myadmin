@@ -11,6 +11,7 @@ import {
   NativeCheckbox,
   NativeSelect,
   Panel,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Globe, ZoomIn, ZoomOut } from 'lucide-react'
@@ -20,7 +21,7 @@ import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { RowsFieldsetInputs } from '../table/chart/ChartPage'
 import type { VisualizationSearch } from '../table/chart/ChartPage'
-import type { OlData } from './olMap'
+import { OlPlot } from './OlPlot'
 import { GIS_PNG_BACKGROUND, hex, olDataset, svgDocument, svgShapes } from './visualization'
 
 /**
@@ -39,6 +40,7 @@ export function GisVisualizationPage({ scope, search }: { scope: VisScope; searc
   }>({})
   const req: GisPageRequest = {
     sql: search.sql,
+    sig: search.sig,
     unlimNumRows: search.unlimNumRows,
     ...(search.pos === undefined ? {} : { pos: search.pos }),
     ...(search.sessionMaxRows === undefined ? {} : { sessionMaxRows: search.sessionMaxRows }),
@@ -74,7 +76,7 @@ function GisForm({
     sessionMaxRows?: number
   }) => void
 }) {
-  const fieldset = page.fieldset ?? { pos: 0, rows: 0, unlimNumRows: 0, sql: '' }
+  const fieldset = page.fieldset ?? { pos: 0, rows: 0, unlimNumRows: 0, sql: '', sig: '' }
   const [pos, setPos] = useState(fieldset.pos)
   const [rows, setRows] = useState(fieldset.rows)
   const shapes = useMemo(() => svgShapes(page.rows, page.width, page.height), [page])
@@ -89,17 +91,23 @@ function GisForm({
       return
     }
     // the PNG of the same drawing on phpMyAdmin's grey background
+    // pma: GisVisualization::toFile() === null answers 500 "Failed to create image"
+    const failed = () => showMessage(t('Failed to create image'), false, 'error')
     const img = new Image()
+    img.onerror = failed
     img.onload = () => {
       const canvas = document.createElement('canvas')
       canvas.width = page.width
       canvas.height = page.height
       const ctx = canvas.getContext('2d')
-      if (ctx === null) return
+      if (ctx === null) {
+        failed()
+        return
+      }
       ctx.fillStyle = hex(GIS_PNG_BACKGROUND)
       ctx.fillRect(0, 0, page.width, page.height)
       ctx.drawImage(img, 0, 0)
-      canvas.toBlob((b) => b !== null && save(b, name), 'image/png')
+      canvas.toBlob((b) => (b !== null ? save(b, name) : failed()), 'image/png')
     }
     img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(doc)}`
   }
@@ -376,36 +384,3 @@ function SvgPlot({
 }
 
 /** OlVisualization: the OpenStreetMaps map, created the first time the switch shows it */
-function OlPlot({ data, visible }: { data: OlData; visible: boolean }) {
-  const target = useRef<HTMLDivElement>(null)
-  const map = useRef<{ updateSize(): void; setTarget(t: undefined): void } | null>(null)
-  useEffect(() => {
-    if (!visible || target.current === null) return
-    if (map.current !== null) {
-      map.current.updateSize()
-      return
-    }
-    const el = target.current
-    let cancelled = false
-    void import('./olMap').then(({ drawOpenLayers }) => {
-      if (!cancelled && map.current === null) map.current = drawOpenLayers(el, data)
-    })
-    return () => {
-      cancelled = true
-    }
-  }, [visible, data])
-  // Removes ol.Map's resize listener from window
-  useEffect(
-    () => () => {
-      map.current?.setTarget(undefined)
-      map.current = null
-    },
-    [],
-  )
-  return (
-    <div
-      ref={target}
-      className={`visualization-target visualization-target-ol h-full ${visible ? '' : 'hidden'}`}
-    />
-  )
-}

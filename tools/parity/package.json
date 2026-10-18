@@ -9,7 +9,8 @@
     "inventory": "tsx src/cli/inventory.ts",
     "report": "tsx src/cli/report.ts",
     "check": "tsx src/cli/check.ts",
-    "baseline": "tsx src/cli/baseline.ts"
+    "baseline": "tsx src/cli/baseline.ts",
+    "next-id": "tsx src/cli/next-id.ts"
   },
   "dependencies": {
     "@bettermyadmin/config": "workspace:*",

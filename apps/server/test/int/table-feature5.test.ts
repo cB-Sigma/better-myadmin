@@ -79,7 +79,7 @@ describe('chart', () => {
         { name: 'd', numeric: false, dateTime: true },
       ],
       // the last page of 2 rows by $cfg['MaxRows']
-      fieldset: { pos: 0, rows: 25, unlimNumRows: 2, sql },
+      fieldset: { pos: 0, rows: 25, unlimNumRows: 2, sql, sig: expect.any(String) },
     })
     r = await app.req('POST', `${base}/tables/t/chart/data`, { sql, pos: 1, sessionMaxRows: 5 })
     expect(J(r)).toEqual({ error: null, data: [{ name: 'b', qty: '2.50', d: '2024-01-02' }] })

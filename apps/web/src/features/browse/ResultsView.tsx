@@ -5,6 +5,7 @@ import type {
   SqlMessage as SqlMessageData,
   StatementResult,
 } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import {
   Alert,
   Button,
@@ -37,10 +38,12 @@ import { rowsOptions, validRowNumbers } from './logic'
 import './grid.css'
 
 const MISSING = {
-  unavailable:
+  unavailable: N_(
     'Current selection does not contain a unique column. Grid edit, checkbox, Edit, Copy and Delete features are not available. %s',
-  undesired:
+  ),
+  undesired: N_(
     'Current selection does not contain a unique column. Grid edit, Edit, Copy and Delete features may result in undesired behavior. %s',
+  ),
 } as const
 
 /** Link with a computed (splat) destination the route types cannot narrow. */
@@ -241,6 +244,7 @@ export function ResultsView(props: ResultsViewProps) {
         unique: grid.clauseIsUnique ? '1' : '0',
         action: action === 'copy' ? 'insert' : 'update',
         sql: grid.sql,
+        sql_sig: grid.sig,
         ...(action === 'export' ? { single_table: 'true' } : {}),
       },
     } as never)
@@ -664,13 +668,13 @@ function DisplayOptions({ grid, onRun }: { grid: GridData; onRun: (r: Partial<Br
         checked={cur === value}
         onChange={() => set(value as never)}
       />
-      <label htmlFor={id}>{t(text)}</label>
+      <label htmlFor={id}>{text}</label>
     </div>
   )
   const check = (name: string, id: string, cur: boolean, set: (v: boolean) => void, text: string) => (
     <div className="flex items-center gap-1">
       <input type="checkbox" name={name} id={id} checked={cur} onChange={(e) => set(e.target.checked)} />
-      <label htmlFor={id}>{t(text)}</label>
+      <label htmlFor={id}>{text}</label>
     </div>
   )
   return (
@@ -678,13 +682,14 @@ function DisplayOptions({ grid, onRun }: { grid: GridData; onRun: (r: Partial<Br
       <Disclosure
         label={t('Extra options')}
         id="extraOptions"
-        initialState={grid.settings.InitialSlidersState as 'open'}
+        // table.twig: a Bootstrap collapse, closed on every page (InitialSlidersState is not read)
+        initialState="closed"
       >
         <Panel>
           <PanelBody className="flex flex-wrap gap-6">
             <fieldset>
-              {radio('pftext', 'partialFulltextRadioPgrid', 'P', pftext, setPftext, 'Partial texts')}
-              {radio('pftext', 'partialFulltextRadioFgrid', 'F', pftext, setPftext, 'Full texts')}
+              {radio('pftext', 'partialFulltextRadioPgrid', 'P', pftext, setPftext, t('Partial texts'))}
+              {radio('pftext', 'partialFulltextRadioFgrid', 'F', pftext, setPftext, t('Full texts'))}
             </fieldset>
             {grid.relationOptions && (
               <fieldset>
@@ -694,7 +699,7 @@ function DisplayOptions({ grid, onRun }: { grid: GridData; onRun: (r: Partial<Br
                   'K',
                   rel,
                   setRel,
-                  'Relational key',
+                  t('Relational key'),
                 )}
                 {radio(
                   'relational_display',
@@ -702,13 +707,13 @@ function DisplayOptions({ grid, onRun }: { grid: GridData; onRun: (r: Partial<Br
                   'D',
                   rel,
                   setRel,
-                  'Display column for relationships',
+                  t('Display column for relationships'),
                 )}
               </fieldset>
             )}
             <fieldset>
-              {check('display_binary', 'display_binary_grid', bin, setBin, 'Show binary contents')}
-              {check('display_blob', 'display_blob_grid', blob, setBlob, 'Show BLOB contents')}
+              {check('display_binary', 'display_binary_grid', bin, setBin, t('Show binary contents'))}
+              {check('display_blob', 'display_blob_grid', blob, setBlob, t('Show BLOB contents'))}
             </fieldset>
             <div>
               {check(
@@ -716,14 +721,14 @@ function DisplayOptions({ grid, onRun }: { grid: GridData; onRun: (r: Partial<Br
                 'hide_transformation_grid',
                 hide,
                 setHide,
-                'Hide browser transformation',
+                t('Hide browser transformation'),
               )}
             </div>
             <fieldset>
               {v.possibleAsGeometry &&
-                radio('geoOption', 'geoOptionRadioGeomgrid', 'GEOM', geo, setGeo, 'Geometry')}
-              {radio('geoOption', 'geoOptionRadioWktgrid', 'WKT', geo, setGeo, 'Well Known Text')}
-              {radio('geoOption', 'geoOptionRadioWkbgrid', 'WKB', geo, setGeo, 'Well Known Binary')}
+                radio('geoOption', 'geoOptionRadioGeomgrid', 'GEOM', geo, setGeo, t('Geometry'))}
+              {radio('geoOption', 'geoOptionRadioWktgrid', 'WKT', geo, setGeo, t('Well Known Text'))}
+              {radio('geoOption', 'geoOptionRadioWkbgrid', 'WKB', geo, setGeo, t('Well Known Binary'))}
             </fieldset>
           </PanelBody>
           <div className="border-t border-border px-3 py-2">
@@ -785,7 +790,8 @@ function Operations({
   const tableLink = (splat: string) => ({
     to: '/s/$server/db/$db/t/$table/$' as const,
     params: { server, db: grid.db, table: exportTable, _splat: splat },
-    search: exportSearch,
+    // the export page reads sql_query with its sql_signature
+    search: { ...exportSearch, sql_query: grid.sql, sql_signature: grid.sig },
   })
   /**
    * Display chart / Visualize GIS data: /table/chart with the result's table, else its database,
@@ -795,6 +801,7 @@ function Operations({
   const viewLink = (splat: 'chart' | 'gis-visualization') => {
     const search = {
       ...exportSearch,
+      sig: grid.sig,
       pos: String(grid.view.pos),
       ...(grid.view.maxRows === 'all' ? {} : { session_max_rows: String(grid.view.maxRows) }),
     }

@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   type Browser,
+  type BrowserContext,
   type BrowserContextOptions,
   type Locator,
   type Page,
@@ -24,6 +25,8 @@ import { type App, PMA_URL, ROOT, login, pmaReachable, pmaUrl } from './env.ts'
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 export const GALLERY_DIR = join(repo, '.data/ui-parity')
+/** `diff` (default): screenshots of the steps with differences only; `all`: of every step */
+const SHOTS = process.env.BMA_UIP_SHOTS === 'all' ? 'all' : 'diff'
 
 /** An action expressed once and run in both apps, located by accessible name inside the scope. */
 export type Action =
@@ -72,7 +75,13 @@ export interface PageSpec {
    * Other instances than the shared ones (the setup script without a configuration file, the
    * other auth types): their base URLs, read when the case runs (started in a beforeAll).
    */
-  bases?: () => { pma?: string; ours?: string }
+  bases?: () => { pma?: string | undefined; ours?: string | undefined }
+  /**
+   * Seeds Math.random in both pages (a fixed-seed generator, before any script), for pages that
+   * place things at random, such as the Designer's tables without saved coordinates: the layout
+   * is then the same on every run.
+   */
+  seedRandom?: boolean
   /** browser context options per app (e.g. `httpCredentials` for http auth) */
   context?: Partial<Record<App, BrowserContextOptions>>
   /** SQL run as root before the case (fixtures beyond global-setup's) */
@@ -141,6 +150,17 @@ export interface StepRecord {
 
 async function openApp(browser: Browser, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
   const ctx = await browser.newContext({ baseURL, ...spec.context?.[app] })
+  if (spec.seedRandom === true) await ctx.addInitScript(seedMathRandom)
+  try {
+    return await openPage(ctx, baseURL, app, spec)
+  } catch (e) {
+    // a page that failed to open is closed at once: left open it keeps polling the server
+    await ctx.close()
+    throw e
+  }
+}
+
+async function openPage(ctx: BrowserContext, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
   const page = await ctx.newPage()
   if (spec.auth !== false) await login(page, app, baseURL)
   else await ctx.clearCookies()
@@ -177,15 +197,23 @@ export function pageParity(name: string, spec: PageSpec): void {
       throw new Error(`tests/ui-parity/maps/${spec.map ?? name}.yaml:\n  ${problems.join('\n  ')}`)
     if (spec.sql !== undefined) {
       const c = await mysql.createConnection({ ...ROOT, multipleStatements: true })
-      await c.query(spec.sql)
-      await c.end()
+      try {
+        // a DDL blocked by a metadata lock fails this case instead of waiting (lock_wait_timeout
+        // defaults to a year): left waiting, it outlives the case and every later case touching
+        // the schema queues behind its pending exclusive lock
+        await c.query('SET SESSION lock_wait_timeout = 20')
+        await c.query(spec.sql)
+      } finally {
+        await c.end()
+      }
     }
     const base = baseURL ?? ''
-    const pages = {
-      pma: await openApp(browser, base, 'pma', spec),
-      ours: await openApp(browser, base, 'ours', spec),
-    }
-    await spec.setup?.(pages)
+    const pmaPage = await openApp(browser, base, 'pma', spec)
+    const oursPage = await openApp(browser, base, 'ours', spec).catch(async (e: unknown) => {
+      await pmaPage.context().close()
+      throw e
+    })
+    const pages = { pma: pmaPage, ours: oursPage }
     const dir = join(GALLERY_DIR, slug(name))
     mkdirSync(dir, { recursive: true })
     const opts = (app: App): CaptureOptions => ({
@@ -198,18 +226,28 @@ export function pageParity(name: string, spec: PageSpec): void {
       const side = async (app: App) => {
         const page = pages[app]
         await settle(page)
-        const shot = `${String(records.length).padStart(2, '0')}-${slug(step)}-${app}.png`
-        await page.screenshot({ path: join(dir, shot), fullPage: true })
-        return { url: page.url(), shot, controls: await captureControls(page, opts(app)) }
+        return { url: page.url(), shot: '', controls: await captureControls(page, opts(app)) }
       }
       const p = await side('pma')
       const o = await side('ours')
       const diff = diffControls(p.controls, o.controls, map, step)
+      // screenshots (the gallery, a review aid) only where they help: steps with differences, or
+      // every step with BMA_UIP_SHOTS=all; full-page shots were a large part of a case's time
+      if (SHOTS === 'all' || diff.differences.length > 0) {
+        for (const [app, rec] of [
+          ['pma', p],
+          ['ours', o],
+        ] as const) {
+          rec.shot = `${String(records.length).padStart(2, '0')}-${slug(step)}-${app}.png`
+          await pages[app].screenshot({ path: join(dir, rec.shot), fullPage: true })
+        }
+      }
       records.push({ step, pma: p, ours: o, diff })
       report.push(formatDiff(name, step, diff))
       for (const w of diff.warnings) report.push(`  (warning) ${w}`)
     }
     try {
+      await spec.setup?.(pages)
       await capture('initial')
       for (const s of spec.interactions ?? []) {
         await runStep(pages.pma, 'pma', scopeSel(spec.scope, 'pma'), s)
@@ -229,6 +267,17 @@ export function pageParity(name: string, spec: PageSpec): void {
     const total = records.reduce((n, r) => n + r.diff.differences.length, 0)
     expect(total, text).toBe(0)
   })
+}
+
+/** Replaces Math.random with mulberry32 (fixed seed); runs in the page. */
+function seedMathRandom(): void {
+  let a = 0x5eed1234
+  Math.random = () => {
+    a = (a + 0x6d2b79f5) | 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
 }
 
 const specSummary = (s: PageSpec) => ({

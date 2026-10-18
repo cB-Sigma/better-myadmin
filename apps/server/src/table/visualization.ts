@@ -62,7 +62,8 @@ function fieldset(cfg: AppConfig, req: PageIn): RowsFieldset {
   const rows = req.sessionMaxRows ?? cfg.MaxRows
   const n = req.unlimNumRows
   const pos = req.pos ?? (Math.ceil(n / rows) - 1) * rows
-  return { pos, rows, unlimNumRows: n, sql: req.sql }
+  // the route signs the query (sig) for the form's requests
+  return { pos, rows, unlimNumRows: n, sql: req.sql, sig: '' }
 }
 
 /** ChartController (the page): the keys of the first row and their types */

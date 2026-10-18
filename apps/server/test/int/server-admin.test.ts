@@ -15,6 +15,7 @@ import type {
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { hasPerformanceSchema, isMariaDb, utf8mb4Default } from '../support/vendor.ts'
 
 /** The server-level endpoints against a real MySQL (docs/features/06-server-level.md). */
 let t: ReturnType<typeof testApp>
@@ -69,7 +70,11 @@ describe('databases', () => {
 
   it('a limited account sees its databases, gets the wildcard prefilled and no drop', async () => {
     const d = await get<DatabasesResponse>('/databases', limited)
-    expect(d.databases.map((x) => x.name)).toEqual(['information_schema', 'm3srv_it_a', 'performance_schema'])
+    expect(d.databases.map((x) => x.name)).toEqual([
+      'information_schema',
+      'm3srv_it_a',
+      ...(hasPerformanceSchema ? ['performance_schema'] : []),
+    ])
     expect(d.hasCreateDatabasePrivileges).toBe(true)
     expect(d.databaseToCreate).toBe('m3srv_it_')
     expect(d.isDropAllowed).toBe(false)
@@ -167,8 +172,11 @@ describe('status', () => {
     const hit = v.variables.find((x) => x.name === 'Threads_cache_hitrate_%')!
     expect(hit.docUrl).toBeNull()
     expect(hit.formatted.text).toMatch(/ %$/)
+    // Generator::linkToVarDocumentation: the MariaDB knowledge base on MariaDB
     expect(v.variables.find((x) => x.name === 'Uptime')!.docUrl).toBe(
-      'https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Uptime',
+      isMariaDb
+        ? 'https://mariadb.com/kb/en/server-status-variables/#uptime'
+        : 'https://dev.mysql.com/doc/refman/8.0/en/server-status-variables.html#statvar_Uptime',
     )
     const f = await t.req('POST', '/api/servers/1/status/variables', { flush: 'TABLES' })
     expect(f.json.flushed).toBe('FLUSH TABLES;')
@@ -180,7 +188,8 @@ describe('status', () => {
     const a = await get<AdvisorResponse>('/status/advisor')
     expect(a.isDataLoaded).toBe(true)
     expect(a.errors).toEqual([])
-    expect(a.fired.length + a.notfired.length + a.unchecked.length).toBe(48)
+    // the rules file has MariaDB-only and MySQL-only rules (IS_MARIADB in their conditions)
+    expect(a.fired.length + a.notfired.length + a.unchecked.length).toBe(isMariaDb ? 55 : 48)
     expect(
       a.fired.find((r) => r.id === 'Long query time')?.issue ??
         '<a href="/s/1/variables?filter=long_query_time">',
@@ -191,12 +200,16 @@ describe('status', () => {
 describe('variables', () => {
   it('lists, gets and sets [p06-162a8d] [p06-d139b2]', async () => {
     const v = await get<ServerVariablesResponse>('/variables')
-    // the knowledge base's first MySQL entry wins, like KBSearch::getByName
+    // the knowledge base's first MySQL entry wins, like KBSearch::getByName (its MariaDB entry on MariaDB)
     expect(v.variables.find((x) => x.name === 'max_connections')!.docUrl).toBe(
-      'https://dev.mysql.com/doc/refman/8.0/en/replication-options-binary-log.html#sysvar_max_connections',
+      isMariaDb
+        ? 'https://mariadb.com/kb/en/server-system-variables/#max_connections'
+        : 'https://dev.mysql.com/doc/refman/8.0/en/replication-options-binary-log.html#sysvar_max_connections',
     )
     expect(v.variables.find((x) => x.name === 'sql_mode')!.docUrl).toBe(
-      'https://dev.mysql.com/doc/refman/8.0/en/server-options.html#option_mysqld_sql-mode',
+      isMariaDb
+        ? 'https://mariadb.com/kb/en/server-system-variables/#sql_mode'
+        : 'https://dev.mysql.com/doc/refman/8.0/en/server-options.html#option_mysqld_sql-mode',
     )
     const [rows] = await root.query('SELECT @@GLOBAL.max_connect_errors AS v')
     const original = String((rows as Array<{ v: unknown }>)[0]!.v)
@@ -217,7 +230,7 @@ describe('charsets, engines, plugins, binlog', () => {
   it('collations grouped per charset [p06-b19775]', async () => {
     const c = await get<CollationsResponse>('/collations')
     const utf8mb4 = c.charsets.find((x) => x.name === 'utf8mb4')!
-    expect(utf8mb4.collations.find((x) => x.isDefault)!.name).toBe('utf8mb4_0900_ai_ci')
+    expect(utf8mb4.collations.find((x) => x.isDefault)!.name).toBe(utf8mb4Default)
   })
 
   it('engines, InnoDB pages, unknown engine [p06-e1da5c]', async () => {

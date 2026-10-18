@@ -6,5 +6,5 @@ rules:
     n/a: matched by the unlabelled checkbox below (packages/ui Checkbox has no name attribute)
   - pma: { kind: checkbox, name: col_extra }
     n/a: matched by the unlabelled checkbox below (packages/ui Checkbox has no name attribute)
-  - ours: { kind: checkbox, label: '/^$/', section: '', step: initial }
+  - ours: { kind: checkbox, label: '/^$/', section: '', step: '/^(initial|ENUM type shows the ENUM\/SET editor link)$/' }
     added: the Null and A_I checkboxes of the Add new column row

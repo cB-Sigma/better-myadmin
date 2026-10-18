@@ -12,6 +12,7 @@ import { backquote } from '@bettermyadmin/sql-gen'
 import { Parser, SelectStatement, replaceClauses } from '@bettermyadmin/sql-lexer'
 import { type Context, Hono } from 'hono'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
+import { checkSqlSignature } from '../query/signature.ts'
 import type { ServerEnv } from '../routes/server.ts'
 import { isSystemSchema } from '../server-admin/context.ts'
 import { databaseList } from '../server-admin/databases.ts'
@@ -63,6 +64,19 @@ exportPageRoutes.get('/page', async (c) => {
     let tablesView: ExportPageResponse['tables']
     let databases: ExportPageResponse['databases']
     let sqlQuery = params.str('sql_query')
+    // the export page gets sql_query from the URL: with a signature it must verify (an unsigned
+    // GET sql_query never reaches phpMyAdmin's export page, which reads it from POST only)
+    if (
+      params.has('sql_signature') &&
+      !checkSqlSignature(
+        sqlQuery,
+        params.str('sql_signature'),
+        c.get('session').hmacSecret,
+        settings.blowfish_secret,
+      )
+    ) {
+      sqlQuery = ''
+    }
     let singleTable = false
     if (params.has('single_table')) singleTable = !['', '0'].includes(params.str('single_table'))
 
@@ -179,7 +193,7 @@ exportPageRoutes.get('/page', async (c) => {
       session.exportAliases !== undefined && JSON.stringify(session.exportAliases).match(/:"[^"]/) !== null
     const title =
       exportType === 'raw'
-        ? tr.pgettext('A query that the user has written freely', 'Exporting a raw query')
+        ? tr.gettext('Exporting a raw query')
         : exportType === 'server'
           ? tr.gettext('Exporting databases from the current server')
           : exportType === 'database'

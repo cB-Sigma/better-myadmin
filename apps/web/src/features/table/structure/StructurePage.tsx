@@ -8,13 +8,15 @@ import {
   Panel,
   PanelBody,
   PreviewSqlDialog,
+  removeMessage,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, KeyRound, ListTree } from 'lucide-react'
 import { useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
-import { t } from '../../../lib/i18n'
+import { pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { usePagePrefs } from '../../preferences/PageSettings.tsx'
 import { StructurePills } from '../common/StructurePills'
@@ -49,6 +51,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const [selected, setSelected] = useState<string[]>([])
   const [confirm, setConfirm] = useState<{
     question: string
+    /** the dialog title when it is not the question (drop_confirm.twig's <h1>) */
+    heading?: string
     sql: string
     run: () => Promise<void>
     /** the "No" button (pma: DropColumnController answers "No change") */
@@ -112,7 +116,9 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   }
   const dropColumn = async (c: Column) => {
     if (!confirmSql(c.dropSql)) return
+    const box = showMessage(t('Dropping column'), false)
     await act(() => api.dropColumns(scope, { columns: [c.name], source: 'row' }))
+    removeMessage(box)
   }
   const orderedSelection = columnNames.filter((n) => selected.includes(n))
   /** the With-selected buttons are always enabled; without a selection the action answers this */
@@ -235,7 +241,11 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                   <td className="column_attribute whitespace-nowrap px-1">{c.attribute}</td>
                   <td className="px-1">{c.isNull ? t('Yes') : t('No')}</td>
                   <td className="whitespace-nowrap px-1">
-                    {c.default !== null ? c.default : <em>{c.isNull ? 'NULL' : t('None')}</em>}
+                    {c.default !== null ? (
+                      c.default
+                    ) : (
+                      <em>{c.isNull ? 'NULL' : pgettext('None for default', 'None')}</em>
+                    )}
                   </td>
                   {s.config.ShowColumnComments && <td className="px-1">{c.comment}</td>}
                   <td className="whitespace-nowrap px-1">{c.extra}</td>
@@ -317,7 +327,9 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 onClick={() =>
                   noneSelected() ||
                   void navigate({
-                    to: `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}/structure/change?${orderedSelection.map((f) => `fields=${encodeURIComponent(f)}`).join('&')}`,
+                    to: `/s/${server}/db/${encodeURIComponent(db)}/t/${encodeURIComponent(table)}/structure/change`,
+                    // `fields[]=a&fields[]=b` (lib/search.ts): a repeated plain key keeps its last value
+                    search: { fields: orderedSelection } as never,
                   })
                 }
               >
@@ -328,6 +340,8 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 onClick={() =>
                   noneSelected() ||
                   setConfirm({
+                    // pma: DropColumnConfirmationController (table/structure/drop_confirm.twig)
+                    heading: t('Dropping columns from the table'),
                     question: t('Do you really want to execute the following query?'),
                     sql: `ALTER TABLE \`${table}\`\n${orderedSelection.map((f) => `  DROP \`${f}\``).join(',\n')};`,
                     run: async () => {
@@ -662,7 +676,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
       )}
 
       <Modal
-        title={t('Do you really want to execute the following query?')}
+        title={confirm?.heading ?? t('Do you really want to execute the following query?')}
         open={confirm !== null}
         onClose={() => setConfirm(null)}
         footer={
@@ -690,6 +704,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
           </>
         }
       >
+        {confirm?.heading !== undefined && <p className="mb-2">{confirm.question}</p>}
         <pre className="whitespace-pre-wrap font-mono text-xs text-error" data-testid="confirm-sql">
           {confirm?.sql}
         </pre>
@@ -778,7 +793,10 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         onConfirm={async () => {
           const d = dropIndex
           setDropIndex(null)
-          if (d !== null) await act(() => api.dropIndex(scope, d.name))
+          if (d === null) return
+          const box = showMessage(t('Dropping Primary Key/Index'), false)
+          await act(() => api.dropIndex(scope, d.name))
+          removeMessage(box)
         }}
       />
       <Modal

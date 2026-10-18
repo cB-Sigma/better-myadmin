@@ -20,7 +20,8 @@ A sync that brings in one of these fixes retires the exception: remove the code 
 ## Upstream history clone
 
 The check reads history from `../ref/pma-upstream.git` when that exists, else from the reference
-instance `../ref/pma`. It is a blobless bare clone, so fetching it is cheap and does not depend on
+instance `../ref/pma`; both paths are relative to the main checkout, also when the check runs in a
+linked worktree (found through `git rev-parse --git-common-dir`). It is a blobless bare clone, so fetching it is cheap and does not depend on
 the reference checkout's git state:
 
 ```sh

@@ -15,7 +15,12 @@ import type {
   PartitionFormResponse,
 } from '@bettermyadmin/contracts'
 import type { Translator } from '@bettermyadmin/i18n'
-import { type MimeInfo, getMime } from '@bettermyadmin/metadata'
+import {
+  type MimeInfo,
+  getColumnFromForeignKeysData,
+  getForeignKeysData,
+  getMime,
+} from '@bettermyadmin/metadata'
 import {
   type ColumnMeta,
   type TransformationPlugin,
@@ -27,7 +32,7 @@ import {
   getVirtualityOptions,
   isIntegersLengthRestricted,
 } from '@bettermyadmin/mysql-types'
-import { indexInputFromTableIndex } from '@bettermyadmin/sql-gen'
+import { backquote, indexInputFromTableIndex } from '@bettermyadmin/sql-gen'
 import {
   CreateStatement,
   type OptionsArray,
@@ -163,6 +168,7 @@ export async function changeForm(
   selected: readonly string[],
   features?: StructureFeatures,
   meta?: OpsMeta | null,
+  disableIs = false,
 ): Promise<ChangeFormResponse> {
   const all = await reader.getColumns(db, table)
   const metas: ColumnMeta[] = all.filter((c) => selected.includes(c.Field))
@@ -183,9 +189,21 @@ export async function changeForm(
       ? ((await getMime(meta.control, meta.rp, db, table)) ?? {})
       : {}
   const names = all.map((c) => c.Field)
+  // ColumnsDefinition::displayForm: MySQL from 5.6.6 renames columns bound in a foreign key
+  const statuses = new Map<string, ColumnStatus>()
+  if (reader.server.version < 50606) {
+    const foreigners = getForeignKeysData(await reader.showCreate(db, table))
+    for (const meta of metas) {
+      statuses.set(
+        meta.Field,
+        await checkChildForeignReferences(reader, db, table, meta.Field, foreigners, disableIs),
+      )
+    }
+  }
   return {
     options,
     columns: metas.map((meta) => {
+      const status = statuses.get(meta.Field)
       const { values, orig } = columnFormRow(meta, reader.server)
       const found = names.indexOf(meta.Field)
       const current = found < 0 ? 0 : found
@@ -198,9 +216,36 @@ export async function changeForm(
           { value: '-first', after: null, disabled: current === 0 },
           ...names.map((n, i) => ({ value: n, after: n, disabled: current === i || current === i + 1 })),
         ],
+        ...(status !== undefined ? { status } : {}),
       }
     }),
   }
+}
+
+type ColumnStatus = NonNullable<ChangeFormResponse['columns'][number]['status']>
+
+/** pma: Relation::checkChildForeignReferences (getChildReferences, getColumnFromForeignKeysData) */
+export async function checkChildForeignReferences(
+  reader: Pick<TableReader, 'childReferences'>,
+  db: string,
+  table: string,
+  column: string,
+  foreigners: ReturnType<typeof getForeignKeysData>,
+  disableIs: boolean,
+): Promise<ColumnStatus> {
+  const status: ColumnStatus = { isEditable: true, isReferenced: false, isForeignKey: false, references: [] }
+  const foreigner = getColumnFromForeignKeysData(foreigners, column, db)
+  const children = await reader.childReferences(db, table, column, disableIs)
+  if (children.length > 0 || foreigner !== false) {
+    status.isEditable = false
+    if (children.length > 0) {
+      status.isReferenced = true
+      for (const c of children)
+        status.references.push(`${backquote(c.table_schema)}.${backquote(c.table_name)}`)
+    }
+    if (foreigner !== false) status.isForeignKey = true
+  }
+  return status
 }
 
 /**

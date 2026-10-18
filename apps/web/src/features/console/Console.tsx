@@ -14,7 +14,7 @@ import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { SqlEditor } from '../sql/editor/SqlEditor'
+import { SqlEditor, userHasActed } from '../sql/editor/SqlEditor'
 import type { SqlEditorHandle, SqlEditorProps } from '../sql/editor/types'
 import {
   CONSOLE_DELETE_BOOKMARK_CONFIRM,
@@ -101,6 +101,9 @@ function ConsoleDock({
   const [settings, setSettings] = useState(initial)
   const mode0 = normaliseMode(initial.Mode)
   const [open, setOpen] = useState(mode0 === 'show')
+  // Console.initialize → show(true) on page load: the stored mode opens the console with the focus,
+  // unless the user already clicked or typed elsewhere (the console mounts after its config loads)
+  const [focusOnOpen, setFocusOnOpen] = useState(() => mode0 !== 'show' || !userHasActed())
   const [height, setHeight] = useState(Math.max(92, initial.Height))
   const [messages, setMessages] = useState<ConsoleMessage[]>([])
   const [card, setCard] = useState<'options' | 'bookmarks' | 'debug' | null>(null)
@@ -219,6 +222,7 @@ function ConsoleDock({
 
   const show = useCallback(
     (focus = false) => {
+      setFocusOnOpen(true)
       setOpen(true)
       set('Mode', 'show')
       if (focus) setTimeout(() => input.current?.focus(), 0)
@@ -510,7 +514,7 @@ function ConsoleDock({
                 <SqlEditor
                   handleRef={input}
                   // Console.show(true): the input has the focus once the console opens
-                  autoFocus
+                  autoFocus={focusOnOpen}
                   ariaLabel={t('SQL Query Console')}
                   initialValue=""
                   rows={2}

@@ -1,6 +1,7 @@
 import type { AuthState, CaptchaSettings } from '@bettermyadmin/contracts'
 import { MessageBox, Panel, PanelBody, buttonVariants, cn } from '@bettermyadmin/ui'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { CircleHelp, Database } from 'lucide-react'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
@@ -33,6 +34,8 @@ export function LoginPage({
   const userRef = useRef<HTMLInputElement>(null)
   const passRef = useRef<HTMLInputElement>(null)
   const { state: lang } = useLanguage()
+  const navigate = useNavigate()
+  const pathname = useRouterState({ select: (r) => r.location.pathname })
   const cfg = useConfig()
 
   // focus the password field when a username is prefilled, else the username (functions.ts)
@@ -55,9 +58,16 @@ export function LoginPage({
         ...(state.allowArbitraryServer ? { arbitraryServer: arbitrary } : {}),
         ...(captchaToken !== undefined ? { captchaToken } : {}),
       }),
-    onSuccess: () => {
+    onSuccess: async (r) => {
       onLoggedIn?.()
-      return qc.invalidateQueries({ queryKey: qk.auth })
+      // rememberCredentials: the chosen server opens (index.php?route=/&server=N); the page of the
+      // URL is kept when it belongs to that server, and always after the idle check's login
+      // (session_timedout: no redirect)
+      const shown = /^\/s\/(\d+)(\/|$)/.exec(pathname)
+      if (onLoggedIn === undefined && (shown === null || Number(shown[1]) !== r.server)) {
+        await navigate({ to: '/s/$server', params: { server: r.server } })
+      }
+      await qc.invalidateQueries({ queryKey: qk.auth })
     },
     // a captcha answer is good for one verification
     onSettled: () => (window as CaptchaWindow)[captchaGlobal(captcha)]?.reset?.(),

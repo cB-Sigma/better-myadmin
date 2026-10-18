@@ -85,8 +85,18 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
     const pma = fromHtml(html)
     const ours = fromJson(json)
     // variables whose value changes on its own between the two requests
-    const volatile = new Set(['GTID EXECUTED', 'TIMESTAMP', 'GTID PURGED', 'WARNING COUNT'])
-    const strip = (xs: typeof pma) => xs.map((x) => (volatile.has(x.name) ? { ...x, value: '' } : x))
+    // (MariaDB's GTID positions move with every write of the other suites on the server)
+    const volatile = new Set([
+      'GTID EXECUTED',
+      'TIMESTAMP',
+      'GTID PURGED',
+      'WARNING COUNT',
+      'GTID BINLOG POS',
+      'GTID BINLOG STATE',
+      'GTID CURRENT POS',
+    ])
+    const strip = (xs: typeof pma) =>
+      xs.map((x) => (volatile.has(x.name.toUpperCase()) ? { ...x, value: '' } : x))
     expect(strip(ours)).toEqual(strip(pma))
     expect(pma.some((v) => v.session)).toBe(true)
     expect(json.isSuperUser).toBe(true)

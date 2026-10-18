@@ -37,7 +37,9 @@ test.afterAll(async () => {
   await sql(`DROP DATABASE IF EXISTS ${DB}; DROP USER IF EXISTS '${USER}'@'%'`)
 })
 
-test('grid editing keys, cell selection and copy, column resize', async ({ page }) => {
+test('grid editing keys, cell selection and copy, column resize [p02-75250b] [p02-296ea8]', async ({
+  page,
+}) => {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)

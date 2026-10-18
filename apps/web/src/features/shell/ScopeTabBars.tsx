@@ -1,6 +1,7 @@
 import { TabBar, type TabItem, type TabLinkComponent } from '@bettermyadmin/ui'
 import { Link, useLocation } from '@tanstack/react-router'
 import { t } from '../../lib/i18n'
+import { parsePhpQuery } from '../../lib/search'
 import { useDatabaseScope, useServerScope, useTableScope } from './scope.ts'
 import { DB_TABS, SERVER_TABS, TABLE_TABS, type TabDef, isTabActive } from './tabs.ts'
 
@@ -8,12 +9,7 @@ import { DB_TABS, SERVER_TABS, TABLE_TABS, type TabDef, isTabActive } from './ta
 const TabLink: TabLinkComponent = ({ href, className, children, ...rest }) => {
   const [path = '', qs = ''] = href.split('?')
   return (
-    <Link
-      to={path}
-      search={Object.fromEntries(new URLSearchParams(qs)) as never}
-      className={className}
-      {...rest}
-    >
+    <Link to={path} search={parsePhpQuery(qs) as never} className={className} {...rest}>
       {children}
     </Link>
   )

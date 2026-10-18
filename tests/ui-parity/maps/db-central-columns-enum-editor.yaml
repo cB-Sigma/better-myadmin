@@ -1,0 +1,16 @@
+# Intentional differences of the ENUM/SET editor opened from Central columns (same as table-enum-editor).
+rules:
+  - ours: { kind: button, label: Drop }
+    added: >-
+      phpMyAdmin's drop cell is an icon in a <td class="drop"> with a click handler (no control);
+      ours makes it a focusable button
+  - ours: { kind: slider }
+    added: >-
+      the "Add %d value(s)" slider is a native range input; phpMyAdmin's jQuery UI slider (a <span>
+      handle) is not counted as a control by the harness
+  - match: { kind: button, label: Go }
+    ignore: [order]
+    reason: the modal's Close buttons come after the footer's Go in our DOM (Radix Dialog), see Close
+  - match: { kind: button, label: Close }
+    ignore: [order]
+    reason: the dialog's corner close button comes last in our DOM (Radix Dialog), first in Bootstrap's header

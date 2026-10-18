@@ -38,6 +38,8 @@ export interface ExportEnvironment {
   verbose: string
   httpHost: string
   now?: Date
+  /** Encoding::canConvertKanji(): the request's language is Japanese */
+  canConvertKanji?: boolean
 }
 
 /**
@@ -252,6 +254,15 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
       ? charset
       : null
 
+  // ExportController: knjenc / xkana when posted, used when Encoding::canConvertKanji()
+  const kanji =
+    env.canConvertKanji === true
+      ? {
+          enc: params.has('knjenc') ? params.str('knjenc') : '',
+          kana: params.has('xkana') ? params.str('xkana') : '',
+        }
+      : null
+
   const now = env.now ?? new Date()
   const out: OutputHandler = new Output(
     { write: () => {} },
@@ -323,6 +334,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
       compression,
       compressOnFly: config.CompressOnFly,
       convertCharset,
+      kanji,
     })
     ;(ctx as { out: OutputHandler }).out = handler
     const walker = new ExportWalker(ctx, handler, maxSize)

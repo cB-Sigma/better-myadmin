@@ -12,3 +12,5 @@ docker compose -f docker/dev.compose.yml up -d mysql84   # MySQL 8.4, root/root 
 pnpm --filter @bettermyadmin/web build
 BMA_HOST=127.0.0.1 pnpm --filter @bettermyadmin/server start   # http://127.0.0.1:8080
 ```
+
+Until a configuration file (`bettermyadmin.config.json`, `.ts`, …) exists, the setup script at `/setup` is open without a login, as phpMyAdmin's `setup/` is; the server prints a warning at start. Write a configuration file before exposing the server ([security](docs/architecture/07-security.md#authentication)).

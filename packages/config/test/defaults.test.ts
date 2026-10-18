@@ -104,7 +104,7 @@ describe('directive metadata', () => {
       2 /* MysqlMinVersion leaves */
     const bma = directives.filter((d) => d.node.flags.bma).length
     expect(directiveCount).toBe(pmaLeafCount + bma)
-    expect(bma).toBe(15)
+    expect(bma).toBe(19)
   })
 
   it('userPref flags match phpMyAdmin UserFormList::getFields() + custom-handled keys', () => {

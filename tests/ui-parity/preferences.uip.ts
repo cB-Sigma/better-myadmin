@@ -1,3 +1,4 @@
+import { RUN, USERS } from './lib/env.ts'
 import { pageParity } from './lib/parity.ts'
 
 /**
@@ -10,7 +11,7 @@ import { pageParity } from './lib/parity.ts'
  */
 const exclude = ['#selflink']
 /** phpMyAdmin's user starts from the defaults (ours never saves in these cases) */
-const RESET = "DELETE FROM phpmyadmin.pma__userconfig WHERE username = 'uip_pma'"
+const RESET = `DELETE FROM phpmyadmin.pma__userconfig WHERE username = '${USERS.pma}'`
 
 const tabs: Array<{ tab: string; forms: string[] }> = [
   { tab: 'features', forms: ['Databases', 'Text fields', 'Page titles', 'Warnings', 'Console'] },
@@ -65,8 +66,8 @@ pageParity('preferences-two-factor', {
   exclude,
 })
 
-/** a database of this suite: uip_db is shared with suites of other worktrees */
-const PS = { db: 'f08_uip', table: 't' }
+/** a database of this suite (per worker) */
+const PS = { db: `f08_uip_${RUN}`, table: 't' }
 const PS_SQL = `CREATE DATABASE IF NOT EXISTS ${PS.db}; CREATE TABLE IF NOT EXISTS ${PS.db}.${PS.table} (id INT PRIMARY KEY);
   INSERT IGNORE INTO ${PS.db}.${PS.table} VALUES (1), (2);`
 

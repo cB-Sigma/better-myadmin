@@ -5,7 +5,7 @@ import {
   resolveThemeState,
   themeKey,
 } from '@bettermyadmin/ui/themes'
-import { useSyncExternalStore } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import { api } from '../../../lib/api'
 import { pgettext } from '../../../lib/i18n'
 
@@ -92,8 +92,25 @@ export function colorModeText(mode: string): string {
 let cachedKey = ''
 let cachedState: ThemeState | null = null
 
+const synced = new Set<number>()
+
+/**
+ * loadUserPreferences "save theme": a theme cookie that differs from the preferences' ThemeDefault
+ * (a theme chosen in another browser, or before the preferences changed) is stored again, once per
+ * page load and server.
+ */
+function useThemePreferenceSync(o: ThemeOptions): void {
+  useEffect(() => {
+    if (synced.has(o.server)) return
+    synced.add(o.server)
+    const stored = read(themeKey(o.perServer, o.server))
+    if (stored !== null && stored !== o.themeDefault) void api.themeSet(o.server, stored).catch(() => {})
+  }, [o.server, o.perServer, o.themeDefault])
+}
+
 /** The active theme, re-rendering on changes and on OS colour-scheme changes while in automatic mode. */
 export function useThemeState(o: ThemeOptions): ThemeState {
+  useThemePreferenceSync(o)
   return useSyncExternalStore(
     (cb) => {
       listeners.add(cb)

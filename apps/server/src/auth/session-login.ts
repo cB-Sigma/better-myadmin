@@ -77,8 +77,11 @@ export async function storeLogin(
   opts: { secure: boolean },
 ): Promise<ServerLogin> {
   const ac = c
-  const { credBox, store } = ac.get('deps')
-  const session = opts.secure ? regenerate(store, ac.get('session'), server) : ac.get('session')
+  const { credBox, store, pools } = ac.get('deps')
+  const previous = ac.get('session')
+  const session = opts.secure ? regenerate(store, previous, server) : previous
+  // the old session id is gone: so are its connections
+  if (session !== previous && previous !== null) await pools.dropSession(previous.id)
   session.currentServer = server
   const login: ServerLogin = {
     user: creds.user,

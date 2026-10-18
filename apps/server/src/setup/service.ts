@@ -56,6 +56,15 @@ export function setupDisabled(deps: AppDeps, cwd = process.cwd()): boolean {
   return configFileExists(deps, cwd)
 }
 
+/**
+ * The start-up warning while the setup script is open: like phpMyAdmin's `setup/`, it needs no
+ * login until a configuration file exists (docs/reference/security-review.md L3).
+ */
+export function setupOpenWarning(deps: AppDeps, cwd = process.cwd()): string | null {
+  if (setupDisabled(deps, cwd)) return null
+  return `no configuration file (${CONFIG_FILE_NAMES.join(', ')}): the setup script at /setup is open without a login to anyone who can reach this server; write a configuration file, or keep the server private until you have`
+}
+
 /** `file_exists(CONFIG_FILE)`: one was loaded at start or has been written into the working directory. */
 export function configFileExists(deps: AppDeps, cwd = process.cwd()): boolean {
   if (deps.configFile !== undefined) return true

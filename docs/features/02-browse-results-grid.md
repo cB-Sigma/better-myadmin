@@ -534,17 +534,17 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [x] Executed SQL is displayed highlighted only when `ShowSQL` is true and the query is non-empty and not `;`. <!-- parity:test --> `p02-f22617` [sql-message.test.ts:79](../../apps/server/test/unit/sql-message.test.ts#L79) +1
 - [ ] PHP session is closed during query execution and reopened afterwards (long queries do not block other tabs). <!-- parity:n/a: no PHP session lock; the Node server answers requests of one session concurrently -->
 - [x] MySQL warnings after execution are appended as notice messages below the result. <!-- parity:test --> `p02-be287b` [sql-tab.parity.test.ts:206](../../tests/parity/sql-tab.parity.test.ts#L206)
-- [x] `DROP DATABASE` is refused when `AllowUserDropDatabase` is false and user is not superuser: ""DROP DATABASE" statements are disabled." <!-- parity:test --> `p02-1f1ac2` [sql-tab.test.ts:91](../../apps/server/test/int/sql-tab.test.ts#L91) +1
+- [x] `DROP DATABASE` is refused when `AllowUserDropDatabase` is false and user is not superuser: ""DROP DATABASE" statements are disabled." <!-- parity:test --> `p02-1f1ac2` [sql-tab.test.ts:92](../../apps/server/test/int/sql-tab.test.ts#L92) +1
 - [x] `USE db` changes trigger a navigation reload (`reload`) in the AJAX response. <!-- parity:test --> `p02-b19bd5` [sql-message.test.ts:117](../../apps/server/test/unit/sql-message.test.ts#L117) +2
-- [x] `fk_checks` request param sets `FOREIGN_KEY_CHECKS` ON/OFF for the duration of the request and restores the previous value afterwards. <!-- parity:test --> `p02-b10e84` [sql-tab.test.ts:114](../../apps/server/test/int/sql-tab.test.ts#L114) +1
+- [x] `fk_checks` request param sets `FOREIGN_KEY_CHECKS` ON/OFF for the duration of the request and restores the previous value afterwards. <!-- parity:test --> `p02-b10e84` [sql-tab.test.ts:118](../../apps/server/test/int/sql-tab.test.ts#L118) +1
 
 ### Result header card tools
-- [x] "Edit inline" replaces the SQL display with an editor + FK-checks checkbox (default fetched from `/sql/get-default-fk-check-value`) + Go/Cancel; Go posts `show_query=1` to `/import`. Only one inline editor at a time. <!-- parity:test --> `p02-9128e7` [sql-editor.e2e.ts:179](../../tests/e2e/sql-editor.e2e.ts#L179)
+- [x] "Edit inline" replaces the SQL display with an editor + FK-checks checkbox (default fetched from `/sql/get-default-fk-check-value`) + Go/Cancel; Go posts `show_query=1` to `/import`. Only one inline editor at a time. <!-- parity:test --> `p02-9128e7` [sql-editor.e2e.ts:198](../../tests/e2e/sql-editor.e2e.ts#L198)
 - [x] "Edit" goes to the SQL tab of table/db/server with the query prefilled (`show_query=1`). <!-- parity:test --> `p02-88edc9` [sql-tab.parity.test.ts:196](../../tests/parity/sql-tab.parity.test.ts#L196) +1
 - [x] "Explain SQL" only for queries beginning with `SELECT`; "Skip Explain SQL"/"Skip Analyze SQL" when already prefixed (supports `ANALYZE`, `FORMAT=JSON|TREE|TRADITIONAL`). <!-- parity:test --> `p02-aa2107` [sql-message.test.ts:19](../../apps/server/test/unit/sql-message.test.ts#L19) +3
 - [x] "Create PHP code" renders `$sql = "…";` with newline concatenation; in that mode links become "Without PHP code" and "Submit query". <!-- parity:test --> `p02-f4f624` [sql-message.test.ts:84](../../apps/server/test/unit/sql-message.test.ts#L84) +2
 - [x] "Refresh" only for `ANALYZE|EXPLAIN|SELECT|SHOW` and not in PHP mode. <!-- parity:test --> `p02-f44b2c` [sql-message.test.ts:41](../../apps/server/test/unit/sql-message.test.ts#L41) +1
-- [x] Explain / PHP / Edit-inline links disappear when the query is longer than `MaxCharactersInDisplayedSQL`. <!-- parity:test --> `p02-40a8f8` [sql-tab.test.ts:56](../../apps/server/test/int/sql-tab.test.ts#L56) +1
+- [x] Explain / PHP / Edit-inline links disappear when the query is longer than `MaxCharactersInDisplayedSQL`. <!-- parity:test --> `p02-40a8f8` [sql-tab.test.ts:57](../../apps/server/test/int/sql-tab.test.ts#L57) +1
 - [x] Profiling switch appears next to Refresh when the server supports profiling; checking it re-runs the query and renders Detailed profile + Summary by state + chart. <!-- parity:test --> `p02-2a54e4` [sql-message.test.ts:41](../../apps/server/test/unit/sql-message.test.ts#L41) +3
 
 ### Navigation bar
@@ -563,7 +563,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] "Save edited data" and "Restore column order" buttons live in the navigation bar and are hidden until relevant.
 
 ### Display options
-- [ ] Panel collapsible per `InitialSlidersState` (`closed` default, `open`, `disabled` = always open without toggle).
+- [ ] Panel collapsible: the "Extra options" button toggles the panel, closed on every page (`table.twig` `collapse`; unlike other sliders `InitialSlidersState` is not read).
 - [ ] Partial/Full texts radio; Relational key / Display column radio only when both `relation` and `table_info` pmadb features exist; Show binary contents; Show BLOB contents; Hide browser transformation; Geometry (only when result is editable) / WKT / WKB radios; Go.
 - [x] Submitting the options form re-renders the whole result block via AJAX and reinitialises the grid. <!-- parity:test --> `p02-5293ef` [browse.e2e.ts:42](../../tests/e2e/browse.e2e.ts#L42)
 - [ ] `display_binary` defaults to **on** for a fresh query unless toggled off via the options form; the full/partial toggle link does not reset it.
@@ -627,7 +627,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [x] Display column resolution: `pma__table_info.display_field` → emulated for `information_schema.CHARACTER_SETS/TABLES` → first CHAR-class column → none. <!-- parity:test --> `p02-2e6fb1` [browse.test.ts:102](../../apps/server/test/int/browse.test.ts#L102)
 - [ ] Both pmadb internal relations and native FOREIGN KEYs (from `SHOW CREATE TABLE`) produce FK links; `information_schema`/`mysql` tables get emulated relations and special links (e.g. user → privileges page).
 - [x] Browse-distinct results (`is_browse_distinct=1`) link each distinct value back to the filtered table. <!-- parity:test --> `p02-0d4e9a` [table-structure-extras.e2e.ts:79](../../tests/e2e/table-structure-extras.e2e.ts#L79)
-- [x] Browser transformations (pmadb `column_info`) applied unless "Hide browser transformation"; built-in SQL/JSON/link transformations for system/pmadb columns and `SHOW PROCESSLIST`/`SHOW CREATE TABLE` outputs; transformed cells get class `transformed`; JSON highlighted via CodeMirror. <!-- parity:test --> `p02-15262e` [insert-edit.test.ts:226](../../apps/server/test/int/insert-edit.test.ts#L226)
+- [x] Browser transformations (pmadb `column_info`) applied unless "Hide browser transformation"; built-in SQL/JSON/link transformations for system/pmadb columns and `SHOW PROCESSLIST`/`SHOW CREATE TABLE` outputs; transformed cells get class `transformed`; JSON highlighted via CodeMirror. <!-- parity:test --> `p02-15262e` [insert-edit.test.ts:229](../../apps/server/test/int/insert-edit.test.ts#L229)
 - [ ] Print view shows FK cells as `value [->display]`.
 
 ### Grid editing
@@ -654,9 +654,9 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [x] No-result messages: `%d row(s) deleted/inserted/affected`, `Inserted row id: N`, "MySQL returned an empty result set (i.e. zero rows).", `[ROLLBACK occurred.]`, "Showing as PHP code"; always with query time. <!-- parity:test --> `p02-68785a` [query.test.ts:88](../../apps/server/test/int/query.test.ts#L88) +2
 - [x] Empty table browse still renders headers (sortable, no navigation/actions). <!-- parity:test --> `p02-141e59` [query.test.ts:109](../../apps/server/test/int/query.test.ts#L109)
 - [x] SQL errors: "Error" alert with static analysis list, "SQL query:" + copy icon + doc links, formatted query, "MySQL said:" + server message; AJAX scrolls to it. <!-- parity:test --> `p02-fa2d56` [sql-message.test.ts:92](../../apps/server/test/unit/sql-message.test.ts#L92) +2
-- [x] Simulate query button for UPDATE/DELETE text; modal with per-statement SQL, "Affected rows" count link opening the equivalent SELECT. <!-- parity:test --> `p02-930d5c` [sql-editor.e2e.ts:139](../../tests/e2e/sql-editor.e2e.ts#L139)
+- [x] Simulate query button for UPDATE/DELETE text; modal with per-statement SQL, "Affected rows" count link opening the equivalent SELECT. <!-- parity:test --> `p02-930d5c` [sql-editor.e2e.ts:158](../../tests/e2e/sql-editor.e2e.ts#L158)
 - [x] Rollback when finished only for DML on transactional tables. <!-- parity:test --> `p02-b3ba1b` [sql-tab.parity.test.ts:89](../../tests/parity/sql-tab.parity.test.ts#L89) +1
-- [x] Query box: Show this query here again (localStorage), Retain query box (collapse toggle), Bind parameters, Delimiter, FK checks, bookmark label/shared/replace, auto-save & "Get auto-saved query", SELECT*/SELECT/INSERT/UPDATE/DELETE/Clear/Format templates, column insert list. <!-- parity:test --> `p02-390d7c` [sql-editor.e2e.ts:74](../../tests/e2e/sql-editor.e2e.ts#L74) +1
+- [x] Query box: Show this query here again (localStorage), Retain query box (collapse toggle), Bind parameters, Delimiter, FK checks, bookmark label/shared/replace, auto-save & "Get auto-saved query", SELECT*/SELECT/INSERT/UPDATE/DELETE/Clear/Format templates, column insert list. <!-- parity:test --> `p02-390d7c` [sql-editor.e2e.ts:93](../../tests/e2e/sql-editor.e2e.ts#L93) +1
 - [ ] Page-settings gear on Browse exposes exactly the 16 `Browse` directives listed above.
 - [x] Global keyboard shortcuts (D/T prefixes, K console, E export, H home, Backspace back) are inactive while typing. <!-- parity:test --> `p02-a7b23d` [shell.test.tsx:110](../../apps/web/src/features/shell/shell.test.tsx#L110)
 

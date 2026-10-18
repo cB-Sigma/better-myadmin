@@ -2,7 +2,8 @@
 # - mysql84 / mariadb11: test servers (root/root), general log on for the parity harness, as an
 #   indexed MyISAM table (seed/00-general-log.sql; see docs/architecture/14-development-setup.md)
 # - phpmyadmin-ref: phpMyAdmin at the reference commit (docs/reference/reference-commit.txt) on :8081
-# - phpmyadmin-ref-i18n: the same with compiled translations (like a release) on :8082
+# - phpmyadmin-ref-i18n: the same with compiled translations (like a release) on :8082, Japanese
+#   always among them (tests/parity/export-kanji)
 # - mysql84-replica (:3308): a replica of mysql84 (seed/replica/10-replica.sh), and
 #   phpmyadmin-ref-replica (:8083) whose only server it is, for tests/parity/server-replication
 # - BMA_PARITY_TARGET=mariadb: mariadb11 (:3307) with phpmyadmin-ref-mariadb (:8084), and
@@ -11,7 +12,7 @@ services:
   mysql84:
     image: mysql:8.4
     environment: { MYSQL_ROOT_PASSWORD: root }
-    command: ["--general-log=1", "--log-output=TABLE"]
+    command: ["--general-log=1", "--log-output=TABLE", "--max-connections=1000"]
     ports: ["3306:3306"]
     volumes:
       - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
@@ -42,7 +43,7 @@ services:
   mariadb11:
     image: mariadb:11.4
     environment: { MARIADB_ROOT_PASSWORD: root }
-    command: ["--server-id=11", "--log-bin=mariadb-bin", "--general-log=1", "--log-output=TABLE"]
+    command: ["--server-id=11", "--log-bin=mariadb-bin", "--general-log=1", "--log-output=TABLE", "--max-connections=1000"]
     ports: ["3307:3306"]
     volumes:
       - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
@@ -72,9 +73,10 @@ services:
     environment: { PMA_HOST: mysql84 }
     ports: ["8081:8081"]
     depends_on: { mysql84: { condition: service_healthy } }
-  # the same commit with compiled translations (release behaviour) for tests/parity/i18n.parity.test.ts
+  # the same commit with compiled translations (release behaviour) for tests/parity/i18n.parity.test.ts,
+  # and Japanese for tests/parity/export-kanji.parity.test.ts (an empty catalog if the release drops it)
   phpmyadmin-ref-i18n:
-    build: { context: ./pma-ref, args: { PMA_TRANSLATIONS: "1" } }
+    build: { context: ./pma-ref, args: { PMA_TRANSLATIONS: "1", PMA_LOCALE_STUBS: "ja" } }
     environment: { PMA_HOST: mysql84 }
     ports: ["8082:8081"]
     depends_on: { mysql84: { condition: service_healthy } }

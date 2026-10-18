@@ -8,7 +8,9 @@
  *       (when the reference checkout is available) re-extracting gives a different result,
  *   (e) a map references an exception id missing from docs/reference/parity-exceptions.md (or an
  *       unknown milestone),
- *   (f) docs/reference/pma-route-map.md is out of date (stale coverage reports only warn).
+ *   (f) docs/reference/pma-route-map.md is out of date (stale coverage reports only warn),
+ *   (g) an exception id is registered twice in parity-exceptions.md, or an id written anywhere in the
+ *       repository is not registered (src/exception-ids.ts).
  */
 import { existsSync, readFileSync } from 'node:fs'
 import { COVERAGE_KINDS, COVERED, type Coverage } from './coverage.ts'

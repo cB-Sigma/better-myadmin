@@ -9,8 +9,11 @@ import {
   Label,
   MySqlDocLink,
   NativeSelect,
+  PROCESSING_REQUEST,
   Panel,
   PanelBody,
+  removeMessage,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -79,6 +82,8 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
       return
     }
     if (!(await confirm({ question: `CREATE DATABASE ${renameTo} / DROP DATABASE ${db}` }))) return
+    // operations.ts: ajaxShowMessage(strRenamingDatabases, false) until the answer
+    const box = showMessage(t('Renaming databases'), false)
     try {
       const r = await api.dbRenameCopy({ server, db }, 'rename', {
         newName: renameTo,
@@ -90,11 +95,14 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
       if (r.messages[0]?.type === 'success') void navigate({ to: path(`${dbBase(server, r.db)}/operations`) })
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 
   const copy = async () => {
     if (copyTo === '') return missing()
+    const box = showMessage(t('Copying database'), false)
     try {
       const r = await api.dbRenameCopy({ server, db }, 'copy', {
         newName: copyTo,
@@ -109,6 +117,8 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
       if (r.db !== db) void navigate({ to: path(`${dbBase(server, r.db)}/operations`) })
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 
@@ -119,15 +129,19 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
       destructive: true,
     })
     if (!ok) return
+    const box = showMessage(PROCESSING_REQUEST)
     try {
       const r = await runQuery(server, { sql, db }, 'page')
+      removeMessage(box)
       const err = r.statements.find((s) => s.kind === 'error')
       if (err !== undefined) {
         setMessages([{ type: 'error', text: err.message?.text ?? '', sql }])
         return
       }
       await reloadNav()
-      void navigate({ to: path(`/s/${server}/databases`) })
+      await navigate({ to: path(`/s/${server}/databases`) })
+      // the drop link's message_to_show, shown once the databases list is loaded (AJAX.callback)
+      showMessage(t('Database %s has been dropped.', `\`${db.replaceAll('`', '``')}\``), null, 'success')
     } catch (e) {
       setMessages([errorMessage(e)])
     }
@@ -336,13 +350,15 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
         </div>,
         go(
           () =>
-            void run(() =>
-              api.dbOperation({ server, db }, 'collation', {
+            void run(() => {
+              // operations.ts: ajaxShowMessage(strChangingCharset)
+              showMessage(t('Changing charset'))
+              return api.dbOperation({ server, db }, 'collation', {
                 collation: collationValue,
                 changeAllTables: allTables,
                 changeAllColumns: allTables && allColumns,
-              }),
-            ),
+              })
+            }),
         ),
         'change_db_charset_form',
       )}

@@ -125,6 +125,8 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
       parserContext: conn.serverInfo?.context ?? new SqlContext(),
       verbose: server.verbose,
       httpHost,
+      // Encoding::canConvertKanji()
+      canConvertKanji: c.get('language').code === 'ja',
     }
     return { env, conn, cfg, settings, server, meta, admin, user: c.get('creds').user, close }
   } catch (e) {
@@ -133,10 +135,4 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
   }
 }
 
-/** Util::userDir: `%u` in UploadDir / SaveDir becomes the user name; a trailing slash is ensured. */
-export function userDir(user: string, dir: string): string {
-  if (dir === '') return ''
-  const d = dir.endsWith('/') ? dir : `${dir}/`
-  // Core::securePath
-  return d.replaceAll('%u', user.replace(/\.\.*/g, '.'))
-}
+export { userDir } from '../util/secure-path.ts'

@@ -1,4 +1,10 @@
-import { CSRF_COOKIE, CSRF_HEADER, type Executed, SESSION_COOKIE } from '@bettermyadmin/contracts'
+import {
+  CSRF_COOKIE,
+  CSRF_HEADER,
+  type Executed,
+  SESSION_COOKIE,
+  USER_ERRORS_HEADER,
+} from '@bettermyadmin/contracts'
 import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
 import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
@@ -7,6 +13,7 @@ import { requestClientIp } from './auth/login.ts'
 import { authPageGate, isPageRequest } from './auth/page-gate.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
+import { requestScope, runInRequestScope } from './db/request-scope.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { isHttpsRequest, securityHeaders } from './http/headers.ts'
@@ -79,6 +86,22 @@ export function createApp(deps: AppDeps) {
   const session = sessionMiddleware(deps)
   const language = languageLoading(languageManager(deps.cfg))
   const permissions = configPermissions()
+  // one user link and one control link per request (db/request-scope.ts)
+  app.use('/api/*', (c, next) =>
+    runInRequestScope(async () => {
+      await next()
+      // ErrorHandler::addUserError of the connection set-up (DatabaseInterface::postConnect)
+      const errors = requestScope()?.userErrors ?? []
+      if (errors.length > 0) {
+        const unique = [...new Map(errors.map((e) => [JSON.stringify(e), e])).values()]
+        try {
+          c.res.headers.set(USER_ERRORS_HEADER, encodeURIComponent(JSON.stringify(unique)))
+        } catch {
+          // a response with immutable headers (a stream): nothing to add
+        }
+      }
+    }),
+  )
   app.use('/api/*', session)
   app.use('/api/*', sqlLog())
   app.use('/api/*', language)

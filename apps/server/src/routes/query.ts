@@ -9,6 +9,7 @@ import {
 import { Hono } from 'hono'
 import { gridHook, gridMeta } from '../browse/service.ts'
 import { resolveViewState } from '../browse/view-state.ts'
+import { type Conn, USER_STATEMENT } from '../db/connection.ts'
 import { ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
 import { afterSqlBox } from '../metadata/hooks.ts'
@@ -23,7 +24,7 @@ import { withConn } from './sql.ts'
 export const queryRoutes = new Hono<ServerEnv>()
 
 /** Connections running a query, by `${sessionId}\0${server}\0${queryId}` (for KILL QUERY). */
-const running = new Map<string, number>()
+const running = new Map<string, Conn>()
 
 /** POST /api/servers/:s/query — the SQL tab (pma: /import with sql_query) */
 queryRoutes.post('/', async (c) => {
@@ -52,7 +53,7 @@ queryRoutes.post('/', async (c) => {
     c.get('language').mysqlLocale,
   )
   const runKey = req.queryId !== undefined ? `${session.id}\u0000${server}\u0000${req.queryId}` : null
-  if (runKey !== null) running.set(runKey, conn.threadId)
+  if (runKey !== null) running.set(runKey, conn)
   let discard = false
   let r: SqlBoxResult | null = null
   // the results grid (row actions, sort links, FK links) for the SQL tab
@@ -169,8 +170,14 @@ queryRoutes.post('/cancel', async (c) => {
   const req = await parseJson(c, CancelRequest)
   const session = c.get('session')
   const server = c.get('serverIndex')
-  const threadId = running.get(`${session.id}\u0000${server}\u0000${req.queryId}`)
-  if (threadId !== undefined) await pools.killQuery(session.id, server, threadId, c.get('creds'))
-  const body: CancelResponse = { killed: threadId !== undefined }
+  const conn = running.get(`${session.id}\u0000${server}\u0000${req.queryId}`)
+  if (conn !== undefined) {
+    // KILL QUERY interrupts whatever the link runs: only the user's statement, never the pipeline's
+    // own statements (USE, SHOW VARIABLES, the tracking probe); before it starts, it is not sent at all
+    if (conn.activeLabel === USER_STATEMENT)
+      await pools.killQuery(session.id, server, conn.threadId, c.get('creds'))
+    else conn.cancelled = true
+  }
+  const body: CancelResponse = { killed: conn !== undefined }
   return c.json(body)
 })

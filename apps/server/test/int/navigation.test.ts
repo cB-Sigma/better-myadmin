@@ -4,9 +4,13 @@ import { translatorFor } from '@bettermyadmin/i18n/node'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
+import { hasPerformanceSchema, isMariaDb } from '../support/vendor.ts'
 
 /** A user that only sees `m1nav\_it%` databases (plus information_schema / performance_schema). */
 const USER = 'm1nav_it'
+
+/** the first-level databases besides ours (MariaDB has performance_schema off by default) */
+const SYSTEM_DBS = hasPerformanceSchema ? ['performance_schema'] : []
 
 const SEED = `
 CREATE DATABASE m1nav_it_a;
@@ -69,7 +73,7 @@ describe('GET /navigation/tree', () => {
       expect(body.settings.NavigationWidth).toBe(240)
       expect(body.controls).toBe(true)
       // m1nav > it is merged into one group because `it` holds every member of `m1nav`
-      expect(labels(body.tree)).toEqual(['New', 'information_schema', 'm1nav_it', 'performance_schema'])
+      expect(labels(body.tree)).toEqual(['New', 'information_schema', 'm1nav_it', ...SYSTEM_DBS])
       const group = find(body.tree, 'm1nav_it')
       expect(group.kind).toBe('group')
       expect(group.loaded).toBe(true)
@@ -99,16 +103,20 @@ describe('GET /navigation/tree', () => {
       const r = await t.req('GET', '/api/servers/1/navigation/tree?pos=1')
       const body = r.json as unknown as NavTreeResponse
       expect(body.tree.fastFilter).toEqual({ kind: 'db', aPath: [] })
+      // first-level items: information_schema, m1nav_it (and performance_schema)
+      const last = hasPerformanceSchema ? 2 : null
       expect(body.tree.pageSelector).toMatchObject({
-        count: 3,
+        count: 2 + SYSTEM_DBS.length,
         pos: 1,
         maxCount: 1,
         begin: 0,
         prev: 0,
-        next: 2,
-        end: 2,
+        next: last,
+        end: last,
       })
-      expect(body.tree.pageSelector?.pages.map((p) => p.selected)).toEqual([false, true, false])
+      expect(body.tree.pageSelector?.pages.map((p) => p.selected)).toEqual(
+        hasPerformanceSchema ? [false, true, false] : [false, true],
+      )
       // one group holding every other item is not created (rfe #1634)
       expect(labels(body.tree)).toEqual(['New', 'm1nav_it_a', 'm1nav_it_b', 'm1nav_it_large'])
     } finally {
@@ -257,8 +265,10 @@ describe('GET /navigation/branch', () => {
       expect(labels(body.list)).toEqual([
         'New',
         'id (PRI, int)',
-        'name (varchar, a long..., nullable)',
-        'u (UNI, int, nullable)',
+        // NodeTable::getColumns reads information_schema COLUMN_DEFAULT: MariaDB quotes string
+        // literals and reports a NULL default as the text NULL, NodeColumn shows both as they come
+        isMariaDb ? "name (varchar, 'a lon..., nullable)" : 'name (varchar, a long..., nullable)',
+        isMariaDb ? 'u (UNI, int, NULL, nullable)' : 'u (UNI, int, nullable)',
       ])
       expect(body.list?.items[1]?.icons[0]?.image).toBe('b_primary')
     } finally {
@@ -362,7 +372,7 @@ describe('POST /navigation/tree', () => {
     try {
       const r = await t.req('POST', '/api/servers/1/navigation/tree', {})
       const body = r.json as unknown as NavTreeResponse
-      expect(labels(body.tree)).toEqual(['New', 'information_schema', 'm1nav_it', 'performance_schema'])
+      expect(labels(body.tree)).toEqual(['New', 'information_schema', 'm1nav_it', ...SYSTEM_DBS])
     } finally {
       await t.close()
     }
