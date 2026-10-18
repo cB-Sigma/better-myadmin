@@ -35,6 +35,9 @@ test('[p01-03005f] [p01-b3cadb] a link loads the page in place: the navigation, 
   await page.keyboard.insertText('SELECT 1 AS f01a_kept')
   await page.keyboard.press('Control+Enter')
   await expect(messages.locator('.message', { hasText: 'f01a_kept' })).toBeVisible()
+  // the console shows its result on the SQL page; let that navigation finish first
+  await expect(page).toHaveURL(/\/s\/1\/sql$/)
+  await expect(page.getByText(/Showing rows/).first()).toBeVisible({ timeout: 15000 })
   const db = page.locator(`#pma_navigation [role=treeitem][data-kind=database][data-name="${DB}"]`)
   await db.getByRole('link', { name: DB, exact: true }).click()
   await expect(page).toHaveURL(new RegExp(`/db/${DB}/`))
@@ -73,9 +76,14 @@ test('[p01-40520e] every POST carries the token; API answers are never cached', 
       gets.push(r.headers()['cache-control'] ?? '')
   })
   await page.goto(`/s/1/db/${DB}/sql`)
-  await page.locator('#sqlquery .cm-content').click()
-  await page.keyboard.press('Control+a')
-  await page.keyboard.insertText('SELECT 1')
+  const editor = page.locator('#sqlquery .cm-content')
+  // under load the editor can mount after the first keystrokes: type until it holds the query
+  await expect(async () => {
+    await editor.click()
+    await page.keyboard.press('Control+a')
+    await page.keyboard.insertText('SELECT 1')
+    await expect(editor).toHaveText('SELECT 1', { timeout: 1000 })
+  }).toPass({ timeout: 15000 })
   await page.locator('#button_submit_query').click()
   await expect(page.getByText(/Showing rows/).first()).toBeVisible({ timeout: 15000 })
   expect(posts.length).toBeGreaterThan(0)
@@ -100,11 +108,12 @@ test('[p01-211041] a failing request shows its error; a lost session brings back
   await expect(page.getByText('f01a broken')).toBeVisible()
   await page.unroute('**/api/servers/1/status')
   await context.clearCookies()
-  // a page not loaded yet in this session (nothing cached)
+  // a page not loaded (nor preloaded) yet in this session; a background request may bring the
+  // login form back first, which detaches the menu
   await page
-    .locator(`#pma_navigation [role=treeitem][data-kind=database][data-name="${DB}"]`)
-    .getByRole('link', { name: DB, exact: true })
-    .click()
+    .locator('#topmenu a[href$="/variables"]')
+    .click({ timeout: 5000 })
+    .catch(() => undefined)
   await expect(page.locator('#login_form')).toBeVisible({ timeout: 15000 })
 })
 
