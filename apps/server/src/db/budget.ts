@@ -12,6 +12,13 @@ export interface BudgetedPool {
   ended: boolean
   /** acquisitions decided and not yet handed out */
   pending: number
+  /** requests inside getConnection for this pool (waiting or connecting): it must not be closed */
+  waiting: number
+}
+
+/** A pool that may be closed now: nothing checked out, nobody about to take a connection. */
+export function isIdle(p: BudgetedPool): boolean {
+  return p.busy.size === 0 && p.pending === 0 && p.waiting === 0
 }
 
 /** The core connection object behind a promise connection (the one pool events carry). */
@@ -96,10 +103,25 @@ export class ConnectionBudget {
   ): Promise<T> {
     const mayWait = opts.mayWait ?? true
     const deadline = Date.now() + this.waitMs
+    entry.waiting++
+    try {
+      return await this.#take(entry, get, opts.limit, mayWait, deadline)
+    } finally {
+      entry.waiting--
+    }
+  }
+
+  async #take<T>(
+    entry: BudgetedPool,
+    get: () => Promise<T>,
+    limit: number | undefined,
+    mayWait: boolean,
+    deadline: number,
+  ): Promise<T> {
     let reserved = false
     for (;;) {
       const inUse = entry.busy.size + entry.pending
-      const underLimit = opts.limit === undefined || inUse < opts.limit
+      const underLimit = limit === undefined || inUse < limit
       // a free connection of this pool needs no new one
       const free = entry.open - entry.busy.size - entry.pending > 0
       if (underLimit && (free || this.open + this.#pending < this.maxTotal)) break
@@ -137,7 +159,7 @@ export class ConnectionBudget {
   async #reclaim(except: BudgetedPool): Promise<boolean> {
     let lru: BudgetedPool | null = null
     for (const p of this.#pools) {
-      if (p === except || p.ended || p.open === 0 || p.busy.size > 0) continue
+      if (p === except || p.ended || p.open === 0 || !isIdle(p)) continue
       if (lru === null || p.lastUsed < lru.lastUsed) lru = p
     }
     if (lru === null) return false

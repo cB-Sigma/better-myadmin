@@ -4,7 +4,7 @@ import mysql, { type FieldPacket, type PoolConnection, type ResultSetHeader } fr
 import { connectionErrorMessage } from '../auth/failure.ts'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { isMysqlError } from '../http/errors.ts'
-import type { BudgetedPool, ConnectionBudget } from './budget.ts'
+import { type BudgetedPool, type ConnectionBudget, isIdle } from './budget.ts'
 import { type Credentials, UNLIMITED, connectionOptions, idleOptions } from './pool-manager.ts'
 import { afterQuery } from './query-hook.ts'
 import { type SharedLink, requestScope } from './request-scope.ts'
@@ -200,6 +200,7 @@ export class ControlConnections {
       busy: new Set(),
       ended: false,
       pending: 0,
+      waiting: 0,
     }
     this.#budget.track(entry)
     return entry
@@ -321,13 +322,13 @@ export class ControlConnections {
   /** Drops the pools with no request for `maxMs` and nothing checked out. */
   async evictIdle(now: number, maxMs: number): Promise<void> {
     for (const [n, e] of this.#shared) {
-      if (e.busy.size === 0 && now - e.lastUsed > maxMs) {
+      if (isIdle(e) && now - e.lastUsed > maxMs) {
         this.#shared.delete(n)
         await this.#end(e)
       }
     }
     for (const [k, e] of this.#perSession) {
-      if (e.busy.size === 0 && now - e.lastUsed > maxMs) {
+      if (isIdle(e) && now - e.lastUsed > maxMs) {
         this.#perSession.delete(k)
         await this.#end(e)
       }
