@@ -563,7 +563,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] "Save edited data" and "Restore column order" buttons live in the navigation bar and are hidden until relevant.
 
 ### Display options
-- [ ] Panel collapsible per `InitialSlidersState` (`closed` default, `open`, `disabled` = always open without toggle).
+- [ ] Panel collapsible: the "Extra options" button toggles the panel, closed on every page (`table.twig` `collapse`; unlike other sliders `InitialSlidersState` is not read).
 - [ ] Partial/Full texts radio; Relational key / Display column radio only when both `relation` and `table_info` pmadb features exist; Show binary contents; Show BLOB contents; Hide browser transformation; Geometry (only when result is editable) / WKT / WKB radios; Go.
 - [x] Submitting the options form re-renders the whole result block via AJAX and reinitialises the grid. <!-- parity:test --> `p02-5293ef` [browse.e2e.ts:42](../../tests/e2e/browse.e2e.ts#L42)
 - [ ] `display_binary` defaults to **on** for a fresh query unless toggled off via the options form; the full/partial toggle link does not reset it.
