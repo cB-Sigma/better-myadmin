@@ -144,3 +144,21 @@ export function comparable(d: Dump): string {
   }
   return normaliseText(b.toString('latin1'))
 }
+
+/** Version / tool strings that differ by design (the JSON header, PHP array doc comment, …). */
+export function normaliseFormat(s: string): string {
+  return s
+    .replace(/("version":\s*)"[^"]*"(,\s*"comment":\s*"Export to JSON plugin for )[^"]*"/, '$1"V"$2TOOL"')
+    .replace(/^ \* Export to PHP Array plugin for .*$/m, ' * Export to PHP Array plugin for TOOL')
+    .replace(/^ \* @version .*$/m, ' * @version V')
+}
+
+export function compareOpenDocument(d: Dump): string {
+  return readZip(d.body)
+    .map((e) => {
+      let text = e.data.toString('utf8')
+      if (e.name === 'meta.xml') text = text.replace(/<office:meta>.*<\/office:meta>/, '<office:meta/>')
+      return `== ${e.name}\n${text}`
+    })
+    .join('\n')
+}

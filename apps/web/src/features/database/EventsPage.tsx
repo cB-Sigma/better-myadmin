@@ -8,6 +8,8 @@ import {
   Panel,
   PanelBody,
   Textarea,
+  ToggleButton,
+  removeMessage,
   showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -73,6 +75,7 @@ export function EventsPage({
     queryFn: () => api.dbEvents({ server, db }),
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
+  const [toggling, setToggling] = useState(false)
   const [editor, setEditor] = useState<{ event: EventEditorData; original: string | null } | null>(null)
   const openRef = useRef<(name: string) => Promise<void>>(async () => {})
   // once, after the list has loaded (the route keys the page by db)
@@ -101,14 +104,22 @@ export function EventsPage({
     }
   }
   openRef.current = open
+  // functions.ts toggleButton: ajaxShowMessage() while it runs; the callback slides in the query's
+  // message (window.pmaSlidingMessage(data.sql_query))
   const toggleScheduler = async () => {
     const sql = `SET GLOBAL event_scheduler="${on ? 'OFF' : 'ON'}"`
+    setToggling(true)
+    const box = showMessage()
     try {
       await runQuery(server, { sql, db }, 'page')
+      removeMessage(box)
       setMessages([{ type: 'success', text: t('Your SQL query has been executed successfully.'), sql }])
       await refresh()
     } catch (e) {
-      setMessages([errorMessage(e)])
+      removeMessage(box)
+      showMessage(errorMessage(e).text, false, 'error')
+    } finally {
+      setToggling(false)
     }
   }
 
@@ -151,16 +162,14 @@ export function EventsPage({
         after={
           <Panel title={t('Event scheduler status')} className="mt-3 max-w-md">
             <PanelBody>
-              <Button
+              <ToggleButton
+                on={on}
+                onLabel={t('ON')}
+                offLabel={t('OFF')}
                 title={t('Click to toggle')}
-                className="toggleAjax"
-                aria-pressed={on}
-                onClick={() => void toggleScheduler()}
-              >
-                <span className={on ? 'font-semibold' : 'opacity-50'}>{t('ON')}</span>
-                <span>/</span>
-                <span className={!on ? 'font-semibold' : 'opacity-50'}>{t('OFF')}</span>
-              </Button>
+                disabled={toggling}
+                onToggle={() => void toggleScheduler()}
+              />
             </PanelBody>
           </Panel>
         }

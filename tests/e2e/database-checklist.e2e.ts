@@ -274,8 +274,8 @@ test.describe('routines, events, triggers', () => {
       await route.abort()
     })
     await page.goto(`${base}/events`)
-    const on = await page.locator('.toggleAjax').getAttribute('aria-pressed')
-    await page.locator('.toggleAjax').click()
+    const on = await page.locator('.toggleAjax [role=switch]').getAttribute('aria-checked')
+    await page.locator('.toggleAjax .toggle-container').click()
     await expect.poll(() => sent).toBe(`SET GLOBAL event_scheduler="${on === 'true' ? 'OFF' : 'ON'}"`)
   })
 

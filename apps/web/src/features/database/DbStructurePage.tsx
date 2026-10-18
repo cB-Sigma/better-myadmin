@@ -260,6 +260,8 @@ export function DbStructurePage({
           .map((line) => <p key={line}>{line}</p>),
         okLabel: t('Continue'),
         closeLabel: t('Cancel'),
+        // check_all_tables.twig #makeConsistentWithCentralListModal: Cancel, then the primary Continue
+        cancelFirst: true,
       })
       if (!ok) return
       await act(() => api.dbStructureAction({ server, db }, 'central-make-consistent', { tables }))

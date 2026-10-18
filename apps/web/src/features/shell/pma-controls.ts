@@ -148,16 +148,16 @@ export const pmaControls = {
     match: 'new ResizeObserver(() => recompute())',
   },
   'js:modules/functions.ts#click:div.toggle-container': {
-    file: '../database/TrackingPage.tsx',
-    match: "className={`toggle-container ${v.active ? 'on' : 'off'}`}",
+    file: '../../../../../packages/ui/src/components/toggle-button.tsx',
+    match: "'toggle-container absolute top-0 flex",
   },
   'js:modules/functions.ts#ajax:POST <parts[0]>': {
     file: '../database/TrackingPage.tsx',
     match: "action: 'toggle',",
   },
   'js:modules/functions.ts#load:this': {
-    file: '../database/TrackingPage.tsx',
-    match: "title={t('Click to toggle')}",
+    file: '../../../../../packages/ui/src/components/toggle-button.tsx',
+    match: 'setPart((partRef.current?.offsetWidth ?? 0) + 2)',
   },
   'js:modules/functions/event-loader.ts#change:select#select_authentication_plugin_cp': {
     file: 'home/ChangePasswordDialog.tsx',

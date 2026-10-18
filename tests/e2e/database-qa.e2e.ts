@@ -23,7 +23,9 @@ test.beforeAll(async () => {
 })
 test.afterAll(async () => {
   const c = await mysql.createConnection({ ...MYSQL, multipleStatements: true })
-  await c.query(`DROP DATABASE IF EXISTS ${DB}; DROP DATABASE IF EXISTS ${DB}_c`)
+  await c.query(
+    `DROP DATABASE IF EXISTS ${DB}; DROP DATABASE IF EXISTS ${DB}_c; DROP DATABASE IF EXISTS ${DB}_d`,
+  )
   await c.end()
 })
 const base = `/s/1/db/${DB}`
@@ -153,4 +155,21 @@ test("tracking: the database page's Structure snapshot opens the version's snaps
   await page.goto(`${base}/t/authors/tracking?snapshot=true&version=1`)
   await expect(page.getByText('Version 1 snapshot (SQL code)')).toBeVisible()
   await expect(page.getByRole('button', { name: 'Edit inline' })).toBeVisible()
+})
+
+test('operations: Drop the database announces "has been dropped. (Query took …)" on the databases list', async ({
+  page,
+}) => {
+  const c = await mysql.createConnection(MYSQL)
+  await c.query(`CREATE DATABASE IF NOT EXISTS ${DB}_d`)
+  await c.end()
+  await login(page)
+  await page.goto(`/s/1/db/${DB}_d/operations`)
+  await page.locator('#drop_db_anchor').click()
+  await page.getByRole('alertdialog').getByRole('button', { name: 'OK' }).click()
+  await expect(
+    page.getByText(
+      new RegExp(`^Database \`${DB}_d\` has been dropped\\. \\(Query took \\d\\.\\d{4} seconds\\.\\)$`),
+    ),
+  ).toBeVisible()
 })
