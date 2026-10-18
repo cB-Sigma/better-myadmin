@@ -1,6 +1,6 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr ""
@@ -682,89 +682,6 @@ msgstr ""
 msgid "Select export relational type:"
 msgstr ""
 
-msgid "Details"
-msgstr ""
-
-msgid "Event name"
-msgstr ""
-
-msgid "Status"
-msgstr ""
-
-msgid "Event type"
-msgstr ""
-
-msgid "Change to %s"
-msgstr ""
-
-msgid "Execute at"
-msgstr ""
-
-msgid "Execute every"
-msgstr ""
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr ""
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr ""
-
-msgid "Definition"
-msgstr ""
-
-msgid "Format"
-msgstr ""
-
-msgid "On completion preserve"
-msgstr ""
-
-msgid "Definer"
-msgstr ""
-
-msgid "Events"
-msgstr ""
-
-msgid "Check all"
-msgstr ""
-
-msgid "Export"
-msgstr ""
-
-msgid "Drop"
-msgstr ""
-
-msgid "Create new event"
-msgstr ""
-
-msgid "There are no events to display."
-msgstr ""
-
-msgid "Event scheduler status"
-msgstr ""
-
-msgid "Click to toggle"
-msgstr ""
-
-msgid "ON"
-msgstr ""
-
-msgid "OFF"
-msgstr ""
-
-msgid "Event editor"
-msgstr ""
-
-msgid "Loading…"
-msgstr ""
-
-msgid "Save changes"
-msgstr ""
-
-msgid "Export event"
-msgstr ""
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr ""
 
@@ -945,10 +862,16 @@ msgstr ""
 msgid "Edit privileges"
 msgstr ""
 
+msgid "Export"
+msgstr ""
+
 msgid "No user found."
 msgstr ""
 
 msgid "With selected:"
+msgstr ""
+
+msgid "Check all"
 msgstr ""
 
 msgid "Not enough privilege to view users."
@@ -957,7 +880,13 @@ msgstr ""
 msgid "Add user account"
 msgstr ""
 
+msgid "Details"
+msgstr ""
+
 msgid "Routine name"
+msgstr ""
+
+msgid "Change to %s"
 msgstr ""
 
 msgid "Parameters"
@@ -984,10 +913,19 @@ msgstr ""
 msgid "Charset"
 msgstr ""
 
+msgid "Definition"
+msgstr ""
+
+msgid "Format"
+msgstr ""
+
 msgid "Is deterministic"
 msgstr ""
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
+msgstr ""
+
+msgid "Definer"
 msgstr ""
 
 msgid "Security type"
@@ -1008,6 +946,9 @@ msgstr ""
 msgid "Routines"
 msgstr ""
 
+msgid "Drop"
+msgstr ""
+
 msgid "Search"
 msgstr ""
 
@@ -1021,6 +962,12 @@ msgid "Returns"
 msgstr ""
 
 msgid "Routine editor"
+msgstr ""
+
+msgid "Loading…"
+msgstr ""
+
+msgid "Save changes"
 msgstr ""
 
 msgid "Export routine"
@@ -1275,6 +1222,12 @@ msgstr ""
 msgid "Updated"
 msgstr ""
 
+msgid "Status"
+msgstr ""
+
+msgid "Click to toggle"
+msgstr ""
+
 msgid "active"
 msgstr ""
 
@@ -1419,6 +1372,56 @@ msgid "Something went wrong"
 msgstr ""
 
 msgid "Go back"
+msgstr ""
+
+msgid "Event name"
+msgstr ""
+
+msgid "Event type"
+msgstr ""
+
+msgid "Execute at"
+msgstr ""
+
+msgid "Execute every"
+msgstr ""
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr ""
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr ""
+
+msgid "On completion preserve"
+msgstr ""
+
+msgid "Events"
+msgstr ""
+
+msgid "Create new event"
+msgstr ""
+
+msgid "There are no events to display."
+msgstr ""
+
+msgid "Event scheduler status"
+msgstr ""
+
+msgid "ON"
+msgstr ""
+
+msgid "OFF"
+msgstr ""
+
+msgid "Event editor"
+msgstr ""
+
+msgid "Export event"
+msgstr ""
+
+msgid "The event scheduler is disabled."
 msgstr ""
 
 msgid "Select a template"
@@ -6599,27 +6602,6 @@ msgstr ""
 msgid "No databases selected."
 msgstr ""
 
-msgid "The event was dropped immediately after creation."
-msgstr ""
-
-msgid "Add event"
-msgstr ""
-
-msgid "Edit event"
-msgstr ""
-
-msgid "Error in processing request:"
-msgstr ""
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr ""
-
-msgid "Export of event %s"
-msgstr ""
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr ""
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr ""
 
@@ -6639,6 +6621,9 @@ msgid "Add routine"
 msgstr ""
 
 msgid "Edit routine"
+msgstr ""
+
+msgid "Error in processing request:"
 msgstr ""
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
@@ -6693,6 +6678,27 @@ msgid "If you experience any problems please submit a bug report manually."
 msgstr ""
 
 msgid "You may want to refresh the page."
+msgstr ""
+
+msgid "No database selected."
+msgstr ""
+
+msgid "Export of event %s"
+msgstr ""
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr ""
+
+msgid "The event was dropped immediately after creation."
+msgstr ""
+
+msgid "Add event"
+msgstr ""
+
+msgid "Edit event"
+msgstr ""
+
+msgid "No event with name %1$s found in database %2$s."
 msgstr ""
 
 msgid "Bad type!"
@@ -8641,52 +8647,25 @@ msgstr ""
 msgid "Could not load schema plugins, please check your installation!"
 msgstr ""
 
+msgid "Invalid routine type: \"%s\""
+msgstr ""
+
 msgid "The following query has failed: \"%s\""
 msgstr ""
 
 msgid "MySQL said: "
 msgstr ""
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr ""
-
-msgid "The backed up query was:"
-msgstr ""
-
-msgid "Event %1$s has been modified."
-msgstr ""
-
-msgid "Event %1$s has been created."
+msgid "Routine %1$s has been created."
 msgstr ""
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr ""
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr ""
-
-msgid "You must provide an event name!"
-msgstr ""
-
-msgid "You must provide a valid interval value for the event."
-msgstr ""
-
-msgid "You must provide a valid execution time for the event."
-msgstr ""
-
-msgid "You must provide a valid type for the event."
-msgstr ""
-
-msgid "You must provide an event definition."
-msgstr ""
-
-msgid "Invalid routine type: \"%s\""
-msgstr ""
-
-msgid "Routine %1$s has been created."
-msgstr ""
-
 msgid "Sorry, we failed to restore the dropped routine."
+msgstr ""
+
+msgid "The backed up query was:"
 msgstr ""
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
@@ -8705,6 +8684,9 @@ msgid "You must provide length/values for routine parameters of type ENUM, SET, 
 msgstr ""
 
 msgid "You must provide a valid return type for the routine."
+msgstr ""
+
+msgid "The definer must be in the \"username@hostname\" format!"
 msgstr ""
 
 msgid "Invalid routine type!"
@@ -8893,6 +8875,30 @@ msgid "Too many error messages, some are not displayed."
 msgstr ""
 
 msgid "Report"
+msgstr ""
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr ""
+
+msgid "Event %1$s has been modified."
+msgstr ""
+
+msgid "Event %1$s has been created."
+msgstr ""
+
+msgid "You must provide an event name!"
+msgstr ""
+
+msgid "You must provide a valid interval value for the event."
+msgstr ""
+
+msgid "You must provide a valid execution time for the event."
+msgstr ""
+
+msgid "You must provide a valid type for the event."
+msgstr ""
+
+msgid "You must provide an event definition."
 msgstr ""
 
 msgid "Cannot log in to the database server."

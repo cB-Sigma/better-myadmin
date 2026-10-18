@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/bn.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/bn.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Bengali <https://hosted.weblate.org/projects/phpmyadmin/master/bn/>\nLanguage: bn\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Bengali <https://hosted.weblate.org/projects/phpmyadmin/master/bn/>\nLanguage: bn\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "এখানে আসার পুর্বেই জাভা স্ক্রীপট কার্যকর থাকতে হবে।"
@@ -325,74 +325,6 @@ msgstr "নতুন পাতার নাম:"
 msgid "Select page"
 msgstr "পাতা নির্বাচন"
 
-msgid "Details"
-msgstr "বিশদ"
-
-msgid "Event name"
-msgstr "ইভেন্টের নাম"
-
-msgid "Status"
-msgstr "অবস্থা"
-
-msgid "Event type"
-msgstr "ইভেন্টের ধরন"
-
-msgid "Change to %s"
-msgstr "পরিবর্তন কর %s এ"
-
-msgid "Execute at"
-msgstr "নির্বাহ কর"
-
-msgid "Execute every"
-msgstr "সবগুলো নির্বাহ কর"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "আরম্ভ কর"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "শেষ"
-
-msgid "Definition"
-msgstr "সংজ্ঞা"
-
-msgid "Format"
-msgstr "গঠন"
-
-msgid "On completion preserve"
-msgstr "শেষ করার পর রক্ষাকর"
-
-msgid "Definer"
-msgstr "সংজ্ঞা দানকারী"
-
-msgid "Events"
-msgstr "ইভেন্টসমূহ"
-
-msgid "Export"
-msgstr "রফতানী"
-
-msgid "Drop"
-msgstr "মুছ"
-
-msgid "There are no events to display."
-msgstr "প্রদর্শনের জন্য কোন ইভেন্ট নাই।"
-
-msgid "Event scheduler status"
-msgstr "ইভেন্ট সময়সূচীর অবস্থা"
-
-msgid "Click to toggle"
-msgstr "টোগল ক্লীক করুন"
-
-msgid "ON"
-msgstr "খোলা"
-
-msgid "OFF"
-msgstr "বন্ধ"
-
-msgid "Loading…"
-msgstr "লোডিং…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "ডাটাবেইজ থেকে \"%s\" টেবিল রফতানী করা হচ্ছে"
 
@@ -501,14 +433,23 @@ msgstr "ওয়াইল্ডকার্ড"
 msgid "routine"
 msgstr "রুটিন"
 
+msgid "Export"
+msgstr "রফতানী"
+
 msgid "No user found."
 msgstr "ব্যবহারকারী নাই।"
 
 msgid "With selected:"
 msgstr "নিবার্চিত গুলো নিয়ে:"
 
+msgid "Details"
+msgstr "বিশদ"
+
 msgid "Routine name"
 msgstr "রুটিনের নাম"
+
+msgid "Change to %s"
+msgstr "পরিবর্তন কর %s এ"
 
 msgid "Parameters"
 msgstr "প্যারামিটার সমূহ"
@@ -534,8 +475,17 @@ msgstr "রুটিনের পছন্দসমূহ"
 msgid "Charset"
 msgstr "বর্ণ রাশি"
 
+msgid "Definition"
+msgstr "সংজ্ঞা"
+
+msgid "Format"
+msgstr "গঠন"
+
 msgid "Is deterministic"
 msgstr "নির্ধারক"
+
+msgid "Definer"
+msgstr "সংজ্ঞা দানকারী"
 
 msgid "Security type"
 msgstr "নিরাপত্তার ধরণ"
@@ -552,6 +502,9 @@ msgstr "ফাংশন"
 msgid "Routines"
 msgstr "রুটিনসমূহ"
 
+msgid "Drop"
+msgstr "মুছ"
+
 msgid "Search"
 msgstr "খোঁজা"
 
@@ -560,6 +513,9 @@ msgstr "প্রদর্শনের জন্য কোন রুটিন �
 
 msgid "Returns"
 msgstr "ফেরৎ দিয়াছে"
+
+msgid "Loading…"
+msgstr "লোডিং…"
 
 msgid "Execute routine"
 msgstr "রুটিন নির্বাহ কর"
@@ -733,6 +689,12 @@ msgstr "তৈরী হয়েছে"
 msgid "Updated"
 msgstr "আধুনিকায়ন হয়েছে"
 
+msgid "Status"
+msgstr "অবস্থা"
+
+msgid "Click to toggle"
+msgstr "টোগল ক্লীক করুন"
+
 msgid "active"
 msgstr "কার্যকর"
 
@@ -836,6 +798,44 @@ msgstr "ভুল"
 
 msgid "Automatically send report next time"
 msgstr "পরবর্তী সময়ে স্বয়ংক্রীয়ভাবে প্রতিবেদন পাঠাবে"
+
+msgid "Event name"
+msgstr "ইভেন্টের নাম"
+
+msgid "Event type"
+msgstr "ইভেন্টের ধরন"
+
+msgid "Execute at"
+msgstr "নির্বাহ কর"
+
+msgid "Execute every"
+msgstr "সবগুলো নির্বাহ কর"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "আরম্ভ কর"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "শেষ"
+
+msgid "On completion preserve"
+msgstr "শেষ করার পর রক্ষাকর"
+
+msgid "Events"
+msgstr "ইভেন্টসমূহ"
+
+msgid "There are no events to display."
+msgstr "প্রদর্শনের জন্য কোন ইভেন্ট নাই।"
+
+msgid "Event scheduler status"
+msgstr "ইভেন্ট সময়সূচীর অবস্থা"
+
+msgid "ON"
+msgstr "খোলা"
+
+msgid "OFF"
+msgstr "বন্ধ"
 
 msgid "SQL query:"
 msgstr "SQL অনুসন্ধান:"
@@ -4229,18 +4229,6 @@ msgstr "রো দেখাচ্ছে %1$s - %2$s."
 msgid "No databases selected."
 msgstr "ডাটাবেইজ নিবার্চন করা হয়নি।"
 
-msgid "Add event"
-msgstr "ইভেন্ট যোগ কর"
-
-msgid "Edit event"
-msgstr "ইভেন্ট সম্পাদনা"
-
-msgid "Error in processing request:"
-msgstr "নির্দেশ প্রক্রিয়া করনে সমস্যা হয়েছে:"
-
-msgid "Export of event %s"
-msgstr "ইভেন্ট %s যোগ কর"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "রফতানী সহায়কটি লোড করা যাচ্ছে না, ইনস্টলেশন পরীক্ষা করুন!"
 
@@ -4255,6 +4243,9 @@ msgstr "রুটিন যোগকর"
 
 msgid "Edit routine"
 msgstr "রুটিন সম্পাদনা"
+
+msgid "Error in processing request:"
+msgstr "নির্দেশ প্রক্রিয়া করনে সমস্যা হয়েছে:"
 
 msgid "Export of routine %s"
 msgstr "রুটিন %s এর রফতানী"
@@ -4291,6 +4282,15 @@ msgstr "আপনি যদি কোন সমস্যা অনুভব ক�
 
 msgid "You may want to refresh the page."
 msgstr "আপনি পাতাটি রিফ্রেশ করে নিতে পারেন."
+
+msgid "Export of event %s"
+msgstr "ইভেন্ট %s যোগ কর"
+
+msgid "Add event"
+msgstr "ইভেন্ট যোগ কর"
+
+msgid "Edit event"
+msgstr "ইভেন্ট সম্পাদনা"
 
 msgid "Bad type!"
 msgstr "ধরন মিলে নাই!"
@@ -5222,47 +5222,26 @@ msgstr "%s সংযোজনক পাওয়া যাচ্ছে না। �
 msgid "Error: Relational features are disabled!"
 msgstr "ভুল: সর্ম্পক তৈরী অকার্যকর করা আছে!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "অকার্যকর রুটিন ধরন:\"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "নিন্মোক্ত অনুসন্ধানটি ব্যার্থ হয়েছে: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL বলেছে: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "দুঃখিত, আমরা মুছে ফেলা ইভেন্ট ফিরিয়ে আনতে পারিনি।"
-
-msgid "The backed up query was:"
-msgstr "ব্যাকআপকৃত অনুসন্ধানটি ছিল:"
-
-msgid "Event %1$s has been modified."
-msgstr "ইভেন্ট %1$s পরিবর্তন হয়েছে।"
-
-msgid "Event %1$s has been created."
-msgstr "ইভেন্ট %1$s তৈরী হয়েছে।"
+msgid "Routine %1$s has been created."
+msgstr "রুটিন %1$s তৈরী করা হয়েছে।"
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "আপনার কাজ প্রক্রিয়া করার সময় এক বা একাধীক ভুল হয়েছে:"
 
-msgid "You must provide a valid interval value for the event."
-msgstr "আপনাকে এই ইভেন্টের জন্য অবশ্যই একটি কার্যকর বিরাম মান দিতে হবে।"
-
-msgid "You must provide a valid execution time for the event."
-msgstr "আপনাকে অবশ্য্ই এই ইভেন্টের জন্য একটি কার্যকর সম্পাদন সময় দিতে হবে।"
-
-msgid "You must provide a valid type for the event."
-msgstr "আপনাকে অবশ্যই এই ইভেন্টের জন্য একটি কার্যকর ধরন দিতে হবে।"
-
-msgid "You must provide an event definition."
-msgstr "আপনাকে অবশ্যই ইভেন্টের সংজ্ঞা দিতে হবে।"
-
-msgid "Invalid routine type: \"%s\""
-msgstr "অকার্যকর রুটিন ধরন:\"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "রুটিন %1$s তৈরী করা হয়েছে।"
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "দুখিত, মুছে ফেলা রুটিনটি ফেরত আনা যায়নি।"
+
+msgid "The backed up query was:"
+msgstr "ব্যাকআপকৃত অনুসন্ধানটি ছিল:"
 
 msgid "Routine %1$s has been modified."
 msgstr "রুটিন %1$s পরিবর্তীত হয়েছে।"
@@ -5434,6 +5413,27 @@ msgstr "নথিপত্রাদি এবং PBXT'র অন্যান্�
 
 msgid "Too many error messages, some are not displayed."
 msgstr "অনেক বেশী ভুল সংক্রান্ত তথ্য, কতগুলো দেখানো হয় নাই।"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "দুঃখিত, আমরা মুছে ফেলা ইভেন্ট ফিরিয়ে আনতে পারিনি।"
+
+msgid "Event %1$s has been modified."
+msgstr "ইভেন্ট %1$s পরিবর্তন হয়েছে।"
+
+msgid "Event %1$s has been created."
+msgstr "ইভেন্ট %1$s তৈরী হয়েছে।"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "আপনাকে এই ইভেন্টের জন্য অবশ্যই একটি কার্যকর বিরাম মান দিতে হবে।"
+
+msgid "You must provide a valid execution time for the event."
+msgstr "আপনাকে অবশ্য্ই এই ইভেন্টের জন্য একটি কার্যকর সম্পাদন সময় দিতে হবে।"
+
+msgid "You must provide a valid type for the event."
+msgstr "আপনাকে অবশ্যই এই ইভেন্টের জন্য একটি কার্যকর ধরন দিতে হবে।"
+
+msgid "You must provide an event definition."
+msgstr "আপনাকে অবশ্যই ইভেন্টের সংজ্ঞা দিতে হবে।"
 
 msgid "Access denied!"
 msgstr "প্রবেশ করা যাচ্ছে না"

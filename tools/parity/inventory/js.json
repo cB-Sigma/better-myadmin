@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "a57149e1f6273eb326b153487ad070893dd9e19c",
+    "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
     "count": 966
   },
@@ -180,195 +180,6 @@
       "selector": "#multi_edit_central_columns",
       "line": 84,
       "file": "resources/js/database/central_columns.ts"
-    },
-    {
-      "key": "js:database/events.ts#ajax:GET <$this.attr('href')>",
-      "script": "database/events.ts",
-      "count": 2,
-      "kind": "ajax",
-      "method": "GET",
-      "url": "<$this.attr('href')>",
-      "line": 98,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#ajax:GET <h>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "ajax",
-      "method": "GET",
-      "url": "<h>",
-      "line": 79,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#ajax:POST <$anchor.attr('href')>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "ajax",
-      "method": "POST",
-      "url": "<$anchor.attr('href')>",
-      "line": 438,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#ajax:POST <url>",
-      "script": "database/events.ts",
-      "count": 2,
-      "kind": "ajax",
-      "method": "POST",
-      "url": "<url>",
-      "line": 178,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#alert:strFormEmpty",
-      "script": "database/events.ts",
-      "count": 4,
-      "kind": "dialog",
-      "event": "alert",
-      "messages": [
-        "strFormEmpty"
-      ],
-      "line": 39,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#change:select[name=item_type]",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "change",
-      "selector": "select[name=item_type]",
-      "delegated": true,
-      "line": 584,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#click:#bulkActionDropButton",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "click",
-      "selector": "#bulkActionDropButton",
-      "delegated": true,
-      "line": 575,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#click:#bulkActionExportButton",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "click",
-      "selector": "#bulkActionExportButton",
-      "delegated": true,
-      "line": 562,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#click:<eventsEditorModalSaveButton>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "click",
-      "selector": "<eventsEditorModalSaveButton>",
-      "line": 299,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#click:a.ajax.add_anchor, a.ajax.edit_anchor",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "click",
-      "selector": "a.ajax.add_anchor, a.ajax.edit_anchor",
-      "delegated": true,
-      "line": 543,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#click:a.ajax.drop_anchor",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "click",
-      "selector": "a.ajax.drop_anchor",
-      "delegated": true,
-      "line": 570,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#click:a.ajax.export_anchor",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "click",
-      "selector": "a.ajax.export_anchor",
-      "delegated": true,
-      "line": 557,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#confirm:<$('<div></div>').text( $currRow.childre…>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "dialog",
-      "event": "confirm",
-      "line": 353,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#confirm:strDropRTEitems",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "dialog",
-      "event": "confirm",
-      "messages": [
-        "strDropRTEitems"
-      ],
-      "line": 418,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#hidden.bs.modal:<eventsEditorModal>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "hidden.bs.modal",
-      "selector": "<eventsEditorModal>",
-      "line": 330,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#hidden.bs.modal:<eventsExportModal>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "hidden.bs.modal",
-      "selector": "<eventsExportModal>",
-      "line": 121,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#shown.bs.modal:<eventsEditorModal>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "shown.bs.modal",
-      "selector": "<eventsEditorModal>",
-      "line": 290,
-      "file": "resources/js/database/events.ts"
-    },
-    {
-      "key": "js:database/events.ts#shown.bs.modal:<eventsExportModal>",
-      "script": "database/events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "shown.bs.modal",
-      "selector": "<eventsExportModal>",
-      "line": 114,
-      "file": "resources/js/database/events.ts"
     },
     {
       "key": "js:database/multi_table_query.ts#ajax:GET /database/multi-table-query/tables",
@@ -2263,6 +2074,195 @@
       "selector": "<$errorReportModal>",
       "line": 120,
       "file": "resources/js/error_report.ts"
+    },
+    {
+      "key": "js:events.ts#ajax:GET <$this.attr('href')>",
+      "script": "events.ts",
+      "count": 2,
+      "kind": "ajax",
+      "method": "GET",
+      "url": "<$this.attr('href')>",
+      "line": 98,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#ajax:GET <h>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "ajax",
+      "method": "GET",
+      "url": "<h>",
+      "line": 79,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#ajax:POST <$anchor.attr('href')>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "ajax",
+      "method": "POST",
+      "url": "<$anchor.attr('href')>",
+      "line": 438,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#ajax:POST <url>",
+      "script": "events.ts",
+      "count": 2,
+      "kind": "ajax",
+      "method": "POST",
+      "url": "<url>",
+      "line": 178,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#alert:strFormEmpty",
+      "script": "events.ts",
+      "count": 4,
+      "kind": "dialog",
+      "event": "alert",
+      "messages": [
+        "strFormEmpty"
+      ],
+      "line": 39,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#change:select[name=item_type]",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "change",
+      "selector": "select[name=item_type]",
+      "delegated": true,
+      "line": 584,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#click:#bulkActionDropButton",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "click",
+      "selector": "#bulkActionDropButton",
+      "delegated": true,
+      "line": 575,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#click:#bulkActionExportButton",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "click",
+      "selector": "#bulkActionExportButton",
+      "delegated": true,
+      "line": 562,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#click:<eventsEditorModalSaveButton>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "click",
+      "selector": "<eventsEditorModalSaveButton>",
+      "line": 299,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#click:a.ajax.add_anchor, a.ajax.edit_anchor",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "click",
+      "selector": "a.ajax.add_anchor, a.ajax.edit_anchor",
+      "delegated": true,
+      "line": 543,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#click:a.ajax.drop_anchor",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "click",
+      "selector": "a.ajax.drop_anchor",
+      "delegated": true,
+      "line": 570,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#click:a.ajax.export_anchor",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "click",
+      "selector": "a.ajax.export_anchor",
+      "delegated": true,
+      "line": 557,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#confirm:<$('<div></div>').text( $currRow.childre…>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "dialog",
+      "event": "confirm",
+      "line": 353,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#confirm:strDropRTEitems",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "dialog",
+      "event": "confirm",
+      "messages": [
+        "strDropRTEitems"
+      ],
+      "line": 418,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#hidden.bs.modal:<eventsEditorModal>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "hidden.bs.modal",
+      "selector": "<eventsEditorModal>",
+      "line": 330,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#hidden.bs.modal:<eventsExportModal>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "hidden.bs.modal",
+      "selector": "<eventsExportModal>",
+      "line": 121,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#shown.bs.modal:<eventsEditorModal>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "shown.bs.modal",
+      "selector": "<eventsEditorModal>",
+      "line": 290,
+      "file": "resources/js/events.ts"
+    },
+    {
+      "key": "js:events.ts#shown.bs.modal:<eventsExportModal>",
+      "script": "events.ts",
+      "count": 1,
+      "kind": "event",
+      "event": "shown.bs.modal",
+      "selector": "<eventsExportModal>",
+      "line": 114,
+      "file": "resources/js/events.ts"
     },
     {
       "key": "js:export_output.ts#click:.export_copy_to_clipboard_btn",

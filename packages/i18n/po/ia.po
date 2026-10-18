@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ia.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ia.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Interlingua <https://hosted.weblate.org/projects/phpmyadmin/master/ia/>\nLanguage: ia\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Interlingua <https://hosted.weblate.org/projects/phpmyadmin/master/ia/>\nLanguage: ia\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript debe esser habilitate passate iste puncto!"
@@ -612,62 +612,6 @@ msgstr "Nomine de nove pagina"
 msgid "Select page"
 msgstr "Selige pagina"
 
-msgid "Details"
-msgstr "Detalios"
-
-msgid "Event name"
-msgstr "Nomine de evento"
-
-msgid "Status"
-msgstr "Stato"
-
-msgid "Event type"
-msgstr "Typo de evento"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Initia"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Fin"
-
-msgid "Definition"
-msgstr "Definition"
-
-msgid "Format"
-msgstr "Formato"
-
-msgid "Events"
-msgstr "Eventos"
-
-msgid "Check all"
-msgstr "Marca omnes"
-
-msgid "Export"
-msgstr "Exporta"
-
-msgid "Drop"
-msgstr "Lassa cader"
-
-msgid "Create new event"
-msgstr "Crea nove evento"
-
-msgid "Click to toggle"
-msgstr "Pulsa pro alternar"
-
-msgid "ON"
-msgstr "Activate (On)"
-
-msgid "OFF"
-msgstr "non activate (off)"
-
-msgid "Loading…"
-msgstr "Cargar…"
-
-msgid "Save changes"
-msgstr "Salveguarda cambiamentos"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ devenira le nomine de servitor e @DATABASE@ devenira le nomine de base de datos."
 
@@ -821,11 +765,20 @@ msgstr "Global"
 msgid "Edit privileges"
 msgstr "Modifica privilegios"
 
+msgid "Export"
+msgstr "Exporta"
+
 msgid "With selected:"
 msgstr "Si seligite:"
 
+msgid "Check all"
+msgstr "Marca omnes"
+
 msgid "Add user account"
 msgstr "Adde conto de usator"
+
+msgid "Details"
+msgstr "Detalios"
 
 msgid "Parameters"
 msgstr "Parametros"
@@ -835,6 +788,12 @@ msgstr "Direction"
 
 msgid "Charset"
 msgstr "Insimul de characteres"
+
+msgid "Definition"
+msgstr "Definition"
+
+msgid "Format"
+msgstr "Formato"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Tu non ha bastante privilegios pro executar iste operation; Pro favor tu refere al documentation pro altere detalios."
@@ -848,11 +807,20 @@ msgstr "Function"
 msgid "Routines"
 msgstr "Routines"
 
+msgid "Drop"
+msgstr "Lassa cader"
+
 msgid "Search"
 msgstr "Cerca"
 
 msgid "Create new routine"
 msgstr "Crea nove routine"
+
+msgid "Loading…"
+msgstr "Cargar…"
+
+msgid "Save changes"
+msgstr "Salveguarda cambiamentos"
 
 msgid "Execute"
 msgstr "Executa"
@@ -1074,6 +1042,12 @@ msgstr "Create"
 msgid "Updated"
 msgstr "Actualisate"
 
+msgid "Status"
+msgstr "Stato"
+
+msgid "Click to toggle"
+msgstr "Pulsa pro alternar"
+
 msgid "active"
 msgstr "active"
 
@@ -1204,6 +1178,32 @@ msgstr "Submitte reporto de error"
 
 msgid "Send error report"
 msgstr "Invia reporto de errores"
+
+msgid "Event name"
+msgstr "Nomine de evento"
+
+msgid "Event type"
+msgstr "Typo de evento"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Initia"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Fin"
+
+msgid "Events"
+msgstr "Eventos"
+
+msgid "Create new event"
+msgstr "Crea nove evento"
+
+msgid "ON"
+msgstr "Activate (On)"
+
+msgid "OFF"
+msgstr "non activate (off)"
 
 msgid "Select a template"
 msgstr "Selige un patrono"
@@ -4799,15 +4799,6 @@ msgstr "Monstrante rangos %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Necun base de datos seligite."
 
-msgid "Edit event"
-msgstr "Modifica evento"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "il non ha trovate alcun evento con nomine %1$s in base de datos %2$s."
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Error quando on processava requesta: il non ha trovate alcun evento con nomine %1$s in base de datos %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Il non pote cargar plugins de exportar, pro favor verifica tu installation!"
 
@@ -4861,6 +4852,15 @@ msgstr "Si tu ha experientia de ulle problema, pro favor tu submitte un reporto 
 
 msgid "You may want to refresh the page."
 msgstr "Tu poterea voler refrescar le pagina."
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Error quando on processava requesta: il non ha trovate alcun evento con nomine %1$s in base de datos %2$s."
+
+msgid "Edit event"
+msgstr "Modifica evento"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "il non ha trovate alcun evento con nomine %1$s in base de datos %2$s."
 
 msgid "Bad type!"
 msgstr "Mal typo!"

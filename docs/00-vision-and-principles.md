@@ -2,7 +2,7 @@
 
 BetterMyAdmin is a feature-for-feature rebuild of phpMyAdmin (pMA) in a modern stack with a modern UI. It is not "inspired by" phpMyAdmin. It is a clone: every tab, every option, every confirmation dialog, every link you can click on a cell, every config directive. The modern part is *how* it is built and *how it feels*, not *what* it does.
 
-The source of truth for behaviour is phpMyAdmin `6.0.0-dev` at the pinned commit (`docs/reference/reference-commit.txt`, currently `a57149e1f6`, 2026-10-11; first specified at `e3e877e8`, 2026-10-06, and moved forward by [upstream syncs](architecture/15-upstream-sync.md)). The feature docs in [`docs/features`](features/) were written by reading that code (controllers, Twig templates, TypeScript) and cite the files they describe. When this documentation and phpMyAdmin disagree, phpMyAdmin wins and the doc gets fixed.
+The source of truth for behaviour is phpMyAdmin `6.0.0-dev` at the pinned commit (`docs/reference/reference-commit.txt`, currently `328b8d8003`, 2026-10-18; first specified at `e3e877e8`, 2026-10-06, and moved forward by [upstream syncs](architecture/15-upstream-sync.md)). The feature docs in [`docs/features`](features/) were written by reading that code (controllers, Twig templates, TypeScript) and cite the files they describe. When this documentation and phpMyAdmin disagree, phpMyAdmin wins and the doc gets fixed.
 
 ## Why a clone and not a redesign
 

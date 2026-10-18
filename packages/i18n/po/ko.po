@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ko.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ko.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-06-02 06:01+0000\nLast-Translator: kim8ccf3a4116ec4691 <kim@yong.biz>\nLanguage-Team: Korean <https://hosted.weblate.org/projects/phpmyadmin/master/ko/>\nLanguage: ko\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.6\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-06-02 06:01+0000\nLast-Translator: kim8ccf3a4116ec4691 <kim@yong.biz>\nLanguage-Team: Korean <https://hosted.weblate.org/projects/phpmyadmin/master/ko/>\nLanguage: ko\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.6\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "이 페이지를 넘기려면 Javascript 사용을 허용해야 합니다!"
@@ -683,89 +683,6 @@ msgstr "페이지를 선택하세요"
 msgid "Select export relational type:"
 msgstr "내보낼 관계 형식 선택:"
 
-msgid "Details"
-msgstr "자세한 내용"
-
-msgid "Event name"
-msgstr "이벤트 이름"
-
-msgid "Status"
-msgstr "상태"
-
-msgid "Event type"
-msgstr "이벤트 종류"
-
-msgid "Change to %s"
-msgstr "%s 로 변경"
-
-msgid "Execute at"
-msgstr "실행일시"
-
-msgid "Execute every"
-msgstr "실행간격"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "시작"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "완료"
-
-msgid "Definition"
-msgstr "정의"
-
-msgid "Format"
-msgstr "형식"
-
-msgid "On completion preserve"
-msgstr "완료 후에 남기기"
-
-msgid "Definer"
-msgstr "정의자"
-
-msgid "Events"
-msgstr "이벤트"
-
-msgid "Check all"
-msgstr "모두 선택"
-
-msgid "Export"
-msgstr "내보내기"
-
-msgid "Drop"
-msgstr "삭제"
-
-msgid "Create new event"
-msgstr "새로운 이벤트 생성"
-
-msgid "There are no events to display."
-msgstr "표시할 이벤트가 없습니다."
-
-msgid "Event scheduler status"
-msgstr "이벤트 스케줄러 상태"
-
-msgid "Click to toggle"
-msgstr "토글하려면 클릭"
-
-msgid "ON"
-msgstr "ON"
-
-msgid "OFF"
-msgstr "OFF"
-
-msgid "Event editor"
-msgstr "이벤트 편집기"
-
-msgid "Loading…"
-msgstr "불러오는 중…"
-
-msgid "Save changes"
-msgstr "변경사항을 저장"
-
-msgid "Export event"
-msgstr "이벤트 내보내기"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ 는 서버 명이, @DATABASE@ 는 데이터베이스 명이 됩니다."
 
@@ -946,11 +863,17 @@ msgstr "루틴"
 msgid "Edit privileges"
 msgstr "권한 수정"
 
+msgid "Export"
+msgstr "내보내기"
+
 msgid "No user found."
 msgstr "사용자가 없습니다."
 
 msgid "With selected:"
 msgstr "선택한 것을:"
+
+msgid "Check all"
+msgstr "모두 선택"
 
 msgid "Not enough privilege to view users."
 msgstr "사용자를 볼 수 있는 권한이 부족합니다."
@@ -958,8 +881,14 @@ msgstr "사용자를 볼 수 있는 권한이 부족합니다."
 msgid "Add user account"
 msgstr "사용자 추가"
 
+msgid "Details"
+msgstr "자세한 내용"
+
 msgid "Routine name"
 msgstr "루틴 이름"
+
+msgid "Change to %s"
+msgstr "%s 로 변경"
 
 msgid "Parameters"
 msgstr "파라미터"
@@ -985,11 +914,20 @@ msgstr "반환(return) 옵션"
 msgid "Charset"
 msgstr "문자집합"
 
+msgid "Definition"
+msgstr "정의"
+
+msgid "Format"
+msgstr "형식"
+
 msgid "Is deterministic"
 msgstr "Deterministic"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "이 작업을 수행할 수 있는 충분한 권한이 없습니다. 자세한 내용은 설명서를 참조하세요."
+
+msgid "Definer"
+msgstr "정의자"
 
 msgid "Security type"
 msgstr "보안 타입"
@@ -1009,6 +947,9 @@ msgstr "이 루틴은 파라미터가 필요없습니다."
 msgid "Routines"
 msgstr "루틴"
 
+msgid "Drop"
+msgstr "삭제"
+
 msgid "Search"
 msgstr "검색"
 
@@ -1023,6 +964,12 @@ msgstr "반환값"
 
 msgid "Routine editor"
 msgstr "루틴 편집기"
+
+msgid "Loading…"
+msgstr "불러오는 중…"
+
+msgid "Save changes"
+msgstr "변경사항을 저장"
 
 msgid "Export routine"
 msgstr "루틴 내보내기"
@@ -1273,6 +1220,12 @@ msgstr "생성됨"
 msgid "Updated"
 msgstr "갱신됨"
 
+msgid "Status"
+msgstr "상태"
+
+msgid "Click to toggle"
+msgstr "토글하려면 클릭"
+
 msgid "active"
 msgstr "활성"
 
@@ -1418,6 +1371,53 @@ msgstr "문제가 발생했습니다"
 
 msgid "Go back"
 msgstr "돌아가기"
+
+msgid "Event name"
+msgstr "이벤트 이름"
+
+msgid "Event type"
+msgstr "이벤트 종류"
+
+msgid "Execute at"
+msgstr "실행일시"
+
+msgid "Execute every"
+msgstr "실행간격"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "시작"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "완료"
+
+msgid "On completion preserve"
+msgstr "완료 후에 남기기"
+
+msgid "Events"
+msgstr "이벤트"
+
+msgid "Create new event"
+msgstr "새로운 이벤트 생성"
+
+msgid "There are no events to display."
+msgstr "표시할 이벤트가 없습니다."
+
+msgid "Event scheduler status"
+msgstr "이벤트 스케줄러 상태"
+
+msgid "ON"
+msgstr "ON"
+
+msgid "OFF"
+msgstr "OFF"
+
+msgid "Event editor"
+msgstr "이벤트 편집기"
+
+msgid "Export event"
+msgstr "이벤트 내보내기"
 
 msgid "Select a template"
 msgstr "템플릿 선택"
@@ -6594,27 +6594,6 @@ msgstr "\"%s\"라는 이름의 페이지가 이미 있습니다. 이름을 다�
 msgid "No databases selected."
 msgstr "데이터베이스를 선택하지 않았습니다."
 
-msgid "The event was dropped immediately after creation."
-msgstr "이 이벤트는 생성 후 즉시 삭제됩니다."
-
-msgid "Add event"
-msgstr "이벤트 추가"
-
-msgid "Edit event"
-msgstr "이벤트 수정"
-
-msgid "Error in processing request:"
-msgstr "요청 처리 중 에러가 발생:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "%2$s 데이터베이스에 %1$s라는 이름의 이벤트가 없습니다."
-
-msgid "Export of event %s"
-msgstr "이벤트 %s 추출"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "처리 요청 중 오류: %2$s 데이터베이스에 %1$s라는 이름의 이벤트가 없습니다."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "내보내기 플러그인을 로드할 수 없습니다. 올바로 설치되었는지 확인해주세요!"
 
@@ -6635,6 +6614,9 @@ msgstr "루틴 추가하기"
 
 msgid "Edit routine"
 msgstr "루틴 수정"
+
+msgid "Error in processing request:"
+msgstr "요청 처리 중 에러가 발생:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "%2$s 데이터베이스에 %1$s 이름의 루틴을 찾을 수 없습니다. 이 루틴을 편집하는 데 필요한 권한이 부족할 수 있습니다."
@@ -6689,6 +6671,24 @@ msgstr "사용중 발생한 문제는 수동으로 제출해 주세요."
 
 msgid "You may want to refresh the page."
 msgstr "페이지를 새로고침 하세요."
+
+msgid "Export of event %s"
+msgstr "이벤트 %s 추출"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "처리 요청 중 오류: %2$s 데이터베이스에 %1$s라는 이름의 이벤트가 없습니다."
+
+msgid "The event was dropped immediately after creation."
+msgstr "이 이벤트는 생성 후 즉시 삭제됩니다."
+
+msgid "Add event"
+msgstr "이벤트 추가"
+
+msgid "Edit event"
+msgstr "이벤트 수정"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "%2$s 데이터베이스에 %1$s라는 이름의 이벤트가 없습니다."
 
 msgid "Bad type!"
 msgstr "잘못된 타입!"
@@ -8632,53 +8632,26 @@ msgstr "내부 릴레이션이 제거되었습니다."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "개요 플러그인을 로드할 수 없습니다. 올바로 설치되었는지 확인해주세요!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "잘못된 루틴 타입: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "쿼리 실행 실패: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL 메시지: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "삭제한 이벤트를 복원하지 못했습니다."
-
-msgid "The backed up query was:"
-msgstr "백업했던 쿼리:"
-
-msgid "Event %1$s has been modified."
-msgstr "이벤트 %1$s 를 변경했습니다."
-
-msgid "Event %1$s has been created."
-msgstr "이벤트 %1$s 를 생성했습니다."
+msgid "Routine %1$s has been created."
+msgstr "루틴 %1$s가 생성되었습니다."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "요청을 처리하는 중에 하나 혹은 그 이상의 오류가 발생했습니다:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "디파이너의 형식은 \"username@hostname\" 이어야 합니다!"
-
-msgid "You must provide an event name!"
-msgstr "이벤트 이름을 지정하세요!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "이벤트의 올바른 시간 간격을 입력하세요."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "이벤트 실행 시간을 올바르게 입력하세요."
-
-msgid "You must provide a valid type for the event."
-msgstr "올바른 이벤트 타입을 입력하세요."
-
-msgid "You must provide an event definition."
-msgstr "이벤트 정의를 입력하세요."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "잘못된 루틴 타입: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "루틴 %1$s가 생성되었습니다."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "죄송합니다만 삭제한 루틴을 복구하지 못했습니다."
+
+msgid "The backed up query was:"
+msgstr "백업했던 쿼리:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "%1$s 루틴이수정되었습니다. 권한이 조정되었습니다."
@@ -8697,6 +8670,9 @@ msgstr "ENUM, SET, VARCHAR, VARBINARY 유형의 루틴 매개변수에 대한 �
 
 msgid "You must provide a valid return type for the routine."
 msgstr "루틴에 유효한 반환 유형을 제공해야 합니다."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "디파이너의 형식은 \"username@hostname\" 이어야 합니다!"
 
 msgid "Invalid routine type!"
 msgstr "루틴 타입이 잘못되었습니다!"
@@ -8884,6 +8860,30 @@ msgstr "오류메시지가 너무 많기 때문에 일부 메시지는 출력되
 
 msgid "Report"
 msgstr "보고"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "삭제한 이벤트를 복원하지 못했습니다."
+
+msgid "Event %1$s has been modified."
+msgstr "이벤트 %1$s 를 변경했습니다."
+
+msgid "Event %1$s has been created."
+msgstr "이벤트 %1$s 를 생성했습니다."
+
+msgid "You must provide an event name!"
+msgstr "이벤트 이름을 지정하세요!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "이벤트의 올바른 시간 간격을 입력하세요."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "이벤트 실행 시간을 올바르게 입력하세요."
+
+msgid "You must provide a valid type for the event."
+msgstr "올바른 이벤트 타입을 입력하세요."
+
+msgid "You must provide an event definition."
+msgstr "이벤트 정의를 입력하세요."
 
 msgid "Cannot log in to the database server."
 msgstr "데이터베이스 서버에 로그인할 수 없습니다."

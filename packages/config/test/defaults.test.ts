@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, expectTypeOf, it } from 'vitest'
 import { defaultConfig, defaults, serverDefaults } from '../src/defaults.ts'
 import type { AnyNode } from '../src/nodes.ts'
@@ -16,7 +17,9 @@ const pma = readFixture<PmaDefaultsFixture>('pma-defaults.json')
 
 describe('defaults vs phpMyAdmin Settings::asArray() dump', () => {
   it('fixture comes from the reference commit', () => {
-    expect(pma._meta.commit).toBe('e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1')
+    // docs/reference/reference-commit.txt: the pin moves with each upstream sync
+    const pin = readFileSync(new URL('../../../docs/reference/reference-commit.txt', import.meta.url), 'utf8')
+    expect(pma._meta.commit).toBe(pin.trim().split(/\s+/)[0])
   })
 
   it('top-level defaults equal the PHP dump exactly (BetterMyAdmin additions removed)', () => {

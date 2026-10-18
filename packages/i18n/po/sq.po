@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/sq.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/sq.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2022-02-15 16:20+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Albanian <https://hosted.weblate.org/projects/phpmyadmin/master/sq/>\nLanguage: sq\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:20+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Albanian <https://hosted.weblate.org/projects/phpmyadmin/master/sq/>\nLanguage: sq\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript duhet të aftësohet për të kaluar këtë pikë!"
@@ -610,77 +610,6 @@ msgstr "Emër i ri faqeje"
 msgid "Select page"
 msgstr "Zgjedh faqen"
 
-msgid "Details"
-msgstr "Detajet"
-
-msgid "Event name"
-msgstr "Emri i ngjarjes"
-
-msgid "Status"
-msgstr "Statusi"
-
-msgid "Event type"
-msgstr "Tipi i ngjarjes"
-
-msgid "Change to %s"
-msgstr "Ndrysho tek %s"
-
-msgid "Execute at"
-msgstr "Ekzekuto në"
-
-msgid "Execute every"
-msgstr "Ekzekuto çdo"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Fillo"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Fund"
-
-msgid "Definition"
-msgstr "Përkufizimi"
-
-msgid "Format"
-msgstr "Formati"
-
-msgid "On completion preserve"
-msgstr "Në përfundim ruaj"
-
-msgid "Definer"
-msgstr "Përcaktuesi"
-
-msgid "Events"
-msgstr "Ngjarjet"
-
-msgid "Check all"
-msgstr "Shënjo të gjitha"
-
-msgid "Export"
-msgstr "Eksporti"
-
-msgid "Drop"
-msgstr "Fshij"
-
-msgid "There are no events to display."
-msgstr "Nuk ka ngjarje për t'u shfaqur."
-
-msgid "Event scheduler status"
-msgstr "Statusi i ngjarjeve të planifikuara"
-
-msgid "Click to toggle"
-msgstr "Kliko për të nyjëzuar"
-
-msgid "ON"
-msgstr "PO"
-
-msgid "OFF"
-msgstr "hequr"
-
-msgid "Loading…"
-msgstr "Ngarkon…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Eksporton tabela nga \"%s\" databaza"
 
@@ -804,11 +733,17 @@ msgstr "rutinë"
 msgid "Edit privileges"
 msgstr "Redakto privilegjet"
 
+msgid "Export"
+msgstr "Eksporti"
+
 msgid "No user found."
 msgstr "Nuk gjendet asnjë përdorues."
 
 msgid "With selected:"
 msgstr "Me të zgjedhur:"
+
+msgid "Check all"
+msgstr "Shënjo të gjitha"
 
 msgid "Not enough privilege to view users."
 msgstr "Nuk ka privilegje të mjaftueshme për të shfaqur përdoruesit."
@@ -816,8 +751,14 @@ msgstr "Nuk ka privilegje të mjaftueshme për të shfaqur përdoruesit."
 msgid "Add user account"
 msgstr "Shto llogari përdoruesi"
 
+msgid "Details"
+msgstr "Detajet"
+
 msgid "Routine name"
 msgstr "Emri rutinë"
+
+msgid "Change to %s"
+msgstr "Ndrysho tek %s"
 
 msgid "Parameters"
 msgstr "Parametrat"
@@ -843,8 +784,17 @@ msgstr "Opsionet e kthimit"
 msgid "Charset"
 msgstr "Set karakteresh"
 
+msgid "Definition"
+msgstr "Përkufizimi"
+
+msgid "Format"
+msgstr "Formati"
+
 msgid "Is deterministic"
 msgstr "Është përcaktuese"
+
+msgid "Definer"
+msgstr "Përcaktuesi"
 
 msgid "Security type"
 msgstr "Tipi i sigurisë"
@@ -861,6 +811,9 @@ msgstr "Funksioni"
 msgid "Routines"
 msgstr "Rutinat"
 
+msgid "Drop"
+msgstr "Fshij"
+
 msgid "Search"
 msgstr "Kërko"
 
@@ -869,6 +822,9 @@ msgstr "Nuk ka rutina për t'u shfaqur."
 
 msgid "Returns"
 msgstr "Kthimet"
+
+msgid "Loading…"
+msgstr "Ngarkon…"
 
 msgid "Execute routine"
 msgstr "Ekzekuto rutinën"
@@ -1108,6 +1064,12 @@ msgstr "Krijuar"
 msgid "Updated"
 msgstr "Aktualizuar"
 
+msgid "Status"
+msgstr "Statusi"
+
+msgid "Click to toggle"
+msgstr "Kliko për të nyjëzuar"
+
 msgid "active"
 msgstr "aktive"
 
@@ -1235,6 +1197,44 @@ msgstr "Dërgo raportin e gabimit"
 
 msgid "Send error report"
 msgstr "Dërgo raportin e gabimit"
+
+msgid "Event name"
+msgstr "Emri i ngjarjes"
+
+msgid "Event type"
+msgstr "Tipi i ngjarjes"
+
+msgid "Execute at"
+msgstr "Ekzekuto në"
+
+msgid "Execute every"
+msgstr "Ekzekuto çdo"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Fillo"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Fund"
+
+msgid "On completion preserve"
+msgstr "Në përfundim ruaj"
+
+msgid "Events"
+msgstr "Ngjarjet"
+
+msgid "There are no events to display."
+msgstr "Nuk ka ngjarje për t'u shfaqur."
+
+msgid "Event scheduler status"
+msgstr "Statusi i ngjarjeve të planifikuara"
+
+msgid "ON"
+msgstr "PO"
+
+msgid "OFF"
+msgstr "hequr"
 
 msgid "Select a template"
 msgstr "Zgjedh një shabllon"
@@ -5567,21 +5567,6 @@ msgstr "Shfaqën radhët %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Nuk janë zgjedhur databaza."
 
-msgid "Add event"
-msgstr "Shto ngjarje"
-
-msgid "Edit event"
-msgstr "Redakto ngjarjen"
-
-msgid "Error in processing request:"
-msgstr "Gabim në proçesimin e kërkesës:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Nuk ka ngjarje me emrin %1$s që gjendet në databazë %2$s."
-
-msgid "Export of event %s"
-msgstr "Eksporti i ngjarjes %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Nuk mund të ngarkojë shtojcat e eksportit, ju lutem kontrollo instalimin tuaj!"
 
@@ -5596,6 +5581,9 @@ msgstr "Shto rutinë"
 
 msgid "Edit routine"
 msgstr "Redakto rutinën"
+
+msgid "Error in processing request:"
+msgstr "Gabim në proçesimin e kërkesës:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Asnjë rutinë me emrin %1$s nuk gjendet në bazën e të dhënave %2$s. Mund t`ju mungojne privilegjet e nevojshme për të redaktuar këtë rutinë."
@@ -5644,6 +5632,18 @@ msgstr "Nëse keni ndonjë problem, ju lutem dërgoni manualisht një raportim b
 
 msgid "You may want to refresh the page."
 msgstr "Duhet të rifreskoni faqen."
+
+msgid "Export of event %s"
+msgstr "Eksporti i ngjarjes %s"
+
+msgid "Add event"
+msgstr "Shto ngjarje"
+
+msgid "Edit event"
+msgstr "Redakto ngjarjen"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Nuk ka ngjarje me emrin %1$s që gjendet në databazë %2$s."
 
 msgid "Bad type!"
 msgstr "Tip i keq!"
@@ -7165,53 +7165,26 @@ msgstr "Relacionet e brendshme janë hequr."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Nuk mund te ngarkohen shtojcat e skemës, ju lutem kontrollo instalimin tuaj!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Tip rutine i pavlefshëm: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Pyetsori që vijon, ka dështuar: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL tha: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Na vjen keq, dështuam në rikthimin e ngjarjes së fshirë."
-
-msgid "The backed up query was:"
-msgstr "Pyetsori i ruajtur ishte:"
-
-msgid "Event %1$s has been modified."
-msgstr "Ngjarja %1$s është modifikuar."
-
-msgid "Event %1$s has been created."
-msgstr "Ngjarja %1$s është krijuar."
+msgid "Routine %1$s has been created."
+msgstr "Rutina %1$s është krijuar."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Një ose më shumë gabime kanë ndodhur gjatë proçesimit të kërkesës suaj:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Përcaktuesi duhet të jetë në formatin \"username@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "Duhet të siguroni një emër për ngjarjen!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Duhet të siguroni një vlerë të vlefshme intervali për ngjarjen."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Duhet të siguroni një kohë të vlefshme të ekzekutimit për ngjarjen."
-
-msgid "You must provide a valid type for the event."
-msgstr "Duhet të siguroni një tip të vlefshëm për ngjarjen."
-
-msgid "You must provide an event definition."
-msgstr "Duhet të siguroni një përcaktim për ngjarjen."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Tip rutine i pavlefshëm: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Rutina %1$s është krijuar."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Na vjen keq, dështuam në rikthimin e rutinës së fshirë."
+
+msgid "The backed up query was:"
+msgstr "Pyetsori i ruajtur ishte:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutina %1$s është modifikuar. Privilegjet janë përshtatur."
@@ -7230,6 +7203,9 @@ msgstr "Duhet të siguroni gjatësinë/vlerat për parametrat rutinë të tipit 
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Duhet të siguroni një tip të vlefshëm të kthimit për rutinën."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Përcaktuesi duhet të jetë në formatin \"username@hostname\"!"
 
 msgid "You must provide a routine name!"
 msgstr "Duhet të siguroni një emër rutinë!"
@@ -7403,6 +7379,30 @@ msgstr "Shumë mesazhe gabimi, disa nuk shfaqen."
 
 msgid "Report"
 msgstr "Raporto"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Na vjen keq, dështuam në rikthimin e ngjarjes së fshirë."
+
+msgid "Event %1$s has been modified."
+msgstr "Ngjarja %1$s është modifikuar."
+
+msgid "Event %1$s has been created."
+msgstr "Ngjarja %1$s është krijuar."
+
+msgid "You must provide an event name!"
+msgstr "Duhet të siguroni një emër për ngjarjen!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Duhet të siguroni një vlerë të vlefshme intervali për ngjarjen."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Duhet të siguroni një kohë të vlefshme të ekzekutimit për ngjarjen."
+
+msgid "You must provide a valid type for the event."
+msgstr "Duhet të siguroni një tip të vlefshëm për ngjarjen."
+
+msgid "You must provide an event definition."
+msgstr "Duhet të siguroni një përcaktim për ngjarjen."
 
 msgid "Access denied!"
 msgstr "Hyrja nuk lejohet!"

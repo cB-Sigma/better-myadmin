@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/be.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/be.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Belarusian <https://hosted.weblate.org/projects/phpmyadmin/master/be/>\nLanguage: be\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Belarusian <https://hosted.weblate.org/projects/phpmyadmin/master/be/>\nLanguage: be\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript мусіць быць уключаным!"
@@ -511,59 +511,6 @@ msgstr "Назва новай старонкі"
 msgid "Select page"
 msgstr "Выбраць старонку"
 
-msgid "Details"
-msgstr "Дэталі"
-
-msgid "Event name"
-msgstr "Назва падзеі"
-
-msgid "Status"
-msgstr "Стан"
-
-msgid "Event type"
-msgstr "Тып падзеі"
-
-msgid "Change to %s"
-msgstr "Змяніць на %s"
-
-msgid "Execute every"
-msgstr "Выканаць кожны"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Пачатак"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Канец"
-
-msgid "Definition"
-msgstr "Азначэнне"
-
-msgid "Format"
-msgstr "Фармат"
-
-msgid "On completion preserve"
-msgstr "Па завяршэнні захавання"
-
-msgid "Events"
-msgstr "Падзеі"
-
-msgid "Check all"
-msgstr "Адзначыць усё"
-
-msgid "Export"
-msgstr "Экспарт"
-
-msgid "Drop"
-msgstr "Выдаліць"
-
-msgid "There are no events to display."
-msgstr "Няма падзей для адлюстравання."
-
-msgid "Loading…"
-msgstr "Загрузка…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Экспартаванне табліц з базы даных «%s»"
 
@@ -717,17 +664,29 @@ msgstr "працэдура"
 msgid "Edit privileges"
 msgstr "Рэдагаваць прывілеі"
 
+msgid "Export"
+msgstr "Экспарт"
+
 msgid "No user found."
 msgstr "Карыстальнік не знойдзены."
 
 msgid "With selected:"
 msgstr "З адзначанымі:"
 
+msgid "Check all"
+msgstr "Адзначыць усё"
+
 msgid "Add user account"
 msgstr "Дадаць конт карыстальніка"
 
+msgid "Details"
+msgstr "Дэталі"
+
 msgid "Routine name"
 msgstr "Назва працэдуры"
+
+msgid "Change to %s"
+msgstr "Змяніць на %s"
 
 msgid "Direction"
 msgstr "Напрамак"
@@ -750,6 +709,12 @@ msgstr "Вярнуць опцыі"
 msgid "Charset"
 msgstr "Знаказбор"
 
+msgid "Definition"
+msgstr "Азначэнне"
+
+msgid "Format"
+msgstr "Фармат"
+
 msgid "Security type"
 msgstr "Тып бяспекі"
 
@@ -762,6 +727,9 @@ msgstr "Функцыя"
 msgid "Routines"
 msgstr "Працэдуры"
 
+msgid "Drop"
+msgstr "Выдаліць"
+
 msgid "Search"
 msgstr "Пошук"
 
@@ -770,6 +738,9 @@ msgstr "Няма працэдур для адлюстравання."
 
 msgid "Returns"
 msgstr "Вяртае"
+
+msgid "Loading…"
+msgstr "Загрузка…"
 
 msgid "Search in database"
 msgstr "Пошук у базе дадзеных"
@@ -975,6 +946,9 @@ msgstr "Апошняя версія"
 msgid "Created"
 msgstr "Створаная"
 
+msgid "Status"
+msgstr "Стан"
+
 msgid "Delete tracking"
 msgstr "Выдаліць адсочванне"
 
@@ -1072,6 +1046,32 @@ msgstr "Адаслаць зварот аб памылцы"
 
 msgid "Send error report"
 msgstr "Адправіць зварот аб памылцы"
+
+msgid "Event name"
+msgstr "Назва падзеі"
+
+msgid "Event type"
+msgstr "Тып падзеі"
+
+msgid "Execute every"
+msgstr "Выканаць кожны"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Пачатак"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Канец"
+
+msgid "On completion preserve"
+msgstr "Па завяршэнні захавання"
+
+msgid "Events"
+msgstr "Падзеі"
+
+msgid "There are no events to display."
+msgstr "Няма падзей для адлюстравання."
 
 msgid "Select a template"
 msgstr "Выберыце шаблон"
@@ -3649,21 +3649,6 @@ msgstr "Паказваюцца радкі %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Ня выбраная база дадзеных."
 
-msgid "Add event"
-msgstr "Дадаць падзею"
-
-msgid "Edit event"
-msgstr "Рэдагаваць падзею"
-
-msgid "Error in processing request:"
-msgstr "Памылка пры апрацоўцы запыту:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Падзеі з назвай %1$s няма ў базе даных %2$s."
-
-msgid "Export of event %s"
-msgstr "Экспартаваць падзею %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Немагчыма загрузіць плагіны экспартаваньня, калі ласка, праверце ўсталяваныя файлы!"
 
@@ -3678,6 +3663,9 @@ msgstr "Дадаць працэдуру"
 
 msgid "Edit routine"
 msgstr "Рэдагаваць працэдуру"
+
+msgid "Error in processing request:"
+msgstr "Памылка пры апрацоўцы запыту:"
 
 msgid "No routine with name %1$s found in database %2$s."
 msgstr "Працэдуры з назвай %1$s няма ў базе даных %2$s."
@@ -3702,6 +3690,18 @@ msgstr "Не выбрана ніводнай табліцы."
 
 msgid "Database Log"
 msgstr "Журнал базы дадзеных"
+
+msgid "Export of event %s"
+msgstr "Экспартаваць падзею %s"
+
+msgid "Add event"
+msgstr "Дадаць падзею"
+
+msgid "Edit event"
+msgstr "Рэдагаваць падзею"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Падзеі з назвай %1$s няма ў базе даных %2$s."
 
 msgid "Bad type!"
 msgstr "Памылковы тып!"
@@ -4734,20 +4734,11 @@ msgstr "Унутраная сувязь выдаленая."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Немагчыма загрузіць плагіны схемы, калі ласка, праверце ўсталёўку!"
 
-msgid "MySQL said: "
-msgstr "Адказ MySQL: "
-
-msgid "Event %1$s has been modified."
-msgstr "Падзея %1$s была змененая."
-
-msgid "Event %1$s has been created."
-msgstr "Падзея %1$s створаная."
-
-msgid "You must provide an event name!"
-msgstr "Неабходна задаць назву падзеі!"
-
 msgid "Invalid routine type: \"%s\""
 msgstr "Некарэктны тып працэдуры: «%s»"
+
+msgid "MySQL said: "
+msgstr "Адказ MySQL: "
 
 msgid "Routine %1$s has been created."
 msgstr "Працэдура %1$s створаная."
@@ -4916,6 +4907,15 @@ msgstr "Гэта колькасьць файлаў логу транзакцый
 
 msgid "Report"
 msgstr "Справаздача"
+
+msgid "Event %1$s has been modified."
+msgstr "Падзея %1$s была змененая."
+
+msgid "Event %1$s has been created."
+msgstr "Падзея %1$s створаная."
+
+msgid "You must provide an event name!"
+msgstr "Неабходна задаць назву падзеі!"
 
 msgid "Access denied!"
 msgstr "У доступе адмоўлена!"

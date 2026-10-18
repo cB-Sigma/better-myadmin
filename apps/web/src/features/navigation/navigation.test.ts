@@ -77,6 +77,9 @@ describe('navHref', () => {
       navHref(1, '/database/routines', { item_type: 'PROCEDURE', edit_item: 1, db: 'x', item_name: 'p' }),
     ).toBe('/s/1/db/x/routines?item_type=PROCEDURE&edit_item=1&item_name=p')
     expect(navHref(1, '/triggers', { add_item: 1, db: 'x' })).toBe('/s/1/db/x/triggers?add_item=1')
+    expect(navHref(1, '/events', { edit_item: 1, db: 'x', item_name: 'e' })).toBe(
+      '/s/1/db/x/events?edit_item=1&item_name=e',
+    )
     expect(navHref(1, '/server/databases', {})).toBe('/s/1/databases')
     expect(navHref(1, '/view/create', { db: 'x' })).toBe('/s/1/db/x/view/create')
   })

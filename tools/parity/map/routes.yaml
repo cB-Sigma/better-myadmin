@@ -61,13 +61,6 @@
     - 'POST /api/servers/:s/databases/:db/designer/remove-relation'
     - 'POST /api/servers/:s/databases/:db/designer/setting'
   ui: '/s/:s/db/:db/designer'
-/database/events:
-  api:
-    - 'GET /api/servers/:s/databases/:db/events'
-    - 'POST /api/servers/:s/databases/:db/events'
-    - 'GET /api/servers/:s/databases/:db/events/editor'
-    - 'GET /api/servers/:s/databases/:db/events/export'
-  ui: '/s/:s/db/:db/events'
 /database/export:
   api: 'GET /api/servers/:s/export/page'
   ui: '/s/:s/db/:db/export'
@@ -175,6 +168,16 @@
   planned: M1
   exception: X19
   note: opt-in
+/events:
+  api:
+    - 'GET /api/servers/:s/databases/:db/events'
+    - 'POST /api/servers/:s/databases/:db/events'
+    - 'GET /api/servers/:s/databases/:db/events/editor'
+  ui: '/s/:s/db/:db/events'
+/events/export:
+  api: 'GET /api/servers/:s/databases/:db/events/export'
+  ui: '/s/:s/db/:db/events'
+  note: the Export link and the bulk Export button of the Events page
 /export:
   api:
     - 'POST /api/servers/:s/export'

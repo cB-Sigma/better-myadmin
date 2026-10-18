@@ -2,7 +2,7 @@
 
 # phpMyAdmin route map (source of truth for parity)
 
-Every route of phpMyAdmin `a57149e1`, extracted by executing its routing definition (`src/Routing/Routes.php::collect`, which reads the `#[Route]` attributes of every controller and feeds FastRoute) — 195 routes — plus the 4 paths of the setup script (`Routing::callSetupController`). "GET, POST" routes are page routes that also accept form posts, "POST"-only routes are AJAX actions, "GET"-only routes are read-only pages or JSON feeds.
+Every route of phpMyAdmin `328b8d80`, extracted by executing its routing definition (`src/Routing/Routes.php::collect`, which reads the `#[Route]` attributes of every controller and feeds FastRoute) — 196 routes — plus the 4 paths of the setup script (`Routing::callSetupController`). "GET, POST" routes are page routes that also accept form posts, "POST"-only routes are AJAX actions, "GET"-only routes are read-only pages or JSON feeds.
 
 The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that replace it (see [API reference](../architecture/05-api-reference.md) and [Frontend architecture](../architecture/03-frontend-architecture.md)). Edit `tools/parity/map/routes.yaml`, then run `pnpm parity:report`. Status is computed: targets are checked against the Hono registrations and TanStack file routes, so "implemented" means every listed target exists; see [coverage](coverage/routes.md).
 
@@ -21,7 +21,6 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | POST | `/database/central-columns/populate` | `Database/CentralColumns/PopulateColumnsController` | API `GET /api/servers/:s/databases/:db/central-columns/populate` | ✅ implemented |
 | GET | `/database/data-dictionary` | `Database/DataDictionaryController` | UI `/s/:s/db/:db/data-dictionary` · API `GET /api/servers/:s/databases/:db/data-dictionary` | ✅ implemented |
 | GET, POST | `/database/designer` | `Database/DesignerController` | UI `/s/:s/db/:db/designer` · API `GET /api/servers/:s/databases/:db/designer` · API `GET /api/servers/:s/databases/:db/designer/pages` · API `GET /api/servers/:s/databases/:db/designer/table` · API `GET /api/servers/:s/databases/:db/designer/export` · API `POST /api/servers/:s/databases/:db/designer/save-page` · API `POST /api/servers/:s/databases/:db/designer/delete-page` · API `POST /api/servers/:s/databases/:db/designer/display-field` · API `POST /api/servers/:s/databases/:db/designer/add-relation` · API `POST /api/servers/:s/databases/:db/designer/remove-relation` · API `POST /api/servers/:s/databases/:db/designer/setting` | ✅ implemented |
-| GET, POST | `/database/events` | `Database/EventsController` | UI `/s/:s/db/:db/events` · API `GET /api/servers/:s/databases/:db/events` · API `POST /api/servers/:s/databases/:db/events` · API `GET /api/servers/:s/databases/:db/events/editor` · API `GET /api/servers/:s/databases/:db/events/export` | ✅ implemented |
 | GET, POST | `/database/export` | `Database/ExportController` | UI `/s/:s/db/:db/export` · API `GET /api/servers/:s/export/page` | ✅ implemented |
 | GET, POST | `/database/import` | `Database/ImportController` | UI `/s/:s/db/:db/import` · API `GET /api/servers/:s/import/page` | ✅ implemented |
 | GET | `/database/multi-table-query` | `Database/MultiTableQueryController` | UI `/s/:s/db/:db/multi-table-query` · API `GET /api/servers/:s/databases/:db/multi-table-query` | ✅ implemented |
@@ -56,6 +55,8 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/database/tracking` | `Database/TrackingController` | UI `/s/:s/db/:db/tracking` · API `GET /api/servers/:s/databases/:db/tracking` · API `POST /api/servers/:s/databases/:db/tracking` | ✅ implemented |
 | POST | `/databases` | `DatabaseController` | API `GET /api/servers/:s/databases` · (name lists for pickers) | ✅ implemented (M3) |
 | GET, POST | `/error-report` | `ErrorReportController` | API `POST /api/telemetry/error` · (opt-in) | 🔀 exception (M1, X19) |
+| GET, POST | `/events` | `Events/IndexController` | UI `/s/:s/db/:db/events` · API `GET /api/servers/:s/databases/:db/events` · API `POST /api/servers/:s/databases/:db/events` · API `GET /api/servers/:s/databases/:db/events/editor` | ✅ implemented |
+| GET | `/events/export` | `Events/ExportController` | UI `/s/:s/db/:db/events` · API `GET /api/servers/:s/databases/:db/events/export` · (the Export link and the bulk Export button of the Events page) | ✅ implemented |
 | GET, POST | `/export` | `Export/ExportController` | API `POST /api/servers/:s/export` · API `GET /api/servers/:s/export/:id` · (streaming (prepare + one-shot download)) | 🔀 exception (X10) |
 | GET | `/export/check-time-out` | `Export/CheckTimeOutController` | API `GET /api/servers/:s/export/check-time-out` · (streaming) | 🔀 exception (X10) |
 | POST | `/export/tables` | `Export/TablesController` | UI `/s/:s/db/:db/export` · API `GET /api/servers/:s/export/page` · (selected_tbl[] in the search params) | ✅ implemented |

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ug.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ug.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-03-03 23:09+0000\nLast-Translator: Abduqadir Abliz <sahranbay@gmail.com>\nLanguage-Team: Uyghur <https://hosted.weblate.org/projects/phpmyadmin/master/ug/>\nLanguage: ug\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-03-03 23:09+0000\nLast-Translator: Abduqadir Abliz <sahranbay@gmail.com>\nLanguage-Team: Uyghur <https://hosted.weblate.org/projects/phpmyadmin/master/ug/>\nLanguage: ug\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "چوقۇم Javascript قوزغىتىلسا داۋاملىشىدۇ."
@@ -452,49 +452,6 @@ msgstr "يوللاڭ"
 msgid "Create a page and save to it"
 msgstr "بىر بەت قۇرۇپ ئۇنى ساقلىۋېلىڭ"
 
-msgid "Status"
-msgstr "ھالەت"
-
-msgid "Event type"
-msgstr "پائالىيەت تىپى"
-
-msgid "Execute at"
-msgstr "ئىجرا قىلىڭ"
-
-msgid "Execute every"
-msgstr "ھەر بىرىنى ئىجرا قىلىڭ"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "باشلاش"
-
-msgid "Format"
-msgstr "فورماتلاش"
-
-msgid "On completion preserve"
-msgstr "تاماملانغاندىن كېيىن"
-
-msgid "Definer"
-msgstr "Definer"
-
-msgid "Events"
-msgstr "ھادىسە"
-
-msgid "Export"
-msgstr "چىقىرىش"
-
-msgid "Drop"
-msgstr "ئۆچۈرۈش"
-
-msgid "Event scheduler status"
-msgstr "پائالىيەت ئورۇنلاشتۇرغۇچى ھالىتى"
-
-msgid "ON"
-msgstr "ON"
-
-msgid "OFF"
-msgstr "OFF"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@ SERVER @ مۇلازىمېتىر نامىغا ، @ DATABASE @ ساندان نامىغا ئايلىنىدۇ."
 
@@ -588,6 +545,9 @@ msgstr "ساندانغا خاس"
 msgid "wildcard"
 msgstr "wildcard"
 
+msgid "Export"
+msgstr "چىقىرىش"
+
 msgid "No user found."
 msgstr "ئىشلەتكۈچى تېپىلمىدى."
 
@@ -612,11 +572,17 @@ msgstr "ئۇزۇنلۇقى / قىممىتى"
 msgid "Charset"
 msgstr "Charset"
 
+msgid "Format"
+msgstr "فورماتلاش"
+
 msgid "Is deterministic"
 msgstr "قەتئىيلىك"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "بۇ مەشغۇلاتنى قىلىشقا يېتەرلىك ئىمتىيازىڭىز يوق. تېخىمۇ كۆپ تەپسىلاتلار ئۈچۈن ھۆججەتلەرنى كۆرۈڭ."
+
+msgid "Definer"
+msgstr "Definer"
 
 msgid "SQL data access"
 msgstr "SQL سانلىق مەلۇمات زىيارەت قىلىش"
@@ -626,6 +592,9 @@ msgstr "ئىقتىدار"
 
 msgid "Routines"
 msgstr "دائىملىق"
+
+msgid "Drop"
+msgstr "ئۆچۈرۈش"
 
 msgid "Search"
 msgstr "ئىزدەش"
@@ -784,6 +753,9 @@ msgstr "قۇرۇش"
 msgid "Updated"
 msgstr "يېڭلاش"
 
+msgid "Status"
+msgstr "ھالەت"
+
 msgid "active"
 msgstr "پائال"
 
@@ -880,6 +852,34 @@ msgstr "خاتالىق دوكلاتىنى ئەۋەتىڭ"
 
 msgid "Go back"
 msgstr "قايتىڭ"
+
+msgid "Event type"
+msgstr "پائالىيەت تىپى"
+
+msgid "Execute at"
+msgstr "ئىجرا قىلىڭ"
+
+msgid "Execute every"
+msgstr "ھەر بىرىنى ئىجرا قىلىڭ"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "باشلاش"
+
+msgid "On completion preserve"
+msgstr "تاماملانغاندىن كېيىن"
+
+msgid "Events"
+msgstr "ھادىسە"
+
+msgid "Event scheduler status"
+msgstr "پائالىيەت ئورۇنلاشتۇرغۇچى ھالىتى"
+
+msgid "ON"
+msgstr "ON"
+
+msgid "OFF"
+msgstr "OFF"
 
 msgid "Quick - display only the minimal options"
 msgstr "تېز - پەقەت ئەڭ كىچىك تاللاشلارنىلا كۆرسىتىدۇ"
@@ -4332,9 +4332,6 @@ msgstr "مەغلۇب بولدى"
 msgid "No databases selected."
 msgstr "ساندان تاللانمىدى."
 
-msgid "Error in processing request:"
-msgstr "بىر تەرەپ قىلىش تەلىپىدىكى خاتالىق:"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "ئېكسپورت قىستۇرمىلىرىنى يۈكلىيەلمىدى ، قاچىلاشنى تەكشۈرۈپ بېقىڭ!"
 
@@ -4346,6 +4343,9 @@ msgstr "ھوقۇقسىز"
 
 msgid "You do not have the privileges to administrate the users!"
 msgstr "ئىشلەتكۈچىلەرنى باشقۇرۇش ھوقۇقىڭىز يوق!"
+
+msgid "Error in processing request:"
+msgstr "بىر تەرەپ قىلىش تەلىپىدىكى خاتالىق:"
 
 msgid "Success!"
 msgstr "مۇۋەپپەقىيەت!"
@@ -5556,32 +5556,14 @@ msgstr "خاتالىق: ئىستون (لار) دىكى كۆرسەتكۈچ يوق
 msgid "MySQL said: "
 msgstr "MySQL جاۋابى: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "كەچۈرۈڭ ، بىز چۈشۈپ كەتكەن ۋەقەنى ئەسلىگە كەلتۈرەلمىدۇق."
-
-msgid "The backed up query was:"
-msgstr "زاپاسلانغان سوئال:"
-
 msgid "One or more errors have occurred while processing your request:"
 msgstr "تەلىپىڭىزنى بىر تەرەپ قىلغاندا بىر ياكى بىر قانچە خاتالىق كۆرۈلدى:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "ئېنىقلىغۇچى چوقۇم «ئىشلەتكۈچى ئىسمى @ hostname» شەكلىدە بولۇشى كېرەك!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "سىز چوقۇم پائالىيەت ئۈچۈن ئۈنۈملۈك ئارىلىق قىممىتى بىلەن تەمىنلىشىڭىز كېرەك."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "سىز چوقۇم پائالىيەت ئۈچۈن ئۈنۈملۈك ئىجرا ۋاقتى بىلەن تەمىنلىشىڭىز كېرەك."
-
-msgid "You must provide a valid type for the event."
-msgstr "سىز چوقۇم پائالىيەت ئۈچۈن ئۈنۈملۈك تىپ بىلەن تەمىنلىشىڭىز كېرەك."
-
-msgid "You must provide an event definition."
-msgstr "سىز چوقۇم پائالىيەت ئېنىقلىمىسى بىلەن تەمىنلىشىڭىز كېرەك."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "كەچۈرۈڭ ، بىز تاشلىۋېتىلگەن ئادەتنى ئەسلىگە كەلتۈرەلمىدۇق."
+
+msgid "The backed up query was:"
+msgstr "زاپاسلانغان سوئال:"
 
 msgid "You must provide a name and a type for each routine parameter."
 msgstr "ھەر بىر ئادەتتىكى پارامېتىرغا چوقۇم ئىسىم ۋە تىپ تەمىنلىشىڭىز كېرەك."
@@ -5591,6 +5573,9 @@ msgstr "ENUM ، SET ، VARCHAR ۋە VARBINARY تىپىدىكى ئادەتتىك�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "دائىملىق ئۈچۈن چوقۇم ئۈنۈملۈك قايتۇرۇش تىپى بىلەن تەمىنلىشىڭىز كېرەك."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "ئېنىقلىغۇچى چوقۇم «ئىشلەتكۈچى ئىسمى @ hostname» شەكلىدە بولۇشى كېرەك!"
 
 msgid "You must provide a routine definition."
 msgstr "سىز چوقۇم دائىملىق ئېنىقلىما بېرىشىڭىز كېرەك."
@@ -5732,6 +5717,21 @@ msgstr "بۇ سىستېما ساقلايدىغان سودا خاتىرىسىنى
 
 msgid "Too many error messages, some are not displayed."
 msgstr "خاتالىق ئۇچۇرى بەك كۆپ ، بەزىلىرى كۆرۈنمەيدۇ."
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "كەچۈرۈڭ ، بىز چۈشۈپ كەتكەن ۋەقەنى ئەسلىگە كەلتۈرەلمىدۇق."
+
+msgid "You must provide a valid interval value for the event."
+msgstr "سىز چوقۇم پائالىيەت ئۈچۈن ئۈنۈملۈك ئارىلىق قىممىتى بىلەن تەمىنلىشىڭىز كېرەك."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "سىز چوقۇم پائالىيەت ئۈچۈن ئۈنۈملۈك ئىجرا ۋاقتى بىلەن تەمىنلىشىڭىز كېرەك."
+
+msgid "You must provide a valid type for the event."
+msgstr "سىز چوقۇم پائالىيەت ئۈچۈن ئۈنۈملۈك تىپ بىلەن تەمىنلىشىڭىز كېرەك."
+
+msgid "You must provide an event definition."
+msgstr "سىز چوقۇم پائالىيەت ئېنىقلىمىسى بىلەن تەمىنلىشىڭىز كېرەك."
 
 msgid "Access denied!"
 msgstr "زىيارەت رەت قىلىندى!"

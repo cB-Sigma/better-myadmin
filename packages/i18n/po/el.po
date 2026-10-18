@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/el.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/el.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Greek <https://hosted.weblate.org/projects/phpmyadmin/master/el/>\nLanguage: el\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Greek <https://hosted.weblate.org/projects/phpmyadmin/master/el/>\nLanguage: el\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Από αυτό το σημείο πρέπει να έχετε ενεργοποιημένη την Javascript!"
@@ -671,83 +671,6 @@ msgstr "Νέο όνομα σελίδα"
 msgid "Select page"
 msgstr "Επιλογή σελίδας"
 
-msgid "Details"
-msgstr "Λεπτομέρειες"
-
-msgid "Event name"
-msgstr "Όνομα συμβάντος"
-
-msgid "Status"
-msgstr "Κατάσταση"
-
-msgid "Event type"
-msgstr "Τύπος συμβάντος"
-
-msgid "Change to %s"
-msgstr "Αλλαγή σε %s"
-
-msgid "Execute at"
-msgstr "Εκτέλεση σε"
-
-msgid "Execute every"
-msgstr "Εκτέλεση κάθε"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Έναρξη"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Λήξη"
-
-msgid "Definition"
-msgstr "Προσδιορισμός"
-
-msgid "Format"
-msgstr "Μορφοποίηση"
-
-msgid "On completion preserve"
-msgstr "Διατήρηση με την ολοκλήρωση"
-
-msgid "Definer"
-msgstr "Οριστής"
-
-msgid "Events"
-msgstr "Συμβάντα"
-
-msgid "Check all"
-msgstr "Επιλογή όλων"
-
-msgid "Export"
-msgstr "Εξαγωγή"
-
-msgid "Drop"
-msgstr "Διαγραφή"
-
-msgid "Create new event"
-msgstr "Δημιουργία νέου συμβάντος"
-
-msgid "There are no events to display."
-msgstr "Δεν υπάρχουν συμβάντα για εμφάνιση."
-
-msgid "Event scheduler status"
-msgstr "Κατάσταση προγραμματισμού συμβάντων"
-
-msgid "Click to toggle"
-msgstr "Πατήστε για εναλλαγή"
-
-msgid "ON"
-msgstr "ΕΝΕΡΓΟ"
-
-msgid "OFF"
-msgstr "ΑΝΕΝΕΡΓΟ"
-
-msgid "Loading…"
-msgstr "Φόρτωση…"
-
-msgid "Save changes"
-msgstr "Αποθήκευση αλλαγών"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "Το @SERVER@ θα γίνει το όνομα του διακομιστή και το @DATABASE@ θα γίνει το όνομα της βάσης δεδομένων."
 
@@ -928,11 +851,17 @@ msgstr "ρουτίνα"
 msgid "Edit privileges"
 msgstr "Επεξεργασία δικαιωμάτων"
 
+msgid "Export"
+msgstr "Εξαγωγή"
+
 msgid "No user found."
 msgstr "Δεν βρέθηκαν χρήστες."
 
 msgid "With selected:"
 msgstr "Με τους επιλεγμένους:"
+
+msgid "Check all"
+msgstr "Επιλογή όλων"
 
 msgid "Not enough privilege to view users."
 msgstr "Δεν υπάρχουν αρκετά δικαιώματα για προβολή χρηστών."
@@ -940,8 +869,14 @@ msgstr "Δεν υπάρχουν αρκετά δικαιώματα για προ�
 msgid "Add user account"
 msgstr "Προσθήκη λογαριασμού χρήστη"
 
+msgid "Details"
+msgstr "Λεπτομέρειες"
+
 msgid "Routine name"
 msgstr "Όνομα ρουτίνας"
+
+msgid "Change to %s"
+msgstr "Αλλαγή σε %s"
 
 msgid "Parameters"
 msgstr "Παράμετροι"
@@ -967,11 +902,20 @@ msgstr "Επιλογές επιστροφής"
 msgid "Charset"
 msgstr "Σύνολο χαρακτήρων"
 
+msgid "Definition"
+msgstr "Προσδιορισμός"
+
+msgid "Format"
+msgstr "Μορφοποίηση"
+
 msgid "Is deterministic"
 msgstr "Είναι προσδιοριστικό"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Δεν έχετε επαρκή δικαιώματα για την εκτέλεση αυτή της λειτουργίας.  Παρακαλώ ανατρέξτε στην τεκμηρίωση για περισσότερες λεπτομέρειες."
+
+msgid "Definer"
+msgstr "Οριστής"
 
 msgid "Security type"
 msgstr "Τύπος ασφάλειας"
@@ -991,6 +935,9 @@ msgstr "Αυτή η ρουτίνα δεν απαιτεί καμία παράμε
 msgid "Routines"
 msgstr "Εργασίες"
 
+msgid "Drop"
+msgstr "Διαγραφή"
+
 msgid "Search"
 msgstr "Αναζήτηση"
 
@@ -1005,6 +952,12 @@ msgstr "Επιστροφές"
 
 msgid "Routine editor"
 msgstr "Επεξεργαστής Ρουτίνας"
+
+msgid "Loading…"
+msgstr "Φόρτωση…"
+
+msgid "Save changes"
+msgstr "Αποθήκευση αλλαγών"
 
 msgid "Export routine"
 msgstr "Εξαγωγή ρουτίνας"
@@ -1258,6 +1211,12 @@ msgstr "Δημιουργήθηκε"
 msgid "Updated"
 msgstr "Ενημερώθηκε"
 
+msgid "Status"
+msgstr "Κατάσταση"
+
+msgid "Click to toggle"
+msgstr "Πατήστε για εναλλαγή"
+
 msgid "active"
 msgstr "ενεργή"
 
@@ -1394,6 +1353,47 @@ msgstr "Υποβολή αναφοράς σφάλματος"
 
 msgid "Send error report"
 msgstr "Αποστολή αναφορών σφάλματος"
+
+msgid "Event name"
+msgstr "Όνομα συμβάντος"
+
+msgid "Event type"
+msgstr "Τύπος συμβάντος"
+
+msgid "Execute at"
+msgstr "Εκτέλεση σε"
+
+msgid "Execute every"
+msgstr "Εκτέλεση κάθε"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Έναρξη"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Λήξη"
+
+msgid "On completion preserve"
+msgstr "Διατήρηση με την ολοκλήρωση"
+
+msgid "Events"
+msgstr "Συμβάντα"
+
+msgid "Create new event"
+msgstr "Δημιουργία νέου συμβάντος"
+
+msgid "There are no events to display."
+msgstr "Δεν υπάρχουν συμβάντα για εμφάνιση."
+
+msgid "Event scheduler status"
+msgstr "Κατάσταση προγραμματισμού συμβάντων"
+
+msgid "ON"
+msgstr "ΕΝΕΡΓΟ"
+
+msgid "OFF"
+msgstr "ΑΝΕΝΕΡΓΟ"
 
 msgid "Select a template"
 msgstr "Επιλογή ενός προτύπου"
@@ -6141,24 +6141,6 @@ msgstr "Υπάρχει ήδη σελίδα με το όνομα «%s», μετο
 msgid "No databases selected."
 msgstr "Δεν έχετε επιλέξει βάσεις δεδομένων."
 
-msgid "Add event"
-msgstr "Προσθήκη συμβάντος"
-
-msgid "Edit event"
-msgstr "Επεξεργασία συμβάντος"
-
-msgid "Error in processing request:"
-msgstr "Σφάλμα στην προώθηση αιτημάτος:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Κανένα συμβάν με ονομασία %1$s δεν βρέθηκε στη βάση δεδομένων %2$s."
-
-msgid "Export of event %s"
-msgstr "Εξαγωγή του συμβάντος %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Σφάλμα κατά την επεξεργασία του αιτήματος: Δεν βρέθηκε συμβάν με το όνομα %1$s στη βάση δεδομένων %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Αδύνατη η φόρτωση προσθέτων εξαγωγής, για αυτό εξέξτε την εγκατάστασή σας!"
 
@@ -6179,6 +6161,9 @@ msgstr "Προσθήκη ρουτίνας"
 
 msgid "Edit routine"
 msgstr "Επεξεργασία ρουτίνας"
+
+msgid "Error in processing request:"
+msgstr "Σφάλμα στην προώθηση αιτημάτος:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Καμιά ρουτίνα με το όνομα %1$s δεν βρέθηκε στη βάση δεδομένων %2$s. Ίσως δεν έχετε τα απαραίτητα δικαιώματα για επεξεργασία της ρουτίνας."
@@ -6230,6 +6215,21 @@ msgstr "Αν σας παρουσιάστηκε κάποιο σφάλμα υπο�
 
 msgid "You may want to refresh the page."
 msgstr "Ίσως θέλετε να ανανεώσετε τη σελίδα."
+
+msgid "Export of event %s"
+msgstr "Εξαγωγή του συμβάντος %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Σφάλμα κατά την επεξεργασία του αιτήματος: Δεν βρέθηκε συμβάν με το όνομα %1$s στη βάση δεδομένων %2$s."
+
+msgid "Add event"
+msgstr "Προσθήκη συμβάντος"
+
+msgid "Edit event"
+msgstr "Επεξεργασία συμβάντος"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Κανένα συμβάν με ονομασία %1$s δεν βρέθηκε στη βάση δεδομένων %2$s."
 
 msgid "Bad type!"
 msgstr "Μη έγκυρος τύπος!"
@@ -7860,53 +7860,26 @@ msgstr "Η εσωτερική συσχέτιση έχει απομακρυνθε
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Αδύνατη η φόρτωση προσθέτων σχήματος, για αυτό ελέξτε την εγκατάστασή σας!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Μη έγκυρος τύπος ρουτίνας: «%s»"
+
 msgid "The following query has failed: \"%s\""
 msgstr "Το ακόλουθο ερώτημα έχει αποτύχει: «%s»"
 
 msgid "MySQL said: "
 msgstr "Η MySQL επέστρεψε το μήνυμα: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Συγνώμη, αποτύχαμε να επαναφέρουμε το συμβάν διαγραφής."
-
-msgid "The backed up query was:"
-msgstr "Το εφεδρικό ερώτημα ήταν:"
-
-msgid "Event %1$s has been modified."
-msgstr "Το συμβάν %1$s έχει αλλαχτεί."
-
-msgid "Event %1$s has been created."
-msgstr "Το συμβάν %1$s έχει δημιουργηθεί."
+msgid "Routine %1$s has been created."
+msgstr "Η ρουτίνα %1$s έχει δημιουργηθεί."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Ένα ή περισσότερα σφάλματα έλαβαν χώρα κατά την προώθηση του αιτήματός σας:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Ο οριστής πρέπει να είναι της μορφής «username@hostname»!"
-
-msgid "You must provide an event name!"
-msgstr "Πρέπει να δώσετε ένα όνομα στο συμβάν!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Πρέπει να δώσετε μια έγκυρη τιμή διαστήματος για το συμβάν."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Πρέπει να δώσετε μια έγκυρη τιμή εκτέλεσης για το συμβάν."
-
-msgid "You must provide a valid type for the event."
-msgstr "Πρέπει να δώσετε έναν έγκυρο τύπο συμβάντος."
-
-msgid "You must provide an event definition."
-msgstr "Πρέπει να δώσετε έναν προσδιορισμό συμβάντος."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Μη έγκυρος τύπος ρουτίνας: «%s»"
-
-msgid "Routine %1$s has been created."
-msgstr "Η ρουτίνα %1$s έχει δημιουργηθεί."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Συγνώμη, αποτύχαμε να επαναφέρουμε τη διαγραμμένη ρουτίνα."
+
+msgid "The backed up query was:"
+msgstr "Το εφεδρικό ερώτημα ήταν:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Η ρουτίνα %1$s έχει αλλαχτεί. Τα προνόμια έχουν προσαρμοστει."
@@ -7925,6 +7898,9 @@ msgstr "Πρέπει να δώσετε μήκος/τιμές για τις πα�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Πρέπει να δώσετε ένα έγκυρο τύπο επιστροφής για τη ρουτίνα."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Ο οριστής πρέπει να είναι της μορφής «username@hostname»!"
 
 msgid "You must provide a routine name!"
 msgstr "Πρέπει να δώσετε ένα όνομα στη ρουτίνα!"
@@ -8104,6 +8080,30 @@ msgstr "Πολλά μηνύματα σφάλματος, ορισμένα δεν 
 
 msgid "Report"
 msgstr "Αναφορά"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Συγνώμη, αποτύχαμε να επαναφέρουμε το συμβάν διαγραφής."
+
+msgid "Event %1$s has been modified."
+msgstr "Το συμβάν %1$s έχει αλλαχτεί."
+
+msgid "Event %1$s has been created."
+msgstr "Το συμβάν %1$s έχει δημιουργηθεί."
+
+msgid "You must provide an event name!"
+msgstr "Πρέπει να δώσετε ένα όνομα στο συμβάν!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Πρέπει να δώσετε μια έγκυρη τιμή διαστήματος για το συμβάν."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Πρέπει να δώσετε μια έγκυρη τιμή εκτέλεσης για το συμβάν."
+
+msgid "You must provide a valid type for the event."
+msgstr "Πρέπει να δώσετε έναν έγκυρο τύπο συμβάντος."
+
+msgid "You must provide an event definition."
+msgstr "Πρέπει να δώσετε έναν προσδιορισμό συμβάντος."
 
 msgid "Access denied!"
 msgstr "Άρνηση πρόσβασης!"

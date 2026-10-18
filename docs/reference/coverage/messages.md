@@ -4,9 +4,9 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3158/3426 covered (92.2%): 3069 implemented, 13 exception, 76 n/a, 1 planned, 267 missing. [Summary](README.md).
+3160/3428 covered (92.2%): 3071 implemented, 13 exception, 76 n/a, 1 planned, 267 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 403/403 (100.0%) covered, 348/403 implemented
+## 01 shell navigation auth — 404/404 (100.0%) covered, 349/404 implemented
 
 0 msgids not used yet.
 
@@ -56,30 +56,40 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 442/534 (82.8%) covered, 442/534 implemented
+## 04 table level — 450/543 (82.9%) covered, 450/543 implemented
 
-92 msgids not used yet.
+93 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
 | `resources/templates/table/operations/index.twig` | 6/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
+| `resources/js/modules/indexes.ts` | 2/13 | `Dropping Primary Key/Index` · `Processing request` |
 | `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
+| `resources/js/table/operations.ts` | 2/8 | `Processing request` · `You are about to DELETE all the rows of the table!` |
+| `resources/js/table/structure.ts` | 2/9 | `Dropping column` · `Processing request` |
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
-| `resources/templates/triggers/list.twig` | 2/8 | `Export trigger` · `Trigger editor` |
+| `resources/templates/triggers/list.twig` | 2/9 | `Export trigger` · `Trigger editor` |
 | `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
-| `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
+| `src/Controllers/Triggers/IndexController.php` | 2/8 | `Add trigger` · `Edit trigger` |
 | `src/Table/Table.php` | 2/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
+| `resources/js/database/operations.ts` | 1/2 | `Processing request` |
+| `resources/js/database/routines.ts` | 1/3 | `Processing request` |
 | `resources/js/database/search.ts` | 1/4 | `Searching` |
-| `resources/js/modules/indexes.ts` | 1/12 | `Dropping Primary Key/Index` |
+| `resources/js/database/structure.ts` | 1/5 | `Processing request` |
+| `resources/js/designer/move.ts` | 1/1 | `Processing request` |
+| `resources/js/events.ts` | 1/3 | `Processing request` |
+| `resources/js/modules/ajax-message.ts` | 1/2 | `Processing request` |
+| `resources/js/modules/functions.ts` | 1/7 | `Processing request` |
+| `resources/js/server/databases.ts` | 1/3 | `Processing request` |
+| `resources/js/server/variables.ts` | 1/1 | `Processing request` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
-| `resources/js/table/operations.ts` | 1/7 | `You are about to DELETE all the rows of the table!` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/select.ts` | 1/6 | `Searching` |
-| `resources/js/table/structure.ts` | 1/8 | `Dropping column` |
+| `resources/js/triggers.ts` | 1/3 | `Processing request` |
 | `resources/templates/columns_definitions/column_definitions_form.twig` | 1/14 | `Online transaction (Online transaction part of the SQL DDL for InnoDB)` |
 | `resources/templates/table/chart/tbl_chart.twig` | 1/22 | `X Values` |
 | `resources/templates/table/partition/analyze.twig` | 1/1 | `Analyze partition` |
@@ -96,48 +106,35 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
 | `src/Normalization.php` | 1/52 | `String (string types)` |
 
-## 05 database level — 302/340 (88.8%) covered, 302/340 implemented
+## 05 database level — 269/301 (89.4%) covered, 269/301 implemented
 
-38 msgids not used yet.
+32 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `resources/js/database/operations.ts` | 4/6 | `Changing charset` · `Copying database` · `Processing request` · `Renaming databases` |
 | `src/Plugins/Schema/SchemaPdf.php` | 4/11 | `Name (Ascending)` · `Name (Descending)` · `Order of the tables` · `Show grid` |
-| `resources/js/database/structure.ts` | 3/6 | `Add table prefix` · `Processing request` · `Replace table with prefix` |
-| `src/Controllers/Database/EventsController.php` | 3/7 | `Add event` · `Edit event` · `No event with name %1$s found in database %2$s.` |
-| `src/Controllers/Database/RoutinesController.php` | 3/8 | `Add routine` · `Edit routine` · `No routine with name %1$s found in database %2$s. You might be lack…` |
+| `resources/js/database/operations.ts` | 3/4 | `Changing charset` · `Copying database` · `Renaming databases` |
+| `src/Controllers/Database/RoutinesController.php` | 3/7 | `Add routine` · `Edit routine` · `No routine with name %1$s found in database %2$s. You might be lack…` |
 | `src/Plugins/Schema/Pdf/PdfRelationSchema.php` | 3/8 | `Relational schema` · `Schema of the %s database` · `Table of contents` |
 | `resources/js/database/search.ts` | 2/7 | `Browsing` · `Deleting` |
-| `resources/templates/database/events/index.twig` | 2/14 | `Event editor` · `Export event` |
+| `resources/js/database/structure.ts` | 2/5 | `Add table prefix` · `Replace table with prefix` |
 | `resources/templates/database/routines/editor_form.twig` | 2/19 | `Change to %s` · `Remove last parameter` |
-| `resources/templates/database/routines/index.twig` | 2/12 | `Export routine` · `Routine editor` |
+| `resources/templates/database/routines/index.twig` | 2/11 | `Export routine` · `Routine editor` |
 | `src/Database/CentralColumns.php` | 2/5 | `Could not add %1$s as they already exist in central list!` · `Couldn't remove Column(s) %1$s as they don't exist in central colum…` |
-| `resources/js/database/events.ts` | 1/4 | `Processing request` |
-| `resources/js/database/routines.ts` | 1/6 | `Processing request` |
 | `resources/js/database/tracking.ts` | 1/3 | `Deleting tracking data` |
-| `resources/js/designer/move.ts` | 1/23 | `Processing request` |
-| `resources/js/modules/ajax-message.ts` | 1/1 | `Processing request` |
-| `resources/js/modules/functions.ts` | 1/4 | `Processing request` |
-| `resources/js/modules/indexes.ts` | 1/3 | `Processing request` |
-| `resources/js/server/databases.ts` | 1/2 | `Processing request` |
-| `resources/js/server/variables.ts` | 1/1 | `Processing request` |
-| `resources/js/table/operations.ts` | 1/1 | `Processing request` |
-| `resources/js/table/structure.ts` | 1/1 | `Processing request` |
-| `resources/js/triggers.ts` | 1/4 | `Processing request` |
 | `resources/templates/columns_definitions/column_attributes.twig` | 1/4 | `None (for default)` |
 | `resources/templates/database/central_columns/edit_table_row.twig` | 1/3 | `None (for default)` |
 | `resources/templates/database/central_columns/edit.twig` | 1/5 | `A_I (Auto Increment)` |
 | `resources/templates/database/central_columns/main.twig` | 1/18 | `None (for default)` |
 | `resources/templates/database/designer/main.twig` | 1/40 | `Except` |
-| `resources/templates/database/events/editor_form.twig` | 1/9 | `Change to %s` |
 | `resources/templates/database/operations/index.twig` | 1/18 | `Database %s has been dropped.` |
+| `resources/templates/events/editor-form.twig` | 1/1 | `Change to %s` |
 | `src/Controllers/Database/CentralColumnsController.php` | 1/1 | `Showing rows %1$s - %2$s.` |
 | `src/Controllers/Database/TrackingController.php` | 1/5 | `Version %1$s was created for selected tables, tracking is active fo…` |
 | `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
 | `src/Plugins/Schema/Pdf/Pdf.php` | 1/1 | `PDF export page` |
 
-## 06 server level — 915/915 (100.0%) covered, 915/915 implemented
+## 06 server level — 917/917 (100.0%) covered, 917/917 implemented
 
 0 msgids not used yet.
 
@@ -195,16 +192,18 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Sql.php` | 3/5 | `Bookmark %s has been created.` · `Current selection does not contain a unique column. Grid edit, chec…` · `Current selection does not contain a unique column. Grid edit, Edit…` |
 | `src/Controllers/Sql/SqlController.php` | 2/2 | `Bookmark %s has been created.` · `Bookmark not created!` |
 
-## other — 48/94 (51.1%) covered, 48/94 implemented
+## other — 72/123 (58.5%) covered, 72/123 implemented
 
-46 msgids not used yet.
+51 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/js/datetimepicker.ts` | 32/51 | `Time (A specific point in the day, as shown on a clock)` · `Wk (Column header for week of the year in calendar)` · `Fr (Minimal week day name for Friday)` · `Mo (Minimal week day name for Monday)` · `Sa (Minimal week day name for Saturday)` · `Su (Minimal week day name for Sunday)` · `Th (Minimal week day name for Thursday)` · `Tu (Minimal week day name for Tuesday)` · `We (Minimal week day name for Wednesday)` · `April (Month name)` · `August (Month name)` · `December (Month name)` · … +20 |
+| `src/Controllers/Events/IndexController.php` | 3/5 | `Add event` · `Edit event` · `No event with name %1$s found in database %2$s.` |
 | `src/Html/Generator.php` | 3/13 | `Jump to database “%s”.` · `Skip Analyze SQL` · `Skip Explain SQL` |
 | `src/Identifiers/InvalidTableName.php` | 3/3 | `The table name cannot be longer than %d characters.` · `The table name cannot end with a space character.` · `The table name must be a non-empty string.` |
 | `src/Identifiers/InvalidTriggerName.php` | 3/3 | `The trigger name cannot be longer than %d characters.` · `The trigger name cannot end with a space character.` · `The trigger name must not be empty.` |
+| `resources/templates/events/index.twig` | 2/8 | `Event editor` · `Export event` |
 | `src/Dbal/DatabaseInterface.php` | 2/2 | `Failed to set configured collation connection!` · `Unable to use timezone "%1$s" for server %2$d. Please check your co…` |
 | `src/FlashMessenger.php` | 1/1 | `Session not found.` |
 | `src/Plugins/AuthenticationPluginFactory.php` | 1/1 | `Invalid authentication method set in configuration:` |

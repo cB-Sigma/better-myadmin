@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/nl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/nl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: dingo thirteen <dingo13@d404.nl>\nLanguage-Team: Dutch <https://hosted.weblate.org/projects/phpmyadmin/master/nl/>\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: dingo thirteen <dingo13@d404.nl>\nLanguage-Team: Dutch <https://hosted.weblate.org/projects/phpmyadmin/master/nl/>\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript moet ingeschakeld zijn voorbij dit punt!"
@@ -683,89 +683,6 @@ msgstr "Selecteer pagina"
 msgid "Select export relational type:"
 msgstr "Selecteer uitvoer relationeel type:"
 
-msgid "Details"
-msgstr "Details"
-
-msgid "Event name"
-msgstr "Gebeurtenisnaam"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Event type"
-msgstr "Gebeurtenistype"
-
-msgid "Change to %s"
-msgstr "Veranderen naar %s"
-
-msgid "Execute at"
-msgstr "Uitvoeren om"
-
-msgid "Execute every"
-msgstr "Uitvoeren iedere"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Begin"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Einde"
-
-msgid "Definition"
-msgstr "Definitie"
-
-msgid "Format"
-msgstr "Opmaken"
-
-msgid "On completion preserve"
-msgstr "Na afloop behouden"
-
-msgid "Definer"
-msgstr "DEFINER"
-
-msgid "Events"
-msgstr "Gebeurtenissen"
-
-msgid "Check all"
-msgstr "Selecteer alles"
-
-msgid "Export"
-msgstr "Exporteren"
-
-msgid "Drop"
-msgstr "Verwijderen"
-
-msgid "Create new event"
-msgstr "Maak nieuw event"
-
-msgid "There are no events to display."
-msgstr "Er zijn geen gebeurtenissen om weer te geven."
-
-msgid "Event scheduler status"
-msgstr "Status van de gebeurtenis-scheduler"
-
-msgid "Click to toggle"
-msgstr "Klik om te wisselen"
-
-msgid "ON"
-msgstr "AAN"
-
-msgid "OFF"
-msgstr "UIT"
-
-msgid "Event editor"
-msgstr "Gebeurtenis bewerker"
-
-msgid "Loading…"
-msgstr "Laden…"
-
-msgid "Save changes"
-msgstr "Wijzigingen opslaan"
-
-msgid "Export event"
-msgstr "Export gebeurtenis"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ wordt de servernaam en @DATABASE@ wordt de databasenaam."
 
@@ -946,11 +863,17 @@ msgstr "routine"
 msgid "Edit privileges"
 msgstr "Rechten bewerken"
 
+msgid "Export"
+msgstr "Exporteren"
+
 msgid "No user found."
 msgstr "Geen gebruiker gevonden."
 
 msgid "With selected:"
 msgstr "Met geselecteerde:"
+
+msgid "Check all"
+msgstr "Selecteer alles"
 
 msgid "Not enough privilege to view users."
 msgstr "Niet genoeg rechten om gebruikers in te zien."
@@ -958,8 +881,14 @@ msgstr "Niet genoeg rechten om gebruikers in te zien."
 msgid "Add user account"
 msgstr "Gebruikersaccount toevoegen"
 
+msgid "Details"
+msgstr "Details"
+
 msgid "Routine name"
 msgstr "Routinenaam"
+
+msgid "Change to %s"
+msgstr "Veranderen naar %s"
 
 msgid "Parameters"
 msgstr "Parameters"
@@ -985,11 +914,20 @@ msgstr "Return-opties"
 msgid "Charset"
 msgstr "Karakterset"
 
+msgid "Definition"
+msgstr "Definitie"
+
+msgid "Format"
+msgstr "Opmaken"
+
 msgid "Is deterministic"
 msgstr "Is vast bepaald"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "U heeft niet genoeg rechten om deze actie uit te voeren; Kijk a.u.b. naar de documentatie voor meer details."
+
+msgid "Definer"
+msgstr "DEFINER"
 
 msgid "Security type"
 msgstr "Beveiligingstype"
@@ -1009,6 +947,9 @@ msgstr "Deze routine heeft geen parameters nodig."
 msgid "Routines"
 msgstr "Routines"
 
+msgid "Drop"
+msgstr "Verwijderen"
+
 msgid "Search"
 msgstr "Zoeken"
 
@@ -1023,6 +964,12 @@ msgstr "Geeft terug"
 
 msgid "Routine editor"
 msgstr "Routine bewerker"
+
+msgid "Loading…"
+msgstr "Laden…"
+
+msgid "Save changes"
+msgstr "Wijzigingen opslaan"
 
 msgid "Export routine"
 msgstr "Exporteer routine"
@@ -1276,6 +1223,12 @@ msgstr "Aangemaakt"
 msgid "Updated"
 msgstr "Bijgewerkt"
 
+msgid "Status"
+msgstr "Status"
+
+msgid "Click to toggle"
+msgstr "Klik om te wisselen"
+
 msgid "active"
 msgstr "ingeschakeld"
 
@@ -1421,6 +1374,53 @@ msgstr "Er ging iets verkeerd"
 
 msgid "Go back"
 msgstr "Ga terug"
+
+msgid "Event name"
+msgstr "Gebeurtenisnaam"
+
+msgid "Event type"
+msgstr "Gebeurtenistype"
+
+msgid "Execute at"
+msgstr "Uitvoeren om"
+
+msgid "Execute every"
+msgstr "Uitvoeren iedere"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Begin"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Einde"
+
+msgid "On completion preserve"
+msgstr "Na afloop behouden"
+
+msgid "Events"
+msgstr "Gebeurtenissen"
+
+msgid "Create new event"
+msgstr "Maak nieuw event"
+
+msgid "There are no events to display."
+msgstr "Er zijn geen gebeurtenissen om weer te geven."
+
+msgid "Event scheduler status"
+msgstr "Status van de gebeurtenis-scheduler"
+
+msgid "ON"
+msgstr "AAN"
+
+msgid "OFF"
+msgstr "UIT"
+
+msgid "Event editor"
+msgstr "Gebeurtenis bewerker"
+
+msgid "Export event"
+msgstr "Export gebeurtenis"
 
 msgid "Select a template"
 msgstr "Selecteer een template"
@@ -6594,24 +6594,6 @@ msgstr "Er bestaat al een pagina met naam \"%s\", geef het a.u.b. een andere naa
 msgid "No databases selected."
 msgstr "Er zijn geen databases geselecteerd."
 
-msgid "Add event"
-msgstr "Gebeurtenis toevoegen"
-
-msgid "Edit event"
-msgstr "Gebeurtenis bewerken"
-
-msgid "Error in processing request:"
-msgstr "Fout tijdens het uitvoeren van de opdracht:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Geen gebeurtenis met naam %1$s gevonden in database %2$s."
-
-msgid "Export of event %s"
-msgstr "Export van gebeurtenis %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Fout opgetreden in de verwerking van de aanvraag: Geen gebeurtenis met naam %1$s gevonden in database %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "De plugins voor het exporteren konden niet worden geladen, controleer uw installatie!"
 
@@ -6632,6 +6614,9 @@ msgstr "Routine toevoegen"
 
 msgid "Edit routine"
 msgstr "Routine aanpassen"
+
+msgid "Error in processing request:"
+msgstr "Fout tijdens het uitvoeren van de opdracht:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Geen routine met de naam %1$s gevonden in database %2$s. Je hebt mogelijk niet de benodigde rechten om deze routine te wijzigen."
@@ -6686,6 +6671,21 @@ msgstr "Als u problemen ondervindt, meld dan handmatig een bug."
 
 msgid "You may want to refresh the page."
 msgstr "Misschien wilt u de pagina vernieuwen."
+
+msgid "Export of event %s"
+msgstr "Export van gebeurtenis %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Fout opgetreden in de verwerking van de aanvraag: Geen gebeurtenis met naam %1$s gevonden in database %2$s."
+
+msgid "Add event"
+msgstr "Gebeurtenis toevoegen"
+
+msgid "Edit event"
+msgstr "Gebeurtenis bewerken"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Geen gebeurtenis met naam %1$s gevonden in database %2$s."
 
 msgid "Bad type!"
 msgstr "Verkeerd type!"
@@ -8624,53 +8624,26 @@ msgstr "Interne relatie is verwijderd."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "De plugins voor schema's konden niet worden geladen, controleer uw installatie!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Ongeldig routine-type: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "De volgende query is mislukt: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL meldt: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Sorry, het herstellen van de verwijderde gebeurtenis is mislukt."
-
-msgid "The backed up query was:"
-msgstr "De gebackupte query was:"
-
-msgid "Event %1$s has been modified."
-msgstr "Gebeurtenis %1$s is gewijzigd."
-
-msgid "Event %1$s has been created."
-msgstr "Gebeurtenis %1$s is aangemaakt."
+msgid "Routine %1$s has been created."
+msgstr "Routine %1$s is aangemaakt."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Een of meer fouten zijn opgetreden tijdens het uitvoeren van uw opdracht:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "DEFINER moet het formaat \"gebruikersnaam@computernaam\" hebben!"
-
-msgid "You must provide an event name!"
-msgstr "Vul een naam voor de gebeurtenis in!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Vul een geldige waarde in voor het interval van de gebeurtenis."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Vul een geldige uitvoeringstijd in voor de gebeurtenis."
-
-msgid "You must provide a valid type for the event."
-msgstr "Vul een geldig type in voor de gebeurtenis."
-
-msgid "You must provide an event definition."
-msgstr "Vul een definitie voor de gebeurtenis in."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Ongeldig routine-type: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Routine %1$s is aangemaakt."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Het terugzetten van de verwijderde routine is mislukt."
+
+msgid "The backed up query was:"
+msgstr "De gebackupte query was:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Routine %1$s is gewijzigd. Rechten zijn aangepast."
@@ -8689,6 +8662,9 @@ msgstr "Vul de lengte/waarden in voor routineparameters van het type ENUM, SET, 
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Vul een geldig returntype in voor de routine."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "DEFINER moet het formaat \"gebruikersnaam@computernaam\" hebben!"
 
 msgid "Invalid routine type!"
 msgstr "Ongeldig routine-type!"
@@ -8877,6 +8853,30 @@ msgstr "Er zijn teveel foutmeldingen, sommige worden niet weergegeven."
 
 msgid "Report"
 msgstr "Rapporteren"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Sorry, het herstellen van de verwijderde gebeurtenis is mislukt."
+
+msgid "Event %1$s has been modified."
+msgstr "Gebeurtenis %1$s is gewijzigd."
+
+msgid "Event %1$s has been created."
+msgstr "Gebeurtenis %1$s is aangemaakt."
+
+msgid "You must provide an event name!"
+msgstr "Vul een naam voor de gebeurtenis in!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Vul een geldige waarde in voor het interval van de gebeurtenis."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Vul een geldige uitvoeringstijd in voor de gebeurtenis."
+
+msgid "You must provide a valid type for the event."
+msgstr "Vul een geldig type in voor de gebeurtenis."
+
+msgid "You must provide an event definition."
+msgstr "Vul een definitie voor de gebeurtenis in."
 
 msgid "Cannot log in to the database server."
 msgstr "Kan niet inloggen op database server."
