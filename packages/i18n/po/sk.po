@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/sk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/sk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2023-10-24 11:03+0000\nLast-Translator: Pavol Linet <linet.pavol@gmail.com>\nLanguage-Team: Slovak <https://hosted.weblate.org/projects/phpmyadmin/master/sk/>\nLanguage: sk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\nX-Generator: Weblate 5.1.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2023-10-24 11:03+0000\nLast-Translator: Pavol Linet <linet.pavol@gmail.com>\nLanguage-Team: Slovak <https://hosted.weblate.org/projects/phpmyadmin/master/sk/>\nLanguage: sk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\nX-Generator: Weblate 5.1.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Pokiaľ chcete pokračovať, JavaScript musí byť povolený!"
@@ -534,71 +534,6 @@ msgstr "Názov novej stránky"
 msgid "Select page"
 msgstr "Zvoliť stránku"
 
-msgid "Details"
-msgstr "Podrobnosti"
-
-msgid "Event name"
-msgstr "Meno udalosti"
-
-msgid "Status"
-msgstr "Stav"
-
-msgid "Event type"
-msgstr "Typ udalosti"
-
-msgid "Change to %s"
-msgstr "Zmeniť na %s"
-
-msgid "Execute at"
-msgstr "Spustiť o"
-
-msgid "Execute every"
-msgstr "Spustiť každých"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Začiatok"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Koniec"
-
-msgid "Definition"
-msgstr "Definícia"
-
-msgid "Format"
-msgstr "Formát"
-
-msgid "On completion preserve"
-msgstr "Zachovať pri ukončení"
-
-msgid "Events"
-msgstr "Udalosti"
-
-msgid "Check all"
-msgstr "Označiť všetko"
-
-msgid "Export"
-msgstr "Exportovať"
-
-msgid "Drop"
-msgstr "Odstrániť"
-
-msgid "There are no events to display."
-msgstr "Nie sú žiadne udalosti na zobrazenie."
-
-msgid "Click to toggle"
-msgstr "Kliknite pre prepnutie"
-
-msgid "ON"
-msgstr "ON"
-
-msgid "OFF"
-msgstr "OFF"
-
-msgid "Loading…"
-msgstr "Načítanie…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Exportujem tabuľky z databázy \"%s\""
 
@@ -722,17 +657,29 @@ msgstr "rutina"
 msgid "Edit privileges"
 msgstr "Upraviť oprávnenia"
 
+msgid "Export"
+msgstr "Exportovať"
+
 msgid "No user found."
 msgstr "Nebol nájdený žiadny používateľ."
 
 msgid "With selected:"
 msgstr "Výber:"
 
+msgid "Check all"
+msgstr "Označiť všetko"
+
 msgid "Add user account"
 msgstr "Pridať používateľský účet"
 
+msgid "Details"
+msgstr "Podrobnosti"
+
 msgid "Routine name"
 msgstr "Meno rutiny"
+
+msgid "Change to %s"
+msgstr "Zmeniť na %s"
 
 msgid "Parameters"
 msgstr "Parametre"
@@ -758,6 +705,12 @@ msgstr "Návratové možnosti"
 msgid "Charset"
 msgstr "Znaková sada"
 
+msgid "Definition"
+msgstr "Definícia"
+
+msgid "Format"
+msgstr "Formát"
+
 msgid "Is deterministic"
 msgstr "Je deterministický"
 
@@ -770,11 +723,17 @@ msgstr "Funkcia"
 msgid "Routines"
 msgstr "Rutiny"
 
+msgid "Drop"
+msgstr "Odstrániť"
+
 msgid "Search"
 msgstr "Hľadať"
 
 msgid "There are no routines to display."
 msgstr "Neboli nájdené žiadne rutiny."
+
+msgid "Loading…"
+msgstr "Načítanie…"
 
 msgid "Execute routine"
 msgstr "Spustiť rutinu"
@@ -998,6 +957,12 @@ msgstr "Vytvorené"
 msgid "Updated"
 msgstr "Aktualizované"
 
+msgid "Status"
+msgstr "Stav"
+
+msgid "Click to toggle"
+msgstr "Kliknite pre prepnutie"
+
 msgid "active"
 msgstr "zapnuté"
 
@@ -1107,6 +1072,41 @@ msgstr "Odoslať chybové hlásenie"
 
 msgid "Send error report"
 msgstr "Poslať chybové hlásenie"
+
+msgid "Event name"
+msgstr "Meno udalosti"
+
+msgid "Event type"
+msgstr "Typ udalosti"
+
+msgid "Execute at"
+msgstr "Spustiť o"
+
+msgid "Execute every"
+msgstr "Spustiť každých"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Začiatok"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Koniec"
+
+msgid "On completion preserve"
+msgstr "Zachovať pri ukončení"
+
+msgid "Events"
+msgstr "Udalosti"
+
+msgid "There are no events to display."
+msgstr "Nie sú žiadne udalosti na zobrazenie."
+
+msgid "ON"
+msgstr "ON"
+
+msgid "OFF"
+msgstr "OFF"
 
 msgid "Select a template"
 msgstr "Zvoľte šablónu"
@@ -4563,18 +4563,6 @@ msgstr "Zobrazované riadky %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Neboli vybrané žiadne databázy."
 
-msgid "Add event"
-msgstr "Pridať udalosť"
-
-msgid "Edit event"
-msgstr "Upraviť udalosť"
-
-msgid "Error in processing request:"
-msgstr "Chyba pri spracovaní požiadavky:"
-
-msgid "Export of event %s"
-msgstr "Exportovať udalosť %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Nepodarilo sa načítať exportné pluginy, skontrolujte prosím vašu inštaláciu!"
 
@@ -4589,6 +4577,9 @@ msgstr "Pridať rutinu"
 
 msgid "Edit routine"
 msgstr "Upraviť rutinu"
+
+msgid "Error in processing request:"
+msgstr "Chyba pri spracovaní požiadavky:"
 
 msgid "Export of routine %s"
 msgstr "Export rutiny %s"
@@ -4631,6 +4622,15 @@ msgstr "Ak spozorujete problém, odošlite hlášku o chybe manuálne."
 
 msgid "You may want to refresh the page."
 msgstr "Možno bude treba obnoviť stránku."
+
+msgid "Export of event %s"
+msgstr "Exportovať udalosť %s"
+
+msgid "Add event"
+msgstr "Pridať udalosť"
+
+msgid "Edit event"
+msgstr "Upraviť udalosť"
 
 msgid "Bad type!"
 msgstr "Nesprávny typ!"
@@ -5988,32 +5988,20 @@ msgstr "Nepodarilo sa odstrániť stĺpce!"
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Nebolo možné načítať zásuvné moduly schémy, skontrolujte prosím vašu inštaláciu!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Chybný typ rutiny: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Nasledujúci dopyt zlyhal: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL hlási: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Prepáčte, ale nepodarilo sa obnoviť odstránenú udalosť."
-
-msgid "Event %1$s has been modified."
-msgstr "Udalosť %1$s bola zmenená."
-
-msgid "Event %1$s has been created."
-msgstr "Udalosť %1$s bola vytvorená."
+msgid "Routine %1$s has been created."
+msgstr "Rutina %1$s bola vytvorená."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Pri spracovaní požiadavky došlo k jednej alebo viacerým chybám:"
-
-msgid "You must provide an event name!"
-msgstr "Musíte zadať názov udalosti!"
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Chybný typ rutiny: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Rutina %1$s bola vytvorená."
 
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Bohužiaľ sa nepodarilo obnoviť odstránenú rutinu."
@@ -6128,6 +6116,18 @@ msgstr "Príliš veľa chybových správ, niektoré neboli zobrazené."
 
 msgid "Report"
 msgstr "Nahlásiť"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Prepáčte, ale nepodarilo sa obnoviť odstránenú udalosť."
+
+msgid "Event %1$s has been modified."
+msgstr "Udalosť %1$s bola zmenená."
+
+msgid "Event %1$s has been created."
+msgstr "Udalosť %1$s bola vytvorená."
+
+msgid "You must provide an event name!"
+msgstr "Musíte zadať názov udalosti!"
 
 msgid "Access denied!"
 msgstr "Prístup odmietnutý!"

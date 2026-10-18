@@ -232,20 +232,21 @@ databaseRoutes.get('/:db/routines/export', async (c) =>
 
 // ---------------------------------------------------------------- Events
 
-/** pma: /database/events */
-databaseRoutes.get('/:db/events', async (c) => c.json(await withDb(c, eventsList)))
+/** pma: /events and /events/export (Events\IndexController, Events\ExportController) */
+const eventsDb = (c: Context<ServerEnv>) => ({ noDatabase: c.get('tr').gettext('No database selected.') })
+databaseRoutes.get('/:db/events', async (c) => c.json(await withDb(c, eventsList, eventsDb(c))))
 
 databaseRoutes.get('/:db/events/editor', async (c) =>
-  c.json(await withDb(c, (ctx) => eventData(ctx, c.req.query('name') ?? ''))),
+  c.json(await withDb(c, (ctx) => eventData(ctx, c.req.query('name') ?? ''), eventsDb(c))),
 )
 
 databaseRoutes.post('/:db/events', async (c) => {
   const req = parse(EventSaveRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => saveEvent(ctx, req)))
+  return c.json(await withDb(c, (ctx) => saveEvent(ctx, req), eventsDb(c)))
 })
 
 databaseRoutes.get('/:db/events/export', async (c) =>
-  c.json(await withDb(c, (ctx) => exportEvent(ctx, c.req.query('name') ?? ''))),
+  c.json(await withDb(c, (ctx) => exportEvent(ctx, c.req.query('name') ?? ''), eventsDb(c))),
 )
 
 // ---------------------------------------------------------------- Triggers (database or table scope)

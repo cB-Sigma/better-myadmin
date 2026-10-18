@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/nb.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/nb.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-01-27 12:44+0000\nLast-Translator: IsakBH <isak@brunhenriksen.net>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/phpmyadmin/master/nb_NO/>\nLanguage: nb\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.16-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-01-27 12:44+0000\nLast-Translator: IsakBH <isak@brunhenriksen.net>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/phpmyadmin/master/nb_NO/>\nLanguage: nb\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.16-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScript må være slått på forbi dette punktet!"
@@ -498,33 +498,6 @@ msgstr "Send"
 msgid "Select page"
 msgstr "Velg side"
 
-msgid "Details"
-msgstr "Detaljer"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Event type"
-msgstr "Hendelsestype"
-
-msgid "Format"
-msgstr "Format"
-
-msgid "Events"
-msgstr "Hendelser"
-
-msgid "Export"
-msgstr "Eksporter"
-
-msgid "Drop"
-msgstr "Slett"
-
-msgid "Click to toggle"
-msgstr "Klikk for å endre"
-
-msgid "Loading…"
-msgstr "Laster…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Eksporter tabell fra \"%s\" database"
 
@@ -621,11 +594,17 @@ msgstr "databasespesifikk"
 msgid "wildcard"
 msgstr "jokertegn"
 
+msgid "Export"
+msgstr "Eksporter"
+
 msgid "No user found."
 msgstr "Ingen bruker(e) funnet."
 
 msgid "With selected:"
 msgstr "Med avkrysset:"
+
+msgid "Details"
+msgstr "Detaljer"
 
 msgid "Parameters"
 msgstr "Parameter"
@@ -635,6 +614,9 @@ msgstr "Returtype"
 
 msgid "Charset"
 msgstr "Tegnsett"
+
+msgid "Format"
+msgstr "Format"
 
 msgid "Is deterministic"
 msgstr "Er deterministisk"
@@ -648,8 +630,14 @@ msgstr "Funksjon"
 msgid "Routines"
 msgstr "Rutiner"
 
+msgid "Drop"
+msgstr "Slett"
+
 msgid "Search"
 msgstr "Søk"
+
+msgid "Loading…"
+msgstr "Laster…"
 
 msgid "Execute"
 msgstr "Utfør"
@@ -823,6 +811,12 @@ msgstr "Opprettet"
 msgid "Updated"
 msgstr "Oppdatert"
 
+msgid "Status"
+msgstr "Status"
+
+msgid "Click to toggle"
+msgstr "Klikk for å endre"
+
 msgid "active"
 msgstr "aktiv"
 
@@ -935,6 +929,12 @@ msgstr "Send feilrapport"
 
 msgid "Send error report"
 msgstr "Send feilrapport"
+
+msgid "Event type"
+msgstr "Hendelsestype"
+
+msgid "Events"
+msgstr "Hendelser"
 
 msgid "SQL query:"
 msgstr "SQL-spørring:"

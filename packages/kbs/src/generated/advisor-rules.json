@@ -1,5 +1,5 @@
 {
-  "_generated": {"by": "packages/kbs/scripts/generate.php", "pma": "e3e877e8b4"},
+  "_generated": {"by": "packages/kbs/scripts/generate.php", "pma": "328b8d8003"},
   "generic": [
     {"id": "Uptime below one day", "name": "Uptime below one day", "formula": "Uptime", "test": "value < 86400", "issue": "Uptime is less than 1 day, performance tuning may not be accurate.", "recommendation": "To have more accurate averages it is recommended to let the server run for longer than a day before running this analyzer", "justification": "The uptime is only %s", "justification_formula": "ADVISOR_timespanFormat(Uptime)"},
     {"id": "Questions below 1,000", "name": "Questions below 1,000", "formula": "Questions", "test": "value < 1000", "issue": "Fewer than 1,000 questions have been run against this server. The recommendations may not be accurate.", "recommendation": "Let the server run for a longer time until it has executed a greater amount of queries.", "justification": "Current amount of Questions: %s", "justification_formula": "Questions"},

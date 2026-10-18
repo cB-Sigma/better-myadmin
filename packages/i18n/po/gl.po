@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/gl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/gl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Galician <https://hosted.weblate.org/projects/phpmyadmin/master/gl/>\nLanguage: gl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Galician <https://hosted.weblate.org/projects/phpmyadmin/master/gl/>\nLanguage: gl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript debe estar activo a partir de aquí!"
@@ -454,77 +454,6 @@ msgstr "Enviar"
 msgid "Select page"
 msgstr "Escoller unha páxina"
 
-msgid "Details"
-msgstr "Detalles"
-
-msgid "Event name"
-msgstr "Nome do acontecemento"
-
-msgid "Status"
-msgstr "Estado"
-
-msgid "Event type"
-msgstr "Tipo de acontecemento"
-
-msgid "Change to %s"
-msgstr "Cambiar a %s"
-
-msgid "Execute at"
-msgstr "Executar en"
-
-msgid "Execute every"
-msgstr "Executar cada"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Inicio"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Fin"
-
-msgid "Definition"
-msgstr "Definición"
-
-msgid "Format"
-msgstr "Formato"
-
-msgid "On completion preserve"
-msgstr "Preservar ao completar"
-
-msgid "Definer"
-msgstr "Definidor"
-
-msgid "Events"
-msgstr "Acontecementos"
-
-msgid "Check all"
-msgstr "Marcar todo"
-
-msgid "Export"
-msgstr "Exportar"
-
-msgid "Drop"
-msgstr "Eliminar"
-
-msgid "There are no events to display."
-msgstr "Non hai acontecementos que mostrar."
-
-msgid "Event scheduler status"
-msgstr "Estado do planificador de acontecementos"
-
-msgid "Click to toggle"
-msgstr "Prema para conmutar"
-
-msgid "ON"
-msgstr "Acendido"
-
-msgid "OFF"
-msgstr "Apagado"
-
-msgid "Loading…"
-msgstr "A cargar…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "A exportar táboas desde a base de datos «%s»"
 
@@ -633,14 +562,26 @@ msgstr "comodín"
 msgid "routine"
 msgstr "rutina"
 
+msgid "Export"
+msgstr "Exportar"
+
 msgid "No user found."
 msgstr "Non se achou ningún usuario."
 
 msgid "With selected:"
 msgstr "Cos marcados:"
 
+msgid "Check all"
+msgstr "Marcar todo"
+
+msgid "Details"
+msgstr "Detalles"
+
 msgid "Routine name"
 msgstr "Nome da rutina"
+
+msgid "Change to %s"
+msgstr "Cambiar a %s"
 
 msgid "Parameters"
 msgstr "Parámetros"
@@ -666,8 +607,17 @@ msgstr "Devolver opcións"
 msgid "Charset"
 msgstr "Conxunto de caracteres"
 
+msgid "Definition"
+msgstr "Definición"
+
+msgid "Format"
+msgstr "Formato"
+
 msgid "Is deterministic"
 msgstr "É determinista"
+
+msgid "Definer"
+msgstr "Definidor"
 
 msgid "Security type"
 msgstr "Tipo de seguranza"
@@ -684,6 +634,9 @@ msgstr "Función"
 msgid "Routines"
 msgstr "Rutinas"
 
+msgid "Drop"
+msgstr "Eliminar"
+
 msgid "Search"
 msgstr "Buscar"
 
@@ -692,6 +645,9 @@ msgstr "Non hai rutinas que mostrar."
 
 msgid "Returns"
 msgstr "Devolve"
+
+msgid "Loading…"
+msgstr "A cargar…"
 
 msgid "Execute routine"
 msgstr "Executar a rutina"
@@ -886,6 +842,12 @@ msgstr "Creada"
 msgid "Updated"
 msgstr "Actualizada"
 
+msgid "Status"
+msgstr "Estado"
+
+msgid "Click to toggle"
+msgstr "Prema para conmutar"
+
 msgid "active"
 msgstr "activado"
 
@@ -998,6 +960,44 @@ msgstr "Entregar o informe de erro"
 
 msgid "Send error report"
 msgstr "Enviar un informe de erro"
+
+msgid "Event name"
+msgstr "Nome do acontecemento"
+
+msgid "Event type"
+msgstr "Tipo de acontecemento"
+
+msgid "Execute at"
+msgstr "Executar en"
+
+msgid "Execute every"
+msgstr "Executar cada"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Inicio"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Fin"
+
+msgid "On completion preserve"
+msgstr "Preservar ao completar"
+
+msgid "Events"
+msgstr "Acontecementos"
+
+msgid "There are no events to display."
+msgstr "Non hai acontecementos que mostrar."
+
+msgid "Event scheduler status"
+msgstr "Estado do planificador de acontecementos"
+
+msgid "ON"
+msgstr "Acendido"
+
+msgid "OFF"
+msgstr "Apagado"
 
 msgid "Select a template"
 msgstr "Seleccionar un modelo"
@@ -4428,18 +4428,6 @@ msgstr "A mostrar as filas %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Non hai ningunha base de datos escollida."
 
-msgid "Add event"
-msgstr "Engadir un acontecemento"
-
-msgid "Edit event"
-msgstr "Editar o acontecemento"
-
-msgid "Error in processing request:"
-msgstr "Produciuse un erro ao procesar a petición:"
-
-msgid "Export of event %s"
-msgstr "Exportación do acontecemento %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Non foi posíbel cargar os engadidos de exportación. Comprobe a instalación!"
 
@@ -4454,6 +4442,9 @@ msgstr "Engadir unha rutina"
 
 msgid "Edit routine"
 msgstr "Editar a rutina"
+
+msgid "Error in processing request:"
+msgstr "Produciuse un erro ao procesar a petición:"
 
 msgid "Export of routine %s"
 msgstr "Exportar a rutina %s"
@@ -4493,6 +4484,15 @@ msgstr "Se percibe problemas envíe un informe de fallo manualmente."
 
 msgid "You may want to refresh the page."
 msgstr "Pode ser útil cargar de novo a páxina."
+
+msgid "Export of event %s"
+msgstr "Exportación do acontecemento %s"
+
+msgid "Add event"
+msgstr "Engadir un acontecemento"
+
+msgid "Edit event"
+msgstr "Editar o acontecemento"
 
 msgid "Bad type!"
 msgstr "Ese tipo é incorrecto!"
@@ -5872,44 +5872,23 @@ msgstr "O almacenamento de configuración non está preparado para a funcionalid
 msgid "Error: Relational features are disabled!"
 msgstr "Erro: As funcionalidades relacionais están desactivadas!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "O tipo de rutina non é válido: «%s»"
+
 msgid "The following query has failed: \"%s\""
 msgstr "Fallou a procura seguinte: «%s»"
 
 msgid "MySQL said: "
 msgstr "Mensaxes do MySQL: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Sentímolo, non foi posíbel restaurar o acontecemento eliminado."
-
-msgid "The backed up query was:"
-msgstr "A consulta almacenada foi:"
-
-msgid "Event %1$s has been modified."
-msgstr "O acontecemento %1$s foi modificado."
-
-msgid "Event %1$s has been created."
-msgstr "O acontecemento %1$s foi creado."
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Debe indicar un valor do intervalo válido para o acontecemento."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Debe indicar un tempo de execución válido para o acontecemento."
-
-msgid "You must provide a valid type for the event."
-msgstr "Debe indicar un tipo válido para o acontecemento."
-
-msgid "You must provide an event definition."
-msgstr "Debe indicar unha definición do acontecemento."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "O tipo de rutina non é válido: «%s»"
-
 msgid "Routine %1$s has been created."
 msgstr "A rutina %1$s foi creada."
 
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Sentímolo, non foi posíbel restaurar a rutina eliminada."
+
+msgid "The backed up query was:"
+msgstr "A consulta almacenada foi:"
 
 msgid "Routine %1$s has been modified."
 msgstr "A rutina %1$s foi modificada."
@@ -6087,6 +6066,27 @@ msgstr "Houbo demasiadas mensaxes de erro; algunhas non se mostran."
 
 msgid "Report"
 msgstr "Informar"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Sentímolo, non foi posíbel restaurar o acontecemento eliminado."
+
+msgid "Event %1$s has been modified."
+msgstr "O acontecemento %1$s foi modificado."
+
+msgid "Event %1$s has been created."
+msgstr "O acontecemento %1$s foi creado."
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Debe indicar un valor do intervalo válido para o acontecemento."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Debe indicar un tempo de execución válido para o acontecemento."
+
+msgid "You must provide a valid type for the event."
+msgstr "Debe indicar un tipo válido para o acontecemento."
+
+msgid "You must provide an event definition."
+msgstr "Debe indicar unha definición do acontecemento."
 
 msgid "Access denied!"
 msgstr "Denegouse o acceso!"

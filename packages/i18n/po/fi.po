@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/fi.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/fi.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Finnish <https://hosted.weblate.org/projects/phpmyadmin/master/fi/>\nLanguage: fi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Finnish <https://hosted.weblate.org/projects/phpmyadmin/master/fi/>\nLanguage: fi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScriptin on oltava päällä tämän jälkeen!"
@@ -411,42 +411,6 @@ msgstr "Operaattori"
 msgid "Submit"
 msgstr "Lähetä"
 
-msgid "Details"
-msgstr "Yksityiskohdat"
-
-msgid "Status"
-msgstr "Tila"
-
-msgid "Event type"
-msgstr "Tapahtuman tyyppi"
-
-msgid "Change to %s"
-msgstr "Vaihda %s:ksi"
-
-msgid "Definition"
-msgstr "Määritys"
-
-msgid "Format"
-msgstr "Muoto"
-
-msgid "Events"
-msgstr "Tapahtumat"
-
-msgid "Check all"
-msgstr "Valitse kaikki"
-
-msgid "Export"
-msgstr "Vienti"
-
-msgid "Drop"
-msgstr "Tuhoa"
-
-msgid "Click to toggle"
-msgstr "Vaihda painamalla"
-
-msgid "Loading…"
-msgstr "Lataa…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Vie tauluja tietokannasta \"%s\""
 
@@ -546,8 +510,20 @@ msgstr "tietokantakohtainen"
 msgid "wildcard"
 msgstr "korvausmerkki"
 
+msgid "Export"
+msgstr "Vienti"
+
 msgid "With selected:"
 msgstr "Valitut:"
+
+msgid "Check all"
+msgstr "Valitse kaikki"
+
+msgid "Details"
+msgstr "Yksityiskohdat"
+
+msgid "Change to %s"
+msgstr "Vaihda %s:ksi"
 
 msgid "Return type"
 msgstr "Paluutyyppi"
@@ -555,14 +531,26 @@ msgstr "Paluutyyppi"
 msgid "Charset"
 msgstr "Merkistökoodaus"
 
+msgid "Definition"
+msgstr "Määritys"
+
+msgid "Format"
+msgstr "Muoto"
+
 msgid "Function"
 msgstr "Funktio"
 
 msgid "Routines"
 msgstr "Rutiinit"
 
+msgid "Drop"
+msgstr "Tuhoa"
+
 msgid "Search"
 msgstr "Etsi"
+
+msgid "Loading…"
+msgstr "Lataa…"
 
 msgid "Execute"
 msgstr "Suorita"
@@ -739,6 +727,12 @@ msgstr "Luotu"
 msgid "Updated"
 msgstr "Päivitetty"
 
+msgid "Status"
+msgstr "Tila"
+
+msgid "Click to toggle"
+msgstr "Vaihda painamalla"
+
 msgid "active"
 msgstr "käytössä"
 
@@ -857,6 +851,12 @@ msgstr "Lähetä virheraportti"
 
 msgid "Send error report"
 msgstr "Lähetä virheraportti"
+
+msgid "Event type"
+msgstr "Tapahtuman tyyppi"
+
+msgid "Events"
+msgstr "Tapahtumat"
 
 msgid "SQL query:"
 msgstr "SQL-kysely:"
@@ -3877,18 +3877,6 @@ msgstr "Näytetään rivi(t) %1$s–%2$s."
 msgid "No databases selected."
 msgstr "Yhtään tietokantaa ei ole valittu."
 
-msgid "Error in processing request:"
-msgstr "Virhe pyynnön käsittelyssä:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Tietokannasta %2$s ei löytynyt tapahtumaa nimeltä %1$s."
-
-msgid "Export of event %s"
-msgstr "Tapahtuman %s vienti"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Virhe pyynnön käsittelyssä: Tietokannasta %2$s ei löytynyt tapahtumaa nimeltä %1$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Vientiin tarvittavia lisäosia ei voitu ladata; tarkista asetukset!"
 
@@ -3897,6 +3885,9 @@ msgstr "Tuontiin tarvittavaa lisäosaa ei voida tuoda, tarkista asetukset!"
 
 msgid "No Privileges"
 msgstr "Ei käyttöoikeuksia"
+
+msgid "Error in processing request:"
+msgstr "Virhe pyynnön käsittelyssä:"
 
 msgid "No routine with name %1$s found in database %2$s."
 msgstr "Tietokannasta %2$s ei löytynyt rutiinia nimeltä %1$s."
@@ -3939,6 +3930,15 @@ msgstr "Mikäli sinulla on ongelmia, ole hyvä ja lähetä virheraportti manuaal
 
 msgid "You may want to refresh the page."
 msgstr "Haluat ehkä päivittää tämän sivun."
+
+msgid "Export of event %s"
+msgstr "Tapahtuman %s vienti"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Virhe pyynnön käsittelyssä: Tietokannasta %2$s ei löytynyt tapahtumaa nimeltä %1$s."
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Tietokannasta %2$s ei löytynyt tapahtumaa nimeltä %1$s."
 
 msgid "Bad type!"
 msgstr "Virheellinen tyyppi!"
@@ -5393,12 +5393,6 @@ msgstr "Seuraava kysely epäonnistui: \"%s\""
 msgid "MySQL said: "
 msgstr "MySQL ilmoittaa: "
 
-msgid "Event %1$s has been modified."
-msgstr "Tapahtumaa %1$s on muokattu."
-
-msgid "You must provide an event name!"
-msgstr "Sinun on annettava tapahtuman nimi!"
-
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutiinia %1$s on muokattu. Oikeuksia on säädetty."
 
@@ -5566,6 +5560,12 @@ msgstr "Liikaa virhesanomia, joitakin ei näytetä."
 
 msgid "Report"
 msgstr "Raportoi"
+
+msgid "Event %1$s has been modified."
+msgstr "Tapahtumaa %1$s on muokattu."
+
+msgid "You must provide an event name!"
+msgstr "Sinun on annettava tapahtuman nimi!"
 
 msgid "Access denied!"
 msgstr "Käyttö estetty!"

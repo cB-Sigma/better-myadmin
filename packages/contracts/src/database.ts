@@ -363,7 +363,11 @@ export interface RoutineExecuteResponse {
 
 export interface EventsListResponse {
   items: Array<{ name: string; type: string; status: string; dropSql: string }>
-  schedulerOn: boolean
+  /**
+   * Events::getEventSchedulerStatus: DISABLED (server started with --event-scheduler=DISABLED)
+   * leaves the page with the notice only
+   */
+  schedulerState: 'ON' | 'OFF' | 'DISABLED'
   canCreate: boolean
   /** $cfg['CodemirrorEnable']: the definition / query editor is CodeMirror */
   codemirror: boolean

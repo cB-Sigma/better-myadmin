@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/uk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/uk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-08-16 08:11+0000\nLast-Translator: Hotripak <hotr1pak@gmail.com>\nLanguage-Team: Ukrainian <https://hosted.weblate.org/projects/phpmyadmin/master/uk/>\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-08-16 08:11+0000\nLast-Translator: Hotripak <hotr1pak@gmail.com>\nLanguage-Team: Ukrainian <https://hosted.weblate.org/projects/phpmyadmin/master/uk/>\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "З цього моменту Javascript має бути увімкнений!"
@@ -683,89 +683,6 @@ msgstr "Вибрати сторінку"
 msgid "Select export relational type:"
 msgstr "Виберіть тип відношення для експорту:"
 
-msgid "Details"
-msgstr "Деталі"
-
-msgid "Event name"
-msgstr "Назва події"
-
-msgid "Status"
-msgstr "Статус"
-
-msgid "Event type"
-msgstr "Тип події"
-
-msgid "Change to %s"
-msgstr "Змінити на %s"
-
-msgid "Execute at"
-msgstr "Виконати у"
-
-msgid "Execute every"
-msgstr "Виконати кожні"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Старт"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Кінець"
-
-msgid "Definition"
-msgstr "Визначення"
-
-msgid "Format"
-msgstr "Формат"
-
-msgid "On completion preserve"
-msgstr "По завершенні збереження"
-
-msgid "Definer"
-msgstr "Визначник"
-
-msgid "Events"
-msgstr "Події"
-
-msgid "Check all"
-msgstr "Позначити все"
-
-msgid "Export"
-msgstr "Експорт"
-
-msgid "Drop"
-msgstr "Знищити"
-
-msgid "Create new event"
-msgstr "Створити нову подію"
-
-msgid "There are no events to display."
-msgstr "Немає подій."
-
-msgid "Event scheduler status"
-msgstr "Статус планувальника подій"
-
-msgid "Click to toggle"
-msgstr "Клікніть, щоб змінити"
-
-msgid "ON"
-msgstr "Включити"
-
-msgid "OFF"
-msgstr "Відключити"
-
-msgid "Event editor"
-msgstr "Редактор події"
-
-msgid "Loading…"
-msgstr "Завантаження…"
-
-msgid "Save changes"
-msgstr "Зберегти зміни"
-
-msgid "Export event"
-msgstr "Експортувати подію"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ стане ім'ям сервера, а @DATABASE@ стане ім'ям бази даних."
 
@@ -946,11 +863,17 @@ msgstr "порядок"
 msgid "Edit privileges"
 msgstr "Редагувати привілеї"
 
+msgid "Export"
+msgstr "Експорт"
+
 msgid "No user found."
 msgstr "Користувача не знайдено."
 
 msgid "With selected:"
 msgstr "Вибрані:"
+
+msgid "Check all"
+msgstr "Позначити все"
 
 msgid "Not enough privilege to view users."
 msgstr "Не достатньо привілеїв для перегляду користувачів."
@@ -958,8 +881,14 @@ msgstr "Не достатньо привілеїв для перегляду к�
 msgid "Add user account"
 msgstr "Додати обліковий запис користувача"
 
+msgid "Details"
+msgstr "Деталі"
+
 msgid "Routine name"
 msgstr "Назва порядку"
+
+msgid "Change to %s"
+msgstr "Змінити на %s"
 
 msgid "Parameters"
 msgstr "Параметри"
@@ -985,11 +914,20 @@ msgstr "Опції повернення"
 msgid "Charset"
 msgstr "Кодування"
 
+msgid "Definition"
+msgstr "Визначення"
+
+msgid "Format"
+msgstr "Формат"
+
 msgid "Is deterministic"
 msgstr "Детермінований"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "У вас немає достатніх прав для виконання цієї операції; Будь ласка, зверніться до документації для отримання більш докладної інформації."
+
+msgid "Definer"
+msgstr "Визначник"
 
 msgid "Security type"
 msgstr "Тип безпеки"
@@ -1009,6 +947,9 @@ msgstr "Ця процедура не вимагає жодних парамет�
 msgid "Routines"
 msgstr "Процедури"
 
+msgid "Drop"
+msgstr "Знищити"
+
 msgid "Search"
 msgstr "Пошук"
 
@@ -1023,6 +964,12 @@ msgstr "Повернення"
 
 msgid "Routine editor"
 msgstr "Рутинний редактор"
+
+msgid "Loading…"
+msgstr "Завантаження…"
+
+msgid "Save changes"
+msgstr "Зберегти зміни"
 
 msgid "Export routine"
 msgstr "Експорт процедури"
@@ -1279,6 +1226,12 @@ msgstr "Створено"
 msgid "Updated"
 msgstr "Оновлено"
 
+msgid "Status"
+msgstr "Статус"
+
+msgid "Click to toggle"
+msgstr "Клікніть, щоб змінити"
+
 msgid "active"
 msgstr "активний"
 
@@ -1424,6 +1377,53 @@ msgstr "Щось пішло не так"
 
 msgid "Go back"
 msgstr "Повернутись"
+
+msgid "Event name"
+msgstr "Назва події"
+
+msgid "Event type"
+msgstr "Тип події"
+
+msgid "Execute at"
+msgstr "Виконати у"
+
+msgid "Execute every"
+msgstr "Виконати кожні"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Старт"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Кінець"
+
+msgid "On completion preserve"
+msgstr "По завершенні збереження"
+
+msgid "Events"
+msgstr "Події"
+
+msgid "Create new event"
+msgstr "Створити нову подію"
+
+msgid "There are no events to display."
+msgstr "Немає подій."
+
+msgid "Event scheduler status"
+msgstr "Статус планувальника подій"
+
+msgid "ON"
+msgstr "Включити"
+
+msgid "OFF"
+msgstr "Відключити"
+
+msgid "Event editor"
+msgstr "Редактор події"
+
+msgid "Export event"
+msgstr "Експортувати подію"
 
 msgid "Select a template"
 msgstr "Вибрати шаблон"
@@ -6606,27 +6606,6 @@ msgstr "Сторінка з іменем \"%s\" вже існує; вибері�
 msgid "No databases selected."
 msgstr "Жодної бази даних не вибрано."
 
-msgid "The event was dropped immediately after creation."
-msgstr "Подія була скасована відразу після створення."
-
-msgid "Add event"
-msgstr "Додати подію"
-
-msgid "Edit event"
-msgstr "Редагувати подію"
-
-msgid "Error in processing request:"
-msgstr "Помилка при обробці запиту:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Немає події з ім'ям %1$s в базі даних %2$s."
-
-msgid "Export of event %s"
-msgstr "Експортувати подію %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Помилка в обробці запиту: Немає події з ім'ям %1$s в базі даних %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Відсутні плагіни експорту. Будь ласка, перевірте правильність установки!"
 
@@ -6647,6 +6626,9 @@ msgstr "Додати порядок"
 
 msgid "Edit routine"
 msgstr "Редагувати порядок"
+
+msgid "Error in processing request:"
+msgstr "Помилка при обробці запиту:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Немає процедури з ім'ям %1$s знайти в базі даних %2$s. Можливо у вас, не вистачає необхідних привілеїв, щоб редагувати цю процедуру."
@@ -6701,6 +6683,24 @@ msgstr "Якщо це створює проблему - надішліть по�
 
 msgid "You may want to refresh the page."
 msgstr "Можливо, варто перезавантажити сторінку."
+
+msgid "Export of event %s"
+msgstr "Експортувати подію %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Помилка в обробці запиту: Немає події з ім'ям %1$s в базі даних %2$s."
+
+msgid "The event was dropped immediately after creation."
+msgstr "Подія була скасована відразу після створення."
+
+msgid "Add event"
+msgstr "Додати подію"
+
+msgid "Edit event"
+msgstr "Редагувати подію"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Немає події з ім'ям %1$s в базі даних %2$s."
 
 msgid "Bad type!"
 msgstr "Помилковий тип!"
@@ -8652,53 +8652,26 @@ msgstr "Внутрішні зв'язки будуть видалені."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Не вдалося завантажити плагіни схеми, будь ласка, перевірте вашу установку!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Неправильний тип порядку: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Наступний запит не виконався: \"%s\""
 
 msgid "MySQL said: "
 msgstr "Відповідь MySQL: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Неможливо відновити видалену подію."
-
-msgid "The backed up query was:"
-msgstr "Збережений запит був:"
-
-msgid "Event %1$s has been modified."
-msgstr "Подію %1$s було змінено."
-
-msgid "Event %1$s has been created."
-msgstr "Подія %1$s була створена."
+msgid "Routine %1$s has been created."
+msgstr "Порядок %1$s створено."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Одна або декілька помилок виникли під час обробки вашого запиту:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Визначник повинен бути в форматі \"username@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "Слід вказати назву події!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Необхідно задати коректний інтервал значень для події."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Необхідно задати коректний час виконання події."
-
-msgid "You must provide a valid type for the event."
-msgstr "Необхідно задати коректний тип події."
-
-msgid "You must provide an event definition."
-msgstr "Ви повинні задати визначення події."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Неправильний тип порядку: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Порядок %1$s створено."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Вибачте, нам невдалось відновити видалений порядок."
+
+msgid "The backed up query was:"
+msgstr "Збережений запит був:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Процедура %1$s була змінена. Привілеї були скориговані."
@@ -8717,6 +8690,9 @@ msgstr "Ви повинні задати довжину/значення для 
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Необхідно задати коректний тип, що повертатиму процедуру."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Визначник повинен бути в форматі \"username@hostname\"!"
 
 msgid "Invalid routine type!"
 msgstr "Невірний тип процедури!"
@@ -8906,6 +8882,30 @@ msgstr "Занадто багато повідомлень про помилки
 
 msgid "Report"
 msgstr "Звіт"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Неможливо відновити видалену подію."
+
+msgid "Event %1$s has been modified."
+msgstr "Подію %1$s було змінено."
+
+msgid "Event %1$s has been created."
+msgstr "Подія %1$s була створена."
+
+msgid "You must provide an event name!"
+msgstr "Слід вказати назву події!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Необхідно задати коректний інтервал значень для події."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Необхідно задати коректний час виконання події."
+
+msgid "You must provide a valid type for the event."
+msgstr "Необхідно задати коректний тип події."
+
+msgid "You must provide an event definition."
+msgstr "Ви повинні задати визначення події."
 
 msgid "Cannot log in to the database server."
 msgstr "Не вдається увійти на сервер бази даних."

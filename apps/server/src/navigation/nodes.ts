@@ -680,16 +680,16 @@ export class NodeProcedureContainer extends NodeDatabaseChildContainer {
 export class NodeEventContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
     super(ctx, ctx.tr.gettext('Events'))
-    this.icon = new Icon('b_events', ctx.tr.gettext('Events'), '/database/events', { db: null })
-    this.link = new Link('', '/database/events', { db: null })
+    this.icon = new Icon('b_events', ctx.tr.gettext('Events'), '/events', { db: null })
+    this.link = new Link('', '/events', { db: null })
     this.realName = 'events'
     const p = { add_item: 1, db: null }
     newChild(
       this,
       ctx.tr.pgettext('Create new event', 'New'),
       'new_event italics',
-      new Icon('b_event_add', ctx.tr.pgettext('Create new event', 'New'), '/database/events', p),
-      new Link(ctx.tr.pgettext('Create new event', 'New'), '/database/events', p),
+      new Icon('b_event_add', ctx.tr.pgettext('Create new event', 'New'), '/events', p),
+      new Link(ctx.tr.pgettext('Create new event', 'New'), '/events', p),
     )
   }
 }
@@ -950,12 +950,12 @@ export class NodeFunction extends NodeDatabaseChild {
 export class NodeEvent extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_events', ctx.tr.gettext('Event'), '/database/events', {
+    this.icon = new Icon('b_events', ctx.tr.gettext('Event'), '/events', {
       edit_item: 1,
       db: null,
       item_name: null,
     })
-    this.link = new Link('', '/database/events', { edit_item: 1, db: null, item_name: null })
+    this.link = new Link('', '/events', { edit_item: 1, db: null, item_name: null })
     this.classes = 'event'
     this.urlParamName = 'item_name'
   }

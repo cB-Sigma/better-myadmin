@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ca.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ca.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "A partir d'aquest punt és necessari tenir el javascript activat!"
@@ -616,77 +616,6 @@ msgstr "Nou nom de pàgina"
 msgid "Select page"
 msgstr "Seleccioneu la pàgina"
 
-msgid "Details"
-msgstr "Detalls"
-
-msgid "Event name"
-msgstr "Nom d'esdeveniment"
-
-msgid "Status"
-msgstr "Estat"
-
-msgid "Event type"
-msgstr "Tipus d'esdeveniment"
-
-msgid "Change to %s"
-msgstr "Canvia a %s"
-
-msgid "Execute at"
-msgstr "Executa a les"
-
-msgid "Execute every"
-msgstr "Executar cada"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Inici"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Final"
-
-msgid "Definition"
-msgstr "Definició"
-
-msgid "Format"
-msgstr "Format"
-
-msgid "On completion preserve"
-msgstr "Preservar al completar"
-
-msgid "Definer"
-msgstr "Definidor"
-
-msgid "Events"
-msgstr "Esdeveniments"
-
-msgid "Check all"
-msgstr "Marca-ho tot"
-
-msgid "Export"
-msgstr "Exporta"
-
-msgid "Drop"
-msgstr "Elimina"
-
-msgid "There are no events to display."
-msgstr "No hi ha esdeveniments per mostrar."
-
-msgid "Event scheduler status"
-msgstr "Estat del planificador d'esdeveniments"
-
-msgid "Click to toggle"
-msgstr "Feu clic per commutar"
-
-msgid "ON"
-msgstr "Connectat"
-
-msgid "OFF"
-msgstr "Desconnectat"
-
-msgid "Loading…"
-msgstr "S'està carregant…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Exportació de les taules de la base de dades \"%s\""
 
@@ -849,11 +778,17 @@ msgstr "rutina"
 msgid "Edit privileges"
 msgstr "Edita els privilegis"
 
+msgid "Export"
+msgstr "Exporta"
+
 msgid "No user found."
 msgstr "No s'han trobat usuaris."
 
 msgid "With selected:"
 msgstr "Amb els seleccionats:"
+
+msgid "Check all"
+msgstr "Marca-ho tot"
 
 msgid "Not enough privilege to view users."
 msgstr "No teniu prou privilegis per veure els usuaris."
@@ -861,8 +796,14 @@ msgstr "No teniu prou privilegis per veure els usuaris."
 msgid "Add user account"
 msgstr "Afegeix un compte d'usuari"
 
+msgid "Details"
+msgstr "Detalls"
+
 msgid "Routine name"
 msgstr "Nom de rutina"
+
+msgid "Change to %s"
+msgstr "Canvia a %s"
 
 msgid "Parameters"
 msgstr "Paràmetres"
@@ -888,8 +829,17 @@ msgstr "Retornar opcions"
 msgid "Charset"
 msgstr "Joc de caràcters"
 
+msgid "Definition"
+msgstr "Definició"
+
+msgid "Format"
+msgstr "Format"
+
 msgid "Is deterministic"
 msgstr "És deterministic"
+
+msgid "Definer"
+msgstr "Definidor"
 
 msgid "Security type"
 msgstr "Tipus de seguretat"
@@ -906,6 +856,9 @@ msgstr "Funció"
 msgid "Routines"
 msgstr "Rutines"
 
+msgid "Drop"
+msgstr "Elimina"
+
 msgid "Search"
 msgstr "Cerca"
 
@@ -914,6 +867,9 @@ msgstr "No hi ha cap rutina a mostrar."
 
 msgid "Returns"
 msgstr "Retorna"
+
+msgid "Loading…"
+msgstr "S'està carregant…"
 
 msgid "Execute routine"
 msgstr "Executa la rutina"
@@ -1153,6 +1109,12 @@ msgstr "Creat"
 msgid "Updated"
 msgstr "Actualitzat"
 
+msgid "Status"
+msgstr "Estat"
+
+msgid "Click to toggle"
+msgstr "Feu clic per commutar"
+
 msgid "active"
 msgstr "actiu"
 
@@ -1283,6 +1245,44 @@ msgstr "Envia l'informe d'error"
 
 msgid "Send error report"
 msgstr "Enviar informe d'error"
+
+msgid "Event name"
+msgstr "Nom d'esdeveniment"
+
+msgid "Event type"
+msgstr "Tipus d'esdeveniment"
+
+msgid "Execute at"
+msgstr "Executa a les"
+
+msgid "Execute every"
+msgstr "Executar cada"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Inici"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Final"
+
+msgid "On completion preserve"
+msgstr "Preservar al completar"
+
+msgid "Events"
+msgstr "Esdeveniments"
+
+msgid "There are no events to display."
+msgstr "No hi ha esdeveniments per mostrar."
+
+msgid "Event scheduler status"
+msgstr "Estat del planificador d'esdeveniments"
+
+msgid "ON"
+msgstr "Connectat"
+
+msgid "OFF"
+msgstr "Desconnectat"
 
 msgid "Select a template"
 msgstr "Seleccioneu una plantilla"
@@ -5740,21 +5740,6 @@ msgstr "Es mostren les files %1$s - %2$s."
 msgid "No databases selected."
 msgstr "No s'ha seleccionat cap base de dades."
 
-msgid "Add event"
-msgstr "Afegeix un esdeveniment"
-
-msgid "Edit event"
-msgstr "Edita l'esdeveniment"
-
-msgid "Error in processing request:"
-msgstr "Error processant a la petició:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "No s'ha trobat un esdeveniment amb nom %1$s a la base de dades %2$s."
-
-msgid "Export of event %s"
-msgstr "Exportar esdeveniment %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "No s'han pogut carregar els connectors d'exportació, comproveu la vostra instal·lació!"
 
@@ -5772,6 +5757,9 @@ msgstr "Afegeix una rutina"
 
 msgid "Edit routine"
 msgstr "Edita la rutina"
+
+msgid "Error in processing request:"
+msgstr "Error processant a la petició:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "No s'ha trobat cap rutina anomenada %1$s a la base de dades %2$s. Potser falten els privilegis necessaris per editar aquesta rutina."
@@ -5820,6 +5808,18 @@ msgstr "Si us trobeu amb qualsevol problema, si us plau, envieu manualment un in
 
 msgid "You may want to refresh the page."
 msgstr "És possible que vulgueu refrescar la pàgina."
+
+msgid "Export of event %s"
+msgstr "Exportar esdeveniment %s"
+
+msgid "Add event"
+msgstr "Afegeix un esdeveniment"
+
+msgid "Edit event"
+msgstr "Edita l'esdeveniment"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "No s'ha trobat un esdeveniment amb nom %1$s a la base de dades %2$s."
 
 msgid "Bad type!"
 msgstr "Tipus incorrecte!"
@@ -7379,53 +7379,26 @@ msgstr "S'ha eliminat la relació interna."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "No s'han pogut carregar els connectors d'esquema, comproveu la vostra instal·lació!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "tipus de rutina invàlid: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Ha fallat la consulta següent: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL diu: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Ho sentim, no s'ha pogut restaurar l'esdeveniment eliminat."
-
-msgid "The backed up query was:"
-msgstr "La consulta a la còpia de seguretat era:"
-
-msgid "Event %1$s has been modified."
-msgstr "S'ha modificat l'esdeveniment %1$s."
-
-msgid "Event %1$s has been created."
-msgstr "S'ha creat l'esdeveniment %1$s."
+msgid "Routine %1$s has been created."
+msgstr "S'ha creat la rutina %1$s."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "S'han produït un o més errors mentre es processava la vostra sol·licitud:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "El definidor ha de tenir el format \"usuari@servidor\"!"
-
-msgid "You must provide an event name!"
-msgstr "Heu de proporcionar un nom d'esdeveniment!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Heu de proporcionar un valor d'interval vàlid per a l'esdeveniment."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Heu de proporcionar un temps d'execució vàlid per a l'esdeveniment."
-
-msgid "You must provide a valid type for the event."
-msgstr "Heu de proporcionar un tipus vàlid per a l'esdeveniment."
-
-msgid "You must provide an event definition."
-msgstr "Heu de proporcionar una definició d'esdeveniment."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "tipus de rutina invàlid: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "S'ha creat la rutina %1$s."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Malauradament, no hem pogut recuperar la rutina eliminada."
+
+msgid "The backed up query was:"
+msgstr "La consulta a la còpia de seguretat era:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "S'ha modificat la rutina %1$s. S'han ajustat els privilegis."
@@ -7444,6 +7417,9 @@ msgstr "Heu de proporcionar la longitud/valors per als paràmetres de la rutina 
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Heu de proporcionar un tipus de retorn vàlid per a la rutina."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "El definidor ha de tenir el format \"usuari@servidor\"!"
 
 msgid "You must provide a routine name!"
 msgstr "Heu de proporcionar un nom de rutina!"
@@ -7620,6 +7596,30 @@ msgstr "Hi ha massa missatges d'error, alguns no es visualitzen."
 
 msgid "Report"
 msgstr "Informa"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Ho sentim, no s'ha pogut restaurar l'esdeveniment eliminat."
+
+msgid "Event %1$s has been modified."
+msgstr "S'ha modificat l'esdeveniment %1$s."
+
+msgid "Event %1$s has been created."
+msgstr "S'ha creat l'esdeveniment %1$s."
+
+msgid "You must provide an event name!"
+msgstr "Heu de proporcionar un nom d'esdeveniment!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Heu de proporcionar un valor d'interval vàlid per a l'esdeveniment."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Heu de proporcionar un temps d'execució vàlid per a l'esdeveniment."
+
+msgid "You must provide a valid type for the event."
+msgstr "Heu de proporcionar un tipus vàlid per a l'esdeveniment."
+
+msgid "You must provide an event definition."
+msgstr "Heu de proporcionar una definició d'esdeveniment."
 
 msgid "Access denied!"
 msgstr "Accés denegat!"

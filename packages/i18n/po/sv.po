@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/sv.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/sv.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript måste vara aktiverat efter detta!"
@@ -683,89 +683,6 @@ msgstr "Välj sida"
 msgid "Select export relational type:"
 msgstr "Välj typ av relationsexport:"
 
-msgid "Details"
-msgstr "Detaljer"
-
-msgid "Event name"
-msgstr "Händelsenamn"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Event type"
-msgstr "Händelsetyp"
-
-msgid "Change to %s"
-msgstr "Ändra till %s"
-
-msgid "Execute at"
-msgstr "Utför vid"
-
-msgid "Execute every"
-msgstr "Utför varje"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Start"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Slut"
-
-msgid "Definition"
-msgstr "Definition"
-
-msgid "Format"
-msgstr "Format"
-
-msgid "On completion preserve"
-msgstr "Vid avslut, bevara"
-
-msgid "Definer"
-msgstr "Definierare"
-
-msgid "Events"
-msgstr "Händelser"
-
-msgid "Check all"
-msgstr "Markera alla"
-
-msgid "Export"
-msgstr "Exportera"
-
-msgid "Drop"
-msgstr "Radera"
-
-msgid "Create new event"
-msgstr "Skapa ny händelse"
-
-msgid "There are no events to display."
-msgstr "Det finns inga händelser att visa."
-
-msgid "Event scheduler status"
-msgstr "Status för händelsehanteraren"
-
-msgid "Click to toggle"
-msgstr "Klicka för att växla"
-
-msgid "ON"
-msgstr "ON"
-
-msgid "OFF"
-msgstr "OFF"
-
-msgid "Event editor"
-msgstr "Händelseredigerare"
-
-msgid "Loading…"
-msgstr "Laddar…"
-
-msgid "Save changes"
-msgstr "Spara ändringar"
-
-msgid "Export event"
-msgstr "Exportera händelse"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ blir servernamnet och @DATABASE@ blir databasnamnet."
 
@@ -946,11 +863,17 @@ msgstr "Rutin"
 msgid "Edit privileges"
 msgstr "Redigera behörigheter"
 
+msgid "Export"
+msgstr "Exportera"
+
 msgid "No user found."
 msgstr "Ingen användare hittades."
 
 msgid "With selected:"
 msgstr "Med markerade:"
+
+msgid "Check all"
+msgstr "Markera alla"
 
 msgid "Not enough privilege to view users."
 msgstr "Inte tillräckligt privilegier för att visa användare."
@@ -958,8 +881,14 @@ msgstr "Inte tillräckligt privilegier för att visa användare."
 msgid "Add user account"
 msgstr "Lägg till användare"
 
+msgid "Details"
+msgstr "Detaljer"
+
 msgid "Routine name"
 msgstr "Rutinnamn"
+
+msgid "Change to %s"
+msgstr "Ändra till %s"
 
 msgid "Parameters"
 msgstr "Parametrar"
@@ -985,11 +914,20 @@ msgstr "Return alternativ"
 msgid "Charset"
 msgstr "Teckenuppsättning"
 
+msgid "Definition"
+msgstr "Definition"
+
+msgid "Format"
+msgstr "Format"
+
 msgid "Is deterministic"
 msgstr "Är deterministisk"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Du har inte tillräcklig behörighet att utföra åtgärden. Se dokumentationen för mer information."
+
+msgid "Definer"
+msgstr "Definierare"
 
 msgid "Security type"
 msgstr "Säkerhetstyp"
@@ -1009,6 +947,9 @@ msgstr "Den här rutinen kräver inga parametrar."
 msgid "Routines"
 msgstr "Rutiner"
 
+msgid "Drop"
+msgstr "Radera"
+
 msgid "Search"
 msgstr "Sök"
 
@@ -1023,6 +964,12 @@ msgstr "Returnerar"
 
 msgid "Routine editor"
 msgstr "Rutinredigerare"
+
+msgid "Loading…"
+msgstr "Laddar…"
+
+msgid "Save changes"
+msgstr "Spara ändringar"
 
 msgid "Export routine"
 msgstr "Exportera rutin"
@@ -1276,6 +1223,12 @@ msgstr "Skapad"
 msgid "Updated"
 msgstr "Uppdaterad"
 
+msgid "Status"
+msgstr "Status"
+
+msgid "Click to toggle"
+msgstr "Klicka för att växla"
+
 msgid "active"
 msgstr "aktiv"
 
@@ -1421,6 +1374,53 @@ msgstr "Något gick fel"
 
 msgid "Go back"
 msgstr "Gå tillbaka"
+
+msgid "Event name"
+msgstr "Händelsenamn"
+
+msgid "Event type"
+msgstr "Händelsetyp"
+
+msgid "Execute at"
+msgstr "Utför vid"
+
+msgid "Execute every"
+msgstr "Utför varje"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Start"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Slut"
+
+msgid "On completion preserve"
+msgstr "Vid avslut, bevara"
+
+msgid "Events"
+msgstr "Händelser"
+
+msgid "Create new event"
+msgstr "Skapa ny händelse"
+
+msgid "There are no events to display."
+msgstr "Det finns inga händelser att visa."
+
+msgid "Event scheduler status"
+msgstr "Status för händelsehanteraren"
+
+msgid "ON"
+msgstr "ON"
+
+msgid "OFF"
+msgstr "OFF"
+
+msgid "Event editor"
+msgstr "Händelseredigerare"
+
+msgid "Export event"
+msgstr "Exportera händelse"
 
 msgid "Select a template"
 msgstr "Välj Mall"
@@ -6600,27 +6600,6 @@ msgstr "Det finns redan en sida med namnet ”%s”. Byt namn till något annat.
 msgid "No databases selected."
 msgstr "Inga databaser markerade."
 
-msgid "The event was dropped immediately after creation."
-msgstr "Händelsen kasserades omedelbart efter att den skapades."
-
-msgid "Add event"
-msgstr "Lägg till händelse"
-
-msgid "Edit event"
-msgstr "Redigera händelse"
-
-msgid "Error in processing request:"
-msgstr "Fel i processbegäran:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Ingen händelse med namnet %1$s hittades i databasen %2$s."
-
-msgid "Export of event %s"
-msgstr "Exportera händelse %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Fel vid bearbetning av begäran: Ingen händelse med namnet %1$s hittades i databasen %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Kunde inte läsa in insticksprogram för export. Kontrollera din installation!"
 
@@ -6641,6 +6620,9 @@ msgstr "Lägg till rutin"
 
 msgid "Edit routine"
 msgstr "Redigera rutin"
+
+msgid "Error in processing request:"
+msgstr "Fel i processbegäran:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Ingen rutin med namnet %1$s hittades i databasen %2$s. Du kanske saknar behörighet att redigera den här rutinen."
@@ -6695,6 +6677,24 @@ msgstr "Skicka en buggrapport manuellt om du upplever några problem."
 
 msgid "You may want to refresh the page."
 msgstr "Du kan vilja ladda om sidan."
+
+msgid "Export of event %s"
+msgstr "Exportera händelse %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Fel vid bearbetning av begäran: Ingen händelse med namnet %1$s hittades i databasen %2$s."
+
+msgid "The event was dropped immediately after creation."
+msgstr "Händelsen kasserades omedelbart efter att den skapades."
+
+msgid "Add event"
+msgstr "Lägg till händelse"
+
+msgid "Edit event"
+msgstr "Redigera händelse"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Ingen händelse med namnet %1$s hittades i databasen %2$s."
 
 msgid "Bad type!"
 msgstr "Dålig typ!"
@@ -8642,53 +8642,26 @@ msgstr "En intern relation har tagits bort."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Kunde inte läsa in insticksprogram, kontrollera din installation!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Ogiltig rutintyp: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Följande fråga har fallerat: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL sa: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Tyvärr kunde vi inte återställa tappade händelsen."
-
-msgid "The backed up query was:"
-msgstr "Den säkerhetskopierade frågan var:"
-
-msgid "Event %1$s has been modified."
-msgstr "Händelsen %1$s har ändrats."
-
-msgid "Event %1$s has been created."
-msgstr "Händelsen %1$s har skapats."
+msgid "Routine %1$s has been created."
+msgstr "Rutinen %1$s har skapats."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Ett eller flera fel har inträffat under hanteringen av din begäran:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Definieraren måste vara i formatet: \"användarnamn@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "Du måste ange ett händelsenamn!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Du måste ange ett giltigt intervallvärde för händelsen."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Du måste ange en giltig exekveringstid för händelsen."
-
-msgid "You must provide a valid type for the event."
-msgstr "Du måste ange en giltig typ för händelsen."
-
-msgid "You must provide an event definition."
-msgstr "Du måste ange en händelsedefinition."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Ogiltig rutintyp: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Rutinen %1$s har skapats."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Tyvärr, vi lyckades inte återställa den slängda rutinen."
+
+msgid "The backed up query was:"
+msgstr "Den säkerhetskopierade frågan var:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutin %1$s har ändrats. Privilegier har justerats."
@@ -8707,6 +8680,9 @@ msgstr "Du måste ange längd/värden för rutinparametrar av typen ENUM, SET, V
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Du måste ange en giltig returtyp för händelsen."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Definieraren måste vara i formatet: \"användarnamn@hostname\"!"
 
 msgid "Invalid routine type!"
 msgstr "Ogiltig rutintyp!"
@@ -8895,6 +8871,30 @@ msgstr "För många felmeddelanden, en del kommer inte visas."
 
 msgid "Report"
 msgstr "Rapport"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Tyvärr kunde vi inte återställa tappade händelsen."
+
+msgid "Event %1$s has been modified."
+msgstr "Händelsen %1$s har ändrats."
+
+msgid "Event %1$s has been created."
+msgstr "Händelsen %1$s har skapats."
+
+msgid "You must provide an event name!"
+msgstr "Du måste ange ett händelsenamn!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Du måste ange ett giltigt intervallvärde för händelsen."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Du måste ange en giltig exekveringstid för händelsen."
+
+msgid "You must provide a valid type for the event."
+msgstr "Du måste ange en giltig typ för händelsen."
+
+msgid "You must provide an event definition."
+msgstr "Du måste ange en händelsedefinition."
 
 msgid "Cannot log in to the database server."
 msgstr "Det går inte att logga in på databasservern."
