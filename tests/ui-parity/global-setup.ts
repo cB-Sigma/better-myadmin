@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import mysql from 'mysql2/promise'
 import { holdSuiteLock } from '../e2e/suite-lock.ts'
 import { FIX, ROOT, USERS } from './lib/env.ts'
+import { startPmaInstance } from './lib/instances.ts'
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -36,5 +37,36 @@ export default async function setup() {
       GRANT ALL ON *.* TO '${u}'@'%' WITH GRANT OPTION;`)
   }
   await c.end()
-  return release
+  const pma = await privateReference()
+  return async () => {
+    await pma?.stop()
+    await release()
+  }
+}
+
+/**
+ * The run's own reference phpMyAdmin, configured like the shared :8081 one (server 1 = ROOT, the
+ * `phpmyadmin` storage with control user pma), unless BMA_PARITY_PMA_URL names one. The shared
+ * instance is a single-process `php -S` that every checkout's parity runs and agents hit: a case
+ * queued behind their requests took minutes, and its timeout cascaded into the next cases. The
+ * private instance serves only this run, several requests at a time (a page loads ~35 assets).
+ * Workers inherit the URL through the environment.
+ */
+async function privateReference() {
+  if (process.env.BMA_PARITY_PMA_URL !== undefined) return null
+  const inst = await startPmaInstance(
+    `$cfg['blowfish_secret'] = 'uip-private-reference-0123456789abcdef';
+$i = 1;
+$cfg['Servers'][$i]['host'] = ${JSON.stringify(ROOT.host)};
+$cfg['Servers'][$i]['port'] = ${JSON.stringify(String(ROOT.port))};
+$cfg['Servers'][$i]['auth_type'] = 'cookie';
+$cfg['Servers'][$i]['controluser'] = 'pma';
+$cfg['Servers'][$i]['controlpass'] = 'pmapass';
+$cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';`,
+    { workers: Number(process.env.BMA_UIP_PMA_WORKERS ?? 6) },
+  )
+  process.env.BMA_PARITY_PMA_URL = inst.url
+  // compile the login page's templates once, before the first case's timeout runs
+  await fetch(`${inst.url}/index.php`).catch(() => {})
+  return inst
 }
