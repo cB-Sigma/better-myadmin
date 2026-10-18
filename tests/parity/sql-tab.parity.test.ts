@@ -363,6 +363,45 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     })
   }
 
+  it('Refresh and Profiling repost the card to /sql: the query shows without the import ";"', async () => {
+    await root.query(SEED(DB_PMA))
+    await root.query(SEED(DB_BMA))
+    const sql = 'SELECT id FROM t WHERE id < 3'
+    // the SQL box (/import) appends ";"
+    const boxed = (
+      (await bma.super.req('POST', '/api/servers/1/query', { sql, db: DB_BMA, fromQueryBox: true }))
+        .json as unknown as QueryResponse
+    ).statements[0]!
+    expect(boxed.card?.display).toBe(`${sql};`)
+    // a card from /sql (browse, search results): its signed Refresh link goes to /sql again
+    const first = (
+      (await bma.super.req('POST', '/api/servers/1/query', { sql, db: DB_BMA, viaSql: true }))
+        .json as unknown as QueryResponse
+    ).statements[0]!
+    expect(first.card?.display).toBe(sql)
+    const toggles: Array<{ p: Record<string, string>; b: { profiling?: boolean } }> = [
+      { p: {}, b: {} },
+      { p: { profiling_form: '1', profiling: 'on' }, b: { profiling: true } },
+      { p: { profiling_form: '1' }, b: { profiling: false } },
+    ]
+    for (const { p: pmaExtra, b: extra } of toggles) {
+      const pr = await pma.super.postJson('/sql', { db: DB_PMA, sql_query: first.sql, ...pmaExtra })
+      const br = (
+        await bma.super.req('POST', '/api/servers/1/query', {
+          sql: first.sql,
+          db: DB_BMA,
+          sig: first.sig,
+          ...extra,
+        })
+      ).json as unknown as QueryResponse
+      const st = br.statements[0]!
+      expect(st.card?.display).toBe(sql)
+      const pmaText = norm(visibleText(String(pr.message ?? '')))
+      expect(pmaText).toContain(norm(cardText(st)))
+      expect(pmaText).not.toContain(`${sql};`)
+    }
+  })
+
   describe('editor endpoints', () => {
     beforeAll(async () => {
       await root.query(SEED(DB_PMA))

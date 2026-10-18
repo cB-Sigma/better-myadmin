@@ -412,6 +412,8 @@ export function BinlogPage({
           grid: true,
           ...(a.showAsPhp !== undefined ? { showAsPhp: a.showAsPhp } : {}),
           ...(a.profiling !== undefined ? { profiling: a.profiling } : {}),
+          // pma: a signed link (Refresh, Profiling) goes to /sql, the query as posted
+          ...(a.sig !== undefined ? { sig: a.sig } : {}),
           ...(a.fkChecks !== undefined ? { fkChecks: a.fkChecks } : {}),
         },
         'page',

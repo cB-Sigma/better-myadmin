@@ -121,7 +121,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
     const box = showMessage(t('Browsing'), false)
     try {
       // search.ts posts the browse SQL to /sql: the results grid with its row and result operations
-      const response = await runQuery(server, { sql, db, table, grid: true }, 'page')
+      const response = await runQuery(server, { sql, db, table, grid: true, viaSql: true }, 'page')
       setDeleted(null)
       setBrowse({ table, response })
     } catch (e) {
@@ -136,7 +136,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       return
     const box = showMessage(t('Deleting'), false)
     try {
-      const response = await runQuery(server, { sql, db, table }, 'page')
+      const response = await runQuery(server, { sql, db, table, viaSql: true }, 'page')
       // search.ts: the browse results and table info hide, the deletion's result shows in
       // #sqlqueryform with "Hide query box"
       setBrowse(null)

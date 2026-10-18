@@ -74,7 +74,8 @@ export function BrowsePage(props: BrowsePageProps) {
         void navigate({ ...sqlTabRoute(server, a.db, a.table), search: { sql: a.sql } } as never)
         return
       }
-      // Explain / Create PHP code / inline edit: the /import path, shown in place of the grid
+      // Explain / Create PHP code / inline edit: the /import path, shown in place of the grid;
+      // Profiling keeps its signature (/sql)
       void runQuery(
         server,
         {
@@ -85,6 +86,8 @@ export function BrowsePage(props: BrowsePageProps) {
           grid: true,
           ...(a.showAsPhp !== undefined ? { showAsPhp: a.showAsPhp } : {}),
           ...(a.profiling !== undefined ? { profiling: a.profiling } : {}),
+          // pma: a signed link (Refresh, Profiling) goes to /sql, the query as posted
+          ...(a.sig !== undefined ? { sig: a.sig } : {}),
           ...(a.fkChecks !== undefined ? { fkChecks: a.fkChecks } : {}),
         },
         'page',

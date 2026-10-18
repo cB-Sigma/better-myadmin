@@ -188,7 +188,8 @@ describe('relational schema export', () => {
     const [rows] = await root.query(`SELECT page_nr FROM phpmyadmin.pma__pdf_pages WHERE db_name = '${DB}'`)
     const nr = String((rows as Array<{ page_nr: number }>)[0]?.page_nr)
     const saved = J(await schema({ page_number: nr, export_type: 'svg', offline_export: false, tables: pos }))
-    expect(saved.fileName).toBe('f07ck page.svg')
+    // Sanitize::sanitizeFilename: the space becomes "_"
+    expect(saved.fileName).toBe('f07ck_page.svg')
   })
 
   it('the tables and their places come from the posted canvas state [p07-a8542e]', async () => {

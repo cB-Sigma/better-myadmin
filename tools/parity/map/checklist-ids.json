@@ -1922,7 +1922,7 @@
   "p05-41c645": {
     "file": "docs/features/05-database-level.md",
     "section": "Micro-behaviours checklist › Query (multi-table)",
-    "text": "Criteria collapse syncs with the \"use in criteria\" checkbox; AND/OR row appears only with ≥2 criteria columns."
+    "text": "Criteria collapse syncs with the \"use in criteria\" checkbox; AND/OR row appears with every criteria column."
   },
   "p05-431e33": {
     "file": "docs/features/05-database-level.md",
