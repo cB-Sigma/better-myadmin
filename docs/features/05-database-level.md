@@ -553,7 +553,7 @@ Structure
 - [x] Dropping clears the session table-offset cache (#14205). <!-- parity:test --> `p05-d99774` [database-checklist.test.ts:180](../../apps/server/test/int/database-checklist.test.ts#L180)
 - [x] Show create groups Tables and Views separately. <!-- parity:test --> `p05-d5ead9` [database-structure.test.ts:52](../../apps/server/test/int/database-structure.test.ts#L52)
 - [x] `PropertiesNumColumns > 1` splits the list into N vertical blocks and hides Type/Collation. <!-- parity:test --> `p05-ccc3d5` [database-checklist.test.ts:112](../../apps/server/test/int/database-checklist.test.ts#L112)
-- [x] Page-settings gear exposes the five `ShowDbStructure*` toggles and persists them in `pma__userconfig`. <!-- parity:test --> `p05-67e9c0` [database-checklist.e2e.ts:479](../../tests/e2e/database-checklist.e2e.ts#L479)
+- [x] Page-settings gear exposes the five `ShowDbStructure*` toggles and persists them in `pma__userconfig`. <!-- parity:test --> `p05-67e9c0` [database-checklist.e2e.ts:561](../../tests/e2e/database-checklist.e2e.ts#L561)
 - [x] Print view hides checkboxes/actions (`d-print-none`) and the create-table form. <!-- parity:test --> `p05-898d30` [database-checklist.e2e.ts:85](../../tests/e2e/database-checklist.e2e.ts#L85)
 - [x] Create-table form: name maxlength 64, columns min 1 default 4, `lock-page` (warns on navigation with unsaved input). <!-- parity:test --> `p05-6362c2` [database-checklist.e2e.ts:102](../../tests/e2e/database-checklist.e2e.ts#L102)
 
@@ -594,12 +594,12 @@ Search
 - [x] After a search the criteria form collapses with "Show search criteria" / "Hide search results" toggles. <!-- parity:test --> `p05-802894` [database-checklist.e2e.ts:171](../../tests/e2e/database-checklist.e2e.ts#L171)
 
 Query (multi-table)
-- [x] Three column cards initially; `+ Add column` clones; each card removable. <!-- parity:test --> `p05-bd2290` [database-checklist.e2e.ts:289](../../tests/e2e/database-checklist.e2e.ts#L289)
-- [x] Column select populated from the table's hashed option template; `*` disables column alias; criteria column select excludes `*`. <!-- parity:test --> `p05-24d15b` [database-checklist.e2e.ts:289](../../tests/e2e/database-checklist.e2e.ts#L289)
-- [x] Criteria collapse syncs with the "use in criteria" checkbox; AND/OR row appears only with ≥2 criteria columns. <!-- parity:test --> `p05-41c645` [database-checklist.e2e.ts:289](../../tests/e2e/database-checklist.e2e.ts#L289)
+- [x] Three column cards initially; `+ Add column` clones; each card removable. <!-- parity:test --> `p05-bd2290` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
+- [x] Column select populated from the table's hashed option template; `*` disables column alias; criteria column select excludes `*`. <!-- parity:test --> `p05-24d15b` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
+- [x] Criteria collapse syncs with the "use in criteria" checkbox; AND/OR row appears only with ≥2 criteria columns. <!-- parity:test --> `p05-41c645` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
 - [x] Operator-specific RHS widgets: none for IS [NOT] NULL, multi-value for IN/NOT IN, two values for BETWEEN, free text otherwise; "Another column" RHS swaps in table+column selects. <!-- parity:test --> `p05-86eabf` [queryGenerator.test.ts:51](../../apps/web/src/features/database/queryGenerator.test.ts#L51)
 - [x] Update query: "Nothing selected" error when no shown column; FROM built with LEFT JOINs from FK metadata, else comma joins; aliases honoured. <!-- parity:test --> `p05-661434` [queryGenerator.test.ts:33](../../apps/web/src/features/database/queryGenerator.test.ts#L33) +1
-- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:289](../../tests/e2e/database-checklist.e2e.ts#L289)
+- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295) +1
 
 Privileges
 - [x] Non-admin users see "No Privileges"; grant/create-less users get a notice. <!-- parity:test --> `p05-2e6a47` [database-checklist.test.ts:457](../../apps/server/test/int/database-checklist.test.ts#L457)
@@ -615,7 +615,7 @@ Routines
 - [x] Edit = backup + DROP + CREATE, with restore on failure; Adjust privileges copies `procs_priv` rows to the new name/type and flushes. <!-- parity:test --> `p05-fe4110` [database-programs.parity.test.ts:184](../../tests/parity/database-programs.parity.test.ts#L184)
 - [x] Execute dialog hides OUT params, uses radios for ENUM, checkboxes for SET, datepickers for DATE/DATETIME/TIMESTAMP, optional function column (`ShowFunctionFields`); results per result set; "%d rows affected" for procedures; empty-set notice. <!-- parity:test --> `p05-0167fe` [database-programs.parity.test.ts:224](../../tests/parity/database-programs.parity.test.ts#L224)
 - [x] Export wraps in `DELIMITER $$ … $$ DELIMITER ;`; bulk export concatenates; none exportable → message. <!-- parity:test --> `p05-73e5bf` [database-programs.parity.test.ts:272](../../tests/parity/database-programs.parity.test.ts#L272)
-- [x] Drop/bulk drop confirm; table hides and "no routines" notice shows when the last row is removed. <!-- parity:test --> `p05-9964cd` [database-checklist.e2e.ts:242](../../tests/e2e/database-checklist.e2e.ts#L242)
+- [x] Drop/bulk drop confirm; table hides and "no routines" notice shows when the last row is removed. <!-- parity:test --> `p05-9964cd` [database-checklist.e2e.ts:248](../../tests/e2e/database-checklist.e2e.ts#L248)
 
 Events
 - [x] Tab only with EVENT privilege; create button disabled without it. <!-- parity:test --> `p05-f1997a` [database-checklist.test.ts:360](../../apps/server/test/int/database-checklist.test.ts#L360)
@@ -628,7 +628,7 @@ Events
 - [x] Rows sorted by name; export shows raw `SHOW CREATE EVENT`. <!-- parity:test --> `p05-cfe947` [database-programs.parity.test.ts:422](../../tests/parity/database-programs.parity.test.ts#L422)
 
 Triggers (db scope)
-- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:276](../../tests/e2e/database-checklist.e2e.ts#L276)
+- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282) +1
 
 Tracking (db scope)
 - [x] Tab only when `Tracker::isActive()`; tracked vs untracked tables listed separately. <!-- parity:test --> `p05-edc4ef` [database-admin.parity.test.ts:365](../../tests/parity/database-admin.parity.test.ts#L365)
@@ -636,11 +636,11 @@ Tracking (db scope)
 - [x] Status toggle hits `/table/tracking` activate/deactivate; Delete tracking removes all versions for the table. <!-- parity:test --> `p05-e6492b` [database-admin.parity.test.ts:388](../../tests/parity/database-admin.parity.test.ts#L388)
 - [x] Bulk "Track table" shows the create-version form (version 1) with statement checkboxes pre-checked from `tracking_default_statements`; bulk delete confirms. <!-- parity:test --> `p05-e898ae` [database-checklist.test.ts:211](../../apps/server/test/int/database-checklist.test.ts#L211)
 - [x] Database-level DDL log shown as "Database Log" when present; empty DB shows create-table form. <!-- parity:test --> `p05-504fe5` [database-admin.parity.test.ts:365](../../tests/parity/database-admin.parity.test.ts#L365)
-- [x] Tables sorted client-side (tablesorter), version numeric. <!-- parity:test --> `p05-6d5ef9` [database-checklist.e2e.ts:384](../../tests/e2e/database-checklist.e2e.ts#L384)
+- [x] Tables sorted client-side (tablesorter), version numeric. <!-- parity:test --> `p05-6d5ef9` [database-checklist.e2e.ts:466](../../tests/e2e/database-checklist.e2e.ts#L466)
 
 Designer
 - [x] Page selection: `?page=N`, else page named like the DB, else lowest page number, else none (−1 → all tables at random positions). <!-- parity:test --> `p05-1864e4` [database-designer.test.ts:49](../../apps/server/test/int/database-designer.test.ts#L49)
-- [x] Unsaved indicator `*`; prompts to save when creating a new page with unsaved changes. <!-- parity:test --> `p05-1655f2` [database-checklist.e2e.ts:429](../../tests/e2e/database-checklist.e2e.ts#L429)
+- [x] Unsaved indicator `*`; prompts to save when creating a new page with unsaved changes. <!-- parity:test --> `p05-1655f2` [database-checklist.e2e.ts:511](../../tests/e2e/database-checklist.e2e.ts#L511)
 - [x] Drag with snap-to-grid (10px) and non-negative clamp; lines redrawn on mouseup. <!-- parity:test --> `p05-39dc32` [designer.test.ts:54](../../apps/web/src/features/database/designer/designer.test.ts#L54)
 - [x] Line routing picks closest box edges; angular vs direct style; lines hidden when toggle off or either table hidden. <!-- parity:test --> `p05-d2699b` [designer.test.ts:5](../../apps/web/src/features/database/designer/designer.test.ts#L5)
 - [x] Clicking a line start selects it (red) and opens the delete pane. <!-- parity:test --> `p05-e7645a` [designer.test.ts:60](../../apps/web/src/features/database/designer/designer.test.ts#L60)
@@ -649,15 +649,15 @@ Designer
 - [x] Seven toggles persisted per user (`angular_direct`, `snap_to_grid`, `pin_text`, `relation_lines`, `small_big_all`, `side_menu`, `full_screen`). <!-- parity:test --> `p05-8248ec` [database-designer.parity.test.ts:411](../../tests/parity/database-designer.parity.test.ts#L411)
 - [x] Save page rejects duplicate names; Save as offers "selected page" vs "new page". <!-- parity:test --> `p05-3c7130` [database-designer.parity.test.ts:158](../../tests/parity/database-designer.parity.test.ts#L158)
 - [x] Offline (IndexedDB) fallback when pmadb Designer tables are missing. <!-- parity:test --> `p05-585808` [database-designer.test.ts:169](../../apps/server/test/int/database-designer.test.ts#L169)
-- [x] Add tables from other databases with duplicate detection. <!-- parity:test --> `p05-853bd8` [database-checklist.e2e.ts:445](../../tests/e2e/database-checklist.e2e.ts#L445)
-- [x] Export schema modal shows only the chosen format's options and posts current coordinates. <!-- parity:test --> `p05-f81540` [database-checklist.e2e.ts:460](../../tests/e2e/database-checklist.e2e.ts#L460)
+- [x] Add tables from other databases with duplicate detection. <!-- parity:test --> `p05-853bd8` [database-checklist.e2e.ts:527](../../tests/e2e/database-checklist.e2e.ts#L527)
+- [x] Export schema modal shows only the chosen format's options and posts current coordinates. <!-- parity:test --> `p05-f81540` [database-checklist.e2e.ts:542](../../tests/e2e/database-checklist.e2e.ts#L542)
 - [x] Query mode: select-all/column checkboxes, per-column options (WHERE/Rename/Aggregate/GROUP BY/ORDER BY/HAVING), history accordion with edit/delete/AND-OR, Build Query with LEFT JOIN inference. <!-- parity:test --> `p05-32645c` [history.test.ts:28](../../apps/web/src/features/database/designer/history.test.ts#L28)
 
 Central columns
 - [x] Tab only with pmadb `central_columns`; empty-state alert; "Add new column" form auto-expanded only when the list is empty. <!-- parity:test --> `p05-9d28f6` [database-checklist.test.ts:410](../../apps/server/test/int/database-checklist.test.ts#L410) +2
 - [x] Page size `MaxRows=25` with prev/next and page selector; client filter box. <!-- parity:test --> `p05-ab58ec` [database-checklist.test.ts:404](../../apps/server/test/int/database-checklist.test.ts#L404)
 - [x] Add from table: table select populates column select with columns not yet in the list. <!-- parity:test --> `p05-b6cb36` [database-admin.test.ts:37](../../apps/server/test/int/database-admin.test.ts#L37)
-- [x] Inline edit per row (Edit → Save/Cancel), delete with confirm, bulk Edit (multi-edit page) and bulk Delete requiring a selection. <!-- parity:test --> `p05-1c26ce` [database-checklist.e2e.ts:351](../../tests/e2e/database-checklist.e2e.ts#L351)
+- [x] Inline edit per row (Edit → Save/Cancel), delete with confirm, bulk Edit (multi-edit page) and bulk Delete requiring a selection. <!-- parity:test --> `p05-1c26ce` [database-checklist.e2e.ts:433](../../tests/e2e/database-checklist.e2e.ts#L433)
 - [x] Default type select controls the default-value field; `col_extra` stores `extra,attribute`. <!-- parity:test --> `p05-23ba82` [database-checklist.test.ts:415](../../apps/server/test/int/database-checklist.test.ts#L415)
 - [x] Sync from Structure reports already-existing columns; Make consistent skips FK-referenced columns. <!-- parity:test --> `p05-36e33d` [database-admin.parity.test.ts:109](../../tests/parity/database-admin.parity.test.ts#L109) +1
 

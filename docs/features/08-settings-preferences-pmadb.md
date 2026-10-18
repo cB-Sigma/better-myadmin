@@ -615,7 +615,7 @@ Manage your settings
 - [x] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message. <!-- parity:test --> `p08-6b7a63` [preferences.e2e.ts:166](../../tests/e2e/preferences.e2e.ts#L166)
 - [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:295](../../apps/server/test/int/preferences.test.ts#L295) +1
 - [x] Autoload banner shown once per session when prefs are session-based and `localStorage.config` exists; Yes imports with `return_url` back to the current page; No/Delete hide it for the session (`prefs_autoload=hide`). <!-- parity:test --> `p08-5de125` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
-- [x] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not. <!-- parity:test --> `p08-953597` [preferences.test.ts:354](../../apps/server/test/int/preferences.test.ts#L354)
+- [x] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not. <!-- parity:test --> `p08-953597` [preferences.test.ts:358](../../apps/server/test/int/preferences.test.ts#L358)
 
 Page settings
 - [x] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view. <!-- parity:test --> `p08-8abc69` [preferences.e2e.ts:73](../../tests/e2e/preferences.e2e.ts#L73)
@@ -624,7 +624,7 @@ Page settings
 - [x] Edit popup shows both Edit-mode and Text-fields groups; Browse popup shows the Browse-mode group only. <!-- parity:test --> `p08-6f0e6e` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
 
 Two-factor
-- [x] Tab unusable without pmadb (explicit message). <!-- parity:test --> `p08-d68897` [preferences.test.ts:374](../../apps/server/test/int/preferences.test.ts#L374)
+- [x] Tab unusable without pmadb (explicit message). <!-- parity:test --> `p08-d68897` [preferences.test.ts:378](../../apps/server/test/int/preferences.test.ts#L378)
 - [x] Backend list: none, (simple if DBG), application if deps, WebAuthn always, key (U2F) if dep; missing deps listed with composer package names. <!-- parity:test --> `p08-47e665` [webauthn.test.ts:62](../../apps/server/test/unit/webauthn.test.ts#L62) +1
 - [x] Configure is a two-step POST (choose -> setup form -> verify); failure re-renders the setup form with *Two-factor authentication failed[: reason]*. <!-- parity:test --> `p08-38b5dc` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98) +1
 - [x] Application secret stable within the session until verified; QR label `phpMyAdmin (<host>)`. <!-- parity:test --> `p08-3db3a5` [preferences.test.ts:97](../../apps/server/test/unit/preferences.test.ts#L97)
