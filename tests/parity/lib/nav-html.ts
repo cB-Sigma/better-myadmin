@@ -247,7 +247,10 @@ export function stateFromHtml(html: string): Entry[] {
   for (const c of elements(root)) {
     if (c.tag === 'ul') out.push(...listFromUl(c))
     else if (c.tag === 'div' && hasClass(c, 'pageselector')) out.push(pagerFromHtml(c))
-    else if (c.tag === 'div' && c.attrs.id === 'pma_navigation_tree_content') {
+    else if (c.tag === 'div' && c.attrs.id === 'pma_navigation_select_database') {
+      // renderDbSelect (ShowDatabasesNavigationAsTree off): the list navigator, then #navi_db_select
+      for (const d of find(c, (e) => e.tag === 'div' && hasClass(e, 'dbselector'))) out.push(pagerFromHtml(d))
+    } else if (c.tag === 'div' && c.attrs.id === 'pma_navigation_tree_content') {
       const ul = elements(c).find((e) => e.tag === 'ul')
       if (ul !== undefined) out.push(...listFromUl(ul))
     }
@@ -325,4 +328,13 @@ function nodeFromJson(n: NavNode): Entry {
 /** The state response: phpMyAdmin puts the fast filter before and the page selector after the controls. */
 export function stateFromJson(tree: NavList): Entry[] {
   return listFromJson(tree)
+}
+
+/** The options of the legacy `select#navi_db_select` (renderDbSelect): name, title, selected. */
+export function dbSelectFromHtml(html: string): string[] {
+  const select = find(parseHtml(html), (e) => e.tag === 'select' && e.attrs.id === 'navi_db_select')[0]
+  if (select === undefined) return []
+  return find(select, (e) => e.tag === 'option').map(
+    (o) => `${o.attrs.value ?? ''}|${o.attrs.title ?? ''}|${o.attrs.selected !== undefined}`,
+  )
 }

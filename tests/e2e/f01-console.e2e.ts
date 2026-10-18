@@ -75,6 +75,11 @@ test('[p01-0acf73] an executed query is a pending entry, then successful or fail
   await expect(messages(page).locator('.message[data-state="failed"]').last()).toContainText(
     'SELECT nope FROM t',
   )
+  // the error stays in a message over the page (ajaxShowMessage(data.error, false)): a click removes it
+  const error = page.locator('.ajax_notification', { hasText: "Unknown column 'nope'" })
+  await expect(error).toBeVisible()
+  await error.click()
+  await expect(error).toHaveCount(0)
   // a query of the page (the SQL tab's Go): shown with "Show current browsing query" (on by default)
   const sqlTab = async (sql: string) => {
     // the SQL tab of another scope, without reloading the app (the console keeps its messages)
@@ -153,6 +158,16 @@ test('[p01-b992bd] the options persist through /console/update-config; "Restore 
   const saved = page.waitForResponse(
     (r) => r.url().endsWith('/console/config') && r.request().method() === 'POST',
   )
+  // console/display.twig's input names
+  for (const [id, name] of [
+    ['AlwaysExpand', 'always_expand'],
+    ['StartHistory', 'start_history'],
+    ['CurrentQuery', 'current_query'],
+    ['EnterExecutes', 'enter_executes'],
+    ['DarkTheme', 'dark_theme'],
+  ]) {
+    await expect(page.locator(`#consoleOptions${id}Checkbox`)).toHaveAttribute('name', name)
+  }
   await page.locator('#consoleOptionsAlwaysExpandCheckbox').check()
   await saved
   await page.reload()

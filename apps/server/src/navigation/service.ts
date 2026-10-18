@@ -61,6 +61,7 @@ export function navSettings(deps: Pick<NavServiceDeps, 'cfg' | 'server' | 'conn'
     NavigationTreePointerEnable: cfg.NavigationTreePointerEnable,
     NavigationTreeAutoexpandSingleDb: cfg.NavigationTreeAutoexpandSingleDb,
     NavigationTreeEnableExpansion: cfg.NavigationTreeEnableExpansion,
+    ShowDatabasesNavigationAsTree: cfg.ShowDatabasesNavigationAsTree,
     NavigationDisplayLogo: cfg.NavigationDisplayLogo,
     NavigationLogoLink: cfg.NavigationLogoLink,
     NavigationLogoLinkWindow: cfg.NavigationLogoLinkWindow as 'main' | 'new',
@@ -102,13 +103,18 @@ export async function navigationTree(
     forgetDatabasesToTest(ctx.dbi)
     ctx.privileges = await getPrivileges(ctx.dbi)
   }
-  const list = await tree.renderState()
+  // Navigation::getDisplay: the legacy pre-4.0 database select, or the tree
+  const asTree = deps.cfg.ShowDatabasesNavigationAsTree
+  const select = asTree ? null : await tree.renderDbSelect()
+  const list = select === null ? await tree.renderState() : select.list
   return {
     settings: navSettings(deps),
     pos: tree.pos,
     searchClause: tree.searchClause,
     tree: list,
-    controls: deps.cfg.NavigationTreeEnableExpansion,
+    // renderDbSelect has no controls
+    controls: deps.cfg.NavigationTreeEnableExpansion && asTree,
+    ...(select === null ? {} : { dbSelect: select.options }),
     errors: tree.errors,
   }
 }

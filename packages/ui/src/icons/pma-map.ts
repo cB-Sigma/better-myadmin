@@ -161,6 +161,12 @@ export const pmaIcons = {
   b_index_add: Plus,
   b_spatial: Globe,
   b_ftext: TextSearch,
+  // the disabled variants of the structure row actions (bd_*: the same glyph, dimmed)
+  bd_primary: Key,
+  bd_unique: KeySquare,
+  bd_index: ListOrdered,
+  bd_spatial: Globe,
+  bd_ftext: TextSearch,
   s_views: Eye,
   s_process: Activity,
   s_sortable: ArrowUpDown,
@@ -214,6 +220,7 @@ export const pmaIcons = {
   b_versions: ListOrdered,
   s_cancel: XCircle,
   centralColumns_add: Plus,
+  centralColumns_delete: Minus,
   // results grid (src/Display/Results.php, display/results/table.twig)
   b_view_add: Eye,
   b_globe: Globe,
@@ -273,4 +280,11 @@ export const pmaIcons = {
 export type PmaIconName = keyof typeof pmaIcons
 
 /** Icons where phpMyAdmin shows an outline/greyed variant of the same glyph. */
-export const pmaIconOutline: ReadonlySet<PmaIconName> = new Set(['b_no_favorite'])
+export const pmaIconOutline: ReadonlySet<PmaIconName> = new Set([
+  'b_no_favorite',
+  'bd_primary',
+  'bd_unique',
+  'bd_index',
+  'bd_spatial',
+  'bd_ftext',
+])

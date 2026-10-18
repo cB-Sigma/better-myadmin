@@ -1,5 +1,5 @@
 import type { IndexFormResponse } from '@bettermyadmin/contracts'
-import { Button, MessageBox, Modal } from '@bettermyadmin/ui'
+import { Button, Modal, showMessage } from '@bettermyadmin/ui'
 import { useRef, useState } from 'react'
 import type { TableRef } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
@@ -34,7 +34,6 @@ export function AddIndexFormDialog({
   onClose: () => void
 }) {
   const actions = useRef<EditorActions | null>(null)
-  const [missing, setMissing] = useState(false)
   // index_form.twig: add_fields = count(columns), row i preselects the i-th posted column
   const [form] = useState<IndexFormResponse>(() => ({
     index: {
@@ -61,7 +60,8 @@ export function AddIndexFormDialog({
     const v = actions.current?.value()
     if (v === undefined) return
     if (v.columns.some((c) => c.name === '')) {
-      setMissing(true)
+      // indexes.ts addIndexGo: ajaxShowMessage(s_error + strMissingColumn, false, 'error')
+      showMessage(t('Please select column(s) for the index.'), false, 'error')
       return
     }
     onGo({
@@ -102,14 +102,6 @@ export function AddIndexFormDialog({
           go()
         }}
       >
-        {missing && (
-          <MessageBox
-            type="error"
-            flush
-            className="mb-2"
-            text={t('Please select column(s) for the index.')}
-          />
-        )}
         <IndexEditorForm scope={scope} form={form} onDone={() => {}} actions={actions} targets={targets} />
       </div>
     </Modal>
@@ -141,11 +133,11 @@ export function IndexTypeDialog({
   // holding the column on is `checked` and the browser keeps the last one
   const present = source.some((i) => i.columns.some((c) => c.colIndex === colIndex))
   const [with_, setWith] = useState<number | null>(present ? source.length - 1 : null)
-  const [empty, setEmpty] = useState(false)
   const go = () => {
     if (!composite) return onSingle()
     if (with_ === null) {
-      setEmpty(true)
+      // indexes.ts: ajaxShowMessage(s_error + strFormEmpty, false, 'error')
+      showMessage(t('Missing value in the form!'), false, 'error')
       return
     }
     onComposite(with_)
@@ -167,7 +159,6 @@ export function IndexTypeDialog({
         </>
       }
     >
-      {empty && <MessageBox type="error" flush className="mb-2" text={t('Missing value in the form!')} />}
       <fieldset id="advance_index_creator" className="text-sm">
         <legend className="font-semibold">{choice.toUpperCase()}</legend>
         <div className="form-check">

@@ -223,9 +223,15 @@ test.describe('routines, events, triggers', () => {
     await expect(dlg.locator('select[name="item_param_opts_text[0]"]')).toHaveCount(0)
     await typeOf(0).selectOption('INT')
     await expect(dlg.locator('select[name="item_param_opts_num[0]"]')).toBeVisible()
-    // validation: a missing name, then a function body without RETURN
+    // validation: a missing name, then a function body without RETURN (routines.ts validate:
+    // native alerts)
+    const alerts: string[] = []
+    page.on('dialog', (d) => {
+      alerts.push(d.message())
+      void d.dismiss()
+    })
     await dlg.getByRole('button', { name: 'Save changes' }).click()
-    await expect(dlg.getByText('Missing value in the form!')).toBeVisible()
+    await expect.poll(() => alerts.at(-1)).toBe('Missing value in the form!')
     await dlg.locator('input[name="item_name"]').fill('f_ck')
     await dlg.locator('input[name="item_param_name[0]"]').fill('first')
     await dlg.locator('#addRoutineParameterButton').click()
@@ -234,9 +240,9 @@ test.describe('routines, events, triggers', () => {
     await expect(dlg.locator('input[name="item_param_name[0]"]')).toHaveValue('second')
     await dlg.locator('textarea, .cm-content').first().fill('SELECT 1')
     await dlg.getByRole('button', { name: 'Save changes' }).click()
-    await expect(
-      dlg.getByText('The definition of a stored function must contain a RETURN statement!'),
-    ).toBeVisible()
+    await expect
+      .poll(() => alerts.at(-1))
+      .toBe('The definition of a stored function must contain a RETURN statement!')
   })
 
   test('dropping the last routine shows the "no routines" notice [p05-9964cd]', async ({ page }) => {
@@ -310,6 +316,82 @@ test.describe('multi-table query', () => {
     await expect(page.locator('input[type=radio][value=OR]')).toHaveCount(0)
     await page.locator('.criteria_col').nth(1).check()
     await expect(page.locator('input[type=radio][value=OR]').first()).toBeVisible()
+  })
+})
+
+test.describe('trigger created from the dialog', () => {
+  test('the message and its query card come before the list, the new row is listed [p05-6d51f6]', async ({
+    page,
+  }) => {
+    await sql(`DROP TRIGGER IF EXISTS ${DB}.f05_cke_trg`)
+    await login(page, USER, USER)
+    await page.goto(`/s/1/db/${DB}/triggers`)
+    await page
+      .getByRole('button', { name: /Create new trigger/ })
+      .first()
+      .click()
+    const dlg = page.getByRole('dialog')
+    await dlg.locator('[name="item_name"]').fill('f05_cke_trg')
+    await dlg.locator('[name="item_table"]').selectOption('a')
+    await dlg.locator('.cm-content').first().click()
+    await page.keyboard.insertText('SET NEW.v = TRIM(NEW.v)')
+    await dlg.getByRole('button', { name: 'Save changes' }).click()
+    const card = page.locator('.result_query').first()
+    await expect(card).toContainText('Trigger `f05_cke_trg` has been created.')
+    await expect(card).toContainText('CREATE TRIGGER `f05_cke_trg` BEFORE INSERT ON `a`')
+    for (const link of ['Edit inline', 'Edit', 'Create PHP code']) {
+      await expect(card.getByText(link, { exact: true }).first()).toBeVisible()
+    }
+    // Generator::getMessage before the "Triggers" heading (QA: it followed the heading, no links)
+    expect(
+      await card.evaluate((c) => {
+        const h = document.querySelector('h2')
+        return h !== null && (c.compareDocumentPosition(h) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
+      }),
+    ).toBe(true)
+    await expect(page.locator('#triggersTable')).toContainText('f05_cke_trg')
+    await sql(`DROP TRIGGER IF EXISTS ${DB}.f05_cke_trg`)
+  })
+})
+
+test.describe('multi-table query results', () => {
+  test('a chosen table fills the column lists (`*` first, the criteria list without it); Submit renders the /sql results with inert AJAX controls [p05-cd1b8a]', async ({
+    page,
+  }) => {
+    await sql(`DELETE FROM ${DB}.a; INSERT INTO ${DB}.a VALUES (1, 'x'), (2, 'y')`)
+    await login(page, USER, USER)
+    await page.goto(`/s/1/db/${DB}/multi-table-query`)
+    const card = page
+      .locator('fieldset')
+      .filter({ has: page.locator('select.tableNameSelect') })
+      .first()
+    await card.locator('select.tableNameSelect').selectOption('a')
+    // the table's options replace "select column", the first one selected
+    const cols = card.locator('select.columnNameSelect').first()
+    await expect(cols.locator('option')).toHaveText(['*', 'id', 'v'])
+    await expect(cols).toHaveValue('*')
+    await card.locator('.criteria_col').check()
+    await expect(card.locator('select.columnNameSelect.opColumn option')).toHaveText(['id', 'v'])
+    await card.locator('.criteria_col').uncheck()
+    await page.locator('#update_query_button').click()
+    await page.locator('#submit_query').click()
+    const results = page.locator('#sql_results')
+    // the results page of /sql: message card, navigation bar and grid
+    await expect(results.locator('.result_query').first()).toContainText('Showing rows 0 - 1')
+    await expect(results.locator('table.navigation').first()).toBeVisible()
+    await expect(results.locator('table.table_results tbody tr')).toHaveCount(2)
+    // its AJAX controls do nothing here: Show all stays unchecked, Delete asks nothing
+    await results.locator('.showAllRows').first().click()
+    await expect(results.locator('.showAllRows').first()).not.toBeChecked()
+    let asked = false
+    page.once('dialog', (d) => {
+      asked = true
+      void d.dismiss()
+    })
+    await results.locator('.delete_row').first().click()
+    await expect(page.getByRole('alertdialog')).toHaveCount(0)
+    expect(asked).toBe(false)
+    await expect(results.locator('table.table_results tbody tr')).toHaveCount(2)
   })
 })
 

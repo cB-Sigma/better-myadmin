@@ -34,6 +34,7 @@ import {
   suggestPassword,
 } from '../../shell/home/password.ts'
 import { InlineHtml } from '../../shell/inline-html.tsx'
+import { usePageCardEnv } from '../../sql/page-card'
 import { LoginInformationFields } from './LoginInformationFields.tsx'
 import { GroupCard, PrivilegesTableFields, useGroupState } from './PrivilegesTableFields.tsx'
 import { type Flash, setFlash, takeFlash } from './flash.ts'
@@ -83,6 +84,7 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
   })
   const [flash, setLocalFlash] = useState<Flash | null>(() => takeFlash())
   const [active, setActive] = useState(0)
+  const { env, replacement } = usePageCardEnv(server)
 
   const run = async (
     form: PrivForm,
@@ -92,7 +94,7 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
       const r = await api.submitPrivileges(server, form)
       void qc.invalidateQueries({ queryKey: qk.privileges(server) })
       if (r.reload) void qc.invalidateQueries({ queryKey: qk.nav(server) })
-      setLocalFlash({ message: r.message, sql: r.sql })
+      setLocalFlash({ message: r.message, sql: r.sql, card: r.card })
       then?.(r)
     } catch (e) {
       setLocalFlash({ message: errorMessage(e), sql: '' })
@@ -101,6 +103,8 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
   }
 
   const d = data.data
+  // a link of the message's query card ran its query: the result replaces the page
+  if (replacement !== null) return replacement
   if (data.error !== null) return <MessageBox {...errorMessage(data.error)} />
   if (d === undefined) return <Loading />
   if (d.gate.noPrivileges) return <GateMessages gate={d.gate} />
@@ -182,7 +186,7 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
           onSubmit={(f) =>
             void run(f, (r) => {
               if (r.success && r.account !== null) {
-                setFlash({ message: r.message, sql: r.sql })
+                setFlash({ message: r.message, sql: r.sql, card: r.card })
                 void navigate(editor(server, editSearch(r.account.username, r.account.hostname)))
               }
             })
@@ -195,6 +199,10 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
   const db = Array.isArray(d.database) ? d.database : d.database
   return (
     <div className="container" id="edit_user_dialog">
+      {/* the response page of the form: Generator::getMessage before the user's page (and its pills) */}
+      {flash !== null && (
+        <PrivMessageBox message={flash.message} sql={flash.sql} card={flash.card} env={env} />
+      )}
       {/* addOrUpdateSubmenu replaces the sub-navigation (.nav-pills) by the sections' pills */}
       {sections.length > 0 && (
         <ul className="nav nav-pills mb-2 flex flex-wrap gap-1 text-sm" aria-label={t('Edit privileges:')}>
@@ -215,7 +223,6 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
         </ul>
       )}
       <GateMessages gate={d.gate} />
-      {flash !== null && <PrivMessageBox message={flash.message} sql={flash.sql} />}
       <PageHeader icon={UserPen}>
         <EditHeader server={server} d={d} />
       </PageHeader>

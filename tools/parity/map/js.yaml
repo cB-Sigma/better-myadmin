@@ -15,9 +15,6 @@ js:modules/ajax.ts#click:#pma_ignore_all_errors_popup:
   n/a: 'PHP errors of the request (see #pma_ignore_errors_bottom)'
 js:modules/ajax.ts#click:<$pageContent> form input[type=submit]:
   n/a: 'records the clicked submit button as a hidden field for the serialized AJAX form post; each button of a React form calls its own action'
-js:modules/navigation/event-loader.ts#change:#navi_db_select:
-  planned: M1
-  note: 'the legacy pre-4.0 database select (ShowDatabasesNavigationAsTree = false, NavigationTree::renderDbSelect): the panel always shows the tree'
 js:server/privileges.ts#change:#checkbox_SSL_priv:
   n/a: 'dead handler: no template renders #checkbox_SSL_priv (the SSL radios are handled by input[name="ssl_type"])'
 js:modules/console.ts#click:<$targetMessage> .action.dbg_show_trace:

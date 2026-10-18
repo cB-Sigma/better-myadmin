@@ -631,11 +631,11 @@ Triggers (db scope)
 - [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:276](../../tests/e2e/database-checklist.e2e.ts#L276)
 
 Tracking (db scope)
-- [x] Tab only when `Tracker::isActive()`; tracked vs untracked tables listed separately. <!-- parity:test --> `p05-edc4ef` [database-admin.parity.test.ts:365](../../tests/parity/database-admin.parity.test.ts#L365)
+- [x] Tab only when `Tracker::isActive()`; tracked vs untracked tables listed separately. <!-- parity:test --> `p05-edc4ef` [database-admin.parity.test.ts:366](../../tests/parity/database-admin.parity.test.ts#L366)
 - [x] Untracked list excludes deactivated-but-tracked tables (they appear as tracked, "not active"). <!-- parity:test --> `p05-579ebb` [database-checklist.test.ts:205](../../apps/server/test/int/database-checklist.test.ts#L205)
-- [x] Status toggle hits `/table/tracking` activate/deactivate; Delete tracking removes all versions for the table. <!-- parity:test --> `p05-e6492b` [database-admin.parity.test.ts:388](../../tests/parity/database-admin.parity.test.ts#L388)
+- [x] Status toggle hits `/table/tracking` activate/deactivate; Delete tracking removes all versions for the table. <!-- parity:test --> `p05-e6492b` [database-admin.parity.test.ts:389](../../tests/parity/database-admin.parity.test.ts#L389)
 - [x] Bulk "Track table" shows the create-version form (version 1) with statement checkboxes pre-checked from `tracking_default_statements`; bulk delete confirms. <!-- parity:test --> `p05-e898ae` [database-checklist.test.ts:211](../../apps/server/test/int/database-checklist.test.ts#L211)
-- [x] Database-level DDL log shown as "Database Log" when present; empty DB shows create-table form. <!-- parity:test --> `p05-504fe5` [database-admin.parity.test.ts:365](../../tests/parity/database-admin.parity.test.ts#L365)
+- [x] Database-level DDL log shown as "Database Log" when present; empty DB shows create-table form. <!-- parity:test --> `p05-504fe5` [database-admin.parity.test.ts:366](../../tests/parity/database-admin.parity.test.ts#L366)
 - [x] Tables sorted client-side (tablesorter), version numeric. <!-- parity:test --> `p05-6d5ef9` [database-checklist.e2e.ts:384](../../tests/e2e/database-checklist.e2e.ts#L384)
 
 Designer
@@ -646,7 +646,7 @@ Designer
 - [x] Clicking a line start selects it (red) and opens the delete pane. <!-- parity:test --> `p05-e7645a` [designer.test.ts:60](../../apps/web/src/features/database/designer/designer.test.ts#L60)
 - [x] Create relationship enforces key on referenced column when FKs unsupported; FK path requires indexes on both columns and same FK-capable engine; else internal relation in `pma__relation`. <!-- parity:test --> `p05-cec42b` [database-designer.parity.test.ts:320](../../tests/parity/database-designer.parity.test.ts#L320) +1
 - [x] Display field toggle: clicking the current display field clears it. <!-- parity:test --> `p05-1b1083` [database-designer.parity.test.ts:300](../../tests/parity/database-designer.parity.test.ts#L300)
-- [x] Seven toggles persisted per user (`angular_direct`, `snap_to_grid`, `pin_text`, `relation_lines`, `small_big_all`, `side_menu`, `full_screen`). <!-- parity:test --> `p05-8248ec` [database-designer.parity.test.ts:411](../../tests/parity/database-designer.parity.test.ts#L411)
+- [x] Seven toggles persisted per user (`angular_direct`, `snap_to_grid`, `pin_text`, `relation_lines`, `small_big_all`, `side_menu`, `full_screen`). <!-- parity:test --> `p05-8248ec` [database-designer.parity.test.ts:416](../../tests/parity/database-designer.parity.test.ts#L416)
 - [x] Save page rejects duplicate names; Save as offers "selected page" vs "new page". <!-- parity:test --> `p05-3c7130` [database-designer.parity.test.ts:158](../../tests/parity/database-designer.parity.test.ts#L158)
 - [x] Offline (IndexedDB) fallback when pmadb Designer tables are missing. <!-- parity:test --> `p05-585808` [database-designer.test.ts:169](../../apps/server/test/int/database-designer.test.ts#L169)
 - [x] Add tables from other databases with duplicate detection. <!-- parity:test --> `p05-853bd8` [database-checklist.e2e.ts:445](../../tests/e2e/database-checklist.e2e.ts#L445)
@@ -662,7 +662,7 @@ Central columns
 - [x] Sync from Structure reports already-existing columns; Make consistent skips FK-referenced columns. <!-- parity:test --> `p05-36e33d` [database-admin.parity.test.ts:109](../../tests/parity/database-admin.parity.test.ts#L109) +1
 
 Data dictionary
-- [x] Shows DB comment, per-table comments, primary markers, relations (when configured), MIME types (when configured), indexes with rowspans; print buttons top and bottom. <!-- parity:test --> `p05-8e2280` [database-admin.parity.test.ts:421](../../tests/parity/database-admin.parity.test.ts#L421)
+- [x] Shows DB comment, per-table comments, primary markers, relations (when configured), MIME types (when configured), indexes with rowspans; print buttons top and bottom. <!-- parity:test --> `p05-8e2280` [database-admin.parity.test.ts:422](../../tests/parity/database-admin.parity.test.ts#L422)
 
 ---
 

@@ -1,7 +1,7 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
-import { Button, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Button, Hint, Modal, MySqlDocLink, PreviewSqlDialog, showMessage } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
-import { ArrowDown, ArrowUp } from 'lucide-react'
+import { GripVertical } from 'lucide-react'
 import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
@@ -78,10 +78,8 @@ export function IndexEditorForm({
   useEffect(() => {
     if (nameRef.current !== null && nameRef.current.value === '') nameRef.current.focus()
   }, [])
-  const [addShown, setAddShown] = useState(false)
   const [advanced, setAdvanced] = useState(form.sliders === 'open')
   const [preview, setPreview] = useState<string | null>(null)
-  const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   useEffect(() => setIndex(form.index), [form])
 
   // checkIndexName: PRIMARY forces the name; a non-primary named PRIMARY is cleared
@@ -93,6 +91,8 @@ export function IndexEditorForm({
     })
   const setCol = (i: number, patch: Partial<EditorIndex['columns'][number]>) =>
     setIndex({ ...index, columns: index.columns.map((c, j) => (j === i ? { ...c, ...patch } : c)) })
+  const [dragFrom, setDragFrom] = useState<number | null>(null)
+  const [dragOver, setDragOver] = useState<number | null>(null)
   const move = (i: number, d: number) => {
     const cols = [...index.columns]
     const [c] = cols.splice(i, 1)
@@ -102,13 +102,13 @@ export function IndexEditorForm({
   }
 
   const submit = async (dryRun: boolean) => {
-    setError(null)
     try {
       const r = await api.saveIndex(scope, { oldIndex: form.oldIndex, index, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
-      setError(errorMessage(e))
+      // indexEditorDialog / indexRenameDialog: ajaxShowMessage(data.error, false), the dialog stays
+      showMessage(errorMessage(e).text, false, 'error')
     }
   }
 
@@ -252,16 +252,42 @@ export function IndexEditorForm({
         </thead>
         <tbody>
           {index.columns.map((c, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: positional index parts
-            <tr key={i} data-testid={`index-column-${i}`}>
+            // showIndexEditDialog: `#index_columns tbody` is jQuery-UI sortable (axis y); the first
+            // cell is the drag handle
+            <tr
+              // biome-ignore lint/suspicious/noArrayIndexKey: positional index parts
+              key={i}
+              data-testid={`index-column-${i}`}
+              className={dragOver === i && dragFrom !== null && dragFrom !== i ? 'bg-bg-subtle' : undefined}
+              onDragOver={(e) => {
+                if (dragFrom === null) return
+                e.preventDefault()
+                setDragOver(i)
+              }}
+              onDrop={(e) => {
+                e.preventDefault()
+                if (dragFrom !== null && dragFrom !== i) move(dragFrom, i - dragFrom)
+                setDragFrom(null)
+                setDragOver(null)
+              }}
+            >
               <td className="whitespace-nowrap">
-                <span title={t('Drag to reorder')}>
-                  <button type="button" aria-label={t('Drag to reorder')} onClick={() => move(i, -1)}>
-                    <ArrowUp className="size-3" aria-hidden />
-                  </button>
-                  <button type="button" aria-label={t('Drag to reorder')} onClick={() => move(i, 1)}>
-                    <ArrowDown className="size-3" aria-hidden />
-                  </button>
+                <span
+                  className="drag_icon inline-flex cursor-move text-fg-muted"
+                  title={t('Drag to reorder')}
+                  draggable
+                  onDragStart={(e) => {
+                    setDragFrom(i)
+                    e.dataTransfer.effectAllowed = 'move'
+                    const tr = e.currentTarget.closest('tr')
+                    if (tr !== null) e.dataTransfer.setDragImage(tr, 0, 0)
+                  }}
+                  onDragEnd={() => {
+                    setDragFrom(null)
+                    setDragOver(null)
+                  }}
+                >
+                  <GripVertical className="size-4" aria-hidden />
                 </span>
               </td>
               <td>
@@ -338,15 +364,11 @@ export function IndexEditorForm({
             max={16}
             value={addN}
             aria-label={t('Add %s column(s) to index', addN)}
-            onChange={(e) => {
-              setAddN(Number(e.target.value))
-              setAddShown(true)
-            }}
+            onChange={(e) => setAddN(Number(e.target.value))}
           />
-          {/* .add_fields is hidden until the slider moves (indexes.ts) */}
+          {/* showIndexEditDialog shows div.add_fields once the slider is set up */}
           <Button
             id="add_fields"
-            className={addShown ? undefined : 'hidden'}
             onClick={() =>
               setIndex({
                 ...index,
@@ -361,7 +383,6 @@ export function IndexEditorForm({
           </Button>
         </div>
       )}
-      {error !== null && <MessageBox {...error} flush className="mt-2" />}
       {actions === undefined && targets === undefined && (
         <div className="mt-3 flex justify-end gap-2">
           <Button type="submit" variant="primary">
@@ -447,17 +468,16 @@ export function RenameIndexDialog({
 }: { scope: TableRef; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
   const [name, setName] = useState(initialName(index))
   const [preview, setPreview] = useState<string | null>(null)
-  const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   useEffect(() => setName(initialName(index)), [index])
   const submit = async (dryRun: boolean) => {
     if (index === null) return
-    setError(null)
     try {
       const r = await api.renameIndex(scope, { oldIndex: index, name, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
-      setError(errorMessage(e))
+      // indexEditorDialog / indexRenameDialog: ajaxShowMessage(data.error, false), the dialog stays
+      showMessage(errorMessage(e).text, false, 'error')
     }
   }
   return (
@@ -495,11 +515,6 @@ export function RenameIndexDialog({
           onChange={(e) => setName(e.target.value)}
         />
       </form>
-      {error !== null && (
-        <div className="mt-2 text-sm text-error" role="alert">
-          {error.text}
-        </div>
-      )}
       <PreviewSqlDialog
         highlight
         sql={preview}

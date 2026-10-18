@@ -183,7 +183,9 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
       'Write waits in %',
     ])
     expect(activity!.rows[3]![1]).toBe(b.waitFree)
-    expect(activity!.rows[5]![1]).toBe(b.writeWaitsPct)
+    // write waits / write requests: the requests move, so the same formatting (number, unit prefix, %)
+    const unit = (v: string) => v.replace(/^[\d.,]+\s*/, '')
+    expect(unit(activity!.rows[5]![1]!)).toBe(unit(b.writeWaitsPct))
   })
 
   it('InnoDB Status page [p06-e1da5c]', async () => {

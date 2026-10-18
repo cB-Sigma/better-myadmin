@@ -5,6 +5,7 @@ import type {
   QueryResponse,
 } from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n/php'
+import { showMessage } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { SquareTerminal } from 'lucide-react'
@@ -14,6 +15,7 @@ import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { HighlightedSql } from '../sql/HighlightedSql'
+import { ErrorCard } from '../sql/SqlMessage'
 import { SqlEditor, userHasActed } from '../sql/editor/SqlEditor'
 import type { SqlEditorHandle, SqlEditorProps } from '../sql/editor/types'
 import {
@@ -264,8 +266,10 @@ function ConsoleDock({
       if (!/[a-z]|[A-Z]/.test(sql)) return
       if (confirm && needsConfirmation(sql) && !window.confirm(confirmationText(sql, t(DO_YOU_REALLY))))
         return
+      // pma: Console.execute fills the request form's db (options.db, else the current db) and its
+      // table only from options: a query typed in the console never carries the current table
       const db = opts.db ?? scope.db
-      const table = opts.table ?? scope.table
+      const table = opts.db !== undefined ? (opts.table ?? '') : ''
       const id = newQueryId()
       append({ id, sql, db, table, state: 'pending', hidden: false })
       input.current?.setValue('')
@@ -299,6 +303,13 @@ function ConsoleDock({
         .then((res) => {
           update(res)
           if (res.executed.length > 0) setDebugLog(res.executed)
+          // pma: ajax.ts responseHandler — a failed request (success false) shows its error in a
+          // message that stays (ajaxShowMessage(data.error, false)); the main panel is not replaced
+          const failed = res.statements.find((st) => st.error !== undefined)
+          if (failed !== undefined) {
+            showMessage(<ErrorCard st={failed} env={{ versionInt: 0 }} />, false)
+            return
+          }
           // the response becomes the main panel's content, in the context the query set
           // (pma: the /import response's db and table drive the menu of the main panel)
           const rdb = res.db ?? db
@@ -677,6 +688,8 @@ function OptionsCard({
         role="switch"
         aria-checked={settings[key]}
         id={`consoleOptions${key}Checkbox`}
+        // console/display.twig names (always_expand, start_history, …)
+        name={key.replace(/(?<=[a-z])(?=[A-Z])/g, '_').toLowerCase()}
         checked={settings[key]}
         onChange={(e) => set(key, e.target.checked)}
       />

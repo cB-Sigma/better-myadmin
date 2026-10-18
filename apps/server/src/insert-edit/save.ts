@@ -25,7 +25,7 @@ import {
   getUniqueCondition,
 } from '@bettermyadmin/sql-gen'
 import bcrypt from 'bcryptjs'
-import { formatSqlForDisplay } from '../query/message.ts'
+import { formatSqlForDisplay, getMessageCard } from '../query/message.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { phpRegex } from '../util/php-regex.ts'
 import { securePath, userDir } from '../util/secure-path.ts'
@@ -309,8 +309,18 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
   // Generator::getMessage(message, displayQuery): formatSql truncates at MaxCharactersInDisplayedSQL,
   // so an uploaded BLOB's hex literal is not sent back (twice) to the browser
   const shown = formatSqlForDisplay(sqlQuery, ctx.cfg)
+  // the query card on the page "Go back" opens (its links are off for a query that big)
+  const full = await getMessageCard(sqlQuery, {
+    cfg: ctx.cfg,
+    showAsPhp: null,
+    db: ctx.db,
+    table: ctx.table,
+    profilingOn: false,
+    profilingSupported: () => Promise.resolve(false),
+  })
+  const card = full === null ? null : { ...full, sql: shown }
   const out: SaveRowsResponse = {
-    message: { type, text: parts.join('\n'), sql: shown },
+    message: { type, text: parts.join('\n'), sql: shown, card },
     sqlQuery: shown,
     next: backTarget(),
   }

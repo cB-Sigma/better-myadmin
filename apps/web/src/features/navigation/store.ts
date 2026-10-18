@@ -72,6 +72,11 @@ export class NavTreeStore {
   /** Container lists replaced by an item search, with their search clause. */
   itemSearch = new Map<string, { clause: string; list: NavList }>()
   searchLists = new WeakSet<NavList>()
+  /**
+   * Lists just swapped in by a server search: FastFilter.swap shows them as the server sent them
+   * ("New" included) until the next keyup filters them again.
+   */
+  unfiltered = new Set<string>()
   /** Errors the server attached to responses (large-group warning, branch errors). */
   errors: string[] = []
   /** "Link with main panel" (not persisted, like phpMyAdmin). */
@@ -116,6 +121,7 @@ export class NavTreeStore {
       branches,
       searchLists: this.searchLists,
       filters: this.filters,
+      unfiltered: this.unfiltered,
     }
   }
 
@@ -367,6 +373,7 @@ export class NavTreeStore {
   /** keyup: the client-side filter (and its stored state, navTreeSearchFilters). */
   setFilter(ownerKey: string, text: string): void {
     this.filters.set(ownerKey, text)
+    this.unfiltered.delete(ownerKey)
     if (text === '') this.#restoreSearch(ownerKey)
     this.#emit()
     this.#storeFilter(ownerKey, text)
@@ -396,6 +403,7 @@ export class NavTreeStore {
         this.searchLists.add(r.list)
         this.rootSearch = r.list
         this.rootSearchClause = text
+        this.unfiltered.add(ownerKey)
       }
     } else {
       if (this.itemSearch.get(ownerKey)?.clause === text) return
@@ -412,6 +420,7 @@ export class NavTreeStore {
       if (r?.list && r.results !== null) {
         this.searchLists.add(r.list)
         this.itemSearch.set(ownerKey, { clause: text, list: r.list })
+        this.unfiltered.add(ownerKey)
       }
     }
     this.#emit()

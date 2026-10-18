@@ -62,11 +62,15 @@ export function TrackingPage({ scope }: { scope: TableRef }) {
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [view, setView] = useState<View>({ kind: 'main' })
   const [dump, setDump] = useState<string | null>(null)
+  // TrackingController: "Tracking of … is activated." reflects the state before the posted action
+  // (none for deactivate_now); null until an action ran
+  const [activeShown, setActiveShown] = useState<boolean | null>(null)
   if (q.isError) return <ResultMessages messages={[errorMessage(q.error)]} />
   if (q.data === undefined) return null
   const page = q.data
 
-  const run = async (fn: () => Promise<{ messages: SqlMessage[] }>) => {
+  const run = async (fn: () => Promise<{ messages: SqlMessage[] }>, deactivate = false) => {
+    setActiveShown(deactivate ? false : page.activeMessage)
     try {
       const r = await fn()
       setMessages(r.messages)
@@ -116,7 +120,7 @@ export function TrackingPage({ scope }: { scope: TableRef }) {
 
   return (
     <div className="flex flex-col gap-3">
-      {page.activeMessage && (
+      {(activeShown ?? page.activeMessage) && (
         <ResultMessages
           messages={[{ type: 'notice', text: t('Tracking of %s is activated.', `${page.db}.${page.table}`) }]}
         />
@@ -141,7 +145,7 @@ function Main({
 }: {
   scope: TableRef
   page: TrackingPageResponse
-  run: (fn: () => Promise<{ messages: SqlMessage[] }>) => Promise<void>
+  run: (fn: () => Promise<{ messages: SqlMessage[] }>, deactivate?: boolean) => Promise<void>
   report: (version: string) => void
   snapshot: (version: string) => void
 }) {
@@ -291,11 +295,13 @@ function Main({
           <PanelBody>
             <Button
               onClick={() =>
-                void run(() =>
-                  api.tableTrackingToggle(scope, {
-                    version: String(page.lastVersion),
-                    action: last.active ? 'deactivate' : 'activate',
-                  }),
+                void run(
+                  () =>
+                    api.tableTrackingToggle(scope, {
+                      version: String(page.lastVersion),
+                      action: last.active ? 'deactivate' : 'activate',
+                    }),
+                  last.active,
                 )
               }
             >

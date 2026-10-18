@@ -15,6 +15,40 @@ const badge = (type: string) =>
         ? 'bg-info text-white'
         : 'bg-bg-inset'
 
+/** Twig's `title` filter: every word capitalised, the rest in lower case ("status" → "Status"). */
+export const titleCase = (s: string) =>
+  s.toLowerCase().replace(/(^|[\s\-_])(\p{L})/gu, (_, sep: string, c: string) => sep + c.toUpperCase())
+
+/**
+ * The Msg rows of one table: an Op badge when the row's Op is not the operation, the Msg_type
+ * badge, the text (`row.Op|title`, `row.Msg_type|title`).
+ */
+export function MaintenanceRows({
+  rows,
+  op,
+}: {
+  rows: MaintenanceResult['rows']
+  /** the operation in lower case */
+  op: string
+}) {
+  return (
+    <PanelList>
+      {rows.map((r, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: result rows
+        <PanelItem key={i}>
+          {r.op.toLowerCase() !== op && (
+            <span className="me-1 rounded bg-bg-inset px-1 text-xs">{titleCase(r.op)}</span>
+          )}
+          <span className={`me-1 rounded px-1 text-xs ${badge(r.msgType.toLowerCase())}`}>
+            {titleCase(r.msgType)}
+          </span>
+          {r.msgText}
+        </PanelItem>
+      ))}
+    </PanelList>
+  )
+}
+
 /** pma: templates/table/maintenance/{analyze,check,checksum,optimize,repair}.twig */
 export function MaintenanceResults({ result }: { result: MaintenanceResult }) {
   const tables = [...new Set(result.rows.map((r) => r.table))]
@@ -41,22 +75,7 @@ export function MaintenanceResults({ result }: { result: MaintenanceResult }) {
       ) : (
         tables.map((name) => (
           <Panel key={name} title={name}>
-            <PanelList>
-              {result.rows
-                .filter((r) => r.table === name)
-                .map((r, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: result rows
-                  <PanelItem key={i}>
-                    {r.op.toLowerCase() !== result.op && (
-                      <span className="me-1 rounded bg-bg-inset px-1 text-xs">{r.op}</span>
-                    )}
-                    <span className={`me-1 rounded px-1 text-xs ${badge(r.msgType.toLowerCase())}`}>
-                      {r.msgType}
-                    </span>
-                    {r.msgText}
-                  </PanelItem>
-                ))}
-            </PanelList>
+            <MaintenanceRows rows={result.rows.filter((r) => r.table === name)} op={result.op} />
           </Panel>
         ))
       )}

@@ -93,5 +93,4 @@ export function uiSettingsFrom(cfg: ClientConfig, serverVersion = 0, isMariaDb =
   }
 }
 
-/** The project's homepage (the login logo, the home page's "Official Homepage"). */
-export const PROJECT_URL = 'https://github.com/cB-Abhinav-Gautam/better-myadmin'
+export { PROJECT_URL } from '@bettermyadmin/contracts/constants'

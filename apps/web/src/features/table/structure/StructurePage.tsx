@@ -1,6 +1,7 @@
 import type { DdlResponse, SqlMessage, StructureResponse } from '@bettermyadmin/contracts'
 import {
   Button,
+  IconText,
   MessageBox,
   Modal,
   MySqlDocLink,
@@ -9,6 +10,7 @@ import {
   PreviewSqlDialog,
   removeMessage,
   showMessage,
+  useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
@@ -18,9 +20,10 @@ import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { usePagePrefs } from '../../preferences/PageSettings.tsx'
+import { MaintenanceRows } from '../common/MaintenanceResults'
 import { StructurePills } from '../common/StructurePills'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
-import { confirmSql } from './confirm'
+import { sqlQuestion } from './confirm'
 import { takeFlash } from './flash'
 
 /**
@@ -96,9 +99,12 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const columnNames = s.columns.map((c) => c.name)
   const afterField = after ?? columnNames.at(-1) ?? 'first'
 
+  // structure.ts: the row actions confirm in the $.fn.confirm modal (OK / Close)
+  const ask = useConfirm()
   const addKey = async (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT', column: Column) => {
     const clause = type === 'PRIMARY' ? 'ADD PRIMARY KEY' : `ADD ${type}`
-    if (!confirmSql(`ALTER TABLE \`${table}\` ${clause}(\`${column.name}\`);`)) return
+    if (!(await ask({ question: sqlQuestion(`ALTER TABLE \`${table}\` ${clause}(\`${column.name}\`);`) })))
+      return
     await act(() => api.addKey(scope, { type, columns: [column.name], source: 'row' }))
   }
   const bulkKey = async (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT') => {
@@ -114,7 +120,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
     }
   }
   const dropColumn = async (c: Column) => {
-    if (!confirmSql(c.dropSql)) return
+    if (!(await ask({ question: sqlQuestion(c.dropSql), destructive: true }))) return
     const box = showMessage(t('Dropping column'), false)
     await act(() => api.dropColumns(scope, { columns: [c.name], source: 'row' }))
     removeMessage(box)
@@ -136,28 +142,18 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         <MessageBox key={i} {...m} />
       ))}
       {maintenance && (
-        <Panel title={maintenance.title}>
-          <PanelBody>
-            {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
-              <div key={name} className="mb-2">
-                <div className="font-semibold">
-                  {name} ({maintenance.partition})
-                </div>
-                <ul>
-                  {maintenance.rows
-                    .filter((r) => r.table === name)
-                    .map((r, i) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: result rows
-                      <li key={i} className="text-sm">
-                        <span className="mr-1 rounded bg-bg-inset px-1">{r.msgType}</span>
-                        {r.msgText}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            ))}
-          </PanelBody>
-        </Panel>
+        // pma: templates/table/partition/{analyze,check,optimize,repair}.twig
+        <div className="space-y-2" data-testid="partition-maintenance">
+          <h2 className="text-lg">{maintenance.title}</h2>
+          {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
+            <Panel key={name} title={`${name} (${maintenance.partition})`}>
+              <MaintenanceRows
+                rows={maintenance.rows.filter((r) => r.table === name)}
+                op={maintenance.op ?? ''}
+              />
+            </Panel>
+          ))}
+        </div>
       )}
 
       <form id="fieldsForm" onSubmit={(e) => e.preventDefault()}>
@@ -864,26 +860,27 @@ function RowActions({
       className={
         hide
           ? 'absolute right-0 z-10 min-w-40 rounded border border-border bg-bg-elevated p-1 shadow'
-          : 'flex gap-1'
+          : 'nav flex gap-1'
       }
     >
       {(
         [
-          ['PRIMARY', t('Primary'), column.actions.primary, 'add_primary_key_anchor'],
-          ['UNIQUE', t('Unique'), column.actions.unique, 'add_unique_anchor'],
-          ['INDEX', t('Index'), column.actions.index, 'add_index_anchor'],
-          ['SPATIAL', t('Spatial'), column.actions.spatial, 'add_spatial_anchor'],
-          ['FULLTEXT', t('Fulltext'), column.actions.fulltext, 'add_fulltext_anchor'],
+          ['PRIMARY', t('Primary'), column.actions.primary, 'add_primary_key_anchor', 'primary'],
+          ['UNIQUE', t('Unique'), column.actions.unique, 'add_unique_anchor', 'unique'],
+          ['INDEX', t('Index'), column.actions.index, 'add_index_anchor', 'index'],
+          ['SPATIAL', t('Spatial'), column.actions.spatial, 'add_spatial_anchor', 'spatial'],
+          ['FULLTEXT', t('Fulltext'), column.actions.fulltext, 'add_fulltext_anchor', 'ftext'],
         ] as const
-      ).map(([type, label, enabled, cls]) => (
-        <li key={type} className="whitespace-nowrap">
+      ).map(([type, label, enabled, cls, icon]) => (
+        // display_structure.twig: b_* icons for the possible keys, bd_* (disabled) for the others
+        <li key={type} className={hide ? 'whitespace-nowrap' : 'nav-item whitespace-nowrap'}>
           {enabled ? (
             <Button variant="link" className={`add_key ${cls}`} onClick={() => onKey(type)}>
-              {label}
+              <IconText icon={`b_${icon}`} text={label} />
             </Button>
           ) : (
             <span className="px-1 text-fg-subtle" aria-disabled="true">
-              {label}
+              <IconText icon={`bd_${icon}`} text={label} />
             </span>
           )}
         </li>
@@ -897,18 +894,18 @@ function RowActions({
           }
           className="px-1"
         >
-          {t('Distinct values')}
+          <IconText icon="b_browse" text={t('Distinct values')} />
         </Link>
       </li>
       {onCentral !== null && (
         <li className="browse whitespace-nowrap">
           {column.inCentralList ? (
             <Button variant="link" onClick={() => onCentral('remove')}>
-              {t('Remove from central columns')}
+              <IconText icon="centralColumns_delete" text={t('Remove from central columns')} />
             </Button>
           ) : (
             <Button variant="link" onClick={() => onCentral('add')}>
-              {t('Add to central columns')}
+              <IconText icon="centralColumns_add" text={t('Add to central columns')} />
             </Button>
           )}
         </li>
@@ -937,6 +934,7 @@ function PartitionsCard({
 }) {
   const p = s.partitions
   const navigate = useNavigate()
+  const ask = useConfirm()
   const sliders = s.config.InitialSlidersState
   const [open, setOpen] = useState(sliders === 'open' || sliders === 'disabled' || p.partitions.length === 0)
   type Op = 'ANALYZE' | 'CHECK' | 'OPTIMIZE' | 'REBUILD' | 'REPAIR' | 'TRUNCATE' | 'DROP'
@@ -960,17 +958,19 @@ function PartitionsCard({
   }
   const run = (operation: Op, partition: string) => {
     const go = () => void act(() => api.partitionMaintenance(scope, { operation, partition }))
+    // structure.ts: DROP and TRUNCATE confirm in the $.fn.confirm modal
     if (operation === 'DROP') {
-      if (
-        window.confirm(
-          t(
-            'Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!',
-          ),
-        )
-      )
-        go()
+      void ask({
+        question: t(
+          'Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!',
+        ),
+        destructive: true,
+      }).then((ok) => ok && go())
     } else if (operation === 'TRUNCATE') {
-      if (window.confirm(t('Do you really want to TRUNCATE the selected partition(s)?'))) go()
+      void ask({
+        question: t('Do you really want to TRUNCATE the selected partition(s)?'),
+        destructive: true,
+      }).then((ok) => ok && go())
     } else go()
   }
   const editHref = `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/structure/partitioning`
@@ -990,11 +990,11 @@ function PartitionsCard({
             <>
               <Button
                 id="remove_partitioning"
-                onClick={() => {
-                  if (window.confirm(t('Do you really want to remove partitioning?'))) {
-                    void act(() => api.removePartitioning(scope))
-                  }
-                }}
+                onClick={() =>
+                  void ask({ question: t('Do you really want to remove partitioning?') }).then(
+                    (ok) => ok && void act(() => api.removePartitioning(scope)),
+                  )
+                }
               >
                 {t('Remove partitioning')}
               </Button>
