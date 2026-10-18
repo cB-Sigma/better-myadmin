@@ -1,9 +1,10 @@
+import { createHash } from 'node:crypto'
 import { englishTranslator } from '@bettermyadmin/i18n'
 import { describe, expect, it } from 'vitest'
 import { ConfigFile, arrayRemove, flatArray } from '../../src/preferences/config-file.ts'
 import { validateSelect } from '../../src/preferences/form-display.ts'
 import { qrMatrix } from '../../src/preferences/qr.ts'
-import { prefsMessage } from '../../src/preferences/service.ts'
+import { prefsMessage, twoFactorAppId } from '../../src/preferences/service.ts'
 import { base32Decode, oathTotp, otpauthUrl, verifyKey } from '../../src/preferences/totp.ts'
 import { pcreError, validate } from '../../src/preferences/validator.ts'
 
@@ -101,12 +102,42 @@ describe('TOTP (pragmarx/google2fa)', () => {
   })
 })
 
+describe('TwoFactorPlugin::getAppId(false)', () => {
+  it('the PmaAbsoluteUri host as parse_url() gives it (no port, case kept), else HTTP_HOST', () => {
+    expect(twoFactorAppId('', '127.0.0.1:8080')).toBe('127.0.0.1:8080')
+    expect(twoFactorAppId('https://Pma.Example.com:8443/pma/', 'x:1')).toBe('Pma.Example.com')
+    expect(twoFactorAppId('http://u:p@[::1]:81/', 'x:1')).toBe('[::1]')
+    expect(twoFactorAppId('//host.example/pma/', 'x:1')).toBe('host.example')
+    expect(twoFactorAppId('pma/', 'x:1')).toBe('x:1')
+    expect(twoFactorAppId('host:8080', 'x:1')).toBe('host')
+    expect(twoFactorAppId('http://h?x', 'x:1')).toBe('h')
+  })
+})
+
 describe('QR encoder', () => {
   it('produces a square matrix with the finder patterns', () => {
     const m = qrMatrix('otpauth://totp/phpMyAdmin%20%28localhost%29:root?secret=ABCDEFGHIJKLMNOP&issuer=x')
     expect(m.length).toBe(m[0]?.length)
     expect(m[0]?.slice(0, 7)).toBe('1111111')
     expect(m[1]?.slice(0, 7)).toBe('1000001')
+  })
+
+  // sha256 of the module rows of Bacon\Encoder::encode($text, L, 'utf-8') (Google2FA-QRCode's call):
+  // the UTF-8 ECI header, the intdiv(bits + 8, 8) version boundary (30 vs 31 bytes) and the
+  // in-bounds rule 3 of the mask penalty
+  it.each([
+    ['a'.repeat(30), 25, '6de35d917025aeaeddec23f4976b3712e542dcae57b5c0dc780645525d1c1756'],
+    ['a'.repeat(31), 29, '790afa901e7bd52ece56e51747b8f00918963381ccdeb1e97b3955a3f8dabeae'],
+    [
+      'otpauth://totp/phpMyAdmin%20%28localhost%29:root?secret=ABCDEFGHIJKLMNOP&issuer=phpMyAdmin%20%28localhost%29&algorithm=SHA1&digits=6&period=30',
+      45,
+      'f338e245189ab06f395a14711c0927ff68702bd84256b65c74c9eeac7e6a20c7',
+    ],
+    ['hello world 123', 21, '7dcf2fd127f95752a897d13bfa8fb7177138cad7e2750b55677554b1d72b8a35'],
+  ])('matches bacon/bacon-qr-code for %s', (text, size, hash) => {
+    const m = qrMatrix(text)
+    expect(m.length).toBe(size)
+    expect(createHash('sha256').update(m.join('')).digest('hex')).toBe(hash)
   })
 })
 

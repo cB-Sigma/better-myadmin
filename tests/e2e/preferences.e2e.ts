@@ -140,6 +140,58 @@ test('two-factor: configure the application backend, then the login asks for the
   await expect(page.getByText('Two-factor authentication has been removed.')).toBeVisible()
 })
 
+test('two-factor: a WebAuthn key (virtual authenticator) registers, logs in and disables [p01-83d6b9] [p08-71a0b1] [p08-bce194]', async ({
+  page,
+  baseURL,
+}) => {
+  // an IP address is no valid relying party id: the same server through `localhost`
+  const base = (baseURL ?? '').replace('127.0.0.1', 'localhost')
+  const cdp = await page.context().newCDPSession(page)
+  await cdp.send('WebAuthn.enable')
+  const { authenticatorId } = await cdp.send('WebAuthn.addVirtualAuthenticator', {
+    options: {
+      protocol: 'ctap2',
+      transport: 'usb',
+      hasResidentKey: false,
+      hasUserVerification: true,
+      isUserVerified: true,
+      automaticPresenceSimulation: true,
+    },
+  })
+  const failed: string[] = []
+  page.on('response', (r) => {
+    if (r.status() >= 400) failed.push(`${r.status()} ${r.url()}`)
+  })
+  const signIn = async () => {
+    await page.goto(`${base}/`)
+    await page.locator('#input_username').fill(USER)
+    await page.locator('#input_password').fill(USER)
+    await page.locator('#input_go').click()
+  }
+  await signIn()
+  await expect(page.locator('#pma_navigation')).toBeVisible()
+  await page.goto(`${base}/s/1/preferences/two-factor`)
+  await page.getByRole('radio', { name: /^Hardware Security Key \(WebAuthn\/FIDO2\)/ }).check()
+  await page.getByRole('button', { name: 'Configure two-factor authentication' }).click()
+  // the registration runs on its own and posts the form
+  await expect(page.getByText('Two-factor authentication has been configured.')).toBeVisible()
+  const creds = await cdp.send('WebAuthn.getCredentials', { authenticatorId })
+  expect(creds.credentials.map((c) => [c.rpId, c.signCount])).toEqual([['localhost', 1]])
+
+  // a new login: the assertion runs on its own after the password
+  await page.goto('about:blank')
+  await page.context().clearCookies()
+  await signIn()
+  await expect(page.locator('#pma_navigation')).toBeVisible()
+  expect((await cdp.send('WebAuthn.getCredentials', { authenticatorId })).credentials[0]?.signCount).toBe(2)
+
+  // disabling asks the key again
+  await page.goto(`${base}/s/1/preferences/two-factor`)
+  await page.getByRole('button', { name: 'Disable two-factor authentication' }).click()
+  await expect(page.getByText('Two-factor authentication has been removed.')).toBeVisible()
+  expect(failed).toEqual([])
+})
+
 test('settings pages: eight pills in order, the current one marked, no navigation gear [p08-b1ce07] [p08-cd4d34]', async ({
   page,
 }) => {

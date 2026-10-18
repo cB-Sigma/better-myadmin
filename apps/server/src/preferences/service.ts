@@ -144,27 +144,31 @@ export function formPage(ctx: PrefsCtx, tab: PreferencesTab): PreferencesFormRes
   return { ...header(ctx), formSet: formSet(fd) }
 }
 
+/**
+ * TwoFactorPlugin::getAppId(false): the host of `PmaAbsoluteUri` as parse_url() returns it (without
+ * the port, case kept), else HTTP_HOST (with the port).
+ */
+export function twoFactorAppId(absoluteUri: string, httpHost: string): string {
+  const m =
+    /^(?:[a-z][a-z0-9+.-]*:)?\/\/(?:[^@/?#]*@)?(\[[^\]]*\]|[^:/?#]*)/i.exec(absoluteUri) ??
+    // `host:8080` (parse_url's host and port without a scheme)
+    /^([^:/?#]+):\d+(?:[/?#]|$)/.exec(absoluteUri)
+  return m?.[1] || httpHost
+}
+
 /** The 2FA backend context of this request. */
 export function twoFactorCtx(ctx: PrefsCtx): TwoFactorContext {
   const c = ctx.m.c
   const session = c.get('session')
   session.twoFactor ??= {}
   const httpHost = c.req.header('host') ?? ''
-  let appId = httpHost
-  if (ctx.m.cfg.PmaAbsoluteUri !== '') {
-    try {
-      appId = new URL(ctx.m.cfg.PmaAbsoluteUri).host || httpHost
-    } catch {
-      appId = httpHost
-    }
-  }
   return {
     tr: ctx.tr,
     user: ctx.m.user,
     simple2fa: ctx.m.cfg.DBG.simple2fa,
     state: session.twoFactor as TwoFactorSessionState,
     host: httpHost.replace(/:\d+$/, ''),
-    appId,
+    appId: twoFactorAppId(ctx.m.cfg.PmaAbsoluteUri, httpHost),
   }
 }
 
