@@ -4,7 +4,7 @@
 
 What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.
 
-964/966 covered (99.8%): 951 implemented, 13 n/a, 1 planned, 1 broken. [Summary](README.md).
+965/966 covered (99.9%): 952 implemented, 13 n/a, 1 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 236/237 (99.6%) covered, 227/237 implemented
 
@@ -36,11 +36,11 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `makegrid.ts` | 61/61: ✅ `POST /sql` ✅ `POST /sql/get-enum-values` ✅ `POST /sql/get-relational-values` ✅ `POST /sql/get-set-values` ✅ `POST /sql/set-column-preferences` ✅ `POST /table/replace` ✅ `alert("")` ✅ `beforeunload window` ✅ `change <$editArea> select` ✅ `change <$editArea> span.curr_value` ✅ `change <g.cEdit> .edit_box` ✅ `click <$checkbox>` ✅ `click <$editArea> .browse_foreign` ✅ `click <$editArea> > *` ✅ `click <cd>` ✅ `click <clone>` ✅ `click <g.o> div.restore_column` ✅ `click <g.o> div.save_edited` ✅ `click <g.t> td.data.click1` ✅ `click <g.t> td.data.click2` ✅ `click <listElmt>` ✅ `click <showAll>` ✅ `click html` ✅ `click this` ✅ `copy document` ✅ `dblclick <g.t> td.data.click2` ✅ `dblclick <g.t> th.draggable` ✅ `dblclick <g.t> th.draggable a` ✅ `dragstart <g.t> th a` ✅ `focus <g.cEditStd> .edit_box` ✅ `focus <g.cEditTextarea> .edit_box` ✅ `input <g.cEdit> .edit_box` ✅ `keydown <$editArea> textarea` ✅ `keydown <g.cEdit> .edit_box [V ctrl]` ✅ `keydown <g.cEditStd>` ✅ `keydown <g.cEditStd> .edit_box, select [Enter]` ✅ `keydown <g.cEditStd> input.edit_box, select [ArrowDown ArrowLeft ArrowRight A…` ✅ `keydown <g.cEditTextarea>` ✅ `keydown <g.cEditTextarea> .edit_box, select [Enter shift]` ✅ `keydown <g.cEditTextarea> textarea.edit_box, select [ArrowDown ArrowLeft Arro…` ✅ `keydown document [Escape KeyA ctrl meta shift]` ✅ `keydown html [Escape]` ✅ `keypress <g.cEdit> .edit_box` ✅ `keyup <$editArea> textarea` ✅ `keyup <$inputField> [Enter Escape]` ✅ `keyup <g.cEdit> .edit_box` ✅ `mousedown <cb>` ✅ `mousedown <g.t> td.data` ✅ `mousedown <g.t> th.draggable` ✅ `mousedown document` ✅ `mouseenter <g.t> td, th.draggable` ✅ `mouseenter <g.t> th.draggable` ✅ `mouseenter <t> th.draggable a` ✅ `mouseleave <g.t> td.data` ✅ `mouseleave <g.t> th.draggable` ✅ `mouseleave <t> th.draggable a` ✅ `mousemove document` ✅ `mouseover <g.t> td.data, thead th:not(.column_action)` ✅ `mouseup document` ✅ `paste <g.cEdit> .edit_box` ✅ `resize <g>` |  |
 | `multi_column_sort.ts` | 2/2: ✅ `POST /sql` ✅ `click th.draggable.column_heading.pointer.marker a` |  |
 
-## 03 insert edit transformations — 21/22 (95.5%) covered, 21/22 implemented
+## 03 insert edit transformations — 22/22 (100.0%) covered, 22/22 implemented
 
 | Script | Covered | Not covered |
 |---|---|---|
-| `gis_data_editor.ts` | 10/11: ✅ `POST /gis-data-editor` ✅ `change #gis_editor input[type='text']` ✅ `change #gis_editor select.gis_type` ✅ `click #gis_editor button.addJs.addGeom` ✅ `click #gis_editor button.addJs.addLine` ✅ `click #gis_editor button.addJs.addPoint` ✅ `click #gis_editor button.addJs.addPolygon` ✅ `click #gis_editor button.gis-copy-data` ✅ `hidden <$gisEditorModal>` ✅ `load <script>` | 💥 `error <script>` |
+| `gis_data_editor.ts` | 11/11: ✅ `POST /gis-data-editor` ✅ `change #gis_editor input[type='text']` ✅ `change #gis_editor select.gis_type` ✅ `click #gis_editor button.addJs.addGeom` ✅ `click #gis_editor button.addJs.addLine` ✅ `click #gis_editor button.addJs.addPoint` ✅ `click #gis_editor button.addJs.addPolygon` ✅ `click #gis_editor button.gis-copy-data` ✅ `error <script>` ✅ `hidden <$gisEditorModal>` ✅ `load <script>` |  |
 | `table/change.ts` | 10/10: ✅ `change #insert_rows` ✅ `change <$thisElement>` ✅ `change select[name="submit_type"]` ✅ `click <$thisElement>` ✅ `click button.gis-copy-data` ✅ `click input.checkbox_null` ✅ `click input[name^='insert_ignore_']` ✅ `confirm(strConfirmRowChange)` ✅ `keypress #insert_rows` ✅ `show.bs.modal <gisEditorModal>` |  |
 | `transformations/image_upload.ts` | 1/1: ✅ `change input.image-upload` |  |
 

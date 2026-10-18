@@ -10,7 +10,7 @@ Mechanical inventories of phpMyAdmin `328b8d80` ([reference-commit.txt](../refer
 | Template controls | 1106 | 1095 | 3 | 7 | 1 | 0 | 0 | 0 | 0 | 1105 | 99.9% |
 | Config directives | 449 | 426 | 2 | 20 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
 | Messages (msgids) | 3428 | 3249 | 13 | 133 | 1 | 0 | 0 | 32 | 0 | 3395 | 99.0% |
-| JS behaviours | 966 | 951 | 0 | 13 | 1 | 0 | 0 | 0 | 1 | 964 | 99.8% |
+| JS behaviours | 966 | 952 | 0 | 13 | 1 | 0 | 0 | 0 | 0 | 965 | 99.9% |
 | Checklist items | 707 | 657 | 0 | 6 | 0 | 1 | 0 | 43 | 0 | 663 | 93.8% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
@@ -23,7 +23,7 @@ Covered / total per inventory (directives are attributed to the feature doc that
 |---|---|---|---|---|---|---|---|
 | [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 97/98 (99.0%) | 109/109 (100.0%) | 404/404 (100.0%) | 236/237 (99.6%) | 76/77 (98.7%) |
 | [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 32/32 (100.0%) | 32/32 (100.0%) | 56/56 (100.0%) | 69/69 (100.0%) | 80/118 (67.8%) |
-| [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 7/7 (100.0%) | 28/28 (100.0%) | 16/16 (100.0%) | 79/79 (100.0%) | 21/22 (95.5%) | 58/59 (98.3%) |
+| [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 7/7 (100.0%) | 28/28 (100.0%) | 16/16 (100.0%) | 79/79 (100.0%) | 22/22 (100.0%) | 58/59 (98.3%) |
 | [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 543/543 (100.0%) | 178/178 (100.0%) | 96/100 (96.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 240/240 (100.0%) | 31/31 (100.0%) | 301/301 (100.0%) | 180/180 (100.0%) | 112/112 (100.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
@@ -39,14 +39,9 @@ phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by c
 | # | phpMyAdmin source | Area | Milestone | Routes | Controls | JS | Msgids | Score |
 |---|---|---|---|---|---|---|---|---|
 | 1 | `resources/js/datetimepicker.ts` | other | M5 | 0 | 0 | 0 | 32 | 32 |
-| 2 | `resources/js/gis_data_editor.ts` | 03 insert edit transformations | M2 | 0 | 0 | 1 | 0 | 2 |
-| 3 | `resources/js/modules/navigation/event-loader.ts` | 01 shell navigation auth | M1 | 0 | 0 | 1 | 0 | 2 |
-| 4 | `resources/templates/navigation/tree/database_select.twig` | 01 shell navigation auth | M1 | 0 | 1 | 0 | 0 | 2 |
-| 5 | `resources/js/validator-messages.ts` | 08 settings preferences pmadb | M4 | 0 | 0 | 0 | 1 | 1 |
-
-## Problems (the gate fails on these)
-
-- js:gis_data_editor.ts#error:<script>: apps/web/src/features/insert-edit/pma-controls.ts:80: ".catch(() => {})" not found in apps/web/src/features/gis/OlPlot.tsx
+| 2 | `resources/js/modules/navigation/event-loader.ts` | 01 shell navigation auth | M1 | 0 | 0 | 1 | 0 | 2 |
+| 3 | `resources/templates/navigation/tree/database_select.twig` | 01 shell navigation auth | M1 | 0 | 1 | 0 | 0 | 2 |
+| 4 | `resources/js/validator-messages.ts` | 08 settings preferences pmadb | M4 | 0 | 0 | 0 | 1 | 1 |
 
 ## Cross-check notes
 
