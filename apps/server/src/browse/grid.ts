@@ -60,6 +60,7 @@ import type { GridHookArgs } from '../query/pipeline.ts'
 import { countRecords } from '../query/pipeline.ts'
 import { signSql } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
+import { mbLongerThan, mbStrlen, mbSubstr } from '../util/mb.ts'
 import { defaultTransformation } from './default-transformations.ts'
 import { runExternalTransformation } from './external.ts'
 import { specialSchemaLink } from './special-links.ts'
@@ -928,7 +929,7 @@ async function fallbackDisplayField(reader: TableReader, db: string, table: stri
 function urlSql(info: StatementInfo, sqlQuery: string): string {
   if (
     info.flags.queryType !== 'SELECT' ||
-    Array.from(sqlQuery).length < 200 ||
+    !mbLongerThan(sqlQuery, 199) ||
     info.statement === null ||
     info.parser.list === null
   ) {
@@ -1065,12 +1066,8 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
   else if (meta.mappedType === 'string') classes.push('text')
   let cls = classes.join(' ')
 
-  const partial = (s: string) => {
-    const cps = Array.from(s)
-    return cps.length > cfg.LimitChars && view.pftext === 'P'
-      ? `${cps.slice(0, cfg.LimitChars).join('')}...`
-      : s
-  }
+  const partial = (s: string) =>
+    view.pftext === 'P' && mbLongerThan(s, cfg.LimitChars) ? `${mbSubstr(s, cfg.LimitChars)}...` : s
   // Results::addClass
   const addClass = (base: string, nowrap: string, truncated = false) => {
     const out = [base, nowrap].filter((x) => x !== '')
@@ -1166,7 +1163,7 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
   let column = text
   let truncated = false
   if (!meta.flags.binary) {
-    originalLength = Array.from(text).length
+    originalLength = mbStrlen(text)
     column = partial(text)
     truncated = column !== text
   }
@@ -1268,10 +1265,9 @@ async function rowData(
       }
       if (v === false) dispval = env.tr.gettext('Link not found!')
       else if (v !== null) {
-        const cps = Array.from(v)
         dispval =
-          cps.length > env.cfg.LimitChars && c.view.pftext === 'P'
-            ? `${cps.slice(0, env.cfg.LimitChars).join('')}...`
+          c.view.pftext === 'P' && mbLongerThan(v, env.cfg.LimitChars)
+            ? `${mbSubstr(v, env.cfg.LimitChars)}...`
             : v
       } else dispval = null
       c.fkCache.set(sql, dispval)

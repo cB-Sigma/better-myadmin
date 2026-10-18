@@ -656,7 +656,7 @@ Designer
 Central columns
 - [x] Tab only with pmadb `central_columns`; empty-state alert; "Add new column" form auto-expanded only when the list is empty. <!-- parity:test --> `p05-9d28f6` [database-checklist.test.ts:410](../../apps/server/test/int/database-checklist.test.ts#L410) +2
 - [x] Page size `MaxRows=25` with prev/next and page selector; client filter box. <!-- parity:test --> `p05-ab58ec` [database-checklist.test.ts:404](../../apps/server/test/int/database-checklist.test.ts#L404)
-- [x] Add from table: table select populates column select with columns not yet in the list. <!-- parity:test --> `p05-b6cb36` [database-admin.test.ts:36](../../apps/server/test/int/database-admin.test.ts#L36)
+- [x] Add from table: table select populates column select with columns not yet in the list. <!-- parity:test --> `p05-b6cb36` [database-admin.test.ts:37](../../apps/server/test/int/database-admin.test.ts#L37)
 - [x] Inline edit per row (Edit → Save/Cancel), delete with confirm, bulk Edit (multi-edit page) and bulk Delete requiring a selection. <!-- parity:test --> `p05-1c26ce` [database-checklist.e2e.ts:351](../../tests/e2e/database-checklist.e2e.ts#L351)
 - [x] Default type select controls the default-value field; `col_extra` stores `extra,attribute`. <!-- parity:test --> `p05-23ba82` [database-checklist.test.ts:415](../../apps/server/test/int/database-checklist.test.ts#L415)
 - [x] Sync from Structure reports already-existing columns; Make consistent skips FK-referenced columns. <!-- parity:test --> `p05-36e33d` [database-admin.parity.test.ts:109](../../tests/parity/database-admin.parity.test.ts#L109) +1

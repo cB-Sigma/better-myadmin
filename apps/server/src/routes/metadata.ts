@@ -38,6 +38,7 @@ import { recordSqlBoxHistory } from '../metadata/hooks.ts'
 import { type MetaRequest, defaultOfPath, resetRelationCache, withMeta } from '../metadata/service.ts'
 import { selectDatabase, tableInfo } from '../metadata/table-info.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
+import { mbLongerThan } from '../util/mb.ts'
 import type { ServerEnv } from './server.ts'
 
 export const metadataRoutes = new Hono<ServerEnv>()
@@ -319,7 +320,7 @@ metadataRoutes.post('/bookmarks/:id{[0-9]+}/run', async (c) => {
       db: r.db === '' ? null : r.db,
       table: r.table === '' ? null : r.table,
       reloadNavigation: r.reloadNavigation,
-      sqlQuery: Array.from(r.sqlQuery).length < settings.MaxCharactersInDisplayedSQL ? r.sqlQuery : '',
+      sqlQuery: !mbLongerThan(r.sqlQuery, settings.MaxCharactersInDisplayedSQL - 1) ? r.sqlQuery : '',
     }
     if (r.ajaxReload !== undefined) res.ajaxReload = r.ajaxReload
     return c.json(res)

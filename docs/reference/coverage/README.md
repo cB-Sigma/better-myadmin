@@ -8,10 +8,10 @@ Mechanical inventories of phpMyAdmin `328b8d80` ([reference-commit.txt](../refer
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 200 | 186 | 13 | 1 | 0 | 0 | 0 | 0 | 0 | 200 | 100.0% |
 | Template controls | 1106 | 1095 | 3 | 7 | 1 | 0 | 0 | 0 | 0 | 1105 | 99.9% |
-| Config directives | 449 | 427 | 1 | 20 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
-| Messages (msgids) | 3428 | 3282 | 13 | 132 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
+| Config directives | 449 | 428 | 1 | 19 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
+| Messages (msgids) | 3428 | 3283 | 13 | 131 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
 | JS behaviours | 966 | 952 | 0 | 13 | 1 | 0 | 0 | 0 | 0 | 965 | 99.9% |
-| Checklist items | 707 | 642 | 0 | 6 | 0 | 0 | 16 | 43 | 0 | 648 | 91.7% |
+| Checklist items | 707 | 642 | 0 | 6 | 0 | 39 | 16 | 4 | 0 | 648 | 91.7% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
 
@@ -176,4 +176,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3428 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2048 control claims, 1786 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2048 control claims, 1852 tests.

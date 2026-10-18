@@ -17,7 +17,7 @@ import { toCell } from '../db/field-meta.ts'
 import { MysqlError } from '../http/errors.ts'
 import type { SessionData } from '../session/store.ts'
 import { bindParameters, handleRollbackRequest, reloadHints, runImport } from './import.ts'
-import { formatError, getMessageCard, mysqlDie } from './message.ts'
+import { formatError, getMessageCard, mbLongerThan, mysqlDie } from './message.ts'
 import {
   checkProfiling,
   enableProfiling,
@@ -25,6 +25,7 @@ import {
   getProfilingInformation,
   isProfilingSupported,
 } from './profiling.ts'
+import { unreadRawCells } from './raw-cells.ts'
 import { signSql } from './signature.ts'
 
 export interface PipelineInput {
@@ -216,7 +217,7 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
   }
 
   // Parse and analyze the query, for correct db and table name (skipped when too large)
-  if (Array.from(sqlQuery).length <= cfg.MaxCharactersInDisplayedSQL) {
+  if (!mbLongerThan(sqlQuery, cfg.MaxCharactersInDisplayedSQL)) {
     const [, d, tableFromSql, reloadNeeded] = parseAnalyze(sqlQuery, db, true, ctxOpt)
     db = d
     state.reload = reloadNeeded
@@ -627,13 +628,22 @@ export async function executeStatement(
       db: db === '' ? null : db,
     }
     if (set !== undefined) {
-      r.result = toResult(set, numRows, unlimNumRows, input, appendLimit)
-      if (ctx.grid !== undefined) {
-        const g = await ctx.grid({ set, info, input, numRows, unlimNumRows, queryTime, limited: false })
-        if (g !== null) {
-          r.grid = g.grid
-          if (g.message !== undefined) r.message.text = g.message
-        }
+      const g =
+        ctx.grid !== undefined
+          ? await ctx.grid({ set, info, input, numRows, unlimNumRows, queryTime, limited: false })
+          : null
+      // the cells the grid editor never reads are not encoded (a page of large TEXT / BLOB values)
+      r.result = toResult(
+        set,
+        numRows,
+        unlimNumRows,
+        input,
+        appendLimit,
+        g === null ? null : unreadRawCells(g.grid),
+      )
+      if (g !== null) {
+        r.grid = g.grid
+        if (g.message !== undefined) r.message.text = g.message
       }
     }
     if (info.flags.isProcedure) {
@@ -654,10 +664,13 @@ function toResult(
   unlimNumRows: number,
   input: PipelineInput,
   appendLimit: boolean,
+  unread: boolean[][] | null = null,
 ): NonNullable<StatementResult['result']> {
   return {
     fields: set.fields as Field[],
-    rows: set.rows.map((row) => row.map((v, i) => toCell(v, set.fields[i]!))),
+    rows: set.rows.map((row, r) =>
+      row.map((v, i) => (unread?.[r]?.[i] === true ? null : toCell(v, set.fields[i]!))),
+    ),
     numRows,
     totalRows: unlimNumRows,
     approximate: false,

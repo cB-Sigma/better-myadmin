@@ -37,6 +37,7 @@ import { isProfilingSupported } from '../query/profiling.ts'
 import { checkSqlSignature, signSql } from '../query/signature.ts'
 import type { SessionData } from '../session/store.ts'
 import { TableReader } from '../table/read.ts'
+import { mbLongerThan } from '../util/mb.ts'
 import { type FkRel, foreignMap } from './grid.ts'
 import { gridMeta, runBrowse } from './service.ts'
 import { resolveViewState } from './view-state.ts'
@@ -82,7 +83,7 @@ export async function browseResponse(
     db: r.db === '' ? null : r.db,
     table: r.table === '' ? null : r.table,
     reloadNavigation: r.reloadNavigation,
-    sqlQuery: Array.from(r.sqlQuery).length < settings.MaxCharactersInDisplayedSQL ? r.sqlQuery : '',
+    sqlQuery: !mbLongerThan(r.sqlQuery, settings.MaxCharactersInDisplayedSQL - 1) ? r.sqlQuery : '',
     usingBookmark: r.usingBookmark,
   }
   if (previous !== undefined) {

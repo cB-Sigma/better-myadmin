@@ -25,6 +25,7 @@ import {
   getUniqueCondition,
 } from '@bettermyadmin/sql-gen'
 import bcrypt from 'bcryptjs'
+import { formatSqlForDisplay } from '../query/message.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { phpRegex } from '../util/php-regex.ts'
 import { securePath, userDir } from '../util/secure-path.ts'
@@ -114,7 +115,12 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
       let value = f.value === null ? '' : Array.isArray(f.value) ? f.value.join(',') : f.value
       let uploaded: Buffer | null = null
       if (f.upload !== undefined && f.upload !== null && f.upload !== '') {
-        uploaded = Buffer.from(f.upload, 'base64')
+        // File::checkTblChangeForm: UPLOAD_ERR_INI_SIZE, the field keeps its typed value
+        if (Math.floor((f.upload.length * 3) / 4) > cfg.MaxUploadSize) {
+          insertErrors.push(
+            tr.gettext('The uploaded file exceeds the upload_max_filesize directive in php.ini.'),
+          )
+        } else uploaded = Buffer.from(f.upload, 'base64')
       } else if (
         f.uploadLocal !== undefined &&
         f.uploadLocal !== null &&
@@ -300,9 +306,12 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
     parts.push(errorMessages.join(' '))
     type = 'error'
   }
+  // Generator::getMessage(message, displayQuery): formatSql truncates at MaxCharactersInDisplayedSQL,
+  // so an uploaded BLOB's hex literal is not sent back (twice) to the browser
+  const shown = formatSqlForDisplay(sqlQuery, ctx.cfg)
   const out: SaveRowsResponse = {
-    message: { type, text: parts.join('\n'), sql: sqlQuery },
-    sqlQuery,
+    message: { type, text: parts.join('\n'), sql: shown },
+    sqlQuery: shown,
     next: backTarget(),
   }
   if (unsaved.length > 0) out.unsaved = unsaved

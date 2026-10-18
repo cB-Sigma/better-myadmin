@@ -647,7 +647,7 @@ Configuration storage
 - [x] Database comment stored as `column_info` row with `table_name=''`, `column_name='(db_comment)'`. <!-- parity:test --> `p08-d94efe` [repositories-golden.test.ts:293](../../packages/metadata/test/repositories-golden.test.ts#L293) +1
 - [x] Internal relation beats InnoDB FK for the same column in browse/insert. <!-- parity:test --> `p08-8e4b43` [repositories-golden.test.ts:295](../../packages/metadata/test/repositories-golden.test.ts#L295)
 - [x] Display field fallback: first CHAR-class column. <!-- parity:test --> `p08-d83080` [repositories-golden.test.ts:291](../../packages/metadata/test/repositories-golden.test.ts#L291)
-- [x] FK dropdown only when foreign table has `< ForeignKeyMaxLimit` rows; otherwise browse-foreign-values popup. <!-- parity:test --> `p08-ad6ee4` [insert-edit.test.ts:184](../../apps/server/test/int/insert-edit.test.ts#L184) +1
+- [x] FK dropdown only when foreign table has `< ForeignKeyMaxLimit` rows; otherwise browse-foreign-values popup. <!-- parity:test --> `p08-ad6ee4` [insert-edit.test.ts:187](../../apps/server/test/int/insert-edit.test.ts#L187) +1
 - [x] Renames propagate to relation (both sides), table_info, column_info, table_coords (delete on cross-db move), table_uiprefs, navigationhiding. <!-- parity:test --> `p08-8b840d` [table-writers.test.ts:32](../../packages/metadata/test/table-writers.test.ts#L32) +2
 
 Config file

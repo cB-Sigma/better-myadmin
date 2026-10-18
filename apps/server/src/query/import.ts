@@ -13,6 +13,7 @@ import {
 } from '@bettermyadmin/sql-lexer'
 import type { Conn } from '../db/connection.ts'
 import { MysqlError } from '../http/errors.ts'
+import { mbLongerThan, mbStrlen } from '../util/mb.ts'
 import { expandPregReplacement, isNumeric, pregQuote } from '../util/php.ts'
 import { formatError } from './message.ts'
 
@@ -347,7 +348,9 @@ export class ImportRunner {
       return
     }
     const buffer = this.#importRunBuffer
-    this.#maxSqlLength = Math.max(this.#maxSqlLength, Array.from(buffer).length)
+    // only compared with 1000 below
+    if (this.#maxSqlLength <= 1000)
+      this.#maxSqlLength = Math.max(this.#maxSqlLength, mbLongerThan(buffer, 1000) ? 1001 : mbStrlen(buffer))
     if (!this.sqlQueryDisabled) st.sqlQuery += buffer
     st.executedQueries++
     if (this.#o.runQuery && st.executedQueries < 50 && !this.forceExecute) {
@@ -369,7 +372,7 @@ export class ImportRunner {
     }
     // check length of query unless we decided to pass it to /sql
     if (!this.goSql && this.#o.runQuery && st.sqlQuery !== '') {
-      if (Array.from(st.sqlQuery).length > 50000 || st.executedQueries > 50 || this.#maxSqlLength > 1000) {
+      if (mbLongerThan(st.sqlQuery, 50000) || st.executedQueries > 50 || this.#maxSqlLength > 1000) {
         st.sqlQuery = ''
         this.sqlQueryDisabled = true
       }

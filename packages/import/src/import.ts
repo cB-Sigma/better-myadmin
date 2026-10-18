@@ -158,6 +158,12 @@ export class Import {
   finished = false
   offset = 0
   timeoutPassed = false
+  /** ImportSettings::$timestamp: when the import started (seconds) */
+  timestamp = Math.floor(Date.now() / 1000)
+  /** ImportSettings::$maximumTime: max_execution_time - 1 with `allow_interrupt`, else 0 (no limit) */
+  maximumTime = 0
+  /** time() */
+  now: () => number = () => Math.floor(Date.now() / 1000)
   charsetConversion = false
   importNotice = ''
   /** Current::$message */
@@ -228,9 +234,16 @@ export class Import {
     await this.runner.runQuery(sql)
   }
 
-  /** Import::checkTimeout: no PHP time limit runs out (max_execution_time 0) */
+  /** Import::checkTimeout: stop 5 seconds before the time limit, the import resumes on resubmit */
   checkTimeout(): boolean {
-    return this.timeoutPassed
+    if (this.maximumTime === 0) return false
+    if (this.timeoutPassed) return true
+    /* 5 in next row might be too much */
+    if (this.now() - this.timestamp > this.maximumTime - 5) {
+      this.timeoutPassed = true
+      return true
+    }
+    return false
   }
 
   /**

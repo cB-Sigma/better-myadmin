@@ -18,6 +18,7 @@ import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { simulateDml } from '../query/simulate.ts'
 import { setTrackedDatabase } from '../table/tracker.ts'
+import { mbLongerThan } from '../util/mb.ts'
 import type { ServerEnv } from './server.ts'
 import { withConn } from './sql.ts'
 
@@ -120,7 +121,7 @@ queryRoutes.post('/', async (c) => {
       table: r.table === '' ? null : r.table,
       reloadNavigation: r.reloadNavigation,
       // reloadQuerywindow.sql_query (the console's "current query")
-      sqlQuery: Array.from(r.sqlQuery).length < cfg.MaxCharactersInDisplayedSQL ? r.sqlQuery : '',
+      sqlQuery: !mbLongerThan(r.sqlQuery, cfg.MaxCharactersInDisplayedSQL - 1) ? r.sqlQuery : '',
     }
     if (r.ajaxReload !== undefined) body.ajaxReload = r.ajaxReload
     return c.json(body)

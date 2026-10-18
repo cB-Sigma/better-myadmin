@@ -14,12 +14,14 @@ import { authPageGate, isPageRequest } from './auth/page-gate.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
 import { requestScope, runInRequestScope } from './db/request-scope.ts'
+import { statementLog } from './db/statement-log.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { isHttpsRequest, securityHeaders } from './http/headers.ts'
 import { requestProblemChecking } from './http/request-problems.ts'
 import { sqlLog } from './http/sql-log.ts'
 import { languageLoading, languageManager } from './i18n.ts'
+import { formatSqlForDisplay } from './query/message.ts'
 import { authRoutes } from './routes/auth.ts'
 import { i18nRoutes } from './routes/i18n.ts'
 import { metaRoutes } from './routes/meta.ts'
@@ -69,7 +71,13 @@ export function createApp(deps: AppDeps) {
   const app = new Hono<AppEnv>()
 
   app.onError((err, c) => {
-    if (err instanceof BmaError) return c.json(err.toEnvelope(), err.status as 400)
+    if (err instanceof BmaError) {
+      const env = err.toEnvelope()
+      // Generator::mysqlDie shows formatSql($sqlQuery, true): a statement with a large literal
+      // (an uploaded BLOB) is not sent back whole
+      if (typeof env.error.sql === 'string') env.error.sql = formatSqlForDisplay(env.error.sql, deps.cfg)
+      return c.json(env, err.status as 400)
+    }
     console.error(err)
     // `environment` = development shows the exception and where it was raised
     // pma: src/Error/ErrorHandler.php::handleException (hideLocation)
@@ -163,7 +171,7 @@ export type App = ReturnType<typeof createApp>
 function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     c.set('deps', deps)
-    c.set('executed', [])
+    c.set('executed', statementLog(deps.cfg.DBG.sql))
     c.set('isHttps', isHttpsRequest(c.req.header('x-forwarded-proto'), c.req.url))
     const id = getCookie(c, SESSION_COOKIE)
     let session = id !== undefined ? deps.store.get(id) : null

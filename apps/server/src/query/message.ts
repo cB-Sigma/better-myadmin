@@ -2,7 +2,10 @@ import type { MysqlDie, SqlCard } from '@bettermyadmin/contracts'
 import { type Gettext, N_, englishTranslator } from '@bettermyadmin/i18n'
 import { type Context, Lexer, Parser, getErrors } from '@bettermyadmin/sql-lexer'
 import type { AppConfig } from '../config.ts'
+import { mbLongerThan, mbSubstr } from '../util/mb.ts'
 import { addslashes } from '../util/php.ts'
+
+export { mbLongerThan }
 
 /**
  * DatabaseInterface::getError() text: `#errno - message`, with phpMyAdmin's extra hints.
@@ -43,9 +46,8 @@ const english = englishTranslator()
 
 /** Generator::formatSql($sql, true): the SQL shown in the card, truncated to MaxCharactersInDisplayedSQL. */
 export function formatSqlForDisplay(sql: string, cfg: AppConfig, truncate = true): string {
-  const chars = Array.from(sql)
-  if (truncate && chars.length > cfg.MaxCharactersInDisplayedSQL) {
-    return `${chars.slice(0, cfg.MaxCharactersInDisplayedSQL).join('')}[...]`
+  if (truncate && mbLongerThan(sql, cfg.MaxCharactersInDisplayedSQL)) {
+    return `${mbSubstr(sql, cfg.MaxCharactersInDisplayedSQL)}[...]`
   }
   return sql
 }
@@ -85,7 +87,7 @@ export async function getMessageCard(sqlQuery: string, o: CardOptions): Promise<
   const sqlBox = cfg.SQLQuery as { Edit: boolean; Explain: boolean; ShowAsPHP: boolean; Refresh: boolean }
 
   const display = o.showAsPhp === true ? sqlAsPhp(sqlQuery) : formatSqlForDisplay(sqlQuery, cfg)
-  const queryTooBig = Array.from(sqlQuery).length > cfg.MaxCharactersInDisplayedSQL
+  const queryTooBig = mbLongerThan(sqlQuery, cfg.MaxCharactersInDisplayedSQL)
   const isSelect = new RegExp(`^SELECT${SP}+`, 'i').test(sqlQuery)
 
   let explain: SqlCard['links']['explain'] = null
