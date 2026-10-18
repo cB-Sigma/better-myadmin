@@ -117,7 +117,7 @@ async function formStep(tab: string, change: (p: Pairs) => Pairs) {
   const pp = fieldsOnly(await pmaForm(`/preferences/${tab}`))
   const g = await bma.req('GET', `/api/servers/1/preferences/forms/${tab}`)
   expect(g.status).toBe(200)
-  expect(bmaPairs(g.json.formSet), `${tab}: form fields`).toEqual(pp)
+  expect(bmaPairs(g.json.formSet as Json), `${tab}: form fields`).toEqual(pp)
   const posted = change(pp)
   return step(
     tab,
@@ -214,7 +214,7 @@ describe.skipIf(!available)('parity: user preferences (pma__userconfig)', () => 
   it('[p08-69a15f] page settings (Sql group on the server SQL page) save like a form [p09-efe138]', async () => {
     const pp = fieldsOnly(await pmaForm('/server/sql', 'page_settings_modal'))
     const g = await bma.req('GET', '/api/servers/1/preferences/page/Sql')
-    expect(bmaPairs(g.json.formSet), 'page settings fields').toEqual(pp)
+    expect(bmaPairs(g.json.formSet as Json), 'page settings fields').toEqual(pp)
     const posted = setPair(pp, 'MaxCharactersInDisplayedSQL', '2000')
     await step(
       'page settings',

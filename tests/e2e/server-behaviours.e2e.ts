@@ -187,7 +187,7 @@ test('status pages without SHOW GLOBAL STATUS: each page shows its own error [p0
     ['/queries', 'Not enough privilege to view query statistics.'],
     ['/variables', 'Not enough privilege to view status variables.'],
     ['/advisor', 'Not enough privilege to view the advisor.'],
-  ]) {
+  ] as const) {
     await page.goto(`/s/1/status${path}`)
     await expect(page.getByText(message)).toBeVisible()
   }

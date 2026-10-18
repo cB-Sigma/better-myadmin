@@ -130,7 +130,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     const userLink = $(td[2]!, 'a')
     const dbLink = $(td[4]!, 'a')
     return {
-      kill: $(td[0]!, 'a.kill_process')?.attrs.href.replace(/^.*kill\//, '') ?? null,
+      kill: $(td[0]!, 'a.kill_process')?.attrs.href?.replace(/^.*kill\//, '') ?? null,
       id: text(td[1]!),
       user: text(td[2]!),
       userLink: userLink?.attrs.href ?? null,

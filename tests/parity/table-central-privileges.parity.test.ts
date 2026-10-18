@@ -131,9 +131,10 @@ describe.skipIf(!pmaReachable)('parity: table Structure central columns', () => 
         ]),
       () => h.bma.req('GET', bma('/central-columns/list?table=t2')),
     )
-    const p = (r.p as { message: Array<{ col_name: string; col_type: string; col_attribute: string }> })
-      .message
-    const b = r.b.json as Array<{ name: string; type: string; attribute: string }>
+    const p = (
+      r.p as unknown as { message: Array<{ col_name: string; col_type: string; col_attribute: string }> }
+    ).message
+    const b = r.b.json as unknown as Array<{ name: string; type: string; attribute: string }>
     expect(b.map((c) => [c.name, c.type, c.attribute])).toEqual(
       p.map((c) => [c.col_name, c.col_type, c.col_attribute]),
     )
