@@ -147,7 +147,9 @@ test('insert: DATETIME(3) writes milliseconds; TIME(6) is a time-only picker up 
   await expect(field(page, 't6')).toHaveValue('99:00:00.000000')
 })
 
-test('grid: the cell editor shows the picker inline; an invalid typed date hides it', async ({ page }) => {
+test('grid: the cell editor shows the picker inline; an invalid typed date hides it [p02-de5ec9]', async ({
+  page,
+}) => {
   await page.goto(`/s/1/db/${DB}/t/t/browse`)
   const cell = page.locator('table.table_results tbody tr').first().locator('td[data-type]').nth(1)
   await cell.dblclick()

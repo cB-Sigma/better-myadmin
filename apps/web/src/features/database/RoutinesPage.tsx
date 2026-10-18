@@ -18,7 +18,7 @@ import {
   Textarea,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -76,7 +76,16 @@ const emptyRoutine = (o: RoutineEditorOptions): RoutineEditorData => ({
   comment: '',
 })
 
-export function RoutinesPage({ server, db }: { server: number; db: string }) {
+export function RoutinesPage({
+  server,
+  db,
+  editItem = null,
+}: {
+  server: number
+  db: string
+  /** `edit_item=1&item_name=…&item_type=…`: open that routine's editor */
+  editItem?: { name: string; type: string } | null
+}) {
   const qc = useQueryClient()
   const [pos, setPos] = useState(0)
   const q = useQuery({
@@ -91,6 +100,14 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
   } | null>(null)
   const [execute, setExecute] = useState<RoutineExecuteForm | null>(null)
   const [result, setResult] = useState<RoutineExecuteResponse | null>(null)
+  const openRef = useRef<(item: { name: string; type: string }) => Promise<void>>(async () => {})
+  // once, after the list has loaded (the route keys the page by db)
+  const opened = useRef(false)
+  useEffect(() => {
+    if (editItem === null || opened.current || q.data === undefined) return
+    opened.current = true
+    void openRef.current(editItem)
+  })
 
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
@@ -104,6 +121,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
       setMessages([errorMessage(e)])
     }
   }
+  openRef.current = open
   const openExecute = async (name: string, type: string) => {
     try {
       setResult(null)

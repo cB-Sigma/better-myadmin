@@ -15,10 +15,17 @@ like the shared :8081 instance (server 1 = that MySQL, storage `phpmyadmin`, con
 `php -S` with `BMA_UIP_PMA_WORKERS` workers (default 6): the shared single-process :8081 is busy with every
 checkout's parity runs. `BMA_PARITY_PMA_URL` uses an existing instance instead; cases are skipped when it is
 down. A case's `sql` fixture runs with `lock_wait_timeout = 20`, so a DDL blocked by a metadata lock fails
-that case instead of stalling every later one; a page that fails to open closes its browser context. global-setup creates `uip_db_<run>.uip_t`, our configuration storage `uip_pmadb_<run>`, the Insert/Edit
-database `uip_ie_<run>` and one superuser per app (`uip_pma_<run>`, `uip_bma_<run>`); global-teardown
-drops them. `<run>` is a hash of the worktree path (`BMA_UIP_RUN` overrides it), so runs from different
-worktrees on one MySQL never touch each other's accounts. Our server runs on a random port (`BMA_UIP_PORT`).
+that case instead of stalling every later one; a page that fails to open closes its browser context.
+The run uses `BMA_UIP_WORKERS` Playwright workers (default 4): files run in parallel, the cases of a
+file in order on one worker. Each worker has its own suffix `<run>` = `<checkout>w<index>` (`<checkout>`
+a hash of the worktree path, `BMA_UIP_RUN` overrides it; `<index>` Playwright's TEST_PARALLEL_INDEX),
+so neither workers nor runs from different worktrees on one MySQL touch each other's objects.
+global-setup creates, per worker, `uip_db_<run>.uip_t`, the Insert/Edit database `uip_ie_<run>` and one
+superuser per app (`uip_pma_<run>`, `uip_bma_<run>`); the cases create their own `f05_uip_<run>`,
+`f05d_uip_<run>`, `f08_uip_<run>` and `f06u_uip1_<run>`/`f06u_uip2_<run>` accounts. Our configuration
+storage `uip_pmadb_<checkout>` is one per run (its rows are keyed by the worker's user).
+global-teardown drops all of them (lib/env.ts `caseObjectsOf` lists the cases' objects: add new ones
+there, suffixed with `RUN`). Our server runs on a random port (`BMA_UIP_PORT`).
 
 ## Writing a case
 

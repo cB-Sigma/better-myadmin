@@ -93,6 +93,11 @@ export const GridCell = z.object({
     .optional(),
   /** download link of a binary/BLOB cell (/table/get-field) */
   dl: z.object({ where: z.string(), sig: z.string(), key: z.string(), table: z.string() }).optional(),
+  /**
+   * SpecialSchemaLinks (browsing mysql / information_schema): the cell links to a page of the
+   * value (a user's privileges, a table, a routine editor): phpMyAdmin route + query parameters
+   */
+  sl: z.object({ route: z.string(), params: z.array(z.tuple([z.string(), z.string()])) }).optional(),
   /** text shown highlighted as code (built-in SQL / JSON transformations) */
   code: z.enum(['sql', 'json']).optional(),
   /**
@@ -180,6 +185,11 @@ export const GridData = z.object({
   /** the query the links act on (Results::$sqlQuery) */
   sql: z.string(),
   sig: z.string(),
+  /**
+   * Results::getUrlSqlQuery when it differs from `sql`: a SELECT of 200 characters or more is
+   * given to the Edit / Copy links as `SELECT <list> FROM <from clause>` (shorter URLs)
+   */
+  urlSql: SignedSql.optional(),
   displayParts: DisplayParts,
   editable: z.boolean(),
   /** getMessageIfMissingColumnIndex: null | 'unavailable' | 'undesired' */

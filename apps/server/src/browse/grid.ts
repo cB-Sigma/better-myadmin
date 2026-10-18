@@ -62,6 +62,7 @@ import { signSql } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
 import { defaultTransformation } from './default-transformations.ts'
 import { runExternalTransformation } from './external.ts'
+import { specialSchemaLink } from './special-links.ts'
 
 export interface GridEnv {
   cfg: AppConfig
@@ -724,6 +725,7 @@ export async function buildGrid(
       const kill = `KILL ${id};`
       row.kill = { sql: kill, sig: sign(kill) }
     }
+    let rowInfo: Map<string, string> | undefined
     // the where clause of each column's own table (download links)
     const whereByTable = new Map<string, string>([[table, uc.condition]])
     for (let j = 0; j < fields.length; j++) {
@@ -768,7 +770,23 @@ export async function buildGrid(
               input_transformation_options: '',
             }
           : stored
-      row.cells.push(applyTransformation(cell, cellRaw, meta, m, where, sign, cfg))
+      const shown = applyTransformation(cell, cellRaw, meta, m, where, sign, cfg)
+      // SpecialSchemaLinks: predefined columns of mysql / information_schema become links
+      let sl: ReturnType<typeof specialSchemaLink> = null
+      if (cellRaw !== null && shown.k !== 'null') {
+        rowInfo ??= specialRowInfo(fields, raw)
+        sl = specialSchemaLink(cfg, db, meta.orgTable, meta.orgName, cellRaw.toString('utf8'), rowInfo)
+      }
+      row.cells.push(
+        sl === null
+          ? shown
+          : {
+              k: 'v',
+              cls: `${cell.cls} Text_Plain transformed`,
+              t: cellRaw!.toString('utf8'),
+              sl,
+            },
+      )
     }
     rows.push(row)
   }
@@ -805,6 +823,8 @@ export async function buildGrid(
     table,
     sql: sqlQuery,
     sig: sign(sqlQuery),
+    // getUrlSqlQuery: the row links of a long SELECT carry only its SELECT list and FROM clause
+    ...(urlSqlQuery !== sqlQuery ? { urlSql: { sql: urlSqlQuery, sig: sign(urlSqlQuery) } } : {}),
     displayParts,
     editable,
     missingUnique,
@@ -1316,6 +1336,16 @@ async function mediaTypeMap(
     const map = await getMime(meta.control, meta.rp, f.db, f.orgTable, false, true)
     for (const [k, v] of Object.entries(map ?? {})) out.set(k, v)
   }
+  return out
+}
+
+/** Results::getRowInfoForSpecialLinks: lower-cased original column name → value (NULL absent). */
+function specialRowInfo(fields: readonly Field[], raw: RawRow): Map<string, string> {
+  const out = new Map<string, string>()
+  fields.forEach((f, i) => {
+    const v = raw[i]
+    if (v !== null && v !== undefined) out.set(f.orgName.toLowerCase(), v.toString('utf8'))
+  })
   return out
 }
 

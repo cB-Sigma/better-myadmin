@@ -71,9 +71,14 @@
   padding: 2px;
   box-shadow: var(--card-shadow);
 }
+/* sized to the cell by showEditCell (outerWidth / outerHeight) */
 .cEdit .edit_box {
-  width: 100%;
-  min-width: 10rem;
+  box-sizing: border-box;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 3px;
+  margin: 0;
   font: inherit;
 }
 .cEdit .edit_area {
@@ -119,4 +124,44 @@ table.navigation td {
 }
 .user-select-none {
   user-select: none;
+}
+
+/* the column reorder drag (makegrid cCpy / cPointer; themes/pmahomme/scss/_common.scss) */
+.cCpy {
+  /* pmahomme: #333 on white text with a black glow */
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: bold;
+  margin: 0.1em;
+  padding: 0.3em;
+  position: absolute;
+  box-shadow: var(--card-shadow);
+  z-index: 30;
+  pointer-events: none;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.cPointer {
+  position: absolute;
+  height: 20px;
+  width: 10px;
+  margin-top: -10px;
+  margin-left: -5px;
+  z-index: 30;
+  pointer-events: none;
+}
+.cPointer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid var(--fg);
+}
+@media print {
+  .cCpy,
+  .cPointer {
+    display: none;
+  }
 }
