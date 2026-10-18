@@ -45,7 +45,9 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test('Settings form: validation, restore default and save [p08-779a14] [p08-a8211e]', async ({ page }) => {
+test('Settings form: validation, restore default and save, back on the first tab [p08-779a14] [p08-a8211e] [p08-ee115b]', async ({
+  page,
+}) => {
   await login(page)
   await page.goto('/s/1/preferences/features')
   await page.locator('#Databases-tab').click()
@@ -65,6 +67,10 @@ test('Settings form: validation, restore default and save [p08-779a14] [p08-a821
   await page.locator('#Databases input[name=submit_save]').click()
   await expect(page.getByText('Configuration has been saved.')).toBeVisible()
   await expect(page).toHaveURL(/saved=1/)
+  // the posted tab_hash is always '' (no script fills it): the form opens on its first tab again
+  await expect(page).not.toHaveURL(/#/)
+  await expect(page.locator('[role=tabpanel]').first()).toBeVisible()
+  await expect(page.locator('#Databases')).toBeHidden()
   await page.reload()
   await page.locator('#Databases-tab').click()
   await expect(page.locator('#MaxTableList')).toHaveValue('120')

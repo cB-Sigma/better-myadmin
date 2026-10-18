@@ -1,4 +1,5 @@
 import { basename } from 'node:path'
+import { PROJECT_URL } from '@bettermyadmin/contracts/constants'
 import { Hono } from 'hono'
 import { aboutFile, readLicense, renderChangelog, runtimeInfo } from '../shell/about.ts'
 import type { ServerEnv } from './server.ts'
@@ -10,7 +11,6 @@ import type { ServerEnv } from './server.ts'
  */
 export const aboutRoutes = new Hono<ServerEnv>()
 
-const PROJECT_URL = 'https://github.com/cB-Abhinav-Gautam/better-myadmin'
 const FAQ_URL = `${PROJECT_URL}/blob/main/docs/README.md`
 
 /** "The %s file is not available on this system, please visit %s for more information." */

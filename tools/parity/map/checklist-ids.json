@@ -3207,7 +3207,7 @@
   "p08-ee115b": {
     "file": "docs/features/08-settings-preferences-pmadb.md",
     "section": "Micro-behaviours checklist › Settings pages",
-    "text": "Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; active tab restored via `tab_hash` after redirect."
+    "text": "Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; the redirect carries `tab_hash`, which no script fills, so the form opens on its first tab again."
   },
   "p08-f18efc": {
     "file": "docs/features/08-settings-preferences-pmadb.md",

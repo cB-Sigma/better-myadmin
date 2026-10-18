@@ -1,3 +1,4 @@
+import { PROJECT_URL } from '@bettermyadmin/contracts/constants'
 import type { ExportEnvironment } from '@bettermyadmin/export'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
 import { Context as SqlContext } from '@bettermyadmin/sql-lexer'
@@ -18,7 +19,7 @@ import { exportRelation } from './relation.ts'
 export const EXPORT_TOOL = {
   name: 'BetterMyAdmin',
   version: APP_VERSION,
-  url: 'https://github.com/bettermyadmin/bettermyadmin',
+  url: PROJECT_URL,
   runtime: process.version,
   runtimeLabel: 'Node.js Version:',
 }

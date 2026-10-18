@@ -158,6 +158,16 @@ test('[p01-b992bd] the options persist through /console/update-config; "Restore 
   const saved = page.waitForResponse(
     (r) => r.url().endsWith('/console/config') && r.request().method() === 'POST',
   )
+  // console/display.twig's input names
+  for (const [id, name] of [
+    ['AlwaysExpand', 'always_expand'],
+    ['StartHistory', 'start_history'],
+    ['CurrentQuery', 'current_query'],
+    ['EnterExecutes', 'enter_executes'],
+    ['DarkTheme', 'dark_theme'],
+  ]) {
+    await expect(page.locator(`#consoleOptions${id}Checkbox`)).toHaveAttribute('name', name)
+  }
   await page.locator('#consoleOptionsAlwaysExpandCheckbox').check()
   await saved
   await page.reload()
