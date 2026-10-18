@@ -183,7 +183,10 @@ const CASES: Case[] = [
     name: 'Skip Explain SQL with FORMAT [p02-aa2107]',
     sql: 'EXPLAIN FORMAT=JSON SELECT * FROM t WHERE id = 2',
   },
-  { name: 'static analysis errors in the error card [p02-fa2d56] [p09-a25a57]', sql: "SELECT * FROM t WHERE name = 'abc" },
+  {
+    name: 'static analysis errors in the error card [p02-fa2d56] [p09-a25a57]',
+    sql: "SELECT * FROM t WHERE name = 'abc",
+  },
   {
     name: 'RENAME TABLE: ajax_reload with the new table name [p09-410573]',
     sql: 'RENAME TABLE t2 TO t2_renamed',
@@ -203,7 +206,10 @@ const CASES: Case[] = [
   { name: 'warnings are reported [p02-be287b] [p09-001dd4]', sql: 'SELECT 1/0' },
   { name: 'UPDATE without WHERE (no confirm server side)', sql: 'UPDATE t SET qty = qty' },
   { name: 'SHOW has Refresh and Profiling [p02-f44b2c]', sql: 'SHOW TABLES' },
-  { name: 'multi-statement with USE keeps the page database [p09-410573]', sql: 'USE mysql; SELECT * FROM t LIMIT 1' },
+  {
+    name: 'multi-statement with USE keeps the page database [p09-410573]',
+    sql: 'USE mysql; SELECT * FROM t LIMIT 1',
+  },
   {
     name: 'SELECT from another database sets Current::$database',
     sql: 'SELECT 1; SELECT * FROM mysql.db LIMIT 1',

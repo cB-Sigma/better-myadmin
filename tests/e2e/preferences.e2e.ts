@@ -109,6 +109,8 @@ test('two-factor: configure the application backend, then the login asks for the
   await expect(page.getByText('Two-factor authentication has been configured.')).toBeVisible()
 
   // a new login: password first, then the code
+  // leave the app first: a response still in flight would set the session cookie again
+  await page.goto('about:blank')
   await page.context().clearCookies()
   await login(page, false)
   await expect(

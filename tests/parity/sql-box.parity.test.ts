@@ -33,7 +33,10 @@ const SEED = (db: string) => `DROP DATABASE IF EXISTS ${db}; CREATE DATABASE ${d
 
 /** The typed queries; every case runs on a freshly seeded database in each tool. */
 const CASES: Array<{ name: string; sql: string; delimiter?: string }> = [
-  { name: 'browse-style SELECT * gets LIMIT and an exact count [p02-b29af3] [p09-4df052] [p09-7438a7]', sql: 'SELECT * FROM t' },
+  {
+    name: 'browse-style SELECT * gets LIMIT and an exact count [p02-b29af3] [p09-4df052] [p09-7438a7]',
+    sql: 'SELECT * FROM t',
+  },
   {
     name: 'SELECT with WHERE and ORDER BY gets the COUNT(*) wrapper [p02-b29af3] [p09-4df052] [p09-7438a7]',
     sql: 'SELECT id, name FROM t WHERE qty > 2 ORDER BY id DESC',
