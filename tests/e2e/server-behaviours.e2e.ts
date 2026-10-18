@@ -15,8 +15,10 @@ const ROOT = {
   password: process.env.BMA_TEST_PASSWORD ?? 'root',
   multipleStatements: true,
 }
-const USER = 'f06j_e2e'
-const DB = 'f06j_e2e_db'
+// per e2e server port: runs of other checkouts on the same MySQL drop and recreate their own account
+const RUN = process.env.BMA_E2E_PORT ?? '8099'
+const USER = `f06j_e2e_${RUN}`
+const DB = `f06j_e2e_db_${RUN}`
 
 test.beforeAll(async () => {
   const c = await mysql.createConnection(ROOT)
@@ -126,7 +128,7 @@ test('processes: refresh rate, auto refresh, header sort, full queries [p06-9768
   const own = page.locator('#tableprocesslist tbody tr', { hasText: USER }).first()
   await expect(own.locator('td').nth(2).getByRole('link', { name: USER })).toHaveAttribute(
     'href',
-    /\/privileges\?username=f06j_e2e/,
+    new RegExp(`/privileges\\?username=${USER}`),
   )
 })
 
@@ -524,7 +526,7 @@ test.describe('monitor', () => {
     try {
       // a SELECT of this session inside the analysed span
       const conn = await mysql.createConnection({ ...ROOT, user: USER, password: USER })
-      for (let i = 0; i < 3; i++) await conn.query(`SELECT ${i} AS f06j_e2e_probe FROM DUAL`)
+      for (let i = 0; i < 3; i++) await conn.query(`SELECT ${i} AS ${USER}_probe FROM DUAL`)
       await conn.end()
 
       // the monitor runs from the start: a refresh after the probes
@@ -546,19 +548,22 @@ test.describe('monitor', () => {
       await expect(table).toBeVisible()
       if ((await table.locator('#filterQueryText').count()) > 0) {
         // keyup #filterQueryText filters at once; above 250 rows #startFilterQueryText applies it
-        await table.locator('#filterQueryText').fill('f06j_e2e_probe')
+        await table.locator('#filterQueryText').fill(`${USER}_probe`)
         if ((await table.locator('#startFilterQueryText').count()) > 0)
           await table.locator('#startFilterQueryText').click()
-        await expect(table.locator('tbody tr').first()).toContainText('f06j_e2e_probe')
+        await expect(table.locator('tbody tr').first()).toContainText(`${USER}_probe`)
         await table.locator('#noWHEREData').check()
-        await expect(table.locator('tbody tr').first()).toContainText('f06j_e2e_probe')
+        await expect(table.locator('tbody tr').first()).toContainText(`${USER}_probe`)
         await table.locator('#noWHEREData').uncheck()
       }
       // click <$tCell>: a SELECT opens the query analyzer
-      await table.locator('td.queryCell', { hasText: 'f06j_e2e_probe' }).first().click()
+      await table
+        .locator('td.queryCell', { hasText: `${USER}_probe` })
+        .first()
+        .click()
       const analyzer = page.locator('#queryAnalyzerModal')
       await expect(analyzer).toBeVisible()
-      await expect(analyzer.locator('#sqlquery')).toHaveValue(/f06j_e2e_probe/)
+      await expect(analyzer.locator('#sqlquery')).toHaveValue(new RegExp(`${USER}_probe`))
       const analysed = page.waitForResponse((r) => /\/status\/monitor\/query$/.test(r.url()))
       await page.locator('#queryAnalyzerModalAnalyseButton').click()
       expect((await analysed).ok()).toBe(true)
