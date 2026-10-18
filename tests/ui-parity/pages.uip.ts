@@ -27,12 +27,15 @@ pageParity('home', {
  * The navigation tree's database rows of other runs and agents (created and dropped between the two
  * captures): only the system databases and this run's (`…_<run>`) are compared. phpMyAdmin's row is
  * `li.database` with its name in its links (`db=<name>`), ours a `.database` treeitem with
- * `data-name`.
+ * `data-name`; the groups of databases sharing a prefix are left out as well.
  */
 const SYSTEM_DBS = ['information_schema', 'mysql', 'performance_schema', 'sys', 'phpmyadmin']
 const OTHER_RUNS_NAV_DBS = [
   `li.database${SYSTEM_DBS.map((n) => `:not(:has(a[href*="db=${n}&"], a[href$="db=${n}"]))`).join('')}:not(:has(a[href*="_${RUN}&"], a[href$="_${RUN}"]))`,
   `[role="treeitem"].database${SYSTEM_DBS.map((n) => `:not([data-name="${n}"])`).join('')}:not([data-name$="_${RUN}"])`,
+  // database groups (NavigationTreeDbSeparator `_`) form and dissolve with those databases
+  'li.navGroup',
+  '[role="treeitem"].navGroup',
 ]
 
 pageParity('navigation', {
