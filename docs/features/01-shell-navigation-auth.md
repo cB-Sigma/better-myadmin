@@ -668,7 +668,7 @@ Navigation panel
 - [x] Recent (10) / Favorites (10) dropdowns above the tree; favorites synced between `localStorage.favoriteTables[sha1(user)]` and `pma__favorite` via a one-time hidden sync link; "Favorite List is full!"; star buttons on structure page and dropdown stay in sync via `data-favtargets`. <!-- parity:test --> `p01-56fa30` [metadata.test.ts:207](../../apps/server/test/int/metadata.test.ts#L207) +3
 - [x] Logo link honours `NavigationLogoLink`/`NavigationLogoLinkWindow`; invalid links fall back to `index.php`. <!-- parity:test --> `p01-a5b403` [f01-shell.test.tsx:27](../../apps/web/src/features/shell/f01-shell.test.tsx#L27)
 - [x] Drag-and-drop SQL import overlay when `enable_drag_drop_import`. <!-- parity:test --> `p01-1123b4` [f01-navigation.e2e.ts:181](../../tests/e2e/f01-navigation.e2e.ts#L181)
-- [ ] Session expiry during tree AJAX (`redirect_flag`) reloads the page with `session_expired=1`.
+- [x] Session expiry during tree AJAX (`redirect_flag`) reloads the page with `session_expired=1`. <!-- parity:test --> `p01-173d41` [f01-navigation.e2e.ts:202](../../tests/e2e/f01-navigation.e2e.ts#L202)
 
 Top bar / shell
 - [x] Breadcrumb bar is fixed at the top and pads `body`; clicking it scrolls to top unless Ctrl/Meta. <!-- parity:test --> `p01-49a7f3` [f01-shell.e2e.ts:36](../../tests/e2e/f01-shell.e2e.ts#L36)
@@ -684,26 +684,26 @@ AJAX model
 - [x] "Loading…" toast; in-flight link requests aborted by a new click ("Request aborted!!"); form posts cannot be aborted. <!-- parity:test --> `p01-47c1c5` [logic.test.ts:10](../../packages/ui/test/logic.test.ts#L10) +1
 - [x] Unsaved-changes confirm "You have unsaved changes; are you sure you want to leave this page?" via `lock-page` hashing. <!-- parity:test --> `p01-c6a012` [f01-shell.e2e.ts:88](../../tests/e2e/f01-shell.e2e.ts#L88)
 - [x] Response swap keeps nav, menubar, console, modals; replaces `#page_content`, title, menu, selflink, CommonParams, scripts (versioned, deduplicated, onload/teardown events). <!-- parity:test --> `p01-03005f` [f01-ajax.e2e.ts:25](../../tests/e2e/f01-ajax.e2e.ts#L25)
-- [x] `pushState` per navigation, `replaceState` after an aborted request; `popstate` re-fetches. <!-- parity:test --> `p01-f41bfa` [f01-ajax.e2e.ts:53](../../tests/e2e/f01-ajax.e2e.ts#L53)
+- [x] `pushState` per navigation, `replaceState` after an aborted request; `popstate` re-fetches. <!-- parity:test --> `p01-f41bfa` [f01-ajax.e2e.ts:58](../../tests/e2e/f01-ajax.e2e.ts#L58)
 - [x] Error toasts sticky for failures; "Error in processing request / Error code / Error text / connection lost"; `redirect_flag` → session expired reload; `reload_flag` → reload. <!-- parity:test --> `p01-211041` [logic.test.ts:29](../../packages/ui/test/logic.test.ts#L29) +1
 - [ ] PHP errors rendered into `#pma_errors` with Report / Ignore / Ignore All; `promptPhpErrors` toast; auto-submit in `always` mode with loop guard. <!-- parity:n/a: PHP notices and warnings collected by ErrorHandler; the Node server raises none into pages (its failures are API errors, shown as messages; JavaScript errors go through the error report, p01-ae26ee) -->
 - [x] Notifications: one at a time, 5 s auto-dismiss (sticky for Loading/Processing or `timeout=false`), click-to-dismiss with tooltip, copy-query button. <!-- parity:test --> `p01-eb435e` [logic.test.ts:10](../../packages/ui/test/logic.test.ts#L10) +3
-- [x] Confirm modal "Confirm" with **OK/Close**, bypassed when `$cfg['Confirm']=false`; native confirms for dangerous SQL in legacy paths. <!-- parity:test --> `p01-9c9c53` [f01-ajax.e2e.ts:138](../../tests/e2e/f01-ajax.e2e.ts#L138)
+- [x] Confirm modal "Confirm" with **OK/Close**, bypassed when `$cfg['Confirm']=false`; native confirms for dangerous SQL in legacy paths. <!-- parity:test --> `p01-9c9c53` [f01-ajax.e2e.ts:147](../../tests/e2e/f01-ajax.e2e.ts#L147)
 - [x] Idle keep-alive POST at `min(LoginCookieValidity, gc_maxlifetime) − 5` s; expiry shows an in-page login modal (`#modalOverlay`) that re-enables the page on success. <!-- parity:test --> `p01-66071e` [auth.test.ts:115](../../apps/server/test/int/auth.test.ts#L115) +2
-- [x] `_nocache` + `token` appended to every jQuery AJAX request. <!-- parity:test --> `p01-40520e` [f01-ajax.e2e.ts:66](../../tests/e2e/f01-ajax.e2e.ts#L66)
+- [x] `_nocache` + `token` appended to every jQuery AJAX request. <!-- parity:test --> `p01-40520e` [f01-ajax.e2e.ts:71](../../tests/e2e/f01-ajax.e2e.ts#L71)
 
 Console
-- [x] Collapsed toolbar shows only "Console"; hover reveals buttons; drag toolbar to resize (persisted `Console/Height`), mode persisted (`Console/Mode`). <!-- parity:test --> `p01-e58832` [f01-console.e2e.ts:170](../../tests/e2e/f01-console.e2e.ts#L170)
-- [x] Enter vs Ctrl+Enter per option; Shift+Enter newline; Ctrl+L/Ctrl+U; history via arrows. <!-- parity:test --> `p01-665316` [f01-console.e2e.ts:116](../../tests/e2e/f01-console.e2e.ts#L116)
-- [x] Each executed query becomes a pending entry updated to success/failed via `console_message_id`; page queries appended via `reloadQuerywindow` and hidden unless "Show current browsing query". <!-- parity:test --> `p01-0acf73` [f01-console.e2e.ts:55](../../tests/e2e/f01-console.e2e.ts#L55)
-- [x] Entry actions: Collapse/Expand/Requery (confirm)/Edit/Explain/Profiling/Bookmark; failed entries show "Query failed" and are removed by Clear. <!-- parity:test --> `p01-52d377` [f01-console.e2e.ts:88](../../tests/e2e/f01-console.e2e.ts#L88)
-- [x] Options switches persist via `/console/update-config`; "Restore default values". <!-- parity:test --> `p01-b992bd` [f01-console.e2e.ts:137](../../tests/e2e/f01-console.e2e.ts#L137)
-- [x] Bookmarks card: list (private + shared), Refresh, Add (label, target db, shared), Edit (creates new), Delete (confirm). <!-- parity:test --> `p01-63933b` [f01-console.e2e.ts:199](../../tests/e2e/f01-console.e2e.ts#L199)
+- [x] Collapsed toolbar shows only "Console"; hover reveals buttons; drag toolbar to resize (persisted `Console/Height`), mode persisted (`Console/Mode`). <!-- parity:test --> `p01-e58832` [f01-console.e2e.ts:180](../../tests/e2e/f01-console.e2e.ts#L180)
+- [x] Enter vs Ctrl+Enter per option; Shift+Enter newline; Ctrl+L/Ctrl+U; history via arrows. <!-- parity:test --> `p01-665316` [f01-console.e2e.ts:126](../../tests/e2e/f01-console.e2e.ts#L126)
+- [x] Each executed query becomes a pending entry updated to success/failed via `console_message_id`; page queries appended via `reloadQuerywindow` and hidden unless "Show current browsing query". <!-- parity:test --> `p01-0acf73` [f01-console.e2e.ts:65](../../tests/e2e/f01-console.e2e.ts#L65)
+- [x] Entry actions: Collapse/Expand/Requery (confirm)/Edit/Explain/Profiling/Bookmark; failed entries show "Query failed" and are removed by Clear. <!-- parity:test --> `p01-52d377` [f01-console.e2e.ts:98](../../tests/e2e/f01-console.e2e.ts#L98)
+- [x] Options switches persist via `/console/update-config`; "Restore default values". <!-- parity:test --> `p01-b992bd` [f01-console.e2e.ts:147](../../tests/e2e/f01-console.e2e.ts#L147)
+- [x] Bookmarks card: list (private + shared), Refresh, Add (label, target db, shared), Edit (creates new), Delete (confirm). <!-- parity:test --> `p01-63933b` [f01-console.e2e.ts:209](../../tests/e2e/f01-console.e2e.ts#L209)
 - [x] Debug SQL card (`DBG.sql`): counts, times, grouping, ordering, traces with arguments. <!-- parity:test --> `p01-d7fef2` [f01-shell.test.tsx:102](../../apps/web/src/features/shell/f01-shell.test.tsx#L102)
-- [x] History from session (or `pma__history` with `QueryHistoryDB`), max 25, shown at start when `StartHistory`. <!-- parity:test --> `p01-24e482` [f01-console.e2e.ts:156](../../tests/e2e/f01-console.e2e.ts#L156)
+- [x] History from session (or `pma__history` with `QueryHistoryDB`), max 25, shown at start when `StartHistory`. <!-- parity:test --> `p01-24e482` [f01-console.e2e.ts:166](../../tests/e2e/f01-console.e2e.ts#L166)
 
 Auth
-- [x] Cookie login redirects (302) after POST so cookies take effect; username recalled via `LoginCookieRecall`; password cookie lifetime per `LoginCookieStore`. <!-- parity:test --> `p01-570894` [auth.test.ts:49](../../apps/server/test/int/auth.test.ts#L49) +1
+- [x] Cookie login redirects (302) after POST so cookies take effect; username recalled via `LoginCookieRecall`; password cookie lifetime per `LoginCookieStore`. <!-- parity:test --> `p01-570894` [auth.test.ts:49](../../apps/server/test/int/auth.test.ts#L49) +3
 - [x] Inactivity logout message with the configured seconds; "Your session has expired. Please log in again." on `session_expired`. <!-- parity:test --> `p01-d6345b` [auth.test.ts:99](../../apps/server/test/int/auth.test.ts#L99)
 - [x] Server dropdown vs arbitrary server input; `ArbitraryServerRegexp`; language card on login. <!-- parity:test --> `p01-4faba9` [f01-auth.test.ts:9](../../apps/server/test/int/f01-auth.test.ts#L9) +1
 - [x] Captcha (invisible/checkbox) when fully configured; CSP extended accordingly. <!-- parity:test --> `p01-cdb8f8` [auth-types.test.ts:237](../../apps/server/test/int/auth-types.test.ts#L237) +1

@@ -587,10 +587,10 @@ Independent of pmadb: a static map for `mysql.*` and `information_schema.*` tabl
 ## Micro-behaviours checklist
 
 Settings pages
-- [x] Eight pill tabs in fixed order; icons follow `TabsMode`; current tab highlighted; all links non-Ajax. <!-- parity:test --> `p08-b1ce07` [preferences.e2e.ts:135](../../tests/e2e/preferences.e2e.ts#L135)
-- [x] Banner *Configuration has been saved.* appears only when `?saved=1` is in the URL (after a redirect), on every settings tab. <!-- parity:test --> `p08-a8211e` [preferences.e2e.ts:46](../../tests/e2e/preferences.e2e.ts#L46)
+- [x] Eight pill tabs in fixed order; icons follow `TabsMode`; current tab highlighted; all links non-Ajax. <!-- parity:test --> `p08-b1ce07` [preferences.e2e.ts:137](../../tests/e2e/preferences.e2e.ts#L137)
+- [x] Banner *Configuration has been saved.* appears only when `?saved=1` is in the URL (after a redirect), on every settings tab. <!-- parity:test --> `p08-a8211e` [preferences.e2e.ts:48](../../tests/e2e/preferences.e2e.ts#L48)
 - [x] Notice about session-only storage appears whenever `pma__userconfig` is unavailable, including on the 2FA tab. <!-- parity:test --> `p08-3ef43d` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157) +1
-- [x] Navigation gear hidden while on a settings page. <!-- parity:test --> `p08-cd4d34` [preferences.e2e.ts:135](../../tests/e2e/preferences.e2e.ts#L135)
+- [x] Navigation gear hidden while on a settings page. <!-- parity:test --> `p08-cd4d34` [preferences.e2e.ts:137](../../tests/e2e/preferences.e2e.ts#L137)
 - [x] Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; active tab restored via `tab_hash` after redirect. <!-- parity:test --> `p08-ee115b` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71) +4
 - [x] A field equal to the phpMyAdmin default is not stored (key removed from the JSON) unless `config.inc.php` overrides the default - then the user's explicit default *is* stored. <!-- parity:test --> `p08-9b4f97` [preferences.test.ts:59](../../apps/server/test/unit/preferences.test.ts#L59) +1
 - [x] Restore-default icon visible only when value differs from default; hover raises opacity; click sets value and fires `change` (re-validates, unmarks `custom`). <!-- parity:test --> `p08-779a14` [configForm.test.ts:48](../../apps/web/src/features/preferences/configForm.test.ts#L48) +1
@@ -602,24 +602,24 @@ Settings pages
 - [x] Save failure keeps the posted values on screen with inline errors and a red summary; a `revert` POST resets only erroneous fields. <!-- parity:test --> `p08-a42fac` [preferences.parity.test.ts:178](../../tests/parity/preferences.parity.test.ts#L178) +1
 - [x] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected. <!-- parity:test --> `p08-5102df` [preferences.test.ts:66](../../apps/server/test/unit/preferences.test.ts#L66) +2
 - [x] Saving any form re-persists the `2fa` block (never lost by a partial save). <!-- parity:test --> `p08-0b1f72` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71) +1
-- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [preferences.test.ts:335](../../apps/server/test/int/preferences.test.ts#L335)
+- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [f08-language.test.ts:32](../../apps/server/test/int/f08-language.test.ts#L32) +1
 - [x] Console toggles, `NavigationWidth` drags etc. persist via `setUserValue`; with session storage they additionally fall back to cookies when a cookie name is provided. <!-- parity:test --> `p08-1383bd` [preferences.parity.test.ts:384](../../tests/parity/preferences.parity.test.ts#L384)
 
 Manage your settings
-- [x] Import-from-browser and Save-to-browser radios are disabled until JS enables them; unsupported localStorage shows the unsupported notice and disables submit. <!-- parity:test --> `p08-0d82bc` [preferences.e2e.ts:164](../../tests/e2e/preferences.e2e.ts#L164) +1
+- [x] Import-from-browser and Save-to-browser radios are disabled until JS enables them; unsupported localStorage shows the unsupported notice and disables submit. <!-- parity:test --> `p08-0d82bc` [preferences.e2e.ts:166](../../tests/e2e/preferences.e2e.ts#L166) +1
 - [x] Import shows *Saved on: <local date>* from `localStorage.configMtimeLocal` or *You have no saved settings!*; submit disabled when importing from an empty storage. <!-- parity:test --> `p08-10a75c` [configForm.test.ts:97](../../apps/web/src/features/preferences/configForm.test.ts#L97) +1
 - [x] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest). <!-- parity:test --> `p08-f18efc` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258) +1
 - [x] Merge checkbox keeps existing prefs under imported ones; otherwise import starts from defaults (prefs not in the file are reset). <!-- parity:test --> `p08-d20c19` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258)
-- [x] Import applies `ThemeDefault` immediately (theme cookie) and redirects with `lang=` when the language differs. <!-- parity:test --> `p08-5c8c99` [preferences.e2e.ts:223](../../tests/e2e/preferences.e2e.ts#L223)
+- [x] Import applies `ThemeDefault` immediately (theme cookie) and redirects with `lang=` when the language differs. <!-- parity:test --> `p08-5c8c99` [preferences.e2e.ts:225](../../tests/e2e/preferences.e2e.ts#L225)
 - [x] Export JSON is pretty-printed; PHP export emits `$cfg['a']['b'] = ...;` lines; both named `phpMyAdmin-config-<host>.<ext>`. <!-- parity:test --> `p08-1c37f1` [preferences.test.ts:227](../../apps/server/test/int/preferences.test.ts#L227) +1
-- [x] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message. <!-- parity:test --> `p08-6b7a63` [preferences.e2e.ts:164](../../tests/e2e/preferences.e2e.ts#L164)
+- [x] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message. <!-- parity:test --> `p08-6b7a63` [preferences.e2e.ts:166](../../tests/e2e/preferences.e2e.ts#L166)
 - [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:295](../../apps/server/test/int/preferences.test.ts#L295) +1
 - [x] Autoload banner shown once per session when prefs are session-based and `localStorage.config` exists; Yes imports with `return_url` back to the current page; No/Delete hide it for the session (`prefs_autoload=hide`). <!-- parity:test --> `p08-5de125` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
 - [x] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not. <!-- parity:test --> `p08-953597` [preferences.test.ts:354](../../apps/server/test/int/preferences.test.ts#L354)
 
 Page settings
-- [x] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view. <!-- parity:test --> `p08-8abc69` [preferences.e2e.ts:71](../../tests/e2e/preferences.e2e.ts#L71)
-- [x] Modal "Page-related settings" with Apply (submits) and Cancel (restores DOM clone, discarding edits). <!-- parity:test --> `p08-4eeac3` [preferences.e2e.ts:71](../../tests/e2e/preferences.e2e.ts#L71)
+- [x] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view. <!-- parity:test --> `p08-8abc69` [preferences.e2e.ts:73](../../tests/e2e/preferences.e2e.ts#L73)
+- [x] Modal "Page-related settings" with Apply (submits) and Cancel (restores DOM clone, discarding edits). <!-- parity:test --> `p08-4eeac3` [preferences.e2e.ts:73](../../tests/e2e/preferences.e2e.ts#L73)
 - [x] Successful save redirects to the same URL; errors render above the page content. <!-- parity:test --> `p08-69a15f` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199) +1
 - [x] Edit popup shows both Edit-mode and Text-fields groups; Browse popup shows the Browse-mode group only. <!-- parity:test --> `p08-6f0e6e` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
 
