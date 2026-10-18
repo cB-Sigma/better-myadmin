@@ -9,6 +9,8 @@ import { qs } from '../../lib/search'
 export const exportSearch = z.object({
   single_table: qs.str(),
   sql_query: qs.str(),
+  /** the signature of sql_query (Core::signSqlQuery): an unsigned query of the URL is not exported */
+  sql_signature: qs.str(),
   raw_query: qs.str(),
   unlim_num_rows: qs.str(),
   /** rows export: one unique WHERE condition per selected row (pma: rows_to_delete[]) */
@@ -23,6 +25,8 @@ export type ExportSearch = z.infer<typeof exportSearch>
 
 export function searchPairs(s: ExportSearch): Array<[string, string]> {
   const out: Array<[string, string]> = []
+  // a query of the URL always goes with a signature ('' never verifies)
+  if (s.sql_query !== undefined && s.sql_signature === undefined) out.push(['sql_signature', ''])
   for (const [k, v] of Object.entries(s)) {
     if (v === undefined) continue
     if (Array.isArray(v)) for (const x of v) out.push([`${k}[]`, x])

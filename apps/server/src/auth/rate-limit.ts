@@ -59,6 +59,25 @@ export class LoginRateLimiter {
     this.#lockedUntil.delete(key)
   }
 
+  readonly #queues = new Map<string, Promise<unknown>>()
+
+  /**
+   * Runs the attempts of one (IP, username) pair one after the other: each sees the failures of the
+   * attempts before it. Concurrent requests would otherwise all pass the lockout check before the
+   * first failure is recorded.
+   */
+  serialize<T>(ip: string | false, user: string, fn: () => Promise<T>): Promise<T> {
+    const key = this.#key(ip, user)
+    const prev = this.#queues.get(key) ?? Promise.resolve()
+    const run = prev.then(fn, fn)
+    const tail = run.catch(() => {})
+    this.#queues.set(key, tail)
+    void tail.then(() => {
+      if (this.#queues.get(key) === tail) this.#queues.delete(key)
+    })
+    return run
+  }
+
   /** Forgets pairs whose failures and lockout are over (memory bound). */
   sweep(): void {
     const now = this.#now()

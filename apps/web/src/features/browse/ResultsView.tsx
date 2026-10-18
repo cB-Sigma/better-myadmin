@@ -244,6 +244,7 @@ export function ResultsView(props: ResultsViewProps) {
         unique: grid.clauseIsUnique ? '1' : '0',
         action: action === 'copy' ? 'insert' : 'update',
         sql: grid.sql,
+        sql_sig: grid.sig,
         ...(action === 'export' ? { single_table: 'true' } : {}),
       },
     } as never)
@@ -788,7 +789,8 @@ function Operations({
   const tableLink = (splat: string) => ({
     to: '/s/$server/db/$db/t/$table/$' as const,
     params: { server, db: grid.db, table: exportTable, _splat: splat },
-    search: exportSearch,
+    // the export page reads sql_query with its sql_signature
+    search: { ...exportSearch, sql_query: grid.sql, sql_signature: grid.sig },
   })
   /**
    * Display chart / Visualize GIS data: /table/chart with the result's table, else its database,
@@ -798,6 +800,7 @@ function Operations({
   const viewLink = (splat: 'chart' | 'gis-visualization') => {
     const search = {
       ...exportSearch,
+      sig: grid.sig,
       pos: String(grid.view.pos),
       ...(grid.view.maxRows === 'all' ? {} : { session_max_rows: String(grid.view.maxRows) }),
     }

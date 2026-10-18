@@ -503,6 +503,7 @@ export function GridTable(props: Props) {
       unique: row.unique ? '1' : '0',
       action,
       sql: grid.sql,
+      sql_sig: grid.sig,
     })
     const edit = grid.displayParts.editLink && (
       <td

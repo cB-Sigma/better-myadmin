@@ -14,6 +14,7 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/gis-visualizati
         scope={{ server, db, table }}
         search={{
           sql: s.sql,
+          sig: s.sig,
           unlimNumRows: s.unlim_num_rows,
           pos: s.pos,
           sessionMaxRows: s.session_max_rows,

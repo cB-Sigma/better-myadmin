@@ -18,8 +18,9 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/edit')({
     action: qs.oneOf(['insert', 'update']),
     unique: qs.int(),
     goto: qs.str(),
-    /** the Browse query (sql_query) */
+    /** the Browse query (sql_query) and its signature (sql_signature) */
     sql: qs.str(),
+    sql_sig: qs.str(),
   }),
   component: function Edit() {
     const { server, db, table } = Route.useParams()
@@ -37,6 +38,7 @@ export const Route = createFileRoute('/s/$server/db/$db/t/$table/edit')({
         clauseIsUnique={s.unique === 1}
         goto={s.goto}
         sqlQuery={s.sql}
+        sqlQuerySig={s.sql === undefined ? undefined : (s.sql_sig ?? '')}
       />
     )
   },
