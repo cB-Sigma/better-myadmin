@@ -11,6 +11,7 @@ import {
   NativeSelect,
   Panel,
   PanelBody,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -128,6 +129,8 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
       }
       await reloadNav()
       void navigate({ to: path(`/s/${server}/databases`) })
+      // the drop link's message_to_show, shown once the databases list is loaded (AJAX.callback)
+      showMessage(t('Database %s has been dropped.', `\`${db.replaceAll('`', '``')}\``), null, 'success')
     } catch (e) {
       setMessages([errorMessage(e)])
     }

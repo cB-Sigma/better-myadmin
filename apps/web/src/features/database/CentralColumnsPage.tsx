@@ -473,14 +473,17 @@ function CentralColumnsView({
             <Button onClick={() => setNav({ pos: d.pos - maxRows, totalRows: d.totalRows })}>&lt;</Button>
           )}
           {pages > 1 && (
+            // Util::pageselector('pos', …): the options carry the first row of each page
             <NativeSelect
+              name="pos"
+              className="pageselector ajax"
               aria-label={t('Page number:')}
-              value={String(Math.floor(d.pos / maxRows))}
-              onChange={(e) => setNav({ pos: Number(e.target.value) * maxRows, totalRows: d.totalRows })}
+              value={String(Math.floor(d.pos / maxRows) * maxRows)}
+              onChange={(e) => setNav({ pos: Number(e.target.value), totalRows: d.totalRows })}
             >
               {Array.from({ length: pages }, (_, i) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: page numbers
-                <option key={i} value={String(i)}>
+                <option key={i} value={String(i * maxRows)}>
                   {i + 1}
                 </option>
               ))}

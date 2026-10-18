@@ -22,3 +22,15 @@ navigation/tree/database_select.twig#db:
   note: 'the legacy pre-4.0 database select (ShowDatabasesNavigationAsTree = false): the panel always shows the tree'
 user_password.twig#link:Back:
   n/a: 'rendered only when the change-password form is posted without JavaScript (UserPasswordController non-AJAX branch); the SPA always takes the AJAX path, whose result shows in the dialog and the page message'
+database/routines/editor_form.twig#routine_changetype:
+  n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor has the item_type select instead (RoutinesPage.tsx)'
+database/routines/editor_form.twig#routine_removeparameter:
+  n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor removes a parameter with its Drop link (RoutinesPage.tsx)'
+database/routines/editor_form.twig#submit:Go:
+  n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor posts editor_process_* as a hidden field from the modal''s Go (#routinesEditorModalSaveButton)'
+database/routines/execute_form.twig#execute_routine:
+  n/a: 'rendered only without JavaScript (ajax false): the AJAX form posts execute_routine as a hidden field from the modal''s Go (#routinesExecuteModalExecuteButton)'
+events/editor-form.twig#editor_process_*:
+  n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor posts editor_process_* as a hidden field from the modal''s Go (#eventsEditorModalSaveButton)'
+events/editor-form.twig#item_changetype:
+  n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor has the item_type select instead (EventsPage.tsx)'
