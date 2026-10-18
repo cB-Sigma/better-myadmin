@@ -45,6 +45,7 @@ const SETTINGS = {
   NavigationTreePointerEnable: true,
   NavigationTreeAutoexpandSingleDb: true,
   NavigationTreeEnableExpansion: true,
+  ShowDatabasesNavigationAsTree: true,
   NavigationDisplayLogo: true,
   NavigationLogoLink: 'index.php',
   NavigationLogoLinkWindow: 'main' as const,

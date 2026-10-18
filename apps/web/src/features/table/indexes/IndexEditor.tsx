@@ -1,7 +1,7 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
 import { Button, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
-import { ArrowDown, ArrowUp } from 'lucide-react'
+import { GripVertical } from 'lucide-react'
 import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
@@ -93,6 +93,8 @@ export function IndexEditorForm({
     })
   const setCol = (i: number, patch: Partial<EditorIndex['columns'][number]>) =>
     setIndex({ ...index, columns: index.columns.map((c, j) => (j === i ? { ...c, ...patch } : c)) })
+  const [dragFrom, setDragFrom] = useState<number | null>(null)
+  const [dragOver, setDragOver] = useState<number | null>(null)
   const move = (i: number, d: number) => {
     const cols = [...index.columns]
     const [c] = cols.splice(i, 1)
@@ -253,15 +255,41 @@ export function IndexEditorForm({
         <tbody>
           {index.columns.map((c, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: positional index parts
-            <tr key={i} data-testid={`index-column-${i}`}>
+            // showIndexEditDialog: `#index_columns tbody` is jQuery-UI sortable (axis y); the first
+            // cell is the drag handle
+            <tr
+              key={i}
+              data-testid={`index-column-${i}`}
+              className={dragOver === i && dragFrom !== null && dragFrom !== i ? 'bg-bg-subtle' : undefined}
+              onDragOver={(e) => {
+                if (dragFrom === null) return
+                e.preventDefault()
+                setDragOver(i)
+              }}
+              onDrop={(e) => {
+                e.preventDefault()
+                if (dragFrom !== null && dragFrom !== i) move(dragFrom, i - dragFrom)
+                setDragFrom(null)
+                setDragOver(null)
+              }}
+            >
               <td className="whitespace-nowrap">
-                <span title={t('Drag to reorder')}>
-                  <button type="button" aria-label={t('Drag to reorder')} onClick={() => move(i, -1)}>
-                    <ArrowUp className="size-3" aria-hidden />
-                  </button>
-                  <button type="button" aria-label={t('Drag to reorder')} onClick={() => move(i, 1)}>
-                    <ArrowDown className="size-3" aria-hidden />
-                  </button>
+                <span
+                  className="drag_icon inline-flex cursor-move text-fg-muted"
+                  title={t('Drag to reorder')}
+                  draggable
+                  onDragStart={(e) => {
+                    setDragFrom(i)
+                    e.dataTransfer.effectAllowed = 'move'
+                    const tr = e.currentTarget.closest('tr')
+                    if (tr !== null) e.dataTransfer.setDragImage(tr, 0, 0)
+                  }}
+                  onDragEnd={() => {
+                    setDragFrom(null)
+                    setDragOver(null)
+                  }}
+                >
+                  <GripVertical className="size-4" aria-hidden />
                 </span>
               </td>
               <td>

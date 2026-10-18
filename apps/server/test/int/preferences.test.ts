@@ -196,7 +196,7 @@ describe('storage and the running app', () => {
     await t.close()
   })
 
-  it('[p08-69a15f] page settings save like a form [p08-6f0e6e]', async () => {
+  it('[p08-69a15f] page settings save like a form [p08-6f0e6e] [p03-4b85ec]', async () => {
     await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
     const t = await app()
     const g = (await t.req('GET', '/api/servers/1/preferences/page/Edit')).json as Json

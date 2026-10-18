@@ -992,7 +992,12 @@ export function ColumnForm({
               <th className="pr-2 text-left">
                 {t('Storage Engine:')} <MySqlDocLink link="storage-engines" />
               </th>
-              {tableOptions.engine === 'FEDERATED' && <th className="text-left">{t('Connection:')}</th>}
+              {/* hideShowConnection: only the FEDERATED engine has a Connection */}
+              {tableOptions.engine === 'FEDERATED' && (
+                <th id="storage-engine-connection" className="text-left">
+                  {t('Connection:')} <MySqlDocLink link="federated-create-connection" />
+                </th>
+              )}
             </tr>
             <tr>
               <td className="pr-2">

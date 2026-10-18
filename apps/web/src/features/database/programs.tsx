@@ -9,6 +9,7 @@ import {
   PmaIcon,
   type PmaIconName,
   Textarea,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQueryClient } from '@tanstack/react-query'
@@ -55,7 +56,10 @@ export function ProgramListPage({
   after,
   tableId,
   filterable = false,
+  noExportable = false,
 }: {
+  /** routines.ts: a bulk export without an exportable selection says "No routine is exportable…" */
+  noExportable?: boolean
   server: number
   db: string
   table?: string
@@ -129,16 +133,30 @@ export function ProgramListPage({
       return
     await drop(items.filter((i) => selected.includes(i.name)).map((i) => i.dropSql))
   }
-  const exportItems = async (names: string[]) => {
+  /**
+   * Export dialog of one row, or of the selection (#bulkActionExportButton): the selection's
+   * exports go one after the other into one "Export" text, each as `\n<sql>\n`; one failure shows
+   * the errors instead (routines.ts / triggers.ts exportDialog, `combined`).
+   */
+  const exportItems = async (names: string[], bulk = false) => {
+    if (bulk && names.length === 0) {
+      if (noExportable) showMessage(t('No routine is exportable. Required privileges may be lacking.'))
+      return
+    }
     const parts: DbExportResponse[] = []
+    const errors: string[] = []
     for (const n of names) {
       try {
         const r = await onExport(n)
         if (r !== null) parts.push(r)
       } catch (e) {
-        setMessages([errorMessage(e)])
-        return
+        errors.push(errorMessage(e).text)
       }
+    }
+    if (errors.length > 0) {
+      if (bulk) showMessage(errors.map((e) => `\n${e}\n`).join(''), false, 'error')
+      else setMessages(errors.map((text) => ({ type: 'error', text })))
+      return
     }
     if (parts.length === 0) {
       setMessages([
@@ -147,9 +165,9 @@ export function ProgramListPage({
       return
     }
     setExported(
-      parts.length === 1
-        ? (parts[0] as DbExportResponse)
-        : { title: t('Export'), sql: parts.map((p) => p.sql).join('\n\n') },
+      bulk
+        ? { title: t('Export'), sql: parts.map((p) => `\n${p.sql}\n`).join('') }
+        : (parts[0] as DbExportResponse),
     )
   }
   return (
@@ -176,6 +194,7 @@ export function ProgramListPage({
               onClick={() =>
                 void exportItems(
                   items.filter((i) => selected.includes(i.name) && i.exportable).map((i) => i.name),
+                  true,
                 )
               }
             >

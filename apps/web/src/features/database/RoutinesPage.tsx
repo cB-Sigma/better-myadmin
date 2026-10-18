@@ -116,6 +116,7 @@ export function RoutinesPage({ server, db }: { server: number; db: string }) {
     <>
       <ProgramListPage
         filterable
+        noExportable
         server={server}
         db={db}
         icon="b_routines"

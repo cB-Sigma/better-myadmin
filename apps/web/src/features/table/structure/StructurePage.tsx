@@ -1,6 +1,7 @@
 import type { DdlResponse, SqlMessage, StructureResponse } from '@bettermyadmin/contracts'
 import {
   Button,
+  IconText,
   MessageBox,
   Modal,
   MySqlDocLink,
@@ -846,26 +847,27 @@ function RowActions({
       className={
         hide
           ? 'absolute right-0 z-10 min-w-40 rounded border border-border bg-bg-elevated p-1 shadow'
-          : 'flex gap-1'
+          : 'nav flex gap-1'
       }
     >
       {(
         [
-          ['PRIMARY', t('Primary'), column.actions.primary, 'add_primary_key_anchor'],
-          ['UNIQUE', t('Unique'), column.actions.unique, 'add_unique_anchor'],
-          ['INDEX', t('Index'), column.actions.index, 'add_index_anchor'],
-          ['SPATIAL', t('Spatial'), column.actions.spatial, 'add_spatial_anchor'],
-          ['FULLTEXT', t('Fulltext'), column.actions.fulltext, 'add_fulltext_anchor'],
+          ['PRIMARY', t('Primary'), column.actions.primary, 'add_primary_key_anchor', 'primary'],
+          ['UNIQUE', t('Unique'), column.actions.unique, 'add_unique_anchor', 'unique'],
+          ['INDEX', t('Index'), column.actions.index, 'add_index_anchor', 'index'],
+          ['SPATIAL', t('Spatial'), column.actions.spatial, 'add_spatial_anchor', 'spatial'],
+          ['FULLTEXT', t('Fulltext'), column.actions.fulltext, 'add_fulltext_anchor', 'ftext'],
         ] as const
-      ).map(([type, label, enabled, cls]) => (
-        <li key={type} className="whitespace-nowrap">
+      ).map(([type, label, enabled, cls, icon]) => (
+        // display_structure.twig: b_* icons for the possible keys, bd_* (disabled) for the others
+        <li key={type} className={hide ? 'whitespace-nowrap' : 'nav-item whitespace-nowrap'}>
           {enabled ? (
             <Button variant="link" className={`add_key ${cls}`} onClick={() => onKey(type)}>
-              {label}
+              <IconText icon={`b_${icon}`} text={label} />
             </Button>
           ) : (
             <span className="px-1 text-fg-subtle" aria-disabled="true">
-              {label}
+              <IconText icon={`bd_${icon}`} text={label} />
             </span>
           )}
         </li>
@@ -879,18 +881,18 @@ function RowActions({
           }
           className="px-1"
         >
-          {t('Distinct values')}
+          <IconText icon="b_browse" text={t('Distinct values')} />
         </Link>
       </li>
       {onCentral !== null && (
         <li className="browse whitespace-nowrap">
           {column.inCentralList ? (
             <Button variant="link" onClick={() => onCentral('remove')}>
-              {t('Remove from central columns')}
+              <IconText icon="centralColumns_delete" text={t('Remove from central columns')} />
             </Button>
           ) : (
             <Button variant="link" onClick={() => onCentral('add')}>
-              {t('Add to central columns')}
+              <IconText icon="centralColumns_add" text={t('Add to central columns')} />
             </Button>
           )}
         </li>

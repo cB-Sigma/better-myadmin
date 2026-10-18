@@ -154,3 +154,51 @@ export function* walkNodes(list: NavList | null): Generator<NavNode> {
     yield* walkNodes(item.children)
   }
 }
+
+/** What the legacy panel (ShowDatabasesNavigationAsTree = false) shows of the rows. */
+export interface LegacyRows {
+  /** The list navigator of the databases (`#pma_navigation_select_database div.dbselector`). */
+  pager: Extract<Row, { type: 'pager' }> | null
+  /** The databases of `#navi_db_select` (the "New" item is not an option). */
+  options: NavNode[]
+  /** The row of the current database, when it is on the page. */
+  current: Extract<Row, { type: 'node' }> | null
+  /** `#pma_navigation_tree_content`: the databases, or the branch of the current one a level up. */
+  content: Row[]
+}
+
+/**
+ * pma: NavigationTree::renderDbSelect + Navigation.showCurrent with `#navi_db_select` — with no
+ * database the tree content lists the databases (no expanders); with one, it holds that
+ * database's children only (loadChildNodes into `#pma_navigation_tree_content`).
+ */
+export function legacyRows(rows: readonly Row[], db: string, order?: readonly string[]): LegacyRows {
+  let pager: LegacyRows['pager'] = null
+  const options: NavNode[] = []
+  const top: Row[] = []
+  let current: LegacyRows['current'] = null
+  const content: Row[] = []
+  let inCurrent = false
+  for (const r of rows) {
+    if (r.depth > 0) {
+      if (inCurrent) content.push({ ...r, depth: r.depth - 1 })
+      continue
+    }
+    inCurrent = false
+    if (r.type === 'pager' && r.ownerKey === ROOT) pager = r
+    if (r.type !== 'node') continue
+    top.push(r)
+    if (r.node.kind !== 'database' || r.node.isNew) continue
+    options.push(r.node)
+    if (db !== '' && current === null && r.node.realName === db) {
+      current = r
+      inCurrent = true
+    }
+  }
+  // the options keep the order of the query (renderDbSelect), the nodes are sorted
+  if (order !== undefined) {
+    const at = new Map(order.map((n, i) => [n, i]))
+    options.sort((a, b) => (at.get(a.realName) ?? order.length) - (at.get(b.realName) ?? order.length))
+  }
+  return { pager, options, current, content: current === null ? top : content }
+}
