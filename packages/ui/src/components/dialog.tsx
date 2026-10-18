@@ -57,6 +57,10 @@ export function DialogContent({
         )}
         onInteractOutside={(e) => {
           if (modal === 'static') e.preventDefault()
+          // clicking the AJAX notification (which sits above the modal) dismisses the message,
+          // not the dialog: phpMyAdmin's modal stays open
+          else if (e.target instanceof Element && e.target.closest('[data-sonner-toaster]') !== null)
+            e.preventDefault()
           onInteractOutside?.(e)
         }}
         onEscapeKeyDown={(e) => {

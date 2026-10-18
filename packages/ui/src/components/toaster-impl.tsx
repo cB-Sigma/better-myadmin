@@ -23,6 +23,9 @@ export default function SonnerHost() {
       offset={{ top: 200 }}
       visibleToasts={1}
       toastOptions={{ unstyled: true, className: 'w-[350px]' }}
+      // above an open modal and clickable there, as phpMyAdmin's .ajax_notification (z-index 1100
+      // over the modals): a modal dialog sets pointer-events: none on <body>
+      style={{ pointerEvents: 'auto' }}
     />
   )
 }

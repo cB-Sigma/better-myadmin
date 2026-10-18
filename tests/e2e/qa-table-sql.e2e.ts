@@ -203,7 +203,8 @@ test('the routine, event and trigger editors have one "Details" legend', async (
     await page.goto(`/s/1/db/${DB}/${path}`)
     await page.getByRole('button', { name: open }).click()
     await expect(page.locator(`${modal} [name="item_name"]`)).toBeVisible()
-    await expect(page.locator(modal).getByText('Details', { exact: true })).toHaveCount(1)
+    // one card headed "Details" (its doc link's icon is an SVG whose <title> is part of the text)
+    await expect(page.locator(modal).locator('header').filter({ hasText: /^Details\b/ })).toHaveCount(1)
     await page.locator(modal).getByRole('button', { name: 'Close' }).last().click()
   }
 })
