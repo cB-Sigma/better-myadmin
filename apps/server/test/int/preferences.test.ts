@@ -95,7 +95,7 @@ describe('settings forms', () => {
 })
 
 describe('two-factor', () => {
-  it('[p08-38b5dc] configures the application backend in two steps and asks at login [p08-71a0b1]', async () => {
+  it('[p08-38b5dc] configures the application backend in two steps and asks at login [p08-71a0b1] [p01-83d6b9]', async () => {
     await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
     const t = await app()
     const st = await t.req('GET', '/api/servers/1/preferences/two-factor')

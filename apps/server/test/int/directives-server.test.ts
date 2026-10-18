@@ -51,7 +51,7 @@ describe('server directives', () => {
     }
   })
 
-  it('LogoutURL and AuthLog: logout goes to the URL; a failed and a successful login are logged', async () => {
+  it('LogoutURL and AuthLog: logout goes to the URL; a failed and a successful login are logged [p01-389871] [p01-c0c8ad]', async () => {
     const log = join(tmp, 'auth.log')
     const t = testApp(
       testConfig({ AuthLog: log, AuthLogSuccess: true }, { LogoutURL: 'https://example.org/bye' }),

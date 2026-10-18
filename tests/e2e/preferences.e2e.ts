@@ -87,7 +87,7 @@ test('Browse page settings: Maximum number of rows applies to the grid [p08-4eea
   await expect(page.locator('#pageSettingsModal select#MaxRows')).toHaveValue('50')
 })
 
-test('two-factor: configure the application backend, then the login asks for the code [p08-38b5dc] [p08-71a0b1]', async ({
+test('two-factor: configure the application backend, then the login asks for the code [p08-38b5dc] [p08-71a0b1] [p01-83d6b9]', async ({
   page,
 }) => {
   await login(page)

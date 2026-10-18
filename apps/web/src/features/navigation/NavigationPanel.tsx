@@ -31,6 +31,7 @@ import { PageSettingsForm } from '../preferences/PageSettings.tsx'
 import { useLogout } from '../shell/UserMenu'
 import { NodeControls, QuickWarp } from './NavExtras'
 import { NavTree } from './NavTree'
+import { logoTarget } from './check-link.ts'
 import { currentScope } from './links'
 import { type NavFetchers, NavTreeStore } from './store'
 
@@ -385,24 +386,27 @@ function Logo({ server, settings }: { server: number; settings: NavSettings | un
       <span className="text-base font-semibold">BetterMyAdmin</span>
     </>
   )
-  const link = settings?.NavigationLogoLink.trim() ?? 'index.php'
-  if (settings !== undefined && link === '') return inner
-  const external = /^[a-z][a-z0-9+.-]*:\/\//i.test(link)
+  const target = logoTarget(
+    settings?.NavigationLogoLink ?? 'index.php',
+    settings?.NavigationLogoLinkWindow ?? 'main',
+  )
+  if (target.kind === 'none') return inner
+  const win = target.newWindow ? { target: '_blank', rel: 'noopener noreferrer' } : {}
   // an internal link (index.php or relative) opens the home page of the SPA
-  if (!external) {
+  if (target.kind === 'home') {
     return (
-      <Link to="/s/$server" params={{ server }} className="flex items-center gap-2 hover:no-underline">
+      <Link
+        to="/s/$server"
+        params={{ server }}
+        className="flex items-center gap-2 hover:no-underline"
+        {...win}
+      >
         {inner}
       </Link>
     )
   }
-  const newWindow = settings?.NavigationLogoLinkWindow === 'new'
   return (
-    <a
-      href={link}
-      className="flex items-center gap-2 hover:no-underline"
-      {...(newWindow ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-    >
+    <a href={target.href} className="flex items-center gap-2 hover:no-underline" {...win}>
       {inner}
     </a>
   )

@@ -59,7 +59,7 @@ describe('WebAuthn backend (pma: src/WebAuthn/CustomServer.php)', () => {
     )
   })
 
-  it('[p08-47e665] registers a credential (attestation none) and verifies a signed assertion', async () => {
+  it('[p08-47e665] registers a credential (attestation none) and verifies a signed assertion [p01-83d6b9]', async () => {
     const { host, ctx, saved } = setup()
     const backend = new WebAuthnBackend(host, ctx)
     const creation = backend.setup()
