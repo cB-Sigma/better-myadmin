@@ -187,7 +187,8 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
     for (const [k, v] of new FormData(form).entries()) {
       if (typeof v !== 'string') continue
       if (localTab ? k === 'import_file' : k === 'local_import_file') continue
-      // only the selected format's options are part of its request (others are hidden, same names)
+      // every format's options are posted, the hidden ones too (import.twig keeps them all in
+      // #import_file_form); each plugin reads only its own
       pairs.push([k, v])
     }
     setResult(null)
@@ -583,7 +584,7 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
               }}
             >
               {page.plugins.map((p) => (
-                <fieldset key={p.name} disabled={p.name !== plugin} className="contents">
+                <fieldset key={p.name} className="contents">
                   <PluginOptions
                     plugin={p}
                     hidden={p.name !== plugin}
