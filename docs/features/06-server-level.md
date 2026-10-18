@@ -602,7 +602,7 @@ Variables
 
 Charsets / Engines / Plugins
 - [x] Collations grouped per charset with synthesised descriptions and "default" badge. <!-- parity:test --> `p06-b19775` [collation.test.ts:11](../../packages/mysql-types/test/collation.test.ts#L11) +3
-- [ ] Engines list with `disabled`/`marked` row classes; detail page with support sentence, variables table (size/number/plain formatting, hint icons), bracket sub-navigation; InnoDB Buffer Pool (two tables + totals/percentages) and InnoDB Status `<pre>`; "Unknown storage engine." error.
+- [x] Engines list with `disabled`/`marked` row classes; detail page with support sentence, variables table (size/number/plain formatting, hint icons), bracket sub-navigation; InnoDB Buffer Pool (two tables + totals/percentages) and InnoDB Status `<pre>`; "Unknown storage engine." error. <!-- parity:test --> `p06-e1da5c` [server-admin.test.ts:236](../../apps/server/test/int/server-admin.test.ts#L236) +5
 - [x] Plugins grouped by type with jump buttons, status badges, sortable tables (description column unsortable). <!-- parity:test --> `p06-e5aa2e` [server-admin.test.ts:249](../../apps/server/test/int/server-admin.test.ts#L249) +3
 
 Replication

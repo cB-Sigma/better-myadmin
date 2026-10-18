@@ -11,7 +11,7 @@ Mechanical inventories of phpMyAdmin `328b8d80` ([reference-commit.txt](../refer
 | Config directives | 449 | 427 | 1 | 20 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
 | Messages (msgids) | 3428 | 3282 | 13 | 132 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
 | JS behaviours | 966 | 952 | 0 | 13 | 1 | 0 | 0 | 0 | 0 | 965 | 99.9% |
-| Checklist items | 707 | 696 | 0 | 6 | 0 | 0 | 1 | 4 | 0 | 702 | 99.3% |
+| Checklist items | 707 | 697 | 0 | 6 | 0 | 0 | 0 | 4 | 0 | 703 | 99.4% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
 
@@ -26,7 +26,7 @@ Covered / total per inventory (directives are attributed to the feature doc that
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 7/7 (100.0%) | 28/28 (100.0%) | 16/16 (100.0%) | 79/79 (100.0%) | 22/22 (100.0%) | 59/59 (100.0%) |
 | [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 543/543 (100.0%) | 178/178 (100.0%) | 96/100 (96.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 240/240 (100.0%) | 31/31 (100.0%) | 301/301 (100.0%) | 180/180 (100.0%) | 112/112 (100.0%) |
-| [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 48/49 (98.0%) |
+| [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
 | [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 63/63 (100.0%) | 137/138 (99.3%) | 293/293 (100.0%) | 66/66 (100.0%) | 67/67 (100.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 9/9 (100.0%) | 39/39 (100.0%) | 62/62 (100.0%) | 665/666 (99.8%) | 17/17 (100.0%) | 62/62 (100.0%) |
 | [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 7/7 (100.0%) | 28/28 (100.0%) | 11/11 (100.0%) | 46/46 (100.0%) | 48/48 (100.0%) | 63/63 (100.0%) |
