@@ -1,5 +1,5 @@
 /**
- * Configuration loading: defaults <- config file <- environment.
+ * Configuration loading: defaults <- phpMyAdmin image variables <- config file <- environment.
  *
  * pma: src/Config.php::loadFromFile (config.inc.php) — replaced by
  * `bettermyadmin.config.{ts,js,mjs,json,yaml,yml}` (parity exception X6).
@@ -8,6 +8,7 @@ import { access, readFile } from 'node:fs/promises'
 import { basename, isAbsolute, resolve as resolvePath } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { parse as parseYaml } from 'yaml'
+import { parseDockerEnv } from './docker-env.ts'
 import { ENV_CONFIG_FILE, parseEnv } from './env.ts'
 import { ConfigError } from './errors.ts'
 import { type Layer, type ResolveResult, resolveLayers } from './resolve.ts'
@@ -130,7 +131,8 @@ export async function readConfigFile(file: string): Promise<unknown> {
 }
 
 /**
- * Loads the configuration: defaults <- config file <- environment. Throws {@link ConfigError}
+ * Loads the configuration: defaults <- the phpMyAdmin image's variables <- config file <- BMA_*
+ * environment. Throws {@link ConfigError}
  * listing every unknown directive (with the nearest known name) and invalid value.
  */
 export async function loadConfig(options: LoadConfigOptions = {}): Promise<LoadedConfig> {
@@ -153,13 +155,16 @@ export async function loadConfig(options: LoadConfigOptions = {}): Promise<Loade
   }
 
   const layers: Layer[] = []
+  // the official phpMyAdmin image's PMA_* variables (its config.user.inc.php overrides them)
+  const dockerLayer = parseDockerEnv(env)
+  layers.push({ value: dockerLayer.value, label: 'environment', origins: dockerLayer.origins })
   if (file !== undefined) layers.push({ value: await readConfigFile(file), label: basename(file) })
   const envLayer = parseEnv(env)
   layers.push({ value: envLayer.value, label: 'environment', origins: envLayer.origins })
 
   let result: ResolveResult
   try {
-    result = resolveLayers(layers, envLayer.issues)
+    result = resolveLayers(layers, [...dockerLayer.issues, ...envLayer.issues])
   } catch (e) {
     if (e instanceof ConfigError && file !== undefined) {
       throw new ConfigError(e.issues, `Invalid BetterMyAdmin configuration (${file})`)
