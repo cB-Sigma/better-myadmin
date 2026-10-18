@@ -11,7 +11,7 @@ services:
   mysql84:
     image: mysql:8.4
     environment: { MYSQL_ROOT_PASSWORD: root }
-    command: ["--general-log=1", "--log-output=TABLE"]
+    command: ["--general-log=1", "--log-output=TABLE", "--max-connections=1000"]
     ports: ["3306:3306"]
     volumes:
       - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
@@ -42,7 +42,7 @@ services:
   mariadb11:
     image: mariadb:11.4
     environment: { MARIADB_ROOT_PASSWORD: root }
-    command: ["--server-id=11", "--log-bin=mariadb-bin", "--general-log=1", "--log-output=TABLE"]
+    command: ["--server-id=11", "--log-bin=mariadb-bin", "--general-log=1", "--log-output=TABLE", "--max-connections=1000"]
     ports: ["3307:3306"]
     volumes:
       - "./seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro"
