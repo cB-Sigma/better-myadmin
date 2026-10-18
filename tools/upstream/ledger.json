@@ -245,6 +245,13 @@
       "status": "ported",
       "areas": ["i18n"],
       "notes": "sync 328b8d8003: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): new msgid \"The event scheduler is disabled.\", the moved source references, the Latvian and Chinese (Simplified) translations."
+    },
+    {
+      "commit": "8e6af1a04f9c1d9344313fcb8ebfedeaf21bd5a3",
+      "subject": "Refactor Sanitize::convertBBCode()",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth", "tests"],
+      "notes": "refactor, same output: the replace pairs become a constant and [dochelpicon] gets its own strtr pass after them; no pair overlaps it or produces it, so one pass and two give the same text (ours: packages/i18n/src/bbcode.ts, apps/web/src/features/shell/bbcode.tsx)."
     }
   ]
 }
