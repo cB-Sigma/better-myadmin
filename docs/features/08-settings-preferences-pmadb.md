@@ -602,7 +602,7 @@ Settings pages
 - [x] Save failure keeps the posted values on screen with inline errors and a red summary; a `revert` POST resets only erroneous fields. <!-- parity:test --> `p08-a42fac` [preferences.parity.test.ts:178](../../tests/parity/preferences.parity.test.ts#L178) +1
 - [x] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected. <!-- parity:test --> `p08-5102df` [preferences.test.ts:66](../../apps/server/test/unit/preferences.test.ts#L66) +2
 - [x] Saving any form re-persists the `2fa` block (never lost by a partial save). <!-- parity:test --> `p08-0b1f72` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71) +1
-- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [preferences.test.ts:335](../../apps/server/test/int/preferences.test.ts#L335)
+- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [f08-language.test.ts:32](../../apps/server/test/int/f08-language.test.ts#L32) +1
 - [x] Console toggles, `NavigationWidth` drags etc. persist via `setUserValue`; with session storage they additionally fall back to cookies when a cookie name is provided. <!-- parity:test --> `p08-1383bd` [preferences.parity.test.ts:384](../../tests/parity/preferences.parity.test.ts#L384)
 
 Manage your settings
@@ -647,7 +647,7 @@ Configuration storage
 - [x] Database comment stored as `column_info` row with `table_name=''`, `column_name='(db_comment)'`. <!-- parity:test --> `p08-d94efe` [repositories-golden.test.ts:293](../../packages/metadata/test/repositories-golden.test.ts#L293) +1
 - [x] Internal relation beats InnoDB FK for the same column in browse/insert. <!-- parity:test --> `p08-8e4b43` [repositories-golden.test.ts:295](../../packages/metadata/test/repositories-golden.test.ts#L295)
 - [x] Display field fallback: first CHAR-class column. <!-- parity:test --> `p08-d83080` [repositories-golden.test.ts:291](../../packages/metadata/test/repositories-golden.test.ts#L291)
-- [x] FK dropdown only when foreign table has `< ForeignKeyMaxLimit` rows; otherwise browse-foreign-values popup. <!-- parity:test --> `p08-ad6ee4` [insert-edit.test.ts:184](../../apps/server/test/int/insert-edit.test.ts#L184) +1
+- [x] FK dropdown only when foreign table has `< ForeignKeyMaxLimit` rows; otherwise browse-foreign-values popup. <!-- parity:test --> `p08-ad6ee4` [insert-edit.test.ts:187](../../apps/server/test/int/insert-edit.test.ts#L187) +1
 - [x] Renames propagate to relation (both sides), table_info, column_info, table_coords (delete on cross-db move), table_uiprefs, navigationhiding. <!-- parity:test --> `p08-8b840d` [table-writers.test.ts:32](../../packages/metadata/test/table-writers.test.ts#L32) +2
 
 Config file
