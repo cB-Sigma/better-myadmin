@@ -9,9 +9,13 @@ pnpm exec playwright test -c tests/ui-parity/playwright.config.ts -g table   # s
 open .data/ui-parity/index.html           # screenshots side by side + differences (review aid, not a gate)
 ```
 
-Needs MySQL (`BMA_TEST_HOST/PORT`, root `BMA_TEST_PASSWORD`) and the reference phpMyAdmin
-(`BMA_PARITY_PMA_URL`, default `http://127.0.0.1:8081`, cookie auth); cases are skipped when it is
-down. global-setup creates `uip_db_<run>.uip_t`, our configuration storage `uip_pmadb_<run>`, the Insert/Edit
+Needs MySQL (`BMA_TEST_HOST/PORT`, root `BMA_TEST_PASSWORD`) and the reference checkout
+(`/home/user/ref/pma`, `PMA_PATH`). global-setup starts the run's own reference phpMyAdmin from it, configured
+like the shared :8081 instance (server 1 = that MySQL, storage `phpmyadmin`, control user pma) and served by
+`php -S` with `BMA_UIP_PMA_WORKERS` workers (default 6): the shared single-process :8081 is busy with every
+checkout's parity runs. `BMA_PARITY_PMA_URL` uses an existing instance instead; cases are skipped when it is
+down. A case's `sql` fixture runs with `lock_wait_timeout = 20`, so a DDL blocked by a metadata lock fails
+that case instead of stalling every later one; a page that fails to open closes its browser context. global-setup creates `uip_db_<run>.uip_t`, our configuration storage `uip_pmadb_<run>`, the Insert/Edit
 database `uip_ie_<run>` and one superuser per app (`uip_pma_<run>`, `uip_bma_<run>`); global-teardown
 drops them. `<run>` is a hash of the worktree path (`BMA_UIP_RUN` overrides it), so runs from different
 worktrees on one MySQL never touch each other's accounts. Our server runs on a random port (`BMA_UIP_PORT`).

@@ -113,7 +113,12 @@ function shadowTree(root: string): void {
 export async function startPmaInstance(
   configPhp: string,
   /** `noConfig`: no config.inc.php (the setup script runs only then; `configPhp` is ignored) */
-  opts: { dumpState?: boolean; noConfig?: boolean } = {},
+  opts: {
+    dumpState?: boolean
+    noConfig?: boolean
+    /** PHP_CLI_SERVER_WORKERS: the built-in server answers this many requests at once (default 1) */
+    workers?: number
+  } = {},
 ): Promise<PmaInstance> {
   const root = mkdtempSync(join(tmpdir(), 'bma-pma-'))
   shadowTree(root)
@@ -142,6 +147,10 @@ export async function startPmaInstance(
     ['-d', 'opcache.revalidate_freq=0', '-S', `127.0.0.1:${port}`, '-t', join(root, 'public')],
     {
       stdio: 'ignore',
+      env:
+        opts.workers !== undefined && opts.workers > 1
+          ? { ...process.env, PHP_CLI_SERVER_WORKERS: String(opts.workers) }
+          : process.env,
     },
   )
   const url = `http://127.0.0.1:${port}`
