@@ -29,7 +29,12 @@ test('[p01-03005f] [p01-b3cadb] a link loads the page in place: the navigation, 
   await page.evaluate(() => {
     ;(window as unknown as { f01Marker: number }).f01Marker = 1
   })
-  await page.locator('.console_switch').click()
+  // the first page of a fresh server can still be hydrating: open the console until its input shows
+  await expect(async () => {
+    if (!(await page.locator('.console_query_input .cm-content').isVisible()))
+      await page.locator('.console_switch').click()
+    await expect(page.locator('.console_query_input .cm-content')).toBeVisible({ timeout: 2000 })
+  }).toPass({ timeout: 20000 })
   const messages = page.getByTestId('console-messages')
   await page.locator('.console_query_input .cm-content').click()
   await page.keyboard.insertText('SELECT 1 AS f01a_kept')
