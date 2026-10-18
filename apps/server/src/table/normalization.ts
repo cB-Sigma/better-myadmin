@@ -26,7 +26,7 @@ import {
   backquote,
   get2NFNewTables,
   get2NFQueries,
-  get3NFNewTables,
+  get3NFProposals,
   get3NFQueries,
   getAllCombinationPartialKeys,
   getDistinctValuesCountQuery,
@@ -203,7 +203,7 @@ export async function newTables3NF(
 ): Promise<NewTables3NFResponse> {
   const pks: Record<string, string[]> = {}
   for (const [table, arr] of tables) if (new Set(arr).size > 1) pks[table] = await primaryKey(ctx, table)
-  return { newTables: get3NFNewTables(pd, tables, pks) }
+  return get3NFProposals(pd, tables, pks)
 }
 
 /** pma: Normalization::createNewTablesFor3NF */

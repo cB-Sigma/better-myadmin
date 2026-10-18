@@ -82,7 +82,11 @@ export const NewTables3NFRequest = z.object({
   /** normalization.js tablesTds: per table, the table itself then each determinant */
   tables: z.array(z.tuple([z.string(), z.array(z.string())])),
 })
-export const NewTables3NFResponse = z.object({ newTables: NewTables3NF })
+export const NewTables3NFResponse = z.object({
+  newTables: NewTables3NF,
+  /** the rows the step shows (a repeated name shows twice; newTables keeps the last) */
+  rows: NewTables3NF,
+})
 export type NewTables3NFResponse = z.infer<typeof NewTables3NFResponse>
 
 export const CreateTables3NFRequest = z.object({ newTables: NewTables3NF })
