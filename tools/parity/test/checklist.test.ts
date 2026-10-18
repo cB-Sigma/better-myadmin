@@ -168,28 +168,28 @@ describe('test linking', () => {
 
   it('reads Playwright JSON (file suites, describe blocks, retries)', () => {
     const r = parsePlaywrightJson(
-      'playwright-web',
+      'playwright-e2e',
       {
-        config: { rootDir: '/repo/apps/web/e2e' },
+        config: { rootDir: '/repo/tests/e2e' },
         suites: [
           {
-            title: 'navigation.spec.ts',
-            file: 'navigation.spec.ts',
+            title: 'navigation.e2e.ts',
+            file: 'navigation.e2e.ts',
             specs: [
               {
                 title: 'top',
-                file: 'navigation.spec.ts',
+                file: 'navigation.e2e.ts',
                 tests: [{ results: [{ status: 'failed' }, { status: 'passed' }] }],
               },
             ],
             suites: [
               {
                 title: 'group',
-                file: 'navigation.spec.ts',
+                file: 'navigation.e2e.ts',
                 specs: [
                   {
                     title: 'inner',
-                    file: 'navigation.spec.ts',
+                    file: 'navigation.e2e.ts',
                     tests: [{ results: [{ status: 'skipped' }] }],
                   },
                 ],
@@ -202,14 +202,14 @@ describe('test linking', () => {
     )
     expect(r).toEqual([
       {
-        suite: 'playwright-web',
-        file: 'apps/web/e2e/navigation.spec.ts',
+        suite: 'playwright-e2e',
+        file: 'tests/e2e/navigation.e2e.ts',
         fullTitle: 'top',
         status: 'passed',
       },
       {
-        suite: 'playwright-web',
-        file: 'apps/web/e2e/navigation.spec.ts',
+        suite: 'playwright-e2e',
+        file: 'tests/e2e/navigation.e2e.ts',
         fullTitle: 'group > inner',
         status: 'skipped',
       },

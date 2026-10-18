@@ -2,8 +2,8 @@
  * pnpm parity:report [--run[=suite,…]] — computes coverage and writes the reports.
  *
  *   --run           run the Vitest unit project with its JSON reporter first
- *   --run=all       run every suite (vitest-unit, vitest-int, vitest-parity, playwright-web, playwright-e2e;
- *                   int/parity/e2e need MySQL, the reference phpMyAdmin and a built web app)
+ *   --run=all       run every suite (vitest-unit, vitest-int, vitest-parity, playwright-e2e;
+ *                   int/parity/e2e need MySQL and the reference phpMyAdmin; apps/web is built first)
  *   --run=a,b       run those suites
  * Without --run it reads the latest saved results under .data/parity-results/.
  *
