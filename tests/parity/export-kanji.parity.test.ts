@@ -11,8 +11,11 @@ import {
   pmaExportForm,
   withFields,
 } from './lib/export.ts'
+import { type PmaShadow, canStartShadow, startPmaShadow } from './lib/pma-shadow.ts'
 import { PmaClient } from './lib/pma.ts'
 import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
+
+const PMA_I18N_URL = process.env.PMA_I18N_URL ?? 'http://127.0.0.1:8082'
 
 /**
  * The export's Kanji conversion (Encoding::kanjiStrConv in OutputHandler::addLine) in the Japanese
@@ -30,19 +33,31 @@ let bma: ReturnType<typeof testApp>
 let form: Pairs
 
 /**
- * Encoding::canConvertKanji() needs Current::$lang === 'ja': a reference built without translations
- * offers English only (lang=ja is ignored), and the suite is skipped. A copy of the reference with a
- * `resources/locale/ja/LC_MESSAGES/phpmyadmin.mo` (an empty catalog is enough) served as
- * BMA_PARITY_PMA_URL runs it.
+ * Encoding::canConvertKanji() needs Current::$lang === 'ja'. The reference checkout is built without
+ * translations (English only, lang=ja ignored), and giving the shared instance a Japanese catalog
+ * would make its language selector appear on every page. So the suite uses, in this order:
+ * BMA_PARITY_PMA_URL when it serves Japanese, the translated reference (PMA_I18N_URL, :8082; CI's
+ * phpmyadmin-ref-i18n), or its own shadow instance of the checkout (pma-shadow.ts) with an empty
+ * `resources/locale/ja/LC_MESSAGES/phpmyadmin.mo` in the shadow tree. Skipped only when none exists
+ * (the MariaDB target has no translated reference).
  */
-const japanese =
-  pmaReachable &&
-  (await new PmaClient(PMA_URL)
+const servesJapanese = (url: string) =>
+  new PmaClient(url)
     .getPage('/', { lang: 'ja' })
     .then((html) => /<html lang="ja"/.test(html))
-    .catch(() => false))
+    .catch(() => false)
+const SHADOW_PORT = 18953
+const reference: string | 'shadow' | null =
+  pmaReachable && (await servesJapanese(PMA_URL))
+    ? PMA_URL
+    : (await servesJapanese(PMA_I18N_URL))
+      ? PMA_I18N_URL
+      : pmaReachable && canStartShadow()
+        ? 'shadow'
+        : null
+let shadow: PmaShadow | undefined
 
-describe.skipIf(!japanese)('export Kanji conversion parity (Japanese locale)', () => {
+describe.skipIf(reference === null)('export Kanji conversion parity (Japanese locale)', () => {
   beforeAll(async () => {
     root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
     await createAccounts(root, [USERS.pma, USERS.bma])
@@ -51,7 +66,8 @@ describe.skipIf(!japanese)('export Kanji conversion parity (Japanese locale)', (
       INSERT INTO ${DB}.t VALUES (1, 'alpha'), (2, 'beta "two"'), (3, NULL);
       CREATE TABLE ${DB}.jp (id INT PRIMARY KEY, name VARCHAR(20));
       INSERT INTO ${DB}.jp VALUES (1, '日本語'), (2, 'ｶﾞｷﾞﾊﾟ'), (3, 'テスト ～'), (4, 'abc');`)
-    pma = new PmaClient(PMA_URL)
+    if (reference === 'shadow') shadow = await startPmaShadow(SHADOW_PORT, {}, { locales: ['ja'] })
+    pma = new PmaClient(shadow?.url ?? (reference as string))
     await pma.login(USERS.pma, USERS.pma, 1, 'ja')
     bma = testApp(testConfig({}, PMA_STORAGE))
     await bma.req('GET', '/api/i18n?lang=ja')
@@ -61,6 +77,7 @@ describe.skipIf(!japanese)('export Kanji conversion parity (Japanese locale)', (
 
   afterAll(async () => {
     await bma?.close()
+    await shadow?.stop()
     if (root !== undefined) {
       await root.query(`DROP DATABASE IF EXISTS ${DB}`)
       for (const u of Object.values(USERS)) await root.query(`DROP USER IF EXISTS '${u}'@'%'`)

@@ -10,7 +10,10 @@ import { isPmaUp } from './pma.ts'
  * and then applies `overrides.json`. Served by `php -S` on its own port.
  *
  * Used where parity depends on directives the shared reference instance keeps at their defaults
- * (FirstLevelNavigationItems, DisableIS, hide_db, grouping…).
+ * (FirstLevelNavigationItems, DisableIS, hide_db, grouping…), or on a language the checkout (built
+ * without translations, English only) does not offer: `locales` adds an empty catalog
+ * `resources/locale/<code>/LC_MESSAGES/phpmyadmin.mo` per code to the shadow tree only, so
+ * phpMyAdmin offers and selects that language (texts stay English, Current::$lang is the code).
  */
 export interface PmaShadow {
   url: string
@@ -27,13 +30,32 @@ export function canStartShadow(): boolean {
 
 const phpString = (s: string) => `'${s.replaceAll('\\', '\\\\').replaceAll("'", "\\'")}'`
 
-export async function startPmaShadow(port: number, base: Record<string, unknown> = {}): Promise<PmaShadow> {
+export async function startPmaShadow(
+  port: number,
+  base: Record<string, unknown> = {},
+  opts: { locales?: string[] } = {},
+): Promise<PmaShadow> {
   const root = join(tmpdir(), `bma-pma-shadow-${port}`)
   rmSync(root, { recursive: true, force: true })
   mkdirSync(join(root, 'public'), { recursive: true })
+  const locales = opts.locales ?? []
   for (const entry of readdirSync(PMA_ROOT)) {
     if (entry === 'public' || entry === 'config.inc.php') continue
+    if (entry === 'resources' && locales.length > 0) continue
     symlinkSync(join(PMA_ROOT, entry), join(root, entry))
+  }
+  if (locales.length > 0) {
+    const resources = join(PMA_ROOT, 'resources')
+    mkdirSync(join(root, 'resources', 'locale'), { recursive: true })
+    for (const entry of readdirSync(resources)) {
+      if (entry !== 'locale') symlinkSync(join(resources, entry), join(root, 'resources', entry))
+    }
+    const shipped = existsSync(join(resources, 'locale')) ? readdirSync(join(resources, 'locale')) : []
+    for (const l of shipped) symlinkSync(join(resources, 'locale', l), join(root, 'resources', 'locale', l))
+    for (const l of locales.filter((x) => !shipped.includes(x))) {
+      mkdirSync(join(root, 'resources', 'locale', l, 'LC_MESSAGES'), { recursive: true })
+      writeFileSync(join(root, 'resources', 'locale', l, 'LC_MESSAGES', 'phpmyadmin.mo'), '')
+    }
   }
   for (const entry of readdirSync(join(PMA_ROOT, 'public'))) {
     // index.php must be a real file: ROOT_PATH = dirname(__DIR__)
