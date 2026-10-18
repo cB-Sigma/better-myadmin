@@ -134,6 +134,13 @@
   font-size: 13px;
   line-height: 1.4;
 }
+/* the column grid of Create table / Add / Change: pma _common.scss #table_columns gives its text
+   inputs and selects 10em, so the grid scrolls sideways instead of shrinking to the window */
+#table_columns select,
+#table_columns input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
+  width: 10em;
+  box-sizing: border-box;
+}
 .input:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 0;

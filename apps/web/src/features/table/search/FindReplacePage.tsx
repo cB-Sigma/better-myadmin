@@ -18,15 +18,26 @@ export function FindReplacePage({ scope }: { scope: TableRef }) {
   const q = useSearchPage(scope)
   if (q.isError) return <ResultMessages messages={[errorMessage(q.error)]} />
   if (q.data === undefined) return null
+  return <FindReplaceBody scope={scope} page={q.data} />
+}
+
+/** FindReplaceController: the replace's Generator::getMessage comes before the search pills. */
+function FindReplaceBody({ scope, page }: { scope: TableRef; page: SearchPageResponse }) {
+  const [messages, setMessages] = useState<SqlMessage[]>([])
   return (
     <div>
+      <ResultMessages messages={messages} />
       <SearchPills scope={scope} active="find-replace" />
-      <FindReplaceForm scope={scope} page={q.data} />
+      <FindReplaceForm scope={scope} page={page} setMessages={setMessages} />
     </div>
   )
 }
 
-function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }) {
+function FindReplaceForm({
+  scope,
+  page,
+  setMessages,
+}: { scope: TableRef; page: SearchPageResponse; setMessages: (m: SqlMessage[]) => void }) {
   // form.lock-page (AJAX.lockPageHandler)
   const lockRef = useFormLock()
   const [find, setFind] = useState('')
@@ -38,7 +49,6 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
     res: FindReplacePreviewResponse
   } | null>(null)
   const [shown, setShown] = useState(true)
-  const [messages, setMessages] = useState<SqlMessage[]>([])
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
@@ -66,7 +76,6 @@ function FindReplaceForm({ scope, page }: { scope: TableRef; page: SearchPageRes
 
   return (
     <>
-      <ResultMessages messages={messages} />
       {preview !== null && (
         <div id="toggle_find_div" className="mb-2">
           <Button size="sm" id="toggle_find" onClick={() => setShown(!shown)}>

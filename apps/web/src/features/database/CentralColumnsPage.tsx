@@ -18,7 +18,7 @@ import {
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -281,10 +281,20 @@ function CentralColumnsView({
   })
 
   const refresh = () => qc.invalidateQueries({ queryKey: qk.dbPage({ server, db }, 'central-columns') })
-  const act = async (fn: () => Promise<CentralColumnsActionResponse>): Promise<boolean> => {
+  // the forms post the page (add, add new, delete, multi edit): main.twig renders the add-new form
+  // hidden as soon as the list has rows; only the inline row save is an AJAX call
+  const reloading = useRef(false)
+  useEffect(() => {
+    if (!reloading.current) return
+    reloading.current = false
+    setShowAdd(d.totalRows === 0)
+  }, [d])
+  const act = async (fn: () => Promise<CentralColumnsActionResponse>, reload = true): Promise<boolean> => {
     try {
       const r = await fn()
       setMessage(r.message)
+      // the page that comes back (the refetched list) decides
+      reloading.current = reload
       await refresh()
       return r.ok
     } catch (e) {
@@ -655,15 +665,17 @@ function CentralColumnsView({
                             variant="primary"
                             className="edit_save_form"
                             onClick={() =>
-                              void act(() =>
-                                api.dbCentralColumnsAction(
-                                  { server, db },
-                                  {
-                                    action: 'edit',
-                                    origName: c.name,
-                                    column: input(e),
-                                  },
-                                ),
+                              void act(
+                                () =>
+                                  api.dbCentralColumnsAction(
+                                    { server, db },
+                                    {
+                                      action: 'edit',
+                                      origName: c.name,
+                                      column: input(e),
+                                    },
+                                  ),
+                                false,
                               ).then((ok) => ok && stopEdit())
                             }
                           >

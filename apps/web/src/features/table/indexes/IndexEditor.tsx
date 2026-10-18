@@ -1,12 +1,5 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
-import {
-  Button,
-  Hint,
-  Modal,
-  MySqlDocLink,
-  PreviewSqlDialog,
-  showMessage,
-} from '@bettermyadmin/ui'
+import { Button, Hint, Modal, MySqlDocLink, PreviewSqlDialog, showMessage } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { GripVertical } from 'lucide-react'
 import { type ChangeEvent, useEffect, useRef, useState } from 'react'
