@@ -102,7 +102,7 @@ async function structureMarks() {
 }
 
 describe.skipIf(!pmaReachable)('parity: table Structure central columns', () => {
-  it('row link: add one column; the page marks it', async () => {
+  it('row link: add one column; the page marks it [p04-a0caf6]', async () => {
     const r = await structureStep('add', ['name'])
     expect(r.b[0]?.text).toBe('Your SQL query has been executed successfully.')
     expect(r.p).toContain('Your SQL query has been executed successfully.')
@@ -111,7 +111,7 @@ describe.skipIf(!pmaReachable)('parity: table Structure central columns', () => 
     expect(m.inList).toEqual(['name'])
   })
 
-  it('With selected: add columns, the existing one noticed', async () => {
+  it('With selected: add columns, the existing one noticed [p04-a0caf6]', async () => {
     const r = await structureStep('add', ['id', 'name', 'created'])
     expect(r.b[0]?.text).toContain("Could not add 'name' as they already exist in central list!")
     expect(r.p).toContain('Could not add &#039;name&#039; as they already exist in central list!')
@@ -140,7 +140,7 @@ describe.skipIf(!pmaReachable)('parity: table Structure central columns', () => 
     expect(b.map((c) => c.name).sort()).toEqual(['created', 'name'])
   })
 
-  it('With selected: remove columns, the missing one noticed', async () => {
+  it('With selected: remove columns, the missing one noticed [p04-a0caf6]', async () => {
     const r = await structureStep('remove', ['name', 'note'])
     expect(r.b[0]?.text).toContain(
       "Couldn't remove Column(s) 'note' as they don't exist in central columns list!",
@@ -168,7 +168,7 @@ describe.skipIf(!pmaReachable)('parity: table Structure central columns', () => 
 })
 
 describe.skipIf(!pmaReachable)('parity: table Privileges', () => {
-  it('the accounts with access to the table, with the table-specific privileges', async () => {
+  it('the accounts with access to the table, with the table-specific privileges [p04-f4f8d7]', async () => {
     const r = await both(
       h,
       () => h.pma.getPage('/table/privileges', { db: P, table: 't' }),

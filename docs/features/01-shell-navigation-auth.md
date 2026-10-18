@@ -709,7 +709,7 @@ Auth
 - [x] Captcha (invisible/checkbox) when fully configured; CSP extended accordingly. <!-- parity:test --> `p01-cdb8f8` [auth-types.test.ts:237](../../apps/server/test/int/auth-types.test.ts#L237) +1
 - [ ] 2FA prompt after password; Application (TOTP + QR), WebAuthn, U2F (deprecated), Simple (debug); configure/disable in Settings with confirmation.
 - [ ] Logout via JS-built POST form with token; `LoginCookieDeleteAll`; partial logout message; `LogoutURL`.
-- [ ] Config auth failure page with "Retry to connect" and server list; HTTP auth 401 realm; signon redirect flows.
+- [x] Config auth failure page with "Retry to connect" and server list; HTTP auth 401 realm; signon redirect flows. <!-- parity:test --> `p01-03cad3` [auth-types.test.ts:34](../../apps/server/test/int/auth-types.test.ts#L34) +14
 - [ ] Change-password modal with strength meter, generator, hashing plugin select, `FLUSH PRIVILEGES`, cookie re-encryption.
 
 Home / themes / languages / misc

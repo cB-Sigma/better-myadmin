@@ -159,7 +159,7 @@ function newRow(pairs: Pairs, i: number, row: Record<string, string>): Pairs {
 
 const CASES: Case[] = [
   {
-    name: 'add a constraint with a name, ON DELETE CASCADE / ON UPDATE SET NULL',
+    name: 'add a constraint with a name, ON DELETE CASCADE / ON UPDATE SET NULL [p04-b2ab58]',
     pma: async () =>
       pma.postPage(
         '/table/relation',
@@ -190,7 +190,7 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'change ON UPDATE of an existing constraint (drop + create)',
+    name: 'change ON UPDATE of an existing constraint (drop + create) [p04-b2ab58]',
     pma: async () =>
       pma.postPage('/table/relation', setPair(await pmaForm('child'), 'on_update[0]', 'NO_ACTION')),
     bma: async () => {
@@ -204,7 +204,7 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'clearing the referenced table drops the constraint',
+    name: 'clearing the referenced table drops the constraint [p04-b2ab58]',
     pma: async () =>
       pma.postPage('/table/relation', setPair(await pmaForm('child'), 'destination_foreign_table[0]', '')),
     bma: async () => {
@@ -218,7 +218,7 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'a failing change restores the dropped constraint',
+    name: 'a failing change restores the dropped constraint [p04-b2ab58]',
     pma: async () =>
       pma.postPage(
         '/table/relation',
@@ -239,7 +239,7 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'Preview SQL shows the statements and runs none of them',
+    name: 'Preview SQL shows the statements and runs none of them [p04-929453]',
     pma: async () =>
       pma.postJson('/table/relation', [
         ...setPair(await pmaForm('child'), 'on_delete[0]', 'SET_NULL'),
@@ -259,7 +259,7 @@ const CASES: Case[] = [
     },
   },
   {
-    name: 'drop a constraint from its row link (via /sql)',
+    name: 'drop a constraint from its row link (via /sql) [p04-2da92c]',
     pma: async () => {
       const html = await pma.getPage('/table/relation', { db: DB_PMA, table: 'child' })
       const post =
@@ -278,7 +278,7 @@ const CASES: Case[] = [
       bma.req('POST', `${bmaBase('child')}/drop-foreign-key`, { constraint: 'fk_a' }).then((r) => r.json),
   },
   {
-    name: 'internal relations and the display column (configuration storage)',
+    name: 'internal relations and the display column (configuration storage) [p04-111f1c]',
     pma: async () => {
       let pairs = await pmaForm('t')
       const hash = (await import('node:crypto')).createHash('md5').update('label').digest('hex')
@@ -329,7 +329,7 @@ describe.skipIf(!reachable)('parity: Relation view (phpMyAdmin forms vs BetterMy
 
   for (const c of CASES) it(c.name, () => runCase(c))
 
-  it('the page shows the same constraints, choices and dropdown values', async () => {
+  it('the page shows the same constraints, choices and dropdown values [p04-9bf7e7]', async () => {
     for (const db of [DB_PMA, DB_BMA]) {
       await root.query(`DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`)
     }

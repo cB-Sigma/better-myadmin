@@ -33,7 +33,7 @@ afterAll(async () => {
 })
 
 describe('Structure central columns', () => {
-  it('adds and removes columns, marks them on the page, lists them for the column form', async () => {
+  it('adds and removes columns, marks them on the page, lists them for the column form [p04-a0caf6]', async () => {
     let r = await app.req('POST', `${base}/tables/a/structure/central-columns-add`, { columns: ['id', 'v'] })
     expect(J(r).messages).toEqual([
       { type: 'success', text: 'Your SQL query has been executed successfully.' },
@@ -57,7 +57,7 @@ describe('Structure central columns', () => {
 })
 
 describe('table Privileges', () => {
-  it('lists the accounts with access to the table', async () => {
+  it('lists the accounts with access to the table [p04-f4f8d7]', async () => {
     const r = await bare.req('GET', `${base}/tables/a/privileges`)
     expect(r.status).toBe(200)
     expect(J(r)).toMatchObject({ db: DB, table: 'a', gate: { isSuperUser: true, noPrivileges: false } })

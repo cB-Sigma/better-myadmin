@@ -39,7 +39,9 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test('browse, sort, page, options, grid edit and delete', async ({ page }) => {
+test('browse, sort, page, options, grid edit and delete [p02-50ad5b p02-8c16e6 p02-dc194e p02-26b09f p02-5293ef]', async ({
+  page,
+}) => {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)

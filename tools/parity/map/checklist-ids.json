@@ -974,6 +974,11 @@
     "section": "Micro-behaviours checklist › Navigation bar",
     "text": "\"Filter rows\" box filters the current page client-side across all `data-column` headers, mirrors its text to the twin box, hides non-matching rows live on keyup."
   },
+  "p03-0470d0": {
+    "file": "docs/features/03-insert-edit-transformations.md",
+    "section": "Micro-behaviours checklist",
+    "text": "float/double and geometry inputs are as wide as the column length clamped to `MaxSizeForInputField` (60)."
+  },
   "p03-06384d": {
     "file": "docs/features/03-insert-edit-transformations.md",
     "section": "Micro-behaviours checklist",
@@ -1179,11 +1184,6 @@
     "section": "Micro-behaviours checklist",
     "text": "Selecting `AES_*`/`DES_*`/`ENCRYPT`/`SHA2` reveals an \"Encryption key\" salt input; selecting `HEX` on an int column shows the HEX conversion note; `NOW` sets min/max 0..fsp."
   },
-  "p03-bc0ddf": {
-    "file": "docs/features/03-insert-edit-transformations.md",
-    "section": "Micro-behaviours checklist",
-    "text": "float/double inputs are 100 wide (clamped to 60); geometry inputs 30."
-  },
   "p03-c6dc22": {
     "file": "docs/features/03-insert-edit-transformations.md",
     "section": "Micro-behaviours checklist",
@@ -1344,11 +1344,6 @@
     "section": "Micro-behaviours checklist › Operations",
     "text": "Order-by card hidden for InnoDB with PK or NOT NULL UNIQUE."
   },
-  "p04-319e6d": {
-    "file": "docs/features/04-table-level.md",
-    "section": "Micro-behaviours checklist › Index editor",
-    "text": "PRIMARY option hidden when a PK exists (unless editing it)."
-  },
   "p04-31ee94": {
     "file": "docs/features/04-table-level.md",
     "section": "Micro-behaviours checklist › Structure list",
@@ -1403,6 +1398,11 @@
     "file": "docs/features/04-table-level.md",
     "section": "Micro-behaviours checklist › Column form",
     "text": "Collation dropdowns are empty until focused (template clone) but preselected ones are filled on load."
+  },
+  "p04-4cb4a4": {
+    "file": "docs/features/04-table-level.md",
+    "section": "Micro-behaviours checklist › Index editor",
+    "text": "PRIMARY option hidden when a PK exists (unless editing it); a new index always offers it (`Index::hasPrimary()` has no table for it)."
   },
   "p04-4da9c9": {
     "file": "docs/features/04-table-level.md",

@@ -40,7 +40,7 @@ test.afterAll(async () => {
   )
 })
 
-test('the accounts with access to the table', async ({ page }) => {
+test('the accounts with access to the table [p04-f4f8d7]', async ({ page }) => {
   await page.goto('/')
   await page.locator('#input_username').fill(ADMIN)
   await page.locator('#input_password').fill(ADMIN)

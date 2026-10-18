@@ -13,7 +13,7 @@ const base = {
 }
 
 describe('getViewSqlQuery (CreateController::getSqlQuery)', () => {
-  it('builds CREATE with every option, lines joined by \\r\\n', () => {
+  it('builds CREATE with every option, lines joined by \\r\\n [p04-74ef44]', () => {
     expect(
       getViewSqlQuery(true, {
         orReplace: true,
