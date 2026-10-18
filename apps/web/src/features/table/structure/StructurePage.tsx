@@ -10,6 +10,7 @@ import {
   PreviewSqlDialog,
   removeMessage,
   showMessage,
+  useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
@@ -19,9 +20,10 @@ import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { usePagePrefs } from '../../preferences/PageSettings.tsx'
+import { MaintenanceRows } from '../common/MaintenanceResults'
 import { StructurePills } from '../common/StructurePills'
 import { IndexDialog, RenameIndexDialog } from '../indexes/IndexEditor'
-import { confirmSql } from './confirm'
+import { sqlQuestion } from './confirm'
 import { takeFlash } from './flash'
 
 /**
@@ -97,9 +99,12 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
   const columnNames = s.columns.map((c) => c.name)
   const afterField = after ?? columnNames.at(-1) ?? 'first'
 
+  // structure.ts: the row actions confirm in the $.fn.confirm modal (OK / Close)
+  const ask = useConfirm()
   const addKey = async (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT', column: Column) => {
     const clause = type === 'PRIMARY' ? 'ADD PRIMARY KEY' : `ADD ${type}`
-    if (!confirmSql(`ALTER TABLE \`${table}\` ${clause}(\`${column.name}\`);`)) return
+    if (!(await ask({ question: sqlQuestion(`ALTER TABLE \`${table}\` ${clause}(\`${column.name}\`);`) })))
+      return
     await act(() => api.addKey(scope, { type, columns: [column.name], source: 'row' }))
   }
   const bulkKey = async (type: 'PRIMARY' | 'UNIQUE' | 'INDEX' | 'SPATIAL' | 'FULLTEXT') => {
@@ -115,7 +120,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
     }
   }
   const dropColumn = async (c: Column) => {
-    if (!confirmSql(c.dropSql)) return
+    if (!(await ask({ question: sqlQuestion(c.dropSql), destructive: true }))) return
     const box = showMessage(t('Dropping column'), false)
     await act(() => api.dropColumns(scope, { columns: [c.name], source: 'row' }))
     removeMessage(box)
@@ -137,28 +142,18 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
         <MessageBox key={i} {...m} />
       ))}
       {maintenance && (
-        <Panel title={maintenance.title}>
-          <PanelBody>
-            {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
-              <div key={name} className="mb-2">
-                <div className="font-semibold">
-                  {name} ({maintenance.partition})
-                </div>
-                <ul>
-                  {maintenance.rows
-                    .filter((r) => r.table === name)
-                    .map((r, i) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: result rows
-                      <li key={i} className="text-sm">
-                        <span className="mr-1 rounded bg-bg-inset px-1">{r.msgType}</span>
-                        {r.msgText}
-                      </li>
-                    ))}
-                </ul>
-              </div>
-            ))}
-          </PanelBody>
-        </Panel>
+        // pma: templates/table/partition/{analyze,check,optimize,repair}.twig
+        <div className="space-y-2" data-testid="partition-maintenance">
+          <h2 className="text-lg">{maintenance.title}</h2>
+          {[...new Set(maintenance.rows.map((r) => r.table))].map((name) => (
+            <Panel key={name} title={`${name} (${maintenance.partition})`}>
+              <MaintenanceRows
+                rows={maintenance.rows.filter((r) => r.table === name)}
+                op={maintenance.op ?? ''}
+              />
+            </Panel>
+          ))}
+        </div>
       )}
 
       <form id="fieldsForm" onSubmit={(e) => e.preventDefault()}>
@@ -939,6 +934,7 @@ function PartitionsCard({
 }) {
   const p = s.partitions
   const navigate = useNavigate()
+  const ask = useConfirm()
   const sliders = s.config.InitialSlidersState
   const [open, setOpen] = useState(sliders === 'open' || sliders === 'disabled' || p.partitions.length === 0)
   type Op = 'ANALYZE' | 'CHECK' | 'OPTIMIZE' | 'REBUILD' | 'REPAIR' | 'TRUNCATE' | 'DROP'
@@ -962,17 +958,19 @@ function PartitionsCard({
   }
   const run = (operation: Op, partition: string) => {
     const go = () => void act(() => api.partitionMaintenance(scope, { operation, partition }))
+    // structure.ts: DROP and TRUNCATE confirm in the $.fn.confirm modal
     if (operation === 'DROP') {
-      if (
-        window.confirm(
-          t(
-            'Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!',
-          ),
-        )
-      )
-        go()
+      void ask({
+        question: t(
+          'Do you really want to DROP the selected partition(s)? This will also DELETE the data related to the selected partition(s)!',
+        ),
+        destructive: true,
+      }).then((ok) => ok && go())
     } else if (operation === 'TRUNCATE') {
-      if (window.confirm(t('Do you really want to TRUNCATE the selected partition(s)?'))) go()
+      void ask({
+        question: t('Do you really want to TRUNCATE the selected partition(s)?'),
+        destructive: true,
+      }).then((ok) => ok && go())
     } else go()
   }
   const editHref = `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/structure/partitioning`
@@ -992,11 +990,11 @@ function PartitionsCard({
             <>
               <Button
                 id="remove_partitioning"
-                onClick={() => {
-                  if (window.confirm(t('Do you really want to remove partitioning?'))) {
-                    void act(() => api.removePartitioning(scope))
-                  }
-                }}
+                onClick={() =>
+                  void ask({ question: t('Do you really want to remove partitioning?') }).then(
+                    (ok) => ok && void act(() => api.removePartitioning(scope)),
+                  )
+                }
               >
                 {t('Remove partitioning')}
               </Button>

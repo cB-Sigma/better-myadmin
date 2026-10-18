@@ -27,6 +27,8 @@ export const DdlResponse = z.object({
   maintenance: z
     .object({
       title: z.string(),
+      /** the operation in lower case (the rows whose Op differs get an Op badge) */
+      op: z.string().optional(),
       partition: z.string(),
       rows: z.array(
         z.object({ table: z.string(), op: z.string(), msgType: z.string(), msgText: z.string() }),

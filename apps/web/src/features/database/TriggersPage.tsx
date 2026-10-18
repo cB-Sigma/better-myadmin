@@ -165,11 +165,14 @@ function TriggerEditor({
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}
     >
       <Messages messages={errors} />
-      <div className="mb-2 font-semibold">
-        {t('Details')} {!editMode && <MySqlDocLink link="CREATE_TRIGGER" />}
-      </div>
-      {/* editor_form.twig: the fields sit in a card headed "Details" */}
-      <Panel title={t('Details')}>
+      {/* editor_form.twig: the fields sit in one card headed "Details" (with its doc link) */}
+      <Panel
+        title={
+          <>
+            {t('Details')} {!editMode && <MySqlDocLink link="CREATE_TRIGGER" />}
+          </>
+        }
+      >
         <PanelBody>
           <table className="rte_table w-full text-sm">
             <tbody>

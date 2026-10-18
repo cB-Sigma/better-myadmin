@@ -44,7 +44,13 @@ export function OperationsPage({ scope }: { scope: TableRef }) {
     queryKey: qk.tblPage(scope, 'operations'),
     queryFn: () => api.tableOperations(scope),
   })
-  const [messages, setMessages] = useState<SqlMessage[]>([])
+  // a rename reloads the tab of the new name with the result (pma: the response's message)
+  const [messages, setMessages] = useState<SqlMessage[]>(() => {
+    const key = flashKey(scope.db, scope.table)
+    const m = flash.get(key) ?? []
+    flash.delete(key)
+    return m
+  })
   const [maint, setMaint] = useState<MaintenanceResult | null>(null)
   if (q.isError) return <ResultMessages messages={[errorMessage(q.error)]} />
   if (q.data === undefined) return null
@@ -58,6 +64,10 @@ export function OperationsPage({ scope }: { scope: TableRef }) {
     </div>
   )
 }
+
+/** Messages handed to the Operations tab of a renamed table (the route remounts the page). */
+const flash = new Map<string, SqlMessage[]>()
+const flashKey = (db: string, table: string) => `${db}\u0000${table}`
 
 interface Common {
   scope: TableRef
@@ -81,9 +91,10 @@ function useRunner({ scope, setMessages, setMaint }: Common) {
       const r = await fn()
       setMessages(r.messages)
       setMaint(r.maintenance ?? null)
+      // after first: a rename leaves the old name's queries before they are refetched (404)
+      await after?.(r)
       await qc.invalidateQueries({ queryKey: qk.tbl(scope) })
       await qc.invalidateQueries({ queryKey: qk.nav(scope.server) })
-      await after?.(r)
       return r
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -383,8 +394,10 @@ function OptionsCard(props: Common) {
           ...(page.rowFormats.length > 0 ? { rowFormat: f.rowFormat } : {}),
         }),
       async (r) => {
-        if (r.table !== undefined && r.table !== scope.table)
+        if (r.table !== undefined && r.table !== scope.table) {
+          flash.set(flashKey(scope.db, r.table), r.messages)
           await navigate({ to: tablePath(scope, scope.db, r.table) })
+        }
       },
     )
   }
@@ -897,8 +910,10 @@ function ViewOperations(props: Common) {
     void run(
       () => api.tableOperation(scope, 'rename-view', { newName: name }),
       async (r) => {
-        if (r.table !== undefined && r.table !== scope.table)
+        if (r.table !== undefined && r.table !== scope.table) {
+          flash.set(flashKey(scope.db, r.table), r.messages)
           await navigate({ to: tablePath(scope, scope.db, r.table) })
+        }
       },
     )
   }
