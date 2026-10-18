@@ -104,7 +104,8 @@ function useThemePreferenceSync(o: ThemeOptions): void {
     if (synced.has(o.server)) return
     synced.add(o.server)
     const stored = read(themeKey(o.perServer, o.server))
-    if (stored !== null && stored !== o.themeDefault) void api.themeSet(o.server, stored).catch(() => {})
+    if (stored !== null && stored !== o.themeDefault)
+      void api.themeSet(o.server, stored, true).catch(() => {})
   }, [o.server, o.perServer, o.themeDefault])
 }
 

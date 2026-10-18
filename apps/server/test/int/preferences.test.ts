@@ -332,7 +332,7 @@ describe('preferences applied to the running app', () => {
 })
 
 describe('theme and language kept as preferences [p08-495415]', () => {
-  it('ThemeDefault and lang are stored, and removed again for original / en', async () => {
+  it('ThemeDefault and lang are stored, and removed again for original / en (a theme set explicitly is always stored, like ThemeSetController)', async () => {
     await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
     const t = await app({ ThemeManager: true })
     expect((await t.req('POST', '/api/servers/1/themes/set', { theme: 'metro' })).json).toEqual({ ok: true })
@@ -342,7 +342,11 @@ describe('theme and language kept as preferences [p08-495415]', () => {
         .status,
     ).toBe(200)
     expect(await storedPrefs()).toMatchObject({ ThemeDefault: 'metro', lang: 'de' })
+    // ThemeSetController stores the chosen theme, `original` too
     await t.req('POST', '/api/servers/1/themes/set', { theme: 'original' })
+    expect(await storedPrefs()).toMatchObject({ ThemeDefault: 'original' })
+    // loadUserPreferences' sync (setUserValue with the default `original`) removes it
+    await t.req('POST', '/api/servers/1/themes/set', { theme: 'original', sync: true })
     await t.req('POST', '/api/servers/1/prefs/option', { path: 'lang', value: 'en', default: 'en' })
     const after = (await storedPrefs()) ?? {}
     expect('ThemeDefault' in after).toBe(false)

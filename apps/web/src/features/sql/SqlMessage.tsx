@@ -1,7 +1,7 @@
 import type { SqlCard, StatementResult } from '@bettermyadmin/contracts'
 import { MessageBox, MessageLine, MySqlDocLink, buttonVariants, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
-import { createContext, useContext, useRef, useState } from 'react'
+import { type ReactNode, createContext, useContext, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -266,7 +266,16 @@ function InlineEditor({ card, env, onClose }: { card: SqlCard; env: CardEnv; onC
  * The error card.
  * pma: src/Html/Generator.php::mysqlDie
  */
-export function ErrorCard({ st, env }: { st: StatementResult; env: Pick<CardEnv, 'versionInt'> }) {
+export function ErrorCard({
+  st,
+  env,
+  modify,
+}: {
+  st: Pick<StatementResult, 'error' | 'executedSql'>
+  env: Pick<CardEnv, 'versionInt'>
+  /** mysqlDie($isModifyLink): the Edit link to the SQL tab with the query */
+  modify?: ReactNode
+}) {
   const e = st.error!
   const [copied, setCopied] = useState(false)
   return (
@@ -306,6 +315,7 @@ export function ErrorCard({ st, env }: { st: StatementResult; env: Pick<CardEnv,
             </button>
             {copied && <span className="sr-only">{t('Successfully copied!')}</span>}
             {e.selectDoc && <MySqlDocLink url={mysqlDocUrl('SELECT', '', env.versionInt)} />}
+            {modify}
           </p>
           <HighlightedSql sql={e.sql} versionInt={env.versionInt} className="my-1 text-fg" />
         </>

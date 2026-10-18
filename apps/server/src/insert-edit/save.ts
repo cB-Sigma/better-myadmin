@@ -25,6 +25,7 @@ import {
   getUniqueCondition,
 } from '@bettermyadmin/sql-gen'
 import bcrypt from 'bcryptjs'
+import { getMessageCard } from '../query/message.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { phpRegex } from '../util/php-regex.ts'
 import { securePath, userDir } from '../util/secure-path.ts'
@@ -300,8 +301,17 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
     parts.push(errorMessages.join(' '))
     type = 'error'
   }
+  // Generator::getMessage($message, $sqlQuery) on the page "Go back" opens: the query card
+  const card = await getMessageCard(sqlQuery, {
+    cfg: ctx.cfg,
+    showAsPhp: null,
+    db: ctx.db,
+    table: ctx.table,
+    profilingOn: false,
+    profilingSupported: () => Promise.resolve(false),
+  })
   const out: SaveRowsResponse = {
-    message: { type, text: parts.join('\n'), sql: sqlQuery },
+    message: { type, text: parts.join('\n'), sql: sqlQuery, card },
     sqlQuery,
     next: backTarget(),
   }

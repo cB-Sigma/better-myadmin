@@ -16,6 +16,8 @@ import type { Context } from 'hono'
 import { MysqlError } from '../http/errors.ts'
 import { withMeta } from '../metadata/service.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
+import { getMessageCard } from '../query/message.ts'
+import { isProfilingSupported } from '../query/profiling.ts'
 import type { ServerEnv } from '../routes/server.ts'
 import { mysqlDocuUrl, withAdmin } from '../server-admin/context.ts'
 import { PasswordUpdateFailure, type PrivStorage, Privileges } from './privileges.ts'
@@ -306,6 +308,26 @@ export async function validateUsername(p: Privileges): Promise<ValidateUsernameR
  * copy part V, reload — and the AJAX extra data.
  */
 export async function privilegesAction(p: Privileges): Promise<PrivActionResponse> {
+  const r = await privilegesActionInner(p)
+  // Generator::getMessage($message, $sqlQuery): the query card (Edit inline, Edit, Create PHP
+  // code) under the message, at server level
+  const { ctx } = p
+  const session = ctx.session
+  const card = await getMessageCard(r.sql, {
+    cfg: ctx.cfg,
+    showAsPhp: null,
+    db: '',
+    table: '',
+    profilingOn: session?.profiling === true,
+    profilingSupported: () =>
+      session === undefined
+        ? Promise.resolve(false)
+        : isProfilingSupported(ctx.conn, session, ctx.serverIndex),
+  })
+  return { ...r, card }
+}
+
+async function privilegesActionInner(p: Privileges): Promise<PrivActionResponse> {
   const t = (s: string) => p.ctx.tr.gettext(s)
   const post = p.post
   const gate = await privilegesGate(p)
@@ -320,6 +342,7 @@ export async function privilegesAction(p: Privileges): Promise<PrivActionRespons
     account: null,
     addUserError: false,
     reload: false,
+    card: null,
     ...extra,
   })
   if (gate.noPrivileges) return answer({ type: 'error', text: t('No Privileges') })

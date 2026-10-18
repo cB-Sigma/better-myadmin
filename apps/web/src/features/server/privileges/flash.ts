@@ -1,4 +1,4 @@
-import type { PrivMessage } from '@bettermyadmin/contracts'
+import type { PrivMessage, SqlCard } from '@bettermyadmin/contracts'
 
 /**
  * The message of the last privileges action, shown once by the page the SPA opens next
@@ -7,6 +7,8 @@ import type { PrivMessage } from '@bettermyadmin/contracts'
 export interface Flash {
   message: PrivMessage
   sql: string
+  /** the query card under the message (Edit inline / Edit / Create PHP code) */
+  card?: SqlCard | null
 }
 
 let pending: Flash | null = null

@@ -16,6 +16,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { type ReactNode, useState } from 'react'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { PageMessages } from '../sql/page-card'
 import { runQuery } from '../sql/runner'
 import { DbModal, Messages, errorMessage } from './common'
 
@@ -175,10 +176,11 @@ export function ProgramListPage({
   }
   return (
     <div className="my-3">
+      {/* the response of the action (Generator::getMessage, with its query card) comes first */}
+      <PageMessages server={server} messages={messages} scope={{ db, table }} />
       <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
         <IconText icon={icon} text={title} /> <MySqlDocLink link={docLink} />
       </h2>
-      <Messages messages={messages} />
       {before}
       {disabledNotice !== undefined ? (
         // events/index.twig: scheduler_state DISABLED shows the notice only
