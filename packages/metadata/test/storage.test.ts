@@ -136,77 +136,130 @@ function serverFrom(setup: Scenario['setup']): StorageServer {
 
 const UPGRADE = 'column_info needs the 4.3 upgrade'
 
-describe('ConfigStorage (Relation.php) against phpMyAdmin run on a real server', () => {
-  for (const sc of fixture.scenarios) {
-    it(sc.name, async () => {
-      const { conn, tablesAfter } = emulate(sc)
-      const server = serverFrom(sc.setup)
-      const storage = new ConfigStorage(conn, server)
-      for (const st of sc.steps) {
-        const before = conn.log.length
-        let result: unknown = null
-        let message: string | null = null
-        switch (st.step) {
-          case 'init':
-            await storage.initRelationParamsCache(sc.setup.currentDb ?? '')
-            break
-          case 'params':
-            result = relationParametersToArray(await storage.getRelationParameters())
-            break
-          case 'flags':
-            result = {
-              arePmadbTablesDefined: storage.arePmadbTablesDefined(),
-              arePmadbTablesAllDisabled: storage.arePmadbTablesAllDisabled(),
-              configurationStorageDbName: storage.getConfigurationStorageDbName(),
-            }
-            break
-          case 'fix_pmadb':
-            message =
-              (await storage.fixPmaTables(String((await storage.getRelationParameters()).db ?? '')))?.text ??
-              null
-            break
-          case 'fixall_pmadb':
-            message = (await storage.fixPmaTables(sc.setup.currentDb ?? ''))?.text ?? null
-            break
-          case 'create_pmadb': {
-            const name = storage.getConfigurationStorageDbName()
-            const msg = await storage.createPmaDatabase(name)
-            if (msg === null) message = (await storage.fixPmaTables(name))?.text ?? null
-            else message = msg.text
-            break
-          }
+async function runScenario(sc: Scenario) {
+  const { conn, tablesAfter } = emulate(sc)
+  const server = serverFrom(sc.setup)
+  const storage = new ConfigStorage(conn, server)
+  for (const st of sc.steps) {
+    const before = conn.log.length
+    let result: unknown = null
+    let message: string | null = null
+    switch (st.step) {
+      case 'init':
+        await storage.initRelationParamsCache(sc.setup.currentDb ?? '')
+        break
+      case 'params':
+        result = relationParametersToArray(await storage.getRelationParameters())
+        break
+      case 'flags':
+        result = {
+          arePmadbTablesDefined: storage.arePmadbTablesDefined(),
+          arePmadbTablesAllDisabled: storage.arePmadbTablesAllDisabled(),
+          configurationStorageDbName: storage.getConfigurationStorageDbName(),
         }
-        let expected = st.statements.map(({ kind, sql }) => ({ kind, sql }))
-        let expectedResult = st.result
-        if (sc.name === UPGRADE && st.step === 'init') {
-          // phpMyAdmin leaves its control link out of sync after the upgrade multi-query, so its
-          // `pma__users` probe fails and `pma__usergroups` is never probed; we consume all results
-          // (docs/reference/parity-exceptions.md)
-          const i = expected.findIndex((e) => e.sql === 'SELECT NULL FROM `pma__users` LIMIT 0')
-          expected = [
-            ...expected.slice(0, i + 1),
-            { kind: 'query', sql: 'SELECT NULL FROM `pma__usergroups` LIMIT 0' },
-            ...expected.slice(i + 1),
-          ]
-        }
-        if (sc.name === UPGRADE && st.step === 'params' && expectedResult !== null) {
-          const all = fixture.scenarios.find((s) => s.name === 'all tables, auto-detected names')
-          expectedResult = all?.steps.find((s) => s.step === 'params')?.result ?? null
-        }
-        expect(conn.log.slice(before), `${st.step} statements`).toEqual(expected)
-        if (expectedResult !== null) {
-          expect(result as RelationParametersArray, `${st.step} result`).toEqual({
-            ...expectedResult,
-            user: expectedResult.user,
-          })
-        }
-        expect(message, `${st.step} message`).toBe(st.message)
-        const pick = Object.fromEntries(
-          Object.keys(st.selectedServer).map((k) => [k, (server as Record<string, unknown>)[k]]),
-        )
-        expect(pick, `${st.step} selectedServer`).toEqual(st.selectedServer)
+        break
+      case 'fix_pmadb':
+        message =
+          (await storage.fixPmaTables(String((await storage.getRelationParameters()).db ?? '')))?.text ?? null
+        break
+      case 'fixall_pmadb':
+        message = (await storage.fixPmaTables(sc.setup.currentDb ?? ''))?.text ?? null
+        break
+      case 'create_pmadb': {
+        const name = storage.getConfigurationStorageDbName()
+        const msg = await storage.createPmaDatabase(name)
+        if (msg === null) message = (await storage.fixPmaTables(name))?.text ?? null
+        else message = msg.text
+        break
       }
-      expect(tablesAfter()).toEqual(sc.tablesAfter)
-    })
+    }
+    let expected = st.statements.map(({ kind, sql }) => ({ kind, sql }))
+    let expectedResult = st.result
+    if (sc.name === UPGRADE && st.step === 'init') {
+      // phpMyAdmin leaves its control link out of sync after the upgrade multi-query, so its
+      // `pma__users` probe fails and `pma__usergroups` is never probed; we consume all results
+      // (docs/reference/parity-exceptions.md)
+      const i = expected.findIndex((e) => e.sql === 'SELECT NULL FROM `pma__users` LIMIT 0')
+      expected = [
+        ...expected.slice(0, i + 1),
+        { kind: 'query', sql: 'SELECT NULL FROM `pma__usergroups` LIMIT 0' },
+        ...expected.slice(i + 1),
+      ]
+    }
+    if (sc.name === UPGRADE && st.step === 'params' && expectedResult !== null) {
+      const all = fixture.scenarios.find((s) => s.name === 'all tables, auto-detected names')
+      expectedResult = all?.steps.find((s) => s.step === 'params')?.result ?? null
+    }
+    expect(conn.log.slice(before), `${st.step} statements`).toEqual(expected)
+    if (expectedResult !== null) {
+      expect(result as RelationParametersArray, `${st.step} result`).toEqual({
+        ...expectedResult,
+        user: expectedResult.user,
+      })
+    }
+    expect(message, `${st.step} message`).toBe(st.message)
+    const pick = Object.fromEntries(
+      Object.keys(st.selectedServer).map((k) => [k, (server as Record<string, unknown>)[k]]),
+    )
+    expect(pick, `${st.step} selectedServer`).toEqual(st.selectedServer)
   }
+  expect(tablesAfter()).toEqual(sc.tablesAfter)
+}
+
+describe('ConfigStorage (Relation.php) against phpMyAdmin run on a real server', () => {
+  for (const sc of fixture.scenarios) it(sc.name, () => runScenario(sc))
+})
+
+/** The checklist behaviours of docs/features/08 these golden scenarios prove. */
+describe('ConfigStorage behaviours (golden scenarios)', () => {
+  const run =
+    (...names: string[]) =>
+    async () => {
+      for (const name of names) {
+        const sc = fixture.scenarios.find((x) => x.name === name)
+        expect(sc, name).toBeDefined()
+        await runScenario(sc!)
+      }
+    }
+  it(
+    'probe order: the configured pmadb (or phpmyadmin), then the current database [p08-0c056a]',
+    run(
+      'no pmadb configured, nothing found',
+      'pmadb configured but missing',
+      'all tables, auto-detected names',
+      'tables in the current database are picked up (ZeroConf)',
+    ),
+  )
+  it(
+    "table directives: '' auto-detected, false never probed, a string is the name [p08-759df7]",
+    run(
+      'all tables, auto-detected names',
+      'all tables, explicit names',
+      'custom table name',
+      'features disabled with false',
+      'all features disabled',
+    ),
+  )
+  it(
+    'each table probed with SELECT NULL … LIMIT 0; a missing or unreadable table disables only its features [p08-ac345c] [p08-d5ec83]',
+    run('subset of tables, auto-detected', 'control user cannot read one table'),
+  )
+  it('mimework needs the 4.3 column_info columns: upgraded silently [p08-5b639b]', run(UPGRADE))
+  it(
+    '/check-relations: create phpmyadmin, create in the current database or create the missing tables [p08-19523b]',
+    run(
+      'create_pmadb creates the database and the tables',
+      'create_pmadb without privileges',
+      'fixall_pmadb creates the storage in the current database',
+      'fix_pmadb creates the missing tables (explicit names)',
+    ),
+  )
+  it(
+    'creating the tables: create_tables.sql with the configured names, only the missing ones, disabled ones skipped [p08-c68812]',
+    run(
+      'fix_pmadb creates the missing tables (explicit names)',
+      'fix_pmadb with disabled tables skips them',
+      'fixall_pmadb creates the storage in the current database',
+    ),
+  )
 })

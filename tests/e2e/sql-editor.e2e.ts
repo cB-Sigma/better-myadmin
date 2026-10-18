@@ -4,8 +4,8 @@ import { formatSql } from '../../packages/sql-lexer/src/index.ts'
 
 const DB = 'm1sql_e2e'
 const ROOT = {
-  host: '127.0.0.1',
-  port: 3306,
+  host: process.env.BMA_TEST_HOST ?? '127.0.0.1',
+  port: Number(process.env.BMA_TEST_PORT ?? 3306),
   user: 'root',
   password: process.env.BMA_TEST_PASSWORD ?? 'root',
 }
@@ -48,7 +48,9 @@ test.describe('SQL tab', () => {
     await login(page)
   })
 
-  test('table scope: legend, DefaultQueryTable, columns and snippets', async ({ page }) => {
+  test('table scope: legend, DefaultQueryTable, columns and snippets [p09-0cd66f] [p09-625a43] [p09-50c42a] [p09-74590b]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/t/t/sql`)
     await expect(page.getByText(`Run SQL query/queries on table ${DB}.t`)).toBeVisible()
     await expect(editor(page)).toHaveText('SELECT * FROM `t` WHERE 1')
@@ -69,7 +71,7 @@ test.describe('SQL tab', () => {
     await expect(editor(page)).toHaveText('`id`, `qty`')
   })
 
-  test('Ctrl+Enter and Alt+Enter run the query; the box collapses unless retained [p02-390d7c]', async ({
+  test('Ctrl+Enter and Alt+Enter run the query; the box collapses unless retained [p02-390d7c] [p09-5a7b7c] [p09-ba7ff7] [p09-550737]', async ({
     page,
   }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
@@ -93,7 +95,9 @@ test.describe('SQL tab', () => {
     await expect(page.getByText('Showing as PHP code')).toBeVisible()
   })
 
-  test('empty query alert and confirmation of destructive statements', async ({ page }) => {
+  test('empty query alert and confirmation of destructive statements [p09-331963] [p09-e295f8]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     const dialogs: string[] = []
     page.on('dialog', (d) => {
@@ -110,7 +114,9 @@ test.describe('SQL tab', () => {
     await expect(page.locator('.result_query')).toHaveCount(0)
   })
 
-  test('autocomplete with Ctrl+Space lists the current database columns', async ({ page }) => {
+  test('autocomplete with Ctrl+Space lists the current database columns [p09-ba7ff7] [p09-d9ff25]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/t/t/sql`)
     await setQuery(page, 'SELECT na')
     await page.keyboard.press('Control+Space')
@@ -119,7 +125,7 @@ test.describe('SQL tab', () => {
     await expect(option).toContainText('varchar(20)')
   })
 
-  test('lint gutter marks syntax errors (worker, no round trip)', async ({ page }) => {
+  test('lint gutter marks syntax errors (worker, no round trip) [p09-d82c3f]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     const lintRequests: string[] = []
     page.on('request', (r) => {
@@ -130,7 +136,9 @@ test.describe('SQL tab', () => {
     expect(lintRequests).toEqual([])
   })
 
-  test('Simulate query appears for UPDATE and shows the matched rows [p02-930d5c]', async ({ page }) => {
+  test('Simulate query appears for UPDATE and shows the matched rows [p02-930d5c] [p09-c33691]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT 1')
     await expect(page.locator('#simulate_dml')).toHaveCount(0)
@@ -146,7 +154,9 @@ test.describe('SQL tab', () => {
     await expect(modal).toBeHidden()
   })
 
-  test('Format, bind parameters and the auto-saved query [p02-390d7c]', async ({ page }) => {
+  test('Format, bind parameters and the auto-saved query [p02-390d7c] [p09-58f383] [p09-d68993] [p09-ec9fe2]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await expect(page.locator('#saved')).toBeDisabled()
     const q = 'select id,name from t where id = :id or name = :name'
@@ -166,7 +176,9 @@ test.describe('SQL tab', () => {
     await expect(editor(page)).toContainText(':name')
   })
 
-  test('card links: Edit inline, Explain SQL, Edit [p02-88edc9 p02-9128e7 p02-aa2107]', async ({ page }) => {
+  test('card links: Edit inline, Explain SQL, Edit [p02-88edc9 p02-9128e7 p02-aa2107] [p09-0c49c5] [p09-ba7ff7] [p09-1fc182]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT * FROM t WHERE id = 1')
     await page.keyboard.press('Control+Enter')
@@ -190,7 +202,9 @@ test.describe('SQL tab', () => {
     await expect(editor(page)).toHaveText('EXPLAIN SELECT * FROM t WHERE id > 1;')
   })
 
-  test('profiling switch re-runs the query with the profile [p02-2a54e4]', async ({ page }) => {
+  test('profiling switch re-runs the query with the profile [p02-2a54e4] [p09-280f8a] [p09-33158a]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT * FROM t WHERE qty > 1')
     await page.keyboard.press('Control+Enter')
@@ -219,7 +233,7 @@ test.describe('console', () => {
     })
   })
 
-  test('runs queries, keeps them as messages, keys and options', async ({ page }) => {
+  test('runs queries, keeps them as messages, keys and options [p09-c24913]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await page.locator('.console_switch').click()
     const messages = page.getByTestId('console-messages')
@@ -255,6 +269,49 @@ test.describe('console', () => {
     await expect(page.getByTestId('console-messages').locator('.welcome')).toHaveText(
       'Press Enter to execute query',
     )
+  })
+
+  test('history entries: Requery (confirm), Edit, Explain, Profiling, Bookmark, select styling, Queried time [p09-f102f9]', async ({
+    page,
+  }) => {
+    await page.goto(`/s/1/db/${DB}/sql`)
+    await page.locator('.console_switch').click()
+    const messages = page.getByTestId('console-messages')
+    const input = page.locator('.console_query_input .cm-content')
+    await input.click()
+    await page.keyboard.insertText('SELECT id FROM t WHERE id = 3')
+    await page.keyboard.press('Control+Enter')
+    const last = messages.locator('.message[data-state="successed"]').last()
+    await expect(last).toContainText('SELECT id FROM t WHERE id = 3')
+    const entry = messages.locator(`.message[data-msgid="${await last.getAttribute('data-msgid')}"]`)
+    await expect(entry).toHaveClass(/\bselect\b/)
+    // the actions float above a collapsed entry on hover; Expand keeps them in the entry
+    await entry.locator('.action_content button', { hasText: 'Expand' }).dispatchEvent('click')
+    const actions = entry.locator('.action_content')
+    for (const name of ['Collapse', 'Requery', 'Edit', 'Explain', 'Profiling', 'Bookmark']) {
+      await expect(actions.getByRole('button', { name, exact: true })).toBeVisible()
+    }
+    await expect(actions.locator('.query_time')).toContainText('Queried time')
+    await expect(actions.locator('.targetdb')).toContainText(DB)
+    // Edit puts the query back into the console input
+    await actions.getByRole('button', { name: 'Edit', exact: true }).click()
+    await expect(input).toHaveText('SELECT id FROM t WHERE id = 3;')
+    // Explain runs EXPLAIN <query>
+    await actions.getByRole('button', { name: 'Explain', exact: true }).click()
+    await expect(messages.locator('.message[data-state="successed"]').last()).toContainText(
+      'EXPLAIN SELECT id FROM t WHERE id = 3',
+    )
+    // Requery asks first; dismissed, nothing runs
+    const before = await messages.locator('.message:not(.welcome)').count()
+    const asked = new Promise<string>((resolve) => {
+      page.once('dialog', (d) => {
+        resolve(d.message())
+        void d.dismiss()
+      })
+    })
+    await actions.getByRole('button', { name: 'Requery', exact: true }).click()
+    expect(await asked).toContain('SELECT id FROM t WHERE id = 3')
+    await expect(messages.locator('.message:not(.welcome)')).toHaveCount(before)
   })
 
   test('Ctrl+K toggles twice outside fields and once inside, like phpMyAdmin (Q45)', async ({ page }) => {

@@ -7,7 +7,7 @@ const docs = (sql: string) =>
     .map((s) => [s.text, s.doc?.[0]])
 
 describe('highlightSql documentation links (sql-highlight.ts)', () => {
-  it('prefers three, then two, then one keyword', () => {
+  it('prefers three, then two, then one keyword [p09-dc4450]', () => {
     expect(docs('SHOW CREATE TABLE t')).toEqual([
       ['SHOW', 'show-create-table'],
       ['CREATE', 'show-create-table'],
@@ -17,7 +17,7 @@ describe('highlightSql documentation links (sql-highlight.ts)', () => {
     expect(docs('select * from t')).toEqual([['select', 'select']])
   })
 
-  it('links builtins (column types)', () => {
+  it('links builtins (column types) [p09-dc4450]', () => {
     expect(
       docs('CREATE TABLE t (a INT, b VARCHAR(3))').filter(([t]) => t === 'INT' || t === 'VARCHAR'),
     ).toEqual([

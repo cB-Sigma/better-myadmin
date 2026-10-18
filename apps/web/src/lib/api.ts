@@ -418,6 +418,13 @@ export const api = {
   passwordForm: (server: number) => call<PasswordForm>('GET', `/servers/${server}/account/password`),
   changePassword: (server: number, req: ChangePasswordRequest) =>
     call<ChangePasswordResponse>('POST', `/servers/${server}/account/password`, req),
+  /** UserPreferencesHandler::setUserValue: one preference (`default` removes it again) */
+  prefsOption: (server: number, path: string, value: unknown, def?: unknown) =>
+    call<{ success: boolean }>('POST', `/servers/${server}/prefs/option`, {
+      path,
+      value,
+      ...(def !== undefined ? { default: def } : {}),
+    }),
   /** ThemeSetController's ThemeDefault in the user preferences */
   themeSet: (server: number, theme: string) =>
     call<{ ok: boolean }>('POST', `/servers/${server}/themes/set`, { theme }),

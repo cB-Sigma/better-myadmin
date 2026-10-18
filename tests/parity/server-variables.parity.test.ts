@@ -71,7 +71,7 @@ function fromJson(r: ServerVariablesResponse) {
 }
 
 describe.skipIf(!pmaReachable)('parity: server variables', () => {
-  it('lists every variable with formatted value, session value and documentation link', async () => {
+  it('lists every variable with formatted value, session value and documentation link [p06-162a8d]', async () => {
     const r = await both(
       h,
       () => h.pma.getJson('/server/variables'),
@@ -92,7 +92,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
     expect(json.isSuperUser).toBe(true)
   })
 
-  it('reads a variable for the inline editor', async () => {
+  it('reads a variable for the inline editor [p06-d139b2]', async () => {
     const r = await both(
       h,
       () => h.pma.getJson('/server/variables/get/max_connect_errors'),
@@ -109,7 +109,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
     ['string variable, quoted', 'sql_mode', ''],
   ]
   for (const [name, variable, value0] of SETS) {
-    it(`SET GLOBAL: ${name}`, async () => {
+    it(`SET GLOBAL: ${name} [p06-d139b2]`, async () => {
       let value = value0
       if (variable === 'sql_mode') {
         // set it to its current value: a quoted string, no effect on the server
@@ -131,7 +131,7 @@ describe.skipIf(!pmaReachable)('parity: server variables', () => {
     })
   }
 
-  it('SET GLOBAL of a read-only variable reports the MySQL error', async () => {
+  it('SET GLOBAL of a read-only variable reports the MySQL error [p06-d139b2]', async () => {
     const r = await both(
       h,
       () => h.pma.postJson('/server/variables/set/version', { varValue: 'x' }),

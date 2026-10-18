@@ -153,6 +153,8 @@ export type HomeWarning = z.infer<typeof HomeWarning>
 export const HomeResponse = z.object({
   /** `Select::render` in the General settings card (ServerDefault = 0, or several servers + NavigationDisplayServers) */
   hasServerSelection: z.boolean(),
+  /** DisplayServersList: the selection is a list of links instead of a select */
+  displayServersList: z.boolean(),
   /** auth_type !== 'config' && ShowChgPassword */
   hasChangePasswordLink: z.boolean(),
   collation: z.object({

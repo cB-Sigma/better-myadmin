@@ -67,7 +67,7 @@ async function page(pmaRoute: string, bmaPath: string, params: Record<string, st
 const pills = (html: Node) => $$(html, 'ul.nav-pills a').map((a) => [text(a), hasClass(a, 'active')])
 
 describe.skipIf(!pmaReachable)('parity: status pages', () => {
-  it('Server overview (/server/status)', async () => {
+  it('Server overview (/server/status) [p06-bc85e3] [p06-770074] [p06-8b5ab5] [p06-48ba20]', async () => {
     const r = await page('/server/status', '/status')
     const cmp = diff(h, r.pmaLog, r.bmaLog, [], {})
     // SELECT UNIX_TIMESTAMP() - {Uptime}: the uptime moved on by a second or two
@@ -226,7 +226,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     ],
   ]
   for (const [name, params, qs] of PROCESS_CASES) {
-    it(`Processes: ${name}`, async () => {
+    it(`Processes: ${name} [p06-9768f8] [p06-0b7c03] [p06-5727d3]`, async () => {
       const r = await page('/server/status/processes', `/status/processes${qs}`, params, true)
       const cmp = diff(h, r.pmaLog, r.bmaLog)
       expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
@@ -251,7 +251,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     })
   }
 
-  it('Processes: the auto-refresh request (always SHOW FULL PROCESSLIST, quirk reproduced)', async () => {
+  it('Processes: the auto-refresh request (always SHOW FULL PROCESSLIST, quirk reproduced) [p06-5727d3]', async () => {
     const r = await both(
       h,
       () =>
@@ -269,7 +269,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     expect(cmp.bma).toContain('SHOW FULL PROCESSLIST')
   })
 
-  it('Kill: KILL {id}; removes the process, both messages', async () => {
+  it('Kill: KILL {id}; removes the process, both messages [p06-9768f8]', async () => {
     const a = await sleeperConnection()
     const b = await sleeperConnection()
     try {
@@ -306,7 +306,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     }
   })
 
-  it('Query statistics (/server/status/queries)', async () => {
+  it('Query statistics (/server/status/queries) [p06-cac377]', async () => {
     const r = await page('/server/status/queries', '/status/queries')
     const cmp = diff(h, r.pmaLog, r.bmaLog)
     expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
@@ -358,7 +358,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
       }
     })
 
-  it('All status variables (/server/status/variables)', async () => {
+  it('All status variables (/server/status/variables) [p06-65e09f] [p06-fa0c8f]', async () => {
     const r = await page('/server/status/variables', '/status/variables')
     const cmp = diff(h, r.pmaLog, r.bmaLog)
     expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
@@ -407,7 +407,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     }
   })
 
-  it('FLUSH TABLES from the related links (quirk Q15 fixed: the action reaches the page)', async () => {
+  it('FLUSH TABLES from the related links (quirk Q15 fixed: the action reaches the page) [p06-90f755]', async () => {
     const r = await both(
       h,
       () => h.pma.postJson('/server/status/variables', { flush: 'TABLES' }),
@@ -419,7 +419,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     expect((r.b.json as unknown as StatusVariables).flushed).toBe('FLUSH TABLES;')
   })
 
-  it('a flush value outside the list is ignored', async () => {
+  it('a flush value outside the list is ignored [p06-90f755]', async () => {
     const r = await both(
       h,
       () => h.pma.postJson('/server/status/variables', { flush: 'PRIVILEGES' }),
@@ -430,7 +430,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     expect(cmp.bma.some((s) => s.startsWith('FLUSH'))).toBe(false)
   })
 
-  it('Advisor (/server/status/advisor)', async () => {
+  it('Advisor (/server/status/advisor) [p06-44265d]', async () => {
     const r = await page('/server/status/advisor', '/status/advisor')
     const cmp = diff(h, r.pmaLog, r.bmaLog)
     expect(cmp.problems, cmp.problems.join('\n')).toEqual([])

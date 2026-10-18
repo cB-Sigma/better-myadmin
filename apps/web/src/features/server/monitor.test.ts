@@ -45,7 +45,7 @@ function memoryStorage(): StorageLike & { data: Map<string, string> } {
 }
 
 describe('monitor grid', () => {
-  it('default grid: three charts, plus CPU / memory / swap for a local server on Linux', () => {
+  it('default grid: three charts, plus CPU / memory / swap for a local server on Linux [p06-a4313a]', () => {
     expect(Object.keys(defaultChartGrid('Linux', false, t))).toEqual(['c0', 'c1', 'c2'])
     expect(Object.keys(defaultChartGrid('Linux', true, t))).toEqual(['c0', 'c1', 'c2', 'c3', 'c4', 'c5'])
     expect(Object.keys(defaultChartGrid('Darwin', true, t))).toEqual(['c0', 'c1', 'c2'])
@@ -77,14 +77,14 @@ describe('monitor grid', () => {
     })
   })
 
-  it('auto max points from the chart width', () => {
+  it('auto max points from the chart width [p06-a4313a]', () => {
     expect(maxPoints(DEFAULT_SETTINGS, 295)).toBe(21)
     expect(maxPoints({ ...DEFAULT_SETTINGS, gridMaxPoints: 50 }, 295)).toBe(50)
   })
 })
 
 describe('monitor storage (phpMyAdmin keys and format)', () => {
-  it('saves monitorCharts / monitorSettings / monitorVersion and loads them back', () => {
+  it('saves monitorCharts / monitorSettings / monitorVersion and loads them back [p06-94e73a]', () => {
     const st = memoryStorage()
     const grid = orderedCharts(defaultChartGrid('Linux', false, t))
     saveStored(st, grid, DEFAULT_SETTINGS)
@@ -101,7 +101,7 @@ describe('monitor storage (phpMyAdmin keys and format)', () => {
     expect(loadStored(null)).toEqual({ charts: null, settings: null, incompatible: false })
   })
 
-  it('export / import of {monitorCharts, monitorSettings}', () => {
+  it('export / import of {monitorCharts, monitorSettings} [p06-94e73a]', () => {
     const grid = orderedCharts(defaultChartGrid('Linux', false, t))
     const json = exportConfig(grid, DEFAULT_SETTINGS)
     expect(Object.keys(JSON.parse(json))).toEqual(['monitorCharts', 'monitorSettings'])
@@ -110,7 +110,7 @@ describe('monitor storage (phpMyAdmin keys and format)', () => {
     expect(parseImportedConfig('{"monitorSettings":{}}')).toBeNull()
   })
 
-  it('an imported grid rebuildGrid cannot build (strFailedBuildingGrid)', () => {
+  it('an imported grid rebuildGrid cannot build (strFailedBuildingGrid) [p06-94e73a]', () => {
     const grid = orderedCharts(defaultChartGrid('Linux', false, t))
     const ok = parseImportedConfig(exportConfig(grid, DEFAULT_SETTINGS))!
     expect(() => checkImportedGrid(ok)).not.toThrow()
@@ -120,7 +120,7 @@ describe('monitor storage (phpMyAdmin keys and format)', () => {
 })
 
 describe('monitor values', () => {
-  it('differential, negative after a restart, divisor', () => {
+  it('differential, negative after a restart, divisor [p06-ca6abc]', () => {
     const node = { dataPoints: [], display: 'differential' as const, valueDivisor: 1024 }
     expect(nodeValue(node, [{ value: '4096' }], null)).toBeUndefined()
     expect(nodeValue(node, [{ value: '4096' }], [{ value: '2048' }])).toBe(2)
@@ -137,7 +137,7 @@ describe('monitor values', () => {
     expect(transformValue('qcu', [{ value: 25 }, { value: 0 }], null)).toBe(0)
   })
 
-  it('axis kinds and tick labels', () => {
+  it('axis kinds and tick labels [p06-ca6abc]', () => {
     expect(axisKind('System CPU usage', t)).toBe('percent')
     expect(axisKind('System swap', t)).toBe('mib')
     expect(axisKind('Traffic', t)).toBe('kib')
@@ -156,7 +156,7 @@ describe('monitor values', () => {
     expect(yMax('mib', 0, 1234)).toBe(1400)
   })
 
-  it('add-chart series', () => {
+  it('add-chart series [p06-3de1f6]', () => {
     const n = newSeriesNode('Processes', { differential: false, divisor: null, unit: null })
     expect(n).toEqual({ dataPoints: [{ type: 'proc', name: 'Processes' }], display: '' })
     const m = newSeriesNode('Bytes_sent', { differential: true, divisor: '1024', unit: 'KiB' })
@@ -165,7 +165,7 @@ describe('monitor values', () => {
 })
 
 describe('monitor log table', () => {
-  it('time helpers, user_host, sums label', () => {
+  it('time helpers, user_host, sums label [p06-d6900b]', () => {
     expect(timeToSec('01:02:03')).toBe(3723)
     expect(secToTime(100)).toBe('00:01:40')
     expect(userHost('root[root] @ localhost [127.0.0.1]')).toBe('root @ localhost ')
@@ -173,7 +173,7 @@ describe('monitor log table', () => {
     expect(sumLabel('select')).toBe('Select')
   })
 
-  it('WHERE-value grouping of SELECTs', () => {
+  it('WHERE-value grouping of SELECTs [p06-d6900b]', () => {
     expect(groupedQuery('SELECT * FROM t WHERE id=5')).toBe('SELECT * FROM t WHERE id=...')
     expect(groupedQuery("SELECT a FROM t WHERE name='x' AND n=2")).toBe(
       'SELECT a FROM t WHERE name=... AND n=...',
@@ -181,7 +181,7 @@ describe('monitor log table', () => {
     expect(groupedQuery('SELECT COUNT(id) FROM t')).toBe('SELECT  COUNT(...) FROM t')
   })
 
-  it('filter by regexp and group (counts summed into the first row)', () => {
+  it('filter by regexp and group (counts summed into the first row) [p06-d6900b]', () => {
     const cols = ['event_time', 'argument', '#']
     const rows = [
       { event_time: '1', argument: 'SELECT * FROM t WHERE id=1', '#': '2' },
@@ -202,7 +202,7 @@ describe('monitor log table', () => {
     expect(filterLogRows(rows, cols, { text: '(', group: false, slow: false }).invalid).toBe(true)
   })
 
-  it('slow log grouping sums time and row columns', () => {
+  it('slow log grouping sums time and row columns [p06-d6900b]', () => {
     const cols = [
       'start_time',
       'user_host',
@@ -234,7 +234,7 @@ describe('monitor log table', () => {
     expect(out.rows[0]!.count).toBe(2)
   })
 
-  it('profiling: pretty numbers and the 2 % slices', () => {
+  it('profiling: pretty numbers and the 2 % slices [p06-95d2b5]', () => {
     expect(prettyProfilingNum(0.00005)).toBe('50µs')
     expect(prettyProfilingNum(0.05)).toBe('50ms')
     expect(prettyProfilingNum(1.234)).toBe('1.23s')

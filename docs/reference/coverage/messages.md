@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3044/3426 covered (88.8%): 3010 implemented, 4 exception, 30 n/a, 4 planned, 378 missing. [Summary](README.md).
+3046/3426 covered (88.9%): 3012 implemented, 4 exception, 30 n/a, 4 planned, 376 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 292/403 (72.5%) covered, 292/403 implemented
 
@@ -198,9 +198,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 07 export import — 243/293 (82.9%) covered, 243/293 implemented
+## 07 export import — 245/293 (83.6%) covered, 245/293 implemented
 
-50 msgids not used yet.
+48 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -210,7 +210,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportCsv.php` | 4/16 | `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` |
 | `src/Export/OutputHandler.php` | 3/4 | `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
 | `src/Plugins/Import/ImportShp.php` | 3/4 | `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
-| `resources/templates/encoding/kanji_encoding_form.twig` | 2/2 | `Convert to Kana` · `None (None encoding conversion)` |
 | `src/ZipExtension.php` | 2/2 | `Error in ZIP archive:` · `No files found inside ZIP archive!` |
 | `resources/js/drag_drop_import.ts` | 1/4 | `cancel` |
 | `resources/js/export.ts` | 1/9 | `SQL Query` |

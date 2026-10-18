@@ -12,7 +12,7 @@ const tmp = mkdtempSync(join(tmpdir(), 'f01a-dirsrv-'))
 afterAll(() => rmSync(tmp, { recursive: true, force: true }))
 
 describe('server directives', () => {
-  it('CheckConfigurationPermissions: a world-writable configuration file stops every request', async () => {
+  it('CheckConfigurationPermissions: a world-writable configuration file stops every request [p08-56c38b]', async () => {
     const file = join(tmp, 'bettermyadmin.config.json')
     writeFileSync(file, '{}')
     chmodSync(file, 0o666)

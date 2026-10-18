@@ -236,7 +236,7 @@ async function restoreReplica(root: mysql.Connection) {
   await setThreads(root, true, true)
 }
 
-describe.skipIf(!pmaReachable)('parity: replication on the primary', () => {
+describe.skipIf(!pmaReachable)('parity: replication on the primary [p06-3af6a2]', () => {
   it('page: primary card, status table, connected replicas, not-a-replica card', async () => {
     const res = await both(
       p,
@@ -332,7 +332,7 @@ describe.skipIf(!pmaReachable)('parity: replication on the primary', () => {
     ['password, any host', {}],
     ['no password, local host', { pred_password: 'none', pred_hostname: 'localhost', pma_pw: '' }],
   ] as Array<[string, Record<string, string>]>) {
-    it(`add replica user (${name}): CREATE USER, GRANT REPLICATION SLAVE, ALTER USER … REQUIRE NONE`, async () => {
+    it(`add replica user (${name}): CREATE USER, GRANT REPLICATION SLAVE, ALTER USER … REQUIRE NONE [p06-57b49f]`, async () => {
       const res = await both(
         p,
         () => pmaAddUser(userForm(NEW_USERS.pma, extra)),
@@ -393,7 +393,7 @@ describe.skipIf(!pmaReachable)('parity: replication on the primary', () => {
     })
   }
 
-  it('change-primary form on a non-replica, and the AllowArbitraryServer refusal (no statement)', async () => {
+  it('change-primary form on a non-replica, and the AllowArbitraryServer refusal (no statement) [p06-8d7e2c]', async () => {
     const form = await both(
       p,
       () => p.pma.postJson('/server/replication', { replica_configure: '1', replica_clear_screen: '1' }),
@@ -446,7 +446,7 @@ async function liveDatabases(): Promise<string[]> {
   return rows.map((x) => x[0]!)
 }
 
-describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
+describe.skipIf(!replicaReachable)('parity: replication on the replica [p06-3c4d46]', () => {
   afterEach(async () => {
     if (r !== undefined) await setThreads(r.root, true, true)
   })
@@ -614,7 +614,7 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica', () => {
     expect(alertsIn(parse(pageHtml(res.p)), 'replication')).toEqual([])
   })
 
-  it('change primary: binary log position from the primary, STOP, CHANGE REPLICATION SOURCE (not started)', async () => {
+  it('change primary: binary log position from the primary, STOP, CHANGE REPLICATION SOURCE (not started) [p06-8d7e2c]', async () => {
     const h = r!
     const primaryLog = p.log
     const auxUser = SOURCE.user
