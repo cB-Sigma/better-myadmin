@@ -41,6 +41,8 @@ export interface RowState {
   searchLists: { has(list: NavList): boolean }
   /** Client-side fast filter text by owner key (ROOT for the database filter). */
   filters: ReadonlyMap<string, string>
+  /** Owner keys whose list a server search just replaced: not filtered until the next keyup. */
+  unfiltered?: ReadonlySet<string>
 }
 
 /** The children shown under a node, or null when they still have to be requested. */
@@ -89,7 +91,7 @@ export function buildRows(list: NavList, s: RowState): Row[] {
   ): void {
     // a filter only acts while its input is there (a search result may come back without one)
     const text = l.fastFilter !== null ? (s.filters.get(listKey) ?? '') : ''
-    const re = regexOf(text) ?? filter
+    const re = s.unfiltered?.has(listKey) === true ? filter : (regexOf(text) ?? filter)
     // typing in a fast filter hides the page selectors below it
     const noPager = hidePagers || text !== ''
     const inSearch = s.searchLists.has(l)

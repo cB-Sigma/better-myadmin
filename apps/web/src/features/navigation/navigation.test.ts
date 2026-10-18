@@ -305,3 +305,28 @@ describe('legacyRows (ShowDatabasesNavigationAsTree off)', () => {
     expect(legacyRows(rows, 'gone').current).toBeNull()
   })
 })
+
+describe('server search results (FastFilter.swap)', () => {
+  const found = list([node('new', ['New']), node('database', ['tbl_2']), node('database', ['tbl_20'])], {
+    fastFilter: { kind: 'db', aPath: [] },
+  })
+  const s = {
+    expanded: new Set<string>(),
+    loading: new Set<string>(),
+    selected: new Set<string>(),
+    branches: new Map<string, NavList>(),
+    searchLists: new Set<NavList>([found]),
+    filters: new Map([[ROOT, 'tbl_2']]),
+  }
+  const labels = (rows: ReturnType<typeof buildRows>) =>
+    rows.flatMap((r) => (r.type === 'node' ? [r.node.label] : []))
+
+  it('shows the swapped list as sent ("New" included) until the next keyup filters it', () => {
+    expect(labels(buildRows(found, { ...s, unfiltered: new Set([ROOT]) }))).toEqual([
+      'New',
+      'tbl_2',
+      'tbl_20',
+    ])
+    expect(labels(buildRows(found, s))).toEqual(['tbl_2', 'tbl_20'])
+  })
+})

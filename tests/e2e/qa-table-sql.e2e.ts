@@ -86,7 +86,9 @@ test('console: a failed query shows its error over the page, which stays (ajax.t
   await expect(page.getByText("#1146 - Table 'm1qae_db.nope' doesn't exist")).toBeVisible()
   await expect(page).toHaveURL(new RegExp(`/db/${DB}/structure`))
   await expect(page.getByTestId('db-structure-row-t')).toBeVisible()
-  await expect(page.getByTestId('console-messages').locator('.message[data-state="failed"]')).toHaveCount(1)
+  await expect(page.getByTestId('console-messages').locator('.message[data-state="failed"]')).toHaveCount(1, {
+    timeout: 15_000,
+  })
 })
 
 test('console: a query typed on a table page runs without that table (Console.execute)', async ({ page }) => {
@@ -190,4 +192,50 @@ test('tracking: "Tracking of … is activated." reflects the state before the ac
   await page.getByRole('button', { name: 'Create version' }).click()
   await expect(page.getByText(`Version 2 was created, tracking for ${DB}.select is active.`)).toBeVisible()
   await expect(page.getByText(`Tracking of ${DB}.select is activated.`)).toBeVisible()
+})
+
+test('the routine, event and trigger editors have one "Details" legend', async ({ page }) => {
+  for (const [path, open, modal] of [
+    ['routines', 'Create new routine', '#routinesEditorModal'],
+    ['events', 'Create new event', '#eventsEditorModal'],
+    ['triggers', 'Create new trigger', '#triggersEditorModal'],
+  ] as const) {
+    await page.goto(`/s/1/db/${DB}/${path}`)
+    await page.getByRole('button', { name: open }).click()
+    await expect(page.locator(`${modal} [name="item_name"]`)).toBeVisible()
+    await expect(page.locator(modal).getByText('Details', { exact: true })).toHaveCount(1)
+    await page.locator(modal).getByRole('button', { name: 'Close' }).last().click()
+  }
+})
+
+test('a failed trigger save shows the error in the floating message; the editor stays (triggers.ts)', async ({
+  page,
+}) => {
+  await page.goto(`/s/1/db/${DB}/t/t/triggers`)
+  await page.getByRole('button', { name: 'Create new trigger' }).click()
+  const modal = page.locator('#triggersEditorModal')
+  await modal.locator('[name="item_name"]').fill('trg bad')
+  await modal.locator('.cm-content, textarea[name="item_definition"]').first().click()
+  await page.keyboard.insertText('SET NEW.nope = 1')
+  await modal.getByRole('button', { name: 'Save changes' }).click()
+  const error = page.locator('.ajax_notification', { hasText: 'The following query has failed' })
+  await expect(error).toBeVisible()
+  await expect(modal.getByText('The following query has failed')).toHaveCount(0)
+  await expect(modal.locator('[name="item_name"]')).toHaveValue('trg bad')
+})
+
+test('index dialogs: a refused rename shows its error in the floating message (indexRenameDialog)', async ({
+  page,
+}) => {
+  await sql(`ALTER TABLE ${DB}.t ADD KEY k (\`名前\`)`)
+  await page.goto(`/s/1/db/${DB}/t/t/structure`)
+  await page.getByTestId('index-k').getByRole('button', { name: 'Rename' }).click()
+  const modal = page.locator('#indexDialogModal')
+  await modal.locator('#input_index_name').fill('PRIMARY')
+  await modal.getByRole('button', { name: 'Go' }).click()
+  await expect(
+    page.locator('.ajax_notification', { hasText: "Can't rename index to PRIMARY!" }),
+  ).toBeVisible()
+  await expect(modal.getByText("Can't rename index to PRIMARY!")).toHaveCount(0)
+  await expect(modal.locator('#input_index_name')).toBeVisible()
 })

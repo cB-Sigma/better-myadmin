@@ -62,9 +62,11 @@ test('create table: the Index selects open the Add index dialogs (indexes.ts)', 
   await expect(modal.locator('#advance_index_creator legend')).toHaveText('UNIQUE')
   await modal.locator('#composite_index').check()
   await expect(modal.locator('#composite_index_list')).toContainText('Composite with:')
-  // no index picked: "Missing value in the form!"
+  // no index picked: "Missing value in the form!" in the floating message (indexes.ts)
   await modal.locator('#addIndexModalGoButton').click()
-  await expect(modal).toContainText('Missing value in the form!')
+  const empty = page.locator('.ajax_notification', { hasText: 'Missing value in the form!' })
+  await expect(empty).toBeVisible()
+  await empty.click()
   await modal.locator('#composite_index_0').check()
   await modal.locator('#addIndexModalGoButton').click()
   await expect(modal.locator('select[name="index[columns][names][]"]')).toHaveCount(2)

@@ -1,5 +1,12 @@
 import type { DdlResponse, IndexFormResponse } from '@bettermyadmin/contracts'
-import { Button, Hint, MessageBox, Modal, MySqlDocLink, PreviewSqlDialog } from '@bettermyadmin/ui'
+import {
+  Button,
+  Hint,
+  Modal,
+  MySqlDocLink,
+  PreviewSqlDialog,
+  showMessage,
+} from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { GripVertical } from 'lucide-react'
 import { type ChangeEvent, useEffect, useRef, useState } from 'react'
@@ -80,7 +87,6 @@ export function IndexEditorForm({
   }, [])
   const [advanced, setAdvanced] = useState(form.sliders === 'open')
   const [preview, setPreview] = useState<string | null>(null)
-  const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   useEffect(() => setIndex(form.index), [form])
 
   // checkIndexName: PRIMARY forces the name; a non-primary named PRIMARY is cleared
@@ -103,13 +109,13 @@ export function IndexEditorForm({
   }
 
   const submit = async (dryRun: boolean) => {
-    setError(null)
     try {
       const r = await api.saveIndex(scope, { oldIndex: form.oldIndex, index, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
-      setError(errorMessage(e))
+      // indexEditorDialog / indexRenameDialog: ajaxShowMessage(data.error, false), the dialog stays
+      showMessage(errorMessage(e).text, false, 'error')
     }
   }
 
@@ -384,7 +390,6 @@ export function IndexEditorForm({
           </Button>
         </div>
       )}
-      {error !== null && <MessageBox {...error} flush className="mt-2" />}
       {actions === undefined && targets === undefined && (
         <div className="mt-3 flex justify-end gap-2">
           <Button type="submit" variant="primary">
@@ -470,17 +475,16 @@ export function RenameIndexDialog({
 }: { scope: TableRef; index: string | null; onClose: () => void; onDone: (r: DdlResponse) => void }) {
   const [name, setName] = useState(initialName(index))
   const [preview, setPreview] = useState<string | null>(null)
-  const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   useEffect(() => setName(initialName(index)), [index])
   const submit = async (dryRun: boolean) => {
     if (index === null) return
-    setError(null)
     try {
       const r = await api.renameIndex(scope, { oldIndex: index, name, dryRun })
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
-      setError(errorMessage(e))
+      // indexEditorDialog / indexRenameDialog: ajaxShowMessage(data.error, false), the dialog stays
+      showMessage(errorMessage(e).text, false, 'error')
     }
   }
   return (
@@ -518,11 +522,6 @@ export function RenameIndexDialog({
           onChange={(e) => setName(e.target.value)}
         />
       </form>
-      {error !== null && (
-        <div className="mt-2 text-sm text-error" role="alert">
-          {error.text}
-        </div>
-      )}
       <PreviewSqlDialog
         highlight
         sql={preview}

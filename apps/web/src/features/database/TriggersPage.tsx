@@ -1,5 +1,5 @@
 import type { SqlMessage, TriggerEditorData } from '@bettermyadmin/contracts'
-import { Button, Input, MySqlDocLink, NativeSelect, Panel, PanelBody } from '@bettermyadmin/ui'
+import { Button, Input, MySqlDocLink, NativeSelect, Panel, PanelBody, showMessage } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
@@ -146,15 +146,16 @@ function TriggerEditor({
   onSave: (body: TriggerEditorData) => Promise<SqlMessage[] | null>
 }) {
   const [tg, setTg] = useState(initial)
-  const [errors, setErrors] = useState<SqlMessage[]>([])
   const set = (p: Partial<TriggerEditorData>) => setTg({ ...tg, ...p })
   const save = async () => {
     if (tg.name === '' || tg.definition === '') {
-      setErrors([{ type: 'error', text: t('Missing value in the form!') }])
+      // validate(): alert(Messages.strFormEmpty)
+      window.alert(t('Missing value in the form!'))
       return
     }
     const r = await onSave(tg)
-    if (r !== null) setErrors(r)
+    // a failed save: ajaxShowMessage(data.error, false), the editor stays open
+    if (r !== null && r.length > 0) showMessage(<Messages messages={r} />, false)
   }
   return (
     <DbModal
@@ -164,7 +165,6 @@ function TriggerEditor({
       onClose={onClose}
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}
     >
-      <Messages messages={errors} />
       {/* editor_form.twig: the fields sit in one card headed "Details" (with its doc link) */}
       <Panel
         title={

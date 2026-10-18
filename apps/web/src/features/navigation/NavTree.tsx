@@ -297,6 +297,7 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
         onFocus={(e) => {
           if (e.currentTarget.value !== '') e.currentTarget.select()
         }}
+        // typing filters on the client only; the server search waits for Enter (Q74)
         onChange={(e) => store.setFilter(ownerKey, e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') void store.search(row.filter, ownerKey, e.currentTarget.value)
