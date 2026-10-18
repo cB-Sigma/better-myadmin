@@ -23,6 +23,7 @@ import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { HighlightedSql } from '../sql/HighlightedSql'
+import { KanjiEncodingForm } from '../sql/KanjiEncodingForm'
 import { AliasDialog } from './AliasDialog'
 import { ExportOutput } from './ExportOutput'
 import { OptionText, PluginOptions } from './PluginOptions'
@@ -1085,6 +1086,15 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
               ))}
             </PanelBody>
           </Panel>
+
+          {page.kanji && (
+            // Encoding::canConvertKanji(): the Japanese locale (encoding/kanji_encoding_form.twig)
+            <Panel title={t('Encoding Conversion:')} className="mb-3" id="kanji_encoding">
+              <PanelBody>
+                <KanjiEncodingForm />
+              </PanelBody>
+            </Panel>
+          )}
 
           <div id="submit">
             <Button

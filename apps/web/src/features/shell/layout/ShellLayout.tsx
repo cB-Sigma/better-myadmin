@@ -23,6 +23,7 @@ import { useScopeParams, useServerScope } from '../scope.ts'
 import { CheckAllRanges } from '../session/CheckAllRanges.tsx'
 import { IdleCheck } from '../session/IdleCheck.tsx'
 import { RequestErrors } from '../session/RequestErrors.tsx'
+import { UserErrors } from '../session/UserErrors.tsx'
 import { useThemeState } from '../theme/theme.ts'
 import { pageTitle } from '../title.ts'
 
@@ -129,6 +130,7 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                         <ServerTabBar server={server} />
                       </div>
                     )}
+                    <UserErrors />
                     <main id="page_content" className="p-3 pb-12">
                       <PageErrorBoundary resetKey={location.pathname}>
                         <Outlet />

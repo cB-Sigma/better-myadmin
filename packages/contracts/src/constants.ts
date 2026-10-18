@@ -4,3 +4,6 @@
 export const CSRF_HEADER = 'X-BMA-Token'
 export const CSRF_COOKIE = 'bma_token'
 export const SESSION_COOKIE = 'bma_sid'
+
+/** Connection user errors of a response (URI-encoded JSON `UserError[]`, common.ts). */
+export const USER_ERRORS_HEADER = 'X-BMA-User-Errors'

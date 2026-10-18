@@ -101,3 +101,27 @@ test('Operations: dropping the database shows "Database `x` has been dropped." o
   await expect(page).toHaveURL(/\/s\/1\/databases/)
   await expect(page.getByText(`Database \`${DROP}\` has been dropped.`)).toBeVisible()
 })
+
+test('Import and Export: the Kanji conversion form only in the Japanese locale', async ({ page }) => {
+  for (const path of [`/s/1/db/${DB}/import`, `/s/1/db/${DB}/export`]) {
+    await page.goto(path)
+    await expect(page.locator('#buttonGo')).toBeVisible()
+    await expect(page.locator('#kanji_encoding')).toHaveCount(0)
+  }
+  // every response writes the language cookie: leave the app first
+  await page.goto('about:blank')
+  await page.goto('/api/i18n?lang=ja')
+  try {
+    for (const path of [`/s/1/db/${DB}/import`, `/s/1/db/${DB}/export`]) {
+      await page.goto(path)
+      await expect(page.locator('html')).toHaveAttribute('lang', 'ja', { timeout: 15000 })
+      const kanji = page.locator('#kanji_encoding')
+      await expect(kanji.locator('input[name="knjenc"]')).toHaveCount(3)
+      await expect(kanji.locator('#kj-none')).toBeChecked()
+      await expect(kanji.locator('#kj-kana')).toHaveAttribute('name', 'xkana')
+    }
+  } finally {
+    await page.goto('about:blank')
+    await page.goto('/api/i18n?lang=en')
+  }
+})
