@@ -22,15 +22,16 @@ import {
   Table,
   useConfirm,
 } from '@bettermyadmin/ui'
-import { MessageLine } from '@bettermyadmin/ui'
+
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { type FormEvent, type ReactNode, useState } from 'react'
+import { type FormEvent, type ReactNode, useEffect, useRef, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
 import { Trans, pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { HighlightedSql } from '../../sql/HighlightedSql'
 import { SqlPage } from '../../sql/SqlPage'
+import { PageMessages } from '../../sql/page-card'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 
 /**
@@ -55,7 +56,14 @@ const TABLE_STATEMENTS: readonly TrackingStatement[] = [
   'DROP TABLE',
 ]
 
-export function TrackingPage({ scope }: { scope: TableRef }) {
+export function TrackingPage({
+  scope,
+  open = null,
+}: {
+  scope: TableRef
+  /** TrackingController's `report` / `snapshot` request with `version`: shown once the page loads */
+  open?: { kind: 'report' | 'snapshot'; version: string } | null
+}) {
   const qc = useQueryClient()
   const key = qk.tblPage(scope, 'tracking')
   const q = useQuery({ queryKey: key, queryFn: () => api.tableTracking(scope) })
@@ -65,6 +73,16 @@ export function TrackingPage({ scope }: { scope: TableRef }) {
   // TrackingController: "Tracking of … is activated." reflects the state before the posted action
   // (none for deactivate_now); null until an action ran
   const [activeShown, setActiveShown] = useState<boolean | null>(null)
+  const actions = useRef<{ report: (v: string) => void; snapshot: (v: string) => void } | null>(null)
+  const loaded = q.data !== undefined
+  const pending = useRef(open)
+  useEffect(() => {
+    const o = pending.current
+    if (!loaded || o === null || actions.current === null) return
+    pending.current = null
+    if (o.kind === 'report') actions.current.report(o.version)
+    else actions.current.snapshot(o.version)
+  }, [loaded])
   if (q.isError) return <ResultMessages messages={[errorMessage(q.error)]} />
   if (q.data === undefined) return null
   const page = q.data
@@ -117,6 +135,7 @@ export function TrackingPage({ scope }: { scope: TableRef }) {
     setView({ kind: 'main' })
     setDump(null)
   }
+  actions.current = { report: (v) => void report(v), snapshot: (v) => void snapshot(v) }
 
   return (
     <div className="flex flex-col gap-3">
@@ -127,7 +146,7 @@ export function TrackingPage({ scope }: { scope: TableRef }) {
       )}
       <ResultMessages messages={messages} />
       {dump !== null && <SqlPage server={scope.server} db="" table="" sql={dump} />}
-      {view.kind === 'snapshot' && <Snapshot data={view.data} close={close} />}
+      {view.kind === 'snapshot' && <Snapshot scope={scope} data={view.data} close={close} />}
       {view.kind === 'report' && (
         <Report data={view.data} close={close} run={(req) => report(view.version, req)} />
       )}
@@ -329,8 +348,18 @@ function CreateVersion({
   page: TrackingPageResponse
   create: (statements: TrackingStatement[]) => Promise<void>
 }) {
+  // the checkboxes of the form (a table's or a view's statements): only those are posted
+  const shown: readonly TrackingStatement[] = [
+    ...(page.type === 'table' ? TABLE_STATEMENTS : VIEW_STATEMENTS),
+    'CREATE INDEX',
+    'DROP INDEX',
+    'INSERT',
+    'UPDATE',
+    'DELETE',
+    'TRUNCATE',
+  ]
   const [checked, setChecked] = useState<TrackingStatement[]>(() =>
-    TRACKING_STATEMENTS.filter((s) => page.defaultStatements.includes(s)),
+    TRACKING_STATEMENTS.filter((s) => shown.includes(s) && page.defaultStatements.includes(s)),
   )
   const box = (s: TrackingStatement) => (
     // the template's checkboxes have no <label>
@@ -584,7 +613,15 @@ function ReportTable({
 }
 
 /** Tracking::getHtmlForSchemaSnapshot */
-function Snapshot({ data, close }: { data: TrackingSnapshotResponse; close: () => void }) {
+function Snapshot({
+  scope,
+  data,
+  close,
+}: {
+  scope: TableRef
+  data: TrackingSnapshotResponse
+  close: () => void
+}) {
   return (
     <div className="flex flex-col gap-3 text-sm">
       <h3 className="text-lg">
@@ -592,15 +629,14 @@ function Snapshot({ data, close }: { data: TrackingSnapshotResponse; close: () =
         <CloseLink close={close} />
       </h3>
       {data.sql !== null && (
-        // Generator::getMessage(…, $sqlQuery): the statements as text (no query links: nothing ran)
-        <div className="result_query overflow-hidden rounded-(--radius) border border-border">
-          <MessageLine
-            type="success"
-            text={t('Version %s snapshot (SQL code)', data.version)}
-            className="border-x-0 border-t-0"
-          />
-          <HighlightedSql sql={data.sql.trim()} className="px-3 py-2" />
-        </div>
+        // Generator::getMessage(new Message(…), $dropCreateStatements): a notice with the query card
+        <PageMessages
+          server={scope.server}
+          messages={[
+            { type: 'notice', text: t('Version %s snapshot (SQL code)', data.version), sql: data.sql.trim() },
+          ]}
+          scope={{ db: scope.db, table: scope.table }}
+        />
       )}
       <Panel title={t('Structure')}>
         <PanelBody>

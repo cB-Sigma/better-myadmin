@@ -70,7 +70,6 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
     setCards(list.map((c, j) => (j === i ? { ...c, ...p } : c)))
   const setCrit = (i: number, p: Partial<QueryColumn['criteria']>) =>
     set(i, { criteria: { ...(list[i] as QueryColumn).criteria, ...p } })
-  const criteriaCount = list.filter((c) => c.useCriteria).length
 
   const update = async () => {
     const used = [...new Set(list.filter((c) => c.table !== '' && c.show).map((c) => c.table))]
@@ -99,6 +98,8 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
       setMessages([errorMessage(e)])
     }
   }
+
+  // multi_table_query.ts: the results' AJAX links are inert (inertResultControl)
   const env: CardEnv = {
     server,
     versionInt: 0,
@@ -223,26 +224,25 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                               </label>
                             </td>
                           </tr>
-                          {criteriaCount > 1 && (
-                            <tr className="logical_operator">
-                              <td>{t('Add as')}</td>
-                              {['AND', 'OR'].map((op) => (
-                                <td key={op}>
-                                  <label>
-                                    <input
-                                      type="radio"
-                                      className="logical_op"
-                                      name={`logical_op[${i}]`}
-                                      value={op}
-                                      checked={c.criteria.logicalOp === op}
-                                      onChange={() => setCrit(i, { logicalOp: op })}
-                                    />{' '}
-                                    {op}
-                                  </label>
-                                </td>
-                              ))}
-                            </tr>
-                          )}
+                          {/* form.twig: always shown (multi_table_query.ts only sets its display) */}
+                          <tr className="logical_operator">
+                            <td>{t('Add as')}</td>
+                            {['AND', 'OR'].map((op) => (
+                              <td key={op}>
+                                <label>
+                                  <input
+                                    type="radio"
+                                    className="logical_op"
+                                    name={`logical_op[${i}]`}
+                                    value={op}
+                                    checked={c.criteria.logicalOp === op}
+                                    onChange={() => setCrit(i, { logicalOp: op })}
+                                  />{' '}
+                                  {op}
+                                </label>
+                              </td>
+                            ))}
+                          </tr>
                           <tr>
                             <td>Column</td>
                             <td colSpan={2}>

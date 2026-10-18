@@ -14,8 +14,8 @@ import {
   useUiSettings,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
-import { useMemo, useRef, useState } from 'react'
+import { useNavigate, useRouter } from '@tanstack/react-router'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ImportProgressLost, api } from '../../lib/api'
 import { t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -126,6 +126,10 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
     start?: number
   }>(null)
   const [result, setResult] = useState<ImportResult | null>(null)
+  // the Import tab again shows the form, as phpMyAdmin's page load does: a link to the current URL
+  // is a router load, not a new history entry
+  const router = useRouter()
+  useEffect(() => router.subscribe('onBeforeLoad', () => setResult(null)), [router])
   const [failure, setFailure] = useState<string | null>(null)
   const formats = page.plugins.map((p) => p.name)
 
@@ -242,11 +246,14 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
         {result.statements?.map((st, i) => (
           <StatementBlock key={`${i}-${st.sig}`} st={st} env={env} />
         ))}
-        <p className="mt-3">
-          <Button type="button" onClick={() => setResult(null)}>
-            {t('Back')}
-          </Button>
-        </p>
+        {/* Generator::getBackUrlHtml: only after a failed statement (the import page without JavaScript) */}
+        {result.back === true && (
+          <p className="mt-3">
+            <Button type="button" onClick={() => setResult(null)}>
+              {t('Back')}
+            </Button>
+          </p>
+        )}
       </div>
     )
   }

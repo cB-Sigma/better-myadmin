@@ -73,6 +73,12 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
   }
   const missing = () => setMessages([{ type: 'error', text: t('Missing value in the form!') }])
 
+  /** the answer of the rename / copy request as operations.ts shows it: the message alone, as a toast */
+  const toast = (ms: SqlMessage[]) => {
+    for (const m of ms)
+      showMessage(m.text, m.type === 'error' ? false : null, m.type === 'error' ? 'error' : 'success')
+  }
+
   const rename = async () => {
     if (renameTo === '') return missing()
     if (renameTo === db) {
@@ -90,7 +96,8 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
         ...(d.dbCollation !== '' ? { collation: d.dbCollation } : {}),
         adjustPrivileges: adjustRename ?? d.hasAdjustPrivileges,
       })
-      setMessages(r.messages)
+      // operations.ts: ajaxShowMessage(data.message) / ajaxShowMessage(data.error, false)
+      toast(r.messages)
       await reloadNav()
       if (r.messages[0]?.type === 'success') void navigate({ to: path(`${dbBase(server, r.db)}/operations`) })
     } catch (e) {
@@ -112,7 +119,8 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
         adjustPrivileges: adjustCopy ?? d.hasAdjustPrivileges,
         switchToNew: switchToNew ?? d.switchToNew,
       })
-      setMessages(r.messages)
+      // operations.ts: ajaxShowMessage(data.message) / ajaxShowMessage(data.error, false)
+      toast(r.messages)
       await reloadNav()
       if (r.db !== db) void navigate({ to: path(`${dbBase(server, r.db)}/operations`) })
     } catch (e) {
@@ -350,15 +358,21 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
         </div>,
         go(
           () =>
-            void run(() => {
-              // operations.ts: ajaxShowMessage(strChangingCharset)
+            void (async () => {
+              // operations.ts: ajaxShowMessage(strChangingCharset), then the answer as a toast
               showMessage(t('Changing charset'))
-              return api.dbOperation({ server, db }, 'collation', {
-                collation: collationValue,
-                changeAllTables: allTables,
-                changeAllColumns: allTables && allColumns,
-              })
-            }),
+              try {
+                const r = await api.dbOperation({ server, db }, 'collation', {
+                  collation: collationValue,
+                  changeAllTables: allTables,
+                  changeAllColumns: allTables && allColumns,
+                })
+                toast(r.messages)
+                await qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
+              } catch (e) {
+                toast([errorMessage(e)])
+              }
+            })(),
         ),
         'change_db_charset_form',
       )}

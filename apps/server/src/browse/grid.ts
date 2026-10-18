@@ -63,7 +63,7 @@ import { TableReader } from '../table/read.ts'
 import { mbLongerThan, mbStrlen, mbSubstr } from '../util/mb.ts'
 import { defaultTransformation } from './default-transformations.ts'
 import { runExternalTransformation } from './external.ts'
-import { specialSchemaLink } from './special-links.ts'
+import { hasSpecialSchemaLink, specialSchemaLink } from './special-links.ts'
 
 export interface GridEnv {
   cfg: AppConfig
@@ -112,7 +112,8 @@ export function uniqueMeta(f: Field): UniqueFieldMeta {
 export function rowValues(fields: readonly Field[], row: RawRow): CellValue[] {
   return row.map((v, i) => {
     if (v === null || v === undefined) return null
-    return isRawBytes(fields[i]!) ? new Uint8Array(v) : v.toString('utf8')
+    // the Buffer is the bytes (not copied: a page of 1 MB BLOBs per row)
+    return isRawBytes(fields[i]!) ? v : v.toString('utf8')
   })
 }
 
@@ -756,10 +757,11 @@ export async function buildGrid(
       const cellRaw = raw[i] ?? null
       const stored = mediaTypes.get(`${meta.db}.${meta.orgTable}.${meta.orgName}`)
       // Results::getRowValues: the syntax highlighting of predefined columns wins over a stored one
-      const predefined =
-        cellRaw !== null && !env.view.hideTransformation && cellRaw.toString('utf8').trim() !== ''
-          ? defaultTransformation(env.meta?.rp ?? null, db, meta.orgTable, meta.orgName)
-          : null
+      const builtIn =
+        cellRaw === null || env.view.hideTransformation
+          ? null
+          : defaultTransformation(env.meta?.rp ?? null, db, meta.orgTable, meta.orgName)
+      const predefined = builtIn !== null && cellRaw!.toString('utf8').trim() !== '' ? builtIn : null
       const m =
         predefined !== null
           ? {
@@ -774,7 +776,7 @@ export async function buildGrid(
       const shown = applyTransformation(cell, cellRaw, meta, m, where, sign, cfg)
       // SpecialSchemaLinks: predefined columns of mysql / information_schema become links
       let sl: ReturnType<typeof specialSchemaLink> = null
-      if (cellRaw !== null && shown.k !== 'null') {
+      if (cellRaw !== null && shown.k !== 'null' && hasSpecialSchemaLink(db, meta.orgTable, meta.orgName)) {
         rowInfo ??= specialRowInfo(fields, raw)
         sl = specialSchemaLink(cfg, db, meta.orgTable, meta.orgName, cellRaw.toString('utf8'), rowInfo)
       }
@@ -1097,12 +1099,13 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
     if (c.raw === null) return nullCell(base)
     const v = c.raw.toString('utf8')
     if (v === '') return emptyCell(base)
-    return rowData(env, c, base, 'text-nowrap', v, v, ` = ${v}`, false, '', addClass)
+    return rowData(env, c, base, 'text-nowrap', v, v, () => ` = ${v}`, false, '', addClass)
   }
   if (meta.mappedType === 'geometry') {
     cls = cls.replace('grid_edit', '')
     if (c.raw === null) return nullCell(cls)
     if (c.raw.length === 0) return emptyCell(cls)
+    const wkbBytes = c.raw
     if (view.geoOption === 'GEOM') {
       return valueDisplay(cls, nonPrintableLabel(tr, 'GEOMETRY', c.raw), { dl: download() })
     }
@@ -1122,7 +1125,7 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
         '',
         wkt,
         shown,
-        ` = ${c.raw.toString('latin1')}`,
+        () => ` = ${wkbBytes.toString('latin1')}`,
         shown !== wkt,
         '',
         addClass,
@@ -1138,7 +1141,7 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
         '',
         wkb,
         shown,
-        ` = ${c.raw.toString('latin1')}`,
+        () => ` = ${wkbBytes.toString('latin1')}`,
         shown !== wkb,
         '',
         addClass,
@@ -1158,16 +1161,16 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
   }
   if (c.raw === null) return nullCell(cls)
   if (c.raw.length === 0) return emptyCell(cls)
-  const text = c.raw.toString('utf8')
-  let originalLength = 0
-  let column = text
-  let truncated = false
-  if (!meta.flags.binary) {
-    originalLength = mbStrlen(text)
-    column = partial(text)
-    truncated = column !== text
+  const raw = c.raw
+  // the text of the value, decoded only when shown (a BLOB shows its placeholder)
+  const decode = () => {
+    const text = raw.toString('utf8')
+    if (meta.flags.binary) return { text, column: text, truncated: false, originalLength: 0 }
+    const column = partial(text)
+    return { text, column, truncated: column !== text, originalLength: mbStrlen(text) }
   }
   if (meta.mappedType === 'bit') {
+    const { text, column, truncated, originalLength } = decode()
     let n = 0n
     for (const b of c.raw) n = (n << 8n) | BigInt(b)
     const shown = printableBitValue(n, meta.length)
@@ -1178,7 +1181,7 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
       'pre_wrap',
       column,
       shown,
-      ` = ${quoteString(text)}`,
+      () => ` = ${quoteString(text)}`,
       truncated,
       String(originalLength),
       addClass,
@@ -1199,6 +1202,7 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
     return valueDisplay(finalCls, shown, { dl: download() })
   }
   const nowrap = isDateTime(meta) ? 'text-nowrap' : 'pre_wrap'
+  const { text, column, truncated, originalLength } = decode()
   return rowData(
     env,
     c,
@@ -1206,7 +1210,7 @@ async function cellOf(env: GridEnv, c: CellArgs): Promise<GridCell> {
     nowrap,
     column,
     column,
-    ` = ${quoteString(text)}`,
+    () => ` = ${quoteString(text)}`,
     truncated,
     truncated ? String(originalLength) : '',
     addClass,
@@ -1221,7 +1225,8 @@ async function rowData(
   nowrap: string,
   data: string,
   displayed: string,
-  whereComparison: string,
+  /** ` = <value>` (built only for a relation: a 500 KB text would be quoted per cell) */
+  comparison: () => string,
   truncated: boolean,
   originalLength: string,
   addClass: (base: string, nowrap: string, truncated?: boolean) => string,
@@ -1249,6 +1254,7 @@ async function rowData(
   }
   const rel = c.map.get(name)
   if (rel === undefined) return cell
+  const whereComparison = comparison()
   let dispval: string | null = ''
   if (rel.displayField !== '') {
     const sql = `SELECT ${backquote(rel.displayField)} FROM ${backquote(rel.db)}.${backquote(rel.table)} WHERE ${backquote(rel.field)}${whereComparison} LIMIT 1`

@@ -412,7 +412,7 @@ export async function executeForm(ctx: DbCtx, name: string, type: string): Promi
     // execute_form.twig renders every parameter; getExecuteForm prepares only the non-OUT ones
     // (an OUT row gets no function select and no date class)
     const isOut = r.type === 'PROCEDURE' && p.dir === 'OUT'
-    let functions: Array<{ value: string; selected: boolean }> | null = null
+    let functions: Array<{ value: string; label: string; selected: boolean; title?: string }> | null = null
     if (!isOut && ctx.cfg.ShowFunctionFields && !/enum|set/i.test(p.type)) {
       const def = getDefaultFunctionForField(
         {
@@ -427,9 +427,13 @@ export async function executeForm(ctx: DbCtx, name: string, type: string): Promi
         },
         server,
       )
-      functions = getFunctionsForField(server, def)
-        .filter((f) => f.value !== 'PHP_PASSWORD_HASH')
-        .map((f) => ({ value: f.value, selected: f.selected }))
+      // the whole list, password_hash() included: execute ignores a value outside getAllFunctions
+      functions = getFunctionsForField(server, def, false, (s) => ctx.tr.gettext(s)).map((f) => ({
+        value: f.value,
+        label: f.label,
+        selected: f.selected,
+        ...(f.title !== undefined ? { title: f.title } : {}),
+      }))
     }
     params.push({
       index: i,

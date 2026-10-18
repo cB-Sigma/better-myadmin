@@ -4,7 +4,6 @@ import {
   Checkbox,
   IconText,
   Label,
-  MessageBox,
   Panel,
   PanelBody,
   showMessage,
@@ -16,7 +15,7 @@ import { useState } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { HighlightedSql } from '../sql/HighlightedSql'
+import { ActionMessage, usePageCardEnv } from '../sql/page-card'
 import { path, CreateTableBox, Messages, errorMessage, tableBase } from './common'
 
 const tableClass =
@@ -64,10 +63,13 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
   const [untracked, setUntracked] = useState<string[]>([])
   const [createFor, setCreateFor] = useState<string[] | null>(null)
   const [statements, setStatements] = useState<string[] | null>(null)
+  // Generator::getMessage's card links of the Database Log (a link's result replaces the page)
+  const { env, replacement } = usePageCardEnv(server)
 
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
   if (d === undefined) return null
+  if (replacement !== null) return replacement
   const run = async (fn: () => Promise<DbActionResponse>) => {
     try {
       const r = await fn()
@@ -297,16 +299,14 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
                         <IconText icon="b_versions" text={t('Versions')} />
                       </Link>
                       <Link
-                        to={path(
-                          `${tableBase(server, db, v.table)}/tracking?report=true&version=${v.version}`,
-                        )}
+                        to={path(`${tableBase(server, db, v.table)}/tracking`)}
+                        search={{ report: 'true', version: String(v.version) } as never}
                       >
                         <IconText icon="b_report" text={t('Tracking report')} />
                       </Link>
                       <Link
-                        to={path(
-                          `${tableBase(server, db, v.table)}/tracking?snapshot=true&version=${v.version}`,
-                        )}
+                        to={path(`${tableBase(server, db, v.table)}/tracking`)}
+                        search={{ snapshot: 'true', version: String(v.version) } as never}
                       >
                         <IconText icon="b_props" text={t('Structure snapshot')} />
                       </Link>
@@ -373,10 +373,14 @@ export function TrackingPage({ server, db }: { server: number; db: string }) {
           </form>
         </>
       )}
+      {/* Generator::getMessage(new Message('Database Log'), $log) */}
       {d.log !== null && (
-        <div className="mt-4 overflow-hidden rounded-(--radius) border border-border">
-          <MessageBox type="notice" text={t('Database Log')} className="border-0" />
-          <HighlightedSql sql={d.log} className="bg-bg-inset px-3 py-2" />
+        <div className="mt-4">
+          <ActionMessage
+            message={{ type: 'notice', text: t('Database Log'), sql: d.log }}
+            scope={{ db, table: '' }}
+            env={env}
+          />
         </div>
       )}
     </div>

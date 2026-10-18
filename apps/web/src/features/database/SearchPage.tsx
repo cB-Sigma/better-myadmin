@@ -26,7 +26,7 @@ import { BBCode } from '../shell/bbcode'
 import { InlineHtml } from '../shell/inline-html'
 import { useFormLock } from '../shell/page-chrome'
 import { StatementBlock } from '../sql/Results'
-import type { CardEnv } from '../sql/SqlMessage'
+import { usePageCardEnv } from '../sql/page-card'
 import { runQuery } from '../sql/runner'
 import { path, Messages, dbBase, errorMessage, tableBase } from './common'
 
@@ -84,9 +84,12 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
   // #sqlqueryform: the result of "Delete", with the #togglequerybox button
   const [deleted, setDeleted] = useState<QueryResponse | null>(null)
   const [queryBox, setQueryBox] = useState(true)
+  // the result's card links and grid act like the /sql page's (a link's result replaces the page)
+  const { env, replacement } = usePageCardEnv(server)
 
   if (form.isError) return <SimpleError server={server} db={db} message={errorMessage(form.error).text} />
   if (form.data === undefined) return null
+  if (replacement !== null) return replacement
   const tables = selected ?? form.data.tables
 
   const submit = async () => {
@@ -113,19 +116,12 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
     }
   }
 
-  const env: CardEnv = {
-    server,
-    versionInt: 0,
-    confirmQuery: () => true,
-    codemirror: false,
-    onAction: () => {},
-  }
-
   const browseResults = async (table: string, sql: string) => {
     // search.ts: ajaxShowMessage(strBrowsing, false), removed with the results
     const box = showMessage(t('Browsing'), false)
     try {
-      const response = await runQuery(server, { sql, db, table }, 'page')
+      // search.ts posts the browse SQL to /sql: the results grid with its row and result operations
+      const response = await runQuery(server, { sql, db, table, grid: true }, 'page')
       setDeleted(null)
       setBrowse({ table, response })
     } catch (e) {

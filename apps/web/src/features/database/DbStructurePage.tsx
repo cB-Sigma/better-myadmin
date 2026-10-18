@@ -24,16 +24,20 @@ import {
   PanelBody,
   PmaIcon,
   useConfirm,
+  useUiSettings,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Link, useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate, useRouter } from '@tanstack/react-router'
 import { ArrowDown, ArrowUp, LoaderCircle, Printer } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { api } from '../../lib/api'
+import { ApiError, api } from '../../lib/api'
 import { ngettext, t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
+import { ErrorCard } from '../sql/SqlMessage'
+import { PageMessages } from '../sql/page-card'
+import { sqlTabRoute } from '../sql/routes'
 import { runQuery } from '../sql/runner'
 import { MaintenanceResults } from '../table/common/MaintenanceResults'
 import {
@@ -100,6 +104,7 @@ export function DbStructurePage({
   usePagePrefs(server, 'DbStructure')
   const scope = { server, db }
   const confirm = useConfirm()
+  const ui = useUiSettings()
   const qc = useQueryClient()
   const navigate = useNavigate()
   const q = useQuery({
@@ -110,6 +115,25 @@ export function DbStructurePage({
   const [selected, setSelected] = useState<string[]>([])
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [maintenance, setMaintenance] = useState<MaintenanceResult | null>(null)
+  // drop_form.twig / empty_form.twig in place of the list (AJAX.responseHandler's page)
+  const [bulkForm, setBulkForm] = useState<{
+    action: 'empty' | 'drop'
+    tables: string[]
+    sql: string
+  } | null>(null)
+  // Generator::mysqlDie of a failed statement of the (non-AJAX) empty form: the page is the error
+  const [die, setDie] = useState<{ sql: string; text: string } | null>(null)
+  // a page load (the Structure tab again) shows the list: the bulk action's page is gone
+  const router = useRouter()
+  useEffect(
+    () =>
+      router.subscribe('onBeforeLoad', () => {
+        setMaintenance(null)
+        setBulkForm(null)
+        setDie(null)
+      }),
+    [router],
+  )
   const [dialog, setDialog] = useState<DialogState>(null)
   const [filter, setFilter] = useState('')
   const [counts, setCounts] = useState<Record<string, string>>({})
@@ -184,7 +208,7 @@ export function DbStructurePage({
       return
     }
     if (value === 'empty_tbl') {
-      await bulkConfirm('empty', tables, tables.map((n) => `TRUNCATE \`${n}\`;`).join('\n'))
+      setBulkForm({ action: 'empty', tables, sql: tables.map((n) => `TRUNCATE \`${n}\`;`).join('\n') })
       return
     }
     if (value === 'drop_tbl') {
@@ -193,7 +217,7 @@ export function DbStructurePage({
       const lines: string[] = []
       if (tbls.length > 0) lines.push(`DROP TABLE ${tbls.map((n) => `\`${n}\``).join(', ')};`)
       if (vws.length > 0) lines.push(`DROP VIEW ${vws.map((n) => `\`${n}\``).join(', ')};`)
-      await bulkConfirm('drop', tables, lines.join('\n'))
+      setBulkForm({ action: 'drop', tables, sql: lines.join('\n') })
       return
     }
     const op = {
@@ -361,20 +385,30 @@ export function DbStructurePage({
     return ok ? box.checked : null
   }
 
-  /** drop_form.twig / empty_form.twig */
-  const bulkConfirm = async (action: 'empty' | 'drop', tables: string[], sql: string) => {
-    const fk = await askFk(
-      <>
-        <p className="mb-2">{t('Do you really want to execute the following query?')}</p>
-        <pre className="mb-2 rounded bg-bg-inset p-2 font-mono text-xs">{sql}</pre>
-      </>,
-      true,
-    )
-    if (fk === null) {
+  /** drop_form.twig / empty_form.twig: Yes runs it, No ("No change") goes back to the list */
+  const bulkSubmit = async (yes: boolean, fk: boolean) => {
+    const form = bulkForm
+    if (form === null) return
+    setBulkForm(null)
+    if (!yes) {
       setMessages([{ type: 'success', text: t('No change') }])
       return
     }
-    await act(() => api.dbStructureAction({ server, db }, action, { tables, fkChecks: fk }))
+    if (form.action === 'drop') {
+      await act(() => api.dbStructureAction({ server, db }, 'drop', { tables: form.tables, fkChecks: fk }))
+      return
+    }
+    try {
+      const r = await api.dbStructureAction({ server, db }, 'empty', { tables: form.tables, fkChecks: fk })
+      setMessages(r.messages)
+      setSelected([])
+      await refresh()
+    } catch (e) {
+      if (e instanceof ApiError && e.envelope.errno !== undefined) {
+        setDie({ sql: e.envelope.sql ?? '', text: `#${e.envelope.errno} - ${e.envelope.message}` })
+        await refresh()
+      } else setMessages([errorMessage(e)])
+    }
   }
 
   /** structure.ts truncate_table_anchor / drop_table_anchor, posted to /sql */
@@ -414,10 +448,44 @@ export function DbStructurePage({
     }
   }
 
+  const pageMessages = <PageMessages server={server} messages={messages} scope={{ db, table: '' }} />
+  // the maintenance page (table/maintenance/*.twig) replaces the list, as its AJAX page load does
+  if (maintenance !== null) {
+    return (
+      <div id="tableslistcontainer">
+        <MaintenanceResults result={maintenance} message={pageMessages} />
+      </div>
+    )
+  }
+  if (die !== null) {
+    return (
+      <ErrorCard
+        st={{
+          executedSql: die.sql,
+          error: {
+            staticAnalysis: [],
+            sql: die.sql,
+            sqlTruncated: false,
+            selectDoc: die.sql.toLowerCase().includes('select'),
+            serverMessage: die.text,
+            hint: null,
+          },
+        }}
+        env={{ versionInt: ui.serverVersion }}
+        modify={
+          <Link {...sqlTabRoute(server, db, '')} search={{ sql: die.sql } as never}>
+            <IconText icon="b_edit" text={t('Edit')} />
+          </Link>
+        }
+      />
+    )
+  }
+  if (bulkForm !== null) {
+    return <BulkForm sql={bulkForm.sql} fkDefault={fkDefault} onSubmit={bulkSubmit} />
+  }
   return (
     <div id="tableslistcontainer">
-      <Messages messages={messages} />
-      {maintenance !== null && <MaintenanceResults result={maintenance} />}
+      {pageMessages}
       {d.tables.length === 0 ? (
         <Alert variant="notice" className="mb-3">
           {t('No tables found in database.')}
@@ -1043,6 +1111,43 @@ function PrefixDialog({
 }
 
 /** The "Enable foreign key checks" checkbox inside a confirmation. */
+/** pma: templates/database/structure/drop_form.twig, empty_form.twig */
+function BulkForm({
+  sql,
+  fkDefault,
+  onSubmit,
+}: {
+  sql: string
+  fkDefault: boolean
+  onSubmit: (yes: boolean, fk: boolean) => void
+}) {
+  const [fk, setFk] = useState(fkDefault)
+  return (
+    <Panel
+      title={t('Do you really want to execute the following query?')}
+      className="mx-auto max-w-5xl"
+      footer={
+        <div className="flex gap-2">
+          <Button id="buttonYes" variant="destructive" onClick={() => onSubmit(true, fk)}>
+            {t('Yes')}
+          </Button>
+          <Button id="buttonNo" variant="secondary" onClick={() => onSubmit(false, fk)}>
+            {t('No')}
+          </Button>
+        </div>
+      }
+    >
+      <PanelBody>
+        <pre className="mb-3 rounded border border-border bg-bg-inset p-3 font-mono text-xs">{sql}</pre>
+        <Label className="flex items-center gap-2">
+          <Checkbox id="checkForeignKeyCheckbox" checked={fk} onCheckedChange={(v) => setFk(v === true)} />
+          {t('Enable foreign key checks')}
+        </Label>
+      </PanelBody>
+    </Panel>
+  )
+}
+
 function FkCheckbox({ box }: { box: { checked: boolean } }) {
   const [checked, setChecked] = useState(box.checked)
   return (

@@ -5,12 +5,14 @@ import { backquote } from '@bettermyadmin/sql-gen'
 import { MysqlError, ValidationError } from '../http/errors.ts'
 import { mbSubstr } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
+import { getMessageCard } from '../query/message.ts'
 import { getDatabaseList, moveCopy, newMoveState } from '../table/table-mover.ts'
 import {
   type DbCtx,
   errorText,
   fkCheckCleanup,
   fkCheckInit,
+  isSystemSchema,
   moverCtx,
   msg,
   selectDb,
@@ -82,7 +84,17 @@ export async function dropTables(
   }
   await fkCheckCleanup(ctx, def)
   tableCache(ctx).forget(ctx.db)
-  return { messages: [error === null ? msg('success', successText(ctx.tr), sql) : msg('error', error, sql)] }
+  if (error === null) return { messages: [msg('success', successText(ctx.tr), sql)] }
+  // the structure page's Generator::getMessage(Message::error(), sql): the query card, links and all
+  const card = await getMessageCard(sql, {
+    cfg: ctx.cfg,
+    showAsPhp: null,
+    db: ctx.db,
+    table: '',
+    profilingOn: false,
+    profilingSupported: () => Promise.resolve(false),
+  })
+  return { messages: [{ ...msg('error', error, sql), card }] }
 }
 
 /** pma: AddPrefixTableController */
@@ -142,11 +154,11 @@ export async function copyWithPrefix(
   }
 }
 
-/** pma: CopyFormController (databases except the current one) */
+/** pma: CopyFormController (databases except the current one; ListDatabase::getList skips the system schemas) */
 export async function copyForm(ctx: DbCtx): Promise<CopyFormResponse> {
   const p = await getPrivileges(ctx.dbi)
   return {
-    databases: (await getDatabaseList(moverCtx(ctx))).filter((d) => d !== ctx.db),
+    databases: (await getDatabaseList(moverCtx(ctx))).filter((d) => d !== ctx.db && !isSystemSchema(d)),
     hasAdjustPrivileges: p.table && p.column && p.isReload,
   }
 }

@@ -115,6 +115,7 @@ export function EventsPage({
   return (
     <>
       <ProgramListPage
+        codemirror={q.data?.codemirror ?? false}
         server={server}
         db={db}
         icon="b_events"
