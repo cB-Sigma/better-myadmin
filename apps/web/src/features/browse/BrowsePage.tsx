@@ -11,6 +11,7 @@ import { HighlightedSql } from '../sql/HighlightedSql'
 import { StatementBlock } from '../sql/Results'
 import type { CardEnv } from '../sql/SqlMessage'
 import { DO_YOU_REALLY, checkSqlQuery, confirmationText } from '../sql/logic'
+import { FlashMessages } from '../sql/page-card'
 import { sqlTabRoute } from '../sql/routes'
 import { runQuery } from '../sql/runner'
 import { takeFlash } from '../table/structure/flash'
@@ -99,15 +100,7 @@ export function BrowsePage(props: BrowsePageProps) {
   const res = other ?? q.data
   return (
     <div id="sqlqueryresultsouter" className="max-w-full">
-      {flash.map((m, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: messages are positional
-        <div key={i} className="mb-3 overflow-hidden rounded border border-border">
-          <MessageBox type={m.type} text={m.text} />
-          {m.sql !== undefined && m.sql !== '' && (
-            <HighlightedSql sql={m.sql} className="bg-bg-inset px-3 py-2" />
-          )}
-        </div>
-      ))}
+      <FlashMessages messages={flash} scope={{ db, table }} env={env} />
       {res.statements.map((st, i) => (
         <StatementBlock
           key={`${i}-${st.sig}`}

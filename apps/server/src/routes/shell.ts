@@ -134,18 +134,25 @@ shellRoutes.post('/account/password', async (c) => {
 
 /**
  * POST /api/servers/:s/themes/set — the part of ThemeSetController the client-side theme store
- * cannot do: `ThemeDefault` in the user preferences (persistOption with the default `original`;
- * configuration storage or session).
+ * cannot do: `ThemeDefault` in the user preferences, always written (load, set, save — also for
+ * `original`). With `sync` (a stored theme differs from the preferences on page load): the
+ * "save theme" of UserPreferencesHandler::loadUserPreferences, setUserValue with the default
+ * `original` (the key removed for `original`). Configuration storage or session.
  */
 shellRoutes.post('/themes/set', async (c) => {
-  const body = (await c.req.json().catch(() => null)) as { theme?: unknown } | null
+  const body = (await c.req.json().catch(() => null)) as { theme?: unknown; sync?: unknown } | null
   const theme = typeof body?.theme === 'string' ? body.theme : ''
   const { cfg } = c.get('deps')
   if (!cfg.ThemeManager || theme === '') return c.json({ ok: false })
   return withMeta(c, {}, async (m) => {
-    // UserPreferencesHandler::loadUserPreferences: setUserValue('ThemeDefault', id, 'original'), the
-    // key removed again when the theme is back to `original`
-    const r = await (await m.meta()).userPreferences().persistOption('ThemeDefault', theme, 'original')
+    const prefs = (await m.meta()).userPreferences()
+    if (body?.sync === true) {
+      const r = await prefs.persistOption('ThemeDefault', theme, 'original')
+      return c.json({ ok: r === true })
+    }
+    // ThemeSetController: $preferences['config_data']['ThemeDefault'] = $theme; save()
+    const loaded = await prefs.load()
+    const r = await prefs.save({ ...loaded.config_data, ThemeDefault: theme })
     return c.json({ ok: r === true })
   })
 })

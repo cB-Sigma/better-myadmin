@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { SqlCard } from './query.ts'
 
 /**
  * Table Structure tab, column definition form (create / add / change), index editor, partitions.
@@ -11,6 +12,8 @@ export const SqlMessage = z.object({
   type: z.enum(['success', 'notice', 'error']),
   text: z.string(),
   sql: z.string().optional(),
+  /** Generator::getMessage's query card for `sql` (Edit inline / Edit / Create PHP code) */
+  card: SqlCard.nullable().optional(),
 })
 export type SqlMessage = z.infer<typeof SqlMessage>
 

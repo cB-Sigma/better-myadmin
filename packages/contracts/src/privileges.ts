@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { SqlCard } from './query.ts'
 
 /**
  * Server → User accounts (/server/privileges, /server/user-groups, /table/privileges): the models
@@ -220,6 +221,8 @@ export const PrivActionResponse = z.object({
   message: PrivMessage,
   /** the SQL shown under the message (Generator::getMessage) */
   sql: z.string(),
+  /** Generator::getMessage's query card for `sql` (null: no SQL shown) */
+  card: SqlCard.nullable(),
   /** add user / copy user: the account to open next */
   account: z.object({ username: z.string(), hostname: z.string() }).nullable(),
   /** add user failed: the form is shown again */

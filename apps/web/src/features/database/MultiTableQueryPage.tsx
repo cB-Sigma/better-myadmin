@@ -11,7 +11,7 @@ import {
   Textarea,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { type SyntheticEvent, useState } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -92,7 +92,8 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
       return
     }
     try {
-      setResult(await runQuery(server, { sql, db }, 'page'))
+      // QueryController → Sql::executeQueryAndSendQueryResponse: the full results page (grid)
+      setResult(await runQuery(server, { sql, db, grid: true }, 'page'))
       setMessages([])
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -122,7 +123,17 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                       <NativeSelect
                         className="tableNameSelect"
                         value={c.table}
-                        onChange={(e) => set(i, { table: e.target.value, column: '' })}
+                        onChange={(e) => {
+                          // the column lists take the table's options (`*` + its columns; the
+                          // criteria list without `*`), their first one selected
+                          const table = e.target.value
+                          const first = columnsOf(table)[0] ?? ''
+                          set(i, {
+                            table,
+                            column: table === '' ? '' : '*',
+                            criteria: { ...c.criteria, column: table === '' ? '' : first },
+                          })
+                        }}
                       >
                         <option value="">{t('select table')}</option>
                         {d.tables.map((tb) => (
@@ -142,8 +153,11 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                           })
                         }
                       >
-                        <option value="">{t('select column')}</option>
-                        {c.table !== '' && <option value="*">*</option>}
+                        {c.table === '' ? (
+                          <option value="">{t('select column')}</option>
+                        ) : (
+                          <option value="*">*</option>
+                        )}
                         {cols.map((col) => (
                           <option key={col} value={col}>
                             {col}
@@ -237,7 +251,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                                 value={c.criteria.column}
                                 onChange={(e) => setCrit(i, { column: e.target.value })}
                               >
-                                <option value="">{t('select column')}</option>
+                                {c.table === '' && <option value="">{t('select column')}</option>}
                                 {cols.map((col) => (
                                   <option key={col} value={col}>
                                     {col}
@@ -432,7 +446,16 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
           </div>
         </Panel>
       </Disclosure>
-      <div id="sql_results">
+      {/* multi_table_query.ts: the /sql results page, whose `.ajax` links and navigation
+          controls do nothing here (preventDefault on .ajax:not(.pageselector), and on
+          change / click / focus of .autosubmit, .pageselector, .showAllRows, .filter_rows) */}
+      <div
+        id="sql_results"
+        onClickCapture={inertResultControl}
+        onChangeCapture={inertResultControl}
+        onFocusCapture={inertResultControl}
+        onInputCapture={inertResultControl}
+      >
         {result?.statements.map((st, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: statements are positional
           <StatementBlock key={i} st={st} env={env} />
@@ -440,4 +463,15 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
       </div>
     </div>
   )
+}
+
+const INERT =
+  '.ajax:not(.pageselector), [name="navig"], .autosubmit, .pageselector, .showAllRows, .filter_rows'
+
+/** The results' AJAX links and navigation controls are inert on this page (see #sql_results). */
+function inertResultControl(e: SyntheticEvent) {
+  const el = e.target instanceof Element ? e.target.closest(INERT) : null
+  if (el === null || !(e.currentTarget as Element).contains(el)) return
+  e.preventDefault()
+  e.stopPropagation()
 }

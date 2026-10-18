@@ -65,6 +65,27 @@ test('add a user account, grant a database with the grant option, remove it', as
   await page.locator('#adduser_submit').click()
   await expect(page.getByText('You have added a new user.')).toBeVisible()
   await expect(page.locator('#edit_user_dialog')).toContainText(`'${USER}'@'%'`)
+  // Generator::getMessage: the message and its query card (Edit inline / Edit / Create PHP code)
+  // come first, before the user page's pills (QA: they followed the pills, without the links)
+  const card = page.locator('#edit_user_dialog > .result_query').first()
+  await expect(card).toContainText('CREATE USER')
+  for (const link of ['Edit inline', 'Edit', 'Create PHP code']) {
+    await expect(
+      card
+        .getByRole('button', { name: link, exact: true })
+        .or(card.getByRole('link', { name: link, exact: true }))
+        .first(),
+    ).toBeVisible()
+  }
+  expect(
+    await page
+      .locator('#edit_user_dialog')
+      .evaluate(
+        (d) =>
+          [...d.children].findIndex((c) => c.classList.contains('result_query')) <
+          [...d.children].findIndex((c) => c.matches('ul.nav-pills')),
+      ),
+  ).toBe(true)
   expect((await grants(`'${USER}'@'%'`)).join('\n')).toMatch(/GRANT SELECT ON \*\.\* TO /)
 
   // the editor at database level: INSERT with GRANT

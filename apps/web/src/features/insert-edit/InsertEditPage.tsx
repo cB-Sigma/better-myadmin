@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   Hint,
+  IconText,
   Input,
   Label,
   MessageBox,
@@ -17,9 +18,10 @@ import {
   PanelBody,
   Table,
   useConfirm,
+  useUiSettings,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { Fragment, type KeyboardEvent, useMemo, useState } from 'react'
 import { ApiError, type InsertFormRequest, api, errorMessage } from '../../lib/api'
 import { t } from '../../lib/i18n'
@@ -28,6 +30,7 @@ import { GisEditor } from '../gis/GisEditor'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { useLockPage } from '../shell/page-chrome'
 import { HighlightedSql } from '../sql/HighlightedSql'
+import { ErrorCard } from '../sql/SqlMessage'
 import { setFlash } from '../table/structure/flash'
 import { ForeignBrowser } from './ForeignBrowser'
 import { NullCheckbox, ValueWidget } from './ValueWidget'
@@ -199,7 +202,13 @@ function InsertEditForm({
             to: `${tbl}/browse`,
             search: { sql: r.next.sql.sql, sig: r.next.sql.sig } as never,
           })
-        } else await navigate({ to: `${tbl}/sql` })
+        } else {
+          // GotoDefault /table/sql: the SQL box shows the statements that ran (Current::$sqlQuery)
+          await navigate({
+            to: `${tbl}/sql`,
+            ...(r.sqlQuery !== '' ? { search: { sql: r.sqlQuery } as never } : {}),
+          })
+        }
       } else if (r.next.action === 'insert') {
         reload(
           {
@@ -219,12 +228,21 @@ function InsertEditForm({
         env?.errno !== undefined
           ? `#${env.errno} - ${env.message}`
           : String(e instanceof Error ? e.message : e)
-      reloadMessages([{ type: 'error', text, ...(env?.sql !== undefined ? { sql: env.sql } : {}) }])
+      if (env?.errno !== undefined && env.sql !== undefined) {
+        // DatabaseInterface::query → Generator::mysqlDie($error, $query, true): the error card
+        setFailure({ sql: env.sql, text })
+        reloadMessages([])
+      } else {
+        setFailure(null)
+        reloadMessages([{ type: 'error', text, ...(env?.sql !== undefined ? { sql: env.sql } : {}) }])
+      }
     } finally {
       setBusy(false)
     }
   }
   const [localMessages, reloadMessages] = useState<SqlMessage[]>([])
+  const [failure, setFailure] = useState<{ sql: string; text: string } | null>(null)
+  const ui = useUiSettings()
 
   /** "Continue insertion with N rows": rows added/removed client-side */
   const continueInsertion = async (raw: string) => {
@@ -284,6 +302,31 @@ function InsertEditForm({
 
   return (
     <div className="space-y-3" data-testid="insert-edit">
+      {failure !== null && (
+        <ErrorCard
+          st={{
+            executedSql: failure.sql,
+            error: {
+              staticAnalysis: [],
+              sql: failure.sql,
+              sqlTruncated: false,
+              selectDoc: failure.sql.toLowerCase().includes('select'),
+              serverMessage: failure.text,
+              hint: null,
+            },
+          }}
+          env={{ versionInt: ui.serverVersion }}
+          modify={
+            <Link
+              to="/s/$server/db/$db/t/$table/sql"
+              params={{ server, db, table }}
+              search={{ sql: failure.sql } as never}
+            >
+              <IconText icon="b_edit" text={t('Edit')} />
+            </Link>
+          }
+        />
+      )}
       {[...messages, ...f.messages, ...localMessages].map((m, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: messages are positional
         <div key={i} className="overflow-hidden rounded border border-border">
