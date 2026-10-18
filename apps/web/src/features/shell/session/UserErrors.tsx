@@ -12,9 +12,17 @@ export const TIMEZONE_ERROR =
 /** DatabaseInterface::setCollation */
 export const COLLATION_ERROR = 'Failed to set configured collation connection!'
 
+/** ExternalTransformationsPlugin's E_USER_DEPRECATED (the deprecated command-line options field) */
+export const EXTERNAL_OPTIONS_NOTICE =
+  'You are using the external transformation command line options field, which has been deprecated for security reasons. Add all command line options directly to the definition in %s.'
+
 /** The text of one user error (Sanitize::convertBBCode applies to the time zone message). */
 export function userErrorText(e: UserError): string {
-  return e.kind === 'timezone' ? tProduct(TIMEZONE_ERROR, e.timeZone, e.server, e.server) : t(COLLATION_ERROR)
+  if (e.kind === 'timezone') return tProduct(TIMEZONE_ERROR, e.timeZone, e.server, e.server)
+  // our definitions live in the configuration, not in the PHP file
+  if (e.kind === 'external-options')
+    return t(EXTERNAL_OPTIONS_NOTICE, '[code]TransformationsExternalPrograms[/code]')
+  return t(COLLATION_ERROR)
 }
 
 /**
@@ -44,7 +52,8 @@ export function UserErrors() {
   return (
     <div id="pma_errors" className="px-3 pt-3">
       {errors.map((e) => (
-        <MessageBox key={JSON.stringify(e)} type="error">
+        // E_USER_DEPRECATED is a notice (Error::getLevel), the connection errors are errors
+        <MessageBox key={JSON.stringify(e)} type={e.kind === 'external-options' ? 'notice' : 'error'}>
           <BBCode text={userErrorText(e)} />
         </MessageBox>
       ))}

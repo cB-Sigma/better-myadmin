@@ -48,7 +48,7 @@ Set on every response (equivalent of `Core::headerJSON`/`Header::sendHttpHeaders
 - **Export file injection**: CSV/Excel cells beginning with `=`, `+`, `-`, `@` are escaped per the plugin's existing behaviour only (phpMyAdmin does not neutralize formulas; we add an opt-in `Export.csv_escape_formulas`, default off, to stay byte-compatible by default and document the risk).
 - **Path traversal**: `UploadDir`/`SaveDir` listings and reads use `realpath` containment checks (`FileListing`, `File::checkUploadedFile` equivalents) and the import "select from server directory" accepts only basenames present in the listing.
 - **Zip bombs / decompression**: decompression is streamed with a configurable output cap (`Import.MaxDecompressedSize`, default 10 × `MaxUploadSize`).
-- **Shell**: none. phpMyAdmin's `RecodingEngine=recode` and `Text_Plain_External` shell-out are replaced by in-process `iconv` and a no-exec policy; `External` transformation is implemented with an allow-listed set of pure-JS formatters.
+- **Shell**: none. phpMyAdmin's `RecodingEngine=recode` is replaced by in-process `iconv`. The `External` transformation runs only the programs an administrator lists in `TransformationsExternalPrograms` (empty by default, phpMyAdmin's shipped state), without a shell, with a timeout and an output cap (X4).
 
 ## Information disclosure
 

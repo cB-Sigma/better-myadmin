@@ -3,7 +3,7 @@
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
     "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010",
     "source": "packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php)",
-    "count": 467
+    "count": 468
   },
   "items": [
     {
@@ -3653,6 +3653,14 @@
       "bma": false,
       "userPref": true,
       "inPma": true
+    },
+    {
+      "key": "TransformationsExternalPrograms",
+      "source": "schema",
+      "type": "string-list",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
     },
     {
       "key": "TranslationWarningThreshold",

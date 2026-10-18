@@ -245,8 +245,6 @@ msgids:
   "You do not have necessary privileges to create a database named '%s'. You may go to 'Operations' tab of any database to set up the phpMyAdmin configuration storage there.":
     via: packages/metadata/src/storage.ts
     note: Relation::createPmaDatabase; translated with its msgid by routes/metadata.ts (pkgMsg)
-  "You are using the external transformation command line options field, which has been deprecated for security reasons. Add all command line options directly to the definition in %s.":
-    n/a: "ExternalTransformationsPlugin::applyTransformation returns the buffer before it when $allowedPrograms is empty, as it is in phpMyAdmin's source (we never run a program either)"
   "Cannot save UI property \"%s\". The changes made will not be persistent after you refresh this page. Please check if the table structure has been changed.":
     via: packages/metadata/src/uiprefs.ts
     note: Table::setUiProp; translated with its msgid by routes/metadata.ts (pkgMsg)

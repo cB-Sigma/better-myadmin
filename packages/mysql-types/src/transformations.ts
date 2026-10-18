@@ -259,6 +259,8 @@ export interface TransformContext {
   t?: (msgid: string) => string
   /** Config::isGd2Available — the Inline plugin requests resized thumbnails */
   gd2?: boolean
+  /** Text_Plain_External: the configured program's output (the server runs it) */
+  external?: string
   /** Util::localisedDate for the Dateformat plugin (format with strftime-like specifiers) */
   localisedDate?: (date: Date, format: string) => string
 }
@@ -687,9 +689,9 @@ export function applyOutputTransformation(
     case 'Output/Text_Plain_Dateformat':
       return { html: dateFormat(text, options, { ...ctx, t }) }
     case 'Output/Text_Plain_External':
-      // $allowedPrograms is empty in phpMyAdmin's source: the buffer is returned unchanged
-      // (parity exception: BetterMyAdmin never runs a shell command)
-      return { html: text }
+      // no program configured ($allowedPrograms is empty in phpMyAdmin's source): the buffer as it is;
+      // else the program's output, run on the server (apps/server/src/browse/external.ts)
+      return { html: ctx.external ?? text }
     case 'Output/Text_Plain_Formatted':
       return { html: `<iframe srcdoc="${text.replaceAll('"', "'")}" sandbox=""></iframe>` }
     case 'Output/Text_Plain_Imagelink': {

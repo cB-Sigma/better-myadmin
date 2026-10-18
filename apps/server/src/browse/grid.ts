@@ -61,6 +61,7 @@ import { countRecords } from '../query/pipeline.ts'
 import { signSql } from '../query/signature.ts'
 import { TableReader } from '../table/read.ts'
 import { defaultTransformation } from './default-transformations.ts'
+import { runExternalTransformation } from './external.ts'
 
 export interface GridEnv {
   cfg: AppConfig
@@ -767,7 +768,7 @@ export async function buildGrid(
               input_transformation_options: '',
             }
           : stored
-      row.cells.push(applyTransformation(cell, cellRaw, meta, m, where, sign))
+      row.cells.push(applyTransformation(cell, cellRaw, meta, m, where, sign, cfg))
     }
     rows.push(row)
   }
@@ -1326,6 +1327,7 @@ function applyTransformation(
   m: MimeInfo | undefined,
   where: string,
   sign: (s: string) => string,
+  cfg: AppConfig,
 ): GridCell {
   if (raw === null || cell.k === 'null') return cell
   if (m === undefined || m.mimetype === '' || m.transformation === '') return cell
@@ -1350,6 +1352,17 @@ function applyTransformation(
       sig: sign(where),
       isInt: meta.mappedType === 'int',
       isBinary: meta.flags.binary,
+      // the program runs here, on the server; the browser shows its output
+      ...(plugin.file === 'Output/Text_Plain_External' && cfg.TransformationsExternalPrograms.length > 0
+        ? {
+            external: runExternalTransformation(
+              cfg.TransformationsExternalPrograms,
+              options,
+              raw,
+              cfg.DefaultTransformations.External,
+            ),
+          }
+        : {}),
     },
   }
 }

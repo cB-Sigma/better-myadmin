@@ -828,6 +828,13 @@ export const configNode = group({
     },
     { bma: true },
   ),
+  /**
+   * `$allowedPrograms` of the External transformation (phpMyAdmin: edited in
+   * src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php): each entry is a program
+   * with its fixed arguments (`/usr/bin/tidy -q`). Empty (the default, as in phpMyAdmin's source):
+   * the transformation shows the value unchanged. The program runs without a shell (X4).
+   */
+  TransformationsExternalPrograms: list([], { bma: true }),
   /** Removed from phpMyAdmin in 4.6.0; honoured by BetterMyAdmin (HTTPS redirect + HSTS). */
   ForceSSL: bool(false, { bma: true }),
   /** Upload size limit in bytes (phpMyAdmin uses PHP's `upload_max_filesize`). */

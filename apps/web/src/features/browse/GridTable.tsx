@@ -944,6 +944,7 @@ function GridTransformed({
     { isInt: tf.isInt, isBinary: tf.isBinary },
     versionInt,
     cfg,
+    tf.external,
   )
 }
 

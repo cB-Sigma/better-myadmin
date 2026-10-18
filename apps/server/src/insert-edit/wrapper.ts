@@ -8,6 +8,7 @@ import { parseTransformationOptions } from '@bettermyadmin/mysql-types'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { checkSqlSignature } from '../query/signature.ts'
 import { type IeCtx, assoc, mimeMap } from './context.ts'
+import { copyResampled, createTrueColor, encodeJpeg, encodePng, imageFromString } from './image.ts'
 
 export interface RawCell {
   status: number
@@ -65,6 +66,46 @@ export interface WrapperParams {
   ct?: string | undefined
   cn?: string | undefined
   resize?: string | undefined
+  newWidth?: string | undefined
+  newHeight?: string | undefined
+}
+
+/** WrapperController::formatSize: 1 below 2 or not numeric, at most 2000 */
+export function formatSize(size: string | undefined): number {
+  const n =
+    size === undefined || size.trim() === '' || !Number.isFinite(Number(size)) ? Number.NaN : Number(size)
+  if (Number.isNaN(n) || n < 2) return 1
+  if (n >= 2000) return 2000
+  return Math.trunc(n)
+}
+
+/**
+ * The thumbnail of `resize=jpeg|png`: the image fitted into newWidth × newHeight keeping its
+ * ratio, resampled, then written as JPEG (quality 75) or PNG; null when it is not an image.
+ */
+export function resizeImage(
+  bytes: Buffer,
+  resize: 'jpeg' | 'png',
+  newWidth: number,
+  newHeight: number,
+): Buffer | null {
+  const src = imageFromString(bytes)
+  if (src === null) return null
+  const ratioWidth = src.width / newWidth
+  const ratioHeight = src.height / newHeight
+  // keep the image smaller than the new width and height
+  let destWidth: number
+  let destHeight: number
+  if (ratioWidth < ratioHeight) {
+    destWidth = Math.round(src.width / ratioHeight)
+    destHeight = newHeight
+  } else {
+    destWidth = newWidth
+    destHeight = Math.round(src.height / ratioWidth)
+  }
+  const dest = createTrueColor(destWidth, destHeight)
+  copyResampled(dest, src, 0, 0, 0, 0, destWidth, destHeight, src.width, src.height)
+  return resize === 'jpeg' ? encodeJpeg(dest, 75) : encodePng(dest)
 }
 
 /** GET …/transformation/wrapper */
@@ -93,9 +134,12 @@ export async function transformationWrapper(ctx: IeCtx, p: WrapperParams): Promi
   if (p.ct !== undefined && p.ct !== '') contentType = p.ct
   else
     contentType = (mediaType !== '' ? mediaType.replaceAll('_', '/') : 'application/octet-stream') + charset
-  // resize=jpeg|png: phpMyAdmin resamples with GD; the original image is sent and the browser
-  // scales it to the requested box (parity exception: no image library on the server)
-  if (p.resize !== 'jpeg' && p.resize !== 'png' && contentType.toLowerCase().includes('html')) {
+  if (p.resize === 'jpeg' || p.resize === 'png') {
+    // ImageWrapper::fromString === null: the download headers and an empty body
+    const out = resizeImage(value, p.resize, formatSize(p.newWidth), formatSize(p.newHeight))
+    return { status: 200, body: out ?? '', headers: downloadHeaders(p.cn ?? '', contentType) }
+  }
+  if (contentType.toLowerCase().includes('html')) {
     const s = value
       .toString('utf8')
       .replace(/&/g, '&amp;')

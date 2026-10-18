@@ -113,6 +113,8 @@ export const GridCell = z.object({
       sig: z.string(),
       isInt: z.boolean(),
       isBinary: z.boolean(),
+      /** Text_Plain_External with programs configured: the program's output (run on the server) */
+      external: z.string().optional(),
     })
     .optional(),
 })

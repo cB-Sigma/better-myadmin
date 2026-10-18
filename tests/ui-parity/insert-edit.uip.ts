@@ -76,6 +76,39 @@ pageParity('table-insert-gis-editor', {
   interactions: [{ name: 'type x', do: { fill: ['X', '3'] } }],
 })
 
+/**
+ * a parent with more rows than ForeignKeyMaxLimit (100): the foreign key is a text field with the
+ * "Browse foreign values" link instead of a dropdown, and the dialog pages its MaxRows (25)
+ */
+const FK = 'uip_ie_fk'
+const FK_SQL = `CREATE DATABASE IF NOT EXISTS ${FIX.db}; DROP TABLE IF EXISTS ${FIX.db}.${FK}; DROP TABLE IF EXISTS ${FIX.db}.uip_ie_big;
+  CREATE TABLE ${FIX.db}.uip_ie_big (id INT PRIMARY KEY, label VARCHAR(20));
+  INSERT INTO ${FIX.db}.uip_ie_big
+    WITH RECURSIVE n (i) AS (SELECT 1 UNION ALL SELECT i + 1 FROM n WHERE i < 120)
+    SELECT i, CONCAT('label ', i) FROM n;
+  CREATE TABLE ${FIX.db}.${FK} (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    big_id INT,
+    FOREIGN KEY (big_id) REFERENCES ${FIX.db}.uip_ie_big (id)
+  );`
+
+pageParity('table-insert-browse-foreign', {
+  sql: FK_SQL,
+  pma: { route: '/table/change', params: { db: FIX.db, table: FK } },
+  ours: { path: `/s/1/db/${FIX.db}/t/${FK}/insert` },
+  ready: { pma: '#insertForm', ours: '#insertForm' },
+  scope: { pma: '#browseForeignModal .modal-content', ours: '#browseForeignModal' },
+  setup: async ({ pma, ours }) => {
+    for (const page of [pma, ours]) {
+      await page.locator('a.browse_foreign, button.browse_foreign').first().click()
+      await page.locator('#browse_foreign_table').filter({ visible: true }).waitFor()
+    }
+  },
+  interactions: [
+    { name: 'search', do: [{ fill: ['Search:', 'label 11'] }, { press: 'Enter' }, { wait: 800 }] },
+  ],
+})
+
 pageParity('transformation-overview', {
   pma: { route: '/transformation/overview' },
   ours: { path: '/s/1/transformations' },

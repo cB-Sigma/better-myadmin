@@ -48,3 +48,5 @@ export { CSRF_COOKIE, CSRF_HEADER, SESSION_COOKIE, USER_ERRORS_HEADER } from './
 export type UserError =
   | { kind: 'timezone'; timeZone: string; server: number }
   | { kind: 'collation'; server: number }
+  /** ExternalTransformationsPlugin's E_USER_DEPRECATED: the options field holds command-line options */
+  | { kind: 'external-options' }

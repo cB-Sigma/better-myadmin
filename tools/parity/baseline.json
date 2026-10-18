@@ -1331,7 +1331,7 @@
     },
     "directives": {
       "total": 449,
-      "implemented": 426,
+      "implemented": 427,
       "covered": 448,
       "coverage": 0.9978,
       "implementedKeys": [
@@ -1391,6 +1391,7 @@
         "DefaultTabTable",
         "DefaultTransformations/Bool2Text",
         "DefaultTransformations/DateFormat",
+        "DefaultTransformations/External",
         "DefaultTransformations/Hex",
         "DefaultTransformations/Inline/0",
         "DefaultTransformations/Inline/1",
@@ -1764,7 +1765,6 @@
       ],
       "accountedKeys": [
         "ConsoleEnterExecutes",
-        "DefaultTransformations/External",
         "DefaultTransformations/Inline/wrapper_link",
         "DefaultTransformations/Inline/wrapper_params",
         "Export/pdf_report_title",
@@ -1789,7 +1789,7 @@
     },
     "messages": {
       "total": 3428,
-      "implemented": 3281,
+      "implemented": 3282,
       "covered": 3427,
       "coverage": 0.9997,
       "implementedKeys": [
@@ -4999,6 +4999,7 @@
         "You are trying to set this account to log in with no password, but the configuration directive <code>AllowNoPassword</code> is false. If you proceed, the account will not be able to log in through phpMyAdmin.",
         "You are using Git version, run [kbd]git pull[/kbd] :-)[br]The latest stable version is %s, released on %s.",
         "You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at %s.",
+        "You are using the external transformation command line options field, which has been deprecated for security reasons. Add all command line options directly to the definition in %s.",
         "You are using the MySQL Query cache with a fairly high traffic database. It might be worth considering to use <a href=\"https://dev.mysql.com/doc/refman/5.6/en/ha-memcached.html\">memcached</a> instead of the MySQL Query cache, especially if you have multiple replicas.",
         "You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration.",
         "You can also edit most values by clicking directly on them.",
@@ -5218,7 +5219,6 @@
         "X Values",
         "Y Values",
         "You are not using https to access phpMyAdmin, therefore FIDO U2F device will most likely refuse to authenticate you.",
-        "You are using the external transformation command line options field, which has been deprecated for security reasons. Add all command line options directly to the definition in %s.",
         "You can still use Firefox to authenticate your account using the FIDO U2F API, however it's recommended that you use the WebAuthn authentication instead.",
         "You haven't saved the changes in the layout. They will be lost if you don't save them. Do you want to continue?",
         "Your PHP parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is lower than cookie validity configured in phpMyAdmin, because of this, your login might expire sooner than configured in phpMyAdmin."
