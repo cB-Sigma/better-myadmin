@@ -86,6 +86,15 @@ export const pmaControls = {
   'js:export.ts#ajax:POST /export/template/delete': 'ExportPage.tsx',
   'js:export.ts#ajax:POST /export/template/load': 'ExportPage.tsx',
   'js:export.ts#ajax:POST /export/template/update': 'ExportPage.tsx',
+  'js:export.ts#ajax:GET /export/check-time-out': {
+    file: 'ExportPage.tsx',
+    match: "d.message === 'timeout'",
+  },
+  // #db_alias_select → POST /tables, #table_alias_select → POST /columns
+  'js:export.ts#ajax:POST <url>': 'AliasDialog.tsx',
+  'js:export_output.ts#keydown:document': { file: 'ExportOutput.tsx', match: "e.key === 'F5'" },
+  'js:export_output.ts#click:.export_refresh_btn': 'ExportOutput.tsx',
+  'js:export_output.ts#click:.export_copy_to_clipboard_btn': 'ExportOutput.tsx',
   'js:export.ts#click:#btn_alias_config': 'ExportPage.tsx',
   'js:export.ts#ajax:POST /databases': 'AliasDialog.tsx',
   'js:export.ts#change:#column_alias_select': 'AliasDialog.tsx',
