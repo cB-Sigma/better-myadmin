@@ -53,7 +53,7 @@ describe('bookmarks (BookmarkRepository / Bookmark)', () => {
     ])
   })
 
-  it('createBookmark rules: AllowSharedBookmarks, empty label/query, no user [p02-62c852]', () => {
+  it('createBookmark rules: AllowSharedBookmarks, empty label/query, no user [p02-62c852] [p08-dd1f62]', () => {
     const conn = new FakeConn()
     const noShare = new BookmarkRepository(new PmadbDriver(conn, rp()).bookmarks, false)
     expect(noShare.createBookmark('q', 'l', 'u', 'd', true)).toEqual({
@@ -75,7 +75,7 @@ describe('bookmarks (BookmarkRepository / Bookmark)', () => {
     expect(new BookmarkRepository(null, true).createBookmark('q', 'l', 'u', 'd')).toBe(false)
   })
 
-  it('without AllowSharedBookmarks the list matches the user exactly', async () => {
+  it('without AllowSharedBookmarks the list matches the user exactly [p08-dd1f62]', async () => {
     const conn = new FakeConn(() => ok([]))
     await new BookmarkRepository(new PmadbDriver(conn, rp()).bookmarks, false).getList('u1', false)
     expect(sqls(conn)).toEqual([
@@ -116,7 +116,7 @@ describe('bookmarks (BookmarkRepository / Bookmark)', () => {
 describe('query history (Console/History.php)', () => {
   const cfg = { MaxCharactersInDisplayedSQL: 20, QueryHistoryMax: 2, QueryHistoryDB: true }
 
-  it('records in the session (capped) and in pmadb, then purges', async () => {
+  it('records in the session (capped) and in pmadb, then purges [p08-96d5e0]', async () => {
     const conn = new FakeConn((sql) =>
       sql.includes('SELECT `timevalue`') ? ok([{ timevalue: '2026-10-08 10:00:00' }]) : ok(),
     )
@@ -133,7 +133,7 @@ describe('query history (Console/History.php)', () => {
     ])
   })
 
-  it('skips queries longer than MaxCharactersInDisplayedSQL, and pmadb when QueryHistoryDB is off', async () => {
+  it('skips queries longer than MaxCharactersInDisplayedSQL, and pmadb when QueryHistoryDB is off [p08-96d5e0]', async () => {
     const conn = new FakeConn()
     const session: SessionHistoryEntry[] = []
     const h = new QueryHistory(
@@ -154,7 +154,7 @@ describe('query history (Console/History.php)', () => {
 describe('recent / favorite tables (RecentFavoriteTables.php)', () => {
   const exists = async () => true
 
-  it('adds to the front, de-duplicates, trims and REPLACEs', async () => {
+  it('adds to the front, de-duplicates, trims and REPLACEs [p08-ca3864]', async () => {
     const conn = new FakeConn((sql) =>
       sql.startsWith('SELECT') ? ok([{ tables: '[{"db":"d","table":"a"}]' }]) : ok(),
     )
@@ -182,7 +182,7 @@ describe('recent / favorite tables (RecentFavoriteTables.php)', () => {
     ])
   })
 
-  it('remove() keeps PHP keys, so the immediate save is a JSON object', async () => {
+  it('remove() keeps PHP keys, so the immediate save is a JSON object [p08-ca3864]', async () => {
     const conn = new FakeConn()
     const list = await RecentFavoriteTables.load({
       type: 'favorite',
@@ -245,7 +245,7 @@ describe('table UI preferences (Table.php)', () => {
     return { t, slot: () => slot }
   }
 
-  it('saves col_order / col_visib with CREATE_TIME and trims to MaxTableUiprefs [p02-19721f p02-e55a88]', async () => {
+  it('saves col_order / col_visib with CREATE_TIME and trims to MaxTableUiprefs [p02-19721f p02-e55a88] [p08-5921ba]', async () => {
     const conn = new FakeConn((sql) => (sql.startsWith('SELECT COUNT') ? ok([{ 'COUNT(*)': '5' }]) : ok([])))
     const { t } = make(conn)
     expect(

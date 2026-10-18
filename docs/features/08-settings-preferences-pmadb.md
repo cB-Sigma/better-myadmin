@@ -587,78 +587,78 @@ Independent of pmadb: a static map for `mysql.*` and `information_schema.*` tabl
 ## Micro-behaviours checklist
 
 Settings pages
-- [ ] Eight pill tabs in fixed order; icons follow `TabsMode`; current tab highlighted; all links non-Ajax.
+- [x] Eight pill tabs in fixed order; icons follow `TabsMode`; current tab highlighted; all links non-Ajax. <!-- parity:test --> `p08-b1ce07` [preferences.e2e.ts:135](../../tests/e2e/preferences.e2e.ts#L135)
 - [x] Banner *Configuration has been saved.* appears only when `?saved=1` is in the URL (after a redirect), on every settings tab. <!-- parity:test --> `p08-a8211e` [preferences.e2e.ts:46](../../tests/e2e/preferences.e2e.ts#L46)
-- [x] Notice about session-only storage appears whenever `pma__userconfig` is unavailable, including on the 2FA tab. <!-- parity:test --> `p08-3ef43d` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157) +1
-- [ ] Navigation gear hidden while on a settings page.
-- [x] Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; active tab restored via `tab_hash` after redirect. <!-- parity:test --> `p08-ee115b` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71) +4
+- [x] Notice about session-only storage appears whenever `pma__userconfig` is unavailable, including on the 2FA tab. <!-- parity:test --> `p08-3ef43d` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
+- [x] Navigation gear hidden while on a settings page. <!-- parity:test --> `p08-cd4d34` [preferences.e2e.ts:135](../../tests/e2e/preferences.e2e.ts#L135)
+- [x] Each tab of a form has its own Apply/Reset; Apply saves **all** tabs of that form (whole `FormDisplay`), not just the visible one; active tab restored via `tab_hash` after redirect. <!-- parity:test --> `p08-ee115b` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71)
 - [x] A field equal to the phpMyAdmin default is not stored (key removed from the JSON) unless `config.inc.php` overrides the default - then the user's explicit default *is* stored. <!-- parity:test --> `p08-9b4f97` [preferences.test.ts:59](../../apps/server/test/unit/preferences.test.ts#L59) +1
-- [x] Restore-default icon visible only when value differs from default; hover raises opacity; click sets value and fires `change` (re-validates, unmarks `custom`). <!-- parity:test --> `p08-779a14` [configForm.test.ts:48](../../apps/web/src/features/preferences/configForm.test.ts#L48) +1
-- [x] Fields in `UserprefsDisallow` are rendered disabled with a "Disabled" badge and are ignored on save/apply even if posted. <!-- parity:test --> `p08-8fd8fd` [preferences.test.ts:181](../../apps/server/test/int/preferences.test.ts#L181) +1
-- [ ] Setup shows a third column with "Allow users to customize this value" checkboxes; unchecking adds the path to `UserprefsDisallow` in the generated file.
+- [x] Restore-default icon visible only when value differs from default; hover raises opacity; click sets value and fires `change` (re-validates, unmarks `custom`). <!-- parity:test --> `p08-779a14` [preferences.e2e.ts:46](../../tests/e2e/preferences.e2e.ts#L46)
+- [x] Fields in `UserprefsDisallow` are rendered disabled with a "Disabled" badge and are ignored on save/apply even if posted. <!-- parity:test --> `p08-8fd8fd` [preferences.test.ts:181](../../apps/server/test/int/preferences.test.ts#L181)
+- [x] Setup shows a third column with "Allow users to customize this value" checkboxes; unchecking adds the path to `UserprefsDisallow` in the generated file. <!-- parity:test --> `p08-0c99d6` [setup.parity.test.ts:273](../../tests/parity/setup.parity.test.ts#L273)
 - [x] Numeric validators run on keyup for text inputs; selects/checkboxes on change; whole form re-validated after a browser refresh restores values (`check_page_refresh`). <!-- parity:test --> `p08-d2dece` [preferences.test.ts:13](../../apps/server/test/unit/preferences.test.ts#L13) +1
 - [x] Upper-bound validators for `MaxDbList`, `MaxTableList`, `MaxRoutineList`, `QueryHistoryMax` use the admin's `config.inc.php` value, shown as comment *maximum N*. <!-- parity:test --> `p08-8ef8d5` [preferences.test.ts:21](../../apps/server/test/unit/preferences.test.ts#L21) +1
 - [x] `hide_db` validated as a PCRE body (delimiter `/` added); `MemoryLimit` must match `-1|\d+[kmg]?`. <!-- parity:test --> `p08-84b620` [preferences.test.ts:28](../../apps/server/test/unit/preferences.test.ts#L28) +1
-- [ ] Save failure keeps the posted values on screen with inline errors and a red summary; a `revert` POST resets only erroneous fields.
-- [x] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected. <!-- parity:test --> `p08-5102df` [preferences.test.ts:66](../../apps/server/test/unit/preferences.test.ts#L66) +2
-- [x] Saving any form re-persists the `2fa` block (never lost by a partial save). <!-- parity:test --> `p08-0b1f72` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71) +1
-- [ ] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`).
+- [x] Save failure keeps the posted values on screen with inline errors and a red summary; a `revert` POST resets only erroneous fields. <!-- parity:test --> `p08-a42fac` [preferences.parity.test.ts:178](../../tests/parity/preferences.parity.test.ts#L178) +1
+- [x] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected. <!-- parity:test --> `p08-5102df` [preferences.test.ts:312](../../apps/server/test/int/preferences.test.ts#L312)
+- [x] Saving any form re-persists the `2fa` block (never lost by a partial save). <!-- parity:test --> `p08-0b1f72` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71)
+- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [preferences.test.ts:335](../../apps/server/test/int/preferences.test.ts#L335)
 - [x] Console toggles, `NavigationWidth` drags etc. persist via `setUserValue`; with session storage they additionally fall back to cookies when a cookie name is provided. <!-- parity:test --> `p08-1383bd` [preferences.parity.test.ts:384](../../tests/parity/preferences.parity.test.ts#L384)
 
 Manage your settings
-- [ ] Import-from-browser and Save-to-browser radios are disabled until JS enables them; unsupported localStorage shows the unsupported notice and disables submit.
-- [x] Import shows *Saved on: <local date>* from `localStorage.configMtimeLocal` or *You have no saved settings!*; submit disabled when importing from an empty storage. <!-- parity:test --> `p08-10a75c` [configForm.test.ts:97](../../apps/web/src/features/preferences/configForm.test.ts#L97)
-- [x] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest). <!-- parity:test --> `p08-f18efc` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258) +1
+- [x] Import-from-browser and Save-to-browser radios are disabled until JS enables them; unsupported localStorage shows the unsupported notice and disables submit. <!-- parity:test --> `p08-0d82bc` [preferences.e2e.ts:164](../../tests/e2e/preferences.e2e.ts#L164) +1
+- [x] Import shows *Saved on: <local date>* from `localStorage.configMtimeLocal` or *You have no saved settings!*; submit disabled when importing from an empty storage. <!-- parity:test --> `p08-10a75c` [configForm.test.ts:97](../../apps/web/src/features/preferences/configForm.test.ts#L97) +1
+- [x] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest). <!-- parity:test --> `p08-f18efc` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258)
 - [x] Merge checkbox keeps existing prefs under imported ones; otherwise import starts from defaults (prefs not in the file are reset). <!-- parity:test --> `p08-d20c19` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258)
-- [ ] Import applies `ThemeDefault` immediately (theme cookie) and redirects with `lang=` when the language differs.
-- [x] Export JSON is pretty-printed; PHP export emits `$cfg['a']['b'] = ...;` lines; both named `phpMyAdmin-config-<host>.<ext>`. <!-- parity:test --> `p08-1c37f1` [preferences.test.ts:227](../../apps/server/test/int/preferences.test.ts#L227) +1
-- [ ] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message.
-- [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:295](../../apps/server/test/int/preferences.test.ts#L295) +1
+- [x] Import applies `ThemeDefault` immediately (theme cookie) and redirects with `lang=` when the language differs. <!-- parity:test --> `p08-5c8c99` [preferences.e2e.ts:223](../../tests/e2e/preferences.e2e.ts#L223)
+- [x] Export JSON is pretty-printed; PHP export emits `$cfg['a']['b'] = ...;` lines; both named `phpMyAdmin-config-<host>.<ext>`. <!-- parity:test --> `p08-1c37f1` [preferences.test.ts:227](../../apps/server/test/int/preferences.test.ts#L227)
+- [x] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message. <!-- parity:test --> `p08-6b7a63` [preferences.e2e.ts:164](../../tests/e2e/preferences.e2e.ts#L164)
+- [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:295](../../apps/server/test/int/preferences.test.ts#L295)
 - [x] Autoload banner shown once per session when prefs are session-based and `localStorage.config` exists; Yes imports with `return_url` back to the current page; No/Delete hide it for the session (`prefs_autoload=hide`). <!-- parity:test --> `p08-5de125` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
-- [ ] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not.
+- [x] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not. <!-- parity:test --> `p08-953597` [preferences.test.ts:354](../../apps/server/test/int/preferences.test.ts#L354)
 
 Page settings
 - [x] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view. <!-- parity:test --> `p08-8abc69` [preferences.e2e.ts:71](../../tests/e2e/preferences.e2e.ts#L71)
 - [x] Modal "Page-related settings" with Apply (submits) and Cancel (restores DOM clone, discarding edits). <!-- parity:test --> `p08-4eeac3` [preferences.e2e.ts:71](../../tests/e2e/preferences.e2e.ts#L71)
-- [x] Successful save redirects to the same URL; errors render above the page content. <!-- parity:test --> `p08-69a15f` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199) +1
+- [x] Successful save redirects to the same URL; errors render above the page content. <!-- parity:test --> `p08-69a15f` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
 - [x] Edit popup shows both Edit-mode and Text-fields groups; Browse popup shows the Browse-mode group only. <!-- parity:test --> `p08-6f0e6e` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
 
 Two-factor
-- [ ] Tab unusable without pmadb (explicit message).
+- [x] Tab unusable without pmadb (explicit message). <!-- parity:test --> `p08-d68897` [preferences.test.ts:374](../../apps/server/test/int/preferences.test.ts#L374)
 - [x] Backend list: none, (simple if DBG), application if deps, WebAuthn always, key (U2F) if dep; missing deps listed with composer package names. <!-- parity:test --> `p08-47e665` [webauthn.test.ts:62](../../apps/server/test/unit/webauthn.test.ts#L62) +1
-- [x] Configure is a two-step POST (choose -> setup form -> verify); failure re-renders the setup form with *Two-factor authentication failed[: reason]*. <!-- parity:test --> `p08-38b5dc` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98) +1
+- [x] Configure is a two-step POST (choose -> setup form -> verify); failure re-renders the setup form with *Two-factor authentication failed[: reason]*. <!-- parity:test --> `p08-38b5dc` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98)
 - [x] Application secret stable within the session until verified; QR label `phpMyAdmin (<host>)`. <!-- parity:test --> `p08-3db3a5` [preferences.test.ts:97](../../apps/server/test/unit/preferences.test.ts#L97)
-- [ ] Disabling requires passing the current challenge; U2F pages show the deprecation alert and HTTPS warning.
-- [x] Login shows the 2FA step after password success; the check result is cached in session; `Invalid` backend blocks login. <!-- parity:test --> `p08-71a0b1` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98) +1
+- [x] Disabling requires passing the current challenge; U2F pages show the deprecation alert and HTTPS warning. <!-- parity:test --> `p08-bce194` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98)
+- [x] Login shows the 2FA step after password success; the check result is cached in session; `Invalid` backend blocks login. <!-- parity:test --> `p08-71a0b1` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98)
 
 Configuration storage
-- [ ] Table directives: `''` = auto (ZeroConf fills default name if table exists), `false` = disabled (never probed; `allworks` stays false), string = explicit name.
-- [ ] Probe order at bootstrap: configured `pmadb` or `phpmyadmin`, then the current database.
-- [ ] Each table individually probed with `SELECT NULL ... LIMIT 0` as control user; a missing/unreadable table disables only its feature(s).
-- [ ] `displaywork` needs both relation and table_info; `pdfwork` both table_coords and pdf_pages; `menuswork` both users and usergroups.
-- [ ] `mimework` requires the 4.3 columns; auto-upgrade attempted silently; failure flagged on the check page.
-- [ ] Home/DB-Operations notice severity: error when `pmadb` set in config, notice otherwise; suppressed by `PmaNoRelation_DisableWarning`; extra ZeroConf hint line.
-- [ ] `/check-relations` offers exactly one of: create database `phpmyadmin`, create in current database, create missing tables - depending on state and `ZeroConf`. A configured but missing `pmadb` is cleared by the failing discovery before the page reads it, so the database offered (and created) is `phpmyadmin`.
-- [ ] Creating tables uses `create_tables.sql` parsed at runtime with configured custom names substituted; only missing tables are created; disabled (`false`) features skipped.
-- [ ] `table_uiprefs` trimmed to `MaxTableUiprefs` newest rows on every save.
-- [ ] Recent/favorite lists stored as JSON `[{db,table}]` via `REPLACE INTO`; the save right after a removal that leaves a gap stores `{"<pos>":{db,table}}`.
-- [ ] History rows per user purged beyond `QueryHistoryMax`; only written when `QueryHistoryDB`.
-- [ ] Shared bookmarks have `user=''` and are visible to everyone; disallowed when `AllowSharedBookmarks=false`.
-- [ ] Database comment stored as `column_info` row with `table_name=''`, `column_name='(db_comment)'`.
-- [ ] Internal relation beats InnoDB FK for the same column in browse/insert.
-- [ ] Display field fallback: first CHAR-class column.
-- [ ] FK dropdown only when foreign table has `< ForeignKeyMaxLimit` rows; otherwise browse-foreign-values popup.
-- [ ] Renames propagate to relation (both sides), table_info, column_info, table_coords (delete on cross-db move), table_uiprefs, navigationhiding.
+- [x] Table directives: `''` = auto (ZeroConf fills default name if table exists), `false` = disabled (never probed; `allworks` stays false), string = explicit name. <!-- parity:test --> `p08-759df7` [storage.test.ts:233](../../packages/metadata/test/storage.test.ts#L233)
+- [x] Probe order at bootstrap: configured `pmadb` or `phpmyadmin`, then the current database. <!-- parity:test --> `p08-0c056a` [metadata.test.ts:84](../../apps/server/test/int/metadata.test.ts#L84) +1
+- [x] Each table individually probed with `SELECT NULL ... LIMIT 0` as control user; a missing/unreadable table disables only its feature(s). <!-- parity:test --> `p08-ac345c` [metadata.test.ts:84](../../apps/server/test/int/metadata.test.ts#L84) +1
+- [x] `displaywork` needs both relation and table_info; `pdfwork` both table_coords and pdf_pages; `menuswork` both users and usergroups. <!-- parity:test --> `p08-d5ec83` [check-relations.test.tsx:80](../../apps/web/src/features/shell/check-relations.test.tsx#L80) +1
+- [x] `mimework` requires the 4.3 columns; auto-upgrade attempted silently; failure flagged on the check page. <!-- parity:test --> `p08-5b639b` [check-relations.test.tsx:80](../../apps/web/src/features/shell/check-relations.test.tsx#L80) +1
+- [x] Home/DB-Operations notice severity: error when `pmadb` set in config, notice otherwise; suppressed by `PmaNoRelation_DisableWarning`; extra ZeroConf hint line. <!-- parity:test --> `p08-9f5c8d` [storage-notice.test.ts:45](../../apps/server/test/int/storage-notice.test.ts#L45) +2
+- [x] `/check-relations` offers exactly one of: create database `phpmyadmin`, create in current database, create missing tables - depending on state and `ZeroConf`. A configured but missing `pmadb` is cleared by the failing discovery before the page reads it, so the database offered (and created) is `phpmyadmin`. <!-- parity:test --> `p08-19523b` [metadata.test.ts:322](../../apps/server/test/int/metadata.test.ts#L322) +1
+- [x] Creating tables uses `create_tables.sql` parsed at runtime with configured custom names substituted; only missing tables are created; disabled (`false`) features skipped. <!-- parity:test --> `p08-c68812` [metadata.test.ts:322](../../apps/server/test/int/metadata.test.ts#L322) +1
+- [x] `table_uiprefs` trimmed to `MaxTableUiprefs` newest rows on every save. <!-- parity:test --> `p08-5921ba` [repositories-golden.test.ts:305](../../packages/metadata/test/repositories-golden.test.ts#L305) +1
+- [x] Recent/favorite lists stored as JSON `[{db,table}]` via `REPLACE INTO`; the save right after a removal that leaves a gap stores `{"<pos>":{db,table}}`. <!-- parity:test --> `p08-ca3864` [repositories-golden.test.ts:301](../../packages/metadata/test/repositories-golden.test.ts#L301) +2
+- [x] History rows per user purged beyond `QueryHistoryMax`; only written when `QueryHistoryDB`. <!-- parity:test --> `p08-96d5e0` [metadata.test.ts:183](../../apps/server/test/int/metadata.test.ts#L183)
+- [x] Shared bookmarks have `user=''` and are visible to everyone; disallowed when `AllowSharedBookmarks=false`. <!-- parity:test --> `p08-dd1f62` [repositories-golden.test.ts:297](../../packages/metadata/test/repositories-golden.test.ts#L297) +2
+- [x] Database comment stored as `column_info` row with `table_name=''`, `column_name='(db_comment)'`. <!-- parity:test --> `p08-d94efe` [shell.test.ts:180](../../apps/server/test/int/shell.test.ts#L180)
+- [x] Internal relation beats InnoDB FK for the same column in browse/insert. <!-- parity:test --> `p08-8e4b43` [repositories-golden.test.ts:295](../../packages/metadata/test/repositories-golden.test.ts#L295)
+- [x] Display field fallback: first CHAR-class column. <!-- parity:test --> `p08-d83080` [repositories-golden.test.ts:291](../../packages/metadata/test/repositories-golden.test.ts#L291)
+- [x] FK dropdown only when foreign table has `< ForeignKeyMaxLimit` rows; otherwise browse-foreign-values popup. <!-- parity:test --> `p08-ad6ee4` [insert-edit.test.ts:184](../../apps/server/test/int/insert-edit.test.ts#L184) +1
+- [x] Renames propagate to relation (both sides), table_info, column_info, table_coords (delete on cross-db move), table_uiprefs, navigationhiding. <!-- parity:test --> `p08-8b840d` [table-writers.test.ts:32](../../packages/metadata/test/table-writers.test.ts#L32) +2
 
 Config file
-- [ ] `config.inc.php` optional; missing file = defaults (cookie auth to localhost) + setup allowed; existing file disables the setup script (*Configuration already exists, setup is disabled!*) except in demo mode.
-- [ ] World-writable config refused (non-Windows) unless `CheckConfigurationPermissions=false`.
-- [ ] `Servers[0]` ignored; `$i` numbering must start at 1.
-- [ ] Legacy control aliases accepted: `control_host`, `control_port`, `control_user`, `control_pass`, `control_password`.
-- [ ] Legacy tab words (`structure`, `browse`, `welcome`...) accepted for `DefaultTab*` / `NavigationTreeDefaultTabTable*` and mapped to routes.
-- [ ] Setup generator writes `blowfish_secret` as `\sodium_hex2bin(...)`, drops default-valued keys, honours EOL choice, groups servers under `$i++`.
-- [ ] Setup overview: language selector, hidden/old messages toggle, servers table (id, name, auth type, DSN with `***` password, Edit/Delete), New server, Configuration file form (Default language, Default server with "let the user choose" when >1 server, End of line, Display/Download/Clear), footer links incl. *Check for latest version*.
-- [ ] Setup security checks produce notices: blowfish secret missing/weak with cookie auth, `AllowArbitraryServer` enabled, `LoginCookieValidity` vs `session.gc_maxlifetime`, `SaveDir`/`TempDir` set (directory exposure warning), `AllowNoPassword`, missing zip/gzip/bzip2 functions, insecure (non-HTTPS) connection.
+- [x] `config.inc.php` optional; missing file = defaults (cookie auth to localhost) + setup allowed; existing file disables the setup script (*Configuration already exists, setup is disabled!*) except in demo mode. <!-- parity:test --> `p08-f2ccb9` [setup.test.ts:15](../../apps/server/test/int/setup.test.ts#L15)
+- [x] World-writable config refused (non-Windows) unless `CheckConfigurationPermissions=false`. <!-- parity:test --> `p08-56c38b` [directives-server.test.ts:15](../../apps/server/test/int/directives-server.test.ts#L15)
+- [x] `Servers[0]` ignored; `$i` numbering must start at 1. <!-- parity:test --> `p08-18cb5e` [loader.test.ts:228](../../packages/config/test/loader.test.ts#L228)
+- [x] Legacy control aliases accepted: `control_host`, `control_port`, `control_user`, `control_pass`, `control_password`. <!-- parity:test --> `p08-7bc4a5` [loader.test.ts:296](../../packages/config/test/loader.test.ts#L296)
+- [x] Legacy tab words (`structure`, `browse`, `welcome`...) accepted for `DefaultTab*` / `NavigationTreeDefaultTabTable*` and mapped to routes. <!-- parity:test --> `p08-81d59d` [loader.test.ts:325](../../packages/config/test/loader.test.ts#L325)
+- [x] Setup generator writes `blowfish_secret` as `\sodium_hex2bin(...)`, drops default-valued keys, honours EOL choice, groups servers under `$i++`. <!-- parity:test --> `p08-4b45c6` [setup.parity.test.ts:178](../../tests/parity/setup.parity.test.ts#L178) +2
+- [x] Setup overview: language selector, hidden/old messages toggle, servers table (id, name, auth type, DSN with `***` password, Edit/Delete), New server, Configuration file form (Default language, Default server with "let the user choose" when >1 server, End of line, Display/Download/Clear), footer links incl. *Check for latest version*. <!-- parity:test --> `p08-7737a8` [setup.test.ts:27](../../apps/server/test/int/setup.test.ts#L27)
+- [x] Setup security checks produce notices: blowfish secret missing/weak with cookie auth, `AllowArbitraryServer` enabled, `LoginCookieValidity` vs `session.gc_maxlifetime`, `SaveDir`/`TempDir` set (directory exposure warning), `AllowNoPassword`, missing zip/gzip/bzip2 functions, insecure (non-HTTPS) connection. <!-- parity:test --> `p08-94aa36` [setup.parity.test.ts:178](../../tests/parity/setup.parity.test.ts#L178) +1
 
 ---
 

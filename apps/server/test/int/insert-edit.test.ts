@@ -181,7 +181,7 @@ describe('edit form', () => {
 })
 
 describe('foreign values and wrapper', () => {
-  it('browses the referenced table [p03-d20896]', async () => {
+  it('browses the referenced table [p03-d20896] [p08-ad6ee4]', async () => {
     const r = await post(`${base}/t/browse-foreigners`, { field: 'parent_id', data: '2' })
     expect(r.total).toBe(2)
     expect(r.rows.map((x: Json) => x.left.key)).toEqual(['1', '2'])
@@ -239,5 +239,27 @@ describe('browser display transformations in the Browse grid', () => {
     const cols = (await s.req('GET', `${base}/t/transformations`)).json as Json
     expect(cols.enabled).toBe(true)
     expect(cols.columns.name.transformationOptions).toEqual(['[', ']'])
+  })
+})
+
+describe('the foreign key widget follows ForeignKeyMaxLimit [p08-ad6ee4]', () => {
+  it('a dropdown below the limit, the browse-foreign-values link from it on', async () => {
+    const widget = async (limit: number) => {
+      const app = testApp(testConfig({ ForeignKeyMaxLimit: limit }))
+      try {
+        await app.login()
+        const r = await app.req('POST', `${base}/t/insert-form`, {})
+        expect(r.status, JSON.stringify(r.json)).toBe(200)
+        const form = r.json as Json
+        const i = (form.columns as Json[]).findIndex((c) => c.field === 'parent_id')
+        return form.rows[0].cells[i].widget.kind as string
+      } finally {
+        await app.close()
+      }
+    }
+    // parent has 2 rows
+    expect(await widget(100)).toBe('foreign-select')
+    expect(await widget(3)).toBe('foreign-select')
+    expect(await widget(2)).toBe('foreign-link')
   })
 })

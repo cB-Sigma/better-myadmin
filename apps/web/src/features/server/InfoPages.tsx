@@ -1,4 +1,4 @@
-import type { QueryResponse } from '@bettermyadmin/contracts'
+import type { PluginsResponse, QueryResponse } from '@bettermyadmin/contracts'
 import { N_ } from '@bettermyadmin/i18n'
 import {
   Hint,
@@ -15,7 +15,7 @@ import {
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { CaseSensitive, Cog, FileText, FileType, Puzzle, Table2 } from 'lucide-react'
+import { ArrowDown, ArrowUp, CaseSensitive, Cog, FileText, FileType, Puzzle, Table2 } from 'lucide-react'
 import { Fragment, useState } from 'react'
 import { api, errorMessage } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
@@ -279,40 +279,87 @@ export function PluginsPage({ server }: { server: number }) {
             </PanelBody>
           </Panel>
           {q.data.types.map((ty) => (
-            <Table key={ty.type} id={`plugins-${ty.cleanType}`} zebra className="mb-4">
-              <caption className="caption-top text-start text-sm font-semibold">{ty.type}</caption>
-              <thead>
-                <tr>
-                  <th scope="col">{t('Plugin')}</th>
-                  <th scope="col">{t('Description')}</th>
-                  <th scope="col">{t('Version')}</th>
-                  <th scope="col">{t('Author')}</th>
-                  <th scope="col">{t('License')}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ty.plugins.map((p) => (
-                  <tr key={p.name} className="noclick">
-                    <th>
-                      {p.name}
-                      {p.status !== 'ACTIVE' && (
-                        <span className="ms-1 rounded bg-error px-1 text-xs text-bg">
-                          {STATUS_LABEL[p.status] !== undefined ? t(STATUS_LABEL[p.status]!) : ''}
-                        </span>
-                      )}
-                    </th>
-                    <td>{p.description}</td>
-                    <td>{p.version}</td>
-                    <td>{p.author}</td>
-                    <td>{p.license}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <PluginTable key={ty.type} type={ty} />
           ))}
         </div>
       )}
     </div>
+  )
+}
+
+type PluginType = PluginsResponse['types'][number]
+
+/**
+ * One plugin type: tablesorter on tables with more than one row (plugins.ts makeColumnsSortable),
+ * sorted by name first, every column but Description sortable (a click sorts ascending, the next
+ * one descending), natural case-insensitive text order.
+ */
+function PluginTable({ type: ty }: { type: PluginType }) {
+  const [sort, setSort] = useState<{ col: number; desc: boolean }>({ col: 0, desc: false })
+  const sortable = ty.plugins.length > 1
+  const cell = (p: PluginType['plugins'][number], col: number) =>
+    [p.name, p.description ?? '', p.version ?? '', p.author ?? '', p.license][col] ?? ''
+  const rows = sortable
+    ? [...ty.plugins].sort((a, b) => {
+        const d = cell(a, sort.col).localeCompare(cell(b, sort.col), undefined, {
+          numeric: true,
+          sensitivity: 'base',
+        })
+        return sort.desc ? -d : d
+      })
+    : ty.plugins
+  const header = (label: string, col: number) => {
+    if (!sortable || col === 1) return <th scope="col">{label}</th>
+    const active = sort.col === col
+    return (
+      <th scope="col" aria-sort={active ? (sort.desc ? 'descending' : 'ascending') : 'none'}>
+        <button
+          type="button"
+          className="inline-flex items-center gap-1"
+          onClick={() => setSort({ col, desc: active ? !sort.desc : false })}
+        >
+          {label}
+          {active &&
+            (sort.desc ? (
+              <ArrowDown className="size-3" aria-hidden />
+            ) : (
+              <ArrowUp className="size-3" aria-hidden />
+            ))}
+        </button>
+      </th>
+    )
+  }
+  return (
+    <Table id={`plugins-${ty.cleanType}`} zebra className="mb-4">
+      <caption className="caption-top text-start text-sm font-semibold">{ty.type}</caption>
+      <thead>
+        <tr>
+          {header(t('Plugin'), 0)}
+          {header(t('Description'), 1)}
+          {header(t('Version'), 2)}
+          {header(t('Author'), 3)}
+          {header(t('License'), 4)}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((p) => (
+          <tr key={p.name} className="noclick">
+            <th>
+              {p.name}
+              {p.status !== 'ACTIVE' && (
+                <span className="ms-1 rounded bg-error px-1 text-xs text-bg">
+                  {STATUS_LABEL[p.status] !== undefined ? t(STATUS_LABEL[p.status]!) : ''}
+                </span>
+              )}
+            </th>
+            <td>{p.description}</td>
+            <td>{p.version}</td>
+            <td>{p.author}</td>
+            <td>{p.license}</td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   )
 }
 

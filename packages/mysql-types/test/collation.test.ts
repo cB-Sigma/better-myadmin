@@ -8,7 +8,7 @@ const expected = JSON.parse(
 ) as Record<string, string>
 
 describe('Collation::buildDescription port', () => {
-  it('matches phpMyAdmin for every MySQL 8.4 collation and the MariaDB/legacy extras', () => {
+  it('matches phpMyAdmin for every MySQL 8.4 collation and the MariaDB/legacy extras [p06-b19775]', () => {
     const got = Object.fromEntries(Object.keys(expected).map((n) => [n, collationDescription(n)]))
     expect(got).toEqual(expected)
   })

@@ -45,7 +45,9 @@ test.describe('themes', () => {
     await ctx.close()
   })
 
-  test('the gallery shows one card per theme with "Take it" [p01-b253b9] [p01-100ac1]', async ({ page }) => {
+  test('the gallery shows one card per theme with "Take it" [p01-b253b9] [p01-100ac1] [p06-c67ed8]', async ({
+    page,
+  }) => {
     await login(page)
     await page.getByRole('button', { name: 'View all' }).click()
     const dialog = page.getByRole('dialog', { name: 'BetterMyAdmin Themes' })

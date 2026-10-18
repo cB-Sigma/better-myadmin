@@ -113,7 +113,7 @@ describe('databases', () => {
 })
 
 describe('status', () => {
-  it('overview', async () => {
+  it('overview [p06-770074] [p06-8b5ab5]', async () => {
     const o = await get<StatusOverview>('/status')
     expect(o.isDataLoaded).toBe(true)
     expect(o.traffic.map((x) => x.name)).toEqual(['Received', 'Sent', 'Total'])
@@ -126,7 +126,7 @@ describe('status', () => {
     expect(o.uptime).toMatch(/^\d+ days, \d+ hours, \d+ minutes and \d+ seconds$/)
   })
 
-  it('processes: sort, filter, full texts, kill', async () => {
+  it('processes: sort, filter, full texts, kill [p06-0b7c03] [p06-9768f8]', async () => {
     const c = await mysql.createConnection(MYSQL)
     void c.query('SELECT SLEEP(30) /* m3srv_it_sleep */').catch(() => {})
     await new Promise((r) => setTimeout(r, 200))
@@ -154,14 +154,14 @@ describe('status', () => {
     }
   })
 
-  it('query statistics', async () => {
+  it('query statistics [p06-cac377]', async () => {
     const q = await get<QueryStatistics>('/status/queries')
     expect(q.queries.find((x) => x.key === 'Com_select')!.name).toBe('Select')
     expect(q.queries.some((x) => x.key === 'Com_admin_commands')).toBe(false)
     expect(q.chart.labels.length).toBe(q.chart.data.length)
   })
 
-  it('status variables: categories, synthetic values, docs, FLUSH', async () => {
+  it('status variables: categories, synthetic values, docs, FLUSH [p06-3399cc] [p06-90f755] [p06-fa0c8f]', async () => {
     const v = await get<StatusVariables>('/status/variables')
     expect(v.categories.map((c) => c.id)).toContain('innodb')
     const hit = v.variables.find((x) => x.name === 'Threads_cache_hitrate_%')!
@@ -176,7 +176,7 @@ describe('status', () => {
     expect(ignored.json.flushed).toBeNull()
   })
 
-  it('advisor', async () => {
+  it('advisor [p06-44265d]', async () => {
     const a = await get<AdvisorResponse>('/status/advisor')
     expect(a.isDataLoaded).toBe(true)
     expect(a.errors).toEqual([])
@@ -189,7 +189,7 @@ describe('status', () => {
 })
 
 describe('variables', () => {
-  it('lists, gets and sets', async () => {
+  it('lists, gets and sets [p06-162a8d] [p06-d139b2]', async () => {
     const v = await get<ServerVariablesResponse>('/variables')
     // the knowledge base's first MySQL entry wins, like KBSearch::getByName
     expect(v.variables.find((x) => x.name === 'max_connections')!.docUrl).toBe(
@@ -214,13 +214,13 @@ describe('variables', () => {
 })
 
 describe('charsets, engines, plugins, binlog', () => {
-  it('collations grouped per charset', async () => {
+  it('collations grouped per charset [p06-b19775]', async () => {
     const c = await get<CollationsResponse>('/collations')
     const utf8mb4 = c.charsets.find((x) => x.name === 'utf8mb4')!
     expect(utf8mb4.collations.find((x) => x.isDefault)!.name).toBe('utf8mb4_0900_ai_ci')
   })
 
-  it('engines, InnoDB pages, unknown engine', async () => {
+  it('engines, InnoDB pages, unknown engine [p06-e1da5c]', async () => {
     const e = await get<EnginesResponse>('/engines')
     expect(e.engines.find((x) => x.engine === 'InnoDB')!.support).toBe('DEFAULT')
     const innodb = await get<EngineResponse>('/engines/InnoDB')
@@ -233,14 +233,14 @@ describe('charsets, engines, plugins, binlog', () => {
     expect(unknown.isValid).toBe(false)
   })
 
-  it('plugins grouped by sorted type', async () => {
+  it('plugins grouped by sorted type [p06-e5aa2e]', async () => {
     const p = await get<PluginsResponse>('/plugins')
     const types = p.types.map((x) => x.type)
     expect(types).toEqual([...types].sort())
     expect(p.types.find((x) => x.type === 'STORAGE ENGINE')!.cleanType).toBe('storageengine')
   })
 
-  it('binary log paging', async () => {
+  it('binary log paging [p06-debfa6]', async () => {
     const b = await get<BinlogResponse>('/binlog?pos=25')
     expect(b.sqlMessage.sql).toBe('SHOW BINLOG EVENTS LIMIT 25, 25')
     expect(b.previous).toEqual({ pos: null })

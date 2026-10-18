@@ -271,6 +271,7 @@ export async function homeData(ctx: ShellCtx, env: HomeEnv): Promise<HomeRespons
   return {
     hasServerSelection:
       cfg.ServerDefault === 0 || (cfg.NavigationDisplayServers && serverIndexes(cfg).length > 1),
+    displayServersList: cfg.DisplayServersList,
     hasChangePasswordLink: server.auth_type !== 'config' && cfg.ShowChgPassword,
     collation: {
       selected: defaultCollation,

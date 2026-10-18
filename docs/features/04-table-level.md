@@ -548,38 +548,38 @@ Functions offered per class (Insert form, listed for completeness since they der
 
 Structure list
 - [x] Column name underlined/dotted with tooltip when a pmadb comment exists (`span.commented_column[title]`); only when `ShowPropertyComments`. <!-- parity:test --> `p04-31ee94` [table-structure.parity.test.ts:1120](../../tests/parity/table-structure.parity.test.ts#L1120)
-- [x] Primary icon (`b_primary`) and index icon (`bd_primary`) appended after the name; both can appear. <!-- parity:test --> `p04-902977` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +1
-- [x] Type cell lower-cased, attributes stripped, `enum('a', 'b')` spacing, truncated at `LimitChars` with `<abbr>`; MIME line "Media type: image/jpeg" appended when configured. <!-- parity:test --> `p04-23b058` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +1
-- [x] Default cell: `NULL` italic when nullable without default, `None` italic otherwise; BIT defaults shown as plain bits. <!-- parity:test --> `p04-5cfcc5` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +1
-- [x] Extra upper-cased. <!-- parity:test --> `p04-7efffd` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +1
+- [x] Primary icon (`b_primary`) and index icon (`bd_primary`) appended after the name; both can appear. <!-- parity:test --> `p04-902977` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67)
+- [x] Type cell lower-cased, attributes stripped, `enum('a', 'b')` spacing, truncated at `LimitChars` with `<abbr>`; MIME line "Media type: image/jpeg" appended when configured. <!-- parity:test --> `p04-23b058` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67)
+- [x] Default cell: `NULL` italic when nullable without default, `None` italic otherwise; BIT defaults shown as plain bits. <!-- parity:test --> `p04-5cfcc5` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67)
+- [x] Extra upper-cased. <!-- parity:test --> `p04-7efffd` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67)
 - [x] Action column hidden for views and system schemas; `colspan` 8 vs 9 depending on `ActionLinksMode` icons. <!-- parity:test --> `p04-46e274` [table-structure-extras.e2e.ts:111](../../tests/e2e/table-structure-extras.e2e.ts#L111)
 - [ ] "More" dropdown vs inline nav depends on `HideStructureActions`.
-- [x] Primary/Unique/Index disabled for text/blob print types and ARCHIVE engine; Primary also disabled when column already in PK. <!-- parity:test --> `p04-eed3e0` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +1
-- [x] Spatial enabled only for spatial types on MySQL ≥ 5.7.5 / MyISAM; Fulltext only MyISAM/Aria/Maria or InnoDB ≥ 5.6.4 and char/text types. <!-- parity:test --> `p04-27610d` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +1
-- [x] Distinct values opens Browse with `COUNT(*) AS Rows, col … GROUP BY col ORDER BY col` and `is_browse_distinct`. <!-- parity:test --> `p04-a12911` [structure.test.ts:333](../../packages/sql-gen/test/structure.test.ts#L333) +3
-- [x] Central-column add/remove per row and in bulk only when the central columns feature is configured. <!-- parity:test --> `p04-a0caf6` [table-central-privileges.test.ts:36](../../apps/server/test/int/table-central-privileges.test.ts#L36) +3
-- [x] Drop column: JS confirm with exact SQL; row removed, row numbers renumbered, after_field option removed and last selected, stats + index list refreshed, navigation reloaded. <!-- parity:test --> `p04-3e085e` [table-structure.test.ts:309](../../apps/server/test/int/table-structure.test.ts#L309) +2
-- [x] Add key: confirm with `ALTER TABLE … ADD PRIMARY KEY(col)` text; PK replacement drops existing PK first. <!-- parity:test --> `p04-5ea0c3` [structure.test.ts:93](../../packages/sql-gen/test/structure.test.ts#L93) +5
-- [x] Bulk Primary with an existing PK shows a Yes/No confirmation card with the DROP+ADD statement. <!-- parity:test --> `p04-009e25` [table-structure.test.ts:290](../../apps/server/test/int/table-structure.test.ts#L290) +1
-- [x] Bulk Drop shows the red confirmation page with the multi-DROP statement; "No" → "No change". <!-- parity:test --> `p04-2324e1` [table-structure.parity.test.ts:949](../../tests/parity/table-structure.parity.test.ts#L949) +1
-- [x] Bulk Browse runs `SELECT cols FROM db.t` into the grid. <!-- parity:test --> `p04-e3d505` [structure.test.ts:333](../../packages/sql-gen/test/structure.test.ts#L333) +2
-- [x] Bulk Change opens the multi-column edit form (one row per selected column). <!-- parity:test --> `p04-e5b2c3` [table-structure.test.ts:201](../../apps/server/test/int/table-structure.test.ts#L201) +1
-- [x] "Add N column(s) at beginning | after X" — hidden `field_where` toggled by selecting the first option; last column preselected. <!-- parity:test --> `p04-9d4da3` [table-structure.test.ts:176](../../apps/server/test/int/table-structure.test.ts#L176) +2
-- [x] Move columns modal: drag list, Go no-op when unchanged, Preview SQL shows generated `ALTER TABLE … CHANGE … FIRST/AFTER`, error modal on mismatch ("The selected columns do not match the columns in the table." / "…already in the correct order."). <!-- parity:test --> `p04-511b9e` [structure.test.ts:210](../../packages/sql-gen/test/structure.test.ts#L210) +2
+- [x] Primary/Unique/Index disabled for text/blob print types and ARCHIVE engine; Primary also disabled when column already in PK. <!-- parity:test --> `p04-eed3e0` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67)
+- [x] Spatial enabled only for spatial types on MySQL ≥ 5.7.5 / MyISAM; Fulltext only MyISAM/Aria/Maria or InnoDB ≥ 5.6.4 and char/text types. <!-- parity:test --> `p04-27610d` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67)
+- [x] Distinct values opens Browse with `COUNT(*) AS Rows, col … GROUP BY col ORDER BY col` and `is_browse_distinct`. <!-- parity:test --> `p04-a12911` [table-structure.test.ts:67](../../apps/server/test/int/table-structure.test.ts#L67) +2
+- [x] Central-column add/remove per row and in bulk only when the central columns feature is configured. <!-- parity:test --> `p04-a0caf6` [table-central-privileges.test.ts:36](../../apps/server/test/int/table-central-privileges.test.ts#L36)
+- [x] Drop column: JS confirm with exact SQL; row removed, row numbers renumbered, after_field option removed and last selected, stats + index list refreshed, navigation reloaded. <!-- parity:test --> `p04-3e085e` [table-structure.test.ts:309](../../apps/server/test/int/table-structure.test.ts#L309) +1
+- [x] Add key: confirm with `ALTER TABLE … ADD PRIMARY KEY(col)` text; PK replacement drops existing PK first. <!-- parity:test --> `p04-5ea0c3` [table-structure.test.ts:273](../../apps/server/test/int/table-structure.test.ts#L273) +1
+- [x] Bulk Primary with an existing PK shows a Yes/No confirmation card with the DROP+ADD statement. <!-- parity:test --> `p04-009e25` [table-structure.test.ts:290](../../apps/server/test/int/table-structure.test.ts#L290)
+- [x] Bulk Drop shows the red confirmation page with the multi-DROP statement; "No" → "No change". <!-- parity:test --> `p04-2324e1` [table-structure-extras.e2e.ts:54](../../tests/e2e/table-structure-extras.e2e.ts#L54)
+- [x] Bulk Browse runs `SELECT cols FROM db.t` into the grid. <!-- parity:test --> `p04-e3d505` [table-structure.test.ts:505](../../apps/server/test/int/table-structure.test.ts#L505) +1
+- [x] Bulk Change opens the multi-column edit form (one row per selected column). <!-- parity:test --> `p04-e5b2c3` [table-structure.test.ts:201](../../apps/server/test/int/table-structure.test.ts#L201)
+- [x] "Add N column(s) at beginning | after X" — hidden `field_where` toggled by selecting the first option; last column preselected. <!-- parity:test --> `p04-9d4da3` [table-structure.test.ts:176](../../apps/server/test/int/table-structure.test.ts#L176)
+- [x] Move columns modal: drag list, Go no-op when unchanged, Preview SQL shows generated `ALTER TABLE … CHANGE … FIRST/AFTER`, error modal on mismatch ("The selected columns do not match the columns in the table." / "…already in the correct order."). <!-- parity:test --> `p04-511b9e` [table-structure.test.ts:241](../../apps/server/test/int/table-structure.test.ts#L241)
 - [x] Propose table structure only on MySQL < 8 or MariaDB (`PROCEDURE ANALYSE()` with all rows). <!-- parity:test --> `p04-262da9` [table-structure.test.ts:491](../../apps/server/test/int/table-structure.test.ts#L491)
 - [x] Track table / Track view links only when tracking is active. <!-- parity:test --> `p04-c123c5` [table-structure.test.ts:479](../../apps/server/test/int/table-structure.test.ts#L479)
 - [x] Print button hides `d-print-none` and shows the `<h1>` table name. <!-- parity:test --> `p04-e9ef21` [table-structure-extras.e2e.ts:99](../../tests/e2e/table-structure-extras.e2e.ts#L99)
-- [x] Indexes card hidden for ARCHIVE; duplicate-index notices; "No index defined!" placeholder; create-index count 1..16. <!-- parity:test --> `p04-58bbc9` [structure.test.ts:167](../../packages/sql-gen/test/structure.test.ts#L167) +2
+- [x] Indexes card hidden for ARCHIVE; duplicate-index notices; "No index defined!" placeholder; create-index count 1..16. <!-- parity:test --> `p04-58bbc9` [table-structure.test.ts:107](../../apps/server/test/int/table-structure.test.ts#L107)
 - [x] Index drop uses the Preview-SQL confirm modal; removing the last index swaps to the placeholder without reload. <!-- parity:test --> `p04-68a55a` [table-structure.parity.test.ts:961](../../tests/parity/table-structure.parity.test.ts#L961) +1
-- [x] Partitions block collapsible per `InitialSlidersState`; DROP/TRUNCATE partition confirmations; Drop only for RANGE/LIST families; "Partition table" vs "Edit partitioning"+"Remove partitioning". <!-- parity:test --> `p04-97675f` [table-structure.test.ts:411](../../apps/server/test/int/table-structure.test.ts#L411) +7
-- [x] Information card: Overhead/Effective rows only when `Data_free` reported; Optimize link only for MyISAM/Aria/Maria or InnoDB file-per-table; InnoDB hides Rows/Row length/Row size; MERGE hides Index/Total/Row size; dates localised. <!-- parity:test --> `p04-8ac250` [table-structure.test.ts:107](../../apps/server/test/int/table-structure.test.ts#L107) +1
+- [x] Partitions block collapsible per `InitialSlidersState`; DROP/TRUNCATE partition confirmations; Drop only for RANGE/LIST families; "Partition table" vs "Edit partitioning"+"Remove partitioning". <!-- parity:test --> `p04-97675f` [table-structure.test.ts:411](../../apps/server/test/int/table-structure.test.ts#L411) +1
+- [x] Information card: Overhead/Effective rows only when `Data_free` reported; Optimize link only for MyISAM/Aria/Maria or InnoDB file-per-table; InnoDB hides Rows/Row length/Row size; MERGE hides Index/Total/Row size; dates localised. <!-- parity:test --> `p04-8ac250` [table-structure.test.ts:107](../../apps/server/test/int/table-structure.test.ts#L107)
 - [x] Structure page returns `tableStat` JSON for AJAX refresh. <!-- parity:test --> `p04-e0df58` [table-structure.test.ts:107](../../apps/server/test/int/table-structure.test.ts#L107)
 
 Column form
 - [ ] Collation dropdowns are empty until focused (template clone) but preselected ones are filled on load. <!-- parity:n/a: a DOM-size optimisation of the jQuery form; the SPA renders each select directly -->
 - [x] Type options carry description tooltips and `data-length-restricted`. <!-- parity:test --> `p04-488fbc` [table-structure-extras.e2e.ts:154](../../tests/e2e/table-structure-extras.e2e.ts#L154)
 - [x] "Edit ENUM/SET values" link only shown for ENUM/SET; editor escapes quotes/backslashes and writes `'a','b'`. <!-- parity:test --> `p04-9b95d9` [columnForm.test.ts:48](../../apps/web/src/features/table/structure/columnForm.test.ts#L48)
-- [x] Length required for CHAR/VARCHAR/BIT/BINARY/VARBINARY (alert); UNSIGNED/ZEROFILL rejected on non-numeric types. <!-- parity:test --> `p04-f66062` [columnForm.test.ts:8](../../apps/web/src/features/table/structure/columnForm.test.ts#L8) +1
+- [x] Length required for CHAR/VARCHAR/BIT/BINARY/VARBINARY (alert); UNSIGNED/ZEROFILL rejected on non-numeric types. <!-- parity:test --> `p04-f66062` [table-structure.e2e.ts:39](../../tests/e2e/table-structure.e2e.ts#L39)
 - [x] At least one column name required; create form requires table name. <!-- parity:test --> `p04-4dc9ab` [columnForm.test.ts:33](../../apps/web/src/features/table/structure/columnForm.test.ts#L33)
 - [x] Reserved-word confirm (`window.confirm`) unless `ReservedWordDisableWarning`. <!-- parity:test --> `p04-4da9c9` [table-structure.test.ts:259](../../apps/server/test/int/table-structure.test.ts#L259)
 - [x] Collation-change confirm with garbled-data warning. <!-- parity:test --> `p04-928ba0` [table-structure-extras.e2e.ts:154](../../tests/e2e/table-structure-extras.e2e.ts#L154)
@@ -591,13 +591,13 @@ Column form
 - [x] Adjust privileges checkbox disabled without column privilege + RELOAD (tooltip). <!-- parity:test --> `p04-9f1072` [table-structure-extras.e2e.ts:154](../../tests/e2e/table-structure-extras.e2e.ts#L154)
 - [x] Index select opens inline Add-index modal; composite vs single-column choice when indexes of the type already exist; PRIMARY always composes; Cancel restores previous selection; Enter submits. <!-- parity:test --> `p04-7f5bf8` [advanced-index.test.ts:29](../../apps/web/src/features/table/structure/advanced-index.test.ts#L29)
 - [x] Column labels under the Index select show `<small>name or [cols]</small>` and are clickable to reopen the index dialog. <!-- parity:test --> `p04-1cf31a` [advanced-index.test.ts:40](../../apps/web/src/features/table/structure/advanced-index.test.ts#L40)
-- [x] Preview SQL modal for create/add/change/index/relation/move-columns. <!-- parity:test --> `p04-929453` [table-structure.test.ts:154](../../apps/server/test/int/table-structure.test.ts#L154) +3
+- [x] Preview SQL modal for create/add/change/index/relation/move-columns. <!-- parity:test --> `p04-929453` [table-structure.test.ts:154](../../apps/server/test/int/table-structure.test.ts#L154) +1
 - [x] Online transaction checkbox appends `, ALGORITHM=INPLACE, LOCK=NONE` (add/change only). <!-- parity:test --> `p04-5c9f2a` [table-structure.parity.test.ts:928](../../tests/parity/table-structure.parity.test.ts#L928) +1
-- [x] Change-column collation change first converts to BLOB variant and reverts on failure. <!-- parity:test --> `p04-7544dc` [structure.test.ts:292](../../packages/sql-gen/test/structure.test.ts#L292) +4
+- [x] Change-column collation change first converts to BLOB variant and reverts on failure. <!-- parity:test --> `p04-7544dc` [table-structure.test.ts:229](../../apps/server/test/int/table-structure.test.ts#L229)
 - [x] Renamed columns update pmadb (`Relation::renameField`), MIME settings saved, remembered sort cleared. <!-- parity:test --> `p04-98c823` [table-mime.parity.test.ts:186](../../tests/parity/table-mime.parity.test.ts#L186)
 - [ ] FEDERATED engine reveals the Connection field; other engines hide/disable it.
 - [x] Create table refuses existing table name; max 4096 columns; default 4 rows. <!-- parity:test --> `p04-8c7675` [table-structure.test.ts:154](../../apps/server/test/int/table-structure.test.ts#L154) +1
-- [x] Add column: only the first new column honours First/After; the rest chain `AFTER` previous. <!-- parity:test --> `p04-5a8e76` [table-structure.test.ts:176](../../apps/server/test/int/table-structure.test.ts#L176) +1
+- [x] Add column: only the first new column honours First/After; the rest chain `AFTER` previous. <!-- parity:test --> `p04-5a8e76` [table-structure.test.ts:176](../../apps/server/test/int/table-structure.test.ts#L176)
 
 Index editor
 - [x] PRIMARY forces name `PRIMARY` (disabled input, re-enabled on submit); non-primary named PRIMARY → error. <!-- parity:test --> `p04-a2ef93` [table-structure.test.ts:358](../../apps/server/test/int/table-structure.test.ts#L358)
@@ -606,20 +606,20 @@ Index editor
 - [x] FULLTEXT column list filtered to char/text; SPATIAL to spatial types. <!-- parity:test --> `p04-e82c71` [indexEditor.test.ts:6](../../apps/web/src/features/table/indexes/indexEditor.test.ts#L6)
 - [ ] Column rows drag-sortable; slider 1..16 for "Add N column(s) to index".
 - [x] `USING` omitted for TokuDB; `WITH PARSER` only FULLTEXT; `KEY_BLOCK_SIZE` only when non-zero. <!-- parity:test --> `p04-04b04d` [structure.test.ts:139](../../packages/sql-gen/test/structure.test.ts#L139) +1
-- [x] Rename uses `RENAME INDEX` on MySQL ≥ 5.7 / MariaDB ≥ 10.5.2 else drop+recreate. <!-- parity:test --> `p04-99728b` [structure.test.ts:149](../../packages/sql-gen/test/structure.test.ts#L149) +2
+- [x] Rename uses `RENAME INDEX` on MySQL ≥ 5.7 / MariaDB ≥ 10.5.2 else drop+recreate. <!-- parity:test --> `p04-99728b` [table-structure.test.ts:358](../../apps/server/test/int/table-structure.test.ts#L358)
 
 Operations
-- [x] Order-by card hidden for InnoDB with PK or NOT NULL UNIQUE. <!-- parity:test --> `p04-2f4327` [table-operations.parity.test.ts:503](../../tests/parity/table-operations.parity.test.ts#L503) +2
+- [x] Order-by card hidden for InnoDB with PK or NOT NULL UNIQUE. <!-- parity:test --> `p04-2f4327` [table-operations.e2e.ts:40](../../tests/e2e/table-operations.e2e.ts#L40)
 - [x] Target DB select vs text input based on `MaxDbList`. <!-- parity:test --> `p04-98d742` [table-operations.test.ts:152](../../apps/server/test/int/table-operations.test.ts#L152)
 - [x] Move to same name → "Can't move table to same one!"; empty → "The table name is empty!". <!-- parity:test --> `p04-72c855` [table-operations.test.ts:64](../../apps/server/test/int/table-operations.test.ts#L64)
 - [x] Move prefers `RENAME TABLE`; cross-DB moves drop/recreate triggers. <!-- parity:test --> `p04-f60570` [table-operations.parity.test.ts:504](../../tests/parity/table-operations.parity.test.ts#L504) +1
-- [x] Copy options: structure/data/data-only, DROP TABLE, AUTO_INCREMENT, constraints (only if FKs), adjust privileges, switch to copied (remembered in session). <!-- parity:test --> `p04-2674e4` [table-operations.test.ts:106](../../apps/server/test/int/table-operations.test.ts#L106) +3
+- [x] Copy options: structure/data/data-only, DROP TABLE, AUTO_INCREMENT, constraints (only if FKs), adjust privileges, switch to copied (remembered in session). <!-- parity:test --> `p04-2674e4` [table-operations.test.ts:106](../../apps/server/test/int/table-operations.test.ts#L106)
 - [x] Copy duplicates pmadb column_info/table_info/relation rows. <!-- parity:test --> `p04-e92555` [table-operations.test.ts:76](../../apps/server/test/int/table-operations.test.ts#L76)
 - [x] Table options card shows engine-specific fields (PACK_KEYS MyISAM/Aria/ISAM; CHECKSUM/DELAY_KEY_WRITE MyISAM/Aria; TRANSACTIONAL/PAGE_CHECKSUM Aria; AUTO_INCREMENT only when value present; ROW_FORMAT per engine map). <!-- parity:test --> `p04-b5340d` [table-operations.parity.test.ts:524](../../tests/parity/table-operations.parity.test.ts#L524) +3
 - [x] "Change all column collations" → `CONVERT TO CHARACTER SET`; confirm when combined. <!-- parity:test --> `p04-72588d` [table-operations.parity.test.ts:536](../../tests/parity/table-operations.parity.test.ts#L536)
 - [x] Empty collation on AJAX → "No collation provided."; nothing changed → "No change"; warnings shown as errors (1478 suppressed for MyISAM). <!-- parity:test --> `p04-c9f811` [table-operations.test.ts:119](../../apps/server/test/int/table-operations.test.ts#L119)
 - [x] Maintenance links engine-filtered; Defragment InnoDB only; Flush message. <!-- parity:test --> `p04-f822b0` [table-operations.parity.test.ts:540](../../tests/parity/table-operations.parity.test.ts#L540) +4
-- [x] TRUNCATE/DELETE/DROP confirmations with strong warning + FK-checks checkbox; DROP returns to the database page. <!-- parity:test --> `p04-b6e8f9` [table-operations.parity.test.ts:544](../../tests/parity/table-operations.parity.test.ts#L544) +3
+- [x] TRUNCATE/DELETE/DROP confirmations with strong warning + FK-checks checkbox; DROP returns to the database page. <!-- parity:test --> `p04-b6e8f9` [table-operations.e2e.ts:40](../../tests/e2e/table-operations.e2e.ts#L40)
 - [x] Partition maintenance multi-select; COALESCE uses count; DROP/TRUNCATE confirm. <!-- parity:test --> `p04-408957` [structure.test.ts:107](../../packages/sql-gen/test/structure.test.ts#L107) +3
 - [x] Referential integrity links only with pmadb internal relations. <!-- parity:test --> `p04-27eea3` [table-operations.test.ts:139](../../apps/server/test/int/table-operations.test.ts#L139)
 - [x] Multi-table maintenance refused when `DisableMultiTableMaintenance`. <!-- parity:test --> `p04-83ca2d` [table-operations.test.ts:162](../../apps/server/test/int/table-operations.test.ts#L162)
@@ -648,7 +648,7 @@ Tracking
 - [x] Create version pre-checks statements from `tracking_default_statements`; view vs table statement sets. <!-- parity:test --> `p04-853d9b` [table-tracking.parity.test.ts:134](../../tests/parity/table-tracking.parity.test.ts#L134) +1
 - [x] Report filter by type/date range/users; per-entry delete; export file / dump box / execute (alert). <!-- parity:test --> `p04-4377f6` [table-tracking.parity.test.ts:192](../../tests/parity/table-tracking.parity.test.ts#L192) +4
 - [x] Snapshot shows DROP+CREATE SQL and structure/indexes tables. <!-- parity:test --> `p04-9a7eb6` [table-tracking.parity.test.ts:342](../../tests/parity/table-tracking.parity.test.ts#L342)
-- [x] Logged queries prefixed with `# log date user`; `/*NOTRACK*/` bypass; auto-create version option. <!-- parity:test --> `p04-cc268e` [table-tracker.test.ts:42](../../apps/server/test/int/table-tracker.test.ts#L42) +4
+- [x] Logged queries prefixed with `# log date user`; `/*NOTRACK*/` bypass; auto-create version option. <!-- parity:test --> `p04-cc268e` [table-tracker.test.ts:42](../../apps/server/test/int/table-tracker.test.ts#L42) +2
 
 Triggers
 - [x] Privilege-gated create/edit/drop; export always. <!-- parity:test --> `p04-941ec9` [table-triggers.test.ts:87](../../apps/server/test/int/table-triggers.test.ts#L87)
@@ -657,16 +657,16 @@ Triggers
 - [ ] Bulk export concatenates; bulk drop confirms once.
 
 Chart / GIS
-- [x] Chart type visibility rules (Pie 1 series, Timeline date X, Scatter numeric X); Stacked for bar/column/area; series-in-column pivot; save as PNG. <!-- parity:test --> `p04-bc6299` [table-feature5.test.ts:71](../../apps/server/test/int/table-feature5.test.ts#L71) +3
-- [x] GIS: label/spatial selects autosubmit; OSM switch default from SRID presence; SVG pan/zoom controls; PDF/PNG/SVG download availability by server capability. <!-- parity:test --> `p04-1f3c9c` [table-feature5.test.ts:102](../../apps/server/test/int/table-feature5.test.ts#L102) +2
+- [x] Chart type visibility rules (Pie 1 series, Timeline date X, Scatter numeric X); Stacked for bar/column/area; series-in-column pivot; save as PNG. <!-- parity:test --> `p04-bc6299` [table-feature5.test.ts:71](../../apps/server/test/int/table-feature5.test.ts#L71) +1
+- [x] GIS: label/spatial selects autosubmit; OSM switch default from SRID presence; SVG pan/zoom controls; PDF/PNG/SVG download availability by server capability. <!-- parity:test --> `p04-1f3c9c` [table-feature5.test.ts:102](../../apps/server/test/int/table-feature5.test.ts#L102) +1
 
 Normalization
 - [x] Steps 1.1–1.4, 2.1–2.2, 3.1–3.2 wording and controls as listed; auto-advance timers (3 s / 2 s); Back restores previous HTML; navigation reload after table creation; central columns list link in 1.1. <!-- parity:test --> `p04-720bc5` [table-normalization.parity.test.ts:114](../../tests/parity/table-normalization.parity.test.ts#L114) +2
 
 Views / Privileges
-- [x] Create view fields and generated SQL incl. `WITH … CHECK OPTION`; edit mode hides name; empty name error. <!-- parity:test --> `p04-74ef44` [view.test.ts:16](../../packages/sql-gen/test/view.test.ts#L16) +7
+- [x] Create view fields and generated SQL incl. `WITH … CHECK OPTION`; edit mode hides name; empty name error. <!-- parity:test --> `p04-74ef44` [table-feature5.test.ts:32](../../apps/server/test/int/table-feature5.test.ts#L32) +2
 - [x] View operations: rename + drop only. <!-- parity:test --> `p04-c3d646` [table-operations.parity.test.ts:561](../../tests/parity/table-operations.parity.test.ts#L561) +1
-- [x] Table privileges: super-user table, type labels, Edit/Export per row, bulk export, Add user account with db/table prefilled. <!-- parity:test --> `p04-f4f8d7` [table-central-privileges.test.ts:60](../../apps/server/test/int/table-central-privileges.test.ts#L60) +2
+- [x] Table privileges: super-user table, type labels, Edit/Export per row, bulk export, Add user account with db/table prefilled. <!-- parity:test --> `p04-f4f8d7` [table-central-privileges.test.ts:60](../../apps/server/test/int/table-central-privileges.test.ts#L60) +1
 
 ---
 

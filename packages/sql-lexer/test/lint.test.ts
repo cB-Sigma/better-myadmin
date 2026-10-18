@@ -23,7 +23,7 @@ describe('Linter::lint() (phpMyAdmin)', () => {
     })
   }
 
-  it('refuses long queries', () => {
+  it('refuses long queries [p09-d82c3f]', () => {
     expect(lint('SELECT 1 '.repeat(2000))[0]?.severity).toBe('warning')
   })
 })

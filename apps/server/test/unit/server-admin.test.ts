@@ -9,7 +9,7 @@ import fixture from './fixtures/server-admin.json' with { type: 'json' }
 /** Golden fixtures from scripts/gen-server-admin-fixtures.php (phpMyAdmin code executed by PHP). */
 const tr = englishTranslator()
 
-describe('Collation::buildDescription', () => {
+describe('Collation::buildDescription [p06-b19775]', () => {
   for (const [name, description] of Object.entries(fixture.collations)) {
     it(name, () => expect(collationDescription(name, tr)).toBe(description))
   }
@@ -22,7 +22,7 @@ describe('query statistics names (mb_convert_case MB_CASE_TITLE)', () => {
 })
 
 describe('Server\\Status\\Data', () => {
-  it('cleanDeprecated, calculateValues, sortVariables', () => {
+  it('cleanDeprecated, calculateValues, sortVariables [p06-3399cc]', () => {
     const status = new Map<string, string | number>(Object.entries(fixture.status.input))
     cleanDeprecated(status)
     calculateValues(status, fixture.status.variables)
@@ -44,7 +44,7 @@ describe('Server\\Status\\Data', () => {
 })
 
 describe('status variable formatting (status/variables/index.twig)', () => {
-  it('formats per name and value', () => {
+  it('formats per name and value [p06-fa0c8f]', () => {
     expect(formatStatusValue(tr, 'Key_read_ratio_%', 7)).toEqual({ text: '7.00 %' })
     expect(formatStatusValue(tr, 'Uptime', '3725')).toEqual({
       text: '0 days, 1 hours, 2 minutes and 5 seconds',
@@ -59,7 +59,7 @@ describe('status variable formatting (status/variables/index.twig)', () => {
 })
 
 describe('SET GLOBAL values (SetVariableController)', () => {
-  it('parses units for byte variables', () => {
+  it('parses units for byte variables [p06-d139b2]', () => {
     expect(setVariableValue('byte', '1.5 MB')).toBe('1572864')
     expect(setVariableValue('byte', '2gib')).toBe('2147483648')
     expect(setVariableValue('byte', ' 16 KiB ')).toBe('16384')

@@ -118,178 +118,190 @@ function metadata(
 
 const groups = [...new Set(fx.ops.map((o) => o.group))]
 
-describe('pmadb repositories replay phpMyAdmin’s statements', () => {
-  for (const group of groups) {
-    it(group, async () => {
-      const ops = fx.ops.filter((o) => o.group === group)
-      const { conn, done } = replay(ops)
-      const state: MetaSessionState = {}
-      const sqlHistory: Array<{ db: string; table: string; sqlquery: string }> = []
-      const m = metadata(conn, state, sqlHistory)
-      const rp = m.relationParameters
-      let recent: RecentFavoriteTables | null = null
-      let favorite: RecentFavoriteTables | null = null
-      for (const o of ops) {
-        const a = o.args
-        let result: unknown
-        switch (`${group}.${o.op}`) {
-          case 'bookmarks.create': {
-            const [q, label, user, db, shared] = o.args as [string, string, string, string, boolean]
-            const b = m.bookmarks().createBookmark(q, label, user, db, shared)
-            result = b === false ? false : await m.bookmarks().save(b)
-            break
-          }
-          case 'bookmarks.getList': {
-            const [user, db] = o.args as [string, string | false]
-            result = (await m.bookmarks().getList(user, db)).map(({ id, dbase, user: u, label, query }) => ({
-              id,
-              dbase,
-              user: u,
-              label,
-              query,
-            }))
-            break
-          }
-          case 'bookmarks.get':
-          case 'bookmarks.getByLabel': {
-            const b =
-              o.op === 'get'
-                ? await m.bookmarks().get(a[0] as string | null, a[1] as number)
-                : await m.bookmarks().getByLabel(a[0] as string, a[1] as string, a[2] as string)
-            result =
-              b === null ? null : { id: b.id, dbase: b.dbase, user: b.user, label: b.label, query: b.query }
-            break
-          }
-          case 'bookmarks.delete': {
-            const b = await m.bookmarks().get(USER, a[0] as number)
-            result = b === null ? null : await m.bookmarks().delete(b.id)
-            break
-          }
-          case 'history.setHistory':
-            await m.history().setHistory(a[0] as string, a[1] as string, USER, a[2] as string)
-            result = [...sqlHistory]
-            break
-          case 'history.getHistory':
-            result = (
-              (await m.history().getHistory(USER)) as Array<{ db: string; table: string; sqlquery: string }>
-            ).map(({ db, table, sqlquery }) => ({ db, table, sqlquery }))
-            break
-          case 'recent.add': {
-            recent ??= await m.recentFavorite('recent')
-            const r = await recent.add({ db: a[0] as string, table: a[1] as string })
-            result = { returned: r === true ? true : r.text, tables: recent.getTables() }
-            break
-          }
-          case 'favorite.add':
-          case 'favorite.remove': {
-            favorite ??= await m.recentFavorite('favorite')
-            const t = { db: a[0] as string, table: a[1] as string }
-            const r = o.op === 'add' ? await favorite.add(t) : await favorite.remove(t)
-            result = { returned: r === true ? true : r.text, tables: favorite.getTables() }
-            break
-          }
-          case 'uiprefs.set':
-          case 'uiprefs.get':
-          case 'uiprefs.remove': {
-            const [, table, prop, value, ct] = o.args as [
-              string,
-              string,
-              UiProperty,
-              number[] | string,
-              string | null,
-            ]
-            const info = TABLES[table] as (typeof TABLES)[string]
-            const ui = m.uiPrefs(DB, table, {
-              isView: async () => info.view,
-              createTime: async () => (info.view ? null : fx.createTime),
-              columns: async () => info.cols.map((c) => `${DB}.${table}.${c.field}`),
-            })
-            const r =
-              o.op === 'set'
-                ? await ui.setUiProp(prop, value, ct)
-                : o.op === 'get'
-                  ? await ui.getUiProp(prop)
-                  : await ui.removeUiProp(prop)
-            result = typeof r === 'object' && r !== null && !Array.isArray(r) ? { message: r.text } : r
-            break
-          }
-          case 'uiprefs.session':
-            result = state.tableUiPrefs?.['1']
-            break
-          case 'userprefs.load': {
-            const { mtime: _m, ...rest } = await m.userPreferences().load()
-            result = {
-              ...rest,
-              config_data: Object.keys(rest.config_data).length === 0 ? [] : rest.config_data,
-            }
-            break
-          }
-          case 'userprefs.save':
-            result = await m
-              .userPreferences()
-              .save((Array.isArray(a[0]) ? {} : a[0]) as Record<string, unknown>)
-            break
-          case 'userprefs.persistOption':
-            result = await m.userPreferences().persistOption(a[0] as string, a[1], a[2])
-            break
-          case 'navigation.hide':
-            result = await m.navigationHiding()?.hide(USER, a[0] as string, a[1] as string, a[2] as string)
-            result = null
-            break
-          case 'navigation.unhide':
-            await m.navigationHiding()?.unhide(USER, a[0] as string, a[1] as string, a[2] as string)
-            result = null
-            break
-          case 'navigation.hiddenItems':
-            result = await m.navigationHiding()?.hiddenItems(USER, a[0] as string)
-            break
-          case 'navigation.hiddenOfType':
-            result = await m.navigationHiding()?.hiddenOfType(USER, a[0] as string, a[1] as string)
-            break
-          case 'navigation.hiddenCounts': {
-            const counts = (await m.navigationHiding()?.hiddenCounts(USER)) ?? {}
-            result = Object.fromEntries(Object.entries(counts).map(([k, v]) => [k, String(v)]))
-            break
-          }
-          case 'relation.getForeignersInternal':
-            result = await getForeignersInternal(conn, rp, a[0] as string, a[1] as string, a[2] as string)
-            if (Object.keys(result as object).length === 0) result = []
-            break
-          case 'relation.getDisplayField': {
-            const table = a[1] as string
-            result = await getDisplayField(
-              conn,
-              rp,
-              a[0] as string,
-              table,
-              async () => TABLES[table]?.cols ?? [],
-            )
-            break
-          }
-          case 'relation.getDbComment':
-            result = await getDbComment(conn, rp, a[0] as string)
-            break
-          case 'relation.setDbComment':
-            result = await setDbComment(conn, rp, a[0] as string, a[1] as string)
-            break
-          case 'relation.getMime':
-            result = await getMime(conn, rp, a[0] as string, a[1] as string, a[2] as boolean, a[3] as boolean)
-            break
-          case 'foreign.getForeigners': {
-            const [db, table, column, showCreate] = o.args as [string, string, string, string]
-            const f = await getForeigners(conn, rp, db, table, column, async () => showCreate)
-            const search: Record<string, unknown> = {}
-            for (const col of ['id', 'pid', 'pcode', 'other', 'plain'])
-              search[col] = searchColumnInForeigners(f, col, db)
-            result = { data: f.data, keysData: f.keysData, search }
-            break
-          }
-          default:
-            throw new Error(`no replay for ${group}.${o.op}`)
-        }
-        expect(result, `${group}.${o.op}(${JSON.stringify(o.args)}) result`).toEqual(o.result)
+async function replayGroup(group: string) {
+  const ops = fx.ops.filter((o) => o.group === group)
+  const { conn, done } = replay(ops)
+  const state: MetaSessionState = {}
+  const sqlHistory: Array<{ db: string; table: string; sqlquery: string }> = []
+  const m = metadata(conn, state, sqlHistory)
+  const rp = m.relationParameters
+  let recent: RecentFavoriteTables | null = null
+  let favorite: RecentFavoriteTables | null = null
+  for (const o of ops) {
+    const a = o.args
+    let result: unknown
+    switch (`${group}.${o.op}`) {
+      case 'bookmarks.create': {
+        const [q, label, user, db, shared] = o.args as [string, string, string, string, boolean]
+        const b = m.bookmarks().createBookmark(q, label, user, db, shared)
+        result = b === false ? false : await m.bookmarks().save(b)
+        break
       }
-      done()
-    })
+      case 'bookmarks.getList': {
+        const [user, db] = o.args as [string, string | false]
+        result = (await m.bookmarks().getList(user, db)).map(({ id, dbase, user: u, label, query }) => ({
+          id,
+          dbase,
+          user: u,
+          label,
+          query,
+        }))
+        break
+      }
+      case 'bookmarks.get':
+      case 'bookmarks.getByLabel': {
+        const b =
+          o.op === 'get'
+            ? await m.bookmarks().get(a[0] as string | null, a[1] as number)
+            : await m.bookmarks().getByLabel(a[0] as string, a[1] as string, a[2] as string)
+        result =
+          b === null ? null : { id: b.id, dbase: b.dbase, user: b.user, label: b.label, query: b.query }
+        break
+      }
+      case 'bookmarks.delete': {
+        const b = await m.bookmarks().get(USER, a[0] as number)
+        result = b === null ? null : await m.bookmarks().delete(b.id)
+        break
+      }
+      case 'history.setHistory':
+        await m.history().setHistory(a[0] as string, a[1] as string, USER, a[2] as string)
+        result = [...sqlHistory]
+        break
+      case 'history.getHistory':
+        result = (
+          (await m.history().getHistory(USER)) as Array<{ db: string; table: string; sqlquery: string }>
+        ).map(({ db, table, sqlquery }) => ({ db, table, sqlquery }))
+        break
+      case 'recent.add': {
+        recent ??= await m.recentFavorite('recent')
+        const r = await recent.add({ db: a[0] as string, table: a[1] as string })
+        result = { returned: r === true ? true : r.text, tables: recent.getTables() }
+        break
+      }
+      case 'favorite.add':
+      case 'favorite.remove': {
+        favorite ??= await m.recentFavorite('favorite')
+        const t = { db: a[0] as string, table: a[1] as string }
+        const r = o.op === 'add' ? await favorite.add(t) : await favorite.remove(t)
+        result = { returned: r === true ? true : r.text, tables: favorite.getTables() }
+        break
+      }
+      case 'uiprefs.set':
+      case 'uiprefs.get':
+      case 'uiprefs.remove': {
+        const [, table, prop, value, ct] = o.args as [
+          string,
+          string,
+          UiProperty,
+          number[] | string,
+          string | null,
+        ]
+        const info = TABLES[table] as (typeof TABLES)[string]
+        const ui = m.uiPrefs(DB, table, {
+          isView: async () => info.view,
+          createTime: async () => (info.view ? null : fx.createTime),
+          columns: async () => info.cols.map((c) => `${DB}.${table}.${c.field}`),
+        })
+        const r =
+          o.op === 'set'
+            ? await ui.setUiProp(prop, value, ct)
+            : o.op === 'get'
+              ? await ui.getUiProp(prop)
+              : await ui.removeUiProp(prop)
+        result = typeof r === 'object' && r !== null && !Array.isArray(r) ? { message: r.text } : r
+        break
+      }
+      case 'uiprefs.session':
+        result = state.tableUiPrefs?.['1']
+        break
+      case 'userprefs.load': {
+        const { mtime: _m, ...rest } = await m.userPreferences().load()
+        result = {
+          ...rest,
+          config_data: Object.keys(rest.config_data).length === 0 ? [] : rest.config_data,
+        }
+        break
+      }
+      case 'userprefs.save':
+        result = await m.userPreferences().save((Array.isArray(a[0]) ? {} : a[0]) as Record<string, unknown>)
+        break
+      case 'userprefs.persistOption':
+        result = await m.userPreferences().persistOption(a[0] as string, a[1], a[2])
+        break
+      case 'navigation.hide':
+        result = await m.navigationHiding()?.hide(USER, a[0] as string, a[1] as string, a[2] as string)
+        result = null
+        break
+      case 'navigation.unhide':
+        await m.navigationHiding()?.unhide(USER, a[0] as string, a[1] as string, a[2] as string)
+        result = null
+        break
+      case 'navigation.hiddenItems':
+        result = await m.navigationHiding()?.hiddenItems(USER, a[0] as string)
+        break
+      case 'navigation.hiddenOfType':
+        result = await m.navigationHiding()?.hiddenOfType(USER, a[0] as string, a[1] as string)
+        break
+      case 'navigation.hiddenCounts': {
+        const counts = (await m.navigationHiding()?.hiddenCounts(USER)) ?? {}
+        result = Object.fromEntries(Object.entries(counts).map(([k, v]) => [k, String(v)]))
+        break
+      }
+      case 'relation.getForeignersInternal':
+        result = await getForeignersInternal(conn, rp, a[0] as string, a[1] as string, a[2] as string)
+        if (Object.keys(result as object).length === 0) result = []
+        break
+      case 'relation.getDisplayField': {
+        const table = a[1] as string
+        result = await getDisplayField(conn, rp, a[0] as string, table, async () => TABLES[table]?.cols ?? [])
+        break
+      }
+      case 'relation.getDbComment':
+        result = await getDbComment(conn, rp, a[0] as string)
+        break
+      case 'relation.setDbComment':
+        result = await setDbComment(conn, rp, a[0] as string, a[1] as string)
+        break
+      case 'relation.getMime':
+        result = await getMime(conn, rp, a[0] as string, a[1] as string, a[2] as boolean, a[3] as boolean)
+        break
+      case 'foreign.getForeigners': {
+        const [db, table, column, showCreate] = o.args as [string, string, string, string]
+        const f = await getForeigners(conn, rp, db, table, column, async () => showCreate)
+        const search: Record<string, unknown> = {}
+        for (const col of ['id', 'pid', 'pcode', 'other', 'plain'])
+          search[col] = searchColumnInForeigners(f, col, db)
+        result = { data: f.data, keysData: f.keysData, search }
+        break
+      }
+      default:
+        throw new Error(`no replay for ${group}.${o.op}`)
+    }
+    expect(result, `${group}.${o.op}(${JSON.stringify(o.args)}) result`).toEqual(o.result)
   }
+  done()
+}
+
+describe('pmadb repositories replay phpMyAdmin’s statements', () => {
+  for (const group of groups) it(group, () => replayGroup(group))
+})
+
+/** The checklist behaviours of docs/features/08 these replays prove (statements and results). */
+describe('pmadb behaviours (phpMyAdmin replays)', () => {
+  it("display field: the configured one, else the first CHAR-class column, else '' [p08-d83080]", () =>
+    replayGroup('relation'))
+  it("database comment: a column_info row with table_name '' and column_name '(db_comment)' [p08-d94efe]", () =>
+    replayGroup('relation'))
+  it('an internal relation wins over the InnoDB foreign key of the same column [p08-8e4b43]', () =>
+    replayGroup('foreign'))
+  it("shared bookmarks: user '' visible to everyone, refused without AllowSharedBookmarks [p08-dd1f62]", () =>
+    replayGroup('bookmarks'))
+  it('history rows purged beyond QueryHistoryMax, written only with QueryHistoryDB [p08-96d5e0]', () =>
+    replayGroup('history'))
+  it('recent and favorite tables: a JSON list via REPLACE INTO, an object after a removal [p08-ca3864]', async () => {
+    await replayGroup('recent')
+    await replayGroup('favorite')
+  })
+  it('table_uiprefs trimmed to the MaxTableUiprefs newest rows on every save [p08-5921ba]', () =>
+    replayGroup('uiprefs'))
 })

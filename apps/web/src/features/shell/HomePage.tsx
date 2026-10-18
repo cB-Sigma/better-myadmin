@@ -145,7 +145,37 @@ function GeneralSettings(props: {
   return (
     <Panel variant="home" title={t('General settings')}>
       <PanelList>
-        {home.hasServerSelection && (
+        {home.hasServerSelection && home.displayServersList && (auth.data?.servers.length ?? 0) > 0 && (
+          // Select::render with DisplayServersList: the servers as links, the current one in bold
+          <PanelItem id="li_select_server">
+            {t('Current server:')}
+            <br />
+            <ul id="list_server">
+              <li>
+                {auth.data?.servers.map((s) =>
+                  s.index === server ? (
+                    <strong key={s.index}>{s.label}</strong>
+                  ) : (
+                    <a
+                      key={s.index}
+                      className="item text-accent hover:underline"
+                      href={`/s/${s.index}`}
+                      onClick={async (e) => {
+                        e.preventDefault()
+                        await api.switchServer(s.index).catch(() => null)
+                        await qc.invalidateQueries({ queryKey: qk.auth })
+                        await navigate({ to: '/s/$server', params: { server: s.index } })
+                      }}
+                    >
+                      {s.label}
+                    </a>
+                  ),
+                )}
+              </li>
+            </ul>
+          </PanelItem>
+        )}
+        {home.hasServerSelection && !home.displayServersList && (
           <PanelItem id="li_select_server">
             <label htmlFor="select_server" className="me-2 inline-flex items-center gap-1">
               <PmaIcon name="s_host" /> {t('Current server:')}
