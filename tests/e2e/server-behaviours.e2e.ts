@@ -111,6 +111,7 @@ test('processes: refresh rate, auto refresh, header sort, full queries [p06-9768
   await page.locator('#tableprocesslist thead .sortlink', { hasText: 'Time' }).click()
   await expect(page).toHaveURL(/order_by_field=Time/)
   await page.locator('#tableprocesslist thead').getByRole('button', { name: 'Show full queries' }).click()
+  // Processes::getList: $urlParams['full'] = 1 (booleans in the URL are 1/0, as phpMyAdmin's)
   await expect(page).toHaveURL(/full=1/)
   await expect(
     page.locator('#tableprocesslist thead').getByRole('button', { name: 'Truncate shown queries' }),

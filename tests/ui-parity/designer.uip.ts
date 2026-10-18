@@ -16,6 +16,8 @@ const designer = (extra: Partial<PageSpec> = {}, query = false): PageSpec => ({
   pma: { route: '/database/designer', params: query ? { db: DB, query: '1' } : { db: DB } },
   ours: { path: `/s/1/db/${DB}/designer${query ? '?query=1' : ''}` },
   ready: { pma: '#side_menu', ours: '#side_menu' },
+  // tables without saved coordinates are placed at random (page.ts getRandom): the same layout each run
+  seedRandom: true,
   ...extra,
 })
 
@@ -85,8 +87,12 @@ pageParity(
     setup: async ({ pma, ours }) => {
       for (const page of [pma, ours]) {
         await click(page, 'rel_button')
-        await page.locator(`[id="id_tr_parent.id"]`).click({ force: true })
-        await page.locator(`[id="id_tr_child.parent_id"]`).click({ force: true })
+        // the click event itself (phpMyAdmin's delegated .tab_field handler, our row's onClick):
+        // a pointer click lands on whatever covers the row's centre, and the randomly placed
+        // tables can overlap
+        for (const id of ['id_tr_parent.id', 'id_tr_child.parent_id']) {
+          await page.locator(`[id="${id}"]`).dispatchEvent('click')
+        }
         await page.locator('#layer_new_relation #ok_new_rel_panel').waitFor()
       }
     },

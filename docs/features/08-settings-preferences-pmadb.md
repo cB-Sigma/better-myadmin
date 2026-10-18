@@ -602,7 +602,7 @@ Settings pages
 - [x] Save failure keeps the posted values on screen with inline errors and a red summary; a `revert` POST resets only erroneous fields. <!-- parity:test --> `p08-a42fac` [preferences.parity.test.ts:178](../../tests/parity/preferences.parity.test.ts#L178) +1
 - [x] `Servers/1/only_db` and `Servers/1/hide_db` are persisted as `Server/only_db` / `Server/hide_db` and re-applied to whichever server is currently selected. <!-- parity:test --> `p08-5102df` [preferences.test.ts:66](../../apps/server/test/unit/preferences.test.ts#L66) +2
 - [x] Saving any form re-persists the `2fa` block (never lost by a partial save). <!-- parity:test --> `p08-0b1f72` [preferences.test.ts:71](../../apps/server/test/int/preferences.test.ts#L71) +1
-- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [preferences.test.ts:335](../../apps/server/test/int/preferences.test.ts#L335)
+- [x] Theme changes and language changes made anywhere are silently stored as prefs `ThemeDefault` / `lang` (deleted when back to `original` / `en`). <!-- parity:test --> `p08-495415` [f08-language.test.ts:32](../../apps/server/test/int/f08-language.test.ts#L32) +1
 - [x] Console toggles, `NavigationWidth` drags etc. persist via `setUserValue`; with session storage they additionally fall back to cookies when a cookie name is provided. <!-- parity:test --> `p08-1383bd` [preferences.parity.test.ts:384](../../tests/parity/preferences.parity.test.ts#L384)
 
 Manage your settings
