@@ -684,13 +684,13 @@ AJAX model
 - [x] "Loading…" toast; in-flight link requests aborted by a new click ("Request aborted!!"); form posts cannot be aborted. <!-- parity:test --> `p01-47c1c5` [logic.test.ts:10](../../packages/ui/test/logic.test.ts#L10) +1
 - [x] Unsaved-changes confirm "You have unsaved changes; are you sure you want to leave this page?" via `lock-page` hashing. <!-- parity:test --> `p01-c6a012` [f01-shell.e2e.ts:88](../../tests/e2e/f01-shell.e2e.ts#L88)
 - [x] Response swap keeps nav, menubar, console, modals; replaces `#page_content`, title, menu, selflink, CommonParams, scripts (versioned, deduplicated, onload/teardown events). <!-- parity:test --> `p01-03005f` [f01-ajax.e2e.ts:25](../../tests/e2e/f01-ajax.e2e.ts#L25)
-- [x] `pushState` per navigation, `replaceState` after an aborted request; `popstate` re-fetches. <!-- parity:test --> `p01-f41bfa` [f01-ajax.e2e.ts:50](../../tests/e2e/f01-ajax.e2e.ts#L50)
+- [x] `pushState` per navigation, `replaceState` after an aborted request; `popstate` re-fetches. <!-- parity:test --> `p01-f41bfa` [f01-ajax.e2e.ts:53](../../tests/e2e/f01-ajax.e2e.ts#L53)
 - [ ] Error toasts sticky for failures; "Error in processing request / Error code / Error text / connection lost"; `redirect_flag` → session expired reload; `reload_flag` → reload.
 - [ ] PHP errors rendered into `#pma_errors` with Report / Ignore / Ignore All; `promptPhpErrors` toast; auto-submit in `always` mode with loop guard. <!-- parity:n/a: PHP notices and warnings collected by ErrorHandler; the Node server raises none into pages (its failures are API errors, shown as messages; JavaScript errors go through the error report, p01-ae26ee) -->
 - [x] Notifications: one at a time, 5 s auto-dismiss (sticky for Loading/Processing or `timeout=false`), click-to-dismiss with tooltip, copy-query button. <!-- parity:test --> `p01-eb435e` [logic.test.ts:10](../../packages/ui/test/logic.test.ts#L10) +3
-- [x] Confirm modal "Confirm" with **OK/Close**, bypassed when `$cfg['Confirm']=false`; native confirms for dangerous SQL in legacy paths. <!-- parity:test --> `p01-9c9c53` [f01-ajax.e2e.ts:129](../../tests/e2e/f01-ajax.e2e.ts#L129)
+- [x] Confirm modal "Confirm" with **OK/Close**, bypassed when `$cfg['Confirm']=false`; native confirms for dangerous SQL in legacy paths. <!-- parity:test --> `p01-9c9c53` [f01-ajax.e2e.ts:138](../../tests/e2e/f01-ajax.e2e.ts#L138)
 - [ ] Idle keep-alive POST at `min(LoginCookieValidity, gc_maxlifetime) − 5` s; expiry shows an in-page login modal (`#modalOverlay`) that re-enables the page on success.
-- [x] `_nocache` + `token` appended to every jQuery AJAX request. <!-- parity:test --> `p01-40520e` [f01-ajax.e2e.ts:63](../../tests/e2e/f01-ajax.e2e.ts#L63)
+- [x] `_nocache` + `token` appended to every jQuery AJAX request. <!-- parity:test --> `p01-40520e` [f01-ajax.e2e.ts:66](../../tests/e2e/f01-ajax.e2e.ts#L66)
 
 Console
 - [x] Collapsed toolbar shows only "Console"; hover reveals buttons; drag toolbar to resize (persisted `Console/Height`), mode persisted (`Console/Mode`). <!-- parity:test --> `p01-e58832` [f01-console.e2e.ts:170](../../tests/e2e/f01-console.e2e.ts#L170)
