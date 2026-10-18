@@ -101,6 +101,9 @@ queryRoutes.post('/', async (c) => {
         params: req.params,
         showAsPhp: req.showAsPhp,
         profiling: req.profiling,
+        // pma: a signed query is a GET to /sql (Refresh, Profiling, browse links)
+        viaSql: req.viaSql === true || req.sig !== undefined,
+        noTable: req.noTable,
       },
       {
         cfg,

@@ -88,4 +88,33 @@ describe.skipIf(!pmaReachable)('parity: database search', () => {
       expect(html).toContain(`Search results for "<em>${c.s.replace('^', '^')}</em>" ${d.description}:`)
     })
   }
+
+  it('Browse posts the select to /sql: the query is shown as posted, without a ";"', async () => {
+    const found = await h.bma.req('POST', `/api/servers/1/databases/${B}/search`, {
+      searchString: 'apple',
+      searchType: '3',
+      tables: ['a'],
+      columnName: '',
+      includeHex: false,
+    })
+    const sql = (found.json as unknown as DbSearchResponse).rows[0]!.selectSql
+    const r = await both(
+      h,
+      () =>
+        h.pma.postJson('/sql', {
+          db: P,
+          table: 'a',
+          sql_query: sql.replaceAll(B, P),
+          is_js_confirmed: '0',
+        }),
+      () => h.bma.req('POST', '/api/servers/1/query', { sql, db: B, table: 'a', grid: true, viaSql: true }),
+    )
+    const sent = (log: typeof r.pmaLog) =>
+      log.map((e) => normalise(e.sql, dbMap)).filter((s) => s.startsWith('SELECT * FROM `DB`.`a` WHERE'))
+    expect(sent(r.bmaLog)).toEqual(sent(r.pmaLog))
+    const st = (r.b.json as { statements: Array<{ card: { display: string } | null }> }).statements[0]
+    expect(st?.card?.display).toBe(sql)
+    expect(visibleText(String(r.p.message))).toContain(`${visibleText(sql).replaceAll(B, P)} `)
+    expect(visibleText(String(r.p.message))).not.toContain(`${visibleText(sql).replaceAll(B, P)};`)
+  })
 })

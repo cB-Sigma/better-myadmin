@@ -463,14 +463,18 @@ describe.skipIf(!pmaReachable)('parity: relational schema export', () => {
     )
   })
 
-  const run = async (type: string, options: Record<string, string>) => {
+  const run = async (
+    type: string,
+    options: Record<string, string>,
+    page: { p: string; b: string } | null = null,
+  ) => {
     let disposition = ''
     const p = await h.pma.postPage(
       '/schema-export',
       [
         ['db', P],
-        ['page_number', '-1'],
-        ['offline_export', 'true'],
+        ['page_number', page?.p ?? '-1'],
+        ...(page === null ? [['offline_export', 'true'] as [string, string]] : []),
         ['export_type', type],
         ...Object.entries(options),
         ...positionsForm(P, tables),
@@ -483,8 +487,8 @@ describe.skipIf(!pmaReachable)('parity: relational schema export', () => {
     )
     const b = (
       await h.bma.req('POST', bma('/schema-export'), {
-        page_number: '-1',
-        offline_export: true,
+        page_number: page?.b ?? '-1',
+        offline_export: page === null,
         export_type: type,
         options,
         tables: positionsBody(B, tables),
@@ -514,6 +518,17 @@ describe.skipIf(!pmaReachable)('parity: relational schema export', () => {
       s.replace(/^%%Creator: .*$/m, '%%Creator:').replace(/^%%CreationDate: .*$/m, '%%CreationDate:')
     expect(stable(r.b)).toBe(stable(r.p))
     expect(r.b).toContain('lineto')
+  })
+
+  it('a saved page: the file is named after it, through Sanitize::sanitizeFilename', async () => {
+    for (const db of [P, B])
+      await h.root.query(
+        `DELETE FROM phpmyadmin.pma__pdf_pages WHERE db_name = '${db}' AND page_descr = 'qa page/1';
+         INSERT INTO phpmyadmin.pma__pdf_pages (db_name, page_descr) VALUES ('${db}', 'qa page/1')`,
+      )
+    const r = await run('svg', {}, { p: await pageId(P, 'qa page/1'), b: await pageId(B, 'qa page/1') })
+    expect(r.disposition).toContain('filename="qa_page_1.svg"')
+    expect(r.fileName).toBe('qa_page_1.svg')
   })
 
   it('a missing table: the schema error', async () => {

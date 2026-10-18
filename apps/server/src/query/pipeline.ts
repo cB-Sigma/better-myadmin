@@ -49,6 +49,10 @@ export interface PipelineInput {
   messageToShow?: string | undefined
   /** already split statements (a file import's goSql queries) instead of splitting `sql` */
   statements?: readonly string[] | undefined
+  /** the /sql path (SqlController): `sql` as posted, no import buffer (no `;` appended) */
+  viaSql?: boolean | undefined
+  /** no table context (MultiTableQueryController: table null unless the SQL names one table) */
+  noTable?: boolean | undefined
 }
 
 /** What a results-grid builder receives for a statement with a result set (Results.php). */
@@ -199,13 +203,17 @@ export async function runSqlBox(input: PipelineInput, ctx: PipelineContext): Pro
   try {
     if (input.fkChecks !== undefined)
       await setVariable(conn, 'FOREIGN_KEY_CHECKS', input.fkChecks ? 'ON' : 'OFF')
-    run = await runImport(input.statements ?? splitSql(sql, { delimiter: input.delimiter }), {
-      conn,
-      runQuery: state.showAsPhp === null,
-      db,
-      ignoreMultiSubmitErrors: cfg.IgnoreMultiSubmitErrors,
-      tr,
-    })
+    run =
+      input.viaSql === true
+        ? // SqlController: the posted sql_query is the one query (no ImportSql buffer)
+          { goSql: true, queriesToBeExecuted: [sql], sqlQuery: sql, importMode: null }
+        : await runImport(input.statements ?? splitSql(sql, { delimiter: input.delimiter }), {
+            conn,
+            runQuery: state.showAsPhp === null,
+            db,
+            ignoreMultiSubmitErrors: cfg.IgnoreMultiSubmitErrors,
+            tr,
+          })
   } finally {
     await setVariable(conn, 'FOREIGN_KEY_CHECKS', fkDefault ? 'ON' : 'OFF')
   }

@@ -436,6 +436,7 @@ export function ColumnForm({
   onDone,
   header,
   defaultNumFields = 1,
+  normalization,
 }: {
   mode: FormMode
   options: ColumnFormOptions
@@ -449,6 +450,12 @@ export function ColumnForm({
   onDone: (r: DdlResponse) => void
   header?: ReactNode
   defaultNumFields?: number
+  /**
+   * The normalization wizard's #newCols grid (Normalization::getHtmlForCreateNewColumn): the
+   * columns only (no Index column, table options, online transaction or Preview SQL), saved by
+   * `#saveSplit` / `#saveNewPrimary` with `#cancelSplit`; an empty first name only takes the focus.
+   */
+  normalization?: { saveId: 'saveSplit' | 'saveNewPrimary'; onCancel: () => void }
 }) {
   const [online, setOnline] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
@@ -457,7 +464,6 @@ export function ColumnForm({
   // form.create_table_form / append_fields_form are lock-page forms (AJAX.lockPageHandler)
   const lockRef = useFormLock()
   const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   const [addCount, setAddCount] = useState(defaultNumFields)
   // submit_num_fields: the form gets more column rows
   const addFields = () => setRows([...rows, ...Array.from({ length: Math.max(1, addCount) }, emptyRow)])
@@ -563,8 +569,13 @@ export function ColumnForm({
     cols.map((c) => ({ name: rows[c]?.name ?? '', type: (rows[c]?.type ?? '').toLowerCase(), colIndex: c }))
 
   const run = async (dryRun: boolean) => {
-    setError(null)
-    if (!dryRun) {
+    if (normalization !== undefined) {
+      // saveSplit / saveNewPrimary: `#newCols #field_0_1` empty → focus, nothing posted
+      if ((rows[0]?.name ?? '') === '') {
+        document.querySelector<HTMLInputElement>('input[name="field_name[0]"]')?.focus()
+        return
+      }
+    } else if (!dryRun) {
       const problem = checkTableEditForm(rows, mode, tableOptions?.table ?? '')
       if (problem !== null) {
         if (problem.notify) showMessage(problem.text, null, 'error')
@@ -597,7 +608,8 @@ export function ColumnForm({
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
-      setError(errorMessage(e))
+      // create_table_form / append_fields_form: ajaxShowMessage(data.error, false, 'error')
+      showMessage(errorMessage(e).text, false, 'error')
     } finally {
       setBusy(false)
     }
@@ -691,7 +703,7 @@ export function ColumnForm({
                   {t('Adjust privileges')} <DocLink page="faq" anchor="faq6-39" />
                 </th>
               )}
-              {mode !== 'change' && <th className="px-1">{t('Index')}</th>}
+              {mode !== 'change' && normalization === undefined && <th className="px-1">{t('Index')}</th>}
               <th className="px-1">
                 <abbr title="AUTO_INCREMENT">A_I</abbr>
               </th>
@@ -881,7 +893,7 @@ export function ColumnForm({
                     />
                   </td>
                 )}
-                {mode !== 'change' && (
+                {mode !== 'change' && normalization === undefined && (
                   <td className="p-1">
                     <select
                       name={`field_key[${i}]`}
@@ -1109,30 +1121,42 @@ export function ColumnForm({
           </div>
         )}
 
-      <div className="mt-3 flex flex-wrap items-center gap-3 rounded border border-border bg-bg-subtle px-3 py-2 text-sm">
-        {mode !== 'create' && (
-          <label className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              name="online_transaction"
-              checked={online}
-              onChange={(e) => setOnline(e.target.checked)}
-            />
-            {pgettext('Online transaction part of the SQL DDL for InnoDB', 'Online transaction')}{' '}
-            <MySqlDocLink link="innodb-online-ddl" />
-          </label>
-        )}
-        <div className="ml-auto flex gap-2">
-          <Button className="preview_sql" disabled={busy} onClick={() => void run(true)}>
-            {t('Preview SQL')}
-          </Button>
-          <Button type="submit" variant="primary" disabled={busy}>
+      {normalization !== undefined ? (
+        <div className="mt-3 flex gap-2">
+          <Button type="submit" variant="primary" id={normalization.saveId} disabled={busy}>
             {t('Save')}
           </Button>
+          <Button id="cancelSplit" onClick={normalization.onCancel}>
+            {t('Cancel')}
+          </Button>
         </div>
-      </div>
+      ) : (
+        <div className="mt-3 flex flex-wrap items-center gap-3 rounded border border-border bg-bg-subtle px-3 py-2 text-sm">
+          {mode !== 'create' && (
+            <label className="flex items-center gap-1">
+              <input
+                type="checkbox"
+                name="online_transaction"
+                checked={online}
+                onChange={(e) => setOnline(e.target.checked)}
+              />
+              {pgettext('Online transaction part of the SQL DDL for InnoDB', 'Online transaction')}{' '}
+              <MySqlDocLink link="innodb-online-ddl" />
+            </label>
+          )}
+          <div className="ml-auto flex gap-2">
+            <Button className="preview_sql" disabled={busy} onClick={() => void run(true)}>
+              {t('Preview SQL')}
+            </Button>
+            <Button type="submit" variant="primary" disabled={busy}>
+              {t('Save')}
+            </Button>
+          </div>
+        </div>
+      )}
       {/* functions.ts showWarningForIntTypes: shown while a selected type is length-restricted */}
-      {options.integersLengthRestricted &&
+      {normalization === undefined &&
+        options.integersLengthRestricted &&
         rows.some((r) =>
           options.types.some((o) => !('separator' in o) && o.type === r.type && o.lengthRestricted),
         ) && (
@@ -1143,7 +1167,6 @@ export function ColumnForm({
             <MySqlDocLink url="https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-19.html" />
           </MessageBox>
         )}
-      {error !== null && <MessageBox {...error} flush className="mt-2" />}
       <PreviewSqlDialog highlight sql={preview} onClose={() => setPreview(null)} />
       {pending?.kind === 'form' && (
         <AddIndexFormDialog

@@ -1790,7 +1790,7 @@
     },
     "messages": {
       "total": 3428,
-      "implemented": 3283,
+      "implemented": 3284,
       "covered": 3427,
       "coverage": 0.9997,
       "implementedKeys": [
@@ -3689,6 +3689,7 @@
         "phpMyAdmin configuration storage is not configured for \"Display Features\" on designer when user tries to set a display field.\u0004phpMyAdmin configuration storage is not configured for \"Display Features\".",
         "phpMyAdmin Demo Server",
         "phpMyAdmin documentation",
+        "phpMyAdmin homepage",
         "phpMyAdmin Themes",
         "phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server.",
         "phpMyAdmin was unable to kill thread %s. It probably has already been closed.",
@@ -5142,7 +5143,6 @@
         "PHP extension:",
         "PHP version:",
         "PHP Version:",
-        "phpMyAdmin homepage",
         "Please be patient, the file is being uploaded. Details about the upload are not available.",
         "Please connect your FIDO U2F device into your computer's USB port. Then confirm login on the device.",
         "Please connect your FIDO U2F device into your computer's USB port. Then confirm registration on the device.",

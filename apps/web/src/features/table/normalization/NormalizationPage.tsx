@@ -9,13 +9,15 @@ import {
   PanelBody,
   PmaIcon,
   Radio,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { type ReactNode, useEffect, useState } from 'react'
+import { Fragment, type ReactNode, useEffect, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
-import { ResultMessages } from '../common/ResultMessages'
+import { Messages } from '../../database/common'
+import { InlineHtml } from '../../shell/inline-html'
 import { IndexDialog } from '../indexes/IndexEditor'
 import { CentralColumnPicker } from '../structure/CentralColumnPicker'
 import { ColumnForm, type ColumnRow, emptyRow, toColumnDef } from '../structure/ColumnForm'
@@ -57,7 +59,8 @@ export function NormalizationPage({ scope }: { scope: TableRef }) {
   const q = useQuery({ queryKey: key, queryFn: () => api.normalization(scope) })
   const [normalizeTo, setNormalizeTo] = useState<NormalForm>('1nf')
   const [stage, setStage] = useState<Stage>({ k: 'start' })
-  const [messages, setMessages] = useState<SqlMessage[]>([])
+  // a step reloaded with the same stage (goToStep3 after moving a group) starts afresh
+  const [visit, setVisit] = useState(0)
   const refresh = () => qc.invalidateQueries({ queryKey: qk.tbl(scope) })
   if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined) return null
@@ -115,17 +118,21 @@ export function NormalizationPage({ scope }: { scope: TableRef }) {
     data: q.data,
     normalizeTo,
     go: (s) => {
-      setMessages([])
+      setVisit((v) => v + 1)
       setStage(s)
     },
-    show: setMessages,
+    // normalization.ts: every message and error is ajaxShowMessage(…, false)
+    show: (m) => {
+      if (m.length > 0) showMessage(<Messages messages={m} />, false)
+    },
     refresh,
+    // $('#pma_navigation_reload').trigger('click')
+    reloadNav: () => void qc.invalidateQueries({ queryKey: qk.nav(scope.server) }),
   }
   return (
     <div className="flex flex-col gap-3">
       <h3 className="text-lg">{phaseTitle(phase)}</h3>
-      <ResultMessages messages={messages} />
-      <Step key={JSON.stringify(stage)} stage={stage} env={env} />
+      <Step key={`${visit}-${JSON.stringify(stage)}`} stage={stage} env={env} />
     </div>
   )
 }
@@ -137,6 +144,7 @@ interface StepEnv {
   go: (s: Stage) => void
   show: (m: SqlMessage[]) => void
   refresh: () => Promise<void>
+  reloadNav: () => void
 }
 
 /** #mainContent: .card-header legend, h4 question, p.cm-em hint, #extra, #newCols, .card-footer */
@@ -168,7 +176,15 @@ function StepCard({
 }
 
 /** a msgid with `<br>` / `<b>` markup (Normalization.php builds HTML): line breaks, tags dropped */
-const plain = (s: string) => s.replaceAll('<br>', '\n').replace(/<\/?b>/g, '')
+/** a step text with phpMyAdmin's inline markup (`<b>`, `<br>`), as `$('#mainContent p').html()` shows it */
+const plain = (s: string): ReactNode =>
+  s.split('<br>').map((part, i) => (
+    // biome-ignore lint/suspicious/noArrayIndexKey: static message parts
+    <Fragment key={i}>
+      {i > 0 && <br />}
+      <InlineHtml text={part} />
+    </Fragment>
+  ))
 
 function Step({ stage, env }: { stage: Stage; env: StepEnv }) {
   switch (stage.k) {
@@ -231,6 +247,7 @@ function NewColumns({
   onSaved,
   onCancel,
   afterSave,
+  saveId,
 }: {
   env: StepEnv
   initial: ColumnRow[]
@@ -238,6 +255,7 @@ function NewColumns({
   onCancel: () => void
   /** runs after the columns were added (the split drops the original column) */
   afterSave?: () => Promise<SqlMessage[] | null>
+  saveId: 'saveSplit' | 'saveNewPrimary'
 }) {
   const form = useQuery({
     queryKey: qk.addColumnsForm(env.scope),
@@ -257,25 +275,28 @@ function NewColumns({
         submit={(dryRun, _online, indexes) =>
           api.addColumns(env.scope, {
             columns: rows.map((r) => toColumnDef(r, options)),
-            indexes,
+            // saveNewPrimary posts field_key[0]=primary_0, which /table/add-field no longer reads
+            // (indexes are a JSON list now): the new column is made the PRIMARY KEY (Q76)
+            indexes:
+              saveId === 'saveNewPrimary'
+                ? [{ choice: 'PRIMARY', columns: [{ colIndex: 0, size: '' }] }]
+                : indexes,
             where: 'last',
             dryRun,
           })
         }
-        onDone={async (r) => {
+        onDone={async () => {
           const extra = afterSave === undefined ? null : await afterSave()
           if (extra?.some((m) => m.type === 'error')) {
             env.show(extra)
             return
           }
-          env.show(r.messages)
+          // saveSplit / saveNewPrimary: no message on success, the step updates itself
           await env.refresh()
           onSaved()
         }}
+        normalization={{ saveId, onCancel }}
       />
-      <Button className="mt-2" onClick={onCancel}>
-        {t('Cancel')}
-      </Button>
     </div>
   )
 }
@@ -297,7 +318,8 @@ function Step11({ env }: { env: StepEnv }) {
           )}
           <br />(
           <Button variant="link" className="central_columns_dialog" onClick={() => setCentralList(true)}>
-            {t('Show me the central list of columns that are not already in this table')}
+            {/* Normalization::getHtmlFor1NFStep1: `<a …> text </a>` */}{' '}
+            {t('Show me the central list of columns that are not already in this table')}{' '}
           </Button>
           )
           {centralList && (
@@ -362,6 +384,7 @@ function Step11({ env }: { env: StepEnv }) {
           <NewColumns
             env={env}
             initial={Array.from({ length: splitting }, emptyRow)}
+            saveId="saveSplit"
             onCancel={() => setSplitting(null)}
             onSaved={() => {
               setSplitting(null)
@@ -435,6 +458,7 @@ function Step12({ env, extra }: { env: StepEnv; extra?: 'goToStep3' | 'goToFinis
               initial={[
                 { ...emptyRow(), name: `${env.scope.table}_id`, autoIncrement: true, key: 'primary' },
               ]}
+              saveId="saveNewPrimary"
               onCancel={() => setAdding(false)}
               onSaved={() => {
                 setAdding(false)
@@ -510,6 +534,7 @@ function Step13({ env }: { env: StepEnv }) {
       await env.refresh()
       if (!r.queryError) env.go({ k: '1.3' })
       env.show(r.messages)
+      env.reloadNav()
     } catch (e) {
       env.show([errorMessage(e)])
     }
@@ -635,11 +660,17 @@ function Step14({ env }: { env: StepEnv }) {
 
 /** the dependency checkboxes of one column (`'%s' depends on:`) */
 function DependsOn({
+  id,
+  table,
   column,
   choices,
   value,
   onChange,
 }: {
+  /** Normalization: `pk_N` (2NF) / `td_N` (3NF), N counting the columns from 1 */
+  id: string
+  /** 3NF: the table the column is in (`data-tablename`) */
+  table?: string
   column: string
   choices: string[]
   value: string[]
@@ -648,7 +679,13 @@ function DependsOn({
   return (
     <div className="mb-2">
       <b>{t("'%1$s' depends on:", column)}</b>
-      <div className="smallIndent ml-4 flex flex-wrap gap-3">
+      <form
+        id={id}
+        data-colname={column}
+        {...(table !== undefined ? { 'data-tablename': table } : {})}
+        className="smallIndent ml-4 flex flex-wrap gap-3"
+        onSubmit={(e) => e.preventDefault()}
+      >
         {choices.map((c) => (
           <span key={c} className="flex items-center gap-1">
             <NativeCheckbox
@@ -660,7 +697,7 @@ function DependsOn({
             {c}
           </span>
         ))}
-      </div>
+      </form>
     </div>
   )
 }
@@ -782,9 +819,10 @@ function Step21({ env }: { env: StepEnv }) {
           'For each column below, please select the <b>minimal set</b> of columns among given set whose values combined together are sufficient to determine the value of the column.',
         ),
       )}
-      extra={nonPk.map((c) => (
+      extra={nonPk.map((c, i) => (
         <DependsOn
           key={c}
+          id={`pk_${i + 1}`}
           column={c}
           choices={pk}
           value={deps[c] ?? []}
@@ -816,6 +854,7 @@ function Step22({ env, pd, pk }: { env: StepEnv; pd: Dependencies; pk: string })
     try {
       const r = await api.normalizationCreateTables2NF(env.scope, { pd, newTablesName: tables })
       await env.refresh()
+      env.reloadNav()
       if (r.queryError) return env.show(r.messages)
       // goTo3NFStep1(tables): one table → the current table
       if (env.normalizeTo === '3nf') {
@@ -938,17 +977,19 @@ function Step31({ env, tables }: { env: StepEnv; tables: string[] }) {
           "For each column below, please select the <b>minimal set</b> of columns among given set whose values combined together are sufficient to determine the value of the column.<br>Note: A column may have no transitive dependency, in that case you don't have to select any.",
         ),
       )}
-      extra={q.data.tables.flatMap((tb) =>
-        tb.nonPk.map((c) => (
+      extra={q.data.tables
+        .flatMap((tb) => tb.nonPk.map((c) => ({ tb, c })))
+        .map(({ tb, c }, i) => (
           <DependsOn
             key={formKey(tb.table, c)}
+            id={`td_${i + 1}`}
+            table={tb.table}
             column={c}
             choices={tb.nonPk.filter((x) => x !== c)}
             value={deps[formKey(tb.table, c)] ?? []}
             onChange={(v) => setDeps({ ...deps, [formKey(tb.table, c)]: v })}
           />
-        )),
-      )}
+        ))}
       footer={
         <Button variant="primary" onClick={processDependencies}>
           {t('Done')}
@@ -973,21 +1014,29 @@ function Step32({
     queryFn: () => api.normalizationNewTables3NF(env.scope, pd, tables),
     enabled: found.length > 0,
   })
+  /** the value typed in each shown row, by `${orig}\0${row index}` */
   const [names, setNames] = useState<Record<string, string>>({})
+  const rowKey = (orig: string, i: number) => `${orig}\u0000${i}`
   const go = async () => {
-    // goTo3NFFinish: each proposed table under the name typed for it
+    // goTo3NFFinish: each table of newTables under `$('#extra input[name="<name>"]').val()`, the
+    // first shown row of that name
+    const rows = proposals.data?.rows ?? []
+    const typed = (orig: string, name: string) => {
+      const list = rows.find(([o]) => o === orig)?.[1] ?? []
+      const i = list.findIndex(([n]) => n === name)
+      return i < 0 ? name : (names[rowKey(orig, i)] ?? name)
+    }
     const newTables: NewTables3NFResponse['newTables'] =
       found.length === 0
         ? []
         : (proposals.data?.newTables ?? []).map(([orig, list]) => [
             orig,
-            list.map(
-              ([name, cols]) => [names[`${orig}\u0000${name}`] ?? name, cols] as [string, typeof cols],
-            ),
+            list.map(([name, cols]) => [typed(orig, name), cols] as [string, typeof cols]),
           ])
     try {
       const r = await api.normalizationCreateTables3NF(env.scope, { newTables })
       await env.refresh()
+      env.reloadNav()
       if (r.queryError) return env.show(r.messages)
       env.go({ k: '3-end' })
     } catch (e) {
@@ -1012,7 +1061,7 @@ function Step32({
             {found.length === 0 && <p className="m-1">{t('No dependencies selected!')}</p>}
           </div>
           {found.length > 0 &&
-            proposals.data?.newTables.map(([orig, list]) => (
+            proposals.data?.rows.map(([orig, list]) => (
               <div key={orig}>
                 <p>
                   <b>
@@ -1022,13 +1071,14 @@ function Step32({
                     )}
                   </b>
                 </p>
-                {list.map(([name, cols]) => (
-                  <p key={name} className="flex flex-wrap items-center gap-1">
+                {list.map(([name, cols], i) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: a name can repeat (table2 twice)
+                  <p key={i} className="flex flex-wrap items-center gap-1">
                     <Input
                       name={name}
                       className="max-w-48"
-                      value={names[`${orig}\u0000${name}`] ?? name}
-                      onChange={(e) => setNames({ ...names, [`${orig}\u0000${name}`]: e.target.value })}
+                      value={names[rowKey(orig, i)] ?? name}
+                      onChange={(e) => setNames({ ...names, [rowKey(orig, i)]: e.target.value })}
                     />
                     ( <u>{cols.pk}</u>
                     {cols.nonpk !== '' ? ', ' : ''}

@@ -331,13 +331,16 @@ export async function buildGrid(
           printLink: true,
         }
   }
-  const missingUnique: GridData['missingUnique'] = a.limited
-    ? null
-    : isSystemSchema(db) || !editable
-      ? 'unavailable'
-      : !hasUnique
-        ? 'undesired'
-        : null
+  // pma: Sql::getQueryResponseForResultsReturned — `$table !== null ? getMessageIfMissingColumnIndex`:
+  // MultiTableQueryController passes no table, so a query over several tables shows no notice
+  const missingUnique: GridData['missingUnique'] =
+    a.limited || (a.input.noTable === true && table === '')
+      ? null
+      : isSystemSchema(db) || !editable
+        ? 'unavailable'
+        : !hasUnique
+          ? 'undesired'
+          : null
   const view: GridView = { ...env.view, possibleAsGeometry: a.limited ? false : editable }
   // getOptionsBlock: Geometry is not offered for a non-editable result
   if (!view.possibleAsGeometry && view.geoOption === 'GEOM' && !a.limited) view.geoOption = 'WKT'

@@ -60,6 +60,8 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
   const [sql, setSql] = useState('')
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [result, setResult] = useState<QueryResponse | null>(null)
+  // multi_table_query.ts: $('#sql_results').html(data) replaces the results on every submit
+  const [runs, setRuns] = useState(0)
   const [open, setOpen] = useState<Record<number, boolean>>({})
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
@@ -92,7 +94,8 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
     }
     try {
       // QueryController → Sql::executeQueryAndSendQueryResponse: the full results page (grid)
-      setResult(await runQuery(server, { sql, db, grid: true }, 'page'))
+      setResult(await runQuery(server, { sql, db, grid: true, viaSql: true, noTable: true }, 'page'))
+      setRuns((n) => n + 1)
       setMessages([])
     } catch (e) {
       setMessages([errorMessage(e)])
@@ -459,7 +462,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
       >
         {result?.statements.map((st, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: statements are positional
-          <StatementBlock key={i} st={st} env={env} />
+          <StatementBlock key={`${runs}-${i}`} st={st} env={env} />
         ))}
       </div>
     </div>

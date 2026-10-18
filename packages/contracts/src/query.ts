@@ -14,6 +14,17 @@ export const QueryRequest = z.object({
   /** true when the query was typed in the SQL box ($_SESSION['sql_from_query_box']). */
   fromQueryBox: z.boolean().default(false),
   /**
+   * pma's /sql (SqlController: browse, search results, Refresh and Profiling links) instead of
+   * /import: `sql` runs as posted, one query, without the import buffer's `;`.
+   */
+  viaSql: z.boolean().optional(),
+  /**
+   * No table context for the result (MultiTableQueryController passes a null table, set only when
+   * the SQL names one table): a query over several tables shows no "Current selection does not
+   * contain a unique column." notice.
+   */
+  noTable: z.boolean().optional(),
+  /**
    * Signature of `sql` when it came from a URL (Core::checkSqlQuerySignature). When present it must
    * verify, otherwise the query is refused like phpMyAdmin ignores an unsigned GET sql_query.
    */

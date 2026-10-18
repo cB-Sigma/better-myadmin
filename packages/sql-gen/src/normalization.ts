@@ -115,7 +115,21 @@ export function get3NFNewTables(
   tables: Array<[table: string, dependsOn: string[]]>,
   primaryKeys: Record<string, string[]>,
 ): NewTables3NF {
+  return get3NFProposals(pd, tables, primaryKeys).newTables
+}
+
+/**
+ * Both parts of getHtmlForNewTables3NF: `rows`, every `<p><input name=…>( pk, nonpk )` the HTML
+ * shows (a repeated name, e.g. `table2` for the table and its first new table, shows twice), and
+ * `newTables`, the JSON where a repeated name overwrites the earlier entry.
+ */
+export function get3NFProposals(
+  pd: Record<string, string[]>,
+  tables: Array<[table: string, dependsOn: string[]]>,
+  primaryKeys: Record<string, string[]>,
+): { newTables: NewTables3NF; rows: NewTables3NF } {
   const out: NewTables3NF = []
+  const rows: NewTables3NF = []
   let i = 1
   for (const [table, arr] of tables) {
     if (new Set(arr).size === 1) continue
@@ -123,6 +137,7 @@ export function get3NFNewTables(
     let tableName = table
     const columnList: string[] = []
     const list: Array<[string, NewTable3NF]> = []
+    const shown: Array<[string, NewTable3NF]> = []
     for (const k of arr) {
       const dependents = pd[k] ?? []
       const key = k === table ? pk.join(', ') : k
@@ -134,14 +149,16 @@ export function get3NFNewTables(
       // a repeated name overwrites the entry, as the PHP array assignment does
       const existing = list.findIndex(([n]) => n === tableName)
       const entry: [string, NewTable3NF] = [tableName, { pk: key, nonpk: dependents.join(', ') }]
+      shown.push(entry)
       if (existing >= 0) list[existing] = entry
       else list.push(entry)
       i++
       tableName = `table${i}`
     }
     out.push([table, list])
+    rows.push([table, shown])
   }
-  return out
+  return { newTables: out, rows }
 }
 
 /**
