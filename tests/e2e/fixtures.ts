@@ -7,11 +7,16 @@ export const MYSQL = {
   password: process.env.BMA_TEST_PASSWORD ?? 'root',
 }
 
-/** Objects of the shell e2e suite (all prefixed m1shell_). */
+/**
+ * Objects of the shell e2e suite (all prefixed m1shell_), per e2e server port: runs of other
+ * checkouts on the same MySQL create, ALTER and drop their own (the database name has no `_` before
+ * the port, so two runs' databases are siblings in the navigation tree, not a group).
+ */
+const RUN = process.env.BMA_E2E_PORT ?? '8099'
 export const E2E = {
-  db: 'm1shell_e2e',
-  limited: 'm1shell_e2e_lim',
-  pw: 'm1shell_e2e_pw',
+  db: `m1shell_e2e${RUN}`,
+  limited: `m1shell_e2e_lim${RUN}`,
+  pw: `m1shell_e2e_pw${RUN}`,
 } as const
 
 export async function login(page: Page, user = MYSQL.user, password = MYSQL.password) {

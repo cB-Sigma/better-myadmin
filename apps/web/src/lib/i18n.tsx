@@ -103,11 +103,8 @@ export function useLanguage() {
     /** The selector's autosubmit: ask the server for `lang` (it sets the language cookie). */
     setLanguage: async (key: string) => {
       const next = await api.i18n(key)
-      // UserPreferencesHandler::loadUserPreferences: a language chosen while logged in is kept as the
-      // `lang` preference (removed again for English)
-      const server = /\/s\/(\d+)(\/|$)/.exec(window.location.pathname)?.[1]
-      if (server !== undefined)
-        await api.prefsOption(Number(server), 'lang', next.code, 'en').catch(() => null)
+      // the server keeps it as the `lang` preference on the next server request, whatever page
+      // chose it (preferences/language-sync.ts, UserPreferencesHandler::loadUserPreferences)
       qc.setQueryData(qk.i18n, next)
     },
   }

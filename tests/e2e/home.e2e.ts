@@ -17,9 +17,8 @@ async function loginAt(page: Page, base: string) {
   await page.locator('#input_username').fill(MYSQL.user)
   await page.locator('#input_password').fill(MYSQL.password)
   await page.locator('#input_go').click()
-  await expect(page.locator('#pma_navigation')).toBeVisible()
-  // the SPA stays on its default server after the login; open server 2's home
-  await page.goto(`${base}/s/2`)
+  // the chosen server opens (rememberCredentials: index.php?route=/&server=2)
+  await expect(page).toHaveURL(/\/s\/2\/?$/)
   await expect(page.locator('#maincontainer')).toBeVisible()
 }
 

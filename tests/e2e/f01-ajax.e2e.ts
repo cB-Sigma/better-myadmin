@@ -29,7 +29,12 @@ test('[p01-03005f] [p01-b3cadb] a link loads the page in place: the navigation, 
   await page.evaluate(() => {
     ;(window as unknown as { f01Marker: number }).f01Marker = 1
   })
-  await page.locator('.console_switch').click()
+  // the first page of a fresh server can still be hydrating: open the console until its input shows
+  await expect(async () => {
+    if (!(await page.locator('.console_query_input .cm-content').isVisible()))
+      await page.locator('.console_switch').click()
+    await expect(page.locator('.console_query_input .cm-content')).toBeVisible({ timeout: 2000 })
+  }).toPass({ timeout: 20000 })
   const messages = page.getByTestId('console-messages')
   await page.locator('.console_query_input .cm-content').click()
   await page.keyboard.insertText('SELECT 1 AS f01a_kept')
@@ -107,7 +112,11 @@ test('[p01-211041] a failing request shows its error; a lost session brings back
   await page.goto('/s/1/status')
   await expect(page.getByText('f01a broken')).toBeVisible()
   await page.unroute('**/api/servers/1/status')
-  await context.clearCookies()
+  // the session ends on the server (clearing the cookies is not enough: a response still in flight
+  // sets the session cookie again)
+  const token = (await context.cookies()).find((c) => c.name === 'bma_token')?.value ?? ''
+  const out = await page.request.post('/api/auth/logout', { headers: { 'X-BMA-Token': token } })
+  expect(out.ok()).toBe(true)
   // a page not loaded (nor preloaded) yet in this session; a background request may bring the
   // login form back first, which detaches the menu
   await page

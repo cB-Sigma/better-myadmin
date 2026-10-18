@@ -15,8 +15,10 @@ const ROOT = {
   password: process.env.BMA_TEST_PASSWORD ?? 'root',
   multipleStatements: true,
 }
-const USER = 'f08_e2e'
-const DB = 'f08_e2e'
+// per e2e server port: runs of other checkouts on the same MySQL drop and recreate their own account
+const RUN = process.env.BMA_E2E_PORT ?? '8099'
+const USER = `f08_e2e_${RUN}`
+const DB = `f08_e2e${RUN}`
 
 async function login(page: Page, done = true) {
   await page.goto('/')
@@ -33,7 +35,7 @@ test.beforeAll(async () => {
     CREATE TABLE t (id INT PRIMARY KEY); INSERT INTO t VALUES ${values};
     CREATE TABLE t2 (id INT PRIMARY KEY); INSERT INTO t2 VALUES ${values};
     DROP USER IF EXISTS '${USER}'@'%'; CREATE USER '${USER}'@'%' IDENTIFIED BY '${USER}';
-    GRANT ALL ON \`f08\\_e2e\`.* TO '${USER}'@'%';`)
+    GRANT ALL ON \`${DB}\`.* TO '${USER}'@'%';`)
   await c.end()
 })
 

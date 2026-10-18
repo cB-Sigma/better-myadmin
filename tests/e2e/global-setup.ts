@@ -3,7 +3,7 @@ import { E2E, MYSQL } from './fixtures.ts'
 import { holdSuiteLock } from './suite-lock.ts'
 
 export default async function setup() {
-  // one e2e run per MySQL at a time (fixed m1shell_*, m3srv_*, f06j_* objects)
+  // one e2e run per MySQL at a time (fixed m3srv_* objects; m1shell_*, f06j_*, f08_e2e_* are per port)
   const release = await holdSuiteLock('bma_browser:e2e', MYSQL)
   const c = await mysql.createConnection({ ...MYSQL, multipleStatements: true })
   await c.query(`DROP DATABASE IF EXISTS ${E2E.db}; CREATE DATABASE ${E2E.db};

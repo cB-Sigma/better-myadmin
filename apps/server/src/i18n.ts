@@ -37,8 +37,8 @@ export function languageLoading(lm: LanguageManager): MiddlewareHandler<AppEnv> 
       ['Lax', 'Strict', 'None'].includes(cfg.CookieSameSite) ? cfg.CookieSameSite : 'Strict'
     ) as 'Lax' | 'Strict' | 'None'
     const path = cfg.Listen?.basePath !== undefined && cfg.Listen.basePath !== '' ? cfg.Listen.basePath : '/'
-    // Config::setCookie default validity: 30 days
-    setCookie(c, LANG_COOKIE, sel.language.code, {
+    // Config::setCookie default validity: 30 days; the language may come from the preferences
+    setCookie(c, LANG_COOKIE, c.get('language').code, {
       path,
       httpOnly: true,
       secure: c.get('isHttps'),
