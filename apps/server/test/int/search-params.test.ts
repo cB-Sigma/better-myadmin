@@ -77,21 +77,27 @@ it(
     let answered = 0
     for (const route of routes) {
       for (const v of variants) {
-        const url = `${route}?${keys.map(v).join('&')}`
-        const r = await Promise.race([
-          app.req('GET', url),
-          new Promise<null>((ok) => setTimeout(() => ok(null), 15_000)),
-        ])
-        if (r === null) failed.push(`${route} [timeout] ${v('k')}`)
-        else {
-          if (r.status < 300) answered++
-          if (r.status >= 500)
-            failed.push(`${route} [${r.status}] ${v('k')}: ${JSON.stringify(r.json).slice(0, 300)}`)
+        // in chunks under RequestProblemChecking's 1000 parameters ("possible exploit")
+        for (let at = 0; at < keys.length; at += 400) {
+          const url = `${route}?${keys
+            .slice(at, at + 400)
+            .map(v)
+            .join('&')}`
+          const r = await Promise.race([
+            app.req('GET', url),
+            new Promise<null>((ok) => setTimeout(() => ok(null), 15_000)),
+          ])
+          if (r === null) failed.push(`${route} [timeout] ${v('k')}`)
+          else {
+            if (r.status < 300) answered++
+            if (r.status >= 500)
+              failed.push(`${route} [${r.status}] ${v('k')}: ${JSON.stringify(r.json).slice(0, 300)}`)
+          }
         }
       }
     }
     expect(failed).toEqual([])
     // most endpoints read the odd values instead of refusing them
-    expect(answered).toBeGreaterThan(routes.length * variants.length * 0.5)
+    expect(answered).toBeGreaterThan(routes.length * variants.length * Math.ceil(keys.length / 400) * 0.5)
   },
 )
