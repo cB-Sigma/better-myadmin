@@ -7,13 +7,15 @@ import {
   DialogTitle,
   Input,
   Label,
+  NativeCheckbox,
   NativeSelect,
   Panel,
   PanelBody,
   Textarea,
 } from '@bettermyadmin/ui'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { pgettext, t } from '../../lib/i18n'
+import { OlPlot } from './OlPlot'
 import {
   GIS_TYPES,
   type Geom,
@@ -21,15 +23,18 @@ import {
   type GisValue,
   type Pt,
   emptyGeom,
+  generateWkt,
   initialValue,
   resultValue,
   shapes,
 } from './gis'
+import { olDataset } from './visualization'
 
 /**
  * The GIS data editor modal (`#gisEditorModal`): geometry type (GEOMETRY columns only), SRID,
  * coordinate rows with "+ Add …" buttons, an SVG preview and the `'WKT',srid` output.
- * The OpenStreetMap base layer of phpMyAdmin is not offered (parity exception: no OpenLayers).
+ * "Use OpenStreetMaps as Base Layer" switches the preview to the OpenLayers map (on when the SRID
+ * is not 0), redrawn after each change like GisVisualizationController.
  * pma: templates/gis_data_editor_form.twig, templates/modals/gis_editor.twig, js/gis_data_editor.ts
  */
 export function GisEditor({
@@ -57,6 +62,17 @@ export function GisEditor({
   // updateResult() runs on `change` of an input (blur) and on the add/type buttons, not per key
   const [shown, setShown] = useState<GisValue>(init.value)
   const output = resultValue(shown)
+  // gis_data_editor_form.twig: checked when srid != 0
+  const [useOsm, setUseOsm] = useState((Number.parseInt(init.value.srid, 10) || 0) !== 0)
+  const olData = useMemo(
+    () =>
+      olDataset(
+        [{ wkt: generateWkt(shown.geom), srid: Number.parseInt(shown.srid, 10) || 0, label: '' }],
+        PREVIEW_W,
+        PREVIEW_H,
+      ),
+    [shown],
+  )
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
       <DialogContent size="xl" id="gisEditorModal" aria-describedby={undefined} modal="static">
@@ -113,8 +129,28 @@ export function GisEditor({
               </div>
               <Panel className="self-start">
                 <PanelBody>
-                  <Preview geom={shown.geom} />
+                  <div
+                    id="visualization-placeholder"
+                    className="relative"
+                    style={{ width: PREVIEW_W, height: PREVIEW_H }}
+                  >
+                    {!useOsm && <Preview geom={shown.geom} />}
+                    {/* onCoordinateEdit: the map is made again for the new geometry */}
+                    <OlPlot key={JSON.stringify(olData)} data={olData} visible={useOsm} />
+                  </div>
                 </PanelBody>
+                <div className="border-t border-border px-3 py-2">
+                  <Label className="flex items-center gap-2" id="useOsmAsBaseLayerSwitchLabel">
+                    <NativeCheckbox
+                      role="switch"
+                      id="useOsmAsBaseLayerSwitch"
+                      value="useBaseLayer"
+                      checked={useOsm}
+                      onChange={(e) => setUseOsm(e.target.checked)}
+                    />
+                    {t('Use OpenStreetMaps as Base Layer')}
+                  </Label>
+                </div>
               </Panel>
             </div>
             <div className="mt-3">
@@ -327,10 +363,14 @@ function GeomInputs({
   }
 }
 
+/** GisDataEditorController: the visualization is 450×300 */
+const PREVIEW_W = 450
+const PREVIEW_H = 300
+
 /** GisVisualization::asSVG (450×300), drawn client-side */
 function Preview({ geom }: { geom: Geom }) {
-  const W = 450
-  const H = 300
+  const W = PREVIEW_W
+  const H = PREVIEW_H
   const all = shapes(geom)
   const coords = all.flatMap((s) => s.paths.flat())
   const xs = coords.map((c) => c[0])
@@ -345,8 +385,7 @@ function Preview({ geom }: { geom: Geom }) {
     <svg
       width={W}
       height={H}
-      id="visualization-placeholder"
-      className="bg-bg"
+      className="visualization-target visualization-target-svg bg-bg"
       role="img"
       aria-label={t('Output')}
     >

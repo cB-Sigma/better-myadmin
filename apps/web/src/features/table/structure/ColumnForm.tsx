@@ -215,7 +215,8 @@ export function formatEnumValues(values: string[]): string {
     .join(',')
 }
 
-function EnumEditor({
+/** The ENUM/SET values editor (functions.ts `a.open_enum_editor`). */
+export function EnumEditor({
   value,
   column,
   onClose,
