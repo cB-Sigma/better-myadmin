@@ -21,7 +21,7 @@ import { DbModal, Messages, errorMessage } from './common'
 /**
  * The list page shared by Routines, Events and Triggers (rte lists): heading, Check all / Export /
  * Drop, the search filter, "Create new …", the table, export modal and drop confirmations.
- * pma: templates/database/routines/index.twig, database/events/index.twig, triggers/list.twig,
+ * pma: templates/database/routines/index.twig, events/index.twig, triggers/list.twig,
  *      resources/js/database/routines.ts (dropDialog, exportDialog), modules/functions.ts
  */
 export interface ProgramItem {
@@ -53,6 +53,7 @@ export function ProgramListPage({
   onExport,
   before,
   after,
+  disabledNotice,
   tableId,
   filterable = false,
 }: {
@@ -78,6 +79,8 @@ export function ProgramListPage({
   onExport: (name: string) => Promise<DbExportResponse | null>
   before?: ReactNode
   after?: ReactNode
+  /** replaces the toolbar, the list and `after` (the Events page with the scheduler DISABLED) */
+  disabledNotice?: string | undefined
   tableId: string
 }) {
   const qc = useQueryClient()
@@ -159,113 +162,120 @@ export function ProgramListPage({
       </h2>
       <Messages messages={messages} />
       {before}
-      <div className="my-3 flex flex-wrap items-center gap-2">
-        {any && (
-          <>
-            <Label className="flex items-center gap-2 rounded border border-border px-2 py-1">
-              <Checkbox
-                id="checkAllCheckbox"
-                checked={selected.length > 0 && selected.length === items.length}
-                onCheckedChange={(v) => setSelected(v === true ? items.map((i) => i.name) : [])}
-              />
-              {t('Check all')}
-            </Label>
-            <Button
-              id="bulkActionExportButton"
-              title={t('Export')}
-              onClick={() =>
-                void exportItems(
-                  items.filter((i) => selected.includes(i.name) && i.exportable).map((i) => i.name),
-                )
-              }
-            >
-              <IconText icon="b_export" text={t('Export')} />
-            </Button>
-            <Button id="bulkActionDropButton" title={t('Drop')} onClick={() => void bulkDrop()}>
-              <IconText icon="b_drop" text={t('Drop')} />
-            </Button>
-            {filterable && (
-              <div className="ms-auto flex items-center gap-1">
-                <PmaIcon name="b_search" alt={t('Search')} />
-                <Input
-                  id="filterText"
-                  className="max-w-60"
-                  placeholder={t('Search')}
-                  aria-label={t('Search')}
-                  value={filter}
-                  onChange={(e) => setFilter(e.target.value)}
-                />
-              </div>
-            )}
-          </>
-        )}
-        <Button variant="primary" className="add_anchor" disabled={!canCreate} onClick={onCreate}>
-          <IconText icon={createIcon} text={createLabel} />
-        </Button>
-      </div>
-      {!any ? (
-        <div id="nothing2display">
-          <Messages messages={[{ type: 'notice', text: empty }]} />
-        </div>
+      {disabledNotice !== undefined ? (
+        // events/index.twig: scheduler_state DISABLED shows the notice only
+        <Messages messages={[{ type: 'notice', text: disabledNotice }]} />
       ) : (
-        <table
-          id={tableId}
-          className="w-auto border-collapse text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2 [&_th]:py-1"
-        >
-          <thead>
-            <tr className="bg-grid-header text-left">
-              <th />
-              {headers.map((h) => (
-                <th key={h}>{h}</th>
-              ))}
-              <th colSpan={actionCols} />
-            </tr>
-          </thead>
-          <tbody>
-            {shown.map((item) => (
-              <tr key={item.name} className="odd:bg-grid-odd even:bg-grid-even hover:bg-grid-hover">
-                <td>
+        <>
+          <div className="my-3 flex flex-wrap items-center gap-2">
+            {any && (
+              <>
+                <Label className="flex items-center gap-2 rounded border border-border px-2 py-1">
                   <Checkbox
-                    aria-label={item.name}
-                    checked={selected.includes(item.name)}
-                    onCheckedChange={(v) =>
-                      setSelected(
-                        v === true ? [...selected, item.name] : selected.filter((x) => x !== item.name),
-                      )
-                    }
+                    id="checkAllCheckbox"
+                    checked={selected.length > 0 && selected.length === items.length}
+                    onCheckedChange={(v) => setSelected(v === true ? items.map((i) => i.name) : [])}
                   />
-                </td>
-                <td>
-                  <strong>{item.name}</strong>
-                </td>
-                {item.cells.map((c, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: positional cells
-                  <td key={i}>{c}</td>
+                  {t('Check all')}
+                </Label>
+                <Button
+                  id="bulkActionExportButton"
+                  title={t('Export')}
+                  onClick={() =>
+                    void exportItems(
+                      items.filter((i) => selected.includes(i.name) && i.exportable).map((i) => i.name),
+                    )
+                  }
+                >
+                  <IconText icon="b_export" text={t('Export')} />
+                </Button>
+                <Button id="bulkActionDropButton" title={t('Drop')} onClick={() => void bulkDrop()}>
+                  <IconText icon="b_drop" text={t('Drop')} />
+                </Button>
+                {filterable && (
+                  <div className="ms-auto flex items-center gap-1">
+                    <PmaIcon name="b_search" alt={t('Search')} />
+                    <Input
+                      id="filterText"
+                      className="max-w-60"
+                      placeholder={t('Search')}
+                      aria-label={t('Search')}
+                      value={filter}
+                      onChange={(e) => setFilter(e.target.value)}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            <Button variant="primary" className="add_anchor" disabled={!canCreate} onClick={onCreate}>
+              <IconText icon={createIcon} text={createLabel} />
+            </Button>
+          </div>
+          {!any ? (
+            <div id="nothing2display">
+              <Messages messages={[{ type: 'notice', text: empty }]} />
+            </div>
+          ) : (
+            <table
+              id={tableId}
+              className="w-auto border-collapse text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2 [&_th]:py-1"
+            >
+              <thead>
+                <tr className="bg-grid-header text-left">
+                  <th />
+                  {headers.map((h) => (
+                    <th key={h}>{h}</th>
+                  ))}
+                  <th colSpan={actionCols} />
+                </tr>
+              </thead>
+              <tbody>
+                {shown.map((item) => (
+                  <tr key={item.name} className="odd:bg-grid-odd even:bg-grid-even hover:bg-grid-hover">
+                    <td>
+                      <Checkbox
+                        aria-label={item.name}
+                        checked={selected.includes(item.name)}
+                        onCheckedChange={(v) =>
+                          setSelected(
+                            v === true ? [...selected, item.name] : selected.filter((x) => x !== item.name),
+                          )
+                        }
+                      />
+                    </td>
+                    <td>
+                      <strong>{item.name}</strong>
+                    </td>
+                    {item.cells.map((c, i) => (
+                      // biome-ignore lint/suspicious/noArrayIndexKey: positional cells
+                      <td key={i}>{c}</td>
+                    ))}
+                    {item.actions.map((a, i) => (
+                      // biome-ignore lint/suspicious/noArrayIndexKey: positional actions
+                      <td key={i}>{a}</td>
+                    ))}
+                    <td>
+                      <RowAction
+                        icon="b_export"
+                        text={t('Export')}
+                        enabled={item.exportable}
+                        className="export_anchor"
+                        onClick={() => void exportItems([item.name])}
+                      />
+                    </td>
+                    <td>
+                      <Button variant="link" className="drop_anchor" onClick={() => void dropOne(item)}>
+                        <IconText icon="b_drop" text={t('Drop')} />
+                      </Button>
+                    </td>
+                  </tr>
                 ))}
-                {item.actions.map((a, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: positional actions
-                  <td key={i}>{a}</td>
-                ))}
-                <td>
-                  <RowAction
-                    icon="b_export"
-                    text={t('Export')}
-                    enabled={item.exportable}
-                    className="export_anchor"
-                    onClick={() => void exportItems([item.name])}
-                  />
-                </td>
-                <td>
-                  <Button variant="link" className="drop_anchor" onClick={() => void dropOne(item)}>
-                    <IconText icon="b_drop" text={t('Drop')} />
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          )}
+          {after}
+        </>
       )}
-      {after}
       {exported !== null && (
         <DbModal
           title={exported.title}

@@ -20,7 +20,7 @@ import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 
 /**
  * Database → Events.
- * pma: templates/database/events/{index,row,editor_form}.twig, resources/js/database/events.ts
+ * pma: templates/events/{index,row,editor-form}.twig, resources/js/events.ts
  */
 const STATUSES = ['ENABLED', 'DISABLED', 'SLAVESIDE_DISABLED']
 const INTERVALS = [
@@ -68,6 +68,8 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
   const d = q.data
   if (d === undefined) return null
   const refresh = () => qc.invalidateQueries({ queryKey: qk.db({ server, db }) })
+  // events/index.twig: the toggle is "on" only for ON (d284996d6b)
+  const on = d.schedulerState === 'ON'
 
   const open = async (name?: string) => {
     try {
@@ -81,7 +83,7 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
     }
   }
   const toggleScheduler = async () => {
-    const sql = `SET GLOBAL event_scheduler="${d.schedulerOn ? 'OFF' : 'ON'}"`
+    const sql = `SET GLOBAL event_scheduler="${on ? 'OFF' : 'ON'}"`
     try {
       await runQuery(server, { sql, db }, 'page')
       setMessages([{ type: 'success', text: t('Your SQL query has been executed successfully.'), sql }])
@@ -107,6 +109,7 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
         createLabel={t('Create new event')}
         onCreate={() => void open()}
         empty={t('There are no events to display.')}
+        disabledNotice={d.schedulerState === 'DISABLED' ? t('The event scheduler is disabled.') : undefined}
         messages={messages}
         setMessages={setMessages}
         onExport={(name) => api.dbEventExport({ server, db }, name)}
@@ -131,12 +134,12 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
               <Button
                 title={t('Click to toggle')}
                 className="toggleAjax"
-                aria-pressed={d.schedulerOn}
+                aria-pressed={on}
                 onClick={() => void toggleScheduler()}
               >
-                <span className={d.schedulerOn ? 'font-semibold' : 'opacity-50'}>{t('ON')}</span>
+                <span className={on ? 'font-semibold' : 'opacity-50'}>{t('ON')}</span>
                 <span>/</span>
-                <span className={!d.schedulerOn ? 'font-semibold' : 'opacity-50'}>{t('OFF')}</span>
+                <span className={!on ? 'font-semibold' : 'opacity-50'}>{t('OFF')}</span>
               </Button>
             </PanelBody>
           </Panel>

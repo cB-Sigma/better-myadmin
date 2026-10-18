@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/sl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/sl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Po tej točki mora biti JavaScript omogočen!"
@@ -683,89 +683,6 @@ msgstr "Izberi stran"
 msgid "Select export relational type:"
 msgstr "Izberite relacijsko vrsto izvoza:"
 
-msgid "Details"
-msgstr "Podrobnosti"
-
-msgid "Event name"
-msgstr "Ime dogodka"
-
-msgid "Status"
-msgstr "Stanje"
-
-msgid "Event type"
-msgstr "Vrsta dogodka"
-
-msgid "Change to %s"
-msgstr "Spremeni v %s"
-
-msgid "Execute at"
-msgstr "Izvedi ob"
-
-msgid "Execute every"
-msgstr "Izvedi vsakih"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Začetek"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Konec"
-
-msgid "Definition"
-msgstr "Opredelitev"
-
-msgid "Format"
-msgstr "Oblika"
-
-msgid "On completion preserve"
-msgstr "Ob dokončanju ohrani"
-
-msgid "Definer"
-msgstr "Opredeljevalec"
-
-msgid "Events"
-msgstr "Dogodki"
-
-msgid "Check all"
-msgstr "Označi vse"
-
-msgid "Export"
-msgstr "Izvozi"
-
-msgid "Drop"
-msgstr "Zavrzi"
-
-msgid "Create new event"
-msgstr "Ustvari nov dogodek"
-
-msgid "There are no events to display."
-msgstr "Ni dogodkov za prikaz."
-
-msgid "Event scheduler status"
-msgstr "Stanje razporejevalnika dogodkov"
-
-msgid "Click to toggle"
-msgstr "Kliknite za preklop"
-
-msgid "ON"
-msgstr "VKL"
-
-msgid "OFF"
-msgstr "IZKL"
-
-msgid "Event editor"
-msgstr "Urejevalnik dogodkov"
-
-msgid "Loading…"
-msgstr "Nalaganje…"
-
-msgid "Save changes"
-msgstr "Shrani spremembe"
-
-msgid "Export event"
-msgstr "Izvoz dogodka"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ bo postalo ime strežnika in @DATABASE@ bo postalo ime zbirke podatkov."
 
@@ -946,11 +863,17 @@ msgstr "rutina"
 msgid "Edit privileges"
 msgstr "Uredi privilegije"
 
+msgid "Export"
+msgstr "Izvozi"
+
 msgid "No user found."
 msgstr "Najden ni bil noben uporabnik."
 
 msgid "With selected:"
 msgstr "Z označenim:"
+
+msgid "Check all"
+msgstr "Označi vse"
 
 msgid "Not enough privilege to view users."
 msgstr "Nimate zadostnih privilegijev za ogled uporabnikov."
@@ -958,8 +881,14 @@ msgstr "Nimate zadostnih privilegijev za ogled uporabnikov."
 msgid "Add user account"
 msgstr "Dodaj uporabniški račun"
 
+msgid "Details"
+msgstr "Podrobnosti"
+
 msgid "Routine name"
 msgstr "Ime rutine"
+
+msgid "Change to %s"
+msgstr "Spremeni v %s"
 
 msgid "Parameters"
 msgstr "Parametri"
@@ -985,11 +914,20 @@ msgstr "Vrnjene možnosti"
 msgid "Charset"
 msgstr "Nabor znakov"
 
+msgid "Definition"
+msgstr "Opredelitev"
+
+msgid "Format"
+msgstr "Oblika"
+
 msgid "Is deterministic"
 msgstr "Je deterministično"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Nimate zadostnih pravic za izvedbo posega; prosimo, oglejte si dokumentacijo za več podrobnosti."
+
+msgid "Definer"
+msgstr "Opredeljevalec"
 
 msgid "Security type"
 msgstr "Vrsta varnosti"
@@ -1009,6 +947,9 @@ msgstr "Rutina ne potrebuje nobenih parametrov."
 msgid "Routines"
 msgstr "Rutina"
 
+msgid "Drop"
+msgstr "Zavrzi"
+
 msgid "Search"
 msgstr "Iskanje"
 
@@ -1023,6 +964,12 @@ msgstr "Vrnjeno"
 
 msgid "Routine editor"
 msgstr "Urejevalnik rutin"
+
+msgid "Loading…"
+msgstr "Nalaganje…"
+
+msgid "Save changes"
+msgstr "Shrani spremembe"
 
 msgid "Export routine"
 msgstr "Izvoz rutine"
@@ -1282,6 +1229,12 @@ msgstr "Ustvarjeno"
 msgid "Updated"
 msgstr "Posodobljeno"
 
+msgid "Status"
+msgstr "Stanje"
+
+msgid "Click to toggle"
+msgstr "Kliknite za preklop"
+
 msgid "active"
 msgstr "aktivno"
 
@@ -1427,6 +1380,53 @@ msgstr "Prišlo je do napake"
 
 msgid "Go back"
 msgstr "Pojdi nazaj"
+
+msgid "Event name"
+msgstr "Ime dogodka"
+
+msgid "Event type"
+msgstr "Vrsta dogodka"
+
+msgid "Execute at"
+msgstr "Izvedi ob"
+
+msgid "Execute every"
+msgstr "Izvedi vsakih"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Začetek"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Konec"
+
+msgid "On completion preserve"
+msgstr "Ob dokončanju ohrani"
+
+msgid "Events"
+msgstr "Dogodki"
+
+msgid "Create new event"
+msgstr "Ustvari nov dogodek"
+
+msgid "There are no events to display."
+msgstr "Ni dogodkov za prikaz."
+
+msgid "Event scheduler status"
+msgstr "Stanje razporejevalnika dogodkov"
+
+msgid "ON"
+msgstr "VKL"
+
+msgid "OFF"
+msgstr "IZKL"
+
+msgid "Event editor"
+msgstr "Urejevalnik dogodkov"
+
+msgid "Export event"
+msgstr "Izvoz dogodka"
 
 msgid "Select a template"
 msgstr "Izberite predlogo"
@@ -6606,24 +6606,6 @@ msgstr "Stran z imenom »%s« že obstaja; prosimo, preimenujte jo."
 msgid "No databases selected."
 msgstr "Ni izbranih zbirk podatkov."
 
-msgid "Add event"
-msgstr "Dodaj dogodek"
-
-msgid "Edit event"
-msgstr "Uredi dogodek"
-
-msgid "Error in processing request:"
-msgstr "Napaka v obdelovanju zahteve:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Dogodka imenovanega %1$s ni mogoče najti v zbirki podatkov %2$s."
-
-msgid "Export of event %s"
-msgstr "Izvoz dogodka %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Napaka v obdelavi zahteve: Dogodka imenovanega %1$s ni mogoče najti v zbirki podatkov %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Ne morem naložiti vtičnikov za izvoz, prosimo, preverite vašo namestitev!"
 
@@ -6644,6 +6626,9 @@ msgstr "Dodaj rutino"
 
 msgid "Edit routine"
 msgstr "Uredi rutino"
+
+msgid "Error in processing request:"
+msgstr "Napaka v obdelovanju zahteve:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "V zbirki podatkov %2$s nismo našli nobene rutine z imenom %1$s. Morda nimate zahtevanih privilegijev za urejanje rutine."
@@ -6698,6 +6683,21 @@ msgstr "Če naletite na kakršne koli težave, prosimo, da ročno pošljete poro
 
 msgid "You may want to refresh the page."
 msgstr "Morda boste želeli osvežiti stran."
+
+msgid "Export of event %s"
+msgstr "Izvoz dogodka %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Napaka v obdelavi zahteve: Dogodka imenovanega %1$s ni mogoče najti v zbirki podatkov %2$s."
+
+msgid "Add event"
+msgstr "Dodaj dogodek"
+
+msgid "Edit event"
+msgstr "Uredi dogodek"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Dogodka imenovanega %1$s ni mogoče najti v zbirki podatkov %2$s."
 
 msgid "Bad type!"
 msgstr "Slaba vrsta!"
@@ -8632,53 +8632,26 @@ msgstr "Odstranili smo notranje razmerje."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Ne morem naložiti vtičnikov sheme, prosimo, preverite vašo namestitev!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Neveljavna vrsta rutine: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Naslednja poizvedba je spodletela: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL je vrnil: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Oprostite, zavrženega dogodka nam ni uspelo obnoviti."
-
-msgid "The backed up query was:"
-msgstr "Varnostno kopirana poizvedba je bila:"
-
-msgid "Event %1$s has been modified."
-msgstr "Dogodek %1$s je bil spremenjen."
-
-msgid "Event %1$s has been created."
-msgstr "Dogodek %1$s je ustvarjen."
+msgid "Routine %1$s has been created."
+msgstr "Rutino %1$s smo ustvarili."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Med obdelovanjem vaše zahteve je prišlo do ene ali več napak:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Opredeljevalec mora biti oblike \"uporabniškoime@imegostitelja\"!"
-
-msgid "You must provide an event name!"
-msgstr "Navesti morate ime dogodka!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Navesti morateveljavno vrednost intervala dogodka."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Navesti morate veljavni čas izvedbe dogodka."
-
-msgid "You must provide a valid type for the event."
-msgstr "Navesti morate veljavno vrsto dogodka."
-
-msgid "You must provide an event definition."
-msgstr "Navesti morate opredelitev dogodka."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Neveljavna vrsta rutine: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Rutino %1$s smo ustvarili."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Oprostite, zavržene rutine nam ni uspelo obnoviti."
+
+msgid "The backed up query was:"
+msgstr "Varnostno kopirana poizvedba je bila:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutino %1$s smo spremenili. Privilegije smo prilagodili."
@@ -8697,6 +8670,9 @@ msgstr "Navesti morate dolžine/vrednosti za parametre rutine vrste ENUM, SET, V
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Navesti morate veljavno vrsto vrnjene vrednosti dogodka."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Opredeljevalec mora biti oblike \"uporabniškoime@imegostitelja\"!"
 
 msgid "Invalid routine type!"
 msgstr "Neveljavna vrsta rutine!"
@@ -8887,6 +8863,30 @@ msgstr "Preveč sporočil o napakah; nekatera zato niso prikazana."
 
 msgid "Report"
 msgstr "Poročaj"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Oprostite, zavrženega dogodka nam ni uspelo obnoviti."
+
+msgid "Event %1$s has been modified."
+msgstr "Dogodek %1$s je bil spremenjen."
+
+msgid "Event %1$s has been created."
+msgstr "Dogodek %1$s je ustvarjen."
+
+msgid "You must provide an event name!"
+msgstr "Navesti morate ime dogodka!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Navesti morateveljavno vrednost intervala dogodka."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Navesti morate veljavni čas izvedbe dogodka."
+
+msgid "You must provide a valid type for the event."
+msgstr "Navesti morate veljavno vrsto dogodka."
+
+msgid "You must provide an event definition."
+msgstr "Navesti morate opredelitev dogodka."
 
 msgid "Cannot log in to the database server."
 msgstr "Ne morem se prijaviti v strežnik zbirk podatkov."

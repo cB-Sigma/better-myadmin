@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ta.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ta.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "சாவாச்கிரிப்ட் இந்த புள்ளியைத் தாண்டி இயக்கப்பட வேண்டும்!"
@@ -683,89 +683,6 @@ msgstr "பக்கத்தைத் தேர்ந்தெடுக்க�
 msgid "Select export relational type:"
 msgstr "ஏற்றுமதி தொடர்புடைய வகையைத் தேர்ந்தெடுக்கவும்:"
 
-msgid "Details"
-msgstr "விவரங்கள்"
-
-msgid "Event name"
-msgstr "நிகழ்வு பெயர்"
-
-msgid "Status"
-msgstr "நிகழ்நிலை"
-
-msgid "Event type"
-msgstr "நிகழ்வு வகை"
-
-msgid "Change to %s"
-msgstr "%s ஆக மாற்றவும்"
-
-msgid "Execute at"
-msgstr "செயல்படுத்தவும்"
-
-msgid "Execute every"
-msgstr "ஒவ்வொன்றையும் இயக்கவும்"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "தொடங்கு"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "முடிவு"
-
-msgid "Definition"
-msgstr "வரையறை"
-
-msgid "Format"
-msgstr "வடிவம்"
-
-msgid "On completion preserve"
-msgstr "நிறைவு செய்தவுடன்"
-
-msgid "Definer"
-msgstr "வரையறுக்கவும்"
-
-msgid "Events"
-msgstr "நிகழ்வுகள்"
-
-msgid "Check all"
-msgstr "அனைத்தையும் சரிபார்க்கவும்"
-
-msgid "Export"
-msgstr "தரவேற்றுக"
-
-msgid "Drop"
-msgstr "அழி"
-
-msgid "Create new event"
-msgstr "புதிய நிகழ்வை உருவாக்கவும்"
-
-msgid "There are no events to display."
-msgstr "காண்பிக்க நிகழ்வுகள் எதுவும் இல்லை."
-
-msgid "Event scheduler status"
-msgstr "நிகழ்வு திட்டமிடல் நிலை"
-
-msgid "Click to toggle"
-msgstr "பிறழ்வதற்கு சொடுக்குக"
-
-msgid "ON"
-msgstr "ஆன்"
-
-msgid "OFF"
-msgstr "அணை"
-
-msgid "Event editor"
-msgstr "நிகழ்வு திருத்தி"
-
-msgid "Loading…"
-msgstr "ஏற்றப்படுகிறது…"
-
-msgid "Save changes"
-msgstr "மாற்றங்களைச் சேமிக்கவும்"
-
-msgid "Export event"
-msgstr "நிகழ்வு ஏற்றம்"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@ சேவையகம்@ சேவையக பெயராகவும்,@ தரவுத்தளமாக@ தரவுத்தள பெயராகவும் மாறும்."
 
@@ -946,11 +863,17 @@ msgstr "%s களத்தை சேர்க்க->செயல்முறை
 msgid "Edit privileges"
 msgstr "சலுகைகளைத் திருத்தவும்"
 
+msgid "Export"
+msgstr "தரவேற்றுக"
+
 msgid "No user found."
 msgstr "எந்த பயனரும் கிடைக்கவில்லை."
 
 msgid "With selected:"
 msgstr "உடன் தெரிவுசெய்யப்பட்டது:"
+
+msgid "Check all"
+msgstr "அனைத்தையும் சரிபார்க்கவும்"
 
 msgid "Not enough privilege to view users."
 msgstr "பயனர்களைப் பார்க்க போதுமான பாக்கியம் இல்லை."
@@ -958,8 +881,14 @@ msgstr "பயனர்களைப் பார்க்க போதுமா�
 msgid "Add user account"
 msgstr "பயனர் கணக்கைச் சேர்க்கவும்"
 
+msgid "Details"
+msgstr "விவரங்கள்"
+
 msgid "Routine name"
 msgstr "வழக்கமான பெயர்"
+
+msgid "Change to %s"
+msgstr "%s ஆக மாற்றவும்"
 
 msgid "Parameters"
 msgstr "அளவுருக்கள்"
@@ -985,11 +914,20 @@ msgstr "செயல்கள்->திருப்பியளிதல் வ
 msgid "Charset"
 msgstr "எழுத்துக்கணம்"
 
+msgid "Definition"
+msgstr "வரையறை"
+
+msgid "Format"
+msgstr "வடிவம்"
+
 msgid "Is deterministic"
 msgstr "தீர்மானகரமானது"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "இந்த செயல்பாட்டைச் செய்ய உங்களுக்கு போதுமான சலுகைகள் இல்லை; மேலும் விவரங்களுக்கு ஆவணங்களைப் பார்க்கவும்."
+
+msgid "Definer"
+msgstr "வரையறுக்கவும்"
 
 msgid "Security type"
 msgstr "பாதுகாப்பு வகை"
@@ -1009,6 +947,9 @@ msgstr "இந்த வழக்கத்திற்கு எந்த அள
 msgid "Routines"
 msgstr "நடைமுறைகள்"
 
+msgid "Drop"
+msgstr "அழி"
+
 msgid "Search"
 msgstr "தேடு"
 
@@ -1023,6 +964,12 @@ msgstr "செயல்கள்->திருப்பியளிப்பத�
 
 msgid "Routine editor"
 msgstr "வழக்கமான பெயர்"
+
+msgid "Loading…"
+msgstr "ஏற்றப்படுகிறது…"
+
+msgid "Save changes"
+msgstr "மாற்றங்களைச் சேமிக்கவும்"
 
 msgid "Export routine"
 msgstr "செயல்முறை தரவேற்றம்"
@@ -1276,6 +1223,12 @@ msgstr "உருவாக்கப்பட்டது"
 msgid "Updated"
 msgstr "புதுப்பிக்கப்பட்டது"
 
+msgid "Status"
+msgstr "நிகழ்நிலை"
+
+msgid "Click to toggle"
+msgstr "பிறழ்வதற்கு சொடுக்குக"
+
 msgid "active"
 msgstr "செயற்படு"
 
@@ -1421,6 +1374,53 @@ msgstr "ஏதோ தவறு நடந்தது"
 
 msgid "Go back"
 msgstr "திரும்பிச் செல்லுங்கள்"
+
+msgid "Event name"
+msgstr "நிகழ்வு பெயர்"
+
+msgid "Event type"
+msgstr "நிகழ்வு வகை"
+
+msgid "Execute at"
+msgstr "செயல்படுத்தவும்"
+
+msgid "Execute every"
+msgstr "ஒவ்வொன்றையும் இயக்கவும்"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "தொடங்கு"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "முடிவு"
+
+msgid "On completion preserve"
+msgstr "நிறைவு செய்தவுடன்"
+
+msgid "Events"
+msgstr "நிகழ்வுகள்"
+
+msgid "Create new event"
+msgstr "புதிய நிகழ்வை உருவாக்கவும்"
+
+msgid "There are no events to display."
+msgstr "காண்பிக்க நிகழ்வுகள் எதுவும் இல்லை."
+
+msgid "Event scheduler status"
+msgstr "நிகழ்வு திட்டமிடல் நிலை"
+
+msgid "ON"
+msgstr "ஆன்"
+
+msgid "OFF"
+msgstr "அணை"
+
+msgid "Event editor"
+msgstr "நிகழ்வு திருத்தி"
+
+msgid "Export event"
+msgstr "நிகழ்வு ஏற்றம்"
 
 msgid "Select a template"
 msgstr "ஒரு வார்ப்புருவைத் தேர்ந்தெடுக்கவும்"
@@ -6600,27 +6600,6 @@ msgstr "\"%s\" என்ற பக்கம் ஏற்கனவே உள்�
 msgid "No databases selected."
 msgstr "எந்த தரவுத்தளமும் தேர்ந்தெடுக்கப்படவில்லை."
 
-msgid "The event was dropped immediately after creation."
-msgstr "நிகழ்வு உருவாக்கப்பட்ட உடனேயே கைவிடப்பட்டது."
-
-msgid "Add event"
-msgstr "புதிய பயனாளரை சேர்க்க->நிகழ்வை சேர்க்க"
-
-msgid "Edit event"
-msgstr "நிகழ்வை தொகுக்க"
-
-msgid "Error in processing request:"
-msgstr "வேண்டுகோள் செயலாக்கதில் பிழை:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "தரவுத்தள %2$s இல் %1$s என்ற பெயர் கொண்ட நிகழ்வு இல்லை."
-
-msgid "Export of event %s"
-msgstr "%s நிகழ்வின் தரவேற்றம்"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "செயலாக்க கோரிக்கையில் பிழை: தரவுத்தள %2$s இல் %1$s என்ற பெயருடன் நிகழ்வு எதுவும் இல்லை."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "ஏற்றுமதி செருகுநிரல்களை ஏற்ற முடியவில்லை, தயவுசெய்து உங்கள் நிறுவலை சரிபார்க்கவும்!"
 
@@ -6641,6 +6620,9 @@ msgstr "%s களத்தை சேர்க்க->செயல்முறை
 
 msgid "Edit routine"
 msgstr "வழக்கத்தைத் திருத்து"
+
+msgid "Error in processing request:"
+msgstr "வேண்டுகோள் செயலாக்கதில் பிழை:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "தரவுத்தள %2$s இல் %1$s என்ற பெயரைக் கொண்ட வழக்கம் இல்லை. இந்த வழக்கத்தைத் திருத்துவதற்கு தேவையான சலுகைகள் உங்களுக்கு இல்லாதிருக்கலாம்."
@@ -6695,6 +6677,24 @@ msgstr "நீங்கள் ஏதேனும் சிக்கல்கள�
 
 msgid "You may want to refresh the page."
 msgstr "நீங்கள் இப்பக்கத்தை மீளேற்ற வேண்டியிருக்கலாம்."
+
+msgid "Export of event %s"
+msgstr "%s நிகழ்வின் தரவேற்றம்"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "செயலாக்க கோரிக்கையில் பிழை: தரவுத்தள %2$s இல் %1$s என்ற பெயருடன் நிகழ்வு எதுவும் இல்லை."
+
+msgid "The event was dropped immediately after creation."
+msgstr "நிகழ்வு உருவாக்கப்பட்ட உடனேயே கைவிடப்பட்டது."
+
+msgid "Add event"
+msgstr "புதிய பயனாளரை சேர்க்க->நிகழ்வை சேர்க்க"
+
+msgid "Edit event"
+msgstr "நிகழ்வை தொகுக்க"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "தரவுத்தள %2$s இல் %1$s என்ற பெயர் கொண்ட நிகழ்வு இல்லை."
 
 msgid "Bad type!"
 msgstr "தகா வகை!"
@@ -8642,53 +8642,26 @@ msgstr "உள் உறவு அகற்றப்பட்டுள்ளத�
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "ஒழுங்கமைவு செருகுநிரல்களை நினைவேற்ற இயலவில்லை, தயவுசெய்து உங்கள் நிறுவலை சரிபார்க்கவும்!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "தவறான வழக்கமான வகை: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "பின்வரும் வினவல் தோல்வியுற்றது: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL சொன்னது: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "மன்னிக்கவும், கைவிடப்பட்ட நிகழ்வை மீட்டெடுக்க நாங்கள் தவறிவிட்டோம்."
-
-msgid "The backed up query was:"
-msgstr "காப்புப்பிரதி வினவல்:"
-
-msgid "Event %1$s has been modified."
-msgstr "நிகழ்வு %1$s மாற்றியமைக்கப்பட்டுள்ளது."
-
-msgid "Event %1$s has been created."
-msgstr "நிகழ்வு %1$s உருவாக்கப்பட்டுள்ளது."
+msgid "Routine %1$s has been created."
+msgstr "வழக்கமான %1$s உருவாக்கப்பட்டுள்ளது."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "உங்கள் கோரிக்கையை செயலாக்கும்போது ஒன்று அல்லது அதற்கு மேற்பட்ட பிழைகள் ஏற்பட்டுள்ளன:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "வரையறுக்கப்பட்டவர் \"பயனர்பெயர்@ஓச்ட்பெயர்\" வடிவத்தில் இருக்க வேண்டும்!"
-
-msgid "You must provide an event name!"
-msgstr "நீங்கள் ஒரு நிகழ்வு பெயரை வழங்க வேண்டும்!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "நிகழ்வுக்கு சரியான இடைவெளி மதிப்பை நீங்கள் வழங்க வேண்டும்."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "நிகழ்வுக்கு சரியான சாவுஒறுப்பு நேரத்தை நீங்கள் வழங்க வேண்டும்."
-
-msgid "You must provide a valid type for the event."
-msgstr "நிகழ்வுக்கு சரியான வகையை நீங்கள் வழங்க வேண்டும்."
-
-msgid "You must provide an event definition."
-msgstr "நீங்கள் ஒரு நிகழ்வு வரையறையை வழங்க வேண்டும்."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "தவறான வழக்கமான வகை: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "வழக்கமான %1$s உருவாக்கப்பட்டுள்ளது."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "மன்னிக்கவும், கைவிடப்பட்ட வழக்கத்தை மீட்டெடுக்க நாங்கள் தவறிவிட்டோம்."
+
+msgid "The backed up query was:"
+msgstr "காப்புப்பிரதி வினவல்:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "வழக்கமான %1$s மாற்றியமைக்கப்பட்டுள்ளது. சலுகைகள் சரிசெய்யப்பட்டுள்ளன."
@@ -8707,6 +8680,9 @@ msgstr "ENUM, SET, VARBAR மற்றும் வர்பினரி என�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "வழக்கத்திற்கு நீங்கள் சரியான வருவாய் வகையை வழங்க வேண்டும்."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "வரையறுக்கப்பட்டவர் \"பயனர்பெயர்@ஓச்ட்பெயர்\" வடிவத்தில் இருக்க வேண்டும்!"
 
 msgid "Invalid routine type!"
 msgstr "தவறான வழக்கமான வகை!"
@@ -8895,6 +8871,30 @@ msgstr "பல்வேறு பிழை செய்திகள், சி�
 
 msgid "Report"
 msgstr "அறிவிக்கை"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "மன்னிக்கவும், கைவிடப்பட்ட நிகழ்வை மீட்டெடுக்க நாங்கள் தவறிவிட்டோம்."
+
+msgid "Event %1$s has been modified."
+msgstr "நிகழ்வு %1$s மாற்றியமைக்கப்பட்டுள்ளது."
+
+msgid "Event %1$s has been created."
+msgstr "நிகழ்வு %1$s உருவாக்கப்பட்டுள்ளது."
+
+msgid "You must provide an event name!"
+msgstr "நீங்கள் ஒரு நிகழ்வு பெயரை வழங்க வேண்டும்!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "நிகழ்வுக்கு சரியான இடைவெளி மதிப்பை நீங்கள் வழங்க வேண்டும்."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "நிகழ்வுக்கு சரியான சாவுஒறுப்பு நேரத்தை நீங்கள் வழங்க வேண்டும்."
+
+msgid "You must provide a valid type for the event."
+msgstr "நிகழ்வுக்கு சரியான வகையை நீங்கள் வழங்க வேண்டும்."
+
+msgid "You must provide an event definition."
+msgstr "நீங்கள் ஒரு நிகழ்வு வரையறையை வழங்க வேண்டும்."
 
 msgid "Cannot log in to the database server."
 msgstr "தரவுத்தள சேவையகத்தில் உள்நுழைய முடியாது."

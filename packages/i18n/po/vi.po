@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/vi.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/vi.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-09-01 09:51+0000\nLast-Translator: hoanghuy309 <hoanghuy309@gmail.com>\nLanguage-Team: Vietnamese <https://hosted.weblate.org/projects/phpmyadmin/master/vi/>\nLanguage: vi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-09-01 09:51+0000\nLast-Translator: hoanghuy309 <hoanghuy309@gmail.com>\nLanguage-Team: Vietnamese <https://hosted.weblate.org/projects/phpmyadmin/master/vi/>\nLanguage: vi\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript phải được bật qua điểm này!"
@@ -683,89 +683,6 @@ msgstr "Chọn trang"
 msgid "Select export relational type:"
 msgstr "Chọn loại quan hệ xuất:"
 
-msgid "Details"
-msgstr "Chi tiết"
-
-msgid "Event name"
-msgstr "Tên sự kiện"
-
-msgid "Status"
-msgstr "Trạng thái"
-
-msgid "Event type"
-msgstr "Kiểu sự kiện"
-
-msgid "Change to %s"
-msgstr "Thay đổi thành %s"
-
-msgid "Execute at"
-msgstr "Thực hiện lúc"
-
-msgid "Execute every"
-msgstr "Thực thi mỗi"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Bắt đầu"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Cuối"
-
-msgid "Definition"
-msgstr "Định nghĩa"
-
-msgid "Format"
-msgstr "Định dạng"
-
-msgid "On completion preserve"
-msgstr "Đóng cong khi tạo xong"
-
-msgid "Definer"
-msgstr "Bộ định nghĩa"
-
-msgid "Events"
-msgstr "Sự kiện"
-
-msgid "Check all"
-msgstr "Theo dõi bảng"
-
-msgid "Export"
-msgstr "Xuất"
-
-msgid "Drop"
-msgstr "Xóa"
-
-msgid "Create new event"
-msgstr "Tạo sự kiện mới"
-
-msgid "There are no events to display."
-msgstr "Ở đây không có sự kiện nào để trình bày."
-
-msgid "Event scheduler status"
-msgstr "Trạng thái lên lịch sự kiện"
-
-msgid "Click to toggle"
-msgstr "Nhấn vào để bật/tắt"
-
-msgid "ON"
-msgstr "BẬT"
-
-msgid "OFF"
-msgstr "TẮT"
-
-msgid "Event editor"
-msgstr "Trình chỉnh sửa sự kiện"
-
-msgid "Loading…"
-msgstr "Đang tải…"
-
-msgid "Save changes"
-msgstr "Lưu thay đổi"
-
-msgid "Export event"
-msgstr "Xuất sự kiện"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ sẽ trở thành tên máy chủ và @DATABASE@ sẽ trở thành tên cơ sở dữ liệu."
 
@@ -946,11 +863,17 @@ msgstr "thủ tục"
 msgid "Edit privileges"
 msgstr "Sửa đặc quyền"
 
+msgid "Export"
+msgstr "Xuất"
+
 msgid "No user found."
 msgstr "Không tìm thấy người dùng."
 
 msgid "With selected:"
 msgstr "Với cái đã chọn:"
+
+msgid "Check all"
+msgstr "Theo dõi bảng"
 
 msgid "Not enough privilege to view users."
 msgstr "Không đủ quyền để xem người dùng."
@@ -958,8 +881,14 @@ msgstr "Không đủ quyền để xem người dùng."
 msgid "Add user account"
 msgstr "Thêm tài khoản người dùng"
 
+msgid "Details"
+msgstr "Chi tiết"
+
 msgid "Routine name"
 msgstr "Tên thủ tục"
+
+msgid "Change to %s"
+msgstr "Thay đổi thành %s"
 
 msgid "Parameters"
 msgstr "Tham số"
@@ -985,11 +914,20 @@ msgstr "Tùy chọn trả về"
 msgid "Charset"
 msgstr "Tên bộ ký tự"
 
+msgid "Definition"
+msgstr "Định nghĩa"
+
+msgid "Format"
+msgstr "Định dạng"
+
 msgid "Is deterministic"
 msgstr "Là một tất định"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Bạn không có đủ đặc quyền cần thiết để thực hiện thao tác này; Vui lòng xem tài liệu để biết thêm chi tiết."
+
+msgid "Definer"
+msgstr "Bộ định nghĩa"
 
 msgid "Security type"
 msgstr "Kiểu an ninh"
@@ -1009,6 +947,9 @@ msgstr "Thủ tục không yêu cầu bất kỳ tham số nào."
 msgid "Routines"
 msgstr "Thủ tục"
 
+msgid "Drop"
+msgstr "Xóa"
+
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -1023,6 +964,12 @@ msgstr "Trả về"
 
 msgid "Routine editor"
 msgstr "Trình soạn thảo thủ tục"
+
+msgid "Loading…"
+msgstr "Đang tải…"
+
+msgid "Save changes"
+msgstr "Lưu thay đổi"
 
 msgid "Export routine"
 msgstr "Xuất thủ tục"
@@ -1273,6 +1220,12 @@ msgstr "Đã được tạo"
 msgid "Updated"
 msgstr "Đã được cập nhật"
 
+msgid "Status"
+msgstr "Trạng thái"
+
+msgid "Click to toggle"
+msgstr "Nhấn vào để bật/tắt"
+
 msgid "active"
 msgstr "tích cực"
 
@@ -1418,6 +1371,53 @@ msgstr "Đã xảy ra lỗi"
 
 msgid "Go back"
 msgstr "Quay lại"
+
+msgid "Event name"
+msgstr "Tên sự kiện"
+
+msgid "Event type"
+msgstr "Kiểu sự kiện"
+
+msgid "Execute at"
+msgstr "Thực hiện lúc"
+
+msgid "Execute every"
+msgstr "Thực thi mỗi"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Bắt đầu"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Cuối"
+
+msgid "On completion preserve"
+msgstr "Đóng cong khi tạo xong"
+
+msgid "Events"
+msgstr "Sự kiện"
+
+msgid "Create new event"
+msgstr "Tạo sự kiện mới"
+
+msgid "There are no events to display."
+msgstr "Ở đây không có sự kiện nào để trình bày."
+
+msgid "Event scheduler status"
+msgstr "Trạng thái lên lịch sự kiện"
+
+msgid "ON"
+msgstr "BẬT"
+
+msgid "OFF"
+msgstr "TẮT"
+
+msgid "Event editor"
+msgstr "Trình chỉnh sửa sự kiện"
+
+msgid "Export event"
+msgstr "Xuất sự kiện"
 
 msgid "Select a template"
 msgstr "Chọn một mẫu"
@@ -6255,24 +6255,6 @@ msgstr "Hiển thị các hàng %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Chưa chọn cơ sở dữ liệu."
 
-msgid "Add event"
-msgstr "Thêm sự kiện"
-
-msgid "Edit event"
-msgstr "Sửa sự kiện"
-
-msgid "Error in processing request:"
-msgstr "Có lỗi trong yêu cấu xử lý:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Không tìm thấy sự kiện nào có tên %1$s trong cơ sở dữ liệu %2$s."
-
-msgid "Export of event %s"
-msgstr "Xuất của sự kiện %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Lỗi trong quá trình xử lý yêu cầu: Không tìm thấy sự kiện nào có tên %1$s trong cơ sở dữ liệu %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Không thể tải phần bổ xung xuất, vui lòng kiểm tra bản cài đặt của bạn!"
 
@@ -6290,6 +6272,9 @@ msgstr "Thêm thủ tục"
 
 msgid "Edit routine"
 msgstr "Sửa thủ tục"
+
+msgid "Error in processing request:"
+msgstr "Có lỗi trong yêu cấu xử lý:"
 
 msgid "No routine with name %1$s found in database %2$s."
 msgstr "Không có thủ tục nào mang tên %1$s ở trong cơ sở dữ liệu %2$s."
@@ -6335,6 +6320,21 @@ msgstr "Nếu bạn có kinh nghiệm phát hiện vấn đề nào đó không 
 
 msgid "You may want to refresh the page."
 msgstr "Bạn có lẽ nên làm tươi trang này lại."
+
+msgid "Export of event %s"
+msgstr "Xuất của sự kiện %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Lỗi trong quá trình xử lý yêu cầu: Không tìm thấy sự kiện nào có tên %1$s trong cơ sở dữ liệu %2$s."
+
+msgid "Add event"
+msgstr "Thêm sự kiện"
+
+msgid "Edit event"
+msgstr "Sửa sự kiện"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Không tìm thấy sự kiện nào có tên %1$s trong cơ sở dữ liệu %2$s."
 
 msgid "Bad type!"
 msgstr "Sai kiểu!"
@@ -7671,53 +7671,26 @@ msgstr "Lỗi: Các tính năng quan hệ đã bị vô hiệu hóa!"
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Không thể tải phần bổ sung lược đồ, vui lòng kiểm tra bản cài đặt của bạn!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Kiểu thủ tục không hợp lệ: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Truy vấn sau đây bị lỗi: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL đã nói: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Rất tiếc, chúng tôi gặp lỗi khi phục hồi lại sự kiện đã xóa."
-
-msgid "The backed up query was:"
-msgstr "Truy vấn sao lưu dự phòng là:"
-
-msgid "Event %1$s has been modified."
-msgstr "Sự kiện %1$s đã bị sửa đổi."
-
-msgid "Event %1$s has been created."
-msgstr "Sự kiện %1$s đã được tạo ra."
+msgid "Routine %1$s has been created."
+msgstr "Thủ tục %1$s đã được tạo ra."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Có một hay nhiều lỗi xảy ra khi đang xử lý yêu cầu của bạn:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Định nghĩa phải ở định dạng \"username@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "Bạn phải cung cấp tên sự kiện!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Bạn phải cung cấp giá trị nhịp thời gian hợp lệ cho sự kiện."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Bạn phải cung cấp thời gian thi hành hợp lệ cho sự kiện."
-
-msgid "You must provide a valid type for the event."
-msgstr "Bạn phải cung cấp kiểu hợp lệ cho sự kiện."
-
-msgid "You must provide an event definition."
-msgstr "Phải cung cấp một định nghĩa sự kiện."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Kiểu thủ tục không hợp lệ: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Thủ tục %1$s đã được tạo ra."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Rất tiếc, chúng tôi gặp lỗi khi khôi phục lịa thủ tục đã xóa."
+
+msgid "The backed up query was:"
+msgstr "Truy vấn sao lưu dự phòng là:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Thủ tục %1$s đã bị sửa đổi. Các đặc quyền bị sửa đổi."
@@ -7727,6 +7700,9 @@ msgstr "Thủ tục %1$s đã bị sửa đổi."
 
 msgid "Invalid direction \"%s\" given for parameter."
 msgstr "Chỉ thị không hợp lệ \"%s\" đưa cho tham số."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Định nghĩa phải ở định dạng \"username@hostname\"!"
 
 msgid "Invalid routine type!"
 msgstr "Loại thủ tục không hợp lệ!"
@@ -7845,6 +7821,30 @@ msgstr "Quá nhiều lời nhắn lỗi, một số trong chúng sẽ không đ�
 
 msgid "Report"
 msgstr "Báo cáo"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Rất tiếc, chúng tôi gặp lỗi khi phục hồi lại sự kiện đã xóa."
+
+msgid "Event %1$s has been modified."
+msgstr "Sự kiện %1$s đã bị sửa đổi."
+
+msgid "Event %1$s has been created."
+msgstr "Sự kiện %1$s đã được tạo ra."
+
+msgid "You must provide an event name!"
+msgstr "Bạn phải cung cấp tên sự kiện!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Bạn phải cung cấp giá trị nhịp thời gian hợp lệ cho sự kiện."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Bạn phải cung cấp thời gian thi hành hợp lệ cho sự kiện."
+
+msgid "You must provide a valid type for the event."
+msgstr "Bạn phải cung cấp kiểu hợp lệ cho sự kiện."
+
+msgid "You must provide an event definition."
+msgstr "Phải cung cấp một định nghĩa sự kiện."
 
 msgid "Cannot log in to the database server."
 msgstr "Không thể đăng nhập vào máy chủ cơ sở dữ liệu."

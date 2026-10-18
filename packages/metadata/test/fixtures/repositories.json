@@ -1,7 +1,7 @@
 {
-  "_generated": {"by": "generate-repository-fixtures.php", "pma": "e3e877e8b4", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "_generated": {"by": "generate-repository-fixtures.php", "pma": "328b8d8003", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
   "relationParameters": {"version": "6.0.0-dev", "user": "m1meta_rpu", "db": "m1meta_rp", "bookmark": "pma__bookmark", "central_columns": "pma__central_columns", "column_info": "pma__column_info", "designer_settings": "pma__designer_settings", "export_templates": "pma__export_templates", "favorite": "pma__favorite", "history": "pma__history", "navigationhiding": "pma__navigationhiding", "pdf_pages": "pma__pdf_pages", "recent": "pma__recent", "relation": "pma__relation", "savedsearches": "pma__savedsearches", "table_coords": "pma__table_coords", "table_info": "pma__table_info", "table_uiprefs": "pma__table_uiprefs", "tracking": "pma__tracking", "userconfig": "pma__userconfig", "usergroups": "pma__usergroups", "users": "pma__users", "bookmarkwork": true, "mimework": true, "centralcolumnswork": true, "commwork": true, "menuswork": true, "designersettingswork": true, "displaywork": true, "exporttemplateswork": true, "favoritework": true, "navwork": true, "pdfwork": true, "recentwork": true, "relwork": true, "savedsearcheswork": true, "historywork": true, "trackingwork": true, "uiprefswork": true, "userconfigwork": true, "allworks": true},
-  "createTime": "2026-10-08 11:58:05",
+  "createTime": "2026-10-18 03:48:10",
   "ops": [
     {
       "group": "bookmarks",
@@ -529,7 +529,7 @@
         "t",
         "col_order",
         [1, 0, 2, 3],
-        "2026-10-08 11:58:05"
+        "2026-10-18 03:48:10"
       ],
       "statements": [
         {
@@ -564,7 +564,7 @@
             {"TABLE_CATALOG": "def", "TABLE_SCHEMA": "m1meta_rpd", "TABLE_NAME": "t", "TABLE_TYPE": "BASE TABLE", "ENGINE": "InnoDB", "VERSION": "10", "ROW_FORMAT": "Dynamic", "TABLE_ROWS": "0", "AVG_ROW_LENGTH": "0", "DATA_LENGTH": "16384", "MAX_DATA_LENGTH": "0", "INDEX_LENGTH": "0", "DATA_FREE": "0", "AUTO_INCREMENT": null, "CREATE_TIME": "<TS>", "UPDATE_TIME": null, "CHECK_TIME": null, "TABLE_COLLATION": "utf8mb4_0900_ai_ci", "CHECKSUM": null, "CREATE_OPTIONS": "", "TABLE_COMMENT": "", "Db": "m1meta_rpd", "Name": "t", "Engine": "InnoDB", "Type": "InnoDB", "Version": "10", "Row_format": "Dynamic", "Rows": "0", "Avg_row_length": "0", "Data_length": "16384", "Max_data_length": "0", "Index_length": "0", "Data_free": "0", "Auto_increment": null, "Create_time": "<TS>", "Update_time": null, "Check_time": null, "Collation": "utf8mb4_0900_ai_ci", "Checksum": null, "Create_options": "", "Comment": ""}
           ]
         },
-        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 11:58:05\\\",\\\"col_order\\\":[1,0,2,3]}')"},
+        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-18 03:48:10\\\",\\\"col_order\\\":[1,0,2,3]}')"},
         {
           "conn": "control",
           "kind": "query",
@@ -577,7 +577,7 @@
       ],
       "result": true,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_order\":[1,0,2,3]}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_order\":[1,0,2,3]}"}
       ]
     },
     {
@@ -588,10 +588,10 @@
         "t",
         "col_visib",
         [1, 1, 0, 1],
-        "2026-10-08 11:58:05"
+        "2026-10-18 03:48:10"
       ],
       "statements": [
-        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 11:58:05\\\",\\\"col_order\\\":[1,0,2,3],\\\"col_visib\\\":[1,1,0,1]}')"},
+        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-18 03:48:10\\\",\\\"col_order\\\":[1,0,2,3],\\\"col_visib\\\":[1,1,0,1]}')"},
         {
           "conn": "control",
           "kind": "query",
@@ -604,7 +604,7 @@
       ],
       "result": true,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1]}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1]}"}
       ]
     },
     {
@@ -612,7 +612,7 @@
       "op": "set",
       "args": ["m1meta_rpd", "t", "sorted_col", "`name` DESC", null],
       "statements": [
-        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 11:58:05\\\",\\\"col_order\\\":[1,0,2,3],\\\"col_visib\\\":[1,1,0,1],\\\"sorted_col\\\":\\\"`name` DESC\\\"}')"},
+        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-18 03:48:10\\\",\\\"col_order\\\":[1,0,2,3],\\\"col_visib\\\":[1,1,0,1],\\\"sorted_col\\\":\\\"`name` DESC\\\"}')"},
         {
           "conn": "control",
           "kind": "query",
@@ -625,7 +625,7 @@
       ],
       "result": true,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
       ]
     },
     {
@@ -648,7 +648,7 @@
       ],
       "result": "`name` DESC",
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
       ]
     },
     {
@@ -658,7 +658,7 @@
       "statements": [],
       "result": [1, 0, 2, 3],
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_order\":[1,0,2,3],\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
       ]
     },
     {
@@ -666,7 +666,7 @@
       "op": "remove",
       "args": ["m1meta_rpd", "t", "col_order", null, null],
       "statements": [
-        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 11:58:05\\\",\\\"col_visib\\\":[1,1,0,1],\\\"sorted_col\\\":\\\"`name` DESC\\\"}')"},
+        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-18 03:48:10\\\",\\\"col_visib\\\":[1,1,0,1],\\\"sorted_col\\\":\\\"`name` DESC\\\"}')"},
         {
           "conn": "control",
           "kind": "query",
@@ -679,7 +679,7 @@
       ],
       "result": true,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
       ]
     },
     {
@@ -695,7 +695,7 @@
       "statements": [],
       "result": {"message": "Cannot save UI property \"col_order\". The changes made will not be persistent after you refresh this page. Please check if the table structure has been changed."},
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"}
       ]
     },
     {
@@ -730,7 +730,7 @@
       ],
       "result": true,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"},
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`name` DESC\"}"},
         {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t2", "prefs": "{\"sorted_col\":\"`label` ASC\"}"}
       ]
     },
@@ -784,7 +784,7 @@
       "op": "set",
       "args": ["m1meta_rpd", "t", "sorted_col", "`gone` ASC", null],
       "statements": [
-        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 11:58:05\\\",\\\"col_visib\\\":[1,1,0,1],\\\"sorted_col\\\":\\\"`gone` ASC\\\"}')"},
+        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-18 03:48:10\\\",\\\"col_visib\\\":[1,1,0,1],\\\"sorted_col\\\":\\\"`gone` ASC\\\"}')"},
         {
           "conn": "control",
           "kind": "query",
@@ -798,7 +798,7 @@
       ],
       "result": true,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`gone` ASC\"}"},
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_visib\":[1,1,0,1],\"sorted_col\":\"`gone` ASC\"}"},
         {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "v", "prefs": "{\"col_order\":[1,0]}"}
       ]
     },
@@ -819,7 +819,7 @@
             {"COLUMN_NAME": "note", "COLUMN_TYPE": "text"}
           ]
         },
-        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-08 11:58:05\\\",\\\"col_visib\\\":[1,1,0,1]}')"},
+        {"conn": "control", "kind": "query", "sql": " REPLACE INTO `m1meta_rp`.`pma__table_uiprefs` (username, db_name, table_name, prefs) VALUES ('m1meta_rpu', 'm1meta_rpd', 't', '{\\\"CREATE_TIME\\\":\\\"2026-10-18 03:48:10\\\",\\\"col_visib\\\":[1,1,0,1]}')"},
         {
           "conn": "control",
           "kind": "query",
@@ -832,7 +832,7 @@
       ],
       "result": false,
       "rows": [
-        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-08 11:58:05\",\"col_visib\":[1,1,0,1]}"},
+        {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "t", "prefs": "{\"CREATE_TIME\":\"2026-10-18 03:48:10\",\"col_visib\":[1,1,0,1]}"},
         {"username": "m1meta_rpu", "db_name": "m1meta_rpd", "table_name": "v", "prefs": "{\"col_order\":[1,0]}"}
       ]
     },
@@ -844,7 +844,7 @@
       "result": {
         "m1meta_rpd": {
           "t": {
-            "CREATE_TIME": "2026-10-08 11:58:05",
+            "CREATE_TIME": "2026-10-18 03:48:10",
             "col_visib": [1, 1, 0, 1]
           },
           "t2": {"sorted_col": "`label` ASC"},
@@ -941,7 +941,7 @@
           "sql": "SELECT `config_data`, UNIX_TIMESTAMP(`timevalue`) ts FROM `m1meta_rp`.`pma__userconfig` WHERE `username` = 'm1meta_rpu'",
           "fields": ["config_data", "ts"],
           "rows": [
-            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"lang\":\"cs\"}", "ts": "1791460700"}
+            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"lang\":\"cs\"}", "ts": "1792295306"}
           ]
         },
         {
@@ -971,7 +971,7 @@
           "sql": "SELECT `config_data`, UNIX_TIMESTAMP(`timevalue`) ts FROM `m1meta_rp`.`pma__userconfig` WHERE `username` = 'm1meta_rpu'",
           "fields": ["config_data", "ts"],
           "rows": [
-            {"config_data": "{\"MaxRows\":25,\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}}}", "ts": "1791460700"}
+            {"config_data": "{\"MaxRows\":25,\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}}}", "ts": "1792295306"}
           ]
         },
         {
@@ -1001,7 +1001,7 @@
           "sql": "SELECT `config_data`, UNIX_TIMESTAMP(`timevalue`) ts FROM `m1meta_rp`.`pma__userconfig` WHERE `username` = 'm1meta_rpu'",
           "fields": ["config_data", "ts"],
           "rows": [
-            {"config_data": "{\"MaxRows\":25,\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"Console\\/Mode\":\"collapse\"}", "ts": "1791460700"}
+            {"config_data": "{\"MaxRows\":25,\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"Console\\/Mode\":\"collapse\"}", "ts": "1792295306"}
           ]
         },
         {
@@ -1031,7 +1031,7 @@
           "sql": "SELECT `config_data`, UNIX_TIMESTAMP(`timevalue`) ts FROM `m1meta_rp`.`pma__userconfig` WHERE `username` = 'm1meta_rpu'",
           "fields": ["config_data", "ts"],
           "rows": [
-            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"Console\\/Mode\":\"collapse\"}", "ts": "1791460700"}
+            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"Console\\/Mode\":\"collapse\"}", "ts": "1792295306"}
           ]
         }
       ],
@@ -1051,7 +1051,7 @@
           "sql": "SELECT `config_data`, UNIX_TIMESTAMP(`timevalue`) ts FROM `m1meta_rp`.`pma__userconfig` WHERE `username` = 'm1meta_rpu'",
           "fields": ["config_data", "ts"],
           "rows": [
-            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"Console\\/Mode\":\"collapse\"}", "ts": "1791460700"}
+            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}},\"Console\\/Mode\":\"collapse\"}", "ts": "1792295306"}
           ]
         },
         {
@@ -1081,7 +1081,7 @@
           "sql": "SELECT `config_data`, UNIX_TIMESTAMP(`timevalue`) ts FROM `m1meta_rp`.`pma__userconfig` WHERE `username` = 'm1meta_rpu'",
           "fields": ["config_data", "ts"],
           "rows": [
-            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}}}", "ts": "1791460700"}
+            {"config_data": "{\"2fa\":{\"backend\":\"application\",\"settings\":{\"secret\":\"S\"}}}", "ts": "1792295306"}
           ]
         }
       ],

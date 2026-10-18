@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/ar.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/ar.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2025-07-14 12:01+0000\nLast-Translator: \"Ali H.Abdulhadi\" <a.h.alsaady1998@gmail.com>\nLanguage-Team: Arabic <https://hosted.weblate.org/projects/phpmyadmin/master/ar/>\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Weblate 5.13-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2025-07-14 12:01+0000\nLast-Translator: \"Ali H.Abdulhadi\" <a.h.alsaady1998@gmail.com>\nLanguage-Team: Arabic <https://hosted.weblate.org/projects/phpmyadmin/master/ar/>\nLanguage: ar\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\nX-Generator: Weblate 5.13-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "يجب تفعيل Javascript بعد هذه النقطة!"
@@ -392,39 +392,6 @@ msgstr "عامل التشغيل"
 msgid "Submit"
 msgstr "إرسال"
 
-msgid "Status"
-msgstr "الحالة"
-
-msgid "Event type"
-msgstr "نوع الحدث"
-
-msgid "Change to %s"
-msgstr "التغيير إلى %s"
-
-msgid "Format"
-msgstr "صيغة"
-
-msgid "Definer"
-msgstr "محدد"
-
-msgid "Events"
-msgstr "أحداث"
-
-msgid "Check all"
-msgstr "تحقق من الكل"
-
-msgid "Export"
-msgstr "تصدير"
-
-msgid "Drop"
-msgstr "سقّط"
-
-msgid "Click to toggle"
-msgstr "إضغط للإختيار"
-
-msgid "Loading…"
-msgstr "جار التحميل…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "تصدير الجداول من قاعدة المعطيات \"%s\""
 
@@ -542,8 +509,17 @@ msgstr "خاص بقاعدة بيانات"
 msgid "wildcard"
 msgstr "حرف شامل"
 
+msgid "Export"
+msgstr "تصدير"
+
 msgid "With selected:"
 msgstr "مع المحدد:"
+
+msgid "Check all"
+msgstr "تحقق من الكل"
+
+msgid "Change to %s"
+msgstr "التغيير إلى %s"
 
 msgid "Parameters"
 msgstr "معايير"
@@ -554,8 +530,14 @@ msgstr "إضافة معلمة"
 msgid "Charset"
 msgstr "مجموعة المحارف"
 
+msgid "Format"
+msgstr "صيغة"
+
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "ليس لديك امتيازات كافية لتنفيذ هذه العملية ؛ يرجى الرجوع إلى الوثائق لمزيد من التفاصيل."
+
+msgid "Definer"
+msgstr "محدد"
 
 msgid "Function"
 msgstr "دالة"
@@ -563,8 +545,14 @@ msgstr "دالة"
 msgid "Routines"
 msgstr "روتينات"
 
+msgid "Drop"
+msgstr "سقّط"
+
 msgid "Search"
 msgstr "إبحث"
+
+msgid "Loading…"
+msgstr "جار التحميل…"
 
 msgid "Execute routine"
 msgstr "تنفيذ"
@@ -776,6 +764,12 @@ msgstr "أنشئ"
 msgid "Updated"
 msgstr "محدث"
 
+msgid "Status"
+msgstr "الحالة"
+
+msgid "Click to toggle"
+msgstr "إضغط للإختيار"
+
 msgid "active"
 msgstr "نشط"
 
@@ -894,6 +888,12 @@ msgstr "إرسال تقرير الخطأ"
 
 msgid "Send error report"
 msgstr "إرسال تقرير عن الخطأ"
+
+msgid "Event type"
+msgstr "نوع الحدث"
+
+msgid "Events"
+msgstr "أحداث"
 
 msgid "Select a template"
 msgstr "اختر قالب"
@@ -3659,18 +3659,6 @@ msgstr "إظهار الصفوف %1$s - %2$s."
 msgid "No databases selected."
 msgstr "لا قواعد بيانات محددة."
 
-msgid "Add event"
-msgstr "إضافة حدث"
-
-msgid "Error in processing request:"
-msgstr "خطأ في معالجة الطلب:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "لم يتم العثور على حدث يحمل الاسم %1$s في قاعدة البيانات %2$s."
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "خطأ في طلب المعالجة: لم يتم العثور على حدث يحمل الاسم %1$s في قاعدة البيانات %2$s."
-
 msgid "Could not load import plugins, please check your installation!"
 msgstr "لم يمكن تحميل قوابس الاستيراد، الرجاء فحص تثبيتك!"
 
@@ -3682,6 +3670,9 @@ msgstr "إضافة روتين"
 
 msgid "Edit routine"
 msgstr "تعديل الإجراء"
+
+msgid "Error in processing request:"
+msgstr "خطأ في معالجة الطلب:"
 
 msgid "No routine with name %1$s found in database %2$s."
 msgstr "لم يتم العثور على إجراء بالاسم %1$s في قاعدة البيانات %2$s."
@@ -3727,6 +3718,15 @@ msgstr "إذا واجهت أي مشاكل يرجى تقديم تقرير بذل�
 
 msgid "You may want to refresh the page."
 msgstr "لربما يكون من الأفضل أن تقوم بتحديث هذه الصفحة."
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "خطأ في طلب المعالجة: لم يتم العثور على حدث يحمل الاسم %1$s في قاعدة البيانات %2$s."
+
+msgid "Add event"
+msgstr "إضافة حدث"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "لم يتم العثور على حدث يحمل الاسم %1$s في قاعدة البيانات %2$s."
 
 msgid "Bad type!"
 msgstr "نوع غير جيد!"
@@ -4889,32 +4889,23 @@ msgstr "خطأ: تعذر إزالة العلاقة الداخلية!"
 msgid "Internal relationship has been removed."
 msgstr "تمت إزالة العلاقة الداخلية."
 
-msgid "MySQL said: "
-msgstr "MySQL قال: "
-
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "عذرا ، لقد فشلنا في استعادة الحدث الذي تم إسقاطه."
-
-msgid "The backed up query was:"
-msgstr "الإستعلام الإحتياطي:"
-
-msgid "Event %1$s has been modified."
-msgstr "تم تعديل الحدث %1$s."
-
-msgid "One or more errors have occurred while processing your request:"
-msgstr "حدث خطأ واحد أو أكثر أثناء معالجة طلبك:"
-
-msgid "You must provide an event name!"
-msgstr "يجب عليك تقديم اسم الحدث!"
-
 msgid "Invalid routine type: \"%s\""
 msgstr "نوع الإجراء غير صحيح: %s"
+
+msgid "MySQL said: "
+msgstr "MySQL قال: "
 
 msgid "Routine %1$s has been created."
 msgstr "تم إنشاء الإجراء %1$s."
 
+msgid "One or more errors have occurred while processing your request:"
+msgstr "حدث خطأ واحد أو أكثر أثناء معالجة طلبك:"
+
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "معذرة، فشلنا في استعادة الروتين الذي تم إسقاطه."
+
+msgid "The backed up query was:"
+msgstr "الإستعلام الإحتياطي:"
 
 msgid "Routine %1$s has been modified."
 msgstr "تم تعديل الإجراء %1$s."
@@ -4960,6 +4951,15 @@ msgstr "كثيراً من رسائل الخطأ، لن تعرض كلها."
 
 msgid "Report"
 msgstr "أبلغ عن"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "عذرا ، لقد فشلنا في استعادة الحدث الذي تم إسقاطه."
+
+msgid "Event %1$s has been modified."
+msgstr "تم تعديل الحدث %1$s."
+
+msgid "You must provide an event name!"
+msgstr "يجب عليك تقديم اسم الحدث!"
 
 msgid "Access denied!"
 msgstr "ممنوع الوصول!"

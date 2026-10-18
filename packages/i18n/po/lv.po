@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/lv.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/lv.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-09-08 03:51+0000\nLast-Translator: \"ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)\" <coool@mail.lv>\nLanguage-Team: Latvian <https://hosted.weblate.org/projects/phpmyadmin/master/lv/>\nLanguage: lv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\nX-Generator: Weblate 2026.9.1.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-10-15 09:51+0000\nLast-Translator: \"ℂ𝕠𝕠𝕠𝕝 (𝕘𝕚𝕥𝕙𝕦𝕓.𝕔𝕠𝕞/ℂ𝕠𝕠𝕠𝕝)\" <coool@mail.lv>\nLanguage-Team: Latvian <https://hosted.weblate.org/projects/phpmyadmin/master/lv/>\nLanguage: lv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Lai nodrošinātu pilnu funkcionalitāti, jums ir jāiespējo JavaScript!"
@@ -287,11 +287,18 @@ msgstr "Izveidot %1$s versiju no %2$s"
 msgid "Create version %1$s"
 msgstr "Izveidot %1$s versiju"
 
+msgctxt "Auto Increment"
+msgid "A_I"
+msgstr "Automātiska skaitliskās vērtības piešķiršana"
+
 msgid "Add new column"
 msgstr "Pievienot jaunu kolonnu"
 
 msgid "Length/Value"
 msgstr "Garums/Vērtība"
+
+msgid "A_I"
+msgstr "Automātiska skaitliskās vērtības piešķiršana"
 
 msgid "The central list of columns for the current database is empty"
 msgstr "Pašreizējās datubāzes centrālais kolonnu saraksts ir tukšs"
@@ -418,54 +425,6 @@ msgstr "Aktīvie parametri"
 
 msgid "Submit"
 msgstr "Nosūtīt"
-
-msgid "Event name"
-msgstr "Notikuma nosaukums"
-
-msgid "Status"
-msgstr "Statuss"
-
-msgid "Event type"
-msgstr "Notikuma tips"
-
-msgid "Change to %s"
-msgstr "Mainīt uz %s"
-
-msgid "Execute at"
-msgstr "Izpildīt pulksten"
-
-msgid "Execute every"
-msgstr "Izpildīt ik pēc"
-
-msgid "Format"
-msgstr "Formats"
-
-msgid "On completion preserve"
-msgstr "Pabeidzot saglabāt"
-
-msgid "Events"
-msgstr "Notikumi"
-
-msgid "Export"
-msgstr "Izgūt"
-
-msgid "There are no events to display."
-msgstr "Nav neviena notikuma, ko parādīt."
-
-msgid "Event scheduler status"
-msgstr "Notikumu plānotāja statuss"
-
-msgid "ON"
-msgstr "IESLĒGT"
-
-msgid "OFF"
-msgstr "IZSLĒGT"
-
-msgid "Loading…"
-msgstr "Ielādē…"
-
-msgid "Save changes"
-msgstr "Saglabāt izmaiņas"
 
 msgid "Exporting tables from \"%s\" database"
 msgstr "Izgūst \"%s\" datubāzes tabulas"
@@ -620,6 +579,9 @@ msgstr "apakšprogramma"
 msgid "Edit privileges"
 msgstr "Rediģēt privilēģijas"
 
+msgid "Export"
+msgstr "Izgūt"
+
 msgid "No user found."
 msgstr "Neviens lietotājs nav atrasts."
 
@@ -631,6 +593,9 @@ msgstr "Pievienot lietotāja kontu"
 
 msgid "Routine name"
 msgstr "Apakšprogrammas nosaukums"
+
+msgid "Change to %s"
+msgstr "Mainīt uz %s"
 
 msgid "Parameters"
 msgstr "Parametri"
@@ -649,6 +614,9 @@ msgstr "Atgriezt parametrus"
 
 msgid "Charset"
 msgstr "Rakstzīmju kodējums"
+
+msgid "Format"
+msgstr "Formāts"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Jums nav pietiekamu tiesību, lai veiktu šo darbību; Lūdzu, skatiet dokumentāciju, lai iegūtu plašāku informāciju."
@@ -679,6 +647,12 @@ msgstr "Nav apakšprogrammu, ko parādīt."
 
 msgid "Routine editor"
 msgstr "Apakšprogrammas redaktors"
+
+msgid "Loading…"
+msgstr "Ielādē…"
+
+msgid "Save changes"
+msgstr "Saglabāt izmaiņas"
 
 msgid "Export routine"
 msgstr "Izgūt apakšprogrammu"
@@ -845,6 +819,9 @@ msgstr "Izveidots"
 msgid "Updated"
 msgstr "Atjaunots"
 
+msgid "Status"
+msgstr "Statuss"
+
 msgid "active"
 msgstr "aktīvs"
 
@@ -918,6 +895,36 @@ msgstr "Iesniegt kļūdas ziņojumu"
 
 msgid "Send error report"
 msgstr "Sūtīt kļūdas ziņojumu"
+
+msgid "Event name"
+msgstr "Notikuma nosaukums"
+
+msgid "Event type"
+msgstr "Notikuma tips"
+
+msgid "Execute at"
+msgstr "Izpildīt pulksten"
+
+msgid "Execute every"
+msgstr "Izpildīt ik pēc"
+
+msgid "On completion preserve"
+msgstr "Pabeidzot saglabāt"
+
+msgid "Events"
+msgstr "Notikumi"
+
+msgid "There are no events to display."
+msgstr "Nav neviena notikuma, ko parādīt."
+
+msgid "Event scheduler status"
+msgstr "Notikumu plānotāja statuss"
+
+msgid "ON"
+msgstr "IESLĒGT"
+
+msgid "OFF"
+msgstr "IZSLĒGT"
 
 msgid "Export templates:"
 msgstr "Izgūt veidnes:"
@@ -1133,6 +1140,9 @@ msgstr "Licence"
 
 msgid "Warning"
 msgstr "Brīdinājums"
+
+msgid "Notice"
+msgstr "Paziņojums"
 
 msgid "phpMyAdmin Themes"
 msgstr "phpMyAdmin motīvi"
@@ -1645,6 +1655,10 @@ msgstr "Atbloķēt šo kontu."
 msgid "Lock this account."
 msgstr "Bloķēt šo kontu."
 
+msgctxt "Lock the account."
+msgid "Lock"
+msgstr "Bloķēt"
+
 msgid "Revoke all active privileges from the users and delete them afterwards."
 msgstr "Atņemt visas aktīvās privilēģijas lietotājiem, un pēc tam dzēst tos."
 
@@ -1710,6 +1724,9 @@ msgstr "Procesi"
 
 msgid "Query statistics"
 msgstr "Vaicājumu statistika"
+
+msgid "Monitor"
+msgstr "Reāllaika uzraudzība"
 
 msgid "Advisor"
 msgstr "Padomdevējs"
@@ -1958,8 +1975,20 @@ msgid "Line"
 msgstr "Līniju"
 
 msgctxt "Chart type"
+msgid "Spline"
+msgstr "Gludlīkņu"
+
+msgctxt "Chart type"
+msgid "Area"
+msgstr "Datu apgabala (laukuma)"
+
+msgctxt "Chart type"
 msgid "Timeline"
 msgstr "Laikskalas"
+
+msgctxt "Chart type"
+msgid "Scatter"
+msgstr "Datu punktu izkliedes"
 
 msgid "Chart title:"
 msgstr "Diagrammas/Grafika nosaukums:"
@@ -2228,6 +2257,9 @@ msgstr "Rindas garums"
 msgid "Row size"
 msgstr "Rindas izmērs"
 
+msgid "Delete version"
+msgstr "Dzēst versiju"
+
 msgid "Activate now"
 msgstr "Aktivizēt tagad"
 
@@ -2246,6 +2278,9 @@ msgstr "Lietotājvārds"
 
 msgid "Additional search criteria"
 msgstr "Papildu meklēšanas kritēriji"
+
+msgid "Maximum rows to plot"
+msgstr "Maksimālais rindu skaits grafikā"
 
 msgid "How to use"
 msgstr "Kā lietot"
@@ -2691,7 +2726,16 @@ msgid "Vietnamese"
 msgstr "Vjetnamiešu"
 
 msgid "Both"
-msgstr "Abi"
+msgstr "Abās pusēs"
+
+msgid "Nowhere"
+msgstr "Nerādīt jeb nevienā pusē"
+
+msgid "Left"
+msgstr "Kreisā pusē"
+
+msgid "Right"
+msgstr "Labā pusē"
 
 msgid "key"
 msgstr "atslēga"
@@ -3096,24 +3140,6 @@ msgstr "Tiek rādītas rindas no %1$s līdz %2$s."
 msgid "No databases selected."
 msgstr "Nav atlasīta neviena datubāze."
 
-msgid "Add event"
-msgstr "Pievienot notikumu"
-
-msgid "Edit event"
-msgstr "Rediģēt notikumu"
-
-msgid "Error in processing request:"
-msgstr "Kļūda, apstrādājot pieprasījumu:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "%2$s datubāzē nav atrasts neviens notikums ar %1$s nosaukumu."
-
-msgid "Export of event %s"
-msgstr "Izgūt %s notikumu"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Kļūda, apstrādājot pieprasījumu: %2$s datubāzē neatrasta nevienu notikumu ar %1$s nosaukumu."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Nevarēja ielādēt izgūšanas papildinājumus, lūdzu, pārbaudiet, vai tie ir pareizi uzstādīti!"
 
@@ -3131,6 +3157,9 @@ msgstr "Pievienot apakšprogrammu"
 
 msgid "Edit routine"
 msgstr "Rediģēt apakšprogrammu"
+
+msgid "Error in processing request:"
+msgstr "Kļūda, apstrādājot pieprasījumu:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Apakšprogramma ar %1$s nosaukumu netika atrasta %2$s datubāzē. Iespējams, jums nav nepieciešamo privilēģiju šīs apakšprogrammas rediģēšanai."
@@ -3173,6 +3202,21 @@ msgstr "Ja Jums rodas problēmas, lūdzu manuāli iesniedziet kļūdu atskaiti."
 
 msgid "You may want to refresh the page."
 msgstr "Varētu būt derīgi pārlādēt lapu."
+
+msgid "Export of event %s"
+msgstr "Izgūt %s notikumu"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Kļūda, apstrādājot pieprasījumu: %2$s datubāzē neatrasta nevienu notikumu ar %1$s nosaukumu."
+
+msgid "Add event"
+msgstr "Pievienot notikumu"
+
+msgid "Edit event"
+msgstr "Rediģēt notikumu"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "%2$s datubāzē nav atrasts neviens notikums ar %1$s nosaukumu."
 
 msgid "Bad type!"
 msgstr "Nepareizs tips!"
@@ -3431,6 +3475,9 @@ msgstr "Jautājumi"
 
 msgid "Please add at least one variable to the series!"
 msgstr "Lūdzu, pievienojiet sērijai vismaz vienu mainīgo!"
+
+msgid "SQL Query"
+msgstr "SQL vaicājums"
 
 msgid "general_log and slow_query_log are enabled."
 msgstr "general_log un slow_query_log parametri iespējoti."
@@ -4193,20 +4240,11 @@ msgstr "Nevarēja pievienot kolonnas!"
 msgid "Could not remove columns!"
 msgstr "Nevarēja izdzēst kolonnas!"
 
-msgid "MySQL said: "
-msgstr "MySQL teica: "
-
-msgid "Event %1$s has been modified."
-msgstr "%1$s notikums ir mainīts."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s notikums ir izveidots."
-
-msgid "You must provide an event name!"
-msgstr "Jānorāda notikuma nosaukums!"
-
 msgid "Invalid routine type: \"%s\""
 msgstr "Nederīgs apakšprogrammas tips: \"%s\""
+
+msgid "MySQL said: "
+msgstr "MySQL teica: "
 
 msgid "Routine %1$s has been created."
 msgstr "Izveidota %1$s apakšprogramma."
@@ -4261,6 +4299,15 @@ msgstr "Datu datnes"
 
 msgid "InnoDB Status"
 msgstr "InnoDB statuss"
+
+msgid "Event %1$s has been modified."
+msgstr "%1$s notikums ir mainīts."
+
+msgid "Event %1$s has been created."
+msgstr "%1$s notikums ir izveidots."
+
+msgid "You must provide an event name!"
+msgstr "Jānorāda notikuma nosaukums!"
 
 msgid "Cannot log in to the database server."
 msgstr "Nevar pieteikties datubāzes serverī."
@@ -4388,6 +4435,10 @@ msgstr "Sakļaut visu"
 msgctxt "Create new column"
 msgid "New"
 msgstr "Jauna"
+
+msgctxt "Create new database"
+msgid "New"
+msgstr "Jaunu"
 
 msgctxt "Create new event"
 msgid "New"
@@ -4896,6 +4947,10 @@ msgstr "Laiks, diapazons ir no %1$s līdz %2$s"
 msgid "A polygon"
 msgstr "Daudzstūris (poligons)"
 
+msgctxt "numeric types"
+msgid "Numeric"
+msgstr "Skaitliskie"
+
 msgctxt "date and time types"
 msgid "Date and time"
 msgstr "Datums un laiks"
@@ -4904,7 +4959,7 @@ msgid "Password is too long!"
 msgstr "Parole ir pārāk gara!"
 
 msgid "The profile has been updated."
-msgstr "Profils tika modificēts."
+msgstr "Profils atjaunināts."
 
 msgid "Max: %s%s"
 msgstr "Maksimālais izmērs: %s%s"

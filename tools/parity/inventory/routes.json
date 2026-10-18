@@ -1,9 +1,9 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "a57149e1f6273eb326b153487ad070893dd9e19c",
+    "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010",
     "source": "src/Routing/Routes.php::collect (FastRoute collector, executed) + Routing::callSetupController",
-    "count": 199
+    "count": 200
   },
   "items": [
     {
@@ -178,20 +178,6 @@
       "file": "src/Controllers/Database/DesignerController.php",
       "variants": [
         "/database/designer"
-      ],
-      "scope": "app"
-    },
-    {
-      "key": "/database/events",
-      "path": "/database/events",
-      "methods": [
-        "GET",
-        "POST"
-      ],
-      "controller": "Database/EventsController",
-      "file": "src/Controllers/Database/EventsController.php",
-      "variants": [
-        "/database/events"
       ],
       "scope": "app"
     },
@@ -644,6 +630,33 @@
       "file": "src/Controllers/ErrorReportController.php",
       "variants": [
         "/error-report"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/events",
+      "path": "/events",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "controller": "Events/IndexController",
+      "file": "src/Controllers/Events/IndexController.php",
+      "variants": [
+        "/events"
+      ],
+      "scope": "app"
+    },
+    {
+      "key": "/events/export",
+      "path": "/events/export",
+      "methods": [
+        "GET"
+      ],
+      "controller": "Events/ExportController",
+      "file": "src/Controllers/Events/ExportController.php",
+      "variants": [
+        "/events/export"
       ],
       "scope": "app"
     },
