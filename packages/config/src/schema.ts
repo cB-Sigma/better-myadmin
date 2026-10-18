@@ -833,6 +833,9 @@ export const configNode = group({
    * src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php): each entry is a program
    * with its fixed arguments (`/usr/bin/tidy -q`). Empty (the default, as in phpMyAdmin's source):
    * the transformation shows the value unchanged. The program runs without a shell (X4).
+   * As phpMyAdmin warns, any user who can set a column's transformation options can add arguments
+   * (the deprecated second option) and feed it any cell value: list only programs that cannot
+   * write or read files through their arguments, or wrapper scripts that ignore them.
    */
   TransformationsExternalPrograms: list([], { bma: true }),
   /** Removed from phpMyAdmin in 4.6.0; honoured by BetterMyAdmin (HTTPS redirect + HSTS). */

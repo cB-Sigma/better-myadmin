@@ -23,6 +23,11 @@ phpMyAdmin or needs configuration an administrator chose.
 | S3 | Medium | Signed SQL: the Edit form's "Go back" signed an unsigned query of the URL | fixed |
 | S4 | Medium | Signed SQL: the Export page exported (ran) an unsigned `sql_query` of the URL | fixed |
 | S5 | Medium | Auth: the login rate limit (X2) let concurrent attempts through | fixed |
+| S6 | Medium | Import: decompression bombs (a zip entry inflated into memory, a gzip/bzip2 copy filling the disk) | fixed |
+| S7 | Medium | Transformation wrapper: thumbnails decoded images of any claimed size (one cell blocked the process) | fixed |
+| S8 | Medium | Import: an upload chunk was buffered whole before the size check | fixed |
+| S9 | Low | Import: the upload of a job whose events were never requested stayed on disk | fixed |
+| S10 | Low | Docker: decoded `PMA_SSL_*_BASE64` keys were world-readable, a bad value was echoed in the start-up error | fixed |
 | L1 | Low | Auth: no limit on second-factor codes | verified as phpMyAdmin, kept |
 | L2 | Low | Bookmarks: another user's private bookmark can be run by id (showing it is refused) | verified as phpMyAdmin, kept |
 | L3 | Low | Setup: open without a login until a configuration file exists | verified as phpMyAdmin, kept; documented and warned at start |
@@ -140,6 +145,87 @@ MySQL.
 delayed.
 
 **Test.** `security.test.ts` "S5": 3 attempts, then 7 lockouts.
+
+## Re-audit (October 2026, the changes after S1–S5)
+
+The changes since the first review were read: the streaming import, the `.ts` configuration
+loader, the external transformation allow-list, SpecialSchemaLinks and the message cards, the
+two-factor backends, the Docker image, the thumbnail resize and the translation and entity
+decoding.
+
+### S6 Decompression bombs in import
+
+**Area.** `packages/import/src/file.ts`, `packages/export/src/zip.ts`.
+
+**Problem.** phpMyAdmin inflates on the fly under PHP's `memory_limit` and `max_execution_time`.
+Ours inflated a zip entry (all of them, in fact) into memory, and a gzip or bzip2 file into a
+temporary copy, without a bound. A few hundred kilobytes of zip could exhaust the process's memory
+for every user; a small `.bz2` could fill the disk.
+
+**Fix.** A zip entry is inflated only when read, at most 1 GiB (`maxOutputLength`). A gzip or bzip2
+copy stops at the free disk space less 1 GiB, and at `ExecTimeLimit` (phpMyAdmin's
+`set_time_limit` ends its decompression too). Either says "File could not be read!" and leaves no
+partial copy.
+
+**Tests.** `packages/import/test/large.test.ts` "decompression bombs".
+
+### S7 Image bombs in the thumbnail resize
+
+**Area.** `apps/server/src/insert-edit/image.ts` (`resize=jpeg|png` of the transformation wrapper).
+
+**Problem.** The decoders allocated whatever the header claimed: a 43-byte GIF claiming
+12000 × 12000 took 1.1 GiB and seconds of the single server thread. GD under phpMyAdmin is bounded
+by `memory_limit` per request.
+
+**Fix.** Images above 30 megapixels (GD's truecolor at the default 128 MiB) are not images: the
+PNG IHDR and GIF screen size are checked before decoding, JPEG through jpeg-js's
+`maxResolutionInMP`.
+
+**Test.** `apps/server/test/unit/gd-resize.test.ts` "untrusted images".
+
+### S8 Upload chunks buffered before the size check
+
+**Area.** `apps/server/src/routes/import.ts` (PATCH `…/import/uploads/:id`).
+
+**Problem.** The chunk was read into memory whole, then compared with `MaxUploadSize`.
+
+**Fix.** `bodyLimit(MaxUploadSize)`: a larger Content-Length is refused unread, a streamed body
+stops at the limit.
+
+**Test.** `apps/server/test/int/import.test.ts` "upload limits".
+
+### S9 Abandoned job uploads
+
+**Problem.** An upload registered with a job whose events were never requested was dropped from
+memory after an hour but its file stayed in the temporary directory. **Fix.** The prune removes it.
+
+### S10 Docker SSL files
+
+**Area.** `packages/config/src/docker-env.ts`, `Dockerfile`.
+
+**Problem.** The decoded certificates and keys were written with the default mode (0644), and a
+value that was not base64 was quoted whole in the start-up error, so a key could land in the logs.
+The default `PMA_SSL_DIR` (`/etc/phpmyadmin/ssl`) was not writable by the image's `node` user.
+
+**Fix.** Files 0600 in a 0700 directory, the error names the file, and the image creates the
+directory for `node`.
+
+**Test.** `packages/config/test/docker-env.test.ts` "a decoded key is readable by its owner only".
+
+### Re-audit: no finding
+
+- **`.ts` configuration.** The file is the administrator's (like `config.inc.php`); esbuild
+  bundles it in memory and it runs from a `data:` URL, nothing is written.
+- **External transformations.** No shell (X4); the deprecated options field adds arguments only.
+  The directive documents that the listed programs must not read or write files through
+  arguments, as phpMyAdmin's source comment warns.
+- **SpecialSchemaLinks and message cards.** The links carry names, never SQL; every action that
+  runs a query posts it with the CSRF token, and a query from a URL runs only with its signature
+  (the grid's `urlSql` is signed by the server, the SQL tab runs `?sql=` only with `sig`).
+- **Two-factor.** Enforced for every server route; WebAuthn assertions need a valid signature by
+  the registered key; TOTP window and the lack of an attempt limit are phpMyAdmin's (L1).
+- **Translations and entities.** Decoded entities and translated strings are rendered as text
+  nodes; markup still goes through `SafeHtml` only.
 
 ## Low (verified against phpMyAdmin)
 

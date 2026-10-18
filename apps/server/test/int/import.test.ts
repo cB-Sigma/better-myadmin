@@ -145,3 +145,49 @@ describe('import job', () => {
     expect(r.status).toBe(400)
   })
 })
+
+describe('upload limits', () => {
+  it('refuses a chunk larger than MaxUploadSize before buffering it, with or without Content-Length', async () => {
+    const small = testApp(testConfig({ UploadDir: uploadDir, MaxUploadSize: 1024 }))
+    try {
+      const tok = String((await small.login()).json.csrfToken ?? '')
+      const headers = () => ({
+        cookie: [...small.jar].map(([k, v]) => `${k}=${v}`).join('; '),
+        'X-BMA-Token': tok,
+      })
+      const id = (await small.req('POST', '/api/servers/1/import/uploads', {})).json.id as string
+      const big = await small.app.request(`/api/servers/1/import/uploads/${id}?offset=0`, {
+        method: 'PATCH',
+        headers: { ...headers(), 'content-length': '2048' },
+        body: Buffer.alloc(2048),
+      })
+      expect(big.status).toBe(400)
+      expect(((await big.json()) as { error: { message: string } }).error.message).toMatch(
+        /^You probably tried to upload a file that is too large/,
+      )
+      // a streamed body without Content-Length stops at the limit as well
+      const stream = new ReadableStream({
+        start(ctl) {
+          for (let i = 0; i < 4; i++) ctl.enqueue(new Uint8Array(512))
+          ctl.close()
+        },
+      })
+      const streamed = await small.app.request(`/api/servers/1/import/uploads/${id}?offset=0`, {
+        method: 'PATCH',
+        headers: headers(),
+        body: stream,
+        // @ts-expect-error undici's streamed request bodies
+        duplex: 'half',
+      })
+      expect(streamed.status).toBe(400)
+      const ok = await small.app.request(`/api/servers/1/import/uploads/${id}?offset=0`, {
+        method: 'PATCH',
+        headers: headers(),
+        body: Buffer.alloc(1000),
+      })
+      expect(ok.status).toBe(200)
+    } finally {
+      await small.close()
+    }
+  })
+})

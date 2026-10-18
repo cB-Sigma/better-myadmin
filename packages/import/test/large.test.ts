@@ -2,6 +2,7 @@ import { mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { gzipSync } from 'node:zlib'
+import { createZip } from '@bettermyadmin/export'
 import { englishTranslator } from '@bettermyadmin/i18n'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { Import, ImportFile, type QueryRunner } from '../src/index.ts'
@@ -92,6 +93,41 @@ describe('ImportFile.open: from disk, in chunks', () => {
     const f = await ImportFile.open(path, SUPPORT)
     f.convert((b) => Buffer.from(b.toString().toUpperCase()))
     expect([f.read(4).toString(), f.read(4).toString()]).toEqual(['ABCD', 'EF'])
+    f.close()
+  })
+})
+
+describe('ImportFile.open: decompression bombs', () => {
+  // 64 MiB of zeros compress to ~64 KiB
+  const bomb = () => Buffer.alloc(64 * 1024 * 1024)
+
+  it('gzip: stops past maxBytes, removes the partial copy, says the file could not be read', async () => {
+    const path = join(dir, 'bomb.sql.gz')
+    writeFileSync(path, gzipSync(bomb()))
+    const before = tempCopies()
+    await expect(ImportFile.open(path, SUPPORT, (s) => s, { maxBytes: 1024 * 1024 })).rejects.toThrow(
+      'File could not be read!',
+    )
+    expect(tempCopies()).toEqual(before)
+  })
+
+  it('gzip: stops past the deadline (ExecTimeLimit)', async () => {
+    const path = join(dir, 'slow.sql.gz')
+    writeFileSync(path, gzipSync(bomb()))
+    await expect(ImportFile.open(path, SUPPORT, (s) => s, { deadline: Date.now() - 1 })).rejects.toThrow(
+      'File could not be read!',
+    )
+  })
+
+  it('zip: an entry inflating past maxBytes is not held in memory', async () => {
+    const path = join(dir, 'bomb.zip')
+    writeFileSync(path, createZip(bomb(), 'a.sql'))
+    await expect(ImportFile.open(path, SUPPORT, (s) => s, { maxBytes: 1024 * 1024 })).rejects.toThrow(
+      'File could not be read!',
+    )
+    // within the limit it opens
+    const f = await ImportFile.open(path, SUPPORT, (s) => s, { maxBytes: 128 * 1024 * 1024 })
+    expect(f.read(4).length).toBe(4)
     f.close()
   })
 })
