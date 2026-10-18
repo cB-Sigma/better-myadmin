@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-2076/3426 covered (60.6%): 2019 implemented, 9 exception, 48 n/a, 1350 missing. [Summary](README.md).
+3154/3426 covered (92.1%): 3063 implemented, 13 exception, 78 n/a, 1 planned, 271 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 403/403 (100.0%) covered, 346/403 implemented
 
@@ -13,15 +13,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 02 browse results grid — 39/56 (69.6%) covered, 39/56 implemented
+## 02 browse results grid — 43/56 (76.8%) covered, 43/56 implemented
 
-17 msgids not used yet.
+13 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `resources/templates/display/results/table.twig` | 9/25 | `Display column for relationships` · `Full texts` · `Hide browser transformation` · `Partial texts` · `Relational key` · `Show binary contents` · `Show BLOB contents` · `Well Known Binary` · `Well Known Text` |
-| `resources/js/makegrid.ts` | 5/15 | `Click to mark/unmark.` · `Column name copying to clipboard failed!` · `Double-click to copy column name.` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
-| `resources/templates/display/results/checkbox_and_links.twig` | 2/2 | `You can also edit most values by clicking directly on them.` · `You can also edit most values by double-clicking directly on them.` |
+| `resources/js/makegrid.ts` | 3/15 | `Column name copying to clipboard failed!` · `Original length` · `You have edited some data and they have not been saved. Are you sur…` |
 | `src/Display/Results.php` | 2/11 | `Full texts` · `Partial texts` |
 | `src/Controllers/Table/GetFieldController.php` | 1/4 | `Invalid table name` |
 
@@ -57,20 +56,16 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Transformations/Output/Text_Plain_Json.php` | 1/1 | `Formats text as JSON with syntax highlighting.` |
 | `src/Plugins/Transformations/Output/Text_Plain_Xml.php` | 1/1 | `Formats text as XML with syntax highlighting.` |
 
-## 04 table level — 430/534 (80.5%) covered, 430/534 implemented
+## 04 table level — 441/534 (82.6%) covered, 441/534 implemented
 
-104 msgids not used yet.
+93 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Types.php` | 49/51 | `128-bit UUID (Universally Unique Identifier)` · `A 1-byte integer, signed range is -128 to 127, unsigned range is 0 …` · `A 2-byte integer, signed range is -32,768 to 32,767, unsigned range…` · `A 3-byte integer, signed range is -8,388,608 to 8,388,607, unsigned…` · `A 4-byte integer, signed range is -2,147,483,648 to 2,147,483,647, …` · `A bit-field type (M), storing M of bits per value (default is 1, ma…` · `A BLOB column with a maximum length of 16,777,215 (2^24 - 1) bytes,…` · `A BLOB column with a maximum length of 255 (2^8 - 1) bytes, stored …` · `A BLOB column with a maximum length of 4,294,967,295 or 4GiB (2^32 …` · `A BLOB column with a maximum length of 65,535 (2^16 - 1) bytes, sto…` · `A collection of curves with linear interpolation between points` · `A collection of geometry objects of any type` · … +37 |
-| `resources/templates/table/operations/index.twig` | 7/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` · `Table %s has been dropped.` |
-| `resources/js/modules/indexes.ts` | 5/12 | `Composite with:` · `Create composite index` · `Create single-column index` · `Dropping Primary Key/Index` · `Please select column(s) for the index.` |
-| `resources/js/table/operations.ts` | 3/7 | `You are about to DELETE all the rows of the table!` · `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
+| `resources/templates/table/operations/index.twig` | 6/43 | `(singly) (Alter table order by a single field.)` · `Defragment table` · `Delete the table (DROP)` · `Empty the table (DELETE FROM)` · `Empty the table (TRUNCATE)` · `Flush the table (FLUSH)` |
 | `src/Table/Indexes.php` | 3/3 | `Can't rename index to PRIMARY!` · `No index parts defined!` · `The name of the primary key must be "PRIMARY"!` |
-| `resources/js/database/structure.ts` | 2/4 | `You are about to DESTROY a complete table!` · `You are about to TRUNCATE a complete table!` |
 | `resources/js/normalization.ts` | 2/22 | `Show me the possible partial dependencies based on data in the table` · `Sit tight! It may take few seconds depending on data size and colum…` |
-| `resources/js/table/find_replace.ts` | 2/2 | `Hide find and replace criteria` · `Show find and replace criteria` |
 | `resources/templates/columns_definitions/column_name.twig` | 2/4 | `Is a foreign key.` · `Referenced by %s.` |
 | `resources/templates/columns_definitions/table_fields_definitions.twig` | 2/12 | `For default values, please enter just a single value, without backs…` · `If column type is "enum" or "set", please enter the values using th…` |
 | `resources/templates/table/structure/display_structure.twig` | 2/51 | `Media type:` · `None (None for default)` |
@@ -78,10 +73,11 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Controllers/Table/GisVisualizationController.php` | 2/5 | `Failed to create image` · `Invalid file format, expected one of: ` |
 | `src/Controllers/Table/Structure/MoveColumnsController.php` | 2/3 | `The selected columns are already in the correct order.` · `The selected columns do not match the columns in the table.` |
 | `src/Controllers/Triggers/IndexController.php` | 2/7 | `Add trigger` · `Edit trigger` |
-| `src/Operations.php` | 2/15 | `Can't copy table to same one!` · `Can't move table to same one!` |
 | `src/Table/Table.php` | 2/7 | `Cannot save UI property "%s". The changes made will not be persiste…` · `Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['Ma…` |
 | `resources/js/database/search.ts` | 1/4 | `Searching` |
+| `resources/js/modules/indexes.ts` | 1/12 | `Dropping Primary Key/Index` |
 | `resources/js/table/chart.ts` | 1/1 | `Y values` |
+| `resources/js/table/operations.ts` | 1/7 | `You are about to DELETE all the rows of the table!` |
 | `resources/js/table/relation.ts` | 1/3 | `Dropping Foreign key.` |
 | `resources/js/table/select.ts` | 1/6 | `Searching` |
 | `resources/js/table/structure.ts` | 1/8 | `Dropping column` |
@@ -96,14 +92,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/table/partition/truncate.twig` | 1/1 | `Truncate partition` |
 | `resources/templates/table/structure/drop_confirm.twig` | 1/4 | `Dropping columns from the table` |
 | `resources/templates/table/tracking/structure_snapshot_columns.twig` | 1/11 | `None (None for default)` |
-| `src/Controllers/Database/StructureController.php` | 1/3 | `Table %s has been dropped.` |
 | `src/Controllers/Normalization/GetColumnsController.php` | 1/3 | `String (string types)` |
 | `src/Controllers/Table/Structure/AddKeyController.php` | 1/1 | `Invalid request parameter.` |
 | `src/Normalization.php` | 1/52 | `String (string types)` |
 
-## 05 database level — 299/340 (87.9%) covered, 299/340 implemented
+## 05 database level — 302/340 (88.8%) covered, 302/340 implemented
 
-41 msgids not used yet.
+38 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
@@ -118,7 +113,6 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/routines/editor_form.twig` | 2/19 | `Change to %s` · `Remove last parameter` |
 | `resources/templates/database/routines/index.twig` | 2/12 | `Export routine` · `Routine editor` |
 | `src/Database/CentralColumns.php` | 2/5 | `Could not add %1$s as they already exist in central list!` · `Couldn't remove Column(s) %1$s as they don't exist in central colum…` |
-| `src/Database/Routines.php` | 2/19 | `Routine %1$s has been modified.` · `Routine %1$s has been modified. Privileges have been adjusted.` |
 | `resources/js/database/events.ts` | 1/4 | `Processing request` |
 | `resources/js/database/routines.ts` | 1/6 | `Processing request` |
 | `resources/js/database/tracking.ts` | 1/3 | `Deleting tracking data` |
@@ -138,48 +132,28 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/templates/database/designer/main.twig` | 1/40 | `Except` |
 | `resources/templates/database/events/editor_form.twig` | 1/9 | `Change to %s` |
 | `resources/templates/database/operations/index.twig` | 1/18 | `Database %s has been dropped.` |
-| `resources/templates/database/structure/body_for_table_summary.twig` | 1/5 | `%s table` |
 | `src/Controllers/Database/CentralColumnsController.php` | 1/1 | `Showing rows %1$s - %2$s.` |
 | `src/Controllers/Database/TrackingController.php` | 1/5 | `Version %1$s was created for selected tables, tracking is active fo…` |
 | `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
 | `src/Plugins/Schema/Pdf/Pdf.php` | 1/1 | `PDF export page` |
 
-## 06 server level — 435/915 (47.5%) covered, 435/915 implemented
+## 06 server level — 915/915 (100.0%) covered, 915/915 implemented
 
-480 msgids not used yet.
+0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Advisory/Rules.php` | 197/197 | `'percona' found in version_comment` · `'source' found in version_comment` · `{long_query_time} is set to 10 seconds or more, thus only slow quer…` · `{tmp_table_size} and {max_heap_table_size} are not the same.` · `%% MyISAM key buffer used: %s%%, this value should be above 95%%` · `%s thread(s) took longer than %s seconds to start, it should be 0` · `%s%% of all clients are aborted. This value should be below 2%%` · `%s%% of all connections are aborted. This value should be below 1%%` · `%s%% of all sorts cause temporary tables, this value should be lowe…` · `%s%% of all temporary tables are being written to disk, this value …` · `Aborted client rate is at %s, this value should be less than 1 per …` · `Aborted connections rate is at %s, this value should be less than 1…` · … +185 |
-| `src/Controllers/Server/Status/VariablesController.php` | 114/114 | `How many temporary files mysqld has created.` · `Key cache miss calculated as rate of physical reads compared to rea…` · `Normally, writes to the InnoDB buffer pool happen in the background…` · `Pending log file writes.` · `Percentage of physical writes compared to write requests (calculate…` · `Percentage of used key cache (calculated value)` · `The amount of data read so far, in bytes.` · `The amount of data written so far, in bytes.` · `The amount of free memory for query cache.` · `The average time to acquire a row lock, in milliseconds.` · `The compiled-in InnoDB page size (default 16KB). Many values are co…` · `The current number of pending fsync() operations.` · … +102 |
-| `src/Charsets/Collation.php` | 55/56 | `accent-insensitive (Collation variant)` · `accent-sensitive (Collation variant)` · `binary (Collation variant)` · `case-insensitive (Collation variant)` · `case-sensitive (Collation variant)` · `kana-sensitive (Collation variant)` · `multi-level (Collation variant)` · `no-pad (Collation variant)` · `Arabic (Collation)` · `Armenian (Collation)` · `Baltic (Collation)` · `Binary (Collation)` · … +43 |
-| `resources/templates/server/privileges/privileges_table.twig` | 41/58 | `Allows adding users and privileges without reloading the privilege …` · `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating foreign key relations.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · … +29 |
-| `src/Server/Privileges.php` | 40/56 | `Allows altering and dropping stored routines.` · `Allows altering the structure of existing tables.` · `Allows changing data.` · `Allows connecting, even if maximum number of connections is reached…` · `Allows creating and dropping indexes.` · `Allows creating and dropping triggers.` · `Allows creating new databases and tables.` · `Allows creating new tables.` · `Allows creating new views.` · `Allows creating stored routines.` · `Allows creating temporary tables.` · `Allows creating, dropping and renaming user accounts.` · … +28 |
-| `src/Engines/Pbxt.php` | 24/25 | `Checkpoint frequency` · `Data file grow size` · `Data log threshold` · `Garbage threshold` · `Index cache size` · `Log buffer size` · `Log cache size` · `Log file count` · `Log file threshold` · `Record cache size` · `Row file grow size` · `The amount of data written to the transaction log before a checkpoi…` · … +12 |
-| `src/Engines/Myisam.php` | 12/12 | `Automatic recovery mode` · `Data pointer size` · `If the temporary file used for fast MyISAM index creation would be …` · `If this value is greater than 1, MyISAM table indexes are created i…` · `Maximum size for temporary files on index creation` · `Maximum size for temporary sort files` · `Repair threads` · `Sort buffer size` · `The buffer that is allocated when sorting MyISAM indexes during a R…` · `The default pointer size in bytes, to be used by CREATE TABLE for M…` · `The maximum size of the temporary file MySQL is allowed to use whil…` · `The mode for automatic recovery of crashed MyISAM tables, as set vi…` |
-| `src/Engines/Innodb.php` | 8/9 | `Autoextend increment` · `Buffer Pool` · `Buffer pool size` · `Data files` · `Data home directory` · `The common part of the directory path for all InnoDB data files.` · `The increment size for extending the size of an autoextending table…` · `The size of the memory buffer InnoDB uses to cache data and indexes…` |
-| `resources/templates/server/plugins/index.twig` | 4/7 | `deleted` · `deleting` · `disabled` · `inactive` |
-| `resources/templates/server/privileges/user_properties.twig` | 4/12 | `… delete the old one from the user tables and reload the privileges…` · `… delete the old one from the user tables.` · `… keep the old one.` · `… revoke all active privileges from the old one and delete it after…` |
-| `src/Server/Plugins.php` | 4/5 | `Caching sha2 authentication` · `Old MySQL-4.0 authentication` · `SHA256 password authentication` · `Unix Socket based authentication` |
-| `src/UserPassword.php` | 3/4 | `Password is too long!` · `The password is empty!` · `The passwords aren't the same!` |
-| `resources/js/modules/functions.ts` | 2/2 | `The password is empty!` · `The passwords aren't the same!` |
-| `resources/js/server/privileges.ts` | 2/10 | `The host name is empty!` · `The user name is empty!` |
-| `resources/js/server/status/queries.ts` | 1/1 | `Number of statements` |
-| `resources/templates/server/status/monitor/index.twig` | 1/59 | `Warning:` |
-| `src/Controllers/Server/Privileges/AccountLockController.php` | 1/1 | `The account %s@%s has been successfully locked.` |
-| `src/Controllers/Server/Privileges/AccountUnlockController.php` | 1/1 | `The account %s@%s has been successfully unlocked.` |
 
-## 07 export import — 238/293 (81.2%) covered, 238/293 implemented
+## 07 export import — 242/293 (82.6%) covered, 242/293 implemented
 
-55 msgids not used yet.
+51 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/File.php` | 13/15 | `Cannot create temporary file.` · `Cannot read uploaded file.` · `Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc].` · `Error while moving uploaded file.` · `Failed to write file to disk.` · `File upload stopped by extension.` · `File was not an uploaded file.` · `Missing a temporary folder.` · `The uploaded file exceeds the MAX_FILE_SIZE directive that was spec…` · `The uploaded file exceeds the upload_max_filesize directive in php.…` · `The uploaded file was only partially uploaded.` · `Unknown error in file upload.` · … +1 |
-| `src/Plugins/Import/ImportCsv.php` | 8/16 | `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` · `Lines terminated with` |
 | `resources/js/import.ts` | 5/13 | `%s/sec.` · `About %MIN min. %SEC sec. remaining.` · `About %SEC sec. remaining.` · `Please be patient, the file is being uploaded. Details about the up…` · `The file being uploaded is probably larger than the maximum allowed…` |
 | `src/Plugins/Export/ExportPdf.php` | 5/10 | `Dumping data` · `Query result data` · `Report title:` · `Stand in` · `View structure` |
-| `src/Config/Descriptions.php` | 4/20 | `Columns enclosed with` · `Columns escaped with` · `Columns terminated with` · `Lines terminated with` |
+| `src/Plugins/Import/ImportCsv.php` | 4/16 | `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` |
 | `src/Export/OutputHandler.php` | 3/4 | `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
 | `src/Plugins/Import/ImportShp.php` | 3/4 | `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
 | `resources/js/export.ts` | 2/9 | `SQL Query` · `Your export is incomplete, due to a low execution time limit at the…` |
@@ -205,30 +179,13 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
 | `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
-## 08 settings preferences pmadb — 89/666 (13.4%) covered, 89/666 implemented
+## 08 settings preferences pmadb — 665/666 (99.8%) covered, 631/666 implemented
 
-577 msgids not used yet.
+1 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Config/Descriptions.php` | 467/474 | `[kbd]SMART[/kbd] - i.e. descending order for columns of type TIME, …` · `A dropdown will be used if fewer items are present.` · `A special MySQL user configured with limited permissions, more info…` · `A user-friendly description of this server. Leave blank to display …` · `Add DROP DATABASE` · `Add DROP VIEW` · `Add IF NOT EXISTS (less efficient as indexes will be generated duri…` · `Add ON DUPLICATE KEY UPDATE` · `Advanced server configuration, do not change these options unless y…` · `Allow for searching inside the entire database.` · `Allow interrupt of import in case script detects it is close to tim…` · `Allow login to any MySQL server` · … +455 |
-| `resources/templates/relation/check_relations.twig` | 33/34 | `%sCreate%s a database named '%s' and setup the phpMyAdmin configura…` · `%sCreate%s missing phpMyAdmin configuration storage tables.` · `%sCreate%s the phpMyAdmin configuration storage in the current data…` · `Bookmarked SQL query:` · `Browser transformation:` · `Configurable menus:` · `Configuration of pmadb…` · `OK (Correctly working)` · `Create a pma user and give access to these tables.` · `Create the needed tables with the <code>%screate_tables.sql</code>.` · `Designer and creation of PDFs:` · `Display features:` · … +21 |
-| `src/Config/ConfigFile.php` | 32/33 | `Always send error reports` · `Ask before sending error reports` · `Both` · `both of the above` · `Click` · `Closed` · `complete inserts` · `Custom - display all possible options to configure` · `Custom - like above, but without the quick/custom choice` · `Disable` · `display column` · `Double click` · … +20 |
-| `resources/js/validator-messages.ts` | 15/20 | `Please enter a valid credit card number` · `Please enter a valid date` · `Please enter a valid date ( ISO )` · `Please enter a valid email address` · `Please enter a valid number` · `Please enter a valid URL` · `Please enter a value between {0} and {1}` · `Please enter a value between {0} and {1} characters long` · `Please enter at least {0} characters` · `Please enter only digits` · `Please enter the same value again` · `Please fix this field` · … +3 |
-| `resources/js/datetimepicker.ts` | 7/7 | `Friday (Week day name)` · `Monday (Week day name)` · `Saturday (Week day name)` · `Sunday (Week day name)` · `Thursday (Week day name)` · `Tuesday (Week day name)` · `Wednesday (Week day name)` |
-| `src/Config/Forms/User/ExportForm.php` | 7/7 | `CSV` · `CSV for MS Excel` · `Custom` · `Microsoft Word 2000` · `OpenDocument Spreadsheet` · `OpenDocument Text` · `Quick` |
-| `src/Config/FormDisplay.php` | 5/7 | `"%s" requires %s extension` · `Compressed export will not work due to missing function %s.` · `Compressed import will not work due to missing function %s.` · `maximum %s` · `unavailable` |
-| `src/Config/ServerConfigChecks.php` | 4/14 | `%1$sGZip compression and decompression%2$s requires functions (%3$s…` · `%1$sLogin cookie validity%2$s greater than %3$ssession.gc_maxlifeti…` · `%sZip compression%s requires functions (%s) which are unavailable o…` · `%sZip decompression%s requires functions (%s) which are unavailable…` |
-| `src/Config/Forms/Setup/ServersForm.php` | 3/3 | `Config authentication` · `HTTP authentication` · `Signon authentication` |
-| `src/Config/Forms/User/ImportForm.php` | 3/4 | `CSV` · `CSV using LOAD DATA` · `OpenDocument Spreadsheet` |
-| `src/ConfigStorage/UserGroups.php` | 3/4 | `Database-level tabs` · `Server-level tabs` · `Table-level tabs` |
-| `src/Config.php` | 2/2 | `Existing configuration file (%s) is not readable.` · `Wrong permissions on configuration file, should not be world writable!` |
-| `src/Config/UserPreferences.php` | 2/2 | `Could not save configuration` · `The phpMyAdmin configuration storage database could not be accessed.` |
-| `resources/templates/preferences/manage/main.twig` | 1/17 | `You can set more settings by modifying config.inc.php, eg. by using…` |
-| `src/Config/Forms/User/MainForm.php` | 1/2 | `Default transformations` |
-| `src/Config/Settings.php` | 1/1 | `Server %d` |
-| `src/ConfigStorage/Relation.php` | 1/2 | `You do not have necessary privileges to create a database named '%s…` |
-| `src/Html/Generator.php` | 1/2 | `Explain SQL` |
+| `resources/js/validator-messages.ts` | 1/20 | `This field is required` |
 
 ## 09 sql editor query pipeline — 42/46 (91.3%) covered, 42/46 implemented
 

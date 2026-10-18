@@ -53,4 +53,31 @@ export const pmaControls = {
   'js:table/operations.ts#submit:#moveTableForm': 'OperationsPage.tsx',
   'js:table/operations.ts#submit:#partitionsForm': 'OperationsPage.tsx',
   'js:table/operations.ts#submit:#tableOptionsForm': 'OperationsPage.tsx',
+  // link_or_button anchors whose message_to_show the inventory lists as their label
+  'table/operations/index.twig#link:Table %s has been emptied.': {
+    file: 'OperationsPage.tsx',
+    match: "'truncate_tbl_anchor'",
+  },
+  'table/operations/index.twig#link:View %s has been dropped.': {
+    file: 'OperationsPage.tsx',
+    match: "'drop_tbl_anchor'",
+  },
+  'table/operations/view.twig#link:View %s has been dropped.': {
+    file: 'OperationsPage.tsx',
+    match: 'id="drop_view_anchor"',
+  },
+  // pma: resources/js — browser behaviours (js.json)
+  "js:table/operations.ts#ajax:POST <$form.attr('action')>": {
+    file: 'OperationsPage.tsx',
+    match: "api.tableOperation(scope, 'move-copy', {",
+  },
+  "js:table/operations.ts#ajax:POST <$link.attr('href')>": {
+    file: 'OperationsPage.tsx',
+    match: "api.tableOperation(scope, 'maintenance', { op })",
+  },
+  'js:table/operations.ts#ajax:POST <url>': {
+    file: 'OperationsPage.tsx',
+    match: "api.tableOperation(scope, 'sql', { action, fkChecks: fk })",
+  },
+  'js:table/operations.ts#confirm:': { file: 'OperationsPage.tsx', match: '{t(warning)} {t(' },
 } as const

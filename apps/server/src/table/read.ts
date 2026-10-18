@@ -54,7 +54,7 @@ export class TableReader {
 
   /** pma: DbTableExists::selectDatabase (selectDb) — false when the database does not exist */
   async selectDb(db: string): Promise<boolean> {
-    return (await this.dbi.tryQuery(`USE ${backquote(db)}`, 'table.use')) !== null
+    return this.conn.selectDb(db, 'table.use')
   }
 
   /**

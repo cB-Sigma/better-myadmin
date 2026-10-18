@@ -8,6 +8,7 @@ import {
 import { SafeHtml } from '@bettermyadmin/ui'
 import type { ReactNode } from 'react'
 import { tablePath } from '../../lib/api'
+import { useConfig } from '../../lib/config'
 import { translator } from '../../lib/i18n'
 import { HighlightedSql } from '../sql/HighlightedSql'
 
@@ -63,13 +64,20 @@ export function renderTransformation(
   loc: CellLocation,
   meta: TransformContext['meta'] = {},
   versionInt = 0,
+  /** the client configuration (`DefaultTransformations`, `GD2Available`) */
+  cfg: Record<string, unknown> = {},
 ): ReactNode {
   const out = applyOutputTransformation(tr.transformation, value, tr.transformationOptions, {
     meta,
     wrapperUrl: (extra) => wrapperUrl(loc, extra),
     t: (s) => translator().gettext(s),
-    // thumbnails are requested like with GD; the server sends the original image (no resampling)
-    gd2: true,
+    // $cfg['DefaultTransformations'] (the options a column leaves empty)
+    ...(cfg.DefaultTransformations !== undefined
+      ? { defaults: cfg.DefaultTransformations as NonNullable<TransformContext['defaults']> }
+      : {}),
+    // Config::isGd2Available: 'no' shows the image at 320×240 instead of a resized thumbnail link
+    // ('auto' is available: the wrapper answers the thumbnail request with the original image)
+    gd2: cfg.GD2Available !== 'no',
   })
   if ('sql' in out) return <HighlightedSql sql={out.sql} versionInt={versionInt} />
   return <SafeHtml profile="transformation" html={out.html} />
@@ -82,10 +90,11 @@ export function TransformedCell(props: {
   location: CellLocation
   meta?: TransformContext['meta']
 }) {
+  const cfg = useConfig()
   const cls = `${props.transformation.mimetype.replaceAll('/', '_').toLowerCase()} transformed${noWrap(props.transformation) ? ' text-nowrap' : ''}`
   return (
     <span className={cls}>
-      {renderTransformation(props.transformation, props.value, props.location, props.meta)}
+      {renderTransformation(props.transformation, props.value, props.location, props.meta, 0, cfg)}
     </span>
   )
 }

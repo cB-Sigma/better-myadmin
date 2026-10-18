@@ -1,0 +1,5 @@
+# Intentional differences of the index drop confirmation (confirmPreviewSql) (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: button, label: Close }
+    ignore: [order]
+    reason: the dialog's corner close button comes last in our DOM (Radix Dialog), first in Bootstrap's header

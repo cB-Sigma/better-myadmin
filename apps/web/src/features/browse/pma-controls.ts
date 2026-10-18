@@ -100,4 +100,145 @@ export const pmaControls = {
     file: 'ResultsView.tsx',
     match: 'className="create_view ajax"',
   },
+  // pma: resources/js — browser behaviours (js.json)
+  'js:makegrid.ts#change:<$editArea> span.curr_value': { file: 'GridTable.tsx', match: 'onPick={(key) => {' },
+  'js:makegrid.ts#change:<g.cEdit> .edit_box': {
+    file: 'GridTable.tsx',
+    match: "if (e.target.value !== '') setNullChecked(false)",
+  },
+  'js:makegrid.ts#click:<$checkbox>': { file: 'GridTable.tsx', match: 'className="null_div"' },
+  'js:makegrid.ts#click:<$editArea> .browse_foreign': {
+    file: 'GridTable.tsx',
+    match: 'className="browse_foreign h-auto p-0"',
+  },
+  'js:makegrid.ts#click:<$editArea> > *': {
+    file: 'GridTable.tsx',
+    match: 'onClick={(e) => e.stopPropagation()}',
+  },
+  'js:makegrid.ts#click:<cd>': { file: 'GridTable.tsx', match: 'className="coldrop ms-1"' },
+  'js:makegrid.ts#click:<clone>': { file: 'GridTable.tsx', match: '{n > 10 && (' },
+  'js:makegrid.ts#click:<g.t> td.data.click2': {
+    file: 'GridTable.tsx',
+    match: 'fkTimer.current = setTimeout(',
+  },
+  'js:makegrid.ts#click:html': {
+    file: 'GridTable.tsx',
+    match: "document.getElementById('browseForeignModal') !== null",
+  },
+  'js:makegrid.ts#click:this': { file: 'GridTable.tsx', match: 'actions.deleteRow(row)' },
+  'js:makegrid.ts#copy:document': { file: 'GridTable.tsx', match: "document.addEventListener('copy', copy)" },
+  'js:makegrid.ts#dblclick:<g.t> th.draggable a': {
+    file: 'GridTable.tsx',
+    match: 'onDoubleClick={(e) => e.stopPropagation()}',
+  },
+  'js:makegrid.ts#dragstart:<g.t> th a': {
+    file: 'GridTable.tsx',
+    match: 'onDragStart={() => setDragFrom(j)}',
+  },
+  'js:makegrid.ts#focus:<g.cEditStd> .edit_box': { file: 'GridTable.tsx', match: 'b.focus()' },
+  'js:makegrid.ts#focus:<g.cEditTextarea> .edit_box': { file: 'GridTable.tsx', match: 'b.focus()' },
+  'js:makegrid.ts#input:<g.cEdit> .edit_box': {
+    file: 'GridTable.tsx',
+    match: 'else if (!notNull) setNullChecked(true)',
+  },
+  'js:makegrid.ts#keydown:<$editArea> textarea': {
+    file: 'GridTable.tsx',
+    match: "props.edited && (hasClass(cell.cls, 'truncated')",
+  },
+  'js:makegrid.ts#keydown:<g.cEdit> .edit_box': {
+    file: 'GridTable.tsx',
+    match: "e.key.toLowerCase() === 'v'",
+  },
+  'js:makegrid.ts#keydown:<g.cEditStd> input.edit_box, select': {
+    file: 'GridTable.tsx',
+    match: 'props.onMove(dir, ...r)',
+  },
+  'js:makegrid.ts#keydown:<g.cEditStd>': { file: 'GridTable.tsx', match: '!textEditable' },
+  'js:makegrid.ts#keydown:<g.cEditTextarea>': { file: 'GridTable.tsx', match: '!textEditable' },
+  'js:makegrid.ts#keydown:<g.cEditTextarea> textarea.edit_box, select': {
+    file: 'GridTable.tsx',
+    match: 'props.onMove(dir, ...r)',
+  },
+  'js:makegrid.ts#keydown:document': { file: 'GridTable.tsx', match: "e.code === 'KeyA'" },
+  'js:makegrid.ts#keydown:html': {
+    file: 'GridTable.tsx',
+    match: "document.getElementById('browseForeignModal') === null",
+  },
+  'js:makegrid.ts#keypress:<g.cEdit> .edit_box': {
+    file: 'GridTable.tsx',
+    match: "if (e.target.value !== '') setNullChecked(false)",
+  },
+  'js:makegrid.ts#keyup:<$editArea> textarea': {
+    file: 'GridTable.tsx',
+    match: "props.edited && (hasClass(cell.cls, 'truncated')",
+  },
+  'js:makegrid.ts#keyup:<$inputField>': { file: 'GridTable.tsx', match: '<DateTimePicker' },
+  'js:makegrid.ts#keyup:<g.cEdit> .edit_box': {
+    file: 'GridTable.tsx',
+    match: "props.edited && (hasClass(cell.cls, 'truncated')",
+  },
+  'js:makegrid.ts#mousedown:<cb>': { file: 'GridTable.tsx', match: 'className={`colborder' },
+  'js:makegrid.ts#mousedown:<g.t> td.data': {
+    file: 'GridTable.tsx',
+    match: 'startSelection(cur, r, j, multi)',
+  },
+  'js:makegrid.ts#mouseenter:<g.t> td, th.draggable': { file: 'GridTable.tsx', match: 'setColList(false)' },
+  'js:makegrid.ts#mouseenter:<g.t> th.draggable': { file: 'GridTable.tsx', match: "' cursor-move'" },
+  'js:makegrid.ts#mouseenter:<t> th.draggable a': {
+    file: 'GridTable.tsx',
+    match: 'className="sortlink group h-auto"',
+  },
+  'js:makegrid.ts#mouseleave:<g.t> td.data': {
+    file: 'GridTable.tsx',
+    match: 'window.getSelection()?.removeAllRanges()',
+  },
+  'js:makegrid.ts#mouseleave:<g.t> th.draggable': {
+    file: 'GridTable.tsx',
+    match: 'onMouseLeave={() => setHoverCol(null)}',
+  },
+  'js:makegrid.ts#mouseleave:<t> th.draggable a': {
+    file: 'GridTable.tsx',
+    match: 'className="sortlink group h-auto"',
+  },
+  'js:makegrid.ts#mousemove:document': {
+    file: 'GridTable.tsx',
+    match: "document.addEventListener('mousemove', move)",
+  },
+  'js:makegrid.ts#mouseover:<g.t> td.data, thead th:not(.column_action)': {
+    file: 'GridTable.tsx',
+    match: 'dragSelection(cur, r, j',
+  },
+  'js:makegrid.ts#mouseup:document': {
+    file: 'GridTable.tsx',
+    match: "document.addEventListener('mouseup', up)",
+  },
+  'js:makegrid.ts#paste:<g.cEdit> .edit_box': {
+    file: 'GridTable.tsx',
+    match: "if (e.target.value !== '') setNullChecked(false)",
+  },
+  'js:makegrid.ts#resize:<g>': { file: 'GridTable.tsx', match: 'setWidths((w) => new Map(w).set(d.p, nw))' },
+  'js:jquery.sortable-table.ts#mousedown:<table> td': {
+    file: '../server/MonitorPage.tsx',
+    match: 'draggable={editMode}',
+  },
+  'js:jquery.sortable-table.ts#mouseleave:document': {
+    file: '../server/MonitorPage.tsx',
+    match: 'onDragOver={(e) => editMode && e.preventDefault()}',
+  },
+  'js:jquery.sortable-table.ts#mousemove:document': {
+    file: '../server/MonitorPage.tsx',
+    match: 'onDragOver={(e) => editMode && e.preventDefault()}',
+  },
+  'js:jquery.sortable-table.ts#mouseup:<drag>': {
+    file: '../server/MonitorPage.tsx',
+    match: 'onDrop={() => {',
+  },
+  'js:jquery.sortable-table.ts#mouseup:<dropTo>': {
+    file: '../server/MonitorPage.tsx',
+    match: 'g.splice(i, 0, moved!)',
+  },
+  'js:jquery.sortable-table.ts#mouseup:<table> td': {
+    file: '../server/MonitorPage.tsx',
+    match: 'dragFrom.current = i',
+  },
 }

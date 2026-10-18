@@ -170,21 +170,6 @@ describe('cookie auth', () => {
     expect(s.json.authenticated).toBe(false)
   })
 
-  it('a server older than MysqlMinVersion: "You should upgrade to MySQL … or later." (DatabaseServerVersionChecking)', async () => {
-    t = testApp(testConfig({ MysqlMinVersion: { internal: 990000, human: '99.0.0' } }))
-    await t.login()
-    const r = await t.req('GET', '/api/servers/1/home')
-    expect(r.status).toBe(500)
-    expect(r.json.error).toMatchObject({
-      code: 'UNSUPPORTED_SERVER',
-      message: 'You should upgrade to MySQL 99.0.0 or later.',
-    })
-    const de = await t.req('GET', '/api/servers/1/home?lang=de')
-    expect((de.json.error as { message: string }).message).not.toBe(
-      'You should upgrade to MySQL 99.0.0 or later.',
-    )
-  })
-
   it('sets security headers', async () => {
     t = testApp()
     const r = await t.req('GET', '/api/auth/state')

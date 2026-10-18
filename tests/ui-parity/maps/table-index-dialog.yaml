@@ -1,0 +1,13 @@
+# Intentional differences of the index editor dialog (Structure > Indexes > Edit) (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: button, label: Drag to reorder }
+    added: >-
+      phpMyAdmin reorders the index columns by dragging the row (jQuery UI sortable, no control);
+      ours gives the drag handle a focusable button
+  - ours: { kind: slider, label: 'Add 1 column(s) to index' }
+    added: >-
+      the "Add %s column(s) to index" slider is a native range input; phpMyAdmin's jQuery UI slider
+      (a <span> handle) is not counted as a control by the harness
+  - match: { kind: button, label: Close }
+    ignore: [order]
+    reason: the dialog's corner close button comes last in our DOM (Radix Dialog), first in Bootstrap's header

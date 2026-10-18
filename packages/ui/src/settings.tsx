@@ -27,6 +27,8 @@ export interface UiSettings {
   isMariaDb: boolean
   /** `__()` of the page language for the kit's own texts (phpMyAdmin msgids); identity = English. */
   gettext: (msgid: string) => string
+  /** highlightSql: the app's highlighted `<pre><code class="sql">` (keywords linked to the manual) */
+  renderSql?: (sql: string) => ReactNode
 }
 
 export const defaultUiSettings: UiSettings = {

@@ -1,3 +1,4 @@
+import { N_ } from '@bettermyadmin/i18n'
 import { backquote, escapeMysqlWildcards, quoteString } from '@bettermyadmin/sql-gen'
 import { type MetaConn, type Row, fetchSingleRow, fetchValue, firstColumn } from './conn.ts'
 import type {
@@ -13,9 +14,6 @@ import type {
   UserConfigBackend,
 } from './driver.ts'
 import type { RelationParameters } from './relation-parameters.ts'
-
-/** gettext_noop: a phpMyAdmin msgid, translated where the message is shown */
-const N_ = (msgid: string): string => msgid
 
 const q = (s: string) => quoteString(s)
 const t = (db: string, table: string) => `${backquote(db)}.${backquote(table)}`
@@ -239,11 +237,11 @@ class PmadbUserConfig implements UserConfigBackend {
         ? `SHOW DATABASES LIKE ${q(escapeMysqlWildcards(this.database))}`
         : `SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ${q(this.database)}`
       const canAccess = (await fetchSingleRow(this.conn, access)) !== null
+      // the messages are translated by the caller
       return {
         error: 'Could not save configuration',
-        detail: canAccess
-          ? detail
-          : `${detail}\n\nThe phpMyAdmin configuration storage database could not be accessed.`,
+        detail,
+        ...(canAccess ? {} : { inaccessible: true as const }),
       }
     }
     return true

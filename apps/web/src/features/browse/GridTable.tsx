@@ -14,7 +14,10 @@ import { Link } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
 import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../../lib/api'
+import { useConfig } from '../../lib/config'
 import { t } from '../../lib/i18n'
+import { ForeignBrowser } from '../insert-edit/ForeignBrowser'
+import { DateTimePicker } from '../insert-edit/ValueWidget'
 import { HighlightedSql } from '../sql/HighlightedSql'
 import { renderTransformation } from '../transformations/registry'
 import {
@@ -27,6 +30,16 @@ import {
   rowMatchesFilter,
   truncateForDisplay,
 } from './logic'
+import {
+  type CellSelection,
+  dragSelection,
+  emptySelection,
+  extendSelection,
+  selectAll,
+  selectionClass,
+  selectionText,
+  startSelection,
+} from './selection'
 
 export interface GridActions {
   /** a sort / FK / text toggle link of the grid (POST /browse) */
@@ -62,7 +75,15 @@ const MSG = {
   multiSortHint:
     'Shift+Click to add this column to ORDER BY clause or to toggle ASC/DESC.<br>- Ctrl+Click or Alt+Click (Mac: Shift+Option+Click) to remove column from ORDER BY clause',
   cellEditHint: 'Press escape to cancel editing.<br>- Shift+Enter for a newline.',
+  reorderHint: 'Drag to reorder.',
+  markHint: 'Click to mark/unmark.',
+  copyHint: 'Double-click to copy column name.',
 }
+
+/** makegrid minColWidth */
+const MIN_COL_WIDTH = 15
+
+type MoveDir = 'up' | 'down' | 'left' | 'right'
 
 const hasClass = (cls: string, c: string) => cls.split(/\s+/).includes(c)
 
@@ -133,6 +154,17 @@ export function GridTable(props: Props) {
   const [pending, setPending] = useState<Map<string, { value: string | null; type: string }>>(new Map())
   const [dragFrom, setDragFrom] = useState<number | null>(null)
   const lastChecked = useRef<number | null>(null)
+  // initColResize: widths set by dragging the .colborder handles (by server position)
+  const [widths, setWidths] = useState<ReadonlyMap<number, number>>(new Map())
+  const rsz = useRef<{ p: number; x0: number; w0: number } | null>(null)
+  const [rszActive, setRszActive] = useState<number | null>(null)
+  // initCellSelection
+  const [sel, setSel] = useState<CellSelection>(emptySelection)
+  const [colList, setColList] = useState(false)
+  const selecting = useRef<{ multi: boolean } | null>(null)
+  const tableRef = useRef<HTMLTableElement>(null)
+  /** relational links in double-click mode: a single click follows after 700 ms, a double one edits */
+  const fkTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const canReorder = grid.navigation !== null && n > 1
   const visibleCount = visib.filter(Boolean).length
 
@@ -143,6 +175,8 @@ export function GridTable(props: Props) {
     setVisib(grid.columns.map((c) => !c.hidden))
     setPending(new Map())
     setEditing(null)
+    setWidths(new Map())
+    setSel(emptySelection)
   }, [grid, props.raw])
 
   // makegrid sendColPrefs
@@ -297,6 +331,120 @@ export function GridTable(props: Props) {
     setEditing({ r, p })
   }
 
+  /** moveUp / moveDown / moveLeft / moveRight: the same column of the row above / below, or the
+   * previous / next grid-editable cell of the row (hideEditCell with { move: true }) */
+  const moveEdit = (from: EditState, dir: MoveDir) => {
+    let to: EditState | null = null
+    if (dir === 'up' || dir === 'down') {
+      const r = from.r + (dir === 'up' ? -1 : 1)
+      if (rows[r] !== undefined) to = { r, p: from.p }
+    } else {
+      const editable = order.filter(
+        (p) => visib[p] && hasClass(rows[from.r]?.cells[p]?.cls ?? '', 'grid_edit'),
+      )
+      const i = editable.indexOf(from.p)
+      const p = editable[dir === 'left' ? i - 1 : i + 1]
+      if (i >= 0 && p !== undefined) to = { r: from.r, p }
+    }
+    if (to !== null) startEdit(to.r, to.p)
+  }
+
+  // column resizing: the document follows the drag (dragMove / dragEnd)
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      const d = rsz.current
+      if (d === null) return
+      e.preventDefault()
+    }
+    const up = (e: MouseEvent) => {
+      const d = rsz.current
+      if (d === null) return
+      rsz.current = null
+      setRszActive(null)
+      document.body.style.cursor = ''
+      document.body.classList.remove('user-select-none')
+      const nw = Math.max(MIN_COL_WIDTH, d.w0 + e.pageX - d.x0)
+      setWidths((w) => new Map(w).set(d.p, nw))
+    }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
+    return () => {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', up)
+    }
+  }, [])
+
+  // cell selection: mouseup ends a drag, a mousedown outside the table, Escape reset it; Ctrl+A,
+  // Shift+arrows and copy work when no field has the focus
+  const keyAt = useRef(0)
+  const selRef = useRef(sel)
+  selRef.current = sel
+  const copyRef = useRef<(e: ClipboardEvent) => void>(() => {})
+  copyRef.current = (e: ClipboardEvent) => {
+    const t0 = tableRef.current
+    const ns = window.getSelection()
+    if (t0 === null || !document.body.contains(t0) || editing !== null) return
+    if (ns !== null && ns.rangeCount > 0 && !ns.isCollapsed) return
+    const cur = selRef.current
+    if (cur.cols.size === 0 || cur.rows.size === 0) return
+    const shownCols = order.filter((p) => visib[p])
+    const text = selectionText(
+      cur,
+      shownCols.map((p) => grid.columns[p]!.name),
+      (r, c) => {
+        const cell = rows[r]?.cells[shownCols[c] ?? -1]
+        return cell === undefined ? '' : cell.k === 'null' ? 'NULL' : (cell.t ?? '')
+      },
+      rows.length,
+    )
+    if (e.clipboardData !== null) {
+      e.clipboardData.setData('text/plain', text)
+      e.preventDefault()
+    }
+  }
+  const dimsRef = useRef({ rows: 0, cols: 0 })
+  dimsRef.current = { rows: rows.length, cols: order.filter((p) => visib[p]).length }
+  useEffect(() => {
+    const up = () => {
+      selecting.current = null
+    }
+    const down = (e: MouseEvent) => {
+      if (tableRef.current !== null && !tableRef.current.contains(e.target as Node)) setSel(emptySelection)
+    }
+    const key = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSel(emptySelection)
+      const a = document.activeElement
+      if (a?.matches('input, textarea, select')) return
+      if ((e.ctrlKey || e.metaKey) && e.code === 'KeyA') {
+        e.preventDefault()
+        window.getSelection()?.removeAllRanges()
+        setSel(selectAll(dimsRef.current.rows, dimsRef.current.cols))
+      }
+      // throttle (100 ms)
+      if (keyAt.current !== 0 && Date.now() - keyAt.current < 100) return
+      keyAt.current = Date.now()
+      if (e.shiftKey && selRef.current.end !== null) {
+        if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          e.preventDefault()
+          setSel((cur) =>
+            extendSelection(cur, e.key as 'ArrowUp', dimsRef.current.rows, dimsRef.current.cols),
+          )
+        }
+      }
+    }
+    const copy = (e: ClipboardEvent) => copyRef.current(e)
+    document.addEventListener('mouseup', up)
+    document.addEventListener('mousedown', down)
+    document.addEventListener('keydown', key)
+    document.addEventListener('copy', copy)
+    return () => {
+      document.removeEventListener('mouseup', up)
+      document.removeEventListener('mousedown', down)
+      document.removeEventListener('keydown', key)
+      document.removeEventListener('copy', copy)
+    }
+  }, [])
+
   // row marking ---------------------------------------------------------------------------------
   const toggleRow = (r: number, shift: boolean) => {
     const next = new Set(props.checked)
@@ -419,7 +567,8 @@ export function GridTable(props: Props) {
     </Button>
   )
   const colDrop = n > 1 && (
-    <DropdownMenu>
+    // not modal: entering a cell or a header hides the list (initColVisib mouseenter)
+    <DropdownMenu open={colList} onOpenChange={setColList} modal={false}>
       <DropdownMenuTrigger
         className="coldrop ms-1"
         aria-label={t("Click the drop-down arrow to toggle column's visibility.")}
@@ -494,11 +643,18 @@ export function GridTable(props: Props) {
               </small>
             </>
           )
+        const hint =
+          // updateHint: reorder + mark + copy hints when the table has markers and several columns
+          visibleCount > 1 && grid.columns.some((x) => x.sort !== null) && s.BrowseMarkerEnable
+            ? `- ${t(MSG.reorderHint)}\n- ${t(MSG.markHint)}\n- ${t(MSG.copyHint)}`
+            : undefined
+        const width = widths.get(p)
+        const sc = repeat ? '' : selectionClass(sel, -1, order.filter((x) => visib[x]).indexOf(p))
         return (
           // biome-ignore lint/a11y/useKeyWithClickEvents: column marking is a pointer feature (sql.ts)
           <th
             key={p}
-            className={cls}
+            className={`${cls}${sc === '' ? '' : ` ${sc}`} relative${canReorder ? (visibleCount > 1 ? ' cursor-move' : ' cursor-[inherit]') : ''}`}
             data-column={c.name}
             draggable={!repeat && canReorder && visibleCount > 1}
             onDragStart={() => setDragFrom(j)}
@@ -507,7 +663,6 @@ export function GridTable(props: Props) {
               if (dragFrom !== null) moveColumn(dragFrom, j)
               setDragFrom(null)
             }}
-            onMouseEnter={() => sortable && s.BrowsePointerEnable && setHoverCol(p)}
             onMouseLeave={() => setHoverCol(null)}
             onClick={(e) => {
               if ((e.target as HTMLElement).closest('a, button') !== null) return
@@ -524,50 +679,79 @@ export function GridTable(props: Props) {
                 () => showMessage(t('Copying failed!'), false, 'error'),
               )
             }}
-            title={canReorder && !sortable ? t('Drag to reorder.') : undefined}
+            // mouseover.cellSelect (enter: the header has no children to bubble from)
+            onMouseEnter={() => {
+              setColList(false)
+              if (sortable && s.BrowsePointerEnable) setHoverCol(p)
+              if (selecting.current === null || repeat) return
+              const j2 = order.filter((x) => visib[x]).indexOf(p)
+              setSel((cur) => dragSelection(cur, -1, j2, selecting.current?.multi === true))
+            }}
+            title={hint ?? (canReorder && !sortable ? t(MSG.reorderHint) : undefined)}
           >
-            {sortable ? (
-              <Button
-                variant="link"
-                size="sm"
-                className="sortlink group h-auto"
-                title={`${t(MSG.sortHint)}\n${t(MSG.multiSortHint).replace('<br>', '\n')}`}
-                onClick={(e) => {
-                  const sort = c.sort!
-                  if (e.ctrlKey || e.altKey)
-                    actions.sort(sort.remove.sql, sort.remove.sig, sort.remove.discard)
-                  else if (e.shiftKey) actions.sort(sort.add.sql, sort.add.sig, false)
-                  else actions.sort(sort.single.sql, sort.single.sig, false)
+            {!repeat && (
+              // initColResize: the column border handle (mousedown starts dragStartRsz)
+              <div
+                aria-hidden
+                className={`colborder absolute top-0 -right-0.5 h-full w-[5px] cursor-col-resize${rszActive === p ? ' colborder_active' : ''}`}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  const span = (e.currentTarget.parentElement as HTMLElement).querySelector('span.th-content')
+                  rsz.current = { p, x0: e.pageX, w0: (span as HTMLElement | null)?.offsetWidth ?? 0 }
+                  setRszActive(p)
+                  document.body.style.cursor = 'col-resize'
+                  document.body.classList.add('user-select-none')
+                  if (editing !== null) setEditing(null)
                 }}
-              >
-                {c.name}
-                {c.sort!.dir !== null && (
-                  <>
-                    {' '}
-                    {/* .sortlink mouseover / mouseout toggle the .soimg pair: hovering shows the
-                        other direction (Results::getSortingUrlParams) */}
-                    <span className="inline-flex group-hover:hidden">
-                      <PmaIcon
-                        name={c.sort!.dir === 'DESC' ? 's_desc' : 's_asc'}
-                        alt={t(c.sort!.dir === 'DESC' ? 'Descending' : 'Ascending')}
-                        className="soimg"
-                      />
-                    </span>
-                    <span className="hidden group-hover:inline-flex">
-                      <PmaIcon
-                        name={c.sort!.dir === 'DESC' ? 's_asc' : 's_desc'}
-                        alt={t(c.sort!.dir === 'DESC' ? 'Ascending' : 'Descending')}
-                        className="soimg"
-                      />
-                    </span>{' '}
-                    <small>{c.sort!.position}</small>
-                  </>
-                )}
-              </Button>
-            ) : (
-              c.name
+              />
             )}
-            {comment}
+            <span className="th-content inline-block" style={width === undefined ? undefined : { width }}>
+              {sortable ? (
+                <Button
+                  variant="link"
+                  size="sm"
+                  className="sortlink group h-auto"
+                  title={`${t(MSG.sortHint)}\n${t(MSG.multiSortHint).replace('<br>', '\n')}`}
+                  // th.draggable a: a double-click on the link does not copy the column name
+                  onDoubleClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    const sort = c.sort!
+                    if (e.ctrlKey || e.altKey)
+                      actions.sort(sort.remove.sql, sort.remove.sig, sort.remove.discard)
+                    else if (e.shiftKey) actions.sort(sort.add.sql, sort.add.sig, false)
+                    else actions.sort(sort.single.sql, sort.single.sig, false)
+                  }}
+                >
+                  {c.name}
+                  {c.sort!.dir !== null && (
+                    <>
+                      {' '}
+                      {/* .sortlink mouseover / mouseout toggle the .soimg pair: hovering shows the
+                          other direction (Results::getSortingUrlParams) */}
+                      <span className="inline-flex group-hover:hidden">
+                        <PmaIcon
+                          name={c.sort!.dir === 'DESC' ? 's_desc' : 's_asc'}
+                          alt={t(c.sort!.dir === 'DESC' ? 'Descending' : 'Ascending')}
+                          className="soimg"
+                        />
+                      </span>
+                      <span className="hidden group-hover:inline-flex">
+                        <PmaIcon
+                          name={c.sort!.dir === 'DESC' ? 's_asc' : 's_desc'}
+                          alt={t(c.sort!.dir === 'DESC' ? 'Ascending' : 'Descending')}
+                          className="soimg"
+                        />
+                      </span>{' '}
+                      <small>{c.sort!.position}</small>
+                    </>
+                  )}
+                </Button>
+              ) : (
+                c.name
+              )}
+              {comment}
+            </span>
           </th>
         )
       })}
@@ -591,7 +775,7 @@ export function GridTable(props: Props) {
 
   return (
     <div className="table-responsive-md relative overflow-x-auto">
-      <table className="table_results data ajax w-auto" data-uniqueid="grid">
+      <table ref={tableRef} className="table_results data ajax w-auto" data-uniqueid="grid">
         <thead>{header(false)}</thead>
         <tbody>
           {rows.map((row, r) => {
@@ -618,17 +802,50 @@ export function GridTable(props: Props) {
                       .filter((x) => x !== '')
                       .join(' ')
                     const isEditing = editing?.r === r && editing.p === p
+                    const j = order.filter((x) => visib[x]).indexOf(p)
+                    const sc = selectionClass(sel, r, j)
+                    const width = widths.get(p)
                     return (
                       <td
                         key={p}
-                        className={`${cls} relative`}
+                        className={`${cls}${sc === '' ? '' : ` ${sc}`} relative`}
+                        onMouseDown={(e) => {
+                          const target = e.target as HTMLElement
+                          if (
+                            e.button !== 0 ||
+                            target.closest('a, input, select, textarea, button, .edit_box, .cEdit')
+                          )
+                            return
+                          const multi = e.ctrlKey || e.metaKey
+                          selecting.current = { multi }
+                          setSel((cur) => startSelection(cur, r, j, multi))
+                        }}
+                        // mouseover.cellSelect
+                        onMouseEnter={() => {
+                          setColList(false)
+                          if (selecting.current === null) return
+                          setSel((cur) => dragSelection(cur, r, j, selecting.current?.multi === true))
+                        }}
+                        onMouseLeave={() => {
+                          if (selecting.current !== null) window.getSelection()?.removeAllRanges()
+                        }}
                         data-decimals={col.decimals}
                         data-type={col.dataType}
                         {...(cell.ol !== undefined ? { 'data-originallength': cell.ol } : {})}
                         onClick={() => grid.gridEdit === 'click' && startEdit(r, p)}
-                        onDoubleClick={() => grid.gridEdit === 'double-click' && startEdit(r, p)}
+                        onDoubleClick={(e) => {
+                          if (grid.gridEdit !== 'double-click') return
+                          if (fkTimer.current !== null) {
+                            clearTimeout(fkTimer.current)
+                            fkTimer.current = null
+                          } else if ((e.target as HTMLElement).closest('a') !== null) return
+                          startEdit(r, p)
+                        }}
                       >
-                        <span {...(cell.ol !== undefined ? { title: `Original length ${cell.ol}` } : {})}>
+                        <span
+                          {...(cell.ol !== undefined ? { title: `Original length ${cell.ol}` } : {})}
+                          style={width === undefined ? undefined : { width, display: 'inline-block' }}
+                        >
                           {edited !== undefined ? (
                             edited.value === null ? (
                               <em>NULL</em>
@@ -646,7 +863,18 @@ export function GridTable(props: Props) {
                               onFk={(fk) => {
                                 if (grid.gridEdit === 'click' && hasClass(cell.cls, 'grid_edit'))
                                   startEdit(r, p)
-                                else actions.followFk(fk)
+                                else if (
+                                  grid.gridEdit === 'double-click' &&
+                                  hasClass(cell.cls, 'grid_edit')
+                                ) {
+                                  // td.data.click2 on .grid_edit.relation a: follow after 700 ms unless
+                                  // a second click comes (then dblclick starts editing)
+                                  if (fkTimer.current !== null) return
+                                  fkTimer.current = setTimeout(() => {
+                                    fkTimer.current = null
+                                    actions.followFk(fk)
+                                  }, 700)
+                                } else actions.followFk(fk)
                               }}
                             />
                           )}
@@ -659,8 +887,13 @@ export function GridTable(props: Props) {
                             cell={cell}
                             column={col}
                             raw={edited !== undefined ? edited.value : (raw[r]?.[col.index] ?? null)}
+                            edited={edited !== undefined}
                             field={fieldOf(p)}
                             onDone={(v, type, changed) => commitEdit({ r, p }, v, type, changed)}
+                            onMove={(dir, v, type, changed) => {
+                              commitEdit({ r, p }, v, type, changed)
+                              moveEdit({ r, p }, dir)
+                            }}
                             onCancel={() => setEditing(null)}
                           />
                         )}
@@ -685,6 +918,7 @@ function GridTransformed({
   versionInt,
 }: { tf: NonNullable<GridCell['tf']>; server: number; versionInt: number }) {
   const bytes = Uint8Array.from(atob(tf.b64), (c) => c.charCodeAt(0))
+  const cfg = useConfig()
   return renderTransformation(
     {
       mimetype: tf.mimetype,
@@ -697,6 +931,7 @@ function GridTransformed({
     { server, db: tf.db, table: tf.table, column: tf.column, where: { clause: tf.where, sig: tf.sig } },
     { isInt: tf.isInt, isBinary: tf.isBinary },
     versionInt,
+    cfg,
   )
 }
 
@@ -774,12 +1009,26 @@ function CellEditor(props: {
   column: GridData['columns'][number]
   raw: Cell
   field: Field | undefined
+  /** the cell holds an unsaved edit (td.to_be_saved): its value is not fetched again */
+  edited: boolean
   onDone: (value: string | null, type: string, changed: boolean) => void
+  /** Ctrl/Alt + arrow: save and edit the neighbouring cell */
+  onMove: (dir: MoveDir, value: string | null, type: string, changed: boolean) => void
   onCancel: () => void
 }) {
   const { grid, cell, column, server } = props
-  const isNull = cell.k === 'null'
-  const initial = isNull ? '' : rawText(props.raw, props.field)
+  const isNull = props.edited ? props.raw === null : cell.k === 'null'
+  const isDate = ['timefield', 'datefield', 'datetimefield', 'timestampfield'].some((c) =>
+    hasClass(cell.cls, c),
+  )
+  // showEditArea: time values get the fractional digits of the column (.000 / .000000)
+  const initial = (() => {
+    const v = isNull ? '' : rawText(props.raw, props.field)
+    if (!isDate || column.decimals <= 0 || !column.dataType.includes('time') || v === '') return v
+    const dotted = v.includes('.') ? v : `${v}.`
+    const n = column.decimals > 3 ? 6 : 3
+    return `${dotted}${'0'.repeat(n)}`.slice(0, dotted.indexOf('.') + 1 + n)
+  })()
   const [value, setValue] = useState(column.dataType === 'json' ? prettyJson(initial) : initial)
   const [nullChecked, setNullChecked] = useState(isNull)
   const [original, setOriginal] = useState<string>(initial)
@@ -827,7 +1076,7 @@ function CellEditor(props: {
         })
         .catch((e: Error) => showMessage(e.message, false, 'error'))
         .finally(() => setLoading(false))
-    } else if (hasClass(cell.cls, 'truncated') || hasClass(cell.cls, 'transformed')) {
+    } else if ((hasClass(cell.cls, 'truncated') || hasClass(cell.cls, 'transformed')) && !props.edited) {
       setLoading(true)
       void api
         .gridValue(server, { ...base, where: props.row.where })
@@ -841,12 +1090,9 @@ function CellEditor(props: {
     }
   }, [])
 
-  const save = () => {
-    if (loading) return
-    if (nullChecked) {
-      props.onDone(null, '', !isNull)
-      return
-    }
+  /** saveEditedCell: the value, its type and whether it changed (null: refused) */
+  const result = (): [string | null, string, boolean] | null => {
+    if (nullChecked) return [null, '', !isNull]
     let v = value
     if (isSet) v = selected.join(',')
     if (isHex && !isValidHex(v)) {
@@ -856,29 +1102,68 @@ function CellEditor(props: {
         'error',
       )
       props.onCancel()
-      return
+      return null
     }
     const changed =
       isNull || (column.dataType === 'json' ? prettyJson(v) !== prettyJson(original) : v !== original)
-    props.onDone(v, isBit ? 'bit' : isHex ? 'hex' : '', changed)
+    return [v, isBit ? 'bit' : isHex ? 'hex' : '', changed]
   }
+  const save = () => {
+    if (loading) return
+    const r = result()
+    if (r !== null) props.onDone(...r)
+  }
+  const [foreign, setForeign] = useState(false)
 
-  // click outside saves (hideEditCell)
+  // click outside saves (hideEditCell) — not in the datepicker or the Browse foreign values dialog
   useEffect(() => {
     const h = (e: MouseEvent) => {
-      if (ref.current !== null && !ref.current.contains(e.target as Node)) save()
+      const target = e.target as Element
+      if (ref.current === null || ref.current.contains(target)) return
+      if (target.closest('[data-radix-popper-content-wrapper], .dismissable') !== null) return
+      if (document.getElementById('browseForeignModal') !== null) return
+      save()
     }
     document.addEventListener('mousedown', h)
     return () => document.removeEventListener('mousedown', h)
   })
+  // $('html').on('keydown'): Esc cancels wherever the focus is
+  useEffect(() => {
+    const h = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && document.getElementById('browseForeignModal') === null) props.onCancel()
+    }
+    document.addEventListener('keydown', h)
+    return () => document.removeEventListener('keydown', h)
+  })
 
+  /** ENUM / SET values come from the list: the text box is not editable (isEditCellTextEditable) */
+  const textEditable = !(isEnum || isSet)
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
+    const arrows: Record<string, MoveDir> = {
+      ArrowUp: 'up',
+      ArrowDown: 'down',
+      ArrowLeft: 'left',
+      ArrowRight: 'right',
+    }
+    const dir = arrows[e.key]
+    if (dir !== undefined && (e.ctrlKey || e.altKey)) {
+      // handleCtrlNavigation
       e.preventDefault()
+      if (loading) return
+      const r = result()
+      if (r !== null) props.onMove(dir, ...r)
+    } else if (e.ctrlKey && e.key.toLowerCase() === 'v') {
+      // Capture ctrl+v: the value is not NULL any more
+      setNullChecked(false)
+    } else if (e.key === 'Escape') {
+      e.preventDefault()
+      e.nativeEvent.stopImmediatePropagation()
       props.onCancel()
     } else if (e.key === 'Enter' && !(textarea && e.shiftKey)) {
       e.preventDefault()
       save()
+    } else if (!textEditable && e.key !== 'Tab') {
+      e.preventDefault()
     }
   }
   const box = textarea ? (
@@ -920,6 +1205,29 @@ function CellEditor(props: {
           <div className="goto_link">
             {t('Go to link:')} <span>{cell.t}</span>
           </div>
+        )}
+        {props.edited && (hasClass(cell.cls, 'truncated') || hasClass(cell.cls, 'transformed')) && (
+          // a re-opened unsaved truncated value: a textarea in the edit area mirrors the text box
+          <Textarea
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value)
+              setNullChecked(false)
+            }}
+          />
+        )}
+        {isDate && (
+          <DateTimePicker
+            kind={
+              hasClass(cell.cls, 'datefield') ? 'date' : hasClass(cell.cls, 'timefield') ? 'time' : 'datetime'
+            }
+            decimals={column.decimals}
+            trueType={column.dataType}
+            onPick={(v) => {
+              setValue(v)
+              setNullChecked(false)
+            }}
+          />
         )}
         {!notNull && (
           <label className="flex items-center gap-1">
@@ -965,7 +1273,37 @@ function CellEditor(props: {
             ))}
           </NativeSelect>
         )}
-        {browseForeign && <span className="browse_foreign">{t('Browse foreign values')}</span>}
+        {browseForeign && (
+          <>
+            <Button
+              variant="link"
+              size="sm"
+              className="browse_foreign h-auto p-0"
+              onClick={() => {
+                setNullChecked(false)
+                setForeign(true)
+              }}
+            >
+              {t('Browse foreign values')}
+            </Button>
+            {foreign && (
+              <ForeignBrowser
+                server={server}
+                db={grid.db}
+                table={grid.table}
+                field={column.name}
+                data={value}
+                onClose={() => setForeign(false)}
+                // span.curr_value change: the picked key goes to the text box
+                onPick={(key) => {
+                  setValue(key)
+                  setNullChecked(false)
+                  setForeign(false)
+                }}
+              />
+            )}
+          </>
+        )}
         <div className="cell_edit_hint">{t(MSG.cellEditHint).replace('<br>', ' ')}</div>
       </div>
     </div>

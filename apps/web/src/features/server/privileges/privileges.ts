@@ -1,4 +1,5 @@
 import type { PrivForm, PrivilegesTable } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 
 /**
  * Pure logic of Server → User accounts: the browser's form submission as PHP reads it, the
@@ -83,9 +84,10 @@ export interface PrivilegesTableModel {
   hasSubmit: boolean
 }
 
-const GRANT_GLOBAL = 'Allows adding users and privileges without reloading the privilege tables.'
-const GRANT_OTHER =
-  'Allows user to give to other users or remove from other users the privileges that user possess yourself.'
+const GRANT_GLOBAL = N_('Allows adding users and privileges without reloading the privilege tables.')
+const GRANT_OTHER = N_(
+  'Allows user to give to other users or remove from other users the privileges that user possess yourself.',
+)
 
 /** pma: templates/server/privileges/privileges_table.twig */
 export function privilegesTableModel(t: PrivilegesTable): PrivilegesTableModel {
@@ -121,21 +123,26 @@ export function privilegesTableModel(t: PrivilegesTable): PrivilegesTableModel {
       options: cols.map((c) => ({ name: c.name, selected: y(`${key}_priv`) || c[key] })),
     })
     const tableBoxes = [
-      box('Delete_priv', 'DELETE', 'Allows deleting data.'),
-      box('Create_priv', 'CREATE', 'Allows creating new tables.'),
-      box('Drop_priv', 'DROP', 'Allows dropping tables.'),
+      box('Delete_priv', 'DELETE', N_('Allows deleting data.')),
+      box('Create_priv', 'CREATE', N_('Allows creating new tables.')),
+      box('Drop_priv', 'DROP', N_('Allows dropping tables.')),
       box('Grant_priv', 'GRANT', GRANT_OTHER),
-      box('Index_priv', 'INDEX', 'Allows creating and dropping indexes.'),
-      box('Alter_priv', 'ALTER', 'Allows altering the structure of existing tables.'),
-      box('Create_view_priv', 'CREATE VIEW', 'Allows creating new views.', y('Create View_priv')),
-      box('Show_view_priv', 'SHOW VIEW', 'Allows performing SHOW CREATE VIEW queries.', y('Show view_priv')),
-      box('Trigger_priv', 'TRIGGER', 'Allows creating and dropping triggers.'),
+      box('Index_priv', 'INDEX', N_('Allows creating and dropping indexes.')),
+      box('Alter_priv', 'ALTER', N_('Allows altering the structure of existing tables.')),
+      box('Create_view_priv', 'CREATE VIEW', N_('Allows creating new views.'), y('Create View_priv')),
+      box(
+        'Show_view_priv',
+        'SHOW VIEW',
+        N_('Allows performing SHOW CREATE VIEW queries.'),
+        y('Show view_priv'),
+      ),
+      box('Trigger_priv', 'TRIGGER', N_('Allows creating and dropping triggers.')),
       ...(has('Delete versioning rows_priv')
         ? [
             box(
               'Delete_history_priv',
               'DELETE HISTORY',
-              'Allows deleting historical rows.',
+              N_('Allows deleting historical rows.'),
               y('Delete versioning rows_priv'),
             ),
           ]
@@ -148,10 +155,10 @@ export function privilegesTableModel(t: PrivilegesTable): PrivilegesTableModel {
       submenuLabel: 'Table',
       groups: [],
       columns: [
-        select('Select', 'SELECT', 'Allows reading data.'),
-        select('Insert', 'INSERT', 'Allows inserting and replacing data.'),
-        select('Update', 'UPDATE', 'Allows changing data.'),
-        select('References', 'REFERENCES', 'Has no effect in this MySQL version.'),
+        select('Select', 'SELECT', N_('Allows reading data.')),
+        select('Insert', 'INSERT', N_('Allows inserting and replacing data.')),
+        select('Update', 'UPDATE', N_('Allows changing data.')),
+        select('References', 'REFERENCES', N_('Has no effect in this MySQL version.')),
       ],
       tableBoxes,
       grantCount: Object.keys(row).length,
@@ -161,44 +168,44 @@ export function privilegesTableModel(t: PrivilegesTable): PrivilegesTableModel {
   const g = t.isGlobal
   const d = t.isDatabase
   const data: PrivBox[] = [
-    box('Select_priv', 'SELECT', 'Allows reading data.'),
-    box('Insert_priv', 'INSERT', 'Allows inserting and replacing data.'),
-    box('Update_priv', 'UPDATE', 'Allows changing data.'),
-    box('Delete_priv', 'DELETE', 'Allows deleting data.'),
-    ...(g ? [box('File_priv', 'FILE', 'Allows importing data from and exporting data into files.')] : []),
+    box('Select_priv', 'SELECT', N_('Allows reading data.')),
+    box('Insert_priv', 'INSERT', N_('Allows inserting and replacing data.')),
+    box('Update_priv', 'UPDATE', N_('Allows changing data.')),
+    box('Delete_priv', 'DELETE', N_('Allows deleting data.')),
+    ...(g ? [box('File_priv', 'FILE', N_('Allows importing data from and exporting data into files.'))] : []),
   ]
   const structure: PrivBox[] = [
     box(
       'Create_priv',
       'CREATE',
-      d ? 'Allows creating new databases and tables.' : 'Allows creating new tables.',
+      d ? N_('Allows creating new databases and tables.') : N_('Allows creating new tables.'),
     ),
-    box('Alter_priv', 'ALTER', 'Allows altering the structure of existing tables.'),
-    box('Index_priv', 'INDEX', 'Allows creating and dropping indexes.'),
-    box('Drop_priv', 'DROP', d ? 'Allows dropping databases and tables.' : 'Allows dropping tables.'),
-    box('Create_tmp_table_priv', 'CREATE TEMPORARY TABLES', 'Allows creating temporary tables.'),
-    box('Show_view_priv', 'SHOW VIEW', 'Allows performing SHOW CREATE VIEW queries.'),
-    box('Create_routine_priv', 'CREATE ROUTINE', 'Allows creating stored routines.'),
-    box('Alter_routine_priv', 'ALTER ROUTINE', 'Allows altering and dropping stored routines.'),
-    box('Execute_priv', 'EXECUTE', 'Allows executing stored routines.'),
+    box('Alter_priv', 'ALTER', N_('Allows altering the structure of existing tables.')),
+    box('Index_priv', 'INDEX', N_('Allows creating and dropping indexes.')),
+    box('Drop_priv', 'DROP', d ? N_('Allows dropping databases and tables.') : N_('Allows dropping tables.')),
+    box('Create_tmp_table_priv', 'CREATE TEMPORARY TABLES', N_('Allows creating temporary tables.')),
+    box('Show_view_priv', 'SHOW VIEW', N_('Allows performing SHOW CREATE VIEW queries.')),
+    box('Create_routine_priv', 'CREATE ROUTINE', N_('Allows creating stored routines.')),
+    box('Alter_routine_priv', 'ALTER ROUTINE', N_('Allows altering and dropping stored routines.')),
+    box('Execute_priv', 'EXECUTE', N_('Allows executing stored routines.')),
     ...(has('Create_view_priv')
-      ? [box('Create_view_priv', 'CREATE VIEW', 'Allows creating new views.')]
+      ? [box('Create_view_priv', 'CREATE VIEW', N_('Allows creating new views.'))]
       : []),
     ...(has('Create View_priv')
-      ? [box('Create View_priv', 'CREATE VIEW', 'Allows creating new views.', y('Create View_priv'))]
+      ? [box('Create View_priv', 'CREATE VIEW', N_('Allows creating new views.'), y('Create View_priv'))]
       : []),
     ...(has('Event_priv')
       ? [
-          box('Event_priv', 'EVENT', 'Allows to set up events for the event scheduler.'),
-          box('Trigger_priv', 'TRIGGER', 'Allows creating and dropping triggers.'),
+          box('Event_priv', 'EVENT', N_('Allows to set up events for the event scheduler.')),
+          box('Trigger_priv', 'TRIGGER', N_('Allows creating and dropping triggers.')),
         ]
       : []),
   ]
   const references = t.supportsReferencesPrivilege
-    ? 'Allows creating foreign key relations.'
+    ? N_('Allows creating foreign key relations.')
     : t.isMariaDb
-      ? 'Not used on MariaDB.'
-      : 'Not used for this MySQL version.'
+      ? N_('Not used on MariaDB.')
+      : N_('Not used for this MySQL version.')
   const administration: PrivBox[] = [
     ...(g
       ? [
@@ -206,19 +213,25 @@ export function privilegesTableModel(t: PrivilegesTable): PrivilegesTableModel {
           box(
             'Super_priv',
             'SUPER',
-            'Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users.',
+            N_(
+              'Allows connecting, even if maximum number of connections is reached; required for most administrative operations like setting global variables or killing threads of other users.',
+            ),
           ),
-          box('Process_priv', 'PROCESS', 'Allows viewing processes of all users.'),
-          box('Reload_priv', 'RELOAD', "Allows reloading server settings and flushing the server's caches."),
-          box('Shutdown_priv', 'SHUTDOWN', 'Allows shutting down the server.'),
-          box('Show_db_priv', 'SHOW DATABASES', 'Gives access to the complete list of databases.'),
+          box('Process_priv', 'PROCESS', N_('Allows viewing processes of all users.')),
+          box(
+            'Reload_priv',
+            'RELOAD',
+            N_("Allows reloading server settings and flushing the server's caches."),
+          ),
+          box('Shutdown_priv', 'SHUTDOWN', N_('Allows shutting down the server.')),
+          box('Show_db_priv', 'SHOW DATABASES', N_('Gives access to the complete list of databases.')),
         ]
       : [box('Grant_priv', 'GRANT', GRANT_OTHER)]),
-    box('Lock_tables_priv', 'LOCK TABLES', 'Allows locking tables for the current thread.'),
+    box('Lock_tables_priv', 'LOCK TABLES', N_('Allows locking tables for the current thread.')),
     box(
       'References_priv',
       'REFERENCES',
-      'Has no effect in this MySQL version.',
+      N_('Has no effect in this MySQL version.'),
       y('References_priv'),
       references,
     ),
@@ -227,10 +240,10 @@ export function privilegesTableModel(t: PrivilegesTable): PrivilegesTableModel {
           box(
             'Repl_client_priv',
             'REPLICATION CLIENT',
-            'Allows the user to ask where the replicas / primaries are.',
+            N_('Allows the user to ask where the replicas / primaries are.'),
           ),
-          box('Repl_slave_priv', 'REPLICATION SLAVE', 'Needed for the replication replicas.'),
-          box('Create_user_priv', 'CREATE USER', 'Allows creating, dropping and renaming user accounts.'),
+          box('Repl_slave_priv', 'REPLICATION SLAVE', N_('Needed for the replication replicas.')),
+          box('Create_user_priv', 'CREATE USER', N_('Allows creating, dropping and renaming user accounts.')),
         ]
       : []),
   ]
@@ -301,22 +314,23 @@ export function routinePrivilegesModel(privileges: Record<string, string>): Priv
         name: 'Grant_priv',
         id: 'checkbox_Grant_priv',
         label: 'GRANT',
-        title:
+        title: N_(
           'Allows user to give to other users or remove from other users privileges that user possess on this routine.',
+        ),
         checked: y('Grant_priv'),
       },
       {
         name: 'Alter_routine_priv',
         id: 'checkbox_Alter_routine_priv',
         label: 'ALTER ROUTINE',
-        title: 'Allows altering and dropping this routine.',
+        title: N_('Allows altering and dropping this routine.'),
         checked: y('Alter_routine_priv'),
       },
       {
         name: 'Execute_priv',
         id: 'checkbox_Execute_priv',
         label: 'EXECUTE',
-        title: 'Allows executing this routine.',
+        title: N_('Allows executing this routine.'),
         checked: y('Execute_priv'),
       },
     ],
@@ -408,11 +422,11 @@ export function checkAddUser(f: {
   password: string
   password2: string
 }): string | null {
-  if (f.hostname !== undefined && f.hostname === '') return 'The host name is empty!'
-  if (f.predUsername === 'userdefined' && f.username === '') return 'The user name is empty!'
+  if (f.hostname !== undefined && f.hostname === '') return N_('The host name is empty!')
+  if (f.predUsername === 'userdefined' && f.username === '') return N_('The user name is empty!')
   if (f.predPassword === 'none' || f.predPassword === 'keep') return null
-  if (f.password === '') return 'The password is empty!'
-  if (f.password !== f.password2) return "The passwords aren't the same!"
+  if (f.password === '') return N_('The password is empty!')
+  if (f.password !== f.password2) return N_("The passwords aren't the same!")
   return null
 }
 

@@ -16,7 +16,7 @@ import {
   type UiMessage,
   UiPrefsRequest,
 } from '@bettermyadmin/contracts'
-import { sprintf } from '@bettermyadmin/i18n'
+import { N_, sprintf } from '@bettermyadmin/i18n'
 import {
   type ConfigStorage,
   applyVariables,
@@ -28,6 +28,7 @@ import {
   phpJsonEncode,
   relationParametersToArray,
   setColumnPreferences,
+  sqlDir,
   validIdentifier,
 } from '@bettermyadmin/metadata'
 import { type Context, Hono } from 'hono'
@@ -38,9 +39,6 @@ import { type MetaRequest, defaultOfPath, resetRelationCache, withMeta } from '.
 import { selectDatabase, tableInfo } from '../metadata/table-info.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import type { ServerEnv } from './server.ts'
-
-/** gettext_noop: a msgid that `msg` translates */
-const N_ = (msgid: string): string => msgid
 
 export const metadataRoutes = new Hono<ServerEnv>()
 
@@ -157,6 +155,7 @@ async function storageStatus(m: MetaRequest, storage: ConfigStorage): Promise<St
     arePmadbTablesDefined: storage.arePmadbTablesDefined(),
     arePmadbTablesAllDisabled: storage.arePmadbTablesAllDisabled(),
     configurationStorageDbName: storage.getConfigurationStorageDbName(),
+    sqlDir: sqlDir(),
     homeNotice,
     operationsNotice,
     offer,

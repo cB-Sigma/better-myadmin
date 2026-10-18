@@ -8,6 +8,7 @@ import type { AppEnv } from '../app.ts'
 import { type ServerConfig, getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { SecretBox, safeEqual } from '../session/crypto.ts'
+import { logUser } from './auth-log.ts'
 import { AuthMessages, LoginFailure } from './failure.ts'
 import { checkRules, connectLogin, requestClientIp } from './login.ts'
 import { loginCredentials, storeLogin } from './session-login.ts'
@@ -64,14 +65,14 @@ export function decodeSignonSession(secret: string, value: string): SignonSessio
  * samesite other than Lax / Strict is dropped.
  */
 export function signonCookieOptions(server: ServerConfig) {
-  const p = server.SignonCookieParams
+  const { samesite } = server.SignonCookieParams
   return {
-    path: p.path === '' ? '/' : p.path,
-    ...(p.domain !== '' ? { domain: p.domain } : {}),
-    secure: p.secure,
-    httpOnly: p.httponly,
-    ...(p.lifetime > 0 ? { maxAge: p.lifetime } : {}),
-    ...(p.samesite === 'Lax' || p.samesite === 'Strict' ? { sameSite: p.samesite } : {}),
+    path: server.SignonCookieParams.path === '' ? '/' : server.SignonCookieParams.path,
+    ...(server.SignonCookieParams.domain !== '' ? { domain: server.SignonCookieParams.domain } : {}),
+    secure: server.SignonCookieParams.secure,
+    httpOnly: server.SignonCookieParams.httponly,
+    ...(server.SignonCookieParams.lifetime > 0 ? { maxAge: server.SignonCookieParams.lifetime } : {}),
+    ...(samesite === 'Lax' || samesite === 'Strict' ? { sameSite: samesite } : {}),
   }
 }
 
@@ -109,18 +110,18 @@ export type SignonAuthResult = 'ok' | { redirect: string } | { error: string }
  */
 export async function signonPageAuth(c: Context<AppEnv>, server: number): Promise<SignonAuthResult> {
   const { cfg, pools, credBox } = c.get('deps')
-  const s = getServer(cfg, server)
-  if (s === undefined) return { error: 'You must set SignonURL!' }
+  const srv = getServer(cfg, server)
+  if (srv === undefined) return { error: 'You must set SignonURL!' }
   const tr = c.get('tr')
   const loginForm = (): SignonAuthResult =>
-    s.SignonURL === '' ? { error: 'You must set SignonURL!' } : { redirect: s.SignonURL }
+    srv.SignonURL === '' ? { error: 'You must set SignonURL!' } : { redirect: srv.SignonURL }
 
   const creds: Credentials = { user: '', password: '' }
-  const cookieValue = s.SignonScript === '' ? getCookie(c, s.SignonSession) : undefined
+  const cookieValue = srv.SignonScript === '' ? getCookie(c, srv.SignonSession) : undefined
   let data: SignonSessionData | null = null
-  if (s.SignonScript !== '') {
+  if (srv.SignonScript !== '') {
     try {
-      ;[creds.user, creds.password] = await scriptCredentials(s.SignonScript, s.user)
+      ;[creds.user, creds.password] = await scriptCredentials(srv.SignonScript, srv.user)
     } catch (e) {
       if (!(e instanceof SignonError)) throw e
       return {
@@ -135,7 +136,7 @@ export async function signonPageAuth(c: Context<AppEnv>, server: number): Promis
     // Clear error message
     if (data.PMA_single_signon_error_message !== undefined) {
       delete data.PMA_single_signon_error_message
-      writeSignonSession(c, s, data)
+      writeSignonSession(c, srv, data)
     }
     creds.user = data.PMA_single_signon_user ?? ''
     creds.password = data.PMA_single_signon_password ?? ''
@@ -159,28 +160,30 @@ export async function signonPageAuth(c: Context<AppEnv>, server: number): Promis
     )
       return 'ok'
   }
+  const ip = requestClientIp(c, cfg.TrustedProxies)
   try {
-    checkRules(s, creds.user, creds.password, requestClientIp(c, cfg.TrustedProxies), tr)
+    checkRules(srv, creds.user, creds.password, ip, tr)
     await connectLogin(pools, server, creds, tr)
     await storeLogin(c, server, creds, { secure: false })
     return 'ok'
   } catch (e) {
     if (!(e instanceof LoginFailure)) throw e
+    logUser(cfg, creds.user, e.failureType, ip)
     delete session.servers[String(server)]
     if (data !== null) {
       // getErrorMessage: after a failed connect there is no connection error text
       const message = e.failureType === 'server-denied' ? tr.gettext(AuthMessages.serverDenied) : e.message
-      writeSignonSession(c, s, { ...data, PMA_single_signon_error_message: message })
+      writeSignonSession(c, srv, { ...data, PMA_single_signon_error_message: message })
     }
     return loginForm()
   }
 }
 
-function writeSignonSession(c: Context<AppEnv>, s: ServerConfig, data: SignonSessionData): void {
+function writeSignonSession(c: Context<AppEnv>, srv: ServerConfig, data: SignonSessionData): void {
   setCookie(
     c,
-    s.SignonSession,
+    srv.SignonSession,
     encodeSignonSession(c.get('deps').cfg.blowfish_secret, data),
-    signonCookieOptions(s),
+    signonCookieOptions(srv),
   )
 }

@@ -76,6 +76,8 @@ export const StorageStatusResponse = z.object({
   arePmadbTablesDefined: z.boolean(),
   arePmadbTablesAllDisabled: z.boolean(),
   configurationStorageDbName: z.string(),
+  /** SQL_DIR, where create_tables.sql is (check_relations.twig `sql_dir`) */
+  sqlDir: z.string(),
   /** Home page notice (HomeController), null when not shown. */
   homeNotice: UiMessage.nullable(),
   /** Database Operations notice (Operations/DatabaseController), null when not shown. */
@@ -106,10 +108,12 @@ export const StorageCreateRequest = z.object({
   /** The current database (fixall_pmadb creates the storage there). */
   db: z.string().optional(),
 })
+export type StorageCreateRequest = z.infer<typeof StorageCreateRequest>
 export const StorageCreateResponse = z.object({
   message: UiMessage.nullable(),
   status: StorageStatusResponse,
 })
+export type StorageCreateResponse = z.infer<typeof StorageCreateResponse>
 
 // ---------------------------------------------------------------------------------------------
 // Bookmarks

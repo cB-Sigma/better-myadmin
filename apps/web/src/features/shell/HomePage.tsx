@@ -112,7 +112,7 @@ function ConfigStorageText({ server }: { server: number }) {
   return (
     <>
       {before}
-      <Link to="/s/$server/$" params={{ server, _splat: 'check-relations' }}>
+      <Link to="/s/$server/check-relations" params={{ server }} search={{}}>
         {middle}
       </Link>
       {after}

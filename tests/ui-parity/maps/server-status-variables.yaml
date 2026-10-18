@@ -1,0 +1,7 @@
+# Intentional differences of Server › Status › All status variables (see tests/ui-parity/README.md).
+rules:
+  - ours: { kind: link, label: '/^(Variables|InnoDB Status|Documentation)$/' }
+    added: >-
+      Q68: phpMyAdmin's #linkSuggestions keeps its `hide` class (display: none), so the related links
+      variables.ts reveals with css('display', '') never show; ours shows them for the matching
+      word or category

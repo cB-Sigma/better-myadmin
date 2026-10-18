@@ -300,6 +300,9 @@ importers:
 
   packages/metadata:
     dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@bettermyadmin/mysql-types':
         specifier: workspace:*
         version: link:../mysql-types
@@ -324,6 +327,9 @@ importers:
 
   packages/sql-gen:
     dependencies:
+      '@bettermyadmin/i18n':
+        specifier: workspace:*
+        version: link:../i18n
       '@bettermyadmin/mysql-types':
         specifier: workspace:*
         version: link:../mysql-types

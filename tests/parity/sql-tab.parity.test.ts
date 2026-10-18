@@ -6,6 +6,7 @@ import { compareLogs } from './lib/compare.ts'
 import { GeneralLog } from './lib/general-log.ts'
 import { PmaClient, isPmaUp, sqlBoxForm, visibleText } from './lib/pma.ts'
 import { cardText, collapse, errorText } from './lib/render.ts'
+import { PMA_STORAGE } from './lib/server-setup.ts'
 
 /**
  * Golden parity for the SQL tab beyond plain execution: bind parameters, rollback, foreign key checks,
@@ -230,7 +231,7 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
     log = await GeneralLog.open(ROOT)
     await pma.super.login(U.pma, U.pma)
     await pma.low.login(U.pmaLow, U.pmaLow)
-    bma = { super: testApp(testConfig()), low: testApp(testConfig()) }
+    bma = { super: testApp(testConfig({}, PMA_STORAGE)), low: testApp(testConfig({}, PMA_STORAGE)) }
     await bma.super.login(U.bma, U.bma)
     await bma.low.login(U.bmaLow, U.bmaLow)
   })

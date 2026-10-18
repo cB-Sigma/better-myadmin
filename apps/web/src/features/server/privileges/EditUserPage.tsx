@@ -1,4 +1,5 @@
 import type { ChangePasswordFields, PrivForm, SpecificRights, UserProperties } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import {
   Alert,
   Button,
@@ -729,10 +730,10 @@ function ChangePasswordSection({
 function CopyUserForm(props: { server: number; d: UserProperties; onSubmit: (f: PrivForm) => void }) {
   const { d } = props
   const modes: Array<[string, string]> = [
-    ['4', '… keep the old one.'],
-    ['1', '… delete the old one from the user tables.'],
-    ['2', '… revoke all active privileges from the old one and delete it afterwards.'],
-    ['3', '… delete the old one from the user tables and reload the privileges afterwards.'],
+    ['4', N_('… keep the old one.')],
+    ['1', N_('… delete the old one from the user tables.')],
+    ['2', N_('… revoke all active privileges from the old one and delete it afterwards.')],
+    ['3', N_('… delete the old one from the user tables and reload the privileges afterwards.')],
   ]
   return (
     <form

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { NavPageSelector } from './navigation.ts'
+import { SqlCard } from './query.ts'
 
 /**
  * Server-level pages: Databases list, Status (overview, processes, query statistics, status
@@ -449,6 +450,8 @@ export const BinlogResponse = z.object({
   /** the selected log, when it is one of the server's (url_params.log) */
   selectedLog: z.string().nullable(),
   sqlMessage: SqlMessageBox,
+  /** Generator::getMessage's card under the message (Edit inline / Edit / PHP / Refresh), null without ShowSQL */
+  card: SqlCard.nullable(),
   events: z.array(
     z.object({
       logName: z.string(),

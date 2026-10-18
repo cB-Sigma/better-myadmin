@@ -14,6 +14,7 @@ import { phpEmpty } from '@bettermyadmin/metadata'
 import { type Context, Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
 import { type AppEnv, writeSessionCookies } from '../app.ts'
+import { logUser } from '../auth/auth-log.ts'
 import { captchaSettings, verifyCaptcha } from '../auth/captcha.ts'
 import { configFailure, configLogin } from '../auth/config.ts'
 import { cookieLogin } from '../auth/cookie.ts'
@@ -150,7 +151,11 @@ authRoutes.post('/login', async (c) => {
       tr,
     })
   } catch (e) {
-    if (e instanceof LoginFailure && e.failureType !== 'form') limiter.failed(remoteIp, req.username)
+    if (e instanceof LoginFailure && e.failureType !== 'form') {
+      limiter.failed(remoteIp, req.username)
+      // AuthenticationPlugin::logFailure
+      logUser(cfg, req.username, e.failureType, remoteIp)
+    }
     throw e
   }
   limiter.succeeded(remoteIp, req.username)
@@ -235,16 +240,16 @@ authRoutes.post('/logout', async (c) => {
   const { cfg, pools } = c.get('deps')
   const session = c.get('session')
   const server = session.currentServer
-  const s = getServer(cfg, server)
+  const srv = getServer(cfg, server)
   const user = session.servers[String(server)]?.user ?? ''
   // getLoginFormURL: http asks again for another user, signon goes back to its form
   let logoutUrl: string | null = null
-  if (s !== undefined && s.LogoutURL !== '') logoutUrl = s.LogoutURL
-  else if (s?.auth_type === 'http') {
+  if (srv !== undefined && srv.LogoutURL !== '') logoutUrl = srv.LogoutURL
+  else if (srv?.auth_type === 'http') {
     const base = cfg.Listen.basePath === '' ? '/' : cfg.Listen.basePath
     logoutUrl = `${base.endsWith('/') ? base : `${base}/`}?old_usr=${encodeURIComponent(user)}`
-  } else if (s?.auth_type === 'signon' && s.SignonURL !== '') logoutUrl = s.SignonURL
-  const cookieAuth = s?.auth_type === 'cookie'
+  } else if (srv?.auth_type === 'signon' && srv.SignonURL !== '') logoutUrl = srv.SignonURL
+  const cookieAuth = srv?.auth_type === 'cookie'
   delete session.servers[String(server)]
   forgetServerMetadata(session, server)
   await pools.dropSession(session.id, server)

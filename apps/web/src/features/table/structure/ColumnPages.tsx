@@ -1,12 +1,12 @@
 import type { ChangeFormResponse, ColumnFormOptions, Partitioning } from '@bettermyadmin/contracts'
-import { Button, MessageBox, MySqlDocLink, Panel, PanelBody, PreviewSqlDialog } from '@bettermyadmin/ui'
+import { Button, MessageBox, Panel, PanelBody } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { type TableRef, api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
-import { ColumnForm, type ColumnRow, emptyRow, indexesFromRows, toColumnDef } from './ColumnForm'
+import { ColumnForm, type ColumnRow, emptyRow, toColumnDef } from './ColumnForm'
 import { PartitionEditor } from './PartitionEditor'
 import { setFlash } from './flash'
 
@@ -110,10 +110,10 @@ export function AddColumnsPage({
       rows={rows}
       setRows={setRows}
       reservedCheck={(names) => api.reservedWordCheck(scope, names)}
-      submit={(dryRun, online) =>
+      submit={(dryRun, online, indexes) =>
         api.addColumns(scope, {
           columns: rows.map((r) => toColumnDef(r, q.data.options)),
-          indexes: indexesFromRows(rows),
+          indexes,
           where,
           afterField: after,
           onlineTransaction: online,
@@ -134,42 +134,33 @@ export function PartitioningPage({ scope }: { scope: TableRef }) {
     gcTime: 0,
   })
   const [value, setValue] = useState<Partitioning | null>(null)
-  const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   useEffect(() => {
     if (q.data !== undefined) setValue(q.data.partitioning)
   }, [q.data])
   if (q.isError) return <MessageBox {...errorMessage(q.error)} />
   if (q.data === undefined || value === null) return null
-  const save = async (dryRun: boolean) => {
+  // partition_definition_form.twig: a Save submit only (no Preview SQL, no doc link in the header)
+  const save = async () => {
     try {
-      const r = await api.savePartitioning(scope, { partitioning: value, dryRun })
-      if (dryRun) setPreview(r.preview ?? '')
-      else void back(r.messages)
+      const r = await api.savePartitioning(scope, { partitioning: value, dryRun: false })
+      void back(r.messages)
     } catch (e) {
       setError(errorMessage(e))
     }
   }
   return (
     <Panel
-      title={
-        <>
-          {t('Edit partitioning')} <MySqlDocLink link="partitioning" />
-        </>
-      }
+      title={t('Edit partitioning')}
       footer={
-        <div className="flex gap-2">
-          <Button variant="primary" onClick={() => void save(false)}>
-            {t('Save')}
-          </Button>
-          <Button onClick={() => void save(true)}>{t('Preview SQL')}</Button>
-        </div>
+        <Button variant="primary" onClick={() => void save()}>
+          {t('Save')}
+        </Button>
       }
     >
       <PanelBody>
         {error !== null && <MessageBox {...error} />}
         <PartitionEditor value={value} engines={q.data.engines} onChange={setValue} />
-        <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
       </PanelBody>
     </Panel>
   )

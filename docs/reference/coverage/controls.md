@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-878/1106 covered (79.4%): 875 implemented, 3 exception, 1 planned, 227 missing. [Summary](README.md).
+1069/1106 covered (96.7%): 1065 implemented, 3 exception, 1 n/a, 1 planned, 36 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 97/98 (99.0%) covered, 94/98 implemented
 
@@ -67,55 +67,55 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `table/insert/get_head_and_foot_of_insert_row_table.twig` | 1/1 | ✅ `submit:Go` |  |
 | `table/insert/value_column_for_other_datatype.twig` | 1/1 | ✅ `fields*` |  |
 
-## 04 table level — 155/306 (50.7%) covered, 155/306 implemented
+## 04 table level — 306/306 (100.0%) covered, 306/306 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `columns_definitions/column_attribute.twig` | 0/1 |  | ⬜ `field_attribute[*]` |
-| `columns_definitions/column_attributes.twig` | 0/19 |  | ⬜ `field_adjust_privileges[*]` ⬜ `field_collation[*]` ⬜ `field_comments[*]` ⬜ `field_default_type[*]` ⬜ `field_default_value[*]` ⬜ `field_expression[*]` ⬜ `field_extra[*]` ⬜ `field_input_transformation_options[*]` ⬜ `field_input_transformation[*]` ⬜ `field_key[*]` ⬜ `field_length[*]` ⬜ `field_mimetype[*]` ⬜ `field_move_to[*]` ⬜ `field_null[*]` ⬜ `field_transformation_options[*]` ⬜ `field_transformation[*]` ⬜ `field_type[*]` ⬜ `field_virtuality[*]` ⬜ `link:Edit ENUM/SET values` |
-| `columns_definitions/column_definitions_form.twig` | 0/12 |  | ⬜ `added_fields` ⬜ `button:Close` ⬜ `button:Preview SQL` ⬜ `comment` ⬜ `connection` ⬜ `do_save_data` ⬜ `id:previewSQLCloseButton` ⬜ `online_transaction` ⬜ `submit_num_fields` ⬜ `table` ⬜ `tbl_collation` ⬜ `tbl_storage_engine` |
-| `columns_definitions/column_name.twig` | 0/2 |  | ⬜ `field_name[*]` ⬜ `link:Pick from Central Columns` |
-| `columns_definitions/partitions.twig` | 0/17 |  | ⬜ `*[comment]` ⬜ `*[data_directory]` ⬜ `*[engine]` ⬜ `*[index_directory]` ⬜ `*[max_rows]` ⬜ `*[min_rows]` ⬜ `*[name]` ⬜ `*[node_group]` ⬜ `*[tablespace]` ⬜ `*[value_type]` ⬜ `*[value]` ⬜ `partition_by` ⬜ `partition_count` ⬜ `partition_expr` ⬜ `subpartition_by` ⬜ `subpartition_count` ⬜ `subpartition_expr` |
-| `columns_definitions/table_fields_definitions.twig` | 0/2 |  | ⬜ `link:Browser display transformation` ⬜ `link:Input transformation` |
+| `columns_definitions/column_attribute.twig` | 1/1 | ✅ `field_attribute[*]` |  |
+| `columns_definitions/column_attributes.twig` | 19/19 | ✅ `field_adjust_privileges[*]` ✅ `field_collation[*]` ✅ `field_comments[*]` ✅ `field_default_type[*]` ✅ `field_default_value[*]` ✅ `field_expression[*]` ✅ `field_extra[*]` ✅ `field_input_transformation_options[*]` ✅ `field_input_transformation[*]` ✅ `field_key[*]` ✅ `field_length[*]` ✅ `field_mimetype[*]` ✅ `field_move_to[*]` ✅ `field_null[*]` ✅ `field_transformation_options[*]` ✅ `field_transformation[*]` ✅ `field_type[*]` ✅ `field_virtuality[*]` ✅ `link:Edit ENUM/SET values` |  |
+| `columns_definitions/column_definitions_form.twig` | 12/12 | ✅ `added_fields` ✅ `button:Close` ✅ `button:Preview SQL` ✅ `comment` ✅ `connection` ✅ `do_save_data` ✅ `id:previewSQLCloseButton` ✅ `online_transaction` ✅ `submit_num_fields` ✅ `table` ✅ `tbl_collation` ✅ `tbl_storage_engine` |  |
+| `columns_definitions/column_name.twig` | 2/2 | ✅ `field_name[*]` ✅ `link:Pick from Central Columns` |  |
+| `columns_definitions/partitions.twig` | 17/17 | ✅ `*[comment]` ✅ `*[data_directory]` ✅ `*[engine]` ✅ `*[index_directory]` ✅ `*[max_rows]` ✅ `*[min_rows]` ✅ `*[name]` ✅ `*[node_group]` ✅ `*[tablespace]` ✅ `*[value_type]` ✅ `*[value]` ✅ `partition_by` ✅ `partition_count` ✅ `partition_expr` ✅ `subpartition_by` ✅ `subpartition_count` ✅ `subpartition_expr` |  |
+| `columns_definitions/table_fields_definitions.twig` | 2/2 | ✅ `link:Browser display transformation` ✅ `link:Input transformation` |  |
 | `create_tracking_version.twig` | 14/14 | ✅ `alter_table` ✅ `alter_view` ✅ `create_index` ✅ `create_table` ✅ `create_view` ✅ `delete` ✅ `drop_index` ✅ `drop_table` ✅ `drop_view` ✅ `insert` ✅ `rename_table` ✅ `submit:Create version` ✅ `truncate` ✅ `update` |  |
-| `indexes.twig` | 0/3 |  | ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Rename` |
+| `indexes.twig` | 3/3 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Rename` |  |
 | `modals/create_view.twig` | 2/2 | ✅ `button:Close` ✅ `id:createViewModalGoButton` |  |
-| `modals/enum_set_editor.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:enumEditorGoButton` |
-| `modals/index_dialog_modal.twig` | 0/4 |  | ⬜ `button:Close` ⬜ `button:Go back` ⬜ `button:Preview SQL` ⬜ `id:indexDialogModalGoButton` |
-| `modals/preview_sql_confirmation.twig` | 0/2 |  | ⬜ `button:Close` ⬜ `id:previewSQLConfirmOkButton` |
-| `modals/preview_sql_modal.twig` | 0/1 |  | ⬜ `button:Close` |
+| `modals/enum_set_editor.twig` | 2/2 | ✅ `button:Close` ✅ `id:enumEditorGoButton` |  |
+| `modals/index_dialog_modal.twig` | 4/4 | ✅ `button:Close` ✅ `button:Go back` ✅ `button:Preview SQL` ✅ `id:indexDialogModalGoButton` |  |
+| `modals/preview_sql_confirmation.twig` | 2/2 | ✅ `button:Close` ✅ `id:previewSQLConfirmOkButton` |  |
+| `modals/preview_sql_modal.twig` | 1/1 | ✅ `button:Close` |  |
 | `table/chart/tbl_chart.twig` | 11/11 | ✅ `barStackedCheckbox` ✅ `chartSeriesColumnSelect` ✅ `chartSeriesSelect` ✅ `chartTitleInput` ✅ `chartType` ✅ `chartValueColumnSelect` ✅ `chartXAxisSelect` ✅ `link:Save chart as image` ✅ `seriesColumnCheckbox` ✅ `xAxisLabelInput` ✅ `yAxisLabelInput` |  |
 | `table/delete/confirm.twig` | 2/2 | ✅ `fk_checks` ✅ `mult_btn` |  |
 | `table/find_replace/index.twig` | 8/8 | ✅ `columnIndex` ✅ `find` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `replaceWith` ✅ `submit` ✅ `useRegex` |  |
 | `table/find_replace/replace_preview.twig` | 1/1 | ✅ `replace` |  |
 | `table/gis_visualization/gis_visualization.twig` | 4/4 | ✅ `id:saveImageButton` ✅ `useBaseLayer` ✅ `visualizationSettings[labelColumn]` ✅ `visualizationSettings[spatialColumn]` |  |
-| `table/index_form.twig` | 0/13 |  | ⬜ `button:Advanced options` ⬜ `button:Go` ⬜ `id:add_fields` ⬜ `id:preview_index_frm` ⬜ `index[columns][collations][]` ⬜ `index[columns][names][]` ⬜ `index[columns][sub_parts][]` ⬜ `index[Index_choice]` ⬜ `index[Index_comment]` ⬜ `index[Index_type]` ⬜ `index[Key_block_size]` ⬜ `index[Key_name]` ⬜ `index[Parser]` |
-| `table/index_rename_form.twig` | 0/2 |  | ⬜ `id:preview_index_frm` ⬜ `index` |
+| `table/index_form.twig` | 13/13 | ✅ `button:Advanced options` ✅ `button:Go` ✅ `id:add_fields` ✅ `id:preview_index_frm` ✅ `index[columns][collations][]` ✅ `index[columns][names][]` ✅ `index[columns][sub_parts][]` ✅ `index[Index_choice]` ✅ `index[Index_comment]` ✅ `index[Index_type]` ✅ `index[Key_block_size]` ✅ `index[Key_name]` ✅ `index[Parser]` |  |
+| `table/index_rename_form.twig` | 2/2 | ✅ `id:preview_index_frm` ✅ `index` |  |
 | `table/normalization/normalization.twig` | 2/2 | ✅ `normalizeTo` ✅ `submit_normalize` |  |
-| `table/operations/index.twig` | 34/36 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_collations` ✅ `comment` ✅ `drop_if_exists` ✅ `link:Analyze table` ✅ `link:Check table` ✅ `link:Checksum table` ✅ `link:Defragment table` ✅ `link:Flush the table (FLUSH)` ✅ `link:Optimize table` ✅ `link:Remove partitioning` ✅ `link:Repair table` ✅ `new_auto_increment` ✅ `new_checksum` ✅ `new_delay_key_write` ✅ `new_name` ✅ `new_pack_keys` ✅ `new_page_checksum` ✅ `new_row_format` ✅ `new_tbl_storage_engine` ✅ `new_transactional` ✅ `order_field` ✅ `order_order` ✅ `partition_name[]` ✅ `partition_operation` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit_move` ✅ `submit:Go` ✅ `switch_to_new` ✅ `target_db` ✅ `tbl_collation` ✅ `what` | ⬜ `link:Table %s has been emptied.` ⬜ `link:View %s has been dropped.` |
-| `table/operations/view.twig` | 2/3 | ✅ `new_name` ✅ `submit:Go` | ⬜ `link:View %s has been dropped.` |
-| `table/page_with_secondary_tabs.twig` | 0/2 |  | ⬜ `link:Relation view` ⬜ `link:Table structure` |
+| `table/operations/index.twig` | 36/36 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_collations` ✅ `comment` ✅ `drop_if_exists` ✅ `link:Analyze table` ✅ `link:Check table` ✅ `link:Checksum table` ✅ `link:Defragment table` ✅ `link:Flush the table (FLUSH)` ✅ `link:Optimize table` ✅ `link:Remove partitioning` ✅ `link:Repair table` ✅ `link:Table %s has been emptied.` ✅ `link:View %s has been dropped.` ✅ `new_auto_increment` ✅ `new_checksum` ✅ `new_delay_key_write` ✅ `new_name` ✅ `new_pack_keys` ✅ `new_page_checksum` ✅ `new_row_format` ✅ `new_tbl_storage_engine` ✅ `new_transactional` ✅ `order_field` ✅ `order_order` ✅ `partition_name[]` ✅ `partition_operation` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit_move` ✅ `submit:Go` ✅ `switch_to_new` ✅ `target_db` ✅ `tbl_collation` ✅ `what` |  |
+| `table/operations/view.twig` | 3/3 | ✅ `link:View %s has been dropped.` ✅ `new_name` ✅ `submit:Go` |  |
+| `table/page_with_secondary_tabs.twig` | 2/2 | ✅ `link:Relation view` ✅ `link:Table structure` |  |
 | `table/privileges/index.twig` | 6/6 | ✅ `id:usersForm_checkall` ✅ `link:Add user account` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` ✅ `submit_mult` |  |
-| `table/relation/common_form.twig` | 5/7 | ✅ `button:Internal relationships` ✅ `button:Preview SQL` ✅ `display_field` ✅ `link:+ Add constraint` ✅ `submit:Save` | ⬜ `button:Close` ⬜ `id:previewSQLCloseButton` |
-| `table/relation/dropdown_generate.twig` | 0/1 |  | ⬜ `select:L2` |
+| `table/relation/common_form.twig` | 7/7 | ✅ `button:Close` ✅ `button:Internal relationships` ✅ `button:Preview SQL` ✅ `display_field` ✅ `id:previewSQLCloseButton` ✅ `link:+ Add constraint` ✅ `submit:Save` |  |
+| `table/relation/dropdown_generate.twig` | 1/1 | ✅ `select:L2` |  |
 | `table/relation/foreign_key_row.twig` | 2/2 | ✅ `constraint_name[*]` ✅ `link:+ Add column` |  |
-| `table/relation/relational_dropdown.twig` | 0/1 |  | ⬜ `select:L1` |
+| `table/relation/relational_dropdown.twig` | 1/1 | ✅ `select:L1` |  |
 | `table/search/column_comparison_operators.twig` | 1/1 | ✅ `criteriaColumnOperators[*]` |  |
 | `table/search/index.twig` | 17/17 | ✅ `button:Cancel` ✅ `button:Close` ✅ `button:Extra options` ✅ `columnsToDisplay[]` ✅ `customWhereClause` ✅ `distinct` ✅ `geom_func[*]` ✅ `id:max_value` ✅ `id:min_value` ✅ `id:rangeSearchModalGo` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `order` ✅ `orderByColumn` ✅ `session_max_rows` ✅ `submit` |  |
-| `table/search/input_box.twig` | 1/3 | ✅ `criteriaValues[*]` | ⬜ `button:Edit/Insert` ⬜ `link:Browse foreign values` |
-| `table/structure/display_partitions.twig` | 0/10 |  | ⬜ `link:Analyze` ⬜ `link:Check` ⬜ `link:Drop` ⬜ `link:Optimize` ⬜ `link:Rebuild` ⬜ `link:Remove partitioning` ⬜ `link:Repair` ⬜ `link:Truncate` ⬜ `submit:Edit partitioning` ⬜ `submit:Partition table` |
-| `table/structure/display_structure.twig` | 0/42 |  | ⬜ `after_field` ⬜ `button:Add to central columns` ⬜ `button:Browse` ⬜ `button:Change` ⬜ `button:Close` ⬜ `button:Drop` ⬜ `button:Fulltext` ⬜ `button:Go back` ⬜ `button:Index` ⬜ `button:OK` ⬜ `button:Partitions` ⬜ `button:Primary` ⬜ `button:Print` ⬜ `button:Remove from central columns` ⬜ `button:Spatial` ⬜ `button:Unique` ⬜ `id:designerModalCloseButton` ⬜ `id:designerModalGoButton` ⬜ `id:designerModalPreviewButton` ⬜ `id:moreActionsButton` ⬜ `link:Add to central columns` ⬜ `link:Change` ⬜ `link:Distinct values` ⬜ `link:Drop` ⬜ `link:Edit` ⬜ `link:Edit view` ⬜ `link:Fulltext` ⬜ `link:Index` ⬜ `link:Move columns` ⬜ `link:Normalize` ⬜ `link:Primary` ⬜ `link:Propose table structure` ⬜ `link:Remove from central columns` ⬜ `link:Rename` ⬜ `link:Show create` ⬜ `link:Spatial` ⬜ `link:Track table` ⬜ `link:Track view` ⬜ `link:Unique` ⬜ `num_fields` ⬜ `selected_fld[]` ⬜ `submit:Go` |
-| `table/structure/display_table_stats.twig` | 0/1 |  | ⬜ `link:Optimize table` |
-| `table/structure/drop_confirm.twig` | 0/1 |  | ⬜ `mult_btn` |
-| `table/structure/partition_definition_form.twig` | 0/1 |  | ⬜ `save_partitioning` |
-| `table/structure/primary.twig` | 0/1 |  | ⬜ `mult_btn` |
+| `table/search/input_box.twig` | 3/3 | ✅ `button:Edit/Insert` ✅ `criteriaValues[*]` ✅ `link:Browse foreign values` |  |
+| `table/structure/display_partitions.twig` | 10/10 | ✅ `link:Analyze` ✅ `link:Check` ✅ `link:Drop` ✅ `link:Optimize` ✅ `link:Rebuild` ✅ `link:Remove partitioning` ✅ `link:Repair` ✅ `link:Truncate` ✅ `submit:Edit partitioning` ✅ `submit:Partition table` |  |
+| `table/structure/display_structure.twig` | 42/42 | ✅ `after_field` ✅ `button:Add to central columns` ✅ `button:Browse` ✅ `button:Change` ✅ `button:Close` ✅ `button:Drop` ✅ `button:Fulltext` ✅ `button:Go back` ✅ `button:Index` ✅ `button:OK` ✅ `button:Partitions` ✅ `button:Primary` ✅ `button:Print` ✅ `button:Remove from central columns` ✅ `button:Spatial` ✅ `button:Unique` ✅ `id:designerModalCloseButton` ✅ `id:designerModalGoButton` ✅ `id:designerModalPreviewButton` ✅ `id:moreActionsButton` ✅ `link:Add to central columns` ✅ `link:Change` ✅ `link:Distinct values` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Edit view` ✅ `link:Fulltext` ✅ `link:Index` ✅ `link:Move columns` ✅ `link:Normalize` ✅ `link:Primary` ✅ `link:Propose table structure` ✅ `link:Remove from central columns` ✅ `link:Rename` ✅ `link:Show create` ✅ `link:Spatial` ✅ `link:Track table` ✅ `link:Track view` ✅ `link:Unique` ✅ `num_fields` ✅ `selected_fld[]` ✅ `submit:Go` |  |
+| `table/structure/display_table_stats.twig` | 1/1 | ✅ `link:Optimize table` |  |
+| `table/structure/drop_confirm.twig` | 1/1 | ✅ `mult_btn` |  |
+| `table/structure/partition_definition_form.twig` | 1/1 | ✅ `save_partitioning` |  |
+| `table/structure/primary.twig` | 1/1 | ✅ `mult_btn` |  |
 | `table/tracking/main.twig` | 7/7 | ✅ `link:Delete version` ✅ `link:Structure snapshot` ✅ `link:Tracking report` ✅ `selected_versions[]` ✅ `submit_mult` ✅ `submit:L113` ✅ `table` |  |
 | `table/zoom_search/index.twig` | 7/7 | ✅ `criteriaColumnNames[]` ✅ `dataLabel` ✅ `link:Find and replace` ✅ `link:Table search` ✅ `link:Zoom search` ✅ `maxPlotLimit` ✅ `zoom_submit` |  |
-| `table/zoom_search/result_form.twig` | 4/5 | ✅ `button:Close` ✅ `button:Reset zoom` ✅ `id:dataPointSaveButton` ✅ `link:How to use` | ⬜ `criteriaColumnNullFlags[*]` |
-| `triggers/editor_form.twig` | 7/8 | ✅ `id:format` ✅ `item_definer` ✅ `item_definition` ✅ `item_event` ✅ `item_name` ✅ `item_table` ✅ `item_timing` | ⬜ `submit:Go` |
-| `triggers/export.twig` | 0/1 |  | ⬜ `textarea:L6` |
+| `table/zoom_search/result_form.twig` | 5/5 | ✅ `button:Close` ✅ `button:Reset zoom` ✅ `criteriaColumnNullFlags[*]` ✅ `id:dataPointSaveButton` ✅ `link:How to use` |  |
+| `triggers/editor_form.twig` | 8/8 | ✅ `id:format` ✅ `item_definer` ✅ `item_definition` ✅ `item_event` ✅ `item_name` ✅ `item_table` ✅ `item_timing` ✅ `submit:Go` |  |
+| `triggers/export.twig` | 1/1 | ✅ `textarea:L6` |  |
 | `triggers/list.twig` | 5/5 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:triggersEditorModalSaveButton` ✅ `link:Create new trigger` ✅ `submit_mult` |  |
-| `triggers/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
+| `triggers/row.twig` | 4/4 | ✅ `item_name[]` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` |  |
 | `view_create.twig` | 10/10 | ✅ `id:format` ✅ `submit:Go` ✅ `view[algorithm]` ✅ `view[as]` ✅ `view[column_names]` ✅ `view[definer]` ✅ `view[name]` ✅ `view[or_replace]` ✅ `view[sql_security]` ✅ `view[with]` |  |
 
 ## 05 database level — 244/268 (91.0%) covered, 244/268 implemented
@@ -159,13 +159,13 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/tracking/tables.twig` | 7/7 | ✅ `link:Delete tracking` ✅ `link:Structure snapshot` ✅ `link:Track table` ✅ `link:Tracking report` ✅ `link:Versions` ✅ `selected_tbl[]` ✅ `submit_mult` |  |
 | `src/Database/CentralColumns.php` | 0/1 |  | ⬜ `pos` |
 
-## 06 server level — 203/243 (83.5%) covered, 203/243 implemented
+## 06 server level — 243/243 (100.0%) covered, 242/243 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `modals/change_password.twig` | 0/3 |  | ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `id:changePasswordGoButton` |
-| `server/binlog/index.twig` | 0/6 |  | ⬜ `link:Next` ⬜ `link:Previous` ⬜ `link:Show full queries` ⬜ `link:Truncate shown queries` ⬜ `log` ⬜ `submit:Go` |
-| `server/databases/index.twig` | 0/16 |  | ⬜ `button:Cancel` ⬜ `db_collation` ⬜ `filterText` ⬜ `id:buttonGo` ⬜ `id:checkAllCheckbox` ⬜ `id:dropDatabaseModalDropButton` ⬜ `link:Ascending` ⬜ `link:Check privileges` ⬜ `link:Collation` ⬜ `link:Database` ⬜ `link:Enable statistics` ⬜ `link:Jump to database '%s'` ⬜ `link:SQL` ⬜ `new_db` ⬜ `selected_dbs[]` ⬜ `submit_mult` |
+| `modals/change_password.twig` | 3/3 | ✅ `button:Cancel` ✅ `button:Close` ✅ `id:changePasswordGoButton` |  |
+| `server/binlog/index.twig` | 6/6 | ✅ `link:Next` ✅ `link:Previous` ✅ `link:Show full queries` ✅ `link:Truncate shown queries` ✅ `log` ✅ `submit:Go` |  |
+| `server/databases/index.twig` | 16/16 | ✅ `button:Cancel` ✅ `db_collation` ✅ `filterText` ✅ `id:buttonGo` ✅ `id:checkAllCheckbox` ✅ `id:dropDatabaseModalDropButton` ✅ `link:Ascending` ✅ `link:Check privileges` ✅ `link:Collation` ✅ `link:Database` ✅ `link:Enable statistics` ✅ `link:Jump to database '%s'` ✅ `link:SQL` ✅ `new_db` ✅ `selected_dbs[]` ✅ `submit_mult` |  |
 | `server/engines/show.twig` | 1/1 | ✅ `link:Variables` |  |
 | `server/privileges/add_user_fieldset.twig` | 1/1 | ✅ `link:Add user account` |  |
 | `server/privileges/add_user.twig` | 4/4 | ✅ `createdb-1` ✅ `createdb-2` ✅ `createdb-3` ✅ `id:adduser_submit` |  |
@@ -187,17 +187,17 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `server/replication/primary_configuration.twig` | 2/2 | ✅ `db_type` ✅ `id:goButton` |  |
 | `server/replication/primary_replication.twig` | 3/3 | ✅ `link:Add replica replication user` ✅ `link:Show connected replicas` ✅ `link:Show primary status` |  |
 | `server/replication/replica_configuration.twig` | 11/11 | ✅ `id:goButton` ✅ `link:Change or reconfigure primary server` ✅ `link:Control replica:` ✅ `link:Error management:` ✅ `link:Reset replica` ✅ `link:See replica status table` ✅ `link:Skip current error` ✅ `link:Start IO Thread only` ✅ `link:Start SQL Thread only` ✅ `primary_connection` ✅ `sr_replica_skip_error` |  |
-| `server/status/advisor/index.twig` | 0/3 |  | ⬜ `button:Close` ⬜ `button:Instructions` ⬜ `button:L61` |
-| `server/status/base.twig` | 0/6 |  | ⬜ `link:Advisor` ⬜ `link:All status variables` ⬜ `link:Monitor` ⬜ `link:Processes` ⬜ `link:Query statistics` ⬜ `link:Server` |
+| `server/status/advisor/index.twig` | 3/3 | ✅ `button:Close` ✅ `button:Instructions` ✅ `button:L61` |  |
+| `server/status/base.twig` | 6/6 | ✅ `link:Advisor` ✅ `link:All status variables` ✅ `link:Monitor` ✅ `link:Processes` ✅ `link:Query statistics` ✅ `link:Server` |  |
 | `server/status/monitor/index.twig` | 41/41 | ✅ `button:Cancel request` ✅ `button:Close` ✅ `button:Import` ✅ `button:Instructions/Setup` ✅ `button:Settings` ✅ `chartTitle` ✅ `chartType` ✅ `dateEnd` ✅ `dateStart` ✅ `differentialValue` ✅ `file` ✅ `id:addChartButton` ✅ `id:analysingLogsLogDataLoadedModalJumpButton` ✅ `id:closeModalButton` ✅ `id:limitTypes` ✅ `id:logAnalyseModalGeneralLogButton` ✅ `id:logAnalyseModalSlowLogButton` ✅ `id:monitorAddNewChartButton` ✅ `id:monitorDoneRearrangeChartButton` ✅ `id:monitorExportConfigButton` ✅ `id:monitorImportConfigImportButton` ✅ `id:monitorPauseResumeButton` ✅ `id:monitorRearrangeChartButton` ✅ `id:monitorResetConfigButton` ✅ `id:queryAnalyzerModalAnalyseButton` ✅ `id:removeVariables` ✅ `id:serverResponseErrorModalReloadButton` ✅ `id:sqlquery` ✅ `link:Add this series` ✅ `link:Clear series` ✅ `link:KiB` ✅ `link:MiB` ✅ `monitorChartColumns` ✅ `monitorChartRefreshRate` ✅ `presetCharts` ✅ `useDivisor` ✅ `useUnit` ✅ `valueDivisor` ✅ `valueUnit` ✅ `varChartList` ✅ `variableInput` |  |
 | `server/status/processes/index.twig` | 4/4 | ✅ `link:Start auto refresh` ✅ `refreshRate` ✅ `showExecuting` ✅ `submit:Refresh` |  |
 | `server/status/processes/list.twig` | 3/3 | ✅ `link:Descending` ✅ `link:Kill` ✅ `link:Truncate shown queries` |  |
-| `server/status/variables/index.twig` | 0/5 |  | ⬜ `dontFormat` ⬜ `filterAlert` ⬜ `filterCategory` ⬜ `filterText` ⬜ `submit:Refresh` |
+| `server/status/variables/index.twig` | 5/5 | ✅ `dontFormat` ✅ `filterAlert` ✅ `filterCategory` ✅ `filterText` ✅ `submit:Refresh` |  |
 | `server/user_groups/edit_user_groups.twig` | 3/3 | ✅ `id:addUsersForm_checkall` ✅ `submit:Add user group` ✅ `userGroup` |  |
 | `server/user_groups/tab_list.twig` | 1/1 | ✅ `*_*` |  |
 | `server/user_groups/user_groups.twig` | 4/4 | ✅ `button:Close` ✅ `button:Delete` ✅ `id:deleteUserGroupConfirm` ✅ `link:Add user group` |  |
 | `server/variables/index.twig` | 3/3 | ✅ `link:Cancel` ✅ `link:Edit` ✅ `link:Save` |  |
-| `user_password.twig` | 0/1 |  | ⬜ `link:Back` |
+| `user_password.twig` | 1/1 | ➖ `link:Back` |  |
 
 ## 07 export import — 59/63 (93.7%) covered, 59/63 implemented
 

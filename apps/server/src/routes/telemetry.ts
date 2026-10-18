@@ -4,6 +4,7 @@ import { getCookie } from 'hono/cookie'
 import type { AppEnv } from '../app.ts'
 import { parseJson } from '../http/validate.ts'
 import { APP_VERSION } from '../shell/scope.ts'
+import { httpRequest } from '../util/http-request.ts'
 
 export const telemetryRoutes = new Hono<AppEnv>()
 
@@ -75,13 +76,13 @@ telemetryRoutes.post('/error', async (c) => {
   let success = true
   const url = process.env.BMA_ERROR_REPORT_URL ?? ''
   if (url !== '') {
-    success = await fetch(url, {
+    // ErrorReport::send: HttpRequest::create through ProxyUrl, success on 200
+    success = await httpRequest(c.get('deps').cfg, url, {
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(report),
-      signal: AbortSignal.timeout(10_000),
     })
-      .then((r) => r.ok)
+      .then((r) => r.status === 200)
       .catch(() => false)
   } else {
     console.warn(`error report: ${JSON.stringify(report)}`)

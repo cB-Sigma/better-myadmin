@@ -133,7 +133,16 @@ export function PartitionEditor({
             <input
               className="input"
               type={k === 'maxRows' || k === 'minRows' ? 'number' : 'text'}
-              aria-label={k}
+              aria-label={
+                {
+                  dataDirectory: t('Data directory'),
+                  indexDirectory: t('Index directory'),
+                  maxRows: t('Max rows'),
+                  minRows: t('Min rows'),
+                  tablespace: t('Table space'),
+                  nodeGroup: t('Node group'),
+                }[k]
+              }
               value={d[k] ?? ''}
               onChange={(e) => setPart(i, { [k]: e.target.value }, j)}
             />

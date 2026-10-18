@@ -243,4 +243,12 @@ export const pmaControls = {
   },
   'menu/main.twig#link:Database:': { file: 'Breadcrumb.tsx', match: "t('Database:')" },
   'menu/main.twig#link:View:': { file: 'Breadcrumb.tsx', match: "t('View:')" },
+  // pma: resources/templates/modals/change_password.twig (the form: server/privileges/change_password.twig)
+  'modals/change_password.twig#id:changePasswordGoButton': 'home/ChangePasswordDialog.tsx',
+  'modals/change_password.twig#button:Cancel': 'home/ChangePasswordDialog.tsx',
+  // the corner button of DialogContent (closeLabel 'Close')
+  'modals/change_password.twig#button:Close': {
+    file: 'home/ChangePasswordDialog.tsx',
+    match: 'id="changePasswordModal"',
+  },
 }

@@ -307,6 +307,10 @@ export const pmaControls = {
   'triggers/row.twig#link:Edit': 'TriggersPage.tsx',
   'triggers/row.twig#link:Export': 'programs.tsx',
   'triggers/row.twig#link:Drop': 'programs.tsx',
+  'triggers/row.twig#item_name[]': { file: 'programs.tsx', match: 'onCheckedChange' },
+  // the non-AJAX editor's card-footer Go; the modal saves through #triggersEditorModalSaveButton
+  'triggers/editor_form.twig#submit:Go': { file: 'programs.tsx', match: "t('Save changes')" },
+  'triggers/export.twig#textarea:L6': { file: 'programs.tsx', match: 'value={exported.sql}' },
   // phpMyAdmin JS behaviours
   'js:database/central_columns.ts#ajax:POST /database/central-columns': 'CentralColumnsPage.tsx',
   'js:database/central_columns.ts#ajax:POST <href>': 'CentralColumnsPage.tsx',

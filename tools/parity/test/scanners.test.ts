@@ -143,6 +143,56 @@ describe('msgid scan', () => {
   })
 })
 
+describe('msgid scan: markers, conditionals and JSON message tables', () => {
+  const { repo, list } = sources({
+    'packages/kbs/src/index.ts':
+      "export { default as kb } from './generated/kb.json' with { type: 'json' }\n",
+    'packages/kbs/src/rules.ts': [
+      "import rules from './generated/rules.json' with { type: 'json' }",
+      'export const names = (tr: any) => rules.list.map((rule) => tr.gettext(rule.name))',
+    ].join('\n'),
+    'apps/server/a.ts': [
+      "import { kb } from '@bettermyadmin/kbs'",
+      "const LABELS = { a: N_('Allows reading data.'), b: NC_('Collation', 'Swedish') }",
+      'export function f(tr: any, lock: boolean, name: string) {',
+      '  const descriptions = kb.descriptions',
+      "  return [tr.gettext(lock ? 'Locked.' : 'Unlocked.'), tProduct('Hello phpMyAdmin'),",
+      '    tr.gettext(descriptions[name]!), tr.gettext(LABELS.a)]',
+      '}',
+    ].join('\n'),
+  })
+  mkdirSync(join(repo, 'packages/kbs/src/generated'), { recursive: true })
+  writeFileSync(
+    join(repo, 'packages/kbs/package.json'),
+    JSON.stringify({ name: '@bettermyadmin/kbs', exports: { '.': './src/index.ts' } }),
+  )
+  writeFileSync(
+    join(repo, 'packages/kbs/src/generated/kb.json'),
+    JSON.stringify({ descriptions: { Uptime: 'The number of seconds the server has been up.' }, title: 'x' }),
+  )
+  writeFileSync(
+    join(repo, 'packages/kbs/src/generated/rules.json'),
+    JSON.stringify({ list: [{ name: 'Uptime below one day' }, { name: 'Questions below 1,000' }] }),
+  )
+  const found = scanMsgids(list, repo)
+  const via = (k: string) => found.filter((f) => f.key === k).map((f) => f.via)
+  it('reads N_/NC_ markers, tProduct and both branches of a conditional', () => {
+    expect(via('Allows reading data.')).toContain('literal')
+    expect(via('Collation\u0004Swedish')).toEqual(['literal'])
+    expect(via('Hello phpMyAdmin')).toEqual(['literal'])
+    expect(via('Locked.')).toEqual(['literal'])
+    expect(via('Unlocked.')).toEqual(['literal'])
+  })
+  it('resolves properties of imported JSON and string maps re-exported by a workspace package', () => {
+    expect(via('Uptime below one day')).toEqual(['json'])
+    expect(via('Questions below 1,000')).toEqual(['json'])
+    expect(via('The number of seconds the server has been up.')).toEqual(['json'])
+    // a map's keys and the JSON's other properties are not msgids of `descriptions[name]`
+    expect(via('Uptime')).toEqual([])
+    expect(via('x')).toEqual([])
+  })
+})
+
 describe('control claims', () => {
   const repo = mkdtempSync(join(tmpdir(), 'parity-claims-'))
   const dir = join(repo, 'apps/web/src/features/x')

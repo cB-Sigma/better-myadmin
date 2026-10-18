@@ -80,14 +80,3 @@ export class MysqlError extends BmaError {
     super('MYSQL_ERROR', e.sqlMessage ?? e.message, 400, extra)
   }
 }
-
-/**
- * The server is older than $cfg['MysqlMinVersion'] (translated with the request's language in
- * app.onError: "You should upgrade to %s %s or later.").
- * pma: src/Http/Middleware/DatabaseServerVersionChecking.php
- */
-export class ServerTooOldError extends BmaError {
-  constructor(readonly minVersion: string) {
-    super('UNSUPPORTED_SERVER', `You should upgrade to MySQL ${minVersion} or later.`, 500)
-  }
-}

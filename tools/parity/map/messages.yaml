@@ -48,6 +48,21 @@ sources:
     n/a: 'the git revision comes with the home page data (GET /api/servers/:s/home), there is no separate request to fail'
   resources/templates/javascript/redirect.twig:
     n/a: 'external links open directly (rel="noopener noreferrer"); there is no /url redirect page'
+
+# The settings forms (FormDisplay, Descriptions, Forms/*): generated/pma-forms.json keeps the msgids,
+# translated (and BBCode converted) when a form is rendered.
+data:
+  packages/config/src/generated/pma-forms.json:
+    - paths: [fields.*.name, fields.*.desc, fields.*.cmt]
+      at: apps/server/src/preferences/form-display.ts::describe
+    - paths: ['*.*.forms.*.title', '*.*.forms.*.desc']
+      at: apps/server/src/preferences/form-display.ts::describeForm
+    - paths: ['*.*.forms.*.items.*.group']
+      at: apps/server/src/preferences/form-display.ts::display
+    - paths: [fields.*.values.*.label]
+      at: apps/server/src/preferences/form-display.ts::msgText
+    - paths: [setup.*.name]
+      at: apps/server/src/setup/service.ts::setupPages
 msgids:
   '%s argument(s) passed':
     n/a: 'Debug SQL backtraces: no PHP call stack (js.yaml dbg_show_trace)'
@@ -117,3 +132,80 @@ msgids:
     n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
   "You can still use Firefox to authenticate your account using the FIDO U2F API, however it's recommended that you use the WebAuthn authentication instead.":
     n/a: 'FIDO U2F two-factor backend unavailable (see resources/js/u2f.ts)'
+  "\"%s\" requires %s extension":
+    n/a: "FormDisplay::setComments puts it in $opts['comment'], which input.twig never shows (it shows userprefs_comment)"
+  "Compressed export will not work due to missing function %s.":
+    n/a: "FormDisplay::setComments puts it in $opts['comment'], which input.twig never shows (it shows userprefs_comment)"
+  "Compressed import will not work due to missing function %s.":
+    n/a: "FormDisplay::setComments puts it in $opts['comment'], which input.twig never shows (it shows userprefs_comment)"
+  "maximum %s":
+    n/a: "FormDisplay::setComments puts it in $opts['comment'], which input.twig never shows (it shows userprefs_comment)"
+  "unavailable":
+    n/a: "FormDisplay::setComments marks RecodingEngine's iconv choice when PHP lacks iconv; RecodingEngine has no effect here (X20)"
+  "%1$sGZip compression and decompression%2$s requires functions (%3$s) which are unavailable on this system.":
+    exception: X44
+  "%sZip compression%s requires functions (%s) which are unavailable on this system.":
+    exception: X44
+  "%sZip decompression%s requires functions (%s) which are unavailable on this system.":
+    exception: X44
+  "%1$sLogin cookie validity%2$s greater than %3$ssession.gc_maxlifetime%4$s may cause random session invalidation (currently session.gc_maxlifetime is %5$d).":
+    exception: X44
+  "Content-Security-Policy snippet for reCAPTCHA v2 API":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Enter the Content-Security-Policy snippet for your reCAPTCHA v2 compatible API.":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Enter the request parameter used by your reCAPTCHA v2 compatible API.":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Enter the response parameter used by your reCAPTCHA v2 compatible API.":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Enter the URL for your reCAPTCHA v2 compatible API.":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "GZip output buffering":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Remember filename template":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Remove DEFINER clause from definitions":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Request parameter for reCAPTCHA v2 API":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Response parameter for reCAPTCHA v2 API":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "URL for reCAPTCHA v2 API":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Use GZip output buffering for increased speed in HTTP transfers.":
+    n/a: "a Descriptions entry no settings form lists (Descriptions are only shown by the forms)"
+  "Server %d":
+    n/a: "built while the configuration loads, before a language is chosen, so phpMyAdmin shows it in English; packages/config does the same (resolve.ts)"
+  "Existing configuration file (%s) is not readable.":
+    n/a: "built while the configuration loads, before a language is chosen, so phpMyAdmin shows it in English; packages/config does the same (loader.ts)"
+  "Please enter a valid credit card number":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter a valid date":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter a valid date ( ISO )":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter a valid email address":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter a valid URL":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter a value between {0} and {1}":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter a value between {0} and {1} characters long":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter at least {0} characters":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter only digits":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please enter the same value again":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "Please fix this field":
+    n/a: "a jQuery Validation default for a rule none of the forms phpMyAdmin validates (#insertForm, the table search) declares"
+  "This field is required":
+    planned: M2
+    note: table search; once an INT/FLOAT criterion is edited, jQuery Validate replaces the browser checks of #maxRowsInput (required, type=number)
+  "Please enter a valid number":
+    planned: M2
+    note: table search; once an INT/FLOAT criterion is edited, jQuery Validate replaces the browser checks of #maxRowsInput (required, type=number)
+  "You do not have necessary privileges to create a database named '%s'. You may go to 'Operations' tab of any database to set up the phpMyAdmin configuration storage there.":
+    via: packages/metadata/src/storage.ts
+    note: Relation::createPmaDatabase; translated with its msgid by routes/metadata.ts (pkgMsg)

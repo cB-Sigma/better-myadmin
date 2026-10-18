@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { ConfigFile, arrayRemove, flatArray } from '../../src/preferences/config-file.ts'
 import { validateSelect } from '../../src/preferences/form-display.ts'
 import { qrMatrix } from '../../src/preferences/qr.ts'
+import { prefsMessage } from '../../src/preferences/service.ts'
 import { base32Decode, oathTotp, otpauthUrl, verifyKey } from '../../src/preferences/totp.ts'
 import { pcreError, validate } from '../../src/preferences/validator.ts'
 
@@ -106,5 +107,23 @@ describe('QR encoder', () => {
     expect(m.length).toBe(m[0]?.length)
     expect(m[0]?.slice(0, 7)).toBe('1111111')
     expect(m[1]?.slice(0, 7)).toBe('1000001')
+  })
+})
+
+describe('UserPreferences::save failure message', () => {
+  it('the error, the control link error and the inaccessible-storage notice', () => {
+    expect(
+      prefsMessage(tr, { type: 'error', text: 'Could not save configuration', detail: 'denied' }).text,
+    ).toBe('Could not save configuration<br><br>denied')
+    expect(
+      prefsMessage(tr, {
+        type: 'error',
+        text: 'Could not save configuration',
+        detail: 'x',
+        inaccessible: true,
+      }).text,
+    ).toBe(
+      'Could not save configuration<br><br>x<br><br>The phpMyAdmin configuration storage database could not be accessed.',
+    )
   })
 })

@@ -4,6 +4,7 @@ import type { AppEnv } from '../app.ts'
 import { type ServerConfig, getServer } from '../config.ts'
 import type { Credentials } from '../db/pool-manager.ts'
 import { safeEqual } from '../session/crypto.ts'
+import { logUser } from './auth-log.ts'
 import { LoginFailure, sanitizeMySQLUser } from './failure.ts'
 import { checkRules, connectLogin, requestClientIp } from './login.ts'
 import { loginRateLimiter } from './rate-limit.ts'
@@ -80,6 +81,7 @@ export async function httpPageAuth(c: Context<AppEnv>, server: number): Promise<
   } catch (e) {
     if (!(e instanceof LoginFailure)) throw e
     limiter.failed(ip, creds.user)
+    logUser(cfg, creds.user, e.failureType, ip)
     delete session.servers[String(server)]
     return 'challenge'
   }

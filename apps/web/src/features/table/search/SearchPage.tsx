@@ -18,11 +18,11 @@ import {
   Radio,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
+import { BrowsePage } from '../../browse/BrowsePage'
 import { useFormLock } from '../../shell/page-chrome'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 import { SearchPills } from './SearchPills'
@@ -33,10 +33,12 @@ import {
   ValueInput,
   criteriaToSend,
   initialCriterion,
+  searchFieldError,
 } from './criteria'
 
 /**
- * Table search: "query by example". The query runs as a signed /sql link in the table's Browse view.
+ * Table search: "query by example". The results show under the form, which hides behind the
+ * "Show search criteria" toggle (select.ts).
  *
  * pma: resources/templates/table/search/index.twig, column_comparison_operators.twig, input_box.twig,
  *      resources/js/table/select.ts
@@ -66,7 +68,6 @@ const RANGE_TYPES =
 function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }) {
   // form.lock-page (AJAX.lockPageHandler)
   const lockRef = useFormLock()
-  const navigate = useNavigate()
   const [rows, setRows] = useState<Criterion[]>(() => page.columns.map(initialCriterion))
   const [display, setDisplay] = useState<string[]>(() => page.columns.map((c) => c.name))
   const [distinct, setDistinct] = useState(false)
@@ -77,11 +78,16 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [range, setRange] = useState<{
     index: number
+    operator: string
     min: string
     max: string
-    colMin: string
-    colMax: string
+    colMin: string | null
+    colMax: string | null
   } | null>(null)
+  /** the search's signed query: shown in #sqlqueryresultsouter under the form */
+  const [result, setResult] = useState<{ sql: string; sig: string } | null>(null)
+  /** #tbl_search_form slides up once results exist; #togglesearchformlink shows it again */
+  const [formShown, setFormShown] = useState(true)
 
   const patch = (i: number, p: Partial<Criterion>) =>
     setRows((rs) => rs.map((r, j) => (j === i ? { ...r, ...p } : r)))
@@ -93,14 +99,21 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
     if (c === undefined || (op !== 'BETWEEN' && op !== 'NOT BETWEEN') || !RANGE_TYPES.test(c.type)) return
     try {
       const r = await api.tableSearchRange(scope, c.name)
-      setRange({ index: i, min: '', max: '', colMin: r.min ?? '', colMax: r.max ?? '' })
+      // "Reset input values on reuse"
+      setRange({ index: i, operator: op, min: '', max: '', colMin: r.min, colMax: r.max })
     } catch (e) {
       setMessages([errorMessage(e)])
     }
   }
 
+  const errors = page.columns.map((c, i) => {
+    const r = rows[i]
+    return r === undefined || UNARY.includes(r.operator) ? null : searchFieldError(c, r.operator, r.value)
+  })
   const submit = async (e: FormEvent) => {
     e.preventDefault()
+    // jQuery Validation stops the submit while a field is invalid
+    if (errors.some((x) => x !== null)) return
     try {
       const r = await api.tableSearch(scope, {
         distinct,
@@ -110,10 +123,10 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
         orderBy,
         order,
       })
-      await navigate({
-        to: `/s/${scope.server}/db/${encodeURIComponent(scope.db)}/t/${encodeURIComponent(scope.table)}/browse`,
-        search: { sql: r.sql, sig: r.sig } as never,
-      })
+      setMessages([])
+      setResult({ sql: r.sql, sig: r.sig })
+      setFormShown(false)
+      window.scrollTo({ top: 0 })
     } catch (err) {
       setMessages([errorMessage(err)])
     }
@@ -122,7 +135,13 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
   return (
     <>
       <ResultMessages messages={messages} />
-      <form ref={lockRef} id="tbl_search_form" name="insertForm" onSubmit={(e) => void submit(e)}>
+      <form
+        ref={lockRef}
+        id="tbl_search_form"
+        name="insertForm"
+        className={formShown ? undefined : 'hidden'}
+        onSubmit={(e) => void submit(e)}
+      >
         <Panel
           title={t('Do a "query by example" (wildcard: "%")')}
           footer=<Button type="submit" variant="primary" name="submit">
@@ -190,7 +209,14 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                             value={r.value}
                             disabled={UNARY.includes(r.operator)}
                             onChange={(v) => patch(i, { value: v })}
+                            scope={scope}
+                            geomFunc={r.geomFunc}
                           />
+                          {errors[i] != null && (
+                            <label className="error block text-xs text-error" htmlFor={`fieldID_${i}`}>
+                              {errors[i]}
+                            </label>
+                          )}
                         </td>
                       </tr>
                     )
@@ -299,6 +325,16 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
           </PanelBody>
         </Panel>
       </form>
+      {result !== null && (
+        <div id="togglesearchformdiv" className="my-2">
+          <Button size="sm" id="togglesearchformlink" onClick={() => setFormShown(!formShown)}>
+            {formShown ? t('Hide search criteria') : t('Show search criteria')}
+          </Button>
+        </div>
+      )}
+      {result !== null && (
+        <BrowsePage key={result.sig} server={scope.server} db={scope.db} table={scope.table} {...result} />
+      )}
 
       <Dialog open={range !== null} onOpenChange={(o) => !o && setRange(null)}>
         <DialogContent id="rangeSearchModal">
@@ -306,38 +342,43 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
             <DialogTitle>{t('Range search')}</DialogTitle>
           </DialogHeader>
           {range !== null && (
-            <DialogBody className="space-y-2">
-              <div>
+            <DialogBody>
+              <fieldset className="space-y-1">
+                <legend id="rangeSearchLegend" className="font-semibold">
+                  {range.operator}
+                </legend>
                 <Label htmlFor="min_value">{t('Minimum value:')}</Label>{' '}
                 <Input
                   id="min_value"
                   className="w-48"
                   value={range.min}
                   onChange={(e) => setRange({ ...range, min: e.target.value })}
-                />{' '}
-                <span className="text-fg-muted">
-                  ({t('Column minimum:')} {range.colMin})
+                />
+                <br />
+                <span className="small_font text-fg-muted" id="rangeSearchMin">
+                  {range.colMin ? `(${t('Column minimum:')} ${range.colMin})` : ''}
                 </span>
-              </div>
-              <div>
+                <br />
                 <Label htmlFor="max_value">{t('Maximum value:')}</Label>{' '}
                 <Input
                   id="max_value"
                   className="w-48"
                   value={range.max}
                   onChange={(e) => setRange({ ...range, max: e.target.value })}
-                />{' '}
-                <span className="text-fg-muted">
-                  ({t('Column maximum:')} {range.colMax})
+                />
+                <br />
+                <span className="small_font text-fg-muted" id="rangeSearchMax">
+                  {range.colMax ? `(${t('Column maximum:')} ${range.colMax})` : ''}
                 </span>
-              </div>
+              </fieldset>
             </DialogBody>
           )}
           <DialogFooter>
             <Button
-              variant="primary"
+              id="rangeSearchModalGo"
               onClick={() => {
-                if (range !== null) patch(range.index, { value: `${range.min}, ${range.max}` })
+                if (range !== null)
+                  patch(range.index, { value: rangeValue(page.columns[range.index], range) })
                 setRange(null)
               }}
             >
@@ -349,4 +390,29 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
       </Dialog>
     </>
   )
+}
+
+/**
+ * #rangeSearchModalGo: "min, max" when both are given; a select target takes the option closest
+ * to the minimum, then the one closest to the maximum (both get `selected`, the last one wins).
+ */
+export function rangeValue(
+  column: SearchPageResponse['columns'][number] | undefined,
+  range: { min: string; max: string },
+): string {
+  const inp = column?.input
+  if (inp !== undefined && (inp.kind === 'foreign' || inp.kind === 'enum')) {
+    const values =
+      inp.kind === 'foreign' ? (inp.foreign ?? []).map((o) => o.value) : ['', ...(inp.values ?? [])]
+    let closest: string | null = null
+    for (const v of values) {
+      if (
+        closest === null ||
+        Math.abs(Number(v) - Number(range.max)) < Math.abs(Number(closest) - Number(range.max))
+      )
+        closest = v
+    }
+    return closest ?? ''
+  }
+  return range.min.length > 0 && range.max.length > 0 ? `${range.min}, ${range.max}` : ''
 }

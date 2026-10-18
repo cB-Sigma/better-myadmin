@@ -12,8 +12,11 @@ import {
   MessageBox,
   Modal,
   MySqlDocLink,
+  Panel,
+  PanelBody,
   PmaIcon,
   PreviewSqlDialog,
+  buttonVariants,
   showMessage,
 } from '@bettermyadmin/ui'
 import { Link, useParams } from '@tanstack/react-router'
@@ -21,8 +24,19 @@ import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { useFormLock } from '../../shell/page-chrome'
+import { AddIndexFormDialog, IndexTypeDialog } from './AddIndexDialog'
 import { CentralColumnPicker } from './CentralColumnPicker'
 import { PartitionEditor } from './PartitionEditor'
+import {
+  type DraftIndex,
+  type IndexChoice,
+  emptyIndexLists,
+  formIndexes,
+  indexLabels,
+  parseDataIndex,
+  removeColumnFromIndex,
+  setIndex,
+} from './advanced-index'
 
 /**
  * The column definition form shared by Create table, Add column(s) and Change column(s).
@@ -50,6 +64,8 @@ export interface ColumnRow {
   adjustPrivileges: boolean
   /** create/add: the Index select (none, primary, unique, index, fulltext, spatial) */
   key: string
+  /** the select's `data-index` ("unique,0"): the form index the row was added to (indexes.ts) */
+  dataIndex?: string
   orig?: ColumnOrig
   moveOptions?: Array<{ value: string; after: string | null; disabled: boolean }>
   /** the MIME columns (only when the form shows them) */
@@ -63,6 +79,12 @@ export interface MimeValues {
   inputTransformation: string
   inputTransformationOptions: string
 }
+
+/** create / add: no `move_columns`, the new column counts as the first (current_index 0) */
+const NO_MOVE: NonNullable<ColumnRow['moveOptions']> = [
+  { value: '', after: null, disabled: false },
+  { value: '-first', after: null, disabled: true },
+]
 
 const EMPTY_MIME: MimeValues = {
   mimetype: '',
@@ -113,26 +135,8 @@ export interface TableOptions {
 
 export type FormMode = 'create' | 'add' | 'change'
 
-/** The five index buckets of the create/add forms, from the per-column Index selects. */
-export function indexesFromRows(rows: ColumnRow[]): FormIndex[] {
-  const out: FormIndex[] = []
-  const primary = rows.flatMap((r, i) =>
-    r.key === 'primary' && r.name !== '' ? [{ colIndex: i, size: '' }] : [],
-  )
-  // PRIMARY always composes (Indexes.addColumnToIndex on the existing primary key)
-  if (primary.length > 0) out.push({ choice: 'PRIMARY', keyName: 'PRIMARY', columns: primary })
-  rows.forEach((r, i) => {
-    if (r.name === '' || r.key === 'none' || r.key === 'primary') return
-    const choice = r.key.toUpperCase() as FormIndex['choice']
-    out.push({ choice, keyName: '', columns: [{ colIndex: i, size: '' }] })
-  })
-  return out
-}
-
 const LENGTH_REQUIRED = ['VARCHAR', 'CHAR', 'BIT', 'VARBINARY', 'BINARY']
 const NUM_TYPES = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL']
-/** the integer types whose display width MySQL 8.0.19+ ignores (data-length-restricted=1) */
-const LENGTH_RESTRICTED = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT']
 
 /**
  * pma: functions.ts::checkTableEditForm — the problem, or null when the form is valid: an `alert`,
@@ -227,67 +231,76 @@ function EnumEditor({
       onClose={onClose}
       footer={
         <>
-          <Button variant="primary" onClick={() => onSave(formatEnumValues(values))}>
+          <Button id="enumEditorGoButton" variant="primary" onClick={() => onSave(formatEnumValues(values))}>
             {t('Go')}
           </Button>
           <Button onClick={onClose}>{t('Close')}</Button>
         </>
       }
     >
-      <div id="enum_editor">
-        <p className="mb-2 text-sm font-semibold">
-          {column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
-        </p>
-        <p className="mb-2 flex items-center gap-1 text-sm">
-          <PmaIcon name="s_notice" alt="" />
-          {t('Enter each value in a separate field.')}
-        </p>
-        <table className="w-full text-sm">
-          <tbody>
-            {values.map((v, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: editable value rows
-              <tr key={i}>
-                <td className="py-0.5">
-                  <input
-                    className="input"
-                    aria-label={t('Value')}
-                    value={v}
-                    onChange={(e) => setValues(values.map((x, j) => (j === i ? e.target.value : x)))}
-                  />
-                </td>
-                <td className="px-1">
-                  {/* td.drop removes the row */}
-                  <Button
-                    variant="link"
-                    className="drop"
-                    onClick={() => setValues(values.filter((_, j) => j !== i))}
-                  >
-                    {t('Drop')}
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="mt-2 flex items-center gap-2 text-sm">
-          {/* the slider (1 to 9) and "Add %d value(s)" (input.add_value) */}
-          <input
-            type="range"
-            className="slider"
-            min={1}
-            max={9}
-            aria-label={t('Add %d value(s)', add)}
-            value={add}
-            onChange={(e) => setAdd(Number(e.target.value))}
-          />
-          <Button
-            className="add_value"
-            onClick={() => setValues([...values, ...Array.from({ length: add }, () => '')])}
-          >
-            {t('Add %d value(s)', add)}
-          </Button>
-        </div>
-      </div>
+      <Panel
+        id="enum_editor"
+        title={column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
+        footer={
+          <div className="flex items-center gap-2 text-sm">
+            {/* the slider (1 to 9) and "Add %d value(s)" (input.add_value) */}
+            <input
+              type="range"
+              className="slider"
+              min={1}
+              max={9}
+              aria-label={t('Add %d value(s)', add)}
+              value={add}
+              onChange={(e) => setAdd(Number(e.target.value))}
+            />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                setValues([...values, ...Array.from({ length: add }, () => '')])
+              }}
+            >
+              <input
+                type="submit"
+                className={`add_value ${buttonVariants({ variant: 'primary' })}`}
+                value={t('Add %d value(s)', add)}
+              />
+            </form>
+          </div>
+        }
+      >
+        <PanelBody>
+          <p className="mb-2 text-sm">
+            <PmaIcon name="s_notice" /> {t('Enter each value in a separate field.')}
+          </p>
+          <table className="values w-full text-sm">
+            <tbody>
+              {values.map((v, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: editable value rows
+                <tr key={i}>
+                  <td className="py-0.5">
+                    {/* the editor's inputs have no label in phpMyAdmin either */}
+                    <input
+                      type="text"
+                      className="input"
+                      value={v}
+                      onChange={(e) => setValues(values.map((x, j) => (j === i ? e.target.value : x)))}
+                    />
+                  </td>
+                  <td className="drop px-1">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setValues(values.filter((_, j) => j !== i))}
+                    >
+                      <PmaIcon name="b_drop" alt={t('Drop')} />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </PanelBody>
+      </Panel>
     </Modal>
   )
 }
@@ -411,7 +424,7 @@ export function ColumnForm({
   tableOptions?: TableOptions
   setTableOptions?: (o: TableOptions) => void
   /** runs (or previews with dryRun) the form */
-  submit: (dryRun: boolean, online: boolean) => Promise<DdlResponse>
+  submit: (dryRun: boolean, online: boolean, indexes: FormIndex[]) => Promise<DdlResponse>
   reservedCheck: (names: string[]) => Promise<{ reserved: boolean; message: string }>
   onDone: (r: DdlResponse) => void
   header?: ReactNode
@@ -429,13 +442,11 @@ export function ColumnForm({
   // submit_num_fields: the form gets more column rows
   const addFields = () => setRows([...rows, ...Array.from({ length: Math.max(1, addCount) }, emptyRow)])
 
-  const update = (i: number, patch: Partial<ColumnRow>) => {
+  const update = (i: number, patch: Partial<ColumnRow>) =>
     setRows(
       rows.map((r, j) => {
         if (j !== i) return r
         const next = { ...r, ...patch }
-        // ticking A_I picks PRIMARY in the Index select (functions.ts input[value=AUTO_INCREMENT])
-        if (patch.autoIncrement === true && mode !== 'change' && next.key === 'none') next.key = 'primary'
         // resetAttributeForNonNumericType (select.column_type change): UNSIGNED / ZEROFILL go with a
         // non-numeric type
         if (
@@ -447,7 +458,89 @@ export function ColumnForm({
         return next
       }),
     )
+
+  // ---- the form's indexes (indexes.ts): the Index selects open #addIndexModal
+  const [lists, setLists] = useState(emptyIndexLists)
+  const [pending, setPending] = useState<
+    | {
+        kind: 'form'
+        choice: IndexChoice
+        arrayIndex: number
+        colIndex: number
+        targets: number[]
+        initial: DraftIndex
+      }
+    | { kind: 'type'; choice: IndexChoice; colIndex: number }
+    | null
+  >(null)
+  const names = rows.map((r) => r.name)
+  const labels = indexLabels(lists, names)
+  const newIndex = (choice: IndexChoice): DraftIndex => ({
+    keyName: choice === 'primary' ? 'PRIMARY' : '',
+    comment: '',
+    choice: choice.toUpperCase() as DraftIndex['choice'],
+    keyBlockSize: '',
+    parser: '',
+    type: '',
+    columns: [],
+  })
+  /** addColumnToIndex: store the index, point the row's select at it */
+  const addColumnToIndex = (
+    base: ColumnRow[],
+    choice: IndexChoice,
+    arrayIndex: number,
+    colIndex: number,
+    index: DraftIndex,
+  ) => {
+    let l = lists
+    let at = arrayIndex
+    if (colIndex >= 0) {
+      const before = l[choice].length
+      l = removeColumnFromIndex(l, base[colIndex]?.dataIndex, colIndex)
+      const prev = parseDataIndex(base[colIndex]?.dataIndex)
+      if (prev?.choice === choice && l[choice].length < before && prev.arrayIndex < at) at--
+    }
+    at = Math.min(at, l[choice].length)
+    setLists(setIndex(l, choice, at, index))
+    return colIndex >= 0
+      ? base.map((r, j) => (j === colIndex ? { ...r, dataIndex: `${choice},${at}` } : r))
+      : base
   }
+  /** change select[name*="field_key"] (showDialog false: the A_I box adds to PRIMARY without a dialog) */
+  const keyChanged = (base: ColumnRow[], i: number, value: string, showDialog: boolean): ColumnRow[] => {
+    const row = base[i]
+    if (row === undefined) return base
+    if (value === 'none') {
+      setLists(removeColumnFromIndex(lists, row.dataIndex, i))
+      return base.map((r, j) => (j === i ? { ...r, key: 'none', dataIndex: '' } : r))
+    }
+    const choice = value as IndexChoice
+    const next = base.map((r, j) => (j === i ? { ...r, key: value } : r))
+    const source = lists[choice]
+    const existing = source[0]
+    if (source.length === 0 || (choice === 'primary' && existing !== undefined)) {
+      const initial = existing !== undefined && choice === 'primary' ? existing : newIndex(choice)
+      const targets = [...initial.columns.map((c) => c.colIndex), i]
+      if (!showDialog) {
+        return addColumnToIndex(next, choice, 0, i, {
+          ...initial,
+          columns: targets.map((c) => ({ colIndex: c, size: '' })),
+        })
+      }
+      setPending({ kind: 'form', choice, arrayIndex: 0, colIndex: i, targets, initial })
+      return next
+    }
+    setPending({ kind: 'type', choice, colIndex: i })
+    return next
+  }
+  /** #addIndexModalCancelButton: the select goes back to the index it was in (or ---) */
+  const cancelIndex = (colIndex: number) => {
+    setPending(null)
+    if (colIndex < 0) return
+    update(colIndex, { key: parseDataIndex(rows[colIndex]?.dataIndex)?.choice ?? 'none' })
+  }
+  const targetsOf = (cols: number[]) =>
+    cols.map((c) => ({ name: rows[c]?.name ?? '', type: (rows[c]?.type ?? '').toLowerCase(), colIndex: c }))
 
   const run = async (dryRun: boolean) => {
     setError(null)
@@ -480,7 +573,7 @@ export function ColumnForm({
     }
     setBusy(true)
     try {
-      const r = await submit(dryRun, online)
+      const r = await submit(dryRun, online, formIndexes(lists))
       if (dryRun) setPreview(r.preview ?? '')
       else onDone(r)
     } catch (e) {
@@ -522,9 +615,10 @@ export function ColumnForm({
             {t('Add')}
             <input
               type="number"
-              name="added_fields"
               className="input w-16"
               min={1}
+              name="added_fields"
+              id="added_fields"
               aria-label={t('Add column(s)')}
               value={addCount}
               onChange={(e) => setAddCount(Number(e.target.value))}
@@ -569,7 +663,8 @@ export function ColumnForm({
               </th>
               <th className="px-1">{t('Comments')}</th>
               {virtuality !== null && <th className="px-1">{t('Virtuality')}</th>}
-              {mode === 'change' && <th className="px-1">{t('Move column')}</th>}
+              {/* `fields_meta is defined` holds in every mode (null in create/add) */}
+              <th className="px-1">{t('Move column')}</th>
               {mimeTypes !== null && (
                 <>
                   <th className="px-1">{t('Media type')}</th>
@@ -749,28 +844,54 @@ export function ColumnForm({
                 {mode !== 'change' && (
                   <td className="p-1">
                     <select
+                      name={`field_key[${i}]`}
                       className="input"
                       aria-label={t('Index')}
-                      value={r.key}
-                      onChange={(e) => update(i, { key: e.target.value })}
+                      value={`${r.key}_${i}`}
+                      // column_attributes.twig: the option values carry the row number (none_0, primary_0…)
+                      onChange={(e) =>
+                        setRows(keyChanged(rows, i, e.target.value.replace(/_\d+$/, ''), true))
+                      }
                     >
-                      <option value="none">---</option>
-                      <option value="primary" title={t('Primary')}>
-                        PRIMARY
-                      </option>
-                      <option value="unique" title={t('Unique')}>
-                        UNIQUE
-                      </option>
-                      <option value="index" title={t('Index')}>
-                        INDEX
-                      </option>
-                      <option value="fulltext" title={t('Fulltext')}>
-                        FULLTEXT
-                      </option>
-                      <option value="spatial" title={t('Spatial')}>
-                        SPATIAL
-                      </option>
+                      {(
+                        [
+                          ['none', '---', undefined],
+                          ['primary', 'PRIMARY', t('Primary')],
+                          ['unique', 'UNIQUE', t('Unique')],
+                          ['index', 'INDEX', t('Index')],
+                          ['fulltext', 'FULLTEXT', t('Fulltext')],
+                          ['spatial', 'SPATIAL', t('Spatial')],
+                        ] as const
+                      ).map(([key, label, title]) => (
+                        <option key={key} value={`${key}_${i}`} title={title}>
+                          {label}
+                        </option>
+                      ))}
                     </select>
+                    {labels.has(i) && (
+                      // the index's name (or its columns) under the select; reopens the index form
+                      <Button
+                        variant="link"
+                        id={`index_name_${i}_8`}
+                        className="ajax show_index_dialog block h-auto p-0"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          const prev = parseDataIndex(r.dataIndex)
+                          const index = prev === null ? undefined : lists[prev.choice][prev.arrayIndex]
+                          if (prev === null || index === undefined) return
+                          setPending({
+                            kind: 'form',
+                            choice: prev.choice,
+                            arrayIndex: prev.arrayIndex,
+                            colIndex: -1,
+                            targets: index.columns.map((c) => c.colIndex),
+                            initial: index,
+                          })
+                        }}
+                      >
+                        <small>{labels.get(i)}</small>
+                      </Button>
+                    )}
                   </td>
                 )}
                 <td className="p-1 text-center">
@@ -779,7 +900,17 @@ export function ColumnForm({
                     aria-label="AUTO_INCREMENT"
                     name={`field_extra[${i}]`}
                     checked={r.autoIncrement}
-                    onChange={(e) => update(i, { autoIncrement: e.target.checked })}
+                    onChange={(e) => {
+                      const next = rows.map((x, j) =>
+                        j === i ? { ...x, autoIncrement: e.target.checked } : x,
+                      )
+                      // functions.ts input[value=AUTO_INCREMENT]: none_N becomes primary_N, change([false])
+                      setRows(
+                        e.target.checked && mode !== 'change' && r.key === 'none'
+                          ? keyChanged(next, i, 'primary', false)
+                          : next,
+                      )
+                    }}
                   />
                 </td>
                 <td className="p-1">
@@ -819,27 +950,25 @@ export function ColumnForm({
                     )}
                   </td>
                 )}
-                {mode === 'change' && (
-                  <td className="p-1">
-                    <select
-                      className="input"
-                      aria-label={t('Move column')}
-                      name={`field_move_to[${i}]`}
-                      value={r.moveTo}
-                      onChange={(e) => update(i, { moveTo: e.target.value })}
-                    >
-                      {(r.moveOptions ?? []).map((o) => (
-                        <option key={o.value} value={o.value} disabled={o.disabled}>
-                          {o.value === ''
-                            ? ' '
-                            : o.value === '-first'
-                              ? t('first')
-                              : t('after %s', `\`${o.after}\``)}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                )}
+                <td className="p-1">
+                  <select
+                    className="input"
+                    aria-label={t('Move column')}
+                    name={`field_move_to[${i}]`}
+                    value={r.moveTo}
+                    onChange={(e) => update(i, { moveTo: e.target.value })}
+                  >
+                    {(r.moveOptions ?? NO_MOVE).map((o) => (
+                      <option key={o.value} value={o.value} disabled={o.disabled}>
+                        {o.value === ''
+                          ? ' '
+                          : o.value === '-first'
+                            ? t('first')
+                            : t('after %s', `\`${o.after}\``)}
+                      </option>
+                    ))}
+                  </select>
+                </td>
                 {mimeTypes !== null && (
                   <MimeCells
                     index={i}
@@ -891,7 +1020,7 @@ export function ColumnForm({
                 <select
                   className="input"
                   name="tbl_storage_engine"
-                  aria-label={t('Storage Engine:')}
+                  aria-label={t('Storage engine')}
                   value={tableOptions.engine}
                   onChange={(e) => setTableOptions({ ...tableOptions, engine: e.target.value })}
                 >
@@ -956,10 +1085,11 @@ export function ColumnForm({
           </Button>
         </div>
       </div>
-      {/* showWarningForIntTypes: only while a row has a type whose width is ignored
-          (Compatibility::isIntegersSupportLength, data-length-restricted) */}
+      {/* functions.ts showWarningForIntTypes: shown while a selected type is length-restricted */}
       {options.integersLengthRestricted &&
-        rows.some((r) => LENGTH_RESTRICTED.includes(r.type.toUpperCase())) && (
+        rows.some((r) =>
+          options.types.some((o) => !('separator' in o) && o.type === r.type && o.lengthRestricted),
+        ) && (
           <MessageBox id="length_not_allowed" type="notice" flush className="mt-2">
             {t(
               'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
@@ -968,7 +1098,54 @@ export function ColumnForm({
           </MessageBox>
         )}
       {error !== null && <MessageBox {...error} flush className="mt-2" />}
-      <PreviewSqlDialog sql={preview} onClose={() => setPreview(null)} />
+      <PreviewSqlDialog highlight sql={preview} onClose={() => setPreview(null)} />
+      {pending?.kind === 'form' && (
+        <AddIndexFormDialog
+          key={`${pending.choice}-${pending.arrayIndex}-${pending.colIndex}`}
+          scope={{ server, db: params.db ?? '', table: params.table ?? '' }}
+          targets={targetsOf(pending.targets)}
+          initial={pending.initial}
+          sliders={options.sliders}
+          onGo={(index) => {
+            setPending(null)
+            setRows(addColumnToIndex(rows, pending.choice, pending.arrayIndex, pending.colIndex, index))
+          }}
+          onCancel={() => cancelIndex(pending.colIndex)}
+          onClose={() => setPending(null)}
+        />
+      )}
+      {pending?.kind === 'type' && (
+        <IndexTypeDialog
+          choice={pending.choice}
+          source={lists[pending.choice]}
+          colIndex={pending.colIndex}
+          names={names}
+          onSingle={() =>
+            setPending({
+              kind: 'form',
+              choice: pending.choice,
+              arrayIndex: lists[pending.choice].length,
+              colIndex: pending.colIndex,
+              targets: [pending.colIndex],
+              initial: newIndex(pending.choice),
+            })
+          }
+          onComposite={(arrayIndex) => {
+            const index = lists[pending.choice][arrayIndex]
+            if (index === undefined) return
+            setPending({
+              kind: 'form',
+              choice: pending.choice,
+              arrayIndex,
+              colIndex: pending.colIndex,
+              targets: [...index.columns.map((c) => c.colIndex), pending.colIndex],
+              initial: index,
+            })
+          }}
+          onCancel={() => cancelIndex(pending.colIndex)}
+          onClose={() => setPending(null)}
+        />
+      )}
       {enumFor !== null && (
         <EnumEditor
           value={rows[enumFor]?.length ?? ''}

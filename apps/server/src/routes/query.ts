@@ -16,6 +16,7 @@ import { MetaRequest } from '../metadata/service.ts'
 import { type SqlBoxResult, runSqlBox } from '../query/pipeline.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { simulateDml } from '../query/simulate.ts'
+import { setTrackedDatabase } from '../table/tracker.ts'
 import type { ServerEnv } from './server.ts'
 import { withConn } from './sql.ts'
 
@@ -38,6 +39,8 @@ queryRoutes.post('/', async (c) => {
   ) {
     throw new ValidationError(`${c.get('tr').gettext('Missing parameter:')} sql_query`)
   }
+  // Current::$database of the statements' tracking
+  await setTrackedDatabase(c, req.db ?? '')
   const executed = c.get('executed')
   const server = c.get('serverIndex')
   const conn = await pools.acquire(
