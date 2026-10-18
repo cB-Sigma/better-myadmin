@@ -181,7 +181,7 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
     })
   }
 
-  it('edit = backup, DROP, CREATE (with privilege adjustment)', async () => {
+  it('edit = backup, DROP, CREATE (with privilege adjustment) [p05-fe4110]', async () => {
     const r: Parameters<typeof routinePairs>[0] = {
       mode: 'edit',
       name: 'p_add2',
@@ -221,7 +221,7 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
     expect(html).toContain(d.definition.replaceAll('"', '&quot;'))
   })
 
-  it('execute a procedure and a function', async () => {
+  it('execute a procedure and a function [p05-0167fe]', async () => {
     const p = await both(
       h,
       () =>
@@ -269,7 +269,7 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
     expect(String(f.p.message)).toContain(`<td>${rs[0]?.rows[0]?.[0]}</td>`)
   })
 
-  it('export wraps SHOW CREATE in DELIMITER', async () => {
+  it('export wraps SHOW CREATE in DELIMITER [p05-73e5bf]', async () => {
     const res = await both(
       h,
       () =>
@@ -363,7 +363,7 @@ describe.skipIf(!pmaReachable)('parity: events', () => {
     })
   }
 
-  it('list and export', async () => {
+  it('list and export [p05-cfe947]', async () => {
     const res = await both(
       h,
       () => h.pma.getJson('/database/events', { db: P, export_item: '1', item_name: 'e2' }),

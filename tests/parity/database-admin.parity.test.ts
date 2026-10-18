@@ -106,7 +106,7 @@ const centralPost = (form: Array<[string, string]>) =>
 const centralReq = (body: unknown) => h.bma.req('POST', bma('/central-columns'), body)
 
 describe.skipIf(!pmaReachable)('parity: central columns', () => {
-  it('Structure → add the columns of tables to the central list (duplicates noticed)', async () => {
+  it('Structure → add the columns of tables to the central list (duplicates noticed) [p05-36e33d]', async () => {
     const r = await centralStep(
       () =>
         h.pma.postJson('/database/structure/central-columns/add', [
@@ -286,7 +286,7 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
     )
   })
 
-  it('Structure → make consistent with the central list (referenced columns kept)', async () => {
+  it('Structure → make consistent with the central list (referenced columns kept) [p05-36e33d]', async () => {
     await h.root.query(
       `UPDATE phpmyadmin.pma__central_columns SET col_length = '30', col_default = 'y' WHERE col_name = 'name' AND db_name IN ('${P}', '${B}')`,
     )
@@ -362,7 +362,7 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
     expect(String(r.p)).toContain('Version 1 was created for selected tables, tracking is active for them.')
   })
 
-  it('the page: tracked and untracked tables, the database log', async () => {
+  it('the page: tracked and untracked tables, the database log [p05-504fe5 p05-edc4ef]', async () => {
     const r = await both(
       h,
       () => h.pma.getPage('/database/tracking', { db: P }),
@@ -385,7 +385,7 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
     expect(b.log === null).toBe(!p.includes('Database Log'))
   })
 
-  it('delete tracking of one table, then of the selected ones', async () => {
+  it('delete tracking of one table, then of the selected ones [p05-e6492b]', async () => {
     const one = await both(
       h,
       () =>
@@ -418,7 +418,7 @@ describe.skipIf(!pmaReachable)('parity: tracking (database)', () => {
 })
 
 describe.skipIf(!pmaReachable)('parity: data dictionary and privileges', () => {
-  it('data dictionary: tables, column types, defaults, links and indexes', async () => {
+  it('data dictionary: tables, column types, defaults, links and indexes [p05-8e2280]', async () => {
     const r = await both(
       h,
       () => h.pma.getPage('/database/data-dictionary', { db: P }),

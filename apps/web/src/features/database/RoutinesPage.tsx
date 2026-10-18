@@ -370,8 +370,25 @@ function RoutineEditor({
                   </thead>
                   <tbody>
                     {r.params.map((p, i) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: parameters are positional (item_param_*[i])
-                      <tr key={i}>
+                      <tr
+                        // biome-ignore lint/suspicious/noArrayIndexKey: parameters are positional (item_param_*[i])
+                        key={i}
+                        // routines.ts: the parameter rows are sortable by drag (jQuery UI sortable)
+                        draggable
+                        className="cursor-move"
+                        data-testid={`routine-param-${i}`}
+                        onDragStart={(e) => e.dataTransfer.setData('text/plain', String(i))}
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => {
+                          e.preventDefault()
+                          const from = Number(e.dataTransfer.getData('text/plain'))
+                          if (Number.isNaN(from) || from === i) return
+                          const next = [...r.params]
+                          const [moved] = next.splice(from, 1)
+                          if (moved !== undefined) next.splice(i, 0, moved)
+                          set({ params: next })
+                        }}
+                      >
                         {!isFunction && (
                           <td>
                             <NativeSelect
