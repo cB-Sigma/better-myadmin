@@ -1,3 +1,4 @@
+import { N_ } from '@bettermyadmin/i18n'
 import { backquote, escapeMysqlWildcards, quoteString } from '@bettermyadmin/sql-gen'
 import { type MetaConn, type Row, fetchSingleRow, fetchValue, firstColumn } from './conn.ts'
 import type {
@@ -149,7 +150,8 @@ class PmadbRecentFavorite implements RecentFavoriteBackend {
     const sqlQuery = ` REPLACE INTO ${this.table} (\`username\`, \`tables\`) VALUES (${q(username)}, ${q(json)})`
     if ((await this.conn.tryQuery(sqlQuery)) === false) {
       return {
-        error: this.kind === 'recent' ? 'Could not save recent table!' : 'Could not save favorite table!',
+        error:
+          this.kind === 'recent' ? N_('Could not save recent table!') : N_('Could not save favorite table!'),
         detail: this.conn.lastError,
       }
     }
@@ -181,7 +183,7 @@ class PmadbUiPrefs implements UiPrefsBackend {
   ): Promise<SaveResult> {
     const sqlQuery = ` REPLACE INTO ${this.table} (username, db_name, table_name, prefs) VALUES (${q(username)}, ${q(db)}, ${q(table)}, ${q(json)})`
     if ((await this.conn.tryQuery(sqlQuery)) === false) {
-      return { error: 'Could not save table UI preferences!', detail: this.conn.lastError }
+      return { error: N_('Could not save table UI preferences!'), detail: this.conn.lastError }
     }
     // remove some old rows in table_uiprefs if it exceeds the configured maximum rows
     const rowsCount = Number((await fetchValue(this.conn, `SELECT COUNT(*) FROM ${this.table}`)) || 0)

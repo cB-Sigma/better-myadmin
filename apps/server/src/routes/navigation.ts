@@ -31,7 +31,7 @@ async function withDeps<T>(c: Context<ServerEnv>, fn: (deps: NavServiceDeps) => 
     c.get('language').mysqlLocale,
   )
   try {
-    const base = { cfg, server, conn, cache: login.cache }
+    const base = { cfg, server, conn, cache: login.cache, tr: c.get('tr') }
     return await fn({ ...base, hiding: navigationHiding(base) })
   } finally {
     conn.raw.release()

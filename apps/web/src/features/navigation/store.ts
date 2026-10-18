@@ -373,8 +373,22 @@ export class NavTreeStore {
   }
 
   /** Enter: server search (FastFilter.update → request → swap). */
+  /** Lists whose fast filter search is under way (the filter's throbber, FastFilter.request). */
+  readonly searching = new Set<string>()
+
   async search(filter: NavFastFilter, ownerKey: string, text: string): Promise<void> {
     if (text === '') return
+    this.searching.add(ownerKey)
+    this.#emit()
+    try {
+      await this.#search(filter, ownerKey, text)
+    } finally {
+      this.searching.delete(ownerKey)
+      this.#emit()
+    }
+  }
+
+  async #search(filter: NavFastFilter, ownerKey: string, text: string): Promise<void> {
     if (filter.kind === 'db') {
       if (this.rootSearch !== null && this.rootSearchClause === text) return
       const r = await this.#fetch.branch({ path: [], pos: 0, searchClause: text }).catch(() => null)

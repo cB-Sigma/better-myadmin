@@ -83,6 +83,9 @@ test('expand a database, open a table, state restored after reload [p01-8e663c]'
   // collapse all, then the panel collapser hides and shows the panel
   await nav.getByRole('button', { name: 'Collapse all' }).click()
   await expect(nav.locator('[role=treeitem][data-kind=container][data-name=tables]')).toHaveCount(0)
+  // the link button: its title and icon say what a click does (hover swaps the icon)
+  const sync = page.locator('#pma_navigation_sync')
+  await expect(sync).toHaveAttribute('title', /^(Unlink from|Link with) main panel$/)
   await page.getByTitle('Hide panel').click()
   await expect(nav).toBeHidden()
   await page.getByTitle('Show panel').click()
@@ -135,10 +138,30 @@ test.describe('fast filter and paging of a container', () => {
 
     // typing filters the loaded items and hides the page selector; Enter searches the server
     await filter.fill('tbl_5')
+    // FastFilter.events.focus: focusing a typed filter selects it
+    await nav.getByRole('button', { name: 'Reload navigation panel' }).focus()
+    await filter.focus()
+    expect(await filter.evaluate((el: HTMLInputElement) => [el.selectionStart, el.selectionEnd])).toEqual([
+      0, 5,
+    ])
     await expect(pageSelect).toHaveCount(0)
     // tbl_51 … tbl_59 of this page (case-insensitive regular expression on the link text)
     await expect(tables()).toHaveCount(9)
+    // FastFilter.request: the throbber while the server searches (the answer is held back)
+    let release = () => {}
+    const held = new Promise<void>((r) => {
+      release = r
+    })
+    await page.route(/\/navigation\/branch\?/, async (route) => {
+      await held
+      await route.continue()
+    })
     await filter.press('Enter')
+    const throbber = nav.locator('.fast_filter .throbber')
+    await expect(throbber).toBeVisible()
+    await expect(throbber).toHaveAttribute('aria-label', 'Loading…')
+    release()
+    await expect(throbber).toHaveCount(0)
     // tbl_5 and tbl_50..tbl_59 across both pages; with fewer than 30 results phpMyAdmin's
     // response has no fast filter any more (the count comes from the filtered object list)
     await expect(tables()).toHaveCount(11)

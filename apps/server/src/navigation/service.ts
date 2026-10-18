@@ -1,4 +1,5 @@
 import type { NavBranchResponse, NavPath, NavSettings, NavTreeResponse } from '@bettermyadmin/contracts'
+import { type Translator, englishTranslator } from '@bettermyadmin/i18n'
 import type { AppConfig, ServerConfig } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
 import { NavDbi } from './dbi.ts'
@@ -13,6 +14,8 @@ export interface NavServiceDeps {
   /** Per-server session cache (SessionCache). */
   cache: Record<string, unknown>
   hiding: NavigationHiding | null
+  /** the request's translator (English when absent) */
+  tr?: Translator
 }
 
 /**
@@ -44,6 +47,7 @@ async function context(deps: NavServiceDeps): Promise<NavCtx> {
     server: deps.server,
     privileges: await getPrivileges(dbi),
     hiding: deps.hiding,
+    tr: deps.tr ?? englishTranslator(),
   }
 }
 
@@ -142,7 +146,7 @@ export async function navigationBranch(
   const r = await tree.renderPath()
   return {
     list: r.list === false ? null : r.list,
-    error: r.list === false ? NAVIGATION_ERROR : null,
+    error: r.list === false ? (deps.tr ?? englishTranslator()).gettext(NAVIGATION_ERROR) : null,
     searchResults: r.searchResults,
     results: r.results,
     errors: tree.errors,

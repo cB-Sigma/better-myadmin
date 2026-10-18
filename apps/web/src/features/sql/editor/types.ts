@@ -40,6 +40,15 @@ export interface SqlEditorProps {
   lint: { server: SqlFormResponse['server']; editorType?: 'event' | 'routine' | 'trigger' } | null
   /** Tables/columns of the current database and the current table (EnableAutocompleteForTablesAndColumns). */
   autocomplete: { tables: AutocompleteResponse['tables']; defaultTable: string } | null
+  /**
+   * Focus the editor once it is loaded (pma: onloadCodeMirrorEditor's `codeMirrorEditor.focus()` for
+   * the SQL box, the inline editor's `codeMirrorInlineEditor.focus()`). Skipped when the user acted
+   * (pointer or key) after the editor started loading: the CodeMirror chunk loads lazily and must
+   * not take the focus away from what the user did meanwhile.
+   */
+  autoFocus?: boolean
+  /** Internal (SqlEditor → CodeMirrorEditor): whether the loaded editor should take the focus. */
+  focusOnLoad?: () => boolean
   /** $cfg['TextareaAutoSelect']: the plain textarea selects its content on the first click. */
   autoSelect?: boolean
   /** Console dark theme. */

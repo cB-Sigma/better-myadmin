@@ -12,7 +12,7 @@ import {
 import { type ReactNode, useRef, useState } from 'react'
 import { api } from '../../../lib/api'
 import { pgettext, t } from '../../../lib/i18n'
-import { SHA256_NOTICE, STRENGTH_LABELS, passwordScore, suggestPassword } from '../../shell/home/password.ts'
+import { SHA256_NOTICE, passwordScore, strengthLabel, suggestPassword } from '../../shell/home/password.ts'
 import { InlineHtml } from '../../shell/inline-html.tsx'
 import { hostnameForPreset, thisHostData } from './privileges.ts'
 
@@ -209,7 +209,7 @@ export function LoginInformationFields({ server, login }: { server: number; logi
             />
             <span>{pgettext('Password strength', 'Strength:')}</span>
             <meter max={4} id="password_strength_meter" value={score ?? 0} />
-            <span id="password_strength">{score === null ? '' : t(STRENGTH_LABELS[score] ?? '')}</span>
+            <span id="password_strength">{strengthLabel(score)}</span>
           </span>
         </Item>
         <Item label={t('Re-type:')} htmlFor="text_pma_pw2" id="div_element_before_generate_password">

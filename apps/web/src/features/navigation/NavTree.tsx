@@ -21,10 +21,12 @@ export interface NavTreeProps {
   nodeControls?: ((node: NavNode) => ReactNode) | undefined
   /** Hover prefetch of a branch (database and container nodes). */
   onPrefetch?: ((node: NavNode) => void) | undefined
+  /** "New" under Views (li.new_view a.ajax): the create view dialog for the database */
+  onNewView?: ((db: string) => void) | undefined
 }
 
 /** The tree as one flat, virtualized list of visible rows (docs/architecture/03-frontend-architecture.md#navigation-tree). */
-export function NavTree({ store, rows, settings, nodeControls, onPrefetch }: NavTreeProps) {
+export function NavTree({ store, rows, settings, nodeControls, onPrefetch, onNewView }: NavTreeProps) {
   const parentRef = useRef<HTMLDivElement>(null)
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -74,6 +76,7 @@ export function NavTree({ store, rows, settings, nodeControls, onPrefetch }: Nav
                   pointer={settings.NavigationTreePointerEnable}
                   nodeControls={nodeControls}
                   onPrefetch={onPrefetch}
+                  onNewView={onNewView}
                 />
               ) : row.type === 'filter' ? (
                 <FilterRow row={row} store={store} />
@@ -103,15 +106,32 @@ function NodeRow({
   pointer,
   nodeControls,
   onPrefetch,
+  onNewView,
 }: {
   row: Extract<Row, { type: 'node' }>
   store: NavTreeStore
   pointer: boolean
   nodeControls?: ((node: NavNode) => ReactNode) | undefined
   onPrefetch?: ((node: NavNode) => void) | undefined
+  onNewView?: ((db: string) => void) | undefined
 }) {
   const { node, depth } = row
-  const go = useNavigate()
+  const navigate = useNavigate()
+  const newViewDb = /\bnew_view\b/.test(node.classes) ? node.link?.params.db : undefined
+  const go = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (
+      onNewView !== undefined &&
+      typeof newViewDb === 'string' &&
+      e.button === 0 &&
+      !e.ctrlKey &&
+      !e.metaKey
+    ) {
+      e.preventDefault()
+      onNewView(newViewDb)
+      return
+    }
+    navigate(e, href)
+  }
   const href = (route: string, params: NavNode['icons'][number]['params']) =>
     navHref(store.server, route, params)
   const italic = node.kind === 'container' || node.isNew
@@ -147,7 +167,10 @@ function NodeRow({
           className="flex size-4 shrink-0 items-center justify-center rounded text-fg-muted hover:text-fg"
           title={t('Expand/Collapse')}
           aria-label={t('Expand/Collapse')}
-          onClick={() => void store.toggle(node)}
+          // the throbber of a loading node takes no clicks (navigation.ts expandTreeNode)
+          onClick={() => {
+            if (!row.loading) void store.toggle(node)
+          }}
         >
           {row.loading ? (
             <LoaderCircle className="size-3.5 animate-spin" aria-hidden />
@@ -255,6 +278,10 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
         aria-label={label}
         placeholder={label}
         value={value}
+        // FastFilter.events.focus: a typed filter is selected
+        onFocus={(e) => {
+          if (e.currentTarget.value !== '') e.currentTarget.select()
+        }}
         onChange={(e) => store.setFilter(ownerKey, e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') void store.search(row.filter, ownerKey, e.currentTarget.value)
@@ -268,6 +295,12 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
       >
         X
       </button>
+      {/* FastFilter.request: the throbber while the server searches */}
+      {store.searching.has(ownerKey) && (
+        <span className="throbber" role="status" aria-label={t('Loading…')}>
+          <LoaderCircle className="size-3.5 animate-spin text-fg-muted" aria-hidden />
+        </span>
+      )}
     </div>
   )
 }

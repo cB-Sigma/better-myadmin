@@ -59,10 +59,6 @@ export function usePageSettings(reg: PageSettingsRegistration | null): void {
   }, [reg, setSettings])
 }
 
-export const UNSAVED_CHANGES = 'You have unsaved changes; are you sure you want to leave this page?'
-export const LOCK_TOOLTIP =
-  'Indicates that you have made changes to this page; you will be prompted for confirmation before abandoning changes'
-
 /** A `lock-page` form: shows the lock icon while dirty and asks before navigating away. */
 export function useLockPage(dirty: boolean): void {
   const { setLocked } = useChrome()
@@ -71,7 +67,79 @@ export function useLockPage(dirty: boolean): void {
     setLocked((n) => n + 1)
     return () => setLocked((n) => n - 1)
   }, [dirty, setLocked])
-  useBlocker({ shouldBlockFn: () => dirty && !window.confirm(UNSAVED_CHANGES), disabled: !dirty })
+  // Messages.strConfirmNavigation
+  useBlocker({
+    shouldBlockFn: () =>
+      dirty && !window.confirm(t('You have unsaved changes; are you sure you want to leave this page?')),
+    disabled: !dirty,
+    // the confirmation is for leaving through the page's links (AJAX.requestHandler), not for
+    // closing or reloading the window
+    enableBeforeUnload: false,
+  })
+}
+
+// (an <input> without a type attribute is a text input too)
+const LOCK_FIELDS =
+  'textarea, input[type="text"], input:not([type]), input[type="number"], select, input[type="checkbox"], input[type="radio"]'
+
+type LockField = HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+
+function lockValue(el: LockField): string {
+  return el instanceof HTMLInputElement && (el.type === 'checkbox' || el.type === 'radio')
+    ? String(el.checked)
+    : el.value
+}
+
+/**
+ * A `form.lock-page`: a field whose committed value (its `change` event) differs from the value it
+ * had is a locked target; while there is one the lock icon shows and leaving asks first. Checkbox
+ * changes do not lock, a reset or a submit of the form releases the lock. `editorDirty` is the
+ * CodeMirror lock (the query editor is not clean). Returns the form's ref.
+ * pma: resources/js/modules/ajax.ts (lockPageHandler, resetLock, the form.lock-page keyup / change /
+ *      reset handlers), functions.ts::onloadLockPage (lock-id, val-hash)
+ */
+export function useFormLock(editorDirty = false): (form: HTMLFormElement | null) => void {
+  const [form, setForm] = useState<HTMLFormElement | null>(null)
+  const [locked, setLocked] = useState(false)
+  useEffect(() => {
+    if (form === null) return
+    // val-hash: the value a field had before the user touched it
+    const initial = new WeakMap<Element, string>()
+    const targets = new Set<Element>()
+    const field = (t: EventTarget | null): LockField | null =>
+      t instanceof Element && t.matches(LOCK_FIELDS) ? (t as LockField) : null
+    const remember = (e: Event) => {
+      const el = field(e.target)
+      if (el !== null && !initial.has(el)) initial.set(el, lockValue(el))
+    }
+    const onChange = (e: Event) => {
+      const el = field(e.target)
+      // lockPageHandler: checkbox events are not considered
+      if (el === null || (el instanceof HTMLInputElement && el.type === 'checkbox')) return
+      const old = initial.get(el)
+      if (old === undefined) return
+      if (lockValue(el) !== old) targets.add(el)
+      else targets.delete(el)
+      setLocked(targets.size > 0)
+    }
+    // resetLock: the form's reset, and a submit (AJAX.requestHandler resets before the request)
+    const release = () => {
+      targets.clear()
+      setLocked(false)
+    }
+    form.addEventListener('focusin', remember)
+    form.addEventListener('change', onChange)
+    form.addEventListener('reset', release)
+    form.addEventListener('submit', release)
+    return () => {
+      form.removeEventListener('focusin', remember)
+      form.removeEventListener('change', onChange)
+      form.removeEventListener('reset', release)
+      form.removeEventListener('submit', release)
+    }
+  }, [form])
+  useLockPage(locked || editorDirty)
+  return setForm
 }
 
 /** `#lock_page_icon`, `#page_settings_icon`, `#goto_pagetop` (base.twig #page_nav_icons). */
@@ -80,7 +148,17 @@ export function PageIcons({ onTop }: { onTop: () => void }) {
   const [open, setOpen] = useState(false)
   return (
     <span className="flex items-center gap-1.5">
-      <span id="lock_page_icon">{locked > 0 && <PmaIcon name="s_lock" alt={LOCK_TOOLTIP} />}</span>
+      <span id="lock_page_icon">
+        {locked > 0 && (
+          // Messages.strLockToolTip
+          <PmaIcon
+            name="s_lock"
+            alt={t(
+              'Indicates that you have made changes to this page; you will be prompted for confirmation before abandoning changes',
+            )}
+          />
+        )}
+      </span>
       {settings !== null && (
         <span id="page_settings_icon">
           <button

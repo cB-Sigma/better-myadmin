@@ -4,6 +4,7 @@
  * pma: src/Navigation/Nodes/*.php
  */
 import type { NavNode } from '@bettermyadmin/contracts'
+import type { Gettext, Translator } from '@bettermyadmin/i18n'
 import { extractColumnSpec, php } from '@bettermyadmin/mysql-types'
 import { backquote, escapeMysqlWildcards } from '@bettermyadmin/sql-gen'
 import type { AppConfig, ServerConfig } from '../config.ts'
@@ -33,6 +34,8 @@ export interface NavCtx {
   server: ServerConfig
   privileges: UserPrivileges
   hiding: NavigationHiding | null
+  /** the request's language: node names and titles are translated like phpMyAdmin's __() */
+  tr: Translator
 }
 
 export type NodeType = 'container' | 'object'
@@ -447,8 +450,7 @@ export class NodeDatabaseContainer extends Node {
       this.separatorDepth = 10000
     }
     if (!ctx.privileges.isCreateDatabase || !cfg.ShowCreateDb) return
-    // _pgettext('Create new database', 'New')
-    const newLabel = 'New'
+    const newLabel = ctx.tr.pgettext('Create new database', 'New')
     const node = this.getInstanceForNewNode(newLabel, 'new_database italics')
     node.icon = new Icon('b_newdb', newLabel, '/server/databases')
     node.link = new Link(newLabel, '/server/databases')
@@ -464,8 +466,8 @@ export class NodeDatabase extends Node {
 
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('s_db', 'Database operations', '/database/operations', { db: null })
-    this.link = new Link('Structure', ctx.cfg.DefaultTabDatabase, { db: null })
+    this.icon = new Icon('s_db', ctx.tr.gettext('Database operations'), '/database/operations', { db: null })
+    this.link = new Link(ctx.tr.gettext('Structure'), ctx.cfg.DefaultTabDatabase, { db: null })
     this.classes = 'database'
     this.urlParamName = 'db'
     this.#objectFetcher = new ObjectFetcher(ctx)
@@ -597,85 +599,97 @@ function newChild(container: Node, label: string, classes: string, icon: Icon, l
 
 export class NodeTableContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Tables')
-    this.icon = new Icon('b_browse', 'Tables', '/database/structure', { tbl_type: 'table', db: null })
+    super(ctx, ctx.tr.gettext('Tables'))
+    this.icon = new Icon('b_browse', ctx.tr.gettext('Tables'), '/database/structure', {
+      tbl_type: 'table',
+      db: null,
+    })
     this.link = new Link('', '/database/structure', { tbl_type: 'table', db: null })
     this.realName = 'tables'
     this.classes = 'tableContainer subContainer'
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new table', 'New'),
       'new_table italics',
-      new Icon('b_table_add', 'New', '/table/create', { db: null }),
-      new Link('New', '/table/create', { db: null }),
+      new Icon('b_table_add', ctx.tr.pgettext('Create new table', 'New'), '/table/create', { db: null }),
+      new Link(ctx.tr.pgettext('Create new table', 'New'), '/table/create', { db: null }),
     )
   }
 }
 
 export class NodeViewContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Views')
-    this.icon = new Icon('b_views', 'Views', '/database/structure', { tbl_type: 'view', db: null })
+    super(ctx, ctx.tr.gettext('Views'))
+    this.icon = new Icon('b_views', ctx.tr.gettext('Views'), '/database/structure', {
+      tbl_type: 'view',
+      db: null,
+    })
     this.link = new Link('', '/database/structure', { tbl_type: 'view', db: null })
     this.classes = 'viewContainer subContainer'
     this.realName = 'views'
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new view', 'New'),
       'new_view italics',
-      new Icon('b_view_add', 'New', '/view/create', { db: null }),
-      new Link('New', '/view/create', { db: null }),
+      new Icon('b_view_add', ctx.tr.pgettext('Create new view', 'New'), '/view/create', { db: null }),
+      new Link(ctx.tr.pgettext('Create new view', 'New'), '/view/create', { db: null }),
     )
   }
 }
 
 export class NodeFunctionContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Functions')
-    this.icon = new Icon('b_routines', 'Functions', '/database/routines', { type: 'FUNCTION', db: null })
+    super(ctx, ctx.tr.gettext('Functions'))
+    this.icon = new Icon('b_routines', ctx.tr.gettext('Functions'), '/database/routines', {
+      type: 'FUNCTION',
+      db: null,
+    })
     this.link = new Link('', '/database/routines', { type: 'FUNCTION', db: null })
     this.realName = 'functions'
     const p = { item_type: 'FUNCTION', add_item: 1, db: null }
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new function', 'New'),
       'new_function italics',
-      new Icon('b_routine_add', 'New', '/database/routines', p),
-      new Link('New', '/database/routines', p),
+      new Icon('b_routine_add', ctx.tr.pgettext('Create new function', 'New'), '/database/routines', p),
+      new Link(ctx.tr.pgettext('Create new function', 'New'), '/database/routines', p),
     )
   }
 }
 
 export class NodeProcedureContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Procedures')
-    this.icon = new Icon('b_routines', 'Procedures', '/database/routines', { type: 'PROCEDURE', db: null })
+    super(ctx, ctx.tr.gettext('Procedures'))
+    this.icon = new Icon('b_routines', ctx.tr.gettext('Procedures'), '/database/routines', {
+      type: 'PROCEDURE',
+      db: null,
+    })
     this.link = new Link('', '/database/routines', { type: 'PROCEDURE', db: null })
     this.realName = 'procedures'
     const p = { add_item: 1, db: null }
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new procedure', 'New'),
       'new_procedure italics',
-      new Icon('b_routine_add', 'New', '/database/routines', p),
-      new Link('New', '/database/routines', p),
+      new Icon('b_routine_add', ctx.tr.pgettext('Create new procedure', 'New'), '/database/routines', p),
+      new Link(ctx.tr.pgettext('Create new procedure', 'New'), '/database/routines', p),
     )
   }
 }
 
 export class NodeEventContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Events')
-    this.icon = new Icon('b_events', 'Events', '/database/events', { db: null })
+    super(ctx, ctx.tr.gettext('Events'))
+    this.icon = new Icon('b_events', ctx.tr.gettext('Events'), '/database/events', { db: null })
     this.link = new Link('', '/database/events', { db: null })
     this.realName = 'events'
     const p = { add_item: 1, db: null }
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new event', 'New'),
       'new_event italics',
-      new Icon('b_event_add', 'New', '/database/events', p),
-      new Link('New', '/database/events', p),
+      new Icon('b_event_add', ctx.tr.pgettext('Create new event', 'New'), '/database/events', p),
+      new Link(ctx.tr.pgettext('Create new event', 'New'), '/database/events', p),
     )
   }
 }
@@ -687,10 +701,10 @@ export class NodeTable extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
     const cfg = ctx.cfg
-    const icon = NodeTable.#addIcon(cfg.NavigationTreeDefaultTabTable, { db: null, table: null })
+    const icon = NodeTable.#addIcon(ctx, cfg.NavigationTreeDefaultTabTable, { db: null, table: null })
     if (icon !== null) this.icon = icon
-    this.secondIcon = NodeTable.#addIcon(cfg.NavigationTreeDefaultTabTable2, { db: null, table: null })
-    this.link = new Link(titleForTarget(cfg.DefaultTabTable), cfg.DefaultTabTable, {
+    this.secondIcon = NodeTable.#addIcon(ctx, cfg.NavigationTreeDefaultTabTable2, { db: null, table: null })
+    this.link = new Link(titleForTarget(ctx.tr, cfg.DefaultTabTable), cfg.DefaultTabTable, {
       pos: 0,
       db: null,
       table: null,
@@ -707,18 +721,18 @@ export class NodeTable extends NodeDatabaseChild {
     return 'table'
   }
 
-  static #addIcon(page: string, params: Params): Icon | null {
+  static #addIcon(ctx: NavCtx, page: string, params: Params): Icon | null {
     switch (page) {
       case '/table/structure':
-        return new Icon('b_props', 'Structure', page, params)
+        return new Icon('b_props', ctx.tr.gettext('Structure'), page, params)
       case '/table/search':
-        return new Icon('b_search', 'Search', page, params)
+        return new Icon('b_search', ctx.tr.gettext('Search'), page, params)
       case '/table/change':
-        return new Icon('b_insrow', 'Insert', page, params)
+        return new Icon('b_insrow', ctx.tr.gettext('Insert'), page, params)
       case '/table/sql':
-        return new Icon('b_sql', 'SQL', page, params)
+        return new Icon('b_sql', ctx.tr.gettext('SQL'), page, params)
       case '/sql':
-        return new Icon('b_browse', 'Browse', page, params)
+        return new Icon('b_browse', ctx.tr.gettext('Browse'), page, params)
       default:
         return null
     }
@@ -837,23 +851,23 @@ export class NodeTable extends NodeDatabaseChild {
 }
 
 /** pma: src/Util.php::getTitleForTarget */
-export function titleForTarget(target: string): string {
+export function titleForTarget(tr: Gettext, target: string): string {
   switch (target) {
     case '/table/structure':
     case '/database/structure':
-      return 'Structure'
+      return tr.gettext('Structure')
     case '/table/sql':
     case '/database/sql':
-      return 'SQL'
+      return tr.gettext('SQL')
     case '/table/search':
     case '/database/search':
-      return 'Search'
+      return tr.gettext('Search')
     case '/table/change':
-      return 'Insert'
+      return tr.gettext('Insert')
     case '/sql':
-      return 'Browse'
+      return tr.gettext('Browse')
     case '/database/operations':
-      return 'Operations'
+      return tr.gettext('Operations')
     default:
       return ''
   }
@@ -862,7 +876,7 @@ export function titleForTarget(target: string): string {
 export class NodeView extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_props', 'View', '/table/structure', { db: null, table: null })
+    this.icon = new Icon('b_props', ctx.tr.gettext('View'), '/table/structure', { db: null, table: null })
     this.link = new Link('', '/sql', { pos: 0, db: null, table: null })
     this.classes = 'view'
     this.urlParamName = 'table'
@@ -880,7 +894,7 @@ export class NodeView extends NodeDatabaseChild {
 export class NodeProcedure extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_routines', 'Procedure', '/database/routines', {
+    this.icon = new Icon('b_routines', ctx.tr.gettext('Procedure'), '/database/routines', {
       item_type: 'PROCEDURE',
       execute_dialog: 1,
       db: null,
@@ -908,7 +922,7 @@ export class NodeProcedure extends NodeDatabaseChild {
 export class NodeFunction extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_routines', 'Function', '/database/routines', {
+    this.icon = new Icon('b_routines', ctx.tr.gettext('Function'), '/database/routines', {
       item_type: 'FUNCTION',
       execute_dialog: 1,
       db: null,
@@ -936,7 +950,11 @@ export class NodeFunction extends NodeDatabaseChild {
 export class NodeEvent extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_events', 'Event', '/database/events', { edit_item: 1, db: null, item_name: null })
+    this.icon = new Icon('b_events', ctx.tr.gettext('Event'), '/database/events', {
+      edit_item: 1,
+      db: null,
+      item_name: null,
+    })
     this.link = new Link('', '/database/events', { edit_item: 1, db: null, item_name: null })
     this.classes = 'event'
     this.urlParamName = 'item_name'
@@ -953,51 +971,51 @@ export class NodeEvent extends NodeDatabaseChild {
 
 export class NodeColumnContainer extends Node {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Columns', 'container')
-    this.icon = new Icon('pause', 'Columns', '/table/structure', { db: null, table: null })
+    super(ctx, ctx.tr.gettext('Columns'), 'container')
+    this.icon = new Icon('pause', ctx.tr.gettext('Columns'), '/table/structure', { db: null, table: null })
     this.link = new Link('', '/table/structure', { db: null, table: null })
     this.realName = 'columns'
     const p = { field_where: 'last', after_field: '', db: null, table: null }
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new column', 'New'),
       'new_column italics',
-      new Icon('b_column_add', 'New', '/table/add-field', p),
-      new Link('New', '/table/add-field', p),
+      new Icon('b_column_add', ctx.tr.pgettext('Create new column', 'New'), '/table/add-field', p),
+      new Link(ctx.tr.pgettext('Create new column', 'New'), '/table/add-field', p),
     )
   }
 }
 
 export class NodeIndexContainer extends Node {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Indexes', 'container')
-    this.icon = new Icon('b_index', 'Indexes', '/table/structure', { db: null, table: null })
+    super(ctx, ctx.tr.gettext('Indexes'), 'container')
+    this.icon = new Icon('b_index', ctx.tr.gettext('Indexes'), '/table/structure', { db: null, table: null })
     this.link = new Link('', '/table/structure', { db: null, table: null })
     this.realName = 'indexes'
     const p = { create_index: 1, added_fields: 2, db: null, table: null }
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new index', 'New'),
       'new_index italics',
-      new Icon('b_index_add', 'New', '/table/indexes', p),
-      new Link('New', '/table/indexes', p),
+      new Icon('b_index_add', ctx.tr.pgettext('Create new index', 'New'), '/table/indexes', p),
+      new Link(ctx.tr.pgettext('Create new index', 'New'), '/table/indexes', p),
     )
   }
 }
 
 export class NodeTriggerContainer extends Node {
   constructor(ctx: NavCtx) {
-    super(ctx, 'Triggers', 'container')
-    this.icon = new Icon('b_triggers', 'Triggers', '/triggers', { db: null, table: null })
+    super(ctx, ctx.tr.gettext('Triggers'), 'container')
+    this.icon = new Icon('b_triggers', ctx.tr.gettext('Triggers'), '/triggers', { db: null, table: null })
     this.link = new Link('', '/triggers', { db: null, table: null })
     this.realName = 'triggers'
     const p = { add_item: 1, db: null }
     newChild(
       this,
-      'New',
+      ctx.tr.pgettext('Create new trigger', 'New'),
       'new_trigger italics',
-      new Icon('b_trigger_add', 'New', '/triggers', p),
-      new Link('New', '/triggers', p),
+      new Icon('b_trigger_add', ctx.tr.pgettext('Create new trigger', 'New'), '/triggers', p),
+      new Link(ctx.tr.pgettext('Create new trigger', 'New'), '/triggers', p),
     )
   }
 }
@@ -1019,8 +1037,8 @@ export class NodeColumn extends Node {
     this.displayName = NodeColumn.#getDisplayName(item)
     const icon = item.key === 'PRI' ? 'b_primary' : item.key === 'UNI' ? 'bd_primary' : 'pause'
     const p = { change_column: 1, db: null, table: null, field: null }
-    this.icon = new Icon(icon, 'Column', '/table/structure/change', p)
-    this.link = new Link('Structure', '/table/structure/change', p)
+    this.icon = new Icon(icon, ctx.tr.gettext('Column'), '/table/structure/change', p)
+    this.link = new Link(ctx.tr.gettext('Structure'), '/table/structure/change', p)
     this.urlParamName = 'field'
   }
 
@@ -1041,7 +1059,11 @@ export class NodeColumn extends Node {
 export class NodeIndex extends Node {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_index', 'Index', '/table/indexes', { db: null, table: null, index: null })
+    this.icon = new Icon('b_index', ctx.tr.gettext('Index'), '/table/indexes', {
+      db: null,
+      table: null,
+      index: null,
+    })
     this.link = new Link('', '/table/indexes', { db: null, table: null, index: null })
     this.classes = 'index'
     this.urlParamName = 'index'
@@ -1051,7 +1073,11 @@ export class NodeIndex extends Node {
 export class NodeTrigger extends Node {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_triggers', 'Trigger', '/triggers', { export_item: 1, db: null, item_name: null })
+    this.icon = new Icon('b_triggers', ctx.tr.gettext('Trigger'), '/triggers', {
+      export_item: 1,
+      db: null,
+      item_name: null,
+    })
     this.link = new Link('', '/triggers', { edit_item: 1, db: null, item_name: null })
     this.classes = 'trigger'
     this.urlParamName = 'item_name'

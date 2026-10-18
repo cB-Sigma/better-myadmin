@@ -20,6 +20,9 @@ import { ErrorReporting, PageErrorBoundary } from '../errors/ErrorReporting.tsx'
 import { ShortcutLayer } from '../hotkeys/useShortcuts.tsx'
 import { PageChromeProvider, PageIcons } from '../page-chrome.tsx'
 import { useScopeParams, useServerScope } from '../scope.ts'
+import { CheckAllRanges } from '../session/CheckAllRanges.tsx'
+import { IdleCheck } from '../session/IdleCheck.tsx'
+import { RequestErrors } from '../session/RequestErrors.tsx'
 import { useThemeState } from '../theme/theme.ts'
 import { pageTitle } from '../title.ts'
 
@@ -154,6 +157,9 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
             <Toaster />
             <ShortcutLayer server={server} db={db} table={table} disabled={cfg.DisableShortcutKeys} />
             <ErrorReporting server={server} setting={cfg.SendErrorReports} />
+            <RequestErrors />
+            <IdleCheck />
+            <CheckAllRanges />
           </PageChromeProvider>
         </ConfirmProvider>
       </TooltipProvider>

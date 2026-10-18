@@ -5,16 +5,27 @@ import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { CircleHelp, Database } from 'lucide-react'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { PROJECT_URL } from '../../lib/config'
+import { PROJECT_URL, useConfig } from '../../lib/config'
 import { Trans, t, useLanguage } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { LanguageLabel, LanguageSelect } from './LanguageSelect'
+import { DemoServerCard, isDemo } from './session/DemoNotice'
 
 /**
  * Cookie-auth login form.
  * pma: resources/templates/login/form.twig, src/Plugins/Auth/AuthenticationCookie.php::showLoginForm
  */
-export function LoginPage({ state }: { state: AuthState }) {
+export function LoginPage({
+  state,
+  error: shownError,
+  onLoggedIn,
+}: {
+  state: AuthState
+  /** a failure shown above the form (the inactivity logout of the expired-login form) */
+  error?: string
+  /** after logging in (the expired-login form goes on with the page) */
+  onLoggedIn?: () => void
+}) {
   const qc = useQueryClient()
   const [server, setServer] = useState(state.server)
   const [username, setUsername] = useState(state.recalledUser ?? '')
@@ -25,6 +36,7 @@ export function LoginPage({ state }: { state: AuthState }) {
   const { state: lang } = useLanguage()
   const navigate = useNavigate()
   const pathname = useRouterState({ select: (r) => r.location.pathname })
+  const cfg = useConfig()
 
   // focus the password field when a username is prefilled, else the username (functions.ts)
   // biome-ignore lint/correctness/useExhaustiveDependencies: focus once on mount, like functions.ts
@@ -47,10 +59,12 @@ export function LoginPage({ state }: { state: AuthState }) {
         ...(captchaToken !== undefined ? { captchaToken } : {}),
       }),
     onSuccess: async (r) => {
+      onLoggedIn?.()
       // rememberCredentials: the chosen server opens (index.php?route=/&server=N); the page of the
-      // URL is kept only when it belongs to that server (a login after the session expired)
+      // URL is kept when it belongs to that server, and always after the idle check's login
+      // (session_timedout: no redirect)
       const shown = /^\/s\/(\d+)(\/|$)/.exec(pathname)
-      if (shown === null || Number(shown[1]) !== r.server) {
+      if (onLoggedIn === undefined && (shown === null || Number(shown[1]) !== r.server)) {
         await navigate({ to: '/s/$server', params: { server: r.server } })
       }
       await qc.invalidateQueries({ queryKey: qk.auth })
@@ -81,12 +95,25 @@ export function LoginPage({ state }: { state: AuthState }) {
   let error: string | null = null
   if (login.error instanceof ApiError) error = login.error.message
   else if (login.error) error = login.error.message
+  else if (shownError !== undefined && shownError !== '') error = shownError
   else if (state.sessionExpired) error = t('Your session has expired. Please log in again.')
 
   return (
     <div className="mx-auto max-w-md px-4 py-10">
       <LoginHeader />
+      {isDemo(cfg) && <DemoServerCard />}
 
+      {/* login/header.twig #js-https-mismatch: shown when the browser and the server disagree */}
+      {(window.location.protocol === 'https:') !== state.isHttps && (
+        <MessageBox
+          id="js-https-mismatch"
+          type="error"
+          className="mb-4"
+          text={t(
+            'There is a mismatch between HTTPS indicated on the server and client. This can lead to a non working phpMyAdmin or a security risk. Please fix your server configuration to indicate HTTPS properly.',
+          )}
+        />
+      )}
       {[lang?.warning ?? null, error].map(
         (msg) => msg !== null && <MessageBox key={msg} type="error" text={msg} className="mb-4" />,
       )}

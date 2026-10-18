@@ -11,10 +11,11 @@ import {
   SafeHtml,
   buttonVariants,
   cn,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import { type FormEvent, useMemo, useState } from 'react'
+import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import { api, errorMessage } from '../../lib/api'
 import { useConfig } from '../../lib/config.ts'
 import { t, useLanguage } from '../../lib/i18n'
@@ -37,6 +38,16 @@ export function ManagePage({ server, saved }: { server: number; saved: boolean }
   const applied = usePrefsSaved(server)
   const cfg = useConfig()
   const { setLanguage } = useLanguage()
+  // config.ts: isStorageSupported('localStorage', true) warns once when the storage is unusable
+  useEffect(() => {
+    if (!localStorageSupported())
+      showMessage(
+        t(
+          'There was a problem accessing your browser storage, some features may not work properly for you. It is likely that the browser doesn\'t support storage or the quota limit has been reached. In Firefox, corrupted storage can also cause such a problem, clearing your "Offline Website Data" might help. In Safari, such problem is commonly caused by "Private Mode Browsing".',
+        ),
+        false,
+      )
+  }, [])
   // the import whose bad fields are listed (the "Do you want to import remaining settings?" step)
   const [pending, setPending] = useState<{
     json: string

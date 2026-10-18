@@ -16,7 +16,7 @@ import {
   type UiMessage,
   UiPrefsRequest,
 } from '@bettermyadmin/contracts'
-import { sprintf } from '@bettermyadmin/i18n'
+import { N_, sprintf } from '@bettermyadmin/i18n'
 import {
   type ConfigStorage,
   applyVariables,
@@ -422,7 +422,7 @@ metadataRoutes.get('/recent-favorite', (c) =>
 metadataRoutes.post('/recent-favorite/open', async (c) => {
   const req = await parseJson(c, RecentAddRequest, {})
   if (!validIdentifier(req.db) || !validIdentifier(req.table)) {
-    return c.json({ ok: false, message: msg(c, 'error', 'Invalid database or table name.') })
+    return c.json({ ok: false, message: msg(c, 'error', N_('Invalid database or table name.')) })
   }
   return withMeta(c, { db: req.db }, async (m) => {
     const meta = await m.meta()

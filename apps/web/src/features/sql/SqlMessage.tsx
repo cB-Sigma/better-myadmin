@@ -222,6 +222,7 @@ function InlineEditor({ card, env, onClose }: { card: SqlCard; env: CardEnv; onC
       <SqlEditor
         handleRef={editor}
         id="sql_query_edit"
+        autoFocus
         ariaLabel={t('SQL query')}
         initialValue={card.sql.trim()}
         rows={5}

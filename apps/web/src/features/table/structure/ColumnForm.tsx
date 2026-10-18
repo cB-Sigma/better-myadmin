@@ -17,11 +17,13 @@ import {
   PmaIcon,
   PreviewSqlDialog,
   buttonVariants,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { useFormLock } from '../../shell/page-chrome'
 import { AddIndexFormDialog, IndexTypeDialog } from './AddIndexDialog'
 import { CentralColumnPicker } from './CentralColumnPicker'
 import { PartitionEditor } from './PartitionEditor'
@@ -136,25 +138,35 @@ export type FormMode = 'create' | 'add' | 'change'
 const LENGTH_REQUIRED = ['VARCHAR', 'CHAR', 'BIT', 'VARBINARY', 'BINARY']
 const NUM_TYPES = ['TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'BIGINT', 'FLOAT', 'DOUBLE', 'DECIMAL']
 
-/** pma: functions.ts::checkTableEditForm — the alert text, or null when the form is valid */
-export function checkTableEditForm(rows: ColumnRow[], mode: FormMode, table: string): string | null {
+/**
+ * pma: functions.ts::checkTableEditForm — the problem, or null when the form is valid: an `alert`,
+ * or (an attribute a type does not take) an error notification (ajaxShowMessage)
+ */
+export function checkTableEditForm(
+  rows: ColumnRow[],
+  mode: FormMode,
+  table: string,
+): { text: string; notify: boolean } | null {
   let atLeastOne = false
   for (const r of rows) {
     if (LENGTH_REQUIRED.includes(r.type) && Number.isNaN(Number.parseInt(r.length, 10)) && r.name !== '') {
-      return t('Please enter a valid length!')
+      return { text: t('Please enter a valid length!'), notify: false }
     }
     const attr = r.attribute.toUpperCase()
     if (
-      (attr === 'UNSIGNED' || attr === 'UNSIGNED ZEROFILL') &&
-      !NUM_TYPES.includes(r.type) &&
+      (attr === 'UNSIGNED' || attr === 'UNSIGNED ZEROFILL' || attr === 'ZEROFILL') &&
+      !NUM_TYPES.includes(r.type.toUpperCase()) &&
       r.name !== ''
     ) {
-      return `${r.type} ${t('does not support the UNSIGNED attribute.')}`
+      return {
+        text: `${r.type.toUpperCase()} ${t('does not support the UNSIGNED attribute.')}`,
+        notify: true,
+      }
     }
     if (r.name.trim() !== '') atLeastOne = true
   }
-  if (!atLeastOne) return t('Missing value in the form!')
-  if (mode === 'create' && table === '') return t('Missing value in the form!')
+  if (!atLeastOne) return { text: t('Missing value in the form!'), notify: false }
+  if (mode === 'create' && table === '') return { text: t('Missing value in the form!'), notify: false }
   return null
 }
 
@@ -231,10 +243,13 @@ function EnumEditor({
         title={column === '' ? t('Values for a new column') : t('Values for column %s', `"${column}"`)}
         footer={
           <div className="flex items-center gap-2 text-sm">
+            {/* the slider (1 to 9) and "Add %d value(s)" (input.add_value) */}
             <input
               type="range"
+              className="slider"
               min={1}
-              max={20}
+              max={9}
+              aria-label={t('Add %d value(s)', add)}
               value={add}
               onChange={(e) => setAdd(Number(e.target.value))}
             />
@@ -419,12 +434,30 @@ export function ColumnForm({
   const [preview, setPreview] = useState<string | null>(null)
   const [enumFor, setEnumFor] = useState<number | null>(null)
   const [pickFor, setPickFor] = useState<number | null>(null)
+  // form.create_table_form / append_fields_form are lock-page forms (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
   const [addCount, setAddCount] = useState(defaultNumFields)
+  // submit_num_fields: the form gets more column rows
+  const addFields = () => setRows([...rows, ...Array.from({ length: Math.max(1, addCount) }, emptyRow)])
 
   const update = (i: number, patch: Partial<ColumnRow>) =>
-    setRows(rows.map((r, j) => (j === i ? { ...r, ...patch } : r)))
+    setRows(
+      rows.map((r, j) => {
+        if (j !== i) return r
+        const next = { ...r, ...patch }
+        // resetAttributeForNonNumericType (select.column_type change): UNSIGNED / ZEROFILL go with a
+        // non-numeric type
+        if (
+          patch.type !== undefined &&
+          !NUM_TYPES.includes(patch.type.toUpperCase()) &&
+          ['UNSIGNED', 'UNSIGNED ZEROFILL', 'ZEROFILL'].includes(next.attribute.toUpperCase())
+        )
+          next.attribute = ''
+        return next
+      }),
+    )
 
   // ---- the form's indexes (indexes.ts): the Index selects open #addIndexModal
   const [lists, setLists] = useState(emptyIndexLists)
@@ -514,7 +547,8 @@ export function ColumnForm({
     if (!dryRun) {
       const problem = checkTableEditForm(rows, mode, tableOptions?.table ?? '')
       if (problem !== null) {
-        window.alert(problem)
+        if (problem.notify) showMessage(problem.text, null, 'error')
+        else window.alert(problem.text)
         return
       }
       const reserved = await reservedCheck(rows.map((r) => r.name).filter((n) => n !== ''))
@@ -556,6 +590,7 @@ export function ColumnForm({
   const server = Number(params.server ?? 1)
   return (
     <form
+      ref={lockRef}
       className={mode === 'create' ? 'create_table_form' : 'append_fields_form'}
       onSubmit={(e) => {
         e.preventDefault()
@@ -587,11 +622,15 @@ export function ColumnForm({
               aria-label={t('Add column(s)')}
               value={addCount}
               onChange={(e) => setAddCount(Number(e.target.value))}
+              // Enter adds the columns instead of submitting the form (input[name=added_fields] keydown)
+              onKeyDown={(e) => {
+                if (e.key !== 'Enter') return
+                e.preventDefault()
+                addFields()
+              }}
             />
             {t('column(s)')}
-            <Button
-              onClick={() => setRows([...rows, ...Array.from({ length: Math.max(1, addCount) }, emptyRow)])}
-            >
+            <Button name="submit_num_fields" onClick={addFields}>
               {t('Go')}
             </Button>
           </span>
@@ -774,7 +813,13 @@ export function ColumnForm({
                     aria-label={t('Null')}
                     name={`field_null[${i}]`}
                     checked={r.null}
-                    onChange={(e) => update(i, { null: e.target.checked })}
+                    // validateDefaultValue: a column that is no longer nullable loses a NULL default
+                    onChange={(e) =>
+                      update(i, {
+                        null: e.target.checked,
+                        ...(!e.target.checked && r.defaultType === 'NULL' ? { defaultType: 'NONE' } : {}),
+                      })
+                    }
                   />
                 </td>
                 {mode === 'change' && (
