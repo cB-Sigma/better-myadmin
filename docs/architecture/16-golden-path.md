@@ -72,6 +72,10 @@ Put the checklist id in the test title (`it('… [p01-41d435]')`).
 
 Form builders for recurring forms are plain functions next to it (`sqlBoxForm()` for the SQL tab, `navigationForm()`), passed to `postJson`. Reachability: `isPmaUp(url)` (`pmaReachable` in server-setup.ts for the shared instance). Instance setup: `server-setup.ts` (`startHarness`); an instance with its own configuration: `pma-shadow.ts` (overrides on top of the reference config) or `pma-instance.ts` (own `config.inc.php` + session-state dumps) — prefer pma-shadow for new cases.
 
+### Exception ids
+
+<a id="exception-ids"></a>An intentional difference (`X<n>`) or a phpMyAdmin source quirk (`Q<n>`) gets a row in [docs/reference/parity-exceptions.md](../reference/parity-exceptions.md). Take the id from `pnpm parity:next-id X` (or `Q`), never by counting rows: it prints one above the highest id ever registered (retired `~~X38~~` rows included, so an id is never reused). When a merge brings in someone else's new row with the same id, renumber yours with a fresh `pnpm parity:next-id` everywhere you wrote it. `pnpm parity:check` fails when an id is registered twice or when an id written anywhere in the repository (code, tests, docs, `tests/parity/allowed-diffs.yaml`, the maps) is not registered ([tools/parity/src/exception-ids.ts](../../tools/parity/src/exception-ids.ts)); a test that feeds a validator a deliberately unknown id says `fake exception id` on that line or the line above.
+
 ## Naming
 
 <a id="naming"></a>
