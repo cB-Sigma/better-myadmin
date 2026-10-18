@@ -135,10 +135,4 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
   }
 }
 
-/** Util::userDir: `%u` in UploadDir / SaveDir becomes the user name; a trailing slash is ensured. */
-export function userDir(user: string, dir: string): string {
-  if (dir === '') return ''
-  const d = dir.endsWith('/') ? dir : `${dir}/`
-  // Core::securePath
-  return d.replaceAll('%u', user.replace(/\.\.*/g, '.'))
-}
+export { userDir } from '../util/secure-path.ts'

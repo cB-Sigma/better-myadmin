@@ -44,8 +44,9 @@ export function BrowsePage(props: BrowsePageProps) {
   const req = {
     db,
     table,
-    ...(props.sql !== undefined ? { sql: props.sql } : {}),
-    ...(props.sig !== undefined ? { sig: props.sig } : {}),
+    // a query of the URL runs only with its signature: without one the server is sent an empty
+    // signature, which fails, so it browses the table (phpMyAdmin ignores an unsigned GET sql_query)
+    ...(props.sql !== undefined ? { sql: props.sql, sig: props.sig ?? '' } : {}),
     ...(props.pos !== undefined ? { pos: props.pos } : {}),
     ...(props.distinct === true ? { isBrowseDistinct: true } : {}),
   }
