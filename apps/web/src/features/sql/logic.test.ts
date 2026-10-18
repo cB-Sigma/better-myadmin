@@ -36,13 +36,13 @@ describe('confirmQuery (resources/js/modules/functions.ts)', () => {
     expect(needsConfirmation(sql)).toBe(want)
   })
 
-  it('cuts the message at 100 characters', () => {
+  it('cuts the message at 100 characters [p09-e295f8]', () => {
     expect(confirmationText('TRUNCATE t')).toBe('Do you really want to execute "TRUNCATE t"?')
     const long = `DELETE FROM t WHERE ${'x'.repeat(200)}`
     expect(confirmationText(long)).toBe(`Do you really want to execute "${long.slice(0, 100)}\n    ..."?`)
   })
 
-  it('checkSqlQuery: empty, Confirm off', () => {
+  it('checkSqlQuery: empty, Confirm off [p09-331963]', () => {
     expect(checkSqlQuery('', true)).toBe('empty')
     expect(checkSqlQuery(' \n ', true)).toBe('empty')
     expect(checkSqlQuery('TRUNCATE t', false)).toBe('ok')
@@ -52,7 +52,7 @@ describe('confirmQuery (resources/js/modules/functions.ts)', () => {
 })
 
 describe('updateQueryParameters', () => {
-  it('finds unique :names in order', () => {
+  it('finds unique :names in order [p09-ec9fe2]', () => {
     expect(scanParameters('SELECT :a, :b1, :a, :_x FROM t WHERE c = ":q"')).toEqual([
       ':a',
       ':b1',
@@ -66,7 +66,7 @@ describe('updateQueryParameters', () => {
 
 describe('insertQuery / insertValueQuery (resources/js/sql.ts)', () => {
   const cols = ['`id`', '`name`', '`a``b`']
-  it('uses every column of the list', () => {
+  it('uses every column of the list [p09-625a43]', () => {
     expect(snippetQuery('selectall', 'my`t', cols)).toBe('SELECT * FROM `my``t` WHERE 1')
     expect(snippetQuery('select', 't', cols)).toBe('SELECT `id`, `name`, `a``b` FROM `t` WHERE 1')
     expect(snippetQuery('insert', 't', cols)).toBe(
@@ -78,7 +78,7 @@ describe('insertQuery / insertValueQuery (resources/js/sql.ts)', () => {
     expect(snippetQuery('delete', 't', cols)).toBe('DELETE FROM `t` WHERE 0')
     expect(snippetQuery('select', 't', [])).toBeNull()
   })
-  it('inserts the selected columns comma separated', () => {
+  it('inserts the selected columns comma separated [p09-0cd66f]', () => {
     expect(insertValueText(['`a`', '`b`'])).toBe('`a`, `b`')
   })
 })
@@ -99,7 +99,7 @@ describe('handleSimulateQueryButton', () => {
 })
 
 describe('getAutoSavedKey', () => {
-  it('db[.table], "undefined" at server scope', () => {
+  it('db[.table], "undefined" at server scope [p09-d68993]', () => {
     expect(autoSavedKey('', '')).toBe('autoSavedSql_undefined')
     expect(autoSavedKey('db', '')).toBe('autoSavedSql_db')
     expect(autoSavedKey('db', 't')).toBe('autoSavedSql_db.t')

@@ -175,7 +175,7 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
     await inst?.stop()
   })
 
-  it('[p01-984896] a cookie server: same form fields, overview messages, servers and config.inc.php', async () => {
+  it('[p01-984896] a cookie server: same form fields, overview messages, servers and config.inc.php [p08-7737a8] [p08-4b45c6] [p08-94aa36]', async () => {
     const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     try {
@@ -200,7 +200,7 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
     }
   })
 
-  it('[p01-984896] validateServer: a new server is not validated (Q66), an edited one is', async () => {
+  it('[p01-984896] validateServer: a new server is not validated (Q66), an edited one is [p08-a42fac] [p08-4b45c6]', async () => {
     const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     const errorsOf = (r: SetupSaveResponse) =>
@@ -270,7 +270,7 @@ describe.skipIf(!available)('parity: setup script (src/Controllers/Setup, Config
     }
   })
 
-  it('[p01-984896] Features form (security settings), TrustedProxies, deleting a server', async () => {
+  it('[p01-984896] Features form (security settings), TrustedProxies, deleting a server [p08-0c99d6] [p08-4b45c6] [p08-94aa36]', async () => {
     const pc = new PmaClient(inst.url)
     const b = new BmaSetup()
     try {

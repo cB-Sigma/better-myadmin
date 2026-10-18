@@ -56,7 +56,9 @@ test('databases: list, statistics, create and drop', async ({ page }) => {
   await expect(page.getByText('1 database has been dropped successfully.')).toBeVisible()
 })
 
-test('status pages: overview, processes with kill, queries, variables, advisor', async ({ page }) => {
+test('status pages: overview, processes with kill, queries, variables, advisor [p06-bc85e3] [p06-9768f8] [p06-cac377] [p06-44265d]', async ({
+  page,
+}) => {
   await login(page)
   await page.goto('/s/1/status')
   await expect(page.getByText(/^Network traffic since startup: /)).toBeVisible()
@@ -82,6 +84,11 @@ test('status pages: overview, processes with kill, queries, variables, advisor',
   await page.getByRole('link', { name: 'Query statistics' }).click()
   await expect(page.getByText(/^Questions since startup:/)).toBeVisible()
   await expect(page.locator('#serverStatusQueriesDetails')).toContainText('Select')
+  // the Chart.js pie of queries.ts: a slice per statement type, "Number of statements" in its tooltip
+  await expect(page.locator('#query-statistics-chart path').first()).toBeAttached()
+  await expect(page.locator('#query-statistics-chart path title').first()).toContainText(
+    'Number of statements',
+  )
 
   await page.getByRole('link', { name: 'All status variables' }).click()
   await page.locator('#filterText').fill('uptime')
@@ -95,7 +102,7 @@ test('status pages: overview, processes with kill, queries, variables, advisor',
   await expect(page.locator('#advisorInstructionsModal')).toContainText('rule of thumb')
 })
 
-test('variables: filter and inline edit', async ({ page }) => {
+test('variables: filter and inline edit [p06-162a8d] [p06-d139b2]', async ({ page }) => {
   const c = await mysql.createConnection(ROOT)
   const [rows] = await c.query('SELECT @@GLOBAL.max_connect_errors AS v')
   const original = Number((rows as Array<{ v: number }>)[0]!.v)
@@ -115,7 +122,9 @@ test('variables: filter and inline edit', async ({ page }) => {
   }
 })
 
-test('charsets, engines, plugins, binary log', async ({ page }) => {
+test('charsets, engines, plugins, binary log [p06-b19775] [p06-e1da5c] [p06-e5aa2e] [p06-debfa6]', async ({
+  page,
+}) => {
   await login(page)
   await page.goto('/s/1/collations')
   await expect(page.getByRole('heading', { name: 'Character sets and collations' })).toBeVisible()

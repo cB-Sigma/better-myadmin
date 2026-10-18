@@ -27,7 +27,7 @@ function rp(): RelationParameters {
 const sqls = (c: FakeConn) => c.log.map((l) => l.sql.replace(/\s+/g, ' ').trim())
 
 describe('bookmarks (BookmarkRepository / Bookmark)', () => {
-  it('builds phpMyAdmin’s list / get / insert / delete statements [p08-dd1f62]', async () => {
+  it('builds phpMyAdmin’s list / get / insert / delete statements', async () => {
     const conn = new FakeConn(() =>
       ok([{ id: '3', dbase: 'd', user: 'u1', label: 'L', query: 'SELECT [VARIABLE1]' }]),
     )
@@ -53,7 +53,7 @@ describe('bookmarks (BookmarkRepository / Bookmark)', () => {
     ])
   })
 
-  it('createBookmark rules: AllowSharedBookmarks, empty label/query, no user [p02-62c852]', () => {
+  it('createBookmark rules: AllowSharedBookmarks, empty label/query, no user [p02-62c852] [p08-dd1f62]', () => {
     const conn = new FakeConn()
     const noShare = new BookmarkRepository(new PmadbDriver(conn, rp()).bookmarks, false)
     expect(noShare.createBookmark('q', 'l', 'u', 'd', true)).toEqual({

@@ -2,11 +2,15 @@ import { readFileSync, rmSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import mysql from 'mysql2/promise'
+import { holdSuiteLock } from '../e2e/suite-lock.ts'
 import { FIX, ROOT, USERS } from './lib/env.ts'
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../..')
 
 export default async function setup() {
+  // one UI parity run per MySQL at a time: both apps list the server's databases, processes and
+  // accounts, which a concurrent run would change between the two captures
+  const release = await holdSuiteLock('bma_browser:ui-parity', ROOT)
   rmSync(join(repo, '.data/ui-parity'), { recursive: true, force: true })
   const c = await mysql.createConnection({ ...ROOT, multipleStatements: true })
   await c.query(`DROP DATABASE IF EXISTS ${FIX.insertDb};
@@ -32,4 +36,5 @@ export default async function setup() {
       GRANT ALL ON *.* TO '${u}'@'%' WITH GRANT OPTION;`)
   }
   await c.end()
+  return release
 }

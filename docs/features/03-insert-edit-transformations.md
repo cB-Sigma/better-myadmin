@@ -373,7 +373,7 @@ MIME types discovered from file names: `application/octetstream`, `image/jpeg`, 
 - [x] `/table/get-field` downloads a column value as `<table>-<column>.bin` with sniffed MIME. <!-- parity:test --> `p03-f61c7d` [insert-edit-widgets.test.ts:126](../../apps/server/test/int/insert-edit-widgets.test.ts#L126)
 - [x] `/transformation/overview` lists media types, output and input transformations with descriptions. <!-- parity:test --> `p03-e852ea` [transformations.test.ts:36](../../packages/mysql-types/test/transformations.test.ts#L36)
 - [x] Structure column editor offers Media type / Browser display transformation / Transformation options / Input transformation / Input transformation options, persisted to `pma__column_info`; row deleted when all are emptied. <!-- parity:test --> `p03-ff556a` [table-mime.parity.test.ts:164](../../tests/parity/table-mime.parity.test.ts#L164) +3
-- [x] Grid-edit save reuses `/table/replace` with `submit_type=save`, returns recomputed relation links, transformed values, `isNeedToRecheck`/`truncatableFieldValue`, `row_count`. <!-- parity:test --> `p03-995b4e` [browse.test.ts:164](../../apps/server/test/int/browse.test.ts#L164)
+- [x] Grid-edit save reuses `/table/replace` with `submit_type=save`, returns recomputed relation links, transformed values, `isNeedToRecheck`/`truncatableFieldValue`, `row_count`. <!-- parity:test --> `p03-995b4e` [browse.test.ts:164](../../apps/server/test/int/browse.test.ts#L164) +1
 
 ---
 

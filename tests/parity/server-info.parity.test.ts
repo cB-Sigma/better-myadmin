@@ -34,7 +34,7 @@ async function page<T>(pmaRoute: string, bmaPath: string, params: Record<string,
 }
 
 describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log', () => {
-  it('Character sets and collations (/server/collations)', async () => {
+  it('Character sets and collations (/server/collations) [p06-b19775]', async () => {
     const { html, json } = await page<CollationsResponse>('/server/collations', '/collations')
     expect(text($(html, 'h2')!)).toBe('Character sets and collations')
     const cards = $$(html, 'div.card')
@@ -53,7 +53,7 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     expect(pma.length).toBeGreaterThan(30)
   })
 
-  it('Storage engines (/server/engines)', async () => {
+  it('Storage engines (/server/engines) [p06-e1da5c]', async () => {
     const { html, json } = await page<EnginesResponse>('/server/engines', '/engines')
     const rows = $$(html, 'tbody tr').map((tr) => {
       const [a, b] = $$(tr, 'td')
@@ -141,13 +141,13 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     'NoSuchEngine',
     'PBMS',
   ]) {
-    it(`engine detail page ${engine}`, async () => {
+    it(`engine detail page ${engine} [p06-e1da5c]`, async () => {
       const { html, json } = await page<EngineResponse>(`/server/engines/${engine}`, `/engines/${engine}`)
       expect(ours(json)).toEqual(enginePage(html))
     })
   }
 
-  it('InnoDB Buffer Pool page', async () => {
+  it('InnoDB Buffer Pool page [p06-e1da5c]', async () => {
     const { html, json } = await page<EngineResponse>(
       '/server/engines/InnoDB/Bufferpool',
       '/engines/InnoDB/Bufferpool',
@@ -186,7 +186,7 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     expect(activity!.rows[5]![1]).toBe(b.writeWaitsPct)
   })
 
-  it('InnoDB Status page', async () => {
+  it('InnoDB Status page [p06-e1da5c]', async () => {
     const { html, json } = await page<EngineResponse>(
       '/server/engines/InnoDB/Status',
       '/engines/InnoDB/Status',
@@ -203,7 +203,7 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     expect(enginePage(html).nav).toBe('[ Variables | Buffer Pool | InnoDB Status ]')
   })
 
-  it('Plugins (/server/plugins)', async () => {
+  it('Plugins (/server/plugins) [p06-e5aa2e]', async () => {
     const { html, json } = await page<PluginsResponse>('/server/plugins', '/plugins')
     const buttons = $$(html, 'div.card-body a.btn').map((a) => [text(a), a.attrs.href])
     expect(json.types.map((t) => [t.type, `#plugins-${t.cleanType}`])).toEqual(buttons)
@@ -307,7 +307,7 @@ describe.skipIf(!pmaReachable)('parity: charsets, engines, plugins, binary log',
     ['a log by name', { log: '{first}', pos: '10' }, '?log={first}&pos=10'],
   ]
   for (const [name, params0, qs0] of BINLOG_CASES) {
-    it(`Binary log: ${name}`, async () => {
+    it(`Binary log: ${name} [p06-debfa6]`, async () => {
       const [[first]] = (await h.root.query({ sql: 'SHOW BINARY LOGS', rowsAsArray: true })) as unknown as [
         [[string]],
       ]

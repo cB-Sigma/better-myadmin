@@ -33,7 +33,7 @@ const pmaUrls = {
 }
 
 describe('advisor rules', () => {
-  it('ports all 55 rules (48 generic, 7 before MySQL 8.0.3)', () => {
+  it('ports all 55 rules (48 generic, 7 before MySQL 8.0.3) [p06-44265d]', () => {
     expect(GENERIC_RULES).toHaveLength(48)
     expect(BEFORE_MYSQL_80003_RULES).toHaveLength(7)
   })

@@ -134,29 +134,18 @@ shellRoutes.post('/account/password', async (c) => {
 
 /**
  * POST /api/servers/:s/themes/set — the part of ThemeSetController the client-side theme store
- * cannot do: `ThemeDefault` in the user preferences (load, set, save; configuration storage or session).
+ * cannot do: `ThemeDefault` in the user preferences (persistOption with the default `original`;
+ * configuration storage or session).
  */
 shellRoutes.post('/themes/set', async (c) => {
-  const body = (await c.req.json().catch(() => null)) as { theme?: unknown; sync?: unknown } | null
+  const body = (await c.req.json().catch(() => null)) as { theme?: unknown } | null
   const theme = typeof body?.theme === 'string' ? body.theme : ''
   const { cfg } = c.get('deps')
   if (!cfg.ThemeManager || theme === '') return c.json({ ok: false })
   return withMeta(c, {}, async (m) => {
-    const prefs = (await m.meta()).userPreferences()
-    const loaded = await prefs.load()
-    if (body?.sync === true) {
-      // loadUserPreferences "save theme": the theme cookie differs from the preferences, so it is
-      // stored with setUserValue('ThemeDefault', <theme>, 'original') (removed for `original`)
-      const stored = loaded.config_data.ThemeDefault
-      if ((stored === undefined && theme !== 'original') || (stored !== undefined && stored !== theme)) {
-        const r = await prefs.persistOption('ThemeDefault', theme, 'original')
-        m.forgetPrefs()
-        return c.json({ ok: r === true })
-      }
-      return c.json({ ok: true })
-    }
-    loaded.config_data.ThemeDefault = theme
-    const r = await prefs.save(loaded.config_data)
+    // UserPreferencesHandler::loadUserPreferences: setUserValue('ThemeDefault', id, 'original'), the
+    // key removed again when the theme is back to `original`
+    const r = await (await m.meta()).userPreferences().persistOption('ThemeDefault', theme, 'original')
     return c.json({ ok: r === true })
   })
 })

@@ -38,7 +38,7 @@ async function q(sql: string, extra: Record<string, unknown> = {}): Promise<St[]
 }
 
 describe('query pipeline (Sql.php parity)', () => {
-  it('appends LIMIT pos, max_rows to a plain SELECT … FROM and counts exactly when just browsing [p02-9f5692 p02-b29af3]', async () => {
+  it('appends LIMIT pos, max_rows to a plain SELECT … FROM and counts exactly when just browsing [p02-9f5692 p02-b29af3] [p09-4c9f73] [p09-4df052] [p09-662a39] [p09-7438a7]', async () => {
     const [st] = await q('SELECT * FROM t')
     expect(st!.executedSql).toBe('SELECT * FROM t LIMIT 0, 25')
     expect(st!.result!.rows).toHaveLength(25)
@@ -55,7 +55,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(st!.message.text).toMatch(/^Showing rows 25 - 29 \(30 total,/)
   })
 
-  it('does not limit SELECT without FROM, or a query with its own LIMIT [p02-9f5692 p02-290262]', async () => {
+  it('does not limit SELECT without FROM, or a query with its own LIMIT [p02-9f5692 p02-290262] [p09-662a39]', async () => {
     const [a] = await q('SELECT 1')
     expect(a!.executedSql).toBe('SELECT 1;')
     const [b] = await q('SELECT * FROM t LIMIT 3')
@@ -63,7 +63,7 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(b!.result!.rows).toHaveLength(3)
   })
 
-  it('wraps a non-trivial SELECT in SELECT COUNT(*) FROM (…) as cnt [p02-b29af3]', async () => {
+  it('wraps a non-trivial SELECT in SELECT COUNT(*) FROM (…) as cnt [p02-b29af3] [p09-7438a7]', async () => {
     const [st] = await q("SELECT id, name FROM t WHERE name LIKE 'row%' ORDER BY id DESC", { maxRows: 5 })
     expect(st!.result!.totalRows).toBe(29)
     const r = await t.req('POST', '/api/servers/1/query', {
@@ -106,20 +106,20 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(c!.message.text).toMatch(/^MySQL returned an empty result set \(i\.e\. zero rows\)\./)
   })
 
-  it('empty result set with columns [p09-a212a5 p02-68785a p02-141e59]', async () => {
+  it('empty result set with columns [p09-a212a5 p02-68785a p02-141e59] [p09-4d18f5]', async () => {
     const [st] = await q('SELECT * FROM t WHERE id = -1')
     expect(st!.kind).toBe('empty')
     expect(st!.message.text).toMatch(/^MySQL returned an empty result set \(i\.e\. zero rows\)\./)
   })
 
-  it('splits multi-statement input by the delimiter field and honours DELIMITER lines', async () => {
+  it('splits multi-statement input by the delimiter field and honours DELIMITER lines [p09-eef6d7]', async () => {
     const sts = await q('SELECT 1; SELECT 2;\nDELIMITER //\nSELECT 3 //')
     expect(sts.map((s) => s.executedSql)).toEqual(['SELECT 1;', 'SELECT 2;', 'SELECT 3;'])
     const custom = await q('SELECT 1 $$ SELECT 2', { delimiter: '$$' })
     expect(custom).toHaveLength(2)
   })
 
-  it('stops at the first error and reports #errno - message [p02-fa2d56]', async () => {
+  it('stops at the first error and reports #errno - message [p02-fa2d56] [p09-9a56f6]', async () => {
     const sts = await q('SELECT 1; SELECT * FROM nope; SELECT 1')
     // like mysqlDie: the response is only the error, showing the SQL actually sent
     expect(sts).toHaveLength(1)
@@ -128,14 +128,14 @@ describe('query pipeline (Sql.php parity)', () => {
     expect(sts[0]!.message.text).toBe(`#1146 - Table '${DB}.nope' doesn't exist`)
   })
 
-  it('re-selects the page database before every statement, like phpMyAdmin', async () => {
+  it('re-selects the page database before every statement, like phpMyAdmin [p09-410573]', async () => {
     // verified against the reference phpMyAdmin: the second statement still sees the page's db
     const sts = await q('USE mysql; SELECT DATABASE()')
     expect(sts[0]!.message.text).toMatch(/^MySQL returned an empty result set/)
     expect(sts[1]!.result!.rows[0]![0]).toBe(DB)
   })
 
-  it('SHOW is not limited and has no navigation message [p02-507e37]', async () => {
+  it('SHOW is not limited and has no navigation message [p02-507e37] [p09-662a39]', async () => {
     const [st] = await q('SHOW TABLES')
     expect(st!.executedSql).toBe('SHOW TABLES;')
     expect(st!.message.text).toMatch(/^Your SQL query has been executed successfully\. \(Query took/)

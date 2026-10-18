@@ -43,7 +43,7 @@ afterAll(async () => {
 })
 
 describe('SQL tab options', () => {
-  it('IgnoreMultiSubmitErrors keeps going and shows the error in a card', async () => {
+  it('IgnoreMultiSubmitErrors keeps going and shows the error in a card [p09-9a56f6]', async () => {
     const a = await app({ IgnoreMultiSubmitErrors: true })
     const { body } = await run(a, 'SELECT 1; SELECT * FROM nope; SELECT 2')
     expect(body.statements.map((s) => s.kind)).toEqual(['resultset', 'error', 'resultset'])
@@ -53,7 +53,7 @@ describe('SQL tab options', () => {
     expect(err.card?.sql).toBe('SELECT * FROM nope;')
   })
 
-  it('MaxCharactersInDisplayedSQL truncates the card and hides Explain / PHP links [p02-40a8f8]', async () => {
+  it('MaxCharactersInDisplayedSQL truncates the card and hides Explain / PHP links [p02-40a8f8] [p09-16d3bb]', async () => {
     const a = await app({ MaxCharactersInDisplayedSQL: 20 })
     const { body } = await run(a, 'SELECT id, name, qty FROM t WHERE id = 1')
     const card = body.statements[0]!.card!
@@ -69,7 +69,7 @@ describe('SQL tab options', () => {
     expect(body.sqlQuery).toBe('')
   })
 
-  it('ShowSQL=false renders only the message [p02-f22617]', async () => {
+  it('ShowSQL=false renders only the message [p02-f22617] [p09-ac586d]', async () => {
     const a = await app({ ShowSQL: false })
     const { body } = await run(a, 'SELECT 1')
     expect(body.statements[0]!.card).toBeNull()
@@ -88,7 +88,7 @@ describe('SQL tab options', () => {
     })
   })
 
-  it('AllowUserDropDatabase lets a DROP DATABASE through the guard [p02-1f1ac2]', async () => {
+  it('AllowUserDropDatabase lets a DROP DATABASE through the guard [p02-1f1ac2] [p09-15a63a]', async () => {
     await root.query('CREATE DATABASE IF NOT EXISTS m1sql_it_drop')
     const a = await app({ AllowUserDropDatabase: true })
     const { body } = await run(a, 'DROP DATABASE m1sql_it_drop')
@@ -96,7 +96,7 @@ describe('SQL tab options', () => {
     expect(body.ajaxReload).toEqual({ reload: true })
   })
 
-  it('rollback when finished leaves the data unchanged and the pooled connection clean', async () => {
+  it('rollback when finished leaves the data unchanged and the pooled connection clean [p09-aa1339]', async () => {
     const a = await app()
     const { body } = await run(a, "UPDATE t SET name = 'changed' WHERE id = 1", { rollback: true })
     expect(body.statements[0]!.message.text).toMatch(
@@ -111,7 +111,7 @@ describe('SQL tab options', () => {
     expect(after.body.statements[0]!.result!.rows[0]).toEqual(['0', '1'])
   })
 
-  it('an error with foreign key checks off does not leak the setting to the next request [p02-b10e84]', async () => {
+  it('an error with foreign key checks off does not leak the setting to the next request [p02-b10e84] [p09-1fc182]', async () => {
     const a = await app()
     const failed = await run(a, 'INSERT INTO nope VALUES (1)', { fkChecks: false })
     expect(failed.body.statements[0]!.kind).toBe('error')
@@ -119,7 +119,7 @@ describe('SQL tab options', () => {
     expect(after.body.statements[0]!.result!.rows[0]).toEqual(['1'])
   })
 
-  it('profiling switch: on, statistics, then off again [p02-2a54e4]', async () => {
+  it('profiling switch: on, statistics, then off again [p02-2a54e4] [p09-280f8a] [p09-33158a]', async () => {
     const a = await app()
     const on = await run(a, 'SELECT * FROM t', { profiling: true })
     const st = on.body.statements[0]!
@@ -133,7 +133,7 @@ describe('SQL tab options', () => {
     expect(off.body.statements[0]!.card!.links.profiling).toEqual({ checked: false })
   })
 
-  it('a signed query runs only with a valid signature [p02-fae7cc]', async () => {
+  it('a signed query runs only with a valid signature [p02-fae7cc] [p09-3ee67a]', async () => {
     const a = await app()
     const { body } = await run(a, 'SELECT 1')
     const sig = body.statements[0]!.sig
@@ -143,7 +143,7 @@ describe('SQL tab options', () => {
     expect(bad.body.error?.message).toBe('Missing parameter: sql_query')
   })
 
-  it('cancel kills the running query', async () => {
+  it('cancel kills the running query [p09-11fdd7]', async () => {
     const a = await app()
     const pending = run(a, 'SELECT SLEEP(20)', { queryId: 'q1' })
     let killed = false
@@ -158,7 +158,7 @@ describe('SQL tab options', () => {
     expect((await a.req('POST', '/api/servers/1/query/cancel', { queryId: 'q1' })).json.killed).toBe(false)
   })
 
-  it('records the session history (last statement, capped at QueryHistoryMax)', async () => {
+  it('records the session history (last statement, capped at QueryHistoryMax) [p09-45cd38]', async () => {
     // the history feature comes from the configuration storage (here the local store)
     const a = await app({ QueryHistoryMax: 2, DataDir: ':memory:' })
     await run(a, 'SELECT 1')
@@ -174,7 +174,7 @@ describe('SQL tab options', () => {
 })
 
 describe('SQL form, autocomplete and console endpoints', () => {
-  it('server, database and table scope forms', async () => {
+  it('server, database and table scope forms [p09-50c42a] [p09-74590b]', async () => {
     const a = await app({
       DefaultQueryDatabase: 'SHOW TABLES FROM @DATABASE@',
       DefaultQueryTable: 'SELECT @COLUMNS@ FROM @TABLE@ WHERE 1',
@@ -208,14 +208,14 @@ describe('SQL form, autocomplete and console endpoints', () => {
     })
   })
 
-  it('DefaultForeignKeyChecks enable/disable', async () => {
+  it('DefaultForeignKeyChecks enable/disable [p09-1fc182]', async () => {
     const off = await app({ DefaultForeignKeyChecks: 'disable' })
     expect((await off.req('GET', '/api/servers/1/sql/default-fk-check')).json.defaultFkCheckValue).toBe(false)
     const on = await app({ DefaultForeignKeyChecks: 'enable' })
     expect((await on.req('GET', '/api/servers/1/sql/form')).json.fkChecks).toBe(true)
   })
 
-  it('EnableAutocompleteForTablesAndColumns=false returns no tables', async () => {
+  it('EnableAutocompleteForTablesAndColumns=false returns no tables [p09-d9ff25]', async () => {
     const a = await app({ EnableAutocompleteForTablesAndColumns: false })
     expect((await a.req('GET', `/api/servers/1/sql/autocomplete?db=${DB}`)).json.tables).toEqual({})
   })
@@ -238,7 +238,7 @@ describe('SQL form, autocomplete and console endpoints', () => {
     expect((await a.req('POST', '/api/servers/1/columns', { db: DB })).json.success).toBe(false)
   })
 
-  it('console options: defaults, validation, persistence in the user preferences (session)', async () => {
+  it('console options: defaults, validation, persistence in the user preferences (session) [p09-f4e866]', async () => {
     // a configured storage that does not exist: no pmadb features, the preferences live in the session
     // (the shared MySQL's `phpmyadmin` storage is not touched, other test files run concurrently)
     const a = await app({}, { pmadb: 'm1sql_it_no_storage' })
@@ -282,5 +282,18 @@ describe('SQL form, autocomplete and console endpoints', () => {
       EnterExecutes: false,
       Height: 92,
     })
+  })
+})
+
+describe('Debug SQL [p09-b87d68]', () => {
+  it('only with DBG.sql: every statement of the request with its time', async () => {
+    const off = await run(await app(), 'SELECT 1')
+    expect(off.body.executed).toEqual([])
+    const on = await run(await app({ DBG: { sql: true } }), 'SELECT 1')
+    const executed = on.body.executed as Array<{ sql: string; ms: number }>
+    expect(executed.some((e) => /^SELECT 1\b/.test(e.sql))).toBe(true)
+    // the internal ones (the page database, the count) are listed too
+    expect(executed.length).toBeGreaterThan(1)
+    for (const e of executed) expect(typeof e.ms).toBe('number')
   })
 })

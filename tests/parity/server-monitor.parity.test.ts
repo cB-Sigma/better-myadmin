@@ -122,7 +122,7 @@ const kinds = (m: Record<string, unknown>) =>
   )
 
 describe.skipIf(!pmaReachable)('parity: status monitor', () => {
-  it('page: server time, OS, superuser, local database, the numeric status variables', async () => {
+  it('page: server time, OS, superuser, local database, the numeric status variables [p06-3de1f6] [p06-a4313a]', async () => {
     const res = await both(
       p,
       () => p.pma.getJson('/server/status/monitor'),
@@ -172,7 +172,7 @@ describe.skipIf(!pmaReachable)('parity: status monitor', () => {
     expect(kinds(res.b.message)).toEqual(kinds(res.p.message as unknown as Record<string, unknown>))
   })
 
-  it('general log statistics of a past window (grouped, limited to DML, INSERTs grouped)', async () => {
+  it('general log statistics of a past window (grouped, limited to DML, INSERTs grouped) [p06-599f02] [p06-d6900b]', async () => {
     const [[now]] = (await p.root.query({
       sql: 'SELECT UNIX_TIMESTAMP()',
       rowsAsArray: true,
@@ -210,7 +210,7 @@ describe.skipIf(!pmaReachable)('parity: status monitor', () => {
     }
   })
 
-  it('slow log statistics: an empty window, and the failure of a missing log table', async () => {
+  it('slow log statistics: an empty window, and the failure of a missing log table [p06-599f02]', async () => {
     const res = await both(
       p,
       () => p.pma.postJson('/server/status/monitor/slow-log', { time_start: '0', time_end: '1' }),
@@ -221,7 +221,7 @@ describe.skipIf(!pmaReachable)('parity: status monitor', () => {
     expect(res.b.message).toEqual(res.p.message)
   })
 
-  it('logging variables (read only on the shared server)', async () => {
+  it('logging variables (read only on the shared server) [p06-f985d3]', async () => {
     const res = await both(
       p,
       () => p.pma.postJson('/server/status/monitor/log-vars', {}),
@@ -250,7 +250,7 @@ describe.skipIf(!pmaReachable)('parity: status monitor', () => {
     ['full scan', '  select v from t'],
     ['unknown table', 'SELECT * FROM f06r_missing'],
   ] as Array<[string, string]>) {
-    it(`query analyzer: ${name}`, async () => {
+    it(`query analyzer: ${name} [p06-95d2b5]`, async () => {
       const res = await both(
         p,
         () => p.pma.postJson('/server/status/monitor/query', { database: DB, query }),
@@ -276,7 +276,7 @@ describe.skipIf(!replicaReachable)('parity: status monitor, logging variables (d
     ['long_query_time back', 'long_query_time', '5'],
     ['slow_query_log OFF', 'slow_query_log', 'OFF'],
   ] as Array<[string, string, string]>) {
-    it(`SET GLOBAL ${name}`, async () => {
+    it(`SET GLOBAL ${name} [p06-f985d3]`, async () => {
       const h = r!
       const res = await both(
         h,
@@ -292,7 +292,7 @@ describe.skipIf(!replicaReachable)('parity: status monitor, logging variables (d
     })
   }
 
-  it('slow log statistics of logged statements', async () => {
+  it('slow log statistics of logged statements [p06-599f02] [p06-d6900b]', async () => {
     const h = r!
     await h.root.query("SET GLOBAL long_query_time = 0; SET GLOBAL slow_query_log = 'ON'")
     const [[t0]] = (await h.root.query({ sql: 'SELECT UNIX_TIMESTAMP()', rowsAsArray: true })) as unknown as [

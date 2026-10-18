@@ -77,6 +77,49 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:parity
 
+  # the browser suites (tests/e2e, tests/ui-parity) against the built SPA served by the real server,
+  # in Playwright's Chromium; one suite per job, each run holding its MySQL lock (tests/e2e/suite-lock.ts)
+  browser:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: e2e
+            target: mysql
+            # the replica for server-replica.e2e.ts
+            services: mysql84 mysql84-replica
+          - suite: e2e
+            target: mariadb
+            services: mariadb11
+            port: "3307"
+          - suite: ui-parity
+            target: mysql
+            services: mysql84 phpmyadmin-ref
+    env:
+      BMA_TEST_PORT: ${{ matrix.port || '3306' }}
+      # the replica reaches the primary by its service name (server-replica.e2e.ts restores it)
+      BMA_PARITY_REPLICA_SOURCE_HOST: mysql84
+      BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:${{ matrix.suite }}
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.suite }}-${{ matrix.target }}-results
+          path: |
+            .data/e2e-results
+            .data/ui-parity-results
+            .data/ui-parity
+          if-no-files-found: ignore
+
   upstream:
     runs-on: ubuntu-latest
     steps:
