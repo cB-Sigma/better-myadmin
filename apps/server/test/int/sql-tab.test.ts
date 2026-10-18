@@ -145,13 +145,19 @@ describe('SQL tab options', () => {
 
   it('cancel kills the running query [p09-11fdd7]', async () => {
     const a = await app()
-    const pending = run(a, 'SELECT SLEEP(20)', { queryId: 'q1' })
-    let killed = false
-    for (let i = 0; i < 50 && !killed; i++) {
-      await new Promise((r) => setTimeout(r, 100))
-      killed = (await a.req('POST', '/api/servers/1/query/cancel', { queryId: 'q1' })).json.killed === true
+    // a name of its own: other test runs on the same server may sleep too
+    const probe = `m1sql_cancel_${process.pid}_${Date.now()}`
+    const pending = run(a, `SELECT SLEEP(20) AS ${probe}`, { queryId: 'q1' })
+    // cancel once the statement runs on the server (a cancel before it would keep it from being sent)
+    const sleeping = async () => {
+      const [rows] = await root.query(
+        "SELECT COUNT(*) AS n FROM information_schema.PROCESSLIST WHERE INFO LIKE 'SELECT SLEEP(20)%' AND INFO LIKE ?",
+        [`%${probe}%`],
+      )
+      return Number((rows as Array<{ n: number }>)[0]!.n)
     }
-    expect(killed).toBe(true)
+    await expect.poll(sleeping, { timeout: 15_000, interval: 50 }).toBe(1)
+    expect((await a.req('POST', '/api/servers/1/query/cancel', { queryId: 'q1' })).json.killed).toBe(true)
     const { body } = await pending
     // SLEEP interrupted by KILL QUERY returns 1
     expect(body.statements[0]!.result!.rows[0]).toEqual(['1'])

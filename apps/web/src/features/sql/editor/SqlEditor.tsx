@@ -23,6 +23,11 @@ if (typeof window !== 'undefined') {
   window.addEventListener('keydown', mark, true)
 }
 
+/** Whether the user clicked or typed since the page loaded. */
+export function userHasActed(): boolean {
+  return lastUserInput !== Number.NEGATIVE_INFINITY
+}
+
 /**
  * The SQL editor: CodeMirror when $cfg['CodemirrorEnable'], else (and while CodeMirror loads) the
  * plain textarea, which keeps the same keys (Ctrl/Alt+Enter) and the TextareaAutoSelect behaviour.

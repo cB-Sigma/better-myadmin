@@ -12,7 +12,7 @@ import {
   splitSql,
 } from '@bettermyadmin/sql-lexer'
 import type { AppConfig } from '../config.ts'
-import type { Conn, QueryResult, ResultSet } from '../db/connection.ts'
+import { type Conn, type QueryResult, type ResultSet, USER_STATEMENT } from '../db/connection.ts'
 import { toCell } from '../db/field-meta.ts'
 import { MysqlError } from '../http/errors.ts'
 import type { SessionData } from '../session/store.ts'
@@ -501,7 +501,7 @@ export async function executeStatement(
   let result: QueryResult | null = null
   let errorMessage = ''
   try {
-    result = await conn.query(fullSql, 'query.user')
+    result = await conn.query(fullSql, USER_STATEMENT)
     state.queryTime = result.ms / 1000
   } catch (e) {
     if (!(e instanceof MysqlError)) {
