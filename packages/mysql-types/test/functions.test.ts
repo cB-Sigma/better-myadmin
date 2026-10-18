@@ -31,7 +31,7 @@ const f = loadFixture<FunctionsFixture>('insert-edit-functions.json')
 
 describe('insert/edit function dropdown (golden, executed phpMyAdmin)', () => {
   for (const group of f.defaultFunctionForField) {
-    it(`getDefaultFunctionForField ${group.server.vendor} ${group.server.version} config=${group.config}`, () => {
+    it(`getDefaultFunctionForField ${group.server.vendor} ${group.server.version} config=${group.config} [p03-4c37d2]`, () => {
       const cfg = resolveDefaultFunctions(f.defaultFunctionsConfig[group.config])
       for (const [
         trueType,
@@ -56,7 +56,7 @@ describe('insert/edit function dropdown (golden, executed phpMyAdmin)', () => {
     })
   }
 
-  it('getFunctionsForField', () => {
+  it('getFunctionsForField [p03-0a843f]', () => {
     for (const c of f.functionsForField) {
       const actual = getFunctionsForField(c.server, c.defaultFunction, c.hasForeignField).map((o) => {
         const r: { label: string; value?: string; title?: string; selected?: boolean } = { label: o.label }
@@ -74,7 +74,7 @@ describe('insert/edit function dropdown (golden, executed phpMyAdmin)', () => {
 
 describe('insert/edit function cell', () => {
   const cfg = { showFunctionFields: true, protectBinary: 'blob' as const }
-  it('mirrors isColumnBinary and the ENUM/SET "--" cell', () => {
+  it('mirrors isColumnBinary and the ENUM/SET "--" cell [p03-0a843f]', () => {
     expect(
       getFunctionCellKind({ trueType: 'blob', isBlob: true, isBinary: false, isUpload: false }, cfg),
     ).toBe('binary')

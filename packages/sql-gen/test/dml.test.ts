@@ -35,7 +35,7 @@ describe('InsertEdit value generation (golden, executed phpMyAdmin)', () => {
   })
 
   for (const server of [...new Set(cases.map((c) => `${c.server.vendor} ${c.server.version}`))]) {
-    it(`getQueryValueForInsert / getQueryValueForUpdate on ${server}`, () => {
+    it(`getQueryValueForInsert / getQueryValueForUpdate on ${server} [p03-cb66f4 p03-f8cc27]`, () => {
       for (const c of cases.filter((x) => `${x.server.vendor} ${x.server.version}` === server)) {
         const ctx = { server: c.server, uuid: () => c.uuid }
         const label = JSON.stringify(c.field)
@@ -125,7 +125,7 @@ describe('statement assembly (ReplaceController)', () => {
     ])
   })
 
-  it('"Insert as new row" from an edit copies protected binary values', () => {
+  it('"Insert as new row" from an edit copies protected binary values [p03-4997ee p03-6d6c71]', () => {
     const sql = buildInsertEditQueries(
       {
         table: 'files',
@@ -148,13 +148,13 @@ describe('statement assembly (ReplaceController)', () => {
     )
   })
 
-  it('uploads are inserted as hex verbatim; protected blobs untouched on UPDATE', () => {
+  it('uploads are inserted as hex verbatim; protected blobs untouched on UPDATE [p03-b4c209 p03-4997ee]', () => {
     const up = uploadedEditField('img', Uint8Array.from([0xff, 0xd8]))
     expect(getQueryValueForInsert(up, ctx)).toBe('0xffd8')
     expect(getQueryValueForUpdate(field('img', '', { type: 'protected' }), ctx)).toBe('')
   })
 
-  it('BIT, hex, uuid and NOW(fsp) values', () => {
+  it('BIT, hex, uuid and NOW(fsp) values [p03-2e3f92 p03-b3c9a2 p03-c6dc22]', () => {
     expect(getQueryValueForInsert(field('b', '1021', { type: 'bit' }), ctx)).toBe("b'1001'")
     expect(getQueryValueForInsert(field('h', 'ABCD', { type: 'hex' }), ctx)).toBe('0xABCD')
     expect(getQueryValueForInsert(field('u', '', { type: 'uuid' }), ctx)).toBe('uuid()')

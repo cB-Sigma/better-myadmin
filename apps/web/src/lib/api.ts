@@ -212,6 +212,7 @@ import type {
   StorageCreateRequest,
   StorageCreateResponse,
   StorageStatusResponse,
+  StructureBrowseResponse,
   StructureResponse,
   TableNamesResponse,
   TableOptionsRequest,
@@ -752,6 +753,9 @@ export const api = {
     call<DdlResponse>('POST', `${tablePath(r)}/columns/change`, req),
   dropColumns: (r: TableRef, req: DropColumnsRequest) =>
     call<DdlResponse>('POST', `${tablePath(r)}/columns/drop`, req),
+  /** pma: /table/structure/browse (With selected → Browse) */
+  structureBrowse: (r: TableRef, columns: string[]) =>
+    call<StructureBrowseResponse>('POST', `${tablePath(r)}/structure/browse`, { columns }),
   /** pma: /table/structure/central-columns-{add,remove} */
   structureCentralColumns: (r: TableRef, op: 'add' | 'remove', columns: string[]) =>
     call<DdlResponse>('POST', `${tablePath(r)}/structure/central-columns-${op}`, { columns }),

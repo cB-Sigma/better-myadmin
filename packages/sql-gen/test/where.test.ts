@@ -52,7 +52,7 @@ const expectedOf = (c: UniqueCase) => ({
 })
 
 describe('getUniqueCondition (golden, executed phpMyAdmin UniqueCondition)', () => {
-  it('has the PHPUnit cases and a large generated matrix', () => {
+  it('has the PHPUnit cases and a large generated matrix [p02-841990]', () => {
     expect(cases.filter((c) => c.label.startsWith('phpunit')).length).toBe(12)
     expect(cases.length).toBeGreaterThan(1000)
   })
@@ -91,7 +91,7 @@ describe('getUniqueCondition (golden, executed phpMyAdmin UniqueCondition)', () 
 })
 
 describe('getUniqueCondition extras', () => {
-  it('BIT values from mysql2 (raw bytes) match the mysqli decimal text', () => {
+  it('BIT values from mysql2 (raw bytes) match the mysqli decimal text [p02-841990]', () => {
     const fields = [
       createFieldMetadata({
         name: 'b',

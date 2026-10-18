@@ -53,7 +53,7 @@ describe('SQL tab options', () => {
     expect(err.card?.sql).toBe('SELECT * FROM nope;')
   })
 
-  it('MaxCharactersInDisplayedSQL truncates the card and hides Explain / PHP links', async () => {
+  it('MaxCharactersInDisplayedSQL truncates the card and hides Explain / PHP links [p02-40a8f8]', async () => {
     const a = await app({ MaxCharactersInDisplayedSQL: 20 })
     const { body } = await run(a, 'SELECT id, name, qty FROM t WHERE id = 1')
     const card = body.statements[0]!.card!
@@ -69,7 +69,7 @@ describe('SQL tab options', () => {
     expect(body.sqlQuery).toBe('')
   })
 
-  it('ShowSQL=false renders only the message', async () => {
+  it('ShowSQL=false renders only the message [p02-f22617]', async () => {
     const a = await app({ ShowSQL: false })
     const { body } = await run(a, 'SELECT 1')
     expect(body.statements[0]!.card).toBeNull()
@@ -88,7 +88,7 @@ describe('SQL tab options', () => {
     })
   })
 
-  it('AllowUserDropDatabase lets a DROP DATABASE through the guard', async () => {
+  it('AllowUserDropDatabase lets a DROP DATABASE through the guard [p02-1f1ac2]', async () => {
     await root.query('CREATE DATABASE IF NOT EXISTS m1sql_it_drop')
     const a = await app({ AllowUserDropDatabase: true })
     const { body } = await run(a, 'DROP DATABASE m1sql_it_drop')
@@ -111,7 +111,7 @@ describe('SQL tab options', () => {
     expect(after.body.statements[0]!.result!.rows[0]).toEqual(['0', '1'])
   })
 
-  it('an error with foreign key checks off does not leak the setting to the next request', async () => {
+  it('an error with foreign key checks off does not leak the setting to the next request [p02-b10e84]', async () => {
     const a = await app()
     const failed = await run(a, 'INSERT INTO nope VALUES (1)', { fkChecks: false })
     expect(failed.body.statements[0]!.kind).toBe('error')
@@ -119,7 +119,7 @@ describe('SQL tab options', () => {
     expect(after.body.statements[0]!.result!.rows[0]).toEqual(['1'])
   })
 
-  it('profiling switch: on, statistics, then off again', async () => {
+  it('profiling switch: on, statistics, then off again [p02-2a54e4]', async () => {
     const a = await app()
     const on = await run(a, 'SELECT * FROM t', { profiling: true })
     const st = on.body.statements[0]!
@@ -133,7 +133,7 @@ describe('SQL tab options', () => {
     expect(off.body.statements[0]!.card!.links.profiling).toEqual({ checked: false })
   })
 
-  it('a signed query runs only with a valid signature', async () => {
+  it('a signed query runs only with a valid signature [p02-fae7cc]', async () => {
     const a = await app()
     const { body } = await run(a, 'SELECT 1')
     const sig = body.statements[0]!.sig

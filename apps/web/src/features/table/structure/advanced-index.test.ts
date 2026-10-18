@@ -26,7 +26,7 @@ describe('the create/add form indexes (indexes.ts)', () => {
     expect(parseDataIndex('bogus,0')).toBeNull()
   })
 
-  it('composes and serialises the five buckets', () => {
+  it('composes and serialises the five buckets [p04-7f5bf8]', () => {
     let l = setIndex(emptyIndexLists(), 'primary', 0, idx('PRIMARY', [0], 'PRIMARY'))
     l = setIndex(l, 'unique', 0, idx('UNIQUE', [1, 2]))
     l = setIndex(l, 'index', 0, idx('INDEX', [3], 'i3'))
@@ -37,7 +37,7 @@ describe('the create/add form indexes (indexes.ts)', () => {
     ])
   })
 
-  it('labels each indexed row with the index name or its columns', () => {
+  it('labels each indexed row with the index name or its columns [p04-1cf31a]', () => {
     let l = setIndex(emptyIndexLists(), 'unique', 0, idx('UNIQUE', [1, 2]))
     l = setIndex(l, 'index', 0, idx('INDEX', [3], 'i3'))
     const labels = indexLabels(l, ['id', 'a', 'b', 'c'])

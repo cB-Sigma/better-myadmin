@@ -911,9 +911,67 @@ describe.skipIf(!reachable)('parity: table structure DDL (phpMyAdmin forms vs Be
     await bma?.close()
   })
 
-  for (const c of CASES) it(c.name, () => runCase(c))
+  // the cases a checklist item of docs/features/04-table-level.md rests on, as literal titles
+  const claimed = new Set<string>()
+  const run = (name: string) => {
+    claimed.add(name)
+    return () => {
+      const c = CASES.find((x) => x.name === name)
+      if (c === undefined) throw new Error(`no case ${name}`)
+      return runCase(c)
+    }
+  }
+  it(
+    'add two columns after a column, with a UNIQUE index on the first [p04-5a8e76 p04-9d4da3]',
+    run('add two columns after a column, with a UNIQUE index on the first'),
+  )
+  it(
+    'add a column at the beginning with online transaction [p04-5c9f2a p04-9d4da3]',
+    run('add a column at the beginning with online transaction'),
+  )
+  it(
+    'change: a collation change converts through BLOB first [p04-7544dc]',
+    run('change: a collation change converts through BLOB first'),
+  )
+  it(
+    'change: several columns, type, NULL and move to first, online transaction off [p04-e5b2c3 p04-5c9f2a]',
+    run('change: several columns, type, NULL and move to first, online transaction off'),
+  )
+  it('change: a virtual column expression [p04-ddf0af]', run('change: a virtual column expression'))
+  it(
+    'change: a failing ALTER reverts the BLOB conversion [p04-7544dc]',
+    run('change: a failing ALTER reverts the BLOB conversion'),
+  )
+  it(
+    'drop a column from its row link (via /sql) [p04-3e085e]',
+    run('drop a column from its row link (via /sql)'),
+  )
+  it('drop columns with the bulk Yes/No page [p04-2324e1]', run('drop columns with the bulk Yes/No page'))
+  it('row action PRIMARY on nk.a [p04-5ea0c3]', run('row action PRIMARY on nk.a'))
+  it('row action PRIMARY on t.qty [p04-5ea0c3]', run('row action PRIMARY on t.qty'))
+  it(
+    'bulk Primary on a table with a primary key: confirmation, then Yes [p04-009e25]',
+    run('bulk Primary on a table with a primary key: confirmation, then Yes'),
+  )
+  it(
+    'index editor: a new composite index with size, order, block size and comment [p04-04b04d]',
+    run('index editor: a new composite index with size, order, block size and comment'),
+  )
+  it('index rename [p04-99728b]', run('index rename'))
+  it('drop an index (via /sql) [p04-68a55a]', run('drop an index (via /sql)'))
+  it('drop the primary key (via /sql) [p04-68a55a]', run('drop the primary key (via /sql)'))
+  it('move columns [p04-511b9e]', run('move columns'))
+  it(
+    'edit partitioning: the re-posted form with a changed boundary [p04-97675f]',
+    run('edit partitioning: the re-posted form with a changed boundary'),
+  )
+  it('remove partitioning (via /sql) [p04-97675f]', run('remove partitioning (via /sql)'))
+  it('partition an unpartitioned table [p04-97675f]', run('partition an unpartitioned table'))
+  it('partition truncate [p04-97675f]', run('partition truncate'))
+  it('partition drop [p04-97675f]', run('partition drop'))
+  for (const c of CASES) if (!claimed.has(c.name)) it(c.name, () => runCase(c))
 
-  it('Preview SQL shows the statement that runs (add, change, index, move, create)', async () => {
+  it('Preview SQL shows the statement that runs (add, change, index, move, create) [p04-929453]', async () => {
     for (const db of [DB_PMA, DB_BMA]) {
       await root.query(`DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`)
     }
@@ -1059,15 +1117,29 @@ describe.skipIf(!reachable)('parity: table structure DDL (phpMyAdmin forms vs Be
     )
   })
 
-  it('the Structure page shows the same values', async () => {
+  it('the Structure page shows the same values [p04-23b058 p04-31ee94 p04-5cfcc5 p04-7efffd p04-902977 p04-27610d p04-eed3e0 p04-58bbc9 p04-8ac250 p04-97675f]', async () => {
     for (const db of [DB_PMA, DB_BMA]) {
       await root.query(`DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}
-        ALTER TABLE t ADD KEY k_dup (name(10), qty), ADD FULLTEXT KEY ft (body);`)
+        ALTER TABLE t ADD KEY k_dup (name(10), qty), ADD FULLTEXT KEY ft (body);
+        DELETE FROM phpmyadmin.pma__column_info WHERE db_name = '${db}';
+        INSERT INTO phpmyadmin.pma__column_info (db_name, table_name, column_name, comment, mimetype, transformation, transformation_options, input_transformation, input_transformation_options)
+          VALUES ('${db}', 't', 'name', '', 'text_plain', '', '', '', ''), ('${db}', 't', 'body', '', '', 'output/text_plain_append.php', '', '', '');`)
     }
-    for (const table of ['t', 'nk', 'p']) {
-      const html = await pma.getPage(`/index.php?route=/table/structure&db=${DB_PMA}&table=${table}`)
-      const b = await bmaGet(`/tables/${table}/structure`)
-      expect(structureFromBma(b), table).toEqual(structureFromPma(html))
+    try {
+      for (const table of ['t', 'nk', 'p']) {
+        const html = await pma.getPage(`/index.php?route=/table/structure&db=${DB_PMA}&table=${table}`)
+        const b = await bmaGet(`/tables/${table}/structure`)
+        const page = structureFromPma(html)
+        expect(structureFromBma(b), table).toEqual(page)
+        // only a mimetype (not a transformation alone) adds the "Media type:" line
+        if (table === 't') {
+          expect(page.columns.filter((c) => /Media type/.test(c.type)).map((c) => c.type)).toEqual([
+            'varchar(30) Media type: text/plain',
+          ])
+        }
+      }
+    } finally {
+      await root.query(`DELETE FROM phpmyadmin.pma__column_info WHERE db_name IN ('${DB_PMA}', '${DB_BMA}')`)
     }
   })
 })
@@ -1168,7 +1240,7 @@ function structureFromBma(j: Record<string, unknown>): PageModel {
       name: c.name,
       commentTitle: c.comment === '' ? null : c.comment,
       icons: [...(c.isPrimary ? ['Primary'] : []), ...(c.hasIndex ? ['Index'] : [])],
-      type: c.displayedType,
+      type: c.mediaType === undefined ? c.displayedType : `${c.displayedType} Media type: ${c.mediaType}`,
       collation: collation === null ? null : [collation.name, collation.description],
       attribute: c.attribute,
       null: c.isNull ? 'Yes' : 'No',

@@ -177,8 +177,11 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
     await bma?.close()
   })
 
-  for (const s of SEARCHES) {
-    it(`search: ${s.name}`, async () => {
+  // literal titles, so that the checklist items of docs/features/04-table-level.md can be claimed
+  const search = (name: string) => async () => {
+    const s = SEARCHES.find((x) => x.name === name)
+    if (s === undefined) throw new Error(`no search ${name}`)
+    {
       const m = await log.marker()
       await pmaSearch(s.crits, s.extra ?? [])
       const pmaLog = (await log.since(PMA_USER, m)).map((e) => normalise(e.sql, dbMap))
@@ -197,10 +200,35 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
         table: 't',
       })
       expect(q.status, JSON.stringify(q.json)).toBe(200)
-    })
+    }
   }
+  it('search: LIKE %...% on text, = on number [p04-3ef752]', search('LIKE %...% on text, = on number'))
+  it('search: IN with an empty element, BETWEEN', search('IN with an empty element, BETWEEN'))
+  it('search: unary operators and REGEXP ^...$ [p04-3ef752]', search('unary operators and REGEXP ^...$'))
+  it('search: ENUM with one value', search('ENUM with one value'))
+  it('search: GIS function with a geometry value', search('GIS function with a geometry value'))
+  it("search: = '' (empty) and NOT LIKE [p04-3ef752]", search("= '' (empty) and NOT LIKE"))
+  it(
+    'search: DISTINCT, selected columns and ORDER BY [p04-05763b]',
+    search('DISTINCT, selected columns and ORDER BY'),
+  )
+  it(
+    'search: custom WHERE overrides the criteria [p04-05763b]',
+    search('custom WHERE overrides the criteria'),
+  )
+  it('every search has a test', () =>
+    expect(SEARCHES.map((x) => x.name)).toEqual([
+      'LIKE %...% on text, = on number',
+      'IN with an empty element, BETWEEN',
+      'unary operators and REGEXP ^...$',
+      'ENUM with one value',
+      'GIS function with a geometry value',
+      "= '' (empty) and NOT LIKE",
+      'DISTINCT, selected columns and ORDER BY',
+      'custom WHERE overrides the criteria',
+    ]))
 
-  it('zoom search runs the same LIMITed query', async () => {
+  it('zoom search runs the same LIMITed query [p04-e40cc6]', async () => {
     const m = await log.marker()
     const html = await pma.getPage('/table/zoom-search', { db: DB_PMA, table: 't' })
     const pairs = serializeForm(findForm(html, { id: 'zoom_search_form' })).filter(
@@ -257,8 +285,8 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
     expect(pr.row_info).toBeUndefined()
   })
 
-  for (const regex of [false, true]) {
-    it(`find and replace (${regex ? 'regular expression' : 'plain'}): preview and replace`, async () => {
+  const findReplace = (regex: boolean) => async () => {
+    {
       for (const db of [DB_PMA, DB_BMA]) {
         await root.query(
           `DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`,
@@ -309,6 +337,8 @@ describe.skipIf(!reachable)('parity: table Search, Zoom search, Find and replace
       const [a] = await root.query(`SELECT note FROM ${DB_PMA}.t ORDER BY id`)
       const [b] = await root.query(`SELECT note FROM ${DB_BMA}.t ORDER BY id`)
       expect(b).toEqual(a)
-    })
+    }
   }
+  it('find and replace (plain): preview and replace [p04-741dc3]', findReplace(false))
+  it('find and replace (regular expression): preview and replace [p04-741dc3]', findReplace(true))
 })

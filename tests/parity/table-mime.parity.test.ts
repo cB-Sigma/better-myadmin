@@ -161,7 +161,7 @@ describe.skipIf(!pmaReachable)(
       await bma?.close()
     })
 
-    it('set a media type, a browser transformation and its options (INSERT)', () => {
+    it('set a media type, a browser transformation and its options (INSERT) [p03-ff556a]', () => {
       const mime = {
         mimetype: 'Text_Plain',
         transformation: 'Output/Text_Plain_Dateformat.php',
@@ -174,7 +174,7 @@ describe.skipIf(!pmaReachable)(
       )
     })
 
-    it('an input transformation on another column (INSERT), the stored row untouched (UPDATE)', () => {
+    it('an input transformation on another column (INSERT), the stored row untouched (UPDATE) [p03-ff556a]', () => {
       const mime = { inputTransformation: 'Input/Text_Plain_Iptolong.php' }
       return runCase(
         stored,
@@ -183,7 +183,7 @@ describe.skipIf(!pmaReachable)(
       )
     })
 
-    it('change the options of a stored transformation and rename the column (renameField + UPDATE)', () => {
+    it('change the options of a stored transformation and rename the column (renameField + UPDATE) [p04-98c823]', () => {
       const mime = { transformationOptions: '2' }
       return runCase(
         stored,
@@ -192,7 +192,7 @@ describe.skipIf(!pmaReachable)(
       )
     })
 
-    it('clear a stored transformation (DELETE)', () => {
+    it('clear a stored transformation (DELETE) [p03-ff556a]', () => {
       const mime = { mimetype: '', transformation: '', transformationOptions: '' }
       return runCase(
         stored,
@@ -201,7 +201,7 @@ describe.skipIf(!pmaReachable)(
       )
     })
 
-    it('the change form selects the stored settings', async () => {
+    it('the change form selects the stored settings [p03-ff556a]', async () => {
       await seed(stored)
       const json = await pma.getJson('/table/structure/change', {
         db: DB_PMA,

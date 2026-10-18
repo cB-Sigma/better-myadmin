@@ -111,7 +111,7 @@ describe.skipIf(!pmaReachable)('parity: normalization wizard (phpMyAdmin vs Bett
     await bma?.close()
   })
 
-  it('1NF: move a repeating group to a new table', () =>
+  it('1NF: move a repeating group to a new table [p04-720bc5]', () =>
     runCase(
       () =>
         pmaPost('/normalization/move-repeating-group', 'people', {
@@ -129,7 +129,7 @@ describe.skipIf(!pmaReachable)('parity: normalization wizard (phpMyAdmin vs Bett
         }),
     ))
 
-  it('2NF: split on a partial dependency, the original table kept', () =>
+  it('2NF: split on a partial dependency, the original table kept [p04-720bc5]', () =>
     runCase(
       () =>
         pmaPost('/normalization/2nf/create-new-tables', 'orders', {
@@ -157,7 +157,7 @@ describe.skipIf(!pmaReachable)('parity: normalization wizard (phpMyAdmin vs Bett
         }),
     ))
 
-  it('3NF: the new tables proposed and created for a transitive dependency', async () => {
+  it('3NF: the new tables proposed and created for a transitive dependency [p04-720bc5]', async () => {
     // normalization.js processDependencies(…, true): name, city → people; zip → city
     const pd = { '': [], people: ['name', 'city'], city: ['zip'] }
     const tables: Array<[string, string[]]> = [['people', ['people', 'people', 'people', 'city']]]

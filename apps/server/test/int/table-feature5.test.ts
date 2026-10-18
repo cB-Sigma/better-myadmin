@@ -29,7 +29,7 @@ afterAll(async () => {
 })
 
 describe('view form', () => {
-  it('creates, prefills the edit form, alters', async () => {
+  it('creates, prefills the edit form, alters [p04-74ef44]', async () => {
     let r = await app.req('GET', `${base}/views/form?sql=${encodeURIComponent('SELECT id FROM t')}`)
     expect(J(r)).toMatchObject({ operation: 'create', view: { as: 'SELECT id FROM t', name: '' } })
     r = await app.req('POST', `${base}/views`, {
@@ -55,7 +55,7 @@ describe('view form', () => {
     expect(J(r).links.editView).toBe(true)
   })
 
-  it('answers the errors', async () => {
+  it('answers the errors [p04-74ef44]', async () => {
     let r = await app.req('POST', `${base}/views`, {
       operation: 'create',
       view: { name: '', as: 'SELECT 1' },
@@ -68,7 +68,7 @@ describe('view form', () => {
 })
 
 describe('chart', () => {
-  it('answers the form data, the rows and the errors', async () => {
+  it('answers the form data, the rows and the errors [p04-bc6299]', async () => {
     const sql = 'SELECT name, qty, d FROM t'
     let r = await app.req('POST', `${base}/tables/t/chart`, { sql, unlimNumRows: 2 })
     expect(J(r)).toEqual({
@@ -99,7 +99,7 @@ describe('chart', () => {
 })
 
 describe('GIS visualization', () => {
-  it('answers the candidates and the rows', async () => {
+  it('answers the candidates and the rows [p04-1f3c9c]', async () => {
     let r = await app.req('POST', `${base}/tables/t/gis`, { sql: 'SELECT * FROM t' })
     expect(J(r)).toMatchObject({
       error: null,
