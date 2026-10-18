@@ -177,10 +177,13 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
       } else if (res.reloadNavigation) {
         void qc.invalidateQueries({ queryKey: qk.srv(server), refetchType: 'active' })
       }
+      editor.current?.markClean()
+      // pma: sql.ts sqlqueryform_submit — a failed batch (success false) only shows the error: the
+      // query box stays as it was, and the "Show query box" toggle is not revealed
+      if (res.statements.some((st) => st.error !== undefined)) return
       setToggleShown(true)
       // the query box collapses unless "Retain query box" is checked
       if (fromForm && !retain) setBoxHidden(true)
-      editor.current?.markClean()
     },
     [db, table, server, retain, navigate, qc],
   )

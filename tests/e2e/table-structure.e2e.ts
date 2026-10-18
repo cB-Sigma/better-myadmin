@@ -107,9 +107,10 @@ test('create table, add / change a column, add indexes, drop a column [p04-92945
   const qty = page.getByTestId('structure-row-qty')
   await qty.getByText('More').click()
   await qty.getByRole('button', { name: 'Index', exact: true }).click()
-  await expect
-    .poll(() => dialogs.at(-1))
-    .toBe('Do you really want to execute "ALTER TABLE `items` ADD INDEX(`qty`);"?')
+  // structure.ts $.fn.confirm: the Confirm modal (OK / Close), not a native confirm
+  const ask = page.getByRole('alertdialog')
+  await expect(ask).toContainText('Do you really want to execute "ALTER TABLE `items` ADD INDEX(`qty`);"?')
+  await ask.getByRole('button', { name: 'OK' }).click()
   await expect(page.getByTestId('index-qty')).toBeVisible()
 
   // ---- and a named composite one from the index dialog
@@ -125,11 +126,10 @@ test('create table, add / change a column, add indexes, drop a column [p04-92945
   await expect(page.getByTestId('index-t_q')).toContainText('title (10)')
   expect(await showCreate('items')).toContain('KEY `t_q` (`title`(10),`qty`)')
 
-  // ---- drop "qty" from its row (JS confirm with the exact statement)
+  // ---- drop "qty" from its row (the Confirm modal with the exact statement)
   await qty.getByRole('button', { name: 'Drop' }).click()
-  await expect
-    .poll(() => dialogs.at(-1))
-    .toBe('Do you really want to execute "ALTER TABLE `items` DROP `qty`;"?')
+  await expect(ask).toContainText('Do you really want to execute "ALTER TABLE `items` DROP `qty`;"?')
+  await ask.getByRole('button', { name: 'OK' }).click()
   await expect(page.getByTestId('structure-row-qty')).toHaveCount(0)
   await expect(page.getByTestId('message-text').first()).toContainText('Column qty has been dropped.')
   expect(await showCreate('items')).not.toContain('`qty`')

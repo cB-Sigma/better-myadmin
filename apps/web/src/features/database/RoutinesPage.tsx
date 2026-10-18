@@ -16,6 +16,7 @@ import {
   PanelBody,
   PmaIcon,
   Textarea,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
@@ -135,6 +136,7 @@ export function RoutinesPage({
     <>
       <ProgramListPage
         filterable
+        noExportable
         server={server}
         db={db}
         icon="b_routines"
@@ -265,7 +267,6 @@ function RoutineEditor({
 }) {
   const [r, setR] = useState(initial)
   const [adjust, setAdjust] = useState(options.hasAdjustPrivileges)
-  const [errors, setErrors] = useState<SqlMessage[]>([])
   const set = (p: Partial<RoutineEditorData>) => setR({ ...r, ...p })
   const setParam = (i: number, p: Partial<Param>) =>
     set({ params: r.params.map((x, j) => (j === i ? { ...x, ...p } : x)) })
@@ -302,16 +303,15 @@ function RoutineEditor({
     NUMERIC.includes(type) ? num() : TEXTUAL.includes(type) ? text() : <span className="no_opts">---</span>
 
   const save = async () => {
-    const missing = () => setErrors([{ type: 'error', text: t('Missing value in the form!') }])
+    // validate() / validateCustom(): alert(Messages.strFormEmpty / MissingReturn)
+    const missing = () => window.alert(t('Missing value in the form!'))
     if (r.name === '' || r.definition === '') return missing()
     if (r.params.some((p) => (r.type === 'PROCEDURE' && p.dir === '') || p.name === '' || p.type === ''))
       return missing()
     if (r.params.some((p) => needsLength(p.type) && p.length === '')) return missing()
     if (isFunction && needsLength(returnType) && r.returnLength === '') return missing()
     if (isFunction && !r.definition.toUpperCase().includes('RETURN')) {
-      setErrors([
-        { type: 'error', text: t('The definition of a stored function must contain a RETURN statement!') },
-      ])
+      window.alert(t('The definition of a stored function must contain a RETURN statement!'))
       return
     }
     const res = await onSave({
@@ -337,7 +337,8 @@ function RoutineEditor({
       sqlDataAccess: r.sqlDataAccess,
       comment: r.comment,
     })
-    if (res !== null) setErrors(res)
+    // a failed save: ajaxShowMessage(data.error, false), the editor stays open
+    if (res !== null && res.length > 0) showMessage(<Messages messages={res} />, false)
   }
 
   return (
@@ -348,12 +349,14 @@ function RoutineEditor({
       onClose={onClose}
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}
     >
-      <Messages messages={errors} />
-      <div className="mb-2 font-semibold">
-        {t('Details')} {!editMode && <MySqlDocLink link="CREATE_PROCEDURE" />}
-      </div>
-      {/* editor_form.twig: the fields sit in a card headed "Details" */}
-      <Panel title={t('Details')}>
+      {/* editor_form.twig: the fields sit in one card headed "Details" (with its doc link) */}
+      <Panel
+        title={
+          <>
+            {t('Details')} {!editMode && <MySqlDocLink link="CREATE_PROCEDURE" />}
+          </>
+        }
+      >
         <PanelBody>
           <table className="rte_table w-full text-sm">
             <tbody>

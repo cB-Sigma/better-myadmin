@@ -23,10 +23,20 @@ export interface NavTreeProps {
   onPrefetch?: ((node: NavNode) => void) | undefined
   /** "New" under Views (li.new_view a.ajax): the create view dialog for the database */
   onNewView?: ((db: string) => void) | undefined
+  /** ShowDatabasesNavigationAsTree = false: the rows are the legacy tree content */
+  legacy?: boolean
 }
 
 /** The tree as one flat, virtualized list of visible rows (docs/architecture/03-frontend-architecture.md#navigation-tree). */
-export function NavTree({ store, rows, settings, nodeControls, onPrefetch, onNewView }: NavTreeProps) {
+export function NavTree({
+  store,
+  rows,
+  settings,
+  nodeControls,
+  onPrefetch,
+  onNewView,
+  legacy = false,
+}: NavTreeProps) {
   const parentRef = useRef<HTMLDivElement>(null)
   const virtualizer = useVirtualizer({
     count: rows.length,
@@ -77,6 +87,7 @@ export function NavTree({ store, rows, settings, nodeControls, onPrefetch, onNew
                   nodeControls={nodeControls}
                   onPrefetch={onPrefetch}
                   onNewView={onNewView}
+                  legacy={legacy}
                 />
               ) : row.type === 'filter' ? (
                 <FilterRow row={row} store={store} />
@@ -107,6 +118,7 @@ function NodeRow({
   nodeControls,
   onPrefetch,
   onNewView,
+  legacy,
 }: {
   row: Extract<Row, { type: 'node' }>
   store: NavTreeStore
@@ -114,8 +126,11 @@ function NodeRow({
   nodeControls?: ((node: NavNode) => ReactNode) | undefined
   onPrefetch?: ((node: NavNode) => void) | undefined
   onNewView?: ((db: string) => void) | undefined
+  legacy: boolean
 }) {
   const { node, depth } = row
+  // pma: renderNode — databases of the legacy select get no expander icon (they load via the select)
+  const expandable = node.expandable && !(legacy && node.kind === 'database')
   const navigate = useNavigate()
   const newViewDb = /\bnew_view\b/.test(node.classes) ? node.link?.params.db : undefined
   const go = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -141,7 +156,7 @@ function NodeRow({
     <div
       role="treeitem"
       aria-level={depth + 1}
-      aria-expanded={node.expandable ? row.expanded : undefined}
+      aria-expanded={expandable ? row.expanded : undefined}
       aria-selected={row.selected}
       data-kind={node.kind}
       data-name={node.realName}
@@ -161,7 +176,7 @@ function NodeRow({
         if (timer.current !== null) clearTimeout(timer.current)
       }}
     >
-      {node.expandable ? (
+      {expandable ? (
         <button
           type="button"
           className="flex size-4 shrink-0 items-center justify-center rounded text-fg-muted hover:text-fg"
@@ -282,6 +297,7 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
         onFocus={(e) => {
           if (e.currentTarget.value !== '') e.currentTarget.select()
         }}
+        // typing filters on the client only; the server search waits for Enter (Q74)
         onChange={(e) => store.setFilter(ownerKey, e.target.value)}
         onKeyDown={(e) => {
           if (e.key === 'Enter') void store.search(row.filter, ownerKey, e.currentTarget.value)
@@ -305,7 +321,7 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
   )
 }
 
-function PagerRow({
+export function PagerRow({
   row,
   store,
   mode,

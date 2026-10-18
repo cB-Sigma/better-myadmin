@@ -4,9 +4,9 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-1105/1106 covered (99.9%): 1095 implemented, 3 exception, 7 n/a, 1 planned. [Summary](README.md).
+1106/1106 covered (100.0%): 1096 implemented, 3 exception, 7 n/a. [Summary](README.md).
 
-## 01 shell navigation auth — 97/98 (99.0%) covered, 94/98 implemented
+## 01 shell navigation auth — 98/98 (100.0%) covered, 95/98 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -27,7 +27,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `modals/unhide_nav_item.twig` | 1/1 | ✅ `button:Close` |  |
 | `navigation/item_unhide_dialog.twig` | 1/1 | ✅ `link:Unhide` |  |
 | `navigation/main.twig` | 6/6 | ✅ `link:Empty session data` ✅ `link:Home` ✅ `link:MariaDB Documentation` ✅ `link:Navigation panel settings` ✅ `link:phpMyAdmin documentation` ✅ `link:Reload navigation panel` |  |
-| `navigation/tree/database_select.twig` | 0/1 |  | 🗓️ `db` |
+| `navigation/tree/database_select.twig` | 1/1 | ✅ `db` |  |
 | `navigation/tree/fast_filter.twig` | 2/2 | ✅ `button:Clear fast filter` ✅ `text:Type to filter these, Enter to search all` |  |
 | `navigation/tree/quick_warp.twig` | 2/2 | ✅ `button:Favorites` ✅ `button:Recent` |  |
 | `recent_favorite_table_favorite.twig` | 1/1 | ✅ `link:Remove from Favorites` |  |

@@ -134,6 +134,35 @@ describe('GET /navigation/tree', () => {
     }
   })
 
+  it('ShowDatabasesNavigationAsTree off: the legacy database select, no grouping, filter or controls', async () => {
+    const t = await app({ ShowDatabasesNavigationAsTree: false, NavigationTreeDisplayDbFilterMinimum: 1 })
+    try {
+      const r = await t.req('GET', '/api/servers/1/navigation/tree?db=m1nav_it_b')
+      const body = r.json as unknown as NavTreeResponse
+      expect(body.settings.ShowDatabasesNavigationAsTree).toBe(false)
+      expect(body.controls).toBe(false)
+      expect(body.tree.fastFilter).toBeNull()
+      expect(labels(body.tree)).toEqual([
+        'New',
+        'information_schema',
+        'm1nav_it_a',
+        'm1nav_it_b',
+        'm1nav_it_large',
+        'performance_schema',
+      ])
+      // the options of #navi_db_select: the databases without New, in the order of the query
+      expect(body.dbSelect).toEqual([
+        'information_schema',
+        'm1nav_it_a',
+        'm1nav_it_b',
+        'm1nav_it_large',
+        'performance_schema',
+      ])
+    } finally {
+      await t.close()
+    }
+  })
+
   it('requires a login', async () => {
     const t = testApp()
     await t.req('GET', '/api/auth/state')

@@ -462,6 +462,23 @@ export class NavigationTree {
     return { fastFilter, pageSelector, items }
   }
 
+  /**
+   * pma: NavigationTree::renderDbSelect (ShowDatabasesNavigationAsTree = false): the databases of
+   * the page (the client turns them into `#navi_db_select`) with the list navigator, no fast filter
+   * and no grouping.
+   */
+  async renderDbSelect(): Promise<{ list: NavList; options: string[] }> {
+    await this.#buildPath()
+    const pageSelector = await this.#getPageSelector(this.#tree)
+    this.#tree.isGroup = false
+    // the options keep the order of the query; the nodes are sorted
+    const options = this.#tree.children.filter((n) => !n.isNew).map((n) => n.realName)
+    const children = this.#sorted(this.#tree.children)
+    this.#setVisibility()
+    const items = await this.#renderNodes(children)
+    return { list: { fastFilter: null, pageSelector, items }, options }
+  }
+
   /** pma: NavigationTree::renderPath — false when the branch cannot be built. */
   async renderPath(): Promise<{ list: NavList | false; results: string | null; searchResults: boolean }> {
     const node = await this.#buildPath()

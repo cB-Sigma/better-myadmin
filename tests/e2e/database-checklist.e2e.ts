@@ -223,9 +223,15 @@ test.describe('routines, events, triggers', () => {
     await expect(dlg.locator('select[name="item_param_opts_text[0]"]')).toHaveCount(0)
     await typeOf(0).selectOption('INT')
     await expect(dlg.locator('select[name="item_param_opts_num[0]"]')).toBeVisible()
-    // validation: a missing name, then a function body without RETURN
+    // validation: a missing name, then a function body without RETURN (routines.ts validate:
+    // native alerts)
+    const alerts: string[] = []
+    page.on('dialog', (d) => {
+      alerts.push(d.message())
+      void d.dismiss()
+    })
     await dlg.getByRole('button', { name: 'Save changes' }).click()
-    await expect(dlg.getByText('Missing value in the form!')).toBeVisible()
+    await expect.poll(() => alerts.at(-1)).toBe('Missing value in the form!')
     await dlg.locator('input[name="item_name"]').fill('f_ck')
     await dlg.locator('input[name="item_param_name[0]"]').fill('first')
     await dlg.locator('#addRoutineParameterButton').click()
@@ -234,9 +240,9 @@ test.describe('routines, events, triggers', () => {
     await expect(dlg.locator('input[name="item_param_name[0]"]')).toHaveValue('second')
     await dlg.locator('textarea, .cm-content').first().fill('SELECT 1')
     await dlg.getByRole('button', { name: 'Save changes' }).click()
-    await expect(
-      dlg.getByText('The definition of a stored function must contain a RETURN statement!'),
-    ).toBeVisible()
+    await expect
+      .poll(() => alerts.at(-1))
+      .toBe('The definition of a stored function must contain a RETURN statement!')
   })
 
   test('dropping the last routine shows the "no routines" notice [p05-9964cd]', async ({ page }) => {

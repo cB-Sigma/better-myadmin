@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { compareLogs } from './lib/compare.ts'
 import { GeneralLog } from './lib/general-log.ts'
-import { type Entry, listFromJson, pathFromHtml, stateFromHtml } from './lib/nav-html.ts'
+import { type Entry, dbSelectFromHtml, listFromJson, pathFromHtml, stateFromHtml } from './lib/nav-html.ts'
 import { type PmaShadow, canStartShadow, startPmaShadow } from './lib/pma-shadow.ts'
 import { PmaClient } from './lib/pma.ts'
 import { PMA_STORAGE } from './lib/server-setup.ts'
@@ -38,6 +38,11 @@ const COMPARE = {
       tool: 'pma' as const,
       pattern: '^SHOW TABLES FROM `',
       why: 'DbTableExists check of the request `db` parameter (middleware), not the navigation.',
+    },
+    {
+      tool: 'pma' as const,
+      pattern: '^SELECT `PRIVILEGE_TYPE` FROM `INFORMATION_SCHEMA`.`SCHEMA_PRIVILEGES` ',
+      why: 'Menu tabs (EVENT / TRIGGER) of the request `db` parameter, sent with the AJAX response, not the navigation.',
     },
   ],
 }
@@ -288,6 +293,21 @@ const CASES: Case[] = [
     cfg: { NavigationTreeEnableExpansion: false },
     state: { paths: [{ aPath: ['m1nav_a'], vPath: ['m1nav', 'a'] }] },
   },
+  {
+    name: 'legacy database select (ShowDatabasesNavigationAsTree off)',
+    cfg: { ShowDatabasesNavigationAsTree: false },
+    state: {},
+  },
+  {
+    name: 'legacy database select with the current database',
+    cfg: { ShowDatabasesNavigationAsTree: false },
+    state: { db: 'm1nav_a' },
+  },
+  {
+    name: 'legacy database select: list navigator',
+    cfg: { ShowDatabasesNavigationAsTree: false, FirstLevelNavigationItems: 2 },
+    state: { pos: 2 },
+  },
   { name: 'another database separator', cfg: { NavigationTreeDbSeparator: 'nav_' }, state: {} },
   {
     name: 'item filter at NavigationTreeDisplayItemFilterMinimum [p01-79ae51]',
@@ -409,8 +429,18 @@ describe.skipIf(!reachable)('parity: navigation tree (/navigation vs /navigation
                 )
               : await bma.req('POST', '/api/servers/1/navigation/tree', s)
           expect(r.status, JSON.stringify(r.json)).toBe(200)
-          bmaEntries = listFromJson((r.json as unknown as NavTreeResponse).tree)
+          const tree = r.json as unknown as NavTreeResponse
+          bmaEntries = listFromJson(tree.tree)
           pmaEntries = stateFromHtml(pr.message ?? '')
+          if (c.cfg?.ShowDatabasesNavigationAsTree === false) {
+            // the client builds #navi_db_select from the databases of the page (legacyRows)
+            const nodes = new Map(tree.tree.items.map((n) => [n.realName, n]))
+            const options = (tree.dbSelect ?? []).map(
+              (name) => `${name}|${nodes.get(name)?.link?.title ?? ''}|${name === s.db}`,
+            )
+            expect(options).toEqual(dbSelectFromHtml(pr.message ?? ''))
+            expect(tree.controls).toBe(false)
+          }
         } else {
           const r = await bma.req(
             'GET',

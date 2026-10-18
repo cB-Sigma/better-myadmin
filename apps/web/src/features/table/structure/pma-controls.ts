@@ -505,7 +505,7 @@ export const pmaControls = {
   },
   'js:table/structure.ts#confirm:strDoYouReally': {
     file: 'StructurePage.tsx',
-    match: 'if (!confirmSql(c.dropSql)) return',
+    match: 'question: sqlQuestion(c.dropSql), destructive: true',
   },
   'js:table/structure.ts#confirm:strDropPartitionWarning': {
     file: 'StructurePage.tsx',

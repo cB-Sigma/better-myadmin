@@ -75,6 +75,11 @@ test('[p01-0acf73] an executed query is a pending entry, then successful or fail
   await expect(messages(page).locator('.message[data-state="failed"]').last()).toContainText(
     'SELECT nope FROM t',
   )
+  // the error stays in a message over the page (ajaxShowMessage(data.error, false)): a click removes it
+  const error = page.locator('.ajax_notification', { hasText: "Unknown column 'nope'" })
+  await expect(error).toBeVisible()
+  await error.click()
+  await expect(error).toHaveCount(0)
   // a query of the page (the SQL tab's Go): shown with "Show current browsing query" (on by default)
   const sqlTab = async (sql: string) => {
     // the SQL tab of another scope, without reloading the app (the console keeps its messages)

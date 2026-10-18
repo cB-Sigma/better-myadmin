@@ -183,6 +183,8 @@ export const NavSettings = z.object({
   NavigationTreePointerEnable: z.boolean(),
   NavigationTreeAutoexpandSingleDb: z.boolean(),
   NavigationTreeEnableExpansion: z.boolean(),
+  /** false: the legacy pre-4.0 panel, a database select with the tree of the current database (NavigationTree::renderDbSelect) */
+  ShowDatabasesNavigationAsTree: z.boolean(),
   NavigationDisplayLogo: z.boolean(),
   NavigationLogoLink: z.string(),
   NavigationLogoLinkWindow: z.enum(['main', 'new']),
@@ -242,6 +244,8 @@ export const NavTreeResponse = z.object({
   tree: NavList,
   /** `Collapse all` / `Link with main panel` controls are shown (NavigationTreeEnableExpansion). */
   controls: z.boolean(),
+  /** ShowDatabasesNavigationAsTree off: the databases of `#navi_db_select`, in the order of the query (renderDbSelect). */
+  dbSelect: z.array(z.string()).optional(),
   /** User errors raised while building the tree (e.g. the large-group warning). */
   errors: z.array(z.string()),
 })

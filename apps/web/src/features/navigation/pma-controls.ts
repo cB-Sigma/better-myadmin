@@ -15,6 +15,8 @@ export const pmaControls = {
   'src/Navigation/NavigationTree.php#id:pma_navigation_sync': 'NavigationPanel.tsx',
   // pma: resources/templates/server/select/index.twig (NavigationDisplayServers, DisplayServersList = false)
   'server/select/index.twig#server': { file: 'NavigationPanel.tsx', match: 'select_server' },
+  // pma: resources/templates/navigation/tree/database_select.twig (ShowDatabasesNavigationAsTree = false)
+  'navigation/tree/database_select.twig#db': { file: 'NavigationPanel.tsx', match: 'id="navi_db_select"' },
   // pma: resources/templates/navigation/tree/fast_filter.twig
   'navigation/tree/fast_filter.twig#text:Type to filter these, Enter to search all': 'NavTree.tsx',
   'navigation/tree/fast_filter.twig#button:Clear fast filter': 'NavTree.tsx',
@@ -85,6 +87,10 @@ export const pmaControls = {
   'js:modules/navigation/event-loader.ts#focus:#pma_navigation_tree li.fast_filter input.searchClause': {
     file: 'NavTree.tsx',
     match: 'e.currentTarget.select()',
+  },
+  'js:modules/navigation/event-loader.ts#change:#navi_db_select': {
+    file: 'NavigationPanel.tsx',
+    match: 'if (node?.link) onSelect(navHref(server, node.link.route, node.link.params))',
   },
   'js:modules/navigation/event-loader.ts#submit:.fast_filter': {
     file: 'NavTree.tsx',

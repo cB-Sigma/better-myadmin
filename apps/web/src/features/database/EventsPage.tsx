@@ -8,6 +8,7 @@ import {
   Panel,
   PanelBody,
   Textarea,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
@@ -210,16 +211,17 @@ function EventEditor({
   onSave: (body: EventEditorData) => Promise<SqlMessage[] | null>
 }) {
   const [e, setE] = useState(initial)
-  const [errors, setErrors] = useState<SqlMessage[]>([])
   const set = (p: Partial<EventEditorData>) => setE({ ...e, ...p })
   const recurring = e.type === 'RECURRING'
   const save = async () => {
     if (e.name === '' || e.definition === '') {
-      setErrors([{ type: 'error', text: t('Missing value in the form!') }])
+      // validate(): alert(Messages.strFormEmpty)
+      window.alert(t('Missing value in the form!'))
       return
     }
     const r = await onSave(e)
-    if (r !== null) setErrors(r)
+    // a failed save: ajaxShowMessage(data.error, false), the editor stays open
+    if (r !== null && r.length > 0) showMessage(<Messages messages={r} />, false)
   }
   return (
     <DbModal
@@ -229,12 +231,14 @@ function EventEditor({
       onClose={onClose}
       footer={<EditorFooter onClose={onClose} onSave={() => void save()} />}
     >
-      <Messages messages={errors} />
-      <div className="mb-2 font-semibold">
-        {t('Details')} {!editMode && <MySqlDocLink link="CREATE_EVENT" />}
-      </div>
-      {/* editor_form.twig: the fields sit in a card headed "Details" */}
-      <Panel title={t('Details')}>
+      {/* editor_form.twig: the fields sit in one card headed "Details" (with its doc link) */}
+      <Panel
+        title={
+          <>
+            {t('Details')} {!editMode && <MySqlDocLink link="CREATE_EVENT" />}
+          </>
+        }
+      >
         <PanelBody>
           <table className="rte_table w-full text-sm">
             <tbody>

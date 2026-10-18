@@ -718,7 +718,7 @@ export async function partitionMaintenance(
     reader.invalidate()
     return {
       messages: [msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql)],
-      maintenance: { title, partition: req.partition, rows },
+      maintenance: { title, op: req.operation.toLowerCase(), partition: req.partition, rows },
     }
   }
   const r = await tryQuery(ctx, sql, 'partition.maintenance')
@@ -729,6 +729,6 @@ export async function partitionMaintenance(
         ? msg('success', tr.gettext('Your SQL query has been executed successfully.'), sql)
         : msg('error', tr.gettext('Error'), sql),
     ],
-    maintenance: { title, partition: req.partition, rows: [] },
+    maintenance: { title, op: req.operation.toLowerCase(), partition: req.partition, rows: [] },
   }
 }

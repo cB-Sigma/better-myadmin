@@ -84,6 +84,7 @@ test('structure: header hints, type groups, the bulk drop dialog and "Dropping â
 
   await slow(page, '**/tables/t/columns/drop')
   await page.getByTestId('structure-row-a').getByRole('button', { name: 'Drop' }).click()
+  await page.getByRole('alertdialog').getByRole('button', { name: 'OK' }).click()
   await expect(page.getByText('Dropping column', { exact: true })).toBeVisible()
   await expect(page.getByTestId('structure-row-a')).toHaveCount(0)
 

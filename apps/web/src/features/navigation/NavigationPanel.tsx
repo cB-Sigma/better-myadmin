@@ -32,9 +32,10 @@ import { PageSettingsForm } from '../preferences/PageSettings.tsx'
 import { useLogout } from '../shell/UserMenu'
 import { CreateViewDialog } from '../table/view/ViewForm'
 import { NodeControls, QuickWarp } from './NavExtras'
-import { NavTree } from './NavTree'
+import { NavTree, PagerRow } from './NavTree'
 import { logoTarget } from './check-link.ts'
-import { currentScope } from './links'
+import { currentScope, navHref } from './links'
+import { legacyRows } from './rows'
 import { type NavFetchers, NavTreeStore } from './store'
 
 export interface NavigationPanelProps {
@@ -115,12 +116,14 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
 
   // link with main panel: after every navigation of the main panel
   const loaded = store.root !== null
-  const synced = store.synced
+  const settings = store.root?.settings
+  // ShowDatabasesNavigationAsTree = false: the legacy database select (NavigationTree::renderDbSelect)
+  const legacy = settings !== undefined && !settings.ShowDatabasesNavigationAsTree
+  const synced = store.synced || legacy
   useEffect(() => {
     if (loaded && synced) void store.showCurrent(db, table)
   }, [store, loaded, synced, db, table])
-
-  const settings = store.root?.settings
+  const router = useRouter()
   const [syncHover, setSyncHover] = useState(false)
   // li.new_view a.ajax: "New" under Views opens the create view dialog over the page
   const [newViewDb, setNewViewDb] = useState<string | null>(null)
@@ -236,11 +239,21 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
             {t('An error has occurred while loading the navigation display')}
           </p>
         )}
+        {settings !== undefined && legacy && (
+          <LegacyDbSelect
+            server={server}
+            store={store}
+            db={db}
+            mode={settings.TableNavigationLinksMode}
+            onSelect={(href) => router.history.push(href)}
+          />
+        )}
         {settings !== undefined && (
           <NavTree
             store={store}
-            rows={store.rows()}
+            rows={legacy ? legacyRows(store.rows(), db).content : store.rows()}
             settings={settings}
+            legacy={legacy}
             nodeControls={
               nodeControls ??
               ((node) => <NodeControls server={server} node={node} onChanged={() => void reload()} />)
@@ -550,5 +563,54 @@ function NaviSettingsButton({
         <PageSettingsForm server={server} group="Navi" submit={submit} />
       </Modal>
     </>
+  )
+}
+
+/**
+ * pma: navigation/tree/database_select.twig — the list navigator of the databases and
+ * `select#navi_db_select`, shown while a database is current (Navigation.selectCurrentDatabase);
+ * a change loads the chosen database's DefaultTabDatabase (event-loader.ts change:#navi_db_select).
+ */
+function LegacyDbSelect({
+  server,
+  store,
+  db,
+  mode,
+  onSelect,
+}: {
+  server: number
+  store: NavTreeStore
+  db: string
+  mode: NavSettings['TableNavigationLinksMode']
+  onSelect: (href: string) => void
+}) {
+  const { pager, options, current, content } = legacyRows(store.rows(), db, store.root?.dbSelect)
+  return (
+    <div id="pma_navigation_select_database" className="px-1 pb-1">
+      {pager !== null && <PagerRow row={pager} store={store} mode={mode} />}
+      <div id="pma_navigation_db_select" hidden={db === ''}>
+        <select
+          id="navi_db_select"
+          name="db"
+          aria-label={t('Databases')}
+          className="h-7 w-full rounded border border-border bg-bg px-1 text-[13px]"
+          value={current?.node.realName ?? ''}
+          onChange={(e) => {
+            const node = options.find((n) => n.realName === e.target.value)
+            if (node?.link) onSelect(navHref(server, node.link.route, node.link.params))
+          }}
+        >
+          {current === null && <option value="" />}
+          {options.map((n) => (
+            <option key={n.realName} value={n.realName} title={n.link?.title}>
+              {n.realName}
+            </option>
+          ))}
+        </select>
+      </div>
+      {current?.expanded === true && content.length === 0 && (
+        <div className="px-1 text-[13px]">{t('No tables found in database.')}</div>
+      )}
+    </div>
   )
 }
