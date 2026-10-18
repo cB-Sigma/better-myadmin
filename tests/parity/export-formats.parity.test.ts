@@ -2,14 +2,15 @@ import { writeFileSync } from 'node:fs'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
-import { readZip } from '../../packages/export/src/zip.ts'
 import {
   type Dump,
   type Pairs,
   ROOT,
   bmaDump,
   comparable,
+  compareOpenDocument,
   createAccounts,
+  normaliseFormat,
   pmaDump,
   pmaExportForm,
   seedDatabase,
@@ -38,24 +39,6 @@ let rowsForm: Pairs
 
 type Changes = Record<string, string | string[] | null>
 const custom = (what: string, more: Changes = {}): Changes => ({ what, quick_or_custom: 'custom', ...more })
-
-/** Version / tool strings that differ by design (the JSON header, PHP array doc comment, …). */
-function normaliseFormat(s: string): string {
-  return s
-    .replace(/("version":\s*)"[^"]*"(,\s*"comment":\s*"Export to JSON plugin for )[^"]*"/, '$1"V"$2TOOL"')
-    .replace(/^ \* Export to PHP Array plugin for .*$/m, ' * Export to PHP Array plugin for TOOL')
-    .replace(/^ \* @version .*$/m, ' * @version V')
-}
-
-function compareOpenDocument(d: Dump): string {
-  return readZip(d.body)
-    .map((e) => {
-      let text = e.data.toString('utf8')
-      if (e.name === 'meta.xml') text = text.replace(/<office:meta>.*<\/office:meta>/, '<office:meta/>')
-      return `== ${e.name}\n${text}`
-    })
-    .join('\n')
-}
 
 const cases: Array<{ name: string; form: () => Pairs; changes: Changes; odf?: true }> = [
   { name: 'csv defaults', form: () => dbForm, changes: custom('csv') },

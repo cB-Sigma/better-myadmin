@@ -510,6 +510,8 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
           <input type="hidden" name="template_id" value={templateId} />
           {page.singleTable && <input type="hidden" name="single_table" value="1" />}
           {page.sqlQuery !== '' && <input type="hidden" name="sql_query" value={page.sqlQuery} />}
+          {/* export.twig: the aliases table's hidden template row posts an empty aliases_new */}
+          <input type="hidden" name="aliases_new" value="" />
 
           {page.exportMethod !== 'custom-no-form' && (
             <Panel title={t('Export method:')} className="mb-3" id="quick_or_custom">
