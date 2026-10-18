@@ -215,6 +215,11 @@ export const SaveRowsRequest = z.object({
   preview: z.boolean().default(false),
   /** sql_query the form was opened with (Browse); kept for "Go back" */
   sqlQuery: z.string().default(''),
+  /**
+   * Its signature: the form gets the query from the URL, so it sends this; when present it must
+   * verify, else "Go back" browses the table (InsertEdit::getFormParametersForInsertForm)
+   */
+  sqlQuerySig: z.string().optional(),
 })
 export type SaveRowsRequest = z.infer<typeof SaveRowsRequest>
 

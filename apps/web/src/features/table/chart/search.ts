@@ -7,6 +7,8 @@ import { qs } from '../../../lib/search'
  */
 export const visualizationSearch = z.object({
   sql: qs.strOr(''),
+  /** the signature of `sql` (Core::signSqlQuery): an unsigned query is not run */
+  sig: qs.strOr(''),
   unlim_num_rows: qs.intOr(0),
   pos: qs.int(),
   session_max_rows: qs.int(),

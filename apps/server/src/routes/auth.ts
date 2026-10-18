@@ -137,28 +137,30 @@ authRoutes.post('/login', async (c) => {
   const remoteIp = requestClientIp(c, cfg.TrustedProxies)
   await verifyCaptcha(cfg, req.captchaToken, remoteIp, tr)
   const limiter = loginRateLimiter(cfg)
-  const locked = limiter.lockedMessage(remoteIp, req.username, tr)
-  if (locked !== null) throw new LoginFailure('form', locked)
-
-  let creds: Awaited<ReturnType<typeof cookieLogin>>
-  try {
-    creds = await cookieLogin(cfg, pools, {
-      serverIndex: req.server,
-      username: req.username,
-      password: req.password,
-      arbitraryServer: req.arbitraryServer,
-      remoteIp,
-      tr,
-    })
-  } catch (e) {
-    if (e instanceof LoginFailure && e.failureType !== 'form') {
-      limiter.failed(remoteIp, req.username)
-      // AuthenticationPlugin::logFailure
-      logUser(cfg, req.username, e.failureType, remoteIp)
+  // one attempt of a pair at a time, so the lockout counts every failure (X2)
+  const creds = await limiter.serialize(remoteIp, req.username, async () => {
+    const locked = limiter.lockedMessage(remoteIp, req.username, tr)
+    if (locked !== null) throw new LoginFailure('form', locked)
+    try {
+      const r = await cookieLogin(cfg, pools, {
+        serverIndex: req.server,
+        username: req.username,
+        password: req.password,
+        arbitraryServer: req.arbitraryServer,
+        remoteIp,
+        tr,
+      })
+      limiter.succeeded(remoteIp, req.username)
+      return r
+    } catch (e) {
+      if (e instanceof LoginFailure && e.failureType !== 'form') {
+        limiter.failed(remoteIp, req.username)
+        // AuthenticationPlugin::logFailure
+        logUser(cfg, req.username, e.failureType, remoteIp)
+      }
+      throw e
     }
-    throw e
-  }
-  limiter.succeeded(remoteIp, req.username)
+  })
 
   // Session::secure(): new id + token on login, logins on other servers are kept
   const login = await storeLogin(c, req.server, creds, { secure: true })

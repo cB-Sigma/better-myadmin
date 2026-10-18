@@ -55,6 +55,8 @@ export interface InsertEditPageProps {
   goto?: string | undefined
   /** sql_query of the Browse page */
   sqlQuery?: string | undefined
+  /** the signature of sqlQuery (it comes from the URL); '' never verifies */
+  sqlQuerySig?: string | undefined
 }
 
 /**
@@ -103,6 +105,7 @@ function InsertEditForm({
   reload,
   goto,
   sqlQuery,
+  sqlQuerySig,
 }: InsertEditPageProps & {
   form: InsertFormResponse
   messages: SqlMessage[]
@@ -175,6 +178,7 @@ function InsertEditForm({
       clauseIsUnique: f.clauseIsUnique,
       preview: isPreview,
       sqlQuery: sqlQuery ?? '',
+      ...(sqlQuerySig !== undefined ? { sqlQuerySig } : {}),
     }
     setBusy(true)
     try {

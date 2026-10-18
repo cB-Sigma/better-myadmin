@@ -40,6 +40,7 @@ export function GisVisualizationPage({ scope, search }: { scope: VisScope; searc
   }>({})
   const req: GisPageRequest = {
     sql: search.sql,
+    sig: search.sig,
     unlimNumRows: search.unlimNumRows,
     ...(search.pos === undefined ? {} : { pos: search.pos }),
     ...(search.sessionMaxRows === undefined ? {} : { sessionMaxRows: search.sessionMaxRows }),
@@ -75,7 +76,7 @@ function GisForm({
     sessionMaxRows?: number
   }) => void
 }) {
-  const fieldset = page.fieldset ?? { pos: 0, rows: 0, unlimNumRows: 0, sql: '' }
+  const fieldset = page.fieldset ?? { pos: 0, rows: 0, unlimNumRows: 0, sql: '', sig: '' }
   const [pos, setPos] = useState(fieldset.pos)
   const [rows, setRows] = useState(fieldset.rows)
   const shapes = useMemo(() => svgShapes(page.rows, page.width, page.height), [page])

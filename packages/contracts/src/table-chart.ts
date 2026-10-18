@@ -14,12 +14,19 @@ export const RowsFieldset = z.object({
   rows: z.number().int(),
   unlimNumRows: z.number().int(),
   sql: z.string(),
+  /** the signature of `sql` for the form's requests */
+  sig: z.string(),
 })
 export type RowsFieldset = z.infer<typeof RowsFieldset>
 
 /** the page request: the query of the results and the fieldset's parameters */
 export const VisualizationPageRequest = z.object({
   sql: z.string().default(''),
+  /**
+   * The signature of `sql` (Core::signSqlQuery). The links carry the query in the URL, so the
+   * page sends it; when present it must verify, else the query is dropped ("No SQL query was set").
+   */
+  sig: z.string().optional(),
   /** `pos` (absent: the session's, else the last page) */
   pos: z.coerce.number().int().optional(),
   /** `session_max_rows` (absent: $cfg['MaxRows']) */
@@ -49,6 +56,8 @@ export type ChartPageResponse = z.infer<typeof ChartPageResponse>
 /** POST …/chart/data (the form's ajax submit: pos, session_max_rows) */
 export const ChartDataRequest = z.object({
   sql: z.string(),
+  /** as VisualizationPageRequest.sig: when present it must verify */
+  sig: z.string().optional(),
   pos: z.coerce.number().int().default(0),
   sessionMaxRows: z.coerce.number().int().default(0),
 })

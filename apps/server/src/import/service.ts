@@ -40,7 +40,8 @@ export const COMPATIBILITIES = [
 ]
 
 /** Core::securePath */
-export const securePath = (p: string) => p.replace(/\.\.*/g, '.')
+export { securePath } from '../util/secure-path.ts'
+import { securePath } from '../util/secure-path.ts'
 
 /** ForeignKey::isCheckEnabled */
 export async function isFkCheckEnabled(

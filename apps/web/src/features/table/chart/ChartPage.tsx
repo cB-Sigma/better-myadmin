@@ -24,6 +24,8 @@ import type { ChartSettings, ChartType } from './queryChart'
 
 export interface VisualizationSearch {
   sql: string
+  /** the signature of `sql`; '' (an unsigned query of the URL) never verifies */
+  sig: string
   unlimNumRows: number
   pos?: number | undefined
   sessionMaxRows?: number | undefined
@@ -32,6 +34,7 @@ export interface VisualizationSearch {
 export function ChartPage({ scope, search }: { scope: VisScope; search: VisualizationSearch }) {
   const req = {
     sql: search.sql,
+    sig: search.sig,
     unlimNumRows: search.unlimNumRows,
     ...(search.pos === undefined ? {} : { pos: search.pos }),
     ...(search.sessionMaxRows === undefined ? {} : { sessionMaxRows: search.sessionMaxRows }),
@@ -120,7 +123,12 @@ function ChartForm({
   // the form's ajax submit: the rows of the page
   const submit = async () => {
     try {
-      const r = await api.chartData(scope, { sql: fieldset.sql, pos, sessionMaxRows: rows })
+      const r = await api.chartData(scope, {
+        sql: fieldset.sql,
+        sig: fieldset.sig,
+        pos,
+        sessionMaxRows: rows,
+      })
       if (r.error !== null) {
         setMessage({ type: 'error', text: r.error })
         return
