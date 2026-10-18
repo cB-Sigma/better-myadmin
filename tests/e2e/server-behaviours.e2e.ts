@@ -529,12 +529,25 @@ test.describe('monitor', () => {
       for (let i = 0; i < 3; i++) await conn.query(`SELECT ${i} AS ${USER}_probe FROM DUAL`)
       await conn.end()
 
-      // the monitor runs from the start: a refresh after the probes
-      await page.waitForResponse((r) => /\/status\/monitor\/chart$/.test(r.url()))
-      await page.waitForTimeout(500)
+      // the monitor runs from the start. The span a click analyses ends at the last refresh, and the
+      // log query compares whole seconds: wait for a refresh *sent* a second after the probes (one
+      // already in flight would end the span before them)
+      const probed = Date.now()
+      const refresh = await page.waitForRequest(
+        (r) => /\/status\/monitor\/chart$/.test(r.url()) && Date.now() > probed + 1000,
+        { timeout: 30_000 },
+      )
+      await refresh.response()
+      // two frames: the new point is committed and the chart's axis updated (read on click)
+      await page.evaluate(
+        () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+      )
       await page.locator('#chartGrid .monitorChart canvas').first().click()
       const modal = page.locator('#logAnalyseModal')
       await expect(modal).toBeVisible()
+      // the selected span ends after the probes
+      const end = await modal.locator('input[name="dateEnd"]').inputValue()
+      expect(Date.parse(end.replace(' ', 'T'))).toBeGreaterThan(probed)
       await modal.locator('#removeVariables').check()
       const log = page.waitForResponse((r) => /\/status\/monitor\/general-log$/.test(r.url()))
       await page.locator('#logAnalyseModalGeneralLogButton').click()
