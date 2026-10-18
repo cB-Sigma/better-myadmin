@@ -36,7 +36,9 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test('create table, add / change a column, add indexes, drop a column', async ({ page }) => {
+test('create table, add / change a column, add indexes, drop a column [p04-929453 p04-5ea0c3 p04-3e085e p04-f66062 p04-8c7675]', async ({
+  page,
+}) => {
   const dialogs: string[] = []
   page.on('dialog', (d) => {
     dialogs.push(d.message())

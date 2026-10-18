@@ -107,7 +107,7 @@ describe('shortcuts_handler.ts', () => {
     timers[0]?.[0]()
     expect(m.keydown(key(83), page).actions).toEqual(['navigation-settings'])
   })
-  it('form fields: letters are ignored, Ctrl+K and Ctrl+Alt+C still toggle the console', () => {
+  it('form fields: letters are ignored, Ctrl+K and Ctrl+Alt+C still toggle the console [p02-a7b23d]', () => {
     const m = new ShortcutMachine(() => {})
     expect(m.keydown(key(69, { targetTag: 'INPUT' }), page).actions).toEqual([])
     expect(m.keydown(key(75, { targetTag: 'TEXTAREA', ctrlKey: true }), page)).toEqual({

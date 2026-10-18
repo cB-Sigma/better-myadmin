@@ -64,7 +64,7 @@ describe('GET structure', () => {
     ) ENGINE=InnoDB COMMENT='tbl comment';`),
   )
 
-  it('lists columns with the Structure page values and row-action availability', async () => {
+  it('lists columns with the Structure page values and row-action availability [p04-23b058 p04-27610d p04-5cfcc5 p04-7efffd p04-902977 p04-eed3e0 p04-a12911]', async () => {
     const j = await get(`${base}/tables/s/structure`)
     expect(j.engine).toBe('INNODB')
     const cols = j.columns as Array<Record<string, unknown>>
@@ -104,7 +104,7 @@ describe('GET structure', () => {
     )
   })
 
-  it('lists indexes, duplicate notices and the information card', async () => {
+  it('lists indexes, duplicate notices and the information card [p04-58bbc9 p04-8ac250 p04-e0df58]', async () => {
     const j = await get(`${base}/tables/s/structure`)
     const indexes = j.indexes as Array<Record<string, unknown>>
     expect(indexes.map((i) => [i.name, i.type, i.unique])).toEqual([
@@ -151,7 +151,7 @@ describe('create table, add and change columns', () => {
     },
   ]
 
-  it('previews and creates a table', async () => {
+  it('previews and creates a table [p04-929453 p04-8c7675]', async () => {
     const req = {
       table: 'c1',
       columns: cols,
@@ -173,7 +173,7 @@ describe('create table, add and change columns', () => {
     expect(again.error).toMatchObject({ message: 'Table c1 already exists!' })
   })
 
-  it('adds columns at the beginning / after a column, only the first honours the position', async () => {
+  it('adds columns at the beginning / after a column, only the first honours the position [p04-5a8e76 p04-9d4da3]', async () => {
     const r = await post(`${base}/tables/c1/columns/add`, {
       columns: [
         { name: 'a', type: 'INT' },
@@ -198,7 +198,7 @@ describe('create table, add and change columns', () => {
     expect(first.preview).toBe('ALTER TABLE `c1` ADD `z` TINYINT(1) NOT NULL FIRST;')
   })
 
-  it('pre-fills the change form like phpMyAdmin and only CHANGEs columns that differ', async () => {
+  it('pre-fills the change form like phpMyAdmin and only CHANGEs columns that differ [p04-e5b2c3]', async () => {
     const form = await get(`${base}/tables/c1/columns/form?fields=label&fields=id`)
     const rows = form.columns as Array<{ values: Json; orig: Json }>
     // table order, not selection order
@@ -226,7 +226,7 @@ describe('create table, add and change columns', () => {
     expect(await createSql('c1')).toContain('`title` varchar(60)')
   })
 
-  it('changes a collation through a BLOB conversion first', async () => {
+  it('changes a collation through a BLOB conversion first [p04-7544dc]', async () => {
     const form = await get(`${base}/tables/c1/columns/form?fields=title`)
     const row = (form.columns as Array<{ values: Json; orig: Json }>)[0]!
     const r = await post(`${base}/tables/c1/columns/change`, {
@@ -238,7 +238,7 @@ describe('create table, add and change columns', () => {
     ])
   })
 
-  it('moves columns and reports phpMyAdmin errors', async () => {
+  it('moves columns and reports phpMyAdmin errors [p04-511b9e]', async () => {
     const before = ((await get(`${base}/tables/c1/structure`)).columns as Json[]).map((c) => c.name as string)
     const same = await post(`${base}/tables/c1/columns/move`, { order: before }, 400)
     expect(same.error).toMatchObject({ message: 'The selected columns are already in the correct order.' })
@@ -256,7 +256,7 @@ describe('create table, add and change columns', () => {
     expect(after).toEqual(order)
   })
 
-  it('checks reserved words', async () => {
+  it('checks reserved words [p04-4da9c9]', async () => {
     const r = await post(`${base}/tables/c1/columns/reserved-word-check`, {
       names: ['select ', 'ok', 'from'],
     })
@@ -270,7 +270,7 @@ describe('create table, add and change columns', () => {
 describe('row actions, bulk buttons, drop', () => {
   beforeAll(() => seed('CREATE TABLE k (a INT NOT NULL, b INT NOT NULL, c TEXT, PRIMARY KEY (a));'))
 
-  it('adds keys from the row links (Primary replaces the existing one)', async () => {
+  it('adds keys from the row links (Primary replaces the existing one) [p04-5ea0c3]', async () => {
     const u = await post(`${base}/tables/k/columns/key`, { type: 'UNIQUE', columns: ['b'] })
     expect((u.messages as Json[])[0]).toEqual({
       type: 'success',
@@ -287,7 +287,7 @@ describe('row actions, bulk buttons, drop', () => {
     expect(String((err.messages as Json[])[0]?.text)).toMatch(/^#1170 - /)
   })
 
-  it('asks before replacing the primary key from the bulk button', async () => {
+  it('asks before replacing the primary key from the bulk button [p04-009e25]', async () => {
     const q = await post(`${base}/tables/k/columns/key`, {
       type: 'PRIMARY',
       columns: ['a', 'b'],
@@ -306,7 +306,7 @@ describe('row actions, bulk buttons, drop', () => {
     expect(executedWrites(yes)).toEqual(['ALTER TABLE `k` DROP PRIMARY KEY, ADD PRIMARY KEY(`a`, `b`);'])
   })
 
-  it('drops a column from its row link (through /sql) and several from the bulk page', async () => {
+  it('drops a column from its row link (through /sql) and several from the bulk page [p04-3e085e]', async () => {
     const r = await post(`${base}/tables/k/columns/drop`, { columns: ['c'], source: 'row' })
     expect(executedWrites(r)).toEqual([
       'SET FOREIGN_KEY_CHECKS = OFF;',
@@ -355,7 +355,7 @@ describe('index editor', () => {
     ])
   })
 
-  it('creates an index on N columns, refuses bad names, renames and drops', async () => {
+  it('creates an index on N columns, refuses bad names, renames and drops [p04-a2ef93 p04-99728b]', async () => {
     const form = await get(`${base}/tables/i/indexes/form?create=2`)
     // a new Index() is UNIQUE and offers PRIMARY even when the table has one (phpMyAdmin quirk)
     expect(form).toMatchObject({
@@ -408,7 +408,7 @@ describe('partitions', () => {
       INSERT INTO p VALUES (1, 1990), (2, 2010);`),
   )
 
-  it('shows the partitions card and pre-fills the editor from SHOW CREATE TABLE', async () => {
+  it('shows the partitions card and pre-fills the editor from SHOW CREATE TABLE [p04-97675f]', async () => {
     const j = await get(`${base}/tables/p/structure`)
     const parts = j.partitions as Json
     expect(parts).toMatchObject({
@@ -434,7 +434,7 @@ describe('partitions', () => {
     expect(form.valueEnabled).toBe(true)
   })
 
-  it('runs partition maintenance, re-partitions and removes partitioning', async () => {
+  it('runs partition maintenance, re-partitions and removes partitioning [p04-97675f]', async () => {
     const a = await post(`${base}/tables/p/partitions/maintenance`, { operation: 'ANALYZE', partition: 'p0' })
     expect(a.maintenance).toMatchObject({ title: 'Analyze partition', partition: 'p0' })
     expect(((a.maintenance as Json).rows as Json[])[0]).toMatchObject({ table: `${DB}.p`, op: 'analyze' })
@@ -450,5 +450,73 @@ describe('partitions', () => {
     const rm = await post(`${base}/tables/p/partitions/remove-partitioning`, {})
     expect(executedWrites(rm)).toContain('ALTER TABLE `p` REMOVE PARTITIONING')
     expect(await createSql('p')).not.toContain('PARTITION')
+  })
+})
+
+describe('index editor choices', () => {
+  beforeAll(() =>
+    seed('CREATE TABLE ix (id INT PRIMARY KEY, a INT, KEY ka (a)); CREATE TABLE ixn (a INT, KEY kb (a));'),
+  )
+
+  it('offers PRIMARY only without a primary key, when editing it, or for a new index [p04-4cb4a4]', async () => {
+    const allowed = async (table: string, q: string) =>
+      ((await get(`${base}/tables/${table}/indexes/form?${q}`)) as Json).primaryAllowed
+    // editing another index of a table with a primary key: no PRIMARY
+    expect(await allowed('ix', 'index=ka')).toBe(false)
+    expect(await allowed('ix', 'index=PRIMARY')).toBe(true)
+    expect(await allowed('ixn', 'index=kb')).toBe(true)
+    // a new Index has no table for Index::hasPrimary(): PRIMARY is always offered
+    expect(await allowed('ix', 'create=1')).toBe(true)
+  })
+})
+
+describe('Structure links and the bulk Browse', () => {
+  const PMADB = { controluser: 'pma', controlpass: 'pmapass', pmadb: 'phpmyadmin' }
+  beforeAll(() =>
+    seed('CREATE TABLE lk (id INT PRIMARY KEY, a VARCHAR(5), b INT); CREATE VIEW lkv AS SELECT a FROM lk;'),
+  )
+
+  it('Track table / Track view only with the tracking feature [p04-c123c5]', async () => {
+    const withTracking = testApp(testConfig({}, PMADB))
+    const without = testApp(testConfig({}, { ...PMADB, tracking: false }))
+    for (const a of [withTracking, without]) await a.login()
+    const links = async (a: typeof t, table: string) =>
+      ((await a.req('GET', `${base}/tables/${table}/structure`)).json as { links: Json }).links
+    expect((await links(withTracking, 'lk')).trackTable).toBe(true)
+    expect((await links(withTracking, 'lkv')).trackTable).toBe(true)
+    expect((await links(without, 'lk')).trackTable).toBe(false)
+    for (const a of [withTracking, without]) await a.close()
+  })
+
+  it('Propose table structure is not offered on MySQL 8 (PROCEDURE ANALYSE is gone) nor for views [p04-262da9]', async () => {
+    const [[v]] = (await root.query({ sql: 'SELECT VERSION()', rowsAsArray: true })) as unknown as [[string]]
+    const s = (await get(`${base}/tables/lk/structure`)) as { links: Json }
+    if (/mariadb/i.test(v) || Number.parseInt(v, 10) < 8) {
+      expect(s.links.proposeTableStructure).toBe('SELECT * FROM `lk` PROCEDURE ANALYSE()')
+      expect(typeof s.links.proposeSig).toBe('string')
+    } else {
+      expect(s.links.proposeTableStructure).toBeNull()
+    }
+    expect(
+      ((await get(`${base}/tables/lkv/structure`)) as { links: Json }).links.proposeTableStructure,
+    ).toBeNull()
+  })
+
+  it('signs the Distinct values query and the bulk Browse SELECT for the Browse view [p04-a12911 p04-e3d505]', async () => {
+    const s = (await get(`${base}/tables/lk/structure`)) as { columns: Json[] }
+    const a = s.columns.find((c) => c.name === 'a') as Json
+    expect(a.distinctSql).toBe('SELECT COUNT(*) AS `Rows`, `a` FROM `lk` GROUP BY `a` ORDER BY `a`')
+    const browse = async (sql: unknown, sig: unknown, extra = {}) =>
+      t.req('POST', '/api/servers/1/browse', { db: DB, table: 'lk', sql, sig, ...extra })
+    expect((await browse(a.distinctSql, a.distinctSig, { isBrowseDistinct: true })).status).toBe(200)
+    const b = (await post(`${base}/tables/lk/structure/browse`, { columns: ['id', 'b'] })) as Json
+    expect(b.sql).toBe(`SELECT \`id\`, \`b\` FROM \`${DB}\`.\`lk\``)
+    const ran = await browse(b.sql, b.sig)
+    expect(ran.status).toBe(200)
+    expect(JSON.stringify(ran.json)).toContain('SELECT `id`, `b` FROM')
+    // without the signature the table's default browse runs instead
+    expect(JSON.stringify((await browse(b.sql, 'nope')).json)).not.toContain('SELECT `id`, `b` FROM')
+    const none = await post(`${base}/tables/lk/structure/browse`, { columns: [] }, 400)
+    expect(none.error).toMatchObject({ message: 'No column selected.' })
   })
 })

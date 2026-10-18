@@ -69,7 +69,9 @@ test.describe('SQL tab', () => {
     await expect(editor(page)).toHaveText('`id`, `qty`')
   })
 
-  test('Ctrl+Enter and Alt+Enter run the query; the box collapses unless retained', async ({ page }) => {
+  test('Ctrl+Enter and Alt+Enter run the query; the box collapses unless retained [p02-390d7c]', async ({
+    page,
+  }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT * FROM t')
     await page.keyboard.press('Control+Enter')
@@ -128,7 +130,7 @@ test.describe('SQL tab', () => {
     expect(lintRequests).toEqual([])
   })
 
-  test('Simulate query appears for UPDATE and shows the matched rows', async ({ page }) => {
+  test('Simulate query appears for UPDATE and shows the matched rows [p02-930d5c]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT 1')
     await expect(page.locator('#simulate_dml')).toHaveCount(0)
@@ -144,7 +146,7 @@ test.describe('SQL tab', () => {
     await expect(modal).toBeHidden()
   })
 
-  test('Format, bind parameters and the auto-saved query', async ({ page }) => {
+  test('Format, bind parameters and the auto-saved query [p02-390d7c]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await expect(page.locator('#saved')).toBeDisabled()
     const q = 'select id,name from t where id = :id or name = :name'
@@ -164,7 +166,7 @@ test.describe('SQL tab', () => {
     await expect(editor(page)).toContainText(':name')
   })
 
-  test('card links: Edit inline, Explain SQL, Edit', async ({ page }) => {
+  test('card links: Edit inline, Explain SQL, Edit [p02-88edc9 p02-9128e7 p02-aa2107]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT * FROM t WHERE id = 1')
     await page.keyboard.press('Control+Enter')
@@ -188,7 +190,7 @@ test.describe('SQL tab', () => {
     await expect(editor(page)).toHaveText('EXPLAIN SELECT * FROM t WHERE id > 1;')
   })
 
-  test('profiling switch re-runs the query with the profile', async ({ page }) => {
+  test('profiling switch re-runs the query with the profile [p02-2a54e4]', async ({ page }) => {
     await page.goto(`/s/1/db/${DB}/sql`)
     await setQuery(page, 'SELECT * FROM t WHERE qty > 1')
     await page.keyboard.press('Control+Enter')

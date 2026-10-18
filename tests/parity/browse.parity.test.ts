@@ -85,7 +85,7 @@ const CASES: Case[] = [
     steps: [browse({ table: 't', pos: '0' }, { table: 't' })],
   },
   {
-    name: 'sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6]',
+    name: 'sort link, then the remembered sort on a plain browse, then discard_remembered_sort [p02-dafcf6 p02-440ff1 p02-17fc03]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT * FROM `t` ORDER BY `t`.`name` DESC', session_max_rows: '25' },
@@ -113,7 +113,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'pagination, Number of rows and Show all [p02-284f7e]',
+    name: 'pagination, Number of rows and Show all [p02-284f7e p02-c722eb]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT * FROM `t` WHERE qty > 1', pos: '25' },
@@ -135,7 +135,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'a query with its own LIMIT runs verbatim [p02-9f5692]',
+    name: 'a query with its own LIMIT runs verbatim [p02-9f5692 p02-290262]',
     steps: [
       browse(
         { table: 't', sql_query: 'SELECT id, name FROM `t` LIMIT 3' },
@@ -154,11 +154,11 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'a table without a unique key',
+    name: 'a table without a unique key [p02-c56862]',
     steps: [browse({ table: 'nk', pos: '0' }, { table: 'nk' })],
   },
   {
-    name: 'EXPLAIN and SHOW results',
+    name: 'EXPLAIN and SHOW results [p02-b790fa]',
     steps: [
       browse(
         { table: 't', sql_query: 'EXPLAIN SELECT * FROM `t`' },
@@ -197,7 +197,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'grid edit: full value, save with the re-check, NULL [p02-85eff6]',
+    name: 'grid edit: full value, save with the re-check, NULL [p02-85eff6 p03-995b4e p02-784009]',
     steps: [
       {
         pma: sql('/sql', {
@@ -314,7 +314,7 @@ const CASES: Case[] = [
     ],
   },
   {
-    name: 'Delete with selected: every DELETE with LIMIT 1, then the browse query again [p02-a3dbd4]',
+    name: 'Delete with selected: every DELETE with LIMIT 1, then the browse query again [p02-a3dbd4 p02-9afb97]',
     steps: [
       {
         pma: {

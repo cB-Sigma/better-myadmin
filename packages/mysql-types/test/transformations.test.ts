@@ -16,7 +16,7 @@ const html = (file: string, v: string | Uint8Array, o: string[] = [], ctx = {}) 
 }
 
 describe('Transformations::getOptions', () => {
-  it('splits on commas, keeps quoted commas, strips quotes and slashes', () => {
+  it('splits on commas, keeps quoted commas, strips quotes and slashes [p03-0f872c]', () => {
     expect(parseTransformationOptions("'option ,, quoted',abd,'2,3',")).toEqual([
       'option ,, quoted',
       'abd',
@@ -94,7 +94,7 @@ describe('output plugins', () => {
 })
 
 describe('input plugins', () => {
-  it('IP to binary / long, regex validation, root plugins are not input plugins', () => {
+  it('IP to binary / long, regex validation, root plugins are not input plugins [p03-98a476]', () => {
     expect(applyInputTransformation('Input/Text_Plain_Iptobinary.php', '10.0.0.1').value).toBe('0x0a000001')
     expect(applyInputTransformation('Input/Text_Plain_Iptolong.php', '1.2.3.4').value).toBe('16909060')
     const re = applyInputTransformation('Input/Text_Plain_RegexValidation.php', 'A1', ['/^[a-z]+$/'], {
