@@ -69,3 +69,41 @@ describe('not an image, sizes', () => {
     ])
   })
 })
+
+describe('untrusted images: dimensions bounded before decoding', () => {
+  /** a valid image whose header claims `w` × `h` (the data does not follow: decoding would allocate first) */
+  const pngClaiming = (w: number, h: number) => {
+    const p = new PNG({ width: 2, height: 2 })
+    const b = PNG.sync.write(p)
+    b.writeUInt32BE(w, 16)
+    b.writeUInt32BE(h, 20)
+    return b
+  }
+  const jpegClaiming = (w: number, h: number) => {
+    const b = Buffer.from(
+      jpeg.encode({ data: Buffer.alloc(16 * 16 * 4, 0xff), width: 16, height: 16 }, 75).data,
+    )
+    // SOF0: FF C0, length (2), precision (1), height (2), width (2)
+    const sof = b.indexOf(Buffer.from([0xff, 0xc0]))
+    b.writeUInt16BE(h, sof + 5)
+    b.writeUInt16BE(w, sof + 7)
+    return b
+  }
+  const gifClaiming = (w: number, h: number) => {
+    const g = Buffer.from('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', 'base64')
+    g.writeUInt16LE(w, 6)
+    g.writeUInt16LE(h, 8)
+    return g
+  }
+
+  it.each([
+    ['PNG', pngClaiming(60000, 60000)],
+    ['JPEG', jpegClaiming(60000, 60000)],
+    // a 43-byte GIF claiming 12000 × 12000 used to allocate 1.1 GiB and take seconds
+    ['GIF', gifClaiming(12000, 12000)],
+  ])('%s claiming more than MAX_IMAGE_PIXELS: not an image, at once', (_, bytes) => {
+    const start = Date.now()
+    expect(resizeImage(bytes, 'png', 100, 100)).toBeNull()
+    expect(Date.now() - start).toBeLessThan(1000)
+  })
+})

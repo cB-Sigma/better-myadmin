@@ -35,9 +35,11 @@ RUN --mount=type=secret,id=ca,required=false NODE_EXTRA_CA_CERTS=/run/secrets/ca
  && rm -rf /root/.cache /root/.local/share/pnpm \
  # the image's configuration directory: an empty config file closes /setup like the
  # phpMyAdmin image's config.inc.php; mount your own over it (or next to it, .ts/.js/.mjs win)
- && mkdir -p /etc/bettermyadmin /var/lib/bettermyadmin \
+ && mkdir -p /etc/bettermyadmin /var/lib/bettermyadmin /etc/phpmyadmin/ssl \
  && echo '{}' > /etc/bettermyadmin/bettermyadmin.config.json \
- && chown node:node /var/lib/bettermyadmin
+ # PMA_SSL_*_BASE64 are decoded into PMA_SSL_DIR (default /etc/phpmyadmin/ssl) by the server's user
+ && chown node:node /var/lib/bettermyadmin /etc/phpmyadmin/ssl \
+ && chmod 700 /etc/phpmyadmin/ssl
 ENV NODE_ENV=production \
     BMA_DOCKER=1
 WORKDIR /etc/bettermyadmin

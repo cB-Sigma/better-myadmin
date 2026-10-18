@@ -1,3 +1,4 @@
+import { constants as bufferConstants } from 'node:buffer'
 import { crc32, deflateRawSync, inflateRawSync } from 'node:zlib'
 
 /**
@@ -96,8 +97,14 @@ export function createZip(
   return Buffer.concat([...datasec, tempCtrlDir, eof])
 }
 
-/** The entries of a ZIP archive (stored or deflated), for import and tests. */
-export function readZip(zip: Buffer): Array<{ name: string; data: Buffer }> {
+/**
+ * The entries of a ZIP archive (stored or deflated), for import and tests. An entry's data is
+ * inflated when first read, at most `maxEntryBytes` (a RangeError beyond: a zip bomb's entry).
+ */
+export function readZip(
+  zip: Buffer,
+  { maxEntryBytes = bufferConstants.MAX_LENGTH }: { maxEntryBytes?: number } = {},
+): Array<{ name: string; data: Buffer }> {
   // locate the end of central directory record
   let eocd = -1
   for (let i = zip.length - 22; i >= Math.max(0, zip.length - 65557); i--) {
@@ -123,8 +130,17 @@ export function readZip(zip: Buffer): Array<{ name: string; data: Buffer }> {
     const lExtraLen = zip.readUInt16LE(offset + 28)
     const start = offset + 30 + lNameLen + lExtraLen
     const raw = zip.subarray(start, start + cLen)
-    const data = method === 0 ? Buffer.from(raw) : inflateRawSync(raw)
-    out.push({ name, data })
+    let data: Buffer | null = null
+    out.push({
+      name,
+      get data() {
+        if (data === null) {
+          if (method === 0 && raw.length > maxEntryBytes) throw new RangeError('zip entry too large')
+          data = method === 0 ? Buffer.from(raw) : inflateRawSync(raw, { maxOutputLength: maxEntryBytes })
+        }
+        return data
+      },
+    })
     p += 46 + nameLen + extraLen + commentLen
   }
   return out

@@ -133,6 +133,8 @@ export async function runFileImport(
           importFile,
           { gzip: settings.GZipDump, bzip2: settings.BZipDump, zip: settings.ZipDump },
           __,
+          // set_time_limit(ExecTimeLimit) also ends phpMyAdmin's on-the-fly decompression
+          settings.ExecTimeLimit > 0 ? { deadline: Date.now() + settings.ExecTimeLimit * 1000 } : {},
         )
       } catch (e) {
         if (e instanceof ImportFileError) return errorHtml(e.message)

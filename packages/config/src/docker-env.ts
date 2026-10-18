@@ -93,14 +93,16 @@ export function iniQuantity(raw: string): number | null {
  * `<dir>/<prefix>-<n>.<ext>`; the paths come back comma-separated.
  */
 function saveBase64Files(contents: string, prefix: string, ext: string, dir: string): string {
-  mkdirSync(dir, { recursive: true, mode: 0o755 })
+  mkdirSync(dir, { recursive: true, mode: 0o700 })
   return contents
     .trim()
     .split(',')
     .map((b64, i) => {
       const file = join(dir, `${prefix}-${i + 1}.${ext}`)
-      if (!/^[A-Za-z0-9+/]*={0,2}$/.test(b64.trim())) throw new Error(`Failed to decode: ${b64}`)
-      writeFileSync(file, Buffer.from(b64.trim(), 'base64'))
+      // the message names the file, not its content (a private key)
+      if (!/^[A-Za-z0-9+/]*={0,2}$/.test(b64.trim())) throw new Error(`Failed to decode: ${file}`)
+      // private keys among them: readable by the server's user only
+      writeFileSync(file, Buffer.from(b64.trim(), 'base64'), { mode: 0o600 })
       return file
     })
     .join(',')

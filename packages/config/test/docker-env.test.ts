@@ -1,4 +1,4 @@
-import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
@@ -138,6 +138,20 @@ describe('phpMyAdmin docker image variables', () => {
     expect(config.Servers[1]?.ssl).toBe(true)
     expect(config.Servers[1]?.ssl_ca).toBe(join(dir, 'phpmyadmin-ssl-CA-1.pem'))
     expect(readFileSync(join(dir, 'phpmyadmin-ssl-CA-1.pem'), 'utf8')).toBe('CA PEM')
+  })
+
+  it('a decoded key is readable by its owner only; a bad value is reported without its content', () => {
+    const dir = join(mkdtempSync(join(tmpdir(), 'bma-docker-key-')), 'ssl')
+    const key = Buffer.from('-----BEGIN PRIVATE KEY-----').toString('base64')
+    parseDockerEnv({ PMA_HOST: 'db', PMA_SSL_DIR: dir, PMA_SSL_KEY_BASE64: key })
+    expect(statSync(join(dir, 'phpmyadmin-ssl-CERT-1.cert')).mode & 0o777).toBe(0o600)
+    expect(statSync(dir).mode & 0o777).toBe(0o700)
+    const secret = 'c2VjcmV0!!not-base64'
+    const { issues } = parseDockerEnv({ PMA_HOST: 'db', PMA_SSL_DIR: dir, PMA_SSL_KEY_BASE64: secret })
+    expect(issues.map((i) => i.message)).toEqual([
+      `Failed to decode: ${join(dir, 'phpmyadmin-ssl-CERT-1.cert')}`,
+    ])
+    expect(JSON.stringify(issues)).not.toContain(secret)
   })
 
   it('the config file overrides the image variables, BMA__ variables override both', async () => {

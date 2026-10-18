@@ -3,7 +3,8 @@ import { appendFileSync, mkdirSync, rmSync, statSync, writeFileSync } from 'node
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { ImportRequest, type ImportResult, type ImportUploadCreated } from '@bettermyadmin/contracts'
-import { Hono } from 'hono'
+import { type Context, Hono } from 'hono'
+import { bodyLimit } from 'hono/body-limit'
 import { streamSSE } from 'hono/streaming'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
@@ -47,7 +48,13 @@ function prune() {
       uploads.delete(k)
     }
   }
-  for (const [k, j] of jobs) if (now - j.created > TTL_MS) jobs.delete(k)
+  for (const [k, j] of jobs) {
+    if (now - j.created > TTL_MS) {
+      // a job whose events were never requested: its upload goes with it
+      if (j.upload !== null) rmSync(j.upload.path, { force: true })
+      jobs.delete(k)
+    }
+  }
 }
 
 /** GET …/import/page?db=&table= (pma: /server/import, /database/import, /table/import) */
@@ -64,32 +71,51 @@ importRoutes.post('/uploads', (c) => {
   return c.json({ id } satisfies ImportUploadCreated)
 })
 
-/** PATCH …/import/uploads/:id?offset=n: appends one chunk (the raw request body) */
-importRoutes.patch('/uploads/:id{[0-9a-f]{32}}', async (c) => {
-  const u = uploads.get(c.req.param('id'))
-  if (u === undefined || u.sessionId !== c.get('session').id)
+const tooLarge = (c: Context<ServerEnv>) =>
+  new ValidationError(
+    c
+      .get('tr')
+      .gettext(
+        'You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit.',
+      )
+      .replace('%s', '')
+      .replace('%s', ''),
+  )
+
+/**
+ * PATCH …/import/uploads/:id?offset=n: appends one chunk (the raw request body). The body is read
+ * only up to MaxUploadSize (PHP's post_max_size): a larger request is refused before it is buffered.
+ */
+importRoutes.patch(
+  '/uploads/:id{[0-9a-f]{32}}',
+  (c, next) =>
+    bodyLimit({
+      maxSize: c.get('deps').cfg.MaxUploadSize,
+      // a Content-Length above the limit: refused without reading the body
+      onError: (ctx) => ctx.json(tooLarge(ctx as Context<ServerEnv>).toEnvelope(), 400),
+    })(c, next),
+  async (c) => {
+    const u = uploads.get(c.req.param('id'))
+    if (u === undefined || u.sessionId !== c.get('session').id)
+      // i18n-new: API error (phpMyAdmin has no JSON API)
+      throw new NotFoundError(c.get('tr').gettext('Not found.'))
+    const offset = Number(c.req.query('offset') ?? '-1')
     // i18n-new: API error (phpMyAdmin has no JSON API)
-    throw new NotFoundError(c.get('tr').gettext('Not found.'))
-  const offset = Number(c.req.query('offset') ?? '-1')
-  // i18n-new: API error (phpMyAdmin has no JSON API)
-  if (offset !== u.size) throw new ValidationError(c.get('tr').gettext('Invalid request.'))
-  const body = Buffer.from(await c.req.arrayBuffer())
-  const max = c.get('deps').cfg.MaxUploadSize
-  if (u.size + body.length > max) {
-    throw new ValidationError(
-      c
-        .get('tr')
-        .gettext(
-          'You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit.',
-        )
-        .replace('%s', '')
-        .replace('%s', ''),
-    )
-  }
-  appendFileSync(u.path, body)
-  u.size += body.length
-  return c.json({ size: statSync(u.path).size })
-})
+    if (offset !== u.size) throw new ValidationError(c.get('tr').gettext('Invalid request.'))
+    let body: Buffer
+    try {
+      body = Buffer.from(await c.req.arrayBuffer())
+    } catch (e) {
+      // a streamed body stops at the limit (bodyLimit's reader)
+      if (e instanceof Error && e.name === 'BodyLimitError') throw tooLarge(c)
+      throw e
+    }
+    if (u.size + body.length > c.get('deps').cfg.MaxUploadSize) throw tooLarge(c)
+    appendFileSync(u.path, body)
+    u.size += body.length
+    return c.json({ size: statSync(u.path).size })
+  },
+)
 
 /** POST …/import/jobs: registers the import form (and its upload); the events run it */
 importRoutes.post('/jobs', async (c) => {

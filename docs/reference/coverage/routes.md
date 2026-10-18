@@ -207,7 +207,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | ✅ | `GET, POST /database/export` | `Database/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) |  |
-| ✅ | `GET, POST /database/import` | `Database/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:54)<br>UI /s/:server/db/:db/import (apps/web/src/routes/s/$server/db/$db/import.tsx) |  |
+| ✅ | `GET, POST /database/import` | `Database/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/db/:db/import (apps/web/src/routes/s/$server/db/$db/import.tsx) |  |
 | 🔀 | `GET, POST /export` | `Export/ExportController` | API POST /api/servers/:s/export (apps/server/src/routes/export.ts:45)<br>API GET /api/servers/:s/export/:id} (apps/server/src/routes/export.ts:125) | X10 — streaming (prepare + one-shot download) |
 | 🔀 | `GET /export/check-time-out` | `Export/CheckTimeOutController` | API GET /api/servers/:s/export/check-time-out (apps/server/src/routes/export.ts:167) | X10 — streaming |
 | ✅ | `POST /export/tables` | `Export/TablesController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/export (apps/web/src/routes/s/$server/db/$db/export.tsx) | selected_tbl[] in the search params |
@@ -215,13 +215,13 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /export/template/delete` | `Export/Template/DeleteController` | API POST /api/servers/:s/export/templates/:id/delete (apps/server/src/export/page.ts:346) |  |
 | ✅ | `POST /export/template/load` | `Export/Template/LoadController` | API GET /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:324) |  |
 | ✅ | `POST /export/template/update` | `Export/Template/UpdateController` | API POST /api/servers/:s/export/templates/:id (apps/server/src/export/page.ts:334) |  |
-| 🔀 | `GET, POST /import` | `Import/ImportController` | API POST /api/servers/:s/import/uploads (apps/server/src/routes/import.ts:57)<br>API PATCH /api/servers/:s/import/uploads/:id} (apps/server/src/routes/import.ts:68)<br>API POST /api/servers/:s/import/jobs (apps/server/src/routes/import.ts:95) | X9 — chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query) |
-| 🔀 | `GET, POST /import-status` | `Import/StatusController` | API GET /api/servers/:s/import/jobs/:id}/events (apps/server/src/routes/import.ts:119) | X9 — chunked upload + SSE progress |
+| 🔀 | `GET, POST /import` | `Import/ImportController` | API POST /api/servers/:s/import/uploads (apps/server/src/routes/import.ts:64)<br>API PATCH /api/servers/:s/import/uploads/:id} (apps/server/src/routes/import.ts:89)<br>API POST /api/servers/:s/import/jobs (apps/server/src/routes/import.ts:121) | X9 — chunked upload + SSE progress (the SQL box path is POST /api/servers/:s/query) |
+| 🔀 | `GET, POST /import-status` | `Import/StatusController` | API GET /api/servers/:s/import/jobs/:id}/events (apps/server/src/routes/import.ts:145) | X9 — chunked upload + SSE progress |
 | ✅ | `GET, POST /server/export` | `Server/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/export (apps/web/src/routes/s/$server/export.tsx) |  |
-| ✅ | `GET, POST /server/import` | `Server/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:54)<br>UI /s/:server/import (apps/web/src/routes/s/$server/import.tsx) |  |
+| ✅ | `GET, POST /server/import` | `Server/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/import (apps/web/src/routes/s/$server/import.tsx) |  |
 | ✅ | `GET, POST /table/export` | `Table/ExportController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) |  |
 | ✅ | `POST /table/export/rows` | `Table/ExportRowsController` | API GET /api/servers/:s/export/page (apps/server/src/export/page.ts:52)<br>UI /s/:server/db/:db/t/:table/export (apps/web/src/routes/s/$server/db/$db/t/$table/export.tsx) | where_clause[] in the search params |
-| ✅ | `GET, POST /table/import` | `Table/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:54)<br>UI /s/:server/db/:db/t/:table/import (apps/web/src/routes/s/$server/db/$db/t/$table/import.tsx) |  |
+| ✅ | `GET, POST /table/import` | `Table/ImportController` | API GET /api/servers/:s/import/page (apps/server/src/routes/import.ts:61)<br>UI /s/:server/db/:db/t/:table/import (apps/web/src/routes/s/$server/db/$db/t/$table/import.tsx) |  |
 
 ## 08 settings preferences pmadb — 9/9 (100.0%) covered, 9/9 implemented
 

@@ -18,6 +18,15 @@ export interface GdImage {
 
 const ALPHA_MAX = 127
 
+/**
+ * The largest image decoded (width × height): an untrusted cell value claiming 60000 × 60000 would
+ * allocate gigabytes and block the process for minutes (phpMyAdmin's GD decode runs under PHP's
+ * memory_limit, 128 MiB by default: about 30 megapixels of truecolor). A larger image is treated as
+ * not an image (the empty body imagecreatefromstring's failure gives).
+ */
+export const MAX_IMAGE_PIXELS = 30_000_000
+const tooLarge = (w: number, h: number) => !(w > 0 && h > 0 && w * h <= MAX_IMAGE_PIXELS)
+
 const pack = (a: number, r: number, g: number, b: number) => ((a << 24) | (r << 16) | (g << 8) | b) >>> 0
 
 /** RGBA bytes (8-bit alpha) → GD pixels (gd_png.c: alpha = gdAlphaMax - (a >> 1)) */
@@ -39,15 +48,23 @@ function fromRgba(width: number, height: number, rgba: Uint8Array | Buffer): GdI
 export function imageFromString(buf: Buffer): GdImage | null {
   try {
     if (buf.length >= 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) {
-      const d = jpeg.decode(buf, { useTArray: true, formatAsRGBA: true, maxMemoryUsageInMB: 512 })
+      const d = jpeg.decode(buf, {
+        useTArray: true,
+        formatAsRGBA: true,
+        maxResolutionInMP: MAX_IMAGE_PIXELS / 1_000_000,
+        maxMemoryUsageInMB: 256,
+      })
       return fromRgba(d.width, d.height, d.data)
     }
     if (buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) {
+      // IHDR (the first chunk): width and height before anything is inflated
+      if (buf.length < 24 || tooLarge(buf.readUInt32BE(16), buf.readUInt32BE(20))) return null
       const p = PNG.sync.read(buf)
       return fromRgba(p.width, p.height, p.data)
     }
     if (buf.subarray(0, 4).toString('latin1') === 'GIF8') {
       const g = new GifReader(new Uint8Array(buf))
+      if (tooLarge(g.width, g.height)) return null
       const rgba = new Uint8Array(g.width * g.height * 4)
       g.decodeAndBlitFrameRGBA(0, rgba)
       return fromRgba(g.width, g.height, rgba)
