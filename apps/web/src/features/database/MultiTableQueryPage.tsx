@@ -233,7 +233,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                             <td>Column</td>
                             <td colSpan={2}>
                               <NativeSelect
-                                className="opColumn"
+                                className="columnNameSelect opColumn"
                                 value={c.criteria.column}
                                 onChange={(e) => setCrit(i, { column: e.target.value })}
                               >
@@ -297,7 +297,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                               </td>
                               <td>
                                 <NativeSelect
-                                  className="opColumn"
+                                  className="columnNameSelect"
                                   value={c.criteria.rhsColumn}
                                   onChange={(e) => setCrit(i, { rhsColumn: e.target.value })}
                                 >

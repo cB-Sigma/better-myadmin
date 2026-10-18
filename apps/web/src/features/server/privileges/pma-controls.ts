@@ -326,4 +326,5 @@ export const pmaControls = {
     file: 'PrivilegesTableFields.tsx',
     match: 'ref.current.indeterminate = s.indeterminate',
   },
+  'export_modal.twig#button:Close': { file: 'shared.tsx', match: 'id="exportPrivilegesModal"' },
 }

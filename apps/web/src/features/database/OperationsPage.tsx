@@ -141,7 +141,7 @@ export function OperationsPage({ server, db }: { server: number; db: string }) {
       await reloadNav()
       await navigate({ to: path(`/s/${server}/databases`) })
       // the drop link's message_to_show, shown once the databases list is loaded (AJAX.callback)
-      showMessage(t('Database %s has been dropped.', `\`${db}\``))
+      showMessage(t('Database %s has been dropped.', `\`${db.replaceAll('`', '``')}\``), null, 'success')
     } catch (e) {
       setMessages([errorMessage(e)])
     }

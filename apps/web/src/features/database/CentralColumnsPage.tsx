@@ -22,7 +22,7 @@ import { useState } from 'react'
 import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
-import { CollationSelect, TypeSelect } from '../table/structure/ColumnForm'
+import { CollationSelect, EnumEditor, TypeSelect } from '../table/structure/ColumnForm'
 import { Messages, errorMessage } from './common'
 
 /** One editor row (the inputs of main.twig / edit_table_row.twig). */
@@ -108,6 +108,7 @@ function EditorCells({
   addRow?: boolean
 }) {
   const set = (p: Partial<Draft>) => onChange({ ...draft, ...p })
+  const [enumOpen, setEnumOpen] = useState(false)
   const nm = (field: string, cell: string) => (addRow ? cell : `${field}[${row}]`)
   const lbl = (text: string) => (addRow ? undefined : text)
   return (
@@ -143,6 +144,25 @@ function EditorCells({
           value={draft.length}
           onChange={(e) => set({ length: e.target.value })}
         />
+        {/* p.enum_notice: shown for ENUM and SET (functions.ts checkEnumAndSet) */}
+        {(draft.type === 'ENUM' || draft.type === 'SET') && (
+          <p className="enum_notice" id={`enum_notice_${row}_2`}>
+            <Button variant="link" className="open_enum_editor h-auto p-0" onClick={() => setEnumOpen(true)}>
+              {t('Edit ENUM/SET values')}
+            </Button>
+          </p>
+        )}
+        {enumOpen && (
+          <EnumEditor
+            value={draft.length}
+            column={draft.name}
+            onClose={() => setEnumOpen(false)}
+            onSave={(v) => {
+              set({ length: v })
+              setEnumOpen(false)
+            }}
+          />
+        )}
       </td>
       <td className="text-nowrap">
         <NativeSelect
@@ -453,14 +473,17 @@ function CentralColumnsView({
             <Button onClick={() => setNav({ pos: d.pos - maxRows, totalRows: d.totalRows })}>&lt;</Button>
           )}
           {pages > 1 && (
+            // Util::pageselector('pos', …): the options carry the first row of each page
             <NativeSelect
+              name="pos"
+              className="pageselector ajax"
               aria-label={t('Page number:')}
-              value={String(Math.floor(d.pos / maxRows))}
-              onChange={(e) => setNav({ pos: Number(e.target.value) * maxRows, totalRows: d.totalRows })}
+              value={String(Math.floor(d.pos / maxRows) * maxRows)}
+              onChange={(e) => setNav({ pos: Number(e.target.value), totalRows: d.totalRows })}
             >
               {Array.from({ length: pages }, (_, i) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: page numbers
-                <option key={i} value={String(i)}>
+                <option key={i} value={String(i * maxRows)}>
                   {i + 1}
                 </option>
               ))}

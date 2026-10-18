@@ -460,6 +460,8 @@ export function DbStructurePage({
                         <td className="text-center print:hidden">
                           <Checkbox
                             id={`checkbox_tbl_${i + 1}`}
+                            name="selected_tbl[]"
+                            value={tb.name}
                             aria-label={tb.name}
                             className={tb.overhead !== null ? 'checkall tbl-overhead' : 'checkall'}
                             checked={selected.includes(tb.name)}

@@ -97,4 +97,5 @@ export const pmaControls = {
     file: '../navigation/NavigationPanel.tsx',
     match: 'pma_navigation_settings_icon',
   },
+  'config/form_display/input.twig#link:Comment': { file: 'ConfigForm.tsx', match: 'userprefs-comment' },
 } as const

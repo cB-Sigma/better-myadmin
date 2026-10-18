@@ -14,6 +14,7 @@ import {
   NativeSelect,
   Panel,
   PanelBody,
+  PmaIcon,
   Textarea,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -22,7 +23,7 @@ import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { HighlightedSql } from '../sql/HighlightedSql'
-import { TypeSelect } from '../table/structure/ColumnForm'
+import { EnumEditor, TypeSelect } from '../table/structure/ColumnForm'
 import { DbModal, DefinitionEditor, ListNavigator, Messages, errorMessage } from './common'
 import { EditorFooter, EditorRow, ProgramListPage, RowAction } from './programs'
 
@@ -418,10 +419,12 @@ function RoutineEditor({
                           {NO_LENGTH.includes(p.type) ? (
                             <span className="no_len">---</span>
                           ) : (
-                            <Input
-                              name={`item_param_length[${i}]`}
+                            <ParamLength
+                              index={i}
+                              type={p.type}
+                              name={p.name}
                               value={p.length}
-                              onChange={(e) => setParam(i, { length: e.target.value })}
+                              onChange={(length) => setParam(i, { length })}
                             />
                           )}
                         </td>
@@ -766,5 +769,48 @@ function ExecuteDialog({
         </Panel>
       )}
     </DbModal>
+  )
+}
+
+/**
+ * A parameter's length/values with the ENUM/SET editor link (`div.enum_hint`, shown for ENUM and
+ * SET by routines.ts setOptionsForParameter).
+ * pma: resources/templates/database/routines/parameter_row.twig
+ */
+function ParamLength({
+  index,
+  type,
+  name,
+  value,
+  onChange,
+}: { index: number; type: string; name: string; value: string; onChange: (v: string) => void }) {
+  const [editing, setEditing] = useState(false)
+  return (
+    <>
+      <Input
+        id={`item_param_length_${index}`}
+        name={`item_param_length[${index}]`}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+      {(type === 'ENUM' || type === 'SET') && (
+        <div className="enum_hint">
+          <Button variant="link" className="open_enum_editor h-auto p-0" onClick={() => setEditing(true)}>
+            <PmaIcon name="b_edit" alt={t('ENUM/SET editor')} />
+          </Button>
+        </div>
+      )}
+      {editing && (
+        <EnumEditor
+          value={value}
+          column={name}
+          onClose={() => setEditing(false)}
+          onSave={(v) => {
+            onChange(v)
+            setEditing(false)
+          }}
+        />
+      )}
+    </>
   )
 }
