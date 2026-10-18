@@ -37,8 +37,6 @@ RUN --mount=type=secret,id=ca,required=false NODE_EXTRA_CA_CERTS=/run/secrets/ca
  # phpMyAdmin image's config.inc.php; mount your own over it (or next to it, .ts/.js/.mjs win)
  && mkdir -p /etc/bettermyadmin /var/lib/bettermyadmin \
  && echo '{}' > /etc/bettermyadmin/bettermyadmin.config.json \
- # a mounted bettermyadmin.config.ts is an ES module
- && echo '{"type":"module"}' > /etc/bettermyadmin/package.json \
  && chown node:node /var/lib/bettermyadmin
 ENV NODE_ENV=production \
     BMA_DOCKER=1

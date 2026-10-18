@@ -229,6 +229,9 @@ importers:
 
   packages/config:
     dependencies:
+      esbuild:
+        specifier: 0.25.12
+        version: 0.25.12
       yaml:
         specifier: 2.7.1
         version: 2.7.1

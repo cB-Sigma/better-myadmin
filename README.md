@@ -1,8 +1,8 @@
 # BetterMyAdmin
 
-A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `e3e877e8`.
+A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `328b8d80` ([reference-commit.txt](docs/reference/reference-commit.txt)).
 
-Status: milestone M0 (foundations). You can log in with cookie auth, run queries in a bare SQL box and see results in a virtualized grid. Behaviour is checked against the reference phpMyAdmin by a golden parity harness. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
+Status: a port of every phpMyAdmin 6.0.0-dev feature area (upstream `328b8d80`), checked against a running phpMyAdmin on MySQL 8.4 and MariaDB 11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 99.9%, config directives 99.8%, messages 100%, JS behaviours 99.9%; feature checklist 91.7% (648 of 707 items; 43 missing, 16 failing). The setup wizard is pending a decision. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
 
 Start with [docs/README.md](docs/README.md), then [docs/00-vision-and-principles.md](docs/00-vision-and-principles.md) and [development setup](docs/architecture/14-development-setup.md).
 
@@ -87,7 +87,7 @@ The file holds what `config.inc.php` holds, as data: `$cfg['X']` becomes `X`, an
 }
 ```
 
-A TypeScript file gets type checking and completion over every directive in an editor that resolves `@bettermyadmin/config` (a checkout); elsewhere export a plain object. Node treats `.ts`/`.js` files as ES modules only inside a package with `"type": "module"`: add a `package.json` holding `{"type": "module"}` next to the file, or use `.mjs`, `.json` or `.yaml` (the image already has one in `/etc/bettermyadmin`).
+A TypeScript file is compiled as an ES module wherever it sits (no `package.json` needed; top-level `await` and relative imports work), and `import { defineConfig } from '@bettermyadmin/config'` resolves to BetterMyAdmin's own package, in the image too; it gives type checking and completion over every directive in an editor that resolves the package (a checkout).
 
 ```ts
 // bettermyadmin.config.ts
