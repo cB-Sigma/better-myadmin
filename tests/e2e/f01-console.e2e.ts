@@ -165,7 +165,7 @@ test('[p01-b992bd] the options persist through /console/update-config; "Restore 
     ['CurrentQuery', 'current_query'],
     ['EnterExecutes', 'enter_executes'],
     ['DarkTheme', 'dark_theme'],
-  ]) {
+  ] as const) {
     await expect(page.locator(`#consoleOptions${id}Checkbox`)).toHaveAttribute('name', name)
   }
   await page.locator('#consoleOptionsAlwaysExpandCheckbox').check()
