@@ -574,8 +574,8 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 ### Column headers & sorting
 - [ ] Headers are sticky (`position-sticky bg-body`); numeric columns right-aligned; hidden columns carry `hide`.
 - [x] Columns referenced in the WHERE clause get class `condition` (header and cells) for highlighting. <!-- parity:test --> `p02-c75482` [browse.test.ts:213](../../apps/server/test/int/browse.test.ts#L213)
-- [x] Column comments (native) shown under the name in small muted text, truncated to `LimitChars` with full comment as tooltip (`ShowBrowseComments`). <!-- parity:test --> `p02-26b09f` [browse.test.ts:47](../../apps/server/test/int/browse.test.ts#L47) +1
-- [x] Plain click on header: sort by that column; first click direction is `Order` (`SMART` → DESC for date/time, ASC otherwise); clicking a sorted column flips its direction; other ORDER BY columns are dropped. <!-- parity:test --> `p02-50ad5b` [browse.test.ts:47](../../apps/server/test/int/browse.test.ts#L47) +1
+- [x] Column comments (native) shown under the name in small muted text, truncated to `LimitChars` with full comment as tooltip (`ShowBrowseComments`). <!-- parity:test --> `p02-26b09f` [browse.test.ts:47](../../apps/server/test/int/browse.test.ts#L47)
+- [x] Plain click on header: sort by that column; first click direction is `Order` (`SMART` → DESC for date/time, ASC otherwise); clicking a sorted column flips its direction; other ORDER BY columns are dropped. <!-- parity:test --> `p02-50ad5b` [browse.test.ts:47](../../apps/server/test/int/browse.test.ts#L47)
 - [x] Shift+click adds the column to the ORDER BY (or flips its direction); Ctrl+click / Alt+click removes it; multi-sort indices shown as `<small>N</small>`. <!-- parity:test --> `p02-17fc03` [browse.parity.test.ts:87](../../tests/parity/browse.parity.test.ts#L87)
 - [ ] Hovering a sort link swaps the asc/desc icon preview.
 - [x] Table-qualified `ORDER BY \`t\`.\`c\`` only when the field has a table and is not aliased. <!-- parity:test --> `p02-c390b7` [browse.test.ts:70](../../apps/server/test/int/browse.test.ts#L70)
@@ -610,7 +610,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 - [ ] Multi-table (JOIN/sub-query) results, `information_schema`-like schemas, and results from multiple tables never show row actions or grid editing; updatable views do.
 
 ### Bulk actions
-- [x] "Check all" toggles every row checkbox; "With selected: Edit / Copy / Delete / Export (SELECT only)". <!-- parity:test --> `p02-9afb97` [browse.parity.test.ts:316](../../tests/parity/browse.parity.test.ts#L316) +1
+- [x] "Check all" toggles every row checkbox; "With selected: Edit / Copy / Delete / Export (SELECT only)". <!-- parity:test --> `p02-9afb97` [browse.parity.test.ts:316](../../tests/parity/browse.parity.test.ts#L316)
 - [x] Submitting with nothing selected returns "No row selected." for Edit/Copy/Export/Delete. <!-- parity:test --> `p02-6ae687` [browse-extras.e2e.ts:97](../../tests/e2e/browse-extras.e2e.ts#L97)
 - [ ] Edit opens the multi-row edit form; Copy opens insert forms prefilled; Export exports only the selected rows (`single_table`).
 - [x] Delete shows a confirmation page listing every `DELETE FROM \`t\` WHERE <clause>;`, with "Enable foreign key checks" checkbox, Yes (danger) / No; Yes executes each delete with `LIMIT 1`, then re-runs the original browse query and shows the executed DELETEs above the grid. <!-- parity:test --> `p02-a3dbd4` [browse.test.ts:141](../../apps/server/test/int/browse.test.ts#L141) +1
@@ -618,7 +618,7 @@ Parity acceptance list. Each item is something the clone must reproduce; the cit
 
 ### Cell rendering
 - [x] NULL → italic `NULL` with class `null`; empty string → empty non-wrapping cell; numeric → right-aligned no-wrap. <!-- parity:test --> `p02-f6be27` [browse-extras.e2e.ts:57](../../tests/e2e/browse-extras.e2e.ts#L57)
-- [x] Non-numeric, non-binary text truncated at `LimitChars` + `...` in Partial mode with `data-originallength` and tooltip "Original length N"; Link transformations and binaries are never truncated by this rule. <!-- parity:test --> `p02-dc194e` [browse.test.ts:47](../../apps/server/test/int/browse.test.ts#L47) +1
+- [x] Non-numeric, non-binary text truncated at `LimitChars` + `...` in Partial mode with `data-originallength` and tooltip "Original length N"; Link transformations and binaries are never truncated by this rule. <!-- parity:test --> `p02-dc194e` [browse.test.ts:47](../../apps/server/test/int/browse.test.ts#L47)
 - [x] Date/time cells `text-nowrap`; other text `pre_wrap` (whitespace preserved, newlines → `<br>`, double space → `&nbsp;`). <!-- parity:test --> `p02-57815e` [browse-extras.e2e.ts:57](../../tests/e2e/browse-extras.e2e.ts#L57)
 - [x] BIT shown as binary digits (`printableBitValue`). <!-- parity:test --> `p02-9cc265` [browse-extras.e2e.ts:57](../../tests/e2e/browse-extras.e2e.ts#L57)
 - [x] BINARY/BLOB shown as `[BINARY - 12 B]`/`[BLOB - 1.2 KiB]` (`[BLOB - NULL]` for NULL), wrapped in a download link to `/table/get-field` (file `<table>-<col>.bin`, MIME sniffed); with Show binary/BLOB contents the value is shown as UTF-8 text or `0x<hex>` when not printable, truncated; grid editing disabled when the placeholder is shown or `ProtectBinary` forbids. <!-- parity:test --> `p02-ed7243` [browse.test.ts:118](../../apps/server/test/int/browse.test.ts#L118)
