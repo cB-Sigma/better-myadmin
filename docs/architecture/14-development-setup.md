@@ -104,6 +104,7 @@ Every parity suite also runs against MariaDB: `BMA_PARITY_TARGET=mariadb pnpm te
 | reference (`BMA_PARITY_PMA_URL`) | :8081 | :8084 (`phpmyadmin-ref-mariadb`, its own pmadb `phpmyadmin` with control user pma/pmapass from `docker/seed/pmadb.sql`) |
 | replica (`BMA_PARITY_REPLICA_PORT` / `_PMA_URL`) | mysql84-replica :3308 / :8083 | mariadb11-replica :3309 / :8085 (`docker/seed/replica/10-replica-mariadb.sh`: CHANGE MASTER TO without GTID) |
 | translated reference | :8082 | none (the i18n suite skips itself) |
+| Japanese (Kanji export, `export-kanji`) | :8081 if it serves `lang=ja`, else :8082 (`PMA_I18N_URL`, built with `PMA_LOCALE_STUBS=ja`), else a shadow of the local checkout with an empty `ja` catalog (`startPmaShadow(port, {}, { locales: ['ja'] })`, `tests/parity/lib/pma-shadow.ts`; the shared checkout stays English-only) | none (skips itself) |
 
 Our app is pointed at the same server (server 1 of `testConfig`). The suite locks (`GET_LOCK`), the general-log holders and the per-run fixture names work per server, so a MySQL and a MariaDB run can go on at the same time. Suites with MySQL-only fixtures pick them by vendor (`TARGET` from `tests/parity/lib/target.ts`, or the server version); MariaDB-only behaviour of phpMyAdmin is registered as Q entries in [parity-exceptions.md](../reference/parity-exceptions.md).
 

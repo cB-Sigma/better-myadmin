@@ -84,11 +84,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/controlport` | apps/server/src/db/control.ts:37 |  |
 | ✅ | `Servers/*/controluser` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:236<br>apps/server/src/preferences/validator.ts:237<br>apps/server/src/preferences/validator.ts:253<br>apps/server/src/db/control.ts:49 |  |
 | ✅ | `Servers/*/DisableIS` | apps/server/src/database/events.ts:46<br>apps/server/src/database/tables.ts:122<br>apps/server/src/export/service.ts:103<br>apps/server/src/metadata/service.ts:304<br>apps/server/src/metadata/service.ts:347 |  |
-| ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/login.ts:54<br>apps/server/src/db/control.ts:35<br>apps/server/src/db/control.ts:282 |  |
+| ✅ | `Servers/*/hide_connection_errors` | apps/server/src/auth/login.ts:54<br>apps/server/src/db/control.ts:35<br>apps/server/src/db/control.ts:283 |  |
 | ✅ | `Servers/*/host` | apps/server/src/preferences/validator.ts:215<br>apps/server/src/preferences/validator.ts:250<br>apps/server/src/setup/service.ts:75<br>apps/server/src/auth/cookie.ts:59<br>apps/server/src/auth/http.ts:41 |  |
 | ✅ | `Servers/*/LogoutURL` | apps/server/src/routes/auth.ts:247 |  |
 | ✅ | `Servers/*/password` | apps/server/src/preferences/validator.ts:219<br>apps/server/src/setup/service.ts:80 |  |
-| ✅ | `Servers/*/SessionTimeZone` | apps/server/src/db/pool-manager.ts:120<br>apps/server/src/db/pool-manager.ts:122<br>apps/server/src/db/pool-manager.ts:342 |  |
+| ✅ | `Servers/*/SessionTimeZone` | apps/server/src/db/pool-manager.ts:120<br>apps/server/src/db/pool-manager.ts:122<br>apps/server/src/db/pool-manager.ts:343 |  |
 | ✅ | `Servers/*/SignonCookieParams/httponly` | apps/server/src/auth/signon.ts:73 |  |
 | ✅ | `Servers/*/SignonCookieParams/samesite` | apps/server/src/auth/signon.ts:68 |  |
 | ✅ | `Servers/*/SignonCookieParams/secure` | apps/server/src/auth/signon.ts:72 |  |
@@ -252,7 +252,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 |---|---|---|---|
 | ✅ | `AvailableCharsets` | apps/server/src/preferences/form-display.ts:94<br>apps/server/src/export/page.ts:211<br>apps/server/src/export/service.ts:119<br>apps/server/src/import/page.ts:136<br>apps/server/src/import/service.ts:209 |  |
 | ✅ | `BZipDump` | apps/server/src/setup/checks.ts:245<br>apps/server/src/setup/checks.ts:248<br>apps/server/src/setup/checks.ts:249<br>apps/server/src/import/page.ts:95<br>apps/server/src/import/page.ts:128 |  |
-| ✅ | `CompressOnFly` | apps/server/src/export/service.ts:116<br>packages/export/src/export.ts:261<br>packages/export/src/export.ts:324 |  |
+| ✅ | `CompressOnFly` | apps/server/src/export/service.ts:116<br>packages/export/src/export.ts:272<br>packages/export/src/export.ts:335 |  |
 | ✅ | `ExecTimeLimit` | apps/server/src/export/page.ts:228 | X9 |
 | ✅ | `Export/as_separate_files` | apps/server/src/export/page.ts:175<br>apps/server/src/export/page.ts:218 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/asfile` | apps/server/src/export/page.ts:208 | read under a computed name — option or page-setting name (Plugins::getDefault) |

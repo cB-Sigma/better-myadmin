@@ -27,7 +27,7 @@ import {
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ArrowDown, ArrowUp, Printer } from 'lucide-react'
+import { ArrowDown, ArrowUp, LoaderCircle, Printer } from 'lucide-react'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { api } from '../../lib/api'
@@ -74,6 +74,9 @@ const BULK_TITLES = {
   'copy-with-prefix': N_('Copy table with prefix'),
 } as const
 
+/** `counting` of the sum row's real count (a table name never starts with a NUL) */
+const SUM = '\u0000sum'
+
 function localFavorites(): string {
   try {
     return window.localStorage.getItem('favoriteTables') ?? ''
@@ -110,6 +113,8 @@ export function DbStructurePage({
   const [dialog, setDialog] = useState<DialogState>(null)
   const [filter, setFilter] = useState('')
   const [counts, setCounts] = useState<Record<string, string>>({})
+  // the real row count being fetched: a table, or SUM for the sum row
+  const [counting, setCounting] = useState<string | null>(null)
   const [favorites, setFavorites] = useState<Record<string, boolean>>({})
   // adjustTotals: after a row's Empty / Drop the summary is recounted on the page ("%d table(s)")
   const [adjusted, setAdjusted] = useState(false)
@@ -267,6 +272,8 @@ export function DbStructurePage({
   }
 
   const realCount = async (table: string | null) => {
+    if (counting !== null) return
+    setCounting(table ?? SUM)
     try {
       const r = await api.dbRealRowCount({ server, db }, table)
       if (r.realRowCount !== undefined && table !== null) setCounts({ ...counts, [table]: r.realRowCount })
@@ -274,8 +281,27 @@ export function DbStructurePage({
         setCounts(Object.fromEntries(r.realRowCountAll.map((x) => [x.table, x.rowCount])))
     } catch {
       setMessages([{ type: 'error', text: t('Failed to get real row count.') }])
+    } finally {
+      setCounting(null)
     }
   }
+  /**
+   * structure.ts fetchRealRowCount: the navigation's throbber replaces the count while it loads and
+   * takes no clicks (`.on('click', false)`).
+   */
+  const throbber = (
+    <span
+      className="throbber inline-block"
+      role="status"
+      aria-label={t('Loading…')}
+      onClickCapture={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+    >
+      <LoaderCircle className="inline size-3.5 animate-spin text-fg-muted" aria-hidden />
+    </span>
+  )
 
   /** Util::sortableTableHeader: `table` is the requested sort when none is given */
   const sortLink = (key: string, label: string, initialOrder: 'ASC' | 'DESC' = 'ASC') => {
@@ -566,7 +592,9 @@ export function DbStructurePage({
                         ) : (
                           <>
                             <td className="tbl_rows text-right font-mono" data-table={tb.name}>
-                              {rowApprox(tb) ? (
+                              {counting === tb.name ? (
+                                throbber
+                              ) : rowApprox(tb) ? (
                                 <button
                                   type="button"
                                   className="real_row_count text-accent"
@@ -662,7 +690,9 @@ export function DbStructurePage({
                         {t('Sum')}
                       </th>
                       <th className="tbl_rows text-right font-mono" data-testid="rows-sum">
-                        {sumApprox ? (
+                        {counting === SUM ? (
+                          throbber
+                        ) : sumApprox ? (
                           <button
                             type="button"
                             className="row_count_sum text-accent"

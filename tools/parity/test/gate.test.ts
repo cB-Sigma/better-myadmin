@@ -131,6 +131,7 @@ describe('dispositions', () => {
   it('checks exception ids and milestones', () => {
     expect(p({ exception: 'X1', planned: 'M4' })).toEqual([])
     expect(p({ exception: 'X1, Q3' })).toEqual([])
+    // fake exception id
     expect(p({ exception: 'X99' })).toEqual(['exception X99 is not in docs/reference/parity-exceptions.md'])
     expect(p({ planned: 'M9' })).toEqual([
       'planned milestone M9 is not in docs/architecture/13-roadmap-and-milestones.md',

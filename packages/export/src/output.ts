@@ -1,6 +1,7 @@
 import { gzipSync } from 'node:zlib'
 import { encodeBytes } from './bytes.ts'
 import { convertFromUtf8 } from './charset.ts'
+import { kanjiStrConv } from './kanji.ts'
 import { createZip } from './zip.ts'
 
 /** Where the dump goes: the HTTP response, a file in SaveDir, or memory. */
@@ -21,6 +22,11 @@ export interface OutputOptions {
   memoryLimit?: number
   /** Current::$charset when the output must be converted from UTF-8 (outputCharsetConversion) */
   convertCharset?: string | null
+  /**
+   * outputKanjiConversion (Encoding::canConvertKanji(), the Japanese locale): the posted knjenc
+   * (`''`, `EUC-JP`, `SJIS`) and xkana (`kana` or `''`)
+   */
+  kanji?: { enc: string; kana: string } | null
 }
 
 /**
@@ -35,6 +41,7 @@ export class OutputHandler {
   readonly onFlyCompression: boolean
   readonly memoryLimit: number
   readonly convertCharset: string | null
+  readonly kanji: { enc: string; kana: string } | null
   readonly #sink: OutputSink
   #dumpBuffer: string[] = []
   #dumpBufferLength = 0
@@ -49,6 +56,7 @@ export class OutputHandler {
     this.onFlyCompression = o.compression === 'gzip' && (o.compressOnFly ?? false)
     this.memoryLimit = o.memoryLimit ?? 1024 * 1024
     this.convertCharset = o.convertCharset ?? null
+    this.kanji = o.kanji ?? null
   }
 
   #convert(s: string): Buffer {
@@ -63,7 +71,9 @@ export class OutputHandler {
   }
 
   /** pma: OutputHandler::addLine */
-  async addLine(line: string): Promise<void> {
+  async addLine(text: string): Promise<void> {
+    // Kanji encoding convert feature
+    const line = this.kanji === null ? text : kanjiStrConv(text, this.kanji.enc, this.kanji.kana)
     if (line === '') return
     // If we have to buffer data, we will perform everything at once at the end
     if (this.compression !== '') {

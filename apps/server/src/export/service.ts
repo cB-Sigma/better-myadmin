@@ -125,6 +125,8 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
       parserContext: conn.serverInfo?.context ?? new SqlContext(),
       verbose: server.verbose,
       httpHost,
+      // Encoding::canConvertKanji()
+      canConvertKanji: c.get('language').code === 'ja',
     }
     return { env, conn, cfg, settings, server, meta, admin, user: c.get('creds').user, close }
   } catch (e) {

@@ -13,9 +13,12 @@ export function OlPlot({ data, visible }: { data: OlData; visible: boolean }) {
     }
     const el = target.current
     let cancelled = false
-    void import('./olMap').then(({ drawOpenLayers }) => {
-      if (!cancelled && map.current === null) map.current = drawOpenLayers(el, data)
-    })
+    // like gis_data_editor.ts: without the OpenLayers chunk the editor keeps working on the SVG preview
+    import('./olMap')
+      .then(({ drawOpenLayers }) => {
+        if (!cancelled && map.current === null) map.current = drawOpenLayers(el, data)
+      })
+      .catch(() => {})
     return () => {
       cancelled = true
     }

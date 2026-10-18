@@ -1,0 +1,34 @@
+[
+ {
+  "in": "INSERT INTO t VALUES (1, '日本語');\n",
+  "SJIS": "494e5345525420494e544f20742056414c5545532028312c202793fa967b8cea27293b0a",
+  "SJIS+kana": "494e5345525420494e544f20742056414c5545532028312c202793fa967b8cea27293b0a",
+  "EUC-JP": "494e5345525420494e544f20742056414c5545532028312c2027c6fccbdcb8ec27293b0a",
+  "EUC-JP+kana": "494e5345525420494e544f20742056414c5545532028312c2027c6fccbdcb8ec27293b0a",
+  "kana": "INSERT INTO t VALUES (1, '日本語');\n"
+ },
+ {
+  "in": "ｶﾞｷﾞ ﾊﾟﾋﾟ ｳﾞ ｱｲｳ ｰ ｡｢｣､･ ﾜﾞ\n",
+  "SJIS": "b6deb7de20cadfcbdf20b3de20b1b2b320b020a1a2a3a4a520dcde0a",
+  "SJIS+kana": "834b834d20837083732083942083418343834520815b208142817581768141814520838f814a0a",
+  "EUC-JP": "8eb68ede8eb78ede208eca8edf8ecb8edf208eb38ede208eb18eb28eb3208eb0208ea18ea28ea38ea48ea5208edc8ede0a",
+  "EUC-JP+kana": "a5aca5ae20a5d1a5d420a5f420a5a2a5a4a5a620a1bc20a1a3a1d6a1d7a1a2a1a620a5efa1ab0a",
+  "kana": "ガギ パピ ヴ アイウ ー 。「」、・ ワ゛\n"
+ },
+ {
+  "in": "～－∥￠ ¢£¥¬¯‖‾−〜 ① ㈱ é 𠮷\n",
+  "SJIS": "8160817c816181912081918192818f81ca815081618150817c8160203f203f203f203f0a",
+  "SJIS+kana": "8160817c816181912081918192818f81ca815081618150817c8160203f203f203f203f0a",
+  "EUC-JP": "a1c1a1dda1c2a1f120a1f1a1f23fa2cc8fa2b4a1c2a1b1a1dda1c1203f203f208fabb1203f0a",
+  "EUC-JP+kana": "a1c1a1dda1c2a1f120a1f1a1f23fa2cc8fa2b4a1c2a1b1a1dda1c1203f203f208fabb1203f0a",
+  "kana": "～－∥￠ ¢£¥¬¯‖‾−〜 ① ㈱ é 𠮷\n"
+ },
+ {
+  "in": "plain ascii\n",
+  "SJIS": "706c61696e2061736369690a",
+  "SJIS+kana": "706c61696e2061736369690a",
+  "EUC-JP": "706c61696e2061736369690a",
+  "EUC-JP+kana": "706c61696e2061736369690a",
+  "kana": "plain ascii\n"
+ }
+]
