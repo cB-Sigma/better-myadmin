@@ -22,7 +22,8 @@ mysql84 (MySQL 8.4, `max_allowed_packet` 64 MB), one database `f07_big` with `mi
 | Browse `mixed` (2M rows), first page | 0.2 s, +3 MB | 0.2 s, +2 MB | 0.3 s, +4 MB |
 | Sort `mixed` by an unindexed column (filesort) | 3.3 s, +0 MB | 2.9 s, +0 MB | 3.9 s, +1 MB |
 | Search `mixed` (`LIKE '%…%'`, full scan) | 3.6 s, +0 MB | 3.3 s, +2 MB | 3.1 s, +0 MB |
-| Browse `blobs`, 25 rows of 1 MB | 0.6 s, +27 MB | 1.8 s, +198 MB (30 MB response) | 1.2 s, +140 MB (200 KB response) |
+| Browse `blobs`, 25 rows of 1 MB | 0.6 s, +27 MB | 1.8 s, +198 MB (30 MB response) | 0.3 s, +10–34 MB (24 KB response) |
+| The same, 5 users at once (8 rounds) | — (`php -S` serves one at a time) | 4–7 s per round | 0.9–1.5 s per round; the first round +97 MB, then the process stays at 470–500 MB |
 | Database Structure, 5,000 tables (`MaxTableList` 250 per page) | 0.6 s, +10 MB | 0.5 s, +1 MB | 0.9 s, +0 MB |
 | Navigation: expand the database / the Tables node (`MaxNavigationItems` 50) | 0.2 s / 0.1 s, +0 MB | 0.2 s / 0.1 s, +0 MB | 0.1 s / 0.1 s, +1 MB |
 | SQL export of `mixed`, 383 MB, uncompressed | 18.7 s, +730 MB | 61.4 s, +10 MB | 31.6–36.7 s, +36 MB |
@@ -33,13 +34,14 @@ mysql84 (MySQL 8.4, `max_allowed_packet` 64 MB), one database `f07_big` with `mi
 | Insert/Edit, 25 MB BLOB upload | 8–10 s, +1,000 MB | 3.7 s, +523 MB (100 MB response) | 2.6 s, +297 MB (2 KB response) |
 | Insert/Edit, 50 MB BLOB (above `max_allowed_packet` as hex) | 31–38 s, +1,050–1,860 MB, not stored (one HTTP 500) | 2.9 s, +491 MB, "Got a packet bigger than 'max_allowed_packet' bytes" (100 MB response) | 3.1–3.9 s, +300–370 MB, the same error (1 KB response) |
 
-The import memory "before" grew by the size of the file: the file was read whole into memory, and every executed statement (240 KB each) stayed in the request's statement log. The BLOB-table browse still costs about five times phpMyAdmin's memory: mysql2's buffered page (25 MB) and the decoded cell strings; it is bounded by the page (`MaxRows` × row size), not by the table.
+The import memory "before" grew by the size of the file: the file was read whole into memory, and every executed statement (240 KB each) stayed in the request's statement log. A BLOB-table browse holds mysql2's buffered page (25 MB, as phpMyAdmin holds its buffered result) and is bounded by the page (`MaxRows` × row size), not by the table: concurrent requests each hold their own page, and V8 keeps the heap it grew to for the next ones rather than growing further.
 
 ## Fixes
 
 | Problem | Fix | Test |
 |---|---|---|
 | A browse page sent every raw value (BLOBs base64, full TEXT) besides the grid: a 25-row page of 1 MB rows was a 30 MB response, rendered by the browser | the raw values of truncated, transformed and non-editable cells are not encoded (`unreadRawCells`) | `large-data.test.ts` Browse; unit `unreadRawCells` |
+| A browse page of large cells decoded each 1 MB cell several times (0.8 s a page; five users at once 4–7 s): the BLOB's text it does not show, the whole row per cell for the special schema links, each cell for the predefined transformations, the `= '…'` comparison of every text, and `UniqueCondition` counted every BLOB and quoted every text although the primary key wins | decoded only where shown or needed: `hasSpecialSchemaLink` and `defaultTransformation` first, the comparison built for a relation only, `getUniqueCondition` builds the all-columns fallback only without a key condition and does not count a BLOB too long for it (`mbStrlenAtLeast`), `mbStrlen` without iterating, the row's bytes not copied | `browse-large-concurrent.test.ts`; `where-large.test.ts`; `mb-strlen.test.ts` |
 | The import read the uploaded file whole (and gunzipped it whole) | `ImportFile.open`: positioned reads, gzip/bzip2 through a temporary file | `packages/import/test/large.test.ts` |
 | The request's statement log kept every statement of an import | no statement log without `DBG/sql` | unit `statementLog` |
 | `ExecTimeLimit` did not interrupt an import, so there was no resume | `Import::checkTimeout` ported (`maximumTime`, the 5-second margin), the timeout message links to the import page with `timeout_passed` and `offset` | `large-data.test.ts` import [p07-89e7c9 p07-5a8804] |
