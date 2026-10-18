@@ -4,38 +4,38 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-1028/1106 covered (92.9%): 1027 implemented, 1 n/a, 4 planned, 74 missing. [Summary](README.md).
+1069/1106 covered (96.7%): 1065 implemented, 3 exception, 1 n/a, 1 planned, 36 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 56/98 (57.1%) covered, 56/98 implemented
+## 01 shell navigation auth — 97/98 (99.0%) covered, 94/98 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `base.twig` | 0/9 |  | ⬜ `button:Open user account menu` ⬜ `link:Click on the bar to scroll to top of page` ⬜ `link:Log out` ⬜ `link:MariaDB documentation` ⬜ `link:Open new phpMyAdmin window` ⬜ `link:phpMyAdmin Demo Server` ⬜ `link:phpMyAdmin documentation` ⬜ `link:Settings` ⬜ `themeColorMode` |
+| `base.twig` | 9/9 | ✅ `button:Open user account menu` ✅ `link:Click on the bar to scroll to top of page` ✅ `link:Log out` ✅ `link:MariaDB documentation` ✅ `link:Open new phpMyAdmin window` ✅ `link:phpMyAdmin Demo Server` ✅ `link:phpMyAdmin documentation` ✅ `link:Settings` ✅ `themeColorMode` |  |
 | `console/display.twig` | 9/9 | ✅ `always_expand` ✅ `current_query` ✅ `dark_theme` ✅ `enter_executes` ✅ `label` ✅ `shared` ✅ `start_history` ✅ `submit` ✅ `targetdb` |  |
-| `error/report_form.twig` | 0/2 |  | 🗓️ `always_send` 🗓️ `description` |
-| `error/report_modal.twig` | 0/3 |  | ⬜ `button:Cancel` ⬜ `button:Close` ⬜ `id:errorReportModalConfirm` |
-| `error/simple.twig` | 0/1 |  | ⬜ `link:Go back` |
-| `filter.twig` | 0/1 |  | ⬜ `filterText` |
-| `home/index.twig` | 1/16 | ✅ `lang` | ⬜ `button:Close` ⬜ `button:View all` ⬜ `collation_connection` ⬜ `link:Change password` ⬜ `link:Contribute` ⬜ `link:Documentation` ⬜ `link:Get more themes!` ⬜ `link:Get support` ⬜ `link:License` ⬜ `link:List of changes` ⬜ `link:More settings` ⬜ `link:Official Homepage` 🗓️ `link:Show PHP information` ⬜ `set_theme` ⬜ `themeColorMode` |
-| `home/themes.twig` | 0/1 |  | ⬜ `set_theme` |
+| `error/report_form.twig` | 2/2 | ✅ `always_send` ✅ `description` |  |
+| `error/report_modal.twig` | 3/3 | ✅ `button:Cancel` ✅ `button:Close` ✅ `id:errorReportModalConfirm` |  |
+| `error/simple.twig` | 1/1 | ✅ `link:Go back` |  |
+| `filter.twig` | 1/1 | ✅ `filterText` |  |
+| `home/index.twig` | 16/16 | ✅ `button:Close` ✅ `button:View all` ✅ `collation_connection` ✅ `lang` ✅ `link:Change password` ✅ `link:Contribute` ✅ `link:Documentation` 🔀 `link:Get more themes!` ✅ `link:Get support` ✅ `link:License` ✅ `link:List of changes` ✅ `link:More settings` ✅ `link:Official Homepage` 🔀 `link:Show PHP information` ✅ `set_theme` ✅ `themeColorMode` |  |
+| `home/themes.twig` | 1/1 | ✅ `set_theme` |  |
 | `list_navigator.twig` | 4/4 | ✅ `link:Begin` ✅ `link:End` ✅ `link:Next` ✅ `link:Previous` |  |
 | `login/form.twig` | 6/6 | ✅ `id:input_go` ✅ `lang` ✅ `pma_password` ✅ `pma_servername` ✅ `pma_username` ✅ `server` |  |
 | `login/twofactor.twig` | 1/1 | ✅ `submit:Verify` |  |
 | `login/twofactor/application_configure.twig` | 1/1 | ✅ `2fa_code` |  |
 | `login/twofactor/application.twig` | 1/1 | ✅ `2fa_code` |  |
-| `menu/main.twig` | 2/5 | ✅ `link:(current)` ✅ `link:Server:` | ⬜ `button:Toggle navigation` ⬜ `link:Database:` ⬜ `link:View:` |
-| `modals/unhide_nav_item.twig` | 0/1 |  | ⬜ `button:Close` |
-| `navigation/item_unhide_dialog.twig` | 0/1 |  | ⬜ `link:Unhide` |
+| `menu/main.twig` | 5/5 | ✅ `button:Toggle navigation` ✅ `link:(current)` ✅ `link:Database:` ✅ `link:Server:` ✅ `link:View:` |  |
+| `modals/unhide_nav_item.twig` | 1/1 | ✅ `button:Close` |  |
+| `navigation/item_unhide_dialog.twig` | 1/1 | ✅ `link:Unhide` |  |
 | `navigation/main.twig` | 6/6 | ✅ `link:Empty session data` ✅ `link:Home` ✅ `link:MariaDB Documentation` ✅ `link:Navigation panel settings` ✅ `link:phpMyAdmin documentation` ✅ `link:Reload navigation panel` |  |
-| `navigation/tree/database_select.twig` | 0/1 |  | ⬜ `db` |
+| `navigation/tree/database_select.twig` | 0/1 |  | 🗓️ `db` |
 | `navigation/tree/fast_filter.twig` | 2/2 | ✅ `button:Clear fast filter` ✅ `text:Type to filter these, Enter to search all` |  |
-| `navigation/tree/quick_warp.twig` | 0/2 |  | ⬜ `button:Favorites` ⬜ `button:Recent` |
-| `recent_favorite_table_favorite.twig` | 0/1 |  | ⬜ `link:Remove from Favorites` |
+| `navigation/tree/quick_warp.twig` | 2/2 | ✅ `button:Favorites` ✅ `button:Recent` |  |
+| `recent_favorite_table_favorite.twig` | 1/1 | ✅ `link:Remove from Favorites` |  |
 | `server/select/index.twig` | 1/1 | ✅ `server` |  |
 | `setup/base.twig` | 1/1 | ✅ `link:Overview` |  |
 | `setup/config/index.twig` | 2/2 | ✅ `submit_download` ✅ `textconfig` |  |
 | `setup/error.twig` | 3/3 | ✅ `link:Ignore errors` ✅ `link:Show form` ✅ `link:Try to revert erroneous fields to their default values` |  |
-| `setup/home/index.twig` | 14/15 | ✅ `DefaultLang` ✅ `eol` ✅ `lang` ✅ `link:Check for latest version` ✅ `link:Delete` ✅ `link:Documentation` ✅ `link:Edit` ✅ `link:phpMyAdmin homepage` ✅ `link:Show hidden messages` ✅ `ServerDefault` ✅ `submit` ✅ `submit_clear` ✅ `submit_display` ✅ `submit_download` | 🗓️ `link:Donate` |
+| `setup/home/index.twig` | 15/15 | ✅ `DefaultLang` ✅ `eol` ✅ `lang` ✅ `link:Check for latest version` ✅ `link:Delete` ✅ `link:Documentation` 🔀 `link:Donate` ✅ `link:Edit` ✅ `link:phpMyAdmin homepage` ✅ `link:Show hidden messages` ✅ `ServerDefault` ✅ `submit` ✅ `submit_clear` ✅ `submit_display` ✅ `submit_download` |  |
 | `src/Navigation/NavigationTree.php` | 2/2 | ✅ `id:pma_navigation_collapse` ✅ `id:pma_navigation_sync` |  |
 
 ## 02 browse results grid — 27/32 (84.4%) covered, 27/32 implemented

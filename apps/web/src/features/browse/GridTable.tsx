@@ -420,7 +420,8 @@ export function GridTable(props: Props) {
     const key = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setSel(emptySelection)
       const a = document.activeElement
-      if (a?.matches('input, textarea, select')) return
+      // (phpMyAdmin's CodeMirror 5 types into a hidden textarea; CodeMirror 6 is contenteditable)
+      if (a?.matches('input, textarea, select') || (a instanceof HTMLElement && a.isContentEditable)) return
       if ((e.ctrlKey || e.metaKey) && e.code === 'KeyA') {
         e.preventDefault()
         window.getSelection()?.removeAllRanges()
@@ -717,7 +718,7 @@ export function GridTable(props: Props) {
                 <Button
                   variant="link"
                   size="sm"
-                  className="sortlink h-auto"
+                  className="sortlink group h-auto"
                   title={`${t(MSG.sortHint)}\n${t(MSG.multiSortHint).replace('<br>', '\n')}`}
                   // th.draggable a: a double-click on the link does not copy the column name
                   onDoubleClick={(e) => e.stopPropagation()}
@@ -733,11 +734,22 @@ export function GridTable(props: Props) {
                   {c.sort!.dir !== null && (
                     <>
                       {' '}
-                      <PmaIcon
-                        name={c.sort!.dir === 'DESC' ? 's_desc' : 's_asc'}
-                        alt={t(c.sort!.dir === 'DESC' ? 'Descending' : 'Ascending')}
-                        className="soimg"
-                      />{' '}
+                      {/* .sortlink mouseover / mouseout toggle the .soimg pair: hovering shows the
+                          other direction (Results::getSortingUrlParams) */}
+                      <span className="inline-flex group-hover:hidden">
+                        <PmaIcon
+                          name={c.sort!.dir === 'DESC' ? 's_desc' : 's_asc'}
+                          alt={t(c.sort!.dir === 'DESC' ? 'Descending' : 'Ascending')}
+                          className="soimg"
+                        />
+                      </span>
+                      <span className="hidden group-hover:inline-flex">
+                        <PmaIcon
+                          name={c.sort!.dir === 'DESC' ? 's_asc' : 's_desc'}
+                          alt={t(c.sort!.dir === 'DESC' ? 'Ascending' : 'Descending')}
+                          className="soimg"
+                        />
+                      </span>{' '}
                       <small>{c.sort!.position}</small>
                     </>
                   )}

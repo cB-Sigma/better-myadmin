@@ -64,8 +64,28 @@ export const AuthState = z.object({
   /** set when the current server (not cookie auth) is not logged in */
   failure: AuthFailure.nullable(),
   captcha: CaptchaSettings.nullable(),
+  /** $cfg['LoginCookieValidity'] (seconds): the idle check's schedule (functions.ts onloadIdleEvent) */
+  loginCookieValidity: z.number().int(),
+  /** the server sees an HTTPS request (CommonParams is_https; the login form compares it, js-https-mismatch) */
+  isHttps: z.boolean(),
 })
 export type AuthState = z.infer<typeof AuthState>
+
+/**
+ * POST /api/auth/check-timeout — the idle check: `access_time` seconds since the user's last
+ * activity in the window `guid` (pma: POST / with check_timeout, access_time, guid).
+ */
+export const CheckTimeoutRequest = z.object({
+  guid: z.string().max(64).optional(),
+  access_time: z.number(),
+})
+export type CheckTimeoutRequest = z.infer<typeof CheckTimeoutRequest>
+export const CheckTimeoutResponse = z.object({
+  success: z.boolean(),
+  /** the login ended for inactivity: "No activity within %s seconds; please log in again." */
+  message: z.string().optional(),
+})
+export type CheckTimeoutResponse = z.infer<typeof CheckTimeoutResponse>
 
 /** POST /api/auth/login */
 export const LoginRequest = z.object({

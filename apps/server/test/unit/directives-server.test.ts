@@ -128,7 +128,7 @@ describe('ssl_ca_path (mysqli capath)', () => {
 })
 
 describe('CheckConfigurationPermissions (Config::checkPermissions)', () => {
-  it('a world-writable file is refused, except on Windows', () => {
+  it('a world-writable file is refused, except on Windows [p08-56c38b]', () => {
     const f = join(tmp, 'config.json')
     writeFileSync(f, '{}')
     chmodSync(f, 0o644)

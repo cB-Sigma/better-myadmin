@@ -25,6 +25,7 @@ import { type TableRef, api } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { BrowsePage } from '../../browse/BrowsePage'
+import { useFormLock } from '../../shell/page-chrome'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 import { SearchPills } from './SearchPills'
 import {
@@ -67,6 +68,8 @@ const RANGE_TYPES =
   /^(tinyint|smallint|mediumint|int|bigint|decimal|float|double|real|date|datetime|timestamp|time|year)/
 
 function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }) {
+  // form.lock-page (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const [rows, setRows] = useState<Criterion[]>(() => page.columns.map(initialCriterion))
   const [display, setDisplay] = useState<string[]>(() => page.columns.map((c) => c.name))
   const [distinct, setDistinct] = useState(false)
@@ -138,6 +141,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
     <>
       <ResultMessages messages={messages} />
       <form
+        ref={lockRef}
         id="tbl_search_form"
         name="insertForm"
         className={formShown ? undefined : 'hidden'}

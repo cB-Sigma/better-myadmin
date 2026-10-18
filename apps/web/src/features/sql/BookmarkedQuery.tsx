@@ -1,5 +1,5 @@
 import { DocLink, Panel, buttonVariants } from '@bettermyadmin/ui'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { t } from '../../lib/i18n'
 import type { BookmarkEntry } from '../bookmarks/provider'
 
@@ -12,15 +12,22 @@ export type BookmarkAction = 'submit' | 'view' | 'delete'
 export function BookmarkedQuery({
   bookmarks,
   onGo,
+  resetSignal = 0,
 }: {
   bookmarks: BookmarkEntry[]
   onGo: (b: BookmarkEntry, action: BookmarkAction, variables: Record<number, string>) => void
+  /** changes when the main Go is clicked: `select[name=id_bookmark]` emptied (no change event) */
+  resetSignal?: number
 }) {
   const [id, setId] = useState('')
   const [action, setAction] = useState<BookmarkAction>('submit')
   const variables = useRef<Record<number, string>>({})
   const selected = bookmarks.find((b) => String(b.id) === id)
-  const varCount = selected?.variableCount ?? 0
+  // the variable inputs follow the select's change event only (sql.ts #id_bookmark change)
+  const [varCount, setVarCount] = useState(0)
+  useEffect(() => {
+    if (resetSignal > 0) setId('')
+  }, [resetSignal])
   const go = () => {
     if (selected !== undefined) onGo(selected, action, { ...variables.current })
   }
@@ -36,6 +43,7 @@ export function BookmarkedQuery({
           onChange={(e) => {
             setId(e.target.value)
             variables.current = {}
+            setVarCount(bookmarks.find((b) => String(b.id) === e.target.value)?.variableCount ?? 0)
           }}
         >
           <option value="">&nbsp;</option>

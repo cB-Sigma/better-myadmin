@@ -1,5 +1,7 @@
 import {
   type AuthState,
+  CheckTimeoutRequest,
+  type CheckTimeoutResponse,
   LoginRequest,
   type LoginResponse,
   type LogoutResponse,
@@ -7,6 +9,7 @@ import {
   TwoFactorVerifyRequest,
   type TwoFactorVerifyResponse,
 } from '@bettermyadmin/contracts'
+import { sprintf } from '@bettermyadmin/i18n'
 import { phpEmpty } from '@bettermyadmin/metadata'
 import { type Context, Hono } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
@@ -15,7 +18,7 @@ import { logUser } from '../auth/auth-log.ts'
 import { captchaSettings, verifyCaptcha } from '../auth/captcha.ts'
 import { configFailure, configLogin } from '../auth/config.ts'
 import { cookieLogin } from '../auth/cookie.ts'
-import { LoginFailure } from '../auth/failure.ts'
+import { AuthMessages, LoginFailure } from '../auth/failure.ts'
 import { requestClientIp } from '../auth/login.ts'
 import { loginRateLimiter } from '../auth/rate-limit.ts'
 import { storeLogin, withTwoFactor } from '../auth/session-login.ts'
@@ -23,7 +26,7 @@ import { getServer, serverIndexes, serverLabel } from '../config.ts'
 import { ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
 import { forgetServerMetadata } from '../metadata/service.ts'
-import { regenerate } from '../session/manager.ts'
+import { nowSeconds, regenerate } from '../session/manager.ts'
 import type { ServerLogin } from '../session/store.ts'
 
 /** pmaUser-N equivalent: the recalled username cookie. */
@@ -78,7 +81,43 @@ authRoutes.get('/state', async (c) => {
     authType,
     failure,
     captcha: authType === 'cookie' ? captchaSettings(cfg) : null,
+    loginCookieValidity: cfg.LoginCookieValidity,
+    isHttps: c.get('isHttps'),
   }
+  return c.json(body)
+})
+
+/**
+ * POST /api/auth/check-timeout — the idle check of an open window. The request is not activity
+ * itself: it records `now - access_time` for the window (bounded to <0, LoginCookieValidity + 1>,
+ * AuthenticationPlugin::setSessionAccessTime). When the session already ended for inactivity the
+ * answer carries the inactivity message and the page offers the login again.
+ * pma: HomeController (ajax + access_time), AuthenticationCookie::showLoginForm (check_timeout)
+ */
+authRoutes.post('/check-timeout', async (c) => {
+  const { cfg } = c.get('deps')
+  const req = await parseJson(c, CheckTimeoutRequest, {})
+  c.set('keepLastSeen', true)
+  const session = c.get('session')
+  const tr = c.get('tr')
+  if (session.servers[String(session.currentServer)] === undefined) {
+    const body: CheckTimeoutResponse = {
+      success: false,
+      message:
+        session.expired === true
+          ? sprintf(tr.gettext(AuthMessages.noActivity), String(cfg.LoginCookieValidity))
+          : tr.gettext(AuthMessages.sessionExpired),
+    }
+    return c.json(body)
+  }
+  const now = nowSeconds()
+  const access = Math.min(Math.max(0, Math.trunc(req.access_time)), cfg.LoginCookieValidity + 1)
+  // entries of windows that went quiet are dropped like stale browser_access_time entries
+  const kept = Object.entries(session.browserAccess ?? {}).filter(
+    ([, t]) => t >= now - cfg.LoginCookieValidity,
+  )
+  session.browserAccess = { ...Object.fromEntries(kept), [req.guid ?? 'default']: now - access }
+  const body: CheckTimeoutResponse = { success: true }
   return c.json(body)
 })
 

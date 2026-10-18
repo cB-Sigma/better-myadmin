@@ -6,6 +6,7 @@ import { dirname, join, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseArgs } from 'node:util'
 import { ConfigError, loadConfig } from '@bettermyadmin/config'
+import { type Translator, htmlspecialchars } from '@bettermyadmin/i18n'
 import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { createApp } from './app.ts'
@@ -98,7 +99,13 @@ async function main() {
       }),
     )
     app.use('*', serveStatic({ root }))
-    app.get('*', (c) => c.html(indexHtml))
+    // base.twig / login/header.twig <noscript>, in the request's language (set by the page middleware)
+    const noscript = 'Javascript must be enabled past this point!'
+    app.get('*', (c) => {
+      const tr = c.get('tr') as Translator | undefined
+      const text = tr?.gettext('Javascript must be enabled past this point!') ?? noscript
+      return c.html(text === noscript ? indexHtml : indexHtml.replace(noscript, htmlspecialchars(text)))
+    })
   } else {
     console.warn(`web assets not found in ${staticRoot}; serving the API only (run the web dev server)`)
   }

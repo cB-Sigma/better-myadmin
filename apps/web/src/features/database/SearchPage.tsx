@@ -2,9 +2,11 @@ import type { DbSearchResponse, QueryResponse, SqlMessage } from '@bettermyadmin
 import {
   Button,
   Checkbox,
+  DocLink,
   Hint,
   Input,
   Label,
+  MessageBox,
   MySqlDocLink,
   NativeSelect,
   Panel,
@@ -20,17 +22,50 @@ import { useState } from 'react'
 import { api } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
+import { BBCode } from '../shell/bbcode'
 import { InlineHtml } from '../shell/inline-html'
+import { useFormLock } from '../shell/page-chrome'
 import { StatementBlock } from '../sql/Results'
 import type { CardEnv } from '../sql/SqlMessage'
 import { runQuery } from '../sql/runner'
-import { path, Messages, errorMessage, tableBase } from './common'
+import { path, Messages, dbBase, errorMessage, tableBase } from './common'
+
+/**
+ * "Something went wrong" with the failure and a "Go back" link to the database's default tab (the
+ * search form when $cfg['UseDbSearch'] is off).
+ * pma: resources/templates/error/simple.twig, src/Controllers/Database/SearchController.php
+ */
+function SimpleError({ server, db, message }: { server: number; db: string; message: string }) {
+  return (
+    <div className="container">
+      <h2 className="mb-3 text-xl">{t('Something went wrong')}</h2>
+      <Panel>
+        <PanelBody>
+          <MessageBox type="error">
+            <BBCode text={message} />
+            {message.includes("$cfg['UseDbSearch']") && (
+              <>
+                {' '}
+                <DocLink page="config" anchor="cfg_UseDbSearch" />
+              </>
+            )}
+          </MessageBox>
+          <Link className="card-link mt-2 inline-block" to={path(`${dbBase(server, db)}/`)}>
+            {t('Go back')}
+          </Link>
+        </PanelBody>
+      </Panel>
+    </div>
+  )
+}
 
 /**
  * Database → Search.
  * pma: templates/database/search/{main,results}.twig, resources/js/database/search.ts
  */
 export function SearchPage({ server, db }: { server: number; db: string }) {
+  // form.lock-page (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const confirm = useConfirm()
   const form = useQuery({
     queryKey: qk.dbPage({ server, db }, 'search-form'),
@@ -47,7 +82,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [browse, setBrowse] = useState<{ table: string; response: QueryResponse } | null>(null)
 
-  if (form.isError) return <Messages messages={[errorMessage(form.error)]} />
+  if (form.isError) return <SimpleError server={server} db={db} message={errorMessage(form.error).text} />
   if (form.data === undefined) return null
   const tables = selected ?? form.data.tables
 
@@ -122,6 +157,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       <Messages messages={messages} />
       {showForm && (
         <form
+          ref={lockRef}
           id="db_search_form"
           onSubmit={(e) => {
             e.preventDefault()

@@ -3,8 +3,15 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_CLIENT_CONFIG } from '../../lib/config.ts'
 import { BBCode } from './bbcode.tsx'
 import { parseVersionString, versionNotice } from './home/VersionInfo.tsx'
-import { PASSWORD_CHARS, checkPassword, strengthDictionary, suggestPassword } from './home/password.ts'
+import {
+  PASSWORD_CHARS,
+  checkPassword,
+  strengthDictionary,
+  strengthLabel,
+  suggestPassword,
+} from './home/password.ts'
 import { CHORD_MS, type KeyInfo, ShortcutMachine } from './hotkeys/shortcuts.ts'
+import { DemoServerCard, isDemo } from './session/DemoNotice.tsx'
 import {
   DB_TABS,
   SERVER_TABS,
@@ -26,7 +33,7 @@ const vars = {
 }
 
 describe('page titles (Header::getPageTitle, Util::expandUserString)', () => {
-  it('picks TitleTable / TitleDatabase / TitleServer / TitleDefault', () => {
+  it('picks TitleTable / TitleDatabase / TitleServer / TitleDefault [p01-a7125e]', () => {
     expect(pageTitle(DEFAULT_CLIENT_CONFIG, vars)).toBe(
       'pma.local:8080 / db1 / shop / orders | BetterMyAdmin 1.0.0',
     )
@@ -151,7 +158,7 @@ describe('version check (git-info.ts)', () => {
     expect(parseVersionString('5.2.1-rc2')).toBe(502010000 - 22)
     expect(parseVersionString('5.2.1-beta1')).toBe(502010000 - 41)
   })
-  it('newer / security / up to date', () => {
+  it('newer / security / up to date [p01-bb3004] [p06-f6908d]', () => {
     expect(versionNotice('1.2.0', '1.2.0')).toEqual({ upToDate: true, newer: false, security: false })
     // "security" = only the 4th (hotfix) part differs: Math.floor(v / 10000) compares major.minor.patch
     expect(versionNotice('1.2.0', '1.2.0.1')).toEqual({ upToDate: false, newer: true, security: true })
@@ -176,5 +183,29 @@ describe('BBCode (Sanitize::convertBBCode)', () => {
   })
   it('refuses javascript: links and odd targets', () => {
     expect(html('[a@javascript:alert(1)]x[/a]')).toBe('[a@javascript:alert(1)]x')
+  })
+})
+
+describe('the demo server (DBG/demo) and the password strength labels', () => {
+  it("isDemo reads $cfg['DBG']['demo']; the card carries base.twig's notice", () => {
+    expect(isDemo({ DBG: { demo: true } })).toBe(true)
+    expect(isDemo({ DBG: { demo: false } })).toBe(false)
+    expect(isDemo({})).toBe(false)
+    const html = renderToStaticMarkup(<DemoServerCard />)
+    expect(html).toContain('BetterMyAdmin Demo Server')
+    expect(html).toContain(
+      'You are using the demo server. You can do anything here, but please do not change root, debian-sys-maint and pma users. More information is available at <a',
+    )
+  })
+
+  it('checkPasswordStrength: the zxcvbn score as text', () => {
+    expect([0, 1, 2, 3, 4, null].map(strengthLabel)).toEqual([
+      'Extremely weak',
+      'Very weak',
+      'Weak',
+      'Good',
+      'Strong',
+      '',
+    ])
   })
 })

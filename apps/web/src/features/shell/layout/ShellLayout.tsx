@@ -7,18 +7,22 @@ import {
   iconParts,
 } from '@bettermyadmin/ui'
 import { Outlet, useLocation } from '@tanstack/react-router'
-import { type ReactNode, useEffect, useMemo, useRef } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { uiSettingsFrom, useConfig } from '../../../lib/config.ts'
 import { tProduct } from '../../../lib/i18n'
 import { AutoloadBanner } from '../../preferences/AutoloadBanner.tsx'
 import { HighlightedSql } from '../../sql/HighlightedSql'
 import { Breadcrumb } from '../Breadcrumb.tsx'
+import { DemoBanner } from '../DemoBanner.tsx'
 import { ServerTabBar } from '../ScopeTabBars.tsx'
 import { UserMenu } from '../UserMenu.tsx'
 import { ErrorReporting, PageErrorBoundary } from '../errors/ErrorReporting.tsx'
 import { ShortcutLayer } from '../hotkeys/useShortcuts.tsx'
 import { PageChromeProvider, PageIcons } from '../page-chrome.tsx'
 import { useScopeParams, useServerScope } from '../scope.ts'
+import { CheckAllRanges } from '../session/CheckAllRanges.tsx'
+import { IdleCheck } from '../session/IdleCheck.tsx'
+import { RequestErrors } from '../session/RequestErrors.tsx'
 import { useThemeState } from '../theme/theme.ts'
 import { pageTitle } from '../title.ts'
 
@@ -66,6 +70,31 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
     })
   }, [cfg, scope.data, db, table])
 
+  // console.ts: the body's bottom margin follows the console's height, so it never covers the page
+  const [consoleHeight, setConsoleHeight] = useState(0)
+  useEffect(() => {
+    // the console mounts once its configuration is loaded: watch for it
+    const ro = new ResizeObserver((entries) => {
+      for (const e of entries) setConsoleHeight((e.target as HTMLElement).offsetHeight)
+    })
+    let watched: HTMLElement | null = null
+    const attach = () => {
+      const el = document.getElementById('pma_console')
+      if (el === watched) return
+      if (watched !== null) ro.unobserve(watched)
+      watched = el
+      if (el !== null) ro.observe(el)
+      else setConsoleHeight(0)
+    }
+    const mo = new MutationObserver(attach)
+    mo.observe(document.body, { childList: true, subtree: true })
+    attach()
+    return () => {
+      mo.disconnect()
+      ro.disconnect()
+    }
+  }, [])
+
   const scrollTop = () => scroller.current?.scrollTo({ top: 0, behavior: 'smooth' })
   const tabsParts = iconParts(cfg.TabsMode)
 
@@ -88,7 +117,12 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                       <PageIcons onTop={scrollTop} />
                     </div>
                   </div>
-                  <div ref={scroller} id="page_scroll" className="min-h-0 flex-1 overflow-auto">
+                  <div
+                    ref={scroller}
+                    id="page_scroll"
+                    className="min-h-0 flex-1 overflow-auto"
+                    style={{ paddingBottom: consoleHeight }}
+                  >
                     <AutoloadBanner server={server} />
                     {db === '' && (
                       <div className="sticky top-0 z-10 border-b border-(--tab-border) bg-bg px-2 pt-1 print:hidden">
@@ -114,6 +148,7 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                         )}
                       </a>
                     </div>
+                    <DemoBanner server={server} />
                   </div>
                 </div>
               </div>
@@ -122,6 +157,9 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
             <Toaster />
             <ShortcutLayer server={server} db={db} table={table} disabled={cfg.DisableShortcutKeys} />
             <ErrorReporting server={server} setting={cfg.SendErrorReports} />
+            <RequestErrors />
+            <IdleCheck />
+            <CheckAllRanges />
           </PageChromeProvider>
         </ConfirmProvider>
       </TooltipProvider>

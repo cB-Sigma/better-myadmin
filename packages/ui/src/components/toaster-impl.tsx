@@ -1,5 +1,5 @@
 import { LoaderCircle } from 'lucide-react'
-import { type ReactNode, useRef } from 'react'
+import { type ReactNode, useRef, useState } from 'react'
 import { Toaster as Sonner, toast } from 'sonner'
 import { cn } from '../lib/cn.ts'
 import {
@@ -44,6 +44,10 @@ export function show(num: number, policy: MessagePolicy, body: ReactNode): void 
   )
 }
 
+/** Messages.strCopyToClipboard / strEditQuery (msgids) */
+const COPY_TO_CLIPBOARD = 'Copy to clipboard'
+const EDIT_QUERY = 'Edit query'
+
 export function dismiss(): void {
   toast.dismiss(AJAX_ID)
 }
@@ -58,6 +62,9 @@ function Notification(props: {
 }) {
   const down = useRef(0)
   const { gettext } = useUiSettings()
+  // the tooltip over a link of the notification says what the link does (strCopyToClipboard /
+  // strEditQuery), elsewhere strDismiss
+  const [linkTitle, setLinkTitle] = useState<string | null>(null)
   // Messages.strLoading / strProcessingRequest are msgids; other texts arrive translated
   const text =
     props.children === LOADING || props.children === PROCESSING_REQUEST
@@ -70,10 +77,11 @@ function Notification(props: {
   } as const
   return (
     // biome-ignore lint/a11y/useKeyWithClickEvents: phpMyAdmin's notification is mouse-dismissed; it is a role=status live region
+    // biome-ignore lint/a11y/useKeyWithMouseEvents: the hover only changes the tooltip of the mouse-dismissed notification
     <span
       id={`ajax_message_num_${props.num}`}
       role="status"
-      title={props.dismissable ? gettext(DISMISS_HINT) : undefined}
+      title={props.dismissable ? (linkTitle ?? gettext(DISMISS_HINT)) : undefined}
       className={cn(
         'ajax_notification flex w-[350px] items-center gap-2 rounded-(--radius) border px-3 py-2 text-[13px] shadow-md',
         props.type === null ? 'border-notification-border bg-notification-bg text-fg' : tone[props.type],
@@ -82,10 +90,24 @@ function Notification(props: {
       onMouseDown={() => {
         down.current = Date.now()
       }}
-      onClick={() => {
-        // a press-and-release under 250 ms dismisses (functions.ts dismissNotifications)
+      onClick={(e) => {
+        // a press-and-release under 250 ms dismisses (functions.ts dismissNotifications); a click on
+        // one of its links does not (`.ajax_notification a` mouseup stops the propagation)
+        if (e.target instanceof Element && e.target.closest('a') !== null) return
         if (props.dismissable && Date.now() - down.current < DISMISS_CLICK_MS) props.onDismiss()
       }}
+      onMouseOver={(e) => {
+        const a = e.target instanceof Element ? e.target.closest('a') : null
+        if (!props.dismissable) return
+        setLinkTitle(
+          a === null
+            ? null
+            : a.classList.contains('copyQueryBtn')
+              ? gettext(COPY_TO_CLIPBOARD)
+              : gettext(EDIT_QUERY),
+        )
+      }}
+      onMouseLeave={() => setLinkTitle(null)}
     >
       {props.spinner && <LoaderCircle className="size-4 shrink-0 animate-spin" aria-hidden />}
       <span className="min-w-0 flex-1 break-words">{text}</span>

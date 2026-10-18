@@ -67,7 +67,7 @@ function render(s: StorageStatusResponse, db = '') {
 }
 
 describe('check-relations page (check_relations.twig)', () => {
-  it('without a storage database: not OK, and the Create offer of the zero configuration', () => {
+  it('without a storage database: not OK, and the Create offer of the zero configuration [p08-19523b]', () => {
     const html = render(status({ relationParameters: rp({ db: null }) }))
     expect(html).toContain('Configuration of pmadb…')
     expect(html).toContain('not OK')
@@ -77,7 +77,7 @@ describe('check-relations page (check_relations.twig)', () => {
     )
   })
 
-  it('table rows, feature lines, the column_info hint and the quick steps', () => {
+  it('table rows, feature lines, the column_info hint and the quick steps [p08-5b639b] [p08-d5ec83]', () => {
     const html = render(
       status({
         relationParameters: rp({ relation: 'pma__relation', relwork: true, commwork: true, mimework: false }),

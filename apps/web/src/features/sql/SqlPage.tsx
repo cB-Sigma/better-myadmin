@@ -2,15 +2,16 @@ import type { QueryRequest, QueryResponse, SimulateResponse, SqlFormResponse } f
 import { backquote } from '@bettermyadmin/sql-gen'
 import { DocLink, MessageBox, MySqlDocLink, Panel, buttonVariants, mysqlDocUrl } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Link, useBlocker, useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ApiError, api } from '../../lib/api'
-import { Trans, t } from '../../lib/i18n'
+import { Trans, t, useLanguage } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { takeFlash } from '../table/structure/flash'
 import { type BookmarkAction, BookmarkedQuery } from './BookmarkedQuery'
 import { HighlightedSql } from './HighlightedSql'
+import { KanjiEncodingForm } from './KanjiEncodingForm'
 import { StatementBlock } from './Results'
 import { SimulateModal } from './SimulateModal'
 import { type CardAction, type CardEnv, InlineEditContext } from './SqlMessage'
@@ -36,6 +37,7 @@ import { sqlTabRoute } from './routes'
 import { newQueryId, runQuery, scopeKey, takePendingResults } from './runner'
 import './sql.css'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
+import { useFormLock } from '../shell/page-chrome'
 
 export interface SqlPageProps {
   server: number
@@ -48,7 +50,6 @@ export interface SqlPageProps {
 }
 
 /** Messages.strConfirmNavigation */
-const CONFIRM_NAVIGATION = 'You have unsaved changes; are you sure you want to leave this page?'
 
 /**
  * The SQL tab of the server, a database or a table.
@@ -106,6 +107,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
   const [selectedColumns, setSelectedColumns] = useState<string[]>([])
   const [formatting, setFormatting] = useState(false)
   const [boxHidden, setBoxHidden] = useState(false)
+  const kanji = useLanguage().state?.code === 'ja'
   const [toggleShown, setToggleShown] = useState(false)
   const [result, setResult] = useState<QueryResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -140,11 +142,9 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     [s, form.server],
   )
 
-  // AJAX.lockPageHandler: a changed editor asks before leaving the page
-  useBlocker({
-    shouldBlockFn: () => editor.current?.isDirty() === true && !window.confirm(t(CONFIRM_NAVIGATION)),
-    enableBeforeUnload: () => editor.current?.isDirty() === true,
-  })
+  // form.lock-page + the CodeMirror lock (AJAX.lockPageHandler): a changed editor or field shows
+  // the lock icon and asks before leaving the page (re-read on each keyup through `text`)
+  const lockRef = useFormLock(editor.current?.isDirty() === true)
 
   const updateParameters = useCallback((enabled: boolean) => {
     // updateQueryParameters runs on the checkbox change and on editor blur
@@ -234,8 +234,11 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     return () => window.removeEventListener('bma:pending-results', pick)
   }, [server, db, table])
 
+  // sql.ts: the main Go empties #id_bookmark, so a chosen bookmark is not run by accident
+  const [bookmarkReset, setBookmarkReset] = useState(0)
   const submit = (e?: FormEvent) => {
     e?.preventDefault()
+    setBookmarkReset((n) => n + 1)
     const sql = editor.current?.getValue() ?? ''
     // "Show this query here again"
     rememberShowThisQuery(showQuery, db, table, sql)
@@ -370,6 +373,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
   return (
     <InlineEditContext.Provider value={{ open: inlineOpen, setOpen: setInlineOpen }}>
       <form
+        ref={lockRef}
         id="sqlqueryform"
         name="sqlform"
         onSubmit={submit}
@@ -391,6 +395,8 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                   <SqlEditor
                     handleRef={editor}
                     id="sqlquery"
+                    // onloadCodeMirrorEditor: the SQL box has the focus after loading
+                    autoFocus
                     ariaLabel={t('SQL query')}
                     initialValue={initial}
                     rows={s.TextareaRows}
@@ -675,7 +681,19 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
           </Panel>
         )}
         {!boxHidden && bookmarks.enabled && bookmarks.bookmarks.length > 0 && (
-          <BookmarkedQuery bookmarks={bookmarks.bookmarks} onGo={(b, a, v) => void onBookmark(b, a, v)} />
+          <BookmarkedQuery
+            resetSignal={bookmarkReset}
+            bookmarks={bookmarks.bookmarks}
+            onGo={(b, a, v) => void onBookmark(b, a, v)}
+          />
+        )}
+        {kanji && !boxHidden && (
+          // Encoding::canConvertKanji(): the Japanese locale (encoding/kanji_encoding_form.twig)
+          <Panel className="mb-3" id="kanji_encoding">
+            <div className="p-3">
+              <KanjiEncodingForm />
+            </div>
+          </Panel>
         )}
         {toggleShown && (
           <>

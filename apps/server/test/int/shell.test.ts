@@ -61,7 +61,7 @@ const storageCfg = (o = {}) =>
   testConfig(o, { controluser: MYSQL.user, controlpass: MYSQL.password, pmadb: PMADB })
 
 describe('GET /api/servers/:s — server tabs (Menu::getServerTabs)', () => {
-  it('root sees every server tab, incl. User accounts, Binary log, Replication', async () => {
+  it('root sees every server tab, incl. User accounts, Binary log, Replication [p01-4991aa]', async () => {
     t = testApp()
     await t.login()
     const r = await t.req('GET', '/api/servers/1')
@@ -177,7 +177,7 @@ describe('GET /api/servers/:s/databases/:db — database tabs (Menu::getDbTabs)'
     expect(k).not.toContain('central_columns')
   })
 
-  it('the database comment comes from pma__column_info when column comments work', async () => {
+  it('the database comment comes from pma__column_info when column comments work [p08-d94efe]', async () => {
     t = testApp(storageCfg())
     await t.login()
     const r = await t.req('GET', `/api/servers/1/databases/${DB}`)
@@ -238,7 +238,7 @@ describe('GET /api/servers/:s/databases/:db — database tabs (Menu::getDbTabs)'
 })
 
 describe('GET …/tables/:t/capabilities — table tabs (Menu::getTableTabs)', () => {
-  it('a base table: every tab, comment without "; InnoDB free"', async () => {
+  it('a base table: every tab, comment without "; InnoDB free" [p01-9a3eea] [p01-4991aa]', async () => {
     t = testApp()
     await t.login()
     const r = await t.req('GET', `/api/servers/1/databases/${DB}/tables/t1/capabilities`)
@@ -302,7 +302,7 @@ describe('GET …/tables/:t/capabilities — table tabs (Menu::getTableTabs)', (
 })
 
 describe('GET /api/servers/:s/home (HomeController)', () => {
-  it('returns the blocks and the warnings phpMyAdmin would show', async () => {
+  it('returns the blocks and the warnings phpMyAdmin would show [p01-100ac1] [p01-01225d] [p06-f6908d]', async () => {
     t = testApp(testConfig({}, { controluser: 'pma', controlpass: 'pmapass' }))
     await t.login()
     const r = await t.req('GET', '/api/servers/1/home', undefined, { host: '127.0.0.1:8080' })
@@ -345,14 +345,14 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     )
   })
 
-  it('config storage notice: Error when pmadb is configured but incomplete', async () => {
+  it('config storage notice: Error when pmadb is configured but incomplete [p06-f6908d]', async () => {
     t = testApp(storageCfg())
     await t.login()
     const r = await t.req('GET', '/api/servers/1/home')
     expect(r.json.configStorageMessage).toEqual({ type: 'error', zeroConf: true })
   })
 
-  it('ShowServerInfo = false hides the Database server and Web server blocks', async () => {
+  it('ShowServerInfo = false hides the Database server and Web server blocks [p06-f6908d]', async () => {
     t = testApp(testConfig({ ShowServerInfo: false }))
     await t.login()
     const r = await t.req('GET', '/api/servers/1/home')
@@ -377,7 +377,7 @@ describe('POST /api/servers/:s/session/collation (/collation-connection)', () =>
 })
 
 describe('change password (/user-password)', () => {
-  it('validates like UserPassword::setChangePasswordMsg', async () => {
+  it('validates like UserPassword::setChangePasswordMsg [p01-2a8d28]', async () => {
     t = testApp()
     await t.login(PW, PW)
     const empty = await t.req('POST', '/api/servers/1/account/password', {
@@ -415,7 +415,7 @@ describe('change password (/user-password)', () => {
     )
   })
 
-  it('changes the password with the preselected plugin: plain ALTER USER, session kept, new password works', async () => {
+  it('changes the password with the preselected plugin: plain ALTER USER, session kept, new password works [p01-2a8d28]', async () => {
     t = testApp()
     await t.login(PW, PW)
     // the user cannot read mysql.user: the original plugin falls back to mysql_native_password, the
@@ -438,7 +438,7 @@ describe('change password (/user-password)', () => {
     await root.query(`ALTER USER '${PW}'@'%' IDENTIFIED BY '${PW}'`)
   })
 
-  it('choosing another plugin adds WITH <plugin>, which needs CREATE USER since MySQL 5.7.37 (error shown with the masked SQL)', async () => {
+  it('choosing another plugin adds WITH <plugin>, which needs CREATE USER since MySQL 5.7.37 (error shown with the masked SQL) [p01-2a8d28]', async () => {
     t = testApp()
     await t.login(PW, PW)
     const r = await t.req('POST', '/api/servers/1/account/password', {
@@ -484,7 +484,7 @@ describe('meta and telemetry', () => {
     expect((await t.req('GET', '/api/meta/version-check')).json).toEqual({})
   })
 
-  it('error report settings and submission messages (ErrorReportController)', async () => {
+  it('error report settings and submission messages (ErrorReportController) [p01-ae26ee]', async () => {
     t = testApp()
     await t.req('GET', '/api/auth/state')
     expect(
@@ -515,7 +515,7 @@ describe('meta and telemetry', () => {
 })
 
 describe('partial logout (LoginCookieDeleteAll = false)', () => {
-  it('keeps the other server and flags the message once', async () => {
+  it('keeps the other server and flags the message once [p01-389871]', async () => {
     const cfg = testConfig({ LoginCookieDeleteAll: false })
     const servers = cfg.Servers as unknown as Record<string, unknown>
     servers['2'] = { ...(servers['1'] as object) }

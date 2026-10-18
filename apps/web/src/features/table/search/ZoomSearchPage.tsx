@@ -18,6 +18,7 @@ import {
 import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { useFormLock } from '../../shell/page-chrome'
 import { runQuery } from '../../sql/runner'
 import { ResultMessages, errorMessage } from '../common/ResultMessages'
 import { useSearchPage } from './SearchPage'
@@ -68,6 +69,8 @@ function axisValue(v: string | null, type: string): number {
 }
 
 function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }) {
+  // form.lock-page (AJAX.lockPageHandler)
+  const lockRef = useFormLock()
   const byName = (n: string) => page.columns.find((c) => c.name === n)
   const [rows, setRows] = useState<Row[]>(() =>
     [0, 1, 2, 3].map(() => ({ column: 'pma_null', c: { operator: '', value: '', geomFunc: '' } })),
@@ -199,7 +202,7 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
         </div>
       )}
       {shown && (
-        <form id="zoom_search_form" onSubmit={(e) => void submit(e)}>
+        <form ref={lockRef} id="zoom_search_form" onSubmit={(e) => void submit(e)}>
           <Panel
             title={t('Do a "query by example" (wildcard: "%") for two different columns')}
             footer=<Button type="submit" variant="primary" name="zoom_submit" id="inputFormSubmitId">
@@ -368,14 +371,14 @@ function ZoomResult({
           <DialogBody>
             <ul className="list-disc ps-5">
               {[
-                'Each point represents a data row.',
-                'Hovering over a point will show its label.',
-                'To zoom in, select a section of the plot with the mouse.',
-                'Click reset zoom button to come back to original state.',
-                'Click a data point to view and possibly edit the data row.',
-                'The plot can be resized by dragging it along the bottom right corner.',
+                t('Each point represents a data row.'),
+                t('Hovering over a point will show its label.'),
+                t('To zoom in, select a section of the plot with the mouse.'),
+                t('Click reset zoom button to come back to original state.'),
+                t('Click a data point to view and possibly edit the data row.'),
+                t('The plot can be resized by dragging it along the bottom right corner.'),
               ].map((m) => (
-                <li key={m}>{t(m)}</li>
+                <li key={m}>{m}</li>
               ))}
             </ul>
           </DialogBody>

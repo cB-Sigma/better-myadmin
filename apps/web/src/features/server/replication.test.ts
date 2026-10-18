@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { checkAddUser, hostnameForPreset, primaryConfigSnippet, randomServerId } from './replication.ts'
 
-describe('replication helpers', () => {
+describe('replication helpers [p06-3af6a2]', () => {
   it('primary configuration snippet (replication.ts::updateConfig)', () => {
     expect(primaryConfigSnippet(42, 'all', [])).toBe(
       'server-id=42\nlog_bin=mysql-bin\nlog_error=mysql-bin.err\n',

@@ -32,7 +32,7 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test('expand a database, open a table, state restored after reload', async ({ page }) => {
+test('expand a database, open a table, state restored after reload [p01-8e663c]', async ({ page }) => {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)
@@ -45,7 +45,11 @@ test('expand a database, open a table, state restored after reload', async ({ pa
   const names = await nav
     .locator('[role=treeitem]')
     .evaluateAll((els) => els.map((e) => e.getAttribute('data-name')))
-  expect(names).toEqual(['information_schema', 'm1nav_e2e', 'performance_schema'])
+  // the databases the account sees (MySQL 8 lists performance_schema to everyone, MariaDB does not)
+  const c = await mysql.createConnection({ ...ROOT, user: USER, password: USER })
+  const [rows] = (await c.query('SHOW DATABASES')) as unknown as [Array<{ Database: string }>]
+  await c.end()
+  expect(names).toEqual(rows.map((r) => r.Database).sort())
 
   // expand the database: Tables and Views containers
   await dbRow.getByRole('button', { name: 'Expand/Collapse' }).click()
@@ -79,6 +83,9 @@ test('expand a database, open a table, state restored after reload', async ({ pa
   // collapse all, then the panel collapser hides and shows the panel
   await nav.getByRole('button', { name: 'Collapse all' }).click()
   await expect(nav.locator('[role=treeitem][data-kind=container][data-name=tables]')).toHaveCount(0)
+  // the link button: its title and icon say what a click does (hover swaps the icon)
+  const sync = page.locator('#pma_navigation_sync')
+  await expect(sync).toHaveAttribute('title', /^(Unlink from|Link with) main panel$/)
   await page.getByTitle('Hide panel').click()
   await expect(nav).toBeHidden()
   await page.getByTitle('Show panel').click()
@@ -101,7 +108,7 @@ test.describe('fast filter and paging of a container', () => {
     await c.end()
   })
 
-  test('item filter (client and server) and page selector [p01-41d435]', async ({ page }) => {
+  test('item filter (client and server) and page selector [p01-41d435] [p01-425d41]', async ({ page }) => {
     // tall enough for the virtualized tree to render a whole page of 50 tables
     await page.setViewportSize({ width: 1280, height: 1600 })
     await page.goto('/')
@@ -131,10 +138,30 @@ test.describe('fast filter and paging of a container', () => {
 
     // typing filters the loaded items and hides the page selector; Enter searches the server
     await filter.fill('tbl_5')
+    // FastFilter.events.focus: focusing a typed filter selects it
+    await nav.getByRole('button', { name: 'Reload navigation panel' }).focus()
+    await filter.focus()
+    expect(await filter.evaluate((el: HTMLInputElement) => [el.selectionStart, el.selectionEnd])).toEqual([
+      0, 5,
+    ])
     await expect(pageSelect).toHaveCount(0)
     // tbl_51 … tbl_59 of this page (case-insensitive regular expression on the link text)
     await expect(tables()).toHaveCount(9)
+    // FastFilter.request: the throbber while the server searches (the answer is held back)
+    let release = () => {}
+    const held = new Promise<void>((r) => {
+      release = r
+    })
+    await page.route(/\/navigation\/branch\?/, async (route) => {
+      await held
+      await route.continue()
+    })
     await filter.press('Enter')
+    const throbber = nav.locator('.fast_filter .throbber')
+    await expect(throbber).toBeVisible()
+    await expect(throbber).toHaveAttribute('aria-label', 'Loading…')
+    release()
+    await expect(throbber).toHaveCount(0)
     // tbl_5 and tbl_50..tbl_59 across both pages; with fewer than 30 results phpMyAdmin's
     // response has no fast filter any more (the count comes from the filtered object list)
     await expect(tables()).toHaveCount(11)

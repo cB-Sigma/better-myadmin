@@ -43,9 +43,10 @@ export class NotFoundError extends BmaError {
 }
 
 export class CsrfError extends BmaError {
-  constructor() {
+  /** `message`: the request's translation of "Error: Token mismatch" */
+  constructor(message = 'Error: Token mismatch') {
     // pma: src/Http/Middleware/TokenRequestParamChecking.php (AJAX branch)
-    super('CSRF', 'Error: Token mismatch', 403)
+    super('CSRF', message, 403)
   }
 }
 

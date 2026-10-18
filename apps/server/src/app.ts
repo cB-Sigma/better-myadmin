@@ -9,7 +9,8 @@ import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
-import { securityHeaders } from './http/headers.ts'
+import { isHttpsRequest, securityHeaders } from './http/headers.ts'
+import { requestProblemChecking } from './http/request-problems.ts'
 import { sqlLog } from './http/sql-log.ts'
 import { languageLoading, languageManager } from './i18n.ts'
 import { authRoutes } from './routes/auth.ts'
@@ -45,6 +46,8 @@ export interface AppEnv {
     session: SessionData
     /** True when the session did not exist before this request. */
     sessionIsNew: boolean
+    /** The idle check reports the user's activity itself: the request does not count as activity. */
+    keepLastSeen?: boolean
     executed: Executed[]
     isHttps: boolean
     /** The request's language (LanguageManager::selectLanguage) and its catalogue. */
@@ -80,6 +83,7 @@ export function createApp(deps: AppDeps) {
   app.use('/api/*', sqlLog())
   app.use('/api/*', language)
   app.use('/api/*', permissions)
+  app.use('/api/*', requestProblemChecking())
 
   // page loads authenticate the http / signon servers (the SPA itself is served by main.ts)
   const gate = authPageGate()
@@ -102,7 +106,17 @@ export function createApp(deps: AppDeps) {
     if (m !== 'GET' && m !== 'HEAD' && m !== 'OPTIONS') {
       const header = c.req.header(CSRF_HEADER) ?? ''
       if (c.get('sessionIsNew') || header === '' || !safeEqual(header, c.get('session').csrfToken)) {
-        throw new CsrfError()
+        // the login form's session (set_session) did not come back: its cookie was not stored
+        if (c.get('sessionIsNew') && c.req.path === '/api/auth/login') {
+          throw new CsrfError(
+            c
+              .get('tr')
+              .gettext(
+                'Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin.',
+              ),
+          )
+        }
+        throw new CsrfError(c.get('tr').gettext('Error: Token mismatch'))
       }
     }
     await next()
@@ -127,8 +141,7 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     c.set('deps', deps)
     c.set('executed', [])
-    const proto = c.req.header('x-forwarded-proto') ?? new URL(c.req.url).protocol.replace(':', '')
-    c.set('isHttps', proto === 'https')
+    c.set('isHttps', isHttpsRequest(c.req.header('x-forwarded-proto'), c.req.url))
     const id = getCookie(c, SESSION_COOKIE)
     let session = id !== undefined ? deps.store.get(id) : null
     c.set('sessionIsNew', session === null)
@@ -139,7 +152,7 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
     if (session === null) session = newSession(deps.cfg.ServerDefault > 0 ? deps.cfg.ServerDefault : 1)
     else if (
       Object.keys(session.servers).length > 0 &&
-      nowSeconds() - session.lastSeenAt > deps.cfg.LoginCookieValidity
+      nowSeconds() - lastActivity(session) > deps.cfg.LoginCookieValidity
     ) {
       // inactivity logout (pma: AuthenticationFailure::NO_ACTIVITY, logged by logFailure)
       const ip = requestClientIp(c, deps.cfg.TrustedProxies)
@@ -157,16 +170,25 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
       if (latest === null) return
       s = mergeChanges(latest, loaded, s)
     }
-    s.lastSeenAt = nowSeconds()
+    if (c.get('keepLastSeen') !== true) s.lastSeenAt = nowSeconds()
     deps.store.set(s)
     writeSessionCookies(c, s)
   }
 }
 
+/**
+ * The latest activity of the session: its last request or a window's reported activity.
+ * pma: AuthenticationCookie::readCredentials (browser_access_time entries older than
+ *      LoginCookieValidity are dropped; none left → logged out for inactivity)
+ */
+export function lastActivity(s: SessionData): number {
+  return Math.max(s.lastSeenAt, ...Object.values(s.browserAccess ?? {}))
+}
+
 // biome-ignore lint/suspicious/noExplicitAny: any route path/input
 export function writeSessionCookies(c: Context<AppEnv, any, any>, s: SessionData) {
   const { cfg } = c.get('deps')
-  const secure = c.get('isHttps')
+  const secure = c.get('isHttps') || cfg.ForceSSL
   const sameSite = (['Lax', 'Strict', 'None'].includes(cfg.CookieSameSite) ? cfg.CookieSameSite : 'Strict') as
     | 'Lax'
     | 'Strict'

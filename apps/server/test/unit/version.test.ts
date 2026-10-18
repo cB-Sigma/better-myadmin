@@ -31,7 +31,7 @@ describe('VersionInformation port', () => {
     expect(versionToInt(v)).toBe(exp)
   })
 
-  it('evaluates release constraints and picks the latest compatible release', () => {
+  it('evaluates release constraints and picks the latest compatible release [p01-bb3004]', () => {
     expect(evaluateCondition('22.5.0', '>=22.5')).toBe(true)
     expect(evaluateCondition('22.5.0', '<22')).toBe(false)
     expect(evaluateCondition(null, '>=5.5')).toBe(false)

@@ -12,7 +12,7 @@ const tmp = mkdtempSync(join(tmpdir(), 'f01a-dirsrv-'))
 afterAll(() => rmSync(tmp, { recursive: true, force: true }))
 
 describe('server directives', () => {
-  it('CheckConfigurationPermissions: a world-writable configuration file stops every request', async () => {
+  it('CheckConfigurationPermissions: a world-writable configuration file stops every request [p08-56c38b]', async () => {
     const file = join(tmp, 'bettermyadmin.config.json')
     writeFileSync(file, '{}')
     chmodSync(file, 0o666)
@@ -51,7 +51,7 @@ describe('server directives', () => {
     }
   })
 
-  it('LogoutURL and AuthLog: logout goes to the URL; a failed and a successful login are logged', async () => {
+  it('LogoutURL and AuthLog: logout goes to the URL; a failed and a successful login are logged [p01-389871] [p01-c0c8ad]', async () => {
     const log = join(tmp, 'auth.log')
     const t = testApp(
       testConfig({ AuthLog: log, AuthLogSuccess: true }, { LogoutURL: 'https://example.org/bye' }),

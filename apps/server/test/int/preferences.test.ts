@@ -95,7 +95,7 @@ describe('settings forms', () => {
 })
 
 describe('two-factor', () => {
-  it('[p08-38b5dc] configures the application backend in two steps and asks at login [p08-71a0b1]', async () => {
+  it('[p08-38b5dc] configures the application backend in two steps and asks at login [p08-71a0b1] [p01-83d6b9] [p08-bce194]', async () => {
     await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
     const t = await app()
     const st = await t.req('GET', '/api/servers/1/preferences/two-factor')
@@ -328,5 +328,53 @@ describe('preferences applied to the running app', () => {
     expect(await names()).toBe(false)
     await t.close()
     await root.query('DROP DATABASE IF EXISTS f08_hidden_db')
+  })
+})
+
+describe('theme and language kept as preferences [p08-495415]', () => {
+  it('ThemeDefault and lang are stored, and removed again for original / en', async () => {
+    await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
+    const t = await app({ ThemeManager: true })
+    expect((await t.req('POST', '/api/servers/1/themes/set', { theme: 'metro' })).json).toEqual({ ok: true })
+    expect(await storedPrefs()).toMatchObject({ ThemeDefault: 'metro' })
+    expect(
+      (await t.req('POST', '/api/servers/1/prefs/option', { path: 'lang', value: 'de', default: 'en' }))
+        .status,
+    ).toBe(200)
+    expect(await storedPrefs()).toMatchObject({ ThemeDefault: 'metro', lang: 'de' })
+    await t.req('POST', '/api/servers/1/themes/set', { theme: 'original' })
+    await t.req('POST', '/api/servers/1/prefs/option', { path: 'lang', value: 'en', default: 'en' })
+    const after = (await storedPrefs()) ?? {}
+    expect('ThemeDefault' in after).toBe(false)
+    expect('lang' in after).toBe(false)
+  })
+})
+
+describe('Manage your settings: the More settings card [p08-953597]', () => {
+  it('only while no configuration file exists (the setup script would refuse to run)', async () => {
+    const t = await app()
+    const deps = t.deps as { configFile?: string | undefined }
+    const prev = deps.configFile
+    try {
+      deps.configFile = undefined
+      expect((await t.req('GET', '/api/servers/1/preferences/manage')).json).toMatchObject({
+        moreSettings: true,
+      })
+      deps.configFile = '/srv/bettermyadmin.config.json'
+      expect((await t.req('GET', '/api/servers/1/preferences/manage')).json).toMatchObject({
+        moreSettings: false,
+      })
+    } finally {
+      deps.configFile = prev
+    }
+  })
+})
+
+describe('two-factor without a permanent storage [p08-d68897]', () => {
+  it('the tab says configuration storage is needed and nothing can be configured', async () => {
+    const t = await app({ ZeroConf: false }, { pmadb: 'f08_no_storage' })
+    const st = (await t.req('GET', '/api/servers/1/preferences/two-factor')).json as Json
+    expect(st.enabled).toBe(false)
+    await t.close()
   })
 })

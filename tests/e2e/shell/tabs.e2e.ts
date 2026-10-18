@@ -3,7 +3,9 @@ import { E2E, allTabs, login } from '../fixtures.ts'
 
 /** docs/features/01 "Menu tabs matrix" — visibility as a limited user vs root (src/Menu.php). */
 test.describe('tab visibility', () => {
-  test('root sees User accounts, Binary log and Replication; the limited user does not', async ({ page }) => {
+  test('root sees User accounts, Binary log and Replication; the limited user does not [p01-4991aa]', async ({
+    page,
+  }) => {
     await login(page)
     expect(await allTabs(page)).toEqual([
       'databases',
@@ -39,7 +41,7 @@ test.describe('tab visibility', () => {
     ])
   })
 
-  test('database and table tab bars follow privileges and view status', async ({ page }) => {
+  test('database and table tab bars follow privileges and view status [p01-4991aa]', async ({ page }) => {
     await login(page, E2E.limited, E2E.limited)
     await page.goto(`/s/1/db/${E2E.db}`)
     // DefaultTabDatabase: database structure
@@ -58,7 +60,7 @@ test.describe('tab visibility', () => {
     await expect(page.locator('#server-breadcrumb')).toContainText('View: v')
   })
 
-  test('root on a table: every tab, the comment in the breadcrumb, the active tab marked (current)', async ({
+  test('root on a table: every tab, the comment in the breadcrumb, the active tab marked (current) [p01-4991aa] [p01-9a3eea]', async ({
     page,
   }) => {
     await login(page)
@@ -71,7 +73,7 @@ test.describe('tab visibility', () => {
     await expect(page).toHaveTitle(new RegExp(` / ${E2E.db} / t \\| BetterMyAdmin`))
   })
 
-  test('tabs that do not fit collapse into More from the right', async ({ page }) => {
+  test('tabs that do not fit collapse into More from the right [p01-4991aa]', async ({ page }) => {
     await page.setViewportSize({ width: 900, height: 800 })
     await login(page)
     const inline = await page

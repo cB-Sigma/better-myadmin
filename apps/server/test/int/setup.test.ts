@@ -12,7 +12,7 @@ const start = async () => {
 }
 
 describe('setup script', () => {
-  it('[p01-e2f8e5] is disabled once a configuration file exists', async () => {
+  it('[p01-e2f8e5] is disabled once a configuration file exists [p08-f2ccb9]', async () => {
     await start()
     t.deps.configFile = '/srv/bettermyadmin.config.json'
     const r = await t.req('GET', '/api/setup')
@@ -24,7 +24,7 @@ describe('setup script', () => {
     t.deps.cfg.DBG.demo = false
   })
 
-  it('[p01-984896] overview, menu pages, unknown form set', async () => {
+  it('[p01-984896] overview, menu pages, unknown form set [p08-7737a8]', async () => {
     await start()
     const o = await t.req('GET', '/api/setup')
     expect((o.json.pages as Array<{ formset: string }>).map((p) => p.formset)).toEqual([

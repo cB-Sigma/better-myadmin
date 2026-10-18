@@ -1099,6 +1099,7 @@ export const CLIENT_VISIBLE_EXTRA_PATHS: readonly string[] = [
   'ShowPhpInfo',
   'ShowChgPassword',
   'ShowGitRevision',
+  'DBG/demo', // the demo server banner (Footer::getDisplay is_demo)
   'AllowUserDropDatabase',
   'UseDbSearch',
   'RowActionType',

@@ -175,7 +175,7 @@ describe.skipIf(!available)('parity: user preferences (pma__userconfig)', () => 
     )
   })
 
-  it('[p08-ee115b] SQL queries: an upper bound error keeps everything unsaved [p08-8ef8d5]', async () => {
+  it('[p08-ee115b] SQL queries: an upper bound error keeps everything unsaved [p08-8ef8d5] [p08-a42fac]', async () => {
     const { pr, br } = await formStep('sql', (p) => setPair(p, 'QueryHistoryMax', '500'))
     expect((br as Json).saved).toBe(false)
     const errs = ((br as Json).formSet.errorList as Json[]).flatMap((e) => [e.name, ...e.errors])
@@ -211,7 +211,7 @@ describe.skipIf(!available)('parity: user preferences (pma__userconfig)', () => 
     await formStep('import', (p) => setPair(p, 'Import-csv_terminated', ';'))
   })
 
-  it('[p08-69a15f] page settings (Sql group on the server SQL page) save like a form', async () => {
+  it('[p08-69a15f] page settings (Sql group on the server SQL page) save like a form [p09-efe138]', async () => {
     const pp = fieldsOnly(await pmaForm('/server/sql', 'page_settings_modal'))
     const g = await bma.req('GET', '/api/servers/1/preferences/page/Sql')
     expect(bmaPairs(g.json.formSet), 'page settings fields').toEqual(pp)

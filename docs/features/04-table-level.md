@@ -578,9 +578,9 @@ Structure list
 Column form
 - [ ] Collation dropdowns are empty until focused (template clone) but preselected ones are filled on load. <!-- parity:n/a: a DOM-size optimisation of the jQuery form; the SPA renders each select directly -->
 - [x] Type options carry description tooltips and `data-length-restricted`. <!-- parity:test --> `p04-488fbc` [table-structure-extras.e2e.ts:154](../../tests/e2e/table-structure-extras.e2e.ts#L154)
-- [x] "Edit ENUM/SET values" link only shown for ENUM/SET; editor escapes quotes/backslashes and writes `'a','b'`. <!-- parity:test --> `p04-9b95d9` [columnForm.test.ts:41](../../apps/web/src/features/table/structure/columnForm.test.ts#L41)
+- [x] "Edit ENUM/SET values" link only shown for ENUM/SET; editor escapes quotes/backslashes and writes `'a','b'`. <!-- parity:test --> `p04-9b95d9` [columnForm.test.ts:48](../../apps/web/src/features/table/structure/columnForm.test.ts#L48)
 - [x] Length required for CHAR/VARCHAR/BIT/BINARY/VARBINARY (alert); UNSIGNED/ZEROFILL rejected on non-numeric types. <!-- parity:test --> `p04-f66062` [columnForm.test.ts:8](../../apps/web/src/features/table/structure/columnForm.test.ts#L8) +1
-- [x] At least one column name required; create form requires table name. <!-- parity:test --> `p04-4dc9ab` [columnForm.test.ts:32](../../apps/web/src/features/table/structure/columnForm.test.ts#L32)
+- [x] At least one column name required; create form requires table name. <!-- parity:test --> `p04-4dc9ab` [columnForm.test.ts:33](../../apps/web/src/features/table/structure/columnForm.test.ts#L33)
 - [x] Reserved-word confirm (`window.confirm`) unless `ReservedWordDisableWarning`. <!-- parity:test --> `p04-4da9c9` [table-structure.test.ts:259](../../apps/server/test/int/table-structure.test.ts#L259)
 - [x] Collation-change confirm with garbled-data warning. <!-- parity:test --> `p04-928ba0` [table-structure-extras.e2e.ts:154](../../tests/e2e/table-structure-extras.e2e.ts#L154)
 - [x] Default type NULL only emitted when Null is checked; CURRENT_TIMESTAMP gets `(fsp)` from length; UUID defaults only on MariaDB. <!-- parity:test --> `p04-46d957` [column.test.ts:39](../../packages/sql-gen/test/column.test.ts#L39)

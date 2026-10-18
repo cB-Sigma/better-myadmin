@@ -3,7 +3,9 @@ import { login } from '../fixtures.ts'
 
 /** Themes and colour modes (ThemeManager, ThemeSetController, theme-init.js before first paint). */
 test.describe('themes', () => {
-  test('switching theme and colour mode applies at once and survives a reload', async ({ page }) => {
+  test('switching theme and colour mode applies at once and survives a reload [p01-b253b9]', async ({
+    page,
+  }) => {
     await login(page)
     const html = page.locator('html')
     await expect(html).toHaveAttribute('data-theme', 'pmahomme')
@@ -21,7 +23,9 @@ test.describe('themes', () => {
     expect(cookies.find((c) => c.name === 'bma_theme')?.value).toBe('metro')
   })
 
-  test('every theme has a dark variant; the user menu offers the colour mode too', async ({ page }) => {
+  test('every theme has a dark variant; the user menu offers the colour mode too [p01-b253b9]', async ({
+    page,
+  }) => {
     await login(page)
     await page.selectOption('#themeSelect', 'bootstrap')
     await page.getByRole('button', { name: 'Open user account menu' }).click()
@@ -41,10 +45,12 @@ test.describe('themes', () => {
     await ctx.close()
   })
 
-  test('the gallery shows one card per theme with "Take it"', async ({ page }) => {
+  test('the gallery shows one card per theme with "Take it" [p01-b253b9] [p01-100ac1] [p06-c67ed8]', async ({
+    page,
+  }) => {
     await login(page)
     await page.getByRole('button', { name: 'View all' }).click()
-    const dialog = page.getByRole('dialog', { name: 'phpMyAdmin Themes' })
+    const dialog = page.getByRole('dialog', { name: 'BetterMyAdmin Themes' })
     await expect(dialog.locator('[data-theme-card]')).toHaveCount(4)
     await dialog.locator('[data-theme-card="original"]').getByRole('button', { name: 'Take it' }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'original')

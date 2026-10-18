@@ -87,7 +87,7 @@ test('Browse page settings: Maximum number of rows applies to the grid [p08-4eea
   await expect(page.locator('#pageSettingsModal select#MaxRows')).toHaveValue('50')
 })
 
-test('two-factor: configure the application backend, then the login asks for the code [p08-38b5dc] [p08-71a0b1]', async ({
+test('two-factor: configure the application backend, then the login asks for the code [p08-38b5dc] [p08-71a0b1] [p01-83d6b9] [p08-bce194]', async ({
   page,
 }) => {
   await login(page)
@@ -109,6 +109,8 @@ test('two-factor: configure the application backend, then the login asks for the
   await expect(page.getByText('Two-factor authentication has been configured.')).toBeVisible()
 
   // a new login: password first, then the code
+  // leave the app first: a response still in flight would set the session cookie again
+  await page.goto('about:blank')
   await page.context().clearCookies()
   await login(page, false)
   await expect(
@@ -128,4 +130,114 @@ test('two-factor: configure the application backend, then the login asks for the
   await page.locator('[id="2faCodeInput"]').fill(oathTotp(secret, Math.floor(Date.now() / 30000)))
   await page.getByRole('button', { name: 'Disable two-factor authentication' }).click()
   await expect(page.getByText('Two-factor authentication has been removed.')).toBeVisible()
+})
+
+test('settings pages: eight pills in order, the current one marked, no navigation gear [p08-b1ce07] [p08-cd4d34]', async ({
+  page,
+}) => {
+  await login(page)
+  // the navigation gear (Navi page settings) on an ordinary page…
+  await expect(page.locator('#pma_navigation_settings_icon')).toBeVisible()
+  await page.goto('/s/1/preferences/sql')
+  const pills = page.locator('#user_prefs_tabs a')
+  await expect(pills).toHaveText([
+    'Manage your settings',
+    'Two-factor authentication',
+    'Features',
+    'SQL queries',
+    'Navigation panel',
+    'Main panel',
+    'Export',
+    'Import',
+  ])
+  await expect(page.locator('#user_prefs_tabs a[aria-current="page"]')).toHaveText('SQL queries')
+  // TabsMode both (the default): an icon next to the labels of the form pages
+  await expect(pills.nth(2).locator('[data-icon="ic_b_tblops"]')).toHaveCount(1)
+  await expect(pills.nth(0).locator('[data-icon]')).toHaveCount(0)
+  // …is hidden on the settings pages (disableNaviSettings)
+  await expect(page.locator('#pma_navigation_settings_icon')).toHaveCount(0)
+  await pills.nth(4).click()
+  await expect(page).toHaveURL(/\/preferences\/navigation/)
+  await expect(page.locator('#user_prefs_tabs a[aria-current="page"]')).toHaveText('Navigation panel')
+})
+
+test('browser storage: no saved settings, save to it, then import from it [p08-0d82bc] [p08-6b7a63] [p08-10a75c]', async ({
+  page,
+}) => {
+  await login(page)
+  await page.goto('/s/1/preferences/manage')
+  await page.evaluate(() => {
+    for (const k of ['config', 'configMtime', 'configMtimeLocal']) localStorage.removeItem(k)
+  })
+  await page.reload()
+  await page.locator('#import_local_storage').check()
+  await expect(page.getByText('You have no saved settings!')).toBeVisible()
+  await expect(page.locator('form[name="prefs_import"] input[name="submit_import"]')).toBeDisabled()
+
+  // Save to browser's storage: an Ajax round trip, the three keys, the form hidden, a message
+  await page.locator('#export_local_storage').check()
+  const exported = page.waitForResponse((r) => /\/preferences\/manage\/json$/.test(r.url()))
+  await page.locator('input[name="submit_export"]').click()
+  expect((await exported).ok()).toBe(true)
+  const message = page.getByText('Configuration has been saved.')
+  await expect(message).toBeVisible()
+  const stored = await page.evaluate(() => ({
+    config: localStorage.getItem('config'),
+    mtime: localStorage.getItem('configMtime'),
+    local: localStorage.getItem('configMtimeLocal'),
+  }))
+  expect(() => JSON.parse(stored.config ?? '')).not.toThrow()
+  expect(stored.mtime).toMatch(/^\d+$/)
+  expect(stored.local).not.toBeNull()
+  await message.click()
+  await expect(message).toBeHidden()
+
+  await page.reload()
+  await page.locator('#import_local_storage').check()
+  await expect(page.getByText(/^Saved on: \d{4}-\d{2}-\d{2} \d{2}:\d{2}$/)).toBeVisible()
+})
+
+test('browser storage unsupported: the notice, nothing to submit [p08-0d82bc]', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', {
+      get() {
+        throw new Error('blocked')
+      },
+    })
+  })
+  await login(page)
+  await page.goto('/s/1/preferences/manage')
+  // the radios stay usable; choosing one shows the notice and disables its form's submit
+  await page.locator('#import_local_storage').check()
+  await expect(page.locator('#opts_import_local_storage')).toContainText(
+    'This feature is not supported by your web browser',
+  )
+  await expect(page.locator('form[name="prefs_import"] input[name="submit_import"]')).toBeDisabled()
+  await page.locator('#export_local_storage').check()
+  await expect(page.locator('#opts_export_local_storage')).toContainText(
+    'This feature is not supported by your web browser',
+  )
+  await expect(page.locator('input[name="submit_export"]')).toBeDisabled()
+})
+
+test('import of a file with a theme and a language applies both at once [p08-5c8c99]', async ({ page }) => {
+  await login(page)
+  await page.goto('/s/1/preferences/manage')
+  await page.locator('#import_text_file').check()
+  await page.locator('#input_import_file').setInputFiles({
+    name: 'prefs.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify({ ThemeDefault: 'metro', lang: 'de' })),
+  })
+  await page.locator('form[name="prefs_import"] input[name="submit_import"]').click()
+  await expect(page).toHaveURL(/saved=1/)
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'metro')
+  await expect(page.locator('html')).toHaveAttribute('lang', 'de')
+  // back to the defaults (and English for the next tests)
+  await page.goto('/s/1/preferences/manage')
+  page.once('dialog', (d) => void d.accept())
+  await page.locator('input[name="submit_clear"]').click()
+  await expect(page).toHaveURL(/saved=1/)
+  // the language cookie back to English (the selector's ?lang=)
+  await page.goto('/api/i18n?lang=en')
 })

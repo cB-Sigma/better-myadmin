@@ -509,6 +509,8 @@ function ConsoleDock({
               <div className="query_input border-t border-border">
                 <SqlEditor
                   handleRef={input}
+                  // Console.show(true): the input has the focus once the console opens
+                  autoFocus
                   ariaLabel={t('SQL Query Console')}
                   initialValue=""
                   rows={2}
@@ -674,7 +676,7 @@ function OptionsCard({
         checked={settings[key]}
         onChange={(e) => set(key, e.target.checked)}
       />
-      {t(label)}
+      {label}
     </label>
   )
   return (
@@ -704,14 +706,16 @@ function OptionsCard({
         </button>
       </div>
       <div className="content flex flex-col gap-1 p-3">
-        {sw('AlwaysExpand', 'Always expand query messages')}
-        {sw('StartHistory', 'Show query history at start')}
-        {sw('CurrentQuery', 'Show current browsing query')}
+        {sw('AlwaysExpand', t('Always expand query messages'))}
+        {sw('StartHistory', t('Show query history at start'))}
+        {sw('CurrentQuery', t('Show current browsing query'))}
         {sw(
           'EnterExecutes',
-          'Execute queries on Enter and insert new line with Shift+Enter. To make this permanent, view settings.',
+          t(
+            'Execute queries on Enter and insert new line with Shift+Enter. To make this permanent, view settings.',
+          ),
         )}
-        {sw('DarkTheme', 'Switch to dark theme')}
+        {sw('DarkTheme', t('Switch to dark theme'))}
       </div>
     </div>
   )
@@ -944,7 +948,7 @@ function AddBookmarkForm({
  * Debug SQL: the statements the last request ran, grouped or not, in execution order, by time or count.
  * pma: resources/js/modules/console.ts::ConsoleDebug (backtraces are not collected)
  */
-function DebugCard({
+export function DebugCard({
   log,
   settings,
   set,

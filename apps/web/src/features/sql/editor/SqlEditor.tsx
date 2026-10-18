@@ -1,8 +1,27 @@
-import { type KeyboardEvent, type Ref, Suspense, lazy, useImperativeHandle, useRef, useState } from 'react'
+import {
+  type KeyboardEvent,
+  type Ref,
+  Suspense,
+  lazy,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
 import type { SqlEditorHandle, SqlEditorProps } from './types'
 
 // CodeMirror is a lazy chunk (docs/architecture/08-performance-and-snappiness.md)
 const CodeMirrorEditor = lazy(() => import('./CodeMirrorEditor'))
+
+/** Time of the last pointer or key input of the user (capture phase, before any handler). */
+let lastUserInput = Number.NEGATIVE_INFINITY
+if (typeof window !== 'undefined') {
+  const mark = (e: Event) => {
+    if (e.isTrusted) lastUserInput = performance.now()
+  }
+  window.addEventListener('pointerdown', mark, true)
+  window.addEventListener('keydown', mark, true)
+}
 
 /**
  * The SQL editor: CodeMirror when $cfg['CodemirrorEnable'], else (and while CodeMirror loads) the
@@ -11,10 +30,19 @@ const CodeMirrorEditor = lazy(() => import('./CodeMirrorEditor'))
 export function SqlEditor(props: SqlEditorProps & { handleRef: Ref<SqlEditorHandle> }) {
   // what was typed while the CodeMirror chunk loads carries over
   const [typed, setTyped] = useState(props.initialValue)
+  // autoFocus: when the editor started loading, and whether the user is typing into the fallback
+  const startedAt = useRef(performance.now())
+  const plainFocused = useRef(false)
+  const focusOnLoad = () =>
+    props.autoFocus === true && (plainFocused.current || lastUserInput < startedAt.current)
   const fallback = (
     <PlainEditor
       {...props}
       initialValue={typed}
+      focusOnLoad={focusOnLoad}
+      onFocusChange={(f) => {
+        plainFocused.current = f
+      }}
       onChange={(v) => {
         setTyped(v)
         props.onChange?.(v)
@@ -24,16 +52,25 @@ export function SqlEditor(props: SqlEditorProps & { handleRef: Ref<SqlEditorHand
   if (!props.codemirror) return fallback
   return (
     <Suspense fallback={fallback}>
-      <CodeMirrorEditor {...props} initialValue={typed} />
+      <CodeMirrorEditor {...props} initialValue={typed} focusOnLoad={focusOnLoad} />
     </Suspense>
   )
 }
 
 /** The textarea path (`window.CodeMirror` undefined in phpMyAdmin). */
-export function PlainEditor(props: SqlEditorProps & { handleRef: Ref<SqlEditorHandle> }) {
+export function PlainEditor(
+  props: SqlEditorProps & { handleRef: Ref<SqlEditorHandle>; onFocusChange?: (focused: boolean) => void },
+) {
   const ta = useRef<HTMLTextAreaElement>(null)
   const clean = useRef(props.initialValue)
   const selectedOnce = useRef(false)
+  // the textarea path focuses the box too ($elm.trigger('focus')); while CodeMirror loads it is the
+  // fallback, which only takes the focus with CodemirrorEnable off
+  const focusOnLoad = useRef(props.focusOnLoad)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once, on mount
+  useEffect(() => {
+    if (!props.codemirror && focusOnLoad.current?.() === true) ta.current?.focus()
+  }, [])
 
   useImperativeHandle(
     props.handleRef,
@@ -89,7 +126,11 @@ export function PlainEditor(props: SqlEditorProps & { handleRef: Ref<SqlEditorHa
       spellCheck={false}
       defaultValue={props.initialValue}
       onChange={(e) => props.onChange?.(e.target.value)}
-      onBlur={() => props.onBlur?.()}
+      onFocus={() => props.onFocusChange?.(true)}
+      onBlur={() => {
+        props.onFocusChange?.(false)
+        props.onBlur?.()
+      }}
       onKeyDown={onKeyDown}
       onClick={(e) => {
         // selectContent: only once, and only with $cfg['TextareaAutoSelect']

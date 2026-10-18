@@ -67,7 +67,7 @@ describe('Browse (/sql)', () => {
     )
   })
 
-  it('remembers the sort order and re-applies it to a plain browse [p02-dafcf6 p02-b74767 p02-c390b7]', async () => {
+  it('remembers the sort order and re-applies it to a plain browse [p02-dafcf6 p02-b74767 p02-c390b7] [p09-a6b162]', async () => {
     const a = await app()
     const first = await browse(a, { table: 't' })
     const sort = first.grid.columns.find((c) => c.name === 'name')!.sort!.single
@@ -132,7 +132,7 @@ describe('Browse (/sql)', () => {
     expect(w.grid.rows[0]!.del?.sql).toMatch(/ LIMIT 1$/)
   })
 
-  it('TablePrimaryKeyOrder adds an ORDER BY on the primary key [p02-1f1189]', async () => {
+  it('TablePrimaryKeyOrder adds an ORDER BY on the primary key [p02-1f1189] [p09-945e16]', async () => {
     const a = await app({ TablePrimaryKeyOrder: 'DESC', RememberSorting: false })
     const { st } = await browse(a, { table: 't' })
     expect(st.executedSql).toBe('SELECT * FROM `t` ORDER BY `t`.`id` DESC LIMIT 0, 25')
