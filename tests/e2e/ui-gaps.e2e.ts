@@ -34,7 +34,9 @@ test.beforeAll(async () => {
 })
 
 test.afterAll(async () => {
-  await sql(`DROP DATABASE IF EXISTS ${DB}; DROP DATABASE IF EXISTS ${DB2}; DROP USER IF EXISTS '${USER}'@'%'`)
+  await sql(
+    `DROP DATABASE IF EXISTS ${DB}; DROP DATABASE IF EXISTS ${DB2}; DROP USER IF EXISTS '${USER}'@'%'`,
+  )
 })
 
 async function login(page: Page) {
@@ -55,87 +57,95 @@ async function setPref(page: Page, tab: string, group: string, name: string, on:
   await expect(page.getByText('Configuration has been saved.')).toBeVisible()
 }
 
-test.describe.serial('legacy database select', () => {
-  test.afterAll(async ({ browser }) => {
-    const page = await browser.newPage()
-    await login(page)
-    await setPref(page, 'navigation', 'Navi_panel', 'ShowDatabasesNavigationAsTree', true)
-    await page.close()
+test.describe
+  .serial('legacy database select', () => {
+    test.afterAll(async ({ browser }) => {
+      const page = await browser.newPage()
+      await login(page)
+      await setPref(page, 'navigation', 'Navi_panel', 'ShowDatabasesNavigationAsTree', true)
+      await page.close()
+    })
+
+    test('ShowDatabasesNavigationAsTree off: #navi_db_select picks the database whose tree shows', async ({
+      page,
+    }) => {
+      await login(page)
+      await setPref(page, 'navigation', 'Navi_panel', 'ShowDatabasesNavigationAsTree', false)
+      await page.goto('/s/1')
+      const nav = page.locator('#pma_navigation')
+      const content = page.locator('#pma_navigation_tree_content')
+      // no database: the list of databases without expanders, the select hidden, no tree controls
+      await expect(content.locator(`[data-kind="database"][data-name="${DB}"]`)).toBeVisible()
+      await expect(content.getByRole('button', { name: 'Expand/Collapse' })).toHaveCount(0)
+      await expect(nav.locator('#navi_db_select')).toBeHidden()
+      await expect(nav.locator('#navigation_controls')).toHaveCount(0)
+      await expect(nav.locator('#pma_navigation_collapse')).toHaveCount(0)
+
+      // a database: the select shows it, the tree holds its children only
+      await content.locator(`[data-name="${DB}"]`).getByRole('link', { name: DB, exact: true }).click()
+      await expect(page).toHaveURL(new RegExp(`/db/${DB}/structure`))
+      const select = nav.locator('#navi_db_select')
+      await expect(select).toBeVisible()
+      await expect(select).toHaveValue(DB)
+      await expect(select.locator('option')).toContainText([DB, DB2])
+      await expect(select.locator(`option[value="${DB}"]`)).toHaveAttribute('title', 'Structure')
+      await expect(content.locator('[data-kind="table"][data-name="a"]')).toBeVisible()
+      await expect(content.locator('[data-kind="table"][data-name="b"]')).toBeVisible()
+      await expect(content.locator(`[data-kind="database"]`)).toHaveCount(0)
+
+      // change: the chosen database's default tab, and its (empty) tree
+      await select.selectOption(DB2)
+      await expect(page).toHaveURL(new RegExp(`/db/${DB2}/structure`))
+      await expect(select).toHaveValue(DB2)
+      await expect(content.locator('[data-kind="table"]')).toHaveCount(0)
+
+      // back to the server: the select hides and the databases list returns
+      await page.goto('/s/1')
+      await expect(select).toBeHidden()
+      await expect(content.locator(`[data-kind="database"][data-name="${DB2}"]`)).toBeVisible()
+    })
   })
 
-  test('ShowDatabasesNavigationAsTree off: #navi_db_select picks the database whose tree shows', async ({
-    page,
-  }) => {
-    await login(page)
-    await setPref(page, 'navigation', 'Navi_panel', 'ShowDatabasesNavigationAsTree', false)
-    await page.goto('/s/1')
-    const nav = page.locator('#pma_navigation')
-    const content = page.locator('#pma_navigation_tree_content')
-    // no database: the list of databases without expanders, the select hidden, no tree controls
-    await expect(content.locator(`[data-kind="database"][data-name="${DB}"]`)).toBeVisible()
-    await expect(content.getByRole('button', { name: 'Expand/Collapse' })).toHaveCount(0)
-    await expect(nav.locator('#navi_db_select')).toBeHidden()
-    await expect(nav.locator('#navigation_controls')).toHaveCount(0)
-    await expect(nav.locator('#pma_navigation_collapse')).toHaveCount(0)
+test.describe
+  .serial('inline structure actions', () => {
+    test.afterAll(async ({ browser }) => {
+      const page = await browser.newPage()
+      await login(page)
+      await setPref(page, 'main-panel', 'TableStructure', 'HideStructureActions', true)
+      await page.close()
+    })
 
-    // a database: the select shows it, the tree holds its children only
-    await content.locator(`[data-name="${DB}"]`).getByRole('link', { name: DB, exact: true }).click()
-    await expect(page).toHaveURL(new RegExp(`/db/${DB}/structure`))
-    const select = nav.locator('#navi_db_select')
-    await expect(select).toBeVisible()
-    await expect(select).toHaveValue(DB)
-    await expect(select.locator('option')).toContainText([DB, DB2])
-    await expect(select.locator(`option[value="${DB}"]`)).toHaveAttribute('title', 'Structure')
-    await expect(content.locator('[data-kind="table"][data-name="a"]')).toBeVisible()
-    await expect(content.locator('[data-kind="table"][data-name="b"]')).toBeVisible()
-    await expect(content.locator(`[data-kind="database"]`)).toHaveCount(0)
+    test('HideStructureActions: "More" dropdown when on, inline nav when off [p04-4ff34f]', async ({
+      page,
+    }) => {
+      await login(page)
+      await page.goto(`/s/1/db/${DB}/t/a/structure`)
+      const row = page.getByTestId('structure-row-v')
+      await expect(row.locator('#moreActionsButton')).toBeVisible()
+      await expect(row.getByRole('button', { name: 'Unique', exact: true })).toBeHidden()
 
-    // change: the chosen database's default tab, and its (empty) tree
-    await select.selectOption(DB2)
-    await expect(page).toHaveURL(new RegExp(`/db/${DB2}/structure`))
-    await expect(select).toHaveValue(DB2)
-    await expect(content.locator('[data-kind="table"]')).toHaveCount(0)
-
-    // back to the server: the select hides and the databases list returns
-    await page.goto('/s/1')
-    await expect(select).toBeHidden()
-    await expect(content.locator(`[data-kind="database"][data-name="${DB2}"]`)).toBeVisible()
+      await setPref(page, 'main-panel', 'TableStructure', 'HideStructureActions', false)
+      await page.goto(`/s/1/db/${DB}/t/a/structure`)
+      await expect(row.locator('#moreActionsButton')).toHaveCount(0)
+      await expect(row.locator('ul.nav > li.nav-item')).toHaveCount(5)
+      await expect(row.getByRole('button', { name: 'Unique', exact: true })).toBeVisible()
+      // a TEXT column cannot be PRIMARY / UNIQUE / INDEX: the bd_* (disabled) icons
+      const text = page.getByTestId('structure-row-tx')
+      await expect(text.locator('[aria-disabled="true"]', { hasText: 'Unique' })).toBeVisible()
+      await expect(text.locator('[data-icon="ic_bd_unique"]')).toHaveCount(1)
+    })
   })
-})
-
-test.describe.serial('inline structure actions', () => {
-  test.afterAll(async ({ browser }) => {
-    const page = await browser.newPage()
-    await login(page)
-    await setPref(page, 'main-panel', 'TableStructure', 'HideStructureActions', true)
-    await page.close()
-  })
-
-  test('HideStructureActions: "More" dropdown when on, inline nav when off [p04-4ff34f]', async ({ page }) => {
-    await login(page)
-    await page.goto(`/s/1/db/${DB}/t/a/structure`)
-    const row = page.getByTestId('structure-row-v')
-    await expect(row.locator('#moreActionsButton')).toBeVisible()
-    await expect(row.getByRole('button', { name: 'Unique', exact: true })).toBeHidden()
-
-    await setPref(page, 'main-panel', 'TableStructure', 'HideStructureActions', false)
-    await page.goto(`/s/1/db/${DB}/t/a/structure`)
-    await expect(row.locator('#moreActionsButton')).toHaveCount(0)
-    await expect(row.locator('ul.nav > li.nav-item')).toHaveCount(5)
-    await expect(row.getByRole('button', { name: 'Unique', exact: true })).toBeVisible()
-    // a TEXT column cannot be PRIMARY / UNIQUE / INDEX: the bd_* (disabled) icons
-    const text = page.getByTestId('structure-row-tx')
-    await expect(text.locator('[aria-disabled="true"]', { hasText: 'Unique' })).toBeVisible()
-    await expect(text.locator('[data-icon="ic_bd_unique"]')).toHaveCount(1)
-  })
-})
 
 test('the Connection field shows for FEDERATED only [p04-c48bc1]', async ({ page }) => {
   // MySQL ships FEDERATED disabled: offer it in the engine list of the form
   await page.route('**/create-table/form', async (route) => {
     const r = await route.fetch()
     const body = (await r.json()) as { options: { engines: Array<Record<string, unknown>> } }
-    body.options.engines.push({ name: 'FEDERATED', comment: 'Federated MySQL storage engine', isDefault: false })
+    body.options.engines.push({
+      name: 'FEDERATED',
+      comment: 'Federated MySQL storage engine',
+      isDefault: false,
+    })
     await route.fulfill({ response: r, json: body })
   })
   await login(page)
@@ -168,7 +178,7 @@ test('index columns sort by dragging; the slider adds 1..16 columns [p04-e4af55]
   const slider = dlg.locator('.add_more input[type="range"]')
   await expect(slider).toHaveAttribute('min', '1')
   await expect(slider).toHaveAttribute('max', '16')
-  await expect(dlg.locator('#add_fields')).toBeHidden()
+  await expect(dlg.locator('#add_fields')).toHaveText('Add 1 column(s) to index')
   await slider.fill('3')
   await expect(dlg.locator('#add_fields')).toHaveText('Add 3 column(s) to index')
   await dlg.locator('#add_fields').click()
@@ -183,8 +193,10 @@ test('bulk trigger export concatenates; bulk drop confirms once [p04-f581ea]', a
   await page.locator('#bulkActionExportButton').click()
   const dlg = page.getByRole('dialog', { name: 'Export' })
   const text = await dlg.locator('textarea').inputValue()
-  expect(text.startsWith('\nCREATE TRIGGER')).toBe(true)
-  expect(text.match(/\nCREATE TRIGGER/g)?.length).toBe(2)
+  // triggers.ts exportDialog: each export as `\n<sql>\n`, one after the other
+  expect(text.startsWith('\nDELIMITER $$\nCREATE TRIGGER')).toBe(true)
+  expect(text.match(/\n\nDELIMITER \$\$\nCREATE TRIGGER/g)?.length).toBe(1)
+  expect(text.match(/CREATE TRIGGER/g)?.length).toBe(2)
   expect(text).toContain('`tr_one`')
   expect(text).toContain('`tr_two`')
   await dlg.getByRole('button', { name: 'Close' }).last().click()

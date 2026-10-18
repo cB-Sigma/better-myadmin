@@ -4,9 +4,9 @@
 
 What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.
 
-951/966 covered (98.4%): 938 implemented, 13 n/a, 1 planned, 14 missing. [Summary](README.md).
+952/966 covered (98.6%): 939 implemented, 13 n/a, 14 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 236/237 (99.6%) covered, 227/237 implemented
+## 01 shell navigation auth — 237/237 (100.0%) covered, 228/237 implemented
 
 | Script | Covered | Not covered |
 |---|---|---|
@@ -22,7 +22,7 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `modules/git-info.ts` | 2/2: ✅ `GET /git-revision` ✅ `POST /version-check` |  |
 | `modules/keyhandler.ts` | 4/4: ✅ `keydown #table_columns` ✅ `keydown table.insertRowTable` ✅ `keyup #table_columns` ✅ `keyup table.insertRowTable` |  |
 | `modules/navigation.ts` | 11/11: ✅ `POST /navigation` ✅ `POST <url>` ✅ `click #pma_navigation .throbber` ✅ `click #pma_navigation_collapser` ✅ `mousedown #pma_navigation_resizer` ✅ `mouseenter #full_name_layer` ✅ `mouseenter <$containerELem> .hover_show_full` ✅ `mouseleave #full_name_layer` ✅ `mousemove document` ✅ `mouseup document` ✅ `resize window` |  |
-| `modules/navigation/event-loader.ts` | 22/23: ✅ `POST <$(this).attr('href')>` ✅ `POST <$self.attr('href')>` ✅ `blur #pma_navigation_tree li.fast_filter input.searchClause` ✅ `click .favorite_table_anchor` ✅ `click #pma_navigation_collapse` ✅ `click #pma_navigation_reload` ✅ `click #pma_navigation_sync` ✅ `click #pma_navigation_tree a.expander` ✅ `click #pma_navigation_tree div.pageselector a.ajax` ✅ `click #pma_navigation_tree li.fast_filter button.searchClauseClear` ✅ `click a.hideNavItem.ajax` ✅ `click a.showUnhide.ajax` ✅ `click a.unhideNavItem.ajax` ✅ `click li.new_view a.ajax` ✅ `focus #pma_navigation_tree li.fast_filter input.searchClause` ✅ `keyup #pma_navigation_tree li.fast_filter input.searchClause` ✅ `mouseenter #pma_navigation_sync` ✅ `mouseout #pma_navigation_sync` ✅ `mouseout #pma_navigation_tree.highlight li:not(.fast_filter)` ✅ `mouseover #pma_navigation_tree.highlight li:not(.fast_filter)` ✅ `submit .fast_filter` ✅ `submit form.config-form` | 🗓️ `change #navi_db_select` |
+| `modules/navigation/event-loader.ts` | 23/23: ✅ `POST <$(this).attr('href')>` ✅ `POST <$self.attr('href')>` ✅ `blur #pma_navigation_tree li.fast_filter input.searchClause` ✅ `change #navi_db_select` ✅ `click .favorite_table_anchor` ✅ `click #pma_navigation_collapse` ✅ `click #pma_navigation_reload` ✅ `click #pma_navigation_sync` ✅ `click #pma_navigation_tree a.expander` ✅ `click #pma_navigation_tree div.pageselector a.ajax` ✅ `click #pma_navigation_tree li.fast_filter button.searchClauseClear` ✅ `click a.hideNavItem.ajax` ✅ `click a.showUnhide.ajax` ✅ `click a.unhideNavItem.ajax` ✅ `click li.new_view a.ajax` ✅ `focus #pma_navigation_tree li.fast_filter input.searchClause` ✅ `keyup #pma_navigation_tree li.fast_filter input.searchClause` ✅ `mouseenter #pma_navigation_sync` ✅ `mouseout #pma_navigation_sync` ✅ `mouseout #pma_navigation_tree.highlight li:not(.fast_filter)` ✅ `mouseover #pma_navigation_tree.highlight li:not(.fast_filter)` ✅ `submit .fast_filter` ✅ `submit form.config-form` |  |
 | `modules/navigation/updateNavigationWidthConfig.ts` | 1/1: ✅ `POST /navigation/update-width` |  |
 | `modules/themes-manager.ts` | 2/2: ✅ `GET /themes` ✅ `POST <toggleForm.action>` |  |
 | `setup/scripts.ts` | 7/7: ✅ `POST /setup/validate` ✅ `POST <$this.attr('href')>` ✅ `change .autosubmit` ✅ `click .delete-server` ✅ `click .userprefs-allow` ✅ `click #no_https a` ✅ `click <link>` |  |

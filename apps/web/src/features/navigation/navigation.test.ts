@@ -7,7 +7,7 @@ import type {
 } from '@bettermyadmin/contracts'
 import { describe, expect, it } from 'vitest'
 import { currentScope, navHref } from './links'
-import { ROOT, buildRows, countListItems, nodeKey } from './rows'
+import { ROOT, buildRows, countListItems, legacyRows, nodeKey } from './rows'
 import { NavTreeStore } from './store'
 
 function node(kind: NavNode['kind'], vPath: string[], o: Partial<NavNode> = {}): NavNode {
@@ -270,5 +270,38 @@ describe('NavTreeStore', () => {
     await store.init('')
     await store.expand(node('database', ['db2']))
     expect(store.errors).toEqual(['An error has occurred while loading the navigation display'])
+  })
+})
+
+describe('legacyRows (ShowDatabasesNavigationAsTree off)', () => {
+  const tables = node('container', ['b', 'tables'], {
+    loaded: true,
+    children: list([node('table', ['b', 'tables', 't1'])]),
+  })
+  const dbs = [
+    node('new', ['New']),
+    node('database', ['b'], { loaded: true, children: list([tables]) }),
+    node('database', ['a']),
+  ]
+  const s = {
+    expanded: new Set([nodeKey(dbs[1] as NavNode), nodeKey(tables)]),
+    loading: new Set<string>(),
+    selected: new Set<string>(),
+    branches: new Map<string, NavList>(),
+    searchLists: new Set<NavList>(),
+    filters: new Map<string, string>(),
+  }
+  const rows = buildRows(list(dbs), s)
+  const names = (r: ReturnType<typeof legacyRows>['content']) =>
+    r.map((x) => (x.type === 'node' ? `${x.depth}:${x.node.label}` : x.type))
+
+  it("lists the databases with no database, the current one's branch a level up with one", () => {
+    expect(names(legacyRows(rows, '').content)).toEqual(['0:New', '0:b', '0:a'])
+    const cur = legacyRows(rows, 'b', ['a', 'b'])
+    expect(cur.current?.node.realName).toBe('b')
+    expect(names(cur.content)).toEqual(['0:tables', '1:t1'])
+    // the options: no New, in the server's order
+    expect(cur.options.map((n) => n.realName)).toEqual(['a', 'b'])
+    expect(legacyRows(rows, 'gone').current).toBeNull()
   })
 })

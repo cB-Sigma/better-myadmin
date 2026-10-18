@@ -549,7 +549,7 @@ Structure
 - [x] Central columns group only when pmadb `central_columns` configured; "Make consistent" asks "Are you sure?" first. <!-- parity:test --> `p05-2acc14` [database-checklist.e2e.ts:95](../../tests/e2e/database-checklist.e2e.ts#L95)
 - [x] Copy-table modal excludes the current database from the target list; defaults: Structure and data, Add constraints checked, Add DROP TABLE / AUTO_INCREMENT / Adjust privileges unchecked. <!-- parity:test --> `p05-4aab6b` [database-checklist.test.ts:173](../../apps/server/test/int/database-checklist.test.ts#L173)
 - [ ] Replace prefix leaves non-matching names unchanged; copy-with-prefix does not check the match.
-- [x] Drop/Empty confirm pages show the exact SQL (`DROP TABLE `a`, `b`;` + separate `DROP VIEW …;`; `TRUNCATE` per table) with Yes/No; No → "No change". <!-- parity:test --> `p05-a7eaad` [database-structure.test.ts:67](../../apps/server/test/int/database-structure.test.ts#L67)
+- [x] Drop/Empty confirm pages show the exact SQL (`DROP TABLE `a`, `b`;` + separate `DROP VIEW …;`; `TRUNCATE` per table) with Yes/No; No → "No change". <!-- parity:test --> `p05-a7eaad` [database-structure.test.ts:67](../../apps/server/test/int/database-structure.test.ts#L67) +1
 - [x] Dropping clears the session table-offset cache (#14205). <!-- parity:test --> `p05-d99774` [database-checklist.test.ts:180](../../apps/server/test/int/database-checklist.test.ts#L180)
 - [x] Show create groups Tables and Views separately. <!-- parity:test --> `p05-d5ead9` [database-structure.test.ts:52](../../apps/server/test/int/database-structure.test.ts#L52)
 - [x] `PropertiesNumColumns > 1` splits the list into N vertical blocks and hides Type/Collation. <!-- parity:test --> `p05-ccc3d5` [database-checklist.test.ts:112](../../apps/server/test/int/database-checklist.test.ts#L112)
@@ -622,7 +622,7 @@ Events
 - [x] Status options ENABLED/DISABLED/SLAVESIDE_DISABLED map to ENABLE/DISABLE/DISABLE ON SLAVE. <!-- parity:test --> `p05-fd2119` [database-checklist.test.ts:379](../../apps/server/test/int/database-checklist.test.ts#L379)
 - [x] Type switch toggles Execute at vs Execute every/Start/End rows; interval value cast to int; 15 interval units. <!-- parity:test --> `p05-f63b73` [database-checklist.test.ts:379](../../apps/server/test/int/database-checklist.test.ts#L379) +1
 - [x] ON COMPLETION PRESERVE from checkbox; comment maxlength 64. <!-- parity:test --> `p05-f3950a` [database-checklist.test.ts:379](../../apps/server/test/int/database-checklist.test.ts#L379)
-- [x] Scheduler toggle issues `SET GLOBAL event_scheduler="ON"|"OFF"`; it shows on only for `ON`. <!-- parity:test --> `p05-396223` [database-checklist.e2e.ts:264](../../tests/e2e/database-checklist.e2e.ts#L264)
+- [x] Scheduler toggle issues `SET GLOBAL event_scheduler="ON"|"OFF"`; it shows on only for `ON`. <!-- parity:test --> `p05-396223` [database-programs.parity.test.ts:289](../../tests/parity/database-programs.parity.test.ts#L289) +1
 - [x] Scheduler `DISABLED`: only the notice "The event scheduler is disabled.", no list, editor or export. <!-- parity:test --> `p05-8a82ee` [database-programs.parity.test.ts:289](../../tests/parity/database-programs.parity.test.ts#L289)
 - [x] One-time event that fires immediately → "The event was dropped immediately after creation.". <!-- parity:test --> `p05-7e227b` [database-checklist.test.ts:374](../../apps/server/test/int/database-checklist.test.ts#L374)
 - [ ] Rows sorted by name; export shows raw `SHOW CREATE EVENT`.

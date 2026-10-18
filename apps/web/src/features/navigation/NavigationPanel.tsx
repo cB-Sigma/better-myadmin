@@ -608,7 +608,7 @@ function LegacyDbSelect({
           ))}
         </select>
       </div>
-      {current !== null && current.expanded && content.length === 0 && (
+      {current?.expanded === true && content.length === 0 && (
         <div className="px-1 text-[13px]">{t('No tables found in database.')}</div>
       )}
     </div>

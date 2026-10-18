@@ -78,7 +78,6 @@ export function IndexEditorForm({
   useEffect(() => {
     if (nameRef.current !== null && nameRef.current.value === '') nameRef.current.focus()
   }, [])
-  const [addShown, setAddShown] = useState(false)
   const [advanced, setAdvanced] = useState(form.sliders === 'open')
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<ReturnType<typeof errorMessage> | null>(null)
@@ -254,10 +253,10 @@ export function IndexEditorForm({
         </thead>
         <tbody>
           {index.columns.map((c, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: positional index parts
             // showIndexEditDialog: `#index_columns tbody` is jQuery-UI sortable (axis y); the first
             // cell is the drag handle
             <tr
+              // biome-ignore lint/suspicious/noArrayIndexKey: positional index parts
               key={i}
               data-testid={`index-column-${i}`}
               className={dragOver === i && dragFrom !== null && dragFrom !== i ? 'bg-bg-subtle' : undefined}
@@ -366,15 +365,11 @@ export function IndexEditorForm({
             max={16}
             value={addN}
             aria-label={t('Add %s column(s) to index', addN)}
-            onChange={(e) => {
-              setAddN(Number(e.target.value))
-              setAddShown(true)
-            }}
+            onChange={(e) => setAddN(Number(e.target.value))}
           />
-          {/* .add_fields is hidden until the slider moves (indexes.ts) */}
+          {/* showIndexEditDialog shows div.add_fields once the slider is set up */}
           <Button
             id="add_fields"
-            className={addShown ? undefined : 'hidden'}
             onClick={() =>
               setIndex({
                 ...index,

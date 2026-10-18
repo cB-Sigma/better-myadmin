@@ -17,8 +17,5 @@ home/index.twig#link:Show PHP information:
 home/index.twig#link:Get more themes!:
   exception: X30
   note: phpMyAdmin's CSS themes cannot be loaded; the themes ship with the client (X16)
-navigation/tree/database_select.twig#db:
-  planned: M1
-  note: 'the legacy pre-4.0 database select (ShowDatabasesNavigationAsTree = false): the panel always shows the tree'
 user_password.twig#link:Back:
   n/a: 'rendered only when the change-password form is posted without JavaScript (UserPasswordController non-AJAX branch); the SPA always takes the AJAX path, whose result shows in the dialog and the page message'
