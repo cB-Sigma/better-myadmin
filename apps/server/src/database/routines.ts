@@ -381,9 +381,14 @@ export async function routineEditorOptions(ctx: DbCtx) {
   }
 }
 
-const notFound = (ctx: DbCtx, name: string) =>
+const notFound = (ctx: DbCtx, name: string, editor = false) =>
   `${ctx.tr.gettext('Error in processing request:')} ${sprintf(
-    ctx.tr.gettext('No routine with name %1$s found in database %2$s.'),
+    editor
+      ? // the editor of edit_item
+        ctx.tr.gettext(
+          'No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine.',
+        )
+      : ctx.tr.gettext('No routine with name %1$s found in database %2$s.'),
     backquote(name),
     backquote(ctx.db),
   )}`
@@ -393,7 +398,7 @@ export async function routineEditor(ctx: DbCtx, name: string | undefined, type: 
   const options = await routineEditorOptions(ctx)
   if (name === undefined) return { options, routine: null }
   const routine = await routineData(ctx, name, type)
-  if (routine === null) throw new NotFoundError(notFound(ctx, name))
+  if (routine === null) throw new NotFoundError(notFound(ctx, name, true))
   return { options, routine }
 }
 

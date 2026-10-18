@@ -193,6 +193,35 @@ describe('msgid scan: markers, conditionals and JSON message tables', () => {
   })
 })
 
+describe('msgid scan: wrappers with a msgid parameter', () => {
+  const { repo, list } = sources({
+    'apps/server/ctx.ts': [
+      'export const tf = (tr: any, msgid: string, ...args: string[]) => sprintf(tr.gettext(msgid), ...args)',
+      '// a msgid parameter that is not translated: not a wrapper',
+      'export const raw = (msgid: string) => msgid.trim()',
+      'export class Imp {',
+      '  error(msgid: string, ...p: string[]) { return { html: sprintf(this.__(msgid), ...p) } }',
+      '}',
+    ].join('\n'),
+    'apps/server/use.ts': [
+      "import { tf, raw } from './ctx'",
+      'export function f(tr: any, imp: any) {',
+      "  console.error('not a msgid')",
+      "  return [tf(tr, 'Showing rows %1$s - %2$s.', '1', '2'), imp.error('Invalid format of CSV input on line %d.'), raw('Kept')]",
+      '}',
+    ].join('\n'),
+    'apps/server/other.ts': "export const g = (imp: any) => imp.error('Not in scope')\n",
+  })
+  const found = scanMsgids(list, repo).map((f) => `${f.file}|${f.key}`)
+  it('credits the literal at the msgid position, in the declaring file and the files importing it', () => {
+    expect(found).toContain('apps/server/use.ts|Showing rows %1$s - %2$s.')
+    expect(found).toContain('apps/server/use.ts|Invalid format of CSV input on line %d.')
+    expect(found.some((f) => f.endsWith('|Kept'))).toBe(false)
+    expect(found.some((f) => f.endsWith('|not a msgid'))).toBe(false)
+    expect(found.some((f) => f.endsWith('|Not in scope'))).toBe(false)
+  })
+})
+
 describe('control claims', () => {
   const repo = mkdtempSync(join(tmpdir(), 'parity-claims-'))
   const dir = join(repo, 'apps/web/src/features/x')

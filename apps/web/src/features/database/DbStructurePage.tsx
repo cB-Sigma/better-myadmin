@@ -5,6 +5,7 @@ import type {
   ShowCreateResponse,
   SqlMessage,
 } from '@bettermyadmin/contracts'
+import { N_ } from '@bettermyadmin/i18n'
 import {
   Alert,
   Button,
@@ -68,9 +69,9 @@ type DialogState =
   | null
 
 const BULK_TITLES = {
-  'add-prefix': 'Add table prefix',
-  'replace-prefix': 'Replace table with prefix',
-  'copy-with-prefix': 'Copy table with prefix',
+  'add-prefix': N_('Add table prefix'),
+  'replace-prefix': N_('Replace table with prefix'),
+  'copy-with-prefix': N_('Copy table with prefix'),
 } as const
 
 function localFavorites(): string {

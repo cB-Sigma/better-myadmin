@@ -16,7 +16,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { useMemo, useRef, useState } from 'react'
-import { api } from '../../lib/api'
+import { ImportProgressLost, api } from '../../lib/api'
 import { t, translator } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { PluginOptions } from '../export/PluginOptions'
@@ -75,6 +75,24 @@ export function ImportPage({
 }
 
 /** import.ts matchFile: the format of `name` (a trailing gz/bz2/zip ignored), if one can import it */
+/**
+ * import.ts performUpload: the speed and the estimated time, once more than 9 % or 2 MB are sent.
+ */
+export function uploadEstimate(
+  done: number,
+  total: number,
+  elapsedMs: number,
+): { bytesPerSecond: number; minutes: number; seconds: number } | null {
+  if (total === 0 || done === 0 || elapsedMs <= 0) return null
+  if (!((done / total) * 100 > 9 || done > 2000000)) return null
+  const remaining = Math.trunc((((total - done) / done) * elapsedMs) / 1000)
+  return {
+    bytesPerSecond: (done / elapsedMs) * 1000,
+    minutes: Math.trunc(remaining / 60),
+    seconds: remaining % 60,
+  }
+}
+
 export function matchFormat(name: string, formats: readonly string[]): string | null {
   const parts = name.toLowerCase().split('.')
   let len = parts.length
@@ -99,7 +117,13 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
   const useLocal = page.timeoutPassed && page.localImportFile !== ''
   const tabs = page.isUpload && page.uploadDir !== ''
   const [localTab, setLocalTab] = useState(useLocal)
-  const [phase, setPhase] = useState<null | { label: string; done: number; total: number }>(null)
+  const [phase, setPhase] = useState<null | {
+    label: string
+    done: number
+    total: number
+    /** the upload's start (Date.now()): speed and estimated time */
+    start?: number
+  }>(null)
   const [result, setResult] = useState<ImportResult | null>(null)
   const [failure, setFailure] = useState<string | null>(null)
   const formats = page.plugins.map((p) => p.name)
@@ -166,9 +190,10 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
     try {
       let upload: { id: string; name: string } | undefined
       if (!localTab && file !== undefined) {
-        setPhase({ label: t('Uploading your import file…'), done: 0, total: file.size })
+        const start = Date.now()
+        setPhase({ label: t('Uploading your import file…'), done: 0, total: file.size, start })
         const id = await api.importUpload(server, file, (sent) =>
-          setPhase({ label: t('Uploading your import file…'), done: sent, total: file.size }),
+          setPhase({ label: t('Uploading your import file…'), done: sent, total: file.size, start }),
         )
         upload = { id, name: file.name }
       }
@@ -186,7 +211,13 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
       void qc.invalidateQueries({ queryKey: qk.nav(server) })
       void qc.invalidateQueries({ queryKey: qk.srv(server) })
     } catch (e) {
-      setFailure(e instanceof Error ? e.message : String(e))
+      setFailure(
+        e instanceof ImportProgressLost
+          ? t('Could not load the progress of the import.')
+          : e instanceof Error
+            ? e.message
+            : String(e),
+      )
     } finally {
       setPhase(null)
     }
@@ -306,6 +337,24 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                 formatBytes(translator(), phase.done, 3, 1),
                 formatBytes(translator(), phase.total, 3, 1),
               )}
+              {phase.start !== undefined &&
+                (() => {
+                  const e = uploadEstimate(phase.done, phase.total, Date.now() - phase.start)
+                  if (e === null) return null
+                  return (
+                    <>
+                      <br />
+                      {t('%s/sec.', formatBytes(translator(), e.bytesPerSecond, 3, 1))}
+                      <br />
+                      <br />
+                      {e.minutes > 0
+                        ? t('About %MIN min. %SEC sec. remaining.')
+                            .replace('%MIN', String(e.minutes))
+                            .replace('%SEC', String(e.seconds))
+                        : t('About %SEC sec. remaining.').replace('%SEC', String(e.seconds))}
+                    </>
+                  )
+                })()}
             </div>
           )}
         </div>

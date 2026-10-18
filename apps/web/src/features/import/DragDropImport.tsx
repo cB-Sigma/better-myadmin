@@ -124,10 +124,18 @@ export function DragDropImport({ server }: { server: number }) {
   const update = (hash: number, patch: Partial<Upload>) =>
     setUploads((list) => list.map((x) => (x.hash === hash ? { ...x, ...patch } : x)))
 
+  // the request of each live upload, for its cancel link (jqXHR.abort())
+  const aborts = useRef(new Map<number, AbortController>())
   const send = async (u: Upload, file: File) => {
+    const abort = new AbortController()
+    aborts.current.set(u.hash, abort)
     try {
-      const id = await api.importUpload(server, file, (sent) =>
-        update(u.hash, { percent: file.size === 0 ? 100 : Math.ceil((sent / file.size) * 100) }),
+      const id = await api.importUpload(
+        server,
+        file,
+        (sent) => update(u.hash, { percent: file.size === 0 ? 100 : Math.ceil((sent / file.size) * 100) }),
+        undefined,
+        abort.signal,
       )
       const pairs: Array<[string, string]> = [
         ['db', db],
@@ -140,10 +148,11 @@ export function DragDropImport({ server }: { server: number }) {
         ['sql_no_auto_value_on_zero', 'something'],
       ]
       const job = await api.importJob(server, pairs, { id, name: file.name })
-      const result = await api.importEvents(server, job.id, () => {})
+      const result = await api.importEvents(server, job.id, () => {}, abort.signal)
       update(u.hash, { state: failed(result) ? 'failed' : 'success', result })
       void qc.invalidateQueries({ queryKey: qk.nav(server) })
     } catch (e) {
+      if (abort.signal.aborted) return
       update(u.hash, {
         state: 'failed',
         result: {
@@ -153,6 +162,8 @@ export function DragDropImport({ server }: { server: number }) {
           table: '',
         },
       })
+    } finally {
+      aborts.current.delete(u.hash)
     }
   }
 
@@ -204,7 +215,17 @@ export function DragDropImport({ server }: { server: number }) {
                   {u.name}
                   <span className="filesize ms-2" data-filename={u.name}>
                     {u.state === 'live' ? (
-                      `${(u.size / 1024).toFixed(2)} kb`
+                      <button
+                        type="button"
+                        className="pma_drop_file_status underline"
+                        data-task="cancel"
+                        onClick={() => {
+                          aborts.current.get(u.hash)?.abort()
+                          update(u.hash, { state: 'aborted' })
+                        }}
+                      >
+                        {t('cancel')}
+                      </button>
                     ) : u.state === 'success' ? (
                       <span className="pma_drop_file_status">{t('Success')}</span>
                     ) : u.state === 'failed' ? (

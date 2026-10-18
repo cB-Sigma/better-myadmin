@@ -20,7 +20,7 @@ import {
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { api } from '../../lib/api'
-import { t } from '../../lib/i18n'
+import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { CollationSelect, TypeSelect } from '../table/structure/ColumnForm'
 import { Messages, errorMessage } from './common'
@@ -152,7 +152,7 @@ function EditorCells({
           value={draft.defaultType}
           onChange={(e) => set({ defaultType: e.target.value })}
         >
-          <option value="NONE">{t('None')}</option>
+          <option value="NONE">{pgettext('for default', 'None')}</option>
           <option value="USER_DEFINED">{t('As defined:')}</option>
           <option value="NULL">NULL</option>
           <option value="CURRENT_TIMESTAMP">CURRENT_TIMESTAMP</option>
@@ -344,7 +344,7 @@ function CentralColumnsView({
                     <th>{t('Collation')}</th>
                     <th>{t('Attributes')}</th>
                     <th>{t('Null')}</th>
-                    <th>{t('A_I')}</th>
+                    <th>{pgettext('Auto Increment', 'A_I')}</th>
                   </tr>
                 </thead>
                 <tbody>
