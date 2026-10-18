@@ -27,7 +27,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { type FormEvent, type ReactNode, useRef, useState } from 'react'
 import { type TableRef, api } from '../../../lib/api'
-import { t } from '../../../lib/i18n'
+import { pgettext, t } from '../../../lib/i18n'
 import { qk } from '../../../lib/queryKeys'
 import { InlineHtml } from '../../shell/inline-html'
 import { MaintenanceResults } from '../common/MaintenanceResults'
@@ -219,7 +219,9 @@ function OrderByCard(props: Common) {
                 </option>
               ))}
             </NativeSelect>
-            <div className="text-xs text-fg-muted">{t('(singly)')}</div>
+            <div className="text-xs text-fg-muted">
+              {pgettext('Alter table order by a single field.', '(singly)')}
+            </div>
           </div>
           <div>
             {(['asc', 'desc'] as const).map((o) => (
@@ -669,7 +671,7 @@ function MaintenanceCard(props: Common) {
   const item = (label: string, doc: string, action: () => void) => (
     <PanelItem key={label}>
       <Button variant="link" onClick={action}>
-        {t(label)}
+        {label}
       </Button>{' '}
       <MySqlDocLink link={doc} />
     </PanelItem>
@@ -681,13 +683,13 @@ function MaintenanceCard(props: Common) {
   return (
     <Panel title={t('Table maintenance')}>
       <PanelList id="tbl_maintenance">
-        {four && item('Analyze table', 'ANALYZE_TABLE', maint('analyze'))}
-        {four && item('Check table', 'CHECK_TABLE', maint('check'))}
-        {item('Checksum table', 'CHECKSUM_TABLE', maint('checksum'))}
-        {e === 'INNODB' && item('Defragment table', 'InnoDB_File_Defragmenting', sql('defragment'))}
-        {item('Flush the table (FLUSH)', 'FLUSH', sql('flush'))}
-        {four && item('Optimize table', 'OPTIMIZE_TABLE', maint('optimize'))}
-        {['MYISAM', 'ARIA'].includes(e) && item('Repair table', 'REPAIR_TABLE', maint('repair'))}
+        {four && item(t('Analyze table'), 'ANALYZE_TABLE', maint('analyze'))}
+        {four && item(t('Check table'), 'CHECK_TABLE', maint('check'))}
+        {item(t('Checksum table'), 'CHECKSUM_TABLE', maint('checksum'))}
+        {e === 'INNODB' && item(t('Defragment table'), 'InnoDB_File_Defragmenting', sql('defragment'))}
+        {item(t('Flush the table (FLUSH)'), 'FLUSH', sql('flush'))}
+        {four && item(t('Optimize table'), 'OPTIMIZE_TABLE', maint('optimize'))}
+        {['MYISAM', 'ARIA'].includes(e) && item(t('Repair table'), 'REPAIR_TABLE', maint('repair'))}
       </PanelList>
     </Panel>
   )
@@ -707,7 +709,7 @@ function useDangerConfirm(server: number) {
       destructive: true,
       question: (
         <div>
-          {t(warning)} {t('Do you really want to execute "%s"?', sql)}
+          {warning} {t('Do you really want to execute "%s"?', sql)}
           {withFk && (
             <div className="mt-2">
               <input type="hidden" name="fk_checks" value="0" />
@@ -755,7 +757,7 @@ function DeleteCard(props: Common) {
   const link = (id: string, label: string, onClick: () => void, doc: string) => (
     <PanelItem>
       <Button variant="link" id={id} className="text-error" onClick={onClick}>
-        {t(label)}
+        {label}
       </Button>{' '}
       <MySqlDocLink link={doc} />
     </PanelItem>
@@ -766,23 +768,31 @@ function DeleteCard(props: Common) {
         {!page.isView &&
           link(
             'truncate_tbl_anchor',
-            'Empty the table (TRUNCATE)',
+            t('Empty the table (TRUNCATE)'),
             () =>
-              void act('truncate', 'You are about to TRUNCATE a complete table!', `TRUNCATE TABLE ${full}`),
+              void act(
+                'truncate',
+                t('You are about to TRUNCATE a complete table!'),
+                `TRUNCATE TABLE ${full}`,
+              ),
             'TRUNCATE_TABLE',
           )}
         {!page.isView &&
           link(
             'delete_tbl_anchor',
-            'Empty the table (DELETE FROM)',
+            t('Empty the table (DELETE FROM)'),
             () =>
-              void act('delete', 'You are about to DELETE all the rows of the table!', `DELETE FROM ${full}`),
+              void act(
+                'delete',
+                t('You are about to DELETE all the rows of the table!'),
+                `DELETE FROM ${full}`,
+              ),
             'DELETE',
           )}
         {link(
           'drop_tbl_anchor',
-          'Delete the table (DROP)',
-          () => void act('drop', 'You are about to DESTROY a complete table!', `DROP TABLE ${full}`),
+          t('Delete the table (DROP)'),
+          () => void act('drop', t('You are about to DESTROY a complete table!'), `DROP TABLE ${full}`),
           'DROP_TABLE',
         )}
       </PanelList>
@@ -895,7 +905,7 @@ function ViewOperations(props: Common) {
   const drop = async () => {
     // the view confirmation has no foreign key checkbox: fk_checks=0
     if (
-      (await ask('You are about to DESTROY a complete table!', `DROP VIEW ${bq(scope.table)}`, false)) ===
+      (await ask(t('You are about to DESTROY a complete table!'), `DROP VIEW ${bq(scope.table)}`, false)) ===
       null
     )
       return

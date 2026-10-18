@@ -4,6 +4,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { PageNotFound } from './features/shell/PageNotFound'
 import { I18nProvider } from './lib/i18n'
+import { parsePhpQuery, stringifyPhpQuery } from './lib/search'
 import { routeTree } from './routeTree.gen'
 import './styles/app.css'
 
@@ -13,6 +14,9 @@ const queryClient = new QueryClient({
 
 const router = createRouter({
   routeTree,
+  // pma: query values read like $_GET (lib/search.ts)
+  parseSearch: parsePhpQuery,
+  stringifySearch: stringifyPhpQuery,
   context: { queryClient },
   defaultPreload: 'intent',
   defaultPreloadDelay: 50,

@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   type Browser,
+  type BrowserContext,
   type BrowserContextOptions,
   type Locator,
   type Page,
@@ -141,6 +142,16 @@ export interface StepRecord {
 
 async function openApp(browser: Browser, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
   const ctx = await browser.newContext({ baseURL, ...spec.context?.[app] })
+  try {
+    return await openPage(ctx, baseURL, app, spec)
+  } catch (e) {
+    // a page that failed to open is closed at once: left open it keeps polling the server
+    await ctx.close()
+    throw e
+  }
+}
+
+async function openPage(ctx: BrowserContext, baseURL: string, app: App, spec: PageSpec): Promise<Page> {
   const page = await ctx.newPage()
   if (spec.auth !== false) await login(page, app, baseURL)
   else await ctx.clearCookies()
@@ -177,15 +188,23 @@ export function pageParity(name: string, spec: PageSpec): void {
       throw new Error(`tests/ui-parity/maps/${spec.map ?? name}.yaml:\n  ${problems.join('\n  ')}`)
     if (spec.sql !== undefined) {
       const c = await mysql.createConnection({ ...ROOT, multipleStatements: true })
-      await c.query(spec.sql)
-      await c.end()
+      try {
+        // a DDL blocked by a metadata lock fails this case instead of waiting (lock_wait_timeout
+        // defaults to a year): left waiting, it outlives the case and every later case touching
+        // the schema queues behind its pending exclusive lock
+        await c.query('SET SESSION lock_wait_timeout = 20')
+        await c.query(spec.sql)
+      } finally {
+        await c.end()
+      }
     }
     const base = baseURL ?? ''
-    const pages = {
-      pma: await openApp(browser, base, 'pma', spec),
-      ours: await openApp(browser, base, 'ours', spec),
-    }
-    await spec.setup?.(pages)
+    const pmaPage = await openApp(browser, base, 'pma', spec)
+    const oursPage = await openApp(browser, base, 'ours', spec).catch(async (e: unknown) => {
+      await pmaPage.context().close()
+      throw e
+    })
+    const pages = { pma: pmaPage, ours: oursPage }
     const dir = join(GALLERY_DIR, slug(name))
     mkdirSync(dir, { recursive: true })
     const opts = (app: App): CaptureOptions => ({
@@ -210,6 +229,7 @@ export function pageParity(name: string, spec: PageSpec): void {
       for (const w of diff.warnings) report.push(`  (warning) ${w}`)
     }
     try {
+      await spec.setup?.(pages)
       await capture('initial')
       for (const s of spec.interactions ?? []) {
         await runStep(pages.pma, 'pma', scopeSel(spec.scope, 'pma'), s)

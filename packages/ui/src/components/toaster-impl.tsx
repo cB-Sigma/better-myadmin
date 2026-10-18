@@ -67,9 +67,11 @@ function Notification(props: {
   const [linkTitle, setLinkTitle] = useState<string | null>(null)
   // Messages.strLoading / strProcessingRequest are msgids; other texts arrive translated
   const text =
-    props.children === LOADING || props.children === PROCESSING_REQUEST
-      ? gettext(props.children as string)
-      : props.children
+    props.children === LOADING
+      ? gettext('Loading…')
+      : props.children === PROCESSING_REQUEST
+        ? gettext('Processing request')
+        : props.children
   const tone = {
     error: 'border-error/40 bg-error-bg text-error',
     warning: 'border-warning/40 bg-warning-bg text-warning',

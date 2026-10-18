@@ -1,12 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { CreateTablePage } from '../../../../../features/table/create/CreateTablePage'
+import { qs } from '../../../../../lib/search'
 
 /** Create table (pma: /table/create, the database Structure "Create new table" box) */
 export const Route = createFileRoute('/s/$server/db/$db/create-table')({
   validateSearch: z.object({
-    table: z.coerce.string().optional(),
-    num_fields: z.coerce.number().int().min(1).optional(),
+    table: qs.str(),
+    num_fields: qs.int(1),
   }),
   component: function CreateTable() {
     const { server, db } = Route.useParams()

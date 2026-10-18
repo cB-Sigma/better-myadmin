@@ -104,7 +104,12 @@ export class TableUiPrefs {
       this.maxRows,
     )
     if (r === true) return true
-    return { type: 'error', text: r.error, ...(r.detail !== undefined ? { detail: r.detail } : {}) }
+    return {
+      type: 'error',
+      text: r.error,
+      ...(r.msgid !== undefined ? { msgid: r.msgid, args: r.args ?? [] } : {}),
+      ...(r.detail !== undefined ? { detail: r.detail } : {}),
+    }
   }
 
   /**

@@ -14,51 +14,51 @@ import type { RelationParameters } from './relation-parameters.ts'
 export type MenusFeature = NonNullable<RelationParameters['configurableMenusFeature']>
 export type UserGroupLevel = 'server' | 'db' | 'table'
 
-/** Util::getMenuTabList — tab key → label msgid, per level, in phpMyAdmin's order. */
-export const MENU_TAB_LIST: Record<UserGroupLevel, ReadonlyArray<readonly [string, string]>> = {
+/** Util::getMenuTabList — tab key → label msgid (translated by the caller), per level, in phpMyAdmin's order. */
+export const MENU_TAB_LIST: Record<UserGroupLevel, ReadonlyArray<{ tab: string; msgid: string }>> = {
   server: [
-    ['databases', 'Databases'],
-    ['sql', 'SQL'],
-    ['status', 'Status'],
-    ['rights', 'Users'],
-    ['export', 'Export'],
-    ['import', 'Import'],
-    ['settings', 'Settings'],
-    ['binlog', 'Binary log'],
-    ['replication', 'Replication'],
-    ['vars', 'Variables'],
-    ['charset', 'Charsets'],
-    ['plugins', 'Plugins'],
-    ['engine', 'Engines'],
+    { tab: 'databases', msgid: 'Databases' },
+    { tab: 'sql', msgid: 'SQL' },
+    { tab: 'status', msgid: 'Status' },
+    { tab: 'rights', msgid: 'Users' },
+    { tab: 'export', msgid: 'Export' },
+    { tab: 'import', msgid: 'Import' },
+    { tab: 'settings', msgid: 'Settings' },
+    { tab: 'binlog', msgid: 'Binary log' },
+    { tab: 'replication', msgid: 'Replication' },
+    { tab: 'vars', msgid: 'Variables' },
+    { tab: 'charset', msgid: 'Charsets' },
+    { tab: 'plugins', msgid: 'Plugins' },
+    { tab: 'engine', msgid: 'Engines' },
   ],
   db: [
-    ['structure', 'Structure'],
-    ['sql', 'SQL'],
-    ['search', 'Search'],
-    ['query', 'Query'],
-    ['export', 'Export'],
-    ['import', 'Import'],
-    ['operation', 'Operations'],
-    ['privileges', 'Privileges'],
-    ['routines', 'Routines'],
-    ['events', 'Events'],
-    ['triggers', 'Triggers'],
-    ['tracking', 'Tracking'],
-    ['designer', 'Designer'],
-    ['central_columns', 'Central columns'],
+    { tab: 'structure', msgid: 'Structure' },
+    { tab: 'sql', msgid: 'SQL' },
+    { tab: 'search', msgid: 'Search' },
+    { tab: 'query', msgid: 'Query' },
+    { tab: 'export', msgid: 'Export' },
+    { tab: 'import', msgid: 'Import' },
+    { tab: 'operation', msgid: 'Operations' },
+    { tab: 'privileges', msgid: 'Privileges' },
+    { tab: 'routines', msgid: 'Routines' },
+    { tab: 'events', msgid: 'Events' },
+    { tab: 'triggers', msgid: 'Triggers' },
+    { tab: 'tracking', msgid: 'Tracking' },
+    { tab: 'designer', msgid: 'Designer' },
+    { tab: 'central_columns', msgid: 'Central columns' },
   ],
   table: [
-    ['browse', 'Browse'],
-    ['structure', 'Structure'],
-    ['sql', 'SQL'],
-    ['search', 'Search'],
-    ['insert', 'Insert'],
-    ['export', 'Export'],
-    ['import', 'Import'],
-    ['privileges', 'Privileges'],
-    ['operation', 'Operations'],
-    ['tracking', 'Tracking'],
-    ['triggers', 'Triggers'],
+    { tab: 'browse', msgid: 'Browse' },
+    { tab: 'structure', msgid: 'Structure' },
+    { tab: 'sql', msgid: 'SQL' },
+    { tab: 'search', msgid: 'Search' },
+    { tab: 'insert', msgid: 'Insert' },
+    { tab: 'export', msgid: 'Export' },
+    { tab: 'import', msgid: 'Import' },
+    { tab: 'privileges', msgid: 'Privileges' },
+    { tab: 'operation', msgid: 'Operations' },
+    { tab: 'tracking', msgid: 'Tracking' },
+    { tab: 'triggers', msgid: 'Triggers' },
   ],
 }
 
@@ -125,7 +125,7 @@ export function allowedTabNames(
   translate: (msgid: string) => string,
 ): string {
   const names: string[] = []
-  for (const [tab, label] of MENU_TAB_LIST[level]) {
+  for (const { tab, msgid: label } of MENU_TAB_LIST[level]) {
     const v = tabs[`${level}_${tab}`]
     if (v !== undefined && v !== 'Y') continue
     names.push(translate(label))
@@ -210,7 +210,7 @@ export async function editUserGroup(
   if (!isNew) await conn.query(`DELETE FROM ${groupsTable(f)} WHERE \`usergroup\`=${quoteString(userGroup)};`)
   const values: string[] = []
   for (const level of USER_GROUP_LEVELS) {
-    for (const [tab] of MENU_TAB_LIST[level]) {
+    for (const { tab } of MENU_TAB_LIST[level]) {
       const tabName = `${level}_${tab}`
       values.push(`(${quoteString(userGroup)}, ${quoteString(tabName)}, '${isAllowed(tabName) ? 'Y' : 'N'}')`)
     }

@@ -27,7 +27,7 @@ import type {
   SaveIndexRequest,
   SqlMessage,
 } from '@bettermyadmin/contracts'
-import { type Translator, sprintf } from '@bettermyadmin/i18n'
+import { N_, type Translator, sprintf } from '@bettermyadmin/i18n'
 import { renameField, setMime } from '@bettermyadmin/metadata'
 import { php } from '@bettermyadmin/mysql-types'
 import { looseEquals } from '@bettermyadmin/sql-gen'
@@ -676,13 +676,13 @@ export async function removePartitioning(ctx: DdlCtx): Promise<DdlResponse> {
 }
 
 const MAINTENANCE_TITLES: Record<string, string> = {
-  ANALYZE: 'Analyze partition',
-  CHECK: 'Check partition',
-  OPTIMIZE: 'Optimize partition',
-  REBUILD: 'Rebuild partition',
-  REPAIR: 'Repair partition',
-  TRUNCATE: 'Truncate partition',
-  DROP: 'Drop partition',
+  ANALYZE: N_('Analyze partition'),
+  CHECK: N_('Check partition'),
+  OPTIMIZE: N_('Optimize partition'),
+  REBUILD: N_('Rebuild partition'),
+  REPAIR: N_('Repair partition'),
+  TRUNCATE: N_('Truncate partition'),
+  DROP: N_('Drop partition'),
 }
 
 /** pma: src/Controllers/Table/Partition/*Controller.php + src/Partitioning/Maintenance.php */

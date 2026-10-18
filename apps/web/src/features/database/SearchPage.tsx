@@ -12,6 +12,8 @@ import {
   Panel,
   PanelBody,
   PmaIcon,
+  removeMessage,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
@@ -90,6 +92,7 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       setMessages([{ type: 'error', text: t('No table selected.') }])
       return
     }
+    const box = showMessage(t('Searching'), false)
     try {
       const r = await api.dbSearch(
         { server, db },
@@ -101,6 +104,8 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
       setShowForm(false)
     } catch (e) {
       setMessages([errorMessage(e)])
+    } finally {
+      removeMessage(box)
     }
   }
 

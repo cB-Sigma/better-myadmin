@@ -1,13 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { BinlogPage } from '../../../features/server/InfoPages'
+import { qs } from '../../../lib/search'
 
 /** pma: /server/binlog */
 export const Route = createFileRoute('/s/$server/binlog')({
   validateSearch: z.object({
-    log: z.string().catch('').default(''),
-    pos: z.coerce.number().int().min(0).catch(0).default(0),
-    full: z.boolean().catch(false).default(false),
+    log: qs.strOr(''),
+    pos: qs.intOr(0, 0),
+    full: qs.flag(),
   }),
   component: function Binlog() {
     const { server } = Route.useParams()

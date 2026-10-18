@@ -2,6 +2,7 @@ import { PreferencesTab } from '@bettermyadmin/contracts'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { PreferencesFormPage } from '../../../../features/preferences/PreferencesFormPage'
+import { qs } from '../../../../lib/search'
 
 /** pma: /preferences/features, /sql, /navigation, /main-panel, /export, /import */
 export const Route = createFileRoute('/s/$server/preferences/$tab')({
@@ -9,7 +10,7 @@ export const Route = createFileRoute('/s/$server/preferences/$tab')({
     parse: (p) => ({ tab: PreferencesTab.parse(p.tab) }),
     stringify: (p) => ({ tab: p.tab }),
   },
-  validateSearch: z.object({ saved: z.coerce.number().optional().catch(undefined) }),
+  validateSearch: z.object({ saved: qs.int() }),
   component: function Preferences() {
     const { server, tab } = Route.useParams()
     const { saved } = Route.useSearch()

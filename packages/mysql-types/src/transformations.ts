@@ -8,6 +8,7 @@
  *      src/Config/Settings/Transformations.php ($cfg['DefaultTransformations'])
  */
 
+import { N_ } from '@bettermyadmin/i18n'
 import { checkLink as sanitizeCheckLink } from '@bettermyadmin/i18n/bbcode'
 import { bin2hex, htmlspecialchars, toBytes } from './php.ts'
 
@@ -28,45 +29,61 @@ export interface TransformationPlugin {
 }
 
 const INFO = {
-  download:
+  download: N_(
     'Displays a link to download the binary data of the column. You can use the option to specify the filename.',
-  hex: 'Displays hexadecimal representation of data. Optional first parameter specifies how often space will be added (defaults to 2 nibbles).',
-  inline:
+  ),
+  hex: N_(
+    'Displays hexadecimal representation of data. Optional first parameter specifies how often space will be added (defaults to 2 nibbles).',
+  ),
+  inline: N_(
     'Displays a clickable thumbnail. The options are the maximum width and height in pixels. The original aspect ratio is preserved.',
-  imageLink: 'Displays a link to download this image.',
-  sql: 'Formats text as SQL query with syntax highlighting.',
-  binaryToIp:
+  ),
+  imageLink: N_('Displays a link to download this image.'),
+  sql: N_('Formats text as SQL query with syntax highlighting.'),
+  binaryToIp: N_(
     'Converts an Internet network address stored as a binary string into a string in Internet standard (IPv4/IPv6) format.',
-  bool2text:
+  ),
+  bool2text: N_(
     "Converts Boolean values to text (default 'T' and 'F'). First option is for TRUE, second for FALSE. Nonzero=true.",
-  dateFormat:
+  ),
+  dateFormat: N_(
     'Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. According to that, date format has different value - for "local" see the documentation for PHP\'s strftime() function and for "utc" it is done using gmdate() function.',
-  external:
+  ),
+  external: N_(
     'LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, you have to manually edit the file src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php and list the tools you want to make available. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will convert the output using htmlspecialchars() (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).',
-  formatted:
+  ),
+  formatted: N_(
     'Displays the contents of the column as-is, without running it through htmlspecialchars(). That is, the column is assumed to contain valid HTML.',
-  textImageLink:
+  ),
+  textImageLink: N_(
     'Displays an image and a link; the column contains the filename. The first option is a URL prefix like "https://www.example.com/". The second and third options are the width and the height in pixels.',
-  json: 'Formats text as JSON with syntax highlighting.',
-  xml: 'Formats text as XML with syntax highlighting.',
-  textLink:
+  ),
+  json: N_('Formats text as JSON with syntax highlighting.'),
+  xml: N_('Formats text as XML with syntax highlighting.'),
+  textLink: N_(
     'Displays a link; the column contains the filename. The first option is a URL prefix like "https://www.example.com/". The second option is a title for the link.',
-  longToIp:
+  ),
+  longToIp: N_(
     'Converts an (IPv4) Internet network address stored as a BIGINT into a string in Internet standard dotted format.',
-  preApPend:
+  ),
+  preApPend: N_(
     'Prepends and/or Appends text to a string. First option is text to be prepended, second is appended (enclosed in single quotes, default empty string).',
-  substring:
+  ),
+  substring: N_(
     'Displays a part of a string. The first option is the number of characters to skip from the beginning of the string (Default 0). The second option is the number of characters to return (Default: until end of string). The third option is the string to append and/or prepend when truncation occurs (Default: "…").',
-  imageUpload:
+  ),
+  imageUpload: N_(
     'Image upload functionality which also displays a thumbnail. The options are the width and height of the thumbnail in pixels. Defaults to 100 X 100.',
-  fileUpload: 'File upload functionality for TEXT columns. It does not have a textarea for input.',
-  ipToBinary: 'Converts an Internet network address in (IPv4/IPv6) format to binary',
-  ipToLong: 'Converts an Internet network address in (IPv4/IPv6) format into a long integer.',
-  jsonEditor: 'Syntax highlighted CodeMirror editor for JSON.',
-  regex:
+  ),
+  fileUpload: N_('File upload functionality for TEXT columns. It does not have a textarea for input.'),
+  ipToBinary: N_('Converts an Internet network address in (IPv4/IPv6) format to binary'),
+  ipToLong: N_('Converts an Internet network address in (IPv4/IPv6) format into a long integer.'),
+  jsonEditor: N_('Syntax highlighted CodeMirror editor for JSON.'),
+  regex: N_(
     'Validates the string using regular expression and performs insert only if string matches it. The first option is the Regular Expression.',
-  sqlEditor: 'Syntax highlighted CodeMirror editor for SQL.',
-  xmlEditor: 'Syntax highlighted CodeMirror editor for XML (and HTML).',
+  ),
+  sqlEditor: N_('Syntax highlighted CodeMirror editor for SQL.'),
+  xmlEditor: N_('Syntax highlighted CodeMirror editor for XML (and HTML).'),
 } as const
 
 function plugin(file: string, name: string, kind: TransformationKind, info: string): TransformationPlugin {

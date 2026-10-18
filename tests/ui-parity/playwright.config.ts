@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig } from '@playwright/test'
 
 /**
- * UI structure parity: every case opens the same page in the reference phpMyAdmin (BMA_PARITY_PMA_URL,
- * default http://127.0.0.1:8081) and in BetterMyAdmin (the built SPA served by the real server, as in
+ * UI structure parity: every case opens the same page in the reference phpMyAdmin (the run's own
+ * instance started by global-setup, or BMA_PARITY_PMA_URL) and in BetterMyAdmin (the built SPA served by the real server, as in
  * tests/e2e) and diffs their controls. `pnpm test:ui-parity` builds the web app first.
  * Screenshot gallery: .data/ui-parity/index.html.
  */
@@ -22,7 +22,7 @@ export default defineConfig({
   outputDir: join(repo, '.data/ui-parity-results'),
   timeout: 90_000,
   fullyParallel: false,
-  // `php -S` serves one request at a time: more workers only queue on it
+  // the cases share the fixture databases (each recreates its own before it runs): one at a time
   workers: 1,
   reporter: 'list',
   globalSetup: './global-setup.ts',

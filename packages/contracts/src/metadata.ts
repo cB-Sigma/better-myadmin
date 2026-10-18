@@ -246,7 +246,8 @@ export const RecentAddResponse = z.object({ recent: z.array(TableRef), message: 
 /** POST /api/servers/:s/favorites (/database/structure/favorite-table) */
 export const FavoriteRequest = z.object({
   db: z.string(),
-  table: z.string().min(1),
+  /** checked like TableName::from after the database (the route answers InvalidTableName's messages) */
+  table: z.string(),
   action: z.enum(['add', 'remove']),
   /** The browser's localStorage favoriteTables JSON (sha1(user) → list). */
   favoriteTables: z.string().default(''),

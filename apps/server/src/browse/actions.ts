@@ -23,6 +23,7 @@ import {
   backquote,
   buildDeleteRowsQueries,
   buildInsertEditQueries,
+  quoteString,
 } from '@bettermyadmin/sql-gen'
 import { parseAnalyze, replaceClause } from '@bettermyadmin/sql-lexer'
 import type { z } from 'zod'
@@ -385,10 +386,26 @@ export async function getField(
   q: { db: string; table: string; where: string; sig: string; key: string },
 ): Promise<Buffer> {
   const { conn, tr } = x
+  if (q.db === '') throw new ValidationError(`${tr.gettext('Missing parameter:')} db`)
+  if (q.table === '') throw new ValidationError(`${tr.gettext('Missing parameter:')} table`)
+  // pma: selectDb, then getColumns() === [] (before the signature check)
+  const dbs = await conn.query(
+    `SELECT 1 FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ${quoteString(q.db)}`,
+    'grid.get-field.db',
+  )
+  if ((dbs.resultSets[0]?.rows.length ?? 0) === 0) {
+    throw new NotFoundError(sprintf(tr.gettext("'%s' database does not exist."), q.db))
+  }
+  await conn.query(`USE ${backquote(q.db)}`, 'query.select-db')
+  const cols = await conn
+    .query(`SHOW COLUMNS FROM ${backquote(q.table)}`, 'grid.get-field.columns')
+    .catch(() => null)
+  if (cols === null || (cols.resultSets[0]?.rows.length ?? 0) === 0) {
+    throw new NotFoundError(tr.gettext('Invalid table name'))
+  }
   if (!checkSqlSignature(q.where, q.sig, x.session.hmacSecret, x.settings.blowfish_secret)) {
     throw new ValidationError(tr.gettext('There is an issue with your request.'))
   }
-  await conn.query(`USE ${backquote(q.db)}`, 'query.select-db')
   const r = await conn.query(
     `SELECT ${backquote(q.key)} FROM ${backquote(q.table)} WHERE ${q.where} LIMIT 1;`,
     'grid.get-field',

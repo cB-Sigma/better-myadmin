@@ -667,7 +667,7 @@ Schema export
 - [x] Coordinates and table list always come from the posted canvas state (`t_x/t_y/t_tbl…`); `offline_export` when Designer tables are not configured. <!-- parity:test --> `p07-a8542e` [export-import-checklist.test.ts:194](../../apps/server/test/int/export-import-checklist.test.ts#L194)
 - [x] File name = page description when a saved page is exported online, else `<db>`. <!-- parity:test --> `p07-164735` [export-import-checklist.test.ts:182](../../apps/server/test/int/export-import-checklist.test.ts#L182)
 - [x] Only relations between selected tables are drawn; keys-only mode shows indexed columns only. <!-- parity:test --> `p07-9b4b39` [database-designer.parity.test.ts:493](../../tests/parity/database-designer.parity.test.ts#L493) +1
-- [ ] PDF data dictionary pages, TOC, bookmarks, internal links; grid labels in scaled coordinates.
+- [ ] PDF data dictionary pages, TOC, bookmarks, internal links; grid labels in scaled coordinates. <!-- parity:n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) -->
 
 ---
 

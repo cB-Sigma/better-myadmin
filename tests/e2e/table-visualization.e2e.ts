@@ -56,7 +56,7 @@ test('Display chart [p04-bc6299 p02-7d28de]', async ({ page }) => {
   await expect(page.locator('#pieChartTypeRadio')).toBeVisible()
   await page.locator('#chartSeriesSelect').selectOption(['0', '2'])
   await expect(page.locator('#pieChartTypeRadio')).toHaveCount(0)
-  await expect(page.locator('#yAxisLabelInput')).toHaveValue('Y Values')
+  await expect(page.locator('#yAxisLabelInput')).toHaveValue('Y values')
   await page.locator('#barChartTypeRadio').check()
   await expect(page.locator('#barStackedCheckbox')).toBeVisible()
 })

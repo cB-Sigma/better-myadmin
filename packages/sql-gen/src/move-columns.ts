@@ -5,6 +5,7 @@
  * pma: src/Controllers/Table/Structure/MoveColumnsController.php::generateAlterTableSql
  */
 
+import { N_ } from '@bettermyadmin/i18n'
 import { Context, type CreateDefinition, CreateStatement, Parser } from '@bettermyadmin/sql-lexer'
 import { backquote } from './quote.ts'
 
@@ -41,7 +42,7 @@ export function getMoveColumnsQuery(
   // ensure the columns from the client match the columns of the table
   const moveSet = new Set(moveColumns)
   if (columnNames.length !== moveColumns.length || columnNames.some((c) => !moveSet.has(c))) {
-    return { sql: null, error: 'The selected columns do not match the columns in the table.' }
+    return { sql: null, error: N_('The selected columns do not match the columns in the table.') }
   }
 
   const build = (def: CreateDefinition): string =>
@@ -62,7 +63,7 @@ export function getMoveColumnsQuery(
   })
 
   if (changes.length === 0) {
-    return { sql: null, error: 'The selected columns are already in the correct order.' }
+    return { sql: null, error: N_('The selected columns are already in the correct order.') }
   }
   const table = statement.name?.table ?? ''
   return { sql: `ALTER TABLE ${backquote(table)}\n  ${changes.join(',\n  ')}`, error: null }

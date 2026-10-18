@@ -191,8 +191,11 @@ class PmadbUiPrefs implements UiPrefsBackend {
       const numRowsToDelete = rowsCount - maxRows
       const del = ` DELETE FROM ${this.table} ORDER BY last_update ASC LIMIT ${numRowsToDelete}`
       if ((await this.conn.tryQuery(del)) === false) {
+        // pma: the %s is MySQLDocumentation::showDocumentation('config', 'cfg_Servers_MaxTableUiprefs')
         return {
           error: "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] )",
+          msgid: "Failed to cleanup table UI preferences (see $cfg['Servers'][$i]['MaxTableUiprefs'] %s)",
+          args: [''],
           detail: this.conn.lastError,
         }
       }
