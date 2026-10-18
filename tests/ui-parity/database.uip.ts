@@ -1,12 +1,13 @@
 import type { Page } from '@playwright/test'
+import { OTHER_ACCOUNT_ROWS, RUN } from './lib/env.ts'
 import { type PageSpec, pageParity } from './lib/parity.ts'
 
 /**
  * The database-level pages (docs/features/05-database-level.md): Structure, Operations, Search,
  * Query, Routines, Events, Triggers, Tracking, Central columns, Data dictionary, Privileges.
- * Each case runs against its own copy of a small fixture database, `f05_uip`.
+ * Each case runs against its own copy of a small fixture database, `f05_uip_<run>` (per worker).
  */
-const DB = 'f05_uip'
+const DB = `f05_uip_${RUN}`
 const SQL = `CREATE DATABASE IF NOT EXISTS ${DB};
 CREATE TABLE IF NOT EXISTS ${DB}.parent (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(20)) ENGINE=InnoDB;
 CREATE TABLE IF NOT EXISTS ${DB}.child (id INT PRIMARY KEY, parent_id INT, FOREIGN KEY (parent_id) REFERENCES ${DB}.parent (id)) ENGINE=InnoDB;
@@ -114,4 +115,4 @@ pageParity('db-central-columns-enum-editor', {
   },
 })
 pageParity('db-data-dictionary', db('/database/data-dictionary', 'data-dictionary'))
-pageParity('db-privileges', db('/database/privileges', 'privileges'))
+pageParity('db-privileges', db('/database/privileges', 'privileges', { exclude: [OTHER_ACCOUNT_ROWS] }))

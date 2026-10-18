@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from '@playwright/test'
+import { WORKERS } from './lib/env.ts'
 
 /**
  * UI structure parity: every case opens the same page in the reference phpMyAdmin (the run's own
@@ -22,8 +23,9 @@ export default defineConfig({
   outputDir: join(repo, '.data/ui-parity-results'),
   timeout: 90_000,
   fullyParallel: false,
-  // the cases share the fixture databases (each recreates its own before it runs): one at a time
-  workers: 1,
+  // each worker has its own accounts and databases (lib/env.ts RUN); a file's cases run in order on
+  // one worker (they share that worker's fixture databases), files run in parallel
+  workers: WORKERS,
   reporter: 'list',
   globalSetup: './global-setup.ts',
   globalTeardown: './global-teardown.ts',

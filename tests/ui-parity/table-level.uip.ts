@@ -1,4 +1,4 @@
-import { FIX } from './lib/env.ts'
+import { FIX, OTHER_ACCOUNT_ROWS } from './lib/env.ts'
 import { type PageFn, type PageSpec, pageParity } from './lib/parity.ts'
 
 /**
@@ -142,6 +142,7 @@ pageParity('table-normalization', {
 pageParity('table-privileges', {
   pma: { route: '/table/privileges', params: p(FIX.table) },
   ours: { path: `${T}/${FIX.table}/privileges` },
+  exclude: [OTHER_ACCOUNT_ROWS],
 })
 
 const VIEW = `CREATE OR REPLACE VIEW ${FIX.db}.uip_v AS SELECT id FROM ${FIX.db}.${FIX.table};`

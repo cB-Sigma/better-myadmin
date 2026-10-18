@@ -3,6 +3,7 @@
   "files": {
     "ignore": [
       "**/dist",
+      "**/.turbo",
       "**/node_modules",
       "**/fixtures/**/*.json",
       "packages/kbs/src/data/**",

@@ -25,6 +25,8 @@ import { type App, PMA_URL, ROOT, login, pmaReachable, pmaUrl } from './env.ts'
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '../../..')
 export const GALLERY_DIR = join(repo, '.data/ui-parity')
+/** `diff` (default): screenshots of the steps with differences only; `all`: of every step */
+const SHOTS = process.env.BMA_UIP_SHOTS === 'all' ? 'all' : 'diff'
 
 /** An action expressed once and run in both apps, located by accessible name inside the scope. */
 export type Action =
@@ -73,7 +75,7 @@ export interface PageSpec {
    * Other instances than the shared ones (the setup script without a configuration file, the
    * other auth types): their base URLs, read when the case runs (started in a beforeAll).
    */
-  bases?: () => { pma?: string; ours?: string }
+  bases?: () => { pma?: string | undefined; ours?: string | undefined }
   /**
    * Seeds Math.random in both pages (a fixed-seed generator, before any script), for pages that
    * place things at random, such as the Designer's tables without saved coordinates: the layout
@@ -224,13 +226,22 @@ export function pageParity(name: string, spec: PageSpec): void {
       const side = async (app: App) => {
         const page = pages[app]
         await settle(page)
-        const shot = `${String(records.length).padStart(2, '0')}-${slug(step)}-${app}.png`
-        await page.screenshot({ path: join(dir, shot), fullPage: true })
-        return { url: page.url(), shot, controls: await captureControls(page, opts(app)) }
+        return { url: page.url(), shot: '', controls: await captureControls(page, opts(app)) }
       }
       const p = await side('pma')
       const o = await side('ours')
       const diff = diffControls(p.controls, o.controls, map, step)
+      // screenshots (the gallery, a review aid) only where they help: steps with differences, or
+      // every step with BMA_UIP_SHOTS=all; full-page shots were a large part of a case's time
+      if (SHOTS === 'all' || diff.differences.length > 0) {
+        for (const [app, rec] of [
+          ['pma', p],
+          ['ours', o],
+        ] as const) {
+          rec.shot = `${String(records.length).padStart(2, '0')}-${slug(step)}-${app}.png`
+          await pages[app].screenshot({ path: join(dir, rec.shot), fullPage: true })
+        }
+      }
       records.push({ step, pma: p, ours: o, diff })
       report.push(formatDiff(name, step, diff))
       for (const w of diff.warnings) report.push(`  (warning) ${w}`)

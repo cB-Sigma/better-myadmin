@@ -1,11 +1,12 @@
 import type { Page } from '@playwright/test'
+import { RUN } from './lib/env.ts'
 import { type PageSpec, pageParity } from './lib/parity.ts'
 
 /**
  * The Designer (docs/features/05-database-level.md): the canvas page, its dialogs, the relation
- * pane and the visual query builder, on a small fixture database `f05d_uip`.
+ * pane and the visual query builder, on a small fixture database `f05d_uip_<run>` (per worker).
  */
-const DB = 'f05d_uip'
+const DB = `f05d_uip_${RUN}`
 const SQL = `CREATE DATABASE IF NOT EXISTS ${DB};
 CREATE TABLE IF NOT EXISTS ${DB}.parent (id INT NOT NULL PRIMARY KEY, name VARCHAR(20)) ENGINE=InnoDB;
 CREATE TABLE IF NOT EXISTS ${DB}.child (id INT PRIMARY KEY, parent_id INT, born DATE,
