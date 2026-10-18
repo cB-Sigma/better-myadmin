@@ -53,6 +53,25 @@ describe('loadConfig: .ts outside an ES module package', () => {
     expect([config.Servers[1]?.host, config.Servers[2]?.host]).toEqual(['a', 'b'])
   })
 
+  it('import.meta.url / dirname / filename are those of each file (the bundle runs from a data: URL)', async () => {
+    await mkdir(join(dir, 'lib'))
+    await writeFile(
+      join(dir, 'lib/where.ts'),
+      `import { fileURLToPath } from 'node:url'
+       export const libFile = fileURLToPath(import.meta.url)
+       export const libDir = import.meta.dirname`,
+    )
+    await writeFile(
+      join(dir, 'bettermyadmin.config.ts'),
+      `import { libDir, libFile } from './lib/where.ts'
+       export default { Servers: [{ host: libFile, verbose: libDir }], TempDir: import.meta.filename }`,
+    )
+    const { config } = await loadConfig({ cwd: dir, env: {} })
+    expect(config.Servers[1]?.host).toBe(join(dir, 'lib/where.ts'))
+    expect(config.Servers[1]?.verbose).toBe(join(dir, 'lib'))
+    expect(config.TempDir).toBe(join(dir, 'bettermyadmin.config.ts'))
+  })
+
   it('a default-exported function, .mts; nothing is written next to the file', async () => {
     await writeFile(join(dir, 'c.mts'), 'export default async (): Promise<object> => ({ MaxRows: 100 })')
     expect((await loadConfig({ cwd: dir, file: 'c.mts', env: {} })).config.MaxRows).toBe(100)
