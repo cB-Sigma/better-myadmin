@@ -18,7 +18,7 @@ import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
  * The export's Kanji conversion (Encoding::kanjiStrConv in OutputHandler::addLine) in the Japanese
  * locale, byte for byte against phpMyAdmin: knjenc EUC-JP / SJIS / none, with and without xkana.
  * phpMyAdmin guesses each line's encoding among ASCII, SJIS, EUC-JP and JIS, which misreads UTF-8
- * Japanese (parity-exceptions.md Q66): the compared dump is CSV of ASCII rows, which both convert
+ * Japanese (parity-exceptions.md Q70): the compared dump is CSV of ASCII rows, which both convert
  * the same way; the Japanese text itself is compared with mbstring in packages/export/test/kanji.test.ts.
  */
 const DB = 'f07_kanji'
@@ -93,7 +93,7 @@ describe.skipIf(!japanese)('export Kanji conversion parity (Japanese locale)', (
     })
   }
 
-  // Q66: phpMyAdmin leaves this UTF-8 text as is for SJIS (it guesses SJIS) and garbles it for
+  // Q70: phpMyAdmin leaves this UTF-8 text as is for SJIS (it guesses SJIS) and garbles it for
   // EUC-JP and Kana (it reads the bytes as SJIS / EUC-JP); ours is what mbstring makes of the UTF-8
   // text, which is what phpMyAdmin's own UTF-8 dump becomes through mb_convert_kana('KV') and
   // mb_convert_encoding(…, 'UTF-8') line by line
@@ -102,7 +102,7 @@ describe.skipIf(!japanese)('export Kanji conversion parity (Japanese locale)', (
     ['EUC-JP', 'kana'],
     ['', 'kana'],
   ] as const) {
-    it(`Japanese text, knjenc=${knjenc === '' ? '(none)' : knjenc}${xkana === null ? '' : ' and xkana'} (Q66)`, async () => {
+    it(`Japanese text, knjenc=${knjenc === '' ? '(none)' : knjenc}${xkana === null ? '' : ' and xkana'} (Q70)`, async () => {
       const jp = await pmaExportForm(pma, 'table', { db: DB, table: 'jp', single_table: 'true' })
       const base = { what: 'csv', quick_or_custom: 'custom', output_format: 'sendit' }
       const utf8 = await pmaDump(pma, withFields(jp, { ...base, knjenc: '', xkana: null }))

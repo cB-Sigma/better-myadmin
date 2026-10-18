@@ -5,7 +5,7 @@ import { decodeBytes } from './bytes.ts'
  * Japanese (Kanji) conversion of the export output, `Encoding::kanjiStrConv`: optionally half-width
  * katakana to full-width (`mb_convert_kana($s, 'KV')`), then the text to EUC-JP or Shift_JIS. The
  * line is UTF-8 text here; phpMyAdmin guesses its encoding among ASCII, SJIS, EUC-JP and JIS, which
- * misreads UTF-8 Japanese as SJIS / EUC-JP (parity-exceptions.md Q66, not reproduced): an ASCII line
+ * misreads UTF-8 Japanese as SJIS / EUC-JP (parity-exceptions.md Q70, not reproduced): an ASCII line
  * is the same either way. Bytes kept as escapes (binary cells, bytes.ts) are left as they are.
  * pma: src/Encoding.php::kanjiStrConv, src/Export/OutputHandler.php::addLine
  */
