@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/az.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/az.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Azerbaijani <https://hosted.weblate.org/projects/phpmyadmin/master/az/>\nLanguage: az\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Azerbaijani <https://hosted.weblate.org/projects/phpmyadmin/master/az/>\nLanguage: az\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Bu hissəni keçmək üçün Javascript aktiv olmalıdır!"
@@ -367,71 +367,6 @@ msgstr "Yeni səhifə adı"
 msgid "Select page"
 msgstr "Səhifə Seç"
 
-msgid "Details"
-msgstr "Təfsilatları"
-
-msgid "Event name"
-msgstr "Hadisə adı"
-
-msgid "Status"
-msgstr "Status"
-
-msgid "Event type"
-msgstr "Hadisə tipi"
-
-msgid "Change to %s"
-msgstr "%s buna dəyiş"
-
-msgid "Execute at"
-msgstr "Yerinə yetir"
-
-msgid "Execute every"
-msgstr "Yerinə yetir; hər biri"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Başla"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Son"
-
-msgid "Definition"
-msgstr "Tərif"
-
-msgid "Format"
-msgstr "Format"
-
-msgid "On completion preserve"
-msgstr "Tamamlamada qoruma"
-
-msgid "Definer"
-msgstr "Təyinedici"
-
-msgid "Events"
-msgstr "Hadisələr"
-
-msgid "Export"
-msgstr "Eksport"
-
-msgid "Drop"
-msgstr "Ləğv et"
-
-msgid "Event scheduler status"
-msgstr "Hadisə planlaşdırıcısının statusu"
-
-msgid "Click to toggle"
-msgstr "Dəyişmək üçün tıklayın"
-
-msgid "ON"
-msgstr "Açmaq"
-
-msgid "OFF"
-msgstr "Bağlı"
-
-msgid "Loading…"
-msgstr "Yüklənir…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "\"%s\" Verilənlər Bazasından cədvəllər eksport edilir"
 
@@ -537,6 +472,9 @@ msgstr "xüsusi işarə"
 msgid "routine"
 msgstr "rutin"
 
+msgid "Export"
+msgstr "Eksport"
+
 msgid "No user found."
 msgstr "İstifadəçi tapılmadı."
 
@@ -546,8 +484,14 @@ msgstr "Seçilənləri:"
 msgid "Not enough privilege to view users."
 msgstr "İstifadəçiləri göstərmək üçün yetərsiz səlahiyyət."
 
+msgid "Details"
+msgstr "Təfsilatları"
+
 msgid "Routine name"
 msgstr "Prosedura adı"
+
+msgid "Change to %s"
+msgstr "%s buna dəyiş"
 
 msgid "Parameters"
 msgstr "Parametrlər"
@@ -570,6 +514,15 @@ msgstr "Geri dönüş uzunluğu/qiymətləri"
 msgid "Return options"
 msgstr "Geri dönüş seçənəkləri"
 
+msgid "Definition"
+msgstr "Tərif"
+
+msgid "Format"
+msgstr "Format"
+
+msgid "Definer"
+msgstr "Təyinedici"
+
 msgid "Security type"
 msgstr "Təhlükəsizlik tipi"
 
@@ -579,6 +532,9 @@ msgstr "Funksiya"
 msgid "Routines"
 msgstr "Rutinlər"
 
+msgid "Drop"
+msgstr "Ləğv et"
+
 msgid "Search"
 msgstr "Axtarış"
 
@@ -587,6 +543,9 @@ msgstr "Göstəriləcək rutin yoxdur."
 
 msgid "Returns"
 msgstr "Geri dönüşlər"
+
+msgid "Loading…"
+msgstr "Yüklənir…"
 
 msgid "Execute"
 msgstr "İcra et"
@@ -766,6 +725,12 @@ msgstr "Yaradıldı"
 msgid "Updated"
 msgstr "Yeniləndi"
 
+msgid "Status"
+msgstr "Status"
+
+msgid "Click to toggle"
+msgstr "Dəyişmək üçün tıklayın"
+
 msgid "active"
 msgstr "aktiv"
 
@@ -860,6 +825,41 @@ msgstr "Xəta"
 
 msgid "Automatically send report next time"
 msgstr "Hesabatı növbəti dəfə avtomatik olaraq birbaşa göndər"
+
+msgid "Event name"
+msgstr "Hadisə adı"
+
+msgid "Event type"
+msgstr "Hadisə tipi"
+
+msgid "Execute at"
+msgstr "Yerinə yetir"
+
+msgid "Execute every"
+msgstr "Yerinə yetir; hər biri"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Başla"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Son"
+
+msgid "On completion preserve"
+msgstr "Tamamlamada qoruma"
+
+msgid "Events"
+msgstr "Hadisələr"
+
+msgid "Event scheduler status"
+msgstr "Hadisə planlaşdırıcısının statusu"
+
+msgid "ON"
+msgstr "Açmaq"
+
+msgid "OFF"
+msgstr "Bağlı"
 
 msgid "SQL query:"
 msgstr "SQL sorğusu:"
@@ -2748,12 +2748,6 @@ msgstr "%1$s - %2$s sətirləri göstərilir."
 msgid "No databases selected."
 msgstr "Heç bir baza seçilmemişdir."
 
-msgid "Add event"
-msgstr "Hadisə əlavə et"
-
-msgid "Edit event"
-msgstr "Hadisəni redaktə et"
-
 msgid "Could not load import plugins, please check your installation!"
 msgstr "İmport pluqini yüklənmədi, zəhmət olmasa quraşdırmanı yoxlayın!"
 
@@ -2801,6 +2795,12 @@ msgstr "Əgər hər hansı problemlə qarşılaşsanız, zəhmət olmasa hesabat
 
 msgid "You may want to refresh the page."
 msgstr "Səhifəni yeniləmək istəyə bilərsiniz."
+
+msgid "Add event"
+msgstr "Hadisə əlavə et"
+
+msgid "Edit event"
+msgstr "Hadisəni redaktə et"
 
 msgid "Bad type!"
 msgstr "Pis tip!"
@@ -3642,56 +3642,32 @@ msgstr "Sütunlar əlavə oluna bilmədi!"
 msgid "Could not remove columns!"
 msgstr "Stünlar silinə bilmədi!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Səhv tip prosedurları: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Aşağıdakı sorğu yerinə yetirilə bilmədi: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL deyir: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Bağışlayın, yığışdırılmış(dropped) hadisəni bərpa eləmək mümkün deyil."
-
-msgid "The backed up query was:"
-msgstr "Saxlanılmış sorğu:"
-
-msgid "Event %1$s has been modified."
-msgstr "%1$s hadisəsi dəyişdirildi."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s hadisəsi yaradıldı."
+msgid "Routine %1$s has been created."
+msgstr "Prosedura %1$s yaradıldı."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "İstəyiniz yerinə yetirilərkən bir və ya daha çox xəta yarandı:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Təyinedici\"username@hostname\" formatında olmalıdır!"
-
-msgid "You must provide an event name!"
-msgstr "Bir hadisə adı vermək məcburiyyətindəsiniz!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Hər hadisə üçün düzgün interval verməlisiniz."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Hadisə üçün düzgün icra zamanı verməlisiniz."
-
-msgid "You must provide a valid type for the event."
-msgstr "Hadisə üçün düzgün bir tip verməlisiniz."
-
-msgid "You must provide an event definition."
-msgstr "Bir hadisə tərifi verməlisiniz."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Səhv tip prosedurları: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Prosedura %1$s yaradıldı."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Bağışlayın, silinmiş(dropped) proseduraların bərpa edilməsi uğursuz oldu."
 
+msgid "The backed up query was:"
+msgstr "Saxlanılmış sorğu:"
+
 msgid "Routine %1$s has been modified."
 msgstr "Prosedura %1$s dəyişdirildi."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Təyinedici\"username@hostname\" formatında olmalıdır!"
 
 msgid "The row has been deleted."
 msgstr "Sətir silindi."
@@ -3743,6 +3719,30 @@ msgstr "Çoxlu sayda xəta mesajı, bəziləri göstərilə bilmədi."
 
 msgid "Report"
 msgstr "Hesabat"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Bağışlayın, yığışdırılmış(dropped) hadisəni bərpa eləmək mümkün deyil."
+
+msgid "Event %1$s has been modified."
+msgstr "%1$s hadisəsi dəyişdirildi."
+
+msgid "Event %1$s has been created."
+msgstr "%1$s hadisəsi yaradıldı."
+
+msgid "You must provide an event name!"
+msgstr "Bir hadisə adı vermək məcburiyyətindəsiniz!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Hər hadisə üçün düzgün interval verməlisiniz."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Hadisə üçün düzgün icra zamanı verməlisiniz."
+
+msgid "You must provide a valid type for the event."
+msgstr "Hadisə üçün düzgün bir tip verməlisiniz."
+
+msgid "You must provide an event definition."
+msgstr "Bir hadisə tərifi verməlisiniz."
 
 msgid "Access denied!"
 msgstr "Giriş Təsdiq Edilmədi!"

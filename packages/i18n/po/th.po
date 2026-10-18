@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/th.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/th.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-09-26 09:51+0000\nLast-Translator: Anusuk Sangubon <jaideejung007@gmail.com>\nLanguage-Team: Thai <https://hosted.weblate.org/projects/phpmyadmin/master/th/>\nLanguage: th\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.10.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-09-26 09:51+0000\nLast-Translator: Anusuk Sangubon <jaideejung007@gmail.com>\nLanguage-Team: Thai <https://hosted.weblate.org/projects/phpmyadmin/master/th/>\nLanguage: th\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.10.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "จำเป็นต้องเปิดใช้งาน JavaScript เพื่อใช้งานในส่วนถัดไป"
@@ -683,89 +683,6 @@ msgstr "เลือกหน้า"
 msgid "Select export relational type:"
 msgstr "เลือกประเภทความสัมพันธ์สำหรับการส่งออก:"
 
-msgid "Details"
-msgstr "รายละเอียด"
-
-msgid "Event name"
-msgstr "ชื่อเหตุการณ์"
-
-msgid "Status"
-msgstr "สถานะ"
-
-msgid "Event type"
-msgstr "ประเภทเหตุการณ์"
-
-msgid "Change to %s"
-msgstr "เปลี่ยนเป็น %s"
-
-msgid "Execute at"
-msgstr "ดำเนินการที่"
-
-msgid "Execute every"
-msgstr "ดำเนินการทุก ๆ"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "เริ่ม"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "สิ้นสุด"
-
-msgid "Definition"
-msgstr "นิยาม"
-
-msgid "Format"
-msgstr "รูปแบบ"
-
-msgid "On completion preserve"
-msgstr "คงสถานะเสร็จสมบูรณ์"
-
-msgid "Definer"
-msgstr "ตัวกำหนด"
-
-msgid "Events"
-msgstr "เหตุการณ์"
-
-msgid "Check all"
-msgstr "เลือกทั้งหมด"
-
-msgid "Export"
-msgstr "ส่งออก"
-
-msgid "Drop"
-msgstr "ลบทิ้ง"
-
-msgid "Create new event"
-msgstr "สร้างเหตุการณ์ใหม่"
-
-msgid "There are no events to display."
-msgstr "ไม่มีเหตุการณ์ที่จะแสดง"
-
-msgid "Event scheduler status"
-msgstr "สถานะตัวกำหนดตารางเวลากิจกรรม"
-
-msgid "Click to toggle"
-msgstr "คลิกเพื่อสลับ"
-
-msgid "ON"
-msgstr "เปิด"
-
-msgid "OFF"
-msgstr "ปิด"
-
-msgid "Event editor"
-msgstr "ตัวแก้ไขเหตุการณ์"
-
-msgid "Loading…"
-msgstr "กำลังโหลด…"
-
-msgid "Save changes"
-msgstr "บันทึกการเปลี่ยนแปลง"
-
-msgid "Export event"
-msgstr "ส่งออกเหตุการณ์"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ จะกลายเป็นชื่อเซิร์ฟเวอร์ และ @DATABASE@ จะกลายเป็นชื่อฐานข้อมูล"
 
@@ -946,11 +863,17 @@ msgstr "รูทีน"
 msgid "Edit privileges"
 msgstr "แก้ไขสิทธิ์"
 
+msgid "Export"
+msgstr "ส่งออก"
+
 msgid "No user found."
 msgstr "ไม่พบผู้ใช้งาน"
 
 msgid "With selected:"
 msgstr "ด้วยสิ่งที่เลือก:"
+
+msgid "Check all"
+msgstr "เลือกทั้งหมด"
 
 msgid "Not enough privilege to view users."
 msgstr "ไม่มีสิทธิ์เพียงพอที่จะดูข้อมูลผู้ใช้"
@@ -958,8 +881,14 @@ msgstr "ไม่มีสิทธิ์เพียงพอที่จะด
 msgid "Add user account"
 msgstr "เพิ่มบัญชีผู้ใช้"
 
+msgid "Details"
+msgstr "รายละเอียด"
+
 msgid "Routine name"
 msgstr "ชื่อรูทีน"
+
+msgid "Change to %s"
+msgstr "เปลี่ยนเป็น %s"
 
 msgid "Parameters"
 msgstr "พารามิเตอร์"
@@ -985,11 +914,20 @@ msgstr "ตัวเลือกการส่งคืน"
 msgid "Charset"
 msgstr "ชุดตัวอักษร"
 
+msgid "Definition"
+msgstr "นิยาม"
+
+msgid "Format"
+msgstr "รูปแบบ"
+
 msgid "Is deterministic"
 msgstr "เป็นแบบกำหนดได้แน่นอน"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "คุณไม่มีสิทธิ์เพียงพอที่จะดำเนินการนี้; โปรดดูเอกสารประกอบสำหรับรายละเอียดเพิ่มเติม"
+
+msgid "Definer"
+msgstr "ตัวกำหนด"
 
 msgid "Security type"
 msgstr "ประเภทความปลอดภัย"
@@ -1009,6 +947,9 @@ msgstr "ขั้นตอนการทำงานประจำนี้ไ
 msgid "Routines"
 msgstr "กิจวัตร"
 
+msgid "Drop"
+msgstr "ลบทิ้ง"
+
 msgid "Search"
 msgstr "ค้นหา"
 
@@ -1023,6 +964,12 @@ msgstr "ส่งคืน"
 
 msgid "Routine editor"
 msgstr "ตัวแก้ไขกิจวัตร"
+
+msgid "Loading…"
+msgstr "กำลังโหลด…"
+
+msgid "Save changes"
+msgstr "บันทึกการเปลี่ยนแปลง"
 
 msgid "Export routine"
 msgstr "ส่งออกกิจวัตร"
@@ -1273,6 +1220,12 @@ msgstr "ถูกสร้าง"
 msgid "Updated"
 msgstr "อัปเดตแล้ว"
 
+msgid "Status"
+msgstr "สถานะ"
+
+msgid "Click to toggle"
+msgstr "คลิกเพื่อสลับ"
+
 msgid "active"
 msgstr "ใช้งาน"
 
@@ -1418,6 +1371,53 @@ msgstr "เกิดข้อผิดพลาดบางอย่าง"
 
 msgid "Go back"
 msgstr "ย้อนกลับ"
+
+msgid "Event name"
+msgstr "ชื่อเหตุการณ์"
+
+msgid "Event type"
+msgstr "ประเภทเหตุการณ์"
+
+msgid "Execute at"
+msgstr "ดำเนินการที่"
+
+msgid "Execute every"
+msgstr "ดำเนินการทุก ๆ"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "เริ่ม"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "สิ้นสุด"
+
+msgid "On completion preserve"
+msgstr "คงสถานะเสร็จสมบูรณ์"
+
+msgid "Events"
+msgstr "เหตุการณ์"
+
+msgid "Create new event"
+msgstr "สร้างเหตุการณ์ใหม่"
+
+msgid "There are no events to display."
+msgstr "ไม่มีเหตุการณ์ที่จะแสดง"
+
+msgid "Event scheduler status"
+msgstr "สถานะตัวกำหนดตารางเวลากิจกรรม"
+
+msgid "ON"
+msgstr "เปิด"
+
+msgid "OFF"
+msgstr "ปิด"
+
+msgid "Event editor"
+msgstr "ตัวแก้ไขเหตุการณ์"
+
+msgid "Export event"
+msgstr "ส่งออกเหตุการณ์"
 
 msgid "Select a template"
 msgstr "เลือกต้นแบบ"
@@ -6588,24 +6588,6 @@ msgstr "มีหน้าเพจชื่อ \"%s\" อยู่แล้ว 
 msgid "No databases selected."
 msgstr "ไม่ได้เลือกฐานข้อมูล"
 
-msgid "Add event"
-msgstr "เพิ่มเหตุการณ์"
-
-msgid "Edit event"
-msgstr "แก้ไขเหตุการณ์"
-
-msgid "Error in processing request:"
-msgstr "เกิดข้อผิดพลาดในการประมวลผลคำขอ:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "ไม่พบเหตุการณ์ที่มีชื่อ %1$s ในฐานข้อมูล %2$s"
-
-msgid "Export of event %s"
-msgstr "ส่งออกเหตุการณ์ %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "เกิดข้อผิดพลาดในการประมวลผลคำขอ: ไม่พบเหตุการณ์ที่มีชื่อ %1$s ในฐานข้อมูล %2$s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "ไม่สามารถโหลดปลั๊กอินการส่งออกได้ โปรดตรวจสอบการติดตั้งของคุณ!"
 
@@ -6626,6 +6608,9 @@ msgstr "เพิ่มรูทีน"
 
 msgid "Edit routine"
 msgstr "แก้ไขรูทีน"
+
+msgid "Error in processing request:"
+msgstr "เกิดข้อผิดพลาดในการประมวลผลคำขอ:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "ไม่พบรูทีนชื่อ %1$s ในฐานข้อมูล %2$s คุณอาจไม่มีสิทธิ์ที่จำเป็นในการแก้ไขรูทีนนี้"
@@ -6680,6 +6665,21 @@ msgstr "หากคุณพบปัญหาใด ๆ ในการใช�
 
 msgid "You may want to refresh the page."
 msgstr "คุณอาจต้องการรีเฟรชหน้าเพจ"
+
+msgid "Export of event %s"
+msgstr "ส่งออกเหตุการณ์ %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "เกิดข้อผิดพลาดในการประมวลผลคำขอ: ไม่พบเหตุการณ์ที่มีชื่อ %1$s ในฐานข้อมูล %2$s"
+
+msgid "Add event"
+msgstr "เพิ่มเหตุการณ์"
+
+msgid "Edit event"
+msgstr "แก้ไขเหตุการณ์"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "ไม่พบเหตุการณ์ที่มีชื่อ %1$s ในฐานข้อมูล %2$s"
 
 msgid "Bad type!"
 msgstr "รูปแบบไม่ดี!"
@@ -8602,53 +8602,26 @@ msgstr "ความสัมพันธ์ภายในถูกลบออ
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "ไม่สามารถโหลดปลั๊กอินโครงร่างได้ โปรดตรวจสอบการติดตั้งของคุณ!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "ประเภทรูทีนไม่ถูกต้อง: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "คำสั่งการเรียกดูต่อไปนี้ล้มเหลว: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL แจ้งว่า: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "ขออภัย เราไม่สามารถกู้คืนกิจกรรมที่โยนทิ้งแล้วได้"
-
-msgid "The backed up query was:"
-msgstr "คำสั่งเรียกดูที่สำรองไว้คือ:"
-
-msgid "Event %1$s has been modified."
-msgstr "เหตุการณ์ %1$s ได้รับการแก้ไขแล้ว"
-
-msgid "Event %1$s has been created."
-msgstr "กิจกรรม %1$s ได้ถูกสร้างขึ้นแล้ว"
+msgid "Routine %1$s has been created."
+msgstr "กิจวัตร %1$s ได้ถูกสร้างขึ้นแล้ว"
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "เกิดข้อผิดพลาดอย่างน้อยหนึ่งรายการระหว่างการประมวลผลคำขอของคุณ:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "ตัวกำหนดค่าต้องอยู่ในรูปแบบ \"username@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "คุณต้องระบุชื่อกิจกรรม!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "คุณต้องระบุค่าช่วงเวลาที่ถูกต้องสำหรับเหตุการณ์นั้น"
-
-msgid "You must provide a valid execution time for the event."
-msgstr "คุณต้องระบุเวลาดำเนินการที่ถูกต้องสำหรับกิจกรรมนั้น"
-
-msgid "You must provide a valid type for the event."
-msgstr "คุณต้องระบุประเภทที่ถูกต้องสำหรับกิจกรรมนั้น"
-
-msgid "You must provide an event definition."
-msgstr "คุณต้องระบุคำจำกัดความของเหตุการณ์"
-
-msgid "Invalid routine type: \"%s\""
-msgstr "ประเภทรูทีนไม่ถูกต้อง: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "กิจวัตร %1$s ได้ถูกสร้างขึ้นแล้ว"
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "ขออภัย เราไม่สามารถกู้คืนรูทีนที่โยนทิ้งได้"
+
+msgid "The backed up query was:"
+msgstr "คำสั่งเรียกดูที่สำรองไว้คือ:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "กิจวัตร %1$s ได้รับการแก้ไขแล้ว สิทธิ์การใช้งานได้รับการปรับเปลี่ยนแล้ว"
@@ -8667,6 +8640,9 @@ msgstr "คุณต้องระบุความยาว/ค่าสำ�
 
 msgid "You must provide a valid return type for the routine."
 msgstr "คุณต้องระบุประเภทค่าส่งคืนที่ถูกต้องสำหรับรูทีนนี้"
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "ตัวกำหนดค่าต้องอยู่ในรูปแบบ \"username@hostname\"!"
 
 msgid "Invalid routine type!"
 msgstr "ประเภทกิจวัตรไม่ถูกต้อง"
@@ -8854,6 +8830,30 @@ msgstr "มีข้อความผิดพลาดจำนวนมาก
 
 msgid "Report"
 msgstr "รายงาน"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "ขออภัย เราไม่สามารถกู้คืนกิจกรรมที่โยนทิ้งแล้วได้"
+
+msgid "Event %1$s has been modified."
+msgstr "เหตุการณ์ %1$s ได้รับการแก้ไขแล้ว"
+
+msgid "Event %1$s has been created."
+msgstr "กิจกรรม %1$s ได้ถูกสร้างขึ้นแล้ว"
+
+msgid "You must provide an event name!"
+msgstr "คุณต้องระบุชื่อกิจกรรม!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "คุณต้องระบุค่าช่วงเวลาที่ถูกต้องสำหรับเหตุการณ์นั้น"
+
+msgid "You must provide a valid execution time for the event."
+msgstr "คุณต้องระบุเวลาดำเนินการที่ถูกต้องสำหรับกิจกรรมนั้น"
+
+msgid "You must provide a valid type for the event."
+msgstr "คุณต้องระบุประเภทที่ถูกต้องสำหรับกิจกรรมนั้น"
+
+msgid "You must provide an event definition."
+msgstr "คุณต้องระบุคำจำกัดความของเหตุการณ์"
 
 msgid "Cannot log in to the database server."
 msgstr "ไม่สามารถเข้าสู่ระบบเซิร์ฟเวอร์ฐานข้อมูลได้"

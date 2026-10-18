@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/he.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/he.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-03-23 02:09+0000\nLast-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\nLanguage-Team: Hebrew <https://hosted.weblate.org/projects/phpmyadmin/master/he/>\nLanguage: he\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 5.17-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-03-23 02:09+0000\nLast-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\nLanguage-Team: Hebrew <https://hosted.weblate.org/projects/phpmyadmin/master/he/>\nLanguage: he\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 5.17-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "יש להפעיל Javascript מעבר לנקודה זו!"
@@ -306,45 +306,6 @@ msgstr "שם עמוד חדש"
 msgid "Select page"
 msgstr "בחירת עמוד"
 
-msgid "Status"
-msgstr "מצב"
-
-msgid "Event type"
-msgstr "סוג אירוע"
-
-msgid "Definition"
-msgstr "הגדרה"
-
-msgid "Format"
-msgstr "תבנית"
-
-msgid "Check all"
-msgstr "סימון הכול"
-
-msgid "Export"
-msgstr "יצוא"
-
-msgid "Drop"
-msgstr "השמטה"
-
-msgid "Event scheduler status"
-msgstr "מצב מתזמן אירועים"
-
-msgid "ON"
-msgstr "פעיל"
-
-msgid "OFF"
-msgstr "כבוי"
-
-msgid "Event editor"
-msgstr "עורך אירועים"
-
-msgid "Loading…"
-msgstr "בטעינה…"
-
-msgid "Export event"
-msgstr "ייצוא אירועים"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ יהפוך לשם השרת ואילו @DATABASE@ יהפוך לשם מסד הנתונים."
 
@@ -495,11 +456,17 @@ msgstr "שגרה"
 msgid "Edit privileges"
 msgstr "עריכת הרשאות"
 
+msgid "Export"
+msgstr "יצוא"
+
 msgid "No user found."
 msgstr "לא נמצאו משתמשים."
 
 msgid "With selected:"
 msgstr "עם הנבחרים:"
+
+msgid "Check all"
+msgstr "סימון הכול"
 
 msgid "Add user account"
 msgstr "הוספת חשבון משתמש"
@@ -507,11 +474,23 @@ msgstr "הוספת חשבון משתמש"
 msgid "Charset"
 msgstr "קידוד"
 
+msgid "Definition"
+msgstr "הגדרה"
+
+msgid "Format"
+msgstr "תבנית"
+
 msgid "Function"
 msgstr "פונקציה"
 
+msgid "Drop"
+msgstr "השמטה"
+
 msgid "Search"
 msgstr "חיפוש"
+
+msgid "Loading…"
+msgstr "בטעינה…"
 
 msgid "ENUM/SET editor"
 msgstr "עורך מונה/עריכה (ENUM/SET)"
@@ -696,6 +675,9 @@ msgstr "מועד היצירה"
 msgid "Updated"
 msgstr "עודכנה"
 
+msgid "Status"
+msgstr "מצב"
+
 msgid "active"
 msgstr "פעיל"
 
@@ -792,6 +774,24 @@ msgstr "שליחת דוח שגיאה"
 
 msgid "Send error report"
 msgstr "שליחת דוח שגיאה"
+
+msgid "Event type"
+msgstr "סוג אירוע"
+
+msgid "Event scheduler status"
+msgstr "מצב מתזמן אירועים"
+
+msgid "ON"
+msgstr "פעיל"
+
+msgid "OFF"
+msgstr "כבוי"
+
+msgid "Event editor"
+msgstr "עורך אירועים"
+
+msgid "Export event"
+msgstr "ייצוא אירועים"
 
 msgid "Select a template"
 msgstr "בחירת טבלה"
@@ -3085,18 +3085,6 @@ msgstr "מוצגות השורות %1$s-%2$s."
 msgid "No databases selected."
 msgstr "לא נבחר אף מסד נתונים."
 
-msgid "Add event"
-msgstr "הוספת אירוע"
-
-msgid "Error in processing request:"
-msgstr "שגיאה בעיבוד הבקשה:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "לא נמצא אירוע בשם %1$s במסד הנתונים %2$s."
-
-msgid "Export of event %s"
-msgstr "ייצוא של אירועים %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "לא ניתן לייצא תוספים, נא לבדוק את ההתקנה שלך!"
 
@@ -3108,6 +3096,9 @@ msgstr "ללא הרשאות"
 
 msgid "Add routine"
 msgstr "הוספת שגרה"
+
+msgid "Error in processing request:"
+msgstr "שגיאה בעיבוד הבקשה:"
 
 msgid "No routine with name %1$s found in database %2$s."
 msgstr "לא נמצאה שגרה עם השם %1$s במסד הנתונים %2$s."
@@ -3144,6 +3135,15 @@ msgstr "אם אתה נתקל בבעיות אנא שלח דוח באגים ידנ
 
 msgid "You may want to refresh the page."
 msgstr "כדאי שתרענן את הדף."
+
+msgid "Export of event %s"
+msgstr "ייצוא של אירועים %s"
+
+msgid "Add event"
+msgstr "הוספת אירוע"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "לא נמצא אירוע בשם %1$s במסד הנתונים %2$s."
 
 msgid "Bad type!"
 msgstr "הסוג שגוי!"
@@ -4168,9 +4168,6 @@ msgstr "MySQL אמר: "
 msgid "The backed up query was:"
 msgstr "השאילתה שגובתה היא:"
 
-msgid "You must provide an event definition."
-msgstr "עליך לציין הגדרת אירוע."
-
 msgid "Invalid routine type!"
 msgstr "סוג השגרה שגוי!"
 
@@ -4206,6 +4203,9 @@ msgstr "מצב InnoDB"
 
 msgid "Report"
 msgstr "דיווח"
+
+msgid "You must provide an event definition."
+msgstr "עליך לציין הגדרת אירוע."
 
 msgid "Cannot log in to the database server."
 msgstr "הכניסה לשרת מסד הנתונים נכשלה"

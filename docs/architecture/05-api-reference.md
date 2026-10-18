@@ -156,7 +156,7 @@ The setup script; no login, every endpoint answers 404 "Configuration already ex
 | GET | `/api/servers/:s/databases/:db/qbe?savedSearch=` / POST `.../qbe/generate` / `.../qbe/saved-searches` | QBE builder state, generated SQL, saved searches CRUD | `/database/qbe`, `savedsearches` |
 | GET | `/api/servers/:s/databases/:db/multi-table-query/tables` / POST `.../query` | new multi-table query UI | `/database/multi-table-query*` |
 | GET/POST | `/api/servers/:s/databases/:db/routines[/:name]` | list; create/edit `{type, params[], returns, definition, deterministic, definer, security, dataAccess, comment}`; drop; export; `execute {args}` | `/database/routines` |
-| GET/POST | `/api/servers/:s/databases/:db/events[/:name]` | list, CRUD, `scheduler {on|off}` | `/database/events` |
+| GET/POST | `/api/servers/:s/databases/:db/events[/:name]` | list, CRUD, `scheduler {on|off}` | `/events`, `/events/export` |
 | GET/POST | `/api/servers/:s/databases/:db/triggers[/:name]?table=` | list (db or table), CRUD, export | `/triggers` |
 | GET/POST | `/api/servers/:s/databases/:db/tracking` | tracked/untracked tables; create versions; activate/deactivate/drop | `/database/tracking` |
 | GET | `/api/servers/:s/databases/:db/designer?page=` | tables, columns, fks, internal relations, coordinates, settings | `/database/designer` |

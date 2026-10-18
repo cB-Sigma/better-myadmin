@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/bg.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/bg.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2025-12-18 18:00+0000\nLast-Translator: Кирил Стоименов <steemman123@gmail.com>\nLanguage-Team: Bulgarian <https://hosted.weblate.org/projects/phpmyadmin/master/bg/>\nLanguage: bg\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2025-12-18 18:00+0000\nLast-Translator: Кирил Стоименов <steemman123@gmail.com>\nLanguage-Team: Bulgarian <https://hosted.weblate.org/projects/phpmyadmin/master/bg/>\nLanguage: bg\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Оттук нататък е необходим javascript!"
@@ -625,71 +625,6 @@ msgstr "Избор на страница"
 msgid "Select export relational type:"
 msgstr "Изберете релационен тип експорт:"
 
-msgid "Details"
-msgstr "Подробности"
-
-msgid "Event name"
-msgstr "Име на събитие"
-
-msgid "Status"
-msgstr "Състояние"
-
-msgid "Event type"
-msgstr "Тип на събитието"
-
-msgid "Change to %s"
-msgstr "Промяна на %s"
-
-msgid "Execute at"
-msgstr "Изпълнение в"
-
-msgid "Execute every"
-msgstr "Изпълнение на всеки"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Начало"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Край"
-
-msgid "Definition"
-msgstr "Описание"
-
-msgid "Format"
-msgstr "Формат"
-
-msgid "Events"
-msgstr "Събития"
-
-msgid "Check all"
-msgstr "Маркиране всички"
-
-msgid "Export"
-msgstr "Експорт"
-
-msgid "Drop"
-msgstr "Изтриване"
-
-msgid "There are no events to display."
-msgstr "Няма събития."
-
-msgid "Event scheduler status"
-msgstr "Състояние на Диспечера на събитията"
-
-msgid "Click to toggle"
-msgstr "Щракване за превключване"
-
-msgid "ON"
-msgstr "Вкл."
-
-msgid "OFF"
-msgstr "Изкл."
-
-msgid "Loading…"
-msgstr "Зареждане…"
-
 msgid "Exporting tables from \"%s\" database"
 msgstr "Експорт на таблици от БД \"%s\""
 
@@ -813,17 +748,29 @@ msgstr "знак за заместване"
 msgid "routine"
 msgstr "процедура"
 
+msgid "Export"
+msgstr "Експорт"
+
 msgid "No user found."
 msgstr "Няма потребител."
 
 msgid "With selected:"
 msgstr "Когато има отметка:"
 
+msgid "Check all"
+msgstr "Маркиране всички"
+
 msgid "Add user account"
 msgstr "Нов потребител"
 
+msgid "Details"
+msgstr "Подробности"
+
 msgid "Routine name"
 msgstr "Име"
+
+msgid "Change to %s"
+msgstr "Промяна на %s"
 
 msgid "Parameters"
 msgstr "Параметри"
@@ -849,6 +796,12 @@ msgstr "Настройки на данни при изход"
 msgid "Charset"
 msgstr "Знаков набор"
 
+msgid "Definition"
+msgstr "Описание"
+
+msgid "Format"
+msgstr "Формат"
+
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Не разполагате с права, за да извършите това действие. За подробности прочетете докумантацията."
 
@@ -867,6 +820,9 @@ msgstr "Функция"
 msgid "Routines"
 msgstr "Процедури"
 
+msgid "Drop"
+msgstr "Изтриване"
+
 msgid "Search"
 msgstr "Търсене"
 
@@ -875,6 +831,9 @@ msgstr "Няма процедури."
 
 msgid "Returns"
 msgstr "Връща"
+
+msgid "Loading…"
+msgstr "Зареждане…"
 
 msgid "Execute routine"
 msgstr "Изпълнение на процедура"
@@ -1066,6 +1025,12 @@ msgstr "Създаден"
 msgid "Updated"
 msgstr "Актуализиран"
 
+msgid "Status"
+msgstr "Състояние"
+
+msgid "Click to toggle"
+msgstr "Щракване за превключване"
+
 msgid "active"
 msgstr "активен"
 
@@ -1184,6 +1149,41 @@ msgstr "Представи доклад за грешка"
 
 msgid "Send error report"
 msgstr "Изпрати доклад за грешка"
+
+msgid "Event name"
+msgstr "Име на събитие"
+
+msgid "Event type"
+msgstr "Тип на събитието"
+
+msgid "Execute at"
+msgstr "Изпълнение в"
+
+msgid "Execute every"
+msgstr "Изпълнение на всеки"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Начало"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Край"
+
+msgid "Events"
+msgstr "Събития"
+
+msgid "There are no events to display."
+msgstr "Няма събития."
+
+msgid "Event scheduler status"
+msgstr "Състояние на Диспечера на събитията"
+
+msgid "ON"
+msgstr "Вкл."
+
+msgid "OFF"
+msgstr "Изкл."
 
 msgid "Export templates:"
 msgstr "Експортиране на шаблони:"
@@ -4329,18 +4329,6 @@ msgstr "Показване на редове %1$s - %2$s."
 msgid "No databases selected."
 msgstr "Няма избрани БД."
 
-msgid "Add event"
-msgstr "Ново събитие"
-
-msgid "Edit event"
-msgstr "Редакция събитие"
-
-msgid "Error in processing request:"
-msgstr "Грешка при обработка на заявката:"
-
-msgid "Export of event %s"
-msgstr "Експорт на събитието %s"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Приставките за експортиране не могат да бъдат заредени, моля проверете инсталацията!"
 
@@ -4358,6 +4346,9 @@ msgstr "Нова процедура"
 
 msgid "Edit routine"
 msgstr "Редактиране"
+
+msgid "Error in processing request:"
+msgstr "Грешка при обработка на заявката:"
 
 msgid "Export of routine %s"
 msgstr "Експорт на процедура %s"
@@ -4397,6 +4388,15 @@ msgstr "Ако срещате каквито и да е проблеми, док
 
 msgid "You may want to refresh the page."
 msgstr "Препоръчва се да презаредите страницата."
+
+msgid "Export of event %s"
+msgstr "Експорт на събитието %s"
+
+msgid "Add event"
+msgstr "Ново събитие"
+
+msgid "Edit event"
+msgstr "Редакция събитие"
 
 msgid "Bad type!"
 msgstr "Типът е неправилен!"
@@ -5589,50 +5589,26 @@ msgstr "Грешка: Вътрешната релация не може да б�
 msgid "Error: Internal relationship could not be removed!"
 msgstr "Грешка: Вътрешната релация не можа да бъде премахната!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Невалиден тип процедура: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Следната заявка е неуспешна: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL отговори: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Съжаляваме, но възстановяването на изтритото събитие е неуспешно."
-
-msgid "The backed up query was:"
-msgstr "Архивираната заявка е:"
-
-msgid "Event %1$s has been modified."
-msgstr "Събитието %1$s беше променено."
-
-msgid "Event %1$s has been created."
-msgstr "Събитието %1$s беше създадено."
+msgid "Routine %1$s has been created."
+msgstr "Процедура %1$s беше създадена."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Възникнаха грешки при обработката на вашата заявка:"
 
-msgid "You must provide an event name!"
-msgstr "Трябва да дадете име на събитието!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Трябва да дадете валидна вътрешна стойност на събитието."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Трябва да дадете валиден интервал за изпълнение на събитието."
-
-msgid "You must provide a valid type for the event."
-msgstr "Трябва да дадете валиден тип на събитието."
-
-msgid "You must provide an event definition."
-msgstr "Трябва да дадете дефиниция на събитието."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Невалиден тип процедура: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "Процедура %1$s беше създадена."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Съжаляваме, но възстановяването на изтритата процедура е неуспешно."
+
+msgid "The backed up query was:"
+msgstr "Архивираната заявка е:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Процедурата%1$s е променена."
@@ -5729,6 +5705,30 @@ msgstr "Твърде много съобщения за грешки, някои
 
 msgid "Report"
 msgstr "Доклад"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Съжаляваме, но възстановяването на изтритото събитие е неуспешно."
+
+msgid "Event %1$s has been modified."
+msgstr "Събитието %1$s беше променено."
+
+msgid "Event %1$s has been created."
+msgstr "Събитието %1$s беше създадено."
+
+msgid "You must provide an event name!"
+msgstr "Трябва да дадете име на събитието!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Трябва да дадете валидна вътрешна стойност на събитието."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Трябва да дадете валиден интервал за изпълнение на събитието."
+
+msgid "You must provide a valid type for the event."
+msgstr "Трябва да дадете валиден тип на събитието."
+
+msgid "You must provide an event definition."
+msgstr "Трябва да дадете дефиниция на събитието."
 
 msgid "Access denied!"
 msgstr "Отказан достъп!"

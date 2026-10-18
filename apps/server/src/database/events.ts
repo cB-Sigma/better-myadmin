@@ -7,7 +7,7 @@ import type {
 } from '@bettermyadmin/contracts'
 import { sprintf } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
-import { NotFoundError } from '../http/errors.ts'
+import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { PrivilegeProbe } from '../shell/privileges.ts'
 import { type DbCtx, fetchColumn, msg, tryQuery } from './context.ts'
 import { errorsMessage } from './routines.ts'
@@ -62,19 +62,33 @@ async function details(ctx: DbCtx, name: string | null) {
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
 }
 
-export async function eventsList(ctx: DbCtx): Promise<EventsListResponse> {
+/** pma: Events::getEventSchedulerStatus */
+export async function eventSchedulerStatus(ctx: DbCtx): Promise<EventsListResponse['schedulerState']> {
   const state = await ctx.dbi.tryQuery("SHOW GLOBAL VARIABLES LIKE 'event_scheduler'")
-  const v = String(state?.rows[0]?.[1] ?? '')
-  const items = (await details(ctx, null)).map((e) => ({
-    ...e,
-    dropSql: `DROP EVENT IF EXISTS ${backquote(e.name)}`,
-  }))
-  return {
-    items,
-    schedulerOn: v.toUpperCase() === 'ON' || v === '1',
-    codemirror: ctx.cfg.CodemirrorEnable,
-    canCreate: await new PrivilegeProbe(ctx.conn, ctx.server, ctx.cache).hasPrivilege('EVENT', ctx.db),
+  const v = String(state?.rows[0]?.[1] ?? '').toUpperCase()
+  if (v === 'DISABLED') return 'DISABLED'
+  return v === 'ON' || v === '1' ? 'ON' : 'OFF'
+}
+
+/** The editor and the export answer nothing while the scheduler is DISABLED (Events\IndexController). */
+async function requireScheduler(ctx: DbCtx): Promise<void> {
+  if ((await eventSchedulerStatus(ctx)) === 'DISABLED') {
+    throw new ValidationError(ctx.tr.gettext('The event scheduler is disabled.'))
   }
+}
+
+/** pma: Events\IndexController (the list) */
+export async function eventsList(ctx: DbCtx): Promise<EventsListResponse> {
+  const canCreate = await new PrivilegeProbe(ctx.conn, ctx.server, ctx.cache).hasPrivilege('EVENT', ctx.db)
+  const schedulerState = await eventSchedulerStatus(ctx)
+  const items =
+    schedulerState === 'DISABLED'
+      ? []
+      : (await details(ctx, null)).map((e) => ({
+          ...e,
+          dropSql: `DROP EVENT IF EXISTS ${backquote(e.name)}`,
+        }))
+  return { items, schedulerState, codemirror: ctx.cfg.CodemirrorEnable, canCreate }
 }
 
 /** Events::getQueryFromRequest */
@@ -94,11 +108,8 @@ function eventQuery(ctx: DbCtx, req: EventSaveRequest, errors: string[]): string
   if (req.type !== '' && EVENT_TYPES.includes(req.type)) {
     if (req.type === 'RECURRING') {
       const n = Number.parseInt(req.intervalValue, 10)
-      if (
-        req.intervalValue !== '' &&
-        req.intervalValue !== '0' &&
-        EVENT_INTERVALS.includes(req.intervalField)
-      ) {
+      // 05917fbe4e: any non-empty value (also '0', which the server then refuses)
+      if (req.intervalValue !== '' && EVENT_INTERVALS.includes(req.intervalField)) {
         query += `EVERY ${Number.isNaN(n) ? 0 : n} ${req.intervalField} `
       } else errors.push(tr.gettext('You must provide a valid interval value for the event.'))
       if (req.starts !== '') query += `STARTS ${ctx.dbi.quoteString(req.starts)} `
@@ -128,6 +139,7 @@ const definition = (ctx: DbCtx, name: string) =>
 /** Events::handleEditor + the "dropped immediately" check of EventsController */
 export async function saveEvent(ctx: DbCtx, req: EventSaveRequest): Promise<{ messages: SqlMessage[] }> {
   const tr = ctx.tr
+  await requireScheduler(ctx)
   const errors: string[] = []
   const query = eventQuery(ctx, req, errors)
   let result: SqlMessage | null = null
@@ -175,6 +187,7 @@ export async function saveEvent(ctx: DbCtx, req: EventSaveRequest): Promise<{ me
 
 /** Events::getDataFromName */
 export async function eventData(ctx: DbCtx, name: string): Promise<EventEditorData> {
+  await requireScheduler(ctx)
   const r = (
     await ctx.dbi.fetchResultSimple(
       'SELECT `EVENT_NAME`, `STATUS`, `EVENT_TYPE`, `EXECUTE_AT`, `INTERVAL_VALUE`, `INTERVAL_FIELD`, `STARTS`, `ENDS`, `EVENT_DEFINITION`, `ON_COMPLETION`, `DEFINER`, `EVENT_COMMENT`' +
@@ -198,7 +211,9 @@ export async function eventData(ctx: DbCtx, name: string): Promise<EventEditorDa
   }
 }
 
+/** pma: Events\ExportController */
 export async function exportEvent(ctx: DbCtx, name: string): Promise<DbExportResponse> {
+  await requireScheduler(ctx)
   const def = await definition(ctx, name)
   if (def === null || def === '') {
     throw new NotFoundError(

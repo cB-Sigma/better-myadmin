@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/pt.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/pt.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2026-03-24 13:09+0000\nLast-Translator: Horus68 <horus68@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese <https://hosted.weblate.org/projects/phpmyadmin/master/pt/>\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 5.17-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-03-24 13:09+0000\nLast-Translator: Horus68 <horus68@users.noreply.hosted.weblate.org>\nLanguage-Team: Portuguese <https://hosted.weblate.org/projects/phpmyadmin/master/pt/>\nLanguage: pt\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 5.17-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "O Javascript tem de estar activo a partir deste ponto!"
@@ -651,83 +651,6 @@ msgstr "Novo nome da página"
 msgid "Select page"
 msgstr "Selecionar página"
 
-msgid "Details"
-msgstr "Detalhes"
-
-msgid "Event name"
-msgstr "Nome do evento"
-
-msgid "Status"
-msgstr "Estado"
-
-msgid "Event type"
-msgstr "Tipo de evento"
-
-msgid "Change to %s"
-msgstr "Alterar para %s"
-
-msgid "Execute at"
-msgstr "Executar em"
-
-msgid "Execute every"
-msgstr "Executar cada"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Início"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Fim"
-
-msgid "Definition"
-msgstr "Definição"
-
-msgid "Format"
-msgstr "Formato"
-
-msgid "On completion preserve"
-msgstr "Preservar após a conclusão"
-
-msgid "Definer"
-msgstr "Definidor"
-
-msgid "Events"
-msgstr "Eventos"
-
-msgid "Check all"
-msgstr "Marcar todos"
-
-msgid "Export"
-msgstr "Exportar"
-
-msgid "Drop"
-msgstr "Eliminar"
-
-msgid "Create new event"
-msgstr "Criar evento"
-
-msgid "There are no events to display."
-msgstr "Não há eventos para exibir."
-
-msgid "Event scheduler status"
-msgstr "Estado do agendador de eventos"
-
-msgid "Click to toggle"
-msgstr "Clique para alternar"
-
-msgid "ON"
-msgstr "Ligado"
-
-msgid "OFF"
-msgstr "Desligado"
-
-msgid "Loading…"
-msgstr "A carregar…"
-
-msgid "Save changes"
-msgstr "Guardar alterações"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "@SERVER@ será o nome do servidor e @DATABASE@ será o nome da base de dados."
 
@@ -902,11 +825,17 @@ msgstr "rotina"
 msgid "Edit privileges"
 msgstr "Editar privilégios"
 
+msgid "Export"
+msgstr "Exportar"
+
 msgid "No user found."
 msgstr "Nenhum utilizador encontrado."
 
 msgid "With selected:"
 msgstr "Com os seleccionados:"
+
+msgid "Check all"
+msgstr "Marcar todos"
 
 msgid "Not enough privilege to view users."
 msgstr "Privilégio insuficiente para exibir utilizador(es)."
@@ -914,8 +843,14 @@ msgstr "Privilégio insuficiente para exibir utilizador(es)."
 msgid "Add user account"
 msgstr "Adicionar conta de utilizador"
 
+msgid "Details"
+msgstr "Detalhes"
+
 msgid "Routine name"
 msgstr "Nome da rotina"
+
+msgid "Change to %s"
+msgstr "Alterar para %s"
 
 msgid "Parameters"
 msgstr "Parâmetros"
@@ -941,11 +876,20 @@ msgstr "Opções de retorno"
 msgid "Charset"
 msgstr "Mapa de Caractere"
 
+msgid "Definition"
+msgstr "Definição"
+
+msgid "Format"
+msgstr "Formato"
+
 msgid "Is deterministic"
 msgstr "É determinístico"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Não tem privilégios suficientes para executar esta operação, verifique a documentação para mais detalhes."
+
+msgid "Definer"
+msgstr "Definidor"
 
 msgid "Security type"
 msgstr "Tipo de segurança"
@@ -962,6 +906,9 @@ msgstr "Funções"
 msgid "Routines"
 msgstr "Rotinas"
 
+msgid "Drop"
+msgstr "Eliminar"
+
 msgid "Search"
 msgstr "Pesquisar"
 
@@ -973,6 +920,12 @@ msgstr "Não há rotinas para exibir."
 
 msgid "Returns"
 msgstr "Retorna"
+
+msgid "Loading…"
+msgstr "A carregar…"
+
+msgid "Save changes"
+msgstr "Guardar alterações"
 
 msgid "Execute routine"
 msgstr "Executar rotina"
@@ -1215,6 +1168,12 @@ msgstr "Criado"
 msgid "Updated"
 msgstr "Actualizado"
 
+msgid "Status"
+msgstr "Estado"
+
+msgid "Click to toggle"
+msgstr "Clique para alternar"
+
 msgid "active"
 msgstr "activo"
 
@@ -1354,6 +1313,47 @@ msgstr "Algo deu errado"
 
 msgid "Go back"
 msgstr "Voltar"
+
+msgid "Event name"
+msgstr "Nome do evento"
+
+msgid "Event type"
+msgstr "Tipo de evento"
+
+msgid "Execute at"
+msgstr "Executar em"
+
+msgid "Execute every"
+msgstr "Executar cada"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Início"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Fim"
+
+msgid "On completion preserve"
+msgstr "Preservar após a conclusão"
+
+msgid "Events"
+msgstr "Eventos"
+
+msgid "Create new event"
+msgstr "Criar evento"
+
+msgid "There are no events to display."
+msgstr "Não há eventos para exibir."
+
+msgid "Event scheduler status"
+msgstr "Estado do agendador de eventos"
+
+msgid "ON"
+msgstr "Ligado"
+
+msgid "OFF"
+msgstr "Desligado"
 
 msgid "Select a template"
 msgstr "Selecionar o modelo"
@@ -6225,24 +6225,6 @@ msgstr "Já existe uma página chamada \"%s\", por favor, renomeie com outro nom
 msgid "No databases selected."
 msgstr "Nenhuma base de dados selecionada."
 
-msgid "Add event"
-msgstr "Adicionar evento"
-
-msgid "Edit event"
-msgstr "Editar evento"
-
-msgid "Error in processing request:"
-msgstr "Erro no processamento da requisição:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Não foi encontrado nenhum evento com o nome %1$s na base de dados %2$s."
-
-msgid "Export of event %s"
-msgstr "Exportação do evento %s"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Erro no processamento do pedido: Não foi encontrado nenhum evento com o nome %1$s na base de dados %2$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Não foi possível carregar os plugins de exportação, por favor verifique a sua instalação!"
 
@@ -6263,6 +6245,9 @@ msgstr "Adicionar rotina"
 
 msgid "Edit routine"
 msgstr "Editar rotina"
+
+msgid "Error in processing request:"
+msgstr "Erro no processamento da requisição:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Nenhuma rotina com nome %1$s encontrada na base de dados %2$s. Você pode não ter os privilégios necessários para editar essa rotina."
@@ -6317,6 +6302,21 @@ msgstr "Se encontrar algum problema, por favor, faça um relatório manualmente 
 
 msgid "You may want to refresh the page."
 msgstr "Poderá querer actualizar esta página."
+
+msgid "Export of event %s"
+msgstr "Exportação do evento %s"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Erro no processamento do pedido: Não foi encontrado nenhum evento com o nome %1$s na base de dados %2$s."
+
+msgid "Add event"
+msgstr "Adicionar evento"
+
+msgid "Edit event"
+msgstr "Editar evento"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Não foi encontrado nenhum evento com o nome %1$s na base de dados %2$s."
 
 msgid "Bad type!"
 msgstr "Mau tipo!"
@@ -8006,53 +8006,26 @@ msgstr "Relacionamento interno foi removido."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Não foi possível carregar os plugins de esquema, por favor, verifique sua instalação!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Tipo de rotina inválido: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "A seguinte consulta falhou: \"%s\""
 
 msgid "MySQL said: "
 msgstr "Mensagens do MySQL : "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Desculpe, não conseguimos restaurar o evento eliminado."
-
-msgid "The backed up query was:"
-msgstr "A consulta com backup foi:"
-
-msgid "Event %1$s has been modified."
-msgstr "O evento %1$s foi modificado."
-
-msgid "Event %1$s has been created."
-msgstr "O evento %1$s foi criado."
+msgid "Routine %1$s has been created."
+msgstr "A rotina %1$s foi criada."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Um ou mais erros ocorreram durante o processamento da sua requisição:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "O definidor deve estar no formato \"username@hostname\"!"
-
-msgid "You must provide an event name!"
-msgstr "Você deve fornecer um nome de evento!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Você deve fornecer um valor de intervalo válido para o evento."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Você deve fornecer um tempo de execução válido para o evento."
-
-msgid "You must provide a valid type for the event."
-msgstr "Você deve fornecer um tipo válido para o evento."
-
-msgid "You must provide an event definition."
-msgstr "Você deve fornecer uma definição de evento."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Tipo de rotina inválido: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "A rotina %1$s foi criada."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Desculpe, mas falhamos em restaurar a rotina eliminada."
+
+msgid "The backed up query was:"
+msgstr "A consulta com backup foi:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "A rotina %1$s foi modificada. Os privilégios foram ajustados."
@@ -8071,6 +8044,9 @@ msgstr "Você deve fornecer o comprimento/valores para parâmetros de rotina do 
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Você deve fornecer um tipo válido de retorno para a rotina."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "O definidor deve estar no formato \"username@hostname\"!"
 
 msgid "You must provide a routine name!"
 msgstr "Você deve fornecer um nome de rotina!"
@@ -8250,6 +8226,30 @@ msgstr "Excesso de mensagens de erro, algumas não serão mostradas."
 
 msgid "Report"
 msgstr "Reportar"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Desculpe, não conseguimos restaurar o evento eliminado."
+
+msgid "Event %1$s has been modified."
+msgstr "O evento %1$s foi modificado."
+
+msgid "Event %1$s has been created."
+msgstr "O evento %1$s foi criado."
+
+msgid "You must provide an event name!"
+msgstr "Você deve fornecer um nome de evento!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Você deve fornecer um valor de intervalo válido para o evento."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Você deve fornecer um tempo de execução válido para o evento."
+
+msgid "You must provide a valid type for the event."
+msgstr "Você deve fornecer um tipo válido para o evento."
+
+msgid "You must provide an event definition."
+msgstr "Você deve fornecer uma definição de evento."
 
 msgid "Access denied!"
 msgstr "Acesso Negado!"

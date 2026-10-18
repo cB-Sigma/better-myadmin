@@ -285,9 +285,44 @@ describe.skipIf(!pmaReachable)('parity: routines', () => {
     expect(b.title).toBe(res.p.title)
     expect(b.sql.replaceAll(users.bma, users.pma)).toBe(res.p.message)
   })
+
+  it('the list: scheduler state and its toggle, the DISABLED notice (99e7f2db71, d284996d6b) [p05-396223 p05-8a82ee]', async () => {
+    const html = await h.pma.getPage('/events', { db: P })
+    const b = (await h.bma.req('GET', bma('/events'))).json as {
+      schedulerState: string
+      items: Array<{ name: string }>
+    }
+    // the server's own state: ON / OFF can be toggled, DISABLED needs --event-scheduler=DISABLED
+    const disabled = html.includes('The event scheduler is disabled.')
+    expect(b.schedulerState === 'DISABLED').toBe(disabled)
+    if (disabled) {
+      expect(b.items).toEqual([])
+      expect(html).not.toContain('id="eventsTable"')
+    } else {
+      expect(html.includes('class="toggle-container on"')).toBe(b.schedulerState === 'ON')
+      for (const i of b.items) expect(html).toContain(`<strong>${i.name}</strong>`)
+    }
+  })
+
+  it('an unknown database: "No database selected."', async () => {
+    const p = await h.pma.getJson('/events', { db: 'f04_no_such_db' })
+    const r = await h.bma.req('GET', '/api/servers/1/databases/f04_no_such_db/events')
+    expect(r.status).toBe(404)
+    const message = (r.json as { error: { message: string } }).error.message
+    expect(message).toBe('No database selected.')
+    expect(text((p as PmaJson).message ?? (p as PmaJson).error)).toContain(message)
+  })
 })
 
 describe.skipIf(!pmaReachable)('parity: events', () => {
+  /** --event-scheduler=DISABLED (a spot check server): the editor and the export do nothing */
+  let disabled: boolean | null = null
+  const schedulerDisabled = async () => {
+    disabled ??=
+      ((await h.bma.req('GET', bma('/events'))).json as { schedulerState: string }).schedulerState ===
+      'DISABLED'
+    return disabled
+  }
   const ev = (o: Record<string, string>) => ({
     name: o.item_name ?? '',
     ...(o.item_original_name !== undefined ? { originalName: o.item_original_name } : {}),
@@ -347,16 +382,37 @@ describe.skipIf(!pmaReachable)('parity: events', () => {
       },
     ],
     ['validation errors', { add_item: '1', editor_process_add: 'true', item_type: 'RECURRING' }],
+    [
+      // 05917fbe4e: a non-empty interval value is accepted, 0 included (the server refuses it)
+      'interval value 0 reaches the server',
+      {
+        add_item: '1',
+        editor_process_add: 'true',
+        item_name: 'e0',
+        item_status: 'ENABLED',
+        item_type: 'RECURRING',
+        item_interval_value: '0',
+        item_interval_field: 'DAY',
+        item_definition: 'DELETE FROM log',
+      },
+    ],
   ]
   for (const [name, o] of CASES) {
     it(name, async () => {
       const res = await both(
         h,
-        () => h.pma.postJson('/database/events', { db: P, ...o }),
+        () => h.pma.postJson('/events', { db: P, ...o }),
         () => h.bma.req('POST', bma('/events'), ev(o)),
       )
       const cmp = compareWrites(res.pmaLog, res.bmaLog, dbMap)
       expect(cmp.bma, `pma: ${JSON.stringify(cmp.pma, null, 1)}`).toEqual(cmp.pma)
+      if (await schedulerDisabled()) {
+        // 99e7f2db71: no editor processing, the page with the notice
+        expect(cmp.pma).toEqual([])
+        expect(res.b.status).toBe(400)
+        expect(text(String((res.p as PmaJson).message))).toContain('The event scheduler is disabled.')
+        return
+      }
       const msg = (res.b.json as { messages: Array<{ text: string }> }).messages[0]?.text ?? ''
       const pmaMsg = text((res.p as PmaJson).message ?? (res.p as PmaJson).error)
       for (const line of msg.split('\n')) expect(pmaMsg).toContain(line.replace(/^• /, ''))
@@ -366,9 +422,15 @@ describe.skipIf(!pmaReachable)('parity: events', () => {
   it('list and export', async () => {
     const res = await both(
       h,
-      () => h.pma.getJson('/database/events', { db: P, export_item: '1', item_name: 'e2' }),
+      () => h.pma.getJson('/events/export', { db: P, item_name: 'e2' }),
       () => h.bma.req('GET', bma('/events/export?name=e2')),
     )
+    if (await schedulerDisabled()) {
+      // Events\ExportController answers nothing while the scheduler is DISABLED
+      expect(String(res.p.message ?? '')).not.toContain('CREATE')
+      expect(res.b.status).toBe(400)
+      return
+    }
     const b = res.b.json as { title: string; sql: string }
     expect(b.title).toBe(res.p.title)
     expect(b.sql.replaceAll(users.bma, users.pma)).toBe(res.p.message)

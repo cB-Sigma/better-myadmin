@@ -32,7 +32,7 @@ pageParity('db-operations', db('/database/operations', 'operations'))
 pageParity('db-search', db('/database/search', 'search'))
 pageParity('db-query', db('/database/multi-table-query', 'multi-table-query'))
 pageParity('db-routines', db('/database/routines', 'routines'))
-pageParity('db-events', db('/database/events', 'events'))
+pageParity('db-events', db('/events', 'events'))
 pageParity('db-triggers', db('/triggers', 'triggers'))
 
 /** An editor dialog: phpMyAdmin's Bootstrap modal (opened by its ajax anchor) and our Dialog. */
@@ -54,7 +54,7 @@ pageParity(
 )
 pageParity(
   'db-event-editor',
-  editor('/database/events', 'events', 'eventsEditorModal', 'Create new event', 'item_name'),
+  editor('/events', 'events', 'eventsEditorModal', 'Create new event', 'item_name'),
 )
 pageParity(
   'db-trigger-editor',

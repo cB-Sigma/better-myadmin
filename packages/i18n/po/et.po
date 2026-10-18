@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a57149e1f6273eb326b153487ad070893dd9e19c resources/po/et.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 328b8d80039c6edc237598e7a6fc039065f42010 resources/po/et.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-11 00:47+0000\nPO-Revision-Date: 2023-11-25 02:27+0000\nLast-Translator: Kristjan Räts <kristjanrats@gmail.com>\nLanguage-Team: Estonian <https://hosted.weblate.org/projects/phpmyadmin/master/et/>\nLanguage: et\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.2.1-rc\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2023-11-25 02:27+0000\nLast-Translator: Kristjan Räts <kristjanrats@gmail.com>\nLanguage-Team: Estonian <https://hosted.weblate.org/projects/phpmyadmin/master/et/>\nLanguage: et\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.2.1-rc\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript peab olema lubatud!"
@@ -668,83 +668,6 @@ msgstr "Vali leht"
 msgid "Select export relational type:"
 msgstr "Vali ekspordi seose tüüp:"
 
-msgid "Details"
-msgstr "Detailid"
-
-msgid "Event name"
-msgstr "Sündmuse nimi"
-
-msgid "Status"
-msgstr "Olek"
-
-msgid "Event type"
-msgstr "Sündmuse tüüp"
-
-msgid "Change to %s"
-msgstr "Muuda väärtuseks %s"
-
-msgid "Execute at"
-msgstr "Käivita kell"
-
-msgid "Execute every"
-msgstr "Käivita iga"
-
-msgctxt "Start of recurring event"
-msgid "Start"
-msgstr "Algus"
-
-msgctxt "End of recurring event"
-msgid "End"
-msgstr "Lõpp"
-
-msgid "Definition"
-msgstr "Definitsioon"
-
-msgid "Format"
-msgstr "Formaat"
-
-msgid "On completion preserve"
-msgstr "Lõpetamisel säilita"
-
-msgid "Definer"
-msgstr "Määraja"
-
-msgid "Events"
-msgstr "Sündmused"
-
-msgid "Check all"
-msgstr "Vali kõik"
-
-msgid "Export"
-msgstr "Ekspordi"
-
-msgid "Drop"
-msgstr "Kustuta"
-
-msgid "Create new event"
-msgstr "Loo uus sündmus"
-
-msgid "There are no events to display."
-msgstr "Pole sündmusi, mida näidata."
-
-msgid "Event scheduler status"
-msgstr "Sündmuse ajastaja staatus"
-
-msgid "Click to toggle"
-msgstr "Muuda"
-
-msgid "ON"
-msgstr "ON"
-
-msgid "OFF"
-msgstr "OFF"
-
-msgid "Loading…"
-msgstr "Laadimine…"
-
-msgid "Save changes"
-msgstr "Salvesta muudatused"
-
 msgid "@SERVER@ will become the server name and @DATABASE@ will become the database name."
 msgstr "Serveri nimeks saab @SERVER@ ja andmebaasi nimeks saab @DATABASE@."
 
@@ -922,11 +845,17 @@ msgstr "funktsioon"
 msgid "Edit privileges"
 msgstr "Muuda õiguseid"
 
+msgid "Export"
+msgstr "Ekspordi"
+
 msgid "No user found."
 msgstr "Kasutajat ei leitud."
 
 msgid "With selected:"
 msgstr "Valitutega:"
+
+msgid "Check all"
+msgstr "Vali kõik"
 
 msgid "Not enough privilege to view users."
 msgstr "Puuduvad õigused kasutajate kuvamiseks."
@@ -934,8 +863,14 @@ msgstr "Puuduvad õigused kasutajate kuvamiseks."
 msgid "Add user account"
 msgstr "Lisa kasutajate konto"
 
+msgid "Details"
+msgstr "Detailid"
+
 msgid "Routine name"
 msgstr "Funktsiooni nimi"
+
+msgid "Change to %s"
+msgstr "Muuda väärtuseks %s"
 
 msgid "Parameters"
 msgstr "Parameetrid"
@@ -961,11 +896,20 @@ msgstr "Pöördumise valikud"
 msgid "Charset"
 msgstr "Märgitabel"
 
+msgid "Definition"
+msgstr "Definitsioon"
+
+msgid "Format"
+msgstr "Formaat"
+
 msgid "Is deterministic"
 msgstr "Ette määratud"
 
 msgid "You do not have sufficient privileges to perform this operation; Please refer to the documentation for more details."
 msgstr "Sul puuduvad selle operatsiooni teostamiseks õigused. Täpsemalt vaata palun dokumentatsioonist."
+
+msgid "Definer"
+msgstr "Määraja"
 
 msgid "Security type"
 msgstr "Turvalisuse tüüp"
@@ -982,6 +926,9 @@ msgstr "Funktsioon"
 msgid "Routines"
 msgstr "Funktsioonid"
 
+msgid "Drop"
+msgstr "Kustuta"
+
 msgid "Search"
 msgstr "Otsi"
 
@@ -993,6 +940,12 @@ msgstr "Pole funktsioone, mida näidata."
 
 msgid "Returns"
 msgstr "Naases"
+
+msgid "Loading…"
+msgstr "Laadimine…"
+
+msgid "Save changes"
+msgstr "Salvesta muudatused"
 
 msgid "Execute routine"
 msgstr "Käivita funktsioon"
@@ -1235,6 +1188,12 @@ msgstr "Loodud"
 msgid "Updated"
 msgstr "Uuendatud"
 
+msgid "Status"
+msgstr "Olek"
+
+msgid "Click to toggle"
+msgstr "Muuda"
+
 msgid "active"
 msgstr "aktiivne"
 
@@ -1380,6 +1339,47 @@ msgstr "Midagi läks valesti"
 
 msgid "Go back"
 msgstr "Mine tagasi"
+
+msgid "Event name"
+msgstr "Sündmuse nimi"
+
+msgid "Event type"
+msgstr "Sündmuse tüüp"
+
+msgid "Execute at"
+msgstr "Käivita kell"
+
+msgid "Execute every"
+msgstr "Käivita iga"
+
+msgctxt "Start of recurring event"
+msgid "Start"
+msgstr "Algus"
+
+msgctxt "End of recurring event"
+msgid "End"
+msgstr "Lõpp"
+
+msgid "On completion preserve"
+msgstr "Lõpetamisel säilita"
+
+msgid "Events"
+msgstr "Sündmused"
+
+msgid "Create new event"
+msgstr "Loo uus sündmus"
+
+msgid "There are no events to display."
+msgstr "Pole sündmusi, mida näidata."
+
+msgid "Event scheduler status"
+msgstr "Sündmuse ajastaja staatus"
+
+msgid "ON"
+msgstr "ON"
+
+msgid "OFF"
+msgstr "OFF"
 
 msgid "Select a template"
 msgstr "Vali mall"
@@ -6474,24 +6474,6 @@ msgstr "Lehekülg nimega \"%s\" on juba olemas. Palun anna talle uus nimi."
 msgid "No databases selected."
 msgstr "Ühtegi andmebaasi ei ole valitud."
 
-msgid "Add event"
-msgstr "Lisa sündmus"
-
-msgid "Edit event"
-msgstr "Muuda sündmust"
-
-msgid "Error in processing request:"
-msgstr "Taotluse töötlemisel esines viga:"
-
-msgid "No event with name %1$s found in database %2$s."
-msgstr "Andmebaasist %2$s ei leitud sündmust nimega %1$s."
-
-msgid "Export of event %s"
-msgstr "%s sündmuse eksport"
-
-msgid "Error in processing request: No event with name %1$s found in database %2$s."
-msgstr "Päringu töötlemise viga: andmebaasist %2$s ei leitud sündmust nimega %1$s."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Ei saanud laadida eksportimise pluginaid, palun kontrolli oma paigaldust!"
 
@@ -6512,6 +6494,9 @@ msgstr "Lisa funktsiooni"
 
 msgid "Edit routine"
 msgstr "Muuda funktsiooni"
+
+msgid "Error in processing request:"
+msgstr "Taotluse töötlemisel esines viga:"
 
 msgid "No routine with name %1$s found in database %2$s. You might be lacking the necessary privileges to edit this routine."
 msgstr "Andmebaasist %2$s ei leitud funktsiooni nimega %1$s. Sul võivad puududa selle funktsiooni muutmiseks vajalikud õigused."
@@ -6566,6 +6551,21 @@ msgstr "Kui koged mingeid probleeme, siis raporteeri neist ise."
 
 msgid "You may want to refresh the page."
 msgstr "Sa võiksid lehekülje uuesti laadida."
+
+msgid "Export of event %s"
+msgstr "%s sündmuse eksport"
+
+msgid "Error in processing request: No event with name %1$s found in database %2$s."
+msgstr "Päringu töötlemise viga: andmebaasist %2$s ei leitud sündmust nimega %1$s."
+
+msgid "Add event"
+msgstr "Lisa sündmus"
+
+msgid "Edit event"
+msgstr "Muuda sündmust"
+
+msgid "No event with name %1$s found in database %2$s."
+msgstr "Andmebaasist %2$s ei leitud sündmust nimega %1$s."
 
 msgid "Bad type!"
 msgstr "Halb tüüp!"
@@ -8462,53 +8462,26 @@ msgstr "Siseseos on kustutatud."
 msgid "Could not load schema plugins, please check your installation!"
 msgstr "Skeemi pluginaid ei suudetud laadida, palun kontrolli oma paigaldust!"
 
+msgid "Invalid routine type: \"%s\""
+msgstr "Vale funktsiooni tüüp: \"%s\""
+
 msgid "The following query has failed: \"%s\""
 msgstr "Järgnev päring ebaõnnestus: \"%s\""
 
 msgid "MySQL said: "
 msgstr "MySQL vastas: "
 
-msgid "Sorry, we failed to restore the dropped event."
-msgstr "Vabanda, meil ei õnnestunud kustutatud sündmust taastada."
-
-msgid "The backed up query was:"
-msgstr "Varundatud päring oli:"
-
-msgid "Event %1$s has been modified."
-msgstr "%1$s sündmust on muudetud."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s sündmus on loodud."
+msgid "Routine %1$s has been created."
+msgstr "%1$s funktsioon on loodud."
 
 msgid "One or more errors have occurred while processing your request:"
 msgstr "Sinu päringu töötlemisel esines vähemalt üks viga:"
 
-msgid "The definer must be in the \"username@hostname\" format!"
-msgstr "Määraja peab olema formaadis \"kasutajanimi@hostinimi\"!"
-
-msgid "You must provide an event name!"
-msgstr "Sa pead andma sündmuse nime!"
-
-msgid "You must provide a valid interval value for the event."
-msgstr "Sa pead andma sündmusele õige intervalli väärtuse."
-
-msgid "You must provide a valid execution time for the event."
-msgstr "Sa pead andma sündmusele õige käivitamise aja."
-
-msgid "You must provide a valid type for the event."
-msgstr "Sa pead andma sündmusele õige tüübi."
-
-msgid "You must provide an event definition."
-msgstr "Sa pead andma sündmuse definitsiooni."
-
-msgid "Invalid routine type: \"%s\""
-msgstr "Vale funktsiooni tüüp: \"%s\""
-
-msgid "Routine %1$s has been created."
-msgstr "%1$s funktsioon on loodud."
-
 msgid "Sorry, we failed to restore the dropped routine."
 msgstr "Vabanda, me ei suutnud kustutatud funktsiooni taastada."
+
+msgid "The backed up query was:"
+msgstr "Varundatud päring oli:"
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Funktsiooni %1$s on muudetud. Õiguseid on vastavalt kohandatud."
@@ -8527,6 +8500,9 @@ msgstr "Sa pead andma ENUM, SET, VARCHAR ja VARBINARY tüüpi funktsiooni parame
 
 msgid "You must provide a valid return type for the routine."
 msgstr "Sa pead andma funktsioonile õige pöördumise tüübi."
+
+msgid "The definer must be in the \"username@hostname\" format!"
+msgstr "Määraja peab olema formaadis \"kasutajanimi@hostinimi\"!"
 
 msgid "You must provide a routine name!"
 msgstr "Sa pead andma funktsiooni nime!"
@@ -8712,6 +8688,30 @@ msgstr "Liiga palju veasõnumeid, mõningaid pole näha."
 
 msgid "Report"
 msgstr "Raport"
+
+msgid "Sorry, we failed to restore the dropped event."
+msgstr "Vabanda, meil ei õnnestunud kustutatud sündmust taastada."
+
+msgid "Event %1$s has been modified."
+msgstr "%1$s sündmust on muudetud."
+
+msgid "Event %1$s has been created."
+msgstr "%1$s sündmus on loodud."
+
+msgid "You must provide an event name!"
+msgstr "Sa pead andma sündmuse nime!"
+
+msgid "You must provide a valid interval value for the event."
+msgstr "Sa pead andma sündmusele õige intervalli väärtuse."
+
+msgid "You must provide a valid execution time for the event."
+msgstr "Sa pead andma sündmusele õige käivitamise aja."
+
+msgid "You must provide a valid type for the event."
+msgstr "Sa pead andma sündmusele õige tüübi."
+
+msgid "You must provide an event definition."
+msgstr "Sa pead andma sündmuse definitsiooni."
 
 msgid "Access denied!"
 msgstr "Ligipääs keelatud!"

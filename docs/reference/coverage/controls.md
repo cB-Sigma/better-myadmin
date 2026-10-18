@@ -118,7 +118,7 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `triggers/row.twig` | 4/4 | ✅ `item_name[]` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` |  |
 | `view_create.twig` | 10/10 | ✅ `id:format` ✅ `submit:Go` ✅ `view[algorithm]` ✅ `view[as]` ✅ `view[column_names]` ✅ `view[definer]` ✅ `view[name]` ✅ `view[or_replace]` ✅ `view[sql_security]` ✅ `view[with]` |  |
 
-## 05 database level — 244/268 (91.0%) covered, 244/268 implemented
+## 05 database level — 220/240 (91.7%) covered, 220/240 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
@@ -132,9 +132,6 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `database/designer/page_save_as.twig` | 2/2 | ✅ `save_page` ✅ `selected_value` |  |
 | `database/designer/page_selector.twig` | 1/1 | ✅ `selected_page` |  |
 | `database/designer/schema_export.twig` | 1/1 | ✅ `export_type` |  |
-| `database/events/editor_form.twig` | 13/15 | ✅ `id:format` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` | ⬜ `editor_process_*` ⬜ `item_changetype` |
-| `database/events/index.twig` | 8/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` | ⬜ `item_name[]` |
-| `database/events/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
 | `database/multi_table_query/form.twig` | 14/22 | ✅ `button:criteria` ✅ `button:Query window` ✅ `button:Remove this column` ✅ `checkbox:Use this column in criteria` ✅ `id:add_column_button` ✅ `id:copy_query` ✅ `id:submit_query` ✅ `id:update_query_button` ✅ `logical_op[*]` ✅ `sort[*]` ✅ `sql_query` ✅ `text:Column alias` ✅ `text:Enter criteria as free text` ✅ `text:Table alias` | ⬜ `checkbox:L37` ⬜ `select:L115` ⬜ `select:L125` ⬜ `select:L133` ⬜ `select:L26` ⬜ `select:L33` ⬜ `select:L83` ⬜ `select:L92` |
 | `database/operations/index.twig` | 17/18 | ✅ `add_constraints` ✅ `adjust_privileges` ✅ `change_all_tables_collations` ✅ `change_all_tables_columns_collations` ✅ `comment` ✅ `create_database_before_copying` ✅ `db_collation` ✅ `drop_if_exists` ✅ `newname` ✅ `num_fields` ✅ `sql_auto_increment` ✅ `submit_copy` ✅ `submit:Create` ✅ `submit:Go` ✅ `switch_to_new` ✅ `table` ✅ `what` | ⬜ `link:Database %s has been dropped.` |
 | `database/privileges/index.twig` | 6/6 | ✅ `id:usersForm_checkall` ✅ `link:Add user account` ✅ `link:Edit privileges` ✅ `link:Export` ✅ `selected_usr[]` ✅ `submit_mult` |  |
@@ -232,8 +229,11 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `sql/_bookmark.twig` | 3/3 | ✅ `bkm_all_users` ✅ `bkm_fields[bkm_label]` ✅ `submit:Create new bookmark` |  |
 | `sql/query.twig` | 25/25 | ✅ `action_bookmark` ✅ `bkm_all_users` ✅ `bkm_label` ✅ `bkm_replace` ✅ `button:Close` ✅ `dummy` ✅ `fk_checks` ✅ `id_bookmark` ✅ `id:clear` ✅ `id:delete` ✅ `id:format` ✅ `id:formatSingleLine` ✅ `id:insert` ✅ `id:saved` ✅ `id:select` ✅ `id:selectall` ✅ `id:update` ✅ `insert` ✅ `parameterized` ✅ `retain_query_box` ✅ `rollback_query` ✅ `show_query` ✅ `SQL` ✅ `sql_delimiter` ✅ `sql_query` |  |
 
-## other — 1/1 (100.0%) covered, 1/1 implemented
+## other — 25/29 (86.2%) covered, 25/29 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
+| `events/editor-form.twig` | 13/15 | ✅ `id:format` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` | ⬜ `editor_process_*` ⬜ `item_changetype` |
+| `events/index.twig` | 8/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` | ⬜ `item_name[]` |
+| `events/row.twig` | 3/4 | ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` | ⬜ `item_name[]` |
 | `src/Html/Generator.php` | 1/1 | ✅ `select:pageselector` |  |

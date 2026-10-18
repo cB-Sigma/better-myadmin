@@ -666,16 +666,16 @@ export class NodeProcedureContainer extends NodeDatabaseChildContainer {
 export class NodeEventContainer extends NodeDatabaseChildContainer {
   constructor(ctx: NavCtx) {
     super(ctx, 'Events')
-    this.icon = new Icon('b_events', 'Events', '/database/events', { db: null })
-    this.link = new Link('', '/database/events', { db: null })
+    this.icon = new Icon('b_events', 'Events', '/events', { db: null })
+    this.link = new Link('', '/events', { db: null })
     this.realName = 'events'
     const p = { add_item: 1, db: null }
     newChild(
       this,
       'New',
       'new_event italics',
-      new Icon('b_event_add', 'New', '/database/events', p),
-      new Link('New', '/database/events', p),
+      new Icon('b_event_add', 'New', '/events', p),
+      new Link('New', '/events', p),
     )
   }
 }
@@ -936,8 +936,8 @@ export class NodeFunction extends NodeDatabaseChild {
 export class NodeEvent extends NodeDatabaseChild {
   constructor(ctx: NavCtx, name: string) {
     super(ctx, name)
-    this.icon = new Icon('b_events', 'Event', '/database/events', { edit_item: 1, db: null, item_name: null })
-    this.link = new Link('', '/database/events', { edit_item: 1, db: null, item_name: null })
+    this.icon = new Icon('b_events', 'Event', '/events', { edit_item: 1, db: null, item_name: null })
+    this.link = new Link('', '/events', { edit_item: 1, db: null, item_name: null })
     this.classes = 'event'
     this.urlParamName = 'item_name'
   }

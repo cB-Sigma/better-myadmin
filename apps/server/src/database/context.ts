@@ -48,7 +48,11 @@ export interface DbCtx {
 export async function withDb<T>(
   c: Context<ServerEnv>,
   fn: (ctx: DbCtx) => Promise<T>,
-  opts: { select?: boolean; db?: string } = {},
+  opts: {
+    select?: boolean
+    db?: string /** the translated message for a missing database */
+    noDatabase?: string
+  } = {},
 ): Promise<T> {
   const { pools } = c.get('deps')
   const session = c.get('session')
@@ -75,7 +79,7 @@ export async function withDb<T>(
     const reader = new TableReader(conn, login.cache, tr)
     if (opts.select !== false) {
       if (db === '' || !(await reader.selectDb(db)))
-        throw new NotFoundError(tr.gettext('No databases selected.'))
+        throw new NotFoundError(opts.noDatabase ?? tr.gettext('No databases selected.'))
     }
     const rp = await meta.relationParameters()
     const cfg = await meta.settings()

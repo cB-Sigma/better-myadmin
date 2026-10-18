@@ -23,7 +23,7 @@ Out of scope here (covered by other documents, only pointed to): the SQL editor 
 | operation | `/database/operations` | Operations / `b_tblops` | not a system schema |
 | privileges | `/database/privileges` | Privileges / `s_rights` | not system schema AND (super user OR grant user OR create user) |
 | routines | `/database/routines` | Routines / `b_routines` | not a system schema |
-| events | `/database/events` | Events / `b_events` | not system schema AND `Util::currentUserHasPrivilege('EVENT', db)` |
+| events | `/events` | Events / `b_events` | not system schema AND `Util::currentUserHasPrivilege('EVENT', db)` |
 | triggers | `/triggers` | Triggers / `b_triggers` | not system schema AND `currentUserHasPrivilege('TRIGGER', db)` |
 | tracking | `/database/tracking` | Tracking / `eye` | `Tracker::isActive()` AND not system schema |
 | designer | `/database/designer` | Designer / `b_relations` | not a system schema |
@@ -44,7 +44,7 @@ Out of scope here (covered by other documents, only pointed to): the SQL editor 
 | Query (multi-table) | `src/Controllers/Database/MultiTableQueryController.php`, `.../MultiTableQuery/{Query,Tables}Controller.php`, `src/Database/MultiTableQuery.php` | `database/multi_table_query/form.twig` | `database/multi_table_query.ts`, `database/query_generator.ts` |
 | Privileges | `src/Controllers/Database/PrivilegesController.php` (+ `src/Server/Privileges.php::getAllPrivileges`) | `database/privileges/index.twig` | `server/privileges.ts` |
 | Routines | `src/Controllers/Database/RoutinesController.php`, `src/Database/{Routines,Routine,RoutineItem,RoutineType}.php` | `database/routines/{index,row,editor_form,parameter_row,execute_form}.twig` | `database/routines.ts` |
-| Events | `src/Controllers/Database/EventsController.php`, `src/Database/Events.php` | `database/events/{index,row,editor_form}.twig` | `database/events.ts` |
+| Events | `src/Controllers/Events/{Index,Export}Controller.php`, `src/Events/Events.php` | `events/{index,row,editor-form}.twig` | `events.ts` |
 | Triggers (db scope) | `src/Controllers/Triggers/IndexController.php`, `src/Triggers/*` | `triggers/{list,row,editor_form,export}.twig` | `triggers.ts` |
 | Tracking (db scope) | `src/Controllers/Database/TrackingController.php`, `src/Tracking/{Tracking,Tracker,TrackingChecker,TrackedTable,TrackedData}.php` | `database/tracking/tables.twig`, `create_tracking_version.twig` | `database/tracking.ts` |
 | Designer | `src/Controllers/Database/DesignerController.php`, `src/Database/Designer.php`, `src/Database/Designer/{Common,DesignerTable,ColumnInfo}.php` | `database/designer/{main,database_tables,edit_delete_pages,page_save_as,page_selector,schema_export}.twig` | `resources/js/designer/{init,config,move,page,history,database,objects}.ts` |
@@ -358,19 +358,19 @@ Client validation (`routines.ts::validateCustom` etc.): name and definition requ
 
 ---
 
-### Events (`/database/events`)
+### Events (`/events`, `/events/export`)
 
-**Controller.** `EventsController` (GET/POST). Scripts `database/events.js`, `sql.js`. Same dispatch pattern as routines: editor submit → editor display (`add_item`/`edit_item`/`item_changetype`) → `export_item` → list.
+**Controllers.** `Events\IndexController` (`/events`, GET/POST) and `Events\ExportController` (`/events/export`, GET, `item_name`). Scripts `events.js`, `sql.js`. A missing or unknown `db` answers "No database selected." (redirect to `/` outside AJAX). Index dispatch: editor submit → editor display (`add_item`/`edit_item`/`item_changetype`) → list. With the event scheduler `DISABLED` (server started with `--event-scheduler=DISABLED`) neither the editor nor the export does anything and the page shows only the heading and the notice "The event scheduler is disabled." (avoids the server error 1577).
 
 **List** (`events/index.twig`): heading `b_events` Events + docu `EVENTS`. Toolbar: Check all + Export + Drop (when any), **Create new event** (`add_item=1`, disabled unless `EVENT` privilege). Table `#eventsTable`: checkbox · **Name** (hidden `drop_sql` = `DROP EVENT IF EXISTS `name``) · **Status** · **Type** · Edit / Export / Drop. Rows sorted by name (`array_multisort`). Source query: `information_schema.EVENTS` (or `SHOW EVENTS FROM `db`` when `DisableIS`). Empty → "There are no events to display.".
 
-**Event scheduler status** card: a toggle switch (`.toggleAjax` "Click to toggle") with ON/OFF; ON posts `sql_query=SET GLOBAL event_scheduler="ON"` to `/sql` (goto `/database/events?db`), OFF posts `SET GLOBAL event_scheduler="OFF"`; state from `SHOW GLOBAL VARIABLES LIKE 'event_scheduler'` (`ON` or `1` → on). Callback `window.pmaSlidingMessage(data.sql_query)`.
+**Event scheduler status** card: a toggle switch (`.toggleAjax` "Click to toggle") with ON/OFF; ON posts `sql_query=SET GLOBAL event_scheduler="ON"` to `/sql` (goto `/events?db`), OFF posts `SET GLOBAL event_scheduler="OFF"`; state from `SHOW GLOBAL VARIABLES LIKE 'event_scheduler'` (`Events::getEventSchedulerStatus`: `DISABLED`, else `ON` or `1` → `ON`, else `OFF`); the switch shows on only for `ON`. Callback `window.pmaSlidingMessage(data.sql_query)`.
 
 Modals: `#eventsEditorModal` ("Event editor", Close / Save changes), `#eventsExportModal` ("Export event").
 
 **Editor** (`events/editor_form.twig`): hidden `add_item`/`edit_item`, `item_original_name` in edit. Rows: **Event name** text `item_name` (maxlength 64); **Status** select `item_status` `ENABLED` / `DISABLED` / `SLAVESIDE_DISABLED`; **Event type** select `item_type` `RECURRING` / `ONE TIME` (no-JS: "Change to …" button `item_changetype`); **Execute at** text `item_execute_at` (`datetimefield`, row `onetime_event_row` shown for ONE TIME); **Execute every** text `item_interval_value` + select `item_interval_field` `YEAR, QUARTER, MONTH, DAY, HOUR, MINUTE, WEEK, SECOND, YEAR_MONTH, DAY_HOUR, DAY_MINUTE, DAY_SECOND, HOUR_MINUTE, HOUR_SECOND, MINUTE_SECOND` (row `recurring_event_row`); **Start** `item_starts` (datetime); **End** `item_ends` (datetime); **Definition** textarea `item_definition` + **Format**; **On completion preserve** checkbox `item_preserve`; **Definer** text; **Comment** text (maxlength 64). Changing `item_type` toggles the recurring/one-time rows (`events.ts`). Datetime inputs get the datepicker on modal show.
 
-**Server** (`Events::getQueryFromRequest`): `CREATE [DEFINER=`u`@`h` ]EVENT `name` ON SCHEDULE ` + (`RECURRING`: `EVERY <int> <FIELD> [STARTS '…'] [ENDS '…']` — "You must provide a valid interval value for the event." if missing; `ONE TIME`: `AT '…'` — "You must provide a valid execution time for the event.") + `ON COMPLETION [NOT ]PRESERVE ` + status mapped `ENABLED→ENABLE`, `DISABLED→DISABLE`, `SLAVESIDE_DISABLED→DISABLE ON SLAVE` + `[COMMENT '…'] DO <definition>`. Errors: definer format, "You must provide an event name!", "You must provide a valid type for the event.", "You must provide an event definition.". Edit: backup via `SHOW CREATE EVENT`, `DROP EVENT IF EXISTS `orig`;`, CREATE, restore on failure ("Sorry, we failed to restore the dropped event."). Messages "Event %1$s has been created." / "Event %1$s has been modified.". After a successful AJAX create, if the event is immediately gone (one-time event already executed and not preserved) → `success:false` "The event was dropped immediately after creation.". Export: `SHOW CREATE EVENT` text in modal "Export of event `name`" (plain, no DELIMITER wrapper). Drop/bulk drop identical to routines (`strDropRTEitems`).
+**Server** (`Events::getQueryFromRequest`): `CREATE [DEFINER=`u`@`h` ]EVENT `name` ON SCHEDULE ` + (`RECURRING`: `EVERY <int> <FIELD> [STARTS '…'] [ENDS '…']` — "You must provide a valid interval value for the event." when the value is empty or the field not one of the 15 units; `0` is accepted and left to the server; `ONE TIME`: `AT '…'` — "You must provide a valid execution time for the event.") + `ON COMPLETION [NOT ]PRESERVE ` + status mapped `ENABLED→ENABLE`, `DISABLED→DISABLE`, `SLAVESIDE_DISABLED→DISABLE ON SLAVE` + `[COMMENT '…'] DO <definition>`. Errors: definer format, "You must provide an event name!", "You must provide a valid type for the event.", "You must provide an event definition.". Edit: backup via `SHOW CREATE EVENT`, `DROP EVENT IF EXISTS `orig`;`, CREATE, restore on failure ("Sorry, we failed to restore the dropped event."). Messages "Event %1$s has been created." / "Event %1$s has been modified.". After a successful AJAX create, if the event is immediately gone (one-time event already executed and not preserved) → `success:false` "The event was dropped immediately after creation.". Export: `SHOW CREATE EVENT` text in modal "Export of event `name`" (plain, no DELIMITER wrapper). Drop/bulk drop identical to routines (`strDropRTEitems`).
 
 ---
 
@@ -622,7 +622,8 @@ Events
 - [ ] Status options ENABLED/DISABLED/SLAVESIDE_DISABLED map to ENABLE/DISABLE/DISABLE ON SLAVE.
 - [ ] Type switch toggles Execute at vs Execute every/Start/End rows; interval value cast to int; 15 interval units.
 - [ ] ON COMPLETION PRESERVE from checkbox; comment maxlength 64.
-- [ ] Scheduler toggle issues `SET GLOBAL event_scheduler="ON"|"OFF"`.
+- [x] Scheduler toggle issues `SET GLOBAL event_scheduler="ON"|"OFF"`; it shows on only for `ON`. <!-- parity:test --> `p05-396223` [database-programs.parity.test.ts:289](../../tests/parity/database-programs.parity.test.ts#L289)
+- [x] Scheduler `DISABLED`: only the notice "The event scheduler is disabled.", no list, editor or export. <!-- parity:test --> `p05-8a82ee` [database-programs.parity.test.ts:289](../../tests/parity/database-programs.parity.test.ts#L289)
 - [ ] One-time event that fires immediately → "The event was dropped immediately after creation.".
 - [ ] Rows sorted by name; export shows raw `SHOW CREATE EVENT`.
 

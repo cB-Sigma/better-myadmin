@@ -144,7 +144,7 @@ Every full (non-AJAX) page is rendered by `ResponseRenderer::getDisplay()` → `
 | `NodeViewContainer` | "Views" / `views`, `viewContainer subContainer` | `b_views` → `/database/structure?tbl_type=view` | "New" (Create new view) `b_view_add` → `/view/create?db=` (`new_view`); JS intercepts `li.new_view a.ajax` and opens the *Create view* modal (`handleCreateViewModal`) | `NavigationTreeShowViews=true` |
 | `NodeFunctionContainer` | "Functions" / `functions` | `b_routines` → `/database/routines?type=FUNCTION` | "New" (Create new function) `b_routine_add` → `/database/routines?item_type=FUNCTION&add_item=1` | `NavigationTreeShowFunctions=true` |
 | `NodeProcedureContainer` | "Procedures" / `procedures` | `b_routines` → `/database/routines?type=PROCEDURE` | "New" (Create new procedure) → `/database/routines?add_item=1` | `NavigationTreeShowProcedures=true` |
-| `NodeEventContainer` | "Events" / `events` | `b_events` → `/database/events` | "New" (Create new event) `b_event_add` → `/database/events?add_item=1` | `NavigationTreeShowEvents=true` |
+| `NodeEventContainer` | "Events" / `events` | `b_events` → `/events` | "New" (Create new event) `b_event_add` → `/events?add_item=1` | `NavigationTreeShowEvents=true` |
 
 The *Tables* container `<li>` is **not shown** when it has no siblings (`renderNode`: `NodeTableContainer && !hasSiblings()` → children are rendered directly under the database). Empty containers are dropped from full renders (`nodeIsContainer && children === [] && !isAjax → ''`). Object lists come from `ObjectFetcher` (I_S `TABLES`/`ROUTINES`/`EVENTS`, or `SHOW FULL TABLES`/`SHOW PROCEDURE|FUNCTION STATUS`/`SHOW EVENTS` with `DisableIS`), tables being `TABLE_TYPE IN ('BASE TABLE','SYSTEM VERSIONED')` and everything else a view; results are cached per fetcher instance and sliced with `array_slice(pos2, MaxNavigationItems)` after natural sorting; items present in `pma__navigationhiding` for the user/db/type are removed from the slice (so a page can show fewer than `MaxNavigationItems`).
 
@@ -157,7 +157,7 @@ The *Tables* container `<li>` is **not shown** when it has no siblings (`renderN
 | `NodeTable` | `nav_node_table` | First icon from `NavigationTreeDefaultTabTable` (`'structure'` → `/table/structure` `b_props` "Structure"; `sql`→`/table/sql` `b_sql` "SQL"; `search`→`/table/search` `b_search` "Search"; `insert`→`/table/change` `b_insrow` "Insert"; `browse`→`/sql` `b_browse` "Browse"). Optional second icon from `NavigationTreeDefaultTabTable2` (`''` = none) rendered in a `div.block.second.double`. | `DefaultTabTable` (`'browse'` → `/sql?pos=0&db&table`), title from `Util::getTitleForTarget` | `table` |
 | `NodeView` | `view` | `b_props` "View" → `/table/structure` | `/sql?pos=0` | `table` |
 | `NodeProcedure` / `NodeFunction` | `procedure` / `function` | `b_routines` "Procedure"/"Function" → `/database/routines?item_type=…&execute_dialog=1&item_name=` (opens *Execute* dialog) | `/database/routines?item_type=…&edit_item=1&item_name=` | `item_name` |
-| `NodeEvent` | `event` | `b_events` "Event" → `/database/events?edit_item=1` | same | `item_name` |
+| `NodeEvent` | `event` | `b_events` "Event" → `/events?edit_item=1` | same | `item_name` |
 | `NodeTrigger` | `trigger` | `b_triggers` "Trigger" → `/triggers?export_item=1` | `/triggers?edit_item=1` | `item_name` |
 | `NodeColumn` | — | `b_primary` (PRI) / `bd_primary` (UNI) / `pause` (other) "Column" → `/table/structure/change?change_column=1&field=` | same; display text `name (key, type, default…, nullable)` — `getDisplayName()` appends every non-empty attribute (`key`, `type`, `default` truncated to 6 bytes + `...`, `nullable`) in parentheses | `field` |
 | `NodeIndex` | `index` | `b_index` "Index" → `/table/indexes?index=` | `/table/indexes` — the text link has **no** `disableAjax` and carries `data-post` (`is_from_nav=1`), because the route needs POST params (comment in `node.twig`) | `index` |
@@ -564,7 +564,7 @@ Rendered by `Menu::getServerTabs/getDbTabs/getTableTabs` into `menu/main.twig`; 
 | operation | `b_tblops` | Operations | `/database/operations` | not system schema |
 | privileges | `s_rights` | Privileges | `/database/privileges` | not system schema and `isSuperUser() || isGrantUser() || isCreateUser()` |
 | routines | `b_routines` | Routines | `/database/routines` | not system schema |
-| events | `b_events` | Events | `/database/events` | not system schema and `currentUserHasPrivilege('EVENT', db)` |
+| events | `b_events` | Events | `/events` | not system schema and `currentUserHasPrivilege('EVENT', db)` |
 | triggers | `b_triggers` | Triggers | `/triggers` | not system schema and `currentUserHasPrivilege('TRIGGER', db)` |
 | tracking | `eye` | Tracking | `/database/tracking` | `Tracker::isActive()` and not system schema |
 | designer | `b_relations` | Designer | `/database/designer` | not system schema |
@@ -661,8 +661,8 @@ Navigation panel
 - [ ] Routine icon opens the *Execute* dialog, routine text opens *Edit*; trigger icon = export, text = edit; event = edit.
 - [x] Column label `name (key, type, default…, nullable)` with default truncated to 6 bytes; PRI/UNI icons. <!-- parity:test --> `p01-60ce39` [navigation.test.ts:189](../../apps/server/test/int/navigation.test.ts#L189) +1
 - [ ] Hide (eye) on every db child incl. containers; database shows an unhide icon when hidden items exist; unhide dialog grouped by type.
-- [x] *Tables* container row is suppressed when it is the only container (its tables, filter and page selector show under the database); the client auto-expands a loaded branch made of a single container `<li>`. <!-- parity:test --> `p01-5523b6` [navigation.test.ts:138](../../apps/web/src/features/navigation/navigation.test.ts#L138) +2
-- [x] Link-with-main-panel: highlight + expand + scroll current db/table after every AJAX load; toggle is session-only; `autoexpand` opens the only database when none is selected. <!-- parity:test --> `p01-750138` [navigation.test.ts:245](../../apps/web/src/features/navigation/navigation.test.ts#L245) +1
+- [x] *Tables* container row is suppressed when it is the only container (its tables, filter and page selector show under the database); the client auto-expands a loaded branch made of a single container `<li>`. <!-- parity:test --> `p01-5523b6` [navigation.test.ts:141](../../apps/web/src/features/navigation/navigation.test.ts#L141) +2
+- [x] Link-with-main-panel: highlight + expand + scroll current db/table after every AJAX load; toggle is session-only; `autoexpand` opens the only database when none is selected. <!-- parity:test --> `p01-750138` [navigation.test.ts:248](../../apps/web/src/features/navigation/navigation.test.ts#L248) +1
 - [ ] Hover reveals a floating full-name layer for truncated names; `highlight` class gives hover pointer styling.
 - [x] Reload icon re-fetches the full tree keeping expansion; `reload` also clears the cached db list. <!-- parity:test --> `p01-b7e594` [navigation.test.ts:274](../../apps/server/test/int/navigation.test.ts#L274) +1
 - [ ] Recent (10) / Favorites (10) dropdowns above the tree; favorites synced between `localStorage.favoriteTables[sha1(user)]` and `pma__favorite` via a one-time hidden sync link; "Favorite List is full!"; star buttons on structure page and dropdown stay in sync via `data-favtargets`.
