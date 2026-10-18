@@ -5,7 +5,7 @@ import type {
   UsersOverviewResponse,
 } from '@bettermyadmin/contracts'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { type AllowedDiff, compareLogs } from './lib/compare.ts'
+import { type AllowedDiff, classify, compareLogs } from './lib/compare.ts'
 import type { LogEntry } from './lib/general-log.ts'
 import { $, $$, type Node, pageHtml, parse, text } from './lib/html.ts'
 import type { PmaForm, PmaJson } from './lib/pma.ts'
@@ -464,7 +464,7 @@ const NEW_DB_MENU: AllowedDiff[] = [
   },
 ]
 
-const writes = (c: { bma: string[] }) => c.bma.filter((s) => !/^(SELECT|SHOW|USE)\b/.test(s))
+const writes = (c: { bma: string[] }) => c.bma.filter((s) => classify(s) === 'write')
 
 describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
   it('text fields, password, plugin, same-name database, wildcard grant, privileges, limits', async () => {

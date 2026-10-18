@@ -85,6 +85,7 @@ Values are coerced according to the directive's type:
 | `LoginRateLimit.{enabled,maxAttempts,windowSeconds,lockoutSeconds}` | `true, 5, 900, 300` | failed-login limiter (X2) |
 | `ForceSSL` | `false` | honoured, unlike phpMyAdmin (X22) |
 | `MaxUploadSize` | 512 MiB | upload limit (phpMyAdmin uses PHP's `upload_max_filesize`) |
+| `ConnectionPool.{idleTimeout,maxTotal,waitTimeout}` | `10, 50, 30` | MySQL connections kept between requests: idle seconds, cap for the whole process, seconds a request waits at the cap (X24) |
 | `Servers[i].max_connections` | `4` | mysql2 pool size |
 | `Export.csv_escape_formulas` | `false` | CSV formula escaping (X3) |
 | `Import.MaxDecompressedSize` | `0` (= 10 × `MaxUploadSize`) | decompression cap |

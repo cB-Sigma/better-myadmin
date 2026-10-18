@@ -1,10 +1,11 @@
 import type { Executed } from '@bettermyadmin/contracts'
 import type { MetaConn, QueryOutcome } from '@bettermyadmin/metadata'
-import mysql, { type FieldPacket, type Pool, type PoolConnection, type ResultSetHeader } from 'mysql2/promise'
+import mysql, { type FieldPacket, type PoolConnection, type ResultSetHeader } from 'mysql2/promise'
 import { connectionErrorMessage } from '../auth/failure.ts'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { isMysqlError } from '../http/errors.ts'
-import { type Credentials, connectionOptions } from './pool-manager.ts'
+import type { BudgetedPool, ConnectionBudget } from './budget.ts'
+import { type Credentials, connectionOptions, idleOptions } from './pool-manager.ts'
 import { afterQuery } from './query-hook.ts'
 
 /**
@@ -153,10 +154,7 @@ function toOutcome(res: unknown, fields: unknown): QueryOutcome {
   }
 }
 
-interface ControlPool {
-  pool: Pool
-  lastUsed: number
-}
+type ControlPool = BudgetedPool
 
 export interface AcquiredControl {
   conn: ControlConn
@@ -176,24 +174,35 @@ export interface AcquiredControl {
  */
 export class ControlConnections {
   readonly #cfg: AppConfig
+  readonly #budget: ConnectionBudget
   readonly #shared = new Map<number, ControlPool>()
   readonly #perSession = new Map<string, ControlPool>()
 
-  constructor(cfg: AppConfig) {
+  constructor(cfg: AppConfig, budget: ConnectionBudget) {
     this.#cfg = cfg
+    this.#budget = budget
   }
 
   #pool(server: ServerConfig, creds: Credentials): ControlPool {
-    return {
+    const entry: ControlPool = {
       pool: mysql.createPool({
         ...connectionOptions(server, creds),
         multipleStatements: true,
         connectionLimit: 2,
-        maxIdle: 1,
-        idleTimeout: 60_000,
+        ...idleOptions(this.#cfg.ConnectionPool.idleTimeout, 2),
       }),
       lastUsed: Date.now(),
+      open: 0,
+      busy: new Set(),
+      ended: false,
     }
+    this.#budget.track(entry)
+    return entry
+  }
+
+  async #end(entry: ControlPool): Promise<void> {
+    this.#budget.untrack(entry)
+    await entry.pool.end().catch(() => {})
   }
 
   async acquire(
@@ -213,8 +222,8 @@ export class ControlConnections {
         this.#shared.set(serverIndex, entry)
       }
       try {
-        const raw = await entry.pool.getConnection()
-        entry.lastUsed = Date.now()
+        const pool = entry.pool
+        const raw = await this.#budget.getConnection(entry, () => pool.getConnection())
         return { conn: new ControlConn(raw, log), viaControlUser: true, error: null }
       } catch (e) {
         // pma: src/Dbal/DbiMysqli.php::connect (1045 hidden by the control link's hide_connection_errors)
@@ -227,7 +236,7 @@ export class ControlConnections {
                 ? e.message
                 : String(e)
         this.#shared.delete(serverIndex)
-        await entry.pool.end().catch(() => {})
+        await this.#end(entry)
       }
     }
     const key = `${sessionId}\u0000${serverIndex}\u0000${user.user}`
@@ -236,8 +245,8 @@ export class ControlConnections {
       entry = this.#pool(s, user)
       this.#perSession.set(key, entry)
     }
-    entry.lastUsed = Date.now()
-    const raw = await entry.pool.getConnection()
+    const pool = entry.pool
+    const raw = await this.#budget.getConnection(entry, () => pool.getConnection())
     return { conn: new ControlConn(raw, log), viaControlUser: false, error }
   }
 
@@ -246,14 +255,42 @@ export class ControlConnections {
       if (!key.startsWith(`${sessionId}\u0000`)) continue
       if (serverIndex !== undefined && !key.startsWith(`${sessionId}\u0000${serverIndex}\u0000`)) continue
       this.#perSession.delete(key)
-      await entry.pool.end().catch(() => {})
+      await this.#end(entry)
     }
+  }
+
+  /** The sessions holding a per-session link. */
+  sessionIds(): string[] {
+    return [...this.#perSession.keys()].map((k) => k.slice(0, k.indexOf('\u0000')))
+  }
+
+  /** Drops the pools with no request for `maxMs` and nothing checked out. */
+  async evictIdle(now: number, maxMs: number): Promise<void> {
+    for (const [n, e] of this.#shared) {
+      if (e.busy.size === 0 && now - e.lastUsed > maxMs) {
+        this.#shared.delete(n)
+        await this.#end(e)
+      }
+    }
+    for (const [k, e] of this.#perSession) {
+      if (e.busy.size === 0 && now - e.lastUsed > maxMs) {
+        this.#perSession.delete(k)
+        await this.#end(e)
+      }
+    }
+  }
+
+  /** The budget's reclaim of one of these pools. */
+  async endPool(entry: BudgetedPool): Promise<void> {
+    for (const [n, e] of this.#shared) if (e === entry) this.#shared.delete(n)
+    for (const [k, e] of this.#perSession) if (e === entry) this.#perSession.delete(k)
+    await this.#end(entry)
   }
 
   async closeAll(): Promise<void> {
     const all = [...this.#shared.values(), ...this.#perSession.values()]
     this.#shared.clear()
     this.#perSession.clear()
-    await Promise.all(all.map((e) => e.pool.end().catch(() => {})))
+    await Promise.all(all.map((e) => this.#end(e)))
   }
 }
