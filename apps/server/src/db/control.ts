@@ -5,8 +5,9 @@ import { connectionErrorMessage } from '../auth/failure.ts'
 import { type AppConfig, type ServerConfig, getServer } from '../config.ts'
 import { isMysqlError } from '../http/errors.ts'
 import type { BudgetedPool, ConnectionBudget } from './budget.ts'
-import { type Credentials, connectionOptions, idleOptions } from './pool-manager.ts'
+import { type Credentials, UNLIMITED, connectionOptions, idleOptions } from './pool-manager.ts'
 import { afterQuery } from './query-hook.ts'
+import { type SharedLink, requestScope } from './request-scope.ts'
 
 /**
  * Connection parameters of the control link: control user/password, `controlhost` (else the
@@ -156,6 +157,9 @@ function toOutcome(res: unknown, fields: unknown): QueryOutcome {
 
 type ControlPool = BudgetedPool
 
+/** control links of one pool in use at once (a request that holds one goes over it) */
+const CONTROL_LIMIT = 2
+
 export interface AcquiredControl {
   conn: ControlConn
   /** True when the link uses `controluser`; false when it fell back to the user's credentials. */
@@ -188,13 +192,14 @@ export class ControlConnections {
       pool: mysql.createPool({
         ...connectionOptions(server, creds),
         multipleStatements: true,
-        connectionLimit: 2,
-        ...idleOptions(this.#cfg.ConnectionPool.idleTimeout, 2),
+        connectionLimit: UNLIMITED,
+        ...idleOptions(this.#cfg.ConnectionPool.idleTimeout, CONTROL_LIMIT),
       }),
       lastUsed: Date.now(),
       open: 0,
       busy: new Set(),
       ended: false,
+      pending: 0,
     }
     this.#budget.track(entry)
     return entry
@@ -205,11 +210,54 @@ export class ControlConnections {
     await entry.pool.end().catch(() => {})
   }
 
+  /**
+   * The request's control link: a second MetaRequest of the same request shares the one it holds
+   * (phpMyAdmin: one control link per request). Each holder calls `conn.release()`.
+   */
   async acquire(
     sessionId: string,
     serverIndex: number,
     user: Credentials,
     log: Executed[],
+  ): Promise<AcquiredControl> {
+    const scope = requestScope()
+    if (scope === undefined) return this.#acquire(sessionId, serverIndex, user, log, false)
+    const linkKey = `control\u0000${sessionId}\u0000${serverIndex}\u0000${user.user}`
+    const shared = scope.links.get(linkKey) as SharedLink<Promise<AcquiredControl>> | undefined
+    if (shared !== undefined) {
+      shared.refs++
+      return shared.conn
+    }
+    const link: SharedLink<Promise<AcquiredControl>> = {
+      conn: this.#acquire(sessionId, serverIndex, user, log, scope.held > 0).then(
+        (acquired) => {
+          scope.held++
+          const realRelease = acquired.conn.release.bind(acquired.conn)
+          acquired.conn.release = () => {
+            if (--link.refs > 0) return
+            scope.links.delete(linkKey)
+            scope.held--
+            realRelease()
+          }
+          return acquired
+        },
+        (e: unknown) => {
+          scope.links.delete(linkKey)
+          throw e
+        },
+      ),
+      refs: 1,
+    }
+    scope.links.set(linkKey, link as SharedLink<unknown>)
+    return link.conn
+  }
+
+  async #acquire(
+    sessionId: string,
+    serverIndex: number,
+    user: Credentials,
+    log: Executed[],
+    holdsAny: boolean,
   ): Promise<AcquiredControl> {
     const s = getServer(this.#cfg, serverIndex)
     if (s === undefined) throw new Error(`Unknown server ${serverIndex}`)
@@ -223,7 +271,10 @@ export class ControlConnections {
       }
       try {
         const pool = entry.pool
-        const raw = await this.#budget.getConnection(entry, () => pool.getConnection())
+        const raw = await this.#budget.getConnection(entry, () => pool.getConnection(), {
+          limit: CONTROL_LIMIT * 4,
+          mayWait: !holdsAny,
+        })
         return { conn: new ControlConn(raw, log), viaControlUser: true, error: null }
       } catch (e) {
         // pma: src/Dbal/DbiMysqli.php::connect (1045 hidden by the control link's hide_connection_errors)
@@ -246,7 +297,10 @@ export class ControlConnections {
       this.#perSession.set(key, entry)
     }
     const pool = entry.pool
-    const raw = await this.#budget.getConnection(entry, () => pool.getConnection())
+    const raw = await this.#budget.getConnection(entry, () => pool.getConnection(), {
+      limit: CONTROL_LIMIT,
+      mayWait: !holdsAny,
+    })
     return { conn: new ControlConn(raw, log), viaControlUser: false, error }
   }
 

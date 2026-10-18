@@ -20,8 +20,8 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test.beforeEach(async ({ page }) => {
-  await login(page)
+/** The stored preferences back to the defaults (Console/Mode among them). */
+async function resetPrefs(page: Page) {
   await page.evaluate(async () => {
     const token = document.cookie
       .split('; ')
@@ -32,6 +32,16 @@ test.beforeEach(async ({ page }) => {
       headers: { 'X-BMA-Token': decodeURIComponent(token ?? '') },
     })
   })
+}
+
+test.beforeEach(async ({ page }) => {
+  await login(page)
+  await resetPrefs(page)
+})
+
+// these tests leave the console open (Console/Mode = show): later suites would race it for the focus
+test.afterEach(async ({ page }) => {
+  await resetPrefs(page).catch(() => undefined)
 })
 
 const messages = (page: Page) => page.getByTestId('console-messages')

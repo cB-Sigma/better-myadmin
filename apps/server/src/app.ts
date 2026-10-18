@@ -7,6 +7,7 @@ import { requestClientIp } from './auth/login.ts'
 import { authPageGate, isPageRequest } from './auth/page-gate.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
+import { runInRequestScope } from './db/request-scope.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { isHttpsRequest, securityHeaders } from './http/headers.ts'
@@ -79,6 +80,8 @@ export function createApp(deps: AppDeps) {
   const session = sessionMiddleware(deps)
   const language = languageLoading(languageManager(deps.cfg))
   const permissions = configPermissions()
+  // one user link and one control link per request (db/request-scope.ts)
+  app.use('/api/*', (_c, next) => runInRequestScope(next))
   app.use('/api/*', session)
   app.use('/api/*', sqlLog())
   app.use('/api/*', language)

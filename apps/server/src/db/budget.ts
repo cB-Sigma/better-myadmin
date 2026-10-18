@@ -10,6 +10,8 @@ export interface BudgetedPool {
   busy: Set<object>
   /** set when the pool has been ended */
   ended: boolean
+  /** acquisitions decided and not yet handed out */
+  pending: number
 }
 
 /** The core connection object behind a promise connection (the one pool events carry). */
@@ -81,18 +83,28 @@ export class ConnectionBudget {
     this.#notify()
   }
 
-  /** A connection of `entry`, within the cap. */
-  async getConnection<T>(entry: BudgetedPool, get: () => Promise<T>): Promise<T> {
+  /**
+   * A connection of `entry`, within the caps: `limit` connections in use for this pool (the
+   * session's `Servers[i].max_connections`) and `maxTotal` open for the process. A request that
+   * already holds a connection (`mayWait` false) is never made to wait: it would wait while
+   * holding what the others wait for. It goes over a cap instead, briefly.
+   */
+  async getConnection<T>(
+    entry: BudgetedPool,
+    get: () => Promise<T>,
+    opts: { limit?: number; mayWait?: boolean } = {},
+  ): Promise<T> {
+    const mayWait = opts.mayWait ?? true
     const deadline = Date.now() + this.waitMs
     let reserved = false
-    // a free connection of this pool needs no new one
-    while (entry.open - entry.busy.size <= 0) {
-      if (this.open + this.#pending < this.maxTotal) {
-        this.#pending++
-        reserved = true
-        break
-      }
-      if (await this.#reclaim(entry)) continue
+    for (;;) {
+      const inUse = entry.busy.size + entry.pending
+      const underLimit = opts.limit === undefined || inUse < opts.limit
+      // a free connection of this pool needs no new one
+      const free = entry.open - entry.busy.size - entry.pending > 0
+      if (underLimit && (free || this.open + this.#pending < this.maxTotal)) break
+      if (!mayWait) break
+      if (underLimit && (await this.#reclaim(entry))) continue
       const left = deadline - Date.now()
       if (left <= 0) throw new Error(`All ${this.maxTotal} database connections are in use; try again later.`)
       await new Promise<void>((resolve) => {
@@ -104,13 +116,20 @@ export class ConnectionBudget {
         this.#waiters.push(done)
       })
     }
+    entry.pending++
+    if (entry.open - entry.busy.size - entry.pending < 0) {
+      this.#pending++
+      reserved = true
+    }
     try {
       const conn = await get()
       entry.busy.add(core(conn))
       entry.lastUsed = Date.now()
       return conn
     } finally {
+      entry.pending--
       if (reserved) this.#pending--
+      this.#notify()
     }
   }
 
