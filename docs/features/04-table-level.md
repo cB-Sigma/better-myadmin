@@ -553,7 +553,7 @@ Structure list
 - [x] Default cell: `NULL` italic when nullable without default, `None` italic otherwise; BIT defaults shown as plain bits. <!-- parity:test --> `p04-5cfcc5` [table-structure.test.ts:68](../../apps/server/test/int/table-structure.test.ts#L68) +1
 - [x] Extra upper-cased. <!-- parity:test --> `p04-7efffd` [table-structure.test.ts:68](../../apps/server/test/int/table-structure.test.ts#L68) +1
 - [x] Action column hidden for views and system schemas; `colspan` 8 vs 9 depending on `ActionLinksMode` icons. <!-- parity:test --> `p04-46e274` [table-structure-extras.e2e.ts:111](../../tests/e2e/table-structure-extras.e2e.ts#L111)
-- [ ] "More" dropdown vs inline nav depends on `HideStructureActions`.
+- [x] "More" dropdown vs inline nav depends on `HideStructureActions`. <!-- parity:test --> `p04-4ff34f` [ui-gaps.e2e.ts:118](../../tests/e2e/ui-gaps.e2e.ts#L118)
 - [x] Primary/Unique/Index disabled for text/blob print types and ARCHIVE engine; Primary also disabled when column already in PK. <!-- parity:test --> `p04-eed3e0` [table-structure.test.ts:68](../../apps/server/test/int/table-structure.test.ts#L68) +1
 - [x] Spatial enabled only for spatial types on MySQL ≥ 5.7.5 / MyISAM; Fulltext only MyISAM/Aria/Maria or InnoDB ≥ 5.6.4 and char/text types. <!-- parity:test --> `p04-27610d` [table-structure.test.ts:68](../../apps/server/test/int/table-structure.test.ts#L68) +1
 - [x] Distinct values opens Browse with `COUNT(*) AS Rows, col … GROUP BY col ORDER BY col` and `is_browse_distinct`. <!-- parity:test --> `p04-a12911` [structure.test.ts:333](../../packages/sql-gen/test/structure.test.ts#L333) +3
@@ -595,7 +595,7 @@ Column form
 - [x] Online transaction checkbox appends `, ALGORITHM=INPLACE, LOCK=NONE` (add/change only). <!-- parity:test --> `p04-5c9f2a` [table-structure.parity.test.ts:928](../../tests/parity/table-structure.parity.test.ts#L928) +1
 - [x] Change-column collation change first converts to BLOB variant and reverts on failure. <!-- parity:test --> `p04-7544dc` [structure.test.ts:292](../../packages/sql-gen/test/structure.test.ts#L292) +4
 - [x] Renamed columns update pmadb (`Relation::renameField`), MIME settings saved, remembered sort cleared. <!-- parity:test --> `p04-98c823` [table-mime.parity.test.ts:186](../../tests/parity/table-mime.parity.test.ts#L186)
-- [ ] FEDERATED engine reveals the Connection field; other engines hide/disable it.
+- [x] FEDERATED engine reveals the Connection field; other engines hide/disable it. <!-- parity:test --> `p04-c48bc1` [ui-gaps.e2e.ts:139](../../tests/e2e/ui-gaps.e2e.ts#L139)
 - [x] Create table refuses existing table name; max 4096 columns; default 4 rows. <!-- parity:test --> `p04-8c7675` [table-structure.test.ts:160](../../apps/server/test/int/table-structure.test.ts#L160) +1
 - [x] Add column: only the first new column honours First/After; the rest chain `AFTER` previous. <!-- parity:test --> `p04-5a8e76` [table-structure.test.ts:182](../../apps/server/test/int/table-structure.test.ts#L182) +1
 
@@ -604,7 +604,7 @@ Index editor
 - [x] PRIMARY option hidden when a PK exists (unless editing it); a new index always offers it (`Index::hasPrimary()` has no table for it). <!-- parity:test --> `p04-4cb4a4` [table-structure.test.ts:478](../../apps/server/test/int/table-structure.test.ts#L478)
 - [x] SPATIAL hides size column, limits to one column, hides add-more; SPATIAL/FULLTEXT disable Index type. <!-- parity:test --> `p04-4973ea` [table-structure-extras.e2e.ts:126](../../tests/e2e/table-structure-extras.e2e.ts#L126)
 - [x] FULLTEXT column list filtered to char/text; SPATIAL to spatial types. <!-- parity:test --> `p04-e82c71` [indexEditor.test.ts:6](../../apps/web/src/features/table/indexes/indexEditor.test.ts#L6)
-- [ ] Column rows drag-sortable; slider 1..16 for "Add N column(s) to index".
+- [x] Column rows drag-sortable; slider 1..16 for "Add N column(s) to index". <!-- parity:test --> `p04-e4af55` [ui-gaps.e2e.ts:163](../../tests/e2e/ui-gaps.e2e.ts#L163)
 - [x] `USING` omitted for TokuDB; `WITH PARSER` only FULLTEXT; `KEY_BLOCK_SIZE` only when non-zero. <!-- parity:test --> `p04-04b04d` [structure.test.ts:139](../../packages/sql-gen/test/structure.test.ts#L139) +1
 - [x] Rename uses `RENAME INDEX` on MySQL ≥ 5.7 / MariaDB ≥ 10.5.2 else drop+recreate. <!-- parity:test --> `p04-99728b` [structure.test.ts:149](../../packages/sql-gen/test/structure.test.ts#L149) +2
 
@@ -654,7 +654,7 @@ Triggers
 - [x] Privilege-gated create/edit/drop; export always. <!-- parity:test --> `p04-941ec9` [table-triggers.test.ts:87](../../apps/server/test/int/table-triggers.test.ts#L87)
 - [x] Editor modal with CodeMirror + Format; definer `user@host` validation; table must exist. <!-- parity:test --> `p04-5b8c51` [table-triggers.test.ts:52](../../apps/server/test/int/table-triggers.test.ts#L52)
 - [x] Edit = drop + create with rollback; new row inserted alphabetically; moving to another table removes the row. <!-- parity:test --> `p04-d706ba` [table-triggers.test.ts:67](../../apps/server/test/int/table-triggers.test.ts#L67)
-- [ ] Bulk export concatenates; bulk drop confirms once.
+- [x] Bulk export concatenates; bulk drop confirms once. <!-- parity:test --> `p04-f581ea` [ui-gaps.e2e.ts:188](../../tests/e2e/ui-gaps.e2e.ts#L188)
 
 Chart / GIS
 - [x] Chart type visibility rules (Pie 1 series, Timeline date X, Scatter numeric X); Stacked for bar/column/area; series-in-column pivot; save as PNG. <!-- parity:test --> `p04-bc6299` [table-feature5.test.ts:71](../../apps/server/test/int/table-feature5.test.ts#L71) +3

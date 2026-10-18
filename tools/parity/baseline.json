@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010"
+    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d"
   },
   "kinds": {
     "routes": {
@@ -216,9 +216,9 @@
     },
     "controls": {
       "total": 1106,
-      "implemented": 1095,
-      "covered": 1105,
-      "coverage": 0.9991,
+      "implemented": 1096,
+      "covered": 1106,
+      "coverage": 1,
       "implementedKeys": [
         "base.twig#button:Open user account menu",
         "base.twig#link:Click on the bar to scroll to top of page",
@@ -736,6 +736,7 @@
         "navigation/main.twig#link:Navigation panel settings",
         "navigation/main.twig#link:phpMyAdmin documentation",
         "navigation/main.twig#link:Reload navigation panel",
+        "navigation/tree/database_select.twig#db",
         "navigation/tree/fast_filter.twig#button:Clear fast filter",
         "navigation/tree/fast_filter.twig#text:Type to filter these, Enter to search all",
         "navigation/tree/quick_warp.twig#button:Favorites",
@@ -1331,7 +1332,7 @@
     },
     "directives": {
       "total": 449,
-      "implemented": 427,
+      "implemented": 428,
       "covered": 448,
       "coverage": 0.9978,
       "implementedKeys": [
@@ -1572,6 +1573,7 @@
         "MaxRows",
         "MaxSizeForInputField",
         "MaxTableList",
+        "MemoryLimit",
         "MinSizeForInputField",
         "MysqlMinVersion/human",
         "MysqlMinVersion/internal",
@@ -1773,7 +1775,6 @@
         "Import/sql_read_as_multibytes",
         "LinkLengthLimit",
         "LoginCookieValidityDisableWarning",
-        "MemoryLimit",
         "PDFDefaultPageSize",
         "PersistentConnections",
         "Schema/pdf_all_tables_same_width",
@@ -1789,7 +1790,7 @@
     },
     "messages": {
       "total": 3428,
-      "implemented": 3282,
+      "implemented": 3283,
       "covered": 3427,
       "coverage": 0.9997,
       "implementedKeys": [
@@ -4633,6 +4634,7 @@
         "The total number of data reads.",
         "The total number of data writes.",
         "The total time spent in acquiring row locks, in milliseconds.",
+        "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
         "The uptime is only %s",
         "The URL of the proxy to be used when retrieving the information about the latest version of phpMyAdmin, or when submitting error reports. You need this if the server where phpMyAdmin is installed does not have direct access to the Internet. The format is: \"hostname:portnumber\".",
         "The user %s already exists!",
@@ -5196,7 +5198,6 @@
         "The trigger name cannot end with a space character.",
         "The trigger name must not be empty.",
         "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.",
-        "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
         "The uploaded file was only partially uploaded.",
         "Theme %s not found!",
         "There was an error in loading the Git information.",
@@ -5226,9 +5227,9 @@
     },
     "js": {
       "total": 966,
-      "implemented": 952,
-      "covered": 965,
-      "coverage": 0.999,
+      "implemented": 953,
+      "covered": 966,
+      "coverage": 1,
       "implementedKeys": [
         "js:codemirror/addon/lint/sql-lint.ts#ajax:POST /lint",
         "js:database/central_columns.ts#ajax:POST /database/central-columns",
@@ -5800,6 +5801,7 @@
         "js:modules/navigation/event-loader.ts#ajax:POST <$(this).attr('href')>",
         "js:modules/navigation/event-loader.ts#ajax:POST <$self.attr('href')>",
         "js:modules/navigation/event-loader.ts#blur:#pma_navigation_tree li.fast_filter input.searchClause",
+        "js:modules/navigation/event-loader.ts#change:#navi_db_select",
         "js:modules/navigation/event-loader.ts#click:.favorite_table_anchor",
         "js:modules/navigation/event-loader.ts#click:#pma_navigation_collapse",
         "js:modules/navigation/event-loader.ts#click:#pma_navigation_reload",
@@ -6201,9 +6203,9 @@
     },
     "checklist": {
       "total": 707,
-      "implemented": 697,
-      "covered": 703,
-      "coverage": 0.9943,
+      "implemented": 701,
+      "covered": 707,
+      "coverage": 1,
       "implementedKeys": [
         "p01-01225d",
         "p01-03005f",
@@ -6485,6 +6487,7 @@
         "p04-4da9c9",
         "p04-4dc9ab",
         "p04-4fd2f9",
+        "p04-4ff34f",
         "p04-511b9e",
         "p04-58bbc9",
         "p04-5a8e76",
@@ -6534,6 +6537,7 @@
         "p04-bc6299",
         "p04-c123c5",
         "p04-c3d646",
+        "p04-c48bc1",
         "p04-c9f811",
         "p04-cc268e",
         "p04-d067e0",
@@ -6542,12 +6546,14 @@
         "p04-e0df58",
         "p04-e3d505",
         "p04-e40cc6",
+        "p04-e4af55",
         "p04-e5b2c3",
         "p04-e82c71",
         "p04-e92555",
         "p04-e9ef21",
         "p04-eed3e0",
         "p04-f4f8d7",
+        "p04-f581ea",
         "p04-f60570",
         "p04-f66062",
         "p04-f822b0",

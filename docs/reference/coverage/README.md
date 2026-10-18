@@ -2,16 +2,16 @@
 
 # Parity coverage
 
-Mechanical inventories of phpMyAdmin `328b8d80` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
+Mechanical inventories of phpMyAdmin `a15cd540` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 200 | 186 | 13 | 1 | 0 | 0 | 0 | 0 | 0 | 200 | 100.0% |
-| Template controls | 1106 | 1095 | 3 | 7 | 1 | 0 | 0 | 0 | 0 | 1105 | 99.9% |
-| Config directives | 449 | 427 | 1 | 20 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
-| Messages (msgids) | 3428 | 3282 | 13 | 132 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
-| JS behaviours | 966 | 952 | 0 | 13 | 1 | 0 | 0 | 0 | 0 | 965 | 99.9% |
-| Checklist items | 707 | 697 | 0 | 6 | 0 | 0 | 0 | 4 | 0 | 703 | 99.4% |
+| Template controls | 1106 | 1096 | 3 | 7 | 0 | 0 | 0 | 0 | 0 | 1106 | 100.0% |
+| Config directives | 449 | 428 | 1 | 19 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
+| Messages (msgids) | 3428 | 3283 | 13 | 131 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
+| JS behaviours | 966 | 953 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 966 | 100.0% |
+| Checklist items | 707 | 701 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 707 | 100.0% |
 
 Status: ✅ implemented · 🔀 exception · ➖ n/a · 🗓️ planned · 🧪 untested · ❌ failing · ⬜ missing · 💥 broken. Details: [routes](routes.md), [template controls](controls.md), [config directives](directives.md), [messages (msgids)](messages.md), [js behaviours](js.md), [checklist items](checklist.md).
 
@@ -21,10 +21,10 @@ Covered / total per inventory (directives are attributed to the feature doc that
 
 | Area | Milestone | Routes | Template controls | Config directives | Messages (msgids) | JS behaviours | Checklist items |
 |---|---|---|---|---|---|---|---|
-| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 97/98 (99.0%) | 109/109 (100.0%) | 404/404 (100.0%) | 236/237 (99.6%) | 77/77 (100.0%) |
+| [01 shell navigation auth](../../features/01-shell-navigation-auth.md) | M1 | 23/23 (100.0%) | 98/98 (100.0%) | 109/109 (100.0%) | 404/404 (100.0%) | 237/237 (100.0%) | 77/77 (100.0%) |
 | [02 browse results grid](../../features/02-browse-results-grid.md) | M1 | 8/8 (100.0%) | 32/32 (100.0%) | 32/32 (100.0%) | 56/56 (100.0%) | 69/69 (100.0%) | 118/118 (100.0%) |
 | [03 insert edit transformations](../../features/03-insert-edit-transformations.md) | M2 | 7/7 (100.0%) | 28/28 (100.0%) | 16/16 (100.0%) | 79/79 (100.0%) | 22/22 (100.0%) | 59/59 (100.0%) |
-| [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 543/543 (100.0%) | 178/178 (100.0%) | 96/100 (96.0%) |
+| [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 543/543 (100.0%) | 178/178 (100.0%) | 100/100 (100.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 240/240 (100.0%) | 31/31 (100.0%) | 301/301 (100.0%) | 180/180 (100.0%) | 112/112 (100.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
 | [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 63/63 (100.0%) | 137/138 (99.3%) | 293/293 (100.0%) | 66/66 (100.0%) | 67/67 (100.0%) |
@@ -38,9 +38,7 @@ phpMyAdmin source files ranked by what we lack: uncovered routes (weight 5, by c
 
 | # | phpMyAdmin source | Area | Milestone | Routes | Controls | JS | Msgids | Score |
 |---|---|---|---|---|---|---|---|---|
-| 1 | `resources/js/modules/navigation/event-loader.ts` | 01 shell navigation auth | M1 | 0 | 0 | 1 | 0 | 2 |
-| 2 | `resources/templates/navigation/tree/database_select.twig` | 01 shell navigation auth | M1 | 0 | 1 | 0 | 0 | 2 |
-| 3 | `resources/js/validator-messages.ts` | 08 settings preferences pmadb | M4 | 0 | 0 | 0 | 1 | 1 |
+| 1 | `resources/js/validator-messages.ts` | 08 settings preferences pmadb | M4 | 0 | 0 | 0 | 1 | 1 |
 
 ## Cross-check notes
 
@@ -176,4 +174,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3428 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 966 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2048 control claims, 1835 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2050 control claims, 1877 tests.
