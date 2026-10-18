@@ -1,15 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { DbStructurePage } from '../../../../../features/database/DbStructurePage'
+import { qs } from '../../../../../lib/search'
 
 /** Database Structure tab (pma: /database/structure) */
 export const Route = createFileRoute('/s/$server/db/$db/structure')({
   validateSearch: z.object({
-    pos: z.coerce.string().optional(),
-    sort: z.string().optional(),
-    sort_order: z.string().optional(),
-    tbl_group: z.string().optional(),
-    tbl_type: z.string().optional(),
+    pos: qs.str(),
+    sort: qs.str(),
+    sort_order: qs.str(),
+    tbl_group: qs.str(),
+    tbl_type: qs.str(),
   }),
   component: function DbStructure() {
     const { server, db } = Route.useParams()

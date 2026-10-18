@@ -1,14 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { StatusVariablesPage } from '../../../../features/server/StatusPages'
+import { qs } from '../../../../lib/search'
 
 /** pma: /server/status/variables */
 export const Route = createFileRoute('/s/$server/status/variables')({
   validateSearch: z.object({
-    filterText: z.string().catch('').default(''),
-    filterAlert: z.boolean().catch(false).default(false),
-    filterCategory: z.string().catch('').default(''),
-    dontFormat: z.boolean().catch(false).default(false),
+    filterText: qs.strOr(''),
+    filterAlert: qs.flag(),
+    filterCategory: qs.strOr(''),
+    dontFormat: qs.flag(),
   }),
   component: function StatusVariables() {
     const { server } = Route.useParams()

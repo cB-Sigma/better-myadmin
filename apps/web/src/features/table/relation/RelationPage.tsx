@@ -10,6 +10,8 @@ import {
   Panel,
   PanelBody,
   PreviewSqlDialog,
+  removeMessage,
+  showMessage,
   useConfirm,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -239,12 +241,15 @@ function RelationForm({
   const dropFk = async (constraint: string) => {
     const sql = `ALTER TABLE ${scope.db}.${scope.table} DROP FOREIGN KEY ${constraint};`
     if (!(await confirm({ question: t('Do you really want to execute "%s"?', sql) }))) return
+    const box = showMessage(t('Dropping Foreign key.'), false)
     try {
       const r = await api.tableRelationDropFk(scope, constraint)
       setMessages(r.messages)
       await refresh()
     } catch (err) {
       setMessages([errorMessage(err)])
+    } finally {
+      removeMessage(box)
     }
   }
 

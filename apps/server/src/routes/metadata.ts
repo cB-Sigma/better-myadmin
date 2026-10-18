@@ -452,6 +452,14 @@ metadataRoutes.post('/recent', async (c) => {
   })
 })
 
+/** pma: TableName::from (src/Identifiers/InvalidTableName.php): the msgid and its arguments, or null */
+function tableNameError(name: string): [string, string[]] | null {
+  if (name === '') return [N_('The table name must be a non-empty string.'), []]
+  if (Array.from(name).length > 64) return [N_('The table name cannot be longer than %d characters.'), ['64']]
+  if (name.endsWith(' ')) return [N_('The table name cannot end with a space character.'), []]
+  return null
+}
+
 /** POST /api/servers/:s/favorites — pma: Database\Structure\FavoriteTableController */
 metadataRoutes.post('/favorites', async (c) => {
   const req = await parseJson(c, FavoriteRequest, {})
@@ -475,6 +483,10 @@ metadataRoutes.post('/favorites', async (c) => {
     if (!selected) {
       return c.json({ changes: false, message: msg(c, 'error', 'No databases selected.') }, 400)
     }
+    // pma: TableName::from($favoriteTableName) throws InvalidTableName
+    const bad = tableNameError(req.table)
+    if (bad !== null)
+      return c.json({ changes: false, message: msg(c, 'error', bad[0], undefined, bad[1]) }, 400)
     const t = { db: req.db, table: req.table }
     let already = favorite.contains(t)
     let changes = true

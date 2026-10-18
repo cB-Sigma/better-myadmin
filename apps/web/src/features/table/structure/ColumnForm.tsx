@@ -5,6 +5,7 @@ import type {
   FormIndex,
   Partitioning,
 } from '@bettermyadmin/contracts'
+import { typeGroupLabel } from '@bettermyadmin/mysql-types'
 import {
   Button,
   DocLink,
@@ -22,7 +23,7 @@ import {
 import { Link, useParams } from '@tanstack/react-router'
 import { Fragment, type ReactNode, useState } from 'react'
 import { errorMessage } from '../../../lib/api'
-import { t } from '../../../lib/i18n'
+import { pgettext, t } from '../../../lib/i18n'
 import { useFormLock } from '../../shell/page-chrome'
 import { AddIndexFormDialog, IndexTypeDialog } from './AddIndexDialog'
 import { CentralColumnPicker } from './CentralColumnPicker'
@@ -70,6 +71,21 @@ export interface ColumnRow {
   moveOptions?: Array<{ value: string; after: string | null; disabled: boolean }>
   /** the MIME columns (only when the form shows them) */
   mime?: MimeValues
+  /** change form before MySQL 5.6.6: a column bound in a foreign key (checkChildForeignReferences) */
+  status?: { isEditable: boolean; isReferenced: boolean; isForeignKey: boolean; references: string[] }
+}
+
+/** pma: columns_definitions/column_name.twig, the name input's title */
+export function columnNameTitle(status: ColumnRow['status']): string {
+  let title = ''
+  if (status !== undefined) {
+    if (status.isReferenced) title += t('Referenced by %s.', status.references.join(','))
+    if (status.isForeignKey) {
+      if (title !== '') title += '\n'
+      title += t('Is a foreign key.')
+    }
+  }
+  return title === '' ? t('Column') : title
 }
 
 export interface MimeValues {
@@ -311,6 +327,7 @@ export function TypeSelect({
   onChange,
   name,
   label,
+  disabled = false,
 }: {
   options: Pick<ColumnFormOptions, 'types'>
   value: string
@@ -318,6 +335,7 @@ export function TypeSelect({
   name: string
   /** accessible name ('' for none, as in phpMyAdmin's central columns add row); default "Type" */
   label?: string
+  disabled?: boolean
 }) {
   const groups: Array<{ group: string | null; items: ColumnFormOptions['types'] }> = []
   for (const o of options.types) {
@@ -345,6 +363,7 @@ export function TypeSelect({
       className="input column_type"
       name={name}
       aria-label={label ?? t('Type')}
+      disabled={disabled}
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
@@ -357,7 +376,7 @@ export function TypeSelect({
             {g.items.map(opt)}
           </Fragment>
         ) : (
-          <optgroup key={g.group} label={t(g.group)}>
+          <optgroup key={g.group} label={typeGroupLabel(g.group, pgettext)}>
             {g.items.map(opt)}
           </optgroup>
         ),
@@ -647,8 +666,22 @@ export function ColumnForm({
               <th className="px-1">
                 {t('Type')} <MySqlDocLink link="data-types" />
               </th>
-              <th className="px-1">{t('Length/Values')}</th>
-              <th className="px-1">{t('Default')}</th>
+              <th className="px-1">
+                {t('Length/Values')}{' '}
+                <Hint
+                  message={t(
+                    "If column type is \"enum\" or \"set\", please enter the values using this format: 'a','b','c'…<br>If you ever need to put a backslash (\"\\\") or a single quote (\"'\") amongst those values, precede it with a backslash (for example '\\\\xyz' or 'a\\'b').",
+                  ).replace('<br>', '\n')}
+                />
+              </th>
+              <th className="px-1">
+                {t('Default')}{' '}
+                <Hint
+                  message={t(
+                    'For default values, please enter just a single value, without backslash escaping or quotes, using this format: a',
+                  )}
+                />
+              </th>
               <th className="px-1">{t('Collation')}</th>
               <th className="px-1">{t('Attributes')}</th>
               <th className="px-1">{t('Null')}</th>
@@ -714,11 +747,12 @@ export function ColumnForm({
                     name={`field_name[${i}]`}
                     aria-label={t('Column')}
                     maxLength={64}
-                    title={t('Column')}
+                    title={columnNameTitle(r.status)}
+                    disabled={r.status?.isEditable === false}
                     value={r.name}
                     onChange={(e) => update(i, { name: e.target.value })}
                   />
-                  {options.centralColumns && (
+                  {options.centralColumns && r.status?.isEditable !== false && (
                     <p className="column_name" id={`central_columns_${i}_0`}>
                       <Button variant="link" className="central_columns_dialog" onClick={() => setPickFor(i)}>
                         {t('Pick from Central Columns')}
@@ -730,6 +764,7 @@ export function ColumnForm({
                   <TypeSelect
                     options={options}
                     name={`field_type[${i}]`}
+                    disabled={r.status?.isEditable === false}
                     value={r.type}
                     onChange={(v) => update(i, { type: v })}
                   />
@@ -1073,7 +1108,8 @@ export function ColumnForm({
               checked={online}
               onChange={(e) => setOnline(e.target.checked)}
             />
-            {t('Online transaction')} <MySqlDocLink link="innodb-online-ddl" />
+            {pgettext('Online transaction part of the SQL DDL for InnoDB', 'Online transaction')}{' '}
+            <MySqlDocLink link="innodb-online-ddl" />
           </label>
         )}
         <div className="ml-auto flex gap-2">

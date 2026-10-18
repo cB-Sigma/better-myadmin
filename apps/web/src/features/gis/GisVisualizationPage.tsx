@@ -11,6 +11,7 @@ import {
   NativeCheckbox,
   NativeSelect,
   Panel,
+  showMessage,
 } from '@bettermyadmin/ui'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Globe, ZoomIn, ZoomOut } from 'lucide-react'
@@ -89,17 +90,23 @@ function GisForm({
       return
     }
     // the PNG of the same drawing on phpMyAdmin's grey background
+    // pma: GisVisualization::toFile() === null answers 500 "Failed to create image"
+    const failed = () => showMessage(t('Failed to create image'), false, 'error')
     const img = new Image()
+    img.onerror = failed
     img.onload = () => {
       const canvas = document.createElement('canvas')
       canvas.width = page.width
       canvas.height = page.height
       const ctx = canvas.getContext('2d')
-      if (ctx === null) return
+      if (ctx === null) {
+        failed()
+        return
+      }
       ctx.fillStyle = hex(GIS_PNG_BACKGROUND)
       ctx.fillRect(0, 0, page.width, page.height)
       ctx.drawImage(img, 0, 0)
-      canvas.toBlob((b) => b !== null && save(b, name), 'image/png')
+      canvas.toBlob((b) => (b !== null ? save(b, name) : failed()), 'image/png')
     }
     img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(doc)}`
   }

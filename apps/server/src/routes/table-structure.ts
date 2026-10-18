@@ -23,6 +23,7 @@ import { getMime } from '@bettermyadmin/metadata'
 import { getBrowseColumnsQuery } from '@bettermyadmin/sql-gen'
 import { Context as SqlContext } from '@bettermyadmin/sql-lexer'
 import { type Context, Hono } from 'hono'
+import { getServer } from '../config.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { jsonBody, parse } from '../http/validate.ts'
 import { centralColumnsAdd, centralColumnsRemove, centralList } from '../table/central-columns.ts'
@@ -151,7 +152,19 @@ tableStructureRoutes.get('/:db/tables/:t/columns/form', async (c) => {
   const fields = c.req.queries('fields') ?? []
   if (fields.length === 0) throw new ValidationError(c.get('tr').gettext('No column selected.'))
   return c.json(
-    await withTable(c, (x) => changeForm(x.reader, x.cfg, x.tr, x.db, x.table, fields, x.features, x.meta)),
+    await withTable(c, (x) =>
+      changeForm(
+        x.reader,
+        x.cfg,
+        x.tr,
+        x.db,
+        x.table,
+        fields,
+        x.features,
+        x.meta,
+        getServer(x.cfg, Number(c.req.param('s')))?.DisableIS === true,
+      ),
+    ),
   )
 })
 
@@ -234,7 +247,13 @@ tableStructureRoutes.post('/:db/tables/:t/columns/drop', async (c) => {
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/key', async (c) => {
-  const req = parse(AddKeyRequest, await jsonBody(c))
+  const body = await jsonBody(c)
+  // pma: AddKeyController::getKeyType() === '' → "Invalid request parameter."
+  const keyType = (body as { type?: unknown } | null)?.type
+  if (!['FULLTEXT', 'INDEX', 'PRIMARY', 'SPATIAL', 'UNIQUE'].includes(keyType as string)) {
+    throw new ValidationError(c.get('tr').gettext('Invalid request parameter.'))
+  }
+  const req = parse(AddKeyRequest, body)
   return respond(c, await withTable(c, (x) => addKey(x, req)))
 })
 

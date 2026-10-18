@@ -1,21 +1,23 @@
 import { z } from 'zod'
+import { qs } from '../../lib/search'
 
 /**
  * The export page's request parameters (links from the results grid, DB structure "With
  * selected: Export", the SQL tab): phpMyAdmin's names.
  */
-// the router parses `?single_table=true` / `?offset=1` into a boolean / number: coerced back
+// read like $_GET (lib/search.ts): strings, `k[]=` lists
 export const exportSearch = z.object({
-  single_table: z.coerce.string().optional(),
-  sql_query: z.coerce.string().optional(),
-  raw_query: z.coerce.string().optional(),
-  unlim_num_rows: z.coerce.string().optional(),
+  single_table: qs.str(),
+  sql_query: qs.str(),
+  raw_query: qs.str(),
+  unlim_num_rows: qs.str(),
   /** rows export: one unique WHERE condition per selected row (pma: rows_to_delete[]) */
-  where_clause: z.array(z.coerce.string()).optional(),
-  /** DB structure "With selected: Export" */
-  selected_tbl: z.array(z.coerce.string()).optional(),
-  what: z.coerce.string().optional(),
-  format: z.coerce.string().optional(),
+  where_clause: qs.list(),
+  /** DB structure "With selected: Export" (pma: selected_tbl[]; our bulk action sends table_select[]) */
+  selected_tbl: qs.list(),
+  table_select: qs.list(),
+  what: qs.str(),
+  format: qs.str(),
 })
 export type ExportSearch = z.infer<typeof exportSearch>
 

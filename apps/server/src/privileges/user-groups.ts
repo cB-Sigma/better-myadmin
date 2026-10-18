@@ -99,7 +99,7 @@ export async function userGroupForm(p: Privileges, userGroup: string | null): Pr
     levels: USER_GROUP_LEVELS.map((level) => ({
       level,
       title: titles[level],
-      tabs: MENU_TAB_LIST[level].map(([tab, name]) => ({
+      tabs: MENU_TAB_LIST[level].map(({ tab, msgid: name }) => ({
         tab,
         name: t(name),
         allowed: allowed[level].includes(tab),

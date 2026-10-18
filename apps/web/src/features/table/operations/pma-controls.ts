@@ -79,5 +79,5 @@ export const pmaControls = {
     file: 'OperationsPage.tsx',
     match: "api.tableOperation(scope, 'sql', { action, fkChecks: fk })",
   },
-  'js:table/operations.ts#confirm:': { file: 'OperationsPage.tsx', match: '{t(warning)} {t(' },
+  'js:table/operations.ts#confirm:': { file: 'OperationsPage.tsx', match: '{warning} {t(' },
 } as const

@@ -672,6 +672,9 @@ function Step21({ env }: { env: StepEnv }) {
   const [deps, setDeps] = useState<Record<string, string[]>>({})
   const [possible, setPossible] = useState<Array<{ determinants: string; dependents: string[] }> | null>(null)
   const [showPossible, setShowPossible] = useState(false)
+  // pma: the template's link text, then '+ ' + strShowPossiblePd once hidden
+  const [hiddenOnce, setHiddenOnce] = useState(false)
+  const [loadingPossible, setLoadingPossible] = useState(false)
   const legend = `${t('Step 2.')}1 ${t('Find partial dependencies')}`
   const done = pk.length <= 1 || pk.length === env.data.columns.length
   useEffect(() => {
@@ -708,13 +711,17 @@ function Step21({ env }: { env: StepEnv }) {
   }
   const togglePossible = async () => {
     if (possible === null) {
+      setLoadingPossible(true)
       try {
         setPossible((await api.normalizationPartialDependencies(env.scope)).dependencies)
       } catch (e) {
         env.show([errorMessage(e)])
         return
+      } finally {
+        setLoadingPossible(false)
       }
     }
+    if (showPossible) setHiddenOnce(true)
     setShowPossible(!showPossible)
   }
   return (
@@ -732,8 +739,17 @@ function Step21({ env }: { env: StepEnv }) {
           <Button variant="link" id="showPossiblePd" onClick={() => void togglePossible()}>
             {showPossible
               ? `- ${t('Hide partial dependencies list')}`
-              : t('+ Show me the possible partial dependencies based on data in the table')}
+              : hiddenOnce
+                ? `+ ${t('Show me the possible partial dependencies based on data in the table')}`
+                : t('+ Show me the possible partial dependencies based on data in the table')}
           </Button>
+          {loadingPossible && (
+            <div id="newCols" className="text-center font-normal">
+              {t('Loading…')}
+              <br />
+              {t('Sit tight! It may take few seconds depending on data size and column count of the table.')}
+            </div>
+          )}
           {showPossible && possible !== null && (
             <div className="font-normal">
               {t("This list is based on a subset of the table's data and is not necessarily accurate. ")}

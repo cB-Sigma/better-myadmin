@@ -311,7 +311,13 @@ export function GridTable(props: Props) {
   // leaving the page with unsaved edits (makegrid isCellEdited)
   useEffect(() => {
     if (pending.size === 0) return
-    const h = (e: BeforeUnloadEvent) => e.preventDefault()
+    // pma: return g.saveCellWarning (browsers show their own text, the value only asks)
+    const h = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = t(
+        'You have edited some data and they have not been saved. Are you sure you want to leave this page before saving the data?',
+      )
+    }
     window.addEventListener('beforeunload', h)
     return () => window.removeEventListener('beforeunload', h)
   }, [pending])
@@ -677,7 +683,7 @@ export function GridTable(props: Props) {
             onDoubleClick={() => {
               void navigator.clipboard?.writeText(c.name).then(
                 () => showMessage(t('Column name successfully copied to clipboard!')),
-                () => showMessage(t('Copying failed!'), false, 'error'),
+                () => showMessage(t('Column name copying to clipboard failed!'), false, 'error'),
               )
             }}
             // mouseover.cellSelect (enter: the header has no children to bubble from)
@@ -844,7 +850,7 @@ export function GridTable(props: Props) {
                         }}
                       >
                         <span
-                          {...(cell.ol !== undefined ? { title: `Original length ${cell.ol}` } : {})}
+                          {...(cell.ol !== undefined ? { title: `${t('Original length')} ${cell.ol}` } : {})}
                           style={width === undefined ? undefined : { width, display: 'inline-block' }}
                         >
                           {edited !== undefined ? (
