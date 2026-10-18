@@ -1,5 +1,6 @@
 import { type Page, expect, test } from '@playwright/test'
 import mysql from 'mysql2/promise'
+import { GeneralLog } from '../parity/lib/general-log.ts'
 
 /**
  * The browser behaviours of the server-level pages (docs/features/06-server-level.md, the
@@ -523,6 +524,9 @@ test.describe('monitor', () => {
       Number(vars.g) !== 1 || !vars.o.includes('TABLE'),
       'the general log is not written to mysql.general_log',
     )
+    // a registered reader of mysql.general_log: no other checkout rotates (truncates) it until the
+    // analysis has read the probes (tests/parity/lib/log-holders.ts)
+    const holder = await GeneralLog.open(ROOT)
     try {
       // a SELECT of this session inside the analysed span
       const conn = await mysql.createConnection({ ...ROOT, user: USER, password: USER })
@@ -581,6 +585,7 @@ test.describe('monitor', () => {
       await analyzer.getByRole('button', { name: 'Close' }).last().click()
       await expect(analyzer).toHaveCount(0)
     } finally {
+      await holder.close()
       await c.end()
     }
   })

@@ -95,12 +95,26 @@ export function sqlParserVersion(pma: string, commit: string): string | null {
 }
 
 /**
+ * The main checkout: `../ref` sits next to it, and a linked worktree (.claude/worktrees/…) is not
+ * there, so resolve it from git's common dir (`<main>/.git`).
+ */
+export function mainCheckout(dir = repo): string {
+  try {
+    return dirname(resolve(dir, git(dir, 'rev-parse', '--git-common-dir')))
+  } catch {
+    return dir
+  }
+}
+
+/**
  * The git checkout to read upstream history from: the blobless clone `../ref/pma-upstream.git`
- * when present (cheap to fetch, independent of the reference instance), else `../ref/pma`.
+ * when present (cheap to fetch, independent of the reference instance), else `../ref/pma`, both
+ * next to the main checkout.
  */
 function defaultPmaGit(): string {
-  const clone = resolve(repo, '../ref/pma-upstream.git')
-  return existsSync(clone) ? clone : resolve(repo, '../ref/pma')
+  const main = mainCheckout()
+  const clone = resolve(main, '../ref/pma-upstream.git')
+  return existsSync(clone) ? clone : resolve(main, '../ref/pma')
 }
 
 function main() {

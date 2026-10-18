@@ -74,6 +74,13 @@ const available = phpAvailable()
 
 let root: mysql.Connection
 let log: GeneralLog
+/**
+ * CREATE_TIME of each side's `t`: the two tables are created a moment apart, so under load they can
+ * straddle a second. Each side's own value is masked in its statements (a wrong value still differs).
+ */
+const created = { pma: '', bma: '' }
+const maskCreated = (entries: LogEntry[], value: string): LogEntry[] =>
+  value === '' ? entries : entries.map((e) => ({ ...e, sql: e.sql.replaceAll(value, '<CREATE_TIME>') }))
 
 async function createStorage(db: string, only?: string[]) {
   await root.query(`DROP DATABASE IF EXISTS \`${db}\``)
@@ -114,7 +121,7 @@ async function runStep(pma: PmaClient, bma: Bma, s: Step) {
   const m2 = await log.marker()
   const br = (await s.bma(bma)) as Record<string, unknown>
   const bmaLog: LogEntry[] = [...(await log.since(B.ctl, m2)), ...(await log.since(B.user, m2))]
-  const cmp = compareMetadataLogs(pmaLog, bmaLog, dbMap)
+  const cmp = compareMetadataLogs(maskCreated(pmaLog, created.pma), maskCreated(bmaLog, created.bma), dbMap)
   expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
   for (const t of s.tables) expect(await dump(B, t), `${t} rows`).toEqual(await dump(P, t))
   s.check?.(pr, br)
@@ -153,6 +160,15 @@ describe.skipIf(!available)('parity: configuration storage (pmadb) rows and stat
       await root.query(`GRANT ALL ON \`${x.db}\`.* TO '${x.user}'@'%'`)
       await root.query(`GRANT SELECT, INSERT, UPDATE, DELETE, ALTER ON \`${x.pmadb}\`.* TO '${x.ctl}'@'%'`)
       await root.query(`GRANT ALL ON \`${x.zc}\`.* TO '${x.ctl}'@'%'`)
+    }
+    for (const [k, x] of [
+      ['pma', P],
+      ['bma', B],
+    ] as const) {
+      const [rows] = (await root.query(
+        `SELECT CAST(CREATE_TIME AS CHAR) AS c FROM information_schema.TABLES WHERE TABLE_SCHEMA = '${x.db}' AND TABLE_NAME = 't'`,
+      )) as unknown as [Array<{ c: string | null }>]
+      created[k] = rows[0]?.c ?? ''
     }
     inst = await startPmaInstance(pmaConfig(P), { dumpState: true })
     pma = new PmaClient(inst.url)
