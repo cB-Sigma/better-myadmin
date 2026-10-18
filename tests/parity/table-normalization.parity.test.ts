@@ -165,7 +165,7 @@ describe.skipIf(!pmaReachable)('parity: normalization wizard (phpMyAdmin vs Bett
     const p = (await pmaPost('/normalization/3nf/new-tables', 'people', {
       pd: JSON.stringify(pd),
       tables: JSON.stringify(Object.fromEntries(tables)),
-    })) as { newTables: Record<string, Record<string, { pk: string; nonpk: string }>> }
+    })) as unknown as { newTables: Record<string, Record<string, { pk: string; nonpk: string }>> }
     const b = (await bmaPost('people', '/3nf/new-tables', { pd, tables })) as {
       newTables: Array<[string, Array<[string, { pk: string; nonpk: string }]>]>
     }

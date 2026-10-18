@@ -18,7 +18,11 @@ export default defineWorkspace([
       name: 'int',
       include: ['apps/*/test/int/**/*.test.ts', 'packages/*/test/int/**/*.test.ts'],
       testTimeout: 30000,
-      fileParallelism: false,
+      // one file at a time (they share fixed accounts and databases on one MySQL). Per project,
+      // vitest 3 ignores fileParallelism and maxWorkers (not in ProjectConfig): a single fork is the
+      // per-project way, files then run one after another (each still isolated)
+      pool: 'forks',
+      poolOptions: { forks: { singleFork: true } },
     },
   },
   {
@@ -28,7 +32,9 @@ export default defineWorkspace([
       // one run per fixture group across worktrees sharing a MySQL (tests/parity/lib/suite-lock.ts)
       setupFiles: ['tests/parity/lib/target.ts', 'tests/parity/lib/suite-lock.ts'],
       testTimeout: 60000,
-      fileParallelism: false,
+      // one file at a time, as the int project (see there)
+      pool: 'forks',
+      poolOptions: { forks: { singleFork: true } },
     },
   },
 ])
