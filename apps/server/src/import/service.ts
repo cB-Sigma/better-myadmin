@@ -1,4 +1,4 @@
-import { lstatSync, readFileSync } from 'node:fs'
+import { lstatSync } from 'node:fs'
 import type { ImportProgress, ImportResult, StatementResult } from '@bettermyadmin/contracts'
 import { Params, convertToUtf8, listEncodings } from '@bettermyadmin/export'
 import { convertBBCode, sprintf } from '@bettermyadmin/i18n'
@@ -79,6 +79,7 @@ export async function runFileImport(
   const { conn, settings } = s
   const session = c.get('session')
   const out = (r: Partial<ImportResult>): ImportResult => ({ reloadNavigation: false, db, table, ...r })
+  let openedFile: ImportFile | null = null
   try {
     const charsetOfFile = request.str('charset_of_file')
     const format = request.str('format')
@@ -88,8 +89,20 @@ export async function runFileImport(
       return out({ message: { type: 'error', html: __('Incorrect format parameter') } })
     }
     if (db !== '') await conn.selectDb(db, 'import.select-db')
-    // memory_limit -1: 10 MB chunks, read limit an eighth of it
-    const readLimit = (10 * 1024 * 1024) / 8
+    // Util::setTimeLimit(ExecTimeLimit), ini_set('memory_limit', MemoryLimit): the request's limits
+    const memoryLimitIni =
+      settings.MemoryLimit !== '' && settings.MemoryLimit !== '0' ? settings.MemoryLimit : '-1'
+    // We can not read all at once, otherwise we can run out of memory
+    let memoryLimit = getRealSize(memoryLimitIni)
+    // 2 MB as default
+    if (memoryLimit === 0) memoryLimit = 2 * 1024 * 1024
+    // In case no memory limit we work on 10MB chunks
+    if (memoryLimit === -1) memoryLimit = 10 * 1024 * 1024
+    // Just to be sure, there might be lot of memory needed for uncompression
+    const readLimit = memoryLimit / 8
+    // Give 1 second for phpMyAdmin to exit nicely (with allow_interrupt)
+    const maximumTime =
+      request.has('allow_interrupt') && settings.ExecTimeLimit >= 1 ? settings.ExecTimeLimit - 1 : 0
 
     // handle filenames
     let importFile = 'none'
@@ -114,15 +127,10 @@ export async function runFileImport(
     const errorHtml = (html: string) => out({ message: { type: 'error', html } })
     let file: ImportFile | null = null
     if (importFile !== 'none') {
-      let raw: Buffer
+      // read from disk chunk by chunk (a gzip or bzip2 file through a decompressed temporary copy)
       try {
-        raw = readFileSync(importFile)
-      } catch {
-        return errorHtml(__('File could not be read!'))
-      }
-      try {
-        file = new ImportFile(
-          raw,
+        file = await ImportFile.open(
+          importFile,
           { gzip: settings.GZipDump, bzip2: settings.BZipDump, zip: settings.ZipDump },
           __,
         )
@@ -130,6 +138,7 @@ export async function runFileImport(
         if (e instanceof ImportFileError) return errorHtml(e.message)
         return errorHtml(__('File could not be read!'))
       }
+      openedFile = file
     } else {
       const html = convertBBCode(
         tr,
@@ -201,6 +210,7 @@ export async function runFileImport(
       readLimit,
       request: { get: (n) => request.get(n), has: (n) => request.has(n) },
     })
+    imp.maximumTime = maximumTime
     const total = readFileSize(importFile)
     imp.onChunk = (offset) =>
       progress({ offset: Math.min(offset, total), total, executed: runner.st.executedQueries })
@@ -281,13 +291,23 @@ export async function runFileImport(
       message = { type: 'success', html }
     }
     if (imp.timeoutPassed) {
+      // UrlParams::$params + timeout_passed, offset (and the local file): the import page again
+      const resume = new URLSearchParams({ timeout_passed: '1', offset: String(imp.offset) })
+      if (localImportFile !== '') resume.set('local_import_file', localImportFile)
+      const server = c.get('serverIndex')
+      const page =
+        importType === 'server'
+          ? `/s/${server}/import`
+          : importType === 'database'
+            ? `/s/${server}/db/${encodeURIComponent(request.str('db'))}/import`
+            : `/s/${server}/db/${encodeURIComponent(request.str('db'))}/t/${encodeURIComponent(request.str('table'))}/import`
       message = {
         type: 'error',
         html: __(
           'Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume.',
         )
-          .replace('%s', '')
-          .replace('%s', ''),
+          .replace('%s', `<a href="${escapeHtml(`${page}?${resume}`)}">`)
+          .replace('%s', '</a>'),
       }
       if (imp.offset === 0 || originalSkip === imp.offset) {
         message.html += ` ${__("However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits.")}`
@@ -381,9 +401,19 @@ export async function runFileImport(
     }
     return out({ ...echoed, ...(message !== null ? { message } : {}), reloadNavigation: reload, db })
   } finally {
+    openedFile?.close()
     s.conn.localInfile = null
     await s.close()
   }
+}
+
+/** Util::getRealSize: ini_parse_quantity (-1 stays -1, a bad value counts its leading digits) */
+function getRealSize(size: string): number {
+  if (size === '') return 0
+  const m = /^\s*(-?\d+)\s*([kmg]?)/i.exec(size)
+  if (m === null) return 0
+  const exp = { '': 0, k: 1, m: 2, g: 3 }[(m[2] ?? '').toLowerCase() as '' | 'k' | 'm' | 'g']
+  return Number(m[1]) * 1024 ** exp
 }
 
 function readFileSize(path: string): number {

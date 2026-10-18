@@ -102,13 +102,35 @@ insertEditRoutes.post('/:db/tables/:t/insert-form', async (c) => {
   )
 })
 
-/** POST …/tables/:t/rows (pma: /table/replace) */
-insertEditRoutes.post('/:db/tables/:t/rows', async (c) => {
-  const req = await parseJson(c, SaveRowsRequest)
-  const { cfg } = c.get('deps')
-  const r = await withIe(c, (ctx) => saveRows(ctx, req))
-  return c.json(cfg.DBG.sql ? { ...r, executed: c.get('executed') } : r)
-})
+/**
+ * POST …/tables/:t/rows (pma: /table/replace). The body carries the uploaded files (base64): it is
+ * refused when its Content-Length passes MaxUploadSize plus the encoding and the form, like a
+ * request over post_max_size.
+ */
+insertEditRoutes.post(
+  '/:db/tables/:t/rows',
+  async (c, next) => {
+    const length = Number(c.req.header('content-length') ?? Number.NaN)
+    if (length > Math.ceil((c.get('deps').cfg.MaxUploadSize * 4) / 3) + 1024 * 1024) {
+      throw new ValidationError(
+        c
+          .get('tr')
+          .gettext(
+            'You probably tried to upload a file that is too large. Please refer to %sdocumentation%s for a workaround for this limit.',
+          )
+          .replace('%s', '')
+          .replace('%s', ''),
+      )
+    }
+    await next()
+  },
+  async (c) => {
+    const req = await parseJson(c, SaveRowsRequest)
+    const { cfg } = c.get('deps')
+    const r = await withIe(c, (ctx) => saveRows(ctx, req))
+    return c.json(cfg.DBG.sql ? { ...r, executed: c.get('executed') } : r)
+  },
+)
 
 /** POST …/tables/:t/browse-foreigners (pma: /browse-foreigners) */
 insertEditRoutes.post('/:db/tables/:t/browse-foreigners', async (c) => {

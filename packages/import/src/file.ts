@@ -1,5 +1,10 @@
 /// <reference path="./seek-bzip.d.ts" />
-import { gunzipSync } from 'node:zlib'
+import { closeSync, mkdtempSync, openSync, readFileSync, readSync, rmSync, writeSync } from 'node:fs'
+import { createReadStream, createWriteStream, fstatSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { pipeline } from 'node:stream/promises'
+import { createGunzip, gunzipSync } from 'node:zlib'
 import { readZip } from '@bettermyadmin/export'
 import Bunzip from 'seek-bzip'
 
@@ -23,40 +28,196 @@ export interface CompressionSupport {
 /** A failure while opening the file: the message is a phpMyAdmin msgid, already formatted. */
 export class ImportFileError extends Error {}
 
+const unsupportedError = (t: (s: string) => string, compression: Compression) =>
+  new ImportFileError(
+    t(
+      'You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration.',
+    ).replace('%s', compression),
+  )
+
+/** A file read with positioned reads: only the chunk asked for is in memory. */
+class FileSource {
+  readonly #fd: number
+  readonly size: number
+  #pos = 0
+  /** a temporary file (a decompressed upload) removed on close */
+  readonly #tempDir: string | null
+
+  constructor(path: string, tempDir: string | null = null) {
+    this.#fd = openSync(path, 'r')
+    this.size = fstatSync(this.#fd).size
+    this.#tempDir = tempDir
+  }
+
+  read(size: number): Buffer {
+    const n = Math.max(0, Math.min(size, this.size - this.#pos))
+    const buf = Buffer.allocUnsafe(n)
+    let got = 0
+    while (got < n) {
+      const r = readSync(this.#fd, buf, got, n - got, this.#pos + got)
+      if (r === 0) break
+      got += r
+    }
+    this.#pos += got
+    return got === n ? buf : buf.subarray(0, got)
+  }
+
+  eof(): boolean {
+    return this.#pos >= this.size
+  }
+
+  close(): void {
+    closeSync(this.#fd)
+    if (this.#tempDir !== null) rmSync(this.#tempDir, { recursive: true, force: true })
+  }
+}
+
+/** seek-bzip's byte streams over file descriptors, buffered */
+function bunzipToFile(src: string, dest: string): void {
+  const inFd = openSync(src, 'r')
+  const outFd = openSync(dest, 'w', 0o600)
+  try {
+    const inBuf = Buffer.allocUnsafe(64 * 1024)
+    let inLen = 0
+    let inPos = 0
+    let fileEof = false
+    const fill = () => {
+      inLen = readSync(inFd, inBuf, 0, inBuf.length, null)
+      inPos = 0
+      if (inLen === 0) fileEof = true
+    }
+    const outBuf = Buffer.allocUnsafe(64 * 1024)
+    let outLen = 0
+    const flush = () => {
+      if (outLen > 0) writeSync(outFd, outBuf, 0, outLen)
+      outLen = 0
+    }
+    const input = {
+      readByte: () => {
+        if (inPos >= inLen) fill()
+        return fileEof ? -1 : (inBuf[inPos++] as number)
+      },
+      read(buffer: Buffer, offset: number, length: number) {
+        let n = 0
+        while (n < length) {
+          const c = this.readByte()
+          if (c < 0) return n === 0 ? -1 : n
+          buffer[offset + n++] = c
+        }
+        return n
+      },
+      seek: () => {
+        throw new Error('seek is not supported')
+      },
+      eof: () => {
+        if (inPos >= inLen && !fileEof) fill()
+        return fileEof
+      },
+    }
+    const output = {
+      writeByte: (b: number) => {
+        outBuf[outLen++] = b
+        if (outLen === outBuf.length) flush()
+      },
+      write(buffer: Buffer, offset: number, length: number) {
+        for (let i = 0; i < length; i++) this.writeByte(buffer[offset + i] as number)
+        return length
+      },
+      flush,
+    }
+    ;(Bunzip.decode as unknown as (i: unknown, o: unknown, multistream: boolean) => void)(input, output, true)
+    flush()
+  } finally {
+    closeSync(inFd)
+    closeSync(outFd)
+  }
+}
+
 /**
  * The file to import, decompressed (gzip, bzip2, or the first entry / content.xml of a zip) and
  * read in chunks.
  * pma: src/File.php::open, ::openZip, ::read, ::eof; src/ZipExtension.php::getContents
+ *
+ * {@link ImportFile.open} reads a file on disk the way phpMyAdmin does (fopen / gzopen / bzopen
+ * and fread): an uncompressed file chunk by chunk from disk, a gzip or bzip2 one decompressed to a
+ * temporary file first (Node has no synchronous streaming gunzip; the import's reads are
+ * synchronous) and read from there, so neither is held in memory; a zip is read whole, as
+ * ZipExtension::getContents does. Call {@link close} when done.
  */
 export class ImportFile {
   readonly compression: Compression
-  #content: Buffer
+  #content: Buffer = Buffer.alloc(0)
   #offset = 0
   readonly #raw: Buffer
+  #source: FileSource | null = null
+  /** Encoding conversion of a file read from disk, applied to each chunk (as phpMyAdmin does) */
+  #convertChunk: ((b: Buffer) => Buffer) | null = null
   /** the translator (`__`) */
   readonly #t: (s: string) => string
 
-  constructor(raw: Buffer, support: CompressionSupport, t: (s: string) => string = (s) => s) {
-    this.#raw = raw
+  /**
+   * Opens `path`. Rejects with {@link ImportFileError} for a disabled compression; a damaged gzip
+   * or bzip2 file rejects with the decompressor's error.
+   */
+  static async open(
+    path: string,
+    support: CompressionSupport,
+    t: (s: string) => string = (s) => s,
+  ): Promise<ImportFile> {
+    const fd = openSync(path, 'r')
+    const head = Buffer.alloc(4)
+    try {
+      readSync(fd, head, 0, 4, 0)
+    } finally {
+      closeSync(fd)
+    }
+    const compression = compressionOf(head)
+    if (compression === 'application/zip') return new ImportFile(readFileSync(path), support, t)
+    if (compression === 'none') return new ImportFile(new FileSource(path), compression, t)
+    if (compression === 'application/gzip' && !support.gzip) throw unsupportedError(t, compression)
+    if (compression === 'application/bzip2' && !support.bzip2) throw unsupportedError(t, compression)
+    const dir = mkdtempSync(join(tmpdir(), 'bma-import-'))
+    const out = join(dir, 'content')
+    try {
+      if (compression === 'application/gzip') {
+        await pipeline(createReadStream(path), createGunzip(), createWriteStream(out, { mode: 0o600 }))
+      } else bunzipToFile(path, out)
+    } catch (e) {
+      rmSync(dir, { recursive: true, force: true })
+      throw e
+    }
+    return new ImportFile(new FileSource(out, dir), compression, t)
+  }
+
+  constructor(raw: Buffer, support: CompressionSupport, t?: (s: string) => string)
+  constructor(source: FileSource, compression: Compression, t?: (s: string) => string)
+  constructor(
+    raw: Buffer | FileSource,
+    support: CompressionSupport | Compression,
+    t: (s: string) => string = (s) => s,
+  ) {
     this.#t = t
+    if (raw instanceof FileSource) {
+      this.#raw = Buffer.alloc(0)
+      this.#source = raw
+      this.compression = support as Compression
+      return
+    }
+    this.#raw = raw
     this.compression = compressionOf(raw.subarray(0, 4))
-    const unsupported = () =>
-      new ImportFileError(
-        t(
-          'You attempted to load file with unsupported compression (%s). Either support for it is not implemented or disabled by your configuration.',
-        ).replace('%s', this.compression),
-      )
+    const unsupported = () => unsupportedError(t, this.compression)
+    const enabled = support as CompressionSupport
     switch (this.compression) {
       case 'application/gzip':
-        if (!support.gzip) throw unsupported()
+        if (!enabled.gzip) throw unsupported()
         this.#content = gunzipSync(raw)
         break
       case 'application/bzip2':
-        if (!support.bzip2) throw unsupported()
+        if (!enabled.bzip2) throw unsupported()
         this.#content = Bunzip.decode(raw)
         break
       case 'application/zip':
-        if (!support.zip) throw unsupported()
+        if (!enabled.zip) throw unsupported()
         this.#content = this.#zipEntry(null)
         break
       default:
@@ -100,6 +261,10 @@ export class ImportFile {
 
   /** File::read (zip content is cut at a UTF-8 character boundary: mb_strcut) */
   read(size: number): Buffer {
+    if (this.#source !== null) {
+      const b = this.#source.read(size)
+      return this.#convertChunk === null ? b : this.#convertChunk(b)
+    }
     let end = Math.min(this.#content.length, this.#offset + size)
     if (this.compression === 'application/zip') {
       // mb_strcut: do not split a multi-byte character
@@ -116,11 +281,19 @@ export class ImportFile {
   }
 
   eof(): boolean {
+    if (this.#source !== null) return this.#source.eof()
     return this.#offset >= this.#content.length
   }
 
-  /** Converts the whole content from `charset` (Encoding::convertString, applied per chunk in pma). */
+  /** Converts the content from `charset` (Encoding::convertString, applied per chunk in pma). */
   convert(fn: (b: Buffer) => Buffer): void {
-    this.#content = fn(this.#content)
+    if (this.#source !== null) this.#convertChunk = fn
+    else this.#content = fn(this.#content)
+  }
+
+  /** Closes the file and removes a temporary decompressed copy. */
+  close(): void {
+    this.#source?.close()
+    this.#source = null
   }
 }

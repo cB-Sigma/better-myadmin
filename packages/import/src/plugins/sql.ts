@@ -1,4 +1,5 @@
 import { boolItem, main, select } from '@bettermyadmin/export'
+import { mbStrlen } from '@bettermyadmin/mysql-types'
 import { BufferedQuery } from '@bettermyadmin/sql-lexer'
 import type { Import } from '../import.ts'
 import { ImportPlugin, type ImportPluginProperties } from '../plugin.ts'
@@ -60,7 +61,7 @@ export class ImportSql extends ImportPlugin {
         const newData = imp.getNextChunk()
         // Subtract data we didn't handle yet and stop processing.
         if (newData === false) {
-          imp.offset -= Array.from(bq.query).length
+          imp.offset -= mbStrlen(bq.query)
           break
         }
         // Checking if the input buffer has finished.

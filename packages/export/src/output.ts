@@ -35,6 +35,9 @@ export interface OutputOptions {
  * per object for "export as separate files".
  * pma: src/Export/OutputHandler.php
  */
+/** the size of the uncompressed output's writes */
+const CHUNK = 64 * 1024
+
 export class OutputHandler {
   readonly asFile: boolean
   readonly compression: '' | 'zip' | 'gzip'
@@ -48,6 +51,13 @@ export class OutputHandler {
   readonly #objects = new Map<string, string>()
   /** bytes handed to the sink */
   written = 0
+  /**
+   * Uncompressed output collected into chunks of about {@link CHUNK} bytes before it goes to the
+   * sink: one awaited write per SQL line made a 2M-row dump three times slower than phpMyAdmin's
+   * (docs/architecture/17-large-data.md). The bytes are unchanged.
+   */
+  #pending: Buffer[] = []
+  #pendingLength = 0
 
   constructor(sink: OutputSink, o: OutputOptions) {
     this.#sink = sink
@@ -70,6 +80,21 @@ export class OutputHandler {
     await this.#sink.write(b)
   }
 
+  async #queue(b: Buffer): Promise<void> {
+    if (b.length === 0) return
+    this.#pending.push(b)
+    this.#pendingLength += b.length
+    if (this.#pendingLength >= CHUNK) await this.#flushPending()
+  }
+
+  async #flushPending(): Promise<void> {
+    if (this.#pendingLength === 0) return
+    const chunk = this.#pending.length === 1 ? (this.#pending[0] as Buffer) : Buffer.concat(this.#pending)
+    this.#pending = []
+    this.#pendingLength = 0
+    await this.#emit(chunk)
+  }
+
   /** pma: OutputHandler::addLine */
   async addLine(text: string): Promise<void> {
     // Kanji encoding convert feature
@@ -90,7 +115,7 @@ export class OutputHandler {
       return
     }
     // text view: the client shows the raw text (phpMyAdmin escapes it into a textarea)
-    await this.#emit(this.asFile ? this.#convert(line) : encodeBytes(line))
+    await this.#queue(this.asFile ? this.#convert(line) : encodeBytes(line))
   }
 
   /** pma: OutputHandler::saveObjectInBuffer (separate files) */
@@ -116,6 +141,7 @@ export class OutputHandler {
    * pma: OutputHandler::convertBufferCharset, ::compress, ExportController (getBuffer)
    */
   async finish(separateFiles: boolean, filename: string, now = new Date()): Promise<void> {
+    await this.#flushPending()
     if (this.compression === 'zip') {
       const name = filename.endsWith('.zip') ? filename.slice(0, -4) : filename
       if (separateFiles) {
