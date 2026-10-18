@@ -110,7 +110,7 @@ describe('diffControls', () => {
       validateMap({ rules: [{ pma: { label: 'a' }, ours: { label: 'b' }, reason: 'x' }] }, new Set()),
     ).toEqual(['rule 1: a label rename needs a parity-exception id'])
     expect(
-      validateMap({ rules: [{ ours: { label: 'b' }, added: 'x', exception: 'X999' }] }, new Set()),
+      validateMap({ rules: [{ ours: { label: 'b' }, added: 'x', exception: 'X999' }] }, new Set()), // fake exception id
     ).toEqual(['rule 1: exception X999 is not in docs/reference/parity-exceptions.md'])
   })
 

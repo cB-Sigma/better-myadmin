@@ -4,6 +4,7 @@
  * re-extracts the inventories and compares (skip with --no-reextract).
  */
 import { loadChecklistIds } from '../checklist.ts'
+import { checkExceptionIds } from '../exception-ids.ts'
 import { checkGenerated, checkStale, compareBaseline } from '../gate.ts'
 import { load, loadBaseline, renderAll } from '../pipeline.ts'
 import { printSummary } from '../summary.ts'
@@ -22,6 +23,7 @@ warnings.push(...gate.warnings)
 const knownIds = loadChecklistIds()
 const unsaved = l.cov.scans.checklist.filter((c) => !(c.id in knownIds)).length
 if (unsaved > 0) warnings.push(`${unsaved} checklist item(s) have no stored id yet: run pnpm parity:report`)
+failures.push(...checkExceptionIds())
 const generated = checkGenerated(renderAll(l))
 failures.push(...generated.failures)
 warnings.push(...generated.warnings)
