@@ -133,7 +133,7 @@ export const pmaControls = {
   },
   'js:makegrid.ts#dragstart:<g.t> th a': {
     file: 'GridTable.tsx',
-    match: 'onDragStart={() => setDragFrom(j)}',
+    match: 'onDragStart={(e) => e.preventDefault()}',
   },
   'js:makegrid.ts#focus:<g.cEditStd> .edit_box': { file: 'GridTable.tsx', match: 'b.focus()' },
   'js:makegrid.ts#focus:<g.cEditTextarea> .edit_box': { file: 'GridTable.tsx', match: 'b.focus()' },

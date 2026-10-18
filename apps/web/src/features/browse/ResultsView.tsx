@@ -682,7 +682,8 @@ function DisplayOptions({ grid, onRun }: { grid: GridData; onRun: (r: Partial<Br
       <Disclosure
         label={t('Extra options')}
         id="extraOptions"
-        initialState={grid.settings.InitialSlidersState as 'open'}
+        // table.twig: a Bootstrap collapse, closed on every page (InitialSlidersState is not read)
+        initialState="closed"
       >
         <Panel>
           <PanelBody className="flex flex-wrap gap-6">

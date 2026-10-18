@@ -10,7 +10,7 @@ import {
   Textarea,
 } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api } from '../../lib/api'
 import { pgettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
@@ -56,7 +56,16 @@ const emptyEvent = (): EventEditorData => ({
   comment: '',
 })
 
-export function EventsPage({ server, db }: { server: number; db: string }) {
+export function EventsPage({
+  server,
+  db,
+  editItem = null,
+}: {
+  server: number
+  db: string
+  /** `edit_item=1&item_name=…`: open that event's editor */
+  editItem?: { name: string } | null
+}) {
   const qc = useQueryClient()
   const q = useQuery({
     queryKey: qk.dbPage({ server, db }, 'events'),
@@ -64,6 +73,14 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
   })
   const [messages, setMessages] = useState<SqlMessage[]>([])
   const [editor, setEditor] = useState<{ event: EventEditorData; original: string | null } | null>(null)
+  const openRef = useRef<(name: string) => Promise<void>>(async () => {})
+  // once, after the list has loaded (the route keys the page by db)
+  const opened = useRef(false)
+  useEffect(() => {
+    if (editItem === null || opened.current || q.data === undefined) return
+    opened.current = true
+    void openRef.current(editItem.name)
+  })
   if (q.isError) return <Messages messages={[errorMessage(q.error)]} />
   const d = q.data
   if (d === undefined) return null
@@ -82,6 +99,7 @@ export function EventsPage({ server, db }: { server: number; db: string }) {
       setMessages([errorMessage(e)])
     }
   }
+  openRef.current = open
   const toggleScheduler = async () => {
     const sql = `SET GLOBAL event_scheduler="${on ? 'OFF' : 'ON'}"`
     try {

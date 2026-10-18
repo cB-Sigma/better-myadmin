@@ -45,6 +45,7 @@ import {
   selectionText,
   startSelection,
 } from './selection'
+import { specialLinkHref } from './special-link'
 
 export interface GridActions {
   /** a sort / FK / text toggle link of the grid (POST /browse) */
@@ -124,13 +125,19 @@ function rawText(c: Cell | undefined, field: Field | undefined): string {
   return hex
 }
 
-function ActionLink(props: {
+/**
+ * Results::getActionLinkContent: RowActionType `icons` / `text`, else Generator::getIcon (which
+ * follows ActionLinksMode).
+ */
+export function ActionLink(props: {
   mode: string
   icon: 'b_edit' | 'b_insrow' | 'b_drop'
   text: string
 }) {
-  const m = props.mode === 'icons' || props.mode === 'text' ? props.mode : 'both'
-  return <IconText icon={props.icon} text={props.text} modeValue={m} />
+  if (props.mode === 'icons' || props.mode === 'text') {
+    return <IconText icon={props.icon} text={props.text} modeValue={props.mode} />
+  }
+  return <IconText icon={props.icon} text={props.text} />
 }
 
 interface EditState {
@@ -157,7 +164,17 @@ export function GridTable(props: Props) {
   const [hoverCol, setHoverCol] = useState<number | null>(null)
   const [editing, setEditing] = useState<EditState | null>(null)
   const [pending, setPending] = useState<Map<string, { value: string | null; type: string }>>(new Map())
-  const [dragFrom, setDragFrom] = useState<number | null>(null)
+  // dragStartReorder: the column copy (.cCpy) follows the pointer, .cPointer marks the drop place
+  const reorder = useRef<{ x0: number; n: number; newn: number; left: number; moved: boolean } | null>(null)
+  const [ghost, setGhost] = useState<{
+    text: string
+    top: number
+    left: number
+    w: number
+    h: number
+  } | null>(null)
+  const [colPointer, setColPointer] = useState<{ top: number; left: number } | null>(null)
+  const wrapRef = useRef<HTMLDivElement>(null)
   const lastChecked = useRef<number | null>(null)
   // initColResize: widths set by dragging the .colborder handles (by server position)
   const [widths, setWidths] = useState<ReadonlyMap<number, number>>(new Map())
@@ -385,6 +402,57 @@ export function GridTable(props: Props) {
     }
   }, [])
 
+  // column reordering: dragMove / dragEnd of the reorder drag (makegrid getHoveredCol, shiftCol)
+  const moveRef = useRef(moveColumn)
+  moveRef.current = moveColumn
+  useEffect(() => {
+    const pos = (el: Element) => {
+      const w = wrapRef.current!.getBoundingClientRect()
+      const r = el.getBoundingClientRect()
+      return {
+        left: r.left - w.left + wrapRef.current!.scrollLeft,
+        top: r.top - w.top,
+        w: r.width,
+        h: r.height,
+      }
+    }
+    const move = (e: MouseEvent) => {
+      const d = reorder.current
+      if (d === null || wrapRef.current === null) return
+      const dx = e.pageX - d.x0
+      if (dx !== 0) d.moved = true
+      setGhost((g) => (g === null ? g : { ...g, left: d.left + dx }))
+      const headers = [...(tableRef.current?.querySelectorAll('thead th.draggable:not(.hide)') ?? [])]
+      const hovered = headers.find((h) => {
+        const r = h.getBoundingClientRect()
+        return e.clientX >= r.left && e.clientX <= r.right
+      })
+      if (hovered === undefined) return
+      const newn = Number((hovered as HTMLElement).dataset.orderIndex)
+      d.newn = newn
+      if (newn !== d.n) {
+        const c = pos(hovered)
+        setColPointer({ top: c.top, left: newn < d.n ? c.left : c.left + c.w })
+      } else setColPointer(null)
+    }
+    const up = () => {
+      const d = reorder.current
+      if (d === null) return
+      reorder.current = null
+      setGhost(null)
+      setColPointer(null)
+      document.body.style.cursor = ''
+      document.body.classList.remove('user-select-none')
+      if (d.newn !== d.n) moveRef.current(d.n, d.newn)
+    }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
+    return () => {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', up)
+    }
+  }, [])
+
   // cell selection: mouseup ends a drag, a mousedown outside the table, Escape reset it; Ctrl+A,
   // Shift+arrows and copy work when no field has the focus
   const keyAt = useRef(0)
@@ -507,8 +575,8 @@ export function GridTable(props: Props) {
       sig: row.whereSig,
       unique: row.unique ? '1' : '0',
       action,
-      sql: grid.sql,
-      sql_sig: grid.sig,
+      sql: grid.urlSql?.sql ?? grid.sql,
+      sql_sig: grid.urlSql?.sig ?? grid.sig,
     })
     const edit = grid.displayParts.editLink && (
       <td
@@ -669,12 +737,23 @@ export function GridTable(props: Props) {
             key={p}
             className={`${cls}${sc === '' ? '' : ` ${sc}`} relative${canReorder ? (visibleCount > 1 ? ' cursor-move' : ' cursor-[inherit]') : ''}`}
             data-column={c.name}
-            draggable={!repeat && canReorder && visibleCount > 1}
-            onDragStart={() => setDragFrom(j)}
-            onDragOver={(e) => dragFrom !== null && e.preventDefault()}
-            onDrop={() => {
-              if (dragFrom !== null) moveColumn(dragFrom, j)
-              setDragFrom(null)
+            data-order-index={j}
+            // th a dragstart → false: no native drag (of the sort link) competes with the reorder drag
+            onDragStart={(e) => e.preventDefault()}
+            onMouseDown={(e) => {
+              // th.draggable mousedown: dragStartReorder (when more than one column is visible)
+              if (repeat || !canReorder || visibleCount <= 1 || e.button !== 0) return
+              if ((e.target as HTMLElement).closest('.colborder') !== null) return
+              const th = e.currentTarget
+              const w = wrapRef.current!.getBoundingClientRect()
+              const r = th.getBoundingClientRect()
+              const left = r.left - w.left + wrapRef.current!.scrollLeft
+              const top = r.top - w.top
+              reorder.current = { x0: e.pageX, n: j, newn: j, left, moved: false }
+              setGhost({ text: th.innerText, top: top + 20, left, w: th.clientWidth, h: th.clientHeight })
+              document.body.style.cursor = 'move'
+              document.body.classList.add('user-select-none')
+              if (editing !== null) setEditing(null)
             }}
             onMouseLeave={() => setHoverCol(null)}
             onClick={(e) => {
@@ -787,7 +866,17 @@ export function GridTable(props: Props) {
     .join(' ')
 
   return (
-    <div className="table-responsive-md relative overflow-x-auto">
+    <div ref={wrapRef} className="table-responsive-md relative overflow-x-auto">
+      {ghost !== null && reorder.current?.moved === true && (
+        <div
+          className="cCpy"
+          style={{ top: ghost.top, left: ghost.left, width: ghost.w, height: ghost.h }}
+          aria-hidden
+        >
+          {ghost.text}
+        </div>
+      )}
+      {colPointer !== null && <div className="cPointer" style={colPointer} aria-hidden />}
       <table ref={tableRef} className="table_results data ajax w-auto" data-uniqueid="grid">
         <thead>{header(false)}</thead>
         <tbody>
@@ -965,6 +1054,16 @@ function CellContent({
   if (cell.k === 'empty') return null
   if (cell.tf !== undefined) return <GridTransformed tf={cell.tf} server={server} versionInt={versionInt} />
   const text = cell.t ?? ''
+  if (cell.sl !== undefined) {
+    // SpecialSchemaLinks: the Text_Plain_Link transformation (a new tab, like phpMyAdmin)
+    const href = specialLinkHref(server, cell.sl)
+    if (href === null) return <>{text}</>
+    return (
+      <a href={href} title="" target="_blank" rel="noopener noreferrer">
+        {text}
+      </a>
+    )
+  }
   if (cell.fk !== undefined) {
     const fk = cell.fk
     return (
@@ -1065,10 +1164,15 @@ function CellEditor(props: {
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const boxRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
-  // the cursor goes to the end of the value (showEditCell)
+  // showEditCell: the edit box takes the cell's outer size; the cursor goes to the end of the value
   useEffect(() => {
     const b = boxRef.current
     if (b === null) return
+    const td = b.closest('td')
+    if (td !== null) {
+      b.style.width = `${td.offsetWidth}px`
+      b.style.height = `${td.offsetHeight}px`
+    }
     b.focus()
     b.setSelectionRange(b.value.length, b.value.length)
   }, [])
@@ -1273,21 +1377,23 @@ function CellEditor(props: {
           />
         )}
         {!notNull && (
-          <label className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              className="null_div"
-              checked={nullChecked}
-              onChange={(e) => {
-                setNullChecked(e.target.checked)
-                if (e.target.checked) {
-                  setValue('')
-                  setSelected([])
-                }
-              }}
-            />
-            NULL
-          </label>
+          // makegrid: <div class="null_div"><label>NULL:<input type="checkbox"></label></div>
+          <div className="null_div">
+            <label className="flex items-center gap-1">
+              NULL:
+              <input
+                type="checkbox"
+                checked={nullChecked}
+                onChange={(e) => {
+                  setNullChecked(e.target.checked)
+                  if (e.target.checked) {
+                    setValue('')
+                    setSelected([])
+                  }
+                }}
+              />
+            </label>
+          </div>
         )}
         {loading && <span className="text-fg-subtle">{t('Loading…')}</span>}
         {options !== null && !browseForeign && (
