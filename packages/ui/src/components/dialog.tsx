@@ -56,6 +56,12 @@ export function DialogContent({
           className,
         )}
         onInteractOutside={(e) => {
+          // the AJAX notification sits above the modal (#loading_parent): a click on it removes the
+          // notification and leaves the modal open
+          if (e.target instanceof Element && e.target.closest('[data-sonner-toaster]') !== null) {
+            e.preventDefault()
+            return
+          }
           if (modal === 'static') e.preventDefault()
           onInteractOutside?.(e)
         }}

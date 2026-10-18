@@ -1,14 +1,31 @@
 import type { SqlMessage } from '@bettermyadmin/contracts'
 import { MessageBox, MessageLine } from '@bettermyadmin/ui'
+import { useParams } from '@tanstack/react-router'
 import { HighlightedSql } from '../../sql/HighlightedSql'
+import { PageMessages } from '../../sql/page-card'
 
 export { errorMessage } from '../../../lib/api'
 
 /**
- * The messages of a table-level action: Generator::getMessage (message + the SQL that ran, with
- * the SQL highlighted and linked to the manual like phpMyAdmin's sql-highlight).
+ * The messages of a table-level action: Generator::getMessage, the message with the query card of
+ * the SQL that ran (Edit inline / Edit / Create PHP code), as the SQL pages show it.
  */
 export function ResultMessages({ messages }: { messages: readonly SqlMessage[] }) {
+  const p = useParams({ strict: false }) as { server?: string; db?: string; table?: string }
+  if (messages.length === 0) return null
+  if (p.server !== undefined)
+    return (
+      <PageMessages
+        server={Number(p.server)}
+        messages={[...messages]}
+        scope={{ db: p.db ?? '', table: p.table ?? '' }}
+      />
+    )
+  return <PlainMessages messages={messages} />
+}
+
+/** Outside a server route (no query card environment): the message and its highlighted SQL. */
+function PlainMessages({ messages }: { messages: readonly SqlMessage[] }) {
   return (
     <>
       {messages.map((m, i) =>

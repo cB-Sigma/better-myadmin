@@ -203,7 +203,8 @@ test('the routine, event and trigger editors have one "Details" legend', async (
     await page.goto(`/s/1/db/${DB}/${path}`)
     await page.getByRole('button', { name: open }).click()
     await expect(page.locator(`${modal} [name="item_name"]`)).toBeVisible()
-    await expect(page.locator(modal).getByText('Details', { exact: true })).toHaveCount(1)
+    const text = await page.locator(modal).innerText()
+    expect(text.match(/\bDetails\b/g)?.length).toBe(1)
     await page.locator(modal).getByRole('button', { name: 'Close' }).last().click()
   }
 })

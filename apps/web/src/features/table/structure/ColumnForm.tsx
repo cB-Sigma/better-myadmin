@@ -657,7 +657,7 @@ export function ColumnForm({
         </div>
       )}
       <div className="overflow-x-auto">
-        <table id="table_columns" className="w-full border-collapse text-sm">
+        <table id="table_columns" className="w-auto border-collapse text-sm">
           <caption className="mb-1 text-left font-semibold">
             {t('Structure')} <MySqlDocLink link="create-table" />
           </caption>

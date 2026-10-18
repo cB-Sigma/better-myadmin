@@ -22,6 +22,8 @@ export default function SonnerHost() {
       position="top-center"
       offset={{ top: 200 }}
       visibleToasts={1}
+      // a modal dialog turns the page's pointer events off; the notification above it stays clickable
+      style={{ pointerEvents: 'auto' }}
       toastOptions={{ unstyled: true, className: 'w-[350px]' }}
     />
   )
