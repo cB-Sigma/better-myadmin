@@ -5,6 +5,7 @@ import type {
   SchemaExportRequest,
   SchemaExportResponse,
 } from '@bettermyadmin/contracts'
+import { sanitizeFilename } from '@bettermyadmin/export'
 import { sprintf } from '@bettermyadmin/i18n'
 import { getDisplayField, getForeignKeysData, getForeignersInternal } from '@bettermyadmin/metadata'
 import { type SchemaFormat, type SchemaTableData, exportSchema, schemaPlugins } from '@bettermyadmin/schema'
@@ -164,5 +165,6 @@ export async function schemaExport(ctx: DbCtx, req: SchemaExportRequest): Promis
     },
     data,
   )
-  return result
+  // Core::downloadHeader → getDownloadHeaders: Sanitize::sanitizeFilename on the file name
+  return { ...result, fileName: sanitizeFilename(result.fileName) }
 }
