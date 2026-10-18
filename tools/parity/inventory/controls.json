@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010",
+    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d",
     "source": "resources/templates/**/*.twig (HTML controls, links, link_or_button) + PHP helpers (tools/parity/php/helpers.php)",
     "count": 1106
   },

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "328b8d80039c6edc237598e7a6fc039065f42010",
+    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d",
     "source": "src/Routing/Routes.php::collect (FastRoute collector, executed) + Routing::callSetupController",
     "count": 200
   },
