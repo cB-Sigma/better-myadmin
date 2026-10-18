@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "bin": {
-    "bettermyadmin": "./dist/main.js"
+    "bettermyadmin": "./bin/bettermyadmin.mjs"
   },
   "scripts": {
     "dev": "tsx watch src/main.ts",
-    "start": "tsx src/main.ts",
+    "start": "node bin/bettermyadmin.mjs",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
@@ -30,12 +30,12 @@
     "mysql2": "3.14.1",
     "omggif": "1.0.10",
     "pngjs": "7.0.0",
+    "tsx": "4.19.4",
     "zod": "3.24.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.6",
     "@types/omggif": "1.0.5",
-    "@types/pngjs": "6.0.5",
-    "tsx": "4.19.4"
+    "@types/pngjs": "6.0.5"
   }
 }

@@ -98,6 +98,9 @@ importers:
       pngjs:
         specifier: 7.0.0
         version: 7.0.0
+      tsx:
+        specifier: 4.19.4
+        version: 4.19.4
       zod:
         specifier: 3.24.4
         version: 3.24.4
@@ -111,9 +114,6 @@ importers:
       '@types/pngjs':
         specifier: 6.0.5
         version: 6.0.5
-      tsx:
-        specifier: 4.19.4
-        version: 4.19.4
 
   apps/web:
     dependencies:
@@ -229,6 +229,9 @@ importers:
 
   packages/config:
     dependencies:
+      esbuild:
+        specifier: 0.25.12
+        version: 0.25.12
       yaml:
         specifier: 2.7.1
         version: 2.7.1

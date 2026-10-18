@@ -39,13 +39,14 @@ export type Action =
   | { hover: string }
   | { wait: number }
 
-export type PageFn = (page: Page) => Promise<void>
+/** what a step runs in one app (its result is ignored) */
+export type PageFn = (page: Page) => Promise<unknown>
 
 export interface Step {
   /** shown in the report and the gallery (also the `step` of map selectors) */
   name: string
-  /** the same action in both apps … */
-  do?: Action | Action[]
+  /** the same action in both apps (or the same function, given each app's page) … */
+  do?: Action | Action[] | PageFn
   /** … or one per app (functions get the app's page) */
   pma?: Action | Action[] | PageFn
   ours?: Action | Action[] | PageFn

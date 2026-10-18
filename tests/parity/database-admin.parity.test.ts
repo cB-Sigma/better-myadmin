@@ -116,7 +116,8 @@ describe.skipIf(!pmaReachable)('parity: central columns', () => {
         ]),
       () => h.bma.req('POST', bma('/structure/central-add'), { tables: ['parent', 'child'] }),
     )
-    const text = (r.b.json as { messages: Array<{ text: string }> }).messages[0]?.text ?? ''
+    const text =
+      ((r.b as { json: unknown }).json as { messages: Array<{ text: string }> }).messages[0]?.text ?? ''
     expect(text).toContain("Could not add 'id','name' as they already exist in central list!")
     expect(JSON.stringify(r.p)).toContain(
       'Could not add &#039;id&#039;,&#039;name&#039; as they already exist in central list!',
