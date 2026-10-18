@@ -32,7 +32,7 @@ test.afterAll(async () => {
   await c.end()
 })
 
-test('expand a database, open a table, state restored after reload', async ({ page }) => {
+test('expand a database, open a table, state restored after reload [p01-8e663c]', async ({ page }) => {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)
@@ -105,7 +105,7 @@ test.describe('fast filter and paging of a container', () => {
     await c.end()
   })
 
-  test('item filter (client and server) and page selector [p01-41d435]', async ({ page }) => {
+  test('item filter (client and server) and page selector [p01-41d435] [p01-425d41]', async ({ page }) => {
     // tall enough for the virtualized tree to render a whole page of 50 tables
     await page.setViewportSize({ width: 1280, height: 1600 })
     await page.goto('/')

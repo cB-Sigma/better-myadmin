@@ -58,7 +58,7 @@ async function rows(sql: string, user: string) {
 }
 
 describe.skipIf(!pmaReachable)('parity: navigation width, hiding, recent tables', () => {
-  it('/navigation/update-width stores NavigationWidth', async () => {
+  it('/navigation/update-width stores NavigationWidth [p01-34f437]', async () => {
     const r = await both(
       h,
       () => h.pma.postJson('/navigation/update-width', [['value', '312']]),
@@ -73,7 +73,7 @@ describe.skipIf(!pmaReachable)('parity: navigation width, hiding, recent tables'
     expect((await conf(users.pma))[0]?.config_data).toBe('{"NavigationWidth":312}')
   })
 
-  it('hide two tables, then unhide one', async () => {
+  it('hide two tables, then unhide one [p01-f71193]', async () => {
     const item = (db: string, name: string): Array<[string, string]> => [
       ['itemType', 'table'],
       ['itemName', name],
@@ -116,7 +116,7 @@ describe.skipIf(!pmaReachable)('parity: navigation width, hiding, recent tables'
     expect(await hidden(users.pma)).toEqual([{ item_name: 'u', item_type: 'table', db_name: 'DB' }])
   })
 
-  it('visiting tables fills the Recent list (most recent first)', async () => {
+  it('visiting tables fills the Recent list (most recent first) [p01-56fa30]', async () => {
     for (const name of ['t', 'u']) {
       const r = await both(
         h,

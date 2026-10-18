@@ -4,22 +4,21 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3041/3426 covered (88.8%): 3007 implemented, 4 exception, 30 n/a, 4 planned, 381 missing. [Summary](README.md).
+3046/3426 covered (88.9%): 3012 implemented, 4 exception, 30 n/a, 4 planned, 376 missing. [Summary](README.md).
 
-## 01 shell navigation auth — 287/403 (71.2%) covered, 287/403 implemented
+## 01 shell navigation auth — 292/403 (72.5%) covered, 292/403 implemented
 
-116 msgids not used yet.
+111 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 | `src/Controllers/JavaScriptMessagesController.php` | 16/23 | `Adding primary key` · `Are you sure you wish to change all the column collations and conve…` · `As per your settings, they are being submitted currently, please be…` · `Click a data point to view and possibly edit the data row.` · `Click reset zoom button to come back to original state.` · `Do you want to copy encryption key?` · `Each point represents a data row.` · `Hovering over a point will show its label.` · `Please look at the bottom of this window.` · `Reset all` · `Some errors have been detected on the server!` · `The plot can be resized by dragging it along the bottom right corner.` · … +4 |
-| `resources/templates/home/index.twig` | 7/35 | `Get more themes!` · `PHP extension:` · `PHP version:` · `phpMyAdmin Demo Server` · `phpMyAdmin Themes` · `Show PHP information` · `You are using the demo server. You can do anything here, but please…` |
 | `resources/js/modules/functions.ts` | 6/31 | `Edit query` · `Extremely weak` · `Good` · `Strong` · `Very weak` · `Weak` |
 | `resources/js/u2f.ts` | 6/6 | `Client does not support security key. (U2F error)` · `Failed security key activation. (U2F error)` · `Invalid request sent to security key. (U2F error)` · `Invalid security key. (U2F error)` · `Timed out waiting for security key activation. (U2F error)` · `Unknown security key error. (U2F error)` |
+| `resources/templates/home/index.twig` | 6/35 | `Get more themes!` · `PHP extension:` · `PHP version:` · `phpMyAdmin Themes` · `Show PHP information` · `You are using the demo server. You can do anything here, but please…` |
 | `resources/js/modules/ajax.ts` | 5/6 | `Error code: %s` · `Error text: %s` · `Indicates that you have made changes to this page; you will be prom…` · `It seems that the connection to server has been lost. Please check …` · `Request aborted!!` |
 | `src/Controllers/HomeController.php` | 5/15 | `Directory [code]config[/code], which is used by the setup script, s…` · `The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able …` · `The curl extension was not found and allow_url_fopen is disabled. D…` · `The mbstring PHP extension was not found and you seem to be using a…` · `Your PHP parameter [a@https://www.php.net/manual/en/session.configu…` |
 | `resources/js/modules/console.ts` | 4/8 | `%s argument(s) passed` · `Hide arguments` · `Show arguments` · `Some error occurred while getting SQL debug info.` |
-| `resources/templates/base.twig` | 4/17 | `Currently running Git revision %1$s from the %2$s branch.` · `Git information missing!` · `Javascript must be enabled past this point!` · `phpMyAdmin Demo Server` |
 | `resources/templates/login/twofactor/key_configure.twig` | 4/4 | `Deprecated!` · `Please connect your FIDO U2F device into your computer's USB port. …` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
 | `resources/templates/login/twofactor/key.twig` | 4/4 | `Deprecated!` · `Please connect your FIDO U2F device into your computer's USB port. …` · `The FIDO U2F API has been deprecated in favor of the Web Authentica…` · `You can still use Firefox to authenticate your account using the FI…` |
 | `src/Navigation/NavigationTree.php` | 4/6 | `%s result found` · `Groups` · `There are large item groups in navigation panel which may affect th…` · `Unlink from main panel` |
@@ -31,11 +30,9 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/modules/navigation.ts` | 2/2 | `Hide panel` · `Show panel` |
 | `resources/templates/home/git_info.twig` | 2/5 | `authored on %s by %s` · `committed on %s by %s` |
 | `resources/templates/home/themes.twig` | 2/2 | `Screenshot of the %s theme.` · `Take it` |
-| `resources/templates/login/form.twig` | 2/8 | `phpMyAdmin Demo Server` · `You are using the demo server. You can do anything here, but please…` |
 | `resources/templates/login/header.twig` | 2/3 | `Javascript must be enabled past this point!` · `There is a mismatch between HTTPS indicated on the server and clien…` |
 | `resources/templates/setup/home/index.twig` | 2/20 | `Donate` · `phpMyAdmin homepage` |
 | `src/Favorites/RecentFavoriteTables.php` | 2/2 | `Could not save favorite table!` · `Could not save recent table!` |
-| `src/Http/Middleware/RequestProblemChecking.php` | 2/2 | `GLOBALS overwrite attempt` · `possible exploit` |
 | `src/Http/Middleware/TokenRequestParamChecking.php` | 2/2 | `Error: Token mismatch` · `Failed to set session cookie. Maybe you are using HTTP instead of H…` |
 | `src/Theme/ThemeManager.php` | 2/2 | `Default theme %s not found!` · `Theme %s not found!` |
 | `resources/js/modules/functions/adjustTotals.ts` | 1/8 | `%d table(s)` |
@@ -44,8 +41,10 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | `resources/js/modules/git-info.ts` | 1/4 | `There was an error in loading the Git information.` |
 | `resources/js/modules/navigation/event-loader.ts` | 1/2 | `Unlink from main panel` |
 | `resources/js/triggers.ts` | 1/1 | `Trigger` |
+| `resources/templates/base.twig` | 1/17 | `Javascript must be enabled past this point!` |
 | `resources/templates/error/simple.twig` | 1/1 | `Something went wrong` |
 | `resources/templates/javascript/redirect.twig` | 1/1 | `Taking you to the target site.` |
+| `resources/templates/login/form.twig` | 1/8 | `You are using the demo server. You can do anything here, but please…` |
 | `resources/templates/login/twofactor/key-https-warning.twig` | 1/1 | `You are not using https to access phpMyAdmin, therefore FIDO U2F de…` |
 | `resources/templates/setup/servers/index.twig` | 1/3 | `Something went wrong.` |
 | `src/Controllers/NavigationController.php` | 1/1 | `Fatal error: The navigation can only be accessed via AJAX` |

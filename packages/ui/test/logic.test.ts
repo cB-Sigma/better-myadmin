@@ -7,7 +7,7 @@ import { disclosureInitial } from '../src/lib/sliders.ts'
 import { THEMES, colorModeKey, colorModeLabel, resolveThemeState, themeKey } from '../src/themes/index.ts'
 
 describe('ajaxShowMessage policy (ajax-message.ts)', () => {
-  it('defaults to a sticky, non-dismissable "Loading…" with the spinner', () => {
+  it('defaults to a sticky, non-dismissable "Loading…" with the spinner [p01-47c1c5] [p01-eb435e]', () => {
     expect(messagePolicy()).toEqual({
       text: LOADING,
       duration: null,
@@ -16,17 +16,17 @@ describe('ajaxShowMessage policy (ajax-message.ts)', () => {
       type: null,
     })
   })
-  it('"Processing request" is sticky and not dismissable, without spinner', () => {
+  it('"Processing request" is sticky and not dismissable, without spinner [p01-eb435e]', () => {
     expect(messagePolicy(PROCESSING_REQUEST)).toMatchObject({
       duration: null,
       dismissable: false,
       spinner: false,
     })
   })
-  it('a normal message fades after 5 s and is dismissable', () => {
+  it('a normal message fades after 5 s and is dismissable [p01-eb435e]', () => {
     expect(messagePolicy('Done')).toMatchObject({ duration: 5000, dismissable: true })
   })
-  it('honours an explicit timeout, and timeout=false means sticky but dismissable', () => {
+  it('honours an explicit timeout, and timeout=false means sticky but dismissable [p01-eb435e] [p01-211041]', () => {
     expect(messagePolicy('Done', 3000)?.duration).toBe(3000)
     expect(messagePolicy('Failed', false, 'error')).toMatchObject({
       duration: null,
@@ -71,11 +71,11 @@ describe('ActionLinksMode / TabsMode (Generator::getIcon)', () => {
 })
 
 describe('documentation links', () => {
-  it('phpMyAdmin docs', () => {
+  it('phpMyAdmin docs [p01-62e957]', () => {
     expect(pmaDocUrl('index')).toBe('https://docs.phpmyadmin.net/en/latest/index.html')
     expect(pmaDocUrl('faq', 'faq7-2')).toBe('https://docs.phpmyadmin.net/en/latest/faq.html#faq7-2')
   })
-  it('MySQL manual by server version (Util::getMySQLDocuURL)', () => {
+  it('MySQL manual by server version (Util::getMySQLDocuURL) [p01-62e957]', () => {
     expect(mysqlDocUrl('charset-connection', '', 80404)).toBe(
       'https://dev.mysql.com/doc/refman/8.0/en/charset-connection.html',
     )
@@ -87,7 +87,7 @@ describe('documentation links', () => {
       'https://dev.mysql.com/doc/mysql-errors/8.0/en/server-error-reference.html',
     )
   })
-  it('server docs (Util::getDocuURL)', () => {
+  it('server docs (Util::getDocuURL) [p01-62e957]', () => {
     expect(serverDocUrl(true)).toBe('https://mariadb.com/kb/en/documentation/')
     expect(serverDocUrl(false, 80400)).toBe('https://dev.mysql.com/doc/refman/8.0/en/index.html')
   })
@@ -107,7 +107,7 @@ describe('themes (ThemeManager)', () => {
   it('every theme has a dark variant', () => {
     for (const t of THEMES) expect(t.colorModes).toContain('dark')
   })
-  it('cookie names follow ThemePerServer', () => {
+  it('cookie names follow ThemePerServer [p01-b253b9]', () => {
     expect(themeKey(false, 3)).toBe('bma_theme')
     expect(themeKey(true, 3)).toBe('bma_theme-3')
     expect(colorModeKey(true, 3)).toBe('bma_theme-3_color')
@@ -118,7 +118,7 @@ describe('themes (ThemeManager)', () => {
     expect(resolveThemeState({ ...base, storedTheme: null, themeDefault: 'original' }).theme).toBe('original')
     expect(resolveThemeState({ ...base, storedTheme: 'nope', themeDefault: 'nope' }).theme).toBe('pmahomme')
   })
-  it('colour mode: stored when valid for the theme, else OS preference, else the first mode', () => {
+  it('colour mode: stored when valid for the theme, else OS preference, else the first mode [p01-b253b9]', () => {
     expect(
       resolveThemeState({
         storedTheme: 'metro',

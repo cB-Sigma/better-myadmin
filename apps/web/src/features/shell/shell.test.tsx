@@ -26,7 +26,7 @@ const vars = {
 }
 
 describe('page titles (Header::getPageTitle, Util::expandUserString)', () => {
-  it('picks TitleTable / TitleDatabase / TitleServer / TitleDefault', () => {
+  it('picks TitleTable / TitleDatabase / TitleServer / TitleDefault [p01-a7125e]', () => {
     expect(pageTitle(DEFAULT_CLIENT_CONFIG, vars)).toBe(
       'pma.local:8080 / db1 / shop / orders | BetterMyAdmin 1.0.0',
     )
@@ -151,7 +151,7 @@ describe('version check (git-info.ts)', () => {
     expect(parseVersionString('5.2.1-rc2')).toBe(502010000 - 22)
     expect(parseVersionString('5.2.1-beta1')).toBe(502010000 - 41)
   })
-  it('newer / security / up to date [p06-f6908d]', () => {
+  it('newer / security / up to date [p01-bb3004] [p06-f6908d]', () => {
     expect(versionNotice('1.2.0', '1.2.0')).toEqual({ upToDate: true, newer: false, security: false })
     // "security" = only the 4th (hotfix) part differs: Math.floor(v / 10000) compares major.minor.patch
     expect(versionNotice('1.2.0', '1.2.0.1')).toEqual({ upToDate: false, newer: true, security: true })

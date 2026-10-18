@@ -32,7 +32,7 @@ test.afterAll(async () => {
   await sql(`DROP DATABASE IF EXISTS ${DB}; DROP USER IF EXISTS '${USER}'@'%'`)
 })
 
-test('Recent and Favorites', async ({ page }) => {
+test('Recent and Favorites [p01-56fa30]', async ({ page }) => {
   await page.goto('/')
   await page.locator('#input_username').fill(USER)
   await page.locator('#input_password').fill(USER)

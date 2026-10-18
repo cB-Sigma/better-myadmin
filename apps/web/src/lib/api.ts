@@ -307,6 +307,14 @@ export async function call<T>(
       code: 'INTERNAL' as const,
       message: res.statusText,
     }
+    // the login is gone (inactivity, another tab logged out): the gate shows the login form again
+    // (pma: ajax.ts redirect_flag → session_expired reload; the keep-alive's login modal)
+    if (
+      res.status === 401 &&
+      (env.code === 'AUTH_REQUIRED' || env.code === 'AUTH_EXPIRED') &&
+      !path.startsWith('/auth/')
+    )
+      window.dispatchEvent(new CustomEvent(AUTH_LOST_EVENT, { detail: env }))
     throw new ApiError(res.status, env)
   }
   // $cfg['DBG']['sql']: the statements of any response go to the console's Debug SQL card
@@ -317,6 +325,9 @@ export async function call<T>(
   }
   return json as T
 }
+
+/** Dispatched on `window` when an API call answers that the login is gone (401). */
+export const AUTH_LOST_EVENT = 'bma:auth-lost'
 
 /** Dispatched on `window` with the `executed` statements of an API response (DBG.sql). */
 export const DEBUG_SQL_EVENT = 'bma:debug-sql'
