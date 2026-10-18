@@ -617,6 +617,8 @@ function ExecuteDialog({
     Object.fromEntries(form.params.map((p) => [p.name, p.functions?.find((f) => f.selected)?.value ?? ''])),
   )
   const title = `${t('Execute routine')} \`${form.name}\``
+  const execute = () =>
+    void onExecute(Object.fromEntries(form.params.map((p) => [p.name, values[p.name] ?? ''])), funcs)
   return (
     <DbModal
       id="routinesExecuteModal"
@@ -627,16 +629,7 @@ function ExecuteDialog({
         <>
           <Button onClick={onClose}>{t('Close')}</Button>
           {result === null && (
-            <Button
-              variant="primary"
-              id="routinesExecuteModalExecuteButton"
-              onClick={() =>
-                void onExecute(
-                  Object.fromEntries(form.params.map((p) => [p.name, values[p.name] ?? ''])),
-                  funcs,
-                )
-              }
-            >
+            <Button variant="primary" id="routinesExecuteModalExecuteButton" onClick={execute}>
               {t('Execute')}
             </Button>
           )}
@@ -683,87 +676,97 @@ function ExecuteDialog({
           )}
         </>
       ) : (
-        <Panel title={t('Routine parameters')}>
-          <PanelBody>
-            {form.params.length === 0 ? (
-              <p>{t('This routine does not require any parameters.')}</p>
-            ) : (
-              <table className="rte_table w-auto text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2">
-                <thead>
-                  <tr className="text-left">
-                    <th>{t('Name')}</th>
-                    <th>{t('Type')}</th>
-                    {form.showFunctionFields && <th>{t('Function')}</th>}
-                    <th>{t('Value')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {form.params.map((p) => (
-                    <tr key={p.name}>
-                      <td>{p.name}</td>
-                      <td>{p.type}</td>
-                      {form.showFunctionFields && (
-                        <td>
-                          {p.functions === null ? (
-                            '--'
+        // routines.ts: keyup Enter anywhere in form.rte_form executes the routine
+        <form
+          className="rte_form"
+          onSubmit={(e) => e.preventDefault()}
+          onKeyUp={(e) => {
+            e.preventDefault()
+            if (e.key === 'Enter') execute()
+          }}
+        >
+          <Panel title={t('Routine parameters')}>
+            <PanelBody>
+              {form.params.length === 0 ? (
+                <p>{t('This routine does not require any parameters.')}</p>
+              ) : (
+                <table className="rte_table w-auto text-sm [&_td]:px-2 [&_td]:py-1 [&_th]:px-2">
+                  <thead>
+                    <tr className="text-left">
+                      <th>{t('Name')}</th>
+                      <th>{t('Type')}</th>
+                      {form.showFunctionFields && <th>{t('Function')}</th>}
+                      <th>{t('Value')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {form.params.map((p) => (
+                      <tr key={p.name}>
+                        <td>{p.name}</td>
+                        <td>{p.type}</td>
+                        {form.showFunctionFields && (
+                          <td>
+                            {p.functions === null ? (
+                              '--'
+                            ) : (
+                              <NativeSelect
+                                name={`funcs[${p.name}]`}
+                                value={funcs[p.name] ?? ''}
+                                onChange={(e) => setFuncs({ ...funcs, [p.name]: e.target.value })}
+                              >
+                                {p.functions.map((f) => (
+                                  <option key={f.value} value={f.value}>
+                                    {f.value}
+                                  </option>
+                                ))}
+                              </NativeSelect>
+                            )}
+                          </td>
+                        )}
+                        <td className="whitespace-nowrap">
+                          {p.inputType === 'text' ? (
+                            <Input
+                              className={p.dateClass}
+                              name={`params[${p.name}]`}
+                              value={String(values[p.name] ?? '')}
+                              onChange={(e) => setValues({ ...values, [p.name]: e.target.value })}
+                            />
                           ) : (
-                            <NativeSelect
-                              name={`funcs[${p.name}]`}
-                              value={funcs[p.name] ?? ''}
-                              onChange={(e) => setFuncs({ ...funcs, [p.name]: e.target.value })}
-                            >
-                              {p.functions.map((f) => (
-                                <option key={f.value} value={f.value}>
-                                  {f.value}
-                                </option>
-                              ))}
-                            </NativeSelect>
+                            p.values.map((v) => (
+                              <label key={v} className="block">
+                                <input
+                                  type={p.inputType}
+                                  name={`params[${p.name}][]`}
+                                  value={v}
+                                  checked={
+                                    p.inputType === 'radio'
+                                      ? values[p.name] === v
+                                      : (values[p.name] as string[] | undefined)?.includes(v) === true
+                                  }
+                                  onChange={(e) => {
+                                    if (p.inputType === 'radio') setValues({ ...values, [p.name]: v })
+                                    else {
+                                      const cur = (values[p.name] as string[] | undefined) ?? []
+                                      setValues({
+                                        ...values,
+                                        [p.name]: e.target.checked ? [...cur, v] : cur.filter((x) => x !== v),
+                                      })
+                                    }
+                                  }}
+                                />{' '}
+                                {v}
+                              </label>
+                            ))
                           )}
                         </td>
-                      )}
-                      <td className="whitespace-nowrap">
-                        {p.inputType === 'text' ? (
-                          <Input
-                            className={p.dateClass}
-                            name={`params[${p.name}]`}
-                            value={String(values[p.name] ?? '')}
-                            onChange={(e) => setValues({ ...values, [p.name]: e.target.value })}
-                          />
-                        ) : (
-                          p.values.map((v) => (
-                            <label key={v} className="block">
-                              <input
-                                type={p.inputType}
-                                name={`params[${p.name}][]`}
-                                value={v}
-                                checked={
-                                  p.inputType === 'radio'
-                                    ? values[p.name] === v
-                                    : (values[p.name] as string[] | undefined)?.includes(v) === true
-                                }
-                                onChange={(e) => {
-                                  if (p.inputType === 'radio') setValues({ ...values, [p.name]: v })
-                                  else {
-                                    const cur = (values[p.name] as string[] | undefined) ?? []
-                                    setValues({
-                                      ...values,
-                                      [p.name]: e.target.checked ? [...cur, v] : cur.filter((x) => x !== v),
-                                    })
-                                  }
-                                }}
-                              />{' '}
-                              {v}
-                            </label>
-                          ))
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </PanelBody>
-        </Panel>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </PanelBody>
+          </Panel>
+        </form>
       )}
     </DbModal>
   )

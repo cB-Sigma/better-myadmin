@@ -70,6 +70,14 @@ export const pmaControls = {
   'js:gis_data_editor.ts#click:#gis_editor button.addJs.addPolygon': '../gis/GisEditor.tsx',
   'js:gis_data_editor.ts#click:#gis_editor button.gis-copy-data': '../gis/GisEditor.tsx',
   'js:gis_data_editor.ts#hidden:<$gisEditorModal>': '../gis/GisEditor.tsx',
+  // the editor's data (GisDataEditorController: type, coordinates, preview) is built client-side
+  'js:gis_data_editor.ts#ajax:POST /gis-data-editor': {
+    file: '../gis/gis.ts',
+    match: 'export function initialValue(',
+  },
+  // the OpenLayers chunk of "Use OpenStreetMaps as Base Layer": the editor works whether it loads or not
+  'js:gis_data_editor.ts#load:<script>': { file: '../gis/OlPlot.tsx', match: '.then(({ drawOpenLayers })' },
+  'js:gis_data_editor.ts#error:<script>': { file: '../gis/OlPlot.tsx', match: '.catch(() => {})' },
   'js:transformations/image_upload.ts#change:input.image-upload': 'ValueWidget.tsx',
   // pma: resources/js — browser behaviours (js.json)
   'js:table/change.ts#click:<$thisElement>': { file: 'ValueWidget.tsx', match: 'className="checkbox_null"' },

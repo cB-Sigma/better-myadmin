@@ -352,6 +352,24 @@ export const pmaControls = {
   'js:database/multi_table_query.ts#ajax:POST /database/multi-table-query/query': 'MultiTableQueryPage.tsx',
   'js:database/multi_table_query.ts#change:<editor>': 'MultiTableQueryPage.tsx',
   'js:database/multi_table_query.ts#change:this': 'MultiTableQueryPage.tsx',
+  // the results' links and pager controls do nothing (event.preventDefault): the cards' actions are a no-op
+  'js:database/multi_table_query.ts#click:this': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'onAction: () => {}',
+  },
+  'js:database/multi_table_query.ts#focus:this': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'onAction: () => {}',
+  },
+  'js:database/multi_table_query.ts#select:this': {
+    file: 'MultiTableQueryPage.tsx',
+    match: 'onAction: () => {}',
+  },
+  'js:database/routines.ts#keyup:form.rte_form': { file: 'RoutinesPage.tsx', match: 'className="rte_form"' },
+  'js:database/structure.ts#click:#pma_navigation .throbber': {
+    file: 'DbStructurePage.tsx',
+    match: 'className="throbber inline-block"',
+  },
   'js:database/multi_table_query.ts#click:#add_column_button': 'MultiTableQueryPage.tsx',
   'js:database/multi_table_query.ts#click:#copy_query': 'MultiTableQueryPage.tsx',
   'js:database/multi_table_query.ts#click:#submit_query': 'MultiTableQueryPage.tsx',

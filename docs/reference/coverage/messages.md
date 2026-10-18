@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3309/3428 covered (96.5%): 3202 implemented, 13 exception, 94 n/a, 1 planned, 118 missing. [Summary](README.md).
+3393/3428 covered (99.0%): 3247 implemented, 13 exception, 133 n/a, 1 planned, 34 missing. [Summary](README.md).
 
 ## 01 shell navigation auth — 404/404 (100.0%) covered, 349/404 implemented
 
@@ -34,33 +34,12 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 05 database level — 269/301 (89.4%) covered, 269/301 implemented
+## 05 database level — 301/301 (100.0%) covered, 286/301 implemented
 
-32 msgids not used yet.
+0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Plugins/Schema/SchemaPdf.php` | 4/11 | `Name (Ascending)` · `Name (Descending)` · `Order of the tables` · `Show grid` |
-| `resources/js/database/operations.ts` | 3/4 | `Changing charset` · `Copying database` · `Renaming databases` |
-| `src/Controllers/Database/RoutinesController.php` | 3/7 | `Add routine` · `Edit routine` · `No routine with name %1$s found in database %2$s. You might be lack…` |
-| `src/Plugins/Schema/Pdf/PdfRelationSchema.php` | 3/8 | `Relational schema` · `Schema of the %s database` · `Table of contents` |
-| `resources/js/database/search.ts` | 2/7 | `Browsing` · `Deleting` |
-| `resources/js/database/structure.ts` | 2/5 | `Add table prefix` · `Replace table with prefix` |
-| `resources/templates/database/routines/editor_form.twig` | 2/19 | `Change to %s` · `Remove last parameter` |
-| `resources/templates/database/routines/index.twig` | 2/11 | `Export routine` · `Routine editor` |
-| `src/Database/CentralColumns.php` | 2/5 | `Could not add %1$s as they already exist in central list!` · `Couldn't remove Column(s) %1$s as they don't exist in central colum…` |
-| `resources/js/database/tracking.ts` | 1/3 | `Deleting tracking data` |
-| `resources/templates/columns_definitions/column_attributes.twig` | 1/4 | `None (for default)` |
-| `resources/templates/database/central_columns/edit_table_row.twig` | 1/3 | `None (for default)` |
-| `resources/templates/database/central_columns/edit.twig` | 1/5 | `A_I (Auto Increment)` |
-| `resources/templates/database/central_columns/main.twig` | 1/18 | `None (for default)` |
-| `resources/templates/database/designer/main.twig` | 1/40 | `Except` |
-| `resources/templates/database/operations/index.twig` | 1/18 | `Database %s has been dropped.` |
-| `resources/templates/events/editor-form.twig` | 1/1 | `Change to %s` |
-| `src/Controllers/Database/CentralColumnsController.php` | 1/1 | `Showing rows %1$s - %2$s.` |
-| `src/Controllers/Database/TrackingController.php` | 1/5 | `Version %1$s was created for selected tables, tracking is active fo…` |
-| `src/Database/Designer.php` | 1/1 | `Could not load schema plugins, please check your installation!` |
-| `src/Plugins/Schema/Pdf/Pdf.php` | 1/1 | `PDF export page` |
 
 ## 06 server level — 917/917 (100.0%) covered, 917/917 implemented
 
@@ -69,39 +48,12 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 07 export import — 245/293 (83.6%) covered, 245/293 implemented
+## 07 export import — 293/293 (100.0%) covered, 269/293 implemented
 
-48 msgids not used yet.
+0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/File.php` | 13/15 | `Cannot create temporary file.` · `Cannot read uploaded file.` · `Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc].` · `Error while moving uploaded file.` · `Failed to write file to disk.` · `File upload stopped by extension.` · `File was not an uploaded file.` · `Missing a temporary folder.` · `The uploaded file exceeds the MAX_FILE_SIZE directive that was spec…` · `The uploaded file exceeds the upload_max_filesize directive in php.…` · `The uploaded file was only partially uploaded.` · `Unknown error in file upload.` · … +1 |
-| `resources/js/import.ts` | 5/13 | `%s/sec.` · `About %MIN min. %SEC sec. remaining.` · `About %SEC sec. remaining.` · `Please be patient, the file is being uploaded. Details about the up…` · `The file being uploaded is probably larger than the maximum allowed…` |
-| `src/Plugins/Export/ExportPdf.php` | 5/10 | `Dumping data` · `Query result data` · `Report title:` · `Stand in` · `View structure` |
-| `src/Plugins/Import/ImportCsv.php` | 4/16 | `Invalid column (%s) specified! Ensure that columns names are spelle…` · `Invalid column count in CSV input on line %d.` · `Invalid format of CSV input on line %d.` · `Invalid parameter for CSV import: %s` |
-| `src/Export/OutputHandler.php` | 3/4 | `File %s already exists on server, change filename or check overwrit…` · `Insufficient space to save the file %s.` · `The web server does not have permission to save the file %s.` |
-| `src/Plugins/Import/ImportShp.php` | 3/4 | `MySQL Spatial Extension does not support ESRI type "%s".` · `The imported file does not contain any data!` · `There was an error importing the ESRI shape file: "%s".` |
-| `src/ZipExtension.php` | 2/2 | `Error in ZIP archive:` · `No files found inside ZIP archive!` |
-| `resources/js/drag_drop_import.ts` | 1/4 | `cancel` |
-| `resources/js/export.ts` | 1/9 | `SQL Query` |
-| `resources/templates/database/export/index.twig` | 1/5 | `Exporting a raw query` |
-| `resources/templates/export.twig` | 1/50 | `Show SQL query` |
-| `resources/templates/table/export/index.twig` | 1/3 | `Exporting a raw query` |
-| `src/Controllers/Database/ExportController.php` | 1/1 | `Could not load export plugins, please check your installation!` |
-| `src/Controllers/Database/ImportController.php` | 1/1 | `Could not load import plugins, please check your installation!` |
-| `src/Controllers/Import/ImportController.php` | 1/11 | `Showing bookmark` |
-| `src/Controllers/Import/StatusController.php` | 1/1 | `Could not load the progress of the import.` |
-| `src/Controllers/Server/ExportController.php` | 1/1 | `Could not load export plugins, please check your installation!` |
-| `src/Controllers/Server/ImportController.php` | 1/1 | `Could not load import plugins, please check your installation!` |
-| `src/Controllers/Table/ExportController.php` | 1/1 | `Could not load export plugins, please check your installation!` |
-| `src/Controllers/Table/ImportController.php` | 1/1 | `Could not load import plugins, please check your installation!` |
-| `src/Pdf.php` | 1/1 | `Error while creating PDF:` |
-| `src/Plugins/Export/ExportLatex.php` | 1/27 | `PHP Version:` |
-| `src/Plugins/Export/ExportSql.php` | 1/69 | `PHP Version:` |
-| `src/Plugins/Export/ExportXml.php` | 1/11 | `PHP Version:` |
-| `src/Plugins/Export/Helpers/Pdf.php` | 1/8 | `Purpose:` |
-| `src/Plugins/Import/ImportLdi.php` | 1/4 | `This plugin does not support compressed imports!` |
-| `src/Plugins/Import/ImportOds.php` | 1/6 | `Could not parse OpenDocument Spreadsheet!` |
 
 ## 08 settings preferences pmadb — 665/666 (99.8%) covered, 631/666 implemented
 
@@ -111,14 +63,12 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 |---|---|---|
 | `resources/js/validator-messages.ts` | 1/20 | `This field is required` |
 
-## 09 sql editor query pipeline — 42/46 (91.3%) covered, 42/46 implemented
+## 09 sql editor query pipeline — 46/46 (100.0%) covered, 46/46 implemented
 
-4 msgids not used yet.
+0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
-| `src/Sql.php` | 3/5 | `Bookmark %s has been created.` · `Current selection does not contain a unique column. Grid edit, chec…` · `Current selection does not contain a unique column. Grid edit, Edit…` |
-| `src/Controllers/Sql/SqlController.php` | 2/2 | `Bookmark %s has been created.` · `Bookmark not created!` |
 
 ## other — 89/123 (72.4%) covered, 79/123 implemented
 
