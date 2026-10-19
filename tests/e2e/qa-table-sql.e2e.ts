@@ -130,7 +130,9 @@ test('structure: the row actions and the partition actions confirm in the Confir
   await expect(page.getByTestId('structure-row-名前')).toBeVisible()
 
   await page.goto(`/s/1/db/${DB}/t/parted/structure`)
-  const truncate = page.locator('#partition_action_TRUNCATE').first()
+  // scope to the p0 row (holds id=1): information_schema.PARTITIONS has no guaranteed order, so
+  // .first() can be p1 on MySQL 8.4 — target the partition by name instead of by position
+  const truncate = page.getByTestId('partition-p0').locator('#partition_action_TRUNCATE')
   if (!(await truncate.isVisible())) await page.getByText('Partitions', { exact: true }).first().click()
   await truncate.click()
   await expect(ask).toContainText('Do you really want to TRUNCATE the selected partition(s)?')
@@ -144,7 +146,8 @@ test('structure: partition maintenance shows the operation heading and title-cas
   page,
 }) => {
   await page.goto(`/s/1/db/${DB}/t/parted/structure`)
-  const analyze = page.locator('#partition_action_ANALYZE').first()
+  // scope to the p0 row by name: PARTITIONS has no guaranteed order (.first() can be p1 on 8.4)
+  const analyze = page.getByTestId('partition-p0').locator('#partition_action_ANALYZE')
   if (!(await analyze.isVisible())) await page.getByText('Partitions', { exact: true }).first().click()
   await analyze.click()
   const result = page.getByTestId('partition-maintenance')
