@@ -216,6 +216,32 @@ function applyReplace(cs: Control[], rs: Replace[]): Control[] {
     ...(c.options !== undefined ? { options: c.options.map((o) => ({ ...o, label: sub(o.label) })) } : {}),
   }))
 }
+
+/**
+ * The configured server host shown in the UI differs by environment, not by design: our app reaches
+ * MySQL on 127.0.0.1 (the published port), the reference reaches it by its compose service name
+ * inside the docker network. Mask that token to %HOST% on BOTH sides before diffing (the SQL page's
+ * "… on server '<host>'" heading, the navbar "Server: <host>:<port>" link), so a real difference
+ * anywhere else still stands. Locally both are 127.0.0.1, so this is a no-op there.
+ */
+const SERVER_HOSTS = [
+  'mysql84-replica',
+  'mariadb11-replica',
+  'mysql84',
+  'mariadb11',
+  process.env.BMA_TEST_HOST ?? '127.0.0.1',
+]
+const HOST_RE = new RegExp(`\\b(?:${SERVER_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})\\b`, 'g')
+function maskHost(cs: Control[]): Control[] {
+  const m = (s: string) => s.replace(HOST_RE, '%HOST%')
+  return cs.map((c) => ({
+    ...c,
+    label: m(c.label),
+    section: m(c.section),
+    ...(c.value !== undefined ? { value: m(c.value) } : {}),
+    ...(c.options !== undefined ? { options: c.options.map((o) => ({ ...o, label: m(o.label) })) } : {}),
+  }))
+}
 const describe = (c: Control) => `${c.kind} "${c.label !== '' ? c.label : `[name=${c.name ?? c.id ?? '?'}]`}"`
 
 const same = (a: unknown, b: unknown) => JSON.stringify(a ?? null) === JSON.stringify(b ?? null)
@@ -239,12 +265,13 @@ function lis(xs: number[]): Set<number> {
 }
 
 export function diffControls(
-  pma: Control[],
+  pmaRaw: Control[],
   oursRaw: Control[],
   map: PageMap = {},
   step = 'initial',
 ): DiffResult {
-  const ours = applyReplace(oursRaw, map.replace ?? [])
+  const ours = maskHost(applyReplace(oursRaw, map.replace ?? []))
+  const pma = maskHost(pmaRaw)
   const differences: Difference[] = []
   const warnings: string[] = []
   const notes: string[] = []

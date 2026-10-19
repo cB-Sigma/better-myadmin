@@ -161,6 +161,9 @@ jobs:
       - if: matrix.needsCheckout
         uses: shivammathur/setup-php@v2
         with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
+      # the i18n ui-parity file builds a translated reference instance (packages/i18n build-mo.py)
+      - if: matrix.needsCheckout
+        run: python3 -m pip install --break-system-packages polib
       - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
       - if: matrix.needsCheckout
         name: Copy the reference checkout out of the phpmyadmin-ref image

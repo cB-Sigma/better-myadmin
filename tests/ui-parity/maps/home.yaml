@@ -1,5 +1,9 @@
 # Intentional differences of the home page (see tests/ui-parity/README.md for the format).
 rules:
+  - pma: { kind: link, label: '/^\d+\.\d+\.\d+$/', section: phpMyAdmin }
+    n/a: >-
+      phpMyAdmin's VersionCheck widget links the latest released version on its home card;
+      BetterMyAdmin runs no phpMyAdmin version check, so the link is absent
   - ours: { kind: select, name: lang }
     added: >-
       environment: the reference phpMyAdmin is built without translations (docker/pma-ref,

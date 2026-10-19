@@ -1,3 +1,6 @@
 rules:
-  - ours: { kind: button, label: 'ON / OFF', section: 'Event scheduler status' }
-    added: phpMyAdmin's scheduler switch is a JS toggle on a div (toggleAjax, no accessible control); ours is a button so it is keyboard reachable
+  - ours: { kind: checkbox, label: 'Click to toggle', section: 'Event scheduler status' }
+    added: >-
+      phpMyAdmin's scheduler switch is a JS toggle on a div (toggleAjax, no accessible control); ours
+      is an accessible switch (a checkbox named from its "Click to toggle" title) so it is keyboard
+      reachable and announced

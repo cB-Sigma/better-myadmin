@@ -49,6 +49,8 @@ for (const l of LEVELS) {
     baseURL,
   }) => {
     test.skip(!(await pmaReachable()), 'reference phpMyAdmin not reachable (BMA_PARITY_PMA_URL)')
+    // posts every export format in two browser sessions and diffs each; slow on a loaded 2-core CI
+    test.slow()
     const pma = await session(browser, baseURL ?? '', 'pma')
     const ours = await session(browser, baseURL ?? '', 'ours')
     let posted: Array<[string, string]> = []
