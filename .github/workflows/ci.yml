@@ -55,7 +55,9 @@ jobs:
             -v $seed/pmadb.sql:/docker-entrypoint-initdb.d/01-pmadb.sql:ro
             -v $seed/02-replication-user.sql:/docker-entrypoint-initdb.d/02-replication-user.sql:ro"
           case "$DB_IMAGE" in mariadb*)
-            args="--server-id=11 --log-bin=mariadb-bin $args"
+            # log-bin-trust-function-creators: with binary logging on, a non-SUPER user otherwise
+            # cannot create/drop a trigger or function (#1419); matches docker/dev.compose.yml
+            args="--server-id=11 --log-bin=mariadb-bin --log-bin-trust-function-creators=1 $args"
             mounts="$mounts -v $seed/03-mariadb-plugins.sql:/docker-entrypoint-initdb.d/03-mariadb-plugins.sql:ro" ;;
           esac
           docker run -d --name db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MARIADB_ROOT_PASSWORD=root \
