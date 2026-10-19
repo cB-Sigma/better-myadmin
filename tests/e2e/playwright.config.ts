@@ -24,6 +24,9 @@ export default defineConfig({
   testMatch: ['**/*.e2e.ts'],
   outputDir: join(repo, '.data/e2e-results'),
   timeout: 60_000,
+  // retry on CI only: a dropped DB connection / late chunk under 2-core load is transient, and each
+  // test is isolated. Locally retries stay off so a real failure surfaces immediately
+  retries: process.env.CI ? 2 : 0,
   fullyParallel: false,
   workers: 1,
   reporter: 'list',

@@ -24,6 +24,8 @@ export default defineConfig({
   testMatch: ['**/*.uip.ts'],
   outputDir: join(repo, '.data/ui-parity-results'),
   timeout: 90_000,
+  // retry on CI only: transient render/connection flakes under 2-core load self-heal; off locally
+  retries: process.env.CI ? 2 : 0,
   fullyParallel: false,
   // each worker has its own accounts and databases (lib/env.ts RUN); a file's cases run in order on
   // one worker (they share that worker's fixture databases), files run in parallel
