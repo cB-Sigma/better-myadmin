@@ -172,6 +172,18 @@ function json(target: string, body: string): PmaJson {
   try {
     return JSON.parse(body) as PmaJson
   } catch {
+    // The reference can wrap its JSON body in a PHP notice on some hosts (e.g. the status monitor's
+    // CPU/memory sampling via SysInfo), which Node never emits. Extract the JSON value and retry;
+    // if there is none, surface the raw body so a genuine non-JSON answer is still visible.
+    const start = body.search(/[[{]/)
+    const end = Math.max(body.lastIndexOf('}'), body.lastIndexOf(']'))
+    if (start !== -1 && end > start) {
+      try {
+        return JSON.parse(body.slice(start, end + 1)) as PmaJson
+      } catch {
+        /* fall through to the raw-body error */
+      }
+    }
     throw new Error(`phpMyAdmin did not answer JSON for ${target}: ${body.slice(0, 500)}`)
   }
 }
