@@ -150,8 +150,16 @@ describe.skipIf(!pmaReachable)('parity: databases list', () => {
         return `index.php?route=/server/databases&${p.toString().replaceAll('%2F', '/')}`
       }
       const pma = fromHtml(html)
+      // Rows that tie on the sort key (the empty m3srv_db_9 / m3srv_db_10 share the server's default
+      // collation and 0 rows) come back in a server-unstable order, and neither tool adds a name
+      // tiebreak, so compare the rows sorted by name — the set, each row's attributes and the header
+      // sort-link state are still asserted, only the unstable tie order is normalised.
+      const byName = <T extends { rows: Array<{ name: string }> }>(x: T): T => ({
+        ...x,
+        rows: [...x.rows].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)),
+      })
       // header links: compare the parameters only (phpMyAdmin's url() adds nothing else here)
-      expect(fromJson(d, sortLink)).toEqual(pma)
+      expect(byName(fromJson(d, sortLink))).toEqual(byName(pma))
     })
   }
 

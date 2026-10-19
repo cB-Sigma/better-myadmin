@@ -145,6 +145,27 @@ export function comparable(d: Dump): string {
   return normaliseText(b.toString('latin1'))
 }
 
+/**
+ * Mask the one environment-determined token in an export artifact: the configured server host (and,
+ * in a "Host:" dump-header line, the port it connects on). Our app reaches MySQL on 127.0.0.1 and
+ * the published port; the reference reaches it by its compose service name on :3306. This appears in
+ * the dump header ("-- Host: …", "% Host: …"), in each per-database file's zip-entry name
+ * (`<host>_<db>.sql`) and in the download filename (`<db>-<host>-…`, `srv-<host>.csv`). Everything
+ * else stays byte-exact, and locally both sides are 127.0.0.1 so this is a near no-op.
+ */
+const EXPORT_HOSTS = [
+  'mysql84-replica',
+  'mariadb11-replica',
+  'mysql84',
+  'mariadb11',
+  '127.0.0.1',
+  '127_0_0_1',
+  process.env.BMA_TEST_HOST ?? '127.0.0.1',
+]
+const EXPORT_HOST_RE = new RegExp(`(?:${EXPORT_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})`, 'g')
+export const maskExportHost = (s: string): string =>
+  s.replace(/(Host: )\S+/g, '$1%HOST%').replace(EXPORT_HOST_RE, '%HOST%')
+
 /** Version / tool strings that differ by design (the JSON header, PHP array doc comment, …). */
 export function normaliseFormat(s: string): string {
   return s
