@@ -5,6 +5,15 @@ rules:
     added: >-
       the calendar trigger of date/time fields is a focusable button (phpMyAdmin's jQuery UI
       datepicker adds an <img> trigger that the harness does not count as a control)
+  # db-structure row checkboxes (as in the English db-structure.yaml): phpMyAdmin's selected_tbl[]
+  # has no accessible name, ours labels each with its table name (the uip_ fixture tables)
+  - pma: { kind: checkbox, name: 'selected_tbl[]' }
+    n/a: matched by ours below — phpMyAdmin's row checkbox has no accessible name, only its name attr
+  - ours: { kind: checkbox, label: '/^uip_/' }
+    added: the database-structure row checkbox (selected_tbl[]) labelled with its table name
+  # phpMyAdmin's VersionCheck link on the home card (a version number); BetterMyAdmin runs no check
+  - pma: { kind: link, label: '/^\d+\.\d+\.\d+$/', section: phpMyAdmin }
+    n/a: phpMyAdmin's VersionCheck widget links the latest release; BetterMyAdmin runs no such check
   - ours: { kind: select, name: themeColorMode }
     added: every theme has a dark variant, so the colour-mode select is always shown
     exception: X31
