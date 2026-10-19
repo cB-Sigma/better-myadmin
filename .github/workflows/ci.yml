@@ -122,12 +122,18 @@ jobs:
         include:
           - suite: e2e
             target: mysql
-            # the replica for server-replica.e2e.ts
+            # the replica for server-replica.e2e.ts and the "Dev replica" server of f01-servers.e2e.ts
             services: mysql84 mysql84-replica
+            replicaSourceHost: mysql84
+            replicaPort: "3308"
           - suite: e2e
             target: mariadb
-            services: mariadb11
+            # same replica pair on MariaDB (mariadb11-replica :3309), so f01-servers and
+            # server-replica run here too instead of failing / skipping
+            services: mariadb11 mariadb11-replica
             port: "3307"
+            replicaSourceHost: mariadb11
+            replicaPort: "3309"
           - suite: ui-parity
             target: mysql
             services: mysql84 phpmyadmin-ref
@@ -137,8 +143,10 @@ jobs:
       BMA_TEST_PORT: ${{ matrix.port || '3306' }}
       # the compose reference (phpmyadmin-ref, :8081) serves the shared ui-parity cases
       BMA_PARITY_PMA_URL: http://127.0.0.1:8081
-      # the replica reaches the primary by its service name (server-replica.e2e.ts restores it)
-      BMA_PARITY_REPLICA_SOURCE_HOST: mysql84
+      # the dev replica (bma-replica.config.ts / server-replica.e2e.ts): its published port and the
+      # service name it reaches the primary by, per target
+      BMA_PARITY_REPLICA_PORT: ${{ matrix.replicaPort || '3308' }}
+      BMA_PARITY_REPLICA_SOURCE_HOST: ${{ matrix.replicaSourceHost || 'mysql84' }}
       BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
     steps:
       - uses: actions/checkout@v4
