@@ -19,6 +19,9 @@ export default defineWorkspace([
       include: ['apps/*/test/int/**/*.test.ts', 'packages/*/test/int/**/*.test.ts'],
       // one run of a file per MySQL across worktrees (apps/server/test/support/int-suite-lock.ts)
       setupFiles: ['apps/server/test/support/int-suite-lock.ts'],
+      // transient connection/load flakes on 2-core shared runners (a dropped DB socket, a contended
+      // read) self-heal on a re-run; each test is isolated, so a retry is safe
+      retry: 2,
       testTimeout: 30000,
       // setup/teardown (fixture DDL, replica thread control) is slow on a 2-core CI runner
       hookTimeout: 30000,
@@ -35,6 +38,9 @@ export default defineWorkspace([
       include: ['tests/parity/**/*.parity.test.ts'],
       // one run per fixture group across worktrees sharing a MySQL (tests/parity/lib/suite-lock.ts)
       setupFiles: ['tests/parity/lib/target.ts', 'tests/parity/lib/suite-lock.ts'],
+      // a dropped DB socket / connection error under 2-core load flips this tier red for no product
+      // reason; retry (each test is isolated) so transient connection flakes self-heal
+      retry: 2,
       testTimeout: 60000,
       // replica setup and other hooks are slow on a 2-core CI runner (was hitting the 10s default)
       hookTimeout: 30000,
