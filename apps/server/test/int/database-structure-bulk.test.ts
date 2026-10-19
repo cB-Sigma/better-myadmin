@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp } from '../support/app.ts'
+import { isMariaDb } from '../support/vendor.ts'
 
 /**
  * The Structure tab's bulk actions as phpMyAdmin answers them (side by side QA): the maintenance
@@ -58,7 +59,13 @@ describe('database structure bulk actions', () => {
     const r = await app.req('POST', `${base}/structure/drop`, { tables: ['authors'], fkChecks: true })
     const m = (r.json.messages as Json[])[0] as { type: string; text: string; card: { links: Json } }
     expect(m.type).toBe('error')
-    expect(m.text).toMatch(/^#3730 - Cannot drop table 'authors' referenced by a foreign key constraint/)
+    // MySQL 8: #3730 "Cannot drop table … referenced by a foreign key constraint"; MariaDB keeps
+    // the generic parent-row error #1451 for DROP (both are the server's own wording, shown as is)
+    expect(m.text).toMatch(
+      isMariaDb
+        ? /^#1451 - Cannot delete or update a parent row: a foreign key constraint fails/
+        : /^#3730 - Cannot drop table 'authors' referenced by a foreign key constraint/,
+    )
     expect(m.card.links).toMatchObject({ editInline: true, edit: true, php: 'create' })
   })
 
