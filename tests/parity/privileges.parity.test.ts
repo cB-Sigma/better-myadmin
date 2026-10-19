@@ -130,7 +130,11 @@ async function pair<P, B>(
  * The statements of both tools are identical. Stricter than the shared defaults: phpMyAdmin's
  * `SHOW TABLES FROM` and authentication-plugin reads are part of these pages, so they are compared.
  */
-function same(r: { pmaLog: LogEntry[]; bmaLog: LogEntry[] }, extra: AllowedDiff[] = [], maskClientHost = false) {
+function same(
+  r: { pmaLog: LogEntry[]; bmaLog: LogEntry[] },
+  extra: AllowedDiff[] = [],
+  maskClientHost = false,
+) {
   const cmp = compareLogs(r.pmaLog, r.bmaLog, h.dbMap, {
     extra: [...PER_SUITE, ...extra],
     exclude: ['^SHOW TABLES FROM `[^`]+`$'],

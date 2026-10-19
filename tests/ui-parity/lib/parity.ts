@@ -67,7 +67,7 @@ export interface PageSpec {
   /** region to compare (default `content`, phpMyAdmin's #page_content) */
   scope?: Scope
   /** further selectors to leave out (both apps) */
-  exclude?: string[]
+  exclude?: readonly string[]
   /** map file name in tests/ui-parity/maps (default: the case name) */
   map?: string
   /** log in first (default true) */
