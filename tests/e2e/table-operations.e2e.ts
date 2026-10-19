@@ -68,6 +68,18 @@ test('table options, maintenance, copy, truncate and drop [p04-b6e8f9 p04-2f4327
   await page.getByRole('button', { name: 'Check table' }).click()
   await expect(page.getByTestId('maintenance-result')).toContainText('OK')
 
+  // maintenance: analyze table — its card carries a signature so Refresh re-runs the query
+  await page.getByRole('button', { name: 'Analyze table' }).click()
+  const analyzeCard = page.locator('.result_query').filter({ hasText: 'ANALYZE TABLE' }).first()
+  await expect(analyzeCard).toBeVisible()
+  const ran = page.waitForResponse((r) => r.request().method() === 'POST' && /\/query$/.test(r.url()))
+  await analyzeCard.getByRole('button', { name: 'Refresh', exact: true }).click()
+  expect((await ran).ok()).toBe(true)
+  await expect(page.locator('#sqlqueryresultsouter')).toContainText('Msg_type')
+
+  // back to Operations for the copy/truncate/drop steps
+  await page.goto(`/s/1/db/${DB}/t/t/operations`)
+
   // copy (structure and data)
   await page.locator('#copyTable input[name=new_name]').fill('t_copy')
   await page.locator('#copyTable').getByRole('button', { name: 'Go' }).click()

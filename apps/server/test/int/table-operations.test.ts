@@ -170,6 +170,32 @@ describe('the page', () => {
     const two = await post('t/operations/maintenance', { op: 'analyze', tables: ['t', 'parent'] })
     expect(two.messages[0].type).not.toBe('error')
   })
+
+  it('the Analyze card carries a signature so Refresh re-runs it [p04-83ca2d]', async () => {
+    const r = await post('t/operations/maintenance', { op: 'analyze', tables: ['t'] })
+    const card = r.messages[0].card as { sql: string; sig?: string; links: { refresh: boolean } }
+    // ANALYZE TABLE matches the Refresh regex, so the card offers Refresh/Profiling and must sign
+    expect(card.links.refresh).toBe(true)
+    expect(card.sql).toBe('ANALYZE TABLE `t`;')
+    expect(typeof card.sig).toBe('string')
+    expect(card.sig).not.toBe('')
+    // Refresh posts the card's query with its signature: the query route accepts it
+    const ok = await app.req('POST', '/api/servers/1/query', {
+      sql: card.sql,
+      sig: card.sig,
+      db: DB,
+      grid: true,
+    })
+    expect(ok.status, JSON.stringify(ok.json)).toBe(200)
+    // the pre-fix behaviour (an empty signature, "present but invalid") is still rejected
+    const empty = await app.req('POST', '/api/servers/1/query', {
+      sql: card.sql,
+      sig: '',
+      db: DB,
+      grid: true,
+    })
+    expect(empty.status).toBe(400)
+  })
 })
 
 describe('the Tracking tab', () => {
