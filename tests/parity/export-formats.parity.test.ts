@@ -10,6 +10,7 @@ import {
   comparable,
   compareOpenDocument,
   createAccounts,
+  maskExportHost,
   normaliseFormat,
   pmaDump,
   pmaExportForm,
@@ -222,7 +223,8 @@ describe.skipIf(!pmaReachable)('export formats parity', () => {
       const b = await bmaDump(bma, pairs)
       expect(p.status).toBe(200)
       expect(b.status).toBe(200)
-      expect(b.filename).toBe(p.filename)
+      // the filename and the dump "Host:" header carry the env-determined server host/port
+      expect(maskExportHost(b.filename)).toBe(maskExportHost(p.filename))
       // PHP appends its default_charset to text/* types; the dump itself may be in another charset
       expect(b.contentType).toBe(p.contentType.split(';')[0])
       if (process.env.F07_DUMP !== undefined) {
@@ -235,8 +237,12 @@ describe.skipIf(!pmaReachable)('export formats parity', () => {
           c.odf === true ? compareOpenDocument(b) : normaliseFormat(comparable(b)),
         )
       }
-      if (c.odf === true) expect(compareOpenDocument(b)).toBe(compareOpenDocument(p))
-      else expect(normaliseFormat(comparable(b))).toBe(normaliseFormat(comparable(p)))
+      if (c.odf === true)
+        expect(maskExportHost(compareOpenDocument(b))).toBe(maskExportHost(compareOpenDocument(p)))
+      else
+        expect(maskExportHost(normaliseFormat(comparable(b)))).toBe(
+          maskExportHost(normaliseFormat(comparable(p))),
+        )
     })
   }
 
@@ -253,8 +259,12 @@ describe.skipIf(!pmaReachable)('export formats parity', () => {
       )
       const p = await pmaDump(pma, pairs)
       const b = await bmaDump(bmaStorage, pairs)
-      if (what === 'odt') expect(compareOpenDocument(b)).toBe(compareOpenDocument(p))
-      else expect(normaliseFormat(comparable(b))).toBe(normaliseFormat(comparable(p)))
+      if (what === 'odt')
+        expect(maskExportHost(compareOpenDocument(b))).toBe(maskExportHost(compareOpenDocument(p)))
+      else
+        expect(maskExportHost(normaliseFormat(comparable(b)))).toBe(
+          maskExportHost(normaliseFormat(comparable(p))),
+        )
     }
   })
 })
