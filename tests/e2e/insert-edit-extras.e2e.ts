@@ -1,5 +1,6 @@
 import { type Page, expect, test } from '@playwright/test'
 import mysql from 'mysql2/promise'
+import { isMariaDb } from './vendor.ts'
 
 /**
  * Insert/Edit form details end to end (docs/features/03-insert-edit-transformations.md ›
@@ -138,7 +139,9 @@ test('after Go: the message with its query card, the SQL box showing the INSERT;
   await page.locator('#insertForm [type=submit]:visible').last().click()
   const err = page.getByRole('alert').filter({ hasText: 'MySQL said:' })
   await expect(err).toContainText('Error')
-  await expect(err).toContainText("#1062 - Duplicate entry '901' for key 'w.PRIMARY'")
+  // MariaDB names the key without the table qualifier ('PRIMARY'), MySQL as 'w.PRIMARY'
+  const key = (await isMariaDb()) ? "'PRIMARY'" : "'w.PRIMARY'"
+  await expect(err).toContainText(`#1062 - Duplicate entry '901' for key ${key}`)
   // the form is still modified (lock-page): leaving it asks first
   page.once('dialog', (d) => void d.accept())
   await err.getByRole('link', { name: 'Edit' }).click()
