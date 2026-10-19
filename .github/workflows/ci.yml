@@ -131,10 +131,11 @@ jobs:
           - suite: ui-parity
             target: mysql
             services: mysql84 phpmyadmin-ref
+            # the setup / auth-type / i18n ui-parity files start their own phpMyAdmin from a checkout
+            needsCheckout: true
     env:
       BMA_TEST_PORT: ${{ matrix.port || '3306' }}
-      # the compose reference (phpmyadmin-ref, :8081): without it ui-parity's global-setup starts a
-      # private reference from a local checkout and php, which a runner does not have
+      # the compose reference (phpmyadmin-ref, :8081) serves the shared ui-parity cases
       BMA_PARITY_PMA_URL: http://127.0.0.1:8081
       # the replica reaches the primary by its service name (server-replica.e2e.ts restores it)
       BMA_PARITY_REPLICA_SOURCE_HOST: mysql84
@@ -144,7 +145,20 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
+      # the three private-instance ui-parity files (setup / auth types / i18n) start their own
+      # phpMyAdmin from the reference checkout, served by php on the runner (as the parity job does);
+      # without it their beforeAll throws ENOENT on PMA_PATH and the whole suite does not run
+      - if: matrix.needsCheckout
+        uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
       - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
+      - if: matrix.needsCheckout
+        name: Copy the reference checkout out of the phpmyadmin-ref image
+        run: |
+          docker compose -f docker/dev.compose.yml cp phpmyadmin-ref:/srv/pma "$RUNNER_TEMP/pma"
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/pma"
+          echo "PMA_PATH=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
+          echo "BMA_PARITY_PMA_ROOT=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:${{ matrix.suite }}
