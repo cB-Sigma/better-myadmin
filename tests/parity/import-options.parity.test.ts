@@ -254,9 +254,10 @@ const reset = (db: string) =>
  * file directly in `@@tmpdir` (`/tmp`): phpMyAdmin stages in PHP's `upload_tmp_dir` = `/tmp`, so it
  * gets #13 (file not found); BetterMyAdmin stages in an isolated, private `tmpdir()/bma-import/`
  * (0700 dir, 0600 random-named files — a deliberate security choice we keep), a subdirectory, so
- * MariaDB rejects it with #1290. Both statements are identical (compared above); the difference is
- * the harness's (the file is on neither DB server's filesystem), so it is normalised away here, as
- * import.parity.test.ts does. See the report for why the isolated staging is not changed to match.
+ * MariaDB rejects it with #1290. Both statements are identical (compared above); in the harness the
+ * file is on neither DB server's filesystem, so it is normalised away here, as import.parity.test.ts
+ * does. The isolated bma-import staging is a deliberate security choice and its one narrow real
+ * consequence is recorded as exception X51 (docs/reference/parity-exceptions.md).
  */
 const serverFileError = (m: string): string =>
   TARGET === 'mariadb'
