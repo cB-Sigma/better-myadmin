@@ -20,6 +20,8 @@ export default defineWorkspace([
       // one run of a file per MySQL across worktrees (apps/server/test/support/int-suite-lock.ts)
       setupFiles: ['apps/server/test/support/int-suite-lock.ts'],
       testTimeout: 30000,
+      // setup/teardown (fixture DDL, replica thread control) is slow on a 2-core CI runner
+      hookTimeout: 30000,
       // one file at a time (they share fixed accounts and databases on one MySQL). Per project,
       // vitest 3 ignores fileParallelism and maxWorkers (not in ProjectConfig): a single fork is the
       // per-project way, files then run one after another (each still isolated)
@@ -34,6 +36,8 @@ export default defineWorkspace([
       // one run per fixture group across worktrees sharing a MySQL (tests/parity/lib/suite-lock.ts)
       setupFiles: ['tests/parity/lib/target.ts', 'tests/parity/lib/suite-lock.ts'],
       testTimeout: 60000,
+      // replica setup and other hooks are slow on a 2-core CI runner (was hitting the 10s default)
+      hookTimeout: 30000,
       // one file at a time, as the int project (see there)
       pool: 'forks',
       poolOptions: { forks: { singleFork: true } },

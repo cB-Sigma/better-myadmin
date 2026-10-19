@@ -45,7 +45,11 @@ const tab = (label: string) => ({
   ours: { click: label },
 })
 const SETUP = '/setup/index.php?route=/setup'
-const common = { auth: false, bases, scope: '#page' } as const
+// #BZipDump: the Bzip2 config-check box is environment-determined, not a product difference — Node
+// has no bzip2 compressor so our overview always shows it, while phpMyAdmin shows it only when its
+// PHP lacks the bz2 extension (a CI runner's PHP has it, the host PHP and the reference image do
+// not). Leave it out of both so the comparison does not flip with the runner's PHP build.
+const common = { auth: false, bases, scope: '#page', exclude: ['#BZipDump'] } as const
 
 /** Adds one server through the form (both apps), so the overview lists it. */
 async function addServer(page: Page, app: 'pma' | 'ours'): Promise<void> {

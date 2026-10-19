@@ -3,7 +3,7 @@ import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { DB_TABS, SERVER_TABS, TABLE_TABS } from '../../apps/web/src/features/shell/tabs.ts'
-import { classify, normalise } from './lib/compare.ts'
+import { classify, maskEnv, normalise } from './lib/compare.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { PmaClient, breadcrumb, homeCard, homeWarnings, isPmaUp, menuTabs, visibleText } from './lib/pma.ts'
 import { TARGET } from './lib/target.ts'
@@ -188,7 +188,11 @@ describe.skipIf(!reachable)(
         const r = await bma.req('GET', '/api/servers/1/home', undefined, { host: '127.0.0.1:8081' })
         const home = r.json as unknown as HomeResponse
         const d = home.databaseServer!
-        const mapUser = (s: string) => s.replace(user('pa', 'su'), 'U').replace(user('pb', 'su'), 'U')
+        // the two apps reach MySQL differently (reference by its compose host, ours on 127.0.0.1),
+        // so the "Server:" host and the "User: …@<ip>" client IP are env-determined: maskEnv aligns
+        // only those; the rest of the card stays byte-exact
+        const mapUser = (s: string) =>
+          maskEnv(s.replace(user('pa', 'su'), 'U').replace(user('pb', 'su'), 'U'))
         expect(homeCard(html, 'Database server').map(mapUser)).toEqual(
           [
             `Server: ${d.host}`,

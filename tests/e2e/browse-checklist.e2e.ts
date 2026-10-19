@@ -1,6 +1,7 @@
 import { type Browser, type Page, expect, test } from '@playwright/test'
 import mysql from 'mysql2/promise'
 import { MYSQL, login } from './fixtures.ts'
+import { isMariaDb } from './vendor.ts'
 
 /**
  * The results grid's micro-behaviours (docs/features/02-browse-results-grid.md) in the browser,
@@ -220,11 +221,14 @@ test('the cell editor: a textarea for strings, BLOBs and JSON, an input otherwis
   page,
 }) => {
   await browse(page, 'e')
+  // MariaDB has no native JSON type (it is a longtext with a json_valid CHECK), so the value is the
+  // stored text as-is; MySQL normalizes the JSON and phpMyAdmin pretty-prints it in the editor
+  const jValue = (await isMariaDb()) ? '{"a":1}' : '{\n    "a": 1\n}'
   const expected: Array<[string, 'TEXTAREA' | 'INPUT', string]> = [
     ['id', 'INPUT', '1'],
     ['name', 'TEXTAREA', 'one'],
     ['txt', 'TEXTAREA', 't1'],
-    ['j', 'TEXTAREA', '{\n    "a": 1\n}'],
+    ['j', 'TEXTAREA', jValue],
     ['n', 'INPUT', '5'],
     ['d', 'INPUT', '2024-01-02 03:04:05.678'],
   ]

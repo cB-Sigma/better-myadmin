@@ -5,6 +5,7 @@ import type {
 } from '@bettermyadmin/contracts'
 import mysql from 'mysql2/promise'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { maskClientIp, maskServerHost } from './lib/compare.ts'
 import type { LogEntry } from './lib/general-log.ts'
 import { $, $$, type Node, elements, hasClass, pageHtml, parse, text } from './lib/html.ts'
 import { isPmaUp } from './lib/pma.ts'
@@ -295,7 +296,11 @@ describe.skipIf(!pmaReachable)('parity: replication on the primary [p06-3af6a2]'
     const f = res.b.addUser!
     expect(String(f.usernameLength)).toBe($(html, '#pma_username')!.attrs.maxlength)
     expect(String(f.hostnameLength)).toBe($(html, '#pma_hostname')!.attrs.maxlength)
-    expect(f.thisHost).toBe($(html, '#select_pred_hostname')!.attrs['data-thishost'] ?? null)
+    // "this host" is the connecting client's IP, which differs between the apps (compose net vs host)
+    const thisHost = (v: string | null) => (v === null ? null : maskClientIp(v))
+    expect(thisHost(f.thisHost)).toBe(
+      thisHost($(html, '#select_pred_hostname')!.attrs['data-thishost'] ?? null),
+    )
     expect($$(html, '#select_pred_hostname option').map((o) => o.attrs.value)).toEqual([
       'any',
       'localhost',
@@ -648,7 +653,10 @@ describe.skipIf(!replicaReachable)('parity: replication on the replica [p06-3c4d
         return out
       },
     )
-    const cmp = diff(h, maskLog(mapSource(res.pmaLog)), maskLog(res.bmaLog))
+    // CHANGE REPLICATION SOURCE names the primary by host: ours 127.0.0.1, the reference its compose
+    // service name. Mask only that host token (never the port, SOURCE_LOG_FILE/POS or clause order).
+    const maskHost = (log: LogEntry[]): LogEntry[] => log.map((e) => ({ ...e, sql: maskServerHost(e.sql) }))
+    const cmp = diff(h, maskHost(maskLog(mapSource(res.pmaLog))), maskHost(maskLog(res.bmaLog)))
     expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
     expect(cmp.bma.some((s) => s.startsWith(SQL.change))).toBe(true)
     expect(cmp.bma).toContain('STOP REPLICA')

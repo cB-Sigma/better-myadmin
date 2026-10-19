@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import mysql from 'mysql2/promise'
+import { isMariaDb } from './vendor.ts'
 
 /**
  * Table Structure flows end to end: create a table, add a column, change a column, add an index
@@ -183,10 +184,15 @@ test('column form: added_fields Enter, ENUM/SET editor, NULL default, UNSIGNED n
   await r1.getByLabel('Null').uncheck()
   await expect(r1.getByLabel('Default')).toHaveValue('NONE')
 
-  // showWarningForIntTypes: the integer width notice while a row has an integer type
-  await expect(page.locator('#length_not_allowed')).toContainText(
-    'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
-  )
+  // showWarningForIntTypes: the integer width notice while a row has an integer type. phpMyAdmin
+  // shows it only on MySQL (>= 8.0.17); MariaDB keeps the integer display width, so there is no notice
+  if (await isMariaDb()) {
+    await expect(page.locator('#length_not_allowed')).toHaveCount(0)
+  } else {
+    await expect(page.locator('#length_not_allowed')).toContainText(
+      'The column width of integer types is ignored in your MySQL version unless defining a TINYINT(1) column',
+    )
+  }
   // resetAttributeForNonNumericType: a non-numeric type drops UNSIGNED
   const r2 = page.getByTestId('column-row-2')
   await r2.getByLabel('Type').selectOption('INT')

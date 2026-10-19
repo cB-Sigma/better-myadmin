@@ -434,7 +434,14 @@ describe('partitions', () => {
       hasDescription: true,
       rangeOrList: true,
     })
-    expect((parts.partitions as Json[]).map((p) => [p.name, p.description, p.comment])).toEqual([
+    // information_schema.PARTITIONS has no guaranteed row order (8.4/10.11/11.4 can return p1 first);
+    // sort by the reported ordinal so attribute correctness is asserted regardless of read order
+    expect(
+      (parts.partitions as Json[])
+        .slice()
+        .sort((a, b) => (a.ordinal as number) - (b.ordinal as number))
+        .map((p) => [p.name, p.description, p.comment]),
+    ).toEqual([
       ['p0', '2000', 'old'],
       ['p1', 'MAXVALUE', ''],
     ])
