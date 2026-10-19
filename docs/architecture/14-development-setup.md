@@ -77,6 +77,10 @@ Planned and not yet wired: `pnpm parity:report`, `pnpm docs:gen`, `pnpm storyboo
 - `pnpm compare <url-path>` opens the same page in BetterMyAdmin and the reference phpMyAdmin side by side in the browser.
 - To inspect what phpMyAdmin ran for an action: `docker compose exec mysql84 mysql -e "SELECT argument FROM mysql.general_log ORDER BY event_time DESC LIMIT 20"`.
 
+## CI (`.github/workflows/ci.yml`, `nightly.yml`)
+
+Runs on pushes to `main` and `claude/**`, on pull requests and by hand (`workflow_dispatch`). The `integration` matrix starts each database with `docker run` and the dev seeds (general log as a table, 1000 connections, binary log on MariaDB, pmadb `phpmyadmin` with control user pma/pmapass): a `services:` container takes neither server options nor the checkout's seeds. The `parity` matrix provisions PHP 8.3 (setup-php, with mbstring/iconv for `export-kanji`'s mbstring goldens) and copies the reference checkout out of the built `phpmyadmin-ref` image to the runner (`PMA_PATH`, `BMA_PARITY_PMA_ROOT`), so the suites that start their own phpMyAdmin (`pma-instance.ts`, `pma-shadow.ts`) run rather than skip on the `phpAvailable()` / `canStartShadow()` guard. The `ui-parity` leg points `BMA_PARITY_PMA_URL` at the compose reference (`:8081`, MariaDB `:8084` nightly) so its global-setup uses that instead of starting a private reference. `nightly.yml` runs the MariaDB UI-parity leg out of the PR checks.
+
 ## Sharing one MySQL between worktrees (agents, CI jobs)
 
 Several checkouts may run suites against the same server at once. These mechanisms keep them apart:

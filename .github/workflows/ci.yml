@@ -1,7 +1,9 @@
 name: ci
 on:
-  push: { branches: [main] }
+  # the agents' integration branches too: without a pull request nothing else starts a run
+  push: { branches: [main, "claude/**"] }
   pull_request:
+  workflow_dispatch:
 
 jobs:
   check:
@@ -33,20 +35,38 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm parity:check
 
+  # the database started like docker/dev.compose.yml's mysql84 / mariadb11 (a services: container
+  # takes neither server options nor the checkout's seeds): general log as a table, 1000 connections,
+  # binary log on MariaDB, the pmadb `phpmyadmin` with control user pma/pmapass (the suites' STORAGE)
   integration:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         db: ["mysql:8.4", "mysql:8.0", "mariadb:11.4", "mariadb:10.11"]
-    services:
-      db:
-        image: ${{ matrix.db }}
-        env: { MYSQL_ROOT_PASSWORD: root, MARIADB_ROOT_PASSWORD: root }
-        ports: ["3306:3306"]
-        options: --health-cmd="mysqladmin ping -proot || healthcheck.sh --connect" --health-interval=5s --health-retries=30
     steps:
       - uses: actions/checkout@v4
+      - name: Start ${{ matrix.db }} with the dev seeds
+        env: { DB_IMAGE: "${{ matrix.db }}" }
+        run: |
+          seed="$PWD/docker/seed"
+          args="--general-log=1 --log-output=TABLE --max-connections=1000"
+          mounts="-v $seed/00-general-log.sql:/docker-entrypoint-initdb.d/00-general-log.sql:ro
+            -v $seed/pmadb.sql:/docker-entrypoint-initdb.d/01-pmadb.sql:ro
+            -v $seed/02-replication-user.sql:/docker-entrypoint-initdb.d/02-replication-user.sql:ro"
+          case "$DB_IMAGE" in mariadb*)
+            args="--server-id=11 --log-bin=mariadb-bin $args"
+            mounts="$mounts -v $seed/03-mariadb-plugins.sql:/docker-entrypoint-initdb.d/03-mariadb-plugins.sql:ro" ;;
+          esac
+          docker run -d --name db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MARIADB_ROOT_PASSWORD=root \
+            $mounts "$DB_IMAGE" $args
+          # TCP answers only once the entrypoint's init server (no networking) has run the seeds
+          for i in $(seq 1 90); do
+            docker exec db sh -c 'c=$(command -v mariadb || command -v mysql); "$c" -h127.0.0.1 -uroot -proot -e "SELECT 1"' \
+              >/dev/null 2>&1 && exit 0
+            sleep 2
+          done
+          docker logs db; exit 1
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
@@ -75,7 +95,20 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
+      # PHP 8.3 with mbstring/iconv: the suites that start their own phpMyAdmin (pma-instance.ts,
+      # pma-shadow.ts) and export-kanji's mbstring goldens run php on the runner (phpAvailable)
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
       - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
+      # the reference checkout on the runner, from the built image: without it those suites would skip
+      # (phpAvailable / canStartShadow guard on PMA_PATH / BMA_PARITY_PMA_ROOT), not run
+      - name: Copy the reference checkout out of the phpmyadmin-ref image
+        run: |
+          ref=${{ matrix.target == 'mariadb' && 'phpmyadmin-ref-mariadb' || 'phpmyadmin-ref' }}
+          docker compose -f docker/dev.compose.yml cp "$ref:/srv/pma" "$RUNNER_TEMP/pma"
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/pma"
+          echo "PMA_PATH=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
+          echo "BMA_PARITY_PMA_ROOT=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:parity
 
