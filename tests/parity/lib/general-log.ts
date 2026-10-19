@@ -65,6 +65,11 @@ export class GeneralLog {
     password: string
   }): Promise<GeneralLog> {
     const conn = await mysql.createConnection({ ...opts, dateStrings: true })
+    // A connection-level 'error' (socket reset / server closed the link under 2-core CI load) is
+    // emitted on the connection, not rejected from a query; with no listener Node throws it as an
+    // unhandled event and crashes the worker (even after the test body). Swallow it — query failures
+    // still reject normally, so this hides nothing the tests assert.
+    conn.on('error', () => {})
     // index / rotate only while no other suite (any worktree) holds a marker, then register
     const release = await withRegistryLock(async () => {
       if (liveHolders().length === 0) await prepare(conn)
