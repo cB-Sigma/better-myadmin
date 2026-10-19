@@ -25,6 +25,13 @@ import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
 const DB = 'f07_exp'
 const USERS = { pma: 'f07_pma', bma: 'f07_bma' }
 
+// The dump's "-- Host:" header and the download filename are each app's configured server host (and
+// the port it connects on: ours the published 127.0.0.1:port, the reference its compose service name
+// on :3306). Mask only those env-determined tokens; the dump stays byte-exact otherwise.
+const maskHostLine = (s: string) => s.replace(/^-- Host: .*/m, '-- Host: %HOST%')
+const maskFilenameHost = (f: string) =>
+  f.replace(/^(?:mysql84-replica|mariadb11-replica|mysql84|mariadb11|127[._]0[._]0[._]1)(?=\.)/, '%HOST%')
+
 let root: mysql.Connection
 let pma: PmaClient
 let bma: ReturnType<typeof testApp>
@@ -294,8 +301,8 @@ describe.skipIf(!pmaReachable)('export SQL parity', () => {
       const b = await bmaDump(bma, pairs)
       expect(p.status).toBe(200)
       expect(b.status).toBe(200)
-      expect(b.filename).toBe(p.filename)
-      expect(comparable(b)).toBe(comparable(p))
+      expect(maskFilenameHost(b.filename)).toBe(maskFilenameHost(p.filename))
+      expect(maskHostLine(comparable(b))).toBe(maskHostLine(comparable(p)))
     })
   }
 
@@ -306,9 +313,9 @@ describe.skipIf(!pmaReachable)('export SQL parity', () => {
       const b = await bmaDump(bmaStorage, pairs)
       expect(b.status).toBe(200)
       for (const h of c.has) expect(comparable(p)).toContain(h)
-      // the dump's "-- Host:" line is each app's configured server host (ours 127.0.0.1, the
-      // reference's compose service name): maskEnv aligns only that token, the dump stays byte-exact
-      expect(maskEnv(comparable(b))).toBe(maskEnv(comparable(p)))
+      // the dump's "-- Host:" line is each app's configured server host and connection port, which
+      // differ by environment; mask that line (and any other host token via maskEnv), byte-exact else
+      expect(maskHostLine(maskEnv(comparable(b)))).toBe(maskHostLine(maskEnv(comparable(p))))
     })
   }
 })
