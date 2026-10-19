@@ -1,6 +1,7 @@
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
+import { maskEnv } from './lib/compare.ts'
 import {
   type Pairs,
   ROOT,
@@ -305,7 +306,9 @@ describe.skipIf(!pmaReachable)('export SQL parity', () => {
       const b = await bmaDump(bmaStorage, pairs)
       expect(b.status).toBe(200)
       for (const h of c.has) expect(comparable(p)).toContain(h)
-      expect(comparable(b)).toBe(comparable(p))
+      // the dump's "-- Host:" line is each app's configured server host (ours 127.0.0.1, the
+      // reference's compose service name): maskEnv aligns only that token, the dump stays byte-exact
+      expect(maskEnv(comparable(b))).toBe(maskEnv(comparable(p)))
     })
   }
 })

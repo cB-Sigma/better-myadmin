@@ -42,7 +42,43 @@ function unsuffixed(pmaWrites: string[], bmaWrites: string[], rules: Compiled[])
   })
 }
 
-/** Collapse whitespace, strip the trailing delimiter, map per-tool database names to one name. */
+/**
+ * Masks for the two connection tokens that legitimately differ between the reference phpMyAdmin
+ * (reached by its compose service name, inside the docker network) and our app (reached on 127.0.0.1
+ * through the published port). These are applied ONLY at the specific call sites that compare an
+ * env-determined token — never blanket over a whole log — so a real difference anywhere else, and a
+ * deliberately-typed host literal, stays a difference:
+ *   - the configured server host (`127.0.0.1` ↔ `mysql84` / `mariadb11` / their replicas) → `%HOST%`
+ *   - the connecting client's MySQL host, a Docker-assigned IP after `@` or a bare IP (CURRENT_USER
+ *     host, the "this host" option) → `%CLIENTIP%`
+ * Locally both sides are 127.0.0.1, so these are a near no-op there; they only align the CI topology.
+ */
+const SERVER_HOSTS = [
+  'mysql84-replica',
+  'mariadb11-replica',
+  'mysql84',
+  'mariadb11',
+  process.env.BMA_TEST_HOST ?? '127.0.0.1',
+]
+const SERVER_HOST_RE = new RegExp(
+  `\\b(?:${SERVER_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})\\b`,
+  'g',
+)
+/** A MySQL account host that is an IP assigned by Docker (after `@`, quoted or not, or standalone). */
+export const maskClientIp = (s: string): string =>
+  s
+    .replace(/(@'?)(\d{1,3}(?:\.\d{1,3}){3})('?)/g, '$1%CLIENTIP%$3')
+    .replace(/^\d{1,3}(?:\.\d{1,3}){3}$/, '%CLIENTIP%')
+/** The configured server host token (never the port, log file, position or clause order). */
+export const maskServerHost = (s: string): string => s.replace(SERVER_HOST_RE, '%HOST%')
+/** Both env-determined connection tokens; client IP first so an `@127.0.0.1` is an IP, not the host. */
+export const maskEnv = (s: string): string => maskServerHost(maskClientIp(s))
+
+/**
+ * Collapse whitespace, strip the trailing delimiter, and map per-tool database names to one name.
+ * Byte-exact otherwise: the env-determined connection tokens (`maskClientIp` / `maskServerHost`) are
+ * masked only at the specific call sites that need them, never here, so nothing is silently absorbed.
+ */
 export function normalise(sql: string, dbMap: Record<string, string> = {}): string {
   let s = sql.trim().replace(/;\s*$/, '').replace(/\s+/g, ' ')
   for (const [from, to] of Object.entries(dbMap)) s = s.replaceAll(from, to)
@@ -106,6 +142,13 @@ export function compareLogs(
     extra?: AllowedDiff[]
     /** Patterns of allowed-diffs.yaml that do not apply to this suite (the statement is under test). */
     exclude?: string[]
+    /**
+     * Mask the connecting client's host (the CURRENT_USER / "this host" IP) on both sides, for the
+     * one case where the account host IS the client's own env-determined address — on CI phpMyAdmin
+     * connects from its compose-network IP and we from the docker gateway. Off by default: a host
+     * that the caller typed into the form is a real value and must stay byte-exact.
+     */
+    maskClientHost?: boolean
   } = {},
 ): Comparison {
   const problems: string[] = []
@@ -113,9 +156,11 @@ export function compareLogs(
     ...allowedDiffs.filter((a) => !(options.exclude ?? []).includes(a.pattern)),
     ...(options.extra ?? []).map((a) => ({ ...a, re: new RegExp(a.pattern) })),
   ]
+  const norm = (sql: string) =>
+    options.maskClientHost === true ? maskClientIp(normalise(sql, dbMap)) : normalise(sql, dbMap)
   const filter = (tool: 'pma' | 'bma', log: LogEntry[]) =>
     log
-      .map((e) => normalise(e.sql, dbMap))
+      .map((e) => norm(e.sql))
       .filter((s) => {
         const hit = allowed.find((a) => a.tool === tool && a.suffix === undefined && a.re.test(s))
         if (hit !== undefined && classify(s) === 'write') {

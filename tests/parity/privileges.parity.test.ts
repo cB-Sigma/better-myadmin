@@ -130,10 +130,11 @@ async function pair<P, B>(
  * The statements of both tools are identical. Stricter than the shared defaults: phpMyAdmin's
  * `SHOW TABLES FROM` and authentication-plugin reads are part of these pages, so they are compared.
  */
-function same(r: { pmaLog: LogEntry[]; bmaLog: LogEntry[] }, extra: AllowedDiff[] = []) {
+function same(r: { pmaLog: LogEntry[]; bmaLog: LogEntry[] }, extra: AllowedDiff[] = [], maskClientHost = false) {
   const cmp = compareLogs(r.pmaLog, r.bmaLog, h.dbMap, {
     extra: [...PER_SUITE, ...extra],
     exclude: ['^SHOW TABLES FROM `[^`]+`$'],
+    maskClientHost,
   })
   expect(cmp.problems, cmp.problems.join('\n')).toEqual([])
   return cmp
@@ -442,6 +443,8 @@ async function action(
     extra?: AllowedDiff[]
     failing?: boolean
     grantsOf?: string
+    /** The account host is the client's own env-determined address ("This host"): mask it on CI. */
+    maskClientHost?: boolean
   } = {},
 ) {
   const query = opts.query ?? {}
@@ -454,7 +457,7 @@ async function action(
     opts.setup,
     opts.grantsOf,
   )
-  const cmp = same(r, opts.extra)
+  const cmp = same(r, opts.extra, opts.maskClientHost)
   if (opts.failing === true) {
     expect(r.p.success).toBe(false)
     // mysqlDie: "#errno - message" plus the statement
@@ -624,7 +627,7 @@ describe.skipIf(!pmaReachable)('parity: add user [p06-dc46b3]', () => {
         ['ssl_type', 'ANY'],
         ['adduser_submit', '1'],
       ],
-      { setup: thisHost },
+      { setup: thisHost, maskClientHost: true },
     )
     await h.root.query(thisHost)
   })
