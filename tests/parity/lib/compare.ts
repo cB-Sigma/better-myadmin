@@ -69,6 +69,13 @@ export const maskClientIp = (s: string): string =>
   s
     .replace(/(@'?)(\d{1,3}(?:\.\d{1,3}){3})('?)/g, '$1%CLIENTIP%$3')
     .replace(/^\d{1,3}(?:\.\d{1,3}){3}$/, '%CLIENTIP%')
+/**
+ * The connecting client's host everywhere it appears in the "this host" account path: the `@'ip'`
+ * form (CREATE USER / GRANT / DROP) and the existence probe's ``Host` = 'ip'`` clause. Used only in
+ * the opt-in maskClientHost comparison, never globally, so a Host-column IP in exported data stays.
+ */
+export const maskClientHostTokens = (s: string): string =>
+  maskClientIp(s).replace(/(`?Host`?\s*=\s*')(\d{1,3}(?:\.\d{1,3}){3})(')/gi, '$1%CLIENTIP%$3')
 /** The configured server host token (never the port, log file, position or clause order). */
 export const maskServerHost = (s: string): string => s.replace(SERVER_HOST_RE, '%HOST%')
 /** Both env-determined connection tokens; client IP first so an `@127.0.0.1` is an IP, not the host. */
@@ -157,7 +164,7 @@ export function compareLogs(
     ...(options.extra ?? []).map((a) => ({ ...a, re: new RegExp(a.pattern) })),
   ]
   const norm = (sql: string) =>
-    options.maskClientHost === true ? maskClientIp(normalise(sql, dbMap)) : normalise(sql, dbMap)
+    options.maskClientHost === true ? maskClientHostTokens(normalise(sql, dbMap)) : normalise(sql, dbMap)
   const filter = (tool: 'pma' | 'bma', log: LogEntry[]) =>
     log
       .map((e) => norm(e.sql))
