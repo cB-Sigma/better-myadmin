@@ -17,8 +17,9 @@ export default defineWorkspace([
     test: {
       name: 'int',
       include: ['apps/*/test/int/**/*.test.ts', 'packages/*/test/int/**/*.test.ts'],
-      // one run of a file per MySQL across worktrees (apps/server/test/support/int-suite-lock.ts)
-      setupFiles: ['apps/server/test/support/int-suite-lock.ts'],
+      // socket-guard first: a lost DB socket must not crash the worker (it precedes retry, which
+      // cannot recover a dead worker). Then the per-file MySQL lock.
+      setupFiles: ['apps/server/test/support/socket-guard.ts', 'apps/server/test/support/int-suite-lock.ts'],
       // transient connection/load flakes on 2-core shared runners (a dropped DB socket, a contended
       // read) self-heal on a re-run; each test is isolated, so a retry is safe
       retry: 2,
@@ -36,8 +37,12 @@ export default defineWorkspace([
     test: {
       name: 'parity',
       include: ['tests/parity/**/*.parity.test.ts'],
-      // one run per fixture group across worktrees sharing a MySQL (tests/parity/lib/suite-lock.ts)
-      setupFiles: ['tests/parity/lib/target.ts', 'tests/parity/lib/suite-lock.ts'],
+      // socket-guard first (a lost DB socket must not crash the worker), then target + the lock
+      setupFiles: [
+        'apps/server/test/support/socket-guard.ts',
+        'tests/parity/lib/target.ts',
+        'tests/parity/lib/suite-lock.ts',
+      ],
       // a dropped DB socket / connection error under 2-core load flips this tier red for no product
       // reason; retry (each test is isolated) so transient connection flakes self-heal
       retry: 2,
