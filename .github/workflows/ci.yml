@@ -60,6 +60,8 @@ jobs:
             args="--server-id=11 --log-bin=mariadb-bin --log-bin-trust-function-creators=1 $args"
             mounts="$mounts -v $seed/03-mariadb-plugins.sql:/docker-entrypoint-initdb.d/03-mariadb-plugins.sql:ro" ;;
           esac
+          # pre-pull with retry: Docker Hub returns transient 5xx under load on shared runners
+          for i in 1 2 3; do docker pull "$DB_IMAGE" && break || { echo "pull $DB_IMAGE attempt $i failed; retrying"; sleep $((i * 15)); }; done
           docker run -d --name db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MARIADB_ROOT_PASSWORD=root \
             $mounts "$DB_IMAGE" $args
           # TCP answers only once the entrypoint's init server (no networking) has run the seeds
@@ -94,6 +96,14 @@ jobs:
       BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
     steps:
       - uses: actions/checkout@v4
+      # optional: authenticate to Docker Hub if credentials are configured, to lift anonymous pull
+      # rate limits on shared runners (a no-op when the secrets are absent)
+      - name: Docker Hub login (if configured)
+        env:
+          DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DH_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -n "$DH_USER" ] && [ -n "$DH_TOKEN" ]; then echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin; else echo "no Docker Hub credentials; relying on pull retries"; fi
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
@@ -101,7 +111,18 @@ jobs:
       # pma-shadow.ts) and export-kanji's mbstring goldens run php on the runner (phpAvailable)
       - uses: shivammathur/setup-php@v2
         with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
-      - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
+      # retry the build/up: the image build pulls composer:2 / php:8.3-cli and the DB images from
+      # Docker Hub, which returns transient 5xx (and rate limits) on shared runners
+      - name: docker compose up (with retry)
+        run: |
+          for i in 1 2 3; do
+            docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }} && exit 0
+            echo "::warning::docker compose up attempt $i failed (likely a transient Docker Hub error); retrying"
+            docker compose -f docker/dev.compose.yml down -v || true
+            sleep $((i * 20))
+          done
+          docker compose -f docker/dev.compose.yml logs || true
+          exit 1
       # the reference checkout on the runner, from the built image: without it those suites would skip
       # (phpAvailable / canStartShadow guard on PMA_PATH / BMA_PARITY_PMA_ROOT), not run
       - name: Copy the reference checkout out of the phpmyadmin-ref image
@@ -152,6 +173,13 @@ jobs:
       BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
     steps:
       - uses: actions/checkout@v4
+      # optional Docker Hub auth (no-op without secrets): lifts anonymous pull rate limits
+      - name: Docker Hub login (if configured)
+        env:
+          DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DH_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
+          if [ -n "$DH_USER" ] && [ -n "$DH_TOKEN" ]; then echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin; else echo "no Docker Hub credentials; relying on pull retries"; fi
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
@@ -161,10 +189,21 @@ jobs:
       - if: matrix.needsCheckout
         uses: shivammathur/setup-php@v2
         with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
-      # the i18n ui-parity file builds a translated reference instance (packages/i18n build-mo.py)
+      # the i18n ui-parity file builds a translated reference instance (packages/i18n build-mo.py,
+      # run as `python3 -I`, which ignores the user site — install polib into the system site via sudo)
       - if: matrix.needsCheckout
-        run: python3 -m pip install --break-system-packages polib
-      - run: docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }}
+        run: sudo python3 -m pip install --break-system-packages polib
+      # retry the build/up: Docker Hub returns transient 5xx (and rate limits) on shared runners
+      - name: docker compose up (with retry)
+        run: |
+          for i in 1 2 3; do
+            docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }} && exit 0
+            echo "::warning::docker compose up attempt $i failed (likely a transient Docker Hub error); retrying"
+            docker compose -f docker/dev.compose.yml down -v || true
+            sleep $((i * 20))
+          done
+          docker compose -f docker/dev.compose.yml logs || true
+          exit 1
       - if: matrix.needsCheckout
         name: Copy the reference checkout out of the phpmyadmin-ref image
         run: |

@@ -10,6 +10,7 @@ import {
   comparable,
   compareOpenDocument,
   createAccounts,
+  maskExportHost,
   normaliseFormat,
   normaliseText,
   pmaDump,
@@ -284,7 +285,8 @@ describe.skipIf(!pmaReachable)('export options parity', () => {
       const p = await pmaDump(pma, pairs)
       const b = await bmaDump(bma, pairs)
       expect(b.status).toBe(p.status)
-      expect(b.filename).toBe(p.filename)
+      // the filename and the dump "Host:" header carry the env-determined server host/port
+      expect(maskExportHost(b.filename)).toBe(maskExportHost(p.filename))
       expect(b.contentType).toBe(p.contentType.split(';')[0])
       // a UTF-16 dump is compared as text (the version strings are normalised in the decoded text)
       const text = (d: typeof p) =>
@@ -294,8 +296,8 @@ describe.skipIf(!pmaReachable)('export options parity', () => {
             ? // the decoded text (the tool strings differ in length; csv compares the bytes)
               normaliseFormat(normaliseText(convertToUtf8(d.body, 'utf-7').toString('utf8')))
             : normaliseFormat(comparable(d))
-      const pt = c.odf ? compareOpenDocument(p) : text(p)
-      const bt = c.odf ? compareOpenDocument(b) : text(b)
+      const pt = maskExportHost(c.odf ? compareOpenDocument(p) : text(p))
+      const bt = maskExportHost(c.odf ? compareOpenDocument(b) : text(b))
       if (process.env.F07_DUMP !== undefined && pt !== bt) {
         const n = c.name.replace(/[^a-z0-9]+/gi, '_')
         writeFileSync(`${process.env.F07_DUMP}/${n}.pma`, pt)

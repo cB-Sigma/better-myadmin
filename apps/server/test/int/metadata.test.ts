@@ -300,6 +300,10 @@ describe('with a configuration storage and a control user', () => {
   })
 
   it('caches the storage discovery per session: later requests only send the tracking probe and the feature query [p08-ac345c]', async () => {
+    // the preceding navigation-hiding test writes to pma__navigationhiding, which invalidates the
+    // session's navigation hidden-count cache; warm it (and the storage discovery) with one request
+    // before measuring, so the measured "later request" sees the cached steady state deterministically
+    await t.req('GET', `/api/servers/1/bookmarks?db=${DATA}`)
     const [[mark]] = (await root.query({ sql: 'SELECT NOW(6)', rowsAsArray: true })) as unknown as [
       [[string]],
     ]
