@@ -181,6 +181,20 @@ describe.skipIf(!pmaReachable)('parity: structure bulk actions', () => {
       expectSql: /^DROP TABLE `child`, `m`$/,
     },
     {
+      // dropping a table a foreign key still references fails; both tools issue the identical
+      // statement, so the server's error is identical (MySQL #3730, MariaDB #1451) for each
+      name: 'drop a table referenced by a foreign key (fails identically on each server)',
+      pma: () =>
+        h.pma.postJson('/database/structure/drop-table', [
+          ['db', P],
+          ...sel(['parent']),
+          ['fk_checks', '1'],
+          ['mult_btn', 'Yes'],
+        ]),
+      bma: () => h.bma.req('POST', bma('/structure/drop'), { tables: ['parent'], fkChecks: true }),
+      expectSql: /^DROP TABLE `parent`$/,
+    },
+    {
       name: 'add prefix',
       pma: () =>
         h.pma.postJson('/database/structure/add-prefix-table', [

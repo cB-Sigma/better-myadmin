@@ -3,6 +3,7 @@ import { formatByteDown } from '@bettermyadmin/i18n'
 import { quoteString } from '@bettermyadmin/sql-gen'
 import { getMessageCard } from '../query/message.ts'
 import { isProfilingSupported } from '../query/profiling.ts'
+import { signSql } from '../query/signature.ts'
 import type { AdminCtx } from './context.ts'
 
 /** PHP ksort() of string keys (the plugin types): byte order */
@@ -104,6 +105,9 @@ export async function binlogPage(
       session === undefined
         ? Promise.resolve(false)
         : isProfilingSupported(ctx.conn, session, ctx.serverIndex),
+    ...(session !== undefined
+      ? { sign: (q: string) => signSql(q, session.hmacSecret, cfg.blowfish_secret) }
+      : {}),
   })
   return {
     binaryLogs,

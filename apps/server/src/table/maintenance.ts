@@ -19,6 +19,7 @@ import type { AppConfig } from '../config.ts'
 import { MysqlError } from '../http/errors.ts'
 import { getMessageCard } from '../query/message.ts'
 import { isProfilingSupported } from '../query/profiling.ts'
+import { signSql } from '../query/signature.ts'
 import type { SessionData } from '../session/store.ts'
 import type { TableReader } from './read.ts'
 
@@ -119,6 +120,10 @@ export async function maintenance(
       session === undefined
         ? Promise.resolve(false)
         : isProfilingSupported(reader.conn, session, ctx.serverIndex),
+    // ANALYZE TABLE is refreshable: its Refresh/Profiling links re-run the query, so it is signed
+    ...(session !== undefined
+      ? { sign: (q: string) => signSql(q, session.hmacSecret, cfg.blowfish_secret) }
+      : {}),
   })
   return {
     messages: [

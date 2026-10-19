@@ -138,6 +138,11 @@ export type SqlLinks = z.infer<typeof SqlLinks>
 export const SqlCard = z.object({
   /** The query as given to getMessage (what the links act on). */
   sql: z.string(),
+  /**
+   * The signature of `sql` for the Refresh/Profiling links (signed like a /sql statement), so they
+   * re-run it through the query route's signature guard. Absent when the card offers no Refresh.
+   */
+  sig: z.string().optional(),
   /** What the card shows: the SQL truncated to MaxCharactersInDisplayedSQL + "[...]", or the PHP code. */
   display: z.string(),
   php: z.boolean(),

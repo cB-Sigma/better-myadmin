@@ -73,6 +73,12 @@ export interface CardOptions {
   profilingSupported: () => Promise<boolean>
   /** isset($_SESSION['profiling']) */
   profilingOn: boolean
+  /**
+   * Signs the card's query for its Refresh/Profiling links (signSql with the session's secret), so
+   * they re-run it through the query route's signature guard. Omitted when the page cannot sign (no
+   * Refresh is then offered, as for GRANT/INSERT cards which never match the Refresh regex anyway).
+   */
+  sign?: (sql: string) => string
 }
 
 /**
@@ -126,6 +132,8 @@ export async function getMessageCard(sqlQuery: string, o: CardOptions): Promise<
     db: o.db,
     table: o.db === '' ? '' : o.table,
     links: { editInline, edit, explain, php, refresh, profiling },
+    // Refresh and Profiling re-run the query; they carry its signature like a /sql statement
+    ...(refresh && o.sign !== undefined ? { sig: o.sign(sqlQuery) } : {}),
   }
 }
 

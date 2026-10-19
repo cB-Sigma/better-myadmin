@@ -89,6 +89,9 @@ export function QueryCard(props: {
 }
 
 function SqlCardBody({ card, sig, env }: { card: SqlCard; sig: string; env: CardEnv }) {
+  // a server card (binlog, maintenance) carries its own signature for Refresh/Profiling; a /sql
+  // statement passes it as the prop instead
+  const refreshSig = card.sig ?? sig
   const { open, setOpen } = useContext(InlineEditContext)
   const key = useRef(`${Math.random()}`).current
   const editing = open === key
@@ -119,7 +122,7 @@ function SqlCardBody({ card, sig, env }: { card: SqlCard; sig: string; env: Card
                   db: card.db,
                   table: card.table,
                   profiling: e.target.checked,
-                  sig,
+                  sig: refreshSig,
                 })
               }
             />
@@ -187,7 +190,9 @@ function SqlCardBody({ card, sig, env }: { card: SqlCard; sig: string; env: Card
           <button
             type="button"
             className={link}
-            onClick={() => env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, sig })}
+            onClick={() =>
+              env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, sig: refreshSig })
+            }
           >
             {t('Refresh')}
           </button>
