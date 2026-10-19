@@ -1,6 +1,8 @@
 # phpMyAdmin built from source at the reference commit, served by PHP's built-in server.
 FROM php:8.3-cli
-ARG PMA_COMMIT=e3e877e8b49ccd4600fcd22f3934e4aeb10adbd1
+# the reference commit (docs/reference/reference-commit.txt); docker/dev.compose.yml passes it so
+# the two stay together. Bump both when the pin moves (docs/architecture/15-upstream-sync.md).
+ARG PMA_COMMIT=a15cd540cfd06cebd297890bedd4b5cfb067a57d
 # 1 = compile the translations like a release (bin/generate-mo + bin/remove-incomplete-mo);
 # a plain checkout has no resources/locale and is English-only
 ARG PMA_TRANSLATIONS=0
@@ -8,7 +10,10 @@ ARG PMA_TRANSLATIONS=0
 # for each code the build did not compile (texts stay English, Current::$lang is the code), e.g. "ja"
 # for the Kanji conversion of tests/parity/export-kanji.parity.test.ts (Encoding::canConvertKanji)
 ARG PMA_LOCALE_STUBS=""
-RUN apt-get update && apt-get install -y --no-install-recommends git unzip libzip-dev nodejs npm gettext \
+# phpMyAdmin's yarn build needs Node >= 22 (Debian's nodejs is 20): install Node 22 from NodeSource
+RUN apt-get update && apt-get install -y --no-install-recommends git unzip libzip-dev gettext ca-certificates curl \
+ && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+ && apt-get install -y --no-install-recommends nodejs \
  && docker-php-ext-install mysqli zip && npm install -g yarn@1.22.22 && rm -rf /var/lib/apt/lists/*
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /srv

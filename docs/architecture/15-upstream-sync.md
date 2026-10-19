@@ -26,7 +26,7 @@ BetterMyAdmin is specified against one phpMyAdmin commit (`docs/reference/refere
 4. Regenerate everything derived from phpMyAdmin's code: each package's `scripts/*.php` fixtures, `pnpm parity:inventory`, and `pnpm i18n:import`. Any fixture diff is a behaviour change: port it, or explain it in the ledger.
 5. Run `pnpm test`, `pnpm test:int` and `pnpm test:parity` against the new reference instance, plus `pnpm parity:check`.
 6. Write a `tools/upstream/ledger.json` entry for every commit between the old and the new pin, `ported` or `not-applicable` with notes.
-7. Update `docs/reference/reference-commit.txt` and commit `chore(upstream): sync to <sha>`.
+7. Update `docs/reference/reference-commit.txt` **and the `PMA_COMMIT` default** in `docker/pma-ref/Dockerfile` and the `x-pma-commit` anchor in `docker/dev.compose.yml` (they must equal the pin), then commit `chore(upstream): sync to <sha>`.
 
 ## Gate
 

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -p tsconfig.json"
+    "generate:routes": "node scripts/generate-routes.mjs",
+    "typecheck": "node scripts/generate-routes.mjs && tsc -p tsconfig.json"
   },
   "dependencies": {
     "@bettermyadmin/contracts": "workspace:*",

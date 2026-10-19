@@ -8,6 +8,11 @@
 #   phpmyadmin-ref-replica (:8083) whose only server it is, for tests/parity/server-replication
 # - BMA_PARITY_TARGET=mariadb: mariadb11 (:3307) with phpmyadmin-ref-mariadb (:8084), and
 #   mariadb11-replica (:3309) with phpmyadmin-ref-mariadb-replica (:8085)
+# the reference commit, passed as a build arg to every phpmyadmin-ref* image so the Dockerfile ARG
+# default and this stay together (docs/reference/reference-commit.txt; bump on an upstream sync).
+# Override with the PMA_COMMIT env var.
+x-pma-commit: &pma_commit "${PMA_COMMIT:-a15cd540cfd06cebd297890bedd4b5cfb067a57d}"
+
 services:
   mysql84:
     image: mysql:8.4
@@ -69,29 +74,29 @@ services:
     depends_on: { mariadb11: { condition: service_healthy } }
     healthcheck: { test: ["CMD", "healthcheck.sh", "--connect"], interval: 5s, retries: 30 }
   phpmyadmin-ref:
-    build: { context: ./pma-ref }
+    build: { context: ./pma-ref, args: { PMA_COMMIT: *pma_commit } }
     environment: { PMA_HOST: mysql84 }
     ports: ["8081:8081"]
     depends_on: { mysql84: { condition: service_healthy } }
   # the same commit with compiled translations (release behaviour) for tests/parity/i18n.parity.test.ts,
   # and Japanese for tests/parity/export-kanji.parity.test.ts (an empty catalog if the release drops it)
   phpmyadmin-ref-i18n:
-    build: { context: ./pma-ref, args: { PMA_TRANSLATIONS: "1", PMA_LOCALE_STUBS: "ja" } }
+    build: { context: ./pma-ref, args: { PMA_COMMIT: *pma_commit, PMA_TRANSLATIONS: "1", PMA_LOCALE_STUBS: "ja" } }
     environment: { PMA_HOST: mysql84 }
     ports: ["8082:8081"]
     depends_on: { mysql84: { condition: service_healthy } }
   phpmyadmin-ref-replica:
-    build: { context: ./pma-ref }
+    build: { context: ./pma-ref, args: { PMA_COMMIT: *pma_commit } }
     environment: { PMA_HOST: mysql84-replica, PMA_REPLICA: "1" }
     ports: ["8083:8081"]
     depends_on: { mysql84-replica: { condition: service_healthy } }
   phpmyadmin-ref-mariadb:
-    build: { context: ./pma-ref }
+    build: { context: ./pma-ref, args: { PMA_COMMIT: *pma_commit } }
     environment: { PMA_HOST: mariadb11 }
     ports: ["8084:8081"]
     depends_on: { mariadb11: { condition: service_healthy } }
   phpmyadmin-ref-mariadb-replica:
-    build: { context: ./pma-ref }
+    build: { context: ./pma-ref, args: { PMA_COMMIT: *pma_commit } }
     environment: { PMA_HOST: mariadb11-replica, PMA_REPLICA: "1" }
     ports: ["8085:8081"]
     depends_on: { mariadb11-replica: { condition: service_healthy } }
