@@ -33,8 +33,9 @@ test.describe('keyboard shortcuts', () => {
     await page.locator('body').click()
     await page.keyboard.press('d')
     release()
-    // the editor mounts between the two keys: it must leave the focus where the user put it
-    await page.waitForTimeout(500)
+    // the editor mounts between the two keys: wait for it to actually appear (deterministic on a
+    // slow/2-core runner, unlike a fixed delay), then confirm it left the focus where the user put it
+    await expect(page.locator('.cm-editor')).toBeVisible()
     await page.keyboard.press('s')
     await expect(page).toHaveURL(new RegExp(`/db/${E2E.db}/structure$`))
   })
