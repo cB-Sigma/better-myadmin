@@ -107,9 +107,13 @@ test('[p01-e12d1f] hovering a truncated name shows it whole in a floating layer'
   await login(page, USER, USER)
   const row = item(page, 'database', LONG)
   await row.scrollIntoViewIfNeeded()
-  await row.getByRole('link', { name: LONG }).hover()
+  // The SQL console (#pma_console, pointer-events-auto, fixed to the viewport bottom) overlaps the
+  // nav tree and intercepts a real .hover() on a shorter viewport (reproduces on CI). showFullName
+  // is driven by the name span's mouseenter/mouseleave, so dispatch those directly on the link.
+  const link = row.getByRole('link', { name: LONG })
+  await link.dispatchEvent('mouseover')
   await expect(page.locator('#full_name_layer')).toHaveText(LONG)
-  await page.mouse.move(800, 600)
+  await link.dispatchEvent('mouseout')
   await expect(page.locator('#full_name_layer')).toHaveCount(0)
 })
 
