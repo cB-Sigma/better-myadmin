@@ -77,63 +77,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:int
 
-  # the same suites against each reference pair (tests/parity/lib/target.ts)
-  parity:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - target: mysql
-            services: mysql84 phpmyadmin-ref phpmyadmin-ref-i18n mysql84-replica phpmyadmin-ref-replica
-          - target: mariadb
-            services: mariadb11 phpmyadmin-ref-mariadb mariadb11-replica phpmyadmin-ref-mariadb-replica
-    env:
-      BMA_PARITY_TARGET: ${{ matrix.target }}
-      # in compose networking the reference and the replica reach the primary by its service name and
-      # port 3306; our app (on the runner) by the published port (tests/parity/server-replication)
-      BMA_PARITY_REPLICA_SOURCE_HOST: ${{ matrix.target == 'mariadb' && 'mariadb11' || 'mysql84' }}
-      BMA_PARITY_REPLICA_SOURCE_PORT: "3306"
-    steps:
-      - uses: actions/checkout@v4
-      # optional: authenticate to Docker Hub if credentials are configured, to lift anonymous pull
-      # rate limits on shared runners (a no-op when the secrets are absent)
-      - name: Docker Hub login (if configured)
-        env:
-          DH_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DH_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          if [ -n "$DH_USER" ] && [ -n "$DH_TOKEN" ]; then echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin; else echo "no Docker Hub credentials; relying on pull retries"; fi
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
-      # PHP 8.3 with mbstring/iconv: the suites that start their own phpMyAdmin (pma-instance.ts,
-      # pma-shadow.ts) and export-kanji's mbstring goldens run php on the runner (phpAvailable)
-      - uses: shivammathur/setup-php@v2
-        with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
-      # retry the build/up: the image build pulls composer:2 / php:8.3-cli and the DB images from
-      # Docker Hub, which returns transient 5xx (and rate limits) on shared runners
-      - name: docker compose up (with retry)
-        run: |
-          for i in 1 2 3; do
-            docker compose -f docker/dev.compose.yml up -d --build --wait ${{ matrix.services }} && exit 0
-            echo "::warning::docker compose up attempt $i failed (likely a transient Docker Hub error); retrying"
-            docker compose -f docker/dev.compose.yml down -v || true
-            sleep $((i * 20))
-          done
-          docker compose -f docker/dev.compose.yml logs || true
-          exit 1
-      # the reference checkout on the runner, from the built image: without it those suites would skip
-      # (phpAvailable / canStartShadow guard on PMA_PATH / BMA_PARITY_PMA_ROOT), not run
-      - name: Copy the reference checkout out of the phpmyadmin-ref image
-        run: |
-          ref=${{ matrix.target == 'mariadb' && 'phpmyadmin-ref-mariadb' || 'phpmyadmin-ref' }}
-          docker compose -f docker/dev.compose.yml cp "$ref:/srv/pma" "$RUNNER_TEMP/pma"
-          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/pma"
-          echo "PMA_PATH=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
-          echo "BMA_PARITY_PMA_ROOT=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm test:parity
+  # NOTE: the live-reference parity jobs (parity mysql / mariadb) are intentionally NOT here. They
+  # start a live reference phpMyAdmin and compare live output, which is inherently flaky on shared
+  # 2-core runners (transient Docker Hub pulls, dropped HTTP/DB sockets), so they run in nightly.yml.
+  # The deterministic parity guard for per-push CI is `parity-gate` above (tools/parity against the
+  # saved baseline). See docs/architecture/14-development-setup.md#ci-tiers.
 
   # the browser suites (tests/e2e, tests/ui-parity) against the built SPA served by the real server,
   # in Playwright's Chromium; one suite per job, each run holding its MySQL lock (tests/e2e/suite-lock.ts)
