@@ -1,5 +1,6 @@
 import { type Page, expect, test } from '@playwright/test'
 import mysql from 'mysql2/promise'
+import { isMariaDb } from './vendor.ts'
 
 /**
  * Smoke test of the server-level pages (docs/features/06-server-level.md): every page renders its
@@ -142,13 +143,44 @@ test('charsets, engines, plugins, binary log [p06-b19775] [p06-e1da5c] [p06-e5aa
 
   await page.goto('/s/1/plugins')
   await expect(page.locator('#plugins-storageengine')).toContainText('InnoDB')
-  // plugins/index.twig: the name, a space, the status badge (QA: "FEDERATEDdisabled" in the text)
-  const disabled = page.locator('#plugins-storageengine tr', { hasText: 'FEDERATED' }).locator('th')
-  await expect(disabled).toHaveText(/^FEDERATED\s+disabled$/)
+  // plugins/index.twig: a non-active plugin renders its name, a space, and the status badge (QA:
+  // "FEDERATEDdisabled" in the text). The default disabled plugin differs by vendor: MySQL ships
+  // FEDERATED (storage engine) disabled; MariaDB ships every storage engine active but FEEDBACK
+  // (information schema) disabled.
+  const [section, plugin] = (await isMariaDb())
+    ? ['informationschema', 'FEEDBACK']
+    : ['storageengine', 'FEDERATED']
+  const disabled = page.locator(`#plugins-${section} tr`, { hasText: plugin }).locator('th')
+  await expect(disabled).toHaveText(new RegExp(`^${plugin}\\s+disabled$`))
+
+  // Paging needs a binary log file with more than 25 events. The default view shows the FIRST file,
+  // which on some images (e.g. the MariaDB 10.11 CI image, which rotates after bootstrap) is a tiny
+  // post-bootstrap file — runtime events go to a later file. So write > 25 events into the current
+  // file and page through that one. The events persist after the database is dropped.
+  const binc = await mysql.createConnection(ROOT)
+  let logFile = ''
+  try {
+    const db = `m1shell_binlog${process.env.BMA_E2E_PORT ?? '8099'}`
+    await binc.query(`DROP DATABASE IF EXISTS ${db}`)
+    await binc.query(`CREATE DATABASE ${db}`)
+    await binc.query(`CREATE TABLE ${db}.t (id INT)`)
+    for (let i = 0; i < 30; i++) await binc.query(`INSERT INTO ${db}.t VALUES (${i})`)
+    await binc.query(`DROP DATABASE ${db}`)
+    // the current (last) binary log file, where those events landed
+    const [logs] = (await binc.query('SHOW BINARY LOGS')) as unknown as [Array<{ Log_name: string }>]
+    logFile = logs.at(-1)?.Log_name ?? ''
+  } finally {
+    await binc.end()
+  }
 
   await page.goto('/s/1/binlog')
   await expect(page.getByRole('heading', { name: 'Binary log' })).toBeVisible()
+  // the default view (the first binary log file)
   await expect(page.getByText('SHOW BINLOG EVENTS LIMIT 0, 25')).toBeVisible()
+  // page through the current file, which we just filled with more than 25 events
+  await page.locator('select[name="log"]').selectOption(logFile)
+  await page.getByRole('button', { name: 'Go' }).click()
+  await expect(page.getByText(`SHOW BINLOG EVENTS IN '${logFile}' LIMIT 0, 25`)).toBeVisible()
   await page.getByTitle('Next').click()
-  await expect(page.getByText('SHOW BINLOG EVENTS LIMIT 25, 25')).toBeVisible()
+  await expect(page.getByText(`SHOW BINLOG EVENTS IN '${logFile}' LIMIT 25, 25`)).toBeVisible()
 })

@@ -1,7 +1,7 @@
 import mysql from 'mysql2/promise'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
-import { isMariaDb, serverType } from '../support/vendor.ts'
+import { isMariaDb, serverType, utf8mb4Default, utf8mb4DefaultDescription } from '../support/vendor.ts'
 
 /** Objects of this suite are all prefixed m1shell_. */
 const DB = 'm1shell_db'
@@ -315,9 +315,11 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     expect(home.collation.selected).toBe('utf8mb4_general_ci')
     const utf8mb4 = home.collation.charsets.find((c: { name: string }) => c.name === 'utf8mb4')
     expect(utf8mb4.description).toBe('UTF-8 Unicode')
-    expect(
-      utf8mb4.collations.find((c: { name: string }) => c.name === 'utf8mb4_0900_ai_ci').description,
-    ).toBe('Unicode (UCA 9.0.0), accent-insensitive, case-insensitive')
+    // the server's default utf8mb4 collation varies by vendor/version (MySQL 8.x 0900, MariaDB 11.4+
+    // uca1400, MariaDB 10.11 general_ci); the product describes whatever SHOW COLLATION returns
+    expect(utf8mb4.collations.find((c: { name: string }) => c.name === utf8mb4Default)?.description).toBe(
+      utf8mb4DefaultDescription,
+    )
     expect(home.databaseServer).toMatchObject({
       host: `${MYSQL.host} via TCP/IP`,
       type: serverType,
