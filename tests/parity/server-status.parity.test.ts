@@ -327,9 +327,15 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
     ])
     // the order follows the counters, which move: compare as sets of statement names
     const sortRows = (xs: string[][]) => [...xs].sort((a, b) => a[0]!.localeCompare(b[0]!))
+    // phpMyAdmin abbreviates large counts with an SI suffix (e.g. "12 k"); the counters move between
+    // the two reads, so a per-hour value can straddle the 1000 boundary and pick up the suffix on one
+    // side only. shape() masks the digits but not the suffix, so drop it from the numeric cells.
+    const demag = (row: string[]) => [row[0]!, ...row.slice(1).map((c) => c.replace(/ [kMGTPE]$/, ''))]
     expect(
-      sortRows(q.queries.map((x) => [x.name, shape(x.value), shape(x.perHour), shape(x.percentage)])),
-    ).toEqual(sortRows(pmaRows))
+      sortRows(q.queries.map((x) => [x.name, shape(x.value), shape(x.perHour), shape(x.percentage)])).map(
+        demag,
+      ),
+    ).toEqual(sortRows(pmaRows).map(demag))
     const chart = JSON.parse($(html, 'canvas#query-statistics-chart')!.attrs['data-chart-data']!) as {
       labels: string[]
     }
