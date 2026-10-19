@@ -42,7 +42,7 @@ test.beforeAll(async () => {
     CREATE TABLE ${DB}.t (id INT PRIMARY KEY, a VARCHAR(10), b INT);
     INSERT INTO ${DB}.t VALUES (1, 'x', 5), (2, 'y', 6);
     CREATE VIEW ${DB}.v AS SELECT id, a FROM ${DB}.t;
-    CREATE TABLE ${DB}.geo (id INT PRIMARY KEY, g POINT NOT NULL SRID 0, n VARCHAR(5));
+    CREATE TABLE ${DB}.geo (id INT PRIMARY KEY, g POINT NOT NULL, n VARCHAR(5));
     DROP USER IF EXISTS '${USER}'@'%'; CREATE USER '${USER}'@'%' IDENTIFIED BY '${USER}';
     GRANT ALL ON \`f04\\_e2e\\_struct\`.* TO '${USER}'@'%';`)
 })
