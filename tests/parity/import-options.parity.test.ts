@@ -9,6 +9,7 @@ import { GeneralLog } from './lib/general-log.ts'
 import { type ImportFile, type Pairs, bmaImport, pmaImport, pmaImportForm } from './lib/import.ts'
 import { PmaClient } from './lib/pma.ts'
 import { PMA_STORAGE, PMA_URL, pmaReachable } from './lib/server-setup.ts'
+import { TARGET } from './lib/target.ts'
 
 /**
  * Every import format's options against phpMyAdmin (docs/features/07-export-import.md): the SQL
@@ -245,6 +246,26 @@ async function snapshot(db: string): Promise<string> {
 const reset = (db: string) =>
   `DROP DATABASE IF EXISTS \`${db}_new\`; DROP DATABASE IF EXISTS \`${db}\`; CREATE DATABASE \`${db}\`; USE \`${db}\`; ${SEED}`
 
+/**
+ * `ldi_local_option off` is a server-side `LOAD DATA INFILE` of the uploaded file, which the
+ * reference server (its own container) cannot read either tool's path: both fail, only the error
+ * code differs by the staging path. MySQL (`secure_file_priv=/var/lib/mysql-files`) refuses both
+ * paths with #1290. MariaDB (`secure_file_priv=NULL`) allows server-side `LOAD DATA` only from a
+ * file directly in `@@tmpdir` (`/tmp`): phpMyAdmin stages in PHP's `upload_tmp_dir` = `/tmp`, so it
+ * gets #13 (file not found); BetterMyAdmin stages in an isolated, private `tmpdir()/bma-import/`
+ * (0700 dir, 0600 random-named files — a deliberate security choice we keep), a subdirectory, so
+ * MariaDB rejects it with #1290. Both statements are identical (compared above); the difference is
+ * the harness's (the file is on neither DB server's filesystem), so it is normalised away here, as
+ * import.parity.test.ts does. See the report for why the isolated staging is not changed to match.
+ */
+const serverFileError = (m: string): string =>
+  TARGET === 'mariadb'
+    ? m.replace(
+        /^error: #(13 - Can't get stat of '[^']*' \(Errcode: 2 "No such file or directory"\)|1290 - The MariaDB server is running with the --secure-file-priv option so it cannot execute this statement)$/,
+        'error: <the server cannot read the uploaded file>',
+      )
+    : m
+
 describe.skipIf(!pmaReachable)('import options parity', () => {
   beforeAll(async () => {
     root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
@@ -288,7 +309,9 @@ describe.skipIf(!pmaReachable)('import options parity', () => {
           .filter((q) => /^\s*(LOAD DATA|INSERT|REPLACE|CREATE|ALTER|SET SQL_MODE|SET @@SQL_MODE)/i.test(q))
           .map((q) => q.replaceAll(db, 'DB').replace(/INFILE '[^']*'/i, "INFILE 'F'"))
       expect(await writes(USERS.bma, DBS.bma)).toEqual(await writes(USERS.pma, DBS.pma))
-      expect(b.messages.map((m) => m.replaceAll(DBS.bma, DBS.pma))).toEqual(p)
+      expect(b.messages.map((m) => serverFileError(m.replaceAll(DBS.bma, DBS.pma)))).toEqual(
+        p.map(serverFileError),
+      )
       expect((await snapshot(DBS.bma)).replaceAll(DBS.bma, DBS.pma)).toBe(await snapshot(DBS.pma))
       const [news] = (await root.query(`SHOW DATABASES LIKE '${DBS.pma}_new'`)) as unknown as [unknown[]]
       if (news.length > 0)
