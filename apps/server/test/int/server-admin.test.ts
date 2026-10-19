@@ -261,4 +261,21 @@ describe('charsets, engines, plugins, binlog', () => {
     expect(bad.status).toBe(400)
     expect((bad.json.error as { sql: string }).sql).toBe("SHOW BINLOG EVENTS IN 'nope\\'' LIMIT 0, 25")
   })
+
+  it('binary log: the query card carries a signature so Refresh re-runs it [p06-debfa6]', async () => {
+    const page = await get<BinlogResponse>('/binlog')
+    // the SHOW query matches the Refresh regex, so the card offers Refresh/Profiling and must sign
+    expect(page.card).not.toBeNull()
+    expect(page.card?.links.refresh).toBe(true)
+    const sql = page.card?.sql ?? ''
+    expect(sql).toBe('SHOW BINLOG EVENTS LIMIT 0, 25')
+    expect(typeof page.card?.sig).toBe('string')
+    expect(page.card?.sig).not.toBe('')
+    // Refresh posts the card's query with its signature: the query route accepts it
+    const ok = await t.req('POST', '/api/servers/1/query', { sql, sig: page.card?.sig, db: '', grid: true })
+    expect(ok.status, JSON.stringify(ok.json)).toBe(200)
+    // the pre-fix behaviour (an empty signature, "present but invalid") is rejected
+    const empty = await t.req('POST', '/api/servers/1/query', { sql, sig: '', db: '', grid: true })
+    expect(empty.status).toBe(400)
+  })
 })
