@@ -71,6 +71,9 @@ describe.skipIf(!reachable)(
 
     beforeAll(async () => {
       root = await mysql.createConnection({ ...ROOT, multipleStatements: true })
+      // a socket reset under CI load emits a connection-level 'error' (not a query rejection); without
+      // a listener Node throws it as an unhandled event and crashes the worker, even after a test body
+      root.on('error', () => {})
       await root.query(`DROP DATABASE IF EXISTS ${DB}; CREATE DATABASE ${DB};
       CREATE TABLE ${DB}.t (id INT PRIMARY KEY) COMMENT='Shell parity; InnoDB free: 0 kB';
       CREATE VIEW ${DB}.v_upd AS SELECT id FROM ${DB}.t;
