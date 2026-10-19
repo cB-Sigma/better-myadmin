@@ -134,12 +134,14 @@ const bmaMessages = (o: SetupOverview): Msg[] =>
     text: visibleText(m.message),
   }))
 
-/** The system's missing compression functions differ (the reference PHP has no bz2 at all). */
-const sameSystem = (list: Msg[]) =>
-  list.map((m) => ({
-    ...m,
-    text: m.text.replace(/requires functions \([a-z, ]+\)/, 'requires functions (…)'),
-  }))
+/**
+ * Drop the one config-check message whose presence is determined by the comparison environment, not
+ * by the product: the Bzip2 (BZipDump) check. BetterMyAdmin runs on Node, which has no bzip2
+ * compressor, so it always warns; phpMyAdmin warns only when its PHP lacks the bz2 extension — the
+ * host PHP and the reference image have none, but a CI runner's PHP does, so the reference flips
+ * between emitting and omitting it across environments. Everything else is compared byte-exact.
+ */
+const sameSystem = (list: Msg[]) => list.filter((m) => m.id !== 'BZipDump')
 
 /** The servers table rows: id, name, auth type, DSN. */
 function pmaServers(html: string): string[][] {
