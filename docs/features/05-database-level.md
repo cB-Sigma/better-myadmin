@@ -77,7 +77,7 @@ DDL from `resources/sql/create_tables.sql`:
 
 **Purpose.** List all tables/views in the current database with statistics and per-table action icons, provide bulk actions, favorites, and the "Create new table" starter form.
 
-**Controller.** `StructureController::__invoke` (GET/POST). Rejects when `Current::$database === ''` (missing-parameter error) or the database cannot be selected (`DbTableExists::selectDatabase`): AJAX gets `success:false` + "No databases selected."; non-AJAX redirects to `/` with `reload=true&message=No databases selected.`. Loads scripts `database/structure.js` and `table/change.js`. Initialises page settings group `DbStructure` (`PageSettings::init('DbStructure')`) which renders the per-page "Settings" gear with the five `ShowDbStructure*` checkboxes (`src/Config/Forms/User/MainForm.php` group `DbStructure`; persisted in `pma__userconfig` when available).
+**Controller.** `StructureController::__invoke` (GET/POST). Rejects when `Current::$database === ''` (missing-parameter error) or the database cannot be selected (`DbTableExists::selectDatabase`): AJAX gets `success:false` + "No database selected."; non-AJAX redirects to `/` with `reload=true&message=No database selected.`. Loads scripts `database/structure.js` and `table/change.js`. Initialises page settings group `DbStructure` (`PageSettings::init('DbStructure')`) which renders the per-page "Settings" gear with the five `ShowDbStructure*` checkboxes (`src/Config/Forms/User/MainForm.php` group `DbStructure`; persisted in `pma__userconfig` when available).
 
 **Data gathering** (`getDatabaseInfo` → `getDbInfo` or `getTablesWhenOpen`):
 
@@ -212,7 +212,7 @@ Creating: `#create_database_form` submit (alerts `strFormEmpty` if empty) POSTs 
 **Server-side SQL:**
 
 - `CreateController` (AJAX only, else `Message::error()`): lower-cases the name when `lower_case_table_names = 1`; `CREATE DATABASE `name`` + ` DEFAULT CHARACTER SET x [COLLATE y]` (`Util::getCharsetQueryPart`) only if the posted collation exists in the server's charset/collation lists; `;`. Failure → `rawError(getError())`, `Current::$database = ''`. Success → message "Database %1$s has been created.", `sql_query` HTML, `url` of the default tab.
-- `DestroyController` (AJAX only; requires super user or `AllowUserDropDatabase`): filters out non-strings, system schemas and the pmadb; empty → "No databases selected."; for each: `RelationCleanup::database()`, `DROP DATABASE `x``, `Transformations::clear(db)`; rebuilds the DB list; message "%d database(s) have been dropped successfully.".
+- `DestroyController` (AJAX only; requires super user or `AllowUserDropDatabase`): filters out non-strings, system schemas and the pmadb; empty → "No database selected."; for each: `RelationCleanup::database()`, `DROP DATABASE `x``, `Transformations::clear(db)`; rebuilds the DB list; message "%d database(s) have been dropped successfully.".
 
 `DatabaseController` (`POST /databases`) just returns `{databases: [...]}` (used by pickers).
 
@@ -548,7 +548,7 @@ Structure
 - [x] Delete/maintenance/prefix groups hidden on system schemas or when `DisableMultiTableMaintenance`. <!-- parity:test --> `p05-d2bc56` [database-checklist.test.ts:112](../../apps/server/test/int/database-checklist.test.ts#L112)
 - [x] Central columns group only when pmadb `central_columns` configured; "Make consistent" asks "Are you sure?" first. <!-- parity:test --> `p05-2acc14` [database-checklist.e2e.ts:95](../../tests/e2e/database-checklist.e2e.ts#L95)
 - [x] Copy-table modal excludes the current database from the target list; defaults: Structure and data, Add constraints checked, Add DROP TABLE / AUTO_INCREMENT / Adjust privileges unchecked. <!-- parity:test --> `p05-4aab6b` [database-checklist.test.ts:173](../../apps/server/test/int/database-checklist.test.ts#L173)
-- [x] Replace prefix leaves non-matching names unchanged; copy-with-prefix does not check the match. <!-- parity:test --> `p05-fdecd7` [database-structure.parity.test.ts:194](../../tests/parity/database-structure.parity.test.ts#L194) +1
+- [x] Replace prefix leaves non-matching names unchanged; copy-with-prefix does not check the match. <!-- parity:test --> `p05-fdecd7` [database-structure.parity.test.ts:208](../../tests/parity/database-structure.parity.test.ts#L208) +1
 - [x] Drop/Empty confirm pages show the exact SQL (`DROP TABLE `a`, `b`;` + separate `DROP VIEW …;`; `TRUNCATE` per table) with Yes/No; No → "No change". <!-- parity:test --> `p05-a7eaad` [database-structure.test.ts:67](../../apps/server/test/int/database-structure.test.ts#L67) +1
 - [x] Dropping clears the session table-offset cache (#14205). <!-- parity:test --> `p05-d99774` [database-checklist.test.ts:180](../../apps/server/test/int/database-checklist.test.ts#L180)
 - [x] Show create groups Tables and Views separately. <!-- parity:test --> `p05-d5ead9` [database-structure.test.ts:52](../../apps/server/test/int/database-structure.test.ts#L52)
@@ -560,9 +560,9 @@ Structure
 Databases list / Create database
 - [x] Create-database form hidden when `ShowCreateDb=false`; red "No privileges to create databases" when the user lacks CREATE. <!-- parity:test --> `p05-2bf992` [database-checklist.test.ts:276](../../apps/server/test/int/database-checklist.test.ts#L276)
 - [x] Name prefilled with the user's wildcard DB (`databaseToCreate`); server collation preselected; blank collation allowed. <!-- parity:test --> `p05-b1a892` [database-checklist.test.ts:282](../../apps/server/test/int/database-checklist.test.ts#L282)
-- [x] Name lower-cased when `lower_case_table_names=1`; collation only applied if it exists on the server. <!-- parity:test --> `p05-f14700` [server-databases.parity.test.ts:193](../../tests/parity/server-databases.parity.test.ts#L193)
+- [x] Name lower-cased when `lower_case_table_names=1`; collation only applied if it exists on the server. <!-- parity:test --> `p05-f14700` [server-databases.parity.test.ts:201](../../tests/parity/server-databases.parity.test.ts#L201)
 - [x] After creation: counter +1, navigation reload, auto-open the new DB's default tab. <!-- parity:test --> `p05-3d20d2` [database-checklist.e2e.ts:127](../../tests/e2e/database-checklist.e2e.ts#L127)
-- [x] Drop checkboxes disabled for system schemas and the pmadb; server also filters them. <!-- parity:test --> `p05-684480` [server-databases.parity.test.ts:227](../../tests/parity/server-databases.parity.test.ts#L227)
+- [x] Drop checkboxes disabled for system schemas and the pmadb; server also filters them. <!-- parity:test --> `p05-684480` [server-databases.parity.test.ts:235](../../tests/parity/server-databases.parity.test.ts#L235)
 - [x] Drop requires super user or `AllowUserDropDatabase`; confirmation lists each `DROP DATABASE `x`;`. <!-- parity:test --> `p05-2f780c` [database-checklist.test.ts:288](../../apps/server/test/int/database-checklist.test.ts#L288)
 - [x] Statistics off by default; "Enable statistics" link carries a heavy-traffic warning; stats mode changes the title to "Databases statistics" and adds 6 sortable columns. <!-- parity:test --> `p05-45f47d` [database-checklist.test.ts:262](../../apps/server/test/int/database-checklist.test.ts#L262)
 - [x] Sorting whitelist; unknown `sort_by` → `SCHEMA_NAME`; `sort_order` anything but `desc` → `asc`. <!-- parity:test --> `p05-700f1e` [database-checklist.test.ts:246](../../apps/server/test/int/database-checklist.test.ts#L246)
@@ -599,7 +599,7 @@ Query (multi-table)
 - [x] Criteria collapse syncs with the "use in criteria" checkbox; AND/OR row appears with every criteria column. <!-- parity:test --> `p05-41c645` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
 - [x] Operator-specific RHS widgets: none for IS [NOT] NULL, multi-value for IN/NOT IN, two values for BETWEEN, free text otherwise; "Another column" RHS swaps in table+column selects. <!-- parity:test --> `p05-86eabf` [queryGenerator.test.ts:51](../../apps/web/src/features/database/queryGenerator.test.ts#L51)
 - [x] Update query: "Nothing selected" error when no shown column; FROM built with LEFT JOINs from FK metadata, else comma joins; aliases honoured. <!-- parity:test --> `p05-661434` [queryGenerator.test.ts:33](../../apps/web/src/features/database/queryGenerator.test.ts#L33) +1
-- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295) +1
+- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
 
 Privileges
 - [x] Non-admin users see "No Privileges"; grant/create-less users get a notice. <!-- parity:test --> `p05-2e6a47` [database-checklist.test.ts:457](../../apps/server/test/int/database-checklist.test.ts#L457)
@@ -628,7 +628,7 @@ Events
 - [x] Rows sorted by name; export shows raw `SHOW CREATE EVENT`. <!-- parity:test --> `p05-cfe947` [database-programs.parity.test.ts:422](../../tests/parity/database-programs.parity.test.ts#L422)
 
 Triggers (db scope)
-- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282) +1
+- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282)
 
 Tracking (db scope)
 - [x] Tab only when `Tracker::isActive()`; tracked vs untracked tables listed separately. <!-- parity:test --> `p05-edc4ef` [database-admin.parity.test.ts:366](../../tests/parity/database-admin.parity.test.ts#L366)

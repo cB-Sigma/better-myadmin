@@ -4,7 +4,7 @@
 
 What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.
 
-966/966 covered (100.0%): 953 implemented, 13 n/a. [Summary](README.md).
+965/965 covered (100.0%): 952 implemented, 13 n/a. [Summary](README.md).
 
 ## 01 shell navigation auth — 237/237 (100.0%) covered, 228/237 implemented
 
@@ -106,12 +106,12 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `modules/config.ts` | 13/13: ✅ `POST /preferences/manage` ✅ `POST index.php` ✅ `change <$el>` ✅ `change form.prefs-form` ✅ `click .optbox input[type=button][name=submit_reset]` ✅ `click <$cnt> a` ✅ `click <$radios>` ✅ `click div.click-hide-message` ✅ `click div.tab-content .restore-default, .set-value` ✅ `keyup <$el>` ✅ `mouseenter div.tab-content .restore-default, .set-value` ✅ `mouseleave div.tab-content .restore-default, .set-value` ✅ `submit form.prefs-form` |  |
 | `modules/page_settings.ts` | 4/4: ✅ `click #page_settings_icon` ✅ `click #pageSettingsModalApplyButton` ✅ `click #pageSettingsModalCloseButton,#pageSettingsModalCancelButton` ✅ `click #pma_navigation_settings_icon` |  |
 
-## 09 sql editor query pipeline — 48/48 (100.0%) covered, 48/48 implemented
+## 09 sql editor query pipeline — 47/47 (100.0%) covered, 47/47 implemented
 
 | Script | Covered | Not covered |
 |---|---|---|
 | `codemirror/addon/lint/sql-lint.ts` | 1/1: ✅ `POST /lint` |  |
-| `sql.ts` | 47/47: ✅ `POST …&ajax_request=1` ✅ `POST /database/sql/format` ✅ `POST /import/simulate-dml` ✅ `POST <$(this).attr('action')>` ✅ `POST <$form.attr('action')>` ✅ `POST <$thisA.attr('href')>` ✅ `POST <url>` ✅ `alert("Sorry! Unable to copy")` ✅ `alert(strFormEmpty)` ✅ `change #id_bookmark` ✅ `change <window.codeMirrorEditor>` ✅ `change select[name="sql_query"]` ✅ `click .navigation .showAllRows` ✅ `click .sortlink` ✅ `click #button_submit_query` ✅ `click #copyToClipBoard` ✅ `click #insertBtn` ✅ `click #simulate_dml` ✅ `click #sqlquery` ✅ `click #togglequerybox` ✅ `click #view_as` ✅ `click <formId>` ✅ `click <tableId> td a.foreign_value` ✅ `click a.browse_foreign` ✅ `click a.delete_row.ajax` ✅ `click form[name="resultsForm"].ajax button[name="submit_mult"], form[name="re…` ✅ `click input.sqlbutton` ✅ `click th.column_heading.marker` ✅ `confirm(strDoYouReally)` ✅ `confirm(strShowAllRowsWarning)` ✅ `dblclick #fieldsSelect` ✅ `hidden.bs.modal <browseForeignModal>` ✅ `input #sqlquery` ✅ `input input#bkm_label` ✅ `keypress input[name=bookmark_variable]` ✅ `keyup .filter_rows` ✅ `keyup #sqlqueryform` ✅ `makeGrid .sqlqueryresults` ✅ `mouseenter th.column_heading.pointer` ✅ `mouseleave th.column_heading.pointer` ✅ `propertychange #sqlquery` ✅ `shown <modal>` ✅ `submit .bookmarkQueryForm` ✅ `submit .maxRowsForm` ✅ `submit #sqlqueryform.ajax` ✅ `submit <formId>` ✅ `submit form[name='displayOptionsForm'].ajax` |  |
+| `sql.ts` | 46/46: ✅ `POST /database/sql/format` ✅ `POST /import/simulate-dml` ✅ `POST <$(this).attr('action')>` ✅ `POST <$form.attr('action')>` ✅ `POST <$thisA.attr('href')>` ✅ `POST <url>` ✅ `alert("Sorry! Unable to copy")` ✅ `alert(strFormEmpty)` ✅ `change #id_bookmark` ✅ `change <window.codeMirrorEditor>` ✅ `change select[name="sql_query"]` ✅ `click .navigation .showAllRows` ✅ `click .sortlink` ✅ `click #button_submit_query` ✅ `click #copyToClipBoard` ✅ `click #insertBtn` ✅ `click #simulate_dml` ✅ `click #sqlquery` ✅ `click #togglequerybox` ✅ `click #view_as` ✅ `click <formId>` ✅ `click <tableId> td a.foreign_value` ✅ `click a.browse_foreign` ✅ `click a.delete_row.ajax` ✅ `click form[name="resultsForm"].ajax button[name="submit_mult"], form[name="re…` ✅ `click input.sqlbutton` ✅ `click th.column_heading.marker` ✅ `confirm(strDoYouReally)` ✅ `confirm(strShowAllRowsWarning)` ✅ `dblclick #fieldsSelect` ✅ `hidden.bs.modal <browseForeignModal>` ✅ `input #sqlquery` ✅ `input input#bkm_label` ✅ `keypress input[name=bookmark_variable]` ✅ `keyup .filter_rows` ✅ `keyup #sqlqueryform` ✅ `makeGrid .sqlqueryresults` ✅ `mouseenter th.column_heading.pointer` ✅ `mouseleave th.column_heading.pointer` ✅ `propertychange #sqlquery` ✅ `shown <modal>` ✅ `submit .bookmarkQueryForm` ✅ `submit .maxRowsForm` ✅ `submit #sqlqueryform.ajax` ✅ `submit <formId>` ✅ `submit form[name='displayOptionsForm'].ajax` |  |
 
 ## other — 18/18 (100.0%) covered, 18/18 implemented
 

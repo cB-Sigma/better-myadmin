@@ -1,9 +1,9 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d",
+    "referenceCommit": "ef2fcd20e23b2fbe24844388a45c4d35f2c17309",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
-    "count": 966
+    "count": 965
   },
   "items": [
     {
@@ -35,7 +35,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<href>",
-      "line": 216,
+      "line": 215,
       "file": "resources/js/database/central_columns.ts"
     },
     {
@@ -55,7 +55,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#tableslistcontainer select.default_type",
-      "line": 245,
+      "line": 244,
       "file": "resources/js/database/central_columns.ts"
     },
     {
@@ -105,7 +105,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#add_col_div >a",
-      "line": 231,
+      "line": 230,
       "file": "resources/js/database/central_columns.ts"
     },
     {
@@ -158,7 +158,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#add_column",
-      "line": 223,
+      "line": 222,
       "file": "resources/js/database/central_columns.ts"
     },
     {
@@ -168,7 +168,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#add_new",
-      "line": 241,
+      "line": 240,
       "file": "resources/js/database/central_columns.ts"
     },
     {
@@ -200,7 +200,7 @@
       "method": "POST",
       "url": "index.php?route=/database/multi-table-query/query",
       "route": "/database/multi-table-query/query",
-      "line": 163,
+      "line": 161,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -210,7 +210,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<editor>",
-      "line": 188,
+      "line": 186,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -220,7 +220,7 @@
       "kind": "event",
       "event": "change",
       "selector": "this",
-      "line": 176,
+      "line": 174,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -230,7 +230,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#add_column_button",
-      "line": 201,
+      "line": 199,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -240,7 +240,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#copy_query",
-      "line": 194,
+      "line": 192,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -250,7 +250,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#submit_query",
-      "line": 147,
+      "line": 146,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -271,7 +271,7 @@
       "event": "click",
       "selector": "input.add-option",
       "delegated": true,
-      "line": 272,
+      "line": 270,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -282,7 +282,7 @@
       "event": "click",
       "selector": "input.remove-option",
       "delegated": true,
-      "line": 283,
+      "line": 281,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -292,7 +292,7 @@
       "kind": "event",
       "event": "click",
       "selector": "this",
-      "line": 170,
+      "line": 168,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -302,7 +302,7 @@
       "kind": "event",
       "event": "focus",
       "selector": "this",
-      "line": 176,
+      "line": 174,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -312,7 +312,7 @@
       "kind": "event",
       "event": "select",
       "selector": "this",
-      "line": 176,
+      "line": 174,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -322,7 +322,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 107,
+      "line": 104,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -332,7 +332,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 69,
+      "line": 67,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -342,7 +342,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#checkbox_change_all_tables_collations",
-      "line": 133,
+      "line": 130,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -353,7 +353,7 @@
       "event": "click",
       "selector": "#drop_db_anchor.ajax",
       "delegated": true,
-      "line": 157,
+      "line": 153,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -362,7 +362,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "confirm",
-      "line": 67,
+      "line": 65,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -375,7 +375,7 @@
         "strDropDatabaseStrongWarning"
       ],
       "text": "… ",
-      "line": 171,
+      "line": 167,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -386,7 +386,7 @@
       "event": "submit",
       "selector": "#change_db_charset_form.ajax",
       "delegated": true,
-      "line": 140,
+      "line": 137,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -397,7 +397,7 @@
       "event": "submit",
       "selector": "#copy_db_form.ajax",
       "delegated": true,
-      "line": 95,
+      "line": 93,
       "file": "resources/js/database/operations.ts"
     },
     {
@@ -760,7 +760,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 233,
+      "line": 229,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -770,7 +770,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 145,
+      "line": 144,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -792,7 +792,7 @@
       "event": "click",
       "selector": ".delete_results",
       "delegated": true,
-      "line": 168,
+      "line": 167,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -812,7 +812,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#select_all",
-      "line": 270,
+      "line": 265,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -852,7 +852,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#unselect_all",
-      "line": 276,
+      "line": 271,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -864,7 +864,7 @@
       "messages": [
         "strConfirmDeleteResults"
       ],
-      "line": 179,
+      "line": 178,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -875,7 +875,7 @@
       "event": "submit",
       "selector": "#db_search_form.ajax",
       "delegated": true,
-      "line": 218,
+      "line": 216,
       "file": "resources/js/database/search.ts"
     },
     {
@@ -1603,7 +1603,7 @@
       "method": "POST",
       "url": "index.php?route=/database/designer",
       "route": "/database/designer",
-      "line": 687,
+      "line": 684,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1614,7 +1614,7 @@
       "method": "POST",
       "url": "index.php?route=/sql",
       "route": "/sql",
-      "line": 657,
+      "line": 655,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1624,7 +1624,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 838,
+      "line": 832,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1636,7 +1636,7 @@
       "messages": [
         "strPleaseSelectPrimaryOrUniqueKey"
       ],
-      "line": 1269,
+      "line": 1256,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1646,7 +1646,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#add_table_from",
-      "line": 712,
+      "line": 708,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1656,7 +1656,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$formatDropDown>",
-      "line": 1154,
+      "line": 1142,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1666,7 +1666,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#designerModalGoButton",
-      "line": 671,
+      "line": 668,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1676,7 +1676,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#designerModalNoButton",
-      "line": 1114,
+      "line": 1103,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1686,7 +1686,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#designerModalYesButton",
-      "line": 1109,
+      "line": 1098,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1697,7 +1697,7 @@
       "event": "click",
       "selector": "<$newTableLine> .designer_Tabs2,.designer_Tabs",
       "delegated": true,
-      "line": 612,
+      "line": 610,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1707,7 +1707,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$newTableLine> .scroll_tab_checkbox",
-      "line": 616,
+      "line": 614,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1717,7 +1717,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$newTableLine> .scroll_tab_struct",
-      "line": 608,
+      "line": 606,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1728,7 +1728,7 @@
       "event": "click",
       "selector": "<element> .select_all_1",
       "delegated": true,
-      "line": 2037,
+      "line": 2023,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1739,7 +1739,7 @@
       "event": "click",
       "selector": "<element> .select_all_store_col",
       "delegated": true,
-      "line": 2049,
+      "line": 2035,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1750,7 +1750,7 @@
       "event": "click",
       "selector": "<element> .small_tab_pref_1",
       "delegated": true,
-      "line": 2045,
+      "line": 2031,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1761,7 +1761,7 @@
       "event": "click",
       "selector": "<element> .small_tab_pref_click_opt",
       "delegated": true,
-      "line": 2053,
+      "line": 2039,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1772,7 +1772,7 @@
       "event": "click",
       "selector": "<element> .small_tab,.small_tab2",
       "delegated": true,
-      "line": 2041,
+      "line": 2027,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1783,7 +1783,7 @@
       "event": "click",
       "selector": "<element> .tab_field_2,.tab_field_3,.tab_field",
       "delegated": true,
-      "line": 2063,
+      "line": 2049,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1793,7 +1793,7 @@
       "kind": "event",
       "event": "hidden",
       "selector": "<modal>",
-      "line": 639,
+      "line": 637,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1803,7 +1803,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "document",
-      "line": 2017,
+      "line": 2003,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1813,7 +1813,7 @@
       "kind": "event",
       "event": "mousemove",
       "selector": "document",
-      "line": 2025,
+      "line": 2011,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1823,7 +1823,7 @@
       "kind": "event",
       "event": "mouseout",
       "selector": "<element> .tab_zag_noquery",
-      "line": 2072,
+      "line": 2058,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1833,7 +1833,7 @@
       "kind": "event",
       "event": "mouseout",
       "selector": "<element> .tab_zag_query",
-      "line": 2080,
+      "line": 2066,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1843,7 +1843,7 @@
       "kind": "event",
       "event": "mouseover",
       "selector": "<element> .tab_zag_noquery",
-      "line": 2068,
+      "line": 2054,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1853,7 +1853,7 @@
       "kind": "event",
       "event": "mouseover",
       "selector": "<element> .tab_zag_query",
-      "line": 2076,
+      "line": 2062,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1863,7 +1863,7 @@
       "kind": "event",
       "event": "mouseup",
       "selector": "document",
-      "line": 2021,
+      "line": 2007,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1873,7 +1873,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#save_as_pages",
-      "line": 1023,
+      "line": 1013,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1883,7 +1883,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "<$form>",
-      "line": 881,
+      "line": 875,
       "file": "resources/js/designer/move.ts"
     },
     {
@@ -1905,7 +1905,7 @@
       "event": "click",
       "selector": ".pma_drop_result h2 .close",
       "delegated": true,
-      "line": 461,
+      "line": 460,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1926,7 +1926,7 @@
       "event": "click",
       "selector": ".pma_sql_import_status h2 .close",
       "delegated": true,
-      "line": 453,
+      "line": 452,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1937,7 +1937,7 @@
       "event": "click",
       "selector": ".pma_sql_import_status h2 .minimize",
       "delegated": true,
-      "line": 440,
+      "line": 439,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1947,7 +1947,7 @@
       "kind": "event",
       "event": "dragend",
       "selector": "document",
-      "line": 434,
+      "line": 433,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1957,7 +1957,7 @@
       "kind": "event",
       "event": "dragenter",
       "selector": "document",
-      "line": 430,
+      "line": 429,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1968,7 +1968,7 @@
       "event": "dragleave",
       "selector": ".pma_drop_handler",
       "delegated": true,
-      "line": 432,
+      "line": 431,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1978,7 +1978,7 @@
       "kind": "event",
       "event": "dragover",
       "selector": "document",
-      "line": 431,
+      "line": 430,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1988,7 +1988,7 @@
       "kind": "event",
       "event": "dragstart",
       "selector": "document",
-      "line": 433,
+      "line": 432,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -1999,7 +1999,7 @@
       "event": "drop",
       "selector": "body",
       "delegated": true,
-      "line": 437,
+      "line": 436,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -2009,7 +2009,7 @@
       "kind": "event",
       "event": "drop",
       "selector": "document",
-      "line": 434,
+      "line": 433,
       "file": "resources/js/drag_drop_import.ts"
     },
     {
@@ -2040,7 +2040,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#errorReportModalConfirm",
-      "line": 123,
+      "line": 122,
       "file": "resources/js/error_report.ts"
     },
     {
@@ -2051,7 +2051,7 @@
       "event": "click",
       "selector": "#ignore_error_…",
       "delegated": true,
-      "line": 167,
+      "line": 166,
       "file": "resources/js/error_report.ts"
     },
     {
@@ -2062,7 +2062,7 @@
       "event": "click",
       "selector": "#show_error_report_…",
       "delegated": true,
-      "line": 166,
+      "line": 165,
       "file": "resources/js/error_report.ts"
     },
     {
@@ -2072,7 +2072,7 @@
       "kind": "event",
       "event": "show",
       "selector": "<$errorReportModal>",
-      "line": 120,
+      "line": 119,
       "file": "resources/js/error_report.ts"
     },
     {
@@ -2305,7 +2305,7 @@
       "method": "GET",
       "url": "index.php?route=/export/check-time-out",
       "route": "/export/check-time-out",
-      "line": 785,
+      "line": 781,
       "file": "resources/js/export.ts"
     },
     {
@@ -2316,7 +2316,7 @@
       "method": "POST",
       "url": "index.php?route=/databases",
       "route": "/databases",
-      "line": 824,
+      "line": 818,
       "file": "resources/js/export.ts"
     },
     {
@@ -2327,7 +2327,7 @@
       "method": "POST",
       "url": "index.php?route=/export/template/create",
       "route": "/export/template/create",
-      "line": 104,
+      "line": 103,
       "file": "resources/js/export.ts"
     },
     {
@@ -2338,7 +2338,7 @@
       "method": "POST",
       "url": "index.php?route=/export/template/delete",
       "route": "/export/template/delete",
-      "line": 220,
+      "line": 216,
       "file": "resources/js/export.ts"
     },
     {
@@ -2349,7 +2349,7 @@
       "method": "POST",
       "url": "index.php?route=/export/template/load",
       "route": "/export/template/load",
-      "line": 137,
+      "line": 135,
       "file": "resources/js/export.ts"
     },
     {
@@ -2360,7 +2360,7 @@
       "method": "POST",
       "url": "index.php?route=/export/template/update",
       "route": "/export/template/update",
-      "line": 195,
+      "line": 192,
       "file": "resources/js/export.ts"
     },
     {
@@ -2370,7 +2370,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 973,
+      "line": 966,
       "file": "resources/js/export.ts"
     },
     {
@@ -2380,7 +2380,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#checkbox_sql_include_comments",
-      "line": 478,
+      "line": 474,
       "file": "resources/js/export.ts"
     },
     {
@@ -2390,7 +2390,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#column_alias_select",
-      "line": 1013,
+      "line": 1005,
       "file": "resources/js/export.ts"
     },
     {
@@ -2400,7 +2400,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#compression",
-      "line": 365,
+      "line": 361,
       "file": "resources/js/export.ts"
     },
     {
@@ -2410,7 +2410,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#db_alias_select",
-      "line": 957,
+      "line": 951,
       "file": "resources/js/export.ts"
     },
     {
@@ -2420,7 +2420,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#plugins",
-      "line": 311,
+      "line": 307,
       "file": "resources/js/export.ts"
     },
     {
@@ -2430,7 +2430,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#table_alias_select",
-      "line": 988,
+      "line": 981,
       "file": "resources/js/export.ts"
     },
     {
@@ -2440,7 +2440,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#table_data_all",
-      "line": 681,
+      "line": 677,
       "file": "resources/js/export.ts"
     },
     {
@@ -2450,7 +2450,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#table_structure_all",
-      "line": 674,
+      "line": 670,
       "file": "resources/js/export.ts"
     },
     {
@@ -2460,7 +2460,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$create>",
-      "line": 621,
+      "line": 617,
       "file": "resources/js/export.ts"
     },
     {
@@ -2470,7 +2470,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$createOptions>",
-      "line": 625,
+      "line": 621,
       "file": "resources/js/export.ts"
     },
     {
@@ -2480,7 +2480,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[name=\"table_data[]\"]",
-      "line": 667,
+      "line": 663,
       "file": "resources/js/export.ts"
     },
     {
@@ -2490,7 +2490,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[name=\"table_select[]\"]",
-      "line": 653,
+      "line": 649,
       "file": "resources/js/export.ts"
     },
     {
@@ -2500,7 +2500,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[name=\"table_structure[]\"]",
-      "line": 660,
+      "line": 656,
       "file": "resources/js/export.ts"
     },
     {
@@ -2510,7 +2510,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[type='radio'][name='allrows']",
-      "line": 943,
+      "line": 937,
       "file": "resources/js/export.ts"
     },
     {
@@ -2520,7 +2520,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[type='radio'][name='output_format']",
-      "line": 471,
+      "line": 467,
       "file": "resources/js/export.ts"
     },
     {
@@ -2530,7 +2530,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[type='radio'][name='quick_or_custom']",
-      "line": 922,
+      "line": 916,
       "file": "resources/js/export.ts"
     },
     {
@@ -2540,7 +2540,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[type='radio'][name='sql_structure_or_data']",
-      "line": 320,
+      "line": 316,
       "file": "resources/js/export.ts"
     },
     {
@@ -2550,7 +2550,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[type='radio'][name$='_structure_or_data']",
-      "line": 649,
+      "line": 645,
       "file": "resources/js/export.ts"
     },
     {
@@ -2560,7 +2560,7 @@
       "kind": "event",
       "event": "change",
       "selector": "input[type=\"checkbox\"][name=\"as_separate_files\"]",
-      "line": 359,
+      "line": 355,
       "file": "resources/js/export.ts"
     },
     {
@@ -2570,7 +2570,7 @@
       "kind": "event",
       "event": "change",
       "selector": "select[name=\"template\"]",
-      "line": 281,
+      "line": 277,
       "file": "resources/js/export.ts"
     },
     {
@@ -2580,7 +2580,7 @@
       "kind": "event",
       "event": "click",
       "selector": ".alias_remove",
-      "line": 953,
+      "line": 947,
       "file": "resources/js/export.ts"
     },
     {
@@ -2590,7 +2590,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#btn_alias_config",
-      "line": 952,
+      "line": 946,
       "file": "resources/js/export.ts"
     },
     {
@@ -2600,7 +2600,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#buttonGo",
-      "line": 1073,
+      "line": 1065,
       "file": "resources/js/export.ts"
     },
     {
@@ -2610,7 +2610,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#column_alias_button",
-      "line": 1044,
+      "line": 1036,
       "file": "resources/js/export.ts"
     },
     {
@@ -2620,7 +2620,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#db_alias_button",
-      "line": 1017,
+      "line": 1009,
       "file": "resources/js/export.ts"
     },
     {
@@ -2630,7 +2630,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#db_select_all",
-      "line": 1063,
+      "line": 1055,
       "file": "resources/js/export.ts"
     },
     {
@@ -2640,7 +2640,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#db_unselect_all",
-      "line": 1068,
+      "line": 1060,
       "file": "resources/js/export.ts"
     },
     {
@@ -2650,7 +2650,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#saveAndCloseBtn",
-      "line": 854,
+      "line": 848,
       "file": "resources/js/export.ts"
     },
     {
@@ -2660,7 +2660,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#showsqlquery",
-      "line": 258,
+      "line": 254,
       "file": "resources/js/export.ts"
     },
     {
@@ -2670,7 +2670,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#table_alias_button",
-      "line": 1030,
+      "line": 1022,
       "file": "resources/js/export.ts"
     },
     {
@@ -2680,7 +2680,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<row> .alias_remove",
-      "line": 882,
+      "line": 876,
       "file": "resources/js/export.ts"
     },
     {
@@ -2690,7 +2690,7 @@
       "kind": "event",
       "event": "click",
       "selector": "input[name=\"createTemplate\"]",
-      "line": 272,
+      "line": 268,
       "file": "resources/js/export.ts"
     },
     {
@@ -2700,7 +2700,7 @@
       "kind": "event",
       "event": "click",
       "selector": "input[name=\"deleteTemplate\"]",
-      "line": 299,
+      "line": 295,
       "file": "resources/js/export.ts"
     },
     {
@@ -2710,7 +2710,7 @@
       "kind": "event",
       "event": "click",
       "selector": "input[name=\"updateTemplate\"]",
-      "line": 290,
+      "line": 286,
       "file": "resources/js/export.ts"
     },
     {
@@ -2720,7 +2720,7 @@
       "kind": "event",
       "event": "hidden",
       "selector": "<modal>",
-      "line": 839,
+      "line": 833,
       "file": "resources/js/export.ts"
     },
     {
@@ -2730,7 +2730,7 @@
       "kind": "event",
       "event": "shown",
       "selector": "<modal>",
-      "line": 262,
+      "line": 258,
       "file": "resources/js/export.ts"
     },
     {
@@ -2741,7 +2741,7 @@
       "method": "POST",
       "url": "index.php?route=/gis-data-editor",
       "route": "/gis-data-editor",
-      "line": 297,
+      "line": 296,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2752,7 +2752,7 @@
       "event": "change",
       "selector": "#gis_editor input[type='text']",
       "delegated": true,
-      "line": 490,
+      "line": 489,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2763,7 +2763,7 @@
       "event": "change",
       "selector": "#gis_editor select.gis_type",
       "delegated": true,
-      "line": 491,
+      "line": 490,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2774,7 +2774,7 @@
       "event": "click",
       "selector": "#gis_editor button.addJs.addGeom",
       "delegated": true,
-      "line": 496,
+      "line": 495,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2785,7 +2785,7 @@
       "event": "click",
       "selector": "#gis_editor button.addJs.addLine",
       "delegated": true,
-      "line": 494,
+      "line": 493,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2796,7 +2796,7 @@
       "event": "click",
       "selector": "#gis_editor button.addJs.addPoint",
       "delegated": true,
-      "line": 493,
+      "line": 492,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2807,7 +2807,7 @@
       "event": "click",
       "selector": "#gis_editor button.addJs.addPolygon",
       "delegated": true,
-      "line": 495,
+      "line": 494,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2818,7 +2818,7 @@
       "event": "click",
       "selector": "#gis_editor button.gis-copy-data",
       "delegated": true,
-      "line": 488,
+      "line": 487,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -2838,7 +2838,7 @@
       "kind": "event",
       "event": "hidden",
       "selector": "<$gisEditorModal>",
-      "line": 306,
+      "line": 305,
       "file": "resources/js/gis_data_editor.ts"
     },
     {
@@ -3043,7 +3043,7 @@
       "method": "POST",
       "url": "index.php?route=/sql",
       "route": "/sql",
-      "line": 1122,
+      "line": 1117,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3054,7 +3054,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/get-enum-values",
       "route": "/sql/get-enum-values",
-      "line": 1033,
+      "line": 1030,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3065,7 +3065,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/get-relational-values",
       "route": "/sql/get-relational-values",
-      "line": 988,
+      "line": 986,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3076,7 +3076,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/get-set-values",
       "route": "/sql/get-set-values",
-      "line": 1077,
+      "line": 1072,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3087,7 +3087,7 @@
       "method": "POST",
       "url": "index.php?route=/sql/set-column-preferences",
       "route": "/sql/set-column-preferences",
-      "line": 448,
+      "line": 447,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3098,7 +3098,7 @@
       "method": "POST",
       "url": "index.php?route=/table/replace",
       "route": "/table/replace",
-      "line": 1448,
+      "line": 1441,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3107,7 +3107,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "alert",
-      "line": 1294,
+      "line": 1288,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3117,7 +3117,7 @@
       "kind": "event",
       "event": "beforeunload",
       "selector": "window",
-      "line": 2287,
+      "line": 2280,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3128,7 +3128,7 @@
       "event": "change",
       "selector": "<$editArea> select",
       "delegated": true,
-      "line": 901,
+      "line": 900,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3138,7 +3138,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$editArea> span.curr_value",
-      "line": 1006,
+      "line": 1004,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3149,7 +3149,7 @@
       "event": "change",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 913,
+      "line": 912,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3159,7 +3159,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$checkbox>",
-      "line": 941,
+      "line": 940,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3170,7 +3170,7 @@
       "event": "click",
       "selector": "<$editArea> .browse_foreign",
       "delegated": true,
-      "line": 909,
+      "line": 908,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3180,7 +3180,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$editArea> > *",
-      "line": 1217,
+      "line": 1211,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3190,7 +3190,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<cd>",
-      "line": 1861,
+      "line": 1854,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3200,7 +3200,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<clone>",
-      "line": 1909,
+      "line": 1902,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3210,7 +3210,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<g.o> div.restore_column",
-      "line": 1796,
+      "line": 1789,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3220,7 +3220,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<g.o> div.save_edited",
-      "line": 2282,
+      "line": 2275,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3230,7 +3230,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<g.t> td.data.click1",
-      "line": 2172,
+      "line": 2165,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3241,7 +3241,7 @@
       "event": "click",
       "selector": "<g.t> td.data.click2",
       "delegated": true,
-      "line": 2181,
+      "line": 2174,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3251,7 +3251,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<listElmt>",
-      "line": 1891,
+      "line": 1884,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3261,7 +3261,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<showAll>",
-      "line": 1900,
+      "line": 1893,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3271,7 +3271,7 @@
       "kind": "event",
       "event": "click",
       "selector": "html",
-      "line": 2266,
+      "line": 2259,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3281,7 +3281,7 @@
       "kind": "event",
       "event": "click",
       "selector": "this",
-      "line": 1482,
+      "line": 1475,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3291,7 +3291,7 @@
       "kind": "event",
       "event": "copy",
       "selector": "document",
-      "line": 2667,
+      "line": 2660,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3302,7 +3302,7 @@
       "event": "dblclick",
       "selector": "<g.t> td.data.click2",
       "delegated": true,
-      "line": 2181,
+      "line": 2174,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3312,7 +3312,7 @@
       "kind": "event",
       "event": "dblclick",
       "selector": "<g.t> th.draggable",
-      "line": 1760,
+      "line": 1753,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3322,7 +3322,7 @@
       "kind": "event",
       "event": "dblclick",
       "selector": "<g.t> th.draggable a",
-      "line": 1790,
+      "line": 1783,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3332,7 +3332,7 @@
       "kind": "event",
       "event": "dragstart",
       "selector": "<g.t> th a",
-      "line": 1805,
+      "line": 1798,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3342,7 +3342,7 @@
       "kind": "event",
       "event": "focus",
       "selector": "<g.cEditStd> .edit_box",
-      "line": 2226,
+      "line": 2219,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3352,7 +3352,7 @@
       "kind": "event",
       "event": "focus",
       "selector": "<g.cEditTextarea> .edit_box",
-      "line": 2247,
+      "line": 2240,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3362,7 +3362,7 @@
       "kind": "event",
       "event": "input",
       "selector": "<g.cEdit> .edit_box",
-      "line": 932,
+      "line": 931,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3373,7 +3373,7 @@
       "event": "keydown",
       "selector": "<$editArea> textarea",
       "delegated": true,
-      "line": 926,
+      "line": 925,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3388,7 +3388,7 @@
         "V",
         "ctrl"
       ],
-      "line": 920,
+      "line": 919,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3398,7 +3398,7 @@
       "kind": "event",
       "event": "keydown",
       "selector": "<g.cEditStd>",
-      "line": 2238,
+      "line": 2231,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3412,7 +3412,7 @@
       "keys": [
         "Enter"
       ],
-      "line": 2230,
+      "line": 2223,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3431,7 +3431,7 @@
         "alt",
         "ctrl"
       ],
-      "line": 2224,
+      "line": 2217,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3441,7 +3441,7 @@
       "kind": "event",
       "event": "keydown",
       "selector": "<g.cEditTextarea>",
-      "line": 2259,
+      "line": 2252,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3456,7 +3456,7 @@
         "Enter",
         "shift"
       ],
-      "line": 2251,
+      "line": 2244,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3475,7 +3475,7 @@
         "alt",
         "ctrl"
       ],
-      "line": 2245,
+      "line": 2238,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3492,7 +3492,7 @@
         "meta",
         "shift"
       ],
-      "line": 2465,
+      "line": 2458,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3505,7 +3505,7 @@
       "keys": [
         "Escape"
       ],
-      "line": 2266,
+      "line": 2259,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3516,7 +3516,7 @@
       "event": "keypress",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 913,
+      "line": 912,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3527,7 +3527,7 @@
       "event": "keyup",
       "selector": "<$editArea> textarea",
       "delegated": true,
-      "line": 1101,
+      "line": 1096,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3541,7 +3541,7 @@
         "Enter",
         "Escape"
       ],
-      "line": 1191,
+      "line": 1185,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3552,7 +3552,7 @@
       "event": "keyup",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 1106,
+      "line": 1101,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3562,7 +3562,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "<cb>",
-      "line": 1709,
+      "line": 1702,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3573,7 +3573,7 @@
       "event": "mousedown",
       "selector": "<g.t> td.data",
       "delegated": true,
-      "line": 2596,
+      "line": 2589,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3583,7 +3583,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "<g.t> th.draggable",
-      "line": 1760,
+      "line": 1753,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3593,7 +3593,7 @@
       "kind": "event",
       "event": "mousedown",
       "selector": "document",
-      "line": 826,
+      "line": 825,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3603,7 +3603,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<g.t> td, th.draggable",
-      "line": 1916,
+      "line": 1909,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3613,7 +3613,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<g.t> th.draggable",
-      "line": 1760,
+      "line": 1753,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3623,7 +3623,7 @@
       "kind": "event",
       "event": "mouseenter",
       "selector": "<t> th.draggable a",
-      "line": 2806,
+      "line": 2799,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3634,7 +3634,7 @@
       "event": "mouseleave",
       "selector": "<g.t> td.data",
       "delegated": true,
-      "line": 2616,
+      "line": 2609,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3644,7 +3644,7 @@
       "kind": "event",
       "event": "mouseleave",
       "selector": "<g.t> th.draggable",
-      "line": 1760,
+      "line": 1753,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3654,7 +3654,7 @@
       "kind": "event",
       "event": "mouseleave",
       "selector": "<t> th.draggable a",
-      "line": 2806,
+      "line": 2799,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3664,7 +3664,7 @@
       "kind": "event",
       "event": "mousemove",
       "selector": "document",
-      "line": 2828,
+      "line": 2821,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3675,7 +3675,7 @@
       "event": "mouseover",
       "selector": "<g.t> td.data, thead th:not(.column_action)",
       "delegated": true,
-      "line": 2621,
+      "line": 2614,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3685,7 +3685,7 @@
       "kind": "event",
       "event": "mouseup",
       "selector": "document",
-      "line": 2658,
+      "line": 2651,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3696,7 +3696,7 @@
       "event": "paste",
       "selector": "<g.cEdit> .edit_box",
       "delegated": true,
-      "line": 913,
+      "line": 912,
       "file": "resources/js/makegrid.ts"
     },
     {
@@ -3888,7 +3888,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "index.php",
-      "line": 739,
+      "line": 738,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -3908,7 +3908,7 @@
       "kind": "event",
       "event": "change",
       "selector": "form.prefs-form",
-      "line": 835,
+      "line": 834,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -3918,7 +3918,7 @@
       "kind": "event",
       "event": "click",
       "selector": ".optbox input[type=button][name=submit_reset]",
-      "line": 790,
+      "line": 789,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -3928,7 +3928,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$cnt> a",
-      "line": 734,
+      "line": 733,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -3938,7 +3938,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$radios>",
-      "line": 810,
+      "line": 809,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -3949,7 +3949,7 @@
       "event": "click",
       "selector": "div.click-hide-message",
       "delegated": true,
-      "line": 859,
+      "line": 858,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -4002,7 +4002,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "form.prefs-form",
-      "line": 835,
+      "line": 834,
       "file": "resources/js/modules/config.ts"
     },
     {
@@ -4013,7 +4013,7 @@
       "method": "GET",
       "url": "index.php?route=/console/bookmark/refresh",
       "route": "/console/bookmark/refresh",
-      "line": 1112,
+      "line": 1111,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4024,7 +4024,7 @@
       "method": "POST",
       "url": "index.php?route=/console/bookmark/add",
       "route": "/console/bookmark/add",
-      "line": 1150,
+      "line": 1148,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4055,7 +4055,7 @@
       "kind": "event",
       "event": "ajaxSuccess",
       "selector": "document",
-      "line": 1179,
+      "line": 1176,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4067,7 +4067,7 @@
       "messages": [
         "strFormEmpty"
       ],
-      "line": 1144,
+      "line": 1142,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4127,7 +4127,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#debug_console .button.group_queries",
-      "line": 1200,
+      "line": 1197,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4137,7 +4137,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#debug_console .button.order",
-      "line": 1235,
+      "line": 1232,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4147,7 +4147,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#debug_console .button.order_by",
-      "line": 1220,
+      "line": 1217,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4157,7 +4157,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#debug_console .button.ungroup_queries",
-      "line": 1210,
+      "line": 1207,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4177,7 +4177,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_bookmarks .button.add",
-      "line": 1137,
+      "line": 1135,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4187,7 +4187,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_bookmarks .card.add [name=submit]",
-      "line": 1141,
+      "line": 1139,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4207,7 +4207,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_console .button.bookmarks",
-      "line": 1133,
+      "line": 1131,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4257,7 +4257,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#pma_console .button.refresh",
-      "line": 1166,
+      "line": 1163,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4307,7 +4307,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$targetMessage> .action.dbg_hide_args",
-      "line": 1015,
+      "line": 1014,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4317,7 +4317,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$targetMessage> .action.dbg_hide_trace",
-      "line": 1003,
+      "line": 1002,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4327,7 +4327,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$targetMessage> .action.dbg_show_args",
-      "line": 1009,
+      "line": 1008,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4337,7 +4337,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$targetMessage> .action.dbg_show_trace",
-      "line": 987,
+      "line": 986,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4387,7 +4387,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$targetMessage> .action.explain",
-      "line": 978,
+      "line": 977,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4397,7 +4397,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$targetMessage> .action.profiling",
-      "line": 968,
+      "line": 967,
       "file": "resources/js/modules/console.ts"
     },
     {
@@ -4605,7 +4605,7 @@
       "method": "GET",
       "url": "index.php?route=/sql/get-default-fk-check-value",
       "route": "/sql/get-default-fk-check-value",
-      "line": 1087,
+      "line": 1072,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4615,7 +4615,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<$(this).attr('href')>",
-      "line": 2158,
+      "line": 2138,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4625,7 +4625,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<tableStructureUrl>",
-      "line": 1899,
+      "line": 1881,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4636,7 +4636,7 @@
       "method": "POST",
       "url": "index.php?route=/database/sql/autocomplete",
       "route": "/database/sql/autocomplete",
-      "line": 1234,
+      "line": 1218,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4647,7 +4647,7 @@
       "method": "POST",
       "url": "index.php?route=/table/structure/reserved-word-check",
       "route": "/table/structure/reserved-word-check",
-      "line": 1458,
+      "line": 1441,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4657,7 +4657,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<{ url: formUrl, data: formData, success…>",
-      "line": 2731,
+      "line": 2709,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4667,7 +4667,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$('#sync_favorite_tables').attr('href')>",
-      "line": 3131,
+      "line": 3108,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4677,7 +4677,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 1835,
+      "line": 1817,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4687,7 +4687,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$theForm.attr('action')>",
-      "line": 2133,
+      "line": 2113,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4697,7 +4697,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<formUrl>",
-      "line": 1399,
+      "line": 1382,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4707,7 +4707,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<href>",
-      "line": 866,
+      "line": 853,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4717,7 +4717,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<parts[0]>",
-      "line": 3057,
+      "line": 3034,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4727,7 +4727,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<routeUrl>",
-      "line": 2812,
+      "line": 2789,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4736,7 +4736,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "alert",
-      "line": 698,
+      "line": 686,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4748,7 +4748,7 @@
       "messages": [
         "strEnterValidLength"
       ],
-      "line": 731,
+      "line": 719,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4760,7 +4760,7 @@
       "messages": [
         "strEnterValidNumber"
       ],
-      "line": 692,
+      "line": 680,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4772,7 +4772,7 @@
       "messages": [
         "strFormEmpty"
       ],
-      "line": 637,
+      "line": 625,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4785,7 +4785,7 @@
         "strPasswordEmpty",
         "strPasswordNotSame"
       ],
-      "line": 2021,
+      "line": 2002,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4795,7 +4795,7 @@
       "kind": "event",
       "event": "blur",
       "selector": "<$elm>",
-      "line": 3262,
+      "line": 3239,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4805,7 +4805,7 @@
       "kind": "event",
       "event": "blur",
       "selector": "<window.codeMirrorEditor>",
-      "line": 3259,
+      "line": 3236,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4816,7 +4816,7 @@
       "event": "change",
       "selector": ".create_table_form select[name=tbl_storage_engine]",
       "delegated": true,
-      "line": 2220,
+      "line": 2200,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4827,7 +4827,7 @@
       "event": "change",
       "selector": "#parameterized",
       "delegated": true,
-      "line": 1191,
+      "line": 1176,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4838,7 +4838,7 @@
       "event": "change",
       "selector": "#pma_hostname",
       "delegated": true,
-      "line": 2054,
+      "line": 2035,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4849,7 +4849,7 @@
       "event": "change",
       "selector": "#pma_username",
       "delegated": true,
-      "line": 2070,
+      "line": 2051,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4860,7 +4860,7 @@
       "event": "change",
       "selector": "#select_pred_hostname",
       "delegated": true,
-      "line": 2038,
+      "line": 2019,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4871,7 +4871,7 @@
       "event": "change",
       "selector": "#select_pred_password",
       "delegated": true,
-      "line": 2076,
+      "line": 2057,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4882,7 +4882,7 @@
       "event": "change",
       "selector": "#select_pred_username",
       "delegated": true,
-      "line": 2060,
+      "line": 2041,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4893,7 +4893,7 @@
       "event": "change",
       "selector": "#text_pma_pw,#text_pma_pw2",
       "delegated": true,
-      "line": 2090,
+      "line": 2071,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4903,7 +4903,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$newrow> select",
-      "line": 2711,
+      "line": 2690,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4913,7 +4913,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$outer> table#index_columns select",
-      "line": 2885,
+      "line": 2862,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4934,7 +4934,7 @@
       "event": "change",
       "selector": "input.allow_null",
       "delegated": true,
-      "line": 2216,
+      "line": 2196,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4945,7 +4945,7 @@
       "event": "change",
       "selector": "input[name=partition_count],input[name=subpartition_count],select[name=partition_by]",
       "delegated": true,
-      "line": 1960,
+      "line": 1941,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4956,7 +4956,7 @@
       "event": "change",
       "selector": "input[value=AUTO_INCREMENT]",
       "delegated": true,
-      "line": 1970,
+      "line": 1951,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4967,7 +4967,7 @@
       "event": "change",
       "selector": "select.column_type",
       "delegated": true,
-      "line": 2202,
+      "line": 2182,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4978,7 +4978,7 @@
       "event": "change",
       "selector": "select.default_type",
       "delegated": true,
-      "line": 2208,
+      "line": 2188,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4989,7 +4989,7 @@
       "event": "change",
       "selector": "select.virtuality",
       "delegated": true,
-      "line": 2212,
+      "line": 2192,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -4999,7 +4999,7 @@
       "kind": "event",
       "event": "click",
       "selector": ".logout",
-      "line": 3366,
+      "line": 3343,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5010,7 +5010,7 @@
       "event": "click",
       "selector": "#change_password_anchor.ajax",
       "delegated": true,
-      "line": 2105,
+      "line": 2086,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5020,7 +5020,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#changePasswordGoButton",
-      "line": 2110,
+      "line": 2091,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5031,7 +5031,7 @@
       "event": "click",
       "selector": "#col_list .pick",
       "delegated": true,
-      "line": 2588,
+      "line": 2567,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5042,7 +5042,7 @@
       "event": "click",
       "selector": "#enum_editor td.drop",
       "delegated": true,
-      "line": 2668,
+      "line": 2647,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5052,7 +5052,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#enumEditorGoButton",
-      "line": 2433,
+      "line": 2413,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5062,7 +5062,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#indexDialogModalGoButton",
-      "line": 2757,
+      "line": 2735,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5072,7 +5072,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#previewSQLConfirmOkButton",
-      "line": 1443,
+      "line": 1426,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5082,7 +5082,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#seeMore",
-      "line": 2596,
+      "line": 2575,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5093,7 +5093,7 @@
       "event": "click",
       "selector": "#server-breadcrumb, #goto_pagetop",
       "delegated": true,
-      "line": 3421,
+      "line": 3398,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5103,7 +5103,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$('<input>') as JQuery<HTMLInputElement>>",
-      "line": 477,
+      "line": 465,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5113,7 +5113,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<functionConfirmOkButton>",
-      "line": 1737,
+      "line": 1720,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5124,7 +5124,7 @@
       "event": "click",
       "selector": "a.central_columns_dialog",
       "delegated": true,
-      "line": 2486,
+      "line": 2466,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5135,7 +5135,7 @@
       "event": "click",
       "selector": "a.copyQueryBtn",
       "delegated": true,
-      "line": 1561,
+      "line": 1544,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5146,7 +5146,7 @@
       "event": "click",
       "selector": "a.inline_edit_sql",
       "delegated": true,
-      "line": 1128,
+      "line": 1113,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5157,7 +5157,7 @@
       "event": "click",
       "selector": "a.open_enum_editor",
       "delegated": true,
-      "line": 2334,
+      "line": 2314,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5167,7 +5167,7 @@
       "kind": "event",
       "event": "click",
       "selector": "div.toggle-container",
-      "line": 3019,
+      "line": 2996,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5178,7 +5178,7 @@
       "event": "click",
       "selector": "form.create_table_form.ajax input[name=submit_num_fields]",
       "delegated": true,
-      "line": 1939,
+      "line": 1920,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5189,7 +5189,7 @@
       "event": "click",
       "selector": "input.add_value",
       "delegated": true,
-      "line": 2648,
+      "line": 2627,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5200,7 +5200,7 @@
       "event": "click",
       "selector": "input.preview_sql",
       "delegated": true,
-      "line": 1983,
+      "line": 1964,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5211,7 +5211,7 @@
       "event": "click",
       "selector": "input#sql_query_edit_discard",
       "delegated": true,
-      "line": 1185,
+      "line": 1170,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5222,7 +5222,7 @@
       "event": "click",
       "selector": "input#sql_query_edit_save",
       "delegated": true,
-      "line": 1158,
+      "line": 1143,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5231,7 +5231,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "confirm",
-      "line": 1464,
+      "line": 1447,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5243,7 +5243,7 @@
       "messages": [
         "strDoYouReally"
       ],
-      "line": 525,
+      "line": 513,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5255,7 +5255,7 @@
       "messages": [
         "strPasswordEmptyWhenAllowNoPasswordIsEnabled"
       ],
-      "line": 2150,
+      "line": 2130,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5265,7 +5265,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<centralColumnsModal>",
-      "line": 2635,
+      "line": 2614,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5275,7 +5275,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<indexDialogPreviewModal>",
-      "line": 2750,
+      "line": 2728,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5310,7 +5310,7 @@
         "ctrl",
         "meta"
       ],
-      "line": 1321,
+      "line": 1305,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5326,7 +5326,7 @@
         "ctrl",
         "meta"
       ],
-      "line": 1318,
+      "line": 1302,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5340,7 +5340,7 @@
       "keys": [
         "Enter"
       ],
-      "line": 1944,
+      "line": 1925,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5350,7 +5350,7 @@
       "kind": "event",
       "event": "keyup",
       "selector": ".filter_rows",
-      "line": 2592,
+      "line": 2571,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5360,7 +5360,7 @@
       "kind": "event",
       "event": "load",
       "selector": "this",
-      "line": 3084,
+      "line": 3061,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5371,7 +5371,7 @@
       "event": "mousedown",
       "selector": "span.ajax_notification.dismissable",
       "delegated": true,
-      "line": 1548,
+      "line": 1531,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5382,7 +5382,7 @@
       "event": "mouseleave",
       "selector": "span.ajax_notification.dismissable a",
       "delegated": true,
-      "line": 1567,
+      "line": 1550,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5392,7 +5392,7 @@
       "kind": "event",
       "event": "mousemove",
       "selector": "document",
-      "line": 828,
+      "line": 816,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5403,7 +5403,7 @@
       "event": "mouseout",
       "selector": ".sortlink",
       "delegated": true,
-      "line": 3701,
+      "line": 3678,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5414,7 +5414,7 @@
       "event": "mouseover",
       "selector": ".sortlink",
       "delegated": true,
-      "line": 3697,
+      "line": 3674,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5425,7 +5425,7 @@
       "event": "mouseover",
       "selector": "span.ajax_notification.dismissable a",
       "delegated": true,
-      "line": 1567,
+      "line": 1550,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5436,7 +5436,7 @@
       "event": "mouseup",
       "selector": ".ajax_notification a",
       "delegated": true,
-      "line": 1578,
+      "line": 1561,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5447,7 +5447,7 @@
       "event": "mouseup",
       "selector": "span.ajax_notification.dismissable",
       "delegated": true,
-      "line": 1554,
+      "line": 1537,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5457,7 +5457,7 @@
       "kind": "event",
       "event": "resize",
       "selector": "window",
-      "line": 2936,
+      "line": 2913,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5467,7 +5467,7 @@
       "kind": "event",
       "event": "shown",
       "selector": "#previewSqlConfirmModal",
-      "line": 1439,
+      "line": 1422,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5477,7 +5477,7 @@
       "kind": "event",
       "event": "shown",
       "selector": "#previewSqlModal",
-      "line": 1409,
+      "line": 1392,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5487,7 +5487,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<centralColumnsModal>",
-      "line": 2585,
+      "line": 2564,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5497,7 +5497,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<indexDialogPreviewModal>",
-      "line": 2722,
+      "line": 2701,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5508,7 +5508,7 @@
       "event": "submit",
       "selector": "form.create_table_form.ajax",
       "delegated": true,
-      "line": 1811,
+      "line": 1794,
       "file": "resources/js/modules/functions.ts"
     },
     {
@@ -5722,7 +5722,7 @@
       "method": "POST",
       "url": "index.php?route=/version-check",
       "route": "/version-check",
-      "line": 148,
+      "line": 147,
       "file": "resources/js/modules/git-info.ts"
     },
     {
@@ -5733,7 +5733,7 @@
       "method": "POST",
       "url": "index.php?route=/table/indexes",
       "route": "/table/indexes",
-      "line": 361,
+      "line": 360,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5743,7 +5743,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 607,
+      "line": 606,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5753,7 +5753,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 648,
+      "line": 647,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5763,7 +5763,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#composite_index",
-      "line": 527,
+      "line": 526,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5774,7 +5774,7 @@
       "event": "change",
       "selector": "#select_index_choice",
       "delegated": true,
-      "line": 615,
+      "line": 614,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5784,7 +5784,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#single_column",
-      "line": 533,
+      "line": 532,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5795,7 +5795,7 @@
       "event": "change",
       "selector": "select[name*=\"field_key\"]",
       "delegated": true,
-      "line": 741,
+      "line": 738,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5806,7 +5806,7 @@
       "event": "click",
       "selector": ".show_index_dialog",
       "delegated": true,
-      "line": 797,
+      "line": 794,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5816,7 +5816,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#addIndexModalCancelButton",
-      "line": 340,
+      "line": 339,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5826,7 +5826,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#addIndexModalCloseButton",
-      "line": 356,
+      "line": 355,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5836,7 +5836,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#addIndexModalGoButton",
-      "line": 336,
+      "line": 335,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5847,7 +5847,7 @@
       "event": "click",
       "selector": "#preview_index_frm",
       "delegated": true,
-      "line": 610,
+      "line": 609,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5858,7 +5858,7 @@
       "event": "click",
       "selector": "#save_index_frm",
       "delegated": true,
-      "line": 600,
+      "line": 599,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5869,7 +5869,7 @@
       "event": "click",
       "selector": "#table_index tbody tr td.edit_index.ajax, #index_div .add_index.ajax",
       "delegated": true,
-      "line": 691,
+      "line": 690,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5880,7 +5880,7 @@
       "event": "click",
       "selector": "#table_index tbody tr td.rename_index.ajax",
       "delegated": true,
-      "line": 725,
+      "line": 723,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5891,7 +5891,7 @@
       "event": "click",
       "selector": "a.drop_primary_key_index_anchor.ajax",
       "delegated": true,
-      "line": 624,
+      "line": 623,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5904,7 +5904,7 @@
       "keys": [
         "Enter"
       ],
-      "line": 374,
+      "line": 373,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5914,7 +5914,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "<$('#index_frm') as JQuery<HTMLFormEleme…>",
-      "line": 825,
+      "line": 822,
       "file": "resources/js/modules/indexes.ts"
     },
     {
@@ -5967,7 +5967,7 @@
       "count": 4,
       "kind": "ajax",
       "method": "POST",
-      "url": "index.php?route=/navigation&ajax_request=1",
+      "url": "index.php?route=/navigation",
       "route": "/navigation",
       "line": 167,
       "file": "resources/js/modules/navigation.ts"
@@ -6091,7 +6091,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$self.attr('href')>",
-      "line": 277,
+      "line": 276,
       "file": "resources/js/modules/navigation/event-loader.ts"
     },
     {
@@ -6124,7 +6124,7 @@
       "event": "click",
       "selector": ".favorite_table_anchor",
       "delegated": true,
-      "line": 263,
+      "line": 262,
       "file": "resources/js/modules/navigation/event-loader.ts"
     },
     {
@@ -6223,7 +6223,7 @@
       "event": "click",
       "selector": "a.unhideNavItem.ajax",
       "delegated": true,
-      "line": 239,
+      "line": 238,
       "file": "resources/js/modules/navigation/event-loader.ts"
     },
     {
@@ -6322,7 +6322,7 @@
       "event": "submit",
       "selector": "form.config-form",
       "delegated": true,
-      "line": 307,
+      "line": 306,
       "file": "resources/js/modules/navigation/event-loader.ts"
     },
     {
@@ -6394,7 +6394,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<toggleForm.action>",
-      "line": 27,
+      "line": 26,
       "file": "resources/js/modules/themes-manager.ts"
     },
     {
@@ -6426,7 +6426,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/1nf/step2",
       "route": "/normalization/1nf/step2",
-      "line": 197,
+      "line": 192,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6437,7 +6437,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/1nf/step3",
       "route": "/normalization/1nf/step3",
-      "line": 174,
+      "line": 170,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6448,7 +6448,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/1nf/step4",
       "route": "/normalization/1nf/step4",
-      "line": 142,
+      "line": 139,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6459,7 +6459,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/2nf/create-new-tables",
       "route": "/normalization/2nf/create-new-tables",
-      "line": 245,
+      "line": 238,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6470,7 +6470,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/2nf/new-tables",
       "route": "/normalization/2nf/new-tables",
-      "line": 347,
+      "line": 338,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6481,7 +6481,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/2nf/step1",
       "route": "/normalization/2nf/step1",
-      "line": 87,
+      "line": 85,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6492,7 +6492,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/3nf/create-new-tables",
       "route": "/normalization/3nf/create-new-tables",
-      "line": 294,
+      "line": 286,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6503,7 +6503,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/3nf/new-tables",
       "route": "/normalization/3nf/new-tables",
-      "line": 398,
+      "line": 388,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6514,7 +6514,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/3nf/step1",
       "route": "/normalization/3nf/step1",
-      "line": 47,
+      "line": 46,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6525,7 +6525,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/add-new-primary",
       "route": "/normalization/add-new-primary",
-      "line": 647,
+      "line": 634,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6536,7 +6536,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/create-new-column",
       "route": "/normalization/create-new-column",
-      "line": 560,
+      "line": 549,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6558,7 +6558,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/move-repeating-group",
       "route": "/normalization/move-repeating-group",
-      "line": 508,
+      "line": 497,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6569,7 +6569,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/partial-dependencies",
       "route": "/normalization/partial-dependencies",
-      "line": 826,
+      "line": 810,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6580,7 +6580,7 @@
       "method": "POST",
       "url": "index.php?route=/sql",
       "route": "/sql",
-      "line": 616,
+      "line": 604,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6591,7 +6591,7 @@
       "method": "POST",
       "url": "index.php?route=/table/add-field",
       "route": "/table/add-field",
-      "line": 614,
+      "line": 602,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6602,7 +6602,7 @@
       "event": "click",
       "selector": "#extra #addNewPrimary",
       "delegated": true,
-      "line": 646,
+      "line": 633,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6613,7 +6613,7 @@
       "event": "click",
       "selector": "#extra #moveRepeatingGroup",
       "delegated": true,
-      "line": 738,
+      "line": 723,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6624,7 +6624,7 @@
       "event": "click",
       "selector": "#extra #noRedundantColumn",
       "delegated": true,
-      "line": 858,
+      "line": 841,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6635,7 +6635,7 @@
       "event": "click",
       "selector": "#extra #noRepeatingGroup",
       "delegated": true,
-      "line": 853,
+      "line": 836,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6646,7 +6646,7 @@
       "event": "click",
       "selector": "#extra #removeRedundant",
       "delegated": true,
-      "line": 711,
+      "line": 697,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6657,7 +6657,7 @@
       "event": "click",
       "selector": "#extra #selectNonAtomicCol",
       "delegated": true,
-      "line": 546,
+      "line": 535,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6667,7 +6667,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#goTo2NFFinish",
-      "line": 364,
+      "line": 355,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6677,7 +6677,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#goTo3NFFinish",
-      "line": 416,
+      "line": 406,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6688,7 +6688,7 @@
       "event": "click",
       "selector": "#mainContent .card-footer #saveNewPrimary",
       "delegated": true,
-      "line": 691,
+      "line": 677,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6699,7 +6699,7 @@
       "event": "click",
       "selector": "#mainContent .card-footer #saveSplit",
       "delegated": true,
-      "line": 603,
+      "line": 591,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6710,7 +6710,7 @@
       "event": "click",
       "selector": "#mainContent .pickPd",
       "delegated": true,
-      "line": 840,
+      "line": 823,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6721,7 +6721,7 @@
       "event": "click",
       "selector": "#mainContent #backEditPd",
       "delegated": true,
-      "line": 803,
+      "line": 787,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6732,7 +6732,7 @@
       "event": "click",
       "selector": "#mainContent #showPossiblePd",
       "delegated": true,
-      "line": 807,
+      "line": 791,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6743,7 +6743,7 @@
       "event": "click",
       "selector": "#mainContent p #createPrimaryKey",
       "delegated": true,
-      "line": 779,
+      "line": 764,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6753,7 +6753,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#splitGo",
-      "line": 554,
+      "line": 543,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6763,7 +6763,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<input>",
-      "line": 71,
+      "line": 69,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6773,7 +6773,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 105,
+      "line": 104,
       "file": "resources/js/replication.ts"
     },
     {
@@ -6823,7 +6823,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#nopass_0",
-      "line": 119,
+      "line": 118,
       "file": "resources/js/replication.ts"
     },
     {
@@ -6903,7 +6903,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$('#button_generate_password') as JQuer…>",
-      "line": 109,
+      "line": 108,
       "file": "resources/js/replication.ts"
     },
     {
@@ -6913,7 +6913,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$('#nopass_1') as JQuery<HTMLInputEleme…>",
-      "line": 113,
+      "line": 112,
       "file": "resources/js/replication.ts"
     },
     {
@@ -6935,7 +6935,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<dbStructUrl>",
-      "line": 129,
+      "line": 127,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -6945,7 +6945,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 116,
+      "line": 114,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -6955,7 +6955,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<parts[0]>",
-      "line": 62,
+      "line": 61,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -6967,7 +6967,7 @@
       "messages": [
         "strFormEmpty"
       ],
-      "line": 107,
+      "line": 106,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -6977,7 +6977,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#dropDatabaseModalDropButton",
-      "line": 56,
+      "line": 55,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -6988,7 +6988,7 @@
       "event": "submit",
       "selector": "#create_database_form.ajax",
       "delegated": true,
-      "line": 144,
+      "line": 142,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -6999,7 +6999,7 @@
       "event": "submit",
       "selector": "#dbStatsForm",
       "delegated": true,
-      "line": 143,
+      "line": 141,
       "file": "resources/js/server/databases.ts"
     },
     {
@@ -7020,7 +7020,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<$(this).attr('href')>",
-      "line": 339,
+      "line": 336,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7030,7 +7030,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<href>",
-      "line": 164,
+      "line": 161,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7041,7 +7041,7 @@
       "method": "POST",
       "url": "index.php?route=/server/privileges",
       "route": "/server/privileges",
-      "line": 82,
+      "line": 81,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7051,7 +7051,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$(this.form).prop('action')>",
-      "line": 323,
+      "line": 320,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7061,7 +7061,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 123,
+      "line": 121,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7073,7 +7073,7 @@
       "messages": [
         "strHostEmpty"
       ],
-      "line": 470,
+      "line": 467,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7085,7 +7085,7 @@
       "messages": [
         "strUserEmpty"
       ],
-      "line": 477,
+      "line": 474,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7096,7 +7096,7 @@
       "event": "change",
       "selector": "#checkbox_SSL_priv",
       "delegated": true,
-      "line": 572,
+      "line": 569,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7107,7 +7107,7 @@
       "event": "change",
       "selector": "#fieldset_add_user_login input[name='username']",
       "delegated": true,
-      "line": 551,
+      "line": 548,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7118,7 +7118,7 @@
       "event": "change",
       "selector": "#select_authentication_plugin",
       "delegated": true,
-      "line": 557,
+      "line": 554,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7128,7 +7128,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#text_pma_change_pw",
-      "line": 555,
+      "line": 552,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7138,7 +7138,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#text_pma_change_pw2",
-      "line": 556,
+      "line": 553,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7149,7 +7149,7 @@
       "event": "change",
       "selector": "input[name=\"ssl_type\"]",
       "delegated": true,
-      "line": 570,
+      "line": 567,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7160,7 +7160,7 @@
       "event": "click",
       "selector": "#deleteUserCard .btn.ajax",
       "delegated": true,
-      "line": 558,
+      "line": 555,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7170,7 +7170,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#insert_priv_all",
-      "line": 581,
+      "line": 578,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7180,7 +7180,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#references_priv_all",
-      "line": 583,
+      "line": 580,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7190,7 +7190,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#select_priv_all",
-      "line": 580,
+      "line": 577,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7200,7 +7200,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#update_priv_all",
-      "line": 582,
+      "line": 579,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7210,7 +7210,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$subNav> a",
-      "line": 411,
+      "line": 408,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7220,7 +7220,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<saveButton>",
-      "line": 79,
+      "line": 78,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7231,7 +7231,7 @@
       "event": "click",
       "selector": "a.export_user_anchor.ajax",
       "delegated": true,
-      "line": 568,
+      "line": 565,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7241,7 +7241,7 @@
       "kind": "event",
       "event": "click",
       "selector": "button.jsAccountLocking",
-      "line": 569,
+      "line": 566,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7252,7 +7252,7 @@
       "event": "click",
       "selector": "button.mult_submit[value=export]",
       "delegated": true,
-      "line": 563,
+      "line": 560,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7266,7 +7266,7 @@
         "strDropDatabaseStrongWarning"
       ],
       "text": "…\n…",
-      "line": 247,
+      "line": 244,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7278,7 +7278,7 @@
       "messages": [
         "strDropUserWarning"
       ],
-      "line": 244,
+      "line": 241,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7290,7 +7290,7 @@
       "messages": [
         "strPasswordEmptyWhenAllowNoPasswordIsEnabled"
       ],
-      "line": 492,
+      "line": 489,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7300,7 +7300,7 @@
       "kind": "event",
       "event": "input",
       "selector": "#text_pma_pw",
-      "line": 553,
+      "line": 550,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7310,7 +7310,7 @@
       "kind": "event",
       "event": "keyup",
       "selector": "#text_pma_change_pw",
-      "line": 554,
+      "line": 551,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7320,7 +7320,7 @@
       "kind": "event",
       "event": "keyup",
       "selector": "#text_pma_pw",
-      "line": 552,
+      "line": 549,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7330,7 +7330,7 @@
       "kind": "event",
       "event": "show.bs.modal",
       "selector": "<editUserGroupModal>",
-      "line": 561,
+      "line": 558,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7350,7 +7350,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#addUsersForm",
-      "line": 587,
+      "line": 584,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7360,7 +7360,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#change_password_form",
-      "line": 589,
+      "line": 586,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7370,7 +7370,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#copyUserForm",
-      "line": 588,
+      "line": 585,
       "file": "resources/js/server/privileges.ts"
     },
     {
@@ -7381,7 +7381,7 @@
       "method": "POST",
       "url": "index.php?route=/server/status/monitor/chart",
       "route": "/server/status/monitor/chart",
-      "line": 1445,
+      "line": 1444,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7392,7 +7392,7 @@
       "method": "POST",
       "url": "index.php?route=/server/status/monitor/log-vars",
       "route": "/server/status/monitor/log-vars",
-      "line": 762,
+      "line": 761,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7403,7 +7403,7 @@
       "method": "POST",
       "url": "index.php?route=/server/status/monitor/query",
       "route": "/server/status/monitor/query",
-      "line": 2124,
+      "line": 2121,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7413,7 +7413,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 1708,
+      "line": 1706,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7470,7 +7470,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#noWHEREData",
-      "line": 1766,
+      "line": 1763,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7500,7 +7500,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$('input[name=\"chartType\"]') as JQuery<…>",
-      "line": 888,
+      "line": 887,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7510,7 +7510,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$('input[name=\"useDivisor\"]') as JQuery…>",
-      "line": 900,
+      "line": 899,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7520,7 +7520,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$('input[name=\"useUnit\"]') as JQuery<HT…>",
-      "line": 904,
+      "line": 903,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7530,7 +7530,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<$('select[name=\"varChartList\"]') as JQu…>",
-      "line": 908,
+      "line": 907,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7650,7 +7650,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#queryAnalyzerDialog div.placeHolder a[href*=\"#showExplain\"]",
-      "line": 2192,
+      "line": 2188,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7660,7 +7660,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#queryAnalyzerDialog div.placeHolder a[href=\"#showChart\"]",
-      "line": 2242,
+      "line": 2238,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7670,7 +7670,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#queryAnalyzerDialog div.placeHolder a[href=\"#showNums\"]",
-      "line": 2235,
+      "line": 2231,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7680,7 +7680,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#startFilterQueryText",
-      "line": 1771,
+      "line": 1768,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7690,7 +7690,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$dialog> a.set",
-      "line": 874,
+      "line": 873,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7700,7 +7700,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$tCell>",
-      "line": 2033,
+      "line": 2030,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7710,7 +7710,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<analysingLogsLogDataLoadedModalJumpButt…>",
-      "line": 1786,
+      "line": 1783,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7720,7 +7720,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<logAnalyseModalGeneralLogButton>",
-      "line": 1392,
+      "line": 1391,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7730,7 +7730,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<logAnalyseModalSlowLogButton>",
-      "line": 1389,
+      "line": 1388,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7750,7 +7750,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<queryAnalyzerModalAnalyseButton>",
-      "line": 2083,
+      "line": 2080,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7770,7 +7770,7 @@
       "kind": "event",
       "event": "click",
       "selector": "a[href=\"#kibDivisor\"]",
-      "line": 914,
+      "line": 913,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7780,7 +7780,7 @@
       "kind": "event",
       "event": "click",
       "selector": "a[href=\"#mibDivisor\"]",
-      "line": 924,
+      "line": 923,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7790,7 +7790,7 @@
       "kind": "event",
       "event": "click",
       "selector": "a[href=\"#submitAddSeries\"]",
-      "line": 941,
+      "line": 940,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7800,7 +7800,7 @@
       "kind": "event",
       "event": "click",
       "selector": "a[href=\"#submitClearSeries\"]",
-      "line": 934,
+      "line": 933,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7810,7 +7810,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<analysingLogsLogDataLoadedModal>",
-      "line": 1789,
+      "line": 1786,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7820,7 +7820,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<analysingLogsModal>",
-      "line": 1697,
+      "line": 1695,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7830,7 +7830,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<logAnalyseModal>",
-      "line": 1418,
+      "line": 1417,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7850,7 +7850,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<queryAnalyzerModal>",
-      "line": 2098,
+      "line": 2095,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7860,7 +7860,7 @@
       "kind": "event",
       "event": "keyup",
       "selector": "#filterQueryText",
-      "line": 1773,
+      "line": 1770,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7870,7 +7870,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<analysingLogsLogDataLoadedModal>",
-      "line": 1784,
+      "line": 1781,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7880,7 +7880,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<logAnalyseModal>",
-      "line": 1387,
+      "line": 1386,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7900,7 +7900,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<monitorInstructionsModal>",
-      "line": 884,
+      "line": 883,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7910,7 +7910,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<queryAnalyzerModal>",
-      "line": 2081,
+      "line": 2078,
       "file": "resources/js/server/status/monitor.ts"
     },
     {
@@ -7940,7 +7940,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#id_refreshRate",
-      "line": 187,
+      "line": 186,
       "file": "resources/js/server/status/processes.ts"
     },
     {
@@ -7951,7 +7951,7 @@
       "event": "click",
       "selector": "#tableprocesslist a.kill_process",
       "delegated": true,
-      "line": 173,
+      "line": 172,
       "file": "resources/js/server/status/processes.ts"
     },
     {
@@ -7962,7 +7962,7 @@
       "event": "click",
       "selector": "#tableprocesslist thead a",
       "delegated": true,
-      "line": 193,
+      "line": 192,
       "file": "resources/js/server/status/processes.ts"
     },
     {
@@ -7972,7 +7972,7 @@
       "kind": "event",
       "event": "click",
       "selector": "a#toggleRefresh",
-      "line": 180,
+      "line": 179,
       "file": "resources/js/server/status/processes.ts"
     },
     {
@@ -8064,7 +8064,7 @@
       "method": "GET",
       "url": "index.php?route=/server/variables/get/…",
       "route": "/server/variables/get/",
-      "line": 88,
+      "line": 87,
       "file": "resources/js/server/variables.ts"
     },
     {
@@ -8085,7 +8085,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<$myCancelLink>",
-      "line": 79,
+      "line": 78,
       "file": "resources/js/server/variables.ts"
     },
     {
@@ -8120,7 +8120,7 @@
         "Enter",
         "Escape"
       ],
-      "line": 110,
+      "line": 108,
       "file": "resources/js/server/variables.ts"
     },
     {
@@ -8220,16 +8220,6 @@
       "file": "resources/js/shortcuts_handler.ts"
     },
     {
-      "key": "js:sql.ts#ajax:POST …&ajax_request=1",
-      "script": "sql.ts",
-      "count": 1,
-      "kind": "ajax",
-      "method": "POST",
-      "url": "…&ajax_request=1",
-      "line": 1289,
-      "file": "resources/js/sql.ts"
-    },
-    {
       "key": "js:sql.ts#ajax:POST /database/sql/format",
       "script": "sql.ts",
       "count": 1,
@@ -8237,7 +8227,7 @@
       "method": "POST",
       "url": "index.php?route=/database/sql/format",
       "route": "/database/sql/format",
-      "line": 292,
+      "line": 291,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8248,17 +8238,17 @@
       "method": "POST",
       "url": "index.php?route=/import/simulate-dml",
       "route": "/import/simulate-dml",
-      "line": 1039,
+      "line": 1035,
       "file": "resources/js/sql.ts"
     },
     {
       "key": "js:sql.ts#ajax:POST <$(this).attr('action')>",
       "script": "sql.ts",
-      "count": 1,
+      "count": 2,
       "kind": "ajax",
       "method": "POST",
       "url": "<$(this).attr('action')>",
-      "line": 565,
+      "line": 564,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8268,7 +8258,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 836,
+      "line": 832,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8278,7 +8268,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$thisA.attr('href')>",
-      "line": 1245,
+      "line": 1239,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8288,7 +8278,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 542,
+      "line": 541,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8298,7 +8288,7 @@
       "kind": "dialog",
       "event": "alert",
       "text": "Sorry! Unable to copy",
-      "line": 669,
+      "line": 668,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8310,7 +8300,7 @@
       "messages": [
         "strFormEmpty"
       ],
-      "line": 1032,
+      "line": 1028,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8321,7 +8311,7 @@
       "event": "change",
       "selector": "#id_bookmark",
       "delegated": true,
-      "line": 760,
+      "line": 758,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8331,7 +8321,7 @@
       "kind": "event",
       "event": "change",
       "selector": "<window.codeMirrorEditor>",
-      "line": 494,
+      "line": 493,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8341,7 +8331,7 @@
       "kind": "event",
       "event": "change",
       "selector": "select[name=\"sql_query\"]",
-      "line": 505,
+      "line": 504,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8352,7 +8342,7 @@
       "event": "click",
       "selector": ".navigation .showAllRows",
       "delegated": true,
-      "line": 991,
+      "line": 987,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8362,7 +8352,7 @@
       "kind": "event",
       "event": "click",
       "selector": ".sortlink",
-      "line": 509,
+      "line": 508,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8373,7 +8363,7 @@
       "event": "click",
       "selector": "#button_submit_query",
       "delegated": true,
-      "line": 729,
+      "line": 727,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8384,7 +8374,7 @@
       "event": "click",
       "selector": "#copyToClipBoard",
       "delegated": true,
-      "line": 584,
+      "line": 583,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8394,7 +8384,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#insertBtn",
-      "line": 1142,
+      "line": 1137,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8405,7 +8395,7 @@
       "event": "click",
       "selector": "#simulate_dml",
       "delegated": true,
-      "line": 1019,
+      "line": 1015,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8415,7 +8405,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#sqlquery",
-      "line": 1150,
+      "line": 1145,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8425,7 +8415,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#togglequerybox",
-      "line": 705,
+      "line": 704,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8435,7 +8425,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#view_as",
-      "line": 1146,
+      "line": 1141,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8445,7 +8435,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<formId>",
-      "line": 1266,
+      "line": 1260,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8456,7 +8446,7 @@
       "event": "click",
       "selector": "<tableId> td a.foreign_value",
       "delegated": true,
-      "line": 1250,
+      "line": 1244,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8467,7 +8457,7 @@
       "event": "click",
       "selector": "a.browse_foreign",
       "delegated": true,
-      "line": 1324,
+      "line": 1318,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8478,7 +8468,7 @@
       "event": "click",
       "selector": "a.delete_row.ajax",
       "delegated": true,
-      "line": 529,
+      "line": 528,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8489,7 +8479,7 @@
       "event": "click",
       "selector": "form[name=\"resultsForm\"].ajax button[name=\"submit_mult\"], form[name=\"resultsForm\"].ajax input[name=\"submit_mult\"]",
       "delegated": true,
-      "line": 1094,
+      "line": 1089,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8500,7 +8490,7 @@
       "event": "click",
       "selector": "input.sqlbutton",
       "delegated": true,
-      "line": 1156,
+      "line": 1151,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8511,7 +8501,7 @@
       "event": "click",
       "selector": "th.column_heading.marker",
       "delegated": true,
-      "line": 1343,
+      "line": 1337,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8523,7 +8513,7 @@
       "messages": [
         "strDoYouReally"
       ],
-      "line": 533,
+      "line": 532,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8535,7 +8525,7 @@
       "messages": [
         "strShowAllRowsWarning"
       ],
-      "line": 1006,
+      "line": 1002,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8545,7 +8535,7 @@
       "kind": "event",
       "event": "dblclick",
       "selector": "#fieldsSelect",
-      "line": 1163,
+      "line": 1158,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8555,7 +8545,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<browseForeignModal>",
-      "line": 1236,
+      "line": 1230,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8565,7 +8555,7 @@
       "kind": "event",
       "event": "input",
       "selector": "#sqlquery",
-      "line": 498,
+      "line": 497,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8575,7 +8565,7 @@
       "kind": "event",
       "event": "input",
       "selector": "input#bkm_label",
-      "line": 575,
+      "line": 574,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8585,7 +8575,7 @@
       "kind": "event",
       "event": "keypress",
       "selector": "input[name=bookmark_variable]",
-      "line": 788,
+      "line": 786,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8596,7 +8586,7 @@
       "event": "keyup",
       "selector": ".filter_rows",
       "delegated": true,
-      "line": 965,
+      "line": 961,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8607,7 +8597,7 @@
       "event": "keyup",
       "selector": "#sqlqueryform",
       "delegated": true,
-      "line": 1012,
+      "line": 1008,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8618,7 +8608,7 @@
       "event": "makeGrid",
       "selector": ".sqlqueryresults",
       "delegated": true,
-      "line": 681,
+      "line": 680,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8629,7 +8619,7 @@
       "event": "mouseenter",
       "selector": "th.column_heading.pointer",
       "delegated": true,
-      "line": 1332,
+      "line": 1326,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8640,7 +8630,7 @@
       "event": "mouseleave",
       "selector": "th.column_heading.pointer",
       "delegated": true,
-      "line": 1336,
+      "line": 1330,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8650,7 +8640,7 @@
       "kind": "event",
       "event": "propertychange",
       "selector": "#sqlquery",
-      "line": 498,
+      "line": 497,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8660,7 +8650,7 @@
       "kind": "event",
       "event": "shown",
       "selector": "<modal>",
-      "line": 1078,
+      "line": 1073,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8671,7 +8661,7 @@
       "event": "submit",
       "selector": ".bookmarkQueryForm",
       "delegated": true,
-      "line": 554,
+      "line": 553,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8682,7 +8672,7 @@
       "event": "submit",
       "selector": ".maxRowsForm",
       "delegated": true,
-      "line": 1122,
+      "line": 1117,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8693,7 +8683,7 @@
       "event": "submit",
       "selector": "#sqlqueryform.ajax",
       "delegated": true,
-      "line": 815,
+      "line": 813,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8703,7 +8693,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "<formId>",
-      "line": 1270,
+      "line": 1264,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8714,7 +8704,7 @@
       "event": "submit",
       "selector": "form[name='displayOptionsForm'].ajax",
       "delegated": true,
-      "line": 945,
+      "line": 941,
       "file": "resources/js/sql.ts"
     },
     {
@@ -8830,7 +8820,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 445,
+      "line": 444,
       "file": "resources/js/table/chart.ts"
     },
     {
@@ -8970,7 +8960,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<findReplaceForm.attr('action')>",
-      "line": 41,
+      "line": 39,
       "file": "resources/js/table/find_replace.ts"
     },
     {
@@ -8980,7 +8970,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#toggle_find",
-      "line": 22,
+      "line": 21,
       "file": "resources/js/table/find_replace.ts"
     },
     {
@@ -8990,7 +8980,7 @@
       "kind": "event",
       "event": "submit",
       "selector": "#find_replace_form",
-      "line": 36,
+      "line": 35,
       "file": "resources/js/table/find_replace.ts"
     },
     {
@@ -9181,7 +9171,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.attr('action')>",
-      "line": 86,
+      "line": 85,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9191,7 +9181,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$link.attr('href')>",
-      "line": 218,
+      "line": 214,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9212,7 +9202,7 @@
       "event": "click",
       "selector": "#delete_tbl_anchor.ajax",
       "delegated": true,
-      "line": 354,
+      "line": 350,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9223,7 +9213,7 @@
       "event": "click",
       "selector": "#drop_tbl_anchor.ajax",
       "delegated": true,
-      "line": 285,
+      "line": 281,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9234,7 +9224,7 @@
       "event": "click",
       "selector": "#drop_view_anchor.ajax",
       "delegated": true,
-      "line": 317,
+      "line": 313,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9245,7 +9235,7 @@
       "event": "click",
       "selector": "#tbl_maintenance li a.maintain_action.ajax",
       "delegated": true,
-      "line": 196,
+      "line": 193,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9256,7 +9246,7 @@
       "event": "click",
       "selector": "#truncate_tbl_anchor.ajax",
       "delegated": true,
-      "line": 349,
+      "line": 345,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9278,7 +9268,7 @@
       "messages": [
         "strChangeAllColumnCollationsWarning"
       ],
-      "line": 158,
+      "line": 155,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9290,7 +9280,7 @@
       "messages": [
         "strDropPartitionWarning"
       ],
-      "line": 273,
+      "line": 269,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9303,7 +9293,7 @@
         "strDropTableStrongWarning"
       ],
       "text": "… ",
-      "line": 295,
+      "line": 291,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9315,7 +9305,7 @@
       "messages": [
         "strTruncatePartitionWarning"
       ],
-      "line": 277,
+      "line": 273,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9337,7 +9327,7 @@
       "event": "submit",
       "selector": "#moveTableForm",
       "delegated": true,
-      "line": 118,
+      "line": 117,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9348,7 +9338,7 @@
       "event": "submit",
       "selector": "#partitionsForm",
       "delegated": true,
-      "line": 260,
+      "line": 256,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9359,7 +9349,7 @@
       "event": "submit",
       "selector": "#tableOptionsForm",
       "delegated": true,
-      "line": 143,
+      "line": 141,
       "file": "resources/js/table/operations.ts"
     },
     {
@@ -9446,7 +9436,7 @@
       "method": "POST",
       "url": "index.php?route=/table/search",
       "route": "/table/search",
-      "line": 323,
+      "line": 321,
       "file": "resources/js/table/select.ts"
     },
     {
@@ -9456,7 +9446,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$searchForm.attr('action')>",
-      "line": 177,
+      "line": 175,
       "file": "resources/js/table/select.ts"
     },
     {
@@ -9476,7 +9466,7 @@
       "kind": "event",
       "event": "change",
       "selector": "select.geom_func",
-      "line": 213,
+      "line": 211,
       "file": "resources/js/table/select.ts"
     },
     {
@@ -9487,7 +9477,7 @@
       "event": "change",
       "selector": "select[name*=\"criteriaColumnOperators\"]",
       "delegated": true,
-      "line": 299,
+      "line": 297,
       "file": "resources/js/table/select.ts"
     },
     {
@@ -9497,7 +9487,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#rangeSearchModalGo",
-      "line": 357,
+      "line": 354,
       "file": "resources/js/table/select.ts"
     },
     {
@@ -9517,7 +9507,7 @@
       "kind": "event",
       "event": "show.bs.modal",
       "selector": "<gisEditorModal>",
-      "line": 270,
+      "line": 268,
       "file": "resources/js/table/select.ts"
     },
     {
@@ -9548,7 +9538,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<{ url: formUrl, data: formData, success…>",
-      "line": 349,
+      "line": 347,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9578,7 +9568,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$form.prop('action')>",
-      "line": 389,
+      "line": 387,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9588,7 +9578,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<this.formAction>",
-      "line": 439,
+      "line": 437,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9598,7 +9588,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 210,
+      "line": 209,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9609,7 +9599,7 @@
       "event": "change",
       "selector": "select[name=after_field]",
       "delegated": true,
-      "line": 487,
+      "line": 484,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9619,7 +9609,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#designerModalGoButton",
-      "line": 375,
+      "line": 373,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9630,7 +9620,7 @@
       "event": "click",
       "selector": "#fieldsForm button.mult_submit",
       "delegated": true,
-      "line": 430,
+      "line": 428,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9641,7 +9631,7 @@
       "event": "click",
       "selector": "#move_columns_anchor",
       "delegated": true,
-      "line": 299,
+      "line": 298,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9652,7 +9642,7 @@
       "event": "click",
       "selector": "#remove_partitioning.ajax",
       "delegated": true,
-      "line": 472,
+      "line": 470,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9663,7 +9653,7 @@
       "event": "click",
       "selector": "a.add_key.ajax",
       "delegated": true,
-      "line": 261,
+      "line": 260,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9674,7 +9664,7 @@
       "event": "click",
       "selector": "a.drop_column_anchor.ajax",
       "delegated": true,
-      "line": 181,
+      "line": 180,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9685,7 +9675,7 @@
       "event": "click",
       "selector": "a[id^=partition_action].ajax",
       "delegated": true,
-      "line": 445,
+      "line": 443,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9697,7 +9687,7 @@
       "messages": [
         "strChangeColumnCollation"
       ],
-      "line": 168,
+      "line": 167,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9709,7 +9699,7 @@
       "messages": [
         "strDoYouReally"
       ],
-      "line": 206,
+      "line": 205,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9721,7 +9711,7 @@
       "messages": [
         "strDropPartitionWarning"
       ],
-      "line": 457,
+      "line": 455,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9733,7 +9723,7 @@
       "messages": [
         "strRemovePartitioningWarning"
       ],
-      "line": 476,
+      "line": 474,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9745,7 +9735,7 @@
       "messages": [
         "strTruncatePartitionWarning"
       ],
-      "line": 461,
+      "line": 459,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9755,7 +9745,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<designerModalPreviewModal>",
-      "line": 368,
+      "line": 366,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9765,7 +9755,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<designerModalPreviewModal>",
-      "line": 334,
+      "line": 333,
       "file": "resources/js/table/structure.ts"
     },
     {
@@ -9876,7 +9866,7 @@
       "method": "POST",
       "url": "index.php?route=/sql",
       "route": "/sql",
-      "line": 425,
+      "line": 421,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9907,7 +9897,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#tableid_1",
-      "line": 182,
+      "line": 181,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9917,7 +9907,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#tableid_2",
-      "line": 206,
+      "line": 204,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9927,7 +9917,7 @@
       "kind": "event",
       "event": "change",
       "selector": "#tableid_3",
-      "line": 228,
+      "line": 225,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9947,7 +9937,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#dataPointSaveButton",
-      "line": 442,
+      "line": 437,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9957,7 +9947,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#help_dialog",
-      "line": 692,
+      "line": 686,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9967,7 +9957,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#inputFormSubmitId",
-      "line": 253,
+      "line": 249,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9977,7 +9967,7 @@
       "kind": "event",
       "event": "click",
       "selector": "#togglesearchformlink",
-      "line": 271,
+      "line": 267,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -9987,7 +9977,7 @@
       "kind": "event",
       "event": "click",
       "selector": "button.button-reset",
-      "line": 586,
+      "line": 581,
       "file": "resources/js/table/zoom_search.ts"
     },
     {
@@ -10001,7 +9991,7 @@
       "keys": [
         "Enter"
       ],
-      "line": 453,
+      "line": 448,
       "file": "resources/js/table/zoom_search.ts"
     },
     {

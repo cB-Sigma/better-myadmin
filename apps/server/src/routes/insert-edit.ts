@@ -40,7 +40,7 @@ async function withIe<T>(c: Context<ServerEnv>, fn: (ctx: IeCtx) => Promise<T>):
     login.cache ??= {}
     const reader = new TableReader(conn, login.cache, tr)
     if (db === '' || !(await reader.selectDb(db)))
-      throw new NotFoundError(tr.gettext('No databases selected.'))
+      throw new NotFoundError(tr.gettext('No database selected.'))
     if (table === '' || !(await m.tableExists(db, table)))
       throw new NotFoundError(tr.gettext('No table selected.'))
     const ctx: IeCtx = {

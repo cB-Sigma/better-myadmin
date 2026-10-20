@@ -150,7 +150,7 @@ export async function databaseScope(ctx: ShellCtx, db: string): Promise<Database
   const system = isSystemSchema(db)
   const tables = await getTables(ctx.conn, db)
   if (tables === null && !(await databaseExists(ctx.conn, db))) {
-    throw new NotFoundError(ctx.tr.gettext('No databases selected.'))
+    throw new NotFoundError(ctx.tr.gettext('No database selected.'))
   }
   const numTables = tables?.length ?? 0
   const p = new PrivilegeProbe(ctx.conn, ctx.server, ctx.cache)

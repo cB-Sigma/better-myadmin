@@ -7,7 +7,7 @@ import { body, parse, respond } from './table-scope.ts'
 
 /**
  * The view form (pma: /view/create). Mounted at /api/servers/:s/databases. Like CreateController
- * the database must be selectable ("No databases selected.").
+ * the database must be selectable ("No database selected.").
  */
 export const viewCreateRoutes = new Hono<ServerEnv>()
 

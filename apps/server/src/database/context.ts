@@ -43,7 +43,7 @@ export interface DbCtx {
 
 /**
  * Runs `fn` for the database of the request (`:db`). `select` checks the database like
- * DbTableExists::selectDatabase and answers "No databases selected." when it does not exist.
+ * DbTableExists::selectDatabase and answers "No database selected." when it does not exist.
  */
 export async function withDb<T>(
   c: Context<ServerEnv>,
@@ -79,7 +79,7 @@ export async function withDb<T>(
     const reader = new TableReader(conn, login.cache, tr)
     if (opts.select !== false) {
       if (db === '' || !(await reader.selectDb(db)))
-        throw new NotFoundError(opts.noDatabase ?? tr.gettext('No databases selected.'))
+        throw new NotFoundError(opts.noDatabase ?? tr.gettext('No database selected.'))
     }
     const rp = await meta.relationParameters()
     const cfg = await meta.settings()

@@ -81,7 +81,7 @@ async function withReader<T>(c: Context<ServerEnv>, fn: (reader: TableReader) =>
 
 /**
  * The table scope: the database must be selectable and the table must exist.
- * pma: DbTableExists::selectDatabase / ::hasTable ("No databases selected." / "No table selected.")
+ * pma: DbTableExists::selectDatabase / ::hasTable ("No database selected." / "No table selected.")
  */
 async function withTable<T>(c: Context<ServerEnv>, fn: (ctx: DdlCtx) => Promise<T>): Promise<T> {
   return withScope(c, fn)

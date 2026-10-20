@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d",
+    "referenceCommit": "ef2fcd20e23b2fbe24844388a45c4d35f2c17309",
     "source": "resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys)",
     "count": 3428
   },
@@ -419,8 +419,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/sql.ts:1128",
-        "resources/js/sql.ts:1134",
+        "resources/js/sql.ts:1123",
+        "resources/js/sql.ts:1129",
         "src/Controllers/JavaScriptMessagesController.php:383"
       ]
     },
@@ -440,7 +440,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:2005",
+        "resources/js/designer/move.ts:1991",
         "src/Controllers/JavaScriptMessagesController.php:535"
       ]
     },
@@ -480,7 +480,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/console.ts:1280",
+        "resources/js/modules/console.ts:1277",
         "src/Controllers/JavaScriptMessagesController.php:642"
       ]
     },
@@ -517,6 +517,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/templates/database/structure/body_for_table_summary.twig:36",
         "resources/templates/database/structure/body_for_table_summary.twig:37",
         "src/StorageEngine.php:408"
       ]
@@ -546,7 +547,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/console.ts:1512",
+        "resources/js/modules/console.ts:1509",
         "src/Controllers/JavaScriptMessagesController.php:641"
       ]
     },
@@ -970,7 +971,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/error_report.ts:144",
+        "resources/js/error_report.ts:143",
         "src/Controllers/JavaScriptMessagesController.php:601"
       ]
     },
@@ -1147,7 +1148,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Server/Privileges.php:3228",
+        "src/Server/Privileges.php:3224",
         "src/Server/Privileges.php:3229"
       ]
     },
@@ -1354,8 +1355,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2425",
-        "resources/js/modules/functions.ts:2475",
+        "resources/js/modules/functions.ts:2405",
+        "resources/js/modules/functions.ts:2455",
         "src/Controllers/JavaScriptMessagesController.php:372"
       ]
     },
@@ -1391,7 +1392,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2878",
+        "resources/js/modules/functions.ts:2855",
         "resources/templates/table/index_form.twig:254",
         "src/Controllers/JavaScriptMessagesController.php:124"
       ]
@@ -1602,6 +1603,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Events/IndexController.php:129",
         "src/Controllers/Events/IndexController.php:137"
       ]
     },
@@ -1631,9 +1633,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/indexes.ts:384",
-        "resources/js/modules/indexes.ts:522",
-        "resources/js/modules/indexes.ts:707",
+        "resources/js/modules/indexes.ts:383",
+        "resources/js/modules/indexes.ts:521",
+        "resources/js/modules/indexes.ts:706",
         "src/Controllers/JavaScriptMessagesController.php:120"
       ]
     },
@@ -1690,7 +1692,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:791",
+        "resources/js/normalization.ts:775",
         "src/Controllers/JavaScriptMessagesController.php:398"
       ]
     },
@@ -1774,7 +1776,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:670",
+        "resources/js/designer/move.ts:667",
         "resources/templates/database/designer/main.twig:40",
         "resources/templates/database/designer/main.twig:43",
         "src/Controllers/JavaScriptMessagesController.php:518"
@@ -1938,8 +1940,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2188",
-        "resources/js/sql.ts:1058",
+        "resources/js/server/status/monitor.ts:2184",
+        "resources/js/sql.ts:1053",
         "src/Controllers/JavaScriptMessagesController.php:296"
       ]
     },
@@ -1980,7 +1982,7 @@
       "context": "Alias",
       "plural": null,
       "refs": [
-        "resources/js/export.ts:1050",
+        "resources/js/export.ts:1042",
         "resources/templates/export.twig:231",
         "src/Controllers/JavaScriptMessagesController.php:285"
       ]
@@ -1991,7 +1993,7 @@
       "context": "Alias",
       "plural": null,
       "refs": [
-        "resources/js/export.ts:1021",
+        "resources/js/export.ts:1013",
         "resources/templates/export.twig:204",
         "src/Controllers/JavaScriptMessagesController.php:283"
       ]
@@ -2002,7 +2004,7 @@
       "context": "Alias",
       "plural": null,
       "refs": [
-        "resources/js/export.ts:1035",
+        "resources/js/export.ts:1027",
         "resources/templates/export.twig:218",
         "src/Controllers/JavaScriptMessagesController.php:284"
       ]
@@ -2756,7 +2758,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2121",
+        "resources/js/server/status/monitor.ts:2118",
         "src/Controllers/JavaScriptMessagesController.php:274"
       ]
     },
@@ -3229,8 +3231,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:363",
-        "resources/js/normalization.ts:415",
+        "resources/js/normalization.ts:354",
+        "resources/js/normalization.ts:405",
         "resources/templates/import_status.twig:2",
         "resources/templates/user_password.twig:2",
         "src/Controllers/JavaScriptMessagesController.php:412",
@@ -3484,6 +3486,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/results.twig:25",
+        "resources/templates/database/structure/structure_table_row.twig:42",
         "resources/templates/database/structure/structure_table_row.twig:43",
         "resources/templates/table/structure/display_structure.twig:271",
         "src/Config/ConfigFile.php:526",
@@ -3501,7 +3504,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/sql.ts:1218",
+        "resources/js/sql.ts:1212",
         "resources/templates/sql/relational_column_dropdown.twig:3",
         "resources/templates/table/insert/column_row.twig:48",
         "resources/templates/table/search/input_box.twig:21",
@@ -3787,12 +3790,12 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1142",
-        "resources/js/modules/indexes.ts:574",
+        "resources/js/modules/functions.ts:1127",
+        "resources/js/modules/indexes.ts:573",
         "resources/js/modules/page_settings.ts:18",
-        "resources/js/normalization.ts:588",
-        "resources/js/normalization.ts:674",
-        "resources/js/normalization.ts:757",
+        "resources/js/normalization.ts:576",
+        "resources/js/normalization.ts:660",
+        "resources/js/normalization.ts:742",
         "resources/templates/database/central_columns/main.twig:275",
         "resources/templates/database/designer/main.twig:1061",
         "resources/templates/database/designer/main.twig:1096",
@@ -4020,7 +4023,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/error_report.ts:154",
+        "resources/js/error_report.ts:153",
         "src/Controllers/JavaScriptMessagesController.php:602"
       ]
     },
@@ -4030,7 +4033,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:821",
+        "resources/js/server/status/monitor.ts:820",
         "src/Controllers/JavaScriptMessagesController.php:253"
       ]
     },
@@ -4069,7 +4072,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/operations.ts:144",
+        "resources/js/database/operations.ts:140",
         "src/Controllers/JavaScriptMessagesController.php:343"
       ]
     },
@@ -4156,7 +4159,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2232",
+        "resources/js/server/status/monitor.ts:2228",
         "src/Controllers/JavaScriptMessagesController.php:281"
       ]
     },
@@ -4184,7 +4187,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:891",
+        "resources/js/server/status/monitor.ts:890",
         "src/Controllers/JavaScriptMessagesController.php:256"
       ]
     },
@@ -4459,7 +4462,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1768",
+        "resources/js/designer/move.ts:1754",
         "resources/templates/database/designer/main.twig:101",
         "resources/templates/database/designer/main.twig:98",
         "src/Controllers/JavaScriptMessagesController.php:512"
@@ -4581,8 +4584,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:1854",
-        "resources/js/makegrid.ts:1855",
+        "resources/js/makegrid.ts:1847",
+        "resources/js/makegrid.ts:1848",
         "src/Controllers/JavaScriptMessagesController.php:554"
       ]
     },
@@ -4594,7 +4597,7 @@
       "refs": [
         "resources/js/modules/ajax-message.ts:112",
         "resources/js/modules/ajax-message.ts:113",
-        "resources/js/modules/functions.ts:1568",
+        "resources/js/modules/functions.ts:1551",
         "src/Controllers/JavaScriptMessagesController.php:337"
       ]
     },
@@ -4604,7 +4607,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2759",
+        "resources/js/makegrid.ts:2752",
         "src/Controllers/JavaScriptMessagesController.php:552"
       ]
     },
@@ -4614,7 +4617,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2757",
+        "resources/js/makegrid.ts:2750",
         "src/Controllers/JavaScriptMessagesController.php:546"
       ]
     },
@@ -4655,13 +4658,13 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1689",
-        "resources/js/modules/functions.ts:1694",
-        "resources/js/modules/functions.ts:2565",
-        "resources/js/modules/functions.ts:2573",
-        "resources/js/modules/indexes.ts:569",
+        "resources/js/modules/functions.ts:1672",
+        "resources/js/modules/functions.ts:1677",
+        "resources/js/modules/functions.ts:2544",
+        "resources/js/modules/functions.ts:2552",
+        "resources/js/modules/indexes.ts:568",
         "resources/js/modules/page_settings.ts:13",
-        "resources/js/sql.ts:1219",
+        "resources/js/sql.ts:1213",
         "resources/templates/columns_definitions/column_definitions_form.twig:174",
         "resources/templates/columns_definitions/column_definitions_form.twig:179",
         "resources/templates/database/designer/main.twig:1128",
@@ -5428,7 +5431,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/select.ts:344",
+        "resources/js/table/select.ts:341",
         "src/Controllers/JavaScriptMessagesController.php:437"
       ]
     },
@@ -5438,7 +5441,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/select.ts:339",
+        "resources/js/table/select.ts:336",
         "src/Controllers/JavaScriptMessagesController.php:438"
       ]
     },
@@ -5458,7 +5461,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:1786",
+        "resources/js/makegrid.ts:1779",
         "src/Controllers/JavaScriptMessagesController.php:633"
       ]
     },
@@ -5468,7 +5471,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:1784",
+        "resources/js/makegrid.ts:1777",
         "src/Controllers/JavaScriptMessagesController.php:632"
       ]
     },
@@ -5478,6 +5481,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/templates/view_create.twig:88",
         "resources/templates/view_create.twig:89"
       ]
     },
@@ -5514,7 +5518,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2564",
+        "resources/js/modules/functions.ts:2543",
         "src/Controllers/JavaScriptMessagesController.php:389"
       ]
     },
@@ -5918,7 +5922,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1688",
+        "resources/js/modules/functions.ts:1671",
         "resources/templates/server/databases/index.twig:320",
         "src/Controllers/JavaScriptMessagesController.php:338"
       ]
@@ -5947,7 +5951,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:323",
+        "resources/js/normalization.ts:315",
         "src/Controllers/JavaScriptMessagesController.php:405"
       ]
     },
@@ -5957,7 +5961,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:371",
+        "resources/js/normalization.ts:362",
         "src/Controllers/JavaScriptMessagesController.php:425"
       ]
     },
@@ -5986,7 +5990,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1206",
+        "resources/js/server/status/monitor.ts:1205",
         "resources/js/server/status/monitor.ts:399",
         "resources/templates/server/status/status/index.twig:36",
         "src/Controllers/JavaScriptMessagesController.php:200"
@@ -6356,7 +6360,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1571",
+        "resources/js/modules/functions.ts:1554",
         "resources/templates/display/results/table.twig:353",
         "resources/templates/display/results/table.twig:356",
         "src/Controllers/JavaScriptMessagesController.php:467",
@@ -6369,7 +6373,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/operations.ts:104",
+        "resources/js/database/operations.ts:102",
         "src/Controllers/JavaScriptMessagesController.php:342"
       ]
     },
@@ -6379,8 +6383,8 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/js/modules/functions.ts:1500",
         "resources/js/modules/functions.ts:1517",
-        "resources/js/modules/functions.ts:1534",
         "src/Controllers/JavaScriptMessagesController.php:635"
       ]
     },
@@ -6455,6 +6459,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/ExportController.php:120",
         "src/Controllers/Database/ExportController.php:127",
         "src/Controllers/Server/ExportController.php:57",
         "src/Controllers/Table/ExportController.php:92"
@@ -6466,12 +6471,12 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/ImportController.php:76",
+        "src/Controllers/Database/ImportController.php:69",
         "src/Controllers/Database/ImportController.php:77",
         "src/Controllers/Server/ImportController.php:61",
         "src/Controllers/Server/ImportController.php:62",
-        "src/Controllers/Table/ImportController.php:100",
-        "src/Controllers/Table/ImportController.php:101"
+        "src/Controllers/Table/ImportController.php:101",
+        "src/Controllers/Table/ImportController.php:86"
       ]
     },
     {
@@ -6629,7 +6634,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/indexes.ts:454",
+        "resources/js/modules/indexes.ts:453",
         "src/Controllers/JavaScriptMessagesController.php:126"
       ]
     },
@@ -6825,7 +6830,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/indexes.ts:450",
+        "resources/js/modules/indexes.ts:449",
         "src/Controllers/JavaScriptMessagesController.php:125"
       ]
     },
@@ -6906,6 +6911,7 @@
         "resources/templates/modals/create_view.twig:5",
         "resources/templates/sql/no_results_returned.twig:14",
         "resources/templates/sql/no_results_returned.twig:15",
+        "resources/templates/view_create.twig:13",
         "resources/templates/view_create.twig:14"
       ]
     },
@@ -7050,7 +7056,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:795",
+        "resources/js/server/status/monitor.ts:794",
         "src/Controllers/JavaScriptMessagesController.php:254"
       ]
     },
@@ -7391,7 +7397,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/zoom_search.ts:446",
+        "resources/js/table/zoom_search.ts:441",
         "src/Controllers/JavaScriptMessagesController.php:463"
       ]
     },
@@ -7441,6 +7447,8 @@
         "src/Plugins/Export/ExportHtmlword.php:145",
         "src/Plugins/Export/ExportOdt.php:182",
         "src/Plugins/Export/ExportTexytext.php:115",
+        "src/Server/Privileges.php:1557",
+        "src/Server/Privileges.php:1559",
         "src/Server/Privileges.php:1561",
         "src/Server/Privileges.php:1563",
         "src/Server/Status/Processes.php:107"
@@ -7535,6 +7543,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/TrackingController.php:142",
         "src/Controllers/Database/TrackingController.php:149"
       ]
     },
@@ -7653,6 +7662,7 @@
       "plural": null,
       "refs": [
         "resources/templates/server/privileges/privileges_table.twig:265",
+        "src/Server/Privileges.php:1558",
         "src/Server/Privileges.php:1562"
       ]
     },
@@ -7764,6 +7774,7 @@
         "resources/templates/database/central_columns/main.twig:238",
         "resources/templates/database/central_columns/main.twig:28",
         "resources/templates/database/data_dictionary/index.twig:26",
+        "resources/templates/database/structure/body_for_table_summary.twig:42",
         "resources/templates/database/structure/body_for_table_summary.twig:43",
         "resources/templates/server/replication/replica_configuration.twig:9",
         "resources/templates/table/structure/display_structure.twig:26",
@@ -8015,7 +8026,9 @@
       "refs": [
         "resources/templates/database/routines/editor_form.twig:148",
         "resources/templates/events/editor-form.twig:102",
+        "resources/templates/triggers/editor_form.twig:66",
         "resources/templates/triggers/editor_form.twig:67",
+        "resources/templates/view_create.twig:54",
         "resources/templates/view_create.twig:55"
       ]
     },
@@ -8115,6 +8128,7 @@
       "refs": [
         "resources/templates/database/routines/editor_form.twig:118",
         "resources/templates/events/editor-form.twig:87",
+        "resources/templates/triggers/editor_form.twig:61",
         "resources/templates/triggers/editor_form.twig:62",
         "src/Plugins/Export/ExportHtmlword.php:397",
         "src/Plugins/Export/ExportOdt.php:507",
@@ -8202,7 +8216,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:954",
+        "resources/js/designer/move.ts:946",
         "src/Controllers/JavaScriptMessagesController.php:523"
       ]
     },
@@ -8240,7 +8254,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/search.ts:176",
+        "resources/js/database/search.ts:175",
         "src/Controllers/JavaScriptMessagesController.php:358"
       ]
     },
@@ -8368,7 +8382,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/search.ts:180",
+        "resources/js/database/search.ts:179",
         "src/Controllers/JavaScriptMessagesController.php:357"
       ]
     },
@@ -8378,6 +8392,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:2127",
         "src/Server/Privileges.php:2131"
       ]
     },
@@ -8510,7 +8525,9 @@
       "refs": [
         "resources/templates/database/routines/editor_form.twig:11",
         "resources/templates/events/editor-form.twig:10",
+        "resources/templates/triggers/editor_form.twig:13",
         "resources/templates/triggers/editor_form.twig:14",
+        "resources/templates/view_create.twig:10",
         "resources/templates/view_create.twig:11"
       ]
     },
@@ -8547,7 +8564,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:975",
+        "resources/js/server/status/monitor.ts:974",
         "src/Controllers/JavaScriptMessagesController.php:258"
       ]
     },
@@ -8622,8 +8639,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:840",
-        "resources/js/server/status/monitor.ts:850",
+        "resources/js/server/status/monitor.ts:839",
+        "resources/js/server/status/monitor.ts:849",
         "src/Controllers/JavaScriptMessagesController.php:247"
       ]
     },
@@ -8883,7 +8900,7 @@
       "context": "Display format",
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2232",
+        "resources/js/server/status/monitor.ts:2228",
         "src/Controllers/JavaScriptMessagesController.php:280"
       ]
     },
@@ -9093,7 +9110,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:976",
+        "resources/js/server/status/monitor.ts:975",
         "src/Controllers/JavaScriptMessagesController.php:259"
       ]
     },
@@ -9251,8 +9268,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/operations.ts:273",
-        "resources/js/table/structure.ts:457",
+        "resources/js/table/operations.ts:269",
+        "resources/js/table/structure.ts:455",
         "src/Controllers/JavaScriptMessagesController.php:80",
         "src/Controllers/JavaScriptMessagesController.php:81"
       ]
@@ -9263,24 +9280,24 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/operations.ts:165",
+        "resources/js/database/operations.ts:161",
         "resources/js/database/structure.ts:237",
         "resources/js/database/structure.ts:287",
         "resources/js/database/structure.ts:290",
-        "resources/js/modules/functions.ts:1725",
-        "resources/js/modules/functions.ts:521",
-        "resources/js/modules/functions.ts:525",
-        "resources/js/modules/functions.ts:549",
-        "resources/js/modules/functions.ts:578",
-        "resources/js/server/databases.ts:48",
-        "resources/js/server/privileges.ts:247",
-        "resources/js/sql.ts:531",
-        "resources/js/table/operations.ts:292",
-        "resources/js/table/operations.ts:325",
+        "resources/js/modules/functions.ts:1708",
+        "resources/js/modules/functions.ts:509",
+        "resources/js/modules/functions.ts:513",
+        "resources/js/modules/functions.ts:537",
+        "resources/js/modules/functions.ts:566",
+        "resources/js/server/databases.ts:47",
+        "resources/js/server/privileges.ts:244",
+        "resources/js/sql.ts:530",
+        "resources/js/table/operations.ts:288",
+        "resources/js/table/operations.ts:321",
         "resources/js/table/operations.ts:45",
         "resources/js/table/relation.ts:256",
-        "resources/js/table/structure.ts:204",
-        "resources/js/table/structure.ts:281",
+        "resources/js/table/structure.ts:203",
+        "resources/js/table/structure.ts:280",
         "src/Controllers/JavaScriptMessagesController.php:55"
       ]
     },
@@ -9303,7 +9320,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/structure.ts:475",
+        "resources/js/table/structure.ts:473",
         "src/Controllers/JavaScriptMessagesController.php:85"
       ]
     },
@@ -9323,7 +9340,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:244",
+        "resources/js/server/privileges.ts:241",
         "src/Controllers/JavaScriptMessagesController.php:77"
       ]
     },
@@ -9333,7 +9350,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/sql.ts:1006",
+        "resources/js/sql.ts:1002",
         "src/Controllers/JavaScriptMessagesController.php:561",
         "src/Controllers/JavaScriptMessagesController.php:562"
       ]
@@ -9344,8 +9361,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/operations.ts:277",
-        "resources/js/table/structure.ts:461",
+        "resources/js/table/operations.ts:273",
+        "resources/js/table/structure.ts:459",
         "src/Controllers/JavaScriptMessagesController.php:84"
       ]
     },
@@ -9373,7 +9390,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1107",
+        "resources/js/designer/move.ts:1096",
         "src/Controllers/JavaScriptMessagesController.php:529"
       ]
     },
@@ -9420,7 +9437,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:757",
+        "resources/js/modules/functions.ts:745",
         "src/Controllers/JavaScriptMessagesController.php:119"
       ]
     },
@@ -9440,8 +9457,8 @@
       "plural": null,
       "refs": [
         "resources/js/datetimepicker.ts:10",
-        "resources/js/normalization.ts:105",
-        "resources/js/normalization.ts:74",
+        "resources/js/normalization.ts:102",
+        "resources/js/normalization.ts:72",
         "src/Controllers/JavaScriptMessagesController.php:404",
         "src/Controllers/JavaScriptMessagesController.php:758",
         "src/Normalization.php:351"
@@ -9480,7 +9497,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2760",
+        "resources/js/makegrid.ts:2753",
         "src/Controllers/JavaScriptMessagesController.php:553"
       ]
     },
@@ -9510,7 +9527,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:1739",
+        "resources/js/makegrid.ts:1732",
         "src/Controllers/JavaScriptMessagesController.php:545"
       ]
     },
@@ -9526,6 +9543,7 @@
         "resources/templates/database/routines/row.twig:63",
         "resources/templates/database/routines/row.twig:65",
         "resources/templates/database/structure/check_all_tables.twig:16",
+        "resources/templates/database/structure/structure_table_row.twig:86",
         "resources/templates/database/structure/structure_table_row.twig:87",
         "resources/templates/events/index.twig:101",
         "resources/templates/events/index.twig:21",
@@ -9609,7 +9627,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/structure.ts:207",
+        "resources/js/table/structure.ts:206",
         "src/Controllers/JavaScriptMessagesController.php:334"
       ]
     },
@@ -9638,7 +9656,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/indexes.ts:646",
+        "resources/js/modules/indexes.ts:645",
         "src/Controllers/JavaScriptMessagesController.php:69"
       ]
     },
@@ -9783,6 +9801,7 @@
         "resources/templates/database/central_columns/main.twig:382",
         "resources/templates/database/routines/row.twig:20",
         "resources/templates/database/routines/row.twig:23",
+        "resources/templates/database/structure/structure_table_row.twig:65",
         "resources/templates/database/structure/structure_table_row.twig:66",
         "resources/templates/display/results/table.twig:319",
         "resources/templates/display/results/table.twig:320",
@@ -9823,6 +9842,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Events/IndexController.php:133",
         "src/Controllers/Events/IndexController.php:141"
       ]
     },
@@ -9832,7 +9852,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/indexes.ts:711",
+        "resources/js/modules/indexes.ts:710",
         "src/Controllers/JavaScriptMessagesController.php:121"
       ]
     },
@@ -9874,6 +9894,7 @@
         "resources/templates/server/privileges/new_user_ajax.twig:45",
         "resources/templates/server/privileges/users_overview.twig:75",
         "resources/templates/table/privileges/index.twig:84",
+        "src/Server/Privileges.php:1264",
         "src/Server/Privileges.php:1268"
       ]
     },
@@ -9893,7 +9914,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1571",
+        "resources/js/modules/functions.ts:1554",
         "src/Controllers/JavaScriptMessagesController.php:381"
       ]
     },
@@ -9972,6 +9993,7 @@
       "refs": [
         "resources/templates/table/structure/display_structure.twig:378",
         "resources/templates/table/structure/display_structure.twig:379",
+        "resources/templates/view_create.twig:15",
         "resources/templates/view_create.twig:16"
       ]
     },
@@ -10022,6 +10044,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/structure/check_all_tables.twig:15",
+        "resources/templates/database/structure/structure_table_row.twig:73",
         "resources/templates/database/structure/structure_table_row.twig:74"
       ]
     },
@@ -10128,8 +10151,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:836",
-        "resources/js/server/status/monitor.ts:846",
+        "resources/js/server/status/monitor.ts:835",
+        "resources/js/server/status/monitor.ts:845",
         "src/Controllers/JavaScriptMessagesController.php:245"
       ]
     },
@@ -10193,7 +10216,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1091",
+        "resources/js/modules/functions.ts:1076",
         "resources/templates/database/structure/drop_form.twig:15",
         "resources/templates/database/structure/empty_form.twig:15",
         "resources/templates/import.twig:154",
@@ -10469,7 +10492,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:130",
+        "resources/js/normalization.ts:127",
         "src/Controllers/JavaScriptMessagesController.php:402",
         "src/Normalization.php:519",
         "src/Normalization.php:578",
@@ -10511,7 +10534,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2418",
+        "resources/js/modules/functions.ts:2398",
         "src/Controllers/JavaScriptMessagesController.php:371"
       ]
     },
@@ -10530,7 +10553,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/multi_table_query.ts:246",
+        "resources/js/database/multi_table_query.ts:244",
         "src/Controllers/JavaScriptMessagesController.php:428"
       ]
     },
@@ -10540,7 +10563,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/multi_table_query.ts:247",
+        "resources/js/database/multi_table_query.ts:245",
         "src/Controllers/JavaScriptMessagesController.php:429"
       ]
     },
@@ -10653,6 +10676,7 @@
         "resources/templates/error/generic.twig:39",
         "resources/templates/table/structure/display_structure.twig:361",
         "src/Controllers/Operations/ViewController.php:109",
+        "src/Controllers/Operations/ViewController.php:95",
         "src/Html/Generator.php:728",
         "src/Import/Import.php:122",
         "src/InsertEdit.php:412",
@@ -10718,16 +10742,16 @@
         "resources/js/database/structure.ts:254",
         "resources/js/database/structure.ts:308",
         "resources/js/modules/ajax.ts:973",
-        "resources/js/modules/functions.ts:1417",
-        "resources/js/modules/functions.ts:2736",
-        "resources/js/modules/functions.ts:2745",
-        "resources/js/modules/indexes.ts:682",
-        "resources/js/sql.ts:1086",
+        "resources/js/modules/functions.ts:1400",
+        "resources/js/modules/functions.ts:2714",
+        "resources/js/modules/functions.ts:2723",
+        "resources/js/modules/indexes.ts:681",
+        "resources/js/sql.ts:1081",
         "resources/js/table/relation.ts:266",
-        "resources/js/table/select.ts:403",
-        "resources/js/table/structure.ts:252",
-        "resources/js/table/structure.ts:354",
-        "resources/js/table/structure.ts:363",
+        "resources/js/table/select.ts:400",
+        "resources/js/table/structure.ts:251",
+        "resources/js/table/structure.ts:352",
+        "resources/js/table/structure.ts:361",
         "src/Controllers/JavaScriptMessagesController.php:324",
         "src/Controllers/Sql/EnumValuesController.php:38",
         "src/Controllers/Sql/SetValuesController.php:41"
@@ -10742,6 +10766,7 @@
         "src/Controllers/Database/RoutinesController.php:255",
         "src/Controllers/Database/RoutinesController.php:285",
         "src/Controllers/Database/RoutinesController.php:351",
+        "src/Controllers/Events/IndexController.php:182",
         "src/Controllers/Events/IndexController.php:190",
         "src/Controllers/Triggers/IndexController.php:207"
       ]
@@ -10752,6 +10777,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Events/ExportController.php:75",
         "src/Controllers/Events/ExportController.php:83"
       ]
     },
@@ -11006,6 +11032,7 @@
       "plural": null,
       "refs": [
         "resources/js/events.ts:112",
+        "resources/templates/triggers/editor_form.twig:51",
         "resources/templates/triggers/editor_form.twig:52",
         "resources/templates/triggers/list.twig:52",
         "src/Controllers/JavaScriptMessagesController.php:366",
@@ -11304,7 +11331,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2152",
+        "resources/js/server/status/monitor.ts:2148",
         "src/Controllers/JavaScriptMessagesController.php:275"
       ]
     },
@@ -11363,6 +11390,7 @@
         "src/Menu.php:241",
         "src/Menu.php:347",
         "src/Menu.php:469",
+        "src/Server/Privileges.php:1272",
         "src/Server/Privileges.php:1276",
         "src/Util.php:1374",
         "src/Util.php:1389",
@@ -11456,6 +11484,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Events/ExportController.php:55",
         "src/Controllers/Events/ExportController.php:63"
       ]
     },
@@ -11493,7 +11522,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1160",
+        "resources/js/designer/move.ts:1148",
         "src/Controllers/JavaScriptMessagesController.php:531"
       ]
     },
@@ -11719,7 +11748,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:395",
+        "resources/js/modules/functions.ts:383",
         "src/Controllers/JavaScriptMessagesController.php:660"
       ]
     },
@@ -11827,6 +11856,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/GisVisualizationController.php:118",
         "src/Controllers/Table/GisVisualizationController.php:125"
       ]
     },
@@ -12051,7 +12081,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1762",
+        "resources/js/server/status/monitor.ts:1759",
         "src/Controllers/JavaScriptMessagesController.php:290"
       ]
     },
@@ -12071,7 +12101,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1755",
+        "resources/js/server/status/monitor.ts:1752",
         "src/Controllers/JavaScriptMessagesController.php:291"
       ]
     },
@@ -12238,7 +12268,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:823",
+        "resources/js/server/status/monitor.ts:822",
         "src/Controllers/JavaScriptMessagesController.php:239",
         "src/Controllers/JavaScriptMessagesController.php:240"
       ]
@@ -12397,6 +12427,7 @@
         "resources/templates/import.twig:162",
         "resources/templates/sql/query.twig:40",
         "resources/templates/table/structure/display_table_stats.twig:81",
+        "resources/templates/triggers/editor_form.twig:63",
         "resources/templates/triggers/editor_form.twig:64",
         "src/Config/Descriptions.php:636",
         "src/Config/Descriptions.php:652"
@@ -12672,7 +12703,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:780",
+        "resources/js/server/status/monitor.ts:779",
         "src/Controllers/JavaScriptMessagesController.php:227"
       ]
     },
@@ -12682,7 +12713,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:782",
+        "resources/js/server/status/monitor.ts:781",
         "src/Controllers/JavaScriptMessagesController.php:228"
       ]
     },
@@ -12692,7 +12723,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:478",
+        "resources/js/modules/functions.ts:466",
         "resources/templates/server/replication/primary_add_replica_user.twig:73",
         "src/Controllers/JavaScriptMessagesController.php:579"
       ]
@@ -12703,8 +12734,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:472",
-        "resources/js/modules/functions.ts:496",
+        "resources/js/modules/functions.ts:460",
+        "resources/js/modules/functions.ts:484",
         "src/Controllers/JavaScriptMessagesController.php:578"
       ]
     },
@@ -12869,20 +12900,22 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1141",
-        "resources/js/modules/indexes.ts:573",
-        "resources/js/normalization.ts:363",
-        "resources/js/normalization.ts:415",
-        "resources/js/normalization.ts:769",
+        "resources/js/modules/functions.ts:1126",
+        "resources/js/modules/indexes.ts:572",
+        "resources/js/normalization.ts:354",
+        "resources/js/normalization.ts:405",
+        "resources/js/normalization.ts:754",
         "resources/templates/columns_definitions/column_definitions_form.twig:41",
         "resources/templates/database/designer/main.twig:1100",
         "resources/templates/database/operations/index.twig:186",
         "resources/templates/database/operations/index.twig:20",
         "resources/templates/database/operations/index.twig:226",
         "resources/templates/database/operations/index.twig:76",
+        "resources/templates/database/routines/editor_form.twig:185",
         "resources/templates/database/routines/editor_form.twig:186",
         "resources/templates/database/routines/execute_form.twig:63",
         "resources/templates/display/results/table.twig:279",
+        "resources/templates/events/editor-form.twig:120",
         "resources/templates/events/editor-form.twig:121",
         "resources/templates/modals/change_password.twig:10",
         "resources/templates/modals/create_view.twig:10",
@@ -12922,11 +12955,14 @@
         "resources/templates/table/structure/display_structure.twig:451",
         "resources/templates/table/structure/display_structure.twig:569",
         "resources/templates/table/zoom_search/index.twig:150",
+        "resources/templates/triggers/editor_form.twig:74",
         "resources/templates/triggers/editor_form.twig:75",
+        "resources/templates/view_create.twig:122",
         "resources/templates/view_create.twig:123",
         "src/BrowseForeigners.php:180",
         "src/Controllers/JavaScriptMessagesController.php:312",
         "src/Controllers/Server/PrivilegesController.php:316",
+        "src/Controllers/Server/PrivilegesController.php:319",
         "src/Normalization.php:235",
         "src/Tracking/Tracking.php:288",
         "src/Tracking/Tracking.php:403"
@@ -12976,7 +13012,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2165",
+        "resources/js/makegrid.ts:2158",
         "src/Controllers/JavaScriptMessagesController.php:575"
       ]
     },
@@ -13004,7 +13040,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:404",
+        "resources/js/modules/functions.ts:392",
         "src/Controllers/JavaScriptMessagesController.php:663"
       ]
     },
@@ -13100,7 +13136,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1760",
+        "resources/js/server/status/monitor.ts:1757",
         "src/Controllers/JavaScriptMessagesController.php:292"
       ]
     },
@@ -13230,8 +13266,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:584",
-        "resources/js/designer/move.ts:618",
+        "resources/js/designer/move.ts:582",
+        "resources/js/designer/move.ts:616",
         "src/Controllers/JavaScriptMessagesController.php:693",
         "src/InsertEdit.php:248",
         "src/Navigation/Nodes/NodeDatabaseChild.php:50"
@@ -13243,7 +13279,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/console.ts:1354",
+        "resources/js/modules/console.ts:1351",
         "src/Controllers/JavaScriptMessagesController.php:644"
       ]
     },
@@ -13280,9 +13316,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/find_replace.ts:23",
-        "resources/js/table/find_replace.ts:27",
-        "resources/js/table/find_replace.ts:30",
+        "resources/js/table/find_replace.ts:22",
+        "resources/js/table/find_replace.ts:26",
+        "resources/js/table/find_replace.ts:29",
         "src/Controllers/JavaScriptMessagesController.php:441"
       ]
     },
@@ -13303,8 +13339,8 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/js/normalization.ts:801",
         "resources/js/normalization.ts:817",
-        "resources/js/normalization.ts:834",
         "src/Controllers/JavaScriptMessagesController.php:414"
       ]
     },
@@ -13314,12 +13350,12 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/search.ts:200",
+        "resources/js/database/search.ts:198",
         "resources/js/database/search.ts:93",
         "resources/js/database/search.ts:96",
-        "resources/js/sql.ts:698",
-        "resources/js/sql.ts:708",
-        "resources/js/sql.ts:715",
+        "resources/js/sql.ts:697",
+        "resources/js/sql.ts:707",
+        "resources/js/sql.ts:714",
         "src/Controllers/JavaScriptMessagesController.php:378"
       ]
     },
@@ -13333,8 +13369,8 @@
         "resources/js/database/search.ts:117",
         "resources/js/table/select.ts:82",
         "resources/js/table/select.ts:85",
-        "resources/js/table/zoom_search.ts:276",
-        "resources/js/table/zoom_search.ts:279",
+        "resources/js/table/zoom_search.ts:272",
+        "resources/js/table/zoom_search.ts:275",
         "src/Controllers/JavaScriptMessagesController.php:435"
       ]
     },
@@ -13344,7 +13380,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/search.ts:240",
+        "resources/js/database/search.ts:236",
         "resources/js/database/search.ts:63",
         "resources/js/database/search.ts:67",
         "resources/js/database/search.ts:70",
@@ -13806,7 +13842,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/error_report.ts:158",
+        "resources/js/error_report.ts:157",
         "resources/js/table/change.ts:887",
         "resources/templates/table/index_form.twig:170",
         "resources/templates/table/index_form.twig:213",
@@ -14116,6 +14152,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/templates/database/structure/structure_table_row.twig:238",
         "resources/templates/database/structure/structure_table_row.twig:240"
       ]
     },
@@ -14285,6 +14322,7 @@
         "resources/templates/table/structure/display_structure.twig:290",
         "resources/templates/table/structure/display_table_stats.twig:22",
         "resources/templates/table/tracking/structure_snapshot_columns.twig:29",
+        "src/Controllers/Table/StructureController.php:204",
         "src/Controllers/Table/StructureController.php:219",
         "src/Navigation/Nodes/NodeIndex.php:27"
       ]
@@ -14453,7 +14491,7 @@
       "plural": null,
       "refs": [
         "resources/js/gis_data_editor.ts:156",
-        "resources/js/gis_data_editor.ts:402",
+        "resources/js/gis_data_editor.ts:401",
         "src/Controllers/JavaScriptMessagesController.php:475"
       ]
     },
@@ -14539,6 +14577,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/templates/database/structure/structure_table_row.twig:58",
         "resources/templates/database/structure/structure_table_row.twig:59",
         "resources/templates/sql/query.twig:76",
         "src/Config/ConfigFile.php:524",
@@ -14797,6 +14836,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/GisVisualizationController.php:110",
         "src/Controllers/Table/GisVisualizationController.php:117"
       ]
     },
@@ -15093,7 +15133,7 @@
       "refs": [
         "resources/js/modules/functions/adjustTotals.ts:11",
         "resources/js/modules/functions/chartByteFormatter.ts:8",
-        "resources/js/server/status/monitor.ts:917",
+        "resources/js/server/status/monitor.ts:916",
         "resources/templates/server/status/monitor/index.twig:181",
         "src/Controllers/JavaScriptMessagesController.php:205",
         "src/Util.php:310"
@@ -15594,7 +15634,7 @@
       "plural": null,
       "refs": [
         "resources/js/gis_data_editor.ts:132",
-        "resources/js/gis_data_editor.ts:402",
+        "resources/js/gis_data_editor.ts:401",
         "src/Controllers/JavaScriptMessagesController.php:472"
       ]
     },
@@ -15729,7 +15769,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/central_columns.ts:214",
+        "resources/js/database/central_columns.ts:213",
         "resources/js/database/routines.ts:357",
         "resources/js/events.ts:334",
         "resources/js/modules/ajax-message.ts:104",
@@ -15737,11 +15777,11 @@
         "resources/js/modules/ajax-message.ts:65",
         "resources/js/modules/ajax-message.ts:87",
         "resources/js/modules/ajax.ts:443",
-        "resources/js/modules/functions.ts:2752",
-        "resources/js/modules/indexes.ts:568",
-        "resources/js/normalization.ts:825",
-        "resources/js/sql.ts:1223",
-        "resources/js/table/structure.ts:370",
+        "resources/js/modules/functions.ts:2730",
+        "resources/js/modules/indexes.ts:567",
+        "resources/js/normalization.ts:809",
+        "resources/js/sql.ts:1217",
+        "resources/js/table/structure.ts:368",
         "resources/js/triggers.ts:343",
         "resources/templates/database/routines/index.twig:118",
         "resources/templates/database/routines/index.twig:83",
@@ -15782,8 +15822,8 @@
       "context": "Lock the account.",
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:131",
-        "resources/js/server/privileges.ts:132",
+        "resources/js/server/privileges.ts:129",
+        "resources/js/server/privileges.ts:130",
         "resources/templates/server/privileges/users_overview.twig:105",
         "src/Controllers/JavaScriptMessagesController.php:156"
       ]
@@ -15794,7 +15834,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:133",
+        "resources/js/server/privileges.ts:131",
         "resources/templates/server/privileges/users_overview.twig:100",
         "src/Controllers/JavaScriptMessagesController.php:158"
       ]
@@ -15909,7 +15949,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1752",
+        "resources/js/server/status/monitor.ts:1749",
         "src/Controllers/JavaScriptMessagesController.php:288"
       ]
     },
@@ -15919,7 +15959,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:799",
+        "resources/js/server/status/monitor.ts:798",
         "src/Controllers/JavaScriptMessagesController.php:231"
       ]
     },
@@ -15929,7 +15969,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:801",
+        "resources/js/server/status/monitor.ts:800",
         "src/Controllers/JavaScriptMessagesController.php:232"
       ]
     },
@@ -16067,7 +16107,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:813",
+        "resources/js/server/status/monitor.ts:812",
         "src/Controllers/JavaScriptMessagesController.php:238"
       ]
     },
@@ -16550,7 +16590,7 @@
       "refs": [
         "resources/js/modules/functions/adjustTotals.ts:12",
         "resources/js/modules/functions/chartByteFormatter.ts:9",
-        "resources/js/server/status/monitor.ts:927",
+        "resources/js/server/status/monitor.ts:926",
         "resources/templates/server/status/monitor/index.twig:182",
         "src/Controllers/JavaScriptMessagesController.php:206",
         "src/Util.php:312"
@@ -16754,7 +16794,7 @@
       "plural": null,
       "refs": [
         "resources/js/database/operations.ts:47",
-        "resources/js/database/operations.ts:99",
+        "resources/js/database/operations.ts:97",
         "resources/js/database/routines.ts:49",
         "resources/js/database/routines.ts:62",
         "resources/js/database/routines.ts:642",
@@ -16764,14 +16804,14 @@
         "resources/js/events.ts:52",
         "resources/js/events.ts:520",
         "resources/js/events.ts:529",
-        "resources/js/modules/console.ts:1144",
-        "resources/js/modules/functions.ts:637",
-        "resources/js/modules/functions.ts:774",
-        "resources/js/modules/functions.ts:783",
-        "resources/js/modules/indexes.ts:479",
-        "resources/js/server/databases.ts:107",
-        "resources/js/sql.ts:1032",
-        "resources/js/sql.ts:558",
+        "resources/js/modules/console.ts:1142",
+        "resources/js/modules/functions.ts:625",
+        "resources/js/modules/functions.ts:762",
+        "resources/js/modules/functions.ts:771",
+        "resources/js/modules/indexes.ts:478",
+        "resources/js/server/databases.ts:106",
+        "resources/js/sql.ts:1028",
+        "resources/js/sql.ts:557",
         "resources/js/triggers.ts:38",
         "resources/js/triggers.ts:51",
         "src/Controllers/JavaScriptMessagesController.php:115"
@@ -16783,8 +16823,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1350",
-        "resources/js/designer/move.ts:806",
+        "resources/js/designer/move.ts:1336",
+        "resources/js/designer/move.ts:801",
         "src/Controllers/JavaScriptMessagesController.php:532"
       ]
     },
@@ -17228,6 +17268,7 @@
       "plural": null,
       "refs": [
         "src/Server/Plugins.php:53",
+        "src/Server/Privileges.php:3133",
         "src/Server/Privileges.php:3137",
         "src/Server/Privileges.php:633"
       ]
@@ -17486,7 +17527,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:312",
+        "resources/js/server/privileges.ts:309",
         "src/Controllers/JavaScriptMessagesController.php:333"
       ]
     },
@@ -17517,6 +17558,7 @@
         "resources/templates/components/_preview_sql.twig:3",
         "src/Controllers/Database/Structure/DropTableController.php:44",
         "src/Controllers/Database/Structure/EmptyTableController.php:41",
+        "src/Controllers/Operations/TableController.php:320",
         "src/Controllers/Operations/TableController.php:334",
         "src/Controllers/Table/DropColumnController.php:63",
         "src/Controllers/Table/ReplaceController.php:289"
@@ -17529,6 +17571,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Operations/Database/CollationController.php:42",
+        "src/Controllers/Operations/TableController.php:254",
         "src/Controllers/Operations/TableController.php:268"
       ]
     },
@@ -17554,7 +17597,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2548",
+        "resources/js/modules/functions.ts:2527",
         "src/Controllers/JavaScriptMessagesController.php:391",
         "src/Controllers/JavaScriptMessagesController.php:392"
       ]
@@ -17583,6 +17626,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/ChartController.php:215",
         "src/Controllers/Table/ChartController.php:242"
       ]
     },
@@ -17602,8 +17646,47 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/js/server/databases.ts:35",
+        "src/Controllers/Database/DesignerController.php:172",
+        "src/Controllers/Database/ExportController.php:55",
+        "src/Controllers/Database/ImportController.php:60",
+        "src/Controllers/Database/RoutinesController.php:78",
+        "src/Controllers/Database/RoutinesController.php:96",
+        "src/Controllers/Database/SearchController.php:51",
+        "src/Controllers/Database/SqlController.php:51",
+        "src/Controllers/Database/Structure/FavoriteTableController.php:65",
+        "src/Controllers/Database/Structure/RealRowCountController.php:52",
+        "src/Controllers/Database/StructureController.php:157",
+        "src/Controllers/Database/TrackingController.php:53",
         "src/Controllers/Events/ExportController.php:38",
-        "src/Controllers/Events/IndexController.php:40"
+        "src/Controllers/Events/IndexController.php:40",
+        "src/Controllers/JavaScriptMessagesController.php:331",
+        "src/Controllers/Operations/Database/CollationController.php:54",
+        "src/Controllers/Operations/DatabaseController.php:228",
+        "src/Controllers/Operations/TableController.php:84",
+        "src/Controllers/Operations/ViewController.php:60",
+        "src/Controllers/Server/Databases/DestroyController.php:62",
+        "src/Controllers/Table/AddFieldController.php:158",
+        "src/Controllers/Table/ChangeController.php:67",
+        "src/Controllers/Table/ChartController.php:101",
+        "src/Controllers/Table/ChartController.php:178",
+        "src/Controllers/Table/ChartController.php:84",
+        "src/Controllers/Table/DeleteConfirmController.php:54",
+        "src/Controllers/Table/DropColumnConfirmationController.php:50",
+        "src/Controllers/Table/FindReplaceController.php:74",
+        "src/Controllers/Table/GisVisualizationController.php:68",
+        "src/Controllers/Table/ImportController.php:69",
+        "src/Controllers/Table/IndexRenameController.php:52",
+        "src/Controllers/Table/IndexesController.php:64",
+        "src/Controllers/Table/SearchController.php:168",
+        "src/Controllers/Table/SqlController.php:56",
+        "src/Controllers/Table/Structure/PrimaryController.php:67",
+        "src/Controllers/Table/StructureController.php:90",
+        "src/Controllers/Table/TrackingController.php:67",
+        "src/Controllers/Table/ZoomSearchController.php:99",
+        "src/Controllers/Triggers/IndexController.php:66",
+        "src/Controllers/Triggers/IndexController.php:84",
+        "src/Controllers/View/CreateController.php:66"
       ]
     },
     {
@@ -17621,7 +17704,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/databases.ts:36",
         "src/Controllers/Database/DesignerController.php:175",
         "src/Controllers/Database/DesignerController.php:180",
         "src/Controllers/Database/ExportController.php:57",
@@ -17696,7 +17778,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:387",
+        "resources/js/normalization.ts:378",
         "src/Controllers/JavaScriptMessagesController.php:427"
       ]
     },
@@ -17715,6 +17797,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Events/IndexController.php:184",
         "src/Controllers/Events/IndexController.php:192"
       ]
     },
@@ -17772,6 +17855,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/ChartController.php:137",
         "src/Controllers/Table/ChartController.php:164"
       ]
     },
@@ -17781,7 +17865,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1043",
+        "resources/js/modules/functions.ts:1029",
         "src/Controllers/JavaScriptMessagesController.php:309"
       ]
     },
@@ -17820,7 +17904,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:336",
+        "resources/js/normalization.ts:328",
         "src/Controllers/JavaScriptMessagesController.php:411"
       ]
     },
@@ -17867,6 +17951,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/PrivilegesController.php:61",
         "src/Controllers/Database/PrivilegesController.php:63",
         "src/Controllers/Server/PrivilegesController.php:99",
         "src/Controllers/Server/UserGroupsController.php:46",
@@ -17946,6 +18031,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Table/ChangeRowsController.php:36",
+        "src/Controllers/Table/DeleteConfirmController.php:37",
         "src/Controllers/Table/DeleteConfirmController.php:38",
         "src/Controllers/Table/ExportRowsController.php:33"
       ]
@@ -17956,6 +18042,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/GisVisualizationController.php:86",
         "src/Controllers/Table/GisVisualizationController.php:93"
       ]
     },
@@ -17966,6 +18053,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Table/ChartController.php:59",
+        "src/Controllers/Table/GisVisualizationController.php:77",
         "src/Controllers/Table/GisVisualizationController.php:84"
       ]
     },
@@ -17985,7 +18073,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/search.ts:221",
+        "resources/js/database/search.ts:219",
         "src/Controllers/Database/RoutinesController.php:86",
         "src/Controllers/Database/Structure/AddPrefixController.php:35",
         "src/Controllers/Database/Structure/CentralColumns/AddController.php:39",
@@ -17999,26 +18087,38 @@
         "src/Controllers/Export/TablesController.php:29",
         "src/Controllers/JavaScriptMessagesController.php:332",
         "src/Controllers/Operations/TableController.php:103",
+        "src/Controllers/Operations/TableController.php:89",
         "src/Controllers/Operations/TableController.php:98",
+        "src/Controllers/Operations/ViewController.php:65",
         "src/Controllers/Operations/ViewController.php:74",
         "src/Controllers/Operations/ViewController.php:79",
+        "src/Controllers/Table/AddFieldController.php:163",
         "src/Controllers/Table/AddFieldController.php:173",
         "src/Controllers/Table/AddFieldController.php:178",
+        "src/Controllers/Table/ChangeController.php:72",
         "src/Controllers/Table/ChangeController.php:82",
         "src/Controllers/Table/ChangeController.php:87",
         "src/Controllers/Table/ChartController.php:101",
         "src/Controllers/Table/ChartController.php:106",
+        "src/Controllers/Table/ChartController.php:186",
         "src/Controllers/Table/ChartController.php:213",
+        "src/Controllers/Table/ChartController.php:89",
+        "src/Controllers/Table/DeleteConfirmController.php:59",
         "src/Controllers/Table/DeleteConfirmController.php:69",
         "src/Controllers/Table/DeleteConfirmController.php:74",
+        "src/Controllers/Table/DropColumnConfirmationController.php:54",
         "src/Controllers/Table/DropColumnConfirmationController.php:63",
         "src/Controllers/Table/DropColumnConfirmationController.php:68",
+        "src/Controllers/Table/FindReplaceController.php:79",
         "src/Controllers/Table/FindReplaceController.php:88",
         "src/Controllers/Table/FindReplaceController.php:93",
+        "src/Controllers/Table/ImportController.php:74",
         "src/Controllers/Table/ImportController.php:83",
         "src/Controllers/Table/ImportController.php:88",
+        "src/Controllers/Table/IndexRenameController.php:57",
         "src/Controllers/Table/IndexRenameController.php:66",
         "src/Controllers/Table/IndexRenameController.php:71",
+        "src/Controllers/Table/IndexesController.php:69",
         "src/Controllers/Table/IndexesController.php:81",
         "src/Controllers/Table/IndexesController.php:86",
         "src/Controllers/Table/Maintenance/AnalyzeController.php:45",
@@ -18026,14 +18126,19 @@
         "src/Controllers/Table/Maintenance/ChecksumController.php:45",
         "src/Controllers/Table/Maintenance/OptimizeController.php:45",
         "src/Controllers/Table/Maintenance/RepairController.php:45",
+        "src/Controllers/Table/SearchController.php:173",
         "src/Controllers/Table/SearchController.php:183",
         "src/Controllers/Table/SearchController.php:188",
+        "src/Controllers/Table/SqlController.php:61",
         "src/Controllers/Table/SqlController.php:71",
         "src/Controllers/Table/SqlController.php:76",
+        "src/Controllers/Table/Structure/PrimaryController.php:72",
         "src/Controllers/Table/Structure/PrimaryController.php:84",
         "src/Controllers/Table/Structure/PrimaryController.php:89",
         "src/Controllers/Table/StructureController.php:105",
         "src/Controllers/Table/StructureController.php:110",
+        "src/Controllers/Table/StructureController.php:95",
+        "src/Controllers/Table/ZoomSearchController.php:104",
         "src/Controllers/Table/ZoomSearchController.php:114",
         "src/Controllers/Table/ZoomSearchController.php:119",
         "src/Controllers/Triggers/IndexController.php:74"
@@ -18047,7 +18152,9 @@
       "refs": [
         "resources/templates/database/structure/index.twig:19",
         "resources/templates/navigation/tree/path.twig:9",
+        "src/Controllers/Database/ExportController.php:65",
         "src/Controllers/Database/ExportController.php:72",
+        "src/Controllers/Database/TrackingController.php:117",
         "src/Controllers/Database/TrackingController.php:124",
         "src/Controllers/Export/ExportController.php:286"
       ]
@@ -18058,6 +18165,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/TrackingController.php:107",
         "src/Controllers/Database/TrackingController.php:114"
       ]
     },
@@ -18097,6 +18205,7 @@
       "refs": [
         "resources/templates/database/privileges/index.twig:102",
         "resources/templates/table/privileges/index.twig:106",
+        "src/Server/Privileges.php:2050",
         "src/Server/Privileges.php:2054"
       ]
     },
@@ -18106,6 +18215,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:1873",
         "src/Server/Privileges.php:1877"
       ]
     },
@@ -18133,6 +18243,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/TrackingController.php:196",
         "src/Controllers/Table/TrackingController.php:203"
       ]
     },
@@ -18151,11 +18262,11 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:652",
-        "resources/js/designer/move.ts:655",
-        "resources/js/designer/move.ts:725",
+        "resources/js/designer/move.ts:650",
+        "resources/js/designer/move.ts:653",
+        "resources/js/designer/move.ts:720",
         "resources/js/server/status/monitor.ts:619",
-        "resources/js/server/status/monitor.ts:936",
+        "resources/js/server/status/monitor.ts:935",
         "resources/templates/columns_definitions/column_attributes.twig:215",
         "resources/templates/columns_definitions/column_attributes.twig:238",
         "resources/templates/config/form_display/input.twig:43",
@@ -18336,6 +18447,7 @@
       "refs": [
         "resources/templates/database/privileges/index.twig:122",
         "resources/templates/table/privileges/index.twig:126",
+        "src/Server/Privileges.php:1208",
         "src/Server/Privileges.php:1212"
       ]
     },
@@ -18402,8 +18514,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:325",
-        "resources/js/normalization.ts:373",
+        "resources/js/normalization.ts:317",
+        "resources/js/normalization.ts:364",
         "src/Controllers/JavaScriptMessagesController.php:407",
         "src/Controllers/JavaScriptMessagesController.php:408"
       ]
@@ -18453,7 +18565,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Server/Privileges.php:2486",
+        "src/Server/Privileges.php:2482",
         "src/Server/Privileges.php:2487"
       ]
     },
@@ -18463,7 +18575,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Server/Privileges.php:2470",
+        "src/Server/Privileges.php:2466",
         "src/Server/Privileges.php:2471"
       ]
     },
@@ -18749,7 +18861,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1693",
+        "resources/js/modules/functions.ts:1676",
         "resources/templates/console/display.twig:162",
         "resources/templates/database/designer/main.twig:1059",
         "resources/templates/database/designer/main.twig:335",
@@ -18911,7 +19023,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:916",
+        "resources/js/designer/move.ts:909",
         "resources/templates/database/designer/main.twig:56",
         "resources/templates/database/designer/main.twig:59",
         "src/Controllers/JavaScriptMessagesController.php:522"
@@ -19186,7 +19298,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2722",
+        "resources/js/makegrid.ts:2715",
         "src/Controllers/JavaScriptMessagesController.php:564"
       ]
     },
@@ -19214,7 +19326,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2224",
+        "resources/js/server/status/monitor.ts:2220",
         "src/Controllers/JavaScriptMessagesController.php:168",
         "src/Server/Status/Data.php:130"
       ]
@@ -19344,7 +19456,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:878",
+        "resources/js/designer/move.ts:872",
         "src/Controllers/JavaScriptMessagesController.php:519"
       ]
     },
@@ -20030,8 +20142,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2539",
-        "resources/js/modules/functions.ts:2618",
+        "resources/js/modules/functions.ts:2518",
+        "resources/js/modules/functions.ts:2597",
         "src/Controllers/JavaScriptMessagesController.php:388",
         "src/Normalization.php:956"
       ]
@@ -20225,7 +20337,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:1607",
+        "resources/js/makegrid.ts:1600",
         "src/Controllers/JavaScriptMessagesController.php:560"
       ]
     },
@@ -20235,7 +20347,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:731",
+        "resources/js/modules/functions.ts:719",
         "src/Controllers/JavaScriptMessagesController.php:118"
       ]
     },
@@ -20255,7 +20367,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:692",
+        "resources/js/modules/functions.ts:680",
         "resources/js/table/change.ts:200",
         "resources/js/table/change.ts:214",
         "resources/js/table/change.ts:535",
@@ -20269,8 +20381,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1041",
-        "resources/js/designer/move.ts:828",
+        "resources/js/designer/move.ts:1031",
+        "resources/js/designer/move.ts:823",
         "src/Controllers/JavaScriptMessagesController.php:528"
       ]
     },
@@ -20380,7 +20492,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/multi_table_query.ts:151",
+        "resources/js/database/multi_table_query.ts:150",
         "src/Controllers/JavaScriptMessagesController.php:142"
       ]
     },
@@ -20475,9 +20587,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1033",
-        "resources/js/designer/move.ts:921",
-        "resources/js/designer/move.ts:959",
+        "resources/js/designer/move.ts:1023",
+        "resources/js/designer/move.ts:914",
+        "resources/js/designer/move.ts:951",
         "src/Controllers/JavaScriptMessagesController.php:527"
       ]
     },
@@ -20488,7 +20600,7 @@
       "plural": null,
       "refs": [
         "resources/js/modules/indexes.ts:289",
-        "resources/js/modules/indexes.ts:421",
+        "resources/js/modules/indexes.ts:420",
         "src/Controllers/JavaScriptMessagesController.php:128"
       ]
     },
@@ -20518,7 +20630,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1269",
+        "resources/js/designer/move.ts:1256",
         "src/Controllers/JavaScriptMessagesController.php:511"
       ]
     },
@@ -20560,7 +20672,7 @@
       "plural": null,
       "refs": [
         "resources/js/gis_data_editor.ts:180",
-        "resources/js/gis_data_editor.ts:420",
+        "resources/js/gis_data_editor.ts:419",
         "src/Controllers/JavaScriptMessagesController.php:473"
       ]
     },
@@ -20672,7 +20784,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2162",
+        "resources/js/makegrid.ts:2155",
         "src/Controllers/JavaScriptMessagesController.php:540"
       ]
     },
@@ -20682,8 +20794,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1408",
-        "resources/js/modules/functions.ts:1437",
+        "resources/js/modules/functions.ts:1391",
+        "resources/js/modules/functions.ts:1420",
         "resources/templates/columns_definitions/column_definitions_form.twig:154",
         "resources/templates/modals/index_dialog_modal.twig:11",
         "resources/templates/modals/index_dialog_modal.twig:21",
@@ -20741,6 +20853,7 @@
         "resources/templates/table/structure/display_structure.twig:143",
         "resources/templates/table/structure/display_structure.twig:284",
         "resources/templates/table/tracking/structure_snapshot_columns.twig:27",
+        "src/Controllers/Table/StructureController.php:200",
         "src/Controllers/Table/StructureController.php:215"
       ]
     },
@@ -20768,8 +20881,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:212",
-        "resources/js/normalization.ts:697",
+        "resources/js/normalization.ts:206",
+        "resources/js/normalization.ts:683",
         "src/Controllers/JavaScriptMessagesController.php:399"
       ]
     },
@@ -20864,6 +20977,7 @@
         "resources/templates/table/privileges/index.twig:22",
         "src/Config/ConfigFile.php:582",
         "src/Controllers/Server/PrivilegesController.php:443",
+        "src/Controllers/Server/PrivilegesController.php:446",
         "src/Menu.php:257",
         "src/Menu.php:369",
         "src/Util.php:1392",
@@ -20876,6 +20990,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:2378",
         "src/Server/Privileges.php:2382"
       ]
     },
@@ -20936,7 +21051,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/operations.ts:172",
+        "resources/js/database/operations.ts:168",
         "resources/js/database/routines.ts:193",
         "resources/js/database/routines.ts:381",
         "resources/js/database/routines.ts:446",
@@ -20944,30 +21059,30 @@
         "resources/js/database/routines.ts:875",
         "resources/js/database/structure.ts:241",
         "resources/js/database/structure.ts:296",
-        "resources/js/designer/move.ts:1049",
-        "resources/js/designer/move.ts:1335",
-        "resources/js/designer/move.ts:1363",
-        "resources/js/designer/move.ts:1599",
-        "resources/js/designer/move.ts:800",
-        "resources/js/designer/move.ts:836",
-        "resources/js/designer/move.ts:964",
+        "resources/js/designer/move.ts:1039",
+        "resources/js/designer/move.ts:1322",
+        "resources/js/designer/move.ts:1349",
+        "resources/js/designer/move.ts:1585",
+        "resources/js/designer/move.ts:795",
+        "resources/js/designer/move.ts:831",
+        "resources/js/designer/move.ts:956",
         "resources/js/events.ts:174",
         "resources/js/events.ts:358",
         "resources/js/events.ts:423",
         "resources/js/modules/ajax-message.ts:105",
         "resources/js/modules/ajax-message.ts:22",
         "resources/js/modules/ajax-message.ts:88",
-        "resources/js/modules/functions.ts:1833",
-        "resources/js/modules/functions.ts:1916",
-        "resources/js/modules/functions.ts:2130",
-        "resources/js/modules/functions.ts:2762",
-        "resources/js/modules/indexes.ts:605",
-        "resources/js/server/databases.ts:113",
-        "resources/js/server/databases.ts:57",
+        "resources/js/modules/functions.ts:1815",
+        "resources/js/modules/functions.ts:1898",
+        "resources/js/modules/functions.ts:2111",
+        "resources/js/modules/functions.ts:2740",
+        "resources/js/modules/indexes.ts:604",
+        "resources/js/server/databases.ts:112",
+        "resources/js/server/databases.ts:56",
         "resources/js/server/variables.ts:49",
-        "resources/js/table/operations.ts:267",
-        "resources/js/table/operations.ts:296",
-        "resources/js/table/operations.ts:330",
+        "resources/js/table/operations.ts:263",
+        "resources/js/table/operations.ts:292",
+        "resources/js/table/operations.ts:326",
         "resources/js/table/operations.ts:48",
         "resources/js/table/structure.ts:82",
         "resources/js/triggers.ts:184",
@@ -20994,7 +21109,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2231",
+        "resources/js/server/status/monitor.ts:2227",
         "src/Controllers/JavaScriptMessagesController.php:279"
       ]
     },
@@ -21194,8 +21309,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1189",
-        "resources/js/server/status/monitor.ts:1570",
+        "resources/js/server/status/monitor.ts:1188",
+        "resources/js/server/status/monitor.ts:1568",
         "resources/js/server/status/monitor.ts:201",
         "resources/js/server/status/monitor.ts:204",
         "src/Controllers/JavaScriptMessagesController.php:178"
@@ -21395,7 +21510,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1205",
+        "resources/js/server/status/monitor.ts:1204",
         "resources/js/server/status/monitor.ts:391",
         "resources/js/server/status/monitor.ts:392",
         "src/Controllers/JavaScriptMessagesController.php:214"
@@ -21912,6 +22027,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:1876",
         "src/Server/Privileges.php:1880"
       ]
     },
@@ -22092,7 +22208,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:254",
+        "resources/js/server/privileges.ts:251",
         "src/Controllers/JavaScriptMessagesController.php:154"
       ]
     },
@@ -22131,7 +22247,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/indexes.ts:728",
+        "resources/js/modules/indexes.ts:726",
         "src/Controllers/JavaScriptMessagesController.php:123"
       ]
     },
@@ -22169,7 +22285,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/operations.ts:68",
+        "resources/js/database/operations.ts:66",
         "src/Controllers/JavaScriptMessagesController.php:341"
       ]
     },
@@ -22476,7 +22592,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/variables.ts:63",
+        "resources/js/server/variables.ts:62",
         "src/Controllers/JavaScriptMessagesController.php:323"
       ]
     },
@@ -22728,6 +22844,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:1268",
         "src/Server/Privileges.php:1272"
       ]
     },
@@ -22779,6 +22896,8 @@
         "resources/templates/server/privileges/edit_routine_privileges.twig:46",
         "resources/templates/server/privileges/edit_routine_privileges.twig:59",
         "src/Controllers/JavaScriptMessagesController.php:364",
+        "src/Server/Privileges.php:1569",
+        "src/Server/Privileges.php:1571",
         "src/Server/Privileges.php:1573",
         "src/Server/Privileges.php:1575"
       ]
@@ -22846,6 +22965,7 @@
       "plural": null,
       "refs": [
         "resources/templates/server/privileges/edit_routine_privileges.twig:47",
+        "src/Server/Privileges.php:1570",
         "src/Server/Privileges.php:1574"
       ]
     },
@@ -23000,8 +23120,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:579",
-        "resources/js/normalization.ts:665",
+        "resources/js/normalization.ts:567",
+        "resources/js/normalization.ts:651",
         "resources/templates/columns_definitions/column_definitions_form.twig:157",
         "resources/templates/database/central_columns/edit.twig:22",
         "resources/templates/database/central_columns/main.twig:119",
@@ -23126,8 +23246,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1108",
-        "resources/js/designer/move.ts:880",
+        "resources/js/designer/move.ts:1097",
+        "resources/js/designer/move.ts:874",
         "resources/templates/database/designer/main.twig:63",
         "resources/templates/database/designer/main.twig:66",
         "src/Controllers/JavaScriptMessagesController.php:520"
@@ -23139,7 +23259,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1022",
+        "resources/js/designer/move.ts:1012",
         "resources/templates/database/designer/main.twig:70",
         "resources/templates/database/designer/main.twig:73",
         "src/Controllers/JavaScriptMessagesController.php:521"
@@ -23248,6 +23368,7 @@
         "resources/templates/database/routines/index.twig:29",
         "resources/templates/database/routines/index.twig:29",
         "resources/templates/database/search/main.twig:72",
+        "resources/templates/database/structure/structure_table_row.twig:52",
         "resources/templates/database/structure/structure_table_row.twig:53",
         "resources/templates/server/databases/index.twig:76",
         "resources/templates/server/databases/index.twig:77",
@@ -23279,7 +23400,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2546",
+        "resources/js/modules/functions.ts:2525",
         "src/Controllers/JavaScriptMessagesController.php:390"
       ]
     },
@@ -23308,7 +23429,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/search.ts:226",
+        "resources/js/database/search.ts:224",
         "resources/js/table/select.ts:130",
         "src/Controllers/JavaScriptMessagesController.php:353"
       ]
@@ -23319,7 +23440,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/SearchController.php:62",
+        "src/Controllers/Database/SearchController.php:55",
         "src/Controllers/Database/SearchController.php:63"
       ]
     },
@@ -23338,7 +23459,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:95",
+        "resources/js/normalization.ts:92",
         "src/Controllers/JavaScriptMessagesController.php:403"
       ]
     },
@@ -23404,7 +23525,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2555",
+        "resources/js/modules/functions.ts:2534",
         "src/Controllers/JavaScriptMessagesController.php:395"
       ]
     },
@@ -23582,7 +23703,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1280",
+        "resources/js/designer/move.ts:1267",
         "src/Controllers/JavaScriptMessagesController.php:510"
       ]
     },
@@ -23621,7 +23742,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1249",
+        "resources/js/designer/move.ts:1236",
         "src/Controllers/JavaScriptMessagesController.php:509"
       ]
     },
@@ -23695,7 +23816,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:372",
+        "resources/js/normalization.ts:363",
         "src/Controllers/JavaScriptMessagesController.php:426"
       ]
     },
@@ -23705,7 +23826,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:324",
+        "resources/js/normalization.ts:316",
         "src/Controllers/JavaScriptMessagesController.php:406"
       ]
     },
@@ -24068,7 +24189,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:831",
+        "resources/js/server/status/monitor.ts:830",
         "src/Controllers/JavaScriptMessagesController.php:243"
       ]
     },
@@ -24078,7 +24199,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:860",
+        "resources/js/server/status/monitor.ts:859",
         "src/Controllers/JavaScriptMessagesController.php:249"
       ]
     },
@@ -24250,7 +24371,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2758",
+        "resources/js/makegrid.ts:2751",
         "src/Controllers/JavaScriptMessagesController.php:547",
         "src/Controllers/JavaScriptMessagesController.php:548"
       ]
@@ -24470,12 +24591,13 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:584",
-        "resources/js/designer/move.ts:618",
+        "resources/js/designer/move.ts:582",
+        "resources/js/designer/move.ts:616",
         "resources/templates/database/multi_table_query/form.twig:38",
         "resources/templates/database/tracking/tables.twig:19",
         "resources/templates/table/tracking/main.twig:33",
         "src/Controllers/JavaScriptMessagesController.php:694",
+        "src/Controllers/Table/ChangeController.php:208",
         "src/Controllers/Table/ChangeController.php:223"
       ]
     },
@@ -24503,7 +24625,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:1828",
+        "resources/js/makegrid.ts:1821",
         "resources/templates/display/results/table.twig:96",
         "resources/templates/server/privileges/initials_row.twig:21",
         "resources/templates/table/browse_foreigners/show_all.twig:2",
@@ -24517,7 +24639,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/console.ts:1349",
+        "resources/js/modules/console.ts:1346",
         "src/Controllers/JavaScriptMessagesController.php:643"
       ]
     },
@@ -24646,7 +24768,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/find_replace.ts:28",
+        "resources/js/table/find_replace.ts:27",
         "src/Controllers/JavaScriptMessagesController.php:442"
       ]
     },
@@ -24785,7 +24907,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:809",
+        "resources/js/normalization.ts:793",
         "src/Controllers/JavaScriptMessagesController.php:413"
       ]
     },
@@ -24936,7 +25058,7 @@
       "plural": null,
       "refs": [
         "resources/js/database/search.ts:94",
-        "resources/js/sql.ts:709",
+        "resources/js/sql.ts:708",
         "src/Controllers/JavaScriptMessagesController.php:379"
       ]
     },
@@ -24974,7 +25096,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/error_report.ts:149",
+        "resources/js/error_report.ts:148",
         "src/Controllers/JavaScriptMessagesController.php:603"
       ]
     },
@@ -24995,13 +25117,13 @@
       "refs": [
         "resources/js/database/search.ts:110",
         "resources/js/database/search.ts:115",
-        "resources/js/database/search.ts:256",
-        "resources/js/table/select.ts:194",
+        "resources/js/database/search.ts:251",
+        "resources/js/table/select.ts:192",
         "resources/js/table/select.ts:78",
         "resources/js/table/select.ts:83",
-        "resources/js/table/zoom_search.ts:272",
-        "resources/js/table/zoom_search.ts:277",
-        "resources/js/table/zoom_search.ts:468",
+        "resources/js/table/zoom_search.ts:268",
+        "resources/js/table/zoom_search.ts:273",
+        "resources/js/table/zoom_search.ts:463",
         "src/Controllers/JavaScriptMessagesController.php:436"
       ]
     },
@@ -25177,7 +25299,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/CentralColumnsController.php:148"
+        "src/Controllers/Database/CentralColumnsController.php:148",
+        "src/Controllers/Database/CentralColumnsController.php:151"
       ]
     },
     {
@@ -25282,7 +25405,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2054",
+        "resources/js/server/status/monitor.ts:2051",
         "src/Controllers/JavaScriptMessagesController.php:268",
         "src/Controllers/JavaScriptMessagesController.php:269"
       ]
@@ -25293,7 +25416,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:825",
+        "resources/js/normalization.ts:809",
         "src/Controllers/JavaScriptMessagesController.php:415",
         "src/Controllers/JavaScriptMessagesController.php:416"
       ]
@@ -25432,7 +25555,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:792",
+        "resources/js/server/status/monitor.ts:791",
         "src/Controllers/JavaScriptMessagesController.php:230"
       ]
     },
@@ -25442,7 +25565,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:807",
+        "resources/js/server/status/monitor.ts:806",
         "src/Controllers/JavaScriptMessagesController.php:233",
         "src/Controllers/JavaScriptMessagesController.php:234"
       ]
@@ -25453,7 +25576,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:787",
+        "resources/js/server/status/monitor.ts:786",
         "src/Controllers/JavaScriptMessagesController.php:229"
       ]
     },
@@ -25501,7 +25624,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/console.ts:1475",
+        "resources/js/modules/console.ts:1472",
         "src/Controllers/JavaScriptMessagesController.php:640"
       ]
     },
@@ -25852,7 +25975,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/export.ts:263",
+        "resources/js/export.ts:259",
         "src/Controllers/JavaScriptMessagesController.php:221"
       ]
     },
@@ -25898,7 +26021,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/sql.ts:1056",
+        "resources/js/sql.ts:1051",
         "resources/templates/export.twig:68",
         "src/Controllers/JavaScriptMessagesController.php:135",
         "src/Html/Generator.php:752"
@@ -25910,6 +26033,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/TrackingController.php:137",
         "src/Controllers/Table/TrackingController.php:144"
       ]
     },
@@ -26114,7 +26238,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2200",
+        "resources/js/server/status/monitor.ts:2196",
         "resources/templates/database/tracking/tables.twig:17",
         "resources/templates/events/editor-form.twig:30",
         "resources/templates/events/index.twig:47",
@@ -26141,8 +26265,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:323",
-        "resources/js/normalization.ts:371",
+        "resources/js/normalization.ts:315",
+        "resources/js/normalization.ts:362",
         "src/Controllers/JavaScriptMessagesController.php:418"
       ]
     },
@@ -26296,7 +26420,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:407",
+        "resources/js/modules/functions.ts:395",
         "src/Controllers/JavaScriptMessagesController.php:664"
       ]
     },
@@ -26326,10 +26450,11 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:586",
+        "resources/js/designer/move.ts:584",
         "resources/templates/columns_definitions/table_fields_definitions.twig:16",
         "resources/templates/database/central_columns/edit.twig:3",
         "resources/templates/database/export/index.twig:23",
+        "resources/templates/database/structure/structure_table_row.twig:47",
         "resources/templates/database/structure/structure_table_row.twig:48",
         "resources/templates/server/privileges/privileges_table.twig:357",
         "resources/templates/table/tracking/structure_snapshot_columns.twig:2",
@@ -26597,8 +26722,8 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/js/modules/functions.ts:1498",
         "resources/js/modules/functions.ts:1515",
-        "resources/js/modules/functions.ts:1532",
         "src/Controllers/JavaScriptMessagesController.php:634"
       ]
     },
@@ -26608,8 +26733,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:977",
-        "resources/js/designer/move.ts:990",
+        "resources/js/designer/move.ts:968",
+        "resources/js/designer/move.ts:981",
         "src/Controllers/JavaScriptMessagesController.php:530"
       ]
     },
@@ -26628,8 +26753,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1954",
-        "resources/js/server/status/monitor.ts:2043",
+        "resources/js/server/status/monitor.ts:1951",
+        "resources/js/server/status/monitor.ts:2040",
         "src/Controllers/JavaScriptMessagesController.php:293"
       ]
     },
@@ -26730,8 +26855,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1188",
-        "resources/js/server/status/monitor.ts:1569",
+        "resources/js/server/status/monitor.ts:1187",
+        "resources/js/server/status/monitor.ts:1567",
         "resources/js/server/status/monitor.ts:243",
         "resources/js/server/status/monitor.ts:300",
         "resources/js/server/status/monitor.ts:346",
@@ -26744,10 +26869,10 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1194",
-        "resources/js/server/status/monitor.ts:1550",
-        "resources/js/server/status/monitor.ts:1571",
-        "resources/js/server/status/monitor.ts:1578",
+        "resources/js/server/status/monitor.ts:1193",
+        "resources/js/server/status/monitor.ts:1548",
+        "resources/js/server/status/monitor.ts:1569",
+        "resources/js/server/status/monitor.ts:1576",
         "resources/js/server/status/monitor.ts:258",
         "resources/js/server/status/monitor.ts:310",
         "resources/js/server/status/monitor.ts:360",
@@ -26778,10 +26903,10 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1195",
-        "resources/js/server/status/monitor.ts:1551",
-        "resources/js/server/status/monitor.ts:1572",
-        "resources/js/server/status/monitor.ts:1578",
+        "resources/js/server/status/monitor.ts:1194",
+        "resources/js/server/status/monitor.ts:1549",
+        "resources/js/server/status/monitor.ts:1570",
+        "resources/js/server/status/monitor.ts:1576",
         "resources/js/server/status/monitor.ts:277",
         "resources/js/server/status/monitor.ts:326",
         "resources/js/server/status/monitor.ts:372",
@@ -26837,10 +26962,13 @@
         "resources/templates/table/relation/common_form.twig:39",
         "resources/templates/table/relation/foreign_key_row.twig:102",
         "resources/templates/table/relation/foreign_key_row.twig:103",
+        "resources/templates/triggers/editor_form.twig:31",
         "resources/templates/triggers/editor_form.twig:32",
         "resources/templates/triggers/list.twig:49",
         "src/Config/Descriptions.php:935",
         "src/Plugins/Export/ExportXml.php:408",
+        "src/Server/Privileges.php:1563",
+        "src/Server/Privileges.php:1565",
         "src/Server/Privileges.php:1567",
         "src/Server/Privileges.php:1569"
       ]
@@ -26852,7 +26980,9 @@
       "plural": null,
       "refs": [
         "src/Controllers/Table/AddFieldController.php:136",
+        "src/Controllers/Table/IndexRenameController.php:108",
         "src/Controllers/Table/IndexRenameController.php:122",
+        "src/Controllers/Table/IndexesController.php:120",
         "src/Controllers/Table/IndexesController.php:137",
         "src/Controllers/Table/Structure/PartitioningController.php:264",
         "src/Controllers/Table/Structure/SaveController.php:227"
@@ -26912,6 +27042,7 @@
       "plural": null,
       "refs": [
         "resources/templates/table/operations/index.twig:459",
+        "src/Controllers/Database/StructureController.php:366",
         "src/Controllers/Database/StructureController.php:374"
       ]
     },
@@ -26922,7 +27053,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/structure/structure_table_row.twig:71",
-        "resources/templates/database/structure/structure_table_row.twig:72",
         "resources/templates/table/operations/index.twig:418",
         "resources/templates/table/operations/index.twig:421",
         "resources/templates/table/operations/index.twig:436",
@@ -27228,6 +27358,7 @@
         "resources/templates/server/privileges/privileges_summary.twig:19",
         "resources/templates/server/privileges/privileges_table.twig:267",
         "resources/templates/server/privileges/privileges_table.twig:7",
+        "src/Server/Privileges.php:1564",
         "src/Server/Privileges.php:1568"
       ]
     },
@@ -27300,9 +27431,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:114",
-        "resources/js/normalization.ts:213",
-        "resources/js/normalization.ts:698",
+        "resources/js/normalization.ts:111",
+        "resources/js/normalization.ts:207",
+        "resources/js/normalization.ts:684",
         "src/Controllers/JavaScriptMessagesController.php:400",
         "src/Normalization.php:263"
       ]
@@ -27377,7 +27508,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/export.ts:114",
+        "resources/js/export.ts:113",
         "src/Controllers/JavaScriptMessagesController.php:162"
       ]
     },
@@ -27387,7 +27518,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/export.ts:223",
+        "resources/js/export.ts:219",
         "src/Controllers/JavaScriptMessagesController.php:165"
       ]
     },
@@ -27397,7 +27528,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/export.ts:169",
+        "resources/js/export.ts:167",
         "src/Controllers/JavaScriptMessagesController.php:163"
       ]
     },
@@ -27407,7 +27538,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/export.ts:197",
+        "resources/js/export.ts:194",
         "src/Controllers/JavaScriptMessagesController.php:164"
       ]
     },
@@ -27919,7 +28050,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2139",
+        "resources/js/server/status/monitor.ts:2135",
         "src/Controllers/JavaScriptMessagesController.php:262"
       ]
     },
@@ -27989,6 +28120,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Events/IndexController.php:61",
         "src/Controllers/Events/IndexController.php:69"
       ]
     },
@@ -28063,7 +28195,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:132",
+        "resources/js/normalization.ts:129",
         "src/Controllers/JavaScriptMessagesController.php:401"
       ]
     },
@@ -28110,7 +28242,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:545",
+        "resources/js/designer/move.ts:543",
         "src/Controllers/JavaScriptMessagesController.php:696",
         "src/Controllers/JavaScriptMessagesController.php:697"
       ]
@@ -28160,7 +28292,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:470",
+        "resources/js/server/privileges.ts:467",
         "src/Controllers/JavaScriptMessagesController.php:145"
       ]
     },
@@ -29259,7 +29391,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Server/Privileges.php:886"
+        "src/Server/Privileges.php:886",
+        "src/Server/Privileges.php:888"
       ]
     },
     {
@@ -29277,9 +29410,10 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1994",
-        "resources/js/modules/functions.ts:2015",
+        "resources/js/modules/functions.ts:1975",
+        "resources/js/modules/functions.ts:1996",
         "src/Controllers/JavaScriptMessagesController.php:147",
+        "src/Server/Privileges.php:760",
         "src/Server/Privileges.php:761",
         "src/UserPassword.php:33"
       ]
@@ -29290,9 +29424,10 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:1995",
-        "resources/js/modules/functions.ts:2017",
+        "resources/js/modules/functions.ts:1976",
+        "resources/js/modules/functions.ts:1998",
         "src/Controllers/JavaScriptMessagesController.php:148",
+        "src/Server/Privileges.php:756",
         "src/Server/Privileges.php:759",
         "src/UserPassword.php:38"
       ]
@@ -29331,7 +29466,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Operations/DatabaseController.php:270",
+        "src/Controllers/Operations/DatabaseController.php:263",
         "src/Controllers/Operations/DatabaseController.php:271"
       ]
     },
@@ -29391,6 +29526,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:2157",
         "src/Server/Privileges.php:2161"
       ]
     },
@@ -29579,6 +29715,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:1901",
         "src/Server/Privileges.php:1905"
       ]
     },
@@ -29682,7 +29819,7 @@
       "context": "The table already exists in the designer and can not be added once more.",
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:679",
+        "resources/js/designer/move.ts:676",
         "src/Controllers/JavaScriptMessagesController.php:689",
         "src/Controllers/JavaScriptMessagesController.php:691"
       ]
@@ -29879,6 +30016,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:2224",
         "src/Server/Privileges.php:2228"
       ]
     },
@@ -29888,7 +30026,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:477",
+        "resources/js/server/privileges.ts:474",
         "src/Controllers/JavaScriptMessagesController.php:146"
       ]
     },
@@ -29950,6 +30088,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/DesignerController.php:108",
         "src/Controllers/Database/DesignerController.php:109"
       ]
     },
@@ -30137,7 +30276,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/git-info.ts:135",
+        "resources/js/modules/git-info.ts:134",
         "src/Controllers/JavaScriptMessagesController.php:598"
       ]
     },
@@ -30176,7 +30315,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/normalization.ts:55",
+        "resources/js/normalization.ts:53",
         "src/Controllers/JavaScriptMessagesController.php:424"
       ]
     },
@@ -30215,7 +30354,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2052",
+        "resources/js/server/status/monitor.ts:2049",
         "src/Controllers/JavaScriptMessagesController.php:263",
         "src/Controllers/JavaScriptMessagesController.php:264"
       ]
@@ -30436,7 +30575,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/structure.ts:166",
+        "resources/js/table/structure.ts:165",
         "src/Controllers/JavaScriptMessagesController.php:87",
         "src/Controllers/JavaScriptMessagesController.php:88"
       ]
@@ -30528,7 +30667,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2164",
+        "resources/js/makegrid.ts:2157",
         "src/Controllers/JavaScriptMessagesController.php:556",
         "src/Controllers/JavaScriptMessagesController.php:557"
       ]
@@ -30577,7 +30716,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/StructureController.php:572",
+        "src/Controllers/Database/StructureController.php:564",
         "src/Controllers/Database/StructureController.php:573",
         "src/Display/Results.php:3186",
         "src/Display/Results.php:3187"
@@ -30670,7 +30809,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/table/operations.ts:151",
+        "resources/js/table/operations.ts:149",
         "src/Controllers/JavaScriptMessagesController.php:98",
         "src/Controllers/JavaScriptMessagesController.php:99"
       ]
@@ -30693,7 +30832,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2200",
+        "resources/js/server/status/monitor.ts:2196",
         "resources/templates/sql/profiling_chart.twig:13",
         "resources/templates/triggers/list.twig:51",
         "src/Controllers/JavaScriptMessagesController.php:277",
@@ -30719,7 +30858,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/console.ts:1429",
+        "resources/js/modules/console.ts:1426",
         "resources/templates/console/display.twig:121",
         "src/Controllers/JavaScriptMessagesController.php:645"
       ]
@@ -30949,7 +31088,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:2227",
+        "resources/js/server/status/monitor.ts:2223",
         "src/Controllers/JavaScriptMessagesController.php:278"
       ]
     },
@@ -30959,8 +31098,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1955",
-        "resources/js/server/status/monitor.ts:2044",
+        "resources/js/server/status/monitor.ts:1952",
+        "resources/js/server/status/monitor.ts:2041",
         "resources/templates/server/databases/index.twig:255",
         "resources/templates/server/engines/_innodb_buffer_pool.twig:34",
         "src/Controllers/JavaScriptMessagesController.php:294"
@@ -31041,7 +31180,9 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/TrackingController.php:64",
         "src/Controllers/Database/TrackingController.php:71",
+        "src/Controllers/Database/TrackingController.php:90",
         "src/Controllers/Database/TrackingController.php:97"
       ]
     },
@@ -31096,6 +31237,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/TrackingController.php:84",
         "src/Controllers/Table/TrackingController.php:91"
       ]
     },
@@ -31144,6 +31286,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Table/TrackingController.php:191",
         "src/Controllers/Table/TrackingController.php:198"
       ]
     },
@@ -31162,7 +31305,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:1201",
+        "resources/js/server/status/monitor.ts:1200",
         "resources/js/server/status/monitor.ts:409",
         "resources/templates/server/status/status/index.twig:14",
         "src/Controllers/JavaScriptMessagesController.php:215"
@@ -31221,6 +31364,7 @@
       "context": "Trigger action time",
       "plural": null,
       "refs": [
+        "resources/templates/triggers/editor_form.twig:41",
         "resources/templates/triggers/editor_form.twig:42"
       ]
     },
@@ -31239,6 +31383,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/templates/triggers/editor_form.twig:27",
         "resources/templates/triggers/editor_form.twig:28"
       ]
     },
@@ -31633,7 +31778,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:977",
+        "resources/js/server/status/monitor.ts:976",
         "src/Controllers/JavaScriptMessagesController.php:260"
       ]
     },
@@ -31702,6 +31847,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/StructureController.php:734",
         "src/Controllers/Database/StructureController.php:742"
       ]
     },
@@ -31751,8 +31897,8 @@
       "context": "Unlock the account.",
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:136",
-        "resources/js/server/privileges.ts:137",
+        "resources/js/server/privileges.ts:134",
+        "resources/js/server/privileges.ts:135",
         "resources/templates/server/privileges/users_overview.twig:102",
         "src/Controllers/JavaScriptMessagesController.php:157"
       ]
@@ -31763,7 +31909,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/privileges.ts:138",
+        "resources/js/server/privileges.ts:136",
         "resources/templates/server/privileges/users_overview.twig:100",
         "src/Controllers/JavaScriptMessagesController.php:159"
       ]
@@ -32217,6 +32363,7 @@
       "refs": [
         "resources/templates/server/user_groups/user_listings.twig:9",
         "src/Controllers/Server/PrivilegesController.php:446",
+        "src/Controllers/Server/PrivilegesController.php:449",
         "src/Server/Status/Processes.php:105"
       ]
     },
@@ -32536,7 +32683,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/designer/move.ts:1952",
+        "resources/js/designer/move.ts:1938",
         "src/Controllers/JavaScriptMessagesController.php:517"
       ]
     },
@@ -32555,7 +32702,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2341",
+        "resources/js/modules/functions.ts:2321",
         "src/Controllers/JavaScriptMessagesController.php:370"
       ]
     },
@@ -32565,7 +32712,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2343",
+        "resources/js/modules/functions.ts:2323",
         "src/Controllers/JavaScriptMessagesController.php:369"
       ]
     },
@@ -32612,7 +32759,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/sql.ts:770",
+        "resources/js/sql.ts:768",
         "src/Controllers/JavaScriptMessagesController.php:385"
       ]
     },
@@ -32674,7 +32821,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/TrackingController.php:81",
+        "src/Controllers/Database/TrackingController.php:74",
         "src/Controllers/Database/TrackingController.php:82"
       ]
     },
@@ -32760,7 +32907,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:398",
+        "resources/js/modules/functions.ts:386",
         "src/Controllers/JavaScriptMessagesController.php:661"
       ]
     },
@@ -32771,10 +32918,15 @@
       "plural": null,
       "refs": [
         "resources/templates/database/structure/show_create.twig:35",
+        "resources/templates/database/structure/structure_table_row.twig:120",
         "resources/templates/database/structure/structure_table_row.twig:122",
+        "resources/templates/database/structure/structure_table_row.twig:184",
         "resources/templates/database/structure/structure_table_row.twig:186",
+        "src/Controllers/Operations/TableController.php:104",
         "src/Controllers/Operations/TableController.php:118",
+        "src/Controllers/Operations/TableController.php:304",
         "src/Controllers/Operations/TableController.php:318",
+        "src/Controllers/Table/StructureController.php:134",
         "src/Controllers/Table/StructureController.php:149",
         "src/Navigation/Nodes/NodeView.php:25"
       ]
@@ -32788,6 +32940,7 @@
         "resources/templates/table/operations/index.twig:459",
         "resources/templates/table/operations/view.twig:32",
         "resources/templates/table/operations/view.twig:36",
+        "src/Controllers/Database/StructureController.php:366",
         "src/Controllers/Database/StructureController.php:374"
       ]
     },
@@ -32826,6 +32979,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "resources/templates/view_create.twig:74",
         "resources/templates/view_create.twig:75"
       ]
     },
@@ -32835,6 +32989,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/View/CreateController.php:77",
         "src/Controllers/View/CreateController.php:84"
       ]
     },
@@ -32969,7 +33124,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:401",
+        "resources/js/modules/functions.ts:389",
         "src/Controllers/JavaScriptMessagesController.php:662"
       ]
     },
@@ -33599,6 +33754,7 @@
         "src/Controllers/Table/DeleteRowsController.php:35",
         "src/Controllers/Table/DropColumnController.php:46",
         "src/Controllers/Table/Structure/PrimaryController.php:101",
+        "src/Controllers/Table/Structure/PrimaryController.php:84",
         "src/Indexes/Index.php:474",
         "src/Indexes/IndexColumn.php:148",
         "src/Plugins/Export/ExportHtmlword.php:515",
@@ -33633,9 +33789,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/database/operations.ts:163",
-        "resources/js/server/databases.ts:47",
-        "resources/js/server/privileges.ts:247",
+        "resources/js/database/operations.ts:159",
+        "resources/js/server/databases.ts:46",
+        "resources/js/server/privileges.ts:244",
         "src/Controllers/JavaScriptMessagesController.php:56"
       ]
     },
@@ -33646,8 +33802,8 @@
       "plural": null,
       "refs": [
         "resources/js/database/structure.ts:286",
-        "resources/js/table/operations.ts:291",
-        "resources/js/table/operations.ts:323",
+        "resources/js/table/operations.ts:287",
+        "resources/js/table/operations.ts:319",
         "src/Controllers/JavaScriptMessagesController.php:60"
       ]
     },
@@ -33717,8 +33873,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/modules/functions.ts:2150",
-        "resources/js/server/privileges.ts:492",
+        "resources/js/modules/functions.ts:2130",
+        "resources/js/server/privileges.ts:489",
         "src/Controllers/JavaScriptMessagesController.php:149",
         "src/Controllers/JavaScriptMessagesController.php:150"
       ]
@@ -33873,7 +34029,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/server/status/monitor.ts:863",
+        "resources/js/server/status/monitor.ts:862",
         "src/Controllers/JavaScriptMessagesController.php:250",
         "src/Controllers/JavaScriptMessagesController.php:251"
       ]
@@ -33922,6 +34078,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Controllers/Database/PrivilegesController.php:68",
         "src/Controllers/Database/PrivilegesController.php:70",
         "src/Controllers/Server/PrivilegesController.php:106",
         "src/Controllers/Table/PrivilegesController.php:73"
@@ -33974,6 +34131,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:2771",
         "src/Server/Privileges.php:2775"
       ]
     },
@@ -33993,7 +34151,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/makegrid.ts:2163",
+        "resources/js/makegrid.ts:2156",
         "src/Controllers/JavaScriptMessagesController.php:541",
         "src/Controllers/JavaScriptMessagesController.php:542"
       ]
@@ -34031,6 +34189,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:930",
         "src/Server/Privileges.php:934"
       ]
     },
@@ -34050,6 +34209,7 @@
       "context": null,
       "plural": null,
       "refs": [
+        "src/Server/Privileges.php:1976",
         "src/Server/Privileges.php:1980"
       ]
     },
@@ -34393,7 +34553,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/js/export.ts:793",
+        "resources/js/export.ts:788",
         "src/Controllers/JavaScriptMessagesController.php:604"
       ]
     },
@@ -34483,6 +34643,7 @@
       "refs": [
         "resources/templates/sql/query.twig:7",
         "src/Controllers/Operations/ViewController.php:109",
+        "src/Controllers/Operations/ViewController.php:95",
         "src/Database/Routines.php:1000",
         "src/Message.php:87"
       ]

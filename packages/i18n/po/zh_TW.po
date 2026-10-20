@@ -1,4 +1,4 @@
-# Imported from phpMyAdmin a15cd540cfd06cebd297890bedd4b5cfb067a57d resources/po/zh_TW.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin ef2fcd20e23b2fbe24844388a45c4d35f2c17309 resources/po/zh_TW.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2024-07-03 07:27+0000\nLast-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\nLanguage-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hant/>\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.7-dev\n"

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "a15cd540cfd06cebd297890bedd4b5cfb067a57d"
+    "referenceCommit": "ef2fcd20e23b2fbe24844388a45c4d35f2c17309"
   },
   "kinds": {
     "routes": {
@@ -1790,7 +1790,7 @@
     },
     "messages": {
       "total": 3428,
-      "implemented": 3284,
+      "implemented": 3283,
       "covered": 3427,
       "coverage": 0.9997,
       "implementedKeys": [
@@ -3472,7 +3472,6 @@
         "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc].",
         "No database selected.",
         "No databases",
-        "No databases selected.",
         "No dependencies selected!",
         "no description",
         "No event with name %1$s found in database %2$s.",
@@ -5137,6 +5136,7 @@
         "Missing a temporary folder.",
         "Name (Ascending)",
         "Name (Descending)",
+        "No databases selected.",
         "No valid image path for theme %s found!",
         "Order of the tables",
         "PDF export page",
@@ -5226,9 +5226,9 @@
       ]
     },
     "js": {
-      "total": 966,
-      "implemented": 953,
-      "covered": 966,
+      "total": 965,
+      "implemented": 952,
+      "covered": 965,
       "coverage": 1,
       "implementedKeys": [
         "js:codemirror/addon/lint/sql-lint.ts#ajax:POST /lint",
@@ -5998,7 +5998,6 @@
         "js:setup/scripts.ts#click:<link>",
         "js:shortcuts_handler.ts#keydown:document",
         "js:shortcuts_handler.ts#keyup:document",
-        "js:sql.ts#ajax:POST …&ajax_request=1",
         "js:sql.ts#ajax:POST /database/sql/format",
         "js:sql.ts#ajax:POST /import/simulate-dml",
         "js:sql.ts#ajax:POST <$(this).attr('action')>",

@@ -366,7 +366,7 @@ export async function dropDatabases(ctx: AdminCtx, selected: unknown[]): Promise
     (d): d is string => typeof d === 'string' && !isSystemSchema(d, true) && d !== pmadb,
   )
   if (dbs.length === 0) {
-    return { success: false, message: { type: 'error', text: tr.gettext('No databases selected.') } }
+    return { success: false, message: { type: 'error', text: tr.gettext('No database selected.') } }
   }
   for (const db of dbs) {
     await dropCleanup.relation(ctx, db)

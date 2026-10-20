@@ -137,7 +137,7 @@ describe('GET structure', () => {
     })
     expect((await get('/api/servers/1/databases/m2tbl_missing/tables/x/structure', 404)).error).toMatchObject(
       {
-        message: 'No databases selected.',
+        message: 'No database selected.',
       },
     )
   })

@@ -94,7 +94,7 @@ Secondary pill bar on Structure/Relation pages (`table/page_with_secondary_tabs.
 
 **Purpose.** List columns, manage per-column actions, bulk actions, add columns, manage indexes, partitions and show table statistics.
 
-**Controller flow** (`StructureController::__invoke`): `PageSettings::init('TableStructure')` (page-settings modal), adds script `table/structure.js`, validates db/table (ajax → `{success:false,message:'No databases selected.'|'No table selected.'}`; non-ajax → redirect `/` with `reload=true`), gathers primary index (`Index::getPrimary`), columns with any index (`Table::getColumnsWithIndex(UNIQUE|INDEX|SPATIAL|FULLTEXT)`), `dbi->getColumns()`, then `displayStructure()`.
+**Controller flow** (`StructureController::__invoke`): `PageSettings::init('TableStructure')` (page-settings modal), adds script `table/structure.js`, validates db/table (ajax → `{success:false,message:'No database selected.'|'No table selected.'}`; non-ajax → redirect `/` with `reload=true`), gathers primary index (`Index::getPrimary`), columns with any index (`Table::getColumnsWithIndex(UNIQUE|INDEX|SPATIAL|FULLTEXT)`), `dbi->getColumns()`, then `displayStructure()`.
 
 `displayStructure()` details:
 - View detection: `tbl_is_view` → engine label "View"; else `strtoupper(getStorageEngine())`.
@@ -566,8 +566,8 @@ Structure list
 - [x] Bulk Change opens the multi-column edit form (one row per selected column). <!-- parity:test --> `p04-e5b2c3` [table-structure.test.ts:207](../../apps/server/test/int/table-structure.test.ts#L207) +1
 - [x] "Add N column(s) at beginning | after X" — hidden `field_where` toggled by selecting the first option; last column preselected. <!-- parity:test --> `p04-9d4da3` [table-structure.test.ts:182](../../apps/server/test/int/table-structure.test.ts#L182) +2
 - [x] Move columns modal: drag list, Go no-op when unchanged, Preview SQL shows generated `ALTER TABLE … CHANGE … FIRST/AFTER`, error modal on mismatch ("The selected columns do not match the columns in the table." / "…already in the correct order."). <!-- parity:test --> `p04-511b9e` [structure.test.ts:210](../../packages/sql-gen/test/structure.test.ts#L210) +2
-- [x] Propose table structure only on MySQL < 8 or MariaDB (`PROCEDURE ANALYSE()` with all rows). <!-- parity:test --> `p04-262da9` [table-structure.test.ts:508](../../apps/server/test/int/table-structure.test.ts#L508)
-- [x] Track table / Track view links only when tracking is active. <!-- parity:test --> `p04-c123c5` [table-structure.test.ts:496](../../apps/server/test/int/table-structure.test.ts#L496)
+- [x] Propose table structure only on MySQL < 8 or MariaDB (`PROCEDURE ANALYSE()` with all rows). <!-- parity:test --> `p04-262da9` [table-structure.test.ts:515](../../apps/server/test/int/table-structure.test.ts#L515)
+- [x] Track table / Track view links only when tracking is active. <!-- parity:test --> `p04-c123c5` [table-structure.test.ts:503](../../apps/server/test/int/table-structure.test.ts#L503)
 - [x] Print button hides `d-print-none` and shows the `<h1>` table name. <!-- parity:test --> `p04-e9ef21` [table-structure-extras.e2e.ts:99](../../tests/e2e/table-structure-extras.e2e.ts#L99)
 - [x] Indexes card hidden for ARCHIVE; duplicate-index notices; "No index defined!" placeholder; create-index count 1..16. <!-- parity:test --> `p04-58bbc9` [structure.test.ts:167](../../packages/sql-gen/test/structure.test.ts#L167) +2
 - [x] Index drop uses the Preview-SQL confirm modal; removing the last index swaps to the placeholder without reload. <!-- parity:test --> `p04-68a55a` [table-structure.parity.test.ts:961](../../tests/parity/table-structure.parity.test.ts#L961) +1
@@ -601,7 +601,7 @@ Column form
 
 Index editor
 - [x] PRIMARY forces name `PRIMARY` (disabled input, re-enabled on submit); non-primary named PRIMARY → error. <!-- parity:test --> `p04-a2ef93` [table-structure.test.ts:375](../../apps/server/test/int/table-structure.test.ts#L375)
-- [x] PRIMARY option hidden when a PK exists (unless editing it); a new index always offers it (`Index::hasPrimary()` has no table for it). <!-- parity:test --> `p04-4cb4a4` [table-structure.test.ts:478](../../apps/server/test/int/table-structure.test.ts#L478)
+- [x] PRIMARY option hidden when a PK exists (unless editing it); a new index always offers it (`Index::hasPrimary()` has no table for it). <!-- parity:test --> `p04-4cb4a4` [table-structure.test.ts:485](../../apps/server/test/int/table-structure.test.ts#L485)
 - [x] SPATIAL hides size column, limits to one column, hides add-more; SPATIAL/FULLTEXT disable Index type. <!-- parity:test --> `p04-4973ea` [table-structure-extras.e2e.ts:126](../../tests/e2e/table-structure-extras.e2e.ts#L126)
 - [x] FULLTEXT column list filtered to char/text; SPATIAL to spatial types. <!-- parity:test --> `p04-e82c71` [indexEditor.test.ts:6](../../apps/web/src/features/table/indexes/indexEditor.test.ts#L6)
 - [x] Column rows drag-sortable; slider 1..16 for "Add N column(s) to index". <!-- parity:test --> `p04-e4af55` [ui-gaps.e2e.ts:163](../../tests/e2e/ui-gaps.e2e.ts#L163)
@@ -643,7 +643,7 @@ Relation view
 - [x] Natural ordering of columns and constraints when `NaturalOrder`. <!-- parity:test --> `p04-a09c34` [table-relation.test.ts:51](../../apps/server/test/int/table-relation.test.ts#L51)
 
 Tracking
-- [x] Tab/links only when tracking storage configured. <!-- parity:test --> `p04-010770` [table-operations.test.ts:176](../../apps/server/test/int/table-operations.test.ts#L176)
+- [x] Tab/links only when tracking storage configured. <!-- parity:test --> `p04-010770` [table-operations.test.ts:202](../../apps/server/test/int/table-operations.test.ts#L202)
 - [x] Version list sortable; multi-delete with confirm; activate/deactivate card reflects latest version state. <!-- parity:test --> `p04-777a6c` [table-tracking.parity.test.ts:139](../../tests/parity/table-tracking.parity.test.ts#L139) +5
 - [x] Create version pre-checks statements from `tracking_default_statements`; view vs table statement sets. <!-- parity:test --> `p04-853d9b` [table-tracking.parity.test.ts:134](../../tests/parity/table-tracking.parity.test.ts#L134) +1
 - [x] Report filter by type/date range/users; per-entry delete; export file / dump box / execute (alert). <!-- parity:test --> `p04-4377f6` [table-tracking.parity.test.ts:192](../../tests/parity/table-tracking.parity.test.ts#L192) +4

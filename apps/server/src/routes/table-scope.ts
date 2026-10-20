@@ -29,7 +29,7 @@ export interface ScopeOptions {
 
 /**
  * Runs `fn` with a request-scoped reader, the storage features and the session helpers.
- * pma: DbTableExists::selectDatabase / ::hasTable ("No databases selected." / "No table selected.")
+ * pma: DbTableExists::selectDatabase / ::hasTable ("No database selected." / "No table selected.")
  */
 export async function withScope<T>(
   c: Context<ServerEnv>,
@@ -62,7 +62,7 @@ export async function withScope<T>(
     try {
       const reader = new TableReader(conn, cache, tr)
       if (db === '' || !(await reader.selectDb(db)))
-        throw new NotFoundError(tr.gettext('No databases selected.'))
+        throw new NotFoundError(tr.gettext('No database selected.'))
       if (opts.table !== false && (table === '' || (await reader.getStatus(db, table)) === null)) {
         throw new NotFoundError(tr.gettext('No table selected.'))
       }

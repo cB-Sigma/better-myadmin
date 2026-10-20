@@ -79,7 +79,7 @@ tableVisualizationRoutes.post('/:db/tables/:t/gis', async (c) => {
 
 // ---------------------------------------------------------------- a result without a table
 
-/** ChartController's database branch: the database selected ("No databases selected.") */
+/** ChartController's database branch: the database selected ("No database selected.") */
 tableVisualizationRoutes.post('/:db/chart', async (c) => {
   const req = signedSql(c, parse(VisualizationPageRequest, await body(c)))
   return c.json(

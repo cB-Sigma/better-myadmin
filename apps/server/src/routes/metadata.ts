@@ -485,7 +485,7 @@ metadataRoutes.post('/favorites', async (c) => {
     const conn = await m.userConn()
     const selected = validIdentifier(req.db) ? await selectDatabase(conn, req.db) : false
     if (!selected) {
-      return c.json({ changes: false, message: msg(c, 'error', 'No databases selected.') }, 400)
+      return c.json({ changes: false, message: msg(c, 'error', 'No database selected.') }, 400)
     }
     // pma: TableName::from($favoriteTableName) throws InvalidTableName
     const bad = tableNameError(req.table)

@@ -2,7 +2,7 @@
 FROM php:8.3-cli
 # the reference commit (docs/reference/reference-commit.txt); docker/dev.compose.yml passes it so
 # the two stay together. Bump both when the pin moves (docs/architecture/15-upstream-sync.md).
-ARG PMA_COMMIT=a15cd540cfd06cebd297890bedd4b5cfb067a57d
+ARG PMA_COMMIT=ef2fcd20e23b2fbe24844388a45c4d35f2c17309
 # 1 = compile the translations like a release (bin/generate-mo + bin/remove-incomplete-mo);
 # a plain checkout has no resources/locale and is English-only
 ARG PMA_TRANSLATIONS=0

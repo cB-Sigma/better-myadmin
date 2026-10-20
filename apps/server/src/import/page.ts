@@ -50,7 +50,7 @@ export async function importPage(c: Context<ServerEnv>): Promise<ImportPageRespo
       const ok = await q(
         `SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = ${quoteString(db)}`,
       )
-      if (ok.length === 0) throw new NotFoundError(tr.gettext('No databases selected.'))
+      if (ok.length === 0) throw new NotFoundError(tr.gettext('No database selected.'))
     }
     if (importType === 'table') {
       const ok = await q(

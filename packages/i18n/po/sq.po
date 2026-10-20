@@ -1,4 +1,4 @@
-# Imported from phpMyAdmin a15cd540cfd06cebd297890bedd4b5cfb067a57d resources/po/sq.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin ef2fcd20e23b2fbe24844388a45c4d35f2c17309 resources/po/sq.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:20+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Albanian <https://hosted.weblate.org/projects/phpmyadmin/master/sq/>\nLanguage: sq\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin a15cd540cfd06cebd297890bedd4b5cfb067a57d resources/po/tr.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin ef2fcd20e23b2fbe24844388a45c4d35f2c17309 resources/po/tr.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-08-16 08:11+0000\nLast-Translator: Oğuz Ersen <oguz@ersen.moe>\nLanguage-Team: Turkish <https://hosted.weblate.org/projects/phpmyadmin/master/tr/>\nLanguage: tr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Burak Yavuz <bourock@users.noreply.hosted.weblate.org>\nLanguage-Team: Turkish <https://hosted.weblate.org/projects/phpmyadmin/master/tr/>\nLanguage: tr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Bu kısmı geçmek için Javascript etkinleştirilmek zorundadır!"
@@ -1421,6 +1421,9 @@ msgstr "Olay düzenleyicisi"
 
 msgid "Export event"
 msgstr "Olayı dışa aktar"
+
+msgid "The event scheduler is disabled."
+msgstr "Olay zamanlayıcısı etkisizleştirildi."
 
 msgid "Select a template"
 msgstr "Bir şablon seçin"
@@ -4449,7 +4452,7 @@ msgid "Aborted client rate is at %s, this value should be less than 1 per hour"
 msgstr "Durdurulan istemcilerin oranı %s, bu değer saat başına 1'den az olmalıdır"
 
 msgid "Is InnoDB disabled?"
-msgstr "InnoDB etkisizleştirildi mi?"
+msgstr "InnoDB etkisizleştirilsin mi?"
 
 msgid "You do not have InnoDB enabled."
 msgstr "Etkinleştirilmiş InnoDB'ye sahip değilsiniz."
@@ -4934,10 +4937,10 @@ msgid "Users cannot set a higher value"
 msgstr "Kullanıcılar yüksek değer ayarlayamazlar"
 
 msgid "If enabled, user can enter any MySQL server in login form for cookie auth."
-msgstr "Eğer etkinleştirilirse, kullanıcı herhangi MySQL sunucusuna tanımlama bilgisi kimlik doğrulamasıyla oturum açma formundan girebilir."
+msgstr "Eğer etkinleştirildiyse, kullanıcı herhangi MySQL sunucusuna tanımlama bilgisi kimlik doğrulamasıyla oturum açma formundan girebilir."
 
 msgid "Restricts the MySQL servers the user can enter when a login to an arbitrary MySQL server is enabled by matching the IP or hostname of the MySQL server to the given regular expression."
-msgstr "Verilen düzenli ifadeye göre MySQL sunucusunun IP veya anamakine adı ile eşleşen gelişigüzel bir MySQL sunucusuna oturum açıldığında etkinleşen kullanıcının girebileceği MySQL sunucularını kısıtlar."
+msgstr "MySQL sunucusunun IP'sini veya anamakine adını verilen düzenli ifadeyle eşleştirerek rastgele bir MySQL sunucusunda oturum açma etkinleştirildiğinde kullanıcının girebileceği MySQL sunucularını kısıtlar."
 
 msgid "Enabling this allows a page located on a different domain to call phpMyAdmin inside a frame, and is a potential [strong]security hole[/strong] allowing cross-frame scripting (XSS) attacks."
 msgstr "Bunu etkinleştirmek phpMyAdmin'i çerçeve içinde çağırmak için farklı alan adlarında bulunan sayfalara izin verir ve çerçeveler arası betik (XSS) saldırılarına izin veren olası [strong]güvenlik açığıdır[/strong]."
@@ -5102,7 +5105,7 @@ msgid "Enable gzip compression for import and export operations."
 msgstr "İçe ve dışa aktarma işlemleri için gzip sıkıştırmayı etkinleştirin."
 
 msgid "If enabled, phpMyAdmin continues computing multiple-statement queries even if one of the queries failed."
-msgstr "Eğer etkinleştirilirse, phpMyAdmin çoklu ifade sorgularını hesaplamaya devam eder, eğer sorgulardan biri başarısız olsa bile."
+msgstr "Eğer etkinleştirildiyse, phpMyAdmin çoklu ifade sorgularını hesaplamaya devam eder, eğer sorgulardan biri başarısız olsa bile."
 
 msgid "Allow interrupt of import in case script detects it is close to time limit. This might be a good way to import large files, however it can break transactions."
 msgstr "Betiğin zaman sınırına yaklaşıldığını algılaması durumunda içe aktarımı kesmeye izin verir. Bu büyük dosyaları içe aktarmak için iyi bir yol olabilir, ancak bu işlemleri bozabilir."
@@ -5207,7 +5210,7 @@ msgid "Disable the default warning that is displayed on the Structure page if co
 msgstr "Eğer bir tablodaki sütun adları MySQL kelimelerine ayrılmışsa, Yapı sayfasında görüntülenen varsayılan uyarıyı etkisizleştirir."
 
 msgid "Enable if you want DB-based query history (requires phpMyAdmin configuration storage). If disabled, this utilizes JS-routines to display query history (lost by window close)."
-msgstr "Eğer VT-tabanlı sorgu geçmişi istiyorsanız etkinleştirin (phpMyAdmin yapılandırma depolaması gerektirir). Eğer etkisizleştirilirse, sorgu geçmişini görüntülemek için bu, JS-yordamlarından yararlanır (pencerenin kapatılmasıyla kaybolur)."
+msgstr "VT-tabanlı sorgu geçmişi istiyorsanız etkinleştirin (phpMyAdmin yapılandırma depolaması gerektirir). Eğer etkisizleştirildiyse, sorgu geçmişini görüntülemek için bu, JS-yordamlarından yararlanır (pencerenin kapatılmasıyla kaybolur)."
 
 msgid "Allow users to create bookmarks that are available for all other users"
 msgstr "Kullanıcıların, diğer tüm kullanıcıların kullanabileceği yer işaretleri oluşturmasına izin ver"
@@ -6677,6 +6680,9 @@ msgstr "Eğer herhangi bir sorunla karşılaşırsanız lütfen hata raporunu el
 
 msgid "You may want to refresh the page."
 msgstr "Sayfayı yenilemek isteyebilirsiniz."
+
+msgid "No database selected."
+msgstr "Seçilen veritabanı yok."
 
 msgid "Export of event %s"
 msgstr "%s olayını dışa aktarma"

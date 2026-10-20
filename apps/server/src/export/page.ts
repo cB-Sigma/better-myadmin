@@ -82,7 +82,7 @@ exportPageRoutes.get('/page', async (c) => {
 
     if (scope === 'database') {
       if (db === '' || !(await env.dbi.selectDb(db)))
-        throw new NotFoundError(tr.gettext('No databases selected.'))
+        throw new NotFoundError(tr.gettext('No database selected.'))
       const names = await pageTables(s, db)
       if (names.length < 1) throw new ValidationError(tr.gettext('No tables found in database.'))
       const tableSelect = params.list('table_select')

@@ -216,7 +216,7 @@ describe('SQL form, autocomplete and console endpoints', () => {
     )
     expect(q.json.query).toBe('SELECT 42')
     expect((await a.req('GET', '/api/servers/1/sql/form?db=m1sql_missing')).json).toMatchObject({
-      error: { message: 'No databases selected.' },
+      error: { message: 'No database selected.' },
     })
     expect((await a.req('GET', `/api/servers/1/sql/form?db=${DB}&table=nope`)).json).toMatchObject({
       error: { message: 'No table selected.' },

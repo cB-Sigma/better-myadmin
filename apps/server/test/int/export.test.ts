@@ -100,7 +100,7 @@ describe('export page', () => {
   it('a missing database is refused', async () => {
     const r = await page({ scope: 'database', db: 'f07_it_missing' })
     expect(r.status).toBe(404)
-    expect((r.json.error as { message: string }).message).toBe('No databases selected.')
+    expect((r.json.error as { message: string }).message).toBe('No database selected.')
   })
 })
 

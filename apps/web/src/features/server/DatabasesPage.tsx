@@ -223,7 +223,7 @@ export function DatabasesPage({
                   title={t('Drop')}
                   onClick={() => {
                     if (selected.size === 0) {
-                      setMessage({ type: 'notice', text: t('No databases selected.') })
+                      setMessage({ type: 'notice', text: t('No database selected.') })
                       return
                     }
                     setConfirm([...selected])

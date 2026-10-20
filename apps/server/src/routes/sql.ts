@@ -138,7 +138,7 @@ sqlRoutes.get('/form', async (c) => {
     if (db !== '') {
       // DbTableExists::selectDatabase / hasTable
       if (!(await databaseExists(conn, db)))
-        throw new NotFoundError(c.get('tr').gettext('No databases selected.'))
+        throw new NotFoundError(c.get('tr').gettext('No database selected.'))
       if (table === '') {
         scope = 'database'
         legendName = db

@@ -74,7 +74,9 @@ export const pmaControls = {
     file: '../insert-edit/ForeignBrowser.tsx',
     match: 'api.browseForeigners',
   },
-  'js:sql.ts#ajax:POST …&ajax_request=1': { file: '../insert-edit/ForeignBrowser.tsx', match: 'setApplied(' },
+  // the foreign-browser filter/apply POST (sql.ts) dropped its `ajax_request=1` body prefix upstream
+  // (ea3c53e199), so it now shares the `<$(this).attr('action')>` signature with the bookmark POST
+  // above (one inventory key, count 2); its implementation stays covered by the click claim below
   'js:sql.ts#click:<formId>': { file: '../insert-edit/ForeignBrowser.tsx', match: 'showAll: true' },
   // pma: resources/js/modules/functions.ts (SQL editor, inline edit)
   'js:modules/functions.ts#ajax:GET /sql/get-default-fk-check-value': {

@@ -76,6 +76,8 @@ data:
     - paths: [setup.*.name]
       at: apps/server/src/setup/service.ts::setupPages
 msgids:
+  No databases selected.:
+    n/a: 'stale phpMyAdmin .pot msgid: ef60f1df38 (respondWithErrorMessage) switched every source reference to the singular "No database selected.", which we match; the plural lingers only in the not-yet-regenerated pot and drops on the next upstream extraction'
   Could not load export plugins, please check your installation!:
     n/a: 'the export plugins are modules compiled into the server (packages/export): the list cannot come back empty'
   Could not load import plugins, please check your installation!:
