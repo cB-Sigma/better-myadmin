@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { NotImplemented } from '../../../../../../../features/shell/NotImplemented'
+import { NotFound } from '../../../../../../../features/shell/NotFound'
 
-/** Table pages behind tabs that are not built yet. */
-export const Route = createFileRoute('/s/$server/db/$db/t/$table/$')({ component: NotImplemented })
+/** Any table-level URL that matches no built page. */
+export const Route = createFileRoute('/s/$server/db/$db/t/$table/$')({ component: NotFound })
