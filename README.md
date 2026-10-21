@@ -1,5 +1,9 @@
 # BetterMyAdmin
 
+**A modern phpMyAdmin alternative for MySQL and MariaDB**: every phpMyAdmin feature, the same pages, themes and Docker variables, rebuilt in TypeScript and React. No PHP, no web server, one Node.js process or one Docker image (`ghcr.io/cb-sigma/better-myadmin`). If you are looking for phpMyAdmin with a modern UI, or a drop-in replacement for the `phpmyadmin` Docker image, this is it.
+
+[![Release](https://img.shields.io/github/v/release/cB-Sigma/better-myadmin)](https://github.com/cB-Sigma/better-myadmin/releases) [![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE) [![Docker image](https://img.shields.io/badge/docker-ghcr.io%2Fcb--sigma%2Fbetter--myadmin-2496ED)](https://github.com/cB-Sigma/better-myadmin/pkgs/container/better-myadmin)
+
 A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `2c66fc86` ([reference-commit.txt](docs/reference/reference-commit.txt)) and tracked daily against upstream.
 
 Status: a port of every phpMyAdmin 6.0.0-dev feature area, checked against a running phpMyAdmin on MySQL 8.0/8.4 and MariaDB 10.11/11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 100%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). Current release: **1.0.0** ([changelog](CHANGELOG.md)). It is a faithful, well-tested port that has not been independently security-audited yet; put it behind a configuration file and TLS before exposing it ([security](docs/architecture/07-security.md)). See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
@@ -148,3 +152,5 @@ Bump the version in the `package.json` files, add its section to [CHANGELOG.md](
 ## License
 
 GPL-2.0-or-later, as phpMyAdmin, from which this port is derived. See [LICENSE](LICENSE).
+
+BetterMyAdmin is an independent project and is not affiliated with or endorsed by the phpMyAdmin project; "phpMyAdmin" is used here only to describe what this software is compatible with.

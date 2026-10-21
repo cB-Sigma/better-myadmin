@@ -3,6 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "license": "GPL-2.0-or-later",
+  "description": "A modern phpMyAdmin alternative for MySQL and MariaDB, rebuilt in TypeScript and React",
+  "keywords": [
+    "phpmyadmin",
+    "phpmyadmin-alternative",
+    "mysql",
+    "mariadb",
+    "database",
+    "database-admin",
+    "sql",
+    "admin-panel",
+    "typescript",
+    "react"
+  ],
+  "homepage": "https://github.com/cB-Sigma/better-myadmin",
   "type": "module",
   "packageManager": "pnpm@10.28.0",
   "engines": {
