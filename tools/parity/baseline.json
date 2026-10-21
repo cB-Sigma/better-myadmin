@@ -1332,9 +1332,9 @@
     },
     "directives": {
       "total": 449,
-      "implemented": 428,
-      "covered": 448,
-      "coverage": 0.9978,
+      "implemented": 429,
+      "covered": 449,
+      "coverage": 1,
       "implementedKeys": [
         "ActionLinksMode",
         "AllowArbitraryServer",
@@ -1525,6 +1525,7 @@
         "GridEditing",
         "GZipDump",
         "HideStructureActions",
+        "IconvExtraParams",
         "IgnoreMultiSubmitErrors",
         "Import/allow_interrupt",
         "Import/charset",

@@ -1,6 +1,6 @@
 import { lstatSync, readdirSync, statSync } from 'node:fs'
 import type { ImportPageResponse, ImportScope, PluginInfo } from '@bettermyadmin/contracts'
-import { Params, listEncodings, withValues } from '@bettermyadmin/export'
+import { Params, listEncodings, recodingSupported, withValues } from '@bettermyadmin/export'
 import { getFormattedMaximumUploadSize, sprintf } from '@bettermyadmin/i18n'
 import { type ImportPageContext, listImportPlugins } from '@bettermyadmin/import'
 import { backquote, quoteString } from '@bettermyadmin/sql-gen'
@@ -106,7 +106,7 @@ export async function importPage(c: Context<ServerEnv>): Promise<ImportPageRespo
       const files = dirContent(uDir, matcher)
       localFiles = files === false ? false : files.map((name) => ({ name, selected: name === active }))
     }
-    const encodingSupported = settings.RecodingEngine !== 'none'
+    const encodingSupported = recodingSupported(settings.RecodingEngine)
     const charsets = encodingSupported
       ? []
       : (await q('SHOW CHARACTER SET')).map((r) => r.Charset ?? '').sort()

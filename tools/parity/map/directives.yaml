@@ -16,10 +16,6 @@ ExecTimeLimit:
   note: no execution time limit in Node; the partial-import UI is kept
 RecodingEngine:
   exception: X5
-  planned: M4
-IconvExtraParams:
-  exception: X5
-  planned: M4
 ShowPhpInfo:
   exception: X15
   planned: M1

@@ -1,6 +1,6 @@
 import { lstatSync } from 'node:fs'
 import type { ImportProgress, ImportResult, StatementResult } from '@bettermyadmin/contracts'
-import { Params, convertToUtf8, listEncodings } from '@bettermyadmin/export'
+import { Params, convertToUtf8, listEncodings, recoding, recodingSupported } from '@bettermyadmin/export'
 import { convertBBCode, sprintf } from '@bettermyadmin/i18n'
 import {
   Import,
@@ -217,17 +217,20 @@ export async function runFileImport(
     imp.onChunk = (offset) =>
       progress({ offset: Math.min(offset, total), total, executed: runner.st.executedQueries })
 
-    // Convert the file's charset if necessary
+    // Convert the file's charset if necessary (Encoding::isSupported() is always true here, X52)
     let resetCharset = false
-    const encodings = settings.RecodingEngine !== 'none' ? listEncodings(settings.AvailableCharsets) : []
+    const encodings = recodingSupported(settings.RecodingEngine)
+      ? listEncodings(settings.AvailableCharsets)
+      : []
     if (
-      settings.RecodingEngine !== 'none' &&
+      recodingSupported(settings.RecodingEngine) &&
       charsetOfFile !== '' &&
       charsetOfFile !== 'utf-8' &&
       encodings.includes(charsetOfFile)
     ) {
       imp.charsetConversion = true
-      file?.convert((b) => convertToUtf8(b, charsetOfFile))
+      const rec = recoding(settings)
+      file?.convert((b) => convertToUtf8(b, charsetOfFile, rec))
     } else if (charsetOfFile !== '' && charsetOfFile !== 'utf-8') {
       await conn.query(`SET NAMES '${charsetOfFile}'`, 'import.set-names')
       // We can not show query in this case, it is in different charset

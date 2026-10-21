@@ -8,7 +8,7 @@ Mechanical inventories of phpMyAdmin `ef2fcd20` ([reference-commit.txt](../refer
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 200 | 186 | 13 | 1 | 0 | 0 | 0 | 0 | 0 | 200 | 100.0% |
 | Template controls | 1106 | 1096 | 3 | 7 | 0 | 0 | 0 | 0 | 0 | 1106 | 100.0% |
-| Config directives | 449 | 428 | 1 | 19 | 1 | 0 | 0 | 0 | 0 | 448 | 99.8% |
+| Config directives | 449 | 429 | 1 | 19 | 0 | 0 | 0 | 0 | 0 | 449 | 100.0% |
 | Messages (msgids) | 3428 | 3283 | 12 | 132 | 1 | 0 | 0 | 0 | 0 | 3427 | 100.0% |
 | JS behaviours | 965 | 952 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 965 | 100.0% |
 | Checklist items | 707 | 701 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 707 | 100.0% |
@@ -27,7 +27,7 @@ Covered / total per inventory (directives are attributed to the feature doc that
 | [04 table level](../../features/04-table-level.md) | M2 | 64/64 (100.0%) | 306/306 (100.0%) | 5/5 (100.0%) | 544/544 (100.0%) | 178/178 (100.0%) | 100/100 (100.0%) |
 | [05 database level](../../features/05-database-level.md) | M3 | 33/33 (100.0%) | 240/240 (100.0%) | 31/31 (100.0%) | 301/301 (100.0%) | 180/180 (100.0%) | 112/112 (100.0%) |
 | [06 server level](../../features/06-server-level.md) | M3 | 31/31 (100.0%) | 243/243 (100.0%) | 17/17 (100.0%) | 917/917 (100.0%) | 131/131 (100.0%) | 49/49 (100.0%) |
-| [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 63/63 (100.0%) | 137/138 (99.3%) | 293/293 (100.0%) | 66/66 (100.0%) | 67/67 (100.0%) |
+| [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 63/63 (100.0%) | 138/138 (100.0%) | 293/293 (100.0%) | 66/66 (100.0%) | 67/67 (100.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 9/9 (100.0%) | 39/39 (100.0%) | 62/62 (100.0%) | 665/666 (99.8%) | 17/17 (100.0%) | 62/62 (100.0%) |
 | [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 7/7 (100.0%) | 28/28 (100.0%) | 11/11 (100.0%) | 46/46 (100.0%) | 47/47 (100.0%) | 63/63 (100.0%) |
 | other | M5 | 2/2 (100.0%) | 29/29 (100.0%) | 28/28 (100.0%) | 122/122 (100.0%) | 18/18 (100.0%) | — |
@@ -160,4 +160,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3428 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 965 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2049 control claims, 1943 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 85 SPA routes (3 placeholders/catch-alls), 2049 control claims, 1955 tests.

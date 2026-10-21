@@ -4,7 +4,7 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-448/449 covered (99.8%): 428 implemented, 1 exception, 19 n/a, 1 planned. [Summary](README.md).
+449/449 covered (100.0%): 429 implemented, 1 exception, 19 n/a. [Summary](README.md).
 
 ## 01 shell navigation auth — 109/109 (100.0%) covered, 107/109 implemented
 
@@ -101,7 +101,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Servers/*/tracking_add_drop_view` | apps/server/src/table/tracking.ts:202 |  |
 | ✅ | `Servers/*/tracking_version_auto_create` | apps/server/src/table/tracker.ts:139 |  |
 | ✅ | `Servers/*/user` | apps/server/src/preferences/validator.ts:184<br>apps/server/src/preferences/validator.ts:195<br>apps/server/src/preferences/validator.ts:196<br>apps/server/src/preferences/validator.ts:218<br>apps/server/src/setup/service.ts:88 |  |
-| ✅ | `Servers/*/verbose` | apps/server/src/setup/service.ts:83<br>apps/server/src/auth/http.ts:41<br>apps/server/src/export/service.ts:127<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/home.ts:213 |  |
+| ✅ | `Servers/*/verbose` | apps/server/src/setup/service.ts:83<br>apps/server/src/auth/http.ts:41<br>apps/server/src/export/service.ts:128<br>apps/server/src/routes/sql.ts:135<br>apps/server/src/shell/home.ts:213 |  |
 | ➖ | `SessionSavePath` |  | n/a: PHP session.save_path; sessions live in our SessionStore (DataDir / RedisUrl) |
 | ✅ | `ShowCreateDb` | apps/server/src/navigation/nodes.ts:452<br>apps/server/src/server-admin/databases.ts:243<br>apps/server/src/server-admin/databases.ts:263 |  |
 | ✅ | `ShowDatabasesNavigationAsTree` | apps/server/src/navigation/nodes.ts:184<br>apps/server/src/navigation/nodes.ts:447<br>apps/server/src/navigation/service.ts:64<br>apps/server/src/navigation/service.ts:107<br>apps/server/src/navigation/tree.ts:556 |  |
@@ -228,7 +228,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:230<br>apps/server/src/db/pool-manager.ts:276<br>apps/server/src/import/service.ts:271<br>apps/server/src/routes/shell.ts:81<br>apps/server/src/server-admin/context.ts:60 |  |
+| ✅ | `DefaultConnectionCollation` | apps/server/src/db/pool-manager.ts:230<br>apps/server/src/db/pool-manager.ts:276<br>apps/server/src/import/service.ts:274<br>apps/server/src/routes/shell.ts:81<br>apps/server/src/server-admin/context.ts:60 |  |
 | ➖ | `LoginCookieValidityDisableWarning` |  | n/a: HomeController only gates the warning that PHP's session.gc_maxlifetime is lower than LoginCookieValidity; no PHP session here |
 | ✅ | `NavigationDisplayServers` | apps/server/src/navigation/service.ts:68<br>apps/server/src/shell/home.ts:273<br>apps/web/src/features/navigation/NavigationPanel.tsx:470 |  |
 | ✅ | `Servers/*/controlpass` | apps/server/src/preferences/validator.ts:233<br>apps/server/src/preferences/validator.ts:242<br>apps/server/src/preferences/validator.ts:243<br>apps/server/src/preferences/validator.ts:254<br>apps/server/src/db/control.ts:49 |  |
@@ -246,13 +246,13 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowServerInfo` | apps/web/src/features/shell/AboutPages.tsx:65<br>apps/server/src/shell/about.ts:112<br>apps/server/src/shell/home.ts:210 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:146<br>apps/web/src/features/shell/HomePage.tsx:272<br>apps/web/src/features/shell/HomePage.tsx:277<br>apps/web/src/features/shell/themes/ThemesPage.tsx:16 | X16 |
 
-## 07 export import — 137/138 (99.3%) covered, 133/138 implemented
+## 07 export import — 138/138 (100.0%) covered, 134/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `AvailableCharsets` | apps/server/src/preferences/form-display.ts:94<br>apps/server/src/export/page.ts:225<br>apps/server/src/export/service.ts:120<br>apps/server/src/import/page.ts:136<br>apps/server/src/import/service.ts:222 |  |
+| ✅ | `AvailableCharsets` | apps/server/src/preferences/form-display.ts:94<br>apps/server/src/export/page.ts:225<br>apps/server/src/export/service.ts:121<br>apps/server/src/import/page.ts:136<br>apps/server/src/import/service.ts:223 |  |
 | ✅ | `BZipDump` | apps/server/src/setup/checks.ts:245<br>apps/server/src/setup/checks.ts:248<br>apps/server/src/setup/checks.ts:249<br>apps/server/src/import/page.ts:95<br>apps/server/src/import/page.ts:128 |  |
-| ✅ | `CompressOnFly` | apps/server/src/export/service.ts:117<br>packages/export/src/export.ts:272<br>packages/export/src/export.ts:335 |  |
+| ✅ | `CompressOnFly` | apps/server/src/export/service.ts:117<br>packages/export/src/export.ts:275<br>packages/export/src/export.ts:339 |  |
 | ✅ | `ExecTimeLimit` | apps/server/src/export/page.ts:242<br>apps/server/src/import/service.ts:105<br>apps/server/src/import/service.ts:137 | X9 |
 | ✅ | `Export/as_separate_files` | apps/server/src/export/page.ts:189<br>apps/server/src/export/page.ts:232 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/asfile` | apps/server/src/export/page.ts:222 | read under a computed name — option or page-setting name (Plugins::getDefault) |
@@ -355,7 +355,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Export/xml_export_views` | packages/export/src/plugins/xml.ts:44<br>packages/export/src/plugins/xml.ts:224 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/xml_structure_or_data` | packages/export/src/plugins/xml.ts:37<br>packages/export/src/plugins/xml.ts:214<br>packages/export/src/plugins/xml.ts:215 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `GZipDump` | apps/server/src/export/page.ts:229<br>apps/server/src/export/service.ts:116<br>apps/server/src/import/page.ts:94<br>apps/server/src/import/page.ts:127<br>apps/server/src/import/service.ts:134 |  |
-| 🗓️ | `IconvExtraParams` |  | M4 (X5) |
+| ✅ | `IconvExtraParams` | apps/server/src/export/service.ts:120<br>packages/export/src/charset.ts:96<br>packages/export/src/export.ts:268 |  |
 | ✅ | `Import/allow_interrupt` | apps/server/src/import/page.ts:88<br>apps/server/src/import/page.ts:90 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Import/charset` | packages/import/src/plugins/xml.ts:49<br>apps/server/src/import/page.ts:138 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Import/csv_col_names` | packages/import/src/plugins/csv.ts:72<br>packages/import/src/plugins/csv.ts:108 | read under a computed name — option or page-setting name (Plugins::getDefault) |
@@ -380,7 +380,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Import/sql_no_auto_value_on_zero` | packages/import/src/plugins/sql.ts:35<br>packages/import/src/plugins/sql.ts:49 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ➖ | `PDFDefaultPageSize` |  | n/a: read only by GisVisualization::asPdfFile, offered when TCPDF is installed, which the reference build does not ship either (no PDF download is offered) |
 | ✅ | `PDFPageSizes` | apps/server/src/database/schema-export.ts:29 |  |
-| ✅ | `RecodingEngine` | apps/server/src/export/page.ts:225<br>apps/server/src/export/service.ts:119<br>apps/server/src/import/page.ts:109<br>apps/server/src/import/service.ts:222<br>apps/server/src/import/service.ts:224 | X5 |
+| ✅ | `RecodingEngine` | apps/server/src/export/page.ts:225<br>apps/server/src/export/service.ts:119<br>apps/server/src/import/page.ts:109<br>apps/server/src/import/service.ts:222<br>apps/server/src/import/service.ts:226 | X5 |
 | ✅ | `SaveDir` | apps/server/src/setup/checks.ts:238<br>apps/server/src/setup/checks.ts:239<br>apps/server/src/setup/service.ts:82<br>apps/server/src/export/page.ts:216<br>apps/server/src/export/service.ts:118 |  |
 | ✅ | `Schema/format` | apps/server/src/database/schema-export.ts:54<br>apps/server/src/database/schema-export.ts:55 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
 | ➖ | `Schema/pdf_table_order` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |

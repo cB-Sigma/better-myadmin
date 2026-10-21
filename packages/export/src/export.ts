@@ -1,7 +1,7 @@
 import type { Translator } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { type Context, Parser, SelectStatement } from '@bettermyadmin/sql-lexer'
-import { listEncodings } from './charset.ts'
+import { type Recoding, listEncodings, recoding, recodingSupported } from './charset.ts'
 import type { ExportDbi, ExportRelation } from './dbi.ts'
 import { ExportError } from './errors.ts'
 import { expandUserString } from './expand.ts'
@@ -21,6 +21,7 @@ export interface ExportConfig {
   CompressOnFly: boolean
   SaveDir: string
   RecodingEngine: string
+  IconvExtraParams: string
   AvailableCharsets: readonly string[]
 }
 
@@ -244,10 +245,11 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
   const posted = aliasesFromParams(params)
   if (posted !== null) aliases = mergeAliases(aliases, posted)
 
-  // Do we need to convert charset?
+  // Do we need to convert charset? (Encoding::isSupported() is always true here, X52, so a chosen
+  // non-utf-8 charset from the list is always honoured — `RecodingEngine = 'none'` included.)
   const convertCharset =
     asFile &&
-    config.RecodingEngine !== 'none' &&
+    recodingSupported(config.RecodingEngine) &&
     charset !== null &&
     charset !== 'utf-8' &&
     listEncodings(config.AvailableCharsets).includes(charset)
@@ -263,6 +265,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
         }
       : null
 
+  const rec = recoding({ RecodingEngine: config.RecodingEngine, IconvExtraParams: config.IconvExtraParams })
   const now = env.now ?? new Date()
   const out: OutputHandler = new Output(
     { write: () => {} },
@@ -271,6 +274,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
       compression,
       compressOnFly: config.CompressOnFly,
       convertCharset,
+      recoding: rec,
     },
   )
   const ctx: PluginContext = {
@@ -334,6 +338,7 @@ export async function prepareExport(env: ExportEnvironment, params: Params): Pro
       compression,
       compressOnFly: config.CompressOnFly,
       convertCharset,
+      recoding: rec,
       kanji,
     })
     ;(ctx as { out: OutputHandler }).out = handler

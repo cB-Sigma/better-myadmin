@@ -28,9 +28,73 @@ export const MYSQL_CHARSET_MAP: Readonly<Record<string, string>> = {
   'windows-1257': 'cp1257',
 }
 
-/** The engine phpMyAdmin would use for RecodingEngine (iconv is always available here). */
-export function recodingSupported(engine: string): boolean {
-  return engine !== 'none'
+/**
+ * Encoding::isSupported(). phpMyAdmin picks a recoding engine from `$cfg['RecodingEngine']`
+ * (`initEngine`): the configured one if its PHP function exists, else it autodetects iconv then
+ * mbstring, else `none`. iconv-lite is always present here, so a usable engine is always found —
+ * even for `RecodingEngine = 'none'`, whose `isset` "function" does not exist, so phpMyAdmin falls
+ * through to iconv too (and only adds a "the none extension is missing" notice, which is n/a for us:
+ * there is no PHP extension layer). `isSupported()` is therefore always true (X52).
+ */
+export function recodingSupported(_engine?: string): boolean {
+  return true
+}
+
+/** How `$cfg['IconvExtraParams']` tells glibc iconv to treat a character absent from the target. */
+export type ConvMode =
+  /** `//TRANSLIT`: an ASCII approximation (glibc's transliteration tables), else `?` */
+  | 'translit'
+  /** `//IGNORE`: drop it */
+  | 'ignore'
+  /** no `//` suffix: any such character fails the whole conversion (iconv returns false) */
+  | 'strict'
+  /** an unrecognised `//` suffix: iconv_open itself fails, so every conversion fails */
+  | 'invalid'
+
+/** The recoding engine and mode a request runs with. */
+export interface Recoding {
+  engine: 'iconv' | 'mbstring'
+  mode: ConvMode
+}
+
+/** The default phpMyAdmin ships: autodetected iconv with `IconvExtraParams = '//TRANSLIT'`. */
+export const DEFAULT_RECODING: Recoding = { engine: 'iconv', mode: 'translit' }
+
+/** A character cannot be converted and the mode does not tolerate it: phpMyAdmin dies here (X52). */
+export class RecodeError extends Error {
+  constructor(message = 'Charset conversion failed.') {
+    super(message)
+    this.name = 'RecodeError'
+  }
+}
+
+/**
+ * glibc's reading of `$cfg['IconvExtraParams']`, which phpMyAdmin appends to the target charset
+ * only when it starts with `//` (Encoding::convertString). After the `//`, glibc splits the flags
+ * on `/` and `,`: `TRANSLIT` is matched case-insensitively, `IGNORE` only upper-case, and any other
+ * non-empty token makes iconv_open fail. `TRANSLIT` wins when both are present.
+ */
+export function iconvMode(extra: string): ConvMode {
+  if (!extra.startsWith('//')) return 'strict'
+  let translit = false
+  let ignore = false
+  for (const token of extra.slice(2).split(/[/,]/)) {
+    if (token === '') continue
+    if (token.toUpperCase() === 'TRANSLIT') translit = true
+    else if (token === 'IGNORE') ignore = true
+    else return 'invalid'
+  }
+  return translit ? 'translit' : ignore ? 'ignore' : 'strict'
+}
+
+/** The Recoding of a request's settings (`RecodingEngine` + `IconvExtraParams`). */
+export function recoding(settings: { RecodingEngine: string; IconvExtraParams: string }): Recoding {
+  return {
+    // only an explicit `mb` (stored as `mbstring`) selects mbstring; auto / iconv / none all land on
+    // iconv in a runtime where iconv is present (Encoding::initEngine order is iconv, then mbstring)
+    engine: settings.RecodingEngine === 'mbstring' ? 'mbstring' : 'iconv',
+    mode: iconvMode(settings.IconvExtraParams),
+  }
 }
 
 /**
@@ -58,10 +122,12 @@ function mapName(charset: string): string {
 }
 
 /**
- * Encoding::convertString('utf-8', $charset, $what) on bytes. Unconvertible characters become `?`
- * (glibc iconv with //TRANSLIT approximates some of them instead).
+ * Encoding::convertString('utf-8', $charset, $what) on bytes (export). A character absent from the
+ * target charset is handled per `rec` (IconvExtraParams): approximated (`translit`, the default),
+ * dropped (`ignore`), or — for `strict`/`invalid` — it throws {@link RecodeError}, where phpMyAdmin
+ * dies with an uncaught TypeError (X52). The mbstring engine always substitutes `?` (never throws).
  */
-export function convertFromUtf8(bytes: Buffer, charset: string): Buffer {
+export function convertFromUtf8(bytes: Buffer, charset: string, rec: Recoding = DEFAULT_RECODING): Buffer {
   const c = charset.toLowerCase()
   if (c === 'utf-7') return Buffer.from(encodeUtf7(iconv.decode(bytes, 'utf8')), 'latin1')
   if (c === 'utf-8' || !canEncode(c)) return bytes
@@ -71,6 +137,8 @@ export function convertFromUtf8(bytes: Buffer, charset: string): Buffer {
     cache = new Map()
     encodable.set(name, cache)
   }
+  // an unrecognised //suffix (invalid) fails iconv_open: nothing converts, whatever the input
+  if (rec.engine === 'iconv' && rec.mode === 'invalid') throw new RecodeError()
   let out = ''
   for (const ch of iconv.decode(bytes, 'utf8')) {
     const cp = ch.codePointAt(0) as number
@@ -83,20 +151,41 @@ export function convertFromUtf8(bytes: Buffer, charset: string): Buffer {
       ok = iconv.decode(iconv.encode(ch, name), name) === ch
       cache.set(cp, ok)
     }
-    // like iconv //TRANSLIT: glibc's ASCII transliteration, else '?'
-    out += ok ? ch : (TRANSLIT[cp.toString(16)] ?? '?')
+    if (ok) {
+      out += ch
+      continue
+    }
+    if (rec.engine === 'mbstring')
+      out += '?' // mb_convert_encoding's substitute character
+    else if (rec.mode === 'translit') out += TRANSLIT[cp.toString(16)] ?? '?'
+    else if (rec.mode === 'ignore') continue
+    else throw new RecodeError() // strict: iconv returns false on the first unmappable character
   }
   return iconv.encode(out, name)
 }
 
 const TRANSLIT = translit as Record<string, string>
 const encodable = new Map<string, Map<number, boolean>>()
+/** iconv-lite's substitution character for a byte the source charset does not define. */
+const REPLACEMENT = '�'
 
-/** Encoding::convertString($charset, 'utf-8', $what) on bytes (import). */
-export function convertToUtf8(bytes: Buffer, charset: string): Buffer {
+/**
+ * Encoding::convertString($charset, 'utf-8', $what) on bytes (import). A byte the source charset
+ * does not define is tolerated only by `//IGNORE` (it is dropped); `translit`, `strict` and
+ * `invalid` all make iconv return false on it, so this throws {@link RecodeError} (phpMyAdmin dies,
+ * X52). The mbstring engine substitutes `?` (never throws). //TRANSLIT does not rescue invalid
+ * *input* — it only approximates unmappable *output* — so a bad byte fails under the default too.
+ */
+export function convertToUtf8(bytes: Buffer, charset: string, rec: Recoding = DEFAULT_RECODING): Buffer {
   const c = charset.toLowerCase()
   if (c === 'utf-8' || !canEncode(c)) return bytes
-  return Buffer.from(iconv.decode(bytes, mapName(c)), 'utf8')
+  if (rec.engine === 'iconv' && rec.mode === 'invalid') throw new RecodeError()
+  const decoded = iconv.decode(bytes, mapName(c))
+  if (!decoded.includes(REPLACEMENT)) return Buffer.from(decoded, 'utf8')
+  // the source held bytes the charset does not define
+  if (rec.engine === 'mbstring') return Buffer.from(decoded.replaceAll(REPLACEMENT, '?'), 'utf8')
+  if (rec.mode === 'ignore') return Buffer.from(decoded.replaceAll(REPLACEMENT, ''), 'utf8')
+  throw new RecodeError()
 }
 
 const B64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'

@@ -117,6 +117,7 @@ export async function openExportSession(c: Context<ServerEnv>, db = ''): Promise
         CompressOnFly: settings.CompressOnFly,
         SaveDir: settings.SaveDir,
         RecodingEngine: settings.RecodingEngine,
+        IconvExtraParams: settings.IconvExtraParams,
         AvailableCharsets: settings.AvailableCharsets,
       },
       host: String(server.host),

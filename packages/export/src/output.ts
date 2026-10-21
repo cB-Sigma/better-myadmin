@@ -1,6 +1,6 @@
 import { gzipSync } from 'node:zlib'
 import { encodeBytes } from './bytes.ts'
-import { convertFromUtf8 } from './charset.ts'
+import { DEFAULT_RECODING, type Recoding, convertFromUtf8 } from './charset.ts'
 import { kanjiStrConv } from './kanji.ts'
 import { createZip } from './zip.ts'
 
@@ -22,6 +22,8 @@ export interface OutputOptions {
   memoryLimit?: number
   /** Current::$charset when the output must be converted from UTF-8 (outputCharsetConversion) */
   convertCharset?: string | null
+  /** engine and IconvExtraParams mode for the charset conversion (defaults to iconv //TRANSLIT) */
+  recoding?: Recoding
   /**
    * outputKanjiConversion (Encoding::canConvertKanji(), the Japanese locale): the posted knjenc
    * (`''`, `EUC-JP`, `SJIS`) and xkana (`kana` or `''`)
@@ -44,6 +46,7 @@ export class OutputHandler {
   readonly onFlyCompression: boolean
   readonly memoryLimit: number
   readonly convertCharset: string | null
+  readonly recoding: Recoding
   readonly kanji: { enc: string; kana: string } | null
   readonly #sink: OutputSink
   #dumpBuffer: string[] = []
@@ -66,12 +69,13 @@ export class OutputHandler {
     this.onFlyCompression = o.compression === 'gzip' && (o.compressOnFly ?? false)
     this.memoryLimit = o.memoryLimit ?? 1024 * 1024
     this.convertCharset = o.convertCharset ?? null
+    this.recoding = o.recoding ?? DEFAULT_RECODING
     this.kanji = o.kanji ?? null
   }
 
   #convert(s: string): Buffer {
     const bytes = encodeBytes(s)
-    return this.convertCharset === null ? bytes : convertFromUtf8(bytes, this.convertCharset)
+    return this.convertCharset === null ? bytes : convertFromUtf8(bytes, this.convertCharset, this.recoding)
   }
 
   async #emit(b: Buffer): Promise<void> {
