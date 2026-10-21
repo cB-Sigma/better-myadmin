@@ -1,8 +1,30 @@
 # BetterMyAdmin
 
-A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `328b8d80` ([reference-commit.txt](docs/reference/reference-commit.txt)).
+A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `2c66fc86` ([reference-commit.txt](docs/reference/reference-commit.txt)) and tracked daily against upstream.
 
-Status: a port of every phpMyAdmin 6.0.0-dev feature area (upstream `a15cd540`), checked against a running phpMyAdmin on MySQL 8.4 and MariaDB 11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 99.8%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). The setup wizard is pending a decision. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
+Status: a port of every phpMyAdmin 6.0.0-dev feature area, checked against a running phpMyAdmin on MySQL 8.0/8.4 and MariaDB 10.11/11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 100%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). It is a faithful, well-tested port, not yet independently reviewed or run against production data — treat it as a strong beta. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
+
+## Screenshots
+
+Running against MySQL 8.4 (home page shows the live server, database tree, and git revision):
+
+| Login | Home |
+|---|---|
+| ![Login](docs/screenshots/login.png) | ![Home](docs/screenshots/home.png) |
+
+| SQL editor | Databases |
+|---|---|
+| ![SQL editor](docs/screenshots/sql.png) | ![Databases](docs/screenshots/databases.png) |
+
+## Parity
+
+Every feature is specified against one phpMyAdmin commit and verified automatically, so "feature-for-feature" is a measured claim, not a slogan:
+
+- **Inventories** are extracted from the phpMyAdmin reference checkout — its routes, Twig template controls, config directives, translation msgids, and JavaScript AJAX behaviours — and every one is mapped to our implementation or to a recorded [exception](docs/reference/parity-exceptions.md). `pnpm parity:check` gates this on every push; current coverage is 100% on all five dimensions plus the 707-item feature [checklist](docs/reference/coverage/checklist.md).
+- **Golden parity tests** (`pnpm test:parity`, `pnpm test:ui-parity`) open the same page or run the same request in a live phpMyAdmin and in BetterMyAdmin and compare them byte-for-byte (exports, SQL output, error messages) or control-for-control (every visible button, input, and link). These run nightly against the real reference; the deterministic suites (unit, integration on four database versions, e2e, UI-parity) run on every push.
+- **Upstream is tracked daily**: a routine classifies each new phpMyAdmin commit, ports behaviour changes, and records a decision for every commit in a [ledger](tools/upstream/ledger.json), so the pin only moves forward with a decision for everything it skips.
+
+Intentional differences from phpMyAdmin (a session-id-only cookie instead of an encrypted-password cookie, rate limiting on by default, charset conversion that reports a clean error where phpMyAdmin raises a PHP fatal, and so on) are each listed with their rationale in the [parity exceptions register](docs/reference/parity-exceptions.md).
 
 Start with [docs/README.md](docs/README.md), then [docs/00-vision-and-principles.md](docs/00-vision-and-principles.md) and [development setup](docs/architecture/14-development-setup.md).
 
