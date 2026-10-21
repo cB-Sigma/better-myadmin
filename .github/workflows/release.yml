@@ -1,9 +1,11 @@
 name: release
-# A version tag (v1.0.0, …) publishes a release: the checks of ci.yml, the Docker image on GHCR
-# (ghcr.io/<owner>/better-myadmin:<version> and :latest), and a GitHub release whose notes are the
-# version's section of CHANGELOG.md. The tag must match the package version.
+# A version tag (v1.0.0, …), or a manual run on a branch, publishes a release: the checks of
+# ci.yml, the Docker image on GHCR (ghcr.io/<owner>/better-myadmin:<x.y.z> and :latest), and a
+# GitHub release whose notes are the version's section of CHANGELOG.md. A pushed tag must match the
+# package version; a manual run releases the package version and creates its tag on that commit.
 on:
   push: { tags: ["v*.*.*"] }
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,16 +14,24 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
       - run: pnpm install --frozen-lockfile
-      - name: tag matches the package version
+      - name: release tag (a pushed tag must match the package version)
+        id: version
         run: |
           v="$(node -p "require('./apps/server/package.json').version")"
-          test "v$v" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME, package $v"; exit 1; }
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            test "v$v" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME, package $v"; exit 1; }
+          fi
+          echo "tag=v$v" >> "$GITHUB_OUTPUT"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
       - run: pnpm lint
       - run: pnpm conventions:check
       - run: pnpm i18n:parity
@@ -48,23 +58,25 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ steps.name.outputs.image }}:${{ github.ref_name }}
+            ${{ steps.name.outputs.image }}:${{ needs.check.outputs.version }}
             ${{ steps.name.outputs.image }}:latest
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
-            org.opencontainers.image.version=${{ github.ref_name }}
+            org.opencontainers.image.version=${{ needs.check.outputs.version }}
             org.opencontainers.image.licenses=GPL-2.0-or-later
 
   release:
-    needs: image
+    needs: [check, image]
     runs-on: ubuntu-latest
+    env: { TAG: "${{ needs.check.outputs.tag }}" }
     steps:
       - uses: actions/checkout@v4
       - name: notes from CHANGELOG.md
         run: |
-          v="${GITHUB_REF_NAME#v}"
+          v="${TAG#v}"
           awk -v v="$v" '/^## /{p = index($0, "## " v " ") == 1 || $0 == "## " v; next} p' CHANGELOG.md > notes.md
           test -s notes.md || { echo "no CHANGELOG.md section for $v"; exit 1; }
       - name: GitHub release
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: gh release create "$GITHUB_REF_NAME" --title "BetterMyAdmin ${GITHUB_REF_NAME#v}" --notes-file notes.md --verify-tag
+        # on a manual run the tag does not exist yet: gh creates it on the released commit
+        run: gh release create "$TAG" --title "BetterMyAdmin ${TAG#v}" --notes-file notes.md --target "$GITHUB_SHA"

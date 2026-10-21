@@ -143,7 +143,7 @@ phpMyAdmin's four themes (pmahomme, the default, original, metro and bootstrap),
 
 ## Releasing
 
-Bump the version in the `package.json` files, add its section to [CHANGELOG.md](CHANGELOG.md), and push a `vX.Y.Z` tag: [release.yml](.github/workflows/release.yml) runs the checks, publishes the Docker image to GHCR and creates the GitHub release from the changelog section.
+Bump the version in the `package.json` files, add its section to [CHANGELOG.md](CHANGELOG.md), and push a `vX.Y.Z` tag, or run the [release](.github/workflows/release.yml) workflow by hand on the release commit: it runs the checks, publishes the Docker image to GHCR (`:X.Y.Z` and `:latest`) and creates the tag and the GitHub release from the changelog section.
 
 ## License
 
