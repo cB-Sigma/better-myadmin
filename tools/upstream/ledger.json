@@ -423,6 +423,15 @@
         "features/09-sql-editor-query-pipeline"
       ],
       "notes": "sync ef2fcd20e2: extracts duplicated AJAX/redirect error-response code into ResponseRenderer::respondWithErrorMessage() across ~33 controllers — output-neutral EXCEPT it consolidates the error string \"No databases selected.\" (plural) -> \"No database selected.\" (singular) everywhere, including the genuinely-plural DestroyController and the strNoDatabasesSelected JS key (strNoAccountSelected stays plural). Ported the singular form across our server (withDb default + export/import/insert-edit/sql/table-scope/table-structure/metadata/server-admin/shell), DatabasesPage.tsx, int tests and feature docs; phpMyAdmin .pot is not yet re-extracted so \"No database selected.\" has no catalogue entry (both apps show untranslated English) and the orphaned plural msgid is recorded n/a in tools/parity/map/messages.yaml. parity:check 100%, re-baselined."
+    },
+    {
+      "commit": "2c66fc86b6dda1bf53047a335254d881e27498fb",
+      "subject": "Translated using Weblate (Dutch)",
+      "status": "ported",
+      "areas": [
+        "i18n"
+      ],
+      "notes": "sync 2c66fc86b6: pnpm i18n:import (PMA_ROOT=/home/user/ref/pma): nl catalogue updated (100%)."
     }
   ]
 }

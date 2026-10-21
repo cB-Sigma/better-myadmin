@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin ef2fcd20e23b2fbe24844388a45c4d35f2c17309 resources/po/nl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 2c66fc86b6dda1bf53047a335254d881e27498fb resources/po/nl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: dingo thirteen <dingo13@d404.nl>\nLanguage-Team: Dutch <https://hosted.weblate.org/projects/phpmyadmin/master/nl/>\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-10-20 14:45+0000\nLast-Translator: dingo thirteen <dingo13@users.noreply.hosted.weblate.org>\nLanguage-Team: Dutch <https://hosted.weblate.org/projects/phpmyadmin/master/nl/>\nLanguage: nl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript moet ingeschakeld zijn voorbij dit punt!"
@@ -927,7 +927,7 @@ msgid "You do not have sufficient privileges to perform this operation; Please r
 msgstr "U heeft niet genoeg rechten om deze actie uit te voeren; Kijk a.u.b. naar de documentatie voor meer details."
 
 msgid "Definer"
-msgstr "DEFINER"
+msgstr "Definer"
 
 msgid "Security type"
 msgstr "Beveiligingstype"
@@ -1137,7 +1137,7 @@ msgid "Add AUTO INCREMENT value"
 msgstr "Voeg AUTO INCREMENT-waarde toe"
 
 msgid "Do you really want to execute the following query?"
-msgstr "Weet u zeker dat u de volgende SQL-query wil uitvoeren?"
+msgstr "Weet u zeker dat u de volgende query wil uitvoeren?"
 
 msgid "Enable foreign key checks"
 msgstr "Controle op externe sleutelvelden inschakelen"
@@ -1167,7 +1167,7 @@ msgid "View"
 msgstr "View"
 
 msgid "Create view"
-msgstr "VIEW aanmaken"
+msgstr "View aanmaken"
 
 msgid "Not replicated"
 msgstr "Niet gerepliceerd"
@@ -1421,6 +1421,9 @@ msgstr "Gebeurtenis bewerker"
 
 msgid "Export event"
 msgstr "Export gebeurtenis"
+
+msgid "The event scheduler is disabled."
+msgstr "De event scheduler is uitgeschakeld."
 
 msgid "Select a template"
 msgstr "Selecteer een template"
@@ -2203,6 +2206,9 @@ msgstr "Controleer rechten op database \"%s\"."
 msgid "Check privileges"
 msgstr "Controleer rechten"
 
+msgid "Run SQL queries on database \"%s\"."
+msgstr "Voer SQL queries uit op database \" %s\"."
+
 msgid "SQL"
 msgstr "SQL"
 
@@ -2288,7 +2294,7 @@ msgid "Exporting databases from the current server"
 msgstr "Exporteer meerdere databases vanuit de huidige server"
 
 msgid "Importing into the current server"
-msgstr "Importeren naar de huidige MySQL-server"
+msgstr "Importeren in de huidige server"
 
 msgid "Plugins"
 msgstr "Plug-ins"
@@ -2677,7 +2683,7 @@ msgid "Replica configuration - Change or reconfigure primary server"
 msgstr "Replica configuratie - Wijzigen of herconfigureren primaire server"
 
 msgid "Make sure you have a unique server-id in your configuration file (my.cnf). If not, please add the following line into [mysqld] section:"
-msgstr "Let er op dat u op iedere MySQL-server een uniek server-id heeft ingesteld in het configuratiebestand (my.cnf). Voeg anders de onderstaande regels toe aan de sectie [mysqld]:"
+msgstr "Let er op dat u een uniek server-id heeft ingesteld in het configuratiebestand (my.cnf). Voeg anders de onderstaande regels toe aan de sectie [mysqld]:"
 
 msgid "Host:"
 msgstr "Host:"
@@ -2996,7 +3002,7 @@ msgid "Choose from which log you want the statistics to be generated from."
 msgstr "Kies het logbestand waarvan u de statistieken wil genereren."
 
 msgid "Results are grouped by query text."
-msgstr "Resultaten worden gegroepeerd door de tekst van de SQL-query."
+msgstr "Resultaten worden gegroepeerd door de tekst van de query."
 
 msgid "From slow log"
 msgstr "Uit het logbestand van trage query's"
@@ -3116,7 +3122,7 @@ msgid "This MySQL server works as <b>primary</b> in <b>replication</b> process."
 msgstr "Deze MySQL-server is ingesteld als <b>primaire server</b> in een <b>replicatie</b>proces."
 
 msgid "This MySQL server works as <b>replica</b> in <b>replication</b> process."
-msgstr "Deze MySQL-server is ingesteld als <b>replica</b> in een <b>replicatie</b>proces."
+msgstr "Deze MySQL-server werkt als <b>replica</b> in een <b>replicatie</b>proces."
 
 msgid "Replication status"
 msgstr "Replicatiestatus"
@@ -4176,10 +4182,10 @@ msgid "Sorted rows average: %s"
 msgstr "Gemiddelde aantal gesorteerde regels: %s"
 
 msgid "Rate of joins without indexes"
-msgstr "Aandeel JOINS zonder index"
+msgstr "Aantal joins zonder indexen"
 
 msgid "There are too many joins without indexes."
-msgstr "Er zijn teveel JOINS zonder indexen."
+msgstr "Er zijn teveel joins zonder indexen."
 
 msgid "This means that joins are doing full table scans. Adding indexes for the columns being used in the join conditions will greatly speed up table joins."
 msgstr "Dit betekent dat joins volledige tabelscans uitvoeren. Het toevoegen van indexen voor de kolommen die worden gebruikt in de join-voorwaarden zullen tabeljoins erg versnellen."
@@ -4206,7 +4212,7 @@ msgid "The rate of reading data from a fixed position is high."
 msgstr "De mate van het lezen van gegevens van een vaste positie is hoog."
 
 msgid "This indicates that many queries need to sort results and/or do a full table scan, including join queries that do not use indexes. Add indexes where applicable."
-msgstr "Dit wijst erop dat veel query's resultaten moeten sorteren en/of een tabel volledig doorzoeken, inbegrepen JOIN-query's die geen gebruik maken van indexen. Voeg indexen toe waar nodig."
+msgstr "Dit wijst erop dat veel query's resultaten moeten sorteren en/of een tabel volledig doorzoeken, inbegrepen join-query's die geen gebruik maken van indexen. Voeg indexen toe waar nodig."
 
 msgid "Rate of reading fixed position average: %s, this value should be less than 1 per hour"
 msgstr "Gemiddelde mate van het lezen van een vaste positie: %s, deze waarde is best kleiner dan 1 keer per uur"
@@ -4581,7 +4587,7 @@ msgid "Query cache min result size"
 msgstr "Minimum grootte van querycacheresultaat"
 
 msgid "The max size of the result set in the query cache is the default of 1 MiB."
-msgstr "De maximale grootte van een resultatenset in de querycache is de standaard van 1 MB."
+msgstr "De maximale grootte van een resultatenset in de querycache is de standaard van 1 MiB."
 
 msgid "Changing {query_cache_limit} (usually by increasing) may increase efficiency. This variable determines the maximum size a query result may have to be inserted into the query cache. If there are many query results above 1 MiB that are well cacheable (many reads, little writes) then increasing {query_cache_limit} will increase efficiency. Whereas in the case of many query results being above 1 MiB that are not very well cacheable (often invalidated due to table updates) increasing {query_cache_limit} might reduce efficiency."
 msgstr "{query_cache_limit} wijzigen (doorgaans door te verhogen) kan de efficiëntie verhogen. Deze variabele bepaalt de maximumgrootte van een queryresultaat voor het in de querycache opgenomen mag worden. Als er veel queryresultaten groter dan 1 MiB zijn, die een goeie kandidaat zijn om gecached te worden (veel keer gelezen, weinig geschreven), dan zal het verhogen van {query_cache_limit} de efficiëntie verhogen. Maar in het geval dat er veel queryresultaten groter dan 1 MiB zijn, die geen goede kandidaat zijn om gecached te worden (vaak gewijzigd door wijziging van tabellen), dan zal het verhogen van {query_cache_limit} mogelijk nadelig zijn voor de efficiëntie."
@@ -5339,7 +5345,7 @@ msgid "Enable SSL for connection to MySQL server."
 msgstr "SSL inschakelen voor de verbinding naar de MySQL-server."
 
 msgid "Please note that enabling this has no effect with [kbd]config[/kbd] authentication mode because the password is hard coded in the configuration file; this does not limit the ability to execute the same command directly."
-msgstr "Let op: Deze functie heeft niet de verwachte werking wanneer u gebruik maakt van [kbd]config[/kbd] authenticatie, gezien uw wachtwoord dan vast in het configuratiebestand staat opgeslagen; dit beperkt echter niet de mogelijkheid om de bijbehorende SQL-opdracht handmatig uit te voeren."
+msgstr "Let op dat deze functie niet de verwachte werking heeft wanneer u gebruik maakt van [kbd]config[/kbd] authenticatie, gezien uw wachtwoord dan vast in het configuratiebestand staat opgeslagen; dit beperkt echter niet de mogelijkheid om de bijbehorende opdracht handmatig uit te voeren."
 
 msgid "Show or hide a column displaying the Creation timestamp for all tables."
 msgstr "Toon of verberg een kolom met het tijdstip van aanmaken voor alle tabellen."
@@ -5771,7 +5777,7 @@ msgid "%s view"
 msgstr "%s view"
 
 msgid "Use ignore inserts"
-msgstr "'INSERT IGNORE' gebruiken"
+msgstr "Gebruik ignore inserts"
 
 msgid "Syntax to use when inserting data"
 msgstr "Syntax voor insert-opdrachten"
@@ -5898,6 +5904,9 @@ msgstr "Gedeeltelijke import: onderbreken toestaan"
 
 msgid "Do not abort on INSERT error"
 msgstr "Breek een handeling niet af bij een INSERT-fout"
+
+msgid "Import empty values as NULL"
+msgstr "Importeer lege velden als NULL"
 
 msgid "Add ON DUPLICATE KEY UPDATE"
 msgstr "Voeg ON DUPLICATE KEY UPDATE toe"
@@ -6672,11 +6681,17 @@ msgstr "Als u problemen ondervindt, meld dan handmatig een bug."
 msgid "You may want to refresh the page."
 msgstr "Misschien wilt u de pagina vernieuwen."
 
+msgid "No database selected."
+msgstr "Geen database geselecteerd."
+
 msgid "Export of event %s"
 msgstr "Export van gebeurtenis %s"
 
 msgid "Error in processing request: No event with name %1$s found in database %2$s."
 msgstr "Fout opgetreden in de verwerking van de aanvraag: Geen gebeurtenis met naam %1$s gevonden in database %2$s."
+
+msgid "The event was dropped immediately after creation."
+msgstr "De gebeurtenis werd direct na de aanmaak verwijderd."
 
 msgid "Add event"
 msgstr "Gebeurtenis toevoegen"
@@ -6706,7 +6721,7 @@ msgid "Your PHP parameter [a@https://www.php.net/manual/en/session.configuration
 msgstr "De PHP-parameter [a@https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime@_blank]session.gc_maxlifetime[/a] is korter dan de ingestelde cookie validatie in phpMyAdmin. Hierdoor verloopt uw sessie eerder dan in phpMyAdmin is ingesteld."
 
 msgid "Login cookie store is lower than cookie validity configured in phpMyAdmin, because of this, your login will expire sooner than configured in phpMyAdmin."
-msgstr "De geldigheid van het cookie gedefinieerd door een PHP-parameter is korter dan die instelling in phpMyAdmin. Hierdoor verloopt uw sessie eerder dan in phpMyAdmin is ingesteld."
+msgstr "De opslagduur van de login cookie is korter dan de geldigheidsduur van cookies zoals geconfigureerd in phpMyAdmin. Hierdoor zal uw inlogsessie eerder verlopen dan in phpMyAdmin is ingesteld."
 
 msgid "Your server is running with default values for the controluser and password (controlpass) and is open to intrusion; you really should fix this security weakness by changing the password for controluser 'pma'."
 msgstr "Uw server werkt met standaard waardes voor de administrator (controluser) en wachtwoord (controlpass) en is kwetsbaar voor indringers; u moet echt dit beveiligingsrisico verhelpen door het wachtwoord voor administrator 'pma' te wijzigen."
@@ -6716,6 +6731,12 @@ msgstr "Het configuratiebestand heeft een geldige sleutel nodig voor cookie encr
 
 msgid "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc]."
 msgstr "De cookie encryptie sleutel in het configuratiebestand is langer dan nodig. Het hoeft maar %d bytes lang te zijn. Voor meer informatie zie [doc@cfg_blowfish_secret]documentatie[/doc]."
+
+msgid "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "Het configuratiebestand heeft een geldige sleutel nodig voor query encryptie. Een tijdelijke sleutel is automatisch voor u gegenereerd. Voor meer informatie zie [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+
+msgid "The query encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
+msgstr "De query encryptie sleutel in het configuratiebestand is langer dan nodig. Het hoeft maar %d bytes lang te zijn. Voor meer informatie zie [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc]."
 
 msgid "Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration."
 msgstr "De [code]config[/code]-map, gebruikt door het setup-script, bestaat nog in de phpMyAdmin-map. Het wordt ten sterkste aanbevolen om deze te verwijderen zodra phpMyAdmin is geconfigureerd. Anders kan de beveiliging van uw server aangetast worden omdat ongepriviligieerde personen uw configuratie kunnen downloaden."
@@ -6739,7 +6760,7 @@ msgid "Incorrect format parameter"
 msgstr "Onjuist parameterformaat"
 
 msgid "Sorry an unexpected error happened!"
-msgstr "Sorry, er is een onverwachte fout opgetreden!"
+msgstr "Sorry een onverwachte fout is opgetreden!"
 
 msgid "Showing bookmark"
 msgstr "Toon bladwijzer"
@@ -6759,7 +6780,7 @@ msgid "Script timeout passed, if you want to finish import, please %sresubmit th
 msgstr "De maximale uitvoertijd is verstreken, als u het importeren wilt afmaken, %sresubmit dezelfde file%s opnieuw en de import zal hervat worden."
 
 msgid "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits."
-msgstr "Tijdens de laatste poging zijn er geen gegevens gelezen; meestal betekent dit dat phpMyAdmin het importeren niet kan afmaken, tenzij de tijdsbeperkingen van PHP worden versoepeld."
+msgstr "Tijdens de laatste poging zijn er geen gegevens gelezen; meestal betekent dit dat phpMyAdmin het importeren niet kan afmaken, tenzij de tijdsbeperkingen van php worden versoepeld."
 
 msgid "\"DROP DATABASE\" statements are disabled."
 msgstr "\"DROP DATABASE\" opdrachten zijn uitgeschakeld."
@@ -7255,10 +7276,10 @@ msgid "Note: If the file contains multiple tables, they will be combined into on
 msgstr "Opmerking: Als het bestand meerdere tabellen bevat, zullen deze samengevoegd worden tot één tabel."
 
 msgid "Hide query box"
-msgstr "SQL-queryveld verbergen"
+msgstr "Verberg query veld"
 
 msgid "Show query box"
-msgstr "SQL-queryveld tonen"
+msgstr "Toon query veld"
 
 msgid "Edit query"
 msgstr "Query wijzigen"
@@ -7705,6 +7726,9 @@ msgstr "Tabel %s bestaat reeds!"
 msgid "Hide"
 msgstr "Verbergen"
 
+msgid "The fullscreen request was denied because the Fullscreen API is disabled by user preference in the browser."
+msgstr "Het verzoek voor volledig scherm werd geweigerd omdat de Fullscreen API in de browser is uitgeschakeld op basis van gebruikersvoorkeuren."
+
 msgctxt "Month name"
 msgid "January"
 msgstr "januari"
@@ -8095,7 +8119,7 @@ msgid "The number of temporary tables on disk created automatically by the serve
 msgstr "Het aantal tijdelijke tabellen op de schijf die door de server automatisch aangemaakt zijn bij het uitvoeren van query's. Als Created_tmp_disk_tables groot is, wordt het aanbevolen om de waarde van tmp_table_size te vergroten om tijdelijke tabellen aan te maken in geheugen in plaats van op de schijf."
 
 msgid "How many temporary files mysqld has created."
-msgstr "Het aantal tijdelijke bestanden dat door MySQL is aangemaakt."
+msgstr "Hoeveel tijdelijke bestanden mysqld heeft aangemaakt."
 
 msgid "The number of in-memory temporary tables created automatically by the server while executing statements."
 msgstr "Het aantal in het geheugen geplaatste tijdelijke tabellen die automatisch door de server werden aangemaakt tijdens het uitvoeren van opdrachten."
@@ -8941,6 +8965,9 @@ msgstr "Bestand kon niet worden gelezen!"
 msgid "Error moving the uploaded file, see [doc@faq1-11]FAQ 1.11[/doc]."
 msgstr "Fout bij het verplaatsen van het geüploade bestand, zie [doc@faq1-11]FAQ 1.11[/doc]."
 
+msgid "Cannot create temporary file."
+msgstr "Kan geen tijdelijk bestand maken."
+
 msgid "Error while moving uploaded file."
 msgstr "Fout bij het verplaatsen van het geüploade bestand."
 
@@ -8976,6 +9003,9 @@ msgstr "password_hash() PHP functie"
 
 msgid "Skip Explain SQL"
 msgstr "Uitleg SQL overslaan"
+
+msgid "Skip Analyze SQL"
+msgstr "SQL Analyze overslaan"
 
 msgid "Without PHP code"
 msgstr "Zonder PHP-code"
@@ -9419,7 +9449,7 @@ msgid "Replace NULL with:"
 msgstr "Vervang NULL door:"
 
 msgid "Remove carriage return/line feed characters within columns"
-msgstr "Verwijder CRLF-tekens uit kolommen"
+msgstr "Verwijder carriage return/line feed tekens in de kolommen"
 
 msgid "Excel edition:"
 msgstr "Excel-editie:"
@@ -10405,11 +10435,20 @@ msgstr "Een verzameling van meetkundige objecten van gelijk welk type"
 msgid "Stores and enables efficient access to data in JSON (JavaScript Object Notation) documents"
 msgstr "Maakt efficiënte datatoegang beschikbaar en slaat het op in JSON (JavaScript Object Notation) documenten"
 
+msgid "Intended for storage of IPv4 addresses"
+msgstr "Bedoeld voor het opslaan van IPv4 adressen"
+
 msgid "Intended for storage of IPv6 addresses, as well as IPv4 addresses assuming conventional mapping of IPv4 addresses into IPv6 addresses"
 msgstr "Bedoeld voor opslag van IPv6 adressen, als ook IPv4 adressen waarbij de gebruikelijke omzetting van IPv4 adressen in IPv6 adressen wordt aangenomen"
 
 msgid "128-bit UUID (Universally Unique Identifier)"
 msgstr "128-bit UUID (Universele Unieke Identificatie)"
+
+msgid "Stores vector data optimized for operations such as similarity search and machine learning applications"
+msgstr "Slaat vectordata op die is geoptimaliseerd voor bewerkingen zoals gelijksoortige zoekopdrachten en machine learning toepassingen"
+
+msgid "Intended for storage of XML data"
+msgstr "Bedoeld voor het opslaan van XML data"
 
 msgctxt "numeric types"
 msgid "Numeric"

@@ -2,7 +2,7 @@
 
 # Parity coverage
 
-Mechanical inventories of phpMyAdmin `ef2fcd20` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
+Mechanical inventories of phpMyAdmin `2c66fc86` ([reference-commit.txt](../reference-commit.txt)) and how much of each BetterMyAdmin covers. Covered = implemented + exception + n/a. See [Testing and parity](../../architecture/11-testing-and-parity-strategy.md#mechanical-inventories-and-the-parity-gate) for how the numbers are computed and gated.
 
 | Inventory | Total | implemented | exception | n/a | planned | untested | failing | missing | broken | Covered | % |
 |---|---|---|---|---|---|---|---|---|---|---|---|

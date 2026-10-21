@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "ef2fcd20e23b2fbe24844388a45c4d35f2c17309",
+    "referenceCommit": "2c66fc86b6dda1bf53047a335254d881e27498fb",
     "source": "packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php)",
     "count": 468
   },
