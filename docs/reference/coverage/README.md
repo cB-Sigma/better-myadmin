@@ -70,6 +70,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Configuration saved to file %s`
 - `DB2`
 - `DESC`
+- `Down`
 - `EXECUTE`
 - `Excel 2003 / Macintosh`
 - `Excel 2008 / Macintosh`
@@ -101,8 +102,12 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `The page you requested was not found.`
 - `Too many failed login attempts. Please try again in %s seconds.`
 - `UPDATE`
+- `Up`
 - `WITH `
 - `Windows`
+- `Zoom in`
+- `Zoom out`
+- `Zoom to fit`
 - `all`
 - `allow,deny`
 - `asc`
@@ -161,4 +166,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3428 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 965 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2049 control claims, 1955 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2049 control claims, 1956 tests.
