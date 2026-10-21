@@ -434,6 +434,7 @@ function InsertEditForm({
             <div className="flex flex-wrap items-center gap-2">
               <NativeSelect
                 name="submit_type"
+                aria-label={t('Action')}
                 className="control_at_footer"
                 value={submitType}
                 onChange={(e) => changeSubmitType(e.target.value as SaveRowsRequest['submitType'])}
@@ -446,6 +447,7 @@ function InsertEditForm({
               <strong>{t('and then')}</strong>
               <NativeSelect
                 name="after_insert"
+                aria-label={t('and then')}
                 className="control_at_footer"
                 value={afterInsert}
                 onChange={(e) => setAfterInsert(e.target.value as SaveRowsRequest['afterInsert'])}
@@ -606,6 +608,7 @@ function ColumnRow({
           ) : (
             <NativeSelect
               id={`field_${idx}_1`}
+              aria-label={`${t('Function')}: ${col.field}`}
               name={`funcs[multi_edit][${r}][${col.md5}]`}
               value={state.fn}
               onChange={(e) => setRow((x) => changeCell(x, i, { fn: e.target.value }))}

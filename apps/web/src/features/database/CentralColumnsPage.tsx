@@ -103,14 +103,13 @@ function EditorCells({
   row: number
   /**
    * The "Add new column" row: central_columns.ts renames each control after its cell (col_name,
-   * col_type, …) and phpMyAdmin labels none of them (the name only has title="Column").
+   * col_type, …). phpMyAdmin labels none of them; ours keep their aria-labels.
    */
   addRow?: boolean
 }) {
   const set = (p: Partial<Draft>) => onChange({ ...draft, ...p })
   const [enumOpen, setEnumOpen] = useState(false)
   const nm = (field: string, cell: string) => (addRow ? cell : `${field}[${row}]`)
-  const lbl = (text: string) => (addRow ? undefined : text)
   return (
     <>
       <td className="text-nowrap">
@@ -120,7 +119,7 @@ function EditorCells({
           maxLength={64}
           size={10}
           title={t('Column')}
-          aria-label={lbl(t('Name'))}
+          aria-label={t('Name')}
           required
           value={draft.name}
           onChange={(e) => set({ name: e.target.value })}
@@ -130,7 +129,6 @@ function EditorCells({
         <TypeSelect
           options={options}
           name={nm('field_type', 'col_type')}
-          {...(addRow ? { label: '' } : {})}
           value={draft.type}
           onChange={(v) => set({ type: v })}
         />
@@ -140,7 +138,7 @@ function EditorCells({
           id={`field_${row}_2`}
           name={nm('field_length', 'col_length')}
           size={8}
-          aria-label={lbl(t('Length/Value'))}
+          aria-label={t('Length/Value')}
           value={draft.length}
           onChange={(e) => set({ length: e.target.value })}
         />
@@ -168,7 +166,7 @@ function EditorCells({
         <NativeSelect
           name={nm('field_default_type', 'col_default')}
           className="default_type"
-          aria-label={lbl(t('Default'))}
+          aria-label={t('Default')}
           value={draft.defaultType}
           onChange={(e) => set({ defaultType: e.target.value })}
         >
@@ -192,7 +190,7 @@ function EditorCells({
         <CollationSelect
           options={options}
           name={nm('field_collation', 'collation')}
-          label={lbl(t('Collation')) ?? ''}
+          label={t('Collation')}
           value={draft.collation}
           onChange={(v) => set({ collation: v })}
         />
@@ -200,7 +198,7 @@ function EditorCells({
       <td className="text-nowrap">
         <NativeSelect
           name={nm('field_attribute', 'col_attribute')}
-          aria-label={lbl(t('Attribute'))}
+          aria-label={t('Attribute')}
           // column_attribute.twig: values as listed, the selection compared upper-cased
           value={options.attributes.find((a) => a.toUpperCase() === draft.attribute.toUpperCase()) ?? ''}
           onChange={(e) => set({ attribute: e.target.value })}
@@ -215,14 +213,14 @@ function EditorCells({
       <td className="text-nowrap">
         <Checkbox
           className="allow_null"
-          aria-label={lbl(t('Null'))}
+          aria-label={t('Null')}
           checked={draft.isNull}
           onCheckedChange={(v) => set({ isNull: v === true })}
         />
       </td>
       <td className="text-nowrap">
         <Checkbox
-          aria-label={lbl(t('A_I'))}
+          aria-label={t('A_I')}
           checked={draft.autoIncrement}
           onCheckedChange={(v) => set({ autoIncrement: v === true })}
         />
@@ -448,30 +446,32 @@ function CentralColumnsView({
               })
             }}
           >
-            <table className={tableClass}>
-              <thead>
-                <tr className="bg-grid-header">
-                  <th />
-                  {SORT_KEYS.map((k) => (
-                    <th key={k} data-column={k}>
-                      {labels[k]}
-                    </th>
-                  ))}
-                  <th />
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td />
-                  <EditorCells options={d.options} draft={draft} row={0} onChange={setDraft} addRow />
-                  <td>
-                    <Button id="add_column_save" type="submit" variant="primary">
-                      {t('Save')}
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="overflow-x-auto">
+              <table className={tableClass}>
+                <thead>
+                  <tr className="bg-grid-header">
+                    <th />
+                    {SORT_KEYS.map((k) => (
+                      <th key={k} data-column={k}>
+                        {labels[k]}
+                      </th>
+                    ))}
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td />
+                    <EditorCells options={d.options} draft={draft} row={0} onChange={setDraft} addRow />
+                    <td>
+                      <Button id="add_column_save" type="submit" variant="primary">
+                        {t('Save')}
+                      </Button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </form>
         )}
       </div>

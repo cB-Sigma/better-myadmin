@@ -595,6 +595,7 @@ function Navigation(props: {
                 <NativeSelect
                   name="sql_query"
                   className="autosubmit"
+                  aria-label={t('Sort by key:')}
                   value={grid.sortByKey.options.find((o) => o.selected)?.sql ?? ''}
                   onChange={(e) => {
                     const o = grid.sortByKey!.options.find((x) => x.sql === e.target.value)

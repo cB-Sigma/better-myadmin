@@ -181,18 +181,22 @@ export function Combobox(props: ComboboxProps) {
 // ---------------------------------------------------------------------------------------------
 
 export function Checkbox({ className, ...props }: ComponentProps<typeof CheckboxPrimitive.Root>) {
+  // inside a form Radix adds an absolutely positioned hidden <input> next to the button; the
+  // relative wrapper keeps it there instead of escaping scroll containers and widening the page
   return (
-    <CheckboxPrimitive.Root
-      className={cn(
-        'inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-border-strong bg-bg data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-accent-fg',
-        className,
-      )}
-      {...props}
-    >
-      <CheckboxPrimitive.Indicator>
-        <Check className="size-3" aria-hidden />
-      </CheckboxPrimitive.Indicator>
-    </CheckboxPrimitive.Root>
+    <span className="relative inline-flex align-middle">
+      <CheckboxPrimitive.Root
+        className={cn(
+          'inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-border-strong bg-bg data-[state=checked]:border-accent data-[state=checked]:bg-accent data-[state=checked]:text-accent-fg',
+          className,
+        )}
+        {...props}
+      >
+        <CheckboxPrimitive.Indicator>
+          <Check className="size-3" aria-hidden />
+        </CheckboxPrimitive.Indicator>
+      </CheckboxPrimitive.Root>
+    </span>
   )
 }
 

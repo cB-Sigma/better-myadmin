@@ -57,6 +57,7 @@ export function ValueWidget(p: WidgetProps) {
         <span className="inline-flex items-center gap-1">
           <Input
             id={id}
+            aria-label={col.field}
             name={name}
             value={v}
             size={w.size}
@@ -88,6 +89,7 @@ export function ValueWidget(p: WidgetProps) {
         <>
           <Textarea
             id={id}
+            aria-label={col.field}
             name={name}
             rows={w.rows}
             cols={w.cols}
@@ -128,7 +130,15 @@ export function ValueWidget(p: WidgetProps) {
       break
     case 'enum-select':
       body = (
-        <NativeSelect id={id} name={name} className="textfield" tabIndex={idx} value={v} onChange={text}>
+        <NativeSelect
+          id={id}
+          aria-label={col.field}
+          name={name}
+          className="textfield"
+          tabIndex={idx}
+          value={v}
+          onChange={text}
+        >
           <option value="" />
           {w.values.map((e) => (
             <option key={e} value={e}>
@@ -142,6 +152,7 @@ export function ValueWidget(p: WidgetProps) {
       body = (
         <NativeSelect
           id={id}
+          aria-label={col.field}
           name={`${name}[]`}
           multiple
           size={w.size}
@@ -169,6 +180,7 @@ export function ValueWidget(p: WidgetProps) {
       body = (
         <Textarea
           id={id}
+          aria-label={col.field}
           name={name}
           rows={w.rows}
           cols={w.cols}
@@ -184,6 +196,7 @@ export function ValueWidget(p: WidgetProps) {
       body = (
         <Input
           id={id}
+          aria-label={col.field}
           name={name}
           size={w.size}
           className="w-auto! textfield"
@@ -196,7 +209,15 @@ export function ValueWidget(p: WidgetProps) {
     case 'foreign-link':
       body = (
         <span className="inline-flex items-center gap-1">
-          <Input id={id} name={name} className="w-auto! textfield" tabIndex={idx} value={v} onChange={text} />
+          <Input
+            id={id}
+            aria-label={col.field}
+            name={name}
+            className="w-auto! textfield"
+            tabIndex={idx}
+            value={v}
+            onChange={text}
+          />
           <Button variant="link" className="browse_foreign" onClick={p.onBrowseForeign}>
             <PmaIcon name="b_browse" alt="" /> {t('Browse foreign values')}
           </Button>
@@ -205,7 +226,15 @@ export function ValueWidget(p: WidgetProps) {
       break
     case 'foreign-select':
       body = (
-        <NativeSelect id={id} name={name} className="textfield" tabIndex={idx} value={v} onChange={text}>
+        <NativeSelect
+          id={id}
+          aria-label={col.field}
+          name={name}
+          className="textfield"
+          tabIndex={idx}
+          value={v}
+          onChange={text}
+        >
           {w.options.map((o, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: options repeat (both dropdown sections)
             <option key={i} value={o.value}>
@@ -220,6 +249,7 @@ export function ValueWidget(p: WidgetProps) {
         <span className="inline-flex items-center gap-1">
           <Input
             id={id}
+            aria-label={col.field}
             name={name}
             size={w.size}
             className="w-auto! textfield"
@@ -360,6 +390,7 @@ function TransformedInput(p: WidgetProps) {
       return (
         <Input
           id={`field_${p.idx}_3`}
+          aria-label={p.col.field}
           name={name}
           size={40}
           className={`w-auto! ${w.plugin.endsWith('Iptobinary') ? 'transform_IPToBin' : 'transform_IPToLong'}`}

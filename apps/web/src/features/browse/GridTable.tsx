@@ -563,6 +563,7 @@ export function GridTable(props: Props) {
           className="multi_checkbox checkall"
           id={`id_rows_to_delete${r}_${side === 'right' ? 'right' : 'left'}`}
           name={`rows_to_delete[${r}]`}
+          aria-label={t('Check')}
           value={row.where}
           checked={props.checked.has(r)}
           onChange={() => {}}

@@ -39,9 +39,12 @@ export function Messages({ messages }: { messages: SqlMessage[] }) {
   return (
     <>
       {messages.map((m, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: message list
-        <div key={i} className="mb-3 overflow-hidden rounded-(--radius) border border-border">
-          <MessageBox type={m.type} text={m.text} className="border-0" />
+        <div
+          // biome-ignore lint/suspicious/noArrayIndexKey: message list
+          key={i}
+          className={`mb-3 overflow-hidden rounded-(--radius) ${m.sql !== undefined && m.sql !== '' ? 'border border-border' : ''}`}
+        >
+          <MessageBox type={m.type} text={m.text} flush className="border-0" />
           {m.sql !== undefined && m.sql !== '' && (
             <HighlightedSql sql={m.sql} className="bg-bg-inset px-3 py-2" />
           )}

@@ -66,6 +66,9 @@
   --card-shadow: 2px 2px 5px #cccccc;
   --card-head-bg: #bbbbbb;
   --card-head-fg: #ffffff;
+  /* the shadows that keep the white caption legible on #bbb (pmahomme _card.scss) */
+  --card-head-text-shadow: 0 1px 0 #777777;
+  --card-head-inset: 1px 1px 15px #999999 inset;
   --card-head-size: 1.45rem; /* 1.6em of the base font */
   --card-divider: #dddddd;
   --btn-bg: #eeeeee; /* $secondary: #ddd with gradients */

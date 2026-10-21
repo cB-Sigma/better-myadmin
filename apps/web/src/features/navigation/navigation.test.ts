@@ -75,6 +75,9 @@ describe('navHref', () => {
     expect(navHref(1, '/table/structure', { db: 'x', table: 't' })).toBe('/s/1/db/x/t/t/structure')
     expect(navHref(1, '/table/create', { db: 'x' })).toBe('/s/1/db/x/create-table')
     expect(navHref(1, '/table/add-field', { db: 'x', table: 't' })).toBe('/s/1/db/x/t/t/structure/add')
+    expect(
+      navHref(1, '/table/structure/change', { db: 'x', table: 't', change_column: 1, field: 'a b' }),
+    ).toBe('/s/1/db/x/t/t/structure/change?fields=a+b')
     expect(navHref(1, '/table/change', { db: 'x', table: 't' })).toBe('/s/1/db/x/t/t/insert')
     expect(
       navHref(1, '/database/routines', { item_type: 'PROCEDURE', edit_item: 1, db: 'x', item_name: 'p' }),

@@ -507,6 +507,7 @@ export function StructurePage({ server, db, table }: { server: number; db: strin
                 max={16}
                 required
                 name="added_fields"
+                aria-label={t('Number of columns')}
                 value={indexCount}
                 onChange={(e) => setIndexCount(e.target.value)}
               />

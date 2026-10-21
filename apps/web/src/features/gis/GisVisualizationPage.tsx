@@ -302,6 +302,16 @@ function SvgPlot({
     ],
     ['zoom_out', <ZoomOut key="o" className="size-3" />, () => zoomAt(center, 1 / ZOOM_FACTOR)],
   ]
+  // phpMyAdmin's controls are bare <img>s; these give the buttons a name
+  const controlLabel: Record<string, string> = {
+    left_arrow: t('Left'),
+    right_arrow: t('Right'),
+    up_arrow: t('Up'), // i18n-new: name of the GIS pan-up control
+    down_arrow: t('Down'), // i18n-new: name of the GIS pan-down control
+    zoom_in: t('Zoom in'), // i18n-new: name of the GIS zoom-in control
+    zoom_world: t('Zoom to fit'), // i18n-new: name of the GIS zoom-to-world control
+    zoom_out: t('Zoom out'), // i18n-new: name of the GIS zoom-out control
+  }
   return (
     <div
       ref={box}
@@ -361,6 +371,8 @@ function SvgPlot({
         <button
           key={cls}
           type="button"
+          aria-label={controlLabel[cls]}
+          title={controlLabel[cls]}
           className={`button ${cls} absolute rounded border border-border bg-bg-elevated p-0.5`}
           // .on('dragstart', '.button', () => false)
           onDragStart={(e) => e.preventDefault()}

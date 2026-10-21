@@ -33,7 +33,13 @@ export function navHref(server: number, route: string, params: NavParams): strin
   else if (route === '/table/create') path = `${dbBase}/create-table`
   else if (route === '/table/add-field') path = `${tblBase}/structure/add`
   else if (route === '/table/change') path = `${tblBase}/${rest.has('where_clause') ? 'edit' : 'insert'}`
-  else if (route.startsWith('/table/')) path = `${tblBase}/${route.slice('/table/'.length)}`
+  // a column node (pma NodeColumn: change_column=1&field=x) opens the Change form, which takes `fields`
+  else if (route === '/table/structure/change' && rest.has('field')) {
+    rest.set('fields', rest.get('field') ?? '')
+    rest.delete('field')
+    rest.delete('change_column')
+    path = `${tblBase}/structure/change`
+  } else if (route.startsWith('/table/')) path = `${tblBase}/${route.slice('/table/'.length)}`
   else if (route === '/triggers') path = `${table !== undefined ? tblBase : dbBase}/triggers`
   // the Events page is /events (and /events/export) since phpMyAdmin 2b5b66989b
   else if (route === '/events') path = `${dbBase}/events`

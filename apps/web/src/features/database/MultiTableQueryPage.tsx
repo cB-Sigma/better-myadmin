@@ -126,6 +126,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                     <div className="flex items-center gap-1">
                       <NativeSelect
                         className="tableNameSelect"
+                        aria-label={t('Table')}
                         value={c.table}
                         onChange={(e) => {
                           // the column lists take the table's options (`*` + its columns; the
@@ -149,6 +150,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                       <span>.</span>
                       <NativeSelect
                         className="columnNameSelect"
+                        aria-label={t('Column')}
                         value={c.column}
                         onChange={(e) =>
                           set(i, {
@@ -173,6 +175,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                     <div className="mt-1 flex items-center gap-1">
                       <Checkbox
                         className="show_col"
+                        aria-label={t('Show')}
                         checked={c.show}
                         onCheckedChange={(v) => set(i, { show: v === true })}
                       />
@@ -251,6 +254,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                             <td colSpan={2}>
                               <NativeSelect
                                 className="columnNameSelect opColumn"
+                                aria-label={t('Column')}
                                 value={c.criteria.column}
                                 onChange={(e) => setCrit(i, { column: e.target.value })}
                               >
@@ -301,6 +305,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                               <td>
                                 <NativeSelect
                                   className="tableNameSelect"
+                                  aria-label={t('Table')}
                                   value={c.criteria.rhsTable}
                                   onChange={(e) => setCrit(i, { rhsTable: e.target.value, rhsColumn: '' })}
                                 >
@@ -315,6 +320,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                               <td>
                                 <NativeSelect
                                   className="columnNameSelect"
+                                  aria-label={t('Column')}
                                   value={c.criteria.rhsColumn}
                                   onChange={(e) => setCrit(i, { rhsColumn: e.target.value })}
                                 >

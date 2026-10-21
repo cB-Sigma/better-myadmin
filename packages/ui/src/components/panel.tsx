@@ -38,7 +38,7 @@ export function Panel({
     >
       {title !== undefined &&
         (home ? (
-          <header className="flex items-center justify-between gap-2 bg-(--card-head-bg) px-3 py-1 text-(--card-head-fg)">
+          <header className="flex items-center justify-between gap-2 bg-(--card-head-bg) px-3 py-1 text-(--card-head-fg) [box-shadow:var(--card-head-inset,none)] [text-shadow:var(--card-head-text-shadow,none)]">
             {/* `.card-header` is a div in phpMyAdmin, not a heading */}
             <div
               {...(headerId !== undefined ? { id: headerId } : {})}
