@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import type {
   NavBranchQuery,
   NavBranchResponse,
@@ -72,7 +73,9 @@ describe('navHref', () => {
     )
     expect(navHref(2, '/sql', { pos: 0, db: 'x', table: 't' })).toBe('/s/2/db/x/t/t/')
     expect(navHref(1, '/table/structure', { db: 'x', table: 't' })).toBe('/s/1/db/x/t/t/structure')
-    expect(navHref(1, '/table/create', { db: 'x' })).toBe('/s/1/db/x/table/create')
+    expect(navHref(1, '/table/create', { db: 'x' })).toBe('/s/1/db/x/create-table')
+    expect(navHref(1, '/table/add-field', { db: 'x', table: 't' })).toBe('/s/1/db/x/t/t/structure/add')
+    expect(navHref(1, '/table/change', { db: 'x', table: 't' })).toBe('/s/1/db/x/t/t/insert')
     expect(
       navHref(1, '/database/routines', { item_type: 'PROCEDURE', edit_item: 1, db: 'x', item_name: 'p' }),
     ).toBe('/s/1/db/x/routines?item_type=PROCEDURE&edit_item=1&item_name=p')
@@ -82,6 +85,32 @@ describe('navHref', () => {
     )
     expect(navHref(1, '/server/databases', {})).toBe('/s/1/databases')
     expect(navHref(1, '/view/create', { db: 'x' })).toBe('/s/1/db/x/view/create')
+  })
+
+  it('every route the server navigation emits opens a real page, not the not-found fallback', () => {
+    const read = (p: string) => readFileSync(new URL(p, import.meta.url), 'utf8')
+    const tree = read('../../routeTree.gen.ts')
+    const pages = [...new Set([...tree.matchAll(/fullPath: '([^']+)'/g)].map((m) => m[1] as string))]
+      .filter((p) => !p.endsWith('/$'))
+      .map((p) => new RegExp(`^${p.replace(/\/$/, '').replace(/\$[A-Za-z_]+/g, '[^/]+')}/?$`))
+    const sources = ['nodes.ts', 'tree.ts', 'service.ts']
+      .map((f) => read(`../../../../server/src/navigation/${f}`))
+      .join('\n')
+    const routes = new Set(
+      [...sources.matchAll(/'(\/(?:table|database|server|view|triggers|events|sql)[a-z/_-]*)'/g)].map(
+        (m) => m[1] as string,
+      ),
+    )
+    expect(routes.size).toBeGreaterThan(10)
+    const broken: string[] = []
+    for (const route of routes) {
+      for (const params of [{ db: 'x' }, { db: 'x', table: 't' }]) {
+        if (route.startsWith('/table/') && params.table === undefined && route !== '/table/create') continue
+        const href = navHref(1, route, params).split('?')[0] as string
+        if (!pages.some((re) => re.test(href))) broken.push(`${route} ${JSON.stringify(params)} -> ${href}`)
+      }
+    }
+    expect(broken).toEqual([])
   })
 
   it('reads the current database and table from the URL', () => {

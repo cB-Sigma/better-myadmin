@@ -28,6 +28,11 @@ export function navHref(server: number, route: string, params: NavParams): strin
   } else if (route.startsWith('/server/')) path = `${srv}/${route.slice('/server/'.length)}`
   else if (route === '/database/structure' && rest.size === 0) path = `${dbBase}/`
   else if (route.startsWith('/database/')) path = `${dbBase}/${route.slice('/database/'.length)}`
+  // the table routes whose SPA page has another name: the database's "New" table, a table's "New"
+  // column, and Insert (pma: /table/change, the NavigationTreeDefaultTabTable2 'insert' icon)
+  else if (route === '/table/create') path = `${dbBase}/create-table`
+  else if (route === '/table/add-field') path = `${tblBase}/structure/add`
+  else if (route === '/table/change') path = `${tblBase}/${rest.has('where_clause') ? 'edit' : 'insert'}`
   else if (route.startsWith('/table/')) path = `${tblBase}/${route.slice('/table/'.length)}`
   else if (route === '/triggers') path = `${table !== undefined ? tblBase : dbBase}/triggers`
   // the Events page is /events (and /events/export) since phpMyAdmin 2b5b66989b

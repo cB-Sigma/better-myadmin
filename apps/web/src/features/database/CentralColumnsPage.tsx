@@ -363,7 +363,7 @@ function CentralColumnsView({
           }}
         >
           <Panel title={t('Structure')}>
-            <PanelBody>
+            <PanelBody className="overflow-x-auto">
               <table id="table_columns" className={`${tableClass} noclick`}>
                 <thead>
                   <tr className="bg-grid-header">
@@ -562,7 +562,7 @@ function CentralColumnsView({
         </Button>
       </form>
       {d.totalRows > 0 && (
-        <div id="tableslistcontainer">
+        <div id="tableslistcontainer" className="overflow-x-auto">
           <table id="table_columns" className={`${tableClass} tablesorter`}>
             <thead>
               <tr className="bg-grid-header">

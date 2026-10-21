@@ -1,2 +1,6 @@
 packages/i18n/po/*.po linguist-generated=true
 packages/i18n/po/*.pot linguist-generated=true
+# PHP here is test tooling only (it runs the real phpMyAdmin to generate golden fixtures and
+# parity inventories); the shipped app is TypeScript. Keep it out of GitHub's language stats.
+*.php linguist-detectable=false
+docker/pma-ref/** linguist-detectable=false
