@@ -20,6 +20,8 @@
   --m-gloss: inset 0 1px 0 0 rgb(255 255 255 / 0.14);
   --m-radius-lg: 0.75rem;
   --m-radius-md: 0.5rem;
+  --m-pill-active: var(--bg);
+  --m-input-bg: var(--bg);
   font-feature-settings: "cv11", "ss01";
 }
 
@@ -35,6 +37,9 @@
   --m-ring: rgb(113 113 122 / 0.5);
   --m-ring-border: #71717a;
   --m-gloss: inset 0 1px 0 0 rgb(255 255 255 / 0.6);
+  /* the active tab / pill and the inputs sit a step above the surface they are on */
+  --m-pill-active: #2a2a30;
+  --m-input-bg: rgb(255 255 255 / 0.035);
 }
 
 /* ---- canvas and shell */
@@ -101,7 +106,7 @@
 }
 [data-theme="modern"] .tab-link-active,
 [data-theme="modern"] .tab-link-active:hover {
-  background: var(--bg);
+  background: var(--m-pill-active);
   color: var(--fg);
   box-shadow: var(--m-shadow-sm);
 }
@@ -160,7 +165,7 @@
   ) {
   border-color: var(--border);
   border-radius: 0.4rem;
-  background-color: var(--bg);
+  background-color: var(--m-input-bg);
   box-shadow: var(--m-shadow-xs);
   transition: border-color 120ms ease, box-shadow 120ms ease;
 }
@@ -350,7 +355,7 @@
   text-decoration: none;
 }
 [data-theme="modern"] [data-testid="structure-pills"] a[aria-current="page"] {
-  background: var(--bg);
+  background: var(--m-pill-active);
   color: var(--fg);
   box-shadow: var(--m-shadow-sm);
 }
@@ -385,7 +390,7 @@
   color: var(--fg);
 }
 [data-theme="modern"] .bma-subnav a:is([aria-current="page"], .active) {
-  background: var(--bg);
+  background: var(--m-pill-active);
   color: var(--fg);
   box-shadow: var(--m-shadow-sm);
 }
@@ -436,4 +441,18 @@
   border-radius: 999px;
   background: var(--bg);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+}
+
+/* ---- the sidebar's resize handle: a hairline, the accent while dragging or hovered */
+[data-theme="modern"] #pma_navigation_resizer {
+  background: transparent;
+  box-shadow: inset -1px 0 0 var(--border);
+}
+[data-theme="modern"] #pma_navigation_resizer:hover {
+  box-shadow: inset -2px 0 0 var(--accent);
+}
+
+/* ---- dark: message boxes keep a hairline in their hue instead of a heavy fill */
+[data-theme="modern"][data-color-mode="dark"] [data-message-type] > div {
+  border-color: color-mix(in srgb, currentColor 22%, transparent);
 }

@@ -629,62 +629,65 @@
 }
 
 [data-theme="modern"][data-color-mode="dark"] {
+  /* layered surfaces, darkest first: canvas (modern.css --m-canvas) #09090b, sidebar #0c0c0e,
+     cards / tables / inputs #111113, headers #161619, hover and pills #1c1c20, menus #1f1f23 */
   color-scheme: dark;
-  --bg: #09090b;
-  --bg-subtle: #18181b;
-  --bg-elevated: #18181b;
-  --bg-inset: #111113;
-  --fg: #fafafa;
+  --bg: #111113;
+  --bg-subtle: #1c1c20;
+  --bg-elevated: #1f1f23;
+  --bg-inset: #161619;
+  --fg: #f4f4f5;
   --fg-muted: #a1a1aa;
   --fg-subtle: #8b8b94;
   --fg-on-accent: #09090b;
-  --border: #27272a;
-  --border-strong: #3f3f46;
+  --border: #26262b;
+  --border-strong: #36363d;
   --accent: #60a5fa;
   --accent-hover: #93c5fd;
   --accent-fg: #09090b;
+  /* messages: a faint tint of the hue, its text light enough to read on it */
   --success: #86efac;
-  --success-bg: #052e16;
+  --success-bg: #0c1a12;
   --notice: #93c5fd;
-  --notice-bg: #172554;
-  --warning: #fde047;
-  --warning-bg: #422006;
+  --notice-bg: #0d1526;
+  --warning: #fcd34d;
+  --warning-bg: #1c1708;
   --info: #67e8f9;
-  --info-bg: #083344;
+  --info-bg: #0a1a1f;
   --error: #fca5a5;
-  --error-bg: #450a0a;
-  --grid-header-bg: #18181b;
-  --grid-row-odd: #09090b;
-  --grid-row-even: #09090b;
-  --grid-row-hover: #18181b;
-  --grid-row-marked: #422006;
-  --grid-cell-edited: #3a2f0b;
+  --error-bg: #1f0e10;
+  --grid-header-bg: #161619;
+  --grid-row-odd: #111113;
+  --grid-row-even: #111113;
+  --grid-row-hover: #1c1c20;
+  --grid-row-marked: #2a2410;
+  --grid-cell-edited: #2a2410;
   --data-null: #8b8b94;
-  --data-number: #fafafa;
+  --data-number: #f4f4f5;
   --data-binary: #c4b5fd;
   --data-link: #60a5fa;
   --focus-ring: #60a5fa;
-  --nav-pointer-bg: #27272a;
+  --nav-pointer-bg: #1f1f23;
   --navi-bg: #0c0c0e;
   --navi-fg: #e4e4e7;
   --breadcrumb-bg: #09090b;
-  --breadcrumb-fg: #fafafa;
+  --breadcrumb-fg: #f4f4f5;
   --breadcrumb-comment: #a1a1aa;
   --tab-fg: #a1a1aa;
-  --tab-hover-bg: #18181b;
-  --tab-active-bg: #09090b;
-  --tab-active-fg: #fafafa;
-  --tab-border: #27272a;
-  --card-bg: #09090b;
-  --card-border: #27272a;
+  --tab-hover-bg: #1c1c20;
+  --tab-active-bg: #27272c;
+  --tab-active-fg: #f4f4f5;
+  --tab-border: #26262b;
+  --card-bg: #111113;
+  --card-border: #26262b;
   --card-shadow: none;
   --card-head-bg: #111113;
-  --card-head-fg: #fafafa;
-  --card-divider: #27272a;
-  --btn-bg: #18181b;
-  --btn-hover-bg: #27272a;
-  --notification-bg: #18181b;
-  --notification-border: #27272a;
+  --card-head-fg: #f4f4f5;
+  --card-divider: #26262b;
+  --btn-bg: #1c1c20;
+  --btn-hover-bg: #26262b;
+  --notification-bg: #1f1f23;
+  --notification-border: #26262b;
 }
 
 /* Theme-independent tokens of the app's own widgets (moved here from feature CSS so colours live in one
