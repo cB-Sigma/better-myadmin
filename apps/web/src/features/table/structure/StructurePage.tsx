@@ -920,7 +920,7 @@ function RowActions({
   if (!hide) return items
   return (
     <details className="relative">
-      <summary id="moreActionsButton" className="cursor-pointer text-accent">
+      <summary id="moreActionsButton" className="cursor-pointer whitespace-nowrap text-accent">
         {t('More')}
       </summary>
       {items}

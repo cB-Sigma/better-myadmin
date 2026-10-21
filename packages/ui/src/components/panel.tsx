@@ -28,6 +28,7 @@ export function Panel({
   return (
     <section
       className={cn(
+        'bma-card',
         home
           ? 'overflow-hidden rounded-(--radius) border border-(--card-border) bg-(--card-bg) text-fg shadow-(--card-shadow)'
           : 'mb-3 overflow-hidden rounded-(--radius) border border-border text-fg',
@@ -38,7 +39,7 @@ export function Panel({
     >
       {title !== undefined &&
         (home ? (
-          <header className="flex items-center justify-between gap-2 bg-(--card-head-bg) px-3 py-1 text-(--card-head-fg) [box-shadow:var(--card-head-inset,none)] [text-shadow:var(--card-head-text-shadow,none)]">
+          <header className="bma-card-head flex items-center justify-between gap-2 bg-(--card-head-bg) px-3 py-1 text-(--card-head-fg) [box-shadow:var(--card-head-inset,none)] [text-shadow:var(--card-head-text-shadow,none)]">
             {/* `.card-header` is a div in phpMyAdmin, not a heading */}
             <div
               {...(headerId !== undefined ? { id: headerId } : {})}
@@ -51,7 +52,7 @@ export function Panel({
         ) : (
           <header
             {...(headerId !== undefined ? { id: headerId } : {})}
-            className="flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-1.5 text-[13px] font-semibold"
+            className="bma-card-head flex items-center gap-1 border-b border-border bg-bg-subtle px-3 py-1.5 text-[13px] font-semibold"
           >
             {title}
             {actions !== undefined && <span className="ms-auto font-normal">{actions}</span>}

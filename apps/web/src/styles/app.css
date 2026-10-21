@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-/* Theme tokens: the four phpMyAdmin themes + dark variants (packages/ui/src/themes/themes.css). */
+/* Theme tokens: the four phpMyAdmin themes, `modern`, and dark variants (packages/ui/src/themes/themes.css). */
 @import "@bettermyadmin/ui/themes.css";
+/* the modern theme's component styling */
+@import "./modern.css";
 
 /* Tailwind must see the classes used inside the component kit. */
 @source "../../../../packages/ui/src";
@@ -123,27 +125,30 @@
   }
 }
 
-/* dense form control used across forms */
-.input {
-  width: 100%;
-  border: 1px solid var(--border-strong);
-  border-radius: 0.25rem;
-  background: var(--bg);
-  color: var(--fg);
-  padding: 0.25rem 0.5rem;
-  font-size: 13px;
-  line-height: 1.4;
-}
-/* the column grid of Create table / Add / Change: pma _common.scss #table_columns gives its text
+/* dense form control used across forms. In the components layer so a width utility on the same
+   element (`input w-24`) wins; unlayered, `width: 100%` beat every w-* class. */
+@layer components {
+  .input {
+    width: 100%;
+    border: 1px solid var(--border-strong);
+    border-radius: 0.25rem;
+    background: var(--bg);
+    color: var(--fg);
+    padding: 0.25rem 0.5rem;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  /* the column grid of Create table / Add / Change: pma _common.scss #table_columns gives its text
    inputs and selects 10em, so the grid scrolls sideways instead of shrinking to the window */
-#table_columns select,
-#table_columns input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
-  width: 10em;
-  box-sizing: border-box;
-}
-.input:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 0;
+  #table_columns select,
+  #table_columns input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
+    width: 10em;
+    box-sizing: border-box;
+  }
+  .input:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 0;
+  }
 }
 
 /* Native file inputs (import, Manage, monitor, insert/edit): the browser's default

@@ -1,7 +1,8 @@
 /**
- * The four built-in themes of phpMyAdmin, as token sets (themes.css). Manifest fields are the
- * `public/themes/<id>/theme.json` of phpMyAdmin; `colorModes` lists phpMyAdmin's modes plus the
- * `dark` variant every theme gets here (parity exceptions X16/X23).
+ * The four built-in themes of phpMyAdmin plus BetterMyAdmin's `modern` default, as token sets
+ * (themes.css). Manifest fields are the `public/themes/<id>/theme.json` of phpMyAdmin; `colorModes`
+ * lists phpMyAdmin's modes plus the `dark` variant every theme gets here (parity exceptions X16/X23).
+ * `modern` is not a phpMyAdmin theme and is the default instead of pmahomme (X53).
  * pma: src/Theme/Theme.php, src/Theme/ThemeManager.php
  */
 export interface ThemeManifest {
@@ -18,11 +19,11 @@ export interface ThemeManifest {
   pmaColorModes: string[]
 }
 
-export const THEME_IDS = ['bootstrap', 'metro', 'original', 'pmahomme'] as const
+export const THEME_IDS = ['bootstrap', 'metro', 'modern', 'original', 'pmahomme'] as const
 export type ThemeId = (typeof THEME_IDS)[number]
 
-/** ThemeManager::FALLBACK_THEME */
-export const FALLBACK_THEME: ThemeId = 'pmahomme'
+/** ThemeManager::FALLBACK_THEME (pmahomme there; the default theme here, X53) */
+export const FALLBACK_THEME: ThemeId = 'modern'
 
 const common = { version: '6.0', url: 'https://www.phpmyadmin.net/', supports: ['6.0'] }
 
@@ -45,6 +46,16 @@ export const THEMES: readonly ThemeManifest[] = [
     author: 'phpMyAdmin developers and hplhu',
     colorModes: ['win', 'teal', 'redmond', 'blueeyes', 'mono', 'dark'],
     pmaColorModes: ['win', 'teal', 'redmond', 'blueeyes', 'mono'],
+  },
+  {
+    ...common,
+    id: 'modern',
+    name: 'Modern',
+    version: '1.0',
+    description: 'Clean, flat BetterMyAdmin theme',
+    author: 'BetterMyAdmin developers',
+    colorModes: ['light', 'dark'],
+    pmaColorModes: [],
   },
   {
     ...common,
@@ -96,7 +107,7 @@ export interface ThemeState {
 }
 
 /**
- * ThemeManager::initializeTheme: the stored theme wins, else ThemeDefault, else pmahomme. An
+ * ThemeManager::initializeTheme: the stored theme wins, else ThemeDefault, else the fallback. An
  * unknown stored theme falls back to ThemeDefault (phpMyAdmin throws MissingTheme; recorded as
  * parity exception X29). The mode is applied only when the theme declares it (Theme::setColorMode).
  * Without a stored mode the OS preference picks `dark` when the theme has it, else the first mode.

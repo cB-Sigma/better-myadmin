@@ -174,15 +174,17 @@ export function PartitionEditor({
               </select>
             </td>
             <td>
-              (
-              <input
-                className="input inline w-64"
-                aria-label={t('Expression or column list')}
-                placeholder={t('Expression or column list')}
-                value={p.partitionExpr}
-                onChange={(e) => set({ partitionExpr: e.target.value })}
-              />
-              )
+              <span className="inline-flex items-center gap-1">
+                (
+                <input
+                  className="input inline w-64"
+                  aria-label={t('Expression or column list')}
+                  placeholder={t('Expression or column list')}
+                  value={p.partitionExpr}
+                  onChange={(e) => set({ partitionExpr: e.target.value })}
+                />
+                )
+              </span>
             </td>
           </tr>
           <tr>
@@ -221,14 +223,16 @@ export function PartitionEditor({
                   </select>
                 </td>
                 <td>
-                  (
-                  <input
-                    className="input inline w-64"
-                    aria-label={t('Subpartition by:')}
-                    value={p.subpartitionExpr}
-                    onChange={(e) => set({ subpartitionExpr: e.target.value })}
-                  />
-                  )
+                  <span className="inline-flex items-center gap-1">
+                    (
+                    <input
+                      className="input inline w-64"
+                      aria-label={t('Subpartition by:')}
+                      value={p.subpartitionExpr}
+                      onChange={(e) => set({ subpartitionExpr: e.target.value })}
+                    />
+                    )
+                  </span>
                 </td>
               </tr>
               <tr>

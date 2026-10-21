@@ -48,7 +48,7 @@ export function Table({ zebra = false, className, ...props }: ComponentProps<'ta
   return (
     <table
       className={cn(
-        'border-collapse text-[13px] [&_td]:border-b [&_td]:border-border [&_td]:px-2 [&_td]:py-1 [&_th]:border-b [&_th]:border-border [&_th]:px-2 [&_th]:py-1 [&_th]:text-start [&_thead_th]:bg-grid-header',
+        'bma-table border-collapse text-[13px] [&_td]:border-b [&_td]:border-border [&_td]:px-2 [&_td]:py-1 [&_th]:border-b [&_th]:border-border [&_th]:px-2 [&_th]:py-1 [&_th]:text-start [&_thead_th]:bg-grid-header',
         zebra &&
           '[&_tbody_tr:nth-child(odd)]:bg-grid-odd [&_tbody_tr:nth-child(even)]:bg-grid-even [&_tbody_tr:hover]:bg-grid-hover',
         className,

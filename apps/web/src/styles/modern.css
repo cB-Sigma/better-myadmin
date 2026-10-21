@@ -1,0 +1,356 @@
+/*
+ * The `modern` theme's component styling (parity exception X53). The token values in themes.css
+ * recolour every theme; this file reshapes the shell for `modern` only, in the style of shadcn/ui:
+ * a frosted top bar, segmented tabs, elevated cards, glossy primary buttons, quiet tables and soft
+ * focus rings. Every rule is scoped to [data-theme="modern"], so the phpMyAdmin themes are untouched.
+ * The rules are unlayered on purpose: they override the utilities of the shared components.
+ */
+
+[data-theme="modern"] {
+  --m-canvas: #fafafa;
+  --m-glass: rgb(255 255 255 / 0.85);
+  --m-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --m-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --m-shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --m-primary-top: #3f3f46;
+  --m-primary: #18181b;
+  --m-primary-fg: #fafafa;
+  --m-ring: rgb(161 161 170 / 0.4);
+  --m-ring-border: #a1a1aa;
+  --m-gloss: inset 0 1px 0 0 rgb(255 255 255 / 0.14);
+  --m-radius-lg: 0.75rem;
+  --m-radius-md: 0.5rem;
+  font-feature-settings: "cv11", "ss01";
+}
+
+[data-theme="modern"][data-color-mode="dark"] {
+  --m-canvas: #09090b;
+  --m-glass: rgb(9 9 11 / 0.85);
+  --m-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --m-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5);
+  --m-shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.6);
+  --m-primary-top: #ffffff;
+  --m-primary: #e4e4e7;
+  --m-primary-fg: #09090b;
+  --m-ring: rgb(113 113 122 / 0.5);
+  --m-ring-border: #71717a;
+  --m-gloss: inset 0 1px 0 0 rgb(255 255 255 / 0.6);
+}
+
+/* ---- canvas and shell */
+[data-theme="modern"] #page_scroll {
+  background: var(--m-canvas);
+}
+
+[data-theme="modern"] .bma-topbar {
+  background: var(--m-glass);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding-block: 0.6rem;
+}
+[data-theme="modern"] .bma-topbar a {
+  font-weight: 500;
+}
+
+[data-theme="modern"] #pma_navigation {
+  background: var(--navi-bg);
+}
+
+/* the navigation tree: rounded hover / selected rows inset from the panel edge */
+[data-theme="modern"] #pma_navigation [role="treeitem"] {
+  height: 26px;
+  margin-inline: 6px;
+  border-radius: 6px;
+  transition: background-color 120ms ease;
+}
+[data-theme="modern"] #pma_navigation [role="treeitem"].selected {
+  background: var(--nav-pointer-bg);
+  font-weight: 500;
+}
+
+/* ---- tabs: a segmented control (shadcn Tabs) */
+[data-theme="modern"] .bma-tabbar {
+  background: var(--m-glass);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom-color: var(--border);
+  padding: 0.5rem 0.75rem;
+}
+[data-theme="modern"] .menucontainer #navbarNav > ul {
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 0.625rem;
+  background: var(--bg-subtle);
+}
+[data-theme="modern"] .tab-link {
+  top: 0;
+  margin: 0;
+  padding: 0.3rem 0.75rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--fg-muted);
+  font-weight: 500;
+  transition: color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+[data-theme="modern"] .tab-link:hover {
+  background: transparent;
+  color: var(--fg);
+}
+[data-theme="modern"] .tab-link-active,
+[data-theme="modern"] .tab-link-active:hover {
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: var(--m-shadow-sm);
+}
+
+/* ---- cards (Panel) */
+[data-theme="modern"] .bma-card {
+  border-color: var(--border);
+  border-radius: var(--m-radius-lg);
+  background: var(--card-bg);
+  box-shadow: var(--m-shadow-sm);
+}
+[data-theme="modern"] .bma-card-head {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+[data-theme="modern"] .bma-card-head > div {
+  font-weight: 600;
+}
+
+/* ---- buttons */
+[data-theme="modern"] [data-slot="button"] {
+  border-radius: var(--m-radius-md);
+  transition: background-color 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+[data-theme="modern"] input[type="submit"],
+[data-theme="modern"] [data-slot="button"][data-variant="primary"] {
+  border-color: transparent;
+  background: linear-gradient(to bottom, var(--m-primary-top), var(--m-primary));
+  color: var(--m-primary-fg);
+  box-shadow: var(--m-gloss), var(--m-shadow-sm);
+}
+[data-theme="modern"] input[type="submit"]:hover,
+[data-theme="modern"] [data-slot="button"][data-variant="primary"]:hover {
+  filter: brightness(1.12);
+}
+[data-theme="modern"] [data-slot="button"][data-variant="secondary"] {
+  border-color: var(--border);
+  background: var(--bg);
+  box-shadow: var(--m-shadow-xs);
+}
+[data-theme="modern"] [data-slot="button"][data-variant="secondary"]:hover {
+  background: var(--bg-subtle);
+}
+
+/* ---- form controls: hairline border, soft 3px ring on focus (shadcn Input) */
+[data-theme="modern"]
+  :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="submit"]):not(
+        [type="button"]
+      ):not([type="reset"]):not([type="image"]):not([type="hidden"]):not([type="range"]),
+    select,
+    textarea
+  ) {
+  border-color: var(--border);
+  border-radius: 0.4rem;
+  background-color: var(--bg);
+  box-shadow: var(--m-shadow-xs);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+[data-theme="modern"]
+  :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="submit"]):not(
+        [type="button"]
+      ):not([type="reset"]):not([type="image"]),
+    select,
+    textarea
+  ):focus-visible {
+  outline: none;
+  border-color: var(--m-ring-border);
+  box-shadow: 0 0 0 3px var(--m-ring);
+}
+[data-theme="modern"] :focus-visible {
+  outline-color: var(--m-ring-border);
+}
+
+/* ---- results grid: one rounded frame, hairline rows, muted header */
+[data-theme="modern"] .table-responsive-md {
+  border: 1px solid var(--border);
+  border-radius: var(--m-radius-lg);
+  background: var(--bg);
+  box-shadow: var(--m-shadow-sm);
+}
+[data-theme="modern"] .table_results th {
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  font-weight: 500;
+}
+[data-theme="modern"] .table_results :is(td, th) {
+  border-color: var(--border);
+}
+
+/* ---- messages (shadcn Alert) */
+[data-theme="modern"] [data-message-type] {
+  border-radius: var(--m-radius-md);
+}
+[data-theme="modern"] [data-message-type] > div {
+  border-radius: var(--m-radius-md);
+}
+
+/* ---- menus, dialogs and popovers float with a soft shadow */
+[data-theme="modern"] :is([role="menu"], [role="dialog"], [role="listbox"], .cm-tooltip) {
+  border-radius: var(--m-radius-md);
+  box-shadow: var(--m-shadow-md);
+}
+
+/* ---- the SQL console: a frosted bottom bar; its query box needs no focus frame */
+[data-theme="modern"] #pma_console {
+  border-top-color: var(--border);
+  background: var(--m-glass);
+  backdrop-filter: saturate(180%) blur(12px);
+  box-shadow: 0 -4px 12px -6px rgb(0 0 0 / 0.08);
+}
+[data-theme="modern"] #pma_console .toolbar {
+  background: transparent;
+}
+[data-theme="modern"] #pma_console .cm-editor,
+[data-theme="modern"] #pma_console .cm-editor.cm-focused {
+  outline: none;
+  background: transparent;
+}
+
+/* ---- grid row actions (Edit / Copy / Delete) recede next to the data; foreign keys stay links */
+[data-theme="modern"] .table_results td.d-print-none :is(a, button) {
+  color: var(--fg-muted);
+}
+[data-theme="modern"] .table_results td.d-print-none :is(a, button):hover {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+/* ---- brand: the wordmark in the foreground colour, tighter tracking */
+[data-theme="modern"] #pmalogo a {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---- data tables (shadcn Table): one framed card, muted small header, hairline rows, row hover.
+   Matched by the shared <Table>, the results grid and any table whose rows use the grid stripes. */
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"])) {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--m-radius-lg);
+  background: var(--bg);
+  box-shadow: var(--m-shadow-sm);
+}
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  thead
+  th {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-inset);
+  color: var(--fg-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-align: start;
+  white-space: nowrap;
+}
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  tbody
+  :is(td, th) {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr:last-child
+  > :is(td, th) {
+  border-bottom: 0;
+}
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr {
+  background: transparent;
+  transition: background-color 100ms ease;
+}
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr:hover {
+  background: var(--bg-subtle);
+}
+/* the links of a table row are its actions: quiet until hovered; Drop turns red */
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  td
+  :is(a, [data-variant="link"], summary) {
+  color: var(--fg-muted);
+}
+[data-theme="modern"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  td
+  :is(a, [data-variant="link"], summary):hover {
+  color: var(--fg);
+}
+[data-theme="modern"] #page_content td :is(a, button)[class*="drop"]:hover {
+  color: var(--error);
+}
+
+/* ---- link-style buttons (With selected, Print, Track table, …) are ghost buttons */
+[data-theme="modern"] #page_content [data-slot="button"][data-variant="link"] {
+  height: auto;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--fg-muted);
+  font-weight: 500;
+}
+[data-theme="modern"] #page_content [data-slot="button"][data-variant="link"]:hover {
+  background: var(--bg-subtle);
+  color: var(--fg);
+  text-decoration: none;
+}
+
+/* ---- secondary pills (Table structure / Relation view): a small segmented control */
+[data-theme="modern"] [data-testid="structure-pills"] {
+  width: fit-content;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 0.5rem;
+  background: var(--bg-subtle);
+}
+[data-theme="modern"] [data-testid="structure-pills"] a {
+  display: block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 0.375rem;
+  color: var(--fg-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+[data-theme="modern"] [data-testid="structure-pills"] a[aria-current="page"] {
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: var(--m-shadow-sm);
+}

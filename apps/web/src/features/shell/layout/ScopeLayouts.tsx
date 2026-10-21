@@ -7,7 +7,7 @@ import { useDatabaseScope, useScopeParams, useTableScope } from '../scope.ts'
 
 function Sticky({ children }: { children: ReactNode }) {
   return (
-    <div className="sticky top-0 z-10 -mx-3 -mt-3 mb-3 border-b border-(--tab-border) bg-bg px-2 pt-1 print:hidden">
+    <div className="bma-tabbar sticky top-0 z-10 -mx-3 -mt-3 mb-3 border-b border-(--tab-border) bg-bg px-2 pt-1 print:hidden">
       {children}
     </div>
   )

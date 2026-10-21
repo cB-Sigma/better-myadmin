@@ -94,8 +94,9 @@ describe('documentation links', () => {
 })
 
 describe('themes (ThemeManager)', () => {
-  it('ships the four phpMyAdmin themes sorted by id', () => {
-    expect(THEMES.map((t) => t.id)).toEqual(['bootstrap', 'metro', 'original', 'pmahomme'])
+  it('ships the four phpMyAdmin themes and the modern one, sorted by id', () => {
+    expect(THEMES.map((t) => t.id)).toEqual(['bootstrap', 'metro', 'modern', 'original', 'pmahomme'])
+    expect(THEMES.find((t) => t.id === 'modern')?.pmaColorModes).toEqual([])
     expect(THEMES.find((t) => t.id === 'metro')?.pmaColorModes).toEqual([
       'win',
       'teal',
@@ -112,11 +113,11 @@ describe('themes (ThemeManager)', () => {
     expect(themeKey(true, 3)).toBe('bma_theme-3')
     expect(colorModeKey(true, 3)).toBe('bma_theme-3_color')
   })
-  it('stored theme wins, else ThemeDefault, else pmahomme', () => {
+  it('stored theme wins, else ThemeDefault, else the modern theme (X53)', () => {
     const base = { storedMode: null, prefersDark: false }
     expect(resolveThemeState({ ...base, storedTheme: 'metro', themeDefault: 'original' }).theme).toBe('metro')
     expect(resolveThemeState({ ...base, storedTheme: null, themeDefault: 'original' }).theme).toBe('original')
-    expect(resolveThemeState({ ...base, storedTheme: 'nope', themeDefault: 'nope' }).theme).toBe('pmahomme')
+    expect(resolveThemeState({ ...base, storedTheme: 'nope', themeDefault: 'nope' }).theme).toBe('modern')
   })
   it('colour mode: stored when valid for the theme, else OS preference, else the first mode [p01-b253b9]', () => {
     expect(

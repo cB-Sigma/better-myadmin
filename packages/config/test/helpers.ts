@@ -30,6 +30,8 @@ export function stripBma(value: unknown, node: AnyNode = configNode): unknown {
     if (child?.flags.bma) continue
     out[k] = child ? stripBma(x, child) : x
   }
+  // the one default that differs on purpose: the theme (parity exception X53)
+  if (node === configNode && out.ThemeDefault === 'modern') out.ThemeDefault = 'pmahomme'
   return out
 }
 
