@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import type {
   DatabaseScope,
   DbTabKey,
@@ -17,7 +18,11 @@ import type { MetaRequest } from '../metadata/service.ts'
 import { type StorageInfo, deniedTabs, storageInfo } from '../pmadb/storage.ts'
 import { PrivilegeProbe, isSystemSchema } from './privileges.ts'
 
-export const APP_VERSION = process.env.BMA_VERSION ?? '0.0.0-dev'
+/** BMA_VERSION when set (a build stamping its own version), else the server package's version */
+export const APP_VERSION =
+  process.env.BMA_VERSION ??
+  (JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8')) as { version: string })
+    .version
 
 /**
  * What a shell request needs: the user connection, the configuration-storage request (metadata

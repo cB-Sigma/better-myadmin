@@ -2,7 +2,7 @@
 
 A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `2c66fc86` ([reference-commit.txt](docs/reference/reference-commit.txt)) and tracked daily against upstream.
 
-Status: a port of every phpMyAdmin 6.0.0-dev feature area, checked against a running phpMyAdmin on MySQL 8.0/8.4 and MariaDB 10.11/11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 100%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). It is a faithful, well-tested port, not yet independently reviewed or run against production data — treat it as a strong beta. See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
+Status: a port of every phpMyAdmin 6.0.0-dev feature area, checked against a running phpMyAdmin on MySQL 8.0/8.4 and MariaDB 10.11/11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 100%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). Current release: **1.0.0** ([changelog](CHANGELOG.md)). It is a faithful, well-tested port that has not been independently security-audited yet; put it behind a configuration file and TLS before exposing it ([security](docs/architecture/07-security.md)). See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
 
 ## Screenshots
 
@@ -42,6 +42,14 @@ Until a configuration file (`bettermyadmin.config.json`, `.ts`, …) exists, the
 BetterMyAdmin is one Node.js process (Node 22.5 or later) that serves the web app and its API. It connects to MySQL or MariaDB the way phpMyAdmin does; it needs no PHP and no web server in front of it.
 
 ### Docker
+
+Released images are on GitHub Container Registry:
+
+```bash
+docker run -d -p 8080:80 -e PMA_HOST=mysql.example.org -v bma-data:/var/lib/bettermyadmin ghcr.io/cb-sigma/better-myadmin:latest
+```
+
+or build your own from a checkout:
 
 ```bash
 docker build -t bettermyadmin .
@@ -128,3 +136,15 @@ Until a configuration file exists, the setup script at `/setup` is open without 
 ### Smoke test
 
 `pnpm test:smoke` builds, starts the production server from a scratch directory with a configuration file, logs in to MySQL (`BMA_TEST_HOST`/`BMA_TEST_PORT`, root/root) and browses a table; `pnpm test:smoke:docker` does the same with the Docker image configured by `PMA_*` variables only (`BMA_SMOKE_BUILD_ARGS` adds `docker build` arguments).
+
+## Themes
+
+phpMyAdmin's four themes (pmahomme, the default, original, metro and bootstrap), each with a dark variant, plus an optional **modern** theme in the style of shadcn/ui. Switch from the home page's Appearance settings or the Themes gallery; `ThemeDefault` sets the default for everyone.
+
+## Releasing
+
+Bump the version in the `package.json` files, add its section to [CHANGELOG.md](CHANGELOG.md), and push a `vX.Y.Z` tag: [release.yml](.github/workflows/release.yml) runs the checks, publishes the Docker image to GHCR and creates the GitHub release from the changelog section.
+
+## License
+
+GPL-2.0-or-later, as phpMyAdmin, from which this port is derived. See [LICENSE](LICENSE).

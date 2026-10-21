@@ -1,7 +1,8 @@
 {
   "name": "@bettermyadmin/config",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
+  "license": "GPL-2.0-or-later",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
