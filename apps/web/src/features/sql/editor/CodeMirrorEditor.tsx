@@ -1,5 +1,11 @@
 import { sanitizeToFragment } from '@bettermyadmin/ui'
-import { autocompletion, completionKeymap, startCompletion } from '@codemirror/autocomplete'
+import {
+  autocompletion,
+  closeCompletion,
+  completionKeymap,
+  completionStatus,
+  startCompletion,
+} from '@codemirror/autocomplete'
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands'
 import { MySQL, sql } from '@codemirror/lang-sql'
 import { bracketMatching, defaultHighlightStyle, indentUnit, syntaxHighlighting } from '@codemirror/language'
@@ -134,6 +140,12 @@ export default function CodeMirrorEditor(props: SqlEditorProps & { handleRef?: R
       EditorView.updateListener.of((u) => {
         if (u.docChanged) latest.current.onChange?.(u.state.doc.toString())
         if (u.focusChanged && !u.view.hasFocus) latest.current.onBlur?.()
+        // show-hint's closeOnUnfocus: an async hint list that resolves after the editor lost focus
+        // (typing, then clicking Go) would otherwise open and stay over the page
+        if (!u.view.hasFocus && completionStatus(u.state) !== null) {
+          const v = u.view
+          queueMicrotask(() => closeCompletion(v))
+        }
       }),
     ]
     const view = new EditorView({

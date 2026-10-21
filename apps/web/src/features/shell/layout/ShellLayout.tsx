@@ -109,7 +109,7 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                 <div className="contents print:hidden">{nav}</div>
                 <div className="flex min-w-0 flex-1 flex-col">
                   {/* pma: base.twig — #page_nav_icons follows the menu (#floating_menubar), it is not part of it */}
-                  <div className="flex items-center gap-2 bg-(--breadcrumb-bg) px-3 py-1.5 text-(--breadcrumb-fg) print:hidden [&_a]:text-(--breadcrumb-fg) [&_.breadcrumb-comment]:text-(--breadcrumb-comment)">
+                  <div className="flex items-center gap-2 bg-(--breadcrumb-bg) py-1.5 ps-[2.2em] pe-3 text-(--breadcrumb-fg) print:hidden [&_a]:text-(--breadcrumb-fg) [&_.breadcrumb-comment]:text-(--breadcrumb-comment)">
                     <header id="floating_menubar" className="min-w-0 flex-1">
                       <Breadcrumb server={server} db={db} table={table} onScrollTop={scrollTop} />
                     </header>

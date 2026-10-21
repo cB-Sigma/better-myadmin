@@ -418,7 +418,8 @@ function Navigation(props: {
   const maxRows = grid.view.maxRows
   const go = (p: number) => onRun({ pos: p })
   return (
-    <table className="navigation d-print-none mb-2">
+    // the row wraps between its cells (not inside a label) when the main panel is narrow
+    <table className="navigation d-print-none mb-2 whitespace-nowrap [&>tbody>tr]:flex [&>tbody>tr]:flex-wrap [&>tbody>tr]:items-center">
       <tbody>
         <tr>
           <td className="navigation_separator" />

@@ -613,7 +613,8 @@ export function GridTable(props: Props) {
         <Button
           variant="link"
           size="sm"
-          className="delete_row requireConfirm ajax"
+          // sized like the Edit / Copy links beside it
+          className="delete_row requireConfirm ajax h-auto p-0 align-baseline text-[length:inherit]"
           onClick={() => {
             void actions.deleteRow(row).then((ok) => {
               if (!ok) return
@@ -878,7 +879,9 @@ export function GridTable(props: Props) {
         </div>
       )}
       {colPointer !== null && <div className="cPointer" style={colPointer} aria-hidden />}
-      <table ref={tableRef} className="table_results data ajax w-auto" data-uniqueid="grid">
+      {/* min-w-max: the wrapper scrolls, so the columns keep their natural width instead of
+          breaking short values ("LP-100") over lines; long text is already cut at LimitChars */}
+      <table ref={tableRef} className="table_results data ajax w-auto min-w-max" data-uniqueid="grid">
         <thead>{header(false)}</thead>
         <tbody>
           {rows.map((row, r) => {
