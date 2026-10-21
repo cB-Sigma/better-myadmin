@@ -145,3 +145,25 @@
   outline: 2px solid var(--focus-ring);
   outline-offset: 0;
 }
+
+/* Native file inputs (import, Manage, monitor, insert/edit): the browser's default
+   ::file-selector-button has no theme colours and is unreadable in both themes. Give it the app's
+   button look and keep the "no file chosen" text at the foreground colour. */
+input[type="file"] {
+  color: var(--fg);
+  font-size: 13px;
+}
+input[type="file"]::file-selector-button {
+  margin-right: 0.6rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 0.25rem;
+  background: var(--btn-bg);
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+input[type="file"]::file-selector-button:hover {
+  background: var(--btn-hover-bg);
+}
