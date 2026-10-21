@@ -25,7 +25,7 @@ export function PrivilegesSubnav({ server, isSuperUser }: { server: number; isSu
   const pill = (active: boolean) =>
     `nav-link block rounded px-3 py-1.5 hover:no-underline ${active ? 'active bg-accent text-accent-fg' : 'text-accent hover:bg-bg-subtle'}`
   return (
-    <ul className="nav nav-pills mb-3 flex flex-wrap gap-1 text-sm">
+    <ul className="bma-subnav nav nav-pills mb-3 flex flex-wrap gap-1 text-sm">
       <li className="nav-item">
         <Link to={path(`/s/${server}/privileges`)} className={pill(!groups)}>
           {t('User accounts overview')}

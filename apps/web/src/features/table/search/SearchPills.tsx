@@ -20,7 +20,7 @@ export function SearchPills({
     ['find-replace', 'b_find_replace', t('Find and replace')],
   ] as const
   return (
-    <ul className="m-2 flex gap-2 text-sm" data-testid="search-pills">
+    <ul className="bma-subnav m-2 flex gap-2 text-sm" data-testid="search-pills">
       {pills.map(([key, icon, label]) => (
         <li key={key}>
           <Link

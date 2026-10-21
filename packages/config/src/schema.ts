@@ -734,7 +734,7 @@ export const configNode = group({
   TitleServer: str('@HTTP_HOST@ / @VSERVER@ | @PHPMYADMIN@'),
   TitleDefault: str('@HTTP_HOST@ | @PHPMYADMIN@'),
   ThemeManager: bool(true),
-  ThemeDefault: str('modern'), // pmahomme in phpMyAdmin (parity exception X53)
+  ThemeDefault: str('pmahomme'),
   ThemePerServer: bool(false),
   DefaultQueryTable: str('SELECT * FROM @TABLE@ WHERE 1'),
   DefaultQueryDatabase: str(''),

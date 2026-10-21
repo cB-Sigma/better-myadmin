@@ -23,7 +23,7 @@ export function StructurePills({ scope, active }: { scope: TableRef; active: 'st
     </li>
   )
   return (
-    <ul className="mb-2 flex gap-2 text-sm print:hidden" data-testid="structure-pills">
+    <ul className="bma-subnav mb-2 flex gap-2 text-sm print:hidden" data-testid="structure-pills">
       {pill('structure', t('Table structure'))}
       {pill('relation', t('Relation view'))}
     </ul>

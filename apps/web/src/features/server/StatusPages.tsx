@@ -37,7 +37,7 @@ export function StatusLayout({ server }: { server: number }) {
   const here = pathname.replace(/\/$/, '').split('/status')[1]?.replace(/^\//, '') ?? ''
   return (
     <div>
-      <ul className="mb-3 flex flex-wrap gap-1 text-sm" id="statusPills">
+      <ul className="bma-subnav mb-3 flex flex-wrap gap-1 text-sm" id="statusPills">
         {pills.map(([sub, label]) => (
           <li key={sub}>
             <Link

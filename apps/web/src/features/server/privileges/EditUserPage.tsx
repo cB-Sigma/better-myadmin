@@ -205,7 +205,10 @@ export function EditUserPage({ server, search }: { server: number; search: EditU
       )}
       {/* addOrUpdateSubmenu replaces the sub-navigation (.nav-pills) by the sections' pills */}
       {sections.length > 0 && (
-        <ul className="nav nav-pills mb-2 flex flex-wrap gap-1 text-sm" aria-label={t('Edit privileges:')}>
+        <ul
+          className="bma-subnav nav nav-pills mb-2 flex flex-wrap gap-1 text-sm"
+          aria-label={t('Edit privileges:')}
+        >
           {sections.map((s, i) => (
             <li className="nav-item" key={s.label}>
               <a

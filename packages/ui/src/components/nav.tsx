@@ -23,7 +23,7 @@ export function NavPills({
   return (
     <ul
       {...(id !== undefined ? { id } : {})}
-      className={cn('nav nav-pills m-2 flex flex-wrap gap-1 text-[13px]', className)}
+      className={cn('bma-subnav nav nav-pills m-2 flex flex-wrap gap-1 text-[13px]', className)}
     >
       {items.map((i) => (
         <li key={i.key} className="nav-item my-1">

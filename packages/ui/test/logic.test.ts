@@ -113,11 +113,11 @@ describe('themes (ThemeManager)', () => {
     expect(themeKey(true, 3)).toBe('bma_theme-3')
     expect(colorModeKey(true, 3)).toBe('bma_theme-3_color')
   })
-  it('stored theme wins, else ThemeDefault, else the modern theme (X53)', () => {
+  it('stored theme wins, else ThemeDefault, else pmahomme', () => {
     const base = { storedMode: null, prefersDark: false }
     expect(resolveThemeState({ ...base, storedTheme: 'metro', themeDefault: 'original' }).theme).toBe('metro')
     expect(resolveThemeState({ ...base, storedTheme: null, themeDefault: 'original' }).theme).toBe('original')
-    expect(resolveThemeState({ ...base, storedTheme: 'nope', themeDefault: 'nope' }).theme).toBe('modern')
+    expect(resolveThemeState({ ...base, storedTheme: 'nope', themeDefault: 'nope' }).theme).toBe('pmahomme')
   })
   it('colour mode: stored when valid for the theme, else OS preference, else the first mode [p01-b253b9]', () => {
     expect(

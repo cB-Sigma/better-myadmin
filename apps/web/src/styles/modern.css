@@ -1,5 +1,5 @@
 /*
- * The `modern` theme's component styling (parity exception X53). The token values in themes.css
+ * The optional `modern` theme's component styling (parity exception X53). The token values in themes.css
  * recolour every theme; this file reshapes the shell for `modern` only, in the style of shadcn/ui:
  * a frosted top bar, segmented tabs, elevated cards, glossy primary buttons, quiet tables and soft
  * focus rings. Every rule is scoped to [data-theme="modern"], so the phpMyAdmin themes are untouched.
@@ -353,4 +353,87 @@
   background: var(--bg);
   color: var(--fg);
   box-shadow: var(--m-shadow-sm);
+}
+
+/* ---- every secondary navigation (status, user accounts, search, structure, preferences pills)
+   is the same small segmented control */
+[data-theme="modern"] .bma-subnav {
+  width: fit-content;
+  max-width: 100%;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 0.5rem;
+  background: var(--bg-subtle);
+}
+[data-theme="modern"] .bma-subnav li {
+  margin: 0;
+}
+[data-theme="modern"] .bma-subnav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--fg-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+[data-theme="modern"] .bma-subnav a:hover {
+  background: transparent;
+  color: var(--fg);
+}
+[data-theme="modern"] .bma-subnav a:is([aria-current="page"], .active) {
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: var(--m-shadow-sm);
+}
+
+/* ---- anything drawn as a primary button without the Button component (buttonVariants on a link) */
+[data-theme="modern"] :is(a, button).bg-accent.text-accent-fg:not(.bma-subnav *) {
+  border-color: transparent;
+  background: linear-gradient(to bottom, var(--m-primary-top), var(--m-primary));
+  color: var(--m-primary-fg);
+  box-shadow: var(--m-gloss), var(--m-shadow-sm);
+  text-decoration: none;
+}
+
+/* ---- checkboxes and radios in the primary colour (native and Radix alike) */
+[data-theme="modern"] :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--m-primary);
+}
+[data-theme="modern"] button[role="checkbox"] {
+  border-radius: 0.3rem;
+  border-color: var(--border-strong);
+  box-shadow: var(--m-shadow-xs);
+}
+[data-theme="modern"] button[role="checkbox"][data-state="checked"] {
+  border-color: var(--m-primary);
+  background: var(--m-primary);
+  color: var(--m-primary-fg);
+}
+
+/* ---- the ON / OFF toggle (event scheduler, tracking) as a switch */
+[data-theme="modern"] .toggleButton {
+  border: 0;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+[data-theme="modern"] .toggleButton .toggleOn {
+  background: var(--m-primary);
+  color: var(--m-primary-fg);
+  text-shadow: none;
+  font-weight: 500;
+}
+[data-theme="modern"] .toggleButton .toggleOff {
+  background: var(--bg-subtle);
+  color: var(--fg-muted);
+  font-weight: 500;
+}
+[data-theme="modern"] .toggleButton .toggle-container > span[aria-hidden] {
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
 }

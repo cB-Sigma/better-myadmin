@@ -487,7 +487,7 @@ describe('meta and telemetry', () => {
     t = testApp()
     const r = await t.req('GET', '/api/meta/config-public')
     expect(r.json).toMatchObject({
-      ThemeDefault: 'modern',
+      ThemeDefault: 'pmahomme',
       ThemeManager: true,
       TabsMode: 'both',
       Confirm: true,

@@ -88,7 +88,7 @@ async function main() {
     // ThemeDefault / ThemePerServer for public/theme-init.js, so the first paint uses the configured theme
     const indexHtml = readFileSync(join(staticRoot, 'index.html'), 'utf8')
       .replace(
-        'data-theme-default="modern"',
+        'data-theme-default="pmahomme"',
         `data-theme-default="${cfg.ThemeDefault.replace(/[^\w-]/g, '')}"`,
       )
       .replace('data-theme-per-server="0"', `data-theme-per-server="${cfg.ThemePerServer ? 1 : 0}"`)

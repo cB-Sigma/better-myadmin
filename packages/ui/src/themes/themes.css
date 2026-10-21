@@ -7,7 +7,7 @@
  * variants are BetterMyAdmin's (parity exceptions X16/X23).
  */
 
-/* ------------------------------------------------------------------ pmahomme (phpMyAdmin's default) */
+/* ------------------------------------------------------------------ pmahomme (default) */
 :root,
 [data-theme="pmahomme"] {
   color-scheme: light;
@@ -559,7 +559,7 @@
   --notification-border: #495057;
 }
 
-/* ------------------------------------------------------------------ modern (default; light / dark)
+/* ------------------------------------------------------------------ modern (light / dark)
    BetterMyAdmin's own theme (not in phpMyAdmin, parity exception X53): flat surfaces, hairline
    borders and soft radii in the style of shadcn/ui's zinc palette, with a blue primary so links
    still read as links. Same token set as the phpMyAdmin themes; only the values differ. */

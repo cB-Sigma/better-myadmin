@@ -8,7 +8,7 @@ test.describe('themes', () => {
   }) => {
     await login(page)
     const html = page.locator('html')
-    await expect(html).toHaveAttribute('data-theme', 'modern')
+    await expect(html).toHaveAttribute('data-theme', 'pmahomme')
     await page.selectOption('#themeSelect', 'metro')
     await expect(html).toHaveAttribute('data-theme', 'metro')
     await expect(html).toHaveAttribute('data-color-mode', 'win')

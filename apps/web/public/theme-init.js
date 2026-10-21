@@ -25,8 +25,8 @@
     const perServer = html.getAttribute('data-theme-per-server') === '1'
     const m = /^\/s\/(\d+)(\/|$)/.exec(location.pathname)
     const key = perServer && m ? `bma_theme-${m[1]}` : 'bma_theme'
-    let def = html.getAttribute('data-theme-default') || 'modern'
-    if (!MODES[def]) def = 'modern'
+    let def = html.getAttribute('data-theme-default') || 'pmahomme'
+    if (!MODES[def]) def = 'pmahomme'
     let theme = read(key)
     if (!theme || !MODES[theme]) theme = def
     let mode = read(`${key}_color`)

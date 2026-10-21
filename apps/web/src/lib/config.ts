@@ -40,9 +40,9 @@ export interface ClientConfig {
   [key: string]: unknown
 }
 
-/** phpMyAdmin defaults (the theme aside, X53), used until the endpoint answered (and in unit tests). */
+/** phpMyAdmin defaults, used until the endpoint answered (and in unit tests). */
 export const DEFAULT_CLIENT_CONFIG: ClientConfig = {
-  ThemeDefault: 'modern', // X53
+  ThemeDefault: 'pmahomme',
   ThemeManager: true,
   ThemePerServer: false,
   TabsMode: 'both',
