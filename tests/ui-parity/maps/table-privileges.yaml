@@ -1,0 +1,7 @@
+# Intentional differences of the table privileges page (see tests/ui-parity/README.md for the format).
+rules:
+  - match: { kind: checkbox, name: 'selected_usr[]' }
+    ignore: [label]
+    reason: >-
+      both label each account's checkbox with its user name, and the two sides log in as different
+      fixture accounts (uip_pma_* / uip_bma_*), so the labels cannot be equal

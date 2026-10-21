@@ -106,7 +106,7 @@ export function DbPrivilegesPage({ server, db, table }: { server: number; db: st
                                       className="checkall"
                                       name="selected_usr[]"
                                       id={`checkbox_sel_users_${i}`}
-                                      aria-label={t('Check')}
+                                      aria-label={a.user}
                                       value={v}
                                       checked={selected.has(v)}
                                       onChange={(e) =>

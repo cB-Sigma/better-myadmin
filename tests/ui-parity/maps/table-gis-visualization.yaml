@@ -1,6 +1,6 @@
 # Intentional differences of the GIS visualization (see tests/ui-parity/README.md for the format).
 rules:
-  - ours: { kind: button, section: Display GIS Visualization, label: '' }
+  - ours: { kind: button, section: Display GIS Visualization, label: '/^(Left|Right|Up|Down|Zoom in|Zoom to fit|Zoom out)$/' }
     added: >-
       the SVG's pan and zoom controls: phpMyAdmin's gis_visualization.js appends them as
-      unlabelled img.button elements, ours are buttons
+      unlabelled img.button elements, ours are buttons named after their action

@@ -1,0 +1,12 @@
+# Intentional differences of the multi-table query (see tests/ui-parity/README.md for the format).
+rules:
+  # each column card's table and column selects and its Show checkbox: phpMyAdmin's have neither a
+  # name nor an accessible name; ours are labelled
+  - pma: { kind: select, label: '' }
+    n/a: matched by the labelled Table / Column selects below
+  - pma: { kind: checkbox, label: '' }
+    n/a: matched by the labelled Show checkbox below
+  - ours: { kind: select, label: '/^(Table|Column)$/' }
+    added: the column card's table and column selects, labelled for screen readers
+  - ours: { kind: checkbox, label: Show }
+    added: the column card's Show checkbox, labelled for screen readers

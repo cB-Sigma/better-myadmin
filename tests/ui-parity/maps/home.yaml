@@ -1,5 +1,9 @@
 # Intentional differences of the home page (see tests/ui-parity/README.md for the format).
 rules:
+  - match: { kind: select, name: set_theme }
+    ignore: [options]
+    reason: the theme list has BetterMyAdmin's optional modern theme besides phpMyAdmin's four
+    exception: X53
   - pma: { kind: link, label: '/^\d+\.\d+\.\d+$/', section: phpMyAdmin }
     n/a: >-
       phpMyAdmin's VersionCheck widget links the latest released version on its home card;

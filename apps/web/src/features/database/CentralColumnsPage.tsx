@@ -119,7 +119,8 @@ function EditorCells({
           maxLength={64}
           size={10}
           title={t('Column')}
-          aria-label={t('Name')}
+          // the add row's name box is named by its title ("Column"), as phpMyAdmin's
+          {...(addRow ? {} : { 'aria-label': t('Name') })}
           required
           value={draft.name}
           onChange={(e) => set({ name: e.target.value })}

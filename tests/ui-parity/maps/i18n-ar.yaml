@@ -1,6 +1,10 @@
 # Intentional differences of the translated cases (tests/ui-parity/i18n.uip.ts): those of the English
 # cases (home.yaml, table-insert.yaml…), with their labels in this language where a rule names one.
 rules:
+  - match: { kind: select, name: set_theme }
+    ignore: [options]
+    reason: the theme list has BetterMyAdmin's optional modern theme besides phpMyAdmin's four
+    exception: X53
   - ours: { kind: button, label: '...' }
     added: >-
       the calendar trigger of date/time fields is a focusable button (phpMyAdmin's jQuery UI

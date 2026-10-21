@@ -3,8 +3,8 @@ rules:
   # (named col_isNull / col_extra by central_columns.ts); ours are packages/ui Checkboxes, which carry
   # no name attribute, so the matcher cannot pair them
   - pma: { kind: checkbox, name: col_isNull }
-    n/a: matched by the unlabelled checkbox below (packages/ui Checkbox has no name attribute)
+    n/a: matched by the Null / A_I checkbox below (packages/ui Checkbox has no name attribute)
   - pma: { kind: checkbox, name: col_extra }
-    n/a: matched by the unlabelled checkbox below (packages/ui Checkbox has no name attribute)
-  - ours: { kind: checkbox, label: '/^$/', section: '', step: '/^(initial|ENUM type shows the ENUM\/SET editor link)$/' }
-    added: the Null and A_I checkboxes of the Add new column row
+    n/a: matched by the Null / A_I checkbox below (packages/ui Checkbox has no name attribute)
+  - ours: { kind: checkbox, label: '/^(Null|A_I)$/', section: '', step: '/^(initial|ENUM type shows the ENUM\/SET editor link)$/' }
+    added: the Null and A_I checkboxes of the Add new column row, named after their columns
