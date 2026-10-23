@@ -2,6 +2,22 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.5 (2026-10-23)
+
+### Security
+
+- Node.js 22.23.4 in the Docker image and CI (the 2026-10-21 security release: Brotli decoder
+  out-of-bounds write reachable through `fetch()`, TLS hostname-check bypasses, and more).
+- Dependencies with known advisories updated within their major versions: hono 4.13.13,
+  @hono/node-server 1.19.17, mysql2 3.24.5, dompurify 3.4.16, @xmldom/xmldom 0.8.15, yaml 2.9.1.
+  Three DOMPurify advisories fixed in 3.4.17 remain (`SAFE_FOR_TEMPLATES`, `IN_PLACE` hooks,
+  `PARSER_MEDIA_TYPE`: options BetterMyAdmin does not use); 3.4.17 is taken once it passes the
+  14-day minimum release age.
+
+### Fixes
+
+- Modern theme, dark mode: the options of an open drop-down were unreadable (#1).
+
 ## 1.0.4 (2026-10-23)
 
 ### Fixes

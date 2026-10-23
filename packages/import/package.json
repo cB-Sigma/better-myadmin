@@ -1,6 +1,6 @@
 {
   "name": "@bettermyadmin/import",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "license": "GPL-2.0-or-later",
   "type": "module",
@@ -16,7 +16,7 @@
     "@bettermyadmin/mysql-types": "workspace:*",
     "@bettermyadmin/sql-gen": "workspace:*",
     "@bettermyadmin/sql-lexer": "workspace:*",
-    "@xmldom/xmldom": "0.8.10",
+    "@xmldom/xmldom": "0.8.15",
     "seek-bzip": "2.0.0"
   }
 }

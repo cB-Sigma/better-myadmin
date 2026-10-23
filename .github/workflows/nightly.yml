@@ -40,7 +40,7 @@ jobs:
           if [ -n "$DH_USER" ] && [ -n "$DH_TOKEN" ]; then echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin; else echo "no Docker Hub credentials; relying on pull retries"; fi
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       # PHP 8.3 with mbstring/iconv: the suites that start their own phpMyAdmin (pma-instance.ts,
       # pma-shadow.ts) and export-kanji's mbstring goldens run php on the runner (phpAvailable)
       - uses: shivammathur/setup-php@v2
@@ -82,7 +82,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       - run: docker compose -f docker/dev.compose.yml up -d --build --wait mariadb11 phpmyadmin-ref-mariadb
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium

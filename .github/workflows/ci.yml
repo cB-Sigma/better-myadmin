@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       # docs/architecture/16-golden-path.md: static, no database (tools/conventions)
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm parity:check
 
@@ -73,7 +73,7 @@ jobs:
           docker logs db; exit 1
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:int
 
@@ -130,7 +130,7 @@ jobs:
           if [ -n "$DH_USER" ] && [ -n "$DH_TOKEN" ]; then echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin; else echo "no Docker Hub credentials; relying on pull retries"; fi
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       # the three private-instance ui-parity files (setup / auth types / i18n) start their own
       # phpMyAdmin from the reference checkout, served by php on the runner (as the parity job does);
       # without it their beforeAll throws ENOENT on PMA_PATH and the whole suite does not run
@@ -178,7 +178,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
+        with: { node-version: 22.23.4, cache: pnpm }
       - run: git clone --filter=blob:none --no-checkout https://github.com/phpmyadmin/phpmyadmin.git ../ref/pma
       - run: pnpm install --frozen-lockfile
       - run: pnpm upstream:check --gate

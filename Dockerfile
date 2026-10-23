@@ -11,7 +11,7 @@
 #
 # Behind a TLS-intercepting proxy, pass its CA for the package downloads (optional):
 #   docker build --secret id=ca,src=/path/to/ca.pem -t bettermyadmin .
-ARG NODE_IMAGE=node:22.22.0-bookworm-slim
+ARG NODE_IMAGE=node:22.23.4-bookworm-slim
 
 FROM ${NODE_IMAGE} AS build
 WORKDIR /app
