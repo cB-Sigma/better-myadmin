@@ -185,6 +185,12 @@
   outline-color: var(--m-ring-border);
 }
 
+/* the drop-down is painted from the control's background, so the options get an opaque surface */
+[data-theme="modern"][data-color-mode="dark"] :is(select option, select optgroup) {
+  background-color: var(--bg-elevated);
+  color: var(--fg);
+}
+
 /* ---- results grid: one rounded frame, hairline rows, muted header */
 [data-theme="modern"] .table-responsive-md {
   border: 1px solid var(--border);
