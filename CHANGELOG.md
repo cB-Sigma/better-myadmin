@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.3 (2026-10-23)
+
+### Fixes
+
+- SQL editor in dark colour modes (every theme): keywords, strings and other tokens used the light
+  palette (#708 on near-black), the caret was black and the selection light grey. The editor now
+  colours tokens with the theme's SQL colours, as the highlighted query results already did, and
+  draws the caret and the selection in the theme's colours; it follows a colour-mode change while open.
+
 ## 1.0.2 (2026-10-23)
 
 ### Fixes

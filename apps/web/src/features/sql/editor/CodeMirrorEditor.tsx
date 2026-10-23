@@ -8,10 +8,11 @@ import {
 } from '@codemirror/autocomplete'
 import { defaultKeymap, history, historyKeymap, indentWithTab } from '@codemirror/commands'
 import { MySQL, sql } from '@codemirror/lang-sql'
-import { bracketMatching, defaultHighlightStyle, indentUnit, syntaxHighlighting } from '@codemirror/language'
+import { HighlightStyle, bracketMatching, indentUnit, syntaxHighlighting } from '@codemirror/language'
 import { type Diagnostic, lintGutter, linter } from '@codemirror/lint'
 import { Compartment, EditorState, type Extension, Prec } from '@codemirror/state'
 import { EditorView, keymap, lineNumbers } from '@codemirror/view'
+import { tags } from '@lezer/highlight'
 import { type Ref, useEffect, useImperativeHandle, useRef } from 'react'
 import { t } from '../../../lib/i18n'
 import { lintInWorker } from './lintClient'
@@ -37,12 +38,36 @@ const theme = EditorView.theme({
     borderRight: '1px solid var(--border)',
   },
   '&.cm-focused': { outline: '2px solid var(--focus-ring)', outlineOffset: '-2px' },
+  // the caret and the selection in the theme's colours (CodeMirror's are black and light grey, both
+  // invisible / unreadable on a dark theme)
+  '.cm-content': { caretColor: 'var(--fg)' },
+  '.cm-cursor, .cm-dropCursor': { borderLeftColor: 'var(--fg)' },
+  '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection':
+    { backgroundColor: 'color-mix(in srgb, var(--focus-ring) 35%, transparent)' },
   '.cm-tooltip-autocomplete .cm-completionDetail': {
     marginLeft: '1em',
     fontStyle: 'normal',
     color: 'var(--fg-subtle)',
   },
 })
+
+/**
+ * CodeMirror's default SQL colours (#708 keywords, #a11 strings, …) through the theme's --sql-* tokens,
+ * which switch with the app's colour mode (the same colours as the highlighted SQL of query results).
+ */
+const sqlHighlight = HighlightStyle.define([
+  { tag: tags.keyword, color: 'var(--sql-keyword)' },
+  { tag: tags.typeName, color: 'var(--sql-builtin)' },
+  { tag: [tags.string, tags.special(tags.string)], color: 'var(--sql-string)' },
+  { tag: tags.number, color: 'var(--sql-number)' },
+  { tag: [tags.lineComment, tags.blockComment], color: 'var(--sql-comment)' },
+  { tag: [tags.special(tags.name), tags.variableName], color: 'var(--sql-variable)' },
+  { tag: [tags.bool, tags.null, tags.atom], color: 'var(--sql-atom)' },
+  { tag: tags.invalid, color: 'var(--error)' },
+])
+
+/** The app's colour mode is dark (html[data-color-mode]): CodeMirror's own dark defaults (panels, tooltips). */
+const appIsDark = () => document.documentElement.dataset.colorMode === 'dark'
 
 const darkTheme = EditorView.theme(
   {
@@ -67,6 +92,7 @@ export default function CodeMirrorEditor(props: SqlEditorProps & { handleRef?: R
   const languageConf = useRef(new Compartment())
   const lintConf = useRef(new Compartment())
   const keysConf = useRef(new Compartment())
+  const darkConf = useRef(new Compartment())
 
   useImperativeHandle(
     props.handleRef,
@@ -132,7 +158,8 @@ export default function CodeMirrorEditor(props: SqlEditorProps & { handleRef?: R
       indentUnit.of('    '),
       EditorState.tabSize.of(4),
       EditorView.lineWrapping,
-      syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+      syntaxHighlighting(sqlHighlight),
+      darkConf.current.of(EditorView.darkTheme.of(appIsDark())),
       languageConf.current.of(languageFor(latest.current.autocomplete)),
       // completeSingle: false — a single candidate is never inserted on its own
       autocompletion({ activateOnTyping: true, defaultKeymap: true }),
@@ -158,7 +185,13 @@ export default function CodeMirrorEditor(props: SqlEditorProps & { handleRef?: R
     })
     viewRef.current = view
     if (latest.current.focusOnLoad?.() === true) view.focus()
+    // the colour mode can change while the editor is open (the theme menu)
+    const mode = new MutationObserver(() =>
+      view.dispatch({ effects: darkConf.current.reconfigure(EditorView.darkTheme.of(appIsDark())) }),
+    )
+    mode.observe(document.documentElement, { attributes: true, attributeFilter: ['data-color-mode'] })
     return () => {
+      mode.disconnect()
       view.destroy()
       viewRef.current = null
     }
