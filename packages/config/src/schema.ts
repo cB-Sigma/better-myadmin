@@ -136,6 +136,8 @@ export const serverNode = group({
     samesite: optional('enum', z.enum(['Lax', 'Strict']), { values: ['Lax', 'Strict'], fromEnv: (r) => r }),
   }),
   SignonScript: str(''),
+  // BetterMyAdmin only (X54): a JS module serving the signon login page at SignonURL's path
+  SignonPage: str('', { bma: true }),
   SignonURL: str(''),
   LogoutURL: str(''),
   // Visibility

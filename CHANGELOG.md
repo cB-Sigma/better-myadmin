@@ -2,6 +2,16 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.1 (2026-10-23)
+
+### Features
+
+- `SignonPage` (server setting, BetterMyAdmin only): a signon server's login page can be a
+  JavaScript module that BetterMyAdmin serves itself at `SignonURL`, on its own port, the way a
+  phpMyAdmin signon page is a PHP file next to phpMyAdmin. The module gets the request and helpers
+  to read and write the `SignonSession` cookie; `apps/server/examples/signon-page.mjs` is the
+  example. Parity exception X54.
+
 ## 1.0.0 (2026-10-21)
 
 The first release: a feature-for-feature TypeScript / React port of phpMyAdmin 6.0.0-dev

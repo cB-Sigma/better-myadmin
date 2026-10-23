@@ -11,6 +11,7 @@ import { getCookie, setCookie } from 'hono/cookie'
 import { logUser } from './auth/auth-log.ts'
 import { requestClientIp } from './auth/login.ts'
 import { authPageGate, isPageRequest } from './auth/page-gate.ts'
+import { signonPages } from './auth/signon-page.ts'
 import type { AppConfig } from './config.ts'
 import type { PoolManager } from './db/pool-manager.ts'
 import { requestScope, runInRequestScope } from './db/request-scope.ts'
@@ -115,6 +116,9 @@ export function createApp(deps: AppDeps) {
   app.use('/api/*', language)
   app.use('/api/*', permissions)
   app.use('/api/*', requestProblemChecking())
+
+  // a signon server's own login page (SignonPage), before the gate would redirect it to itself
+  app.use('*', signonPages(deps))
 
   // page loads authenticate the http / signon servers (the SPA itself is served by main.ts)
   const gate = authPageGate()

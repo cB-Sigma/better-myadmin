@@ -164,6 +164,55 @@ describe('signon auth', () => {
     expect(data?.PMA_single_signon_error_message).toBe('Cannot log in to the database server.')
   })
 
+  it('SignonPage serves the login page at SignonURL itself (X54)', async () => {
+    // inside the workspace: the test runner loads modules from there only
+    mkdirSync(join(process.cwd(), '.data'), { recursive: true })
+    const dir = mkdtempSync(join(process.cwd(), '.data', 'f01a-page-'))
+    try {
+      const page = join(dir, 'signon-page.mjs')
+      writeFileSync(
+        page,
+        `export default async function (request, ctx) {
+          const url = new URL(request.url)
+          if (url.searchParams.has('logout')) return new Response('bye', { headers: { 'Set-Cookie': ctx.sessionCookie(null) } })
+          if (request.method === 'POST') {
+            const f = await request.json()
+            return new Response(null, { status: 302, headers: { Location: '/', 'Set-Cookie': ctx.sessionCookie({ PMA_single_signon_user: f.user, PMA_single_signon_password: f.password }) } })
+          }
+          return new Response('form for server ' + ctx.server.index + (ctx.session?.PMA_single_signon_error_message ? ': ' + ctx.session.PMA_single_signon_error_message : ''), { headers: { 'Content-Type': 'text/html' } })
+        }\n`,
+      )
+      t = testApp(sso({ SignonURL: '/signon/', SignonPage: page }))
+      // the page is served, not redirected to itself by the gate
+      const form = await t.req('GET', '/signon/')
+      expect(form.status).toBe(200)
+      expect(form.text).toBe('form for server 1')
+      // a page load without a session goes to the page
+      const gate = await t.req('GET', '/')
+      expect(gate.status).toBe(302)
+      expect(gate.res.headers.get('location')).toBe('/signon/')
+      // wrong credentials: BetterMyAdmin writes the error into the session, the page shows it
+      await t.req('POST', '/signon/', { user: 'f01a_sso', password: 'bad' })
+      expect((await t.req('GET', '/')).status).toBe(302)
+      expect((await t.req('GET', '/signon/')).text).toBe(
+        'form for server 1: Cannot log in to the database server.',
+      )
+      // right credentials: logged in
+      const post = await t.req('POST', '/signon/', { user: 'f01a_sso', password: 'f01a_sso' })
+      expect(post.status).toBe(302)
+      expect((await t.req('GET', '/s/1/')).status).toBe(404) // past the gate (no SPA in the in-process app)
+      expect((await t.req('GET', '/api/auth/state')).json).toMatchObject({
+        authenticated: true,
+        user: 'f01a_sso',
+      })
+      // logout clears the SignonSession
+      await t.req('GET', '/signon/?logout')
+      expect(t.jar.get('SignonSession')).toBe('')
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
   it('[p01-03cad3] "You must set SignonURL!" and the SignonScript hook', async () => {
     t = testApp(sso({ SignonURL: '' }))
     await t.req('GET', '/')
