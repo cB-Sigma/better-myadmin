@@ -227,7 +227,8 @@ export function DefinitionEditor({
   const h = useRef<SqlEditorHandle>(null)
   useEffect(() => {
     const cur = h.current
-    if (cur !== null && cur.getValue() !== value) cur.setValue(value)
+    // CodeMirror keeps \r\n as one line break: a definition saved from Windows is the same text
+    if (cur !== null && cur.getValue() !== value.replace(/\r\n?/g, '\n')) cur.setValue(value)
   }, [value])
   return (
     <SqlEditor

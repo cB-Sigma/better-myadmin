@@ -1,4 +1,5 @@
 import { backquote } from '@bettermyadmin/sql-gen'
+import { splitUserHost } from '../shell/privileges.ts'
 import type { NavDbi } from './dbi.ts'
 
 /** pma: src/UserPrivileges.php */
@@ -195,7 +196,7 @@ async function analyseShowGrant(dbi: NavDbi): Promise<UserPrivileges> {
 
 /** pma: UserPrivilegesFactory::getPrivileges */
 export async function getPrivileges(dbi: NavDbi): Promise<UserPrivileges> {
-  const [username = ''] = (await dbi.getCurrentUser()).split('@')
+  const [username] = splitUserHost(await dbi.getCurrentUser())
   // If MySQL is started with --skip-grant-tables
   if (username === '') {
     return newPrivileges({

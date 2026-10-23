@@ -8,7 +8,7 @@ import type {
 import { sprintf } from '@bettermyadmin/i18n'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { NotFoundError } from '../http/errors.ts'
-import { PrivilegeProbe } from '../shell/privileges.ts'
+import { PrivilegeProbe, splitUserHost } from '../shell/privileges.ts'
 import { getTriggers, triggerCreateSql } from '../table/table-mover.ts'
 import { type DbCtx, listTables, msg, tryQuery } from './context.ts'
 import { errorsMessage } from './routines.ts'
@@ -52,7 +52,7 @@ async function triggerQuery(ctx: DbCtx, req: TriggerSaveRequest, errors: string[
   let query = 'CREATE '
   if (req.definer !== '') {
     if (req.definer.includes('@')) {
-      const [u = '', h = ''] = req.definer.split('@')
+      const [u, h] = splitUserHost(req.definer)
       query += `DEFINER=${backquote(u)}@${backquote(h)} `
     } else errors.push(tr.gettext('The definer must be in the "username@hostname" format!'))
   }

@@ -21,7 +21,7 @@ import { type CreateStatement, Parser, Context as SqlContext, TokensList } from 
 import { MysqlError, NotFoundError } from '../http/errors.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import { isSuperUser } from '../server-admin/context.ts'
-import { PrivilegeProbe } from '../shell/privileges.ts'
+import { PrivilegeProbe, splitUserHost } from '../shell/privileges.ts'
 import { type DbCtx, errorText, fetchColumn, msg, tryQuery } from './context.ts'
 import { pager } from './structure.ts'
 
@@ -112,7 +112,7 @@ function definerSql(ctx: DbCtx, definer: string, errors: string[], allowQuoted: 
     errors.push(ctx.tr.gettext('The definer must be in the "username@hostname" format!'))
     return ''
   }
-  const [user = '', host = ''] = definer.split('@')
+  const [user, host] = splitUserHost(definer)
   const quote = (s: string) =>
     allowQuoted ? backquoteCompat(s, 'NONE', !(s.startsWith('`') && s.endsWith('`'))) : backquote(s)
   return `DEFINER=${quote(user)}@${quote(host)} `

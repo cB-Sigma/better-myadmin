@@ -75,9 +75,13 @@ export default function CodeMirrorEditor(props: SqlEditorProps & { handleRef?: R
       setValue: (value) => {
         const v = viewRef.current
         if (v === null) return
+        // the document's length, not the string's: CodeMirror turns \r\n into one line break (a
+        // routine body saved from Windows put the cursor past the end: "Selection points outside
+        // of document")
+        const doc = v.state.toText(value)
         v.dispatch({
-          changes: { from: 0, to: v.state.doc.length, insert: value },
-          selection: { anchor: value.length },
+          changes: { from: 0, to: v.state.doc.length, insert: doc },
+          selection: { anchor: doc.length },
         })
       },
       replaceSelection: (text) => {

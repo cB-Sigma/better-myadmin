@@ -2,6 +2,18 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.2 (2026-10-23)
+
+### Fixes
+
+- A user named by an email (`'name@company.com'@'%'`, as single sign-on creates) lost the
+  Triggers and Events tabs and other privilege-dependent features: `CURRENT_USER()` was split at
+  its first `@`. It is split at the last one now, as are the definers of routines, triggers and
+  events, which were saved naming another account. Parity exception X55.
+- Editing a routine, trigger or event whose definition has Windows line endings (`\r\n`) failed
+  with "A fatal JavaScript error has occurred. Selection points outside of document" once the SQL
+  editor had been opened earlier in the session.
+
 ## 1.0.1 (2026-10-23)
 
 ### Features

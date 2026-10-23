@@ -56,12 +56,13 @@ export class PrivilegeProbe {
     return '@'
   }
 
-  /** getCurrentUserAndHost: `explode('@', CURRENT_USER())` — only the first two parts are used. */
+  /**
+   * getCurrentUserAndHost: CURRENT_USER() split at its last '@' (parity exception X55). phpMyAdmin
+   * explodes at every '@', so a user named by an email ('a@b.com'@'%') was read as 'a'@'b.com' and
+   * lost every privilege-dependent tab (Triggers, Events, …); a host never contains '@'.
+   */
   async currentUserAndHost(): Promise<[string, string]> {
-    if (this.#userAndHost === null) {
-      const parts = (await this.currentUser()).split('@')
-      this.#userAndHost = [parts[0] ?? '', parts[1] ?? '']
-    }
+    if (this.#userAndHost === null) this.#userAndHost = splitUserHost(await this.currentUser())
     return this.#userAndHost
   }
 
@@ -84,8 +85,7 @@ export class PrivilegeProbe {
     if (this.#rolesAndHost === null) {
       this.#rolesAndHost = (await this.currentRoles(versionInt, isMariaDb)).map((r) => {
         if (!r.includes('@')) return [r, '']
-        const p = r.split('@')
-        return [p[0] ?? '', p[1] ?? '']
+        return splitUserHost(r)
       })
     }
     return this.#rolesAndHost
@@ -196,6 +196,12 @@ export class PrivilegeProbe {
     }
     return false
   }
+}
+
+/** 'user@host' → [user, host], at the last '@' (a user name may contain '@', a host may not). */
+export function splitUserHost(userHost: string): [string, string] {
+  const at = userHost.lastIndexOf('@')
+  return at === -1 ? [userHost, ''] : [userHost.slice(0, at), userHost.slice(at + 1)]
 }
 
 /** PHP `(bool)` of a fetchValue result. */
