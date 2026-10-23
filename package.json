@@ -1,6 +1,6 @@
 {
   "name": "bettermyadmin-monorepo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "license": "GPL-2.0-or-later",
   "description": "A modern phpMyAdmin alternative for MySQL and MariaDB, rebuilt in TypeScript and React",

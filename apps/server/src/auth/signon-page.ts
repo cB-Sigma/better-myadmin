@@ -37,6 +37,19 @@ export interface SignonPageContext {
   session: SignonSessionData | null
   /** a Set-Cookie value that stores this SignonSession (null clears it), with SignonCookieParams */
   sessionCookie: (data: SignonSessionData | null) => string
+  /** the page the user asked for before being sent here (a path on this host), else '/' */
+  returnTo: string
+}
+
+/** The page a signon redirect interrupted (set by the page gate, cleared by the next redirect). */
+export const RETURN_COOKIE = 'bma_signon_return'
+
+/** A same-host path that is not the signon page itself, else '/'. */
+function safeReturn(value: string | undefined, base: string): string {
+  if (value === undefined || !value.startsWith('/') || value.startsWith('//') || value.includes('\\'))
+    return '/'
+  const path = value.split(/[?#]/)[0] ?? ''
+  return path === base || path.startsWith(`${base}/`) ? '/' : value
 }
 
 type PageHandler = (request: Request, ctx: SignonPageContext) => Response | Promise<Response>
@@ -97,9 +110,18 @@ export function signonPages(deps: AppDeps): MiddlewareHandler<AppEnv> {
           ? serialize(hit.srv.SignonSession, '', { ...opts, maxAge: 0 })
           : serialize(hit.srv.SignonSession, encodeSignonSession(cfg.blowfish_secret, data), opts)
       },
+      returnTo: safeReturn(getCookie(c, RETURN_COOKIE), hit.base),
     }
     const res = await handler(c.req.raw, ctx)
     if (!(res instanceof Response)) throw new Error(`SignonPage ${file} did not return a Response`)
+    // the page sent the user on: the interrupted page is used up
+    if (res.status >= 300 && res.status < 400 && getCookie(c, RETURN_COOKIE) !== undefined) {
+      try {
+        res.headers.append('Set-Cookie', serialize(RETURN_COOKIE, '', { path: '/', maxAge: 0 }))
+      } catch {
+        // immutable headers: the cookie expires on its own
+      }
+    }
     c.res = res
   }
 }

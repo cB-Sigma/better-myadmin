@@ -19,6 +19,7 @@ import { statementLog } from './db/statement-log.ts'
 import { configPermissions } from './http/config-permissions.ts'
 import { BmaError, CsrfError } from './http/errors.ts'
 import { isHttpsRequest, securityHeaders } from './http/headers.ts'
+import { legacyUrls } from './http/legacy-urls.ts'
 import { requestProblemChecking } from './http/request-problems.ts'
 import { sqlLog } from './http/sql-log.ts'
 import { languageLoading, languageManager } from './i18n.ts'
@@ -117,6 +118,8 @@ export function createApp(deps: AppDeps) {
   app.use('/api/*', permissions)
   app.use('/api/*', requestProblemChecking())
 
+  // phpMyAdmin's index.php?route=… and *.php addresses: to the page they name
+  app.use('*', legacyUrls(deps))
   // a signon server's own login page (SignonPage), before the gate would redirect it to itself
   app.use('*', signonPages(deps))
 

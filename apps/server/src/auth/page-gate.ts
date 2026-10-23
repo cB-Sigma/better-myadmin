@@ -1,7 +1,9 @@
 import type { MiddlewareHandler } from 'hono'
+import { setCookie } from 'hono/cookie'
 import type { AppEnv } from '../app.ts'
 import { getServer } from '../config.ts'
 import { httpPageAuth, httpRealm } from './http.ts'
+import { RETURN_COOKIE, signonPagePath } from './signon-page.ts'
 import { signonPageAuth } from './signon.ts'
 
 /** A page load of the SPA (not the API, a hashed asset, a static file or the setup script). */
@@ -14,6 +16,8 @@ export function isPageRequest(method: string, path: string): boolean {
     path.startsWith('/setup/')
   )
     return false
+  // every SPA page is under /s/ (a table named `logs.2024` is no static file)
+  if (path.startsWith('/s/')) return true
   const last = path.slice(path.lastIndexOf('/') + 1)
   return !last.includes('.') || last.endsWith('.html')
 }
@@ -47,7 +51,18 @@ export function authPageGate(): MiddlewareHandler<AppEnv> {
         delete c.get('session').authFailure
         return next()
       }
-      if ('redirect' in r) return c.redirect(r.redirect, 302)
+      if ('redirect' in r) {
+        // a SignonPage sends the user back to the page they asked for (X54), not to the home page
+        const url = new URL(c.req.url)
+        if (s.SignonPage !== '' && signonPagePath(s.SignonURL) !== null && url.pathname !== '/')
+          setCookie(c, RETURN_COOKIE, `${url.pathname}${url.search}`, {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'Lax',
+            maxAge: 600,
+          })
+        return c.redirect(r.redirect, 302)
+      }
       c.get('session').authFailure = { server, failure: { kind: 'error', message: r.error } }
       return next()
     }

@@ -7,14 +7,14 @@
  *               LogoutURL: '/signon/?logout', SignonPage: './apps/server/examples/signon-page.mjs' }]
  *
  * The module exports a function (default or `signonPage`) taking the request and a context with
- * the current SignonSession and `sessionCookie(data)`, the Set-Cookie value that stores one
- * (`null` clears it). A relative path is resolved against BetterMyAdmin's working directory.
+ * the current SignonSession, `sessionCookie(data)`, the Set-Cookie value that stores one
+ * (`null` clears it), and `returnTo`, the page the user asked for before being sent here. A relative path is resolved against BetterMyAdmin's working directory.
  *
  * pma: examples/signon.php
  */
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`)
 
-export default async function signonPage(request, { session, sessionCookie }) {
+export default async function signonPage(request, { session, sessionCookie, returnTo }) {
   const url = new URL(request.url)
   if (url.searchParams.has('logout')) {
     return new Response(null, {
@@ -28,7 +28,7 @@ export default async function signonPage(request, { session, sessionCookie }) {
       PMA_single_signon_user: form.get('user') ?? '',
       PMA_single_signon_password: form.get('password') ?? '',
     })
-    return new Response(null, { status: 302, headers: { 'Set-Cookie': cookie, Location: '/' } })
+    return new Response(null, { status: 302, headers: { 'Set-Cookie': cookie, Location: returnTo } })
   }
   const error = session?.PMA_single_signon_error_message
   return new Response(

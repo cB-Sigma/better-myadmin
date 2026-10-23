@@ -2,6 +2,24 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.4 (2026-10-23)
+
+### Fixes
+
+- phpMyAdmin addresses (bookmarks, links): `index.php`, `index.php?route=/database/structure&db=…`
+  and phpMyAdmin 4's `db_structure.php`, `tbl_sql.php`, `server_status.php`, … were treated as
+  static files, so a `signon` or `http` server never authenticated the page load and users ended
+  on "Cannot log in to the database server." They now redirect to the BetterMyAdmin page they
+  name (or the home page).
+- A page whose last path segment has a dot (a table named `logs.2024`) was also treated as a
+  static file on a direct load; every page under `/s/` now goes through authentication.
+
+### Features
+
+- `SignonPage` modules get `returnTo`: the page the user asked for before being sent to the
+  signon page (a path on this host, else `/`), so a signed-on user lands there instead of on the
+  home page.
+
 ## 1.0.3 (2026-10-23)
 
 ### Fixes

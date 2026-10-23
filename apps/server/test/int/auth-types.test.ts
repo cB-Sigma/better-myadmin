@@ -213,6 +213,39 @@ describe('signon auth', () => {
     }
   })
 
+  it('phpMyAdmin addresses redirect, and a SignonPage returns to the page asked for', async () => {
+    mkdirSync(join(process.cwd(), '.data'), { recursive: true })
+    const dir = mkdtempSync(join(process.cwd(), '.data', 'f01a-return-'))
+    try {
+      const page = join(dir, 'signon-page.mjs')
+      writeFileSync(
+        page,
+        `export default async function (request, ctx) {
+          if (request.method !== 'POST') return new Response('return to ' + ctx.returnTo)
+          return new Response(null, { status: 302, headers: { Location: ctx.returnTo, 'Set-Cookie': ctx.sessionCookie({ PMA_single_signon_user: 'f01a_sso', PMA_single_signon_password: 'f01a_sso' }) } })
+        }\n`,
+      )
+      t = testApp(sso({ SignonURL: '/signon/', SignonPage: page }))
+      // an old bookmark: index.php?route=… goes to the page it names (and through the gate)
+      const old = await t.req('GET', '/index.php?route=/database/structure&db=shop&server=1')
+      expect(old.status).toBe(302)
+      expect(old.res.headers.get('location')).toBe('/s/1/db/shop/structure')
+      const gate = await t.req('GET', '/s/1/db/shop/structure')
+      expect(gate.res.headers.get('location')).toBe('/signon/')
+      expect((await t.req('GET', '/signon/')).text).toBe('return to /s/1/db/shop/structure')
+      // signed on: back to that page, and the remembered page is used up
+      const post = await t.req('POST', '/signon/', {})
+      expect(post.res.headers.get('location')).toBe('/s/1/db/shop/structure')
+      expect(t.jar.get('bma_signon_return') ?? '').toBe('')
+      expect((await t.req('GET', '/signon/')).text).toBe('return to /')
+      // only a path on this host is returned to
+      t.jar.set('bma_signon_return', '//evil.example/')
+      expect((await t.req('GET', '/signon/')).text).toBe('return to /')
+    } finally {
+      rmSync(dir, { recursive: true, force: true })
+    }
+  })
+
   it('[p01-03cad3] "You must set SignonURL!" and the SignonScript hook', async () => {
     t = testApp(sso({ SignonURL: '' }))
     await t.req('GET', '/')
