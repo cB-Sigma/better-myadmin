@@ -3,24 +3,24 @@
 Relations
 =========
 
-phpMyAdmin allows relationships (similar to foreign keys) using MySQL-native
-(InnoDB) methods when available and falling back on special phpMyAdmin-only
-features when needed. There are two ways of editing these relations, with the
+BetterMyAdmin allows relationships (similar to foreign keys) using MySQL-native
+(InnoDB) methods when available and falling back on phpMyAdmin's internal
+relations, stored in the :ref:`linked-tables`, when needed. There are two ways of editing these relations, with the
 *relation view* and the drag-and-drop *designer* -- both of which are explained
 on this page.
 
 .. note::
 
-    You need to have configured the :ref:`linked-tables` for using phpMyAdmin
-    only relations.
+    You need to have configured the :ref:`linked-tables` for using the internal
+    relations (those not enforced by MySQL).
 
 Technical info
 --------------
 
 Currently the only MySQL table type that natively supports relationships is
-InnoDB. When using an InnoDB table, phpMyAdmin will create real InnoDB
+InnoDB. When using an InnoDB table, BetterMyAdmin will create real InnoDB
 relations which will be enforced by MySQL no matter which application accesses
-the database. In the case of any other table type, phpMyAdmin enforces the
+the database. In the case of any other table type, BetterMyAdmin enforces the
 relations internally and those relations are not applied to any other
 application.
 
@@ -65,8 +65,8 @@ Designer
 --------
 
 The Designer feature is a graphical way of creating, editing, and displaying
-phpMyAdmin relations. These relations are compatible with those created in
-phpMyAdmin's relation view.
+BetterMyAdmin relations. These relations are compatible with those created in
+the relation view (and with phpMyAdmin's).
 
 To use this feature, you need a properly configured :ref:`linked-tables` and
 must have the :config:option:`$cfg['Servers'][$i]['table_coords']` configured.
@@ -74,10 +74,11 @@ must have the :config:option:`$cfg['Servers'][$i]['table_coords']` configured.
 To use the designer, select a database's structure page, then look for the
 :guilabel:`Designer` tab.
 
-To export the view into PDF, you have to create PDF pages first. The Designer
-creates the layout, how the tables shall be displayed. To finally export the
-view, you have to create this with a PDF page and select your layout, which you
-have created with the designer.
+To export the view, you have to create pages first (they are called PDF pages
+for historical reasons). The Designer creates the layout, how the tables shall
+be displayed. To finally export the view as SVG, EPS or Dia (BetterMyAdmin has
+no PDF export, see :ref:`faqpdf`), select your page, which you have created
+with the designer.
 
 .. seealso::
 

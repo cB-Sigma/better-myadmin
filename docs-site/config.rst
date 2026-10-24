@@ -1,32 +1,78 @@
-.. index:: config.inc.php
+.. index:: configuration file, bettermyadmin.config.json
 
 .. _config:
 
 Configuration
 =============
 
-All configurable data is placed in :file:`config.inc.php` in phpMyAdmin's
-toplevel directory. If this file does not exist, please refer to the
-:ref:`setup` section to create one. This file only needs to contain the
-parameters you want to change from their corresponding default value.
+BetterMyAdmin accepts every configuration directive of phpMyAdmin under the
+same name and with the same default value, plus a few of its own
+(:ref:`config-bma`). Settings come from four layers, each overriding the one
+before:
+
+#. the defaults listed on this page;
+#. the variables of phpMyAdmin's Docker image (:ref:`docker-vars`);
+#. a configuration file: ``--config <file>``, the ``BMA_CONFIG`` environment
+   variable, or the first of :file:`bettermyadmin.config.ts`, ``.js``,
+   ``.mjs``, ``.json``, ``.yaml``, ``.yml`` in the working directory
+   (``/etc/bettermyadmin`` in the Docker image);
+#. ``BMA__<Directive>[__<Sub>…]`` environment variables
+   (``BMA__Servers__1__host=db``, ``BMA__MaxRows=50``,
+   ``BMA__Export__format=csv``), plus the shortcuts ``BMA_HOST``, ``BMA_PORT``,
+   ``BMA_USER``, ``BMA_PASSWORD``, ``BMA_ARBITRARY_SERVER`` and
+   ``BMA_ABSOLUTE_URI``.
+
+If no configuration file exists, please refer to the :ref:`setup` section to
+create one. The file only needs to contain the directives you want to change
+from their default value; if you wish to use the default value there's no need
+to list it. An unknown directive or an invalid value stops the server with a
+message naming the closest directive (phpMyAdmin silently uses the default
+instead).
+
+.. rubric:: Notation
+
+This page names the directives in phpMyAdmin's notation, which is also what
+the setup script and phpMyAdmin's own documentation use. In the configuration
+file:
+
+* ``$cfg['X']`` is the key ``X`` of the file;
+* ``$cfg['X']['Y']`` is the key ``Y`` of the object ``X``
+  (``"Export": { "format": "csv" }``);
+* ``$cfg['Servers'][$i]['Y']`` is the key ``Y`` of an entry of the ``Servers``
+  list, server 1 first.
+
+For example, this :file:`bettermyadmin.config.json`:
+
+.. code-block:: json
+
+    {
+      "blowfish_secret": "a 32-byte or longer random string",
+      "Servers": [
+        { "host": "db.example.org", "port": 3306, "auth_type": "cookie" },
+        { "host": "replica.example.org", "verbose": "Replica" }
+      ],
+      "MaxRows": 50,
+      "Export": { "format": "csv" }
+    }
+
+sets :config:option:`$cfg['blowfish_secret']`,
+:config:option:`$cfg['Servers'][$i]['host']` of two servers,
+:config:option:`$cfg['MaxRows']` and :config:option:`$cfg['Export']['format']`.
+The same configuration can be written as YAML, or as a JavaScript or
+TypeScript module whose default export is the object (see :ref:`setup`). The
+code examples on this page are written as JSON.
+
+Version notes such as "New in version 4.8.0" or "Deprecated since version
+4.7.0" refer to phpMyAdmin's versions. A directive that phpMyAdmin removed is
+accepted by BetterMyAdmin with a warning at start, and has no effect.
+
+The look of the interface (colors, fonts) comes from the themes, see
+:ref:`themes`. phpMyAdmin's :file:`config.header.inc.php` and
+:file:`config.footer.inc.php` include files are PHP and are not supported.
 
 .. seealso::
 
     :ref:`config-examples` for examples of configurations
-
-If a directive is missing from your file, you can just add another line with
-the file. This file is for over-writing the defaults; if you wish to use the
-default value there's no need to add a line here.
-
-The parameters which relate to design (like colors) are placed in
-:file:`themes/themename/scss/_variables.scss`. You might also want to create
-:file:`config.footer.inc.php` and :file:`config.header.inc.php` files to add
-your site specific code to be included on start and end of each page.
-
-.. note::
-
-    Some distributions (eg. Debian or Ubuntu) store :file:`config.inc.php` in
-    ``/etc/phpmyadmin`` instead of within phpMyAdmin sources.
 
 Basic settings
 --------------
@@ -40,21 +86,21 @@ Basic settings
 
         This setting was not available in phpMyAdmin 4.6.0 - 4.6.4.
 
-    Sets here the complete :term:`URL` (with full path) to your phpMyAdmin
-    installation's directory. E.g.
-    ``https://www.example.net/path_to_your_phpMyAdmin_directory/``. Note also
-    that the :term:`URL` on most of web servers are case sensitive (even on
-    Windows). Don’t forget the trailing slash at the end.
+    Sets here the complete public :term:`URL` (with full path) at which users
+    reach BetterMyAdmin. E.g. ``https://www.example.net/bettermyadmin/``.
+    Don’t forget the trailing slash at the end. The Docker variable
+    ``PMA_ABSOLUTE_URI`` and the environment variable ``BMA_ABSOLUTE_URI`` set
+    it too.
 
-    Starting with version 2.3.0, it is advisable to try leaving this blank. In
-    most cases phpMyAdmin automatically detects the proper setting. Users of
-    port forwarding or complex reverse proxy setup might need to set this.
+    It is advisable to try leaving this blank. In most cases BetterMyAdmin
+    automatically detects the proper setting. Users of port forwarding or
+    complex reverse proxy setup might need to set this (see also
+    :config:option:`$cfg['Listen']['basePath']`).
 
-    A good test is to browse a table, edit a row and save it. There should be
-    an error message if phpMyAdmin is having trouble auto–detecting the correct
-    value. If you get an error that this must be set or if the autodetect code
-    fails to detect your path, please post a bug report on our bug tracker so
-    we can improve the code.
+    A good test is to browse a table, edit a row and save it. If you get an
+    error that this must be set or if the autodetect code fails to detect your
+    path, please post a bug report on our bug tracker so we can improve the
+    code.
 
     .. seealso:: :ref:`faq1_40`, :ref:`faq2_5`, :ref:`faq4_7`, :ref:`faq5_16`
 
@@ -63,7 +109,7 @@ Basic settings
     :type: boolean
     :default: false
 
-    Starting with version 2.3.0 phpMyAdmin offers a lot of features to
+    BetterMyAdmin offers a lot of features to
     work with master / foreign – tables (see :config:option:`$cfg['Servers'][$i]['pmadb']`).
 
     If you tried to set this
@@ -88,22 +134,26 @@ Basic settings
     logged according to this directive:
 
     ``auto``
-        Let phpMyAdmin automatically choose between ``syslog`` and ``php``.
+        Log to the server's error output (stderr), like ``php`` and ``sapi``.
+        (phpMyAdmin logs to syslog when PHP has it; Node.js has no syslog.)
     ``syslog``
-        Log using syslog, using AUTH facility, on most systems this ends up
-        in :file:`/var/log/auth.log`.
+        Nothing is logged: BetterMyAdmin has no syslog support.
     ``php``
-        Log into PHP error log.
+        Log to the server's error output (stderr).
     ``sapi``
-        Log into PHP SAPI logging.
+        Log to the server's error output (stderr).
     ``/path/to/file``
-        Any other value is treated as a filename and log entries are written there.
+        Any other value is treated as a filename and log entries are appended
+        there, in phpMyAdmin's format (``M d H:i:s phpmyadmin: …``).
+
+    A successful login is logged once per login (the session then keeps it),
+    a failure at each failed login, and ``no-activity`` when a session
+    expires.
 
     .. note::
 
-        When logging to a file, make sure its permissions are correctly set
-        for a web server user, the setup should closely match instructions
-        described in :config:option:`$cfg['TempDir']`:
+        When logging to a file, make sure the user running BetterMyAdmin can
+        write it.
 
 .. config:option:: $cfg['AuthLogSuccess']
 
@@ -135,10 +185,15 @@ Basic settings
     :type: boolean
     :default: false
 
-    A warning is displayed on the main page if the PHP parameter
+    In phpMyAdmin, a warning is displayed on the main page if the PHP parameter
     ``session.gc_maxlifetime`` is lower than cookie validity configured in phpMyAdmin.
 
-    You can set this parameter to ``true`` to stop this message from appearing.
+    .. note::
+
+        This directive has no effect in BetterMyAdmin: it has no PHP session
+        settings (sessions are kept until twice the cookie lifetime has
+        passed), so the warning never appears. It is accepted in the
+        configuration but no settings form lists it.
 
 .. config:option:: $cfg['ServerLibraryDifference_DisableWarning']
 
@@ -186,7 +241,8 @@ Basic settings
     Sets the default behavior for JavaScript error reporting.
 
     Whenever an error is detected in the JavaScript execution, an error report
-    may be sent to the phpMyAdmin team if the user agrees.
+    may be sent to the BetterMyAdmin project if the user agrees (phpMyAdmin
+    sends its reports to phpmyadmin.net).
 
     The default setting of ``'ask'`` will ask the user everytime there is a new
     error report. However you can set this parameter to ``'always'`` to send error
@@ -215,36 +271,247 @@ Basic settings
     :type: boolean|string
     :default: false
 
-    Setting this to ``true`` allows phpMyAdmin to be included inside a frame,
+    Setting this to ``true`` allows BetterMyAdmin to be included inside a frame,
     and is a potential security hole allowing cross-frame scripting attacks or
-    clickjacking. Setting this to 'sameorigin' prevents phpMyAdmin to be
+    clickjacking. Setting this to 'sameorigin' prevents BetterMyAdmin to be
     included from another document in a frame, unless that document belongs
     to the same domain.
+
+    Besides the ``Content-Security-Policy`` ``frame-ancestors`` rule that
+    phpMyAdmin sends, BetterMyAdmin also sends a matching ``X-Frame-Options``
+    header (``DENY``, or ``SAMEORIGIN`` for 'sameorigin', none for ``true``).
+
+.. _config-bma:
+
+BetterMyAdmin settings
+----------------------
+
+These directives are BetterMyAdmin's own; phpMyAdmin has no equivalent, as
+they concern what PHP and the web server do for it. Besides those below,
+BetterMyAdmin adds :config:option:`$cfg['Servers'][$i]['SignonPage']`,
+:config:option:`$cfg['Servers'][$i]['max_connections']`,
+:config:option:`$cfg['Export']['csv_escape_formulas']`,
+:config:option:`$cfg['Export']['jsmodule_structure_or_data']` and
+:config:option:`$cfg['Import']['MaxDecompressedSize']`, and it honours
+:config:option:`$cfg['ForceSSL']`, which phpMyAdmin no longer does.
+
+.. config:option:: $cfg['Listen']
+
+    :type: array
+    :default: ``{"host": "127.0.0.1", "port": 8080, "basePath": "/"}``
+
+    Where BetterMyAdmin's HTTP server listens. The command-line options
+    ``--host`` and ``--port`` override it. In the Docker image the defaults
+    are ``0.0.0.0`` and port 80 (``APACHE_PORT`` changes the port).
+
+.. config:option:: $cfg['Listen']['host']
+
+    :type: string
+    :default: ``'127.0.0.1'``
+
+    The address to listen on. The default accepts connections from the same
+    machine only; use ``'0.0.0.0'`` (or a specific address) to accept them from
+    the network, preferably behind a reverse proxy with TLS (see
+    :ref:`securing`).
+
+.. config:option:: $cfg['Listen']['port']
+
+    :type: integer
+    :default: 8080
+
+    The TCP port to listen on.
+
+.. config:option:: $cfg['Listen']['basePath']
+
+    :type: string
+    :default: ``'/'``
+
+    The URL path under which users reach BetterMyAdmin, for example
+    ``'/bettermyadmin/'`` behind a reverse proxy. BetterMyAdmin's cookies are
+    scoped to this path.
+
+.. config:option:: $cfg['DataDir']
+
+    :type: string
+    :default: ``'~/.bettermyadmin'``
+
+    The directory where BetterMyAdmin keeps its own data: the sessions
+    (:file:`sessions.sqlite`), the generated :config:option:`$cfg['blowfish_secret']`
+    (:file:`secret`) and the local metadata store (:file:`local-metadata.sqlite`),
+    which keeps per-user data such as recent tables when no
+    :ref:`linked-tables` is configured. ``~`` is the home directory of the
+    user running BetterMyAdmin. The directory is created (mode ``0700``) if
+    it does not exist. In the Docker image it is ``/var/lib/bettermyadmin``;
+    mount a volume there to keep the data across container restarts.
+
+    phpMyAdmin keeps sessions where PHP's session settings say
+    (:config:option:`$cfg['SessionSavePath']`) and has no local metadata store.
+
+.. config:option:: $cfg['SessionStore']
+
+    :type: string
+    :default: ``'sqlite'``
+
+    Where sessions are kept: ``'sqlite'`` stores them in
+    :file:`sessions.sqlite` in :config:option:`$cfg['DataDir']`. The value
+    ``'redis'`` (with :config:option:`$cfg['RedisUrl']`) is accepted by the
+    configuration, but this version always uses the SQLite store.
+
+.. config:option:: $cfg['RedisUrl']
+
+    :type: string
+    :default: ``''``
+
+    The Redis server for ``'redis'`` :config:option:`$cfg['SessionStore']`,
+    as a URL (``redis://:password@host:6379``). It may contain a password, so
+    it is treated as a secret and never shown to users.
+
+.. config:option:: $cfg['MaxUploadSize']
+
+    :type: integer [number of bytes]
+    :default: 536870912 (512 MiB)
+
+    The largest file a user can upload, for example to import it. phpMyAdmin
+    is limited by PHP's ``upload_max_filesize`` and ``post_max_size``
+    settings instead; BetterMyAdmin has no PHP settings, so this directive
+    takes their place, and the messages that name the PHP settings in
+    phpMyAdmin name it. The Docker variable ``UPLOAD_LIMIT`` (for example
+    ``64M``) sets it.
+
+    .. seealso:: :ref:`faq1_16`, :config:option:`$cfg['Import']['MaxDecompressedSize']`
+
+.. config:option:: $cfg['LoginRateLimit']
+
+    :type: array
+    :default: ``{"enabled": true, "maxAttempts": 5, "windowSeconds": 900, "lockoutSeconds": 300}``
+
+    Limits failed logins, for cookie and :term:`HTTP` authentication:
+    ``maxAttempts`` failed logins of one (IP address, username) pair within
+    ``windowSeconds`` lock that pair out for ``lockoutSeconds``, with the
+    message "Too many failed login attempts. Please try again in %s
+    seconds." It is on by default. phpMyAdmin has no such limit and relies on
+    the optional captcha (:config:option:`$cfg['CaptchaLoginPublicKey']`),
+    which BetterMyAdmin supports too.
+
+.. config:option:: $cfg['LoginRateLimit']['enabled']
+
+    :type: boolean
+    :default: true
+
+    Whether failed logins are limited.
+
+.. config:option:: $cfg['LoginRateLimit']['maxAttempts']
+
+    :type: integer
+    :default: 5
+
+    The number of failed logins that locks a pair out.
+
+.. config:option:: $cfg['LoginRateLimit']['windowSeconds']
+
+    :type: integer [number of seconds]
+    :default: 900
+
+    The period in which the failed logins are counted.
+
+.. config:option:: $cfg['LoginRateLimit']['lockoutSeconds']
+
+    :type: integer [number of seconds]
+    :default: 300
+
+    How long a locked-out pair has to wait.
+
+.. config:option:: $cfg['TransformationsExternalPrograms']
+
+    :type: array [list of strings]
+    :default: ``[]``
+
+    The programs that the "External" transformation
+    (``Text/Plain: External``, see :ref:`transformations`) may run. Each entry
+    is a program with its fixed arguments, for example ``"/usr/bin/tidy -q"``.
+    Empty (the default): the transformation shows the value unchanged.
+
+    In phpMyAdmin this list is the ``$allowedPrograms`` array, which an
+    administrator edits in the plugin's PHP file. In BetterMyAdmin the
+    programs run on the server without a shell: the configured words are the
+    program and its fixed arguments, and the column's transformation options
+    can only add arguments, never shell syntax. A program is stopped after 10
+    seconds and its output is limited to 16 MiB.
+
+    .. warning::
+
+        Any user who can set a column's transformation options can add
+        arguments to the program and feed it any cell value: list only
+        programs that cannot write or read files through their arguments, or
+        wrapper scripts that ignore them.
+
+    .. code-block:: json
+
+        { "TransformationsExternalPrograms": ["/usr/bin/tidy -q"] }
+
+.. config:option:: $cfg['ConnectionPool']
+
+    :type: array
+    :default: ``{"idleTimeout": 10, "maxTotal": 50, "waitTimeout": 30}``
+
+    phpMyAdmin opens a MySQL connection for every request. BetterMyAdmin
+    keeps connections open between requests, per session and server (at
+    most :config:option:`$cfg['Servers'][$i]['max_connections']` each), and
+    runs the same session set-up statements once per new connection.
+
+.. config:option:: $cfg['ConnectionPool']['idleTimeout']
+
+    :type: integer [number of seconds]
+    :default: 10
+
+    An idle connection is closed after this many seconds.
+
+.. config:option:: $cfg['ConnectionPool']['maxTotal']
+
+    :type: integer
+    :default: 50
+
+    The most MySQL connections the whole BetterMyAdmin process holds.
+
+.. config:option:: $cfg['ConnectionPool']['waitTimeout']
+
+    :type: integer [number of seconds]
+    :default: 30
+
+    How long a request waits for a connection when they are all in use.
 
 Server connection settings
 --------------------------
 
 .. config:option:: $cfg['Servers']
 
-    :type: array
-    :default: one server array with settings listed below
+    :type: list
+    :default: one server with settings listed below
 
-    Since version 1.4.2, phpMyAdmin supports the administration of multiple
-    MySQL servers. Therefore, a :config:option:`$cfg['Servers']`-array has been
-    added which contains the login information for the different servers. The
-    first :config:option:`$cfg['Servers'][$i]['host']` contains the hostname of
-    the first server, the second :config:option:`$cfg['Servers'][$i]['host']`
-    the hostname of the second server, etc. You can put as many sections for server definition as you need in
-    :file:`config.inc.php`, copy that block or needed parts (you don't have to
-    define all settings, just those you need to change).
+    BetterMyAdmin supports the administration of multiple MySQL servers. The
+    ``Servers`` list contains the login information for the different
+    servers: the first entry's :config:option:`$cfg['Servers'][$i]['host']`
+    contains the hostname of the first server, the second entry's the hostname
+    of the second server, etc. You can put as many entries as you need in the
+    configuration file (you don't have to define all settings, just those you
+    need to change).
+
+    .. code-block:: json
+
+        {
+          "Servers": [
+            { "host": "db1.example.org" },
+            { "host": "db2.example.org", "verbose": "Second server" }
+          ]
+        }
 
     .. note::
 
-        The :config:option:`$cfg['Servers']` array starts with
-        ``$cfg['Servers'][1]``. Do not use ``$cfg['Servers'][0]``. If you want more
-        than one server, just copy following section (including ``$i``
-        increment) several times. There is no need to define full server
-        array, just define values you need to change.
+        The first entry of the list is server 1 (phpMyAdmin's
+        ``$cfg['Servers'][1]``). ``Servers`` may also be written as an object
+        whose keys are the server numbers, from 1 (``{"1": {…}, "2": {…}}``).
+        In environment variables, servers are numbered from 1:
+        ``BMA__Servers__2__host=db2.example.org``.
 
 .. config:option:: $cfg['Servers'][$i]['host']
 
@@ -320,13 +587,8 @@ Server connection settings
     :type: boolean
     :default: false
 
-    Whether to enable SSL for the connection between phpMyAdmin and the MySQL
+    Whether to enable SSL for the connection between BetterMyAdmin and the MySQL
     server to secure the connection.
-
-    When using the ``'mysql'`` extension,
-    none of the remaining ``'ssl...'`` configuration options apply.
-
-    We strongly recommend the ``'mysqli'`` extension when using this option.
 
     .. seealso::
 
@@ -350,9 +612,9 @@ Server connection settings
 
     For example:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['Servers'][$i]['ssl_key'] = '/etc/mysql/server-key.pem';
+        { "Servers": [{ "ssl_key": "/etc/mysql/server-key.pem" }] }
 
     .. seealso::
 
@@ -452,23 +714,16 @@ Server connection settings
 
         This is supported since phpMyAdmin 4.6.0.
 
-    If your PHP install uses the MySQL Native Driver (mysqlnd), your
-    MySQL server is 5.6 or later, and your SSL certificate is self-signed,
-    there is a chance your SSL connection will fail due to validation.
-    Setting this to ``false`` will disable the validation check.
-
-    Since PHP 5.6.0 it also verifies whether server name matches CN of its
-    certificate. There is currently no way to disable just this check without
-    disabling complete SSL verification.
+    With verification on, the server's certificate must be signed by a trusted
+    certificate authority (see :config:option:`$cfg['Servers'][$i]['ssl_ca']`).
+    If your SSL certificate is self-signed and not trusted, the connection will
+    fail validation. Setting this to ``false`` will disable the validation
+    check.
 
     .. warning::
 
         Disabling the certificate verification defeats purpose of using SSL.
         This will make the connection vulnerable to man in the middle attacks.
-
-    .. note::
-
-        This flag only works with PHP 5.6.16 or later.
 
     .. seealso::
 
@@ -499,7 +754,7 @@ Server connection settings
     ``'socket'`` and ``'tcp'``. It defaults to tcp as that is nearly guaranteed
     to be available on all MySQL servers, while sockets are not supported on
     some platforms. To use the socket mode, your MySQL server must be on the
-    same machine as the Web server.
+    same machine as BetterMyAdmin.
 
 .. config:option:: $cfg['Servers'][$i]['compress']
 
@@ -547,9 +802,9 @@ Server connection settings
     :default: ``''``
 
     This special account is used to access :ref:`linked-tables`.
-    You don't need it in single user case, but if phpMyAdmin is shared it
+    You don't need it in single user case, but if BetterMyAdmin is shared it
     is recommended to give access to :ref:`linked-tables` only to this user
-    and configure phpMyAdmin to use it. All users will then be able to use
+    and configure BetterMyAdmin to use it. All users will then be able to use
     the features without need to have direct access to :ref:`linked-tables`.
 
     .. versionchanged:: 2.2.5
@@ -579,16 +834,16 @@ Server connection settings
 
     For example you can configure SSL for the control connection:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        // Enable SSL
-        $cfg['Servers'][$i]['control_ssl'] = true;
-        // Client secret key
-        $cfg['Servers'][$i]['control_ssl_key'] = '../client-key.pem';
-        // Client certificate
-        $cfg['Servers'][$i]['control_ssl_cert'] = '../client-cert.pem';
-        // Server certification authority
-        $cfg['Servers'][$i]['control_ssl_ca'] = '../server-ca.pem';
+        {
+          "Servers": [{
+            "control_ssl": true,
+            "control_ssl_key": "../client-key.pem",
+            "control_ssl_cert": "../client-cert.pem",
+            "control_ssl_ca": "../server-ca.pem"
+          }]
+        }
 
     .. seealso::
 
@@ -611,14 +866,15 @@ Server connection settings
     Whether config or cookie or :term:`HTTP` or signon authentication should be
     used for this server.
 
-    * 'config' authentication (``$auth_type = 'config'``) is the plain old
-      way: username and password are stored in :file:`config.inc.php`.
-    * 'cookie' authentication mode (``$auth_type = 'cookie'``) allows you to
-      log in as any valid MySQL user with the help of cookies.
+    * 'config' authentication (``"auth_type": "config"``) is the plain old
+      way: username and password are stored in the configuration file.
+    * 'cookie' authentication mode (``"auth_type": "cookie"``) allows you to
+      log in as any valid MySQL user with a login form.
     * 'http' authentication allows you to log in as any
       valid MySQL user via HTTP-Auth.
-    * 'signon' authentication mode (``$auth_type = 'signon'``) allows you to
-      log in from prepared PHP session data or using supplied PHP script.
+    * 'signon' authentication mode (``"auth_type": "signon"``) allows you to
+      log in with credentials handed over by another application, or returned
+      by a JavaScript module.
 
     .. seealso:: :ref:`authentication_modes`
 
@@ -631,7 +887,7 @@ Server connection settings
     When using ``'http'`` for :config:option:`$cfg['Servers'][$i]['auth_type']`, this field allows to define a custom
     :term:`HTTP` Basic Auth Realm which will be displayed to the user. If not
     explicitly specified in your configuration, a string combined of
-    "phpMyAdmin " and either :config:option:`$cfg['Servers'][$i]['verbose']` or
+    "BetterMyAdmin " and either :config:option:`$cfg['Servers'][$i]['verbose']` or
     :config:option:`$cfg['Servers'][$i]['host']` will be used.
 
 .. _servers_auth_swekey_config:
@@ -667,7 +923,7 @@ Server connection settings
     :default: ``''``
 
     When using :config:option:`$cfg['Servers'][$i]['auth_type']` set to
-    ``'config'``, this is the user/password-pair which phpMyAdmin will use to
+    ``'config'``, this is the user/password-pair which BetterMyAdmin will use to
     connect to the MySQL server. This user/password pair is not needed when
     :term:`HTTP` or cookie authentication is used
     and should be empty.
@@ -701,8 +957,8 @@ Server connection settings
     :default: ``''``
 
     If set to a (an array of) database name(s), only this (these)
-    database(s) will be shown to the user. Since phpMyAdmin 2.2.1,
-    this/these database(s) name(s) may contain MySQL wildcards characters
+    database(s) will be shown to the user. These database names may contain
+    MySQL wildcards characters
     ("\_" and "%"): if you want to use literal instances of these
     characters, escape them (I.E. use ``'my\_db'`` and not ``'my_db'``).
 
@@ -714,9 +970,9 @@ Server connection settings
 
     An example of using more that one database:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['Servers'][$i]['only_db'] = ['db1', 'db2'];
+        { "Servers": [{ "only_db": ["db1", "db2"] }] }
 
     .. versionchanged:: 4.0.0
         Previous versions permitted to specify the display order of
@@ -733,27 +989,27 @@ Server connection settings
     the MySQL privilege system. For example, to hide all databases
     starting with the letter "a", use
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['Servers'][$i]['hide_db'] = '^a';
+        { "Servers": [{ "hide_db": "^a" }] }
 
     and to hide both "db1" and "db2" use
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['Servers'][$i]['hide_db'] = '^(db1|db2)$';
+        { "Servers": [{ "hide_db": "^(db1|db2)$" }] }
 
-    More information on regular expressions can be found in the `PCRE
-    pattern syntax
-    <https://www.php.net/manual/en/reference.pcre.pattern.syntax.php>`_ portion
-    of the PHP reference manual.
+    The pattern is a JavaScript regular expression (without delimiters); for
+    simple patterns like these it means the same as phpMyAdmin's PCRE. More
+    information can be found in the `regular expressions guide
+    <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions>`_.
 
 .. config:option:: $cfg['Servers'][$i]['verbose']
 
     :type: string
     :default: ``''``
 
-    Only useful when using phpMyAdmin with multiple server entries. If
+    Only useful when using BetterMyAdmin with multiple server entries. If
     set, this string will be displayed instead of the hostname in the
     pull-down menu on the main page. This can be useful if you want to
     show only certain databases on your system, for example. For HTTP
@@ -772,7 +1028,11 @@ Server connection settings
 
     The PHP MySQL extension to use (``mysql`` or ``mysqli``).
 
-    It is recommended to use ``mysqli`` in all installations.
+    .. note::
+
+        This directive has no effect in BetterMyAdmin, which is not PHP: it
+        connects with the `mysql2 <https://www.npmjs.com/package/mysql2>`_
+        Node.js driver.
 
 .. config:option:: $cfg['Servers'][$i]['pmadb']
 
@@ -786,7 +1046,7 @@ Server connection settings
     this feature, and for a quick way of creating this database and the needed
     tables.
 
-    If you are the only user of this phpMyAdmin installation, you can use your
+    If you are the only user of this BetterMyAdmin installation, you can use your
     current database to store those special tables; in this case, just put your
     current database name in :config:option:`$cfg['Servers'][$i]['pmadb']`. For a
     multi-user installation, set this parameter to the name of your central
@@ -800,7 +1060,7 @@ Server connection settings
 
     .. versionadded:: 2.2.0
 
-    Since release 2.2.0 phpMyAdmin allows users to bookmark queries. This
+    BetterMyAdmin allows users to bookmark queries. This
     can be useful for queries you often run. To allow the usage of this
     functionality:
 
@@ -817,8 +1077,8 @@ Server connection settings
 
     .. versionadded:: 2.2.4
 
-    Since release 2.2.4 you can describe, in a special 'relation' table,
-    which column is a key in another table (a foreign key). phpMyAdmin
+    You can describe, in a special 'relation' table,
+    which column is a key in another table (a foreign key). BetterMyAdmin
     currently uses this to:
 
     * make clickable, when you browse the master table, the data values that
@@ -840,7 +1100,7 @@ Server connection settings
 
     * set up :config:option:`$cfg['Servers'][$i]['pmadb']` and the phpMyAdmin configuration storage
     * put the relation table name in :config:option:`$cfg['Servers'][$i]['relation']`
-    * now as normal user open phpMyAdmin and for each one of your tables
+    * now as normal user open BetterMyAdmin and for each one of your tables
       where you want to use this feature, click :guilabel:`Structure/Relation view/`
       and choose foreign columns.
 
@@ -860,7 +1120,7 @@ Server connection settings
 
     .. versionadded:: 2.3.0
 
-    Since release 2.3.0 you can describe, in a special ``table_info``
+    You can describe, in a special ``table_info``
     table, which column is to be displayed as a tool-tip when moving the
     cursor over the corresponding key. This configuration variable will
     hold the name of this special table. To allow the usage of this
@@ -896,7 +1156,7 @@ Server connection settings
 
     .. versionadded:: 2.3.0
 
-    Since release 2.3.0 you can have phpMyAdmin create :term:`PDF` pages
+    You can have BetterMyAdmin create :term:`PDF` pages
     showing the relations between your tables. Further, the designer interface
     permits visually managing the relations. To do this it needs two tables
     "``pdf_pages``" (storing information about the available :term:`PDF` pages)
@@ -940,7 +1200,7 @@ Server connection settings
 
     .. versionadded:: 2.3.0
 
-    This part requires a content update!  Since release 2.3.0 you can
+    This part requires a content update!  You can
     store comments to describe each column for each table. These will then
     be shown on the "printview".
 
@@ -960,10 +1220,11 @@ Server connection settings
     has been introduced. Also, backward compatibility code used in the old
     transformations system was removed. As a result, an update to ``column_info``
     table is necessary for previous transformations and the new input-oriented
-    transformation system to work. phpMyAdmin will upgrade it automatically
+    transformation system to work. BetterMyAdmin will upgrade it automatically
     for you by analyzing your current ``column_info`` table structure.
     However, if something goes wrong with the auto-upgrade then you can
-    use the SQL script found in ``./resources/sql/upgrade_column_info_4_3_0+.sql``
+    use the SQL script found in the repository at
+    :file:`packages/metadata/resources/upgrade_column_info_4_3_0+.sql`
     to upgrade it manually.
 
     To allow the usage of this functionality:
@@ -972,7 +1233,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['column\_info']` (e.g.
       ``pma__column_info``)
     * to update your PRE-2.5.0 ``column_comments`` table use this:  and
-      remember that the Variable in :file:`config.inc.php` has been renamed from
+      remember that the directive has been renamed from
       :samp:`$cfg['Servers'][$i]['column\_comments']` to
       :config:option:`$cfg['Servers'][$i]['column\_info']`
 
@@ -982,8 +1243,8 @@ Server connection settings
            ADD `mimetype` VARCHAR(255) NOT NULL,
            ADD `transformation` VARCHAR(255) NOT NULL,
            ADD `transformation_options` VARCHAR(255) NOT NULL;
-    * to update your PRE-4.3.0 ``column_info`` table manually use this
-      ``./resources/sql/upgrade_column_info_4_3_0+.sql`` SQL script.
+    * to update your PRE-4.3.0 ``column_info`` table manually use the
+      :file:`packages/metadata/resources/upgrade_column_info_4_3_0+.sql` SQL script.
 
     This feature can be disabled by setting the configuration to ``false``.
 
@@ -1003,8 +1264,8 @@ Server connection settings
 
     .. versionadded:: 2.5.0
 
-    Since release 2.5.0 you can store your :term:`SQL` history, which means all
-    queries you entered manually into the phpMyAdmin interface. If you don't
+    You can store your :term:`SQL` history, which means all
+    queries you entered manually into the BetterMyAdmin interface. If you don't
     want to use a table-based history, you can use the JavaScript-based
     history.
 
@@ -1032,7 +1293,7 @@ Server connection settings
 
     .. versionadded:: 3.5.0
 
-    Since release 3.5.0 you can show recently used tables in the
+    You can show recently used tables in the
     navigation panel. It helps you to jump across table directly, without
     the need to select the database, and then select the table. Using
     :config:option:`$cfg['NumRecentTables']` you can configure the maximum number
@@ -1058,7 +1319,7 @@ Server connection settings
 
     .. versionadded:: 4.2.0
 
-    Since release 4.2.0 you can show a list of selected tables in the
+    You can show a list of selected tables in the
     navigation panel. It helps you to jump to the table directly, without
     the need to select the database, and then select the table. When you
     select a table from the list, it will jump to the page specified in
@@ -1088,7 +1349,7 @@ Server connection settings
 
     .. versionadded:: 3.5.0
 
-    Since release 3.5.0 phpMyAdmin can be configured to remember several
+    BetterMyAdmin can be configured to remember several
     things (sorted column :config:option:`$cfg['RememberSorting']`, column order,
     and column visibility from a database table) for browsing tables. Without
     configuring the storage, these features still can be used, but the values will
@@ -1107,7 +1368,7 @@ Server connection settings
     :type: string or false
     :default: ``''``
 
-    The table used by phpMyAdmin to store user name information for associating with user groups.
+    The table used by BetterMyAdmin to store user name information for associating with user groups.
     See the next entry on :config:option:`$cfg['Servers'][$i]['usergroups']` for more details
     and the suggested settings.
 
@@ -1118,7 +1379,7 @@ Server connection settings
 
     .. versionadded:: 4.1.0
 
-    Since release 4.1.0 you can create different user groups with menu items
+    You can create different user groups with menu items
     attached to them. Users can be assigned to these groups and the logged in
     user would only see menu items configured to the usergroup they are assigned to.
     To do this it needs two tables "usergroups" (storing allowed menu items for each
@@ -1143,7 +1404,7 @@ Server connection settings
 
     .. versionadded:: 4.1.0
 
-    Since release 4.1.0 you can hide/show items in the navigation tree.
+    You can hide/show items in the navigation tree.
 
     To allow the usage of this functionality:
 
@@ -1161,7 +1422,7 @@ Server connection settings
 
     .. versionadded:: 4.3.0
 
-    Since release 4.3.0 you can have a central list of columns per database.
+    You can have a central list of columns per database.
     You can add/remove columns to the list as per your requirement. These columns
     in the central list will be available to use while you create a new column for
     a table or create a table itself. You can select a column from central list
@@ -1184,7 +1445,7 @@ Server connection settings
 
     .. versionadded:: 4.5.0
 
-    Since release 4.5.0 your designer settings can be remembered.
+    Your designer settings can be remembered.
     Your choice regarding 'Angular/Direct Links', 'Snap to Grid', 'Toggle Relation Lines',
     'Small/Big All', 'Move Menu' and 'Pin Text' can be remembered persistently.
 
@@ -1204,7 +1465,7 @@ Server connection settings
 
     .. versionadded:: 4.2.0
 
-    Since release 4.2.0 you can save and load query-by-example searches from the Database > Query panel.
+    You can save and load query-by-example searches from the Database > Query panel.
 
     To allow the usage of this functionality:
 
@@ -1222,7 +1483,7 @@ Server connection settings
 
     .. versionadded:: 4.5.0
 
-    Since release 4.5.0 you can save and load export templates.
+    You can save and load export templates.
 
     To allow the usage of this functionality:
 
@@ -1242,15 +1503,15 @@ Server connection settings
 
     Since release 3.3.x a tracking mechanism is available. It helps you to
     track every :term:`SQL` command which is
-    executed by phpMyAdmin. The mechanism supports logging of data
+    executed by BetterMyAdmin. The mechanism supports logging of data
     manipulation and data definition statements. After enabling it you can
     create versions of tables.
 
     The creation of a version has two effects:
 
-    * phpMyAdmin saves a snapshot of the table, including structure and
+    * BetterMyAdmin saves a snapshot of the table, including structure and
       indexes.
-    * phpMyAdmin logs all commands which change the structure and/or data of
+    * BetterMyAdmin logs all commands which change the structure and/or data of
       the table and links these commands with the version number.
 
     Of course you can view the tracked changes. On the :guilabel:`Tracking`
@@ -1329,12 +1590,12 @@ Server connection settings
 
     .. versionadded:: 3.4.x
 
-    Since release 3.4.x phpMyAdmin allows users to set most preferences by
+    BetterMyAdmin allows users to set most preferences by
     themselves and store them in the database.
 
     If you don't allow for storing preferences in
     :config:option:`$cfg['Servers'][$i]['pmadb']`, users can still personalize
-    phpMyAdmin, but settings will be saved in browser's local storage, or, it
+    BetterMyAdmin, but settings will be saved in browser's local storage, or, it
     is is unavailable, until the end of session.
 
     To allow the usage of this functionality:
@@ -1363,12 +1624,12 @@ Server connection settings
     :type: string
     :default: ``''``
 
-    Sets the time zone used by phpMyAdmin. Leave blank to use the time zone of your
+    Sets the time zone used by BetterMyAdmin. Leave blank to use the time zone of your
     database server. Possible values are explained at
     https://dev.mysql.com/doc/refman/8.0/en/time-zone-support.html
 
     This is useful when your database server uses a time zone which is different from the
-    time zone you want to use in phpMyAdmin.
+    time zone you want to use in BetterMyAdmin.
 
 .. config:option:: $cfg['Servers'][$i]['AllowRoot']
 
@@ -1436,8 +1697,9 @@ Server connection settings
     wildcard in the *username* field.
 
     There are a few shortcuts you can
-    use in the *ipmask* field as well (please note that those containing
-    ``SERVER_ADDRESS`` might not be available on all webservers):
+    use in the *ipmask* field as well (``SERVER_ADDRESS`` is read from the
+    ``SERVER_ADDR`` environment variable of the BetterMyAdmin process; without
+    it, the ``localnet`` shortcuts match nothing):
 
     .. code-block:: none
 
@@ -1475,23 +1737,37 @@ Server connection settings
 
     Examples:
 
-    .. code-block:: none
+    Allow only 'bob' to connect from any host:
 
-        $cfg['Servers'][$i]['AllowDeny']['order'] = 'allow,deny';
-        $cfg['Servers'][$i]['AllowDeny']['rules'] = ['allow bob from all'];
-        // Allow only 'bob' to connect from any host
+    .. code-block:: json
 
-        $cfg['Servers'][$i]['AllowDeny']['order'] = 'allow,deny';
-        $cfg['Servers'][$i]['AllowDeny']['rules'] = ['allow mary from 192.168.100.[50-100]'];
-        // Allow only 'mary' to connect from host 192.168.100.50 through 192.168.100.100
+        { "Servers": [{ "AllowDeny": { "order": "allow,deny", "rules": ["allow bob from all"] } }] }
 
-        $cfg['Servers'][$i]['AllowDeny']['order'] = 'allow,deny';
-        $cfg['Servers'][$i]['AllowDeny']['rules'] = ['allow % from 192.168.[5-6].10'];
-        // Allow any user to connect from host 192.168.5.10 or 192.168.6.10
+    Allow only 'mary' to connect from host 192.168.100.50 through 192.168.100.100:
 
-        $cfg['Servers'][$i]['AllowDeny']['order'] = 'allow,deny';
-        $cfg['Servers'][$i]['AllowDeny']['rules'] = ['allow root from 192.168.5.50','allow % from 192.168.6.10'];
-        // Allow any user to connect from 192.168.6.10, and additionally allow root to connect from 192.168.5.50
+    .. code-block:: json
+
+        { "Servers": [{ "AllowDeny": { "order": "allow,deny", "rules": ["allow mary from 192.168.100.[50-100]"] } }] }
+
+    Allow any user to connect from host 192.168.5.10 or 192.168.6.10:
+
+    .. code-block:: json
+
+        { "Servers": [{ "AllowDeny": { "order": "allow,deny", "rules": ["allow % from 192.168.[5-6].10"] } }] }
+
+    Allow any user to connect from 192.168.6.10, and additionally allow root to
+    connect from 192.168.5.50:
+
+    .. code-block:: json
+
+        {
+          "Servers": [{
+            "AllowDeny": {
+              "order": "allow,deny",
+              "rules": ["allow root from 192.168.5.50", "allow % from 192.168.6.10"]
+            }
+          }]
+        }
 
 .. config:option:: $cfg['Servers'][$i]['DisableIS']
 
@@ -1514,15 +1790,24 @@ Server connection settings
 
     .. versionadded:: 3.5.0
 
-    Name of PHP script to be sourced and executed to obtain login
+    Path of a JavaScript or TypeScript module to be imported to obtain login
     credentials. This is alternative approach to session based single
-    signon. The script has to provide a function called
-    ``get_login_credentials`` which returns list of username and
-    password, accepting single parameter of existing username (can be
-    empty). See :file:`examples/signon-script.php` for an example:
+    signon. The module has to export a function called
+    ``getLoginCredentials`` which returns (or resolves to) a list of username
+    and password, accepting single parameter of existing username (can be
+    empty). A relative path is resolved against BetterMyAdmin's working
+    directory. See :file:`apps/server/examples/signon-script.ts` for an
+    example:
 
-    .. literalinclude:: ../examples/signon-script.php
-        :language: php
+    .. literalinclude:: ../apps/server/examples/signon-script.ts
+        :language: ts
+
+    .. note::
+
+        In phpMyAdmin this is a PHP file defining ``get_login_credentials()``;
+        BetterMyAdmin cannot run PHP, so the script has to be ported. A ``.ts``
+        module needs a TypeScript-aware Node.js (22.18 or later); a ``.mjs`` or
+        ``.js`` module works everywhere.
 
     .. seealso:: :ref:`auth_signon`
 
@@ -1531,10 +1816,18 @@ Server connection settings
     :type: string
     :default: ``''``
 
-    Name of session which will be used for signon authentication method.
-    You should use something different than ``phpMyAdmin``, because this
-    is session which phpMyAdmin uses internally. Takes effect only if
+    Name of the cookie which will be used for signon authentication method.
+    Takes effect only if
     :config:option:`$cfg['Servers'][$i]['SignonScript']` is not configured.
+
+    In phpMyAdmin this names the other application's PHP session. BetterMyAdmin
+    cannot read PHP sessions: the other application hands the credentials over
+    in a cookie of this name holding the same ``PMA_single_signon_*`` keys,
+    encrypted with a key derived from :config:option:`$cfg['blowfish_secret']`
+    (see :file:`apps/server/examples/signon.ts`). Login errors are written back
+    into it (``PMA_single_signon_error_message``). The
+    ``PMA_single_signon_token`` and ``PMA_single_signon_HMAC_secret`` keys have
+    no use in BetterMyAdmin.
 
     .. seealso:: :ref:`auth_signon`
 
@@ -1545,11 +1838,11 @@ Server connection settings
 
     .. versionadded:: 4.7.0
 
-    An associative array of session cookie parameters of other authentication system.
-    It is not needed if the other system doesn't use ``session_set_cookie_params()``.
-    Keys should include ``'lifetime'``, ``'path'``, ``'domain'``, ``'secure'`` or ``'httponly'``.
-    Valid values are mentioned in `session_get_cookie_params <https://www.php.net/manual/en/
-    function.session-get-cookie-params.php>`_, they should be set to same values as the
+    An object of cookie parameters of the
+    :config:option:`$cfg['Servers'][$i]['SignonSession']` cookie, used when
+    BetterMyAdmin rewrites it (for example to store a login error).
+    Keys should include ``'lifetime'``, ``'path'``, ``'domain'``, ``'secure'``,
+    ``'httponly'`` or ``'samesite'``; they should be set to same values as the
     other application uses. Takes effect only if
     :config:option:`$cfg['Servers'][$i]['SignonScript']` is not configured.
 
@@ -1562,9 +1855,45 @@ Server connection settings
 
     :term:`URL` where user will be redirected
     to log in for signon authentication method. Should be absolute
-    including protocol.
+    including protocol, or a path on BetterMyAdmin's own host when
+    :config:option:`$cfg['Servers'][$i]['SignonPage']` serves the login page.
 
     .. seealso:: :ref:`auth_signon`
+
+.. config:option:: $cfg['Servers'][$i]['SignonPage']
+
+    :type: string
+    :default: ``''``
+
+    BetterMyAdmin only. Path of a JavaScript module that BetterMyAdmin serves
+    itself as the login page of a signon server, at the path of a same-host
+    :config:option:`$cfg['Servers'][$i]['SignonURL']`, before its login checks.
+    A relative path is resolved against BetterMyAdmin's working directory.
+
+    In phpMyAdmin the login page of a signon server is a PHP page that the same
+    web server runs next to phpMyAdmin (:file:`examples/signon.php`).
+    BetterMyAdmin has no PHP and no separate web server, so this directive
+    takes its place. The module exports a function (``default`` or
+    ``signonPage``) that receives the request and a context with the current
+    ``SignonSession`` data (``session``), ``sessionCookie(data)`` (the
+    ``Set-Cookie`` value that stores the credentials, ``null`` clears them) and
+    ``returnTo`` (the page the user asked for), and returns a ``Response``. An
+    external :config:option:`$cfg['Servers'][$i]['SignonURL']` keeps working
+    without it.
+
+    .. code-block:: json
+
+        {
+          "Servers": [{
+            "auth_type": "signon",
+            "SignonSession": "SignonSession",
+            "SignonURL": "/signon/",
+            "LogoutURL": "/signon/?logout",
+            "SignonPage": "./apps/server/examples/signon-page.mjs"
+          }]
+        }
+
+    .. seealso:: :ref:`auth_signon`, :ref:`example-signon`
 
 .. config:option:: $cfg['Servers'][$i]['LogoutURL']
 
@@ -1589,6 +1918,16 @@ Server connection settings
         This error message can contain the target database server hostname or IP address,
         which may reveal information about your network to an attacker.
 
+.. config:option:: $cfg['Servers'][$i]['max_connections']
+
+    :type: integer
+    :default: 4
+
+    BetterMyAdmin only. The largest number of MySQL connections kept open for
+    one session on this server. phpMyAdmin opens a new connection for every
+    request; BetterMyAdmin keeps connections in a pool and reuses them (see
+    :config:option:`$cfg['ConnectionPool']`).
+
 Generic settings
 ----------------
 
@@ -1597,7 +1936,7 @@ Generic settings
     :type: boolean
     :default: false
 
-    You can disable phpMyAdmin shortcut keys by setting :config:option:`$cfg['DisableShortcutKeys']` to true.
+    You can disable BetterMyAdmin shortcut keys by setting :config:option:`$cfg['DisableShortcutKeys']` to true.
 
 .. config:option:: $cfg['ServerDefault']
 
@@ -1606,7 +1945,7 @@ Generic settings
 
     If you have more than one server configured, you can set
     :config:option:`$cfg['ServerDefault']` to any one of them to autoconnect to that
-    server when phpMyAdmin is started, or set it to 0 to be given a list
+    server when BetterMyAdmin is started, or set it to 0 to be given a list
     of servers without logging in.
 
     If you have only one server configured,
@@ -1617,21 +1956,20 @@ Generic settings
     :type: boolean
     :default: true
 
-    Enables check for latest versions using JavaScript on the main phpMyAdmin
-    page or by directly accessing ``index.php?route=/version-check``.
-
-    .. note::
-
-        This setting can be adjusted by your vendor.
+    Enables check for latest versions using JavaScript on the main BetterMyAdmin
+    page. BetterMyAdmin checks its own release feed (phpMyAdmin checks
+    phpmyadmin.net); this and the error reports
+    (:config:option:`$cfg['SendErrorReports']`) are the only outbound network
+    calls it makes.
 
 .. config:option:: $cfg['ProxyUrl']
 
     :type: string
     :default: ``''``
 
-    The url of the proxy to be used when phpmyadmin needs to access the outside
+    The url of the proxy to be used when BetterMyAdmin needs to access the outside
     internet such as when retrieving the latest version info or submitting error
-    reports. You need this if the server where phpMyAdmin is installed does not
+    reports. You need this if the server where BetterMyAdmin is installed does not
     have direct access to the internet.
     The format is: "hostname:portnumber"
 
@@ -1700,11 +2038,16 @@ Generic settings
     :type: boolean
     :default: false
 
-    Whether `persistent connections <https://www.php.net/manual/en/features.persistent-connections.php>`_ should be used or not.
+    In phpMyAdmin, whether PHP's persistent MySQL connections should be used or
+    not.
 
-.. seealso::
+    .. note::
 
-    `mysqli documentation for persistent connections <https://www.php.net/manual/en/mysqli.persistconns.php>`_
+        This directive has no effect in BetterMyAdmin: it is a PHP feature.
+        BetterMyAdmin always keeps MySQL connections in a pool and reuses them
+        between requests (see :config:option:`$cfg['ConnectionPool']` and
+        :config:option:`$cfg['Servers'][$i]['max_connections']`). The directive
+        is accepted in the configuration but no settings form lists it.
 
 .. config:option:: $cfg['ForceSSL']
 
@@ -1713,17 +2056,20 @@ Generic settings
 
     .. deprecated:: 4.6.0
 
-        This setting is no longer available since phpMyAdmin 4.6.0. Please
-        adjust your webserver instead.
+        This setting is no longer available since phpMyAdmin 4.6.0, which
+        asks you to adjust your web server instead. BetterMyAdmin honours it.
 
-    Whether to force using https while accessing phpMyAdmin. In a reverse
-    proxy setup, setting this to ``true`` is not supported.
+    Whether to force using https while accessing BetterMyAdmin. When ``true``,
+    plain HTTP requests are redirected to HTTPS, a
+    ``Strict-Transport-Security`` (HSTS) header is sent and the cookies are
+    marked ``Secure``.
 
     .. note::
 
-        In some setups (like separate SSL proxy or load balancer) you might
-        have to set :config:option:`$cfg['PmaAbsoluteUri']` for correct
-        redirection.
+        Behind a TLS-terminating reverse proxy or load balancer, the proxy must
+        send an ``X-Forwarded-Proto: https`` header so that BetterMyAdmin sees
+        that the original request used HTTPS, and you might have to set
+        :config:option:`$cfg['PmaAbsoluteUri']` for correct redirection.
 
 .. config:option:: $cfg['MysqlSslWarningSafeHosts']
 
@@ -1741,49 +2087,57 @@ Generic settings
 
     Example configuration:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['MysqlSslWarningSafeHosts'] = ['127.0.0.1', '::1', 'mariadb.local'];
+        { "MysqlSslWarningSafeHosts": ["127.0.0.1", "::1", "mariadb.local"] }
 
 .. config:option:: $cfg['ExecTimeLimit']
 
     :type: integer [number of seconds]
     :default: 300
 
-    Set the number of seconds a script is allowed to run. If seconds is
-    set to zero, no time limit is imposed. This setting is used while
-    importing/exporting dump files but has
-    no effect when PHP is running in safe mode.
+    Set the number of seconds an import is allowed to run. If seconds is
+    set to zero, no time limit is imposed. With "Allow interruption"
+    (the ``allow_interrupt`` key of :config:option:`$cfg['Import']`) the import stops a
+    few seconds before the limit and can be resumed, as in phpMyAdmin. The
+    Docker variable ``MAX_EXECUTION_TIME`` sets it.
+
+    .. note::
+
+        In phpMyAdmin this is PHP's time limit, which ends any request,
+        exports included. BetterMyAdmin applies it to imports only: other
+        requests, exports included, have no time limit and stream their
+        output.
 
 .. config:option:: $cfg['SessionSavePath']
 
     :type: string
     :default: ``''``
 
-    Path for storing session data (`session\_save\_path PHP parameter
-    <https://www.php.net/session_save_path>`_).
+    In phpMyAdmin, the path for storing PHP session data (the
+    ``session.save_path`` PHP parameter).
 
-    .. warning::
+    .. note::
 
-        This folder should not be publicly accessible through the webserver,
-        otherwise you risk leaking private data from your session.
+        This directive has no effect in BetterMyAdmin, which has no PHP
+        sessions: sessions are kept in :file:`sessions.sqlite` in
+        :config:option:`$cfg['DataDir']`. Keep that directory private.
 
 .. config:option:: $cfg['MemoryLimit']
 
     :type: string [number of bytes]
     :default: ``'-1'``
 
-    Set the number of bytes a script is allowed to allocate. If set to
-    ``'-1'``, no limit is imposed. If set to ``'0'``, no change of the
-    memory limit is attempted and the :file:`php.ini` ``memory_limit`` is
-    used.
+    In phpMyAdmin, the number of bytes a PHP script is allowed to allocate
+    (``'-1'``: no limit). You can use a string with a suffix, eg. ``'16M'``.
+    Ensure you don't omit the suffix (16 means 16 bytes!) The Docker variable
+    ``MEMORY_LIMIT`` sets it.
 
-    This setting is used while importing/exporting dump files
-    so you definitely don't want to put here a too low
-    value. It has no effect when PHP is running in safe mode.
+    .. note::
 
-    You can also use any string as in :file:`php.ini`, eg. ``'16M'``. Ensure you
-    don't omit the suffix (16 means 16 bytes!)
+        BetterMyAdmin has no per-request memory limit: it uses this value only
+        to size the chunks an import reads (an eighth of it), as phpMyAdmin
+        does. Exports and other requests stream in bounded memory.
 
 .. config:option:: $cfg['SkipLockedTables']
 
@@ -1799,7 +2153,7 @@ Generic settings
     :default: true
 
     Defines whether :term:`SQL` queries
-    generated by phpMyAdmin should be displayed or not.
+    generated by BetterMyAdmin should be displayed or not.
 
 .. config:option:: $cfg['RetainQueryBox']
 
@@ -1879,7 +2233,7 @@ Generic settings
     :type: boolean
     :default: false
 
-    Define whether phpMyAdmin will continue executing a multi-query
+    Define whether BetterMyAdmin will continue executing a multi-query
     statement if one of the queries fails. Default is to abort execution.
 
 .. config:option:: $cfg['enable_drag_drop_import']
@@ -1888,7 +2242,7 @@ Generic settings
     :default: true
 
     Whether or not the drag and drop import feature is enabled.
-    When enabled, a user can drag a file in to their browser and phpMyAdmin will
+    When enabled, a user can drag a file in to their browser and BetterMyAdmin will
     attempt to import the file.
 
 .. config:option:: $cfg['URLQueryEncryption']
@@ -1898,7 +2252,7 @@ Generic settings
 
     .. versionadded:: 4.9.8
 
-    Define whether phpMyAdmin will encrypt sensitive data (like database name
+    Define whether BetterMyAdmin will encrypt sensitive data (like database name
     and table name) from the URL query string. Default is to not encrypt the URL
     query string.
 
@@ -1929,52 +2283,42 @@ Cookie authentication options
     :type: string
     :default: ``''``
 
-    The ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']` uses the :term:`Sodium` extension to encrypt the cookies (see :term:`Cookie`). If you are
-    using the ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']`, enter here a generated string of random bytes to be used as an encryption key. It
-    will be used internally by the :term:`Sodium` extension: you won't be prompted for this encryption key.
+    The secret from which BetterMyAdmin derives its encryption keys (with
+    HKDF-SHA256, for AES-256-GCM). It encrypts the credentials that the
+    ``'cookie'``, ``'http'`` and ``'signon'``
+    :config:option:`$cfg['Servers'][$i]['auth_type']` keep in the server-side
+    session, the recalled user name (:config:option:`$cfg['LoginCookieRecall']`)
+    and the signon hand-off cookie, and it signs the SQL queries carried in
+    URLs. You won't be prompted for this key. Enter here a string of 32 random
+    characters, for example:
 
-    Since a binary string is usually not printable, it can be converted into a hexadecimal representation (using a
-    function like `sodium_bin2hex <https://www.php.net/sodium_bin2hex>`_) and then used in the configuration file. For
-    example:
+    .. code-block:: json
 
-    .. code-block:: php
+        { "blowfish_secret": "JOFw435365IScA&Q!cDugr!lSfuAz*OW" }
 
-        // The string is a hexadecimal representation of a 32-bytes long string of random bytes.
-        $cfg['blowfish_secret'] = sodium_hex2bin('f16ce59f45714194371b48fe362072dc3b019da7861558cd4ad29e4d6fb13851');
+    If it is empty, BetterMyAdmin generates one on the first start (32 random
+    bytes) and keeps it in the file :file:`secret` in
+    :config:option:`$cfg['DataDir']` (mode ``0600``), so it survives restarts;
+    the home page then still suggests configuring one.
 
-    Using a binary string is recommended. However, if all 32 bytes of the string are visible
-    characters, then a function like `sodium_bin2hex <https://www.php.net/sodium_bin2hex>`_ is not required. For
-    example:
+    .. note::
 
-    .. code-block:: php
-
-        // A string of 32 characters.
-        $cfg['blowfish_secret'] = 'JOFw435365IScA&Q!cDugr!lSfuAz*OW';
+        phpMyAdmin encrypts the password into the browser cookie with the
+        PHP sodium functions, and its configuration often writes the secret as
+        ``sodium_hex2bin('…')``. BetterMyAdmin keeps only a session id in the
+        cookie (the credentials stay on the server), and a configuration file
+        holds data, not PHP calls: write the secret as a plain string (the
+        setup script's :file:`bettermyadmin.config.json` keeps a
+        ``sodium_hex2bin`` secret as its 64-digit hexadecimal string).
 
     .. warning::
 
-        The encryption key must be 32 bytes long. If it is longer than the length of bytes, only the first 32 bytes will
-        be used, and if it is shorter, a new temporary key will be automatically generated for you. However, this
-        temporary key will only last for the duration of the session.
+        The home page warns when the key is not exactly 32 bytes long.
 
     .. note::
 
         The configuration is called blowfish_secret for historical reasons as
         Blowfish algorithm was originally used to do the encryption.
-
-    .. versionchanged:: 3.1.0
-
-        Since version 3.1.0 phpMyAdmin can generate this on the fly, but it
-        makes a bit weaker security as this generated secret is stored in
-        session and furthermore it makes impossible to recall user name from
-        cookie.
-
-    .. versionchanged:: 5.2.0
-
-        Since version 5.2.0, phpMyAdmin uses the
-        `sodium\_crypto\_secretbox <https://www.php.net/sodium_crypto_secretbox>`_ and
-        `sodium\_crypto\_secretbox\_open <https://www.php.net/sodium_crypto_secretbox_open>`_ PHP functions to encrypt
-        and decrypt cookies, respectively.
 
     .. seealso:: :ref:`faq2_10`
 
@@ -2010,13 +2354,9 @@ Cookie authentication options
     :type: integer [number of seconds]
     :default: 1440
 
-    Define how long a login cookie is valid. Please note that php
-    configuration option `session.gc\_maxlifetime
-    <https://www.php.net/manual/en/session.configuration.php#ini.session.gc-
-    maxlifetime>`_ might limit session validity and if the session is lost,
-    the login cookie is also invalidated. So it is a good idea to set
-    ``session.gc_maxlifetime`` at least to the same value of
-    :config:option:`$cfg['LoginCookieValidity']`.
+    Define how long a login is valid without activity: a session idle for
+    longer is logged out. (phpMyAdmin additionally depends on PHP's
+    ``session.gc_maxlifetime``; BetterMyAdmin has no such setting.)
 
 .. config:option:: $cfg['LoginCookieStore']
 
@@ -2048,7 +2388,7 @@ Cookie authentication options
     .. note::
 
         Please use this carefully, as this may allow users access to MySQL servers
-        behind the firewall where your :term:`HTTP` server is placed.
+        behind the firewall where BetterMyAdmin is placed.
         See also :config:option:`$cfg['ArbitraryServerRegexp']`.
 
 .. config:option:: $cfg['ArbitraryServerRegexp']
@@ -2060,23 +2400,33 @@ Cookie authentication options
     :config:option:`$cfg['AllowArbitraryServer']` is enabled by
     matching the :term:`IP` or the hostname of the MySQL server
     to the given regular expression. The regular expression must be enclosed
-    with a delimiter character.
+    with a delimiter character and may be followed by modifiers, as in
+    phpMyAdmin (PCRE syntax): BetterMyAdmin converts it, so a pattern written
+    for phpMyAdmin works unchanged.
 
     It is recommended to include start and end symbols in the regular
     expression, so that you can avoid partial matches on the string.
 
     **Examples:**
 
-    .. code-block:: php
+    Allow connection to three listed servers:
 
-        // Allow connection to three listed servers:
-        $cfg['ArbitraryServerRegexp'] = '/^(server|another|yetdifferent)$/';
+    .. code-block:: json
 
-        // Allow connection to range of IP addresses:
-        $cfg['ArbitraryServerRegexp'] = '@^192\.168\.0\.[0-9]{1,}$@';
+        { "ArbitraryServerRegexp": "/^(server|another|yetdifferent)$/" }
 
-        // Allow connection to server name ending with -mysql:
-        $cfg['ArbitraryServerRegexp'] = '@^[^:]\-mysql$@';
+    Allow connection to range of IP addresses (in JSON, a backslash is
+    written twice):
+
+    .. code-block:: json
+
+        { "ArbitraryServerRegexp": "@^192\\.168\\.0\\.[0-9]{1,}$@" }
+
+    Allow connection to server name ending with -mysql:
+
+    .. code-block:: json
+
+        { "ArbitraryServerRegexp": "@^[^:]\\-mysql$@" }
 
     .. note::
 
@@ -2279,7 +2629,7 @@ Navigation panel setup
     :type: boolean
     :default: true
 
-    Defines whether or not to display the phpMyAdmin logo at the top of
+    Defines whether or not to display the BetterMyAdmin logo at the top of
     the navigation panel.
 
 .. config:option:: $cfg['NavigationLogoLink']
@@ -2288,8 +2638,8 @@ Navigation panel setup
     :default: ``'index.php'``
 
     Enter the :term:`URL` where the logo in the navigation panel will point to.
-    For use especially with self made theme which changes this.
-    For relative/internal URLs, you need to have leading ``./`` or trailing characters ``?`` such as ``'./index.php?route=/server/sql?'``.
+    The default ``'index.php'`` (phpMyAdmin's home page), like any other
+    internal (relative) link, opens BetterMyAdmin's home page.
     For external URLs, you should include URL protocol schemes (``http`` or ``https``) with absolute URLs.
 
     You may want to make the link open in a new browser tab, for that you need to use :config:option:`$cfg['NavigationLogoLinkWindow']`
@@ -2451,7 +2801,8 @@ Main panel
     * ``true`` to show all server information
     * ``false`` to hide server information
     * ``'database-server'`` to show only database server information
-    * ``'web-server'`` to show only web server information
+    * ``'web-server'`` to show only web server information (in BetterMyAdmin,
+      the Node.js server and runtime)
 
     You can additionally hide more information by using
     :config:option:`$cfg['Servers'][$i]['verbose']`.
@@ -2464,19 +2815,16 @@ Main panel
     :type: boolean
     :default: false
 
-    Defines whether to display the :guilabel:`PHP information` or not at
-    the starting main (right) frame.
+    Defines whether to display the :guilabel:`Show runtime information` link
+    or not at the starting main (right) frame.
 
-    Please note that to block the usage of ``phpinfo()`` in scripts, you have to
-    put this in your :file:`php.ini`:
-
-    .. code-block:: ini
-
-        disable_functions = phpinfo()
+    In phpMyAdmin this links to PHP's ``phpinfo()`` page. BetterMyAdmin has no
+    PHP: the link opens a "Runtime info" page instead (Node.js version,
+    platform and a summary of the configuration).
 
     .. warning::
 
-        Enabling phpinfo page will leak quite a lot of information about server
+        Enabling this page will leak information about the server
         setup. Is it not recommended to enable this on shared installations.
 
         This might also make easier some remote attacks on your installations,
@@ -2516,11 +2864,13 @@ Main panel
 .. config:option:: $cfg['MysqlMinVersion']
 
     :type: array
+    :default: ``{"internal": 50500, "human": "5.5.0"}``
 
-    Defines the minimum supported MySQL version. The default is chosen
-    by the phpMyAdmin team; however this directive was asked by a developer
-    of the Plesk control panel to ease integration with older MySQL servers
-    (where most of the phpMyAdmin features work).
+    Defines the minimum supported MySQL version: ``internal`` is the version
+    as a number, ``human`` as shown to the user. The default (5.5.0) is
+    phpMyAdmin's; the directive was asked by a developer of the Plesk control
+    panel to ease integration with older MySQL servers (where most of the
+    features work).
 
 Database structure
 ------------------
@@ -2763,11 +3113,15 @@ Export and import settings
     :type: boolean
     :default: true
 
-    Defines whether to allow on the fly compression for GZip/BZip2
-    compressed exports. This doesn't affect smaller dumps and allows users
-    to create larger dumps that won't otherwise fit in memory due to php
-    memory limit. Produced files contain more GZip/BZip2 headers, but all
-    normal programs handle this correctly.
+    Defines whether to allow on the fly compression for GZip
+    compressed exports: the output is compressed in chunks, so produced files
+    contain more GZip headers, but all normal programs handle this correctly.
+
+    .. note::
+
+        In phpMyAdmin this lets larger dumps fit in PHP's memory limit.
+        BetterMyAdmin always streams exports, compressed or not, so memory is
+        not a concern either way.
 
 .. config:option:: $cfg['Export']
 
@@ -2783,7 +3137,10 @@ Export and import settings
     :type: string
     :default: ``'sql'``
 
-    Default export format.
+    Default export format. Besides phpMyAdmin's formats, ``'jsmodule'``
+    selects BetterMyAdmin's "JavaScript module" format, which replaces
+    phpMyAdmin's "PHP array" (``'phparray'`` is accepted and falls back to
+    ``'sql'``).
 
 .. config:option:: $cfg['Export']['method']
 
@@ -2849,6 +3206,29 @@ Export and import settings
 
     .. versionadded:: 5.2.0
 
+.. config:option:: $cfg['Export']['csv_escape_formulas']
+
+    :type: boolean
+    :default: false
+
+    BetterMyAdmin only. When enabled, :term:`CSV` and CSV for MS Excel cells
+    starting with ``=``, ``+``, ``-`` or ``@`` are escaped, so that a
+    spreadsheet does not run them as formulas (CSV injection). It is off by
+    default to produce the same files as phpMyAdmin, which never escapes
+    them.
+
+.. config:option:: $cfg['Export']['jsmodule_structure_or_data']
+
+    :type: string
+    :default: ``'data'``
+
+    BetterMyAdmin only. What the "JavaScript module" export contains by
+    default: ``'structure'``, ``'data'`` or ``'structure_and_data'``. This
+    format takes the place of phpMyAdmin's "PHP array" export (whose
+    ``phparray_structure_or_data`` is accepted and has no use): each table
+    becomes ``export const <table> = [{…}]`` in a ``.js`` file, values as JSON
+    strings and binary or geometry values in hexadecimal.
+
 .. config:option:: $cfg['Import']
 
     :type: array
@@ -2866,6 +3246,16 @@ Export and import settings
     Defines charset for import. By default no charset conversion is done
     assuming UTF-8.
 
+.. config:option:: $cfg['Import']['MaxDecompressedSize']
+
+    :type: integer [number of bytes]
+    :default: 0
+
+    BetterMyAdmin only. The largest size a compressed import file (gzip,
+    bzip2, zip) may decompress to; a larger output stops the import, which
+    protects against "zip bombs". ``0`` means ten times
+    :config:option:`$cfg['MaxUploadSize']`.
+
 .. config:option:: $cfg['Schema']
 
     :type: array
@@ -2877,6 +3267,10 @@ Export and import settings
     :default: ``'pdf'``
 
     Defines the default format for schema export. Possible values are ``'pdf'``, ``'eps'``, ``'dia'`` or ``'svg'``.
+
+    BetterMyAdmin does not include the :term:`TCPDF` library, so the PDF
+    format is not offered (as in phpMyAdmin builds without TCPDF); export the
+    schema as EPS, Dia or SVG.
 
 Tabs display settings
 ---------------------
@@ -2967,8 +3361,8 @@ Languages
     :default: ``'en'``
 
     Defines the default language to use, if not browser-defined or user-
-    defined. The corresponding language file needs to be in
-    ``locale/*code*/LC_MESSAGES/phpmyadmin.mo``.
+    defined. It must be one of the languages BetterMyAdmin ships (phpMyAdmin's
+    translations, built into the application).
 
 .. config:option:: $cfg['DefaultConnectionCollation']
 
@@ -2985,8 +3379,8 @@ Languages
     :type: string
     :default: not set
 
-    Force language to use. The corresponding language file needs to be in
-    ``locale/*code*/LC_MESSAGES/phpmyadmin.mo``.
+    Force language to use. It must be one of the languages BetterMyAdmin
+    ships.
 
 .. config:option:: $cfg['FilterLanguages']
 
@@ -3009,6 +3403,12 @@ Languages
     * ``'iconv'`` - use iconv or ``libiconv`` functions
     * ``'mb'`` - use :term:`mbstring` extension
     * ``'none'`` - disable encoding conversion
+
+    BetterMyAdmin has no PHP extensions: every value converts with the same
+    built-in converter, which follows iconv's behaviour (including
+    :config:option:`$cfg['IconvExtraParams']`). As in phpMyAdmin, ``'none'``
+    still converts. A character that cannot be converted ends the export or
+    import with an error message (phpMyAdmin stops with a PHP error).
 
     Enabled charset conversion activates a pull-down menu in the Export
     and Import pages, to choose the character set when exporting a file.
@@ -3037,18 +3437,21 @@ Languages
     :default: ``[...]``
 
     Available character sets for MySQL conversion. You can add your own
-    (any of supported by mbstring/iconv) or remove these which you don't
+    (any of supported by iconv) or remove these which you don't
     use. Character sets will be shown in same order as here listed, so if
     you frequently use some of these move them to the top.
 
     Example configuration:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['AvailableCharsets'] = ['utf-8', 'iso-8859-1'];
+        { "AvailableCharsets": ["utf-8", "iso-8859-1"] }
 
 Web server settings
 -------------------
+
+These settings concern the HTTP server built into BetterMyAdmin; there is no
+separate web server to configure.
 
 .. config:option:: $cfg['OBGzip']
 
@@ -3058,7 +3461,7 @@ Web server settings
     Defines whether to use GZip output buffering for increased speed in
     :term:`HTTP` transfers. Set to
     true/false for enabling/disabling. When set to 'auto' (string),
-    phpMyAdmin tries to enable output buffering and will automatically
+    BetterMyAdmin tries to enable output buffering and will automatically
     disable it if your browser has some problems with buffering. IE6 with
     a certain patch is known to cause data corruption when having enabled
     buffering.
@@ -3077,13 +3480,13 @@ Web server settings
     default empty, you need to fill in some trusted proxy servers if you
     want to use rules for IP addresses behind proxy.
 
-    The following example specifies that phpMyAdmin should trust a
+    The following example specifies that BetterMyAdmin should trust a
     ``HTTP_X_FORWARDED_FOR`` (``X-Forwarded-For``) header coming from the proxy
     1.2.3.4:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['TrustedProxies'] = ['1.2.3.4' => 'HTTP_X_FORWARDED_FOR'];
+        { "TrustedProxies": { "1.2.3.4": "HTTP_X_FORWARDED_FOR" } }
 
     The :config:option:`$cfg['Servers'][$i]['AllowDeny']['rules']` directive uses the
     client's IP address as usual.
@@ -3100,13 +3503,19 @@ Web server settings
     * ``yes`` - GD 2 functions can be used
     * ``no`` - GD 2 function cannot be used
 
+    BetterMyAdmin does not use the PHP GD extension: thumbnails are resized by
+    built-in code that reproduces GD's resampling, so ``auto`` and ``yes``
+    both mean available. With ``no``, the inline image transformations show
+    the original image instead of a resized thumbnail.
+
 .. config:option:: $cfg['CheckConfigurationPermissions']
 
     :type: boolean
     :default: true
 
     We normally check the permissions on the configuration file to ensure
-    it's not world writable. However, phpMyAdmin could be installed on a
+    it's not world writable: a world-writable file stops every request with an
+    error. However, the configuration file could be on a
     NTFS filesystem mounted on a non-Windows server, in which case the
     permissions seems wrong but in fact cannot be detected. In this case a
     sysadmin would set this parameter to ``false``.
@@ -3120,6 +3529,12 @@ Web server settings
     limit, it is replaced by form with button. This is required as some web
     servers (:term:`IIS`) have problems with long :term:`URL`.
 
+    .. note::
+
+        This directive has no effect in BetterMyAdmin, whose pages keep their
+        parameters in the path and in request bodies rather than in long
+        URLs.
+
 .. config:option:: $cfg['CSPAllow']
 
     :type: string
@@ -3128,15 +3543,16 @@ Web server settings
     Additional string to include in allowed script and image sources in Content
     Security Policy header.
 
-    This can be useful when you want to include some external JavaScript files
-    in :file:`config.footer.inc.php` or :file:`config.header.inc.php`, which
-    would be normally not allowed by :term:`Content Security Policy`.
+    This can be useful when you want to load some external resources (for
+    example a logo link target, see
+    :config:option:`$cfg['NavigationLogoLinkWindow']`), which would be normally
+    not allowed by :term:`Content Security Policy`.
 
     To allow some sites, just list them within the string:
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['CSPAllow'] = 'example.com example.net';
+        { "CSPAllow": "example.com example.net" }
 
     .. versionadded:: 4.0.4
 
@@ -3153,8 +3569,9 @@ Web server settings
 Theme settings
 --------------
 
-    Please directly modify :file:`themes/themename/scss/_variables.scss`, although
-    your changes will be overwritten with the next update.
+BetterMyAdmin's themes are sets of design tokens built into the application,
+not theme folders with SCSS files: there is nothing to edit on the server. See
+:ref:`themes` and :config:option:`$cfg['ThemeDefault']`.
 
 Design customization
 --------------------
@@ -3369,8 +3786,10 @@ SQL query box settings
     :type: boolean
     :default: true
 
-    Whether to display a link to wrap a query in PHP code in any SQL Query
-    box.
+    Whether to display a link to wrap a query in code in any SQL Query
+    box. In BetterMyAdmin the link is "Create JS code": it shows the query as
+    JavaScript string literals (phpMyAdmin's "Create PHP code"); the directive
+    keeps its phpMyAdmin name.
 
 .. config:option:: $cfg['SQLQuery']['Refresh']
 
@@ -3381,23 +3800,16 @@ SQL query box settings
 
 .. _web-dirs:
 
-Web server upload/save/import directories
------------------------------------------
+Upload/save/import directories
+------------------------------
 
-If PHP is running in safe mode, all directories must be owned by the same user
-as the owner of the phpMyAdmin scripts.
-
-If the directory where phpMyAdmin is installed is subject to an
-``open_basedir`` restriction, you need to create a temporary directory in some
-directory accessible by the PHP interpreter.
-
-For security reasons, all directories should be outside the tree published by
-webserver. If you cannot avoid having this directory published by webserver,
-limit access to it either by web server configuration (for example using
-.htaccess or web.config files) or place at least an empty :file:`index.html`
-file there, so that directory listing is not possible. However as long as the
-directory is accessible by web server, an attacker can guess filenames to download
-the files.
+These directories are on the machine (or in the container) where BetterMyAdmin
+runs, and are read and written by the user running BetterMyAdmin (``node`` in
+the Docker image, where the ``PMA_UPLOADDIR`` and ``PMA_SAVEDIR`` variables set
+them). BetterMyAdmin serves only its own application files over HTTP, never
+these directories, and it lists and reads only the files inside them (paths
+that point outside are refused). Still, give them the strictest permissions you
+can, as they may hold complete database dumps.
 
 .. config:option:: $cfg['UploadDir']
 
@@ -3405,7 +3817,7 @@ the files.
     :default: ``''``
 
     The name of the directory where :term:`SQL` files have been uploaded by
-    other means than phpMyAdmin (for example, FTP). Those files are available
+    other means than BetterMyAdmin (for example, FTP). Those files are available
     under a drop-down box when you click the database or table name, then the
     Import tab.
 
@@ -3418,8 +3830,7 @@ the files.
     enabled).
 
     This feature is useful when your file is too big to be
-    uploaded via :term:`HTTP`, or when file
-    uploads are disabled in PHP.
+    uploaded via :term:`HTTP` (see :config:option:`$cfg['MaxUploadSize']`).
 
     .. warning::
 
@@ -3435,13 +3846,13 @@ the files.
     :type: string
     :default: ``''``
 
-    The name of the webserver directory where exported files can be saved.
+    The name of the directory on the server where exported files can be saved.
 
     If you want a different directory for each user, %u will be replaced with the
     username.
 
     Please note that the directory must exist and has to be writable for
-    the user running webserver.
+    the user running BetterMyAdmin.
 
     .. warning::
 
@@ -3453,41 +3864,18 @@ the files.
     :type: string
     :default: ``'./tmp/'``
 
-    The name of the directory where temporary files can be stored. It is used
-    for several purposes, currently:
+    In phpMyAdmin, the name of the directory where temporary files can be
+    stored (the templates cache, ESRI Shapefiles import, uploaded files under
+    ``open_basedir``).
 
-    * The templates cache which speeds up page loading.
-    * ESRI Shapefiles import, see :ref:`faq6_30`.
-    * To work around limitations of ``open_basedir`` for uploaded files, see
-      :ref:`faq1_11`.
+    .. note::
 
-    This directory should have as strict permissions as possible as the only
-    user required to access this directory is the one who runs the webserver.
-    If you have root privileges, simply make this user owner of this directory
-    and make it accessible only by it:
-
-    .. code-block:: sh
-
-        chown www-data:www-data tmp
-        chmod 700 tmp
-
-    If you cannot change owner of the directory, you can achieve a similar
-    setup using :term:`ACL`:
-
-    .. code-block:: sh
-
-        chmod 700 tmp
-        setfacl -m "g:www-data:rwx" tmp
-        setfacl -d -m "g:www-data:rwx" tmp
-
-    If neither of above works for you, you can still make the directory
-    :command:`chmod 777`, but it might impose risk of other users on system
-    reading and writing data in this directory.
-
-    .. warning::
-
-        Please see top of this chapter (:ref:`web-dirs`) for instructions how
-        to setup this directory and how to make its usage secure.
+        BetterMyAdmin has no template cache and does not keep its temporary
+        files there: an uploaded import file is staged in a private
+        ``bma-import`` subdirectory of the system temporary directory (created
+        with mode ``0700``, files ``0600`` with random names, pruned after
+        a while). The setup script still shows phpMyAdmin's notice when this
+        directive is set; otherwise it has no effect.
 
 Various display setting
 -----------------------
@@ -3590,7 +3978,7 @@ Various display setting
     :type: integer
     :default: 50000
 
-    For InnoDB tables, determines for how large tables phpMyAdmin should
+    For InnoDB tables, determines for how large tables BetterMyAdmin should
     get the exact row count using ``SELECT COUNT``. If the approximate row
     count as returned by ``SHOW TABLE STATUS`` is smaller than this value,
     ``SELECT COUNT`` will be used, otherwise the approximate count will be
@@ -3639,9 +4027,10 @@ Various display setting
     :type: array
     :default: ``[]``
 
-    Contains names of configuration options (keys in ``$cfg`` array) that
+    Contains names of configuration options (keys of the configuration) that
     users can't set through user preferences. For possible values, refer
-    to classes under :file:`src/Config/Forms/User/`.
+    to the user preference forms in :file:`packages/config/src/forms.ts`
+    (phpMyAdmin's :file:`src/Config/Forms/User/`).
 
 .. config:option:: $cfg['UserprefsDeveloperTab']
 
@@ -3651,13 +4040,13 @@ Various display setting
     .. versionadded:: 3.4.0
 
     Activates in the user preferences a tab containing options for
-    developers of phpMyAdmin.
+    developers of BetterMyAdmin.
 
 Page titles
 -----------
 
 The page title displayed by your browser's window or tab title bar can be customized. You can use :ref:`faq6_27`.
-The following four options allow customizing various parts of the phpMyAdmin interface. Note that the login page
+The following four options allow customizing various parts of the BetterMyAdmin interface. Note that the login page
 title cannot be changed.
 
 .. config:option:: $cfg['TitleTable']
@@ -3680,6 +4069,9 @@ title cannot be changed.
     :type: string
     :default: ``'@HTTP_HOST@ | @PHPMYADMIN@'``
 
+    In BetterMyAdmin, ``@PHPMYADMIN@`` is replaced by "BetterMyAdmin" and its
+    version.
+
 Theme manager settings
 ----------------------
 
@@ -3695,7 +4087,10 @@ Theme manager settings
     :type: string
     :default: ``'pmahomme'``
 
-    The default theme (a subdirectory under :file:`./public/themes/`).
+    The default theme: one of ``pmahomme``, ``original``, ``metro`` and
+    ``bootstrap`` (phpMyAdmin's themes), or ``modern``, ``classic`` and
+    ``native`` (BetterMyAdmin's own). An unknown name falls back to
+    ``pmahomme``. See :ref:`themes`.
 
 .. config:option:: $cfg['ThemePerServer']
 
@@ -3747,16 +4142,18 @@ MySQL settings
 
     Example configuration
 
-    .. code-block:: php
+    .. code-block:: json
 
-        $cfg['DefaultFunctions'] = [
-            'FUNC_CHAR' => '',
-            'FUNC_DATE' => '',
-            'FUNC_NUMBER' => '',
-            'FUNC_SPATIAL' => 'ST_GeomFromText',
-            'FUNC_UUID' => 'UUID',
-            'first_timestamp' => 'UTC_TIMESTAMP',
-        ];
+        {
+          "DefaultFunctions": {
+            "FUNC_CHAR": "",
+            "FUNC_DATE": "",
+            "FUNC_NUMBER": "",
+            "FUNC_SPATIAL": "ST_GeomFromText",
+            "FUNC_UUID": "UUID",
+            "first_timestamp": "UTC_TIMESTAMP"
+          }
+        }
 
 Default options for Transformations
 -----------------------------------
@@ -3881,7 +4278,7 @@ Developer
 
     Sets the working environment.
 
-    This only needs to be changed when you are developing phpMyAdmin itself.
+    This only needs to be changed when you are developing BetterMyAdmin itself.
     The ``development`` mode may display debug information in some places.
 
     Possible values are ``'production'`` or ``'development'``.
@@ -3904,7 +4301,9 @@ Developer
     :type: boolean
     :default: false
 
-    Enable logging of queries and execution times to the syslog.
+    Enable logging of queries and execution times. phpMyAdmin sends them to
+    syslog; BetterMyAdmin writes the same lines to the server's error output
+    (stderr) when each request ends.
     Requires :config:option:`$cfg['DBG']['sql']` to be enabled.
 
 .. config:option:: $cfg['DBG']['demo']
@@ -3912,8 +4311,8 @@ Developer
     :type: boolean
     :default: false
 
-    Enable to let server present itself as demo server.
-    This is used for `phpMyAdmin demo server <https://www.phpmyadmin.net/try/>`_.
+    Enable to let server present itself as demo server, like the
+    `phpMyAdmin demo server <https://www.phpmyadmin.net/try/>`_.
 
     It currently changes following behavior:
 
@@ -3934,18 +4333,63 @@ Developer
 Examples
 --------
 
-See following configuration snippets for typical setups of phpMyAdmin.
+See following configuration snippets for typical setups of BetterMyAdmin.
+Each one is a complete :file:`bettermyadmin.config.json`, or a part to merge
+into yours.
 
 Basic example
 +++++++++++++
 
-Example configuration file, which can be copied to :file:`config.inc.php` to
-get some core configuration layout; it is distributed with phpMyAdmin as
-:file:`config.sample.inc.php`. Please note that it does not contain all
-configuration options, only the most frequently used ones.
+Example configuration file, which can be copied to
+:file:`bettermyadmin.config.json` to get some core configuration layout (it
+plays the role of phpMyAdmin's :file:`config.sample.inc.php`). Please note
+that it does not contain all configuration options, only the most frequently
+used ones.
 
-.. literalinclude:: ../config.sample.inc.php
-   :language: php
+.. code-block:: json
+
+    {
+      "blowfish_secret": "a string of 32 random characters",
+      "Servers": [
+        {
+          "auth_type": "cookie",
+          "host": "localhost",
+          "compress": false,
+          "AllowNoPassword": false,
+
+          "controlhost": "",
+          "controlport": "",
+          "controluser": "pma",
+          "controlpass": "pmapass",
+
+          "pmadb": "phpmyadmin",
+          "bookmarktable": "pma__bookmark",
+          "relation": "pma__relation",
+          "table_info": "pma__table_info",
+          "table_coords": "pma__table_coords",
+          "pdf_pages": "pma__pdf_pages",
+          "column_info": "pma__column_info",
+          "history": "pma__history",
+          "table_uiprefs": "pma__table_uiprefs",
+          "tracking": "pma__tracking",
+          "userconfig": "pma__userconfig",
+          "recent": "pma__recent",
+          "favorite": "pma__favorite",
+          "users": "pma__users",
+          "usergroups": "pma__usergroups",
+          "navigationhiding": "pma__navigationhiding",
+          "savedsearches": "pma__savedsearches",
+          "central_columns": "pma__central_columns",
+          "designer_settings": "pma__designer_settings",
+          "export_templates": "pma__export_templates"
+        }
+      ],
+      "UploadDir": "",
+      "SaveDir": ""
+    }
+
+The same file as YAML (:file:`bettermyadmin.config.yaml`) or as a TypeScript
+module (:file:`bettermyadmin.config.ts`, see :ref:`setup`) is equally valid.
 
 .. warning::
 
@@ -3957,31 +4401,52 @@ configuration options, only the most frequently used ones.
 Example for signon authentication
 +++++++++++++++++++++++++++++++++
 
-This example uses :file:`examples/signon.php` to demonstrate usage of :ref:`auth_signon`:
+This example uses :file:`apps/server/examples/signon-page.mjs` to
+demonstrate usage of :ref:`auth_signon`, with the login page served by
+BetterMyAdmin itself (:config:option:`$cfg['Servers'][$i]['SignonPage']`):
 
-.. code-block:: php
+.. code-block:: json
 
-    <?php
-    $i = 0;
-    $i++;
-    $cfg['Servers'][$i]['auth_type']     = 'signon';
-    $cfg['Servers'][$i]['SignonSession'] = 'SignonSession';
-    $cfg['Servers'][$i]['SignonURL']     = 'examples/signon.php';
+    {
+      "Servers": [{
+        "auth_type": "signon",
+        "SignonSession": "SignonSession",
+        "SignonURL": "/signon/",
+        "LogoutURL": "/signon/?logout",
+        "SignonPage": "./apps/server/examples/signon-page.mjs"
+      }]
+    }
+
+With a separate login application, such as
+:file:`apps/server/examples/signon.ts` (listening on port 8090), point
+:config:option:`$cfg['Servers'][$i]['SignonURL']` at it instead:
+
+.. code-block:: json
+
+    {
+      "Servers": [{
+        "auth_type": "signon",
+        "SignonSession": "SignonSession",
+        "SignonURL": "http://localhost:8090/"
+      }]
+    }
 
 Example for IP address limited autologin
 ++++++++++++++++++++++++++++++++++++++++
 
-If you want to automatically login when accessing phpMyAdmin locally while asking
-for a password when accessing remotely, you can achieve it using following snippet:
+If you want to automatically login when accessing BetterMyAdmin locally while
+asking for a password when accessing remotely, phpMyAdmin's configuration
+tests ``$_SERVER['REMOTE_ADDR']`` in PHP. A configuration file of
+BetterMyAdmin is read once at start, not on each request, so this cannot be
+done in the file. Run two instances instead: one listening on ``127.0.0.1``
+only with ``config`` authentication, and a public one with ``cookie``
+authentication:
 
-.. code-block:: php
+.. code-block:: json
 
-    if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1') {
-        $cfg['Servers'][$i]['auth_type'] = 'config';
-        $cfg['Servers'][$i]['user'] = 'root';
-        $cfg['Servers'][$i]['password'] = 'yourpassword';
-    } else {
-        $cfg['Servers'][$i]['auth_type'] = 'cookie';
+    {
+      "Listen": { "host": "127.0.0.1", "port": 8081 },
+      "Servers": [{ "auth_type": "config", "user": "root", "password": "yourpassword" }]
     }
 
 .. note::
@@ -3995,68 +4460,58 @@ Example for using multiple MySQL servers
 You can configure any number of servers using :config:option:`$cfg['Servers']`,
 following example shows two of them:
 
-.. code-block:: php
+.. code-block:: json
 
-    <?php
-    // The string is a hexadecimal representation of a 32-bytes long string of random bytes.
-    $cfg['blowfish_secret'] = sodium_hex2bin('f16ce59f45714194371b48fe362072dc3b019da7861558cd4ad29e4d6fb13851');
-    $i = 0;
+    {
+      "blowfish_secret": "a string of 32 random characters",
+      "Servers": [
+        { "auth_type": "cookie", "verbose": "no1", "host": "localhost" },
+        { "auth_type": "cookie", "verbose": "no2", "host": "remote.host.addr" }
+      ],
+      "ServerDefault": 0
+    }
 
-    $i++; // server 1 :
-    $cfg['Servers'][$i]['auth_type'] = 'cookie';
-    $cfg['Servers'][$i]['verbose']   = 'no1';
-    $cfg['Servers'][$i]['host']      = 'localhost';
-    // more options for #1 ...
-
-    $i++; // server 2 :
-    $cfg['Servers'][$i]['auth_type'] = 'cookie';
-    $cfg['Servers'][$i]['verbose']   = 'no2';
-    $cfg['Servers'][$i]['host']      = 'remote.host.addr';//or ip:'10.9.8.1'
-    // this server must allow remote clients, e.g., host 10.9.8.%
-    // not only in mysql.host but also in the startup configuration
-    // more options for #2 ...
-
-    // end of server sections
-    $cfg['ServerDefault'] = 0; // to choose the server on startup
-
-    // further general options ...
+The second server must allow remote clients (e.g. host ``10.9.8.%``), not only
+in ``mysql.user`` but also in its startup configuration.
+:config:option:`$cfg['ServerDefault']` ``0`` lets the user choose the server
+on startup.
 
 .. _example-google-ssl:
 
 Google Cloud SQL with SSL
 +++++++++++++++++++++++++
 
-To connect to Google Could SQL, you currently need to disable certificate
+To connect to Google Could SQL, you may need to disable certificate
 verification. This is caused by the certificate being issued for CN matching
-your instance name, but you connect to an IP address and PHP tries to match
-these two. With verification you end up with error message like:
-
-.. code-block:: text
-
-    Peer certificate CN=`api-project-851612429544:pmatest' did not match expected CN=`8.8.8.8'
+your instance name, but you connect to an IP address and the name check
+fails. With verification you end up with an error message about the
+certificate name not matching the host.
 
 .. warning::
 
     With disabled verification your traffic is encrypted, but you're open to
     man in the middle attacks.
 
-To connect phpMyAdmin to Google Cloud SQL using SSL download the client and
-server certificates and tell phpMyAdmin to use them:
+To connect BetterMyAdmin to Google Cloud SQL using SSL download the client and
+server certificates and tell BetterMyAdmin to use them:
 
-.. code-block:: php
+.. code-block:: json
 
-    // IP address of your instance
-    $cfg['Servers'][$i]['host'] = '8.8.8.8';
-    // Use SSL for connection
-    $cfg['Servers'][$i]['ssl'] = true;
-    // Client secret key
-    $cfg['Servers'][$i]['ssl_key'] = '../client-key.pem';
-    // Client certificate
-    $cfg['Servers'][$i]['ssl_cert'] = '../client-cert.pem';
-    // Server certification authority
-    $cfg['Servers'][$i]['ssl_ca'] = '../server-ca.pem';
-    // Disable SSL verification (see above note)
-    $cfg['Servers'][$i]['ssl_verify'] = false;
+    {
+      "Servers": [{
+        "host": "8.8.8.8",
+        "ssl": true,
+        "ssl_key": "../client-key.pem",
+        "ssl_cert": "../client-cert.pem",
+        "ssl_ca": "../server-ca.pem",
+        "ssl_verify": false
+      }]
+    }
+
+``host`` is the IP address of your instance; ``ssl_key`` the client secret
+key, ``ssl_cert`` the client certificate and ``ssl_ca`` the server
+certification authority. A relative path is resolved against BetterMyAdmin's
+working directory.
 
 .. seealso::
 
@@ -4065,27 +4520,29 @@ server certificates and tell phpMyAdmin to use them:
     :config:option:`$cfg['Servers'][$i]['ssl_key']`,
     :config:option:`$cfg['Servers'][$i]['ssl_cert']`,
     :config:option:`$cfg['Servers'][$i]['ssl_ca']`,
-    :config:option:`$cfg['Servers'][$i]['ssl_verify']`,
-    <https://bugs.php.net/bug.php?id=72048>
+    :config:option:`$cfg['Servers'][$i]['ssl_verify']`
 
 .. _example-aws-ssl:
 
 Amazon RDS Aurora with SSL
 ++++++++++++++++++++++++++
 
-To connect phpMyAdmin to an Amazon RDS Aurora MySQL database instance using SSL,
-download the CA server certificate and tell phpMyAdmin to use it:
+To connect BetterMyAdmin to an Amazon RDS Aurora MySQL database instance using SSL,
+download the CA server certificate and tell BetterMyAdmin to use it:
 
-.. code-block:: php
+.. code-block:: json
 
-    // Address of your instance
-    $cfg['Servers'][$i]['host'] = 'replace-me-cluster-name.cluster-replace-me-id.replace-me-region.rds.amazonaws.com';
-    // Use SSL for connection
-    $cfg['Servers'][$i]['ssl'] = true;
-    // You need to have the region CA file and the authority CA file (2019 edition CA for example) in the PEM bundle for it to work
-    $cfg['Servers'][$i]['ssl_ca'] = '../rds-combined-ca-bundle.pem';
-    // Enable SSL verification
-    $cfg['Servers'][$i]['ssl_verify'] = true;
+    {
+      "Servers": [{
+        "host": "replace-me-cluster-name.cluster-replace-me-id.replace-me-region.rds.amazonaws.com",
+        "ssl": true,
+        "ssl_ca": "../rds-combined-ca-bundle.pem",
+        "ssl_verify": true
+      }]
+    }
+
+You need to have the region CA file and the authority CA file (2019 edition CA
+for example) in the PEM bundle for it to work.
 
 .. seealso::
 
@@ -4105,17 +4562,20 @@ download the CA server certificate and tell phpMyAdmin to use it:
 reCaptcha using hCaptcha
 ++++++++++++++++++++++++
 
-.. code-block:: php
+``CaptchaLoginPrivateKey`` is the secret key and ``CaptchaLoginPublicKey`` the
+site key from the hCaptcha dashboard:
 
-    $cfg['CaptchaApi'] = 'https://js.hcaptcha.com/1/api.js';
-    $cfg['CaptchaCsp'] = 'https://hcaptcha.com https://*.hcaptcha.com';
-    $cfg['CaptchaRequestParam'] = 'h-captcha';
-    $cfg['CaptchaResponseParam'] = 'h-captcha-response';
-    $cfg['CaptchaSiteVerifyURL'] = 'https://hcaptcha.com/siteverify';
-    // This is the secret key from hCaptcha dashboard
-    $cfg['CaptchaLoginPrivateKey'] = '0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-    // This is the site key from hCaptcha dashboard
-    $cfg['CaptchaLoginPublicKey'] = 'xxx-xxx-xxx-xxx-xxxx';
+.. code-block:: json
+
+    {
+      "CaptchaApi": "https://js.hcaptcha.com/1/api.js",
+      "CaptchaCsp": "https://hcaptcha.com https://*.hcaptcha.com",
+      "CaptchaRequestParam": "h-captcha",
+      "CaptchaResponseParam": "h-captcha-response",
+      "CaptchaSiteVerifyURL": "https://hcaptcha.com/siteverify",
+      "CaptchaLoginPrivateKey": "0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "CaptchaLoginPublicKey": "xxx-xxx-xxx-xxx-xxxx"
+    }
 
 .. seealso:: `hCaptcha website <https://www.hcaptcha.com/>`_
 .. seealso:: `hCaptcha Developer Guide <https://docs.hcaptcha.com/>`_
@@ -4123,16 +4583,18 @@ reCaptcha using hCaptcha
 reCaptcha using Turnstile
 +++++++++++++++++++++++++
 
-.. code-block:: php
+.. code-block:: json
 
-    $cfg['CaptchaMethod'] = 'checkbox';
-    $cfg['CaptchaApi'] = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-    $cfg['CaptchaCsp'] = 'https://challenges.cloudflare.com https://static.cloudflareinsights.com';
-    $cfg['CaptchaRequestParam'] = 'cf-turnstile';
-    $cfg['CaptchaResponseParam'] = 'cf-turnstile-response';
-    $cfg['CaptchaLoginPublicKey'] = '0xxxxxxxxxxxxxxxxxxxxxx';
-    $cfg['CaptchaLoginPrivateKey'] = '0x4AAAAAAAA_xx_xxxxxxxxxxxxxxxxxxxx';
-    $cfg['CaptchaSiteVerifyURL'] = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    {
+      "CaptchaMethod": "checkbox",
+      "CaptchaApi": "https://challenges.cloudflare.com/turnstile/v0/api.js",
+      "CaptchaCsp": "https://challenges.cloudflare.com https://static.cloudflareinsights.com",
+      "CaptchaRequestParam": "cf-turnstile",
+      "CaptchaResponseParam": "cf-turnstile-response",
+      "CaptchaLoginPublicKey": "0xxxxxxxxxxxxxxxxxxxxxx",
+      "CaptchaLoginPrivateKey": "0x4AAAAAAAA_xx_xxxxxxxxxxxxxxxxxxxx",
+      "CaptchaSiteVerifyURL": "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+    }
 
 .. seealso:: `Cloudflare Dashboard <https://dash.cloudflare.com/>`_
 .. seealso:: `Turnstile Developer Guide <https://developers.cloudflare.com/turnstile/get-started/>`_
@@ -4140,12 +4602,15 @@ reCaptcha using Turnstile
 reCaptcha using Google reCaptcha v2/v3
 ++++++++++++++++++++++++++++++++++++++
 
-.. code-block:: php
+Remove ``CaptchaMethod`` if you do not want the checkbox mode:
 
-    $cfg['CaptchaLoginPublicKey'] = 'xxxxxxxxxxxxxxxx-xxxxxxxxxxxx';
-    $cfg['CaptchaLoginPrivateKey'] = 'xxxxxxxxx-xxxxxxxxxxxxxx';
-    // Remove it if you dot not want the checkbox mode
-    $cfg['CaptchaMethod'] = 'checkbox';
+.. code-block:: json
+
+    {
+      "CaptchaLoginPublicKey": "xxxxxxxxxxxxxxxx-xxxxxxxxxxxx",
+      "CaptchaLoginPrivateKey": "xxxxxxxxx-xxxxxxxxxxxxxx",
+      "CaptchaMethod": "checkbox"
+    }
 
 .. seealso:: `Google reCaptcha Developer's Guide <https://developers.google.com/recaptcha/intro>`_
 .. seealso:: `Google reCaptcha types <https://developers.google.com/recaptcha/docs/versions>`_

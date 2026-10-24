@@ -4,13 +4,13 @@ Import and export
 Import
 ++++++
 
-To import data, go to the "Import" tab in phpMyAdmin. To import data into a
+To import data, go to the "Import" tab in BetterMyAdmin. To import data into a
 specific database or table, open the database or table before going to the
 "Import" tab.
 
 In addition to the standard Import and Export tab, you can also import an SQL
 file directly by dragging and dropping it from your local file manager to the
-phpMyAdmin interface in your web browser.
+BetterMyAdmin interface in your web browser.
 
 If you are having troubles importing big files, please consult :ref:`faq1_16`.
 
@@ -26,9 +26,9 @@ Form based SQL Query
 
 Using upload directory
 
-    You can specify an upload directory on your web server where phpMyAdmin is installed, after uploading your file into this directory you can select this file in the import dialog of phpMyAdmin, see :config:option:`$cfg['UploadDir']`.
+    You can specify an upload directory on the server where BetterMyAdmin runs, after uploading your file into this directory you can select this file in the import dialog of BetterMyAdmin, see :config:option:`$cfg['UploadDir']`. Files uploaded from the browser are limited by :config:option:`$cfg['MaxUploadSize']`.
 
-phpMyAdmin can import from several various commonly used formats.
+BetterMyAdmin can import from several various commonly used formats.
 
 CSV
 ---
@@ -50,7 +50,7 @@ All other features, requirements, and limitations are as before.
 CSV using LOAD DATA
 -------------------
 
-Similar to CSV, only using the internal MySQL parser and not the phpMyAdmin one.
+Similar to CSV, only using the internal MySQL parser and not the BetterMyAdmin one.
 
 ESRI Shape File
 ---------------
@@ -63,7 +63,7 @@ among Esri and other software products.
 MediaWiki
 ---------
 
-MediaWiki files, which can be exported by phpMyAdmin (version 4.0 or later),
+MediaWiki files, which can be exported by BetterMyAdmin or phpMyAdmin (version 4.0 or later),
 can now also be imported. This is the format used by Wikipedia to display
 tables.
 
@@ -78,7 +78,7 @@ import as simple as possible.
 Table name
 ~~~~~~~~~~
 
-During import, phpMyAdmin uses the sheet name as the table name; you should rename the
+During import, BetterMyAdmin uses the sheet name as the table name; you should rename the
 sheet in your spreadsheet program in order to match your existing table name (or the table you wish to create,
 though this is less of a concern since you could quickly rename the new table from the Operations tab).
 
@@ -104,7 +104,7 @@ SQL can be used to make any manipulation on data, it is also useful for restorin
 XML
 ---
 
-XML files exported by phpMyAdmin (version 3.3.0 or later) can now be imported.
+XML files exported by BetterMyAdmin or phpMyAdmin (version 3.3.0 or later) can be imported.
 Structures (databases, tables, views, triggers, etc.) and/or data will be
 created depending on the contents of the file.
 
@@ -113,8 +113,8 @@ The supported xml schemas are not yet documented in this wiki.
 Export
 ++++++
 
-phpMyAdmin can export into text files (even compressed) on your local disk (or
-a special the webserver :config:option:`$cfg['SaveDir']` folder) in various
+BetterMyAdmin can export into text files (even compressed) on your local disk (or
+a special :config:option:`$cfg['SaveDir']` folder on the server) in various
 commonly used formats:
 
 CodeGen
@@ -162,7 +162,7 @@ The generated JSON is list of objects with following attributes:
     Type of given object, can be one of:
 
     ``header``
-        Export header containing comment and phpMyAdmin version.
+        Export header containing comment and BetterMyAdmin version.
     ``database``
         Start of a database marker, containing name of database.
     ``table``
@@ -170,7 +170,7 @@ The generated JSON is list of objects with following attributes:
 
 .. js:data:: version
 
-    Used in ``header`` :js:data:`type` and indicates phpMyAdmin version.
+    Used in ``header`` :js:data:`type` and indicates BetterMyAdmin version.
 
 .. js:data:: comment
 
@@ -194,9 +194,9 @@ Sample output:
 
     [
         {
-            "comment": "Export to JSON plugin for phpMyAdmin",
+            "comment": "Export to JSON plugin for BetterMyAdmin",
             "type": "header",
-            "version": "4.7.0-dev"
+            "version": "1.0.0"
         },
         {
             "name": "cars",
@@ -249,7 +249,7 @@ rendered, for example in following document:
 .. code-block:: latex
 
     \documentclass{article}
-    \title{phpMyAdmin SQL output}
+    \title{BetterMyAdmin SQL output}
     \author{}
     \usepackage{longtable,lscape}
     \date{}
@@ -260,7 +260,7 @@ rendered, for example in following document:
     \begin{document}
     \maketitle
 
-    % insert phpMyAdmin LaTeX Dump here
+    % insert BetterMyAdmin LaTeX Dump here
 
     \end{document}
 
@@ -297,11 +297,26 @@ PDF
 
 For presentation purposes, non editable PDF might be best choice for you.
 
-PHP Array
----------
+.. note::
 
-You can generate a php file which will declare a multidimensional array with
-the contents of the selected table or database.
+    The PDF export needs phpMyAdmin's :term:`TCPDF` library, which
+    BetterMyAdmin does not include, so it is not offered (as in phpMyAdmin
+    builds without TCPDF).
+
+.. _export_jsmodule:
+
+JavaScript module
+-----------------
+
+You can generate a JavaScript file (``.js``) which exports the contents of each
+selected table as an array of objects: ``export const <table> = [{…}]``, the
+values as JSON strings and binary or geometry values in hexadecimal. It can be
+imported by any JavaScript or TypeScript program.
+
+This format takes the place of phpMyAdmin's "PHP Array" export, which
+generated a PHP file declaring a multidimensional array; BetterMyAdmin is not
+written in PHP and does not offer it. Its default content is set by
+:config:option:`$cfg['Export']['jsmodule_structure_or_data']`.
 
 SQL
 ---

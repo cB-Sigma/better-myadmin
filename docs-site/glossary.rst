@@ -209,7 +209,7 @@ From Wikipedia, the free encyclopedia
     mbstring
        The PHP `mbstring` functions provide support for languages represented by multi-byte character sets, most notably UTF-8.
 
-       If you have troubles installing this extension, please follow :ref:`faqmysql`, it provides useful hints.
+       BetterMyAdmin does not need it: it handles multi-byte character sets natively.
 
        .. seealso:: <https://www.php.net/manual/en/book.mbstring.php>
 
@@ -287,7 +287,8 @@ From Wikipedia, the free encyclopedia
       short for "PHP: Hypertext Preprocessor", is an open-source, reflective
       programming language used mainly for developing server-side applications
       and dynamic web content, and more recently, a broader range of software
-      applications.
+      applications. phpMyAdmin is written in PHP; BetterMyAdmin, its port, is
+      written in TypeScript and runs on Node.js, without PHP.
 
       .. seealso:: <https://en.wikipedia.org/wiki/PHP>
 
@@ -305,12 +306,12 @@ From Wikipedia, the free encyclopedia
       **PRIMARY**. If no primary key is defined MySQL will use first *unique
       key* as primary key if there is one.
 
-      You can create the primary key when creating the table (in phpMyAdmin
+      You can create the primary key when creating the table (in BetterMyAdmin
       just check the primary key radio buttons for each field you wish to be
       part of the primary key).
 
       You can also add a primary key to an existing table with `ALTER` `TABLE`
-      or `CREATE` `INDEX` (in phpMyAdmin you can just click on 'add index' on
+      or `CREATE` `INDEX` (in BetterMyAdmin you can just click on 'add index' on
       the table structure page below the listed fields).
 
     RFC
@@ -336,13 +337,14 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Server_(computing)>
 
     Sodium
-      The Sodium PHP extension.
+      The Sodium PHP extension, which phpMyAdmin uses for encryption.
+      BetterMyAdmin uses Node.js's built-in cryptography instead.
 
       .. seealso:: `PHP manual for Sodium extension <https://www.php.net/manual/en/book.sodium.php>`_
 
     Storage Engines
       MySQL can use several different formats for storing data on disk, these
-      are called storage engines or table types. phpMyAdmin allows a user to
+      are called storage engines or table types. BetterMyAdmin allows a user to
       change their storage engine for a particular table through the operations
       tab.
 
@@ -393,7 +395,8 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Internet_protocol_suite>
 
     TCPDF
-      PHP library to generate PDF files.
+      PHP library to generate PDF files, used by phpMyAdmin's PDF export and
+      schema. BetterMyAdmin does not include it.
 
       .. seealso:: <https://tcpdf.org/>
       .. seealso:: <https://en.wikipedia.org/wiki/TCPDF>

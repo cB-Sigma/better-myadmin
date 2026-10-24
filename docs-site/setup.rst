@@ -24,8 +24,8 @@ Released images are published on the GitHub Container Registry:
     docker run -d -p 8080:80 -e PMA_HOST=mysql.example.org \
         -v bma-data:/var/lib/bettermyadmin ghcr.io/cb-sigma/better-myadmin:latest
 
-then open ``http://localhost:8080``. Pin a version (``:1.0.9``) instead of
-``:latest`` in production.
+then open ``http://localhost:8080``. Pin a release version (``:X.Y.Z``)
+instead of ``:latest`` in production.
 
 The image takes the variables of phpMyAdmin's official Docker image, so a
 compose file written for the ``phpmyadmin`` image works with the image name
@@ -70,10 +70,10 @@ Docker environment variables
     TLS to the MySQL server (also the plural lists and the ``*_BASE64`` forms).
 
 ``UPLOAD_LIMIT``
-    The largest upload, for example ``64M`` (:config:option:`MaxUploadSize`).
+    The largest upload, for example ``64M`` (:config:option:`$cfg['MaxUploadSize']`).
 
-``MAX_EXECUTION_TIME``
-    :config:option:`$cfg['ExecTimeLimit']`.
+``MAX_EXECUTION_TIME``, ``MEMORY_LIMIT``
+    :config:option:`$cfg['ExecTimeLimit']`, :config:option:`$cfg['MemoryLimit']`.
 
 ``APACHE_PORT``
     The port inside the container (default 80).
@@ -184,8 +184,10 @@ A TypeScript file gives type checking and completion over every directive:
 
 An unknown directive or an invalid value stops the server with a message
 naming the closest directive. Without a ``blowfish_secret``, one is generated
-into :config:option:`DataDir` on the first start. A phpMyAdmin
-:file:`config.inc.php` can be converted with ``bma import-pma-config``.
+into :config:option:`$cfg['DataDir']` on the first start. The directives of a
+phpMyAdmin :file:`config.inc.php` keep their names, so it translates key for
+key; the setup script (below) also shows the configuration it builds in both
+formats.
 
 For a full explanation of possible configuration values, see the
 :ref:`config` of this document.
@@ -220,6 +222,21 @@ in your own database, or in a central database for a multi-user installation
 (this database would then be accessed by the controluser, so no other user
 should have rights to it).
 
+BetterMyAdmin uses phpMyAdmin's configuration storage as it is: the same
+database (``phpmyadmin`` by default, see
+:config:option:`$cfg['Servers'][$i]['pmadb']`), the same ``pma__*`` tables
+and the same contents. BetterMyAdmin and phpMyAdmin can therefore share one
+configuration storage, and you can switch from one to the other without
+losing bookmarks, relations, user preferences or two-factor settings.
+
+Without a configuration storage, BetterMyAdmin keeps the per-user data
+(bookmarks, SQL history, recent and favorite tables, table display
+preferences and user preferences) in a local SQLite file in
+:config:option:`$cfg['DataDir']`; phpMyAdmin offers these only with the
+storage, or keeps them until you log out. The features that describe the
+databases themselves (relations, comments, transformations, tracking, …)
+still need the configuration storage, as they must be shared by all users.
+
 .. _zeroconf:
 
 Zero configuration
@@ -233,49 +250,49 @@ disable set :config:option:`$cfg['ZeroConf']` to false.
 The following three scenarios are covered by the Zero Configuration mode:
 
 * When entering a database where the configuration storage tables are not
-  present, phpMyAdmin offers to create them from the Operations tab.
+  present, BetterMyAdmin offers to create them from the Operations tab.
 * When entering a database where the tables do already exist, the software
   automatically detects this and begins using them. This is the most common
   situation; after the tables are initially created automatically they are
   continually used without disturbing the user; this is also most useful on
-  shared hosting where the user is not able to edit :file:`config.inc.php` and
+  shared hosting where the user is not able to edit the configuration file and
   usually the user only has access to one database.
 * When having access to multiple databases, if the user first enters the
   database containing the configuration storage tables then switches to
   another database,
-  phpMyAdmin continues to use the tables from the first database; the user is
+  BetterMyAdmin continues to use the tables from the first database; the user is
   not prompted to create more tables in the new database.
 
 Manual configuration
 --------------------
 
-Please look at your ``./resources/sql/`` directory, where you should find a
-file called *create\_tables.sql*. (If you are using a Windows server,
-pay special attention to :ref:`faq1_23`).
+The tables are created by the SQL script
+:file:`packages/metadata/resources/create_tables.sql` of the BetterMyAdmin
+repository, which is phpMyAdmin's :file:`resources/sql/create_tables.sql`.
+(If your database server runs on Windows, pay special attention to
+:ref:`faq1_23`.)
 
-If you already had this infrastructure and:
+If you already had this infrastructure and upgraded to phpMyAdmin 4.3.0 or
+newer from 2.5.0 or newer (<= 4.2.x), please use
+:file:`packages/metadata/resources/upgrade_column_info_4_3_0+.sql` (phpMyAdmin's
+:file:`resources/sql/upgrade_column_info_4_3_0+.sql`); for older upgrades, use
+the scripts shipped with phpMyAdmin.
 
-* upgraded to MySQL 4.1.2 or newer, please use
-  :file:`resources/sql/upgrade_tables_mysql_4_1_2+.sql`.
-* upgraded to phpMyAdmin 4.3.0 or newer from 2.5.0 or newer (<= 4.2.x),
-  please use :file:`resources/sql/upgrade_column_info_4_3_0+.sql`.
-* upgraded to phpMyAdmin 4.7.0 or newer from 4.3.0 or newer,
-  please use :file:`resources/sql/upgrade_tables_4_7_0+.sql`.
+You can use BetterMyAdmin to create the tables for you: import
+:file:`create_tables.sql` from the :guilabel:`Import` tab, or use the links of
+the configuration storage check page (linked from the home page and the
+Operations tab). Please be aware that you may need special (administrator)
+privileges to create the database and tables, and that the script may need
+some tuning, depending on the database name.
 
-and then create new tables by importing :file:`resources/sql/create_tables.sql`.
-
-You can use your phpMyAdmin to create the tables for you. Please be
-aware that you may need special (administrator) privileges to create
-the database and tables, and that the script may need some tuning,
-depending on the database name.
-
-After having imported the :file:`resources/sql/create_tables.sql` file, you
-should specify the table names in your :file:`config.inc.php` file. The
-directives used for that can be found in the :ref:`config`.
+After having created the tables, you should specify the table names in your
+configuration file. The directives used for that can be found in the
+:ref:`config` (see also the basic example in :ref:`config-examples`).
 
 You will also need to have a controluser
 (:config:option:`$cfg['Servers'][$i]['controluser']` and
-:config:option:`$cfg['Servers'][$i]['controlpass']` settings)
+:config:option:`$cfg['Servers'][$i]['controlpass']` settings, or the Docker
+variables ``PMA_CONTROLUSER`` and ``PMA_CONTROLPASS``)
 with the proper rights to those tables. For example you can create it
 using following statement:
 
@@ -300,49 +317,52 @@ For MySQL older than 8.0:
    CREATE USER 'pma'@'localhost' IDENTIFIED WITH mysql_native_password AS 'pmapass';
    GRANT SELECT, INSERT, UPDATE, DELETE ON <pma_db>.* TO 'pma'@'localhost';
 
-Note that MySQL installations with PHP older than 7.4 and MySQL newer than 8.0 may require
-using the mysql_native_password authentication as a workaround, see
-:ref:`faq1_45` for details.
+The host in these statements is the host BetterMyAdmin connects from, as the
+MySQL server sees it: with Docker, that is usually the container's address
+rather than ``localhost``. BetterMyAdmin's MySQL driver supports
+``caching_sha2_password``, so the ``mysql_native_password`` workaround that
+phpMyAdmin needs with old PHP versions is not necessary (see :ref:`faq1_45`).
 
 .. _upgrading:
 
 Upgrading from an older version
 +++++++++++++++++++++++++++++++
 
-.. warning::
+Your configuration file, the Docker variables and the :ref:`linked-tables`
+carry over from one version to the next. A directive that a new version no
+longer knows stops the server with a message naming it, rather than being
+silently ignored; one that phpMyAdmin removed only gives a warning at start.
 
-    **Never** extract the new version over an existing installation of
-    phpMyAdmin, always first remove the old files keeping just the
-    configuration.
+With Docker, pull the new image and recreate the container, keeping the data
+volume (``/var/lib/bettermyadmin``) and your configuration file:
 
-    This way, you will not leave any old or outdated files in the directory,
-    which can have severe security implications or can cause various breakages.
+.. code-block:: sh
 
-Simply copy :file:`config.inc.php` from your previous installation into
-the newly unpacked one. Configuration files from old versions may
-require some tweaking as some options have been changed or removed.
-For compatibility with PHP 5.3 and later, remove a
-``set_magic_quotes_runtime(0);`` statement that you might find near
-the end of your configuration file.
+    docker pull ghcr.io/cb-sigma/better-myadmin:X.Y.Z
+    docker rm -f bettermyadmin
+    docker run -d --name bettermyadmin -p 8080:80 -e PMA_HOST=mysql.example.org \
+        -v bma-data:/var/lib/bettermyadmin ghcr.io/cb-sigma/better-myadmin:X.Y.Z
 
-The complete upgrade can be performed in a few simple steps:
+or, with Docker Compose, change the image tag and run
+``docker compose pull && docker compose up -d``.
 
-1. Download the latest phpMyAdmin version from <https://www.phpmyadmin.net/downloads/>.
-2. Rename existing phpMyAdmin folder (for example to ``phpmyadmin-old``).
-3. Unpack freshly downloaded phpMyAdmin to the desired location (for example ``phpmyadmin``).
-4. Copy :file:`config.inc.php`` from old location (``phpmyadmin-old``) to the new one (``phpmyadmin``).
-5. Test that everything works properly.
-6. Remove backup of a previous version (``phpmyadmin-old``).
+From a checkout, update the sources, the dependencies and the web
+application, then restart the server:
 
-If you have upgraded your MySQL server from a version previous to 4.1.2 to
-version 5.x or newer and if you use the phpMyAdmin configuration storage, you
-should run the :term:`SQL` script found in
-:file:`resources/sql/upgrade_tables_mysql_4_1_2+.sql`.
+.. code-block:: sh
+
+    git pull
+    pnpm install --frozen-lockfile
+    pnpm build
+    pnpm start
+
+The release notes of each version are in the `changelog
+<https://github.com/cB-Sigma/better-myadmin/blob/main/CHANGELOG.md>`_.
 
 If you have upgraded your phpMyAdmin to 4.3.0 or newer from 2.5.0 or
 newer (<= 4.2.x) and if you use the phpMyAdmin configuration storage, you
 should run the :term:`SQL` script found in
-:file:`resources/sql/upgrade_column_info_4_3_0+.sql`.
+:file:`packages/metadata/resources/upgrade_column_info_4_3_0+.sql`.
 
 Do not forget to clear the browser cache and to empty the old session by
 logging out and logging in again.
@@ -356,19 +376,19 @@ Using authentication modes
 
 :term:`HTTP` and cookie authentication modes are recommended in a **multi-user
 environment** where you want to give users access to their own database and
-don't want them to play around with others. Nevertheless, be aware that MS
-Internet Explorer seems to be really buggy about cookies, at least till version
-6. Even in a **single-user environment**, you might prefer to use :term:`HTTP`
-or cookie mode so that your user/password pair are not in clear in the
-configuration file.
+don't want them to play around with others. Even in a **single-user
+environment**, you might prefer to use :term:`HTTP` or cookie mode so that
+your user/password pair are not in clear in the configuration file.
 
 :term:`HTTP` and cookie authentication
 modes are more secure: the MySQL login information does not need to be
-set in the phpMyAdmin configuration file (except possibly for the
+set in the BetterMyAdmin configuration file (except possibly for the
 :config:option:`$cfg['Servers'][$i]['controluser']`).
 However, keep in mind that the password travels in plain text unless
-you are using the HTTPS protocol. In cookie mode, the password is
-stored, encrypted with the AES algorithm, in a temporary cookie.
+you are using the HTTPS protocol. In every mode, BetterMyAdmin keeps the
+credentials encrypted (AES-256-GCM) in its server-side session store; the
+browser only gets a cookie with the session id. (phpMyAdmin stores the
+encrypted password in the cookie itself.)
 
 Then each of the *true* users should be granted a set of privileges
 on a set of particular databases. Normally you shouldn't give global
@@ -402,18 +422,12 @@ HTTP authentication mode
 
 * Uses :term:`HTTP` Basic authentication
   method and allows you to log in as any valid MySQL user.
-* Is supported with most PHP configurations. For :term:`IIS` (:term:`ISAPI`)
-  support using :term:`CGI` PHP see :ref:`faq1_32`, for using with Apache
-  :term:`CGI` see :ref:`faq1_35`.
-* When PHP is running under Apache's :term:`mod_proxy_fcgi` (e.g. with PHP-FPM),
-  ``Authorization`` headers are not passed to the underlying FCGI application,
-  such that your credentials will not reach the application. In this case, you can
-  add the following configuration directive:
-
-  .. code-block:: apache
-
-     SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-
+* BetterMyAdmin reads the credentials when a page loads and then keeps them
+  in the session, like cookie mode; the realm shown by the browser is
+  :config:option:`$cfg['Servers'][$i]['auth_http_realm']` (by default
+  "BetterMyAdmin" and the server's name).
+* If a reverse proxy is in front of BetterMyAdmin, it must pass the
+  ``Authorization`` header through (most do by default).
 * See also :ref:`faq4_4` about not using the :term:`.htaccess` mechanism along with
   ':term:`HTTP`' authentication mode.
 
@@ -431,15 +445,16 @@ HTTP authentication mode
 Cookie authentication mode
 --------------------------
 
-* Username and password are stored in cookies during the session and password
-  is deleted when it ends.
-* With this mode, the user can truly log out of phpMyAdmin and log
+* The user logs in with a form; the credentials are kept, encrypted, in the
+  server-side session, and the browser gets a cookie holding only the session
+  id. They are deleted when the session ends.
+* With this mode, the user can truly log out of BetterMyAdmin and log
   back in with the same username (this is not possible with :ref:`auth_http`).
 * If you want to allow users to enter any hostname to connect (rather than only
-  servers that are configured in :file:`config.inc.php`),
+  servers that are configured in the configuration file),
   see the :config:option:`$cfg['AllowArbitraryServer']` directive.
-* As mentioned in the :ref:`require` section, having the ``openssl`` extension
-  will speed up access considerably, but is not required.
+* Failed logins are rate limited by default, see
+  :config:option:`$cfg['LoginRateLimit']`.
 
 .. index:: pair: Signon; Authentication mode
 
@@ -449,36 +464,60 @@ Signon authentication mode
 --------------------------
 
 * This mode is a convenient way of using credentials from another
-  application to authenticate to phpMyAdmin to implement a single signon
+  application to authenticate to BetterMyAdmin to implement a single signon
   solution.
-* The other application has to store login information into session
-  data (see :config:option:`$cfg['Servers'][$i]['SignonSession']` and
-  :config:option:`$cfg['Servers'][$i]['SignonCookieParams']`) or you
-  need to implement script to return the credentials (see
+* The other application hands the login information over in a cookie (see
+  :config:option:`$cfg['Servers'][$i]['SignonSession']` and
+  :config:option:`$cfg['Servers'][$i]['SignonCookieParams']`), or you
+  implement a module to return the credentials (see
   :config:option:`$cfg['Servers'][$i]['SignonScript']`).
 * When no credentials are available, the user is being redirected to
   :config:option:`$cfg['Servers'][$i]['SignonURL']`, where you should handle
   the login process.
 
-The very basic example of saving credentials in a session is available as
-:file:`examples/signon.php`:
+phpMyAdmin reads the credentials from the other application's PHP session and
+runs PHP signon scripts. BetterMyAdmin cannot run PHP, so its signon mode
+works with the same keys (``PMA_single_signon_user``,
+``PMA_single_signon_password``, ``PMA_single_signon_host``, …) in a different
+container:
 
-.. literalinclude:: ../examples/signon.php
-    :language: php
+* the ``SignonSession`` is a cookie of that name whose value is encrypted with
+  a key derived from :config:option:`$cfg['blowfish_secret']` (the other
+  application uses ``encodeSignonSession`` from BetterMyAdmin's sources, or
+  runs on the same host as BetterMyAdmin and shares the cookie);
+* the login page can be served by BetterMyAdmin itself, from a JavaScript
+  module named by :config:option:`$cfg['Servers'][$i]['SignonPage']` (in
+  phpMyAdmin it is a PHP page run by the same web server);
+* :config:option:`$cfg['Servers'][$i]['SignonScript']` names a JavaScript or
+  TypeScript module exporting ``getLoginCredentials(user)`` instead of a PHP
+  file.
 
-Alternatively, you can also use this way to integrate with OpenID as shown
-in :file:`examples/openid.php`:
+The simplest setup is a login page served by BetterMyAdmin,
+:file:`apps/server/examples/signon-page.mjs`, which stores the credentials
+typed into a form (the counterpart of phpMyAdmin's
+:file:`examples/signon.php`):
 
-.. literalinclude:: ../examples/openid.php
-    :language: php
+.. literalinclude:: ../apps/server/examples/signon-page.mjs
+    :language: js
 
-If you intend to pass the credentials using some other means than, you have to
-implement wrapper in PHP to get that data and set it to
+A separate login application writes the cookie itself, as in
+:file:`apps/server/examples/signon.ts` (run with
+``BMA_SECRET=<blowfish_secret> npx tsx apps/server/examples/signon.ts``):
+
+.. literalinclude:: ../apps/server/examples/signon.ts
+    :language: ts
+
+phpMyAdmin's OpenID example (:file:`examples/openid.php`) has no
+BetterMyAdmin counterpart; an OpenID or other single signon front end can use
+either of the ways above.
+
+If you intend to pass the credentials using some other means than the
+cookie, you have to implement a module to get that data and set it to
 :config:option:`$cfg['Servers'][$i]['SignonScript']`. There is a very minimal example
-in :file:`examples/signon-script.php`:
+in :file:`apps/server/examples/signon-script.ts`:
 
-.. literalinclude:: ../examples/signon-script.php
-    :language: php
+.. literalinclude:: ../apps/server/examples/signon-script.ts
+    :language: ts
 
 .. seealso::
     :config:option:`$cfg['Servers'][$i]['auth_type']`,
@@ -486,6 +525,7 @@ in :file:`examples/signon-script.php`:
     :config:option:`$cfg['Servers'][$i]['SignonCookieParams']`,
     :config:option:`$cfg['Servers'][$i]['SignonScript']`,
     :config:option:`$cfg['Servers'][$i]['SignonURL']`,
+    :config:option:`$cfg['Servers'][$i]['SignonPage']`,
     :ref:`example-signon`
 
 .. index:: pair: Config; Authentication mode
@@ -498,87 +538,73 @@ Config authentication mode
 * This mode is sometimes the less secure one because it requires you to fill the
   :config:option:`$cfg['Servers'][$i]['user']` and
   :config:option:`$cfg['Servers'][$i]['password']`
-  fields (and as a result, anyone who can read your :file:`config.inc.php`
-  can discover your username and password).
+  fields (or the Docker variables ``PMA_USER`` and ``PMA_PASSWORD``), and as a
+  result, anyone who can read your configuration file or environment can
+  discover your username and password.
 * In the :ref:`faqmultiuser` section, there is an entry explaining how
   to protect your configuration file.
 * For additional security in this mode, you may wish to consider the
   Host authentication :config:option:`$cfg['Servers'][$i]['AllowDeny']['order']`
   and :config:option:`$cfg['Servers'][$i]['AllowDeny']['rules']` configuration directives.
 * Unlike cookie and http, does not require a user to log in when first
-  loading the phpMyAdmin site. This is by design but could allow any
+  loading the BetterMyAdmin site. This is by design but could allow any
   user to access your installation. Use of some restriction method is
-  suggested, perhaps a :term:`.htaccess` file with the HTTP-AUTH directive or disallowing
-  incoming HTTP requests at one’s router or firewall will suffice (both
-  of which are beyond the scope of this manual but easily searchable
-  with Google).
+  suggested: keep BetterMyAdmin listening on ``127.0.0.1`` (the default of
+  :config:option:`$cfg['Listen']['host']`), put an authenticating reverse
+  proxy in front of it, or disallow incoming HTTP requests at one’s router or
+  firewall.
 
 .. _securing:
 
-Securing your phpMyAdmin installation
-+++++++++++++++++++++++++++++++++++++
+Securing your BetterMyAdmin installation
+++++++++++++++++++++++++++++++++++++++++
 
-The phpMyAdmin team tries hard to make the application secure, however there
-are always ways to make your installation more secure:
+The BetterMyAdmin project tries hard to make the application secure, however
+there are always ways to make your installation more secure. See also
+:ref:`security`.
 
-* Follow our `Security announcements <https://www.phpmyadmin.net/security/>`_ and upgrade
-  phpMyAdmin whenever new vulnerability is published.
-* Serve phpMyAdmin on HTTPS only. Preferably, you should use HSTS as well, so that
-  you're protected from protocol downgrade attacks.
-* Ensure your PHP setup follows recommendations for production sites, for example
-  `display_errors <https://www.php.net/manual/en/errorfunc.configuration.php#ini.display-errors>`_
-  should be disabled.
-* Remove the ``tests`` directory from phpMyAdmin, unless you are developing and need a test suite.
-* Remove the ``setup`` directory from phpMyAdmin, you will probably not
-  use it after the initial setup.
+* Follow the `BetterMyAdmin releases
+  <https://github.com/cB-Sigma/better-myadmin/releases>`_ and upgrade
+  whenever a new vulnerability is published (see :ref:`upgrading`).
+* Write a configuration file before exposing BetterMyAdmin: until one exists,
+  the :ref:`setup_script` is open without a login (the Docker image ships an
+  empty one, so it is closed there).
+* Serve BetterMyAdmin on HTTPS only, for example behind a reverse proxy that
+  terminates TLS. Preferably, you should use HSTS as well, so that you're
+  protected from protocol downgrade attacks: :config:option:`$cfg['ForceSSL']`
+  redirects plain HTTP to HTTPS and sends the HSTS header.
+* Expose only what is needed: BetterMyAdmin listens on ``127.0.0.1`` by
+  default (:config:option:`$cfg['Listen']['host']`); let only the reverse
+  proxy reach it.
 * Properly choose an authentication method - :ref:`cookie`
   is probably the best choice for shared hosting.
-* Deny access to auxiliary files in :file:`./libraries/` or
-  :file:`./templates/` subfolders in your webserver configuration.
-  Such configuration prevents from possible path exposure and cross side
-  scripting vulnerabilities that might happen to be found in that code. For the
-  Apache webserver, this is often accomplished with a :term:`.htaccess` file in
-  those directories.
-* Deny access to temporary files, see :config:option:`$cfg['TempDir']` (if that
-  is placed inside your web root, see also :ref:`web-dirs`.
-* It is generally a good idea to protect a public phpMyAdmin installation
-  against access by robots as they usually can not do anything good there. You
-  can do this using ``robots.txt`` file in the root of your webserver or limit
-  access by web server configuration, see :ref:`faq1_42`.
+* Keep :config:option:`$cfg['DataDir']` private: it holds the sessions and
+  the generated :config:option:`$cfg['blowfish_secret']`. BetterMyAdmin
+  creates it with mode ``0700`` and runs as the unprivileged ``node`` user in
+  the Docker image. Treat :config:option:`$cfg['UploadDir']` and
+  :config:option:`$cfg['SaveDir']` the same way (see :ref:`web-dirs`).
+* It is generally a good idea to protect a public BetterMyAdmin installation
+  against access by robots as they usually can not do anything good there.
+  BetterMyAdmin sends an ``X-Robots-Tag: noindex, nofollow`` header on every
+  response; see also :ref:`faq1_42`.
 * In case you don't want all MySQL users to be able to access
-  phpMyAdmin, you can use :config:option:`$cfg['Servers'][$i]['AllowDeny']['rules']` to limit them
+  BetterMyAdmin, you can use :config:option:`$cfg['Servers'][$i]['AllowDeny']['rules']` to limit them
   or :config:option:`$cfg['Servers'][$i]['AllowRoot']` to deny root user access.
 * Enable :ref:`2fa` for your account.
-* Consider hiding phpMyAdmin behind an authentication proxy, so that
+* Consider hiding BetterMyAdmin behind an authentication proxy, so that
   users need to authenticate prior to providing MySQL credentials
-  to phpMyAdmin. You can achieve this by configuring your web server to request
-  HTTP authentication. For example in Apache this can be done with:
-
-  .. code-block:: apache
-
-     AuthType Basic
-     AuthName "Restricted Access"
-     AuthUserFile /usr/share/phpmyadmin/passwd
-     Require valid-user
-
-  Once you have changed the configuration, you need to create a list of users which
-  can authenticate. This can be done using the :program:`htpasswd` utility:
-
-  .. code-block:: sh
-
-     htpasswd -c /usr/share/phpmyadmin/passwd username
-
-* If you are afraid of automated attacks, enabling Captcha by
+  to BetterMyAdmin. You can achieve this by configuring your reverse proxy to
+  request HTTP authentication, or with a single signon front end
+  (:ref:`auth_signon`).
+* Failed logins are rate limited by default
+  (:config:option:`$cfg['LoginRateLimit']`). If you are afraid of automated
+  attacks, enabling Captcha by
   :config:option:`$cfg['CaptchaLoginPublicKey']` and
-  :config:option:`$cfg['CaptchaLoginPrivateKey']` might be an option.
-* Failed login attempts are logged to syslog (if available, see
-  :config:option:`$cfg['AuthLog']`). This can allow using a tool such as
-  fail2ban to block brute-force attempts. Note that the log file used by syslog
-  is not the same as the Apache error or access log files.
-* In case you're running phpMyAdmin together with other PHP applications, it is
-  generally advised to use separate session storage for phpMyAdmin to avoid
-  possible session-based attacks against it. You can use
-  :config:option:`$cfg['SessionSavePath']` to achieve this.
+  :config:option:`$cfg['CaptchaLoginPrivateKey']` might be an option too.
+* Failed login attempts are logged (see :config:option:`$cfg['AuthLog']`): to
+  the server's error output by default, or to a file. A file log can be used
+  by a tool such as fail2ban to block brute-force attempts. BetterMyAdmin has
+  no syslog support.
 
 .. _ssl:
 
@@ -600,6 +626,10 @@ are several configuration options involved in the SSL setup:
 :config:option:`$cfg['Servers'][$i]['ssl_verify']`
     This configuration disables server certificate verification. Use with
     caution.
+
+With Docker, the ``PMA_SSL``, ``PMA_SSL_VERIFY``, ``PMA_SSL_CA``,
+``PMA_SSL_KEY`` and ``PMA_SSL_CERT`` variables set these (see
+:ref:`docker-vars`).
 
 When the database server is using a local connection or private network and SSL can not be configured
 you can use :config:option:`$cfg['MysqlSslWarningSafeHosts']` to explicitly list the hostnames that are considered secure.
@@ -623,17 +653,15 @@ Users with column-specific privileges are unable to "Browse"
 ------------------------------------------------------------
 
 If a user has only column-specific privileges on some (but not all) columns in a table, "Browse"
-will fail with an error message.
+will fail with an error message, as in phpMyAdmin.
 
 As a workaround, a bookmarked query with the same name as the table can be created, this will
-run when using the "Browse" link instead. `Issue 11922 <https://github.com/phpmyadmin/phpmyadmin/issues/11922>`_.
+run when using the "Browse" link instead. `phpMyAdmin issue 11922 <https://github.com/phpmyadmin/phpmyadmin/issues/11922>`_.
 
 Trouble logging back in after logging out using 'http' authentication
 ----------------------------------------------------------------------
 
-When using the 'http' ``auth_type``, it can be impossible to log back in (when the logout comes
-manually or after a period of inactivity). `Issue 11898 <https://github.com/phpmyadmin/phpmyadmin/issues/11898>`_.
-
-.. _Composer tool: https://getcomposer.org/
-.. _Packagist: https://packagist.org/
-.. _Docker official image: https://hub.docker.com/_/phpmyadmin
+When using the 'http' ``auth_type``, the browser keeps sending the same
+credentials after a logout, so BetterMyAdmin refuses that user once to end
+the session; logging back in with the same user may need the browser to
+forget the credentials first. `phpMyAdmin issue 11898 <https://github.com/phpmyadmin/phpmyadmin/issues/11898>`_.

@@ -3,98 +3,86 @@
 Custom Themes
 =============
 
-phpMyAdmin comes with support for third party themes. You can download
-additional themes from our website at <https://www.phpmyadmin.net/themes/>.
+BetterMyAdmin comes with seven themes, each with a light and a dark variant:
+
+* phpMyAdmin's four themes: ``pmahomme`` (the default), ``original``,
+  ``metro`` (with its colour modes) and ``bootstrap``;
+* three themes of BetterMyAdmin's own: ``modern``, in the style of shadcn/ui;
+  ``classic``, pmahomme refreshed in a flat, compact style; and ``native``,
+  the look of a native database client.
+
+The colour mode follows the operating system's light or dark preference by
+default, and can be chosen by hand.
 
 Configuration
 -------------
 
 Themes are configured with :config:option:`$cfg['ThemeManager']` and
-:config:option:`$cfg['ThemeDefault']`. Under :file:`./public/themes/`, you should not
-delete the directory ``pmahomme`` or its underlying structure, because this is
-the system theme used by phpMyAdmin. ``pmahomme`` contains all images and
-styles, for backwards compatibility and for all themes that would not include
-images or css-files. If :config:option:`$cfg['ThemeManager']` is enabled, you
-can select your favorite theme on the main page. Your selected theme will be
-stored in a cookie.
+:config:option:`$cfg['ThemeDefault']` (``pmahomme`` unless you set another
+one; an unknown name falls back to it). If
+:config:option:`$cfg['ThemeManager']` is enabled, you can select your favorite
+theme and its colour mode from the Appearance settings of the main page or
+from the theme gallery. Your selection is remembered by the browser, and the
+default theme you choose is stored in your user preferences.
+:config:option:`$cfg['ThemePerServer']` allows a different theme for each
+server.
 
 Creating custom theme
 ---------------------
 
-To create a theme:
+In phpMyAdmin a theme is a folder of CSS, SCSS and image files under
+:file:`./public/themes/`, with a :file:`theme.json` describing it, and you
+can add your own or download third party themes from phpMyAdmin's website.
 
-* make a new subdirectory (for example "your\_theme\_name") under :file:`./public/themes/`.
-* copy the files and directories from ``pmahomme`` to "your\_theme\_name"
-* edit the css-files in "your\_theme\_name/css"
-* put your new images in "your\_theme\_name/img"
-* edit :file:`_variables.scss` in "your\_theme\_name/scss"
-* edit :file:`theme.json` in "your\_theme\_name" to contain theme metadata (see below)
-* make a new screenshot of your theme and save it under
-  "your\_theme\_name/screen.png"
+BetterMyAdmin's themes are not folders on the server: each theme is a set of
+design tokens (colours, fonts, spacing, corners) compiled into the
+application, so phpMyAdmin's theme folders cannot be loaded and there is no
+"Get more themes" link. To create a theme, add a token set to the source code
+(:file:`packages/ui/src/themes/` in the repository) and build BetterMyAdmin;
+see the `UI design system
+<https://github.com/cB-Sigma/better-myadmin/blob/main/docs/architecture/09-ui-design-system.md>`_
+documentation.
 
 Theme metadata
 ++++++++++++++
 
-.. versionchanged:: 4.8.0
-
-    Before 4.8.0 the theme metadata was passed in the :file:`info.inc.php` file.
-    It has been replaced by :file:`theme.json` to allow easier parsing (without
-    need to handle PHP code) and to support additional features.
-
-In theme directory there is file :file:`theme.json` which contains theme
-metadata. Currently it consists of:
+Each theme keeps the metadata of phpMyAdmin's :file:`theme.json` (shown in the
+theme gallery):
 
 .. describe:: name
 
     Display name of the theme.
 
-    **This field is required.**
-
 .. describe:: version
 
-    Theme version, can be quite arbitrary and does not have to match phpMyAdmin version.
-
-    **This field is required.**
+    Theme version, can be quite arbitrary and does not have to match
+    BetterMyAdmin's version.
 
 .. describe:: description
 
-    Theme description. this will be shown on the website.
-
-    **This field is required.**
+    Theme description.
 
 .. describe:: author
 
     Theme author name.
 
-    **This field is required.**
-
 .. describe:: url
 
-    Link to theme author website. It's good idea to have way for getting
-    support there.
+    Link to theme author website.
 
 .. describe:: supports
 
     Array of supported phpMyAdmin major versions.
 
-    **This field is required.**
-
-For example, the definition for Original theme shipped with phpMyAdmin 4.8:
+For example, the definition for Original theme:
 
 .. code-block:: json
 
     {
         "name": "Original",
-        "version": "4.8",
+        "version": "6.0",
         "description": "Original phpMyAdmin theme",
         "author": "phpMyAdmin developers",
         "url": "https://www.phpmyadmin.net/",
-        "supports": ["4.8"]
+        "supports": ["6.0"]
     }
-
-Sharing images
-++++++++++++++
-
-If you do not want to use your own symbols and buttons, remove the
-directory "img" in "your\_theme\_name". phpMyAdmin will use the
-default icons and buttons (from the system-theme ``pmahomme``).

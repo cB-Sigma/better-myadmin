@@ -3,13 +3,13 @@ User management
 
 User management is the process of controlling which users are allowed to
 connect to the MySQL server and what permissions they have on each database.
-phpMyAdmin does not handle user management, rather it passes the username and
+BetterMyAdmin does not handle user management, rather it passes the username and
 password on to MySQL, which then determines whether a user is permitted to
-perform a particular action. Within phpMyAdmin, administrators have full
+perform a particular action. Within BetterMyAdmin, administrators have full
 control over creating users, viewing and editing privileges for existing users,
 and removing users.
 
-Within phpMyAdmin, user management is controlled via the :guilabel:`User accounts` tab
+Within BetterMyAdmin, user management is controlled via the :guilabel:`User accounts` tab
 from the main page. Users can be created, edited, and removed.
 
 Creating a new user
@@ -56,7 +56,7 @@ Configurable menus and user groups
 
 By enabling :config:option:`$cfg['Servers'][$i]['users']` and
 :config:option:`$cfg['Servers'][$i]['usergroups']` you can customize what users
-will see in the phpMyAdmin navigation.
+will see in the BetterMyAdmin navigation.
 
 .. warning::
 
@@ -69,6 +69,6 @@ a second tab for managing :guilabel:`User groups`, where you can define what eac
 group will view (see image below) and you can then assign each user to one of
 these groups. Users will be presented with a simplified user interface, which might be
 useful for inexperienced users who could be overwhelmed by all the features
-phpMyAdmin provides.
+BetterMyAdmin provides.
 
 .. image:: images/usergroups.png

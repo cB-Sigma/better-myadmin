@@ -5,7 +5,7 @@ Charts
 
 .. versionadded:: 3.4.0
 
-Since phpMyAdmin version 3.4.0, you can easily generate charts from a SQL query
+You can easily generate charts from a SQL query
 by clicking the "Display chart" link in the "Query results operations" area.
 
 .. image:: images/query_result_operations.png
@@ -24,7 +24,7 @@ A window layer "Display chart" is shown in which you can customize the chart wit
 Chart implementation
 --------------------
 
-Charts in phpMyAdmin are drawn using the `Chart.js <https://www.chartjs.org/>`_ library.
+Charts in BetterMyAdmin are drawn using the `Chart.js <https://www.chartjs.org/>`_ library.
 
 Examples
 --------

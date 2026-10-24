@@ -16,18 +16,18 @@ Introduction
 To enable transformations, you have to set up the ``column_info``
 table and the proper directives. Please see the :ref:`config` on how to do so.
 
-phpMyAdmin has two different types of transformations: browser display
+BetterMyAdmin has two different types of transformations: browser display
 transformations, which affect only how the data is shown when browsing
-through phpMyAdmin; and input transformations, which affect a value
-prior to being inserted through phpMyAdmin.
+through BetterMyAdmin; and input transformations, which affect a value
+prior to being inserted through BetterMyAdmin.
 You can apply different transformations to the contents of each
 column. Each transformation has options to define how it will affect the
 stored data.
 
 Say you have a column ``filename`` which contains a filename. Normally
-you would see in phpMyAdmin only this filename. Using display transformations
+you would see in BetterMyAdmin only this filename. Using display transformations
 you can transform that filename into a HTML link, so you can click
-inside of the phpMyAdmin structure on the column's link and will see
+inside of the BetterMyAdmin structure on the column's link and will see
 the file displayed in a new browser window. Using transformation
 options you can also specify strings to append/prepend to a string or
 the format you want the output stored in.
@@ -39,9 +39,9 @@ on that column structure page for "Browser display transformation" and
 "Input transformation" which will show more information about each
 transformation that is available on your system.
 
-For a tutorial on how to effectively use transformations, see our
+For a tutorial on how to effectively use transformations, see the
 `Link section <https://www.phpmyadmin.net/docs/>`_ on the
-official phpMyAdmin homepage.
+official phpMyAdmin homepage: BetterMyAdmin's transformations are the same.
 
 .. _transformationshowto:
 
@@ -59,7 +59,6 @@ They are called ':term:`Media type`', 'Browser transformation' and
   are inactive until a :term:`Media type` is selected.
 * The field 'Browser display transformation' is a drop-down field. You can
   choose from a hopefully growing amount of pre-defined transformations.
-  See below for information on how to build your own transformation.
   There are global transformations and mimetype-bound transformations.
   Global transformations can be used for any mimetype. They will take
   the mimetype, if necessary, into regard. Mimetype-bound
@@ -91,7 +90,7 @@ They are called ':term:`Media type`', 'Browser transformation' and
   with the instructions above for "Browser display transformation" except
   these affect the data before insertion in to the database. These are
   most commonly used to either provide a specialized editor (for example, using
-  the phpMyAdmin SQL editor interface) or selector (such as for uploading an image).
+  the BetterMyAdmin SQL editor interface) or selector (such as for uploading an image).
   It's also possible to manipulate the data such as converting an IPv4 address to binary
   or parsing it through a regular expression.
 * Finally, 'Input transformation options' is the equivalent of the "Browser display
@@ -102,57 +101,50 @@ They are called ':term:`Media type`', 'Browser transformation' and
 File structure
 ++++++++++++++
 
-All specific transformations for mimetypes are defined through class
-files in the directory :file:`src/Plugins/Transformations/`. Each of
-them extends a certain transformation abstract class declared in
-:file:`src/Plugins/Transformations/Abs`.
-
-They are stored in files to ease customization and to allow easy adding of
-new or custom transformations.
+BetterMyAdmin has phpMyAdmin's transformations, with the same names, options
+and output, but they are not PHP plugin files: they are part of BetterMyAdmin's
+TypeScript source code (:file:`packages/mysql-types/src/transformations.ts`
+in the repository, with the editors of the input transformations in the web
+application). phpMyAdmin's instructions for adding a transformation as a PHP
+class under :file:`src/Plugins/Transformations/` (with its ``TEMPLATE`` files
+and generator scripts) do not apply: to add a transformation to
+BetterMyAdmin, change its source code and build it (see :ref:`developers`).
 
 Because the user cannot enter their own mimetypes, it is kept certain that
 the transformations will always work. It makes no sense to apply a
 transformation to a mimetype the transform-function doesn't know to
 handle.
 
-There is a file called :file:`src/Plugins/Transformations.php` that provides some
-basic functions which can be included by any other transform function.
+The names keep phpMyAdmin's convention, ``[Mimetype]_[Subtype]_[Transformation
+Name]`` (for example ``Text_Plain_Bool2Text`` or ``Image_JPEG_Inline``), so
+that the transformations stored in the ``column_info`` table of the
+:ref:`linked-tables` mean the same in phpMyAdmin and in BetterMyAdmin.
 
-The file name convention is ``[Mimetype]_[Subtype]_[Transformation
-Name].php``, while the abstract class that it extends has the
-name ``[Transformation Name]TransformationsPlugin``. All of the
-methods that have to be implemented by a transformations plug-in are:
+.. _transformations_external:
 
-#. getMIMEType() and getMIMESubtype() in the main class;
-#. getName(), getInfo() and applyTransformation() in the abstract class
-   it extends.
+The External transformation
++++++++++++++++++++++++++++
 
-The getMIMEType(), getMIMESubtype() and getName() methods return the
-name of the MIME type, MIME Subtype and transformation accordingly.
-getInfo() returns the transformation's description and possible
-options it may receive and applyTransformation() is the method that
-does the actual work of the transformation plug-in.
+The ``Text/Plain: External`` transformation passes the value of a cell to a
+program on the server and shows the program's output. In phpMyAdmin, the
+programs it may run are listed in the ``$allowedPrograms`` array of its PHP
+plugin file, which an administrator edits. In BetterMyAdmin they are listed in
+the :config:option:`$cfg['TransformationsExternalPrograms']` directive:
 
-Please see the :file:`src/Plugins/Transformations/TEMPLATE` and
-:file:`src/Plugins/Transformations/TEMPLATE\_ABSTRACT` files for adding
-your own transformation plug-in. You can also generate a new
-transformation plug-in (with or without the abstract transformation
-class), by using
-:file:`bin/transformations_generator_plugin.sh` or
-:file:`bin/transformations_generator_main_class.sh`.
+.. code-block:: json
 
-The applyTransformation() method always gets passed three variables:
+    { "TransformationsExternalPrograms": ["/usr/bin/tidy -q"] }
 
-#. **$buffer** - Contains the text inside of the column. This is the
-   text, you want to transform.
-#. **$options** - Contains any user-passed options to a transform
-   function as an array.
-#. **$meta** - Contains an object with information about your column. The
-   data is drawn from the output of the `mysql\_fetch\_field()
-   <https://www.php.net/mysql_fetch_field>`_ function. This means, all
-   object properties described on the `manual page
-   <https://www.php.net/mysql_fetch_field>`_ are available in this
-   variable and can be used to transform a column accordingly to
-   unsigned/zerofill/not\_null/... properties. The $meta->mimetype
-   variable contains the original :term:`Media type` of the column (i.e.
-   'text/plain', 'image/jpeg' etc.)
+The list is empty by default, as phpMyAdmin ships it: the transformation then
+shows the value unchanged. The first option of the transformation chooses the
+program by its position in the list (0 for the first one). The programs run
+without a shell, with a time limit of 10 seconds and an output limit of
+16 MiB; the deprecated second option can only add arguments to the program,
+never shell syntax.
+
+.. warning::
+
+    Any user who can set a column's transformation options can add
+    arguments to the program and feed it any cell value: list only programs
+    that cannot write or read files through their arguments, or wrapper
+    scripts that ignore them.

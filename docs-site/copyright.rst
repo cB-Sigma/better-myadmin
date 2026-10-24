@@ -3,6 +3,23 @@
 Copyright
 =========
 
+BetterMyAdmin is a port of phpMyAdmin to TypeScript and Node.js, derived from
+phpMyAdmin and distributed, like phpMyAdmin, under the GNU General Public
+License version 2 or (at your option) any later version (GPL-2.0-or-later).
+This documentation is adapted from phpMyAdmin's documentation, which is
+distributed under the same license.
+
+.. code-block:: none
+
+    Copyright (C) 2026 The BetterMyAdmin contributors
+
+BetterMyAdmin is an independent project and is not affiliated with or
+endorsed by the phpMyAdmin project; "phpMyAdmin" is used here only to describe
+what this software is derived from and compatible with.
+
+phpMyAdmin's copyright, which covers the code and documentation BetterMyAdmin
+derives from:
+
 .. code-block:: none
 
     Copyright (C) 1998-2000 Tobias Ratschiller <tobias_at_ratschiller.com>
@@ -31,12 +48,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Third party licenses
 ++++++++++++++++++++
 
-phpMyAdmin includes several third-party libraries which come under their
-respective licenses.
-
-jQuery's license, which is where we got the files under public/js/vendor/jquery/ is
-(MIT|GPL), a copy of each license is available in this repository (GPL
-is available as LICENSE, MIT as public/js/vendor/jquery/MIT-LICENSE.txt).
-
-The download kit additionally includes several composer libraries. See their
-licensing information in the vendor/ directory.
+BetterMyAdmin includes several third-party libraries (npm packages) which come
+under their respective licenses; see their licensing information in the
+:file:`node_modules/` directory of a checkout, or in the package metadata of
+each dependency listed in the repository's :file:`pnpm-lock.yaml`. It also
+includes phpMyAdmin's translations, under phpMyAdmin's license.

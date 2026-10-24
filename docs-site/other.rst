@@ -4,6 +4,10 @@ Other sources of information
 Printed Book
 ------------
 
+BetterMyAdmin has phpMyAdmin's pages and features, so the books and tutorials
+written for phpMyAdmin apply to it too, except where they describe installing
+or configuring PHP.
+
 The definitive guide to using phpMyAdmin is the book Mastering phpMyAdmin for
 Effective MySQL Management by Marc Delisle. You can get information on that
 book and other officially endorsed `books at the phpMyAdmin site`_.

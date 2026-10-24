@@ -1,10 +1,8 @@
-.. phpMyAdmin documentation master file, created by
-   sphinx-quickstart on Wed Sep 26 14:04:48 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. BetterMyAdmin documentation master file, adapted from phpMyAdmin's
+   documentation (GPL-2.0-or-later).
 
-Welcome to phpMyAdmin's documentation!
-======================================
+BetterMyAdmin documentation
+===========================
 
 Contents:
 
@@ -19,7 +17,6 @@ Contents:
     faq
     developers
     security
-    vendors
     copyright
     credits
     glossary
