@@ -85,6 +85,7 @@ export function NavTree({
                   guide={guides[vi.index]!}
                   stem={row.type === 'node' && row.expanded === true && !row.loading}
                   leaf={row.type !== 'node' || !row.node.expandable}
+                  arm={row.type !== 'filter'}
                 />
               )}
               {row.type === 'node' ? (
@@ -124,7 +125,17 @@ function useNavigate() {
  * expander column of each level, and the plain indent guides modern draws instead. CSS picks which a
  * theme shows (none in native).
  */
-function TreeLines({ guide, stem, leaf }: { guide: TreeGuide; stem: boolean; leaf: boolean }) {
+function TreeLines({
+  guide,
+  stem,
+  leaf,
+  arm,
+}: {
+  guide: TreeGuide
+  stem: boolean
+  leaf: boolean
+  arm: boolean
+}) {
   const x = (col: number) => `calc(var(--nav-guide-offset, 0px) + ${4 + col * INDENT + 8}px)`
   const own = guide.pipes.length
   return (
@@ -134,8 +145,8 @@ function TreeLines({ guide, stem, leaf }: { guide: TreeGuide; stem: boolean; lea
         p ? <i key={k} className="nav-pipe" style={{ left: x(k) }} /> : null,
       )}
       <i className={`nav-elbow ${guide.elbow}`} style={{ left: x(own) }} />
-      {/* a leaf has no box: its arm runs on to the item's icon */}
-      <i className={`nav-arm${leaf ? ' leaf' : ''}`} style={{ left: x(own) }} />
+      {/* a leaf has no box: its arm runs on to the item's icon; the filter box gets none */}
+      {arm && <i className={`nav-arm${leaf ? ' leaf' : ''}`} style={{ left: x(own) }} />}
       {/* indent guides (modern): one line under each ancestor's chevron, no elbows */}
       {Array.from({ length: own }, (_, k) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: k is the ancestor level, the identity of the guide
@@ -323,7 +334,8 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
   return (
     <div
       className={clsx('fast_filter flex items-center gap-1 py-1 pr-1', kind === 'db' && 'db_fast_filter')}
-      style={{ paddingLeft: `calc(var(--nav-guide-base, 0px) + ${4 + row.depth * INDENT}px)` }}
+      // past the expander column, so the box starts with the item icons and clears the tree lines
+      style={{ paddingLeft: `calc(var(--nav-guide-base, 0px) + ${4 + row.depth * INDENT + 18}px)` }}
     >
       <input
         className="searchClause h-6 min-w-0 flex-1 rounded border border-border bg-bg px-1.5 text-[13px]"
