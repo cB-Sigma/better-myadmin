@@ -2,6 +2,18 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.6 (2026-10-24)
+
+### Upstream
+
+- Synced to phpMyAdmin 6eba7ba9ad (2026-10-23).
+- Hardcoded UI strings are translatable: multi-table query messages and labels, the index column
+  count check, normalization placeholders, the zoom search help title, the database search
+  caption; the copy failure alert is "Copying failed!" and the export privileges dialog opens
+  titled "Loading…". Translations follow with phpMyAdmin's next catalogue update.
+- `uca1400` collations (MariaDB's default) are described as "UCA 14.0.0" instead of "UCA 4.0.0".
+- New translations (Hebrew, Turkish, Dutch, Ukrainian, Indonesian).
+
 ## 1.0.5 (2026-10-23)
 
 ### Security
