@@ -59,7 +59,11 @@ const act = (entry: ReturnType<Page['locator']>, name: string) =>
 async function run(page: Page, sql: string) {
   await input(page).click()
   await page.keyboard.insertText(sql)
+  // the query is in the input before it runs (a slow re-render right after the previous query's
+  // result must not swallow the typed text unnoticed)
+  await expect(input(page)).toHaveText(sql)
   await page.keyboard.press('Control+Enter')
+  await expect(input(page)).toHaveText('')
 }
 
 test('[p01-0acf73] an executed query is a pending entry, then successful or failed; browsing queries only with "Show current browsing query"', async ({
