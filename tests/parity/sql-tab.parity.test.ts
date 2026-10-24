@@ -9,6 +9,24 @@ import { cardText, collapse, errorText } from './lib/render.ts'
 import { PMA_STORAGE } from './lib/server-setup.ts'
 
 /**
+ * "Create JS code" as phpMyAdmin's "Create PHP code" (parity exception X57): our card shows the query
+ * as JavaScript; it must evaluate back to the query, and the rest of the card is compared with
+ * phpMyAdmin's after the message and the code are put back as phpMyAdmin renders them
+ * (Generator::getMessage with `$sql = "…";`, addslashes and `. "` continuation lines).
+ */
+function asPmaCode(st: QueryResponse['statements'][number]): QueryResponse['statements'][number] {
+  const card = st.card
+  if (card === null || card === undefined || !card.php) return st
+  expect(new Function(`${card.display}\nreturn sql`)()).toBe(card.sql)
+  const php = `$sql = "${card.sql.replace(/[\\'"\0]/g, (c) => (c === '\0' ? '\\0' : `\\${c}`)).replace(/\r\n|\r|\n/g, '\\n"\n    . "')}";`
+  return {
+    ...st,
+    message: { ...st.message, text: st.message.text.replace('Showing as JS code', 'Showing as PHP code') },
+    card: { ...card, display: php },
+  }
+}
+
+/**
  * Golden parity for the SQL tab beyond plain execution: bind parameters, rollback, foreign key checks,
  * Show as PHP, profiling, import mode (>= 50 statements), CALL, the DROP DATABASE guard, the card's links,
  * error cards, reload hints; plus the editor endpoints (lint, format, autocomplete, simulate, FK default).
@@ -317,7 +335,8 @@ describe.skipIf(!reachable)('parity: SQL tab features (/import) vs POST /query',
           }
           continue
         }
-        const expected = st.kind === 'error' && st.error !== undefined ? errorText(st) : cardText(st)
+        const expected =
+          st.kind === 'error' && st.error !== undefined ? errorText(st) : cardText(asPmaCode(st))
         expect(pmaText, `text for ${st.sql.slice(0, 80)}`).toContain(norm(expected))
         for (const more of st.moreResults ?? []) expect(pmaText).toContain(norm(more.message))
         for (const w of st.warnings) expect(pmaText).toContain(norm(`${w.level}: #${w.code} ${w.message}`))

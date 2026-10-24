@@ -2,9 +2,10 @@ import type { PrefsFormSet, SetupMessage, SetupOverview, SetupSaveResponse } fro
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
+import { FORMLESS_FIELDS } from '../../packages/config/src/forms.ts'
 import { type Pairs, findForm, serializeForm, setPair } from './lib/form.ts'
 import { type PmaInstance, phpAvailable, startPmaInstance } from './lib/pma-instance.ts'
-import { PmaClient, visibleText } from './lib/pma.ts'
+import { PmaClient, asPma, visibleText } from './lib/pma.ts'
 
 /**
  * Golden parity of the setup script (docs/features/01 "Setup script"): the same form posts in a
@@ -101,8 +102,13 @@ function bmaPairs(fs: PrefsFormSet): Pairs {
   return out
 }
 
+/** without the PHP-only settings no BetterMyAdmin form lists (X57) */
 const fieldsOnly = (p: Pairs) =>
-  p.filter(([k]) => !['tab_hash', 'check_page_refresh', 'token', 'server'].includes(k))
+  p.filter(
+    ([k]) =>
+      !['tab_hash', 'check_page_refresh', 'token', 'server'].includes(k) &&
+      !FORMLESS_FIELDS.has(k.replace(/-userprefs-allow$/, '')),
+  )
 
 /** The generated file with what differs by design or by chance masked. */
 function mask(php: string): string {
@@ -126,7 +132,7 @@ function pmaMessages(html: string): Msg[] {
   }))
 }
 const bmaMessages = (o: SetupOverview): Msg[] =>
-  o.messages.map((m) => ({
+  asPma(o.messages).map((m) => ({
     id: m.id,
     type: m.type,
     title: visibleText(m.title),

@@ -8,7 +8,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { maskClientIp, maskServerHost } from './lib/compare.ts'
 import type { LogEntry } from './lib/general-log.ts'
 import { $, $$, type Node, elements, hasClass, pageHtml, parse, text } from './lib/html.ts'
-import { isPmaUp } from './lib/pma.ts'
+import { asPma, isPmaUp } from './lib/pma.ts'
 import { type Harness, ROOT, both, diff, pmaReachable, startHarness } from './lib/server-setup.ts'
 import { TARGET } from './lib/target.ts'
 
@@ -438,7 +438,7 @@ describe.skipIf(!pmaReachable)('parity: replication on the primary [p06-3af6a2]'
     expect(c2.bma.filter((s) => !/^(SELECT|SHOW|USE|SET)/.test(s))).toEqual([])
     const msg = $$(parse(pageHtml(refused.p)), 'div.alert-danger').map((d) => text(d).trim())
     expect(refused.b.success).toBe(false)
-    expect(msg).toContain(refused.b.message!.text)
+    expect(msg).toContain(asPma(refused.b.message!.text))
   })
 })
 

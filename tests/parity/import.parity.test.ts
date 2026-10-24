@@ -383,7 +383,13 @@ describe.skipIf(!pmaReachable)('import parity', () => {
       const file = (db: string) => (typeof c.file === 'function' ? c.file(db) : c.file)
       const p = await pmaImport(pma, pairs, file(DBS.pma))
       const b = await bmaImport(bma, token, bPairs, file(DBS.bma))
-      const norm = (m: string[]) => m.map((x) => serverFileError(x.replaceAll(DBS.bma, DBS.pma)))
+      // our "no data received" text names MaxUploadSize where phpMyAdmin's names the PHP configuration (X57)
+      const x57 = (x: string) =>
+        x.replace(
+          'exceeded the maximum upload size (MaxUploadSize).',
+          'exceeded the maximum size permitted by your PHP configuration. See FAQ 1.16 .',
+        )
+      const norm = (m: string[]) => m.map((x) => serverFileError(x57(x.replaceAll(DBS.bma, DBS.pma))))
       expect(norm(b.messages)).toEqual(p.map(serverFileError))
       expect((await snapshot(DBS.bma)).replaceAll(DBS.bma, DBS.pma)).toBe(await snapshot(DBS.pma))
       const [news] = (await root.query(`SHOW DATABASES LIKE '${DBS.pma}_new'`)) as unknown as [unknown[]]

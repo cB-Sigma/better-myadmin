@@ -11,6 +11,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { formatStatusValue } from '../../apps/server/src/server-admin/status.ts'
 import { englishTranslator } from '../../packages/i18n/src/index.ts'
 import { $, $$, type Node, classes, hasClass, linkTarget, pageHtml, parse, shape, text } from './lib/html.ts'
+import { asPma } from './lib/pma.ts'
 import { type Harness, ROOT, both, diff, pmaReachable, startHarness, suiteUsers } from './lib/server-setup.ts'
 import { TARGET } from './lib/target.ts'
 
@@ -298,7 +299,7 @@ describe.skipIf(!pmaReachable)('parity: status pages', () => {
       const k2 = again.b.json as unknown as KillProcessResponse
       expect(k2.success).toBe(false)
       expect(text(parse(String(again.p.error)))).toBe(
-        k2.message.text.replace(String(b.threadId), String(a.threadId)),
+        asPma(k2.message.text).replace(String(b.threadId), String(a.threadId)),
       )
     } finally {
       a.destroy()

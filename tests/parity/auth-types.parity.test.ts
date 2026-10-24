@@ -6,7 +6,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { testApp, testConfig } from '../../apps/server/test/support/app.ts'
 import { GeneralLog, type LogEntry } from './lib/general-log.ts'
 import { type PmaInstance, phpAvailable, startPmaInstance } from './lib/pma-instance.ts'
-import { PmaClient, visibleText } from './lib/pma.ts'
+import { PmaClient, asPma, visibleText } from './lib/pma.ts'
 
 /**
  * Golden parity of the login under each auth type (docs/features/01 "Login page & authentication"):
@@ -160,7 +160,7 @@ describe.skipIf(!available)('parity: auth types (src/Plugins/Auth/*, postConnect
         const f = (await t2.req('GET', '/api/auth/state')).json.failure as { errors: string[] }
         const norm = (l: string[]) =>
           l.map((x) => x.replace(/f01a_p[ab]_cfg/, 'USER').replace(/'@'[^']*'/, "'@'HOST'"))
-        expect(norm(f.errors)).toEqual(norm(pmaErrors.filter((e) => !e.startsWith('Javascript'))))
+        expect(norm(asPma(f.errors))).toEqual(norm(pmaErrors.filter((e) => !e.startsWith('Javascript'))))
         expect(html).toContain('Retry to connect')
       } finally {
         await t2.close()
