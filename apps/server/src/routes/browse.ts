@@ -17,7 +17,7 @@ import {
   gridValue,
 } from '../browse/actions.ts'
 import { parseJson } from '../http/validate.ts'
-import { afterSqlBox, recordHistory } from '../metadata/hooks.ts'
+import { afterSqlBox, announceQuery, recordHistory } from '../metadata/hooks.ts'
 import { withMeta } from '../metadata/service.ts'
 import { setTrackedDatabase } from '../table/tracker.ts'
 import type { ServerEnv } from './server.ts'
@@ -49,6 +49,7 @@ browseRoutes.post('/', async (c) => {
   const r = await withBrowse(c, req.db, (x) => browseResponse(x, req))
   // StatementHistory + RecentTableHandling middlewares
   await afterSqlBox(c, { db: req.db, table: req.table, current: r.current })
+  announceQuery(r.current)
   return c.json(r.body)
 })
 
@@ -83,6 +84,7 @@ browseRoutes.post('/delete-rows', async (c) => {
     })
   })
   await afterSqlBox(c, { db: req.db, table: req.table, current: r.current })
+  announceQuery(r.current)
   return c.json(r.body)
 })
 

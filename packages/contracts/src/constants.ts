@@ -9,6 +9,12 @@ export const SESSION_COOKIE = 'bma_sid'
 export const USER_ERRORS_HEADER = 'X-BMA-User-Errors'
 
 /**
+ * The statement a request ran, for the console (URI-encoded JSON `{ db, table, sqlQuery }`):
+ * phpMyAdmin adds `reloadQuerywindow` to its AJAX responses and the console shows its sql_query.
+ */
+export const QUERY_HEADER = 'X-BMA-Query'
+
+/**
  * The project's home (the login logo, Home's "Official Homepage", the dump headers' site, the
  * changelog / license fallbacks, release links). The one place this URL is written.
  */

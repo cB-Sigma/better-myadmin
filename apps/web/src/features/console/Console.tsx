@@ -10,7 +10,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { SquareTerminal } from 'lucide-react'
 import { type MouseEvent as ReactMouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { DEBUG_SQL_EVENT, api } from '../../lib/api'
+import { DEBUG_SQL_EVENT, PAGE_QUERY_EVENT, type PageQuery, api } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
@@ -221,6 +221,22 @@ function ConsoleDock({
       }),
     [server, append, settings.CurrentQuery],
   )
+  // the same for the page's other requests: browsing, grid edits, insert/edit, operations, …
+  useEffect(() => {
+    const on = (e: Event) => {
+      const q = (e as CustomEvent<PageQuery>).detail
+      append({
+        id: newQueryId(),
+        sql: q.sqlQuery,
+        db: q.db,
+        table: q.table,
+        state: 'successed',
+        hidden: !settings.CurrentQuery,
+      })
+    }
+    window.addEventListener(PAGE_QUERY_EVENT, on)
+    return () => window.removeEventListener(PAGE_QUERY_EVENT, on)
+  }, [append, settings.CurrentQuery])
 
   const show = useCallback(
     (focus = false) => {

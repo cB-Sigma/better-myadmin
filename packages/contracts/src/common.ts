@@ -39,7 +39,7 @@ export type ErrorEnvelope = z.infer<typeof ErrorEnvelope>
 export const Cell = z.union([z.null(), z.string(), z.object({ b64: z.string(), bytes: z.number().int() })])
 export type Cell = z.infer<typeof Cell>
 
-export { CSRF_COOKIE, CSRF_HEADER, SESSION_COOKIE, USER_ERRORS_HEADER } from './constants.ts'
+export { CSRF_COOKIE, CSRF_HEADER, QUERY_HEADER, SESSION_COOKIE, USER_ERRORS_HEADER } from './constants.ts'
 
 /**
  * ErrorHandler::addUserError raised while connecting (DatabaseInterface::postConnect / setCollation),

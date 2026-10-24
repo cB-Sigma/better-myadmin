@@ -2,6 +2,7 @@ import {
   CSRF_COOKIE,
   CSRF_HEADER,
   type Executed,
+  QUERY_HEADER,
   SESSION_COOKIE,
   USER_ERRORS_HEADER,
 } from '@bettermyadmin/contracts'
@@ -108,6 +109,18 @@ export function createApp(deps: AppDeps) {
           c.res.headers.set(USER_ERRORS_HEADER, encodeURIComponent(JSON.stringify(unique)))
         } catch {
           // a response with immutable headers (a stream): nothing to add
+        }
+      }
+      const query = requestScope()?.query
+      if (query !== undefined) {
+        const value = encodeURIComponent(JSON.stringify(query))
+        // a statement too long for a header is not shown (pma: MaxCharactersInDisplayedSQL)
+        if (value.length <= 16_384) {
+          try {
+            c.res.headers.set(QUERY_HEADER, value)
+          } catch {
+            // immutable headers: nothing to add
+          }
         }
       }
     }),

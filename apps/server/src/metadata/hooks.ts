@@ -1,5 +1,6 @@
 import { validIdentifier } from '@bettermyadmin/metadata'
 import type { Context } from 'hono'
+import { requestScope } from '../db/request-scope.ts'
 import type { ServerEnv } from '../routes/server.ts'
 import { type MetaRequest, withMeta } from './service.ts'
 
@@ -39,11 +40,23 @@ export async function recordSqlBoxHistory(
  */
 export async function recordHistory(c: Context<ServerEnv>, current: CurrentQuery): Promise<void> {
   if (current.sqlQuery === '') return
+  announceQuery(current)
   try {
     await withMeta(c, { db: current.db }, (m) => recordSqlBoxHistory(m, { current }))
   } catch (e) {
     console.error('metadata history:', e)
   }
+}
+
+/**
+ * The statement the console shows for a request outside the SQL box (phpMyAdmin's console appends
+ * every AJAX response's `reloadQuerywindow.sql_query`; "Show current browsing query" hides them).
+ * Sent with the response as the X-BMA-Query header (app.ts). The /query route does not announce: its
+ * caller (features/sql/runner.ts) tells the console itself.
+ */
+export function announceQuery(current: CurrentQuery): void {
+  const scope = requestScope()
+  if (scope !== undefined && current.sqlQuery !== '') scope.query = current
 }
 
 /** The statement an action showed in its message (Generator::getMessage of `Current::$sqlQuery`). */

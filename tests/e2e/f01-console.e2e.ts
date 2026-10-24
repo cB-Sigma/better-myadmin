@@ -104,6 +104,23 @@ test('[p01-0acf73] an executed query is a pending entry, then successful or fail
   await expect(messages(page).locator('.message:visible', { hasText: 'f01c_hidden' })).toHaveCount(0)
 })
 
+test('[p01-0acf73] the statements of browsing and of a grid edit show in the console (reloadQuerywindow)', async ({
+  page,
+}) => {
+  await page.goto(`/s/1/db/${DB}/structure`)
+  await openConsole(page)
+  // in-app navigation to the table's Browse page, then a grid edit
+  await page.getByRole('link', { name: 'Browse' }).first().click()
+  await expect(messages(page).locator('.message', { hasText: 'SELECT * FROM `t`' }).first()).toBeVisible()
+  const cell = page.locator('table.table_results tbody tr').first().locator('td[data-type="string"]').first()
+  await cell.dblclick()
+  await page.locator('.cEdit .edit_box').fill('f01c_edit')
+  await page.locator('.cEdit .edit_box').press('Enter')
+  await expect(
+    messages(page).locator('.message', { hasText: "UPDATE `t` SET `name` = 'f01c_edit'" }).first(),
+  ).toBeVisible()
+})
+
 test('[p01-52d377] entry actions: Collapse, Expand, Requery, Edit, Explain, Profiling, Bookmark; Clear removes failed entries', async ({
   page,
 }) => {

@@ -21,6 +21,8 @@ export interface RequestScope {
   held: number
   /** ErrorHandler::addUserError of the connection set-up, sent with the response */
   userErrors: UserError[]
+  /** the statement shown for this request in the console (metadata/hooks.ts announceQuery) */
+  query?: { db: string; table: string; sqlQuery: string }
 }
 
 const storage = new AsyncLocalStorage<RequestScope>()

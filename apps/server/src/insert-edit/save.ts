@@ -25,7 +25,7 @@ import {
   getUniqueCondition,
 } from '@bettermyadmin/sql-gen'
 import bcrypt from 'bcryptjs'
-import { recordSqlBoxHistory } from '../metadata/hooks.ts'
+import { announceQuery, recordSqlBoxHistory } from '../metadata/hooks.ts'
 import { formatSqlForDisplay, getMessageCard } from '../query/message.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { phpRegex } from '../util/php-regex.ts'
@@ -85,6 +85,8 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
     // StatementHistory: Current::$sqlQuery starts as the posted sql_query, executeSqlQuery replaces it
     // with the statements it runs, and the form's "Go back" query (the same sql_query) is put back last
     const sqlQuery = req.sqlQuery !== '' ? req.sqlQuery : ran.sql
+    // the console shows the statements that ran (the page's message shows the same)
+    announceQuery({ db: ctx.db, table: ctx.table, sqlQuery: ran.sql !== '' ? ran.sql : sqlQuery })
     await recordSqlBoxHistory(ctx.meta, { current: { db: ctx.db, table: ctx.table, sqlQuery } }).catch((e) =>
       console.error('metadata history:', e),
     )

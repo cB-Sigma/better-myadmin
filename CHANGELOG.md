@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.10 (2026-10-24)
+
+### Fixes
+
+- Console: browsing a table, grid edits, insert/edit, row deletes and the other page actions show
+  their statements in the console again, as phpMyAdmin's console does with every AJAX response's
+  query. "Show current browsing query" still hides them. These statements were already saved to the
+  SQL history, but they only appeared in the console after a page reload.
+
 ## 1.0.9 (2026-10-24)
 
 ### Features
