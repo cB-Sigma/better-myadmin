@@ -194,6 +194,8 @@ msgids:
     exception: X57
   "Enable advanced features in configuration file (<code>config.inc.php</code>), for example by starting from <code>config.sample.inc.php</code>.":
     exception: X57
+  The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].:
+    exception: X58
   Donate:
     exception: X44
   phpMyAdmin homepage:

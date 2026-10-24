@@ -37,11 +37,9 @@ describe('security checklist', () => {
       texts.some((m) => m.startsWith('Your server is running with default values for the controluser')),
     ).toBe(true)
     await t.close()
-    // the test secret is 36 bytes: longer than necessary
+    // the test secret is 36 bytes: no warning, keys are derived from it (phpMyAdmin warns, X58)
     const long = await home()
-    expect(long.warnings.map((w) => w.message)).toContain(
-      'The cookie encryption key in the configuration file is longer than necessary. It should only be 32 bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].',
-    )
+    expect(long.warnings.some((w) => w.message.includes('cookie encryption key'))).toBe(false)
     // SSL not used: a danger unless the host is a safe one
     expect(long.databaseServer.connection).toEqual({ message: 'SSL is not being used', danger: false })
     await t.close()

@@ -334,10 +334,8 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     expect(texts).toContain(
       "Your server is running with default values for the controluser and password (controlpass) and is open to intrusion; you really should fix this security weakness by changing the password for controluser 'pma'.",
     )
-    // the test secret is 36 bytes
-    expect(texts).toContain(
-      'The cookie encryption key in the configuration file is longer than necessary. It should only be 32 bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].',
-    )
+    // the test secret is 36 bytes: fine, keys are derived from it (no "longer than necessary", X58)
+    expect(texts.some((m: string) => m.includes('longer than necessary'))).toBe(false)
   })
 
   it('LoginCookieStore < LoginCookieValidity, missing HTTP_HOST', async () => {

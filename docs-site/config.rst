@@ -2299,8 +2299,8 @@ Cookie authentication options
     :config:option:`$cfg['Servers'][$i]['auth_type']` keep in the server-side
     session, the recalled user name (:config:option:`$cfg['LoginCookieRecall']`)
     and the signon hand-off cookie, and it signs the SQL queries carried in
-    URLs. You won't be prompted for this key. Enter here a string of 32 random
-    characters, for example:
+    URLs. You won't be prompted for this key. Enter a random string of at
+    least 32 characters, for example:
 
     .. code-block:: json
 
@@ -2323,7 +2323,10 @@ Cookie authentication options
 
     .. warning::
 
-        The home page warns when the key is not exactly 32 bytes long.
+        The home page warns when the key is shorter than 32 bytes. A longer key
+        is fine (phpMyAdmin wants exactly 32 bytes because it uses the secret
+        itself as the key; BetterMyAdmin derives its keys from it), so the
+        generated secret and a converted phpMyAdmin hex secret need no change.
 
     .. note::
 

@@ -82,17 +82,11 @@ export function homeWarnings(
         'The configuration file needs a valid key for cookie encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].',
       ),
     })
-  } else if (keyLength > KEY_BYTES) {
-    out.push({
-      severity: 'warning',
-      message: sprintf(
-        tr.gettext(
-          'The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].',
-        ),
-        KEY_BYTES,
-      ),
-    })
   }
+  // phpMyAdmin also warns about a key longer than 32 bytes: it uses the secret as the sodium key
+  // itself. BetterMyAdmin derives its keys from the secret (HKDF, session/crypto.ts), so any secret of
+  // 32 bytes or more is as good: its own generated one (43 characters) and an imported phpMyAdmin hex
+  // secret (64) included (parity exception X58)
   if (cfg.URLQueryEncryption) {
     const n = Buffer.byteLength(cfg.URLQueryEncryptionSecretKey, 'utf8')
     if (n < KEY_BYTES) {

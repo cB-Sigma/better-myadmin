@@ -1791,7 +1791,7 @@
     },
     "messages": {
       "total": 3437,
-      "implemented": 3274,
+      "implemented": 3273,
       "covered": 3436,
       "coverage": 0.9997,
       "implementedKeys": [
@@ -4431,7 +4431,6 @@
         "The configuration file needs a valid key for query encryption. A temporary key was automatically generated for you. Please refer to the [doc@cfg_URLQueryEncryptionSecretKey]documentation[/doc].",
         "The configuration storage is not ready for the central list of columns feature.",
         "The configured two factor authentication is not available, please install missing dependencies.",
-        "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].",
         "The current number of pending fsync() operations.",
         "The current number of pending reads.",
         "The current number of pending writes.",
@@ -5194,6 +5193,7 @@
         "Taking you to the target site.",
         "The %s extension is missing. Please check your PHP configuration.",
         "The $cfg['TempDir'] (%s) is not accessible. phpMyAdmin is not able to cache templates and will be slow because of this.",
+        "The cookie encryption key in the configuration file is longer than necessary. It should only be %d bytes long. Please refer to the [doc@cfg_blowfish_secret]documentation[/doc].",
         "The curl extension was not found and allow_url_fopen is disabled. Due to this some features such as error reporting or version check are disabled.",
         "The FIDO U2F API has been deprecated in favor of the Web Authentication API (WebAuthn).",
         "The file being uploaded is probably larger than the maximum allowed size.",
