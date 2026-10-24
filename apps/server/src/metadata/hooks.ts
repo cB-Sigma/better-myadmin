@@ -29,6 +29,24 @@ export async function recordSqlBoxHistory(
 }
 
 /**
+ * StatementHistory for every other request: phpMyAdmin's middleware runs after each one and records
+ * `Current::$sqlQuery` whatever set it (the POSTed `sql_query`, or the statements a controller ran:
+ * dropping or emptying tables, operations, privileges, structure changes, find and replace, …), so
+ * each route that mirrors such a request passes the same value here. Nothing is recorded for ''.
+ * Metadata failures never fail the request.
+ *
+ * pma: src/Http/Middleware/StatementHistory.php, src/Http/Middleware/SqlQueryGlobalSetting.php
+ */
+export async function recordHistory(c: Context<ServerEnv>, current: CurrentQuery): Promise<void> {
+  if (current.sqlQuery === '') return
+  try {
+    await withMeta(c, { db: current.db }, (m) => recordSqlBoxHistory(m, { current }))
+  } catch (e) {
+    console.error('metadata history:', e)
+  }
+}
+
+/**
  * After an SQL-box request: StatementHistory (inner middleware) then RecentTableHandling (outer, with
  * the request's own db/table parameters). Metadata failures never fail the query.
  */
