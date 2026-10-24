@@ -186,8 +186,21 @@ An unknown directive or an invalid value stops the server with a message
 naming the closest directive. Without a ``blowfish_secret``, one is generated
 into :config:option:`$cfg['DataDir']` on the first start. The directives of a
 phpMyAdmin :file:`config.inc.php` keep their names, so it translates key for
-key; the setup script (below) also shows the configuration it builds in both
-formats.
+key, and BetterMyAdmin converts one for you:
+
+.. code-block:: sh
+
+    bettermyadmin import-pma-config /etc/phpmyadmin/config.inc.php -o bettermyadmin.config.json
+
+(``node apps/server/bin/bettermyadmin.mjs import-pma-config …`` from a checkout,
+``docker run --rm -v /etc/phpmyadmin:/pma:ro ghcr.io/cb-sigma/better-myadmin
+node /app/apps/server/bin/bettermyadmin.mjs import-pma-config /pma/config.inc.php``
+with Docker). The file is read, not run: the importer evaluates the subset of
+PHP that configuration files use (``getenv()`` reads the environment), and the
+result is checked like a configuration file before it is written. Without
+``-o`` the JSON goes to standard output; an existing file is only replaced with
+``--force``. The setup script (below) also shows the configuration it builds in
+both formats.
 
 For a full explanation of possible configuration values, see the
 :ref:`config` of this document.

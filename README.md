@@ -104,7 +104,7 @@ Settings come from four layers, each overriding the one before:
 3. a configuration file: `--config <file>`, the `BMA_CONFIG` variable, or the first of `bettermyadmin.config.ts`, `.js`, `.mjs`, `.json`, `.yaml`, `.yml` in the working directory (`/etc/bettermyadmin` in the image);
 4. `BMA__<Directive>[__<Sub>…]` environment variables (`BMA__Servers__1__host=db`, `BMA__MaxRows=50`, `BMA__Export__format=csv`), plus the shortcuts `BMA_HOST`, `BMA_PORT`, `BMA_USER`, `BMA_PASSWORD`, `BMA_ARBITRARY_SERVER`, `BMA_ABSOLUTE_URI`.
 
-The file holds what `config.inc.php` holds, as data: `$cfg['X']` becomes `X`, and `$cfg['Servers'][$i]` becomes the entries of a `Servers` list (server 1 first). An unknown directive or an invalid value stops the server with a message naming the closest directive.
+The file holds what `config.inc.php` holds, as data: `$cfg['X']` becomes `X`, and `$cfg['Servers'][$i]` becomes the entries of a `Servers` list (server 1 first). An unknown directive or an invalid value stops the server with a message naming the closest directive. An existing phpMyAdmin configuration converts with `node apps/server/bin/bettermyadmin.mjs import-pma-config config.inc.php -o bettermyadmin.config.json` (the PHP is read, not run).
 
 ```jsonc
 // bettermyadmin.config.json

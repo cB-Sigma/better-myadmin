@@ -13,7 +13,7 @@ import { createApp } from './app.ts'
 import type { AppConfig } from './config.ts'
 import { PoolManager } from './db/pool-manager.ts'
 import { SecretBox } from './session/crypto.ts'
-import { SqliteSessionStore } from './session/store.ts'
+import { type SessionStore, SqliteSessionStore, connectRedisStore } from './session/store.ts'
 import { setupOpenWarning } from './setup/service.ts'
 
 function expandHome(p: string): string {
@@ -66,7 +66,19 @@ async function main() {
   cfg.blowfish_secret = secret
 
   const pools = new PoolManager(cfg)
-  const store = new SqliteSessionStore(join(dataDir, 'sessions.sqlite'))
+  // a session lives as long as its login can (the sweep below uses the same idle limit)
+  const sessionTtl = Math.max(cfg.LoginCookieValidity, cfg.LoginCookieStore) * 2
+  let store: SessionStore
+  try {
+    store =
+      cfg.SessionStore === 'redis'
+        ? await connectRedisStore(cfg.RedisUrl, sessionTtl)
+        : new SqliteSessionStore(join(dataDir, 'sessions.sqlite'))
+  } catch (e) {
+    console.error(`Session store: ${(e as Error).message}`)
+    process.exit(1)
+  }
+  console.log(`sessions: ${cfg.SessionStore === 'redis' ? 'Redis' : join(dataDir, 'sessions.sqlite')}`)
   const deps = {
     cfg,
     store,
@@ -120,16 +132,18 @@ async function main() {
   })
 
   const sweep = setInterval(() => {
-    store.sweep(Math.floor(Date.now() / 1000), Math.max(cfg.LoginCookieValidity, cfg.LoginCookieStore) * 2)
-    // the connections of swept (or otherwise deleted) sessions
-    void pools.dropSessionsExcept((id) => store.get(id) !== null)
+    void (async () => {
+      await store.sweep(Math.floor(Date.now() / 1000), sessionTtl)
+      // the connections of swept (or otherwise deleted, or expired in Redis) sessions
+      await pools.dropSessionsExcept(async (id) => (await store.get(id)) !== null)
+    })().catch((e) => console.error('session sweep:', e))
   }, 60_000)
   sweep.unref()
 
   const shutdown = async () => {
     server.close()
     await pools.closeAll()
-    store.close()
+    await store.close()
     process.exit(0)
   }
   process.on('SIGINT', shutdown)

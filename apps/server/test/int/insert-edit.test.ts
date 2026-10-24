@@ -23,8 +23,8 @@ async function post(path: string, body: unknown, status = 200): Promise<Json> {
   expect(r.status, JSON.stringify(r.json)).toBe(status)
   return r.json
 }
-function signed(clause: string) {
-  const secret = t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? '')?.hmacSecret ?? ''
+async function signed(clause: string) {
+  const secret = (await t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? ''))?.hmacSecret ?? ''
   return { clause, sig: signSql(clause, secret, t.deps.cfg.blowfish_secret) }
 }
 const writes = (j: Json) =>
@@ -145,7 +145,10 @@ describe('insert form', () => {
 
 describe('edit form', () => {
   it('loads the row, saves only changed columns and finds the next row [p03-28b5f4 p03-2e3f92]', async () => {
-    const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 1')], clauseIsUnique: true })
+    const f = await post(`${base}/t/insert-form`, {
+      where: [await signed('`t`.`id` = 1')],
+      clauseIsUnique: true,
+    })
     expect(f.insertMode).toBe(false)
     expect(f.foundUniqueKey).toBe(true)
     expect(f.isNumericWhere).toBe(true)
@@ -163,7 +166,7 @@ describe('edit form', () => {
   })
 
   it('reports an empty result set but still renders the form [p03-5c8c94]', async () => {
-    const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 999')] })
+    const f = await post(`${base}/t/insert-form`, { where: [await signed('`t`.`id` = 999')] })
     expect(f.messages[0].text).toBe('MySQL returned an empty result set (i.e. zero rows).')
     expect(f.rows).toHaveLength(1)
   })
@@ -175,7 +178,7 @@ describe('edit form', () => {
 
   it('"No change" when nothing differs [p03-c84958]', async () => {
     await root.query(`UPDATE ${DB}.t SET flags = NULL WHERE id = 2`)
-    const f = await post(`${base}/t/insert-form`, { where: [signed('`t`.`id` = 2')] })
+    const f = await post(`${base}/t/insert-form`, { where: [await signed('`t`.`id` = 2')] })
     const r = await post(`${base}/t/rows`, {
       rows: [{ whereClause: '`t`.`id` = 2', fields: rowFields(f, 0) }],
     })
@@ -194,7 +197,7 @@ describe('foreign values and wrapper', () => {
   })
 
   it('streams a cell through the wrapper only with a valid signature [p03-d452fe]', async () => {
-    const s = signed('`t`.`id` = 1')
+    const s = await signed('`t`.`id` = 1')
     const ok = await t.app.request(
       `${base}/t/transformation/wrapper?key=bin&where=${encodeURIComponent(s.clause)}&sig=${s.sig}`,
       { headers: { cookie: [...t.jar].map(([k, v]) => `${k}=${v}`).join('; ') } },

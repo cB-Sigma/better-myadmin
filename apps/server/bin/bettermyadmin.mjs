@@ -5,6 +5,7 @@
  * tsx's loader registered in-process. Config files are looked up in the working directory.
  *
  *   node apps/server/bin/bettermyadmin.mjs [--config file] [--host 0.0.0.0] [--port 8080] [--static dir]
+ *   node apps/server/bin/bettermyadmin.mjs import-pma-config <config.inc.php> [-o file] [--force]
  */
 import { register } from 'tsx/esm/api'
 
@@ -18,4 +19,9 @@ process.on('warning', (w) => {
 })
 
 register()
-await import('../src/main.ts')
+if (process.argv[2] === 'import-pma-config') {
+  const { importPmaConfigCommand } = await import('../src/cli/import-pma-config.ts')
+  process.exitCode = importPmaConfigCommand(process.argv.slice(3))
+} else {
+  await import('../src/main.ts')
+}

@@ -21,7 +21,8 @@ export function newSession(currentServer: number): SessionData {
  * pma: src/Session.php::secure
  */
 export function regenerate(store: SessionStore, old: SessionData | null, currentServer: number): SessionData {
-  if (old !== null) store.delete(old.id)
+  // the old id is dropped in the background; the new session is stored when the request ends
+  if (old !== null) void store.delete(old.id).catch((e) => console.error('session delete:', e))
   const s = newSession(currentServer)
   if (old !== null) s.servers = old.servers
   return s

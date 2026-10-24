@@ -137,7 +137,7 @@ describe('GET /api/servers/:s — server tabs (Menu::getServerTabs)', () => {
     t = testApp(testConfig({ DBG: { sql: true } }))
     await t.login()
     await t.req('GET', '/api/servers/1')
-    const s = t.deps.store.get(t.jar.get('bma_sid')!)!
+    const s = (await t.deps.store.get(t.jar.get('bma_sid')!))!
     expect(s.servers['1']!.cache).toMatchObject({
       is_superuser: true,
       binary_logs: true,

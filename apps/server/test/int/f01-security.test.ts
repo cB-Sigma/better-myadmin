@@ -110,9 +110,9 @@ describe('security checklist', () => {
     await t.login()
     const loggedIn = t.jar.get('bma_sid')!
     expect(loggedIn).not.toBe(issued)
-    expect(t.deps.store.get(loggedIn)).not.toBeNull()
+    expect(await t.deps.store.get(loggedIn)).not.toBeNull()
     await t.req('POST', '/api/auth/logout')
-    expect(t.deps.store.get(loggedIn)).toBeNull()
+    expect(await t.deps.store.get(loggedIn)).toBeNull()
   })
 
   it('[p01-5aae36] cookies: HttpOnly session, Secure on HTTPS, SameSite from CookieSameSite, LoginCookieStore, no credentials (X1)', async () => {

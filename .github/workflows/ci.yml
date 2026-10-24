@@ -71,6 +71,8 @@ jobs:
             sleep 2
           done
           docker logs db; exit 1
+      # SessionStore 'redis' (apps/server/test/int/redis-session.test.ts; docker/dev.compose.yml's redis)
+      - run: docker run -d --name redis -p 127.0.0.1:6379:6379 redis:7-alpine --requirepass s3cret
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22.23.4, cache: pnpm }

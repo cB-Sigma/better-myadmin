@@ -35,7 +35,7 @@ async function importFile(
   name: string,
 ) {
   const cookie = () => [...t.jar].map(([k, v]) => `${k}=${v}`).join('; ')
-  const token = String(t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? '')?.csrfToken ?? '')
+  const token = String((await t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? ''))?.csrfToken ?? '')
   const u = await t.req('POST', '/api/servers/1/import/uploads', {})
   const id = u.json.id as string
   const CHUNK = 1024 * 1024

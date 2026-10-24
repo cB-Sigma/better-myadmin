@@ -5,7 +5,7 @@ The order is chosen so that each milestone is usable on its own, the riskiest sh
 ## M0: Foundations (weight 8)
 
 - Monorepo, CI (lint, typecheck, unit, contract), Docker dev compose with MySQL 8.4 + MariaDB 11 + reference phpMyAdmin.
-- `packages/config`: full directive schema with defaults ([reference](../reference/config-directives.md)), file + env loader, `bma import-pma-config`.
+- `packages/config`: full directive schema with defaults ([reference](../reference/config-directives.md)), file + env loader, `bettermyadmin import-pma-config`.
 - `packages/sql-lexer`: lexer + contexts + classifier with phpMyAdmin fixtures.
 - `packages/sql-gen`: quoting, `where.ts` unique conditions, basic `ALTER/CREATE` builders.
 - `packages/mysql-types`: type catalog.

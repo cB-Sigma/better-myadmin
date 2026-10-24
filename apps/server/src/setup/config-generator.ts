@@ -125,7 +125,7 @@ export function generateConfigFile(
 
 /**
  * The generated file as a `bettermyadmin.config.json` (the second output): the same `$cfg` read
- * back by `bma import-pma-config`; the `sodium_hex2bin` secret is kept as its 64-digit hex string.
+ * back by `bettermyadmin import-pma-config`; the `sodium_hex2bin` secret is kept as its 64-digit hex string.
  */
 export function generateBmaConfig(phpSource: string): string {
   const { config } = importPmaConfig(phpSource)

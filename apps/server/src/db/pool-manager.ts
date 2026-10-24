@@ -372,14 +372,11 @@ export class PoolManager {
   }
 
   /** Drops the pools of sessions that are gone (the session sweep). */
-  async dropSessionsExcept(alive: (sessionId: string) => boolean): Promise<void> {
-    const gone = new Set<string>()
-    for (const key of this.#pools.keys()) {
-      const id = key.slice(0, key.indexOf('\u0000'))
-      if (!alive(id)) gone.add(id)
-    }
-    for (const id of this.control.sessionIds()) if (!alive(id)) gone.add(id)
-    for (const id of gone) await this.dropSession(id)
+  async dropSessionsExcept(alive: (sessionId: string) => boolean | Promise<boolean>): Promise<void> {
+    const ids = new Set<string>()
+    for (const key of this.#pools.keys()) ids.add(key.slice(0, key.indexOf('\u0000')))
+    for (const id of this.control.sessionIds()) ids.add(id)
+    for (const id of ids) if (!(await alive(id))) await this.dropSession(id)
   }
 
   /** Drops pools with no request for `ConnectionPool.idleTimeout` and nothing checked out. */

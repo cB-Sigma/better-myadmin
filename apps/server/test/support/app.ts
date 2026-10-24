@@ -3,7 +3,7 @@ import { type AppDeps, createApp } from '../../src/app.ts'
 import type { AppConfig } from '../../src/config.ts'
 import { PoolManager } from '../../src/db/pool-manager.ts'
 import { SecretBox } from '../../src/session/crypto.ts'
-import { MemorySessionStore } from '../../src/session/store.ts'
+import { MemorySessionStore, type SessionStore } from '../../src/session/store.ts'
 
 export const MYSQL = {
   host: process.env.BMA_TEST_HOST ?? '127.0.0.1',
@@ -29,10 +29,10 @@ export function testConfig(o: ConfigInput = {}, server: ServerInput = {}): AppCo
 }
 
 /** In-process app + a tiny cookie-jar client. */
-export function testApp(cfg = testConfig()) {
+export function testApp(cfg = testConfig(), store: SessionStore = new MemorySessionStore()) {
   const deps: AppDeps = {
     cfg,
-    store: new MemorySessionStore(),
+    store,
     pools: new PoolManager(cfg),
     credBox: new SecretBox(cfg.blowfish_secret, 'credentials'),
     userBox: new SecretBox(cfg.blowfish_secret, 'username'),

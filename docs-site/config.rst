@@ -353,9 +353,16 @@ BetterMyAdmin adds :config:option:`$cfg['Servers'][$i]['SignonPage']`,
     :default: ``'sqlite'``
 
     Where sessions are kept: ``'sqlite'`` stores them in
-    :file:`sessions.sqlite` in :config:option:`$cfg['DataDir']`. The value
-    ``'redis'`` (with :config:option:`$cfg['RedisUrl']`) is accepted by the
-    configuration, but this version always uses the SQLite store.
+    :file:`sessions.sqlite` in :config:option:`$cfg['DataDir']`; ``'redis'``
+    stores them in the Redis server of :config:option:`$cfg['RedisUrl']`, so
+    several BetterMyAdmin processes (behind a load balancer, or replicas of a
+    container) share the logins. Each session is one key,
+    ``bettermyadmin:session:<id>``, expiring twice the longer of
+    :config:option:`$cfg['LoginCookieValidity']` and
+    :config:option:`$cfg['LoginCookieStore']` after its last request. When Redis
+    cannot be reached or refuses the credentials at start, the server stops with
+    the reason; once running, it reconnects by itself. All processes must share
+    the same :config:option:`$cfg['blowfish_secret']`.
 
 .. config:option:: $cfg['RedisUrl']
 
@@ -363,8 +370,11 @@ BetterMyAdmin adds :config:option:`$cfg['Servers'][$i]['SignonPage']`,
     :default: ``''``
 
     The Redis server for ``'redis'`` :config:option:`$cfg['SessionStore']`,
-    as a URL (``redis://:password@host:6379``). It may contain a password, so
-    it is treated as a secret and never shown to users.
+    as a URL: ``redis://[[user]:password@]host[:port][/database]``, or
+    ``rediss://`` for TLS. For example ``redis://:secret@redis:6379/0``, or
+    with environment variables ``BMA__SessionStore=redis`` and
+    ``BMA__RedisUrl=redis://:secret@redis:6379/0``. It may contain a password,
+    so it is treated as a secret and never shown to users.
 
 .. config:option:: $cfg['MaxUploadSize']
 

@@ -49,7 +49,7 @@ describe('resize=jpeg|png', () => {
   it('the thumbnail fits newWidth × newHeight in the requested format; not an image gives nothing', async () => {
     const app = make()
     await app.login()
-    const secret = app.deps.store.get(app.jar.get(SESSION_COOKIE) ?? '')?.hmacSecret ?? ''
+    const secret = (await app.deps.store.get(app.jar.get(SESSION_COOKIE) ?? ''))?.hmacSecret ?? ''
     const where = '`t`.`id` = 1'
     const get = async (q: Record<string, string>) => {
       const p = new URLSearchParams({

@@ -96,16 +96,16 @@ describe('S2–S4 a query carried in a URL needs its signature (Core::checkSqlQu
   beforeAll(() => t.login())
   afterAll(() => t.close())
   const base = `/api/servers/1/databases/${DB}`
-  const secret = () => t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? '')?.hmacSecret ?? ''
-  const sign = (sql: string) => signSql(sql, secret(), t.deps.cfg.blowfish_secret)
+  const secret = async () => (await t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? ''))?.hmacSecret ?? ''
+  const sign = async (sql: string) => signSql(sql, await secret(), t.deps.cfg.blowfish_secret)
   const sql = 'SELECT id FROM f'
 
   it('S2 chart: a wrong signature drops the query; a valid one runs and signs the form query', async () => {
     const sql = 'SELECT 1 AS n'
     const bad = (await t.req('POST', `${base}/tables/f/chart`, { sql, sig: '' })).json as Json
     expect(bad).toMatchObject({ error: 'No SQL query was set to fetch data.', fieldset: null })
-    const ok = (await t.req('POST', `${base}/tables/f/chart`, { sql, sig: sign(sql) })).json as Json
-    expect(ok.fieldset).toMatchObject({ sql, sig: sign(sql) })
+    const ok = (await t.req('POST', `${base}/tables/f/chart`, { sql, sig: await sign(sql) })).json as Json
+    expect(ok.fieldset).toMatchObject({ sql, sig: await sign(sql) })
     const data = (
       await t.req('POST', `${base}/tables/f/chart/data`, { sql, sig: '', pos: 0, sessionMaxRows: 5 })
     ).json as Json
@@ -144,10 +144,10 @@ describe('S2–S4 a query carried in a URL needs its signature (Core::checkSqlQu
       await t.req('POST', `${base}/tables/f/rows`, {
         rows: [{ fields: fields.map((x) => (x.name === 'id' ? { ...x, value: '8' } : x)) }],
         sqlQuery: good,
-        sqlQuerySig: sign(good),
+        sqlQuerySig: await sign(good),
       })
     ).json as Json
-    expect(r2.next).toEqual({ action: 'back', sql: { sql: good, sig: sign(good) } })
+    expect(r2.next).toEqual({ action: 'back', sql: { sql: good, sig: await sign(good) } })
   })
 
   it('S4 export page: sql_query of the URL only with a valid sql_signature', async () => {
@@ -160,6 +160,8 @@ describe('S2–S4 a query carried in a URL needs its signature (Core::checkSqlQu
       ['single_table', 'true'],
     ]
     expect((await page([...common, ['sql_query', evil], ['sql_signature', '']])).sqlQuery).toBe('')
-    expect((await page([...common, ['sql_query', sql], ['sql_signature', sign(sql)]])).sqlQuery).toBe(sql)
+    expect((await page([...common, ['sql_query', sql], ['sql_signature', await sign(sql)]])).sqlQuery).toBe(
+      sql,
+    )
   })
 })

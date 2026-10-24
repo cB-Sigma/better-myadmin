@@ -183,8 +183,8 @@ async function pmaRun(c: Case, db: string): Promise<{ preview?: string[] }> {
 // biome-ignore lint/suspicious/noExplicitAny: loosely typed API payloads in tests
 type Json = Record<string, any>
 
-function signed(clause: string) {
-  const secret = bma.deps.store.get(bma.jar.get(SESSION_COOKIE) ?? '')?.hmacSecret ?? ''
+async function signed(clause: string) {
+  const secret = (await bma.deps.store.get(bma.jar.get(SESSION_COOKIE) ?? ''))?.hmacSecret ?? ''
   return { clause, sig: signSql(clause, secret, bma.deps.cfg.blowfish_secret) }
 }
 

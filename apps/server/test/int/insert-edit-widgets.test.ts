@@ -29,8 +29,8 @@ const column = (f: Json, name: string) => {
   expect(i, name).toBeGreaterThanOrEqual(0)
   return { col: f.columns[i] as Json, cell: f.rows[0].cells[i] as Json }
 }
-function signed(clause: string) {
-  const secret = t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? '')?.hmacSecret ?? ''
+async function signed(clause: string) {
+  const secret = (await t.deps.store.get(t.jar.get(SESSION_COOKIE) ?? ''))?.hmacSecret ?? ''
   return { clause, sig: signSql(clause, secret, t.deps.cfg.blowfish_secret) }
 }
 
@@ -94,13 +94,13 @@ describe('insert form widgets', () => {
     expect(column(f, 'nl').col.isNull).toBe(true)
     expect(column(f, 'nl').cell.isNull).toBe(true)
     // editing: checked for a NULL value, recorded as fields_null_prev
-    const e = await form('w', { where: [signed('`w`.`id` = 1')] })
+    const e = await form('w', { where: [await signed('`w`.`id` = 1')] })
     expect(column(e, 'nl').cell).toMatchObject({ isNull: true, nullPrev: true })
     expect(column(e, 'nn').cell).toMatchObject({ isNull: false, nullPrev: false })
   })
 
   it('a TEXT value longer than 32000 characters gets the "might not be editable" notice [p03-877a7f]', async () => {
-    const e = await form('w', { where: [signed('`w`.`id` = 1')] })
+    const e = await form('w', { where: [await signed('`w`.`id` = 1')] })
     expect(column(e, 'txt').cell.widget).toMatchObject({ kind: 'textarea', tooLong: true })
     expect(column(await form('w'), 'txt').cell.widget.tooLong).toBe(false)
   })
@@ -124,7 +124,7 @@ describe('insert form widgets', () => {
 
 describe('BLOB download', () => {
   it('/table/get-field: <table>-<column>.bin with the sniffed content type [p03-f61c7d]', async () => {
-    const s = signed('`w`.`id` = 1')
+    const s = await signed('`w`.`id` = 1')
     const q = new URLSearchParams({ db: DB, table: 'w', where: s.clause, sig: s.sig, key: 'blb' })
     const r = await t.app.request(`/api/servers/1/browse/field?${q}`, {
       headers: { cookie: [...t.jar].map(([k, v]) => `${k}=${v}`).join('; ') },

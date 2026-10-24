@@ -25,7 +25,7 @@ Resolution order is identical to phpMyAdmin's `Config::loadUserPreferences`: a d
 | Listen | `Listen: { host, port, basePath }` | `PmaAbsoluteUri` still honoured for absolute links |
 | Everything else | directive by directive, see [reference](../reference/config-directives.md) | identical names |
 
-The CLI `bma import-pma-config path/to/config.inc.php` converts an existing phpMyAdmin config by evaluating the PHP array syntax (a small PHP-array parser, no PHP runtime) to our format, so migration is one command.
+The CLI `bettermyadmin import-pma-config path/to/config.inc.php [-o bettermyadmin.config.json]` converts an existing phpMyAdmin config by evaluating the PHP array syntax (a small PHP-array parser, no PHP runtime) to our format, so migration is one command.
 
 ## Sessions
 

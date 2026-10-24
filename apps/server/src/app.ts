@@ -181,7 +181,7 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
     c.set('executed', statementLog(deps.cfg.DBG.sql))
     c.set('isHttps', isHttpsRequest(c.req.header('x-forwarded-proto'), c.req.url))
     const id = getCookie(c, SESSION_COOKIE)
-    let session = id !== undefined ? deps.store.get(id) : null
+    let session = id !== undefined ? await deps.store.get(id) : null
     c.set('sessionIsNew', session === null)
     // the session as stored when the request started: what this request changes (including the
     // inactivity logout below) is merged over what a concurrent request stored meanwhile
@@ -203,13 +203,13 @@ function sessionMiddleware(deps: AppDeps): MiddlewareHandler<AppEnv> {
     await next()
     let s = c.get('session')
     if (loaded !== null && s.id === session.id) {
-      const latest = deps.store.get(s.id)
+      const latest = await deps.store.get(s.id)
       // deleted meanwhile (logout, Session::secure() in another request): never bring it back
       if (latest === null) return
       s = mergeChanges(latest, loaded, s)
     }
     if (c.get('keepLastSeen') !== true) s.lastSeenAt = nowSeconds()
-    deps.store.set(s)
+    await deps.store.set(s)
     writeSessionCookies(c, s)
   }
 }
