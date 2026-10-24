@@ -1,0 +1,444 @@
+/*
+ * The optional `native` theme (parity exception X56): the look of a native macOS database client
+ * (TablePlus, Sequel Ace). Light grey window chrome around a white content area: a toolbar with a
+ * centred monospace connection capsule, a segmented tab bar with a solid blue active segment, a
+ * vibrancy-grey sidebar with coloured object icons and a rounded selection, flat sections instead of
+ * boxed cards, compact zebra tables without cell borders, macOS push buttons and text fields.
+ * Every rule is scoped to [data-theme="native"].
+ */
+
+[data-theme="native"] {
+  --n-chrome: #f6f6f8;
+  --n-chrome-border: #dcdce1;
+  --n-capsule: #e3f4e7;
+  --n-capsule-border: #bfe2c8;
+  --n-capsule-fg: #1d6b32;
+  --n-segment: #e4e4e9;
+  --n-hover: #ececf0;
+  --n-select: #dcdce2;
+  --n-primary-top: #3a91ff;
+  --n-primary: #0a6cff;
+  --n-push: 0 0.5px 1.5px rgb(0 0 0 / 0.16), 0 0 0 0.5px rgb(0 0 0 / 0.12);
+  --n-field: inset 0 0.5px 1px rgb(0 0 0 / 0.06);
+  --n-icon-table: #2f7cf6;
+  --n-icon-view: #b44fd9;
+  --n-icon-routine: #e0802b;
+  --n-icon-db: #8e8e93;
+  -webkit-font-smoothing: antialiased;
+}
+[data-theme="native"][data-color-mode="dark"] {
+  --n-chrome: #000000;
+  --n-chrome-border: #1f1f22;
+  --n-capsule: #06160b;
+  --n-capsule-border: #163a21;
+  --n-capsule-fg: #6fe08a;
+  --n-segment: #161618;
+  --n-hover: #121214;
+  --n-select: #1e1e23;
+  --n-primary-top: #3d9bff;
+  --n-primary: #0a84ff;
+  --n-push: 0 0.5px 1.5px rgb(0 0 0 / 0.5), 0 0 0 0.5px rgb(255 255 255 / 0.1);
+  --n-field: inset 0 0.5px 1px rgb(0 0 0 / 0.3);
+  --n-icon-table: #4d9bff;
+  --n-icon-view: #d17cf0;
+  --n-icon-routine: #f0a04b;
+  --n-icon-db: #98989d;
+}
+
+/* ---- window chrome: toolbar, tab bar, sidebar and console in the same light grey */
+[data-theme="native"] .bma-topbar {
+  background: var(--n-chrome);
+  border-bottom: 1px solid var(--n-chrome-border);
+  padding-block: 6px;
+}
+/* the breadcrumb is a centred connection capsule: "Server: localhost : Database: shop : Table: users" */
+[data-theme="native"] #floating_menubar {
+  display: flex;
+  justify-content: center;
+}
+[data-theme="native"] #server-breadcrumb ol {
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px 14px;
+  border: 1px solid var(--n-capsule-border);
+  border-radius: 7px;
+  background: var(--n-capsule);
+  color: var(--n-capsule-fg);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  column-gap: 0;
+}
+[data-theme="native"] #server-breadcrumb a {
+  color: var(--n-capsule-fg);
+}
+[data-theme="native"] #server-breadcrumb .icon {
+  display: none;
+}
+[data-theme="native"] #server-breadcrumb .breadcrumb-divider {
+  font-size: 0;
+}
+[data-theme="native"] #server-breadcrumb .breadcrumb-divider::before {
+  content: ":";
+  padding-inline: 6px;
+  font-size: 12px;
+  opacity: 0.55;
+}
+[data-theme="native"] #page_nav_icons :is(a, button) {
+  border-radius: 6px;
+}
+
+[data-theme="native"] .bma-tabbar {
+  background: var(--n-chrome);
+  border-bottom: 1px solid var(--n-chrome-border);
+  padding: 6px 12px;
+}
+
+[data-theme="native"] #pma_navigation {
+  background: var(--navi-bg);
+  border-inline-end: 1px solid var(--n-chrome-border);
+}
+[data-theme="native"] #pma_navigation_resizer {
+  background: transparent;
+  box-shadow: none;
+}
+[data-theme="native"] #pmalogo a {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+[data-theme="native"] #pma_console {
+  border-top: 1px solid var(--n-chrome-border);
+  background: var(--n-chrome);
+}
+[data-theme="native"] #pma_console .toolbar {
+  background: transparent;
+}
+
+/* ---- segmented controls: the main tabs, every secondary navigation, Recent / Favorites */
+[data-theme="native"] .menucontainer #navbarNav > ul,
+[data-theme="native"] .bma-subnav,
+[data-theme="native"] [data-testid="structure-pills"],
+[data-theme="native"] #recentFavoriteTablesWrapper {
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 1px;
+  padding: 2px;
+  border-radius: 7px;
+  background: var(--n-segment);
+}
+[data-theme="native"] .bma-subnav li {
+  margin: 0;
+}
+/* each item is exactly as tall as its pill, so the track's 2px padding is even on every side */
+[data-theme="native"] :is(.menucontainer #navbarNav > ul, .bma-subnav, [data-testid="structure-pills"]) > li {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  margin: 0;
+}
+[data-theme="native"]
+  :is(.tab-link, .bma-subnav a, [data-testid="structure-pills"] a, #recentFavoriteTablesWrapper button) {
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 22px;
+  margin: 0;
+  padding: 0 0.7rem;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--tab-fg);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+}
+[data-theme="native"]
+  :is(
+    .tab-link,
+    .bma-subnav a,
+    [data-testid="structure-pills"] a,
+    #recentFavoriteTablesWrapper button
+  ):hover {
+  background: var(--tab-hover-bg);
+  color: var(--fg);
+}
+[data-theme="native"]
+  :is(
+    .tab-link-active,
+    .tab-link-active:hover,
+    .bma-subnav a:is([aria-current="page"], .active),
+    [data-testid="structure-pills"] a[aria-current="page"],
+    #recentFavoriteTablesWrapper button[aria-expanded="true"]
+  ) {
+  background: var(--tab-active-bg);
+  color: var(--tab-active-fg);
+  box-shadow: var(--n-push);
+}
+[data-theme="native"] .tab-link .icon,
+[data-theme="native"] .tab-link svg {
+  opacity: 0.85;
+}
+
+/* ---- the sidebar tree: compact rows, a rounded selection, coloured object icons */
+[data-theme="native"] #pma_navigation [role="treeitem"] {
+  height: 22px;
+  margin-inline: 6px;
+  border-radius: 5px;
+}
+[data-theme="native"] #pma_navigation [role="treeitem"]:hover {
+  background: var(--n-hover);
+}
+[data-theme="native"] #pma_navigation [role="treeitem"].selected {
+  background: var(--n-select);
+  font-weight: 500;
+}
+[data-theme="native"] #pma_navigation [role="treeitem"]:is([data-kind="table"]) svg:not(.nav-chevron) {
+  color: var(--n-icon-table);
+}
+[data-theme="native"] #pma_navigation [role="treeitem"]:is([data-kind="view"]) svg:not(.nav-chevron) {
+  color: var(--n-icon-view);
+}
+[data-theme="native"]
+  #pma_navigation
+  [role="treeitem"]:is(
+    [data-kind="procedure"],
+    [data-kind="function"],
+    [data-kind="event"],
+    [data-kind="trigger"]
+  )
+  svg:not(.nav-chevron) {
+  color: var(--n-icon-routine);
+}
+[data-theme="native"] #pma_navigation [role="treeitem"]:is([data-kind="database"]) svg:not(.nav-chevron) {
+  color: var(--n-icon-db);
+}
+
+/* ---- content: flat sections (a title and a hairline) instead of boxed cards */
+[data-theme="native"] #page_content {
+  padding: 14px 18px 48px;
+}
+[data-theme="native"] .bma-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+[data-theme="native"] .bma-card-head {
+  padding: 0 0 6px;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: none;
+  box-shadow: none;
+}
+[data-theme="native"] .bma-card-head > div {
+  font-weight: 600;
+}
+[data-theme="native"] .bma-card > :not(.bma-card-head) {
+  padding-inline: 0;
+}
+
+/* ---- messages: compact, rounded, a thin border in their hue */
+[data-theme="native"] [data-message-type],
+[data-theme="native"] [data-message-type] > div {
+  border-radius: 7px;
+}
+[data-theme="native"] [data-message-type] > div {
+  border-color: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+/* ---- buttons: macOS push buttons; primary is the blue default button */
+[data-theme="native"] [data-slot="button"] {
+  background-image: none;
+  border-radius: 5px;
+}
+[data-theme="native"] [data-slot="button"][data-variant="secondary"],
+[data-theme="native"] input:is([type="button"], [type="reset"]) {
+  border: 0;
+  background: var(--bg);
+  box-shadow: var(--n-push);
+  color: var(--fg);
+}
+[data-theme="native"][data-color-mode="dark"] [data-slot="button"][data-variant="secondary"] {
+  background: #18181b;
+}
+[data-theme="native"] [data-slot="button"][data-variant="secondary"]:hover {
+  background: var(--bg-subtle);
+}
+[data-theme="native"] input[type="submit"],
+[data-theme="native"] [data-slot="button"][data-variant="primary"],
+[data-theme="native"] :is(a, button).bg-accent.text-accent-fg:not(.bma-subnav *) {
+  border: 0;
+  background: linear-gradient(to bottom, var(--n-primary-top), var(--n-primary));
+  color: #ffffff;
+  box-shadow: var(--n-push), inset 0 0.5px 0 rgb(255 255 255 / 0.25);
+  text-decoration: none;
+}
+[data-theme="native"] input[type="submit"]:hover,
+[data-theme="native"] [data-slot="button"][data-variant="primary"]:hover {
+  filter: brightness(1.06);
+}
+/* link-style buttons (Print, Track table, With selected: …) are quiet toolbar buttons */
+[data-theme="native"] #page_content [data-slot="button"][data-variant="link"]:not(.table_results *) {
+  height: auto;
+  padding: 0.15rem 0.5rem;
+  border-radius: 5px;
+  color: var(--accent);
+  font-weight: 450;
+}
+[data-theme="native"] #page_content [data-slot="button"][data-variant="link"]:not(.table_results *):hover {
+  background: var(--n-hover);
+  text-decoration: none;
+}
+
+/* ---- text fields and pop-up buttons */
+[data-theme="native"]
+  :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="submit"]):not(
+        [type="button"]
+      ):not([type="reset"]):not([type="image"]):not([type="hidden"]):not([type="range"]),
+    select,
+    textarea
+  ) {
+  border-color: var(--border-strong);
+  border-radius: 5px;
+  background-color: var(--bg);
+  box-shadow: var(--n-field);
+}
+[data-theme="native"] select {
+  box-shadow: var(--n-push);
+  border-color: transparent;
+}
+[data-theme="native"] :is(input, select, textarea):focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+[data-theme="native"] :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--accent);
+}
+[data-theme="native"][data-color-mode="dark"] :is(select option, select optgroup) {
+  background-color: var(--bg-elevated);
+  color: var(--fg);
+}
+
+/* ---- the results grid: monospace data, zebra rows, dividers in the header only */
+[data-theme="native"] .table-responsive-md {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg);
+}
+[data-theme="native"] .table_results {
+  font-size: 12.5px;
+}
+[data-theme="native"] .table_results :is(td, th) {
+  padding: 0.2rem 0.6rem;
+  border: 0;
+}
+[data-theme="native"] .table_results tbody td:not(.d-print-none) {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+[data-theme="native"] .table_results thead th {
+  border-bottom: 1px solid var(--border);
+  border-inline-end: 1px solid var(--border);
+  background: var(--grid-header-bg);
+  color: var(--fg);
+  font-weight: 600;
+  box-shadow: none;
+}
+[data-theme="native"] .table_results td.d-print-none :is(a, button) {
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+[data-theme="native"] .table_results td.d-print-none :is(a, button):hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ---- other data tables (structure, indexes, database lists, …): the same quiet rows */
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"])) {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  thead
+  th {
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: start;
+  white-space: nowrap;
+}
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  tbody
+  :is(td, th) {
+  padding: 0.22rem 0.6rem;
+  border: 0;
+}
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr:nth-child(even) {
+  background: var(--grid-row-even);
+}
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr:nth-child(odd) {
+  background: transparent;
+}
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr:hover {
+  background: var(--grid-row-hover);
+}
+/* row links are actions: quiet until hovered; Drop turns red */
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  td
+  :is(a, [data-variant="link"], summary) {
+  color: var(--fg-muted);
+}
+[data-theme="native"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  td
+  :is(a, [data-variant="link"], summary):hover {
+  color: var(--accent);
+}
+/* the database list's Empty / Drop are row actions like Browse or Structure */
+[data-theme="native"] #page_content td :is(.truncate_table_anchor, .drop_table_anchor) {
+  color: var(--fg-muted);
+}
+[data-theme="native"] #page_content td :is(a, button):is([class*="drop"], .truncate_table_anchor):hover {
+  color: var(--error);
+}
+
+/* ---- menus, dialogs and popovers: macOS sheets */
+[data-theme="native"] :is([role="menu"], [role="dialog"], [role="listbox"], .cm-tooltip) {
+  border-radius: 9px;
+  box-shadow: 0 12px 32px -8px rgb(0 0 0 / 0.25), 0 0 0 0.5px rgb(0 0 0 / 0.12);
+}

@@ -2,7 +2,7 @@
 rules:
   - match: { kind: select, name: set_theme }
     ignore: [options]
-    reason: the theme list has BetterMyAdmin's optional modern theme besides phpMyAdmin's four
+    reason: the theme list has BetterMyAdmin's optional modern, classic and native themes besides phpMyAdmin's four
     exception: X53
   - pma: { kind: link, label: '/^\d+\.\d+\.\d+$/', section: phpMyAdmin }
     n/a: >-

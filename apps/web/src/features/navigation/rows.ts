@@ -204,3 +204,30 @@ export function legacyRows(rows: readonly Row[], db: string, order?: readonly st
   }
   return { pager, options, current, content: current === null ? top : content }
 }
+
+/**
+ * The tree connector lines of a row (pma: themes' `div.block` i / b segments and `.list_container`
+ * borders): one column per ancestor level, plus the row's own elbow. Every row hangs off an implicit
+ * root, so top-level rows get an elbow too (the line down from "New").
+ * `pipes[k]`: a vertical line passes through column k (a later sibling follows at that level).
+ * `elbow`: the row's own connector, `tee` when a sibling follows it, else `end`.
+ */
+export interface TreeGuide {
+  pipes: boolean[]
+  elbow: 'tee' | 'end'
+}
+
+/** One backwards pass: `open[l]` is whether a later row sits at level l before the tree climbs above it. */
+export function treeGuides(rows: readonly { depth: number }[]): TreeGuide[] {
+  const out: TreeGuide[] = new Array(rows.length)
+  const open: boolean[] = []
+  for (let i = rows.length - 1; i >= 0; i--) {
+    const level = rows[i]!.depth + 1
+    const pipes: boolean[] = []
+    for (let k = 0; k < level - 1; k++) pipes.push(open[k + 1] === true)
+    out[i] = { pipes, elbow: open[level] === true ? 'tee' : 'end' }
+    open[level] = true
+    open.length = level + 1
+  }
+  return out
+}

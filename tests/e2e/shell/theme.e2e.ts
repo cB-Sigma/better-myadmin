@@ -51,7 +51,7 @@ test.describe('themes', () => {
     await login(page)
     await page.getByRole('button', { name: 'View all' }).click()
     const dialog = page.getByRole('dialog', { name: 'BetterMyAdmin Themes' })
-    await expect(dialog.locator('[data-theme-card]')).toHaveCount(5)
+    await expect(dialog.locator('[data-theme-card]')).toHaveCount(7)
     await dialog.locator('[data-theme-card="original"]').getByRole('button', { name: 'Take it' }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'original')
     await expect(dialog).toBeHidden()

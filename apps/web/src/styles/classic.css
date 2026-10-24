@@ -1,0 +1,294 @@
+/*
+ * The optional `classic` theme (parity exception X56): pmahomme, redesigned with the crispness of
+ * GitHub's Primer. Same layout and blue tabs as pmahomme, but: a navy breadcrumb bar, real folder tabs
+ * attached to the page with a blue top accent, white boxes with a light grey header bar, framed
+ * tables with grey headers and row lines, Primer buttons and flash messages, square-ish 4px corners,
+ * no gradients or drop shadows, and a GitHub-dark palette. Every rule is scoped to [data-theme="classic"].
+ */
+
+[data-theme="classic"] {
+  --c-bar-line: #3a6a92;
+  --c-btn-border: rgb(31 35 40 / 0.15);
+  --c-btn-shadow: 0 1px 0 rgb(31 35 40 / 0.04);
+  --c-row-line: #e6eaef;
+  --c-sel-bar: var(--accent);
+  --c-primary: var(--accent);
+  --c-primary-hover: var(--accent-hover);
+  --c-primary-fg: var(--accent-fg);
+}
+[data-theme="classic"][data-color-mode="dark"] {
+  --c-bar-line: #12304d;
+  --c-btn-border: rgb(240 246 252 / 0.1);
+  --c-btn-shadow: 0 0 transparent;
+  --c-row-line: #161618;
+  --c-primary: #2a5f8a;
+  --c-primary-hover: #3470a1;
+  --c-primary-fg: #ffffff;
+}
+
+/* ---- the breadcrumb bar: navy, white text, a thin lighter line under it */
+[data-theme="classic"] .bma-topbar {
+  border-bottom: 2px solid var(--c-bar-line);
+  padding-block: 7px;
+}
+[data-theme="classic"] #server-breadcrumb ol {
+  font-size: 13px;
+}
+[data-theme="classic"] #server-breadcrumb li:last-of-type a {
+  font-weight: 600;
+}
+[data-theme="classic"] #server-breadcrumb .breadcrumb-divider {
+  color: var(--breadcrumb-comment);
+}
+
+/* ---- folder tabs: a grey bar, the active tab white and joined to the page below it */
+[data-theme="classic"] .bma-tabbar {
+  background: var(--tab-bg);
+  border-bottom: 1px solid var(--tab-border);
+  padding: 6px 10px 0;
+}
+[data-theme="classic"] .menucontainer #navbarNav > ul {
+  gap: 2px;
+  align-items: flex-end;
+}
+[data-theme="classic"] .tab-link {
+  top: 0;
+  margin: 0 0 -1px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 4px 4px 0 0;
+  background: transparent;
+  background-image: none;
+  color: var(--tab-fg);
+  font-weight: 500;
+}
+[data-theme="classic"] .tab-link:hover {
+  background: var(--tab-hover-bg);
+  color: var(--tab-fg);
+}
+[data-theme="classic"] .tab-link-active,
+[data-theme="classic"] .tab-link-active:hover {
+  border-color: var(--tab-border);
+  background: var(--tab-active-bg);
+  color: var(--tab-active-fg);
+  font-weight: 600;
+  box-shadow: inset 0 2px 0 var(--accent);
+}
+
+/* ---- secondary navigation (status, user accounts, structure pills): an underline tab strip */
+[data-theme="classic"] .bma-subnav,
+[data-theme="classic"] [data-testid="structure-pills"] {
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+[data-theme="classic"] .bma-subnav li {
+  margin: 0;
+}
+[data-theme="classic"] :is(.bma-subnav a, [data-testid="structure-pills"] a) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: -1px;
+  padding: 0.4rem 0.8rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg-muted);
+  font-weight: 500;
+  text-decoration: none;
+}
+[data-theme="classic"] :is(.bma-subnav a, [data-testid="structure-pills"] a):hover {
+  border-bottom-color: var(--border-strong);
+  color: var(--fg);
+}
+[data-theme="classic"]
+  :is(
+    .bma-subnav a:is([aria-current="page"], .active),
+    [data-testid="structure-pills"] a[aria-current="page"]
+  ) {
+  border-bottom-color: var(--accent);
+  background: transparent;
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ---- sidebar: a light panel, the selection with a blue bar on its left */
+[data-theme="classic"] #pma_navigation {
+  background: var(--navi-bg);
+  border-inline-end: 1px solid var(--border);
+}
+[data-theme="classic"] #pma_navigation [role="treeitem"].selected {
+  background: var(--nav-pointer-bg);
+  box-shadow: inset 2px 0 0 var(--c-sel-bar);
+}
+[data-theme="classic"] #pmalogo a {
+  font-weight: 600;
+}
+
+/* ---- boxes: white, 1px border, a light grey header bar */
+[data-theme="classic"] .bma-card {
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  background: var(--card-bg);
+  box-shadow: none;
+}
+[data-theme="classic"] .bma-card-head {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--card-border);
+  border-radius: 4px 4px 0 0;
+  background: var(--card-head-bg);
+  color: var(--card-head-fg);
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: none;
+  box-shadow: none;
+}
+[data-theme="classic"] .bma-card-head > div {
+  font-weight: 600;
+}
+
+/* ---- flash messages */
+[data-theme="classic"] [data-message-type],
+[data-theme="classic"] [data-message-type] > div {
+  border-radius: 4px;
+}
+[data-theme="classic"] [data-message-type] > div {
+  border-color: color-mix(in srgb, currentColor 28%, transparent);
+}
+
+/* ---- buttons: Primer secondary and primary */
+[data-theme="classic"] [data-slot="button"] {
+  border-radius: 4px;
+  background-image: none;
+  font-weight: 500;
+}
+[data-theme="classic"] [data-slot="button"][data-variant="secondary"],
+[data-theme="classic"] input:is([type="button"], [type="reset"]) {
+  border: 1px solid var(--c-btn-border);
+  background: var(--btn-bg);
+  box-shadow: var(--c-btn-shadow);
+  color: var(--fg);
+}
+[data-theme="classic"] [data-slot="button"][data-variant="secondary"]:hover {
+  background: var(--btn-hover-bg);
+}
+[data-theme="classic"] input[type="submit"],
+[data-theme="classic"] [data-slot="button"][data-variant="primary"],
+[data-theme="classic"] :is(a, button).bg-accent.text-accent-fg:not(.bma-subnav *) {
+  border: 1px solid rgb(0 0 0 / 0.15);
+  background: var(--c-primary);
+  color: var(--c-primary-fg);
+  box-shadow: var(--c-btn-shadow);
+  text-decoration: none;
+}
+[data-theme="classic"] input[type="submit"]:hover,
+[data-theme="classic"] [data-slot="button"][data-variant="primary"]:hover {
+  background: var(--c-primary-hover);
+}
+
+/* ---- inputs: 1px border, a blue ring on focus */
+[data-theme="classic"]
+  :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="submit"]):not(
+        [type="button"]
+      ):not([type="reset"]):not([type="image"]):not([type="hidden"]):not([type="range"]),
+    select,
+    textarea
+  ) {
+  border-color: var(--border);
+  border-radius: 4px;
+  background-color: var(--bg);
+}
+[data-theme="classic"] :is(input, select, textarea):focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+[data-theme="classic"] :is(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--accent);
+}
+[data-theme="classic"][data-color-mode="dark"] :is(select option, select optgroup) {
+  background-color: var(--bg-elevated);
+  color: var(--fg);
+}
+
+/* ---- the results grid: compact, a bold grey header, pmahomme's green row hover */
+[data-theme="classic"] .table-responsive-md {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+[data-theme="classic"] .table_results :is(td, th) {
+  padding: 0.16rem 0.5rem;
+  border-color: var(--c-row-line);
+}
+[data-theme="classic"] .table_results thead th {
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* ---- other data tables (structure, indexes, lists): framed, a grey header, row lines */
+[data-theme="classic"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"])) {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+[data-theme="classic"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  thead
+  th {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--fg);
+  font-weight: 600;
+  text-align: start;
+  white-space: nowrap;
+}
+[data-theme="classic"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  tbody
+  :is(td, th) {
+  padding: 0.18rem 0.6rem;
+  border-top: 1px solid var(--c-row-line);
+}
+[data-theme="classic"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr {
+  background: var(--bg);
+}
+[data-theme="classic"]
+  #page_content
+  :is(.bma-table, #tablestructure, #table_index, table:has(> tbody > tr[class*="bg-grid-odd"]))
+  > tbody
+  > tr:hover {
+  background: var(--grid-row-hover);
+}
+[data-theme="classic"] #page_content td :is(a, button)[class*="drop"]:hover {
+  color: var(--error);
+}
+
+/* ---- the console: a light bar */
+[data-theme="classic"] #pma_console {
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+/* ---- menus and dialogs: one crisp shadow */
+[data-theme="classic"] :is([role="menu"], [role="dialog"], [role="listbox"], .cm-tooltip) {
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgb(31 35 40 / 0.15), 0 0 0 1px var(--border);
+}

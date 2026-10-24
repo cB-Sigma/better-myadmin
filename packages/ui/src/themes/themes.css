@@ -690,6 +690,262 @@
   --notification-border: #26262b;
 }
 
+/* ------------------------------------------------------------------ classic (light / dark)
+   BetterMyAdmin's own theme (not in phpMyAdmin, parity exception X56): pmahomme's layout and blue tabs,
+   refreshed. Flat (no gradients, pill buttons or drop shadows), compact, square edges, crisp caption
+   bars, cleaner zebra stripes, a slate breadcrumb bar, and a slate dark mode. */
+[data-theme="classic"] {
+  color-scheme: light;
+  --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-base: 13px;
+  --radius: 4px;
+  --btn-radius: 4px;
+  --bg: #ffffff;
+  --bg-subtle: #f6f8fa;
+  --bg-elevated: #ffffff;
+  --bg-inset: #f6f8fa;
+  --fg: #1f2328;
+  --fg-muted: #59636e;
+  --fg-subtle: #818b98;
+  --fg-on-accent: #ffffff;
+  --border: #d1d9e0;
+  --border-strong: #b7c0c9;
+  --accent: #235a81;
+  --accent-hover: #1a4462;
+  --accent-fg: #ffffff;
+  --success: #1f6f2b;
+  --success-bg: #e6f4dc;
+  --notice: #1d4f73;
+  --notice-bg: #e7f0f7;
+  --warning: #6b5300;
+  --warning-bg: #fff3cd;
+  --info: #055160;
+  --info-bg: #dff4f8;
+  --error: #8c1d1d;
+  --error-bg: #f9e0e2;
+  --grid-header-bg: #eef2f6;
+  --grid-row-odd: #ffffff;
+  --grid-row-even: #f6f8fa;
+  --grid-row-hover: #dafbe1;
+  --grid-row-marked: #fff1c2;
+  --grid-cell-edited: #fff7c2;
+  --data-null: #8a929c;
+  --data-number: #2b2f33;
+  --data-binary: #6a3d9a;
+  --data-link: #235a81;
+  --focus-ring: #4c8bf5;
+  --nav-pointer-bg: #dbe7f3;
+  --navi-bg: #f6f8fa;
+  --navi-fg: #1f2328;
+  --breadcrumb-bg: #22405a;
+  --breadcrumb-fg: #ffffff;
+  --breadcrumb-comment: #b9cde0;
+  --tab-bg: #eaeef2;
+  --tab-fg: #235a81;
+  --tab-hover-bg: #dde4eb;
+  --tab-active-bg: #ffffff;
+  --tab-active-fg: #1f2328;
+  --tab-border: #c8d1da;
+  --card-bg: #ffffff;
+  --card-border: #d1d9e0;
+  --card-shadow: none;
+  --card-head-bg: #f6f8fa;
+  --card-head-fg: #1f2328;
+  --card-head-size: 13px;
+  --card-divider: #e6eaef;
+  --btn-bg: #f6f8fa;
+  --btn-hover-bg: #eef1f4;
+  --notification-bg: #fffbe6;
+  --notification-border: #e6d98c;
+}
+
+[data-theme="classic"][data-color-mode="dark"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --bg-subtle: #0a0a0b;
+  --bg-elevated: #121214;
+  --bg-inset: #000000;
+  --fg: #e6edf3;
+  --fg-muted: #8b949e;
+  --fg-subtle: #6e7681;
+  --border: #222326;
+  --border-strong: #33353a;
+  --accent: #7fa7c9;
+  --accent-hover: #9dbdd8;
+  --accent-fg: #ffffff;
+  --success: #a2d68f;
+  --success-bg: #06160b;
+  --notice: #a9cbe6;
+  --notice-bg: #06132a;
+  --warning: #e8cf7d;
+  --warning-bg: #1c1605;
+  --info: #8fd6e6;
+  --info-bg: #05181d;
+  --error: #f2a3a3;
+  --error-bg: #1f0707;
+  --grid-header-bg: #0a0a0b;
+  --grid-row-odd: #000000;
+  --grid-row-even: #080809;
+  --grid-row-hover: #06200e;
+  --grid-row-marked: #2a2208;
+  --grid-cell-edited: #4a4420;
+  --data-null: #7c8691;
+  --data-number: #dde2e8;
+  --data-binary: #c7a6f2;
+  --data-link: #7fa7c9;
+  --focus-ring: #5d87ad;
+  --nav-pointer-bg: #0c1c30;
+  --navi-bg: #000000;
+  --navi-fg: #e6edf3;
+  --breadcrumb-bg: #030912;
+  --breadcrumb-fg: #e6edf3;
+  --breadcrumb-comment: #8fb0cc;
+  --tab-bg: #000000;
+  --tab-fg: #9198a1;
+  --tab-hover-bg: #0d0d0f;
+  --tab-active-bg: #000000;
+  --tab-active-fg: #e6edf3;
+  --tab-border: #222326;
+  --card-bg: #000000;
+  --card-border: #222326;
+  --card-shadow: none;
+  --card-head-bg: #0a0a0b;
+  --card-head-fg: #e6edf3;
+  --card-divider: #161618;
+  --btn-bg: #111113;
+  --btn-hover-bg: #1a1a1d;
+  --notification-bg: #16140a;
+  --notification-border: #33300f;
+}
+
+/* ------------------------------------------------------------------ native (light / dark)
+   BetterMyAdmin's own theme (not in phpMyAdmin, parity exception X56): the look of a native database
+   client. System font, compact rows, monospace data with faint zebra stripes and thin column
+   dividers only, a light sidebar with a highlighted selection, small rounded segmented controls and
+   solid blue primary buttons. */
+[data-theme="native"] {
+  color-scheme: light;
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
+  --font-base: 13px;
+  --radius: 6px;
+  --btn-radius: 5px;
+  --bg: #ffffff;
+  --bg-subtle: #f4f4f6;
+  --bg-elevated: #ffffff;
+  --bg-inset: #fafafa;
+  --fg: #1d1d1f;
+  --fg-muted: #6e6e73;
+  --fg-subtle: #a1a1a6;
+  --fg-on-accent: #ffffff;
+  --border: #e3e3e8;
+  --border-strong: #cfcfd5;
+  --accent: #0a6cff;
+  --accent-hover: #0058d6;
+  --accent-fg: #ffffff;
+  --success: #1d7a35;
+  --success-bg: #e5f6e8;
+  --notice: #0a4f9e;
+  --notice-bg: #e8f1fd;
+  --warning: #7a5a00;
+  --warning-bg: #fff4d6;
+  --info: #055160;
+  --info-bg: #e3f5f9;
+  --error: #b3261e;
+  --error-bg: #fde8e7;
+  --grid-header-bg: #ffffff;
+  --grid-row-odd: #ffffff;
+  --grid-row-even: #f5f5f7;
+  --grid-row-hover: #eaf2ff;
+  --grid-row-marked: #d3e3ff;
+  --grid-cell-edited: #fff7c2;
+  --data-null: #a1a1a6;
+  --data-number: #1d1d1f;
+  --data-binary: #8e44ad;
+  --data-link: #0a6cff;
+  --focus-ring: #0a6cff;
+  --nav-pointer-bg: #dcdce2;
+  --navi-bg: #f0f0f3;
+  --navi-fg: #1d1d1f;
+  --breadcrumb-bg: #f6f6f8;
+  --breadcrumb-fg: #1d1d1f;
+  --breadcrumb-comment: #6e6e73;
+  --tab-bg: #e4e4e9;
+  --tab-fg: #3a3a3c;
+  --tab-hover-bg: #d8d8de;
+  --tab-active-bg: #0a6cff;
+  --tab-active-fg: #ffffff;
+  --tab-border: #dcdce1;
+  --card-bg: #ffffff;
+  --card-border: #e3e3e8;
+  --card-shadow: none;
+  --card-head-bg: transparent;
+  --card-head-fg: #1d1d1f;
+  --card-head-size: 13px;
+  --card-divider: #ececf0;
+  --btn-bg: #ffffff;
+  --btn-hover-bg: #f2f2f5;
+  --notification-bg: #fffbe6;
+  --notification-border: #ecdca0;
+}
+
+[data-theme="native"][data-color-mode="dark"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --bg-subtle: #0d0d0e;
+  --bg-elevated: #141416;
+  --bg-inset: #000000;
+  --fg: #ededf0;
+  --fg-muted: #9a9aa0;
+  --fg-subtle: #636368;
+  --border: #1f1f22;
+  --border-strong: #2e2e33;
+  --accent: #0a84ff;
+  --accent-hover: #409cff;
+  --accent-fg: #ffffff;
+  --success: #7fd28f;
+  --success-bg: #07170c;
+  --notice: #8ec1ff;
+  --notice-bg: #07152a;
+  --warning: #f2d27a;
+  --warning-bg: #1c1605;
+  --info: #8fd6e6;
+  --info-bg: #05181d;
+  --error: #ff9a94;
+  --error-bg: #1f0707;
+  --grid-header-bg: #000000;
+  --grid-row-odd: #000000;
+  --grid-row-even: #0b0b0c;
+  --grid-row-hover: #0d1a2e;
+  --grid-row-marked: #10305c;
+  --grid-cell-edited: #4a4420;
+  --data-null: #6e6e73;
+  --data-number: #e8e8ed;
+  --data-binary: #d1a6f2;
+  --data-link: #409cff;
+  --focus-ring: #0a84ff;
+  --nav-pointer-bg: #1c1c20;
+  --navi-bg: #000000;
+  --navi-fg: #e8e8ed;
+  --breadcrumb-bg: #000000;
+  --breadcrumb-fg: #e8e8ed;
+  --breadcrumb-comment: #a1a1a6;
+  --tab-bg: #141416;
+  --tab-fg: #c7c7cc;
+  --tab-hover-bg: #1f1f23;
+  --tab-active-bg: #0a84ff;
+  --tab-active-fg: #ffffff;
+  --tab-border: #1f1f22;
+  --card-bg: #000000;
+  --card-border: #1f1f22;
+  --card-head-bg: transparent;
+  --card-head-fg: #e8e8ed;
+  --card-divider: #161618;
+  --btn-bg: #141416;
+  --btn-hover-bg: #1c1c20;
+  --notification-bg: #16140a;
+  --notification-border: #33300f;
+}
+
 /* Theme-independent tokens of the app's own widgets (moved here from feature CSS so colours live in one
    place): SQL highlighting (resources/js/modules/sql-highlight.ts classes), the console's dark mode
    (.console_dark_theme in phpMyAdmin's _common.scss), chart series (Chart.js' default-like palette). */

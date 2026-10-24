@@ -3,11 +3,11 @@ import { useRouter } from '@tanstack/react-router'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { clsx } from 'clsx'
 import { ChevronDown, ChevronRight, LoaderCircle } from 'lucide-react'
-import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from 'react'
+import { type MouseEvent, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { t } from '../../lib/i18n'
 import { navIcon } from './icons'
 import { navHref } from './links'
-import type { Row } from './rows'
+import { type Row, type TreeGuide, treeGuides } from './rows'
 import type { NavTreeStore } from './store'
 
 const HEIGHT = { node: 22, filter: 34, pager: 30 } as const
@@ -38,6 +38,7 @@ export function NavTree({
   legacy = false,
 }: NavTreeProps) {
   const parentRef = useRef<HTMLDivElement>(null)
+  const guides = useMemo(() => treeGuides(rows), [rows])
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
@@ -79,6 +80,13 @@ export function NavTree({
                 transform: `translateY(${vi.start}px)`,
               }}
             >
+              {guides[vi.index] !== undefined && (
+                <TreeLines
+                  guide={guides[vi.index]!}
+                  stem={row.type === 'node' && row.expanded === true && !row.loading}
+                  leaf={row.type !== 'node' || !row.node.expandable}
+                />
+              )}
               {row.type === 'node' ? (
                 <NodeRow
                   row={row}
@@ -109,6 +117,33 @@ function useNavigate() {
     e.preventDefault()
     router.history.push(href)
   }
+}
+
+/**
+ * A row's connector lines (pma: div.block i / b segments, .list_container borders), positioned on the
+ * expander column of each level, and the plain indent guides modern draws instead. CSS picks which a
+ * theme shows (none in native).
+ */
+function TreeLines({ guide, stem, leaf }: { guide: TreeGuide; stem: boolean; leaf: boolean }) {
+  const x = (col: number) => `calc(var(--nav-guide-offset, 0px) + ${4 + col * INDENT + 8}px)`
+  const own = guide.pipes.length
+  return (
+    <span className="nav-guides" aria-hidden>
+      {guide.pipes.map((p, k) =>
+        // biome-ignore lint/suspicious/noArrayIndexKey: k is the column (the level), the identity of the line
+        p ? <i key={k} className="nav-pipe" style={{ left: x(k) }} /> : null,
+      )}
+      <i className={`nav-elbow ${guide.elbow}`} style={{ left: x(own) }} />
+      {/* a leaf has no box: its arm runs on to the item's icon */}
+      <i className={`nav-arm${leaf ? ' leaf' : ''}`} style={{ left: x(own) }} />
+      {/* indent guides (modern): one line under each ancestor's chevron, no elbows */}
+      {Array.from({ length: own }, (_, k) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: k is the ancestor level, the identity of the guide
+        <i key={`g${k}`} className="nav-indent" style={{ left: x(k + 1) }} />
+      ))}
+      {stem && <i className="nav-stem" style={{ left: x(own + 1) }} />}
+    </span>
+  )
 }
 
 function NodeRow({
@@ -167,7 +202,7 @@ function NodeRow({
         row.selected && 'selected bg-nav-pointer font-semibold',
         italic && 'italic',
       )}
-      style={{ paddingLeft: 4 + depth * INDENT }}
+      style={{ paddingLeft: `calc(var(--nav-guide-base, 0px) + ${4 + depth * INDENT}px)` }}
       onMouseEnter={() => {
         if (onPrefetch === undefined || !node.expandable || node.loaded) return
         timer.current = setTimeout(() => onPrefetch(node), 50)
@@ -189,10 +224,16 @@ function NodeRow({
         >
           {row.loading ? (
             <LoaderCircle className="size-3.5 animate-spin" aria-hidden />
-          ) : row.expanded ? (
-            <ChevronDown className="size-3.5" aria-hidden />
           ) : (
-            <ChevronRight className="size-3.5" aria-hidden />
+            <>
+              {row.expanded ? (
+                <ChevronDown className="nav-chevron size-3.5" aria-hidden />
+              ) : (
+                <ChevronRight className="nav-chevron size-3.5" aria-hidden />
+              )}
+              {/* pma: the b_plus / b_minus box of the themes that draw tree lines */}
+              <span className={`nav-box ${row.expanded ? 'minus' : 'plus'}`} aria-hidden />
+            </>
           )}
         </button>
       ) : (
@@ -282,7 +323,7 @@ function FilterRow({ row, store }: { row: Extract<Row, { type: 'filter' }>; stor
   return (
     <div
       className={clsx('fast_filter flex items-center gap-1 py-1 pr-1', kind === 'db' && 'db_fast_filter')}
-      style={{ paddingLeft: 4 + row.depth * INDENT }}
+      style={{ paddingLeft: `calc(var(--nav-guide-base, 0px) + ${4 + row.depth * INDENT}px)` }}
     >
       <input
         className="searchClause h-6 min-w-0 flex-1 rounded border border-border bg-bg px-1.5 text-[13px]"
@@ -353,7 +394,7 @@ export function PagerRow({
         'pageselector flex items-center gap-0.5 py-0.5 text-[13px]',
         p.paramName === 'pos' && 'dbselector',
       )}
-      style={{ paddingLeft: 4 + row.depth * INDENT }}
+      style={{ paddingLeft: `calc(var(--nav-guide-base, 0px) + ${4 + row.depth * INDENT}px)` }}
     >
       {link(p.begin, 'Begin', '<<', true)}
       {link(p.prev, 'Previous', '<', true)}

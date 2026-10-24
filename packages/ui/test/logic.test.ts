@@ -94,8 +94,16 @@ describe('documentation links', () => {
 })
 
 describe('themes (ThemeManager)', () => {
-  it('ships the four phpMyAdmin themes and the modern one, sorted by id', () => {
-    expect(THEMES.map((t) => t.id)).toEqual(['bootstrap', 'metro', 'modern', 'original', 'pmahomme'])
+  it("ships the four phpMyAdmin themes and BetterMyAdmin's modern, classic and native, sorted by id", () => {
+    expect(THEMES.map((t) => t.id)).toEqual([
+      'bootstrap',
+      'classic',
+      'metro',
+      'modern',
+      'native',
+      'original',
+      'pmahomme',
+    ])
     expect(THEMES.find((t) => t.id === 'modern')?.pmaColorModes).toEqual([])
     expect(THEMES.find((t) => t.id === 'metro')?.pmaColorModes).toEqual([
       'win',

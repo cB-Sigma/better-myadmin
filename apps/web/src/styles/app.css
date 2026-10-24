@@ -4,6 +4,8 @@
 @import "@bettermyadmin/ui/themes.css";
 /* the modern theme's component styling */
 @import "./modern.css";
+@import "./classic.css";
+@import "./native.css";
 
 /* Tailwind must see the classes used inside the component kit. */
 @source "../../../../packages/ui/src";
@@ -171,4 +173,144 @@ input[type="file"]::file-selector-button {
 }
 input[type="file"]::file-selector-button:hover {
   background: var(--btn-hover-bg);
+}
+
+/* ---- navigation tree connector lines and +/− boxes (pma: div.block i / b, .list_container borders,
+   the b_plus / b_minus images). phpMyAdmin's four themes draw lines and boxes, and so does classic;
+   modern draws the lines with its chevrons; native keeps plain chevrons. Lines sit on each level's
+   expander column (NavTree.tsx TreeLines). */
+.nav-guides,
+.nav-box {
+  display: none;
+}
+:is(
+    [data-theme="pmahomme"],
+    [data-theme="original"],
+    [data-theme="metro"],
+    [data-theme="bootstrap"],
+    [data-theme="classic"],
+    [data-theme="modern"],
+    :root:not([data-theme])
+  )
+  #pma_navigation_tree_content {
+  --nav-guide-base: 14px;
+  --nav-line: var(--fg-subtle);
+}
+/* modern: VS Code-style indent guides with its chevrons (no elbows, arms or root line); its rows are
+   inset 6px (modern.css treeitem margin) */
+[data-theme="modern"] #pma_navigation_tree_content {
+  --nav-line: var(--border-strong);
+  --nav-guide-offset: 6px;
+}
+#pma_navigation_tree_content .nav-indent {
+  display: none;
+  top: 0;
+  bottom: 0;
+}
+[data-theme="modern"] #pma_navigation_tree_content :is(.nav-pipe, .nav-elbow, .nav-arm) {
+  display: none;
+}
+[data-theme="modern"] #pma_navigation_tree_content .nav-indent {
+  display: block;
+}
+/* the + and − are drawn, so they sit in the exact centre of the box */
+#pma_navigation_tree_content .nav-box::before,
+#pma_navigation_tree_content .nav-box.plus::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+#pma_navigation_tree_content .nav-box::before {
+  top: 4px;
+  left: 2px;
+  width: 5px;
+  height: 1px;
+}
+#pma_navigation_tree_content .nav-box.plus::after {
+  top: 2px;
+  left: 4px;
+  width: 1px;
+  height: 5px;
+}
+#pma_navigation_tree_content .nav-arm.leaf {
+  width: 22px !important;
+}
+#pma_navigation_tree_content .nav-guides {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#pma_navigation_tree_content .nav-guides i {
+  position: absolute;
+  width: 0;
+  border-left: 1px solid var(--nav-line);
+}
+#pma_navigation_tree_content .nav-pipe,
+#pma_navigation_tree_content .nav-elbow.tee {
+  top: 0;
+  bottom: 0;
+}
+#pma_navigation_tree_content .nav-elbow.end {
+  top: 0;
+  height: 50%;
+}
+#pma_navigation_tree_content .nav-arm {
+  top: 50%;
+  width: 8px !important;
+  border-left: 0 !important;
+  border-top: 1px solid var(--nav-line);
+}
+#pma_navigation_tree_content .nav-stem {
+  top: calc(50% + 5px);
+  bottom: 0;
+}
+/* the stem leaves the chevron from below it, so the guide meets the first child */
+[data-theme="modern"] #pma_navigation_tree_content .nav-stem {
+  top: calc(50% + 8px);
+}
+/* lines: phpMyAdmin's four themes, classic, modern, and no theme yet (pmahomme is the default) */
+:is(
+    [data-theme="pmahomme"],
+    [data-theme="original"],
+    [data-theme="metro"],
+    [data-theme="bootstrap"],
+    [data-theme="classic"],
+    [data-theme="modern"],
+    :root:not([data-theme])
+  )
+  #pma_navigation_tree_content
+  .nav-guides {
+  display: block;
+}
+:is(
+    [data-theme="pmahomme"],
+    [data-theme="original"],
+    [data-theme="metro"],
+    [data-theme="bootstrap"],
+    [data-theme="classic"],
+    :root:not([data-theme])
+  )
+  #pma_navigation_tree_content
+  .nav-chevron {
+  display: none;
+}
+:is(
+    [data-theme="pmahomme"],
+    [data-theme="original"],
+    [data-theme="metro"],
+    [data-theme="bootstrap"],
+    [data-theme="classic"],
+    :root:not([data-theme])
+  )
+  #pma_navigation_tree_content
+  .nav-box {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--nav-line);
+  border-radius: 2px;
+  background: var(--navi-bg);
+  color: var(--fg);
 }

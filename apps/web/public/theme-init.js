@@ -4,8 +4,10 @@
 ;(() => {
   const MODES = {
     bootstrap: ['light', 'dark'],
+    classic: ['light', 'dark'],
     metro: ['win', 'teal', 'redmond', 'blueeyes', 'mono', 'dark'],
     modern: ['light', 'dark'],
+    native: ['light', 'dark'],
     original: ['light', 'dark'],
     pmahomme: ['light', 'dark'],
   }

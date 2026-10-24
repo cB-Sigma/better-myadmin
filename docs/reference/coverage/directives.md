@@ -61,7 +61,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NavigationTreeDisplayItemFilterMinimum` | apps/server/src/navigation/tree.ts:647 |  |
 | ✅ | `NavigationTreeEnableExpansion` | apps/server/src/navigation/nodes.ts:307<br>apps/server/src/navigation/nodes.ts:313<br>apps/server/src/navigation/service.ts:63<br>apps/server/src/navigation/service.ts:116<br>apps/server/src/navigation/tree.ts:335 |  |
 | ✅ | `NavigationTreeEnableGrouping` | apps/server/src/navigation/nodes.ts:184<br>apps/server/src/navigation/nodes.ts:447<br>apps/server/src/navigation/nodes.ts:578 |  |
-| ✅ | `NavigationTreePointerEnable` | apps/server/src/navigation/service.ts:61<br>apps/web/src/features/navigation/NavTree.tsx:86 |  |
+| ✅ | `NavigationTreePointerEnable` | apps/server/src/navigation/service.ts:61<br>apps/web/src/features/navigation/NavTree.tsx:94 |  |
 | ✅ | `NavigationTreeTableSeparator` | apps/server/src/database/structure.ts:112<br>apps/server/src/database/structure.ts:143<br>apps/server/src/navigation/nodes.ts:579 |  |
 | ✅ | `NavigationWidth` | apps/server/src/routes/metadata.ts:697<br>apps/server/src/navigation/service.ts:59<br>apps/web/src/features/navigation/NavigationPanel.tsx:137 |  |
 | ✅ | `NumFavoriteTables` | apps/server/src/database/structure.ts:200<br>apps/server/src/metadata/service.ts:302<br>apps/server/src/navigation/service.ts:72<br>apps/server/src/routes/metadata.ts:413<br>apps/server/src/routes/metadata.ts:503 |  |
@@ -153,7 +153,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowAll` | apps/server/src/browse/grid.ts:602<br>apps/server/src/browse/grid.ts:870<br>apps/server/src/insert-edit/foreign.ts:22 |  |
 | ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:633 |  |
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:102<br>apps/server/src/query/message.ts:91<br>apps/web/src/features/sql/message-card.ts:27 |  |
-| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:331<br>apps/web/src/features/navigation/NavigationPanel.tsx:584<br>packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:866<br>apps/server/src/navigation/service.ts:76 |  |
+| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:372<br>apps/web/src/features/navigation/NavigationPanel.tsx:584<br>packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:866<br>apps/server/src/navigation/service.ts:76 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
 | ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:406 |  |
 

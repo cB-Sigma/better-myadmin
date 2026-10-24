@@ -1,8 +1,8 @@
 /**
- * The four built-in themes of phpMyAdmin plus BetterMyAdmin's `modern`, as token sets
+ * The four built-in themes of phpMyAdmin plus BetterMyAdmin's `modern`, `classic` and `native`, as token sets
  * (themes.css). Manifest fields are the `public/themes/<id>/theme.json` of phpMyAdmin; `colorModes`
  * lists phpMyAdmin's modes plus the `dark` variant every theme gets here (parity exceptions X16/X23).
- * `modern` is not a phpMyAdmin theme (X53); pmahomme stays the default.
+ * `modern` (X53), `classic` and `native` (X56) are not phpMyAdmin themes; pmahomme stays the default.
  * pma: src/Theme/Theme.php, src/Theme/ThemeManager.php
  */
 export interface ThemeManifest {
@@ -19,7 +19,15 @@ export interface ThemeManifest {
   pmaColorModes: string[]
 }
 
-export const THEME_IDS = ['bootstrap', 'metro', 'modern', 'original', 'pmahomme'] as const
+export const THEME_IDS = [
+  'bootstrap',
+  'classic',
+  'metro',
+  'modern',
+  'native',
+  'original',
+  'pmahomme',
+] as const
 export type ThemeId = (typeof THEME_IDS)[number]
 
 /** ThemeManager::FALLBACK_THEME */
@@ -40,6 +48,16 @@ export const THEMES: readonly ThemeManifest[] = [
   },
   {
     ...common,
+    id: 'classic',
+    name: 'Classic',
+    version: '1.0',
+    description: 'pmahomme, refreshed: flat, compact, square',
+    author: 'BetterMyAdmin developers',
+    colorModes: ['light', 'dark'],
+    pmaColorModes: [],
+  },
+  {
+    ...common,
     id: 'metro',
     name: 'Metro',
     description: 'Metro theme for phpMyAdmin',
@@ -53,6 +71,16 @@ export const THEMES: readonly ThemeManifest[] = [
     name: 'Modern',
     version: '1.0',
     description: 'Clean, flat BetterMyAdmin theme',
+    author: 'BetterMyAdmin developers',
+    colorModes: ['light', 'dark'],
+    pmaColorModes: [],
+  },
+  {
+    ...common,
+    id: 'native',
+    name: 'Native',
+    version: '1.0',
+    description: 'The look of a native database client',
     author: 'BetterMyAdmin developers',
     colorModes: ['light', 'dark'],
     pmaColorModes: [],

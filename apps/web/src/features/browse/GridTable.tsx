@@ -1175,6 +1175,27 @@ function CellEditor(props: {
   const [loading, setLoading] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const boxRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
+  // the editor hangs below its cell: in a short result (one row) it reaches past the bottom of the
+  // horizontally scrolling wrapper, which then scrolls vertically to show it and slides the sticky
+  // header over the row. The wrapper grows by the overflow instead (and never scrolls vertically).
+  useEffect(() => {
+    const ed = ref.current
+    const wrap = ed?.closest<HTMLElement>('.table-responsive-md')
+    if (ed === null || ed === undefined || wrap === null || wrap === undefined) return
+    const fit = () => {
+      wrap.style.paddingBottom = ''
+      const over = ed.getBoundingClientRect().bottom - wrap.getBoundingClientRect().bottom
+      if (over > 0) wrap.style.paddingBottom = `${Math.ceil(over) + 4}px`
+      wrap.scrollTop = 0
+    }
+    fit()
+    const ro = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(fit)
+    ro?.observe(ed)
+    return () => {
+      ro?.disconnect()
+      wrap.style.paddingBottom = ''
+    }
+  }, [])
   // showEditCell: the edit box takes the cell's outer size; the cursor goes to the end of the value
   useEffect(() => {
     const b = boxRef.current

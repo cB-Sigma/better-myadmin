@@ -1,5 +1,5 @@
 // Regenerates public/themes/<id>/screen.png (the Themes gallery cards) from a running instance:
-//   BMA_URL=http://127.0.0.1:8080 BMA_USER=root BMA_PASSWORD=… node apps/web/scripts/theme-screenshots.mjs
+//   BMA_URL=http://127.0.0.1:8080 BMA_USER=root BMA_PASSWORD=… [BMA_THEMES=a,b] node apps/web/scripts/theme-screenshots.mjs
 // phpMyAdmin ships a screenshot per theme; ours are pictures of BetterMyAdmin in each theme.
 import { mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -17,7 +17,17 @@ await page.fill('#input_username', process.env.BMA_USER ?? 'root')
 await page.fill('#input_password', process.env.BMA_PASSWORD ?? '')
 await page.click('#input_go')
 await page.waitForSelector('#maincontainer')
-for (const id of ['bootstrap', 'metro', 'original', 'pmahomme']) {
+// BMA_THEMES=classic,native regenerates only those
+const ids = process.env.BMA_THEMES?.split(',') ?? [
+  'bootstrap',
+  'classic',
+  'metro',
+  'modern',
+  'native',
+  'original',
+  'pmahomme',
+]
+for (const id of ids) {
   await page.evaluate((t) => {
     localStorage.setItem('bma_theme', t)
     localStorage.removeItem('bma_theme_color')

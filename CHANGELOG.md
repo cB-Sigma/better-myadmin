@@ -2,6 +2,30 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.8 (2026-10-24)
+
+### Features
+
+- Two new optional themes (parity exception X56), each with light and dark modes; pmahomme stays the
+  default:
+  - **Classic**: pmahomme refreshed in the style of GitHub's Primer. A navy breadcrumb bar, folder
+    tabs joined to the page with a blue top accent, boxes with a light grey header, framed tables with
+    row lines, flat buttons and 4px corners. Its dark mode is true black (AMOLED) with steel-blue
+    accents.
+  - **Native**: the look of a native database client such as TablePlus. System font, a centred
+    breadcrumb capsule, segmented tabs, a compact monospace grid with quiet zebra rows, coloured tree
+    icons and macOS-style push buttons. Its dark mode is true black (AMOLED) too.
+
+### Fixes
+
+- Navigation tree: the connector lines and the +/− expand boxes of phpMyAdmin's tree are back in
+  pmahomme, original, metro and bootstrap (and classic); they had been replaced by chevrons when the
+  tree became a virtualized list. Modern keeps its chevrons and gains indent guides; native keeps
+  plain chevrons.
+- Grid editing in a short result (one row): the cell editor reached past the bottom of the table's
+  scrolling frame, so its NULL checkbox and hint were cut off, and typing scrolled the frame so the
+  sticky header slid over the row. The frame now grows to fit the editor.
+
 ## 1.0.7 (2026-10-24)
 
 ### Fixes
