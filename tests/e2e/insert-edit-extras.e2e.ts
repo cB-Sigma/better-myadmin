@@ -125,7 +125,7 @@ test('after Go: the message with its query card, the SQL box showing the INSERT;
   const card = page.locator('.result_query').first()
   await expect(card).toContainText('1 row inserted.')
   await expect(card).toContainText("INSERT INTO `w` (`id`, `name`, `d`) VALUES ('901', 'qa-card', NULL);")
-  for (const link of ['Edit inline', 'Edit', 'Create PHP code']) {
+  for (const link of ['Edit inline', 'Edit', 'Create JS code']) {
     await expect(card.getByText(link, { exact: true }).first()).toBeVisible()
   }
   // GotoDefault /table/sql: the box holds the statements that ran (Current::$sqlQuery)

@@ -60,7 +60,7 @@ test('find and replace: the result message with its query card comes before the 
   await expect(
     card.getByRole('button', { name: 'Edit inline' }).or(card.getByText('Edit inline')),
   ).toBeVisible()
-  await expect(card.getByText('Create PHP code')).toBeVisible()
+  await expect(card.getByText('Create JS code')).toBeVisible()
   // Generator::getMessage is added before the find and replace page (pills included)
   const above = await page.evaluate(() => {
     const c = document.querySelector('.result_query')

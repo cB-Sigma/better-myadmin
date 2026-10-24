@@ -106,12 +106,12 @@ test.describe('SQL tab', () => {
     await expect(page.locator('#togglequerybox')).toHaveText('Hide query box')
     // the card's links for a SELECT
     const tools = page.locator('.result_query .tools').first()
-    for (const l of ['Profiling', 'Edit inline', 'Edit', 'Explain SQL', 'Create PHP code', 'Refresh']) {
+    for (const l of ['Profiling', 'Edit inline', 'Edit', 'Explain SQL', 'Create JS code', 'Refresh']) {
       await expect(tools.getByText(l, { exact: true })).toBeVisible()
     }
-    await tools.getByText('Create PHP code', { exact: true }).click()
-    await expect(page.getByText('$sql = "SELECT COUNT(*) FROM t;";')).toBeVisible()
-    await expect(page.getByText('Showing as PHP code')).toBeVisible()
+    await tools.getByText('Create JS code', { exact: true }).click()
+    await expect(page.getByText("const sql = 'SELECT COUNT(*) FROM t;';")).toBeVisible()
+    await expect(page.getByText('Showing as JS code')).toBeVisible()
   })
 
   test('empty query alert and confirmation of destructive statements [p09-331963] [p09-e295f8]', async ({

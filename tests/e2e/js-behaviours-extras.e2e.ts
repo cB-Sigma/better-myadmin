@@ -187,7 +187,7 @@ test.describe('export', () => {
     await page.clock.runFor(300_000)
     await expect.poll(() => asked).toBe(1)
     await expect(
-      page.getByText('Your export is incomplete, due to a low execution time limit at the PHP level!'),
+      page.getByText('Your export is incomplete, due to a low execution time limit (ExecTimeLimit)!'),
     ).toBeVisible()
   })
 

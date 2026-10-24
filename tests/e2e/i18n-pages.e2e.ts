@@ -48,14 +48,14 @@ async function openIn(browser: Browser, baseURL: string | undefined, lang: strin
   return { page, context }
 }
 
-// what the localized phpMyAdmin shows for 3 tables (pl and ru: three forms; de: `n != 1` is a
+// what the localized UI shows for 3 tables, with the product name read as BetterMyAdmin (pl and ru: three forms; de: `n != 1` is a
 // boolean, so motranslator always picks form 0; ja: one form)
 const CASES = [
-  { lang: 'pl', tables: '3 tabel', docs: 'Dokumentacja phpMyAdmina', dir: 'ltr' },
-  { lang: 'ru', tables: '3 таблицы', docs: 'Документация phpMyAdmin', dir: 'ltr' },
-  { lang: 'de', tables: '3 Tabelle', docs: 'phpMyAdmin-Dokumentation', dir: 'ltr' },
-  { lang: 'ja', tables: '3 テーブル', docs: 'phpMyAdminのドキュメント', dir: 'ltr' },
-  { lang: 'ar', tables: '3 جداول', docs: 'مستندات وثائقية لـ phpMyAdmin (بالإنجليزية)', dir: 'rtl' },
+  { lang: 'pl', tables: '3 tabel', docs: 'Dokumentacja BetterMyAdmina', dir: 'ltr' },
+  { lang: 'ru', tables: '3 таблицы', docs: 'Документация BetterMyAdmin', dir: 'ltr' },
+  { lang: 'de', tables: '3 Tabelle', docs: 'BetterMyAdmin-Dokumentation', dir: 'ltr' },
+  { lang: 'ja', tables: '3 テーブル', docs: 'BetterMyAdminのドキュメント', dir: 'ltr' },
+  { lang: 'ar', tables: '3 جداول', docs: 'مستندات وثائقية لـ BetterMyAdmin (بالإنجليزية)', dir: 'rtl' },
 ]
 
 for (const c of CASES) {

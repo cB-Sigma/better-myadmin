@@ -340,7 +340,7 @@ test.describe('trigger created from the dialog', () => {
     const card = page.locator('.result_query').first()
     await expect(card).toContainText('Trigger `f05_cke_trg` has been created.')
     await expect(card).toContainText('CREATE TRIGGER `f05_cke_trg` BEFORE INSERT ON `a`')
-    for (const link of ['Edit inline', 'Edit', 'Create PHP code']) {
+    for (const link of ['Edit inline', 'Edit', 'Create JS code']) {
       await expect(card.getByText(link, { exact: true }).first()).toBeVisible()
     }
     // Generator::getMessage before the "Triggers" heading (QA: it followed the heading, no links)

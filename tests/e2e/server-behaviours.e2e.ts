@@ -264,7 +264,7 @@ test('binary log: the query card runs its links through /sql [p06-debfa6]', asyn
   await page.goto('/s/1/binlog')
   const card = page.locator('.result_query').first()
   await expect(card).toContainText('SHOW BINLOG EVENTS LIMIT 0, 25')
-  for (const link of ['Edit inline', 'Edit', 'Create PHP code', 'Refresh'])
+  for (const link of ['Edit inline', 'Edit', 'Create JS code', 'Refresh'])
     await expect(card.getByRole('button', { name: link, exact: true })).toBeVisible()
   // Refresh: phpMyAdmin's /sql result (the grid of SHOW BINLOG EVENTS) in place of the page
   const ran = page.waitForResponse((r) => r.request().method() === 'POST' && /\/query$/.test(r.url()))

@@ -69,7 +69,7 @@ test('add a user account, grant a database with the grant option, remove it', as
   // come first, before the user page's pills (QA: they followed the pills, without the links)
   const card = page.locator('#edit_user_dialog > .result_query').first()
   await expect(card).toContainText('CREATE USER')
-  for (const link of ['Edit inline', 'Edit', 'Create PHP code']) {
+  for (const link of ['Edit inline', 'Edit', 'Create JS code']) {
     await expect(
       card
         .getByRole('button', { name: link, exact: true })
