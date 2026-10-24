@@ -74,11 +74,10 @@ must have the :config:option:`$cfg['Servers'][$i]['table_coords']` configured.
 To use the designer, select a database's structure page, then look for the
 :guilabel:`Designer` tab.
 
-To export the view, you have to create pages first (they are called PDF pages
-for historical reasons). The Designer creates the layout, how the tables shall
-be displayed. To finally export the view as SVG, EPS or Dia (BetterMyAdmin has
-no PDF export, see :ref:`faqpdf`), select your page, which you have created
-with the designer.
+To export the view into PDF, you have to create PDF pages first. The Designer
+creates the layout, how the tables shall be displayed. To finally export the
+view (as PDF, SVG, EPS or Dia), select your page, which you have created with
+the designer.
 
 .. seealso::
 

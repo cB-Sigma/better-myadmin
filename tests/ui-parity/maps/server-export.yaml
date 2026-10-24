@@ -13,7 +13,9 @@ rules:
   - match: { kind: select, label: File format to export }
     ignore: [options]
     exception: X57
-    reason: phpMyAdmin's "PHP array" format is our "JavaScript module" (the rest of the list is the same)
+    reason: >-
+      phpMyAdmin's "PHP array" format is our "JavaScript module"; ours also lists PDF, which the
+      reference built without TCPDF does not (ExportPdf::isAvailable); the rest of the list is the same
   - match: { kind: select, label: File format to export, step: format PHP array }
     ignore: [value]
     exception: X57

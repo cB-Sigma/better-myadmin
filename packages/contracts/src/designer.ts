@@ -174,5 +174,7 @@ export type SchemaExportRequest = z.output<typeof SchemaExportRequest>
 export interface SchemaExportResponse {
   fileName: string
   mediaType: string
+  /** the file: text, or base64 when `encoding` says so (PDF) */
   data: string
+  encoding?: 'base64'
 }

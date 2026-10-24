@@ -100,7 +100,7 @@ The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that 
 | GET, POST | `/preferences/navigation` | `Preferences/NavigationController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
 | GET, POST | `/preferences/sql` | `Preferences/SqlController` | UI `/s/:s/preferences/:tab` · API `GET /api/servers/:s/preferences/forms/:tab` · API `POST /api/servers/:s/preferences/forms/:tab` | ✅ implemented |
 | GET, POST | `/preferences/two-factor` | `Preferences/TwoFactorController` | UI `/s/:s/preferences/two-factor` · API `GET /api/servers/:s/preferences/two-factor` · API `POST /api/servers/:s/preferences/two-factor/configure` · API `POST /api/servers/:s/preferences/two-factor/remove` · API `GET /api/auth/two-factor` · API `POST /api/auth/two-factor` | ✅ implemented |
-| GET, POST | `/schema-export` | `SchemaExportController` | UI `/s/:s/db/:db/designer` · API `POST /api/servers/:s/databases/:db/schema-export` · (PDF (TCPDF) is not ported: the Dia, EPS and SVG plugins are) | ✅ implemented |
+| GET, POST | `/schema-export` | `SchemaExportController` | UI `/s/:s/db/:db/designer` · API `POST /api/servers/:s/databases/:db/schema-export` · (Dia, EPS, PDF and SVG (PDF without TCPDF: packages/pdf)) | ✅ implemented |
 | GET, POST | `/server/binlog` | `Server/BinlogController` | UI `/s/:s/binlog` · API `GET /api/servers/:s/binlog` | ✅ implemented (M3) |
 | GET | `/server/collations` | `Server/CollationsController` | UI `/s/:s/collations` · API `GET /api/servers/:s/collations` | ✅ implemented (M3) |
 | GET, POST | `/server/databases` | `Server/DatabasesController` | UI `/s/:s/databases` · API `GET /api/servers/:s/databases` | ✅ implemented |

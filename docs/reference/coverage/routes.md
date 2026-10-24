@@ -164,7 +164,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /database/structure/show-create` | `Database/Structure/ShowCreateController` | API POST /api/servers/:s/databases/:db/structure/show-create (apps/server/src/routes/database.ts:159) |  |
 | ✅ | `GET, POST /database/tracking` | `Database/TrackingController` | API GET /api/servers/:s/databases/:db/tracking (apps/server/src/routes/database.ts:353)<br>API POST /api/servers/:s/databases/:db/tracking (apps/server/src/routes/database.ts:356)<br>UI /s/:server/db/:db/tracking (apps/web/src/routes/s/$server/db/$db/tracking.tsx) |  |
 | ✅ | `POST /databases` | `DatabaseController` | API GET /api/servers/:s/databases (apps/server/src/routes/server-admin.ts:61) | name lists for pickers |
-| ✅ | `GET, POST /schema-export` | `SchemaExportController` | API POST /api/servers/:s/databases/:db/schema-export (apps/server/src/routes/database.ts:422)<br>UI /s/:server/db/:db/designer (apps/web/src/routes/s/$server/db/$db/designer.tsx) | PDF (TCPDF) is not ported: the Dia, EPS and SVG plugins are |
+| ✅ | `GET, POST /schema-export` | `SchemaExportController` | API POST /api/servers/:s/databases/:db/schema-export (apps/server/src/routes/database.ts:422)<br>UI /s/:server/db/:db/designer (apps/web/src/routes/s/$server/db/$db/designer.tsx) | Dia, EPS, PDF and SVG (PDF without TCPDF: packages/pdf) |
 
 ## 06 server level — 31/31 (100.0%) covered, 31/31 implemented
 

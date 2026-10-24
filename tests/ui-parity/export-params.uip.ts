@@ -8,6 +8,7 @@ import { FIX, PMA_URL, login, pmaReachable } from './lib/env.ts'
  * compared byte for byte by tests/parity/export-options.parity.test.ts.
  */
 const FORMATS = ['codegen', 'csv', 'excel', 'json', 'latex', 'mediawiki', 'htmlword', 'ods', 'odt'].concat([
+  'pdf',
   'sql',
   'texytext',
   'toon',
@@ -37,6 +38,22 @@ const comparable = (pairs: Array<[string, string]>) =>
     .map(([k, v]) => `${k === 'jsmodule_structure_or_data' ? 'phparray_structure_or_data' : k}=${v}`)
     .sort()
 
+/**
+ * A reference built without TCPDF offers no PDF (ExportPdf::isAvailable), so its form lacks the PDF
+ * plugin's fields: they are what phpMyAdmin with TCPDF posts — `pdf_report_title` empty and the
+ * structure/data radio posted like MediaWiki's (the same radio with the same default, `data`).
+ * The PDF format itself is compared with the reference's form for MediaWiki (whose structure/data
+ * choice also decides structure_or_data_forced and the table_data[] column).
+ */
+function withPdf(pairs: Array<[string, string]>, format: string): Array<[string, string]> {
+  const out = pairs.map(([k, v]): [string, string] => [k, format === 'pdf' && k === 'what' ? 'pdf' : v])
+  out.push(['pdf_report_title', ''])
+  for (const [k, v] of pairs) {
+    if (k.startsWith('mediawiki_structure_or_data')) out.push([k.replace(/^mediawiki_/, 'pdf_'), v])
+  }
+  return out
+}
+
 async function session(browser: Browser, baseURL: string, app: 'pma' | 'ours'): Promise<Page> {
   const page = await (await browser.newContext({ baseURL })).newPage()
   await login(page, app, baseURL)
@@ -64,12 +81,14 @@ for (const l of LEVELS) {
         `${PMA_URL}/index.php?${new URLSearchParams({ route: l.route, server: '1', ...l.params })}`,
       )
       await pma.locator('#radio_custom_export').check()
-      await pma.locator('#plugins').selectOption(f)
-      const expected = await pma.evaluate(() =>
+      const pmaHasPdf = (await pma.locator('#plugins option[value="pdf"]').count()) > 0
+      await pma.locator('#plugins').selectOption(f === 'pdf' && !pmaHasPdf ? 'mediawiki' : f)
+      const form = await pma.evaluate(() =>
         [...new FormData(document.querySelector('form[name="dump"]') as HTMLFormElement).entries()].map(
           ([k, v]) => [k, String(v)] as [string, string],
         ),
       )
+      const expected = pmaHasPdf ? form : withPdf(form, f)
       await ours.goto(l.path)
       await ours.locator('#radio_custom_export').check()
       await ours.locator('#plugins').selectOption(f)

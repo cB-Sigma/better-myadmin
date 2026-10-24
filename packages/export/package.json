@@ -13,6 +13,7 @@
   "dependencies": {
     "@bettermyadmin/i18n": "workspace:*",
     "@bettermyadmin/mysql-types": "workspace:*",
+    "@bettermyadmin/pdf": "workspace:*",
     "@bettermyadmin/sql-gen": "workspace:*",
     "@bettermyadmin/sql-lexer": "workspace:*",
     "iconv-lite": "0.6.3"

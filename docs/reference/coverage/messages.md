@@ -4,7 +4,7 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3436/3437 covered (100.0%): 3273 implemented, 28 exception, 135 n/a, 1 planned. [Summary](README.md).
+3436/3437 covered (100.0%): 3288 implemented, 28 exception, 120 n/a, 1 planned. [Summary](README.md).
 
 ## 01 shell navigation auth — 405/405 (100.0%) covered, 348/405 implemented
 
@@ -34,7 +34,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 05 database level — 305/305 (100.0%) covered, 290/305 implemented
+## 05 database level — 305/305 (100.0%) covered, 298/305 implemented
 
 0 msgids not used yet.
 
@@ -48,7 +48,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 07 export import — 293/293 (100.0%) covered, 265/293 implemented
+## 07 export import — 293/293 (100.0%) covered, 272/293 implemented
 
 0 msgids not used yet.
 

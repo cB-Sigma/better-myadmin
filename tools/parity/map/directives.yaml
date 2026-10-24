@@ -53,12 +53,6 @@ Schema/:
     - packages/schema/src/index.ts
     - apps/server/src/database/schema-export.ts
   note: option name (Plugins::getDefault, $cfg['Schema'])
-Export/pdf_report_title:
-  n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)
-Export/pdf_structure_or_data:
-  n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)
-Schema/pdf_*:
-  n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)
 Export/xml_export_struc:
   n/a: phpMyAdmin reads it nowhere (Settings only; ExportXml uses xml_structure_or_data)
 Import/sql_read_as_multibytes:

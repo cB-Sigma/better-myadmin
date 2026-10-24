@@ -4,7 +4,7 @@
 
 Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions excluded) and whether apps/ or packages/ (outside packages/config) reads it. Dispositions: `tools/parity/map/directives.yaml`.
 
-449/449 covered (100.0%): 428 implemented, 2 exception, 19 n/a. [Summary](README.md).
+449/449 covered (100.0%): 438 implemented, 2 exception, 9 n/a. [Summary](README.md).
 
 ## 01 shell navigation auth — 109/109 (100.0%) covered, 107/109 implemented
 
@@ -188,7 +188,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:291<br>apps/server/src/table/structure-page.ts:379 |  |
 | ✅ | `ShowStats` | apps/server/src/database/structure.ts:190<br>apps/server/src/table/structure-page.ts:266<br>apps/server/src/table/structure-page.ts:376 |  |
 
-## 05 database level — 31/31 (100.0%) covered, 24/31 implemented
+## 05 database level — 31/31 (100.0%) covered, 31/31 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -199,24 +199,24 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `MysqlMinVersion/internal` | apps/server/src/auth/login.ts:60 |  |
 | ✅ | `PmaNoRelation_DisableWarning` | apps/server/src/database/operations.ts:51<br>apps/server/src/routes/metadata.ts:131<br>apps/server/src/shell/home.ts:260 |  |
 | ✅ | `PropertiesNumColumns` | apps/server/src/database/structure.ts:191<br>apps/server/src/database/structure.ts:208 |  |
-| ✅ | `Schema/dia_orientation` | packages/schema/src/index.ts:44 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/dia_paper` | packages/schema/src/index.ts:60 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/dia_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/dia_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/eps_all_tables_same_width` | packages/schema/src/index.ts:71 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/eps_orientation` | packages/schema/src/index.ts:44 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/eps_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/eps_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ➖ | `Schema/pdf_all_tables_same_width` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ➖ | `Schema/pdf_orientation` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ➖ | `Schema/pdf_paper` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ➖ | `Schema/pdf_show_color` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ➖ | `Schema/pdf_show_grid` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ➖ | `Schema/pdf_show_keys` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ➖ | `Schema/pdf_with_doc` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
-| ✅ | `Schema/svg_all_tables_same_width` | packages/schema/src/index.ts:80 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/svg_show_color` | packages/schema/src/index.ts:39 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ✅ | `Schema/svg_show_keys` | packages/schema/src/index.ts:40 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_orientation` | packages/schema/src/index.ts:46 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_paper` | packages/schema/src/index.ts:55 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_show_color` | packages/schema/src/index.ts:41 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/dia_show_keys` | packages/schema/src/index.ts:42 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_all_tables_same_width` | packages/schema/src/index.ts:70 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_orientation` | packages/schema/src/index.ts:46 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_show_color` | packages/schema/src/index.ts:41 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/eps_show_keys` | packages/schema/src/index.ts:42 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_all_tables_same_width` | packages/schema/src/index.ts:79 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_orientation` | packages/schema/src/index.ts:46 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_paper` | packages/schema/src/index.ts:55 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_show_color` | packages/schema/src/index.ts:41 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_show_grid` | packages/schema/src/index.ts:82 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_show_keys` | packages/schema/src/index.ts:42 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_with_doc` | packages/schema/src/index.ts:83<br>apps/server/src/database/schema-export.ts:215 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_all_tables_same_width` | packages/schema/src/index.ts:101 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_show_color` | packages/schema/src/index.ts:41 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/svg_show_keys` | packages/schema/src/index.ts:42 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
 | ✅ | `Servers/*/central_columns` | packages/metadata/src/storage.ts:41<br>packages/metadata/src/storage.ts:64<br>packages/metadata/src/storage.ts:87<br>packages/metadata/src/storage.ts:96 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/pdf_pages` | packages/metadata/src/storage.ts:29<br>packages/metadata/src/storage.ts:53<br>packages/metadata/src/storage.ts:76<br>packages/metadata/src/storage.ts:180<br>packages/metadata/src/storage.ts:182 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/tracking` | packages/metadata/src/storage.ts:36<br>packages/metadata/src/storage.ts:58<br>packages/metadata/src/storage.ts:81<br>packages/metadata/src/storage.ts:101 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
@@ -246,7 +246,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowServerInfo` | apps/web/src/features/shell/AboutPages.tsx:65<br>apps/server/src/shell/about.ts:112<br>apps/server/src/shell/home.ts:204 |  |
 | ✅ | `ThemeManager` | apps/server/src/routes/shell.ts:146<br>apps/web/src/features/shell/HomePage.tsx:272<br>apps/web/src/features/shell/HomePage.tsx:277<br>apps/web/src/features/shell/themes/ThemesPage.tsx:16 | X16 |
 
-## 07 export import — 138/138 (100.0%) covered, 133/138 implemented
+## 07 export import — 138/138 (100.0%) covered, 136/138 implemented
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
@@ -305,8 +305,8 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Export/odt_structure_or_data` | packages/export/src/plugins/opendocument.ts:222<br>packages/export/src/plugins/opendocument.ts:438<br>packages/export/src/plugins/opendocument.ts:439 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/onserver` | apps/server/src/export/page.ts:217 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/onserver_overwrite` | apps/server/src/export/page.ts:218 | read under a computed name — option or page-setting name (Plugins::getDefault) |
-| ➖ | `Export/pdf_report_title` |  | n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered) |
-| ➖ | `Export/pdf_structure_or_data` |  | n/a: ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered) |
+| ✅ | `Export/pdf_report_title` | packages/export/src/plugins/pdf.ts:399<br>packages/export/src/plugins/pdf.ts:483 | read under a computed name — option or page-setting name (Plugins::getDefault) |
+| ✅ | `Export/pdf_structure_or_data` | packages/export/src/plugins/pdf.ts:400<br>packages/export/src/plugins/pdf.ts:497<br>packages/export/src/plugins/pdf.ts:498 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | 🔀 | `Export/phparray_structure_or_data` |  | X57 — the PHP array export is replaced by the JavaScript module format (Export/jsmodule_structure_or_data) |
 | ✅ | `Export/quick_export_onserver` | apps/server/src/export/page.ts:219 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Export/quick_export_onserver_overwrite` | apps/server/src/export/page.ts:220 | read under a computed name — option or page-setting name (Plugins::getDefault) |
@@ -379,11 +379,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Import/sql_compatibility` | packages/import/src/plugins/sql.ts:29<br>packages/import/src/plugins/sql.ts:48 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Import/sql_no_auto_value_on_zero` | packages/import/src/plugins/sql.ts:35<br>packages/import/src/plugins/sql.ts:49 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ➖ | `PDFDefaultPageSize` |  | n/a: read only by GisVisualization::asPdfFile, offered when TCPDF is installed, which the reference build does not ship either (no PDF download is offered) |
-| ✅ | `PDFPageSizes` | apps/server/src/database/schema-export.ts:29 |  |
+| ✅ | `PDFPageSizes` | apps/server/src/database/schema-export.ts:44 |  |
 | ✅ | `RecodingEngine` | apps/server/src/export/page.ts:225<br>apps/server/src/export/service.ts:119<br>apps/server/src/import/page.ts:109<br>apps/server/src/import/service.ts:223<br>apps/server/src/import/service.ts:227 | X5 |
 | ✅ | `SaveDir` | apps/server/src/setup/checks.ts:238<br>apps/server/src/setup/checks.ts:239<br>apps/server/src/setup/service.ts:82<br>apps/server/src/export/page.ts:216<br>apps/server/src/export/service.ts:118 |  |
-| ✅ | `Schema/format` | apps/server/src/database/schema-export.ts:54<br>apps/server/src/database/schema-export.ts:55 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
-| ➖ | `Schema/pdf_table_order` |  | n/a: SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered) |
+| ✅ | `Schema/format` | apps/server/src/database/schema-export.ts:69<br>apps/server/src/database/schema-export.ts:70 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
+| ✅ | `Schema/pdf_table_order` | packages/schema/src/index.ts:86 | read under a computed name — option name (Plugins::getDefault, $cfg['Schema']) |
 | ✅ | `Servers/*/export_templates` | packages/metadata/src/storage.ts:43<br>packages/metadata/src/storage.ts:66<br>packages/metadata/src/storage.ts:89<br>packages/metadata/src/storage.ts:94 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `Servers/*/savedsearches` | packages/metadata/src/storage.ts:40<br>packages/metadata/src/storage.ts:63<br>packages/metadata/src/storage.ts:86<br>packages/metadata/src/storage.ts:97 | read under a computed name — DIRECTIVE_PARAM (Relation::fillRelationParamsWithTableNames) |
 | ✅ | `UploadDir` | apps/server/src/setup/service.ts:81<br>apps/server/src/import/page.ts:103<br>apps/server/src/import/page.ts:105<br>apps/server/src/import/page.ts:133<br>apps/server/src/import/service.ts:115 |  |

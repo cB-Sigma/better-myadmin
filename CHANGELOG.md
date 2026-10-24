@@ -6,6 +6,13 @@ All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](http
 
 ### Features
 
+- PDF export and the PDF relational schema, as phpMyAdmin offers them with TCPDF:
+  - the "PDF" export format (report title, structure and/or data);
+  - the Designer's "Export schema" to PDF (colours, keys only, same width, orientation, paper size,
+    grid, and a data dictionary with contents, bookmarks and links).
+
+  A new package, `packages/pdf`, ports the parts of TCPDF these use onto pdf-lib and embeds DejaVu
+  Sans, so non-Latin text prints.
 - Documentation site at https://cb-sigma.github.io/better-myadmin/: phpMyAdmin's manual adapted to
   BetterMyAdmin, with the same sections and anchors. Every help link in the app points there.
 - `bettermyadmin import-pma-config config.inc.php [-o file] [--force]` converts a phpMyAdmin

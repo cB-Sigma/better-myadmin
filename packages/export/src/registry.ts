@@ -5,6 +5,7 @@ import { ExportHtmlword } from './plugins/htmlword.ts'
 import { ExportJson } from './plugins/json.ts'
 import { ExportLatex } from './plugins/latex.ts'
 import { ExportOds, ExportOdt } from './plugins/opendocument.ts'
+import { ExportPdf } from './plugins/pdf.ts'
 import { ExportJsmodule, ExportToon, ExportYaml } from './plugins/simple.ts'
 import { ExportSql } from './plugins/sql.ts'
 import { ExportMediawiki, ExportTexytext } from './plugins/text.ts'
@@ -24,6 +25,7 @@ export const EXPORT_PLUGINS: Record<string, PluginClass> = {
   mediawiki: ExportMediawiki,
   ods: ExportOds,
   odt: ExportOdt,
+  pdf: ExportPdf,
   sql: ExportSql,
   texytext: ExportTexytext,
   toon: ExportToon,
@@ -33,8 +35,8 @@ export const EXPORT_PLUGINS: Record<string, PluginClass> = {
 
 /**
  * Whether a plugin is offered in this scope. ExportXml needs a database (it is skipped on the
- * server export page); ExportPdf needs TCPDF, which is not ported (the reference build ships
- * without it, so it never offers PDF either).
+ * server export page). ExportPdf is always available (phpMyAdmin needs TCPDF and curl; the PDF
+ * layer here is built in).
  * pma: src/Plugins/Export/ExportXml.php::isAvailable, ExportPdf.php::isAvailable
  */
 export const PLUGIN_AVAILABLE: Record<string, (ctx: PluginContext) => boolean> = {

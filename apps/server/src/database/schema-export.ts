@@ -6,13 +6,28 @@ import type {
   SchemaExportResponse,
 } from '@bettermyadmin/contracts'
 import { sanitizeFilename } from '@bettermyadmin/export'
-import { sprintf } from '@bettermyadmin/i18n'
-import { getDisplayField, getForeignKeysData, getForeignersInternal } from '@bettermyadmin/metadata'
-import { type SchemaFormat, type SchemaTableData, exportSchema, schemaPlugins } from '@bettermyadmin/schema'
+import { localisedDate, sprintf } from '@bettermyadmin/i18n'
+import {
+  getDisplayField,
+  getForeignKeysData,
+  getForeigners,
+  getForeignersInternal,
+  getMime,
+  searchColumnInForeigners,
+} from '@bettermyadmin/metadata'
+import { extractColumnSpec } from '@bettermyadmin/mysql-types'
+import {
+  type SchemaFormat,
+  type SchemaTableData,
+  type SchemaTableDoc,
+  exportSchema,
+  schemaPlugins,
+} from '@bettermyadmin/schema'
 import { backquote } from '@bettermyadmin/sql-gen'
 import { EXPORT_TOOL, PROCESS_TIME_ZONE } from '../export/service.ts'
 import { ValidationError } from '../http/errors.ts'
 import type { DbCtx } from './context.ts'
+import { statusInfo } from './tables.ts'
 
 /**
  * The relational schema export (Designer → Export schema): the dialog and the file.
@@ -21,7 +36,7 @@ import type { DbCtx } from './context.ts'
  *      src/Plugins/Schema/TableStats.php
  */
 
-const FORMATS: readonly SchemaFormat[] = ['dia', 'eps', 'svg']
+const FORMATS: readonly SchemaFormat[] = ['dia', 'eps', 'pdf', 'svg']
 
 /** dialog=export: Plugins::getSchema / getChoice / getOptions (defaults from $cfg['Schema']) */
 export function schemaExportForm(ctx: DbCtx, page: number, format: string): SchemaExportFormResponse {
@@ -110,6 +125,71 @@ async function tableData(ctx: DbCtx, table: string): Promise<SchemaTableData | f
   }
 }
 
+/** Util::localisedDate(new DateTimeImmutable($s)) of a table status time ('' when unset) */
+function statusDate(ctx: DbCtx, s: string | null | undefined): string {
+  if (s === null || s === undefined || s === '') return ''
+  const epoch = Date.parse(`${s.replace(' ', 'T')}Z`) / 1000
+  return Number.isFinite(epoch) ? localisedDate(ctx.tr, epoch, '', 'UTC') : ''
+}
+
+/** What PdfRelationSchema::dataDictionaryDoc reads about one table */
+async function tableDoc(ctx: DbCtx, table: string): Promise<SchemaTableDoc> {
+  const { db, rp } = ctx
+  const columns = await ctx.reader.getColumns(db, table)
+  const mime =
+    rp.browserTransformationFeature !== null ? await getMime(ctx.control, rp, db, table, true) : null
+  const status = await statusInfo(ctx, db, table)
+  const foreigners = await getForeigners(ctx.control, rp, db, table, '', () =>
+    ctx.reader.showCreate(db, table),
+  )
+  const doc: SchemaTableDoc = {
+    columns: columns.map((c) => {
+      const spec = extractColumnSpec(c.Type)
+      return {
+        field: c.Field,
+        printType: spec.print_type,
+        attribute: spec.attribute,
+        isNull: c.Null === 'YES',
+        default: c.Default,
+        extra: c.Extra,
+      }
+    }),
+    comments: Object.fromEntries(columns.filter((c) => c.Comment !== '').map((c) => [c.Field, c.Comment])),
+    mime:
+      mime === null ? null : Object.fromEntries(Object.entries(mime).map(([k, v]) => [k, v.mimetype ?? ''])),
+    comment: status?.Comment ?? status?.TABLE_COMMENT ?? '',
+    createTime: statusDate(ctx, status?.Create_time),
+    updateTime: statusDate(ctx, status?.Update_time),
+    checkTime: statusDate(ctx, status?.Check_time),
+    foreigners: {},
+  }
+  for (const c of columns) {
+    const f = searchColumnInForeigners(foreigners, c.Field, db)
+    if (f === false) continue
+    doc.foreigners[c.Field] = {
+      db: f.foreign_db,
+      table: f.foreign_table ?? '',
+      field: f.foreign_field ?? '',
+      ...('on_update' in f ? { onUpdate: f.on_update, onDelete: f.on_delete } : {}),
+    }
+  }
+  return doc
+}
+
+/** Pdf::Header: the saved page's description, else "PDF export page" */
+async function pdfPageTitle(ctx: DbCtx, pageNumber: number, offline: boolean): Promise<string> {
+  const f = ctx.rp.pdfFeature
+  if (offline || pageNumber === -1 || f === null || ctx.control === null) {
+    return ctx.tr.gettext('PDF export page')
+  }
+  const r = await ctx.control.query(
+    `SELECT * FROM ${backquote(f.database)}.${backquote(f.pdfPages)} WHERE db_name = ${ctx.dbi.quoteString(ctx.db)} AND page_nr = ${pageNumber}`,
+  )
+  const descr = r.rows[0]?.page_descr ?? ''
+  // ucfirst
+  return descr.charAt(0).toUpperCase() + descr.slice(1)
+}
+
 /** POST /schema-export */
 export async function schemaExport(ctx: DbCtx, req: SchemaExportRequest): Promise<SchemaExportResponse> {
   const { tr, db, rp } = ctx
@@ -133,6 +213,8 @@ export async function schemaExport(ctx: DbCtx, req: SchemaExportRequest): Promis
         `${tr.gettext('SCHEMA ERROR: ')}${type.toUpperCase()} ${sprintf(tr.gettext("The %s table doesn't exist!"), name)}`,
       )
     }
+    // the data dictionary of the PDF plugin
+    if (type === 'pdf' && req.options.pdf_with_doc !== undefined) d.doc = await tableDoc(ctx, name)
     data.set(name, d)
   }
   // ExportRelationSchema::getFileName: the page's name when it is saved in the configuration storage
@@ -145,7 +227,8 @@ export async function schemaExport(ctx: DbCtx, req: SchemaExportRequest): Promis
     const row = r.rows[0]
     fileBase = row === undefined ? '' : (row.page_descr ?? '')
   }
-  const result = exportSchema(
+  const now = new Date()
+  const result = await exportSchema(
     type,
     {
       db,
@@ -160,8 +243,12 @@ export async function schemaExport(ctx: DbCtx, req: SchemaExportRequest): Promis
       options: req.options,
       fileBase,
       creator: `${EXPORT_TOOL.name} ${EXPORT_TOOL.version}`,
-      date: phpDate(new Date(), PROCESS_TIME_ZONE),
+      date: phpDate(now, PROCESS_TIME_ZONE),
       titleFormat: tr.gettext('Schema of the %s database - Page %s'),
+      t: (m) => tr.gettext(m),
+      localisedDate: localisedDate(tr, Math.floor(now.getTime() / 1000), '', PROCESS_TIME_ZONE),
+      pageTitle: type === 'pdf' ? await pdfPageTitle(ctx, pageNumber, req.offline_export) : '',
+      now,
     },
     data,
   )

@@ -1,4 +1,5 @@
 import { gunzipSync } from 'node:zlib'
+import { inspectPdf } from '@bettermyadmin/pdf'
 import mysql from 'mysql2/promise'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { MYSQL, testApp, testConfig } from '../support/app.ts'
@@ -171,12 +172,67 @@ describe('relational schema export', () => {
   const schema = (body: Record<string, unknown>) =>
     app.req('POST', `/api/servers/1/databases/${DB}/schema-export`, body)
 
-  it('the dialog lists Dia, EPS and SVG with their options; PDF is hidden without TCPDF [p07-8281fd]', async () => {
+  it('the dialog lists Dia, EPS, PDF and SVG with their options (PDF needs no TCPDF here) [p07-8281fd]', async () => {
     const r = J(await app.req('GET', `/api/servers/1/databases/${DB}/designer/export?page=-1&format=svg`))
-    // TCPDF is not ported: the PDF plugin is left out, as phpMyAdmin does without TCPDF
-    expect(r.plugins.map((p: { name: string }) => p.name).sort()).toEqual(['dia', 'eps', 'svg'])
+    expect(r.plugins.map((p: { name: string }) => p.name)).toEqual(['dia', 'eps', 'pdf', 'svg'])
     for (const p of r.plugins) expect(p.options.length).toBeGreaterThan(0)
     expect(r.choice).toBe('svg')
+    // $cfg['Schema']['format'] defaults to pdf, and its options to $cfg['Schema']['pdf_*']
+    const d = J(await app.req('GET', `/api/servers/1/databases/${DB}/designer/export?page=-1`))
+    expect(d.choice).toBe('pdf')
+    const pdf = d.plugins.find((p: { name: string }) => p.name === 'pdf')
+    expect(
+      Object.fromEntries(
+        pdf.options[0].items.map((i: { name: string; checked?: boolean; value?: string }) => [
+          i.name,
+          i.checked ?? i.value,
+        ]),
+      ),
+    ).toEqual({
+      pdf_show_color: true,
+      pdf_show_keys: false,
+      pdf_all_tables_same_width: false,
+      pdf_orientation: 'L',
+      pdf_paper: 'A4',
+      pdf_show_grid: false,
+      pdf_with_doc: true,
+      pdf_table_order: '',
+    })
+  })
+
+  it('the PDF schema with its data dictionary [p07-076972]', async () => {
+    await root.query(`CREATE TABLE ${DB}.kid (id INT PRIMARY KEY, other_id INT COMMENT 'the other one',
+      FOREIGN KEY (other_id) REFERENCES ${DB}.other (id) ON DELETE CASCADE) COMMENT 'kid table' ENGINE=InnoDB`)
+    try {
+      const r = J(
+        await schema({
+          page_number: '-1',
+          export_type: 'pdf',
+          offline_export: true,
+          options: { pdf_with_doc: 'on', pdf_show_color: 'on', pdf_orientation: 'L', pdf_paper: 'A4' },
+          tables: [...pos, { x: '100', y: '200', v: true, h: true, db: DB, table: 'kid' }],
+        }),
+      )
+      expect(r).toMatchObject({ fileName: `${DB}.pdf`, mediaType: 'application/pdf', encoding: 'base64' })
+      const bytes = Buffer.from(r.data, 'base64')
+      expect(bytes.subarray(0, 5).toString('latin1')).toBe('%PDF-')
+      const pdf = await inspectPdf(bytes)
+      // contents, ft, other, kid, the relational schema
+      expect(pdf.pages).toHaveLength(5)
+      expect(pdf.title).toBe(`Schema of the ${DB} database`)
+      const [toc, , , kid, rt] = pdf.pages.map((p) => p.text) as [string, string, string, string, string]
+      for (const s of ['1 ft', '2 other', '3 kid', '4 Relational schema']) expect(toc).toContain(s)
+      expect(kid).toContain('PDF export page')
+      expect(kid).toContain('Table comments: kid table')
+      expect(kid).toContain('the other one')
+      expect(kid).toContain('-> other.id')
+      expect(kid).toContain('ON DELETE CASCADE')
+      for (const s of [' ft', ' other', ' kid', ' other_id']) expect(rt.split('\n')).toContain(s)
+      expect(pdf.outline).toContain('kid')
+      expect(pdf.outline).toContain('Relational schema')
+    } finally {
+      await root.query(`DROP TABLE ${DB}.kid`)
+    }
   })
 
   it('the file is named after the database, or after the saved page [p07-164735]', async () => {
@@ -198,6 +254,30 @@ describe('relational schema export', () => {
     )
     expect(one.data).toContain('ft')
     expect(one.data).not.toContain('>other<')
+  })
+})
+
+describe('PDF export', () => {
+  it('a table as a PDF report: structure and data', async () => {
+    const { res, bytes } = await download([
+      ...tableDump().filter(([k]) => k !== 'what' && !k.startsWith('sql_')),
+      ['what', 'pdf'],
+      ['pdf_report_title', 'FT report'],
+      ['pdf_structure_or_data', 'structure_and_data'],
+    ])
+    expect(res.headers.get('content-type')).toContain('application/pdf')
+    expect(res.headers.get('content-disposition')).toContain('ft.pdf')
+    expect(bytes.subarray(0, 5).toString('latin1')).toBe('%PDF-')
+    const pdf = await inspectPdf(bytes)
+    expect(pdf.pages).toHaveLength(2)
+    const [structure, data] = pdf.pages.map((p) => p.text) as [string, string]
+    expect(structure).toContain('FT report')
+    expect(structure).toContain(`Database: ${DB},  Table: ft,  Purpose: Table structure`)
+    expect(data).toContain(`Database: ${DB},  Table: ft,  Purpose: Dumping data`)
+    // the column titles twice (TCPDF's header draws them, then again over the grey band), the id;
+    // the TEXT cells would print "[BLOB]", but their columns are narrower than its widest glyph
+    expect(data.split('\n').slice(2, 9)).toEqual(['id', 'a', 'b', 'id', 'a', 'b', '1'])
+    expect(data).toContain('Page number: 2/2')
   })
 })
 

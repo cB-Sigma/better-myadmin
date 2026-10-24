@@ -52,16 +52,6 @@ sources:
     n/a: 'external links open directly (rel="noopener noreferrer"); there is no /url redirect page'
   src/File.php:
     n/a: 'PHP file uploads ($_FILES error codes, move_uploaded_file, open_basedir temp copies): the browser streams the file to the Node server in chunks (POST/PATCH /import/uploads)'
-  src/Pdf.php:
-    n/a: 'TCPDF: no PDF export or PDF schema is offered (the reference build does not ship TCPDF either; directives.yaml Export/pdf_*, Schema/pdf_*)'
-  src/Plugins/Export/ExportPdf.php:
-    n/a: 'ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)'
-  src/Plugins/Export/Helpers/Pdf.php:
-    n/a: 'ExportPdf needs TCPDF, which the reference build does not ship either (no PDF export is offered)'
-  src/Plugins/Schema/SchemaPdf.php:
-    n/a: 'SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)'
-  src/Plugins/Schema/Pdf/:
-    n/a: 'SchemaPdf needs TCPDF, which the reference build does not ship either (no PDF schema is offered)'
 
 # The settings forms (FormDisplay, Descriptions, Forms/*): generated/pma-forms.json keeps the msgids,
 # translated (and BBCode converted) when a form is rendered.
