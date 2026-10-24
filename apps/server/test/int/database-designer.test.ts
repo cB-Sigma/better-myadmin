@@ -134,9 +134,10 @@ describe('designer', () => {
     )
     expect(r.message.text).toBe('Internal relationship has been added.')
     r = J(await app.req('GET', `${base}/designer/export?page=-1`))
-    expect(r.plugins.map((p: Any) => p.name)).toEqual(['dia', 'eps', 'svg'])
-    expect(r.choice).toBe('dia')
-    expect(r.plugins[2].options[0].items.map((i: Any) => [i.name, i.checked ?? i.value])).toEqual([
+    expect(r.plugins.map((p: Any) => p.name)).toEqual(['dia', 'eps', 'pdf', 'svg'])
+    // $cfg['Schema']['format'] (pdf)
+    expect(r.choice).toBe('pdf')
+    expect(r.plugins[3].options[0].items.map((i: Any) => [i.name, i.checked ?? i.value])).toEqual([
       ['svg_show_color', true],
       ['svg_show_keys', false],
       ['svg_all_tables_same_width', false],
@@ -152,7 +153,7 @@ describe('designer', () => {
     expect(r.fileName).toBe(`${DB}.svg`)
     expect(r.mediaType).toBe('image/svg+xml')
     expect(r.data).toContain('<line ')
-    const bad = await app.req('POST', `${base}/schema-export`, { export_type: 'pdf', tables: [] })
+    const bad = await app.req('POST', `${base}/schema-export`, { export_type: 'nope', tables: [] })
     expect(bad.status).toBe(400)
     expect(JSON.stringify(bad.json)).toContain('Bad type!')
     r = J(

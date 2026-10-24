@@ -602,8 +602,9 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
         tables: positions(),
       })
       .then((d) => {
-        // Core::downloadHeader: the browser saves the file
-        const url = URL.createObjectURL(new Blob([d.data], { type: d.mediaType }))
+        // Core::downloadHeader: the browser saves the file (a binary format comes base64-encoded)
+        const body = d.encoding === 'base64' ? Uint8Array.from(atob(d.data), (c) => c.charCodeAt(0)) : d.data
+        const url = URL.createObjectURL(new Blob([body], { type: d.mediaType }))
         const a = document.createElement('a')
         a.href = url
         a.download = d.fileName

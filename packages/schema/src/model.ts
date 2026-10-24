@@ -19,6 +19,39 @@ export interface SchemaTableData {
   internal: Array<{ masterField: string; foreignTable: string; foreignField: string }>
   /** Relation::getForeignKeysData */
   foreignKeys: Array<{ refTableName: string | null; indexList: string[]; refIndexList: string[] }>
+  /** what the PDF data dictionary prints (collected only for PDF with pdf_with_doc) */
+  doc?: SchemaTableDoc
+}
+
+/**
+ * One table of the PDF data dictionary.
+ * pma: PdfRelationSchema::dataDictionaryDoc (getColumns, getComments, getMime, getStatusInfo,
+ *      searchColumnInForeigners)
+ */
+export interface SchemaTableDoc {
+  /** DatabaseInterface::getColumns, with Util::extractColumnSpec's print_type and attribute */
+  columns: Array<{
+    field: string
+    printType: string
+    attribute: string
+    isNull: boolean
+    default: string | null
+    extra: string
+  }>
+  /** Relation::getComments: the non-empty column comments */
+  comments: Record<string, string>
+  /** Transformations::getMime(…, strict): column → mimetype (null without the feature) */
+  mime: Record<string, string> | null
+  /** the table's Comment and its localised Create_time / Update_time / Check_time ('' when unset) */
+  comment: string
+  createTime: string
+  updateTime: string
+  checkTime: string
+  /** searchColumnInForeigners per column; onUpdate / onDelete only for FOREIGN KEYs */
+  foreigners: Record<
+    string,
+    { db: string; table: string; field: string; onUpdate?: string; onDelete?: string }
+  >
 }
 
 export interface SchemaRequest {
@@ -41,12 +74,25 @@ export interface SchemaRequest {
   date?: string
   /** `Schema of the %s database - Page %s` (translated) */
   titleFormat: string
+  /** the msgid translation (PDF), identity when absent */
+  t?: (msgid: string) => string
+  /** Util::localisedDate(now) for the PDF footer */
+  localisedDate?: string
+  /**
+   * The PDF page header with the data dictionary: ucfirst(page_descr) of the saved page, absent
+   * offline, for page -1 or without the pdf feature ("PDF export page")
+   */
+  pageTitle?: string
+  /** the PDF's creation date */
+  now?: Date
 }
 
 export interface SchemaResult {
   fileName: string
   mediaType: string
+  /** the file: text, or base64 for a binary format (PDF) */
   data: string
+  encoding?: 'base64'
 }
 
 /** (string) $float */

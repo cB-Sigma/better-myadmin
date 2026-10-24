@@ -1,2 +1,11 @@
 # the Bootstrap modal puts its × first in the header; our Dialog renders it last, after the footer
 ignoreOrder: ['Export relational schema']
+rules:
+  # the reference is built without TCPDF: SchemaPdf::isAvailable is false there, so it lists no PDF
+  # and falls back to Dia for $cfg['Schema']['format'] = 'pdf'; ours needs no TCPDF and, as
+  # phpMyAdmin with TCPDF, lists PDF and selects it with its options shown
+  - match: { kind: select, label: 'Select export relational type:', step: initial }
+    ignore: [value, options]
+    reason: the reference has no TCPDF (no PDF schema plugin); ours offers PDF and selects the configured format
+  - ours: { name: '/^pdf_(all_tables_same_width|show_grid|with_doc|table_order)$/', step: initial }
+    added: the PDF plugin's own options, shown for the selected PDF format (the reference has no TCPDF)
