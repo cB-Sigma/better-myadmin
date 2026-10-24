@@ -1,5 +1,6 @@
 import { FindReplaceRequest, SearchRequest, ZoomRequest, ZoomRowRequest } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
+import { recordHistory, shownSql } from '../metadata/hooks.ts'
 import {
   findReplace,
   findReplacePreview,
@@ -50,5 +51,7 @@ tableSearchRoutes.post('/:db/tables/:t/find-replace/preview', async (c) => {
 
 tableSearchRoutes.post('/:db/tables/:t/find-replace', async (c) => {
   const req = parse(FindReplaceRequest, await body(c))
-  return respond(c, await withScope(c, (x) => findReplace(x, req), { meta: false }))
+  const r = await withScope(c, (x) => findReplace(x, req), { meta: false })
+  await recordHistory(c, { db: c.req.param('db'), table: c.req.param('t'), sqlQuery: shownSql(r) })
+  return respond(c, r)
 })

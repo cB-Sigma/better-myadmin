@@ -26,6 +26,7 @@ import { type Context, Hono } from 'hono'
 import { getServer } from '../config.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { jsonBody, parse } from '../http/validate.ts'
+import { recordHistory, shownSql } from '../metadata/hooks.ts'
 import { centralColumnsAdd, centralColumnsRemove, centralList } from '../table/central-columns.ts'
 import {
   type DdlCtx,
@@ -224,17 +225,18 @@ tableStructureRoutes.get('/:db/create-table/form', async (c) => {
 tableStructureRoutes.post('/:db/tables', async (c) => {
   const req = parse(CreateTableRequest, await jsonBody(c))
   const db = c.req.param('db')
-  return respond(
-    c,
-    await withReader(c, (reader) =>
-      createTable({ reader, cfg: c.get('deps').cfg, tr: c.get('tr'), db }, req),
-    ),
+  const r = await withReader(c, (reader) =>
+    createTable({ reader, cfg: c.get('deps').cfg, tr: c.get('tr'), db }, req),
   )
+  await recordHistory(c, { db: r.db, table: r.table, sqlQuery: shownSql(r) })
+  return respond(c, r)
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/add', async (c) => {
   const req = parse(AddColumnsRequest, await jsonBody(c))
-  return respond(c, await withTable(c, (x) => addColumns(x, req)))
+  const r = await withTable(c, (x) => addColumns(x, req))
+  await recordHistory(c, { db: c.req.param('db'), table: c.req.param('t'), sqlQuery: shownSql(r) })
+  return respond(c, r)
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/change', async (c) => {
@@ -255,7 +257,9 @@ tableStructureRoutes.post('/:db/tables/:t/columns/key', async (c) => {
     throw new ValidationError(c.get('tr').gettext('Invalid request parameter.'))
   }
   const req = parse(AddKeyRequest, body)
-  return respond(c, await withTable(c, (x) => addKey(x, req)))
+  const r = await withTable(c, (x) => addKey(x, req))
+  await recordHistory(c, { db: c.req.param('db'), table: c.req.param('t'), sqlQuery: shownSql(r) })
+  return respond(c, r)
 })
 
 tableStructureRoutes.post('/:db/tables/:t/columns/move', async (c) => {

@@ -46,6 +46,10 @@ export async function recordHistory(c: Context<ServerEnv>, current: CurrentQuery
   }
 }
 
+/** The statement an action showed in its message (Generator::getMessage of `Current::$sqlQuery`). */
+export const shownSql = (r: { messages?: ReadonlyArray<{ sql?: string | undefined }> | undefined }): string =>
+  r.messages?.find((m) => m.sql !== undefined && m.sql !== '')?.sql ?? ''
+
 /**
  * After an SQL-box request: StatementHistory (inner middleware) then RecentTableHandling (outer, with
  * the request's own db/table parameters). Metadata failures never fail the query.

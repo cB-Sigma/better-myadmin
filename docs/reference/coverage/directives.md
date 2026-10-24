@@ -61,11 +61,11 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NavigationTreeDisplayItemFilterMinimum` | apps/server/src/navigation/tree.ts:647 |  |
 | ✅ | `NavigationTreeEnableExpansion` | apps/server/src/navigation/nodes.ts:307<br>apps/server/src/navigation/nodes.ts:313<br>apps/server/src/navigation/service.ts:63<br>apps/server/src/navigation/service.ts:116<br>apps/server/src/navigation/tree.ts:335 |  |
 | ✅ | `NavigationTreeEnableGrouping` | apps/server/src/navigation/nodes.ts:184<br>apps/server/src/navigation/nodes.ts:447<br>apps/server/src/navigation/nodes.ts:578 |  |
-| ✅ | `NavigationTreePointerEnable` | apps/server/src/navigation/service.ts:61<br>apps/web/src/features/navigation/NavTree.tsx:94 |  |
+| ✅ | `NavigationTreePointerEnable` | apps/server/src/navigation/service.ts:61<br>apps/web/src/features/navigation/NavTree.tsx:95 |  |
 | ✅ | `NavigationTreeTableSeparator` | apps/server/src/database/structure.ts:112<br>apps/server/src/database/structure.ts:143<br>apps/server/src/navigation/nodes.ts:579 |  |
 | ✅ | `NavigationWidth` | apps/server/src/routes/metadata.ts:697<br>apps/server/src/navigation/service.ts:59<br>apps/web/src/features/navigation/NavigationPanel.tsx:137 |  |
 | ✅ | `NumFavoriteTables` | apps/server/src/database/structure.ts:200<br>apps/server/src/metadata/service.ts:302<br>apps/server/src/navigation/service.ts:72<br>apps/server/src/routes/metadata.ts:413<br>apps/server/src/routes/metadata.ts:503 |  |
-| ✅ | `NumRecentTables` | apps/server/src/metadata/hooks.ts:59<br>apps/server/src/metadata/service.ts:301<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/routes/metadata.ts:412<br>apps/server/src/routes/metadata.ts:450 |  |
+| ✅ | `NumRecentTables` | apps/server/src/metadata/hooks.ts:81<br>apps/server/src/metadata/service.ts:301<br>apps/server/src/navigation/service.ts:71<br>apps/server/src/routes/metadata.ts:412<br>apps/server/src/routes/metadata.ts:450 |  |
 | ✅ | `PmaAbsoluteUri` | apps/server/src/preferences/service.ts:171 |  |
 | ✅ | `ProxyPass` | apps/server/src/util/http-request.ts:35 |  |
 | ✅ | `ProxyUrl` | apps/server/src/util/http-request.ts:71<br>apps/server/src/util/http-request.ts:75 |  |
@@ -153,7 +153,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `ShowAll` | apps/server/src/browse/grid.ts:602<br>apps/server/src/browse/grid.ts:870<br>apps/server/src/insert-edit/foreign.ts:22 |  |
 | ✅ | `ShowBrowseComments` | apps/server/src/browse/grid.ts:633 |  |
 | ✅ | `ShowSQL` | apps/server/src/browse/actions.ts:102<br>apps/server/src/query/message.ts:91<br>apps/web/src/features/sql/message-card.ts:27 |  |
-| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:372<br>apps/web/src/features/navigation/NavigationPanel.tsx:584<br>packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:866<br>apps/server/src/navigation/service.ts:76 |  |
+| ✅ | `TableNavigationLinksMode` | apps/web/src/features/navigation/NavTree.tsx:384<br>apps/web/src/features/navigation/NavigationPanel.tsx:584<br>packages/ui/src/components/icon.tsx:43<br>apps/server/src/browse/grid.ts:866<br>apps/server/src/navigation/service.ts:76 |  |
 | ✅ | `TablePrimaryKeyOrder` | apps/server/src/browse/service.ts:94<br>apps/server/src/browse/service.ts:99 |  |
 | ✅ | `TextareaAutoSelect` | apps/server/src/routes/sql.ts:194<br>apps/web/src/features/sql/SqlPage.tsx:406 |  |
 
@@ -161,7 +161,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 
 |  | Directive | Read at | Detail |
 |---|---|---|---|
-| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1315<br>apps/server/src/routes/insert-edit.ts:146<br>apps/server/src/routes/table-structure.ts:135<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:111 |  |
+| ✅ | `BrowseMIME` | apps/server/src/browse/grid.ts:1315<br>apps/server/src/routes/insert-edit.ts:146<br>apps/server/src/routes/table-structure.ts:136<br>apps/server/src/table/ddl.ts:343<br>apps/server/src/table/forms.ts:111 |  |
 | ✅ | `CharEditing` | apps/server/src/insert-edit/form.ts:691<br>apps/server/src/table/forms.ts:97 |  |
 | ✅ | `CharTextareaCols` | apps/server/src/insert-edit/form.ts:584<br>apps/server/src/insert-edit/form.ts:700 |  |
 | ✅ | `DefaultFunctions` | apps/server/src/insert-edit/form.ts:361 |  |
@@ -175,7 +175,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `NaturalOrder` | apps/server/src/browse/actions.ts:222<br>apps/server/src/browse/actions.ts:224<br>apps/server/src/database/context.ts:189<br>apps/server/src/database/structure.ts:169<br>apps/server/src/database/tables.ts:77 |  |
 | ✅ | `ShowFieldTypesInDataEditView` | apps/server/src/insert-edit/form.ts:449 |  |
 | ✅ | `ShowFunctionFields` | apps/server/src/database/routines.ts:416<br>apps/server/src/database/routines.ts:457<br>apps/server/src/insert-edit/form.ts:356<br>apps/server/src/insert-edit/form.ts:383<br>apps/server/src/insert-edit/form.ts:403 |  |
-| ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/routes/table-structure.ts:135<br>apps/server/src/table/structure-page.ts:107 |  |
+| ✅ | `ShowPropertyComments` | apps/server/src/insert-edit/form.ts:347<br>apps/server/src/routes/table-structure.ts:136<br>apps/server/src/table/structure-page.ts:107 |  |
 | ✅ | `SQLQuery/Edit` | apps/server/src/query/message.ts:116<br>apps/server/src/query/message.ts:126 | read under a computed name — cfg.SQLQuery read by key (Generator::getMessage) |
 
 ## 04 table level — 5/5 (100.0%) covered, 5/5 implemented
@@ -185,7 +185,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DisableMultiTableMaintenance` | apps/server/src/database/structure.ts:207<br>apps/server/src/table/maintenance.ts:65 |  |
 | ✅ | `Export/sql_auto_increment` | packages/export/src/plugins/sql.ts:254<br>packages/export/src/plugins/sql.ts:1584 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `HideStructureActions` | apps/server/src/table/structure-page.ts:375<br>apps/web/src/features/table/structure/StructurePage.tsx:271 |  |
-| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:287<br>apps/server/src/table/structure-page.ts:379 |  |
+| ✅ | `ReservedWordDisableWarning` | apps/server/src/routes/table-structure.ts:291<br>apps/server/src/table/structure-page.ts:379 |  |
 | ✅ | `ShowStats` | apps/server/src/database/structure.ts:190<br>apps/server/src/table/structure-page.ts:266<br>apps/server/src/table/structure-page.ts:376 |  |
 
 ## 05 database level — 31/31 (100.0%) covered, 24/31 implemented
@@ -417,7 +417,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `Import/ldi_escaped` | packages/import/src/plugins/csv.ts:45<br>packages/import/src/plugins/csv.ts:469 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ✅ | `Import/ldi_terminated` | packages/import/src/plugins/csv.ts:43<br>packages/import/src/plugins/csv.ts:467 | read under a computed name — option or page-setting name (Plugins::getDefault) |
 | ➖ | `Import/sql_read_as_multibytes` |  | n/a: phpMyAdmin reads it nowhere but the Import settings form (Q12) |
-| ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:243 |  |
+| ✅ | `MaxDbList` | apps/server/src/server-admin/databases.ts:126<br>apps/server/src/server-admin/databases.ts:196<br>apps/server/src/server-admin/databases.ts:271<br>apps/server/src/server-admin/databases.ts:272<br>apps/server/src/table/operations.ts:244 |  |
 | ✅ | `MaxRoutineList` | apps/server/src/database/routines.ts:90 |  |
 | ✅ | `MaxTableList` | apps/server/src/database/structure.ts:93<br>apps/server/src/database/structure.ts:220<br>apps/server/src/database/structure.ts:431 |  |
 | ✅ | `MemoryLimit` | apps/server/src/import/service.ts:94 |  |
@@ -463,7 +463,7 @@ Every phpMyAdmin `$cfg` directive in `packages/config` (BetterMyAdmin additions 
 | ✅ | `DBG/sql` | apps/server/src/app.ts:181<br>apps/server/src/http/sql-log.ts:31<br>apps/server/src/routes/browse.ts:41<br>apps/server/src/routes/console.ts:65<br>apps/server/src/routes/insert-edit.ts:132 |  |
 | ✅ | `DBG/sqllog` | apps/server/src/http/sql-log.ts:31 |  |
 | ✅ | `EnableAutocompleteForTablesAndColumns` | apps/server/src/routes/sql.ts:92<br>apps/server/src/routes/sql.ts:191 |  |
-| ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:159<br>apps/server/src/insert-edit/save.ts:265<br>apps/server/src/query/pipeline.ts:214<br>apps/server/src/query/pipeline.ts:521 |  |
+| ✅ | `IgnoreMultiSubmitErrors` | apps/server/src/import/service.ts:159<br>apps/server/src/insert-edit/save.ts:281<br>apps/server/src/query/pipeline.ts:214<br>apps/server/src/query/pipeline.ts:521 |  |
 | ✅ | `LintEnable` | apps/server/src/routes/sql.ts:190<br>apps/web/src/features/sql/SqlPage.tsx:137 |  |
 | ✅ | `MaxCharactersInDisplayedSQL` | apps/server/src/browse/actions.ts:86<br>apps/server/src/metadata/service.ts:300<br>apps/server/src/query/message.ts:49<br>apps/server/src/query/message.ts:50<br>apps/server/src/query/message.ts:96 |  |
 | ✅ | `RetainQueryBox` | apps/server/src/routes/sql.ts:188<br>apps/web/src/features/sql/SqlPage.tsx:97 |  |

@@ -1,6 +1,7 @@
 import { AccountLockRequest, ExportPrivilegesRequest, PrivForm } from '@bettermyadmin/contracts'
 import { type Context, Hono } from 'hono'
 import { parse, parseJson } from '../http/validate.ts'
+import { recordHistory } from '../metadata/hooks.ts'
 import {
   accountLock,
   addUserForm,
@@ -57,7 +58,9 @@ privilegesRoutes.get('/privileges/validate-username', async (c) => {
 /** pma: /server/privileges (POST: add user, update/revoke privileges, password, copy, delete, user group; ?flush_privileges=1) */
 privilegesRoutes.post('/privileges', async (c) => {
   const post = await parseJson(c, PrivForm, {})
-  return c.json(await withPrivileges(c, post, getForm(c), privilegesAction))
+  const r = await withPrivileges(c, post, getForm(c), privilegesAction)
+  await recordHistory(c, { db: '', table: '', sqlQuery: r.sql })
+  return c.json(r)
 })
 
 /** pma: /server/privileges?export=1 (one account) / submit_mult=export (selected accounts) */

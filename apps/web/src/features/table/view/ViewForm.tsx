@@ -202,7 +202,7 @@ function ViewFields({
 }
 
 /** the form state, the save and its messages */
-function useViewSave(scope: Scope, form: ViewFormResponse | undefined) {
+function useViewSave(scope: Scope, form: ViewFormResponse | undefined, table?: string) {
   const qc = useQueryClient()
   const [view, setView] = useState<ViewData | null>(null)
   const [messages, setMessages] = useState<SqlMessage[]>([])
@@ -215,7 +215,7 @@ function useViewSave(scope: Scope, form: ViewFormResponse | undefined) {
     if (form === undefined || current === null) return null
     try {
       const as = editor.current?.getValue() ?? current.as
-      const r = await api.viewSave(scope, { operation: form.operation, view: { ...current, as } })
+      const r = await api.viewSave(scope, { operation: form.operation, view: { ...current, as }, table })
       setMessages(r.messages)
       if (!r.ok) return null
       await qc.invalidateQueries({ queryKey: qk.nav(scope.server) })
@@ -232,7 +232,7 @@ function useViewSave(scope: Scope, form: ViewFormResponse | undefined) {
 export function ViewCreatePage({ server, db, table, sql }: Scope & { table?: string; sql?: string }) {
   const scope = { server, db }
   const q = useViewForm(scope, { table, sql })
-  const s = useViewSave(scope, q.data)
+  const s = useViewSave(scope, q.data, table)
   const navigate = useNavigate()
   if (q.isError) return <ResultMessages messages={[errorMessage(q.error)]} />
   if (q.data === undefined || s.view === null) return null

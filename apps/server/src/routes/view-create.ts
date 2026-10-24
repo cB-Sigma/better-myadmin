@@ -1,6 +1,7 @@
 import { ViewSaveRequest } from '@bettermyadmin/contracts'
 import { Hono } from 'hono'
 import { withDb } from '../database/context.ts'
+import { recordHistory, shownSql } from '../metadata/hooks.ts'
 import { saveView, viewForm } from '../table/view-create.ts'
 import type { ServerEnv } from './server.ts'
 import { body, parse, respond } from './table-scope.ts'
@@ -19,5 +20,8 @@ viewCreateRoutes.get('/:db/views/form', async (c) =>
 /** POST …/views (createview / alterview) */
 viewCreateRoutes.post('/:db/views', async (c) => {
   const req = parse(ViewSaveRequest, await body(c))
-  return respond(c, await withDb(c, (ctx) => saveView(ctx, req)))
+  const r = await withDb(c, (ctx) => saveView(ctx, req))
+  // Current::$table: the table the dialog was opened from (the posted table parameter)
+  await recordHistory(c, { db: c.req.param('db'), table: req.table ?? '', sqlQuery: shownSql(r) })
+  return respond(c, r)
 })

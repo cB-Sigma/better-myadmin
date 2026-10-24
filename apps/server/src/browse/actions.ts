@@ -249,7 +249,7 @@ export async function columnValues(
 export async function gridSave(
   x: BrowseCtx,
   req: z.output<typeof GridSaveRequest>,
-): Promise<GridSaveResponse> {
+): Promise<{ body: GridSaveResponse; history: string }> {
   const { conn, settings, tr } = x
   await conn.query(`USE ${backquote(req.db)}`, 'query.select-db')
   const info = conn.serverInfo
@@ -292,9 +292,11 @@ export async function gridSave(
     }
   }
   const sql = queries.join(';\n')
+  // the SQL history entry: InsertEdit::executeSqlQuery sets Current::$sqlQuery before running them
+  const history = queries.length > 0 ? `${queries.join('; ')};` : ''
   if (errors.length > 0) {
     const body: GridSaveResponse = { success: false, message: errors.join('\n'), sql }
-    return body
+    return { body, history }
   }
   let message = sprintf(tr.ngettext('%1$d row affected.', '%1$d rows affected.', affected), affected)
   const warnings = await conn.rows('SHOW WARNINGS', 'query.warnings')
@@ -342,7 +344,7 @@ export async function gridSave(
     sql: queries.length > 0 ? sql : '',
     ...(recheck !== undefined ? { recheck } : {}),
   }
-  return body
+  return { body, history }
 }
 
 /**

@@ -19,7 +19,7 @@ export const pmaControls = {
   // pma: resources/js/modules/functions/handleCreateViewModal.ts
   'js:modules/functions/handleCreateViewModal.ts#ajax:POST /view/create': {
     file: 'ViewForm.tsx',
-    match: 'api.viewSave(scope, { operation: form.operation, view: { ...current, as } })',
+    match: 'api.viewSave(scope, { operation: form.operation, view: { ...current, as }, table })',
   },
   "js:modules/functions/handleCreateViewModal.ts#ajax:POST <$this.attr('href')>": {
     file: 'ViewForm.tsx',

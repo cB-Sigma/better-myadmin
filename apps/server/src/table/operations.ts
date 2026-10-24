@@ -36,6 +36,7 @@ import { AlterStatement, Context as Ctx, Expression, Parser, parseAnalyze } from
 import type { z } from 'zod'
 import type { ServerConfig } from '../config.ts'
 import { MysqlError } from '../http/errors.ts'
+import type { CurrentQuery } from '../metadata/hooks.ts'
 import { strnatcasecmp } from '../navigation/php.ts'
 import { getPrivileges } from '../navigation/privileges.ts'
 import type { DdlCtx } from './ddl.ts'
@@ -435,7 +436,10 @@ async function adjustPrivilegesCopy(
 // ---------------------------------------------------------------- move / copy
 
 /** pma: Operations::moveOrCopyTable + TableMover::moveCopy (MoveMode::SingleTable) */
-export async function moveCopy(ctx: OpsCtx, req: Out<typeof MoveCopyRequest>) {
+export async function moveCopy(
+  ctx: OpsCtx,
+  req: Out<typeof MoveCopyRequest>,
+): Promise<OperationsResponse & { history?: CurrentQuery }> {
   const { reader, tr, db, table } = ctx
   const move = req.op === 'move'
   await reader.selectDb(db)
@@ -471,7 +475,7 @@ export async function moveCopy(ctx: OpsCtx, req: Out<typeof MoveCopyRequest>) {
   }
   let newName = req.newName
   if ((await reader.dbi.getLowerCaseNames()) === 1) newName = newName.toLowerCase()
-  return {
+  const r = {
     messages: [
       msg(
         'success',
@@ -481,6 +485,9 @@ export async function moveCopy(ctx: OpsCtx, req: Out<typeof MoveCopyRequest>) {
     db: move || req.switchToNew ? targetDb : db,
     table: move || req.switchToNew ? newName : table,
   } satisfies OperationsResponse
+  // the SQL history entry (not shown: phpMyAdmin's message carries no query): the mover's statements,
+  // with Current::$database moved along and Current::$table the new name
+  return { ...r, history: { db: move ? targetDb : db, table: newName, sqlQuery: st.sqlQuery } }
 }
 
 const fail = (text: string): OperationsResponse => ({ messages: [msg('error', text)] })

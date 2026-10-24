@@ -17,7 +17,7 @@ import {
   gridValue,
 } from '../browse/actions.ts'
 import { parseJson } from '../http/validate.ts'
-import { afterSqlBox } from '../metadata/hooks.ts'
+import { afterSqlBox, recordHistory } from '../metadata/hooks.ts'
 import { withMeta } from '../metadata/service.ts'
 import { setTrackedDatabase } from '../table/tracker.ts'
 import type { ServerEnv } from './server.ts'
@@ -67,7 +67,9 @@ browseRoutes.post('/values', async (c) => {
 /** POST /browse/save — pma: /table/replace (grid edit) */
 browseRoutes.post('/save', async (c) => {
   const req = await parseJson(c, GridSaveRequest)
-  return c.json(await withBrowse(c, req.db, (x) => gridSave(x, req)))
+  const r = await withBrowse(c, req.db, (x) => gridSave(x, req))
+  await recordHistory(c, { db: req.db, table: req.table, sqlQuery: r.history })
+  return c.json(r.body)
 })
 
 /** POST /browse/delete-rows — pma: /table/delete/rows (then the original query again) */

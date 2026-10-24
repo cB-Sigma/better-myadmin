@@ -25,6 +25,7 @@ import {
   getUniqueCondition,
 } from '@bettermyadmin/sql-gen'
 import bcrypt from 'bcryptjs'
+import { recordSqlBoxHistory } from '../metadata/hooks.ts'
 import { formatSqlForDisplay, getMessageCard } from '../query/message.ts'
 import { checkSqlSignature } from '../query/signature.ts'
 import { phpRegex } from '../util/php-regex.ts'
@@ -77,6 +78,20 @@ function readUploadDirFile(ctx: IeCtx, name: string): { content: Buffer } | { er
 
 /** POST …/rows (pma: /table/replace) */
 export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRowsResponse> {
+  const ran = { sql: '' }
+  try {
+    return await save(ctx, req, ran)
+  } finally {
+    // StatementHistory: Current::$sqlQuery starts as the posted sql_query, executeSqlQuery replaces it
+    // with the statements it runs, and the form's "Go back" query (the same sql_query) is put back last
+    const sqlQuery = req.sqlQuery !== '' ? req.sqlQuery : ran.sql
+    await recordSqlBoxHistory(ctx.meta, { current: { db: ctx.db, table: ctx.table, sqlQuery } }).catch((e) =>
+      console.error('metadata history:', e),
+    )
+  }
+}
+
+async function save(ctx: IeCtx, req: SaveRowsRequest, ran: { sql: string }): Promise<SaveRowsResponse> {
   const { tr, cfg } = ctx
   // the Browse query of "Go back": only with a valid signature when one is sent (it came from a URL)
   const backQuery =
@@ -252,6 +267,7 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
 
   // pma: InsertEdit::executeSqlQuery
   const sqlQuery = `${queries.join('; ')};`
+  ran.sql = sqlQuery
   let totalAffectedRows = 0
   const lastMessages: string[] = []
   let warningMessages: string[] = []

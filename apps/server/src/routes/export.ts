@@ -9,6 +9,7 @@ import { exportPageRoutes } from '../export/page.ts'
 import { openExportSession, userDir } from '../export/service.ts'
 import { NotFoundError, ValidationError } from '../http/errors.ts'
 import { parseJson } from '../http/validate.ts'
+import { recordSqlBoxHistory } from '../metadata/hooks.ts'
 import { defaultOfPath } from '../metadata/service.ts'
 import type { ServerEnv } from './server.ts'
 
@@ -48,6 +49,10 @@ exportRoutes.post('/', async (c) => {
   const tr = c.get('tr')
   const s = await openExportSession(c, params.str('db'))
   try {
+    // StatementHistory: an export of a result posts its query (sql_query)
+    await recordSqlBoxHistory(s.meta, {
+      current: { db: params.str('db'), table: params.str('table'), sqlQuery: params.str('sql_query') },
+    }).catch((e) => console.error('metadata history:', e))
     const prepared = await prepareExport(s.env, params).catch(requestError)
     // Export::rememberFilename (UserPreferencesHandler::setUserValue)
     if (prepared.rememberTemplate !== null && prepared.exportType !== 'raw') {

@@ -41,6 +41,8 @@ export type ViewFormResponse = z.infer<typeof ViewFormResponse>
 export const ViewSaveRequest = z.object({
   operation: z.enum(['create', 'alter']),
   view: ViewData,
+  /** the table the dialog was opened from (phpMyAdmin's posted `table`, kept in the SQL history) */
+  table: z.string().optional(),
 })
 export type ViewSaveRequest = z.input<typeof ViewSaveRequest>
 

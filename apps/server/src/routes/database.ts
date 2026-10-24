@@ -76,6 +76,7 @@ import { search, searchForm } from '../database/search.ts'
 import { realRowCountAction, structurePage } from '../database/structure.ts'
 import { trackingAction, trackingPage } from '../database/tracking.ts'
 import { exportTrigger, saveTrigger, triggerData, triggersList } from '../database/triggers.ts'
+import { recordHistory, shownSql } from '../metadata/hooks.ts'
 import { maintenance } from '../table/maintenance.ts'
 import type { ServerEnv } from './server.ts'
 
@@ -109,37 +110,49 @@ databaseRoutes.get('/:db/structure/copy-form', async (c) => c.json(await withDb(
 /** pma: /database/structure/empty-table */
 databaseRoutes.post('/:db/structure/empty', async (c) => {
   const req = parse(BulkFkRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => emptyTables(ctx, req)))
+  const r = await withDb(c, (ctx) => emptyTables(ctx, req))
+  await recordHistory(c, { db: c.req.param('db'), table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: /database/structure/drop-table */
 databaseRoutes.post('/:db/structure/drop', async (c) => {
   const req = parse(BulkFkRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => dropTables(ctx, req)))
+  const r = await withDb(c, (ctx) => dropTables(ctx, req))
+  await recordHistory(c, { db: c.req.param('db'), table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: /database/structure/add-prefix-table */
 databaseRoutes.post('/:db/structure/add-prefix', async (c) => {
   const req = parse(AddPrefixRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => addPrefix(ctx, req)))
+  const r = await withDb(c, (ctx) => addPrefix(ctx, req))
+  await recordHistory(c, { db: c.req.param('db'), table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: /database/structure/replace-prefix */
 databaseRoutes.post('/:db/structure/replace-prefix', async (c) => {
   const req = parse(ReplacePrefixRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => replacePrefix(ctx, req)))
+  const r = await withDb(c, (ctx) => replacePrefix(ctx, req))
+  await recordHistory(c, { db: c.req.param('db'), table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: /database/structure/copy-table-with-prefix */
 databaseRoutes.post('/:db/structure/copy-with-prefix', async (c) => {
   const req = parse(ReplacePrefixRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => copyWithPrefix(ctx, req)))
+  const r = await withDb(c, (ctx) => copyWithPrefix(ctx, req))
+  await recordHistory(c, { db: c.req.param('db'), table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: /database/structure/copy-table */
 databaseRoutes.post('/:db/structure/copy', async (c) => {
   const req = parse(CopyTablesRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => copyTables(ctx, req)))
+  const r = await withDb(c, (ctx) => copyTables(ctx, req))
+  await recordHistory(c, { db: c.req.param('db'), table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: /database/structure/show-create */
@@ -176,13 +189,17 @@ databaseRoutes.post('/:db/operations/collation', async (c) => {
 /** pma: POST /database/operations db_rename=true */
 databaseRoutes.post('/:db/operations/rename', async (c) => {
   const req = parse(DbRenameCopyRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: true, what: 'data' })))
+  const r = await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: true, what: 'data' }))
+  await recordHistory(c, { db: r.db, table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 /** pma: POST /database/operations db_copy=true */
 databaseRoutes.post('/:db/operations/copy', async (c) => {
   const req = parse(DbRenameCopyRequest, await body(c))
-  return c.json(await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: false })))
+  const r = await withDb(c, (ctx) => renameOrCopy(ctx, { ...req, move: false }))
+  await recordHistory(c, { db: r.db, table: '', sqlQuery: shownSql(r) })
+  return c.json(r)
 })
 
 // ---------------------------------------------------------------- Search
