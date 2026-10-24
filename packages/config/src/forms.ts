@@ -84,14 +84,48 @@ const json = data as unknown as {
   userValidators: RawValidators
 }
 
+/**
+ * BetterMyAdmin's own wording of fields whose phpMyAdmin text describes PHP (parity exception X57):
+ * the generated JSON stays phpMyAdmin's, these replace its name / desc.
+ */
+const FIELD_TEXT: Readonly<Record<string, Partial<Pick<FormFieldDef, 'name' | 'desc'>>>> = {
+  'SQLQuery/ShowAsPHP': { name: 'Create JS code' },
+  ShowPhpInfo: {
+    name: 'Show runtime information link',
+    desc: 'Shows a link to the Node.js runtime information (versions, process and memory).',
+  },
+}
+
+/**
+ * Fields that do nothing outside PHP (parity exception X57): kept in the configuration for
+ * compatibility, but no form lists them.
+ */
+export const FORMLESS_FIELDS: ReadonlySet<string> = new Set<string>([
+  // the warning about PHP's session.gc_maxlifetime (parity exception X44: never shown)
+  'LoginCookieValidityDisableWarning',
+  // PHP persistent connections: BetterMyAdmin always pools its connections (X24)
+  'PersistentConnections',
+])
+
+const withoutFormless = (tabs: FormTabDef[]): FormTabDef[] =>
+  tabs.map((t) => ({
+    ...t,
+    forms: t.forms.map((f) => ({
+      ...f,
+      items: f.items.filter((i) => !('path' in i) || !FORMLESS_FIELDS.has(i.path)),
+    })),
+  }))
+
 /** UserFormList, every tab (FeaturesForm lists `Developer` only when UserprefsDeveloperTab). */
-export const USER_FORMS: readonly FormTabDef[] = json.user
+export const USER_FORMS: readonly FormTabDef[] = withoutFormless(json.user)
 /** PageFormList (PageSettings::init groups). */
-export const PAGE_FORMS: readonly FormTabDef[] = json.page
+export const PAGE_FORMS: readonly FormTabDef[] = withoutFormless(json.page)
 /** SetupFormList: the setup script's form sets (Config, Export, Features, …, Servers, Sql). */
-export const SETUP_FORMS: readonly FormTabDef[] = json.setup
+export const SETUP_FORMS: readonly FormTabDef[] = withoutFormless(json.setup)
 /** Every field of the user, page and setup forms. */
-export const FORM_FIELDS: Readonly<Record<string, FormFieldDef>> = json.fields
+export const FORM_FIELDS: Readonly<Record<string, FormFieldDef>> = Object.fromEntries(
+  Object.entries(json.fields).map(([path, def]) => [path, { ...def, ...FIELD_TEXT[path] }]),
+)
 /** ConfigFile `_validators` */
 export const FORM_VALIDATORS: Readonly<Record<string, FormValidator[]>> = normaliseValidators(json.validators)
 /** ConfigFile `_userValidators`; `value:<path>` arguments are read from the base configuration. */

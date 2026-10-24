@@ -192,7 +192,7 @@ describe('validation errors are readable', () => {
       'Servers.1.AllowDeny.order: expected one of "", "deny,allow", "allow,deny", "explicit", got "random"',
       'MaxRows: expected an integer, got "lots"',
       'GridEditing: expected one of "double-click", "click", "disabled", got "triple-click"',
-      'Export.format: expected one of "sql", "codegen", "csv", "excel", "htmlword", "json", "latex", "mediawiki", "ods", "odt", "pdf", "phparray", "texytext", "xml", "yaml", got "docx"',
+      'Export.format: expected one of "sql", "codegen", "csv", "excel", "htmlword", "jsmodule", "json", "latex", "mediawiki", "ods", "odt", "pdf", "phparray", "texytext", "xml", "yaml", got "docx"',
       'DefaultTransformations.Substring.1: expected a list like [0,"all","…"], got "some" (at [1])',
       'FirstDayOfCalendar: must be <= 7, got 9',
     ])

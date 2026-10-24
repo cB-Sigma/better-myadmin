@@ -3,7 +3,6 @@ import { type Gettext, N_, englishTranslator } from '@bettermyadmin/i18n'
 import { type Context, Lexer, Parser, getErrors } from '@bettermyadmin/sql-lexer'
 import type { AppConfig } from '../config.ts'
 import { mbLongerThan, mbSubstr } from '../util/mb.ts'
-import { addslashes } from '../util/php.ts'
 
 export { mbLongerThan }
 
@@ -52,10 +51,14 @@ export function formatSqlForDisplay(sql: string, cfg: AppConfig, truncate = true
   return sql
 }
 
-/** The PHP code of "Create PHP code": `$sql = "…";` with `\n"` + `. "` continuation lines. */
-export function sqlAsPhp(sql: string): string {
-  const newLine = '\\n"\n    . "'
-  return `$sql = "${addslashes(sql).replace(/\r\n|\r|\n/g, newLine)}";`
+/**
+ * The JavaScript of "Create JS code" (phpMyAdmin's "Create PHP code", parity exception X57): one
+ * single-quoted literal per line, joined with `+`, so MySQL's backquotes need no escaping.
+ */
+export function sqlAsCode(sql: string): string {
+  const lines = sql.split(/\r\n|\r|\n/)
+  const lit = (l: string, last: boolean) => `'${l.replace(/[\\']/g, '\\$&')}${last ? '' : '\\n'}'`
+  return `const sql =\n  ${lines.map((l, i) => lit(l, i === lines.length - 1)).join(' +\n  ')};`
 }
 
 const SP = '[ \\t\\n\\r\\v\\f]'
@@ -92,7 +95,7 @@ export async function getMessageCard(sqlQuery: string, o: CardOptions): Promise<
   if (!renderSql) return null
   const sqlBox = cfg.SQLQuery as { Edit: boolean; Explain: boolean; ShowAsPHP: boolean; Refresh: boolean }
 
-  const display = o.showAsPhp === true ? sqlAsPhp(sqlQuery) : formatSqlForDisplay(sqlQuery, cfg)
+  const display = o.showAsPhp === true ? sqlAsCode(sqlQuery) : formatSqlForDisplay(sqlQuery, cfg)
   const queryTooBig = mbLongerThan(sqlQuery, cfg.MaxCharactersInDisplayedSQL)
   const isSelect = new RegExp(`^SELECT${SP}+`, 'i').test(sqlQuery)
 

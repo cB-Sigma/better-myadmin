@@ -224,7 +224,7 @@ describe('storage and the running app', () => {
 })
 
 describe('manage your settings', () => {
-  it('[p08-1c37f1] exports JSON (pretty) and PHP', async () => {
+  it('[p08-1c37f1] exports JSON (pretty); no PHP file (X57)', async () => {
     await root.query('DELETE FROM phpmyadmin.pma__userconfig WHERE username = ?', [USER])
     const t = await app()
     const g = (await t.req('GET', '/api/servers/1/preferences/forms/navigation')).json as Json
@@ -236,17 +236,16 @@ describe('manage your settings', () => {
       headers: { cookie, host: 'example.org:8080' },
     })
     expect(json.headers.get('content-disposition')).toBe(
-      'attachment; filename="phpMyAdmin-config-example.org_3A8080.json"',
+      'attachment; filename="BetterMyAdmin-config-example.org_3A8080.json"',
     )
     expect(await json.text()).toBe(
       '{\n    "NavigationTreeDbSeparator": "__",\n    "2fa": {\n        "backend": "",\n        "settings": [],\n        "type": "db"\n    }\n}',
     )
+    // the config.inc.php snippet is not offered: ?type=php is the same JSON file
     const php = await t.app.request('/api/servers/1/preferences/manage/export?type=php', {
       headers: { cookie },
     })
-    expect(await php.text()).toBe(
-      "/* phpMyAdmin configuration snippet */\n\n/* Paste it to your config.inc.php */\n\n$cfg['NavigationTreeDbSeparator'] = '__';\n$cfg['2fa'] = array (\n  'backend' => '',\n  'settings' => \n  array (\n  ),\n  'type' => 'db',\n);\n",
-    )
+    expect(php.headers.get('content-type')).toBe('application/json')
     const ls = (await t.req('GET', '/api/servers/1/preferences/manage/json')).json as Json
     expect(JSON.parse(ls.prefs)).toEqual({
       NavigationTreeDbSeparator: '__',

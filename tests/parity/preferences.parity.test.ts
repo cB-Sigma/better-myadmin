@@ -224,16 +224,14 @@ describe.skipIf(!available)('parity: user preferences (pma__userconfig)', () => 
     )
   })
 
-  it('[p08-1c37f1] exports the same JSON and PHP files', async () => {
+  // phpMyAdmin's "Save as PHP file" is not offered, and the file is named BetterMyAdmin-config-… (X57)
+  it('[p08-1c37f1] exports the same JSON file', async () => {
     const host = new URL(inst.url).host
     const bmaDownload = (type: string) =>
       bma.app.request(`/api/servers/1/preferences/manage/export?type=${type}`, {
         headers: { cookie: [...bma.jar].map(([k, v]) => `${k}=${v}`).join('; '), host },
       })
-    for (const [type, exportType] of [
-      ['json', 'text_file'],
-      ['php', 'php_file'],
-    ] as const) {
+    for (const [type, exportType] of [['json', 'text_file']] as const) {
       let pmaHeaders: Headers | undefined
       const body = await pma.postPage(
         '/preferences/manage',
@@ -250,7 +248,9 @@ describe.skipIf(!available)('parity: user preferences (pma__userconfig)', () => 
       )
       const res = await bmaDownload(type)
       expect(Buffer.from(await res.arrayBuffer()).toString('latin1'), type).toBe(body)
-      expect(res.headers.get('content-disposition'), type).toBe(pmaHeaders?.get('content-disposition'))
+      expect(res.headers.get('content-disposition'), type).toBe(
+        pmaHeaders?.get('content-disposition')?.replace('phpMyAdmin-config-', 'BetterMyAdmin-config-'),
+      )
       expect(res.headers.get('content-type'), type).toBe(pmaHeaders?.get('content-type'))
     }
   })

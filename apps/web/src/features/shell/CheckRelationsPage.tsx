@@ -266,9 +266,12 @@ export function CheckRelationsPage({ server, db }: { server: number; db: string 
                 </li>
                 <li>
                   <SafeHtml
-                    html={t(
-                      'Enable advanced features in configuration file (<code>config.inc.php</code>), for example by starting from <code>config.sample.inc.php</code>.',
-                    )}
+                    html={
+                      // i18n-new: phpMyAdmin's text names config.inc.php and its sample (parity exceptions X6, X57)
+                      t(
+                        'Enable advanced features in the configuration file (<code>bettermyadmin.config.json</code>), for example by using the setup script.',
+                      )
+                    }
                   />{' '}
                   <DocLink page="setup" anchor="quick-install" />
                 </li>

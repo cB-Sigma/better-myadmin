@@ -11,7 +11,7 @@ export {
   useUiSettings,
 } from './settings.tsx'
 export { iconParts, showIcons, showText } from './lib/link-mode.ts'
-export { mysqlDocUrl, phpDocUrl, pmaDocUrl, serverDocUrl } from './lib/doc-urls.ts'
+export { DOCS_BASE, mysqlDocUrl, pmaDocUrl, serverDocUrl } from './lib/doc-urls.ts'
 export {
   DISMISS_CLICK_MS,
   DISMISS_HINT,

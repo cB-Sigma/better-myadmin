@@ -146,6 +146,8 @@ describe('Export / Import / Schema directives', () => {
     ] as const) {
       for (const [k, want] of Object.entries(cfg[g] as Json)) {
         const key = `${g}/${k}`
+        // phpMyAdmin's PHP array format is not offered (X57): its directive shows nowhere
+        if (key === 'Export/phparray_structure_or_data') continue
         const v = key in page ? page[key] : shown(gotOpts, k)
         const norm = (x: unknown) => (typeof x === 'boolean' ? x : String(x))
         // a text value is shown translated (the LaTeX captions are msgids): the change must show

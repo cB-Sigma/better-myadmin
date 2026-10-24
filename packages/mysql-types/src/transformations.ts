@@ -46,14 +46,17 @@ const INFO = {
   bool2text: N_(
     "Converts Boolean values to text (default 'T' and 'F'). First option is for TRUE, second for FALSE. Nonzero=true.",
   ),
+  // i18n-new: phpMyAdmin's text points to PHP's strftime() and gmdate() (parity exception X57)
   dateFormat: N_(
-    'Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. According to that, date format has different value - for "local" see the documentation for PHP\'s strftime() function and for "utc" it is done using gmdate() function.',
+    'Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. The format string uses strftime-style specifiers (for example %Y-%m-%d %H:%M:%S) for both.',
   ),
+  // i18n-new: phpMyAdmin's text asks to edit a PHP file and names htmlspecialchars() (parity exception X57)
   external: N_(
-    'LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, you have to manually edit the file src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php and list the tools you want to make available. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will convert the output using htmlspecialchars() (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).',
+    'LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, the administrator has to list the tools you want to make available in the TransformationsExternalPrograms setting. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will HTML-escape the output (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).',
   ),
+  // i18n-new: phpMyAdmin's text names htmlspecialchars() (parity exception X57)
   formatted: N_(
-    'Displays the contents of the column as-is, without running it through htmlspecialchars(). That is, the column is assumed to contain valid HTML.',
+    'Displays the contents of the column as-is, without HTML-escaping it. That is, the column is assumed to contain valid HTML.',
   ),
   textImageLink: N_(
     'Displays an image and a link; the column contains the filename. The first option is a URL prefix like "https://www.example.com/". The second and third options are the width and the height in pixels.',

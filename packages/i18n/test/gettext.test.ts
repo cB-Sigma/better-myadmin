@@ -5,6 +5,7 @@ import { compileCatalog } from '../src/compile.ts'
 import { shippedLocales } from '../src/generated/catalog-index.ts'
 import { translatorFor } from '../src/node.ts'
 import { moKey, parsePo } from '../src/po.ts'
+import { productText } from '../src/translator.ts'
 
 interface GettextFixture {
   numbers: number[]
@@ -28,20 +29,31 @@ describe('gettext matches phpMyAdmin (motranslator) on .mo files compiled by pol
   for (const [code, data] of Object.entries(fx.locales)) {
     describe(code, () => {
       const t = translatorFor(code)
+      it("the product name: BetterMyAdmin, but the configuration storage keeps phpMyAdmin's (X33, X57)", () => {
+        const en = translatorFor('en')
+        expect(en.gettext('phpMyAdmin documentation')).toBe('BetterMyAdmin documentation')
+        expect(
+          en.gettext(
+            'The phpMyAdmin configuration storage is not completely configured, some extended features have been deactivated. %sFind out why%s. ',
+          ),
+        ).toContain('phpMyAdmin configuration storage')
+      })
+
       it('gettext', () => {
-        for (const [id, expected] of data.gettext) expect(t.gettext(id), id).toBe(expected)
+        // phpMyAdmin's translation with BetterMyAdmin's product name (X33, X57)
+        for (const [id, expected] of data.gettext) expect(t.gettext(id), id).toBe(productText(id, expected))
       })
       it('ngettext (plural form selection included)', () => {
         for (const [one, many, expected] of data.ngettext) {
           expect(
             fx.numbers.map((n) => t.ngettext(one, many, n)),
             one,
-          ).toEqual(expected)
+          ).toEqual((expected as string[]).map((e) => productText(one, e)))
         }
       })
       it('pgettext', () => {
         for (const [ctx, id, expected] of data.pgettext)
-          expect(t.pgettext(ctx, id), `${ctx}|${id}`).toBe(expected)
+          expect(t.pgettext(ctx, id), `${ctx}|${id}`).toBe(productText(id, expected))
       })
     })
   }

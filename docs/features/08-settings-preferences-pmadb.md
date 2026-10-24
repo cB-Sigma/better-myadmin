@@ -608,14 +608,14 @@ Settings pages
 Manage your settings
 - [x] Import-from-browser and Save-to-browser radios are disabled until JS enables them; unsupported localStorage shows the unsupported notice and disables submit. <!-- parity:test --> `p08-0d82bc` [preferences.e2e.ts:224](../../tests/e2e/preferences.e2e.ts#L224) +1
 - [x] Import shows *Saved on: <local date>* from `localStorage.configMtimeLocal` or *You have no saved settings!*; submit disabled when importing from an empty storage. <!-- parity:test --> `p08-10a75c` [configForm.test.ts:97](../../apps/web/src/features/preferences/configForm.test.ts#L97) +1
-- [x] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest). <!-- parity:test --> `p08-f18efc` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258) +1
-- [x] Merge checkbox keeps existing prefs under imported ones; otherwise import starts from defaults (prefs not in the file are reset). <!-- parity:test --> `p08-d20c19` [preferences.test.ts:258](../../apps/server/test/int/preferences.test.ts#L258)
+- [x] Imported JSON is sanitised as if posted field by field; bad values trigger the two-step *Do you want to import remaining settings?* flow (Yes = fix errors and import rest). <!-- parity:test --> `p08-f18efc` [preferences.test.ts:257](../../apps/server/test/int/preferences.test.ts#L257) +1
+- [x] Merge checkbox keeps existing prefs under imported ones; otherwise import starts from defaults (prefs not in the file are reset). <!-- parity:test --> `p08-d20c19` [preferences.test.ts:257](../../apps/server/test/int/preferences.test.ts#L257)
 - [x] Import applies `ThemeDefault` immediately (theme cookie) and redirects with `lang=` when the language differs. <!-- parity:test --> `p08-5c8c99` [preferences.e2e.ts:283](../../tests/e2e/preferences.e2e.ts#L283)
 - [x] Export JSON is pretty-printed; PHP export emits `$cfg['a']['b'] = ...;` lines; both named `phpMyAdmin-config-<host>.<ext>`. <!-- parity:test --> `p08-1c37f1` [preferences.test.ts:227](../../apps/server/test/int/preferences.test.ts#L227) +1
 - [x] Save-to-browser is an Ajax round-trip (`submit_get_json`), stores `config`, `configMtime`, `configMtimeLocal`, hides the form and shows a click-to-dismiss success message. <!-- parity:test --> `p08-6b7a63` [preferences.e2e.ts:224](../../tests/e2e/preferences.e2e.ts#L224)
-- [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:295](../../apps/server/test/int/preferences.test.ts#L295) +1
+- [x] Reset wipes all prefs (`save([])`) and deletes the `pma_lang` cookie. <!-- parity:test --> `p08-e23faa` [preferences.test.ts:294](../../apps/server/test/int/preferences.test.ts#L294) +1
 - [x] Autoload banner shown once per session when prefs are session-based and `localStorage.config` exists; Yes imports with `return_url` back to the current page; No/Delete hide it for the session (`prefs_autoload=hide`). <!-- parity:test --> `p08-5de125` [preferences.test.ts:157](../../apps/server/test/int/preferences.test.ts#L157)
-- [x] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not. <!-- parity:test --> `p08-953597` [preferences.test.ts:358](../../apps/server/test/int/preferences.test.ts#L358)
+- [x] "More settings" card only when `setup/index.php` exists and `config.inc.php` does not. <!-- parity:test --> `p08-953597` [preferences.test.ts:357](../../apps/server/test/int/preferences.test.ts#L357)
 
 Page settings
 - [x] Gear icon appears only on pages that called `PageSettings::init`; hidden in print view. <!-- parity:test --> `p08-8abc69` [preferences.e2e.ts:79](../../tests/e2e/preferences.e2e.ts#L79)
@@ -624,7 +624,7 @@ Page settings
 - [x] Edit popup shows both Edit-mode and Text-fields groups; Browse popup shows the Browse-mode group only. <!-- parity:test --> `p08-6f0e6e` [preferences.test.ts:199](../../apps/server/test/int/preferences.test.ts#L199)
 
 Two-factor
-- [x] Tab unusable without pmadb (explicit message). <!-- parity:test --> `p08-d68897` [preferences.test.ts:378](../../apps/server/test/int/preferences.test.ts#L378)
+- [x] Tab unusable without pmadb (explicit message). <!-- parity:test --> `p08-d68897` [preferences.test.ts:377](../../apps/server/test/int/preferences.test.ts#L377)
 - [x] Backend list: none, (simple if DBG), application if deps, WebAuthn always, key (U2F) if dep; missing deps listed with composer package names. <!-- parity:test --> `p08-47e665` [webauthn.test.ts:62](../../apps/server/test/unit/webauthn.test.ts#L62) +1
 - [x] Configure is a two-step POST (choose -> setup form -> verify); failure re-renders the setup form with *Two-factor authentication failed[: reason]*. <!-- parity:test --> `p08-38b5dc` [preferences.test.ts:98](../../apps/server/test/int/preferences.test.ts#L98) +1
 - [x] Application secret stable within the session until verified; QR label `phpMyAdmin (<host>)`. <!-- parity:test --> `p08-3db3a5` [preferences.test.ts:98](../../apps/server/test/unit/preferences.test.ts#L98)

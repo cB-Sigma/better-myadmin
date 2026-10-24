@@ -39,7 +39,7 @@ describe('HomeController::checkRequirements', () => {
     const msg = (setupConfigDir: boolean) =>
       homeWarnings(ctx, { ...env, setupConfigDir }).map((w) => w.message)
     expect(msg(true)).toContain(
-      'Directory [code]config[/code], which is used by the setup script, still exists in your phpMyAdmin directory. It is strongly recommended to remove it once phpMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration.',
+      'Directory [code]config[/code], which is used by the setup script, still exists in your BetterMyAdmin directory. It is strongly recommended to remove it once BetterMyAdmin has been configured. Otherwise the security of your server may be compromised by unauthorized people downloading your configuration.',
     )
     expect(msg(false).some((m) => m.includes('[code]config[/code]'))).toBe(false)
   })

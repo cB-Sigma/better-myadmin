@@ -53,6 +53,13 @@ export function checkLink(url: string, http = false, other = false, isSetup = fa
 /** PHP empty() on a preg match group */
 const phpEmpty = (s: string | undefined) => s === undefined || s === '' || s === '0'
 
+/**
+ * BetterMyAdmin's documentation (docs-site/, published by .github/workflows/docs.yml), with
+ * phpMyAdmin's page and anchor names; phpMyAdmin links https://docs.phpmyadmin.net/en/latest/
+ * (parity exception X57). The same base as @bettermyadmin/ui's DOCS_BASE.
+ */
+export const DOCS_BASE = 'https://cb-sigma.github.io/better-myadmin/'
+
 /** MySQLDocumentation::getDocumentationLink (no local docs build) */
 export function getDocumentationLink(
   page: string,
@@ -62,7 +69,7 @@ export function getDocumentationLink(
   let url = `${page}.html`
   if (anchor !== '') url += `#${anchor}`
   const link = opts.linkUrl ?? ((u: string) => pmaLinkUrl(u, opts.isSetup))
-  return link((opts.docsBase ?? 'https://docs.phpmyadmin.net/en/latest/') + url)
+  return link((opts.docsBase ?? DOCS_BASE) + url)
 }
 
 /** Sanitize::convertBBCode */

@@ -3,7 +3,7 @@
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
     "referenceCommit": "6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f",
     "source": "packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php)",
-    "count": 469
+    "count": 470
   },
   "items": [
     {
@@ -845,6 +845,14 @@
       "bma": false,
       "userPref": true,
       "inPma": true
+    },
+    {
+      "key": "Export/jsmodule_structure_or_data",
+      "source": "schema",
+      "type": "enum",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
     },
     {
       "key": "Export/json_pretty_print",

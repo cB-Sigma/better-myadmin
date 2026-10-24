@@ -497,9 +497,12 @@ function ImportForm({ server, page }: { server: number; page: ImportPageResponse
                   aria-describedby="allowInterruptHelp"
                 />{' '}
                 <label className="form-check-label" htmlFor="checkbox_allow_interrupt">
-                  {t(
-                    'Allow the interruption of an import in case the script detects it is close to the PHP timeout limit.',
-                  )}
+                  {
+                    // i18n-new: phpMyAdmin's text names the PHP timeout (parity exception X57)
+                    t(
+                      'Allow the interruption of an import when it gets close to the time limit (ExecTimeLimit).',
+                    )
+                  }
                 </label>
                 <div id="allowInterruptHelp" className="form-text text-fg-muted">
                   {t('This might be a good way to import large files, however it can break transactions.')}

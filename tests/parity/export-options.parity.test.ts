@@ -108,7 +108,6 @@ const FORMATS: Record<string, { opts: Opt[]; odf?: true; noServer?: true; noTabl
     ],
     odf: true,
   },
-  phparray: { opts: [] },
   texytext: { opts: [SOD('texytext'), cb('texytext_columns'), text('texytext_null', 'NIL')] },
   toon: { opts: [text('toon_separator', '|'), text('toon_indent', '4')] },
   xml: {

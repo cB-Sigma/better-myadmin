@@ -4,9 +4,9 @@
 
 Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files that use it. A msgid our code never translates usually means the feature around it is missing: this is the "likely missing features" list, per area and source file (largest gaps first). Dispositions: `tools/parity/map/messages.yaml`.
 
-3436/3437 covered (100.0%): 3290 implemented, 12 exception, 134 n/a, 1 planned. [Summary](README.md).
+3436/3437 covered (100.0%): 3274 implemented, 27 exception, 135 n/a, 1 planned. [Summary](README.md).
 
-## 01 shell navigation auth — 405/405 (100.0%) covered, 350/405 implemented
+## 01 shell navigation auth — 405/405 (100.0%) covered, 349/405 implemented
 
 0 msgids not used yet.
 
@@ -20,7 +20,7 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 03 insert edit transformations — 79/79 (100.0%) covered, 79/79 implemented
+## 03 insert edit transformations — 79/79 (100.0%) covered, 76/79 implemented
 
 0 msgids not used yet.
 
@@ -48,14 +48,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 07 export import — 293/293 (100.0%) covered, 270/293 implemented
+## 07 export import — 293/293 (100.0%) covered, 265/293 implemented
 
 0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## 08 settings preferences pmadb — 665/666 (99.8%) covered, 631/666 implemented
+## 08 settings preferences pmadb — 665/666 (99.8%) covered, 626/666 implemented
 
 1 msgids not used yet.
 
@@ -63,14 +63,14 @@ Every msgid of phpMyAdmin's catalogue, attributed to the templates/PHP/JS files 
 |---|---|---|
 | `resources/js/validator-messages.ts` | 1/20 | `This field is required` |
 
-## 09 sql editor query pipeline — 46/46 (100.0%) covered, 46/46 implemented
+## 09 sql editor query pipeline — 46/46 (100.0%) covered, 45/46 implemented
 
 0 msgids not used yet.
 
 | Source file | Unused / total | Unused msgids |
 |---|---|---|
 
-## other — 122/122 (100.0%) covered, 112/122 implemented
+## other — 122/122 (100.0%) covered, 111/122 implemented
 
 0 msgids not used yet.
 

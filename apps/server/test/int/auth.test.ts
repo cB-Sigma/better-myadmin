@@ -42,7 +42,7 @@ describe('cookie auth', () => {
     expect(r.json.error).toMatchObject({
       code: 'CSRF',
       message:
-        'Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin.',
+        'Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access BetterMyAdmin.',
     })
   })
 

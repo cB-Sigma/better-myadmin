@@ -144,8 +144,9 @@ export async function runFileImport(
     } else {
       const html = convertBBCode(
         tr,
+        // i18n-new: phpMyAdmin's text names the PHP configuration and its FAQ 1.16 (parity exception X57)
         __(
-          'No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc].',
+          'No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).',
         ),
       )
       // Current::$message (page header) and the same message added to the page
@@ -315,7 +316,8 @@ export async function runFileImport(
           .replace('%s', '</a>'),
       }
       if (imp.offset === 0 || originalSkip === imp.offset) {
-        message.html += ` ${__("However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits.")}`
+        // i18n-new: phpMyAdmin's text asks for higher PHP time limits (parity exception X57)
+        message.html += ` ${__("However on last run no data has been parsed, this usually means BetterMyAdmin won't be able to finish this import unless you increase the time limit (ExecTimeLimit).")}`
       }
     }
     const echoed = imp.echoed.length > 0 ? { echoed: imp.echoed } : {}

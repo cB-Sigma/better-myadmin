@@ -4,11 +4,16 @@
  */
 
 /**
- * phpMyAdmin documentation (we document the same directives, so links keep pointing there).
- * pma: src/Html/MySQLDocumentation.php::getDocumentationLink (no local docs/html build)
+ * BetterMyAdmin's documentation (docs-site/, published to GitHub Pages by .github/workflows/docs.yml),
+ * which keeps phpMyAdmin's page and anchor names (`config.html#cfg_<Directive>`, `faq.html#faq1-16`);
+ * phpMyAdmin links https://docs.phpmyadmin.net/en/latest/ (parity exception X57). The same base as
+ * @bettermyadmin/i18n's DOCS_BASE (BBCode `[doc@…]` links).
  */
+export const DOCS_BASE = 'https://cb-sigma.github.io/better-myadmin/'
+
+/** A documentation page (and anchor). pma: src/Html/MySQLDocumentation.php::getDocumentationLink */
 export function pmaDocUrl(page: string, anchor = ''): string {
-  return `https://docs.phpmyadmin.net/en/latest/${page}.html${anchor !== '' ? `#${anchor}` : ''}`
+  return `${DOCS_BASE}${page}.html${anchor !== '' ? `#${anchor}` : ''}`
 }
 
 /**
@@ -28,23 +33,4 @@ export function mysqlDocUrl(link: string, anchor = '', serverVersion = 0): strin
 /** pma: src/Util.php::getDocuURL */
 export function serverDocUrl(isMariaDb: boolean, serverVersion = 0): string {
   return isMariaDb ? 'https://mariadb.com/kb/en/documentation/' : mysqlDocUrl('', '', serverVersion)
-}
-
-/**
- * PHP manual language mapping, kept for completeness of the doc-link conventions.
- * pma: src/Core.php::getPHPDocLink
- */
-export function phpDocUrl(target: string, lang = 'en'): string {
-  const map: Record<string, string> = {
-    pt_BR: 'pt_BR',
-    zh_CN: 'zh',
-    zh_TW: 'zh',
-    fr: 'fr',
-    de: 'de',
-    ja: 'ja',
-    ru: 'ru',
-    es: 'es',
-    tr: 'tr',
-  }
-  return `https://www.php.net/manual/${map[lang] ?? 'en'}/${target}`
 }

@@ -177,7 +177,7 @@ describe('BBCode (Sanitize::convertBBCode)', () => {
       '<a href="https://php.net/x" target="_blank" rel="noopener noreferrer">session</a>',
     )
     expect(html('[doc@cfg_blowfish_secret]documentation[/doc]')).toBe(
-      '<a href="https://docs.phpmyadmin.net/en/latest/config.html#cfg_blowfish_secret" target="documentation">documentation</a>',
+      '<a href="https://cb-sigma.github.io/better-myadmin/config.html#cfg_blowfish_secret" target="documentation">documentation</a>',
     )
     expect(html('[doc@faq1-46]x[/doc]')).toContain('faq.html#faq1-46')
   })

@@ -80,7 +80,7 @@ test('config auth with a wrong password shows the failure page [p01-03cad3]', as
   const i = await start({ Servers: [{ ...host, auth_type: 'config', user: USER, password: 'wrong' }] })
   await page.goto(`${i.url}/`)
   await expect(page.getByText(/^1045: Access denied for user 'f01a_e2e'@/)).toBeVisible()
-  await expect(page.getByText(/phpMyAdmin tried to connect to the MySQL server/)).toBeVisible()
+  await expect(page.getByText(/BetterMyAdmin tried to connect to the MySQL server/)).toBeVisible()
   await expect(page.getByRole('link', { name: 'Retry to connect' })).toBeVisible()
 })
 

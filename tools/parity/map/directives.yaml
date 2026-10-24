@@ -150,3 +150,6 @@ LinkLengthLimit:
   n/a: Generator::linkOrButton turns a link whose URL is longer into a POST (data-post); the SPA navigates client-side and sends parameters in API bodies, so no URL length applies
 PDFDefaultPageSize:
   n/a: read only by GisVisualization::asPdfFile, offered when TCPDF is installed, which the reference build does not ship either (no PDF download is offered)
+Export/phparray_structure_or_data:
+  exception: X57
+  note: the PHP array export is replaced by the JavaScript module format (Export/jsmodule_structure_or_data)

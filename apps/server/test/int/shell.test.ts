@@ -346,7 +346,7 @@ describe('GET /api/servers/:s/home (HomeController)', () => {
     const r = await t.req('GET', '/api/servers/1/home', undefined, { host: '' })
     const texts = (r.json.warnings as Array<{ message: string }>).map((w) => w.message)
     expect(texts).toContain(
-      'Login cookie store is lower than cookie validity configured in phpMyAdmin, because of this, your login will expire sooner than configured in phpMyAdmin.',
+      'Login cookie store is lower than cookie validity configured in BetterMyAdmin, because of this, your login will expire sooner than configured in BetterMyAdmin.',
     )
   })
 

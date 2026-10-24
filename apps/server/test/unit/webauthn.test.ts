@@ -68,7 +68,7 @@ describe('WebAuthn backend (pma: src/WebAuthn/CustomServer.php)', () => {
       challenge: string
       rp: { id: string; name: string }
     }
-    expect(options.rp).toEqual({ name: `phpMyAdmin (${HOST})`, id: HOST })
+    expect(options.rp).toEqual({ name: `BetterMyAdmin (${HOST})`, id: HOST })
 
     // the authenticator: an ES256 key
     const { publicKey, privateKey } = generateKeyPairSync('ec', { namedCurve: 'P-256' })

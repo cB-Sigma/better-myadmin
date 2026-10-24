@@ -1,5 +1,6 @@
 import { checkLink } from '@bettermyadmin/i18n'
-import { phpDocUrl } from '@bettermyadmin/ui'
+import { DOCS_BASE as I18N_DOCS_BASE } from '@bettermyadmin/i18n'
+import { DOCS_BASE, pmaDocUrl } from '@bettermyadmin/ui'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
@@ -65,12 +66,10 @@ describe('feature 01 shell', () => {
     )
   })
 
-  it('[p01-62e957] the PHP manual by language; external links go direct with noreferrer instead of /url (X35)', () => {
-    expect(phpDocUrl('function.mysqli-connect.php', 'de')).toBe(
-      'https://www.php.net/manual/de/function.mysqli-connect.php',
-    )
-    expect(phpDocUrl('x.php', 'zh_TW')).toBe('https://www.php.net/manual/zh/x.php')
-    expect(phpDocUrl('x.php', 'xx')).toBe('https://www.php.net/manual/en/x.php')
+  it("[p01-62e957] documentation links go to BetterMyAdmin's docs, direct with noreferrer instead of /url (X35, X57)", () => {
+    // no PHP manual links (X57); the UI and the BBCode links share one documentation base
+    expect(DOCS_BASE).toBe(I18N_DOCS_BASE)
+    expect(pmaDocUrl('config', 'cfg_MaxRows')).toBe(`${DOCS_BASE}config.html#cfg_MaxRows`)
   })
 
   it('[p01-f71193] a hide control on a database child (containers too); a database with hidden items offers to show them', () => {

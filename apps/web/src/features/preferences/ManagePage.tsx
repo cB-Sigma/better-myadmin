@@ -136,11 +136,14 @@ export function ManagePage({ server, saved }: { server: number; saved: boolean }
               <PanelBody>
                 <SafeHtml
                   as="span"
-                  html={t(
-                    'You can set more settings by modifying config.inc.php, eg. by using %sSetup script%s.',
-                    '<a href="/setup" target="_blank">',
-                    '</a>',
-                  )}
+                  html={
+                    // i18n-new: phpMyAdmin's text names config.inc.php (parity exceptions X6, X57)
+                    t(
+                      'You can set more settings by modifying bettermyadmin.config.json, eg. by using %sSetup script%s.',
+                      '<a href="/setup" target="_blank">',
+                      '</a>',
+                    )
+                  }
                 />{' '}
                 <DocLink page="setup" anchor="setup-script" />
               </PanelBody>
@@ -268,7 +271,7 @@ function ImportCard({ onImport, busy }: { onImport: (json: string, merge: boolea
 function ExportCard({ server }: { server: number }) {
   const supported = useMemo(localStorageSupported, [])
   const [exists, setExists] = useState(() => storedPrefs() !== null)
-  const [type, setType] = useState<'text_file' | 'php_file' | 'local_storage'>('text_file')
+  const [type, setType] = useState<'text_file' | 'local_storage'>('text_file')
   const [savedMessage, setSavedMessage] = useState(false)
   const toStorage = useMutation({
     mutationFn: () => api.preferencesJson(server),
@@ -281,7 +284,7 @@ function ExportCard({ server }: { server: number }) {
   const submit = (e: FormEvent) => {
     e.preventDefault()
     if (type === 'local_storage') toStorage.mutate()
-    else window.location.assign(api.preferencesExportUrl(server, type === 'php_file' ? 'php' : 'json'))
+    else window.location.assign(api.preferencesExportUrl(server))
   }
   return (
     <Panel title={t('Export')} className="mt-4">
@@ -307,15 +310,6 @@ function ExportCard({ server }: { server: number }) {
                 onChange={() => setType('text_file')}
               />
               <Label htmlFor="export_text_file"> {t('Save as JSON file')} </Label>
-              <br />
-              <Radio
-                id="export_php_file"
-                name="export_type"
-                value="php_file"
-                checked={type === 'php_file'}
-                onChange={() => setType('php_file')}
-              />
-              <Label htmlFor="export_php_file"> {t('Save as PHP file')} </Label>
               <br />
               <Radio
                 id="export_local_storage"

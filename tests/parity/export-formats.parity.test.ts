@@ -109,7 +109,6 @@ const cases: Array<{ name: string; form: () => Pairs; changes: Changes; odf?: tr
     form: () => tableForm,
     changes: custom('mediawiki', { mediawiki_structure_or_data: 'structure' }),
   },
-  { name: 'php array', form: () => dbForm, changes: custom('phparray') },
   { name: 'texy defaults', form: () => dbForm, changes: custom('texytext') },
   {
     name: 'texy data, columns',

@@ -13,3 +13,4 @@ __pycache__/
 .claude/worktrees/
 test-results/
 playwright-report/
+docs-site/_build/

@@ -254,7 +254,7 @@ export function performConfigChecks(cf: ConfigFile, messages: SetupMessageList, 
           ),
           importExport,
           '[/a]',
-          'bzcompress',
+          'bzip2',
         ),
       ),
     )

@@ -158,6 +158,23 @@ describe('export run', () => {
     expect((third.json.message as { type: string }).type).toBe('success')
   })
 
+  it('JavaScript module: a valid module of the rows, in place of the PHP array (X57)', async () => {
+    const params: Array<[string, string]> = [
+      ...base.filter(([k]) => k !== 'what' && !k.startsWith('sql_')),
+      ['what', 'jsmodule'],
+      ['jsmodule_structure_or_data', 'data'],
+    ]
+    const { prep, res, body } = await download(params)
+    expect(prep.json.filename).toBe(`a-${new Date().getFullYear()}.js`)
+    expect(res?.headers.get('content-type')).toBe('text/javascript')
+    expect(body).toContain('export const a = [')
+    const mod = await import(`data:text/javascript;base64,${Buffer.from(body).toString('base64')}`)
+    expect(mod.a).toEqual([
+      { id: '1', v: 'x' },
+      { id: '2', v: 'y' },
+    ])
+  })
+
   it('an unknown format is "Bad type!"', async () => {
     const r = await t.req('POST', '/api/servers/1/export', {
       params: base.map(([k, v]) => [k, k === 'what' ? 'nope' : v]),

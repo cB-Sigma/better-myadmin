@@ -184,7 +184,8 @@ function ExportForm({ server, page }: { server: number; page: ExportPageResponse
           .then((d) => {
             if (d.message === 'timeout')
               showMessage(
-                t('Your export is incomplete, due to a low execution time limit at the PHP level!'),
+                // i18n-new: phpMyAdmin's text names "the PHP level" (parity exception X57)
+                t('Your export is incomplete, due to a low execution time limit (ExecTimeLimit)!'),
                 false,
                 'error',
               )

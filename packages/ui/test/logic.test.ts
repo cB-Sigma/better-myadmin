@@ -72,8 +72,8 @@ describe('ActionLinksMode / TabsMode (Generator::getIcon)', () => {
 
 describe('documentation links', () => {
   it('phpMyAdmin docs [p01-62e957]', () => {
-    expect(pmaDocUrl('index')).toBe('https://docs.phpmyadmin.net/en/latest/index.html')
-    expect(pmaDocUrl('faq', 'faq7-2')).toBe('https://docs.phpmyadmin.net/en/latest/faq.html#faq7-2')
+    expect(pmaDocUrl('index')).toBe('https://cb-sigma.github.io/better-myadmin/index.html')
+    expect(pmaDocUrl('faq', 'faq7-2')).toBe('https://cb-sigma.github.io/better-myadmin/faq.html#faq7-2')
   })
   it('MySQL manual by server version (Util::getMySQLDocuURL) [p01-62e957]', () => {
     expect(mysqlDocUrl('charset-connection', '', 80404)).toBe(

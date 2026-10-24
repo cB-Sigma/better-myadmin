@@ -285,3 +285,14 @@ export function visibleText(html: string): string {
     .replace(/\s+/g, ' ')
     .trim()
 }
+
+/**
+ * A BetterMyAdmin text as phpMyAdmin's: the product name back (BetterMyAdmin's translator says
+ * "BetterMyAdmin" wherever phpMyAdmin's text says "phpMyAdmin", parity exceptions X33, X57), so the
+ * rest of the text is still compared byte for byte.
+ */
+export function asPma<T>(v: T): T {
+  if (typeof v === 'string') return v.replaceAll('BetterMyAdmin', 'phpMyAdmin') as T
+  if (v === null || typeof v !== 'object') return v
+  return JSON.parse(JSON.stringify(v).replaceAll('BetterMyAdmin', 'phpMyAdmin')) as T
+}

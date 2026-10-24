@@ -1,0 +1,47 @@
+name: docs
+# Builds the user documentation (docs-site/, Sphinx, adapted from phpMyAdmin's) and publishes it to
+# GitHub Pages: https://cb-sigma.github.io/better-myadmin/. The app's documentation links point there
+# (packages/ui/src/lib/doc-urls.ts DOCS_BASE), with phpMyAdmin's page and anchor names
+# (config.html#cfg_<Directive>, faq.html#faq<N>-<M>). Pages must use "GitHub Actions" as its source
+# (Settings → Pages → Build and deployment).
+on:
+  push:
+    branches: [main]
+    paths: ["docs-site/**", ".github/workflows/docs.yml", "package.json"]
+  pull_request:
+    paths: ["docs-site/**", ".github/workflows/docs.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install "sphinx>=8,<10" "sphinx_rtd_theme>=3,<4"
+      # warnings fail the build: a broken reference is a broken in-app link
+      - run: python -m sphinx -b html -W --keep-going docs-site docs-site/_build/html
+      - run: touch docs-site/_build/html/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: docs-site/_build/html }
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

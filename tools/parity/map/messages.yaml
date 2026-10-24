@@ -161,6 +161,39 @@ msgids:
     note: '"Show runtime information" (HomePage.tsx)'
   Get more themes!:
     exception: X30
+  # PHP-only features replaced or removed (X57)
+  Paste it to your config.inc.php:
+    exception: X57
+  phpMyAdmin configuration snippet:
+    exception: X57
+  Save as PHP file:
+    exception: X57
+  Showing as PHP code:
+    exception: X57
+    note: '"Showing as JS code" (query/pipeline.ts)'
+  Without PHP code:
+    exception: X57
+    note: '"Without JS code" (SqlMessage.tsx)'
+  The uploaded file exceeds the upload_max_filesize directive in php.ini.:
+    exception: X57
+  "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc].":
+    exception: X57
+  "However on last run no data has been parsed, this usually means phpMyAdmin won't be able to finish this import unless you increase php time limits.":
+    exception: X57
+  Your export is incomplete, due to a low execution time limit at the PHP level!:
+    exception: X57
+  Allow the interruption of an import in case the script detects it is close to the PHP timeout limit.:
+    exception: X57
+  "Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use \"local\" or \"utc\" strings) for that. According to that, date format has different value - for \"local\" see the documentation for PHP's strftime() function and for \"utc\" it is done using gmdate() function.":
+    exception: X57
+  "LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, you have to manually edit the file src/Plugins/Transformations/Abs/ExternalTransformationsPlugin.php and list the tools you want to make available. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will convert the output using htmlspecialchars() (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).":
+    exception: X57
+  "Displays the contents of the column as-is, without running it through htmlspecialchars(). That is, the column is assumed to contain valid HTML.":
+    exception: X57
+  "You can set more settings by modifying config.inc.php, eg. by using %sSetup script%s.":
+    exception: X57
+  "Enable advanced features in configuration file (<code>config.inc.php</code>), for example by starting from <code>config.sample.inc.php</code>.":
+    exception: X57
   Donate:
     exception: X44
   phpMyAdmin homepage:

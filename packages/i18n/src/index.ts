@@ -1,6 +1,7 @@
 export {
   type BBCodeOptions,
   checkLink,
+  DOCS_BASE,
   convertBBCode,
   getDocumentationLink,
   phpUrlencode,
@@ -37,4 +38,4 @@ export {
 } from './php.ts'
 export { NC_, N_ } from './noop.ts'
 export { type PluralRule, pluralRule } from './plural.ts'
-export { type Gettext, Translator, englishTranslator } from './translator.ts'
+export { type Gettext, Translator, englishTranslator, productText } from './translator.ts'

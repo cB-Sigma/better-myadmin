@@ -82,8 +82,10 @@ describe('Sanitize::convertBBCode', () => {
     it(code, () => {
       const t = translatorFor(code)
       for (const [msg, unsafe, safe] of rows) {
-        expect(convertBBCode(t, msg), msg).toBe(unsafe)
-        expect(convertBBCode(t, msg, true), msg).toBe(safe)
+        // the fixtures are phpMyAdmin's output: its documentation base (ours is DOCS_BASE, X57)
+        const docsBase = 'https://docs.phpmyadmin.net/en/latest/'
+        expect(convertBBCode(t, msg, false, { docsBase }), msg).toBe(unsafe)
+        expect(convertBBCode(t, msg, true, { docsBase }), msg).toBe(safe)
       }
     })
   }

@@ -7,18 +7,13 @@ import { FIX, PMA_URL, login, pmaReachable } from './lib/env.ts'
  * (names and default values), at server, database and table scope. The output of those fields is
  * compared byte for byte by tests/parity/export-options.parity.test.ts.
  */
-const FORMATS = [
-  'codegen',
-  'csv',
-  'excel',
-  'json',
-  'latex',
-  'mediawiki',
-  'htmlword',
-  'ods',
-  'odt',
-  'phparray',
-].concat(['sql', 'texytext', 'toon', 'xml', 'yaml'])
+const FORMATS = ['codegen', 'csv', 'excel', 'json', 'latex', 'mediawiki', 'htmlword', 'ods', 'odt'].concat([
+  'sql',
+  'texytext',
+  'toon',
+  'xml',
+  'yaml',
+])
 const LEVELS = [
   { level: 'server', route: '/server/export', params: {}, path: '/s/1/export' },
   { level: 'database', route: '/database/export', params: { db: FIX.db }, path: `/s/1/db/${FIX.db}/export` },

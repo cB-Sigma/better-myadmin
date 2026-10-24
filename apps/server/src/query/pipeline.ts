@@ -836,9 +836,10 @@ function messageForNoRowsReturned(
   } else if (messageToShow !== '' && info.flags.queryType !== 'SELECT') {
     msg = messageToShow
   } else if (state.showAsPhp === true) {
-    msg = tr.gettext('Showing as PHP code')
+    // i18n-new: "Showing as PHP code" as JavaScript (parity exception X57)
+    msg = tr.gettext('Showing as JS code')
   } else if (state.showAsPhp === false) {
-    // User disable showing as PHP, query is only displayed
+    // User disable showing as code, query is only displayed
     msg = tr.gettext('Showing SQL query')
   } else {
     msg = tr.gettext('MySQL returned an empty result set (i.e. zero rows).')

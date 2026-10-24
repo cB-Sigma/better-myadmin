@@ -268,7 +268,8 @@ export class WebAuthnBackend extends TwoFactorPlugin {
     const host = this.ctx.host
     const options = JSON.stringify({
       challenge: b64(randomBytes(32)),
-      rp: { name: `phpMyAdmin (${host})`, id: host },
+      // the name the browser's passkey prompt shows (phpMyAdmin's is `phpMyAdmin (…)`, X57)
+      rp: { name: `BetterMyAdmin (${host})`, id: host },
       user: { id: userId, name: this.ctx.user, displayName: this.ctx.user },
       pubKeyCredParams: CREDENTIAL_PARAMETERS,
       authenticatorSelection: { authenticatorAttachment: 'cross-platform', userVerification: 'discouraged' },

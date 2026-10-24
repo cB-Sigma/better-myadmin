@@ -78,6 +78,7 @@ describe('defaults vs phpMyAdmin Settings::asArray() dump', () => {
     expect(d.ForceSSL).toBe(false)
     expect(d.Servers[1]?.max_connections).toBe(4)
     expect(d.Export.csv_escape_formulas).toBe(false)
+    expect(d.Export.jsmodule_structure_or_data).toBe('data')
     expect(d.Import.MaxDecompressedSize).toBe(0)
   })
 })
@@ -104,7 +105,7 @@ describe('directive metadata', () => {
       2 /* MysqlMinVersion leaves */
     const bma = directives.filter((d) => d.node.flags.bma).length
     expect(directiveCount).toBe(pmaLeafCount + bma)
-    expect(bma).toBe(20)
+    expect(bma).toBe(21)
   })
 
   it('userPref flags match phpMyAdmin UserFormList::getFields() + custom-handled keys', () => {

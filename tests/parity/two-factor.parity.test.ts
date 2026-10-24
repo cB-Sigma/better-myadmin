@@ -204,8 +204,8 @@ describe.skipIf(vendor === null)('parity: two-factor authentication (application
     // ?? null: the regex capture is undefined when there is no <path>; ref.path is null in the same
     // case, so align the two "no path" values (they are otherwise compared byte-exact)
     expect(/<path[^>]* d="([^"]*)"/.exec(pr)?.[1] ?? null).toBe(ref.path)
-    // ours: the same URL for our host and user, and the same modules
-    const ours = google2fa(`phpMyAdmin (${BMA_HOST})`, B.user, bmaSecret)
+    // ours: the same URL with BetterMyAdmin as the issuer (X57) for our host and user, and the same modules
+    const ours = google2fa(`BetterMyAdmin (${BMA_HOST})`, B.user, bmaSecret)
     expect(br.form.otpauth).toBe(ours.url)
     expect(br.form.qr).toEqual(baconMatrix(ours.url))
   })

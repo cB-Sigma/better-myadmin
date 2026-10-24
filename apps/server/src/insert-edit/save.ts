@@ -133,7 +133,8 @@ async function save(ctx: IeCtx, req: SaveRowsRequest, ran: { sql: string }): Pro
         // File::checkTblChangeForm: UPLOAD_ERR_INI_SIZE, the field keeps its typed value
         if (Math.floor((f.upload.length * 3) / 4) > cfg.MaxUploadSize) {
           insertErrors.push(
-            tr.gettext('The uploaded file exceeds the upload_max_filesize directive in php.ini.'),
+            // i18n-new: phpMyAdmin's text names php.ini's upload_max_filesize (parity exception X57)
+            tr.gettext('The uploaded file exceeds the maximum upload size (MaxUploadSize).'),
           )
         } else uploaded = Buffer.from(f.upload, 'base64')
       } else if (

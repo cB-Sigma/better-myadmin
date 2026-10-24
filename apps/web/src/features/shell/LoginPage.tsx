@@ -1,5 +1,5 @@
 import type { AuthState, CaptchaSettings } from '@bettermyadmin/contracts'
-import { MessageBox, Panel, PanelBody, buttonVariants, cn } from '@bettermyadmin/ui'
+import { MessageBox, Panel, PanelBody, buttonVariants, cn, pmaDocUrl } from '@bettermyadmin/ui'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useRouterState } from '@tanstack/react-router'
 import { CircleHelp, Database } from 'lucide-react'
@@ -141,12 +141,7 @@ export function LoginPage({
         <Panel
           title=<span>{t('Log in')}</span>
           actions={
-            <a
-              href="https://docs.phpmyadmin.net/en/latest/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title={t('Documentation')}
-            >
+            <a href={pmaDocUrl('index')} target="_blank" rel="noopener noreferrer" title={t('Documentation')}>
               <CircleHelp className="size-4" aria-hidden />
               <span className="sr-only">{t('Documentation')}</span>
             </a>

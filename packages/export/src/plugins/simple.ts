@@ -86,34 +86,60 @@ export class ExportYaml extends ExportPlugin {
   }
 }
 
+/** JavaScript's reserved words, which an export binding cannot be named (ES2023, strict mode). */
+const JS_RESERVED = new Set(
+  (
+    'await break case catch class const continue debugger default delete do else enum export extends ' +
+    'false finally for function if implements import in instanceof interface let new null package ' +
+    'private protected public return static super switch this throw true try typeof var void while with yield'
+  ).split(' '),
+)
+
 /**
- * Handles the export for the PHP Array format.
+ * Handles the export for the JavaScript module format: one `export const <table> = [{…}, …]` per
+ * table, the column names and values as JSON literals. BetterMyAdmin's replacement for phpMyAdmin's
+ * PHP array format (parity exception X57), which it follows otherwise (header, database comments,
+ * hex for binary and geometry values, aliases).
  * pma: src/Plugins/Export/ExportPhparray.php
  */
-export class ExportPhparray extends ExportPlugin {
+export class ExportJsmodule extends ExportPlugin {
+  /** the binding names used so far: two tables may sanitise to the same one */
+  private readonly bindings = new Set<string>()
+
   get name(): string {
-    return 'phparray'
+    return 'jsmodule'
   }
 
   protected setProperties(): PluginProperties {
     return {
-      name: 'phparray',
-      text: 'PHP array',
-      extension: 'php',
-      mimeType: 'text/plain',
+      name: 'jsmodule',
+      text: 'JavaScript module',
+      extension: 'js',
+      mimeType: 'text/javascript',
       forceFile: false,
-      options: [main('phparray_general_opts', '', [hidden('phparray_structure_or_data')])],
+      options: [main('jsmodule_general_opts', '', [hidden('jsmodule_structure_or_data')])],
     }
   }
 
-  /** strtr($string, '*' . '/', '-'): only `*` is translated (the "to" string is shorter) */
+  /** `*` + `/` would close the comment */
   commentString(s: string): string {
-    return s.replaceAll('*', '-')
+    return s.replaceAll('*/', '*\\/')
+  }
+
+  /** a valid, unused JavaScript binding name for a table */
+  binding(name: string): string {
+    let id = name.replace(/[^\p{ID_Continue}$]/gu, '_')
+    if (!/^[\p{ID_Start}$_]/u.test(id)) id = `_${id}`
+    if (JS_RESERVED.has(id)) id = `${id}_`
+    let unique = id
+    for (let n = 2; this.bindings.has(unique); n++) unique = `${id}_${n}`
+    this.bindings.add(unique)
+    return unique
   }
 
   override async exportHeader(): Promise<void> {
     await this.addLine(
-      `<?php\n/**\n * Export to PHP Array plugin for ${this.ctx.tool.name}\n * @version ${this.ctx.tool.version}\n */\n\n`,
+      `/**\n * Export to JavaScript module plugin for ${this.ctx.tool.name}\n * @version ${this.ctx.tool.version}\n */\n\n`,
     )
   }
 
@@ -132,40 +158,22 @@ export class ExportPhparray extends ExportPlugin {
     const tableAlias = this.getTableAlias(aliases, db, table)
     const result = await this.query(sqlQuery)
     const fieldsMeta = result.fields
-    const columnsCnt = fieldsMeta.length
-    const columns = fieldsMeta.map((f) => this.getColumnAlias(aliases, db, table, f.name))
-    let tableFixed = table
-    // fix variable names (based on https://www.php.net/manual/en/language.variables.basics.php)
-    if (
-      !/^[a-zA-Z_\u007f-\u{10ffff}\udc80-\udcff][a-zA-Z0-9_\u007f-\u{10ffff}\udc80-\udcff]*$/u.test(
-        tableAlias,
-      )
-    ) {
-      // fix invalid characters in variable names by replacing them with underscores
-      tableFixed = tableAlias.replace(/[^a-zA-Z0-9_\u007f-\u{10ffff}]/gu, '_')
-      // variable name must not start with a number or dash...
-      if (!/^[a-zA-Z_\u007f-\u{10ffff}]/u.test(tableFixed)) tableFixed = `_${tableFixed}`
-    }
+    const columns = fieldsMeta.map((f) => JSON.stringify(this.getColumnAlias(aliases, db, table, f.name)))
     let buffer = `\n/* ${this.commentString(backquote(dbAlias))}.${this.commentString(backquote(tableAlias))} */\n`
-    buffer += `$${tableFixed} = array(`
+    buffer += `export const ${this.binding(tableAlias)} = [`
     await this.addLine(buffer)
-    buffer = ''
     let recordCnt = 0
     for await (const record of result.rows) {
       recordCnt++
-      buffer += recordCnt === 1 ? '\n  array(' : ',\n  array('
-      for (let i = 0; i < columnsCnt; i++) {
+      const cells = columns.map((col, i) => {
         let v = record[i] ?? null
         const f = fieldsMeta[i]
         if (v !== null && (f?.isMappedTypeGeometry === true || f?.isBinary === true)) v = `0x${hexBytes(v)}`
-        buffer += `${varExport(columns[i] as string)} => ${varExport(v)}${i + 1 >= columnsCnt ? '' : ','}`
-      }
-      buffer += ')'
-      await this.addLine(buffer)
-      buffer = ''
+        return `${col}: ${JSON.stringify(v === null ? null : String(v))}`
+      })
+      await this.addLine(`${recordCnt === 1 ? '' : ','}\n  { ${cells.join(', ')} }`)
     }
-    buffer += '\n);\n'
-    await this.addLine(buffer)
+    await this.addLine('\n];\n')
   }
 
   override exportRawQuery(db: string, sqlQuery: string): Promise<void> {
@@ -174,8 +182,8 @@ export class ExportPhparray extends ExportPlugin {
 
   setExportOptions(request: Params, cfg: ExportSettings): void {
     this.structureOrData = this.setStructureOrData(
-      request.get('phparray_structure_or_data'),
-      cfg.phparray_structure_or_data,
+      request.get('jsmodule_structure_or_data'),
+      cfg.jsmodule_structure_or_data,
       'data',
     )
   }

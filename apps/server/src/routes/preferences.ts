@@ -15,7 +15,6 @@ import {
   exportFileName,
   exportForStorage,
   exportJson,
-  exportPhp,
   formPage,
   header,
   importPrefs,
@@ -84,15 +83,17 @@ preferencesRoutes.get('/manage', (c) =>
   ),
 )
 
-/** GET …/manage/export?type=json|php — submit_export (Core::downloadHeader) */
+/**
+ * GET …/manage/export — submit_export with export_type=text_file (Core::downloadHeader). phpMyAdmin's
+ * php_file (a config.inc.php snippet) is not offered: parity exception X57.
+ */
 preferencesRoutes.get('/manage/export', (c) =>
   withMeta(c, {}, async (m) => {
     const ctx = await prefsCtx(m)
-    const php = c.req.query('type') === 'php'
-    const body = php ? await exportPhp(ctx) : await exportJson(ctx)
-    const name = exportFileName(c.req.header('host') ?? '', php ? 'php' : 'json')
+    const body = await exportJson(ctx)
+    const name = exportFileName(c.req.header('host') ?? '', 'json')
     return c.body(body, 200, {
-      'content-type': php ? 'application/php' : 'application/json',
+      'content-type': 'application/json',
       'content-transfer-encoding': 'binary',
       'cache-control': 'private, max-age=0',
       'content-description': 'File Transfer',

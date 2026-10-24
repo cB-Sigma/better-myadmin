@@ -11,7 +11,7 @@ import { MYSQL, testApp, testConfig } from '../support/app.ts'
 const USERS = ['f01a_cfg', 'f01a_http', 'f01a_sso', 'f01a_lim'] as const
 const SECRET = 'test-secret-test-secret-test-secret!'
 const TRIED =
-  'phpMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server.'
+  'BetterMyAdmin tried to connect to the MySQL server, and the server rejected the connection. You should check the host, username and password in your configuration and make sure that they correspond to the information given by the administrator of the MySQL server.'
 
 let root: mysql.Connection
 let t: ReturnType<typeof testApp>

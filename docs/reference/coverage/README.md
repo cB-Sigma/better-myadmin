@@ -8,8 +8,8 @@ Mechanical inventories of phpMyAdmin `6eba7ba9` ([reference-commit.txt](../refer
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | Routes | 200 | 186 | 13 | 1 | 0 | 0 | 0 | 0 | 0 | 200 | 100.0% |
 | Template controls | 1106 | 1096 | 3 | 7 | 0 | 0 | 0 | 0 | 0 | 1106 | 100.0% |
-| Config directives | 449 | 429 | 1 | 19 | 0 | 0 | 0 | 0 | 0 | 449 | 100.0% |
-| Messages (msgids) | 3437 | 3290 | 12 | 134 | 1 | 0 | 0 | 0 | 0 | 3436 | 100.0% |
+| Config directives | 449 | 428 | 2 | 19 | 0 | 0 | 0 | 0 | 0 | 449 | 100.0% |
+| Messages (msgids) | 3437 | 3274 | 27 | 135 | 1 | 0 | 0 | 0 | 0 | 3436 | 100.0% |
 | JS behaviours | 965 | 952 | 0 | 13 | 0 | 0 | 0 | 0 | 0 | 965 | 100.0% |
 | Checklist items | 707 | 701 | 0 | 6 | 0 | 0 | 0 | 0 | 0 | 707 | 100.0% |
 
@@ -62,24 +62,31 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Add CREATE TRIGGER`
 - `Add CREATE VIEW`
 - `Add DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT / TRIGGER`
+- `Allow the interruption of an import when it gets close to the time limit (ExecTimeLimit).`
 - `Bookmark not found.`
 - `CodeGen`
 - `Collation \| WITH `
 - `Collation variant \| WITH `
 - `Config`
 - `Configuration saved to file %s`
+- `Create JS code`
 - `DB2`
 - `DESC`
+- `Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. The format string uses strftime-style specifiers (for example %Y-%m-%d %H:%M:%S) for both.`
+- `Displays the contents of the column as-is, without HTML-escaping it. That is, the column is assumed to contain valid HTML.`
 - `Down`
 - `EXECUTE`
+- `Enable advanced features in the configuration file (<code>bettermyadmin.config.json</code>), for example by using the setup script.`
 - `Excel 2003 / Macintosh`
 - `Excel 2008 / Macintosh`
 - `GRANT`
+- `However on last run no data has been parsed, this usually means BetterMyAdmin won't be able to finish this import unless you increase the time limit (ExecTimeLimit).`
 - `INSERT`
 - `Invalid column.`
 - `Invalid page settings group.`
 - `Invalid request.`
 - `Invalid server index!`
+- `LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, the administrator has to list the tools you want to make available in the TransformationsExternalPrograms setting. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will HTML-escape the output (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).`
 - `MAX CONNECTIONS PER HOUR`
 - `MAX QUERIES PER HOUR`
 - `MAX UPDATES PER HOUR`
@@ -92,19 +99,25 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `NHibernate C# DO`
 - `NHibernate XML`
 - `NONE`
+- `No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).`
 - `Not found.`
 - `OR REPLACE view`
 - `ORACLE`
 - `OpenDocument`
 - `REPLACE`
 - `SMART`
+- `Showing as JS code`
 - `TRADITIONAL`
 - `The page you requested was not found.`
+- `The uploaded file exceeds the maximum upload size (MaxUploadSize).`
 - `Too many failed login attempts. Please try again in %s seconds.`
 - `UPDATE`
 - `Up`
 - `WITH `
 - `Windows`
+- `Without JS code`
+- `You can set more settings by modifying bettermyadmin.config.json, eg. by using %sSetup script%s.`
+- `Your export is incomplete, due to a low execution time limit (ExecTimeLimit)!`
 - `Zoom in`
 - `Zoom out`
 - `Zoom to fit`
@@ -162,8 +175,8 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 |---|---|---|
 | [routes.json](../../../tools/parity/inventory/routes.json) | 200 | src/Routing/Routes.php::collect (FastRoute collector, executed) + Routing::callSetupController |
 | [controls.json](../../../tools/parity/inventory/controls.json) | 1106 | resources/templates/**/*.twig (HTML controls, links, link_or_button) + PHP helpers (tools/parity/php/helpers.php) |
-| [directives.json](../../../tools/parity/inventory/directives.json) | 469 | packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php) |
+| [directives.json](../../../tools/parity/inventory/directives.json) | 470 | packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php) |
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3437 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 965 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2049 control claims, 1998 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 282 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2049 control claims, 1999 tests.

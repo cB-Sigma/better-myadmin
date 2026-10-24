@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { lookForUse, reloadHints } from '../../src/query/import.ts'
-import { formatError, getMessageCard, mysqlDie, sqlAsPhp } from '../../src/query/message.ts'
+import { formatError, getMessageCard, mysqlDie, sqlAsCode } from '../../src/query/message.ts'
 import { getDetailedProfilingStats } from '../../src/query/profiling.ts'
 import { testConfig } from '../support/app.ts'
 
@@ -81,10 +81,14 @@ describe('Generator::getMessage links', () => {
     expect(await card(';')).toBeNull()
   })
 
-  it('PHP code with continuation lines [p02-f4f624] [p09-550737]', () => {
-    expect(sqlAsPhp('SELECT "a" FROM t\nWHERE x = \'y\'')).toBe(
-      '$sql = "SELECT \\"a\\" FROM t\\n"\n    . "WHERE x = \\\'y\\\'";',
+  it('JS code, one literal per line (X57) [p02-f4f624] [p09-550737]', () => {
+    const sql = 'SELECT "a", `b` FROM t\nWHERE x = \'y\\\''
+    const code = sqlAsCode(sql)
+    expect(code).toBe(
+      `const sql =\n  'SELECT "a", \`b\` FROM t\\n' +\n  'WHERE x = \\'y\\\\\\''\n;`.replace('\n;', ';'),
     )
+    // it is valid JavaScript that yields the query back
+    expect(new Function(`${code}\nreturn sql`)()).toBe(sql)
   })
 })
 

@@ -133,7 +133,7 @@ describe('server messages follow the request language', () => {
 
     // "Create PHP code" and "Rollback when finished"
     expect((await run({ sql: 'SELECT 1', showAsPhp: true })).statements[0]?.message.text).toBe(
-      'Ansicht als PHP-Code',
+      'Showing as JS code' /* a BetterMyAdmin msgid (X57), not translated yet */,
     )
     expect(
       sec(

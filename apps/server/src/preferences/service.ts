@@ -20,7 +20,7 @@ import type {
   TwoFactorActionResponse,
   TwoFactorStatusResponse,
 } from '@bettermyadmin/contracts'
-import { type PhpValue, jsonEncode, sanitizeFilename, varExportValue } from '@bettermyadmin/export'
+import { type PhpValue, jsonEncode, sanitizeFilename } from '@bettermyadmin/export'
 import { type Translator, htmlspecialchars, phpUrlencode } from '@bettermyadmin/i18n'
 import {
   type PrefsMessage,
@@ -251,27 +251,18 @@ export function toPhpValue(v: unknown): PhpValue {
   return v as PhpValue
 }
 
-/** `phpMyAdmin-config-<urlencoded HTTP_HOST>.<ext>` after Core::downloadHeader's Sanitize::sanitizeFilename */
+/**
+ * `BetterMyAdmin-config-<urlencoded HTTP_HOST>.<ext>` after Core::downloadHeader's
+ * Sanitize::sanitizeFilename (phpMyAdmin's file is `phpMyAdmin-config-…`; parity exception X57)
+ */
 export function exportFileName(httpHost: string, ext: string): string {
-  return sanitizeFilename(`phpMyAdmin-config-${phpUrlencode(httpHost)}.${ext}`)
+  return sanitizeFilename(`BetterMyAdmin-config-${phpUrlencode(httpHost)}.${ext}`)
 }
 
 /** submit_export, export_type=text_file: pretty JSON of config_data */
 export async function exportJson(ctx: PrefsCtx): Promise<string> {
   const loaded = await ctx.prefs.load()
   return (jsonEncode(toPhpValue(loaded.config_data), { pretty: true }) as string | false) || ''
-}
-
-/** submit_export, export_type=php_file */
-export async function exportPhp(ctx: PrefsCtx): Promise<string> {
-  const loaded = await ctx.prefs.load()
-  const tr = ctx.tr
-  let out = `/* ${tr.gettext('phpMyAdmin configuration snippet')} */\n\n`
-  out += `/* ${tr.gettext('Paste it to your config.inc.php')} */\n\n`
-  for (const [key, val] of Object.entries(loaded.config_data)) {
-    out += `$cfg['${key.replaceAll('/', "']['")}'] = ${varExportValue(toPhpValue(val))};\n`
-  }
-  return out
 }
 
 /** submit_get_json */

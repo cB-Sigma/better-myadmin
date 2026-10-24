@@ -1,5 +1,5 @@
 import type { NavBranchQuery, NavNode, NavSettings, ServerListEntry } from '@bettermyadmin/contracts'
-import { Button, MessageBox, Modal, showMessage } from '@bettermyadmin/ui'
+import { Button, MessageBox, Modal, pmaDocUrl, showMessage } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useLocation, useRouter } from '@tanstack/react-router'
 import { clsx } from 'clsx'
@@ -381,7 +381,7 @@ function NavHeader({
         </button>
         <a
           className={btn}
-          href="https://docs.phpmyadmin.net/en/latest/"
+          href={pmaDocUrl('index')}
           target="_blank"
           rel="noopener noreferrer"
           title={t('phpMyAdmin documentation')}

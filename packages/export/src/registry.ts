@@ -5,7 +5,7 @@ import { ExportHtmlword } from './plugins/htmlword.ts'
 import { ExportJson } from './plugins/json.ts'
 import { ExportLatex } from './plugins/latex.ts'
 import { ExportOds, ExportOdt } from './plugins/opendocument.ts'
-import { ExportPhparray, ExportToon, ExportYaml } from './plugins/simple.ts'
+import { ExportJsmodule, ExportToon, ExportYaml } from './plugins/simple.ts'
 import { ExportSql } from './plugins/sql.ts'
 import { ExportMediawiki, ExportTexytext } from './plugins/text.ts'
 import { ExportXml } from './plugins/xml.ts'
@@ -18,12 +18,12 @@ export const EXPORT_PLUGINS: Record<string, PluginClass> = {
   csv: ExportCsv,
   excel: ExportExcel,
   htmlword: ExportHtmlword,
+  jsmodule: ExportJsmodule,
   json: ExportJson,
   latex: ExportLatex,
   mediawiki: ExportMediawiki,
   ods: ExportOds,
   odt: ExportOdt,
-  phparray: ExportPhparray,
   sql: ExportSql,
   texytext: ExportTexytext,
   toon: ExportToon,

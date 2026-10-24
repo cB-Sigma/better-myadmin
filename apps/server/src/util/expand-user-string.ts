@@ -2,9 +2,13 @@ import { php } from '@bettermyadmin/mysql-types'
 import { quoteString } from '@bettermyadmin/sql-gen'
 import type { ServerConfig } from '../config.ts'
 import type { Conn } from '../db/connection.ts'
+import { APP_VERSION } from '../shell/scope.ts'
 
-/** phpMyAdmin's version string for @PHPMYADMIN@ (Version::VERSION of the reference checkout). */
-export const PMA_VERSION_STRING = 'phpMyAdmin 6.0.0-dev'
+/**
+ * @PHPMYADMIN@: phpMyAdmin's own name and version there; BetterMyAdmin's here (X33), like the
+ * browser's expansion (apps/web/src/features/shell/title.ts).
+ */
+export const PMA_VERSION_STRING = `BetterMyAdmin ${APP_VERSION}`
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const MONTHS = [

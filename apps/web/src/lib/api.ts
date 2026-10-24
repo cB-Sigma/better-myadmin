@@ -1095,8 +1095,7 @@ export const api = {
   preferencesManage: (server: number) =>
     call<PreferencesManageResponse>('GET', `${srvPath(server)}/preferences/manage`),
   /** submit_export: the download URL (navigated to, so the browser saves it) */
-  preferencesExportUrl: (server: number, type: 'json' | 'php') =>
-    `/api${srvPath(server)}/preferences/manage/export?type=${type}`,
+  preferencesExportUrl: (server: number) => `/api${srvPath(server)}/preferences/manage/export`,
   /** submit_get_json (Save to browser's storage) */
   preferencesJson: (server: number) =>
     call<PreferencesJsonResponse>('GET', `${srvPath(server)}/preferences/manage/json`),

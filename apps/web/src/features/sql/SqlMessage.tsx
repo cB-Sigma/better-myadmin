@@ -165,7 +165,10 @@ function SqlCardBody({ card, sig, env }: { card: SqlCard; sig: string; env: Card
               env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table, showAsPhp: true })
             }
           >
-            {t('Create PHP code')}
+            {
+              // i18n-new: "Create PHP code" as JavaScript (parity exception X57)
+              t('Create JS code')
+            }
           </button>
         )}
         {l.php === 'without' && (
@@ -175,7 +178,10 @@ function SqlCardBody({ card, sig, env }: { card: SqlCard; sig: string; env: Card
               className={link}
               onClick={() => env.onAction({ type: 'run', sql: card.sql, db: card.db, table: card.table })}
             >
-              {t('Without PHP code')}
+              {
+                // i18n-new: "Without PHP code" as JavaScript (parity exception X57)
+                t('Without JS code')
+              }
             </button>
             <button
               type="button"

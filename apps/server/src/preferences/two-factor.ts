@@ -76,7 +76,8 @@ class ApplicationBackend extends TwoFactorPlugin {
   }
   override setup(): TwoFactorForm {
     const secret = String(this.tf.config.settings.secret ?? '')
-    const url = otpauthUrl(`phpMyAdmin (${this.ctx.appId})`, this.ctx.user, secret)
+    // the issuer shown in the authenticator app (phpMyAdmin's is `phpMyAdmin (…)`, X57)
+    const url = otpauthUrl(`BetterMyAdmin (${this.ctx.appId})`, this.ctx.user, secret)
     return { kind: 'application_configure', secret, qr: qrMatrix(url), otpauth: url }
   }
   override configure(fields: TwoFactorFields) {
@@ -194,11 +195,12 @@ export class TwoFactor implements TwoFactorHost {
     return out
   }
 
-  /** TwoFactor::getMissingDeps: the U2F library (FIDO U2F API, removed from browsers) */
+  /**
+   * TwoFactor::getMissingDeps: phpMyAdmin lists the U2F library (a composer package) here. The FIDO
+   * U2F API is gone from browsers and there is nothing to install, so the list is empty (X49, X57).
+   */
   missingDeps(): Array<{ class: string; dep: string }> {
-    return [
-      { class: this.#ctx.tr.gettext('Hardware Security Key (FIDO U2F)'), dep: 'code-lts/u2f-php-server' },
-    ]
+    return []
   }
 
   backendClass(name: string): BackendCtor {

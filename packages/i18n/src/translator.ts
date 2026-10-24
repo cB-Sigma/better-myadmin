@@ -5,6 +5,17 @@ import { type PluralRule, extractPluralsForms, pluralRule } from './plural.ts'
 const hasOwn = (o: object, k: string) => Object.prototype.hasOwnProperty.call(o, k)
 
 /**
+ * The product name in phpMyAdmin's texts (parity exceptions X33, X57): "phpMyAdmin" in a translation
+ * becomes "BetterMyAdmin", except in the texts about the configuration storage, which keeps
+ * phpMyAdmin's name (its tables are phpMyAdmin's and shared with it). Decided on the English msgid,
+ * so every language agrees.
+ */
+export function productText(msgid: string, text: string): string {
+  if (!text.includes('phpMyAdmin') || msgid.includes('configuration storage')) return text
+  return text.replaceAll('phpMyAdmin', 'BetterMyAdmin')
+}
+
+/**
  * gettext on top of a Lingui catalogue, with motranslator's semantics (phpMyAdmin's gettext):
  * a missing key returns the msgid, plurals pick the form via the ported Plural-Forms evaluator and fall
  * back to `n !== 1 ? plural : singular` when untranslated.
@@ -34,29 +45,27 @@ export class Translator {
 
   /** Translator::gettext (`__()`) */
   gettext(msgid: string): string {
-    if (!hasOwn(this.#messages, msgid)) return msgid
-    return this.i18n._(msgid)
+    return productText(msgid, hasOwn(this.#messages, msgid) ? this.i18n._(msgid) : msgid)
   }
 
   /** Translator::ngettext (`_ngettext()`) */
   ngettext(msgid: string, msgidPlural: string, n: number): string {
     const key = `${msgid}\u0000${msgidPlural}`
-    if (!hasOwn(this.#messages, key)) return n !== 1 ? msgidPlural : msgid
-    return this.i18n._(key, { i: this.#plural.select(n) })
+    if (!hasOwn(this.#messages, key)) return productText(msgid, n !== 1 ? msgidPlural : msgid)
+    return productText(msgid, this.i18n._(key, { i: this.#plural.select(n) }))
   }
 
   /** Translator::pgettext (`_pgettext()`) */
   pgettext(msgctxt: string, msgid: string): string {
     const key = `${msgctxt}\u0004${msgid}`
-    if (!hasOwn(this.#messages, key)) return msgid
-    return this.i18n._(key)
+    return productText(msgid, hasOwn(this.#messages, key) ? this.i18n._(key) : msgid)
   }
 
   /** Translator::npgettext (`_npgettext()`) */
   npgettext(msgctxt: string, msgid: string, msgidPlural: string, n: number): string {
     const key = `${msgctxt}\u0004${msgid}\u0000${msgidPlural}`
-    if (!hasOwn(this.#messages, key)) return n !== 1 ? msgidPlural : msgid
-    return this.i18n._(key, { i: this.#plural.select(n) })
+    if (!hasOwn(this.#messages, key)) return productText(msgid, n !== 1 ? msgidPlural : msgid)
+    return productText(msgid, this.i18n._(key, { i: this.#plural.select(n) }))
   }
 
   /** Whether the catalogue has a translation (Translator::exists). */
