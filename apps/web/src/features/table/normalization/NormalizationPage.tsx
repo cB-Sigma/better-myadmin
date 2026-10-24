@@ -579,7 +579,8 @@ function Step13({ env }: { env: StepEnv }) {
                 <Input
                   name="repeatGroupTable"
                   className="max-w-48"
-                  placeholder="Enter new table name"
+                  // i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update
+                  placeholder={t('Enter new table name')}
                   value={newTable}
                   onChange={(e) => setNewTable(e.target.value)}
                 />
@@ -587,7 +588,8 @@ function Step13({ env }: { env: StepEnv }) {
                 <Input
                   name="repeatGroupColumn"
                   className="max-w-48"
-                  placeholder="Enter column name"
+                  // i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update
+                  placeholder={t('Enter column name')}
                   value={newColumn}
                   onChange={(e) => setNewColumn(e.target.value)}
                 />

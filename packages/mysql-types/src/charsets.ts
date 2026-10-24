@@ -133,6 +133,7 @@ const LEVEL1: Record<string, string | null> = {
 }
 
 const VARIANTS: Record<string, string> = {
+  uca1400: 'UCA 14.0.0',
   '0900': 'UCA 9.0.0',
   '520': 'UCA 5.2.0',
   mysql561: 'MySQL 5.6.1',

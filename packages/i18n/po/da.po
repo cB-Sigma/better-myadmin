@@ -1,4 +1,4 @@
-# Imported from phpMyAdmin 2c66fc86b6dda1bf53047a335254d881e27498fb resources/po/da.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/da.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Danish <https://hosted.weblate.org/projects/phpmyadmin/master/da/>\nLanguage: da\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"

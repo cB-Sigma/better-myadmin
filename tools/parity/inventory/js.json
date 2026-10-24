@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "2c66fc86b6dda1bf53047a335254d881e27498fb",
+    "referenceCommit": "6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
     "count": 965
   },
@@ -271,7 +271,7 @@
       "event": "click",
       "selector": "input.add-option",
       "delegated": true,
-      "line": 270,
+      "line": 285,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -282,7 +282,7 @@
       "event": "click",
       "selector": "input.remove-option",
       "delegated": true,
-      "line": 281,
+      "line": 296,
       "file": "resources/js/database/multi_table_query.ts"
     },
     {
@@ -6569,7 +6569,7 @@
       "method": "POST",
       "url": "index.php?route=/normalization/partial-dependencies",
       "route": "/normalization/partial-dependencies",
-      "line": 810,
+      "line": 817,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6624,7 +6624,7 @@
       "event": "click",
       "selector": "#extra #noRedundantColumn",
       "delegated": true,
-      "line": 841,
+      "line": 848,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6635,7 +6635,7 @@
       "event": "click",
       "selector": "#extra #noRepeatingGroup",
       "delegated": true,
-      "line": 836,
+      "line": 843,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6710,7 +6710,7 @@
       "event": "click",
       "selector": "#mainContent .pickPd",
       "delegated": true,
-      "line": 823,
+      "line": 830,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6721,7 +6721,7 @@
       "event": "click",
       "selector": "#mainContent #backEditPd",
       "delegated": true,
-      "line": 787,
+      "line": 794,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6732,7 +6732,7 @@
       "event": "click",
       "selector": "#mainContent #showPossiblePd",
       "delegated": true,
-      "line": 791,
+      "line": 798,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -6743,7 +6743,7 @@
       "event": "click",
       "selector": "#mainContent p #createPrimaryKey",
       "delegated": true,
-      "line": 764,
+      "line": 771,
       "file": "resources/js/normalization.ts"
     },
     {
@@ -8282,12 +8282,14 @@
       "file": "resources/js/sql.ts"
     },
     {
-      "key": "js:sql.ts#alert:Sorry! Unable to copy",
+      "key": "js:sql.ts#alert:strCopyQueryButtonFailure",
       "script": "sql.ts",
       "count": 1,
       "kind": "dialog",
       "event": "alert",
-      "text": "Sorry! Unable to copy",
+      "messages": [
+        "strCopyQueryButtonFailure"
+      ],
       "line": 668,
       "file": "resources/js/sql.ts"
     },

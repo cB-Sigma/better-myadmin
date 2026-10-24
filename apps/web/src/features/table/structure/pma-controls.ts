@@ -46,7 +46,7 @@ export const pmaControls = {
   },
   'js:modules/functions.ts#alert:<sprintf(message, val)>': {
     file: 'StructurePage.tsx',
-    match: "window.alert('Column count has to be larger than zero.')",
+    match: "window.alert(t('Column count has to be larger than zero.'))",
   },
   'js:modules/functions.ts#change:.create_table_form select[name=tbl_storage_engine]': {
     file: 'ColumnForm.tsx',

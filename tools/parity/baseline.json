@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "2c66fc86b6dda1bf53047a335254d881e27498fb"
+    "referenceCommit": "6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f"
   },
   "kinds": {
     "routes": {
@@ -1790,9 +1790,9 @@
       ]
     },
     "messages": {
-      "total": 3428,
-      "implemented": 3283,
-      "covered": 3427,
+      "total": 3437,
+      "implemented": 3290,
+      "covered": 3436,
       "coverage": 0.9997,
       "implementedKeys": [
         "- none -",
@@ -2311,6 +2311,7 @@
         "Column",
         "Column %s has been dropped.",
         "Column alias",
+        "Column count has to be larger than zero.",
         "Column header for week of the year in calendar\u0004Wk",
         "Column information table",
         "Column maximum:",
@@ -2795,10 +2796,13 @@
         "End of step",
         "Engine",
         "Engines",
+        "Enter an option",
+        "Enter column name",
         "Enter criteria as free text",
         "Enter each value in a separate field.",
         "Enter executes queries in console",
         "Enter first value",
+        "Enter new table name",
         "Enter second value",
         "Enter server connection parameters.",
         "Enter your private key for your domain reCAPTCHA service.",
@@ -3291,7 +3295,6 @@
         "List of available transformations and their options",
         "List of changes",
         "List of trusted proxies for IP allow/deny",
-        "Loading",
         "Loading logs",
         "Loading…",
         "Local",
@@ -3544,6 +3547,7 @@
         "Note: phpMyAdmin gets the users’ privileges directly from MySQL’s privilege tables. The content of these tables may differ from the privileges the server uses, if they have been changed manually. In this case, you should %sreload the privileges%s before you continue.",
         "Note: Setting these options to 0 (zero) removes the limit.",
         "Note: You are attempting to edit privileges of the user with which you are currently logged in.",
+        "Nothing selected",
         "Notice",
         "Now, add the following lines at the end of [mysqld] section in your my.cnf and please restart the MySQL server afterwards.",
         "Nowhere",
@@ -3583,6 +3587,7 @@
         "Only retrieve SELECT,INSERT,UPDATE and DELETE Statements",
         "Only show keys",
         "Only single-table UPDATE and DELETE queries can be simulated.",
+        "Op",
         "Open",
         "Open new phpMyAdmin window",
         "Open page",
@@ -3990,6 +3995,7 @@
         "Script timeout passed, if you want to finish import, please %sresubmit the same file%s and import will resume.",
         "Search",
         "Search in database",
+        "Search results for \"%s\" %s:",
         "Search this list",
         "Search this table",
         "Search:",
@@ -5077,7 +5083,8 @@
         "Your SQL query has been executed successfully.",
         "ZIP",
         "zipped",
-        "Zoom search"
+        "Zoom search",
+        "Zoom search instructions"
       ],
       "accountedKeys": [
         "\"%s\" requires %s extension",
@@ -5091,6 +5098,7 @@
         "Add trigger",
         "Adding primary key",
         "As per your settings, they are being submitted currently, please be patient.",
+        "Backtrace",
         "Cannot create temporary file.",
         "Cannot read uploaded file.",
         "Change to %s",
@@ -5133,6 +5141,7 @@
         "Invalid authentication method set in configuration:",
         "Invalid file format, expected one of: ",
         "Jump to database “%s”.",
+        "Loading",
         "maximum %s",
         "Missing a temporary folder.",
         "Name (Ascending)",
@@ -6005,7 +6014,7 @@
         "js:sql.ts#ajax:POST <$form.attr('action')>",
         "js:sql.ts#ajax:POST <$thisA.attr('href')>",
         "js:sql.ts#ajax:POST <url>",
-        "js:sql.ts#alert:Sorry! Unable to copy",
+        "js:sql.ts#alert:strCopyQueryButtonFailure",
         "js:sql.ts#alert:strFormEmpty",
         "js:sql.ts#change:#id_bookmark",
         "js:sql.ts#change:<window.codeMirrorEditor>",

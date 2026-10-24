@@ -27,6 +27,8 @@ sources:
     n/a: 'php.ini ini_get / ini_set: no PHP configuration'
   src/Error/ErrorHandler.php:
     n/a: 'PHP errors of the request (#pma_errors): the Node server raises none to show or report'
+  resources/templates/error/get_display.twig:
+    n/a: 'the display of a PHP error and its backtrace (ErrorHandler): the Node server raises none to show'
   src/Controllers/NavigationController.php:
     n/a: 'the navigation is an API (JSON) for the SPA, never a page of its own'
   src/Theme/:
@@ -76,6 +78,8 @@ data:
     - paths: [setup.*.name]
       at: apps/server/src/setup/service.ts::setupPages
 msgids:
+  Loading:
+    n/a: 'the placeholder title in modal markup (export, designer, preview SQL, index, insert, relation): phpMyAdmin JS sets the real title, or strLoading "Loading…", before showing it; BetterMyAdmin opens its dialogs with their title'
   No databases selected.:
     n/a: 'stale phpMyAdmin .pot msgid: ef60f1df38 (respondWithErrorMessage) switched every source reference to the singular "No database selected.", which we match; the plural lingers only in the not-yet-regenerated pot and drops on the next upstream extraction'
   Could not load export plugins, please check your installation!:

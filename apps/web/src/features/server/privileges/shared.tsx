@@ -117,7 +117,7 @@ export function useExportPrivileges(server: number) {
       id="exportPrivilegesModal"
       open={state !== null}
       onClose={() => setState(null)}
-      title={state?.title ?? t('Loading')}
+      title={state?.title ?? t('Loading…')}
       footer={<Button onClick={() => setState(null)}>{t('Close')}</Button>}
     >
       <Textarea className="export font-mono" cols={60} rows={15} readOnly value={state?.grants ?? ''} />

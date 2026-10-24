@@ -2,7 +2,7 @@
 
 # phpMyAdmin route map (source of truth for parity)
 
-Every route of phpMyAdmin `2c66fc86`, extracted by executing its routing definition (`src/Routing/Routes.php::collect`, which reads the `#[Route]` attributes of every controller and feeds FastRoute) — 196 routes — plus the 4 paths of the setup script (`Routing::callSetupController`). "GET, POST" routes are page routes that also accept form posts, "POST"-only routes are AJAX actions, "GET"-only routes are read-only pages or JSON feeds.
+Every route of phpMyAdmin `6eba7ba9`, extracted by executing its routing definition (`src/Routing/Routes.php::collect`, which reads the `#[Route]` attributes of every controller and feeds FastRoute) — 196 routes — plus the 4 paths of the setup script (`Routing::callSetupController`). "GET, POST" routes are page routes that also accept form posts, "POST"-only routes are AJAX actions, "GET"-only routes are read-only pages or JSON feeds.
 
 The equivalent column is the BetterMyAdmin SPA route (UI) and API endpoint that replace it (see [API reference](../architecture/05-api-reference.md) and [Frontend architecture](../architecture/03-frontend-architecture.md)). Edit `tools/parity/map/routes.yaml`, then run `pnpm parity:report`. Status is computed: targets are checked against the Hono registrations and TanStack file routes, so "implemented" means every listed target exists; see [coverage](coverage/routes.md).
 

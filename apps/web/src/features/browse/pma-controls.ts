@@ -80,7 +80,7 @@ export const pmaControls = {
   'js:sql.ts#click:.navigation .showAllRows': 'ResultsView.tsx',
   'js:sql.ts#change:select[name="sql_query"]': 'ResultsView.tsx',
   'js:sql.ts#click:#copyToClipBoard': 'ResultsView.tsx',
-  'js:sql.ts#alert:Sorry! Unable to copy': 'ResultsView.tsx',
+  'js:sql.ts#alert:strCopyQueryButtonFailure': 'ResultsView.tsx',
   'js:sql.ts#keyup:.filter_rows': 'ResultsView.tsx',
   'js:sql.ts#submit:.maxRowsForm': 'ResultsView.tsx',
   "js:sql.ts#submit:form[name='displayOptionsForm'].ajax": 'ResultsView.tsx',

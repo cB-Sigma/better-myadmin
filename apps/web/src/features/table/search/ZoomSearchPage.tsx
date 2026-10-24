@@ -366,8 +366,9 @@ function ZoomResult({
       <Dialog open={help} onOpenChange={setHelp}>
         <DialogContent id="helpModal">
           <DialogHeader>
-            {/* pma: strHelpTitle is not passed through __() */}
-            <DialogTitle>Zoom search instructions</DialogTitle>
+            {/* pma: strHelpTitle, translated since upstream a585a5c2ee
+                i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update */}
+            <DialogTitle>{t('Zoom search instructions')}</DialogTitle>
           </DialogHeader>
           <DialogBody>
             <ul className="list-disc ps-5">

@@ -1,5 +1,5 @@
 {
-  "_generated": {"by": "generate-collation-fixtures.php", "pma": "328b8d8003", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "_generated": {"by": "generate-collation-fixtures.php", "pma": "6eba7ba9ad", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
   "cases": [
     ["binary", "Binary"],
     ["utf8_general_ci", "Unicode, case-insensitive"],
@@ -12,8 +12,8 @@
     ["utf8mb4_es_trad_0900_ai_ci", "Spanish (traditional) (UCA 9.0.0), accent-insensitive, case-insensitive"],
     ["utf8mb4_es_0900_ai_ci", "Spanish (modern) (UCA 9.0.0), accent-insensitive, case-insensitive"],
     ["utf8mb4_de_0900_ai_ci", "German (dictionary order) (UCA 9.0.0), accent-insensitive, case-insensitive"],
-    ["utf8mb4_uca1400_ai_ci", "Unicode (UCA 4.0.0), accent-insensitive, case-insensitive"],
-    ["utf8mb4_uca1400_swedish_nopad_ai_ci", "Unicode (UCA 4.0.0), no-pad, accent-insensitive, case-insensitive"],
+    ["utf8mb4_uca1400_ai_ci", "Unicode (UCA 14.0.0), accent-insensitive, case-insensitive"],
+    ["utf8mb4_uca1400_swedish_nopad_ai_ci", "Unicode (UCA 14.0.0), no-pad, accent-insensitive, case-insensitive"],
     ["ucs2_unicode_ci", "Unicode, case-insensitive"],
     ["ucs2_vietnamese_ci", "Vietnamese, case-insensitive"],
     ["gb18030_chinese_ci", "Chinese, case-insensitive"],

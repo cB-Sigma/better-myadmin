@@ -20,7 +20,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { api } from '../../lib/api'
-import { ngettext, t } from '../../lib/i18n'
+import { Trans, ngettext, t } from '../../lib/i18n'
 import { qk } from '../../lib/queryKeys'
 import { BBCode } from '../shell/bbcode'
 import { InlineHtml } from '../shell/inline-html'
@@ -270,7 +270,11 @@ export function SearchPage({ server, db }: { server: number; db: string }) {
             <div id="searchresults">
               <table className="mb-2 w-auto text-sm [&_td]:px-2 [&_td]:py-1">
                 <caption className="mb-1 text-left">
-                  Search results for "<em>{results.searchString}</em>" {results.description}:
+                  {/* i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update */}
+                  <Trans
+                    id={'Search results for "%s" %s:'}
+                    args={[<em key="s">{results.searchString}</em>, results.description]}
+                  />
                 </caption>
                 <tbody>
                   {results.rows.map((row) => (

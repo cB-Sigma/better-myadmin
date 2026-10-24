@@ -76,7 +76,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
   const update = async () => {
     const used = [...new Set(list.filter((c) => c.table !== '' && c.show).map((c) => c.table))]
     if (used.length === 0) {
-      setMessages([{ type: 'error', text: 'Nothing selected' }])
+      setMessages([{ type: 'error', text: t('Nothing selected') }]) // i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update
       return
     }
     try {
@@ -250,7 +250,7 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                             ))}
                           </tr>
                           <tr>
-                            <td>Column</td>
+                            <td>{t('Column')}</td>
                             <td colSpan={2}>
                               <NativeSelect
                                 className="columnNameSelect opColumn"
@@ -268,7 +268,9 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                             </td>
                           </tr>
                           <tr>
-                            <td>Op</td>
+                            {/* translators: Short label for the comparison operator of a criteria row (=, >, LIKE, IN, BETWEEN…)
+                                i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update */}
+                            <td>{t('Op')}</td>
                             <td>
                               <NativeSelect
                                 className="criteria_op"
@@ -346,7 +348,8 @@ export function MultiTableQueryPage({ server, db }: { server: number; db: string
                                           <Input
                                             className="val"
                                             // pma: multi_table_query.ts hard-codes it in English
-                                            placeholder="Enter an option"
+                                            // i18n-new: upstream a585a5c2ee, in phpmyadmin.pot from its next po update
+                                            placeholder={t('Enter an option')}
                                             value={v}
                                             onChange={(e) =>
                                               setCrit(i, {

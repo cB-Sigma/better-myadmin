@@ -779,7 +779,7 @@ function Operations({
       await navigator.clipboard.writeText(lines.join('\n'))
     } catch {
       // pma: resources/js/sql.ts hard-codes it in English
-      window.alert('Sorry! Unable to copy')
+      window.alert(t('Copying failed!'))
     }
   }
   const exportSearch = {

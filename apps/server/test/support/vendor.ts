@@ -28,10 +28,10 @@ export const intType = (width = 11, unsigned = false) =>
  */
 export const utf8mb4Default = csRows[0]?.c ?? (isMariaDb ? 'utf8mb4_uca1400_ai_ci' : 'utf8mb4_0900_ai_ci')
 
-/** Collation::buildDescription(utf8mb4Default) as phpMyAdmin renders it (phpMyAdmin maps every utf8mb4 UCA to "UCA 4.0.0"). */
+/** Collation::buildDescription(utf8mb4Default) as phpMyAdmin renders it (uca1400 is "UCA 14.0.0" since upstream c348bc2e60). */
 const UTF8MB4_DESCRIPTIONS: Record<string, string> = {
   utf8mb4_0900_ai_ci: 'Unicode (UCA 9.0.0), accent-insensitive, case-insensitive',
-  utf8mb4_uca1400_ai_ci: 'Unicode (UCA 4.0.0), accent-insensitive, case-insensitive',
+  utf8mb4_uca1400_ai_ci: 'Unicode (UCA 14.0.0), accent-insensitive, case-insensitive',
   utf8mb4_general_ci: 'Unicode (UCA 4.0.0), case-insensitive',
 }
 export const utf8mb4DefaultDescription =

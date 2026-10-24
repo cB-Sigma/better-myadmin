@@ -284,7 +284,7 @@
     "utf8mb4_tr_0900_ai_ci": "Turkish (UCA 9.0.0), accent-insensitive, case-insensitive",
     "utf8mb4_tr_0900_as_cs": "Turkish (UCA 9.0.0), accent-sensitive, case-sensitive",
     "utf8mb4_turkish_ci": "Turkish (UCA 4.0.0), case-insensitive",
-    "utf8mb4_uca1400_ai_ci": "Unicode (UCA 4.0.0), accent-insensitive, case-insensitive",
+    "utf8mb4_uca1400_ai_ci": "Unicode (UCA 14.0.0), accent-insensitive, case-insensitive",
     "utf8mb4_unicode_520_ci": "Unicode (UCA 5.2.0), case-insensitive",
     "utf8mb4_unicode_ci": "Unicode (UCA 4.0.0), case-insensitive",
     "utf8mb4_unicode_nopad_ci": "Unicode (UCA 4.0.0), no-pad, case-insensitive",
