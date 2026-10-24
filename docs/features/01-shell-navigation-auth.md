@@ -693,14 +693,14 @@ AJAX model
 - [x] `_nocache` + `token` appended to every jQuery AJAX request. <!-- parity:test --> `p01-40520e` [f01-ajax.e2e.ts:71](../../tests/e2e/f01-ajax.e2e.ts#L71)
 
 Console
-- [x] Collapsed toolbar shows only "Console"; hover reveals buttons; drag toolbar to resize (persisted `Console/Height`), mode persisted (`Console/Mode`). <!-- parity:test --> `p01-e58832` [f01-console.e2e.ts:195](../../tests/e2e/f01-console.e2e.ts#L195)
-- [x] Enter vs Ctrl+Enter per option; Shift+Enter newline; Ctrl+L/Ctrl+U; history via arrows. <!-- parity:test --> `p01-665316` [f01-console.e2e.ts:131](../../tests/e2e/f01-console.e2e.ts#L131)
-- [x] Each executed query becomes a pending entry updated to success/failed via `console_message_id`; page queries appended via `reloadQuerywindow` and hidden unless "Show current browsing query". <!-- parity:test --> `p01-0acf73` [f01-console.e2e.ts:65](../../tests/e2e/f01-console.e2e.ts#L65)
-- [x] Entry actions: Collapse/Expand/Requery (confirm)/Edit/Explain/Profiling/Bookmark; failed entries show "Query failed" and are removed by Clear. <!-- parity:test --> `p01-52d377` [f01-console.e2e.ts:103](../../tests/e2e/f01-console.e2e.ts#L103)
-- [x] Options switches persist via `/console/update-config`; "Restore default values". <!-- parity:test --> `p01-b992bd` [f01-console.e2e.ts:152](../../tests/e2e/f01-console.e2e.ts#L152)
-- [x] Bookmarks card: list (private + shared), Refresh, Add (label, target db, shared), Edit (creates new), Delete (confirm). <!-- parity:test --> `p01-63933b` [f01-console.e2e.ts:224](../../tests/e2e/f01-console.e2e.ts#L224)
+- [x] Collapsed toolbar shows only "Console"; hover reveals buttons; drag toolbar to resize (persisted `Console/Height`), mode persisted (`Console/Mode`). <!-- parity:test --> `p01-e58832` [f01-console.e2e.ts:216](../../tests/e2e/f01-console.e2e.ts#L216)
+- [x] Enter vs Ctrl+Enter per option; Shift+Enter newline; Ctrl+L/Ctrl+U; history via arrows. <!-- parity:test --> `p01-665316` [f01-console.e2e.ts:152](../../tests/e2e/f01-console.e2e.ts#L152)
+- [x] Each executed query becomes a pending entry updated to success/failed via `console_message_id`; page queries appended via `reloadQuerywindow` and hidden unless "Show current browsing query". <!-- parity:test --> `p01-0acf73` [f01-console.e2e.ts:69](../../tests/e2e/f01-console.e2e.ts#L69)
+- [x] Entry actions: Collapse/Expand/Requery (confirm)/Edit/Explain/Profiling/Bookmark; failed entries show "Query failed" and are removed by Clear. <!-- parity:test --> `p01-52d377` [f01-console.e2e.ts:124](../../tests/e2e/f01-console.e2e.ts#L124)
+- [x] Options switches persist via `/console/update-config`; "Restore default values". <!-- parity:test --> `p01-b992bd` [f01-console.e2e.ts:173](../../tests/e2e/f01-console.e2e.ts#L173)
+- [x] Bookmarks card: list (private + shared), Refresh, Add (label, target db, shared), Edit (creates new), Delete (confirm). <!-- parity:test --> `p01-63933b` [f01-console.e2e.ts:245](../../tests/e2e/f01-console.e2e.ts#L245)
 - [x] Debug SQL card (`DBG.sql`): counts, times, grouping, ordering, traces with arguments. <!-- parity:test --> `p01-d7fef2` [f01-shell.test.tsx:101](../../apps/web/src/features/shell/f01-shell.test.tsx#L101)
-- [x] History from session (or `pma__history` with `QueryHistoryDB`), max 25, shown at start when `StartHistory`. <!-- parity:test --> `p01-24e482` [f01-console.e2e.ts:181](../../tests/e2e/f01-console.e2e.ts#L181)
+- [x] History from session (or `pma__history` with `QueryHistoryDB`), max 25, shown at start when `StartHistory`. <!-- parity:test --> `p01-24e482` [f01-console.e2e.ts:202](../../tests/e2e/f01-console.e2e.ts#L202)
 
 Auth
 - [x] Cookie login redirects (302) after POST so cookies take effect; username recalled via `LoginCookieRecall`; password cookie lifetime per `LoginCookieStore`. <!-- parity:test --> `p01-570894` [auth.test.ts:49](../../apps/server/test/int/auth.test.ts#L49) +3

@@ -111,6 +111,8 @@ interface Step {
   name: string
   pma: () => Promise<unknown>
   bma: () => Promise<unknown>
+  /** an intentional difference: what ours records instead of phpMyAdmin's entry (its sqlquery) */
+  bmaRecords?: string
 }
 
 const STEPS: Step[] = [
@@ -164,7 +166,9 @@ const STEPS: Step[] = [
       }),
   },
   {
-    name: 'edit form from a result: the result query',
+    // X59: phpMyAdmin records the result query ("Go back"), ours the UPDATE that ran
+    name: 'edit form from a result: the UPDATE (X59; phpMyAdmin: the result query)',
+    bmaRecords: "UPDATE `t` SET `name` = 'apricot' WHERE `t`.`id` = 1;",
     pma: async () => {
       const html = await pma.postPage('/table/change/rows', [
         ['db', P.db],
@@ -175,10 +179,11 @@ const STEPS: Step[] = [
         ['clause_is_unique', '1'],
         ['sql_query', 'SELECT * FROM `t`'],
       ])
-      return pma.postJson('/table/replace', [
-        ...serializeForm(findForm(html, { id: 'insertForm' })),
-        ['ajax_page_request', 'true'],
-      ])
+      // the same change on both sides: name 'apple' → 'apricot'
+      const pairs = serializeForm(findForm(html, { id: 'insertForm' })).map(([k, v]): [string, string] =>
+        k.startsWith('fields[multi_edit][0]') && v === 'apple' ? [k, 'apricot'] : [k, v],
+      )
+      return pma.postJson('/table/replace', [...pairs, ['ajax_page_request', 'true']])
     },
     bma: () =>
       post('/tables/t/rows', {
@@ -189,7 +194,7 @@ const STEPS: Step[] = [
             whereClause: '`t`.`id` = 1',
             fields: [
               { name: 'id', value: '1', type: 'int', prev: '1' },
-              { name: 'name', value: 'apple', type: 'varchar(20)', prev: 'apple' },
+              { name: 'name', value: 'apricot', type: 'varchar(20)', prev: 'apple' },
             ],
           },
         ],
@@ -644,8 +649,10 @@ describe.skipIf(!available)(
           | Array<{ db: string; table: string; sqlquery: string }>
           | false
         const mine = hist === false || hist.length === 0 ? null : hist[0]!
+        const expected =
+          step.bmaRecords !== undefined && last !== null ? { ...last, sqlquery: step.bmaRecords } : last
         expect(norm(mine === null ? null : { db: mine.db, table: mine.table, sqlquery: mine.sqlquery })).toBe(
-          norm(last),
+          norm(expected),
         )
       })
     }

@@ -646,7 +646,7 @@ Import page
 - [x] Charset select is encoding list when conversion is supported; else MySQL charsets with `utf8` default and `SET NAMES` behaviour. <!-- parity:test --> `p07-02628c` [import.parity.test.ts:162](../../tests/parity/import.parity.test.ts#L162)
 - [x] Choosing a file auto-selects the matching format (ignoring a compression suffix). <!-- parity:test --> `p07-50895c` [import.test.ts:6](../../apps/web/src/features/import/import.test.ts#L6)
 - [x] Enclosure/escape inputs capped at one char client-side (two allowed if first is `\`). <!-- parity:test --> `p07-22fafd` [import.test.ts:13](../../apps/web/src/features/import/import.test.ts#L13)
-- [x] Allow-interrupt uses `max_execution_time − 1` with a 5 s safety margin; `0` means never interrupt. <!-- parity:test --> `p07-89e7c9` [export-import-checklist.test.ts:300](../../apps/server/test/int/export-import-checklist.test.ts#L300) +1
+- [x] Allow-interrupt uses `max_execution_time − 1` with a 5 s safety margin; `0` means never interrupt. <!-- parity:test --> `p07-89e7c9` [export-import-checklist.test.ts:300](../../apps/server/test/int/export-import-checklist.test.ts#L300)
 - [x] Skip-queries input hidden when resuming; `skip=<offset>` hidden field + info banner shown. <!-- parity:test --> `p07-ca9144` [export-import-checklist.test.ts:300](../../apps/server/test/int/export-import-checklist.test.ts#L300) +1
 - [x] FK checks: hidden `fk_checks=0` + switch `1`; server sets/restores `FOREIGN_KEY_CHECKS`. <!-- parity:test --> `p07-abd2aa` [import.parity.test.ts:177](../../tests/parity/import.parity.test.ts#L177) +1
 - [x] Oversized upload (empty POST) → FAQ 1.16 error; no file and no text → "No data was received to import…". <!-- parity:test --> `p07-797ff9` [import.parity.test.ts:308](../../tests/parity/import.parity.test.ts#L308)
@@ -654,7 +654,7 @@ Import page
 - [x] BOM stripped from the first chunk; chunk size grows ×2 up to ×8 of 32 KiB, capped by `memory_limit/8`. <!-- parity:test --> `p07-78ed9c` [import.test.ts:64](../../packages/import/test/import.test.ts#L64) +1
 - [x] First 50 statements are deferred to the `/sql` results page unless `forceExecute`; beyond that executed directly; displayed SQL dropped when too long. <!-- parity:test --> `p07-2162b4` [import.parity.test.ts:126](../../tests/parity/import.parity.test.ts#L126) +1
 - [x] Success message "Import has been successfully finished, N queries executed." + "(filename)" + created-structures list for CSV/ODS/XML/SHP/MediaWiki. <!-- parity:test --> `p07-b1fc0b` [import.parity.test.ts:189](../../tests/parity/import.parity.test.ts#L189)
-- [x] Timeout message with resubmit link carrying `timeout_passed`, `offset`, `local_import_file`; extra sentence when no progress. <!-- parity:test --> `p07-5a8804` [export-import-checklist.test.ts:300](../../apps/server/test/int/export-import-checklist.test.ts#L300) +2
+- [x] Timeout message with resubmit link carrying `timeout_passed`, `offset`, `local_import_file`; extra sentence when no progress. <!-- parity:test --> `p07-5a8804` [export-import-checklist.test.ts:300](../../apps/server/test/int/export-import-checklist.test.ts#L300) +1
 - [x] Progress bar only with the `uploadprogress` extension; otherwise "Please be patient…" text; form targets a hidden iframe only when a progress handler exists. <!-- parity:test --> `p07-573c56` [export-import-checklist.e2e.ts:233](../../tests/e2e/export-import-checklist.e2e.ts#L233)
 - [x] Drag-and-drop requires a selected DB, accepts `sql|xml|ldi|mediawiki|shp` (+`gz|bz2|zip`), posts fixed defaults, shows per-file progress/cancel/result. <!-- parity:test --> `p07-ca06b4` [import.test.ts:21](../../apps/web/src/features/import/import.test.ts#L21)
 - [x] CSV: separator validation messages; Excel trailing-`;` hack; `NULL` literal → NULL; `csv_partial_import` ineffective (source quirk). <!-- parity:test --> `p07-e0700d` [import.parity.test.ts:198](../../tests/parity/import.parity.test.ts#L198) +1
@@ -667,7 +667,7 @@ Schema export
 - [x] Coordinates and table list always come from the posted canvas state (`t_x/t_y/t_tbl…`); `offline_export` when Designer tables are not configured. <!-- parity:test --> `p07-a8542e` [export-import-checklist.test.ts:251](../../apps/server/test/int/export-import-checklist.test.ts#L251)
 - [x] File name = page description when a saved page is exported online, else `<db>`. <!-- parity:test --> `p07-164735` [export-import-checklist.test.ts:238](../../apps/server/test/int/export-import-checklist.test.ts#L238)
 - [x] Only relations between selected tables are drawn; keys-only mode shows indexed columns only. <!-- parity:test --> `p07-9b4b39` [database-designer.parity.test.ts:502](../../tests/parity/database-designer.parity.test.ts#L502) +1
-- [x] PDF data dictionary pages, TOC, bookmarks, internal links; grid labels in scaled coordinates. <!-- parity:test --> `p07-076972` [schema.test.ts:182](../../packages/schema/test/schema.test.ts#L182) +1
+- [x] PDF data dictionary pages, TOC, bookmarks, internal links; grid labels in scaled coordinates. <!-- parity:test --> `p07-076972` [schema.test.ts:206](../../packages/schema/test/schema.test.ts#L206) +1
 
 ---
 

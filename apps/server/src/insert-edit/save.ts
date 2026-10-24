@@ -82,11 +82,12 @@ export async function saveRows(ctx: IeCtx, req: SaveRowsRequest): Promise<SaveRo
   try {
     return await save(ctx, req, ran)
   } finally {
-    // StatementHistory: Current::$sqlQuery starts as the posted sql_query, executeSqlQuery replaces it
-    // with the statements it runs, and the form's "Go back" query (the same sql_query) is put back last
-    const sqlQuery = req.sqlQuery !== '' ? req.sqlQuery : ran.sql
-    // the console shows the statements that ran (the page's message shows the same)
-    announceQuery({ db: ctx.db, table: ctx.table, sqlQuery: ran.sql !== '' ? ran.sql : sqlQuery })
+    // StatementHistory: the statements that ran (executeSqlQuery's Current::$sqlQuery). phpMyAdmin
+    // then puts the form's "Go back" query (the posted sql_query) back last and records that instead,
+    // so an edit or a copy from a result left only the SELECT in the history (X59); with nothing run,
+    // the posted sql_query as there
+    const sqlQuery = ran.sql !== '' ? ran.sql : req.sqlQuery
+    announceQuery({ db: ctx.db, table: ctx.table, sqlQuery })
     await recordSqlBoxHistory(ctx.meta, { current: { db: ctx.db, table: ctx.table, sqlQuery } }).catch((e) =>
       console.error('metadata history:', e),
     )

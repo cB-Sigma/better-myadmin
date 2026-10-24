@@ -39,13 +39,13 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 |  | Route | Controller | Targets | Detail |
 |---|---|---|---|---|
 | ✅ | `GET /sql/get-default-fk-check-value` | `Sql/DefaultForeignKeyCheckValueController` | API GET /api/servers/:s/sql/default-fk-check (apps/server/src/routes/sql.ts:115) |  |
-| ✅ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:62) |  |
-| ✅ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:62) |  |
-| ✅ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:62) |  |
+| ✅ | `POST /sql/get-enum-values` | `Sql/EnumValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:63) |  |
+| ✅ | `POST /sql/get-relational-values` | `Sql/RelationalValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:63) |  |
+| ✅ | `POST /sql/get-set-values` | `Sql/SetValuesController` | API POST /api/servers/:s/browse/values (apps/server/src/routes/browse.ts:63) |  |
 | ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:575) |  |
 | ✅ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the confirmation is rendered in place by the results view (no request of its own) |
-| ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:76) |  |
-| ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:90) |  |
+| ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:77) |  |
+| ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:92) |  |
 
 ## 03 insert edit transformations — 7/7 (100.0%) covered, 7/7 implemented
 

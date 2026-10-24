@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.11 (2026-10-24)
+
+### Changes
+
+- SQL history: saving a row (Edit, Copy or Insert opened from a result) now records the INSERT or
+  UPDATE that ran, so the statement is still there after a reload. phpMyAdmin records the browse
+  query it redisplays afterwards; this difference is listed in the parity exceptions register as
+  X59.
+
 ## 1.0.10 (2026-10-24)
 
 ### Fixes
