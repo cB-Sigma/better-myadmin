@@ -3281,9 +3281,8 @@ Export and import settings
 
     Defines the default format for schema export. Possible values are ``'pdf'``, ``'eps'``, ``'dia'`` or ``'svg'``.
 
-    BetterMyAdmin does not include the :term:`TCPDF` library, so the PDF
-    format is not offered (as in phpMyAdmin builds without TCPDF); export the
-    schema as EPS, Dia or SVG.
+    The PDF schema needs no :term:`TCPDF`: BetterMyAdmin draws the same
+    document itself, with the DejaVu Sans font embedded.
 
 Tabs display settings
 ---------------------

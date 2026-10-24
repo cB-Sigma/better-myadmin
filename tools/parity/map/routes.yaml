@@ -365,7 +365,7 @@
 /schema-export:
   api: 'POST /api/servers/:s/databases/:db/schema-export'
   ui: '/s/:s/db/:db/designer'
-  note: 'PDF (TCPDF) is not ported: the Dia, EPS and SVG plugins are'
+  note: 'Dia, EPS, PDF and SVG (PDF without TCPDF: packages/pdf)'
 /server/binlog:
   api: 'GET /api/servers/:s/binlog'
   ui: '/s/:s/binlog'

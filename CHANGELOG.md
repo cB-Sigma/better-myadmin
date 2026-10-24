@@ -2,6 +2,17 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+### Features
+
+- PDF export and PDF relational schema, as phpMyAdmin with TCPDF offers them (the reference build has
+  no TCPDF, so neither was available before): the export format "PDF" (report title, structure and/or
+  data; A3 landscape report with a header per page) and the Designer's "Export schema" to PDF (show
+  color, only keys, same width, orientation, paper size, grid, data dictionary with contents,
+  bookmarks and links, table order). A new package, `packages/pdf`, ports the TCPDF subset they use
+  onto pdf-lib, with DejaVu Sans embedded so non-Latin text prints.
+
 ## 1.0.8 (2026-10-24)
 
 ### Features

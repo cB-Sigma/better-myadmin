@@ -211,9 +211,11 @@ located in the `MySQL Documentation
 1.19 I can't run the "display relations" feature because the script seems not to know the font face I'm using!
 --------------------------------------------------------------------------------------------------------------
 
-BetterMyAdmin does not include the :term:`TCPDF` library, so it offers no
-:term:`PDF` export and no PDF relational schema (as phpMyAdmin builds without
-TCPDF). Export the schema as SVG, EPS or Dia instead (see :ref:`faqpdf`).
+phpMyAdmin's :term:`TCPDF` library needs special font files for this feature.
+BetterMyAdmin does not use TCPDF: its :term:`PDF` export and PDF relational
+schema embed the DejaVu Sans font they ship with, which covers Latin, Greek,
+Cyrillic and many other scripts, so there are no font files to build (see
+:ref:`faqpdf`).
 
 .. _faqmysql:
 
@@ -1369,17 +1371,15 @@ enables: drop-down list of possible values.
 6.8 How can I produce a PDF schema of my database?
 --------------------------------------------------
 
-BetterMyAdmin exports the relational schema as SVG, EPS or Dia; it does not
-include the :term:`TCPDF` library, so the :term:`PDF` format is not available
-(as in phpMyAdmin builds without TCPDF). First the configuration variables
-"relation", "table\_coords" and "pdf\_pages" have to be filled in.
+First the configuration variables "relation", "table\_coords" and
+"pdf\_pages" have to be filled in.
 
 * Select your database in the navigation panel.
 * Choose ":guilabel:`Designer`" in the navigation bar at the top.
 * Move the tables the way you want them.
 * Choose ":guilabel:`Export schema`" in the left menu.
 * The export modal will open.
-* Select the type of export (SVG, EPS or Dia), you may adjust the other settings.
+* Select the type of export to :term:`PDF`, you may adjust the other settings.
 * Submit the form and the file will start downloading.
 
 .. seealso::

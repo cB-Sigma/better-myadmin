@@ -299,9 +299,10 @@ For presentation purposes, non editable PDF might be best choice for you.
 
 .. note::
 
-    The PDF export needs phpMyAdmin's :term:`TCPDF` library, which
-    BetterMyAdmin does not include, so it is not offered (as in phpMyAdmin
-    builds without TCPDF).
+    phpMyAdmin builds the PDF with the :term:`TCPDF` library; BetterMyAdmin
+    draws the same report (A3 landscape, the report title, one table per
+    page with its column titles repeated on every page) itself, with the
+    DejaVu Sans font embedded, so non-Latin text prints too.
 
 .. _export_jsmodule:
 
