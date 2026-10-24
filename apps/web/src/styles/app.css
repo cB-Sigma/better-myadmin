@@ -205,6 +205,10 @@ input[type="file"]::file-selector-button:hover {
 [data-theme="modern"][data-color-mode="dark"] #pma_navigation_tree_content {
   --nav-line: #3a3a42;
 }
+/* a 1px guide's centre is half a pixel right of its left edge; the chevron moves onto it */
+[data-theme="modern"] #pma_navigation_tree_content .nav-chevron {
+  transform: translateX(0.5px);
+}
 #pma_navigation_tree_content .nav-indent {
   display: none;
   top: 0;
@@ -269,7 +273,7 @@ input[type="file"]::file-selector-button:hover {
 }
 /* the stem leaves the chevron from below it, so the guide meets the first child */
 [data-theme="modern"] #pma_navigation_tree_content .nav-stem {
-  top: calc(50% + 8px);
+  top: calc(50% + 5px);
 }
 /* lines: phpMyAdmin's four themes, classic, modern, and no theme yet (pmahomme is the default) */
 :is(
