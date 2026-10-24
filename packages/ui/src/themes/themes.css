@@ -566,9 +566,9 @@
 [data-theme="modern"] {
   color-scheme: light;
   --font-ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-base: 14px;
-  --radius: 0.5rem;
-  --btn-radius: 0.375rem;
+  --font-base: 13px;
+  --radius: 5px;
+  --btn-radius: 5px;
   --bg: #ffffff;
   --bg-subtle: #f4f4f5;
   --bg-elevated: #ffffff;
@@ -579,8 +579,8 @@
   --fg-on-accent: #ffffff;
   --border: #e4e4e7;
   --border-strong: #d4d4d8;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
+  --accent: #3f6391;
+  --accent-hover: #2e4d75;
   --accent-fg: #ffffff;
   --success: #166534;
   --success-bg: #f0fdf4;
@@ -601,8 +601,8 @@
   --data-null: #71717a;
   --data-number: #09090b;
   --data-binary: #7c3aed;
-  --data-link: #2563eb;
-  --focus-ring: #3b82f6;
+  --data-link: #3f6391;
+  --focus-ring: #7393bb;
   --nav-pointer-bg: #e4e4e7;
   --navi-bg: #fafafa;
   --navi-fg: #18181b;
@@ -620,7 +620,7 @@
   --card-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --card-head-bg: #fafafa;
   --card-head-fg: #09090b;
-  --card-head-size: 1rem;
+  --card-head-size: 13px;
   --card-divider: #f4f4f5;
   --btn-bg: #ffffff;
   --btn-hover-bg: #f4f4f5;
@@ -629,65 +629,65 @@
 }
 
 [data-theme="modern"][data-color-mode="dark"] {
-  /* layered surfaces, darkest first: canvas (modern.css --m-canvas) #09090b, sidebar #0c0c0e,
-     cards / tables / inputs #111113, headers #161619, hover and pills #1c1c20, menus #1f1f23 */
+  /* true black (AMOLED): the canvas, sidebar, cards and rows are #000; raised surfaces step up
+     from #0e0e10 (headers, pills) to #141416 (menus) */
   color-scheme: dark;
-  --bg: #111113;
-  --bg-subtle: #1c1c20;
-  --bg-elevated: #1f1f23;
-  --bg-inset: #161619;
+  --bg: #000000;
+  --bg-subtle: #0e0e10;
+  --bg-elevated: #141416;
+  --bg-inset: #070708;
   --fg: #f4f4f5;
   --fg-muted: #a1a1aa;
-  --fg-subtle: #8b8b94;
+  --fg-subtle: #85858e;
   --fg-on-accent: #09090b;
-  --border: #26262b;
-  --border-strong: #36363d;
-  --accent: #60a5fa;
-  --accent-hover: #93c5fd;
+  --border: #1f1f23;
+  --border-strong: #2e2e34;
+  --accent: #8eafd4;
+  --accent-hover: #b0c8e4;
   --accent-fg: #09090b;
   /* messages: a faint tint of the hue, its text light enough to read on it */
   --success: #86efac;
-  --success-bg: #0c1a12;
-  --notice: #93c5fd;
-  --notice-bg: #0d1526;
+  --success-bg: #04110a;
+  --notice: #a9c2e0;
+  --notice-bg: #050d1c;
   --warning: #fcd34d;
-  --warning-bg: #1c1708;
+  --warning-bg: #140f03;
   --info: #67e8f9;
-  --info-bg: #0a1a1f;
+  --info-bg: #031216;
   --error: #fca5a5;
-  --error-bg: #1f0e10;
-  --grid-header-bg: #161619;
-  --grid-row-odd: #111113;
-  --grid-row-even: #111113;
-  --grid-row-hover: #1c1c20;
-  --grid-row-marked: #2a2410;
-  --grid-cell-edited: #2a2410;
-  --data-null: #8b8b94;
+  --error-bg: #160608;
+  --grid-header-bg: #070708;
+  --grid-row-odd: #000000;
+  --grid-row-even: #000000;
+  --grid-row-hover: #0e0e10;
+  --grid-row-marked: #221c08;
+  --grid-cell-edited: #221c08;
+  --data-null: #85858e;
   --data-number: #f4f4f5;
   --data-binary: #c4b5fd;
-  --data-link: #60a5fa;
-  --focus-ring: #60a5fa;
-  --nav-pointer-bg: #1f1f23;
-  --navi-bg: #0c0c0e;
+  --data-link: #8eafd4;
+  --focus-ring: #6f8fb6;
+  --nav-pointer-bg: #18181c;
+  --navi-bg: #000000;
   --navi-fg: #e4e4e7;
-  --breadcrumb-bg: #09090b;
+  --breadcrumb-bg: #000000;
   --breadcrumb-fg: #f4f4f5;
   --breadcrumb-comment: #a1a1aa;
   --tab-fg: #a1a1aa;
-  --tab-hover-bg: #1c1c20;
-  --tab-active-bg: #27272c;
+  --tab-hover-bg: #0e0e10;
+  --tab-active-bg: #1c1c20;
   --tab-active-fg: #f4f4f5;
-  --tab-border: #26262b;
-  --card-bg: #111113;
-  --card-border: #26262b;
+  --tab-border: #1f1f23;
+  --card-bg: #000000;
+  --card-border: #1f1f23;
   --card-shadow: none;
-  --card-head-bg: #111113;
+  --card-head-bg: #000000;
   --card-head-fg: #f4f4f5;
-  --card-divider: #26262b;
-  --btn-bg: #1c1c20;
-  --btn-hover-bg: #26262b;
-  --notification-bg: #1f1f23;
-  --notification-border: #26262b;
+  --card-divider: #1f1f23;
+  --btn-bg: #0e0e10;
+  --btn-hover-bg: #18181c;
+  --notification-bg: #111113;
+  --notification-border: #1f1f23;
 }
 
 /* ------------------------------------------------------------------ classic (light / dark)
@@ -899,8 +899,8 @@
   --fg-subtle: #636368;
   --border: #1f1f22;
   --border-strong: #2e2e33;
-  --accent: #0a84ff;
-  --accent-hover: #409cff;
+  --accent: #8aaed6;
+  --accent-hover: #aec8e6;
   --accent-fg: #ffffff;
   --success: #7fd28f;
   --success-bg: #07170c;
@@ -921,8 +921,8 @@
   --data-null: #6e6e73;
   --data-number: #e8e8ed;
   --data-binary: #d1a6f2;
-  --data-link: #409cff;
-  --focus-ring: #0a84ff;
+  --data-link: #8aaed6;
+  --focus-ring: #5f86b3;
   --nav-pointer-bg: #1c1c20;
   --navi-bg: #000000;
   --navi-fg: #e8e8ed;
@@ -932,7 +932,7 @@
   --tab-bg: #141416;
   --tab-fg: #c7c7cc;
   --tab-hover-bg: #1f1f23;
-  --tab-active-bg: #0a84ff;
+  --tab-active-bg: #284d77;
   --tab-active-fg: #ffffff;
   --tab-border: #1f1f22;
   --card-bg: #000000;

@@ -35,11 +35,11 @@
   --n-segment: #161618;
   --n-hover: #121214;
   --n-select: #1e1e23;
-  --n-primary-top: #3d9bff;
-  --n-primary: #0a84ff;
+  --n-primary-top: #36618f;
+  --n-primary: #284d77;
   --n-push: 0 0.5px 1.5px rgb(0 0 0 / 0.5), 0 0 0 0.5px rgb(255 255 255 / 0.1);
   --n-field: inset 0 0.5px 1px rgb(0 0 0 / 0.3);
-  --n-icon-table: #4d9bff;
+  --n-icon-table: #7fa4cf;
   --n-icon-view: #d17cf0;
   --n-icon-routine: #f0a04b;
   --n-icon-db: #98989d;

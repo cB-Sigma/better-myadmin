@@ -202,6 +202,9 @@ input[type="file"]::file-selector-button:hover {
   --nav-line: var(--border-strong);
   --nav-guide-offset: 6px;
 }
+[data-theme="modern"][data-color-mode="dark"] #pma_navigation_tree_content {
+  --nav-line: #3a3a42;
+}
 #pma_navigation_tree_content .nav-indent {
   display: none;
   top: 0;

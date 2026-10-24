@@ -15,6 +15,9 @@ All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](http
   - **Native**: the look of a native database client such as TablePlus. System font, a centred
     breadcrumb capsule, segmented tabs, a compact monospace grid with quiet zebra rows, coloured tree
     icons and macOS-style push buttons. Its dark mode is true black (AMOLED) too.
+- Modern theme: tighter spacing (22px tree rows, compact tabs, cards and tables), crisper 4-6px
+  corners and lighter shadows, monospace grid data, a true-black (AMOLED) dark mode, and a muted
+  slate blue in place of the bright link blue.
 
 ### Fixes
 
