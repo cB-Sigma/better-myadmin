@@ -1,0 +1,13 @@
+rules:
+  - pma: { kind: checkbox, name: PersistentConnections }
+    exception: X57
+    reason: PHP persistent connections; BetterMyAdmin always pools its connections (X24)
+  - pma: { kind: link, label: Documentation }
+    exception: X57
+    reason: the documentation link of a setting that is not offered (LoginCookieValidityDisableWarning / PersistentConnections)
+  - pma: { kind: link, label: phpinfo() }
+    exception: X57
+    reason: the description's php.net phpinfo() link; ours reads "Shows a link to the Node.js runtime information"
+  - pma: { kind: checkbox, label: Show phpinfo() link }
+    ours: { label: Show runtime information link }
+    exception: X57

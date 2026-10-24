@@ -1,0 +1,8 @@
+rules:
+  - pma: { kind: link, label: Create PHP code }
+    ours: { kind: button, label: Create JS code }
+    exception: X57
+    reason: the query as JavaScript string literals instead of a PHP `$sql = "…";`
+  - pma: { kind: link, label: Without PHP code }
+    ours: { kind: button, label: Without JS code }
+    exception: X57

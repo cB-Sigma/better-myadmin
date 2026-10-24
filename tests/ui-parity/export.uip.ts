@@ -25,10 +25,16 @@ const FORMATS = [
 
 const steps = (formats: string[]): Step[] => [
   { name: 'custom', do: { check: 'Custom - display all possible options' } },
-  ...formats.map((f) => ({
-    name: `format ${f}`,
-    do: { select: ['File format to export', f] as [string, string] },
-  })),
+  ...formats.map((f) =>
+    f === 'PHP array'
+      ? // phpMyAdmin's PHP array is our JavaScript module (X57): each side picks its own
+        {
+          name: `format ${f}`,
+          pma: { select: ['File format to export', f] as [string, string] },
+          ours: { select: ['File format to export', 'JavaScript module'] as [string, string] },
+        }
+      : { name: `format ${f}`, do: { select: ['File format to export', f] as [string, string] } },
+  ),
 ]
 
 pageParity('server-export', {

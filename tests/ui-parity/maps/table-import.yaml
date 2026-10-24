@@ -11,3 +11,7 @@ rules:
     reason: >-
       the submit row follows the last card in both apps; our card titles are h2 headings (Panel),
       phpMyAdmin's are plain div.card-header, so the preceding-heading fallback names a different section
+  - pma: { kind: checkbox, label: Allow the interruption of an import in case the script detects it is close to the PHP timeout limit. }
+    ours: { label: Allow the interruption of an import when it gets close to the time limit (ExecTimeLimit). }
+    exception: X57
+    reason: BetterMyAdmin has no PHP timeout; the limit is ExecTimeLimit

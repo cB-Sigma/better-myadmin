@@ -6,3 +6,7 @@ rules:
       the option labels carry each log file's size (`binlog.000002 (12.56 MiB)`), which grows between
       the two captures while other suites write to the shared server; the file names and the
       selected log are compared by the binlog parity suite
+  - pma: { kind: link, label: Create PHP code }
+    ours: { kind: button, label: Create JS code }
+    exception: X57
+    reason: the query as JavaScript string literals instead of a PHP `$sql = "…";`

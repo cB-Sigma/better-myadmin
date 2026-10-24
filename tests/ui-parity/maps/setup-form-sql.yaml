@@ -1,0 +1,4 @@
+rules:
+  - pma: { kind: checkbox, label: Create PHP code }
+    ours: { label: Create JS code }
+    exception: X57

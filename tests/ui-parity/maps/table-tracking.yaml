@@ -18,6 +18,9 @@ rules:
     reason: >-
       phpMyAdmin's snapshot <h3> is the preceding heading of every control below it; ours titles the
       snapshot's Structure and Indexes tables as Panels
+  - ours: { kind: button, label: Create JS code, step: structure snapshot }
+    exception: X57
+    reason: the card's "Create PHP code" as JavaScript; phpMyAdmin's links there are n/a (below)
   - pma: { kind: link, label: '/^(Edit inline|Edit|Create PHP code)$/', step: structure snapshot }
     n/a: >-
       Generator::getMessage attaches the query links to the snapshot SQL although nothing ran; ours
@@ -26,3 +29,7 @@ rules:
     added: >-
       the shared SQL highlighter (features/sql/HighlightedSql) also links data types to the MySQL
       manual; phpMyAdmin's links keywords only
+  - pma: { kind: link, label: Create PHP code }
+    ours: { kind: button, label: Create JS code }
+    exception: X57
+    reason: the query as JavaScript string literals instead of a PHP `$sql = "…";`
