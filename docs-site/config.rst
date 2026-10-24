@@ -302,7 +302,7 @@ BetterMyAdmin adds :config:option:`$cfg['Servers'][$i]['SignonPage']`,
 
     Where BetterMyAdmin's HTTP server listens. The command-line options
     ``--host`` and ``--port`` override it. In the Docker image the defaults
-    are ``0.0.0.0`` and port 80 (``APACHE_PORT`` changes the port).
+    are ``0.0.0.0`` and port 80 (``BMA_LISTEN_PORT`` changes the port).
 
 .. config:option:: $cfg['Listen']['host']
 

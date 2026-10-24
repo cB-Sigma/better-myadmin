@@ -21,7 +21,7 @@ Released images are published on the GitHub Container Registry:
 
 .. code-block:: sh
 
-    docker run -d -p 8080:80 -e PMA_HOST=mysql.example.org \
+    docker run -d -p 8080:80 -e BMA_HOST=mysql.example.org \
         -v bma-data:/var/lib/bettermyadmin ghcr.io/cb-sigma/better-myadmin:latest
 
 then open ``http://localhost:8080``. Pin a release version (``:X.Y.Z``)
@@ -31,7 +31,7 @@ The image takes the variables of phpMyAdmin's official Docker image, so a
 compose file written for the ``phpmyadmin`` image works with the image name
 swapped. It keeps its sessions, the generated ``blowfish_secret`` and its local
 metadata in the ``/var/lib/bettermyadmin`` volume, runs as the unprivileged
-``node`` user and listens on port 80 inside the container (``APACHE_PORT``
+``node`` user and listens on port 80 inside the container (``BMA_LISTEN_PORT``
 changes it).
 
 .. _docker-vars:
@@ -453,7 +453,7 @@ volume (``/var/lib/bettermyadmin``) and your configuration file:
 
     docker pull ghcr.io/cb-sigma/better-myadmin:X.Y.Z
     docker rm -f bettermyadmin
-    docker run -d --name bettermyadmin -p 8080:80 -e PMA_HOST=mysql.example.org \
+    docker run -d --name bettermyadmin -p 8080:80 -e BMA_HOST=mysql.example.org \
         -v bma-data:/var/lib/bettermyadmin ghcr.io/cb-sigma/better-myadmin:X.Y.Z
 
 or, with Docker Compose, change the image tag and run
