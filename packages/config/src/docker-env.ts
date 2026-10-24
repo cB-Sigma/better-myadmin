@@ -40,6 +40,80 @@ export interface DockerEnvLayer {
   issues: ConfigIssue[]
 }
 
+/**
+ * Each variable of the phpMyAdmin image with BetterMyAdmin's own name (both are read; the BMA_ one
+ * wins when both are set). The BMA_ names are the documented ones: readable, and without the
+ * phpMyAdmin image's leftovers (`APACHE_PORT` in a server with no Apache).
+ */
+export const DOCKER_ENV_NAMES: ReadonlyArray<{ pma: string; bma: string; effect: string }> = [
+  { pma: 'PMA_HOST', bma: 'BMA_HOST', effect: 'the server to log in to (default: the linked `db`)' },
+  { pma: 'PMA_PORT', bma: 'BMA_PORT', effect: "that server's port" },
+  { pma: 'PMA_VERBOSE', bma: 'BMA_HOST_LABEL', effect: "that server's name in the server list" },
+  { pma: 'PMA_HOSTS', bma: 'BMA_HOSTS', effect: 'several servers, comma-separated' },
+  { pma: 'PMA_PORTS', bma: 'BMA_PORTS', effect: 'their ports' },
+  { pma: 'PMA_VERBOSES', bma: 'BMA_HOST_LABELS', effect: 'their names' },
+  { pma: 'PMA_SOCKET', bma: 'BMA_SOCKET', effect: 'a server reached through a socket' },
+  { pma: 'PMA_SOCKETS', bma: 'BMA_SOCKETS', effect: 'several socket servers, comma-separated' },
+  { pma: 'PMA_ARBITRARY', bma: 'BMA_ARBITRARY_SERVER', effect: '`1`: the login form can name any server' },
+  { pma: 'PMA_USER', bma: 'BMA_USER', effect: 'config authentication: log in as this user, no login form' },
+  { pma: 'PMA_PASSWORD', bma: 'BMA_PASSWORD', effect: "that user's password" },
+  { pma: 'PMA_ABSOLUTE_URI', bma: 'BMA_ABSOLUTE_URI', effect: 'the public URL behind a reverse proxy' },
+  { pma: 'PMA_PMADB', bma: 'BMA_STORAGE_DB', effect: 'the configuration storage database (`phpmyadmin`)' },
+  { pma: 'PMA_CONTROLHOST', bma: 'BMA_CONTROL_HOST', effect: "the configuration storage's server" },
+  { pma: 'PMA_CONTROLPORT', bma: 'BMA_CONTROL_PORT', effect: 'its port' },
+  { pma: 'PMA_CONTROLUSER', bma: 'BMA_CONTROL_USER', effect: 'the control user' },
+  { pma: 'PMA_CONTROLPASS', bma: 'BMA_CONTROL_PASSWORD', effect: "the control user's password" },
+  {
+    pma: 'PMA_QUERYHISTORYDB',
+    bma: 'BMA_QUERY_HISTORY_DB',
+    effect: 'keep the SQL history in the configuration storage',
+  },
+  { pma: 'PMA_QUERYHISTORYMAX', bma: 'BMA_QUERY_HISTORY_MAX', effect: 'how many history entries to keep' },
+  { pma: 'PMA_UPLOADDIR', bma: 'BMA_UPLOAD_DIR', effect: 'server-side directory to import files from' },
+  { pma: 'PMA_SAVEDIR', bma: 'BMA_SAVE_DIR', effect: 'server-side directory to save exports to' },
+  { pma: 'PMA_SSL', bma: 'BMA_SSL', effect: '`1`: TLS to the MySQL server' },
+  { pma: 'PMA_SSL_VERIFY', bma: 'BMA_SSL_VERIFY', effect: "verify the server's certificate" },
+  { pma: 'PMA_SSL_CA', bma: 'BMA_SSL_CA', effect: 'CA certificate file' },
+  { pma: 'PMA_SSL_KEY', bma: 'BMA_SSL_KEY', effect: 'client key file' },
+  { pma: 'PMA_SSL_CERT', bma: 'BMA_SSL_CERT', effect: 'client certificate file' },
+  { pma: 'PMA_SSLS', bma: 'BMA_SSLS', effect: 'the same per server of BMA_HOSTS, comma-separated' },
+  { pma: 'PMA_SSL_VERIFIES', bma: 'BMA_SSL_VERIFIES', effect: '″' },
+  { pma: 'PMA_SSL_CAS', bma: 'BMA_SSL_CAS', effect: '″' },
+  { pma: 'PMA_SSL_KEYS', bma: 'BMA_SSL_KEYS', effect: '″' },
+  { pma: 'PMA_SSL_CERTS', bma: 'BMA_SSL_CERTS', effect: '″' },
+  {
+    pma: 'PMA_SSL_CA_BASE64',
+    bma: 'BMA_SSL_CA_BASE64',
+    effect: 'the CA certificate itself, base64 (written to BMA_SSL_DIR)',
+  },
+  { pma: 'PMA_SSL_KEY_BASE64', bma: 'BMA_SSL_KEY_BASE64', effect: 'the client key itself, base64' },
+  { pma: 'PMA_SSL_CERT_BASE64', bma: 'BMA_SSL_CERT_BASE64', effect: 'the client certificate itself, base64' },
+  { pma: 'PMA_SSL_CAS_BASE64', bma: 'BMA_SSL_CAS_BASE64', effect: '″ per server' },
+  { pma: 'PMA_SSL_KEYS_BASE64', bma: 'BMA_SSL_KEYS_BASE64', effect: '″ per server' },
+  { pma: 'PMA_SSL_CERTS_BASE64', bma: 'BMA_SSL_CERTS_BASE64', effect: '″ per server' },
+  { pma: 'PMA_SSL_DIR', bma: 'BMA_SSL_DIR', effect: 'where the `*_BASE64` files are written' },
+  {
+    pma: 'UPLOAD_LIMIT',
+    bma: 'BMA_UPLOAD_LIMIT',
+    effect: 'the largest upload, e.g. `64M` (MaxUploadSize; default 512M)',
+  },
+  {
+    pma: 'MAX_EXECUTION_TIME',
+    bma: 'BMA_EXEC_TIME_LIMIT',
+    effect: 'seconds an import or export may run (ExecTimeLimit)',
+  },
+  {
+    pma: 'MEMORY_LIMIT',
+    bma: 'BMA_MEMORY_LIMIT',
+    effect: 'MemoryLimit (no effect: imports and exports stream)',
+  },
+  {
+    pma: 'APACHE_PORT',
+    bma: 'BMA_LISTEN_PORT',
+    effect: 'the port BetterMyAdmin listens on in the container (default 80)',
+  },
+]
+
 /** docker-entrypoint.sh: get_docker_secret */
 const SECRET_VARS = [
   'PMA_USER',
@@ -114,6 +188,17 @@ export function parseDockerEnv(input: Env): DockerEnvLayer {
   const origins = new Map<string, string>()
   const issues: ConfigIssue[] = []
   const env: Record<string, string | undefined> = { ...input }
+  // the BMA_ names (and their _FILE secrets) over the phpMyAdmin image's; messages name the one set
+  const shown = new Map<string, string>()
+  for (const { pma, bma } of DOCKER_ENV_NAMES) {
+    for (const suffix of ['', '_FILE']) {
+      const v = input[bma + suffix]
+      if (v === undefined) continue
+      env[pma + suffix] = v
+      shown.set(pma + suffix, bma + suffix)
+    }
+  }
+  const label = (name: string) => shown.get(name) ?? name
 
   // docker-entrypoint.sh: get_docker_secret (`$(cat file)` drops the trailing newlines)
   for (const name of SECRET_VARS) {
@@ -121,11 +206,12 @@ export function parseDockerEnv(input: Env): DockerEnvLayer {
     if (file === undefined || file === '') continue
     try {
       env[name] = readFileSync(file, 'utf8').replace(/\n+$/, '')
+      shown.set(name, label(`${name}_FILE`))
     } catch (e) {
       issues.push({
         path: '',
         message: `cannot read ${file}: ${(e as Error).message}`,
-        source: `env ${name}_FILE`,
+        source: `env ${label(`${name}_FILE`)}`,
       })
     }
   }
@@ -137,7 +223,7 @@ export function parseDockerEnv(input: Env): DockerEnvLayer {
       cur = cur[k] as Record<string, unknown>
     }
     cur[path[path.length - 1] as string] = v
-    origins.set(path.join('.'), `env ${from}`)
+    origins.set(path.join('.'), `env ${label(from)}`)
   }
 
   if (env.PMA_QUERYHISTORYDB !== undefined)
@@ -166,7 +252,7 @@ export function parseDockerEnv(input: Env): DockerEnvLayer {
     try {
       env[to] = saveBase64Files(b64, prefix, ext, sslDir)
     } catch (e) {
-      issues.push({ path: '', message: (e as Error).message, source: `env ${from}` })
+      issues.push({ path: '', message: (e as Error).message, source: `env ${label(from)}` })
     }
   }
 
@@ -260,7 +346,7 @@ export function parseDockerEnv(input: Env): DockerEnvLayer {
       issues.push({
         path: 'MaxUploadSize',
         message: `expected a size such as 2048K, 512M or 1G, got ${JSON.stringify(env.UPLOAD_LIMIT)}`,
-        source: 'env UPLOAD_LIMIT',
+        source: `env ${label('UPLOAD_LIMIT')}`,
       })
     } else set(['MaxUploadSize'], bytes, 'UPLOAD_LIMIT')
   }

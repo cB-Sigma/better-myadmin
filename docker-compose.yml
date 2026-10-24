@@ -19,18 +19,18 @@ services:
       - "8080:80"
     environment:
       # the server to log in to (the image's default is the linked `db`, as in phpMyAdmin's image)
-      PMA_HOST: db
-      PMA_PORT: "3306"
-      # PMA_ARBITRARY: "1"          # let the login form name any server
-      # PMA_USER: root              # config authentication: no login form
-      # PMA_PASSWORD_FILE: /run/secrets/db_password
-      # PMA_ABSOLUTE_URI: https://example.org/bettermyadmin/
-      UPLOAD_LIMIT: 64M
+      BMA_HOST: db
+      BMA_PORT: "3306"
+      # BMA_ARBITRARY_SERVER: "1"   # let the login form name any server
+      # BMA_USER: root              # config authentication: no login form
+      # BMA_PASSWORD_FILE: /run/secrets/db_password
+      # BMA_ABSOLUTE_URI: https://example.org/bettermyadmin/
+      BMA_UPLOAD_LIMIT: 64M
       # any directive: BMA__<Directive>[__<Sub>], e.g. BMA__MaxRows: "50"
     volumes:
       # sessions, the generated blowfish_secret, the local metadata store
       - bma-data:/var/lib/bettermyadmin
-      # your own configuration file (it overrides the PMA_* variables above):
+      # your own configuration file (it overrides the variables above):
       # - ./bettermyadmin.config.ts:/etc/bettermyadmin/bettermyadmin.config.ts:ro
 
 volumes:

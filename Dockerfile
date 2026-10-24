@@ -2,11 +2,12 @@
 # BetterMyAdmin: one Node process serving the API and the built web app.
 #
 #   docker build -t bettermyadmin .
-#   docker run -p 8080:80 -e PMA_HOST=mysql bettermyadmin
+#   docker run -p 8080:80 -e BMA_HOST=mysql bettermyadmin
 #
-# The official phpMyAdmin image's variables work unchanged (PMA_HOST, PMA_PORT, PMA_ARBITRARY,
-# PMA_USER / PMA_PASSWORD, PMA_PMADB, PMA_ABSOLUTE_URI, UPLOAD_LIMIT, … and their *_FILE secrets),
-# see packages/config/src/docker-env.ts; BMA__<Directive> variables and a mounted
+# BMA_HOST, BMA_PORT, BMA_USER / BMA_PASSWORD, BMA_STORAGE_DB, BMA_UPLOAD_LIMIT, BMA_LISTEN_PORT, …
+# (their *_FILE secrets too) configure the image, and the official phpMyAdmin image's names work
+# unchanged (PMA_HOST, PMA_PORT, UPLOAD_LIMIT, APACHE_PORT, …): the table of both is
+# DOCKER_ENV_NAMES in packages/config/src/docker-env.ts. BMA__<Directive> variables and a mounted
 # /etc/bettermyadmin/bettermyadmin.config.{ts,js,mjs,json,yaml,yml} take precedence over them.
 #
 # Behind a TLS-intercepting proxy, pass its CA for the package downloads (optional):

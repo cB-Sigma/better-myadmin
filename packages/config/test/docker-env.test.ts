@@ -2,7 +2,7 @@ import { mkdtempSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { iniQuantity, parseDockerEnv } from '../src/docker-env.ts'
+import { DOCKER_ENV_NAMES, iniQuantity, parseDockerEnv } from '../src/docker-env.ts'
 import { ConfigError } from '../src/errors.ts'
 import { loadConfig } from '../src/loader.ts'
 
@@ -11,6 +11,73 @@ import { loadConfig } from '../src/loader.ts'
  * docker-entrypoint.sh) mapped like the image does.
  */
 const load = (env: Record<string, string>, file: string | false = false) => loadConfig({ file, env })
+
+describe('BetterMyAdmin names for the image variables', () => {
+  it('every phpMyAdmin variable has a distinct BMA_ name', () => {
+    const bma = DOCKER_ENV_NAMES.map((n) => n.bma)
+    expect(new Set(bma).size).toBe(bma.length)
+    expect(bma.every((n) => n.startsWith('BMA_'))).toBe(true)
+    expect(DOCKER_ENV_NAMES.find((n) => n.pma === 'APACHE_PORT')?.bma).toBe('BMA_LISTEN_PORT')
+  })
+
+  it('the documentation lists every variable under both names (docs-site/setup.rst)', () => {
+    const doc = readFileSync(new URL('../../../docs-site/setup.rst', import.meta.url), 'utf8')
+    for (const { pma, bma } of DOCKER_ENV_NAMES) {
+      expect(doc, bma).toContain(`\`\`${bma}\`\``)
+      expect(doc, pma).toContain(`\`\`${pma}\`\``)
+    }
+  })
+
+  it('a BMA_ name does what its phpMyAdmin variable does', async () => {
+    const { config } = await load({
+      BMA_DOCKER: '1',
+      BMA_HOSTS: 'a, b',
+      BMA_HOST_LABELS: 'Primary,Replica',
+      BMA_USER: 'root',
+      BMA_PASSWORD: 'pw',
+      BMA_STORAGE_DB: 'phpmyadmin',
+      BMA_CONTROL_USER: 'pma',
+      BMA_CONTROL_PASSWORD: 'pmapass',
+      BMA_UPLOAD_LIMIT: '64M',
+      BMA_EXEC_TIME_LIMIT: '600',
+      BMA_LISTEN_PORT: '8080',
+    })
+    expect(config.Servers[1]).toMatchObject({
+      host: 'a',
+      verbose: 'Primary',
+      auth_type: 'config',
+      user: 'root',
+    })
+    expect(config.Servers[2]).toMatchObject({
+      host: 'b',
+      verbose: 'Replica',
+      controluser: 'pma',
+      pmadb: 'phpmyadmin',
+    })
+    expect(config.Servers[2]?.controlpass).toBe('pmapass')
+    expect(config.MaxUploadSize).toBe(64 * 1024 * 1024)
+    expect(config.ExecTimeLimit).toBe(600)
+    expect(config.Listen.port).toBe(8080)
+  })
+
+  it('both set: the BMA_ name wins; secrets files and messages under the BMA_ name', async () => {
+    const both = await load({
+      BMA_DOCKER: '1',
+      APACHE_PORT: '80',
+      BMA_LISTEN_PORT: '8080',
+      PMA_HOST: 'old',
+      BMA_HOST: 'new',
+    })
+    expect(both.config.Listen.port).toBe(8080)
+    expect(both.config.Servers[1]?.host).toBe('new')
+    const dir = mkdtempSync(join(tmpdir(), 'bma-secret-'))
+    writeFileSync(join(dir, 'pw'), 's3cret\n')
+    const secret = await load({ BMA_HOST: 'h', BMA_USER: 'u', BMA_PASSWORD_FILE: join(dir, 'pw') })
+    expect(secret.config.Servers[1]?.password).toBe('s3cret')
+    const bad = await load({ BMA_UPLOAD_LIMIT: 'lots' }).catch((e: ConfigError) => e)
+    expect(String((bad as ConfigError).message)).toContain('env BMA_UPLOAD_LIMIT')
+  })
+})
 
 describe('phpMyAdmin docker image variables', () => {
   it('nothing set outside the image: no layer', () => {

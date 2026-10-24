@@ -3,7 +3,13 @@
  * defaults <- `bettermyadmin.config.*` <- environment.
  */
 export { defaultConfig, defaults, serverDefaults } from './defaults.ts'
-export { type DockerEnvLayer, ENV_DOCKER, iniQuantity, parseDockerEnv } from './docker-env.ts'
+export {
+  DOCKER_ENV_NAMES,
+  type DockerEnvLayer,
+  ENV_DOCKER,
+  iniQuantity,
+  parseDockerEnv,
+} from './docker-env.ts'
 export { ENV_CONFIG_FILE, ENV_PREFIX, ENV_SHORTCUTS, type EnvLayer, parseEnv } from './env.ts'
 export {
   FORM_FIELDS,

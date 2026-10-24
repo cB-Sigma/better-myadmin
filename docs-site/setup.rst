@@ -39,47 +39,147 @@ changes it).
 Docker environment variables
 ----------------------------
 
-``PMA_HOST``, ``PMA_PORT``, ``PMA_VERBOSE``
-    The server to log in to (default: the linked ``db``).
+Every variable of the official phpMyAdmin image works, so a compose file
+written for ``phpmyadmin`` runs BetterMyAdmin with only the image name changed.
+Each also has a BetterMyAdmin name, which is the one to use in new setups (the
+``PMA_`` names stay supported; when both are set, the ``BMA_`` one wins):
 
-``PMA_HOSTS``, ``PMA_PORTS``, ``PMA_VERBOSES``
-    Several servers, comma-separated.
+.. list-table::
+   :header-rows: 1
+   :widths: 30 30 40
 
-``PMA_SOCKET``, ``PMA_SOCKETS``
-    Servers reached through a socket.
-
-``PMA_ARBITRARY``
-    Set to ``1`` to let the login form name any server.
-
-``PMA_USER``, ``PMA_PASSWORD``
-    Config authentication: no login form.
-
-``PMA_ABSOLUTE_URI``
-    The public URL when BetterMyAdmin is behind a reverse proxy.
-
-``PMA_PMADB``, ``PMA_CONTROLHOST``, ``PMA_CONTROLPORT``, ``PMA_CONTROLUSER``, ``PMA_CONTROLPASS``
-    The :ref:`linked-tables` and its control user.
-
-``PMA_QUERYHISTORYDB``, ``PMA_QUERYHISTORYMAX``
-    The SQL history in the configuration storage.
-
-``PMA_UPLOADDIR``, ``PMA_SAVEDIR``
-    Server-side import and export directories.
-
-``PMA_SSL``, ``PMA_SSL_VERIFY``, ``PMA_SSL_CA``, ``PMA_SSL_KEY``, ``PMA_SSL_CERT``
-    TLS to the MySQL server (also the plural lists and the ``*_BASE64`` forms).
-
-``UPLOAD_LIMIT``
-    The largest upload, for example ``64M`` (:config:option:`$cfg['MaxUploadSize']`).
-
-``MAX_EXECUTION_TIME``, ``MEMORY_LIMIT``
-    :config:option:`$cfg['ExecTimeLimit']`, :config:option:`$cfg['MemoryLimit']`.
-
-``APACHE_PORT``
-    The port inside the container (default 80).
-
-``PMA_USER_FILE``, ``PMA_PASSWORD_FILE``, ``PMA_HOST_FILE``, …
-    The same values read from Docker secrets.
+   * - BetterMyAdmin
+     - phpMyAdmin image (also read)
+     - Effect
+   * - ``BMA_HOST``
+     - ``PMA_HOST``
+     - the server to log in to (default: the linked ``db``)
+   * - ``BMA_PORT``
+     - ``PMA_PORT``
+     - that server's port
+   * - ``BMA_HOST_LABEL``
+     - ``PMA_VERBOSE``
+     - that server's name in the server list
+   * - ``BMA_HOSTS``
+     - ``PMA_HOSTS``
+     - several servers, comma-separated
+   * - ``BMA_PORTS``
+     - ``PMA_PORTS``
+     - their ports
+   * - ``BMA_HOST_LABELS``
+     - ``PMA_VERBOSES``
+     - their names
+   * - ``BMA_SOCKET``
+     - ``PMA_SOCKET``
+     - a server reached through a socket
+   * - ``BMA_SOCKETS``
+     - ``PMA_SOCKETS``
+     - several socket servers, comma-separated
+   * - ``BMA_ARBITRARY_SERVER``
+     - ``PMA_ARBITRARY``
+     - ``1``: the login form can name any server
+   * - ``BMA_USER``
+     - ``PMA_USER``
+     - config authentication: log in as this user, no login form
+   * - ``BMA_PASSWORD``
+     - ``PMA_PASSWORD``
+     - that user's password
+   * - ``BMA_ABSOLUTE_URI``
+     - ``PMA_ABSOLUTE_URI``
+     - the public URL behind a reverse proxy
+   * - ``BMA_STORAGE_DB``
+     - ``PMA_PMADB``
+     - the configuration storage database (``phpmyadmin``)
+   * - ``BMA_CONTROL_HOST``
+     - ``PMA_CONTROLHOST``
+     - the configuration storage's server
+   * - ``BMA_CONTROL_PORT``
+     - ``PMA_CONTROLPORT``
+     - its port
+   * - ``BMA_CONTROL_USER``
+     - ``PMA_CONTROLUSER``
+     - the control user
+   * - ``BMA_CONTROL_PASSWORD``
+     - ``PMA_CONTROLPASS``
+     - the control user's password
+   * - ``BMA_QUERY_HISTORY_DB``
+     - ``PMA_QUERYHISTORYDB``
+     - keep the SQL history in the configuration storage
+   * - ``BMA_QUERY_HISTORY_MAX``
+     - ``PMA_QUERYHISTORYMAX``
+     - how many history entries to keep
+   * - ``BMA_UPLOAD_DIR``
+     - ``PMA_UPLOADDIR``
+     - server-side directory to import files from
+   * - ``BMA_SAVE_DIR``
+     - ``PMA_SAVEDIR``
+     - server-side directory to save exports to
+   * - ``BMA_SSL``
+     - ``PMA_SSL``
+     - ``1``: TLS to the MySQL server
+   * - ``BMA_SSL_VERIFY``
+     - ``PMA_SSL_VERIFY``
+     - verify the server's certificate
+   * - ``BMA_SSL_CA``
+     - ``PMA_SSL_CA``
+     - CA certificate file
+   * - ``BMA_SSL_KEY``
+     - ``PMA_SSL_KEY``
+     - client key file
+   * - ``BMA_SSL_CERT``
+     - ``PMA_SSL_CERT``
+     - client certificate file
+   * - ``BMA_SSLS``
+     - ``PMA_SSLS``
+     - the same per server of BMA_HOSTS, comma-separated
+   * - ``BMA_SSL_VERIFIES``
+     - ``PMA_SSL_VERIFIES``
+     - ″
+   * - ``BMA_SSL_CAS``
+     - ``PMA_SSL_CAS``
+     - ″
+   * - ``BMA_SSL_KEYS``
+     - ``PMA_SSL_KEYS``
+     - ″
+   * - ``BMA_SSL_CERTS``
+     - ``PMA_SSL_CERTS``
+     - ″
+   * - ``BMA_SSL_CA_BASE64``
+     - ``PMA_SSL_CA_BASE64``
+     - the CA certificate itself, base64 (written to BMA_SSL_DIR)
+   * - ``BMA_SSL_KEY_BASE64``
+     - ``PMA_SSL_KEY_BASE64``
+     - the client key itself, base64
+   * - ``BMA_SSL_CERT_BASE64``
+     - ``PMA_SSL_CERT_BASE64``
+     - the client certificate itself, base64
+   * - ``BMA_SSL_CAS_BASE64``
+     - ``PMA_SSL_CAS_BASE64``
+     - ″ per server
+   * - ``BMA_SSL_KEYS_BASE64``
+     - ``PMA_SSL_KEYS_BASE64``
+     - ″ per server
+   * - ``BMA_SSL_CERTS_BASE64``
+     - ``PMA_SSL_CERTS_BASE64``
+     - ″ per server
+   * - ``BMA_SSL_DIR``
+     - ``PMA_SSL_DIR``
+     - where the ``*_BASE64`` files are written
+   * - ``BMA_UPLOAD_LIMIT``
+     - ``UPLOAD_LIMIT``
+     - the largest upload, e.g. ``64M`` (MaxUploadSize; default 512M)
+   * - ``BMA_EXEC_TIME_LIMIT``
+     - ``MAX_EXECUTION_TIME``
+     - seconds an import or export may run (ExecTimeLimit)
+   * - ``BMA_MEMORY_LIMIT``
+     - ``MEMORY_LIMIT``
+     - MemoryLimit (no effect: imports and exports stream)
+   * - ``BMA_LISTEN_PORT``
+     - ``APACHE_PORT``
+     - the port BetterMyAdmin listens on in the container (default 80)
+   * - ``BMA_USER_FILE``, ``BMA_PASSWORD_FILE``, ``BMA_HOST_FILE``, ``BMA_HOSTS_FILE``, ``BMA_CONTROL_HOST_FILE``, ``BMA_CONTROL_USER_FILE``, ``BMA_CONTROL_PASSWORD_FILE``
+     - ``PMA_USER_FILE``, ``PMA_PASSWORD_FILE``, …
+     - the same values read from files (Docker secrets)
 
 ``PMA_CONFIG_BASE64``, ``PMA_USER_CONFIG_BASE64`` and ``/etc/phpmyadmin/conf.d``
 hold PHP code and are not read; use a configuration file instead (below).
