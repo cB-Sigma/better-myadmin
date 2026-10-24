@@ -1,0 +1,23 @@
+# Intentional differences of the setup script forms (see tests/ui-parity/README.md for the format).
+# Warnings / Other core settings: the X57 rows removed there (each with its "allow users to customize"
+# box) shift the identical-label boxes that follow, so the pairing reads as reordered
+ignoreOrder: ['Warnings', 'Other core settings']
+rules:
+  - pma: { kind: checkbox, name: PersistentConnections }
+    n/a: "X57: PHP persistent connections; BetterMyAdmin always pools its connections (X24)"
+  - pma: { kind: link, label: Documentation }
+    n/a: "X57: the documentation link of a setting that is not offered (LoginCookieValidityDisableWarning / PersistentConnections)"
+  - pma: { kind: link, label: phpinfo() }
+    n/a: "X57: the description's php.net phpinfo() link; ours reads \"Shows a link to the Node.js runtime information\""
+  - pma: { kind: checkbox, label: Show phpinfo() link }
+    ours: { label: Show runtime information link }
+    exception: X57
+  - pma: { kind: checkbox, name: LoginCookieValidityDisableWarning }
+    n/a: "X57: the warning about PHP's session.gc_maxlifetime is never shown (X44), so its switch is not offered"
+  - pma: { kind: checkbox, label: Allow users to customize this value }
+    n/a: >-
+      X57: the "allow users to customize" box of the LoginCookieValidityDisableWarning row (identical
+      labels, so the report names the next row's)
+  - pma: { kind: checkbox, label: Create PHP code }
+    ours: { label: Create JS code }
+    exception: X57

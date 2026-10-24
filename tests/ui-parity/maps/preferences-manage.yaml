@@ -1,4 +1,3 @@
 rules:
   - pma: { kind: radio, label: Save as PHP file }
-    exception: X57
-    reason: a config.inc.php snippet; the JSON file is offered
+    n/a: "X57: a config.inc.php snippet; the JSON file is offered"

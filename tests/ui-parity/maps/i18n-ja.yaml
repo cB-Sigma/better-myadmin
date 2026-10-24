@@ -26,3 +26,7 @@ rules:
       the Web server card lists 4 PHP-extension documentation links in phpMyAdmin and 3 Node.js
       module links in ours
     exception: X30
+  - pma: { kind: link, section: '', label: 'ドキュメント', step: initial }
+    n/a: >-
+      X58: the documentation link of phpMyAdmin's "blowfish_secret is longer than necessary" warning;
+      BetterMyAdmin derives its keys from the secret, so any length is fine and the warning is not shown

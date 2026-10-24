@@ -22,3 +22,7 @@ rules:
       links in ours (X30); the 4th pairs with our language selector's documentation link (faq7-2), which
       the reference hides together with the selector (built without translations, see the lang rule)
     exception: X30
+  - pma: { kind: link, section: '' , label: 'documentation' }
+    n/a: >-
+      X58: the documentation link of phpMyAdmin's "blowfish_secret is longer than necessary" warning;
+      BetterMyAdmin derives its keys from the secret, so any length is fine and the warning is not shown

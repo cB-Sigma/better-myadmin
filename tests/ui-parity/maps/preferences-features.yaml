@@ -10,8 +10,6 @@ rules:
     n/a: >-
       the restore link of that stored Console mode (same cause as the rule above)
   - pma: { kind: checkbox, name: LoginCookieValidityDisableWarning }
-    exception: X57
-    reason: the warning about PHP's session.gc_maxlifetime is never shown (X44), so its switch is not offered
+    n/a: "X57: the warning about PHP's session.gc_maxlifetime is never shown (X44), so its switch is not offered"
   - pma: { kind: link, label: Documentation }
-    exception: X57
-    reason: the documentation link of a setting that is not offered (LoginCookieValidityDisableWarning / PersistentConnections)
+    n/a: "X57: the documentation link of a setting that is not offered (LoginCookieValidityDisableWarning / PersistentConnections)"

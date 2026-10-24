@@ -25,11 +25,16 @@ const LEVELS = [
   },
 ] as const
 
-/** the session's own fields (token, server, lang) are not part of the comparison */
+/**
+ * the session's own fields (token, server, lang) are not part of the comparison; our JavaScript
+ * module format stands in for phpMyAdmin's PHP array (X57), and the databases other suites create
+ * and drop meanwhile are not the fixture's
+ */
 const comparable = (pairs: Array<[string, string]>) =>
   pairs
     .filter(([k]) => !['token', 'server', 'lang'].includes(k))
-    .map(([k, v]) => `${k}=${v}`)
+    .filter(([k, v]) => k !== 'db_select[]' || v === FIX.db || !/_(uip|e2e|parity)_/.test(v))
+    .map(([k, v]) => `${k === 'jsmodule_structure_or_data' ? 'phparray_structure_or_data' : k}=${v}`)
     .sort()
 
 async function session(browser: Browser, baseURL: string, app: 'pma' | 'ours'): Promise<Page> {

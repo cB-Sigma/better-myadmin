@@ -10,3 +10,11 @@ rules:
     reason: >-
       environment: the list holds every database of the shared MySQL; suites running concurrently
       create and drop theirs between the two captures
+  - match: { kind: select, label: File format to export }
+    ignore: [options]
+    exception: X57
+    reason: phpMyAdmin's "PHP array" format is our "JavaScript module" (the rest of the list is the same)
+  - match: { kind: select, label: File format to export, step: format PHP array }
+    ignore: [value]
+    exception: X57
+    reason: phparray there, jsmodule here
