@@ -1178,14 +1178,21 @@ function CellEditor(props: {
   // the editor hangs below its cell: in a short result (one row) it reaches past the bottom of the
   // horizontally scrolling wrapper, which then scrolls vertically to show it and slides the sticky
   // header over the row. The wrapper grows by the overflow instead (and never scrolls vertically).
+  // Likewise to the right, where a frame only as wide as a narrow table (the classic, modern and
+  // native themes) would cut off a date picker wider than the cell.
   useEffect(() => {
     const ed = ref.current
     const wrap = ed?.closest<HTMLElement>('.table-responsive-md')
     if (ed === null || ed === undefined || wrap === null || wrap === undefined) return
     const fit = () => {
       wrap.style.paddingBottom = ''
-      const over = ed.getBoundingClientRect().bottom - wrap.getBoundingClientRect().bottom
+      wrap.style.paddingRight = ''
+      const box = ed.getBoundingClientRect()
+      const frame = wrap.getBoundingClientRect()
+      const over = box.bottom - frame.bottom
       if (over > 0) wrap.style.paddingBottom = `${Math.ceil(over) + 4}px`
+      const right = box.right - frame.right
+      if (right > 0) wrap.style.paddingRight = `${Math.ceil(right) + 4}px`
       wrap.scrollTop = 0
     }
     fit()
@@ -1194,6 +1201,7 @@ function CellEditor(props: {
     return () => {
       ro?.disconnect()
       wrap.style.paddingBottom = ''
+      wrap.style.paddingRight = ''
     }
   }, [])
   // showEditCell: the edit box takes the cell's outer size; the cursor goes to the end of the value

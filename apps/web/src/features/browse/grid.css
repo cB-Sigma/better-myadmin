@@ -96,6 +96,32 @@
   color: var(--fg-subtle);
   font-size: 11px;
 }
+/* the date picker shown in a cell editor is a table inside a grid cell: the grid's cell, stripe,
+   sticky-header and theme rules (monospace data in modern and native) stop at it */
+.table_results .cEdit :is(.null_div, .cell_edit_hint) {
+  font-family: var(--font-ui);
+}
+.table_results .cEdit .ui-datepicker.ui-widget {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  white-space: normal;
+}
+.table_results .cEdit .ui-datepicker.ui-widget tr {
+  background: transparent;
+}
+.table_results .cEdit .ui-datepicker.ui-widget :is(td, th) {
+  position: static;
+  padding: 1px;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: normal;
+  white-space: nowrap;
+}
+.table_results .cEdit .ui-datepicker.ui-widget thead th {
+  font-weight: 700;
+}
 table.navigation td {
   padding: 0.15rem 0.3rem;
   vertical-align: middle;
