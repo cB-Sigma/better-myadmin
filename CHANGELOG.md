@@ -2,6 +2,13 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.12 (2026-10-24)
+
+### Changes
+
+- SQL history: deleting rows from a result records the DELETE statements, not the browse query
+  shown again afterwards (X59, like saved edits in 1.0.11). The console shows them too.
+
 ## 1.0.11 (2026-10-24)
 
 ### Changes

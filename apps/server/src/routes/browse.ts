@@ -78,13 +78,17 @@ browseRoutes.post('/delete-rows', async (c) => {
   const req = await parseJson(c, DeleteRowsRequest)
   const r = await withBrowse(c, req.db, async (x) => {
     const queries = await deleteRows(x, req)
-    return browseResponse(x, BrowseRequest.parse({ db: req.db, table: req.table, sql: req.originalSql }), {
-      sql: queries.join('\n'),
-      message: x.tr.gettext('Your SQL query has been executed successfully.'),
-    })
+    const shown = await browseResponse(
+      x,
+      BrowseRequest.parse({ db: req.db, table: req.table, sql: req.originalSql }),
+      { sql: queries.join('\n'), message: x.tr.gettext('Your SQL query has been executed successfully.') },
+    )
+    return { ...shown, queries }
   })
-  await afterSqlBox(c, { db: req.db, table: req.table, current: r.current })
-  announceQuery(r.current)
+  // the DELETE statements, not the result query shown again after them (X59, like a saved edit)
+  const current = { db: req.db, table: req.table, sqlQuery: r.queries.join('\n') }
+  await afterSqlBox(c, { db: req.db, table: req.table, current })
+  announceQuery(current)
   return c.json(r.body)
 })
 

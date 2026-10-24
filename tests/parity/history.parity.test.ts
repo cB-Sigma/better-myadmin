@@ -201,7 +201,9 @@ const STEPS: Step[] = [
       }),
   },
   {
-    name: 'delete rows: the result query',
+    // X59: phpMyAdmin records the result query shown again, ours the DELETE statements
+    name: 'delete rows: the DELETE statements (X59; phpMyAdmin: the result query)',
+    bmaRecords: 'DELETE FROM `t` WHERE `t`.`id` = 5 LIMIT 1;\nDELETE FROM `t` WHERE `t`.`id` = 6 LIMIT 1;',
     pma: () =>
       pma.postJson('/table/delete/rows', [
         ['db', P.db],
