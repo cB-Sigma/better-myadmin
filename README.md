@@ -1,156 +1,67 @@
+<div align="center">
+
 # BetterMyAdmin
 
-**A modern phpMyAdmin alternative for MySQL and MariaDB**: every phpMyAdmin feature, the same pages, themes and Docker variables, rebuilt in TypeScript and React. No PHP, no web server, one Node.js process or one Docker image (`ghcr.io/cb-sigma/better-myadmin`). If you are looking for phpMyAdmin with a modern UI, or a drop-in replacement for the `phpmyadmin` Docker image, this is it.
+**phpMyAdmin, rebuilt for today.** Every feature you know, in a fast TypeScript and React app.<br>
+No PHP, no Apache: one Node.js process or one Docker image.
 
-[![Release](https://img.shields.io/github/v/release/cB-Sigma/better-myadmin)](https://github.com/cB-Sigma/better-myadmin/releases) [![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)](LICENSE) [![Docker image](https://img.shields.io/badge/docker-ghcr.io%2Fcb--sigma%2Fbetter--myadmin-2496ED)](https://github.com/cB-Sigma/better-myadmin/pkgs/container/better-myadmin)
+[![Release](https://img.shields.io/github/v/release/cB-Sigma/better-myadmin?style=flat-square)](https://github.com/cB-Sigma/better-myadmin/releases)
+[![Docker image](https://img.shields.io/badge/docker-ghcr.io%2Fcb--sigma%2Fbetter--myadmin-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/cB-Sigma/better-myadmin/pkgs/container/better-myadmin)
+[![Docs](https://img.shields.io/badge/docs-cb--sigma.github.io-0F766E?style=flat-square)](https://cb-sigma.github.io/better-myadmin/)
+[![License: GPL-2.0-or-later](https://img.shields.io/badge/license-GPL--2.0--or--later-blue?style=flat-square)](LICENSE)
 
-A feature-for-feature rebuild of [phpMyAdmin](https://github.com/phpmyadmin/phpmyadmin) in TypeScript and React with a modern UI, specified against phpMyAdmin 6.0.0-dev commit `2c66fc86` ([reference-commit.txt](docs/reference/reference-commit.txt)) and tracked daily against upstream.
+[**Documentation**](https://cb-sigma.github.io/better-myadmin/) ·
+[Install](https://cb-sigma.github.io/better-myadmin/setup.html) ·
+[Configuration](https://cb-sigma.github.io/better-myadmin/config.html) ·
+[Changelog](CHANGELOG.md)
 
-Status: a port of every phpMyAdmin 6.0.0-dev feature area, checked against a running phpMyAdmin on MySQL 8.0/8.4 and MariaDB 10.11/11.4 by golden parity tests. [Coverage](docs/reference/coverage/README.md): routes 100%, template controls 100%, config directives 100%, messages 100%, JS behaviours 100%; feature checklist 100% (707 of 707 items). Current release: **1.0.0** ([changelog](CHANGELOG.md)). It is a faithful, well-tested port that has not been independently security-audited yet; put it behind a configuration file and TLS before exposing it ([security](docs/architecture/07-security.md)). See the [roadmap](docs/architecture/13-roadmap-and-milestones.md).
+<img src="docs/screenshots/hero.jpg" alt="Browsing a table in BetterMyAdmin's modern dark theme" width="100%">
 
-## Screenshots
+</div>
 
-Running against MySQL 8.4 (home page shows the live server, database tree, and git revision):
-
-| Login | Home |
-|---|---|
-| ![Login](docs/screenshots/login.png) | ![Home](docs/screenshots/home.png) |
-
-| SQL editor | Databases |
-|---|---|
-| ![SQL editor](docs/screenshots/sql.png) | ![Databases](docs/screenshots/databases.png) |
-
-## Parity
-
-Every feature is specified against one phpMyAdmin commit and verified automatically, so "feature-for-feature" is a measured claim, not a slogan:
-
-- **Inventories** are extracted from the phpMyAdmin reference checkout — its routes, Twig template controls, config directives, translation msgids, and JavaScript AJAX behaviours — and every one is mapped to our implementation or to a recorded [exception](docs/reference/parity-exceptions.md). `pnpm parity:check` gates this on every push; current coverage is 100% on all five dimensions plus the 707-item feature [checklist](docs/reference/coverage/checklist.md).
-- **Golden parity tests** (`pnpm test:parity`, `pnpm test:ui-parity`) open the same page or run the same request in a live phpMyAdmin and in BetterMyAdmin and compare them byte-for-byte (exports, SQL output, error messages) or control-for-control (every visible button, input, and link). These run nightly against the real reference; the deterministic suites (unit, integration on four database versions, e2e, UI-parity) run on every push.
-- **Upstream is tracked daily**: a routine classifies each new phpMyAdmin commit, ports behaviour changes, and records a decision for every commit in a [ledger](tools/upstream/ledger.json), so the pin only moves forward with a decision for everything it skips.
-
-Intentional differences from phpMyAdmin (a session-id-only cookie instead of an encrypted-password cookie, rate limiting on by default, charset conversion that reports a clean error where phpMyAdmin raises a PHP fatal, and so on) are each listed with their rationale in the [parity exceptions register](docs/reference/parity-exceptions.md).
-
-Start with [docs/README.md](docs/README.md), then [docs/00-vision-and-principles.md](docs/00-vision-and-principles.md) and [development setup](docs/architecture/14-development-setup.md).
+## Quick start
 
 ```bash
-pnpm install
-docker compose -f docker/dev.compose.yml up -d mysql84   # MySQL 8.4, root/root on :3306
-pnpm --filter @bettermyadmin/web build
-BMA_HOST=127.0.0.1 pnpm --filter @bettermyadmin/server start   # http://127.0.0.1:8080
+docker run -d -p 8080:80 -e BMA_HOST=mysql.example.org ghcr.io/cb-sigma/better-myadmin:latest
 ```
 
-Until a configuration file (`bettermyadmin.config.json`, `.ts`, …) exists, the setup script at `/setup` is open without a login, as phpMyAdmin's `setup/` is; the server prints a warning at start. Write a configuration file before exposing the server ([security](docs/architecture/07-security.md#authentication)).
+Open http://localhost:8080 and log in with your MySQL or MariaDB account. Already running the
+`phpmyadmin` image? Swap the image name and keep your `PMA_*` variables, because both naming
+schemes work ([variables](https://cb-sigma.github.io/better-myadmin/setup.html#docker-vars)).
 
-## Install and run
+## Why BetterMyAdmin
 
-BetterMyAdmin is one Node.js process (Node 22.5 or later) that serves the web app and its API. It connects to MySQL or MariaDB the way phpMyAdmin does; it needs no PHP and no web server in front of it.
+|     |     |
+|-----|-----|
+| ⚡ **Fast** | A single-page app with a virtualized grid and pooled connections. Pages switch instantly and large tables scroll smoothly. |
+| 🧩 **Complete** | Browse, search, insert and edit, structure, SQL editor and console, import and export, the designer, privileges, replication, status, routines, events and triggers. It covers all of phpMyAdmin, [measured](docs/parity.md) against 707 checklist items. |
+| 🔁 **Drop-in** | phpMyAdmin's pages, settings, configuration storage and Docker variables. Converting an existing `config.inc.php` takes one command. |
+| 🎨 **Good-looking** | phpMyAdmin's themes plus Modern, Classic and Native, each with light and dark modes. |
+| 🔒 **Safer defaults** | Session-id-only cookies, login rate limiting, and no PHP to patch. |
+| 📦 **Simple to run** | One process and one port, with sessions in SQLite or Redis. Runs on Node 22.5+, or from the Docker image. |
 
-### Docker
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/sql.jpg" alt="SQL editor with results"><br><sub><b>SQL editor:</b> highlighting, autocomplete, inline-editable results</sub></td>
+<td width="50%"><img src="docs/screenshots/designer.jpg" alt="Designer with relations"><br><sub><b>Designer:</b> tables, foreign keys and the visual query builder</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/screenshots/structure.jpg" alt="Database structure in the native dark theme"><br><sub><b>Structure:</b> every table at a glance, with bulk actions</sub></td>
+<td width="50%"><img src="docs/screenshots/themes.jpg" alt="pmahomme, Modern, Classic and Native themes"><br><sub><b>Themes:</b> pmahomme (default), Modern, Classic, Native, light and dark</sub></td>
+</tr>
+</table>
 
-Released images are on GitHub Container Registry:
+## Learn more
 
-```bash
-docker run -d -p 8080:80 -e PMA_HOST=mysql.example.org -v bma-data:/var/lib/bettermyadmin ghcr.io/cb-sigma/better-myadmin:latest
-```
-
-or build your own from a checkout:
-
-```bash
-docker build -t bettermyadmin .
-docker run -d -p 8080:80 -e PMA_HOST=mysql.example.org -v bma-data:/var/lib/bettermyadmin bettermyadmin
-```
-
-or `docker compose up -d` with the example [docker-compose.yml](docker-compose.yml) (BetterMyAdmin and MySQL 8.4), then open http://localhost:8080.
-
-The image takes the [official phpMyAdmin image's variables](https://hub.docker.com/_/phpmyadmin), so a compose file written for `phpmyadmin` works with the image swapped:
-
-| Variable | Effect |
-|---|---|
-| `PMA_HOST`, `PMA_PORT`, `PMA_VERBOSE` | the server to log in to (default: the linked `db`) |
-| `PMA_HOSTS`, `PMA_PORTS`, `PMA_VERBOSES` | several servers, comma-separated |
-| `PMA_SOCKET`, `PMA_SOCKETS` | socket servers |
-| `PMA_ARBITRARY=1` | the login form can name any server |
-| `PMA_USER`, `PMA_PASSWORD` | config authentication (no login form) |
-| `PMA_ABSOLUTE_URI` | the public URL behind a reverse proxy |
-| `PMA_PMADB`, `PMA_CONTROLHOST`, `PMA_CONTROLPORT`, `PMA_CONTROLUSER`, `PMA_CONTROLPASS` | configuration storage and its control user |
-| `PMA_QUERYHISTORYDB`, `PMA_QUERYHISTORYMAX` | SQL history in the configuration storage |
-| `PMA_UPLOADDIR`, `PMA_SAVEDIR` | server-side import and export directories |
-| `PMA_SSL`, `PMA_SSL_VERIFY`, `PMA_SSL_CA`, `PMA_SSL_KEY`, `PMA_SSL_CERT` (also the plural lists and the `*_BASE64` forms, written to `PMA_SSL_DIR`) | TLS to the MySQL server |
-| `UPLOAD_LIMIT` | the largest upload, e.g. `64M` (BetterMyAdmin's default is 512M) |
-| `MAX_EXECUTION_TIME`, `MEMORY_LIMIT` | `ExecTimeLimit`, `MemoryLimit` |
-| `APACHE_PORT` | the port inside the container (default 80) |
-| `PMA_USER_FILE`, `PMA_PASSWORD_FILE`, `PMA_HOST_FILE`, … | the same values read from Docker secrets |
-
-`PMA_CONFIG_BASE64`, `PMA_USER_CONFIG_BASE64` and `/etc/phpmyadmin/conf.d` hold PHP code and are not read; use a configuration file instead (below). The image keeps its sessions, the generated `blowfish_secret` and its local metadata in the `/var/lib/bettermyadmin` volume, runs as the unprivileged `node` user, and listens on port 80 inside the container; Docker 20.10 and later let an unprivileged process bind ports below 1024 inside a container, and on other runtimes set `APACHE_PORT=8080`.
-
-Building behind a TLS-intercepting proxy: `docker build --secret id=ca,src=/path/to/ca.pem -t bettermyadmin .`.
-
-### From a checkout
-
-```bash
-pnpm install --frozen-lockfile
-pnpm build                      # the web app (apps/web/dist)
-pnpm start                      # http://127.0.0.1:8080
-```
-
-`pnpm start` runs `node apps/server/bin/bettermyadmin.mjs`, which takes `--config <file>`, `--host`, `--port` and `--static <dir>`. The server runs from its TypeScript sources through tsx's loader: there is no separate server build. Configuration files are looked up in the working directory.
-
-### Configuration
-
-Settings come from four layers, each overriding the one before:
-
-1. the defaults: every phpMyAdmin directive under its phpMyAdmin name, with phpMyAdmin's default ([reference](docs/reference/config-directives.md));
-2. the phpMyAdmin image's variables above;
-3. a configuration file: `--config <file>`, the `BMA_CONFIG` variable, or the first of `bettermyadmin.config.ts`, `.js`, `.mjs`, `.json`, `.yaml`, `.yml` in the working directory (`/etc/bettermyadmin` in the image);
-4. `BMA__<Directive>[__<Sub>…]` environment variables (`BMA__Servers__1__host=db`, `BMA__MaxRows=50`, `BMA__Export__format=csv`), plus the shortcuts `BMA_HOST`, `BMA_PORT`, `BMA_USER`, `BMA_PASSWORD`, `BMA_ARBITRARY_SERVER`, `BMA_ABSOLUTE_URI`.
-
-The file holds what `config.inc.php` holds, as data: `$cfg['X']` becomes `X`, and `$cfg['Servers'][$i]` becomes the entries of a `Servers` list (server 1 first). An unknown directive or an invalid value stops the server with a message naming the closest directive. An existing phpMyAdmin configuration converts with `node apps/server/bin/bettermyadmin.mjs import-pma-config config.inc.php -o bettermyadmin.config.json` (the PHP is read, not run).
-
-```jsonc
-// bettermyadmin.config.json
-{
-  "blowfish_secret": "a 32-byte or longer random string",
-  "Servers": [
-    { "host": "db.example.org", "port": 3306, "auth_type": "cookie" },
-    { "host": "replica.example.org", "verbose": "Replica", "controluser": "pma", "controlpass": "secret", "pmadb": "phpmyadmin" }
-  ],
-  "MaxRows": 50,
-  "Export": { "format": "csv" },
-  "Listen": { "host": "0.0.0.0", "port": 8080 },
-  "DataDir": "/var/lib/bettermyadmin"
-}
-```
-
-A TypeScript file is compiled as an ES module wherever it sits (no `package.json` needed; top-level `await` and relative imports work), and `import { defineConfig } from '@bettermyadmin/config'` resolves to BetterMyAdmin's own package, in the image too; it gives type checking and completion over every directive in an editor that resolves the package (a checkout).
-
-```ts
-// bettermyadmin.config.ts
-import { defineConfig } from '@bettermyadmin/config'
-
-export default defineConfig({
-  Servers: [{ host: 'db.example.org', auth_type: 'cookie' }],
-  MaxRows: 50,
-})
-```
-
-Directives of BetterMyAdmin's own (not in phpMyAdmin): `Listen` (`host`, `port`, `basePath`), `DataDir` (sessions, the generated secret, the local metadata store; default `~/.bettermyadmin`), `MaxUploadSize`, `SessionStore` / `RedisUrl`, `LoginRateLimit`, `ForceSSL`, `TransformationsExternalPrograms` and the others flagged `bma: true` in [packages/config/src/schema.ts](packages/config/src/schema.ts). Without a `blowfish_secret`, one is generated into `DataDir` on the first start.
-
-Until a configuration file exists, the setup script at `/setup` is open without a login, as phpMyAdmin's `setup/` is (the image ships an empty one, so it is closed there).
-
-### Smoke test
-
-`pnpm test:smoke` builds, starts the production server from a scratch directory with a configuration file, logs in to MySQL (`BMA_TEST_HOST`/`BMA_TEST_PORT`, root/root) and browses a table; `pnpm test:smoke:docker` does the same with the Docker image configured by `PMA_*` variables only (`BMA_SMOKE_BUILD_ARGS` adds `docker build` arguments).
-
-## Themes
-
-phpMyAdmin's four themes (pmahomme, the default, original, metro and bootstrap), each with a dark variant, plus an optional **modern** theme in the style of shadcn/ui. Switch from the home page's Appearance settings or the Themes gallery; `ThemeDefault` sets the default for everyone.
-
-## Releasing
-
-Bump the version in the `package.json` files, add its section to [CHANGELOG.md](CHANGELOG.md), and push a `vX.Y.Z` tag, or run the [release](.github/workflows/release.yml) workflow by hand on the release commit: it runs the checks, publishes the Docker image to GHCR (`:X.Y.Z` and `:latest`) and creates the tag and the GitHub release from the changelog section.
+- **[Installation](https://cb-sigma.github.io/better-myadmin/setup.html)**: Docker, Docker Compose, running from a checkout, and reverse proxies
+- **[Configuration](https://cb-sigma.github.io/better-myadmin/config.html)**: every directive, configuration files, `BMA__*` environment variables, Redis sessions
+- **[Migrating from phpMyAdmin](https://cb-sigma.github.io/better-myadmin/setup.html#manually-creating-the-file)**: `bettermyadmin import-pma-config config.inc.php`
+- **[Security](docs/architecture/07-security.md)**: put it behind TLS and a configuration file before exposing it
+- **[How parity is measured](docs/parity.md)**: inventories, golden tests against a live phpMyAdmin, daily upstream tracking
+- **[Development](docs/architecture/14-development-setup.md)**: building, testing and releasing
 
 ## License
 
-GPL-2.0-or-later, as phpMyAdmin, from which this port is derived. See [LICENSE](LICENSE).
+GPL-2.0-or-later, like phpMyAdmin, from which BetterMyAdmin is derived. See [LICENSE](LICENSE).
 
-BetterMyAdmin is an independent project and is not affiliated with or endorsed by the phpMyAdmin project; "phpMyAdmin" is used here only to describe what this software is compatible with.
+<sub>BetterMyAdmin is an independent project and is not affiliated with or endorsed by the phpMyAdmin project. The name "phpMyAdmin" is used only to describe compatibility.</sub>

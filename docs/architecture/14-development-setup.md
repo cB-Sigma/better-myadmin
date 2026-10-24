@@ -130,3 +130,20 @@ Locally without Docker for phpMyAdmin: start the containers with host networking
 ## Directory for generated/runtime data
 
 `.data/` (git-ignored): SQLite session store, local metadata fallback, upload/save dirs, generated secret in non-dev runs.
+
+## Smoke test
+
+`pnpm test:smoke` builds, starts the production server from a scratch directory with a configuration
+file, logs in to MySQL (`BMA_TEST_HOST`/`BMA_TEST_PORT`, root/root) and browses a table;
+`pnpm test:smoke:docker` does the same with the Docker image configured by `BMA_*`/`PMA_*` variables
+only (`BMA_SMOKE_BUILD_ARGS` adds `docker build` arguments).
+
+## Releasing
+
+Bump the version in the `package.json` files, add its section to [CHANGELOG.md](../../CHANGELOG.md),
+and push a `vX.Y.Z` tag, or run the [release](../../.github/workflows/release.yml) workflow by hand
+on the release commit: it runs the checks, publishes the Docker image to GHCR (`:X.Y.Z` and
+`:latest`) and creates the tag and the GitHub release from the changelog section.
+
+Building the image behind a TLS-intercepting proxy:
+`docker build --secret id=ca,src=/path/to/ca.pem -t bettermyadmin .`.
