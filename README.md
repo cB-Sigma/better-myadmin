@@ -29,6 +29,10 @@ Open http://localhost:8080 and log in with your MySQL or MariaDB account. Alread
 `phpmyadmin` image? Swap the image name and keep your `PMA_*` variables, because both naming
 schemes work ([variables](https://cb-sigma.github.io/better-myadmin/setup.html#docker-vars)).
 
+Or try it in your browser with a demo database, with nothing to install:
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/cB-Sigma/better-myadmin?quickstart=1)
+
 ## Why BetterMyAdmin
 
 |     |     |

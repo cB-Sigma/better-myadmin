@@ -2,6 +2,40 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.9 (2026-10-24)
+
+### Features
+
+- Documentation site at https://cb-sigma.github.io/better-myadmin/: phpMyAdmin's manual adapted to
+  BetterMyAdmin, with the same sections and anchors. Every help link in the app points there.
+- `bettermyadmin import-pma-config config.inc.php [-o file] [--force]` converts a phpMyAdmin
+  configuration file to a BetterMyAdmin JSON file. The PHP is read, not run, and the result is
+  validated.
+- `SessionStore: 'redis'` (with `RedisUrl`) now works, so several instances can share their sessions.
+  An unreachable Redis server or a wrong password stops the server at startup.
+- Docker: every phpMyAdmin image variable has a `BMA_` name: `BMA_HOST`, `BMA_HOST_LABEL` (was
+  `PMA_VERBOSE`), `BMA_STORAGE_DB` (was `PMA_PMADB`), `BMA_LISTEN_PORT` (was `APACHE_PORT`) and so on.
+  Both names work, and the `BMA_` name wins when both are set. The full table is in the
+  [docs](https://cb-sigma.github.io/better-myadmin/setup.html#docker-vars).
+- Try it in a browser: an "Open in GitHub Codespaces" button starts the released image with a demo
+  database (`.devcontainer`).
+- PHP-only features are replaced (parity exception X57):
+  - "Create PHP code" is now "Create JS code" (the query as JavaScript string literals);
+  - the "PHP array" export is now a "JavaScript module" export;
+  - "Save as PHP file" is removed from Settings › Export;
+  - the product is called BetterMyAdmin throughout the UI.
+
+### Fixes
+
+- SQL history: every statement phpMyAdmin records is now recorded, not only queries from the SQL box.
+  That covers table and column changes, inserts and edits, grid saves, operations, privileges and
+  exports.
+- `blowfish_secret`: no "longer than necessary" warning (X58). BetterMyAdmin derives its keys from
+  the secret, so a longer secret is fine.
+- Navigation tree: the fast filter box no longer overlaps the tree lines.
+- Grid editor: the date and time picker keeps the UI font and its own styling, and the editing
+  frame widens to show it.
+
 ## 1.0.8 (2026-10-24)
 
 ### Features

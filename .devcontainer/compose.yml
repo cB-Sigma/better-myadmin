@@ -1,0 +1,28 @@
+# The Codespaces demo (see devcontainer.json). The demo logs straight in as root (config
+# authentication); the forwarded port is private to your codespace unless you make it public.
+services:
+  workspace:
+    image: mcr.microsoft.com/devcontainers/base:bookworm
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces:cached
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: demo
+    volumes:
+      - ../docker/demo/acme_store.sql:/docker-entrypoint-initdb.d/acme_store.sql:ro
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-pdemo']
+      interval: 3s
+      retries: 40
+  bettermyadmin:
+    image: ghcr.io/cb-sigma/better-myadmin:latest
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      BMA_HOST: mysql
+      BMA_USER: root
+      BMA_PASSWORD: demo
+      BMA_HOST_LABEL: Demo

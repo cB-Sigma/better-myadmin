@@ -1,0 +1,17 @@
+{
+  // Try BetterMyAdmin in a browser: GitHub Codespaces starts the released image next to a MySQL 8.4
+  // server holding a demo shop database (docker/demo/acme_store.sql) and opens it on port 8080.
+  "name": "BetterMyAdmin demo",
+  "dockerComposeFile": "compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": ["bettermyadmin:80"],
+  "portsAttributes": {
+    "bettermyadmin:80": { "label": "BetterMyAdmin", "onAutoForward": "openBrowser" }
+  },
+  "otherPortsAttributes": { "onAutoForward": "silent" },
+  "hostRequirements": { "cpus": 2 },
+  "customizations": {
+    "codespaces": { "openFiles": [".devcontainer/README.md"] }
+  }
+}
