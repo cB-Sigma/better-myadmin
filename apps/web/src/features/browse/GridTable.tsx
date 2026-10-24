@@ -642,7 +642,13 @@ export function GridTable(props: Props) {
   }
 
   const toggleLink = grid.textToggle !== null && (
-    <Button variant="link" size="sm" onClick={() => actions.toggleText(grid.textToggle!.pftext)}>
+    <Button
+      variant="link"
+      size="sm"
+      // Generator::getImage: the title is the hover text (Full texts / Partial texts)
+      title={t(grid.textToggle.title)}
+      onClick={() => actions.toggleText(grid.textToggle!.pftext)}
+    >
       <PmaIcon
         name={grid.textToggle.pftext === 'F' ? 's_fulltext' : 's_partialtext'}
         alt={t(grid.textToggle.title)}
@@ -696,7 +702,7 @@ export function GridTable(props: Props) {
           {colDrop}
         </th>
       ) : layout.before === 'empty-td' ? (
-        <td colSpan={layout.colspan} />
+        <td className="results-pad" colSpan={layout.colspan} />
       ) : layout.before === 'empty-th' ? (
         <th className="column_action">{colDrop}</th>
       ) : null}
@@ -858,7 +864,7 @@ export function GridTable(props: Props) {
           {toggleLink}
         </th>
       ) : layout.after === 'empty-td' ? (
-        <td className="d-print-none" colSpan={layout.colspan} />
+        <td className="results-pad d-print-none" colSpan={layout.colspan} />
       ) : null}
     </tr>
   )

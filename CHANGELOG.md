@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.7 (2026-10-24)
+
+### Fixes
+
+- Results grid: an empty box at the end of every table's header row. phpMyAdmin puts an empty
+  header cell there (no body cell below it) that its themes draw invisibly; it now takes no room.
+- The full / partial texts toggle in the grid's top-left corner shows its name ("Full texts" /
+  "Partial texts") on hover, as in phpMyAdmin.
+
 ## 1.0.6 (2026-10-24)
 
 ### Upstream

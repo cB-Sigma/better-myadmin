@@ -10,6 +10,13 @@
   padding: 0.15rem 0.4rem;
   vertical-align: top;
 }
+/* getColumnAtRightSide's empty header <td> (RowActionLinks left: no body cell below it), and its
+   mirror on the left: phpMyAdmin's themes draw nothing for it, so it takes no room here either */
+.table_results td.results-pad {
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
 .table_results thead th {
   position: sticky;
   top: 0;
