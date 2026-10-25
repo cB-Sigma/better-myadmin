@@ -7,7 +7,8 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # a pinned runner image: ubuntu-latest moved to 26.04, where Playwright 1.52 has no Chromium build
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -26,7 +27,7 @@ jobs:
   # Parity ratchet (tools/parity): mapped/covered items, map targets, exception ids and inventory
   # freshness against tools/parity/baseline.json. Static: no database, no PHP. Never runs parity:baseline.
   parity-gate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -39,7 +40,7 @@ jobs:
   # takes neither server options nor the checkout's seeds): general log as a table, 1000 connections,
   # binary log on MariaDB, the pmadb `phpmyadmin` with control user pma/pmapass (the suites' STORAGE)
   integration:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -88,7 +89,7 @@ jobs:
   # the browser suites (tests/e2e, tests/ui-parity) against the built SPA served by the real server,
   # in Playwright's Chromium; one suite per job, each run holding its MySQL lock (tests/e2e/suite-lock.ts)
   browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -175,7 +176,7 @@ jobs:
           if-no-files-found: ignore
 
   upstream:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

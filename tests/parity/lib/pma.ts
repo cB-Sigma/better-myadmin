@@ -139,6 +139,9 @@ export class PmaClient {
     if (opts.binary === true) return Buffer.from(await res.arrayBuffer()).toString('latin1')
     if (res.status >= 300 && res.status < 400 && opts.noRedirect !== true) {
       const loc = res.headers.get('location') ?? '/'
+      // every body is read: Node 22.23's undici asserts (!this.paused) when a connection with an
+      // unread body closes, which kills the test worker
+      await res.arrayBuffer().catch(() => undefined)
       return this.#send(
         loc.startsWith('http') ? new URL(loc).pathname + new URL(loc).search : `/${loc.replace(/^\.\//, '')}`,
       )
@@ -194,11 +197,13 @@ export async function isPmaUp(
   o: { path?: string; contains?: string; anyStatus?: boolean } = {},
 ) {
   return fetch(`${base}${o.path ?? '/index.php'}`)
-    .then(async (r) =>
-      o.anyStatus === true
+    .then(async (r) => {
+      // the body is always read (see #send)
+      const text = await r.text().catch(() => '')
+      return o.anyStatus === true
         ? r.status > 0
-        : r.ok && (o.contains === undefined || (await r.text()).includes(o.contains)),
-    )
+        : r.ok && (o.contains === undefined || text.includes(o.contains))
+    })
     .catch(() => false)
 }
 
