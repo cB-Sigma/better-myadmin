@@ -463,8 +463,10 @@ const STEPS: Step[] = [
     name: 'partition maintenance',
     pma: async () => {
       const form = serializeForm(findForm(await opsPage('h'), { id: 'partitionsForm' }))
+      // partition p1 on both sides (the form preselects whichever partition the server lists first)
       return pma.postJson('/table/operations', [
-        ...setPair(form, 'partition_operation', 'ANALYZE'),
+        ...setPair(form, 'partition_operation', 'ANALYZE').filter(([k]) => k !== 'partition_name[]'),
+        ['partition_name[]', 'p1'],
         ['ajax_page_request', 'true'],
       ])
     },

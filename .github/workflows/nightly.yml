@@ -83,7 +83,18 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22.23.4, cache: pnpm }
+      # the private-instance ui-parity files (setup / auth types / i18n) start their own phpMyAdmin
+      # from the reference checkout, as ci.yml's ui-parity job does
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", extensions: "mysqli, mbstring, zip, iconv", coverage: none }
+      - run: sudo python3 -m pip install --break-system-packages polib
       - run: docker compose -f docker/dev.compose.yml up -d --build --wait mariadb11 phpmyadmin-ref-mariadb
+      - name: Copy the reference checkout out of the phpmyadmin-ref-mariadb image
+        run: |
+          docker compose -f docker/dev.compose.yml cp phpmyadmin-ref-mariadb:/srv/pma "$RUNNER_TEMP/pma"
+          sudo chown -R "$(id -u):$(id -g)" "$RUNNER_TEMP/pma"
+          echo "PMA_PATH=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
+          echo "BMA_PARITY_PMA_ROOT=$RUNNER_TEMP/pma" >> "$GITHUB_ENV"
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:ui-parity

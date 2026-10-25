@@ -222,7 +222,8 @@ function applyReplace(cs: Control[], rs: Replace[]): Control[] {
  * MySQL on 127.0.0.1 (the published port), the reference reaches it by its compose service name
  * inside the docker network. Mask that token to %HOST% on BOTH sides before diffing (the SQL page's
  * "… on server '<host>'" heading, the navbar "Server: <host>:<port>" link), so a real difference
- * anywhere else still stands. Locally both are 127.0.0.1, so this is a no-op there.
+ * anywhere else still stands. A port after the host is masked too: the reference reaches MariaDB on
+ * 3306 inside the network, ours on its published 3307. Locally both are 127.0.0.1, so this is a no-op there.
  */
 const SERVER_HOSTS = [
   'mysql84-replica',
@@ -231,7 +232,10 @@ const SERVER_HOSTS = [
   'mariadb11',
   process.env.BMA_TEST_HOST ?? '127.0.0.1',
 ]
-const HOST_RE = new RegExp(`\\b(?:${SERVER_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})\\b`, 'g')
+const HOST_RE = new RegExp(
+  `\\b(?:${SERVER_HOSTS.map((h) => h.replace(/\./g, '\\.')).join('|')})\\b(?::\\d+\\b)?`,
+  'g',
+)
 function maskHost(cs: Control[]): Control[] {
   const m = (s: string) => s.replace(HOST_RE, '%HOST%')
   return cs.map((c) => ({
