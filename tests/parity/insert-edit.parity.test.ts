@@ -192,7 +192,7 @@ async function bmaRun(c: Case, db: string): Promise<{ preview?: string[] }> {
   const base = `/api/servers/1/databases/${db}/tables/${c.table}`
   const f = (
     await bma.req('POST', `${base}/insert-form`, {
-      where: (c.where ?? []).map(signed),
+      where: await Promise.all((c.where ?? []).map(signed)),
       copy: c.copy === true,
       clauseIsUnique: c.clauseIsUnique === true,
     })

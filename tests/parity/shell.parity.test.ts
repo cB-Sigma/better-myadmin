@@ -232,7 +232,10 @@ describe.skipIf(!reachable)(
         // warnings (BBCode rendered as text on both sides)
         const bb = (s: string) => s.replace(/\[(\/?[a-z]+|a@[^\]]*|doc@[^\]]*)\]/g, '')
         expect(home.warnings.map((w) => bb(w.message))).toEqual(
-          homeWarnings(html).map((w) => w.replace(/ \.$/, '.')),
+          homeWarnings(html)
+            .map((w) => w.replace(/ \.$/, '.'))
+            // X58: no "longer than necessary" warning (the reference's secret is 34 bytes)
+            .filter((w) => !w.includes('longer than necessary')),
         )
         // configuration storage complete → no notice on either side
         expect(home.configStorageMessage).toBeNull()
