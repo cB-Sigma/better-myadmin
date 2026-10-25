@@ -32,6 +32,9 @@ export function connectionOptions(configured: ServerConfig, creds: Credentials):
     supportBigNumbers: true,
     bigNumberStrings: true,
     dateStrings: true,
+    // JSON columns as the text the server sent: mysql2 parses them even with typeCast:false (MariaDB
+    // reports them through its extended type info), and the object read back as "[object Object]"
+    jsonStrings: true,
     multipleStatements: false,
     // mysqli does not request CLIENT_FOUND_ROWS (UPDATE reports changed rows, not matched rows) nor
     // CLIENT_IGNORE_SPACE (which adds IGNORE_SPACE to the session sql_mode)

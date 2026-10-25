@@ -2,6 +2,16 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.13 (2026-10-25)
+
+### Fixes
+
+- MariaDB: JSON columns read as `[object Object]`. mysql2 3.24 (updated in 1.0.5) parses JSON
+  columns even with type casting off, so values reached BetterMyAdmin as objects instead of the text
+  the server sent. This broke the user accounts list on MariaDB, where a locked account showed as
+  unlocked because the lock flag lives in the JSON column `mysql.global_priv.Priv`. Connections now
+  set `jsonStrings`, so JSON values come through as text.
+
 ## 1.0.12 (2026-10-24)
 
 ### Changes
