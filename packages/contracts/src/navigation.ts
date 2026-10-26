@@ -8,7 +8,7 @@ import { z } from 'zod'
  */
 
 /** A phpMyAdmin route plus its query parameters, e.g. `/table/structure` + `{db, table}`. */
-export const NavParams = z.record(z.union([z.string(), z.number(), z.null()]))
+export const NavParams = z.record(z.string(), z.union([z.string(), z.number(), z.null()]))
 export type NavParams = z.infer<typeof NavParams>
 
 /** pma: src/Navigation/Nodes/Link.php — the text link of a node. */
@@ -142,7 +142,7 @@ export interface NavList {
   items: NavNode[]
 }
 
-export const NavNode: z.ZodType<NavNode> = z.lazy(() =>
+export const NavNode: z.ZodType<NavNode, NavNode> = z.lazy(() =>
   z.object({
     kind: NavNodeKind,
     container: NavContainer.optional(),
@@ -168,7 +168,7 @@ export const NavNode: z.ZodType<NavNode> = z.lazy(() =>
   }),
 )
 
-export const NavList: z.ZodType<NavList> = z.lazy(() =>
+export const NavList: z.ZodType<NavList, NavList> = z.lazy(() =>
   z.object({
     fastFilter: NavFastFilter.nullable(),
     pageSelector: NavPageSelector.nullable(),

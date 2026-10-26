@@ -28,7 +28,7 @@ export type FormatResponse = z.infer<typeof FormatResponse>
 /** GET /api/servers/:s/sql/autocomplete?db= (pma: /database/sql/autocomplete). */
 export const AutocompleteResponse = z.object({
   /** table name → columns; empty when EnableAutocompleteForTablesAndColumns is off or no db. */
-  tables: z.record(z.array(z.object({ field: z.string(), columnHint: z.string() }))),
+  tables: z.record(z.string(), z.array(z.object({ field: z.string(), columnHint: z.string() }))),
 })
 export type AutocompleteResponse = z.infer<typeof AutocompleteResponse>
 

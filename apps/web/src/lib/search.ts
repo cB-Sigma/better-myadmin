@@ -141,46 +141,69 @@ export function searchList(v: unknown): string[] | undefined {
 }
 
 /** The route validators' fields: lenient readers that never throw. */
+// every helper starts from z.unknown().optional(): zod 4 makes an object key of z.unknown() required
+// in the input type, and a search parameter is always optional
 export const qs = {
   /** a string, absent when missing or not a scalar */
-  str: () => z.unknown().transform(searchString),
+  str: () => z.unknown().optional().transform(searchString),
   /** a string with a default */
-  strOr: (def: string) => z.unknown().transform((v) => searchString(v) ?? def),
+  strOr: (def: string) =>
+    z
+      .unknown()
+      .optional()
+      .transform((v) => searchString(v) ?? def),
   /** an integer (PHP cast), absent when missing; below `min` counts as missing */
   int: (min?: number) =>
-    z.unknown().transform((v) => {
-      const n = v === undefined ? undefined : searchInt(v)
-      return n === undefined || (min !== undefined && n < min) ? undefined : n
-    }),
+    z
+      .unknown()
+      .optional()
+      .transform((v) => {
+        const n = v === undefined ? undefined : searchInt(v)
+        return n === undefined || (min !== undefined && n < min) ? undefined : n
+      }),
   /** an integer with a default (missing, or below `min`) */
   intOr: (def: number, min?: number) =>
-    z.unknown().transform((v) => {
-      const n = v === undefined ? undefined : searchInt(v)
-      return n === undefined || (min !== undefined && n < min) ? def : n
-    }),
+    z
+      .unknown()
+      .optional()
+      .transform((v) => {
+        const n = v === undefined ? undefined : searchInt(v)
+        return n === undefined || (min !== undefined && n < min) ? def : n
+      }),
   /** `! empty()` */
-  flag: () => z.unknown().transform(searchFlag),
+  flag: () => z.unknown().optional().transform(searchFlag),
   /** set at all (`isset()`, the value does not matter) */
-  isset: () => z.unknown().transform((v) => v !== undefined && v !== null),
+  isset: () =>
+    z
+      .unknown()
+      .optional()
+      .transform((v) => v !== undefined && v !== null),
   /** a list of strings, absent when missing */
-  list: () => z.unknown().transform(searchList),
+  list: () => z.unknown().optional().transform(searchList),
   /** a string, or a list when the request sends an array (`dbname` vs `dbname[]`) */
   strOrList: () =>
     z
       .unknown()
+      .optional()
       .transform((v): string | string[] | undefined =>
         typeof v === 'object' && v !== null ? searchList(v) : searchString(v),
       ),
   /** one of the given values, absent otherwise */
   oneOf: <const T extends string>(values: readonly T[]) =>
-    z.unknown().transform((v): T | undefined => {
-      const s = searchString(v)
-      return s !== undefined && (values as readonly string[]).includes(s) ? (s as T) : undefined
-    }),
+    z
+      .unknown()
+      .optional()
+      .transform((v): T | undefined => {
+        const s = searchString(v)
+        return s !== undefined && (values as readonly string[]).includes(s) ? (s as T) : undefined
+      }),
   /** one of the given values, `def` otherwise */
   oneOfOr: <const T extends string>(values: readonly T[], def: T) =>
-    z.unknown().transform((v): T => {
-      const s = searchString(v)
-      return s !== undefined && (values as readonly string[]).includes(s) ? (s as T) : def
-    }),
+    z
+      .unknown()
+      .optional()
+      .transform((v): T => {
+        const s = searchString(v)
+        return s !== undefined && (values as readonly string[]).includes(s) ? (s as T) : def
+      }),
 }

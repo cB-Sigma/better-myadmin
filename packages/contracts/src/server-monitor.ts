@@ -39,7 +39,7 @@ export type MonitorChartRequest = z.input<typeof MonitorChartRequest>
 
 /** The same structure with the values filled in, plus `x`: the server time of the reading in ms. */
 export const MonitorChartResponse = z.object({
-  message: z.record(z.union([z.array(z.array(MonitorDataPoint)), z.number()])),
+  message: z.record(z.string(), z.union([z.array(z.array(MonitorDataPoint)), z.number()])),
 })
 export type MonitorChartResponse = z.infer<typeof MonitorChartResponse>
 
@@ -59,8 +59,8 @@ export const MonitorLogResponse = z.object({
   success: z.boolean(),
   message: z
     .object({
-      rows: z.array(z.record(z.string().nullable())),
-      sum: z.record(z.number()),
+      rows: z.array(z.record(z.string(), z.string().nullable())),
+      sum: z.record(z.string(), z.number()),
       numRows: z.number().int(),
     })
     .nullable(),
@@ -74,7 +74,7 @@ export const MonitorLogVarsRequest = z.object({
 })
 export type MonitorLogVarsRequest = z.input<typeof MonitorLogVarsRequest>
 
-export const MonitorLogVarsResponse = z.object({ message: z.record(z.string()) })
+export const MonitorLogVarsResponse = z.object({ message: z.record(z.string(), z.string()) })
 export type MonitorLogVarsResponse = z.infer<typeof MonitorLogVarsResponse>
 
 export const MonitorQueryRequest = z.object({
@@ -87,9 +87,9 @@ export type MonitorQueryRequest = z.input<typeof MonitorQueryRequest>
 export const MonitorQueryResponse = z.object({
   message: z.object({
     affectedRows: z.number(),
-    explain: z.array(z.record(z.string().nullable())).optional(),
+    explain: z.array(z.record(z.string(), z.string().nullable())).optional(),
     error: z.string(),
-    profiling: z.array(z.record(z.string().nullable())).optional(),
+    profiling: z.array(z.record(z.string(), z.string().nullable())).optional(),
   }),
 })
 export type MonitorQueryResponse = z.infer<typeof MonitorQueryResponse>

@@ -105,8 +105,8 @@ importers:
         specifier: 4.19.4
         version: 4.19.4
       zod:
-        specifier: 3.24.4
-        version: 3.24.4
+        specifier: 4.6.6
+        version: 4.6.6
     devDependencies:
       '@bettermyadmin/pdf':
         specifier: workspace:*
@@ -205,8 +205,8 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       zod:
-        specifier: 3.24.4
-        version: 3.24.4
+        specifier: 4.6.6
+        version: 4.6.6
     devDependencies:
       '@tailwindcss/vite':
         specifier: 4.1.7
@@ -242,14 +242,14 @@ importers:
         specifier: 2.9.1
         version: 2.9.1
       zod:
-        specifier: 3.24.4
-        version: 3.24.4
+        specifier: 4.6.6
+        version: 4.6.6
 
   packages/contracts:
     dependencies:
       zod:
-        specifier: 3.24.4
-        version: 3.24.4
+        specifier: 4.6.6
+        version: 4.6.6
 
   packages/export:
     dependencies:
@@ -2693,6 +2693,9 @@ packages:
   zod@3.24.4:
     resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
 
+  zod@4.6.6:
+    resolution: {integrity: sha512-4UmzQUF5fxvfcYHlbjBmejU+w+hbDnWFx4aS8kBx7nPBHcO2SqPbpAG8snbdg+Xse4pRefR98hgjFgIMCI/UhA==}
+
   zstddec@0.2.0:
     resolution: {integrity: sha512-oyPnDa1X5c13+Y7mA/FDMNJrn4S8UNBe0KCqtDmor40Re7ALrPN6npFwyYVRRh+PqozZQdeg23QtbcamZnG5rA==}
 
@@ -4718,5 +4721,7 @@ snapshots:
       numcodecs: 0.3.2
 
   zod@3.24.4: {}
+
+  zod@4.6.6: {}
 
   zstddec@0.2.0: {}

@@ -103,7 +103,7 @@ export const PreferencesFormResponse = PrefsHeader.extend({ formSet: PrefsFormSe
 export type PreferencesFormResponse = z.infer<typeof PreferencesFormResponse>
 
 /** The posted form: browser-style values by input name (checked checkboxes `on`, unchecked absent). */
-export const PrefsPostedValues = z.record(z.union([z.string(), z.array(z.string())]))
+export const PrefsPostedValues = z.record(z.string(), z.union([z.string(), z.array(z.string())]))
 
 /** POST /api/servers/:s/preferences/forms/:tab (submit_save) */
 export const PreferencesSaveRequest = z.object({
@@ -207,7 +207,7 @@ export const TwoFactorStatusResponse = PrefsHeader.extend({
 export type TwoFactorStatusResponse = z.infer<typeof TwoFactorStatusResponse>
 
 /** The posted challenge fields (2fa_code, 2fa_confirm, webauthn response). */
-export const TwoFactorFields = z.record(z.string())
+export const TwoFactorFields = z.record(z.string(), z.string())
 export type TwoFactorFields = z.infer<typeof TwoFactorFields>
 
 /** POST /api/servers/:s/preferences/two-factor/configure (2fa_configure) */

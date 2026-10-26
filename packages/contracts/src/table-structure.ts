@@ -2,6 +2,18 @@ import { z } from 'zod'
 import { SqlCard } from './query.ts'
 
 /**
+ * zod 3's `.required()`: only `.optional()` fields become required; a field with a default keeps it
+ * (zod 4's `.required()` rejects a missing defaulted field too). The type is zod 4's `.required()`.
+ */
+function requiredOptionals<T extends z.ZodObject>(schema: T): ReturnType<T['required']> {
+  const shape: Record<string, z.ZodType> = {}
+  for (const [k, v] of Object.entries(schema.shape as Record<string, z.ZodType>)) {
+    shape[k] = v instanceof z.ZodOptional ? (v.unwrap() as z.ZodType) : v
+  }
+  return z.object(shape) as unknown as ReturnType<T['required']>
+}
+
+/**
  * Table Structure tab, column definition form (create / add / change), index editor, partitions.
  * docs/features/04-table-level.md, docs/architecture/05-api-reference.md#table-scope.
  * Messages are phpMyAdmin's msgids, translated with the request language.
@@ -264,7 +276,7 @@ export const FormIndex = z.object({
 })
 export type FormIndex = z.input<typeof FormIndex>
 
-export const PartitionDef: z.ZodType<PartitionDefT> = z.lazy(() =>
+export const PartitionDef: z.ZodType<PartitionDefT, PartitionDefT> = z.lazy(() =>
   z.object({
     name: z.string(),
     valueType: z.string().optional(),
@@ -367,9 +379,9 @@ export const ChangeFormResponse = z.object({
   options: ColumnFormOptions,
   columns: z.array(
     z.object({
-      values: ColumnDef.omit({ mime: true }).required(),
+      values: requiredOptionals(ColumnDef.omit({ mime: true })),
       /** the stored MIME settings (Transformations::getMime), null when the form has no MIME columns */
-      mime: ColumnMime.required().nullable(),
+      mime: requiredOptionals(ColumnMime).nullable(),
       orig: ColumnOrig,
       /** move column select: value, "after %s" argument, disabled */
       moveOptions: z.array(
@@ -485,7 +497,8 @@ export const CreateTableRequest = z.object({
   collation: z.string().default(''),
   engine: z.string().default(''),
   connection: z.string().default(''),
-  partitioning: Partitioning.default({}),
+  // prefault: {} is parsed (its fields take their defaults), as .default did in zod 3
+  partitioning: Partitioning.prefault({}),
   dryRun: z.boolean().default(false),
 })
 export type CreateTableRequest = z.input<typeof CreateTableRequest>
@@ -512,7 +525,7 @@ export type IndexEditorIndex = z.input<typeof IndexEditorIndex>
 
 /** GET …/tables/:t/indexes/form?index=name | ?create=N — the editor form as phpMyAdmin renders it */
 export const IndexFormResponse = z.object({
-  index: IndexEditorIndex.required(),
+  index: requiredOptionals(IndexEditorIndex),
   /** `old_index`: the index being edited (null for a new one) */
   oldIndex: z.string().nullable(),
   /** the PRIMARY option is offered (editing the PK, or the table has none) */
@@ -549,7 +562,7 @@ export type DropIndexRequest = z.input<typeof DropIndexRequest>
 
 /** GET …/tables/:t/partitions/form (pma: /table/structure/partitioning without save) */
 export const PartitionFormResponse = z.object({
-  partitioning: Partitioning.required(),
+  partitioning: requiredOptionals(Partitioning),
   canHaveSubpartitions: z.boolean(),
   valueEnabled: z.boolean(),
   engines: z.array(z.object({ name: z.string(), comment: z.string(), isDefault: z.boolean() })),

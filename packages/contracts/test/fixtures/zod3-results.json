@@ -1,0 +1,810 @@
+{
+ "ChangeFormResponse/min": {
+  "input": {
+   "options": {
+    "server": {
+     "vendor": "mysql",
+     "version": 3
+    },
+    "types": [
+     {
+      "separator": true,
+      "group": "__undef__"
+     }
+    ],
+    "attributes": [
+     "s318"
+    ],
+    "defaultTypes": [
+     "s319"
+    ],
+    "virtuality": "__undef__",
+    "charsets": [
+     {
+      "name": "s320",
+      "description": "s321",
+      "collations": [
+       {
+        "name": "s322",
+        "description": "s323"
+       }
+      ]
+     }
+    ],
+    "engines": [
+     {
+      "name": "s324",
+      "comment": "s325",
+      "isDefault": true
+     }
+    ],
+    "havePartitioning": true,
+    "integersLengthRestricted": true,
+    "commentMaxLength": 3,
+    "privsAvailable": true,
+    "charEditing": "s326",
+    "centralColumns": true,
+    "maxRows": 3,
+    "mime": true,
+    "mimeTypes": "__undef__"
+   },
+   "columns": [
+    {
+     "values": {
+      "name": "s327",
+      "type": "s328"
+     },
+     "mime": "__undef__",
+     "orig": {
+      "field": "s329",
+      "type": "s330",
+      "length": "s331",
+      "defaultValue": "s332",
+      "defaultType": "s333",
+      "collation": "s334",
+      "attribute": "s335",
+      "null": "s336",
+      "extra": "s337",
+      "comments": "s338",
+      "virtuality": "s339",
+      "expression": "s340"
+     },
+     "moveOptions": [
+      {
+       "value": "s341",
+       "after": "__undef__",
+       "disabled": true
+      }
+     ]
+    }
+   ]
+  },
+  "zod3": {
+   "err": [
+    "columns.0.mime",
+    "columns.0.moveOptions.0.after",
+    "options.mimeTypes",
+    "options.types.0",
+    "options.virtuality"
+   ]
+  }
+ },
+ "ChangeFormResponse/empty": {
+  "input": {},
+  "zod3": {
+   "err": [
+    "columns",
+    "options"
+   ]
+  }
+ },
+ "ChangeFormResponse/full": {
+  "input": {
+   "options": {
+    "server": {
+     "vendor": "mysql",
+     "version": 3
+    },
+    "types": [
+     {
+      "separator": true,
+      "group": "s268"
+     }
+    ],
+    "attributes": [
+     "s269"
+    ],
+    "defaultTypes": [
+     "s270"
+    ],
+    "virtuality": [
+     "s271"
+    ],
+    "charsets": [
+     {
+      "name": "s272",
+      "description": "s273",
+      "collations": [
+       {
+        "name": "s274",
+        "description": "s275"
+       }
+      ]
+     }
+    ],
+    "engines": [
+     {
+      "name": "s276",
+      "comment": "s277",
+      "isDefault": true
+     }
+    ],
+    "havePartitioning": true,
+    "integersLengthRestricted": true,
+    "sliders": "s278",
+    "commentMaxLength": 3,
+    "privsAvailable": true,
+    "charEditing": "s279",
+    "centralColumns": true,
+    "maxRows": 3,
+    "mime": true,
+    "mimeTypes": {
+     "mimetypes": [
+      {
+       "value": "s280",
+       "label": "s281"
+      }
+     ],
+     "transformations": [
+      {
+       "value": "s282",
+       "label": "s283",
+       "title": "s284"
+      }
+     ],
+     "inputTransformations": [
+      {
+       "value": "s285",
+       "label": "s286",
+       "title": "s287"
+      }
+     ]
+    }
+   },
+   "columns": [
+    {
+     "values": {
+      "name": "s288",
+      "type": "s289",
+      "length": "s290",
+      "defaultType": "s291",
+      "defaultValue": "s292",
+      "collation": "s293",
+      "attribute": "s294",
+      "null": true,
+      "autoIncrement": true,
+      "comments": "s295",
+      "virtuality": "s296",
+      "expression": "s297"
+     },
+     "mime": {
+      "mimetype": "s298",
+      "transformation": "s299",
+      "transformationOptions": "s300",
+      "inputTransformation": "s301",
+      "inputTransformationOptions": "s302"
+     },
+     "orig": {
+      "field": "s303",
+      "type": "s304",
+      "length": "s305",
+      "defaultValue": "s306",
+      "defaultType": "s307",
+      "collation": "s308",
+      "attribute": "s309",
+      "null": "s310",
+      "extra": "s311",
+      "comments": "s312",
+      "virtuality": "s313",
+      "expression": "s314"
+     },
+     "moveOptions": [
+      {
+       "value": "s315",
+       "after": "s316",
+       "disabled": true
+      }
+     ],
+     "status": {
+      "isEditable": true,
+      "isReferenced": true,
+      "isForeignKey": true,
+      "references": [
+       "s317"
+      ]
+     }
+    }
+   ]
+  },
+  "zod3": {
+   "ok": {
+    "options": {
+     "server": {
+      "vendor": "mysql",
+      "version": 3
+     },
+     "types": [
+      {
+       "separator": true,
+       "group": "s268"
+      }
+     ],
+     "attributes": [
+      "s269"
+     ],
+     "defaultTypes": [
+      "s270"
+     ],
+     "virtuality": [
+      "s271"
+     ],
+     "charsets": [
+      {
+       "name": "s272",
+       "description": "s273",
+       "collations": [
+        {
+         "name": "s274",
+         "description": "s275"
+        }
+       ]
+      }
+     ],
+     "engines": [
+      {
+       "name": "s276",
+       "comment": "s277",
+       "isDefault": true
+      }
+     ],
+     "havePartitioning": true,
+     "integersLengthRestricted": true,
+     "sliders": "s278",
+     "commentMaxLength": 3,
+     "privsAvailable": true,
+     "charEditing": "s279",
+     "centralColumns": true,
+     "maxRows": 3,
+     "mime": true,
+     "mimeTypes": {
+      "mimetypes": [
+       {
+        "value": "s280",
+        "label": "s281"
+       }
+      ],
+      "transformations": [
+       {
+        "value": "s282",
+        "label": "s283",
+        "title": "s284"
+       }
+      ],
+      "inputTransformations": [
+       {
+        "value": "s285",
+        "label": "s286",
+        "title": "s287"
+       }
+      ]
+     }
+    },
+    "columns": [
+     {
+      "values": {
+       "name": "s288",
+       "type": "s289",
+       "length": "s290",
+       "defaultType": "s291",
+       "defaultValue": "s292",
+       "collation": "s293",
+       "attribute": "s294",
+       "null": true,
+       "autoIncrement": true,
+       "comments": "s295",
+       "virtuality": "s296",
+       "expression": "s297"
+      },
+      "mime": {
+       "mimetype": "s298",
+       "transformation": "s299",
+       "transformationOptions": "s300",
+       "inputTransformation": "s301",
+       "inputTransformationOptions": "s302"
+      },
+      "orig": {
+       "field": "s303",
+       "type": "s304",
+       "length": "s305",
+       "defaultValue": "s306",
+       "defaultType": "s307",
+       "collation": "s308",
+       "attribute": "s309",
+       "null": "s310",
+       "extra": "s311",
+       "comments": "s312",
+       "virtuality": "s313",
+       "expression": "s314"
+      },
+      "moveOptions": [
+       {
+        "value": "s315",
+        "after": "s316",
+        "disabled": true
+       }
+      ],
+      "status": {
+       "isEditable": true,
+       "isReferenced": true,
+       "isForeignKey": true,
+       "references": [
+        "s317"
+       ]
+      }
+     }
+    ]
+   }
+  }
+ },
+ "IndexFormResponse/min": {
+  "input": {
+   "index": {
+    "choice": "PRIMARY",
+    "columns": [
+     {
+      "name": "s1290"
+     }
+    ]
+   },
+   "oldIndex": "__undef__",
+   "primaryAllowed": true,
+   "fields": [
+    [
+     "s1291",
+     "s1292"
+    ]
+   ],
+   "addFields": 3,
+   "sliders": "s1293"
+  },
+  "zod3": {
+   "err": [
+    "oldIndex"
+   ]
+  }
+ },
+ "IndexFormResponse/empty": {
+  "input": {},
+  "zod3": {
+   "err": [
+    "addFields",
+    "fields",
+    "index",
+    "oldIndex",
+    "primaryAllowed",
+    "sliders"
+   ]
+  }
+ },
+ "IndexFormResponse/full": {
+  "input": {
+   "index": {
+    "name": "s1278",
+    "choice": "PRIMARY",
+    "keyBlockSize": "s1279",
+    "type": "s1280",
+    "parser": "s1281",
+    "comment": "s1282",
+    "columns": [
+     {
+      "name": "s1283",
+      "subPart": "s1284",
+      "collation": "s1285"
+     }
+    ]
+   },
+   "oldIndex": "s1286",
+   "primaryAllowed": true,
+   "fields": [
+    [
+     "s1287",
+     "s1288"
+    ]
+   ],
+   "addFields": 3,
+   "sliders": "s1289"
+  },
+  "zod3": {
+   "ok": {
+    "index": {
+     "name": "s1278",
+     "choice": "PRIMARY",
+     "keyBlockSize": "s1279",
+     "type": "s1280",
+     "parser": "s1281",
+     "comment": "s1282",
+     "columns": [
+      {
+       "name": "s1283",
+       "subPart": "s1284",
+       "collation": "s1285"
+      }
+     ]
+    },
+    "oldIndex": "s1286",
+    "primaryAllowed": true,
+    "fields": [
+     [
+      "s1287",
+      "s1288"
+     ]
+    ],
+    "addFields": 3,
+    "sliders": "s1289"
+   }
+  }
+ },
+ "PartitionFormResponse/min": {
+  "input": {
+   "partitioning": {},
+   "canHaveSubpartitions": true,
+   "valueEnabled": true,
+   "engines": [
+    {
+     "name": "s1814",
+     "comment": "s1815",
+     "isDefault": true
+    }
+   ]
+  },
+  "zod3": {
+   "ok": {
+    "partitioning": {
+     "partitionBy": "",
+     "partitionExpr": "",
+     "partitionCount": "",
+     "subpartitionBy": "",
+     "subpartitionExpr": "",
+     "subpartitionCount": "",
+     "partitions": []
+    },
+    "canHaveSubpartitions": true,
+    "valueEnabled": true,
+    "engines": [
+     {
+      "name": "s1814",
+      "comment": "s1815",
+      "isDefault": true
+     }
+    ]
+   }
+  }
+ },
+ "PartitionFormResponse/empty": {
+  "input": {},
+  "zod3": {
+   "err": [
+    "canHaveSubpartitions",
+    "engines",
+    "partitioning",
+    "valueEnabled"
+   ]
+  }
+ },
+ "PartitionFormResponse/full": {
+  "input": {
+   "partitioning": {
+    "partitionBy": "s1805",
+    "partitionExpr": "s1806",
+    "partitionCount": "s1807",
+    "subpartitionBy": "s1808",
+    "subpartitionExpr": "s1809",
+    "subpartitionCount": "s1810",
+    "partitions": [
+     {
+      "name": "s1811",
+      "valueType": "__undef__",
+      "value": "__undef__",
+      "engine": "__undef__",
+      "comment": "__undef__",
+      "dataDirectory": "__undef__",
+      "indexDirectory": "__undef__",
+      "maxRows": "__undef__",
+      "minRows": "__undef__",
+      "tablespace": "__undef__",
+      "nodeGroup": "__undef__",
+      "subpartitions": "__undef__"
+     }
+    ]
+   },
+   "canHaveSubpartitions": true,
+   "valueEnabled": true,
+   "engines": [
+    {
+     "name": "s1812",
+     "comment": "s1813",
+     "isDefault": true
+    }
+   ]
+  },
+  "zod3": {
+   "ok": {
+    "partitioning": {
+     "partitionBy": "s1805",
+     "partitionExpr": "s1806",
+     "partitionCount": "s1807",
+     "subpartitionBy": "s1808",
+     "subpartitionExpr": "s1809",
+     "subpartitionCount": "s1810",
+     "partitions": [
+      {
+       "name": "s1811"
+      }
+     ]
+    },
+    "canHaveSubpartitions": true,
+    "valueEnabled": true,
+    "engines": [
+     {
+      "name": "s1812",
+      "comment": "s1813",
+      "isDefault": true
+     }
+    ]
+   }
+  }
+ },
+ "PrefsResponse/min": {
+  "input": {
+   "storage": "db",
+   "mtime": 3,
+   "configData": {
+    "k": "v"
+   },
+   "values": {
+    "k": {
+     "source": "default",
+     "disallowed": true
+    }
+   }
+  },
+  "zod3": {
+   "ok": {
+    "storage": "db",
+    "mtime": 3,
+    "configData": {
+     "k": "v"
+    },
+    "values": {
+     "k": {
+      "source": "default",
+      "disallowed": true
+     }
+    }
+   }
+  }
+ },
+ "PrefsResponse/empty": {
+  "input": {},
+  "zod3": {
+   "err": [
+    "configData",
+    "mtime",
+    "storage",
+    "values"
+   ]
+  }
+ },
+ "PrefsResponse/full": {
+  "input": {
+   "storage": "db",
+   "mtime": 3,
+   "configData": {
+    "k": "v"
+   },
+   "values": {
+    "k": {
+     "value": "v",
+     "default": "v",
+     "config": "v",
+     "source": "default",
+     "disallowed": true
+    }
+   }
+  },
+  "zod3": {
+   "ok": {
+    "storage": "db",
+    "mtime": 3,
+    "configData": {
+     "k": "v"
+    },
+    "values": {
+     "k": {
+      "value": "v",
+      "default": "v",
+      "config": "v",
+      "source": "default",
+      "disallowed": true
+     }
+    }
+   }
+  }
+ },
+ "PrefsOptionRequest/min": {
+  "input": {
+   "path": "abcdefghij"
+  },
+  "zod3": {
+   "ok": {
+    "path": "abcdefghij"
+   }
+  }
+ },
+ "PrefsOptionRequest/empty": {
+  "input": {},
+  "zod3": {
+   "err": [
+    "path"
+   ]
+  }
+ },
+ "PrefsOptionRequest/full": {
+  "input": {
+   "path": "abcdefghij",
+   "value": "v",
+   "default": "v"
+  },
+  "zod3": {
+   "ok": {
+    "path": "abcdefghij",
+    "value": "v",
+    "default": "v"
+   }
+  }
+ },
+ "CreateTableRequest/min": {
+  "input": {
+   "table": "s626",
+   "columns": [
+    {
+     "name": "s627",
+     "type": "s628"
+    }
+   ]
+  },
+  "zod3": {
+   "ok": {
+    "table": "s626",
+    "columns": [
+     {
+      "name": "s627",
+      "type": "s628",
+      "length": "",
+      "defaultType": "NONE",
+      "defaultValue": "",
+      "collation": "",
+      "attribute": "",
+      "null": false,
+      "autoIncrement": false,
+      "comments": "",
+      "virtuality": "",
+      "expression": ""
+     }
+    ],
+    "indexes": [],
+    "comment": "",
+    "collation": "",
+    "engine": "",
+    "connection": "",
+    "partitioning": {
+     "partitionBy": "",
+     "partitionExpr": "",
+     "partitionCount": "",
+     "subpartitionBy": "",
+     "subpartitionExpr": "",
+     "subpartitionCount": "",
+     "partitions": []
+    },
+    "dryRun": false
+   }
+  }
+ },
+ "CreateTableRequest/empty": {
+  "input": {},
+  "zod3": {
+   "err": [
+    "columns",
+    "table"
+   ]
+  }
+ },
+ "CreateTableRequest/full": {
+  "input": {
+   "table": "s595",
+   "columns": [
+    {
+     "name": "s596",
+     "type": "s597",
+     "length": "s598",
+     "defaultType": "s599",
+     "defaultValue": "s600",
+     "collation": "s601",
+     "attribute": "s602",
+     "null": true,
+     "autoIncrement": true,
+     "comments": "s603",
+     "virtuality": "s604",
+     "expression": "s605",
+     "mime": {
+      "mimetype": "s606",
+      "transformation": "s607",
+      "transformationOptions": "s608",
+      "inputTransformation": "s609",
+      "inputTransformationOptions": "s610"
+     }
+    }
+   ],
+   "indexes": [
+    {
+     "keyName": "s611",
+     "comment": "s612",
+     "choice": "PRIMARY",
+     "keyBlockSize": "s613",
+     "parser": "s614",
+     "type": "s615",
+     "columns": [
+      {
+       "colIndex": 0,
+       "size": "__undef__"
+      }
+     ]
+    }
+   ],
+   "comment": "s616",
+   "collation": "s617",
+   "engine": "s618",
+   "connection": "s619",
+   "partitioning": {
+    "partitionBy": "s620",
+    "partitionExpr": "s621",
+    "partitionCount": "s622",
+    "subpartitionBy": "s623",
+    "subpartitionExpr": "s624",
+    "subpartitionCount": "s625",
+    "partitions": [
+     {
+      "name": "__undef__",
+      "valueType": "__undef__",
+      "value": "__undef__",
+      "engine": "__undef__",
+      "comment": "__undef__",
+      "dataDirectory": "__undef__",
+      "indexDirectory": "__undef__",
+      "maxRows": "__undef__",
+      "minRows": "__undef__",
+      "tablespace": "__undef__",
+      "nodeGroup": "__undef__",
+      "subpartitions": "__undef__"
+     }
+    ]
+   },
+   "dryRun": true
+  },
+  "zod3": {
+   "err": [
+    "partitioning.partitions.0.name"
+   ]
+  }
+ }
+}

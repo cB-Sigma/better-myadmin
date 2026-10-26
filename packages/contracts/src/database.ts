@@ -349,8 +349,8 @@ export interface RoutineExecuteForm {
 export const RoutineExecuteRequest = z.object({
   name: z.string(),
   type: z.string(),
-  params: z.record(z.union([z.string(), z.array(z.string())])).default({}),
-  funcs: z.record(z.string()).default({}),
+  params: z.record(z.string(), z.union([z.string(), z.array(z.string())])).default({}),
+  funcs: z.record(z.string(), z.string()).default({}),
 })
 
 export interface RoutineExecuteResponse {

@@ -67,7 +67,7 @@ export const ChartDataResponse = z.object({
   /** "No data to display" (or the parser's error) */
   error: z.string().nullable(),
   /** fetchAllAssoc: one object per row, by column name */
-  data: z.array(z.record(z.string().nullable())),
+  data: z.array(z.record(z.string(), z.string().nullable())),
 })
 export type ChartDataResponse = z.infer<typeof ChartDataResponse>
 

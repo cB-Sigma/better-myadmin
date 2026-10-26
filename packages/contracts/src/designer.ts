@@ -165,7 +165,7 @@ export const SchemaExportRequest = z.object({
   export_type: z.string().default(''),
   offline_export: z.boolean().default(false),
   /** the format-specific options posted (`svg_show_color` = 'y', `dia_paper` = 'A4', …) */
-  options: z.record(z.string()).default({}),
+  options: z.record(z.string(), z.string()).default({}),
   tables: z.array(DesignerTablePosition).default([]),
 })
 export type SchemaExportRequest = z.output<typeof SchemaExportRequest>

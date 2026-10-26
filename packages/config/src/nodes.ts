@@ -113,7 +113,7 @@ type TupleIn<T extends readonly z.ZodTypeAny[]> = { [K in keyof T]?: z.input<T[K
 /** Input shape: everything optional; `null` means "not set" (PHP `isset` semantics). */
 export type In<N> = N extends LeafNode<infer Z, infer _O>
   ? // biome-ignore lint/suspicious/noExplicitAny: tuple rest
-    (Z extends z.ZodTuple<infer I extends z.ZodTupleItems, any> ? TupleIn<I> : z.input<Z>) | null
+    (Z extends z.ZodTuple<infer I extends readonly z.ZodTypeAny[], any> ? TupleIn<I> : z.input<Z>) | null
   : N extends GroupNode<infer F>
     ? { [K in keyof F]?: In<F[K]> }
     : N extends ServersNode<infer S>
@@ -333,7 +333,7 @@ export function oneOf<
   const legacyKeys = legacy ? Object.keys(legacy) : []
   const schema = (legacyKeys.length > 0 && legacy
     ? z.union([base, z.enum(legacyKeys as [string, ...string[]]).transform((k) => legacy[k] as V[number])])
-    : base) as unknown as z.ZodType<V[number], z.ZodTypeDef, V[number] | Extract<keyof A, string>>
+    : base) as unknown as z.ZodType<V[number], V[number] | Extract<keyof A, string>>
   const { legacy: _l, ...nodeOpts } = opts
   return leaf({
     type: 'enum',

@@ -157,7 +157,7 @@ export const BookmarkRunRequest = z.object({
   db: z.string().optional(),
   table: z.string().optional(),
   /** bookmark_variable[n], 1-based */
-  variables: z.record(z.string()).optional(),
+  variables: z.record(z.string(), z.string()).optional(),
   /** action_bookmark_all: look the bookmark up regardless of its owner */
   allUsers: z.boolean().default(false),
   pos: z.number().int().min(0).default(0),
@@ -304,13 +304,15 @@ export const PrefsResponse = z.object({
   storage: z.enum(['db', 'local', 'session']),
   mtime: z.number().int(),
   /** The stored flat map (`config_data`) as is. */
-  configData: z.record(z.unknown()),
+  configData: z.record(z.string(), z.unknown()),
   /** Every user-preference directive: effective value and where it comes from. */
   values: z.record(
+    z.string(),
     z.object({
-      value: z.unknown(),
-      default: z.unknown(),
-      config: z.unknown(),
+      // zod 4 requires a z.unknown() key; zod 3 (and these responses) let it be absent
+      value: z.unknown().optional(),
+      default: z.unknown().optional(),
+      config: z.unknown().optional(),
       source: PrefSource,
       disallowed: z.boolean(),
     }),
@@ -318,11 +320,12 @@ export const PrefsResponse = z.object({
 })
 
 /** POST /api/servers/:s/prefs — replace the whole map (UserPreferences::save) */
-export const PrefsSaveRequest = z.object({ configData: z.record(z.unknown()) })
+export const PrefsSaveRequest = z.object({ configData: z.record(z.string(), z.unknown()) })
 /** POST /api/servers/:s/prefs/option — one value (UserPreferencesHandler::setUserValue) */
 export const PrefsOptionRequest = z.object({
   path: z.string().min(1),
-  value: z.unknown(),
+  // optional as in zod 3 (zod 4 requires a z.unknown() key)
+  value: z.unknown().optional(),
   /** Defaults to the phpMyAdmin default of the directive. */
   default: z.unknown().optional(),
 })
@@ -336,9 +339,9 @@ export const PrefsSaveResponse = z.object({ success: z.boolean(), message: UiMes
 export const HiddenItemsResponse = z.object({
   available: z.boolean(),
   /** item_type → item names, for `db` (Navigation::getHiddenItems) */
-  hidden: z.record(z.array(z.string())),
+  hidden: z.record(z.string(), z.array(z.string())),
   /** db → number of hidden items (Node::getNavigationHidingData) */
-  counts: z.record(z.number().int()),
+  counts: z.record(z.string(), z.number().int()),
 })
 
 /** POST /api/servers/:s/navigation/hide | /unhide */

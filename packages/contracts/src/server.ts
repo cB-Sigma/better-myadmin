@@ -273,7 +273,7 @@ export type ErrorReportRequest = z.input<typeof ErrorReportRequest>
 export const ErrorReportResponse = z.object({
   report_setting: z.enum(['ask', 'always', 'never']).optional(),
   /** The report payload shown in the modal ("You may examine the data in the error report:") */
-  report: z.record(z.unknown()).optional(),
+  report: z.record(z.string(), z.unknown()).optional(),
   message: z.object({ type: z.enum(['notice', 'error']), text: z.string() }).optional(),
 })
 export type ErrorReportResponse = z.infer<typeof ErrorReportResponse>

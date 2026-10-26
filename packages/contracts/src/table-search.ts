@@ -96,7 +96,7 @@ export const ZoomResponse = z.object({
 export type ZoomResponse = z.infer<typeof ZoomResponse>
 
 export const ZoomRowRequest = z.object({ whereClause: z.string(), sig: z.string() })
-export const ZoomRowResponse = z.object({ row: z.record(z.string().nullable()).nullable() })
+export const ZoomRowResponse = z.object({ row: z.record(z.string(), z.string().nullable()).nullable() })
 export type ZoomRowResponse = z.infer<typeof ZoomRowResponse>
 
 export const FindReplaceRequest = z.object({

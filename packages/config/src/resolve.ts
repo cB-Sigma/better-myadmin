@@ -355,17 +355,19 @@ export function expectation(node: AnyNode): string {
   }
 }
 
-function friendly(issue: z.ZodIssue, merged: unknown, ctx: Ctx): ConfigIssue {
-  const { node, rest } = leafAt(issue.path)
-  const leafPath = issue.path.slice(0, issue.path.length - rest.length)
-  const value = valueAt(merged, issue.path)
+function friendly(issue: z.core.$ZodIssue, merged: unknown, ctx: Ctx): ConfigIssue {
+  // the configuration is plain data: no symbol keys in a path
+  const path = issue.path as (string | number)[]
+  const { node, rest } = leafAt(path)
+  const leafPath = path.slice(0, path.length - rest.length)
+  const value = valueAt(merged, path)
   const secret = node.flags.secret
   const got = secret ? '(secret value hidden)' : preview(value)
   let message: string
-  if ((issue.code === 'too_small' || issue.code === 'too_big') && issue.type === 'number') {
+  if ((issue.code === 'too_small' || issue.code === 'too_big') && issue.origin === 'number') {
     const bound = issue.code === 'too_small' ? `>= ${issue.minimum}` : `<= ${issue.maximum}`
     message = `must be ${bound}, got ${got}`
-  } else if ((issue.code === 'too_small' || issue.code === 'too_big') && issue.type === 'array') {
+  } else if ((issue.code === 'too_small' || issue.code === 'too_big') && issue.origin === 'array') {
     message =
       issue.code === 'too_small'
         ? `must contain at least ${issue.minimum} item(s)`
@@ -374,8 +376,8 @@ function friendly(issue: z.ZodIssue, merged: unknown, ctx: Ctx): ConfigIssue {
     const at = rest.length > 0 ? ` (at ${rest.map((r) => `[${JSON.stringify(r)}]`).join('')})` : ''
     message = `expected ${expectation(node)}, got ${got}${at}`
   }
-  const source = ctx.sources.get(dotted(leafPath)) ?? ctx.sources.get(dotted(issue.path))
-  return { path: dotted(issue.path), message, ...(source !== undefined ? { source } : {}) }
+  const source = ctx.sources.get(dotted(leafPath)) ?? ctx.sources.get(dotted(path))
+  return { path: dotted(path), message, ...(source !== undefined ? { source } : {}) }
 }
 
 // ---------------------------------------------------------------------------
@@ -413,7 +415,17 @@ export function resolveLayers(
   const parsed = resolvedConfigSchema.safeParse(cfg)
   if (!parsed.success) {
     const ctx: Ctx = { issues, warnings, label: 'config', origins: undefined, sources }
-    throw new ConfigError(parsed.error.issues.map((i) => friendly(i, cfg, ctx)))
+    // one issue per path and message: zod 4 can report a union's failure once per option
+    const found = parsed.error.issues.map((i) => friendly(i, cfg, ctx))
+    const seen = new Set<string>()
+    throw new ConfigError(
+      found.filter((i) => {
+        const key = `${i.path}\u0000${i.message}`
+        if (seen.has(key)) return false
+        seen.add(key)
+        return true
+      }),
+    )
   }
   const config = parsed.data as ResolvedConfig
   warnings.push(...userprefsDisallowWarnings(config))

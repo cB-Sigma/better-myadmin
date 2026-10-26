@@ -39,7 +39,7 @@ export const QueryRequest = z.object({
   /** rollback_query: "Rollback when finished". */
   rollback: z.boolean().optional(),
   /** `parameterized` + `parameters[:name]`: "Bind parameters". Keys include the colon. */
-  params: z.record(z.string()).optional(),
+  params: z.record(z.string(), z.string()).optional(),
   /** show_as_php: true = "Create PHP code", false = show the SQL only; neither executes the query. */
   showAsPhp: z.boolean().optional(),
   /** Client-chosen id so POST /query/cancel can KILL QUERY this request's connection. */
