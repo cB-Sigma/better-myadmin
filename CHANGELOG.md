@@ -2,6 +2,23 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.15 (2026-10-26)
+
+### Security
+
+- Zod 3.24.4 → 4.6.6. This fixes GHSA-mrhx-c7xc-m3w5, where validating an oversized request could
+  exhaust memory. `pnpm audit --prod` now reports no known vulnerabilities.
+
+### Changes
+
+- No behaviour change is intended. The request and response schemas and the configuration
+  validation accept and produce the same values as before. A differential run checked this by
+  parsing the same inputs with Zod 3 and Zod 4: 2,526 cases across all 421 API schemas, and 6,110
+  cases covering every configuration directive with valid and invalid values. The places where
+  Zod 4 changed the result have been adjusted to match Zod 3 and are pinned by tests: `.required()`
+  with defaults, optional `unknown` fields, defaults that are parsed, and a configuration error
+  that was reported twice.
+
 ## 1.0.14 (2026-10-26)
 
 ### Security
