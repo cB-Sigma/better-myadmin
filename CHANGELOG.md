@@ -2,6 +2,13 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.14 (2026-10-26)
+
+### Security
+
+- DOMPurify 3.4.16 → 3.4.17, which fixes three advisories. BetterMyAdmin doesn't use the options
+  they affect. The release is now past the 14-day minimum release age.
+
 ## 1.0.13 (2026-10-25)
 
 ### Fixes

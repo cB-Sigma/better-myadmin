@@ -1,6 +1,6 @@
 {
   "name": "@bettermyadmin/schema",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": true,
   "license": "GPL-2.0-or-later",
   "type": "module",
