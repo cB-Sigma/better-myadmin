@@ -471,6 +471,174 @@
         "features/02-browse-results-grid"
       ],
       "notes": "sync 6eba7ba9ad: Hardcoded UI strings translated: multi-table query \"Nothing selected\", \"Enter an option\", Column / Op labels; index \"Column count has to be larger than zero.\"; normalization \"Enter new table name\" / \"Enter column name\"; zoom search help title; database search caption msgid 'Search results for \"%s\" %s:' (Trans with <em>); copy failure uses strCopyQueryButtonFailure \"Copying failed!\"; export privileges modal title strLoading \"Loading…\". \"Backtrace\" (error/get_display.twig): n/a, no PHP error display. pma-controls signatures updated; parity baseline re-recorded."
+    },
+    {
+      "commit": "a1e4edef2d5cf9d83bf4ab58595c23c945026c25",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync c7bb2a19e5: po files regenerated upstream (new .pot extraction): pnpm i18n:import; the stale plural msgid \"No databases selected.\" left the pot, its messages.yaml n/a entry was dropped."
+    },
+    {
+      "commit": "1a1c10130a4873a75ebc1e6056144e62d119ccb8",
+      "subject": "Translated using Weblate (Turkish)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync c7bb2a19e5: Turkish translation: pnpm i18n:import."
+    },
+    {
+      "commit": "2907d1fa8cd7ce8d8b5b2962377e87dade0f68a1",
+      "subject": "Translated using Weblate (Ukrainian)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync c7bb2a19e5: Ukrainian translation: pnpm i18n:import."
+    },
+    {
+      "commit": "beb3fc4578d5c311e6de35a17e3334e73b461c84",
+      "subject": "Translated using Weblate (Korean)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync c7bb2a19e5: Korean translation: pnpm i18n:import."
+    },
+    {
+      "commit": "c2e56e6ec6078ba45f4086220d372fdb7a551e4f",
+      "subject": "Translated using Weblate (French)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync c7bb2a19e5: French translation: pnpm i18n:import."
+    },
+    {
+      "commit": "ee077aa2ac9dcef03321fbed75feeb96038f8768",
+      "subject": "docs: withdraw obsolete browser FAQ entries and fix demo link",
+      "status": "ported",
+      "areas": ["docs"],
+      "notes": "sync c7bb2a19e5: FAQ 5.8 and 5.9 withdrawn and the demo link fixed in docs-site/faq.rst."
+    },
+    {
+      "commit": "8fe98a1b05c4771ad51d28e62b4ac8953e477da4",
+      "subject": "docs: fix FAQ typo and clarify compress option",
+      "status": "ported",
+      "areas": ["docs"],
+      "notes": "sync c7bb2a19e5: FAQ typo (\"more than one\") and the compress option text in docs-site/config.rst."
+    },
+    {
+      "commit": "7e1292d3d8643cbbf146c85ab2b137f1df9f656c",
+      "subject": "Fix the FAQ 3.10 wording about duplicate values",
+      "status": "ported",
+      "areas": ["docs"],
+      "notes": "sync c7bb2a19e5: FAQ 3.10 wording (\"more than one row\") in docs-site/faq.rst."
+    },
+    {
+      "commit": "20fd4203a4d38a44cdcb5b78bc31bd3fca1f909f",
+      "subject": "Add ResponseRendererAjaxSetting",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync c7bb2a19e5: ResponseRendererAjaxSetting middleware: sets ResponseRenderer::setAjax from the request; BetterMyAdmin is a JSON API with a React client, there is no ajax/non-ajax page rendering split."
+    },
+    {
+      "commit": "499f30824a807aeafe433b89a56552e10a44c317",
+      "subject": "Refactor Events\\IndexController",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync c7bb2a19e5: Events\\IndexController refactor: the failed-query errors of events, routines and triggers are now one getErrorForFailedQuery (query, one break, \"MySQL said:\"), where add mode had a double break: our failed() helpers in apps/server/src/database/{events,routines,triggers}.ts lose the separator argument (test: table-triggers.test.ts). The event rows come from events/row.twig (claims moved), the non-JS \"Change to %s\" button is gone (controls.yaml n/a dropped), the one-time/recurring rows are toggled by CSS :has instead of JS (EventsPage.tsx already renders them by type), the new events/export.twig textarea is claimed by the export dialog, and the new-row fade-in is removed (we never had one). Parity baseline re-recorded."
+    },
+    {
+      "commit": "897dc800d54027b6ddc156012da0318e238cd88e",
+      "subject": "Use DI for ThemeManager",
+      "status": "not-applicable",
+      "areas": ["tooling"],
+      "notes": "sync c7bb2a19e5: ThemeManager through the DI container: same themes and cookie; BetterMyAdmin has its own theme registry (packages/ui)."
+    },
+    {
+      "commit": "abf7b1357927ac03c754610c15e2d2c073bcfe2a",
+      "subject": "Improve ErrorHandlerTest::testUniqueness() test",
+      "status": "not-applicable",
+      "areas": ["tests"],
+      "notes": "sync c7bb2a19e5: ErrorHandlerTest::testUniqueness: PHP error handler, no counterpart."
+    },
+    {
+      "commit": "7ba996c591142e0244c016d1d94355d3d9e7cf16",
+      "subject": "Remove DisableIS from Import",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: Remove DisableIS from Import: our import never consulted DisableIS."
+    },
+    {
+      "commit": "c55c43c2fcfdd0f4144fd6ed44d27db820b4603d",
+      "subject": "Move getMimeType to ExportPluginProperties",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: getMimeType moved to ExportPluginProperties: the import/schema plugins never used it; same MIME types for the exports (packages/export properties.mimeType)."
+    },
+    {
+      "commit": "1ac66470b0d6271c9b846ccf917e47ff82c8d66d",
+      "subject": "Fix getValuesForCsvTable()",
+      "status": "ported",
+      "areas": ["features/05-database-level"],
+      "notes": "sync c7bb2a19e5: getValuesForCsvTable: the CSV size estimate maps \\r to \"rn\" as well as \\n to \"nl\", and drops the SET SESSION group_concat_max_len (fetchResultSimple, which we already used): apps/server/src/database/structure.ts."
+    },
+    {
+      "commit": "d27d4c465e2060cd435e4b7c96ee62e8f38c7bff",
+      "subject": "Fix IPv4 CIDR matching in AllowDeny rules",
+      "status": "ported",
+      "areas": ["features/01-shell-navigation-auth"],
+      "notes": "sync c7bb2a19e5: IPv4 CIDR matching in AllowDeny rules: cidrMatch compares the packed addresses with a byte mask instead of ip2long arithmetic (the 31-bit quirk is gone): apps/server/src/auth/ip-allow-deny.ts; fixtures regenerated (ip-allow-deny.json, 711 cases)."
+    },
+    {
+      "commit": "910322373f14ed4601c85234858f630f127569ef",
+      "subject": "Check CSRF token on config and http login",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth"],
+      "notes": "sync c7bb2a19e5: CSRF token checked on config and http login: our API requires the CSRF header on every non-GET request, logins included."
+    },
+    {
+      "commit": "951f6c9344d3b7b76f9f36c3b58e5a07ac46b024",
+      "subject": "PluginFactory",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: PluginFactory replaces Plugins static helpers: same plugin availability and order (inventories unchanged)."
+    },
+    {
+      "commit": "5c6485ed876a67ae8dc743366df1207e0880fe9d",
+      "subject": "ExportType and singleTable",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: ExportType and singleTable as instance fields: our PluginContext already carries exportType and singleTable per export."
+    },
+    {
+      "commit": "4c780eae5212c7dc5c72d767d8bf4314792a3092",
+      "subject": "Refactor Pdf to narrow down types",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: Pdf helper type narrowing: same output."
+    },
+    {
+      "commit": "a993e75d61faff1ec5d0ba57a4a4594aaf0b1bb7",
+      "subject": "Add test for Pdf::getTableDef() column layout",
+      "status": "ported",
+      "areas": ["tests"],
+      "notes": "sync c7bb2a19e5: Pdf::getTableDef column layout test: ported as packages/export/test/pdf.test.ts \"the structure table: the comments under their title\"."
+    },
+    {
+      "commit": "acbb64ea40a1971a1a105c254e29b9f4c2a22212",
+      "subject": "Fix bug I introduced in the past",
+      "status": "ported",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: Pdf::getTableDef: the optional Links to / Comments / Media type columns are laid out in order, so the comments land under their title without relations: packages/export/src/plugins/pdf.ts."
+    },
+    {
+      "commit": "7a202008ab497283f621073440678640f931d3f6",
+      "subject": "Fix more type issues",
+      "status": "ported",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: Pdf::getTableDef: the Media type cell needs the browser transformation feature as well as doMime: packages/export/src/plugins/pdf.ts."
+    },
+    {
+      "commit": "889b269b98c972fb1380ac28d2b66464ea96ae59",
+      "subject": "Make $results local",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync c7bb2a19e5: Pdf $results made local: same output."
     }
   ]
 }

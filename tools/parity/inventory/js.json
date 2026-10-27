@@ -1,9 +1,9 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f",
+    "referenceCommit": "c7bb2a19e557d6345800bf5f2fed859aafdbae60",
     "source": "resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys",
-    "count": 965
+    "count": 964
   },
   "items": [
     {
@@ -450,7 +450,7 @@
       "method": "POST",
       "url": "index.php?route=/database/routines",
       "route": "/database/routines",
-      "line": 825,
+      "line": 820,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -460,7 +460,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$anchor.attr('href')>",
-      "line": 461,
+      "line": 456,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -470,7 +470,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$this.attr('href')>",
-      "line": 795,
+      "line": 790,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -492,7 +492,7 @@
       "messages": [
         "MissingReturn"
       ],
-      "line": 689,
+      "line": 684,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -515,7 +515,7 @@
       "event": "change",
       "selector": "select[name^=item_param_type]",
       "delegated": true,
-      "line": 942,
+      "line": 937,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -526,7 +526,7 @@
       "event": "change",
       "selector": "select[name=item_returntype]",
       "delegated": true,
-      "line": 952,
+      "line": 947,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -537,7 +537,7 @@
       "event": "change",
       "selector": "select[name=item_type]",
       "delegated": true,
-      "line": 938,
+      "line": 933,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -548,7 +548,7 @@
       "event": "click",
       "selector": "#addRoutineParameterButton",
       "delegated": true,
-      "line": 962,
+      "line": 957,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -559,7 +559,7 @@
       "event": "click",
       "selector": "#bulkActionDropButton",
       "delegated": true,
-      "line": 933,
+      "line": 928,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -570,7 +570,7 @@
       "event": "click",
       "selector": "#bulkActionExportButton",
       "delegated": true,
-      "line": 923,
+      "line": 918,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -580,7 +580,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<routinesEditorModalSaveButton>",
-      "line": 319,
+      "line": 314,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -590,7 +590,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<routinesExecuteModalExecuteButton>",
-      "line": 850,
+      "line": 845,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -601,7 +601,7 @@
       "event": "click",
       "selector": "a.ajax.add_anchor",
       "delegated": true,
-      "line": 901,
+      "line": 896,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -612,7 +612,7 @@
       "event": "click",
       "selector": "a.ajax.drop_anchor",
       "delegated": true,
-      "line": 928,
+      "line": 923,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -623,7 +623,7 @@
       "event": "click",
       "selector": "a.ajax.edit_anchor",
       "delegated": true,
-      "line": 908,
+      "line": 903,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -634,7 +634,7 @@
       "event": "click",
       "selector": "a.ajax.exec_anchor",
       "delegated": true,
-      "line": 913,
+      "line": 908,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -645,7 +645,7 @@
       "event": "click",
       "selector": "a.ajax.export_anchor",
       "delegated": true,
-      "line": 918,
+      "line": 913,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -656,7 +656,7 @@
       "event": "click",
       "selector": "a.routine_param_remove_anchor",
       "delegated": true,
-      "line": 996,
+      "line": 991,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -665,7 +665,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "confirm",
-      "line": 376,
+      "line": 371,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -677,7 +677,7 @@
       "messages": [
         "strDropRTEitems"
       ],
-      "line": 441,
+      "line": 436,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -687,7 +687,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<routinesEditorModal>",
-      "line": 353,
+      "line": 348,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -697,7 +697,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<routinesExecuteModal>",
-      "line": 837,
+      "line": 832,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -720,7 +720,7 @@
       "keys": [
         "Enter"
       ],
-      "line": 864,
+      "line": 859,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -730,7 +730,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<routinesEditorModal>",
-      "line": 310,
+      "line": 305,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -740,7 +740,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<routinesExecuteModal>",
-      "line": 845,
+      "line": 840,
       "file": "resources/js/database/routines.ts"
     },
     {
@@ -2082,7 +2082,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<$this.attr('href')>",
-      "line": 98,
+      "line": 97,
       "file": "resources/js/events.ts"
     },
     {
@@ -2092,7 +2092,7 @@
       "kind": "ajax",
       "method": "GET",
       "url": "<h>",
-      "line": 79,
+      "line": 78,
       "file": "resources/js/events.ts"
     },
     {
@@ -2102,7 +2102,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$anchor.attr('href')>",
-      "line": 438,
+      "line": 432,
       "file": "resources/js/events.ts"
     },
     {
@@ -2112,7 +2112,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<url>",
-      "line": 178,
+      "line": 177,
       "file": "resources/js/events.ts"
     },
     {
@@ -2124,18 +2124,7 @@
       "messages": [
         "strFormEmpty"
       ],
-      "line": 39,
-      "file": "resources/js/events.ts"
-    },
-    {
-      "key": "js:events.ts#change:select[name=item_type]",
-      "script": "events.ts",
-      "count": 1,
-      "kind": "event",
-      "event": "change",
-      "selector": "select[name=item_type]",
-      "delegated": true,
-      "line": 584,
+      "line": 38,
       "file": "resources/js/events.ts"
     },
     {
@@ -2146,7 +2135,7 @@
       "event": "click",
       "selector": "#bulkActionDropButton",
       "delegated": true,
-      "line": 575,
+      "line": 569,
       "file": "resources/js/events.ts"
     },
     {
@@ -2157,7 +2146,7 @@
       "event": "click",
       "selector": "#bulkActionExportButton",
       "delegated": true,
-      "line": 562,
+      "line": 556,
       "file": "resources/js/events.ts"
     },
     {
@@ -2167,7 +2156,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<eventsEditorModalSaveButton>",
-      "line": 299,
+      "line": 293,
       "file": "resources/js/events.ts"
     },
     {
@@ -2178,7 +2167,7 @@
       "event": "click",
       "selector": "a.ajax.add_anchor, a.ajax.edit_anchor",
       "delegated": true,
-      "line": 543,
+      "line": 537,
       "file": "resources/js/events.ts"
     },
     {
@@ -2189,7 +2178,7 @@
       "event": "click",
       "selector": "a.ajax.drop_anchor",
       "delegated": true,
-      "line": 570,
+      "line": 564,
       "file": "resources/js/events.ts"
     },
     {
@@ -2200,7 +2189,7 @@
       "event": "click",
       "selector": "a.ajax.export_anchor",
       "delegated": true,
-      "line": 557,
+      "line": 551,
       "file": "resources/js/events.ts"
     },
     {
@@ -2209,7 +2198,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "confirm",
-      "line": 353,
+      "line": 347,
       "file": "resources/js/events.ts"
     },
     {
@@ -2221,7 +2210,7 @@
       "messages": [
         "strDropRTEitems"
       ],
-      "line": 418,
+      "line": 412,
       "file": "resources/js/events.ts"
     },
     {
@@ -2231,7 +2220,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<eventsEditorModal>",
-      "line": 330,
+      "line": 324,
       "file": "resources/js/events.ts"
     },
     {
@@ -2241,7 +2230,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<eventsExportModal>",
-      "line": 121,
+      "line": 120,
       "file": "resources/js/events.ts"
     },
     {
@@ -2251,7 +2240,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<eventsEditorModal>",
-      "line": 290,
+      "line": 284,
       "file": "resources/js/events.ts"
     },
     {
@@ -2261,7 +2250,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<eventsExportModal>",
-      "line": 114,
+      "line": 113,
       "file": "resources/js/events.ts"
     },
     {
@@ -10033,7 +10022,7 @@
       "kind": "ajax",
       "method": "POST",
       "url": "<$anchor.attr('href')>",
-      "line": 447,
+      "line": 442,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10066,7 +10055,7 @@
       "event": "click",
       "selector": "#bulkActionDropButton",
       "delegated": true,
-      "line": 550,
+      "line": 545,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10077,7 +10066,7 @@
       "event": "click",
       "selector": "#bulkActionExportButton",
       "delegated": true,
-      "line": 537,
+      "line": 532,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10087,7 +10076,7 @@
       "kind": "event",
       "event": "click",
       "selector": "<triggersEditorModalSaveButton>",
-      "line": 308,
+      "line": 303,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10098,7 +10087,7 @@
       "event": "click",
       "selector": "a.ajax.add_anchor, a.ajax.edit_anchor",
       "delegated": true,
-      "line": 518,
+      "line": 513,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10109,7 +10098,7 @@
       "event": "click",
       "selector": "a.ajax.drop_anchor",
       "delegated": true,
-      "line": 545,
+      "line": 540,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10120,7 +10109,7 @@
       "event": "click",
       "selector": "a.ajax.export_anchor",
       "delegated": true,
-      "line": 532,
+      "line": 527,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10129,7 +10118,7 @@
       "count": 1,
       "kind": "dialog",
       "event": "confirm",
-      "line": 362,
+      "line": 357,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10141,7 +10130,7 @@
       "messages": [
         "strDropRTEitems"
       ],
-      "line": 427,
+      "line": 422,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10151,7 +10140,7 @@
       "kind": "event",
       "event": "hidden.bs.modal",
       "selector": "<triggersEditorModal>",
-      "line": 339,
+      "line": 334,
       "file": "resources/js/triggers.ts"
     },
     {
@@ -10171,7 +10160,7 @@
       "kind": "event",
       "event": "shown.bs.modal",
       "selector": "<triggersEditorModal>",
-      "line": 299,
+      "line": 294,
       "file": "resources/js/triggers.ts"
     },
     {

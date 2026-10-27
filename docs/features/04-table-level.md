@@ -651,7 +651,7 @@ Tracking
 - [x] Logged queries prefixed with `# log date user`; `/*NOTRACK*/` bypass; auto-create version option. <!-- parity:test --> `p04-cc268e` [table-tracker.test.ts:42](../../apps/server/test/int/table-tracker.test.ts#L42) +4
 
 Triggers
-- [x] Privilege-gated create/edit/drop; export always. <!-- parity:test --> `p04-941ec9` [table-triggers.test.ts:87](../../apps/server/test/int/table-triggers.test.ts#L87)
+- [x] Privilege-gated create/edit/drop; export always. <!-- parity:test --> `p04-941ec9` [table-triggers.test.ts:95](../../apps/server/test/int/table-triggers.test.ts#L95)
 - [x] Editor modal with CodeMirror + Format; definer `user@host` validation; table must exist. <!-- parity:test --> `p04-5b8c51` [table-triggers.test.ts:52](../../apps/server/test/int/table-triggers.test.ts#L52)
 - [x] Edit = drop + create with rollback; new row inserted alphabetically; moving to another table removes the row. <!-- parity:test --> `p04-d706ba` [table-triggers.test.ts:67](../../apps/server/test/int/table-triggers.test.ts#L67)
 - [x] Bulk export concatenates; bulk drop confirms once. <!-- parity:test --> `p04-f581ea` [ui-gaps.e2e.ts:188](../../tests/e2e/ui-gaps.e2e.ts#L188)

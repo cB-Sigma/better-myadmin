@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/el.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/el.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Greek <https://hosted.weblate.org/projects/phpmyadmin/master/el/>\nLanguage: el\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-01-03 06:36+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Greek <https://hosted.weblate.org/projects/phpmyadmin/master/el/>\nLanguage: el\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Από αυτό το σημείο πρέπει να έχετε ενεργοποιημένη την Javascript!"
@@ -6138,9 +6138,6 @@ msgstr "Εμφάνιση εγγραφών %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Υπάρχει ήδη σελίδα με το όνομα «%s», μετονομάστε τη σε κάτι άλλο."
 
-msgid "No databases selected."
-msgstr "Δεν έχετε επιλέξει βάσεις δεδομένων."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Αδύνατη η φόρτωση προσθέτων εξαγωγής, για αυτό εξέξτε την εγκατάστασή σας!"
 
@@ -6415,6 +6412,9 @@ msgstr "Σύνθεση με:"
 
 msgid "Please select column(s) for the index."
 msgstr "Επιλέξτε στήλη(ες) για το ευρετήριο."
+
+msgid "Column count has to be larger than zero."
+msgstr "Το πλήθος των στηλών δεν πρέπει να είναι μηδέν."
 
 msgid "Y values"
 msgstr "Τιμές Υ"

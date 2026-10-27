@@ -4,7 +4,7 @@
 
 What phpMyAdmin's resources/js does in the browser: event bindings (with the keys keyboard handlers compare), confirm/alert dialogs (with their `window.Messages` keys), AJAX calls (with their routes) and CodeMirror key bindings. Claims: `js:<script>#…` keys in `pma-controls.ts` registries (or `data-pma`), docs/architecture/12; dispositions: `tools/parity/map/js.yaml`.
 
-965/965 covered (100.0%): 952 implemented, 13 n/a. [Summary](README.md).
+964/964 covered (100.0%): 951 implemented, 13 n/a. [Summary](README.md).
 
 ## 01 shell navigation auth — 237/237 (100.0%) covered, 228/237 implemented
 
@@ -113,8 +113,8 @@ What phpMyAdmin's resources/js does in the browser: event bindings (with the key
 | `codemirror/addon/lint/sql-lint.ts` | 1/1: ✅ `POST /lint` |  |
 | `sql.ts` | 46/46: ✅ `POST /database/sql/format` ✅ `POST /import/simulate-dml` ✅ `POST <$(this).attr('action')>` ✅ `POST <$form.attr('action')>` ✅ `POST <$thisA.attr('href')>` ✅ `POST <url>` ✅ `alert(strCopyQueryButtonFailure)` ✅ `alert(strFormEmpty)` ✅ `change #id_bookmark` ✅ `change <window.codeMirrorEditor>` ✅ `change select[name="sql_query"]` ✅ `click .navigation .showAllRows` ✅ `click .sortlink` ✅ `click #button_submit_query` ✅ `click #copyToClipBoard` ✅ `click #insertBtn` ✅ `click #simulate_dml` ✅ `click #sqlquery` ✅ `click #togglequerybox` ✅ `click #view_as` ✅ `click <formId>` ✅ `click <tableId> td a.foreign_value` ✅ `click a.browse_foreign` ✅ `click a.delete_row.ajax` ✅ `click form[name="resultsForm"].ajax button[name="submit_mult"], form[name="re…` ✅ `click input.sqlbutton` ✅ `click th.column_heading.marker` ✅ `confirm(strDoYouReally)` ✅ `confirm(strShowAllRowsWarning)` ✅ `dblclick #fieldsSelect` ✅ `hidden.bs.modal <browseForeignModal>` ✅ `input #sqlquery` ✅ `input input#bkm_label` ✅ `keypress input[name=bookmark_variable]` ✅ `keyup .filter_rows` ✅ `keyup #sqlqueryform` ✅ `makeGrid .sqlqueryresults` ✅ `mouseenter th.column_heading.pointer` ✅ `mouseleave th.column_heading.pointer` ✅ `propertychange #sqlquery` ✅ `shown <modal>` ✅ `submit .bookmarkQueryForm` ✅ `submit .maxRowsForm` ✅ `submit #sqlqueryform.ajax` ✅ `submit <formId>` ✅ `submit form[name='displayOptionsForm'].ajax` |  |
 
-## other — 18/18 (100.0%) covered, 18/18 implemented
+## other — 17/17 (100.0%) covered, 17/17 implemented
 
 | Script | Covered | Not covered |
 |---|---|---|
-| `events.ts` | 18/18: ✅ `GET <$this.attr('href')>` ✅ `GET <h>` ✅ `POST <$anchor.attr('href')>` ✅ `POST <url>` ✅ `alert(strFormEmpty)` ✅ `change select[name=item_type]` ✅ `click #bulkActionDropButton` ✅ `click #bulkActionExportButton` ✅ `click <eventsEditorModalSaveButton>` ✅ `click a.ajax.add_anchor, a.ajax.edit_anchor` ✅ `click a.ajax.drop_anchor` ✅ `click a.ajax.export_anchor` ✅ `confirm("")` ✅ `confirm(strDropRTEitems)` ✅ `hidden.bs.modal <eventsEditorModal>` ✅ `hidden.bs.modal <eventsExportModal>` ✅ `shown.bs.modal <eventsEditorModal>` ✅ `shown.bs.modal <eventsExportModal>` |  |
+| `events.ts` | 17/17: ✅ `GET <$this.attr('href')>` ✅ `GET <h>` ✅ `POST <$anchor.attr('href')>` ✅ `POST <url>` ✅ `alert(strFormEmpty)` ✅ `click #bulkActionDropButton` ✅ `click #bulkActionExportButton` ✅ `click <eventsEditorModalSaveButton>` ✅ `click a.ajax.add_anchor, a.ajax.edit_anchor` ✅ `click a.ajax.drop_anchor` ✅ `click a.ajax.export_anchor` ✅ `confirm("")` ✅ `confirm(strDropRTEitems)` ✅ `hidden.bs.modal <eventsEditorModal>` ✅ `hidden.bs.modal <eventsExportModal>` ✅ `shown.bs.modal <eventsEditorModal>` ✅ `shown.bs.modal <eventsExportModal>` |  |

@@ -1,5 +1,5 @@
 {
-  "_generated": {"by": "generate-fixtures.php", "pma": "6eba7ba9ad", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "_generated": {"by": "generate-fixtures.php", "pma": "c7bb2a19e5", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
   "phpunitExpected": {
     "partitions": ["", " PARTITION BY HASH (EXPR()) PARTITIONS 2", " PARTITION BY LIST (EXPR2()) PARTITIONS 2 ( PARTITION p0,  PARTITION p1)", " PARTITION BY LIST (EXPR2()) PARTITIONS 2 SUBPARTITION BY HASH (EXPR1()) SUBPARTITIONS 2 ( PARTITION p0,  PARTITION p1,  PARTITION p2 VALUES <value type> (<value>))", " PARTITION BY LIST (EXPR2()) PARTITIONS 2 SUBPARTITION BY HASH (EXPR1()) SUBPARTITIONS 2 ( PARTITION p0 ENGINE = MRG_MyISAM COMMENT = 'Partition zero' MAX_ROWS = 2048 MIN_ROWS = 25,  PARTITION p1 VALUES LESS THAN MAXVALUE,  PARTITION p2 ( SUBPARTITION p2_s1 DATA DIRECTORY = 'datadir' INDEX_DIRECTORY = 'indexdir' TABLESPACE = space1 NODEGROUP = ngroup1))"],
     "create": ["CREATE TABLE `db`.`table` ();", "CREATE TABLE `db`.`table` () ENGINE = dummy CHARSET=armscii8 COMMENT = 'my \\'table';", "CREATE TABLE `db`.`table` () CHARSET=armscii8 COMMENT = 'my \\'table';"],

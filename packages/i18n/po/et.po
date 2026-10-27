@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/et.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/et.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2023-11-25 02:27+0000\nLast-Translator: Kristjan Räts <kristjanrats@gmail.com>\nLanguage-Team: Estonian <https://hosted.weblate.org/projects/phpmyadmin/master/et/>\nLanguage: et\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.2.1-rc\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2023-11-25 02:27+0000\nLast-Translator: Kristjan Räts <kristjanrats@gmail.com>\nLanguage-Team: Estonian <https://hosted.weblate.org/projects/phpmyadmin/master/et/>\nLanguage: et\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.2.1-rc\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript peab olema lubatud!"
@@ -6471,9 +6471,6 @@ msgstr "Kuvatakse read %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Lehekülg nimega \"%s\" on juba olemas. Palun anna talle uus nimi."
 
-msgid "No databases selected."
-msgstr "Ühtegi andmebaasi ei ole valitud."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Ei saanud laadida eksportimise pluginaid, palun kontrolli oma paigaldust!"
 
@@ -6766,6 +6763,9 @@ msgstr "Kasuta:"
 
 msgid "Please select column(s) for the index."
 msgstr "Palun vali indeksi veerg(u)."
+
+msgid "Column count has to be larger than zero."
+msgstr "Veergude arv peab olema nullist suurem."
 
 msgid "Y values"
 msgstr "Y väärtused"

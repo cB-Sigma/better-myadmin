@@ -130,8 +130,9 @@ function eventQuery(ctx: DbCtx, req: EventSaveRequest, errors: string[]): string
   return query
 }
 
-const failed = (ctx: DbCtx, sql: string, error: string, sep = '\n') =>
-  `${sprintf(ctx.tr.gettext('The following query has failed: "%s"'), sql)}${sep}${ctx.tr.gettext('MySQL said: ')}${error}`
+/** getErrorForFailedQuery (one line break since upstream 499f30824a) */
+const failed = (ctx: DbCtx, sql: string, error: string) =>
+  `${sprintf(ctx.tr.gettext('The following query has failed: "%s"'), sql)}\n${ctx.tr.gettext('MySQL said: ')}${error}`
 
 const definition = (ctx: DbCtx, name: string) =>
   fetchColumn(ctx, `SHOW CREATE EVENT ${backquote(ctx.db)}.${backquote(name)}`, 'Create Event')
@@ -169,7 +170,7 @@ export async function saveEvent(ctx: DbCtx, req: EventSaveRequest): Promise<{ me
       }
     } else {
       const e = await tryQuery(ctx, query, 'events.create')
-      if (e !== null) errors.push(failed(ctx, query, e, '\n\n'))
+      if (e !== null) errors.push(failed(ctx, query, e))
       else
         result = msg(
           'success',

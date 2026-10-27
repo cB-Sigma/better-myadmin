@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/th.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/th.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-09-26 09:51+0000\nLast-Translator: Anusuk Sangubon <jaideejung007@gmail.com>\nLanguage-Team: Thai <https://hosted.weblate.org/projects/phpmyadmin/master/th/>\nLanguage: th\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.10.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-09-26 09:51+0000\nLast-Translator: Anusuk Sangubon <jaideejung007@gmail.com>\nLanguage-Team: Thai <https://hosted.weblate.org/projects/phpmyadmin/master/th/>\nLanguage: th\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.10.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "จำเป็นต้องเปิดใช้งาน JavaScript เพื่อใช้งานในส่วนถัดไป"
@@ -6584,9 +6584,6 @@ msgstr "แสดงแถว %1$s - %2$s"
 
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "มีหน้าเพจชื่อ \"%s\" อยู่แล้ว กรุณาแก้ไขเป็นชื่ออื่น"
-
-msgid "No databases selected."
-msgstr "ไม่ได้เลือกฐานข้อมูล"
 
 msgid "Could not load export plugins, please check your installation!"
 msgstr "ไม่สามารถโหลดปลั๊กอินการส่งออกได้ โปรดตรวจสอบการติดตั้งของคุณ!"

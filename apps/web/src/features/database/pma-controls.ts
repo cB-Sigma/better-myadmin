@@ -135,9 +135,6 @@ export const pmaControls = {
   'events/index.twig#id:checkAllCheckbox': 'programs.tsx',
   'events/index.twig#submit_mult': 'programs.tsx',
   'events/index.twig#link:Create new event': 'EventsPage.tsx',
-  'events/index.twig#link:Edit': 'EventsPage.tsx',
-  'events/index.twig#link:Export': 'programs.tsx',
-  'events/index.twig#link:Drop': 'programs.tsx',
   'events/index.twig#button:Close': 'programs.tsx',
   'events/index.twig#id:eventsEditorModalSaveButton': 'programs.tsx',
   'events/row.twig#link:Edit': 'EventsPage.tsx',
@@ -311,6 +308,7 @@ export const pmaControls = {
   // the non-AJAX editor's card-footer Go; the modal saves through #triggersEditorModalSaveButton
   'triggers/editor_form.twig#submit:Go': { file: 'programs.tsx', match: "t('Save changes')" },
   'triggers/export.twig#textarea:L6': { file: 'programs.tsx', match: 'value={exported.sql}' },
+  'events/export.twig#textarea:L5': { file: 'programs.tsx', match: 'value={exported.sql}' },
   // phpMyAdmin JS behaviours
   'js:database/central_columns.ts#ajax:POST /database/central-columns': 'CentralColumnsPage.tsx',
   'js:database/central_columns.ts#ajax:POST <href>': 'CentralColumnsPage.tsx',
@@ -335,7 +333,6 @@ export const pmaControls = {
   "js:events.ts#ajax:POST <$anchor.attr('href')>": 'EventsPage.tsx',
   'js:events.ts#ajax:POST <url>': 'EventsPage.tsx',
   'js:events.ts#alert:strFormEmpty': 'EventsPage.tsx',
-  'js:events.ts#change:select[name=item_type]': 'EventsPage.tsx',
   'js:events.ts#click:#bulkActionDropButton': 'EventsPage.tsx',
   'js:events.ts#click:#bulkActionExportButton': 'EventsPage.tsx',
   'js:events.ts#click:<eventsEditorModalSaveButton>': 'EventsPage.tsx',
@@ -520,7 +517,6 @@ export const pmaControls = {
   },
   'database/routines/parameter_row.twig#link:ENUM/SET editor': 'RoutinesPage.tsx',
   'database/routines/row.twig#item_name[]': { file: 'programs.tsx', match: 'name="item_name[]"' },
-  'events/index.twig#item_name[]': { file: 'programs.tsx', match: 'name="item_name[]"' },
   'events/row.twig#item_name[]': { file: 'programs.tsx', match: 'name="item_name[]"' },
   'database/search/main.twig#id:togglequerybox': 'SearchPage.tsx',
   'database/structure/structure_table_row.twig#selected_tbl[]': 'DbStructurePage.tsx',

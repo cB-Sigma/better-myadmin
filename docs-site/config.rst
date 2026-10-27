@@ -771,8 +771,23 @@ Server connection settings
     :type: boolean
     :default: false
 
-    Whether to use a compressed protocol for the MySQL server connection
-    or not (experimental).
+    Whether to enable client/server protocol compression for this
+    database server connection (experimental).
+
+    When enabled, BetterMyAdmin asks the MySQL client library (mysql2) for a
+    compressed connection, so that traffic between the BetterMyAdmin server and
+    the database server is compressed. This affects only the database connection
+    protocol. It does not compress SQL dumps, CSV/export downloads, or HTTP
+    responses to the browser.
+
+    Compression can help on slow or metered links between BetterMyAdmin and the
+    database server. On a local or low-latency network the CPU cost often
+    outweighs any bandwidth savings, so leave this disabled unless you
+    measure a benefit.
+
+    .. seealso::
+
+        - `MySQL connection compression control <https://dev.mysql.com/doc/refman/en/connection-compression-control.html>`_
 
 .. _controlhost:
 .. config:option:: $cfg['Servers'][$i]['controlhost']
@@ -978,7 +993,7 @@ Server connection settings
     MySQL database server**. If set, it just means only these databases
     will be displayed but **not that all other databases can't be used.**
 
-    An example of using more that one database:
+    An example of using more than one database:
 
     .. code-block:: json
 

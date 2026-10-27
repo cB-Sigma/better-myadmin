@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/bn.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/bn.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Bengali <https://hosted.weblate.org/projects/phpmyadmin/master/bn/>\nLanguage: bn\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Bengali <https://hosted.weblate.org/projects/phpmyadmin/master/bn/>\nLanguage: bn\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "এখানে আসার পুর্বেই জাভা স্ক্রীপট কার্যকর থাকতে হবে।"
@@ -4226,9 +4226,6 @@ msgstr "সফল হয়েছে"
 msgid "Showing rows %1$s - %2$s."
 msgstr "রো দেখাচ্ছে %1$s - %2$s."
 
-msgid "No databases selected."
-msgstr "ডাটাবেইজ নিবার্চন করা হয়নি।"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "রফতানী সহায়কটি লোড করা যাচ্ছে না, ইনস্টলেশন পরীক্ষা করুন!"
 
@@ -4371,6 +4368,9 @@ msgstr "একটি কার্যকর দৈর্ঘ্য দিন!"
 
 msgid "Add index"
 msgstr "ইনডেক্স যোগ কর"
+
+msgid "Column count has to be larger than zero."
+msgstr "স্তম্ভের সংখ্যা ০'র বেশী হতে হবে।"
 
 msgid "The host name is empty!"
 msgstr "হোষ্ট নামটি শুন্য!"

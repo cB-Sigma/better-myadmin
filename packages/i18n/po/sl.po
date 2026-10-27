@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/sl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/sl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2025-09-22 11:47+0000\nLast-Translator: Domen <mitenem@outlook.com>\nLanguage-Team: Slovenian <https://hosted.weblate.org/projects/phpmyadmin/master/sl/>\nLanguage: sl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\nX-Generator: Weblate 5.14-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Po tej točki mora biti JavaScript omogočen!"
@@ -6603,9 +6603,6 @@ msgstr "Prikazujem vrstice %1$s–%2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Stran z imenom »%s« že obstaja; prosimo, preimenujte jo."
 
-msgid "No databases selected."
-msgstr "Ni izbranih zbirk podatkov."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Ne morem naložiti vtičnikov za izvoz, prosimo, preverite vašo namestitev!"
 
@@ -6906,6 +6903,9 @@ msgstr "Ustvari z:"
 
 msgid "Please select column(s) for the index."
 msgstr "Prosimo, izberite stolpce za indeks."
+
+msgid "Column count has to be larger than zero."
+msgstr "Število stolpcev mora biti večje od nič."
 
 msgid "Y values"
 msgstr "Vrednosti y"

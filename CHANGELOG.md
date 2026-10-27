@@ -2,6 +2,24 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.16 (2026-10-27)
+
+### Upstream
+
+- Synced to phpMyAdmin c7bb2a19e5 (2026-10-26).
+- `AllowDeny` rules: IPv4 CIDR ranges now compare every bit of the address. The mask used to skip
+  the most significant bit, so `allow % from 10.0.0.0/8` also matched `138.0.0.0/8`, and the
+  `localhost` shortcut also matched `255.0.0.0/8`. Invalid addresses never match.
+- Database structure, CSV size estimate: carriage returns in values are counted the same way as
+  line feeds.
+- PDF export: the structure table puts each optional column (Links to, Comments, Media type) under
+  its own title. Without relations, the comments used to end up under the wrong title. The Media
+  type column now needs the browser transformation feature.
+- Events, routines and triggers: when a statement fails, the error shows the query and the server
+  error on separate lines. Adding an item no longer inserts an extra blank line.
+- Translations: Turkish, Ukrainian, Korean and French updates, and the strings from 1.0.6 are now
+  in the catalogues.
+
 ## 1.0.15 (2026-10-26)
 
 ### Security

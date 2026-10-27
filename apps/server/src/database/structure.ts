@@ -311,11 +311,10 @@ export async function structurePage(
             `SELECT COLUMN_NAME, NUMERIC_SCALE IS NULL AS HAS_QUOTES FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = ${ctx.dbi.quoteString(db)} AND TABLE_NAME = ${ctx.dbi.quoteString(name)};`,
           )
           const list = cols.map((c) => backquote(c.COLUMN_NAME ?? '')).join(',')
-          await ctx.conn.query('SET SESSION group_concat_max_len = 10 * 1024 * 1024', 'structure.csv')
           const dl = await ctx.dbi.fetchValue(`
                 SELECT SUM(LENGTH(REPLACE(
                     REPLACE(
-                        REPLACE(CONCAT(${list}), '\\n', 'nl'),
+                        REPLACE(REPLACE(CONCAT(${list}), '\\r', 'rn'), '\\n', 'nl'),
                         '"',
                         'qu'
                     ),

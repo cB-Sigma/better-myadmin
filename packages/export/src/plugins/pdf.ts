@@ -234,28 +234,23 @@ export class PdfReport extends PmaPdf {
     // column count and table heading
     this.colTitles = { 0: tr('Column'), 1: tr('Type'), 2: tr('Null'), 3: tr('Default') }
     this.tablewidths = { 0: 90, 1: 80, 2: 40, 3: 120 }
-    let columnsCnt = 0
-    for (; columnsCnt < 4; columnsCnt++) {
-      this.colAlign[columnsCnt] = 'L'
-      this.displayColumn[columnsCnt] = true
+    for (let i = 0; i < 4; i++) {
+      this.colAlign[i] = 'L'
+      this.displayColumn[i] = true
     }
+    // the optional columns follow in order (pma: upstream acbb64ea40 appends them; before it,
+    // "Links to" took index 4 without moving the counter and the comments shifted left of their title)
+    let next = 4
     const titled = (title: string) => {
-      this.colTitles[columnsCnt] = title
-      this.displayColumn[columnsCnt] = true
-      this.colAlign[columnsCnt] = 'L'
-      this.tablewidths[columnsCnt] = 120
+      this.colTitles[next] = title
+      this.displayColumn[next] = true
+      this.colAlign[next] = 'L'
+      this.tablewidths[next] = 120
+      next++
     }
-    // (as phpMyAdmin: "Links to" takes index 4 without moving the counter, so the comments are
-    // index 5 either way and, without relations, the cells shift left of their titles)
     if (doRelation && haveRel) titled(tr('Links to'))
-    if (doComments) {
-      columnsCnt++
-      titled(tr('Comments'))
-    }
-    if (doMime && rel.browserTransformationFeature) {
-      columnsCnt++
-      titled(tr('Media type'))
-    }
+    if (doComments) titled(tr('Comments'))
+    if (doMime && rel.browserTransformationFeature) titled(tr('Media type'))
     // Starting to fill table with required info
     this.setY(this.tMargin)
     this.addPage()
@@ -278,7 +273,7 @@ export class PdfReport extends PmaPdf {
         data.push(f !== undefined ? `${f.foreign_table} (${f.foreign_field})` : '')
       }
       if (doComments) data.push(comments[fieldName] ?? '')
-      if (doMime) data.push(mimeMap?.[fieldName]?.mimetype ?? '')
+      if (doMime && rel.browserTransformationFeature) data.push(mimeMap?.[fieldName]?.mimetype ?? '')
       return data
     })
     await this.#table(rows, this.fontSizePt)

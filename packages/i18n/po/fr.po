@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/fr.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/fr.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-06-02 06:01+0000\nLast-Translator: kjo-sdds <kjo@domo-supply.com>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.6\n"
+msgstr "Project-Id-Version: phpMyAdmin-docs 4.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-26 16:55+0000\nLast-Translator: kjo-sdds <kjo-sdds@users.noreply.hosted.weblate.org>\nLanguage-Team: French <https://hosted.weblate.org/projects/phpmyadmin/master/fr/>\nLanguage: fr\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n > 1;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScript doit être activé au-delà de ce point !"
@@ -746,6 +746,9 @@ msgstr "Décroissant"
 msgid "Add as"
 msgstr "Ajouter en"
 
+msgid "Op"
+msgstr "Op"
+
 msgid "Text"
 msgstr "Texte"
 
@@ -1024,6 +1027,9 @@ msgstr "Tout désélectionner"
 
 msgid "Inside column:"
 msgstr "Dans la colonne :"
+
+msgid "Search results for \"%s\" %s:"
+msgstr "Résultats de la recherche de « %s » %s :"
 
 msgid "%1$s match in <strong>%2$s</strong>"
 msgid_plural "%1$s matches in <strong>%2$s</strong>"
@@ -1351,6 +1357,9 @@ msgstr "Convertir en Kana"
 msgid "Error"
 msgstr "Erreur"
 
+msgid "Backtrace"
+msgstr "Traçage de pile"
+
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 msgstr "Ce rapport inclut des données sur l'erreur, ainsi que des informations sur les paramètres de configuration pertinents. Il va être transmis à l'équipe phpMyAdmin pour l'aider à déboguer le problème."
 
@@ -1421,6 +1430,9 @@ msgstr "Éditeur d'évènements"
 
 msgid "Export event"
 msgstr "Exporter l'évènement"
+
+msgid "The event scheduler is disabled."
+msgstr "Le planificateur d'évènements est désactivé."
 
 msgid "Select a template"
 msgstr "Sélectionner un modèle"
@@ -6597,7 +6609,7 @@ msgstr "Affichage des lignes %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Il existe déjà une page nommée \"%s\" ; veuillez la renommer en quelque chose d'autre."
 
-msgid "No databases selected."
+msgid "No database selected."
 msgstr "Aucune base de données n'a été sélectionnée."
 
 msgid "Could not load export plugins, please check your installation!"
@@ -6914,11 +6926,20 @@ msgstr "Autres colonnes formant l'index :"
 msgid "Please select column(s) for the index."
 msgstr "Merci de sélectionner la(es) colonne(s) de l'index."
 
+msgid "Column count has to be larger than zero."
+msgstr "Le nombre de champs doit être plus grand que zéro."
+
 msgid "Y values"
 msgstr "Valeurs en Y"
 
 msgid "Please enter the SQL query first."
 msgstr "Veuillez d'abord entrer la requête SQL."
+
+msgid "Nothing selected"
+msgstr "Aucune sélection"
+
+msgid "Enter an option"
+msgstr "Saisir une option"
 
 msgid "The host name is empty!"
 msgstr "Le nom d'hôte est vide !"
@@ -10428,6 +10449,9 @@ msgstr "Une collection d'objets de géométrie de tout type"
 
 msgid "Stores and enables efficient access to data in JSON (JavaScript Object Notation) documents"
 msgstr "Stocke et permet un accès efficace aux données dans les documents JSON (JavaScript Object Notation)"
+
+msgid "Intended for storage of IPv4 addresses"
+msgstr "Prévu pour le stockage d'adresses IPv4"
 
 msgid "Intended for storage of IPv6 addresses, as well as IPv4 addresses assuming conventional mapping of IPv4 addresses into IPv6 addresses"
 msgstr "Destiné au stockage des adresses IPv6, ainsi que des adresses IPv4 en supposant un mappage conventionnel des adresses IPv4 en adresses IPv6"

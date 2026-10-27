@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/ja.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/ja.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: Sandra Swift <nolamiller1203+weblate@gmail.com>\nLanguage-Team: Japanese <https://hosted.weblate.org/projects/phpmyadmin/master/ja/>\nLanguage: ja\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-04-27 16:31+0000\nLast-Translator: Sandra Swift <nolamiller1203+weblate@gmail.com>\nLanguage-Team: Japanese <https://hosted.weblate.org/projects/phpmyadmin/master/ja/>\nLanguage: ja\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript を有効にしてください！"
@@ -6576,9 +6576,6 @@ msgstr "%1$s から %2$s の行の表示。"
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "\"%s\" という名前のページが既にあるので、他の名前に変更してください。"
 
-msgid "No databases selected."
-msgstr "データベースが選択されていません。"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "エクスポートプラグインをロードできません。正しくインストールされているか確認してください!"
 
@@ -6879,6 +6876,9 @@ msgstr "合成物:"
 
 msgid "Please select column(s) for the index."
 msgstr "インデックスに使用するカラムを選択してください。"
+
+msgid "Column count has to be larger than zero."
+msgstr "カラム数は 0 より大きくなければいけません"
 
 msgid "Y values"
 msgstr "Y軸の値"

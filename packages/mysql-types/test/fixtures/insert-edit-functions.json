@@ -1,5 +1,5 @@
 {
-  "_generated": {"by": "generate-fixtures.php", "pma": "6eba7ba9ad", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
+  "_generated": {"by": "generate-fixtures.php", "pma": "c7bb2a19e5", "escape": "mysqli 8.4.11 (mysqlnd 8.3.6)"},
   "defaultFunctionsConfig": {
     "default": null,
     "custom": {"FUNC_CHAR": "UPPER", "FUNC_DATE": "NOW", "FUNC_NUMBER": "ABS", "FUNC_SPATIAL": "ST_GeomFromText", "FUNC_UUID": "UUID", "FUNC_JSON": "QUOTE", "first_timestamp": "UTC_TIMESTAMP"},

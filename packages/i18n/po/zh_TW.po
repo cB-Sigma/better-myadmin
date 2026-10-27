@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/zh_TW.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/zh_TW.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2024-07-03 07:27+0000\nLast-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\nLanguage-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hant/>\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.7-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2024-07-03 07:27+0000\nLast-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\nLanguage-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/phpmyadmin/master/zh_Hant/>\nLanguage: zh_TW\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 5.7-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "必須啟用 Javascript 才能繼續！"
@@ -6206,9 +6206,6 @@ msgstr "正在顯示第 %1$s - %2$s 列。"
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "已存在名為 “%s” 的頁面，請重新命名。"
 
-msgid "No databases selected."
-msgstr "尚未選擇資料庫。"
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "無法載入匯出外掛程式，請檢查安裝！"
 
@@ -6485,6 +6482,9 @@ msgstr "組合使用："
 
 msgid "Please select column(s) for the index."
 msgstr "請選擇要建立索引的欄位。"
+
+msgid "Column count has to be larger than zero."
+msgstr "至少要有一個欄位"
 
 msgid "Y values"
 msgstr "Y 軸值"

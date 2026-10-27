@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/ru.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/ru.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Andrei Stepanov <adem@users.noreply.hosted.weblate.org>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Andrei Stepanov <adem@users.noreply.hosted.weblate.org>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Для полноценной работы необходимо включить JavaScript!"
@@ -6606,7 +6606,7 @@ msgstr "Отображение строк %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Страница с именем \"%s\" уже существует, укажите другое имя, пожалуйста."
 
-msgid "No databases selected."
+msgid "No database selected."
 msgstr "Ни одна база данных не выбрана."
 
 msgid "Could not load export plugins, please check your installation!"
@@ -6686,9 +6686,6 @@ msgstr "Если у вас возникают проблемы, отправьт
 
 msgid "You may want to refresh the page."
 msgstr "Возможно вы хотите перезагрузить страницу."
-
-msgid "No database selected."
-msgstr "Ни одна база данных не выбрана."
 
 msgid "Export of event %s"
 msgstr "Экспортировать событие %s"
@@ -6926,6 +6923,9 @@ msgstr "Составной с:"
 
 msgid "Please select column(s) for the index."
 msgstr "Пожалуйста, выберите столбец(ы) для индекса."
+
+msgid "Column count has to be larger than zero."
+msgstr "Количество столбцов должно быть больше нуля."
 
 msgid "Y values"
 msgstr "Значения Y"

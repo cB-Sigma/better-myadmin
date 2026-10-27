@@ -205,8 +205,9 @@ export function routineQuery(ctx: DbCtx, req: RoutineSaveRequest, errors: string
   return query
 }
 
-const failed = (ctx: DbCtx, sql: string, error: string, sep = '\n') =>
-  `${sprintf(ctx.tr.gettext('The following query has failed: "%s"'), sql)}${sep}${ctx.tr.gettext('MySQL said: ')}${error}`
+/** getErrorForFailedQuery (one line break since upstream 499f30824a) */
+const failed = (ctx: DbCtx, sql: string, error: string) =>
+  `${sprintf(ctx.tr.gettext('The following query has failed: "%s"'), sql)}\n${ctx.tr.gettext('MySQL said: ')}${error}`
 
 /** The "One or more errors have occurred" card */
 export function errorsMessage(ctx: DbCtx, errors: string[]): SqlMessage {
@@ -294,7 +295,7 @@ export async function saveRoutine(ctx: DbCtx, req: RoutineSaveRequest): Promise<
       }
     } else {
       const err = await tryQuery(ctx, query, 'routines.create')
-      if (err !== null) errors.push(failed(ctx, query, err, '\n\n'))
+      if (err !== null) errors.push(failed(ctx, query, err))
       else {
         message = msg('success', sprintf(tr.gettext('Routine %1$s has been created.'), backquote(req.name)))
         sql = query
@@ -508,7 +509,7 @@ export async function executeRoutine(
     } catch (e) {
       if (e instanceof MysqlError) {
         return {
-          messages: [msg('error', failed(ctx, q, errorText(e), '\n\n'))],
+          messages: [msg('error', failed(ctx, q, errorText(e)))],
           queries: [],
           title: '',
           resultSets: [],

@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:baseline`; the ratchet `pnpm parity:check` compares against",
-    "referenceCommit": "6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f"
+    "referenceCommit": "c7bb2a19e557d6345800bf5f2fed859aafdbae60"
   },
   "kinds": {
     "routes": {
@@ -215,9 +215,9 @@
       ]
     },
     "controls": {
-      "total": 1106,
-      "implemented": 1096,
-      "covered": 1106,
+      "total": 1102,
+      "implemented": 1093,
+      "covered": 1102,
       "coverage": 1,
       "implementedKeys": [
         "base.twig#button:Open user account menu",
@@ -603,14 +603,11 @@
         "events/editor-form.twig#item_starts",
         "events/editor-form.twig#item_status",
         "events/editor-form.twig#item_type",
+        "events/export.twig#textarea:L5",
         "events/index.twig#button:Close",
         "events/index.twig#id:checkAllCheckbox",
         "events/index.twig#id:eventsEditorModalSaveButton",
-        "events/index.twig#item_name[]",
         "events/index.twig#link:Create new event",
-        "events/index.twig#link:Drop",
-        "events/index.twig#link:Edit",
-        "events/index.twig#link:Export",
         "events/index.twig#submit_mult",
         "events/row.twig#item_name[]",
         "events/row.twig#link:Drop",
@@ -1323,7 +1320,6 @@
         "database/routines/editor_form.twig#submit:Go",
         "database/routines/execute_form.twig#execute_routine",
         "events/editor-form.twig#editor_process_*",
-        "events/editor-form.twig#item_changetype",
         "home/index.twig#link:Get more themes!",
         "home/index.twig#link:Show PHP information",
         "setup/home/index.twig#link:Donate",
@@ -1790,9 +1786,9 @@
       ]
     },
     "messages": {
-      "total": 3437,
+      "total": 3436,
       "implemented": 3288,
-      "covered": 3436,
+      "covered": 3435,
       "coverage": 0.9997,
       "implementedKeys": [
         "- none -",
@@ -5148,7 +5144,6 @@
         "maximum %s",
         "Missing a temporary folder.",
         "No data was received to import. Either no file name was submitted, or the file size exceeded the maximum size permitted by your PHP configuration. See [doc@faq1-16]FAQ 1.16[/doc].",
-        "No databases selected.",
         "No valid image path for theme %s found!",
         "Paste it to your config.inc.php",
         "PHP extension:",
@@ -5236,9 +5231,9 @@
       ]
     },
     "js": {
-      "total": 965,
-      "implemented": 952,
-      "covered": 965,
+      "total": 964,
+      "implemented": 951,
+      "covered": 964,
       "coverage": 1,
       "implementedKeys": [
         "js:codemirror/addon/lint/sql-lint.ts#ajax:POST /lint",
@@ -5445,7 +5440,6 @@
         "js:events.ts#ajax:POST <$anchor.attr('href')>",
         "js:events.ts#ajax:POST <url>",
         "js:events.ts#alert:strFormEmpty",
-        "js:events.ts#change:select[name=item_type]",
         "js:events.ts#click:#bulkActionDropButton",
         "js:events.ts#click:#bulkActionExportButton",
         "js:events.ts#click:<eventsEditorModalSaveButton>",

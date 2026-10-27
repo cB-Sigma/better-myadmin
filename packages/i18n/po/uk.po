@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/uk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/uk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Hotripak <hotr1pak@users.noreply.hosted.weblate.org>\nLanguage-Team: Ukrainian <https://hosted.weblate.org/projects/phpmyadmin/master/uk/>\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-25 08:31+0000\nLast-Translator: Hotripak <hotr1pak@users.noreply.hosted.weblate.org>\nLanguage-Team: Ukrainian <https://hosted.weblate.org/projects/phpmyadmin/master/uk/>\nLanguage: uk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "З цього моменту Javascript має бути увімкнений!"
@@ -746,6 +746,9 @@ msgstr "За спаданням"
 msgid "Add as"
 msgstr "Додати як"
 
+msgid "Op"
+msgstr "Ві"
+
 msgid "Text"
 msgstr "Текст"
 
@@ -1024,6 +1027,9 @@ msgstr "Зняти виділення"
 
 msgid "Inside column:"
 msgstr "Всередині стовпця:"
+
+msgid "Search results for \"%s\" %s:"
+msgstr "Результати пошуку за запитом \"%s\" %s:"
 
 msgid "%1$s match in <strong>%2$s</strong>"
 msgid_plural "%1$s matches in <strong>%2$s</strong>"
@@ -1353,6 +1359,9 @@ msgstr "Конвертувати в Kana"
 
 msgid "Error"
 msgstr "Помилка"
+
+msgid "Backtrace"
+msgstr "Відстеження стеку"
 
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 msgstr "Звіт містить повідомлення про помилку і інформацію про відповідні налаштуваннях. Вони будуть відправлені команді розробників phpMyAdmin для виправлення помилки."
@@ -6606,8 +6615,8 @@ msgstr "Показано рядки %1$s - %2$s."
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "Сторінка з іменем \"%s\" вже існує; виберіть інше ім'я."
 
-msgid "No databases selected."
-msgstr "Жодної бази даних не вибрано."
+msgid "No database selected."
+msgstr "База даних не обрана."
 
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Відсутні плагіни експорту. Будь ласка, перевірте правильність установки!"
@@ -6686,9 +6695,6 @@ msgstr "Якщо це створює проблему - надішліть по�
 
 msgid "You may want to refresh the page."
 msgstr "Можливо, варто перезавантажити сторінку."
-
-msgid "No database selected."
-msgstr "База даних не обрана."
 
 msgid "Export of event %s"
 msgstr "Експортувати подію %s"
@@ -6927,11 +6933,20 @@ msgstr "Складається з:"
 msgid "Please select column(s) for the index."
 msgstr "Будь ласка, виберіть стовпець(і) для індексу."
 
+msgid "Column count has to be larger than zero."
+msgstr "Кількість стовпців має бути більшою за нуль."
+
 msgid "Y values"
 msgstr "Значення Y"
 
 msgid "Please enter the SQL query first."
 msgstr "Будь ласка, спочатку введіть запит SQL."
+
+msgid "Nothing selected"
+msgstr "Нічого не вибрано"
+
+msgid "Enter an option"
+msgstr "Введіть параметр"
 
 msgid "The host name is empty!"
 msgstr "Відсутнє ім'я хосту!"
@@ -7366,6 +7381,12 @@ msgstr "СКИНУТИ стовпці %s для таблиці %s"
 msgid "Create the following table"
 msgstr "Створити наступну таблицю"
 
+msgid "Enter new table name"
+msgstr "Введіть назву нової таблиці"
+
+msgid "Enter column name"
+msgstr "Введіть назву стовпця"
+
 msgid "Third step of normalization (3NF)"
 msgstr "Третій етап нормалізації (3NF)"
 
@@ -7419,6 +7440,9 @@ msgstr "Натисніть на точку даних щоб перегляну�
 
 msgid "The plot can be resized by dragging it along the bottom right corner."
 msgstr "Ділянка може бути змінена шляхом перетягування в нижньому правому куті."
+
+msgid "Zoom search instructions"
+msgstr "Інструкції щодо пошуку в Zoom"
 
 msgid "Select two columns"
 msgstr "Виберіть два стовпця"

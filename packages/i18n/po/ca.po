@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/ca.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/ca.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-04-25 14:09+0000\nLast-Translator: blacx0 <josepd.capdevila@gmail.com>\nLanguage-Team: Catalan <https://hosted.weblate.org/projects/phpmyadmin/master/ca/>\nLanguage: ca\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "A partir d'aquest punt és necessari tenir el javascript activat!"
@@ -5737,9 +5737,6 @@ msgstr "Amb èxit"
 msgid "Showing rows %1$s - %2$s."
 msgstr "Es mostren les files %1$s - %2$s."
 
-msgid "No databases selected."
-msgstr "No s'ha seleccionat cap base de dades."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "No s'han pogut carregar els connectors d'exportació, comproveu la vostra instal·lació!"
 
@@ -6002,6 +5999,9 @@ msgstr "Compon amb:"
 
 msgid "Please select column(s) for the index."
 msgstr "Seleccioneu la(es) columna(es) per a l'índex."
+
+msgid "Column count has to be larger than zero."
+msgstr "El comptador de columnes ha de ser més gran que zero."
 
 msgid "Y values"
 msgstr "Valors Y"

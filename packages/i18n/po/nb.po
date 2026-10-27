@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/nb.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/nb.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-01-27 12:44+0000\nLast-Translator: IsakBH <isak@brunhenriksen.net>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/phpmyadmin/master/nb_NO/>\nLanguage: nb\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.16-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-01-27 12:44+0000\nLast-Translator: IsakBH <isak@brunhenriksen.net>\nLanguage-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/phpmyadmin/master/nb_NO/>\nLanguage: nb\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 5.16-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "JavaScript må være slått på forbi dette punktet!"
@@ -3618,9 +3618,6 @@ msgstr "Vellykket"
 msgid "Showing rows %1$s - %2$s."
 msgstr "Viser radene %1$s - %2$s."
 
-msgid "No databases selected."
-msgstr "Ingen databaser er valgt."
-
 msgid "Could not load export plugins, please check your installation!"
 msgstr "Kunne ikke laste eksporttillegg, kontroller din innstallasjon!"
 
@@ -3841,6 +3838,9 @@ msgstr "Kompositt med:"
 
 msgid "Please select column(s) for the index."
 msgstr "Vennligst velg kolonne(r) for indexen."
+
+msgid "Column count has to be larger than zero."
+msgstr "Antall kolonner må være større enn null."
 
 msgid "Y values"
 msgstr "Y-verdier"

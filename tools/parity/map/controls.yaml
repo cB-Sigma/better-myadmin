@@ -29,5 +29,3 @@ database/routines/execute_form.twig#execute_routine:
   n/a: 'rendered only without JavaScript (ajax false): the AJAX form posts execute_routine as a hidden field from the modal''s Go (#routinesExecuteModalExecuteButton)'
 events/editor-form.twig#editor_process_*:
   n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor posts editor_process_* as a hidden field from the modal''s Go (#eventsEditorModalSaveButton)'
-events/editor-form.twig#item_changetype:
-  n/a: 'rendered only without JavaScript (is_ajax false): the AJAX editor has the item_type select instead (EventsPage.tsx)'

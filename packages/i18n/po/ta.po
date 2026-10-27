@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/ta.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/ta.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "சாவாச்கிரிப்ட் இந்த புள்ளியைத் தாண்டி இயக்கப்பட வேண்டும்!"
@@ -6596,9 +6596,6 @@ msgstr "நிறைவரிசைகள் %1$s - %2$s காட்டப்�
 
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr "\"%s\" என்ற பக்கம் ஏற்கனவே உள்ளது, தயவுசெய்து அதை வேறு ஏதாவது மறுபெயரிடுங்கள்."
-
-msgid "No databases selected."
-msgstr "எந்த தரவுத்தளமும் தேர்ந்தெடுக்கப்படவில்லை."
 
 msgid "Could not load export plugins, please check your installation!"
 msgstr "ஏற்றுமதி செருகுநிரல்களை ஏற்ற முடியவில்லை, தயவுசெய்து உங்கள் நிறுவலை சரிபார்க்கவும்!"

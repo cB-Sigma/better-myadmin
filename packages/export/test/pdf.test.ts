@@ -1,7 +1,7 @@
 import { englishTranslator } from '@bettermyadmin/i18n'
 import { MysqlType, createFieldMetadata } from '@bettermyadmin/mysql-types'
-import { inspectPdf } from '@bettermyadmin/pdf'
-import { describe, expect, it } from 'vitest'
+import { Tcpdf, inspectPdf } from '@bettermyadmin/pdf'
+import { describe, expect, it, vi } from 'vitest'
 import {
   type ExportField,
   type ExportPdf,
@@ -154,6 +154,28 @@ describe('ExportPdf', () => {
     // A3 landscape, in points
     const { width, height } = r.pdf.pages[0] as { width: number; height: number }
     expect([Math.round(width), Math.round(height)]).toEqual([1191, 842])
+  })
+
+  it('the structure table: the comments under their title, without relations too (upstream acbb64ea40)', async () => {
+    const cells: string[] = []
+    const spy = vi.spyOn(Tcpdf.prototype, 'multiCell').mockImplementation(function (
+      this: Tcpdf,
+      _w,
+      _h,
+      txt,
+    ) {
+      cells.push(txt)
+    })
+    try {
+      await dump([['pdf_structure_or_data', 'structure']], (p) =>
+        p.exportStructure('shop', 'customers', 'create_table'),
+      )
+    } finally {
+      spy.mockRestore()
+    }
+    // pma PdfTest::testGetTableDef: the last cells are the row's Column, Type, Null, Default, Comments
+    expect(cells.slice(-5)).toEqual(['name', 'varchar(50)', 'Yes', 'NULL', 'full name'])
+    expect(cells).toContain('Comments')
   })
 
   it('continues a long table on further pages, each with the header and column titles', async () => {

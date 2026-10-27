@@ -1,19 +1,11 @@
 import { isIPv4, isIPv6 } from 'node:net'
 
 /**
- * Port of phpMyAdmin's IP based allow/deny rules, quirks included (the IPv4 CIDR mask is built
- * from 31 bits only, octet ranges compare numerically, IPv6 compares hex strings).
+ * Port of phpMyAdmin's IP based allow/deny rules, quirks included (octet ranges compare
+ * numerically, IPv6 compares hex strings).
  *
  * pma: src/IpAllowDeny.php
  */
-
-/** PHP ip2long(): false for invalid input, which acts as 0 in the bitwise test. */
-function ip2long(ip: string): number | false {
-  if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(ip)) return false
-  const parts = ip.split('.').map((p) => Number.parseInt(p, 10))
-  if (parts.some((p) => p > 255)) return false
-  return ((parts[0]! << 24) >>> 0) + (parts[1]! << 16) + (parts[2]! << 8) + parts[3]!
-}
 
 /** bin2hex(inet_pton(ip)); '' when inet_pton fails. */
 function inetPtonHex(ip: string): string {
@@ -48,18 +40,8 @@ function phpNum(s: string | undefined): number {
 }
 
 export function ipv4MaskTest(testRange: string, ipToTest: string): boolean {
-  const cidr = testRange.match(/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)\/([0-9]+)/)
-  if (cidr) {
-    const ipl = ip2long(ipToTest) || 0
-    const rangel = ip2long(`${cidr[1]}.${cidr[2]}.${cidr[3]}.${cidr[4]}`) || 0
-    const bits = Number(cidr[5])
-    let maskl = 0
-    for (let i = 0; i < 31; i++) {
-      if (i >= bits - 1) continue
-      maskl += 2 ** (30 - i)
-    }
-    return (maskl & rangel) === (maskl & ipl)
-  }
+  const cidr = testRange.match(/^([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)\/([0-9]+)$/)
+  if (cidr) return cidrMatch(cidr[1]!, Number(cidr[2]), ipToTest)
   const maskocts = testRange.split('.')
   const ipocts = ipToTest.split('.')
   let result = true
@@ -74,6 +56,26 @@ export function ipv4MaskTest(testRange: string, ipToTest: string): boolean {
     }
   }
   return result
+}
+
+/**
+ * The first `prefix` bits of the subnet and the address (their inet_pton() bytes) are equal; an
+ * invalid address never matches, a prefix longer than the address is the whole address.
+ * pma: IpAllowDeny::cidrMatch (upstream d27d4c465e, which fixed the 31-bit mask: 10.0.0.0/8 also
+ * matched 138.0.0.0/8)
+ */
+function cidrMatch(subnet: string, prefixIn: number, ipToTest: string): boolean {
+  const a = inetPtonHex(subnet)
+  const b = inetPtonHex(ipToTest)
+  if (a === '' || b === '' || a.length !== b.length) return false
+  const prefix = Math.min(prefixIn, a.length * 4)
+  const fullBytes = Math.floor(prefix / 8)
+  if (a.slice(0, fullBytes * 2) !== b.slice(0, fullBytes * 2)) return false
+  const remaining = prefix % 8
+  if (remaining === 0) return true
+  const mask = (0xff << (8 - remaining)) & 0xff
+  const byte = (h: string) => Number.parseInt(h.slice(fullBytes * 2, fullBytes * 2 + 2), 16)
+  return (byte(a) & mask) === (byte(b) & mask)
 }
 
 export function ipv6MaskTest(testRangeIn: string, ipToTestIn: string): boolean {

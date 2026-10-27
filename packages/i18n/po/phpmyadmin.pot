@@ -1,6 +1,6 @@
-# Imported from phpMyAdmin 6eba7ba9ad3e06b3df7a7a61e87b6ad9bd0f209f resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/phpmyadmin.pot by packages/i18n/scripts/import-po.ts.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-18 00:40+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nLanguage: \nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr ""
@@ -745,6 +745,9 @@ msgstr ""
 msgid "Add as"
 msgstr ""
 
+msgid "Op"
+msgstr ""
+
 msgid "Text"
 msgstr ""
 
@@ -1022,6 +1025,9 @@ msgid "Unselect all"
 msgstr ""
 
 msgid "Inside column:"
+msgstr ""
+
+msgid "Search results for \"%s\" %s:"
 msgstr ""
 
 msgid "%1$s match in <strong>%2$s</strong>"
@@ -1348,6 +1354,9 @@ msgid "Convert to Kana"
 msgstr ""
 
 msgid "Error"
+msgstr ""
+
+msgid "Backtrace"
 msgstr ""
 
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
@@ -6599,7 +6608,7 @@ msgstr ""
 msgid "There already exists a page named \"%s\" please rename it to something else."
 msgstr ""
 
-msgid "No databases selected."
+msgid "No database selected."
 msgstr ""
 
 msgid "Could not load export plugins, please check your installation!"
@@ -6678,9 +6687,6 @@ msgid "If you experience any problems please submit a bug report manually."
 msgstr ""
 
 msgid "You may want to refresh the page."
-msgstr ""
-
-msgid "No database selected."
 msgstr ""
 
 msgid "Export of event %s"
@@ -6919,10 +6925,19 @@ msgstr ""
 msgid "Please select column(s) for the index."
 msgstr ""
 
+msgid "Column count has to be larger than zero."
+msgstr ""
+
 msgid "Y values"
 msgstr ""
 
 msgid "Please enter the SQL query first."
+msgstr ""
+
+msgid "Nothing selected"
+msgstr ""
+
+msgid "Enter an option"
 msgstr ""
 
 msgid "The host name is empty!"
@@ -7358,6 +7373,12 @@ msgstr ""
 msgid "Create the following table"
 msgstr ""
 
+msgid "Enter new table name"
+msgstr ""
+
+msgid "Enter column name"
+msgstr ""
+
 msgid "Third step of normalization (3NF)"
 msgstr ""
 
@@ -7410,6 +7431,9 @@ msgid "Click a data point to view and possibly edit the data row."
 msgstr ""
 
 msgid "The plot can be resized by dragging it along the bottom right corner."
+msgstr ""
+
+msgid "Zoom search instructions"
 msgstr ""
 
 msgid "Select two columns"

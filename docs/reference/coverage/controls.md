@@ -4,7 +4,7 @@
 
 Form controls, action links and checkbox/radio groups of every Twig template. Claims: `pma-controls.ts` registries and `data-pma` attributes in apps/web (docs/architecture/12); dispositions: `tools/parity/map/controls.yaml`.
 
-1106/1106 covered (100.0%): 1096 implemented, 3 exception, 7 n/a. [Summary](README.md).
+1102/1102 covered (100.0%): 1093 implemented, 3 exception, 6 n/a. [Summary](README.md).
 
 ## 01 shell navigation auth — 98/98 (100.0%) covered, 95/98 implemented
 
@@ -229,11 +229,12 @@ Form controls, action links and checkbox/radio groups of every Twig template. Cl
 | `sql/_bookmark.twig` | 3/3 | ✅ `bkm_all_users` ✅ `bkm_fields[bkm_label]` ✅ `submit:Create new bookmark` |  |
 | `sql/query.twig` | 25/25 | ✅ `action_bookmark` ✅ `bkm_all_users` ✅ `bkm_label` ✅ `bkm_replace` ✅ `button:Close` ✅ `dummy` ✅ `fk_checks` ✅ `id_bookmark` ✅ `id:clear` ✅ `id:delete` ✅ `id:format` ✅ `id:formatSingleLine` ✅ `id:insert` ✅ `id:saved` ✅ `id:select` ✅ `id:selectall` ✅ `id:update` ✅ `insert` ✅ `parameterized` ✅ `retain_query_box` ✅ `rollback_query` ✅ `show_query` ✅ `SQL` ✅ `sql_delimiter` ✅ `sql_query` |  |
 
-## other — 29/29 (100.0%) covered, 27/29 implemented
+## other — 25/25 (100.0%) covered, 24/25 implemented
 
 | Template | Covered | Implemented / other | Not covered |
 |---|---|---|---|
-| `events/editor-form.twig` | 15/15 | ➖ `editor_process_*` ✅ `id:format` ➖ `item_changetype` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` |  |
-| `events/index.twig` | 9/9 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `item_name[]` ✅ `link:Create new event` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` ✅ `submit_mult` |  |
+| `events/editor-form.twig` | 14/14 | ➖ `editor_process_*` ✅ `id:format` ✅ `item_comment` ✅ `item_definer` ✅ `item_definition` ✅ `item_ends` ✅ `item_execute_at` ✅ `item_interval_field` ✅ `item_interval_value` ✅ `item_name` ✅ `item_preserve` ✅ `item_starts` ✅ `item_status` ✅ `item_type` |  |
+| `events/export.twig` | 1/1 | ✅ `textarea:L5` |  |
+| `events/index.twig` | 5/5 | ✅ `button:Close` ✅ `id:checkAllCheckbox` ✅ `id:eventsEditorModalSaveButton` ✅ `link:Create new event` ✅ `submit_mult` |  |
 | `events/row.twig` | 4/4 | ✅ `item_name[]` ✅ `link:Drop` ✅ `link:Edit` ✅ `link:Export` |  |
 | `src/Html/Generator.php` | 1/1 | ✅ `select:pageselector` |  |

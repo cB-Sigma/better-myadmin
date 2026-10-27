@@ -81,6 +81,14 @@ describe('trigger editor', () => {
       ['tg2', 'INSERT INTO log VALUES (NEW.v)'],
     ])
   })
+
+  it('a failed create: the query, one line break, then the server error (upstream 499f30824a)', async () => {
+    const bad = await save({ name: 'tg4', definition: 'SET NEW.nope = 1' })
+    expect(bad.messages[0].type).toBe('error')
+    expect(text(bad)).toMatch(
+      /• The following query has failed: "CREATE TRIGGER `tg4` [^\n]*"\nMySQL said: [^\n]*nope[^\n]*$/,
+    )
+  })
 })
 
 describe('privileges', () => {

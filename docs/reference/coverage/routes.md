@@ -45,7 +45,7 @@ Every phpMyAdmin route (FastRoute collector executed, plus the setup script) and
 | ✅ | `POST /sql/set-column-preferences` | `Sql/ColumnPreferencesController` | API POST /api/servers/:s/databases/:db/tables/:t/uiprefs (apps/server/src/routes/metadata.ts:575) |  |
 | ✅ | `POST /table/delete/confirm` | `Table/DeleteConfirmController` | UI /s/:server/db/:db/t/:table/browse (apps/web/src/routes/s/$server/db/$db/t/$table/browse.tsx) | the confirmation is rendered in place by the results view (no request of its own) |
 | ✅ | `POST /table/delete/rows` | `Table/DeleteRowsController` | API POST /api/servers/:s/browse/delete-rows (apps/server/src/routes/browse.ts:77) |  |
-| ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:92) |  |
+| ✅ | `GET, POST /table/get-field` | `Table/GetFieldController` | API GET /api/servers/:s/browse/field (apps/server/src/routes/browse.ts:96) |  |
 
 ## 03 insert edit transformations — 7/7 (100.0%) covered, 7/7 implemented
 
