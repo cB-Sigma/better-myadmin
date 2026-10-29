@@ -181,7 +181,8 @@ export function ProgramListPage({
       {/* the response of the action (Generator::getMessage, with its query card) comes first */}
       <PageMessages server={server} messages={messages} scope={{ db, table }} />
       <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold">
-        <IconText icon={icon} text={title} /> <MySqlDocLink link={docLink} />
+        {/* get_image + the title (upstream bab805a40f): the icon and the text whatever ActionLinksMode */}
+        <PmaIcon name={icon} /> {title} <MySqlDocLink link={docLink} />
       </h2>
       {before}
       {disabledNotice !== undefined ? (

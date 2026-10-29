@@ -639,6 +639,90 @@
       "status": "not-applicable",
       "areas": ["features/07-export-import"],
       "notes": "sync c7bb2a19e5: Pdf $results made local: same output."
+    },
+    {
+      "commit": "0181b04315a6753f0523b5679aa1d7419e34476f",
+      "subject": "Translated using Weblate (Korean)",
+      "status": "not-applicable",
+      "areas": ["i18n"],
+      "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): Korean po/ko.po of the 5.2 tree; master's resources/po is unchanged by it."
+    },
+    {
+      "commit": "5fd0e9ba56d4e1061a10d74788da532729759c49",
+      "subject": "Translated using Weblate (French)",
+      "status": "not-applicable",
+      "areas": ["i18n"],
+      "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): French po/fr.po of the 5.2 tree; master's resources/po is unchanged by it."
+    },
+    {
+      "commit": "faea1b46c8147f602a6218631746af89c27155fc",
+      "subject": "Fix IPv4 CIDR matching in AllowDeny rules",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth"],
+      "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): the 5.2 backport of d27d4c465e (IPv4 CIDR matching), ported in sync c7bb2a19e5."
+    },
+    {
+      "commit": "8bea9d92b46a6f6129a3519d54f46ca54eb6fbc8",
+      "subject": "Add ChangeLog entry for #20576",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync 6016908886: ChangeLog entry for #20576 (the CIDR fix): BetterMyAdmin keeps its own CHANGELOG (1.0.16)."
+    },
+    {
+      "commit": "49ef98f90430e97df12a8af94f3e97cce40ceff7",
+      "subject": "Fix SqlController missing parameter check",
+      "status": "not-applicable",
+      "areas": ["features/09-sql-editor-query-pipeline"],
+      "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): SqlController in the 5.2 tree (libraries/classes) answers a missing sql_query with a 400 \"Missing parameter: sql_query\" instead of Util::checkParameters; on master only its test lands (SqlControllerTest). Our query endpoint rejects a request without its statement through the request schema."
+    },
+    {
+      "commit": "ea1119dc31ed0dbaf6f5038d64d8813940eca317",
+      "subject": "Add ChangeLog entry for #20577",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync 6016908886: ChangeLog entry for #20577: our own CHANGELOG."
+    },
+    {
+      "commit": "da43fc46875e714d1fa4c732c95eed7330d9defc",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "not-applicable",
+      "areas": ["i18n"],
+      "notes": "sync 6016908886: QA_5_2 branch commit merged into master (a880333a04 / f34ca07728): Spanish po/es.po of the 5.2 tree; master's Spanish update is cc6ed3b9ee."
+    },
+    {
+      "commit": "cc6ed3b9eee1f7de35ed3160f497024c96c2341a",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 6016908886: Spanish translation: pnpm i18n:import."
+    },
+    {
+      "commit": "3710262a6b20ebfc8dadd9395806d208ae6f5835",
+      "subject": "Translated using Weblate (Indonesian)",
+      "status": "ported",
+      "areas": ["i18n"],
+      "notes": "sync 6016908886: Indonesian translation: pnpm i18n:import."
+    },
+    {
+      "commit": "3f3852040e9e31319a5dbabf859b483587be4eee",
+      "subject": "Fix cases where an invalid include will cause an error",
+      "status": "not-applicable",
+      "areas": ["features/03-insert-edit-transformations", "features/07-export-import"],
+      "notes": "sync 6016908886: invalid include: InsertEdit::getGotoInclude no longer takes a goto of the form *.php to include, ReplaceController falls back to /table/sql, ImportController drops the include branch (Import::$result is a result object or false, so it was unreachable). BetterMyAdmin never includes a goto script: the save response says where to go back (apps/server/src/insert-edit/save.ts backTarget)."
+    },
+    {
+      "commit": "b6b849380f8f1196c7ebcf8b1c7afc53b74d60e6",
+      "subject": "Add change log entry for #20578",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync 6016908886: ChangeLog entry for #20578: our own CHANGELOG."
+    },
+    {
+      "commit": "bab805a40f4071e28fe76a4598d75a6723dfb88f",
+      "subject": "Align all page titles to the same style",
+      "status": "ported",
+      "areas": ["features/05-database-level", "features/06-server-level", "features/04-table-level"],
+      "notes": "sync 6016908886: page titles aligned: get_image + the title (whatever ActionLinksMode) and the my-3 margin on the container. The Routines / Triggers / Events heading followed ActionLinksMode through IconText; it now renders PmaIcon + the title (apps/web/src/features/database/programs.tsx, test tests/e2e/program-titles.e2e.ts, docs/features/05-database-level.md). The other headings (databases, privileges, user accounts, export/import, check relations, chart, show create) already used PageHeader, which always shows its icon; UI-parity unchanged."
     }
   ]
 }

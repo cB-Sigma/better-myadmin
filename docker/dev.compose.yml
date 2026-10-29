@@ -12,7 +12,7 @@
 # the reference commit, passed as a build arg to every phpmyadmin-ref* image so the Dockerfile ARG
 # default and this stay together (docs/reference/reference-commit.txt; bump on an upstream sync).
 # Override with the PMA_COMMIT env var.
-x-pma-commit: &pma_commit "${PMA_COMMIT:-c7bb2a19e557d6345800bf5f2fed859aafdbae60}"
+x-pma-commit: &pma_commit "${PMA_COMMIT:-601690888679e2fb5574ba7acd499812ddc9160a}"
 
 services:
   redis:

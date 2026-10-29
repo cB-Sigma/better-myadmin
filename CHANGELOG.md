@@ -2,6 +2,16 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.17 (2026-10-29)
+
+### Upstream
+
+- Synced to phpMyAdmin 6016908886 (2026-10-28).
+- The Routines, Triggers and Events page titles always show both the icon and the text, as the
+  other page titles do. They used to follow `ActionLinksMode`, so with icons only the title text
+  disappeared.
+- Translations: Spanish and Indonesian updates.
+
 ## 1.0.16 (2026-10-27)
 
 ### Upstream

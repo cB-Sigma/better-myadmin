@@ -1,4 +1,4 @@
-# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/pl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/pl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
 msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2025-10-27 19:02+0000\nLast-Translator: Janusz Duda <janusz.duda.niewiem@gmail.com>\nLanguage-Team: Polish <https://hosted.weblate.org/projects/phpmyadmin/master/pl/>\nLanguage: pl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 5.14.1-dev\n"

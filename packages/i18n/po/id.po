@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin c7bb2a19e557d6345800bf5f2fed859aafdbae60 resources/po/id.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/id.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-19 01:50+0000\nLast-Translator: Zahid Rizky Fakhri <zahidrf@users.noreply.hosted.weblate.org>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/phpmyadmin/master/id/>\nLanguage: id\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\nX-Poedit-Basepath: ../../..\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-28 00:51+0000\nLast-Translator: Zahid Rizky Fakhri <zahidrf@users.noreply.hosted.weblate.org>\nLanguage-Team: Indonesian <https://hosted.weblate.org/projects/phpmyadmin/master/id/>\nLanguage: id\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 2026.11.dev0\nX-Poedit-Basepath: ../../..\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript harus diaktifkan lewat point ini!"
@@ -746,6 +746,9 @@ msgstr "Menurun"
 msgid "Add as"
 msgstr "Tambahkan sebagai"
 
+msgid "Op"
+msgstr "Bu"
+
 msgid "Text"
 msgstr "Teks"
 
@@ -1024,6 +1027,9 @@ msgstr "Lepas semua"
 
 msgid "Inside column:"
 msgstr "Dalam kolom:"
+
+msgid "Search results for \"%s\" %s:"
+msgstr "Hasil pencarian untuk \"%s\" %s:"
 
 msgid "%1$s match in <strong>%2$s</strong>"
 msgid_plural "%1$s matches in <strong>%2$s</strong>"
@@ -1347,6 +1353,9 @@ msgstr "Mengonversi ke Kana"
 
 msgid "Error"
 msgstr "Galat"
+
+msgid "Backtrace"
+msgstr "Penelusuran balik"
 
 msgid "This report automatically includes data about the error and information about relevant configuration settings. It will be sent to the phpMyAdmin team for debugging the error."
 msgstr "Laporan ini secara otomatis menyertakan data tentang kesalahan dan informasi tentang pengaturan konfigurasi yang relevan. Laporan ini akan dikirim ke tim phpMyAdmin untuk men-debug kesalahan tersebut."
@@ -6919,6 +6928,12 @@ msgstr "Nilai Y"
 msgid "Please enter the SQL query first."
 msgstr "Silakan masukkan kueri SQL dulu."
 
+msgid "Nothing selected"
+msgstr "Tidak ada dipilih"
+
+msgid "Enter an option"
+msgstr "Masukkan opsi"
+
 msgid "The host name is empty!"
 msgstr "Nama inang kosong!"
 
@@ -7352,6 +7367,12 @@ msgstr "DROP kolom %s dari tabel %s"
 msgid "Create the following table"
 msgstr "Buat tabel"
 
+msgid "Enter new table name"
+msgstr "Masukkan nama tabel baru"
+
+msgid "Enter column name"
+msgstr "Masukkan nama kolom"
+
 msgid "Third step of normalization (3NF)"
 msgstr "Tahap ketiga normalisasi (3NF)"
 
@@ -7405,6 +7426,9 @@ msgstr "Klik titik data untuk melihat dan mungkin mengedit baris data."
 
 msgid "The plot can be resized by dragging it along the bottom right corner."
 msgstr "Plot dapat diubah ukurannya dengan menyeretnya di sepanjang sudut kanan bawah."
+
+msgid "Zoom search instructions"
+msgstr "Instruksi pencarian zum"
 
 msgid "Select two columns"
 msgstr "Pilih dua kolom"
