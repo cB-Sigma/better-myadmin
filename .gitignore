@@ -14,3 +14,5 @@ __pycache__/
 test-results/
 playwright-report/
 docs-site/_build/
+docs-site/html/
+docs-site/doctrees/
