@@ -52,7 +52,8 @@ test('browse, sort, page, options, grid edit and delete [p02-50ad5b p02-8c16e6 p
   const results = page.locator('.sqlqueryresults')
   await expect(results.getByText(/Showing rows 0 - 24 \(30 total/)).toBeVisible()
   await expect(page.locator('table.table_results tbody tr')).toHaveCount(25)
-  await expect(page.locator('th[data-column="name"] small')).toHaveText('the name')
+  // the column comment (a retry also finds the remembered sort's order number in the header)
+  await expect(page.locator('th[data-column="name"] small[title]')).toHaveText('the name')
   // a truncated cell
   await expect(page.locator('td[data-originallength="70"]')).toHaveCount(1)
 
@@ -72,9 +73,13 @@ test('browse, sort, page, options, grid edit and delete [p02-50ad5b p02-8c16e6 p
   await page.getByRole('button', { name: 'Go', exact: true }).click()
   await expect(page.locator('td.truncated')).toHaveCount(0)
 
-  // back to an unsorted first page, edit a cell with a double click + Enter
+  // back to the first page (still sorted by name: RememberSorting), edit a cell with a double
+  // click + Enter. Not the truncated one (row 3, first in this order): its editor loads the full
+  // value after opening, which can land after the typed text and replace it
   await page.goto(`/s/1/db/${DB}/t/t/browse`)
-  const cell = page.locator('table.table_results tbody tr').first().locator('td[data-type="string"]').first()
+  const cell = page
+    .locator('table.table_results tbody td[data-type="string"]:not([data-originallength])')
+    .first()
   await cell.dblclick()
   await page.locator('.cEdit .edit_box').fill('edited')
   await page.locator('.cEdit .edit_box').press('Enter')
