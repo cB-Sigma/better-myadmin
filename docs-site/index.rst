@@ -14,6 +14,7 @@ Contents:
     setup
     config
     user
+    agents
     faq
     developers
     security

@@ -2,6 +2,25 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.18 (2026-10-30)
+
+### New
+
+- An agent API and an MCP endpoint for AI agents and scripts, which don't need the web interface.
+  They're off until `AgentApi` is enabled.
+  - `/api/agent/v1/servers/<n>/…` returns plain JSON: databases, tables, a table's description,
+    query and explain.
+  - `…/mcp` is a Model Context Protocol server with the same operations as tools, so agents such
+    as Claude Code can connect with a URL and headers.
+  - Every request carries its own credentials, with no session or CSRF token:
+    - `config` servers use the configured user.
+    - `cookie` and `http` servers take HTTP Basic credentials.
+    - `signon` servers use the sign-on module's new `agentCredentials` export.
+  - Each request passes the same login rules as a login (AllowDeny, AllowRoot, AllowNoPassword
+    and the failed-login limiter), then runs with that MySQL user's privileges.
+  - Requests from other websites are refused.
+  - See "AI agents and scripts" in the documentation.
+
 ## 1.0.17 (2026-10-29)
 
 ### Upstream

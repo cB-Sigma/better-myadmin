@@ -9,6 +9,7 @@ import {
 import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
 import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
+import { agentRoutes } from './agent/routes.ts'
 import { logUser } from './auth/auth-log.ts'
 import { requestClientIp } from './auth/login.ts'
 import { authPageGate, isPageRequest } from './auth/page-gate.ts'
@@ -125,6 +126,8 @@ export function createApp(deps: AppDeps) {
       }
     }),
   )
+  // the agent API authenticates every request itself: before the session and the CSRF check
+  app.route('/api/agent', agentRoutes(deps))
   app.use('/api/*', session)
   app.use('/api/*', sqlLog())
   app.use('/api/*', language)

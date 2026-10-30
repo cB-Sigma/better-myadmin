@@ -379,7 +379,8 @@ export class PoolManager {
     const ids = new Set<string>()
     for (const key of this.#pools.keys()) ids.add(key.slice(0, key.indexOf('\u0000')))
     for (const id of this.control.sessionIds()) ids.add(id)
-    for (const id of ids) if (!(await alive(id))) await this.dropSession(id)
+    // the agent API's pools (agent:…) belong to no session: they go when idle (evictIdle)
+    for (const id of ids) if (!id.startsWith('agent:') && !(await alive(id))) await this.dropSession(id)
   }
 
   /** Drops pools with no request for `ConnectionPool.idleTimeout` and nothing checked out. */

@@ -54,21 +54,51 @@ function safeReturn(value: string | undefined, base: string): string {
 
 type PageHandler = (request: Request, ctx: SignonPageContext) => Response | Promise<Response>
 
-const handlers = new Map<string, Promise<PageHandler>>()
+/**
+ * The agent API's credentials for a request to a signon server (optional export `agentCredentials`
+ * of the SignonPage module): the MySQL user and password the request authenticates as (e.g. from
+ * a single sign-on proxy's header), or null when it carries none.
+ */
+export type AgentCredentialsHook = (
+  request: Request,
+  ctx: { server: { index: number; config: ServerConfig }; clientIp: string },
+) => { user: string; password: string } | null | Promise<{ user: string; password: string } | null>
 
-function loadHandler(file: string): Promise<PageHandler> {
-  let h = handlers.get(file)
-  if (h === undefined) {
-    h = import(pathToFileURL(file).href).then((mod: { default?: unknown; signonPage?: unknown }) => {
-      const fn = mod.signonPage ?? mod.default
-      if (typeof fn !== 'function') throw new Error(`SignonPage ${file} exports no function`)
-      return fn as PageHandler
-    })
+interface SignonModule {
+  default?: unknown
+  signonPage?: unknown
+  agentCredentials?: unknown
+}
+
+const modules = new Map<string, Promise<SignonModule>>()
+
+function loadModule(file: string): Promise<SignonModule> {
+  let m = modules.get(file)
+  if (m === undefined) {
+    m = import(pathToFileURL(file).href) as Promise<SignonModule>
     // a failed import is retried on the next request (the file may be fixed meanwhile)
-    h.catch(() => handlers.delete(file))
-    handlers.set(file, h)
+    m.catch(() => modules.delete(file))
+    modules.set(file, m)
   }
-  return h
+  return m
+}
+
+/** The SignonPage file of a server, resolved against the working directory. */
+export function signonPageFile(srv: ServerConfig): string {
+  return isAbsolute(srv.SignonPage) ? srv.SignonPage : resolve(process.cwd(), srv.SignonPage)
+}
+
+async function loadHandler(file: string): Promise<PageHandler> {
+  const mod = await loadModule(file)
+  const fn = mod.signonPage ?? mod.default
+  if (typeof fn !== 'function') throw new Error(`SignonPage ${file} exports no function`)
+  return fn as PageHandler
+}
+
+/** The SignonPage module's `agentCredentials` export, or null when it has none. */
+export async function loadAgentCredentials(file: string): Promise<AgentCredentialsHook | null> {
+  const fn = (await loadModule(file)).agentCredentials
+  return typeof fn === 'function' ? (fn as AgentCredentialsHook) : null
 }
 
 /** The path a SignonURL names when it is on this host ('/signon/' → '/signon'), else null. */
@@ -95,9 +125,7 @@ export function signonPages(deps: AppDeps): MiddlewareHandler<AppEnv> {
     const { cfg } = deps
     const hit = pageServer(cfg, c.req.path)
     if (hit === null) return next()
-    const file = isAbsolute(hit.srv.SignonPage)
-      ? hit.srv.SignonPage
-      : resolve(process.cwd(), hit.srv.SignonPage)
+    const file = signonPageFile(hit.srv)
     const handler = await loadHandler(file)
     const cookie = getCookie(c, hit.srv.SignonSession)
     const ctx: SignonPageContext = {

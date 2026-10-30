@@ -41,3 +41,15 @@ export default async function signonPage(request, { session, sessionCookie, retu
     { headers: { 'Content-Type': 'text/html; charset=utf-8' } },
   )
 }
+
+/**
+ * Optional: the credentials of an agent API request (AgentApi, docs-site/agents.rst), which has no
+ * SignonSession cookie. Read them from the request (a sign-on proxy's header, a token…) and return
+ * the MySQL user and password, or null. This example has no such source: agent requests are refused.
+ *
+ * @param {Request} _request
+ * @returns {{ user: string, password: string } | null}
+ */
+export function agentCredentials(_request) {
+  return null
+}

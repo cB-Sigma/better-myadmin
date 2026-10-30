@@ -861,6 +861,13 @@ export const configNode = group({
     },
     { bma: true },
   ),
+  /**
+   * The agent API (BetterMyAdmin only): /api/agent/v1/… and its MCP endpoint, for AI agents and
+   * scripts. Each request carries its own credentials (no session, no CSRF token): the configured
+   * user (config), HTTP Basic (cookie, http) or the SignonPage's `agentCredentials` (signon), and
+   * passes the login rules (AllowDeny, AllowRoot, AllowNoPassword) like a login. Off by default.
+   */
+  AgentApi: bool(false, { bma: true }),
 })
 
 // ---------------------------------------------------------------------------

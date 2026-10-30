@@ -1,0 +1,1038 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glossary &mdash; BetterMyAdmin 1.0.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fbbe2b82" />
+
+  
+    <link rel="canonical" href="https://cb-sigma.github.io/better-myadmin/glossary.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fcf7e67d"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="prev" title="Credits" href="credits.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            BetterMyAdmin
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#supported-features">Supported features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#shortcut-keys">Shortcut keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#a-word-about-users">A word about users</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="require.html">Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="require.html#runtime">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="require.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="require.html#web-browser">Web browser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#installing-using-docker">Installing using Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#docker-environment-variables">Docker environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#customizing-configuration-file-using-docker">Customizing configuration file using Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#installing-from-a-checkout">Installing from a checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#quick-install">Quick Install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#manually-creating-the-file">Manually creating the file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#using-the-setup-script">Using the Setup script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#phpmyadmin-configuration-storage">phpMyAdmin configuration storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#zero-configuration">Zero configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#manual-configuration">Manual configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#upgrading-from-an-older-version">Upgrading from an older version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#using-authentication-modes">Using authentication modes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#http-authentication-mode">HTTP authentication mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#cookie-authentication-mode">Cookie authentication mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#signon-authentication-mode">Signon authentication mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#config-authentication-mode">Config authentication mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#securing-your-bettermyadmin-installation">Securing your BetterMyAdmin installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#using-ssl-for-connection-to-database-server">Using SSL for connection to database server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#known-issues">Known issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#users-with-column-specific-privileges-are-unable-to-browse">Users with column-specific privileges are unable to “Browse”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="setup.html#trouble-logging-back-in-after-logging-out-using-http-authentication">Trouble logging back in after logging out using ‘http’ authentication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#basic-settings">Basic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#bettermyadmin-settings">BetterMyAdmin settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#server-connection-settings">Server connection settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#generic-settings">Generic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#cookie-authentication-options">Cookie authentication options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#navigation-panel-setup">Navigation panel setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#main-panel">Main panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#database-structure">Database structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#browse-mode">Browse mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#editing-mode">Editing mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#export-and-import-settings">Export and import settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#tabs-display-settings">Tabs display settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#pdf-options">PDF Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#languages">Languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#web-server-settings">Web server settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#theme-settings">Theme settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#design-customization">Design customization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#text-fields">Text fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#sql-query-box-settings">SQL query box settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#upload-save-import-directories">Upload/save/import directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#various-display-setting">Various display setting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#page-titles">Page titles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#theme-manager-settings">Theme manager settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#default-queries">Default queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#mysql-settings">MySQL settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#default-options-for-transformations">Default options for Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#console-settings">Console settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#developer">Developer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#basic-example">Basic example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#example-for-signon-authentication">Example for signon authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#example-for-ip-address-limited-autologin">Example for IP address limited autologin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#example-for-using-multiple-mysql-servers">Example for using multiple MySQL servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#google-cloud-sql-with-ssl">Google Cloud SQL with SSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#amazon-rds-aurora-with-ssl">Amazon RDS Aurora with SSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#recaptcha-using-hcaptcha">reCaptcha using hCaptcha</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#recaptcha-using-turnstile">reCaptcha using Turnstile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#recaptcha-using-google-recaptcha-v2-v3">reCaptcha using Google reCaptcha v2/v3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html">Configuring BetterMyAdmin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="two_factor.html">Two-factor authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#authentication-application-2fa">Authentication Application (2FA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#hardware-security-key-webauthn-fido2">Hardware Security Key (WebAuthn/FIDO2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#hardware-security-key-fido-u2f">Hardware Security Key (FIDO U2F)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#simple-two-factor-authentication">Simple two-factor authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transformations.html">Transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#file-structure">File structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#the-external-transformation">The External transformation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bookmarks.html">Bookmarks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bookmarks.html#storing-bookmarks">Storing bookmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bookmarks.html#variables-inside-bookmarks">Variables inside bookmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bookmarks.html#browsing-a-table-using-a-bookmark">Browsing a table using a bookmark</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="privileges.html">User management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#creating-a-new-user">Creating a new user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#editing-an-existing-user">Editing an existing user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#deleting-a-user">Deleting a user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#assigning-privileges-to-user-for-a-specific-database">Assigning privileges to user for a specific database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#configurable-menus-and-user-groups">Configurable menus and user groups</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Relations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="relations.html#technical-info">Technical info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="relations.html#relation-view">Relation view</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="relations.html#relation-view-example">Relation view example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="relations.html#designer">Designer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="charts.html">Charts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="charts.html#chart-implementation">Chart implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="charts.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#pie-chart">Pie chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#bar-and-column-chart">Bar and column chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#scatter-chart">Scatter chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#line-spline-and-timeline-charts">Line, spline and timeline charts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="import_export.html">Import and export</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="import_export.html#import">Import</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#csv">CSV</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#csv-using-load-data">CSV using LOAD DATA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#esri-shape-file">ESRI Shape File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#mediawiki">MediaWiki</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#open-document-spreadsheet-ods">Open Document Spreadsheet (ODS)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#sql">SQL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#xml">XML</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="import_export.html#export">Export</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#codegen">CodeGen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id1">CSV</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#csv-for-microsoft-excel">CSV for Microsoft Excel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#microsoft-word-2000">Microsoft Word 2000</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#json">JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#latex">LaTeX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#toon">TOON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id2">MediaWiki</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#opendocument-spreadsheet">OpenDocument Spreadsheet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#opendocument-text">OpenDocument Text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#pdf">PDF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#javascript-module">JavaScript module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id3">SQL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#texy">Texy!</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id5">XML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#yaml">YAML</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Custom Themes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="themes.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="themes.html#creating-custom-theme">Creating custom theme</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="themes.html#theme-metadata">Theme metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="other.html">Other sources of information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="other.html#printed-book">Printed Book</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other.html#tutorials">Tutorials</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="other.html#cesky-czech">Česky (Czech)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html#english">English</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html#russian">Русский (Russian)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">AI agents and scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="agents.html#the-api">The API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.html#id1">MCP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ - Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#server">Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#my-server-is-crashing-each-time-a-specific-action-is-required-or-phpmyadmin-sends-a-blank-page-or-a-page-full-of-cryptic-characters-to-my-browser-what-can-i-do">1.1 My server is crashing each time a specific action is required or phpMyAdmin sends a blank page or a page full of cryptic characters to my browser, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#my-apache-server-crashes-when-using-phpmyadmin">1.2 My Apache server crashes when using phpMyAdmin.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#withdrawn">1.3 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#using-phpmyadmin-on-iis-i-m-displayed-the-error-message-the-specified-cgi-application-misbehaved-by-not-returning-a-complete-set-of-http-headers">1.4 Using phpMyAdmin on IIS, I’m displayed the error message: “The specified CGI application misbehaved by not returning a complete set of HTTP headers …”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#using-phpmyadmin-on-iis-i-m-facing-crashes-and-or-many-error-messages-with-the-http">1.5 Using phpMyAdmin on IIS, I’m facing crashes and/or many error messages with the HTTP.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-use-phpmyadmin-on-pws-nothing-is-displayed">1.6 I can’t use phpMyAdmin on PWS: nothing is displayed!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-gzip-a-dump-or-a-csv-export-it-does-not-seem-to-work">1.7 How can I gzip a dump or a CSV export? It does not seem to work.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-cannot-insert-a-text-file-in-a-table-and-i-get-an-error-about-safe-mode-being-in-effect">1.8 I cannot insert a text file in a table, and I get an error about safe mode being in effect.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-9">1.9 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-m-having-troubles-when-uploading-files-with-phpmyadmin-running-on-a-secure-server-my-browser-is-internet-explorer-and-i-m-using-the-apache-server">1.10 I’m having troubles when uploading files with phpMyAdmin running on a secure server. My browser is Internet Explorer and I’m using the Apache server.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-open-basedir-restriction-while-uploading-a-file-from-the-import-tab">1.11 I get an ‘open_basedir restriction’ while uploading a file from the import tab.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-lost-my-mysql-root-password-what-can-i-do">1.12 I have lost my MySQL root password, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-13">1.13 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-14">1.14 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-problems-with-mysql-user-column-names">1.15 I have problems with <em>mysql.user</em> column names.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-cannot-upload-big-dump-files-memory-http-or-timeout-problems">1.16 I cannot upload big dump files (memory, HTTP or timeout problems).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#which-database-versions-does-bettermyadmin-support">1.17 Which Database versions does BetterMyAdmin support?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#a-i-cannot-connect-to-the-mysql-server-it-always-returns-the-error-message-client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client">1.17a I cannot connect to the MySQL server. It always returns the error message, “Client does not support authentication protocol requested by server; consider upgrading MySQL client”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-18">1.18 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-run-the-display-relations-feature-because-the-script-seems-not-to-know-the-font-face-i-m-using">1.19 I can’t run the “display relations” feature because the script seems not to know the font face I’m using!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-receive-an-error-about-missing-mysqli-and-mysql-extensions">1.20 I receive an error about missing mysqli and mysql extensions.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-running-the-cgi-version-of-php-under-unix-and-i-cannot-log-in-using-cookie-auth">1.21 I am running the CGI version of PHP under Unix, and I cannot log in using cookie auth.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-don-t-see-the-location-of-text-file-field-so-i-cannot-upload">1.22 I don’t see the “Location of text file” field, so I cannot upload.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-m-running-mysql-on-a-win32-machine-each-time-i-create-a-new-table-the-table-and-column-names-are-changed-to-lowercase">1.23 I’m running MySQL on a Win32 machine. Each time I create a new table the table and column names are changed to lowercase!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-24">1.24 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-running-apache-with-mod-gzip-1-3-26-1a-on-windows-xp-and-i-get-problems-such-as-undefined-variables-when-i-run-a-sql-query">1.25 I am running Apache with mod_gzip-1.3.26.1a on Windows XP, and I get problems, such as undefined variables when I run a SQL query.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-just-installed-phpmyadmin-in-my-document-root-of-iis-but-i-get-the-error-no-input-file-specified-when-trying-to-run-phpmyadmin">1.26 I just installed phpMyAdmin in my document root of IIS but I get the error “No input file specified” when trying to run phpMyAdmin.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-empty-page-when-i-want-to-view-huge-page-eg-db-structure-php-with-plenty-of-tables">1.27 I get empty page when I want to view huge page (eg. db_structure.php with plenty of tables).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#my-mysql-server-sometimes-refuses-queries-and-returns-the-message-errorcode-13-what-does-this-mean">1.28 My MySQL server sometimes refuses queries and returns the message ‘Errorcode: 13’. What does this mean?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-create-a-table-or-modify-a-column-i-get-an-error-and-the-columns-are-duplicated">1.29 When I create a table or modify a column, I get an error and the columns are duplicated.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-the-error-navigation-php-missing-hash">1.30 I get the error “navigation.php: Missing hash”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#which-php-versions-does-phpmyadmin-support">1.31 Which PHP versions does phpMyAdmin support?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#can-i-use-http-authentication-with-iis">1.32 Can I use HTTP authentication with IIS?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-33">1.33 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#can-i-directly-access-a-database-or-table-pages">1.34 Can I directly access a database or table pages?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#can-i-use-http-authentication-with-apache-cgi">1.35 Can I use HTTP authentication with Apache CGI?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-error-500-internal-server-error">1.36 I get an error “500 Internal Server Error”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-run-bettermyadmin-on-cluster-of-different-machines-and-password-encryption-in-cookie-auth-doesn-t-work">1.37 I run BetterMyAdmin on cluster of different machines and password encryption in cookie auth doesn’t work.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-38">1.38 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-try-to-connect-via-https-i-can-log-in-but-then-my-connection-is-redirected-back-to-http-what-can-cause-this-behavior">1.39 When I try to connect via https, I can log in, but then my connection is redirected back to http. What can cause this behavior?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-accessing-bettermyadmin-via-an-apache-reverse-proxy-cookie-login-does-not-work">1.40 When accessing BetterMyAdmin via an Apache reverse proxy, cookie login does not work.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-view-a-database-and-ask-to-see-its-privileges-i-get-an-error-about-an-unknown-column">1.41 When I view a database and ask to see its privileges, I get an error about an unknown column.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-prevent-robots-from-accessing-bettermyadmin">1.42 How can I prevent robots from accessing BetterMyAdmin?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#why-can-t-i-display-the-structure-of-my-table-containing-hundreds-of-columns">1.43 Why can’t I display the structure of my table containing hundreds of columns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-reduce-the-installed-size-of-phpmyadmin-on-disk">1.44 How can I reduce the installed size of phpMyAdmin on disk?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-error-message-about-unknown-authentication-method-caching-sha2-password-when-trying-to-log-in">1.45 I get an error message about unknown authentication method caching_sha2_password when trying to log in</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#missing-http-host-variable-when-using-nginx-with-http-3">1.46 Missing <code class="docutils literal notranslate"><span class="pre">HTTP_HOST</span></code> variable when using nginx with HTTP/3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#the-error-message-warning-cannot-add-header-information-headers-already-sent-by-is-displayed-what-s-the-problem">2.1 The error message “Warning: Cannot add header information - headers already sent by …” is displayed, what’s the problem?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bettermyadmin-can-t-connect-to-mysql-what-s-wrong">2.2 BetterMyAdmin can’t connect to MySQL. What’s wrong?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#the-error-message-warning-mysql-connection-failed-can-t-connect-to-local-mysql-server-through-socket-tmp-mysql-sock-111-is-displayed-what-can-i-do">2.3 The error message “Warning: MySQL Connection Failed: Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’ (111) …” is displayed. What can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#nothing-is-displayed-by-my-browser-when-i-try-to-run-bettermyadmin-what-can-i-do">2.4 Nothing is displayed by my browser when I try to run BetterMyAdmin, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#each-time-i-want-to-insert-or-change-a-row-or-drop-a-database-or-a-table-an-error-404-page-not-found-is-displayed-or-with-http-or-cookie-authentication-i-m-asked-to-log-in-again-what-s-wrong">2.5 Each time I want to insert or change a row or drop a database or a table, an error 404 (page not found) is displayed or, with HTTP or cookie authentication, I’m asked to log in again. What’s wrong?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-access-denied-for-user-root-localhost-using-password-yes-error-when-trying-to-access-a-mysql-server-on-a-host-which-is-port-forwarded-for-my-localhost">2.6 I get an “Access denied for user: ‘root&#64;localhost’ (Using password: YES)”-error when trying to access a MySQL-Server on a host which is port-forwarded for my localhost.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#using-and-creating-themes">2.7 Using and creating themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-missing-parameters-errors-what-can-i-do">2.8 I get “Missing parameters” errors, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#seeing-an-upload-progress-bar">2.9 Seeing an upload progress bar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-to-generate-a-string-of-random-bytes">2.10 How to generate a string of random bytes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#known-limitations">Known limitations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-using-http-authentication-a-user-who-logged-out-can-not-log-in-again-in-with-the-same-nick">3.1 When using HTTP authentication, a user who logged out can not log in again in with the same nick.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-dumping-a-large-table-in-compressed-mode-i-get-a-memory-limit-error-or-a-time-limit-error">3.2 When dumping a large table in compressed mode, I get a memory limit error or a time limit error.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-innodb-tables-i-lose-foreign-key-relationships-when-i-rename-a-table-or-a-column">3.3 With InnoDB tables, I lose foreign key relationships when I rename a table or a column.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-unable-to-import-dumps-i-created-with-the-mysqldump-tool-bundled-with-the-mysql-server-distribution">3.4 I am unable to import dumps I created with the mysqldump tool bundled with the MySQL server distribution.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-using-nested-folders-multiple-hierarchies-are-displayed-in-a-wrong-manner">3.5 When using nested folders, multiple hierarchies are displayed in a wrong manner.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-6">3.6 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-table-with-many-100-columns-and-when-i-try-to-browse-table-i-get-series-of-errors-like-warning-unable-to-parse-url-how-can-this-be-fixed">3.7 I have table with many (100+) columns and when I try to browse table I get series of errors like “Warning: unable to parse url”. How can this be fixed?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-cannot-use-clickable-html-forms-in-columns-where-i-put-a-mime-transformation-onto">3.8 I cannot use (clickable) HTML-forms in columns where I put a MIME-Transformation onto!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-error-messages-when-using-sql-mode-ansi-for-the-mysql-server">3.9 I get error messages when using “–sql_mode=ANSI” for the MySQL server.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#homonyms-and-no-primary-key-when-the-results-of-a-select-display-more-than-one-row-with-the-same-value-for-example-select-lastname-from-employees-where-firstname-like-a-and-two-smith-values-are-displayed-if-i-click-edit-i-cannot-be-sure-that-i-am-editing-the-intended-row">3.10 Homonyms and no primary key: When the results of a SELECT display more than one row with the same value (for example <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">lastname</span> <span class="pre">from</span> <span class="pre">employees</span> <span class="pre">where</span> <span class="pre">firstname</span> <span class="pre">like</span> <span class="pre">'A%'</span></code> and two “Smith” values are displayed), if I click Edit I cannot be sure that I am editing the intended row.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#the-number-of-rows-for-innodb-tables-is-not-correct">3.11 The number of rows for InnoDB tables is not correct.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-12">3.12 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-error-when-entering-use-followed-by-a-db-name-containing-an-hyphen">3.13 I get an error when entering <code class="docutils literal notranslate"><span class="pre">USE</span></code> followed by a db name containing an hyphen.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-not-able-to-browse-a-table-when-i-don-t-have-the-right-to-select-one-of-the-columns">3.14 I am not able to browse a table when I don’t have the right to SELECT one of the columns.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-15">3.15 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-16">3.16 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-17">3.17 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-import-a-csv-file-that-contains-multiple-tables-they-are-lumped-together-into-a-single-table">3.18 When I import a CSV file that contains multiple tables, they are lumped together into a single table.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-import-a-file-and-have-bettermyadmin-determine-the-appropriate-data-structure-it-only-uses-int-decimal-and-varchar-types">3.19 When I import a file and have BetterMyAdmin determine the appropriate data structure it only uses int, decimal, and varchar types.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#after-upgrading-some-bookmarks-are-gone-or-their-content-cannot-be-shown">3.20 After upgrading, some bookmarks are gone or their content cannot be shown.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-unable-to-log-in-with-a-username-containing-unicode-characters-such-as-a">3.21 I am unable to log in with a username containing unicode characters such as á.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#isps-multi-user-installations">ISPs, multi-user installations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-m-an-isp-can-i-setup-one-central-copy-of-bettermyadmin-or-do-i-need-to-install-it-for-each-customer">4.1 I’m an ISP. Can I setup one central copy of BetterMyAdmin or do I need to install it for each customer?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-s-the-preferred-way-of-making-bettermyadmin-secure-against-evil-access">4.2 What’s the preferred way of making BetterMyAdmin secure against evil access?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-errors-about-not-being-able-to-include-a-file-in-lang-or-in-libraries">4.3 I get errors about not being able to include a file in <em>/lang</em> or in <em>/libraries</em>.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bettermyadmin-always-gives-access-denied-when-using-http-authentication">4.4 BetterMyAdmin always gives “Access denied” when using HTTP authentication.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#is-it-possible-to-let-users-create-their-own-databases">4.5 Is it possible to let users create their own databases?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-host-based-authentication-additions">4.6 How can I use the Host-based authentication additions?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#authentication-window-is-displayed-more-than-once-why">4.7 Authentication window is displayed more than once, why?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#which-parameters-can-i-use-in-the-url-that-starts-bettermyadmin">4.8 Which parameters can I use in the URL that starts BetterMyAdmin?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#browsers-or-client-os">Browsers or client OS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-out-of-memory-error-and-my-controls-are-non-functional-when-trying-to-create-a-table-with-more-than-14-columns">5.1 I get an out of memory error, and my controls are non-functional, when trying to create a table with more than 14 columns.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-xitami-2-5b4-phpmyadmin-won-t-process-form-fields">5.2 With Xitami 2.5b4, phpMyAdmin won’t process form fields.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-problems-dumping-tables-with-konqueror-phpmyadmin-2-2-2">5.3 I have problems dumping tables with Konqueror (phpMyAdmin 2.2.2).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-use-the-cookie-authentication-mode-because-internet-explorer-never-stores-the-cookies">5.4 I can’t use the cookie authentication mode because Internet Explorer never stores the cookies.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-5">5.5 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-6">5.6 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-refresh-reload-my-browser-and-come-back-to-the-welcome-page">5.7 I refresh (reload) my browser, and come back to the welcome page.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-8">5.8 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-9">5.9 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-10">5.10 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#extended-ascii-characters-like-german-umlauts-are-displayed-wrong">5.11 Extended-ASCII characters like German umlauts are displayed wrong.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#mac-os-x-safari-browser-changes-special-characters-to">5.12 Mac OS X Safari browser changes special characters to “?”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-13">5.13 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-14">5.14 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-15">5.15 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-internet-explorer-i-get-access-is-denied-javascript-errors-or-i-cannot-make-bettermyadmin-work-under-windows">5.16 With Internet Explorer, I get “Access is denied” Javascript errors. Or I cannot make BetterMyAdmin work under Windows.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-firefox-i-cannot-delete-rows-of-data-or-drop-a-database">5.17 With Firefox, I cannot delete rows of data or drop a database.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-18">5.18 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-javascript-errors-in-my-browser">5.19 I get JavaScript errors in my browser.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-errors-about-violating-content-security-policy">5.20 I get errors about violating Content Security Policy.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-errors-about-potentially-unsafe-operation-when-browsing-table-or-executing-sql-query">5.21 I get errors about potentially unsafe operation when browsing table or executing SQL query.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#using-bettermyadmin">Using BetterMyAdmin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-insert-new-rows-into-a-table-i-can-t-create-a-table-mysql-brings-up-a-sql-error">6.1 I can’t insert new rows into a table / I can’t create a table - MySQL brings up a SQL error.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-create-a-table-i-set-an-index-for-two-columns-and-bettermyadmin-generates-only-one-index-with-those-two-columns">6.2 When I create a table, I set an index for two columns and BetterMyAdmin generates only one index with those two columns.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-insert-a-null-value-into-my-table">6.3 How can I insert a null value into my table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-backup-my-database-or-table">6.4 How can I backup my database or table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-restore-upload-my-database-or-table-using-a-dump-how-can-i-run-a-sql-file">6.5 How can I restore (upload) my database or table using a dump? How can I run a “.sql” file?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-relation-table-in-query-by-example">6.6 How can I use the relation table in Query-by-example?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-display-column-feature">6.7 How can I use the “display column” feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-produce-a-pdf-schema-of-my-database">6.8 How can I produce a PDF schema of my database?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bettermyadmin-is-changing-the-type-of-one-of-my-columns">6.9 BetterMyAdmin is changing the type of one of my columns!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-creating-a-privilege-what-happens-with-underscores-in-the-database-name">6.10 When creating a privilege, what happens with underscores in the database name?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-is-the-curious-symbol-o-in-the-statistics-pages">6.11 What is the curious symbol ø in the statistics pages?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-want-to-understand-some-export-options">6.12 I want to understand some Export options.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-would-like-to-create-a-database-with-a-dot-in-its-name">6.13 I would like to create a database with a dot in its name.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faqsqlvalidator">6.14 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-want-to-add-a-blob-column-and-put-an-index-on-it-but-mysql-says-blob-column-used-in-key-specification-without-a-key-length">6.15 I want to add a BLOB column and put an index on it, but MySQL says “BLOB column ‘…’ used in key specification without a key length”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-simply-move-in-page-with-plenty-editing-fields">6.16 How can I simply move in page with plenty editing fields?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#transformations-i-can-t-enter-my-own-mimetype-what-is-this-feature-then-useful-for">6.17 Transformations: I can’t enter my own mimetype! What is this feature then useful for?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bookmarks-where-can-i-store-bookmarks-why-can-t-i-see-any-bookmarks-below-the-query-box-what-are-these-variables-for">6.18 Bookmarks: Where can I store bookmarks? Why can’t I see any bookmarks below the query box? What are these variables for?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-create-simple-latex-document-to-include-exported-table">6.19 How can I create simple LATEX document to include exported table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-see-a-lot-of-databases-which-are-not-mine-and-cannot-access-them">6.20 I see a lot of databases which are not mine, and cannot access them.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#in-edit-insert-mode-how-can-i-see-a-list-of-possible-values-for-a-column-based-on-some-foreign-table">6.21 In edit/insert mode, how can I see a list of possible values for a column, based on some foreign table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bookmarks-can-i-execute-a-default-bookmark-automatically-when-entering-browse-mode-for-a-table">6.22 Bookmarks: Can I execute a default bookmark automatically when entering Browse mode for a table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#export-i-heard-bettermyadmin-can-export-microsoft-excel-files">6.23 Export: I heard BetterMyAdmin can export Microsoft Excel files?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#now-that-bettermyadmin-supports-native-mysql-4-1-x-column-comments-what-happens-to-my-column-comments-stored-in-pmadb">6.24 Now that BetterMyAdmin supports native MySQL 4.1.x column comments, what happens to my column comments stored in pmadb?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq6-25">6.25 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-select-a-range-of-rows">6.26 How can I select a range of rows?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-format-strings-can-i-use">6.27 What format strings can I use?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq6-28">6.28 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#why-can-t-i-get-a-chart-from-my-query-result-table">6.29 Why can’t I get a chart from my query result table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#import-how-can-i-import-esri-shapefiles">6.30 Import: How can I import ESRI Shapefiles?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-do-i-create-a-relation-in-designer">6.31 How do I create a relation in designer?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-zoom-search-feature">6.32 How can I use the zoom search feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-browsing-a-table-how-can-i-copy-a-column-name">6.33 When browsing a table, how can I copy a column name?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-favorite-tables-feature">6.34 How can I use the Favorite Tables feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-range-search-feature">6.35 How can I use the Range search feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-is-central-columns-and-how-can-i-use-this-feature">6.36 What is Central columns and how can I use this feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-improve-table-structure-feature">6.37 How can I use Improve Table structure feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-reassign-auto-incremented-values">6.38 How can I reassign auto-incremented values?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-is-the-adjust-privileges-option-when-renaming-copying-or-moving-a-database-table-column-or-procedure">6.39 What is the “Adjust privileges” option when renaming, copying, or moving a database, table, column, or procedure?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-see-bind-parameters-checkbox-in-the-sql-page-how-do-i-write-parameterized-sql-queries">6.40 I see “Bind parameters” checkbox in the “SQL” page. How do I write parameterized SQL queries?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-import-errors-while-importing-the-dumps-exported-from-older-mysql-versions-pre-5-7-6-into-newer-mysql-versions-5-7-7-but-they-work-fine-when-imported-back-on-same-older-versions">6.41 I get import errors while importing the dumps exported from older MySQL versions (pre-5.7.6) into newer MySQL versions (5.7.7+), but they work fine when imported back on same older versions ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#bettermyadmin-project">BetterMyAdmin project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-found-a-bug-how-do-i-inform-developers">7.1 I have found a bug. How do I inform developers?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-want-to-translate-the-messages-to-a-new-language-or-upgrade-an-existing-language-where-do-i-start">7.2 I want to translate the messages to a new language or upgrade an existing language, where do I start?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-would-like-to-help-out-with-the-development-of-bettermyadmin-how-should-i-proceed">7.3 I would like to help out with the development of BetterMyAdmin. How should I proceed?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#security">Security</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#where-can-i-get-information-about-the-security-alerts-issued-for-bettermyadmin">8.1 Where can I get information about the security alerts issued for BetterMyAdmin?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-protect-bettermyadmin-against-brute-force-attacks">8.2 How can I protect BetterMyAdmin against brute force attacks?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#why-are-there-path-disclosures-when-directly-loading-certain-files">8.3 Why are there path disclosures when directly loading certain files?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#csv-files-exported-from-bettermyadmin-could-allow-a-formula-injection-attack">8.4 CSV files exported from BetterMyAdmin could allow a formula injection attack.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#synchronization">Synchronization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq9-1">9.1 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq9-2">9.2 (withdrawn).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developers.html">Developers Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security policy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="security.html#typical-vulnerabilities">Typical vulnerabilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="security.html#cross-site-scripting-xss">Cross-site scripting (XSS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html#cross-site-request-forgery-csrf">Cross-site request forgery (CSRF)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html#sql-injection">SQL injection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html#brute-force-attack">Brute force attack</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#reporting-security-issues">Reporting security issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="copyright.html#third-party-licenses">Third party licenses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#credits-in-chronological-order">Credits, in chronological order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#translators">Translators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#documentation-translators">Documentation translators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#original-credits-of-version-2-1-0">Original Credits of Version 2.1.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BetterMyAdmin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/cB-Sigma/better-myadmin/blob/main/docs-site/glossary.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="glossary">
+<span id="id1"></span><h1>Glossary<a class="headerlink" href="#glossary" title="Link to this heading"></a></h1>
+<p>From Wikipedia, the free encyclopedia</p>
+<dl class="glossary">
+<dt id="term-.htaccess">.htaccess<a class="headerlink" href="#term-.htaccess" title="Link to this term"></a></dt><dd><p>the default name of Apache’s directory-level configuration file.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/.htaccess">https://en.wikipedia.org/wiki/.htaccess</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-ACL">ACL<a class="headerlink" href="#term-ACL" title="Link to this term"></a></dt><dd><p>Access Control List</p>
+</dd>
+<dt id="term-Blowfish">Blowfish<a class="headerlink" href="#term-Blowfish" title="Link to this term"></a></dt><dd><p>a keyed, symmetric block cipher, designed in 1993 by <a class="reference external" href="https://en.wikipedia.org/wiki/Bruce_Schneier">Bruce Schneier</a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Blowfish_(cipher)">https://en.wikipedia.org/wiki/Blowfish_(cipher)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Browser">Browser<a class="headerlink" href="#term-Browser" title="Link to this term"></a></dt><dd><p>a software application that enables a user to display and interact with text, images, and other information typically located on a web page at a website on the World Wide Web.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Web_browser">https://en.wikipedia.org/wiki/Web_browser</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-bzip2">bzip2<a class="headerlink" href="#term-bzip2" title="Link to this term"></a></dt><dd><p>a free software/open-source data compression algorithm and program developed by Julian Seward.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Bzip2">https://en.wikipedia.org/wiki/Bzip2</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-CGI">CGI<a class="headerlink" href="#term-CGI" title="Link to this term"></a></dt><dd><p>Common Gateway Interface is an important World Wide Web technology that
+enables a client web browser to request data from a program executed on
+the web server.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Common_Gateway_Interface">https://en.wikipedia.org/wiki/Common_Gateway_Interface</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Changelog">Changelog<a class="headerlink" href="#term-Changelog" title="Link to this term"></a></dt><dd><p>a log or record of changes made to a project.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Changelog">https://en.wikipedia.org/wiki/Changelog</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Client">Client<a class="headerlink" href="#term-Client" title="Link to this term"></a></dt><dd><p>a computer system that accesses a (remote) service on another computer by some kind of network.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Client_(computing)">https://en.wikipedia.org/wiki/Client_(computing)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-column">column<a class="headerlink" href="#term-column" title="Link to this term"></a></dt><dd><p>a set of data values of a particularly simple type, one for each row of the table.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Column_(database)">https://en.wikipedia.org/wiki/Column_(database)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Cookie">Cookie<a class="headerlink" href="#term-Cookie" title="Link to this term"></a></dt><dd><p>a packet of information sent by a server to a World Wide Web browser and then sent back by the browser each time it accesses that server.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/HTTP_cookie">https://en.wikipedia.org/wiki/HTTP_cookie</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-CSV">CSV<a class="headerlink" href="#term-CSV" title="Link to this term"></a></dt><dd><p>Comma-separated values</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Comma-separated_values">https://en.wikipedia.org/wiki/Comma-separated_values</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-DB">DB<a class="headerlink" href="#term-DB" title="Link to this term"></a></dt><dd><p>look at <a class="reference internal" href="#term-Database"><span class="xref std std-term">Database</span></a></p>
+</dd>
+<dt id="term-Database">Database<a class="headerlink" href="#term-Database" title="Link to this term"></a></dt><dd><p>an organized collection of data.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Database">https://en.wikipedia.org/wiki/Database</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Engine">Engine<a class="headerlink" href="#term-Engine" title="Link to this term"></a></dt><dd><p>look at <a class="reference internal" href="#term-Storage-Engines"><span class="xref std std-term">Storage Engines</span></a></p>
+</dd>
+<dt id="term-PHP-extension">PHP extension<a class="headerlink" href="#term-PHP-extension" title="Link to this term"></a></dt><dd><p>a PHP module that extends PHP with additional functionality.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Software_extension">https://en.wikipedia.org/wiki/Software_extension</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-FAQ">FAQ<a class="headerlink" href="#term-FAQ" title="Link to this term"></a></dt><dd><p>Frequently Asked Questions is a list of commonly asked question and their
+answers.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/FAQ">https://en.wikipedia.org/wiki/FAQ</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Field">Field<a class="headerlink" href="#term-Field" title="Link to this term"></a></dt><dd><p>one part of divided data/columns.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Field_(computer_science)">https://en.wikipedia.org/wiki/Field_(computer_science)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Foreign-key">Foreign key<a class="headerlink" href="#term-Foreign-key" title="Link to this term"></a></dt><dd><p>a column or group of columns in a database row that points to a key column
+or group of columns forming a key of another database row in some
+(usually different) table.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Foreign_key">https://en.wikipedia.org/wiki/Foreign_key</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-GD">GD<a class="headerlink" href="#term-GD" title="Link to this term"></a></dt><dd><p>Graphics Library by Thomas Boutell and others for dynamically manipulating images.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/GD_Graphics_Library">https://en.wikipedia.org/wiki/GD_Graphics_Library</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-GD2">GD2<a class="headerlink" href="#term-GD2" title="Link to this term"></a></dt><dd><p>look at <a class="reference internal" href="#term-GD"><span class="xref std std-term">GD</span></a></p>
+</dd>
+<dt id="term-GZip">GZip<a class="headerlink" href="#term-GZip" title="Link to this term"></a></dt><dd><p>GZip is short for GNU zip, a GNU free software file compression program.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Gzip">https://en.wikipedia.org/wiki/Gzip</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-host">host<a class="headerlink" href="#term-host" title="Link to this term"></a></dt><dd><p>any machine connected to a computer network, a node that has a hostname.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Host_(network)">https://en.wikipedia.org/wiki/Host_(network)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-hostname">hostname<a class="headerlink" href="#term-hostname" title="Link to this term"></a></dt><dd><p>the unique name by which a network-attached device is known on a network.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Hostname">https://en.wikipedia.org/wiki/Hostname</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-HTTP">HTTP<a class="headerlink" href="#term-HTTP" title="Link to this term"></a></dt><dd><p>Hypertext Transfer Protocol is the primary method used to transfer or
+convey information on the World Wide Web.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/HyperText_Transfer_Protocol">https://en.wikipedia.org/wiki/HyperText_Transfer_Protocol</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-HTTPS">HTTPS<a class="headerlink" href="#term-HTTPS" title="Link to this term"></a></dt><dd><p>a <a class="reference internal" href="#term-HTTP"><span class="xref std std-term">HTTP</span></a>-connection with additional security measures.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/HTTPS">https://en.wikipedia.org/wiki/HTTPS</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-IEC">IEC<a class="headerlink" href="#term-IEC" title="Link to this term"></a></dt><dd><p>International Electrotechnical Commission</p>
+</dd>
+<dt id="term-IIS">IIS<a class="headerlink" href="#term-IIS" title="Link to this term"></a></dt><dd><p>Internet Information Services is a set of internet-based services for
+servers using Microsoft Windows.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Internet_Information_Services">https://en.wikipedia.org/wiki/Internet_Information_Services</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Index">Index<a class="headerlink" href="#term-Index" title="Link to this term"></a></dt><dd><p>a feature that allows quick access to the rows in a table.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Database_index">https://en.wikipedia.org/wiki/Database_index</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-IP">IP<a class="headerlink" href="#term-IP" title="Link to this term"></a></dt><dd><p>“Internet Protocol” is a data-oriented protocol used by source and
+destination hosts for communicating data across a packet-switched
+internetwork.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Internet_Protocol">https://en.wikipedia.org/wiki/Internet_Protocol</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-IP-Address">IP Address<a class="headerlink" href="#term-IP-Address" title="Link to this term"></a></dt><dd><p>a unique number that devices use in order to identify and communicate with each other on a network utilizing the Internet Protocol standard.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/IP_Address">https://en.wikipedia.org/wiki/IP_Address</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-IPv6">IPv6<a class="headerlink" href="#term-IPv6" title="Link to this term"></a></dt><dd><p>IPv6 (Internet Protocol version 6) is the latest revision of the
+Internet Protocol (<a class="reference internal" href="#term-IP"><span class="xref std std-term">IP</span></a>), designed to deal with the
+long-anticipated problem of its predecessor IPv4 running out of addresses.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/IPv6">https://en.wikipedia.org/wiki/IPv6</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-ISAPI">ISAPI<a class="headerlink" href="#term-ISAPI" title="Link to this term"></a></dt><dd><p>Internet Server Application Programming Interface is the API of Internet Information Services (IIS).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Internet_Server_Application_Programming_Interface">https://en.wikipedia.org/wiki/Internet_Server_Application_Programming_Interface</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-ISP">ISP<a class="headerlink" href="#term-ISP" title="Link to this term"></a></dt><dd><p>An Internet service provider is a business or organization that offers users
+access to the Internet and related services.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Internet_service_provider">https://en.wikipedia.org/wiki/Internet_service_provider</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-ISO">ISO<a class="headerlink" href="#term-ISO" title="Link to this term"></a></dt><dd><p>International Standards Organization</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.iso.org/about-us.html">ISO organization website</a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/International_Organization_for_Standardization">https://en.wikipedia.org/wiki/International_Organization_for_Standardization</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-JPEG">JPEG<a class="headerlink" href="#term-JPEG" title="Link to this term"></a></dt><dd><p>a most commonly used standard method of lossy compression for photographic images.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/JPEG">https://en.wikipedia.org/wiki/JPEG</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-JPG">JPG<a class="headerlink" href="#term-JPG" title="Link to this term"></a></dt><dd><p>look at <a class="reference internal" href="#term-JPEG"><span class="xref std std-term">JPEG</span></a></p>
+</dd>
+<dt id="term-Key">Key<a class="headerlink" href="#term-Key" title="Link to this term"></a></dt><dd><p>look at <a class="reference internal" href="#term-Index"><span class="xref std std-term">Index</span></a></p>
+</dd>
+<dt id="term-LATEX">LATEX<a class="headerlink" href="#term-LATEX" title="Link to this term"></a></dt><dd><p>a document preparation system for the TeX typesetting program.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/LaTeX">https://en.wikipedia.org/wiki/LaTeX</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Mac">Mac<a class="headerlink" href="#term-Mac" title="Link to this term"></a></dt><dd><p>Apple Macintosh is a line of personal computers designed, developed, manufactured, and marketed by Apple Inc.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Macintosh">https://en.wikipedia.org/wiki/Macintosh</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-macOS">macOS<a class="headerlink" href="#term-macOS" title="Link to this term"></a></dt><dd><p>the operating system which is included with all currently shipping Apple Macintosh computers in the consumer and professional markets.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/MacOS">https://en.wikipedia.org/wiki/MacOS</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-mbstring">mbstring<a class="headerlink" href="#term-mbstring" title="Link to this term"></a></dt><dd><p>The PHP <cite>mbstring</cite> functions provide support for languages represented by multi-byte character sets, most notably UTF-8.</p>
+<p>BetterMyAdmin does not need it: it handles multi-byte character sets natively.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://www.php.net/manual/en/book.mbstring.php">https://www.php.net/manual/en/book.mbstring.php</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Media-type">Media type<a class="headerlink" href="#term-Media-type" title="Link to this term"></a></dt><dd><p>A media type (formerly known as MIME type) is a two-part identifier
+for file formats and format contents transmitted on the Internet.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Media_type">https://en.wikipedia.org/wiki/Media_type</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-MIME">MIME<a class="headerlink" href="#term-MIME" title="Link to this term"></a></dt><dd><p>Multipurpose Internet Mail Extensions is
+an Internet Standard for the format of e-mail.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/MIME">https://en.wikipedia.org/wiki/MIME</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-module">module<a class="headerlink" href="#term-module" title="Link to this term"></a></dt><dd><p>modular extension for the Apache HTTP Server httpd.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Apache_HTTP_Server">https://en.wikipedia.org/wiki/Apache_HTTP_Server</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-mod_proxy_fcgi">mod_proxy_fcgi<a class="headerlink" href="#term-mod_proxy_fcgi" title="Link to this term"></a></dt><dd><p>an Apache module implementing a Fast CGI interface; PHP can be run as a CGI module, FastCGI, or
+directly as an Apache module.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Mod_proxy">https://en.wikipedia.org/wiki/Mod_proxy</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-MySQL">MySQL<a class="headerlink" href="#term-MySQL" title="Link to this term"></a></dt><dd><p>a multithreaded, multi-user, SQL (Structured Query Language) Database Management System (DBMS).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/MySQL">https://en.wikipedia.org/wiki/MySQL</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-MySQLi">MySQLi<a class="headerlink" href="#term-MySQLi" title="Link to this term"></a></dt><dd><p>the improved MySQL client PHP extension.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.php.net/manual/en/book.mysqli.php">PHP manual for MySQL Improved Extension</a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/MySQLi">https://en.wikipedia.org/wiki/MySQLi</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-mysql">mysql<a class="headerlink" href="#term-mysql" title="Link to this term"></a></dt><dd><p>the MySQL client PHP extension.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://www.php.net/manual/en/book.mysql.php">https://www.php.net/manual/en/book.mysql.php</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-OpenDocument">OpenDocument<a class="headerlink" href="#term-OpenDocument" title="Link to this term"></a></dt><dd><p>an open standard for office documents.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/OpenDocument">https://en.wikipedia.org/wiki/OpenDocument</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-OS-X">OS X<a class="headerlink" href="#term-OS-X" title="Link to this term"></a></dt><dd><p>look at <a class="reference internal" href="#term-macOS"><span class="xref std std-term">macOS</span></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/MacOS">https://en.wikipedia.org/wiki/MacOS</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-PDF">PDF<a class="headerlink" href="#term-PDF" title="Link to this term"></a></dt><dd><p>Portable Document Format is a file format developed by Adobe Systems for
+representing two-dimensional documents in a device-independent and
+resolution-independent format.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/PDF">https://en.wikipedia.org/wiki/PDF</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-PEAR">PEAR<a class="headerlink" href="#term-PEAR" title="Link to this term"></a></dt><dd><p>the PHP Extension and Application Repository.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://pear.php.net/">PEAR website</a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/PEAR">Wikipedia page for PEAR</a></p>
+</div>
+</dd>
+<dt id="term-PCRE">PCRE<a class="headerlink" href="#term-PCRE" title="Link to this term"></a></dt><dd><p>Perl-Compatible Regular Expressions is the Perl-compatible regular
+expression functions for PHP</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://www.php.net/pcre">https://www.php.net/pcre</a>&gt;</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.php.net/pcre">PHP manual for Perl-Compatible Regular Expressions</a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions">https://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-PHP">PHP<a class="headerlink" href="#term-PHP" title="Link to this term"></a></dt><dd><p>short for “PHP: Hypertext Preprocessor”, is an open-source, reflective
+programming language used mainly for developing server-side applications
+and dynamic web content, and more recently, a broader range of software
+applications. phpMyAdmin is written in PHP; BetterMyAdmin, its port, is
+written in TypeScript and runs on Node.js, without PHP.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/PHP">https://en.wikipedia.org/wiki/PHP</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-port">port<a class="headerlink" href="#term-port" title="Link to this term"></a></dt><dd><p>a connection through which data is sent and received.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Port_(computer_networking)">https://en.wikipedia.org/wiki/Port_(computer_networking)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-primary-key">primary key<a class="headerlink" href="#term-primary-key" title="Link to this term"></a></dt><dd><p>A primary key is an index over one or more fields in a table with
+unique values for every single row in this table. Every table should have
+a primary key for easier accessing/identifying data in this table. There
+can only be one primary key per table and it is named always <strong>PRIMARY</strong>.
+In fact, a primary key is just an <a class="reference internal" href="#term-unique-key"><span class="xref std std-term">unique key</span></a> with the name
+<strong>PRIMARY</strong>. If no primary key is defined MySQL will use first <em>unique
+key</em> as primary key if there is one.</p>
+<p>You can create the primary key when creating the table (in BetterMyAdmin
+just check the primary key radio buttons for each field you wish to be
+part of the primary key).</p>
+<p>You can also add a primary key to an existing table with <cite>ALTER</cite> <cite>TABLE</cite>
+or <cite>CREATE</cite> <cite>INDEX</cite> (in BetterMyAdmin you can just click on ‘add index’ on
+the table structure page below the listed fields).</p>
+</dd>
+<dt id="term-RFC">RFC<a class="headerlink" href="#term-RFC" title="Link to this term"></a></dt><dd><p>Request for Comments (RFC) documents are a series of memoranda
+encompassing new research, innovations, and methodologies applicable to
+Internet technologies.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Request_for_Comments">https://en.wikipedia.org/wiki/Request_for_Comments</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-RFC-1952">RFC 1952<a class="headerlink" href="#term-RFC-1952" title="Link to this term"></a></dt><dd><p>GZIP file format specification version 4.3</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-0"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1952.html"><strong>RFC 1952</strong></a></p>
+</div>
+</dd>
+<dt id="term-Row-record-tuple">Row (record, tuple)<a class="headerlink" href="#term-Row-record-tuple" title="Link to this term"></a></dt><dd><p>represents a single, implicitly structured data item in a table.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Row_(database)">https://en.wikipedia.org/wiki/Row_(database)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Server">Server<a class="headerlink" href="#term-Server" title="Link to this term"></a></dt><dd><p>a computer system that provides services to other computing systems over a network.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Server_(computing)">https://en.wikipedia.org/wiki/Server_(computing)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Sodium">Sodium<a class="headerlink" href="#term-Sodium" title="Link to this term"></a></dt><dd><p>The Sodium PHP extension, which phpMyAdmin uses for encryption.
+BetterMyAdmin uses Node.js’s built-in cryptography instead.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.php.net/manual/en/book.sodium.php">PHP manual for Sodium extension</a></p>
+</div>
+</dd>
+<dt id="term-Storage-Engines">Storage Engines<a class="headerlink" href="#term-Storage-Engines" title="Link to this term"></a></dt><dd><p>MySQL can use several different formats for storing data on disk, these
+are called storage engines or table types. BetterMyAdmin allows a user to
+change their storage engine for a particular table through the operations
+tab.</p>
+<p>Common table types are InnoDB and MyISAM, though many others exist and
+may be desirable in some situations.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html">MySQL doc chapter about Alternative Storage Engines</a></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Database_engine">https://en.wikipedia.org/wiki/Database_engine</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-socket">socket<a class="headerlink" href="#term-socket" title="Link to this term"></a></dt><dd><p>a form of inter-process communication.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Unix_domain_socket">https://en.wikipedia.org/wiki/Unix_domain_socket</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-SSL">SSL<a class="headerlink" href="#term-SSL" title="Link to this term"></a></dt><dd><p>Secure Sockets Layer, (now superseded by TLS) is a cryptographic protocol
+which provides secure communication on the Internet.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Transport_Layer_Security">https://en.wikipedia.org/wiki/Transport_Layer_Security</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Stored-procedure">Stored procedure<a class="headerlink" href="#term-Stored-procedure" title="Link to this term"></a></dt><dd><p>a subroutine available to applications accessing a relational database system</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Stored_procedure">https://en.wikipedia.org/wiki/Stored_procedure</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-SQL">SQL<a class="headerlink" href="#term-SQL" title="Link to this term"></a></dt><dd><p>Structured Query Language</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/SQL">https://en.wikipedia.org/wiki/SQL</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-table">table<a class="headerlink" href="#term-table" title="Link to this term"></a></dt><dd><p>a set of data elements (cells) that is organized, defined and stored as
+horizontal rows and vertical columns where each item can be uniquely
+identified by a label or key or by its position in relation to other
+items.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Table_(database)">https://en.wikipedia.org/wiki/Table_(database)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-tar">tar<a class="headerlink" href="#term-tar" title="Link to this term"></a></dt><dd><p>a type of archive file format, from “Tape Archive”.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Tar_(computing)">https://en.wikipedia.org/wiki/Tar_(computing)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-TCP">TCP<a class="headerlink" href="#term-TCP" title="Link to this term"></a></dt><dd><p>Transmission Control Protocol is one of the core protocols of the
+Internet protocol suite.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Internet_protocol_suite">https://en.wikipedia.org/wiki/Internet_protocol_suite</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-TCPDF">TCPDF<a class="headerlink" href="#term-TCPDF" title="Link to this term"></a></dt><dd><p>PHP library to generate PDF files, used by phpMyAdmin’s PDF export and
+schema. BetterMyAdmin does not include it.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://tcpdf.org/">https://tcpdf.org/</a>&gt;</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/TCPDF">https://en.wikipedia.org/wiki/TCPDF</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-trigger">trigger<a class="headerlink" href="#term-trigger" title="Link to this term"></a></dt><dd><p>a procedural code that is automatically executed in response to certain events on a particular table or view in a database</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Database_trigger">https://en.wikipedia.org/wiki/Database_trigger</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-unique-key">unique key<a class="headerlink" href="#term-unique-key" title="Link to this term"></a></dt><dd><p>A unique key is an index over one or more fields in a table which has a
+unique value for each row. The first unique key will be treated as
+<a class="reference internal" href="#term-primary-key"><span class="xref std std-term">primary key</span></a> if there is no <em>primary key</em> defined.</p>
+</dd>
+<dt id="term-URL">URL<a class="headerlink" href="#term-URL" title="Link to this term"></a></dt><dd><p>Uniform Resource Locator is a sequence of characters, conforming to a
+standardized format, that is used for referring to resources, such as
+documents and images on the Internet, by their location.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/URL">https://en.wikipedia.org/wiki/URL</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Web-server">Web server<a class="headerlink" href="#term-Web-server" title="Link to this term"></a></dt><dd><p>A computer (program) that is responsible for accepting HTTP requests from clients and serving them web pages.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Web_server">https://en.wikipedia.org/wiki/Web_server</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-XML">XML<a class="headerlink" href="#term-XML" title="Link to this term"></a></dt><dd><p>Extensible Markup Language is a W3C-recommended general-purpose markup
+language for creating special-purpose markup languages, capable of
+describing many different kinds of data.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/XML">https://en.wikipedia.org/wiki/XML</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-ZIP">ZIP<a class="headerlink" href="#term-ZIP" title="Link to this term"></a></dt><dd><p>a popular data compression and archival format.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Zip_(file_format)">https://en.wikipedia.org/wiki/Zip_(file_format)</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Zlib">Zlib<a class="headerlink" href="#term-Zlib" title="Link to this term"></a></dt><dd><p>an open-source, cross-platform data compression library by <a class="reference external" href="https://en.wikipedia.org/wiki/Jean-Loup_Gailly">Jean-loup Gailly</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Mark_Adler">Mark Adler</a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Zlib">https://en.wikipedia.org/wiki/Zlib</a>&gt;</p>
+</div>
+</dd>
+<dt id="term-Content-Security-Policy">Content Security Policy<a class="headerlink" href="#term-Content-Security-Policy" title="Link to this term"></a></dt><dd><p>The HTTP <cite>Content-Security-Policy</cite> response header allows web site administrators
+to control resources the user agent is allowed to load for a given page.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://en.wikipedia.org/wiki/Content_Security_Policy">https://en.wikipedia.org/wiki/Content_Security_Policy</a>&gt;</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>&lt;<a class="reference external" href="https://developer.mozilla.org/en/docs/Web/HTTP/CSP">https://developer.mozilla.org/en/docs/Web/HTTP/CSP</a>&gt;</p>
+</div>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="credits.html" class="btn btn-neutral float-left" title="Credits" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2012 - 2026, The phpMyAdmin devel team; 2026, the BetterMyAdmin contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

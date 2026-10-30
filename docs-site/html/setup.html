@@ -1,0 +1,1368 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; BetterMyAdmin 1.0.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=fbbe2b82" />
+
+  
+    <link rel="canonical" href="https://cb-sigma.github.io/better-myadmin/setup.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=fcf7e67d"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="next" title="Configuration" href="config.html" />
+    <link rel="prev" title="Requirements" href="require.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            BetterMyAdmin
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#supported-features">Supported features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#shortcut-keys">Shortcut keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#a-word-about-users">A word about users</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="require.html">Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="require.html#runtime">Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="require.html#database">Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="require.html#web-browser">Web browser</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installing-using-docker">Installing using Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#docker-environment-variables">Docker environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customizing-configuration-file-using-docker">Customizing configuration file using Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-from-a-checkout">Installing from a checkout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-install">Quick Install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#manually-creating-the-file">Manually creating the file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-setup-script">Using the Setup script</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#phpmyadmin-configuration-storage">phpMyAdmin configuration storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zero-configuration">Zero configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manual-configuration">Manual configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrading-from-an-older-version">Upgrading from an older version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-authentication-modes">Using authentication modes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#http-authentication-mode">HTTP authentication mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cookie-authentication-mode">Cookie authentication mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signon-authentication-mode">Signon authentication mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-authentication-mode">Config authentication mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#securing-your-bettermyadmin-installation">Securing your BetterMyAdmin installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-ssl-for-connection-to-database-server">Using SSL for connection to database server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues">Known issues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#users-with-column-specific-privileges-are-unable-to-browse">Users with column-specific privileges are unable to “Browse”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trouble-logging-back-in-after-logging-out-using-http-authentication">Trouble logging back in after logging out using ‘http’ authentication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#basic-settings">Basic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#bettermyadmin-settings">BetterMyAdmin settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#server-connection-settings">Server connection settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#generic-settings">Generic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#cookie-authentication-options">Cookie authentication options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#navigation-panel-setup">Navigation panel setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#main-panel">Main panel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#database-structure">Database structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#browse-mode">Browse mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#editing-mode">Editing mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#export-and-import-settings">Export and import settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#tabs-display-settings">Tabs display settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#pdf-options">PDF Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#languages">Languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#web-server-settings">Web server settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#theme-settings">Theme settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#design-customization">Design customization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#text-fields">Text fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#sql-query-box-settings">SQL query box settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#upload-save-import-directories">Upload/save/import directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#various-display-setting">Various display setting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#page-titles">Page titles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#theme-manager-settings">Theme manager settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#default-queries">Default queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#mysql-settings">MySQL settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#default-options-for-transformations">Default options for Transformations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#console-settings">Console settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#developer">Developer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config.html#basic-example">Basic example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#example-for-signon-authentication">Example for signon authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#example-for-ip-address-limited-autologin">Example for IP address limited autologin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#example-for-using-multiple-mysql-servers">Example for using multiple MySQL servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#google-cloud-sql-with-ssl">Google Cloud SQL with SSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#amazon-rds-aurora-with-ssl">Amazon RDS Aurora with SSL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#recaptcha-using-hcaptcha">reCaptcha using hCaptcha</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#recaptcha-using-turnstile">reCaptcha using Turnstile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config.html#recaptcha-using-google-recaptcha-v2-v3">reCaptcha using Google reCaptcha v2/v3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html">Configuring BetterMyAdmin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="two_factor.html">Two-factor authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#authentication-application-2fa">Authentication Application (2FA)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#hardware-security-key-webauthn-fido2">Hardware Security Key (WebAuthn/FIDO2)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#hardware-security-key-fido-u2f">Hardware Security Key (FIDO U2F)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="two_factor.html#simple-two-factor-authentication">Simple two-factor authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transformations.html">Transformations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#file-structure">File structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transformations.html#the-external-transformation">The External transformation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bookmarks.html">Bookmarks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bookmarks.html#storing-bookmarks">Storing bookmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bookmarks.html#variables-inside-bookmarks">Variables inside bookmarks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bookmarks.html#browsing-a-table-using-a-bookmark">Browsing a table using a bookmark</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="privileges.html">User management</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#creating-a-new-user">Creating a new user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#editing-an-existing-user">Editing an existing user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#deleting-a-user">Deleting a user</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#assigning-privileges-to-user-for-a-specific-database">Assigning privileges to user for a specific database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="privileges.html#configurable-menus-and-user-groups">Configurable menus and user groups</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="relations.html">Relations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="relations.html#technical-info">Technical info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="relations.html#relation-view">Relation view</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="relations.html#relation-view-example">Relation view example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="relations.html#designer">Designer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="charts.html">Charts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="charts.html#chart-implementation">Chart implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="charts.html#examples">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#pie-chart">Pie chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#bar-and-column-chart">Bar and column chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#scatter-chart">Scatter chart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="charts.html#line-spline-and-timeline-charts">Line, spline and timeline charts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="import_export.html">Import and export</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="import_export.html#import">Import</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#csv">CSV</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#csv-using-load-data">CSV using LOAD DATA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#esri-shape-file">ESRI Shape File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#mediawiki">MediaWiki</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#open-document-spreadsheet-ods">Open Document Spreadsheet (ODS)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#sql">SQL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#xml">XML</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="import_export.html#export">Export</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#codegen">CodeGen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id1">CSV</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#csv-for-microsoft-excel">CSV for Microsoft Excel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#microsoft-word-2000">Microsoft Word 2000</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#json">JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#latex">LaTeX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#toon">TOON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id2">MediaWiki</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#opendocument-spreadsheet">OpenDocument Spreadsheet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#opendocument-text">OpenDocument Text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#pdf">PDF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#javascript-module">JavaScript module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id3">SQL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#texy">Texy!</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#id5">XML</a></li>
+<li class="toctree-l4"><a class="reference internal" href="import_export.html#yaml">YAML</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="themes.html">Custom Themes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="themes.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="themes.html#creating-custom-theme">Creating custom theme</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="themes.html#theme-metadata">Theme metadata</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="other.html">Other sources of information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="other.html#printed-book">Printed Book</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other.html#tutorials">Tutorials</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="other.html#cesky-czech">Česky (Czech)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html#english">English</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other.html#russian">Русский (Russian)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="agents.html">AI agents and scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="agents.html#the-api">The API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.html#id1">MCP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ - Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#server">Server</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#my-server-is-crashing-each-time-a-specific-action-is-required-or-phpmyadmin-sends-a-blank-page-or-a-page-full-of-cryptic-characters-to-my-browser-what-can-i-do">1.1 My server is crashing each time a specific action is required or phpMyAdmin sends a blank page or a page full of cryptic characters to my browser, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#my-apache-server-crashes-when-using-phpmyadmin">1.2 My Apache server crashes when using phpMyAdmin.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#withdrawn">1.3 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#using-phpmyadmin-on-iis-i-m-displayed-the-error-message-the-specified-cgi-application-misbehaved-by-not-returning-a-complete-set-of-http-headers">1.4 Using phpMyAdmin on IIS, I’m displayed the error message: “The specified CGI application misbehaved by not returning a complete set of HTTP headers …”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#using-phpmyadmin-on-iis-i-m-facing-crashes-and-or-many-error-messages-with-the-http">1.5 Using phpMyAdmin on IIS, I’m facing crashes and/or many error messages with the HTTP.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-use-phpmyadmin-on-pws-nothing-is-displayed">1.6 I can’t use phpMyAdmin on PWS: nothing is displayed!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-gzip-a-dump-or-a-csv-export-it-does-not-seem-to-work">1.7 How can I gzip a dump or a CSV export? It does not seem to work.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-cannot-insert-a-text-file-in-a-table-and-i-get-an-error-about-safe-mode-being-in-effect">1.8 I cannot insert a text file in a table, and I get an error about safe mode being in effect.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-9">1.9 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-m-having-troubles-when-uploading-files-with-phpmyadmin-running-on-a-secure-server-my-browser-is-internet-explorer-and-i-m-using-the-apache-server">1.10 I’m having troubles when uploading files with phpMyAdmin running on a secure server. My browser is Internet Explorer and I’m using the Apache server.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-open-basedir-restriction-while-uploading-a-file-from-the-import-tab">1.11 I get an ‘open_basedir restriction’ while uploading a file from the import tab.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-lost-my-mysql-root-password-what-can-i-do">1.12 I have lost my MySQL root password, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-13">1.13 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-14">1.14 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-problems-with-mysql-user-column-names">1.15 I have problems with <em>mysql.user</em> column names.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-cannot-upload-big-dump-files-memory-http-or-timeout-problems">1.16 I cannot upload big dump files (memory, HTTP or timeout problems).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#which-database-versions-does-bettermyadmin-support">1.17 Which Database versions does BetterMyAdmin support?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#a-i-cannot-connect-to-the-mysql-server-it-always-returns-the-error-message-client-does-not-support-authentication-protocol-requested-by-server-consider-upgrading-mysql-client">1.17a I cannot connect to the MySQL server. It always returns the error message, “Client does not support authentication protocol requested by server; consider upgrading MySQL client”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-18">1.18 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-run-the-display-relations-feature-because-the-script-seems-not-to-know-the-font-face-i-m-using">1.19 I can’t run the “display relations” feature because the script seems not to know the font face I’m using!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-receive-an-error-about-missing-mysqli-and-mysql-extensions">1.20 I receive an error about missing mysqli and mysql extensions.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-running-the-cgi-version-of-php-under-unix-and-i-cannot-log-in-using-cookie-auth">1.21 I am running the CGI version of PHP under Unix, and I cannot log in using cookie auth.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-don-t-see-the-location-of-text-file-field-so-i-cannot-upload">1.22 I don’t see the “Location of text file” field, so I cannot upload.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-m-running-mysql-on-a-win32-machine-each-time-i-create-a-new-table-the-table-and-column-names-are-changed-to-lowercase">1.23 I’m running MySQL on a Win32 machine. Each time I create a new table the table and column names are changed to lowercase!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-24">1.24 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-running-apache-with-mod-gzip-1-3-26-1a-on-windows-xp-and-i-get-problems-such-as-undefined-variables-when-i-run-a-sql-query">1.25 I am running Apache with mod_gzip-1.3.26.1a on Windows XP, and I get problems, such as undefined variables when I run a SQL query.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-just-installed-phpmyadmin-in-my-document-root-of-iis-but-i-get-the-error-no-input-file-specified-when-trying-to-run-phpmyadmin">1.26 I just installed phpMyAdmin in my document root of IIS but I get the error “No input file specified” when trying to run phpMyAdmin.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-empty-page-when-i-want-to-view-huge-page-eg-db-structure-php-with-plenty-of-tables">1.27 I get empty page when I want to view huge page (eg. db_structure.php with plenty of tables).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#my-mysql-server-sometimes-refuses-queries-and-returns-the-message-errorcode-13-what-does-this-mean">1.28 My MySQL server sometimes refuses queries and returns the message ‘Errorcode: 13’. What does this mean?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-create-a-table-or-modify-a-column-i-get-an-error-and-the-columns-are-duplicated">1.29 When I create a table or modify a column, I get an error and the columns are duplicated.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-the-error-navigation-php-missing-hash">1.30 I get the error “navigation.php: Missing hash”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#which-php-versions-does-phpmyadmin-support">1.31 Which PHP versions does phpMyAdmin support?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#can-i-use-http-authentication-with-iis">1.32 Can I use HTTP authentication with IIS?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-33">1.33 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#can-i-directly-access-a-database-or-table-pages">1.34 Can I directly access a database or table pages?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#can-i-use-http-authentication-with-apache-cgi">1.35 Can I use HTTP authentication with Apache CGI?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-error-500-internal-server-error">1.36 I get an error “500 Internal Server Error”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-run-bettermyadmin-on-cluster-of-different-machines-and-password-encryption-in-cookie-auth-doesn-t-work">1.37 I run BetterMyAdmin on cluster of different machines and password encryption in cookie auth doesn’t work.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq1-38">1.38 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-try-to-connect-via-https-i-can-log-in-but-then-my-connection-is-redirected-back-to-http-what-can-cause-this-behavior">1.39 When I try to connect via https, I can log in, but then my connection is redirected back to http. What can cause this behavior?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-accessing-bettermyadmin-via-an-apache-reverse-proxy-cookie-login-does-not-work">1.40 When accessing BetterMyAdmin via an Apache reverse proxy, cookie login does not work.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-view-a-database-and-ask-to-see-its-privileges-i-get-an-error-about-an-unknown-column">1.41 When I view a database and ask to see its privileges, I get an error about an unknown column.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-prevent-robots-from-accessing-bettermyadmin">1.42 How can I prevent robots from accessing BetterMyAdmin?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#why-can-t-i-display-the-structure-of-my-table-containing-hundreds-of-columns">1.43 Why can’t I display the structure of my table containing hundreds of columns?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-reduce-the-installed-size-of-phpmyadmin-on-disk">1.44 How can I reduce the installed size of phpMyAdmin on disk?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-error-message-about-unknown-authentication-method-caching-sha2-password-when-trying-to-log-in">1.45 I get an error message about unknown authentication method caching_sha2_password when trying to log in</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#missing-http-host-variable-when-using-nginx-with-http-3">1.46 Missing <code class="docutils literal notranslate"><span class="pre">HTTP_HOST</span></code> variable when using nginx with HTTP/3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#configuration">Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#the-error-message-warning-cannot-add-header-information-headers-already-sent-by-is-displayed-what-s-the-problem">2.1 The error message “Warning: Cannot add header information - headers already sent by …” is displayed, what’s the problem?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bettermyadmin-can-t-connect-to-mysql-what-s-wrong">2.2 BetterMyAdmin can’t connect to MySQL. What’s wrong?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#the-error-message-warning-mysql-connection-failed-can-t-connect-to-local-mysql-server-through-socket-tmp-mysql-sock-111-is-displayed-what-can-i-do">2.3 The error message “Warning: MySQL Connection Failed: Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’ (111) …” is displayed. What can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#nothing-is-displayed-by-my-browser-when-i-try-to-run-bettermyadmin-what-can-i-do">2.4 Nothing is displayed by my browser when I try to run BetterMyAdmin, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#each-time-i-want-to-insert-or-change-a-row-or-drop-a-database-or-a-table-an-error-404-page-not-found-is-displayed-or-with-http-or-cookie-authentication-i-m-asked-to-log-in-again-what-s-wrong">2.5 Each time I want to insert or change a row or drop a database or a table, an error 404 (page not found) is displayed or, with HTTP or cookie authentication, I’m asked to log in again. What’s wrong?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-access-denied-for-user-root-localhost-using-password-yes-error-when-trying-to-access-a-mysql-server-on-a-host-which-is-port-forwarded-for-my-localhost">2.6 I get an “Access denied for user: ‘root&#64;localhost’ (Using password: YES)”-error when trying to access a MySQL-Server on a host which is port-forwarded for my localhost.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#using-and-creating-themes">2.7 Using and creating themes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-missing-parameters-errors-what-can-i-do">2.8 I get “Missing parameters” errors, what can I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#seeing-an-upload-progress-bar">2.9 Seeing an upload progress bar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-to-generate-a-string-of-random-bytes">2.10 How to generate a string of random bytes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#known-limitations">Known limitations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-using-http-authentication-a-user-who-logged-out-can-not-log-in-again-in-with-the-same-nick">3.1 When using HTTP authentication, a user who logged out can not log in again in with the same nick.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-dumping-a-large-table-in-compressed-mode-i-get-a-memory-limit-error-or-a-time-limit-error">3.2 When dumping a large table in compressed mode, I get a memory limit error or a time limit error.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-innodb-tables-i-lose-foreign-key-relationships-when-i-rename-a-table-or-a-column">3.3 With InnoDB tables, I lose foreign key relationships when I rename a table or a column.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-unable-to-import-dumps-i-created-with-the-mysqldump-tool-bundled-with-the-mysql-server-distribution">3.4 I am unable to import dumps I created with the mysqldump tool bundled with the MySQL server distribution.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-using-nested-folders-multiple-hierarchies-are-displayed-in-a-wrong-manner">3.5 When using nested folders, multiple hierarchies are displayed in a wrong manner.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-6">3.6 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-table-with-many-100-columns-and-when-i-try-to-browse-table-i-get-series-of-errors-like-warning-unable-to-parse-url-how-can-this-be-fixed">3.7 I have table with many (100+) columns and when I try to browse table I get series of errors like “Warning: unable to parse url”. How can this be fixed?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-cannot-use-clickable-html-forms-in-columns-where-i-put-a-mime-transformation-onto">3.8 I cannot use (clickable) HTML-forms in columns where I put a MIME-Transformation onto!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-error-messages-when-using-sql-mode-ansi-for-the-mysql-server">3.9 I get error messages when using “–sql_mode=ANSI” for the MySQL server.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#homonyms-and-no-primary-key-when-the-results-of-a-select-display-more-than-one-row-with-the-same-value-for-example-select-lastname-from-employees-where-firstname-like-a-and-two-smith-values-are-displayed-if-i-click-edit-i-cannot-be-sure-that-i-am-editing-the-intended-row">3.10 Homonyms and no primary key: When the results of a SELECT display more than one row with the same value (for example <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">lastname</span> <span class="pre">from</span> <span class="pre">employees</span> <span class="pre">where</span> <span class="pre">firstname</span> <span class="pre">like</span> <span class="pre">'A%'</span></code> and two “Smith” values are displayed), if I click Edit I cannot be sure that I am editing the intended row.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#the-number-of-rows-for-innodb-tables-is-not-correct">3.11 The number of rows for InnoDB tables is not correct.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-12">3.12 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-error-when-entering-use-followed-by-a-db-name-containing-an-hyphen">3.13 I get an error when entering <code class="docutils literal notranslate"><span class="pre">USE</span></code> followed by a db name containing an hyphen.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-not-able-to-browse-a-table-when-i-don-t-have-the-right-to-select-one-of-the-columns">3.14 I am not able to browse a table when I don’t have the right to SELECT one of the columns.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-15">3.15 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-16">3.16 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq3-17">3.17 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-import-a-csv-file-that-contains-multiple-tables-they-are-lumped-together-into-a-single-table">3.18 When I import a CSV file that contains multiple tables, they are lumped together into a single table.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-import-a-file-and-have-bettermyadmin-determine-the-appropriate-data-structure-it-only-uses-int-decimal-and-varchar-types">3.19 When I import a file and have BetterMyAdmin determine the appropriate data structure it only uses int, decimal, and varchar types.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#after-upgrading-some-bookmarks-are-gone-or-their-content-cannot-be-shown">3.20 After upgrading, some bookmarks are gone or their content cannot be shown.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-am-unable-to-log-in-with-a-username-containing-unicode-characters-such-as-a">3.21 I am unable to log in with a username containing unicode characters such as á.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#isps-multi-user-installations">ISPs, multi-user installations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-m-an-isp-can-i-setup-one-central-copy-of-bettermyadmin-or-do-i-need-to-install-it-for-each-customer">4.1 I’m an ISP. Can I setup one central copy of BetterMyAdmin or do I need to install it for each customer?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-s-the-preferred-way-of-making-bettermyadmin-secure-against-evil-access">4.2 What’s the preferred way of making BetterMyAdmin secure against evil access?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-errors-about-not-being-able-to-include-a-file-in-lang-or-in-libraries">4.3 I get errors about not being able to include a file in <em>/lang</em> or in <em>/libraries</em>.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bettermyadmin-always-gives-access-denied-when-using-http-authentication">4.4 BetterMyAdmin always gives “Access denied” when using HTTP authentication.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#is-it-possible-to-let-users-create-their-own-databases">4.5 Is it possible to let users create their own databases?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-host-based-authentication-additions">4.6 How can I use the Host-based authentication additions?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#authentication-window-is-displayed-more-than-once-why">4.7 Authentication window is displayed more than once, why?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#which-parameters-can-i-use-in-the-url-that-starts-bettermyadmin">4.8 Which parameters can I use in the URL that starts BetterMyAdmin?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#browsers-or-client-os">Browsers or client OS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-an-out-of-memory-error-and-my-controls-are-non-functional-when-trying-to-create-a-table-with-more-than-14-columns">5.1 I get an out of memory error, and my controls are non-functional, when trying to create a table with more than 14 columns.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-xitami-2-5b4-phpmyadmin-won-t-process-form-fields">5.2 With Xitami 2.5b4, phpMyAdmin won’t process form fields.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-problems-dumping-tables-with-konqueror-phpmyadmin-2-2-2">5.3 I have problems dumping tables with Konqueror (phpMyAdmin 2.2.2).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-use-the-cookie-authentication-mode-because-internet-explorer-never-stores-the-cookies">5.4 I can’t use the cookie authentication mode because Internet Explorer never stores the cookies.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-5">5.5 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-6">5.6 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-refresh-reload-my-browser-and-come-back-to-the-welcome-page">5.7 I refresh (reload) my browser, and come back to the welcome page.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-8">5.8 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-9">5.9 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-10">5.10 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#extended-ascii-characters-like-german-umlauts-are-displayed-wrong">5.11 Extended-ASCII characters like German umlauts are displayed wrong.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#mac-os-x-safari-browser-changes-special-characters-to">5.12 Mac OS X Safari browser changes special characters to “?”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-13">5.13 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-14">5.14 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-15">5.15 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-internet-explorer-i-get-access-is-denied-javascript-errors-or-i-cannot-make-bettermyadmin-work-under-windows">5.16 With Internet Explorer, I get “Access is denied” Javascript errors. Or I cannot make BetterMyAdmin work under Windows.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#with-firefox-i-cannot-delete-rows-of-data-or-drop-a-database">5.17 With Firefox, I cannot delete rows of data or drop a database.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq5-18">5.18 (withdrawn)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-javascript-errors-in-my-browser">5.19 I get JavaScript errors in my browser.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-errors-about-violating-content-security-policy">5.20 I get errors about violating Content Security Policy.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-errors-about-potentially-unsafe-operation-when-browsing-table-or-executing-sql-query">5.21 I get errors about potentially unsafe operation when browsing table or executing SQL query.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#using-bettermyadmin">Using BetterMyAdmin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-can-t-insert-new-rows-into-a-table-i-can-t-create-a-table-mysql-brings-up-a-sql-error">6.1 I can’t insert new rows into a table / I can’t create a table - MySQL brings up a SQL error.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-i-create-a-table-i-set-an-index-for-two-columns-and-bettermyadmin-generates-only-one-index-with-those-two-columns">6.2 When I create a table, I set an index for two columns and BetterMyAdmin generates only one index with those two columns.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-insert-a-null-value-into-my-table">6.3 How can I insert a null value into my table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-backup-my-database-or-table">6.4 How can I backup my database or table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-restore-upload-my-database-or-table-using-a-dump-how-can-i-run-a-sql-file">6.5 How can I restore (upload) my database or table using a dump? How can I run a “.sql” file?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-relation-table-in-query-by-example">6.6 How can I use the relation table in Query-by-example?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-display-column-feature">6.7 How can I use the “display column” feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-produce-a-pdf-schema-of-my-database">6.8 How can I produce a PDF schema of my database?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bettermyadmin-is-changing-the-type-of-one-of-my-columns">6.9 BetterMyAdmin is changing the type of one of my columns!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-creating-a-privilege-what-happens-with-underscores-in-the-database-name">6.10 When creating a privilege, what happens with underscores in the database name?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-is-the-curious-symbol-o-in-the-statistics-pages">6.11 What is the curious symbol ø in the statistics pages?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-want-to-understand-some-export-options">6.12 I want to understand some Export options.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-would-like-to-create-a-database-with-a-dot-in-its-name">6.13 I would like to create a database with a dot in its name.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faqsqlvalidator">6.14 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-want-to-add-a-blob-column-and-put-an-index-on-it-but-mysql-says-blob-column-used-in-key-specification-without-a-key-length">6.15 I want to add a BLOB column and put an index on it, but MySQL says “BLOB column ‘…’ used in key specification without a key length”.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-simply-move-in-page-with-plenty-editing-fields">6.16 How can I simply move in page with plenty editing fields?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#transformations-i-can-t-enter-my-own-mimetype-what-is-this-feature-then-useful-for">6.17 Transformations: I can’t enter my own mimetype! What is this feature then useful for?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bookmarks-where-can-i-store-bookmarks-why-can-t-i-see-any-bookmarks-below-the-query-box-what-are-these-variables-for">6.18 Bookmarks: Where can I store bookmarks? Why can’t I see any bookmarks below the query box? What are these variables for?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-create-simple-latex-document-to-include-exported-table">6.19 How can I create simple LATEX document to include exported table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-see-a-lot-of-databases-which-are-not-mine-and-cannot-access-them">6.20 I see a lot of databases which are not mine, and cannot access them.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#in-edit-insert-mode-how-can-i-see-a-list-of-possible-values-for-a-column-based-on-some-foreign-table">6.21 In edit/insert mode, how can I see a list of possible values for a column, based on some foreign table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#bookmarks-can-i-execute-a-default-bookmark-automatically-when-entering-browse-mode-for-a-table">6.22 Bookmarks: Can I execute a default bookmark automatically when entering Browse mode for a table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#export-i-heard-bettermyadmin-can-export-microsoft-excel-files">6.23 Export: I heard BetterMyAdmin can export Microsoft Excel files?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#now-that-bettermyadmin-supports-native-mysql-4-1-x-column-comments-what-happens-to-my-column-comments-stored-in-pmadb">6.24 Now that BetterMyAdmin supports native MySQL 4.1.x column comments, what happens to my column comments stored in pmadb?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq6-25">6.25 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-select-a-range-of-rows">6.26 How can I select a range of rows?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-format-strings-can-i-use">6.27 What format strings can I use?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq6-28">6.28 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#why-can-t-i-get-a-chart-from-my-query-result-table">6.29 Why can’t I get a chart from my query result table?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#import-how-can-i-import-esri-shapefiles">6.30 Import: How can I import ESRI Shapefiles?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-do-i-create-a-relation-in-designer">6.31 How do I create a relation in designer?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-zoom-search-feature">6.32 How can I use the zoom search feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#when-browsing-a-table-how-can-i-copy-a-column-name">6.33 When browsing a table, how can I copy a column name?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-favorite-tables-feature">6.34 How can I use the Favorite Tables feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-the-range-search-feature">6.35 How can I use the Range search feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-is-central-columns-and-how-can-i-use-this-feature">6.36 What is Central columns and how can I use this feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-use-improve-table-structure-feature">6.37 How can I use Improve Table structure feature?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-reassign-auto-incremented-values">6.38 How can I reassign auto-incremented values?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#what-is-the-adjust-privileges-option-when-renaming-copying-or-moving-a-database-table-column-or-procedure">6.39 What is the “Adjust privileges” option when renaming, copying, or moving a database, table, column, or procedure?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-see-bind-parameters-checkbox-in-the-sql-page-how-do-i-write-parameterized-sql-queries">6.40 I see “Bind parameters” checkbox in the “SQL” page. How do I write parameterized SQL queries?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-get-import-errors-while-importing-the-dumps-exported-from-older-mysql-versions-pre-5-7-6-into-newer-mysql-versions-5-7-7-but-they-work-fine-when-imported-back-on-same-older-versions">6.41 I get import errors while importing the dumps exported from older MySQL versions (pre-5.7.6) into newer MySQL versions (5.7.7+), but they work fine when imported back on same older versions ?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#bettermyadmin-project">BetterMyAdmin project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-have-found-a-bug-how-do-i-inform-developers">7.1 I have found a bug. How do I inform developers?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-want-to-translate-the-messages-to-a-new-language-or-upgrade-an-existing-language-where-do-i-start">7.2 I want to translate the messages to a new language or upgrade an existing language, where do I start?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#i-would-like-to-help-out-with-the-development-of-bettermyadmin-how-should-i-proceed">7.3 I would like to help out with the development of BetterMyAdmin. How should I proceed?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#security">Security</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#where-can-i-get-information-about-the-security-alerts-issued-for-bettermyadmin">8.1 Where can I get information about the security alerts issued for BetterMyAdmin?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#how-can-i-protect-bettermyadmin-against-brute-force-attacks">8.2 How can I protect BetterMyAdmin against brute force attacks?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#why-are-there-path-disclosures-when-directly-loading-certain-files">8.3 Why are there path disclosures when directly loading certain files?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#csv-files-exported-from-bettermyadmin-could-allow-a-formula-injection-attack">8.4 CSV files exported from BetterMyAdmin could allow a formula injection attack.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#synchronization">Synchronization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq9-1">9.1 (withdrawn).</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq.html#faq9-2">9.2 (withdrawn).</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developers.html">Developers Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security policy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="security.html#typical-vulnerabilities">Typical vulnerabilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="security.html#cross-site-scripting-xss">Cross-site scripting (XSS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html#cross-site-request-forgery-csrf">Cross-site request forgery (CSRF)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html#sql-injection">SQL injection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="security.html#brute-force-attack">Brute force attack</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#reporting-security-issues">Reporting security issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copyright.html">Copyright</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="copyright.html#third-party-licenses">Third party licenses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="credits.html">Credits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#credits-in-chronological-order">Credits, in chronological order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#translators">Translators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#documentation-translators">Documentation translators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="credits.html#original-credits-of-version-2-1-0">Original Credits of Version 2.1.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">BetterMyAdmin</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/cB-Sigma/better-myadmin/blob/main/docs-site/setup.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<span id="setup"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>BetterMyAdmin does not apply any special security methods to the MySQL
+database server. It is still the system administrator’s job to grant
+permissions on the MySQL databases properly. BetterMyAdmin’s <span class="guilabel">Users</span>
+page can be used for this.</p>
+<p>BetterMyAdmin is one Node.js process that serves the web application and its
+API. It needs no PHP and no web server in front of it; put a reverse proxy with
+TLS in front of it before exposing it to a network (see <a class="reference internal" href="#securing"><span class="std std-ref">Securing your BetterMyAdmin installation</span></a>).</p>
+<section id="installing-using-docker">
+<span id="docker"></span><h2>Installing using Docker<a class="headerlink" href="#installing-using-docker" title="Link to this heading"></a></h2>
+<p>Released images are published on the GitHub Container Registry:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>-e<span class="w"> </span><span class="nv">BMA_HOST</span><span class="o">=</span>mysql.example.org<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>bma-data:/var/lib/bettermyadmin<span class="w"> </span>ghcr.io/cb-sigma/better-myadmin:latest
+</pre></div>
+</div>
+<p>then open <code class="docutils literal notranslate"><span class="pre">http://localhost:8080</span></code>. Pin a release version (<code class="docutils literal notranslate"><span class="pre">:X.Y.Z</span></code>)
+instead of <code class="docutils literal notranslate"><span class="pre">:latest</span></code> in production.</p>
+<p>The image takes the variables of phpMyAdmin’s official Docker image, so a
+compose file written for the <code class="docutils literal notranslate"><span class="pre">phpmyadmin</span></code> image works with the image name
+swapped. It keeps its sessions, the generated <code class="docutils literal notranslate"><span class="pre">blowfish_secret</span></code> and its local
+metadata in the <code class="docutils literal notranslate"><span class="pre">/var/lib/bettermyadmin</span></code> volume, runs as the unprivileged
+<code class="docutils literal notranslate"><span class="pre">node</span></code> user and listens on port 80 inside the container (<code class="docutils literal notranslate"><span class="pre">BMA_LISTEN_PORT</span></code>
+changes it).</p>
+<section id="docker-environment-variables">
+<span id="docker-vars"></span><h3>Docker environment variables<a class="headerlink" href="#docker-environment-variables" title="Link to this heading"></a></h3>
+<p>Every variable of the official phpMyAdmin image works, so a compose file
+written for <code class="docutils literal notranslate"><span class="pre">phpmyadmin</span></code> runs BetterMyAdmin with only the image name changed.
+Each also has a BetterMyAdmin name, which is the one to use in new setups (the
+<code class="docutils literal notranslate"><span class="pre">PMA_</span></code> names stay supported; when both are set, the <code class="docutils literal notranslate"><span class="pre">BMA_</span></code> one wins):</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>BetterMyAdmin</p></th>
+<th class="head"><p>phpMyAdmin image (also read)</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_HOST</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_HOST</span></code></p></td>
+<td><p>the server to log in to (default: the linked <code class="docutils literal notranslate"><span class="pre">db</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_PORT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_PORT</span></code></p></td>
+<td><p>that server’s port</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_HOST_LABEL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_VERBOSE</span></code></p></td>
+<td><p>that server’s name in the server list</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_HOSTS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_HOSTS</span></code></p></td>
+<td><p>several servers, comma-separated</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_PORTS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_PORTS</span></code></p></td>
+<td><p>their ports</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_HOST_LABELS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_VERBOSES</span></code></p></td>
+<td><p>their names</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SOCKET</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SOCKET</span></code></p></td>
+<td><p>a server reached through a socket</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SOCKETS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SOCKETS</span></code></p></td>
+<td><p>several socket servers, comma-separated</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_ARBITRARY_SERVER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_ARBITRARY</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: the login form can name any server</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_USER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_USER</span></code></p></td>
+<td><p>config authentication: log in as this user, no login form</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_PASSWORD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_PASSWORD</span></code></p></td>
+<td><p>that user’s password</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_ABSOLUTE_URI</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_ABSOLUTE_URI</span></code></p></td>
+<td><p>the public URL behind a reverse proxy</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_STORAGE_DB</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_PMADB</span></code></p></td>
+<td><p>the configuration storage database (<code class="docutils literal notranslate"><span class="pre">phpmyadmin</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_HOST</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_CONTROLHOST</span></code></p></td>
+<td><p>the configuration storage’s server</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_PORT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_CONTROLPORT</span></code></p></td>
+<td><p>its port</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_USER</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_CONTROLUSER</span></code></p></td>
+<td><p>the control user</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_PASSWORD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_CONTROLPASS</span></code></p></td>
+<td><p>the control user’s password</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_QUERY_HISTORY_DB</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_QUERYHISTORYDB</span></code></p></td>
+<td><p>keep the SQL history in the configuration storage</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_QUERY_HISTORY_MAX</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_QUERYHISTORYMAX</span></code></p></td>
+<td><p>how many history entries to keep</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_UPLOAD_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_UPLOADDIR</span></code></p></td>
+<td><p>server-side directory to import files from</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SAVE_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SAVEDIR</span></code></p></td>
+<td><p>server-side directory to save exports to</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1</span></code>: TLS to the MySQL server</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_VERIFY</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_VERIFY</span></code></p></td>
+<td><p>verify the server’s certificate</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CA</span></code></p></td>
+<td><p>CA certificate file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_KEY</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_KEY</span></code></p></td>
+<td><p>client key file</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CERT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CERT</span></code></p></td>
+<td><p>client certificate file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSLS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSLS</span></code></p></td>
+<td><p>the same per server of BMA_HOSTS, comma-separated</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_VERIFIES</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_VERIFIES</span></code></p></td>
+<td><p>″</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CAS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CAS</span></code></p></td>
+<td><p>″</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_KEYS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_KEYS</span></code></p></td>
+<td><p>″</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CERTS</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CERTS</span></code></p></td>
+<td><p>″</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CA_BASE64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CA_BASE64</span></code></p></td>
+<td><p>the CA certificate itself, base64 (written to BMA_SSL_DIR)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_KEY_BASE64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_KEY_BASE64</span></code></p></td>
+<td><p>the client key itself, base64</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CERT_BASE64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CERT_BASE64</span></code></p></td>
+<td><p>the client certificate itself, base64</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CAS_BASE64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CAS_BASE64</span></code></p></td>
+<td><p>″ per server</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_KEYS_BASE64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_KEYS_BASE64</span></code></p></td>
+<td><p>″ per server</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_CERTS_BASE64</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_CERTS_BASE64</span></code></p></td>
+<td><p>″ per server</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_SSL_DIR</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_SSL_DIR</span></code></p></td>
+<td><p>where the <code class="docutils literal notranslate"><span class="pre">*_BASE64</span></code> files are written</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_UPLOAD_LIMIT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">UPLOAD_LIMIT</span></code></p></td>
+<td><p>the largest upload, e.g. <code class="docutils literal notranslate"><span class="pre">64M</span></code> (MaxUploadSize; default 512M)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_EXEC_TIME_LIMIT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MAX_EXECUTION_TIME</span></code></p></td>
+<td><p>seconds an import or export may run (ExecTimeLimit)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_MEMORY_LIMIT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MEMORY_LIMIT</span></code></p></td>
+<td><p>MemoryLimit (no effect: imports and exports stream)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_LISTEN_PORT</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">APACHE_PORT</span></code></p></td>
+<td><p>the port BetterMyAdmin listens on in the container (default 80)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BMA_USER_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_PASSWORD_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_HOST_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_HOSTS_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_HOST_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_USER_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_CONTROL_PASSWORD_FILE</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PMA_USER_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">PMA_PASSWORD_FILE</span></code>, …</p></td>
+<td><p>the same values read from files (Docker secrets)</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">PMA_CONFIG_BASE64</span></code>, <code class="docutils literal notranslate"><span class="pre">PMA_USER_CONFIG_BASE64</span></code> and <code class="docutils literal notranslate"><span class="pre">/etc/phpmyadmin/conf.d</span></code>
+hold PHP code and are not read; use a configuration file instead (below).</p>
+</section>
+<section id="customizing-configuration-file-using-docker">
+<span id="docker-custom"></span><h3>Customizing configuration file using Docker<a class="headerlink" href="#customizing-configuration-file-using-docker" title="Link to this heading"></a></h3>
+<p>Mount a configuration file into <code class="docutils literal notranslate"><span class="pre">/etc/bettermyadmin</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>-v<span class="w"> </span>./bettermyadmin.config.json:/etc/bettermyadmin/bettermyadmin.config.json:ro<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>bma-data:/var/lib/bettermyadmin<span class="w"> </span>ghcr.io/cb-sigma/better-myadmin:latest
+</pre></div>
+</div>
+</section>
+</section>
+<section id="installing-from-a-checkout">
+<span id="checkout"></span><h2>Installing from a checkout<a class="headerlink" href="#installing-from-a-checkout" title="Link to this heading"></a></h2>
+<p>BetterMyAdmin needs Node.js 22.5 or later and pnpm:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/cB-Sigma/better-myadmin.git
+<span class="nb">cd</span><span class="w"> </span>better-myadmin
+pnpm<span class="w"> </span>install<span class="w"> </span>--frozen-lockfile
+pnpm<span class="w"> </span>build<span class="w">          </span><span class="c1"># the web application (apps/web/dist)</span>
+pnpm<span class="w"> </span>start<span class="w">          </span><span class="c1"># http://127.0.0.1:8080</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">pnpm</span> <span class="pre">start</span></code> runs <code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">apps/server/bin/bettermyadmin.mjs</span></code>, which takes
+<code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">&lt;file&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">--host</span></code>, <code class="docutils literal notranslate"><span class="pre">--port</span></code> and <code class="docutils literal notranslate"><span class="pre">--static</span> <span class="pre">&lt;dir&gt;</span></code>.</p>
+</section>
+<section id="quick-install">
+<span id="id1"></span><h2>Quick Install<a class="headerlink" href="#quick-install" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Start BetterMyAdmin with Docker (<a class="reference internal" href="#docker"><span class="std std-ref">Installing using Docker</span></a>) or from a checkout
+(<a class="reference internal" href="#checkout"><span class="std std-ref">Installing from a checkout</span></a>).</p></li>
+<li><p>Configure it. Settings come from four layers, each overriding the one
+before:</p>
+<ol class="arabic simple">
+<li><p>the defaults: every directive of <a class="reference internal" href="config.html#config"><span class="std std-ref">Configuration</span></a> with its default value;</p></li>
+<li><p>the Docker variables above;</p></li>
+<li><p>a configuration file: <code class="docutils literal notranslate"><span class="pre">--config</span> <span class="pre">&lt;file&gt;</span></code>, the <code class="docutils literal notranslate"><span class="pre">BMA_CONFIG</span></code> variable, or
+the first of <code class="file docutils literal notranslate"><span class="pre">bettermyadmin.config.ts</span></code>, <code class="docutils literal notranslate"><span class="pre">.js</span></code>, <code class="docutils literal notranslate"><span class="pre">.mjs</span></code>, <code class="docutils literal notranslate"><span class="pre">.json</span></code>,
+<code class="docutils literal notranslate"><span class="pre">.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">.yml</span></code> in the working directory (<code class="docutils literal notranslate"><span class="pre">/etc/bettermyadmin</span></code> in the
+image);</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BMA__&lt;Directive&gt;[__&lt;Sub&gt;…]</span></code> environment variables
+(<code class="docutils literal notranslate"><span class="pre">BMA__Servers__1__host=db</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA__MaxRows=50</span></code>), plus the shortcuts
+<code class="docutils literal notranslate"><span class="pre">BMA_HOST</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_PORT</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_USER</span></code>, <code class="docutils literal notranslate"><span class="pre">BMA_PASSWORD</span></code>,
+<code class="docutils literal notranslate"><span class="pre">BMA_ARBITRARY_SERVER</span></code> and <code class="docutils literal notranslate"><span class="pre">BMA_ABSOLUTE_URI</span></code>.</p></li>
+</ol>
+</li>
+<li><p>Log in with a MySQL account.</p></li>
+</ol>
+<section id="manually-creating-the-file">
+<h3>Manually creating the file<a class="headerlink" href="#manually-creating-the-file" title="Link to this heading"></a></h3>
+<p>The configuration file holds every directive of <a class="reference internal" href="config.html#config"><span class="std std-ref">Configuration</span></a> as data:
+<code class="docutils literal notranslate"><span class="pre">$cfg['X']</span></code> in this documentation is the key <code class="docutils literal notranslate"><span class="pre">X</span></code> of the file, and
+<code class="docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]</span></code> is an entry of its <code class="docutils literal notranslate"><span class="pre">Servers</span></code> list (server 1 first).
+If the default value is okay for a particular setting, there is no need to
+include it. A simple configuration may look like this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"blowfish_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a 32-byte or longer random string"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"Servers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db.example.org"</span><span class="p">,</span><span class="w"> </span><span class="nt">"auth_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cookie"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or, if you prefer to not be prompted every time you log in:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"Servers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db.example.org"</span><span class="p">,</span><span class="w"> </span><span class="nt">"auth_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"config"</span><span class="p">,</span><span class="w"> </span><span class="nt">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root"</span><span class="p">,</span><span class="w"> </span><span class="nt">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"changeme"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Storing passwords in the configuration is insecure as anybody can then
+manipulate your database.</p>
+</div>
+<p>A TypeScript file gives type checking and completion over every directive:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="c1">// bettermyadmin.config.ts</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">defineConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'@bettermyadmin/config'</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">defineConfig</span><span class="p">({</span>
+<span class="w">  </span><span class="nx">Servers</span><span class="o">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nx">host</span><span class="o">:</span><span class="w"> </span><span class="s1">'db.example.org'</span><span class="p">,</span><span class="w"> </span><span class="nx">auth_type</span><span class="o">:</span><span class="w"> </span><span class="s1">'cookie'</span><span class="w"> </span><span class="p">}],</span>
+<span class="w">  </span><span class="nx">MaxRows</span><span class="o">:</span><span class="w"> </span><span class="kt">50</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>An unknown directive or an invalid value stops the server with a message
+naming the closest directive. Without a <code class="docutils literal notranslate"><span class="pre">blowfish_secret</span></code>, one is generated
+into <span class="target" id="index-0"></span><a class="reference internal" href="config.html#cfg_DataDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['DataDir']</span></code></a> on the first start. The directives of a
+phpMyAdmin <code class="file docutils literal notranslate"><span class="pre">config.inc.php</span></code> keep their names, so it translates key for
+key, and BetterMyAdmin converts one for you:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>bettermyadmin<span class="w"> </span>import-pma-config<span class="w"> </span>/etc/phpmyadmin/config.inc.php<span class="w"> </span>-o<span class="w"> </span>bettermyadmin.config.json
+</pre></div>
+</div>
+<p>(<code class="docutils literal notranslate"><span class="pre">node</span> <span class="pre">apps/server/bin/bettermyadmin.mjs</span> <span class="pre">import-pma-config</span> <span class="pre">…</span></code> from a checkout,
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">--rm</span> <span class="pre">-v</span> <span class="pre">/etc/phpmyadmin:/pma:ro</span> <span class="pre">ghcr.io/cb-sigma/better-myadmin</span>
+<span class="pre">node</span> <span class="pre">/app/apps/server/bin/bettermyadmin.mjs</span> <span class="pre">import-pma-config</span> <span class="pre">/pma/config.inc.php</span></code>
+with Docker). The file is read, not run: the importer evaluates the subset of
+PHP that configuration files use (<code class="docutils literal notranslate"><span class="pre">getenv()</span></code> reads the environment), and the
+result is checked like a configuration file before it is written. Without
+<code class="docutils literal notranslate"><span class="pre">-o</span></code> the JSON goes to standard output; an existing file is only replaced with
+<code class="docutils literal notranslate"><span class="pre">--force</span></code>. The setup script (below) also shows the configuration it builds in
+both formats.</p>
+<p>For a full explanation of possible configuration values, see the
+<a class="reference internal" href="config.html#config"><span class="std std-ref">Configuration</span></a> of this document.</p>
+</section>
+<section id="using-the-setup-script">
+<span id="setup-script"></span><span id="index-1"></span><h3>Using the Setup script<a class="headerlink" href="#using-the-setup-script" title="Link to this heading"></a></h3>
+<p>Until a configuration file exists, the setup script at <code class="docutils literal notranslate"><span class="pre">/setup</span></code> is open
+without a login, and the server prints a warning when it starts. It lets you
+build a configuration page by page and saves it as
+<code class="file docutils literal notranslate"><span class="pre">bettermyadmin.config.json</span></code> (or shows it for you to copy). Write a
+configuration file before exposing the server.</p>
+</section>
+</section>
+<section id="phpmyadmin-configuration-storage">
+<span id="linked-tables"></span><h2>phpMyAdmin configuration storage<a class="headerlink" href="#phpmyadmin-configuration-storage" title="Link to this heading"></a></h2>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.4.0: </span>Prior to phpMyAdmin 3.4.0 this was called Linked Tables Infrastructure, but
+the name was changed due to the extended scope of the storage.</p>
+</div>
+<p>For a whole set of additional features (<a class="reference internal" href="bookmarks.html#bookmarks"><span class="std std-ref">Bookmarks</span></a>, comments, <a class="reference internal" href="glossary.html#term-SQL"><span class="xref std std-term">SQL</span></a>-history,
+tracking mechanism, <a class="reference internal" href="glossary.html#term-PDF"><span class="xref std std-term">PDF</span></a>-generation, <a class="reference internal" href="transformations.html#transformations"><span class="std std-ref">Transformations</span></a>, <a class="reference internal" href="relations.html#relations"><span class="std std-ref">Relations</span></a>
+etc.) you need to create a set of special tables. Those tables can be located
+in your own database, or in a central database for a multi-user installation
+(this database would then be accessed by the controluser, so no other user
+should have rights to it).</p>
+<p>BetterMyAdmin uses phpMyAdmin’s configuration storage as it is: the same
+database (<code class="docutils literal notranslate"><span class="pre">phpmyadmin</span></code> by default, see
+<span class="target" id="index-2"></span><a class="reference internal" href="config.html#cfg_Servers_pmadb"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['pmadb']</span></code></a>), the same <code class="docutils literal notranslate"><span class="pre">pma__*</span></code> tables
+and the same contents. BetterMyAdmin and phpMyAdmin can therefore share one
+configuration storage, and you can switch from one to the other without
+losing bookmarks, relations, user preferences or two-factor settings.</p>
+<p>Without a configuration storage, BetterMyAdmin keeps the per-user data
+(bookmarks, SQL history, recent and favorite tables, table display
+preferences and user preferences) in a local SQLite file in
+<span class="target" id="index-3"></span><a class="reference internal" href="config.html#cfg_DataDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['DataDir']</span></code></a>; phpMyAdmin offers these only with the
+storage, or keeps them until you log out. The features that describe the
+databases themselves (relations, comments, transformations, tracking, …)
+still need the configuration storage, as they must be shared by all users.</p>
+<section id="zero-configuration">
+<span id="zeroconf"></span><h3>Zero configuration<a class="headerlink" href="#zero-configuration" title="Link to this heading"></a></h3>
+<p>In many cases, this database structure can be automatically created and
+configured. This is called “Zero Configuration” mode and can be particularly
+useful in shared hosting situations. “ZeroConf” mode is on by default, to
+disable set <span class="target" id="index-4"></span><a class="reference internal" href="config.html#cfg_ZeroConf"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['ZeroConf']</span></code></a> to false.</p>
+<p>The following three scenarios are covered by the Zero Configuration mode:</p>
+<ul class="simple">
+<li><p>When entering a database where the configuration storage tables are not
+present, BetterMyAdmin offers to create them from the Operations tab.</p></li>
+<li><p>When entering a database where the tables do already exist, the software
+automatically detects this and begins using them. This is the most common
+situation; after the tables are initially created automatically they are
+continually used without disturbing the user; this is also most useful on
+shared hosting where the user is not able to edit the configuration file and
+usually the user only has access to one database.</p></li>
+<li><p>When having access to multiple databases, if the user first enters the
+database containing the configuration storage tables then switches to
+another database,
+BetterMyAdmin continues to use the tables from the first database; the user is
+not prompted to create more tables in the new database.</p></li>
+</ul>
+</section>
+<section id="manual-configuration">
+<h3>Manual configuration<a class="headerlink" href="#manual-configuration" title="Link to this heading"></a></h3>
+<p>The tables are created by the SQL script
+<code class="file docutils literal notranslate"><span class="pre">packages/metadata/resources/create_tables.sql</span></code> of the BetterMyAdmin
+repository, which is phpMyAdmin’s <code class="file docutils literal notranslate"><span class="pre">resources/sql/create_tables.sql</span></code>.
+(If your database server runs on Windows, pay special attention to
+<a class="reference internal" href="faq.html#faq1-23"><span class="std std-ref">1.23 I’m running MySQL on a Win32 machine. Each time I create a new table the table and column names are changed to lowercase!</span></a>.)</p>
+<p>If you already had this infrastructure and upgraded to phpMyAdmin 4.3.0 or
+newer from 2.5.0 or newer (&lt;= 4.2.x), please use
+<code class="file docutils literal notranslate"><span class="pre">packages/metadata/resources/upgrade_column_info_4_3_0+.sql</span></code> (phpMyAdmin’s
+<code class="file docutils literal notranslate"><span class="pre">resources/sql/upgrade_column_info_4_3_0+.sql</span></code>); for older upgrades, use
+the scripts shipped with phpMyAdmin.</p>
+<p>You can use BetterMyAdmin to create the tables for you: import
+<code class="file docutils literal notranslate"><span class="pre">create_tables.sql</span></code> from the <span class="guilabel">Import</span> tab, or use the links of
+the configuration storage check page (linked from the home page and the
+Operations tab). Please be aware that you may need special (administrator)
+privileges to create the database and tables, and that the script may need
+some tuning, depending on the database name.</p>
+<p>After having created the tables, you should specify the table names in your
+configuration file. The directives used for that can be found in the
+<a class="reference internal" href="config.html#config"><span class="std std-ref">Configuration</span></a> (see also the basic example in <a class="reference internal" href="config.html#config-examples"><span class="std std-ref">Examples</span></a>).</p>
+<p>You will also need to have a controluser
+(<span class="target" id="index-5"></span><a class="reference internal" href="config.html#cfg_Servers_controluser"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['controluser']</span></code></a> and
+<span class="target" id="index-6"></span><a class="reference internal" href="config.html#cfg_Servers_controlpass"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['controlpass']</span></code></a> settings, or the Docker
+variables <code class="docutils literal notranslate"><span class="pre">PMA_CONTROLUSER</span></code> and <code class="docutils literal notranslate"><span class="pre">PMA_CONTROLPASS</span></code>)
+with the proper rights to those tables. For example you can create it
+using following statement:</p>
+<p>And for any MariaDB version:</p>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">'pma'</span><span class="nv">@'localhost'</span><span class="w"> </span><span class="k">IDENTIFIED</span><span class="w"> </span><span class="n">VIA</span><span class="w"> </span><span class="n">mysql_native_password</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="s1">'pmapass'</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="p">,</span><span class="w"> </span><span class="k">INSERT</span><span class="p">,</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">,</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n n-Quoted">`&lt;pma_db&gt;`</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">'pma'</span><span class="nv">@'localhost'</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For MySQL 8.0 and newer:</p>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">'pma'</span><span class="nv">@'localhost'</span><span class="w"> </span><span class="k">IDENTIFIED</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">caching_sha2_password</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">'pmapass'</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="p">,</span><span class="w"> </span><span class="k">INSERT</span><span class="p">,</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">,</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">&lt;</span><span class="n">pma_db</span><span class="o">&gt;</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">'pma'</span><span class="nv">@'localhost'</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For MySQL older than 8.0:</p>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="s1">'pma'</span><span class="nv">@'localhost'</span><span class="w"> </span><span class="k">IDENTIFIED</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="n">mysql_native_password</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">'pmapass'</span><span class="p">;</span>
+<span class="k">GRANT</span><span class="w"> </span><span class="k">SELECT</span><span class="p">,</span><span class="w"> </span><span class="k">INSERT</span><span class="p">,</span><span class="w"> </span><span class="k">UPDATE</span><span class="p">,</span><span class="w"> </span><span class="k">DELETE</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="o">&lt;</span><span class="n">pma_db</span><span class="o">&gt;</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">'pma'</span><span class="nv">@'localhost'</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The host in these statements is the host BetterMyAdmin connects from, as the
+MySQL server sees it: with Docker, that is usually the container’s address
+rather than <code class="docutils literal notranslate"><span class="pre">localhost</span></code>. BetterMyAdmin’s MySQL driver supports
+<code class="docutils literal notranslate"><span class="pre">caching_sha2_password</span></code>, so the <code class="docutils literal notranslate"><span class="pre">mysql_native_password</span></code> workaround that
+phpMyAdmin needs with old PHP versions is not necessary (see <a class="reference internal" href="faq.html#faq1-45"><span class="std std-ref">1.45 I get an error message about unknown authentication method caching_sha2_password when trying to log in</span></a>).</p>
+</section>
+</section>
+<section id="upgrading-from-an-older-version">
+<span id="upgrading"></span><h2>Upgrading from an older version<a class="headerlink" href="#upgrading-from-an-older-version" title="Link to this heading"></a></h2>
+<p>Your configuration file, the Docker variables and the <a class="reference internal" href="#linked-tables"><span class="std std-ref">phpMyAdmin configuration storage</span></a>
+carry over from one version to the next. A directive that a new version no
+longer knows stops the server with a message naming it, rather than being
+silently ignored; one that phpMyAdmin removed only gives a warning at start.</p>
+<p>With Docker, pull the new image and recreate the container, keeping the data
+volume (<code class="docutils literal notranslate"><span class="pre">/var/lib/bettermyadmin</span></code>) and your configuration file:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/cb-sigma/better-myadmin:X.Y.Z
+docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>bettermyadmin
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>bettermyadmin<span class="w"> </span>-p<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>-e<span class="w"> </span><span class="nv">BMA_HOST</span><span class="o">=</span>mysql.example.org<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-v<span class="w"> </span>bma-data:/var/lib/bettermyadmin<span class="w"> </span>ghcr.io/cb-sigma/better-myadmin:X.Y.Z
+</pre></div>
+</div>
+<p>or, with Docker Compose, change the image tag and run
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">pull</span> <span class="pre">&amp;&amp;</span> <span class="pre">docker</span> <span class="pre">compose</span> <span class="pre">up</span> <span class="pre">-d</span></code>.</p>
+<p>From a checkout, update the sources, the dependencies and the web
+application, then restart the server:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>pull
+pnpm<span class="w"> </span>install<span class="w"> </span>--frozen-lockfile
+pnpm<span class="w"> </span>build
+pnpm<span class="w"> </span>start
+</pre></div>
+</div>
+<p>The release notes of each version are in the <a class="reference external" href="https://github.com/cB-Sigma/better-myadmin/blob/main/CHANGELOG.md">changelog</a>.</p>
+<p>If you have upgraded your phpMyAdmin to 4.3.0 or newer from 2.5.0 or
+newer (&lt;= 4.2.x) and if you use the phpMyAdmin configuration storage, you
+should run the <a class="reference internal" href="glossary.html#term-SQL"><span class="xref std std-term">SQL</span></a> script found in
+<code class="file docutils literal notranslate"><span class="pre">packages/metadata/resources/upgrade_column_info_4_3_0+.sql</span></code>.</p>
+<p>Do not forget to clear the browser cache and to empty the old session by
+logging out and logging in again.</p>
+</section>
+<section id="using-authentication-modes">
+<span id="authentication-modes"></span><span id="index-7"></span><h2>Using authentication modes<a class="headerlink" href="#using-authentication-modes" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a> and cookie authentication modes are recommended in a <strong>multi-user
+environment</strong> where you want to give users access to their own database and
+don’t want them to play around with others. Even in a <strong>single-user
+environment</strong>, you might prefer to use <a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a> or cookie mode so that
+your user/password pair are not in clear in the configuration file.</p>
+<p><a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a> and cookie authentication
+modes are more secure: the MySQL login information does not need to be
+set in the BetterMyAdmin configuration file (except possibly for the
+<span class="target" id="index-8"></span><a class="reference internal" href="config.html#cfg_Servers_controluser"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['controluser']</span></code></a>).
+However, keep in mind that the password travels in plain text unless
+you are using the HTTPS protocol. In every mode, BetterMyAdmin keeps the
+credentials encrypted (AES-256-GCM) in its server-side session store; the
+browser only gets a cookie with the session id. (phpMyAdmin stores the
+encrypted password in the cookie itself.)</p>
+<p>Then each of the <em>true</em> users should be granted a set of privileges
+on a set of particular databases. Normally you shouldn’t give global
+privileges to an ordinary user unless you understand the impact of those
+privileges (for example, you are creating a superuser).
+For example, to grant the user <em>real_user</em> with all privileges on
+the database <em>user_base</em>:</p>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">GRANT</span><span class="w"> </span><span class="k">ALL</span><span class="w"> </span><span class="k">PRIVILEGES</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_base</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="s1">'real_user'</span><span class="nv">@localhost</span><span class="w"> </span><span class="k">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="s1">'real_password'</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>What the user may now do is controlled entirely by the MySQL user management
+system. With HTTP or cookie authentication mode, you don’t need to fill the
+user/password fields inside the <span class="target" id="index-9"></span><a class="reference internal" href="config.html#cfg_Servers"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers']</span></code></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="faq.html#faq1-32"><span class="std std-ref">1.32 Can I use HTTP authentication with IIS?</span></a>,
+<a class="reference internal" href="faq.html#faq1-35"><span class="std std-ref">1.35 Can I use HTTP authentication with Apache CGI?</span></a>,
+<a class="reference internal" href="faq.html#faq4-1"><span class="std std-ref">4.1 I’m an ISP. Can I setup one central copy of BetterMyAdmin or do I need to install it for each customer?</span></a>,
+<a class="reference internal" href="faq.html#faq4-2"><span class="std std-ref">4.2 What’s the preferred way of making BetterMyAdmin secure against evil access?</span></a>,
+<a class="reference internal" href="faq.html#faq4-3"><span class="std std-ref">4.3 I get errors about not being able to include a file in /lang or in /libraries.</span></a></p>
+</div>
+<section id="http-authentication-mode">
+<span id="auth-http"></span><span id="index-10"></span><h3>HTTP authentication mode<a class="headerlink" href="#http-authentication-mode" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Uses <a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a> Basic authentication
+method and allows you to log in as any valid MySQL user.</p></li>
+<li><p>BetterMyAdmin reads the credentials when a page loads and then keeps them
+in the session, like cookie mode; the realm shown by the browser is
+<span class="target" id="index-11"></span><a class="reference internal" href="config.html#cfg_Servers_auth_http_realm"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['auth_http_realm']</span></code></a> (by default
+“BetterMyAdmin” and the server’s name).</p></li>
+<li><p>If a reverse proxy is in front of BetterMyAdmin, it must pass the
+<code class="docutils literal notranslate"><span class="pre">Authorization</span></code> header through (most do by default).</p></li>
+<li><p>See also <a class="reference internal" href="faq.html#faq4-4"><span class="std std-ref">4.4 BetterMyAdmin always gives “Access denied” when using HTTP authentication.</span></a> about not using the <a class="reference internal" href="glossary.html#term-.htaccess"><span class="xref std std-term">.htaccess</span></a> mechanism along with
+‘<a class="reference internal" href="glossary.html#term-HTTP"><span class="xref std std-term">HTTP</span></a>’ authentication mode.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is no way to do proper logout in HTTP authentication, most browsers
+will remember credentials until there is no different successful
+authentication. Because of this, this method has a limitation that you can not
+login with the same user after logout.</p>
+</div>
+</section>
+<section id="cookie-authentication-mode">
+<span id="cookie"></span><span id="index-12"></span><h3>Cookie authentication mode<a class="headerlink" href="#cookie-authentication-mode" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>The user logs in with a form; the credentials are kept, encrypted, in the
+server-side session, and the browser gets a cookie holding only the session
+id. They are deleted when the session ends.</p></li>
+<li><p>With this mode, the user can truly log out of BetterMyAdmin and log
+back in with the same username (this is not possible with <a class="reference internal" href="#auth-http"><span class="std std-ref">HTTP authentication mode</span></a>).</p></li>
+<li><p>If you want to allow users to enter any hostname to connect (rather than only
+servers that are configured in the configuration file),
+see the <span class="target" id="index-13"></span><a class="reference internal" href="config.html#cfg_AllowArbitraryServer"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['AllowArbitraryServer']</span></code></a> directive.</p></li>
+<li><p>Failed logins are rate limited by default, see
+<span class="target" id="index-14"></span><a class="reference internal" href="config.html#cfg_LoginRateLimit"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['LoginRateLimit']</span></code></a>.</p></li>
+</ul>
+</section>
+<section id="signon-authentication-mode">
+<span id="auth-signon"></span><span id="index-15"></span><h3>Signon authentication mode<a class="headerlink" href="#signon-authentication-mode" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>This mode is a convenient way of using credentials from another
+application to authenticate to BetterMyAdmin to implement a single signon
+solution.</p></li>
+<li><p>The other application hands the login information over in a cookie (see
+<span class="target" id="index-16"></span><a class="reference internal" href="config.html#cfg_Servers_SignonSession"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonSession']</span></code></a> and
+<span class="target" id="index-17"></span><a class="reference internal" href="config.html#cfg_Servers_SignonCookieParams"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonCookieParams']</span></code></a>), or you
+implement a module to return the credentials (see
+<span class="target" id="index-18"></span><a class="reference internal" href="config.html#cfg_Servers_SignonScript"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonScript']</span></code></a>).</p></li>
+<li><p>When no credentials are available, the user is being redirected to
+<span class="target" id="index-19"></span><a class="reference internal" href="config.html#cfg_Servers_SignonURL"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonURL']</span></code></a>, where you should handle
+the login process.</p></li>
+</ul>
+<p>phpMyAdmin reads the credentials from the other application’s PHP session and
+runs PHP signon scripts. BetterMyAdmin cannot run PHP, so its signon mode
+works with the same keys (<code class="docutils literal notranslate"><span class="pre">PMA_single_signon_user</span></code>,
+<code class="docutils literal notranslate"><span class="pre">PMA_single_signon_password</span></code>, <code class="docutils literal notranslate"><span class="pre">PMA_single_signon_host</span></code>, …) in a different
+container:</p>
+<ul class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">SignonSession</span></code> is a cookie of that name whose value is encrypted with
+a key derived from <span class="target" id="index-20"></span><a class="reference internal" href="config.html#cfg_blowfish_secret"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['blowfish_secret']</span></code></a> (the other
+application uses <code class="docutils literal notranslate"><span class="pre">encodeSignonSession</span></code> from BetterMyAdmin’s sources, or
+runs on the same host as BetterMyAdmin and shares the cookie);</p></li>
+<li><p>the login page can be served by BetterMyAdmin itself, from a JavaScript
+module named by <span class="target" id="index-21"></span><a class="reference internal" href="config.html#cfg_Servers_SignonPage"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonPage']</span></code></a> (in
+phpMyAdmin it is a PHP page run by the same web server);</p></li>
+<li><p><span class="target" id="index-22"></span><a class="reference internal" href="config.html#cfg_Servers_SignonScript"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonScript']</span></code></a> names a JavaScript or
+TypeScript module exporting <code class="docutils literal notranslate"><span class="pre">getLoginCredentials(user)</span></code> instead of a PHP
+file.</p></li>
+</ul>
+<p>The simplest setup is a login page served by BetterMyAdmin,
+<code class="file docutils literal notranslate"><span class="pre">apps/server/examples/signon-page.mjs</span></code>, which stores the credentials
+typed into a form (the counterpart of phpMyAdmin’s
+<code class="file docutils literal notranslate"><span class="pre">examples/signon.php</span></code>):</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * `SignonPage` example: the login page of a signon server, served by BetterMyAdmin itself at</span>
+<span class="cm"> * SignonURL's path (parity exception X54). The in-process counterpart of examples/signon.ts /</span>
+<span class="cm"> * phpMyAdmin's examples/signon.php: a form whose credentials go into the SignonSession.</span>
+<span class="cm"> *</span>
+<span class="cm"> *   Servers: [{ auth_type: 'signon', SignonSession: 'SignonSession', SignonURL: '/signon/',</span>
+<span class="cm"> *               LogoutURL: '/signon/?logout', SignonPage: './apps/server/examples/signon-page.mjs' }]</span>
+<span class="cm"> *</span>
+<span class="cm"> * The module exports a function (default or `signonPage`) taking the request and a context with</span>
+<span class="cm"> * the current SignonSession, `sessionCookie(data)`, the Set-Cookie value that stores one</span>
+<span class="cm"> * (`null` clears it), and `returnTo`, the page the user asked for before being sent here. A relative path is resolved against BetterMyAdmin's working directory.</span>
+<span class="cm"> *</span>
+<span class="cm"> * pma: examples/signon.php</span>
+<span class="cm"> */</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">esc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nb">String</span><span class="p">(</span><span class="nx">s</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[&amp;&lt;&gt;"']/g</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="sb">`&amp;#</span><span class="si">${</span><span class="nx">c</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span><span class="si">}</span><span class="sb">;`</span><span class="p">)</span>
+
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">signonPage</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">session</span><span class="p">,</span><span class="w"> </span><span class="nx">sessionCookie</span><span class="p">,</span><span class="w"> </span><span class="nx">returnTo</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URL</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">url</span><span class="p">)</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s1">'logout'</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Response</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="mf">302</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">'Set-Cookie'</span><span class="o">:</span><span class="w"> </span><span class="nx">sessionCookie</span><span class="p">(</span><span class="kc">null</span><span class="p">),</span><span class="w"> </span><span class="nx">Location</span><span class="o">:</span><span class="w"> </span><span class="nx">url</span><span class="p">.</span><span class="nx">pathname</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'POST'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">form</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="k">await</span><span class="w"> </span><span class="nx">request</span><span class="p">.</span><span class="nx">text</span><span class="p">())</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">cookie</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">sessionCookie</span><span class="p">({</span>
+<span class="w">      </span><span class="nx">PMA_single_signon_user</span><span class="o">:</span><span class="w"> </span><span class="nx">form</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'user'</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">PMA_single_signon_password</span><span class="o">:</span><span class="w"> </span><span class="nx">form</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'password'</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Response</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="mf">302</span><span class="p">,</span><span class="w"> </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">'Set-Cookie'</span><span class="o">:</span><span class="w"> </span><span class="nx">cookie</span><span class="p">,</span><span class="w"> </span><span class="nx">Location</span><span class="o">:</span><span class="w"> </span><span class="nx">returnTo</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">})</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">PMA_single_signon_error_message</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">Response</span><span class="p">(</span>
+<span class="w">    </span><span class="sb">`&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;BetterMyAdmin single signon example&lt;/title&gt;&lt;/head&gt;</span>
+<span class="sb">&lt;body&gt;</span><span class="si">${</span><span class="nx">error</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s1">''</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="sb">`&lt;p class="error"&gt;</span><span class="si">${</span><span class="nx">esc</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="si">}</span><span class="sb">&lt;/p&gt;`</span><span class="si">}</span>
+<span class="sb">&lt;form action="</span><span class="si">${</span><span class="nx">esc</span><span class="p">(</span><span class="nx">url</span><span class="p">.</span><span class="nx">pathname</span><span class="p">)</span><span class="si">}</span><span class="sb">" method="post"&gt;</span>
+<span class="sb">&lt;label&gt;User: &lt;input type="text" name="user" autocomplete="username"&gt;&lt;/label&gt;</span>
+<span class="sb">&lt;label&gt;Password: &lt;input type="password" name="password" autocomplete="current-password"&gt;&lt;/label&gt;</span>
+<span class="sb">&lt;input type="submit"&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;`</span><span class="p">,</span>
+<span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">'Content-Type'</span><span class="o">:</span><span class="w"> </span><span class="s1">'text/html; charset=utf-8'</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A separate login application writes the cookie itself, as in
+<code class="file docutils literal notranslate"><span class="pre">apps/server/examples/signon.ts</span></code> (run with
+<code class="docutils literal notranslate"><span class="pre">BMA_SECRET=&lt;blowfish_secret&gt;</span> <span class="pre">npx</span> <span class="pre">tsx</span> <span class="pre">apps/server/examples/signon.ts</span></code>):</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Single signon example: a tiny login application handing credentials to BetterMyAdmin through</span>
+<span class="cm"> * the `SignonSession` cookie (`auth_type = 'signon'`), the port of phpMyAdmin's examples/signon.php.</span>
+<span class="cm"> *</span>
+<span class="cm"> *   BMA_SECRET=&lt;BetterMyAdmin's blowfish_secret&gt; npx tsx apps/server/examples/signon.ts</span>
+<span class="cm"> *</span>
+<span class="cm"> * BetterMyAdmin configuration (the example listens on :8090, BetterMyAdmin on :8080, one host so</span>
+<span class="cm"> * the cookie is shared):</span>
+<span class="cm"> *</span>
+<span class="cm"> *   Servers: [{ auth_type: 'signon', SignonSession: 'SignonSession', SignonURL: 'http://localhost:8090/' }]</span>
+<span class="cm"> *</span>
+<span class="cm"> * pma: examples/signon.php</span>
+<span class="cm"> */</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">createServer</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'node:http'</span>
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">decodeSignonSession</span><span class="p">,</span><span class="w"> </span><span class="nx">encodeSignonSession</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">'../src/auth/signon.ts'</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">secret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">BMA_SECRET</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">sessionName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'SignonSession'</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">bma</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">BMA_URL</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">'http://localhost:8080/'</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">esc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[&amp;&lt;&gt;"']/g</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">c</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="sb">`&amp;#</span><span class="si">${</span><span class="nx">c</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span><span class="si">}</span><span class="sb">;`</span><span class="p">)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">cookieOf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">header</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span>
+<span class="w">  </span><span class="nx">header</span>
+<span class="w">    </span><span class="o">?</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">';'</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">p</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">p</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">))</span>
+<span class="w">    </span><span class="p">.</span><span class="nx">find</span><span class="p">(([</span><span class="nx">k</span><span class="p">])</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">name</span><span class="p">)</span><span class="o">?</span><span class="p">.[</span><span class="mf">1</span><span class="p">]</span>
+
+<span class="nx">createServer</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span><span class="w"> </span><span class="nx">res</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">'POST'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nx">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">''</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">body</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">d</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="nx">req</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'end'</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">URLSearchParams</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
+<span class="w">      </span><span class="c1">// store the credentials, and update another field of the server configuration</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">encodeSignonSession</span><span class="p">(</span><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">PMA_single_signon_user</span><span class="o">:</span><span class="w"> </span><span class="kt">f.get</span><span class="p">(</span><span class="s1">'user'</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">PMA_single_signon_password</span><span class="o">:</span><span class="w"> </span><span class="kt">f.get</span><span class="p">(</span><span class="s1">'password'</span><span class="p">)</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">,</span>
+<span class="w">        </span><span class="p">...(</span><span class="nx">f</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'host'</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PMA_single_signon_host</span><span class="o">:</span><span class="w"> </span><span class="kt">f.get</span><span class="p">(</span><span class="s1">'host'</span><span class="p">)</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{}),</span>
+<span class="w">        </span><span class="p">...(</span><span class="nx">f</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'port'</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">PMA_single_signon_port</span><span class="o">:</span><span class="w"> </span><span class="kt">f.get</span><span class="p">(</span><span class="s1">'port'</span><span class="p">)</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="p">{}),</span>
+<span class="w">        </span><span class="nx">PMA_single_signon_cfgupdate</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">verbose</span><span class="o">:</span><span class="w"> </span><span class="s1">'Signon test'</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">      </span><span class="c1">// the cookie parameters must match SignonCookieParams (path '/', httponly here)</span>
+<span class="w">      </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mf">302</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="s1">'Set-Cookie'</span><span class="o">:</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">sessionName</span><span class="si">}</span><span class="sb">=</span><span class="si">${</span><span class="nx">value</span><span class="si">}</span><span class="sb">; Path=/; HttpOnly; SameSite=Lax`</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Location</span><span class="o">:</span><span class="w"> </span><span class="kt">bma</span><span class="p">,</span>
+<span class="w">      </span><span class="p">})</span>
+<span class="w">      </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+<span class="w">    </span><span class="p">})</span>
+<span class="w">    </span><span class="k">return</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">cookieOf</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">cookie</span><span class="p">,</span><span class="w"> </span><span class="nx">sessionName</span><span class="p">)</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="nx">value</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">undefined</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">decodeSignonSession</span><span class="p">(</span><span class="nx">secret</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="nx">PMA_single_signon_error_message</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">(</span><span class="mf">200</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s1">'Content-Type'</span><span class="o">:</span><span class="w"> </span><span class="s1">'text/html; charset=utf-8'</span><span class="w"> </span><span class="p">})</span>
+<span class="w">  </span><span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="sb">`&lt;!DOCTYPE HTML&gt;</span>
+<span class="sb">&lt;html lang="en" dir="ltr"&gt;</span>
+<span class="sb">&lt;head&gt;&lt;meta charset="utf-8"&gt;&lt;title&gt;BetterMyAdmin single signon example&lt;/title&gt;&lt;/head&gt;</span>
+<span class="sb">&lt;body&gt;</span>
+<span class="si">${</span><span class="nx">error</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="sb">`&lt;p class="error"&gt;</span><span class="si">${</span><span class="nx">esc</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="si">}</span><span class="sb">&lt;/p&gt;`</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s1">''</span><span class="si">}</span>
+<span class="sb">&lt;form action="/" method="post"&gt;</span>
+<span class="sb">Username: &lt;input type="text" name="user" autocomplete="username" spellcheck="false"&gt;&lt;br&gt;</span>
+<span class="sb">Password: &lt;input type="password" name="password" autocomplete="current-password" spellcheck="false"&gt;&lt;br&gt;</span>
+<span class="sb">Host: (will use the one from the configuration by default) &lt;input type="text" name="host"&gt;&lt;br&gt;</span>
+<span class="sb">Port: (will use the one from the configuration by default) &lt;input type="text" name="port"&gt;&lt;br&gt;</span>
+<span class="sb">&lt;input type="submit"&gt;</span>
+<span class="sb">&lt;/form&gt;</span>
+<span class="sb">&lt;/body&gt;</span>
+<span class="sb">&lt;/html&gt;`</span><span class="p">)</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="mf">8090</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>phpMyAdmin’s OpenID example (<code class="file docutils literal notranslate"><span class="pre">examples/openid.php</span></code>) has no
+BetterMyAdmin counterpart; an OpenID or other single signon front end can use
+either of the ways above.</p>
+<p>If you intend to pass the credentials using some other means than the
+cookie, you have to implement a module to get that data and set it to
+<span class="target" id="index-23"></span><a class="reference internal" href="config.html#cfg_Servers_SignonScript"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonScript']</span></code></a>. There is a very minimal example
+in <code class="file docutils literal notranslate"><span class="pre">apps/server/examples/signon-script.ts</span></code>:</p>
+<div class="highlight-ts notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * `SignonScript` example: BetterMyAdmin imports this module and calls `getLoginCredentials(user)`</span>
+<span class="cm"> * with the server's configured `user` on every page load; it returns `[user, password]` (or a</span>
+<span class="cm"> * promise of it). An empty user redirects to SignonURL. The port of phpMyAdmin's</span>
+<span class="cm"> * examples/signon-script.php (where the PHP function is `get_login_credentials`).</span>
+<span class="cm"> *</span>
+<span class="cm"> *   Servers: [{ auth_type: 'signon', SignonScript: './apps/server/examples/signon-script.ts', SignonURL: '…' }]</span>
+<span class="cm"> *</span>
+<span class="cm"> * A relative path is resolved against BetterMyAdmin's working directory. A `.ts` module needs a</span>
+<span class="cm"> * TypeScript-aware Node (≥ 22.18 or tsx), a `.mjs` / `.js` one works everywhere.</span>
+<span class="cm"> *</span>
+<span class="cm"> * pma: examples/signon-script.php</span>
+<span class="cm"> */</span>
+<span class="k">export</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">getLoginCredentials</span><span class="p">(</span><span class="nx">user</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// this would usually check the request (a header set by a reverse proxy, a ticket, …)</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nx">user</span><span class="p">,</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SIGNON_PASSWORD</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="s1">''</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="target" id="index-24"></span><a class="reference internal" href="config.html#cfg_Servers_auth_type"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['auth_type']</span></code></a>,
+<span class="target" id="index-25"></span><a class="reference internal" href="config.html#cfg_Servers_SignonSession"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonSession']</span></code></a>,
+<span class="target" id="index-26"></span><a class="reference internal" href="config.html#cfg_Servers_SignonCookieParams"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonCookieParams']</span></code></a>,
+<span class="target" id="index-27"></span><a class="reference internal" href="config.html#cfg_Servers_SignonScript"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonScript']</span></code></a>,
+<span class="target" id="index-28"></span><a class="reference internal" href="config.html#cfg_Servers_SignonURL"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonURL']</span></code></a>,
+<span class="target" id="index-29"></span><a class="reference internal" href="config.html#cfg_Servers_SignonPage"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['SignonPage']</span></code></a>,
+<a class="reference internal" href="config.html#example-signon"><span class="std std-ref">Example for signon authentication</span></a></p>
+</div>
+</section>
+<section id="config-authentication-mode">
+<span id="auth-config"></span><span id="index-30"></span><h3>Config authentication mode<a class="headerlink" href="#config-authentication-mode" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>This mode is sometimes the less secure one because it requires you to fill the
+<span class="target" id="index-31"></span><a class="reference internal" href="config.html#cfg_Servers_user"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['user']</span></code></a> and
+<span class="target" id="index-32"></span><a class="reference internal" href="config.html#cfg_Servers_password"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['password']</span></code></a>
+fields (or the Docker variables <code class="docutils literal notranslate"><span class="pre">PMA_USER</span></code> and <code class="docutils literal notranslate"><span class="pre">PMA_PASSWORD</span></code>), and as a
+result, anyone who can read your configuration file or environment can
+discover your username and password.</p></li>
+<li><p>In the <a class="reference internal" href="faq.html#faqmultiuser"><span class="std std-ref">ISPs, multi-user installations</span></a> section, there is an entry explaining how
+to protect your configuration file.</p></li>
+<li><p>For additional security in this mode, you may wish to consider the
+Host authentication <span class="target" id="index-33"></span><a class="reference internal" href="config.html#cfg_Servers_AllowDeny_order"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['order']</span></code></a>
+and <span class="target" id="index-34"></span><a class="reference internal" href="config.html#cfg_Servers_AllowDeny_rules"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['rules']</span></code></a> configuration directives.</p></li>
+<li><p>Unlike cookie and http, does not require a user to log in when first
+loading the BetterMyAdmin site. This is by design but could allow any
+user to access your installation. Use of some restriction method is
+suggested: keep BetterMyAdmin listening on <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> (the default of
+<span class="target" id="index-35"></span><a class="reference internal" href="config.html#cfg_Listen_host"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Listen']['host']</span></code></a>), put an authenticating reverse
+proxy in front of it, or disallow incoming HTTP requests at one’s router or
+firewall.</p></li>
+</ul>
+</section>
+</section>
+<section id="securing-your-bettermyadmin-installation">
+<span id="securing"></span><h2>Securing your BetterMyAdmin installation<a class="headerlink" href="#securing-your-bettermyadmin-installation" title="Link to this heading"></a></h2>
+<p>The BetterMyAdmin project tries hard to make the application secure, however
+there are always ways to make your installation more secure. See also
+<a class="reference internal" href="security.html#security"><span class="std std-ref">Security policy</span></a>.</p>
+<ul class="simple">
+<li><p>Follow the <a class="reference external" href="https://github.com/cB-Sigma/better-myadmin/releases">BetterMyAdmin releases</a> and upgrade
+whenever a new vulnerability is published (see <a class="reference internal" href="#upgrading"><span class="std std-ref">Upgrading from an older version</span></a>).</p></li>
+<li><p>Write a configuration file before exposing BetterMyAdmin: until one exists,
+the <a class="reference internal" href="#setup-script"><span class="std std-ref">Using the Setup script</span></a> is open without a login (the Docker image ships an
+empty one, so it is closed there).</p></li>
+<li><p>Serve BetterMyAdmin on HTTPS only, for example behind a reverse proxy that
+terminates TLS. Preferably, you should use HSTS as well, so that you’re
+protected from protocol downgrade attacks: <span class="target" id="index-36"></span><a class="reference internal" href="config.html#cfg_ForceSSL"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['ForceSSL']</span></code></a>
+redirects plain HTTP to HTTPS and sends the HSTS header.</p></li>
+<li><p>Expose only what is needed: BetterMyAdmin listens on <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> by
+default (<span class="target" id="index-37"></span><a class="reference internal" href="config.html#cfg_Listen_host"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Listen']['host']</span></code></a>); let only the reverse
+proxy reach it.</p></li>
+<li><p>Properly choose an authentication method - <a class="reference internal" href="#cookie"><span class="std std-ref">Cookie authentication mode</span></a>
+is probably the best choice for shared hosting.</p></li>
+<li><p>Keep <span class="target" id="index-38"></span><a class="reference internal" href="config.html#cfg_DataDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['DataDir']</span></code></a> private: it holds the sessions and
+the generated <span class="target" id="index-39"></span><a class="reference internal" href="config.html#cfg_blowfish_secret"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['blowfish_secret']</span></code></a>. BetterMyAdmin
+creates it with mode <code class="docutils literal notranslate"><span class="pre">0700</span></code> and runs as the unprivileged <code class="docutils literal notranslate"><span class="pre">node</span></code> user in
+the Docker image. Treat <span class="target" id="index-40"></span><a class="reference internal" href="config.html#cfg_UploadDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['UploadDir']</span></code></a> and
+<span class="target" id="index-41"></span><a class="reference internal" href="config.html#cfg_SaveDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['SaveDir']</span></code></a> the same way (see <a class="reference internal" href="config.html#web-dirs"><span class="std std-ref">Upload/save/import directories</span></a>).</p></li>
+<li><p>It is generally a good idea to protect a public BetterMyAdmin installation
+against access by robots as they usually can not do anything good there.
+BetterMyAdmin sends an <code class="docutils literal notranslate"><span class="pre">X-Robots-Tag:</span> <span class="pre">noindex,</span> <span class="pre">nofollow</span></code> header on every
+response; see also <a class="reference internal" href="faq.html#faq1-42"><span class="std std-ref">1.42 How can I prevent robots from accessing BetterMyAdmin?</span></a>.</p></li>
+<li><p>In case you don’t want all MySQL users to be able to access
+BetterMyAdmin, you can use <span class="target" id="index-42"></span><a class="reference internal" href="config.html#cfg_Servers_AllowDeny_rules"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['AllowDeny']['rules']</span></code></a> to limit them
+or <span class="target" id="index-43"></span><a class="reference internal" href="config.html#cfg_Servers_AllowRoot"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['AllowRoot']</span></code></a> to deny root user access.</p></li>
+<li><p>Enable <a class="reference internal" href="two_factor.html#fa"><span class="std std-ref">Two-factor authentication</span></a> for your account.</p></li>
+<li><p>Consider hiding BetterMyAdmin behind an authentication proxy, so that
+users need to authenticate prior to providing MySQL credentials
+to BetterMyAdmin. You can achieve this by configuring your reverse proxy to
+request HTTP authentication, or with a single signon front end
+(<a class="reference internal" href="#auth-signon"><span class="std std-ref">Signon authentication mode</span></a>).</p></li>
+<li><p>Failed logins are rate limited by default
+(<span class="target" id="index-44"></span><a class="reference internal" href="config.html#cfg_LoginRateLimit"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['LoginRateLimit']</span></code></a>). If you are afraid of automated
+attacks, enabling Captcha by
+<span class="target" id="index-45"></span><a class="reference internal" href="config.html#cfg_CaptchaLoginPublicKey"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['CaptchaLoginPublicKey']</span></code></a> and
+<span class="target" id="index-46"></span><a class="reference internal" href="config.html#cfg_CaptchaLoginPrivateKey"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['CaptchaLoginPrivateKey']</span></code></a> might be an option too.</p></li>
+<li><p>Failed login attempts are logged (see <span class="target" id="index-47"></span><a class="reference internal" href="config.html#cfg_AuthLog"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['AuthLog']</span></code></a>): to
+the server’s error output by default, or to a file. A file log can be used
+by a tool such as fail2ban to block brute-force attempts. BetterMyAdmin has
+no syslog support.</p></li>
+</ul>
+</section>
+<section id="using-ssl-for-connection-to-database-server">
+<span id="ssl"></span><h2>Using SSL for connection to database server<a class="headerlink" href="#using-ssl-for-connection-to-database-server" title="Link to this heading"></a></h2>
+<p>It is recommended to use SSL when connecting to remote database server. There
+are several configuration options involved in the SSL setup:</p>
+<dl class="simple">
+<dt><span class="target" id="index-48"></span><a class="reference internal" href="config.html#cfg_Servers_ssl"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl']</span></code></a></dt><dd><p>Defines whether to use SSL at all. If you enable only this, the connection
+will be encrypted, but there is not authentication of the connection - you
+can not verify that you are talking to the right server.</p>
+</dd>
+<dt><span class="target" id="index-49"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_key"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_key']</span></code></a> and <span class="target" id="index-50"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_cert"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_cert']</span></code></a></dt><dd><p>This is used for authentication of client to the server.</p>
+</dd>
+<dt><span class="target" id="index-51"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_ca"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_ca']</span></code></a> and <span class="target" id="index-52"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_ca_path"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_ca_path']</span></code></a></dt><dd><p>The certificate authorities you trust for server certificates.
+This is used to ensure that you are talking to a trusted server.</p>
+</dd>
+<dt><span class="target" id="index-53"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_verify"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_verify']</span></code></a></dt><dd><p>This configuration disables server certificate verification. Use with
+caution.</p>
+</dd>
+</dl>
+<p>With Docker, the <code class="docutils literal notranslate"><span class="pre">PMA_SSL</span></code>, <code class="docutils literal notranslate"><span class="pre">PMA_SSL_VERIFY</span></code>, <code class="docutils literal notranslate"><span class="pre">PMA_SSL_CA</span></code>,
+<code class="docutils literal notranslate"><span class="pre">PMA_SSL_KEY</span></code> and <code class="docutils literal notranslate"><span class="pre">PMA_SSL_CERT</span></code> variables set these (see
+<a class="reference internal" href="#docker-vars"><span class="std std-ref">Docker environment variables</span></a>).</p>
+<p>When the database server is using a local connection or private network and SSL can not be configured
+you can use <span class="target" id="index-54"></span><a class="reference internal" href="config.html#cfg_MysqlSslWarningSafeHosts"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['MysqlSslWarningSafeHosts']</span></code></a> to explicitly list the hostnames that are considered secure.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="config.html#example-google-ssl"><span class="std std-ref">Google Cloud SQL with SSL</span></a>,
+<a class="reference internal" href="config.html#example-aws-ssl"><span class="std std-ref">Amazon RDS Aurora with SSL</span></a>,
+<span class="target" id="index-55"></span><a class="reference internal" href="config.html#cfg_Servers_ssl"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl']</span></code></a>,
+<span class="target" id="index-56"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_key"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_key']</span></code></a>,
+<span class="target" id="index-57"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_cert"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_cert']</span></code></a>,
+<span class="target" id="index-58"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_ca"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_ca']</span></code></a>,
+<span class="target" id="index-59"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_ca_path"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_ca_path']</span></code></a>,
+<span class="target" id="index-60"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_ciphers"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_ciphers']</span></code></a>,
+<span class="target" id="index-61"></span><a class="reference internal" href="config.html#cfg_Servers_ssl_verify"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['Servers'][$i]['ssl_verify']</span></code></a></p>
+</div>
+</section>
+<section id="known-issues">
+<h2>Known issues<a class="headerlink" href="#known-issues" title="Link to this heading"></a></h2>
+<section id="users-with-column-specific-privileges-are-unable-to-browse">
+<h3>Users with column-specific privileges are unable to “Browse”<a class="headerlink" href="#users-with-column-specific-privileges-are-unable-to-browse" title="Link to this heading"></a></h3>
+<p>If a user has only column-specific privileges on some (but not all) columns in a table, “Browse”
+will fail with an error message, as in phpMyAdmin.</p>
+<p>As a workaround, a bookmarked query with the same name as the table can be created, this will
+run when using the “Browse” link instead. <a class="reference external" href="https://github.com/phpmyadmin/phpmyadmin/issues/11922">phpMyAdmin issue 11922</a>.</p>
+</section>
+<section id="trouble-logging-back-in-after-logging-out-using-http-authentication">
+<h3>Trouble logging back in after logging out using ‘http’ authentication<a class="headerlink" href="#trouble-logging-back-in-after-logging-out-using-http-authentication" title="Link to this heading"></a></h3>
+<p>When using the ‘http’ <code class="docutils literal notranslate"><span class="pre">auth_type</span></code>, the browser keeps sending the same
+credentials after a logout, so BetterMyAdmin refuses that user once to end
+the session; logging back in with the same user may need the browser to
+forget the credentials first. <a class="reference external" href="https://github.com/phpmyadmin/phpmyadmin/issues/11898">phpMyAdmin issue 11898</a>.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="require.html" class="btn btn-neutral float-left" title="Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="config.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; <a href="copyright.html">Copyright</a> 2012 - 2026, The phpMyAdmin devel team; 2026, the BetterMyAdmin contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

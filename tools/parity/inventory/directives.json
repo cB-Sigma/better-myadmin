@@ -3,7 +3,7 @@
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
     "referenceCommit": "601690888679e2fb5574ba7acd499812ddc9160a",
     "source": "packages/config schema leaves, cross-checked with phpMyAdmin Settings::asArray() (packages/config/scripts/dump-pma-defaults.php)",
-    "count": 470
+    "count": 471
   },
   "items": [
     {
@@ -13,6 +13,14 @@
       "bma": false,
       "userPref": true,
       "inPma": true
+    },
+    {
+      "key": "AgentApi",
+      "source": "schema",
+      "type": "boolean",
+      "bma": true,
+      "userPref": false,
+      "inPma": false
     },
     {
       "key": "AllowArbitraryServer",

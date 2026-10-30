@@ -906,7 +906,7 @@ export async function setVariable(conn: Conn, name: string, value: string): Prom
   await conn.query(`SET ${name} = ${value};`, 'var.set')
 }
 
-async function isSuperUser(conn: Conn): Promise<boolean> {
+export async function isSuperUser(conn: Conn): Promise<boolean> {
   try {
     return (await conn.value('SELECT 1 FROM mysql.user LIMIT 1', 'priv.superuser')) !== null
   } catch {

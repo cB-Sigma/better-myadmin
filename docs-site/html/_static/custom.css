@@ -1,0 +1,13 @@
+/* Use the window's width: the theme caps the page at 800px, which squeezes wide tables (the Docker
+   variable table) and leaves most of a desktop screen empty. */
+.wy-nav-content {
+  max-width: none;
+}
+/* Table cells wrap instead of forcing a horizontal scroll */
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+  white-space: normal;
+}
+.wy-table-responsive {
+  overflow: visible;
+}

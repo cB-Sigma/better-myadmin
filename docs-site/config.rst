@@ -490,6 +490,16 @@ BetterMyAdmin adds :config:option:`$cfg['Servers'][$i]['SignonPage']`,
 
     How long a request waits for a connection when they are all in use.
 
+.. config:option:: $cfg['AgentApi']
+
+    :type: boolean
+    :default: false
+
+    BetterMyAdmin only. Enables the agent API and its MCP endpoint
+    (``/api/agent/v1/…``) for AI agents and scripts: see :ref:`agents`. Each
+    request authenticates on its own as a MySQL user, with that user's
+    privileges.
+
 Server connection settings
 --------------------------
 
