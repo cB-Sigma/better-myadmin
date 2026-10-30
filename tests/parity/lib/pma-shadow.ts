@@ -1,7 +1,7 @@
-import { type ChildProcess, spawn } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { servePhp } from './pma-instance.ts'
 import { isPmaUp } from './pma.ts'
 
 /**
@@ -80,17 +80,11 @@ foreach (($bmaOverrides['cfg'] ?? []) as $k => $v) { $cfg[$k] = $v; }
 `,
   )
   writeFileSync(overrides, '{}')
-  const proc: ChildProcess = spawn('php', ['-S', `127.0.0.1:${port}`, '-t', 'public'], {
+  const { url, proc } = await servePhp((p) => ['-S', `127.0.0.1:${p}`, '-t', 'public'], {
     cwd: root,
-    stdio: 'ignore',
+    port,
+    ready: (u) => isPmaUp(u),
   })
-  const url = `http://127.0.0.1:${port}`
-  const deadline = Date.now() + 15000
-  while (Date.now() < deadline) {
-    const ok = await isPmaUp(url)
-    if (ok) break
-    await new Promise((r) => setTimeout(r, 100))
-  }
   return {
     url,
     configure(o) {

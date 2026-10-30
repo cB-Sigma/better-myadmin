@@ -95,6 +95,56 @@ function freePort(): Promise<number> {
   })
 }
 
+export interface PhpServer {
+  url: string
+  proc: ChildProcess
+}
+
+/**
+ * `php -S` on a free port, up once it answers. Its stderr (startup errors, the request log) is
+ * kept short and printed if the server exits early or never answers: a reference that is gone
+ * otherwise only shows as ECONNREFUSED in every later request. A server that exits at once (the
+ * port taken between freePort and the bind) is started again on another port.
+ */
+export async function servePhp(
+  args: (port: number) => string[],
+  opts: { cwd?: string; env?: NodeJS.ProcessEnv; ready: (url: string) => Promise<boolean>; port?: number },
+): Promise<PhpServer> {
+  for (let attempt = 1; ; attempt++) {
+    const port = opts.port ?? (await freePort())
+    let tail = ''
+    let exited: number | string | null = null
+    const proc: ChildProcess = spawn(PHP, args(port), {
+      stdio: ['ignore', 'ignore', 'pipe'],
+      ...(opts.cwd !== undefined ? { cwd: opts.cwd } : {}),
+      env: opts.env ?? process.env,
+    })
+    proc.stderr?.on('data', (d: Buffer) => {
+      tail = (tail + d.toString('utf8')).slice(-4000)
+    })
+    proc.once('exit', (code, signal) => {
+      exited = code ?? signal ?? 'exit'
+    })
+    const url = `http://127.0.0.1:${port}`
+    const deadline = Date.now() + 30_000
+    while (exited === null && Date.now() < deadline) {
+      if (await opts.ready(url)) {
+        // a server that dies later says so (the failures that follow are its consequence)
+        proc.once('exit', (code, signal) => {
+          if (signal !== 'SIGTERM') console.error(`php -S ${url} exited (${code ?? signal}):\n${tail}`)
+        })
+        return { url, proc }
+      }
+      await new Promise((r) => setTimeout(r, 100))
+    }
+    if (exited === null) proc.kill()
+    if (exited !== null && attempt < 3 && opts.port === undefined) continue
+    throw new Error(
+      `php -S ${url} ${exited === null ? 'did not answer within 30 s' : `exited (${exited})`}:\n${tail}`,
+    )
+  }
+}
+
 function shadowTree(root: string, locales: readonly string[] = []): void {
   for (const entry of readdirSync(PMA_PATH)) {
     if (['public', 'app', 'config.inc.php', 'tmp'].includes(entry)) continue
@@ -175,25 +225,17 @@ export async function startPmaInstance(
       `<?php\ndeclare(strict_types=1);\n$cfg['TempDir'] = ${JSON.stringify(join(root, 'tmp'))};\n${php}\n`,
     )
   if (opts.noConfig !== true) writeConfig(configPhp)
-  const port = await freePort()
   // revalidate_freq=0: setConfig() and rewritten included files (SignonScript) apply at once
-  const proc: ChildProcess = spawn(
-    PHP,
-    ['-d', 'opcache.revalidate_freq=0', '-S', `127.0.0.1:${port}`, '-t', join(root, 'public')],
+  const { url, proc } = await servePhp(
+    (port) => ['-d', 'opcache.revalidate_freq=0', '-S', `127.0.0.1:${port}`, '-t', join(root, 'public')],
     {
-      stdio: 'ignore',
       env:
         opts.workers !== undefined && opts.workers > 1
           ? { ...process.env, PHP_CLI_SERVER_WORKERS: String(opts.workers) }
           : process.env,
+      ready: (u) => isPmaUp(u, { anyStatus: true }),
     },
   )
-  const url = `http://127.0.0.1:${port}`
-  for (let i = 0; i < 100; i++) {
-    const ok = await isPmaUp(url, { anyStatus: true })
-    if (ok) break
-    await new Promise((r) => setTimeout(r, 100))
-  }
   return {
     url,
     dumps: () =>
