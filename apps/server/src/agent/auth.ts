@@ -34,6 +34,9 @@ export class AgentAuthRequired extends AuthRequiredError {
   }
 }
 
+/** The agent API's paths: no session, no CSRF token (app.ts). */
+export const isAgentPath = (path: string): boolean => path === '/api/agent' || path.startsWith('/api/agent/')
+
 /** The pool of a credential set: its own (session-less) pool key, never one of a login session. */
 export function agentPoolId(serverIndex: number, user: string, password: string): string {
   return `agent:${createHash('sha256').update(`${serverIndex}\u0000${user}\u0000${password}`).digest('hex')}`
@@ -112,7 +115,7 @@ export async function withAgent<T>(
   } catch (e) {
     if (isMysqlError(e) && e.errno !== undefined && ACCESS_DENIED.has(e.errno)) {
       limiter.failed(ip, creds.user)
-      throw new AgentAuthRequired(tr.gettext('Cannot log in to the MySQL server'), basic)
+      throw new AgentAuthRequired('The MySQL server refused this user name and password.', basic)
     }
     throw e
   }

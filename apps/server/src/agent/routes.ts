@@ -6,7 +6,14 @@ import { BmaError, ValidationError } from '../http/errors.ts'
 import { APP_VERSION } from '../shell/scope.ts'
 import { AgentAuthRequired, checkAgentRequest, withAgent } from './auth.ts'
 import { MCP_PROTOCOL_VERSIONS, handleMcp } from './mcp.ts'
-import { AGENT_MAX_ROWS, describeTable, explain, listDatabases, listTables, runQuery } from './service.ts'
+import {
+  AGENT_MAX_ROWS,
+  describeTable,
+  explain,
+  listDatabases,
+  listTables,
+  runAgentQuery,
+} from './service.ts'
 
 /**
  * The agent API (docs/features/16-agent-api.md), mounted at /api/agent before the session and
@@ -84,7 +91,7 @@ export function agentRoutes(deps: AppDeps) {
     const s = server(c.req.param('s'))
     checkAgentRequest(c)
     const b = await body(c.req.raw, QueryBody)
-    return c.json(await withAgent(c, deps, s, tr, (ctx) => runQuery(ctx, b)))
+    return c.json(await withAgent(c, deps, s, tr, (ctx) => runAgentQuery(ctx, b)))
   })
   app.post('/v1/servers/:s/explain', async (c) => {
     const s = server(c.req.param('s'))

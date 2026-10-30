@@ -169,7 +169,7 @@ export const AGENT_MAX_ROWS = 10_000
  * one), stopping at the first error. Each statement runs with the user's privileges; DROP DATABASE
  * follows AllowUserDropDatabase like the SQL box.
  */
-export async function runQuery(
+export async function runAgentQuery(
   ctx: AgentCtx,
   input: { sql: string; db?: string | undefined; maxRows?: number | undefined },
 ): Promise<{ statements: AgentStatement[] }> {
@@ -232,6 +232,7 @@ export async function runQuery(
 export async function explain(ctx: AgentCtx, input: { sql: string; db?: string | undefined }) {
   const [q] = splitSql(input.sql)
   if (q === undefined) throw new ValidationError('No SQL query given.')
-  return (await runQuery(ctx, { sql: `EXPLAIN ${q}`, ...(input.db !== undefined ? { db: input.db } : {}) }))
-    .statements[0]!
+  return (
+    await runAgentQuery(ctx, { sql: `EXPLAIN ${q}`, ...(input.db !== undefined ? { db: input.db } : {}) })
+  ).statements[0]!
 }

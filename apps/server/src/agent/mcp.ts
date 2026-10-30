@@ -1,5 +1,5 @@
 import type { AgentCtx } from './service.ts'
-import { describeTable, explain, listDatabases, listTables, runQuery } from './service.ts'
+import { describeTable, explain, listDatabases, listTables, runAgentQuery } from './service.ts'
 
 /**
  * The agent API as an MCP server (Model Context Protocol, Streamable HTTP transport, stateless):
@@ -113,7 +113,7 @@ async function callTool(ctx: AgentCtx, name: string, args: Record<string, unknow
       if (max !== undefined && (typeof max !== 'number' || !Number.isInteger(max) || max < 1))
         throw new ToolInputError('Argument max_rows must be a positive integer')
       const db = arg(args, 'database')
-      return runQuery(ctx, {
+      return runAgentQuery(ctx, {
         sql: arg(args, 'sql', true),
         ...(db !== undefined ? { db } : {}),
         ...(max !== undefined ? { maxRows: max as number } : {}),

@@ -9,6 +9,7 @@ import {
 import type { Language, LanguageManager, Translator } from '@bettermyadmin/i18n'
 import { type Context, Hono, type MiddlewareHandler } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
+import { checkAgentRequest, isAgentPath } from './agent/auth.ts'
 import { agentRoutes } from './agent/routes.ts'
 import { logUser } from './auth/auth-log.ts'
 import { requestClientIp } from './auth/login.ts'
@@ -126,13 +127,16 @@ export function createApp(deps: AppDeps) {
       }
     }),
   )
-  // the agent API authenticates every request itself: before the session and the CSRF check
-  app.route('/api/agent', agentRoutes(deps))
-  app.use('/api/*', session)
-  app.use('/api/*', sqlLog())
-  app.use('/api/*', language)
-  app.use('/api/*', permissions)
-  app.use('/api/*', requestProblemChecking())
+  // the agent API (/api/agent/…) has no session: every request authenticates itself
+  const sessionOnly =
+    (mw: MiddlewareHandler<AppEnv>): MiddlewareHandler<AppEnv> =>
+    (c, next) =>
+      isAgentPath(c.req.path) ? next() : mw(c, next)
+  app.use('/api/*', sessionOnly(session))
+  app.use('/api/*', sessionOnly(sqlLog()))
+  app.use('/api/*', sessionOnly(language))
+  app.use('/api/*', sessionOnly(permissions))
+  app.use('/api/*', sessionOnly(requestProblemChecking()))
 
   // phpMyAdmin's index.php?route=… and *.php addresses: to the page they name
   app.use('*', legacyUrls(deps))
@@ -156,6 +160,12 @@ export function createApp(deps: AppDeps) {
 
   // CSRF: double submit on every non-GET request (pma: TokenRequestParamChecking)
   app.use('/api/*', async (c, next) => {
+    // the agent API carries its credentials in every request, never in a cookie: no token to
+    // compare, but no cross-site request either (agent/auth.ts)
+    if (isAgentPath(c.req.path)) {
+      checkAgentRequest(c)
+      return next()
+    }
     const m = c.req.method
     if (m !== 'GET' && m !== 'HEAD' && m !== 'OPTIONS') {
       const header = c.req.header(CSRF_HEADER) ?? ''
@@ -176,6 +186,7 @@ export function createApp(deps: AppDeps) {
     await next()
   })
 
+  app.route('/api/agent', agentRoutes(deps))
   app.route('/api/auth', authRoutes)
   app.route('/api/meta', metaRoutes)
   app.route('/api/i18n', i18nRoutes)
