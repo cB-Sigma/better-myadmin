@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.19 (2026-10-31)
+
+### Fixes
+
+- The console strip at the bottom of the window no longer covers the end of the navigation
+  panel. With a long list of databases, the last one was hidden under it. The console now starts
+  after the panel and its resizer, as in phpMyAdmin, and follows when the panel is resized or
+  collapsed.
+
 ## 1.0.18 (2026-10-30)
 
 ### New

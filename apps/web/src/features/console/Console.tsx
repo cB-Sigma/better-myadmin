@@ -426,6 +426,8 @@ function ConsoleDock({
       <div
         id="pma_console"
         className="pointer-events-auto relative border-t border-border-strong bg-bg-elevated text-sm shadow"
+        // pma: navigation.ts sets #pma_console's margin to the panel's width plus the resizer's
+        style={{ marginInlineStart: 'var(--bma-nav-offset, 0px)' }}
       >
         <div
           className={`toolbar group flex items-center gap-1 bg-bg-subtle px-2 py-1 ${open ? 'cursor-n-resize' : 'collapsed'}`}
