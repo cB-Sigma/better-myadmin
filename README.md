@@ -3,7 +3,7 @@
 # BetterMyAdmin
 
 **phpMyAdmin, rebuilt for today.** Every feature you know, in a fast TypeScript and React app.<br>
-No PHP, no Apache: one Node.js process or one Docker image.
+No PHP, no Apache: one Node.js process or one Docker image. Ready for AI agents, with a built-in MCP server.
 
 [![Release](https://img.shields.io/github/v/release/cB-Sigma/better-myadmin?style=flat-square)](https://github.com/cB-Sigma/better-myadmin/releases)
 [![Docker image](https://img.shields.io/badge/docker-ghcr.io%2Fcb--sigma%2Fbetter--myadmin-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/cB-Sigma/better-myadmin/pkgs/container/better-myadmin)
@@ -41,6 +41,7 @@ Or try it in your browser with a demo database, with nothing to install:
 | 🧩 **Complete** | Browse, search, insert and edit, structure, SQL editor and console, import and export, the designer, privileges, replication, status, routines, events and triggers. It covers all of phpMyAdmin, [measured](docs/parity.md) against 707 checklist items. |
 | 🔁 **Drop-in** | phpMyAdmin's pages, settings, configuration storage and Docker variables. Converting an existing `config.inc.php` takes one command. |
 | 🎨 **Good-looking** | phpMyAdmin's themes plus Modern, Classic and Native, each with light and dark modes. |
+| 🤖 **Agent-ready** | A built-in [MCP server](#ai-agents-and-mcp) and JSON API let Claude Code and other agents explore schemas and run SQL, as a MySQL user with that user's privileges. |
 | 🔒 **Safer defaults** | Session-id-only cookies, login rate limiting, and no PHP to patch. |
 | 📦 **Simple to run** | One process and one port, with sessions in SQLite or Redis. Runs on Node 22.5+, or from the Docker image. |
 
@@ -55,11 +56,51 @@ Or try it in your browser with a demo database, with nothing to install:
 </tr>
 </table>
 
+## AI agents and MCP
+
+Agents don't need the web interface. Set `AgentApi: true` (or `BMA__AgentApi=true`), and
+BetterMyAdmin serves an MCP server and a small JSON API next to the UI:
+
+| Tool | What it does |
+|---|---|
+| `list_databases` | The databases this MySQL user can see |
+| `list_tables` | Tables and views, with engine, row estimate and comment |
+| `describe_table` | Columns, indexes and the `CREATE TABLE` statement |
+| `query` | Runs SQL and returns rows as JSON, with a row limit |
+| `explain` | The server's query plan |
+
+Connect Claude Code with a `.mcp.json` in your project:
+
+```json
+{
+  "mcpServers": {
+    "bettermyadmin": {
+      "type": "http",
+      "url": "https://bma.example.com/api/agent/v1/servers/1/mcp",
+      "headers": { "Authorization": "Basic <base64 of user:password>" }
+    }
+  }
+}
+```
+
+- **Same rules as people.** Each request signs in as a MySQL user. The usual login checks apply
+  (AllowDeny, AllowRoot, the failed-login limiter), and MySQL's grants decide what an agent can
+  see and change.
+- **No new exposure.** It uses the same port and the same authentication as the UI. It works
+  with HTTP Basic, a configured user, or a single sign-on module such as Cloudflare Access with
+  service tokens. Requests from other websites are refused.
+- **Exact values.** Numbers come back exactly as the server sent them, `NULL` as `null`, and
+  binary values as base64.
+
+Scripts can call the same operations as plain JSON at `/api/agent/v1/servers/1/…`. See
+[AI agents and scripts](https://cb-sigma.github.io/better-myadmin/agents.html) for details.
+
 ## Learn more
 
 - **[Installation](https://cb-sigma.github.io/better-myadmin/setup.html)**: Docker, Docker Compose, running from a checkout, and reverse proxies
 - **[Configuration](https://cb-sigma.github.io/better-myadmin/config.html)**: every directive, configuration files, `BMA__*` environment variables, Redis sessions
 - **[Migrating from phpMyAdmin](https://cb-sigma.github.io/better-myadmin/setup.html#manually-creating-the-file)**: `bettermyadmin import-pma-config config.inc.php`
+- **[AI agents and scripts](https://cb-sigma.github.io/better-myadmin/agents.html)**: the MCP server and the JSON API
 - **[Security](docs/architecture/07-security.md)**: put it behind TLS and a configuration file before exposing it
 - **[How parity is measured](docs/parity.md)**: inventories, golden tests against a live phpMyAdmin, daily upstream tracking
 - **[Development](docs/architecture/14-development-setup.md)**: building, testing and releasing
