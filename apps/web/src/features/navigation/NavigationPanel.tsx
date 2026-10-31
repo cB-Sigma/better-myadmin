@@ -179,8 +179,23 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
     [qc, server, store],
   )
 
+  // ResizeHandler.panelResize: #pma_console starts after the panel and its resizer, so the console
+  // never covers the end of the tree (--bma-nav-offset, read by Console.tsx)
+  const panelRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = panelRef.current
+    if (el === null) return
+    const root = document.documentElement
+    const ro = new ResizeObserver(() => root.style.setProperty('--bma-nav-offset', `${el.offsetWidth}px`))
+    ro.observe(el)
+    return () => {
+      ro.disconnect()
+      root.style.removeProperty('--bma-nav-offset')
+    }
+  }, [])
+
   return (
-    <div className="relative flex shrink-0 print:hidden">
+    <div ref={panelRef} className="relative flex shrink-0 print:hidden">
       <aside
         id="pma_navigation"
         className="flex flex-col overflow-hidden border-r border-border bg-bg-subtle"
