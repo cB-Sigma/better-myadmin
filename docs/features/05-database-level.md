@@ -599,7 +599,7 @@ Query (multi-table)
 - [x] Criteria collapse syncs with the "use in criteria" checkbox; AND/OR row appears with every criteria column. <!-- parity:test --> `p05-41c645` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
 - [x] Operator-specific RHS widgets: none for IS [NOT] NULL, multi-value for IN/NOT IN, two values for BETWEEN, free text otherwise; "Another column" RHS swaps in table+column selects. <!-- parity:test --> `p05-86eabf` [queryGenerator.test.ts:51](../../apps/web/src/features/database/queryGenerator.test.ts#L51)
 - [x] Update query: "Nothing selected" error when no shown column; FROM built with LEFT JOINs from FK metadata, else comma joins; aliases honoured. <!-- parity:test --> `p05-661434` [queryGenerator.test.ts:33](../../apps/web/src/features/database/queryGenerator.test.ts#L33) +1
-- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
+- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295) +1
 
 Privileges
 - [x] Non-admin users see "No Privileges"; grant/create-less users get a notice. <!-- parity:test --> `p05-2e6a47` [database-checklist.test.ts:457](../../apps/server/test/int/database-checklist.test.ts#L457)
@@ -628,7 +628,7 @@ Events
 - [x] Rows sorted by name; export shows raw `SHOW CREATE EVENT`. <!-- parity:test --> `p05-cfe947` [database-programs.parity.test.ts:422](../../tests/parity/database-programs.parity.test.ts#L422)
 
 Triggers (db scope)
-- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282)
+- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282) +1
 
 Tracking (db scope)
 - [x] Tab only when `Tracker::isActive()`; tracked vs untracked tables listed separately. <!-- parity:test --> `p05-edc4ef` [database-admin.parity.test.ts:366](../../tests/parity/database-admin.parity.test.ts#L366)

@@ -39,6 +39,17 @@ export {
   Modal,
 } from './components/dialog.tsx'
 export {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandMenu,
+  CommandShortcut,
+  CommandStatus,
+} from './components/command.tsx'
+export {
   ConfirmDialog,
   type ConfirmDialogProps,
   type ConfirmOptions,

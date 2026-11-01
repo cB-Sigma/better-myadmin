@@ -13,4 +13,5 @@ User Guide
     charts
     import_export
     themes
+    command_palette
     other
