@@ -138,6 +138,7 @@ import type {
   OperationsResponse,
   OrderByRequest,
   PageSettingsResponse,
+  PaletteSearchResponse,
   PartialDependenciesResponse,
   PartitionFormResponse,
   PartitionMaintenanceRequest,
@@ -623,6 +624,12 @@ export const api = {
     call<TableNamesResponse>('POST', `/servers/${server}/tables`, { db }),
   columnNames: (server: number, db: string, table: string) =>
     call<ColumnNamesResponse>('POST', `/servers/${server}/columns`, { db, table }),
+  /** BetterMyAdmin's command palette (X61): databases and tables matching `q`, filtered on the server */
+  commandPalette: (server: number, q: string, db: string) =>
+    call<PaletteSearchResponse>(
+      'GET',
+      `/servers/${server}/command-palette${queryString({ q, db: db === '' ? undefined : db })}`,
+    ),
   exportRun: (server: number, params: Array<[string, string]>) =>
     call<ExportResponse>('POST', `/servers/${server}/export`, { params }),
   /** The one-shot download URL of a prepared dump (navigated to, so the browser saves it). */

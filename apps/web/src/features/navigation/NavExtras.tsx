@@ -65,17 +65,38 @@ export function addRecentTable(
   void added.then(() => qc.invalidateQueries({ queryKey: qk.recentFavorite(server) }))
 }
 
+/** The Recent / Favorites lists (also read by the command palette). */
+export const recentFavoriteQuery = (server: number) => ({
+  queryKey: qk.recentFavorite(server),
+  queryFn: async () => {
+    await pendingRecent
+    return api.recentFavorite(server)
+  },
+})
+
+/**
+ * Opens a Recent / Favorites table: /table/recent-favorite forgets a table that no longer exists,
+ * then /sql (Browse). Also used by the command palette's recent tables.
+ */
+export function useOpenRecentFavorite(server: number): (tb: { db: string; table: string }) => Promise<void> {
+  const qc = useQueryClient()
+  const navigate = useNavigate()
+  return async (tb) => {
+    const r = await api.openRecentFavorite(server, tb)
+    if (!r.ok) {
+      if (r.message !== null) showMessage(r.message.text, false, 'error')
+      return
+    }
+    await qc.invalidateQueries({ queryKey: qk.recentFavorite(server) })
+    void navigate({ to: '/s/$server/db/$db/t/$table/browse', params: { server, db: tb.db, table: tb.table } })
+  }
+}
+
 /** tree/quick_warp.twig: shown when NumRecentTables / NumFavoriteTables are not 0 */
 export function QuickWarp({ server }: { server: number }) {
   const qc = useQueryClient()
-  const navigate = useNavigate()
-  const q = useQuery({
-    queryKey: qk.recentFavorite(server),
-    queryFn: async () => {
-      await pendingRecent
-      return api.recentFavorite(server)
-    },
-  })
+  const q = useQuery(recentFavoriteQuery(server))
+  const open = useOpenRecentFavorite(server)
   const sync = q.data?.syncFavorites === true
   // onloadRecentFavoriteTables: the favorites of localStorage synchronised to the storage once
   useEffect(() => {
@@ -90,16 +111,6 @@ export function QuickWarp({ server }: { server: number }) {
   if (q.data === undefined) return null
   const d = q.data
   if (d.numRecentTables <= 0 && d.numFavoriteTables <= 0) return null
-  const open = async (tb: { db: string; table: string }) => {
-    // /table/recent-favorite: forget a table that no longer exists, then /sql (Browse)
-    const r = await api.openRecentFavorite(server, tb)
-    if (!r.ok) {
-      if (r.message !== null) showMessage(r.message.text, false, 'error')
-      return
-    }
-    await qc.invalidateQueries({ queryKey: qk.recentFavorite(server) })
-    void navigate({ to: '/s/$server/db/$db/t/$table/browse', params: { server, db: tb.db, table: tb.table } })
-  }
   const removeFavorite = async (tb: { db: string; table: string }) => {
     const r = await api.favorite(server, { ...tb, action: 'remove', favoriteTables: localFavorites() })
     if (!r.changes) {
