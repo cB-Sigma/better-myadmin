@@ -65,6 +65,58 @@ export async function getForeignersInternal(
   return foreign
 }
 
+/** An internal relation of {@link getDbInternalRelations}: one master column of one table. */
+export interface DbInternalRelation extends InternalRelation {
+  master_table: string
+  master_field: string
+}
+
+/**
+ * Every internal relation whose master side is in `db`, in one statement (the Diagram of a whole
+ * database, X63), merged like {@link getForeignersInternal}: pma__relation rows first, then the
+ * built-in `information_schema` / `mysql` relations of columns that have none. Ordered by master
+ * table and column.
+ */
+export async function getDbInternalRelations(
+  conn: MetaConn | null,
+  rp: RelationParameters,
+  db: string,
+): Promise<DbInternalRelation[]> {
+  const out: DbInternalRelation[] = []
+  const seen = new Set<string>()
+  const f = rp.relationFeature
+  if (f !== null && conn !== null) {
+    const r = await conn.tryQuery(
+      `SELECT \`master_table\`, \`master_field\`, \`foreign_db\`, \`foreign_table\`, \`foreign_field\` FROM ${backquote(f.database)}.${backquote(f.relation)} WHERE \`master_db\` = ${q(db)} ORDER BY \`master_table\`, \`master_field\``,
+    )
+    if (r !== false) {
+      for (const row of r.rows) {
+        const rel: DbInternalRelation = {
+          master_table: row.master_table ?? '',
+          master_field: row.master_field ?? '',
+          foreign_db: row.foreign_db ?? '',
+          foreign_table: row.foreign_table ?? '',
+          foreign_field: row.foreign_field ?? '',
+        }
+        seen.add(`${rel.master_table}\u0000${rel.master_field}`)
+        out.push(rel)
+      }
+    }
+  }
+  const lower = db.toLowerCase()
+  if (lower === 'information_schema' || lower === 'mysql') {
+    const map =
+      lower === 'information_schema' ? INTERNAL_RELATIONS.information_schema : INTERNAL_RELATIONS.mysql
+    for (const [table, rels] of Object.entries(map)) {
+      for (const [field, rel] of Object.entries(rels)) {
+        if (seen.has(`${table}\u0000${field}`)) continue
+        out.push({ ...rel, master_table: table, master_field: field })
+      }
+    }
+  }
+  return out
+}
+
 export interface ColumnLike {
   field: string
   type: string

@@ -103,6 +103,7 @@ import {
   Variable,
   Wand2,
   Waypoints,
+  Workflow,
   Wrench,
   X,
   XCircle,
@@ -137,6 +138,8 @@ export const pmaIcons = {
   b_triggers: Zap,
   eye: Eye,
   b_relations: Network,
+  /** BetterMyAdmin-only: the Diagram tab (X63) */
+  erDiagram: Workflow,
   centralColumns: LayoutList,
   b_browse: Table,
   b_insrow: Plus,

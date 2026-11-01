@@ -60,6 +60,7 @@ import {
   designerSetDisplayField,
   designerSetting,
 } from '../database/designer.ts'
+import { erDiagram } from '../database/er-diagram.ts'
 import { eventData, eventsList, exportEvent, saveEvent } from '../database/events.ts'
 import { multiTableForm, multiTableKeys } from '../database/multi-table.ts'
 import { changeCollation, operationsPage, renameOrCopy, saveComment } from '../database/operations.ts'
@@ -357,6 +358,11 @@ databaseRoutes.post('/:db/tracking', async (c) => {
   const req = parse(DbTrackingRequest, await body(c))
   return c.json(await withDb(c, (ctx) => trackingAction(ctx, req)))
 })
+
+// ---------------------------------------------------------------- Diagram (BetterMyAdmin-only, X63)
+
+/** GET …/:db/er-diagram — pma: none (the read-only ER diagram, X63) */
+databaseRoutes.get('/:db/er-diagram', async (c) => c.json(await withDb(c, erDiagram)))
 
 // ---------------------------------------------------------------- Designer
 

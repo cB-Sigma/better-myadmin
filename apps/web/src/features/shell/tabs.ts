@@ -10,6 +10,11 @@ export interface TabDef {
   activePaths?: string[]
   /** a path prefix marks the tab active (status/*, settings/*) */
   prefix?: boolean
+  /**
+   * A BetterMyAdmin-only tab phpMyAdmin's menu does not have: the parity-exception id that registers
+   * it (the shell parity test and the UI parity maps leave it out of the comparison).
+   */
+  bmaOnly?: string
 }
 
 /**
@@ -60,6 +65,8 @@ export const DB_TABS: Record<DbTabKey, TabDef> = {
   triggers: { text: 'Triggers', icon: 'b_triggers', path: 'triggers' },
   tracking: { text: 'Tracking', icon: 'eye', path: 'tracking' },
   designer: { text: 'Designer', icon: 'b_relations', path: 'designer' },
+  // BetterMyAdmin-only: the automatic read-only ER diagram (X63)
+  diagram: { text: 'Diagram', icon: 'erDiagram', path: 'diagram', bmaOnly: 'X63' },
   central_columns: { text: 'Central columns', icon: 'centralColumns', path: 'central-columns' },
 }
 

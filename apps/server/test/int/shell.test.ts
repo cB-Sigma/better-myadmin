@@ -33,7 +33,8 @@ beforeAll(async () => {
     INSERT INTO ${PMADB}.pma__column_info (db_name, table_name, column_name, comment) VALUES ('${DB}', '', '(db_comment)', 'The shell test database');
     INSERT INTO ${PMADB}.pma__users VALUES ('${GROUPED}', 'm1shell_group');
     INSERT INTO ${PMADB}.pma__usergroups VALUES ('m1shell_group', 'server_sql', 'N'), ('m1shell_group', 'server_status', 'Y'),
-      ('m1shell_group', 'db_central_columns', 'N'), ('m1shell_group', 'db_sql', 'N'), ('m1shell_group', 'table_browse', 'N');
+      ('m1shell_group', 'db_central_columns', 'N'), ('m1shell_group', 'db_sql', 'N'), ('m1shell_group', 'table_browse', 'N'),
+      ('m1shell_group', 'db_designer', 'N');
   `)
   for (const u of [LIMITED, TRIG, GRANTOR, GROUPED, PW]) {
     await root.query(`DROP USER IF EXISTS '${u}'@'%'; CREATE USER '${u}'@'%' IDENTIFIED BY '${u}';`)
@@ -128,6 +129,9 @@ describe('GET /api/servers/:s — server tabs (Menu::getServerTabs)', () => {
     const db = await t.req('GET', `/api/servers/1/databases/${DB}`)
     expect(keys(db)).not.toContain('sql')
     expect(keys(db)).toContain('structure')
+    // the BetterMyAdmin-only Diagram (X63) has no user-group key: it follows the Designer
+    expect(keys(db)).not.toContain('designer')
+    expect(keys(db)).not.toContain('diagram')
     expect(keys(await t.req('GET', `/api/servers/1/databases/${DB}/tables/t1/capabilities`))).not.toContain(
       'browse',
     )
@@ -166,6 +170,7 @@ describe('GET /api/servers/:s/databases/:db — database tabs (Menu::getDbTabs)'
       'triggers',
       'tracking',
       'designer',
+      'diagram',
       'central_columns',
     ])
     expect(r.json).toMatchObject({ db: DB, isSystemSchema: false, numTables: 4, comment: '' })
@@ -198,6 +203,7 @@ describe('GET /api/servers/:s/databases/:db — database tabs (Menu::getDbTabs)'
       'operation',
       'routines',
       'designer',
+      'diagram',
     ])
   })
 
