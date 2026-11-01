@@ -2,6 +2,13 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.21 (2026-11-01)
+
+### Fixes
+
+- Slow queries: times under a millisecond read "821.14 m ms". They now read "821.14 µs", and
+  longer times read in ms or s.
+
 ## 1.0.20 (2026-11-01)
 
 ### New

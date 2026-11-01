@@ -34,10 +34,16 @@ export interface SlowQueriesSearch {
   order: 'asc' | 'desc'
 }
 
-/** A duration in ms as `12.3 ms` / `4.56 s` (unit symbols, not translated) */
+/**
+ * A duration in ms as `821.14 µs` / `12.3 ms` / `4.56 s` (unit symbols, not translated). Plain
+ * numbers: formatNumber's digitsLeft would add an SI prefix of its own ("821.14 m ms").
+ */
 export function duration(ms: number): string {
   const tr = translator()
-  return ms < 1000 ? `${formatNumber(tr, ms, 3, 2)} ms` : `${formatNumber(tr, ms / 1000, 3, 2)} s`
+  const num = (n: number) => formatNumber(tr, n, 0, 2)
+  if (ms === 0) return '0 ms'
+  if (ms < 1) return `${num(ms * 1000)} µs`
+  return ms < 1000 ? `${num(ms)} ms` : `${num(ms / 1000)} s`
 }
 
 const count = (n: number) => formatNumber(translator(), n, 0, 0)

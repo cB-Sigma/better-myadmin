@@ -128,9 +128,47 @@ const SHOTS: Shot[] = [
     name: 'slow-queries',
     title: 'localhost:8080 / Status / Slow queries',
     run: async (page) => {
+      // a clean digest table and a shop-like workload (this resets performance_schema's statement
+      // statistics of the server it runs against: use a development server)
+      const conn = await mysql.createConnection({ ...MYSQL, database: DB })
+      try {
+        await conn.query('TRUNCATE TABLE performance_schema.events_statements_summary_by_digest')
+        const work = [
+          [
+            40,
+            "SELECT * FROM orders o JOIN customers c ON c.id = o.customer_id WHERE c.email LIKE '%@example.%' ORDER BY o.placed_at DESC",
+          ],
+          [
+            25,
+            'SELECT p.category, SUM(oi.quantity * oi.unit_price) AS revenue FROM order_items oi JOIN products p ON p.id = oi.product_id GROUP BY p.category ORDER BY revenue DESC',
+          ],
+          [60, "SELECT * FROM products WHERE name LIKE '%desk%' OR category = 'Furniture'"],
+          [
+            30,
+            'SELECT c.country, COUNT(*) AS n, AVG(o.total) FROM customers c JOIN orders o ON o.customer_id = c.id GROUP BY c.country',
+          ],
+          [80, 'SELECT id, name, price FROM products WHERE id = 7'],
+          [
+            20,
+            'SELECT r.rating, r.body FROM reviews r WHERE r.product_id IN (SELECT id FROM products WHERE price > 100) ORDER BY r.created_at DESC',
+          ],
+          [15, "UPDATE products SET stock = stock WHERE category = 'Audio'"],
+        ] as const
+        for (const [n, sql] of work) for (let k = 0; k < n; k++) await conn.query(sql)
+      } finally {
+        await conn.end()
+      }
       await page.goto('/s/1/status/slow-queries')
-      await page.locator('table').first().waitFor()
-      await page.waitForTimeout(500)
+      await page.locator('#slowQueriesDb').selectOption(DB)
+      const first = page.locator('table tbody tr').first()
+      await first.waitFor()
+      await first.locator('.slow-query-open').click()
+      const dialog = page.locator('#slowQueryDetail')
+      await dialog.waitFor()
+      await dialog.locator('#slowQueryExplain').click()
+      await dialog.locator('#slowQueryExplainResult tbody tr').first().waitFor()
+      await dialog.locator('#slowQueryExplainResult tbody tr').first().scrollIntoViewIfNeeded()
+      await page.waitForTimeout(400)
     },
   },
 ]

@@ -71,10 +71,12 @@ second app to get:
 <td width="50%"><img src="docs/screenshots/diagram.jpg" alt="Automatic ER diagram of a database"><br><sub><b>ER diagram:</b> every table and foreign key, laid out automatically; export to SVG or PNG</sub></td>
 <td width="50%"><img src="docs/screenshots/dashboard.jpg" alt="Live server dashboard"><br><sub><b>Live dashboard:</b> queries per second, connections, buffer pool, traffic and replication lag</sub></td>
 </tr>
+<tr>
+<td width="50%"><img src="docs/screenshots/slow-queries.jpg" alt="Slow queries with a statement's EXPLAIN"><br><sub><b>Slow queries:</b> the costliest statements by shape, with the full query and a one-click EXPLAIN</sub></td>
+<td width="50%"></td>
+</tr>
 </table>
 
-- **Slow queries:** the statements that cost the most time, grouped by shape from performance_schema
-  or the slow log, with the full query and a one-click EXPLAIN.
 - **AI agents:** a built-in MCP server and JSON API, [below](#ai-agents-and-mcp).
 
 ## AI agents and MCP
