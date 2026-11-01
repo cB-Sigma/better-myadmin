@@ -150,5 +150,7 @@ export const SHORTCUT_HELP: Array<{ keys: string; scope: string; action: string 
   { keys: 'Ctrl+Alt+W', scope: 'SQL tab', action: 'Close the query tab' },
   { keys: '←/→, F2, Delete', scope: 'query tabs', action: 'Switch, rename, close' },
   { keys: '?', scope: 'outside form fields', action: 'Show this list' },
+  // BetterMyAdmin addition (X61): features/shell/palette
+  { keys: 'Ctrl+Shift+P / Cmd+Shift+P', scope: 'anywhere', action: 'Command palette' },
   { keys: 'Esc', scope: 'dialogs', action: 'Close the dialog' },
 ]

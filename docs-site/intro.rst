@@ -66,6 +66,8 @@ Currently BetterMyAdmin supports following shortcuts:
 * t + f - Search table (Provided you are in table related page)
 * backspace - Takes you to older page.
 * ? - Show the list of shortcuts
+* CTRL+SHIFT+p (CMD+SHIFT+p on macOS) - Open the command palette, see
+  :ref:`command-palette`
 
 A word about users
 ------------------

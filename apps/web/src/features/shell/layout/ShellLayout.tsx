@@ -19,6 +19,7 @@ import { UserMenu } from '../UserMenu.tsx'
 import { ErrorReporting, PageErrorBoundary } from '../errors/ErrorReporting.tsx'
 import { ShortcutLayer } from '../hotkeys/useShortcuts.tsx'
 import { PageChromeProvider, PageIcons } from '../page-chrome.tsx'
+import { CommandPalette } from '../palette/CommandPalette.tsx'
 import { useScopeParams, useServerScope } from '../scope.ts'
 import { CheckAllRanges } from '../session/CheckAllRanges.tsx'
 import { IdleCheck } from '../session/IdleCheck.tsx'
@@ -113,6 +114,13 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                     <header id="floating_menubar" className="min-w-0 flex-1">
                       <Breadcrumb server={server} db={db} table={table} onScrollTop={scrollTop} />
                     </header>
+                    {/* BetterMyAdmin's command palette (X61): a sibling, #page_nav_icons stays phpMyAdmin's */}
+                    <CommandPalette
+                      server={server}
+                      db={db}
+                      table={table}
+                      shortcutsDisabled={cfg.DisableShortcutKeys}
+                    />
                     <div id="page_nav_icons" className="flex shrink-0 items-center gap-2">
                       <UserMenu server={server} />
                       <PageIcons onTop={scrollTop} />

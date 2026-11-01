@@ -69,6 +69,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `CodeGen`
 - `Collation \| WITH `
 - `Collation variant \| WITH `
+- `Command palette`
 - `Config`
 - `Configuration saved to file %s`
 - `Create JS code`
@@ -104,6 +105,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `New query tab`
 - `New tab`
 - `No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).`
+- `No matches`
 - `Not found.`
 - `OR REPLACE view`
 - `ORACLE`
@@ -112,10 +114,12 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Query tabs`
 - `REPLACE`
 - `SMART`
+- `Search databases, tables and commands`
 - `Showing as JS code`
 - `TRADITIONAL`
 - `The page you requested was not found.`
 - `The uploaded file exceeds the maximum upload size (MaxUploadSize).`
+- `Toggle console`
 - `Too many failed login attempts. Please try again in %s seconds.`
 - `UPDATE`
 - `Up`
@@ -186,4 +190,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3436 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 964 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 290 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2055 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 291 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2087 tests.

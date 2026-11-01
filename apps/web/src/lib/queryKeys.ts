@@ -23,6 +23,8 @@ export const qk = {
   navReloadSignal: (s: number) => ['srv', s, 'nav', 'reload-signal'] as const,
   navTree: (s: number, q: object) => ['srv', s, 'nav', 'dbs', q] as const,
   navBranch: (s: number, q: object) => ['srv', s, 'nav', 'db', q] as const,
+  /** the command palette's databases / tables (under nav: refreshed whenever the tree is) */
+  commandPalette: (s: number, q: string, db: string) => ['srv', s, 'nav', 'palette', q, db] as const,
   sqlForm: (s: number, db: string, table: string, q: string) =>
     ['srv', s, 'db', db, 't', table, 'sqlForm', q] as const,
   autocomplete: (s: number, db: string) => ['srv', s, 'db', db, 'autocomplete'] as const,
