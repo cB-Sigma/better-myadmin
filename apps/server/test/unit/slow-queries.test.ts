@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import {
   explainableStatement,
+  fingerprintQuery,
   grantsAllow,
   groupSlowLog,
-  fingerprintQuery,
   sortRows,
 } from '../../src/server-admin/slow-queries.ts'
 
@@ -14,7 +14,9 @@ describe('fingerprintQuery', () => {
     )
   })
   it('collapses IN lists and multi-row VALUES', () => {
-    expect(fingerprintQuery('SELECT * FROM t WHERE id IN (1, 2, 3)')).toBe('SELECT * FROM t WHERE id IN (...)')
+    expect(fingerprintQuery('SELECT * FROM t WHERE id IN (1, 2, 3)')).toBe(
+      'SELECT * FROM t WHERE id IN (...)',
+    )
     expect(fingerprintQuery("INSERT INTO t VALUES (1,'a'),(2,'b'), (3, 'c');")).toBe(
       'INSERT INTO t VALUES (...)',
     )
