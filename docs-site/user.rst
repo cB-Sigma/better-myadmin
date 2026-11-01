@@ -12,6 +12,7 @@ User Guide
     privileges
     relations
     charts
+    status_insights
     import_export
     themes
     command_palette
