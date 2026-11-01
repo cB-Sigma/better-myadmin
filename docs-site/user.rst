@@ -8,6 +8,7 @@ User Guide
     two_factor
     transformations
     bookmarks
+    query_tabs
     privileges
     relations
     charts

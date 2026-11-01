@@ -1,0 +1,6 @@
+# Intentional differences of the SQL tab (see tests/ui-parity/README.md for the format).
+rules:
+  - ours: { kind: button, label: 'New query tab' }
+    added: >-
+      BetterMyAdmin's query tabs (parity exception X62): with one tab the page is phpMyAdmin's query
+      box plus this discreet "New tab" button; the tab strip shows from two tabs on

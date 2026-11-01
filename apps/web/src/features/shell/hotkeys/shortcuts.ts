@@ -145,6 +145,10 @@ export const SHORTCUT_HELP: Array<{ keys: string; scope: string; action: string 
   { keys: 'Ctrl+Enter / Alt+Enter', scope: 'in a form field', action: 'Submit the form' },
   { keys: 'Ctrl+←/↑/→/↓', scope: 'column definition and insert forms', action: 'Move between fields' },
   { keys: 'Ctrl+Space', scope: 'SQL editors', action: 'Autocomplete' },
+  // BetterMyAdmin query tabs (parity exception X62)
+  { keys: 'Ctrl+Alt+T', scope: 'SQL tab', action: 'New query tab' },
+  { keys: 'Ctrl+Alt+W', scope: 'SQL tab', action: 'Close the query tab' },
+  { keys: '←/→, F2, Delete', scope: 'query tabs', action: 'Switch, rename, close' },
   { keys: '?', scope: 'outside form fields', action: 'Show this list' },
   { keys: 'Esc', scope: 'dialogs', action: 'Close the dialog' },
 ]
