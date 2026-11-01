@@ -39,7 +39,7 @@ const num = (v: string | null | undefined) => (v === null || v === undefined ? 0
  * keywords upper-cased; a parenthesised list of placeholders reads `(...)` and repeated `(...)`
  * rows of a multi-row VALUES collapse into one — the slow log's queries grouped like digests.
  */
-export function normalizeQuery(sql: string): string {
+export function fingerprintQuery(sql: string): string {
   const out: string[] = []
   for (const tok of tokenize(sql)) {
     switch (tok.type) {
@@ -94,7 +94,7 @@ export function slowLogDigest(db: string | null, text: string): string {
 export function groupSlowLog(entries: SlowLogEntry[]): SlowQueryRow[] {
   const groups = new Map<string, SlowQueryRow>()
   for (const e of entries) {
-    const text = normalizeQuery(e.sql_text)
+    const text = fingerprintQuery(e.sql_text)
     const db = e.db === '' ? null : e.db
     const digest = slowLogDigest(db, text)
     const ms = e.query_time * 1000

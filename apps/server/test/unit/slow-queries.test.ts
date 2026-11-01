@@ -3,24 +3,24 @@ import {
   explainableStatement,
   grantsAllow,
   groupSlowLog,
-  normalizeQuery,
+  fingerprintQuery,
   sortRows,
 } from '../../src/server-admin/slow-queries.ts'
 
-describe('normalizeQuery', () => {
+describe('fingerprintQuery', () => {
   it('replaces literals, collapses whitespace, upper-cases keywords and drops comments', () => {
-    expect(normalizeQuery("select  *\n from t /* x */ where a = 1 and b = 'x' -- c\n")).toBe(
+    expect(fingerprintQuery("select  *\n from t /* x */ where a = 1 and b = 'x' -- c\n")).toBe(
       'SELECT * FROM t WHERE a = ? AND b = ?',
     )
   })
   it('collapses IN lists and multi-row VALUES', () => {
-    expect(normalizeQuery('SELECT * FROM t WHERE id IN (1, 2, 3)')).toBe('SELECT * FROM t WHERE id IN (...)')
-    expect(normalizeQuery("INSERT INTO t VALUES (1,'a'),(2,'b'), (3, 'c');")).toBe(
+    expect(fingerprintQuery('SELECT * FROM t WHERE id IN (1, 2, 3)')).toBe('SELECT * FROM t WHERE id IN (...)')
+    expect(fingerprintQuery("INSERT INTO t VALUES (1,'a'),(2,'b'), (3, 'c');")).toBe(
       'INSERT INTO t VALUES (...)',
     )
   })
   it('keeps identifiers, so different tables stay apart', () => {
-    expect(normalizeQuery('SELECT `a` FROM t1')).not.toBe(normalizeQuery('SELECT `a` FROM t2'))
+    expect(fingerprintQuery('SELECT `a` FROM t1')).not.toBe(fingerprintQuery('SELECT `a` FROM t2'))
   })
 })
 
