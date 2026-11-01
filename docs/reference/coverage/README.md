@@ -64,6 +64,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Add CREATE VIEW`
 - `Add DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT / TRIGGER`
 - `Allow the interruption of an import when it gets close to the time limit (ExecTimeLimit).`
+- `Average time`
 - `Bookmark not found.`
 - `Close %s`
 - `CodeGen`
@@ -73,23 +74,31 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Config`
 - `Configuration saved to file %s`
 - `Create JS code`
+- `Critical`
 - `DB2`
 - `DESC`
+- `Dashboard`
 - `Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. The format string uses strftime-style specifiers (for example %Y-%m-%d %H:%M:%S) for both.`
 - `Displays the contents of the column as-is, without HTML-escaping it. That is, the column is assumed to contain valid HTML.`
 - `Down`
 - `EXECUTE`
 - `Enable advanced features in the configuration file (<code>bettermyadmin.config.json</code>), for example by using the setup script.`
+- `Errors / warnings`
+- `Example statement`
 - `Excel 2003 / Macintosh`
 - `Excel 2008 / Macintosh`
+- `First seen`
 - `GRANT`
 - `However on last run no data has been parsed, this usually means BetterMyAdmin won't be able to finish this import unless you increase the time limit (ExecTimeLimit).`
 - `INSERT`
+- `InnoDB buffer pool hit rate`
 - `Invalid column.`
 - `Invalid page settings group.`
 - `Invalid request.`
 - `Invalid server index!`
 - `LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, the administrator has to list the tools you want to make available in the TransformationsExternalPrograms setting. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will HTML-escape the output (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).`
+- `Last seen`
+- `Last update: %s`
 - `MAX CONNECTIONS PER HOUR`
 - `MAX QUERIES PER HOUR`
 - `MAX UPDATES PER HOUR`
@@ -98,6 +107,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `MSSQL`
 - `MYSQL323`
 - `MYSQL40`
+- `Maximum time`
 - `Missing username.`
 - `NHibernate C# DO`
 - `NHibernate XML`
@@ -106,27 +116,57 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `New tab`
 - `No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).`
 - `No matches`
+- `No statements recorded yet.`
+- `Normalized statement`
 - `Not found.`
 - `OR REPLACE view`
 - `ORACLE`
+- `Only a single SELECT, INSERT, UPDATE, DELETE, REPLACE or TABLE statement can be explained.`
+- `Open in the SQL tab`
 - `OpenDocument`
+- `Paused`
+- `Paused while the page is hidden`
+- `Queries per second`
 - `Query %s`
 - `Query tabs`
 - `REPLACE`
+- `Replication lag`
+- `Reset statistics`
+- `Reset the statement statistics of the whole server? This truncates performance_schema.events_statements_summary_by_digest for every user.`
+- `Rows examined`
+- `Rows sent`
 - `SMART`
 - `Search databases, tables and commands`
+- `Showing %1$s of %2$s statements.`
 - `Showing as JS code`
+- `Slow queries`
+- `Slow query log (mysql.slow_log)`
+- `Source:`
+- `Statement details`
+- `Statement digests (performance_schema)`
 - `TRADITIONAL`
+- `Table locks waited`
+- `Temporary tables on disk`
 - `The page you requested was not found.`
+- `The replication lag is not shown: reading the replica status needs the REPLICATION CLIENT privilege (REPLICA MONITOR or SLAVE MONITOR on MariaDB).`
+- `The slow query log is off: SET GLOBAL slow_query_log = ON; (long_query_time decides which statements are logged).`
+- `The statement is no longer recorded.`
+- `The statement statistics have been reset.`
+- `The statements_digest consumer is disabled, so new statements are not summarized: UPDATE performance_schema.setup_consumers SET ENABLED = 'YES' WHERE NAME = 'statements_digest';`
 - `The uploaded file exceeds the maximum upload size (MaxUploadSize).`
+- `Threads running`
 - `Toggle console`
 - `Too many failed login attempts. Please try again in %s seconds.`
+- `Total time`
 - `UPDATE`
 - `Up`
+- `Uptime:`
 - `WITH `
 - `Windows`
 - `Without JS code`
 - `You can set more settings by modifying bettermyadmin.config.json, eg. by using %sSetup script%s.`
+- `Your account cannot read mysql.slow_log: it needs the SELECT privilege on that table.`
+- `Your account cannot read performance_schema.events_statements_summary_by_digest: it needs the SELECT privilege on performance_schema.`
 - `Your export is incomplete, due to a low execution time limit (ExecTimeLimit)!`
 - `Zoom in`
 - `Zoom out`
@@ -161,6 +201,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `ldi`
 - `legal`
 - `letter`
+- `log_output does not include TABLE, so the slow query log is not written to mysql.slow_log: SET GLOBAL log_output = 'FILE,TABLE';`
 - `main`
 - `mb`
 - `new`
@@ -169,6 +210,8 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `ods`
 - `odt`
 - `pdf`
+- `performance_schema is off on this server, so no statement statistics are collected. Set performance_schema = ON in the server configuration (my.cnf) and restart the server. MariaDB has it off by default.`
+- `performance_schema keeps no example of this statement with its values. Open it in the SQL tab, replace the ? placeholders with values and explain it there.`
 - `show`
 - `signon`
 - `sql`
@@ -190,4 +233,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3436 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 964 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 291 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2087 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 296 API endpoints, 88 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2129 tests.

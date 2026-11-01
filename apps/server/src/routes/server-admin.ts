@@ -14,13 +14,18 @@ import {
   ReplicaUserRequest,
   ReplicationQuery,
   SetVariableRequest,
+  SlowQueriesQuery,
+  SlowQueryDetailQuery,
+  SlowQueryExplainRequest,
   StatusVariablesRequest,
 } from '@bettermyadmin/contracts'
 import { phpIntval } from '@bettermyadmin/i18n'
 import { Hono } from 'hono'
+import { NotFoundError } from '../http/errors.ts'
 import { jsonBody, parse } from '../http/validate.ts'
 import { collationsPage } from '../server-admin/charsets.ts'
 import { withAdmin } from '../server-admin/context.ts'
+import { dashboardSample } from '../server-admin/dashboard.ts'
 import { createDatabase, databasesPage, dropDatabases } from '../server-admin/databases.ts'
 import { enginePage, enginesPage } from '../server-admin/engines.ts'
 import {
@@ -40,6 +45,7 @@ import {
   replicaSkipErrors,
   replicationPage,
 } from '../server-admin/replication.ts'
+import { explainSlowQuery, resetDigests, slowQueries, slowQueryDetail } from '../server-admin/slow-queries.ts'
 import {
   advisorPage,
   killProcess,
@@ -184,6 +190,33 @@ serverAdminRoutes.post('/status/monitor/query', async (c) => {
   // database and PROFILING do not stay on a pooled connection
   return c.json(await withAdmin(c, (ctx) => queryAnalyzer(ctx, req.database, req.query), true))
 })
+
+/** BetterMyAdmin only (X64): one reading of the live dashboard's counters (polled by the page) */
+serverAdminRoutes.get('/status/dashboard', async (c) => c.json(await withAdmin(c, dashboardSample)))
+
+/** BetterMyAdmin only (X65): the top statement digests, or the slow log grouped by query */
+serverAdminRoutes.get('/status/slow-queries', async (c) => {
+  const q = parse(SlowQueriesQuery, c.req.query())
+  return c.json(await withAdmin(c, (ctx) => slowQueries(ctx, q)))
+})
+
+/** BetterMyAdmin only (X65): one digest's text, formatted, and a representative statement */
+serverAdminRoutes.get('/status/slow-queries/detail', async (c) => {
+  const q = parse(SlowQueryDetailQuery, c.req.query())
+  const d = await withAdmin(c, (ctx) => slowQueryDetail(ctx, q))
+  // i18n-new: Status › Slow queries (parity exception X65)
+  if (d === null) throw new NotFoundError(c.get('tr').gettext('The statement is no longer recorded.'))
+  return c.json(d)
+})
+
+/** BetterMyAdmin only (X65): EXPLAIN of a representative statement (on a link of its own: USE db) */
+serverAdminRoutes.post('/status/slow-queries/explain', async (c) => {
+  const req = parse(SlowQueryExplainRequest, await jsonBody(c, {}))
+  return c.json(await withAdmin(c, (ctx) => explainSlowQuery(ctx, req.db, req.query), true))
+})
+
+/** BetterMyAdmin only (X65): TRUNCATE the statement digest summary */
+serverAdminRoutes.post('/status/slow-queries/reset', async (c) => c.json(await withAdmin(c, resetDigests)))
 
 /** pma: /server/variables */
 serverAdminRoutes.get('/variables', async (c) => c.json(await withAdmin(c, variablesPage)))
