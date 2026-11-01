@@ -146,5 +146,7 @@ export const SHORTCUT_HELP: Array<{ keys: string; scope: string; action: string 
   { keys: 'Ctrl+←/↑/→/↓', scope: 'column definition and insert forms', action: 'Move between fields' },
   { keys: 'Ctrl+Space', scope: 'SQL editors', action: 'Autocomplete' },
   { keys: '?', scope: 'outside form fields', action: 'Show this list' },
+  // BetterMyAdmin addition (X61): features/shell/palette
+  { keys: 'Ctrl+Shift+P / Cmd+Shift+P', scope: 'anywhere', action: 'Command palette' },
   { keys: 'Esc', scope: 'dialogs', action: 'Close the dialog' },
 ]

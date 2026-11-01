@@ -622,7 +622,7 @@ Operations
 - [x] TRUNCATE/DELETE/DROP confirmations with strong warning + FK-checks checkbox; DROP returns to the database page. <!-- parity:test --> `p04-b6e8f9` [table-operations.parity.test.ts:544](../../tests/parity/table-operations.parity.test.ts#L544) +3
 - [x] Partition maintenance multi-select; COALESCE uses count; DROP/TRUNCATE confirm. <!-- parity:test --> `p04-408957` [structure.test.ts:107](../../packages/sql-gen/test/structure.test.ts#L107) +3
 - [x] Referential integrity links only with pmadb internal relations. <!-- parity:test --> `p04-27eea3` [table-operations.test.ts:139](../../apps/server/test/int/table-operations.test.ts#L139)
-- [x] Multi-table maintenance refused when `DisableMultiTableMaintenance`. <!-- parity:test --> `p04-83ca2d` [table-operations.test.ts:162](../../apps/server/test/int/table-operations.test.ts#L162)
+- [x] Multi-table maintenance refused when `DisableMultiTableMaintenance`. <!-- parity:test --> `p04-83ca2d` [table-operations.test.ts:162](../../apps/server/test/int/table-operations.test.ts#L162) +1
 
 Search / Zoom / Find-Replace
 - [x] Operators per type class incl. `IS NULL`/`IS NOT NULL` for nullable; display strings for `= ''` / `!= ''`. <!-- parity:test --> `p04-3ef752` [types.test.ts:49](../../packages/mysql-types/test/types.test.ts#L49) +4

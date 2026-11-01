@@ -25,3 +25,24 @@ export const ColumnNamesResponse = z.object({
   message: z.string().optional(),
 })
 export type ColumnNamesResponse = z.infer<typeof ColumnNamesResponse>
+
+/**
+ * GET /api/servers/:s/command-palette?q=…&db=… — the command palette's navigation targets
+ * (BetterMyAdmin only, parity exception X61): the visible databases and the tables / views of every
+ * visible database whose name contains the letters of `q` in order (case-insensitive; `db.table`
+ * narrows both parts), best matches first and capped. An empty `q` lists the tables of `db`.
+ */
+export const PaletteSearchQuery = z.object({
+  q: z.string().max(256).default(''),
+  db: z.string().optional(),
+})
+export type PaletteSearchQuery = z.input<typeof PaletteSearchQuery>
+export const PaletteTarget = z.object({ db: z.string(), table: z.string(), view: z.boolean() })
+export type PaletteTarget = z.infer<typeof PaletteTarget>
+export const PaletteSearchResponse = z.object({
+  databases: z.array(z.string()),
+  tables: z.array(PaletteTarget),
+  /** more databases or tables matched than were returned */
+  truncated: z.boolean(),
+})
+export type PaletteSearchResponse = z.infer<typeof PaletteSearchResponse>
