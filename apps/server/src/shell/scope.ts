@@ -173,13 +173,17 @@ export async function databaseScope(ctx: ShellCtx, db: string): Promise<Database
   }
   if (st.features.tracking && !system) tabs.push({ key: 'tracking' })
   if (!system) tabs.push({ key: 'designer' })
+  // BetterMyAdmin-only (X63): the read-only ER diagram, next to the Designer and hidden with it
+  if (!system) tabs.push({ key: 'diagram' })
   if (!system && st.features.centralColumns) tabs.push({ key: 'central_columns' })
   const keep = await allowed<DbTabKey>(
     ctx,
     'db',
     tabs.map((t) => t.key),
   )
-  return { db, comment, isSystemSchema: system, numTables, tabs: tabs.filter((t) => keep.includes(t.key)) }
+  // user groups (pma__usergroups) know phpMyAdmin's tabs only: the diagram follows the Designer
+  const visible = (k: DbTabKey) => keep.includes(k) && (k !== 'diagram' || keep.includes('designer'))
+  return { db, comment, isSystemSchema: system, numTables, tabs: tabs.filter((t) => visible(t.key)) }
 }
 
 /** The shell needs an existence check only when SHOW TABLES failed (no privilege vs. missing database). */

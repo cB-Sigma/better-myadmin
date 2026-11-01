@@ -1,4 +1,4 @@
-# 05 — Database level (Structure, Search, Query, Operations, Privileges, Routines, Events, Triggers, Tracking, Designer, Central columns, Data dictionary, Create database, server Databases list)
+# 05 — Database level (Structure, Search, Query, Operations, Privileges, Routines, Events, Triggers, Tracking, Designer, Diagram, Central columns, Data dictionary, Create database, server Databases list)
 
 Source snapshot: phpMyAdmin `master` (Oct 2026), cloned at `scratchpad/pma`. All paths below are relative to that root. Everything in this document is derived from the cited PHP controllers, Twig templates and TypeScript modules; nothing is invented. Where a behaviour depends on a configuration directive, the directive is named with its default from `src/Config/Settings.php` (or `src/Config/Settings/Schema.php` / `src/Config/Settings/Server.php`).
 
@@ -27,6 +27,7 @@ Out of scope here (covered by other documents, only pointed to): the SQL editor 
 | triggers | `/triggers` | Triggers / `b_triggers` | not system schema AND `currentUserHasPrivilege('TRIGGER', db)` |
 | tracking | `/database/tracking` | Tracking / `eye` | `Tracker::isActive()` AND not system schema |
 | designer | `/database/designer` | Designer / `b_relations` | not a system schema |
+| *diagram* | — (BetterMyAdmin-only, X63: `/s/:s/db/:db/diagram`) | Diagram / `erDiagram` | with Designer: not a system schema and Designer not removed by the user group |
 | central_columns | `/database/central-columns` | Central columns / `centralColumns` | not system schema AND `relationParameters->centralColumnsFeature !== null` (pmadb `central_columns` configured) |
 
 "System schema" is `PhpMyAdmin\Query\Utilities::isSystemSchema()` (`information_schema`, `performance_schema`, `mysql`, `sys` — `mysql`/`sys` only when the `$testForMysqlSchema` flag is true; the db-tab check uses the default which treats `information_schema`/`performance_schema` as system).
@@ -456,6 +457,19 @@ Then: `getTrackedData(db, '', '1')` for the database-level log; if no tables and
 
 ---
 
+### Diagram (BetterMyAdmin-only, X63)
+
+Not in phpMyAdmin ([parity exception X63](../reference/parity-exceptions.md)). A read-only ER diagram of the whole database next to the Designer, which stays as it is.
+
+- **Data.** `GET /api/servers/:s/databases/:db/er-diagram` (`apps/server/src/database/er-diagram.ts`, contract `ErDiagramResponse`): tables (TABLE_TYPE, ENGINE, TABLE_COMMENT), columns (COLUMN_TYPE, IS_NULLABLE), index columns (PRIMARY → `pk`, a one-column UNIQUE → `unique`) and FOREIGN KEY columns (KEY_COLUMN_USAGE, grouped by constraint) in four information_schema reads, plus the internal relations of the configuration storage in one `pma__relation` read (`getDbInternalRelations` in packages/metadata, with the built-in `mysql` / `information_schema` relations). information_schema lists only what the user has a privilege on; internal relations are kept only when both ends are visible to the user and no FOREIGN KEY already draws them. Relations to another database are listed, not drawn.
+- **Layout.** `features/database/diagram/diagram.ts` (pure, unit-tested): box sizes from the measured texts, dagre's layered layout (`rankdir LR`: referenced tables left of the tables referencing them) for the tables with relations, then the unrelated tables packed in rows below. Nothing is saved; `@dagrejs/dagre` is loaded with the page only.
+- **Canvas.** SVG drawn with theme tokens (readable in every theme and dark mode): tables with their columns (PK / FK / UQ markers, `?` after a nullable column), views with a dashed border and an italic header, FOREIGN KEY lines from the referencing to the referenced column (internal relations dashed). Drag to pan, wheel or pinch to zoom, buttons for zoom in / out / to fit / reset, arrows and `+` `-` `0` on the focused canvas; per-table collapse to the header and Collapse all / Expand all; the search box highlights the matching tables and centres the first (Enter: next); hovering a relation highlights both tables and columns, hovering a table its relations; a click opens the table's Structure.
+- **Export.** "Export as SVG" (the whole diagram, colours of the current theme resolved) and "Export as PNG" (that SVG on a canvas, 2× when the size allows), both client-side, named after the database.
+- **Text alternative.** "List view": the tables with their columns and every relation (constraint name, columns, referenced table) as tables.
+- Tests: `apps/server/test/int/database-er-diagram.test.ts`, `apps/server/test/unit/er-diagram.test.ts`, `apps/web/src/features/database/diagram/diagram.test.ts`, `tests/e2e/er-diagram.e2e.ts`; the database tab bar UI parity case `db-menu` maps the extra tab.
+
+---
+
 ### Schema export (`/schema-export`, used from Designer)
 
 `SchemaExportController` (GET/POST): requires `db` and `export_type` ("Missing parameter: db|export_type" with FAQ link); `Export::getExportSchemaInfo(db, format)` validates the format against `/^[a-zA-Z]+$/` (default `pdf`), loads `Plugins::getPlugin('schema', format)` ("Bad type!" if none), selects the db and returns `{fileName, mediaType, fileData}` streamed with `Core::downloadHeader`.
@@ -599,7 +613,7 @@ Query (multi-table)
 - [x] Criteria collapse syncs with the "use in criteria" checkbox; AND/OR row appears with every criteria column. <!-- parity:test --> `p05-41c645` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
 - [x] Operator-specific RHS widgets: none for IS [NOT] NULL, multi-value for IN/NOT IN, two values for BETWEEN, free text otherwise; "Another column" RHS swaps in table+column selects. <!-- parity:test --> `p05-86eabf` [queryGenerator.test.ts:51](../../apps/web/src/features/database/queryGenerator.test.ts#L51)
 - [x] Update query: "Nothing selected" error when no shown column; FROM built with LEFT JOINs from FK metadata, else comma joins; aliases honoured. <!-- parity:test --> `p05-661434` [queryGenerator.test.ts:33](../../apps/web/src/features/database/queryGenerator.test.ts#L33) +1
-- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295)
+- [x] Copy query disabled while editor empty; Submit query rejects empty (`strEmptyQuery`) and renders results inline with pagination links disabled. <!-- parity:test --> `p05-cd1b8a` [database-checklist.e2e.ts:295](../../tests/e2e/database-checklist.e2e.ts#L295) +1
 
 Privileges
 - [x] Non-admin users see "No Privileges"; grant/create-less users get a notice. <!-- parity:test --> `p05-2e6a47` [database-checklist.test.ts:457](../../apps/server/test/int/database-checklist.test.ts#L457)
@@ -628,7 +642,7 @@ Events
 - [x] Rows sorted by name; export shows raw `SHOW CREATE EVENT`. <!-- parity:test --> `p05-cfe947` [database-programs.parity.test.ts:422](../../tests/parity/database-programs.parity.test.ts#L422)
 
 Triggers (db scope)
-- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282)
+- [x] Extra "Table" column linking to the table-scoped list; new rows inserted live. <!-- parity:test --> `p05-6d51f6` [database-checklist.e2e.ts:282](../../tests/e2e/database-checklist.e2e.ts#L282) +1
 
 Tracking (db scope)
 - [x] Tab only when `Tracker::isActive()`; tracked vs untracked tables listed separately. <!-- parity:test --> `p05-edc4ef` [database-admin.parity.test.ts:366](../../tests/parity/database-admin.parity.test.ts#L366)

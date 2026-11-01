@@ -37,6 +37,8 @@ export const DbTabKey = z.enum([
   'tracking',
   'designer',
   'central_columns',
+  /** BetterMyAdmin-only: the automatic ER diagram (X63), not a phpMyAdmin menu key */
+  'diagram',
 ])
 export type DbTabKey = z.infer<typeof DbTabKey>
 

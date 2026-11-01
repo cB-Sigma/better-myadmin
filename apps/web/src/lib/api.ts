@@ -78,6 +78,7 @@ import type {
   DropDatabasesResponse,
   EngineResponse,
   EnginesResponse,
+  ErDiagramResponse,
   ErrorEnvelope,
   ErrorReportRequest,
   ErrorReportResponse,
@@ -958,6 +959,8 @@ export const api = {
     ),
   dbCentralColumnsPopulate: (r: DbRef, table: string) =>
     call<string[]>('GET', `${dbPath(r)}/central-columns/populate?table=${encodeURIComponent(table)}`),
+  // Diagram: the read-only ER diagram (BetterMyAdmin-only, X63)
+  erDiagram: (r: DbRef) => call<ErDiagramResponse>('GET', `${dbPath(r)}/er-diagram`),
   // Designer and schema export (pma: /database/designer, /schema-export)
   designer: (r: DbRef, q: DesignerQuery) =>
     call<DesignerResponse>('GET', `${dbPath(r)}/designer${queryString(q)}`),

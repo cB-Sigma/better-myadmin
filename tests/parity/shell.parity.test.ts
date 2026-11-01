@@ -164,9 +164,11 @@ describe.skipIf(!reachable)(
           for (const p of pages) {
             const r = await bma.req('GET', p.bma)
             expect(r.status, JSON.stringify(r.json)).toBe(200)
-            const tabs = (r.json.tabs as Array<{ key: string }>).map(
-              (t) => (p.defs as Record<string, { text: string }>)[t.key]!.text,
-            )
+            const defs = p.defs as Record<string, { text: string; bmaOnly?: string }>
+            // BetterMyAdmin-only tabs (the Diagram, X63) are not in phpMyAdmin's menu
+            const tabs = (r.json.tabs as Array<{ key: string }>)
+              .filter((t) => defs[t.key]!.bmaOnly === undefined)
+              .map((t) => defs[t.key]!.text)
             expect(tabs, `${role}: ${p.name} tabs`).toEqual(pmaTabs[p.name])
             if (p.name !== 'server')
               expect(String(r.json.comment ?? ''), `${role}: ${p.name} comment`).toBe(pmaCrumb[p.name])
