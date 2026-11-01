@@ -41,6 +41,7 @@ Or try it in your browser with a demo database, with nothing to install:
 | 🧩 **Complete** | Browse, search, insert and edit, structure, SQL editor and console, import and export, the designer, privileges, replication, status, routines, events and triggers. It covers all of phpMyAdmin, [measured](docs/parity.md) against 707 checklist items. |
 | 🔁 **Drop-in** | phpMyAdmin's pages, settings, configuration storage and Docker variables. Converting an existing `config.inc.php` takes one command. |
 | 🎨 **Good-looking** | phpMyAdmin's themes plus Modern, Classic and Native, each with light and dark modes. |
+| ✨ **Beyond phpMyAdmin** | [Query tabs, a command palette, an ER diagram, a live dashboard and slow query analysis](#beyond-phpmyadmin), added on top of everything phpMyAdmin does. |
 | 🤖 **Agent-ready** | A built-in [MCP server](#ai-agents-and-mcp) and JSON API let Claude Code and other agents explore schemas and run SQL, as a MySQL user with that user's privileges. |
 | 🔒 **Safer defaults** | Session-id-only cookies, login rate limiting, and no PHP to patch. |
 | 📦 **Simple to run** | One process and one port, with sessions in SQLite or Redis. Runs on Node 22.5+, or from the Docker image. |
@@ -55,6 +56,26 @@ Or try it in your browser with a demo database, with nothing to install:
 <td width="50%"><img src="docs/screenshots/themes.jpg" alt="pmahomme, Modern, Classic and Native themes"><br><sub><b>Themes:</b> pmahomme (default), Modern, Classic, Native, light and dark</sub></td>
 </tr>
 </table>
+
+## Beyond phpMyAdmin
+
+Everything phpMyAdmin does is here, and BetterMyAdmin adds the tools people usually reach for a
+second app to get:
+
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/tabs.jpg" alt="SQL page with three query tabs"><br><sub><b>Query tabs:</b> several queries side by side, each with its own results, kept across reloads</sub></td>
+<td width="50%"><img src="docs/screenshots/palette.jpg" alt="Command palette in the modern dark theme"><br><sub><b>Command palette:</b> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> to jump to any table, page or action</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/screenshots/diagram.jpg" alt="Automatic ER diagram of a database"><br><sub><b>ER diagram:</b> every table and foreign key, laid out automatically; export to SVG or PNG</sub></td>
+<td width="50%"><img src="docs/screenshots/dashboard.jpg" alt="Live server dashboard"><br><sub><b>Live dashboard:</b> queries per second, connections, buffer pool, traffic and replication lag</sub></td>
+</tr>
+</table>
+
+- **Slow queries:** the statements that cost the most time, grouped by shape from performance_schema
+  or the slow log, with the full query and a one-click EXPLAIN.
+- **AI agents:** a built-in MCP server and JSON API, [below](#ai-agents-and-mcp).
 
 ## AI agents and MCP
 

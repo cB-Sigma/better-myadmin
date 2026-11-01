@@ -2,6 +2,35 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.20 (2026-11-01)
+
+### New
+
+These are BetterMyAdmin additions: phpMyAdmin has no equivalent, and its own pages are unchanged.
+
+- **Query tabs on the SQL page.** Several queries side by side, each with its own results. Tabs
+  can be renamed (double-click or F2) and closed (×, middle-click or Delete). Closing a tab with an
+  unrun query asks first. Tabs and their queries are kept across reloads, per server, database or
+  table. With a single tab the page looks as before, plus a "New tab" button. Shortcuts:
+  Ctrl+Alt+T and Ctrl+Alt+W.
+- **Command palette.** Ctrl+Shift+P (Cmd+Shift+P on macOS) or the search button in the top bar.
+  It lists recent tables, the tabs of the current page, databases and tables (searched on the
+  server for large servers), settings, themes, the console and log out. Typing `db.table`
+  narrows the search to one database.
+- **ER diagram.** A new Diagram tab for each database, after Designer. It lays out every table
+  and view with its columns, and draws the foreign keys and the configuration storage's
+  relations. You can pan and zoom, search, collapse tables, click through to a table's
+  structure, export to SVG or PNG, and switch to a list view. It handles databases with 100+
+  tables.
+- **Live dashboard.** Status → Dashboard: live cards for queries per second, connections,
+  threads, buffer pool hit rate and usage, traffic, slow queries, table locks, temporary tables on
+  disk and replication lag. Cards turn yellow or red near limits. The refresh rate is 2 to 30
+  seconds, and polling pauses while the browser tab is hidden.
+- **Slow queries.** Status → Slow queries: the statements that cost the most time, from
+  performance_schema's digests or the slow query log. Each shows its full formatted text and an
+  example with real values, and runs EXPLAIN on demand; nothing else runs automatically. When a
+  source is off, the page explains how to enable it.
+
 ## 1.0.19 (2026-10-31)
 
 ### Fixes
