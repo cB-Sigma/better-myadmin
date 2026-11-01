@@ -51,6 +51,11 @@ test.describe('tab visibility', () => {
     expect(dbTabs).not.toContain('events')
     expect(dbTabs).not.toContain('triggers')
     expect(dbTabs).toContain('operation')
+    // the BetterMyAdmin-only Diagram (X63) follows the Designer
+    expect(dbTabs.slice(dbTabs.indexOf('designer'), dbTabs.indexOf('designer') + 2)).toEqual([
+      'designer',
+      'diagram',
+    ])
 
     await page.goto(`/s/1/db/${E2E.db}/t/v`)
     await expect(page).toHaveURL(new RegExp(`/s/1/db/${E2E.db}/t/v/browse`))

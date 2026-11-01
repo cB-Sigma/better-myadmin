@@ -30,6 +30,7 @@ Covered / total per inventory (directives are attributed to the feature doc that
 | [07 export import](../../features/07-export-import.md) | M4 | 16/16 (100.0%) | 63/63 (100.0%) | 138/138 (100.0%) | 293/293 (100.0%) | 66/66 (100.0%) | 67/67 (100.0%) |
 | [08 settings preferences pmadb](../../features/08-settings-preferences-pmadb.md) | M4 | 9/9 (100.0%) | 39/39 (100.0%) | 62/62 (100.0%) | 665/666 (99.8%) | 17/17 (100.0%) | 62/62 (100.0%) |
 | [09 sql editor query pipeline](../../features/09-sql-editor-query-pipeline.md) | M1 | 7/7 (100.0%) | 28/28 (100.0%) | 11/11 (100.0%) | 46/46 (100.0%) | 47/47 (100.0%) | 63/63 (100.0%) |
+| [16 agent api](../../features/16-agent-api.md) | — | — | — | — | — | — | — |
 | other | M5 | 2/2 (100.0%) | 25/25 (100.0%) | 28/28 (100.0%) | 122/122 (100.0%) | 17/17 (100.0%) | — |
 
 ## Top 30 missing
@@ -64,7 +65,6 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Add DROP TABLE / VIEW / PROCEDURE / FUNCTION / EVENT / TRIGGER`
 - `Allow the interruption of an import when it gets close to the time limit (ExecTimeLimit).`
 - `Bookmark not found.`
-- `Cannot log in to the MySQL server`
 - `CodeGen`
 - `Collation \| WITH `
 - `Collation variant \| WITH `
@@ -73,13 +73,20 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Create JS code`
 - `DB2`
 - `DESC`
+- `Diagram`
 - `Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. The format string uses strftime-style specifiers (for example %Y-%m-%d %H:%M:%S) for both.`
 - `Displays the contents of the column as-is, without HTML-escaping it. That is, the column is assumed to contain valid HTML.`
 - `Down`
+- `Drag to move, scroll or pinch to zoom, click a table to open its structure.`
 - `EXECUTE`
 - `Enable advanced features in the configuration file (<code>bettermyadmin.config.json</code>), for example by using the setup script.`
+- `Entity-relationship diagram of the database %s`
 - `Excel 2003 / Macintosh`
 - `Excel 2008 / Macintosh`
+- `Expand all`
+- `Export as PNG`
+- `Export as SVG`
+- `FK`
 - `GRANT`
 - `However on last run no data has been parsed, this usually means BetterMyAdmin won't be able to finish this import unless you increase the time limit (ExecTimeLimit).`
 - `INSERT`
@@ -88,6 +95,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Invalid request.`
 - `Invalid server index!`
 - `LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, the administrator has to list the tools you want to make available in the TransformationsExternalPrograms setting. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will HTML-escape the output (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).`
+- `List view`
 - `MAX CONNECTIONS PER HOUR`
 - `MAX QUERIES PER HOUR`
 - `MAX UPDATES PER HOUR`
@@ -101,11 +109,14 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `NHibernate XML`
 - `NONE`
 - `No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).`
+- `No matching table`
 - `Not found.`
 - `OR REPLACE view`
 - `ORACLE`
 - `OpenDocument`
+- `PK`
 - `REPLACE`
+- `Relations`
 - `SMART`
 - `Showing as JS code`
 - `TRADITIONAL`
@@ -113,6 +124,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `The uploaded file exceeds the maximum upload size (MaxUploadSize).`
 - `Too many failed login attempts. Please try again in %s seconds.`
 - `UPDATE`
+- `UQ`
 - `Up`
 - `WITH `
 - `Windows`
@@ -180,4 +192,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3436 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 964 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 290 API endpoints, 86 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2038 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 291 API endpoints, 87 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2066 tests.

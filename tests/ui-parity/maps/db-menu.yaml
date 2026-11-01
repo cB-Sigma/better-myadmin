@@ -1,0 +1,4 @@
+# Intentional differences of the database tab bar (tests/ui-parity/README.md).
+rules:
+  - ours: { label: Diagram }
+    added: the BetterMyAdmin-only, read-only ER diagram tab after Designer (X63)
