@@ -15,6 +15,7 @@ import { KanjiEncodingForm } from './KanjiEncodingForm'
 import { StatementBlock } from './Results'
 import { SimulateModal } from './SimulateModal'
 import { type CardAction, type CardEnv, InlineEditContext } from './SqlMessage'
+import { type SqlTabContext, SqlTabs } from './SqlTabs'
 import { SqlEditor } from './editor/SqlEditor'
 import type { SqlEditorHandle } from './editor/types'
 import {
@@ -48,6 +49,8 @@ export interface SqlPageProps {
   sql?: string | undefined
   /** With a signature the query in the URL is executed (signed /sql links: Simulate's matched rows). */
   sig?: string | undefined
+  /** Query tabs (parity exception X62); off for a query box embedded in another page. */
+  tabs?: boolean
 }
 
 /** Messages.strConfirmNavigation */
@@ -64,11 +67,20 @@ export function SqlPage(props: SqlPageProps) {
   // the message of the action that came back here (Insert/Edit "Go back to previous page")
   const [flash] = useState(() => takeFlash())
   const { env, replacement } = usePageCardEnv(server)
+  const sameScope = qk.sqlForm(server, db, table, '').slice(0, -1).join('\u0000')
   const form = useQuery({
     queryKey: qk.sqlForm(server, db, table, props.sql ?? ''),
     queryFn: () => api.sqlForm(server, { db, table, sqlQuery: props.sql }),
     staleTime: 0,
+    // a query put in the box through the URL (a card's Edit link) keeps the other query tabs mounted
+    placeholderData: (prev, prevQuery) =>
+      props.tabs !== false && prevQuery?.queryKey.slice(0, -1).join('\u0000') === sameScope
+        ? prev
+        : undefined,
   })
+  // the URL's query of the data shown (the previous one while a placeholder is shown)
+  const shownSql = useRef(props.sql)
+  if (!form.isPlaceholderData) shownSql.current = props.sql
   if (form.error instanceof ApiError) {
     return <MessageBox type="error" text={form.error.message} flush />
   }
@@ -78,18 +90,51 @@ export function SqlPage(props: SqlPageProps) {
   return (
     <>
       <FlashMessages messages={flash} scope={{ db, table }} env={env} />
-      <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
+      {props.tabs === false ? (
+        <SqlForm key={scopeKey(server, db, table) + (props.sql ?? '')} {...props} form={form.data} />
+      ) : (
+        <SqlTabs
+          key={scopeKey(server, db, table)}
+          server={server}
+          db={db}
+          table={table}
+          urlKey={shownSql.current ?? ''}
+        >
+          {(tab) => (
+            <SqlForm
+              {...props}
+              sql={tab.fromUrl ? shownSql.current : undefined}
+              sig={tab.fromUrl && !form.isPlaceholderData ? props.sig : undefined}
+              form={form.data as SqlFormResponse}
+              tab={tab}
+            />
+          )}
+        </SqlTabs>
+      )}
     </>
   )
 }
 
-function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFormResponse }) {
+function SqlForm({
+  server,
+  db,
+  table,
+  sql,
+  sig,
+  form,
+  tab,
+}: SqlPageProps & { form: SqlFormResponse; tab?: SqlTabContext }) {
   const s = form.settings
   const navigate = useNavigate()
   const qc = useQueryClient()
   const editor = useRef<SqlEditorHandle>(null)
   const restored = useMemo(() => restoreShowThisQuery(db, table), [db, table])
-  const initial = sig === undefined && restored.query !== null ? restored.query : form.query
+  // one of several query tabs (X62) starts with its own stored text, unless the URL's query is for it
+  const stored = tab?.multi === true && sql === undefined ? tab.tab.text : null
+  const initial = stored ?? (sig === undefined && restored.query !== null ? restored.query : form.query)
+  const active = tab?.active ?? true
+  const register = tab?.register
+  useEffect(() => register?.(() => editor.current?.isDirty() === true), [register])
   const [text, setText] = useState(initial)
   const [savedAvailable, setSavedAvailable] = useState(() => getAutoSaved(db, table) !== null)
   const [delimiter, setDelimiter] = useState(';')
@@ -218,8 +263,9 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     void execute({ sql: form.query, db, table, sig })
   }, [sig, form.query, db, table, execute])
 
-  // results produced by the console for this scope
+  // results produced by the console for this scope (shown in the active query tab)
   useEffect(() => {
+    if (!active) return
     const pick = () => {
       const r = takePendingResults(scopeKey(server, db, table))
       if (r !== null) {
@@ -231,7 +277,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
     pick()
     window.addEventListener('bma:pending-results', pick)
     return () => window.removeEventListener('bma:pending-results', pick)
-  }, [server, db, table])
+  }, [server, db, table, active])
 
   // sql.ts: the main Go empties #id_bookmark, so a chosen bookmark is not run by accident
   const [bookmarkReset, setBookmarkReset] = useState(0)
@@ -395,7 +441,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     handleRef={editor}
                     id="sqlquery"
                     // onloadCodeMirrorEditor: the SQL box has the focus after loading
-                    autoFocus
+                    autoFocus={tab?.autoFocus ?? true}
                     ariaLabel={t('SQL query')}
                     initialValue={initial}
                     rows={s.TextareaRows}
@@ -407,6 +453,7 @@ function SqlForm({ server, db, table, sig, form }: SqlPageProps & { form: SqlFor
                     onSubmit={() => submit()}
                     onChange={(v) => {
                       setText(v)
+                      tab?.onText(v)
                       // Sql.autoSave on every change
                       autoSave(db, table, v)
                       if (v !== '') setSavedAvailable(true)
