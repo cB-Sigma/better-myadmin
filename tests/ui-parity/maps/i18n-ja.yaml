@@ -30,3 +30,6 @@ rules:
     n/a: >-
       X58: the documentation link of phpMyAdmin's "blowfish_secret is longer than necessary" warning;
       BetterMyAdmin derives its keys from the secret, so any length is fine and the warning is not shown
+  # the SQL tab's "New tab" button (as in server-sql.yaml; a BetterMyAdmin-only text, not translated)
+  - ours: { kind: button, label: 'New query tab' }
+    added: BetterMyAdmin's query tabs (parity exception X62)

@@ -145,7 +145,7 @@ export function TrackingPage({
         />
       )}
       <ResultMessages messages={messages} />
-      {dump !== null && <SqlPage server={scope.server} db="" table="" sql={dump} />}
+      {dump !== null && <SqlPage server={scope.server} db="" table="" sql={dump} tabs={false} />}
       {view.kind === 'snapshot' && <Snapshot scope={scope} data={view.data} close={close} />}
       {view.kind === 'report' && (
         <Report data={view.data} close={close} run={(req) => report(view.version, req)} />
