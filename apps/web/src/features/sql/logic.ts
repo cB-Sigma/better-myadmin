@@ -151,6 +151,13 @@ export const storage = {
       // storage unavailable: the feature degrades silently, like phpMyAdmin's cookie fallback failing
     }
   },
+  remove(key: string): void {
+    try {
+      window.localStorage.removeItem(key)
+    } catch {
+      // storage unavailable
+    }
+  },
 }
 
 /** Sql.autoSave: an empty query is not saved. */
