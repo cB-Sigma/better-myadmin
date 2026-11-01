@@ -67,6 +67,21 @@ pageParity('table-menu', {
   scope: 'menu',
 })
 
+/**
+ * The database tab bar (Menu::getDbTabs), every tab inline. Ours has one tab more, the
+ * BetterMyAdmin-only Diagram (X63), mapped as added in maps/db-menu.yaml.
+ */
+pageParity('db-menu', {
+  pma: { route: '/database/structure', params: { db: FIX.db } },
+  ours: { path: `/s/1/db/${FIX.db}/structure` },
+  scope: 'menu',
+  // wide enough for every tab inline (at 1400 px the last ones are in "More" in both apps)
+  context: {
+    pma: { viewport: { width: 2600, height: 900 } },
+    ours: { viewport: { width: 2600, height: 900 } },
+  },
+})
+
 pageParity('server-variables', {
   pma: { route: '/server/variables' },
   ours: { path: '/s/1/variables' },

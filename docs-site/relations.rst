@@ -82,3 +82,44 @@ the designer.
 .. seealso::
 
     :ref:`faqpdf`
+
+.. _er-diagram:
+
+Diagram
+-------
+
+The :guilabel:`Diagram` tab, next to :guilabel:`Designer` on a database's
+pages, draws an entity-relationship diagram of the whole database
+automatically. It is a BetterMyAdmin addition (phpMyAdmin has no such tab) and
+it is read-only: nothing is arranged by hand and nothing is saved, so it needs
+no configuration storage and always shows the current structure.
+
+* Every table is a box listing its columns with their types. **PK** marks the
+  primary key, **FK** a column that references another table, **UQ** a column
+  with a unique index of its own and a ``?`` after the name a column that
+  accepts ``NULL``. Views have a dashed border and an italic name.
+* A line goes from the referencing column to the referenced one for every
+  foreign key (InnoDB). Internal relations from the :ref:`linked-tables` are
+  drawn dashed. Relations to tables in another database are only listed in the
+  list view.
+* The tables are placed automatically: referenced tables to the left of the
+  tables that reference them, tables without relations in rows below.
+* Drag to move the diagram, use the mouse wheel or pinch to zoom, or the zoom
+  buttons and :guilabel:`Zoom to fit`. With the diagram focused, the arrow keys
+  move it and :kbd:`+`, :kbd:`-` and :kbd:`0` zoom in, out and to fit.
+* Type in the search box to highlight the tables whose name contains the text;
+  the first one is centred, :kbd:`Enter` moves to the next.
+* The button in a table's header collapses it to its name;
+  :guilabel:`Collapse all` and :guilabel:`Expand all` do it for every table.
+* Point at a relation to highlight the two tables and columns it links; point
+  at a table to highlight its relations. Click a table to open its
+  :guilabel:`Structure` page.
+* :guilabel:`Export as SVG` and :guilabel:`Export as PNG` save the whole
+  diagram as an image, in the colours of the current theme.
+* :guilabel:`List view` shows the same information as text: the tables with
+  their columns, then every relation.
+
+The diagram shows only the tables and columns your MySQL account has
+privileges on. Large databases are read in one request, so the tab stays fast
+with hundreds of tables. When a user group hides the Designer, the Diagram is
+hidden too.

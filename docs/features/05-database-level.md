@@ -1,4 +1,4 @@
-# 05 — Database level (Structure, Search, Query, Operations, Privileges, Routines, Events, Triggers, Tracking, Designer, Central columns, Data dictionary, Create database, server Databases list)
+# 05 — Database level (Structure, Search, Query, Operations, Privileges, Routines, Events, Triggers, Tracking, Designer, Diagram, Central columns, Data dictionary, Create database, server Databases list)
 
 Source snapshot: phpMyAdmin `master` (Oct 2026), cloned at `scratchpad/pma`. All paths below are relative to that root. Everything in this document is derived from the cited PHP controllers, Twig templates and TypeScript modules; nothing is invented. Where a behaviour depends on a configuration directive, the directive is named with its default from `src/Config/Settings.php` (or `src/Config/Settings/Schema.php` / `src/Config/Settings/Server.php`).
 
@@ -27,6 +27,7 @@ Out of scope here (covered by other documents, only pointed to): the SQL editor 
 | triggers | `/triggers` | Triggers / `b_triggers` | not system schema AND `currentUserHasPrivilege('TRIGGER', db)` |
 | tracking | `/database/tracking` | Tracking / `eye` | `Tracker::isActive()` AND not system schema |
 | designer | `/database/designer` | Designer / `b_relations` | not a system schema |
+| *diagram* | — (BetterMyAdmin-only, X63: `/s/:s/db/:db/diagram`) | Diagram / `erDiagram` | with Designer: not a system schema and Designer not removed by the user group |
 | central_columns | `/database/central-columns` | Central columns / `centralColumns` | not system schema AND `relationParameters->centralColumnsFeature !== null` (pmadb `central_columns` configured) |
 
 "System schema" is `PhpMyAdmin\Query\Utilities::isSystemSchema()` (`information_schema`, `performance_schema`, `mysql`, `sys` — `mysql`/`sys` only when the `$testForMysqlSchema` flag is true; the db-tab check uses the default which treats `information_schema`/`performance_schema` as system).
@@ -453,6 +454,19 @@ Then: `getTrackedData(db, '', '1')` for the database-level log; if no tables and
 - *Visual query builder* (`?query`): header "Select all" checkbox adds `` `table`.* `` to the select list; column checkboxes add `` `table`.`col` `` (`storeColumn`); the per-column Options icon opens `#designer_optionse` pre-titled "Add an option for column "c"."; **OK** (`addObject`) creates history objects for each filled section — Where (`strQueryEmpty` if value missing), Rename, Aggregate, GroupBy, Having, OrderBy — reports `strObjectsCreated`, and renders them into the `#ab` accordion (each with edit/delete icons and AND/OR toggles). **Build Query** (`DesignerHistory.buildQuery`) composes `SELECT [aggregate(col)] [AS rename] … | *` + `\nFROM ` + `queryFrom()` (first used table, then `LEFT JOIN `t` ON `a`.`x` = `b`.`y`` for each relation in `contr` linking a used table to a pending one, iterated twice, remaining tables comma-joined) + optional `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, opens `#buildQueryModal` with a CodeMirror editor; Submit posts `#vqb_form` (to the removed `/database/qbe` route — see unresolved notes).
 
 **Config/pmadb.** Settings persisted per user in `pma__designer_settings.settings_data` JSON keys: `angular_direct` (`angular`|`direct`), `snap_to_grid` (`on`|`off`), `pin_text` (`true`|`false`), `relation_lines` (`true`|`false`), `small_big_all` (`v`|`>`), `side_menu` (`true`|`false`), `full_screen` (`off`). Pages in `pma__pdf_pages`/`pma__table_coords`; display fields in `pma__table_info`; internal relations in `pma__relation`.
+
+---
+
+### Diagram (BetterMyAdmin-only, X63)
+
+Not in phpMyAdmin ([parity exception X63](../reference/parity-exceptions.md)). A read-only ER diagram of the whole database next to the Designer, which stays as it is.
+
+- **Data.** `GET /api/servers/:s/databases/:db/er-diagram` (`apps/server/src/database/er-diagram.ts`, contract `ErDiagramResponse`): tables (TABLE_TYPE, ENGINE, TABLE_COMMENT), columns (COLUMN_TYPE, IS_NULLABLE), index columns (PRIMARY → `pk`, a one-column UNIQUE → `unique`) and FOREIGN KEY columns (KEY_COLUMN_USAGE, grouped by constraint) in four information_schema reads, plus the internal relations of the configuration storage in one `pma__relation` read (`getDbInternalRelations` in packages/metadata, with the built-in `mysql` / `information_schema` relations). information_schema lists only what the user has a privilege on; internal relations are kept only when both ends are visible to the user and no FOREIGN KEY already draws them. Relations to another database are listed, not drawn.
+- **Layout.** `features/database/diagram/diagram.ts` (pure, unit-tested): box sizes from the measured texts, dagre's layered layout (`rankdir LR`: referenced tables left of the tables referencing them) for the tables with relations, then the unrelated tables packed in rows below. Nothing is saved; `@dagrejs/dagre` is loaded with the page only.
+- **Canvas.** SVG drawn with theme tokens (readable in every theme and dark mode): tables with their columns (PK / FK / UQ markers, `?` after a nullable column), views with a dashed border and an italic header, FOREIGN KEY lines from the referencing to the referenced column (internal relations dashed). Drag to pan, wheel or pinch to zoom, buttons for zoom in / out / to fit / reset, arrows and `+` `-` `0` on the focused canvas; per-table collapse to the header and Collapse all / Expand all; the search box highlights the matching tables and centres the first (Enter: next); hovering a relation highlights both tables and columns, hovering a table its relations; a click opens the table's Structure.
+- **Export.** "Export as SVG" (the whole diagram, colours of the current theme resolved) and "Export as PNG" (that SVG on a canvas, 2× when the size allows), both client-side, named after the database.
+- **Text alternative.** "List view": the tables with their columns and every relation (constraint name, columns, referenced table) as tables.
+- Tests: `apps/server/test/int/database-er-diagram.test.ts`, `apps/server/test/unit/er-diagram.test.ts`, `apps/web/src/features/database/diagram/diagram.test.ts`, `tests/e2e/er-diagram.e2e.ts`; the database tab bar UI parity case `db-menu` maps the extra tab.
 
 ---
 

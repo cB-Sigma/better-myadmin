@@ -78,15 +78,22 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `DB2`
 - `DESC`
 - `Dashboard`
+- `Diagram`
 - `Displays a TIME, TIMESTAMP, DATETIME or numeric unix timestamp column as formatted date. The first option is the offset (in hours) which will be added to the timestamp (Default: 0). Use second option to specify a different date/time format string. Third option determines whether you want to see local date or UTC one (use "local" or "utc" strings) for that. The format string uses strftime-style specifiers (for example %Y-%m-%d %H:%M:%S) for both.`
 - `Displays the contents of the column as-is, without HTML-escaping it. That is, the column is assumed to contain valid HTML.`
 - `Down`
+- `Drag to move, scroll or pinch to zoom, click a table to open its structure.`
 - `EXECUTE`
 - `Enable advanced features in the configuration file (<code>bettermyadmin.config.json</code>), for example by using the setup script.`
+- `Entity-relationship diagram of the database %s`
 - `Errors / warnings`
 - `Example statement`
 - `Excel 2003 / Macintosh`
 - `Excel 2008 / Macintosh`
+- `Expand all`
+- `Export as PNG`
+- `Export as SVG`
+- `FK`
 - `First seen`
 - `GRANT`
 - `However on last run no data has been parsed, this usually means BetterMyAdmin won't be able to finish this import unless you increase the time limit (ExecTimeLimit).`
@@ -99,6 +106,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `LINUX ONLY: Launches an external application and feeds it the column data via standard input. Returns the standard output of the application. The default is Tidy, to pretty-print HTML code. For security reasons, the administrator has to list the tools you want to make available in the TransformationsExternalPrograms setting. The first option is then the number of the program you want to use. The second option should be blank for historical reasons. The third option, if set to 1, will HTML-escape the output (Default 1). The fourth option, if set to 1, will prevent wrapping and ensure that the output appears all on one line (Default 1).`
 - `Last seen`
 - `Last update: %s`
+- `List view`
 - `MAX CONNECTIONS PER HOUR`
 - `MAX QUERIES PER HOUR`
 - `MAX UPDATES PER HOUR`
@@ -116,6 +124,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `New tab`
 - `No data was received to import. Either no file name was submitted, or the file size exceeded the maximum upload size (MaxUploadSize).`
 - `No matches`
+- `No matching table`
 - `No statements recorded yet.`
 - `Normalized statement`
 - `Not found.`
@@ -124,12 +133,14 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Only a single SELECT, INSERT, UPDATE, DELETE, REPLACE or TABLE statement can be explained.`
 - `Open in the SQL tab`
 - `OpenDocument`
+- `PK`
 - `Paused`
 - `Paused while the page is hidden`
 - `Queries per second`
 - `Query %s`
 - `Query tabs`
 - `REPLACE`
+- `Relations`
 - `Replication lag`
 - `Reset statistics`
 - `Reset the statement statistics of the whole server? This truncates performance_schema.events_statements_summary_by_digest for every user.`
@@ -159,6 +170,7 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 - `Too many failed login attempts. Please try again in %s seconds.`
 - `Total time`
 - `UPDATE`
+- `UQ`
 - `Up`
 - `Uptime:`
 - `WITH `
@@ -233,4 +245,4 @@ Also reported by `pnpm i18n:parity` (which accepts `// i18n-new:` annotations).
 | [messages.json](../../../tools/parity/inventory/messages.json) | 3436 | resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys) |
 | [js.json](../../../tools/parity/inventory/js.json) | 964 | resources/js/**/*.ts parsed with TypeScript (tools/parity/src/extract/js-behaviours.ts): event bindings, confirm/alert, AJAX calls, CodeMirror keys |
 
-Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 296 API endpoints, 88 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2129 tests.
+Checklist items: 707 from `docs/features/*.md` (ids in [checklist-ids.json](../../../tools/parity/map/checklist-ids.json)). Our side: 297 API endpoints, 89 SPA routes (3 placeholders/catch-alls), 2045 control claims, 2156 tests.
