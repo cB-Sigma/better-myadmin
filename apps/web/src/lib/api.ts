@@ -48,6 +48,7 @@ import type {
   CreateTables2NFRequest,
   CreateTables3NFRequest,
   CreateTrackingVersionRequest,
+  DashboardSample,
   DataDictionaryResponse,
   DatabaseScope,
   DatabasesQuery,
@@ -204,6 +205,12 @@ import type {
   ShowCreateResponse,
   SimulateRequest,
   SimulateResponse,
+  SlowQueriesQuery,
+  SlowQueriesResetResponse,
+  SlowQueriesResponse,
+  SlowQueryDetail,
+  SlowQueryDetailQuery,
+  SlowQueryExplainResponse,
   SqlActionRequest,
   SqlFormResponse,
   SqlMessage,
@@ -744,6 +751,17 @@ export const api = {
       ? call<StatusVariables>('POST', `${srvPath(s)}/status/variables`, req)
       : call<StatusVariables>('GET', `${srvPath(s)}/status/variables${flags(req)}`),
   advisor: (s: number) => call<AdvisorResponse>('GET', `${srvPath(s)}/status/advisor`),
+  // Status › Dashboard and Slow queries (BetterMyAdmin only, X64 / X65)
+  dashboard: (s: number, signal?: AbortSignal) =>
+    call<DashboardSample>('GET', `${srvPath(s)}/status/dashboard`, undefined, signal),
+  slowQueries: (s: number, q: SlowQueriesQuery) =>
+    call<SlowQueriesResponse>('GET', `${srvPath(s)}/status/slow-queries${flags(q)}`),
+  slowQueryDetail: (s: number, q: SlowQueryDetailQuery) =>
+    call<SlowQueryDetail>('GET', `${srvPath(s)}/status/slow-queries/detail${flags(q)}`),
+  explainSlowQuery: (s: number, db: string, query: string) =>
+    call<SlowQueryExplainResponse>('POST', `${srvPath(s)}/status/slow-queries/explain`, { db, query }),
+  resetSlowQueries: (s: number) =>
+    call<SlowQueriesResetResponse>('POST', `${srvPath(s)}/status/slow-queries/reset`, {}),
   serverVariables: (s: number) => call<ServerVariablesResponse>('GET', `${srvPath(s)}/variables`),
   serverVariable: (s: number, name: string) =>
     call<GetVariableResponse>('GET', `${srvPath(s)}/variables/${encodeURIComponent(name)}`),

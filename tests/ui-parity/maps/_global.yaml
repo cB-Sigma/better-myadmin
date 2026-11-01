@@ -4,3 +4,10 @@ replace:
   - ours: BetterMyAdmin
     pma: phpMyAdmin
     exception: X33
+rules:
+  # the Status pills (#statusPills) of every Status sub-page: two BetterMyAdmin-only pages
+  - ours: { kind: link, label: '/^(Dashboard|Slow queries)$/', section: '/^$/' }
+    exception: X64, X65
+    added: >-
+      X64 (Status › Dashboard) and X65 (Status › Slow queries): BetterMyAdmin-only pages, linked
+      from the Status pills that phpMyAdmin's server/status/base.twig renders without them

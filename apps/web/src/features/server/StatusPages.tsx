@@ -15,7 +15,7 @@ import {
 } from '@bettermyadmin/ui'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, Outlet, useLocation, useNavigate } from '@tanstack/react-router'
-import { ArrowDown, ArrowUp, CircleHelp, FileText, FileType, Pause, Play } from 'lucide-react'
+import { Activity, ArrowDown, ArrowUp, CircleHelp, FileText, FileType, Pause, Play } from 'lucide-react'
 import { type ReactNode, useMemo, useState } from 'react'
 import { ApiError, api, errorMessage } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
@@ -26,10 +26,16 @@ import { ReplicationStatusTable } from './ReplicationPage'
 /** pma: templates/server/status/base.twig — the pills shared by the Status sub-pages */
 export function StatusLayout({ server }: { server: number }) {
   const { pathname } = useLocation()
-  const pills: Array<[string, string]> = [
+  // `bma`: BetterMyAdmin-only pages (Dashboard X64, Slow queries X65); phpMyAdmin's landing page
+  // (Server) stays the default, the Dashboard comes first so it is the most visible
+  const pills: Array<[string, string, bma?: true]> = [
+    // i18n-new: Status › Dashboard (parity exception X64)
+    ['dashboard', t('Dashboard'), true],
     ['', t('Server')],
     ['processes', t('Processes')],
     ['queries', t('Query statistics')],
+    // i18n-new: Status › Slow queries (parity exception X65)
+    ['slow-queries', t('Slow queries'), true],
     ['variables', t('All status variables')],
     ['monitor', t('Monitor')],
     ['advisor', t('Advisor')],
@@ -38,13 +44,16 @@ export function StatusLayout({ server }: { server: number }) {
   return (
     <div>
       <ul className="bma-subnav mb-3 flex flex-wrap gap-1 text-sm" id="statusPills">
-        {pills.map(([sub, label]) => (
-          <li key={sub}>
+        {pills.map(([sub, label, bma]) => (
+          <li key={sub} {...(bma ? { 'data-bma': '' } : {})}>
             <Link
               to={path(`/s/${server}/status${sub === '' ? '' : '/'}${sub}`)}
-              className={`block rounded px-3 py-1.5 hover:no-underline ${here === sub ? 'active bg-accent text-accent-fg' : 'text-accent hover:bg-bg-subtle'}`}
+              // the Server pill is the parent route: only its own page marks it active
+              activeOptions={{ exact: true }}
+              className={`flex items-center gap-1 rounded px-3 py-1.5 hover:no-underline ${here === sub ? 'active bg-accent text-accent-fg' : 'text-accent hover:bg-bg-subtle'}`}
               aria-current={here === sub ? 'page' : undefined}
             >
+              {sub === 'dashboard' && <Activity className="size-3.5" aria-hidden />}
               {label}
             </Link>
           </li>
