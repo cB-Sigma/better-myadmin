@@ -62,7 +62,12 @@ for (const [name, path] of PAGES) {
       })
     await expect(page).toHaveScreenshot(`${name}.png`, {
       fullPage: true,
-      mask: [page.getByText(/Query took [\d.]+ seconds/), page.getByText(/^Last update:/)],
+      mask: [
+        page.getByText(/Query took [\d.]+ seconds/),
+        page.getByText(/^Last update:/),
+        // the home page's "Git revision: <hash> from the <branch> branch" changes with every commit
+        page.locator('li', { hasText: 'Git revision:' }),
+      ],
     })
   })
 }
