@@ -1,4 +1,484 @@
 /*
  * Phone layout (shell): every rule here sits inside @media (max-width: 767px) (lib/mobile.ts), so the
  * desktop layout is untouched. Checked by tests/visual (desktop pixel baseline) and tests/e2e/mobile.
+ *
+ * The top bar is one 48px line (the navigation drawer's button, the breadcrumb scrolling sideways, the
+ * palette / user / page icons); the navigation panel is an off-canvas drawer; the folded tab menu is a
+ * labelled button opening a two-column grid; the console is a strip that opens full screen; dialogs are
+ * full-screen sheets (confirmations a bottom sheet), the command palette too. Touch targets are at least
+ * 40px and form fields 16px (no iOS zoom on focus). env(safe-area-inset-*) is 0 unless the page is
+ * shown edge to edge; it keeps the bars clear of a notch if it ever is.
  */
+@media (max-width: 767px) {
+  /* ------------------------------------------------------------------------------------------- */
+  /* top bar                                                                                      */
+  /* ------------------------------------------------------------------------------------------- */
+  .bma-topbar {
+    min-height: calc(48px + env(safe-area-inset-top));
+    gap: 2px;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: 0;
+    padding-inline-start: calc(50px + env(safe-area-inset-left));
+    padding-inline-end: calc(4px + env(safe-area-inset-right));
+  }
+  #server-breadcrumb ol {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+  #server-breadcrumb ol::-webkit-scrollbar {
+    display: none;
+  }
+  #server-breadcrumb :is(.breadcrumb-item, .breadcrumb-comment) {
+    flex-shrink: 0;
+  }
+  #server-breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+  #page_nav_icons,
+  #page_nav_icons > span {
+    gap: 2px;
+  }
+  :is(#bma_command_palette, #userAccountDropdown > button, #page_settings_icon > button, #goto_pagetop) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  #lock_page_icon:empty {
+    display: none;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+  /* navigation drawer (NavigationPanel.tsx useDrawer)                                            */
+  /* ------------------------------------------------------------------------------------------- */
+  .bma-nav-drawer {
+    flex: none;
+    width: 0;
+  }
+  .bma-nav-toggle {
+    position: fixed;
+    top: calc(4px + env(safe-area-inset-top));
+    inset-inline-start: calc(5px + env(safe-area-inset-left));
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius, 4px);
+    color: var(--breadcrumb-fg);
+    background: transparent;
+  }
+  .bma-nav-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+  .bma-nav-drawer[data-open="true"] .bma-nav-toggle {
+    z-index: 56;
+    inset-inline-start: calc(min(86vw, 340px) - 46px);
+    color: var(--fg);
+  }
+  .bma-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 54;
+    background: rgb(0 0 0 / 0.4);
+  }
+  .bma-nav-drawer > #pma_navigation {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 55;
+    width: min(86vw, 340px);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-inline-start: env(safe-area-inset-left);
+    overscroll-behavior: contain;
+    box-shadow: 0 0 24px rgb(0 0 0 / 0.3);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.2s ease, visibility 0s linear 0.2s;
+  }
+  [dir="rtl"] .bma-nav-drawer > #pma_navigation {
+    transform: translateX(100%);
+  }
+  .bma-nav-drawer[data-open="true"] > #pma_navigation {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.2s ease;
+  }
+  /* the logo row leaves room for the close button */
+  #pma_navigation #pmalogo {
+    min-height: 48px;
+    padding-block: 4px;
+    padding-inline-end: 52px;
+  }
+  :is(#navipanellinks, #navigation_controls) > :is(a, button, .throbber) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  :is(#navipanellinks, #navigation_controls) svg {
+    width: 20px;
+    height: 20px;
+  }
+  #pma_navigation :is(select, input[type="text"], input[type="search"], input:not([type])) {
+    min-height: 40px;
+    font-size: 16px;
+  }
+  #pma_navigation :is(#quick_warp, .quick_warp, [data-quick-warp]) button,
+  #pma_navigation #pma_quick_warp button {
+    min-height: 36px;
+  }
+  /* tree rows: NavTree.tsx MOBILE_HEIGHT */
+  #pma_navigation #pma_navigation_tree_content [role="treeitem"] {
+    height: 100%;
+    font-size: 15px;
+  }
+  #pma_navigation #pma_navigation_tree_content [role="treeitem"] > button:first-child {
+    position: relative;
+  }
+  #pma_navigation #pma_navigation_tree_content [role="treeitem"] > button:first-child::after {
+    content: "";
+    position: absolute;
+    inset: -12px -5px;
+  }
+  #pma_navigation #pma_navigation_tree_content [role="treeitem"] > a {
+    align-self: stretch;
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 2px;
+  }
+  #pma_navigation #pma_navigation_tree_content [role="treeitem"] > span.truncate {
+    align-self: stretch;
+    line-height: 40px;
+  }
+  #pma_navigation #pma_navigation_tree_content [role="treeitem"] > span.truncate > a {
+    padding-block: 11px;
+  }
+  #pma_navigation_tree_content .fast_filter :is(input, button) {
+    height: 40px;
+  }
+  #pma_navigation_tree_content .fast_filter button {
+    min-width: 40px;
+  }
+  #pma_navigation :is(.pageselector) :is(button, select) {
+    min-height: 36px;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+  /* the folded tab menu (packages/ui tab-bar.tsx, narrow)                                        */
+  /* ------------------------------------------------------------------------------------------- */
+  .bma-tabbar {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .menucontainer[data-narrow] .bma-tabmenu-toggle {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 12px;
+    font-size: 15px;
+    text-align: start;
+    color: var(--fg);
+    background: var(--bg);
+  }
+  .bma-tabmenu-current {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+  }
+  .bma-tabmenu-chevron {
+    transition: transform 0.15s ease;
+  }
+  .bma-tabmenu-toggle[aria-expanded="true"] .bma-tabmenu-chevron {
+    transform: rotate(180deg);
+  }
+  .menucontainer[data-narrow] #navbarNav > ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    width: 100%;
+    max-width: none;
+    max-height: 65dvh;
+    margin: 0;
+    padding: 6px 0 4px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: 0;
+    background: none;
+  }
+  .menucontainer[data-narrow] #navbarNav > ul > li {
+    min-width: 0;
+    margin: 0;
+  }
+  .menucontainer[data-narrow] #navbarNav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    height: auto;
+    margin: 0;
+    padding: 0 10px;
+    overflow: hidden;
+    font-size: 14px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border: 1px solid var(--border);
+    border-radius: var(--radius, 4px);
+  }
+  .menucontainer[data-narrow] #navbarNav .nav-link > span:not(.sr-only) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+  /* console (Console.tsx): a strip, open a full screen                                           */
+  /* ------------------------------------------------------------------------------------------- */
+  #pma_console > .toolbar {
+    min-height: 44px;
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-inline: calc(4px + env(safe-area-inset-left)) calc(4px + env(safe-area-inset-right));
+  }
+  /* the open console's buttons scroll sideways between the switch and the close button */
+  #pma_console > .toolbar > div {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #pma_console > .toolbar button {
+    flex-shrink: 0;
+    min-height: 40px;
+    white-space: nowrap;
+  }
+  /* the buttons that appear on hover beside the collapsed strip wait for the open console */
+  #pma_console > .toolbar.collapsed > div {
+    display: none;
+  }
+  #pma_console[data-fullscreen] {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    margin: 0 !important;
+    border-top: 0;
+    background: var(--bg);
+  }
+  #pma_console[data-fullscreen] > .toolbar {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  #pma_console[data-fullscreen] > .toolbar + div {
+    flex: 1;
+    min-height: 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bma-console-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+  }
+  /* a message's actions show under it (not on hover) */
+  #pma_console .message .action_content {
+    position: static;
+    display: flex;
+    gap: 0 14px;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  #pma_console .message .action_content .action {
+    padding-block: 9px;
+  }
+  #pma_console .card {
+    inset-inline-start: 0;
+  }
+  #pma_console .card .toolbar :is(button) {
+    min-height: 40px;
+  }
+  #pma_console :is(.cm-content, input, select, textarea) {
+    font-size: 16px;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+  /* dialogs (packages/ui dialog.tsx): full-screen sheets, header and footer kept in view          */
+  /* ------------------------------------------------------------------------------------------- */
+  [data-bma-dialog] {
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    translate: none;
+    border-width: 0;
+    border-radius: 0;
+  }
+  [data-bma-dialog] > [data-bma-dialog-header] {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    flex-shrink: 0;
+    min-height: calc(48px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+    padding-inline-end: 52px;
+  }
+  [data-bma-dialog] > [data-bma-dialog-footer] {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    margin-top: auto;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+  [data-bma-dialog] > [data-bma-dialog-footer] :is(button, a, input[type="submit"]) {
+    min-height: 44px;
+  }
+  [data-bma-dialog] > [data-bma-dialog-close] {
+    top: calc(4px + env(safe-area-inset-top));
+    right: calc(4px + env(safe-area-inset-right));
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+  }
+  [data-bma-dialog] > [data-bma-dialog-close] svg {
+    width: 20px;
+    height: 20px;
+  }
+  :is([data-bma-dialog], [data-bma-confirm])
+    :is(input:not([type="checkbox"], [type="radio"]), select, textarea) {
+    font-size: 16px;
+  }
+
+  /* the change password form (home/ChangePasswordDialog.tsx): its table's cells stack */
+  #change_password_form :is(table, tbody, tr, td) {
+    display: block;
+    width: 100%;
+  }
+  #change_password_form td {
+    padding-inline: 0;
+  }
+  #change_password_form tr + tr {
+    margin-top: 12px;
+  }
+  #change_password_form :is(input[type="password"], input[type="text"], select) {
+    width: 100%;
+    max-width: none;
+    min-height: 40px;
+  }
+  #change_password_form td > .flex {
+    flex-wrap: wrap;
+  }
+
+  /* a confirmation: a bottom sheet with full-width buttons */
+  [data-bma-confirm] {
+    inset: auto 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 85dvh;
+    overflow-y: auto;
+    translate: none;
+    border-width: 1px 0 0;
+    border-radius: 12px 12px 0 0;
+  }
+  [data-bma-confirm] > div:last-child {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+  }
+  [data-bma-confirm] > div:last-child > button {
+    flex: 1;
+    min-height: 44px;
+  }
+
+  /* the command palette: a full screen with its own close button (command.tsx) */
+  #bma_command_palette_dialog [cmdk-input] {
+    height: 52px;
+    font-size: 16px;
+  }
+  #bma_command_palette_dialog > [cmdk-root] > div:first-child {
+    padding-top: env(safe-area-inset-top);
+    padding-inline-end: 52px;
+  }
+  #bma_command_palette_dialog [cmdk-item] {
+    min-height: 44px;
+  }
+  #bma_command_palette_dialog [cmdk-list] {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  #bma_command_palette_dialog .bma-sheet-close {
+    position: absolute;
+    top: calc(6px + env(safe-area-inset-top));
+    right: calc(6px + env(safe-area-inset-right));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius, 4px);
+    color: var(--fg-muted);
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+  /* menus and popovers (packages/ui menus.tsx): inside the screen, rows a finger can hit          */
+  /* ------------------------------------------------------------------------------------------- */
+  [data-radix-popper-content-wrapper] > [role="menu"] {
+    max-width: calc(100vw - 16px);
+    max-height: calc(var(--radix-dropdown-menu-content-available-height, 80dvh) - 8px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  [data-radix-popper-content-wrapper] > [role="dialog"] {
+    max-width: calc(100vw - 16px);
+    max-height: calc(var(--radix-popover-content-available-height, 80dvh) - 8px);
+    overflow-y: auto;
+  }
+  [role="menu"] [role="menuitem"] {
+    min-height: 40px;
+    font-size: 14px;
+  }
+  [role="menu"] :is(select, input) {
+    min-height: 36px;
+    font-size: 16px;
+  }
+
+  /* the AJAX notification (toaster-impl.tsx: bottom-center above the console strip) */
+  [data-sonner-toaster] .ajax_notification {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* ------------------------------------------------------------------------------------------- */
+  /* login page (LoginPage.tsx)                                                                   */
+  /* ------------------------------------------------------------------------------------------- */
+  #login_form :is(input:not([type="checkbox"], [type="radio"]), select),
+  #languageSelectLabel ~ * select,
+  select#sel-lang {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  #login_form #input_go {
+    min-height: 44px;
+    min-width: 96px;
+  }
+}

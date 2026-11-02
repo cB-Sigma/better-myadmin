@@ -8,10 +8,11 @@ import { sprintf } from '@bettermyadmin/i18n/php'
 import { showMessage } from '@bettermyadmin/ui'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from '@tanstack/react-router'
-import { SquareTerminal } from 'lucide-react'
+import { SquareTerminal, X } from 'lucide-react'
 import { type MouseEvent as ReactMouseEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DEBUG_SQL_EVENT, PAGE_QUERY_EVENT, type PageQuery, api } from '../../lib/api'
 import { ngettext, t } from '../../lib/i18n'
+import { isMobileViewport, useIsMobile } from '../../lib/mobile'
 import { qk } from '../../lib/queryKeys'
 import { type BookmarkEntry, bookmarks as bookmarkApi, useBookmarks } from '../bookmarks/provider'
 import { HighlightedSql } from '../sql/HighlightedSql'
@@ -102,7 +103,8 @@ function ConsoleDock({
 }) {
   const [settings, setSettings] = useState(initial)
   const mode0 = normaliseMode(initial.Mode)
-  const [open, setOpen] = useState(mode0 === 'show')
+  // a phone starts with the strip only: the open console takes the whole screen
+  const [open, setOpen] = useState(mode0 === 'show' && !isMobileViewport())
   // Console.initialize → show(true) on page load: the stored mode opens the console with the focus,
   // unless the user already clicked or typed elsewhere (the console mounts after its config loads)
   const [focusOnOpen, setFocusOnOpen] = useState(() => mode0 !== 'show' || !userHasActed())
@@ -416,6 +418,8 @@ function ConsoleDock({
   }
 
   const shownHeight = open ? Math.min(Math.max(92, height), window.innerHeight - 25) : undefined
+  // phones: open, the console is a full screen (styles/mobile-shell.css) with a close button
+  const fullScreen = useIsMobile() && open
   const tb = 'rounded px-2 py-0.5 hover:bg-nav-pointer'
 
   return (
@@ -428,6 +432,7 @@ function ConsoleDock({
         className="pointer-events-auto relative border-t border-border-strong bg-bg-elevated text-sm shadow"
         // pma: navigation.ts sets #pma_console's margin to the panel's width plus the resizer's
         style={{ marginInlineStart: 'var(--bma-nav-offset, 0px)' }}
+        {...(fullScreen ? { 'data-fullscreen': '' } : {})}
       >
         <div
           className={`toolbar group flex items-center gap-1 bg-bg-subtle px-2 py-1 ${open ? 'cursor-n-resize' : 'collapsed'}`}
@@ -493,10 +498,23 @@ function ConsoleDock({
               </button>
             )}
           </div>
+          {fullScreen && (
+            <button
+              type="button"
+              className={`bma-console-close ${tb}`}
+              onClick={toggle}
+              aria-label={t('Close')}
+            >
+              <X className="size-5" aria-hidden />
+            </button>
+          )}
         </div>
 
         {open && (
-          <div className="relative overflow-hidden" style={{ height: (shownHeight ?? 92) - 30 }}>
+          <div
+            className="relative overflow-hidden"
+            style={fullScreen ? undefined : { height: (shownHeight ?? 92) - 30 }}
+          >
             {/* pma: one scrolling .content (messages, then the input), scrolled to the bottom on
                 each new message (Console.scrollBottom) */}
             <div
