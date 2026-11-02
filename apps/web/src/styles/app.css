@@ -6,6 +6,9 @@
 @import "./modern.css";
 @import "./classic.css";
 @import "./native.css";
+@import "./mobile-shell.css";
+@import "./mobile-data.css";
+@import "./mobile-admin.css";
 
 /* Tailwind must see the classes used inside the component kit. */
 @source "../../../../packages/ui/src";

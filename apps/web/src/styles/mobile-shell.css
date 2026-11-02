@@ -1,0 +1,4 @@
+/*
+ * Phone layout (shell): every rule here sits inside @media (max-width: 767px) (lib/mobile.ts), so the
+ * desktop layout is untouched. Checked by tests/visual (desktop pixel baseline) and tests/e2e/mobile.
+ */

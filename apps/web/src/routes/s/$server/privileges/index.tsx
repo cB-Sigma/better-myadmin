@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { UsersPage } from '../../../../features/server/privileges/UsersPage'
+import { AdminPage } from '../../../../lib/mobileAdmin'
 import { qs } from '../../../../lib/search'
 
 /** pma: /server/privileges (overview: `initial`, `showall`) */
@@ -12,6 +13,10 @@ export const Route = createFileRoute('/s/$server/privileges/')({
   component: function Users() {
     const { server } = Route.useParams()
     const search = Route.useSearch()
-    return <UsersPage server={server} search={search} />
+    return (
+      <AdminPage>
+        <UsersPage server={server} search={search} />
+      </AdminPage>
+    )
   },
 })

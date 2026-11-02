@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { DatabasesPage } from '../../../features/server/DatabasesPage'
+import { AdminPage } from '../../../lib/mobileAdmin'
 import { qs } from '../../../lib/search'
 
 /** pma: /server/databases */
@@ -16,11 +17,13 @@ export const Route = createFileRoute('/s/$server/databases')({
     const search = Route.useSearch()
     const navigate = Route.useNavigate()
     return (
-      <DatabasesPage
-        server={server}
-        search={search}
-        onSearch={(s) => void navigate({ search: (p) => ({ ...p, ...s }) })}
-      />
+      <AdminPage>
+        <DatabasesPage
+          server={server}
+          search={search}
+          onSearch={(s) => void navigate({ search: (p) => ({ ...p, ...s }) })}
+        />
+      </AdminPage>
     )
   },
 })
