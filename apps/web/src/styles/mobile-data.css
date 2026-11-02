@@ -498,6 +498,11 @@
     width: 20px;
     height: 20px;
   }
+  /* the SQL editors at 16px: iOS Safari zooms the page in on a field with smaller text, which pushed
+     the editor past the screen and Go out of view (CodeMirrorEditor's theme sets 13px) */
+  :is(#sqlqueryform, #pma_console, [data-bma-dialog]) .cm-editor {
+    font-size: 16px !important;
+  }
   /* the editor leaves room for the keyboard and the Go bar */
   #sqlqueryform [data-testid="sql-editor"] {
     max-height: 38svh;

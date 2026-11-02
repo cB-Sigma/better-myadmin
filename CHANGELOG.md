@@ -2,6 +2,14 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.25 (2026-11-02)
+
+### Fixes
+
+- Phone layout: the SQL editor's text is 16px, so iOS Safari no longer zooms the page in when you
+  tap it (the zoom pushed the editor past the screen and Go out of view). The on-screen keyboard
+  is measured against the page's own height, which a zoom does not change.
+
 ## 1.0.24 (2026-11-02)
 
 ### Fixes
