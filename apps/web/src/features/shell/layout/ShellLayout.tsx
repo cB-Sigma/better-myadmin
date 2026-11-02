@@ -130,7 +130,11 @@ export function ShellLayout({ server, nav, console: consoleSlot }: ShellLayoutPr
                     ref={scroller}
                     id="page_scroll"
                     className="min-h-0 flex-1 overflow-auto"
-                    style={{ paddingBottom: consoleHeight }}
+                    // --bma-console-h: the phone layout's sticky bars stay clear of the console strip
+                    style={{
+                      paddingBottom: consoleHeight,
+                      ['--bma-console-h' as string]: `${consoleHeight}px`,
+                    }}
                   >
                     <AutoloadBanner server={server} />
                     {db === '' && (
