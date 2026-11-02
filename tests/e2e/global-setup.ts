@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs'
 import mysql from 'mysql2/promise'
 import { E2E, MYSQL } from './fixtures.ts'
 import { holdSuiteLock } from './suite-lock.ts'
@@ -12,6 +13,15 @@ export default async function setup() {
   for (const u of [E2E.limited, E2E.pw]) {
     await c.query(`DROP USER IF EXISTS '${u}'@'%'; CREATE USER '${u}'@'%' IDENTIFIED BY '${u}';
       GRANT SELECT ON ${E2E.db}.* TO '${u}'@'%';`)
+  }
+  // the acme_store demo database (docker/demo/acme_store.sql) for the phone suites (tests/e2e/mobile),
+  // when the server does not have it yet; MariaDB has no utf8mb4_0900_ai_ci
+  const [have] = await c.query("SHOW DATABASES LIKE 'acme_store'")
+  if ((have as unknown[]).length === 0) {
+    const [[{ v }]] = (await c.query('SELECT VERSION() AS v')) as unknown as [[{ v: string }]]
+    let demo = readFileSync(new URL('../../docker/demo/acme_store.sql', import.meta.url), 'utf8')
+    if (/mariadb/i.test(v)) demo = demo.replaceAll('utf8mb4_0900_ai_ci', 'utf8mb4_general_ci')
+    await c.query(demo)
   }
   await c.end()
   return release
