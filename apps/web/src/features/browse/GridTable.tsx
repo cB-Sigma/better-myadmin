@@ -1657,11 +1657,6 @@ function CellEditor(props: {
       {!sheet && <div className="cell_edit_hint">{t(MSG.cellEditHint).replace('<br>', ' ')}</div>}
     </div>
   )
-  const stop = {
-    onClick: (e: ReactMouseEvent) => e.stopPropagation(),
-    onDoubleClick: (e: ReactMouseEvent) => e.stopPropagation(),
-    onKeyDown: (e: React.KeyboardEvent) => e.stopPropagation(),
-  }
   if (sheet)
     return (
       <Dialog open onOpenChange={(o) => !o && props.onCancel()}>
@@ -1671,7 +1666,13 @@ function CellEditor(props: {
             <span className="bma-cell-sheet-type">{column.dataType}</span>
           </DialogHeader>
           <DialogBody>
-            <div ref={ref} className="cEdit" {...stop}>
+            <div
+              ref={ref}
+              className="cEdit"
+              onClick={(e) => e.stopPropagation()}
+              onDoubleClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+            >
               {/* ENUM / SET: the list below is the editor (the text box is read-only) */}
               {textEditable && box}
               {area}
@@ -1689,7 +1690,13 @@ function CellEditor(props: {
       </Dialog>
     )
   return (
-    <div ref={ref} className="cEdit start-0 top-0" {...stop}>
+    <div
+      ref={ref}
+      className="cEdit start-0 top-0"
+      onClick={(e) => e.stopPropagation()}
+      onDoubleClick={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
+    >
       {box}
       {area}
     </div>

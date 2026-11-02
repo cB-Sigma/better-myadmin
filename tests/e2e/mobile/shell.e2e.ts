@@ -239,8 +239,8 @@ test.describe('phone shell', () => {
       }
       for (let i = 0; i < cells.length; i++)
         for (let j = i + 1; j < cells.length; j++) {
-          const a = cells[i]
-          const b = cells[j]
+          const a = cells[i] as (typeof cells)[number]
+          const b = cells[j] as (typeof cells)[number]
           const overlap =
             a.x < b.x + b.w - 1 && b.x < a.x + a.w - 1 && a.y < b.y + b.h - 1 && b.y < a.y + a.h - 1
           expect(overlap, `tab cells ${i} and ${j} overlap`).toBe(false)
