@@ -1,9 +1,6 @@
 /*
  * Phone layout (admin): every rule here sits inside @media (max-width: 767px) (lib/mobile.ts), so the
  * desktop layout is untouched. Checked by tests/visual (desktop pixel baseline) and tests/e2e/mobile.
-<<<<<<< HEAD
- */
-=======
  *
  * Scope: `.bma-admin` (lib/mobileAdmin.tsx, a `display: contents` wrapper set by the admin routes:
  * server pages, user accounts, status, export/import, operations, routines/events/triggers,
@@ -430,4 +427,3 @@
     font-size: 16px;
   }
 }
->>>>>>> worktree-agent-aa1b1da52f3548f24
