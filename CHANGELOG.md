@@ -2,6 +2,23 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.22 (2026-11-02)
+
+### New
+
+- **Phone layout.** Every page now fits a phone screen (767px wide or less); desktop is unchanged,
+  checked pixel by pixel against the previous release on 27 pages.
+  - The top bar is one line, with the breadcrumb scrolling sideways. The navigation panel is a
+    drawer: the menu button, a swipe, Escape or a tap outside closes it, and so does picking a table.
+  - The tab menu folds into a button naming the current tab. Dialogs and the command palette open
+    full screen, and the console opens full screen from its strip.
+  - Wide tables (browse results, structure, variables, processes, binlog and others) scroll in their
+    own box rather than the page. User accounts are shown as cards, and privilege lists as rows.
+  - Forms put labels above full-width fields. Touch targets are at least 40px, and fields use 16px
+    text so iOS doesn't zoom in.
+  - Status, monitor and dashboard charts stack in one column. The Designer pans in its own box, with
+    pinch zoom and zoom buttons. The ER diagram fits the phone's screen on load.
+
 ## 1.0.21 (2026-11-01)
 
 ### Fixes
