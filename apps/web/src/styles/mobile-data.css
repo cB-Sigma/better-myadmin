@@ -374,6 +374,18 @@
     max-width: 100%;
   }
 
+  /* ---- table structure: Table structure / Relation view pills, touch sized in every theme
+     (#page_scroll outranks native.css's 22px segmented control) */
+  #page_scroll [data-testid="structure-pills"] > li {
+    height: auto;
+  }
+  #page_scroll [data-testid="structure-pills"] a {
+    display: inline-flex;
+    align-items: center;
+    height: auto;
+    min-height: 40px;
+  }
+
   /* ---- SQL page --------------------------------------------------------------------------------- */
 
   .bma-sql-editorrow {

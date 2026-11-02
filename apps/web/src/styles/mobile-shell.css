@@ -206,7 +206,9 @@
   .bma-tabmenu-toggle[aria-expanded="true"] .bma-tabmenu-chevron {
     transform: rotate(180deg);
   }
-  .menucontainer[data-narrow] #navbarNav > ul {
+  /* (html: one element more than a theme's own tab rules, e.g. native.css's 22px segmented strip,
+     whichever stylesheet loads last) */
+  html .menucontainer[data-narrow] #navbarNav > ul {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4px;
@@ -220,11 +222,13 @@
     border: 0;
     background: none;
   }
-  .menucontainer[data-narrow] #navbarNav > ul > li {
+  html .menucontainer[data-narrow] #navbarNav > ul > li {
+    display: block;
     min-width: 0;
+    height: auto;
     margin: 0;
   }
-  .menucontainer[data-narrow] #navbarNav .nav-link {
+  html .menucontainer[data-narrow] #navbarNav .nav-link {
     display: flex;
     align-items: center;
     gap: 8px;

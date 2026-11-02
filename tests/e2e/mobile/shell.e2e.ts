@@ -213,4 +213,40 @@ test.describe('phone shell', () => {
     expect((box?.x ?? 0) + (box?.width ?? 999)).toBeLessThanOrEqual(360)
     await minSize(page, '[role=menu] [role=menuitem]')
   })
+
+  // every theme restyles the tabs for desktop (native.css: a 22px segmented strip); on a phone the
+  // grid's own sizes win
+  for (const theme of ['pmahomme', 'native', 'modern', 'classic', 'metro']) {
+    test(`${theme} theme: the open tab menu is a grid of separate 40px cells; structure pills 40px`, async ({
+      page,
+    }) => {
+      await page.addInitScript((t) => localStorage.setItem('bma_theme', t), theme)
+      await login(page)
+      await page.goto(BROWSE)
+      await page.getByRole('button', { name: 'Toggle navigation' }).click()
+      await expect(page.locator('#topmenu [data-tab=structure]')).toBeVisible()
+      const cells = await page.locator('#topmenu .nav-link').evaluateAll((els) =>
+        els.map((e) => {
+          const r = e.getBoundingClientRect()
+          const li = (e.closest('li') as HTMLElement).getBoundingClientRect()
+          return { x: r.x, y: r.y, w: r.width, h: r.height, liH: li.height }
+        }),
+      )
+      for (const c of cells) {
+        expect(c.h).toBeGreaterThanOrEqual(40)
+        // the item is as tall as its link (no 22px row with the link spilling over the next one)
+        expect(Math.abs(c.liH - c.h)).toBeLessThanOrEqual(1)
+      }
+      for (let i = 0; i < cells.length; i++)
+        for (let j = i + 1; j < cells.length; j++) {
+          const a = cells[i]
+          const b = cells[j]
+          const overlap =
+            a.x < b.x + b.w - 1 && b.x < a.x + a.w - 1 && a.y < b.y + b.h - 1 && b.y < a.y + a.h - 1
+          expect(overlap, `tab cells ${i} and ${j} overlap`).toBe(false)
+        }
+      await page.goto('/s/1/db/acme_store/t/products/structure')
+      await minSize(page, '[data-testid="structure-pills"] a')
+    })
+  }
 })

@@ -2,6 +2,14 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.23 (2026-11-02)
+
+### Fixes
+
+- Phone layout with the Native theme: the open tab menu's items overlapped (Native's 22px desktop
+  tab strip outranked the phone grid). The grid now keeps its own sizes in every theme.
+- Phone layout: the Table structure / Relation view pills are 40px tall, in every theme.
+
 ## 1.0.22 (2026-11-02)
 
 ### New
