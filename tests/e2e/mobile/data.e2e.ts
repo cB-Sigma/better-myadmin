@@ -271,3 +271,56 @@ test('SQL page: the column list sits below the editor and a query runs', async (
   await page.locator('#button_submit_query').tap()
   await expect(page.locator('table.table_results tbody tr').first()).toBeVisible()
 })
+
+/** A stand-in visualViewport (Playwright opens no on-screen keyboard): kb(px) covers the bottom. */
+async function fakeKeyboard(page: Page) {
+  await page.addInitScript(() => {
+    const vv = new EventTarget() as EventTarget & Record<string, number>
+    Object.assign(vv, { width: innerWidth, height: innerHeight, offsetTop: 0, offsetLeft: 0, scale: 1 })
+    Object.defineProperty(window, 'visualViewport', { get: () => vv })
+    ;(window as unknown as { kb: (px: number) => void }).kb = (px) => {
+      vv.height = innerHeight - px
+      vv.dispatchEvent(new Event('resize'))
+    }
+  })
+}
+const openKeyboard = (page: Page, px: number) =>
+  page.evaluate((px) => (window as unknown as { kb: (px: number) => void }).kb(px), px)
+
+test('the on-screen keyboard: Go on the SQL page and Save in the cell editor stay above it', async ({
+  page,
+}) => {
+  await fakeKeyboard(page)
+  await page.goto(`/s/1/db/${DB}/t/t/sql`)
+  await expect(page.locator('#button_submit_query')).toBeVisible()
+  const h = page.viewportSize()!.height
+  await openKeyboard(page, 300)
+  await expect
+    .poll(async () => {
+      const b = await box(page.locator('#button_submit_query'))
+      return b.y + b.height
+    })
+    .toBeLessThanOrEqual(h - 300)
+
+  await page.goto(`/s/1/db/${DB}/t/t/browse`)
+  await page.locator('table.table_results tbody tr').first().locator('td[data-type="string"]').first().tap()
+  const sheet = page.getByRole('dialog', { name: 'name' })
+  await expect(sheet).toBeVisible()
+  await openKeyboard(page, 300)
+  const save = sheet.getByRole('button', { name: 'Save' })
+  await expect
+    .poll(async () => {
+      const b = await box(save)
+      return b.y + b.height
+    })
+    .toBeLessThanOrEqual(h - 300)
+  // the text area is still there to type in, between the header and the footer
+  expect((await box(sheet.locator('.edit_box'))).height).toBeGreaterThanOrEqual(80)
+  await openKeyboard(page, 0)
+  await expect
+    .poll(async () => {
+      const b = await box(save)
+      return b.y + b.height
+    })
+    .toBeGreaterThan(h - 100)
+})

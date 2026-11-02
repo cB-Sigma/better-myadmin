@@ -276,9 +276,10 @@
   #pma_console[data-fullscreen] {
     position: fixed;
     inset: 0;
+    top: var(--bma-vv-top, 0px);
     display: flex;
     flex-direction: column;
-    height: 100dvh;
+    height: calc(100dvh - var(--bma-vv-top, 0px) - var(--bma-kb, 0px));
     margin: 0 !important;
     border-top: 0;
     background: var(--bg);
@@ -326,9 +327,12 @@
   /* ------------------------------------------------------------------------------------------- */
   [data-bma-dialog] {
     inset: 0;
+    /* the part of the screen the keyboard leaves (lib/mobile.ts installKeyboardInset) */
+    top: var(--bma-vv-top, 0px);
+    bottom: var(--bma-kb, 0px);
     width: 100%;
     max-width: none;
-    height: 100%;
+    height: auto;
     max-height: none;
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -399,6 +403,7 @@
   /* a confirmation: a bottom sheet with full-width buttons */
   [data-bma-confirm] {
     inset: auto 0 0;
+    bottom: var(--bma-kb, 0px);
     width: 100%;
     max-width: none;
     max-height: 85dvh;
