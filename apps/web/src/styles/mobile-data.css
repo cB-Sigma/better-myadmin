@@ -418,9 +418,20 @@
   }
   /* SqlPage on phones: the footer (Options, Go) stays at the bottom of the screen while the query box
      is in view, so Go is one tap away; the delimiter and checkboxes fold under Options */
+  /* the console strip's room is a spacer at the end rather than #page_scroll's padding: browsers
+     differ on whether a sticky box keeps clear of its scroll box's padding, so the footer's offset
+     is the strip's height itself */
+  #page_scroll:has(.bma-sql-footer) {
+    padding-bottom: 0 !important;
+  }
+  #page_scroll:has(.bma-sql-footer)::after {
+    content: "";
+    display: block;
+    height: var(--bma-console-h, 0px);
+  }
   .bma-sql-footer {
     position: sticky;
-    bottom: 0;
+    bottom: var(--bma-console-h, 0px);
     z-index: 5;
     flex-wrap: wrap;
     box-shadow: 0 -4px 10px rgb(0 0 0 / 0.08);
