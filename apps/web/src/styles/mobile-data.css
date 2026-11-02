@@ -412,4 +412,35 @@
     width: 20px;
     height: 20px;
   }
+  /* the editor leaves room for the keyboard and the Go bar */
+  #sqlqueryform [data-testid="sql-editor"] {
+    max-height: 38svh;
+  }
+  /* SqlPage on phones: the footer (Options, Go) stays at the bottom of the screen while the query box
+     is in view, so Go is one tap away; the delimiter and checkboxes fold under Options */
+  .bma-sql-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    flex-wrap: wrap;
+    box-shadow: 0 -4px 10px rgb(0 0 0 / 0.08);
+  }
+  /* the card's overflow: hidden would make it the sticky footer's scroll box */
+  .bma-card:has(> .bma-sql-footer) {
+    overflow: visible;
+  }
+  .bma-sql-footer > .ml-auto > input[type="submit"] {
+    min-width: 88px;
+  }
+  .bma-sql-options:not([hidden]) {
+    order: 3;
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .bma-sql-options > label {
+    min-height: 40px;
+  }
 }

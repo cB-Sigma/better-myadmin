@@ -234,6 +234,14 @@ test('SQL page: the column list sits below the editor and a query runs', async (
     expect(b.x + b.width).toBeLessThanOrEqual(vw)
     expect(b.height).toBeGreaterThanOrEqual(40)
   }
+  // Go is on screen without scrolling (the footer stays at the bottom, above the console strip); the
+  // delimiter and checkboxes fold under Options
+  const go = await box(page.locator('#button_submit_query'))
+  const strip = await box(page.locator('#pma_console'))
+  expect(go.y + go.height).toBeLessThanOrEqual(strip.y)
+  await expect(page.locator('#id_sql_delimiter')).toBeHidden()
+  await page.getByRole('button', { name: 'Options' }).tap()
+  await expect(page.locator('#id_sql_delimiter')).toBeVisible()
   await page.locator('#button_submit_query').tap()
   await expect(page.locator('table.table_results tbody tr').first()).toBeVisible()
 })

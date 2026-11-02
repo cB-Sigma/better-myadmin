@@ -40,6 +40,7 @@ import { newQueryId, runQuery, scopeKey, takePendingResults } from './runner'
 import './sql.css'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { useFormLock } from '../shell/page-chrome'
+import { useIsMobile } from '../../lib/mobile'
 
 export interface SqlPageProps {
   server: number
@@ -138,6 +139,9 @@ function SqlForm({
   const [text, setText] = useState(initial)
   const [savedAvailable, setSavedAvailable] = useState(() => getAutoSaved(db, table) !== null)
   const [delimiter, setDelimiter] = useState(';')
+  // phones: the footer stays at the bottom of the screen, Go in reach; its options fold away
+  const mobile = useIsMobile()
+  const [optionsOpen, setOptionsOpen] = useState(false)
   const [showQuery, setShowQuery] = useState(restored.checked)
   const [retain, setRetain] = useState(s.RetainQueryBox)
   const [rollback, setRollback] = useState(false)
@@ -415,6 +419,62 @@ function SqlForm({
       />
     )
 
+  const options = (
+    <>
+      <label className="flex items-center gap-1">
+        <span>{t('Delimiter')}</span>
+        <input
+          id="id_sql_delimiter"
+          name="sql_delimiter"
+          className="input w-12"
+          size={3}
+          value={delimiter}
+          onChange={(e) => setDelimiter(e.target.value)}
+        />
+      </label>
+      <label className="flex items-center gap-1">
+        <input
+          type="checkbox"
+          id="checkbox_show_query"
+          name="show_query"
+          checked={showQuery}
+          onChange={(e) => setShowQuery(e.target.checked)}
+        />
+        {t('Show this query here again')}
+      </label>
+      <label className="flex items-center gap-1">
+        <input
+          type="checkbox"
+          id="retain_query_box"
+          name="retain_query_box"
+          checked={retain}
+          onChange={(e) => setRetain(e.target.checked)}
+        />
+        {t('Retain query box')}
+      </label>
+      <label className="flex items-center gap-1">
+        <input
+          type="checkbox"
+          id="rollback_query"
+          name="rollback_query"
+          checked={rollback}
+          onChange={(e) => setRollback(e.target.checked)}
+        />
+        {t('Rollback when finished')}
+      </label>
+      <label className="flex items-center gap-1">
+        <input
+          type="checkbox"
+          id="fk_checks"
+          name="fk_checks"
+          checked={fkChecks}
+          onChange={(e) => setFkChecks(e.target.checked)}
+        />
+        {t('Enable foreign key checks')}
+      </label>
+    </>
+  )
+
   return (
     <InlineEditContext.Provider value={{ open: inlineOpen, setOpen: setInlineOpen }}>
       <form
@@ -646,58 +706,27 @@ function SqlForm({
                 </div>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border bg-bg-subtle px-3 py-2 text-sm">
-              <label className="flex items-center gap-1">
-                <span>{t('Delimiter')}</span>
-                <input
-                  id="id_sql_delimiter"
-                  name="sql_delimiter"
-                  className="input w-12"
-                  size={3}
-                  value={delimiter}
-                  onChange={(e) => setDelimiter(e.target.value)}
-                />
-              </label>
-              <label className="flex items-center gap-1">
-                <input
-                  type="checkbox"
-                  id="checkbox_show_query"
-                  name="show_query"
-                  checked={showQuery}
-                  onChange={(e) => setShowQuery(e.target.checked)}
-                />
-                {t('Show this query here again')}
-              </label>
-              <label className="flex items-center gap-1">
-                <input
-                  type="checkbox"
-                  id="retain_query_box"
-                  name="retain_query_box"
-                  checked={retain}
-                  onChange={(e) => setRetain(e.target.checked)}
-                />
-                {t('Retain query box')}
-              </label>
-              <label className="flex items-center gap-1">
-                <input
-                  type="checkbox"
-                  id="rollback_query"
-                  name="rollback_query"
-                  checked={rollback}
-                  onChange={(e) => setRollback(e.target.checked)}
-                />
-                {t('Rollback when finished')}
-              </label>
-              <label className="flex items-center gap-1">
-                <input
-                  type="checkbox"
-                  id="fk_checks"
-                  name="fk_checks"
-                  checked={fkChecks}
-                  onChange={(e) => setFkChecks(e.target.checked)}
-                />
-                {t('Enable foreign key checks')}
-              </label>
+            <div
+              className={`flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border bg-bg-subtle px-3 py-2 text-sm${mobile ? ' bma-sql-footer' : ''}`}
+            >
+              {mobile ? (
+                <>
+                  <button
+                    type="button"
+                    className={btn}
+                    aria-expanded={optionsOpen}
+                    aria-controls="bma_sql_options"
+                    onClick={() => setOptionsOpen((o) => !o)}
+                  >
+                    {t('Options')}
+                  </button>
+                  <div id="bma_sql_options" className="bma-sql-options" hidden={!optionsOpen}>
+                    {options}
+                  </div>
+                </>
+              ) : (
+                options
+              )}
               <div className="ml-auto flex items-center gap-2">
                 {canSimulate(text) && (
                   <button
