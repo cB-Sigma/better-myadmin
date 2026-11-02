@@ -271,7 +271,7 @@
     line-height: 1.4;
   }
   .bma-cell-sheet .cEdit textarea.edit_box {
-    min-height: 40svh;
+    min-height: min(40svh, calc(100svh - var(--bma-kb, 0px) - 240px));
     resize: vertical;
   }
   .bma-cell-sheet .cEdit .edit_area {
@@ -517,7 +517,8 @@
   }
   .bma-sql-footer {
     position: sticky;
-    bottom: var(--bma-console-h, 0px);
+    /* above the console strip, or above the on-screen keyboard while it is open */
+    bottom: max(var(--bma-console-h, 0px), var(--bma-kb, 0px));
     z-index: 5;
     flex-wrap: wrap;
     box-shadow: 0 -4px 10px rgb(0 0 0 / 0.08);

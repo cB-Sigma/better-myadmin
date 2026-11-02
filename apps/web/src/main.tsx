@@ -4,6 +4,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { PageNotFound } from './features/shell/PageNotFound'
 import { I18nProvider } from './lib/i18n'
+import { installKeyboardInset } from './lib/mobile'
 import { parsePhpQuery, stringifyPhpQuery } from './lib/search'
 import { routeTree } from './routeTree.gen'
 import './styles/app.css'
@@ -30,6 +31,9 @@ declare module '@tanstack/react-router' {
     router: typeof router
   }
 }
+
+// pinned bars stay above the on-screen keyboard (lib/mobile.ts)
+installKeyboardInset()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

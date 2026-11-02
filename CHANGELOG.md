@@ -2,6 +2,16 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.24 (2026-11-02)
+
+### Fixes
+
+- Phone layout: the on-screen keyboard no longer covers Go, Save and the other buttons pinned to the
+  bottom of the screen. The SQL page's Go bar, the cell editor and every other dialog, the
+  confirmation sheet and the full-screen console move up above the keyboard while it is open
+  (iOS Safari and Android Chrome lay the keyboard over the page; Android is also asked to resize
+  the page instead).
+
 ## 1.0.23 (2026-11-02)
 
 ### New
