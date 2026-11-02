@@ -2,6 +2,15 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.26 (2026-11-02)
+
+### Fixes
+
+- ER diagram: Export as PNG failed on iPhone and iPad for a large database ("Error: png"). iOS
+  Safari draws at most 16.7 million pixels on a canvas; the image is now sized for the device and,
+  should a browser still refuse, made again smaller. If no size works the message says so and
+  points to Export as SVG.
+
 ## 1.0.25 (2026-11-02)
 
 ### Fixes

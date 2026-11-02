@@ -366,8 +366,19 @@ export function diagramFileName(db: string, ext: 'svg' | 'png'): string {
   return `${base}.${ext}`
 }
 
+/** Canvas size limits: iOS / iPadOS Safari draws at most 16,777,216 pixels (4096²) on one canvas
+ * and returns no image past it; other browsers take far more. */
+export const IOS_CANVAS_AREA = 16_777_216
+export const CANVAS_AREA = 100_000_000
+export function canvasAreaLimit(nav: Pick<Navigator, 'userAgent' | 'maxTouchPoints'> = navigator): number {
+  // iPadOS reports a Mac user agent: a touch-screen "Macintosh" is an iPad
+  const ios =
+    /iPhone|iPad|iPod/.test(nav.userAgent) || (/Macintosh/.test(nav.userAgent) && nav.maxTouchPoints > 1)
+  return ios ? IOS_CANVAS_AREA : CANVAS_AREA
+}
+
 /** The largest PNG scale (≤ 2) whose canvas stays inside the browser limits. */
-export function pngScale(b: Bounds, maxSide = 16384, maxArea = 100_000_000): number {
+export function pngScale(b: Bounds, maxSide = 16384, maxArea = CANVAS_AREA): number {
   let s = 2
   s = Math.min(s, maxSide / b.width, maxSide / b.height)
   s = Math.min(s, Math.sqrt(maxArea / (b.width * b.height)))
