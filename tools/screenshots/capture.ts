@@ -173,6 +173,48 @@ const SHOTS: Shot[] = [
   },
 ]
 
+/** Phone captures (iPhone 13 size), shown side by side in one picture: docs/screenshots/mobile.jpg */
+const PHONE = { width: 390, height: 844 }
+const PHONES: Array<Omit<Shot, 'name' | 'title'>> = [
+  {
+    run: async (page) => {
+      await page.goto(`/s/1/db/${DB}/structure`)
+      await page.locator('#pma_navigation_collapser').click()
+      await page.locator('#pma_navigation [role=treeitem][data-kind=table][data-name=orders]').waitFor()
+      await page.waitForTimeout(500)
+    },
+  },
+  {
+    run: async (page) => {
+      await page.goto(`/s/1/db/${DB}/t/products/browse`)
+      await page.locator('table.table_results tbody tr').first().waitFor()
+      await page.waitForTimeout(400)
+    },
+  },
+  {
+    theme: { theme: 'modern', mode: 'dark' },
+    run: async (page) => {
+      // the desktop dashboard shot's page and traffic
+      await (SHOTS.find((s) => s.name === 'dashboard') as Shot).run(page)
+    },
+  },
+]
+
+/** Phones side by side on the same gradient as the window frames. */
+function phoneFrame(pngs: Buffer[]): string {
+  const w = 300
+  const h = Math.round((w * PHONE.height) / PHONE.width)
+  return `<!doctype html><html><head><style>
+  html,body{margin:0}
+  body{width:1080px;padding:40px 0;box-sizing:border-box;display:flex;justify-content:center;gap:40px;
+    background:linear-gradient(135deg,#1e3a8a 0%,#2563eb 45%,#60a5fa 100%)}
+  .phone{padding:12px;border-radius:46px;background:#0f172a;box-shadow:0 30px 60px rgba(15,23,42,.45),0 0 0 2px #334155}
+  img{display:block;width:${w}px;height:${h}px;border-radius:34px}
+  </style></head><body>${pngs
+    .map((p) => `<div class="phone"><img src="data:image/png;base64,${p.toString('base64')}"></div>`)
+    .join('')}</body></html>`
+}
+
 /** The window frame around a screenshot, rendered as HTML (macOS-style chrome on a gradient). */
 function frame(png: Buffer, title: string, w: number, h: number): string {
   return `<!doctype html><html><head><style>
@@ -282,6 +324,39 @@ try {
     await fp.locator('body').screenshot({ path: join(out, `${shot.name}.jpg`), type: 'jpeg', quality: 88 })
     await fctx.close()
     console.log(`docs/screenshots/${shot.name}.jpg`)
+  }
+  if (wanted.size === 0 || wanted.has('mobile')) {
+    const pngs: Buffer[] = []
+    for (const shot of PHONES) {
+      const ctx = await browser.newContext({
+        baseURL: base,
+        viewport: PHONE,
+        deviceScaleFactor: 3,
+        isMobile: true,
+        hasTouch: true,
+        colorScheme: shot.theme?.mode ?? 'light',
+      })
+      if (shot.theme !== undefined)
+        await ctx.addInitScript((t) => {
+          localStorage.setItem('bma_theme', t.theme)
+          localStorage.setItem('bma_theme_color', t.mode)
+        }, shot.theme)
+      const page = await ctx.newPage()
+      await page.goto('/')
+      await page.fill('#input_username', process.env.BMA_TEST_USER ?? 'root')
+      await page.fill('#input_password', process.env.BMA_TEST_PASSWORD ?? 'root')
+      await page.click('#input_go')
+      await page.locator('#maincontainer').waitFor()
+      await shot.run(page)
+      pngs.push(await page.screenshot())
+      await ctx.close()
+    }
+    const fctx = await browser.newContext({ deviceScaleFactor: 2, viewport: { width: 1080, height: 800 } })
+    const fp = await fctx.newPage()
+    await fp.setContent(phoneFrame(pngs))
+    await fp.locator('body').screenshot({ path: join(out, 'mobile.jpg'), type: 'jpeg', quality: 88 })
+    await fctx.close()
+    console.log('docs/screenshots/mobile.jpg')
   }
   await browser.close()
 } finally {

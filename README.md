@@ -40,6 +40,7 @@ Or try it in your browser with a demo database, with nothing to install:
 | ⚡ **Fast** | A single-page app with a virtualized grid and pooled connections. Pages switch instantly and large tables scroll smoothly. |
 | 🧩 **Complete** | Browse, search, insert and edit, structure, SQL editor and console, import and export, the designer, privileges, replication, status, routines, events and triggers. It covers all of phpMyAdmin, [measured](docs/parity.md) against 707 checklist items. |
 | 🔁 **Drop-in** | phpMyAdmin's pages, settings, configuration storage and Docker variables. Converting an existing `config.inc.php` takes one command. |
+| 📱 **Works on phones** | Every page fits a phone: a slide-in navigation drawer, tables that scroll in place, full-screen dialogs and 40px touch targets. The desktop layout is unchanged. |
 | 🎨 **Good-looking** | phpMyAdmin's themes plus Modern, Classic and Native, each with light and dark modes. |
 | ✨ **Beyond phpMyAdmin** | [Query tabs, a command palette, an ER diagram, a live dashboard and slow query analysis](#beyond-phpmyadmin), added on top of everything phpMyAdmin does. |
 | 🤖 **Agent-ready** | A built-in [MCP server](#ai-agents-and-mcp) and JSON API let Claude Code and other agents explore schemas and run SQL, as a MySQL user with that user's privileges. |
@@ -78,6 +79,13 @@ second app to get:
 </table>
 
 - **AI agents:** a built-in MCP server and JSON API, [below](#ai-agents-and-mcp).
+
+### On your phone
+
+The same app, laid out for a phone screen: navigation in a drawer, the browse grid scrolling in
+place, and the live dashboard in one column. Desktop pages are pixel-for-pixel what they were.
+
+<img src="docs/screenshots/mobile.jpg" alt="BetterMyAdmin on three phones: navigation drawer, browsing a table, live dashboard in the modern dark theme" width="100%">
 
 ## AI agents and MCP
 
