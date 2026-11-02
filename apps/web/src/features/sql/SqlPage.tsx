@@ -38,9 +38,9 @@ import { FlashMessages, usePageCardEnv } from './page-card'
 import { sqlTabRoute } from './routes'
 import { newQueryId, runQuery, scopeKey, takePendingResults } from './runner'
 import './sql.css'
+import { useIsMobile } from '../../lib/mobile'
 import { usePagePrefs } from '../preferences/PageSettings.tsx'
 import { useFormLock } from '../shell/page-chrome'
-import { useIsMobile } from '../../lib/mobile'
 
 export interface SqlPageProps {
   server: number
