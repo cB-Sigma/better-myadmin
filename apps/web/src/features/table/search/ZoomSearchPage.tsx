@@ -142,7 +142,7 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
     const col = byName(r.column)
     return (
       <tr key={i} className="noclick">
-        <td className="px-2 py-1">
+        <td className="bma-mfull px-2 py-1" data-label={t('Column')}>
           <NativeSelect
             name="criteriaColumnNames[]"
             id={`tableid_${i}`}
@@ -157,11 +157,11 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
             ))}
           </NativeSelect>
         </td>
-        <td className="px-2 py-1" dir="ltr">
+        <td className="bma-mmeta px-2 py-1" dir="ltr">
           {col?.type}
         </td>
-        <td className="px-2 py-1">{col?.collation}</td>
-        <td className="px-2 py-1">
+        <td className="bma-mmeta px-2 py-1">{col?.collation}</td>
+        <td className="bma-mfull px-2 py-1" data-label={t('Operator')}>
           {col !== undefined && (
             <OperatorSelect
               column={col}
@@ -171,7 +171,7 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
             />
           )}
         </td>
-        <td className="px-2 py-1">
+        <td className="bma-mfull px-2 py-1" data-label={t('Value')}>
           {col !== undefined && (
             <ValueInput
               column={col}
@@ -210,7 +210,7 @@ function ZoomForm({ scope, page }: { scope: TableRef; page: SearchPageResponse }
             </Button>
           >
             <PanelBody>
-              <table id="tableFieldsId" className="w-auto text-sm">
+              <table id="tableFieldsId" className="bma-mstack w-auto text-sm">
                 <thead>
                   <tr className="text-left">
                     <th className="px-2">{t('Column')}</th>

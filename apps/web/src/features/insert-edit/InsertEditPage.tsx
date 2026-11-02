@@ -385,7 +385,7 @@ function InsertEditForm({
               </div>
             )}
             <div className="overflow-x-auto">
-              <Table zebra className="insertRowTable my-3 w-auto" onKeyDown={onKeyDown}>
+              <Table zebra className="insertRowTable bma-mstack my-3 w-auto" onKeyDown={onKeyDown}>
                 <thead>
                   {goRow}
                   <tr>
@@ -581,7 +581,7 @@ function ColumnRow({
   const idx = fieldIndex(r, f.columnCount, col.columnNumber)
   return (
     <tr className="noclick">
-      <td className="px-2 py-1 text-center">
+      <td className="bma-mname px-2 py-1 text-center">
         {col.comment !== null ? (
           <span className="border-b border-dashed border-fg" title={col.comment}>
             {col.field}
@@ -592,7 +592,7 @@ function ColumnRow({
       </td>
       {f.showFieldTypes && (
         <td
-          className={`px-2 py-1 text-center ${col.trueType !== 'set' && col.trueType !== 'enum' ? 'whitespace-nowrap' : ''}`}
+          className={`bma-mmeta px-2 py-1 text-center ${col.trueType !== 'set' && col.trueType !== 'enum' ? 'whitespace-nowrap' : ''}`}
         >
           <span className="column_type" dir="ltr">
             {col.displayType}
@@ -600,7 +600,10 @@ function ColumnRow({
         </td>
       )}
       {f.showFunctionFields && (
-        <td className={`px-2 py-1 ${col.functionCell !== 'select' ? 'text-center' : ''}`}>
+        <td
+          className={`bma-mfull px-2 py-1 ${col.functionCell !== 'select' ? 'text-center' : ''}`}
+          data-label={t('Function')}
+        >
           {col.functionCell === 'binary' ? (
             t('Binary')
           ) : col.functionCell === 'none' ? (
@@ -622,7 +625,7 @@ function ColumnRow({
           )}
         </td>
       )}
-      <td className="px-2 py-1">
+      <td className="bma-minline px-2 py-1" data-label={t('Null')}>
         <NullCheckbox
           col={col}
           idx={idx}
@@ -631,7 +634,12 @@ function ColumnRow({
           onChange={(v) => setRow((x) => toggleNull(x, i, v))}
         />
       </td>
-      <td className="px-2 py-1" data-type={col.trueType} data-decimals={col.decimals}>
+      <td
+        className="bma-mfull px-2 py-1"
+        data-type={col.trueType}
+        data-decimals={col.decimals}
+        data-label={t('Value')}
+      >
         <ValueWidget
           col={col}
           cell={cell}

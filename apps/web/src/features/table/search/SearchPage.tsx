@@ -155,7 +155,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
         >
           <PanelBody className="space-y-3">
             <div id="fieldset_table_qbe" className="overflow-x-auto">
-              <table className="w-auto text-sm">
+              <table className="bma-mstack w-auto text-sm">
                 <thead>
                   <tr className="text-left">
                     {page.geomColumnFlag && <th className="px-2">{t('Function')}</th>}
@@ -176,7 +176,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                         data-testid={`criteria-${c.name}`}
                       >
                         {page.geomColumnFlag && (
-                          <td className="px-2 py-1">
+                          <td className="bma-mfull px-2 py-1" data-label={t('Function')}>
                             {c.geomFunctions !== undefined && (
                               <NativeSelect
                                 className="geom_func"
@@ -195,11 +195,11 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                           </td>
                         )}
                         <th className="px-2 py-1 text-left">{c.name}</th>
-                        <td className="px-2 py-1" dir="ltr">
+                        <td className="bma-mmeta px-2 py-1" dir="ltr">
                           {c.type}
                         </td>
-                        <td className="px-2 py-1">{c.collation}</td>
-                        <td className="px-2 py-1">
+                        <td className="bma-mmeta px-2 py-1">{c.collation}</td>
+                        <td className="bma-mfull px-2 py-1" data-label={t('Operator')}>
                           <OperatorSelect
                             column={c}
                             index={i}
@@ -207,7 +207,7 @@ function SearchForm({ scope, page }: { scope: TableRef; page: SearchPageResponse
                             onChange={(v) => void onOperator(i, v)}
                           />
                         </td>
-                        <td className="px-2 py-1" data-type={c.type}>
+                        <td className="bma-mfull px-2 py-1" data-type={c.type} data-label={t('Value')}>
                           <ValueInput
                             column={c}
                             index={i}
