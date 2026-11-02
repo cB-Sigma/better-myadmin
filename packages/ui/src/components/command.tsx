@@ -1,8 +1,9 @@
 import { Command } from 'cmdk'
-import { Search } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../lib/cn.ts'
-import { Dialog, DialogContent, DialogTitle } from './dialog.tsx'
+import { useUiSettings } from '../settings.tsx'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from './dialog.tsx'
 
 /**
  * A command menu in a modal (BetterMyAdmin's command palette, parity exception X61): the standard
@@ -28,6 +29,7 @@ export function CommandDialog({
   /** after closing, before the focus goes back (Radix `onCloseAutoFocus`) */
   onCloseAutoFocus?: (e: Event) => void
 }) {
+  const { gettext } = useUiSettings()
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -40,6 +42,10 @@ export function CommandDialog({
       >
         <DialogTitle className="sr-only">{title}</DialogTitle>
         {children}
+        {/* phones only (the palette is a full screen there, Esc is not at hand): shown by mobile-shell.css */}
+        <DialogClose className="bma-sheet-close hidden" aria-label={gettext('Close')}>
+          <X className="size-5" aria-hidden />
+        </DialogClose>
       </DialogContent>
     </Dialog>
   )

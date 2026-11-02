@@ -55,6 +55,8 @@ export function DialogContent({
           sizes[size],
           className,
         )}
+        // phones: a full-screen sheet (apps/web/src/styles/mobile-shell.css)
+        data-bma-dialog=""
         onInteractOutside={(e) => {
           // the AJAX notification sits above the modal (#loading_parent): a click on it removes the
           // notification and leaves the modal open
@@ -75,6 +77,7 @@ export function DialogContent({
         {!hideClose && (
           <DialogPrimitive.Close
             className="absolute top-2 right-2 rounded p-1 text-fg-muted hover:bg-bg-subtle hover:text-fg"
+            data-bma-dialog-close=""
             aria-label={closeLabel}
           >
             <X className="size-4" aria-hidden />
@@ -89,6 +92,7 @@ export function DialogHeader({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       className={cn('flex items-center gap-2 border-b border-border bg-bg-subtle px-3 py-2 pr-10', className)}
+      data-bma-dialog-header=""
       {...props}
     />
   )
@@ -116,6 +120,7 @@ export function DialogFooter({ className, ...props }: ComponentProps<'div'>) {
         'flex items-center justify-end gap-2 border-t border-border bg-bg-subtle px-3 py-2',
         className,
       )}
+      data-bma-dialog-footer=""
       {...props}
     />
   )
