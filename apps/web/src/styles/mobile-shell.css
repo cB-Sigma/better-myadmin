@@ -13,43 +13,151 @@
   /* ------------------------------------------------------------------------------------------- */
   /* top bar                                                                                      */
   /* ------------------------------------------------------------------------------------------- */
-  .bma-topbar {
-    min-height: calc(48px + env(safe-area-inset-top));
-    gap: 2px;
+  /* one 52px row in every theme (:root … doubled class: above a theme's own padding), the
+     drawer button (fixed, .bma-nav-toggle) centred in it */
+  :root .bma-topbar.bma-topbar {
+    box-sizing: border-box;
+    height: calc(52px + env(safe-area-inset-top));
+    min-height: 0;
+    gap: 4px;
     padding-top: env(safe-area-inset-top);
     padding-bottom: 0;
-    padding-inline-start: calc(50px + env(safe-area-inset-left));
+    padding-inline-start: calc(52px + env(safe-area-inset-left));
     padding-inline-end: calc(4px + env(safe-area-inset-right));
   }
-  #server-breadcrumb ol {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    white-space: nowrap;
-    font-size: 14px;
+  /* the breadcrumb: one line, no sideways scrolling. Inside a database the server segment goes (the
+     drawer and Home have it), so it reads "database › table"; a long database name ends in "…"
+     before the current table does. Comments are left out. */
+  #floating_menubar {
+    display: flex;
+    min-width: 0;
+    align-items: center;
   }
-  #server-breadcrumb ol::-webkit-scrollbar {
+  #server-breadcrumb {
+    display: flex;
+    min-width: 0;
+    max-width: 100%;
+  }
+  :root #server-breadcrumb ol {
+    flex-wrap: nowrap;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 15px;
+  }
+  #server-breadcrumb .breadcrumb-comment {
     display: none;
   }
-  #server-breadcrumb :is(.breadcrumb-item, .breadcrumb-comment) {
+  #server-breadcrumb ol > li.breadcrumb-item:first-child:not(:last-of-type) {
+    display: none;
+  }
+  #server-breadcrumb ol > li.breadcrumb-item:nth-child(2) .breadcrumb-divider {
+    display: none;
+  }
+  #server-breadcrumb ol > li.breadcrumb-item {
+    display: flex;
+    flex: 0 1 auto;
+    min-width: 0;
+    align-items: center;
+  }
+  #server-breadcrumb ol > li.breadcrumb-item:last-of-type {
     flex-shrink: 0;
+    max-width: 72%;
+  }
+  #server-breadcrumb ol > li.breadcrumb-item:only-of-type,
+  #server-breadcrumb ol > li.breadcrumb-item:first-child:not(:last-of-type) + li:last-of-type {
+    max-width: 100%;
+  }
+  #server-breadcrumb :is(.icon, .breadcrumb-divider) {
+    flex: none;
   }
   #server-breadcrumb a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 40px;
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 40px;
   }
+  #server-breadcrumb li:last-of-type a {
+    font-weight: 600;
+  }
+  /* a table: a two-line title, the database small above the table (both whole, each ends in
+     "…" only past the bar's width) */
+  :root #server-breadcrumb ol:has(> li:nth-child(3)) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+  }
+  #server-breadcrumb ol:has(> li:nth-child(3)) > li.breadcrumb-item {
+    max-width: 100%;
+  }
+  #server-breadcrumb ol:has(> li:nth-child(3)) .breadcrumb-divider {
+    display: none;
+  }
+  #server-breadcrumb ol:has(> li:nth-child(3)) > li:nth-child(2) {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  #server-breadcrumb ol:has(> li:nth-child(3)) > li:nth-child(2) a {
+    line-height: 16px;
+  }
+  #server-breadcrumb ol:has(> li:nth-child(3)) > li:nth-child(2) .icon {
+    width: 12px;
+    height: 12px;
+  }
+  #server-breadcrumb ol:has(> li:nth-child(3)) > li:last-of-type a {
+    line-height: 20px;
+  }
+  /* native: the connection capsule, padded, as tall as the buttons beside it */
+  :root[data-theme="native"] #server-breadcrumb ol,
+  [data-theme="native"] #server-breadcrumb ol {
+    height: 36px;
+    align-items: center;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+  [data-theme="native"] #server-breadcrumb a {
+    line-height: 34px;
+  }
+  /* the page icons: four alike, borderless 40px buttons in the bar's own colour */
   #page_nav_icons,
   #page_nav_icons > span {
-    gap: 2px;
+    gap: 0;
   }
-  :is(#bma_command_palette, #userAccountDropdown > button, #page_settings_icon > button, #goto_pagetop) {
+  :root
+    .bma-topbar
+    :is(#bma_command_palette, #userAccountDropdown > button, #page_settings_icon > button, #goto_pagetop) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 40px;
     min-width: 40px;
+    height: 40px;
     min-height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    box-shadow: none;
+    color: var(--breadcrumb-fg);
+  }
+  :root
+    .bma-topbar
+    :is(#bma_command_palette, #userAccountDropdown > button, #page_settings_icon > button, #goto_pagetop):is(
+      :hover,
+      :active,
+      [aria-expanded="true"]
+    ) {
+    background: color-mix(in srgb, currentColor 14%, transparent);
+  }
+  :root
+    .bma-topbar
+    :is(#bma_command_palette, #userAccountDropdown > button, #page_settings_icon > button, #goto_pagetop)
+    svg {
+    width: 20px;
+    height: 20px;
   }
   #lock_page_icon:empty {
     display: none;
@@ -64,8 +172,8 @@
   }
   .bma-nav-toggle {
     position: fixed;
-    top: calc(4px + env(safe-area-inset-top));
-    inset-inline-start: calc(5px + env(safe-area-inset-left));
+    top: calc(6px + env(safe-area-inset-top));
+    inset-inline-start: calc(6px + env(safe-area-inset-left));
     z-index: 30;
     display: inline-flex;
     align-items: center;

@@ -1,6 +1,6 @@
 import { PmaIcon, iconParts, useUiSettings } from '@bettermyadmin/ui'
 import { Link } from '@tanstack/react-router'
-import { type MouseEvent, type ReactNode, useEffect, useRef } from 'react'
+import type { MouseEvent, ReactNode } from 'react'
 import { useConfig } from '../../lib/config.ts'
 import { t } from '../../lib/i18n'
 import { useIsMobile } from '../../lib/mobile'
@@ -47,16 +47,9 @@ export function Breadcrumb({
   const comment =
     table !== '' ? (tblScope.data?.comment ?? '') : db !== '' ? (dbScope.data?.comment ?? '') : ''
 
-  // phones: one line that scrolls sideways, kept at its end (the current table or database); the
-  // "Server:" / "Database:" prefixes stay for screen readers when an icon already says it
+  // phones: one line (styles/mobile-shell.css); the "Server:" / "Database:" prefixes stay for screen
+  // readers when an icon already says it
   const mobile = useIsMobile()
-  const list = useRef<HTMLOListElement>(null)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new trail scrolls to its end again
-  useEffect(() => {
-    const ol = list.current
-    if (!mobile || ol === null) return
-    ol.scrollLeft = getComputedStyle(ol).direction === 'rtl' ? -ol.scrollWidth : ol.scrollWidth
-  }, [mobile, name, db, table, comment])
   const prefix = (text: string): ReactNode =>
     mobile && parts.icon ? <span className="sr-only">{text}</span> : text
 
@@ -68,7 +61,7 @@ export function Breadcrumb({
       onClick={onBarClick}
       className="breadcrumb-navbar min-w-0"
     >
-      <ol ref={list} className="flex min-w-0 flex-wrap items-center gap-x-1 text-[13px]">
+      <ol className="flex min-w-0 flex-wrap items-center gap-x-1 text-[13px]">
         <li className="breadcrumb-item inline-flex items-center gap-1">
           {parts.icon && <PmaIcon name="s_host" />}
           <Link to={serverHref} data-raw-text={name} draggable={false}>

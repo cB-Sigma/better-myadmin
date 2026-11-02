@@ -9,6 +9,11 @@ All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](http
 - Phone layout: the SQL editor's text is 16px, so iOS Safari no longer zooms the page in when you
   tap it (the zoom pushed the editor past the screen and Go out of view). The on-screen keyboard
   is measured against the page's own height, which a zoom does not change.
+- Phone layout: a cleaner top bar in every theme. It is one 52px row with the menu button centred.
+  The breadcrumb no longer scrolls or cuts words: inside a database it shows the database, and on a
+  table a two-line title (the database small above the table name); long names end in "…". The
+  four page buttons (search, user, settings, top) are alike, borderless 40px buttons. The Native
+  theme's capsule is padded.
 
 ## 1.0.24 (2026-11-02)
 
