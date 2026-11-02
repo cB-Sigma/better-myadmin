@@ -245,6 +245,13 @@ test('SQL page: the column list sits below the editor and a query runs', async (
   await page.goto(`/s/1/db/${DB}/t/t/sql`)
   await expect(page.locator('#fieldsSelect')).toBeVisible()
   await noPageOverflow(page)
+  // 16px text in the editor: iOS Safari zooms the page in on a smaller one (and Go leaves the screen)
+  expect(
+    await page
+      .locator('#sqlqueryform .cm-content')
+      .first()
+      .evaluate((e) => Number.parseFloat(getComputedStyle(e).fontSize)),
+  ).toBeGreaterThanOrEqual(16)
   const vw = page.viewportSize()!.width
   const editor = await box(page.locator('.bma-sql-editorrow > div').first())
   const fields = await box(page.locator('#fieldsSelect'))

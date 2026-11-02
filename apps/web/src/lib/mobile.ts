@@ -44,7 +44,10 @@ export function installKeyboardInset(win: Window = window): () => void {
   let frame = 0
   const update = () => {
     frame = 0
-    const covered = Math.round(win.innerHeight - vv.height - vv.offsetTop)
+    // the layout viewport's height: iOS Safari changes innerHeight with pinch / focus zoom, clientHeight
+    // stays the layout height (what position: fixed and sticky offsets are measured against)
+    const layout = win.document.documentElement.clientHeight || win.innerHeight
+    const covered = Math.round(layout - vv.height - vv.offsetTop)
     const keyboard = covered > 80
     root.style.setProperty('--bma-kb', `${keyboard ? covered : 0}px`)
     root.style.setProperty('--bma-vv-top', `${keyboard ? Math.max(0, Math.round(vv.offsetTop)) : 0}px`)
