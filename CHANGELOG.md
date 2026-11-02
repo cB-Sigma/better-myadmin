@@ -14,6 +14,8 @@ All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](http
     full screen, and the console opens full screen from its strip.
   - Wide tables (browse results, structure, variables, processes, binlog and others) scroll in their
     own box rather than the page. User accounts are shown as cards, and privilege lists as rows.
+  - SQL page: the Go button stays at the bottom of the screen while you write a query, and the
+    delimiter and query options fold under an Options button.
   - Forms put labels above full-width fields. Touch targets are at least 40px, and fields use 16px
     text so iOS doesn't zoom in.
   - Status, monitor and dashboard charts stack in one column. The Designer pans in its own box, with
