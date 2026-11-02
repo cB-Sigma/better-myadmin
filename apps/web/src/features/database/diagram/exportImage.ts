@@ -1,4 +1,4 @@
-import { type Bounds, pngScale } from './diagram.ts'
+import { type Bounds, canvasAreaLimit, pngScale } from './diagram.ts'
 
 /**
  * Database → Diagram export (X63): the whole diagram (not the visible part) as a standalone SVG
@@ -61,12 +61,20 @@ export function diagramSvg(svg: SVGSVGElement, content: SVGGElement, b: Bounds, 
   return `<?xml version="1.0" encoding="UTF-8"?>\n${new XMLSerializer().serializeToString(out)}`
 }
 
-/** The SVG text rasterised at {@link pngScale} (2× when the browser allows it). */
+/** Raised when no canvas size the browser accepts can hold the diagram (the page offers SVG). */
+export class DiagramTooLargeError extends Error {
+  constructor() {
+    super('too large')
+  }
+}
+
+/** The SVG text rasterised at {@link pngScale} (2× when the browser allows it, within the device's
+ * canvas limit). A browser that still returns no image (a lower limit than expected, memory) gets
+ * the canvas again at a quarter of the area, down to a readable floor. */
 export async function diagramPng(svgText: string, b: Bounds): Promise<Blob> {
   const pad = 16
   const w = b.width + 2 * pad
   const h = b.height + 2 * pad
-  const scale = pngScale({ x: 0, y: 0, width: w, height: h })
   const url = URL.createObjectURL(new Blob([svgText], { type: 'image/svg+xml' }))
   try {
     const img = new Image()
@@ -75,16 +83,24 @@ export async function diagramPng(svgText: string, b: Bounds): Promise<Blob> {
       img.onerror = () => reject(new Error('svg'))
       img.src = url
     })
-    const canvas = document.createElement('canvas')
-    canvas.width = Math.ceil(w * scale)
-    canvas.height = Math.ceil(h * scale)
-    const ctx = canvas.getContext('2d')
-    if (ctx === null) throw new Error('canvas')
-    ctx.scale(scale, scale)
-    ctx.drawImage(img, 0, 0, w, h)
-    return await new Promise<Blob>((resolve, reject) =>
-      canvas.toBlob((blob) => (blob === null ? reject(new Error('png')) : resolve(blob)), 'image/png'),
-    )
+    let area = canvasAreaLimit()
+    for (let attempt = 0; attempt < 4; attempt++, area /= 4) {
+      const scale = pngScale({ x: 0, y: 0, width: w, height: h }, 16384, area)
+      if (attempt > 0 && scale < 0.25) break
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.ceil(w * scale)
+      canvas.height = Math.ceil(h * scale)
+      const ctx = canvas.getContext('2d')
+      if (ctx === null) continue
+      ctx.scale(scale, scale)
+      ctx.drawImage(img, 0, 0, w, h)
+      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'))
+      // free the pixels now (Safari keeps a canvas's memory until it is collected)
+      canvas.width = 0
+      canvas.height = 0
+      if (blob !== null) return blob
+    }
+    throw new DiagramTooLargeError()
   } finally {
     URL.revokeObjectURL(url)
   }

@@ -3,8 +3,10 @@ import * as dagre from '@dagrejs/dagre'
 import { describe, expect, it } from 'vitest'
 import {
   HEADER_H,
+  IOS_CANVAS_AREA,
   ROW_H,
   buildGraph,
+  canvasAreaLimit,
   centreView,
   columnY,
   diagramFileName,
@@ -265,7 +267,24 @@ describe('search, view and export helpers', () => {
     expect(diagramFileName('', 'png')).toBe('diagram.png')
     expect(pngScale({ x: 0, y: 0, width: 1000, height: 500 })).toBe(2)
     expect(pngScale({ x: 0, y: 0, width: 20000, height: 500 })).toBeLessThan(1)
+    // iOS's 16.7M-pixel canvas: a large diagram stays under it
+    const big = { x: 0, y: 0, width: 9000, height: 5000 }
+    const s = pngScale(big, 16384, IOS_CANVAS_AREA)
+    expect(big.width * s * big.height * s).toBeLessThanOrEqual(IOS_CANVAS_AREA)
     expect(refText(DATA.relations[0]!, 'shop')).toBe('customer (id)')
     expect(refText(DATA.relations[4]!, 'shop')).toBe('other.audit (id)')
+  })
+})
+
+describe('canvasAreaLimit', () => {
+  it('is the iOS limit on iPhone and iPad (which reports a Mac), the large one elsewhere', () => {
+    const iphone = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15'
+    const mac = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15'
+    expect(canvasAreaLimit({ userAgent: iphone, maxTouchPoints: 5 })).toBe(IOS_CANVAS_AREA)
+    expect(canvasAreaLimit({ userAgent: mac, maxTouchPoints: 5 })).toBe(IOS_CANVAS_AREA)
+    expect(canvasAreaLimit({ userAgent: mac, maxTouchPoints: 0 })).toBeGreaterThan(IOS_CANVAS_AREA)
+    expect(
+      canvasAreaLimit({ userAgent: 'Mozilla/5.0 (Linux; Android 15)', maxTouchPoints: 5 }),
+    ).toBeGreaterThan(IOS_CANVAS_AREA)
   })
 })

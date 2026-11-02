@@ -41,7 +41,7 @@ import {
   searchTables,
   zoomAt,
 } from './diagram.ts'
-import { diagramPng, diagramSvg, saveFile } from './exportImage.ts'
+import { DiagramTooLargeError, diagramPng, diagramSvg, saveFile } from './exportImage.ts'
 
 /**
  * Database → Diagram: the automatic, read-only ER diagram of the whole database (BetterMyAdmin-only,
@@ -90,6 +90,8 @@ function labels() {
   return {
     // i18n-new: the BetterMyAdmin-only Diagram tab (X63)
     diagram: t('Diagram'),
+    // i18n-new: ER diagram (X63) PNG export past the device's canvas limit
+    pngTooLarge: t('The diagram is too large for a PNG on this device. Use Export as SVG instead.'),
     // i18n-new: the accessible name of the ER diagram (X63)
     title: t('Entity-relationship diagram of the database %s'),
     // i18n-new: ER diagram (X63) search result
@@ -366,7 +368,7 @@ function Diagram({
     try {
       saveFile(await diagramPng(text, layout.bounds), diagramFileName(data.db, 'png'))
     } catch (e) {
-      showMessage(String(e), false, 'error')
+      showMessage(e instanceof DiagramTooLargeError ? L.pngTooLarge : String(e), false, 'error')
     }
   }
 
