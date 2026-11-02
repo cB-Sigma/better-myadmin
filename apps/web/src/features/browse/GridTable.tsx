@@ -4,6 +4,7 @@ import {
   DateTimeCalendar,
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
   IconText,
   NativeSelect,
@@ -16,11 +17,21 @@ import {
   useUiSettings,
 } from '@bettermyadmin/ui'
 import { Link } from '@tanstack/react-router'
-import { ChevronDown } from 'lucide-react'
-import { Fragment, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { ChevronDown, EllipsisVertical } from 'lucide-react'
+import {
+  Fragment,
+  type MouseEvent as ReactMouseEvent,
+  type ReactNode,
+  type TouchEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { api } from '../../lib/api'
 import { useConfig } from '../../lib/config'
 import { t } from '../../lib/i18n'
+import { useIsMobile } from '../../lib/mobile'
 import { ForeignBrowser } from '../insert-edit/ForeignBrowser'
 import { pickerTip } from '../insert-edit/ValueWidget'
 import { HighlightedSql } from '../sql/HighlightedSql'
@@ -154,7 +165,23 @@ interface EditState {
 export function GridTable(props: Props) {
   const { grid, server, actions } = props
   const s = grid.settings
-  const layout: HeaderLayout = headerLayout(grid.displayParts, s.RowActionLinks)
+  const isMobile = useIsMobile()
+  const baseLayout: HeaderLayout = headerLayout(grid.displayParts, s.RowActionLinks)
+  // phones: Edit / Copy / Delete fold into one menu cell per row (beside the checkbox), so the
+  // header spans that many cells instead (desktop keeps phpMyAdmin's cells and spans)
+  const rowMenu =
+    isMobile &&
+    !baseLayout.checkboxOnly &&
+    (grid.displayParts.editLink || grid.displayParts.deleteLink !== 'none')
+  const menuCells = (grid.displayParts.deleteLink === 'delete' ? 1 : 0) + 1
+  const layout: HeaderLayout = rowMenu
+    ? {
+        ...baseLayout,
+        colspan: menuCells,
+        emptyBefore: baseLayout.emptyBefore > 0 ? menuCells : 0,
+        emptyAfter: baseLayout.emptyAfter > 0 ? menuCells : 0,
+      }
+    : baseLayout
   const [rows, setRows] = useState<GridRow[]>(grid.rows)
   const [raw, setRaw] = useState<Cell[][]>(props.raw)
   const n = grid.columns.length
@@ -187,6 +214,10 @@ export function GridTable(props: Props) {
   const tableRef = useRef<HTMLTableElement>(null)
   /** relational links in double-click mode: a single click follows after 700 ms, a double one edits */
   const fkTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  /** phones, GridEditing=double-click: the last tap on a cell (a second one within 400 ms edits) and
+   * the long-press timer (holding a cell 450 ms edits too) */
+  const lastTap = useRef<{ key: string; at: number } | null>(null)
+  const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const canReorder = grid.navigation !== null && n > 1
   const visibleCount = visib.filter(Boolean).length
 
@@ -357,6 +388,61 @@ export function GridTable(props: Props) {
     const cell = rows[r]?.cells[p]
     if (cell === undefined || !hasClass(cell.cls, 'grid_edit')) return
     setEditing({ r, p })
+  }
+
+  /** phones (GridEditing=double-click): a double tap or a long press on a cell edits it, as a
+   * double click does on desktop (a single tap on a relational link still follows it) */
+  const touchEdit = (r: number, p: number) => {
+    const key = `${r}:${p}`
+    const clear = () => {
+      if (pressTimer.current !== null) clearTimeout(pressTimer.current)
+      pressTimer.current = null
+    }
+    return {
+      onTouchStart: (e: TouchEvent) => {
+        if ((e.target as HTMLElement).closest('.cEdit') !== null || e.touches.length > 1) return
+        clear()
+        pressTimer.current = setTimeout(() => {
+          pressTimer.current = null
+          lastTap.current = { key, at: -1 }
+          startEdit(r, p)
+        }, 450)
+      },
+      // Chrome on Android turns a long press into a context menu (and cancels the touch)
+      onContextMenu: (e: ReactMouseEvent) => {
+        if ((e.target as HTMLElement).closest('.cEdit') !== null) return
+        e.preventDefault()
+        if (editing?.r === r && editing.p === p) return
+        clear()
+        lastTap.current = { key, at: -1 }
+        startEdit(r, p)
+      },
+      onTouchMove: clear,
+      onTouchCancel: clear,
+      onTouchEnd: (e: TouchEvent) => {
+        if ((e.target as HTMLElement).closest('.cEdit') !== null) return
+        clear()
+        const last = lastTap.current
+        const now = e.timeStamp
+        if (last !== null && last.key === key && last.at === -1) {
+          // the long press already opened the editor: no click from this touch
+          e.preventDefault()
+          lastTap.current = null
+          return
+        }
+        if (last !== null && last.key === key && now - last.at < 400) {
+          e.preventDefault()
+          lastTap.current = null
+          if (fkTimer.current !== null) {
+            clearTimeout(fkTimer.current)
+            fkTimer.current = null
+          }
+          startEdit(r, p)
+          return
+        }
+        lastTap.current = { key, at: now }
+      },
+    }
   }
 
   /** moveUp / moveDown / moveLeft / moveRight: the same column of the row above / below, or the
@@ -608,6 +694,68 @@ export function GridTable(props: Props) {
         </Link>
       </td>
     )
+    const deleteRow = () => {
+      void actions.deleteRow(row).then((ok) => {
+        if (!ok) return
+        const next = rows.filter((x) => x !== row)
+        setRows(next)
+        props.onRows(next)
+      })
+    }
+    if (rowMenu) {
+      const canDelete = row.del !== undefined || row.kill !== undefined
+      const menu = (
+        <td key="menu" className="bma-row-menu text-center d-print-none">
+          {(grid.displayParts.editLink || canDelete) && (
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger
+                className="bma-row-menu-btn"
+                aria-label={t('Actions')}
+                title={t('Actions')}
+              >
+                <EllipsisVertical className="size-4" aria-hidden />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {grid.displayParts.editLink && (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        to="/s/$server/db/$db/t/$table/$"
+                        params={{ server, db: grid.db, table: grid.table, _splat: 'edit' }}
+                        search={editSearch('update') as never}
+                      >
+                        <IconText icon="b_edit" text={t('Edit')} modeValue="both" />
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        to="/s/$server/db/$db/t/$table/$"
+                        params={{ server, db: grid.db, table: grid.table, _splat: 'edit' }}
+                        search={editSearch('insert') as never}
+                      >
+                        <IconText icon="b_insrow" text={t('Copy')} modeValue="both" />
+                      </Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                {canDelete && (
+                  <DropdownMenuItem className="delete_row" onSelect={deleteRow}>
+                    <IconText
+                      icon="b_drop"
+                      text={t(row.kill !== undefined ? 'Kill' : 'Delete')}
+                      modeValue="both"
+                    />
+                  </DropdownMenuItem>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </td>
+      )
+      const list = side === 'left' ? [checkbox, menu] : [menu, checkbox]
+      for (const x of list) if (x) out.push(x)
+      return out
+    }
     const del = (row.del !== undefined || row.kill !== undefined) && (
       <td key="del" className="text-center d-print-none ajax">
         <Button
@@ -615,14 +763,7 @@ export function GridTable(props: Props) {
           size="sm"
           // sized like the Edit / Copy links beside it
           className="delete_row requireConfirm ajax h-auto p-0 align-baseline text-[length:inherit]"
-          onClick={() => {
-            void actions.deleteRow(row).then((ok) => {
-              if (!ok) return
-              const next = rows.filter((x) => x !== row)
-              setRows(next)
-              props.onRows(next)
-            })
-          }}
+          onClick={deleteRow}
         >
           {row.kill !== undefined ? (
             <IconText icon="b_drop" text={t('Kill')} />
@@ -874,7 +1015,7 @@ export function GridTable(props: Props) {
     .join(' ')
 
   return (
-    <div ref={wrapRef} className="table-responsive-md relative overflow-x-auto">
+    <div ref={wrapRef} className="table-responsive-md bma-mscroll relative overflow-x-auto">
       {ghost !== null && reorder.current?.moved === true && (
         <div
           className="cCpy"
@@ -945,6 +1086,9 @@ export function GridTable(props: Props) {
                         data-type={col.dataType}
                         {...(cell.ol !== undefined ? { 'data-originallength': cell.ol } : {})}
                         onClick={() => grid.gridEdit === 'click' && startEdit(r, p)}
+                        {...(isMobile && grid.gridEdit === 'double-click' && hasClass(cell.cls, 'grid_edit')
+                          ? touchEdit(r, p)
+                          : {})}
                         onDoubleClick={(e) => {
                           if (grid.gridEdit !== 'double-click') return
                           if (fkTimer.current !== null) {

@@ -55,7 +55,7 @@ export function ResultGrid({ fields, rows }: { fields: Field[]; rows: Cell[][] }
   return (
     <div
       ref={parentRef}
-      className={`overflow-auto rounded border border-border ${virtual ? 'max-h-[70vh]' : ''}`}
+      className={`bma-mscroll overflow-auto rounded border border-border ${virtual ? 'max-h-[70vh]' : ''}`}
     >
       <table
         className="tnum w-max min-w-full border-collapse text-[13px]"
