@@ -1,4 +1,433 @@
 /*
  * Phone layout (admin): every rule here sits inside @media (max-width: 767px) (lib/mobile.ts), so the
  * desktop layout is untouched. Checked by tests/visual (desktop pixel baseline) and tests/e2e/mobile.
+<<<<<<< HEAD
  */
+=======
+ *
+ * Scope: `.bma-admin` (lib/mobileAdmin.tsx, a `display: contents` wrapper set by the admin routes:
+ * server pages, user accounts, status, export/import, operations, routines/events/triggers,
+ * Designer, ER diagram).
+ */
+
+/* the scroll hint of the wide tables: a fade at the edge that still has content (scroll-driven) */
+@property --bma-fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --bma-fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes bma-scroll-fade {
+  0% {
+    --bma-fade-start: 0px;
+    --bma-fade-end: 32px;
+  }
+  8% {
+    --bma-fade-start: 24px;
+  }
+  92% {
+    --bma-fade-end: 32px;
+  }
+  100% {
+    --bma-fade-start: 24px;
+    --bma-fade-end: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* ---- touch: controls at least 40px high, 16px text in fields (no zoom on focus in iOS) */
+  .bma-admin
+    :is(
+      input:not([type="checkbox"], [type="radio"], [type="hidden"], [type="range"], [type="color"]),
+      select:not([multiple], [size]),
+      textarea
+    ) {
+    min-height: 40px;
+    max-width: 100%;
+    font-size: 16px;
+  }
+  .bma-admin :is(select[multiple], select[size]) {
+    max-width: 100%;
+    font-size: 16px;
+  }
+  .bma-admin
+    :is(
+      button:not([role="checkbox"]),
+      [data-slot="button"],
+      a[class*="cursor-pointer"][class*="inline-flex"]
+    ) {
+    min-height: 40px;
+    min-width: 40px;
+  }
+  /* a link-styled button inside a sentence keeps its width */
+  .bma-admin.bma-admin [data-slot="button"][data-variant="link"] {
+    min-width: 0;
+  }
+  /* a select inside a label row shrinks to the row */
+  .bma-admin label:has(> select) {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .bma-admin label:has(> select) > select {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .bma-admin input:is([type="checkbox"], [type="radio"]) {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  .bma-admin button[role="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+  }
+  /* a box and its label: one tappable 40px row */
+  .bma-admin label:has(> input:is([type="checkbox"], [type="radio"])),
+  .bma-admin label:has(> button[role="checkbox"]) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+  }
+  .bma-admin input:is([type="checkbox"], [type="radio"]) + label,
+  .bma-admin button[role="checkbox"] + label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding-inline-start: 4px;
+  }
+  .bma-admin :is(div, li, p):has(> input:is([type="checkbox"], [type="radio"]):first-child + label),
+  .bma-admin .form-check,
+  .bma-admin .form-check-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ---- forms: label above a full-width field (the label/field grids of the admin pages) */
+  .bma-admin .grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .bma-admin .grid > :is(input, select, textarea),
+  .bma-admin .grid > div > :is(input:not([type="checkbox"], [type="radio"]), select, textarea) {
+    width: 100%;
+  }
+
+  /* ---- wide tables: their own horizontal scroller (the page does not scroll sideways) */
+  .bma-admin table:not(table table, .bma-mobile-cards, .designer_tab, .designer-pane, #layer_menu table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  @supports (animation-timeline: scroll()) {
+    .bma-admin table:not(table table, .bma-mobile-cards, .designer_tab, .designer-pane, #layer_menu table),
+    .bma-admin .overflow-x-auto {
+      animation: bma-scroll-fade linear both;
+      animation-timeline: scroll(self inline);
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        var(--bg) var(--bma-fade-start),
+        var(--bg) calc(100% - var(--bma-fade-end)),
+        transparent
+      );
+    }
+  }
+  /* an element that already scrolls sideways keeps its table as a table */
+  .bma-admin .overflow-x-auto > table {
+    display: table !important;
+    animation: none !important;
+    mask-image: none !important;
+  }
+  .bma-admin .overflow-x-auto {
+    max-width: 100%;
+  }
+  .bma-admin :is(pre, code) {
+    overflow-wrap: anywhere;
+  }
+  .bma-admin pre {
+    white-space: pre-wrap;
+  }
+
+  /* ---- card lists (user accounts): one card per row, each value after its column name */
+  .bma-admin table.bma-mobile-cards {
+    display: block;
+    width: 100%;
+  }
+  .bma-admin table.bma-mobile-cards > thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .bma-admin table.bma-mobile-cards > tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td {
+    border: 0;
+    padding: 2px 4px;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td:nth-child(2) {
+    flex: 1 1 0;
+    min-width: 0;
+    font-size: 15px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td[data-label] {
+    display: flex;
+    flex: 1 1 100%;
+    gap: 8px;
+    align-items: baseline;
+    text-align: start;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td[data-label]::before {
+    content: attr(data-label);
+    flex: 0 0 9rem;
+    color: var(--fg-muted);
+    font-weight: 600;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td:not(:first-child, :nth-child(2), [data-label]) {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    margin-inline-end: 12px;
+  }
+  .bma-admin table.bma-mobile-cards > tbody > tr > td:not(:first-child, :nth-child(2), [data-label]) > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  /* ---- sub-menus (status pills, user account tabs, preferences tabs), pagination */
+  .bma-admin :is(#statusPills a, .nav-link, .page-link) {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  /* ---- privilege matrices: each privilege a full-width 40px row, the whole row toggles it */
+  .bma-admin .item:has(> input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-block: 0;
+  }
+  .bma-admin .item:has(> input[type="checkbox"]) > label {
+    flex: 1;
+    min-height: 40px;
+  }
+  .bma-admin .bma-card-head:has(input[type="checkbox"]) {
+    min-height: 44px;
+  }
+
+  /* ---- settings forms (preferences): the option name and its help above the field */
+  .bma-admin .config-form .optbox > table {
+    display: block;
+    animation: none !important;
+    mask-image: none !important;
+  }
+  .bma-admin .config-form .optbox > table > tbody,
+  .bma-admin .config-form .optbox > table > tbody > tr {
+    display: block;
+  }
+  .bma-admin .config-form .optbox > table > tbody > tr {
+    padding-block: 6px;
+    border-top: 1px solid var(--border);
+  }
+  .bma-admin .config-form .optbox > table > tbody > tr > :is(th, td) {
+    display: block;
+    width: auto;
+    border: 0;
+    padding-inline: 0;
+  }
+  .bma-admin .config-form .optbox > table > tbody > tr > td {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+  }
+  .bma-admin
+    .config-form
+    .optbox
+    > table
+    > tbody
+    > tr
+    > td
+    > :is(input:not([type="checkbox"]), select, textarea) {
+    flex: 1 1 12rem;
+    width: auto !important;
+  }
+  .bma-admin
+    .config-form
+    .optbox
+    > table
+    > tbody
+    > tr
+    > td
+    > :is(.set-value, .restore-default, .userprefs-comment) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    opacity: 0.6;
+  }
+
+  /* ---- Designer: the side menu as a scrolling toolbar, the canvas in its own pan/pinch scroller */
+  .bma-admin .designer .designer_header {
+    position: static;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 2px;
+    overflow-x: auto;
+    margin-bottom: 6px;
+    overscroll-behavior-x: contain;
+  }
+  .bma-admin .designer .designer_header a {
+    flex-shrink: 0;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+  }
+  .bma-admin .designer .designer_header a .hidable {
+    display: none;
+  }
+  .bma-admin .designer-mobile-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin-bottom: 6px;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--info-bg);
+    color: var(--fg);
+    font-size: 13px;
+  }
+  .bma-admin .designer-mobile-bar p {
+    flex: 1 1 12rem;
+    margin: 0;
+  }
+  .bma-admin .designer #canvas_outer {
+    height: calc(100dvh - 260px);
+    min-height: 320px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    touch-action: pan-x pan-y;
+  }
+  .bma-admin .designer.content_fullscreen #canvas_outer {
+    height: calc(100dvh - 110px);
+  }
+  .bma-admin .designer #layer_menu {
+    width: min(240px, 80%);
+  }
+  .bma-admin .designer #layer_menu tr {
+    height: 40px;
+  }
+  .bma-admin .designer .panel {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-height: 60dvh;
+  }
+  .bma-admin .designer .trigger {
+    top: auto;
+    bottom: 48px;
+  }
+  .bma-admin .designer-pane {
+    max-width: calc(100vw - 16px);
+  }
+
+  /* ---- ER diagram: the canvas fills the phone screen under its toolbar */
+  .bma-admin [data-testid="er-canvas"] {
+    height: calc(100dvh - 330px);
+    min-height: 320px;
+  }
+
+  /* a Radix checkbox: a 40px hit area around the 20px box */
+  .bma-admin button[role="checkbox"] {
+    position: relative;
+  }
+  .bma-admin button[role="checkbox"]::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+  }
+
+  /* ---- routine / event / trigger editors (dialogs, outside .bma-admin): label above the field,
+     the routine parameters in their own sideways scroller */
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal, #routinesExecuteModal) table.rte_table,
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal, #routinesExecuteModal)
+    table.rte_table
+    > tbody,
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal) table.rte_table > tbody > tr,
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal)
+    table.rte_table
+    > tbody
+    > tr
+    > :is(td, th) {
+    display: block;
+    width: 100%;
+  }
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal) table.rte_table > tbody > tr {
+    padding-block: 4px;
+  }
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal)
+    table.rte_table
+    > tbody
+    > tr
+    > :is(td, th) {
+    padding-inline: 0;
+  }
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal, #routinesExecuteModal)
+    table:is(.routine_params_table, .rte_table .rte_table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  #routinesExecuteModal table.rte_table {
+    overflow-x: auto;
+  }
+  :is(#routinesEditorModal, #eventsEditorModal, #triggersEditorModal, #routinesExecuteModal)
+    :is(
+      input:not([type="checkbox"], [type="radio"], [type="hidden"]),
+      select:not([multiple], [size]),
+      textarea
+    ) {
+    min-height: 40px;
+    font-size: 16px;
+  }
+}
+>>>>>>> worktree-agent-aa1b1da52f3548f24

@@ -24,6 +24,7 @@ import { Users } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { api, errorMessage } from '../../../lib/api'
 import { pgettext, t, tProduct } from '../../../lib/i18n'
+import { useIsMobile } from '../../../lib/mobile'
 import { path } from '../../../lib/paths'
 import { qk } from '../../../lib/queryKeys'
 import { type Flash, takeFlash } from './flash.ts'
@@ -59,6 +60,9 @@ export function UsersPage({ server, search }: { server: number; search: UsersSea
   const [groupFor, setGroupFor] = useState<string | null>(null)
   const [locks, setLocks] = useState<Record<string, boolean>>({})
   const exporter = useExportPrivileges(server)
+  // phones: the accounts as cards, each value after its column name (styles/mobile-admin.css)
+  const mobile = useIsMobile()
+  const cell = (label: string) => (mobile ? { 'data-label': label } : {})
   const refresh = () => {
     void qc.invalidateQueries({ queryKey: qk.privileges(server) })
   }
@@ -200,7 +204,7 @@ export function UsersPage({ server, search }: { server: number; search: UsersSea
       )}
       {d.users !== null ? (
         <form name="usersForm" id="usersForm" onSubmit={(e) => e.preventDefault()}>
-          <Table zebra id="userRightsTable" className="w-auto">
+          <Table zebra id="userRightsTable" className={mobile ? 'bma-mobile-cards w-auto' : 'w-auto'}>
             <thead>
               <tr>
                 <th />
@@ -252,18 +256,22 @@ export function UsersPage({ server, search }: { server: number; search: UsersSea
                         )}
                       </label>
                     </td>
-                    <td>{u.host}</td>
-                    <td>
+                    <td {...cell(t('Host name'))}>{u.host}</td>
+                    <td {...cell(t('Password'))}>
                       {u.hasPassword ? t('Yes') : <span className="text-error">{t('No')}</span>}
                       {!u.hasSelectPriv && (
                         <Hint message={t('The selected user was not found in the privilege table.')} />
                       )}
                     </td>
-                    <td>
+                    <td {...cell(t('Global privileges'))}>
                       <PrivList items={u.privileges} />
                     </td>
-                    {d.gate.menusWork && <td className="usrGroup">{u.group}</td>}
-                    <td>{u.hasGrant ? t('Yes') : t('No')}</td>
+                    {d.gate.menusWork && (
+                      <td className="usrGroup" {...cell(t('User group'))}>
+                        {u.group}
+                      </td>
+                    )}
+                    <td {...cell(t('Grant'))}>{u.hasGrant ? t('Yes') : t('No')}</td>
                     {d.gate.isGrantUser && (
                       <td className="text-center">
                         <Link className="edit_user_anchor text-accent" {...edit}>

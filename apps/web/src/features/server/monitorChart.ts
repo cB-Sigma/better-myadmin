@@ -12,6 +12,7 @@ import {
   Tooltip,
 } from 'chart.js'
 import { translator } from '../../lib/i18n'
+import { isMobileViewport } from '../../lib/mobile'
 import { type Translate, axisKind, formatTick } from './monitor'
 
 Chart.register(
@@ -69,7 +70,11 @@ export function createMonitorChart(
           type: 'linear',
           min: o.range.min,
           max: o.range.max,
-          ticks: { maxTicksLimit: 5, callback: (v) => clock(Number(v)) },
+          ticks: {
+            maxTicksLimit: 5,
+            // phones: every other time label, five do not fit a full-width chart of a phone
+            callback: (v, i) => (i % 2 === 1 && isMobileViewport() ? '' : clock(Number(v))),
+          },
           // refreshChartGrid's labels: five ticks spread over the shown span, the last at its end
           afterBuildTicks: (axis) => {
             const step = (axis.max - axis.min) / 5
