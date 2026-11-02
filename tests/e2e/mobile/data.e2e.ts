@@ -113,7 +113,7 @@ test('browse: a tap opens the editor sheet; Save saves, Cancel leaves the value'
   const before = (await cell.innerText()).trim()
   // Cancel
   await cell.tap()
-  const sheet = page.getByRole('dialog', { name: /Edit: name/ })
+  const sheet = page.getByRole('dialog', { name: 'name' })
   await expect(sheet).toBeVisible()
   const vw = page.viewportSize()!.width
   const sb = await box(sheet)
@@ -128,6 +128,9 @@ test('browse: a tap opens the editor sheet; Save saves, Cancel leaves the value'
   expect((await box(editor)).height).toBeGreaterThanOrEqual(150)
   await editor.fill('not saved')
   await sheet.getByRole('button', { name: 'Cancel' }).tap()
+  await expect(sheet).toBeHidden()
+  // and stays closed (the tap on Cancel must not count as a long press on the cell behind it)
+  await page.waitForTimeout(700)
   await expect(sheet).toBeHidden()
   await expect(cell).toHaveText(before)
   // Enter makes a new line in the text area; Save saves
