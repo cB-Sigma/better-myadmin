@@ -435,7 +435,7 @@ function SqlForm({
             }
           >
             <div className="p-3">
-              <div className="flex gap-3">
+              <div className="bma-sql-editorrow flex gap-3">
                 <div className="min-w-0 flex-1">
                   <SqlEditor
                     handleRef={editor}
@@ -464,7 +464,7 @@ function SqlForm({
                   <div id="querymessage" className="min-h-5 text-xs text-fg-subtle" aria-live="polite">
                     {formatting && t('Formatting SQL…')}
                   </div>
-                  <div className="mt-1 flex flex-wrap gap-2" role="toolbar">
+                  <div className="bma-sql-toolbar mt-1 flex flex-wrap gap-2" role="toolbar">
                     {form.columns.length > 0 && (
                       <div className="flex gap-1" role="group">
                         <button
@@ -566,7 +566,7 @@ function SqlForm({
                   )}
                 </div>
                 {form.columns.length > 0 && (
-                  <div className="flex w-48 shrink-0 flex-col gap-2">
+                  <div className="bma-sql-fields flex w-48 shrink-0 flex-col gap-2">
                     <label className="sr-only" htmlFor="fieldsSelect">
                       {t('Columns')}
                     </label>
