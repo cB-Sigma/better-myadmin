@@ -92,7 +92,7 @@ function FindReplaceForm({
             </Button>
           >
             <PanelBody>
-              <table className="w-auto text-sm">
+              <table className="bma-mstack bma-mform w-auto text-sm">
                 <tbody>
                   <tr>
                     <td className="px-2 py-1">

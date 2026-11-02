@@ -1,4 +1,407 @@
 /*
  * Phone layout (data): every rule here sits inside @media (max-width: 767px) (lib/mobile.ts), so the
  * desktop layout is untouched. Checked by tests/visual (desktop pixel baseline) and tests/e2e/mobile.
+ *
+ *   wide tables     scroll sideways in their own box; the edge that has more content fades out
+ *                   (a scroll-driven animation, so it follows the finger without script), and the
+ *                   name column of the structure tables stays put while the rest scrolls
+ *   form tables     `.bma-mstack` (insert / edit, table search, zoom search, find and replace): each
+ *                   row becomes a card, a cell's `data-label` is printed above it, inputs fill the width
+ *   grids           compact row menu (GridTable, useIsMobile), touch-sized controls, 16px inputs
  */
+
+@property --bma-fade-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --bma-fade-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes bma-mscroll-fade {
+  from {
+    --bma-fade-start: 0px;
+    --bma-fade-end: 32px;
+  }
+  8% {
+    --bma-fade-start: 24px;
+  }
+  92% {
+    --bma-fade-end: 32px;
+  }
+  to {
+    --bma-fade-start: 24px;
+    --bma-fade-end: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* ---- horizontal scroll boxes -------------------------------------------------------------- */
+
+  /* tables that have their own scrolling wrapper */
+  .bma-mscroll,
+  #page_content div.overflow-x-auto:has(> :is(#structureTable, #tablestructure, .relationalTable)),
+  #page_content :is(.overflow-x-auto, .overflow-auto):has(> table.relationalTable),
+  /* tables without one become their own scroll box */
+    #page_content
+    :is(#table_index, #previewTable, #dataDisplay, #profiletable, #profilesummarytable, #index_columns),
+  #page_content table.relationalTable {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    animation: bma-mscroll-fade linear both;
+    animation-timeline: scroll(self inline);
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--bma-fade-start),
+      #000 calc(100% - var(--bma-fade-end)),
+      transparent 100%
+    );
+  }
+  #page_content
+    :is(#table_index, #previewTable, #dataDisplay, #profiletable, #profilesummarytable, #index_columns),
+  #page_content table.relationalTable {
+    display: block;
+    /* the modern and classic themes frame these tables with overflow: hidden */
+    overflow-x: auto !important;
+  }
+  /* overflow: hidden there would also make the table the box its sticky name column sticks in */
+  #page_content :is(#structureTable, #tablestructure) {
+    overflow: clip !important;
+  }
+  /* the structure tables keep their name column in view: no fade on the left there */
+  #page_content div.overflow-x-auto:has(> :is(#structureTable, #tablestructure)) {
+    mask-image: linear-gradient(to right, #000 calc(100% - var(--bma-fade-end)), transparent 100%);
+  }
+  :is(#structureTable, #tablestructure) > tbody > tr > th,
+  #structureTable > thead > tr > th:nth-child(2),
+  #tablestructure > thead > tr > th:nth-child(3) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: inherit;
+    box-shadow: 1px 0 0 var(--border);
+  }
+  #structureTable > thead > tr > th:nth-child(2),
+  #tablestructure > thead > tr > th:nth-child(3) {
+    background-color: var(--grid-header-bg);
+  }
+  /* modern: transparent rows on the table's own background, a muted header */
+  [data-theme="modern"] :is(#structureTable, #tablestructure) > tbody > tr > th {
+    background-color: var(--bg);
+  }
+  [data-theme="modern"] :is(#structureTable, #tablestructure) > tbody > tr:hover > th {
+    background-color: var(--bg-subtle);
+  }
+  [data-theme="modern"] #structureTable > thead > tr > th:nth-child(2),
+  [data-theme="modern"] #tablestructure > thead > tr > th:nth-child(3) {
+    background-color: var(--bg-inset);
+  }
+
+  /* db structure: the per-table actions (Browse, Structure, Search, Insert, Empty, Drop) as icons
+     (with ActionLinksMode text there is no icon, and the text stays) */
+  #structureTable td.print\:hidden .inline-flex:has(> svg) > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  #structureTable td.print\:hidden :is(a, button:not([role="checkbox"])),
+  #tablestructure td.print\:hidden :is(a, button:not([role="checkbox"])),
+  #table_index td :is(a, button) {
+    display: inline-flex;
+    min-width: 40px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+  :is(#structureTable, #tablestructure) td.print\:hidden:not(:first-child) {
+    padding: 0 !important;
+  }
+  :is(#structureTable, #tablestructure, #fieldsForm, #tablesForm) input[type="checkbox"],
+  #structureTable button[role="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---- data forms: 16px controls (no zoom on focus in iOS Safari), touch-sized ---------------- */
+
+  :is(
+      #insertForm,
+      #continueForm,
+      #sqlqueryform,
+      #tbl_search_form,
+      #zoom_search_form,
+      #find_replace_form,
+      #previewReplaceForm,
+      #db_search_form,
+      #tablesForm,
+      #fieldsForm,
+      #index_frm,
+      #tblchartform,
+      #resultsForm_grid,
+      [data-testid="relation-form"],
+      .sqlqueryresults
+    )
+    :is(
+      input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+      select,
+      textarea
+    ) {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  :is(
+      #insertForm,
+      #sqlqueryform,
+      #tbl_search_form,
+      #zoom_search_form,
+      #find_replace_form,
+      #db_search_form,
+      #index_frm,
+      #tblchartform,
+      [data-testid="relation-form"]
+    )
+    :is(
+      input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+      select:not([multiple])
+    ) {
+    min-height: 40px;
+  }
+
+  /* ---- results grid (browse, SQL results) ---------------------------------------------------- */
+
+  .table_results td.bma-row-menu {
+    padding: 0;
+    vertical-align: middle;
+  }
+  .table_results .bma-row-menu-btn {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    color: var(--accent);
+  }
+  .table_results .bma-row-menu-btn[data-state="open"] {
+    background: var(--bg-subtle);
+  }
+  .table_results td.text-center.d-print-none:has(> .multi_checkbox) {
+    vertical-align: middle;
+    min-width: 40px;
+  }
+  .table_results .multi_checkbox {
+    width: 20px;
+    height: 20px;
+  }
+  .table_results td {
+    vertical-align: middle;
+  }
+  /* a long press must not bring up the text callout over the cell being edited */
+  .table_results td.grid_edit {
+    -webkit-touch-callout: none;
+  }
+  .cEdit {
+    max-width: calc(100vw - 32px);
+  }
+  .cEdit :is(.edit_box, input, select, textarea) {
+    font-size: 16px;
+  }
+
+  /* navigation above and below the grid: wraps between whole controls, touch-sized */
+  table.navigation {
+    width: 100%;
+  }
+  table.navigation > tbody > tr {
+    gap: 4px 6px;
+  }
+  table.navigation td {
+    padding: 0;
+  }
+  table.navigation td:empty,
+  table.navigation .navigation_separator {
+    display: none;
+  }
+  table.navigation :is(button, select) {
+    min-height: 40px;
+  }
+  table.navigation select,
+  .sqlqueryresults :is(input:not([type="checkbox"]):not([type="radio"]), select) {
+    font-size: 16px;
+  }
+  table.navigation input[type="checkbox"],
+  .sqlqueryresults .checkall_box,
+  .sqlqueryresults input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ---- stacked form tables ------------------------------------------------------------------- */
+
+  /* a flex column, so the footer row (insert / edit's second Go) stays last as it is in a table */
+  table.bma-mstack {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+  }
+  table.bma-mstack > :is(tbody, tfoot) {
+    display: block;
+  }
+  table.bma-mstack > tfoot {
+    order: 1;
+  }
+  table.bma-mstack > thead > tr:not(:first-child),
+  table.bma-mstack:not(.insertRowTable) > thead {
+    display: none;
+  }
+  table.bma-mstack > thead,
+  table.bma-mstack > :is(thead, tfoot) > tr {
+    display: block;
+  }
+  table.bma-mstack > :is(thead, tfoot) > tr > th {
+    display: block;
+    border: 0;
+  }
+  table.bma-mstack > tbody > tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  table.bma-mstack > tbody > tr > :is(td, th) {
+    display: block;
+    padding: 0 !important;
+    border: 0 !important;
+    text-align: start !important;
+    white-space: normal;
+  }
+  table.bma-mstack > tbody > tr > th,
+  table.bma-mstack > tbody > tr > td.bma-mname {
+    font-weight: 600;
+  }
+  table.bma-mstack > tbody > tr > td.bma-mmeta {
+    color: var(--fg-muted);
+    font-size: 13px;
+  }
+  table.bma-mstack > tbody > tr > td:is(.bma-mfull, :only-child),
+  table.bma-mstack > tbody > tr > th:only-child,
+  table.bma-mstack.bma-mform > tbody > tr > td {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  table.bma-mstack [data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 2px;
+    color: var(--fg-muted);
+    font-size: 12px;
+    font-weight: normal;
+  }
+  table.bma-mstack td.bma-minline {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+  }
+  table.bma-mstack td.bma-minline::before {
+    display: inline;
+    margin: 0;
+  }
+  table.bma-mstack td:is(.bma-minline, .bma-mfull):empty {
+    display: none !important;
+  }
+  table.bma-mstack
+    :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select, textarea) {
+    max-width: 100%;
+    font-size: 16px;
+    min-height: 40px;
+  }
+  table.bma-mstack
+    :is(td.bma-mfull, .bma-mform td)
+    :is(
+      input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+      select:not([multiple]),
+      textarea
+    ) {
+    width: 100% !important;
+  }
+  table.bma-mstack td.bma-mfull > .inline-flex,
+  table.bma-mstack td.bma-mfull > span {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  table.bma-mstack td.bma-mfull > span > :is(input, textarea, select) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  table.bma-mstack button[role="checkbox"],
+  table.bma-mstack input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+  .insertRowTable.bma-mstack {
+    margin-block: 8px;
+  }
+  .insertRowTable.bma-mstack > :is(thead, tfoot) > tr > th {
+    padding: 6px 0;
+    text-align: end;
+  }
+  .insertRowTable.bma-mstack > thead > tr:first-child > th {
+    background: transparent;
+  }
+  #insertForm #actions_panel :is(select, button) {
+    min-height: 40px;
+  }
+  #insertForm #actions_panel select,
+  #continueForm input {
+    font-size: 16px;
+    max-width: 100%;
+  }
+
+  /* ---- SQL page --------------------------------------------------------------------------------- */
+
+  .bma-sql-editorrow {
+    flex-direction: column;
+  }
+  .bma-sql-fields {
+    width: 100%;
+    margin-bottom: 8px;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .bma-sql-fields > select {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-height: 7.5em;
+    font-size: 16px;
+  }
+  .bma-sql-fields > button {
+    flex: none;
+    min-width: 48px;
+  }
+  .bma-sql-toolbar > [role="group"] {
+    flex-wrap: wrap;
+  }
+  .bma-sql-toolbar button,
+  #sqlqueryform :is(button, input[type="submit"]) {
+    min-height: 40px;
+  }
+  #sqlqueryform :is(input:not([type="checkbox"]):not([type="radio"]), select) {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  #sqlqueryform input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+}
