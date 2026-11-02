@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { EditUserPage } from '../../../../features/server/privileges/EditUserPage'
+import { AdminPage } from '../../../../lib/mobileAdmin'
 import { qs } from '../../../../lib/search'
 
 /** pma: /server/privileges?username=&hostname=[&dbname=[&tablename=|&routinename=]] */
@@ -15,6 +16,10 @@ export const Route = createFileRoute('/s/$server/privileges/user')({
   component: function EditUser() {
     const { server } = Route.useParams()
     const search = Route.useSearch()
-    return <EditUserPage key={JSON.stringify(search)} server={server} search={search} />
+    return (
+      <AdminPage>
+        <EditUserPage key={JSON.stringify(search)} server={server} search={search} />
+      </AdminPage>
+    )
   },
 })

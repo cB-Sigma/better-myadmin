@@ -34,6 +34,7 @@ import {
 } from 'react'
 import { type DbRef, api, errorMessage } from '../../../lib/api'
 import { pgettext, t } from '../../../lib/i18n'
+import { useIsMobile } from '../../../lib/mobile'
 import { qk } from '../../../lib/queryKeys'
 import { path, dbBase, tableBase } from '../common'
 import {
@@ -72,6 +73,7 @@ import {
   offlineSaveToNewPage,
   offlineSaveToSelectedPage,
 } from './offlineDb'
+import { clampZoom, useTouchZoom } from './touchZoom'
 import './designer.css'
 
 /**
@@ -346,6 +348,17 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
   const targets = useRef<Array<[string, string]>>([])
   const [lines, setLines] = useState<DrawnLine[]>([])
   const [size, setSize] = useState({ w: 100, h: 100 })
+  // phones: the canvas pans in its own scroller and pinch-zooms (touchZoom.ts); 1 on desktop
+  const mobile = useIsMobile()
+  const outerRef = useRef<HTMLDivElement>(null)
+  const [zoom, setZoom] = useTouchZoom(outerRef, mobile)
+  const zoomFitted = useRef(false)
+  useEffect(() => {
+    const el = outerRef.current
+    if (!mobile || zoomFitted.current || size.w <= 100 || el === null) return
+    zoomFitted.current = true
+    setZoom(clampZoom(Math.min(1, el.clientWidth / size.w)))
+  }, [mobile, size.w, setZoom])
   const [dragging, setDragging] = useState<string | null>(null)
 
   // DesignerMove.reload / resizeOsnTab
@@ -408,7 +421,7 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
         setTables((ts) =>
           ts.map((x) => {
             if (x.key !== dragging) return x
-            const n = dragTo(x.raw, dx, dy, grid)
+            const n = dragTo(x.raw, dx / zoom, dy / zoom, grid)
             return { ...x, raw: n.raw, x: n.x, y: n.y }
           }),
         )
@@ -427,7 +440,7 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
       document.removeEventListener('mouseup', up)
       document.removeEventListener('mousedown', down)
     }
-  }, [dragging, grid, onRelation, onDisplay])
+  }, [dragging, grid, onRelation, onDisplay, zoom])
 
   // ---------------------------------------------------------------- positions and pages
   /** DesignerMove.getUrlPos(true): every table of the canvas */
@@ -746,8 +759,8 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
   /** canvasClick */
   const canvasClick = (e: ReactMouseEvent<SVGSVGElement>) => {
     const box = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - box.left
-    const y = e.clientY - box.top
+    const x = (e.clientX - box.left) / zoom
+    const y = (e.clientY - box.top) / zoom
     const hit = lines.find((l) => hitsStart(l.line, x, y))
     if (hit === undefined) {
       setUpdRel(null)
@@ -1095,7 +1108,34 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
         )}
       </div>
 
-      <div id="canvas_outer">
+      {mobile && (
+        <div className="designer-mobile-bar">
+          {/* i18n-new: Designer on a phone (BetterMyAdmin) */}
+          <p>{t('The Designer works best on a larger screen. Drag to scroll, pinch to zoom.')}</p>
+          <div className="flex items-center gap-2">
+            <Button
+              size="icon"
+              // i18n-new: ER diagram (X63) zoom button
+              aria-label={t('Zoom out')}
+              onClick={() => setZoom((z) => clampZoom(z / 1.25))}
+            >
+              −
+            </Button>
+            <span className="min-w-12 text-center tabular-nums" data-testid="designer-zoom">
+              {Math.round(zoom * 100)}%
+            </span>
+            <Button
+              size="icon"
+              // i18n-new: ER diagram (X63) zoom button
+              aria-label={t('Zoom in')}
+              onClick={() => setZoom((z) => clampZoom(z * 1.25))}
+            >
+              +
+            </Button>
+          </div>
+        </div>
+      )}
+      <div id="canvas_outer" ref={outerRef}>
         <form id="container-form" name="form1" onSubmit={(e) => e.preventDefault()}>
           {leftMenu && (
             <div id="layer_menu" className={right ? 'float-start' : ''}>
@@ -1153,7 +1193,7 @@ function Designer({ r, data }: { r: DbRef; data: DesignerResponse }) {
               </div>
             </div>
           )}
-          <div id="osn_tab" style={{ width: size.w, height: size.h }}>
+          <div id="osn_tab" style={{ width: size.w, height: size.h, ...(zoom !== 1 ? { zoom } : {}) }}>
             {/* biome-ignore lint/a11y/useKeyWithClickEvents: relation lines are picked with the mouse (phpMyAdmin's canvas) */}
             <svg
               id="canvas"

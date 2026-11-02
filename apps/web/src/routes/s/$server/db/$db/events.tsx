@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { EventsPage } from '../../../../../features/database/EventsPage'
+import { AdminPage } from '../../../../../lib/mobileAdmin'
 import { qs } from '../../../../../lib/search'
 
 /** pma: /events (and /events/export) */
@@ -14,6 +15,10 @@ export const Route = createFileRoute('/s/$server/db/$db/events')({
       q.edit_item !== undefined && q.edit_item !== '' && q.item_name !== undefined
         ? { name: q.item_name, type: '' }
         : null
-    return <EventsPage key={db} server={server} db={db} editItem={editItem} />
+    return (
+      <AdminPage>
+        <EventsPage key={db} server={server} db={db} editItem={editItem} />
+      </AdminPage>
+    )
   },
 })

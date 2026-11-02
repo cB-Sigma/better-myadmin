@@ -1,6 +1,7 @@
 /*
  * Phone layout (data): every rule here sits inside @media (max-width: 767px) (lib/mobile.ts), so the
  * desktop layout is untouched. Checked by tests/visual (desktop pixel baseline) and tests/e2e/mobile.
+<<<<<<< HEAD
  *
  *   wide tables     scroll sideways in their own box; the edge that has more content fades out
  *                   (a scroll-driven animation, so it follows the finger without script), and the
@@ -413,3 +414,6 @@
     height: 20px;
   }
 }
+=======
+ */
+>>>>>>> worktree-agent-aa1b1da52f3548f24
