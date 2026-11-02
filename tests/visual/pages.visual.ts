@@ -3,7 +3,7 @@ import { type Page, expect, test } from '@playwright/test'
 /**
  * The main pages on the acme_store demo database, at desktop and phone size (playwright.config.ts).
  * Pages with live numbers (Status, Processes, Monitor, Dashboard) are left out; query timings are
- * masked.
+ * masked and the Designer's canvas hidden.
  */
 const DB = 'acme_store'
 const PAGES: Array<[name: string, path: string]> = [
@@ -53,6 +53,13 @@ for (const [name, path] of PAGES) {
     await page.goto(path)
     await page.waitForLoadState('networkidle')
     await page.waitForTimeout(400)
+    // the Designer places tables without saved positions at random (phpMyAdmin too), and its canvas
+    // grows to fit them: hidden tables and a fixed canvas keep the rest of the page comparable
+    if (name === 'db-designer')
+      await page.addStyleTag({
+        content:
+          '.designer_tab, #canvas { display: none !important; } #canvas_outer { height: 600px !important; overflow: hidden !important; }',
+      })
     await expect(page).toHaveScreenshot(`${name}.png`, {
       fullPage: true,
       mask: [page.getByText(/Query took [\d.]+ seconds/), page.getByText(/^Last update:/)],
