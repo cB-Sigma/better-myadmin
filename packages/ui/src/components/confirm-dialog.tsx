@@ -105,6 +105,8 @@ export function ConfirmDialog(props: ConfirmDialogProps) {
         <AlertDialog.Overlay className="fixed inset-0 z-50 bg-black/40" />
         <AlertDialog.Content
           id="functionConfirmModal"
+          // phones: a bottom sheet (apps/web/src/styles/mobile-shell.css)
+          data-bma-confirm=""
           className="fixed top-[12vh] left-1/2 z-50 w-[calc(100%-2rem)] max-w-lg -translate-x-1/2 overflow-hidden rounded-(--radius) border border-border-strong bg-bg-elevated text-fg shadow-xl"
         >
           <div className="border-b border-border bg-bg-subtle px-3 py-2">

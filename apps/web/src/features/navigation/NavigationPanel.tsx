@@ -12,12 +12,16 @@ import {
   Link as LinkIcon,
   LoaderCircle,
   LogOut,
+  Menu,
   RefreshCw,
   Settings,
   Unlink,
+  X,
 } from 'lucide-react'
 import {
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
+  type TouchEvent as ReactTouchEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -27,6 +31,7 @@ import {
 } from 'react'
 import { api } from '../../lib/api'
 import { t } from '../../lib/i18n'
+import { useIsMobile } from '../../lib/mobile'
 import { qk } from '../../lib/queryKeys'
 import { PageSettingsForm } from '../preferences/PageSettings.tsx'
 import { useLogout } from '../shell/UserMenu'
@@ -128,6 +133,9 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
   // li.new_view a.ajax: "New" under Views opens the create view dialog over the page
   const [newViewDb, setNewViewDb] = useState<string | null>(null)
   const [width, setWidth] = useState(() => readWidth(DEFAULT_WIDTH))
+  // phones: the panel is an off-canvas drawer over the page, its width preference untouched
+  const mobile = useIsMobile()
+  const drawer = useDrawer(mobile, pathname)
   const lastWidth = useRef(0)
   const appliedConfigWidth = useRef(false)
   useEffect(() => {
@@ -195,13 +203,22 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
   }, [])
 
   return (
-    <div ref={panelRef} className="relative flex shrink-0 print:hidden">
+    <div
+      ref={panelRef}
+      className={mobile ? 'bma-nav-drawer print:hidden' : 'relative flex shrink-0 print:hidden'}
+      {...(mobile ? { 'data-open': drawer.open } : {})}
+    >
+      {mobile && drawer.open && (
+        // biome-ignore lint/a11y/useKeyWithClickEvents: the backdrop is a pointer target; Escape and the toggle close it from the keyboard
+        <div className="bma-nav-backdrop" aria-hidden onClick={drawer.close} />
+      )}
       <aside
         id="pma_navigation"
         className="flex flex-col overflow-hidden border-r border-border bg-bg-subtle"
-        style={{ width }}
         aria-label={t('Navigation panel')}
-        hidden={width === 0}
+        {...(mobile
+          ? { inert: !drawer.open, ...drawer.asideHandlers }
+          : { style: { width }, hidden: width === 0 })}
       >
         <NavHeader server={server} settings={settings} onReload={reload} />
         {settings !== undefined && auth.data !== undefined && (
@@ -291,25 +308,88 @@ export function NavigationPanel({ server, quickWarp, nodeControls }: NavigationP
           />
         )}
       </aside>
-      <Resizer width={width} onResize={setWidth} onDone={(w) => saveWidth(w, server)} />
-      <button
-        type="button"
-        id="pma_navigation_collapser"
-        className="absolute top-1 z-10 flex h-5 w-4 items-center justify-center rounded border border-border bg-bg-subtle text-xs text-fg-muted hover:text-fg"
-        style={{ left: Math.max(width - 18, 3) }}
-        title={width === 0 ? t('Show panel') : t('Hide panel')}
-        onClick={() => {
-          // pma: ResizeHandler.collapse — toggles between 0 and the previous width (240 when unknown)
-          const panelWidth = width === 0 && lastWidth.current === 0 ? DEFAULT_WIDTH : lastWidth.current
-          lastWidth.current = width
-          setWidth(panelWidth)
-          saveWidth(panelWidth, server)
-        }}
-      >
-        {width === 0 ? '→' : '←'}
-      </button>
+      {mobile ? (
+        <button
+          type="button"
+          id="pma_navigation_collapser"
+          className="bma-nav-toggle"
+          title={drawer.open ? t('Hide panel') : t('Show panel')}
+          aria-label={drawer.open ? t('Hide panel') : t('Show panel')}
+          aria-expanded={drawer.open}
+          aria-controls="pma_navigation"
+          onClick={drawer.toggle}
+        >
+          {drawer.open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
+        </button>
+      ) : (
+        <>
+          <Resizer width={width} onResize={setWidth} onDone={(w) => saveWidth(w, server)} />
+          <button
+            type="button"
+            id="pma_navigation_collapser"
+            className="absolute top-1 z-10 flex h-5 w-4 items-center justify-center rounded border border-border bg-bg-subtle text-xs text-fg-muted hover:text-fg"
+            style={{ left: Math.max(width - 18, 3) }}
+            title={width === 0 ? t('Show panel') : t('Hide panel')}
+            onClick={() => {
+              // pma: ResizeHandler.collapse — toggles between 0 and the previous width (240 when unknown)
+              const panelWidth = width === 0 && lastWidth.current === 0 ? DEFAULT_WIDTH : lastWidth.current
+              lastWidth.current = width
+              setWidth(panelWidth)
+              saveWidth(panelWidth, server)
+            }}
+          >
+            {width === 0 ? '→' : '←'}
+          </button>
+        </>
+      )}
     </div>
   )
+}
+
+/**
+ * The phone drawer: closed at first, toggled by the top bar's button, closed again by a navigation
+ * (a link in the panel or any change of page), a tap on the backdrop, Escape or a swipe to the left.
+ */
+function useDrawer(mobile: boolean, pathname: string) {
+  const [open, setOpen] = useState(false)
+  const close = useCallback(() => setOpen(false), [])
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new page closes the drawer
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname, mobile])
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape' || e.defaultPrevented) return
+      // a dialog opened from the panel (settings, create view) handles its own Escape
+      if (document.querySelector('[role="dialog"], [role="alertdialog"]') !== null) return
+      setOpen(false)
+      document.getElementById('pma_navigation_collapser')?.focus()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open])
+  const touch = useRef<{ x: number; y: number } | null>(null)
+  const asideHandlers = {
+    onClick: (e: ReactMouseEvent) => {
+      // the panel's links (the tree pushes its own history entries): the page shows, the drawer goes
+      const a = (e.target as Element).closest('a[href]')
+      if (a !== null && a.getAttribute('target') === null) setOpen(false)
+    },
+    onTouchStart: (e: ReactTouchEvent) => {
+      const p = e.touches[0]
+      touch.current = p === undefined || e.touches.length > 1 ? null : { x: p.clientX, y: p.clientY }
+    },
+    onTouchEnd: (e: ReactTouchEvent) => {
+      const start = touch.current
+      const p = e.changedTouches[0]
+      touch.current = null
+      if (start === null || p === undefined) return
+      const dx = p.clientX - start.x
+      if (dx < -60 && Math.abs(dx) > 2 * Math.abs(p.clientY - start.y)) setOpen(false)
+    },
+  }
+  return { open, close, toggle: () => setOpen((o) => !o), asideHandlers }
 }
 
 /** pma: #pma_navigation_resizer + ResizeHandler.mousedown/mousemove/mouseup */
