@@ -107,21 +107,40 @@ test('browse: Delete from the row menu asks and deletes', async ({ page }) => {
   await expect.poll(() => value(`SELECT COUNT(*) FROM ${DB}.t`)).toBe(before - 1)
 })
 
-test('browse: a double tap edits a cell, a single tap does not', async ({ page }) => {
+test('browse: a tap opens the editor sheet; Save saves, Cancel leaves the value', async ({ page }) => {
   await page.goto(`/s/1/db/${DB}/t/t/browse`)
   const cell = page.locator('table.table_results tbody tr').nth(1).locator('td[data-type="string"]').first()
+  const before = (await cell.innerText()).trim()
+  // Cancel
   await cell.tap()
-  await page.waitForTimeout(500)
-  await expect(page.locator('.cEdit')).toHaveCount(0)
-  await cell.tap()
-  await cell.tap()
-  const editor = page.locator('.cEdit .edit_box')
-  await expect(editor).toBeVisible()
+  const sheet = page.getByRole('dialog', { name: /Edit: name/ })
+  await expect(sheet).toBeVisible()
+  const vw = page.viewportSize()!.width
+  const sb = await box(sheet)
+  expect(sb.x).toBeLessThanOrEqual(0)
+  expect(sb.width).toBeGreaterThanOrEqual(vw)
+  const editor = sheet.locator('.edit_box')
+  await expect(editor).toHaveValue(before)
+  expect(await editor.evaluate((e) => e.tagName)).toBe('TEXTAREA')
   expect(
     await editor.evaluate((e) => Number.parseFloat(getComputedStyle(e).fontSize)),
   ).toBeGreaterThanOrEqual(16)
+  expect((await box(editor)).height).toBeGreaterThanOrEqual(150)
+  await editor.fill('not saved')
+  await sheet.getByRole('button', { name: 'Cancel' }).tap()
+  await expect(sheet).toBeHidden()
+  await expect(cell).toHaveText(before)
+  // Enter makes a new line in the text area; Save saves
+  await cell.tap()
+  await expect(sheet).toBeVisible()
   await editor.fill('tapped')
   await editor.press('Enter')
+  await expect(sheet).toBeVisible()
+  await editor.fill('tapped')
+  const save = sheet.getByRole('button', { name: 'Save' })
+  expect((await box(save)).height).toBeGreaterThanOrEqual(40)
+  await save.tap()
+  await expect(sheet).toBeHidden()
   await expect(page.getByText('1 row affected.')).toBeVisible()
   await expect.poll(() => value(`SELECT COUNT(*) FROM ${DB}.t WHERE name = 'tapped'`)).toBe(1)
 })

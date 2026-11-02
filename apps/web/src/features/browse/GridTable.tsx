@@ -28,6 +28,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { createPortal } from 'react-dom'
 import { api } from '../../lib/api'
 import { useConfig } from '../../lib/config'
 import { t } from '../../lib/i18n'
@@ -1085,7 +1086,18 @@ export function GridTable(props: Props) {
                         data-decimals={col.decimals}
                         data-type={col.dataType}
                         {...(cell.ol !== undefined ? { 'data-originallength': cell.ol } : {})}
-                        onClick={() => grid.gridEdit === 'click' && startEdit(r, p)}
+                        onClick={(e) => {
+                          if (grid.gridEdit === 'click') startEdit(r, p)
+                          // phones: one tap opens the editor sheet (not on a link or a control in the cell)
+                          else if (
+                            isMobile &&
+                            grid.gridEdit === 'double-click' &&
+                            (e.target as HTMLElement).closest(
+                              'a, button, input, select, textarea, .cEdit',
+                            ) === null
+                          )
+                            startEdit(r, p)
+                        }}
                         {...(isMobile && grid.gridEdit === 'double-click' && hasClass(cell.cls, 'grid_edit')
                           ? touchEdit(r, p)
                           : {})}
@@ -1299,6 +1311,8 @@ function CellEditor(props: {
           ? 'datetime'
           : null
   const { FirstDayOfCalendar } = useUiSettings()
+  /** phones: the editor is a full-screen sheet (text area, Cancel / Save) instead of a box over the cell */
+  const sheet = useIsMobile()
   const [typed, setTyped] = useState(0)
   // datepicker('show') right away (makegrid showEditArea)
   const [pickerShown, setPickerShown] = useState(true)
@@ -1324,7 +1338,9 @@ function CellEditor(props: {
   // header over the row. The wrapper grows by the overflow instead (and never scrolls vertically).
   // Likewise to the right, where a frame only as wide as a narrow table (the classic, modern and
   // native themes) would cut off a date picker wider than the cell.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: measured once per opened editor
   useEffect(() => {
+    if (sheet) return
     const ed = ref.current
     const wrap = ed?.closest<HTMLElement>('.table-responsive-md')
     if (ed === null || ed === undefined || wrap === null || wrap === undefined) return
@@ -1349,10 +1365,11 @@ function CellEditor(props: {
     }
   }, [])
   // showEditCell: the edit box takes the cell's outer size; the cursor goes to the end of the value
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once per opened editor
   useEffect(() => {
     const b = boxRef.current
     if (b === null) return
-    const td = b.closest('td')
+    const td = sheet ? null : b.closest('td')
     if (td !== null) {
       b.style.width = `${td.offsetWidth}px`
       b.style.height = `${td.offsetHeight}px`
@@ -1474,7 +1491,7 @@ function CellEditor(props: {
       e.preventDefault()
       e.nativeEvent.stopImmediatePropagation()
       props.onCancel()
-    } else if (e.key === 'Enter' && !(textarea && e.shiftKey)) {
+    } else if (e.key === 'Enter' && !(textarea && (e.shiftKey || sheet))) {
       e.preventDefault()
       save()
     } else if (!textEditable && e.key !== 'Tab') {
@@ -1507,138 +1524,171 @@ function CellEditor(props: {
       }}
     />
   )
-  return (
-    <div
-      ref={ref}
-      className="cEdit start-0 top-0"
-      onClick={(e) => e.stopPropagation()}
-      onDoubleClick={(e) => e.stopPropagation()}
-      onKeyDown={(e) => e.stopPropagation()}
-    >
-      {box}
-      <div className="edit_area">
-        {cell.fk !== undefined && (
-          <div className="goto_link">
-            {t('Go to link:')} <span>{cell.t}</span>
-          </div>
-        )}
-        {props.edited && (hasClass(cell.cls, 'truncated') || hasClass(cell.cls, 'transformed')) && (
-          // a re-opened unsaved truncated value: a textarea in the edit area mirrors the text box
-          <Textarea
-            value={value}
-            onChange={(e) => {
-              setValue(e.target.value)
-              setNullChecked(false)
-            }}
-          />
-        )}
-        {pickerKind !== null && (
-          // showOn 'button': the trigger after the edit box shows and hides the picker
-          <button
-            type="button"
-            className="ui-datepicker-trigger inline-flex cursor-pointer items-center p-0.5"
-            title="..."
-            aria-label="..."
-            onClick={() => setPickerShown((v) => !v)}
-          >
-            <PmaIcon name="b_calendar" alt="" />
-          </button>
-        )}
-        {pickerKind !== null && pickerShown && pickerCanShow(pickerKind, value) && (
-          // the picker shown in the edit area (#ui-datepicker-div moved into cEdit, position: relative);
-          // a typed value is read again (datepicker('show') on keyup), an invalid one hides it
-          <DateTimeCalendar
-            key={typed}
-            inline
-            kind={pickerKind}
-            value={value}
-            options={{ ...pickerOptionsFor(pickerKind, column.decimals, FirstDayOfCalendar), hourMax: 23 }}
-            {...(pickerTip(pickerKind) !== undefined ? { note: pickerTip(pickerKind) as string } : {})}
-            onChange={(v) => {
-              setValue(v)
-              setNullChecked(false)
-            }}
-          />
-        )}
-        {!notNull && (
-          // makegrid: <div class="null_div"><label>NULL:<input type="checkbox"></label></div>
-          <div className="null_div">
-            <label className="flex items-center gap-1">
-              NULL:
-              <input
-                type="checkbox"
-                checked={nullChecked}
-                onChange={(e) => {
-                  setNullChecked(e.target.checked)
-                  if (e.target.checked) {
-                    setValue('')
-                    setSelected([])
-                  }
-                }}
-              />
-            </label>
-          </div>
-        )}
-        {loading && <span className="text-fg-subtle">{t('Loading…')}</span>}
-        {options !== null && !browseForeign && (
-          <NativeSelect
-            multiple={isSet}
-            size={isSet ? Math.min(options.length, 10) : undefined}
-            className={isSet ? 'resize-vertical' : undefined}
-            value={isSet ? selected : (selected[0] ?? '')}
-            onChange={(e) => {
-              if (isSet) {
-                const vals = [...e.target.selectedOptions].map((o) => o.value)
-                setSelected(vals)
-                setValue(vals.join(','))
-              } else {
-                setSelected([e.target.value])
-                setValue(e.target.value)
-              }
-              setNullChecked(false)
-            }}
-          >
-            {options.map((o, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: separators share the empty value
-              <option key={i} value={o.value}>
-                {o.label === '' ? ' ' : o.label}
-              </option>
-            ))}
-          </NativeSelect>
-        )}
-        {browseForeign && (
-          <>
-            <Button
-              variant="link"
-              size="sm"
-              className="browse_foreign h-auto p-0"
-              onClick={() => {
-                setNullChecked(false)
-                setForeign(true)
+  const area = (
+    <div className="edit_area">
+      {cell.fk !== undefined && (
+        <div className="goto_link">
+          {t('Go to link:')} <span>{cell.t}</span>
+        </div>
+      )}
+      {props.edited && (hasClass(cell.cls, 'truncated') || hasClass(cell.cls, 'transformed')) && (
+        // a re-opened unsaved truncated value: a textarea in the edit area mirrors the text box
+        <Textarea
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value)
+            setNullChecked(false)
+          }}
+        />
+      )}
+      {pickerKind !== null && (
+        // showOn 'button': the trigger after the edit box shows and hides the picker
+        <button
+          type="button"
+          className="ui-datepicker-trigger inline-flex cursor-pointer items-center p-0.5"
+          title="..."
+          aria-label="..."
+          onClick={() => setPickerShown((v) => !v)}
+        >
+          <PmaIcon name="b_calendar" alt="" />
+        </button>
+      )}
+      {pickerKind !== null && pickerShown && pickerCanShow(pickerKind, value) && (
+        // the picker shown in the edit area (#ui-datepicker-div moved into cEdit, position: relative);
+        // a typed value is read again (datepicker('show') on keyup), an invalid one hides it
+        <DateTimeCalendar
+          key={typed}
+          inline
+          kind={pickerKind}
+          value={value}
+          options={{ ...pickerOptionsFor(pickerKind, column.decimals, FirstDayOfCalendar), hourMax: 23 }}
+          {...(pickerTip(pickerKind) !== undefined ? { note: pickerTip(pickerKind) as string } : {})}
+          onChange={(v) => {
+            setValue(v)
+            setNullChecked(false)
+          }}
+        />
+      )}
+      {!notNull && (
+        // makegrid: <div class="null_div"><label>NULL:<input type="checkbox"></label></div>
+        <div className="null_div">
+          <label className="flex items-center gap-1">
+            NULL:
+            <input
+              type="checkbox"
+              checked={nullChecked}
+              onChange={(e) => {
+                setNullChecked(e.target.checked)
+                if (e.target.checked) {
+                  setValue('')
+                  setSelected([])
+                }
               }}
-            >
-              {t('Browse foreign values')}
+            />
+          </label>
+        </div>
+      )}
+      {loading && <span className="text-fg-subtle">{t('Loading…')}</span>}
+      {options !== null && !browseForeign && (
+        <NativeSelect
+          multiple={isSet}
+          size={isSet ? Math.min(options.length, 10) : undefined}
+          className={isSet ? 'resize-vertical' : undefined}
+          value={isSet ? selected : (selected[0] ?? '')}
+          onChange={(e) => {
+            if (isSet) {
+              const vals = [...e.target.selectedOptions].map((o) => o.value)
+              setSelected(vals)
+              setValue(vals.join(','))
+            } else {
+              setSelected([e.target.value])
+              setValue(e.target.value)
+            }
+            setNullChecked(false)
+          }}
+        >
+          {options.map((o, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: separators share the empty value
+            <option key={i} value={o.value}>
+              {o.label === '' ? ' ' : o.label}
+            </option>
+          ))}
+        </NativeSelect>
+      )}
+      {browseForeign && (
+        <>
+          <Button
+            variant="link"
+            size="sm"
+            className="browse_foreign h-auto p-0"
+            onClick={() => {
+              setNullChecked(false)
+              setForeign(true)
+            }}
+          >
+            {t('Browse foreign values')}
+          </Button>
+          {foreign && (
+            <ForeignBrowser
+              server={server}
+              db={grid.db}
+              table={grid.table}
+              field={column.name}
+              data={value}
+              onClose={() => setForeign(false)}
+              // span.curr_value change: the picked key goes to the text box
+              onPick={(key) => {
+                setValue(key)
+                setNullChecked(false)
+                setForeign(false)
+              }}
+            />
+          )}
+        </>
+      )}
+      {!sheet && <div className="cell_edit_hint">{t(MSG.cellEditHint).replace('<br>', ' ')}</div>}
+    </div>
+  )
+  const stop = {
+    onClick: (e: ReactMouseEvent) => e.stopPropagation(),
+    onDoubleClick: (e: ReactMouseEvent) => e.stopPropagation(),
+    onKeyDown: (e: React.KeyboardEvent) => e.stopPropagation(),
+  }
+  if (sheet)
+    return createPortal(
+      <div className="bma-cell-sheet-backdrop">
+        <div
+          ref={ref}
+          className="cEdit bma-cell-sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${t('Edit')}: ${column.name}`}
+          {...stop}
+        >
+          <div className="bma-cell-sheet-head">
+            <span className="bma-cell-sheet-title">{column.name}</span>
+            <span className="bma-cell-sheet-type">{column.dataType}</span>
+          </div>
+          <div className="bma-cell-sheet-body">
+            {box}
+            {area}
+          </div>
+          <div className="bma-cell-sheet-foot">
+            <Button type="button" onClick={props.onCancel}>
+              {t('Cancel')}
             </Button>
-            {foreign && (
-              <ForeignBrowser
-                server={server}
-                db={grid.db}
-                table={grid.table}
-                field={column.name}
-                data={value}
-                onClose={() => setForeign(false)}
-                // span.curr_value change: the picked key goes to the text box
-                onPick={(key) => {
-                  setValue(key)
-                  setNullChecked(false)
-                  setForeign(false)
-                }}
-              />
-            )}
-          </>
-        )}
-        <div className="cell_edit_hint">{t(MSG.cellEditHint).replace('<br>', ' ')}</div>
-      </div>
+            <Button type="button" variant="primary" disabled={loading} onClick={save}>
+              {t('Save')}
+            </Button>
+          </div>
+        </div>
+      </div>,
+      document.body,
+    )
+  return (
+    <div ref={ref} className="cEdit start-0 top-0" {...stop}>
+      {box}
+      {area}
     </div>
   )
 }

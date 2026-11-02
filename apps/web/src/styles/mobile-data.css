@@ -218,6 +218,102 @@
   .cEdit {
     max-width: calc(100vw - 32px);
   }
+  /* GridTable's CellEditor on phones: a full-screen sheet (portalled to body) with the value in a
+     large text area, its options below, Cancel / Save at the bottom */
+  .bma-cell-sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgb(0 0 0 / 0.4);
+  }
+  .cEdit.bma-cell-sheet {
+    position: fixed;
+    inset: env(safe-area-inset-top) 0 0 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: var(--bg);
+    color: var(--fg);
+    box-shadow: none;
+  }
+  .bma-cell-sheet-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .bma-cell-sheet-title {
+    min-width: 0;
+    overflow: hidden;
+    font-size: 17px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .bma-cell-sheet-type {
+    color: var(--fg-subtle);
+    font-size: 13px;
+  }
+  .bma-cell-sheet-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    padding: 12px 16px;
+    overflow-y: auto;
+  }
+  .cEdit.bma-cell-sheet .edit_box {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 48px;
+    padding: 10px 12px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .cEdit.bma-cell-sheet textarea.edit_box {
+    min-height: 40svh;
+    resize: vertical;
+  }
+  .cEdit.bma-cell-sheet .edit_area {
+    position: static;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .bma-cell-sheet .null_div label {
+    min-height: 40px;
+  }
+  .bma-cell-sheet .edit_area select {
+    width: 100%;
+  }
+  .bma-cell-sheet-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+  }
+  .bma-cell-sheet-foot > button {
+    min-width: 96px;
+    min-height: 44px;
+  }
   .cEdit :is(.edit_box, input, select, textarea) {
     font-size: 16px;
   }
