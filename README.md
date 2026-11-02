@@ -87,6 +87,11 @@ place, and the live dashboard in one column. Desktop pages are pixel-for-pixel w
 
 <img src="docs/screenshots/mobile.jpg" alt="BetterMyAdmin on three phones: navigation drawer, browsing a table, live dashboard in the modern dark theme" width="100%">
 
+Writing SQL on a phone: autocomplete as you type, **Go** always at the bottom of the screen, the
+query options folded under **Options**, and the results with the grid scrolling in place.
+
+<img src="docs/screenshots/mobile-sql.jpg" alt="The SQL page on three phones: typing a query with autocomplete, the query options opened, the results" width="100%">
+
 ## AI agents and MCP
 
 Agents don't need the web interface. Set `AgentApi: true` (or `BMA__AgentApi=true`), and

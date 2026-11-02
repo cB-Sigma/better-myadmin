@@ -173,9 +173,55 @@ const SHOTS: Shot[] = [
   },
 ]
 
-/** Phone captures (iPhone 13 size), shown side by side in one picture: docs/screenshots/mobile.jpg */
+/** Phone captures (iPhone 13 size), each set shown side by side in one picture: docs/screenshots/<set>.jpg */
 const PHONE = { width: 390, height: 844 }
-const PHONES: Array<Omit<Shot, 'name' | 'title'>> = [
+type PhoneShot = Omit<Shot, 'name' | 'title'>
+const SPENDERS =
+  'SELECT c.first_name, c.last_name, c.city, COUNT(o.id) AS orders, SUM(o.total) AS spent FROM customers c JOIN orders o ON o.customer_id = c.id GROUP BY c.id ORDER BY spent '
+
+/** The SQL page of acme_store with the top-spenders query typed on the phone keyboard. */
+async function phoneQuery(page: Page) {
+  await page.goto(`/s/1/db/${DB}/sql`)
+  await page.locator('#sqlquery .cm-content').first().tap()
+  await page.keyboard.insertText(SPENDERS)
+  // the last word typed key by key: the autocomplete list shows
+  await page.keyboard.type('DESC')
+  await page.waitForTimeout(500)
+}
+
+const PHONE_SQL: PhoneShot[] = [
+  { run: phoneQuery },
+  {
+    run: async (page) => {
+      await phoneQuery(page)
+      await page.keyboard.press('Escape')
+      await page.getByRole('button', { name: 'Options' }).tap()
+      await page.waitForTimeout(300)
+    },
+  },
+  {
+    run: async (page) => {
+      await phoneQuery(page)
+      await page.keyboard.press('Escape')
+      await page.locator('#button_submit_query').tap()
+      await page.locator('table.table_results tbody tr').first().waitFor()
+      // the query's message at the top (under the pinned tab menu), the rows under it
+      await page
+        .getByText(/Showing rows/)
+        .first()
+        .evaluate((e) => {
+          const box = document.getElementById('page_scroll')
+          const menu = document.querySelector('.menucontainer')?.getBoundingClientRect().bottom ?? 0
+          if (box !== null) box.scrollTop += e.getBoundingClientRect().top - menu - 12
+        })
+      // no hover highlight where Go was tapped
+      await page.mouse.move(2, 2)
+      await page.waitForTimeout(400)
+    },
+  },
+]
+
+const PHONES: PhoneShot[] = [
   {
     run: async (page) => {
       await page.goto(`/s/1/db/${DB}/structure`)
@@ -325,9 +371,13 @@ try {
     await fctx.close()
     console.log(`docs/screenshots/${shot.name}.jpg`)
   }
-  if (wanted.size === 0 || wanted.has('mobile')) {
+  for (const [set, shots] of [
+    ['mobile', PHONES],
+    ['mobile-sql', PHONE_SQL],
+  ] as const) {
+    if (wanted.size > 0 && !wanted.has(set)) continue
     const pngs: Buffer[] = []
-    for (const shot of PHONES) {
+    for (const shot of shots) {
       const ctx = await browser.newContext({
         baseURL: base,
         viewport: PHONE,
@@ -354,9 +404,9 @@ try {
     const fctx = await browser.newContext({ deviceScaleFactor: 2, viewport: { width: 1080, height: 800 } })
     const fp = await fctx.newPage()
     await fp.setContent(phoneFrame(pngs))
-    await fp.locator('body').screenshot({ path: join(out, 'mobile.jpg'), type: 'jpeg', quality: 88 })
+    await fp.locator('body').screenshot({ path: join(out, `${set}.jpg`), type: 'jpeg', quality: 88 })
     await fctx.close()
-    console.log('docs/screenshots/mobile.jpg')
+    console.log(`docs/screenshots/${set}.jpg`)
   }
   await browser.close()
 } finally {
