@@ -4,6 +4,12 @@ All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](http
 
 ## 1.0.23 (2026-11-02)
 
+### New
+
+- Phone layout: editing a cell is one tap. The value opens in a full-screen editor with a large
+  text area (Enter makes a new line), the NULL box, date picker or value list below it, and
+  Cancel / Save at the bottom. A long press still edits; desktop editing is unchanged.
+
 ### Fixes
 
 - Phone layout with the Native theme: the open tab menu's items overlapped (Native's 22px desktop
