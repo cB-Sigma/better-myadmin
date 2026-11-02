@@ -1,10 +1,20 @@
-import { Menu } from 'lucide-react'
-import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { ChevronDown, Menu } from 'lucide-react'
+import {
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 import type { PmaIconName } from '../icons/pma-map.ts'
 import { cn } from '../lib/cn.ts'
 import { decodeEntities } from '../lib/entities.ts'
 import { iconParts } from '../lib/link-mode.ts'
-import { HAMBURGER_BREAKPOINT, visibleTabCount } from '../lib/overflow.ts'
+import { useNarrow } from '../lib/narrow.ts'
+import { visibleTabCount } from '../lib/overflow.ts'
 import { useUiSettings } from '../settings.tsx'
 import { PmaIcon } from './icon.tsx'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './menus.tsx'
@@ -36,23 +46,6 @@ export interface TabBarProps {
 }
 
 const MORE_ESTIMATE = 80
-
-function useNarrow(): boolean {
-  const query = `(max-width: ${HAMBURGER_BREAKPOINT - 1}px)`
-  const [narrow, setNarrow] = useState(() =>
-    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
-      ? window.matchMedia(query).matches
-      : false,
-  )
-  useEffect(() => {
-    if (typeof window.matchMedia !== 'function') return
-    const mq = window.matchMedia(query)
-    const on = () => setNarrow(mq.matches)
-    mq.addEventListener('change', on)
-    return () => mq.removeEventListener('change', on)
-  }, [query])
-  return narrow
-}
 
 /**
  * The tab menu (`ul#topmenu.navbar-nav`) with phpMyAdmin's overflow behaviour: tabs that do not
@@ -107,6 +100,21 @@ export function TabBar({ items, ariaLabel, link: Link, id = 'topmenu', className
     return () => ro.disconnect()
   }, [recompute])
 
+  // phones: the folded menu closes when a tab is chosen, on Escape and on a tap elsewhere
+  const activeKey = items.find((i) => i.active)?.key ?? ''
+  // biome-ignore lint/correctness/useExhaustiveDependencies: a new current tab (a navigation) closes it
+  useEffect(() => {
+    setExpanded(false)
+  }, [activeKey, narrow])
+  useEffect(() => {
+    if (!narrow || !expanded) return
+    const away = (e: PointerEvent) => {
+      if (e.target instanceof Node && navRef.current?.contains(e.target) !== true) setExpanded(false)
+    }
+    document.addEventListener('pointerdown', away)
+    return () => document.removeEventListener('pointerdown', away)
+  }, [narrow, expanded])
+
   const inline = narrow || measuring ? items : items.slice(0, count)
   const hidden = narrow || measuring ? [] : items.slice(count)
 
@@ -120,17 +128,49 @@ export function TabBar({ items, ariaLabel, link: Link, id = 'topmenu', className
   )
 
   return (
-    <nav ref={navRef} aria-label={ariaLabel} className={cn('menucontainer relative min-w-0', className)}>
+    <nav
+      ref={navRef}
+      aria-label={ariaLabel}
+      className={cn('menucontainer relative min-w-0', className)}
+      {...(narrow
+        ? {
+            'data-narrow': '',
+            onKeyDown: (e: KeyboardEvent) => {
+              if (e.key !== 'Escape' || !expanded) return
+              e.stopPropagation()
+              setExpanded(false)
+              navRef.current?.querySelector<HTMLElement>('.bma-tabmenu-toggle')?.focus()
+            },
+            onClick: (e: MouseEvent) => {
+              if ((e.target as Element).closest('#navbarNav a') !== null) setExpanded(false)
+            },
+          }
+        : {})}
+    >
       {narrow && (
         <button
           type="button"
-          className="m-1 inline-flex items-center rounded border border-border-strong p-1"
+          className="bma-tabmenu-toggle m-1 inline-flex items-center rounded border border-border-strong p-1"
           aria-label={gettext('Toggle navigation')}
           aria-expanded={expanded}
           aria-controls="navbarNav"
           onClick={() => setExpanded((v) => !v)}
         >
-          <Menu className="size-5" aria-hidden />
+          <Menu className="size-5 shrink-0" aria-hidden />
+          {/* the current tab, so the folded menu still says where you are */}
+          {items.some((i) => i.active) && (
+            <span className="bma-tabmenu-current" aria-hidden>
+              {items
+                .filter((i) => i.active)
+                .map((i) => (
+                  <span key={i.key} className="inline-flex min-w-0 items-center gap-1">
+                    {parts.icon && <PmaIcon name={i.icon} />}
+                    <span className="truncate">{decodeEntities(i.label)}</span>
+                  </span>
+                ))}
+            </span>
+          )}
+          <ChevronDown className="bma-tabmenu-chevron size-4 shrink-0" aria-hidden />
         </button>
       )}
       <div id="navbarNav" className={cn(narrow && !expanded && 'hidden')}>

@@ -5,12 +5,15 @@ import { clsx } from 'clsx'
 import { ChevronDown, ChevronRight, LoaderCircle } from 'lucide-react'
 import { type MouseEvent, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { t } from '../../lib/i18n'
+import { useIsMobile } from '../../lib/mobile'
 import { navIcon } from './icons'
 import { navHref } from './links'
 import { type Row, type TreeGuide, treeGuides } from './rows'
 import type { NavTreeStore } from './store'
 
 const HEIGHT = { node: 22, filter: 34, pager: 30 } as const
+/** phones: rows tall enough for a finger (styles/mobile-shell.css sizes their contents) */
+const MOBILE_HEIGHT = { node: 40, filter: 48, pager: 44 } as const
 const INDENT = 14
 
 export interface NavTreeProps {
@@ -39,13 +42,19 @@ export function NavTree({
 }: NavTreeProps) {
   const parentRef = useRef<HTMLDivElement>(null)
   const guides = useMemo(() => treeGuides(rows), [rows])
+  const heights = useIsMobile() ? MOBILE_HEIGHT : HEIGHT
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: (i) => HEIGHT[(rows[i] as Row).type],
+    estimateSize: (i) => heights[(rows[i] as Row).type],
     getItemKey: (i) => (rows[i] as Row).key,
     overscan: 12,
   })
+  // a rotation across the phone breakpoint changes the row heights
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-measure when the heights change
+  useEffect(() => {
+    virtualizer.measure()
+  }, [heights, virtualizer])
 
   // scrollToView: keep the highlighted item visible (to the top for a database)
   const request = store.scrollRequest

@@ -3,6 +3,7 @@ import * as PopoverPrimitive from '@radix-ui/react-popover'
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../lib/cn.ts'
+import { useNarrow } from '../lib/narrow.ts'
 
 const surface =
   'z-50 min-w-40 overflow-hidden rounded-(--radius) border border-border-strong bg-bg-elevated text-fg shadow-lg'
@@ -21,11 +22,14 @@ export function DropdownMenuContent({
   align = 'end',
   ...props
 }: ComponentProps<typeof DropdownPrimitive.Content>) {
+  // phones: kept 8px inside the screen (its size is capped in apps/web/src/styles/mobile-shell.css)
+  const narrow = useNarrow()
   return (
     <DropdownPrimitive.Portal>
       <DropdownPrimitive.Content
         sideOffset={sideOffset}
         align={align}
+        {...(narrow ? { collisionPadding: 8 } : {})}
         className={cn(surface, 'p-1 text-[13px]', className)}
         {...props}
       />
@@ -71,11 +75,13 @@ export function PopoverContent({
   align = 'start',
   ...props
 }: ComponentProps<typeof PopoverPrimitive.Content>) {
+  const narrow = useNarrow()
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         sideOffset={sideOffset}
         align={align}
+        {...(narrow ? { collisionPadding: 8 } : {})}
         className={cn(surface, 'p-2 text-sm', className)}
         {...props}
       />

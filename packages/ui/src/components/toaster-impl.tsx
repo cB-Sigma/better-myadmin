@@ -10,6 +10,7 @@ import {
   type MessageType,
   PROCESSING_REQUEST,
 } from '../lib/messages.ts'
+import { useNarrow } from '../lib/narrow.ts'
 import { useUiSettings } from '../settings.tsx'
 
 /** Only one AJAX notification exists at a time: every new one replaces the previous (same id). */
@@ -17,10 +18,13 @@ export const AJAX_ID = 'ajax_message'
 
 /** The sonner host (`#loading_parent`), loaded with the first notification. */
 export default function SonnerHost() {
+  // phones: at the bottom, above the console strip, clear of the top bar and the tab menu
+  const narrow = useNarrow()
   return (
     <Sonner
-      position="top-center"
-      offset={{ top: 200 }}
+      position={narrow ? 'bottom-center' : 'top-center'}
+      offset={narrow ? { bottom: 56 } : { top: 200 }}
+      {...(narrow ? { mobileOffset: { bottom: 56, left: 12, right: 12 } } : {})}
       visibleToasts={1}
       // a modal dialog turns the page's pointer events off; the notification above it stays clickable
       style={{ pointerEvents: 'auto' }}
