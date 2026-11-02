@@ -104,8 +104,14 @@
   }
 
   /* db structure: the per-table actions (Browse, Structure, Search, Insert, Empty, Drop) as icons
-     (with ActionLinksMode text there is no icon, and the text stays) */
+     (with ActionLinksMode text there is no icon, and the text stays). The hidden label is placed
+     in its icon: positioned against the page it would widen the layout past the screen */
+  #structureTable td.print\:hidden .inline-flex:has(> svg) {
+    position: relative;
+  }
   #structureTable td.print\:hidden .inline-flex:has(> svg) > span {
+    top: 0;
+    left: 0;
     position: absolute;
     width: 1px;
     height: 1px;
@@ -378,6 +384,8 @@
     margin-bottom: 8px;
     flex-direction: row;
     align-items: stretch;
+    /* holds its visually hidden label (else placed against the page, below the screen) */
+    position: relative;
   }
   .bma-sql-fields > select {
     flex: 1 1 auto;

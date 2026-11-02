@@ -55,6 +55,9 @@ test.beforeEach(async ({ page }) => {
 async function noPageOverflow(page: Page) {
   const o = await page.locator('#page_scroll').evaluate((e) => e.scrollWidth - e.clientWidth)
   expect(o).toBeLessThanOrEqual(1)
+  // nor does the document (a stray absolutely placed element would widen the layout viewport)
+  const d = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
+  expect(d).toBeLessThanOrEqual(0)
 }
 
 async function box(l: Locator) {
