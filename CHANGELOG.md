@@ -15,6 +15,9 @@ All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](http
 - Phone layout with the Native theme: the open tab menu's items overlapped (Native's 22px desktop
   tab strip outranked the phone grid). The grid now keeps its own sizes in every theme.
 - Phone layout: the Table structure / Relation view pills are 40px tall, in every theme.
+- Phone layout: on the database and table Structure pages, the table name column that stays in view
+  while the list scrolls sideways was see-through in the Native theme (its odd rows have no
+  background), so checkboxes and action icons showed under the names. It is solid in every theme.
 
 ## 1.0.22 (2026-11-02)
 

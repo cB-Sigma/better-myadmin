@@ -247,6 +247,14 @@ test.describe('phone shell', () => {
         }
       await page.goto('/s/1/db/acme_store/t/products/structure')
       await minSize(page, '[data-testid="structure-pills"] a')
+      // the database structure's pinned name column is opaque: what scrolls under it stays hidden
+      await page.goto('/s/1/db/acme_store/structure')
+      const names = page.locator('#structureTable > tbody > tr > th')
+      await expect(names.first()).toBeVisible()
+      for (const bg of await names.evaluateAll((ths) =>
+        ths.map((th) => getComputedStyle(th, '::before').backgroundColor),
+      ))
+        expect(bg).not.toMatch(/^(transparent|rgba\(\d+, \d+, \d+, 0\))$/)
     })
   }
 })
