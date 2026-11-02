@@ -2,6 +2,12 @@ import type { Cell, Field, GridCell, GridData, GridRow } from '@bettermyadmin/co
 import {
   Button,
   DateTimeCalendar,
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -28,7 +34,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { createPortal } from 'react-dom'
 import { api } from '../../lib/api'
 import { useConfig } from '../../lib/config'
 import { t } from '../../lib/i18n'
@@ -401,7 +406,8 @@ export function GridTable(props: Props) {
     }
     return {
       onTouchStart: (e: TouchEvent) => {
-        if ((e.target as HTMLElement).closest('.cEdit') !== null || e.touches.length > 1) return
+        if ((e.target as HTMLElement).closest('.cEdit, [data-bma-dialog]') !== null || e.touches.length > 1)
+          return
         clear()
         pressTimer.current = setTimeout(() => {
           pressTimer.current = null
@@ -411,7 +417,7 @@ export function GridTable(props: Props) {
       },
       // Chrome on Android turns a long press into a context menu (and cancels the touch)
       onContextMenu: (e: ReactMouseEvent) => {
-        if ((e.target as HTMLElement).closest('.cEdit') !== null) return
+        if ((e.target as HTMLElement).closest('.cEdit, [data-bma-dialog]') !== null) return
         e.preventDefault()
         if (editing?.r === r && editing.p === p) return
         clear()
@@ -421,7 +427,7 @@ export function GridTable(props: Props) {
       onTouchMove: clear,
       onTouchCancel: clear,
       onTouchEnd: (e: TouchEvent) => {
-        if ((e.target as HTMLElement).closest('.cEdit') !== null) return
+        if ((e.target as HTMLElement).closest('.cEdit, [data-bma-dialog]') !== null) return
         clear()
         const last = lastTap.current
         const now = e.timeStamp
@@ -1092,8 +1098,9 @@ export function GridTable(props: Props) {
                           else if (
                             isMobile &&
                             grid.gridEdit === 'double-click' &&
+                            // (React passes the editor dialog's events up through the cell too)
                             (e.target as HTMLElement).closest(
-                              'a, button, input, select, textarea, .cEdit',
+                              'a, button, input, select, textarea, .cEdit, [data-bma-dialog]',
                             ) === null
                           )
                             startEdit(r, p)
@@ -1449,6 +1456,7 @@ function CellEditor(props: {
 
   // click outside saves (hideEditCell) — not in the datepicker or the Browse foreign values dialog
   useEffect(() => {
+    if (sheet) return
     const h = (e: MouseEvent) => {
       const target = e.target as Element
       if (ref.current === null || ref.current.contains(target)) return
@@ -1655,35 +1663,30 @@ function CellEditor(props: {
     onKeyDown: (e: React.KeyboardEvent) => e.stopPropagation(),
   }
   if (sheet)
-    return createPortal(
-      <div className="bma-cell-sheet-backdrop">
-        <div
-          ref={ref}
-          className="cEdit bma-cell-sheet"
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${t('Edit')}: ${column.name}`}
-          {...stop}
-        >
-          <div className="bma-cell-sheet-head">
-            <span className="bma-cell-sheet-title">{column.name}</span>
+    return (
+      <Dialog open onOpenChange={(o) => !o && props.onCancel()}>
+        <DialogContent className="bma-cell-sheet" aria-describedby={undefined} hideClose>
+          <DialogHeader>
+            <DialogTitle className="bma-cell-sheet-title">{column.name}</DialogTitle>
             <span className="bma-cell-sheet-type">{column.dataType}</span>
-          </div>
-          <div className="bma-cell-sheet-body">
-            {box}
-            {area}
-          </div>
-          <div className="bma-cell-sheet-foot">
+          </DialogHeader>
+          <DialogBody>
+            <div ref={ref} className="cEdit" {...stop}>
+              {/* ENUM / SET: the list below is the editor (the text box is read-only) */}
+              {textEditable && box}
+              {area}
+            </div>
+          </DialogBody>
+          <DialogFooter>
             <Button type="button" onClick={props.onCancel}>
               {t('Cancel')}
             </Button>
             <Button type="button" variant="primary" disabled={loading} onClick={save}>
               {t('Save')}
             </Button>
-          </div>
-        </div>
-      </div>,
-      document.body,
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     )
   return (
     <div ref={ref} className="cEdit start-0 top-0" {...stop}>
