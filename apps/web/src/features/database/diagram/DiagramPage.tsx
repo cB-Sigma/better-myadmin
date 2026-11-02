@@ -16,6 +16,7 @@ import {
 } from 'react'
 import { api, errorMessage } from '../../../lib/api'
 import { t } from '../../../lib/i18n'
+import { isMobileViewport } from '../../../lib/mobile'
 import { qk } from '../../../lib/queryKeys'
 import {
   type DagreModule,
@@ -167,7 +168,8 @@ function Diagram({
   const layout = useMemo(() => layoutGraph(graph, dagre), [graph, dagre])
   const nodes = useMemo(() => new Map(graph.nodes.map((n) => [n.id, n])), [graph])
   const [view, setView] = useState<View>({ x: 0, y: 0, k: 1 })
-  const [size, setSize] = useState({ w: 800, h: 500 })
+  // phones: no assumed size, so the first fit waits for the measured (narrow) canvas
+  const [size, setSize] = useState(() => (isMobileViewport() ? { w: 1, h: 1 } : { w: 800, h: 500 }))
   const [hoverEdge, setHoverEdge] = useState<string | null>(null)
   const [hoverTable, setHoverTable] = useState<string | null>(null)
   const [search, setSearch] = useState('')

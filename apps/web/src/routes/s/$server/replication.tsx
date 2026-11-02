@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { ReplicationPage } from '../../../features/server/ReplicationPage'
+import { AdminPage } from '../../../lib/mobileAdmin'
 import { qs } from '../../../lib/search'
 
 /** pma: /server/replication */
@@ -14,11 +15,13 @@ export const Route = createFileRoute('/s/$server/replication')({
     const search = Route.useSearch()
     const navigate = Route.useNavigate()
     return (
-      <ReplicationPage
-        server={server}
-        search={search}
-        onSearch={(s) => void navigate({ search: (p) => ({ ...p, ...s }) })}
-      />
+      <AdminPage>
+        <ReplicationPage
+          server={server}
+          search={search}
+          onSearch={(s) => void navigate({ search: (p) => ({ ...p, ...s }) })}
+        />
+      </AdminPage>
     )
   },
 })
