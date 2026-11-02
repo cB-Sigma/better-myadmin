@@ -91,6 +91,23 @@
   #tablestructure > thead > tr > th:nth-child(3) {
     background-color: var(--grid-header-bg);
   }
+  /* rows without a background of their own (native: odd rows) would leave the pinned name cell
+     transparent, with the cells scrolling under it showing through: two layers under its content,
+     the page background, then the row's own colour (stripes, hover and marking still show) */
+  :is(#structureTable, #tablestructure) > tbody > tr > th::before,
+  :is(#structureTable, #tablestructure) > tbody > tr > th::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  :is(#structureTable, #tablestructure) > tbody > tr > th::before {
+    background-color: var(--bg);
+  }
+  :is(#structureTable, #tablestructure) > tbody > tr > th::after {
+    background-color: inherit;
+  }
   /* modern: transparent rows on the table's own background, a muted header */
   [data-theme="modern"] :is(#structureTable, #tablestructure) > tbody > tr > th {
     background-color: var(--bg);
