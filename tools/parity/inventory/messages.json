@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generated": "by `pnpm parity:inventory` from the phpMyAdmin reference checkout; do not edit",
-    "referenceCommit": "601690888679e2fb5574ba7acd499812ddc9160a",
+    "referenceCommit": "6f240a8f64d0a4c62a02b0ef484568fe39017480",
     "source": "resources/po/phpmyadmin.pot ∪ uses found by tools/parity/php/messages.php (Twig AST, PHP tokens, JS Messages keys)",
     "count": 3436
   },
@@ -214,7 +214,6 @@
       "plural": null,
       "refs": [
         "src/Controllers/Import/ImportController.php:697",
-        "src/Sql.php:918",
         "src/Sql.php:920"
       ]
     },
@@ -362,8 +361,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Display/Results.php:3206",
-        "src/Display/Results.php:3208"
+        "src/Display/Results.php:3206"
       ]
     },
     {
@@ -452,8 +450,8 @@
       "context": null,
       "plural": "%d rows affected by the last statement inside the procedure.",
       "refs": [
-        "src/Database/Routines.php:1008",
-        "src/Database/Routines.php:987"
+        "src/Database/Routines.php:987",
+        "src/Database/Routines.php:988"
       ]
     },
     {
@@ -586,8 +584,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Display/Results.php:3211",
-        "src/Display/Results.php:3213"
+        "src/Display/Results.php:3211"
       ]
     },
     {
@@ -1277,7 +1274,6 @@
         "resources/templates/database/tracking/tables.twig:153",
         "resources/templates/database/tracking/tables.twig:18",
         "resources/templates/indexes.twig:16",
-        "resources/templates/server/databases/index.twig:163",
         "resources/templates/server/databases/index.twig:164",
         "resources/templates/server/privileges/privileges_summary.twig:23",
         "resources/templates/server/privileges/users_overview.twig:22",
@@ -1606,8 +1602,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Events/IndexController.php:112",
-        "src/Controllers/Events/IndexController.php:129"
+        "src/Controllers/Events/IndexController.php:112"
       ]
     },
     {
@@ -1742,8 +1737,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:166",
-        "src/Controllers/Database/RoutinesController.php:171"
+        "src/Controllers/Database/RoutinesController.php:166"
       ]
     },
     {
@@ -1820,8 +1814,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Triggers/IndexController.php:155",
-        "src/Controllers/Triggers/IndexController.php:163"
+        "src/Controllers/Triggers/IndexController.php:155"
       ]
     },
     {
@@ -2030,7 +2023,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:21",
-        "resources/templates/database/search/main.twig:22",
         "src/Database/Search.php:80"
       ]
     },
@@ -2931,7 +2923,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:33",
-        "resources/templates/database/search/main.twig:34",
         "src/Database/Search.php:83"
       ]
     },
@@ -2951,20 +2942,15 @@
       "plural": null,
       "refs": [
         "resources/templates/database/multi_table_query/form.twig:57",
-        "resources/templates/server/databases/index.twig:109",
         "resources/templates/server/databases/index.twig:110",
-        "resources/templates/server/databases/index.twig:126",
         "resources/templates/server/databases/index.twig:127",
-        "resources/templates/server/databases/index.twig:145",
         "resources/templates/server/databases/index.twig:146",
         "resources/templates/server/status/processes/list.twig:14",
         "resources/templates/table/operations/index.twig:28",
         "resources/templates/table/search/index.twig:156",
         "src/Config/ConfigFile.php:554",
         "src/Display/Results.php:1369",
-        "src/Display/Results.php:1371",
         "src/Display/Results.php:1375",
-        "src/Display/Results.php:1377",
         "src/Util.php:1642",
         "src/Util.php:1659"
       ]
@@ -2994,7 +2980,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:17",
-        "resources/templates/database/search/main.twig:18",
         "src/Database/Search.php:79"
       ]
     },
@@ -3249,7 +3234,6 @@
         "resources/templates/import_status.twig:2",
         "resources/templates/user_password.twig:2",
         "src/Controllers/JavaScriptMessagesController.php:416",
-        "src/Export/Export.php:739",
         "src/Export/Export.php:740",
         "src/Html/Generator.php:836",
         "src/Plugins/Schema/ExportRelationSchema.php:258"
@@ -3270,9 +3254,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Export/ExportController.php:120",
         "src/Controllers/Export/ExportController.php:121",
-        "src/Export/Export.php:677",
         "src/Export/Export.php:678"
       ]
     },
@@ -3368,7 +3350,6 @@
       "plural": null,
       "refs": [
         "src/Controllers/Sql/SqlController.php:218",
-        "src/Sql.php:1078",
         "src/Sql.php:1080"
       ]
     },
@@ -3841,9 +3822,7 @@
         "resources/templates/error/report_modal.twig:6",
         "resources/templates/gis_data_editor_form.twig:76",
         "resources/templates/modals/change_password.twig:11",
-        "resources/templates/server/databases/index.twig:321",
         "resources/templates/server/databases/index.twig:322",
-        "resources/templates/server/databases/index.twig:325",
         "resources/templates/server/databases/index.twig:326",
         "resources/templates/server/variables/index.twig:15",
         "resources/templates/table/search/index.twig:196",
@@ -3866,7 +3845,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Operations/DatabaseController.php:82",
         "src/Controllers/Operations/DatabaseController.php:85"
       ]
     },
@@ -4011,8 +3989,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1213",
-        "src/Import/Import.php:1214"
+        "src/Import/Import.php:1213"
       ]
     },
     {
@@ -4072,8 +4049,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/editor_form.twig:43",
-        "resources/templates/events/editor-form.twig:53"
+        "resources/templates/database/routines/editor_form.twig:43"
       ]
     },
     {
@@ -4338,17 +4314,14 @@
       "refs": [
         "resources/templates/database/privileges/index.twig:112",
         "resources/templates/database/privileges/index.twig:113",
-        "resources/templates/database/routines/index.twig:14",
         "resources/templates/database/routines/index.twig:15",
         "resources/templates/database/structure/check_all_tables.twig:3",
         "resources/templates/database/structure/check_all_tables.twig:4",
         "resources/templates/display/results/table.twig:315",
         "resources/templates/display/results/table.twig:316",
-        "resources/templates/events/index.twig:15",
         "resources/templates/events/index.twig:16",
         "resources/templates/select_all.twig:3",
         "resources/templates/select_all.twig:4",
-        "resources/templates/server/databases/index.twig:64",
         "resources/templates/server/databases/index.twig:65",
         "resources/templates/server/privileges/edit_routine_privileges.twig:58",
         "resources/templates/server/privileges/privileges_table.twig:269",
@@ -4362,7 +4335,6 @@
         "resources/templates/server/user_groups/edit_user_groups.twig:22",
         "resources/templates/table/privileges/index.twig:116",
         "resources/templates/table/privileges/index.twig:117",
-        "resources/templates/triggers/list.twig:14",
         "resources/templates/triggers/list.twig:15"
       ]
     },
@@ -4399,7 +4371,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:239",
         "resources/templates/server/databases/index.twig:240"
       ]
     },
@@ -4409,7 +4380,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:238",
         "resources/templates/server/databases/index.twig:239"
       ]
     },
@@ -4672,7 +4642,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/tracking/tables.twig:47",
-        "resources/templates/events/index.twig:116",
         "resources/templates/events/index.twig:74"
       ]
     },
@@ -4706,26 +4675,16 @@
         "resources/templates/database/designer/main.twig:1128",
         "resources/templates/database/designer/main.twig:1138",
         "resources/templates/database/routines/index.twig:100",
-        "resources/templates/database/routines/index.twig:103",
         "resources/templates/database/routines/index.twig:104",
-        "resources/templates/database/routines/index.twig:114",
         "resources/templates/database/routines/index.twig:115",
-        "resources/templates/database/routines/index.twig:122",
         "resources/templates/database/routines/index.twig:123",
-        "resources/templates/database/routines/index.twig:79",
         "resources/templates/database/routines/index.twig:80",
-        "resources/templates/database/routines/index.twig:87",
         "resources/templates/database/routines/index.twig:88",
-        "resources/templates/database/routines/index.twig:99",
         "resources/templates/error/report_modal.twig:14",
         "resources/templates/events/index.twig:117",
         "resources/templates/events/index.twig:125",
         "resources/templates/events/index.twig:137",
         "resources/templates/events/index.twig:141",
-        "resources/templates/events/index.twig:159",
-        "resources/templates/events/index.twig:167",
-        "resources/templates/events/index.twig:179",
-        "resources/templates/events/index.twig:183",
         "resources/templates/export.twig:188",
         "resources/templates/export.twig:82",
         "resources/templates/export.twig:90",
@@ -4849,9 +4808,7 @@
         "resources/templates/database/structure/table_header.twig:31",
         "resources/templates/home/index.twig:62",
         "resources/templates/indexes.twig:23",
-        "resources/templates/server/databases/index.twig:123",
         "resources/templates/server/databases/index.twig:124",
-        "resources/templates/server/databases/index.twig:29",
         "resources/templates/server/databases/index.twig:30",
         "resources/templates/server/databases/index.twig:31",
         "resources/templates/table/index_form.twig:147",
@@ -5432,7 +5389,6 @@
         "src/Plugins/Export/ExportTexytext.php:240",
         "src/Plugins/Export/ExportTexytext.php:300",
         "src/Plugins/Export/Helpers/Pdf.php:463",
-        "src/Plugins/Export/Helpers/Pdf.php:470",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:576",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:598"
       ]
@@ -5707,7 +5663,6 @@
         "resources/templates/database/routines/editor_form.twig:173",
         "resources/templates/database/structure/table_header.twig:46",
         "resources/templates/events/editor-form.twig:100",
-        "resources/templates/events/editor-form.twig:108",
         "resources/templates/indexes.twig:25",
         "resources/templates/table/structure/display_partitions.twig:32",
         "resources/templates/table/structure/display_structure.twig:480",
@@ -5750,7 +5705,6 @@
         "src/Plugins/Export/ExportOdt.php:409",
         "src/Plugins/Export/ExportTexytext.php:309",
         "src/Plugins/Export/Helpers/Pdf.php:485",
-        "src/Plugins/Export/Helpers/Pdf.php:493",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:592",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:605"
       ]
@@ -5984,7 +5938,6 @@
       "plural": null,
       "refs": [
         "resources/js/modules/functions.ts:1671",
-        "resources/templates/server/databases/index.twig:320",
         "resources/templates/server/databases/index.twig:321",
         "src/Controllers/JavaScriptMessagesController.php:342"
       ]
@@ -6356,7 +6309,6 @@
         "resources/templates/gis_data_editor_form.twig:75",
         "src/Controllers/JavaScriptMessagesController.php:472",
         "src/Display/Results.php:1833",
-        "src/Display/Results.php:1835",
         "src/Html/Generator.php:82"
       ]
     },
@@ -6427,7 +6379,6 @@
         "resources/templates/display/results/table.twig:353",
         "resources/templates/display/results/table.twig:356",
         "src/Controllers/JavaScriptMessagesController.php:471",
-        "src/Export/Export.php:716",
         "src/Export/Export.php:717"
       ]
     },
@@ -6524,11 +6475,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/ExportController.php:120",
         "src/Controllers/Database/ExportController.php:121",
-        "src/Controllers/Server/ExportController.php:57",
         "src/Controllers/Server/ExportController.php:58",
-        "src/Controllers/Table/ExportController.php:92",
         "src/Controllers/Table/ExportController.php:93"
       ]
     },
@@ -6538,12 +6486,12 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/ImportController.php:70",
         "src/Controllers/Database/ImportController.php:71",
-        "src/Controllers/Server/ImportController.php:62",
+        "src/Controllers/Database/ImportController.php:72",
         "src/Controllers/Server/ImportController.php:63",
-        "src/Controllers/Table/ImportController.php:87",
-        "src/Controllers/Table/ImportController.php:88"
+        "src/Controllers/Server/ImportController.php:64",
+        "src/Controllers/Table/ImportController.php:88",
+        "src/Controllers/Table/ImportController.php:89"
       ]
     },
     {
@@ -6552,7 +6500,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Designer.php:117",
         "src/Database/Designer.php:119"
       ]
     },
@@ -6657,7 +6604,6 @@
         "resources/templates/database/create_table.twig:14",
         "resources/templates/database/operations/index.twig:40",
         "resources/templates/export.twig:29",
-        "resources/templates/server/databases/index.twig:46",
         "resources/templates/server/databases/index.twig:47"
       ]
     },
@@ -6713,8 +6659,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:10",
-        "resources/templates/server/databases/index.twig:9"
+        "resources/templates/server/databases/index.twig:10"
       ]
     },
     {
@@ -6768,7 +6713,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:30",
         "resources/templates/events/index.twig:31"
       ]
     },
@@ -6814,7 +6758,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:36",
         "resources/templates/database/routines/index.twig:37"
       ]
     },
@@ -6843,7 +6786,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/triggers/list.twig:29",
         "resources/templates/triggers/list.twig:30"
       ]
     },
@@ -7097,8 +7039,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Sql.php:1244",
-        "src/Sql.php:1245"
+        "src/Sql.php:1245",
+        "src/Sql.php:1246"
       ]
     },
     {
@@ -7107,8 +7049,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Sql.php:1258",
-        "src/Sql.php:1259"
+        "src/Sql.php:1259",
+        "src/Sql.php:1260"
       ]
     },
     {
@@ -7372,8 +7314,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/structure/index.twig:15",
-        "src/Plugins/Schema/SchemaPdf.php:86",
-        "src/Plugins/Schema/SchemaPdf.php:87"
+        "src/Plugins/Schema/SchemaPdf.php:86"
       ]
     },
     {
@@ -7502,7 +7443,6 @@
         "resources/templates/console/bookmark_content.twig:12",
         "resources/templates/console/display.twig:218",
         "resources/templates/console/display.twig:60",
-        "resources/templates/server/databases/index.twig:106",
         "resources/templates/server/databases/index.twig:107",
         "resources/templates/server/privileges/edit_routine_privileges.twig:17",
         "resources/templates/server/privileges/privileges_table.twig:258",
@@ -7532,7 +7472,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Operations/DatabaseController.php:175",
         "src/Controllers/Operations/DatabaseController.php:183"
       ]
     },
@@ -7551,7 +7490,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Operations/DatabaseController.php:162",
         "src/Controllers/Operations/DatabaseController.php:170"
       ]
     },
@@ -7627,8 +7565,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/operations/index.twig:123",
-        "resources/templates/server/databases/index.twig:24",
-        "resources/templates/server/databases/index.twig:24",
+        "resources/templates/server/databases/index.twig:25",
         "resources/templates/server/databases/index.twig:25",
         "src/Config/Descriptions.php:884"
       ]
@@ -7750,8 +7687,7 @@
         "src/Plugins/Export/ExportLatex.php:250",
         "src/Plugins/Export/ExportSql.php:907",
         "src/Plugins/Export/ExportXml.php:356",
-        "src/Plugins/Export/Helpers/Pdf.php:146",
-        "src/Plugins/Export/Helpers/Pdf.php:147"
+        "src/Plugins/Export/Helpers/Pdf.php:146"
       ]
     },
     {
@@ -7761,7 +7697,6 @@
       "plural": null,
       "refs": [
         "resources/templates/navigation/tree/database_select.twig:10",
-        "resources/templates/server/databases/index.twig:3",
         "resources/templates/server/databases/index.twig:4",
         "resources/templates/server/export/index.twig:14",
         "resources/templates/server/export/index.twig:7",
@@ -7788,7 +7723,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:3",
         "resources/templates/server/databases/index.twig:4"
       ]
     },
@@ -7862,7 +7796,6 @@
         "src/Plugins/Export/ExportTexytext.php:243",
         "src/Plugins/Export/ExportTexytext.php:303",
         "src/Plugins/Export/Helpers/Pdf.php:469",
-        "src/Plugins/Export/Helpers/Pdf.php:476",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:580",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:602"
       ]
@@ -8101,7 +8034,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/routines/editor_form.twig:148",
-        "resources/templates/events/editor-form.twig:102",
         "resources/templates/events/editor-form.twig:94",
         "resources/templates/triggers/editor_form.twig:66",
         "resources/templates/view_create.twig:54"
@@ -8203,13 +8135,11 @@
       "refs": [
         "resources/templates/database/routines/editor_form.twig:118",
         "resources/templates/events/editor-form.twig:79",
-        "resources/templates/events/editor-form.twig:87",
         "resources/templates/triggers/editor_form.twig:61",
         "src/Plugins/Export/ExportHtmlword.php:397",
         "src/Plugins/Export/ExportOdt.php:507",
         "src/Plugins/Export/ExportTexytext.php:372",
-        "src/Plugins/Export/Helpers/Pdf.php:314",
-        "src/Plugins/Export/Helpers/Pdf.php:318"
+        "src/Plugins/Export/Helpers/Pdf.php:314"
       ]
     },
     {
@@ -8253,7 +8183,6 @@
         "resources/templates/sql/query.twig:189",
         "src/Controllers/JavaScriptMessagesController.php:386",
         "src/Display/Results.php:2360",
-        "src/Display/Results.php:2362",
         "src/Tracking/Tracking.php:225"
       ]
     },
@@ -8530,20 +8459,15 @@
       "plural": null,
       "refs": [
         "resources/templates/database/multi_table_query/form.twig:58",
-        "resources/templates/server/databases/index.twig:111",
         "resources/templates/server/databases/index.twig:112",
-        "resources/templates/server/databases/index.twig:128",
         "resources/templates/server/databases/index.twig:129",
-        "resources/templates/server/databases/index.twig:147",
         "resources/templates/server/databases/index.twig:148",
         "resources/templates/server/status/processes/list.twig:12",
         "resources/templates/table/operations/index.twig:32",
         "resources/templates/table/search/index.twig:160",
         "src/Config/ConfigFile.php:554",
         "src/Display/Results.php:1364",
-        "src/Display/Results.php:1366",
         "src/Display/Results.php:1380",
-        "src/Display/Results.php:1382",
         "src/Util.php:1647",
         "src/Util.php:1664"
       ]
@@ -9615,7 +9539,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:20",
         "resources/templates/database/routines/index.twig:21",
         "resources/templates/database/routines/index.twig:22",
         "resources/templates/database/routines/parameter_row.twig:51",
@@ -9623,19 +9546,14 @@
         "resources/templates/database/routines/row.twig:65",
         "resources/templates/database/structure/check_all_tables.twig:16",
         "resources/templates/database/structure/structure_table_row.twig:86",
-        "resources/templates/events/index.twig:101",
-        "resources/templates/events/index.twig:21",
         "resources/templates/events/index.twig:22",
         "resources/templates/events/index.twig:23",
-        "resources/templates/events/index.twig:95",
+        "resources/templates/events/row.twig:40",
         "resources/templates/events/row.twig:42",
         "resources/templates/events/row.twig:46",
-        "resources/templates/events/row.twig:48",
         "resources/templates/indexes.twig:59",
         "resources/templates/indexes.twig:60",
-        "resources/templates/server/databases/index.twig:326",
         "resources/templates/server/databases/index.twig:327",
-        "resources/templates/server/databases/index.twig:67",
         "resources/templates/server/databases/index.twig:68",
         "resources/templates/server/databases/index.twig:69",
         "resources/templates/table/relation/foreign_key_row.twig:25",
@@ -9644,7 +9562,6 @@
         "resources/templates/table/structure/display_structure.twig:279",
         "resources/templates/table/structure/display_structure.twig:522",
         "resources/templates/table/structure/display_structure.twig:523",
-        "resources/templates/triggers/list.twig:20",
         "resources/templates/triggers/list.twig:21",
         "resources/templates/triggers/list.twig:22",
         "resources/templates/triggers/row.twig:52",
@@ -9885,12 +9802,8 @@
         "resources/templates/database/structure/structure_table_row.twig:65",
         "resources/templates/display/results/table.twig:319",
         "resources/templates/display/results/table.twig:320",
-        "resources/templates/events/index.twig:77",
-        "resources/templates/events/index.twig:80",
         "resources/templates/events/row.twig:22",
-        "resources/templates/events/row.twig:23",
         "resources/templates/events/row.twig:25",
-        "resources/templates/events/row.twig:26",
         "resources/templates/indexes.twig:35",
         "resources/templates/server/variables/index.twig:41",
         "resources/templates/server/variables/index.twig:44",
@@ -9902,7 +9815,6 @@
         "src/ConfigStorage/UserGroups.php:113",
         "src/Controllers/JavaScriptMessagesController.php:384",
         "src/Display/Results.php:1832",
-        "src/Display/Results.php:1834",
         "src/Html/Generator.php:520",
         "src/Html/Generator.php:777"
       ]
@@ -9925,8 +9837,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Events/IndexController.php:116",
-        "src/Controllers/Events/IndexController.php:133"
+        "src/Controllers/Events/IndexController.php:116"
       ]
     },
     {
@@ -10006,8 +9917,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:170",
-        "src/Controllers/Database/RoutinesController.php:175"
+        "src/Controllers/Database/RoutinesController.php:170"
       ]
     },
     {
@@ -10026,9 +9936,7 @@
       "plural": null,
       "refs": [
         "src/Import/Import.php:1178",
-        "src/Import/Import.php:1179",
-        "src/Import/Import.php:1227",
-        "src/Import/Import.php:1228"
+        "src/Import/Import.php:1227"
       ]
     },
     {
@@ -10037,8 +9945,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1214",
-        "src/Import/Import.php:1215"
+        "src/Import/Import.php:1214"
       ]
     },
     {
@@ -10047,8 +9954,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Triggers/IndexController.php:159",
-        "src/Controllers/Triggers/IndexController.php:167"
+        "src/Controllers/Triggers/IndexController.php:159"
       ]
     },
     {
@@ -10391,7 +10297,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:302",
         "resources/templates/server/databases/index.twig:303",
         "resources/templates/server/databases/index.twig:304"
       ]
@@ -10569,8 +10474,7 @@
       "context": "End of recurring event",
       "plural": null,
       "refs": [
-        "resources/templates/events/editor-form.twig:73",
-        "resources/templates/events/editor-form.twig:81"
+        "resources/templates/events/editor-form.twig:73"
       ]
     },
     {
@@ -10797,7 +10701,6 @@
         "src/Controllers/Operations/ViewController.php:95",
         "src/Html/Generator.php:728",
         "src/Import/Import.php:121",
-        "src/Import/Import.php:122",
         "src/InsertEdit.php:412",
         "src/Message.php:104"
       ]
@@ -10883,15 +10786,10 @@
       "plural": null,
       "refs": [
         "src/Controllers/Database/RoutinesController.php:250",
-        "src/Controllers/Database/RoutinesController.php:255",
         "src/Controllers/Database/RoutinesController.php:280",
-        "src/Controllers/Database/RoutinesController.php:285",
         "src/Controllers/Database/RoutinesController.php:346",
-        "src/Controllers/Database/RoutinesController.php:351",
         "src/Controllers/Events/IndexController.php:175",
-        "src/Controllers/Events/IndexController.php:182",
-        "src/Controllers/Triggers/IndexController.php:199",
-        "src/Controllers/Triggers/IndexController.php:207"
+        "src/Controllers/Triggers/IndexController.php:199"
       ]
     },
     {
@@ -10900,8 +10798,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Events/ExportController.php:67",
-        "src/Controllers/Events/ExportController.php:75"
+        "src/Controllers/Events/ExportController.php:67"
       ]
     },
     {
@@ -10911,7 +10808,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Database/RoutinesController.php:397",
-        "src/Controllers/Database/RoutinesController.php:403"
+        "src/Controllers/Database/RoutinesController.php:398"
       ]
     },
     {
@@ -10920,8 +10817,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Triggers/IndexController.php:242",
-        "src/Controllers/Triggers/IndexController.php:250"
+        "src/Controllers/Triggers/IndexController.php:242"
       ]
     },
     {
@@ -11108,7 +11004,7 @@
       "plural": null,
       "refs": [
         "src/Http/Middleware/TokenRequestParamChecking.php:46",
-        "src/Http/Middleware/TokenRequestParamChecking.php:69"
+        "src/Http/Middleware/TokenRequestParamChecking.php:47"
       ]
     },
     {
@@ -11158,15 +11054,13 @@
       "refs": [
         "resources/js/events.ts:111",
         "resources/templates/triggers/editor_form.twig:51",
-        "resources/templates/triggers/list.twig:52",
         "resources/templates/triggers/list.twig:53",
         "src/Controllers/JavaScriptMessagesController.php:370",
         "src/Navigation/Nodes/NodeEvent.php:27",
         "src/Plugins/Export/ExportHtmlword.php:396",
         "src/Plugins/Export/ExportOdt.php:504",
         "src/Plugins/Export/ExportTexytext.php:371",
-        "src/Plugins/Export/Helpers/Pdf.php:312",
-        "src/Plugins/Export/Helpers/Pdf.php:316"
+        "src/Plugins/Export/Helpers/Pdf.php:312"
       ]
     },
     {
@@ -11175,7 +11069,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:135",
         "src/Events/Events.php:88"
       ]
     },
@@ -11185,7 +11078,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:117",
         "src/Events/Events.php:133"
       ]
     },
@@ -11195,8 +11087,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:116",
-        "resources/templates/events/index.twig:158"
+        "resources/templates/events/index.twig:116"
       ]
     },
     {
@@ -11214,7 +11105,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:111",
         "resources/templates/events/index.twig:69"
       ]
     },
@@ -11234,7 +11124,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:3",
         "resources/templates/events/index.twig:4",
         "src/Menu.php:381",
         "src/Navigation/Nodes/NodeEventContainer.php:23",
@@ -11300,7 +11189,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:123",
         "resources/templates/database/routines/index.twig:124",
         "resources/templates/database/routines/row.twig:35",
         "resources/templates/database/routines/row.twig:38"
@@ -11312,8 +11200,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/editor-form.twig:50",
-        "resources/templates/events/editor-form.twig:58"
+        "resources/templates/events/editor-form.twig:50"
       ]
     },
     {
@@ -11322,8 +11209,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/editor-form.twig:56",
-        "resources/templates/events/editor-form.twig:64"
+        "resources/templates/events/editor-form.twig:56"
       ]
     },
     {
@@ -11350,12 +11236,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:113",
         "resources/templates/database/routines/index.twig:114",
         "src/Controllers/Database/RoutinesController.php:331",
-        "src/Controllers/Database/RoutinesController.php:336",
-        "src/Controllers/Database/RoutinesController.php:339",
-        "src/Controllers/Database/RoutinesController.php:344"
+        "src/Controllers/Database/RoutinesController.php:339"
       ]
     },
     {
@@ -11383,8 +11266,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:973",
-        "src/Database/Routines.php:993"
+        "src/Database/Routines.php:973"
       ]
     },
     {
@@ -11495,7 +11377,6 @@
         "resources/templates/database/privileges/index.twig:115",
         "resources/templates/database/privileges/index.twig:116",
         "resources/templates/database/privileges/index.twig:91",
-        "resources/templates/database/routines/index.twig:17",
         "resources/templates/database/routines/index.twig:18",
         "resources/templates/database/routines/index.twig:19",
         "resources/templates/database/routines/row.twig:50",
@@ -11505,12 +11386,9 @@
         "resources/templates/display/results/table.twig:333",
         "resources/templates/display/results/table.twig:365",
         "resources/templates/display/results/table.twig:366",
-        "resources/templates/events/index.twig:18",
         "resources/templates/events/index.twig:19",
         "resources/templates/events/index.twig:20",
-        "resources/templates/events/index.twig:85",
         "resources/templates/events/row.twig:30",
-        "resources/templates/events/row.twig:31",
         "resources/templates/export.twig:3",
         "resources/templates/export.twig:493",
         "resources/templates/preferences/header.twig:42",
@@ -11523,7 +11401,6 @@
         "resources/templates/table/privileges/index.twig:119",
         "resources/templates/table/privileges/index.twig:120",
         "resources/templates/table/privileges/index.twig:95",
-        "resources/templates/triggers/list.twig:17",
         "resources/templates/triggers/list.twig:18",
         "resources/templates/triggers/list.twig:19",
         "resources/templates/triggers/row.twig:41",
@@ -11589,8 +11466,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:136",
-        "resources/templates/events/index.twig:178"
+        "resources/templates/events/index.twig:136"
       ]
     },
     {
@@ -11635,8 +11511,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/RoutinesController.php:379",
-        "src/Controllers/Database/RoutinesController.php:384"
+        "src/Controllers/Database/RoutinesController.php:379"
       ]
     },
     {
@@ -11646,8 +11521,7 @@
       "plural": null,
       "refs": [
         "resources/templates/triggers/export.twig:2",
-        "src/Controllers/Triggers/IndexController.php:225",
-        "src/Controllers/Triggers/IndexController.php:233"
+        "src/Controllers/Triggers/IndexController.php:225"
       ]
     },
     {
@@ -11675,7 +11549,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:98",
         "resources/templates/database/routines/index.twig:99"
       ]
     },
@@ -12029,8 +11902,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Http/Middleware/TokenRequestParamChecking.php:61",
-        "src/Http/Middleware/TokenRequestParamChecking.php:77"
+        "src/Http/Middleware/TokenRequestParamChecking.php:78",
+        "src/Http/Middleware/TokenRequestParamChecking.php:83"
       ]
     },
     {
@@ -12325,7 +12198,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:13",
-        "resources/templates/database/search/main.twig:14",
         "resources/templates/table/find_replace/index.twig:31"
       ]
     },
@@ -12567,7 +12439,6 @@
       "refs": [
         "resources/templates/database/routines/editor_form.twig:121",
         "resources/templates/events/editor-form.twig:84",
-        "resources/templates/events/editor-form.twig:92",
         "resources/templates/import.twig:160",
         "resources/templates/import.twig:162",
         "resources/templates/sql/query.twig:40",
@@ -13059,7 +12930,6 @@
         "resources/templates/database/routines/execute_form.twig:63",
         "resources/templates/display/results/table.twig:279",
         "resources/templates/events/editor-form.twig:112",
-        "resources/templates/events/editor-form.twig:120",
         "resources/templates/modals/change_password.twig:10",
         "resources/templates/modals/create_view.twig:10",
         "resources/templates/modals/enum_set_editor.twig:10",
@@ -13143,8 +13013,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1221",
-        "src/Import/Import.php:1222"
+        "src/Import/Import.php:1221"
       ]
     },
     {
@@ -13163,8 +13032,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1163",
-        "src/Import/Import.php:1164"
+        "src/Import/Import.php:1163"
       ]
     },
     {
@@ -13173,8 +13041,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1189",
-        "src/Import/Import.php:1190"
+        "src/Import/Import.php:1189"
       ]
     },
     {
@@ -13992,8 +13859,7 @@
         "src/Controllers/JavaScriptMessagesController.php:470",
         "src/Controllers/JavaScriptMessagesController.php:622",
         "src/Error/ErrorHandler.php:424",
-        "src/InsertEdit.php:1390",
-        "src/InsertEdit.php:1394"
+        "src/InsertEdit.php:1390"
       ]
     },
     {
@@ -14334,8 +14200,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/search/main.twig:39",
-        "resources/templates/database/search/main.twig:40"
+        "resources/templates/database/search/main.twig:39"
       ]
     },
     {
@@ -14775,8 +14640,6 @@
       "plural": null,
       "refs": [
         "src/InsertEdit.php:839",
-        "src/InsertEdit.php:843",
-        "src/Sql.php:882",
         "src/Sql.php:884"
       ]
     },
@@ -14786,8 +14649,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/search/main.twig:66",
-        "resources/templates/database/search/main.twig:67"
+        "resources/templates/database/search/main.twig:66"
       ]
     },
     {
@@ -14796,8 +14658,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/search/main.twig:44",
-        "resources/templates/database/search/main.twig:45"
+        "resources/templates/database/search/main.twig:44"
       ]
     },
     {
@@ -14973,8 +14834,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:631",
-        "src/Database/Routines.php:646"
+        "src/Database/Routines.php:631"
       ]
     },
     {
@@ -15032,8 +14892,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:775",
-        "src/Database/Routines.php:790"
+        "src/Database/Routines.php:775"
       ]
     },
     {
@@ -15173,7 +15032,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:181",
         "resources/templates/server/databases/index.twig:182"
       ]
     },
@@ -15294,8 +15152,7 @@
       "plural": null,
       "refs": [
         "resources/templates/server/status/processes/list.twig:44",
-        "src/Display/Results.php:2378",
-        "src/Display/Results.php:2380"
+        "src/Display/Results.php:2378"
       ]
     },
     {
@@ -15343,11 +15200,8 @@
       "plural": null,
       "refs": [
         "src/Plugins/Schema/SchemaDia.php:57",
-        "src/Plugins/Schema/SchemaDia.php:58",
         "src/Plugins/Schema/SchemaEps.php:65",
-        "src/Plugins/Schema/SchemaEps.php:66",
-        "src/Plugins/Schema/SchemaPdf.php:67",
-        "src/Plugins/Schema/SchemaPdf.php:68"
+        "src/Plugins/Schema/SchemaPdf.php:67"
       ]
     },
     {
@@ -15796,8 +15650,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Display/Results.php:3509",
-        "src/Display/Results.php:3511"
+        "src/Display/Results.php:3509"
       ]
     },
     {
@@ -15835,7 +15688,6 @@
         "src/Plugins/Export/ExportOdt.php:403",
         "src/Plugins/Export/ExportTexytext.php:305",
         "src/Plugins/Export/Helpers/Pdf.php:478",
-        "src/Plugins/Export/Helpers/Pdf.php:485",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:582",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:604"
       ]
@@ -15938,12 +15790,9 @@
         "resources/js/sql.ts:1217",
         "resources/js/table/structure.ts:368",
         "resources/js/triggers.ts:338",
-        "resources/templates/database/routines/index.twig:118",
         "resources/templates/database/routines/index.twig:119",
-        "resources/templates/database/routines/index.twig:83",
         "resources/templates/database/routines/index.twig:84",
         "resources/templates/events/index.twig:121",
-        "resources/templates/events/index.twig:163",
         "resources/templates/home/index.twig:320",
         "resources/templates/modals/index_dialog_modal.twig:26",
         "resources/templates/navigation/main.twig:58",
@@ -16665,8 +16514,7 @@
         "src/Plugins/Export/ExportHtmlword.php:320",
         "src/Plugins/Export/ExportOdt.php:416",
         "src/Plugins/Export/ExportTexytext.php:314",
-        "src/Plugins/Export/Helpers/Pdf.php:492",
-        "src/Plugins/Export/Helpers/Pdf.php:501"
+        "src/Plugins/Export/Helpers/Pdf.php:492"
       ]
     },
     {
@@ -17322,12 +17170,9 @@
       "plural": null,
       "refs": [
         "src/Controllers/Table/GetFieldController.php:109",
-        "src/Database/Routines.php:1017",
         "src/Database/Routines.php:997",
         "src/Import/Import.php:137",
-        "src/Import/Import.php:138",
         "src/InsertEdit.php:163",
-        "src/Sql.php:904",
         "src/Sql.php:906"
       ]
     },
@@ -17337,26 +17182,13 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:107",
         "src/Database/Routines.php:1220",
-        "src/Database/Routines.php:133",
         "src/Database/Routines.php:208",
-        "src/Database/Routines.php:209",
-        "src/Database/Routines.php:223",
-        "src/Database/Routines.php:981",
-        "src/Events/Events.php:100",
-        "src/Events/Events.php:113",
         "src/Events/Events.php:124",
-        "src/Events/Events.php:132",
         "src/Events/Events.php:164",
-        "src/Events/Events.php:91",
         "src/Html/Generator.php:793",
         "src/Triggers/Triggers.php:101",
-        "src/Triggers/Triggers.php:111",
-        "src/Triggers/Triggers.php:130",
-        "src/Triggers/Triggers.php:268",
-        "src/Triggers/Triggers.php:88",
-        "src/Triggers/Triggers.php:97"
+        "src/Triggers/Triggers.php:268"
       ]
     },
     {
@@ -17380,19 +17212,15 @@
         "resources/templates/database/central_columns/main.twig:226",
         "resources/templates/database/routines/editor_form.twig:55",
         "resources/templates/database/routines/execute_form.twig:16",
-        "resources/templates/database/routines/index.twig:56",
         "resources/templates/database/routines/index.twig:57",
-        "resources/templates/events/index.twig:46",
         "resources/templates/events/index.twig:47",
         "resources/templates/setup/home/index.twig:50",
         "resources/templates/table/structure/display_structure.twig:21",
-        "resources/templates/triggers/list.twig:47",
         "resources/templates/triggers/list.twig:48",
         "src/Plugins/Export/ExportHtmlword.php:394",
         "src/Plugins/Export/ExportOdt.php:498",
         "src/Plugins/Export/ExportTexytext.php:369",
-        "src/Plugins/Export/Helpers/Pdf.php:308",
-        "src/Plugins/Export/Helpers/Pdf.php:312"
+        "src/Plugins/Export/Helpers/Pdf.php:308"
       ]
     },
     {
@@ -17401,8 +17229,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Schema/SchemaPdf.php:95",
-        "src/Plugins/Schema/SchemaPdf.php:96"
+        "src/Plugins/Schema/SchemaPdf.php:95"
       ]
     },
     {
@@ -17411,8 +17238,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Schema/SchemaPdf.php:95",
-        "src/Plugins/Schema/SchemaPdf.php:96"
+        "src/Plugins/Schema/SchemaPdf.php:95"
       ]
     },
     {
@@ -17733,8 +17559,7 @@
         "src/Controllers/Database/Structure/EmptyTableController.php:41",
         "src/Controllers/Operations/TableController.php:320",
         "src/Controllers/Table/DropColumnController.php:63",
-        "src/Controllers/Table/ReplaceController.php:288",
-        "src/Controllers/Table/ReplaceController.php:289"
+        "src/Controllers/Table/ReplaceController.php:288"
       ]
     },
     {
@@ -17819,9 +17644,7 @@
       "refs": [
         "resources/js/server/databases.ts:35",
         "src/Controllers/Database/DesignerController.php:172",
-        "src/Controllers/Database/ExportController.php:55",
         "src/Controllers/Database/ExportController.php:56",
-        "src/Controllers/Database/ImportController.php:60",
         "src/Controllers/Database/ImportController.php:62",
         "src/Controllers/Database/RoutinesController.php:78",
         "src/Controllers/Database/RoutinesController.php:96",
@@ -17829,15 +17652,12 @@
         "src/Controllers/Database/SqlController.php:51",
         "src/Controllers/Database/Structure/FavoriteTableController.php:65",
         "src/Controllers/Database/Structure/RealRowCountController.php:52",
-        "src/Controllers/Database/StructureController.php:157",
         "src/Controllers/Database/StructureController.php:158",
         "src/Controllers/Database/TrackingController.php:53",
         "src/Controllers/Events/ExportController.php:38",
-        "src/Controllers/Events/IndexController.php:40",
         "src/Controllers/Events/IndexController.php:42",
         "src/Controllers/JavaScriptMessagesController.php:335",
         "src/Controllers/Operations/Database/CollationController.php:54",
-        "src/Controllers/Operations/DatabaseController.php:228",
         "src/Controllers/Operations/DatabaseController.php:236",
         "src/Controllers/Operations/TableController.php:84",
         "src/Controllers/Operations/ViewController.php:60",
@@ -17851,7 +17671,6 @@
         "src/Controllers/Table/DropColumnConfirmationController.php:50",
         "src/Controllers/Table/FindReplaceController.php:74",
         "src/Controllers/Table/GisVisualizationController.php:68",
-        "src/Controllers/Table/ImportController.php:69",
         "src/Controllers/Table/ImportController.php:71",
         "src/Controllers/Table/IndexRenameController.php:52",
         "src/Controllers/Table/IndexesController.php:64",
@@ -17872,7 +17691,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:310",
         "resources/templates/server/databases/index.twig:311"
       ]
     },
@@ -17901,8 +17719,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Events/IndexController.php:175",
-        "src/Controllers/Events/IndexController.php:184"
+        "src/Controllers/Events/IndexController.php:175"
       ]
     },
     {
@@ -18066,7 +17883,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:50",
         "resources/templates/server/databases/index.twig:51"
       ]
     },
@@ -18114,9 +17930,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Database/RoutinesController.php:282",
-        "src/Controllers/Database/RoutinesController.php:287",
-        "src/Controllers/Database/RoutinesController.php:348",
-        "src/Controllers/Database/RoutinesController.php:353"
+        "src/Controllers/Database/RoutinesController.php:348"
       ]
     },
     {
@@ -18126,7 +17940,7 @@
       "plural": null,
       "refs": [
         "src/Controllers/Database/RoutinesController.php:252",
-        "src/Controllers/Database/RoutinesController.php:258"
+        "src/Controllers/Database/RoutinesController.php:253"
       ]
     },
     {
@@ -18197,7 +18011,6 @@
         "src/Controllers/Table/DeleteConfirmController.php:59",
         "src/Controllers/Table/DropColumnConfirmationController.php:54",
         "src/Controllers/Table/FindReplaceController.php:79",
-        "src/Controllers/Table/ImportController.php:74",
         "src/Controllers/Table/ImportController.php:76",
         "src/Controllers/Table/IndexRenameController.php:57",
         "src/Controllers/Table/IndexesController.php:69",
@@ -18222,10 +18035,8 @@
       "refs": [
         "resources/templates/database/structure/index.twig:19",
         "resources/templates/navigation/tree/path.twig:9",
-        "src/Controllers/Database/ExportController.php:65",
         "src/Controllers/Database/ExportController.php:66",
         "src/Controllers/Database/TrackingController.php:117",
-        "src/Controllers/Export/ExportController.php:286",
         "src/Controllers/Export/ExportController.php:287"
       ]
     },
@@ -18254,8 +18065,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Triggers/IndexController.php:201",
-        "src/Controllers/Triggers/IndexController.php:209"
+        "src/Controllers/Triggers/IndexController.php:201"
       ]
     },
     {
@@ -18351,8 +18161,7 @@
         "src/Controllers/JavaScriptMessagesController.php:223",
         "src/Display/Results.php:921",
         "src/Plugins/Export/ExportSql.php:1970",
-        "src/Plugins/Schema/SchemaPdf.php:95",
-        "src/Plugins/Schema/SchemaPdf.php:96"
+        "src/Plugins/Schema/SchemaPdf.php:95"
       ]
     },
     {
@@ -18553,9 +18362,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/structure/structure_table_row.twig:17",
-        "resources/templates/server/databases/index.twig:219",
         "resources/templates/server/databases/index.twig:220",
-        "resources/templates/server/databases/index.twig:231",
         "resources/templates/server/databases/index.twig:232"
       ]
     },
@@ -18604,7 +18411,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:300",
         "resources/templates/server/databases/index.twig:301"
       ]
     },
@@ -18732,7 +18538,6 @@
         "src/Plugins/Export/ExportTexytext.php:242",
         "src/Plugins/Export/ExportTexytext.php:302",
         "src/Plugins/Export/Helpers/Pdf.php:467",
-        "src/Plugins/Export/Helpers/Pdf.php:474",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:579",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:601"
       ]
@@ -18924,7 +18729,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:140",
         "resources/templates/events/index.twig:98"
       ]
     },
@@ -18971,7 +18775,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:129",
         "resources/templates/events/index.twig:87"
       ]
     },
@@ -18990,8 +18793,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/editor-form.twig:88",
-        "resources/templates/events/editor-form.twig:96"
+        "resources/templates/events/editor-form.twig:88"
       ]
     },
     {
@@ -19010,11 +18812,11 @@
       "plural": null,
       "refs": [
         "src/Database/Routines.php:136",
-        "src/Database/Routines.php:147",
+        "src/Database/Routines.php:137",
         "src/Events/Events.php:144",
-        "src/Events/Events.php:147",
+        "src/Events/Events.php:145",
         "src/Triggers/Triggers.php:129",
-        "src/Triggers/Triggers.php:145"
+        "src/Triggers/Triggers.php:130"
       ]
     },
     {
@@ -19042,7 +18844,7 @@
       "plural": null,
       "refs": [
         "src/Import/Import.php:945",
-        "src/Import/Import.php:947"
+        "src/Import/Import.php:946"
       ]
     },
     {
@@ -19282,9 +19084,7 @@
         "resources/templates/database/routines/editor_form.twig:58",
         "resources/templates/table/structure/display_table_stats.twig:94",
         "src/Import/Import.php:1160",
-        "src/Import/Import.php:1161",
-        "src/Import/Import.php:1218",
-        "src/Import/Import.php:1219"
+        "src/Import/Import.php:1218"
       ]
     },
     {
@@ -19294,7 +19094,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:35",
-        "resources/templates/database/search/main.twig:36",
         "resources/templates/database/structure/copy_form.twig:14"
       ]
     },
@@ -19365,8 +19164,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Schema/SchemaPdf.php:92",
-        "src/Plugins/Schema/SchemaPdf.php:93"
+        "src/Plugins/Schema/SchemaPdf.php:92"
       ]
     },
     {
@@ -19385,11 +19183,8 @@
       "plural": null,
       "refs": [
         "src/Plugins/Schema/SchemaDia.php:54",
-        "src/Plugins/Schema/SchemaDia.php:55",
         "src/Plugins/Schema/SchemaEps.php:62",
-        "src/Plugins/Schema/SchemaEps.php:63",
-        "src/Plugins/Schema/SchemaPdf.php:64",
-        "src/Plugins/Schema/SchemaPdf.php:65"
+        "src/Plugins/Schema/SchemaPdf.php:64"
       ]
     },
     {
@@ -19647,9 +19442,7 @@
       "refs": [
         "src/Config/Descriptions.php:614",
         "src/Plugins/Schema/SchemaDia.php:63",
-        "src/Plugins/Schema/SchemaDia.php:64",
-        "src/Plugins/Schema/SchemaPdf.php:73",
-        "src/Plugins/Schema/SchemaPdf.php:74"
+        "src/Plugins/Schema/SchemaPdf.php:73"
       ]
     },
     {
@@ -20803,11 +20596,8 @@
       "plural": null,
       "refs": [
         "src/Plugins/Schema/SchemaDia.php:57",
-        "src/Plugins/Schema/SchemaDia.php:58",
         "src/Plugins/Schema/SchemaEps.php:65",
-        "src/Plugins/Schema/SchemaEps.php:66",
-        "src/Plugins/Schema/SchemaPdf.php:67",
-        "src/Plugins/Schema/SchemaPdf.php:68"
+        "src/Plugins/Schema/SchemaPdf.php:67"
       ]
     },
     {
@@ -21014,7 +20804,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:156",
         "resources/templates/server/databases/index.twig:157",
         "resources/templates/server/replication/index.twig:18",
         "resources/templates/server/replication/primary_replication.twig:3"
@@ -21315,8 +21104,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Export/Helpers/Pdf.php:148",
-        "src/Plugins/Export/Helpers/Pdf.php:149"
+        "src/Plugins/Export/Helpers/Pdf.php:148"
       ]
     },
     {
@@ -21577,10 +21365,7 @@
       "plural": null,
       "refs": [
         "src/Display/Results.php:2909",
-        "src/Display/Results.php:2911",
         "src/Display/Results.php:3225",
-        "src/Display/Results.php:3227",
-        "src/Sql.php:910",
         "src/Sql.php:912"
       ]
     },
@@ -21991,7 +21776,6 @@
         "resources/templates/server/status/processes/index.twig:19",
         "resources/templates/server/status/variables/index.twig:42",
         "src/Config/Descriptions.php:927",
-        "src/Export/Export.php:697",
         "src/Export/Export.php:698",
         "src/Html/Generator.php:576"
       ]
@@ -22562,7 +22346,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:160",
         "resources/templates/server/databases/index.twig:161",
         "resources/templates/server/replication/replica_configuration.twig:2"
       ]
@@ -22601,9 +22384,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/structure/structure_table_row.twig:18",
-        "resources/templates/server/databases/index.twig:215",
         "resources/templates/server/databases/index.twig:216",
-        "resources/templates/server/databases/index.twig:227",
         "resources/templates/server/databases/index.twig:228"
       ]
     },
@@ -22945,7 +22726,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:58",
         "resources/templates/database/routines/index.twig:59"
       ]
     },
@@ -23016,8 +22796,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:126",
-        "src/Database/Routines.php:136"
+        "src/Database/Routines.php:126"
       ]
     },
     {
@@ -23026,8 +22805,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:259",
-        "src/Database/Routines.php:274"
+        "src/Database/Routines.php:259"
       ]
     },
     {
@@ -23037,7 +22815,7 @@
       "plural": null,
       "refs": [
         "src/Database/Routines.php:253",
-        "src/Database/Routines.php:269"
+        "src/Database/Routines.php:254"
       ]
     },
     {
@@ -23046,7 +22824,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:78",
         "resources/templates/database/routines/index.twig:79"
       ]
     },
@@ -23085,7 +22862,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:3",
         "resources/templates/database/routines/index.twig:4",
         "src/Menu.php:375",
         "src/Util.php:1393"
@@ -23151,8 +22927,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Table/ReplaceController.php:182",
-        "src/Controllers/Table/ReplaceController.php:183"
+        "src/Controllers/Table/ReplaceController.php:182"
       ]
     },
     {
@@ -23167,8 +22942,7 @@
         "resources/templates/table/structure/display_structure.twig:221",
         "resources/templates/table/structure/display_table_stats.twig:116",
         "src/Controllers/Server/DatabasesController.php:267",
-        "src/Import/Import.php:132",
-        "src/Import/Import.php:133"
+        "src/Import/Import.php:132"
       ]
     },
     {
@@ -23186,7 +22960,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:244",
         "resources/templates/server/databases/index.twig:245"
       ]
     },
@@ -23224,11 +22997,8 @@
       "plural": null,
       "refs": [
         "src/Plugins/Schema/SchemaEps.php:56",
-        "src/Plugins/Schema/SchemaEps.php:57",
         "src/Plugins/Schema/SchemaPdf.php:58",
-        "src/Plugins/Schema/SchemaPdf.php:59",
-        "src/Plugins/Schema/SchemaSvg.php:55",
-        "src/Plugins/Schema/SchemaSvg.php:56"
+        "src/Plugins/Schema/SchemaSvg.php:55"
       ]
     },
     {
@@ -23295,10 +23065,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:88",
         "resources/templates/database/routines/index.twig:89",
         "resources/templates/events/index.twig:126",
-        "resources/templates/events/index.twig:168",
         "resources/templates/server/privileges/users_overview.twig:177",
         "resources/templates/triggers/list.twig:91"
       ]
@@ -23483,16 +23251,13 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:28",
-        "resources/templates/database/routines/index.twig:29",
         "resources/templates/database/routines/index.twig:29",
         "resources/templates/database/routines/index.twig:30",
+        "resources/templates/database/routines/index.twig:30",
         "resources/templates/database/search/main.twig:71",
-        "resources/templates/database/search/main.twig:72",
         "resources/templates/database/structure/structure_table_row.twig:52",
-        "resources/templates/server/databases/index.twig:76",
         "resources/templates/server/databases/index.twig:77",
-        "resources/templates/server/databases/index.twig:77",
+        "resources/templates/server/databases/index.twig:78",
         "resources/templates/server/databases/index.twig:78",
         "src/Config/ConfigFile.php:522",
         "src/Config/ConfigFile.php:536",
@@ -23733,7 +23498,6 @@
         "resources/templates/database/designer/database_tables.twig:31",
         "resources/templates/database/export/index.twig:28",
         "resources/templates/database/search/main.twig:47",
-        "resources/templates/database/search/main.twig:48",
         "resources/templates/server/export/index.twig:10",
         "resources/templates/server/privileges/privileges_table.twig:110",
         "resources/templates/server/privileges/privileges_table.twig:29",
@@ -24947,8 +24711,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins/Schema/SchemaPdf.php:80",
-        "src/Plugins/Schema/SchemaPdf.php:81"
+        "src/Plugins/Schema/SchemaPdf.php:80"
       ]
     },
     {
@@ -25402,7 +25165,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Sql.php:898",
         "src/Sql.php:900"
       ]
     },
@@ -25440,8 +25202,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Display/Results.php:3193",
-        "src/Display/Results.php:3195"
+        "src/Display/Results.php:3193"
       ]
     },
     {
@@ -25451,8 +25212,6 @@
       "plural": null,
       "refs": [
         "src/InsertEdit.php:815",
-        "src/InsertEdit.php:819",
-        "src/Sql.php:901",
         "src/Sql.php:903"
       ]
     },
@@ -25815,7 +25574,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:110",
         "src/Events/Events.php:121"
       ]
     },
@@ -25825,8 +25583,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:205",
-        "src/Database/Routines.php:220"
+        "src/Database/Routines.php:205"
       ]
     },
     {
@@ -25835,7 +25592,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:108",
         "src/Triggers/Triggers.php:98"
       ]
     },
@@ -25910,7 +25666,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Table/TableMover.php:309",
         "src/Table/TableMover.php:312"
       ]
     },
@@ -25996,7 +25751,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/server/databases/index.twig:245",
         "resources/templates/server/databases/index.twig:246",
         "src/Config/ConfigFile.php:520",
         "src/Config/ConfigFile.php:534",
@@ -26294,8 +26048,7 @@
       "context": "Start of recurring event",
       "plural": null,
       "refs": [
-        "resources/templates/events/editor-form.twig:67",
-        "resources/templates/events/editor-form.twig:75"
+        "resources/templates/events/editor-form.twig:67"
       ]
     },
     {
@@ -26380,7 +26133,6 @@
         "resources/js/server/status/monitor.ts:2196",
         "resources/templates/database/tracking/tables.twig:17",
         "resources/templates/events/editor-form.twig:30",
-        "resources/templates/events/index.twig:47",
         "resources/templates/events/index.twig:48",
         "resources/templates/table/tracking/main.twig:31",
         "src/Config/ConfigFile.php:578",
@@ -26606,7 +26358,7 @@
         "src/Config/Forms/User/ExportForm.php:98",
         "src/Controllers/JavaScriptMessagesController.php:699",
         "src/Import/Import.php:1158",
-        "src/Import/Import.php:1160",
+        "src/Import/Import.php:1159",
         "src/Menu.php:214",
         "src/Menu.php:322",
         "src/Navigation/Nodes/NodeColumn.php:38",
@@ -26676,8 +26428,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1171",
-        "src/Import/Import.php:1172"
+        "src/Import/Import.php:1171"
       ]
     },
     {
@@ -27103,7 +26854,6 @@
         "resources/templates/table/relation/foreign_key_row.twig:102",
         "resources/templates/table/relation/foreign_key_row.twig:103",
         "resources/templates/triggers/editor_form.twig:31",
-        "resources/templates/triggers/list.twig:49",
         "resources/templates/triggers/list.twig:50",
         "src/Config/Descriptions.php:935",
         "src/Plugins/Export/ExportXml.php:408",
@@ -27178,7 +26928,6 @@
       "plural": null,
       "refs": [
         "resources/templates/table/operations/index.twig:459",
-        "src/Controllers/Database/StructureController.php:366",
         "src/Controllers/Database/StructureController.php:367"
       ]
     },
@@ -27505,8 +27254,7 @@
       "plural": null,
       "refs": [
         "resources/templates/menu/main.twig:29",
-        "src/Plugins/Export/Helpers/Pdf.php:147",
-        "src/Plugins/Export/Helpers/Pdf.php:148"
+        "src/Plugins/Export/Helpers/Pdf.php:147"
       ]
     },
     {
@@ -27599,7 +27347,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Table/TableMover.php:318",
         "src/Table/TableMover.php:321"
       ]
     },
@@ -27953,10 +27700,7 @@
       "plural": null,
       "refs": [
         "src/Database/Routines.php:206",
-        "src/Database/Routines.php:221",
-        "src/Events/Events.php:111",
         "src/Events/Events.php:122",
-        "src/Triggers/Triggers.php:109",
         "src/Triggers/Triggers.php:99"
       ]
     },
@@ -28221,11 +27965,8 @@
       "plural": null,
       "refs": [
         "src/Database/Routines.php:768",
-        "src/Database/Routines.php:783",
-        "src/Events/Events.php:258",
         "src/Events/Events.php:259",
-        "src/Triggers/Triggers.php:172",
-        "src/Triggers/Triggers.php:187"
+        "src/Triggers/Triggers.php:172"
       ]
     },
     {
@@ -28255,8 +27996,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:147",
-        "resources/templates/events/index.twig:189"
+        "resources/templates/events/index.twig:147"
       ]
     },
     {
@@ -28265,7 +28005,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Events/IndexController.php:61",
         "src/Controllers/Events/IndexController.php:65"
       ]
     },
@@ -28276,7 +28015,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:25",
-        "resources/templates/database/search/main.twig:26",
         "src/Database/Search.php:81"
       ]
     },
@@ -28287,7 +28025,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:29",
-        "resources/templates/database/search/main.twig:30",
         "src/Database/Search.php:82"
       ]
     },
@@ -28361,19 +28098,9 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:103",
         "src/Database/Routines.php:1218",
-        "src/Database/Routines.php:129",
-        "src/Database/Routines.php:205",
-        "src/Database/Routines.php:977",
-        "src/Events/Events.php:128",
         "src/Events/Events.php:162",
-        "src/Events/Events.php:87",
-        "src/Events/Events.php:96",
-        "src/Triggers/Triggers.php:126",
-        "src/Triggers/Triggers.php:266",
-        "src/Triggers/Triggers.php:84",
-        "src/Triggers/Triggers.php:93"
+        "src/Triggers/Triggers.php:266"
       ]
     },
     {
@@ -28383,7 +28110,7 @@
       "plural": null,
       "refs": [
         "src/Import/Import.php:1209",
-        "src/Import/Import.php:1211"
+        "src/Import/Import.php:1210"
       ]
     },
     {
@@ -29613,8 +29340,8 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Operations/DatabaseController.php:264",
-        "src/Controllers/Operations/DatabaseController.php:271"
+        "src/Controllers/Operations/DatabaseController.php:271",
+        "src/Controllers/Operations/DatabaseController.php:272"
       ]
     },
     {
@@ -29815,9 +29542,7 @@
       "plural": null,
       "refs": [
         "src/Display/Results.php:2337",
-        "src/Display/Results.php:2339",
-        "src/Display/Results.php:2352",
-        "src/Display/Results.php:2354"
+        "src/Display/Results.php:2352"
       ]
     },
     {
@@ -30205,9 +29930,9 @@
         "src/Plugins/Import/ImportOds.php:156",
         "src/Plugins/Import/ImportOds.php:157",
         "src/Plugins/Import/ImportXml.php:109",
-        "src/Plugins/Import/ImportXml.php:111",
+        "src/Plugins/Import/ImportXml.php:110",
         "src/Plugins/Import/ImportXml.php:71",
-        "src/Plugins/Import/ImportXml.php:73"
+        "src/Plugins/Import/ImportXml.php:72"
       ]
     },
     {
@@ -30271,7 +29996,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/events/index.twig:39",
         "resources/templates/events/index.twig:40"
       ]
     },
@@ -30309,7 +30033,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/routines/index.twig:49",
         "resources/templates/database/routines/index.twig:50"
       ]
     },
@@ -30319,7 +30042,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/triggers/list.twig:40",
         "resources/templates/triggers/list.twig:41"
       ]
     },
@@ -30533,8 +30255,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Plugins.php:243",
-        "src/Plugins.php:406"
+        "src/Plugins.php:243"
       ]
     },
     {
@@ -30866,8 +30587,9 @@
       "plural": null,
       "refs": [
         "src/Controllers/Database/StructureController.php:565",
+        "src/Controllers/Database/StructureController.php:566",
         "src/Display/Results.php:3184",
-        "src/Display/Results.php:3187"
+        "src/Display/Results.php:3185"
       ]
     },
     {
@@ -30982,14 +30704,12 @@
       "refs": [
         "resources/js/server/status/monitor.ts:2196",
         "resources/templates/sql/profiling_chart.twig:13",
-        "resources/templates/triggers/list.twig:51",
         "resources/templates/triggers/list.twig:52",
         "src/Controllers/JavaScriptMessagesController.php:281",
         "src/Plugins/Export/ExportHtmlword.php:395",
         "src/Plugins/Export/ExportOdt.php:501",
         "src/Plugins/Export/ExportTexytext.php:370",
         "src/Plugins/Export/Helpers/Pdf.php:310",
-        "src/Plugins/Export/Helpers/Pdf.php:314",
         "src/Server/Status/Processes.php:109"
       ]
     },
@@ -31250,7 +30970,6 @@
       "refs": [
         "resources/js/server/status/monitor.ts:1952",
         "resources/js/server/status/monitor.ts:2041",
-        "resources/templates/server/databases/index.twig:255",
         "resources/templates/server/databases/index.twig:256",
         "resources/templates/server/engines/_innodb_buffer_pool.twig:34",
         "src/Controllers/JavaScriptMessagesController.php:298"
@@ -31493,8 +31212,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:118",
-        "src/Triggers/Triggers.php:133"
+        "src/Triggers/Triggers.php:118"
       ]
     },
     {
@@ -31503,8 +31221,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:105",
-        "src/Triggers/Triggers.php:115"
+        "src/Triggers/Triggers.php:105"
       ]
     },
     {
@@ -31540,7 +31257,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/triggers/list.twig:3",
         "resources/templates/triggers/list.twig:4",
         "src/Menu.php:295",
         "src/Menu.php:388",
@@ -31712,10 +31428,8 @@
         "resources/templates/database/routines/editor_form.twig:31",
         "resources/templates/database/routines/editor_form.twig:56",
         "resources/templates/database/routines/execute_form.twig:17",
-        "resources/templates/database/routines/index.twig:57",
         "resources/templates/database/routines/index.twig:58",
         "resources/templates/database/structure/table_header.twig:30",
-        "resources/templates/events/index.twig:48",
         "resources/templates/events/index.twig:49",
         "resources/templates/indexes.twig:18",
         "resources/templates/table/privileges/index.twig:21",
@@ -31734,7 +31448,6 @@
         "src/Plugins/Export/ExportTexytext.php:241",
         "src/Plugins/Export/ExportTexytext.php:301",
         "src/Plugins/Export/Helpers/Pdf.php:465",
-        "src/Plugins/Export/Helpers/Pdf.php:472",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:577",
         "src/Plugins/Schema/Pdf/PdfRelationSchema.php:599"
       ]
@@ -31998,7 +31711,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Controllers/Database/StructureController.php:734",
         "src/Controllers/Database/StructureController.php:735"
       ]
     },
@@ -32072,7 +31784,6 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:48",
-        "resources/templates/database/search/main.twig:49",
         "resources/templates/server/export/index.twig:11",
         "resources/templates/server/replication/database_multibox.twig:8"
       ]
@@ -32748,7 +32459,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Sql.php:445",
         "src/Sql.php:447"
       ]
     },
@@ -33087,7 +32797,6 @@
         "resources/templates/table/operations/index.twig:459",
         "resources/templates/table/operations/view.twig:32",
         "resources/templates/table/operations/view.twig:36",
-        "src/Controllers/Database/StructureController.php:366",
         "src/Controllers/Database/StructureController.php:367"
       ]
     },
@@ -33097,8 +32806,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Import/Import.php:1212",
-        "src/Import/Import.php:1213"
+        "src/Import/Import.php:1212"
       ]
     },
     {
@@ -33692,9 +33400,7 @@
       "plural": null,
       "refs": [
         "resources/templates/database/search/main.twig:17",
-        "resources/templates/database/search/main.twig:18",
-        "resources/templates/database/search/main.twig:21",
-        "resources/templates/database/search/main.twig:22"
+        "resources/templates/database/search/main.twig:21"
       ]
     },
     {
@@ -33703,8 +33409,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "resources/templates/database/search/main.twig:8",
-        "resources/templates/database/search/main.twig:9"
+        "resources/templates/database/search/main.twig:8"
       ]
     },
     {
@@ -34444,8 +34149,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:613",
-        "src/Database/Routines.php:628"
+        "src/Database/Routines.php:613"
       ]
     },
     {
@@ -34454,8 +34158,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:852",
-        "src/Database/Routines.php:867"
+        "src/Database/Routines.php:852"
       ]
     },
     {
@@ -34464,8 +34167,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:781",
-        "src/Database/Routines.php:796"
+        "src/Database/Routines.php:781"
       ]
     },
     {
@@ -34474,8 +34176,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:209",
-        "src/Triggers/Triggers.php:224"
+        "src/Triggers/Triggers.php:209"
       ]
     },
     {
@@ -34484,8 +34185,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:180",
-        "src/Triggers/Triggers.php:195"
+        "src/Triggers/Triggers.php:180"
       ]
     },
     {
@@ -34494,8 +34194,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:192",
-        "src/Triggers/Triggers.php:207"
+        "src/Triggers/Triggers.php:192"
       ]
     },
     {
@@ -34504,7 +34203,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:296",
         "src/Events/Events.php:297"
       ]
     },
@@ -34514,7 +34212,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:281",
         "src/Events/Events.php:282"
       ]
     },
@@ -34524,8 +34221,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Database/Routines.php:698",
-        "src/Database/Routines.php:713"
+        "src/Database/Routines.php:698"
       ]
     },
     {
@@ -34534,8 +34230,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:202",
-        "src/Triggers/Triggers.php:217"
+        "src/Triggers/Triggers.php:202"
       ]
     },
     {
@@ -34544,8 +34239,7 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Triggers/Triggers.php:186",
-        "src/Triggers/Triggers.php:201"
+        "src/Triggers/Triggers.php:186"
       ]
     },
     {
@@ -34554,7 +34248,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:299",
         "src/Events/Events.php:300"
       ]
     },
@@ -34564,7 +34257,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:328",
         "src/Events/Events.php:329"
       ]
     },
@@ -34574,7 +34266,6 @@
       "context": null,
       "plural": null,
       "refs": [
-        "src/Events/Events.php:267",
         "src/Events/Events.php:268"
       ]
     },
@@ -34585,9 +34276,9 @@
       "plural": null,
       "refs": [
         "src/Database/Routines.php:650",
-        "src/Database/Routines.php:666",
+        "src/Database/Routines.php:651",
         "src/Database/Routines.php:715",
-        "src/Database/Routines.php:731"
+        "src/Database/Routines.php:716"
       ]
     },
     {
@@ -34801,7 +34492,6 @@
       "refs": [
         "resources/templates/sql/query.twig:7",
         "src/Controllers/Operations/ViewController.php:95",
-        "src/Database/Routines.php:1000",
         "src/Database/Routines.php:980",
         "src/Message.php:87"
       ]

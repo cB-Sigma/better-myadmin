@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/ro.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/ro.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2025-12-29 11:00+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Romanian <https://hosted.weblate.org/projects/phpmyadmin/master/ro/>\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\nX-Generator: Weblate 5.15.1\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2025-12-29 11:00+0000\nLast-Translator: liviuconcioiu <liviu.concioiu@gmail.com>\nLanguage-Team: Romanian <https://hosted.weblate.org/projects/phpmyadmin/master/ro/>\nLanguage: ro\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\nX-Generator: Weblate 5.15.1\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript trebuie să fie activat peste acest punct!"
@@ -7740,12 +7740,6 @@ msgstr "Nu am putut încărca modulele din schemă, te rog verifică-ți instala
 msgid "Invalid routine type: \"%s\""
 msgstr "Tip de rutină invalid: „%s”"
 
-msgid "The following query has failed: \"%s\""
-msgstr "Următoarea interogare a eșuat: „%s”"
-
-msgid "MySQL said: "
-msgstr "MySQL zice: "
-
 msgid "Routine %1$s has been created."
 msgstr "Rutina %1$s a fost creată."
 
@@ -7757,6 +7751,9 @@ msgstr "Regretăm, nu am reușit să restaurăm rutina eliminată."
 
 msgid "The backed up query was:"
 msgstr "Interogarea de siguranță era:"
+
+msgid "MySQL said: "
+msgstr "MySQL zice: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutina %1$s a fost modificată. Privilegiile au fost ajustate."
@@ -7790,6 +7787,9 @@ msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "Un rând afectat de ultima declarație din cadrul procedurii."
 msgstr[1] "%d rânduri afectate de ultima declarație din cadrul procedurii."
 msgstr[2] "%d de rânduri afectate de ultima declarație din cadrul procedurii."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Următoarea interogare a eșuat: „%s”"
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "Nu pot folosi fusul orar „%1$s” pentru serverul %2$d. te rog verifică setarea de configurare pentru [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin folosește în prezent fusul orar implicit al serverului de baze de date."
@@ -7953,14 +7953,14 @@ msgstr "Prea multe mesaje de eroare, unele nu sunt afișate."
 msgid "Report"
 msgstr "Raport"
 
+msgid "Event %1$s has been created."
+msgstr "Evenimentul %1$s a fost creat."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Regretăm, nu am putut restaura evenimentul eliminat."
 
 msgid "Event %1$s has been modified."
 msgstr "Evenimentul %1$s a fost modificat."
-
-msgid "Event %1$s has been created."
-msgstr "Evenimentul %1$s a fost creat."
 
 msgid "You must provide an event name!"
 msgstr "Trebuie să furnizezi un nume de eveniment!"
@@ -8092,11 +8092,11 @@ msgstr "vulnerabilitate potențială"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Funcțiile ini_get și/sau ini_set sunt dezactivate în php.ini. phpMyAdmin are nevoie de aceste funcții!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Setarea cookie-urilor de sesiune a eșuat. Probabil folosești HTTP în loc de HTTPS pentru a accesa phpMyAdmin."
-
 msgid "Error: Token mismatch"
 msgstr "Eroare: tokenul nu se potrivește"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Setarea cookie-urilor de sesiune a eșuat. Probabil folosești HTTP în loc de HTTPS pentru a accesa phpMyAdmin."
 
 msgid "Ignoring unsupported language code."
 msgstr "Ignor codul de limbă neacceptat."

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/cs.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/cs.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-08-21 11:52+0000\nLast-Translator: Adam Havránek <adamhavra@seznam.cz>\nLanguage-Team: Czech <https://hosted.weblate.org/projects/phpmyadmin/master/cs/>\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-08-21 11:52+0000\nLast-Translator: Adam Havránek <adamhavra@seznam.cz>\nLanguage-Team: Czech <https://hosted.weblate.org/projects/phpmyadmin/master/cs/>\nLanguage: cs\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\nX-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Pro použití phpMyAdmina musíte mít zapnutý Javascript!"
@@ -8655,12 +8655,6 @@ msgstr "Nepodařilo se nahrát pluginy schémata, zkontrolujte prosím vaší in
 msgid "Invalid routine type: \"%s\""
 msgstr "Chybný typ rutiny: „%s“"
 
-msgid "The following query has failed: \"%s\""
-msgstr "Následující dotaz selhal: „%s“"
-
-msgid "MySQL said: "
-msgstr "MySQL hlásí: "
-
 msgid "Routine %1$s has been created."
 msgstr "Byla vytvořena rutina %1$s."
 
@@ -8672,6 +8666,9 @@ msgstr "Bohužel se nepodařilo obnovit odstraněnou rutinu."
 
 msgid "The backed up query was:"
 msgstr "Záložní dotaz byl:"
+
+msgid "MySQL said: "
+msgstr "MySQL hlásí: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Byla změněna rutina %1$s. Práva byla upravena."
@@ -8711,6 +8708,9 @@ msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "Posledním příkazem v proceduře byl ovlivněn %d řádek."
 msgstr[1] "Posledním příkazem v proceduře byly ovlivněny %d řádky."
 msgstr[2] "Posledním příkazem v proceduře bylo ovlivněno %d řádků."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Následující dotaz selhal: „%s“"
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "Pro server %2$d nelze použít časové pásmo \"%1$s\". Zkontrolujte prosím nastavení konfigurace [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin aktuálně používá výchozí časové pásmo databázového serveru."
@@ -8883,14 +8883,14 @@ msgstr "Příliš mnoho chyb, některé nebudou zobrazeny."
 msgid "Report"
 msgstr "Nahlásit"
 
+msgid "Event %1$s has been created."
+msgstr "Byla vytvořena událost %1$s."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Bohužel se nepodařilo obnovit odstraněnou událost."
 
 msgid "Event %1$s has been modified."
 msgstr "Byla změněna událost %1$s."
-
-msgid "Event %1$s has been created."
-msgstr "Byla vytvořena událost %1$s."
 
 msgid "You must provide an event name!"
 msgstr "Musíte zadat název události!"
@@ -9040,11 +9040,11 @@ msgstr "možný pokus o exploit"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "V souboru php.ini je zakázaná funkce ini_get nebo ini_set. phpMyAdmin však tyto funkce vyžaduje!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Nepodařilo se nastavit relační cookie. Možná pro přístup do phpMyAdmina používáte protokol HTTP místo HTTPS."
-
 msgid "Error: Token mismatch"
 msgstr "Chyba: neplatný token"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Nepodařilo se nastavit relační cookie. Možná pro přístup do phpMyAdmina používáte protokol HTTP místo HTTPS."
 
 msgid "Ignoring unsupported language code."
 msgstr "Ignorován nepodporovaný jazykový kód."

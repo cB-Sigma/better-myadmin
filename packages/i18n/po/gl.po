@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/gl.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/gl.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Galician <https://hosted.weblate.org/projects/phpmyadmin/master/gl/>\nLanguage: gl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2022-02-15 16:21+0000\nLast-Translator: Maurício Meneghini Fauth <mauricio@fauth.dev>\nLanguage-Team: Galician <https://hosted.weblate.org/projects/phpmyadmin/master/gl/>\nLanguage: gl\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.11-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript debe estar activo a partir de aquí!"
@@ -5875,12 +5875,6 @@ msgstr "Erro: As funcionalidades relacionais están desactivadas!"
 msgid "Invalid routine type: \"%s\""
 msgstr "O tipo de rutina non é válido: «%s»"
 
-msgid "The following query has failed: \"%s\""
-msgstr "Fallou a procura seguinte: «%s»"
-
-msgid "MySQL said: "
-msgstr "Mensaxes do MySQL: "
-
 msgid "Routine %1$s has been created."
 msgstr "A rutina %1$s foi creada."
 
@@ -5889,6 +5883,9 @@ msgstr "Sentímolo, non foi posíbel restaurar a rutina eliminada."
 
 msgid "The backed up query was:"
 msgstr "A consulta almacenada foi:"
+
+msgid "MySQL said: "
+msgstr "Mensaxes do MySQL: "
 
 msgid "Routine %1$s has been modified."
 msgstr "A rutina %1$s foi modificada."
@@ -5910,6 +5907,9 @@ msgstr "Debe indicar unha definición da rutina."
 
 msgid "Execution results of routine %s"
 msgstr "Resultados da execución da rutina %s"
+
+msgid "The following query has failed: \"%s\""
+msgstr "Fallou a procura seguinte: «%s»"
 
 msgid "The row has been deleted."
 msgstr "A fila foi eliminada."
@@ -6067,14 +6067,14 @@ msgstr "Houbo demasiadas mensaxes de erro; algunhas non se mostran."
 msgid "Report"
 msgstr "Informar"
 
+msgid "Event %1$s has been created."
+msgstr "O acontecemento %1$s foi creado."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Sentímolo, non foi posíbel restaurar o acontecemento eliminado."
 
 msgid "Event %1$s has been modified."
 msgstr "O acontecemento %1$s foi modificado."
-
-msgid "Event %1$s has been created."
-msgstr "O acontecemento %1$s foi creado."
 
 msgid "You must provide a valid interval value for the event."
 msgstr "Debe indicar un valor do intervalo válido para o acontecemento."

@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/kk.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/kk.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Kazakh <https://hosted.weblate.org/projects/phpmyadmin/master/kk/>\nLanguage: kk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2021-01-22 17:26+0000\nLast-Translator: William Desportes <williamdes@wdes.fr>\nLanguage-Team: Kazakh <https://hosted.weblate.org/projects/phpmyadmin/master/kk/>\nLanguage: kk\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 4.5-dev\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Osy sátten bastap Javascript qosýly bolýy qajet!"
@@ -7424,12 +7424,6 @@ msgstr "Sulba plagınderin júkteý múmkin emes, ornatylymdy tekserińiz!"
 msgid "Invalid routine type: \"%s\""
 msgstr "Jaramsyz rásim túri: «%s»"
 
-msgid "The following query has failed: \"%s\""
-msgstr "Kelesi saýal oryndalmady: «%s»"
-
-msgid "MySQL said: "
-msgstr "MySQL habarlaýy: "
-
 msgid "Routine %1$s has been created."
 msgstr "%1$s rásimi jasaldy."
 
@@ -7441,6 +7435,9 @@ msgstr "Joıylǵan rásimdi qalpyna keltire almadyq."
 
 msgid "The backed up query was:"
 msgstr "Saqtyq kóshirmesi jasalǵan saýal:"
+
+msgid "MySQL said: "
+msgstr "MySQL habarlaýy: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "%1$s rásimi ózgertildi. Artyqshylyqtar naqtylandy."
@@ -7476,6 +7473,9 @@ msgid "%d row affected by the last statement inside the procedure."
 msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "Rásim ishindegi sońǵy nusqaý arqyly %d jolǵa áser etildi."
 msgstr[1] "Rásim ishindegi sońǵy nusqaý arqyly sany %d jolǵa áser etildi."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Kelesi saýal oryndalmady: «%s»"
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "%2$d serveri úshin «%1$s» ýaqyt beldeýin paıdalaný múmkin emes. Konfıgýrasıadaǵy [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em] parametri úshin teńsheýdi tekserińiz. Aǵymda phpMyAdmin derekqor serveriniń ádepki ýaqyt beldeýin paıdalanady."
@@ -7639,14 +7639,14 @@ msgstr "Tym kóp qate týraly habarlar, keıbireýleri beınelenbeıdi."
 msgid "Report"
 msgstr "Esep"
 
+msgid "Event %1$s has been created."
+msgstr "%1$s oqıǵasy jasalǵan."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Joıylǵan oqıǵany qalpyna keltire almadyq."
 
 msgid "Event %1$s has been modified."
 msgstr "%1$s oqıǵasy ózgertildi."
-
-msgid "Event %1$s has been created."
-msgstr "%1$s oqıǵasy jasalǵan."
 
 msgid "You must provide an event name!"
 msgstr "Oqıǵa ataýyn jetkizýińiz qajet!"
@@ -7772,11 +7772,11 @@ msgstr "osaldyq yqtımal"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "ini_get jáne/nemese ini_set fýnksıalary php.ini ishinde óshirilgen. phpMyAdmin bul fýnksıalardy qajet etedi!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Seanstyń cookie-faılyn ornatý sátsiz aıaqtaldy. Múmkin phpMyAdmin-ge qatynaý úshin HTTPS ornyna HTTP paıdalanǵansyz."
-
 msgid "Error: Token mismatch"
 msgstr "Qate: Token sáıkessizdigi"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Seanstyń cookie-faılyn ornatý sátsiz aıaqtaldy. Múmkin phpMyAdmin-ge qatynaý úshin HTTPS ornyna HTTP paıdalanǵansyz."
 
 msgid "Ignoring unsupported language code."
 msgstr "Qoldaý kórsetilmegen tildik kodyn elemeý."

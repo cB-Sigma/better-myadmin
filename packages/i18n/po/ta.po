@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/ta.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/ta.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-07-28 04:01+0000\nLast-Translator: Rajkumar Ramadoss <lionrajkumar@gmail.com>\nLanguage-Team: Tamil <https://hosted.weblate.org/projects/phpmyadmin/master/ta/>\nLanguage: ta\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.8.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "சாவாச்கிரிப்ட் இந்த புள்ளியைத் தாண்டி இயக்கப்பட வேண்டும்!"
@@ -8642,12 +8642,6 @@ msgstr "ஒழுங்கமைவு செருகுநிரல்கள�
 msgid "Invalid routine type: \"%s\""
 msgstr "தவறான வழக்கமான வகை: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "பின்வரும் வினவல் தோல்வியுற்றது: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL சொன்னது: "
-
 msgid "Routine %1$s has been created."
 msgstr "வழக்கமான %1$s உருவாக்கப்பட்டுள்ளது."
 
@@ -8659,6 +8653,9 @@ msgstr "மன்னிக்கவும், கைவிடப்பட்ட 
 
 msgid "The backed up query was:"
 msgstr "காப்புப்பிரதி வினவல்:"
+
+msgid "MySQL said: "
+msgstr "MySQL சொன்னது: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "வழக்கமான %1$s மாற்றியமைக்கப்பட்டுள்ளது. சலுகைகள் சரிசெய்யப்பட்டுள்ளன."
@@ -8697,6 +8694,9 @@ msgid "%d row affected by the last statement inside the procedure."
 msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "%d வரிசை செயல்முறையின் உள்ளே கடைசி அறிக்கையால் பாதிக்கப்பட்டது."
 msgstr[1] "%d வரிசைகள் நடைமுறையில் உள்ள கடைசி அறிக்கையால் பாதிக்கப்பட்டுள்ளன."
+
+msgid "The following query has failed: \"%s\""
+msgstr "பின்வரும் வினவல் தோல்வியுற்றது: \"%s\""
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "சேவையகத்திற்கு %2$d க்கு டைம் மண்டலத்தை \" %1$s\" பயன்படுத்த முடியவில்லை. [EM] $ cfg ['சேவையகங்கள்'] [%3$d] ['SessionTimeZone'] [/em] க்கான உங்கள் உள்ளமைவு அமைப்பை சரிபார்க்கவும். PHPMYADMIN தற்போது தரவுத்தள சேவையகத்தின் இயல்புநிலை நேர மண்டலத்தைப் பயன்படுத்துகிறது."
@@ -8869,14 +8869,14 @@ msgstr "பல்வேறு பிழை செய்திகள், சி�
 msgid "Report"
 msgstr "அறிவிக்கை"
 
+msgid "Event %1$s has been created."
+msgstr "நிகழ்வு %1$s உருவாக்கப்பட்டுள்ளது."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "மன்னிக்கவும், கைவிடப்பட்ட நிகழ்வை மீட்டெடுக்க நாங்கள் தவறிவிட்டோம்."
 
 msgid "Event %1$s has been modified."
 msgstr "நிகழ்வு %1$s மாற்றியமைக்கப்பட்டுள்ளது."
-
-msgid "Event %1$s has been created."
-msgstr "நிகழ்வு %1$s உருவாக்கப்பட்டுள்ளது."
 
 msgid "You must provide an event name!"
 msgstr "நீங்கள் ஒரு நிகழ்வு பெயரை வழங்க வேண்டும்!"
@@ -9026,11 +9026,11 @@ msgstr "சாத்தியமான சுரண்டல்"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Ini_get மற்றும்/அல்லது ini_set செயல்பாடுகள் php.ini இல் முடக்கப்பட்டுள்ளன. Phpmyadmin க்கு இந்த செயல்பாடுகள் தேவை!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "அமர்வு குக்கீ அமைக்கத் தவறிவிட்டது. Phpmyadmin ஐ அணுக HTTPS க்கு பதிலாக HTTP ஐப் பயன்படுத்துகிறீர்கள்."
-
 msgid "Error: Token mismatch"
 msgstr "பிழை: கிள்ளாக்கு பொருந்தாத தன்மை"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "அமர்வு குக்கீ அமைக்கத் தவறிவிட்டது. Phpmyadmin ஐ அணுக HTTPS க்கு பதிலாக HTTP ஐப் பயன்படுத்துகிறீர்கள்."
 
 msgid "Ignoring unsupported language code."
 msgstr "ஆதரிக்கப்படாத மொழி குறியீட்டை புறக்கணித்தல்."

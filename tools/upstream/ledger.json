@@ -723,6 +723,83 @@
       "status": "ported",
       "areas": ["features/05-database-level", "features/06-server-level", "features/04-table-level"],
       "notes": "sync 6016908886: page titles aligned: get_image + the title (whatever ActionLinksMode) and the my-3 margin on the container. The Routines / Triggers / Events heading followed ActionLinksMode through IconText; it now renders PmaIcon + the title (apps/web/src/features/database/programs.tsx, test tests/e2e/program-titles.e2e.ts, docs/features/05-database-level.md). The other headings (databases, privileges, user accounts, export/import, check relations, chart, show create) already used PageHeader, which always shows its icon; UI-parity unchanged."
+    },
+    {
+      "commit": "dedf56d2875c0d0e3a9b110a9ee7eec5d943dfb4",
+      "subject": "Update po files",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: po/pot refresh: pnpm i18n:import; the same 3436 msgids (only their order and source references moved)."
+    },
+    {
+      "commit": "3b559d0d1be5c6fd51da110609b93ee042657458",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "bd5d471c4ffcceebe0bda9e7a36bd054f6df78c5",
+      "subject": "Translated using Weblate (Spanish)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: Spanish translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "7d7826caee74f00f0f727b53c2638a3b0fb51e8c",
+      "subject": "Translated using Weblate (Uyghur)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "372718a7071f3132959c27d483fef22fc2962d93",
+      "subject": "Translated using Weblate (Uyghur)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "0d213e8801e03399c9f7c64fff6c5dcf048f13d6",
+      "subject": "Translated using Weblate (Uyghur)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "a2e0282658e2c9a14894e0e39ca92d9561f0c54e",
+      "subject": "Translated using Weblate (Uyghur)",
+      "status": "ported",
+      "areas": ["translations"],
+      "notes": "sync 6f240a8f64: Uyghur translations from Weblate: brought in by pnpm i18n:import (packages/i18n/po), the shipped catalogues regenerated."
+    },
+    {
+      "commit": "be091e471911ef261d7ab3b8338cac4698b73764",
+      "subject": "Update Psalm to 7.0",
+      "status": "not-applicable",
+      "areas": ["tooling", "dependencies", "features/06-server-level"],
+      "notes": "sync 6f240a8f64: Psalm 7 and its CI workflow (dev tooling, no PHP runtime dependency changed but symfony/polyfill-mbstring 1.43.0->1.43.3 and symfony/filesystem 7.4.18->7.4.21 patch releases, which feed none of our fixtures; the reference keeps its installed vendor). The one code line, Privileges::getUsersOverview initialising $groupAssignment before the configurable-menus check, avoids an undefined PHP variable when user groups are off: our users overview builds the user group column from the user groups query result and shows no column without the feature."
+    },
+    {
+      "commit": "a9bb7defd870c6c9b57803136b789a6f9046644a",
+      "subject": "Reset Routing::$route for token mismatch as well",
+      "status": "not-applicable",
+      "areas": ["features/01-shell-navigation-auth"],
+      "notes": "sync 6f240a8f64: Follow-up to 910322373f (not-applicable): on a token mismatch phpMyAdmin also resets the static Routing::$route to \"/\". We keep no global route: a request without a valid CSRF header is refused before any route runs."
+    },
+    {
+      "commit": "99f5ed6475de3fb7e4c6585034ebc7662a05ec8f",
+      "subject": "Fix #20525 - Undefined global variable $maxsize",
+      "status": "not-applicable",
+      "areas": ["features/07-export-import"],
+      "notes": "sync 6f240a8f64: QA_5_2 fix merged into master: Export::exportDatabase reads $maxsize ?? ''. Our export already takes a missing maxsize parameter as the empty string (packages/export/src/export.ts), so every table is exported whatever its size."
+    },
+    {
+      "commit": "28a671db4c8e55bfb6422bf473e1f72803281315",
+      "subject": "Add change log entry for #20587",
+      "status": "not-applicable",
+      "areas": ["docs"],
+      "notes": "sync 6f240a8f64: ChangeLog entry for #20587: our own CHANGELOG."
     }
   ]
 }

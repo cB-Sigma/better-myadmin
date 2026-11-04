@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/es.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/es.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-28 00:51+0000\nLast-Translator: Salvador Peña <sal@users.noreply.hosted.weblate.org>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/phpmyadmin/master/es/>\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-10-28 00:51+0000\nLast-Translator: Salvador Peña <sal@users.noreply.hosted.weblate.org>\nLanguage-Team: Spanish <https://hosted.weblate.org/projects/phpmyadmin/master/es/>\nLanguage: es\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "¡Pasado este punto, debe tener Javascript activado!"
@@ -3541,7 +3541,7 @@ msgid "and then"
 msgstr "y luego"
 
 msgid "Go back to previous page"
-msgstr "Volver"
+msgstr "Volver a la página anterior"
 
 msgid "Insert another new row"
 msgstr "Insertar un nuevo registro"
@@ -8675,12 +8675,6 @@ msgstr "No se pudieron cargar los plugins de esquema. ¡Revise su instalación!"
 msgid "Invalid routine type: \"%s\""
 msgstr "Tipo de rutina inválido: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "Falló la siguiente consulta: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL ha dicho: "
-
 msgid "Routine %1$s has been created."
 msgstr "Se creó la rutina %1$s."
 
@@ -8692,6 +8686,9 @@ msgstr "Pedimos disculpas por no haber podido recuperar la rutina eliminada."
 
 msgid "The backed up query was:"
 msgstr "La consulta respaldada era:"
+
+msgid "MySQL said: "
+msgstr "MySQL ha dicho: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Se modificó la rutina %1$s. Los privilegios se ajustaron."
@@ -8730,6 +8727,9 @@ msgid "%d row affected by the last statement inside the procedure."
 msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "%d fila afectada por la última sentencia del procedimiento."
 msgstr[1] "%d filas afectadas por la última sentencia del procedimiento."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Falló la siguiente consulta: \"%s\""
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "No se puede usar la zona horaria \"%1$s\" para el servidor %2$d. Por favor, compruebe su configuración para[em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin está utilizando actualmente la zona horaria predeterminada del servidor de base de datos."
@@ -8902,14 +8902,14 @@ msgstr "Demasiados mensajes de error, algunos no son mostrados."
 msgid "Report"
 msgstr "Reportar"
 
+msgid "Event %1$s has been created."
+msgstr "Se creó el evento %1$s."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Pedimos disculpas por no haber podido recuperar el evento eliminado."
 
 msgid "Event %1$s has been modified."
 msgstr "Se modificó el evento %1$s."
-
-msgid "Event %1$s has been created."
-msgstr "Se creó el evento %1$s."
 
 msgid "You must provide an event name!"
 msgstr "¡Debe proveer un nombre de evento!"
@@ -9059,11 +9059,11 @@ msgstr "posible aprovechamiento"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Las funciones ini_get y/o ini_set están deshabilitadas en php.ini. ¡phpMyAdmin requiere estas funciones!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "No se pudo establecer la cookie de sesión. Tal vez está usando HTTP en lugar de HTTPS para acceder a phpMyAdmin."
-
 msgid "Error: Token mismatch"
 msgstr "Error: no coincide un «token»"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "No se pudo establecer la cookie de sesión. Tal vez está usando HTTP en lugar de HTTPS para acceder a phpMyAdmin."
 
 msgid "Ignoring unsupported language code."
 msgstr "Ignorando código de idioma no compatible."

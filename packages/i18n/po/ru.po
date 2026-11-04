@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/ru.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/ru.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Andrei Stepanov <adem@users.noreply.hosted.weblate.org>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-10-19 01:51+0000\nLast-Translator: Andrei Stepanov <adem@users.noreply.hosted.weblate.org>\nLanguage-Team: Russian <https://hosted.weblate.org/projects/phpmyadmin/master/ru/>\nLanguage: ru\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\nX-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Для полноценной работы необходимо включить JavaScript!"
@@ -8661,12 +8661,6 @@ msgstr "Не удалось загрузить плагины схемы, про
 msgid "Invalid routine type: \"%s\""
 msgstr "Ошибочный тип процедуры: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "Данный запрос не был выполнен: \"%s\""
-
-msgid "MySQL said: "
-msgstr "Ответ MySQL: "
-
 msgid "Routine %1$s has been created."
 msgstr "Была создана процедура %1$s."
 
@@ -8678,6 +8672,9 @@ msgstr "Невозможно восстановить удаленную про�
 
 msgid "The backed up query was:"
 msgstr "Сохраненный запрос был:"
+
+msgid "MySQL said: "
+msgstr "Ответ MySQL: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Была изменена процедура %1$s. Привилегии обновлены."
@@ -8717,6 +8714,9 @@ msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "Последним выражением в процедуре была затронута %d строка."
 msgstr[1] "Последним выражением в процедуре были затронуты %d строки."
 msgstr[2] "Последним выражением в процедуре было затронуто %d строк."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Данный запрос не был выполнен: \"%s\""
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "Невозможно использовать часовой пояс %1$s для сервера %2$d. Пожалуйста, проверьте настройки для [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin в настоящий момент использует часовой пояс, установленный на сервере по-умолчанию."
@@ -8889,14 +8889,14 @@ msgstr "Слишком большое количество сообщений о
 msgid "Report"
 msgstr "Отчёт"
 
+msgid "Event %1$s has been created."
+msgstr "Было создано событие %1$s."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Невозможно восстановить удаленное событие."
 
 msgid "Event %1$s has been modified."
 msgstr "Было изменено событие %1$s."
-
-msgid "Event %1$s has been created."
-msgstr "Было создано событие %1$s."
 
 msgid "You must provide an event name!"
 msgstr "Необходимо задать имя события!"
@@ -9046,11 +9046,11 @@ msgstr "возможная уязвимость"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Функции ini_get и/или ini_set отключены в php.ini. В phpMyAdmin требуются эти функции!"
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Не удалось установить сессионные куки. Возможно вы подключаетесь через HTTP вместо HTTPS."
-
 msgid "Error: Token mismatch"
 msgstr "Ошибка: несоответствие токена"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Не удалось установить сессионные куки. Возможно вы подключаетесь через HTTP вместо HTTPS."
 
 msgid "Ignoring unsupported language code."
 msgstr "Игнорировать неподдерживаемые коды языков."

@@ -2,6 +2,14 @@
 
 All notable changes to BetterMyAdmin. Versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.0.27 (2026-11-04)
+
+### Upstream
+
+- Synced to phpMyAdmin 6f240a8f64 (11 commits): Spanish and Uyghur translations. The token-mismatch
+  route reset, the export `maxsize` fix and the Psalm 7 update need no change here (see
+  `tools/upstream/ledger.json`).
+
 ## 1.0.26 (2026-11-02)
 
 ### Fixes

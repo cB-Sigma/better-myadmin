@@ -1,7 +1,7 @@
-# Imported from phpMyAdmin 601690888679e2fb5574ba7acd499812ddc9160a resources/po/sv.po by packages/i18n/scripts/import-po.ts.
+# Imported from phpMyAdmin 6f240a8f64d0a4c62a02b0ef484568fe39017480 resources/po/sv.po by packages/i18n/scripts/import-po.ts.
 # Only the entries msgfmt compiles are kept; edit translations upstream (Weblate), not here.
 msgid ""
-msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-10-25 00:40+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
+msgstr "Project-Id-Version: phpMyAdmin 6.0.0-dev\nReport-Msgid-Bugs-To: translators@phpmyadmin.net\nPOT-Creation-Date: 2026-11-01 00:29+0000\nPO-Revision-Date: 2026-09-19 07:51+0000\nLast-Translator: Daniel Nylander <yeagersthlm@gmail.com>\nLanguage-Team: Swedish <https://hosted.weblate.org/projects/phpmyadmin/master/sv/>\nLanguage: sv\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=n != 1;\nX-Generator: Weblate 2026.10.dev0\n"
 
 msgid "Javascript must be enabled past this point!"
 msgstr "Javascript måste vara aktiverat efter detta!"
@@ -8645,12 +8645,6 @@ msgstr "Kunde inte läsa in insticksprogram, kontrollera din installation!"
 msgid "Invalid routine type: \"%s\""
 msgstr "Ogiltig rutintyp: \"%s\""
 
-msgid "The following query has failed: \"%s\""
-msgstr "Följande fråga har fallerat: \"%s\""
-
-msgid "MySQL said: "
-msgstr "MySQL sa: "
-
 msgid "Routine %1$s has been created."
 msgstr "Rutinen %1$s har skapats."
 
@@ -8662,6 +8656,9 @@ msgstr "Tyvärr, vi lyckades inte återställa den slängda rutinen."
 
 msgid "The backed up query was:"
 msgstr "Den säkerhetskopierade frågan var:"
+
+msgid "MySQL said: "
+msgstr "MySQL sa: "
 
 msgid "Routine %1$s has been modified. Privileges have been adjusted."
 msgstr "Rutin %1$s har ändrats. Privilegier har justerats."
@@ -8700,6 +8697,9 @@ msgid "%d row affected by the last statement inside the procedure."
 msgid_plural "%d rows affected by the last statement inside the procedure."
 msgstr[0] "%d rad berörs av det sista uttrycket inom proceduren."
 msgstr[1] "%d rader berörs av det sista uttrycket inom proceduren."
+
+msgid "The following query has failed: \"%s\""
+msgstr "Följande fråga har fallerat: \"%s\""
 
 msgid "Unable to use timezone \"%1$s\" for server %2$d. Please check your configuration setting for [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin is currently using the default time zone of the database server."
 msgstr "Det går inte att använda tidszonen \"%1$s\" för server %2$d. Kontrollera konfigurationsinställningen för [em]$cfg['Servers'][%3$d]['SessionTimeZone'][/em]. phpMyAdmin använder för närvarande databasserverns standardtidszon."
@@ -8872,14 +8872,14 @@ msgstr "För många felmeddelanden, en del kommer inte visas."
 msgid "Report"
 msgstr "Rapport"
 
+msgid "Event %1$s has been created."
+msgstr "Händelsen %1$s har skapats."
+
 msgid "Sorry, we failed to restore the dropped event."
 msgstr "Tyvärr kunde vi inte återställa tappade händelsen."
 
 msgid "Event %1$s has been modified."
 msgstr "Händelsen %1$s har ändrats."
-
-msgid "Event %1$s has been created."
-msgstr "Händelsen %1$s har skapats."
 
 msgid "You must provide an event name!"
 msgstr "Du måste ange ett händelsenamn!"
@@ -9029,11 +9029,11 @@ msgstr "möjlig exploatering"
 msgid "The ini_get and/or ini_set functions are disabled in php.ini. phpMyAdmin requires these functions!"
 msgstr "Funktionerna ini_get och/eller ini_set är inaktiverade i php.ini. phpMyAdmin kräver dessa funktioner."
 
-msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
-msgstr "Det gick inte att ange sessionscookien. Du använder kanske HTTP i stället för HTTPS för att öppna phpMyAdmin."
-
 msgid "Error: Token mismatch"
 msgstr "Fel: Token matchningsfel"
+
+msgid "Failed to set session cookie. Maybe you are using HTTP instead of HTTPS to access phpMyAdmin."
+msgstr "Det gick inte att ange sessionscookien. Du använder kanske HTTP i stället för HTTPS för att öppna phpMyAdmin."
 
 msgid "Ignoring unsupported language code."
 msgstr "Ignorera kod från icke-supportrade språk."
